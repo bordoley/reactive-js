@@ -9,8 +9,8 @@ import {
   Predicate,
 } from "../functions.ts";
 
-import { __DEV__ } from "./env.ts";
 import { Option, none, orCompute as orComputeOption } from "../option.ts";
+import { __DEV__ } from "./env.ts";
 
 export type CharCode = number;
 

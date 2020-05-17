@@ -1,7 +1,7 @@
-import { AbstractDelegatingSink } from "./sink.js";
 import { strictEquality } from "../../functions.js";
-import { lift } from "./lift.js";
 import { none } from "../../option.js";
+import { lift } from "./lift.js";
+import { AbstractDelegatingSink } from "./sink.js";
 class DistinctUntilChangedSink extends AbstractDelegatingSink {
     constructor(delegate, equality) {
         super(delegate);

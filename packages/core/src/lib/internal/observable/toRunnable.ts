@@ -1,13 +1,13 @@
 import { Exception, dispose, addDisposableOrTeardown } from "../../disposable";
+import { Factory, Function1, pipe } from "../../functions";
+import { none, Option, isNone } from "../../option";
 import { createRunnable } from "../../runnable";
 import {
   createVirtualTimeScheduler,
   VirtualTimeSchedulerLike,
 } from "../../scheduler";
-import { Factory, Function1, pipe } from "../../functions";
-import { ObservableLike } from "./interfaces";
 import { RunnableLike } from "../runnable/interfaces";
-import { none, Option, isNone } from "../../option";
+import { ObservableLike } from "./interfaces";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 

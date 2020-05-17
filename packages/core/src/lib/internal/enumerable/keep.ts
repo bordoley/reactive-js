@@ -1,7 +1,7 @@
 import { Predicate, TypePredicate } from "../../functions";
+import { none } from "../../option";
 import { EnumeratorLike, EnumerableOperator } from "./interfaces";
 import { lift } from "./lift";
-import { none } from "../../option";
 
 class KeepTypeEnumerator<TA, TB extends TA> implements EnumeratorLike<TB> {
   hasCurrent = false;

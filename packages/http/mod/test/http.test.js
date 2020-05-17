@@ -1,6 +1,6 @@
 import { bind, pipe, defer } from "@reactive-js/core/lib/functions.js";
-import { none } from "@reactive-js/core/lib/option.js";
 import { test, describe, expectToThrow, expectEquals, } from "@reactive-js/core/lib/internal/testing.js";
+import { none } from "@reactive-js/core/lib/option.js";
 import { createHttpRequest, createHttpResponse, checkIfNotModified, } from "../lib/http.js";
 import { parseMediaTypeOrThrow } from "../lib/internal/http/mediaType.js";
 export const tests = describe("http", describe("mediaType", test("parseMediaType with params", () => {

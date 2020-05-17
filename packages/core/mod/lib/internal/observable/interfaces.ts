@@ -1,6 +1,6 @@
 import { DisposableLike } from "../../disposable.ts";
-import { SchedulerLike } from "../../scheduler.ts";
 import { Function1 } from "../../functions.ts";
+import { SchedulerLike } from "../../scheduler.ts";
 
 /**
  * The underlying mechanism for receiving and transforming notifications from an

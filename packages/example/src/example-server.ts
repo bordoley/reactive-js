@@ -6,12 +6,6 @@ import {
   addDisposableOrTeardown,
 } from "@reactive-js/core/lib/disposable";
 import {
-  encodeUtf8,
-  fromObservable,
-  map as mapFlowable,
-  IOSourceLike,
-} from "@reactive-js/core/lib/io";
-import {
   pipe,
   Function1,
   returns,
@@ -20,6 +14,12 @@ import {
   defer,
   bind,
 } from "@reactive-js/core/lib/functions";
+import {
+  encodeUtf8,
+  fromObservable,
+  map as mapFlowable,
+  IOSourceLike,
+} from "@reactive-js/core/lib/io";
 import {
   createReadableIOSource,
   createDisposableNodeStream,

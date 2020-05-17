@@ -11,9 +11,9 @@ import { fromValue } from "./fromValue.ts";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { never } from "./never.ts";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 
 class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
   private durationSubscription = disposed;

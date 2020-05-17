@@ -1,7 +1,7 @@
 import { fromIterable as fromIterableEnumerable } from "../../enumerable.ts";
+import { Function1, pipe } from "../../functions.ts";
 import { fromEnumerable } from "./fromEnumerable.ts";
 import { AsyncEnumerableLike } from "./interfaces.ts";
-import { Function1, pipe } from "../../functions.ts";
 
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.

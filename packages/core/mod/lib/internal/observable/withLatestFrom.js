@@ -2,9 +2,9 @@ import { dispose, add, addDisposableOrTeardown } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 class WithLatestFromObserver extends AbstractDelegatingObserver {
     constructor(delegate, other, selector) {
         super(delegate);

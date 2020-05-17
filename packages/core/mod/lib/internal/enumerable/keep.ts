@@ -1,7 +1,7 @@
 import { Predicate, TypePredicate } from "../../functions.ts";
+import { none } from "../../option.ts";
 import { EnumeratorLike, EnumerableOperator } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { none } from "../../option.ts";
 
 class KeepTypeEnumerator<TA, TB extends TA> implements EnumeratorLike<TB> {
   hasCurrent = false;

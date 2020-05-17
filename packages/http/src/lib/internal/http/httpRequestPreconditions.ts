@@ -1,11 +1,11 @@
 import { pipe, SideEffect2 } from "@reactive-js/core/lib/functions";
-import { isNone, isSome, none, Option } from "@reactive-js/core/lib/option";
 import {
   parseWith,
   pAsterisk,
   or,
   mapTo,
 } from "@reactive-js/core/lib/internal/parserCombinators";
+import { isNone, isSome, none, Option } from "@reactive-js/core/lib/option";
 import {
   entityTagToString,
   pETag,

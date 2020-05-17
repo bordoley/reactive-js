@@ -1,6 +1,6 @@
+import { Function1 } from "../../functions";
 import { StreamLike } from "../../observable";
 import { SchedulerLike } from "../../scheduler";
-import { Function1 } from "../../functions";
 
 export interface StreamableLike<TReq, T> {
   stream(scheduler: SchedulerLike, replayCount?: number): StreamLike<TReq, T>;

@@ -1,5 +1,5 @@
-import { IOSourceLike, fromValue } from "@reactive-js/core/lib/io";
 import { SideEffect2 } from "@reactive-js/core/lib/functions";
+import { IOSourceLike, fromValue } from "@reactive-js/core/lib/io";
 import { isSome, isNone } from "@reactive-js/core/lib/option";
 import { writeHttpCacheControlHeader } from "./cacheDirective";
 import { writeHttpContentInfoHeaders } from "./httpContentInfo";

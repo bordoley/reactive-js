@@ -6,8 +6,8 @@ import {
 } from "../../enumerable";
 import { pipe } from "../../functions";
 import { isSome } from "../../option";
-import { QueueLike } from "./interfaces";
 import { first } from "../../runnable";
+import { QueueLike } from "./interfaces";
 
 class UniqueQueueImpl<T> implements QueueLike<T> {
   readonly values: Set<T> = new Set();

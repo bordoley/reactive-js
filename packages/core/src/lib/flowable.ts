@@ -57,10 +57,10 @@ const _fromObservable = <T>(observable: ObservableLike<T>): FlowableLike<T> => {
   const op = (modeObs: ObservableLike<FlowMode>) =>
     using(createScheduler(modeObs), pausableScheduler =>
       pipe(
-        observable, 
-        subscribeOn(pausableScheduler), 
+        observable,
+        subscribeOn(pausableScheduler),
         pipe(pausableScheduler, fromDisposable, takeUntil),
-      )
+      ),
     );
 
   return createStreamable(op);

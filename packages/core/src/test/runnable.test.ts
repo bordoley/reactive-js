@@ -1,16 +1,4 @@
 import {
-  compute,
-  contains,
-  first,
-  fromArray,
-  empty,
-  forEach,
-  noneSatisfy,
-  generate,
-  everySatisfy,
-} from "../lib/runnable";
-import * as Runnable from "../lib/runnable";
-import {
   pipe,
   returns,
   alwaysFalse,
@@ -28,6 +16,18 @@ import {
   expectTrue,
   expectFalse,
 } from "../lib/internal/testing";
+import {
+  compute,
+  contains,
+  first,
+  fromArray,
+  empty,
+  forEach,
+  noneSatisfy,
+  generate,
+  everySatisfy,
+} from "../lib/runnable";
+import * as Runnable from "../lib/runnable";
 import { createMonadTests } from "./monadTests";
 
 export const tests = describe(

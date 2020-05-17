@@ -2,9 +2,9 @@ import { dispose, add, addDisposableOrTeardown } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
+import { AbstractObserver, assertObserverState } from "./observer.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractObserver, assertObserverState } from "./observer.js";
 const notifyDelegate = (observer) => {
     if (observer.queue.length > 0 && observer.hasLatest) {
         observer.hasLatest = false;

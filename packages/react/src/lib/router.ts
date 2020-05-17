@@ -1,4 +1,9 @@
-import { Updater, SideEffect1, returns, pipe } from "@reactive-js/core/lib/functions";
+import {
+  Updater,
+  SideEffect1,
+  returns,
+  pipe,
+} from "@reactive-js/core/lib/functions";
 import { none, Option, isSome } from "@reactive-js/core/lib/option";
 import { StateStoreLike } from "@reactive-js/core/lib/stateStore";
 import { scan, mapReq } from "@reactive-js/core/lib/streamable";

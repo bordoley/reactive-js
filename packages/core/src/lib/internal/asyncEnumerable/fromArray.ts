@@ -11,8 +11,8 @@ const fromArrayScanner = (acc: number, _: void): number => acc + 1;
  * @param values The array.
  */
 export const fromArray = <T>(
-  { startIndex } = { startIndex: 0 }
-): Function1<readonly T[],AsyncEnumerableLike<T>> => values =>
+  { startIndex } = { startIndex: 0 },
+): Function1<readonly T[], AsyncEnumerableLike<T>> => values =>
   createStreamable(
     compose(
       scan(fromArrayScanner, returns(startIndex - 1)),

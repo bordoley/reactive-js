@@ -1,10 +1,10 @@
-import { test, describe, expectArrayEquals, expectTrue, } from "../lib/internal/testing.js";
-import { pipe, incrementBy } from "../lib/functions.js";
-import { identity, lift, stream } from "../lib/streamable.js";
-import { toStateStore } from "../lib/stateStore.js";
-import { createVirtualTimeScheduler } from "../lib/scheduler.js";
-import { onNotify, subscribe, startWith, dispatch } from "../lib/observable.js";
 import { dispose } from "../lib/disposable.js";
+import { pipe, incrementBy } from "../lib/functions.js";
+import { test, describe, expectArrayEquals, expectTrue, } from "../lib/internal/testing.js";
+import { onNotify, subscribe, startWith, dispatch } from "../lib/observable.js";
+import { createVirtualTimeScheduler } from "../lib/scheduler.js";
+import { toStateStore } from "../lib/stateStore.js";
+import { identity, lift, stream } from "../lib/streamable.js";
 export const tests = describe("stateStore", test("toStateStore", () => {
     const scheduler = createVirtualTimeScheduler({ maxMicroTaskTicks: 0 });
     const stateStream = stream(pipe(identity(), lift(startWith(0)), toStateStore()), scheduler);

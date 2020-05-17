@@ -1,6 +1,6 @@
+import { add } from "../disposable.js";
 import { pipe, returns } from "../functions.js";
 import { using, takeWhile, keepType, map as mapObs, onNotify, subscribe, createObservable, dispatch, reduce, } from "../observable.js";
-import { add } from "../disposable.js";
 import { stream, createStreamable } from "../streamable.js";
 const isNext = (ev) => ev.type === 1;
 class IOSinkAccumulatorImpl {

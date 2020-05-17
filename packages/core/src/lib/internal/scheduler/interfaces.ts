@@ -7,7 +7,7 @@ export interface SchedulerContinuationRunStatusChangedListenerLike {
 export interface YieldableLike {
   readonly inContinuation: boolean;
   readonly now: number;
-  
+
   yield(options?: { delay: number }): void;
 }
 

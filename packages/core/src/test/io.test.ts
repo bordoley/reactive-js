@@ -1,3 +1,14 @@
+import { FlowMode } from "../lib/flowable";
+import { pipe, returns, sum } from "../lib/functions";
+import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulatorForTests";
+import {
+  test,
+  describe,
+  expectEquals,
+  expectTrue,
+  mockFn,
+  expectToHaveBeenCalledTimes,
+} from "../lib/internal/testing";
 import {
   decodeWithCharset,
   empty,
@@ -7,19 +18,8 @@ import {
   IOEventType,
   map,
 } from "../lib/io";
-import { FlowMode } from "../lib/flowable";
-import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulatorForTests";
-import { pipe, returns, sum } from "../lib/functions";
 import { onNotify, subscribe, dispatch } from "../lib/observable";
 import { createVirtualTimeScheduler } from "../lib/scheduler";
-import {
-  test,
-  describe,
-  expectEquals,
-  expectTrue,
-  mockFn,
-  expectToHaveBeenCalledTimes,
-} from "../lib/internal/testing";
 import { sink, stream } from "../lib/streamable";
 
 export const tests = describe(

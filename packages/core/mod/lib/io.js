@@ -1,8 +1,8 @@
 import { fromObservable as fromObservableFlowable, } from "./flowable.js";
 import { compose, pipe, returns, composeWith } from "./functions.js";
+import { endWith } from "./internal/observable/endWith.js";
 import { map as mapObs, withLatestFrom as withLatestFromObs, compute, concatMap, fromIterator, fromArray as fromArrayObs, } from "./observable.js";
 import { map as mapStream, lift, withLatestFrom, } from "./streamable.js";
-import { endWith } from "./internal/observable/endWith.js";
 export const next = (data) => ({
     type: 1,
     data,

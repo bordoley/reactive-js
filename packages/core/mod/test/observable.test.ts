@@ -1,3 +1,4 @@
+import { dispose } from "../lib/disposable.ts";
 import {
   compose,
   pipe,
@@ -11,6 +12,20 @@ import {
   defer,
   ignore,
 } from "../lib/functions.ts";
+import {
+  test,
+  describe,
+  testAsync,
+  expectArrayEquals,
+  expectToThrowError,
+  expectEquals,
+  expectToThrow,
+  expectPromiseToThrow,
+  mockFn,
+  expectToHaveBeenCalledTimes,
+  expectSome,
+  expectNone,
+} from "../lib/internal/testing.ts";
 import * as Observable from "../lib/observable.ts";
 import {
   await_,
@@ -72,21 +87,6 @@ import {
   createHostScheduler,
   createVirtualTimeScheduler,
 } from "../lib/scheduler.ts";
-import {
-  test,
-  describe,
-  testAsync,
-  expectArrayEquals,
-  expectToThrowError,
-  expectEquals,
-  expectToThrow,
-  expectPromiseToThrow,
-  mockFn,
-  expectToHaveBeenCalledTimes,
-  expectSome,
-  expectNone,
-} from "../lib/internal/testing.ts";
-import { dispose } from "../lib/disposable.ts";
 import { createMonadTests } from "./monadTests.ts";
 
 const scheduler = createHostScheduler();

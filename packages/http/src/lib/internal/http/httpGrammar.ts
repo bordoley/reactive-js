@@ -1,5 +1,4 @@
 import { pipe } from "@reactive-js/core/lib/functions";
-import { isNone, isSome, none, Option } from "@reactive-js/core/lib/option";
 import {
   Parser,
   pEquals,
@@ -19,6 +18,7 @@ import {
   isParseError,
   string,
 } from "@reactive-js/core/lib/internal/parserCombinators";
+import { isNone, isSome, none, Option } from "@reactive-js/core/lib/option";
 import { HttpHeaders } from "./interfaces";
 
 export const enum ASCII {

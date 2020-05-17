@@ -1,4 +1,4 @@
-import { compose, pipe, flip } from "../../functions.js";
+import { compose, pipe, flip, } from "../../functions.js";
 import { createSubject, map, onNotify, onSubscribe, switchAll, using, zipWithLatestFrom, takeFirst, dispatch, } from "../../observable.js";
 import { none } from "../../option.js";
 import { stream } from "../../streamable.js";

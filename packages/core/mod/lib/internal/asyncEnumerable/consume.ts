@@ -1,4 +1,11 @@
-import { compose, Function1, pipe, Factory, flip, Function2 } from "../../functions.ts";
+import {
+  compose,
+  Function1,
+  pipe,
+  Factory,
+  flip,
+  Function2,
+} from "../../functions.ts";
 import {
   createSubject,
   map,
@@ -34,7 +41,11 @@ export type ConsumeRequest<TAcc> =
     };
 
 export type Consumer<T, TAcc> = Function2<TAcc, T, ConsumeRequest<TAcc>>;
-export type AsyncConsumer<T, TAcc> = Function2<TAcc, T, ObservableLike<ConsumeRequest<TAcc>>>;
+export type AsyncConsumer<T, TAcc> = Function2<
+  TAcc,
+  T,
+  ObservableLike<ConsumeRequest<TAcc>>
+>;
 
 export const continue_ = <TAcc>(acc: TAcc): ConsumeRequest<TAcc> => ({
   type: ConsumeRequestType.Continue,

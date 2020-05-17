@@ -1,11 +1,11 @@
 import { bind, pipe, defer } from "@reactive-js/core/lib/functions";
-import { none } from "@reactive-js/core/lib/option";
 import {
   test,
   describe,
   expectToThrow,
   expectEquals,
 } from "@reactive-js/core/lib/internal/testing";
+import { none } from "@reactive-js/core/lib/option";
 import {
   HttpRequest,
   HttpResponse,

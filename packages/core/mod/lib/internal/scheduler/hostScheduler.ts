@@ -5,7 +5,11 @@ import {
   add,
 } from "../../disposable.ts";
 import { Factory, SideEffect, Function1, bind } from "../../functions.ts";
-import { SchedulerLike, SchedulerContinuationLike, YieldError } from "./interfaces.ts";
+import {
+  SchedulerLike,
+  SchedulerContinuationLike,
+  YieldError,
+} from "./interfaces.ts";
 import { runContinuation } from "./schedulerContinuation.ts";
 
 // FIXME: Only declare these to make Deno happy.
@@ -119,7 +123,7 @@ class HostScheduler implements SchedulerLike {
     }
   }
 
-  yield({ delay } = { delay: 0}) {
+  yield({ delay } = { delay: 0 }) {
     if (delay > 0 || this.now > this.startTime + this.yieldInterval) {
       throw new YieldError(delay);
     }

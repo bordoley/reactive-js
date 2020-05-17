@@ -1,6 +1,6 @@
 import { pipe } from "../../../../../core/mod/lib/functions.js";
-import { isSome, none } from "../../../../../core/mod/lib/option.js";
 import { concatWith, map, parseWith, } from "../../../../../core/mod/lib/internal/parserCombinators.js";
+import { isSome, none } from "../../../../../core/mod/lib/option.js";
 import { pToken, pParams, httpList } from "./httpGrammar.js";
 import { getHeaderValue } from "./httpHeaders.js";
 import { pMediaType, parseMediaTypeOrThrow } from "./mediaType.js";

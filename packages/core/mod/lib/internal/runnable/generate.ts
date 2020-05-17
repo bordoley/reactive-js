@@ -1,6 +1,6 @@
 import { Factory, Updater } from "../../functions.ts";
-import { RunnableLike, SinkLike } from "./interfaces.ts";
 import { createRunnable } from "./createRunnable.ts";
+import { RunnableLike, SinkLike } from "./interfaces.ts";
 
 export const generate = <T>(
   generator: Updater<T>,

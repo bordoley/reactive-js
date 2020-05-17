@@ -1,7 +1,7 @@
 import { dispose, addDisposableOrTeardown } from "../../disposable.js";
+import { pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
 import { createDelegatingObserver } from "./observer.js";
-import { pipe } from "../../functions.js";
 const createConcatObserver = (delegate, observables, next) => pipe(delegate, createDelegatingObserver, addDisposableOrTeardown(error => {
     if (isSome(error)) {
         dispose(delegate, error);

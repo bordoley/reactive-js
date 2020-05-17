@@ -1,3 +1,14 @@
+import { FlowMode } from "../lib/flowable.ts";
+import { pipe, returns, sum } from "../lib/functions.ts";
+import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulatorForTests.ts";
+import {
+  test,
+  describe,
+  expectEquals,
+  expectTrue,
+  mockFn,
+  expectToHaveBeenCalledTimes,
+} from "../lib/internal/testing.ts";
 import {
   decodeWithCharset,
   empty,
@@ -7,19 +18,8 @@ import {
   IOEventType,
   map,
 } from "../lib/io.ts";
-import { FlowMode } from "../lib/flowable.ts";
-import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulatorForTests.ts";
-import { pipe, returns, sum } from "../lib/functions.ts";
 import { onNotify, subscribe, dispatch } from "../lib/observable.ts";
 import { createVirtualTimeScheduler } from "../lib/scheduler.ts";
-import {
-  test,
-  describe,
-  expectEquals,
-  expectTrue,
-  mockFn,
-  expectToHaveBeenCalledTimes,
-} from "../lib/internal/testing.ts";
 import { sink, stream } from "../lib/streamable.ts";
 
 export const tests = describe(

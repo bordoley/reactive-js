@@ -1,6 +1,6 @@
 import { pipe } from "../../../../../core/mod/lib/functions.js";
-import { isSome } from "../../../../../core/mod/lib/option.js";
 import { optional, pEquals, parseWith, parseWithOrThrow, } from "../../../../../core/mod/lib/internal/parserCombinators.js";
+import { isSome } from "../../../../../core/mod/lib/option.js";
 import { pToken, pTokenOrQuotedString, toTokenOrQuotedString, httpList, } from "./httpGrammar.js";
 import { getHeaderValue } from "./httpHeaders.js";
 const pOptionalEquals = optional(pEquals);

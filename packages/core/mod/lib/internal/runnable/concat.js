@@ -47,9 +47,6 @@ export function startWith(...values) {
     return obs => concat(fromArray()(values), obs);
 }
 class FlattenSink extends AbstractDelegatingSink {
-    constructor(delegate) {
-        super(delegate);
-    }
     notify(next) {
         runConcatUnsafe(next, this.delegate);
     }

@@ -1,10 +1,10 @@
+import { dispose, addDisposableOrTeardown } from "../lib/disposable.js";
 import { pipe, returns, incrementBy, sum } from "../lib/functions.js";
+import { test, describe, expectArrayEquals, expectEquals, expectTrue, expectFalse, } from "../lib/internal/testing.js";
 import { subscribe, onNotify as onNotifyObs, buffer, takeFirst, startWith, dispatch, } from "../lib/observable.js";
+import { none } from "../lib/option.js";
 import { createVirtualTimeScheduler } from "../lib/scheduler.js";
 import { empty, identity, lift, map, mapReq, onNotify, scan, createActionReducer, mapTo, sink, stream, } from "../lib/streamable.js";
-import { test, describe, expectArrayEquals, expectEquals, expectTrue, expectFalse, } from "../lib/internal/testing.js";
-import { none } from "../lib/option.js";
-import { dispose, addDisposableOrTeardown } from "../lib/disposable.js";
 export const tests = describe("streamable", test("createActionReducer", () => {
     const scheduler = createVirtualTimeScheduler();
     const actionReducerStream = stream(createActionReducer(sum, returns(0)), scheduler);

@@ -1,5 +1,5 @@
-import { lift } from "./lift.js";
 import { none } from "../../option.js";
+import { lift } from "./lift.js";
 class KeepTypeEnumerator {
     constructor(delegate, predicate) {
         this.delegate = delegate;

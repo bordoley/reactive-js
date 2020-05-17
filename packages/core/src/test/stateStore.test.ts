@@ -1,15 +1,15 @@
+import { dispose } from "../lib/disposable";
+import { pipe, incrementBy } from "../lib/functions";
 import {
   test,
   describe,
   expectArrayEquals,
   expectTrue,
 } from "../lib/internal/testing";
-import { pipe, incrementBy } from "../lib/functions";
-import { identity, lift, stream } from "../lib/streamable";
-import { toStateStore } from "../lib/stateStore";
-import { createVirtualTimeScheduler } from "../lib/scheduler";
 import { onNotify, subscribe, startWith, dispatch } from "../lib/observable";
-import { dispose } from "../lib/disposable";
+import { createVirtualTimeScheduler } from "../lib/scheduler";
+import { toStateStore } from "../lib/stateStore";
+import { identity, lift, stream } from "../lib/streamable";
 
 export const tests = describe(
   "stateStore",

@@ -1,8 +1,8 @@
 import { Readable } from "stream";
 import { DisposableValueLike, dispose, add } from "../../disposable";
 import { FlowMode } from "../../flowable";
-import { next, complete, IOSourceLike } from "../../io";
 import { pipe, compose, Factory } from "../../functions";
+import { next, complete, IOSourceLike } from "../../io";
 import {
   createObservable,
   onNotify,

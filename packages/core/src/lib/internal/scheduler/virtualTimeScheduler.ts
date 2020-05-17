@@ -45,7 +45,8 @@ const move = (scheduler: VirtualTimeSchedulerImpl) => {
   return scheduler.hasCurrent;
 };
 
-class VirtualTimeSchedulerImpl extends AbstractDisposable implements SchedulerLike {
+class VirtualTimeSchedulerImpl extends AbstractDisposable
+  implements SchedulerLike {
   current: SchedulerContinuationLike = none as any;
   hasCurrent = false;
   inContinuation = false;
@@ -83,10 +84,10 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable implements SchedulerLi
     }
   }
 
-  yield({ delay } = { delay: 0}) {
+  yield({ delay } = { delay: 0 }) {
     this.microTaskTicks++;
 
-    if(delay > 0 || this.microTaskTicks >= this.maxMicroTaskTicks) {
+    if (delay > 0 || this.microTaskTicks >= this.maxMicroTaskTicks) {
       throw new YieldError(delay);
     }
   }

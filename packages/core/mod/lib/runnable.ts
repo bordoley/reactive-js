@@ -38,8 +38,8 @@ export { takeLast } from "./internal/runnable/takeLast.ts";
 export { takeWhile } from "./internal/runnable/takeWhile.ts";
 export { toArray } from "./internal/runnable/toArray.ts";
 
-import { RunnableLike } from "./internal/runnable/interfaces.ts";
 import { Function1, identity } from "./functions.ts";
+import { RunnableLike } from "./internal/runnable/interfaces.ts";
 
 export const toRunnable = <T>(): Function1<RunnableLike<T>, RunnableLike<T>> =>
   identity;

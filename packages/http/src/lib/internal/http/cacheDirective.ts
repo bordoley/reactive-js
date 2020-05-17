@@ -1,5 +1,4 @@
 import { pipe, SideEffect2 } from "@reactive-js/core/lib/functions";
-import { isSome } from "@reactive-js/core/lib/option";
 import {
   CharStreamLike,
   optional,
@@ -7,6 +6,7 @@ import {
   parseWith,
   parseWithOrThrow,
 } from "@reactive-js/core/lib/internal/parserCombinators";
+import { isSome } from "@reactive-js/core/lib/option";
 import {
   pToken,
   pTokenOrQuotedString,

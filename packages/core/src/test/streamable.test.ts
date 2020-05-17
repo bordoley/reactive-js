@@ -1,4 +1,13 @@
+import { dispose, addDisposableOrTeardown } from "../lib/disposable";
 import { pipe, returns, incrementBy, sum } from "../lib/functions";
+import {
+  test,
+  describe,
+  expectArrayEquals,
+  expectEquals,
+  expectTrue,
+  expectFalse,
+} from "../lib/internal/testing";
 import {
   subscribe,
   onNotify as onNotifyObs,
@@ -7,6 +16,7 @@ import {
   startWith,
   dispatch,
 } from "../lib/observable";
+import { none } from "../lib/option";
 import { createVirtualTimeScheduler } from "../lib/scheduler";
 import {
   empty,
@@ -21,16 +31,6 @@ import {
   sink,
   stream,
 } from "../lib/streamable";
-import {
-  test,
-  describe,
-  expectArrayEquals,
-  expectEquals,
-  expectTrue,
-  expectFalse,
-} from "../lib/internal/testing";
-import { none } from "../lib/option";
-import { dispose, addDisposableOrTeardown } from "../lib/disposable";
 
 export const tests = describe(
   "streamable",

@@ -44,9 +44,7 @@ import { idlePriority, normalPriority } from "@reactive-js/react/lib/scheduler";
 import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { default as ReactDOM } from "react-dom";
 
-const makeCallbacks = (
-  uriUpdater: (updater: Updater<RelativeURI>) => void,
-) => {
+const makeCallbacks = (uriUpdater: (updater: Updater<RelativeURI>) => void) => {
   const liftUpdater = (updater: Updater<RelativeURI>) => () =>
     uriUpdater(updater);
 
@@ -115,11 +113,7 @@ const StatefulComponent = (_props: RoutableComponentProps) => {
 };
 
 const StreamPauseResume = (_props: RoutableComponentProps) => {
-  const stream = useMemo(() => pipe(
-    obs, 
-    throttle(15), 
-    fromObservable(),
-  ), []);
+  const stream = useMemo(() => pipe(obs, throttle(15), fromObservable()), []);
   const [value, setMode] = useStreamable(stream, {
     scheduler: idlePriority,
   });

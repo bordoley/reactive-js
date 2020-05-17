@@ -1,8 +1,8 @@
 import { dispose, addDisposableOrTeardown } from "../../disposable.js";
-import { createRunnable } from "../../runnable.js";
-import { createVirtualTimeScheduler, } from "../../scheduler.js";
 import { pipe } from "../../functions.js";
 import { none, isNone } from "../../option.js";
+import { createRunnable } from "../../runnable.js";
+import { createVirtualTimeScheduler, } from "../../scheduler.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
 export const toRunnable = (schedulerFactory = createVirtualTimeScheduler) => source => createRunnable(sink => {

@@ -2,7 +2,7 @@ import { none } from "../../option.js";
 import { AbstractSink } from "./sink.js";
 class LastSink extends AbstractSink {
     constructor() {
-        super();
+        super(...arguments);
         this.result = none;
     }
     notify(next) {

@@ -1,6 +1,6 @@
+import { Function1 } from "../../functions";
 import { enumerate } from "./enumerator";
 import { EnumerableLike } from "./interfaces";
-import { Function1 } from "../../functions";
 
 class EnumerableIterable<T> implements Iterable<T> {
   constructor(private readonly enumerable: EnumerableLike<T>) {}

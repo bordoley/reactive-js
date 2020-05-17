@@ -9,9 +9,9 @@ import { isSome } from "../../option.ts";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { map } from "./map.ts";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 
 const subscribeNext = <T>(observer: MergeObserver<T>) => {
   if (observer.activeCount < observer.maxConcurrency) {
@@ -150,6 +150,5 @@ export const exhaust = <T>(): ObservableOperator<ObservableLike<T>, T> =>
   _exhaust as ObservableOperator<ObservableLike<T>, T>;
 
 export const exhaustMap = <TA, TB>(
-  mapper: Function1<TA, ObservableLike<TB>>
-): ObservableOperator<TA, TB> =>
-  compose(map(mapper), exhaust());
+  mapper: Function1<TA, ObservableLike<TB>>,
+): ObservableOperator<TA, TB> => compose(map(mapper), exhaust());

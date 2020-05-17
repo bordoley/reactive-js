@@ -5,15 +5,15 @@ import {
   add,
 } from "../../disposable";
 import { current, EnumeratorLike } from "../../enumerable";
+import { returns } from "../../functions";
 import { none, isSome, isNone } from "../../option";
 import { SchedulerContinuationLike, runContinuation } from "../../scheduler";
 import { zipEnumerators } from "../enumerable/zip";
+import { YieldError } from "../scheduler/interfaces";
 import { fromEnumerator } from "./fromEnumerable";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 import { using } from "./using";
-import { YieldError } from "../scheduler/interfaces";
-import { returns } from "../../functions";
 
 class EnumeratorObserver<T> extends AbstractDisposable
   implements EnumeratorLike<T>, ObserverLike<T> {

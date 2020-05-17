@@ -5,15 +5,15 @@ import {
   add,
 } from "../../disposable.ts";
 import { current, EnumeratorLike } from "../../enumerable.ts";
+import { returns } from "../../functions.ts";
 import { none, isSome, isNone } from "../../option.ts";
 import { SchedulerContinuationLike, runContinuation } from "../../scheduler.ts";
 import { zipEnumerators } from "../enumerable/zip.ts";
+import { YieldError } from "../scheduler/interfaces.ts";
 import { fromEnumerator } from "./fromEnumerable.ts";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces.ts";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { using } from "./using.ts";
-import { YieldError } from "../scheduler/interfaces.ts";
-import { returns } from "../../functions.ts";
 
 class EnumeratorObserver<T> extends AbstractDisposable
   implements EnumeratorLike<T>, ObserverLike<T> {

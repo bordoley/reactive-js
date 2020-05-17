@@ -32,7 +32,11 @@ export function bindNodeCallback(
 ): Factory<ObservableLike<void>>;
 
 export function bindNodeCallback<A1, R1, R2, R3, R4, T>(
-  callbackFunc: Function2<A1, Function5<unknown, R1, R2, R3, R4, unknown>, unknown>,
+  callbackFunc: Function2<
+    A1,
+    Function5<unknown, R1, R2, R3, R4, unknown>,
+    unknown
+  >,
   selector: Function4<R1, R2, R3, R4, T>,
 ): Function1<A1, ObservableLike<T>>;
 export function bindNodeCallback<A1, R1, R2, R3, T>(
@@ -52,11 +56,21 @@ export function bindNodeCallback<A1>(
 ): Function1<A1, ObservableLike<void>>;
 
 export function bindNodeCallback<A1, A2, R1, R2, R3, R4, T>(
-  callbackFunc: Function3<A1, A2, Function5<unknown, R1, R2, R3, R4, unknown>, unknown>,
+  callbackFunc: Function3<
+    A1,
+    A2,
+    Function5<unknown, R1, R2, R3, R4, unknown>,
+    unknown
+  >,
   selector: Function4<R1, R2, R3, R4, T>,
 ): Function2<A1, A2, ObservableLike<T>>;
 export function bindNodeCallback<A1, A2, R1, R2, R3, T>(
-  callbackFunc: Function3<A1, A2, Function4<unknown, R1, R2, R3, unknown>, unknown>,
+  callbackFunc: Function3<
+    A1,
+    A2,
+    Function4<unknown, R1, R2, R3, unknown>,
+    unknown
+  >,
   selector: Function3<R1, R2, R3, T>,
 ): Function2<A1, A2, ObservableLike<T>>;
 export function bindNodeCallback<A1, A2, R1, R2, T>(
@@ -72,15 +86,33 @@ export function bindNodeCallback<A1, A2>(
 ): Function2<A1, A2, ObservableLike<void>>;
 
 export function bindNodeCallback<A1, A2, A3, R1, R2, R3, R4, T>(
-  callbackFunc: Function4<A1, A2, A3, Function5<unknown, R1, R2, R3, R4, unknown>, unknown>,
+  callbackFunc: Function4<
+    A1,
+    A2,
+    A3,
+    Function5<unknown, R1, R2, R3, R4, unknown>,
+    unknown
+  >,
   selector: Function4<R1, R2, R3, R4, T>,
 ): Function3<A1, A2, A3, ObservableLike<T>>;
 export function bindNodeCallback<A1, A2, A3, R1, R2, R3, T>(
-  callbackFunc: Function4<A1, A2, A3, Function4<unknown, R1, R2, R3, unknown>, unknown>,
+  callbackFunc: Function4<
+    A1,
+    A2,
+    A3,
+    Function4<unknown, R1, R2, R3, unknown>,
+    unknown
+  >,
   selector: Function3<R1, R2, R3, T>,
 ): Function3<A1, A2, A3, ObservableLike<T>>;
 export function bindNodeCallback<A1, A2, A3, R1, R2, T>(
-  callbackFunc: Function4<A1, A2, A3, Function3<unknown, R1, R2, unknown>, unknown>,
+  callbackFunc: Function4<
+    A1,
+    A2,
+    A3,
+    Function3<unknown, R1, R2, unknown>,
+    unknown
+  >,
   selector: Function2<R1, R2, T>,
 ): Function3<A1, A2, A3, ObservableLike<T>>;
 export function bindNodeCallback<A1, A2, A3, R1, T>(
@@ -92,19 +124,47 @@ export function bindNodeCallback<A1, A2, A3>(
 ): Function3<A1, A2, A3, ObservableLike<void>>;
 
 export function bindNodeCallback<A1, A2, A3, A4, R1, R2, R3, R4, T>(
-  callbackFunc: Function5<A1, A2, A3, A4, Function5<unknown, R1, R2, R3, R4, unknown>, unknown>,
+  callbackFunc: Function5<
+    A1,
+    A2,
+    A3,
+    A4,
+    Function5<unknown, R1, R2, R3, R4, unknown>,
+    unknown
+  >,
   selector: Function4<R1, R2, R3, R4, T>,
 ): Function4<A1, A2, A3, A4, ObservableLike<T>>;
 export function bindNodeCallback<A1, A2, A3, A4, R1, R2, R3, T>(
-  callbackFunc: Function5<A1, A2, A3, A4, Function4<unknown, R1, R2, R3, unknown>, unknown>,
+  callbackFunc: Function5<
+    A1,
+    A2,
+    A3,
+    A4,
+    Function4<unknown, R1, R2, R3, unknown>,
+    unknown
+  >,
   selector: Function3<R1, R2, R3, T>,
 ): Function4<A1, A2, A3, A4, ObservableLike<T>>;
 export function bindNodeCallback<A1, A2, A3, A4, R1, R2, T>(
-  callbackFunc: Function5<A1, A2, A3, A4, Function3<unknown, R1, R2, unknown>, unknown>,
+  callbackFunc: Function5<
+    A1,
+    A2,
+    A3,
+    A4,
+    Function3<unknown, R1, R2, unknown>,
+    unknown
+  >,
   selector: Function2<R1, R2, T>,
 ): Function4<A1, A2, A3, A4, ObservableLike<T>>;
 export function bindNodeCallback<A1, A2, A3, A4, R1, T>(
-  callbackFunc: Function5<A1, A2, A3, A4, Function2<unknown, R1, unknown>, unknown>,
+  callbackFunc: Function5<
+    A1,
+    A2,
+    A3,
+    A4,
+    Function2<unknown, R1, unknown>,
+    unknown
+  >,
   selector: Function1<R1, T>,
 ): Function4<A1, A2, A3, A4, ObservableLike<T>>;
 export function bindNodeCallback<A1, A2, A3, A4>(
@@ -112,24 +172,64 @@ export function bindNodeCallback<A1, A2, A3, A4>(
 ): Function4<A1, A2, A3, A4, ObservableLike<void>>;
 
 export function bindNodeCallback<A1, A2, A3, A4, A5, R1, R2, R3, R4, T>(
-  callbackFunc: Function6<A1, A2, A3, A4, A5, Function5<unknown, R1, R2, R3, R4, unknown>, unknown>,
+  callbackFunc: Function6<
+    A1,
+    A2,
+    A3,
+    A4,
+    A5,
+    Function5<unknown, R1, R2, R3, R4, unknown>,
+    unknown
+  >,
   selector: Function4<R1, R2, R3, R4, T>,
 ): Function5<A1, A2, A3, A4, A5, ObservableLike<T>>;
 export function bindNodeCallback<A1, A2, A3, A4, A5, R1, R2, R3, T>(
-  callbackFunc: Function6<A1, A2, A3, A4, A5, Function4<unknown, R1, R2, R3,  unknown>, unknown>,
+  callbackFunc: Function6<
+    A1,
+    A2,
+    A3,
+    A4,
+    A5,
+    Function4<unknown, R1, R2, R3, unknown>,
+    unknown
+  >,
   selector: Function3<R1, R2, R3, T>,
 ): Function5<A1, A2, A3, A4, A5, ObservableLike<T>>;
 export function bindNodeCallback<A1, A2, A3, A4, A5, R1, R2, T>(
-  callbackFunc: Function6<A1, A2, A3, A4, A5, Function3<unknown, R1, R2,  unknown>, unknown>,
+  callbackFunc: Function6<
+    A1,
+    A2,
+    A3,
+    A4,
+    A5,
+    Function3<unknown, R1, R2, unknown>,
+    unknown
+  >,
   selector: Function2<R1, R2, T>,
 ): Function5<A1, A2, A3, A4, A5, ObservableLike<T>>;
 export function bindNodeCallback<A1, A2, A3, A4, A5, R1, T>(
-  callbackFunc: Function6<A1, A2, A3, A4, A5, Function2<unknown, R1, unknown>, unknown>,
+  callbackFunc: Function6<
+    A1,
+    A2,
+    A3,
+    A4,
+    A5,
+    Function2<unknown, R1, unknown>,
+    unknown
+  >,
   selector: Function1<R1, T>,
 ): Function5<A1, A2, A3, A4, A5, ObservableLike<T>>;
 export function bindNodeCallback<A1, A2, A3, A4, A5>(
-  callbackFunc: Function6<A1, A2, A3, A4, A5, Function1<unknown, unknown>, unknown>,
-):Function5<A1, A2, A3, A4, A5, ObservableLike<void>>;
+  callbackFunc: Function6<
+    A1,
+    A2,
+    A3,
+    A4,
+    A5,
+    Function1<unknown, unknown>,
+    unknown
+  >,
+): Function5<A1, A2, A3, A4, A5, ObservableLike<void>>;
 
 export function bindNodeCallback<T>(
   callback: (...args: any[]) => any,

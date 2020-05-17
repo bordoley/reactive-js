@@ -1,4 +1,5 @@
 import { ZlibOptions, BrotliOptions } from "zlib";
+import { IOSourceOperator } from "@reactive-js/core/lib/io";
 import {
   brotliDecompress,
   gunzip,
@@ -7,7 +8,6 @@ import {
   gzip,
   deflate,
 } from "@reactive-js/core/lib/node";
-import { IOSourceOperator } from "@reactive-js/core/lib/io";
 import { HttpContentEncoding } from "../../http";
 
 export const createContentEncodingDecompressTransforms = (

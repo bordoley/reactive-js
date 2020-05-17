@@ -1,10 +1,10 @@
+import { addDisposableOrTeardown, add, dispose } from "../../disposable";
+import { pipe, bind } from "../../functions";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { createAutoDisposingDelegatingObserver } from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
-import { addDisposableOrTeardown, add, dispose } from "../../disposable";
-import { pipe, bind } from "../../functions";
 
 export const takeUntil = <T>(
   notifier: ObservableLike<unknown>,
@@ -21,7 +21,7 @@ export const takeUntil = <T>(
 
     add(observer, otherSubscription);
     return takeUntilObserver;
-  }
+  };
   operator.isSynchronous = false;
   return lift(operator);
-}
+};

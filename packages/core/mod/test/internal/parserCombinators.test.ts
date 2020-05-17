@@ -1,12 +1,4 @@
 import { bind, defer, pipe, returns } from "../../lib/functions.ts";
-import { none } from "../../lib/option.ts";
-import {
-  test,
-  describe,
-  expectToThrow,
-  expectArrayEquals,
-  expectEquals,
-} from "../../lib/internal/testing.ts";
 import {
   string,
   map,
@@ -26,6 +18,14 @@ import {
   parseWithOrThrow,
   throwParseError,
 } from "../../lib/internal/parserCombinators.ts";
+import {
+  test,
+  describe,
+  expectToThrow,
+  expectArrayEquals,
+  expectEquals,
+} from "../../lib/internal/testing.ts";
+import { none } from "../../lib/option.ts";
 
 export const tests = describe(
   "parser combinators",

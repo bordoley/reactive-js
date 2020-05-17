@@ -8,9 +8,9 @@ import { pipe, Predicate, Function2 } from "../../functions";
 import { isNone, isSome } from "../../option";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
+import { createDelegatingObserver } from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
-import { createDelegatingObserver } from "./observer";
 
 const createRepeatObserver = <T>(
   delegate: ObserverLike<T>,

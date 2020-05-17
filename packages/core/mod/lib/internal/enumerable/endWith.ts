@@ -1,7 +1,7 @@
+import { pipe } from "../../functions.ts";
 import { concatWith } from "./concat.ts";
 import { fromArray } from "./fromArray.ts";
 import { EnumerableOperator } from "./interfaces.ts";
-import { pipe } from "../../functions.ts";
 
 /**
  * Returns an EnumerableLike that yields items from the source,

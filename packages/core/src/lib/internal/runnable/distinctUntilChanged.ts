@@ -1,8 +1,8 @@
-import { AbstractDelegatingSink } from "./sink";
-import { RunnableOperator, SinkLike } from "./interfaces";
 import { Equality, strictEquality } from "../../functions";
-import { lift } from "./lift";
 import { Option, none } from "../../option";
+import { RunnableOperator, SinkLike } from "./interfaces";
+import { lift } from "./lift";
+import { AbstractDelegatingSink } from "./sink";
 
 class DistinctUntilChangedSink<T> extends AbstractDelegatingSink<T, T> {
   prev: Option<T> = none;

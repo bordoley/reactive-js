@@ -1,9 +1,9 @@
+import { Function1, SideEffect2 } from "@reactive-js/core/lib/functions";
 import {
   IOSourceLike,
   IOSourceOperator,
   empty,
 } from "@reactive-js/core/lib/io";
-import { Function1, SideEffect2 } from "@reactive-js/core/lib/functions";
 import { isNone, isSome, none } from "@reactive-js/core/lib/option";
 import {
   writeHttpMessageHeaders,

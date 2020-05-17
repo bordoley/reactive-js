@@ -9,8 +9,8 @@ import {
   Predicate,
 } from "../functions";
 
-import { __DEV__ } from "./env";
 import { Option, none, orCompute as orComputeOption } from "../option";
+import { __DEV__ } from "./env";
 
 export type CharCode = number;
 

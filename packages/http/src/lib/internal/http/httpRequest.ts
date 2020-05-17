@@ -1,5 +1,5 @@
-import { IOSourceLike, IOSourceOperator } from "@reactive-js/core/lib/io";
 import { Function1, SideEffect2 } from "@reactive-js/core/lib/functions";
+import { IOSourceLike, IOSourceOperator } from "@reactive-js/core/lib/io";
 import { isNone, isSome, none } from "@reactive-js/core/lib/option";
 import {
   writeHttpMessageHeaders,

@@ -1,3 +1,4 @@
+import { dispose } from "../lib/disposable";
 import {
   compose,
   pipe,
@@ -11,6 +12,20 @@ import {
   defer,
   ignore,
 } from "../lib/functions";
+import {
+  test,
+  describe,
+  testAsync,
+  expectArrayEquals,
+  expectToThrowError,
+  expectEquals,
+  expectToThrow,
+  expectPromiseToThrow,
+  mockFn,
+  expectToHaveBeenCalledTimes,
+  expectSome,
+  expectNone,
+} from "../lib/internal/testing";
 import * as Observable from "../lib/observable";
 import {
   await_,
@@ -72,21 +87,6 @@ import {
   createHostScheduler,
   createVirtualTimeScheduler,
 } from "../lib/scheduler";
-import {
-  test,
-  describe,
-  testAsync,
-  expectArrayEquals,
-  expectToThrowError,
-  expectEquals,
-  expectToThrow,
-  expectPromiseToThrow,
-  mockFn,
-  expectToHaveBeenCalledTimes,
-  expectSome,
-  expectNone,
-} from "../lib/internal/testing";
-import { dispose } from "../lib/disposable";
 import { createMonadTests } from "./monadTests";
 
 const scheduler = createHostScheduler();

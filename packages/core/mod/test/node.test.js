@@ -1,12 +1,12 @@
 import { Readable, Writable } from "stream";
 import { pipe, bind, returns } from "../lib/functions.js";
+import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulatorForTests.js";
+import { describe, testAsync, expectEquals, expectPromiseToThrow, } from "../lib/internal/testing.js";
+import { fromArray } from "../lib/io.js";
 import { createReadableIOSource, createWritableIOSink, gzip, gunzip, createDisposableNodeStream, } from "../lib/node.js";
 import { toPromise } from "../lib/observable.js";
 import { createHostScheduler } from "../lib/scheduler.js";
 import { sink } from "../lib/streamable.js";
-import { describe, testAsync, expectEquals, expectPromiseToThrow, } from "../lib/internal/testing.js";
-import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulatorForTests.js";
-import { fromArray } from "../lib/io.js";
 const scheduler = createHostScheduler();
 export const tests = describe("node", describe("createWritableIOSink", testAsync("sinking to writable", async () => {
     const encoder = new TextEncoder();

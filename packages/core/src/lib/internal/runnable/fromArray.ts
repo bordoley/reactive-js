@@ -1,5 +1,5 @@
-import { createRunnable } from "./createRunnable";
 import { Function1 } from "../../functions";
+import { createRunnable } from "./createRunnable";
 import { RunnableLike, SinkLike } from "./interfaces";
 
 export const fromArray = <T>(

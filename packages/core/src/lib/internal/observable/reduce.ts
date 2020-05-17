@@ -1,10 +1,10 @@
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
-import { ObserverLike, ObservableOperator } from "./interfaces";
-import { Reducer, Factory } from "../../functions";
 import { add, dispose } from "../../disposable";
+import { Reducer, Factory } from "../../functions";
 import { isNone } from "../../option";
 import { fromValue } from "./fromValue";
+import { ObserverLike, ObservableOperator } from "./interfaces";
 import { lift } from "./lift";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
 class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
   constructor(

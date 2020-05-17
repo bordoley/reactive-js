@@ -1,6 +1,6 @@
 import { pipe, SideEffect2 } from "../../../../../core/mod/lib/functions.ts";
-import { isNone, none, Option } from "../../../../../core/mod/lib/option.ts";
 import { parseWith } from "../../../../../core/mod/lib/internal/parserCombinators.ts";
+import { isNone, none, Option } from "../../../../../core/mod/lib/option.ts";
 import { pToken, httpList } from "./httpGrammar.ts";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders.ts";
 import {
