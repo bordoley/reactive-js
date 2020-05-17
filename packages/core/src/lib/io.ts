@@ -1,21 +1,16 @@
-import { FlowableLike, FlowMode, fromObservable } from "./flowable";
-import { Function1, compose, pipe, returns, isEqualTo } from "./functions";
+import { FlowableLike, FlowMode, fromObservable as fromObservableFlowable } from "./flowable";
+import { Function1, compose, pipe, returns } from "./functions";
 import {
   map as mapObs,
-  mapTo,
-  genMap,
-  takeFirst,
-  takeWhile,
-  keep,
   withLatestFrom,
   compute,
   concatMap,
   fromIterator,
   fromArray as fromArrayObs,
+  ObservableLike,
 } from "./observable";
 
 import {
-  createStreamable,
   map as mapStream,
   lift,
   StreamableLike,
@@ -42,45 +37,13 @@ export const complete = <T>(): IOEvent<T> => _complete;
 export interface IOStreamLike<T>
   extends FlowableLike<IOEvent<T>> {}
 
-  /** @noInheritDoc */
+/** @noInheritDoc */
 export interface IOSinkLike<T> extends StreamableLike<IOEvent<T>, FlowMode> {}
 
 export type IOStreamFunction<TA, TB> = Function1<
   IOStreamLike<TA>,
   IOStreamLike<TB>
 >;
-
-const _empty: IOStreamLike<any> = createStreamable(
-  compose(
-    keep(isEqualTo(FlowMode.Resume)),
-    takeWhile(isEqualTo(FlowMode.Pause), { inclusive: true }),
-    mapTo(complete()),
-  ),
-);
-export const empty = <T>(): IOStreamLike<T> => _empty;
-
-const _fromValue = <T>(data: T): IOStreamLike<T> =>
-  createStreamable(
-    compose(
-      keep(isEqualTo(FlowMode.Resume)),
-      takeFirst(),
-      genMap(function*(mode: FlowMode): Generator<IOEvent<T>> {
-        switch (mode) {
-          case FlowMode.Resume:
-            yield next(data);
-            yield complete();
-        }
-      }),
-    ),
-  );
-export const fromValue = <T>(): Function1<T, IOStreamLike<T>> => _fromValue;
-
-export const map = <TA, TB>(
-  mapper: Function1<TA, TB>,
-): Function1<IOStreamLike<TA>, IOStreamLike<TB>> =>
-  mapStream((ev: IOEvent<TA>) =>
-    ev.type === IOEventType.Next ? pipe(ev.data, mapper, next) : ev,
-  );
 
 export const decodeWithCharset = (
   charset = "utf-8",
@@ -131,10 +94,28 @@ export const encodeUtf8: IOStreamFunction<string, Uint8Array> = lift(
   ),
 );
 
-export const fromArray = <T>() => (arr: T[]) => pipe(
-  arr,
-  fromArrayObs(),
+export const map = <TA, TB>(
+  mapper: Function1<TA, TB>,
+): Function1<IOStreamLike<TA>, IOStreamLike<TB>> =>
+  mapStream((ev: IOEvent<TA>) =>
+    ev.type === IOEventType.Next ? pipe(ev.data, mapper, next) : ev,
+  );
+
+const _fromObservable = compose(
   mapObs(next),
   endWith(complete()),
+  fromObservableFlowable(),
+);
+export const fromObservable = <T>(): Function1<ObservableLike<T>, IOStreamLike<T>> => _fromObservable;
+
+const _fromArray = compose(
+  fromArrayObs(),
   fromObservable(),
 );
+export const fromArray = <T>(): Function1<readonly T[], IOStreamLike<T>> => _fromArray;
+
+const _fromValue = <T>(v: T) => pipe([v], fromArray());
+export const fromValue = <T>(): Function1<T, IOStreamLike<T>> => _fromValue;
+
+const _empty: IOStreamLike<any> = _fromArray([]);
+export const empty = <T>(): IOStreamLike<T> => _empty;

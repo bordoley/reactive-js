@@ -5,7 +5,7 @@ import { onNotify, subscribe, dispatch, } from "../lib/observable.js";
 import { createVirtualTimeScheduler } from "../lib/scheduler.js";
 import { test, describe, expectEquals, expectTrue, mockFn, expectToHaveBeenCalledTimes, } from "../lib/internal/testing.js";
 import { sink, stream } from "../lib/streamable.js";
-export const tests = describe("flowables", test("decodeWithCharset", () => {
+export const tests = describe("io", test("decodeWithCharset", () => {
     const lib = pipe([Uint8Array.from([226]), Uint8Array.from([130]), Uint8Array.from([172])], fromArray(), decodeWithCharset());
     const dest = createIOSinkAccumulator((acc, next) => acc + next, returns(""));
     const scheduler = createVirtualTimeScheduler();
@@ -37,11 +37,7 @@ export const tests = describe("flowables", test("decodeWithCharset", () => {
 }), test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
     const fromValueStream = stream(fromValue()(1), scheduler);
-    dispatch(fromValueStream, 2);
-    dispatch(fromValueStream, 2);
     dispatch(fromValueStream, 1);
-    dispatch(fromValueStream, 1);
-    dispatch(fromValueStream, 2);
     const f = mockFn();
     const subscription = pipe(fromValueStream, onNotify(f), subscribe(scheduler));
     scheduler.continue();
@@ -52,7 +48,7 @@ export const tests = describe("flowables", test("decodeWithCharset", () => {
     expectTrue(subscription.isDisposed);
     expectTrue(fromValueStream.isDisposed);
 }), test("map", () => {
-    const lib = pipe(1, fromValue(), map(_ => 2));
+    const lib = pipe(1, fromValue(), map(returns(2)));
     const dest = createIOSinkAccumulator(sum, returns(0));
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(lib, dest), subscribe(scheduler));

@@ -1,7 +1,7 @@
-import { fromObservable } from "./flowable.js";
-import { compose, pipe, returns, isEqualTo } from "./functions.js";
-import { map as mapObs, mapTo, genMap, takeFirst, takeWhile, keep, withLatestFrom, compute, concatMap, fromIterator, fromArray as fromArrayObs, } from "./observable.js";
-import { createStreamable, map as mapStream, lift, } from "./streamable.js";
+import { fromObservable as fromObservableFlowable } from "./flowable.js";
+import { compose, pipe, returns } from "./functions.js";
+import { map as mapObs, withLatestFrom, compute, concatMap, fromIterator, fromArray as fromArrayObs, } from "./observable.js";
+import { map as mapStream, lift, } from "./streamable.js";
 import { endWith } from "./internal/observable/endWith.js";
 export const next = (data) => ({
     type: 1,
@@ -9,17 +9,6 @@ export const next = (data) => ({
 });
 const _complete = { type: 2 };
 export const complete = () => _complete;
-const _empty = createStreamable(compose(keep(isEqualTo(1)), takeWhile(isEqualTo(2), { inclusive: true }), mapTo(complete())));
-export const empty = () => _empty;
-const _fromValue = (data) => createStreamable(compose(keep(isEqualTo(1)), takeFirst(), genMap(function* (mode) {
-    switch (mode) {
-        case 1:
-            yield next(data);
-            yield complete();
-    }
-})));
-export const fromValue = () => _fromValue;
-export const map = (mapper) => mapStream((ev) => ev.type === 1 ? pipe(ev.data, mapper, next) : ev);
 export const decodeWithCharset = (charset = "utf-8", options) => lift(compose(withLatestFrom(compute()(() => new TextDecoder(charset, options)), function* (ev, decoder) {
     switch (ev.type) {
         case 1: {
@@ -50,4 +39,12 @@ export const encodeUtf8 = lift(withLatestFrom(compute()(() => new TextEncoder())
         }
     }
 }));
-export const fromArray = () => (arr) => pipe(arr, fromArrayObs(), mapObs(next), endWith(complete()), fromObservable());
+export const map = (mapper) => mapStream((ev) => ev.type === 1 ? pipe(ev.data, mapper, next) : ev);
+const _fromObservable = compose(mapObs(next), endWith(complete()), fromObservableFlowable());
+export const fromObservable = () => _fromObservable;
+const _fromArray = compose(fromArrayObs(), fromObservable());
+export const fromArray = () => _fromArray;
+const _fromValue = (v) => pipe([v], fromArray());
+export const fromValue = () => _fromValue;
+const _empty = _fromArray([]);
+export const empty = () => _empty;

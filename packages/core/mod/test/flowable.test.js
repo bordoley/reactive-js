@@ -40,11 +40,8 @@ export const tests = describe("flowables", test("empty", () => {
 }), test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
     const fromValueStream = stream(fromValue()(1), scheduler);
-    dispatch(fromValueStream, 2);
-    dispatch(fromValueStream, 2);
     dispatch(fromValueStream, 1);
     dispatch(fromValueStream, 1);
-    dispatch(fromValueStream, 2);
     const f = mockFn();
     const subscription = pipe(fromValueStream, onNotify(f), subscribe(scheduler));
     scheduler.continue();

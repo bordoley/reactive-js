@@ -28,6 +28,7 @@
 * [decodeWithCharset](_io_.md#const-decodewithcharset)
 * [empty](_io_.md#const-empty)
 * [fromArray](_io_.md#const-fromarray)
+* [fromObservable](_io_.md#const-fromobservable)
 * [fromValue](_io_.md#const-fromvalue)
 * [map](_io_.md#const-map)
 * [next](_io_.md#const-next)
@@ -108,13 +109,25 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(): *(Anonymous function)*
+▸ **fromArray**<**T**>(): *[Function1](_functions_.md#function1)‹keyof T[], [IOStreamLike](../interfaces/_io_.iostreamlike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *(Anonymous function)*
+**Returns:** *[Function1](_functions_.md#function1)‹keyof T[], [IOStreamLike](../interfaces/_io_.iostreamlike.md)‹T››*
+
+___
+
+### `Const` fromObservable
+
+▸ **fromObservable**<**T**>(): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [IOStreamLike](../interfaces/_io_.iostreamlike.md)‹T››*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [IOStreamLike](../interfaces/_io_.iostreamlike.md)‹T››*
 
 ___
 

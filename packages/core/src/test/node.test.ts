@@ -1,10 +1,10 @@
 import { Readable, Writable } from "stream";
-import { createGzip, createGunzip } from "zlib";
 import { pipe, bind, returns } from "../lib/functions";
 import {
   createReadableIOStream,
   createWritableIOSink,
-  transform,
+  gzip, 
+  gunzip,
   createDisposableNodeStream,
 } from "../lib/node";
 import { toPromise } from "../lib/observable";
@@ -24,7 +24,7 @@ const scheduler = createHostScheduler();
 export const tests = describe(
   "node",
   describe(
-    "createWritableFlowableSink",
+    "createWritableIOSink",
     testAsync("sinking to writable", async () => {
       const encoder = new TextEncoder();
       const decoder = new TextDecoder();
@@ -84,7 +84,7 @@ export const tests = describe(
   ),
 
   describe(
-    "createReadablFlowable",
+    "createReadableIOStream",
     testAsync("reading from readable", async () => {
       function* generate() {
         yield Buffer.from("abc", "utf8");
@@ -128,8 +128,8 @@ export const tests = describe(
     const lib = pipe(
       [encoder.encode("abc"), encoder.encode("defg")],
       fromArray<Uint8Array>(),
-      transform(() => createDisposableNodeStream(createGzip())),
-      transform(() => createDisposableNodeStream(createGunzip())),
+      gzip(),
+      gunzip(),
     );
 
     const textDecoder = new TextDecoder();

@@ -1,17 +1,8 @@
 import { add, addDisposableOrTeardown } from "./disposable.js";
-import { compose, pipe, isEqualTo } from "./functions.js";
-import { ignoreElements, genMap, onNotify, subscribe, subscribeOn, takeFirst, takeWhile, using, keep, } from "./observable.js";
+import { compose, pipe } from "./functions.js";
+import { fromArray as fromArrayObs, onNotify, subscribe, subscribeOn, using, } from "./observable.js";
 import { toPausableScheduler } from "./scheduler.js";
 import { createStreamable, } from "./streamable.js";
-const _empty = createStreamable(compose(keep(isEqualTo(1)), takeWhile(isEqualTo(2)), ignoreElements()));
-export const empty = () => _empty;
-const _fromValue = (data) => createStreamable(compose(keep(isEqualTo(1)), takeFirst(), genMap(function* (mode) {
-    switch (mode) {
-        case 1:
-            yield data;
-    }
-})));
-export const fromValue = () => _fromValue;
 const _fromObservable = (observable) => {
     const createScheduler = (modeObs) => (scheduler) => {
         const pausableScheduler = toPausableScheduler(scheduler);
@@ -32,3 +23,9 @@ const _fromObservable = (observable) => {
     return createStreamable(op);
 };
 export const fromObservable = () => _fromObservable;
+const _fromArray = compose(fromArrayObs(), fromObservable());
+export const fromArray = () => _fromArray;
+const _fromValue = (v) => _fromArray([v]);
+export const fromValue = () => _fromValue;
+const _empty = _fromArray([]);
+export const empty = () => _empty;
