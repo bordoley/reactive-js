@@ -9,7 +9,5 @@
     "./lib",
     "./mod",
     "./test",
-    "./testRunner.deno.ts",
-    "./testRunner.jest.ts"
   ]
 }

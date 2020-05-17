@@ -1,7 +1,8 @@
 import {
   TestGroup,
   TestGroupType,
-} from "../packages/core/src/lib/internal/testing";
+} from "./testing";
+
 const toJestTest = (testGroup: TestGroup) => {
   if (testGroup.type === TestGroupType.Describe) {
     describe(testGroup.name, () => {

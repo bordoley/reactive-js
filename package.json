@@ -5,14 +5,14 @@
     "build": "lerna run build",
     "clean": "lerna run clean",
     "deno-install": "curl -fsSL https://deno.land/x/install/install.sh | sh",
-    "deno-test": "lerna run deno-test",
     "example": "node ./packages/example/build/cjs/example-server",
     "example-debug": "node --inspect-brk ./packages/example/build/cjs/example-server",
     "format": "prettier '**' --write",
     "lint": "eslint . --fix -f codeFrame --ext .ts,.tsx,.js,.jsx",
     "perf": "lerna run perf",
     "test": "lerna run test",
-    "test-coverage": "lerna run test-coverage"
+    "test-coverage": "lerna run test-coverage",
+    "test-deno": "lerna run test-deno"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.10.0",
