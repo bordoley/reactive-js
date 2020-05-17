@@ -1,7 +1,7 @@
 export type Comparator<T> = (a: T, b: T) => number;
 export type Equality<T> = (a: T, b: T) => boolean;
 export type Factory<T> = () => T;
-export type Generator<T> = (prev: T) => T;
+export type Updater<T> = (prev: T) => T;
 export type Predicate<T> = (a: T) => boolean;
 export type TypePredicate<TA, TB extends TA> = (v: TA) => v is TB;
 export type Reducer<T, TAcc> = (acc: TAcc, next: T) => TAcc;
@@ -151,12 +151,12 @@ export const ignore: (..._args: unknown[]) => void = _ignore;
 
 export const increment = (x: number) => x + 1;
 
-export const incrementBy = (incr: number): Generator<number> => (x: number) =>
+export const incrementBy = (incr: number): Updater<number> => (x: number) =>
   x + incr;
 
 export const decrement = (x: number) => x - 1;
 
-export const decrementBy = (decr: number): Generator<number> => (x: number) =>
+export const decrementBy = (decr: number): Updater<number> => (x: number) =>
   x - decr;
 
 export const strictEquality = <T>(a: T, b: T) => a === b;

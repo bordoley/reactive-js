@@ -8,6 +8,6 @@
 
 ## Hierarchy
 
-* [StreamableLike](_streamable_.streamablelike.md)‹[Generator](../modules/_functions_.md#generator)‹T›, T›
+* [StreamableLike](_streamable_.streamablelike.md)‹[Updater](../modules/_functions_.md#updater)‹T›, T›
 
   ↳ **StateStoreLike**

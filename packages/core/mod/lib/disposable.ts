@@ -12,7 +12,7 @@ export type Exception = {
 
 export type DisposableOrTeardown =
   | DisposableLike
-  | ((error?: Exception) => void);
+  | SideEffect1<Option<Exception>>;
 
 /**
  * Represents an unmanaged resource that can be disposed.

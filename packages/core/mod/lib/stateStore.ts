@@ -1,5 +1,5 @@
 import { addDisposableOrTeardown, add } from "./disposable.ts";
-import { pipe, identity, Factory, Equality, strictEquality, Generator } from "./functions.ts";
+import { pipe, identity, Factory, Equality, strictEquality, Updater } from "./functions.ts";
 import {
   onNotify,
   using,
@@ -17,9 +17,9 @@ import {
 } from "./streamable.ts";
 
 /** @noInheritDoc */
-export interface StateStoreLike<T> extends StreamableLike<Generator<T>, T> {}
+export interface StateStoreLike<T> extends StreamableLike<Updater<T>, T> {}
 
-const stateStoreReducer = <T>(state: T, action: Generator<T>) =>
+const stateStoreReducer = <T>(state: T, action: Updater<T>) =>
   action(state);
 
 /**
@@ -46,7 +46,7 @@ export const createStateStore = <T>(
  */
 export const toStateStore = <T>(
   equality: Equality<T> = strictEquality,
-): StreamableOperator<T, T, Generator<T>, T> => streamable =>
+): StreamableOperator<T, T, Updater<T>, T> => streamable =>
   createStreamable(updates =>
     using(scheduler => {
       const stream = streamStreamable(streamable, scheduler);

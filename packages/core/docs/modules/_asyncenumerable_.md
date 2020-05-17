@@ -33,18 +33,7 @@
 
 ###  AsyncConsumer
 
-Ƭ **AsyncConsumer**: *function*
-
-#### Type declaration:
-
-▸ (`acc`: TAcc, `next`: T): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹[ConsumeRequest](_asyncenumerable_.md#consumerequest)‹TAcc››*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`acc` | TAcc |
-`next` | T |
+Ƭ **AsyncConsumer**: *[Function2](_functions_.md#function2)‹TAcc, T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹[ConsumeRequest](_asyncenumerable_.md#consumerequest)‹TAcc›››*
 
 ___
 
@@ -56,18 +45,7 @@ ___
 
 ###  Consumer
 
-Ƭ **Consumer**: *function*
-
-#### Type declaration:
-
-▸ (`acc`: TAcc, `next`: T): *[ConsumeRequest](_asyncenumerable_.md#consumerequest)‹TAcc›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`acc` | TAcc |
-`next` | T |
+Ƭ **Consumer**: *[Function2](_functions_.md#function2)‹TAcc, T, [ConsumeRequest](_asyncenumerable_.md#consumerequest)‹TAcc››*
 
 ## Functions
 
@@ -201,7 +179,7 @@ ___
 
 ### `Const` generate
 
-▸ **generate**<**T**>(`generator`: [Generator](_functions_.md#generator)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›): *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
+▸ **generate**<**T**>(`generator`: [Updater](_functions_.md#updater)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›): *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
 
 Generates an `AsyncEnumerableLike` sequence from a generator function
 that is applied to an accumulator value.
@@ -214,7 +192,7 @@ that is applied to an accumulator value.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`generator` | [Generator](_functions_.md#generator)‹T› | The generator function. |
+`generator` | [Updater](_functions_.md#updater)‹T› | The generator function. |
 `initialValue` | [Factory](_functions_.md#factory)‹T› | Factory function to generate the initial accumulator.  |
 
 **Returns:** *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*

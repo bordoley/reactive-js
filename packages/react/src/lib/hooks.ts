@@ -11,7 +11,7 @@ import {
   returns,
   bind,
   Function1,
-  Generator,
+  Updater,
 } from "@reactive-js/core/lib/functions";
 import {
   dispatch as dispatchToStream,
@@ -127,8 +127,8 @@ const requestMapper = <TSerialized, TState>(
   parse: Function1<TSerialized, TState>,
   serialize: Function1<TState, TSerialized>,
 ) => (
-  stateUpdater: Generator<TState>,
-): Generator<TSerialized> => oldStateString => {
+  stateUpdater: Updater<TState>,
+): Updater<TSerialized> => oldStateString => {
   const oldState = parse(oldStateString);
   const newState = stateUpdater(oldState);
 
@@ -139,7 +139,7 @@ export const useSerializedState = <TSerialized, TState>(
   store: StateStoreLike<TSerialized>,
   parse: Function1<TSerialized, TState>,
   serialize: Function1<TState, TSerialized>,
-): [Option<TState>, SideEffect1<Generator<TState>>] => {
+): [Option<TState>, SideEffect1<Updater<TState>>] => {
   const mappedStore = useMemo(
     defer(store, mapReq(requestMapper(parse, serialize)), map(parse)),
     [store, parse, serialize],
