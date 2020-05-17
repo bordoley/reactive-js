@@ -322,7 +322,7 @@ ___
 
 ### `Const` generate
 
-▸ **generate**<**T**>(`generator`: [Generator](_functions_.md#generator)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+▸ **generate**<**T**>(`generator`: [Updater](_functions_.md#updater)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
 
 Generates an EnumerableLike from a generator function
 that is applied to an accumulator value.
@@ -335,7 +335,7 @@ that is applied to an accumulator value.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`generator` | [Generator](_functions_.md#generator)‹T› | the generator function. |
+`generator` | [Updater](_functions_.md#updater)‹T› | the generator function. |
 `initialValue` | [Factory](_functions_.md#factory)‹T› | Factory function used to generate the initial accumulator.  |
 
 **Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*

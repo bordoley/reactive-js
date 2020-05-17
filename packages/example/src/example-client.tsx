@@ -11,7 +11,7 @@ import {
   increment,
   identity,
   bind,
-  Generator,
+  Updater,
 } from "@reactive-js/core/lib/functions";
 import {
   generate,
@@ -45,9 +45,9 @@ import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { default as ReactDOM } from "react-dom";
 
 const makeCallbacks = (
-  uriUpdater: (updater: Generator<RelativeURI>) => void,
+  uriUpdater: (updater: Updater<RelativeURI>) => void,
 ) => {
-  const liftUpdater = (updater: Generator<RelativeURI>) => () =>
+  const liftUpdater = (updater: Updater<RelativeURI>) => () =>
     uriUpdater(updater);
 
   const goToPath = (pathname: string) =>

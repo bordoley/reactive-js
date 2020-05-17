@@ -339,7 +339,7 @@ ___
 
 ### `Const` generate
 
-▸ **generate**<**T**>(`generator`: [Generator](_functions_.md#generator)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›): *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
+▸ **generate**<**T**>(`generator`: [Updater](_functions_.md#updater)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›): *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -349,7 +349,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`generator` | [Generator](_functions_.md#generator)‹T› |
+`generator` | [Updater](_functions_.md#updater)‹T› |
 `initialValue` | [Factory](_functions_.md#factory)‹T› |
 
 **Returns:** *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*

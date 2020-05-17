@@ -1,4 +1,4 @@
-import { pipe, Generator } from "../../functions.ts";
+import { pipe, Updater } from "../../functions.ts";
 import {
   compute,
   merge,
@@ -52,8 +52,8 @@ const getSearchState = (state: string): ParamMap => {
 };
 
 const searchStateRequestMapper = (
-  stateUpdater: Generator<ParamMap>,
-): Generator<string> => (prevStateString: string) => {
+  stateUpdater: Updater<ParamMap>,
+): Updater<string> => (prevStateString: string) => {
   const prevStateURL = new URL(prevStateString);
   const prevState = parseQueryState(prevStateURL.searchParams);
   const newState = stateUpdater(prevState);
@@ -89,8 +89,8 @@ const getHashState = (state: string): string => {
 };
 
 const hashStateRequestMapper = (
-  stateUpdater: Generator<string>,
-): Generator<string> => (prevStateString: string) => {
+  stateUpdater: Updater<string>,
+): Updater<string> => (prevStateString: string) => {
   const prevStateURL = new URL(prevStateString);
   const prevState = parseHashState(prevStateURL.hash);
   const newState = stateUpdater(prevState);

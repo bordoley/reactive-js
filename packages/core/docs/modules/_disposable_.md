@@ -39,7 +39,7 @@
 
 ###  DisposableOrTeardown
 
-Ƭ **DisposableOrTeardown**: *[DisposableLike](../interfaces/_disposable_.disposablelike.md) | function*
+Ƭ **DisposableOrTeardown**: *[DisposableLike](../interfaces/_disposable_.disposablelike.md) | [SideEffect1](_functions_.md#sideeffect1)‹[Option](_option_.md#option)‹[Exception](_disposable_.md#exception)››*
 
 ___
 

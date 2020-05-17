@@ -18,13 +18,13 @@
 * [Function7](_functions_.md#function7)
 * [Function8](_functions_.md#function8)
 * [Function9](_functions_.md#function9)
-* [Generator](_functions_.md#generator)
 * [Predicate](_functions_.md#predicate)
 * [Reducer](_functions_.md#reducer)
 * [SideEffect](_functions_.md#sideeffect)
 * [SideEffect1](_functions_.md#sideeffect1)
 * [SideEffect2](_functions_.md#sideeffect2)
 * [TypePredicate](_functions_.md#typepredicate)
+* [Updater](_functions_.md#updater)
 
 ### Variables
 
@@ -281,22 +281,6 @@ Name | Type |
 
 ___
 
-###  Generator
-
-Ƭ **Generator**: *function*
-
-#### Type declaration:
-
-▸ (`prev`: T): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`prev` | T |
-
-___
-
 ###  Predicate
 
 Ƭ **Predicate**: *function*
@@ -386,6 +370,22 @@ ___
 Name | Type |
 ------ | ------ |
 `v` | TA |
+
+___
+
+###  Updater
+
+Ƭ **Updater**: *function*
+
+#### Type declaration:
+
+▸ (`prev`: T): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`prev` | T |
 
 ## Variables
 
@@ -1187,7 +1187,7 @@ ___
 
 ### `Const` decrementBy
 
-▸ **decrementBy**(`decr`: number): *[Generator](_functions_.md#generator)‹number›*
+▸ **decrementBy**(`decr`: number): *[Updater](_functions_.md#updater)‹number›*
 
 **Parameters:**
 
@@ -1195,7 +1195,7 @@ Name | Type |
 ------ | ------ |
 `decr` | number |
 
-**Returns:** *[Generator](_functions_.md#generator)‹number›*
+**Returns:** *[Updater](_functions_.md#updater)‹number›*
 
 ___
 
@@ -1718,7 +1718,7 @@ ___
 
 ### `Const` incrementBy
 
-▸ **incrementBy**(`incr`: number): *[Generator](_functions_.md#generator)‹number›*
+▸ **incrementBy**(`incr`: number): *[Updater](_functions_.md#updater)‹number›*
 
 **Parameters:**
 
@@ -1726,7 +1726,7 @@ Name | Type |
 ------ | ------ |
 `incr` | number |
 
-**Returns:** *[Generator](_functions_.md#generator)‹number›*
+**Returns:** *[Updater](_functions_.md#updater)‹number›*
 
 ___
 

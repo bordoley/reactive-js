@@ -1,11 +1,11 @@
-import { Factory, Generator } from "../../functions.ts";
+import { Factory, Updater } from "../../functions.ts";
 import { EnumerableLike, EnumeratorLike } from "./interfaces.ts";
 
 class GenerateEnumerator<T> implements EnumeratorLike<T> {
   current: T;
   hasCurrent = false;
 
-  constructor(private readonly f: Generator<T>, acc: T) {
+  constructor(private readonly f: Updater<T>, acc: T) {
     this.current = acc;
   }
 
@@ -19,7 +19,7 @@ class GenerateEnumerator<T> implements EnumeratorLike<T> {
 
 class GenerateEnumerable<T> implements EnumerableLike<T> {
   constructor(
-    private readonly f: Generator<T>,
+    private readonly f: Updater<T>,
     private readonly acc: Factory<T>,
   ) {}
 
@@ -36,6 +36,6 @@ class GenerateEnumerable<T> implements EnumerableLike<T> {
  * @param initialValue Factory function used to generate the initial accumulator.
  */
 export const generate = <T>(
-  generator: Generator<T>,
+  generator: Updater<T>,
   initialValue: Factory<T>,
 ): EnumerableLike<T> => new GenerateEnumerable(generator, initialValue);

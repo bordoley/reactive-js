@@ -1,5 +1,5 @@
 import { dispose } from "../../disposable";
-import { Factory, Generator } from "../../functions";
+import { Factory, Updater } from "../../functions";
 import { SchedulerLike, schedule } from "../../scheduler";
 import { ObservableLike, ObserverLike } from "./interfaces";
 import {
@@ -11,7 +11,7 @@ import { AbstractProducer } from "./producer";
 class GenerateProducer<T> extends AbstractProducer<T> {
   constructor(
     observer: ObserverLike<T>,
-    private readonly generator: Generator<T>,
+    private readonly generator: Updater<T>,
     private acc: T,
     readonly delay: number,
   ) {
@@ -51,7 +51,7 @@ class GenerateProducer<T> extends AbstractProducer<T> {
  * @param delay The requested delay between emitted items by the observable.
  */
 export function generate<T>(
-  generator: Generator<T>,
+  generator: Updater<T>,
   initialValue: Factory<T>,
   { delay }: { delay: number } = { delay: 0 },
 ): ObservableLike<T> {

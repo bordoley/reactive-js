@@ -108,18 +108,7 @@
 
 ###  AsyncReducer
 
-Ƭ **AsyncReducer**: *function*
-
-#### Type declaration:
-
-▸ (`acc`: TAcc, `next`: T): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`acc` | TAcc |
-`next` | T |
+Ƭ **AsyncReducer**: *[Function2](_functions_.md#function2)‹TAcc, T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
 
 ___
 
@@ -957,7 +946,7 @@ ___
 
 ###  generate
 
-▸ **generate**<**T**>(`generator`: [Generator](_functions_.md#generator)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›, `__namedParameters`: object): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **generate**<**T**>(`generator`: [Updater](_functions_.md#updater)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›, `__namedParameters`: object): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Generates an `ObservableLike` sequence from a generator function
 that is applied to an accumulator value with a specified `delay`
@@ -969,7 +958,7 @@ between emitted items.
 
 **Parameters:**
 
-▪ **generator**: *[Generator](_functions_.md#generator)‹T›*
+▪ **generator**: *[Updater](_functions_.md#updater)‹T›*
 
 the generator function.
 

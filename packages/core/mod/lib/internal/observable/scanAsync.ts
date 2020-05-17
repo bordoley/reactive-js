@@ -1,4 +1,4 @@
-import { pipe, Factory } from "../../functions.ts";
+import { pipe, Factory, Function2 } from "../../functions.ts";
 import { createSubject } from "./createSubject.ts";
 import { dispatchTo, dispatch } from "./dispatcher.ts";
 import { ObservableLike, ObservableOperator } from "./interfaces.ts";
@@ -9,10 +9,8 @@ import { takeFirst } from "./takeFirst.ts";
 import { using } from "./using.ts";
 import { zipWithLatestFrom } from "./zipWithLatestFrom.ts";
 
-export type AsyncReducer<TAcc, T> = (
-  acc: TAcc,
-  next: T,
-) => ObservableLike<TAcc>;
+export type AsyncReducer<TAcc, T> = Function2<TAcc, T, ObservableLike<TAcc>>;
+
 /**
  * Returns the `ObservableLike` that applies an asynchronous accumulator function
  * over the source, and emits each intermediate result.
