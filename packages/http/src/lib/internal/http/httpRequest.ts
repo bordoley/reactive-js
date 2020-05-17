@@ -1,10 +1,10 @@
-import { FlowableLike, FlowableOperator } from "@reactive-js/core/lib/flowable";
+import { IOStreamableLike, IOStreamableOperator } from "@reactive-js/core/lib/io";
 import { Function1, SideEffect2 } from "@reactive-js/core/lib/functions";
 import { isNone, isSome, none } from "@reactive-js/core/lib/option";
 import {
   writeHttpMessageHeaders,
   encodeHttpMessageWithUtf8,
-  toFlowableHttpMessage,
+  toIOStreamableHttpMessage,
   decodeHttpMessageWithCharset,
 } from "./HttpMessage";
 import {
@@ -301,16 +301,16 @@ export const decodeHttpRequestWithCharset: Function1<
   HttpRequest<string>
 >;
 
-export const toFlowableHttpRequest = <TBody>(
+export const toIOStreamableHttpRequest = <TBody>(
   req: HttpRequest<TBody>,
-): HttpRequest<FlowableLike<TBody>> =>
-  toFlowableHttpMessage(req) as HttpRequest<FlowableLike<TBody>>;
+): HttpRequest<IOStreamableLike<TBody>> =>
+  toIOStreamableHttpMessage(req) as HttpRequest<IOStreamableLike<TBody>>;
 
 export const decodeHttpRequestContent = (decoderProvider: {
-  [key: string]: FlowableOperator<Uint8Array, Uint8Array>;
+  [key: string]: IOStreamableOperator<Uint8Array, Uint8Array>;
 }): Function1<
-  HttpRequest<FlowableLike<Uint8Array>>,
-  HttpRequest<FlowableLike<Uint8Array>>
+  HttpRequest<IOStreamableLike<Uint8Array>>,
+  HttpRequest<IOStreamableLike<Uint8Array>>
 > => req => {
   const { body, contentInfo, ...rest } = req;
 
@@ -344,7 +344,7 @@ export const decodeHttpRequestContent = (decoderProvider: {
 
 export const encodeHttpClientRequestContent = (
   encoderProvider: {
-    [key: string]: FlowableOperator<Uint8Array, Uint8Array>;
+    [key: string]: IOStreamableOperator<Uint8Array, Uint8Array>;
   },
   db: {
     [key: string]: {
@@ -352,8 +352,8 @@ export const encodeHttpClientRequestContent = (
     };
   } = {},
 ): Function1<
-  HttpClientRequest<FlowableLike<Uint8Array>>,
-  HttpClientRequest<FlowableLike<Uint8Array>>
+  HttpClientRequest<IOStreamableLike<Uint8Array>>,
+  HttpClientRequest<IOStreamableLike<Uint8Array>>
 > => {
   const supportedEncodings = Object.keys(encoderProvider);
 

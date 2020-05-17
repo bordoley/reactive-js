@@ -15,7 +15,7 @@ import {
   disposeOnError,
   add,
 } from "../../disposable";
-import { IOStreamOperator } from "../../io";
+import { IOStreamableOperator } from "../../io";
 import { defer, ignore, pipe, returns, Factory } from "../../functions";
 import { using, subscribe, onNotify, dispatchTo } from "../../observable";
 import { createStreamable, sink, stream } from "../../streamable";
@@ -25,7 +25,7 @@ import { createDisposableNodeStream } from "./nodeStream";
 
 export const transform = (
   factory: Factory<DisposableValueLike<Transform>>,
-): IOStreamOperator<Uint8Array, Uint8Array> => src =>
+): IOStreamableOperator<Uint8Array, Uint8Array> => src =>
   createStreamable(modeObs =>
     using(
       scheduler => {
@@ -69,30 +69,30 @@ export const transform = (
 
 export const brotliDecompress = (
   options: BrotliOptions = {},
-): IOStreamOperator<Uint8Array, Uint8Array> =>
+): IOStreamableOperator<Uint8Array, Uint8Array> =>
   transform(defer(options, createBrotliDecompress, createDisposableNodeStream));
 
 export const gunzip = (
   options: ZlibOptions = {},
-): IOStreamOperator<Uint8Array, Uint8Array> =>
+): IOStreamableOperator<Uint8Array, Uint8Array> =>
   transform(defer(options, createGunzip, createDisposableNodeStream));
 
 export const inflate = (
   options: ZlibOptions = {},
-): IOStreamOperator<Uint8Array, Uint8Array> =>
+): IOStreamableOperator<Uint8Array, Uint8Array> =>
   transform(defer(options, createInflate, createDisposableNodeStream));
 
 export const brotliCompress = (
   options: BrotliOptions = {},
-): IOStreamOperator<Uint8Array, Uint8Array> =>
+): IOStreamableOperator<Uint8Array, Uint8Array> =>
   transform(defer(options, createBrotliCompress, createDisposableNodeStream));
 
 export const gzip = (
   options: ZlibOptions = {},
-): IOStreamOperator<Uint8Array, Uint8Array> =>
+): IOStreamableOperator<Uint8Array, Uint8Array> =>
   transform(defer(options, createGzip, createDisposableNodeStream));
 
 export const deflate = (
   options: ZlibOptions = {},
-): IOStreamOperator<Uint8Array, Uint8Array> =>
+): IOStreamableOperator<Uint8Array, Uint8Array> =>
   transform(defer(options, createDeflate, createDisposableNodeStream));
