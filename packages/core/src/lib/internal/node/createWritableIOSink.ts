@@ -1,5 +1,5 @@
 import { Writable } from "stream";
-import { DisposableValueLike, dispose, add } from "../../disposable";
+import { DisposableValueLike, dispose, add, addDisposableOrTeardown, disposeOnError } from "../../disposable";
 import { FlowMode } from "../../flowable";
 import { pipe, bind, Factory } from "../../functions";
 import { IOEventType, IOEvent, IOSinkLike } from "../../io";
@@ -66,6 +66,7 @@ const createWritableAndSetupEventSubscription = (
       }
     }),
     subscribe(scheduler),
+    pipe(writable, disposeOnError, addDisposableOrTeardown),
   );
 
   return add(writable, streamEventsSubscription);

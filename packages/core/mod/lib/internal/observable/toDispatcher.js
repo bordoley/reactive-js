@@ -14,11 +14,13 @@ class ObserverDelegatingDispatcher extends AbstractDisposable {
             const nextQueue = this.nextQueue;
             const observer = this.observer;
             let observerIsDisposed = observer.isDisposed;
-            while (nextQueue.length > 0 && !observerIsDisposed) {
+            let nextQueueLength = nextQueue.length;
+            while (nextQueueLength > 0 && !observerIsDisposed) {
                 const next = nextQueue.shift();
                 observer.notify(next);
                 observerIsDisposed = observer.isDisposed;
-                if (nextQueue.length > 0 && !observerIsDisposed) {
+                nextQueueLength = nextQueue.length;
+                if (nextQueueLength > 0 && !observerIsDisposed) {
                     $.yield();
                 }
             }
