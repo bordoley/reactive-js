@@ -6,23 +6,23 @@ import {
   scan as scanObs,
 } from "../../observable";
 import { lift } from "./streamable";
-import { StreamableFunction } from "./interfaces";
+import { StreamableOperator } from "./interfaces";
 
 export const map = <TReq, TA, TB>(
   mapper: Function1<TA, TB>,
-): StreamableFunction<TReq, TA, TReq, TB> => lift<TReq, TA, TB>(mapObs(mapper));
+): StreamableOperator<TReq, TA, TReq, TB> => lift<TReq, TA, TB>(mapObs(mapper));
 
 export const mapTo = <TReq, TA, TB>(
   v: TB,
-): StreamableFunction<TReq, TA, TReq, TB> => lift<TReq, TA, TB>(mapToObs(v));
+): StreamableOperator<TReq, TA, TReq, TB> => lift<TReq, TA, TB>(mapToObs(v));
 
 export const onNotify = <TReq, T>(
   onNotify: SideEffect1<T>,
-): StreamableFunction<TReq, T, TReq, T> =>
+): StreamableOperator<TReq, T, TReq, T> =>
   lift<TReq, T, T>(onNotifyObs(onNotify));
 
 export const scan = <TReq, T, TAcc>(
   scanner: Reducer<T, TAcc>,
   initalValue: Factory<TAcc>,
-): StreamableFunction<TReq, T, TReq, TAcc> =>
+): StreamableOperator<TReq, T, TReq, TAcc> =>
   lift<TReq, T, TAcc>(scanObs(scanner, initalValue));

@@ -1,5 +1,5 @@
 import { pipe } from "../../functions";
-import { RunnableFunction, SinkLike } from "./interfaces";
+import { RunnableOperator, SinkLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSink } from "./sink";
 
@@ -18,7 +18,7 @@ class SkipFirstSink<T> extends AbstractDelegatingSink<T, T> {
   }
 }
 
-export const skipFirst = <T>(count = 1): RunnableFunction<T, T> => {
+export const skipFirst = <T>(count = 1): RunnableOperator<T, T> => {
   const operator = (sink: SinkLike<T>) => new SkipFirstSink(sink, count);
   return runnable => (count > 0 ? pipe(runnable, lift(operator)) : runnable);
 };

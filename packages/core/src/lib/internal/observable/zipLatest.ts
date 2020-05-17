@@ -1,4 +1,4 @@
-import { ObservableLike, ObservableFunction } from "./interfaces";
+import { ObservableLike, ObservableOperator } from "./interfaces";
 import { LatestMode, latest } from "./latest";
 
 export function zipLatest<TA, TB>(
@@ -74,4 +74,4 @@ export function zipLatest(
 
 export const zipLatestWith = <TA, TB>(
   snd: ObservableLike<TB>,
-): ObservableFunction<TA, [TA, TB]> => fst => zipLatest(fst, snd);
+): ObservableOperator<TA, [TA, TB]> => fst => zipLatest(fst, snd);

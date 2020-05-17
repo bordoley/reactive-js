@@ -1,7 +1,7 @@
 import { add, dispose } from "../../disposable";
 import { Factory } from "../../functions";
 import { isNone } from "../../option";
-import { ObservableFunction, ObserverLike } from "./interfaces";
+import { ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
@@ -37,7 +37,7 @@ class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
  */
 export const throwIfEmpty = <T>(
   factory: Factory<unknown>,
-): ObservableFunction<T, T> => {
+): ObservableOperator<T, T> => {
   const operator = (observer: ObserverLike<T>) =>
     new ThrowIfEmptyObserver(observer, factory);
   operator.isSynchronous = true;

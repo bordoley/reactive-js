@@ -15,8 +15,8 @@
 
 ### Type aliases
 
-* [RunnableFunction](_runnable_.md#runnablefunction)
-* [SinkFunction](_runnable_.md#sinkfunction)
+* [RunnableOperator](_runnable_.md#runnableoperator)
+* [SinkOperator](_runnable_.md#sinkoperator)
 
 ### Variables
 
@@ -61,15 +61,15 @@
 
 ## Type aliases
 
-###  RunnableFunction
+###  RunnableOperator
 
-Ƭ **RunnableFunction**: *[Function1](_functions_.md#function1)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TA›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TB››*
+Ƭ **RunnableOperator**: *[Function1](_functions_.md#function1)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TA›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TB››*
 
 ___
 
-###  SinkFunction
+###  SinkOperator
 
-Ƭ **SinkFunction**: *[Function1](_functions_.md#function1)‹[SinkLike](../interfaces/_runnable_.sinklike.md)‹TB›, [SinkLike](../interfaces/_runnable_.sinklike.md)‹TA››*
+Ƭ **SinkOperator**: *[Function1](_functions_.md#function1)‹[SinkLike](../interfaces/_runnable_.sinklike.md)‹TB›, [SinkLike](../interfaces/_runnable_.sinklike.md)‹TA››*
 
 ## Variables
 
@@ -115,19 +115,19 @@ ___
 
 ### `Const` concatAll
 
-▸ **concatAll**<**T**>(): *[RunnableFunction](_runnable_.md#runnablefunction)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, T›*
+▸ **concatAll**<**T**>(): *[RunnableOperator](_runnable_.md#runnableoperator)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, T›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, T›*
 
 ___
 
 ### `Const` concatMap
 
-▸ **concatMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TB››): *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
+▸ **concatMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TB››): *[RunnableOperator](_runnable_.md#runnableoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -141,13 +141,13 @@ Name | Type |
 ------ | ------ |
 `mapper` | [Function1](_functions_.md#function1)‹TA, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹TB›› |
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹TA, TB›*
 
 ___
 
 ### `Const` concatWith
 
-▸ **concatWith**<**T**>(`snd`: [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›): *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+▸ **concatWith**<**T**>(`snd`: [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -159,7 +159,7 @@ Name | Type |
 ------ | ------ |
 `snd` | [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T› |
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 ___
 
@@ -202,7 +202,7 @@ ___
 
 ### `Const` distinctUntilChanged
 
-▸ **distinctUntilChanged**<**T**>(`equality`: [Equality](_functions_.md#equality)‹T›): *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+▸ **distinctUntilChanged**<**T**>(`equality`: [Equality](_functions_.md#equality)‹T›): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -214,7 +214,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `equality` | [Equality](_functions_.md#equality)‹T› | strictEquality |
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 ___
 
@@ -232,7 +232,7 @@ ___
 
 ###  endWith
 
-▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -245,7 +245,7 @@ Name | Type |
 `value` | T |
 `...values` | T[] |
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 ___
 
@@ -358,7 +358,7 @@ ___
 
 ### `Const` keep
 
-▸ **keep**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+▸ **keep**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -370,13 +370,13 @@ Name | Type |
 ------ | ------ |
 `predicate` | [Predicate](_functions_.md#predicate)‹T› |
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 ___
 
 ### `Const` keepType
 
-▸ **keepType**<**TA**, **TB**>(`predicate`: [TypePredicate](_functions_.md#typepredicate)‹TA, TB›): *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
+▸ **keepType**<**TA**, **TB**>(`predicate`: [TypePredicate](_functions_.md#typepredicate)‹TA, TB›): *[RunnableOperator](_runnable_.md#runnableoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -390,7 +390,7 @@ Name | Type |
 ------ | ------ |
 `predicate` | [TypePredicate](_functions_.md#typepredicate)‹TA, TB› |
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹TA, TB›*
 
 ___
 
@@ -414,7 +414,7 @@ ___
 
 ### `Const` lift
 
-▸ **lift**<**TA**, **TB**>(`operator`: [SinkFunction](_runnable_.md#sinkfunction)‹TA, TB›): *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
+▸ **lift**<**TA**, **TB**>(`operator`: [SinkOperator](_runnable_.md#sinkoperator)‹TA, TB›): *[RunnableOperator](_runnable_.md#runnableoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -426,15 +426,15 @@ ___
 
 Name | Type |
 ------ | ------ |
-`operator` | [SinkFunction](_runnable_.md#sinkfunction)‹TA, TB› |
+`operator` | [SinkOperator](_runnable_.md#sinkoperator)‹TA, TB› |
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹TA, TB›*
 
 ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
+▸ **map**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[RunnableOperator](_runnable_.md#runnableoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -448,13 +448,13 @@ Name | Type |
 ------ | ------ |
 `mapper` | [Function1](_functions_.md#function1)‹TA, TB› |
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹TA, TB›*
 
 ___
 
 ### `Const` mapTo
 
-▸ **mapTo**<**TA**, **TB**>(`value`: TB): *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
+▸ **mapTo**<**TA**, **TB**>(`value`: TB): *[RunnableOperator](_runnable_.md#runnableoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -468,7 +468,7 @@ Name | Type |
 ------ | ------ |
 `value` | TB |
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹TA, TB›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹TA, TB›*
 
 ___
 
@@ -513,7 +513,7 @@ ___
 
 ###  repeat
 
-▸ **repeat**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹number›): *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+▸ **repeat**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹number›): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 Returns an RunnableLike that applies the predicate function each time the source
 completes to determine if the enumerable should be repeated.
@@ -528,9 +528,9 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `predicate` | [Predicate](_functions_.md#predicate)‹number› | The predicate function to apply.  |
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
-▸ **repeat**<**T**>(`count`: number): *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+▸ **repeat**<**T**>(`count`: number): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 Returns an RunnableLike that repeats the source count times.
 
@@ -544,9 +544,9 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `count` | number |   |
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
-▸ **repeat**<**T**>(): *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+▸ **repeat**<**T**>(): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 Returns an RunnableLike that continually repeats the source.
 
@@ -554,13 +554,13 @@ Returns an RunnableLike that continually repeats the source.
 
 ▪ **T**
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 ___
 
 ### `Const` scan
 
-▸ **scan**<**T**, **TAcc**>(`scanner`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[RunnableFunction](_runnable_.md#runnablefunction)‹T, TAcc›*
+▸ **scan**<**T**, **TAcc**>(`scanner`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, TAcc›*
 
 **Type parameters:**
 
@@ -575,13 +575,13 @@ Name | Type |
 `scanner` | [Reducer](_functions_.md#reducer)‹T, TAcc› |
 `initialValue` | [Factory](_functions_.md#factory)‹TAcc› |
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹T, TAcc›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, TAcc›*
 
 ___
 
 ### `Const` skipFirst
 
-▸ **skipFirst**<**T**>(`count`: number): *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+▸ **skipFirst**<**T**>(`count`: number): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -593,7 +593,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `count` | number | 1 |
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 ___
 
@@ -617,7 +617,7 @@ ___
 
 ###  startWith
 
-▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -630,13 +630,13 @@ Name | Type |
 `value` | T |
 `...values` | T[] |
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 ___
 
 ### `Const` takeFirst
 
-▸ **takeFirst**<**T**>(`count`: number): *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+▸ **takeFirst**<**T**>(`count`: number): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -648,13 +648,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `count` | number | 1 |
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 ___
 
 ### `Const` takeLast
 
-▸ **takeLast**<**T**>(`count`: number): *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+▸ **takeLast**<**T**>(`count`: number): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -666,13 +666,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `count` | number | 1 |
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 ___
 
 ### `Const` takeWhile
 
-▸ **takeWhile**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›, `__namedParameters`: object): *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+▸ **takeWhile**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›, `__namedParameters`: object): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -688,7 +688,7 @@ Name | Type |
 ------ | ------ |
 `inclusive` | boolean |
 
-**Returns:** *[RunnableFunction](_runnable_.md#runnablefunction)‹T, T›*
+**Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 ___
 

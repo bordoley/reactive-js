@@ -1,4 +1,4 @@
-import { RunnableFunction, SinkLike, sinkDone } from "./interfaces";
+import { RunnableOperator, SinkLike, sinkDone } from "./interfaces";
 import { pipe } from "../../functions";
 import { lift } from "./lift";
 import { empty } from "./empty";
@@ -34,7 +34,7 @@ class TakeLastSink<T> implements SinkLike<T> {
   }
 }
 
-export const takeLast = <T>(count = 1): RunnableFunction<T, T> => {
+export const takeLast = <T>(count = 1): RunnableOperator<T, T> => {
   const operator = (sink: SinkLike<T>) => new TakeLastSink(sink, count);
   return runnable => (count > 0 ? pipe(runnable, lift(operator)) : empty());
 };

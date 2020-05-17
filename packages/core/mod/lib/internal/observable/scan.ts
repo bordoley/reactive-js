@@ -1,5 +1,5 @@
 import { Factory, Reducer } from "../../functions.ts";
-import { ObservableFunction, ObserverLike } from "./interfaces.ts";
+import { ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.ts";
 
@@ -31,7 +31,7 @@ class ScanObserver<T, TAcc> extends AbstractAutoDisposingDelegatingObserver<T, T
 export const scan = <T, TAcc>(
   scanner: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-): ObservableFunction<T, TAcc> => {
+): ObservableOperator<T, TAcc> => {
   const operator = (observer: ObserverLike<TAcc>) =>
     new ScanObserver(observer, scanner, initialValue());
   operator.isSynchronous = true;

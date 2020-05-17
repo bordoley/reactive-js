@@ -9,7 +9,7 @@ import { none, isSome, isNone } from "../../option";
 import { SchedulerContinuationLike } from "../../scheduler";
 import { zipEnumerators } from "../enumerable/zip";
 import { fromEnumerator } from "./fromEnumerable";
-import { ObservableLike, ObserverLike, ObservableFunction } from "./interfaces";
+import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 import { using } from "./using";
 
@@ -278,4 +278,4 @@ export function zip(
 
 export const zipWith = <TA, TB>(
   snd: ObservableLike<TB>,
-): ObservableFunction<TA, [TA, TB]> => fst => zip(fst, snd);
+): ObservableOperator<TA, [TA, TB]> => fst => zip(fst, snd);

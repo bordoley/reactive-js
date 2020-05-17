@@ -1,6 +1,6 @@
 import { alwaysTrue, Predicate } from "../../functions.ts";
 import { isNone } from "../../option.ts";
-import { SinkLike, RunnableFunction } from "./interfaces.ts";
+import { SinkLike, RunnableOperator } from "./interfaces.ts";
 import { createRunnable } from "./createRunnable.ts";
 
 class RepeatSink<T> implements SinkLike<T> {
@@ -21,22 +21,22 @@ class RepeatSink<T> implements SinkLike<T> {
  *
  * @param predicate The predicate function to apply.
  */
-export function repeat<T>(predicate: Predicate<number>): RunnableFunction<T, T>;
+export function repeat<T>(predicate: Predicate<number>): RunnableOperator<T, T>;
 
 /**
  * Returns an RunnableLike that repeats the source count times.
  * @param count
  */
-export function repeat<T>(count: number): RunnableFunction<T, T>;
+export function repeat<T>(count: number): RunnableOperator<T, T>;
 
 /**
  * Returns an RunnableLike that continually repeats the source.
  */
-export function repeat<T>(): RunnableFunction<T, T>;
+export function repeat<T>(): RunnableOperator<T, T>;
 
 export function repeat<T>(
   predicate?: Predicate<number> | number,
-): RunnableFunction<T, T> {
+): RunnableOperator<T, T> {
   const shouldRepeat = isNone(predicate)
     ? alwaysTrue
     : typeof predicate === "number"

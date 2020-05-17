@@ -1,4 +1,4 @@
-import { FlowableLike, FlowableFunction } from "@reactive-js/core/lib/flowable";
+import { FlowableLike, FlowableOperator } from "@reactive-js/core/lib/flowable";
 import { Function1, SideEffect2 } from "@reactive-js/core/lib/functions";
 import { isNone, isSome, none } from "@reactive-js/core/lib/option";
 import {
@@ -307,7 +307,7 @@ export const toFlowableHttpRequest = <TBody>(
   toFlowableHttpMessage(req) as HttpRequest<FlowableLike<TBody>>;
 
 export const decodeHttpRequestContent = (decoderProvider: {
-  [key: string]: FlowableFunction<Uint8Array, Uint8Array>;
+  [key: string]: FlowableOperator<Uint8Array, Uint8Array>;
 }): Function1<
   HttpRequest<FlowableLike<Uint8Array>>,
   HttpRequest<FlowableLike<Uint8Array>>
@@ -344,7 +344,7 @@ export const decodeHttpRequestContent = (decoderProvider: {
 
 export const encodeHttpClientRequestContent = (
   encoderProvider: {
-    [key: string]: FlowableFunction<Uint8Array, Uint8Array>;
+    [key: string]: FlowableOperator<Uint8Array, Uint8Array>;
   },
   db: {
     [key: string]: {

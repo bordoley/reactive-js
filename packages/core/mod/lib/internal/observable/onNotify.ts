@@ -1,5 +1,5 @@
 import { SideEffect1 } from "../../functions.ts";
-import { ObservableFunction, ObserverLike } from "./interfaces.ts";
+import { ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.ts";
 
@@ -26,7 +26,7 @@ class OnNotifyObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T> 
  */
 export function onNotify<T>(
   onNotify: SideEffect1<T>,
-): ObservableFunction<T, T> {
+): ObservableOperator<T, T> {
   const operator = (observer: ObserverLike<T>) =>
     new OnNotifyObserver(observer, onNotify);
   operator.isSynchronous = true;

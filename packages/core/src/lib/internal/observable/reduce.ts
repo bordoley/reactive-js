@@ -1,5 +1,5 @@
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
-import { ObserverLike, ObservableFunction } from "./interfaces";
+import { ObserverLike, ObservableOperator } from "./interfaces";
 import { Reducer, Factory } from "../../functions";
 import { add, dispose } from "../../disposable";
 import { isNone } from "../../option";
@@ -32,7 +32,7 @@ class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
 export const reduce = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-): ObservableFunction<T, TAcc> => {
+): ObservableOperator<T, TAcc> => {
   const operator = (observer: ObserverLike<TAcc>) =>
     new ReduceObserver(observer, reducer, initialValue());
   operator.isSynchronous = true;

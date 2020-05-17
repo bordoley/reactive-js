@@ -1,6 +1,6 @@
 import { dispose, addDisposableOrTeardown } from "../../disposable";
 import { isSome } from "../../option";
-import { ObservableLike, ObserverLike, ObservableFunction } from "./interfaces";
+import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
 import { createDelegatingObserver } from "./observer";
 import { pipe } from "../../functions";
 
@@ -53,4 +53,4 @@ export function merge<T>(
 
 export const mergeWith = <T>(
   snd: ObservableLike<T>,
-): ObservableFunction<T, T> => fst => merge(fst, snd);
+): ObservableOperator<T, T> => fst => merge(fst, snd);

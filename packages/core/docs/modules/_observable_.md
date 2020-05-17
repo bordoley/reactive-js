@@ -24,8 +24,8 @@
 ### Type aliases
 
 * [AsyncReducer](_observable_.md#asyncreducer)
-* [ObservableFunction](_observable_.md#observablefunction)
-* [ObserverFunction](_observable_.md#observerfunction)
+* [ObservableOperator](_observable_.md#observableoperator)
+* [ObserverOperator](_observable_.md#observeroperator)
 
 ### Variables
 
@@ -123,9 +123,9 @@ Name | Type |
 
 ___
 
-###  ObservableFunction
+###  ObservableOperator
 
-Ƭ **ObservableFunction**: *function*
+Ƭ **ObservableOperator**: *function*
 
 A function which converts an ObservableLike<A> to an ObservableLike<B>.
 
@@ -141,9 +141,9 @@ Name | Type |
 
 ___
 
-###  ObserverFunction
+###  ObserverOperator
 
-Ƭ **ObserverFunction**: *object*
+Ƭ **ObserverOperator**: *object*
 
 A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.
 
@@ -207,7 +207,7 @@ ___
 
 ###  buffer
 
-▸ **buffer**<**T**>(`options`: object): *[ObservableFunction](_observable_.md#observablefunction)‹T, keyof T[]›*
+▸ **buffer**<**T**>(`options`: object): *[ObservableOperator](_observable_.md#observableoperator)‹T, keyof T[]›*
 
 Returns an `ObservableLike` which buffers items produced by the source until either the
 number of items reaches the specified maximum buffer size or the duration time expires.
@@ -228,13 +228,13 @@ Name | Type |
 `duration?` | [Function1](_functions_.md#function1)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown›› &#124; number |
 `maxBufferSize?` | number |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, keyof T[]›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, keyof T[]›*
 
 ___
 
 ### `Const` catchError
 
-▸ **catchError**<**T**>(`onError`: [Function1](_functions_.md#function1)‹unknown, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› | void›): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **catchError**<**T**>(`onError`: [Function1](_functions_.md#function1)‹unknown, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› | void›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` which catches errors produced by the source and either continues with
 the `ObservableLike` returned from the `onError` callback or swallows the error if
@@ -250,7 +250,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `onError` | [Function1](_functions_.md#function1)‹unknown, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› &#124; void› | a function that takes source error and either returns an `ObservableLike` to continue with or void if the error should be propagated.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
@@ -506,7 +506,7 @@ ___
 
 ### `Const` combineLatestWith
 
-▸ **combineLatestWith**<**TA**, **TB**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›): *[ObservableFunction](_observable_.md#observablefunction)‹TA, [TA, TB]›*
+▸ **combineLatestWith**<**TA**, **TB**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›): *[ObservableOperator](_observable_.md#observableoperator)‹TA, [TA, TB]›*
 
 **Type parameters:**
 
@@ -520,7 +520,7 @@ Name | Type |
 ------ | ------ |
 `snd` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB› |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹TA, [TA, TB]›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, [TA, TB]›*
 
 ___
 
@@ -570,7 +570,7 @@ ___
 
 ### `Const` concatAll
 
-▸ **concatAll**<**T**>(`maxBufferSize`: number): *[ObservableFunction](_observable_.md#observablefunction)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, T›*
+▸ **concatAll**<**T**>(`maxBufferSize`: number): *[ObservableOperator](_observable_.md#observableoperator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, T›*
 
 Converts a higher-order `ObservableLike` into a first-order
 `ObservableLike` by concatenating the inner sources in order.
@@ -585,7 +585,7 @@ Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
 `maxBufferSize` | number | Number.MAX_SAFE_INTEGER | The number of source observables that may be queued before dropping previous observables.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, T›*
 
 ___
 
@@ -620,7 +620,7 @@ ___
 
 ### `Const` concatWith
 
-▸ **concatWith**<**T**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **concatWith**<**T**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -632,7 +632,7 @@ Name | Type |
 ------ | ------ |
 `snd` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
@@ -717,7 +717,7 @@ ___
 
 ### `Const` distinctUntilChanged
 
-▸ **distinctUntilChanged**<**T**>(`equality`: [Equality](_functions_.md#equality)‹T›): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **distinctUntilChanged**<**T**>(`equality`: [Equality](_functions_.md#equality)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that emits all items emitted by the source that
 are distinct by comparison from the previous item.
@@ -732,7 +732,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `equality` | [Equality](_functions_.md#equality)‹T› | strictEquality |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
@@ -760,7 +760,7 @@ ___
 
 ###  endWith
 
-▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that emits items from the source,
 concatenated with the values specified as arguments.
@@ -776,7 +776,7 @@ Name | Type |
 `value` | T |
 `...values` | T[] |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
@@ -977,7 +977,7 @@ ___
 
 ### `Const` genMap
 
-▸ **genMap**<**TA**, **TB**, **TReturn**, **TNext**>(`mapper`: [Function1](_functions_.md#function1)‹TA, Generator‹TB, TReturn, TNext››): *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
+▸ **genMap**<**TA**, **TB**, **TReturn**, **TNext**>(`mapper`: [Function1](_functions_.md#function1)‹TA, Generator‹TB, TReturn, TNext››): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -995,7 +995,7 @@ Name | Type |
 ------ | ------ |
 `mapper` | [Function1](_functions_.md#function1)‹TA, Generator‹TB, TReturn, TNext›› |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 ___
 
@@ -1057,7 +1057,7 @@ ___
 
 ### `Const` keep
 
-▸ **keep**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **keep**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that only emits items produced by the
 source that satisfy the specified predicate.
@@ -1072,13 +1072,13 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `predicate` | [Predicate](_functions_.md#predicate)‹T› | The predicate function.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
 ### `Const` keepType
 
-▸ **keepType**<**TA**, **TB**>(`predicate`: [TypePredicate](_functions_.md#typepredicate)‹TA, TB›): *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
+▸ **keepType**<**TA**, **TB**>(`predicate`: [TypePredicate](_functions_.md#typepredicate)‹TA, TB›): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 Returns an `ObservableLike` that only emits items from the
 source that satisfy the specified type predicate.
@@ -1095,13 +1095,13 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `predicate` | [TypePredicate](_functions_.md#typepredicate)‹TA, TB› | The predicate function.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 ___
 
 ### `Const` lift
 
-▸ **lift**<**TA**, **TB**>(`operator`: [ObserverFunction](_observable_.md#observerfunction)‹TA, TB›): *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
+▸ **lift**<**TA**, **TB**>(`operator`: [ObserverOperator](_observable_.md#observeroperator)‹TA, TB›): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 Creates a new `ObservableLike` which applies the provided the operator function to
 observer when the source is subscribed to.
@@ -1116,15 +1116,15 @@ observer when the source is subscribed to.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`operator` | [ObserverFunction](_observable_.md#observerfunction)‹TA, TB› | The operator function to apply.  |
+`operator` | [ObserverOperator](_observable_.md#observeroperator)‹TA, TB› | The operator function to apply.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
+▸ **map**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 Returns an `ObservableLike` that applies the `mapper` function to each
 value emitted by the source.
@@ -1141,13 +1141,13 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `mapper` | [Function1](_functions_.md#function1)‹TA, TB› | The map function to apply each value. Must be a pure function.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 ___
 
 ### `Const` mapTo
 
-▸ **mapTo**<**TA**, **TB**>(`value`: TB): *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
+▸ **mapTo**<**TA**, **TB**>(`value`: TB): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -1161,7 +1161,7 @@ Name | Type |
 ------ | ------ |
 `value` | TB |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹TA, TB›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 ___
 
@@ -1189,7 +1189,7 @@ ___
 
 ### `Const` mergeAll
 
-▸ **mergeAll**<**T**>(`options`: object): *[ObservableFunction](_observable_.md#observablefunction)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, T›*
+▸ **mergeAll**<**T**>(`options`: object): *[ObservableOperator](_observable_.md#observableoperator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, T›*
 
 Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
 which concurrently delivers values emitted by the inner sources.
@@ -1211,7 +1211,7 @@ Name | Type |
 `maxBufferSize?` | number |
 `maxConcurrency?` | number |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, T›*
 
 ___
 
@@ -1250,7 +1250,7 @@ ___
 
 ### `Const` mergeWith
 
-▸ **mergeWith**<**T**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **mergeWith**<**T**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -1262,7 +1262,7 @@ Name | Type |
 ------ | ------ |
 `snd` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
@@ -1282,7 +1282,7 @@ ___
 
 ###  onNotify
 
-▸ **onNotify**<**T**>(`onNotify`: [SideEffect1](_functions_.md#sideeffect1)‹T›): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **onNotify**<**T**>(`onNotify`: [SideEffect1](_functions_.md#sideeffect1)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
 
@@ -1296,13 +1296,13 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `onNotify` | [SideEffect1](_functions_.md#sideeffect1)‹T› | The function that is invoked when the observable source produces values.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
 ### `Const` onSubscribe
 
-▸ **onSubscribe**<**T**>(`f`: [Factory](_functions_.md#factory)‹[DisposableOrTeardown](_disposable_.md#disposableorteardown) | void›): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **onSubscribe**<**T**>(`f`: [Factory](_functions_.md#factory)‹[DisposableOrTeardown](_disposable_.md#disposableorteardown) | void›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Executes a side-effect when the observable is subscribed.
 
@@ -1316,7 +1316,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `f` | [Factory](_functions_.md#factory)‹[DisposableOrTeardown](_disposable_.md#disposableorteardown) &#124; void› |   |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
@@ -1343,7 +1343,7 @@ ___
 
 ### `Const` reduce
 
-▸ **reduce**<**T**, **TAcc**>(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[ObservableFunction](_observable_.md#observablefunction)‹T, TAcc›*
+▸ **reduce**<**T**, **TAcc**>(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
 
 **Type parameters:**
 
@@ -1358,13 +1358,13 @@ Name | Type |
 `reducer` | [Reducer](_functions_.md#reducer)‹T, TAcc› |
 `initialValue` | [Factory](_functions_.md#factory)‹TAcc› |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, TAcc›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
 
 ___
 
 ###  repeat
 
-▸ **repeat**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹number›): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **repeat**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹number›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that applies the predicate function each time the source
 completes to determine if the subscription should be renewed.
@@ -1379,9 +1379,9 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `predicate` | [Predicate](_functions_.md#predicate)‹number› | The predicate function to apply.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
-▸ **repeat**<**T**>(`count`: number): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **repeat**<**T**>(`count`: number): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that repeats the source count times.
 
@@ -1395,9 +1395,9 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `count` | number |   |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
-▸ **repeat**<**T**>(): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **repeat**<**T**>(): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that continually repeats the source.
 
@@ -1405,13 +1405,13 @@ Returns an `ObservableLike` that continually repeats the source.
 
 ▪ **T**
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
 ###  retry
 
-▸ **retry**<**T**>(): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **retry**<**T**>(): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that mirrors the source, re-subscribing
 if the source completes with an error.
@@ -1420,9 +1420,9 @@ if the source completes with an error.
 
 ▪ **T**
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
-▸ **retry**<**T**>(`predicate`: function): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **retry**<**T**>(`predicate`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that mirrors the source, resubscrbing
 if the source completes with an error which satisfies the predicate function.
@@ -1444,13 +1444,13 @@ Name | Type |
 `count` | number |
 `error` | unknown |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
 ### `Const` scan
 
-▸ **scan**<**T**, **TAcc**>(`scanner`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[ObservableFunction](_observable_.md#observablefunction)‹T, TAcc›*
+▸ **scan**<**T**, **TAcc**>(`scanner`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
 
 Returns an `ObservableLike` that applies an accumulator function over the source,
 and emits each intermediate result.
@@ -1468,13 +1468,13 @@ Name | Type | Description |
 `scanner` | [Reducer](_functions_.md#reducer)‹T, TAcc› | The accumulator function called on each source value. |
 `initialValue` | [Factory](_functions_.md#factory)‹TAcc› | The initial accumulation value.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, TAcc›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
 
 ___
 
 ### `Const` scanAsync
 
-▸ **scanAsync**<**T**, **TAcc**>(`scanner`: [AsyncReducer](_observable_.md#asyncreducer)‹TAcc, T›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[ObservableFunction](_observable_.md#observablefunction)‹T, TAcc›*
+▸ **scanAsync**<**T**, **TAcc**>(`scanner`: [AsyncReducer](_observable_.md#asyncreducer)‹TAcc, T›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
 
 Returns the `ObservableLike` that applies an asynchronous accumulator function
 over the source, and emits each intermediate result.
@@ -1492,13 +1492,13 @@ Name | Type | Description |
 `scanner` | [AsyncReducer](_observable_.md#asyncreducer)‹TAcc, T› | The accumulator function called on each source value. |
 `initialValue` | [Factory](_functions_.md#factory)‹TAcc› | The initial accumulation value.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, TAcc›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, TAcc›*
 
 ___
 
 ### `Const` share
 
-▸ **share**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `replayCount`: number): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **share**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `replayCount`: number): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` backed by a shared refcounted subscription to the
 source. When the refcount goes to 0, the underlying subscription
@@ -1515,13 +1515,13 @@ Name | Type | Default | Description |
 `scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | - | A `SchedulerLike` that is used to subscribe to the source. |
 `replayCount` | number | 0 | The number of events that should be replayed when the `ObservableLike` is subscribed to.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
 ### `Const` skipFirst
 
-▸ **skipFirst**<**T**>(`count`: number): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **skipFirst**<**T**>(`count`: number): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that skips the first count items emitted by the source.
 
@@ -1535,13 +1535,13 @@ Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
 `count` | number | 1 | The number of items emitted by source that should be skipped.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
 ###  startWith
 
-▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that emits the values specified as arguments,
 concatenated with items from the source.
@@ -1557,7 +1557,7 @@ Name | Type |
 `value` | T |
 `...values` | T[] |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
@@ -1585,7 +1585,7 @@ ___
 
 ### `Const` subscribeOn
 
-▸ **subscribeOn**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **subscribeOn**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` instance that subscribes to the source on the specified `SchedulerLike`.
 
@@ -1599,7 +1599,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | `SchedulerLike` instance to use when subscribing to the source.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
@@ -1656,7 +1656,7 @@ ___
 
 ### `Const` takeFirst
 
-▸ **takeFirst**<**T**>(`count`: number): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **takeFirst**<**T**>(`count`: number): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that only emits the first `count` values emitted by the source.
 
@@ -1670,13 +1670,13 @@ Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
 `count` | number | 1 | The maximum number of values to emit.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
 ### `Const` takeLast
 
-▸ **takeLast**<**T**>(`count`: number): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **takeLast**<**T**>(`count`: number): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
 
@@ -1690,13 +1690,13 @@ Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
 `count` | number | 1 | The maximum number of values to emit.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
 ### `Const` takeWhile
 
-▸ **takeWhile**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›, `__namedParameters`: object): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **takeWhile**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›, `__namedParameters`: object): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` which emits values emitted by the source as long
 as each value satisfies the given predicate, and then completes as soon as
@@ -1718,13 +1718,13 @@ Name | Type |
 ------ | ------ |
 `inclusive` | boolean |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
 ###  throttle
 
-▸ **throttle**<**T**>(`duration`: [Function1](_functions_.md#function1)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown››, `mode?`: [ThrottleMode](../enums/_observable_.throttlemode.md)): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **throttle**<**T**>(`duration`: [Function1](_functions_.md#function1)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown››, `mode?`: [ThrottleMode](../enums/_observable_.throttlemode.md)): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
 
@@ -1739,9 +1739,9 @@ Name | Type | Description |
 `duration` | [Function1](_functions_.md#function1)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown›› | Function function that is used to determine the silence duration in between emitted values. |
 `mode?` | [ThrottleMode](../enums/_observable_.throttlemode.md) | The throttle mode.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
-▸ **throttle**<**T**>(`duration`: number, `mode?`: [ThrottleMode](../enums/_observable_.throttlemode.md)): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **throttle**<**T**>(`duration`: number, `mode?`: [ThrottleMode](../enums/_observable_.throttlemode.md)): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` which emits a value from the source,
 then ignores subsequent source values for `duration` milliseconds.
@@ -1757,13 +1757,13 @@ Name | Type | Description |
 `duration` | number | Time to wait before emitting another value after emitting the last value, measured in milliseconds. |
 `mode?` | [ThrottleMode](../enums/_observable_.throttlemode.md) | The throttle mode.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
 ### `Const` throwIfEmpty
 
-▸ **throwIfEmpty**<**T**>(`factory`: [Factory](_functions_.md#factory)‹unknown›): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **throwIfEmpty**<**T**>(`factory`: [Factory](_functions_.md#factory)‹unknown›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that emits an error if the source completes without emitting a value.
 
@@ -1777,7 +1777,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `factory` | [Factory](_functions_.md#factory)‹unknown› | A factory function invoked to produce the error to be thrown.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
@@ -1805,7 +1805,7 @@ ___
 
 ###  timeout
 
-▸ **timeout**<**T**>(`duration`: number): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **timeout**<**T**>(`duration`: number): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that completes with an error if the source
 does not emit a value in given time span.
@@ -1820,9 +1820,9 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `duration` | number | Time in ms within which the source must emit values.  |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
-▸ **timeout**<**T**>(`duration`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown›): *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+▸ **timeout**<**T**>(`duration`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -1834,7 +1834,7 @@ Name | Type | Description |
 ------ | ------ | ------ |
 `duration` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown› |   |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹T, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 ___
 
@@ -2030,7 +2030,7 @@ ___
 
 ### `Const` withLatestFrom
 
-▸ **withLatestFrom**<**TA**, **TB**, **T**>(`other`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, `selector`: [Function2](_functions_.md#function2)‹TA, TB, T›): *[ObservableFunction](_observable_.md#observablefunction)‹TA, T›*
+▸ **withLatestFrom**<**TA**, **TB**, **T**>(`other`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, `selector`: [Function2](_functions_.md#function2)‹TA, TB, T›): *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*
 
 Returns an `ObservableLike` which combines the source with
 the latest value from another `ObservableLike`.
@@ -2050,7 +2050,7 @@ Name | Type | Description |
 `other` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB› | - |
 `selector` | [Function2](_functions_.md#function2)‹TA, TB, T› |   |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹TA, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*
 
 ___
 
@@ -2554,7 +2554,7 @@ ___
 
 ### `Const` zipLatestWith
 
-▸ **zipLatestWith**<**TA**, **TB**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›): *[ObservableFunction](_observable_.md#observablefunction)‹TA, [TA, TB]›*
+▸ **zipLatestWith**<**TA**, **TB**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›): *[ObservableOperator](_observable_.md#observableoperator)‹TA, [TA, TB]›*
 
 **Type parameters:**
 
@@ -2568,13 +2568,13 @@ Name | Type |
 ------ | ------ |
 `snd` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB› |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹TA, [TA, TB]›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, [TA, TB]›*
 
 ___
 
 ### `Const` zipWith
 
-▸ **zipWith**<**TA**, **TB**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›): *[ObservableFunction](_observable_.md#observablefunction)‹TA, [TA, TB]›*
+▸ **zipWith**<**TA**, **TB**>(`snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›): *[ObservableOperator](_observable_.md#observableoperator)‹TA, [TA, TB]›*
 
 **Type parameters:**
 
@@ -2588,13 +2588,13 @@ Name | Type |
 ------ | ------ |
 `snd` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB› |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹TA, [TA, TB]›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, [TA, TB]›*
 
 ___
 
 ### `Const` zipWithLatestFrom
 
-▸ **zipWithLatestFrom**<**TA**, **TB**, **T**>(`other`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, `selector`: [Function2](_functions_.md#function2)‹TA, TB, T›): *[ObservableFunction](_observable_.md#observablefunction)‹TA, T›*
+▸ **zipWithLatestFrom**<**TA**, **TB**, **T**>(`other`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, `selector`: [Function2](_functions_.md#function2)‹TA, TB, T›): *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*
 
 Returns an `ObservableLike` which combines the source with
 the latest value from another `ObservableLike`.
@@ -2614,4 +2614,4 @@ Name | Type | Description |
 `other` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB› | - |
 `selector` | [Function2](_functions_.md#function2)‹TA, TB, T› |   |
 
-**Returns:** *[ObservableFunction](_observable_.md#observablefunction)‹TA, T›*
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, T›*

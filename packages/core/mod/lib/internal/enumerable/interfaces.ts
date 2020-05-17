@@ -33,13 +33,13 @@ export interface EnumerableLike<T> {
 }
 
 /** A unary function that transforms an EnumeratorLike<TA> into a EnumeratorLike<TB> */
-export type EnumeratorFunction<TA, TB> = Function1<
+export type EnumeratorOperator<TA, TB> = Function1<
   EnumeratorLike<TA>,
   EnumeratorLike<TB>
 >;
 
 /** A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB> */
-export type EnumerableFunction<TA, TB> = Function1<
+export type EnumerableOperator<TA, TB> = Function1<
   EnumerableLike<TA>,
   EnumerableLike<TB>
 >;

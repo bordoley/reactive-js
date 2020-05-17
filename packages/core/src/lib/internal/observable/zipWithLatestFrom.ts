@@ -1,7 +1,7 @@
 import { dispose, add, addDisposableOrTeardown } from "../../disposable";
 import { pipe, Function2 } from "../../functions";
 import { isSome, Option } from "../../option";
-import { ObserverLike, ObservableLike, ObservableFunction } from "./interfaces";
+import { ObserverLike, ObservableLike, ObservableOperator } from "./interfaces";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
@@ -84,7 +84,7 @@ class ZipWithLatestFromObserver<TA, TB, T> extends AbstractObserver<TA> {
 export const zipWithLatestFrom = <TA, TB, T>(
   other: ObservableLike<TB>,
   selector: Function2<TA, TB, T>,
-): ObservableFunction<TA, T> => {
+): ObservableOperator<TA, T> => {
   const operator = (observer: ObserverLike<T>) =>
     new ZipWithLatestFromObserver(observer, other, selector);
   operator.isSynchronous = false;

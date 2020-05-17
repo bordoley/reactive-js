@@ -3,7 +3,7 @@ import { pipe } from "../../functions";
 import { isSome } from "../../option";
 import { empty } from "./empty";
 import { fromArray } from "./fromArray";
-import { ObservableFunction, ObserverLike } from "./interfaces";
+import { ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
@@ -44,7 +44,7 @@ class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
  *
  * @param count The maximum number of values to emit.
  */
-export const takeLast = <T>(count = 1): ObservableFunction<T, T> => {
+export const takeLast = <T>(count = 1): ObservableOperator<T, T> => {
   const operator = (observer: ObserverLike<T>) =>
     new TakeLastObserver(observer, count);
   operator.isSynchronous = false;

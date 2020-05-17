@@ -1,5 +1,5 @@
 import { returns, Function1 } from "../../functions.ts";
-import { ObservableFunction, ObserverLike } from "./interfaces.ts";
+import { ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.ts";
 
@@ -23,12 +23,12 @@ class MapObserver<TA, TB> extends AbstractAutoDisposingDelegatingObserver<TA, TB
  */
 export const map = <TA, TB>(
   mapper: Function1<TA, TB>,
-): ObservableFunction<TA, TB> => {
+): ObservableOperator<TA, TB> => {
   const operator = (observer: ObserverLike<TB>) =>
     new MapObserver(observer, mapper);
   operator.isSynchronous = true;
   return lift(operator);
 };
 
-export const mapTo = <TA, TB>(value: TB): ObservableFunction<TA, TB> =>
+export const mapTo = <TA, TB>(value: TB): ObservableOperator<TA, TB> =>
   map(returns(value));

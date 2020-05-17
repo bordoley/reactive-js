@@ -1,4 +1,4 @@
-import { ObservableLike, ObservableFunction } from "./interfaces.ts";
+import { ObservableLike, ObservableOperator } from "./interfaces.ts";
 import { LatestMode, latest } from "./latest.ts";
 
 export function combineLatest<TA, TB>(
@@ -74,4 +74,4 @@ export function combineLatest(
 
 export const combineLatestWith = <TA, TB>(
   snd: ObservableLike<TB>,
-): ObservableFunction<TA, [TA, TB]> => fst => combineLatest(fst, snd);
+): ObservableOperator<TA, [TA, TB]> => fst => combineLatest(fst, snd);

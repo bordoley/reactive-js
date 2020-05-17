@@ -8,7 +8,7 @@ import {
 import { pipe, Function1 } from "../../functions";
 import { isNone, none } from "../../option";
 import { fromValue } from "./fromValue";
-import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces";
+import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { never } from "./never";
 import { onNotify } from "./onNotify";
@@ -78,7 +78,7 @@ export function buffer<T>(
     duration?: Function1<T, ObservableLike<unknown>> | number;
     maxBufferSize?: number;
   } = {},
-): ObservableFunction<T, readonly T[]> {
+): ObservableOperator<T, readonly T[]> {
   const delay = options.duration ?? Number.MAX_SAFE_INTEGER;
   const durationFunction =
     delay === Number.MAX_SAFE_INTEGER

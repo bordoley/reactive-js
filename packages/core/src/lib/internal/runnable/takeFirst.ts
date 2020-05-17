@@ -1,6 +1,6 @@
 import { pipe } from "../../functions";
 import { empty } from "./empty";
-import { RunnableFunction, SinkLike } from "./interfaces";
+import { RunnableOperator, SinkLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSink } from "./sink";
 
@@ -20,7 +20,7 @@ class TakeFirstSink<T> extends AbstractDelegatingSink<T, T> {
   }
 }
 
-export const takeFirst = <T>(count = 1): RunnableFunction<T, T> => {
+export const takeFirst = <T>(count = 1): RunnableOperator<T, T> => {
   const operator = (sink: SinkLike<T>) => new TakeFirstSink(sink, count);
   return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());
 };

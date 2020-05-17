@@ -24,7 +24,7 @@ export const enum FlowMode {
 export interface FlowableLike<T>
   extends StreamableLike<FlowMode, T> {}
 
-export type FlowableFunction<TA, TB> = Function1<
+export type FlowableOperator<TA, TB> = Function1<
   FlowableLike<TA>,
   FlowableLike<TB>
 >;

@@ -1,6 +1,6 @@
 import { Function1, returns } from "../../functions.ts";
 import { none } from "../../option.ts";
-import { EnumeratorLike, EnumerableFunction } from "./interfaces.ts";
+import { EnumeratorLike, EnumerableOperator } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 
 class MapEnumerator<TA, TB> implements EnumeratorLike<TB> {
@@ -33,11 +33,11 @@ class MapEnumerator<TA, TB> implements EnumeratorLike<TB> {
  */
 export const map = <TA, TB>(
   mapper: Function1<TA, TB>,
-): EnumerableFunction<TA, TB> => {
+): EnumerableOperator<TA, TB> => {
   const operator = (enumerator: EnumeratorLike<TA>) =>
     new MapEnumerator(enumerator, mapper);
   return lift(operator);
 };
 
-export const mapTo = <TA, TB>(v: TB): EnumerableFunction<TA, TB> =>
+export const mapTo = <TA, TB>(v: TB): EnumerableOperator<TA, TB> =>
   map(returns(v));

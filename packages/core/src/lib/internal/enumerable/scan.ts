@@ -1,5 +1,5 @@
 import { Factory, Reducer } from "../../functions";
-import { EnumeratorLike, EnumerableFunction } from "./interfaces";
+import { EnumeratorLike, EnumerableOperator } from "./interfaces";
 import { lift } from "./lift";
 
 class ScanEnumerator<T, TAcc> implements EnumeratorLike<TAcc> {
@@ -32,7 +32,7 @@ class ScanEnumerator<T, TAcc> implements EnumeratorLike<TAcc> {
 export const scan = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-): EnumerableFunction<T, TAcc> => {
+): EnumerableOperator<T, TAcc> => {
   const operator = (observer: EnumeratorLike<T>) =>
     new ScanEnumerator(observer, reducer, initialValue());
   return lift(operator);
