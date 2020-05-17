@@ -16,7 +16,7 @@
 ### Type aliases
 
 * [IOEvent](_io_.md#ioevent)
-* [IOStreamOperator](_io_.md#iostreamoperator)
+* [IOStreamableOperator](_io_.md#iostreamableoperator)
 
 ### Variables
 
@@ -41,15 +41,15 @@
 
 ___
 
-###  IOStreamOperator
+###  IOStreamableOperator
 
-Ƭ **IOStreamOperator**: *[Function1](_functions_.md#function1)‹[IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹TA›, [IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹TB››*
+Ƭ **IOStreamableOperator**: *[Function1](_functions_.md#function1)‹[IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹TA›, [IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹TB››*
 
 ## Variables
 
 ### `Const` encodeUtf8
 
-• **encodeUtf8**: *[IOStreamOperator](_io_.md#iostreamoperator)‹string, Uint8Array›* = lift(
+• **encodeUtf8**: *[IOStreamableOperator](_io_.md#iostreamableoperator)‹string, Uint8Array›* = lift(
   withLatestFrom(
     compute<TextEncoder>()(() => new TextEncoder()),
     (ev, textEncoder) => {
@@ -82,7 +82,7 @@ ___
 
 ### `Const` decodeWithCharset
 
-▸ **decodeWithCharset**(`charset`: string, `options?`: TextDecoderOptions): *[IOStreamOperator](_io_.md#iostreamoperator)‹ArrayBuffer, string›*
+▸ **decodeWithCharset**(`charset`: string, `options?`: TextDecoderOptions): *[IOStreamableOperator](_io_.md#iostreamableoperator)‹ArrayBuffer, string›*
 
 **Parameters:**
 
@@ -91,7 +91,7 @@ Name | Type | Default |
 `charset` | string | "utf-8" |
 `options?` | TextDecoderOptions | - |
 
-**Returns:** *[IOStreamOperator](_io_.md#iostreamoperator)‹ArrayBuffer, string›*
+**Returns:** *[IOStreamableOperator](_io_.md#iostreamableoperator)‹ArrayBuffer, string›*
 
 ___
 

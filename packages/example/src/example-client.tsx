@@ -7,7 +7,6 @@ import {
 import {
   fromObservable,
   FlowMode,
-  FlowEventType,
 } from "@reactive-js/core/lib/flowable";
 import {
   pipe,
@@ -119,7 +118,7 @@ const StatefulComponent = (_props: RoutableComponentProps) => {
 };
 
 const StreamPauseResume = (_props: RoutableComponentProps) => {
-  const stream = useMemo(() => pipe(obs, throttle(15), fromObservable), []);
+  const stream = useMemo(() => pipe(obs, throttle(15), fromObservable()), []);
   const [value, setMode] = useStreamable(stream, {
     scheduler: idlePriority,
   });
@@ -138,9 +137,7 @@ const StreamPauseResume = (_props: RoutableComponentProps) => {
   useEffect(() => setMode(mode), [mode, setMode]);
 
   const label = mode === FlowMode.Pause ? "RESUME" : "PAUSE";
-
-  const displayValue =
-    isSome(value) && value.type === FlowEventType.Next ? value.data : 0;
+  const displayValue = isSome(value) ?? 0;
 
   return (
     <>

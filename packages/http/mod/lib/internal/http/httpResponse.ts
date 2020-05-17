@@ -1,14 +1,14 @@
 import {
-  FlowableLike,
-  FlowableFunction,
+  IOStreamableLike,
+  IOStreamableOperator,
   empty,
-} from "../../../../../core/mod/lib/flowable.ts";
+} from "../../../../../core/mod/lib/io.ts";
 import { Function1, SideEffect2 } from "../../../../../core/mod/lib/functions.ts";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.ts";
 import {
   writeHttpMessageHeaders,
   encodeHttpMessageWithUtf8,
-  toFlowableHttpMessage,
+  toIOStreamableHttpMessage,
   decodeHttpMessageWithCharset,
 } from "./HttpMessage.ts";
 import {
@@ -264,16 +264,16 @@ export const decodeHttpResponseWithCharset: Function1<
   HttpResponse<string>
 >;
 
-export const toFlowableHttpResponse = <TBody>(
+export const toIOStreamableHttpResponse = <TBody>(
   resp: HttpResponse<TBody>,
-): HttpResponse<FlowableLike<TBody>> =>
-  toFlowableHttpMessage(resp) as HttpResponse<FlowableLike<TBody>>;
+): HttpResponse<IOStreamableLike<TBody>> =>
+  toIOStreamableHttpMessage(resp) as HttpResponse<IOStreamableLike<TBody>>;
 
 export const decodeHttpResponseContent = (decoderProvider: {
-  [key: string]: FlowableFunction<Uint8Array, Uint8Array>;
+  [key: string]: IOStreamableOperator<Uint8Array, Uint8Array>;
 }): Function1<
-  HttpResponse<FlowableLike<Uint8Array>>,
-  HttpResponse<FlowableLike<Uint8Array>>
+  HttpResponse<IOStreamableLike<Uint8Array>>,
+  HttpResponse<IOStreamableLike<Uint8Array>>
 > => resp => {
   const { body, contentInfo, ...rest } = resp;
 
@@ -309,7 +309,7 @@ export const decodeHttpResponseContent = (decoderProvider: {
 
 export const encodeHttpResponseContent = (
   encoderProvider: {
-    [key: string]: FlowableFunction<Uint8Array, Uint8Array>;
+    [key: string]: IOStreamableOperator<Uint8Array, Uint8Array>;
   },
   db: {
     [key: string]: {
@@ -340,8 +340,8 @@ export const encodeHttpResponseContent = (
   return (
     request: HttpRequest<unknown>,
   ): Function1<
-    HttpResponse<FlowableLike<Uint8Array>>,
-    HttpResponse<FlowableLike<Uint8Array>>
+    HttpResponse<IOStreamableLike<Uint8Array>>,
+    HttpResponse<IOStreamableLike<Uint8Array>>
   > => response => {
     const { body, contentInfo, vary } = response;
 

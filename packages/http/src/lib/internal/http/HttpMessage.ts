@@ -1,4 +1,4 @@
-import { FlowableLike, fromValue } from "@reactive-js/core/lib/flowable";
+import { IOStreamableLike, fromValue } from "@reactive-js/core/lib/io";
 import { SideEffect2 } from "@reactive-js/core/lib/functions";
 import { isSome, isNone } from "@reactive-js/core/lib/option";
 import { writeHttpCacheControlHeader } from "./cacheDirective";
@@ -72,10 +72,10 @@ export const decodeHttpMessageWithCharset = ({
   }
 };
 
-export const toFlowableHttpMessage = <TBody>({
+export const toIOStreamableHttpMessage = <TBody>({
   body,
   ...msg
-}: HttpMessage<TBody>): HttpMessage<FlowableLike<TBody>> => ({
+}: HttpMessage<TBody>): HttpMessage<IOStreamableLike<TBody>> => ({
   ...msg,
   body: fromValue()(body),
 });

@@ -1,6 +1,6 @@
-import { empty, } from "../../../../../core/mod/lib/flowable.js";
+import { empty, } from "../../../../../core/mod/lib/io.js";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.js";
-import { writeHttpMessageHeaders, encodeHttpMessageWithUtf8, toFlowableHttpMessage, decodeHttpMessageWithCharset, } from "./HttpMessage.js";
+import { writeHttpMessageHeaders, encodeHttpMessageWithUtf8, toIOStreamableHttpMessage, decodeHttpMessageWithCharset, } from "./HttpMessage.js";
 import { parseCacheControlFromHeaders, parseCacheDirectiveOrThrow, } from "./cacheDirective.js";
 import { entityTagToString, parseETag, parseETagOrThrow } from "./entityTag.js";
 import { parseHttpContentInfoFromHeaders, contentIsCompressible, createHttpContentInfo, } from "./httpContentInfo.js";
@@ -105,7 +105,7 @@ export const checkIfNotModified = ({ cacheControl, method, preconditions, }) => 
 };
 export const encodeHttpResponseWithUtf8 = encodeHttpMessageWithUtf8;
 export const decodeHttpResponseWithCharset = decodeHttpMessageWithCharset;
-export const toFlowableHttpResponse = (resp) => toFlowableHttpMessage(resp);
+export const toIOStreamableHttpResponse = (resp) => toIOStreamableHttpMessage(resp);
 export const decodeHttpResponseContent = (decoderProvider) => resp => {
     const { body, contentInfo, ...rest } = resp;
     if (isSome(contentInfo) && contentInfo.contentEncodings.length > 0) {

@@ -5,7 +5,7 @@ import {
   addDisposableOrTeardown,
   add,
 } from "@reactive-js/core/lib/disposable";
-import { FlowableLike, FlowableSinkLike } from "@reactive-js/core/lib/flowable";
+import { IOStreamableLike, IOSinkLike } from "@reactive-js/core/lib/io";
 import {
   bind,
   pipe,
@@ -14,8 +14,8 @@ import {
   SideEffect2,
 } from "@reactive-js/core/lib/functions";
 import {
-  createReadableFlowable,
-  createWritableFlowableSink,
+  createReadableIOStream,
+  createWritableIOSink,
   createDisposableNodeStream,
 } from "@reactive-js/core/lib/node";
 import {
@@ -39,7 +39,7 @@ import {
 } from "../../http";
 
 const writeResponseMessage = (serverResponse: ServerResponse) => (
-  response: HttpResponse<FlowableLike<Uint8Array>>,
+  response: HttpResponse<IOStreamableLike<Uint8Array>>,
 ) => {
   serverResponse.statusCode = response.statusCode;
 
@@ -50,9 +50,9 @@ const writeResponseMessage = (serverResponse: ServerResponse) => (
   serverResponse.flushHeaders();
 };
 
-const writeResponseBody = (responseBody: FlowableSinkLike<Uint8Array>) => ({
+const writeResponseBody = (responseBody: IOSinkLike<Uint8Array>) => ({
   body,
-}: HttpResponse<FlowableLike<Uint8Array>>) => sink(body, responseBody);
+}: HttpResponse<IOStreamableLike<Uint8Array>>) => sink(body, responseBody);
 
 const defaultOnError = (e: unknown) => {
   console.log(e);
@@ -69,8 +69,8 @@ export type HttpRequestListener = SideEffect2<
 
 export const createHttpRequestListener = (
   handler: HttpServer<
-    HttpServerRequest<FlowableLike<Uint8Array>>,
-    HttpResponse<FlowableLike<Uint8Array>>
+    HttpServerRequest<IOStreamableLike<Uint8Array>>,
+    HttpResponse<IOStreamableLike<Uint8Array>>
   >,
   scheduler: SchedulerLike,
   options: HttpRequestListenerOptions = {},
@@ -90,8 +90,8 @@ export const createHttpRequestListener = (
     } = request.value;
     const isTransportSecure = (request.value.socket as any).encrypted ?? false;
 
-    const requestBody = createReadableFlowable(returns(request));
-    const responseBody = createWritableFlowableSink(returns(response));
+    const requestBody = createReadableIOStream(returns(request));
+    const responseBody = createWritableIOSink(returns(response));
 
     return pipe(
       bind(parseHttpRequestFromHeaders, {

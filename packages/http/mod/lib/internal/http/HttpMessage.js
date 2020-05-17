@@ -1,4 +1,4 @@
-import { fromValue } from "../../../../../core/mod/lib/flowable.js";
+import { fromValue } from "../../../../../core/mod/lib/io.js";
 import { isSome, isNone } from "../../../../../core/mod/lib/option.js";
 import { writeHttpCacheControlHeader } from "./cacheDirective.js";
 import { writeHttpContentInfoHeaders } from "./httpContentInfo.js";
@@ -52,7 +52,7 @@ export const decodeHttpMessageWithCharset = ({ contentInfo, ...msg }) => {
         };
     }
 };
-export const toFlowableHttpMessage = ({ body, ...msg }) => ({
+export const toIOStreamableHttpMessage = ({ body, ...msg }) => ({
     ...msg,
     body: fromValue()(body),
 });

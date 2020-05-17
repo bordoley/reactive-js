@@ -9,17 +9,17 @@ import {
   toErrorHandler,
   addDisposableOrTeardown,
 } from "@reactive-js/core/lib/disposable";
+import { FlowMode } from "@reactive-js/core/lib/flowable"
 import {
-  FlowEvent,
-  FlowMode,
-  FlowEventType,
-  FlowableLike,
-} from "@reactive-js/core/lib/flowable";
+  IOEvent,
+  IOEventType,
+  IOStreamableLike,
+} from "@reactive-js/core/lib/io";
 import { bind, pipe, returns } from "@reactive-js/core/lib/functions";
 import {
-  createWritableFlowableSink,
+  createWritableIOSink,
   createDisposableNodeStream,
-  createReadableFlowable,
+  createReadableIOStream,
 } from "@reactive-js/core/lib/node";
 import {
   dispatch,
@@ -58,7 +58,7 @@ export type HttpClientOptions = {
 };
 
 class ResponseBody extends AbstractDisposable
-  implements FlowableLike<Uint8Array> {
+  implements IOStreamableLike<Uint8Array> {
   private consumed = false;
 
   constructor(private readonly resp: IncomingMessage) {
@@ -76,14 +76,14 @@ class ResponseBody extends AbstractDisposable
   stream(
     scheduler: SchedulerLike,
     replayCount?: number,
-  ): StreamLike<FlowMode, FlowEvent<Uint8Array>> {
+  ): StreamLike<FlowMode, IOEvent<Uint8Array>> {
     if (this.consumed) {
       throw new Error("Response body already consumed");
     }
     this.consumed = true;
     const responseStream = add(
       stream(
-        createReadableFlowable(bind(createDisposableNodeStream, this.resp)),
+        createReadableIOStream(bind(createDisposableNodeStream, this.resp)),
         scheduler,
         replayCount,
       ),
@@ -97,14 +97,14 @@ class ResponseBody extends AbstractDisposable
 export const createHttpClient = (
   options: HttpClientOptions = {},
 ): HttpClient<
-  HttpRequest<FlowableLike<Uint8Array>>,
-  FlowableLike<Uint8Array> & DisposableLike
+  HttpRequest<IOStreamableLike<Uint8Array>>,
+  IOStreamableLike<Uint8Array> & DisposableLike
 > => request =>
   using(
     (
       scheduler: SchedulerLike,
     ): [
-      StreamLike<FlowMode, FlowEvent<Uint8Array>>,
+      StreamLike<FlowMode, IOEvent<Uint8Array>>,
       SubjectLike<HttpResponse<ResponseBody>>,
     ] => {
       const { method, uri } = request;
@@ -128,7 +128,7 @@ export const createHttpClient = (
             })();
 
       const requestSink = stream(
-        createWritableFlowableSink(bind(createDisposableNodeStream, req)),
+        createWritableIOSink(bind(createDisposableNodeStream, req)),
         scheduler,
       );
 
@@ -176,7 +176,7 @@ export const createHttpClient = (
       return [requestBody, responseSubject];
     },
     (
-      requestBody: StreamLike<FlowMode, FlowEvent<Uint8Array>>,
+      requestBody: StreamLike<FlowMode, IOEvent<Uint8Array>>,
       responseSubject: SubjectLike<HttpResponse<ResponseBody>>,
     ) =>
       merge(
@@ -184,7 +184,7 @@ export const createHttpClient = (
           requestBody,
           scan(
             ([increment, count], ev): [number, number] =>
-              ev.type === FlowEventType.Next
+              ev.type === IOEventType.Next
                 ? [ev.data.length, count + increment]
                 : [-1, count + increment],
 
