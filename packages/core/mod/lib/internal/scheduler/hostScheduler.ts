@@ -129,4 +129,4 @@ export const createHostScheduler = (
   } = {
     yieldInterval: 5,
   },
-) => new HostScheduler(config.yieldInterval);
+): SchedulerLike => new HostScheduler(config.yieldInterval);

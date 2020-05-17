@@ -1,4 +1,4 @@
-import { ObserverLike } from "./interfaces.ts";
+import { ObserverLike, ObservableOperator } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import {
   AbstractAutoDisposingDelegatingObserver,
@@ -21,4 +21,4 @@ operator.isSynchronous = true;
 /**
  * Returns an `ObservableLike` that ignores all items emitted by the source.
  */
-export const ignoreElements = <TA, TB>() => lift<TA, TB>(operator);
+export const ignoreElements = <TA, TB>(): ObservableOperator<TA, TB> => lift<TA, TB>(operator);

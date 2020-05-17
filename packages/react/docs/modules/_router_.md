@@ -41,7 +41,7 @@ ___
 
 * **uri**: *[RelativeURI](_router_.md#relativeuri)*
 
-* **uriUpdater**: *SideEffect1‹StateUpdater‹[RelativeURI](_router_.md#relativeuri)››*
+* **uriUpdater**: *SideEffect1‹Generator‹[RelativeURI](_router_.md#relativeuri)››*
 
 ___
 

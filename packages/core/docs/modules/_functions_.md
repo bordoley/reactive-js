@@ -391,19 +391,49 @@ Name | Type |
 
 ### `Const` alwaysFalse
 
-• **alwaysFalse**: *(Anonymous function)* = returns(false)
+• **alwaysFalse**: *function* = _alwaysFalse
+
+#### Type declaration:
+
+▸ (...`_args`: unknown[]): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`..._args` | unknown[] |
 
 ___
 
 ### `Const` alwaysTrue
 
-• **alwaysTrue**: *(Anonymous function)* = returns(true)
+• **alwaysTrue**: *function* = _alwaysTrue
+
+#### Type declaration:
+
+▸ (...`_args`: unknown[]): *boolean*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`..._args` | unknown[] |
 
 ___
 
 ### `Const` ignore
 
-• **ignore**: *(Anonymous function)* = returns<void>(undefined)
+• **ignore**: *function* = _ignore
+
+#### Type declaration:
+
+▸ (...`_args`: unknown[]): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`..._args` | unknown[] |
 
 ## Functions
 
@@ -2206,7 +2236,7 @@ ___
 
 ### `Const` returns
 
-▸ **returns**<**T**>(`v`: T): *(Anonymous function)*
+▸ **returns**<**T**>(`v`: T): *function*
 
 **Type parameters:**
 
@@ -2218,7 +2248,15 @@ Name | Type |
 ------ | ------ |
 `v` | T |
 
-**Returns:** *(Anonymous function)*
+**Returns:** *function*
+
+▸ (...`_args`: unknown[]): *T*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`..._args` | unknown[] |
 
 ___
 

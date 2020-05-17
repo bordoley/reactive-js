@@ -4,7 +4,7 @@ import {
   dispose,
   addDisposableOrTeardown,
 } from "../../disposable.ts";
-import { pipe, Predicate } from "../../functions.ts";
+import { pipe, Predicate, Function2 } from "../../functions.ts";
 import { isNone, isSome } from "../../option.ts";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
@@ -111,7 +111,7 @@ export function retry<T>(): ObservableOperator<T, T>;
  * @param predicate
  */
 export function retry<T>(
-  predicate: (count: number, error: unknown) => boolean,
+  predicate: Function2<number, unknown, boolean>,
 ): ObservableOperator<T, T>;
 
 export function retry<T>(

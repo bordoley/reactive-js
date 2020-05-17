@@ -22,7 +22,7 @@
 
 ###  bindNodeCallback
 
-▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: [Function1](_functions_.md#function1)‹[Function5](_functions_.md#function5)‹unknown, R1, R2, R3, R4, unknown›, unknown›, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -38,31 +38,14 @@
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3, `res4`: R4): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
-`res3` | R3 |
-`res4` | R4 |
-
-▪ **selector**: *[Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›*
+`callbackFunc` | [Function1](_functions_.md#function1)‹[Function5](_functions_.md#function5)‹unknown, R1, R2, R3, R4, unknown›, unknown› |
+`selector` | [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T› |
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**<**R1**, **R2**, **R3**, **T**>(`callbackFunc`: [Function1](_functions_.md#function1)‹[Function4](_functions_.md#function4)‹unknown, R1, R2, R3, unknown›, unknown›, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -76,30 +59,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
-`res3` | R3 |
-
-▪ **selector**: *[Function3](_functions_.md#function3)‹R1, R2, R3, T›*
+`callbackFunc` | [Function1](_functions_.md#function1)‹[Function4](_functions_.md#function4)‹unknown, R1, R2, R3, unknown›, unknown› |
+`selector` | [Function3](_functions_.md#function3)‹R1, R2, R3, T› |
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ **bindNodeCallback**<**R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**<**R1**, **R2**, **T**>(`callbackFunc`: [Function1](_functions_.md#function1)‹[Function3](_functions_.md#function3)‹unknown, R1, R2, unknown›, unknown›, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -111,29 +78,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
-
-▪ **selector**: *[Function2](_functions_.md#function2)‹R1, R2, T›*
+`callbackFunc` | [Function1](_functions_.md#function1)‹[Function3](_functions_.md#function3)‹unknown, R1, R2, unknown›, unknown› |
+`selector` | [Function2](_functions_.md#function2)‹R1, R2, T› |
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ **bindNodeCallback**<**R1**, **T**>(`callbackFunc`: function, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**<**R1**, **T**>(`callbackFunc`: [Function1](_functions_.md#function1)‹[Function2](_functions_.md#function2)‹unknown, R1, unknown›, unknown›, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -143,50 +95,24 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-
-▪ **selector**: *[Function1](_functions_.md#function1)‹R1, T›*
+`callbackFunc` | [Function1](_functions_.md#function1)‹[Function2](_functions_.md#function2)‹unknown, R1, unknown›, unknown› |
+`selector` | [Function1](_functions_.md#function1)‹R1, T› |
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ **bindNodeCallback**(`callbackFunc`: function): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
-
-**Parameters:**
-
-▪ **callbackFunc**: *function*
-
-▸ (`callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown): *unknown*
+▸ **bindNodeCallback**(`callbackFunc`: [Function1](_functions_.md#function1)‹[Function1](_functions_.md#function1)‹unknown, unknown›, unknown›): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`err` | unknown |
+`callbackFunc` | [Function1](_functions_.md#function1)‹[Function1](_functions_.md#function1)‹unknown, unknown›, unknown› |
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
-▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *function*
+▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: [Function2](_functions_.md#function2)‹A1, [Function5](_functions_.md#function5)‹unknown, R1, R2, R3, R4, unknown›, unknown›, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *[Function1](_functions_.md#function1)‹A1, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -204,41 +130,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3, `res4`: R4): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
-`res3` | R3 |
-`res4` | R4 |
+`callbackFunc` | [Function2](_functions_.md#function2)‹A1, [Function5](_functions_.md#function5)‹unknown, R1, R2, R3, R4, unknown›, unknown› |
+`selector` | [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T› |
 
-▪ **selector**: *[Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›*
+**Returns:** *[Function1](_functions_.md#function1)‹A1, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-
-▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *function*
+▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: [Function2](_functions_.md#function2)‹A1, [Function4](_functions_.md#function4)‹unknown, R1, R2, R3, unknown›, unknown›, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *[Function1](_functions_.md#function1)‹A1, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -254,40 +153,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
-`res3` | R3 |
+`callbackFunc` | [Function2](_functions_.md#function2)‹A1, [Function4](_functions_.md#function4)‹unknown, R1, R2, R3, unknown›, unknown› |
+`selector` | [Function3](_functions_.md#function3)‹R1, R2, R3, T› |
 
-▪ **selector**: *[Function3](_functions_.md#function3)‹R1, R2, R3, T›*
+**Returns:** *[Function1](_functions_.md#function1)‹A1, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-
-▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *function*
+▸ **bindNodeCallback**<**A1**, **R1**, **R2**, **T**>(`callbackFunc`: [Function2](_functions_.md#function2)‹A1, [Function3](_functions_.md#function3)‹unknown, R1, R2, unknown›, unknown›, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *[Function1](_functions_.md#function1)‹A1, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -301,39 +174,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
+`callbackFunc` | [Function2](_functions_.md#function2)‹A1, [Function3](_functions_.md#function3)‹unknown, R1, R2, unknown›, unknown› |
+`selector` | [Function2](_functions_.md#function2)‹R1, R2, T› |
 
-▪ **selector**: *[Function2](_functions_.md#function2)‹R1, R2, T›*
+**Returns:** *[Function1](_functions_.md#function1)‹A1, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-
-▸ **bindNodeCallback**<**A1**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *function*
+▸ **bindNodeCallback**<**A1**, **R1**, **T**>(`callbackFunc`: [Function2](_functions_.md#function2)‹A1, [Function2](_functions_.md#function2)‹unknown, R1, unknown›, unknown›, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *[Function1](_functions_.md#function1)‹A1, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -345,38 +193,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
+`callbackFunc` | [Function2](_functions_.md#function2)‹A1, [Function2](_functions_.md#function2)‹unknown, R1, unknown›, unknown› |
+`selector` | [Function1](_functions_.md#function1)‹R1, T› |
 
-▪ **selector**: *[Function1](_functions_.md#function1)‹R1, T›*
+**Returns:** *[Function1](_functions_.md#function1)‹A1, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-
-▸ **bindNodeCallback**<**A1**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**>(`callbackFunc`: [Function2](_functions_.md#function2)‹A1, [Function1](_functions_.md#function1)‹unknown, unknown›, unknown›): *[Function1](_functions_.md#function1)‹A1, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
 **Type parameters:**
 
@@ -384,35 +208,13 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
+`callbackFunc` | [Function2](_functions_.md#function2)‹A1, [Function1](_functions_.md#function1)‹unknown, unknown›, unknown› |
 
-**Returns:** *function*
+**Returns:** *[Function1](_functions_.md#function1)‹A1, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
-▸ (`arg1`: A1): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹void›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: [Function3](_functions_.md#function3)‹A1, A2, [Function5](_functions_.md#function5)‹unknown, R1, R2, R3, R4, unknown›, unknown›, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *[Function2](_functions_.md#function2)‹A1, A2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -432,44 +234,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3, `res4`: R4): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
-`res3` | R3 |
-`res4` | R4 |
+`callbackFunc` | [Function3](_functions_.md#function3)‹A1, A2, [Function5](_functions_.md#function5)‹unknown, R1, R2, R3, R4, unknown›, unknown› |
+`selector` | [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T› |
 
-▪ **selector**: *[Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›*
+**Returns:** *[Function2](_functions_.md#function2)‹A1, A2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1, `arg2`: A2): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: [Function3](_functions_.md#function3)‹A1, A2, [Function4](_functions_.md#function4)‹unknown, R1, R2, R3, unknown›, unknown›, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *[Function2](_functions_.md#function2)‹A1, A2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -487,43 +259,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
-`res3` | R3 |
+`callbackFunc` | [Function3](_functions_.md#function3)‹A1, A2, [Function4](_functions_.md#function4)‹unknown, R1, R2, R3, unknown›, unknown› |
+`selector` | [Function3](_functions_.md#function3)‹R1, R2, R3, T› |
 
-▪ **selector**: *[Function3](_functions_.md#function3)‹R1, R2, R3, T›*
+**Returns:** *[Function2](_functions_.md#function2)‹A1, A2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1, `arg2`: A2): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **R2**, **T**>(`callbackFunc`: [Function3](_functions_.md#function3)‹A1, A2, [Function3](_functions_.md#function3)‹unknown, R1, R2, unknown›, unknown›, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *[Function2](_functions_.md#function2)‹A1, A2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -539,42 +282,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
+`callbackFunc` | [Function3](_functions_.md#function3)‹A1, A2, [Function3](_functions_.md#function3)‹unknown, R1, R2, unknown›, unknown› |
+`selector` | [Function2](_functions_.md#function2)‹R1, R2, T› |
 
-▪ **selector**: *[Function2](_functions_.md#function2)‹R1, R2, T›*
+**Returns:** *[Function2](_functions_.md#function2)‹A1, A2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1, `arg2`: A2): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **R1**, **T**>(`callbackFunc`: [Function3](_functions_.md#function3)‹A1, A2, [Function2](_functions_.md#function2)‹unknown, R1, unknown›, unknown›, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *[Function2](_functions_.md#function2)‹A1, A2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -588,41 +303,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
+`callbackFunc` | [Function3](_functions_.md#function3)‹A1, A2, [Function2](_functions_.md#function2)‹unknown, R1, unknown›, unknown› |
+`selector` | [Function1](_functions_.md#function1)‹R1, T› |
 
-▪ **selector**: *[Function1](_functions_.md#function1)‹R1, T›*
+**Returns:** *[Function2](_functions_.md#function2)‹A1, A2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1, `arg2`: A2): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-
-▸ **bindNodeCallback**<**A1**, **A2**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**>(`callbackFunc`: [Function3](_functions_.md#function3)‹A1, A2, [Function1](_functions_.md#function1)‹unknown, unknown›, unknown›): *[Function2](_functions_.md#function2)‹A1, A2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
 **Type parameters:**
 
@@ -632,38 +320,13 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
+`callbackFunc` | [Function3](_functions_.md#function3)‹A1, A2, [Function1](_functions_.md#function1)‹unknown, unknown›, unknown› |
 
-**Returns:** *function*
+**Returns:** *[Function2](_functions_.md#function2)‹A1, A2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
-▸ (`arg1`: A1, `arg2`: A2): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹void›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: [Function4](_functions_.md#function4)‹A1, A2, A3, [Function5](_functions_.md#function5)‹unknown, R1, R2, R3, R4, unknown›, unknown›, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *[Function3](_functions_.md#function3)‹A1, A2, A3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -685,47 +348,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **arg3**: *A3*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3, `res4`: R4): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
-`res3` | R3 |
-`res4` | R4 |
+`callbackFunc` | [Function4](_functions_.md#function4)‹A1, A2, A3, [Function5](_functions_.md#function5)‹unknown, R1, R2, R3, R4, unknown›, unknown› |
+`selector` | [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T› |
 
-▪ **selector**: *[Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›*
+**Returns:** *[Function3](_functions_.md#function3)‹A1, A2, A3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-`arg3` | A3 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: [Function4](_functions_.md#function4)‹A1, A2, A3, [Function4](_functions_.md#function4)‹unknown, R1, R2, R3, unknown›, unknown›, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *[Function3](_functions_.md#function3)‹A1, A2, A3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -745,46 +375,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **arg3**: *A3*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
-`res3` | R3 |
+`callbackFunc` | [Function4](_functions_.md#function4)‹A1, A2, A3, [Function4](_functions_.md#function4)‹unknown, R1, R2, R3, unknown›, unknown› |
+`selector` | [Function3](_functions_.md#function3)‹R1, R2, R3, T› |
 
-▪ **selector**: *[Function3](_functions_.md#function3)‹R1, R2, R3, T›*
+**Returns:** *[Function3](_functions_.md#function3)‹A1, A2, A3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-`arg3` | A3 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **R2**, **T**>(`callbackFunc`: [Function4](_functions_.md#function4)‹A1, A2, A3, [Function3](_functions_.md#function3)‹unknown, R1, R2, unknown›, unknown›, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *[Function3](_functions_.md#function3)‹A1, A2, A3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -802,45 +400,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **arg3**: *A3*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
+`callbackFunc` | [Function4](_functions_.md#function4)‹A1, A2, A3, [Function3](_functions_.md#function3)‹unknown, R1, R2, unknown›, unknown› |
+`selector` | [Function2](_functions_.md#function2)‹R1, R2, T› |
 
-▪ **selector**: *[Function2](_functions_.md#function2)‹R1, R2, T›*
+**Returns:** *[Function3](_functions_.md#function3)‹A1, A2, A3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-`arg3` | A3 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **R1**, **T**>(`callbackFunc`: [Function4](_functions_.md#function4)‹A1, A2, A3, [Function2](_functions_.md#function2)‹unknown, R1, unknown›, unknown›, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *[Function3](_functions_.md#function3)‹A1, A2, A3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -856,44 +423,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **arg3**: *A3*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
+`callbackFunc` | [Function4](_functions_.md#function4)‹A1, A2, A3, [Function2](_functions_.md#function2)‹unknown, R1, unknown›, unknown› |
+`selector` | [Function1](_functions_.md#function1)‹R1, T› |
 
-▪ **selector**: *[Function1](_functions_.md#function1)‹R1, T›*
+**Returns:** *[Function3](_functions_.md#function3)‹A1, A2, A3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-`arg3` | A3 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**>(`callbackFunc`: [Function4](_functions_.md#function4)‹A1, A2, A3, [Function1](_functions_.md#function1)‹unknown, unknown›, unknown›): *[Function3](_functions_.md#function3)‹A1, A2, A3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
 **Type parameters:**
 
@@ -905,41 +442,13 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **arg3**: *A3*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
+`callbackFunc` | [Function4](_functions_.md#function4)‹A1, A2, A3, [Function1](_functions_.md#function1)‹unknown, unknown›, unknown› |
 
-**Returns:** *function*
+**Returns:** *[Function3](_functions_.md#function3)‹A1, A2, A3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹void›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-`arg3` | A3 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: [Function5](_functions_.md#function5)‹A1, A2, A3, A4, [Function5](_functions_.md#function5)‹unknown, R1, R2, R3, R4, unknown›, unknown›, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *[Function4](_functions_.md#function4)‹A1, A2, A3, A4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -963,50 +472,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **arg3**: *A3*
-
-▪ **arg4**: *A4*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3, `res4`: R4): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
-`res3` | R3 |
-`res4` | R4 |
+`callbackFunc` | [Function5](_functions_.md#function5)‹A1, A2, A3, A4, [Function5](_functions_.md#function5)‹unknown, R1, R2, R3, R4, unknown›, unknown› |
+`selector` | [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T› |
 
-▪ **selector**: *[Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›*
+**Returns:** *[Function4](_functions_.md#function4)‹A1, A2, A3, A4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-`arg3` | A3 |
-`arg4` | A4 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: [Function5](_functions_.md#function5)‹A1, A2, A3, A4, [Function4](_functions_.md#function4)‹unknown, R1, R2, R3, unknown›, unknown›, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *[Function4](_functions_.md#function4)‹A1, A2, A3, A4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -1028,49 +501,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **arg3**: *A3*
-
-▪ **arg4**: *A4*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
-`res3` | R3 |
+`callbackFunc` | [Function5](_functions_.md#function5)‹A1, A2, A3, A4, [Function4](_functions_.md#function4)‹unknown, R1, R2, R3, unknown›, unknown› |
+`selector` | [Function3](_functions_.md#function3)‹R1, R2, R3, T› |
 
-▪ **selector**: *[Function3](_functions_.md#function3)‹R1, R2, R3, T›*
+**Returns:** *[Function4](_functions_.md#function4)‹A1, A2, A3, A4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-`arg3` | A3 |
-`arg4` | A4 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **R2**, **T**>(`callbackFunc`: [Function5](_functions_.md#function5)‹A1, A2, A3, A4, [Function3](_functions_.md#function3)‹unknown, R1, R2, unknown›, unknown›, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *[Function4](_functions_.md#function4)‹A1, A2, A3, A4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -1090,48 +528,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **arg3**: *A3*
-
-▪ **arg4**: *A4*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
+`callbackFunc` | [Function5](_functions_.md#function5)‹A1, A2, A3, A4, [Function3](_functions_.md#function3)‹unknown, R1, R2, unknown›, unknown› |
+`selector` | [Function2](_functions_.md#function2)‹R1, R2, T› |
 
-▪ **selector**: *[Function2](_functions_.md#function2)‹R1, R2, T›*
+**Returns:** *[Function4](_functions_.md#function4)‹A1, A2, A3, A4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-`arg3` | A3 |
-`arg4` | A4 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **R1**, **T**>(`callbackFunc`: [Function5](_functions_.md#function5)‹A1, A2, A3, A4, [Function2](_functions_.md#function2)‹unknown, R1, unknown›, unknown›, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *[Function4](_functions_.md#function4)‹A1, A2, A3, A4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -1149,47 +553,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **arg3**: *A3*
-
-▪ **arg4**: *A4*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
+`callbackFunc` | [Function5](_functions_.md#function5)‹A1, A2, A3, A4, [Function2](_functions_.md#function2)‹unknown, R1, unknown›, unknown› |
+`selector` | [Function1](_functions_.md#function1)‹R1, T› |
 
-▪ **selector**: *[Function1](_functions_.md#function1)‹R1, T›*
+**Returns:** *[Function4](_functions_.md#function4)‹A1, A2, A3, A4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-`arg3` | A3 |
-`arg4` | A4 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**>(`callbackFunc`: [Function5](_functions_.md#function5)‹A1, A2, A3, A4, [Function1](_functions_.md#function1)‹unknown, unknown›, unknown›): *[Function4](_functions_.md#function4)‹A1, A2, A3, A4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
 **Type parameters:**
 
@@ -1203,44 +574,13 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **arg3**: *A3*
-
-▪ **arg4**: *A4*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
+`callbackFunc` | [Function5](_functions_.md#function5)‹A1, A2, A3, A4, [Function1](_functions_.md#function1)‹unknown, unknown›, unknown› |
 
-**Returns:** *function*
+**Returns:** *[Function4](_functions_.md#function4)‹A1, A2, A3, A4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹void›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-`arg3` | A3 |
-`arg4` | A4 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: function, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**, **R4**, **T**>(`callbackFunc`: [Function6](_functions_.md#function6)‹A1, A2, A3, A4, A5, [Function5](_functions_.md#function5)‹unknown, R1, R2, R3, R4, unknown›, unknown›, `selector`: [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›): *[Function5](_functions_.md#function5)‹A1, A2, A3, A4, A5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -1266,53 +606,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **arg3**: *A3*
-
-▪ **arg4**: *A4*
-
-▪ **arg5**: *A5*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3, `res4`: R4): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
-`res3` | R3 |
-`res4` | R4 |
+`callbackFunc` | [Function6](_functions_.md#function6)‹A1, A2, A3, A4, A5, [Function5](_functions_.md#function5)‹unknown, R1, R2, R3, R4, unknown›, unknown› |
+`selector` | [Function4](_functions_.md#function4)‹R1, R2, R3, R4, T› |
 
-▪ **selector**: *[Function4](_functions_.md#function4)‹R1, R2, R3, R4, T›*
+**Returns:** *[Function5](_functions_.md#function5)‹A1, A2, A3, A4, A5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-`arg3` | A3 |
-`arg4` | A4 |
-`arg5` | A5 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: function, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **R3**, **T**>(`callbackFunc`: [Function6](_functions_.md#function6)‹A1, A2, A3, A4, A5, [Function4](_functions_.md#function4)‹unknown, R1, R2, R3, unknown›, unknown›, `selector`: [Function3](_functions_.md#function3)‹R1, R2, R3, T›): *[Function5](_functions_.md#function5)‹A1, A2, A3, A4, A5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -1336,52 +637,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **arg3**: *A3*
-
-▪ **arg4**: *A4*
-
-▪ **arg5**: *A5*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2, `res3`: R3): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
-`res3` | R3 |
+`callbackFunc` | [Function6](_functions_.md#function6)‹A1, A2, A3, A4, A5, [Function4](_functions_.md#function4)‹unknown, R1, R2, R3, unknown›, unknown› |
+`selector` | [Function3](_functions_.md#function3)‹R1, R2, R3, T› |
 
-▪ **selector**: *[Function3](_functions_.md#function3)‹R1, R2, R3, T›*
+**Returns:** *[Function5](_functions_.md#function5)‹A1, A2, A3, A4, A5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-`arg3` | A3 |
-`arg4` | A4 |
-`arg5` | A5 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **T**>(`callbackFunc`: function, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **R2**, **T**>(`callbackFunc`: [Function6](_functions_.md#function6)‹A1, A2, A3, A4, A5, [Function3](_functions_.md#function3)‹unknown, R1, R2, unknown›, unknown›, `selector`: [Function2](_functions_.md#function2)‹R1, R2, T›): *[Function5](_functions_.md#function5)‹A1, A2, A3, A4, A5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -1403,51 +666,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **arg3**: *A3*
-
-▪ **arg4**: *A4*
-
-▪ **arg5**: *A5*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1, `res2`: R2): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
-`res2` | R2 |
+`callbackFunc` | [Function6](_functions_.md#function6)‹A1, A2, A3, A4, A5, [Function3](_functions_.md#function3)‹unknown, R1, R2, unknown›, unknown› |
+`selector` | [Function2](_functions_.md#function2)‹R1, R2, T› |
 
-▪ **selector**: *[Function2](_functions_.md#function2)‹R1, R2, T›*
+**Returns:** *[Function5](_functions_.md#function5)‹A1, A2, A3, A4, A5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-`arg3` | A3 |
-`arg4` | A4 |
-`arg5` | A5 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **T**>(`callbackFunc`: function, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **R1**, **T**>(`callbackFunc`: [Function6](_functions_.md#function6)‹A1, A2, A3, A4, A5, [Function2](_functions_.md#function2)‹unknown, R1, unknown›, unknown›, `selector`: [Function1](_functions_.md#function1)‹R1, T›): *[Function5](_functions_.md#function5)‹A1, A2, A3, A4, A5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -1467,50 +693,14 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **arg3**: *A3*
-
-▪ **arg4**: *A4*
-
-▪ **arg5**: *A5*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown, `res1`: R1): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
-`res1` | R1 |
+`callbackFunc` | [Function6](_functions_.md#function6)‹A1, A2, A3, A4, A5, [Function2](_functions_.md#function2)‹unknown, R1, unknown›, unknown› |
+`selector` | [Function1](_functions_.md#function1)‹R1, T› |
 
-▪ **selector**: *[Function1](_functions_.md#function1)‹R1, T›*
+**Returns:** *[Function5](_functions_.md#function5)‹A1, A2, A3, A4, A5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-**Returns:** *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-`arg3` | A3 |
-`arg4` | A4 |
-`arg5` | A5 |
-
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**>(`callbackFunc`: function): *function*
+▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**>(`callbackFunc`: [Function6](_functions_.md#function6)‹A1, A2, A3, A4, A5, [Function1](_functions_.md#function1)‹unknown, unknown›, unknown›): *[Function5](_functions_.md#function5)‹A1, A2, A3, A4, A5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
 **Type parameters:**
 
@@ -1526,45 +716,11 @@ Name | Type |
 
 **Parameters:**
 
-▪ **callbackFunc**: *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5, `callback`: function): *unknown*
-
-**Parameters:**
-
-▪ **arg1**: *A1*
-
-▪ **arg2**: *A2*
-
-▪ **arg3**: *A3*
-
-▪ **arg4**: *A4*
-
-▪ **arg5**: *A5*
-
-▪ **callback**: *function*
-
-▸ (`err`: unknown): *unknown*
-
-**Parameters:**
-
 Name | Type |
 ------ | ------ |
-`err` | unknown |
+`callbackFunc` | [Function6](_functions_.md#function6)‹A1, A2, A3, A4, A5, [Function1](_functions_.md#function1)‹unknown, unknown›, unknown› |
 
-**Returns:** *function*
-
-▸ (`arg1`: A1, `arg2`: A2, `arg3`: A3, `arg4`: A4, `arg5`: A5): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹void›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`arg1` | A1 |
-`arg2` | A2 |
-`arg3` | A3 |
-`arg4` | A4 |
-`arg5` | A5 |
+**Returns:** *[Function5](_functions_.md#function5)‹A1, A2, A3, A4, A5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
 ___
 

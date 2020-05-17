@@ -125,19 +125,9 @@ ___
 
 ###  ObservableOperator
 
-Ƭ **ObservableOperator**: *function*
+Ƭ **ObservableOperator**: *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹A›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹B››*
 
 A function which converts an ObservableLike<A> to an ObservableLike<B>.
-
-#### Type declaration:
-
-▸ (`observable`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹A›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹B›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`observable` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹A› |
 
 ___
 
@@ -169,9 +159,7 @@ ___
 
 ### `Const` timeoutError
 
-• **timeoutError**: *unique symbol* = Symbol(
-  "@reactive-js/core/lib/observable/timeoutError",
-)
+• **timeoutError**: *symbol* = _timeoutError
 
 Symbol thrown when the timeout operator times out
 
@@ -179,7 +167,7 @@ Symbol thrown when the timeout operator times out
 
 ### `Const` await_
 
-▸ **await_**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››): *function*
+▸ **await_**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -193,15 +181,7 @@ Name | Type |
 ------ | ------ |
 `mapper` | [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›› |
 
-**Returns:** *function*
-
-▸ (`a`: TA): *TB*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 ___
 
@@ -591,7 +571,7 @@ ___
 
 ### `Const` concatMap
 
-▸ **concatMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››, `maxBufferSize?`: number): *function*
+▸ **concatMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››, `maxBufferSize?`: number): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -606,15 +586,7 @@ Name | Type |
 `mapper` | [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›› |
 `maxBufferSize?` | number |
 
-**Returns:** *function*
-
-▸ (`a`: TA): *TB*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 ___
 
@@ -782,7 +754,7 @@ ___
 
 ### `Const` exhaust
 
-▸ **exhaust**<**T**>(): *function*
+▸ **exhaust**<**T**>(): *[ObservableOperator](_observable_.md#observableoperator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, T›*
 
 Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
 by dropping inner sources while the previous inner source
@@ -792,21 +764,13 @@ has not yet been disposed.
 
 ▪ **T**
 
-**Returns:** *function*
-
-▸ (`observable`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹A›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹B›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`observable` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹A› |
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, T›*
 
 ___
 
 ### `Const` exhaustMap
 
-▸ **exhaustMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››): *function*
+▸ **exhaustMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -820,15 +784,7 @@ Name | Type |
 ------ | ------ |
 `mapper` | [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›› |
 
-**Returns:** *function*
-
-▸ (`a`: TA): *TB*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 ___
 
@@ -1033,7 +989,7 @@ ___
 
 ### `Const` ignoreElements
 
-▸ **ignoreElements**<**TA**, **TB**>(): *function*
+▸ **ignoreElements**<**TA**, **TB**>(): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 Returns an `ObservableLike` that ignores all items emitted by the source.
 
@@ -1043,15 +999,7 @@ Returns an `ObservableLike` that ignores all items emitted by the source.
 
 ▪ **TB**
 
-**Returns:** *function*
-
-▸ (`observable`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹A›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹B›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`observable` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹A› |
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 ___
 
@@ -1217,7 +1165,7 @@ ___
 
 ### `Const` mergeMap
 
-▸ **mergeMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››, `options`: object): *function*
+▸ **mergeMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››, `options`: object): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -1236,15 +1184,7 @@ Name | Type |
 `maxBufferSize?` | number |
 `maxConcurrency?` | number |
 
-**Returns:** *function*
-
-▸ (`a`: TA): *TB*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 ___
 
@@ -1422,7 +1362,7 @@ if the source completes with an error.
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
-▸ **retry**<**T**>(`predicate`: function): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **retry**<**T**>(`predicate`: [Function2](_functions_.md#function2)‹number, unknown, boolean›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that mirrors the source, resubscrbing
 if the source completes with an error which satisfies the predicate function.
@@ -1433,16 +1373,9 @@ if the source completes with an error which satisfies the predicate function.
 
 **Parameters:**
 
-▪ **predicate**: *function*
-
-▸ (`count`: number, `error`: unknown): *boolean*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`count` | number |
-`error` | unknown |
+Name | Type | Description |
+------ | ------ | ------ |
+`predicate` | [Function2](_functions_.md#function2)‹number, unknown, boolean› |   |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
@@ -1616,13 +1549,13 @@ values only from the most recent source.
 
 **Returns:** *function*
 
-▸ (`observable`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹A›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹B›*
+▸ (`a`: TA): *TB*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`observable` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹A› |
+`a` | TA |
 
 ___
 

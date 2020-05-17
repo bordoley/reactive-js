@@ -32,17 +32,7 @@
 
 ###  StreamableOperator
 
-Ƭ **StreamableOperator**: *function*
-
-#### Type declaration:
-
-▸ (`streamable`: [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc›): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`streamable` | [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc› |
+Ƭ **StreamableOperator**: *[Function1](_functions_.md#function1)‹[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TSrcReq, TSrc›, [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T››*
 
 ## Functions
 

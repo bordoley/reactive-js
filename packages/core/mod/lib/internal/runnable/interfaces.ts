@@ -1,6 +1,7 @@
 import { Function1 } from "../../functions.ts";
 
-export const sinkDone = Symbol("@reactive-js/core/lib/runnable/sinkDone");
+const _sinkDone = Symbol("@reactive-js/core/lib/runnable/sinkDone");
+export const sinkDone = _sinkDone;
 export interface SinkLike<T> {
   readonly isDone: boolean;
 

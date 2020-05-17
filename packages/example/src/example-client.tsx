@@ -4,16 +4,14 @@ import {
   createEventSource,
   historyHashStateStore,
 } from "@reactive-js/core/lib/dom";
-import {
-  fromObservable,
-  FlowMode,
-} from "@reactive-js/core/lib/flowable";
+import { fromObservable, FlowMode } from "@reactive-js/core/lib/flowable";
 import {
   pipe,
   returns,
   increment,
   identity,
   bind,
+  Generator,
 } from "@reactive-js/core/lib/functions";
 import {
   generate,
@@ -25,7 +23,6 @@ import {
   throttle,
 } from "@reactive-js/core/lib/observable";
 import { isSome, none } from "@reactive-js/core/lib/option";
-import { StateUpdater } from "@reactive-js/core/lib/stateStore";
 import { onNotify as onNotifyStream } from "@reactive-js/core/lib/streamable";
 import { sendHttpRequest, WebRequestBody } from "@reactive-js/http/lib/dom";
 import {
@@ -48,9 +45,9 @@ import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { default as ReactDOM } from "react-dom";
 
 const makeCallbacks = (
-  uriUpdater: (updater: StateUpdater<RelativeURI>) => void,
+  uriUpdater: (updater: Generator<RelativeURI>) => void,
 ) => {
-  const liftUpdater = (updater: StateUpdater<RelativeURI>) => () =>
+  const liftUpdater = (updater: Generator<RelativeURI>) => () =>
     uriUpdater(updater);
 
   const goToPath = (pathname: string) =>

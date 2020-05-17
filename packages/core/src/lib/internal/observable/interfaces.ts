@@ -1,5 +1,6 @@
 import { DisposableLike } from "../../disposable";
 import { SchedulerLike } from "../../scheduler";
+import { Function1 } from "../../functions";
 
 /**
  * The underlying mechanism for receiving and transforming notifications from an
@@ -46,9 +47,10 @@ export interface ObservableLike<T> {
 }
 
 /** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
-export type ObservableOperator<A, B> = {
-  (observable: ObservableLike<A>): ObservableLike<B>;
-};
+export type ObservableOperator<A, B> = Function1<
+  ObservableLike<A>,
+  ObservableLike<B>
+>;
 
 /**
  * An `ObservableLike` that shares a common subscription to an underlying observable source.

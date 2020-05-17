@@ -75,7 +75,7 @@ ___
 
 ### `Const` sinkDone
 
-• **sinkDone**: *unique symbol* = Symbol("@reactive-js/core/lib/runnable/sinkDone")
+• **sinkDone**: *symbol* = _sinkDone
 
 ## Functions
 

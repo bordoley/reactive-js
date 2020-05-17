@@ -8,30 +8,10 @@
 
 * [StateStoreLike](../interfaces/_statestore_.statestorelike.md)
 
-### Type aliases
-
-* [StateUpdater](_statestore_.md#stateupdater)
-
 ### Functions
 
 * [createStateStore](_statestore_.md#const-createstatestore)
 * [toStateStore](_statestore_.md#const-tostatestore)
-
-## Type aliases
-
-###  StateUpdater
-
-Ƭ **StateUpdater**: *function*
-
-#### Type declaration:
-
-▸ (`oldState`: T): *T*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`oldState` | T |
 
 ## Functions
 
@@ -60,7 +40,7 @@ ___
 
 ### `Const` toStateStore
 
-▸ **toStateStore**<**T**>(`equality`: [Equality](_functions_.md#equality)‹T›): *[StreamableOperator](_streamable_.md#streamableoperator)‹T, T, [StateUpdater](_statestore_.md#stateupdater)‹T›, T›*
+▸ **toStateStore**<**T**>(`equality`: [Equality](_functions_.md#equality)‹T›): *[StreamableOperator](_streamable_.md#streamableoperator)‹T, T, [Generator](_functions_.md#generator)‹T›, T›*
 
 Converts an `StreamableLike<T, T>` to an `StateStoreLike<T>`.
 
@@ -74,4 +54,4 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `equality` | [Equality](_functions_.md#equality)‹T› | strictEquality |
 
-**Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹T, T, [StateUpdater](_statestore_.md#stateupdater)‹T›, T›*
+**Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹T, T, [Generator](_functions_.md#generator)‹T›, T›*
