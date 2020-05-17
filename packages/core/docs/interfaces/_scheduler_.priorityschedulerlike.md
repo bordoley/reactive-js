@@ -6,33 +6,15 @@ A scheduler which schedules work according to it's priority.
 
 ## Hierarchy
 
-* **PrioritySchedulerLike**
+* [YieldableLike](_scheduler_.yieldablelike.md)
+
+  ↳ **PrioritySchedulerLike**
 
 ## Index
-
-### Properties
-
-* [inContinuation](_scheduler_.priorityschedulerlike.md#incontinuation)
-* [now](_scheduler_.priorityschedulerlike.md#now)
 
 ### Methods
 
 * [schedule](_scheduler_.priorityschedulerlike.md#schedule)
-* [shouldYield](_scheduler_.priorityschedulerlike.md#shouldyield)
-
-## Properties
-
-###  inContinuation
-
-• **inContinuation**: *boolean*
-
-___
-
-###  now
-
-• **now**: *number*
-
-The scheduler's current time in ms.
 
 ## Methods
 
@@ -58,11 +40,3 @@ Name | Type |
 **Returns:** *void*
 
 A `DisposableLike` that can be disposed to cancel the scheduled work.
-
-___
-
-###  shouldYield
-
-▸ **shouldYield**(): *boolean*
-
-**Returns:** *boolean*

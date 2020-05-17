@@ -16,7 +16,7 @@ export const toRunnable = (schedulerFactory = createVirtualTimeScheduler) => sou
             sink.done();
         }
     }));
-    scheduler.continue();
+    scheduler.run();
     dispose(subscription);
     dispose(scheduler);
     const reifiedError = error;

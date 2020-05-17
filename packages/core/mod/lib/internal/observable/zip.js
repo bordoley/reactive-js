@@ -1,10 +1,13 @@
 import { AbstractDisposable, dispose, add, } from "../../disposable.js";
 import { current } from "../../enumerable.js";
 import { none, isSome, isNone } from "../../option.js";
+import { runContinuation } from "../../scheduler.js";
 import { zipEnumerators } from "../enumerable/zip.js";
 import { fromEnumerator } from "./fromEnumerable.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 import { using } from "./using.js";
+import { YieldError } from "../scheduler/interfaces.js";
+import { returns } from "../../functions.js";
 class EnumeratorObserver extends AbstractDisposable {
     constructor() {
         super(...arguments);
@@ -23,7 +26,7 @@ class EnumeratorObserver extends AbstractDisposable {
                 break;
             }
             this.inContinuation = true;
-            continuation.continue(this);
+            runContinuation(this, continuation);
             this.inContinuation = false;
             const error = this.error;
             if (isSome(error)) {
@@ -47,8 +50,8 @@ class EnumeratorObserver extends AbstractDisposable {
             dispose(continuation);
         }
     }
-    shouldYield() {
-        return true;
+    yield() {
+        throw new YieldError(0);
     }
 }
 const subscribeInteractive = (obs) => {
@@ -138,7 +141,7 @@ class ZipObservable {
         const observables = this.observables;
         const count = observables.length;
         if (this.isSynchronous) {
-            using(_ => this.observables.map(subscribeInteractive), (...enumerators) => fromEnumerator()(zipEnumerators(enumerators))).observe(observer);
+            using(_ => this.observables.map(subscribeInteractive), (...enumerators) => fromEnumerator()(returns(zipEnumerators(enumerators)))).observe(observer);
         }
         else {
             const enumerators = [];

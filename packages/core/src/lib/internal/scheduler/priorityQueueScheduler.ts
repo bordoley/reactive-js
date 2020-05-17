@@ -2,19 +2,19 @@ import {
   AbstractSerialDisposable,
   DisposableLike,
   disposed,
-  dispose,
   add,
 } from "../../disposable";
 import { none, Option, isSome, isNone } from "../../option";
 import { createPriorityQueue, QueueLike } from "../queues";
-import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation";
 import {
   SchedulerLike,
   SchedulerContinuationLike,
   PrioritySchedulerLike,
   PausableSchedulerLike,
+  YieldError,
+  YieldableLike,
 } from "./interfaces";
-import { schedule } from "./schedule";
+import { runContinuation, schedule } from "./schedulerContinuation";
 
 type ScheduledTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -77,48 +77,6 @@ const peek = (scheduler: PriorityScheduler): Option<ScheduledTask> => {
   return task ?? delayed.peek();
 };
 
-class PrioritySchedulerContinuation extends AbstractSchedulerContinuation {
-  constructor(private readonly priorityScheduler: PriorityScheduler) {
-    super();
-  }
-
-  continueUnsafe(host: SchedulerLike) {
-    const priorityScheduler = this.priorityScheduler;
-
-    for (
-      let task = peek(priorityScheduler), isDisposed = this.isDisposed;
-      isSome(task) && !isDisposed;
-      task = peek(priorityScheduler)
-    ) {
-      const { continuation, dueTime } = task;
-      const now = host.now;
-      const delay = dueTime - now;
-
-      if (delay > 0) {
-        priorityScheduler.dueTime = dueTime;
-        schedule(host, this, { delay });
-        return;
-      }
-
-      move(priorityScheduler);
-
-      priorityScheduler.inContinuation = true;
-      continuation.continue(this.priorityScheduler);
-      priorityScheduler.inContinuation = false;
-
-      isDisposed = this.isDisposed;
-      // Yield if were not disposed. The next iteration of the loop
-      // will yield if the next task is delayed.
-      if (!isDisposed && host.shouldYield()) {
-        schedule(host, this);
-        return;
-      }
-    }
-
-    dispose(this);
-  }
-}
-
 const comparator = (a: ScheduledTask, b: ScheduledTask) => {
   let diff = 0;
   diff = diff !== 0 ? diff : a.priority - b.priority;
@@ -137,19 +95,36 @@ const scheduleContinuation = (
   scheduler: PriorityScheduler,
   task: ScheduledTask,
 ) => {
-  const continuation = new PrioritySchedulerContinuation(scheduler);
-  scheduler.inner = continuation;
-
   const dueTime = task.dueTime;
-  scheduler.dueTime = dueTime;
-
   const delay = dueTime - scheduler.now;
 
-  schedule(scheduler.host, continuation, { delay });
+  scheduler.dueTime = dueTime;  
+  scheduler.inner = schedule(scheduler.host, scheduler.continuation, { delay });
 };
 
 class PriorityScheduler extends AbstractSerialDisposable
   implements PrioritySchedulerLike, PausableSchedulerLike {
+  
+  readonly continuation = ($: YieldableLike) => {
+    for (
+      let task = peek(this);
+      isSome(task) && !this.isDisposed;
+      task = peek(this)
+    ) {
+      const { continuation, dueTime } = task;
+      const delay = Math.max(dueTime - this.now, 0);
+
+      if (delay === 0) {
+        move(this);
+
+        this.inContinuation = true;
+        runContinuation(this, continuation);
+        this.inContinuation = false;
+      }
+
+      $.yield({ delay });
+    }
+  };
   current: ScheduledTask = none as any;
   readonly delayed: QueueLike<ScheduledTask> = createPriorityQueue(
     delayedComparator,
@@ -243,8 +218,9 @@ class PriorityScheduler extends AbstractSerialDisposable
     }
   }
 
-  shouldYield() {
+  yield(options = { delay: 0}) {
     const current = this.current;
+    const { delay } = options;
     const next = peek(this);
 
     const nextTaskIsHigherPriority =
@@ -254,12 +230,16 @@ class PriorityScheduler extends AbstractSerialDisposable
       next.dueTime <= this.now &&
       next.priority < current.priority;
 
-    return (
+    if (
+      delay > 0 ||
       this.isDisposed ||
       this.isPaused ||
-      nextTaskIsHigherPriority ||
-      this.host.shouldYield()
-    );
+      nextTaskIsHigherPriority
+    ) {
+      throw new YieldError(delay);
+    }
+
+    this.host.yield(options)
   }
 }
 

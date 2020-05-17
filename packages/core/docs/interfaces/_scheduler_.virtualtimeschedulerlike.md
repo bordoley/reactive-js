@@ -8,9 +8,7 @@ A scheduler that uses a virtual clock to simulate time. Useful for testing.
 
 * [DisposableLike](_disposable_.disposablelike.md)
 
-* [SchedulerLike](_scheduler_.schedulerlike.md)
-
-  ↳ [SchedulerContinuationLike](_scheduler_.schedulercontinuationlike.md)
+  ↳ [SchedulerLike](_scheduler_.schedulerlike.md)
 
   ↳ **VirtualTimeSchedulerLike**
 
@@ -18,20 +16,12 @@ A scheduler that uses a virtual clock to simulate time. Useful for testing.
 
 ### Methods
 
-* [continue](_scheduler_.virtualtimeschedulerlike.md#continue)
+* [run](_scheduler_.virtualtimeschedulerlike.md#run)
 
 ## Methods
 
-###  continue
+###  run
 
-▸ **continue**(`scheduler?`: [SchedulerLike](_scheduler_.schedulerlike.md)): *void*
-
-*Overrides [SchedulerContinuationLike](_scheduler_.schedulercontinuationlike.md).[continue](_scheduler_.schedulercontinuationlike.md#continue)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`scheduler?` | [SchedulerLike](_scheduler_.schedulerlike.md) |
+▸ **run**(): *void*
 
 **Returns:** *void*

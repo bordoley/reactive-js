@@ -10,12 +10,6 @@ A unit of work to be executed by a scheduler.
 
   ↳ **SchedulerContinuationLike**
 
-  ↳ [VirtualTimeSchedulerLike](_scheduler_.virtualtimeschedulerlike.md)
-
-## Implemented by
-
-* [AbstractSchedulerContinuation](../classes/_scheduler_.abstractschedulercontinuation.md)
-
 ## Index
 
 ### Methods
@@ -43,7 +37,7 @@ ___
 
 ###  continue
 
-▸ **continue**(`scheduler`: [SchedulerLike](_scheduler_.schedulerlike.md)): *void*
+▸ **continue**(`$`: [YieldableLike](_scheduler_.yieldablelike.md)): *void*
 
 Work function to be invoked by the scheduler after the specified delay.
 
@@ -51,7 +45,7 @@ Work function to be invoked by the scheduler after the specified delay.
 
 Name | Type |
 ------ | ------ |
-`scheduler` | [SchedulerLike](_scheduler_.schedulerlike.md) |
+`$` | [YieldableLike](_scheduler_.yieldablelike.md) |
 
 **Returns:** *void*
 

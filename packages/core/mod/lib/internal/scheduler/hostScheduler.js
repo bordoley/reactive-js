@@ -1,5 +1,7 @@
 import { createDisposable, dispose, add, } from "../../disposable.js";
 import { bind } from "../../functions.js";
+import { YieldError } from "./interfaces.js";
+import { runContinuation } from "./schedulerContinuation.js";
 const supportsPerformanceNow = typeof performance === "object" && typeof performance.now === "function";
 const supportsProcessHRTime = typeof process === "object" && typeof process.hrtime === "function";
 const supportsMessageChannel = typeof MessageChannel === "function";
@@ -44,7 +46,7 @@ const createCallback = (scheduler, continuation) => () => {
     if (!continuation.isDisposed) {
         scheduler.inContinuation = true;
         scheduler.startTime = scheduler.now;
-        continuation.continue(scheduler);
+        runContinuation(scheduler, continuation);
         scheduler.inContinuation = false;
     }
 };
@@ -66,8 +68,10 @@ class HostScheduler {
             add(continuation, callbackSubscription);
         }
     }
-    shouldYield() {
-        return this.now > this.startTime + this.yieldInterval;
+    yield({ delay } = { delay: 0 }) {
+        if (delay > 0 || this.now > this.startTime + this.yieldInterval) {
+            throw new YieldError(delay);
+        }
     }
 }
 export const createHostScheduler = (config = {

@@ -127,6 +127,6 @@ export const tests = describe(
       subscribe(scheduler),
     );
 
-    scheduler.continue();
+    scheduler.run();
   }),
 );

@@ -1,41 +1,25 @@
-import { dispose } from "../../disposable.js";
-import { schedule } from "../../scheduler.js";
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
-import { AbstractProducer } from "./producer.js";
-class FromArrayProducer extends AbstractProducer {
-    constructor(observer, values, startIndex, delay) {
-        super(observer);
-        this.values = values;
-        this.startIndex = startIndex;
-        this.delay = delay;
-        this.index = this.startIndex;
-    }
-    continueUnsafe(scheduler) {
-        const delay = this.delay;
-        const values = this.values;
-        const length = values.length;
-        let index = this.index;
-        let isDisposed = this.isDisposed;
-        while (index < length && !isDisposed) {
-            this.notify(values[index]);
-            index++;
-            isDisposed = this.isDisposed;
-            if (index < length &&
-                !isDisposed &&
-                (delay > 0 || scheduler.shouldYield())) {
-                this.index = index;
-                schedule(scheduler, this, this);
-                return;
-            }
-        }
-        dispose(this);
-    }
-}
 export const fromArray = (options = {}) => values => {
     var _a, _b;
     const delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0);
-    const startIndex = Math.min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, values.length);
-    const factory = (observer) => new FromArrayProducer(observer, values, startIndex, delay);
+    const valuesLength = values.length;
+    const startIndex = Math.min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, valuesLength);
+    const factory = (observer) => {
+        const yieldOptions = { delay };
+        let index = startIndex;
+        let observerIsDisposed = observer.isDisposed;
+        return ($) => {
+            while (index < valuesLength && !observerIsDisposed) {
+                observer.notify(values[index]);
+                index++;
+                observerIsDisposed = observer.isDisposed;
+                if (index < valuesLength && !observerIsDisposed) {
+                    $.yield(yieldOptions);
+                }
+            }
+            observer.dispose();
+        };
+    };
     return delay > 0
         ? createDelayedScheduledObservable(factory, delay)
         : createScheduledObservable(factory, true);

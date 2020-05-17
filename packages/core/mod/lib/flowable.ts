@@ -3,9 +3,11 @@ import { Function1, compose, pipe } from "./functions.ts";
 import {
   ObservableLike,
   fromArray as fromArrayObs,
+  fromDisposable,
   onNotify,
   subscribe,
   subscribeOn,
+  takeUntil,
   using,
 } from "./observable.ts";
 import { SchedulerLike, toPausableScheduler } from "./scheduler.ts";
@@ -54,7 +56,11 @@ const _fromObservable = <T>(observable: ObservableLike<T>): FlowableLike<T> => {
 
   const op = (modeObs: ObservableLike<FlowMode>) =>
     using(createScheduler(modeObs), pausableScheduler =>
-      pipe(observable, subscribeOn(pausableScheduler)),
+      pipe(
+        observable, 
+        subscribeOn(pausableScheduler), 
+        pipe(pausableScheduler, fromDisposable, takeUntil),
+      )
     );
 
   return createStreamable(op);

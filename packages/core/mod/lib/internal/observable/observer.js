@@ -1,6 +1,5 @@
-import { add, AbstractDisposable } from "../../disposable.js";
-import { ignore } from "../../functions.js";
-import { schedule, } from "../../scheduler.js";
+import { add, AbstractDisposable, addDisposableOrTeardown } from "../../disposable.js";
+import { ignore, pipe } from "../../functions.js";
 import { __DEV__ } from "../env.js";
 const assertObserverStateProduction = ignore;
 const assertObserverStateDev = (observer) => {
@@ -31,10 +30,10 @@ export class AbstractObserver extends AbstractDisposable {
     schedule(continuation, options = { delay: 0 }) {
         continuation.addListener("onRunStatusChanged", this);
         add(this, continuation);
-        schedule(this.scheduler, continuation, options);
+        this.scheduler.schedule(continuation, options);
     }
-    shouldYield() {
-        return this.scheduler.shouldYield();
+    yield(options) {
+        return this.scheduler.yield(options);
     }
 }
 export class AbstractDelegatingObserver extends AbstractObserver {
@@ -52,14 +51,14 @@ export class AbstractAutoDisposingDelegatingObserver extends AbstractObserver {
         add(this, delegate);
     }
 }
-class DelegatingObserver extends AbstractObserver {
+class DelegatingObserver extends AbstractDelegatingObserver {
     constructor(delegate) {
         super(delegate);
         this.delegate = delegate;
-        add(delegate, this);
     }
     notify(next) {
         this.delegate.notify(next);
     }
 }
 export const createDelegatingObserver = (delegate) => new DelegatingObserver(delegate);
+export const createAutoDisposingDelegatingObserver = (delegate) => pipe(delegate, createDelegatingObserver, addDisposableOrTeardown(delegate));

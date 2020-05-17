@@ -1,14 +1,13 @@
-import { add, dispose } from "../../disposable.ts";
-import { alwaysFalse, ignore } from "../../functions.ts";
+import { AbstractDisposable, add, dispose } from "../../disposable.ts";
 import { none, isSome } from "../../option.ts";
 import { createPriorityQueue, QueueLike } from "../queues.ts";
-import { AbstractSchedulerContinuation } from "./abstractSchedulerContinuation.ts";
 import {
   SchedulerContinuationLike,
   VirtualTimeSchedulerLike,
   SchedulerLike,
+  YieldError,
 } from "./interfaces.ts";
-import { schedule } from "./schedule.ts";
+import { runContinuation } from "./schedulerContinuation.ts";
 
 type VirtualTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -46,21 +45,12 @@ const move = (scheduler: VirtualTimeSchedulerImpl) => {
   return scheduler.hasCurrent;
 };
 
-// A place holder to make the code generic
-const ignoreScheduler: SchedulerLike = {
-  inContinuation: true,
-  now: 0,
-  schedule: ignore,
-  shouldYield: alwaysFalse,
-};
-
-class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
+class VirtualTimeSchedulerImpl extends AbstractDisposable implements SchedulerLike {
   current: SchedulerContinuationLike = none as any;
   hasCurrent = false;
   inContinuation = false;
   microTaskTicks = 0;
   now = 0;
-  private host: SchedulerLike = ignoreScheduler;
   private taskIDCount = 0;
   readonly taskQueue: QueueLike<VirtualTask> = createPriorityQueue(comparator);
 
@@ -68,29 +58,14 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
     super();
   }
 
-  continueUnsafe(scheduler: SchedulerLike) {
-    this.host = scheduler;
-
-    while (move(this)) {
-      const continuation = this.current;
-
+  run() {
+    while (!this.isDisposed && move(this)) {
       this.inContinuation = true;
-      continuation.continue(this);
+      runContinuation(this, this.current);
       this.inContinuation = false;
-
-      if (scheduler.shouldYield()) {
-        this.host = ignoreScheduler;
-        schedule(scheduler, this);
-        return;
-      }
     }
 
-    this.host = ignoreScheduler;
     dispose(this);
-  }
-
-  continue(scheduler = ignoreScheduler) {
-    super.continue(scheduler);
   }
 
   schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
@@ -108,11 +83,12 @@ class VirtualTimeSchedulerImpl extends AbstractSchedulerContinuation {
     }
   }
 
-  shouldYield() {
-    const host = this.host;
+  yield({ delay } = { delay: 0}) {
     this.microTaskTicks++;
 
-    return this.microTaskTicks >= this.maxMicroTaskTicks || host.shouldYield();
+    if(delay > 0 || this.microTaskTicks >= this.maxMicroTaskTicks) {
+      throw new YieldError(delay);
+    }
   }
 }
 

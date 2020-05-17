@@ -1,23 +1,12 @@
 import { dispose } from "../../disposable.ts";
 import { Function1, Factory } from "../../functions.ts";
-import { SchedulerLike } from "../scheduler/interfaces.ts";
+import { YieldableLike } from "../scheduler/interfaces.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import {
   createScheduledObservable,
   createDelayedScheduledObservable,
 } from "./observable.ts";
-import { AbstractProducer } from "./producer.ts";
-
-class ThrowsProducer<T> extends AbstractProducer<T> {
-  constructor(observer: ObserverLike<T>, private readonly f: Factory<unknown>) {
-    super(observer);
-  }
-
-  continueUnsafe(_: SchedulerLike) {
-    const cause = this.f();
-    dispose(this, { cause });
-  }
-}
+import { none } from "../../option.ts";
 
 /**
  * Creates an `ObservableLike` that emits no items and immediately disposes its subscription with an error.
@@ -28,8 +17,15 @@ class ThrowsProducer<T> extends AbstractProducer<T> {
 export const throws = <T>(
   { delay }: { delay: number } = { delay: 0 },
 ): Function1<Factory<unknown>, ObservableLike<T>> => errorFactory => {
-  const factory = (observer: ObserverLike<T>) =>
-    new ThrowsProducer(observer, errorFactory);
+  const factory = (observer: ObserverLike<T>) => (_: YieldableLike) => {
+    let cause: unknown = none;
+    try {
+      cause = errorFactory();
+    } catch(e) {
+      cause = e;
+    }
+    dispose(observer, { cause });
+  };
 
   return delay > 0
     ? createDelayedScheduledObservable(factory, delay)

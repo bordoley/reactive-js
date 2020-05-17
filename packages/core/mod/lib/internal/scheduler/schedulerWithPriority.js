@@ -1,4 +1,3 @@
-import { scheduleWithPriority } from "./schedule.js";
 class SchedulerWithPriorityImpl {
     constructor(priorityScheduler, priority) {
         this.priorityScheduler = priorityScheduler;
@@ -11,13 +10,13 @@ class SchedulerWithPriorityImpl {
         return this.priorityScheduler.now;
     }
     schedule(continuation, { delay } = { delay: 0 }) {
-        scheduleWithPriority(this.priorityScheduler, continuation, {
+        this.priorityScheduler.schedule(continuation, {
             priority: this.priority,
             delay,
         });
     }
-    shouldYield() {
-        return this.priorityScheduler.shouldYield();
+    yield(options) {
+        this.priorityScheduler.yield(options);
     }
 }
 export const toSchedulerWithPriority = (priority) => priorityScheduler => new SchedulerWithPriorityImpl(priorityScheduler, priority);

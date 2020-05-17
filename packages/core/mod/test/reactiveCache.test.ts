@@ -1,3 +1,4 @@
+/*
 import { disposed, dispose } from "../lib/disposable.ts";
 import { pipe, returns, bind } from "../lib/functions.ts";
 import {
@@ -164,3 +165,4 @@ export const tests = describe(
     );
   }),
 );
+*/

@@ -10,7 +10,7 @@ export const tests = describe("io", test("decodeWithCharset", () => {
     const dest = createIOSinkAccumulator((acc, next) => acc + next, returns(""));
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(lib, dest), subscribe(scheduler));
-    scheduler.continue();
+    scheduler.run();
     pipe(dest.acc, expectEquals(String.fromCodePoint(8364)));
     expectTrue(subscription.isDisposed);
 }), test("empty", () => {
@@ -20,7 +20,7 @@ export const tests = describe("io", test("decodeWithCharset", () => {
     dispatch(emptyStream, 1);
     const f = mockFn();
     const subscription = pipe(emptyStream, onNotify(f), subscribe(scheduler));
-    scheduler.continue();
+    scheduler.run();
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0].type, expectEquals(2));
     expectTrue(subscription.isDisposed);
@@ -31,7 +31,7 @@ export const tests = describe("io", test("decodeWithCharset", () => {
     const dest = createIOSinkAccumulator((acc, next) => acc + next, returns(""));
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(lib, dest), subscribe(scheduler));
-    scheduler.continue();
+    scheduler.run();
     pipe(dest.acc, expectEquals(str));
     expectTrue(subscription.isDisposed);
 }), test("fromValue", () => {
@@ -40,7 +40,7 @@ export const tests = describe("io", test("decodeWithCharset", () => {
     dispatch(fromValueStream, 1);
     const f = mockFn();
     const subscription = pipe(fromValueStream, onNotify(f), subscribe(scheduler));
-    scheduler.continue();
+    scheduler.run();
     pipe(f, expectToHaveBeenCalledTimes(2));
     pipe(f.calls[0][0].type, expectEquals(1));
     pipe(f.calls[0][0].data, expectEquals(1));
@@ -52,7 +52,7 @@ export const tests = describe("io", test("decodeWithCharset", () => {
     const dest = createIOSinkAccumulator(sum, returns(0));
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(lib, dest), subscribe(scheduler));
-    scheduler.continue();
+    scheduler.run();
     pipe(dest.acc, expectEquals(2));
     expectTrue(subscription.isDisposed);
 }));

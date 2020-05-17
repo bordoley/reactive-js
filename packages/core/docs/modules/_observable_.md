@@ -54,6 +54,7 @@
 * [exhaust](_observable_.md#const-exhaust)
 * [exhaustMap](_observable_.md#const-exhaustmap)
 * [fromArray](_observable_.md#const-fromarray)
+* [fromDisposable](_observable_.md#const-fromdisposable)
 * [fromEnumerable](_observable_.md#const-fromenumerable)
 * [fromIterable](_observable_.md#const-fromiterable)
 * [fromIterator](_observable_.md#const-fromiterator)
@@ -89,6 +90,7 @@
 * [switchMap](_observable_.md#const-switchmap)
 * [takeFirst](_observable_.md#const-takefirst)
 * [takeLast](_observable_.md#const-takelast)
+* [takeUntil](_observable_.md#const-takeuntil)
 * [takeWhile](_observable_.md#const-takewhile)
 * [throttle](_observable_.md#throttle)
 * [throwIfEmpty](_observable_.md#const-throwifempty)
@@ -804,9 +806,23 @@ Name | Type |
 
 ___
 
+### `Const` fromDisposable
+
+▸ **fromDisposable**(`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`disposable` | [DisposableLike](../interfaces/_disposable_.disposablelike.md) |
+
+**Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown›*
+
+___
+
 ### `Const` fromEnumerable
 
-▸ **fromEnumerable**<**T**>(`__namedParameters`: object): *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **fromEnumerable**<**T**>(`options`: object): *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` which enumerates through the values
 produced by the provided `Enumerable` with a specified `delay` between emitted items.
@@ -817,11 +833,11 @@ produced by the provided `Enumerable` with a specified `delay` between emitted i
 
 **Parameters:**
 
-▪`Default value`  **__namedParameters**: *object*= { delay: 0 }
+▪`Default value`  **options**: *object*= { delay: 0 }
 
-Name | Type |
------- | ------ |
-`delay` | number |
+Name | Type | Default |
+------ | ------ | ------ |
+`delay` | number | 0 |
 
 **Returns:** *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
@@ -946,7 +962,7 @@ ___
 
 ###  generate
 
-▸ **generate**<**T**>(`generator`: [Updater](_functions_.md#updater)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›, `__namedParameters`: object): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **generate**<**T**>(`generator`: [Updater](_functions_.md#updater)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›, `options`: object): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Generates an `ObservableLike` sequence from a generator function
 that is applied to an accumulator value with a specified `delay`
@@ -966,11 +982,11 @@ the generator function.
 
 Factory function used to generate the initial accumulator.
 
-▪`Default value`  **__namedParameters**: *object*= { delay: 0 }
+▪`Default value`  **options**: *object*= { delay: 0 }
 
-Name | Type | Description |
------- | ------ | ------ |
-`delay` | number | The requested delay between emitted items by the observable.  |
+Name | Type |
+------ | ------ |
+`delay` | number |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
@@ -1611,6 +1627,24 @@ Returns an `ObservableLike` that only emits the last `count` items emitted by th
 Name | Type | Default | Description |
 ------ | ------ | ------ | ------ |
 `count` | number | 1 | The maximum number of values to emit.  |
+
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+
+___
+
+### `Const` takeUntil
+
+▸ **takeUntil**<**T**>(`notifier`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`notifier` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown› |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
