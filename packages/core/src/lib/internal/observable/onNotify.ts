@@ -1,9 +1,15 @@
 import { SideEffect1 } from "../../functions";
 import { ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer";
+import {
+  AbstractAutoDisposingDelegatingObserver,
+  assertObserverState,
+} from "./observer";
 
-class OnNotifyObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T> {
+class OnNotifyObserver<T> extends AbstractAutoDisposingDelegatingObserver<
+  T,
+  T
+> {
   constructor(
     delegate: ObserverLike<T>,
     private readonly onNotify: SideEffect1<T>,

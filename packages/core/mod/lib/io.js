@@ -1,7 +1,7 @@
-import { fromObservable as fromObservableFlowable } from "./flowable.js";
-import { compose, pipe, returns } from "./functions.js";
-import { map as mapObs, withLatestFrom, compute, concatMap, fromIterator, fromArray as fromArrayObs, } from "./observable.js";
-import { map as mapStream, lift, } from "./streamable.js";
+import { fromObservable as fromObservableFlowable, } from "./flowable.js";
+import { compose, pipe, returns, composeWith } from "./functions.js";
+import { map as mapObs, withLatestFrom as withLatestFromObs, compute, concatMap, fromIterator, fromArray as fromArrayObs, } from "./observable.js";
+import { map as mapStream, lift, withLatestFrom, } from "./streamable.js";
 import { endWith } from "./internal/observable/endWith.js";
 export const next = (data) => ({
     type: 1,
@@ -9,7 +9,7 @@ export const next = (data) => ({
 });
 const _complete = { type: 2 };
 export const complete = () => _complete;
-export const decodeWithCharset = (charset = "utf-8", options) => lift(compose(withLatestFrom(compute()(() => new TextDecoder(charset, options)), function* (ev, decoder) {
+export const decodeWithCharset = (charset = "utf-8", options) => pipe(withLatestFromObs(compute()(() => new TextDecoder(charset, options)), function* (ev, decoder) {
     switch (ev.type) {
         case 1: {
             const data = decoder.decode(ev.data, { stream: true });
@@ -27,8 +27,8 @@ export const decodeWithCharset = (charset = "utf-8", options) => lift(compose(wi
             break;
         }
     }
-}), concatMap(compose(returns, fromIterator()))));
-export const encodeUtf8 = lift(withLatestFrom(compute()(() => new TextEncoder()), (ev, textEncoder) => {
+}), composeWith(mapObs(returns)), composeWith(concatMap(fromIterator())), lift);
+const _encodeUtf8 = withLatestFrom(compute()(() => new TextEncoder()), (ev, textEncoder) => {
     switch (ev.type) {
         case 1: {
             const data = textEncoder.encode(ev.data);
@@ -38,7 +38,8 @@ export const encodeUtf8 = lift(withLatestFrom(compute()(() => new TextEncoder())
             return ev;
         }
     }
-}));
+});
+export const encodeUtf8 = _encodeUtf8;
 export const map = (mapper) => mapStream((ev) => ev.type === 1 ? pipe(ev.data, mapper, next) : ev);
 const _fromObservable = compose(mapObs(next), endWith(complete()), fromObservableFlowable());
 export const fromObservable = () => _fromObservable;

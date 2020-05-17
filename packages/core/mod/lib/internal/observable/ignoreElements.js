@@ -1,5 +1,5 @@
 import { lift } from "./lift.js";
-import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.js";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState, } from "./observer.js";
 class IgnoreObserver extends AbstractAutoDisposingDelegatingObserver {
     notify(_) {
         assertObserverState(this);

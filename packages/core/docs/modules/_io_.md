@@ -49,22 +49,7 @@ ___
 
 ### `Const` encodeUtf8
 
-• **encodeUtf8**: *[IOSourceOperator](_io_.md#iosourceoperator)‹string, Uint8Array›* = lift(
-  withLatestFrom(
-    compute<TextEncoder>()(() => new TextEncoder()),
-    (ev, textEncoder) => {
-      switch (ev.type) {
-        case IOEventType.Next: {
-          const data = textEncoder.encode(ev.data);
-          return next(data);
-        }
-        case IOEventType.Complete: {
-          return ev;
-        }
-      }
-    },
-  ),
-)
+• **encodeUtf8**: *[IOSourceOperator](_io_.md#iosourceoperator)‹string, Uint8Array›* = _encodeUtf8
 
 ## Functions
 

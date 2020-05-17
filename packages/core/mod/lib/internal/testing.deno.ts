@@ -1,7 +1,4 @@
-import {
-  TestGroup,
-  TestGroupType,
-} from "./testing.ts";
+import { TestGroup, TestGroupType } from "./testing.ts";
 
 declare var Deno: any;
 

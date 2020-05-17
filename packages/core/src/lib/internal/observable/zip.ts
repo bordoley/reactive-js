@@ -53,10 +53,7 @@ class EnumeratorObserver<T> extends AbstractDisposable
     this.hasCurrent = true;
   }
 
-  schedule(
-    continuation: SchedulerContinuationLike,
-    { delay } = { delay: 0 },
-  ) {
+  schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
     add(this, continuation);
     if (!continuation.isDisposed && delay === 0) {
       this.continuations.push(continuation);

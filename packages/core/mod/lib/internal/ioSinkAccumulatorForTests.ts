@@ -1,8 +1,4 @@
-import {
-  IOEvent,
-  IOEventType,
-  IOSinkLike,
-} from "../io.ts";
+import { IOEvent, IOEventType, IOSinkLike } from "../io.ts";
 import { FlowMode } from "../flowable.ts";
 import { Reducer, pipe, returns, Factory } from "../functions.ts";
 import { SchedulerLike } from "../scheduler.ts";
@@ -31,13 +27,11 @@ const isNext = <T>(
  * @experimental
  * @noInheritDoc
  * */
-export interface IOSinkAccumulatorLike<T, TAcc>
-  extends IOSinkLike<T> {
+export interface IOSinkAccumulatorLike<T, TAcc> extends IOSinkLike<T> {
   readonly acc: TAcc;
 }
 
-class IOSinkAccumulatorImpl<T, TAcc>
-  implements IOSinkAccumulatorLike<T, TAcc> {
+class IOSinkAccumulatorImpl<T, TAcc> implements IOSinkAccumulatorLike<T, TAcc> {
   constructor(private readonly reducer: Reducer<T, TAcc>, private _acc: TAcc) {}
 
   get acc() {

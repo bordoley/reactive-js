@@ -1,8 +1,14 @@
 import { ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.ts";
+import {
+  AbstractAutoDisposingDelegatingObserver,
+  assertObserverState,
+} from "./observer.ts";
 
-class IgnoreObserver<TA, TB> extends AbstractAutoDisposingDelegatingObserver<TA, TB> {
+class IgnoreObserver<TA, TB> extends AbstractAutoDisposingDelegatingObserver<
+  TA,
+  TB
+> {
   notify(_: TA) {
     assertObserverState(this);
   }

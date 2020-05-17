@@ -420,6 +420,10 @@ export function compose(
   return source => operators.reduce((acc, next) => next(acc), source);
 }
 
+export const composeWith = <T, A, B>(
+  op2: Function1<A, B>,
+): Function1<Function1<T, A>, Function1<T, B>> => op1 => compose(op1, op2);
+
 export function defer<T, A>(src: T, op1: Function1<T, A>): Factory<A>;
 export function defer<T, A, B>(
   src: T,

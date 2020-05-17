@@ -1,16 +1,6 @@
-import {
-  empty,
-  fromValue,
-  FlowMode,
-  fromObservable,
-} from "../lib/flowable.ts";
+import { empty, fromValue, FlowMode, fromObservable } from "../lib/flowable.ts";
 import { increment, pipe, returns, bind } from "../lib/functions.ts";
-import {
-  onNotify,
-  subscribe,
-  generate,
-  dispatch,
-} from "../lib/observable.ts";
+import { onNotify, subscribe, generate, dispatch } from "../lib/observable.ts";
 import { createVirtualTimeScheduler, schedule } from "../lib/scheduler.ts";
 import {
   test,

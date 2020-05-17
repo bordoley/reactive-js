@@ -3,7 +3,7 @@ import { pipe, bind, returns } from "../lib/functions";
 import {
   createReadableIOSource,
   createWritableIOSink,
-  gzip, 
+  gzip,
   gunzip,
   createDisposableNodeStream,
 } from "../lib/node";

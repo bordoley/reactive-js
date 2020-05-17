@@ -1,9 +1,15 @@
 import { Factory, Reducer } from "../../functions.ts";
 import { ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.ts";
+import {
+  AbstractAutoDisposingDelegatingObserver,
+  assertObserverState,
+} from "./observer.ts";
 
-class ScanObserver<T, TAcc> extends AbstractAutoDisposingDelegatingObserver<T, TAcc> {
+class ScanObserver<T, TAcc> extends AbstractAutoDisposingDelegatingObserver<
+  T,
+  TAcc
+> {
   constructor(
     delegate: ObserverLike<TAcc>,
     readonly scanner: Reducer<T, TAcc>,

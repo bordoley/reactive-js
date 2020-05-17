@@ -38,6 +38,7 @@
 * [bind](_functions_.md#bind)
 * [callWith](_functions_.md#callwith)
 * [compose](_functions_.md#compose)
+* [composeWith](_functions_.md#const-composewith)
 * [decrement](_functions_.md#const-decrement)
 * [decrementBy](_functions_.md#const-decrementby)
 * [defer](_functions_.md#defer)
@@ -1115,6 +1116,28 @@ Name | Type |
 `op12` | [Function1](_functions_.md#function1)‹K, L› |
 
 **Returns:** *[Function1](_functions_.md#function1)‹T, L›*
+
+___
+
+### `Const` composeWith
+
+▸ **composeWith**<**T**, **A**, **B**>(`op2`: [Function1](_functions_.md#function1)‹A, B›): *[Function1](_functions_.md#function1)‹[Function1](_functions_.md#function1)‹T, A›, [Function1](_functions_.md#function1)‹T, B››*
+
+**Type parameters:**
+
+▪ **T**
+
+▪ **A**
+
+▪ **B**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`op2` | [Function1](_functions_.md#function1)‹A, B› |
+
+**Returns:** *[Function1](_functions_.md#function1)‹[Function1](_functions_.md#function1)‹T, A›, [Function1](_functions_.md#function1)‹T, B››*
 
 ___
 

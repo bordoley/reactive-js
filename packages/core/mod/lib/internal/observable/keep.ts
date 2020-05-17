@@ -1,12 +1,15 @@
 import { Predicate, TypePredicate } from "../../functions.ts";
 import { ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.ts";
+import {
+  AbstractAutoDisposingDelegatingObserver,
+  assertObserverState,
+} from "./observer.ts";
 
-class KeepTypeObserver<TA, TB extends TA> extends AbstractAutoDisposingDelegatingObserver<
+class KeepTypeObserver<
   TA,
-  TB
-> {
+  TB extends TA
+> extends AbstractAutoDisposingDelegatingObserver<TA, TB> {
   constructor(
     delegate: ObserverLike<TB>,
     readonly predicate: TypePredicate<TA, TB>,
