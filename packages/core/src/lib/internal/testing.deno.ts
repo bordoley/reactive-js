@@ -1,7 +1,9 @@
 import {
   TestGroup,
   TestGroupType,
-} from "../packages/core/mod/lib/internal/testing.ts";
+} from "./testing";
+
+declare var Deno: any;
 
 const toDenoTest = (testGroup: TestGroup, label = "") => {
   if (testGroup.type === TestGroupType.Describe) {
