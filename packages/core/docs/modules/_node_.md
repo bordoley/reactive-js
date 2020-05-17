@@ -1616,7 +1616,7 @@ ___
 
 ### `Const` createReadableIOStream
 
-▸ **createReadableIOStream**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Readable››): *[IOStreamLike](../interfaces/_io_.iostreamlike.md)‹Uint8Array›*
+▸ **createReadableIOStream**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Readable››): *[IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹Uint8Array›*
 
 **Parameters:**
 
@@ -1624,7 +1624,7 @@ Name | Type |
 ------ | ------ |
 `factory` | [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Readable›› |
 
-**Returns:** *[IOStreamLike](../interfaces/_io_.iostreamlike.md)‹Uint8Array›*
+**Returns:** *[IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹Uint8Array›*
 
 ___
 

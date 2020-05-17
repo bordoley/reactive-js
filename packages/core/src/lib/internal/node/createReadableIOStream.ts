@@ -1,7 +1,7 @@
 import { Readable } from "stream";
 import { DisposableValueLike, dispose, add } from "../../disposable";
 import { FlowMode } from "../../flowable";
-import { next, complete, IOStreamLike } from "../../io";
+import { next, complete, IOStreamableLike } from "../../io";
 import { pipe, compose, Factory } from "../../functions";
 import {
   createObservable,
@@ -65,7 +65,7 @@ const createReadableAndSetupModeSubscription = (
 
 export const createReadableIOStream = (
   factory: Factory<DisposableValueLike<Readable>>,
-): IOStreamLike<Uint8Array> =>
+): IOStreamableLike<Uint8Array> =>
   createStreamable(mode =>
     using(
       createReadableAndSetupModeSubscription(factory, mode),
