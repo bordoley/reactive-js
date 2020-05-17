@@ -1,4 +1,4 @@
-import { pipe } from "../../functions.ts";
+import { pipe, Generator } from "../../functions.ts";
 import {
   compute,
   merge,
@@ -7,7 +7,7 @@ import {
   throttle,
 } from "../../observable.ts";
 import { none } from "../../option.ts";
-import { StateStoreLike, toStateStore, StateUpdater } from "../../stateStore.ts";
+import { StateStoreLike, toStateStore } from "../../stateStore.ts";
 import { createStreamable, map, mapReq } from "../../streamable.ts";
 import { fromEvent } from "./event.ts";
 
@@ -52,8 +52,8 @@ const getSearchState = (state: string): ParamMap => {
 };
 
 const searchStateRequestMapper = (
-  stateUpdater: StateUpdater<ParamMap>,
-): StateUpdater<string> => (prevStateString: string) => {
+  stateUpdater: Generator<ParamMap>,
+): Generator<string> => (prevStateString: string) => {
   const prevStateURL = new URL(prevStateString);
   const prevState = parseQueryState(prevStateURL.searchParams);
   const newState = stateUpdater(prevState);
@@ -89,8 +89,8 @@ const getHashState = (state: string): string => {
 };
 
 const hashStateRequestMapper = (
-  stateUpdater: StateUpdater<string>,
-): StateUpdater<string> => (prevStateString: string) => {
+  stateUpdater: Generator<string>,
+): Generator<string> => (prevStateString: string) => {
   const prevStateURL = new URL(prevStateString);
   const prevState = parseHashState(prevStateURL.hash);
   const newState = stateUpdater(prevState);

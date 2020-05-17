@@ -151,7 +151,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`__namedParameters`: object): *(Anonymous function)*
+▸ **fromArray**<**T**>(`__namedParameters`: object): *[Function1](_functions_.md#function1)‹keyof T[], [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
 
 Returns an `AsyncEnumerableLike` from the provided array.
 
@@ -167,7 +167,7 @@ Name | Type |
 ------ | ------ |
 `startIndex` | number |
 
-**Returns:** *(Anonymous function)*
+**Returns:** *[Function1](_functions_.md#function1)‹keyof T[], [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
 
 ___
 

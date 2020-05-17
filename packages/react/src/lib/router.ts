@@ -1,6 +1,6 @@
-import { SideEffect1, returns, pipe } from "@reactive-js/core/lib/functions";
+import { Generator, SideEffect1, returns, pipe } from "@reactive-js/core/lib/functions";
 import { none, Option, isSome } from "@reactive-js/core/lib/option";
-import { StateUpdater, StateStoreLike } from "@reactive-js/core/lib/stateStore";
+import { StateStoreLike } from "@reactive-js/core/lib/stateStore";
 import { scan, mapReq } from "@reactive-js/core/lib/streamable";
 import { createElement, useMemo, ReactElement } from "react";
 import { useStreamable } from "./hooks";
@@ -46,7 +46,7 @@ const serializeRelativeURI = (
 export type RoutableComponentProps = {
   readonly referer: Option<RelativeURI>;
   readonly uri: RelativeURI;
-  readonly uriUpdater: SideEffect1<StateUpdater<RelativeURI>>;
+  readonly uriUpdater: SideEffect1<Generator<RelativeURI>>;
 };
 
 export type RouteMap = {
@@ -68,8 +68,8 @@ const pairify = (
 };
 
 const mapRequest = (
-  stateUpdater: StateUpdater<RelativeURI>,
-): StateUpdater<string> => prevStateString => {
+  stateUpdater: Generator<RelativeURI>,
+): Generator<string> => prevStateString => {
   const prevStateURL = new URL(prevStateString);
   const newStateRelativeURI = pipe(
     prevStateURL,

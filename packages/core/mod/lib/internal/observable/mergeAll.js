@@ -67,6 +67,6 @@ export const mergeAll = (options = {}) => {
 export const mergeMap = (mapper, options = {}) => compose(map(mapper), mergeAll(options));
 export const concatAll = (maxBufferSize = Number.MAX_SAFE_INTEGER) => mergeAll({ maxBufferSize, maxConcurrency: 1 });
 export const concatMap = (mapper, maxBufferSize) => compose(map(mapper), concatAll(maxBufferSize));
-const exhaustInstance = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
-export const exhaust = () => exhaustInstance;
+const _exhaust = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
+export const exhaust = () => _exhaust;
 export const exhaustMap = (mapper) => compose(map(mapper), exhaust());

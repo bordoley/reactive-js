@@ -6,9 +6,12 @@ export function bind(func, ...args) {
 }
 export const identity = (v) => v;
 export const returns = (v) => (..._args) => v;
-export const alwaysFalse = returns(false);
-export const alwaysTrue = returns(true);
-export const ignore = returns(undefined);
+const _alwaysFalse = returns(false);
+export const alwaysFalse = _alwaysFalse;
+const _alwaysTrue = returns(true);
+export const alwaysTrue = _alwaysTrue;
+const _ignore = returns(undefined);
+export const ignore = _ignore;
 export const increment = (x) => x + 1;
 export const incrementBy = (incr) => (x) => x + incr;
 export const decrement = (x) => x - 1;

@@ -174,7 +174,7 @@ ___
 
 ### `Const` disposeOnError
 
-▸ **disposeOnError**(`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *(Anonymous function)*
+▸ **disposeOnError**(`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *[SideEffect1](_functions_.md#sideeffect1)‹[Option](_option_.md#option)‹[Exception](_disposable_.md#exception)››*
 
 **Parameters:**
 
@@ -182,7 +182,7 @@ Name | Type |
 ------ | ------ |
 `disposable` | [DisposableLike](../interfaces/_disposable_.disposablelike.md) |
 
-**Returns:** *(Anonymous function)*
+**Returns:** *[SideEffect1](_functions_.md#sideeffect1)‹[Option](_option_.md#option)‹[Exception](_disposable_.md#exception)››*
 
 ___
 

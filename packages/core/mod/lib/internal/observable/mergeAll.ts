@@ -121,7 +121,7 @@ export const mergeMap = <TA, TB>(
     maxBufferSize?: number;
     maxConcurrency?: number;
   } = {},
-) => compose(map(mapper), mergeAll(options));
+): ObservableOperator<TA, TB> => compose(map(mapper), mergeAll(options));
 
 /**
  * Converts a higher-order `ObservableLike` into a first-order
@@ -137,17 +137,19 @@ export const concatAll = <T>(
 export const concatMap = <TA, TB>(
   mapper: Function1<TA, ObservableLike<TB>>,
   maxBufferSize?: number,
-) => compose(map(mapper), concatAll(maxBufferSize));
+): ObservableOperator<TA, TB> => compose(map(mapper), concatAll(maxBufferSize));
 
-const exhaustInstance = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
+const _exhaust = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
 
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
  * by dropping inner sources while the previous inner source
  * has not yet been disposed.
  */
-export const exhaust = <T>() =>
-  exhaustInstance as ObservableOperator<ObservableLike<T>, T>;
+export const exhaust = <T>(): ObservableOperator<ObservableLike<T>, T> =>
+  _exhaust as ObservableOperator<ObservableLike<T>, T>;
 
-export const exhaustMap = <TA, TB>(mapper: Function1<TA, ObservableLike<TB>>) =>
+export const exhaustMap = <TA, TB>(
+  mapper: Function1<TA, ObservableLike<TB>>
+): ObservableOperator<TA, TB> =>
   compose(map(mapper), exhaust());

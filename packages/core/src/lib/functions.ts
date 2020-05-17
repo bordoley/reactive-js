@@ -138,13 +138,16 @@ export function bind<T>(
 
 export const identity = <T>(v: T): T => v;
 
-export const returns = <T>(v: T) => (..._args: unknown[]) => v;
+export const returns = <T>(v: T): (..._args: unknown[]) => T => (..._args: unknown[]) => v;
 
-export const alwaysFalse = returns(false);
+const _alwaysFalse = returns(false);
+export const alwaysFalse: (..._args: unknown[]) => boolean = _alwaysFalse;
 
-export const alwaysTrue = returns(true);
+const _alwaysTrue = returns(true);
+export const alwaysTrue: (..._args: unknown[]) => boolean = _alwaysTrue;
 
-export const ignore = returns<void>(undefined);
+const _ignore = returns<void>(undefined);
+export const ignore: (..._args: unknown[]) => void = _ignore;
 
 export const increment = (x: number) => x + 1;
 

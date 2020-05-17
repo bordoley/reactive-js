@@ -30,7 +30,7 @@
 
 ### `Const` createHostScheduler
 
-▸ **createHostScheduler**(`config`: object): *HostScheduler‹›*
+▸ **createHostScheduler**(`config`: object): *[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)*
 
 **Parameters:**
 
@@ -42,7 +42,7 @@ Name | Type |
 ------ | ------ |
 `yieldInterval` | number |
 
-**Returns:** *HostScheduler‹›*
+**Returns:** *[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)*
 
 ___
 

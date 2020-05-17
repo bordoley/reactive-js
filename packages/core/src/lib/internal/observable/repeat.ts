@@ -4,7 +4,7 @@ import {
   dispose,
   addDisposableOrTeardown,
 } from "../../disposable";
-import { pipe, Predicate } from "../../functions";
+import { pipe, Predicate, Function2 } from "../../functions";
 import { isNone, isSome } from "../../option";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
@@ -111,7 +111,7 @@ export function retry<T>(): ObservableOperator<T, T>;
  * @param predicate
  */
 export function retry<T>(
-  predicate: (count: number, error: unknown) => boolean,
+  predicate: Function2<number, unknown, boolean>,
 ): ObservableOperator<T, T>;
 
 export function retry<T>(

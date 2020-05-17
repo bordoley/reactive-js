@@ -14,10 +14,12 @@ import { subscribe } from "./subscribe.ts";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { throws } from "./throws.ts";
 
-/** Symbol thrown when the timeout operator times out */
-export const timeoutError = Symbol(
+const _timeoutError = Symbol(
   "@reactive-js/core/lib/observable/timeoutError",
 );
+
+/** Symbol thrown when the timeout operator times out */
+export const timeoutError = _timeoutError;
 
 const setupDurationSubscription = <T>(observer: TimeoutObserver<T>) => {
   observer.durationSubscription.inner = pipe(
