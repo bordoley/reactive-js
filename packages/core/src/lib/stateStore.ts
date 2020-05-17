@@ -11,7 +11,7 @@ import {
 import {
   StreamableLike,
   createActionReducer,
-  StreamableFunction,
+  StreamableOperator,
   createStreamable,
   stream as streamStreamable,
 } from "./streamable";
@@ -50,7 +50,7 @@ export const createStateStore = <T>(
  */
 export const toStateStore = <T>(
   equality: Equality<T> = strictEquality,
-): StreamableFunction<T, T, StateUpdater<T>, T> => streamable =>
+): StreamableOperator<T, T, StateUpdater<T>, T> => streamable =>
   createStreamable(updates =>
     using(scheduler => {
       const stream = streamStreamable(streamable, scheduler);

@@ -1,5 +1,5 @@
 import { Predicate } from "../../functions";
-import { RunnableFunction, SinkLike } from "./interfaces";
+import { RunnableOperator, SinkLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingSink } from "./sink";
 
@@ -28,7 +28,7 @@ class TakeWhileSink<T> extends AbstractDelegatingSink<T, T> {
 export const takeWhile = <T>(
   predicate: Predicate<T>,
   { inclusive } = { inclusive: false },
-): RunnableFunction<T, T> => {
+): RunnableOperator<T, T> => {
   const operator = (sink: SinkLike<T>) =>
     new TakeWhileSink(sink, predicate, inclusive);
   return lift(operator);

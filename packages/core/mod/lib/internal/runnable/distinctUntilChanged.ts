@@ -1,5 +1,5 @@
 import { AbstractDelegatingSink } from "./sink.ts";
-import { RunnableFunction, SinkLike } from "./interfaces.ts";
+import { RunnableOperator, SinkLike } from "./interfaces.ts";
 import { Equality, strictEquality } from "../../functions.ts";
 import { lift } from "./lift.ts";
 import { Option, none } from "../../option.ts";
@@ -25,7 +25,7 @@ class DistinctUntilChangedSink<T> extends AbstractDelegatingSink<T, T> {
 
 export const distinctUntilChanged = <T>(
   equality: Equality<T> = strictEquality,
-): RunnableFunction<T, T> => {
+): RunnableOperator<T, T> => {
   const operator = (sink: SinkLike<T>) =>
     new DistinctUntilChangedSink(sink, equality);
   return lift(operator);

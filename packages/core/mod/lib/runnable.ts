@@ -18,9 +18,9 @@ export { fromValue } from "./internal/runnable/fromValue.ts";
 export { generate } from "./internal/runnable/generate.ts";
 export {
   RunnableLike,
-  RunnableFunction,
+  RunnableOperator,
   SinkLike,
-  SinkFunction,
+  SinkOperator,
   sinkDone,
 } from "./internal/runnable/interfaces.ts";
 export { lift } from "./internal/runnable/lift.ts";

@@ -14,7 +14,7 @@
 
 ### Type aliases
 
-* [FlowableFunction](_flowable_.md#flowablefunction)
+* [FlowableOperator](_flowable_.md#flowableoperator)
 
 ### Functions
 
@@ -25,9 +25,9 @@
 
 ## Type aliases
 
-###  FlowableFunction
+###  FlowableOperator
 
-Ƭ **FlowableFunction**: *[Function1](_functions_.md#function1)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
+Ƭ **FlowableOperator**: *[Function1](_functions_.md#function1)‹[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TA›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹TB››*
 
 ## Functions
 

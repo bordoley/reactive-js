@@ -1,6 +1,6 @@
 import { dispose } from "../../disposable.ts";
 import { Predicate } from "../../functions.ts";
-import { ObservableFunction, ObserverLike } from "./interfaces.ts";
+import { ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.ts";
 
@@ -38,7 +38,7 @@ class TakeWhileObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T>
 export const takeWhile = <T>(
   predicate: Predicate<T>,
   { inclusive } = { inclusive: false },
-): ObservableFunction<T, T> => {
+): ObservableOperator<T, T> => {
   const operator = (observer: ObserverLike<T>) =>
     new TakeWhileObserver(observer, predicate, inclusive);
   operator.isSynchronous = true;

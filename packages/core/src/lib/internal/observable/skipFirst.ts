@@ -1,5 +1,5 @@
 import { pipe } from "../../functions";
-import { ObservableFunction, ObserverLike } from "./interfaces";
+import { ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer";
 
@@ -24,7 +24,7 @@ class SkipFirstObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T>
  *
  * @param count The number of items emitted by source that should be skipped.
  */
-export const skipFirst = <T>(count = 1): ObservableFunction<T, T> => {
+export const skipFirst = <T>(count = 1): ObservableOperator<T, T> => {
   const operator = (observer: ObserverLike<T>) =>
     new SkipFirstObserver(observer, count);
   operator.isSynchronous = false;

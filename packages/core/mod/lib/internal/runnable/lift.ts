@@ -1,15 +1,15 @@
 import { pipe } from "../../functions.ts";
 import {
-  RunnableFunction,
+  RunnableOperator,
   RunnableLike,
-  SinkFunction,
+  SinkOperator,
   SinkLike,
 } from "./interfaces.ts";
 
 class LiftedRunnable<T> implements RunnableLike<T> {
   constructor(
     readonly src: RunnableLike<any>,
-    readonly operators: SinkFunction<any, any>[],
+    readonly operators: SinkOperator<any, any>[],
   ) {}
 
   run(sink: SinkLike<T>) {
@@ -19,8 +19,8 @@ class LiftedRunnable<T> implements RunnableLike<T> {
 }
 
 export const lift = <TA, TB>(
-  operator: SinkFunction<TA, TB>,
-): RunnableFunction<TA, TB> => runnable => {
+  operator: SinkOperator<TA, TB>,
+): RunnableOperator<TA, TB> => runnable => {
   const src = runnable instanceof LiftedRunnable ? runnable.src : runnable;
 
   const allFunctions =

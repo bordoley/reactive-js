@@ -4,7 +4,7 @@ import { enumerate } from "./enumerator";
 import {
   EnumerableLike,
   EnumeratorLike,
-  EnumerableFunction,
+  EnumerableOperator,
 } from "./interfaces";
 
 class RepeatEnumerator<T> implements EnumeratorLike<T> {
@@ -58,22 +58,22 @@ class RepeatEnumerable<T> implements EnumerableLike<T> {
  */
 export function repeat<T>(
   predicate: Predicate<number>,
-): EnumerableFunction<T, T>;
+): EnumerableOperator<T, T>;
 
 /**
  * Returns an EnumerableLike that repeats the source count times.
  * @param count
  */
-export function repeat<T>(count: number): EnumerableFunction<T, T>;
+export function repeat<T>(count: number): EnumerableOperator<T, T>;
 
 /**
  * Returns an EnumerableLike` that continually repeats the source.
  */
-export function repeat<T>(): EnumerableFunction<T, T>;
+export function repeat<T>(): EnumerableOperator<T, T>;
 
 export function repeat<T>(
   predicate?: Predicate<number> | number,
-): EnumerableFunction<T, T> {
+): EnumerableOperator<T, T> {
   const repeatPredicate = isNone(predicate)
     ? alwaysTrue
     : typeof predicate === "number"

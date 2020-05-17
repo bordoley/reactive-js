@@ -1,5 +1,5 @@
 import { Predicate } from "../../functions";
-import { EnumeratorLike, EnumerableFunction } from "./interfaces";
+import { EnumeratorLike, EnumerableOperator } from "./interfaces";
 import { lift } from "./lift";
 
 class TakeWhileEnumerator<T> implements EnumeratorLike<T> {
@@ -48,7 +48,7 @@ class TakeWhileEnumerator<T> implements EnumeratorLike<T> {
 export const takeWhile = <T>(
   predicate: Predicate<T>,
   { inclusive } = { inclusive: false },
-): EnumerableFunction<T, T> => {
+): EnumerableOperator<T, T> => {
   const operator = (observer: EnumeratorLike<T>) =>
     new TakeWhileEnumerator(observer, predicate, inclusive);
   return lift(operator);

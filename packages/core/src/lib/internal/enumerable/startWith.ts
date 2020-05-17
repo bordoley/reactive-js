@@ -1,6 +1,6 @@
 import { concat } from "./concat";
 import { fromArray } from "./fromArray";
-import { EnumerableFunction } from "./interfaces";
+import { EnumerableOperator } from "./interfaces";
 
 /**
  * Returns an EnumerableLike that yields the values followed by items from the source.
@@ -8,7 +8,7 @@ import { EnumerableFunction } from "./interfaces";
 export function startWith<T>(
   value: T,
   ...values: T[]
-): EnumerableFunction<T, T>;
-export function startWith<T>(...values: T[]): EnumerableFunction<T, T> {
+): EnumerableOperator<T, T>;
+export function startWith<T>(...values: T[]): EnumerableOperator<T, T> {
   return obs => concat(fromArray<T>()(values), obs);
 }

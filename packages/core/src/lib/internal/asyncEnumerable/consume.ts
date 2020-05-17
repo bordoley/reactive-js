@@ -15,7 +15,7 @@ import {
 } from "../../observable";
 import { none } from "../../option";
 import { stream } from "../../streamable";
-import { ObservableFunction } from "../observable/interfaces";
+import { ObservableOperator } from "../observable/interfaces";
 import { AsyncEnumerableLike } from "./interfaces";
 
 export const enum ConsumeRequestType {
@@ -52,7 +52,7 @@ export const done = <TAcc>(acc: TAcc): ConsumeRequest<TAcc> => ({
 const consumeImpl = <TSrc, TAcc>(
   consumer: (
     acc: ObservableLike<TAcc>,
-  ) => ObservableFunction<TSrc, ConsumeRequest<TAcc>>,
+  ) => ObservableOperator<TSrc, ConsumeRequest<TAcc>>,
   initial: Factory<TAcc>,
 ): Function1<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> => enumerable =>
   using(

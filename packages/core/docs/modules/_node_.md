@@ -1570,7 +1570,7 @@ ___
 
 ### `Const` brotliCompress
 
-▸ **brotliCompress**(`options`: BrotliOptions): *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
+▸ **brotliCompress**(`options`: BrotliOptions): *[IOStreamOperator](_io_.md#iostreamoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1578,13 +1578,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | BrotliOptions | {} |
 
-**Returns:** *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOStreamOperator](_io_.md#iostreamoperator)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` brotliDecompress
 
-▸ **brotliDecompress**(`options`: BrotliOptions): *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
+▸ **brotliDecompress**(`options`: BrotliOptions): *[IOStreamOperator](_io_.md#iostreamoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1592,7 +1592,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | BrotliOptions | {} |
 
-**Returns:** *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOStreamOperator](_io_.md#iostreamoperator)‹Uint8Array, Uint8Array›*
 
 ___
 
@@ -1644,7 +1644,7 @@ ___
 
 ### `Const` deflate
 
-▸ **deflate**(`options`: ZlibOptions): *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
+▸ **deflate**(`options`: ZlibOptions): *[IOStreamOperator](_io_.md#iostreamoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1652,13 +1652,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOStreamOperator](_io_.md#iostreamoperator)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` gunzip
 
-▸ **gunzip**(`options`: ZlibOptions): *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
+▸ **gunzip**(`options`: ZlibOptions): *[IOStreamOperator](_io_.md#iostreamoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1666,13 +1666,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOStreamOperator](_io_.md#iostreamoperator)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` gzip
 
-▸ **gzip**(`options`: ZlibOptions): *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
+▸ **gzip**(`options`: ZlibOptions): *[IOStreamOperator](_io_.md#iostreamoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1680,13 +1680,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOStreamOperator](_io_.md#iostreamoperator)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` inflate
 
-▸ **inflate**(`options`: ZlibOptions): *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
+▸ **inflate**(`options`: ZlibOptions): *[IOStreamOperator](_io_.md#iostreamoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1694,13 +1694,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOStreamOperator](_io_.md#iostreamoperator)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` transform
 
-▸ **transform**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Transform››): *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
+▸ **transform**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Transform››): *[IOStreamOperator](_io_.md#iostreamoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1708,4 +1708,4 @@ Name | Type |
 ------ | ------ |
 `factory` | [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Transform›› |
 
-**Returns:** *[IOStreamFunction](_io_.md#iostreamfunction)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOStreamOperator](_io_.md#iostreamoperator)‹Uint8Array, Uint8Array›*

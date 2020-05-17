@@ -2,7 +2,7 @@ import { pipe } from "../../functions";
 import { isNone, Option, none } from "../../option";
 import { enumerate } from "./enumerator";
 import { fromArray, empty } from "./fromArray";
-import { EnumeratorLike, EnumerableFunction } from "./interfaces";
+import { EnumeratorLike, EnumerableOperator } from "./interfaces";
 import { lift } from "./lift";
 
 class TakeLastEnumerator<T> implements EnumeratorLike<T> {
@@ -46,7 +46,7 @@ class TakeLastEnumerator<T> implements EnumeratorLike<T> {
  *
  * @param count The maximum number of values to emit.
  */
-export const takeLast = <T>(count = 1): EnumerableFunction<T, T> => {
+export const takeLast = <T>(count = 1): EnumerableOperator<T, T> => {
   const operator = (enumerator: EnumeratorLike<T>) =>
     new TakeLastEnumerator(enumerator, count);
   return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());

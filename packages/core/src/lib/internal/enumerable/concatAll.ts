@@ -4,7 +4,7 @@ import { enumerate } from "./enumerator";
 import {
   EnumerableLike,
   EnumeratorLike,
-  EnumerableFunction,
+  EnumerableOperator,
 } from "./interfaces";
 import { lift } from "./lift";
 import { map } from "./map";
@@ -52,7 +52,7 @@ const _concatAll = lift(operator);
 /**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
  */
-export const concatAll = <T>(): EnumerableFunction<EnumerableLike<T>, T> =>
+export const concatAll = <T>(): EnumerableOperator<EnumerableLike<T>, T> =>
   _concatAll;
 
 /**
@@ -62,4 +62,4 @@ export const concatAll = <T>(): EnumerableFunction<EnumerableLike<T>, T> =>
  */
 export const concatMap = <TA, TB>(
   mapper: Function1<TA, EnumerableLike<TB>>,
-): EnumerableFunction<TA, TB> => compose(map(mapper), concatAll());
+): EnumerableOperator<TA, TB> => compose(map(mapper), concatAll());

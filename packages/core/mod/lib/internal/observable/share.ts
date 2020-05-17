@@ -4,7 +4,7 @@ import { none, Option } from "../../option.ts";
 import { SchedulerLike } from "../../scheduler.ts";
 import {
   ObservableLike,
-  ObservableFunction,
+  ObservableOperator,
   SubjectLike,
   ObserverLike,
   MulticastObservableLike,
@@ -56,5 +56,5 @@ class SharedObservable<T> implements ObservableLike<T> {
 export const share = <T>(
   scheduler: SchedulerLike,
   replayCount = 0,
-): ObservableFunction<T, T> => observable =>
+): ObservableOperator<T, T> => observable =>
   new SharedObservable(observable, scheduler, replayCount);

@@ -8,13 +8,13 @@ export interface SinkLike<T> {
   done(): void;
 }
 
-export type SinkFunction<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
+export type SinkOperator<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
 
 export interface RunnableLike<T> {
   run(sink: SinkLike<T>): void;
 }
 
-export type RunnableFunction<TA, TB> = Function1<
+export type RunnableOperator<TA, TB> = Function1<
   RunnableLike<TA>,
   RunnableLike<TB>
 >;

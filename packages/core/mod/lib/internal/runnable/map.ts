@@ -1,5 +1,5 @@
 import { returns, Function1 } from "../../functions.ts";
-import { RunnableFunction, SinkLike } from "./interfaces.ts";
+import { RunnableOperator, SinkLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractDelegatingSink } from "./sink.ts";
 
@@ -16,10 +16,10 @@ class MapSink<TA, TB> extends AbstractDelegatingSink<TA, TB> {
 
 export const map = <TA, TB>(
   mapper: Function1<TA, TB>,
-): RunnableFunction<TA, TB> => {
+): RunnableOperator<TA, TB> => {
   const operator = (sink: SinkLike<TB>) => new MapSink(sink, mapper);
   return lift(operator);
 };
 
-export const mapTo = <TA, TB>(value: TB): RunnableFunction<TA, TB> =>
+export const mapTo = <TA, TB>(value: TB): RunnableOperator<TA, TB> =>
   map(returns(value));

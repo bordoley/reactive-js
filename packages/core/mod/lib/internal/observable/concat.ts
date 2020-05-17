@@ -1,6 +1,6 @@
 import { dispose, addDisposableOrTeardown } from "../../disposable.ts";
 import { isSome } from "../../option.ts";
-import { ObservableLike, ObserverLike, ObservableFunction } from "./interfaces.ts";
+import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces.ts";
 import { createDelegatingObserver } from "./observer.ts";
 import { pipe } from "../../functions.ts";
 
@@ -64,4 +64,4 @@ export function concat<T>(
 
 export const concatWith = <T>(
   snd: ObservableLike<T>,
-): ObservableFunction<T, T> => first => concat(first, snd);
+): ObservableOperator<T, T> => first => concat(first, snd);

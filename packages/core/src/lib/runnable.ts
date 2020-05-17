@@ -18,9 +18,9 @@ export { fromValue } from "./internal/runnable/fromValue";
 export { generate } from "./internal/runnable/generate";
 export {
   RunnableLike,
-  RunnableFunction,
+  RunnableOperator,
   SinkLike,
-  SinkFunction,
+  SinkOperator,
   sinkDone,
 } from "./internal/runnable/interfaces";
 export { lift } from "./internal/runnable/lift";

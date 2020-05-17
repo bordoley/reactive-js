@@ -1,7 +1,7 @@
 import { pipe } from "../../functions.ts";
 import { concatAll } from "./concatAll.ts";
 import { fromArray } from "./fromArray.ts";
-import { EnumerableLike, EnumerableFunction } from "./interfaces.ts";
+import { EnumerableLike, EnumerableOperator } from "./interfaces.ts";
 
 /**
  * Creates an EnumerableLike which yields all values from each source sequentially.
@@ -20,4 +20,4 @@ export function concat<T>(
 
 export const concatWith = <T>(
   snd: EnumerableLike<T>,
-): EnumerableFunction<T, T> => first => concat(first, snd);
+): EnumerableOperator<T, T> => first => concat(first, snd);

@@ -2,11 +2,11 @@ export {
   DispatcherLike,
   MulticastObservableLike,
   ObservableLike,
-  ObservableFunction,
+  ObservableOperator,
   StreamLike,
   SubjectLike,
   ObserverLike,
-  ObserverFunction,
+  ObserverOperator,
 } from "./internal/observable/interfaces.ts";
 
 export {

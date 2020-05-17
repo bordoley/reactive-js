@@ -1,4 +1,4 @@
-import { RunnableLike, SinkLike, RunnableFunction } from "./interfaces";
+import { RunnableLike, SinkLike, RunnableOperator } from "./interfaces";
 import { Function1, compose } from "../../functions";
 import { createRunnable } from "./createRunnable";
 import { fromArray } from "./fromArray";
@@ -55,15 +55,15 @@ export function concat<T>(...runnables: RunnableLike<T>[]): RunnableLike<T> {
 
 export const concatWith = <T>(
   snd: RunnableLike<T>,
-): RunnableFunction<T, T> => first => concat(first, snd);
+): RunnableOperator<T, T> => first => concat(first, snd);
 
-export function endWith<T>(value: T, ...values: T[]): RunnableFunction<T, T>;
-export function endWith<T>(...values: T[]): RunnableFunction<T, T> {
+export function endWith<T>(value: T, ...values: T[]): RunnableOperator<T, T>;
+export function endWith<T>(...values: T[]): RunnableOperator<T, T> {
   return concatWith(fromArray()(values));
 }
 
-export function startWith<T>(value: T, ...values: T[]): RunnableFunction<T, T>;
-export function startWith<T>(...values: T[]): RunnableFunction<T, T> {
+export function startWith<T>(value: T, ...values: T[]): RunnableOperator<T, T>;
+export function startWith<T>(...values: T[]): RunnableOperator<T, T> {
   return obs => concat(fromArray()(values), obs);
 }
 
@@ -78,9 +78,9 @@ class FlattenSink<T> extends AbstractDelegatingSink<RunnableLike<T>, T> {
 }
 
 const _concatAll = lift(s => new FlattenSink(s));
-export const concatAll = <T>(): RunnableFunction<RunnableLike<T>, T> =>
+export const concatAll = <T>(): RunnableOperator<RunnableLike<T>, T> =>
   _concatAll;
 
 export const concatMap = <TA, TB>(
   mapper: Function1<TA, RunnableLike<TB>>,
-): RunnableFunction<TA, TB> => compose(map(mapper), concatAll());
+): RunnableOperator<TA, TB> => compose(map(mapper), concatAll());

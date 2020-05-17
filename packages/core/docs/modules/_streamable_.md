@@ -10,7 +10,7 @@
 
 ### Type aliases
 
-* [StreamableFunction](_streamable_.md#streamablefunction)
+* [StreamableOperator](_streamable_.md#streamableoperator)
 
 ### Functions
 
@@ -29,9 +29,9 @@
 
 ## Type aliases
 
-###  StreamableFunction
+###  StreamableOperator
 
-Ƭ **StreamableFunction**: *function*
+Ƭ **StreamableOperator**: *function*
 
 #### Type declaration:
 
@@ -72,7 +72,7 @@ ___
 
 ### `Const` createStreamable
 
-▸ **createStreamable**<**TReq**, **TData**>(`op`: [ObservableFunction](_observable_.md#observablefunction)‹TReq, TData›): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, TData›*
+▸ **createStreamable**<**TReq**, **TData**>(`op`: [ObservableOperator](_observable_.md#observableoperator)‹TReq, TData›): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, TData›*
 
 **Type parameters:**
 
@@ -84,7 +84,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`op` | [ObservableFunction](_observable_.md#observablefunction)‹TReq, TData› |
+`op` | [ObservableOperator](_observable_.md#observableoperator)‹TReq, TData› |
 
 **Returns:** *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, TData›*
 
@@ -129,7 +129,7 @@ ___
 
 ### `Const` lift
 
-▸ **lift**<**TReq**, **TA**, **TB**>(`op`: [ObservableFunction](_observable_.md#observablefunction)‹TA, TB›): *[StreamableFunction](_streamable_.md#streamablefunction)‹TReq, TA, TReq, TB›*
+▸ **lift**<**TReq**, **TA**, **TB**>(`op`: [ObservableOperator](_observable_.md#observableoperator)‹TA, TB›): *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, TA, TReq, TB›*
 
 **Type parameters:**
 
@@ -143,15 +143,15 @@ ___
 
 Name | Type |
 ------ | ------ |
-`op` | [ObservableFunction](_observable_.md#observablefunction)‹TA, TB› |
+`op` | [ObservableOperator](_observable_.md#observableoperator)‹TA, TB› |
 
-**Returns:** *[StreamableFunction](_streamable_.md#streamablefunction)‹TReq, TA, TReq, TB›*
+**Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, TA, TReq, TB›*
 
 ___
 
 ### `Const` map
 
-▸ **map**<**TReq**, **TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[StreamableFunction](_streamable_.md#streamablefunction)‹TReq, TA, TReq, TB›*
+▸ **map**<**TReq**, **TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, TA, TReq, TB›*
 
 **Type parameters:**
 
@@ -167,13 +167,13 @@ Name | Type |
 ------ | ------ |
 `mapper` | [Function1](_functions_.md#function1)‹TA, TB› |
 
-**Returns:** *[StreamableFunction](_streamable_.md#streamablefunction)‹TReq, TA, TReq, TB›*
+**Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, TA, TReq, TB›*
 
 ___
 
 ### `Const` mapReq
 
-▸ **mapReq**<**TReqA**, **TReqB**, **T**>(`op`: [Function1](_functions_.md#function1)‹TReqB, TReqA›): *[StreamableFunction](_streamable_.md#streamablefunction)‹TReqA, T, TReqB, T›*
+▸ **mapReq**<**TReqA**, **TReqB**, **T**>(`op`: [Function1](_functions_.md#function1)‹TReqB, TReqA›): *[StreamableOperator](_streamable_.md#streamableoperator)‹TReqA, T, TReqB, T›*
 
 **Type parameters:**
 
@@ -189,13 +189,13 @@ Name | Type |
 ------ | ------ |
 `op` | [Function1](_functions_.md#function1)‹TReqB, TReqA› |
 
-**Returns:** *[StreamableFunction](_streamable_.md#streamablefunction)‹TReqA, T, TReqB, T›*
+**Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹TReqA, T, TReqB, T›*
 
 ___
 
 ### `Const` mapTo
 
-▸ **mapTo**<**TReq**, **TA**, **TB**>(`v`: TB): *[StreamableFunction](_streamable_.md#streamablefunction)‹TReq, TA, TReq, TB›*
+▸ **mapTo**<**TReq**, **TA**, **TB**>(`v`: TB): *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, TA, TReq, TB›*
 
 **Type parameters:**
 
@@ -211,13 +211,13 @@ Name | Type |
 ------ | ------ |
 `v` | TB |
 
-**Returns:** *[StreamableFunction](_streamable_.md#streamablefunction)‹TReq, TA, TReq, TB›*
+**Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, TA, TReq, TB›*
 
 ___
 
 ### `Const` onNotify
 
-▸ **onNotify**<**TReq**, **T**>(`onNotify`: [SideEffect1](_functions_.md#sideeffect1)‹T›): *[StreamableFunction](_streamable_.md#streamablefunction)‹TReq, T, TReq, T›*
+▸ **onNotify**<**TReq**, **T**>(`onNotify`: [SideEffect1](_functions_.md#sideeffect1)‹T›): *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, T, TReq, T›*
 
 **Type parameters:**
 
@@ -231,13 +231,13 @@ Name | Type |
 ------ | ------ |
 `onNotify` | [SideEffect1](_functions_.md#sideeffect1)‹T› |
 
-**Returns:** *[StreamableFunction](_streamable_.md#streamablefunction)‹TReq, T, TReq, T›*
+**Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, T, TReq, T›*
 
 ___
 
 ### `Const` scan
 
-▸ **scan**<**TReq**, **T**, **TAcc**>(`scanner`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initalValue`: [Factory](_functions_.md#factory)‹TAcc›): *[StreamableFunction](_streamable_.md#streamablefunction)‹TReq, T, TReq, TAcc›*
+▸ **scan**<**TReq**, **T**, **TAcc**>(`scanner`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initalValue`: [Factory](_functions_.md#factory)‹TAcc›): *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, T, TReq, TAcc›*
 
 **Type parameters:**
 
@@ -254,7 +254,7 @@ Name | Type |
 `scanner` | [Reducer](_functions_.md#reducer)‹T, TAcc› |
 `initalValue` | [Factory](_functions_.md#factory)‹TAcc› |
 
-**Returns:** *[StreamableFunction](_streamable_.md#streamablefunction)‹TReq, T, TReq, TAcc›*
+**Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, T, TReq, TAcc›*
 
 ___
 

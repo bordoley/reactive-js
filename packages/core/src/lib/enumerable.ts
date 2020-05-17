@@ -15,8 +15,8 @@ export { generate } from "./internal/enumerable/generate";
 export {
   EnumeratorLike,
   EnumerableLike,
-  EnumeratorFunction,
-  EnumerableFunction,
+  EnumeratorOperator,
+  EnumerableOperator,
 } from "./internal/enumerable/interfaces";
 export { lift } from "./internal/enumerable/lift";
 export { keep, keepType } from "./internal/enumerable/keep";

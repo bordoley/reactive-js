@@ -2,7 +2,7 @@ import { current, enumerate, hasCurrent } from "./enumerator";
 import {
   EnumerableLike,
   EnumeratorLike,
-  EnumerableFunction,
+  EnumerableOperator,
 } from "./interfaces";
 
 const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {
@@ -121,4 +121,4 @@ export function zip(
 
 export const zipWith = <TA, TB>(
   snd: EnumerableLike<TB>,
-): EnumerableFunction<TA, [TA, TB]> => fst => zip(fst, snd);
+): EnumerableOperator<TA, [TA, TB]> => fst => zip(fst, snd);

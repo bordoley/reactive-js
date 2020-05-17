@@ -6,7 +6,7 @@ import {
 } from "../../disposable";
 import { pipe, Predicate } from "../../functions";
 import { isNone, isSome } from "../../option";
-import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces";
+import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
@@ -52,7 +52,7 @@ const createRepeatObserver = <T>(
 
 const repeatObs = <T>(
   shouldRepeat: (count: number, error?: Exception) => boolean,
-): ObservableFunction<T, T> => observable => {
+): ObservableOperator<T, T> => observable => {
   const operator = (observer: ObserverLike<T>) =>
     createRepeatObserver(observer, observable, shouldRepeat);
   operator.isSynchronous = true;
@@ -70,22 +70,22 @@ const defaultRepeatPredicate = (_: number, error?: Exception): boolean =>
  */
 export function repeat<T>(
   predicate: Predicate<number>,
-): ObservableFunction<T, T>;
+): ObservableOperator<T, T>;
 
 /**
  * Returns an `ObservableLike` that repeats the source count times.
  * @param count
  */
-export function repeat<T>(count: number): ObservableFunction<T, T>;
+export function repeat<T>(count: number): ObservableOperator<T, T>;
 
 /**
  * Returns an `ObservableLike` that continually repeats the source.
  */
-export function repeat<T>(): ObservableFunction<T, T>;
+export function repeat<T>(): ObservableOperator<T, T>;
 
 export function repeat<T>(
   predicate?: Predicate<number> | number,
-): ObservableFunction<T, T> {
+): ObservableOperator<T, T> {
   const repeatPredicate = isNone(predicate)
     ? defaultRepeatPredicate
     : typeof predicate === "number"
@@ -102,7 +102,7 @@ const defaultRetryPredicate = (_: number, error?: Exception): boolean =>
  * Returns an `ObservableLike` that mirrors the source, re-subscribing
  * if the source completes with an error.
  */
-export function retry<T>(): ObservableFunction<T, T>;
+export function retry<T>(): ObservableOperator<T, T>;
 
 /**
  * Returns an `ObservableLike` that mirrors the source, resubscrbing
@@ -112,11 +112,11 @@ export function retry<T>(): ObservableFunction<T, T>;
  */
 export function retry<T>(
   predicate: (count: number, error: unknown) => boolean,
-): ObservableFunction<T, T>;
+): ObservableOperator<T, T>;
 
 export function retry<T>(
   predicate?: (count: number, error: unknown) => boolean,
-): ObservableFunction<T, T> {
+): ObservableOperator<T, T> {
   const retryPredicate = isNone(predicate)
     ? defaultRetryPredicate
     : (count: number, error?: Exception) =>

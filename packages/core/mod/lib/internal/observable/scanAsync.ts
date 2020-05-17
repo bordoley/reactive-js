@@ -1,7 +1,7 @@
 import { pipe, Factory } from "../../functions.ts";
 import { createSubject } from "./createSubject.ts";
 import { dispatchTo, dispatch } from "./dispatcher.ts";
-import { ObservableLike, ObservableFunction } from "./interfaces.ts";
+import { ObservableLike, ObservableOperator } from "./interfaces.ts";
 import { onNotify } from "./onNotify.ts";
 import { onSubscribe } from "./onSubscribe.ts";
 import { switchAll } from "./switchAll.ts";
@@ -23,7 +23,7 @@ export type AsyncReducer<TAcc, T> = (
 export const scanAsync = <T, TAcc>(
   scanner: AsyncReducer<TAcc, T>,
   initialValue: Factory<TAcc>,
-): ObservableFunction<T, TAcc> => observable =>
+): ObservableOperator<T, TAcc> => observable =>
   using(
     _ => createSubject<TAcc>(),
     accFeedbackStream =>

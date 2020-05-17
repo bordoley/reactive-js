@@ -40,7 +40,7 @@ export interface IOStreamableLike<T>
 /** @noInheritDoc */
 export interface IOSinkLike<T> extends StreamableLike<IOEvent<T>, FlowMode> {}
 
-export type IOStreamFunction<TA, TB> = Function1<
+export type IOStreamOperator<TA, TB> = Function1<
   IOStreamableLike<TA>,
   IOStreamableLike<TB>
 >;
@@ -48,7 +48,7 @@ export type IOStreamFunction<TA, TB> = Function1<
 export const decodeWithCharset = (
   charset = "utf-8",
   options?: TextDecoderOptions,
-): IOStreamFunction<ArrayBuffer, string> =>
+): IOStreamOperator<ArrayBuffer, string> =>
   lift(
     compose(
       withLatestFrom(
@@ -77,7 +77,7 @@ export const decodeWithCharset = (
     ),
   );
 
-export const encodeUtf8: IOStreamFunction<string, Uint8Array> = lift(
+export const encodeUtf8: IOStreamOperator<string, Uint8Array> = lift(
   withLatestFrom(
     compute<TextEncoder>()(() => new TextEncoder()),
     (ev, textEncoder) => {

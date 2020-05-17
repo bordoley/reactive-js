@@ -1,7 +1,7 @@
 import { dispose } from "../../disposable.ts";
 import { pipe } from "../../functions.ts";
 import { empty } from "./empty.ts";
-import { ObservableFunction, ObserverLike } from "./interfaces.ts";
+import { ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.ts";
 
@@ -28,7 +28,7 @@ class TakeFirstObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T>
  *
  * @param count The maximum number of values to emit.
  */
-export const takeFirst = <T>(count = 1): ObservableFunction<T, T> => {
+export const takeFirst = <T>(count = 1): ObservableOperator<T, T> => {
   const operator = (observer: ObserverLike<T>) =>
     new TakeFirstObserver(observer, count);
   operator.isSynchronous = true;

@@ -9,7 +9,7 @@ import {
 import { pipe, Function1 } from "../../functions";
 import { none, Option, isNone } from "../../option";
 import { fromValue } from "./fromValue";
-import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces";
+import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
@@ -108,7 +108,7 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
 export function throttle<T>(
   duration: Function1<T, ObservableLike<unknown>>,
   mode?: ThrottleMode,
-): ObservableFunction<T, T>;
+): ObservableOperator<T, T>;
 
 /**
  * Returns an `ObservableLike` which emits a value from the source,
@@ -121,12 +121,12 @@ export function throttle<T>(
 export function throttle<T>(
   duration: number,
   mode?: ThrottleMode,
-): ObservableFunction<T, T>;
+): ObservableOperator<T, T>;
 
 export function throttle<T>(
   duration: Function1<T, ObservableLike<unknown>> | number,
   mode: ThrottleMode = ThrottleMode.Interval,
-): ObservableFunction<T, T> {
+): ObservableOperator<T, T> {
   const durationFunction =
     typeof duration === "number"
       ? (_: T) => fromValue({ delay: duration })(none)

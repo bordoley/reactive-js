@@ -1,7 +1,7 @@
 import { Exception, dispose, addDisposableOrTeardown } from "../../disposable.ts";
 import { Function1, pipe } from "../../functions.ts";
 import { isSome, none } from "../../option.ts";
-import { ObservableLike, ObservableFunction, ObserverLike } from "./interfaces.ts";
+import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { createDelegatingObserver } from "./observer.ts";
 
@@ -15,7 +15,7 @@ import { createDelegatingObserver } from "./observer.ts";
  */
 export const catchError = <T>(
   onError: Function1<unknown, ObservableLike<T> | void>,
-): ObservableFunction<T, T> => {
+): ObservableOperator<T, T> => {
   const operator = (delegate: ObserverLike<T>) =>
     pipe(
       delegate,

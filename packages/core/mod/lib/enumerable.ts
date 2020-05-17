@@ -15,8 +15,8 @@ export { generate } from "./internal/enumerable/generate.ts";
 export {
   EnumeratorLike,
   EnumerableLike,
-  EnumeratorFunction,
-  EnumerableFunction,
+  EnumeratorOperator,
+  EnumerableOperator,
 } from "./internal/enumerable/interfaces.ts";
 export { lift } from "./internal/enumerable/lift.ts";
 export { keep, keepType } from "./internal/enumerable/keep.ts";

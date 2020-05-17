@@ -1,6 +1,6 @@
 export {
   StreamableLike,
-  StreamableFunction,
+  StreamableOperator,
 } from "./internal/streamable/interfaces.ts";
 export { createActionReducer } from "./internal/streamable/createActionReducer.ts";
 export {
