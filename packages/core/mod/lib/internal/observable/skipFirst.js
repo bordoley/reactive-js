@@ -1,6 +1,6 @@
 import { pipe } from "../../functions.js";
 import { lift } from "./lift.js";
-import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.js";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState, } from "./observer.js";
 class SkipFirstObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, skipCount) {
         super(delegate);

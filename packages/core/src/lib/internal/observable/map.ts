@@ -1,9 +1,15 @@
 import { returns, Function1 } from "../../functions";
 import { ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer";
+import {
+  AbstractAutoDisposingDelegatingObserver,
+  assertObserverState,
+} from "./observer";
 
-class MapObserver<TA, TB> extends AbstractAutoDisposingDelegatingObserver<TA, TB> {
+class MapObserver<TA, TB> extends AbstractAutoDisposingDelegatingObserver<
+  TA,
+  TB
+> {
   constructor(delegate: ObserverLike<TB>, readonly mapper: Function1<TA, TB>) {
     super(delegate);
   }

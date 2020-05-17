@@ -1,7 +1,4 @@
-import {
-  TestGroup,
-  TestGroupType,
-} from "./testing";
+import { TestGroup, TestGroupType } from "./testing";
 
 const toJestTest = (testGroup: TestGroup) => {
   if (testGroup.type === TestGroupType.Describe) {

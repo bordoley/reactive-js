@@ -26,6 +26,7 @@
 * [scan](_streamable_.md#const-scan)
 * [sink](_streamable_.md#const-sink)
 * [stream](_streamable_.md#const-stream)
+* [withLatestFrom](_streamable_.md#const-withlatestfrom)
 
 ## Type aliases
 
@@ -298,3 +299,28 @@ Name | Type |
 `replayCount?` | number |
 
 **Returns:** *[StreamLike](../interfaces/_observable_.streamlike.md)‹TReq, T›*
+
+___
+
+### `Const` withLatestFrom
+
+▸ **withLatestFrom**<**TReq**, **TA**, **TB**, **T**>(`other`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›, `selector`: [Function2](_functions_.md#function2)‹TA, TB, T›): *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, TA, TReq, T›*
+
+**Type parameters:**
+
+▪ **TReq**
+
+▪ **TA**
+
+▪ **TB**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`other` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB› |
+`selector` | [Function2](_functions_.md#function2)‹TA, TB, T› |
+
+**Returns:** *[StreamableOperator](_streamable_.md#streamableoperator)‹TReq, TA, TReq, T›*

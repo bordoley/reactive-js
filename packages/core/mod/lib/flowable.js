@@ -2,7 +2,7 @@ import { add, addDisposableOrTeardown } from "./disposable.js";
 import { compose, pipe } from "./functions.js";
 import { fromArray as fromArrayObs, onNotify, subscribe, subscribeOn, using, } from "./observable.js";
 import { toPausableScheduler } from "./scheduler.js";
-import { createStreamable, } from "./streamable.js";
+import { createStreamable } from "./streamable.js";
 const _fromObservable = (observable) => {
     const createScheduler = (modeObs) => (scheduler) => {
         const pausableScheduler = toPausableScheduler(scheduler);

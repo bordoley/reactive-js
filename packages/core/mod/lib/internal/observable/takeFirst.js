@@ -2,7 +2,7 @@ import { dispose } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { empty } from "./empty.js";
 import { lift } from "./lift.js";
-import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.js";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState, } from "./observer.js";
 class TakeFirstObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, maxCount) {
         super(delegate);

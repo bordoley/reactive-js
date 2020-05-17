@@ -10,11 +10,7 @@ import {
 import { FlowMode } from "../lib/flowable.ts";
 import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulatorForTests.ts";
 import { pipe, returns, sum } from "../lib/functions.ts";
-import {
-  onNotify,
-  subscribe,
-  dispatch,
-} from "../lib/observable.ts";
+import { onNotify, subscribe, dispatch } from "../lib/observable.ts";
 import { createVirtualTimeScheduler } from "../lib/scheduler.ts";
 import {
   test,
@@ -101,11 +97,7 @@ export const tests = describe(
     expectTrue(fromValueStream.isDisposed);
   }),
   test("map", () => {
-    const lib = pipe(
-      1,
-      fromValue(),
-      map(returns(2)),
-    );
+    const lib = pipe(1, fromValue(), map(returns(2)));
     const dest = createIOSinkAccumulator(sum, returns(0));
 
     const scheduler = createVirtualTimeScheduler();

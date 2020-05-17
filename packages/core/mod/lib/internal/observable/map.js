@@ -1,6 +1,6 @@
 import { returns } from "../../functions.js";
 import { lift } from "./lift.js";
-import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.js";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState, } from "./observer.js";
 class MapObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, mapper) {
         super(delegate);

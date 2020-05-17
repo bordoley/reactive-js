@@ -1,9 +1,15 @@
 import { pipe } from "../../functions.ts";
 import { ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.ts";
+import {
+  AbstractAutoDisposingDelegatingObserver,
+  assertObserverState,
+} from "./observer.ts";
 
-class SkipFirstObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T> {
+class SkipFirstObserver<T> extends AbstractAutoDisposingDelegatingObserver<
+  T,
+  T
+> {
   count = 0;
 
   constructor(delegate: ObserverLike<T>, readonly skipCount: number) {

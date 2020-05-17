@@ -1,5 +1,5 @@
 import { lift } from "./lift.js";
-import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.js";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState, } from "./observer.js";
 class KeepTypeObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, predicate) {
         super(delegate);

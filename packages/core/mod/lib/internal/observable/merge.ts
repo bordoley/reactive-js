@@ -4,19 +4,24 @@ import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces.t
 import { createDelegatingObserver } from "./observer.ts";
 import { pipe } from "../../functions.ts";
 
-const createMergeObserver = <T>(delegate: ObserverLike<T>, count: number, ctx: {
-  completedCount: number;
-}) => pipe(
-  delegate, 
-  createDelegatingObserver, 
-  addDisposableOrTeardown(error => {
-    ctx.completedCount++;
+const createMergeObserver = <T>(
+  delegate: ObserverLike<T>,
+  count: number,
+  ctx: {
+    completedCount: number;
+  },
+) =>
+  pipe(
+    delegate,
+    createDelegatingObserver,
+    addDisposableOrTeardown(error => {
+      ctx.completedCount++;
 
-    if (isSome(error) || ctx.completedCount >= count) {
-      dispose(delegate, error);
-    }
-  }),
-);
+      if (isSome(error) || ctx.completedCount >= count) {
+        dispose(delegate, error);
+      }
+    }),
+  );
 
 class MergeObservable<T> implements ObservableLike<T> {
   readonly isSynchronous = false;
