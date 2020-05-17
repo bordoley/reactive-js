@@ -21,17 +21,17 @@ export const fromEnumerator = <T>(
 
     let observerIsDisposed = observer.isDisposed;
 
-    return ($: YieldableLike) => {  
+    return ($: YieldableLike) => {
       while (!observerIsDisposed && enumerator.move()) {
         observer.notify(enumerator.current);
 
         observerIsDisposed = observer.isDisposed;
-        if(!observerIsDisposed) {
+        if (!observerIsDisposed) {
           $.yield(options);
         }
       }
       observer.dispose();
-    }
+    };
   };
 
   const { delay } = options;
@@ -49,7 +49,5 @@ export const fromEnumerator = <T>(
  */
 export const fromEnumerable = <T>(
   options = { delay: 0 },
-): Function1<EnumerableLike<T>, ObservableLike<T>> => enumerable => pipe(
-  defer(enumerable, enumerate),
-  fromEnumerator(options),
-);
+): Function1<EnumerableLike<T>, ObservableLike<T>> => enumerable =>
+  pipe(defer(enumerable, enumerate), fromEnumerator(options));

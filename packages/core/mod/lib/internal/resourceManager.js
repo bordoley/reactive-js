@@ -1,12 +1,12 @@
 import { AbstractDisposable, disposed, dispose, add, addDisposableOrTeardown, } from "../disposable.js";
 import { fromIterable, toRunnable } from "../enumerable.js";
-import { first, forEach } from "../runnable.js";
 import { pipe } from "../functions.js";
+import { createObservable, subscribe, fromValue, onNotify, dispatch, } from "../observable.js";
+import { isSome, isNone, none } from "../option.js";
+import { first, forEach } from "../runnable.js";
 import { createKeyedQueue } from "./keyedQueue.js";
 import { createSetMultimap } from "./multimaps.js";
 import { createUniqueQueue } from "./queues.js";
-import { createObservable, subscribe, fromValue, onNotify, dispatch, } from "../observable.js";
-import { isSome, isNone, none } from "../option.js";
 const tryDispatch = (resourceManager, key) => {
     var _a;
     const { availableResources, availableResourcesTimeouts, maxIdleTime, maxResourcesPerKey, maxTotalResources, inUseResources, scheduler, resourceRequests, globalResourceWaitQueue, } = resourceManager;

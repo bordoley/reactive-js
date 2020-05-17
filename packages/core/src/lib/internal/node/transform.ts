@@ -15,8 +15,8 @@ import {
   disposeOnError,
   add,
 } from "../../disposable";
-import { IOSourceOperator } from "../../io";
 import { defer, ignore, pipe, returns, Factory } from "../../functions";
+import { IOSourceOperator } from "../../io";
 import { using, subscribe, onNotify, dispatchTo } from "../../observable";
 import { createStreamable, sink, stream } from "../../streamable";
 import { createReadableIOSource } from "./createReadableIOSource";

@@ -1,7 +1,7 @@
-import { RunnableLike, SinkLike, RunnableOperator } from "./interfaces";
 import { Function1, compose } from "../../functions";
 import { createRunnable } from "./createRunnable";
 import { fromArray } from "./fromArray";
+import { RunnableLike, SinkLike, RunnableOperator } from "./interfaces";
 import { lift } from "./lift";
 import { map } from "./map";
 import { AbstractDelegatingSink } from "./sink";
@@ -68,10 +68,6 @@ export function startWith<T>(...values: T[]): RunnableOperator<T, T> {
 }
 
 class FlattenSink<T> extends AbstractDelegatingSink<RunnableLike<T>, T> {
-  constructor(delegate: SinkLike<T>) {
-    super(delegate);
-  }
-
   notify(next: RunnableLike<T>) {
     runConcatUnsafe(next, this.delegate);
   }

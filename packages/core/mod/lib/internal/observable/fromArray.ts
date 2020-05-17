@@ -1,10 +1,10 @@
 import { Function1 } from "../../functions.ts";
+import { YieldableLike } from "../scheduler/interfaces.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import {
   createScheduledObservable,
   createDelayedScheduledObservable,
 } from "./observable.ts";
-import { YieldableLike } from "../scheduler/interfaces.ts";
 
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
@@ -26,14 +26,14 @@ export const fromArray = <T>(
   const factory = (observer: ObserverLike<T>) => {
     const yieldOptions = { delay };
 
-    let index = startIndex;   
+    let index = startIndex;
     let observerIsDisposed = observer.isDisposed;
 
     return ($: YieldableLike) => {
       while (index < valuesLength && !observerIsDisposed) {
         observer.notify(values[index]);
         index++;
-  
+
         observerIsDisposed = observer.isDisposed;
         if (index < valuesLength && !observerIsDisposed) {
           $.yield(yieldOptions);
@@ -41,7 +41,7 @@ export const fromArray = <T>(
       }
       observer.dispose();
     };
-  }
+  };
 
   return delay > 0
     ? createDelayedScheduledObservable(factory, delay)

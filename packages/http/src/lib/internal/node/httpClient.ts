@@ -10,8 +10,8 @@ import {
   addDisposableOrTeardown,
 } from "@reactive-js/core/lib/disposable";
 import { FlowMode } from "@reactive-js/core/lib/flowable";
-import { IOEvent, IOEventType, IOSourceLike } from "@reactive-js/core/lib/io";
 import { bind, pipe, returns } from "@reactive-js/core/lib/functions";
+import { IOEvent, IOEventType, IOSourceLike } from "@reactive-js/core/lib/io";
 import {
   createWritableIOSink,
   createDisposableNodeStream,

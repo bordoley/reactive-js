@@ -1,9 +1,9 @@
+import { Function1, SideEffect2 } from "../../../../../core/mod/lib/functions.ts";
 import {
   IOSourceLike,
   IOSourceOperator,
   empty,
 } from "../../../../../core/mod/lib/io.ts";
-import { Function1, SideEffect2 } from "../../../../../core/mod/lib/functions.ts";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.ts";
 import {
   writeHttpMessageHeaders,

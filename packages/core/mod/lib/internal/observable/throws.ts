@@ -1,12 +1,12 @@
 import { dispose } from "../../disposable.ts";
 import { Function1, Factory } from "../../functions.ts";
+import { none } from "../../option.ts";
 import { YieldableLike } from "../scheduler/interfaces.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import {
   createScheduledObservable,
   createDelayedScheduledObservable,
 } from "./observable.ts";
-import { none } from "../../option.ts";
 
 /**
  * Creates an `ObservableLike` that emits no items and immediately disposes its subscription with an error.
@@ -21,7 +21,7 @@ export const throws = <T>(
     let cause: unknown = none;
     try {
       cause = errorFactory();
-    } catch(e) {
+    } catch (e) {
       cause = e;
     }
     dispose(observer, { cause });

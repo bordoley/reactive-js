@@ -1,4 +1,4 @@
-import { AbstractDisposable, add, dispose } from "../../disposable.js";
+import { AbstractDisposable, add, dispose, } from "../../disposable.js";
 import { none, isSome } from "../../option.js";
 import { YieldError, } from "./interfaces.js";
 const notifyListeners = (listeners, state) => {

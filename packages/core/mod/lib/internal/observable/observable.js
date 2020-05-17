@@ -1,5 +1,5 @@
-import { schedule } from "../../scheduler.js";
 import { add, disposeOnError } from "../../disposable.js";
+import { schedule } from "../../scheduler.js";
 class ScheduledObservable {
     constructor(factory, isSynchronous, delay) {
         this.factory = factory;

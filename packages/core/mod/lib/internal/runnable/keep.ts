@@ -1,7 +1,7 @@
-import { AbstractDelegatingSink } from "./sink.ts";
-import { SinkLike, RunnableOperator } from "./interfaces.ts";
 import { TypePredicate, Predicate } from "../../functions.ts";
+import { SinkLike, RunnableOperator } from "./interfaces.ts";
 import { lift } from "./lift.ts";
+import { AbstractDelegatingSink } from "./sink.ts";
 
 class KeepTypeSink<TA, TB extends TA> extends AbstractDelegatingSink<TA, TB> {
   constructor(

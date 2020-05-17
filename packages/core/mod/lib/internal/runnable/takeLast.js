@@ -1,8 +1,8 @@
-import { sinkDone } from "./interfaces.js";
 import { pipe } from "../../functions.js";
-import { lift } from "./lift.js";
 import { empty } from "./empty.js";
 import { fromArray } from "./fromArray.js";
+import { sinkDone } from "./interfaces.js";
+import { lift } from "./lift.js";
 class TakeLastSink {
     constructor(delegate, maxCount) {
         this.delegate = delegate;

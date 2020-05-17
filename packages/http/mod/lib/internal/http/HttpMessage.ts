@@ -1,5 +1,5 @@
-import { IOSourceLike, fromValue } from "../../../../../core/mod/lib/io.ts";
 import { SideEffect2 } from "../../../../../core/mod/lib/functions.ts";
+import { IOSourceLike, fromValue } from "../../../../../core/mod/lib/io.ts";
 import { isSome, isNone } from "../../../../../core/mod/lib/option.ts";
 import { writeHttpCacheControlHeader } from "./cacheDirective.ts";
 import { writeHttpContentInfoHeaders } from "./httpContentInfo.ts";

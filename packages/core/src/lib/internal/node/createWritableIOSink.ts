@@ -1,8 +1,8 @@
 import { Writable } from "stream";
 import { DisposableValueLike, dispose, add } from "../../disposable";
 import { FlowMode } from "../../flowable";
-import { IOEventType, IOEvent, IOSinkLike } from "../../io";
 import { pipe, bind, Factory } from "../../functions";
+import { IOEventType, IOEvent, IOSinkLike } from "../../io";
 import {
   createObservable,
   onNotify,

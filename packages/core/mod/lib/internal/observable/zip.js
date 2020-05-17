@@ -1,13 +1,13 @@
 import { AbstractDisposable, dispose, add, } from "../../disposable.js";
 import { current } from "../../enumerable.js";
+import { returns } from "../../functions.js";
 import { none, isSome, isNone } from "../../option.js";
 import { runContinuation } from "../../scheduler.js";
 import { zipEnumerators } from "../enumerable/zip.js";
+import { YieldError } from "../scheduler/interfaces.js";
 import { fromEnumerator } from "./fromEnumerable.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 import { using } from "./using.js";
-import { YieldError } from "../scheduler/interfaces.js";
-import { returns } from "../../functions.js";
 class EnumeratorObserver extends AbstractDisposable {
     constructor() {
         super(...arguments);

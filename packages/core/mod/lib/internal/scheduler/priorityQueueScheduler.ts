@@ -98,13 +98,12 @@ const scheduleContinuation = (
   const dueTime = task.dueTime;
   const delay = dueTime - scheduler.now;
 
-  scheduler.dueTime = dueTime;  
+  scheduler.dueTime = dueTime;
   scheduler.inner = schedule(scheduler.host, scheduler.continuation, { delay });
 };
 
 class PriorityScheduler extends AbstractSerialDisposable
   implements PrioritySchedulerLike, PausableSchedulerLike {
-  
   readonly continuation = ($: YieldableLike) => {
     for (
       let task = peek(this);
@@ -218,7 +217,7 @@ class PriorityScheduler extends AbstractSerialDisposable
     }
   }
 
-  yield(options = { delay: 0}) {
+  yield(options = { delay: 0 }) {
     const current = this.current;
     const { delay } = options;
     const next = peek(this);
@@ -239,7 +238,7 @@ class PriorityScheduler extends AbstractSerialDisposable
       throw new YieldError(delay);
     }
 
-    this.host.yield(options)
+    this.host.yield(options);
   }
 }
 

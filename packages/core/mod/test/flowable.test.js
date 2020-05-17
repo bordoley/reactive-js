@@ -1,10 +1,10 @@
+import { dispose } from "../lib/disposable.js";
 import { empty, fromValue, fromObservable } from "../lib/flowable.js";
 import { increment, pipe, returns, bind } from "../lib/functions.js";
+import { test, describe, expectEquals, expectTrue, mockFn, expectToHaveBeenCalledTimes, } from "../lib/internal/testing.js";
 import { onNotify, subscribe, generate, dispatch } from "../lib/observable.js";
 import { createVirtualTimeScheduler, schedule } from "../lib/scheduler.js";
-import { test, describe, expectEquals, expectTrue, mockFn, expectToHaveBeenCalledTimes, } from "../lib/internal/testing.js";
 import { stream } from "../lib/streamable.js";
-import { dispose } from "../lib/disposable.js";
 export const tests = describe("flowables", test("empty", () => {
     const scheduler = createVirtualTimeScheduler();
     const emptyStream = stream(empty(), scheduler);

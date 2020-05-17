@@ -1,8 +1,8 @@
-import { RunnableOperator, SinkLike, sinkDone } from "./interfaces.ts";
 import { pipe } from "../../functions.ts";
-import { lift } from "./lift.ts";
 import { empty } from "./empty.ts";
 import { fromArray } from "./fromArray.ts";
+import { RunnableOperator, SinkLike, sinkDone } from "./interfaces.ts";
+import { lift } from "./lift.ts";
 
 class TakeLastSink<T> implements SinkLike<T> {
   private readonly last: T[] = [];

@@ -1,15 +1,15 @@
+import { dispose } from "../lib/disposable.ts";
+import { pipe, incrementBy } from "../lib/functions.ts";
 import {
   test,
   describe,
   expectArrayEquals,
   expectTrue,
 } from "../lib/internal/testing.ts";
-import { pipe, incrementBy } from "../lib/functions.ts";
-import { identity, lift, stream } from "../lib/streamable.ts";
-import { toStateStore } from "../lib/stateStore.ts";
-import { createVirtualTimeScheduler } from "../lib/scheduler.ts";
 import { onNotify, subscribe, startWith, dispatch } from "../lib/observable.ts";
-import { dispose } from "../lib/disposable.ts";
+import { createVirtualTimeScheduler } from "../lib/scheduler.ts";
+import { toStateStore } from "../lib/stateStore.ts";
+import { identity, lift, stream } from "../lib/streamable.ts";
 
 export const tests = describe(
   "stateStore",

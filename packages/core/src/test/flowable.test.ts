@@ -1,7 +1,6 @@
+import { dispose } from "../lib/disposable";
 import { empty, fromValue, FlowMode, fromObservable } from "../lib/flowable";
 import { increment, pipe, returns, bind } from "../lib/functions";
-import { onNotify, subscribe, generate, dispatch } from "../lib/observable";
-import { createVirtualTimeScheduler, schedule } from "../lib/scheduler";
 import {
   test,
   describe,
@@ -10,8 +9,9 @@ import {
   mockFn,
   expectToHaveBeenCalledTimes,
 } from "../lib/internal/testing";
+import { onNotify, subscribe, generate, dispatch } from "../lib/observable";
+import { createVirtualTimeScheduler, schedule } from "../lib/scheduler";
 import { stream } from "../lib/streamable";
-import { dispose } from "../lib/disposable";
 
 export const tests = describe(
   "flowables",

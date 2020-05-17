@@ -10,13 +10,11 @@ import { pipe, returns } from "../../functions.ts";
 import { concat } from "./concat.ts";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { subscribe } from "./subscribe.ts";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
+import { subscribe } from "./subscribe.ts";
 import { throws } from "./throws.ts";
 
-const _timeoutError = Symbol(
-  "@reactive-js/core/lib/observable/timeoutError",
-);
+const _timeoutError = Symbol("@reactive-js/core/lib/observable/timeoutError");
 
 /** Symbol thrown when the timeout operator times out */
 export const timeoutError = _timeoutError;

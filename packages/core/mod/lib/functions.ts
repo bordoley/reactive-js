@@ -138,7 +138,9 @@ export function bind<T>(
 
 export const identity = <T>(v: T): T => v;
 
-export const returns = <T>(v: T): (..._args: unknown[]) => T => (..._args: unknown[]) => v;
+export const returns = <T>(v: T): ((..._args: unknown[]) => T) => (
+  ..._args: unknown[]
+) => v;
 
 const _alwaysFalse = returns(false);
 export const alwaysFalse: (..._args: unknown[]) => boolean = _alwaysFalse;

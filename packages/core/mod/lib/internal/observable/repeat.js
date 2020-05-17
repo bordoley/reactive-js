@@ -2,9 +2,9 @@ import { createSerialDisposable, dispose, addDisposableOrTeardown, } from "../..
 import { pipe } from "../../functions.js";
 import { isNone, isSome } from "../../option.js";
 import { lift } from "./lift.js";
+import { createDelegatingObserver } from "./observer.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { createDelegatingObserver } from "./observer.js";
 const createRepeatObserver = (delegate, observable, shouldRepeat) => {
     const innerSubscription = createSerialDisposable();
     let count = 1;

@@ -5,7 +5,6 @@ import {
   addDisposableOrTeardown,
   add,
 } from "@reactive-js/core/lib/disposable";
-import { IOSourceLike, IOSinkLike } from "@reactive-js/core/lib/io";
 import {
   bind,
   pipe,
@@ -13,6 +12,7 @@ import {
   Function1,
   SideEffect2,
 } from "@reactive-js/core/lib/functions";
+import { IOSourceLike, IOSinkLike } from "@reactive-js/core/lib/io";
 import {
   createReadableIOSource,
   createWritableIOSink,

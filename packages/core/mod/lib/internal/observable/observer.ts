@@ -1,9 +1,10 @@
-import { add, AbstractDisposable, addDisposableOrTeardown } from "../../disposable.ts";
-import { ignore, SideEffect1, pipe } from "../../functions.ts";
 import {
-  SchedulerContinuationLike,
-  SchedulerLike,
-} from "../../scheduler.ts";
+  add,
+  AbstractDisposable,
+  addDisposableOrTeardown,
+} from "../../disposable.ts";
+import { ignore, SideEffect1, pipe } from "../../functions.ts";
+import { SchedulerContinuationLike, SchedulerLike } from "../../scheduler.ts";
 import { __DEV__ } from "../env.ts";
 import { ObserverLike } from "./interfaces.ts";
 
@@ -106,4 +107,5 @@ export const createDelegatingObserver = <T>(
 
 export const createAutoDisposingDelegatingObserver = <T>(
   delegate: ObserverLike<T>,
-): ObserverLike<T> => pipe(delegate, createDelegatingObserver, addDisposableOrTeardown(delegate));
+): ObserverLike<T> =>
+  pipe(delegate, createDelegatingObserver, addDisposableOrTeardown(delegate));

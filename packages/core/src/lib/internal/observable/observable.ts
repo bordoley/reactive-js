@@ -1,7 +1,7 @@
+import { add, disposeOnError } from "../../disposable";
 import { Function1, SideEffect1 } from "../../functions";
 import { YieldableLike, schedule } from "../../scheduler";
 import { ObservableLike, ObserverLike } from "./interfaces";
-import { add, disposeOnError } from "../../disposable";
 
 class ScheduledObservable<T> implements ObservableLike<T> {
   constructor(
@@ -15,7 +15,10 @@ class ScheduledObservable<T> implements ObservableLike<T> {
 
   observe(observer: ObserverLike<T>) {
     const schedulerContinuation = this.factory(observer);
-    add(schedule(observer, schedulerContinuation, this), disposeOnError(observer));
+    add(
+      schedule(observer, schedulerContinuation, this),
+      disposeOnError(observer),
+    );
   }
 }
 

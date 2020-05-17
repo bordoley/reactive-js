@@ -1,5 +1,5 @@
-import { SinkLike, RunnableLike, sinkDone } from "./interfaces.ts";
 import { SideEffect1 } from "../../functions.ts";
+import { SinkLike, RunnableLike, sinkDone } from "./interfaces.ts";
 
 class RunnableImpl<T> implements RunnableLike<T> {
   constructor(private readonly _run: SideEffect1<SinkLike<T>>) {}

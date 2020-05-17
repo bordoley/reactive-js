@@ -1,9 +1,9 @@
-import { decodeWithCharset, empty, encodeUtf8, fromArray, fromValue, map, } from "../lib/io.js";
-import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulatorForTests.js";
 import { pipe, returns, sum } from "../lib/functions.js";
+import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulatorForTests.js";
+import { test, describe, expectEquals, expectTrue, mockFn, expectToHaveBeenCalledTimes, } from "../lib/internal/testing.js";
+import { decodeWithCharset, empty, encodeUtf8, fromArray, fromValue, map, } from "../lib/io.js";
 import { onNotify, subscribe, dispatch } from "../lib/observable.js";
 import { createVirtualTimeScheduler } from "../lib/scheduler.js";
-import { test, describe, expectEquals, expectTrue, mockFn, expectToHaveBeenCalledTimes, } from "../lib/internal/testing.js";
 import { sink, stream } from "../lib/streamable.js";
 export const tests = describe("io", test("decodeWithCharset", () => {
     const lib = pipe([Uint8Array.from([226]), Uint8Array.from([130]), Uint8Array.from([172])], fromArray(), decodeWithCharset());

@@ -3,9 +3,9 @@ import { pipe, Function2 } from "../../functions.ts";
 import { isSome, Option } from "../../option.ts";
 import { ObserverLike, ObservableLike, ObservableOperator } from "./interfaces.ts";
 import { lift } from "./lift.ts";
+import { AbstractObserver, assertObserverState } from "./observer.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
-import { AbstractObserver, assertObserverState } from "./observer.ts";
 
 const notifyDelegate = <TA, TB, TC>(
   observer: ZipWithLatestFromObserver<TA, TB, TC>,

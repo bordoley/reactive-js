@@ -2,8 +2,8 @@ import { createSerialDisposable, disposeOnError, dispose, add, addDisposableOrTe
 import { pipe, returns } from "../../functions.js";
 import { concat } from "./concat.js";
 import { lift } from "./lift.js";
-import { subscribe } from "./subscribe.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
+import { subscribe } from "./subscribe.js";
 import { throws } from "./throws.js";
 const _timeoutError = Symbol("@reactive-js/core/lib/observable/timeoutError");
 export const timeoutError = _timeoutError;

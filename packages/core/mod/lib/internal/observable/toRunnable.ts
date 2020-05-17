@@ -1,13 +1,13 @@
 import { Exception, dispose, addDisposableOrTeardown } from "../../disposable.ts";
+import { Factory, Function1, pipe } from "../../functions.ts";
+import { none, Option, isNone } from "../../option.ts";
 import { createRunnable } from "../../runnable.ts";
 import {
   createVirtualTimeScheduler,
   VirtualTimeSchedulerLike,
 } from "../../scheduler.ts";
-import { Factory, Function1, pipe } from "../../functions.ts";
-import { ObservableLike } from "./interfaces.ts";
 import { RunnableLike } from "../runnable/interfaces.ts";
-import { none, Option, isNone } from "../../option.ts";
+import { ObservableLike } from "./interfaces.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
 

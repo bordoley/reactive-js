@@ -1,5 +1,4 @@
 import { pipe, SideEffect2 } from "../../../../../core/mod/lib/functions.ts";
-import { isSome } from "../../../../../core/mod/lib/option.ts";
 import {
   CharStreamLike,
   optional,
@@ -7,6 +6,7 @@ import {
   parseWith,
   parseWithOrThrow,
 } from "../../../../../core/mod/lib/internal/parserCombinators.ts";
+import { isSome } from "../../../../../core/mod/lib/option.ts";
 import {
   pToken,
   pTokenOrQuotedString,

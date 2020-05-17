@@ -20,14 +20,13 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
   }
 
   schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
-    this.priorityScheduler.schedule(
-      continuation, {
+    this.priorityScheduler.schedule(continuation, {
       priority: this.priority,
       delay,
     });
   }
- 
-  yield(options?: { delay: number}) {
+
+  yield(options?: { delay: number }) {
     this.priorityScheduler.yield(options);
   }
 }

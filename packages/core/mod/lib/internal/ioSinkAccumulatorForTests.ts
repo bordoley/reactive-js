@@ -1,7 +1,7 @@
-import { IOEvent, IOEventType, IOSinkLike } from "../io.ts";
+import { add } from "../disposable.ts";
 import { FlowMode } from "../flowable.ts";
 import { Reducer, pipe, returns, Factory } from "../functions.ts";
-import { SchedulerLike } from "../scheduler.ts";
+import { IOEvent, IOEventType, IOSinkLike } from "../io.ts";
 import {
   StreamLike,
   ObservableLike,
@@ -15,7 +15,7 @@ import {
   dispatch,
   reduce,
 } from "../observable.ts";
-import { add } from "../disposable.ts";
+import { SchedulerLike } from "../scheduler.ts";
 import { stream, createStreamable } from "../streamable.ts";
 
 const isNext = <T>(

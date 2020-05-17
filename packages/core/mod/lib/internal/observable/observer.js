@@ -1,4 +1,4 @@
-import { add, AbstractDisposable, addDisposableOrTeardown } from "../../disposable.js";
+import { add, AbstractDisposable, addDisposableOrTeardown, } from "../../disposable.js";
 import { ignore, pipe } from "../../functions.js";
 import { __DEV__ } from "../env.js";
 const assertObserverStateProduction = ignore;

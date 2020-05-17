@@ -48,9 +48,9 @@ export const dispose = (disposable: DisposableLike, e?: Exception) => {
   disposable.dispose(e);
 };
 
-export const disposeOnError = (disposable: DisposableLike): SideEffect1<Option<Exception>> => (
-  error?: Exception,
-) => {
+export const disposeOnError = (
+  disposable: DisposableLike,
+): SideEffect1<Option<Exception>> => (error?: Exception) => {
   if (isSome(error)) {
     dispose(disposable, error);
   }

@@ -1,5 +1,12 @@
 import { addDisposableOrTeardown, add } from "./disposable.ts";
-import { pipe, identity, Factory, Equality, strictEquality, Updater } from "./functions.ts";
+import {
+  pipe,
+  identity,
+  Factory,
+  Equality,
+  strictEquality,
+  Updater,
+} from "./functions.ts";
 import {
   onNotify,
   using,
@@ -19,8 +26,7 @@ import {
 /** @noInheritDoc */
 export interface StateStoreLike<T> extends StreamableLike<Updater<T>, T> {}
 
-const stateStoreReducer = <T>(state: T, action: Updater<T>) =>
-  action(state);
+const stateStoreReducer = <T>(state: T, action: Updater<T>) => action(state);
 
 /**
  * Returns a new `StateStoreLike` instance that stores state which can

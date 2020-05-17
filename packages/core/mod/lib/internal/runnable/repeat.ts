@@ -1,7 +1,7 @@
 import { alwaysTrue, Predicate } from "../../functions.ts";
 import { isNone } from "../../option.ts";
-import { SinkLike, RunnableOperator } from "./interfaces.ts";
 import { createRunnable } from "./createRunnable.ts";
+import { SinkLike, RunnableOperator } from "./interfaces.ts";
 
 class RepeatSink<T> implements SinkLike<T> {
   isDone = false;

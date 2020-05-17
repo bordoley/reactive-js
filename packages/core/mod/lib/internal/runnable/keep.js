@@ -1,5 +1,5 @@
-import { AbstractDelegatingSink } from "./sink.js";
 import { lift } from "./lift.js";
+import { AbstractDelegatingSink } from "./sink.js";
 class KeepTypeSink extends AbstractDelegatingSink {
     constructor(delegate, predicate) {
         super(delegate);

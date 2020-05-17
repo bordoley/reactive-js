@@ -3,9 +3,9 @@ import { pipe, Function2 } from "../../functions.ts";
 import { Option, isSome } from "../../option.ts";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 
 class WithLatestFromObserver<TA, TB, T> extends AbstractDelegatingObserver<
   TA,

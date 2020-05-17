@@ -1,13 +1,9 @@
-import { RunnableLike } from "./interfaces.ts";
 import { none, Option } from "../../option.ts";
+import { RunnableLike } from "./interfaces.ts";
 import { AbstractSink } from "./sink.ts";
 
 class FirstSink<T> extends AbstractSink<T> {
   result: Option<T> = none;
-
-  constructor() {
-    super();
-  }
 
   notify(next: T) {
     this.result = next;

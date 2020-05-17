@@ -1,8 +1,8 @@
 import { dispose, addDisposableOrTeardown } from "../../disposable";
+import { pipe } from "../../functions";
 import { isSome } from "../../option";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
 import { createDelegatingObserver } from "./observer";
-import { pipe } from "../../functions";
 
 const createMergeObserver = <T>(
   delegate: ObserverLike<T>,

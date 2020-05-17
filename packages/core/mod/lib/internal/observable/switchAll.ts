@@ -9,9 +9,9 @@ import { isSome } from "../../option.ts";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { map } from "./map.ts";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 
 class SwitchObserver<T> extends AbstractDelegatingObserver<
   ObservableLike<T>,

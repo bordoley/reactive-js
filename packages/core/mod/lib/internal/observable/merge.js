@@ -1,7 +1,7 @@
 import { dispose, addDisposableOrTeardown } from "../../disposable.js";
+import { pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
 import { createDelegatingObserver } from "./observer.js";
-import { pipe } from "../../functions.js";
 const createMergeObserver = (delegate, count, ctx) => pipe(delegate, createDelegatingObserver, addDisposableOrTeardown(error => {
     ctx.completedCount++;
     if (isSome(error) || ctx.completedCount >= count) {

@@ -1,6 +1,6 @@
 import { createDisposable, dispose, add, } from "../../disposable.js";
 import { bind } from "../../functions.js";
-import { YieldError } from "./interfaces.js";
+import { YieldError, } from "./interfaces.js";
 import { runContinuation } from "./schedulerContinuation.js";
 const supportsPerformanceNow = typeof performance === "object" && typeof performance.now === "function";
 const supportsProcessHRTime = typeof process === "object" && typeof process.hrtime === "function";

@@ -85,7 +85,7 @@ const priorityScheduler = {
     if (delay > 0 || unstable_shouldYield()) {
       throw new YieldError(delay);
     }
-  }
+  },
 };
 
 /** Scheduler that schedules work on React's internal priority scheduler with idle priority. */

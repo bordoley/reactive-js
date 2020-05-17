@@ -4,6 +4,7 @@ import {
   fromObservable as fromObservableFlowable,
 } from "./flowable";
 import { Function1, compose, pipe, returns, composeWith } from "./functions";
+import { endWith } from "./internal/observable/endWith";
 import {
   map as mapObs,
   withLatestFrom as withLatestFromObs,
@@ -20,7 +21,6 @@ import {
   withLatestFrom,
   StreamableLike,
 } from "./streamable";
-import { endWith } from "./internal/observable/endWith";
 
 export const enum IOEventType {
   Next = 1,

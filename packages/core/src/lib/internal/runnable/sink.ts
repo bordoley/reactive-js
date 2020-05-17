@@ -3,8 +3,6 @@ import { SinkLike, sinkDone } from "./interfaces";
 export abstract class AbstractSink<T> implements SinkLike<T> {
   isDone = false;
 
-  constructor() {}
-
   abstract notify(next: T): void;
 
   done() {

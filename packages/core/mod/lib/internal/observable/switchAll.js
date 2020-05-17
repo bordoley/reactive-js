@@ -3,9 +3,9 @@ import { compose, pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
 import { map } from "./map.js";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 class SwitchObserver extends AbstractDelegatingObserver {
     constructor(delegate) {
         super(delegate);

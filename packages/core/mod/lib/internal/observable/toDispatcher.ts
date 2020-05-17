@@ -4,7 +4,7 @@ import { YieldableLike, schedule } from "../../scheduler.ts";
 import { DispatcherLike, ObserverLike } from "./interfaces.ts";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
-  if (dispatcher.nextQueue.length === 1) {    
+  if (dispatcher.nextQueue.length === 1) {
     add(
       schedule(dispatcher.observer, dispatcher.continuation),
       dispatcher.onContinuationDispose,
@@ -14,7 +14,6 @@ const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
 
 class ObserverDelegatingDispatcher<T> extends AbstractDisposable
   implements DispatcherLike<T> {
-  
   readonly continuation = ($: YieldableLike) => {
     const nextQueue = this.nextQueue;
     const observer = this.observer;
@@ -29,7 +28,7 @@ class ObserverDelegatingDispatcher<T> extends AbstractDisposable
         $.yield();
       }
     }
-  }
+  };
 
   readonly onContinuationDispose = (e?: Exception) => {
     // FIXME: Maybe publish both?

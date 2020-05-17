@@ -1,4 +1,11 @@
-import { AbstractDisposable, Exception, add, dispose, DisposableLike } from "../../disposable";
+import {
+  AbstractDisposable,
+  Exception,
+  add,
+  dispose,
+  DisposableLike,
+} from "../../disposable";
+import { SideEffect1 } from "../../functions";
 import { none, Option, isSome } from "../../option";
 import {
   SchedulerContinuationLike,
@@ -8,7 +15,6 @@ import {
   PrioritySchedulerLike,
   YieldableLike,
 } from "./interfaces";
-import { SideEffect1 } from "../../functions";
 
 const notifyListeners = (
   listeners: Set<SchedulerContinuationRunStatusChangedListenerLike>,
@@ -19,8 +25,7 @@ const notifyListeners = (
   }
 };
 
-const isYieldError = (e: unknown): e is YieldError => 
-  e instanceof YieldError;
+const isYieldError = (e: unknown): e is YieldError => e instanceof YieldError;
 
 class SchedulerContinuationImpl extends AbstractDisposable
   implements SchedulerContinuationLike {
@@ -92,7 +97,7 @@ export const runContinuation = (
       continuation.dispose({ cause });
     }
   }
-}
+};
 
 export const schedule = (
   scheduler: SchedulerLike,

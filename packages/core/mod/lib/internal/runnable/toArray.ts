@@ -1,6 +1,6 @@
 import { Function1 } from "../../functions.ts";
-import { reduce } from "./reduce.ts";
 import { RunnableLike } from "./interfaces.ts";
+import { reduce } from "./reduce.ts";
 
 const toArrayReducer = <T>(acc: T[], next: T) => {
   acc.push(next);

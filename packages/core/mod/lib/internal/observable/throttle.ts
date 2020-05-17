@@ -11,9 +11,9 @@ import { none, Option, isNone } from "../../option.ts";
 import { fromValue } from "./fromValue.ts";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 
 /**
  * The throttle mode used by the `throttle` operator.

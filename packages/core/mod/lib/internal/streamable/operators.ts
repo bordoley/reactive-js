@@ -13,8 +13,8 @@ import {
   scan as scanObs,
   withLatestFrom as withLatestFromObs,
 } from "../../observable.ts";
-import { lift } from "./streamable.ts";
 import { StreamableOperator } from "./interfaces.ts";
+import { lift } from "./streamable.ts";
 
 export const map = <TReq, TA, TB>(
   mapper: Function1<TA, TB>,

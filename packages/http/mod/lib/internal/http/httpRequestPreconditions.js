@@ -1,6 +1,6 @@
 import { pipe } from "../../../../../core/mod/lib/functions.js";
-import { isNone, isSome, none } from "../../../../../core/mod/lib/option.js";
 import { parseWith, pAsterisk, or, mapTo, } from "../../../../../core/mod/lib/internal/parserCombinators.js";
+import { isNone, isSome, none } from "../../../../../core/mod/lib/option.js";
 import { entityTagToString, pETag, parseETag, parseETagOrThrow, } from "./entityTag.js";
 import { httpDateTimeToString, parseHttpDateTime } from "./httpDateTime.js";
 import { httpList } from "./httpGrammar.js";

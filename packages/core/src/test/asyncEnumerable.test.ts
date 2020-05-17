@@ -10,22 +10,22 @@ import {
 import { Exception, addDisposableOrTeardown } from "../lib/disposable";
 import { pipe, increment, returns, defer } from "../lib/functions";
 import {
-  fromValue,
-  subscribe,
-  onNotify,
-  toRunnable,
-  dispatch,
-} from "../lib/observable";
-import { last } from "../lib/runnable";
-import { none, Option } from "../lib/option";
-import { createVirtualTimeScheduler } from "../lib/scheduler";
-import {
   test,
   describe,
   expectEquals,
   expectNone,
   expectArrayEquals,
 } from "../lib/internal/testing";
+import {
+  fromValue,
+  subscribe,
+  onNotify,
+  toRunnable,
+  dispatch,
+} from "../lib/observable";
+import { none, Option } from "../lib/option";
+import { last } from "../lib/runnable";
+import { createVirtualTimeScheduler } from "../lib/scheduler";
 import { stream } from "../lib/streamable";
 
 export const tests = describe(

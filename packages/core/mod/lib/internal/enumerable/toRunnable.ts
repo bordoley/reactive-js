@@ -1,6 +1,6 @@
-import { EnumerableLike, EnumeratorLike } from "./interfaces.ts";
-import { RunnableLike, createRunnable, SinkLike } from "../../runnable.ts";
 import { Factory, Function1 } from "../../functions.ts";
+import { RunnableLike, createRunnable, SinkLike } from "../../runnable.ts";
+import { EnumerableLike, EnumeratorLike } from "./interfaces.ts";
 
 const enumeratorToRunnable = <T>(
   f: Factory<EnumeratorLike<T>>,

@@ -1,6 +1,6 @@
 import { DisposableLike } from "../../disposable";
-import { SchedulerLike } from "../../scheduler";
 import { Function1 } from "../../functions";
+import { SchedulerLike } from "../../scheduler";
 
 /**
  * The underlying mechanism for receiving and transforming notifications from an
