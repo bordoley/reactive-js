@@ -1,5 +1,5 @@
 import { Readable } from "stream";
-import { DisposableValueLike, dispose, add } from "../../disposable";
+import { DisposableValueLike, dispose, add, disposeOnError, addDisposableOrTeardown } from "../../disposable";
 import { FlowMode } from "../../flowable";
 import { pipe, compose, Factory } from "../../functions";
 import { next, complete, IOSourceLike } from "../../io";
@@ -58,6 +58,7 @@ const createReadableAndSetupModeSubscription = (
       }
     }),
     subscribe(scheduler),
+    pipe(readable, disposeOnError, addDisposableOrTeardown),
   );
 
   return add(readable, modeSubscription);
