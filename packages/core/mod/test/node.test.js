@@ -1,6 +1,6 @@
 import { Readable, Writable } from "stream";
 import { pipe, bind, returns } from "../lib/functions.js";
-import { createReadableIOStream, createWritableIOSink, gzip, gunzip, createDisposableNodeStream, } from "../lib/node.js";
+import { createReadableIOSource, createWritableIOSink, gzip, gunzip, createDisposableNodeStream, } from "../lib/node.js";
 import { toPromise } from "../lib/observable.js";
 import { createHostScheduler } from "../lib/scheduler.js";
 import { sink } from "../lib/streamable.js";
@@ -41,12 +41,12 @@ export const tests = describe("node", describe("createWritableIOSink", testAsync
     const lib = pipe([encoder.encode("abc"), encoder.encode("defg")], fromArray());
     const promise = pipe(sink(lib, dest), toPromise(scheduler));
     await expectPromiseToThrow(promise);
-})), describe("createReadableIOStream", testAsync("reading from readable", async () => {
+})), describe("createReadableIOSource", testAsync("reading from readable", async () => {
     function* generate() {
         yield Buffer.from("abc", "utf8");
         yield Buffer.from("defg", "utf8");
     }
-    const lib = createReadableIOStream(() => pipe(generate(), Readable.from, createDisposableNodeStream));
+    const lib = createReadableIOSource(() => pipe(generate(), Readable.from, createDisposableNodeStream));
     const textDecoder = new TextDecoder();
     const dest = createIOSinkAccumulator((acc, next) => acc + textDecoder.decode(next), returns(""));
     await pipe(sink(lib, dest), toPromise(scheduler));
@@ -57,7 +57,7 @@ export const tests = describe("node", describe("createWritableIOSink", testAsync
         yield Buffer.from("abc", "utf8");
         throw cause;
     }
-    const lib = createReadableIOStream(() => pipe(generate(), Readable.from, createDisposableNodeStream));
+    const lib = createReadableIOSource(() => pipe(generate(), Readable.from, createDisposableNodeStream));
     const textDecoder = new TextDecoder();
     const dest = createIOSinkAccumulator((acc, next) => acc + textDecoder.decode(next), returns(""));
     await pipe(sink(lib, dest), toPromise(scheduler), expectPromiseToThrow);

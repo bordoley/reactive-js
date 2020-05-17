@@ -34,21 +34,21 @@ const _complete: IOEvent<any> = { type: IOEventType.Complete };
 export const complete = <T>(): IOEvent<T> => _complete;
 
 /** @noInheritDoc */
-export interface IOStreamableLike<T>
+export interface IOSourceLike<T>
   extends FlowableLike<IOEvent<T>> {}
 
 /** @noInheritDoc */
 export interface IOSinkLike<T> extends StreamableLike<IOEvent<T>, FlowMode> {}
 
-export type IOStreamableOperator<TA, TB> = Function1<
-  IOStreamableLike<TA>,
-  IOStreamableLike<TB>
+export type IOSourceOperator<TA, TB> = Function1<
+  IOSourceLike<TA>,
+  IOSourceLike<TB>
 >;
 
 export const decodeWithCharset = (
   charset = "utf-8",
   options?: TextDecoderOptions,
-): IOStreamableOperator<ArrayBuffer, string> =>
+): IOSourceOperator<ArrayBuffer, string> =>
   lift(
     compose(
       withLatestFrom(
@@ -77,7 +77,7 @@ export const decodeWithCharset = (
     ),
   );
 
-export const encodeUtf8: IOStreamableOperator<string, Uint8Array> = lift(
+export const encodeUtf8: IOSourceOperator<string, Uint8Array> = lift(
   withLatestFrom(
     compute<TextEncoder>()(() => new TextEncoder()),
     (ev, textEncoder) => {
@@ -96,7 +96,7 @@ export const encodeUtf8: IOStreamableOperator<string, Uint8Array> = lift(
 
 export const map = <TA, TB>(
   mapper: Function1<TA, TB>,
-): Function1<IOStreamableLike<TA>, IOStreamableLike<TB>> =>
+): Function1<IOSourceLike<TA>, IOSourceLike<TB>> =>
   mapStream((ev: IOEvent<TA>) =>
     ev.type === IOEventType.Next ? pipe(ev.data, mapper, next) : ev,
   );
@@ -106,16 +106,16 @@ const _fromObservable = compose(
   endWith(complete()),
   fromObservableFlowable(),
 );
-export const fromObservable = <T>(): Function1<ObservableLike<T>, IOStreamableLike<T>> => _fromObservable;
+export const fromObservable = <T>(): Function1<ObservableLike<T>, IOSourceLike<T>> => _fromObservable;
 
 const _fromArray = compose(
   fromArrayObs(),
   fromObservable(),
 );
-export const fromArray = <T>(): Function1<readonly T[], IOStreamableLike<T>> => _fromArray;
+export const fromArray = <T>(): Function1<readonly T[], IOSourceLike<T>> => _fromArray;
 
 const _fromValue = <T>(v: T) => pipe([v], fromArray());
-export const fromValue = <T>(): Function1<T, IOStreamableLike<T>> => _fromValue;
+export const fromValue = <T>(): Function1<T, IOSourceLike<T>> => _fromValue;
 
-const _empty: IOStreamableLike<any> = _fromArray([]);
-export const empty = <T>(): IOStreamableLike<T> => _empty;
+const _empty: IOSourceLike<any> = _fromArray([]);
+export const empty = <T>(): IOSourceLike<T> => _empty;

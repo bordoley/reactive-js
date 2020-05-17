@@ -1,7 +1,7 @@
 import { Readable, Writable } from "stream";
 import { pipe, bind, returns } from "../lib/functions";
 import {
-  createReadableIOStream,
+  createReadableIOSource,
   createWritableIOSink,
   gzip, 
   gunzip,
@@ -84,13 +84,13 @@ export const tests = describe(
   ),
 
   describe(
-    "createReadableIOStream",
+    "createReadableIOSource",
     testAsync("reading from readable", async () => {
       function* generate() {
         yield Buffer.from("abc", "utf8");
         yield Buffer.from("defg", "utf8");
       }
-      const lib = createReadableIOStream(() =>
+      const lib = createReadableIOSource(() =>
         pipe(generate(), Readable.from, createDisposableNodeStream),
       );
 
@@ -110,7 +110,7 @@ export const tests = describe(
         yield Buffer.from("abc", "utf8");
         throw cause;
       }
-      const lib = createReadableIOStream(() =>
+      const lib = createReadableIOSource(() =>
         pipe(generate(), Readable.from, createDisposableNodeStream),
       );
 

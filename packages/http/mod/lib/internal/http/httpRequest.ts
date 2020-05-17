@@ -1,10 +1,10 @@
-import { IOStreamableLike, IOStreamableOperator } from "../../../../../core/mod/lib/io.ts";
+import { IOSourceLike, IOSourceOperator } from "../../../../../core/mod/lib/io.ts";
 import { Function1, SideEffect2 } from "../../../../../core/mod/lib/functions.ts";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.ts";
 import {
   writeHttpMessageHeaders,
   encodeHttpMessageWithUtf8,
-  toIOStreamableHttpMessage,
+  toIOSourceHttpMessage,
   decodeHttpMessageWithCharset,
 } from "./HttpMessage.ts";
 import {
@@ -301,16 +301,16 @@ export const decodeHttpRequestWithCharset: Function1<
   HttpRequest<string>
 >;
 
-export const toIOStreamableHttpRequest = <TBody>(
+export const toIOSourceHttpRequest = <TBody>(
   req: HttpRequest<TBody>,
-): HttpRequest<IOStreamableLike<TBody>> =>
-  toIOStreamableHttpMessage(req) as HttpRequest<IOStreamableLike<TBody>>;
+): HttpRequest<IOSourceLike<TBody>> =>
+  toIOSourceHttpMessage(req) as HttpRequest<IOSourceLike<TBody>>;
 
 export const decodeHttpRequestContent = (decoderProvider: {
-  [key: string]: IOStreamableOperator<Uint8Array, Uint8Array>;
+  [key: string]: IOSourceOperator<Uint8Array, Uint8Array>;
 }): Function1<
-  HttpRequest<IOStreamableLike<Uint8Array>>,
-  HttpRequest<IOStreamableLike<Uint8Array>>
+  HttpRequest<IOSourceLike<Uint8Array>>,
+  HttpRequest<IOSourceLike<Uint8Array>>
 > => req => {
   const { body, contentInfo, ...rest } = req;
 
@@ -344,7 +344,7 @@ export const decodeHttpRequestContent = (decoderProvider: {
 
 export const encodeHttpClientRequestContent = (
   encoderProvider: {
-    [key: string]: IOStreamableOperator<Uint8Array, Uint8Array>;
+    [key: string]: IOSourceOperator<Uint8Array, Uint8Array>;
   },
   db: {
     [key: string]: {
@@ -352,8 +352,8 @@ export const encodeHttpClientRequestContent = (
     };
   } = {},
 ): Function1<
-  HttpClientRequest<IOStreamableLike<Uint8Array>>,
-  HttpClientRequest<IOStreamableLike<Uint8Array>>
+  HttpClientRequest<IOSourceLike<Uint8Array>>,
+  HttpClientRequest<IOSourceLike<Uint8Array>>
 > => {
   const supportedEncodings = Object.keys(encoderProvider);
 

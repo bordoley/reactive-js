@@ -9,7 +9,7 @@ import {
   encodeUtf8,
   fromObservable,
   map as mapFlowable,
-  IOStreamableLike,
+  IOSourceLike,
 } from "@reactive-js/core/lib/io";
 import {
   pipe,
@@ -21,7 +21,7 @@ import {
   bind,
 } from "@reactive-js/core/lib/functions";
 import {
-  createReadableIOStream,
+  createReadableIOSource,
   createDisposableNodeStream,
   bindNodeCallback,
 } from "@reactive-js/core/lib/node";
@@ -62,8 +62,8 @@ import {
   HttpRoutedRequest,
   HttpClientRequestStatusType,
   withDefaultBehaviors,
-  toIOStreamableHttpResponse,
-  toIOStreamableHttpRequest,
+  toIOSourceHttpResponse,
+  toIOSourceHttpRequest,
   encodeHttpClientRequestContent,
   encodeHttpResponseContent,
   HttpStandardHeader,
@@ -85,8 +85,8 @@ const scheduler = pipe(
 );
 
 const routerHandlerPrintParams: HttpServer<
-  HttpRoutedRequest<IOStreamableLike<Uint8Array>>,
-  HttpResponse<IOStreamableLike<Uint8Array>>
+  HttpRoutedRequest<IOSourceLike<Uint8Array>>,
+  HttpResponse<IOSourceLike<Uint8Array>>
 > = req =>
   pipe(
     createHttpResponse({
@@ -97,13 +97,13 @@ const routerHandlerPrintParams: HttpServer<
       body: JSON.stringify(req.params),
     }),
     encodeHttpResponseWithUtf8,
-    toIOStreamableHttpResponse,
+    toIOSourceHttpResponse,
     fromValue(),
   );
 
 const routerHandlerEventStream: HttpServer<
-  HttpRoutedRequest<IOStreamableLike<Uint8Array>>,
-  HttpResponse<IOStreamableLike<Uint8Array>>
+  HttpRoutedRequest<IOSourceLike<Uint8Array>>,
+  HttpResponse<IOSourceLike<Uint8Array>>
 > = bind(
   fromValue(),
   createHttpResponse({
@@ -125,8 +125,8 @@ const routerHandlerEventStream: HttpServer<
 );
 
 const routerHandlerFiles: HttpServer<
-  HttpRoutedRequest<IOStreamableLike<Uint8Array>>,
-  HttpResponse<IOStreamableLike<Uint8Array>>
+  HttpRoutedRequest<IOSourceLike<Uint8Array>>,
+  HttpResponse<IOSourceLike<Uint8Array>>
 > = req => {
   const path = req.params["*"] || "";
   const contentType = mime.lookup(path) || "application/octet-stream";
@@ -137,7 +137,7 @@ const routerHandlerFiles: HttpServer<
       next.isFile() && !next.isDirectory()
         ? createHttpResponse({
             statusCode: HttpStatusCode.OK,
-            body: createReadableIOStream(
+            body: createReadableIOSource(
               defer(path, fs.createReadStream, createDisposableNodeStream),
             ),
             contentInfo: {
@@ -154,20 +154,20 @@ const routerHandlerFiles: HttpServer<
               body: JSON.stringify(req.params),
             }),
             encodeHttpResponseWithUtf8,
-            toIOStreamableHttpResponse,
+            toIOSourceHttpResponse,
           ),
     ),
   );
 };
 
 const routerHandlerThrow: HttpServer<
-  HttpRoutedRequest<IOStreamableLike<Uint8Array>>,
-  HttpResponse<IOStreamableLike<Uint8Array>>
+  HttpRoutedRequest<IOSourceLike<Uint8Array>>,
+  HttpResponse<IOSourceLike<Uint8Array>>
 > = returns(throws()(() => new Error("internal error")));
 
 const notFound: Function1<
-  HttpRequest<IOStreamableLike<Uint8Array>>,
-  ObservableLike<HttpResponse<IOStreamableLike<Uint8Array>>>
+  HttpRequest<IOSourceLike<Uint8Array>>,
+  ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>>
 > = req =>
   pipe(
     createHttpResponse({
@@ -178,7 +178,7 @@ const notFound: Function1<
       body: req.uri.toString(),
     }),
     encodeHttpResponseWithUtf8,
-    toIOStreamableHttpResponse,
+    toIOSourceHttpResponse,
     fromValue(),
   );
 
@@ -233,7 +233,7 @@ const listener = createHttpRequestListener(
             body,
           }),
           encodeHttpResponseWithUtf8,
-          toIOStreamableHttpResponse,
+          toIOSourceHttpResponse,
           fromValue(),
         );
       }),
@@ -277,7 +277,7 @@ pipe(
     },
   }),
   encodeHttpRequestWithUtf8,
-  toIOStreamableHttpRequest,
+  toIOSourceHttpRequest,
   httpClient,
   onNotify(status => {
     console.log("status: " + status.type);
@@ -301,7 +301,7 @@ pipe(
     createHttpRequest({
       method: HttpMethod.POST,
       uri: "http://localhost:8080/index.html",
-      body: createReadableIOStream(
+      body: createReadableIOSource(
         defer(file, fs.createReadStream, createDisposableNodeStream),
       ),
       contentInfo: {

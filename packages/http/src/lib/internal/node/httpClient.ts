@@ -13,13 +13,13 @@ import { FlowMode } from "@reactive-js/core/lib/flowable"
 import {
   IOEvent,
   IOEventType,
-  IOStreamableLike,
+  IOSourceLike,
 } from "@reactive-js/core/lib/io";
 import { bind, pipe, returns } from "@reactive-js/core/lib/functions";
 import {
   createWritableIOSink,
   createDisposableNodeStream,
-  createReadableIOStream,
+  createReadableIOSource,
 } from "@reactive-js/core/lib/node";
 import {
   dispatch,
@@ -58,7 +58,7 @@ export type HttpClientOptions = {
 };
 
 class ResponseBody extends AbstractDisposable
-  implements IOStreamableLike<Uint8Array> {
+  implements IOSourceLike<Uint8Array> {
   private consumed = false;
 
   constructor(private readonly resp: IncomingMessage) {
@@ -83,7 +83,7 @@ class ResponseBody extends AbstractDisposable
     this.consumed = true;
     const responseStream = add(
       stream(
-        createReadableIOStream(bind(createDisposableNodeStream, this.resp)),
+        createReadableIOSource(bind(createDisposableNodeStream, this.resp)),
         scheduler,
         replayCount,
       ),
@@ -97,8 +97,8 @@ class ResponseBody extends AbstractDisposable
 export const createHttpClient = (
   options: HttpClientOptions = {},
 ): HttpClient<
-  HttpRequest<IOStreamableLike<Uint8Array>>,
-  IOStreamableLike<Uint8Array> & DisposableLike
+  HttpRequest<IOSourceLike<Uint8Array>>,
+  IOSourceLike<Uint8Array> & DisposableLike
 > => request =>
   using(
     (

@@ -52,7 +52,7 @@ export const decodeHttpMessageWithCharset = ({ contentInfo, ...msg }) => {
         };
     }
 };
-export const toIOStreamableHttpMessage = ({ body, ...msg }) => ({
+export const toIOSourceHttpMessage = ({ body, ...msg }) => ({
     ...msg,
     body: fromValue()(body),
 });

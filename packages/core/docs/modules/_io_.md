@@ -11,12 +11,12 @@
 ### Interfaces
 
 * [IOSinkLike](../interfaces/_io_.iosinklike.md)
-* [IOStreamableLike](../interfaces/_io_.iostreamablelike.md)
+* [IOSourceLike](../interfaces/_io_.iosourcelike.md)
 
 ### Type aliases
 
 * [IOEvent](_io_.md#ioevent)
-* [IOStreamableOperator](_io_.md#iostreamableoperator)
+* [IOSourceOperator](_io_.md#iosourceoperator)
 
 ### Variables
 
@@ -41,15 +41,15 @@
 
 ___
 
-###  IOStreamableOperator
+###  IOSourceOperator
 
-Ƭ **IOStreamableOperator**: *[Function1](_functions_.md#function1)‹[IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹TA›, [IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹TB››*
+Ƭ **IOSourceOperator**: *[Function1](_functions_.md#function1)‹[IOSourceLike](../interfaces/_io_.iosourcelike.md)‹TA›, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹TB››*
 
 ## Variables
 
 ### `Const` encodeUtf8
 
-• **encodeUtf8**: *[IOStreamableOperator](_io_.md#iostreamableoperator)‹string, Uint8Array›* = lift(
+• **encodeUtf8**: *[IOSourceOperator](_io_.md#iosourceoperator)‹string, Uint8Array›* = lift(
   withLatestFrom(
     compute<TextEncoder>()(() => new TextEncoder()),
     (ev, textEncoder) => {
@@ -82,7 +82,7 @@ ___
 
 ### `Const` decodeWithCharset
 
-▸ **decodeWithCharset**(`charset`: string, `options?`: TextDecoderOptions): *[IOStreamableOperator](_io_.md#iostreamableoperator)‹ArrayBuffer, string›*
+▸ **decodeWithCharset**(`charset`: string, `options?`: TextDecoderOptions): *[IOSourceOperator](_io_.md#iosourceoperator)‹ArrayBuffer, string›*
 
 **Parameters:**
 
@@ -91,61 +91,61 @@ Name | Type | Default |
 `charset` | string | "utf-8" |
 `options?` | TextDecoderOptions | - |
 
-**Returns:** *[IOStreamableOperator](_io_.md#iostreamableoperator)‹ArrayBuffer, string›*
+**Returns:** *[IOSourceOperator](_io_.md#iosourceoperator)‹ArrayBuffer, string›*
 
 ___
 
 ### `Const` empty
 
-▸ **empty**<**T**>(): *[IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹T›*
+▸ **empty**<**T**>(): *[IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹T›*
+**Returns:** *[IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T›*
 
 ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(): *[Function1](_functions_.md#function1)‹keyof T[], [IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹T››*
+▸ **fromArray**<**T**>(): *[Function1](_functions_.md#function1)‹keyof T[], [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[Function1](_functions_.md#function1)‹keyof T[], [IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹keyof T[], [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
 
 ___
 
 ### `Const` fromObservable
 
-▸ **fromObservable**<**T**>(): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹T››*
+▸ **fromObservable**<**T**>(): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
 
 ___
 
 ### `Const` fromValue
 
-▸ **fromValue**<**T**>(): *[Function1](_functions_.md#function1)‹T, [IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹T››*
+▸ **fromValue**<**T**>(): *[Function1](_functions_.md#function1)‹T, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[Function1](_functions_.md#function1)‹T, [IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹T››*
+**Returns:** *[Function1](_functions_.md#function1)‹T, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
 
 ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[Function1](_functions_.md#function1)‹[IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹TA›, [IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹TB››*
+▸ **map**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[Function1](_functions_.md#function1)‹[IOSourceLike](../interfaces/_io_.iosourcelike.md)‹TA›, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹TB››*
 
 **Type parameters:**
 
@@ -159,7 +159,7 @@ Name | Type |
 ------ | ------ |
 `mapper` | [Function1](_functions_.md#function1)‹TA, TB› |
 
-**Returns:** *[Function1](_functions_.md#function1)‹[IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹TA›, [IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹TB››*
+**Returns:** *[Function1](_functions_.md#function1)‹[IOSourceLike](../interfaces/_io_.iosourcelike.md)‹TA›, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹TB››*
 
 ___
 

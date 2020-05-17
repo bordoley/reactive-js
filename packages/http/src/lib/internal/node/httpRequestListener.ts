@@ -5,7 +5,7 @@ import {
   addDisposableOrTeardown,
   add,
 } from "@reactive-js/core/lib/disposable";
-import { IOStreamableLike, IOSinkLike } from "@reactive-js/core/lib/io";
+import { IOSourceLike, IOSinkLike } from "@reactive-js/core/lib/io";
 import {
   bind,
   pipe,
@@ -14,7 +14,7 @@ import {
   SideEffect2,
 } from "@reactive-js/core/lib/functions";
 import {
-  createReadableIOStream,
+  createReadableIOSource,
   createWritableIOSink,
   createDisposableNodeStream,
 } from "@reactive-js/core/lib/node";
@@ -39,7 +39,7 @@ import {
 } from "../../http";
 
 const writeResponseMessage = (serverResponse: ServerResponse) => (
-  response: HttpResponse<IOStreamableLike<Uint8Array>>,
+  response: HttpResponse<IOSourceLike<Uint8Array>>,
 ) => {
   serverResponse.statusCode = response.statusCode;
 
@@ -52,7 +52,7 @@ const writeResponseMessage = (serverResponse: ServerResponse) => (
 
 const writeResponseBody = (responseBody: IOSinkLike<Uint8Array>) => ({
   body,
-}: HttpResponse<IOStreamableLike<Uint8Array>>) => sink(body, responseBody);
+}: HttpResponse<IOSourceLike<Uint8Array>>) => sink(body, responseBody);
 
 const defaultOnError = (e: unknown) => {
   console.log(e);
@@ -69,8 +69,8 @@ export type HttpRequestListener = SideEffect2<
 
 export const createHttpRequestListener = (
   handler: HttpServer<
-    HttpServerRequest<IOStreamableLike<Uint8Array>>,
-    HttpResponse<IOStreamableLike<Uint8Array>>
+    HttpServerRequest<IOSourceLike<Uint8Array>>,
+    HttpResponse<IOSourceLike<Uint8Array>>
   >,
   scheduler: SchedulerLike,
   options: HttpRequestListenerOptions = {},
@@ -90,7 +90,7 @@ export const createHttpRequestListener = (
     } = request.value;
     const isTransportSecure = (request.value.socket as any).encrypted ?? false;
 
-    const requestBody = createReadableIOStream(returns(request));
+    const requestBody = createReadableIOSource(returns(request));
     const responseBody = createWritableIOSink(returns(response));
 
     return pipe(

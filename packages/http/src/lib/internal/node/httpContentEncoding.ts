@@ -7,12 +7,12 @@ import {
   gzip,
   deflate,
 } from "@reactive-js/core/lib/node";
-import { IOStreamableOperator } from "@reactive-js/core/lib/io";
+import { IOSourceOperator } from "@reactive-js/core/lib/io";
 import { HttpContentEncoding } from "../../http";
 
 export const createContentEncodingDecompressTransforms = (
   options: BrotliOptions | ZlibOptions = {},
-): { [key: string]: IOStreamableOperator<Uint8Array, Uint8Array> } => ({
+): { [key: string]: IOSourceOperator<Uint8Array, Uint8Array> } => ({
   [HttpContentEncoding.Brotli]: brotliDecompress(options),
   [HttpContentEncoding.Deflate]: deflate(options),
   [HttpContentEncoding.GZip]: gunzip(options),
@@ -20,7 +20,7 @@ export const createContentEncodingDecompressTransforms = (
 
 export const createContentEncodingCompressTransforms = (
   options: BrotliOptions | ZlibOptions = {},
-): { [key: string]: IOStreamableOperator<Uint8Array, Uint8Array> } => ({
+): { [key: string]: IOSourceOperator<Uint8Array, Uint8Array> } => ({
   [HttpContentEncoding.Brotli]: brotliCompress(options),
   [HttpContentEncoding.Deflate]: inflate(options),
   [HttpContentEncoding.GZip]: gzip(options),

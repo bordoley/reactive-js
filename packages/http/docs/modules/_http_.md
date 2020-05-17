@@ -63,8 +63,8 @@
 * [parseHeaders](_http_.md#const-parseheaders)
 * [parseHttpRequestFromHeaders](_http_.md#const-parsehttprequestfromheaders)
 * [parseHttpResponseFromHeaders](_http_.md#const-parsehttpresponsefromheaders)
-* [toIOStreamableHttpRequest](_http_.md#const-toiostreamablehttprequest)
-* [toIOStreamableHttpResponse](_http_.md#const-toiostreamablehttpresponse)
+* [toIOSourceHttpRequest](_http_.md#const-toiosourcehttprequest)
+* [toIOSourceHttpResponse](_http_.md#const-toiosourcehttpresponse)
 * [withDefaultBehaviors](_http_.md#const-withdefaultbehaviors)
 * [writeHttpRequestHeaders](_http_.md#const-writehttprequestheaders)
 * [writeHttpResponseHeaders](_http_.md#const-writehttpresponseheaders)
@@ -449,7 +449,7 @@ ___
 
 ### `Const` decodeHttpRequestContent
 
-▸ **decodeHttpRequestContent**(`decoderProvider`: object): *Function1‹[HttpRequest](_http_.md#httprequest)‹IOStreamableLike‹Uint8Array››, [HttpRequest](_http_.md#httprequest)‹IOStreamableLike‹Uint8Array›››*
+▸ **decodeHttpRequestContent**(`decoderProvider`: object): *Function1‹[HttpRequest](_http_.md#httprequest)‹IOSourceLike‹Uint8Array››, [HttpRequest](_http_.md#httprequest)‹IOSourceLike‹Uint8Array›››*
 
 **Parameters:**
 
@@ -457,13 +457,13 @@ Name | Type |
 ------ | ------ |
 `decoderProvider` | object |
 
-**Returns:** *Function1‹[HttpRequest](_http_.md#httprequest)‹IOStreamableLike‹Uint8Array››, [HttpRequest](_http_.md#httprequest)‹IOStreamableLike‹Uint8Array›››*
+**Returns:** *Function1‹[HttpRequest](_http_.md#httprequest)‹IOSourceLike‹Uint8Array››, [HttpRequest](_http_.md#httprequest)‹IOSourceLike‹Uint8Array›››*
 
 ___
 
 ### `Const` decodeHttpResponseContent
 
-▸ **decodeHttpResponseContent**(`decoderProvider`: object): *Function1‹[HttpResponse](_http_.md#httpresponse)‹IOStreamableLike‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹IOStreamableLike‹Uint8Array›››*
+▸ **decodeHttpResponseContent**(`decoderProvider`: object): *Function1‹[HttpResponse](_http_.md#httpresponse)‹IOSourceLike‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹IOSourceLike‹Uint8Array›››*
 
 **Parameters:**
 
@@ -471,7 +471,7 @@ Name | Type |
 ------ | ------ |
 `decoderProvider` | object |
 
-**Returns:** *Function1‹[HttpResponse](_http_.md#httpresponse)‹IOStreamableLike‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹IOStreamableLike‹Uint8Array›››*
+**Returns:** *Function1‹[HttpResponse](_http_.md#httpresponse)‹IOSourceLike‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹IOSourceLike‹Uint8Array›››*
 
 ___
 
@@ -489,7 +489,7 @@ ___
 
 ### `Const` encodeHttpClientRequestContent
 
-▸ **encodeHttpClientRequestContent**(`encoderProvider`: object, `db`: object): *Function1‹[HttpClientRequest](_http_.md#httpclientrequest)‹IOStreamableLike‹Uint8Array››, [HttpClientRequest](_http_.md#httpclientrequest)‹IOStreamableLike‹Uint8Array›››*
+▸ **encodeHttpClientRequestContent**(`encoderProvider`: object, `db`: object): *Function1‹[HttpClientRequest](_http_.md#httpclientrequest)‹IOSourceLike‹Uint8Array››, [HttpClientRequest](_http_.md#httpclientrequest)‹IOSourceLike‹Uint8Array›››*
 
 **Parameters:**
 
@@ -498,7 +498,7 @@ Name | Type | Default |
 `encoderProvider` | object | - |
 `db` | object | {} |
 
-**Returns:** *Function1‹[HttpClientRequest](_http_.md#httpclientrequest)‹IOStreamableLike‹Uint8Array››, [HttpClientRequest](_http_.md#httpclientrequest)‹IOStreamableLike‹Uint8Array›››*
+**Returns:** *Function1‹[HttpClientRequest](_http_.md#httpclientrequest)‹IOSourceLike‹Uint8Array››, [HttpClientRequest](_http_.md#httpclientrequest)‹IOSourceLike‹Uint8Array›››*
 
 ___
 
@@ -593,9 +593,9 @@ Name | Type |
 
 ___
 
-### `Const` toIOStreamableHttpRequest
+### `Const` toIOSourceHttpRequest
 
-▸ **toIOStreamableHttpRequest**<**TBody**>(`req`: [HttpRequest](_http_.md#httprequest)‹TBody›): *[HttpRequest](_http_.md#httprequest)‹IOStreamableLike‹TBody››*
+▸ **toIOSourceHttpRequest**<**TBody**>(`req`: [HttpRequest](_http_.md#httprequest)‹TBody›): *[HttpRequest](_http_.md#httprequest)‹IOSourceLike‹TBody››*
 
 **Type parameters:**
 
@@ -607,13 +607,13 @@ Name | Type |
 ------ | ------ |
 `req` | [HttpRequest](_http_.md#httprequest)‹TBody› |
 
-**Returns:** *[HttpRequest](_http_.md#httprequest)‹IOStreamableLike‹TBody››*
+**Returns:** *[HttpRequest](_http_.md#httprequest)‹IOSourceLike‹TBody››*
 
 ___
 
-### `Const` toIOStreamableHttpResponse
+### `Const` toIOSourceHttpResponse
 
-▸ **toIOStreamableHttpResponse**<**TBody**>(`resp`: [HttpResponse](_http_.md#httpresponse)‹TBody›): *[HttpResponse](_http_.md#httpresponse)‹IOStreamableLike‹TBody››*
+▸ **toIOSourceHttpResponse**<**TBody**>(`resp`: [HttpResponse](_http_.md#httpresponse)‹TBody›): *[HttpResponse](_http_.md#httpresponse)‹IOSourceLike‹TBody››*
 
 **Type parameters:**
 
@@ -625,7 +625,7 @@ Name | Type |
 ------ | ------ |
 `resp` | [HttpResponse](_http_.md#httpresponse)‹TBody› |
 
-**Returns:** *[HttpResponse](_http_.md#httpresponse)‹IOStreamableLike‹TBody››*
+**Returns:** *[HttpResponse](_http_.md#httpresponse)‹IOSourceLike‹TBody››*
 
 ___
 

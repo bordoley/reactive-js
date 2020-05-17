@@ -1,4 +1,4 @@
-import { IOStreamableLike, fromValue } from "@reactive-js/core/lib/io";
+import { IOSourceLike, fromValue } from "@reactive-js/core/lib/io";
 import { SideEffect2 } from "@reactive-js/core/lib/functions";
 import { isSome, isNone } from "@reactive-js/core/lib/option";
 import { writeHttpCacheControlHeader } from "./cacheDirective";
@@ -72,10 +72,10 @@ export const decodeHttpMessageWithCharset = ({
   }
 };
 
-export const toIOStreamableHttpMessage = <TBody>({
+export const toIOSourceHttpMessage = <TBody>({
   body,
   ...msg
-}: HttpMessage<TBody>): HttpMessage<IOStreamableLike<TBody>> => ({
+}: HttpMessage<TBody>): HttpMessage<IOSourceLike<TBody>> => ({
   ...msg,
   body: fromValue()(body),
 });

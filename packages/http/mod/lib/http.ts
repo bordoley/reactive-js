@@ -26,7 +26,7 @@ export {
   encodeHttpClientRequestContent,
   httpRequestToUntypedHeaders,
   parseHttpRequestFromHeaders,
-  toIOStreamableHttpRequest,
+  toIOSourceHttpRequest,
   writeHttpRequestHeaders,
 } from "./internal/http/httpRequest.ts";
 
@@ -38,7 +38,7 @@ export {
   encodeHttpResponseWithUtf8,
   encodeHttpResponseContent,
   parseHttpResponseFromHeaders,
-  toIOStreamableHttpResponse,
+  toIOSourceHttpResponse,
   writeHttpResponseHeaders,
 } from "./internal/http/httpResponse.ts";
 
