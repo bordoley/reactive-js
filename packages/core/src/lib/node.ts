@@ -1,5 +1,5 @@
 export { bindNodeCallback } from "./internal/node/bindNodeCallback";
-export { createReadableIOStream } from "./internal/node/createReadableIOStream";
+export { createReadableIOSource } from "./internal/node/createReadableIOSource";
 export { createWritableIOSink } from "./internal/node/createWritableIOSink";
 export { createDisposableNodeStream } from "./internal/node/nodeStream";
 export {

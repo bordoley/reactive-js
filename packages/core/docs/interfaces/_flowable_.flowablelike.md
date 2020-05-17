@@ -12,4 +12,4 @@
 
   ↳ **FlowableLike**
 
-  ↳ [IOStreamableLike](_io_.iostreamablelike.md)
+  ↳ [IOSourceLike](_io_.iosourcelike.md)

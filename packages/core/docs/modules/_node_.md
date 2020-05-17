@@ -10,7 +10,7 @@
 * [brotliCompress](_node_.md#const-brotlicompress)
 * [brotliDecompress](_node_.md#const-brotlidecompress)
 * [createDisposableNodeStream](_node_.md#const-createdisposablenodestream)
-* [createReadableIOStream](_node_.md#const-createreadableiostream)
+* [createReadableIOSource](_node_.md#const-createreadableiosource)
 * [createWritableIOSink](_node_.md#const-createwritableiosink)
 * [deflate](_node_.md#const-deflate)
 * [gunzip](_node_.md#const-gunzip)
@@ -1570,7 +1570,7 @@ ___
 
 ### `Const` brotliCompress
 
-▸ **brotliCompress**(`options`: BrotliOptions): *[IOStreamableOperator](_io_.md#iostreamableoperator)‹Uint8Array, Uint8Array›*
+▸ **brotliCompress**(`options`: BrotliOptions): *[IOSourceOperator](_io_.md#iosourceoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1578,13 +1578,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | BrotliOptions | {} |
 
-**Returns:** *[IOStreamableOperator](_io_.md#iostreamableoperator)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOSourceOperator](_io_.md#iosourceoperator)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` brotliDecompress
 
-▸ **brotliDecompress**(`options`: BrotliOptions): *[IOStreamableOperator](_io_.md#iostreamableoperator)‹Uint8Array, Uint8Array›*
+▸ **brotliDecompress**(`options`: BrotliOptions): *[IOSourceOperator](_io_.md#iosourceoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1592,7 +1592,7 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | BrotliOptions | {} |
 
-**Returns:** *[IOStreamableOperator](_io_.md#iostreamableoperator)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOSourceOperator](_io_.md#iosourceoperator)‹Uint8Array, Uint8Array›*
 
 ___
 
@@ -1614,9 +1614,9 @@ Name | Type |
 
 ___
 
-### `Const` createReadableIOStream
+### `Const` createReadableIOSource
 
-▸ **createReadableIOStream**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Readable››): *[IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹Uint8Array›*
+▸ **createReadableIOSource**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Readable››): *[IOSourceLike](../interfaces/_io_.iosourcelike.md)‹Uint8Array›*
 
 **Parameters:**
 
@@ -1624,7 +1624,7 @@ Name | Type |
 ------ | ------ |
 `factory` | [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Readable›› |
 
-**Returns:** *[IOStreamableLike](../interfaces/_io_.iostreamablelike.md)‹Uint8Array›*
+**Returns:** *[IOSourceLike](../interfaces/_io_.iosourcelike.md)‹Uint8Array›*
 
 ___
 
@@ -1644,7 +1644,7 @@ ___
 
 ### `Const` deflate
 
-▸ **deflate**(`options`: ZlibOptions): *[IOStreamableOperator](_io_.md#iostreamableoperator)‹Uint8Array, Uint8Array›*
+▸ **deflate**(`options`: ZlibOptions): *[IOSourceOperator](_io_.md#iosourceoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1652,13 +1652,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *[IOStreamableOperator](_io_.md#iostreamableoperator)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOSourceOperator](_io_.md#iosourceoperator)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` gunzip
 
-▸ **gunzip**(`options`: ZlibOptions): *[IOStreamableOperator](_io_.md#iostreamableoperator)‹Uint8Array, Uint8Array›*
+▸ **gunzip**(`options`: ZlibOptions): *[IOSourceOperator](_io_.md#iosourceoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1666,13 +1666,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *[IOStreamableOperator](_io_.md#iostreamableoperator)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOSourceOperator](_io_.md#iosourceoperator)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` gzip
 
-▸ **gzip**(`options`: ZlibOptions): *[IOStreamableOperator](_io_.md#iostreamableoperator)‹Uint8Array, Uint8Array›*
+▸ **gzip**(`options`: ZlibOptions): *[IOSourceOperator](_io_.md#iosourceoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1680,13 +1680,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *[IOStreamableOperator](_io_.md#iostreamableoperator)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOSourceOperator](_io_.md#iosourceoperator)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` inflate
 
-▸ **inflate**(`options`: ZlibOptions): *[IOStreamableOperator](_io_.md#iostreamableoperator)‹Uint8Array, Uint8Array›*
+▸ **inflate**(`options`: ZlibOptions): *[IOSourceOperator](_io_.md#iosourceoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1694,13 +1694,13 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `options` | ZlibOptions | {} |
 
-**Returns:** *[IOStreamableOperator](_io_.md#iostreamableoperator)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOSourceOperator](_io_.md#iosourceoperator)‹Uint8Array, Uint8Array›*
 
 ___
 
 ### `Const` transform
 
-▸ **transform**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Transform››): *[IOStreamableOperator](_io_.md#iostreamableoperator)‹Uint8Array, Uint8Array›*
+▸ **transform**(`factory`: [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Transform››): *[IOSourceOperator](_io_.md#iosourceoperator)‹Uint8Array, Uint8Array›*
 
 **Parameters:**
 
@@ -1708,4 +1708,4 @@ Name | Type |
 ------ | ------ |
 `factory` | [Factory](_functions_.md#factory)‹[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹Transform›› |
 
-**Returns:** *[IOStreamableOperator](_io_.md#iostreamableoperator)‹Uint8Array, Uint8Array›*
+**Returns:** *[IOSourceOperator](_io_.md#iosourceoperator)‹Uint8Array, Uint8Array›*

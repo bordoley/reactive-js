@@ -1,4 +1,4 @@
-import { IOStreamableLike, fromValue } from "../../../../../core/mod/lib/io.ts";
+import { IOSourceLike, fromValue } from "../../../../../core/mod/lib/io.ts";
 import { SideEffect2 } from "../../../../../core/mod/lib/functions.ts";
 import { isSome, isNone } from "../../../../../core/mod/lib/option.ts";
 import { writeHttpCacheControlHeader } from "./cacheDirective.ts";
@@ -72,10 +72,10 @@ export const decodeHttpMessageWithCharset = ({
   }
 };
 
-export const toIOStreamableHttpMessage = <TBody>({
+export const toIOSourceHttpMessage = <TBody>({
   body,
   ...msg
-}: HttpMessage<TBody>): HttpMessage<IOStreamableLike<TBody>> => ({
+}: HttpMessage<TBody>): HttpMessage<IOSourceLike<TBody>> => ({
   ...msg,
   body: fromValue()(body),
 });

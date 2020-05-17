@@ -1,5 +1,5 @@
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.js";
-import { writeHttpMessageHeaders, encodeHttpMessageWithUtf8, toIOStreamableHttpMessage, decodeHttpMessageWithCharset, } from "./HttpMessage.js";
+import { writeHttpMessageHeaders, encodeHttpMessageWithUtf8, toIOSourceHttpMessage, decodeHttpMessageWithCharset, } from "./HttpMessage.js";
 import { parseCacheControlFromHeaders, parseCacheDirectiveOrThrow, } from "./cacheDirective.js";
 import { parseHttpContentInfoFromHeaders, contentIsCompressible, createHttpContentInfo, } from "./httpContentInfo.js";
 import { getHeaderValue, filterHeaders, } from "./httpHeaders.js";
@@ -116,7 +116,7 @@ export const httpRequestToUntypedHeaders = (request) => {
 };
 export const encodeHttpRequestWithUtf8 = encodeHttpMessageWithUtf8;
 export const decodeHttpRequestWithCharset = decodeHttpMessageWithCharset;
-export const toIOStreamableHttpRequest = (req) => toIOStreamableHttpMessage(req);
+export const toIOSourceHttpRequest = (req) => toIOSourceHttpMessage(req);
 export const decodeHttpRequestContent = (decoderProvider) => req => {
     const { body, contentInfo, ...rest } = req;
     if (isSome(contentInfo) && contentInfo.contentEncodings.length > 0) {
