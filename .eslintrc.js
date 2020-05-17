@@ -13,11 +13,9 @@ module.exports = {
     "build",
     "coverage",
     "docs",
-    "lib",
+    "packages/*/lib",
     "mod",
     "node_modules",
-    "scripts/jestTestRunner.ts",
-    "test",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
