@@ -1,16 +1,12 @@
 import { add, addDisposableOrTeardown } from "./disposable.ts";
-import { Function1, compose, pipe, isEqualTo } from "./functions.ts";
+import { Function1, compose, pipe } from "./functions.ts";
 import {
   ObservableLike,
-  ignoreElements,
-  genMap,
+  fromArray as fromArrayObs,
   onNotify,
   subscribe,
   subscribeOn,
-  takeFirst,
-  takeWhile,
   using,
-  keep,
 } from "./observable.ts";
 import { SchedulerLike, toPausableScheduler } from "./scheduler.ts";
 
@@ -32,30 +28,6 @@ export type FlowableFunction<TA, TB> = Function1<
   FlowableLike<TA>,
   FlowableLike<TB>
 >;
-
-const _empty: FlowableLike<any> = createStreamable(
-  compose(
-    keep(isEqualTo(FlowMode.Resume)),
-    takeWhile(isEqualTo(FlowMode.Pause)),
-    ignoreElements(),
-  ),
-);
-export const empty = <T>(): FlowableLike<T> => _empty;
-
-const _fromValue = <T>(data: T): FlowableLike<T> =>
-  createStreamable(
-    compose(
-      keep(isEqualTo(FlowMode.Resume)),
-      takeFirst(),
-      genMap(function*(mode: FlowMode): Generator<T> {
-        switch (mode) {
-          case FlowMode.Resume:
-            yield data;
-        }
-      }),
-    ),
-  );
-export const fromValue = <T>(): Function1<T, FlowableLike<T>> => _fromValue;
 
 const _fromObservable = <T>(
   observable: ObservableLike<T>,
@@ -96,5 +68,16 @@ const _fromObservable = <T>(
 
   return createStreamable(op);
 };
-
 export const fromObservable = <T>(): Function1<ObservableLike<T>, FlowableLike<T>> => _fromObservable;
+
+const _fromArray = compose(
+  fromArrayObs(),
+  fromObservable()
+);
+export const fromArray = <T>(): Function1<readonly T[], FlowableLike<T>> => _fromArray;
+
+const _fromValue = <T>(v: T) => _fromArray([v]);
+export const fromValue = <T>(): Function1<T, FlowableLike<T>> => _fromValue;
+
+const _empty: FlowableLike<any> = _fromArray([]);
+export const empty = <T>(): FlowableLike<T> => _empty;

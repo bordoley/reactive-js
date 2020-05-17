@@ -79,13 +79,10 @@ export const tests = describe(
 
   test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
-    const fromValueStream = stream(fromValue()(1), scheduler);
+    const fromValueStream = stream(fromValue<number>()(1), scheduler);
 
-    dispatch(fromValueStream, FlowMode.Pause);
-    dispatch(fromValueStream, FlowMode.Pause);
     dispatch(fromValueStream, FlowMode.Resume);
     dispatch(fromValueStream, FlowMode.Resume);
-    dispatch(fromValueStream, FlowMode.Pause);
 
     const f = mockFn();
     const subscription = pipe(

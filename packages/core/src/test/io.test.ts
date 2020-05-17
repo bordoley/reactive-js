@@ -27,7 +27,7 @@ import {
 import { sink, stream } from "../lib/streamable";
 
 export const tests = describe(
-  "flowables",
+  "io",
   test("decodeWithCharset", () => {
     const lib = pipe(
       [Uint8Array.from([226]), Uint8Array.from([130]), Uint8Array.from([172])],
@@ -82,11 +82,7 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
     const fromValueStream = stream(fromValue()(1), scheduler);
 
-    dispatch(fromValueStream, FlowMode.Pause);
-    dispatch(fromValueStream, FlowMode.Pause);
     dispatch(fromValueStream, FlowMode.Resume);
-    dispatch(fromValueStream, FlowMode.Resume);
-    dispatch(fromValueStream, FlowMode.Pause);
 
     const f = mockFn();
     const subscription = pipe(
@@ -108,7 +104,7 @@ export const tests = describe(
     const lib = pipe(
       1,
       fromValue(),
-      map(_ => 2),
+      map(returns(2)),
     );
     const dest = createIOSinkAccumulator(sum, returns(0));
 

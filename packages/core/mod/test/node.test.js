@@ -1,7 +1,6 @@
 import { Readable, Writable } from "stream";
-import { createGzip, createGunzip } from "zlib";
 import { pipe, bind, returns } from "../lib/functions.js";
-import { createReadableIOStream, createWritableIOSink, transform, createDisposableNodeStream, } from "../lib/node.js";
+import { createReadableIOStream, createWritableIOSink, gzip, gunzip, createDisposableNodeStream, } from "../lib/node.js";
 import { toPromise } from "../lib/observable.js";
 import { createHostScheduler } from "../lib/scheduler.js";
 import { sink } from "../lib/streamable.js";
@@ -9,7 +8,7 @@ import { describe, testAsync, expectEquals, expectPromiseToThrow, } from "../lib
 import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulatorForTests.js";
 import { fromArray } from "../lib/io.js";
 const scheduler = createHostScheduler();
-export const tests = describe("node", describe("createWritableFlowableSink", testAsync("sinking to writable", async () => {
+export const tests = describe("node", describe("createWritableIOSink", testAsync("sinking to writable", async () => {
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
     let data = "";
@@ -42,7 +41,7 @@ export const tests = describe("node", describe("createWritableFlowableSink", tes
     const lib = pipe([encoder.encode("abc"), encoder.encode("defg")], fromArray());
     const promise = pipe(sink(lib, dest), toPromise(scheduler));
     await expectPromiseToThrow(promise);
-})), describe("createReadablFlowable", testAsync("reading from readable", async () => {
+})), describe("createReadableIOStream", testAsync("reading from readable", async () => {
     function* generate() {
         yield Buffer.from("abc", "utf8");
         yield Buffer.from("defg", "utf8");
@@ -64,7 +63,7 @@ export const tests = describe("node", describe("createWritableFlowableSink", tes
     await pipe(sink(lib, dest), toPromise(scheduler), expectPromiseToThrow);
 })), testAsync("transform", async () => {
     const encoder = new TextEncoder();
-    const lib = pipe([encoder.encode("abc"), encoder.encode("defg")], fromArray(), transform(() => createDisposableNodeStream(createGzip())), transform(() => createDisposableNodeStream(createGunzip())));
+    const lib = pipe([encoder.encode("abc"), encoder.encode("defg")], fromArray(), gzip(), gunzip());
     const textDecoder = new TextDecoder();
     const dest = createIOSinkAccumulator((acc, next) => acc + textDecoder.decode(next), returns(""));
     await pipe(sink(lib, dest), toPromise(scheduler));

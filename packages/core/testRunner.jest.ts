@@ -8,10 +8,11 @@ import { tests as asyncEnumerableTests } from "./src/test/asyncEnumerable.test";
 import { tests as disposableTests } from "./src/test/disposable.test";
 import { tests as enumerableTests } from "./src/test/enumerable.test";
 import { tests as flowableTests } from "./src/test/flowable.test";
-import { tests as parserCombinatorTests } from "./src/test/internal/parserCombinators.test";
-import { tests as queuesTests } from "./src/test/internal/queues.test";
+import { tests as ioTests } from "./src/test/io.test";
 import { tests as nodeTests } from "./src/test/node.test";
 import { tests as observableTests } from "./src/test/observable.test";
+import { tests as parserCombinatorTests } from "./src/test/internal/parserCombinators.test";
+import { tests as queuesTests } from "./src/test/internal/queues.test";
 //import { tests as reactiveCacheTests } from "./reactiveCache.test";
 //import { tests as resourceManagerTests } from "./resourceManager.test";
 import { tests as runnableTests } from "./src/test/runnable.test";
@@ -23,6 +24,7 @@ const tests = [
   disposableTests,
   enumerableTests,
   flowableTests,
+  ioTests,
   nodeTests,
   observableTests,
   parserCombinatorTests,

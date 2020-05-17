@@ -109,7 +109,8 @@ const routerHandlerEventStream: HttpServer<
   createHttpResponse({
     statusCode: HttpStatusCode.OK,
     body: pipe(
-      fromObservable(generate(increment, returns<number>(0), { delay: 1000 })),
+      generate(increment, returns<number>(0), { delay: 1000 }),
+      fromObservable(),
       mapFlowable(
         data =>
           `id: ${data.toString()}\nevent: test\ndata: ${data.toString()}\n\n`,

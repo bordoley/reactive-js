@@ -19,6 +19,7 @@
 ### Functions
 
 * [empty](_flowable_.md#const-empty)
+* [fromArray](_flowable_.md#const-fromarray)
 * [fromObservable](_flowable_.md#const-fromobservable)
 * [fromValue](_flowable_.md#const-fromvalue)
 
@@ -39,6 +40,18 @@
 ▪ **T**
 
 **Returns:** *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
+
+___
+
+### `Const` fromArray
+
+▸ **fromArray**<**T**>(): *[Function1](_functions_.md#function1)‹keyof T[], [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *[Function1](_functions_.md#function1)‹keyof T[], [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
 
 ___
 
