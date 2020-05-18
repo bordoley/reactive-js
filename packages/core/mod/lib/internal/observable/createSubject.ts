@@ -1,4 +1,8 @@
-import { AbstractDisposable, addTeardown, addDisposable } from "../../disposable.ts";
+import {
+  AbstractDisposable,
+  addTeardown,
+  addDisposable,
+} from "../../disposable.ts";
 import { dispatch } from "./dispatcher.ts";
 import { SubjectLike, ObserverLike, DispatcherLike } from "./interfaces.ts";
 import { toDispatcher } from "./toDispatcher.ts";

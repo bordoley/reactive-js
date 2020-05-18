@@ -1,8 +1,8 @@
-import { dispose, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from "../../disposable.js";
+import { dispose, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown, } from "../../disposable.js";
 import { isSome, none } from "../../option.js";
 import { lift } from "./lift.js";
-import { createDelegatingObserver } from "./observer.js";
 import { observe } from "./observable.js";
+import { createDelegatingObserver } from "./observer.js";
 export const catchError = (onError) => {
     const operator = (delegate) => {
         const observer = createDelegatingObserver(delegate);

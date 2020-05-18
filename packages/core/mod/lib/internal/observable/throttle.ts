@@ -11,10 +11,10 @@ import { none, Option } from "../../option.ts";
 import { fromValue } from "./fromValue.ts";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
+import { observeWith } from "./observable.ts";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
-import { observeWith } from "./observable.ts";
 
 /**
  * The throttle mode used by the `throttle` operator.
@@ -72,8 +72,8 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
     addDisposableDisposeParentOnChildError(this, this.durationSubscription);
     addOnDisposedWithError(this, delegate);
     addOnDisposedWithoutErrorTeardown(this, () => {
-      if( mode !== ThrottleMode.First && this.hasValue) {
-        pipe(this.value, fromValue(), observeWith(delegate));;
+      if (mode !== ThrottleMode.First && this.hasValue) {
+        pipe(this.value, fromValue(), observeWith(delegate));
       } else {
         dispose(delegate);
       }

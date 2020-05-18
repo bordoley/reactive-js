@@ -2,8 +2,8 @@ import { DisposableLike } from "../../disposable.ts";
 import { Function1 } from "../../functions.ts";
 import { SchedulerLike } from "../../scheduler.ts";
 import { ObservableLike } from "./interfaces.ts";
-import { AbstractObserver, assertObserverState } from "./observer.ts";
 import { observe } from "./observable.ts";
+import { AbstractObserver, assertObserverState } from "./observer.ts";
 
 class DefaultObserver<T> extends AbstractObserver<T> {
   notify(_: T) {

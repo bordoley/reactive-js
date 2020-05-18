@@ -1,4 +1,4 @@
-import { dispose, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError } from "../../disposable.js";
+import { dispose, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { lift } from "./lift.js";
 import { AbstractObserver, assertObserverState } from "./observer.js";

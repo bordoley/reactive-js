@@ -1,4 +1,8 @@
-import { dispose, bindDisposables, addTeardown } from "../../../../../core/mod/lib/disposable.ts";
+import {
+  dispose,
+  bindDisposables,
+  addTeardown,
+} from "../../../../../core/mod/lib/disposable.ts";
 import { bind } from "../../../../../core/mod/lib/functions.ts";
 import {
   createObservable,

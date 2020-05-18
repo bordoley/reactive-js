@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable";
 import { Function1 } from "../../functions";
 import { YieldableLike } from "../scheduler/interfaces";
 import { ObservableLike, ObserverLike } from "./interfaces";
@@ -5,7 +6,6 @@ import {
   createScheduledObservable,
   createDelayedScheduledObservable,
 } from "./observable";
-import { dispose } from "../../disposable";
 
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.

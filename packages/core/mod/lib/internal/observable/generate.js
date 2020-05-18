@@ -1,5 +1,5 @@
-import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 import { dispose } from "../../disposable.js";
+import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 export function generate(generator, initialValue, options = { delay: 0 }) {
     const factory = (observer) => {
         let acc = initialValue();

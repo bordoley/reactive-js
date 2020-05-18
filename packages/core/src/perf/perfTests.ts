@@ -19,7 +19,7 @@ export const createArray = (n: number): ReadonlyArray<number> => {
   return src;
 };
 
-const createMapPerfTest = (name: string, module: string) => 
+const createMapPerfTest = (name: string, module: string) =>
   benchmarkTest(
     name,
     async (src: readonly number[]) => {
@@ -50,10 +50,7 @@ export const map = (n: number) =>
         const { from } = await import("rxjs");
         const { map, toArray } = await import("rxjs/operators");
 
-        return from(src).pipe(
-          map(increment),
-          toArray(),
-        );
+        return from(src).pipe(map(increment), toArray());
       },
       x => x.subscribe(),
     ),
@@ -66,7 +63,7 @@ export const map = (n: number) =>
     ),
   );
 
-const createFilterMapFusionPerfTest = (name: string, module: string) => 
+const createFilterMapFusionPerfTest = (name: string, module: string) =>
   benchmarkTest(
     name,
     async (src: readonly number[]) => {
@@ -92,9 +89,9 @@ export const filterMapFusion = (n: number) =>
   benchmarkGroup(
     `filter -> map -> fusion with ${n} integers`,
     bind<number, readonly number[]>(createArray, n),
-    createFilterMapFusionPerfTest("enumerable",  "../lib/enumerable"),
-    createFilterMapFusionPerfTest("observable",  "../lib/observable"),
-    createFilterMapFusionPerfTest("runnable",  "../lib/runnable"),
+    createFilterMapFusionPerfTest("enumerable", "../lib/enumerable"),
+    createFilterMapFusionPerfTest("observable", "../lib/observable"),
+    createFilterMapFusionPerfTest("runnable", "../lib/runnable"),
     benchmarkTest(
       "rx-js",
       async src => {
@@ -117,11 +114,18 @@ export const filterMapFusion = (n: number) =>
       async src => {
         return src;
       },
-      src => src.map(increment).filter(isOdd).map(increment).map(increment).filter(isEven).reduce((a, b) => sum(a,b), 0),
-    )
+      src =>
+        src
+          .map(increment)
+          .filter(isOdd)
+          .map(increment)
+          .map(increment)
+          .filter(isEven)
+          .reduce((a, b) => sum(a, b), 0),
+    ),
   );
 
-const createFilterMapReducePerfTest = (name: string, module: string) => 
+const createFilterMapReducePerfTest = (name: string, module: string) =>
   benchmarkTest(
     name,
     async (src: readonly number[]) => {
@@ -163,11 +167,15 @@ export const filterMapReduce = (n: number) =>
       async src => {
         return src;
       },
-      src => src.filter(isEven).map(increment).reduce((a, b) => sum(a,b), 0),
-    )
+      src =>
+        src
+          .filter(isEven)
+          .map(increment)
+          .reduce((a, b) => sum(a, b), 0),
+    ),
   );
 
-const createScanReducePerfTest = (name: string, module: string) => 
+const createScanReducePerfTest = (name: string, module: string) =>
   benchmarkTest(
     name,
     async (src: readonly number[]) => {
@@ -204,27 +212,27 @@ export const scanReduce = (n: number) =>
     ),
   );
 
-export const every = (n: number) => 
-benchmarkGroup(
-  `every ${n} integers`,
-  () => createArray(n),
-  benchmarkTest(
-    "runnable",
-    async src => {
-      const { fromArray, everySatisfy } = await import("../lib/runnable");
-      return defer(
-        src,
-        fromArray(),
-        everySatisfy(i => i < 0),
-      );
-    },
-    callWith(),
-  ),
-  benchmarkTest(
-    "array methods",
-    async src => {
-      return src;
-    },
-    src => src.every(i => i < 0),
-  ),
-);
+export const every = (n: number) =>
+  benchmarkGroup(
+    `every ${n} integers`,
+    () => createArray(n),
+    benchmarkTest(
+      "runnable",
+      async src => {
+        const { fromArray, everySatisfy } = await import("../lib/runnable");
+        return defer(
+          src,
+          fromArray(),
+          everySatisfy(i => i < 0),
+        );
+      },
+      callWith(),
+    ),
+    benchmarkTest(
+      "array methods",
+      async src => {
+        return src;
+      },
+      src => src.every(i => i < 0),
+    ),
+  );

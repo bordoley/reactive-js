@@ -1,4 +1,4 @@
-import { addDisposableDisposeParentOnChildError } from "../../disposable.js";
+import { addDisposableDisposeParentOnChildError, } from "../../disposable.js";
 import { observe } from "./observable.js";
 class UsingObservable {
     constructor(resourceFactory, observableFactory) {

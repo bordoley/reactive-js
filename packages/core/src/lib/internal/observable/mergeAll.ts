@@ -26,9 +26,14 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
         onNotify(observer.onNotify),
         subscribe(observer.delegate),
       );
-      addOnDisposedWithoutErrorTeardown(nextObsSubscription, observer.onDispose);
-      addDisposableDisposeParentOnChildError(observer.delegate, nextObsSubscription);
-      
+      addOnDisposedWithoutErrorTeardown(
+        nextObsSubscription,
+        observer.onDispose,
+      );
+      addDisposableDisposeParentOnChildError(
+        observer.delegate,
+        nextObsSubscription,
+      );
     } else if (observer.isDisposed) {
       dispose(observer.delegate);
     }

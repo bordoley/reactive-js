@@ -8,7 +8,10 @@ import { pipe, returns } from "../../functions";
 import { concat } from "./concat";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer";
+import {
+  AbstractAutoDisposingDelegatingObserver,
+  assertObserverState,
+} from "./observer";
 import { subscribe } from "./subscribe";
 import { throws } from "./throws";
 

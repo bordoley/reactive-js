@@ -11,14 +11,14 @@ export const takeUntil = <T>(
 ): ObservableOperator<T, T> => {
   const operator = (observer: ObserverLike<T>) => {
     const takeUntilObserver = createAutoDisposingDelegatingObserver(observer);
-   
+
     const otherSubscription = pipe(
       notifier,
       onNotify(bind(dispose, takeUntilObserver)),
       subscribe(takeUntilObserver),
     );
 
-    bindDisposables(takeUntilObserver, otherSubscription)
+    bindDisposables(takeUntilObserver, otherSubscription);
     return takeUntilObserver;
   };
   operator.isSynchronous = false;

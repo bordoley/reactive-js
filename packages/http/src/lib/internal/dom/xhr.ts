@@ -1,4 +1,8 @@
-import { dispose, bindDisposables, addTeardown } from "@reactive-js/core/lib/disposable";
+import {
+  dispose,
+  bindDisposables,
+  addTeardown,
+} from "@reactive-js/core/lib/disposable";
 import { bind } from "@reactive-js/core/lib/functions";
 import {
   createObservable,

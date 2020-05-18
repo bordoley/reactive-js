@@ -7,15 +7,15 @@ import {
   addOnDisposedWithoutErrorTeardown,
 } from "../../disposable.ts";
 import { pipe, Function1 } from "../../functions.ts";
-import {  none } from "../../option.ts";
+import { none } from "../../option.ts";
 import { fromValue } from "./fromValue.ts";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { never } from "./never.ts";
+import { observeWith } from "./observable.ts";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
-import { observeWith } from "./observable.ts";
 
 class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
   private readonly durationSubscription = createSerialDisposable();

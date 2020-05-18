@@ -1,6 +1,7 @@
 import {
   dispose,
   Exception,
+  addTeardown,
 } from "@reactive-js/core/lib/disposable";
 import {
   SideEffect1,
@@ -33,7 +34,6 @@ import {
 } from "@reactive-js/core/lib/streamable";
 import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { normalPriority } from "./scheduler";
-import { addTeardown } from "@reactive-js/core/lib/disposable";
 
 const subscribeObservable = <T>(
   observable: ObservableLike<T>,
@@ -51,7 +51,7 @@ const subscribeObservable = <T>(
 
   addTeardown(subscription, compose(returns, updateError));
   return subscription;
-}
+};
 
 /**
  * Returns the current value, if defined, of `observable`.

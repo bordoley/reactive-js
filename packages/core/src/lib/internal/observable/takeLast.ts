@@ -1,11 +1,15 @@
-import { addTeardown, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable";
+import {
+  addTeardown,
+  addOnDisposedWithError,
+  addOnDisposedWithoutErrorTeardown,
+} from "../../disposable";
 import { pipe } from "../../functions";
 import { empty } from "./empty";
 import { fromArray } from "./fromArray";
 import { ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 import { observeWith } from "./observable";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
 class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
   readonly last: T[] = [];

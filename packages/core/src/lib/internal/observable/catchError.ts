@@ -1,10 +1,14 @@
-import { dispose, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from "../../disposable";
+import {
+  dispose,
+  addOnDisposedWithoutError,
+  addOnDisposedWithErrorTeardown,
+} from "../../disposable";
 import { Function1 } from "../../functions";
 import { isSome, none } from "../../option";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import { createDelegatingObserver } from "./observer";
 import { observe } from "./observable";
+import { createDelegatingObserver } from "./observer";
 
 /**
  * Returns an `ObservableLike` which catches errors produced by the source and either continues with

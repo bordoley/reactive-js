@@ -138,11 +138,10 @@ export const createHttpClient = (
           requestBody,
           onNotify(dispatchTo(requestSink)),
           subscribe(scheduler),
-          
         );
-        
+
         addDisposable(dataSubscription, reqSubscription),
-        addDisposable(requestBody, dataSubscription);
+          addDisposable(requestBody, dataSubscription);
         addDisposable(requestBody, requestSink);
       };
 

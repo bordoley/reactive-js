@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable";
 import { EnumeratorLike, EnumerableLike, enumerate } from "../../enumerable";
 import { Function1, Factory, defer, pipe } from "../../functions";
 import { YieldableLike } from "../scheduler/interfaces";
@@ -6,7 +7,6 @@ import {
   createScheduledObservable,
   createDelayedScheduledObservable,
 } from "./observable";
-import { dispose } from "../../disposable";
 
 /**
  * Creates an `ObservableLike` which enumerates through the values

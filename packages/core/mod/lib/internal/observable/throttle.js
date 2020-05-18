@@ -3,10 +3,10 @@ import { pipe } from "../../functions.js";
 import { none } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
+import { observeWith } from "./observable.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-import { observeWith } from "./observable.js";
 const setupDurationSubscription = (observer, next) => {
     observer.durationSubscription.inner = pipe(observer.durationFunction(next), onNotify(observer.onNotify), subscribe(observer));
 };
@@ -32,7 +32,6 @@ class ThrottleObserver extends AbstractDelegatingObserver {
         addOnDisposedWithoutErrorTeardown(this, () => {
             if (mode !== 1 && this.hasValue) {
                 pipe(this.value, fromValue(), observeWith(delegate));
-                ;
             }
             else {
                 dispose(delegate);

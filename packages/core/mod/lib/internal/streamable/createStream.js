@@ -1,4 +1,4 @@
-import { AbstractDisposable, addDisposable, } from "../../disposable.js";
+import { AbstractDisposable, addDisposable } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { createSubject, publish, dispatch, observe, } from "../../observable.js";
 class StreamImpl extends AbstractDisposable {
@@ -7,8 +7,7 @@ class StreamImpl extends AbstractDisposable {
         this.isSynchronous = false;
         const subject = createSubject();
         const observable = pipe(subject, op, publish(scheduler, replayCount));
-        addDisposable(observable, this),
-            addDisposable(this, subject);
+        addDisposable(observable, this), addDisposable(this, subject);
         this.dispatcher = subject;
         this.observable = observable;
     }

@@ -1,7 +1,11 @@
-import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable";
+import {
+  dispose,
+  addOnDisposedWithError,
+  addOnDisposedWithoutErrorTeardown,
+} from "../../disposable";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
-import { createDelegatingObserver } from "./observer";
 import { observe } from "./observable";
+import { createDelegatingObserver } from "./observer";
 
 const createConcatObserver = <T>(
   delegate: ObserverLike<T>,

@@ -9,8 +9,8 @@ import {
   ObserverLike,
   MulticastObservableLike,
 } from "./interfaces.ts";
-import { publish } from "./publish.ts";
 import { observe } from "./observable.ts";
+import { publish } from "./publish.ts";
 
 class SharedObservable<T> implements ObservableLike<T> {
   private observerCount = 0;

@@ -1,5 +1,5 @@
-import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 import { dispose } from "../../disposable.js";
+import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
 export const fromArray = (options = {}) => values => {
     var _a, _b;
     const delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0);

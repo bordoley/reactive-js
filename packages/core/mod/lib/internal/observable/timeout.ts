@@ -8,7 +8,10 @@ import { pipe, returns } from "../../functions.ts";
 import { concat } from "./concat.ts";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.ts";
+import {
+  AbstractAutoDisposingDelegatingObserver,
+  assertObserverState,
+} from "./observer.ts";
 import { subscribe } from "./subscribe.ts";
 import { throws } from "./throws.ts";
 

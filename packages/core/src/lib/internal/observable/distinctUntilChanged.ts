@@ -2,9 +2,14 @@ import { strictEquality, Equality } from "../../functions";
 import { Option } from "../../option";
 import { ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer";
+import {
+  AbstractAutoDisposingDelegatingObserver,
+  assertObserverState,
+} from "./observer";
 
-class DistinctUntilChangedObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T> {
+class DistinctUntilChangedObserver<
+  T
+> extends AbstractAutoDisposingDelegatingObserver<T, T> {
   prev: Option<T>;
   hasValue = false;
 

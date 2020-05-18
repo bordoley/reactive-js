@@ -15,9 +15,9 @@ import { zipEnumerators } from "../enumerable/zip";
 import { YieldError } from "../scheduler/interfaces";
 import { fromEnumerator } from "./fromEnumerable";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
+import { observe } from "./observable";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 import { using } from "./using";
-import { observe } from "./observable";
 
 class EnumeratorObserver<T> extends AbstractDisposable
   implements EnumeratorLike<T>, ObserverLike<T> {
@@ -61,7 +61,7 @@ class EnumeratorObserver<T> extends AbstractDisposable
 
   schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
     addDisposable(this, continuation);
-    
+
     if (!continuation.isDisposed && delay === 0) {
       this.continuations.push(continuation);
     } else {

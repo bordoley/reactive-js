@@ -1,4 +1,4 @@
-import { AbstractDisposable, addTeardown, addDisposable } from "../../disposable.js";
+import { AbstractDisposable, addTeardown, addDisposable, } from "../../disposable.js";
 import { dispatch } from "./dispatcher.js";
 import { toDispatcher } from "./toDispatcher.js";
 class SubjectImpl extends AbstractDisposable {

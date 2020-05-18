@@ -37,7 +37,6 @@ export { throws } from "./internal/observable/throws";
 export { using } from "./internal/observable/using";
 export { observe, observeWith } from "./internal/observable/observable";
 
-
 export { await_ } from "./internal/observable/await";
 export { buffer } from "./internal/observable/buffer";
 export { catchError } from "./internal/observable/catchError";

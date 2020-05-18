@@ -1,4 +1,8 @@
-import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable";
+import {
+  dispose,
+  addOnDisposedWithError,
+  addOnDisposedWithoutErrorTeardown,
+} from "../../disposable";
 import { none } from "../../option";
 import { ObservableLike, ObserverLike } from "./interfaces";
 import { createScheduledObservable, observe } from "./observable";

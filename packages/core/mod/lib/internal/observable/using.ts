@@ -1,4 +1,7 @@
-import { DisposableLike, addDisposableDisposeParentOnChildError } from "../../disposable.ts";
+import {
+  DisposableLike,
+  addDisposableDisposeParentOnChildError,
+} from "../../disposable.ts";
 import {
   Function2,
   Function1,

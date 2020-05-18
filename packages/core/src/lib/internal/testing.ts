@@ -47,7 +47,7 @@ export const test = (name: string, f: SideEffect): Test => ({
   f: (ctx: string) => () => {
     ignore(ctx);
     f();
-  }
+  },
 });
 
 export const testAsync = (
