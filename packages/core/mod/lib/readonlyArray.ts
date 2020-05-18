@@ -20,6 +20,14 @@ export const join = (
   separator?: string,
 ): Function1<readonly string[], string> => arr => arr.join(separator);
 
+export const keep = <T>(
+  predicate: Predicate<T>,
+): ReadonlyArrayOperator<T, T> => arr => arr.filter(predicate);
+
+export const length = (
+  arr: readonly unknown[],
+): number => arr.length;
+
 export const map = <TA, TB>(
   mapper: Function1<TA, TB>,
 ): ReadonlyArrayOperator<TA, TB> => arr => arr.map(mapper);

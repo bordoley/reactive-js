@@ -13,6 +13,8 @@
 * [everySatisfy](_readonlyarray_.md#const-everysatisfy)
 * [fromObject](_readonlyarray_.md#const-fromobject)
 * [join](_readonlyarray_.md#const-join)
+* [keep](_readonlyarray_.md#const-keep)
+* [length](_readonlyarray_.md#const-length)
 * [map](_readonlyarray_.md#const-map)
 * [reduce](_readonlyarray_.md#const-reduce)
 * [reduceRight](_readonlyarray_.md#const-reduceright)
@@ -66,6 +68,38 @@ Name | Type |
 `separator?` | string |
 
 **Returns:** *[Function1](_functions_.md#function1)‹keyof string[], string›*
+
+___
+
+### `Const` keep
+
+▸ **keep**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ReadonlyArrayOperator](_readonlyarray_.md#readonlyarrayoperator)‹T, T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`predicate` | [Predicate](_functions_.md#predicate)‹T› |
+
+**Returns:** *[ReadonlyArrayOperator](_readonlyarray_.md#readonlyarrayoperator)‹T, T›*
+
+___
+
+### `Const` length
+
+▸ **length**(`arr`: keyof unknown[]): *number*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`arr` | keyof unknown[] |
+
+**Returns:** *number*
 
 ___
 

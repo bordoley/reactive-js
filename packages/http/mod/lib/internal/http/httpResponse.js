@@ -1,7 +1,7 @@
 import { pipe, returns, updaterReducer, } from "../../../../../core/mod/lib/functions.js";
 import { empty, } from "../../../../../core/mod/lib/io.js";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.js";
-import { everySatisfy, map, reduceRight, } from "../../../../../core/mod/lib/readonlyArray.js";
+import { everySatisfy, map, reduceRight, join, } from "../../../../../core/mod/lib/readonlyArray.js";
 import { writeHttpMessageHeaders, encodeHttpMessageWithUtf8, toIOSourceHttpMessage, decodeHttpMessageWithCharset, } from "./HttpMessage.js";
 import { parseCacheControlFromHeaders, parseCacheDirectiveOrThrow, } from "./cacheDirective.js";
 import { entityTagToString, parseETag, parseETagOrThrow } from "./entityTag.js";
@@ -71,7 +71,7 @@ export const writeHttpResponseHeaders = (response, writeHeader) => {
         writeHeader("Location", location.toString());
     }
     if (vary.length > 0) {
-        writeHeader("Vary", vary.join(","));
+        writeHeader("Vary", pipe(vary, join(",")));
     }
     writeHttpMessageHeaders(response, writeHeader);
 };
