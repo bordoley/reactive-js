@@ -1,21 +1,21 @@
-import { createSerialDisposable, disposeOnError, dispose, add, addDisposableOrTeardown, } from "../../disposable.js";
+import { createSerialDisposable, dispose, addDisposableDisposeParentOnChildError, } from "../../disposable.js";
 import { pipe, returns } from "../../functions.js";
 import { concat } from "./concat.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.js";
 import { subscribe } from "./subscribe.js";
 import { throws } from "./throws.js";
 const _timeoutError = Symbol("@reactive-js/core/lib/observable/timeoutError");
 export const timeoutError = _timeoutError;
 const setupDurationSubscription = (observer) => {
-    observer.durationSubscription.inner = pipe(observer.duration, subscribe(observer), addDisposableOrTeardown(disposeOnError(observer)));
+    observer.durationSubscription.inner = pipe(observer.duration, subscribe(observer));
 };
-class TimeoutObserver extends AbstractDelegatingObserver {
+class TimeoutObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, duration) {
         super(delegate);
         this.duration = duration;
         this.durationSubscription = createSerialDisposable();
-        add(this, this.durationSubscription, delegate);
+        addDisposableDisposeParentOnChildError(this, this.durationSubscription);
         setupDurationSubscription(this);
     }
     notify(next) {

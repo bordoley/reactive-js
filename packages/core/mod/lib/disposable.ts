@@ -1,5 +1,5 @@
-import { bind, SideEffect1, Function1 } from "./functions.ts";
-import { isSome, none, Option } from "./option.ts";
+import { bind, SideEffect1, SideEffect } from "./functions.ts";
+import { isSome, none, Option, isNone } from "./option.ts";
 
 /**
  * A wrapper around a caught error to handle corner cases such
@@ -34,7 +34,7 @@ export interface DisposableLike {
    * @param disposable
    * @returns `this`
    */
-  add(disposable: DisposableOrTeardown): this;
+  add(disposable: DisposableOrTeardown): void;
 
   /**
    * Dispose the resource. The operation is idempotent.
@@ -48,13 +48,62 @@ export const dispose = (disposable: DisposableLike, e?: Exception) => {
   disposable.dispose(e);
 };
 
-export const disposeOnError = (
+export const addDisposable = (parent: DisposableLike, child: DisposableLike) => {
+  parent.add(child)
+};
+
+export const addTeardown = (parent: DisposableLike, teardown: SideEffect1<Option<Exception>>) => {
+  parent.add(teardown)
+};
+
+export const addOnDisposedWithErrorTeardown = (parent: DisposableLike, teardown: SideEffect1<unknown>) => {
+  addTeardown(parent, e => {
+    if (isSome(e)) {
+      teardown(e.cause);
+    }
+  })
+};
+
+export const addOnDisposedWithoutErrorTeardown = (parent: DisposableLike, teardown: SideEffect) => {
+  addTeardown(parent, e => {
+    if (isNone(e)) {
+      teardown();
+    }
+  });
+}
+
+export const bindDisposables = (a: DisposableLike, b: DisposableLike) => {
+  addDisposable(a, b);
+  addDisposable(b, a);
+};
+
+export const toDisposeOnErrorTeardown = (
   disposable: DisposableLike,
 ): SideEffect1<Option<Exception>> => (error?: Exception) => {
   if (isSome(error)) {
     dispose(disposable, error);
   }
 };
+
+export const addOnDisposedWithError = (parent: DisposableLike, child: DisposableLike) => {
+  addTeardown(parent, toDisposeOnErrorTeardown(child));
+};
+
+export const addDisposableDisposeParentOnChildError = (parent: DisposableLike, child: DisposableLike) => {
+  addDisposable(parent, child);
+  addOnDisposedWithError(child, parent);
+};
+
+export const addOnDisposedWithoutError = (parent: DisposableLike, child: DisposableLike) => {
+  addTeardown(parent, e => {
+    if(isNone(e)) {
+      dispose(child);
+    }
+  });
+};
+
+
+/*
 export function add<T extends DisposableLike>(
   disposable: T,
   firstChild: DisposableOrTeardown,
@@ -73,6 +122,7 @@ export function add<T extends DisposableLike>(
 export const addDisposableOrTeardown = <T extends DisposableLike>(
   d: DisposableOrTeardown,
 ): Function1<T, T> => disposable => add(disposable, d);
+*/
 
 export const toErrorHandler = (
   disposable: DisposableLike,
@@ -122,13 +172,11 @@ export abstract class AbstractDisposable implements DisposableLike {
       disposables.add(disposable);
 
       if (!(disposable instanceof Function)) {
-        add(disposable, () => {
+        addTeardown(disposable, () => {
           disposables.delete(disposable);
         });
       }
     }
-
-    return this;
   }
 
   /** @ignore */
@@ -157,13 +205,15 @@ export const createDisposable = (
   onDispose?: (error?: Exception) => void,
 ): DisposableLike => {
   const disposable = new DisposableImpl();
-  return isSome(onDispose) ? add(disposable, onDispose) : disposable;
+  if(isSome(onDispose)) {
+    addTeardown(disposable, onDispose)
+  }
+  return disposable;
 };
 
 const _disposed: DisposableLike = {
   add(disposable: DisposableOrTeardown) {
     doDispose(disposable);
-    return _disposed;
   },
   error: none,
   isDisposed: true,
@@ -211,7 +261,7 @@ export abstract class AbstractSerialDisposable extends AbstractDisposable
     this._inner = newInner;
 
     if (oldInner !== newInner) {
-      add(this, newInner);
+      addDisposableDisposeParentOnChildError(this, newInner);
       dispose(oldInner);
     }
   }
@@ -247,5 +297,8 @@ class DisposableValueImpl<T> extends AbstractDisposable
 export const createDisposableValue = <T>(
   value: T,
   cleanup: SideEffect1<T>,
-): DisposableValueLike<T> =>
-  add(new DisposableValueImpl(value), bind(cleanup, value));
+): DisposableValueLike<T> => {
+  const retval = new DisposableValueImpl(value);
+  addTeardown(retval, bind(cleanup, value));
+  return retval;
+};

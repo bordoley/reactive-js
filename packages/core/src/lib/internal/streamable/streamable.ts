@@ -1,4 +1,4 @@
-import { addDisposableOrTeardown, add } from "../../disposable";
+import { bindDisposables } from "../../disposable";
 import { pipe, compose, Function1 } from "../../functions";
 import {
   ObservableOperator,
@@ -54,10 +54,11 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
         map((compose as any)(...reqOps)),
         onNotify(dispatchTo(srcStream)),
         subscribe(scheduler),
-        addDisposableOrTeardown(srcStream),
       );
 
-      return add(srcStream, requestSubscription);
+      bindDisposables(srcStream, requestSubscription);
+
+      return srcStream;
     }, (compose as any)(...obsOps));
   return new LiftedStreamable(op, src, obsOps, reqOps);
 };

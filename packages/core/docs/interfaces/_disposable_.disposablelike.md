@@ -60,7 +60,7 @@ ___
 
 ###  add
 
-▸ **add**(`disposable`: [DisposableOrTeardown](../modules/_disposable_.md#disposableorteardown)): *this*
+▸ **add**(`disposable`: [DisposableOrTeardown](../modules/_disposable_.md#disposableorteardown)): *void*
 
 Adds the given disposable to this container or disposes it if the container has been disposed.
 
@@ -70,7 +70,7 @@ Name | Type |
 ------ | ------ |
 `disposable` | [DisposableOrTeardown](../modules/_disposable_.md#disposableorteardown) |
 
-**Returns:** *this*
+**Returns:** *void*
 
 `this`
 

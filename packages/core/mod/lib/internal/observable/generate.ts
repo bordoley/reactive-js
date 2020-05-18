@@ -5,6 +5,7 @@ import {
   createScheduledObservable,
   createDelayedScheduledObservable,
 } from "./observable.ts";
+import { dispose } from "../../disposable.ts";
 
 /**
  * Generates an `ObservableLike` sequence from a generator function
@@ -35,7 +36,7 @@ export function generate<T>(
           $.yield(options);
         }
       }
-      observer.dispose();
+      dispose(observer);
     };
   };
 

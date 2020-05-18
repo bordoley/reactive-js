@@ -1,4 +1,4 @@
-import { AbstractDisposable, add, dispose } from "../../disposable";
+import { AbstractDisposable, addDisposable, dispose } from "../../disposable";
 import { none, isSome } from "../../option";
 import { createPriorityQueue, QueueLike } from "../queues";
 import {
@@ -72,7 +72,7 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable
   schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
     delay = Math.max(0, delay);
 
-    add(this, continuation);
+    addDisposable(this, continuation);
 
     if (!continuation.isDisposed) {
       const work: VirtualTask = {

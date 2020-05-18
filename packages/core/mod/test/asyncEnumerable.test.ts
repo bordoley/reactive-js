@@ -7,7 +7,7 @@ import {
   fromIterable,
   generate,
 } from "../lib/asyncEnumerable.ts";
-import { Exception, addDisposableOrTeardown } from "../lib/disposable.ts";
+import { Exception, addTeardown } from "../lib/disposable.ts";
 import { pipe, increment, returns, defer } from "../lib/functions.ts";
 import {
   test,
@@ -116,14 +116,15 @@ export const tests = describe(
 
     const result: number[] = [];
     let error: Option<Exception> = none;
-    pipe(
+    const subscription = pipe(
       enumerator,
       onNotify(x => result.push(x)),
       subscribe(scheduler),
-      addDisposableOrTeardown(e => {
-        error = e;
-      }),
     );
+
+    addTeardown(subscription, e => {
+      error = e;
+    });
 
     dispatch(enumerator, none);
     dispatch(enumerator, none);

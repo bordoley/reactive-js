@@ -1,4 +1,4 @@
-import { addDisposableOrTeardown, add } from "../../disposable.js";
+import { bindDisposables } from "../../disposable.js";
 import { pipe, compose } from "../../functions.js";
 import { onNotify, empty as emptyObs, map, using, dispatchTo, } from "../../observable.js";
 import { isNone } from "../../option.js";
@@ -25,8 +25,9 @@ const liftImpl = (streamable, obsOps, reqOps) => {
     const src = streamable instanceof LiftedStreamable ? streamable.src : streamable;
     const op = requests => using(scheduler => {
         const srcStream = stream(src, scheduler);
-        const requestSubscription = pipe(requests, map(compose(...reqOps)), onNotify(dispatchTo(srcStream)), subscribe(scheduler), addDisposableOrTeardown(srcStream));
-        return add(srcStream, requestSubscription);
+        const requestSubscription = pipe(requests, map(compose(...reqOps)), onNotify(dispatchTo(srcStream)), subscribe(scheduler));
+        bindDisposables(srcStream, requestSubscription);
+        return srcStream;
     }, compose(...obsOps));
     return new LiftedStreamable(op, src, obsOps, reqOps);
 };

@@ -1,13 +1,13 @@
-import { createSerialDisposable, disposeOnError, dispose, add, addDisposableOrTeardown, } from "../../disposable.js";
+import { createSerialDisposable, dispose, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, } from "../../disposable.js";
 import { pipe } from "../../functions.js";
-import { none, isNone } from "../../option.js";
+import { none } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
 const setupDurationSubscription = (observer, next) => {
-    observer.durationSubscription.inner = pipe(observer.durationFunction(next), onNotify(observer.onNotify), subscribe(observer), addDisposableOrTeardown(disposeOnError(observer)));
+    observer.durationSubscription.inner = pipe(observer.durationFunction(next), onNotify(observer.onNotify), subscribe(observer));
 };
 class ThrottleObserver extends AbstractDelegatingObserver {
     constructor(delegate, durationFunction, mode) {
@@ -26,12 +26,14 @@ class ThrottleObserver extends AbstractDelegatingObserver {
                 this.delegate.notify(value);
             }
         };
-        add(this, this.durationSubscription, error => {
-            if (isNone(error) && mode !== 1 && this.hasValue) {
+        addDisposableDisposeParentOnChildError(this, this.durationSubscription);
+        addOnDisposedWithError(this, delegate);
+        addOnDisposedWithoutErrorTeardown(this, () => {
+            if (mode !== 1 && this.hasValue) {
                 fromValue()(this.value).observe(delegate);
             }
             else {
-                dispose(delegate, error);
+                dispose(delegate);
             }
         });
     }

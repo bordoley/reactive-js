@@ -1,6 +1,6 @@
 import { Readable, Writable } from "stream";
 import { pipe, bind, returns } from "../lib/functions.js";
-import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulatorForTests.js";
+import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulator.js";
 import { describe, testAsync, expectEquals, expectPromiseToThrow, } from "../lib/internal/testing.js";
 import { fromArray } from "../lib/io.js";
 import { createReadableIOSource, createWritableIOSink, gzip, gunzip, createDisposableNodeStream, } from "../lib/node.js";

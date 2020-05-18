@@ -2,7 +2,10 @@ import {
   DisposableLike,
   AbstractDisposable,
   dispose,
-  add,
+  addDisposable,
+  addTeardown,
+  addOnDisposedWithError,
+  addOnDisposedWithoutErrorTeardown,
 } from "../../disposable";
 import { current, EnumeratorLike } from "../../enumerable";
 import { returns } from "../../functions";
@@ -56,7 +59,8 @@ class EnumeratorObserver<T> extends AbstractDisposable
   }
 
   schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
-    add(this, continuation);
+    addDisposable(this, continuation);
+    
     if (!continuation.isDisposed && delay === 0) {
       this.continuations.push(continuation);
     } else {
@@ -110,14 +114,15 @@ class ZipObserver extends AbstractDelegatingObserver<unknown, unknown[]>
       EnumeratorLike<any>)[],
   ) {
     super(delegate);
-    add(delegate, () => {
+    addTeardown(delegate, () => {
       this.hasCurrent = false;
       this.current = none;
       this.buffer.length = 0;
     });
-    add(this, error => {
-      if (isSome(error) || (this.buffer.length === 0 && !this.hasCurrent)) {
-        dispose(delegate, error);
+    addOnDisposedWithError(this, delegate);
+    addOnDisposedWithoutErrorTeardown(this, () => {
+      if (this.buffer.length === 0 && !this.hasCurrent) {
+        dispose(delegate);
       }
     });
   }

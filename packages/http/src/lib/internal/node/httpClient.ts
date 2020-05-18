@@ -2,12 +2,13 @@ import { IncomingMessage, request as httpRequest } from "http";
 import { request as httpsRequest } from "https";
 import { URL } from "url";
 import {
-  add,
   dispose,
   DisposableLike,
   AbstractDisposable,
   toErrorHandler,
-  addDisposableOrTeardown,
+  addTeardown,
+  bindDisposables,
+  addDisposable,
 } from "@reactive-js/core/lib/disposable";
 import { FlowMode } from "@reactive-js/core/lib/flowable";
 import { bind, pipe, returns } from "@reactive-js/core/lib/functions";
@@ -60,7 +61,7 @@ class ResponseBody extends AbstractDisposable
   constructor(private readonly resp: IncomingMessage) {
     super();
 
-    add(this, _ => {
+    addTeardown(this, _ => {
       resp.removeAllListeners();
       resp.destroy();
     });
@@ -77,15 +78,12 @@ class ResponseBody extends AbstractDisposable
       throw new Error("Response body already consumed");
     }
     this.consumed = true;
-    const responseStream = add(
-      stream(
-        createReadableIOSource(bind(createDisposableNodeStream, this.resp)),
-        scheduler,
-        replayCount,
-      ),
-      this,
+    const responseStream = stream(
+      createReadableIOSource(bind(createDisposableNodeStream, this.resp)),
+      scheduler,
+      replayCount,
     );
-    add(this, responseStream);
+    bindDisposables(this, responseStream);
     return responseStream;
   }
 }
@@ -128,7 +126,7 @@ export const createHttpClient = (
         scheduler,
       );
 
-      const requestBody = add(stream(request.body, scheduler), requestSink);
+      const requestBody = stream(request.body, scheduler);
 
       const onContinue = () => {
         const reqSubscription = pipe(
@@ -140,9 +138,12 @@ export const createHttpClient = (
           requestBody,
           onNotify(dispatchTo(requestSink)),
           subscribe(scheduler),
-          addDisposableOrTeardown(reqSubscription),
+          
         );
-        add(requestBody, dataSubscription);
+        
+        addDisposable(dataSubscription, reqSubscription),
+        addDisposable(requestBody, dataSubscription);
+        addDisposable(requestBody, requestSink);
       };
 
       if (request.expectContinue) {
@@ -156,8 +157,7 @@ export const createHttpClient = (
         dispose(requestBody);
 
         const body = new ResponseBody(resp);
-        add(responseSubject, body);
-        add(body, responseSubject);
+        bindDisposables(responseSubject, body);
 
         const response = parseHttpResponseFromHeaders(
           resp.statusCode ?? -1,

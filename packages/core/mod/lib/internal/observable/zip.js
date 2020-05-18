@@ -1,4 +1,4 @@
-import { AbstractDisposable, dispose, add, } from "../../disposable.js";
+import { AbstractDisposable, dispose, addDisposable, addTeardown, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, } from "../../disposable.js";
 import { current } from "../../enumerable.js";
 import { returns } from "../../functions.js";
 import { none, isSome, isNone } from "../../option.js";
@@ -42,7 +42,7 @@ class EnumeratorObserver extends AbstractDisposable {
         this.hasCurrent = true;
     }
     schedule(continuation, { delay } = { delay: 0 }) {
-        add(this, continuation);
+        addDisposable(this, continuation);
         if (!continuation.isDisposed && delay === 0) {
             this.continuations.push(continuation);
         }
@@ -82,14 +82,15 @@ class ZipObserver extends AbstractDelegatingObserver {
         this.enumerators = enumerators;
         this.buffer = [];
         this.hasCurrent = false;
-        add(delegate, () => {
+        addTeardown(delegate, () => {
             this.hasCurrent = false;
             this.current = none;
             this.buffer.length = 0;
         });
-        add(this, error => {
-            if (isSome(error) || (this.buffer.length === 0 && !this.hasCurrent)) {
-                dispose(delegate, error);
+        addOnDisposedWithError(this, delegate);
+        addOnDisposedWithoutErrorTeardown(this, () => {
+            if (this.buffer.length === 0 && !this.hasCurrent) {
+                dispose(delegate);
             }
         });
     }

@@ -1,11 +1,10 @@
-import { dispose, add, addDisposableOrTeardown } from "../../disposable.js";
+import { dispose, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError } from "../../disposable.js";
 import { pipe } from "../../functions.js";
-import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-class WithLatestFromObserver extends AbstractDelegatingObserver {
+class WithLatestFromObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, other, selector) {
         super(delegate);
         this.selector = selector;
@@ -15,12 +14,13 @@ class WithLatestFromObserver extends AbstractDelegatingObserver {
             this.otherLatest = next;
         };
         this.selector = selector;
-        const otherSubscription = pipe(other, onNotify(this.onNotify), subscribe(this), addDisposableOrTeardown(e => {
-            if (isSome(e) || !this.hasLatest) {
-                dispose(this, e);
+        const otherSubscription = pipe(other, onNotify(this.onNotify), subscribe(this));
+        addOnDisposedWithoutErrorTeardown(otherSubscription, () => {
+            if (!this.hasLatest) {
+                dispose(this);
             }
-        }));
-        add(this, otherSubscription, delegate);
+        });
+        addDisposableDisposeParentOnChildError(this, otherSubscription);
     }
     notify(next) {
         assertObserverState(this);

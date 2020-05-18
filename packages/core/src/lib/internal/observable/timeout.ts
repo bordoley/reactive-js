@@ -1,16 +1,14 @@
 import {
   createSerialDisposable,
   SerialDisposableLike,
-  disposeOnError,
   dispose,
-  add,
-  addDisposableOrTeardown,
+  addDisposableDisposeParentOnChildError,
 } from "../../disposable";
 import { pipe, returns } from "../../functions";
 import { concat } from "./concat";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer";
 import { subscribe } from "./subscribe";
 import { throws } from "./throws";
 
@@ -23,11 +21,10 @@ const setupDurationSubscription = <T>(observer: TimeoutObserver<T>) => {
   observer.durationSubscription.inner = pipe(
     observer.duration,
     subscribe(observer),
-    addDisposableOrTeardown(disposeOnError(observer)),
   );
 };
 
-class TimeoutObserver<T> extends AbstractDelegatingObserver<T, T> {
+class TimeoutObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T> {
   readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
 
   constructor(
@@ -35,7 +32,7 @@ class TimeoutObserver<T> extends AbstractDelegatingObserver<T, T> {
     readonly duration: ObservableLike<unknown>,
   ) {
     super(delegate);
-    add(this, this.durationSubscription, delegate);
+    addDisposableDisposeParentOnChildError(this, this.durationSubscription);
     setupDurationSubscription(this);
   }
 

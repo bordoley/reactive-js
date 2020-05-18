@@ -1,8 +1,8 @@
 import {
-  add,
   AbstractDisposable,
   DisposableLike,
   dispose,
+  bindDisposables,
 } from "../../../../../core/mod/lib/disposable.ts";
 import { pipe, bind } from "../../../../../core/mod/lib/functions.ts";
 import {
@@ -72,8 +72,7 @@ export class HttpResponseBodyImpl extends AbstractDisposable
   implements WebResponseBodyLike {
   constructor(readonly body: ObservableLike<unknown> & DisposableLike) {
     super();
-    add(this, body);
-    add(body, this);
+    bindDisposables(this,body);
   }
 
   get arrayBuffer(): ObservableLike<ArrayBuffer> {

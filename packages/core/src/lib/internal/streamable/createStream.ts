@@ -1,7 +1,5 @@
 import {
-  add,
-  AbstractDisposable,
-  addDisposableOrTeardown,
+  AbstractDisposable, addDisposable,
 } from "../../disposable";
 import { pipe } from "../../functions";
 import {
@@ -40,10 +38,11 @@ class StreamImpl<TReq, T> extends AbstractDisposable
       subject,
       op,
       publish(scheduler, replayCount),
-      addDisposableOrTeardown(this),
     );
 
-    add(this, subject);
+    addDisposable(observable, this),
+
+    addDisposable(this, subject);
 
     this.dispatcher = subject;
     this.observable = observable;

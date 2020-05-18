@@ -3,8 +3,7 @@ import {
   DisposableLike,
   disposed,
   dispose,
-  add,
-  addDisposableOrTeardown,
+  addTeardown,
 } from "../disposable.ts";
 import { fromIterable, toRunnable } from "../enumerable.ts";
 import { pipe, Function1 } from "../functions.ts";
@@ -112,8 +111,9 @@ const tryDispatch = <TResource extends DisposableLike>(
   // We have resource to allocate so pop
   // the observer off the request queue
   // and mark the resource as in use
-  const observer = add(
-    resourceRequests.pop(key) as DispatcherLike<TResource>,
+  const observer = resourceRequests.pop(key) as DispatcherLike<TResource>;
+  addTeardown(
+    observer,
     () => {
       inUseResources.remove(key, observer);
       availableResources.push(key, resource);
@@ -138,10 +138,10 @@ const tryDispatch = <TResource extends DisposableLike>(
           }
         }),
         subscribe(scheduler),
-        addDisposableOrTeardown(() => {
-          availableResourcesTimeouts.delete(resource);
-        }),
       );
+      addTeardown(timeoutSubscription, () => {
+        availableResourcesTimeouts.delete(resource);
+      }),
       availableResourcesTimeouts.set(resource, timeoutSubscription);
 
       tryDispatch(resourceManager, key);
@@ -184,7 +184,7 @@ class ResourceManagerImpl<TResource extends DisposableLike>
   ) {
     super();
 
-    add(this, e => {
+    addTeardown(this, e => {
       const forEachDispose = forEach((s: DisposableLike) => dispose(s, e));
 
       pipe(this.resourceRequests.values, forEachDispose);

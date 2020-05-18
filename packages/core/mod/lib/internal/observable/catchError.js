@@ -1,13 +1,13 @@
-import { dispose, addDisposableOrTeardown } from "../../disposable.js";
-import { pipe } from "../../functions.js";
+import { dispose, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from "../../disposable.js";
 import { isSome, none } from "../../option.js";
 import { lift } from "./lift.js";
 import { createDelegatingObserver } from "./observer.js";
 export const catchError = (onError) => {
-    const operator = (delegate) => pipe(delegate, createDelegatingObserver, addDisposableOrTeardown(error => {
-        if (isSome(error)) {
+    const operator = (delegate) => {
+        const observer = createDelegatingObserver(delegate);
+        addOnDisposedWithoutError(observer, delegate);
+        addOnDisposedWithErrorTeardown(observer, cause => {
             try {
-                const { cause } = error;
                 const result = onError(cause) || none;
                 if (isSome(result)) {
                     result.observe(delegate);
@@ -17,13 +17,11 @@ export const catchError = (onError) => {
                 }
             }
             catch (cause) {
-                dispose(delegate, { cause, parent: error });
+                dispose(delegate, { cause: { parent: cause, cause } });
             }
-        }
-        else {
-            dispose(delegate);
-        }
-    }));
+        });
+        return observer;
+    };
     operator.isSynchronous = false;
     return lift(operator);
 };

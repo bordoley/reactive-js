@@ -1,4 +1,4 @@
-import { DisposableLike, add, disposeOnError } from "../../disposable";
+import { DisposableLike, addDisposableDisposeParentOnChildError } from "../../disposable";
 import {
   Function2,
   Function1,
@@ -28,13 +28,12 @@ class UsingObservable<TResource extends DisposableLike, T>
     const observableFactory = this.observableFactory;
 
     const resourcesArray = Array.isArray(resources) ? resources : [resources];
-    (add as any)(observer, ...resourcesArray);
-    observableFactory(...resourcesArray).observe(observer);
 
-    const teardownObserverOnError = disposeOnError(observer);
     for (const r of resourcesArray) {
-      add(r, teardownObserverOnError);
+      addDisposableDisposeParentOnChildError(observer, r);
     }
+
+    observableFactory(...resourcesArray).observe(observer);
   }
 }
 

@@ -12,10 +12,10 @@ import {
 import {
   DisposableValueLike,
   createDisposableValue,
-  disposeOnError,
-  add,
+  addOnDisposedWithError,
+  addDisposableDisposeParentOnChildError,
 } from "../../disposable";
-import { defer, ignore, pipe, returns, Factory } from "../../functions";
+import { defer, ignore, pipe, returns, Factory, identity } from "../../functions";
 import { IOSourceOperator } from "../../io";
 import { using, subscribe, onNotify, dispatchTo } from "../../observable";
 import { createStreamable, sink, stream } from "../../streamable";
@@ -33,21 +33,21 @@ export const transform = (
 
         const transformSink = createWritableIOSink(
           // don't dispose the transform when the writable is disposed.
-          () =>
-            add(
-              createDisposableValue<Transform>(transform.value, ignore),
-              disposeOnError(transform),
-            ),
-        );
-
-        const sinkSubscription = pipe(
-          sink(src, transformSink),
-          subscribe(scheduler),
+          () => {
+            const disposable = createDisposableValue<Transform>(transform.value, ignore);
+            addOnDisposedWithError(disposable, transform);
+            return disposable;
+          },
         );
 
         const transformReadableStream = stream(
           createReadableIOSource(returns(transform)),
           scheduler,
+        );
+
+        const sinkSubscription = pipe(
+          sink(src, transformSink),
+          subscribe(scheduler),
         );
 
         const modeSubscription = pipe(
@@ -56,14 +56,12 @@ export const transform = (
           subscribe(scheduler),
         );
 
-        return add(
-          transformReadableStream,
-          sinkSubscription,
-          transform,
-          modeSubscription,
-        );
+        addDisposableDisposeParentOnChildError(transformReadableStream, sinkSubscription);
+        addDisposableDisposeParentOnChildError(transformReadableStream, modeSubscription);
+
+        return transformReadableStream;
       },
-      t => t,
+      identity,
     ),
   );
 

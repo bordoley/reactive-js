@@ -1,6 +1,5 @@
-import { dispose, add, addDisposableOrTeardown } from "../../disposable.js";
+import { dispose, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError } from "../../disposable.js";
 import { pipe } from "../../functions.js";
-import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
 import { AbstractObserver, assertObserverState } from "./observer.js";
 import { onNotify } from "./onNotify.js";
@@ -29,23 +28,16 @@ class ZipWithLatestFromObserver extends AbstractObserver {
         };
         this.queue = [];
         this.selector = selector;
-        const otherSubscription = pipe(other, onNotify(this.onNotify), subscribe(delegate), addDisposableOrTeardown(e => {
-            if (isSome(e)) {
-                dispose(delegate, e);
-            }
-            else if (this.isDisposed) {
+        const otherSubscription = pipe(other, onNotify(this.onNotify), subscribe(delegate));
+        const disposeDelegate = () => {
+            if (this.isDisposed && otherSubscription.isDisposed) {
                 dispose(delegate);
             }
-        }));
-        add(this, e => {
-            if (isSome(e)) {
-                dispose(delegate, e);
-            }
-            else if (otherSubscription.isDisposed) {
-                dispose(delegate);
-            }
-        });
-        add(delegate, otherSubscription, this);
+        };
+        addDisposableDisposeParentOnChildError(delegate, this);
+        addDisposableDisposeParentOnChildError(delegate, otherSubscription);
+        addOnDisposedWithoutErrorTeardown(this, disposeDelegate);
+        addOnDisposedWithoutErrorTeardown(otherSubscription, disposeDelegate);
     }
     notify(next) {
         assertObserverState(this);

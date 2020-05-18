@@ -1,4 +1,4 @@
-import { add } from "../disposable.ts";
+import { addDisposable } from "../disposable.ts";
 import { FlowMode } from "../flowable.ts";
 import { Reducer, pipe, returns, Factory } from "../functions.ts";
 import { IOEvent, IOEventType, IOSinkLike } from "../io.ts";
@@ -32,11 +32,7 @@ export interface IOSinkAccumulatorLike<T, TAcc> extends IOSinkLike<T> {
 }
 
 class IOSinkAccumulatorImpl<T, TAcc> implements IOSinkAccumulatorLike<T, TAcc> {
-  constructor(private readonly reducer: Reducer<T, TAcc>, private _acc: TAcc) {}
-
-  get acc() {
-    return this._acc;
-  }
+  constructor(private readonly reducer: Reducer<T, TAcc>, public acc: TAcc) {}
 
   stream(
     scheduler: SchedulerLike,
@@ -52,7 +48,7 @@ class IOSinkAccumulatorImpl<T, TAcc> implements IOSinkAccumulatorLike<T, TAcc> {
             mapObs(ev => ev.data),
             reduce(this.reducer, returns(this.acc)),
             onNotify(acc => {
-              this._acc = acc;
+              this.acc = acc;
             }),
             subscribe(scheduler),
           ),
@@ -61,7 +57,7 @@ class IOSinkAccumulatorImpl<T, TAcc> implements IOSinkAccumulatorLike<T, TAcc> {
           createObservable(dispatcher => {
             dispatch(dispatcher, FlowMode.Pause);
             dispatch(dispatcher, FlowMode.Resume);
-            add(eventsSubscription, dispatcher);
+            addDisposable(eventsSubscription, dispatcher);
           }),
       );
     return stream(createStreamable(op), scheduler, replayCount);

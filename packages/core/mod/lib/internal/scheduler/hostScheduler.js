@@ -1,4 +1,4 @@
-import { createDisposable, dispose, add, } from "../../disposable.js";
+import { createDisposable, dispose, addDisposable, addTeardown, } from "../../disposable.js";
 import { bind } from "../../functions.js";
 import { YieldError, } from "./interfaces.js";
 import { runContinuation } from "./schedulerContinuation.js";
@@ -16,14 +16,15 @@ const now = supportsPerformanceNow
         : () => Date.now();
 const createScheduledCallback = (disposable, cb) => () => {
     if (!disposable.isDisposed) {
-        cb();
         dispose(disposable);
+        cb();
     }
 };
 const scheduleImmediateWithSetImmediate = (cb) => {
     const disposable = createDisposable();
     const timeout = setImmediate(createScheduledCallback(disposable, cb));
-    return add(disposable, bind(clearImmediate, timeout));
+    addTeardown(disposable, bind(clearImmediate, timeout));
+    return disposable;
 };
 const scheduleImmediateWithMessageChannel = (channel) => (cb) => {
     const disposable = createDisposable();
@@ -34,7 +35,8 @@ const scheduleImmediateWithMessageChannel = (channel) => (cb) => {
 const scheduleDelayed = (cb, delay) => {
     const disposable = createDisposable();
     const timeout = setTimeout(createScheduledCallback(disposable, cb), delay);
-    return add(disposable, bind(clearTimeout, timeout));
+    addTeardown(disposable, bind(clearTimeout, timeout));
+    return disposable;
 };
 const scheduleImmediateWithSetTimeout = (cb) => scheduleDelayed(cb, 0);
 const scheduleImmediate = supportsSetImmediate
@@ -65,7 +67,7 @@ class HostScheduler {
             const callbackSubscription = delay > 0
                 ? scheduleDelayed(callback, delay)
                 : scheduleImmediate(callback);
-            add(continuation, callbackSubscription);
+            addDisposable(continuation, callbackSubscription);
         }
     }
     yield({ delay } = { delay: 0 }) {

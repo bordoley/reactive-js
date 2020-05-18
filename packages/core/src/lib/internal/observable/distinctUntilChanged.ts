@@ -1,17 +1,15 @@
-import { add } from "../../disposable";
 import { strictEquality, Equality } from "../../functions";
 import { Option } from "../../option";
 import { ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer";
 
-class DistinctUntilChangedObserver<T> extends AbstractDelegatingObserver<T, T> {
+class DistinctUntilChangedObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T> {
   prev: Option<T>;
   hasValue = false;
 
   constructor(delegate: ObserverLike<T>, readonly equality: Equality<T>) {
     super(delegate);
-    add(this, delegate);
   }
 
   notify(next: T) {

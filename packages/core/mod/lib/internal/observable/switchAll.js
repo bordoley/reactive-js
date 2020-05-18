@@ -1,6 +1,5 @@
-import { add, disposed, dispose, addDisposableOrTeardown, } from "../../disposable.js";
+import { disposed, dispose, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, } from "../../disposable.js";
 import { compose, pipe } from "../../functions.js";
-import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
 import { map } from "./map.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
@@ -13,21 +12,23 @@ class SwitchObserver extends AbstractDelegatingObserver {
         this.onNotify = (next) => {
             this.delegate.notify(next);
         };
-        add(this, error => {
-            if (this.inner.isDisposed || isSome(error)) {
-                dispose(this.delegate, error);
+        addOnDisposedWithError(this, delegate);
+        addOnDisposedWithErrorTeardown(this, () => {
+            if (this.inner.isDisposed) {
+                dispose(delegate);
             }
         });
     }
     notify(next) {
         assertObserverState(this);
         dispose(this.inner);
-        const inner = pipe(next, onNotify(this.onNotify), subscribe(this.delegate), addDisposableOrTeardown(e => {
-            if (isSome(e) || this.isDisposed) {
-                dispose(this.delegate, e);
+        const inner = pipe(next, onNotify(this.onNotify), subscribe(this.delegate));
+        addDisposableDisposeParentOnChildError(this.delegate, inner);
+        addOnDisposedWithoutErrorTeardown(inner, () => {
+            if (this.isDisposed) {
+                dispose(this.delegate);
             }
-        }));
-        add(this.delegate, inner);
+        });
         this.inner = inner;
     }
 }

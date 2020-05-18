@@ -1,4 +1,4 @@
-import { createSerialDisposable, dispose, addDisposableOrTeardown, } from "../../disposable.js";
+import { dispose, addDisposable, addTeardown, } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { isNone, isSome } from "../../option.js";
 import { lift } from "./lift.js";
@@ -6,7 +6,7 @@ import { createDelegatingObserver } from "./observer.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
 const createRepeatObserver = (delegate, observable, shouldRepeat) => {
-    const innerSubscription = createSerialDisposable();
+    const observer = createDelegatingObserver(delegate);
     let count = 1;
     const onDispose = (error) => {
         let shouldComplete = false;
@@ -22,10 +22,13 @@ const createRepeatObserver = (delegate, observable, shouldRepeat) => {
         }
         else {
             count++;
-            innerSubscription.inner = pipe(observable, onNotify((next) => delegate.notify(next)), subscribe(delegate), addDisposableOrTeardown(onDispose));
+            const subscription = pipe(observable, onNotify((next) => delegate.notify(next)), subscribe(delegate));
+            addTeardown(subscription, onDispose);
+            addDisposable(observer, subscription);
         }
     };
-    return pipe(delegate, addDisposableOrTeardown(innerSubscription), createDelegatingObserver, addDisposableOrTeardown(onDispose));
+    addTeardown(observer, onDispose);
+    return observer;
 };
 const repeatObs = (shouldRepeat) => observable => {
     const operator = (observer) => createRepeatObserver(observer, observable, shouldRepeat);

@@ -1,6 +1,4 @@
-import { dispose, addDisposableOrTeardown } from "../../disposable.ts";
-import { pipe } from "../../functions.ts";
-import { isSome } from "../../option.ts";
+import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable.ts";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces.ts";
 import { createDelegatingObserver } from "./observer.ts";
 
@@ -10,18 +8,18 @@ const createMergeObserver = <T>(
   ctx: {
     completedCount: number;
   },
-) =>
-  pipe(
-    delegate,
-    createDelegatingObserver,
-    addDisposableOrTeardown(error => {
-      ctx.completedCount++;
-
-      if (isSome(error) || ctx.completedCount >= count) {
-        dispose(delegate, error);
-      }
-    }),
-  );
+) => {
+  const observer = createDelegatingObserver(delegate);
+  
+  addOnDisposedWithError(observer, delegate);
+  addOnDisposedWithoutErrorTeardown(observer, () => {
+    ctx.completedCount++;
+    if (ctx.completedCount >= count) {
+      dispose(delegate);
+    }
+  })
+  return observer;
+};
 
 class MergeObservable<T> implements ObservableLike<T> {
   readonly isSynchronous = false;
@@ -30,7 +28,6 @@ class MergeObservable<T> implements ObservableLike<T> {
 
   observe(observer: ObserverLike<T>) {
     const observables = this.observables;
-
     const count = observables.length;
     const ctx = { completedCount: 0 };
 

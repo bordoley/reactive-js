@@ -1,5 +1,5 @@
-import { Exception, dispose, addDisposableOrTeardown } from "../../disposable.ts";
-import { Function1, pipe } from "../../functions.ts";
+import { dispose, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from "../../disposable.ts";
+import { Function1 } from "../../functions.ts";
 import { isSome, none } from "../../option.ts";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
@@ -16,28 +16,24 @@ import { createDelegatingObserver } from "./observer.ts";
 export const catchError = <T>(
   onError: Function1<unknown, ObservableLike<T> | void>,
 ): ObservableOperator<T, T> => {
-  const operator = (delegate: ObserverLike<T>) =>
-    pipe(
-      delegate,
-      createDelegatingObserver,
-      addDisposableOrTeardown(error => {
-        if (isSome(error)) {
-          try {
-            const { cause } = error;
-            const result = onError(cause) || none;
-            if (isSome(result)) {
-              result.observe(delegate);
-            } else {
-              dispose(delegate);
-            }
-          } catch (cause) {
-            dispose(delegate, { cause, parent: error } as Exception);
-          }
+  const operator = (delegate: ObserverLike<T>) => {
+    const observer = createDelegatingObserver(delegate);
+    addOnDisposedWithoutError(observer, delegate);
+    addOnDisposedWithErrorTeardown(observer, cause => {
+      try {
+        const result = onError(cause) || none;
+        if (isSome(result)) {
+          result.observe(delegate);
         } else {
           dispose(delegate);
         }
-      }),
-    );
+      } catch (cause) {
+        dispose(delegate, { cause: { parent: cause, cause } });
+      }
+    });
+
+    return observer;
+  };
 
   operator.isSynchronous = false;
   return lift(operator);

@@ -1,4 +1,4 @@
-import { add, AbstractDisposable, dispose, } from "../../../../../core/mod/lib/disposable.js";
+import { AbstractDisposable, dispose, bindDisposables, } from "../../../../../core/mod/lib/disposable.js";
 import { pipe, bind } from "../../../../../core/mod/lib/functions.js";
 import { dispatch, fromValue, createObservable, await_, } from "../../../../../core/mod/lib/observable.js";
 const blobToString = (blob) => {
@@ -49,8 +49,7 @@ export class HttpResponseBodyImpl extends AbstractDisposable {
     constructor(body) {
         super();
         this.body = body;
-        add(this, body);
-        add(body, this);
+        bindDisposables(this, body);
     }
     get arrayBuffer() {
         return pipe(this.body, await_(bodyToArrayBuffer));

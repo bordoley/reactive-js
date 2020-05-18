@@ -1,4 +1,4 @@
-import { add } from "../../disposable";
+import { addTeardown } from "../../disposable";
 import { createObservable, ObservableLike, dispatch } from "../../observable";
 
 const reservedEvents = ["error", "open"];
@@ -27,7 +27,7 @@ export const createEventSource = (
       });
     };
 
-    add(dispatcher, _ => {
+    addTeardown(dispatcher, _ => {
       for (const ev of events) {
         eventSource.removeEventListener(ev, listener as EventListener);
       }

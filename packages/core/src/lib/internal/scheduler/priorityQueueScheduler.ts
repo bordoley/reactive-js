@@ -2,7 +2,8 @@ import {
   AbstractSerialDisposable,
   DisposableLike,
   disposed,
-  add,
+  addDisposable,
+  addTeardown,
 } from "../../disposable";
 import { none, Option, isSome, isNone } from "../../option";
 import { createPriorityQueue, QueueLike } from "../queues";
@@ -136,7 +137,7 @@ class PriorityScheduler extends AbstractSerialDisposable
 
   constructor(readonly host: SchedulerLike) {
     super();
-    add(this, () => {
+    addTeardown(this, _e => {
       this.queue.clear();
       this.delayed.clear();
     });
@@ -189,7 +190,7 @@ class PriorityScheduler extends AbstractSerialDisposable
       ? this.current.priority
       : Number.MAX_SAFE_INTEGER;
 
-    add(this, continuation);
+    addDisposable(this, continuation);
 
     if (!continuation.isDisposed) {
       const now = this.now;

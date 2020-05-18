@@ -3,7 +3,6 @@ import { createServer as createHttp1Server } from "http";
 import { createSecureServer as createHttp2Server } from "http2";
 import {
   dispose,
-  addDisposableOrTeardown,
 } from "@reactive-js/core/lib/disposable";
 import {
   pipe,
@@ -287,10 +286,6 @@ pipe(
     }
   }),
   subscribe(scheduler),
-  addDisposableOrTeardown(e => {
-    console.log("dispose value case");
-    console.log(e);
-  }),
 );
 
 const file = "packages/example/build/bundle.js";
@@ -328,8 +323,4 @@ pipe(
   ),
   onNotify(console.log),
   subscribe(scheduler),
-  addDisposableOrTeardown(e => {
-    console.log("dispose");
-    console.log(e);
-  }),
 );

@@ -2,7 +2,8 @@ import {
   DisposableLike,
   createDisposable,
   dispose,
-  add,
+  addDisposable,
+  addTeardown,
 } from "../../disposable";
 import { Factory, SideEffect, Function1, bind } from "../../functions";
 import {
@@ -50,15 +51,16 @@ const createScheduledCallback = (
   cb: SideEffect,
 ): SideEffect => () => {
   if (!disposable.isDisposed) {
-    cb();
     dispose(disposable);
+    cb();
   }
 };
 
 const scheduleImmediateWithSetImmediate = (cb: SideEffect) => {
   const disposable = createDisposable();
   const timeout = setImmediate(createScheduledCallback(disposable, cb));
-  return add(disposable, bind(clearImmediate, timeout));
+  addTeardown(disposable, bind(clearImmediate, timeout));
+  return disposable;
 };
 
 const scheduleImmediateWithMessageChannel = (channel: MessageChannel) => (
@@ -75,7 +77,8 @@ const scheduleImmediateWithMessageChannel = (channel: MessageChannel) => (
 const scheduleDelayed = (cb: SideEffect, delay: number) => {
   const disposable = createDisposable();
   const timeout = setTimeout(createScheduledCallback(disposable, cb), delay);
-  return add(disposable, bind(clearTimeout, timeout));
+  addTeardown(disposable, bind(clearTimeout, timeout));
+  return disposable;
 };
 
 const scheduleImmediateWithSetTimeout = (cb: SideEffect) =>
@@ -119,7 +122,7 @@ class HostScheduler implements SchedulerLike {
         delay > 0
           ? scheduleDelayed(callback, delay)
           : scheduleImmediate(callback);
-      add(continuation, callbackSubscription);
+      addDisposable(continuation, callbackSubscription);
     }
   }
 

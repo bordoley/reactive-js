@@ -1,5 +1,5 @@
 import { Readable } from "stream";
-import { DisposableValueLike, dispose, add, disposeOnError, addDisposableOrTeardown } from "../../disposable";
+import { DisposableValueLike, dispose, addDisposable, addTeardown, addDisposableDisposeParentOnChildError } from "../../disposable";
 import { FlowMode } from "../../flowable";
 import { pipe, compose, Factory } from "../../functions";
 import { next, complete, IOSourceLike } from "../../io";
@@ -19,7 +19,6 @@ const createReadableEventsObservable = (
   readable: DisposableValueLike<Readable>,
 ) =>
   createObservable(dispatcher => {
-    add(readable, dispatcher);
     const readableValue = readable.value;
 
     const onData = compose(next, dispatchTo(dispatcher));
@@ -31,7 +30,8 @@ const createReadableEventsObservable = (
     };
     readableValue.on("end", onEnd);
 
-    add(dispatcher, _ => {
+    addDisposable(readable, dispatcher);
+    addTeardown(dispatcher, _ => {
       readableValue.removeListener("data", onData);
       readableValue.removeListener("end", onEnd);
     });
@@ -58,10 +58,11 @@ const createReadableAndSetupModeSubscription = (
       }
     }),
     subscribe(scheduler),
-    pipe(readable, disposeOnError, addDisposableOrTeardown),
   );
 
-  return add(readable, modeSubscription);
+  addDisposableDisposeParentOnChildError(readable, modeSubscription);
+
+  return readable;
 };
 
 export const createReadableIOSource = (

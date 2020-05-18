@@ -1,20 +1,51 @@
 import { bind } from "./functions.js";
-import { isSome, none } from "./option.js";
+import { isSome, none, isNone } from "./option.js";
 export const dispose = (disposable, e) => {
     disposable.dispose(e);
 };
-export const disposeOnError = (disposable) => (error) => {
+export const addDisposable = (parent, child) => {
+    parent.add(child);
+};
+export const addTeardown = (parent, teardown) => {
+    parent.add(teardown);
+};
+export const addOnDisposedWithErrorTeardown = (parent, teardown) => {
+    addTeardown(parent, e => {
+        if (isSome(e)) {
+            teardown(e.cause);
+        }
+    });
+};
+export const addOnDisposedWithoutErrorTeardown = (parent, teardown) => {
+    addTeardown(parent, e => {
+        if (isNone(e)) {
+            teardown();
+        }
+    });
+};
+export const bindDisposables = (a, b) => {
+    addDisposable(a, b);
+    addDisposable(b, a);
+};
+export const toDisposeOnErrorTeardown = (disposable) => (error) => {
     if (isSome(error)) {
         dispose(disposable, error);
     }
 };
-export function add(disposable, ...disposables) {
-    for (const d of disposables) {
-        disposable.add(d);
-    }
-    return disposable;
-}
-export const addDisposableOrTeardown = (d) => disposable => add(disposable, d);
+export const addOnDisposedWithError = (parent, child) => {
+    addTeardown(parent, toDisposeOnErrorTeardown(child));
+};
+export const addDisposableDisposeParentOnChildError = (parent, child) => {
+    addDisposable(parent, child);
+    addOnDisposedWithError(child, parent);
+};
+export const addOnDisposedWithoutError = (parent, child) => {
+    addTeardown(parent, e => {
+        if (isNone(e)) {
+            dispose(child);
+        }
+    });
+};
 export const toErrorHandler = (disposable) => cause => dispose(disposable, { cause });
 const doDispose = (disposable, error) => {
     if (disposable instanceof Function) {
@@ -48,12 +79,11 @@ export class AbstractDisposable {
         else if (!disposables.has(disposable)) {
             disposables.add(disposable);
             if (!(disposable instanceof Function)) {
-                add(disposable, () => {
+                addTeardown(disposable, () => {
                     disposables.delete(disposable);
                 });
             }
         }
-        return this;
     }
     dispose(error) {
         if (!this.isDisposed) {
@@ -71,12 +101,14 @@ class DisposableImpl extends AbstractDisposable {
 }
 export const createDisposable = (onDispose) => {
     const disposable = new DisposableImpl();
-    return isSome(onDispose) ? add(disposable, onDispose) : disposable;
+    if (isSome(onDispose)) {
+        addTeardown(disposable, onDispose);
+    }
+    return disposable;
 };
 const _disposed = {
     add(disposable) {
         doDispose(disposable);
-        return _disposed;
     },
     error: none,
     isDisposed: true,
@@ -95,7 +127,7 @@ export class AbstractSerialDisposable extends AbstractDisposable {
         const oldInner = this._inner;
         this._inner = newInner;
         if (oldInner !== newInner) {
-            add(this, newInner);
+            addDisposableDisposeParentOnChildError(this, newInner);
             dispose(oldInner);
         }
     }
@@ -109,4 +141,8 @@ class DisposableValueImpl extends AbstractDisposable {
         this.value = value;
     }
 }
-export const createDisposableValue = (value, cleanup) => add(new DisposableValueImpl(value), bind(cleanup, value));
+export const createDisposableValue = (value, cleanup) => {
+    const retval = new DisposableValueImpl(value);
+    addTeardown(retval, bind(cleanup, value));
+    return retval;
+};

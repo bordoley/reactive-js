@@ -1,4 +1,4 @@
-import { dispose, addDisposableOrTeardown } from "../lib/disposable.js";
+import { dispose, addTeardown } from "../lib/disposable.js";
 import { pipe, returns, incrementBy, sum } from "../lib/functions.js";
 import { test, describe, expectArrayEquals, expectEquals, expectTrue, expectFalse, } from "../lib/internal/testing.js";
 import { subscribe, onNotify as onNotifyObs, buffer, takeFirst, startWith, dispatch, } from "../lib/observable.js";
@@ -39,9 +39,10 @@ export const tests = describe("streamable", test("createActionReducer", () => {
     let disposedTime = 0;
     const subscription = pipe(emptyStream, onNotifyObs(x => {
         result.push(x);
-    }), subscribe(scheduler), addDisposableOrTeardown(_ => {
+    }), subscribe(scheduler));
+    addTeardown(subscription, _ => {
         disposedTime = scheduler.now;
-    }));
+    });
     scheduler.run();
     pipe(result, expectArrayEquals([]));
     expectTrue(emptyStream.isDisposed);

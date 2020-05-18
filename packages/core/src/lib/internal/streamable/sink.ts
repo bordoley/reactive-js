@@ -1,4 +1,4 @@
-import { addDisposableOrTeardown } from "../../disposable";
+import { addDisposable } from "../../disposable";
 import { compose, pipe, Function1 } from "../../functions";
 import {
   ObservableLike,
@@ -27,19 +27,20 @@ export const sink = <TReq, T>(
     const srcStream = stream(src, scheduler);
     const destStream = stream(dest, scheduler);
 
-    pipe(
+    const srcSubscription = pipe(
       srcStream,
       onNotify(dispatchTo(destStream)),
       subscribe(scheduler),
-      addDisposableOrTeardown(destStream),
     );
 
-    pipe(
+    const destSubscription = pipe(
       destStream,
       onNotify(dispatchTo(srcStream)),
       subscribe(scheduler),
-      addDisposableOrTeardown(srcStream),
     );
+
+    addDisposable(srcSubscription, destStream);
+    addDisposable(destSubscription, srcStream);
 
     return destStream;
   }, ignoreAndNotifyVoid);
