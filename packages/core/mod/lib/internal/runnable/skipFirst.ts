@@ -4,7 +4,7 @@ import { lift } from "./lift.ts";
 import { AbstractDelegatingSink } from "./sink.ts";
 
 class SkipFirstSink<T> extends AbstractDelegatingSink<T, T> {
-  count = 0;
+  private count = 0;
 
   constructor(delegate: SinkLike<T>, readonly skipCount: number) {
     super(delegate);
