@@ -1,5 +1,5 @@
 import { createSerialDisposable, disposed, dispose, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, } from "../../disposable.js";
-import { pipe, ignore } from "../../functions.js";
+import { pipe } from "../../functions.js";
 import { none } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
@@ -42,10 +42,6 @@ class BufferObserver extends AbstractDelegatingObserver {
         }
         else if (this.durationSubscription.inner.isDisposed) {
             this.durationSubscription.inner = pipe(this.durationFunction(next), onNotify(this.onNotify), subscribe(this.delegate));
-            this.durationSubscription.inner.add(e => {
-                ignore(e);
-                debugger;
-            });
         }
     }
 }
