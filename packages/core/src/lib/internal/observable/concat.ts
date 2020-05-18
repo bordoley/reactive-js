@@ -3,11 +3,11 @@ import {
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
 } from "../../disposable";
+import { pipe } from "../../functions";
+import { everySatisfy } from "../../readonlyArray";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
 import { observe } from "./observable";
 import { createDelegatingObserver } from "./observer";
-import { everySatisfy } from "../../readonlyArray";
-import { pipe } from "../../functions";
 
 const createConcatObserver = <T>(
   delegate: ObserverLike<T>,
@@ -35,7 +35,10 @@ class ConcatObservable<T> implements ObservableLike<T> {
   readonly isSynchronous: boolean;
 
   constructor(private readonly observables: readonly ObservableLike<T>[]) {
-    this.isSynchronous = pipe(observables, everySatisfy(obs => obs.isSynchronous));
+    this.isSynchronous = pipe(
+      observables,
+      everySatisfy(obs => obs.isSynchronous),
+    );
   }
 
   observe(observer: ObserverLike<T>) {

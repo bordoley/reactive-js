@@ -1,6 +1,6 @@
 import { SideEffect2, pipe } from "@reactive-js/core/lib/functions";
-import { map } from "@reactive-js/core/lib/readonlyArray";
 import { Option } from "@reactive-js/core/lib/option";
+import { map } from "@reactive-js/core/lib/readonlyArray";
 import { HttpHeaders } from "./interfaces";
 
 export const enum HttpStandardHeader {

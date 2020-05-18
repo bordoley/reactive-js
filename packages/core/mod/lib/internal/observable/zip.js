@@ -2,6 +2,7 @@ import { AbstractDisposable, dispose, addDisposable, addTeardown, addOnDisposedW
 import { current } from "../../enumerable.js";
 import { returns, pipe, defer } from "../../functions.js";
 import { none, isSome, isNone } from "../../option.js";
+import { map, everySatisfy } from "../../readonlyArray.js";
 import { runContinuation } from "../../scheduler.js";
 import { zipEnumerators } from "../enumerable/zip.js";
 import { YieldError } from "../scheduler/interfaces.js";
@@ -9,7 +10,6 @@ import { fromEnumerator } from "./fromEnumerable.js";
 import { observe } from "./observable.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 import { using } from "./using.js";
-import { map, everySatisfy } from "../../readonlyArray.js";
 class EnumeratorObserver extends AbstractDisposable {
     constructor() {
         super(...arguments);

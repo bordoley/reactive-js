@@ -43,7 +43,9 @@ export function concat<T>(
   ...tail: readonly RunnableLike<T>[]
 ): RunnableLike<T>;
 
-export function concat<T>(...runnables: readonly RunnableLike<T>[]): RunnableLike<T> {
+export function concat<T>(
+  ...runnables: readonly RunnableLike<T>[]
+): RunnableLike<T> {
   return createRunnable((sink: SinkLike<T>) => {
     const runnablesLength = runnables.length;
     for (let i = 0; i < runnablesLength; i++) {
@@ -57,12 +59,18 @@ export const concatWith = <T>(
   snd: RunnableLike<T>,
 ): RunnableOperator<T, T> => first => concat(first, snd);
 
-export function endWith<T>(value: T, ...values: readonly T[]): RunnableOperator<T, T>;
+export function endWith<T>(
+  value: T,
+  ...values: readonly T[]
+): RunnableOperator<T, T>;
 export function endWith<T>(...values: readonly T[]): RunnableOperator<T, T> {
   return concatWith(fromArray()(values));
 }
 
-export function startWith<T>(value: T, ...values: readonly T[]): RunnableOperator<T, T>;
+export function startWith<T>(
+  value: T,
+  ...values: readonly T[]
+): RunnableOperator<T, T>;
 export function startWith<T>(...values: readonly T[]): RunnableOperator<T, T> {
   return obs => concat(fromArray()(values), obs);
 }

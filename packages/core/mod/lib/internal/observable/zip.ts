@@ -10,6 +10,7 @@ import {
 import { current, EnumeratorLike } from "../../enumerable.ts";
 import { returns, pipe, defer } from "../../functions.ts";
 import { none, isSome, isNone } from "../../option.ts";
+import { map, everySatisfy } from "../../readonlyArray.ts";
 import { SchedulerContinuationLike, runContinuation } from "../../scheduler.ts";
 import { zipEnumerators } from "../enumerable/zip.ts";
 import { YieldError } from "../scheduler/interfaces.ts";
@@ -18,7 +19,6 @@ import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces.t
 import { observe } from "./observable.ts";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { using } from "./using.ts";
-import { map, everySatisfy } from "../../readonlyArray.ts";
 
 class EnumeratorObserver<T> extends AbstractDisposable
   implements EnumeratorLike<T>, ObserverLike<T> {
@@ -104,7 +104,8 @@ const shouldComplete = (
   return false;
 };
 
-class ZipObserver extends AbstractDelegatingObserver<unknown, readonly unknown[]>
+class ZipObserver
+  extends AbstractDelegatingObserver<unknown, readonly unknown[]>
   implements EnumeratorLike<unknown> {
   current: unknown;
   private readonly buffer: unknown[] = [];

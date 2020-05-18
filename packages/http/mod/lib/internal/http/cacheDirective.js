@@ -1,9 +1,9 @@
 import { pipe } from "../../../../../core/mod/lib/functions.js";
 import { optional, pEquals, parseWith, parseWithOrThrow, } from "../../../../../core/mod/lib/internal/parserCombinators.js";
 import { isSome } from "../../../../../core/mod/lib/option.js";
+import { map, join } from "../../../../../core/mod/lib/readonlyArray.js";
 import { pToken, pTokenOrQuotedString, toTokenOrQuotedString, httpList, } from "./httpGrammar.js";
 import { getHeaderValue } from "./httpHeaders.js";
-import { map, join } from "../../../../../core/mod/lib/readonlyArray.js";
 const pOptionalEquals = optional(pEquals);
 const pCacheDirective = (charStream) => {
     const directive = pToken(charStream);

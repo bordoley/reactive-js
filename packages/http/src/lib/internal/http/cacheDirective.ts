@@ -7,6 +7,7 @@ import {
   parseWithOrThrow,
 } from "@reactive-js/core/lib/internal/parserCombinators";
 import { isSome } from "@reactive-js/core/lib/option";
+import { map, join } from "@reactive-js/core/lib/readonlyArray";
 import {
   pToken,
   pTokenOrQuotedString,
@@ -15,7 +16,6 @@ import {
 } from "./httpGrammar";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders";
 import { CacheDirective, HttpHeaders } from "./interfaces";
-import { map, join } from "@reactive-js/core/lib/readonlyArray";
 
 const pOptionalEquals = optional(pEquals);
 

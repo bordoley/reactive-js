@@ -1,6 +1,12 @@
-import { Function1, SideEffect2, pipe, returns } from "@reactive-js/core/lib/functions";
+import {
+  Function1,
+  SideEffect2,
+  pipe,
+  returns,
+} from "@reactive-js/core/lib/functions";
 import { IOSourceLike, IOSourceOperator } from "@reactive-js/core/lib/io";
 import { isNone, isSome, none } from "@reactive-js/core/lib/option";
+import { map, reduceRight } from "@reactive-js/core/lib/readonlyArray";
 import {
   writeHttpMessageHeaders,
   encodeHttpMessageWithUtf8,
@@ -48,7 +54,6 @@ import {
   MediaRange,
   MediaType,
 } from "./interfaces";
-import { map, reduceRight } from "@reactive-js/core/lib/readonlyArray";
 
 declare class URL implements URILike {
   readonly hash: string;
@@ -108,9 +113,10 @@ export const createHttpRequest = <T>({
 }): HttpRequest<T> => ({
   ...rest,
   body,
-  cacheControl: pipe(cacheControl ?? [], map(cc =>
-    typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc,
-  )),
+  cacheControl: pipe(
+    cacheControl ?? [],
+    map(cc => (typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc)),
+  ),
   contentInfo: isSome(contentInfo)
     ? createHttpContentInfo(contentInfo)
     : parseHttpContentInfoFromHeaders(headers),
@@ -328,7 +334,10 @@ export const decodeHttpRequestContent = (decoderProvider: {
         }
         return decoder;
       }),
-      reduceRight((acc: IOSourceLike<Uint8Array>, decoder) => decoder(acc), returns(body)),
+      reduceRight(
+        (acc: IOSourceLike<Uint8Array>, decoder) => decoder(acc),
+        returns(body),
+      ),
     );
 
     return {

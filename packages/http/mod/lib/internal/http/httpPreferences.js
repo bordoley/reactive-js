@@ -1,10 +1,10 @@
 import { pipe } from "../../../../../core/mod/lib/functions.js";
 import { concatWith, map, parseWith, } from "../../../../../core/mod/lib/internal/parserCombinators.js";
 import { isSome, none } from "../../../../../core/mod/lib/option.js";
+import { map as mapReadonlyArray } from "../../../../../core/mod/lib/readonlyArray.js";
 import { pToken, pParams, httpList } from "./httpGrammar.js";
 import { getHeaderValue } from "./httpHeaders.js";
 import { pMediaType, parseMediaTypeOrThrow } from "./mediaType.js";
-import { map as mapReadonlyArray } from "../../../../../core/mod/lib/readonlyArray.js";
 const weightedParamComparator = (a, b) => {
     var _a, _b;
     const qA = ((_a = Number.parseFloat(a["q"])) !== null && _a !== void 0 ? _a : 1) * 1000;

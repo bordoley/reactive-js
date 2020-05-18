@@ -6,6 +6,7 @@ import {
   mapTo,
 } from "@reactive-js/core/lib/internal/parserCombinators";
 import { isNone, isSome, none, Option } from "@reactive-js/core/lib/option";
+import { join, map } from "@reactive-js/core/lib/readonlyArray";
 import {
   entityTagToString,
   pETag,
@@ -21,7 +22,6 @@ import {
   EntityTag,
   HttpDateTime,
 } from "./interfaces";
-import { join, map } from "@reactive-js/core/lib/readonlyArray";
 
 const writeEtagPreferenceHeader = (
   header: HttpStandardHeader,
@@ -31,7 +31,9 @@ const writeEtagPreferenceHeader = (
   if (isSome(value)) {
     writeHeader(
       header,
-      Array.isArray(value) ? pipe(value, map(entityTagToString), join(",")) : "*",
+      Array.isArray(value)
+        ? pipe(value, map(entityTagToString), join(","))
+        : "*",
     );
   }
 };
@@ -181,10 +183,13 @@ export const createHttpRequestPreconditions = ({
 
   return {
     ifMatch: Array.isArray(ifMatch)
-      ? pipe(ifMatch, map(etag =>
-          typeof etag === "string" ? parseETagOrThrow(etag) : etag,
-        ))
-      : ifMatch as "*",
+      ? pipe(
+          ifMatch,
+          map(etag =>
+            typeof etag === "string" ? parseETagOrThrow(etag) : etag,
+          ),
+        )
+      : (ifMatch as "*"),
     ifModifiedSince:
       typeof ifModifiedSince === "string"
         ? parseHttpDateTime(ifModifiedSince)
@@ -192,10 +197,13 @@ export const createHttpRequestPreconditions = ({
         ? ifModifiedSince.getTime()
         : ifModifiedSince,
     ifNoneMatch: Array.isArray(ifNoneMatch)
-      ? pipe(ifNoneMatch, map(etag =>
-          typeof etag === "string" ? parseETagOrThrow(etag) : etag,
-        ))
-      : ifNoneMatch as "*",
+      ? pipe(
+          ifNoneMatch,
+          map(etag =>
+            typeof etag === "string" ? parseETagOrThrow(etag) : etag,
+          ),
+        )
+      : (ifNoneMatch as "*"),
     ifUnmodifiedSince:
       typeof ifUnmodifiedSince === "string"
         ? parseHttpDateTime(ifUnmodifiedSince)

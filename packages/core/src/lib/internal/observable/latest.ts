@@ -3,12 +3,12 @@ import {
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
 } from "../../disposable";
+import { pipe } from "../../functions";
 import { none } from "../../option";
+import { everySatisfy, map } from "../../readonlyArray";
 import { ObservableLike, ObserverLike } from "./interfaces";
 import { createScheduledObservable, observe } from "./observable";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
-import { everySatisfy, map } from "../../readonlyArray";
-import { pipe } from "../../functions";
 
 type LatestCtx = {
   completedCount: number;
@@ -21,7 +21,10 @@ export const enum LatestMode {
   Zip = 2,
 }
 
-class LatestObserver extends AbstractDelegatingObserver<unknown, readonly unknown[]> {
+class LatestObserver extends AbstractDelegatingObserver<
+  unknown,
+  readonly unknown[]
+> {
   ready = false;
   latest: unknown = none;
 
@@ -55,7 +58,10 @@ class LatestObserver extends AbstractDelegatingObserver<unknown, readonly unknow
 
     const observers = ctx.observers;
     if (ctx.readyCount === observers.length) {
-      const result = pipe(observers, map(observer => observer.latest));
+      const result = pipe(
+        observers,
+        map(observer => observer.latest),
+      );
       this.delegate.notify(result);
 
       if (this.mode === LatestMode.Zip) {
@@ -90,6 +96,9 @@ export const latest = (
 
   return createScheduledObservable(
     factory,
-    pipe(observables, everySatisfy(obs => obs.isSynchronous)),
+    pipe(
+      observables,
+      everySatisfy(obs => obs.isSynchronous),
+    ),
   );
 };

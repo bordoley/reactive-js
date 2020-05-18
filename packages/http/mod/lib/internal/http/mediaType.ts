@@ -1,13 +1,13 @@
+import { pipe } from "../../../../../core/mod/lib/functions.ts";
 import {
   pForwardSlash,
   Parser,
   parseWith,
   parseWithOrThrow,
 } from "../../../../../core/mod/lib/internal/parserCombinators.ts";
+import { fromObject, map, join } from "../../../../../core/mod/lib/readonlyArray.ts";
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar.ts";
 import { MediaType } from "./interfaces.ts";
-import { fromObject, map, join } from "../../../../../core/mod/lib/readonlyArray.ts";
-import { pipe } from "../../../../../core/mod/lib/functions.ts";
 
 export const pMediaType: Parser<MediaType> = charStream => {
   const type = pToken(charStream);
@@ -29,14 +29,14 @@ export const mediaTypeToString = ({
   type,
   subtype,
   params,
-}: MediaType): string => pipe(
+}: MediaType): string =>
+  pipe(
     params,
     fromObject(),
     map(([k, v]) => `${k}=${toTokenOrQuotedString(v)}`),
     join("; "),
-    stringParams => `${type}/${subtype}${
-      stringParams.length > 0 ? ";" + stringParams : ""
-    }`
+    stringParams =>
+      `${type}/${subtype}${stringParams.length > 0 ? ";" + stringParams : ""}`,
   );
 
 const compressionBlacklist = [

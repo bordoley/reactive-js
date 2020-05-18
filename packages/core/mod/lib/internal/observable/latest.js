@@ -1,9 +1,9 @@
 import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, } from "../../disposable.js";
+import { pipe } from "../../functions.js";
 import { none } from "../../option.js";
+import { everySatisfy, map } from "../../readonlyArray.js";
 import { createScheduledObservable, observe } from "./observable.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
-import { everySatisfy, map } from "../../readonlyArray.js";
-import { pipe } from "../../functions.js";
 class LatestObserver extends AbstractDelegatingObserver {
     constructor(delegate, ctx, mode) {
         super(delegate);

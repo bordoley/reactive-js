@@ -5,6 +5,7 @@ import {
   parseWith,
 } from "../../../../../core/mod/lib/internal/parserCombinators.ts";
 import { isSome, Option, none } from "../../../../../core/mod/lib/option.ts";
+import { map as mapReadonlyArray } from "../../../../../core/mod/lib/readonlyArray.ts";
 import { pToken, pParams, httpList } from "./httpGrammar.ts";
 import { HttpStandardHeader, getHeaderValue } from "./httpHeaders.ts";
 import {
@@ -15,7 +16,6 @@ import {
   HttpContentEncoding,
 } from "./interfaces.ts";
 import { pMediaType, parseMediaTypeOrThrow } from "./mediaType.ts";
-import { map as mapReadonlyArray} from "../../../../../core/mod/lib/readonlyArray"
 
 const weightedParamComparator = (
   a: {
@@ -152,9 +152,12 @@ export const createHttpPreferences = ({
     acceptedCharsets,
     acceptedEncodings,
     acceptedLanguages,
-    acceptedMediaRanges: pipe(acceptedMediaRanges, mapReadonlyArray(mr =>
-      typeof mr === "string" ? parseMediaTypeOrThrow(mr) : mr,
-    )),
+    acceptedMediaRanges: pipe(
+      acceptedMediaRanges,
+      mapReadonlyArray(mr =>
+        typeof mr === "string" ? parseMediaTypeOrThrow(mr) : mr,
+      ),
+    ),
   };
 };
 
@@ -211,9 +214,10 @@ export const writeHttpPreferenceHeaders = (
     writeHeader,
   );
 
-  const tokenizedMediaRanges = pipe(acceptedMediaRanges, mapReadonlyArray(
-    ({ type, subtype }) => `${type}/${subtype}`,
-  ));
+  const tokenizedMediaRanges = pipe(
+    acceptedMediaRanges,
+    mapReadonlyArray(({ type, subtype }) => `${type}/${subtype}`),
+  );
   writeWeightedTokenHeader(
     HttpStandardHeader.Accept,
     tokenizedMediaRanges,

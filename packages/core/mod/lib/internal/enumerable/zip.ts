@@ -1,11 +1,11 @@
+import { pipe } from "../../functions.ts";
+import { everySatisfy, map } from "../../readonlyArray.ts";
 import { current, enumerate, hasCurrent } from "./enumerator.ts";
 import {
   EnumerableLike,
   EnumeratorLike,
   EnumerableOperator,
 } from "./interfaces.ts";
-import { pipe } from "../../functions.ts";
-import { everySatisfy, map } from "../../readonlyArray.ts";
 
 const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {
   for (const enumerator of enumerators) {
@@ -43,7 +43,9 @@ export function zipEnumerators(
 }
 
 class ZipEnumerable implements EnumerableLike<readonly unknown[]> {
-  constructor(private readonly enumerables: readonly EnumerableLike<unknown>[]) {}
+  constructor(
+    private readonly enumerables: readonly EnumerableLike<unknown>[],
+  ) {}
 
   enumerate() {
     return pipe(this.enumerables, map(enumerate), zipEnumerators);
