@@ -4,6 +4,7 @@ import { isNone, none } from "../../../../../core/mod/lib/option.js";
 import { pToken, httpList } from "./httpGrammar.js";
 import { getHeaderValue } from "./httpHeaders.js";
 import { parseMediaType, mediaTypeToString, parseMediaTypeOrThrow, mediaTypeIsCompressible, } from "./mediaType.js";
+import { join } from "../../../../../core/mod/lib/readonlyArray.js";
 const parseTokenList = pipe(pToken, httpList, parseWith);
 export const parseHttpContentInfoFromHeaders = (headers) => {
     var _a, _b, _c;
@@ -27,7 +28,7 @@ export const writeHttpContentInfoHeaders = (content, writeHeader) => {
     }
     writeHeader("Content-Type", mediaTypeToString(contentType));
     if (contentEncodings.length > 0) {
-        writeHeader("Content-Encoding", contentEncodings.join(", "));
+        writeHeader("Content-Encoding", pipe(contentEncodings, join(", ")));
     }
 };
 export const createHttpContentInfo = ({ contentEncodings, contentLength, contentType, }) => ({

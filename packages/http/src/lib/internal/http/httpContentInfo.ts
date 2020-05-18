@@ -15,6 +15,7 @@ import {
   parseMediaTypeOrThrow,
   mediaTypeIsCompressible,
 } from "./mediaType";
+import { join } from "@reactive-js/core/lib/readonlyArray";
 
 const parseTokenList = pipe(pToken, httpList, parseWith);
 
@@ -58,7 +59,7 @@ export const writeHttpContentInfoHeaders = (
   if (contentEncodings.length > 0) {
     writeHeader(
       HttpStandardHeader.ContentEncoding,
-      contentEncodings.join(", "),
+      pipe(contentEncodings, join(", ")),
     );
   }
 };

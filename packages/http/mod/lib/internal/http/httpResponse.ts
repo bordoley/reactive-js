@@ -15,6 +15,7 @@ import {
   everySatisfy,
   map,
   reduceRight,
+  join,
 } from "../../../../../core/mod/lib/readonlyArray.ts";
 import {
   writeHttpMessageHeaders,
@@ -202,7 +203,7 @@ export const writeHttpResponseHeaders = <T>(
   }
 
   if (vary.length > 0) {
-    writeHeader(HttpStandardHeader.Vary, vary.join(","));
+    writeHeader(HttpStandardHeader.Vary, pipe(vary, join(",")));
   }
 
   writeHttpMessageHeaders(response, writeHeader);

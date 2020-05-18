@@ -2,6 +2,7 @@ import { pipe } from "../../../../../core/mod/lib/functions.js";
 import { pForwardSlash, parseWith, parseWithOrThrow, } from "../../../../../core/mod/lib/internal/parserCombinators.js";
 import { fromObject, map, join } from "../../../../../core/mod/lib/readonlyArray.js";
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar.js";
+import { keep, length } from "../../../../../core/mod/lib/readonlyArray.js";
 export const pMediaType = charStream => {
     const type = pToken(charStream);
     pForwardSlash(charStream);
@@ -26,6 +27,6 @@ export const mediaTypeIsCompressible = ({ type, subtype }, db) => {
     const blackListed = compressionBlacklist.includes(mediaType);
     const compressible = (_b = (_a = db[mediaType]) === null || _a === void 0 ? void 0 : _a.compressible) !== null && _b !== void 0 ? _b : false;
     const typeIsText = type === "text";
-    const subtypeIsText = textSubtypes.filter(x => subtype.endsWith(x)).length > 0;
+    const subtypeIsText = pipe(textSubtypes, keep(x => subtype.endsWith(x)), length) > 0;
     return !blackListed && (compressible || typeIsText || subtypeIsText);
 };

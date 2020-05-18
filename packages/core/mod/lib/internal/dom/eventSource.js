@@ -1,9 +1,11 @@
 import { addTeardown } from "../../disposable.js";
 import { createObservable, dispatch } from "../../observable.js";
+import { keep } from "../../readonlyArray.js";
+import { pipe } from "../../functions.js";
 const reservedEvents = ["error", "open"];
 export const createEventSource = (url, options = {}) => {
     const { events: eventsOption = ["message"] } = options;
-    const events = eventsOption.filter(x => !reservedEvents.includes(x));
+    const events = pipe(eventsOption, keep(x => !reservedEvents.includes(x)));
     const requestURL = url instanceof URL ? url.toString() : url;
     return createObservable(dispatcher => {
         const eventSource = new EventSource(requestURL, options);
