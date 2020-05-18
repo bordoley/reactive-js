@@ -6,7 +6,7 @@ import {
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
 } from "../../disposable";
-import { pipe, Function1 } from "../../functions";
+import { pipe, Function1, ignore } from "../../functions";
 import {  none } from "../../option";
 import { fromValue } from "./fromValue";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
@@ -58,12 +58,16 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
 
     if (buffer.length === this.maxBufferSize) {
       this.onNotify();
-    } else if (this.durationSubscription.isDisposed) {
+    } else if (this.durationSubscription.inner.isDisposed) {
       this.durationSubscription.inner = pipe(
         this.durationFunction(next),
         onNotify(this.onNotify),
         subscribe(this.delegate),
       );
+      this.durationSubscription.inner.add(e => {
+        ignore(e)
+        debugger;
+      })
     }
   }
 }
