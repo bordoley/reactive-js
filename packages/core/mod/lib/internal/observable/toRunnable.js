@@ -1,27 +1,19 @@
-import { dispose, addDisposableOrTeardown } from "../../disposable.js";
 import { pipe } from "../../functions.js";
-import { none, isNone } from "../../option.js";
+import { isSome } from "../../option.js";
 import { createRunnable } from "../../runnable.js";
 import { createVirtualTimeScheduler, } from "../../scheduler.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
 export const toRunnable = (schedulerFactory = createVirtualTimeScheduler) => source => createRunnable(sink => {
     const scheduler = schedulerFactory();
-    let error = none;
     const subscription = pipe(source, onNotify((next) => {
         sink.notify(next);
-    }), subscribe(scheduler), addDisposableOrTeardown(e => {
-        error = e;
-        if (isNone(e)) {
-            sink.done();
-        }
-    }));
+    }), subscribe(scheduler));
     scheduler.run();
-    dispose(subscription);
-    dispose(scheduler);
-    const reifiedError = error;
-    if (reifiedError !== none) {
-        const { cause } = reifiedError;
+    const { error } = subscription;
+    if (isSome(error)) {
+        const { cause } = error;
         throw cause;
     }
+    sink.done();
 });
