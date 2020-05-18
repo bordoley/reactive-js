@@ -1,4 +1,5 @@
-import { SideEffect2 } from "@reactive-js/core/lib/functions";
+import { SideEffect2, pipe } from "@reactive-js/core/lib/functions";
+import { map } from "@reactive-js/core/lib/readonlyArray";
 import { Option } from "@reactive-js/core/lib/option";
 import { HttpHeaders } from "./interfaces";
 
@@ -62,27 +63,30 @@ export const enum HttpExtensionHeader {
   XMethodOverride = "X-Method-Override",
 }
 
-const bannedHeaders = [
-  HttpStandardHeader.Accept,
-  HttpStandardHeader.AcceptCharset,
-  HttpStandardHeader.AcceptEncoding,
-  HttpStandardHeader.AcceptLanguage,
-  HttpStandardHeader.CacheControl,
-  HttpStandardHeader.ContentEncoding,
-  HttpStandardHeader.ContentLength,
-  HttpStandardHeader.ContentType,
-  HttpStandardHeader.ETag,
-  HttpStandardHeader.Expect,
-  HttpStandardHeader.Expires,
-  HttpStandardHeader.IfMatch,
-  HttpStandardHeader.IfNoneMatch,
-  HttpStandardHeader.IfModifiedSince,
-  HttpStandardHeader.IfUnmodifiedSince,
-  HttpStandardHeader.IfRange,
-  HttpStandardHeader.LastModified,
-  HttpStandardHeader.TransferEncoding,
-  HttpStandardHeader.Vary,
-].map(s => s.toLowerCase());
+const bannedHeaders = pipe(
+  [
+    HttpStandardHeader.Accept,
+    HttpStandardHeader.AcceptCharset,
+    HttpStandardHeader.AcceptEncoding,
+    HttpStandardHeader.AcceptLanguage,
+    HttpStandardHeader.CacheControl,
+    HttpStandardHeader.ContentEncoding,
+    HttpStandardHeader.ContentLength,
+    HttpStandardHeader.ContentType,
+    HttpStandardHeader.ETag,
+    HttpStandardHeader.Expect,
+    HttpStandardHeader.Expires,
+    HttpStandardHeader.IfMatch,
+    HttpStandardHeader.IfNoneMatch,
+    HttpStandardHeader.IfModifiedSince,
+    HttpStandardHeader.IfUnmodifiedSince,
+    HttpStandardHeader.IfRange,
+    HttpStandardHeader.LastModified,
+    HttpStandardHeader.TransferEncoding,
+    HttpStandardHeader.Vary,
+  ],
+  map(s => s.toLowerCase()),
+);
 
 export function getHeaderValue(
   headers: HttpHeaders,

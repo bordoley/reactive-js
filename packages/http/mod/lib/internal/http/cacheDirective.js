@@ -3,6 +3,7 @@ import { optional, pEquals, parseWith, parseWithOrThrow, } from "../../../../../
 import { isSome } from "../../../../../core/mod/lib/option.js";
 import { pToken, pTokenOrQuotedString, toTokenOrQuotedString, httpList, } from "./httpGrammar.js";
 import { getHeaderValue } from "./httpHeaders.js";
+import { map, join } from "../../../../../core/mod/lib/readonlyArray.js";
 const pOptionalEquals = optional(pEquals);
 const pCacheDirective = (charStream) => {
     const directive = pToken(charStream);
@@ -24,6 +25,6 @@ export const parseCacheControlFromHeaders = (headers) => {
 };
 export const writeHttpCacheControlHeader = (cacheControl, writeHeader) => {
     if (cacheControl.length > 0) {
-        writeHeader("Cache-Control", cacheControl.map(cacheDirectiveToString).join(","));
+        writeHeader("Cache-Control", pipe(cacheControl, map(cacheDirectiveToString), join(",")));
     }
 };

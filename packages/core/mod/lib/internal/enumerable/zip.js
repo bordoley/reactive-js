@@ -1,10 +1,12 @@
 import { current, enumerate, hasCurrent } from "./enumerator.js";
+import { pipe } from "../../functions.js";
+import { everySatisfy, map } from "../../readonlyArray.js";
 const moveAll = (enumerators) => {
     for (const enumerator of enumerators) {
         enumerator.move();
     }
 };
-const allHaveCurrent = (enumerators) => enumerators.every(hasCurrent);
+const allHaveCurrent = (enumerators) => pipe(enumerators, everySatisfy(hasCurrent));
 class ZipEnumerator {
     constructor(enumerators) {
         this.enumerators = enumerators;
@@ -17,7 +19,7 @@ class ZipEnumerator {
         moveAll(enumerators);
         const hasCurrent = allHaveCurrent(enumerators);
         this.hasCurrent = hasCurrent;
-        this.current = hasCurrent ? enumerators.map(current) : [];
+        this.current = hasCurrent ? pipe(enumerators, map(current)) : [];
         return hasCurrent;
     }
 }
@@ -29,7 +31,7 @@ class ZipEnumerable {
         this.enumerables = enumerables;
     }
     enumerate() {
-        return zipEnumerators(this.enumerables.map(enumerate));
+        return pipe(this.enumerables, map(enumerate), zipEnumerators);
     }
 }
 export function zip(...enumerables) {

@@ -7,6 +7,8 @@ import { none } from "../../option.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import { createScheduledObservable, observe } from "./observable.ts";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
+import { everySatisfy, map } from "../../readonlyArray.ts";
+import { pipe } from "../../functions.ts";
 
 type LatestCtx = {
   completedCount: number;
@@ -53,7 +55,7 @@ class LatestObserver extends AbstractDelegatingObserver<unknown, readonly unknow
 
     const observers = ctx.observers;
     if (ctx.readyCount === observers.length) {
-      const result = observers.map(sub => sub.latest);
+      const result = pipe(observers, map(observer => observer.latest));
       this.delegate.notify(result);
 
       if (this.mode === LatestMode.Zip) {
@@ -88,6 +90,6 @@ export const latest = (
 
   return createScheduledObservable(
     factory,
-    observables.every(obs => obs.isSynchronous),
+    pipe(observables, everySatisfy(obs => obs.isSynchronous)),
   );
 };

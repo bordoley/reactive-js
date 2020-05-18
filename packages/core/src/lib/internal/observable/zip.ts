@@ -8,7 +8,7 @@ import {
   addOnDisposedWithoutErrorTeardown,
 } from "../../disposable";
 import { current, EnumeratorLike } from "../../enumerable";
-import { returns } from "../../functions";
+import { returns, pipe, defer } from "../../functions";
 import { none, isSome, isNone } from "../../option";
 import { SchedulerContinuationLike, runContinuation } from "../../scheduler";
 import { zipEnumerators } from "../enumerable/zip";
@@ -18,6 +18,7 @@ import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
 import { observe } from "./observable";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 import { using } from "./using";
+import { map, everySatisfy } from "../../readonlyArray";
 
 class EnumeratorObserver<T> extends AbstractDisposable
   implements EnumeratorLike<T>, ObserverLike<T> {
@@ -156,7 +157,7 @@ class ZipObserver extends AbstractDelegatingObserver<unknown, readonly unknown[]
       }
 
       if (shouldEmit(enumerators)) {
-        const next = enumerators.map(current);
+        const next = pipe(enumerators, map(current));
         const shouldCompleteResult = shouldComplete(enumerators);
 
         this.delegate.notify(next);
@@ -176,7 +177,10 @@ class ZipObservable implements ObservableLike<readonly unknown[]> {
   readonly isSynchronous: boolean;
 
   constructor(private readonly observables: readonly ObservableLike<any>[]) {
-    this.isSynchronous = observables.every(obs => obs.isSynchronous);
+    this.isSynchronous = pipe(
+      observables,
+      everySatisfy(obs => obs.isSynchronous),
+    );
   }
 
   observe(observer: ObserverLike<readonly unknown[]>) {
@@ -185,9 +189,9 @@ class ZipObservable implements ObservableLike<readonly unknown[]> {
 
     if (this.isSynchronous) {
       const observable = using(
-        _ => this.observables.map(subscribeInteractive),
+        defer(this.observables, map(subscribeInteractive)),
         (...enumerators: readonly EnumeratorObserver<any>[]) =>
-          fromEnumerator()(returns(zipEnumerators(enumerators))),
+          pipe(enumerators, zipEnumerators, returns, fromEnumerator()),
       );
 
       observe(observable, observer);

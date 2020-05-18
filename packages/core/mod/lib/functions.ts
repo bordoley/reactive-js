@@ -189,6 +189,8 @@ export const arrayEquality = <T>(
 ): Equality<readonly T[]> => (a: readonly T[], b: readonly T[]) =>
   a.length === b.length && a.every((v, i) => valuesEquality(b[i], v));
 
+export const updaterReducer = <T>(acc: T, updater: Updater<T>) => updater(acc);
+
 export function pipe<T, A>(src: T, op1: Function1<T, A>): A;
 export function pipe<T, A, B>(
   src: T,
@@ -313,7 +315,7 @@ export function pipe(
   source: unknown,
   ...operators: Function1<unknown, unknown>[]
 ): unknown {
-  return operators.reduce((acc, next) => next(acc), source);
+  return operators.reduce(updaterReducer, source);
 }
 
 export function compose<T, A, B>(
@@ -422,7 +424,7 @@ export function compose<T, A, B, C, D, E, F, G, H, I, J, K, L>(
 export function compose(
   ...operators: Function1<unknown, unknown>[]
 ): Function1<unknown, unknown> {
-  return source => operators.reduce((acc, next) => next(acc), source);
+  return source => operators.reduce(updaterReducer, source);
 }
 
 export const composeWith = <T, A, B>(

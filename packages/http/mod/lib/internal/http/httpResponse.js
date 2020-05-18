@@ -1,3 +1,4 @@
+import { pipe } from "../../../../../core/mod/lib/functions.js";
 import { empty, } from "../../../../../core/mod/lib/io.js";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.js";
 import { writeHttpMessageHeaders, encodeHttpMessageWithUtf8, toIOSourceHttpMessage, decodeHttpMessageWithCharset, } from "./HttpMessage.js";
@@ -7,10 +8,11 @@ import { parseHttpContentInfoFromHeaders, contentIsCompressible, createHttpConte
 import { parseHttpDateTime, httpDateTimeToString } from "./httpDateTime.js";
 import { getHeaderValue, filterHeaders, } from "./httpHeaders.js";
 import { parseHttpPreferencesFromHeaders, createHttpPreferences, } from "./httpPreferences.js";
+import { everySatisfy, map } from "../../../../../core/mod/lib/readonlyArray.js";
 export const createHttpResponse = ({ body, cacheControl, contentInfo, etag, expires, headers = {}, lastModified, location, preferences, statusCode, vary, ...rest }) => ({
     ...rest,
     body,
-    cacheControl: (cacheControl !== null && cacheControl !== void 0 ? cacheControl : []).map(cc => typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc),
+    cacheControl: pipe(cacheControl !== null && cacheControl !== void 0 ? cacheControl : [], map(cc => typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc)),
     contentInfo: isSome(contentInfo)
         ? createHttpContentInfo(contentInfo)
         : parseHttpContentInfoFromHeaders(headers),
@@ -109,8 +111,8 @@ export const toIOSourceHttpResponse = (resp) => toIOSourceHttpMessage(resp);
 export const decodeHttpResponseContent = (decoderProvider) => resp => {
     const { body, contentInfo, ...rest } = resp;
     if (isSome(contentInfo) && contentInfo.contentEncodings.length > 0) {
-        const decoders = contentInfo.contentEncodings.map(encoding => decoderProvider[encoding]);
-        const supportsDecodings = decoders.every(isSome);
+        const decoders = pipe(contentInfo.contentEncodings, map(encoding => decoderProvider[encoding]));
+        const supportsDecodings = pipe(decoders, everySatisfy(isSome));
         if (supportsDecodings) {
             return {
                 ...rest,

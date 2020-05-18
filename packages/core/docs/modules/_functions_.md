@@ -54,6 +54,7 @@
 * [returns](_functions_.md#const-returns)
 * [strictEquality](_functions_.md#const-strictequality)
 * [sum](_functions_.md#const-sum)
+* [updaterReducer](_functions_.md#const-updaterreducer)
 
 ## Type aliases
 
@@ -2290,3 +2291,22 @@ Name | Type |
 `...args` | number[] |
 
 **Returns:** *number*
+
+___
+
+### `Const` updaterReducer
+
+▸ **updaterReducer**<**T**>(`acc`: T, `updater`: [Updater](_functions_.md#updater)‹T›): *T*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | T |
+`updater` | [Updater](_functions_.md#updater)‹T› |
+
+**Returns:** *T*

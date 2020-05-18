@@ -1,6 +1,8 @@
 import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, } from "../../disposable.js";
 import { observe } from "./observable.js";
 import { createDelegatingObserver } from "./observer.js";
+import { everySatisfy } from "../../readonlyArray.js";
+import { pipe } from "../../functions.js";
 const createConcatObserver = (delegate, observables, next) => {
     const observer = createDelegatingObserver(delegate);
     addOnDisposedWithError(observer, delegate);
@@ -18,7 +20,7 @@ const createConcatObserver = (delegate, observables, next) => {
 class ConcatObservable {
     constructor(observables) {
         this.observables = observables;
-        this.isSynchronous = observables.every(obs => obs.isSynchronous);
+        this.isSynchronous = pipe(observables, everySatisfy(obs => obs.isSynchronous));
     }
     observe(observer) {
         const observables = this.observables;

@@ -6,6 +6,8 @@ import {
 } from "../../../../../core/mod/lib/internal/parserCombinators.ts";
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar.ts";
 import { MediaType } from "./interfaces.ts";
+import { fromObject, map, join } from "../../../../../core/mod/lib/readonlyArray.ts";
+import { pipe } from "../../../../../core/mod/lib/functions.ts";
 
 export const pMediaType: Parser<MediaType> = charStream => {
   const type = pToken(charStream);
@@ -27,14 +29,15 @@ export const mediaTypeToString = ({
   type,
   subtype,
   params,
-}: MediaType): string => {
-  const stringParams = Object.entries(params)
-    .map(([k, v]) => `${k}=${toTokenOrQuotedString(v)}`)
-    .join("; ");
-  return `${type}/${subtype}${
-    stringParams.length > 0 ? ";" + stringParams : ""
-  }`;
-};
+}: MediaType): string => pipe(
+    params,
+    fromObject(),
+    map(([k, v]) => `${k}=${toTokenOrQuotedString(v)}`),
+    join("; "),
+    stringParams => `${type}/${subtype}${
+      stringParams.length > 0 ? ";" + stringParams : ""
+    }`
+  );
 
 const compressionBlacklist = [
   "text/event-stream", // Browser's don't seem to support compressed event streams

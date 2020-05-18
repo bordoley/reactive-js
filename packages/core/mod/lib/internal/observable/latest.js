@@ -2,6 +2,8 @@ import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, } f
 import { none } from "../../option.js";
 import { createScheduledObservable, observe } from "./observable.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
+import { everySatisfy, map } from "../../readonlyArray.js";
+import { pipe } from "../../functions.js";
 class LatestObserver extends AbstractDelegatingObserver {
     constructor(delegate, ctx, mode) {
         super(delegate);
@@ -28,7 +30,7 @@ class LatestObserver extends AbstractDelegatingObserver {
         }
         const observers = ctx.observers;
         if (ctx.readyCount === observers.length) {
-            const result = observers.map(sub => sub.latest);
+            const result = pipe(observers, map(observer => observer.latest));
             this.delegate.notify(result);
             if (this.mode === 2) {
                 for (const sub of observers) {
@@ -54,5 +56,5 @@ export const latest = (observables, mode) => {
             observe(observable, innerObserver);
         }
     };
-    return createScheduledObservable(factory, observables.every(obs => obs.isSynchronous));
+    return createScheduledObservable(factory, pipe(observables, everySatisfy(obs => obs.isSynchronous)));
 };
