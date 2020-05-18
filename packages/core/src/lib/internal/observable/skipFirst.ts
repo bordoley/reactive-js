@@ -10,7 +10,7 @@ class SkipFirstObserver<T> extends AbstractAutoDisposingDelegatingObserver<
   T,
   T
 > {
-  count = 0;
+  private count = 0;
 
   constructor(delegate: ObserverLike<T>, readonly skipCount: number) {
     super(delegate);
