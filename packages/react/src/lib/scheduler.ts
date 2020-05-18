@@ -2,7 +2,6 @@
 import {
   createDisposable,
   dispose,
-  add,
 } from "@reactive-js/core/lib/disposable";
 import { pipe, bind } from "@reactive-js/core/lib/functions";
 import { none } from "@reactive-js/core/lib/option";
@@ -24,6 +23,7 @@ import {
   unstable_shouldYield,
   unstable_UserBlockingPriority,
 } from "scheduler";
+import { addDisposable } from "@reactive-js/core/src/lib/disposable";
 
 const getScheduler = (priority: number) => {
   switch (priority) {
@@ -62,10 +62,11 @@ const priorityScheduler = {
     const scheduler = getScheduler(priority);
 
     const callback = () => {
+      dispose(callbackNodeDisposable);
+      
       priorityScheduler.inContinuation = true;
       runContinuation(scheduler, continuation);
       priorityScheduler.inContinuation = false;
-      dispose(callbackNodeDisposable);
     };
 
     const callbackNode = unstable_scheduleCallback(
@@ -78,7 +79,7 @@ const priorityScheduler = {
       bind(unstable_cancelCallback, callbackNode),
     );
 
-    add(continuation, callbackNodeDisposable);
+    addDisposable(continuation, callbackNodeDisposable);
   },
 
   yield({ delay } = { delay: 0 }) {

@@ -1,9 +1,11 @@
-import { AbstractDisposable, add, dispose } from "../../disposable.js";
-import { isSome } from "../../option.js";
+import { AbstractDisposable, dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, addTeardown, addDisposable } from "../../disposable.js";
 import { schedule } from "../../scheduler.js";
 const scheduleDrainQueue = (dispatcher) => {
     if (dispatcher.nextQueue.length === 1) {
-        add(schedule(dispatcher.observer, dispatcher.continuation), dispatcher.onContinuationDispose);
+        const { observer } = dispatcher;
+        const continuationSubcription = schedule(observer, dispatcher.continuation);
+        addOnDisposedWithError(continuationSubcription, observer);
+        addOnDisposedWithoutErrorTeardown(continuationSubcription, dispatcher.onContinuationDispose);
     }
 };
 class ObserverDelegatingDispatcher extends AbstractDisposable {
@@ -25,19 +27,18 @@ class ObserverDelegatingDispatcher extends AbstractDisposable {
                 }
             }
         };
-        this.onContinuationDispose = (e) => {
-            const error = e !== null && e !== void 0 ? e : this.error;
-            if (isSome(error) || this.isDisposed) {
-                dispose(this.observer, error);
+        this.onContinuationDispose = () => {
+            if (this.isDisposed) {
+                dispose(this.observer, this.error);
             }
         };
         this.nextQueue = [];
-        add(this, e => {
+        addTeardown(this, e => {
             if (this.nextQueue.length === 0) {
                 dispose(observer, e);
             }
         });
-        add(observer, this);
+        addDisposable(observer, this);
     }
     dispatch(next) {
         if (!this.isDisposed) {

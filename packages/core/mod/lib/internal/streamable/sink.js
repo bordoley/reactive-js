@@ -1,4 +1,4 @@
-import { addDisposableOrTeardown } from "../../disposable.js";
+import { addDisposable } from "../../disposable.js";
 import { compose, pipe } from "../../functions.js";
 import { onNotify, using, endWith, dispatchTo, } from "../../observable.js";
 import { none } from "../../option.js";
@@ -9,7 +9,9 @@ const ignoreAndNotifyVoid = compose(ignoreElements(), endWith(none));
 export const sink = (src, dest) => using(scheduler => {
     const srcStream = stream(src, scheduler);
     const destStream = stream(dest, scheduler);
-    pipe(srcStream, onNotify(dispatchTo(destStream)), subscribe(scheduler), addDisposableOrTeardown(destStream));
-    pipe(destStream, onNotify(dispatchTo(srcStream)), subscribe(scheduler), addDisposableOrTeardown(srcStream));
+    const srcSubscription = pipe(srcStream, onNotify(dispatchTo(destStream)), subscribe(scheduler));
+    const destSubscription = pipe(destStream, onNotify(dispatchTo(srcStream)), subscribe(scheduler));
+    addDisposable(srcSubscription, destStream);
+    addDisposable(destSubscription, srcStream);
     return destStream;
 }, ignoreAndNotifyVoid);

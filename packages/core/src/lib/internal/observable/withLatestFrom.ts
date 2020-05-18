@@ -1,13 +1,13 @@
-import { dispose, add, addDisposableOrTeardown } from "../../disposable";
+import { dispose, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError } from "../../disposable";
 import { pipe, Function2 } from "../../functions";
-import { Option, isSome } from "../../option";
+import { Option } from "../../option";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
-class WithLatestFromObserver<TA, TB, T> extends AbstractDelegatingObserver<
+class WithLatestFromObserver<TA, TB, T> extends AbstractAutoDisposingDelegatingObserver<
   TA,
   T
 > {
@@ -31,14 +31,15 @@ class WithLatestFromObserver<TA, TB, T> extends AbstractDelegatingObserver<
       other,
       onNotify(this.onNotify),
       subscribe(this),
-      addDisposableOrTeardown(e => {
-        if (isSome(e) || !this.hasLatest) {
-          dispose(this, e);
-        }
-      }),
     );
+   
+    addOnDisposedWithoutErrorTeardown(otherSubscription, () => {
+      if (!this.hasLatest) {
+        dispose(this);
+      }
+    });
 
-    add(this, otherSubscription, delegate);
+    addDisposableDisposeParentOnChildError(this, otherSubscription);
   }
 
   notify(next: TA) {

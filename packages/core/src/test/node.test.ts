@@ -1,6 +1,6 @@
 import { Readable, Writable } from "stream";
 import { pipe, bind, returns } from "../lib/functions";
-import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulatorForTests";
+import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulator";
 import {
   describe,
   testAsync,

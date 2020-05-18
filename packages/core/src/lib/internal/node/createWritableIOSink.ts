@@ -1,5 +1,5 @@
 import { Writable } from "stream";
-import { DisposableValueLike, dispose, add, addDisposableOrTeardown, disposeOnError } from "../../disposable";
+import { DisposableValueLike, dispose, addTeardown, addDisposable, addDisposableDisposeParentOnChildError } from "../../disposable";
 import { FlowMode } from "../../flowable";
 import { pipe, bind, Factory } from "../../functions";
 import { IOEventType, IOEvent, IOSinkLike } from "../../io";
@@ -20,7 +20,7 @@ const createWritableEventsObservable = (
   writable: DisposableValueLike<Writable>,
 ) =>
   createObservable(dispatcher => {
-    add(writable, dispatcher);
+   
     const writableValue = writable.value;
 
     const onDrain = bind(dispatch, dispatcher, FlowMode.Resume);
@@ -32,7 +32,8 @@ const createWritableEventsObservable = (
     const onPause = bind(dispatch, dispatcher, FlowMode.Pause);
     writableValue.on(NODE_JS_PAUSE_EVENT, onPause);
 
-    add(dispatcher, _ => {
+    addDisposable(writable, dispatcher);
+    addTeardown(dispatcher, _ => {
       writableValue.removeListener("drain", onDrain);
       writableValue.removeListener("finish", onFinish);
       writableValue.removeListener(NODE_JS_PAUSE_EVENT, onPause);
@@ -66,10 +67,12 @@ const createWritableAndSetupEventSubscription = (
       }
     }),
     subscribe(scheduler),
-    pipe(writable, disposeOnError, addDisposableOrTeardown),
+    
   );
 
-  return add(writable, streamEventsSubscription);
+  addDisposableDisposeParentOnChildError(writable, streamEventsSubscription);
+
+  return writable;
 };
 
 export const createWritableIOSink = (

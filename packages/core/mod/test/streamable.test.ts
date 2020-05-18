@@ -1,4 +1,4 @@
-import { dispose, addDisposableOrTeardown } from "../lib/disposable.ts";
+import { dispose, addTeardown } from "../lib/disposable.ts";
 import { pipe, returns, incrementBy, sum } from "../lib/functions.ts";
 import {
   test,
@@ -100,10 +100,10 @@ export const tests = describe(
           result.push(x);
         }),
         subscribe(scheduler),
-        addDisposableOrTeardown(_ => {
-          disposedTime = scheduler.now;
-        }),
       );
+      addTeardown(subscription, _ => {
+        disposedTime = scheduler.now;
+      });
       scheduler.run();
 
       pipe(result, expectArrayEquals([]));

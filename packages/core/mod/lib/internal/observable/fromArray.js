@@ -1,4 +1,5 @@
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
+import { dispose } from "../../disposable.js";
 export const fromArray = (options = {}) => values => {
     var _a, _b;
     const delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0);
@@ -17,7 +18,7 @@ export const fromArray = (options = {}) => values => {
                     $.yield(yieldOptions);
                 }
             }
-            observer.dispose();
+            dispose(observer);
         };
     };
     return delay > 0

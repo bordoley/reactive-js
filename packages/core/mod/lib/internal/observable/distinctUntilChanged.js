@@ -1,13 +1,11 @@
-import { add } from "../../disposable.js";
 import { strictEquality } from "../../functions.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
-class DistinctUntilChangedObserver extends AbstractDelegatingObserver {
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer.js";
+class DistinctUntilChangedObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, equality) {
         super(delegate);
         this.equality = equality;
         this.hasValue = false;
-        add(this, delegate);
     }
     notify(next) {
         assertObserverState(this);

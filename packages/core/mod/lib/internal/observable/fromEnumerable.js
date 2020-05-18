@@ -1,6 +1,7 @@
 import { enumerate } from "../../enumerable.js";
 import { defer, pipe } from "../../functions.js";
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
+import { dispose } from "../../disposable.js";
 export const fromEnumerator = (options = { delay: 0 }) => f => {
     const factory = (observer) => {
         const enumerator = f();
@@ -13,7 +14,7 @@ export const fromEnumerator = (options = { delay: 0 }) => f => {
                     $.yield(options);
                 }
             }
-            observer.dispose();
+            dispose(observer);
         };
     };
     const { delay } = options;

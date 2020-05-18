@@ -1,5 +1,5 @@
 import { done, continue_, consume, consumeAsync, fromArray, fromIterable, generate, } from "../lib/asyncEnumerable.js";
-import { addDisposableOrTeardown } from "../lib/disposable.js";
+import { addTeardown } from "../lib/disposable.js";
 import { pipe, increment, returns, defer } from "../lib/functions.js";
 import { test, describe, expectEquals, expectNone, expectArrayEquals, } from "../lib/internal/testing.js";
 import { fromValue, subscribe, onNotify, toRunnable, dispatch, } from "../lib/observable.js";
@@ -27,9 +27,10 @@ export const tests = describe("async-enumerable", test("consume", () => {
     const enumerator = stream(fromIterable()([1, 2, 3, 4, 5, 6]), scheduler);
     const result = [];
     let error = none;
-    pipe(enumerator, onNotify(x => result.push(x)), subscribe(scheduler), addDisposableOrTeardown(e => {
+    const subscription = pipe(enumerator, onNotify(x => result.push(x)), subscribe(scheduler));
+    addTeardown(subscription, e => {
         error = e;
-    }));
+    });
     dispatch(enumerator, none);
     dispatch(enumerator, none);
     dispatch(enumerator, none);

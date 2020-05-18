@@ -1,4 +1,4 @@
-import { AbstractDisposable, add } from "../../disposable.ts";
+import { AbstractDisposable, addTeardown, addDisposable } from "../../disposable.ts";
 import { dispatch } from "./dispatcher.ts";
 import { SubjectLike, ObserverLike, DispatcherLike } from "./interfaces.ts";
 import { toDispatcher } from "./toDispatcher.ts";
@@ -45,7 +45,7 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
       const observers = this.observers;
       observers.add(dispatcher);
 
-      add(observer, () => {
+      addTeardown(observer, _e => {
         observers.delete(dispatcher);
       });
     }
@@ -54,7 +54,7 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
       dispatch(dispatcher, next);
     }
 
-    add(this, dispatcher);
+    addDisposable(this, dispatcher);
   }
 }
 

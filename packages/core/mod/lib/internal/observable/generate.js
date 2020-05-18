@@ -1,4 +1,5 @@
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
+import { dispose } from "../../disposable.js";
 export function generate(generator, initialValue, options = { delay: 0 }) {
     const factory = (observer) => {
         let acc = initialValue();
@@ -12,7 +13,7 @@ export function generate(generator, initialValue, options = { delay: 0 }) {
                     $.yield(options);
                 }
             }
-            observer.dispose();
+            dispose(observer);
         };
     };
     const { delay } = options;

@@ -1,4 +1,4 @@
-import { dispose, add } from "../../../../../core/mod/lib/disposable.ts";
+import { dispose, bindDisposables, addTeardown } from "../../../../../core/mod/lib/disposable.ts";
 import { bind } from "../../../../../core/mod/lib/functions.ts";
 import {
   createObservable,
@@ -27,9 +27,8 @@ export const sendHttpRequestUsingXHR: HttpClient<
 
     const bodyStream = createSubject(1);
     const body = new HttpResponseBodyImpl(bodyStream);
-    add(body, dispatcher);
-
-    add(dispatcher, () => xhr.abort(), body);
+    bindDisposables(body, dispatcher);
+    addTeardown(dispatcher, () => xhr.abort());
 
     xhr.onerror = () => {
       const cause = new Error("Network request failed");

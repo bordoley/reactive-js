@@ -1,9 +1,7 @@
 import { ServerResponse, IncomingMessage } from "http";
 import { Http2ServerRequest, Http2ServerResponse } from "http2";
 import {
-  DisposableValueLike,
-  addDisposableOrTeardown,
-  add,
+  DisposableValueLike, addDisposable,
 } from "@reactive-js/core/lib/disposable";
 import {
   bind,
@@ -115,13 +113,12 @@ export const createHttpRequestListener = (
     const request = createDisposableNodeStream(req as IncomingMessage);
     const response = createDisposableNodeStream(resp as ServerResponse);
 
-    add(
-      response,
-      pipe(
-        handleRequest(request, response),
-        subscribe(scheduler),
-        addDisposableOrTeardown(request),
-      ),
+    const handlerSubscription = pipe(
+      handleRequest(request, response),
+      subscribe(scheduler),
     );
+
+    addDisposable(handlerSubscription, request);
+    addDisposable(response, handlerSubscription);
   };
 };

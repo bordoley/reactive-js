@@ -1,19 +1,19 @@
-import { dispose, addDisposableOrTeardown } from "../../disposable.js";
-import { pipe } from "../../functions.js";
-import { isSome } from "../../option.js";
+import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable.js";
 import { createDelegatingObserver } from "./observer.js";
-const createConcatObserver = (delegate, observables, next) => pipe(delegate, createDelegatingObserver, addDisposableOrTeardown(error => {
-    if (isSome(error)) {
-        dispose(delegate, error);
-    }
-    else if (next < observables.length) {
-        const concatObserver = createConcatObserver(delegate, observables, next + 1);
-        observables[next].observe(concatObserver);
-    }
-    else {
-        dispose(delegate);
-    }
-}));
+const createConcatObserver = (delegate, observables, next) => {
+    const observer = createDelegatingObserver(delegate);
+    addOnDisposedWithError(observer, delegate);
+    addOnDisposedWithoutErrorTeardown(observer, () => {
+        if (next < observables.length) {
+            const concatObserver = createConcatObserver(delegate, observables, next + 1);
+            observables[next].observe(concatObserver);
+        }
+        else {
+            dispose(delegate);
+        }
+    });
+    return observer;
+};
 class ConcatObservable {
     constructor(observables) {
         this.observables = observables;

@@ -1,4 +1,4 @@
-import { dispose, add } from "../../disposable.js";
+import { dispose, addTeardown } from "../../disposable.js";
 import { createObservable, dispatch } from "../../observable.js";
 export const fromEvent = (target, eventName, selector) => createObservable(dispatcher => {
     const listener = (event) => {
@@ -11,7 +11,7 @@ export const fromEvent = (target, eventName, selector) => createObservable(dispa
         }
     };
     target.addEventListener(eventName, listener, { passive: true });
-    add(dispatcher, () => {
+    addTeardown(dispatcher, () => {
         target.removeEventListener(eventName, listener);
     });
 });

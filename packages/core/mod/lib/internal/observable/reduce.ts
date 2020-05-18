@@ -1,6 +1,5 @@
-import { add, dispose } from "../../disposable.ts";
+import { addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable.ts";
 import { Reducer, Factory } from "../../functions.ts";
-import { isNone } from "../../option.ts";
 import { fromValue } from "./fromValue.ts";
 import { ObserverLike, ObservableOperator } from "./interfaces.ts";
 import { lift } from "./lift.ts";
@@ -13,12 +12,9 @@ class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
     private acc: TAcc,
   ) {
     super(delegate);
-    add(this, error => {
-      if (isNone(error)) {
-        fromValue()(this.acc).observe(delegate);
-      } else {
-        dispose(delegate, error);
-      }
+    addOnDisposedWithError(this, delegate);
+    addOnDisposedWithoutErrorTeardown(this, () => {
+      fromValue()(this.acc).observe(delegate);
     });
   }
 

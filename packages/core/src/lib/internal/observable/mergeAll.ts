@@ -1,8 +1,9 @@
 import {
-  add,
-  Exception,
   dispose,
-  addDisposableOrTeardown,
+  addOnDisposedWithError,
+  addOnDisposedWithoutErrorTeardown,
+  addTeardown,
+  addDisposableDisposeParentOnChildError,
 } from "../../disposable";
 import { compose, pipe, Function1 } from "../../functions";
 import { isSome } from "../../option";
@@ -24,10 +25,10 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
         nextObs,
         onNotify(observer.onNotify),
         subscribe(observer.delegate),
-        addDisposableOrTeardown(observer.onDispose),
       );
-
-      add(observer.delegate, nextObsSubscription);
+      addOnDisposedWithoutErrorTeardown(nextObsSubscription, observer.onDispose);
+      addDisposableDisposeParentOnChildError(observer.delegate, nextObsSubscription);
+      
     } else if (observer.isDisposed) {
       dispose(observer.delegate);
     }
@@ -40,21 +41,16 @@ class MergeObserver<T> extends AbstractDelegatingObserver<
 > {
   activeCount = 0;
 
-  readonly onDispose = (error?: Exception) => {
+  readonly onDispose = () => {
     this.activeCount--;
-
-    if (isSome(error)) {
-      dispose(this.delegate, error);
-    } else {
-      subscribeNext(this);
-    }
+    subscribeNext(this);
   };
 
   readonly onNotify = (next: T) => {
     this.delegate.notify(next);
   };
 
-  readonly queue: Array<ObservableLike<T>> = [];
+  readonly queue: ObservableLike<T>[] = [];
 
   constructor(
     delegate: ObserverLike<T>,
@@ -63,16 +59,14 @@ class MergeObserver<T> extends AbstractDelegatingObserver<
   ) {
     super(delegate);
 
-    const queue = this.queue;
-
-    add(this, error => {
-      if (isSome(error) || queue.length + this.activeCount === 0) {
-        dispose(delegate, error);
+    addOnDisposedWithError(this, delegate);
+    addOnDisposedWithoutErrorTeardown(this, () => {
+      if (this.queue.length + this.activeCount === 0) {
+        dispose(delegate);
       }
     });
-
-    add(delegate, () => {
-      queue.length = 0;
+    addTeardown(delegate, () => {
+      this.queue.length = 0;
     });
   }
 

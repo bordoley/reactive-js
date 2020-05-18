@@ -1,5 +1,5 @@
-import { add, dispose } from "../../disposable.js";
-import { isNone } from "../../option.js";
+import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable.js";
+import { none } from "../../option.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 class ThrowIfEmptyObserver extends AbstractDelegatingObserver {
@@ -7,12 +7,20 @@ class ThrowIfEmptyObserver extends AbstractDelegatingObserver {
         super(delegate);
         this.factory = factory;
         this.isEmpty = true;
-        add(this, error => {
-            if (isNone(error) && this.isEmpty) {
-                const cause = this.factory();
+        addOnDisposedWithError(this, delegate);
+        addOnDisposedWithoutErrorTeardown(this, () => {
+            let error = none;
+            if (this.isEmpty) {
+                let cause = none;
+                try {
+                    cause = this.factory();
+                }
+                catch (e) {
+                    cause = e;
+                }
                 error = { cause };
             }
-            dispose(this.delegate, error);
+            dispose(delegate, error);
         });
     }
     notify(next) {

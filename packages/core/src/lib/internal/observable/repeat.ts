@@ -1,8 +1,8 @@
 import {
-  createSerialDisposable,
   Exception,
   dispose,
-  addDisposableOrTeardown,
+  addDisposable,
+  addTeardown,
 } from "../../disposable";
 import { pipe, Predicate, Function2 } from "../../functions";
 import { isNone, isSome } from "../../option";
@@ -17,7 +17,8 @@ const createRepeatObserver = <T>(
   observable: ObservableLike<T>,
   shouldRepeat: (count: number, error?: Exception) => boolean,
 ) => {
-  const innerSubscription = createSerialDisposable();
+  const observer = createDelegatingObserver(delegate);
+
   let count = 1;
 
   const onDispose = (error?: Exception) => {
@@ -33,21 +34,20 @@ const createRepeatObserver = <T>(
       dispose(delegate, error);
     } else {
       count++;
-      innerSubscription.inner = pipe(
+      const subscription = pipe(
         observable,
         onNotify((next: T) => delegate.notify(next)),
         subscribe(delegate),
-        addDisposableOrTeardown(onDispose),
       );
+      addTeardown(subscription, onDispose);
+      addDisposable(observer, subscription);
     }
   };
 
-  return pipe(
-    delegate,
-    addDisposableOrTeardown(innerSubscription),
-    createDelegatingObserver,
-    addDisposableOrTeardown(onDispose),
-  );
+
+  addTeardown(observer, onDispose);
+
+  return observer;
 };
 
 const repeatObs = <T>(

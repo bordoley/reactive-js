@@ -5,6 +5,7 @@ import {
   createScheduledObservable,
   createDelayedScheduledObservable,
 } from "./observable";
+import { dispose } from "../../disposable";
 
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
@@ -39,7 +40,7 @@ export const fromArray = <T>(
           $.yield(yieldOptions);
         }
       }
-      observer.dispose();
+      dispose(observer);
     };
   };
 

@@ -1,4 +1,4 @@
-import { dispose, add } from "../../../../../core/mod/lib/disposable.js";
+import { dispose, bindDisposables, addTeardown } from "../../../../../core/mod/lib/disposable.js";
 import { bind } from "../../../../../core/mod/lib/functions.js";
 import { createObservable, createSubject, dispatch, } from "../../../../../core/mod/lib/observable.js";
 import { isSome } from "../../../../../core/mod/lib/option.js";
@@ -10,8 +10,8 @@ export const sendHttpRequestUsingXHR = request => createObservable(dispatcher =>
     const xhrSupportsResponseType = "responseType" in xhr;
     const bodyStream = createSubject(1);
     const body = new HttpResponseBodyImpl(bodyStream);
-    add(body, dispatcher);
-    add(dispatcher, () => xhr.abort(), body);
+    bindDisposables(body, dispatcher);
+    addTeardown(dispatcher, () => xhr.abort());
     xhr.onerror = () => {
         const cause = new Error("Network request failed");
         dispose(dispatcher, { cause });

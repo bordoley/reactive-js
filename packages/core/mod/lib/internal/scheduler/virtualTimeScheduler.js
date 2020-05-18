@@ -1,4 +1,4 @@
-import { AbstractDisposable, add, dispose } from "../../disposable.js";
+import { AbstractDisposable, addDisposable, dispose } from "../../disposable.js";
 import { none, isSome } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
 import { YieldError, } from "./interfaces.js";
@@ -49,7 +49,7 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable {
     }
     schedule(continuation, { delay } = { delay: 0 }) {
         delay = Math.max(0, delay);
-        add(this, continuation);
+        addDisposable(this, continuation);
         if (!continuation.isDisposed) {
             const work = {
                 id: this.taskIDCount++,

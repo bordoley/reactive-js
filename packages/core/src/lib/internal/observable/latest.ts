@@ -1,6 +1,5 @@
-import { dispose, add } from "../../disposable";
-
-import { isSome, none } from "../../option";
+import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable";
+import { none } from "../../option";
 import { ObservableLike, ObserverLike } from "./interfaces";
 import { createScheduledObservable } from "./observable";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
@@ -26,12 +25,13 @@ class LatestObserver extends AbstractDelegatingObserver<unknown, unknown[]> {
     private readonly mode: LatestMode,
   ) {
     super(delegate);
-    add(this, error => {
+    addOnDisposedWithError(this, delegate);
+    addOnDisposedWithoutErrorTeardown(this, () => {
       const ctx = this.ctx;
       ctx.completedCount++;
 
-      if (isSome(error) || ctx.completedCount === ctx.observers.length) {
-        dispose(this.delegate, error);
+      if (ctx.completedCount === ctx.observers.length) {
+        dispose(delegate);
       }
     });
   }

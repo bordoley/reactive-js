@@ -1,4 +1,3 @@
-import { addDisposableOrTeardown } from "@reactive-js/core/lib/disposable";
 import {
   historyStateStore,
   createEventSource,
@@ -10,7 +9,6 @@ import {
   returns,
   increment,
   identity,
-  bind,
   Updater,
 } from "@reactive-js/core/lib/functions";
 import {
@@ -179,7 +177,6 @@ pipe(
   ),
   onNotify(console.log),
   subscribe(normalPriority),
-  addDisposableOrTeardown(bind(console.log, "dispose")),
 );
 
 pipe(
@@ -188,5 +185,4 @@ pipe(
   }),
   onNotify(console.log),
   subscribe(normalPriority),
-  addDisposableOrTeardown(x => console.log(x)),
 );

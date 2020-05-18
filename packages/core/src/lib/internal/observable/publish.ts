@@ -1,4 +1,4 @@
-import { addDisposableOrTeardown, add } from "../../disposable";
+import { bindDisposables } from "../../disposable";
 import { Function1, pipe } from "../../functions";
 import { SchedulerLike } from "../../scheduler";
 import { createSubject } from "./createSubject";
@@ -23,9 +23,9 @@ export const publish = <T>(
     observable,
     onNotify(dispatchTo(subject)),
     subscribe(scheduler),
-    addDisposableOrTeardown(subject),
   );
-  add(subject, srcSubscription);
-  add(srcSubscription, subject);
+
+  bindDisposables(srcSubscription, subject);
+
   return subject;
 };

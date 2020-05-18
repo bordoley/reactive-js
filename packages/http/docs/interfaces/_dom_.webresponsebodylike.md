@@ -61,7 +61,7 @@ ___
 
 ###  add
 
-▸ **add**(`disposable`: DisposableOrTeardown): *this*
+▸ **add**(`disposable`: DisposableOrTeardown): *void*
 
 *Inherited from [WebResponseBodyLike](_dom_.webresponsebodylike.md).[add](_dom_.webresponsebodylike.md#add)*
 
@@ -71,7 +71,7 @@ Name | Type |
 ------ | ------ |
 `disposable` | DisposableOrTeardown |
 
-**Returns:** *this*
+**Returns:** *void*
 
 ___
 

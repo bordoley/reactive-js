@@ -1,4 +1,4 @@
-import { addDisposableOrTeardown, add } from "./disposable";
+import { bindDisposables } from "./disposable";
 import {
   pipe,
   identity,
@@ -62,9 +62,10 @@ export const toStateStore = <T>(
         distinctUntilChanged(equality),
         onNotify(dispatchTo(stream)),
         subscribe(scheduler),
-        addDisposableOrTeardown(stream),
       );
 
-      return add(stream, updatesSubscription);
+      bindDisposables(updatesSubscription, stream);
+
+      return stream;
     }, identity),
   );

@@ -1,4 +1,4 @@
-import { dispose, add } from "../../disposable.js";
+import { dispose, addTeardown, addDisposableDisposeParentOnChildError } from "../../disposable.js";
 import { isSome, none } from "../../option.js";
 class OnSubscribeObservable {
     constructor(src, f) {
@@ -10,8 +10,11 @@ class OnSubscribeObservable {
         try {
             this.src.observe(observer);
             const disposable = this.f() || none;
-            if (isSome(disposable)) {
-                add(observer, disposable);
+            if (disposable instanceof Function) {
+                addTeardown(observer, disposable);
+            }
+            else if (isSome(disposable)) {
+                addDisposableDisposeParentOnChildError(observer, disposable);
             }
         }
         catch (cause) {

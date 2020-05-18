@@ -1,4 +1,4 @@
-import { add, addDisposableOrTeardown } from "./disposable";
+import { bindDisposables } from "./disposable";
 import { Function1, compose, pipe } from "./functions";
 import {
   ObservableLike,
@@ -48,10 +48,12 @@ const _fromObservable = <T>(observable: ObservableLike<T>): FlowableLike<T> => {
       modeObs,
       onNotify(onModeChange),
       subscribe(scheduler),
-      addDisposableOrTeardown(pausableScheduler),
+      
     );
 
-    return add(pausableScheduler, modeSubscription);
+    bindDisposables(modeSubscription, pausableScheduler);
+
+    return pausableScheduler;
   };
 
   const op = (modeObs: ObservableLike<FlowMode>) =>

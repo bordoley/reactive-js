@@ -1,4 +1,4 @@
-import { AbstractDisposable, add, dispose, } from "../../disposable.js";
+import { AbstractDisposable, addTeardown, dispose, } from "../../disposable.js";
 import { none, isSome } from "../../option.js";
 import { YieldError, } from "./interfaces.js";
 const notifyListeners = (listeners, state) => {
@@ -12,7 +12,7 @@ class SchedulerContinuationImpl extends AbstractDisposable {
         super();
         this.f = f;
         this.listeners = new Set();
-        add(this, () => {
+        addTeardown(this, _e => {
             this.listeners.clear();
         });
     }

@@ -1,13 +1,16 @@
-import { dispose, addDisposableOrTeardown } from "../../disposable.js";
-import { pipe } from "../../functions.js";
-import { isSome } from "../../option.js";
+import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable.js";
 import { createDelegatingObserver } from "./observer.js";
-const createMergeObserver = (delegate, count, ctx) => pipe(delegate, createDelegatingObserver, addDisposableOrTeardown(error => {
-    ctx.completedCount++;
-    if (isSome(error) || ctx.completedCount >= count) {
-        dispose(delegate, error);
-    }
-}));
+const createMergeObserver = (delegate, count, ctx) => {
+    const observer = createDelegatingObserver(delegate);
+    addOnDisposedWithError(observer, delegate);
+    addOnDisposedWithoutErrorTeardown(observer, () => {
+        ctx.completedCount++;
+        if (ctx.completedCount >= count) {
+            dispose(delegate);
+        }
+    });
+    return observer;
+};
 class MergeObservable {
     constructor(observables) {
         this.observables = observables;

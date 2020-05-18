@@ -1,9 +1,9 @@
 import {
-  add,
+  addDisposable,
   AbstractDisposable,
-  addDisposableOrTeardown,
+  bindDisposables,
 } from "../../disposable";
-import { ignore, SideEffect1, pipe } from "../../functions";
+import { ignore, SideEffect1 } from "../../functions";
 import { SchedulerContinuationLike, SchedulerLike } from "../../scheduler";
 import { __DEV__ } from "../env";
 import { ObserverLike } from "./interfaces";
@@ -54,7 +54,7 @@ export abstract class AbstractObserver<T> extends AbstractDisposable
   /** @ignore */
   schedule(continuation: SchedulerContinuationLike, options = { delay: 0 }) {
     continuation.addListener("onRunStatusChanged", this);
-    add(this, continuation);
+    addDisposable(this, continuation);
     this.scheduler.schedule(continuation, options);
   }
 
@@ -76,7 +76,7 @@ export abstract class AbstractDelegatingObserver<
 > extends AbstractObserver<TA> {
   constructor(readonly delegate: ObserverLike<TB>) {
     super(delegate);
-    add(delegate, this);
+    addDisposable(delegate, this);
   }
 }
 
@@ -86,12 +86,11 @@ export abstract class AbstractAutoDisposingDelegatingObserver<
 > extends AbstractObserver<TA> {
   constructor(readonly delegate: ObserverLike<TB>) {
     super(delegate);
-    add(delegate, this);
-    add(this, delegate);
+    bindDisposables(this, delegate);
   }
 }
 
-class DelegatingObserver<T> extends AbstractDelegatingObserver<T, T> {
+class DelegatingObserver<T> extends AbstractObserver<T> {
   constructor(readonly delegate: ObserverLike<T>) {
     super(delegate);
   }
@@ -103,9 +102,16 @@ class DelegatingObserver<T> extends AbstractDelegatingObserver<T, T> {
 
 export const createDelegatingObserver = <T>(
   delegate: ObserverLike<T>,
-): ObserverLike<T> => new DelegatingObserver(delegate);
+): ObserverLike<T> => {
+  const observer = new DelegatingObserver(delegate);
+  addDisposable(delegate, observer);
+  return observer;
+}
 
 export const createAutoDisposingDelegatingObserver = <T>(
   delegate: ObserverLike<T>,
-): ObserverLike<T> =>
-  pipe(delegate, createDelegatingObserver, addDisposableOrTeardown(delegate));
+): ObserverLike<T> => {
+  const observer = new DelegatingObserver(delegate);
+  bindDisposables(delegate, observer);
+  return observer;
+}

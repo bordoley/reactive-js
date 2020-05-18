@@ -1,7 +1,7 @@
 import {
   AbstractDisposable,
   Exception,
-  add,
+  addTeardown,
   dispose,
   DisposableLike,
 } from "../../disposable";
@@ -36,7 +36,7 @@ class SchedulerContinuationImpl extends AbstractDisposable
   constructor(private readonly f: SideEffect1<YieldableLike>) {
     super();
 
-    add(this, () => {
+    addTeardown(this, _e => {
       this.listeners.clear();
     });
   }

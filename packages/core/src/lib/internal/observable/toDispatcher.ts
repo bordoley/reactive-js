@@ -1,14 +1,13 @@
-import { AbstractDisposable, add, dispose, Exception } from "../../disposable";
-import { isSome } from "../../option";
+import { AbstractDisposable, dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, addTeardown, addDisposable } from "../../disposable";
 import { YieldableLike, schedule } from "../../scheduler";
 import { DispatcherLike, ObserverLike } from "./interfaces";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (dispatcher.nextQueue.length === 1) {
-    add(
-      schedule(dispatcher.observer, dispatcher.continuation),
-      dispatcher.onContinuationDispose,
-    );
+    const { observer } = dispatcher;
+    const continuationSubcription = schedule(observer, dispatcher.continuation);
+    addOnDisposedWithError(continuationSubcription, observer);
+    addOnDisposedWithoutErrorTeardown(continuationSubcription, dispatcher.onContinuationDispose);
   }
 };
 
@@ -32,11 +31,9 @@ class ObserverDelegatingDispatcher<T> extends AbstractDisposable
     }
   };
 
-  readonly onContinuationDispose = (e?: Exception) => {
-    // FIXME: Maybe publish both?
-    const error = e ?? this.error;
-    if (isSome(error) || this.isDisposed) {
-      dispose(this.observer as ObserverLike<T>, error);
+  readonly onContinuationDispose = () => {
+    if (this.isDisposed) {
+      dispose(this.observer as ObserverLike<T>, this.error);
     }
   };
 
@@ -44,12 +41,12 @@ class ObserverDelegatingDispatcher<T> extends AbstractDisposable
 
   constructor(readonly observer: ObserverLike<T>) {
     super();
-    add(this, e => {
+    addTeardown(this, e => {
       if (this.nextQueue.length === 0) {
         dispose(observer, e);
       }
     });
-    add(observer, this);
+    addDisposable(observer, this);
   }
 
   dispatch(next: T) {

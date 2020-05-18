@@ -1,6 +1,4 @@
-import { dispose, addDisposableOrTeardown } from "../../disposable";
-import { pipe } from "../../functions";
-import { isSome } from "../../option";
+import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
 import { createDelegatingObserver } from "./observer";
 
@@ -8,25 +6,23 @@ const createConcatObserver = <T>(
   delegate: ObserverLike<T>,
   observables: ObservableLike<T>[],
   next: number,
-) =>
-  pipe(
-    delegate,
-    createDelegatingObserver,
-    addDisposableOrTeardown(error => {
-      if (isSome(error)) {
-        dispose(delegate, error);
-      } else if (next < observables.length) {
-        const concatObserver = createConcatObserver(
-          delegate,
-          observables,
-          next + 1,
-        );
-        observables[next].observe(concatObserver);
-      } else {
-        dispose(delegate);
-      }
-    }),
-  );
+) => {
+  const observer = createDelegatingObserver(delegate);
+  addOnDisposedWithError(observer, delegate);
+  addOnDisposedWithoutErrorTeardown(observer, () => {
+    if (next < observables.length) {
+      const concatObserver = createConcatObserver(
+        delegate,
+        observables,
+        next + 1,
+      );
+      observables[next].observe(concatObserver);
+    } else {
+      dispose(delegate);
+    }
+  });
+  return observer;
+};
 
 class ConcatObservable<T> implements ObservableLike<T> {
   readonly isSynchronous: boolean;

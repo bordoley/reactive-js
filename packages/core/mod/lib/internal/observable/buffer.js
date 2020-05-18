@@ -1,6 +1,6 @@
-import { disposed, disposeOnError, dispose, add, addDisposableOrTeardown, } from "../../disposable.js";
+import { createSerialDisposable, disposed, dispose, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, } from "../../disposable.js";
 import { pipe } from "../../functions.js";
-import { isNone, none } from "../../option.js";
+import { none } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
 import { never } from "./never.js";
@@ -12,23 +12,24 @@ class BufferObserver extends AbstractDelegatingObserver {
         super(delegate);
         this.durationFunction = durationFunction;
         this.maxBufferSize = maxBufferSize;
-        this.durationSubscription = disposed;
+        this.durationSubscription = createSerialDisposable();
         this.buffer = [];
         this.onNotify = () => {
-            dispose(this.durationSubscription);
-            this.durationSubscription = disposed;
+            this.durationSubscription.inner = disposed;
             const buffer = this.buffer;
             this.buffer = [];
             this.delegate.notify(buffer);
         };
-        add(this, this.durationSubscription, error => {
+        addDisposableDisposeParentOnChildError(this, this.durationSubscription);
+        addOnDisposedWithError(this, delegate);
+        addOnDisposedWithoutErrorTeardown(this, () => {
             const buffer = this.buffer;
             this.buffer = [];
-            if (isNone(error) && buffer.length > 0) {
+            if (buffer.length > 0) {
                 fromValue()(buffer).observe(delegate);
             }
             else {
-                dispose(delegate, error);
+                dispose(delegate);
             }
         });
     }
@@ -40,7 +41,7 @@ class BufferObserver extends AbstractDelegatingObserver {
             this.onNotify();
         }
         else if (this.durationSubscription.isDisposed) {
-            this.durationSubscription = pipe(this.durationFunction(next), onNotify(this.onNotify), subscribe(this.delegate), addDisposableOrTeardown(disposeOnError(this)));
+            this.durationSubscription.inner = pipe(this.durationFunction(next), onNotify(this.onNotify), subscribe(this.delegate));
         }
     }
 }

@@ -1,6 +1,5 @@
-import { add, dispose } from "../../disposable.js";
+import { addTeardown, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable.js";
 import { pipe } from "../../functions.js";
-import { isSome } from "../../option.js";
 import { empty } from "./empty.js";
 import { fromArray } from "./fromArray.js";
 import { lift } from "./lift.js";
@@ -11,16 +10,12 @@ class TakeLastObserver extends AbstractDelegatingObserver {
         this.maxCount = maxCount;
         this.last = [];
         const last = this.last;
-        add(delegate, () => {
-            last.length = 0;
+        addOnDisposedWithError(this, delegate);
+        addOnDisposedWithoutErrorTeardown(this, () => {
+            fromArray()(last).observe(delegate);
         });
-        add(this, error => {
-            if (isSome(error)) {
-                dispose(delegate, error);
-            }
-            else {
-                fromArray()(last).observe(delegate);
-            }
+        addTeardown(delegate, () => {
+            last.length = 0;
         });
     }
     notify(next) {

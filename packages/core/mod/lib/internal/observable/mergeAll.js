@@ -1,4 +1,4 @@
-import { add, dispose, addDisposableOrTeardown, } from "../../disposable.js";
+import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, addTeardown, addDisposableDisposeParentOnChildError, } from "../../disposable.js";
 import { compose, pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
 import { lift } from "./lift.js";
@@ -11,8 +11,9 @@ const subscribeNext = (observer) => {
         const nextObs = observer.queue.shift();
         if (isSome(nextObs)) {
             observer.activeCount++;
-            const nextObsSubscription = pipe(nextObs, onNotify(observer.onNotify), subscribe(observer.delegate), addDisposableOrTeardown(observer.onDispose));
-            add(observer.delegate, nextObsSubscription);
+            const nextObsSubscription = pipe(nextObs, onNotify(observer.onNotify), subscribe(observer.delegate));
+            addOnDisposedWithoutErrorTeardown(nextObsSubscription, observer.onDispose);
+            addDisposableDisposeParentOnChildError(observer.delegate, nextObsSubscription);
         }
         else if (observer.isDisposed) {
             dispose(observer.delegate);
@@ -25,27 +26,22 @@ class MergeObserver extends AbstractDelegatingObserver {
         this.maxBufferSize = maxBufferSize;
         this.maxConcurrency = maxConcurrency;
         this.activeCount = 0;
-        this.onDispose = (error) => {
+        this.onDispose = () => {
             this.activeCount--;
-            if (isSome(error)) {
-                dispose(this.delegate, error);
-            }
-            else {
-                subscribeNext(this);
-            }
+            subscribeNext(this);
         };
         this.onNotify = (next) => {
             this.delegate.notify(next);
         };
         this.queue = [];
-        const queue = this.queue;
-        add(this, error => {
-            if (isSome(error) || queue.length + this.activeCount === 0) {
-                dispose(delegate, error);
+        addOnDisposedWithError(this, delegate);
+        addOnDisposedWithoutErrorTeardown(this, () => {
+            if (this.queue.length + this.activeCount === 0) {
+                dispose(delegate);
             }
         });
-        add(delegate, () => {
-            queue.length = 0;
+        addTeardown(delegate, () => {
+            this.queue.length = 0;
         });
     }
     notify(next) {

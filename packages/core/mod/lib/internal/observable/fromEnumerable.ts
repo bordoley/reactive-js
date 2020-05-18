@@ -6,6 +6,7 @@ import {
   createScheduledObservable,
   createDelayedScheduledObservable,
 } from "./observable.ts";
+import { dispose } from "../../disposable.ts";
 
 /**
  * Creates an `ObservableLike` which enumerates through the values
@@ -30,7 +31,7 @@ export const fromEnumerator = <T>(
           $.yield(options);
         }
       }
-      observer.dispose();
+      dispose(observer);
     };
   };
 

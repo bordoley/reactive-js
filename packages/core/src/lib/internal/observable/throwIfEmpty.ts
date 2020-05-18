@@ -1,6 +1,6 @@
-import { add, dispose } from "../../disposable";
+import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, Exception } from "../../disposable";
 import { Factory } from "../../functions";
-import { isNone } from "../../option";
+import { none, Option } from "../../option";
 import { ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
@@ -13,12 +13,22 @@ class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
     private readonly factory: Factory<unknown>,
   ) {
     super(delegate);
-    add(this, error => {
-      if (isNone(error) && this.isEmpty) {
-        const cause = this.factory();
+    addOnDisposedWithError(this, delegate);
+    addOnDisposedWithoutErrorTeardown(this, () => {
+      let error: Option<Exception> = none;
+
+      if (this.isEmpty) {
+        let cause: unknown = none;
+        try {
+          cause = this.factory();
+        } catch (e) {
+          cause = e;
+        }
+
         error = { cause };
-      }
-      dispose(this.delegate, error);
+      } 
+
+      dispose(delegate, error);
     });
   }
 

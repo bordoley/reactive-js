@@ -1,4 +1,4 @@
-import { AbstractSerialDisposable, disposed, add, } from "../../disposable.js";
+import { AbstractSerialDisposable, disposed, addDisposable, addTeardown, } from "../../disposable.js";
 import { none, isSome, isNone } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
 import { YieldError, } from "./interfaces.js";
@@ -83,7 +83,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
         this.isPaused = false;
         this.queue = createPriorityQueue(comparator);
         this.taskIDCounter = 0;
-        add(this, () => {
+        addTeardown(this, _e => {
             this.queue.clear();
             this.delayed.clear();
         });
@@ -110,7 +110,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
             : this.inContinuation
                 ? this.current.priority
                 : Number.MAX_SAFE_INTEGER;
-        add(this, continuation);
+        addDisposable(this, continuation);
         if (!continuation.isDisposed) {
             const now = this.now;
             const dueTime = now + delay;
