@@ -3,6 +3,7 @@ import { Function1 } from "../../functions";
 import { SchedulerLike } from "../../scheduler";
 import { ObservableLike } from "./interfaces";
 import { AbstractObserver, assertObserverState } from "./observer";
+import { observe } from "./observable";
 
 class DefaultObserver<T> extends AbstractObserver<T> {
   notify(_: T) {
@@ -23,6 +24,6 @@ export const subscribe = <T>(
   observable: ObservableLike<T>,
 ): DisposableLike => {
   const observer = new DefaultObserver(scheduler);
-  observable.observe(observer);
+  observe(observable, observer);
   return observer;
 };

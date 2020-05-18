@@ -1,6 +1,7 @@
 import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
 import { createDelegatingObserver } from "./observer";
+import { observe } from "./observable";
 
 const createConcatObserver = <T>(
   delegate: ObserverLike<T>,
@@ -16,7 +17,7 @@ const createConcatObserver = <T>(
         observables,
         next + 1,
       );
-      observables[next].observe(concatObserver);
+      observe(observables[next], concatObserver);
     } else {
       dispose(delegate);
     }
@@ -36,7 +37,7 @@ class ConcatObservable<T> implements ObservableLike<T> {
 
     if (observables.length > 0) {
       const concatObserver = createConcatObserver(observer, observables, 1);
-      observables[0].observe(concatObserver);
+      observe(observables[0], concatObserver);
     } else {
       dispose(observer);
     }

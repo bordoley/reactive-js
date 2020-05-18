@@ -1,4 +1,5 @@
 import { AbstractObserver, assertObserverState } from "./observer.js";
+import { observe } from "./observable.js";
 class DefaultObserver extends AbstractObserver {
     notify(_) {
         assertObserverState(this);
@@ -6,6 +7,6 @@ class DefaultObserver extends AbstractObserver {
 }
 export const subscribe = (scheduler) => (observable) => {
     const observer = new DefaultObserver(scheduler);
-    observable.observe(observer);
+    observe(observable, observer);
     return observer;
 };

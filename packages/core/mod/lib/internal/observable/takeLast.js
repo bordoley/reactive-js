@@ -4,6 +4,7 @@ import { empty } from "./empty.js";
 import { fromArray } from "./fromArray.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
+import { observeWith } from "./observable.js";
 class TakeLastObserver extends AbstractDelegatingObserver {
     constructor(delegate, maxCount) {
         super(delegate);
@@ -12,7 +13,7 @@ class TakeLastObserver extends AbstractDelegatingObserver {
         const last = this.last;
         addOnDisposedWithError(this, delegate);
         addOnDisposedWithoutErrorTeardown(this, () => {
-            fromArray()(last).observe(delegate);
+            pipe(last, fromArray(), observeWith(delegate));
         });
         addTeardown(delegate, () => {
             last.length = 0;

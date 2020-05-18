@@ -15,6 +15,7 @@ import { never } from "./never.ts";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
+import { observeWith } from "./observable.ts";
 
 class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
   private readonly durationSubscription = createSerialDisposable();
@@ -42,7 +43,7 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
       this.buffer = [];
 
       if (buffer.length > 0) {
-        fromValue()(buffer).observe(delegate);
+        pipe(buffer, fromValue(), observeWith(delegate));
       } else {
         dispose(delegate);
       }

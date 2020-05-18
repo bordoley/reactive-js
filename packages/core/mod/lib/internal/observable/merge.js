@@ -1,5 +1,6 @@
 import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable.js";
 import { createDelegatingObserver } from "./observer.js";
+import { observe } from "./observable.js";
 const createMergeObserver = (delegate, count, ctx) => {
     const observer = createDelegatingObserver(delegate);
     addOnDisposedWithError(observer, delegate);
@@ -22,7 +23,7 @@ class MergeObservable {
         const ctx = { completedCount: 0 };
         for (const observable of observables) {
             const mergeObserver = createMergeObserver(observer, count, ctx);
-            observable.observe(mergeObserver);
+            observe(observable, mergeObserver);
         }
     }
 }

@@ -5,6 +5,7 @@ import { fromArray } from "./fromArray";
 import { ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
+import { observeWith } from "./observable";
 
 class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
   readonly last: T[] = [];
@@ -14,7 +15,7 @@ class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
     const last = this.last;
     addOnDisposedWithError(this, delegate);
     addOnDisposedWithoutErrorTeardown(this, () => {
-      fromArray()(last).observe(delegate);
+      pipe(last, fromArray(), observeWith(delegate));
     });
     addTeardown(delegate, () => {
       last.length = 0;

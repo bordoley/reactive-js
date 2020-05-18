@@ -2,6 +2,7 @@ import { dispose, addTeardown } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { none } from "../../option.js";
 import { publish } from "./publish.js";
+import { observe } from "./observable.js";
 class SharedObservable {
     constructor(source, scheduler, replay) {
         this.source = source;
@@ -23,7 +24,7 @@ class SharedObservable {
         }
         this.observerCount++;
         const multicast = this.multicast;
-        multicast.observe(observer);
+        observe(multicast, observer);
         addTeardown(observer, this.teardown);
     }
 }

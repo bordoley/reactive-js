@@ -29,3 +29,13 @@ export const createDelayedScheduledObservable = <T>(
   factory: Function1<ObserverLike<T>, SideEffect1<YieldableLike>>,
   delay: number,
 ): ObservableLike<T> => new ScheduledObservable(factory, false, delay);
+
+export const observe = <T>(
+  observable: ObservableLike<T>,
+  observer: ObserverLike<T>,
+) => observable.observe(observer);
+
+export const observeWith = <T>(
+  observer: ObserverLike<T>
+): SideEffect1<ObservableLike<T>> => observable =>
+  observe(observable, observer);

@@ -17,6 +17,7 @@ import { fromEnumerator } from "./fromEnumerable.ts";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces.ts";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { using } from "./using.ts";
+import { observe } from "./observable.ts";
 
 class EnumeratorObserver<T> extends AbstractDisposable
   implements EnumeratorLike<T>, ObserverLike<T> {
@@ -77,7 +78,7 @@ const subscribeInteractive = <T>(
   obs: ObservableLike<T>,
 ): EnumeratorObserver<T> => {
   const observer = new EnumeratorObserver<T>();
-  obs.observe(observer);
+  observe(obs, observer);
   return observer;
 };
 
@@ -183,11 +184,13 @@ class ZipObservable implements ObservableLike<unknown[]> {
     const count = observables.length;
 
     if (this.isSynchronous) {
-      using(
+      const observable = using(
         _ => this.observables.map(subscribeInteractive),
         (...enumerators: EnumeratorObserver<any>[]) =>
           fromEnumerator()(returns(zipEnumerators(enumerators))),
-      ).observe(observer);
+      );
+
+      observe(observable, observer);
     } else {
       const enumerators: (DisposableLike & EnumeratorLike<unknown>)[] = [];
       for (let index = 0; index < count; index++) {
@@ -201,7 +204,7 @@ class ZipObservable implements ObservableLike<unknown[]> {
         } else {
           const innerObserver = new ZipObserver(observer, enumerators);
 
-          observable.observe(innerObserver);
+          observe(observable, innerObserver);
           enumerators.push(innerObserver);
         }
       }

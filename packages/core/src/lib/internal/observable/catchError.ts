@@ -4,6 +4,7 @@ import { isSome, none } from "../../option";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { createDelegatingObserver } from "./observer";
+import { observe } from "./observable";
 
 /**
  * Returns an `ObservableLike` which catches errors produced by the source and either continues with
@@ -23,7 +24,7 @@ export const catchError = <T>(
       try {
         const result = onError(cause) || none;
         if (isSome(result)) {
-          result.observe(delegate);
+          observe(result, delegate);
         } else {
           dispose(delegate);
         }

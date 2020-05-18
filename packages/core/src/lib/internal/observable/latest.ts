@@ -1,7 +1,7 @@
 import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable";
 import { none } from "../../option";
 import { ObservableLike, ObserverLike } from "./interfaces";
-import { createScheduledObservable } from "./observable";
+import { createScheduledObservable, observe } from "./observable";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
 type LatestCtx = {
@@ -78,7 +78,7 @@ export const latest = (
     for (const observable of observables) {
       const innerObserver = new LatestObserver(observer, ctx, mode);
       observers.push(innerObserver);
-      observable.observe(innerObserver);
+      observe(observable, innerObserver);
     }
   };
 

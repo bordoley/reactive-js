@@ -1,9 +1,10 @@
 import { addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable.ts";
-import { Reducer, Factory } from "../../functions.ts";
+import { Reducer, Factory, pipe } from "../../functions.ts";
 import { fromValue } from "./fromValue.ts";
 import { ObserverLike, ObservableOperator } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
+import { observeWith } from "./observable.ts";
 
 class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
   constructor(
@@ -14,7 +15,7 @@ class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
     super(delegate);
     addOnDisposedWithError(this, delegate);
     addOnDisposedWithoutErrorTeardown(this, () => {
-      fromValue()(this.acc).observe(delegate);
+      pipe(this.acc, fromValue(), observeWith(delegate));
     });
   }
 

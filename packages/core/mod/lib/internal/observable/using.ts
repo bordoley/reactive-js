@@ -8,6 +8,7 @@ import {
 } from "../../functions.ts";
 import { SchedulerLike } from "../../scheduler.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
+import { observe } from "./observable.ts";
 
 class UsingObservable<TResource extends DisposableLike, T>
   implements ObservableLike<T> {
@@ -33,7 +34,7 @@ class UsingObservable<TResource extends DisposableLike, T>
       addDisposableDisposeParentOnChildError(observer, r);
     }
 
-    observableFactory(...resourcesArray).observe(observer);
+    observe(observableFactory(...resourcesArray), observer);
   }
 }
 

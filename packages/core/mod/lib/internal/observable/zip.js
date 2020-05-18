@@ -8,6 +8,7 @@ import { YieldError } from "../scheduler/interfaces.js";
 import { fromEnumerator } from "./fromEnumerable.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 import { using } from "./using.js";
+import { observe } from "./observable.js";
 class EnumeratorObserver extends AbstractDisposable {
     constructor() {
         super(...arguments);
@@ -56,7 +57,7 @@ class EnumeratorObserver extends AbstractDisposable {
 }
 const subscribeInteractive = (obs) => {
     const observer = new EnumeratorObserver();
-    obs.observe(observer);
+    observe(obs, observer);
     return observer;
 };
 const shouldEmit = (enumerators) => {
@@ -142,7 +143,8 @@ class ZipObservable {
         const observables = this.observables;
         const count = observables.length;
         if (this.isSynchronous) {
-            using(_ => this.observables.map(subscribeInteractive), (...enumerators) => fromEnumerator()(returns(zipEnumerators(enumerators)))).observe(observer);
+            const observable = using(_ => this.observables.map(subscribeInteractive), (...enumerators) => fromEnumerator()(returns(zipEnumerators(enumerators))));
+            observe(observable, observer);
         }
         else {
             const enumerators = [];
@@ -155,7 +157,7 @@ class ZipObservable {
                 }
                 else {
                     const innerObserver = new ZipObserver(observer, enumerators);
-                    observable.observe(innerObserver);
+                    observe(observable, innerObserver);
                     enumerators.push(innerObserver);
                 }
             }
