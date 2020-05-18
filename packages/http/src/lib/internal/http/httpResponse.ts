@@ -1,11 +1,21 @@
-import { Function1, SideEffect2, pipe } from "@reactive-js/core/lib/functions";
+import {
+  Function1,
+  SideEffect2,
+  pipe,
+  returns,
+  updaterReducer,
+} from "@reactive-js/core/lib/functions";
 import {
   IOSourceLike,
   IOSourceOperator,
   empty,
 } from "@reactive-js/core/lib/io";
 import { isNone, isSome, none } from "@reactive-js/core/lib/option";
-import { everySatisfy, map } from "@reactive-js/core/lib/readonlyArray";
+import {
+  everySatisfy,
+  map,
+  reduceRight,
+} from "@reactive-js/core/lib/readonlyArray";
 import {
   writeHttpMessageHeaders,
   encodeHttpMessageWithUtf8,
@@ -294,10 +304,7 @@ export const decodeHttpResponseContent = (decoderProvider: {
           contentEncodings: [],
           contentLength: -1,
         },
-        body: decoders.reduceRight(
-          (acc, decoder) => (decoder as any)(acc),
-          body,
-        ),
+        body: pipe(decoders, reduceRight(updaterReducer, returns(body))),
       };
     } else {
       return createHttpResponse({

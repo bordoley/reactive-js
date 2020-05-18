@@ -1,7 +1,7 @@
-import { pipe } from "../../../../../core/mod/lib/functions.js";
+import { pipe, returns, updaterReducer, } from "../../../../../core/mod/lib/functions.js";
 import { empty, } from "../../../../../core/mod/lib/io.js";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.js";
-import { everySatisfy, map } from "../../../../../core/mod/lib/readonlyArray.js";
+import { everySatisfy, map, reduceRight, } from "../../../../../core/mod/lib/readonlyArray.js";
 import { writeHttpMessageHeaders, encodeHttpMessageWithUtf8, toIOSourceHttpMessage, decodeHttpMessageWithCharset, } from "./HttpMessage.js";
 import { parseCacheControlFromHeaders, parseCacheDirectiveOrThrow, } from "./cacheDirective.js";
 import { entityTagToString, parseETag, parseETagOrThrow } from "./entityTag.js";
@@ -121,7 +121,7 @@ export const decodeHttpResponseContent = (decoderProvider) => resp => {
                     contentEncodings: [],
                     contentLength: -1,
                 },
-                body: decoders.reduceRight((acc, decoder) => decoder(acc), body),
+                body: pipe(decoders, reduceRight(updaterReducer, returns(body))),
             };
         }
         else {

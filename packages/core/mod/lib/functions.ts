@@ -424,7 +424,7 @@ export function compose<T, A, B, C, D, E, F, G, H, I, J, K, L>(
 export function compose(
   ...operators: Function1<unknown, unknown>[]
 ): Function1<unknown, unknown> {
-  return source => operators.reduce(updaterReducer, source);
+  return source => pipe(source, ...operators);
 }
 
 export const composeWith = <T, A, B>(
@@ -555,7 +555,7 @@ export function defer(
   source: unknown,
   ...operators: Function1<unknown, unknown>[]
 ): Factory<unknown> {
-  return () => operators.reduce((acc, next) => next(acc), source);
+  return () => pipe(source, ...operators);
 }
 
 export function flip<TA, TB, T>(f: Function2<TA, TB, T>): Function2<TB, TA, T>;

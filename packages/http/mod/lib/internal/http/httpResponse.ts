@@ -1,11 +1,21 @@
-import { Function1, SideEffect2, pipe } from "../../../../../core/mod/lib/functions.ts";
+import {
+  Function1,
+  SideEffect2,
+  pipe,
+  returns,
+  updaterReducer,
+} from "../../../../../core/mod/lib/functions.ts";
 import {
   IOSourceLike,
   IOSourceOperator,
   empty,
 } from "../../../../../core/mod/lib/io.ts";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.ts";
-import { everySatisfy, map } from "../../../../../core/mod/lib/readonlyArray.ts";
+import {
+  everySatisfy,
+  map,
+  reduceRight,
+} from "../../../../../core/mod/lib/readonlyArray.ts";
 import {
   writeHttpMessageHeaders,
   encodeHttpMessageWithUtf8,
@@ -294,10 +304,7 @@ export const decodeHttpResponseContent = (decoderProvider: {
           contentEncodings: [],
           contentLength: -1,
         },
-        body: decoders.reduceRight(
-          (acc, decoder) => (decoder as any)(acc),
-          body,
-        ),
+        body: pipe(decoders, reduceRight(updaterReducer, returns(body))),
       };
     } else {
       return createHttpResponse({

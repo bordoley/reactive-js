@@ -1,6 +1,7 @@
-import { Function1 } from "@reactive-js/core/lib/functions";
+import { Function1, pipe, returns } from "@reactive-js/core/lib/functions";
 import { ObservableLike } from "@reactive-js/core/lib/observable";
 import { isNone, isSome, none, Option } from "@reactive-js/core/lib/option";
+import { fromObject, reduce } from "@reactive-js/core/lib/readonlyArray";
 import { HttpResponse, HttpRequest } from "./interfaces";
 
 export type HttpServer<
@@ -138,9 +139,14 @@ export const createRoutingHttpServer = <TReq, TResp>(
     ObservableLike<HttpResponse<TResp>>
   >,
 ): HttpServer<HttpRequest<TReq>, HttpResponse<TResp>> => {
-  const router = Object.entries(routes).reduce(
-    (acc, [path, handler]) => addHandler(acc, createSegments(path), handler),
-    emptyRouter as Router<TReq, TResp>,
+  const router = pipe(
+    routes,
+    fromObject(),
+    reduce(
+      (acc: Router<TReq, TResp>, [path, handler]) =>
+        addHandler(acc, createSegments(path), handler),
+      returns(emptyRouter),
+    ),
   );
 
   return (request: HttpRequest<TReq>) => {

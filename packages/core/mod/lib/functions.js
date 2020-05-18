@@ -35,11 +35,11 @@ export function pipe(source, ...operators) {
     return operators.reduce(updaterReducer, source);
 }
 export function compose(...operators) {
-    return source => operators.reduce(updaterReducer, source);
+    return source => pipe(source, ...operators);
 }
 export const composeWith = (op2) => op1 => compose(op1, op2);
 export function defer(source, ...operators) {
-    return () => operators.reduce((acc, next) => next(acc), source);
+    return () => pipe(source, ...operators);
 }
 export function flip(f) {
     return (...args) => {

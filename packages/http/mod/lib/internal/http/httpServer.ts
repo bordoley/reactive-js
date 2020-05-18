@@ -1,6 +1,7 @@
-import { Function1 } from "../../../../../core/mod/lib/functions.ts";
+import { Function1, pipe, returns } from "../../../../../core/mod/lib/functions.ts";
 import { ObservableLike } from "../../../../../core/mod/lib/observable.ts";
 import { isNone, isSome, none, Option } from "../../../../../core/mod/lib/option.ts";
+import { fromObject, reduce } from "../../../../../core/mod/lib/readonlyArray.ts";
 import { HttpResponse, HttpRequest } from "./interfaces.ts";
 
 export type HttpServer<
@@ -138,9 +139,14 @@ export const createRoutingHttpServer = <TReq, TResp>(
     ObservableLike<HttpResponse<TResp>>
   >,
 ): HttpServer<HttpRequest<TReq>, HttpResponse<TResp>> => {
-  const router = Object.entries(routes).reduce(
-    (acc, [path, handler]) => addHandler(acc, createSegments(path), handler),
-    emptyRouter as Router<TReq, TResp>,
+  const router = pipe(
+    routes,
+    fromObject(),
+    reduce(
+      (acc: Router<TReq, TResp>, [path, handler]) =>
+        addHandler(acc, createSegments(path), handler),
+      returns(emptyRouter),
+    ),
   );
 
   return (request: HttpRequest<TReq>) => {
