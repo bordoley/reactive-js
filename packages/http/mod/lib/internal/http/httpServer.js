@@ -1,4 +1,6 @@
+import { pipe, returns } from "../../../../../core/mod/lib/functions.js";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.js";
+import { fromObject, reduce } from "../../../../../core/mod/lib/readonlyArray.js";
 const createSegments = (path) => {
     const root = { name: "" };
     let acc = root;
@@ -82,7 +84,7 @@ const findHandler = (router, segment, params) => {
     return none;
 };
 export const createRoutingHttpServer = (routes, notFoundHandler) => {
-    const router = Object.entries(routes).reduce((acc, [path, handler]) => addHandler(acc, createSegments(path), handler), emptyRouter);
+    const router = pipe(routes, fromObject(), reduce((acc, [path, handler]) => addHandler(acc, createSegments(path), handler), returns(emptyRouter)));
     return (request) => {
         const segments = createSegments(request.uri.pathname);
         const result = findHandler(router, segments, {});
