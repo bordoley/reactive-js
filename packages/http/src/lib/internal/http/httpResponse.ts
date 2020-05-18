@@ -5,6 +5,7 @@ import {
   empty,
 } from "@reactive-js/core/lib/io";
 import { isNone, isSome, none } from "@reactive-js/core/lib/option";
+import { everySatisfy, map } from "@reactive-js/core/lib/readonlyArray";
 import {
   writeHttpMessageHeaders,
   encodeHttpMessageWithUtf8,
@@ -44,7 +45,6 @@ import {
   MediaRange,
   MediaType,
 } from "./interfaces";
-import { everySatisfy, map } from "@reactive-js/core/lib/readonlyArray";
 
 declare class URL implements URILike {
   readonly hash: string;
@@ -98,9 +98,10 @@ export const createHttpResponse = <T>({
 }): HttpResponse<T> => ({
   ...rest,
   body,
-  cacheControl: pipe(cacheControl ?? [], map(cc =>
-    typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc,
-  )),
+  cacheControl: pipe(
+    cacheControl ?? [],
+    map(cc => (typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc)),
+  ),
   contentInfo: isSome(contentInfo)
     ? createHttpContentInfo(contentInfo)
     : parseHttpContentInfoFromHeaders(headers),
@@ -281,9 +282,8 @@ export const decodeHttpResponseContent = (decoderProvider: {
   if (isSome(contentInfo) && contentInfo.contentEncodings.length > 0) {
     const decoders = pipe(
       contentInfo.contentEncodings,
-      map(
-      encoding => decoderProvider[encoding],
-    ));
+      map(encoding => decoderProvider[encoding]),
+    );
     const supportsDecodings = pipe(decoders, everySatisfy(isSome));
 
     if (supportsDecodings) {

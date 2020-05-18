@@ -10,6 +10,8 @@ export function startWith<T>(
   value: T,
   ...values: readonly T[]
 ): ObservableOperator<T, T>;
-export function startWith<T>(...values: readonly T[]): ObservableOperator<T, T> {
+export function startWith<T>(
+  ...values: readonly T[]
+): ObservableOperator<T, T> {
   return obs => concat(fromArray()(values), obs);
 }

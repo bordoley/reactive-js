@@ -1,6 +1,7 @@
 import { pipe } from "../../../../../core/mod/lib/functions.js";
 import { empty, } from "../../../../../core/mod/lib/io.js";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.js";
+import { everySatisfy, map } from "../../../../../core/mod/lib/readonlyArray.js";
 import { writeHttpMessageHeaders, encodeHttpMessageWithUtf8, toIOSourceHttpMessage, decodeHttpMessageWithCharset, } from "./HttpMessage.js";
 import { parseCacheControlFromHeaders, parseCacheDirectiveOrThrow, } from "./cacheDirective.js";
 import { entityTagToString, parseETag, parseETagOrThrow } from "./entityTag.js";
@@ -8,11 +9,10 @@ import { parseHttpContentInfoFromHeaders, contentIsCompressible, createHttpConte
 import { parseHttpDateTime, httpDateTimeToString } from "./httpDateTime.js";
 import { getHeaderValue, filterHeaders, } from "./httpHeaders.js";
 import { parseHttpPreferencesFromHeaders, createHttpPreferences, } from "./httpPreferences.js";
-import { everySatisfy, map } from "../../../../../core/mod/lib/readonlyArray.js";
 export const createHttpResponse = ({ body, cacheControl, contentInfo, etag, expires, headers = {}, lastModified, location, preferences, statusCode, vary, ...rest }) => ({
     ...rest,
     body,
-    cacheControl: pipe(cacheControl !== null && cacheControl !== void 0 ? cacheControl : [], map(cc => typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc)),
+    cacheControl: pipe(cacheControl !== null && cacheControl !== void 0 ? cacheControl : [], map(cc => (typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc))),
     contentInfo: isSome(contentInfo)
         ? createHttpContentInfo(contentInfo)
         : parseHttpContentInfoFromHeaders(headers),

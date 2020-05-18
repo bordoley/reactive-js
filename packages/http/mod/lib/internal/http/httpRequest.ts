@@ -1,6 +1,12 @@
-import { Function1, SideEffect2, pipe, returns } from "../../../../../core/mod/lib/functions.ts";
+import {
+  Function1,
+  SideEffect2,
+  pipe,
+  returns,
+} from "../../../../../core/mod/lib/functions.ts";
 import { IOSourceLike, IOSourceOperator } from "../../../../../core/mod/lib/io.ts";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.ts";
+import { map, reduceRight } from "../../../../../core/mod/lib/readonlyArray.ts";
 import {
   writeHttpMessageHeaders,
   encodeHttpMessageWithUtf8,
@@ -48,7 +54,6 @@ import {
   MediaRange,
   MediaType,
 } from "./interfaces.ts";
-import { map, reduceRight } from "../../../../../core/mod/lib/readonlyArray.ts";
 
 declare class URL implements URILike {
   readonly hash: string;
@@ -108,9 +113,10 @@ export const createHttpRequest = <T>({
 }): HttpRequest<T> => ({
   ...rest,
   body,
-  cacheControl: pipe(cacheControl ?? [], map(cc =>
-    typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc,
-  )),
+  cacheControl: pipe(
+    cacheControl ?? [],
+    map(cc => (typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc)),
+  ),
   contentInfo: isSome(contentInfo)
     ? createHttpContentInfo(contentInfo)
     : parseHttpContentInfoFromHeaders(headers),
@@ -328,7 +334,10 @@ export const decodeHttpRequestContent = (decoderProvider: {
         }
         return decoder;
       }),
-      reduceRight((acc: IOSourceLike<Uint8Array>, decoder) => decoder(acc), returns(body)),
+      reduceRight(
+        (acc: IOSourceLike<Uint8Array>, decoder) => decoder(acc),
+        returns(body),
+      ),
     );
 
     return {

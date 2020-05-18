@@ -1,6 +1,6 @@
 import { SideEffect2, pipe } from "../../../../../core/mod/lib/functions.ts";
-import { map } from "../../../../../core/mod/lib/readonlyArray.ts";
 import { Option } from "../../../../../core/mod/lib/option.ts";
+import { map } from "../../../../../core/mod/lib/readonlyArray.ts";
 import { HttpHeaders } from "./interfaces.ts";
 
 export const enum HttpStandardHeader {

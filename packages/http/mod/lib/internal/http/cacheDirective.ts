@@ -7,6 +7,7 @@ import {
   parseWithOrThrow,
 } from "../../../../../core/mod/lib/internal/parserCombinators.ts";
 import { isSome } from "../../../../../core/mod/lib/option.ts";
+import { map, join } from "../../../../../core/mod/lib/readonlyArray.ts";
 import {
   pToken,
   pTokenOrQuotedString,
@@ -15,7 +16,6 @@ import {
 } from "./httpGrammar.ts";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders.ts";
 import { CacheDirective, HttpHeaders } from "./interfaces.ts";
-import { map, join } from "../../../../../core/mod/lib/readonlyArray.ts";
 
 const pOptionalEquals = optional(pEquals);
 

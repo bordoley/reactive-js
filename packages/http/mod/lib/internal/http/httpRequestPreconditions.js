@@ -1,14 +1,16 @@
 import { pipe } from "../../../../../core/mod/lib/functions.js";
 import { parseWith, pAsterisk, or, mapTo, } from "../../../../../core/mod/lib/internal/parserCombinators.js";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.js";
+import { join, map } from "../../../../../core/mod/lib/readonlyArray.js";
 import { entityTagToString, pETag, parseETag, parseETagOrThrow, } from "./entityTag.js";
 import { httpDateTimeToString, parseHttpDateTime } from "./httpDateTime.js";
 import { httpList } from "./httpGrammar.js";
 import { getHeaderValue } from "./httpHeaders.js";
-import { join, map } from "../../../../../core/mod/lib/readonlyArray.js";
 const writeEtagPreferenceHeader = (header, value, writeHeader) => {
     if (isSome(value)) {
-        writeHeader(header, Array.isArray(value) ? pipe(value, map(entityTagToString), join(",")) : "*");
+        writeHeader(header, Array.isArray(value)
+            ? pipe(value, map(entityTagToString), join(","))
+            : "*");
     }
 };
 const writeDateHeader = (header, value, writeHeader) => {

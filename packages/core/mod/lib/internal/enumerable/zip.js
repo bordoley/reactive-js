@@ -1,6 +1,6 @@
-import { current, enumerate, hasCurrent } from "./enumerator.js";
 import { pipe } from "../../functions.js";
 import { everySatisfy, map } from "../../readonlyArray.js";
+import { current, enumerate, hasCurrent } from "./enumerator.js";
 const moveAll = (enumerators) => {
     for (const enumerator of enumerators) {
         enumerator.move();

@@ -1,5 +1,6 @@
-import { pipe, returns } from "../../../../../core/mod/lib/functions.js";
+import { pipe, returns, } from "../../../../../core/mod/lib/functions.js";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.js";
+import { map, reduceRight } from "../../../../../core/mod/lib/readonlyArray.js";
 import { writeHttpMessageHeaders, encodeHttpMessageWithUtf8, toIOSourceHttpMessage, decodeHttpMessageWithCharset, } from "./HttpMessage.js";
 import { parseCacheControlFromHeaders, parseCacheDirectiveOrThrow, } from "./cacheDirective.js";
 import { parseHttpContentInfoFromHeaders, contentIsCompressible, createHttpContentInfo, } from "./httpContentInfo.js";
@@ -7,11 +8,10 @@ import { getHeaderValue, filterHeaders, } from "./httpHeaders.js";
 import { parseHttpPreferencesFromHeaders, createHttpPreferences, } from "./httpPreferences.js";
 import { writeHttpRequestPreconditionsHeaders, parseHttpRequestPreconditionsFromHeaders, createHttpRequestPreconditions, } from "./httpRequestPreconditions.js";
 import { createHttpResponse } from "./httpResponse.js";
-import { map, reduceRight } from "../../../../../core/mod/lib/readonlyArray.js";
 export const createHttpRequest = ({ body, cacheControl, contentInfo, expectContinue = false, headers = {}, httpVersionMajor = 1, httpVersionMinor = 1, method, preconditions, preferences, uri, ...rest }) => ({
     ...rest,
     body,
-    cacheControl: pipe(cacheControl !== null && cacheControl !== void 0 ? cacheControl : [], map(cc => typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc)),
+    cacheControl: pipe(cacheControl !== null && cacheControl !== void 0 ? cacheControl : [], map(cc => (typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc))),
     contentInfo: isSome(contentInfo)
         ? createHttpContentInfo(contentInfo)
         : parseHttpContentInfoFromHeaders(headers),

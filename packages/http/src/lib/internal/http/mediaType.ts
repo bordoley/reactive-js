@@ -1,13 +1,13 @@
+import { pipe } from "@reactive-js/core/lib/functions";
 import {
   pForwardSlash,
   Parser,
   parseWith,
   parseWithOrThrow,
 } from "@reactive-js/core/lib/internal/parserCombinators";
+import { fromObject, map, join } from "@reactive-js/core/lib/readonlyArray";
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar";
 import { MediaType } from "./interfaces";
-import { fromObject, map, join } from "@reactive-js/core/lib/readonlyArray";
-import { pipe } from "@reactive-js/core/lib/functions";
 
 export const pMediaType: Parser<MediaType> = charStream => {
   const type = pToken(charStream);
@@ -29,14 +29,14 @@ export const mediaTypeToString = ({
   type,
   subtype,
   params,
-}: MediaType): string => pipe(
+}: MediaType): string =>
+  pipe(
     params,
     fromObject(),
     map(([k, v]) => `${k}=${toTokenOrQuotedString(v)}`),
     join("; "),
-    stringParams => `${type}/${subtype}${
-      stringParams.length > 0 ? ";" + stringParams : ""
-    }`
+    stringParams =>
+      `${type}/${subtype}${stringParams.length > 0 ? ";" + stringParams : ""}`,
   );
 
 const compressionBlacklist = [
