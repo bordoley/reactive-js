@@ -4,6 +4,8 @@ import {
   Factory,
   Equality,
   SideEffect,
+  Function1,
+  ignore,
 } from "../functions.ts";
 import { Option, isSome, isNone, none } from "../option.ts";
 
@@ -22,13 +24,13 @@ export type Describe = {
 export type Test = {
   readonly type: TestGroupType.Test;
   readonly name: string;
-  readonly f: SideEffect;
+  readonly f: Function1<string, SideEffect>;
 };
 
 export type TestAsync = {
   readonly type: TestGroupType.TestAsync;
   readonly name: string;
-  readonly f: Factory<Promise<void>>;
+  readonly f: Function1<string, Factory<Promise<void>>>;
 };
 
 export type TestGroup = Describe | Test | TestAsync;
@@ -42,7 +44,10 @@ export const describe = (name: string, ...tests: TestGroup[]): Describe => ({
 export const test = (name: string, f: SideEffect): Test => ({
   type: TestGroupType.Test,
   name,
-  f,
+  f: (ctx: string) => () => {
+    ignore(ctx);
+    f();
+  }
 });
 
 export const testAsync = (
@@ -51,7 +56,10 @@ export const testAsync = (
 ): TestAsync => ({
   type: TestGroupType.TestAsync,
   name,
-  f,
+  f: (ctx: string) => async () => {
+    ignore(ctx);
+    await f();
+  },
 });
 
 export const expectToThrow = (f: SideEffect) => {
