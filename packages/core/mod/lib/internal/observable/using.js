@@ -1,4 +1,5 @@
 import { addDisposableDisposeParentOnChildError } from "../../disposable.js";
+import { observe } from "./observable.js";
 class UsingObservable {
     constructor(resourceFactory, observableFactory) {
         this.resourceFactory = resourceFactory;
@@ -12,7 +13,7 @@ class UsingObservable {
         for (const r of resourcesArray) {
             addDisposableDisposeParentOnChildError(observer, r);
         }
-        observableFactory(...resourcesArray).observe(observer);
+        observe(observableFactory(...resourcesArray), observer);
     }
 }
 export function using(resourceFactory, observableFactory) {

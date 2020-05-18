@@ -1,6 +1,7 @@
 import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable.ts";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces.ts";
 import { createDelegatingObserver } from "./observer.ts";
+import { observe } from "./observable.ts";
 
 const createMergeObserver = <T>(
   delegate: ObserverLike<T>,
@@ -34,7 +35,7 @@ class MergeObservable<T> implements ObservableLike<T> {
     for (const observable of observables) {
       const mergeObserver = createMergeObserver(observer, count, ctx);
 
-      observable.observe(mergeObserver);
+      observe(observable, mergeObserver);
     }
   }
 }

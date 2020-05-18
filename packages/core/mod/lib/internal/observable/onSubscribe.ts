@@ -2,6 +2,7 @@ import { DisposableOrTeardown, dispose, addTeardown, addDisposableDisposeParentO
 import { Factory } from "../../functions.ts";
 import { isSome, none } from "../../option.ts";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces.ts";
+import { observe } from "./observable.ts";
 
 class OnSubscribeObservable<T> implements ObservableLike<T> {
   readonly isSynchronous = false;
@@ -12,7 +13,7 @@ class OnSubscribeObservable<T> implements ObservableLike<T> {
 
   observe(observer: ObserverLike<T>) {
     try {
-      this.src.observe(observer);
+      observe(this.src, observer);
       const disposable = this.f() || none;
       if (disposable instanceof Function) {
         addTeardown(observer, disposable);

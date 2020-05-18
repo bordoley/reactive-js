@@ -73,6 +73,8 @@
 * [mergeMap](_observable_.md#const-mergemap)
 * [mergeWith](_observable_.md#const-mergewith)
 * [never](_observable_.md#const-never)
+* [observe](_observable_.md#const-observe)
+* [observeWith](_observable_.md#const-observewith)
 * [onNotify](_observable_.md#onnotify)
 * [onSubscribe](_observable_.md#const-onsubscribe)
 * [publish](_observable_.md#const-publish)
@@ -1222,6 +1224,43 @@ Returna an `ObservableLike` instance that emits no items and never disposes its 
 ▪ **T**
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+___
+
+### `Const` observe
+
+▸ **observe**<**T**>(`observable`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, `observer`: [ObserverLike](../interfaces/_observable_.observerlike.md)‹T›): *void*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`observable` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› |
+`observer` | [ObserverLike](../interfaces/_observable_.observerlike.md)‹T› |
+
+**Returns:** *void*
+
+___
+
+### `Const` observeWith
+
+▸ **observeWith**<**T**>(`observer`: [ObserverLike](../interfaces/_observable_.observerlike.md)‹T›): *[SideEffect1](_functions_.md#sideeffect1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`observer` | [ObserverLike](../interfaces/_observable_.observerlike.md)‹T› |
+
+**Returns:** *[SideEffect1](_functions_.md#sideeffect1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 

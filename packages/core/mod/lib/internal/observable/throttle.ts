@@ -14,6 +14,7 @@ import { lift } from "./lift.ts";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
+import { observeWith } from "./observable.ts";
 
 /**
  * The throttle mode used by the `throttle` operator.
@@ -72,7 +73,7 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
     addOnDisposedWithError(this, delegate);
     addOnDisposedWithoutErrorTeardown(this, () => {
       if( mode !== ThrottleMode.First && this.hasValue) {
-        fromValue()(this.value).observe(delegate);
+        pipe(this.value, fromValue(), observeWith(delegate));;
       } else {
         dispose(delegate);
       }

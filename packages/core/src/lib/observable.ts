@@ -35,6 +35,8 @@ export { fromValue } from "./internal/observable/fromValue";
 export { subscribe } from "./internal/observable/subscribe";
 export { throws } from "./internal/observable/throws";
 export { using } from "./internal/observable/using";
+export { observe, observeWith } from "./internal/observable/observable";
+
 
 export { await_ } from "./internal/observable/await";
 export { buffer } from "./internal/observable/buffer";

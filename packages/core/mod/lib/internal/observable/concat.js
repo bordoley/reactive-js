@@ -1,12 +1,13 @@
 import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable.js";
 import { createDelegatingObserver } from "./observer.js";
+import { observe } from "./observable.js";
 const createConcatObserver = (delegate, observables, next) => {
     const observer = createDelegatingObserver(delegate);
     addOnDisposedWithError(observer, delegate);
     addOnDisposedWithoutErrorTeardown(observer, () => {
         if (next < observables.length) {
             const concatObserver = createConcatObserver(delegate, observables, next + 1);
-            observables[next].observe(concatObserver);
+            observe(observables[next], concatObserver);
         }
         else {
             dispose(delegate);
@@ -23,7 +24,7 @@ class ConcatObservable {
         const observables = this.observables;
         if (observables.length > 0) {
             const concatObserver = createConcatObserver(observer, observables, 1);
-            observables[0].observe(concatObserver);
+            observe(observables[0], concatObserver);
         }
         else {
             dispose(observer);

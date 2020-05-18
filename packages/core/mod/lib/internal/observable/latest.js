@@ -1,6 +1,6 @@
 import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable.js";
 import { none } from "../../option.js";
-import { createScheduledObservable } from "./observable.js";
+import { createScheduledObservable, observe } from "./observable.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 class LatestObserver extends AbstractDelegatingObserver {
     constructor(delegate, ctx, mode) {
@@ -51,7 +51,7 @@ export const latest = (observables, mode) => {
         for (const observable of observables) {
             const innerObserver = new LatestObserver(observer, ctx, mode);
             observers.push(innerObserver);
-            observable.observe(innerObserver);
+            observe(observable, innerObserver);
         }
     };
     return createScheduledObservable(factory, observables.every(obs => obs.isSynchronous));

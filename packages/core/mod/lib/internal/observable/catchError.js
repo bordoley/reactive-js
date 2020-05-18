@@ -2,6 +2,7 @@ import { dispose, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } fr
 import { isSome, none } from "../../option.js";
 import { lift } from "./lift.js";
 import { createDelegatingObserver } from "./observer.js";
+import { observe } from "./observable.js";
 export const catchError = (onError) => {
     const operator = (delegate) => {
         const observer = createDelegatingObserver(delegate);
@@ -10,7 +11,7 @@ export const catchError = (onError) => {
             try {
                 const result = onError(cause) || none;
                 if (isSome(result)) {
-                    result.observe(delegate);
+                    observe(result, delegate);
                 }
                 else {
                     dispose(delegate);

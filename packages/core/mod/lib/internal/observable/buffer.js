@@ -7,6 +7,7 @@ import { never } from "./never.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
+import { observeWith } from "./observable.js";
 class BufferObserver extends AbstractDelegatingObserver {
     constructor(delegate, durationFunction, maxBufferSize) {
         super(delegate);
@@ -26,7 +27,7 @@ class BufferObserver extends AbstractDelegatingObserver {
             const buffer = this.buffer;
             this.buffer = [];
             if (buffer.length > 0) {
-                fromValue()(buffer).observe(delegate);
+                pipe(buffer, fromValue(), observeWith(delegate));
             }
             else {
                 dispose(delegate);

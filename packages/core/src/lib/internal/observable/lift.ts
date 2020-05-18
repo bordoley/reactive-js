@@ -5,6 +5,7 @@ import {
   ObserverLike,
   ObserverOperator,
 } from "./interfaces";
+import { observe } from "./observable";
 
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   constructor(
@@ -18,7 +19,7 @@ class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
       any
     >;
 
-    this.source.observe(liftedSubscrber);
+    observe(this.source, liftedSubscrber);
   }
 }
 

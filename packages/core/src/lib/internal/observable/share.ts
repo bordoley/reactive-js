@@ -10,6 +10,7 @@ import {
   MulticastObservableLike,
 } from "./interfaces";
 import { publish } from "./publish";
+import { observe } from "./observable";
 
 class SharedObservable<T> implements ObservableLike<T> {
   private observerCount = 0;
@@ -39,7 +40,7 @@ class SharedObservable<T> implements ObservableLike<T> {
 
     const multicast = this.multicast as SubjectLike<T>;
 
-    multicast.observe(observer);
+    observe(multicast, observer);
     addTeardown(observer, this.teardown);
   }
 }

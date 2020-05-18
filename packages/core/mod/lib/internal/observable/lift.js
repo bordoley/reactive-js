@@ -1,4 +1,5 @@
 import { pipe } from "../../functions.js";
+import { observe } from "./observable.js";
 class LiftedObservable {
     constructor(source, operators, isSynchronous) {
         this.source = source;
@@ -7,7 +8,7 @@ class LiftedObservable {
     }
     observe(observer) {
         const liftedSubscrber = pipe(observer, ...this.operators);
-        this.source.observe(liftedSubscrber);
+        observe(this.source, liftedSubscrber);
     }
 }
 export const lift = (operator) => source => {
