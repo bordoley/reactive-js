@@ -142,7 +142,7 @@ export function concat<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
   i: Parser<TI>,
 ): Parser<[TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 
-export function concat(...parsers: Parser<unknown>[]): Parser<unknown[]> {
+export function concat(...parsers: readonly Parser<unknown>[]): Parser<readonly unknown[]> {
   return charStream => {
     const result = [];
     for (const parse of parsers) {

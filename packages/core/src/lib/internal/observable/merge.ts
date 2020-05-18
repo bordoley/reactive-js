@@ -50,10 +50,10 @@ class MergeObservable<T> implements ObservableLike<T> {
 export function merge<T>(
   fst: ObservableLike<T>,
   snd: ObservableLike<T>,
-  ...tail: Array<ObservableLike<T>>
+  ...tail: readonly ObservableLike<T>[]
 ): ObservableLike<T>;
 export function merge<T>(
-  ...observables: Array<ObservableLike<T>>
+  ...observables: readonly ObservableLike<T>[]
 ): ObservableLike<T> {
   return new MergeObservable(observables);
 }

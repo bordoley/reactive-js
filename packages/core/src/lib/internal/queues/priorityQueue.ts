@@ -54,7 +54,7 @@ const siftUp = <T>(queue: PriorityQueueImpl<T>, item: T) => {
 };
 
 class PriorityQueueImpl<T> implements QueueLike<T> {
-  readonly values: Array<T> = [];
+  readonly values: T[] = [];
 
   constructor(readonly compare: Comparator<T>) {}
 

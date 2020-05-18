@@ -81,7 +81,7 @@ export const createHttpRequest = <T>({
   body: T;
   cacheControl?: readonly (string | CacheDirective)[];
   contentInfo?: {
-    contentEncodings?: HttpContentEncoding[];
+    contentEncodings?: readonly HttpContentEncoding[];
     contentLength?: number;
     contentType: MediaType | string;
   };
@@ -91,9 +91,9 @@ export const createHttpRequest = <T>({
   httpVersionMinor?: number;
   method: HttpMethod;
   preconditions?: {
-    ifMatch?: (string | EntityTag)[] | "*";
+    ifMatch?: readonly (string | EntityTag)[] | "*";
     ifModifiedSince?: string | HttpDateTime | Date;
-    ifNoneMatch?: (string | EntityTag)[] | "*";
+    ifNoneMatch?: readonly (string | EntityTag)[] | "*";
     ifUnmodifiedSince?: string | HttpDateTime | Date;
     ifRange?: string | EntityTag | HttpDateTime | Date;
   };

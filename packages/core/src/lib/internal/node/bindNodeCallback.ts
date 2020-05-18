@@ -232,17 +232,17 @@ export function bindNodeCallback<A1, A2, A3, A4, A5>(
 ): Function5<A1, A2, A3, A4, A5, ObservableLike<void>>;
 
 export function bindNodeCallback<T>(
-  callback: (...args: any[]) => any,
-  selector?: (...args: unknown[]) => T,
-): (...args: unknown[]) => ObservableLike<T | void> {
-  return function(this: unknown, ...args: unknown[]) {
+  callback: (...args: readonly any[]) => any,
+  selector?: (...args: readonly unknown[]) => T,
+): (...args: readonly unknown[]) => ObservableLike<T | void> {
+  return function(this: unknown, ...args: readonly unknown[]) {
     return createObservable(dispatcher => {
-      const handler = (cause: unknown, ...innerArgs: unknown[]) => {
+      const handler = (cause: unknown, ...innerArgs: readonly unknown[]) => {
         if (cause) {
           dispose(dispatcher, { cause });
         } else {
           if (innerArgs.length > 0) {
-            const result = (selector as (...args: unknown[]) => T)(
+            const result = (selector as (...args: readonly unknown[]) => T)(
               ...innerArgs,
             );
             dispatch(dispatcher, result);

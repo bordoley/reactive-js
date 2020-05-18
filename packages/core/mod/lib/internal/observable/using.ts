@@ -20,10 +20,10 @@ class UsingObservable<TResource extends DisposableLike, T>
   constructor(
     private readonly resourceFactory: Function1<
       SchedulerLike,
-      TResource | TResource[]
+      TResource | readonly TResource[]
     >,
     private readonly observableFactory: (
-      ...resources: TResource[]
+      ...resources: readonly TResource[]
     ) => ObservableLike<T>,
   ) {}
 
@@ -116,8 +116,8 @@ export function using<
 ): ObservableLike<T>;
 
 export function using<TResource extends DisposableLike, T>(
-  resourceFactory: Function1<SchedulerLike, TResource | TResource[]>,
-  observableFactory: (...resources: TResource[]) => ObservableLike<T>,
+  resourceFactory: Function1<SchedulerLike, TResource | readonly TResource[]>,
+  observableFactory: (...resources: readonly TResource[]) => ObservableLike<T>,
 ): ObservableLike<T>;
 
 /**
@@ -125,8 +125,8 @@ export function using<TResource extends DisposableLike, T>(
  * will be disposed when the ObservableLike disposes it's only subscription.
  */
 export function using<TResource extends DisposableLike, T>(
-  resourceFactory: Function1<SchedulerLike, TResource | TResource[]>,
-  observableFactory: (...resources: TResource[]) => ObservableLike<T>,
+  resourceFactory: Function1<SchedulerLike, TResource | readonly TResource[]>,
+  observableFactory: (...resources: readonly TResource[]) => ObservableLike<T>,
 ): ObservableLike<T> {
   return new UsingObservable(resourceFactory, observableFactory);
 }

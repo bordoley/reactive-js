@@ -44,7 +44,7 @@ const parseAccept = pipe(
   map(mediaTypes => {
     // Mutate to avoid allocations. Kinda evil.
     (mediaTypes as MediaType[]).sort(mediaRangeCompare);
-    return mediaTypes.map(mediaTypeToMediaRange);
+    return mediaTypes.map(mediaTypeToMediaRange) as readonly MediaRange[];
   }),
   parseWith,
 );

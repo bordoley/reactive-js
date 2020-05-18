@@ -47,7 +47,7 @@ class ObserverDelegatingDispatcher<T> extends AbstractDisposable
     }
   };
 
-  readonly nextQueue: Array<T> = [];
+  readonly nextQueue: T[] = [];
 
   constructor(readonly observer: ObserverLike<T>) {
     super();

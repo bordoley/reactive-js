@@ -19,12 +19,12 @@ export const enum LatestMode {
   Zip = 2,
 }
 
-class LatestObserver extends AbstractDelegatingObserver<unknown, unknown[]> {
+class LatestObserver extends AbstractDelegatingObserver<unknown, readonly unknown[]> {
   ready = false;
   latest: unknown = none;
 
   constructor(
-    delegate: ObserverLike<unknown[]>,
+    delegate: ObserverLike<readonly unknown[]>,
     private readonly ctx: LatestCtx,
     private readonly mode: LatestMode,
   ) {
@@ -68,10 +68,10 @@ class LatestObserver extends AbstractDelegatingObserver<unknown, unknown[]> {
 }
 
 export const latest = (
-  observables: ObservableLike<any>[],
+  observables: readonly ObservableLike<any>[],
   mode: LatestMode,
-): ObservableLike<unknown[]> => {
-  const factory = (observer: ObserverLike<unknown[]>) => () => {
+): ObservableLike<readonly unknown[]> => {
+  const factory = (observer: ObserverLike<readonly unknown[]>) => () => {
     const observers: LatestObserver[] = [];
     const ctx = {
       completedCount: 0,

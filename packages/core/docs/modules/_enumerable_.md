@@ -84,7 +84,7 @@ ___
 
 ###  concat
 
-▸ **concat**<**T**>(`fst`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, `snd`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, ...`tail`: Array‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+▸ **concat**<**T**>(`fst`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, `snd`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, ...`tail`: keyof EnumerableLike<T>[]): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
 
 Creates an EnumerableLike which yields all values from each source sequentially.
 
@@ -98,7 +98,7 @@ Name | Type |
 ------ | ------ |
 `fst` | [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T› |
 `snd` | [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T› |
-`...tail` | Array‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›› |
+`...tail` | keyof EnumerableLike<T>[] |
 
 **Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
 
@@ -213,7 +213,7 @@ ___
 
 ###  endWith
 
-▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **endWith**<**T**>(`value`: T, ...`values`: keyof T[]): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an EnumerableLike that yields items from the source,
 concatenated with the values specified as arguments.
@@ -227,7 +227,7 @@ concatenated with the values specified as arguments.
 Name | Type |
 ------ | ------ |
 `value` | T |
-`...values` | T[] |
+`...values` | keyof T[] |
 
 **Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
@@ -581,7 +581,7 @@ ___
 
 ###  startWith
 
-▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **startWith**<**T**>(`value`: T, ...`values`: keyof T[]): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an EnumerableLike that yields the values followed by items from the source.
 
@@ -594,7 +594,7 @@ Returns an EnumerableLike that yields the values followed by items from the sour
 Name | Type |
 ------ | ------ |
 `value` | T |
-`...values` | T[] |
+`...values` | keyof T[] |
 
 **Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 

@@ -16,7 +16,7 @@ const toJestTest = (testGroup: TestGroup, parents: readonly string[]) => {
   }
 };
 
-export const runTests = (testGroups: TestGroup[]) => {
+export const runTests = (testGroups: readonly TestGroup[]) => {
   for (const test of testGroups) {
     toJestTest(test, []);
   }

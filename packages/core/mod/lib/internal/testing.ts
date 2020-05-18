@@ -143,13 +143,13 @@ export const expectSome = (v: Option<unknown>) => {
 };
 
 type MockFunction = {
-  (...v: any[]): any;
-  readonly calls: any[][];
+  (...v: readonly any[]): any;
+  readonly calls: readonly ReadonlyArray<any>[];
 };
 
 export const mockFn = (retval?: any): MockFunction => {
-  const calls: any[][] = [];
-  const cb = (...args: any[]) => {
+  const calls: ReadonlyArray<any>[] = [];
+  const cb = (...args: readonly any[]) => {
     calls.push(args);
     return retval;
   };

@@ -158,9 +158,9 @@ export const createHttpRequestPreconditions = ({
   ifUnmodifiedSince,
   ifRange,
 }: {
-  ifMatch?: (string | EntityTag)[] | "*";
+  ifMatch?: readonly (string | EntityTag)[] | "*";
   ifModifiedSince?: string | HttpDateTime | Date;
-  ifNoneMatch?: (string | EntityTag)[] | "*";
+  ifNoneMatch?: readonly (string | EntityTag)[] | "*";
   ifUnmodifiedSince?: string | HttpDateTime | Date;
   ifRange?: string | EntityTag | HttpDateTime | Date;
 }): HttpRequestPreconditions => {
@@ -182,8 +182,8 @@ export const createHttpRequestPreconditions = ({
     ifMatch: Array.isArray(ifMatch)
       ? ifMatch.map(etag =>
           typeof etag === "string" ? parseETagOrThrow(etag) : etag,
-        )
-      : ifMatch,
+        ) as readonly EntityTag[]
+      : ifMatch as "*",
     ifModifiedSince:
       typeof ifModifiedSince === "string"
         ? parseHttpDateTime(ifModifiedSince)
@@ -193,8 +193,8 @@ export const createHttpRequestPreconditions = ({
     ifNoneMatch: Array.isArray(ifNoneMatch)
       ? ifNoneMatch.map(etag =>
           typeof etag === "string" ? parseETagOrThrow(etag) : etag,
-        )
-      : ifNoneMatch,
+        ) as readonly EntityTag[]
+      : ifNoneMatch as "*",
     ifUnmodifiedSince:
       typeof ifUnmodifiedSince === "string"
         ? parseHttpDateTime(ifUnmodifiedSince)

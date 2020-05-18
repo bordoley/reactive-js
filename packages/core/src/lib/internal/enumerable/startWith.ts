@@ -7,8 +7,8 @@ import { EnumerableOperator } from "./interfaces";
  */
 export function startWith<T>(
   value: T,
-  ...values: T[]
+  ...values:readonly T[]
 ): EnumerableOperator<T, T>;
-export function startWith<T>(...values: T[]): EnumerableOperator<T, T> {
+export function startWith<T>(...values: readonly T[]): EnumerableOperator<T, T> {
   return obs => concat(fromArray<T>()(values), obs);
 }

@@ -68,7 +68,7 @@ export const createHttpContentInfo = ({
   contentLength,
   contentType,
 }: {
-  contentEncodings?: HttpContentEncoding[];
+  contentEncodings?: readonly HttpContentEncoding[];
   contentLength?: number;
   contentType: MediaType | string;
 }): HttpContentInfo => ({

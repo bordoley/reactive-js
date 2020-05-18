@@ -93,7 +93,7 @@ ___
 
 ###  concat
 
-▸ **concat**<**T**>(`fst`: [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, `snd`: [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, ...`tail`: Array‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››): *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
+▸ **concat**<**T**>(`fst`: [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, `snd`: [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, ...`tail`: keyof RunnableLike<T>[]): *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
 
 Creates an `RunnableLike` which emits all values from each source sequentially.
 
@@ -107,7 +107,7 @@ Name | Type |
 ------ | ------ |
 `fst` | [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T› |
 `snd` | [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T› |
-`...tail` | Array‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›› |
+`...tail` | keyof RunnableLike<T>[] |
 
 **Returns:** *[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›*
 
@@ -232,7 +232,7 @@ ___
 
 ###  endWith
 
-▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
+▸ **endWith**<**T**>(`value`: T, ...`values`: keyof T[]): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -243,7 +243,7 @@ ___
 Name | Type |
 ------ | ------ |
 `value` | T |
-`...values` | T[] |
+`...values` | keyof T[] |
 
 **Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
@@ -617,7 +617,7 @@ ___
 
 ###  startWith
 
-▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
+▸ **startWith**<**T**>(`value`: T, ...`values`: keyof T[]): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -628,7 +628,7 @@ ___
 Name | Type |
 ------ | ------ |
 `value` | T |
-`...values` | T[] |
+`...values` | keyof T[] |
 
 **Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
@@ -694,7 +694,7 @@ ___
 
 ### `Const` toArray
 
-▸ **toArray**<**T**>(): *[Function1](_functions_.md#function1)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, T[]›*
+▸ **toArray**<**T**>(): *[Function1](_functions_.md#function1)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, keyof T[]›*
 
 Accumulates all values emitted by `runnable` into an array.
 
@@ -702,7 +702,7 @@ Accumulates all values emitted by `runnable` into an array.
 
 ▪ **T**
 
-**Returns:** *[Function1](_functions_.md#function1)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, T[]›*
+**Returns:** *[Function1](_functions_.md#function1)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T›, keyof T[]›*
 
 ___
 

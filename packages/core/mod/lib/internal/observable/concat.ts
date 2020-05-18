@@ -9,7 +9,7 @@ import { createDelegatingObserver } from "./observer.ts";
 
 const createConcatObserver = <T>(
   delegate: ObserverLike<T>,
-  observables: ObservableLike<T>[],
+  observables: readonly ObservableLike<T>[],
   next: number,
 ) => {
   const observer = createDelegatingObserver(delegate);
@@ -32,7 +32,7 @@ const createConcatObserver = <T>(
 class ConcatObservable<T> implements ObservableLike<T> {
   readonly isSynchronous: boolean;
 
-  constructor(private readonly observables: ObservableLike<T>[]) {
+  constructor(private readonly observables: readonly ObservableLike<T>[]) {
     this.isSynchronous = observables.every(obs => obs.isSynchronous);
   }
 
@@ -54,11 +54,11 @@ class ConcatObservable<T> implements ObservableLike<T> {
 export function concat<T>(
   fst: ObservableLike<T>,
   snd: ObservableLike<T>,
-  ...tail: Array<ObservableLike<T>>
+  ...tail: readonly ObservableLike<T>[]
 ): ObservableLike<T>;
 
 export function concat<T>(
-  ...observables: ObservableLike<T>[]
+  ...observables: readonly ObservableLike<T>[]
 ): ObservableLike<T> {
   return new ConcatObservable(observables);
 }
