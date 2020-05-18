@@ -1,4 +1,4 @@
-import { strictEquality, arrayEquality, } from "../functions.js";
+import { strictEquality, arrayEquality, ignore, } from "../functions.js";
 import { isSome, isNone, none } from "../option.js";
 export const describe = (name, ...tests) => ({
     type: 1,
@@ -8,12 +8,18 @@ export const describe = (name, ...tests) => ({
 export const test = (name, f) => ({
     type: 2,
     name,
-    f,
+    f: (ctx) => () => {
+        ignore(ctx);
+        f();
+    }
 });
 export const testAsync = (name, f) => ({
     type: 3,
     name,
-    f,
+    f: (ctx) => async () => {
+        ignore(ctx);
+        await f();
+    },
 });
 export const expectToThrow = (f) => {
     let didThrow = false;
