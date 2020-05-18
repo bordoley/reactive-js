@@ -23,7 +23,7 @@ import {
   unstable_shouldYield,
   unstable_UserBlockingPriority,
 } from "scheduler";
-import { addDisposable } from "@reactive-js/core/src/lib/disposable";
+import { addDisposable } from "@reactive-js/core/lib/disposable";
 
 const getScheduler = (priority: number) => {
   switch (priority) {
