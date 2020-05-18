@@ -40,7 +40,7 @@ const createRepeatObserver = <T>(
         subscribe(delegate),
       );
       addTeardown(subscription, onDispose);
-      addDisposable(observer, subscription);
+      addDisposable(delegate, subscription);
     }
   };
 

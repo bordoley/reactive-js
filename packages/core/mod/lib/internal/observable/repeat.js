@@ -24,7 +24,7 @@ const createRepeatObserver = (delegate, observable, shouldRepeat) => {
             count++;
             const subscription = pipe(observable, onNotify((next) => delegate.notify(next)), subscribe(delegate));
             addTeardown(subscription, onDispose);
-            addDisposable(observer, subscription);
+            addDisposable(delegate, subscription);
         }
     };
     addTeardown(observer, onDispose);
