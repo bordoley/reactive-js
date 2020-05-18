@@ -1,6 +1,5 @@
-import { Exception, dispose, addDisposableOrTeardown } from "../../disposable";
 import { Factory, Function1, pipe } from "../../functions";
-import { none, Option, isNone } from "../../option";
+import { isSome } from "../../option";
 import { createRunnable } from "../../runnable";
 import {
   createVirtualTimeScheduler,
@@ -18,7 +17,6 @@ export const toRunnable = <T>(
 ): Function1<ObservableLike<T>, RunnableLike<T>> => source =>
   createRunnable(sink => {
     const scheduler = schedulerFactory();
-    let error: Option<Exception> = none;
 
     const subscription = pipe(
       source,
@@ -26,23 +24,14 @@ export const toRunnable = <T>(
         sink.notify(next);
       }),
       subscribe(scheduler),
-      addDisposableOrTeardown(e => {
-        error = e;
-        if (isNone(e)) {
-          sink.done();
-        }
-      }),
     );
 
     scheduler.run();
 
-    dispose(subscription);
-    dispose(scheduler);
-
-    const reifiedError: Option<Exception> = error;
-    // FIXME: would rather use isSome(reifiedError) but TS is failing the check for some reason
-    if (reifiedError !== none) {
-      const { cause } = reifiedError as Exception;
+    const { error } = subscription;
+    if (isSome(error)) {
+      const { cause } = error;
       throw cause;
     }
+    sink.done();
   });
