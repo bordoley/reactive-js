@@ -33,7 +33,7 @@ import {
 } from "@reactive-js/core/lib/streamable";
 import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { normalPriority } from "./scheduler";
-import { addTeardown } from "@reactive-js/core/src/lib/disposable";
+import { addTeardown } from "@reactive-js/core/lib/disposable";
 
 const subscribeObservable = <T>(
   observable: ObservableLike<T>,

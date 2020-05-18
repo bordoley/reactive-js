@@ -73,7 +73,7 @@ import {
   createContentEncodingDecompressTransforms,
   createContentEncodingCompressTransforms,
 } from "@reactive-js/http/lib/node";
-import { HttpExtensionHeader } from "@reactive-js/http/src/lib/http";
+import { HttpExtensionHeader } from "@reactive-js/http/lib/http";
 import db from "mime-db";
 import mime from "mime-types";
 
