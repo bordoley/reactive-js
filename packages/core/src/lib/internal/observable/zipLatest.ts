@@ -67,8 +67,8 @@ export function zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
  * multiple sources.
  */
 export function zipLatest(
-  ...observables: ObservableLike<any>[]
-): ObservableLike<unknown[]> {
+  ...observables: readonly ObservableLike<any>[]
+): ObservableLike<readonly unknown[]> {
   return latest(observables, LatestMode.Zip);
 }
 

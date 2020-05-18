@@ -10,7 +10,7 @@ import { observe } from "./observable";
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   constructor(
     readonly source: ObservableLike<TIn>,
-    readonly operators: ReadonlyArray<ObserverOperator<any, any>>,
+    readonly operators: readonly ObserverOperator<any, any>[],
     readonly isSynchronous: boolean,
   ) {}
 

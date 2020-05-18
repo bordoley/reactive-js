@@ -103,14 +103,14 @@ const shouldComplete = (
   return false;
 };
 
-class ZipObserver extends AbstractDelegatingObserver<unknown, unknown[]>
+class ZipObserver extends AbstractDelegatingObserver<unknown, readonly unknown[]>
   implements EnumeratorLike<unknown> {
   current: unknown;
   private readonly buffer: unknown[] = [];
   hasCurrent = false;
 
   constructor(
-    delegate: ObserverLike<unknown[]>,
+    delegate: ObserverLike<readonly unknown[]>,
     private readonly enumerators: readonly (DisposableLike &
       EnumeratorLike<any>)[],
   ) {
@@ -172,21 +172,21 @@ class ZipObserver extends AbstractDelegatingObserver<unknown, unknown[]>
   }
 }
 
-class ZipObservable implements ObservableLike<unknown[]> {
+class ZipObservable implements ObservableLike<readonly unknown[]> {
   readonly isSynchronous: boolean;
 
   constructor(private readonly observables: readonly ObservableLike<any>[]) {
     this.isSynchronous = observables.every(obs => obs.isSynchronous);
   }
 
-  observe(observer: ObserverLike<unknown[]>) {
+  observe(observer: ObserverLike<readonly unknown[]>) {
     const observables = this.observables;
     const count = observables.length;
 
     if (this.isSynchronous) {
       const observable = using(
         _ => this.observables.map(subscribeInteractive),
-        (...enumerators: EnumeratorObserver<any>[]) =>
+        (...enumerators: readonly EnumeratorObserver<any>[]) =>
           fromEnumerator()(returns(zipEnumerators(enumerators))),
       );
 
@@ -278,8 +278,8 @@ export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
  * in order, of each of its input sources.
  */
 export function zip(
-  ...observables: ObservableLike<unknown>[]
-): ObservableLike<unknown[]> {
+  ...observables: readonly ObservableLike<unknown>[]
+): ObservableLike<readonly unknown[]> {
   return new ZipObservable(observables);
 }
 

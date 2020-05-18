@@ -9,7 +9,7 @@ import {
 class LiftedRunnable<T> implements RunnableLike<T> {
   constructor(
     readonly src: RunnableLike<any>,
-    readonly operators: SinkOperator<any, any>[],
+    readonly operators: readonly SinkOperator<any, any>[],
   ) {}
 
   run(sink: SinkLike<T>) {

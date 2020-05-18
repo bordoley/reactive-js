@@ -521,7 +521,7 @@ ___
 
 ###  concat
 
-▸ **concat**<**T**>(`fst`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, `snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, ...`tail`: Array‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **concat**<**T**>(`fst`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, `snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, ...`tail`: keyof ObservableLike<T>[]): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Creates an `ObservableLike` which emits all values from each source sequentially.
 
@@ -535,7 +535,7 @@ Name | Type |
 ------ | ------ |
 `fst` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› |
 `snd` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› |
-`...tail` | Array‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›› |
+`...tail` | keyof ObservableLike<T>[] |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
@@ -725,7 +725,7 @@ ___
 
 ###  endWith
 
-▸ **endWith**<**T**>(`value`: T, ...`values`: T[]): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **endWith**<**T**>(`value`: T, ...`values`: keyof T[]): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that emits items from the source,
 concatenated with the values specified as arguments.
@@ -739,7 +739,7 @@ concatenated with the values specified as arguments.
 Name | Type |
 ------ | ------ |
 `value` | T |
-`...values` | T[] |
+`...values` | keyof T[] |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
@@ -1122,7 +1122,7 @@ ___
 
 ###  merge
 
-▸ **merge**<**T**>(`fst`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, `snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, ...`tail`: Array‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **merge**<**T**>(`fst`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, `snd`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, ...`tail`: keyof ObservableLike<T>[]): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
  Creates an `ObservableLike` which concurrently emits values from the sources.
 
@@ -1136,7 +1136,7 @@ Name | Type |
 ------ | ------ |
 `fst` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› |
 `snd` | [ObservableLike](../interfaces/_observable_.observablelike.md)‹T› |
-`...tail` | Array‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›› |
+`...tail` | keyof ObservableLike<T>[] |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
@@ -1518,7 +1518,7 @@ ___
 
 ###  startWith
 
-▸ **startWith**<**T**>(`value`: T, ...`values`: T[]): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **startWith**<**T**>(`value`: T, ...`values`: keyof T[]): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that emits the values specified as arguments,
 concatenated with items from the source.
@@ -1532,7 +1532,7 @@ concatenated with items from the source.
 Name | Type |
 ------ | ------ |
 `value` | T |
-`...values` | T[] |
+`...values` | keyof T[] |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
@@ -1994,7 +1994,7 @@ Name | Type |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
-▸ **using**<**TResource**, **T**>(`resourceFactory`: [Function1](_functions_.md#function1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), TResource | TResource[]›, `observableFactory`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **using**<**TResource**, **T**>(`resourceFactory`: [Function1](_functions_.md#function1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), TResource | keyof TResource[]›, `observableFactory`: function): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Creates an `ObservableLike` that uses one or more resources which
 will be disposed when the ObservableLike disposes it's only subscription.
@@ -2007,17 +2007,17 @@ will be disposed when the ObservableLike disposes it's only subscription.
 
 **Parameters:**
 
-▪ **resourceFactory**: *[Function1](_functions_.md#function1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), TResource | TResource[]›*
+▪ **resourceFactory**: *[Function1](_functions_.md#function1)‹[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), TResource | keyof TResource[]›*
 
 ▪ **observableFactory**: *function*
 
-▸ (...`resources`: TResource[]): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ (...`resources`: keyof TResource[]): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`...resources` | TResource[] |
+`...resources` | keyof TResource[] |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 

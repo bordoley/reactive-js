@@ -123,27 +123,6 @@ export const addOnDisposedWithoutError = (
   });
 };
 
-/*
-export function add<T extends DisposableLike>(
-  disposable: T,
-  firstChild: DisposableOrTeardown,
-  ...others: DisposableOrTeardown[]
-): T;
-export function add<T extends DisposableLike>(
-  disposable: T,
-  ...disposables: DisposableOrTeardown[]
-): T {
-  for (const d of disposables) {
-    disposable.add(d);
-  }
-  return disposable;
-}
-
-export const addDisposableOrTeardown = <T extends DisposableLike>(
-  d: DisposableOrTeardown,
-): Function1<T, T> => disposable => add(disposable, d);
-*/
-
 export const toErrorHandler = (
   disposable: DisposableLike,
 ): SideEffect1<unknown> => cause => dispose(disposable, { cause });

@@ -14,8 +14,8 @@ const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {
 const allHaveCurrent = (enumerators: readonly EnumeratorLike<any>[]) =>
   enumerators.every(hasCurrent);
 
-class ZipEnumerator implements EnumeratorLike<unknown[]> {
-  current: unknown[] = [];
+class ZipEnumerator implements EnumeratorLike<readonly unknown[]> {
+  current: readonly unknown[] = [];
   hasCurrent = false;
 
   constructor(private readonly enumerators: readonly EnumeratorLike<any>[]) {}
@@ -35,13 +35,13 @@ class ZipEnumerator implements EnumeratorLike<unknown[]> {
 }
 
 export function zipEnumerators(
-  enumerators: EnumeratorLike<unknown>[],
-): EnumeratorLike<unknown[]> {
+  enumerators: readonly EnumeratorLike<unknown>[],
+): EnumeratorLike<readonly unknown[]> {
   return new ZipEnumerator(enumerators);
 }
 
-class ZipEnumerable implements EnumerableLike<unknown[]> {
-  constructor(private readonly enumerables: EnumerableLike<unknown>[]) {}
+class ZipEnumerable implements EnumerableLike<readonly unknown[]> {
+  constructor(private readonly enumerables: readonly EnumerableLike<unknown>[]) {}
 
   enumerate() {
     return zipEnumerators(this.enumerables.map(enumerate));
@@ -114,8 +114,8 @@ export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
  * in order, of each of its inputs.
  */
 export function zip(
-  ...enumerables: EnumerableLike<unknown>[]
-): EnumerableLike<unknown[]> {
+  ...enumerables: readonly EnumerableLike<unknown>[]
+): EnumerableLike<readonly unknown[]> {
   return new ZipEnumerable(enumerables);
 }
 

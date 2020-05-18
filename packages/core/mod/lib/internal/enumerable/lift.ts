@@ -10,7 +10,7 @@ import {
 class LiftedEnumerableLike<T> implements EnumerableLike<T> {
   constructor(
     readonly src: EnumerableLike<any>,
-    readonly operators: EnumeratorOperator<any, any>[],
+    readonly operators: readonly EnumeratorOperator<any, any>[],
   ) {}
 
   enumerate(): EnumeratorLike<T> {

@@ -77,7 +77,7 @@ export const createHttpResponse = <T>({
   body: T;
   cacheControl?: readonly (string | CacheDirective)[];
   contentInfo?: {
-    contentEncodings?: HttpContentEncoding[];
+    contentEncodings?: readonly HttpContentEncoding[];
     contentLength?: number;
     contentType: MediaType | string;
   };

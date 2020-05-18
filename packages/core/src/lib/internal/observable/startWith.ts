@@ -8,8 +8,8 @@ import { ObservableOperator } from "./interfaces";
  */
 export function startWith<T>(
   value: T,
-  ...values: T[]
+  ...values: readonly T[]
 ): ObservableOperator<T, T>;
-export function startWith<T>(...values: T[]): ObservableOperator<T, T> {
+export function startWith<T>(...values: readonly T[]): ObservableOperator<T, T> {
   return obs => concat(fromArray()(values), obs);
 }

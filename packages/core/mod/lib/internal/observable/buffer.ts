@@ -19,7 +19,7 @@ import { subscribe } from "./subscribe.ts";
 
 class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
   private readonly durationSubscription = createSerialDisposable();
-  private buffer: Array<T> = [];
+  private buffer: T[] = [];
   private readonly onNotify = () => {
     this.durationSubscription.inner = disposed;
 

@@ -77,8 +77,8 @@ export function callWith<TA, TB, TC, TD, T>(
   d: TD,
 ): Function1<Function4<TA, TB, TC, TD, T>, T>;
 export function callWith<T>(
-  ...args: any[]
-): Function1<(...args: any[]) => T, T> {
+  ...args: readonly any[]
+): Function1<(...args: readonly any[]) => T, T> {
   return f => f(...args);
 }
 
@@ -420,7 +420,7 @@ export function compose<T, A, B, C, D, E, F, G, H, I, J, K, L>(
  * composes the source value through a series of unary functions.
  */
 export function compose(
-  ...operators: Array<Function1<unknown, unknown>>
+  ...operators: Function1<unknown, unknown>[]
 ): Function1<unknown, unknown> {
   return source => operators.reduce((acc, next) => next(acc), source);
 }

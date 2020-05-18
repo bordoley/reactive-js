@@ -31,8 +31,8 @@ class LiftedStreamable<TReqA, TReqB, TA, TB> extends StreamableImpl<TReqB, TB> {
   constructor(
     op: ObservableOperator<TReqB, TB>,
     readonly src: StreamableLike<TReqA, TA>,
-    readonly obsOps: ObservableOperator<any, any>[],
-    readonly reqOps: Function1<any, any>[],
+    readonly obsOps: readonly ObservableOperator<any, any>[],
+    readonly reqOps: readonly Function1<any, any>[],
   ) {
     super(op);
   }
@@ -40,8 +40,8 @@ class LiftedStreamable<TReqA, TReqB, TA, TB> extends StreamableImpl<TReqB, TB> {
 
 const liftImpl = <TReqA, TReqB, TA, TB>(
   streamable: StreamableLike<TReqA, TA>,
-  obsOps: ObservableOperator<any, any>[],
-  reqOps: Function1<any, any>[],
+  obsOps: readonly ObservableOperator<any, any>[],
+  reqOps: readonly Function1<any, any>[],
 ) => {
   const src =
     streamable instanceof LiftedStreamable ? streamable.src : streamable;

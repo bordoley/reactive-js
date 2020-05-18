@@ -9,11 +9,11 @@ import { EnumerableLike, EnumerableOperator } from "./interfaces.ts";
 export function concat<T>(
   fst: EnumerableLike<T>,
   snd: EnumerableLike<T>,
-  ...tail: Array<EnumerableLike<T>>
+  ...tail: readonly EnumerableLike<T>[]
 ): EnumerableLike<T>;
 
 export function concat<T>(
-  ...enumerables: EnumerableLike<T>[]
+  ...enumerables: readonly EnumerableLike<T>[]
 ): EnumerableLike<T> {
   return pipe(enumerables, fromArray(), concatAll());
 }
