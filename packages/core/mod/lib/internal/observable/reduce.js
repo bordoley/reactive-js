@@ -1,9 +1,9 @@
-import { addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable.js";
+import { addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 import { observeWith } from "./observable.js";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 class ReduceObserver extends AbstractDelegatingObserver {
     constructor(delegate, reducer, acc) {
         super(delegate);

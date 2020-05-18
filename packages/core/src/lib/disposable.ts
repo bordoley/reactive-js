@@ -48,29 +48,41 @@ export const dispose = (disposable: DisposableLike, e?: Exception) => {
   disposable.dispose(e);
 };
 
-export const addDisposable = (parent: DisposableLike, child: DisposableLike) => {
-  parent.add(child)
+export const addDisposable = (
+  parent: DisposableLike,
+  child: DisposableLike,
+) => {
+  parent.add(child);
 };
 
-export const addTeardown = (parent: DisposableLike, teardown: SideEffect1<Option<Exception>>) => {
-  parent.add(teardown)
+export const addTeardown = (
+  parent: DisposableLike,
+  teardown: SideEffect1<Option<Exception>>,
+) => {
+  parent.add(teardown);
 };
 
-export const addOnDisposedWithErrorTeardown = (parent: DisposableLike, teardown: SideEffect1<unknown>) => {
+export const addOnDisposedWithErrorTeardown = (
+  parent: DisposableLike,
+  teardown: SideEffect1<unknown>,
+) => {
   addTeardown(parent, e => {
     if (isSome(e)) {
       teardown(e.cause);
     }
-  })
+  });
 };
 
-export const addOnDisposedWithoutErrorTeardown = (parent: DisposableLike, teardown: SideEffect) => {
+export const addOnDisposedWithoutErrorTeardown = (
+  parent: DisposableLike,
+  teardown: SideEffect,
+) => {
   addTeardown(parent, e => {
     if (isNone(e)) {
       teardown();
     }
   });
-}
+};
 
 export const bindDisposables = (a: DisposableLike, b: DisposableLike) => {
   addDisposable(a, b);
@@ -85,23 +97,31 @@ export const toDisposeOnErrorTeardown = (
   }
 };
 
-export const addOnDisposedWithError = (parent: DisposableLike, child: DisposableLike) => {
+export const addOnDisposedWithError = (
+  parent: DisposableLike,
+  child: DisposableLike,
+) => {
   addTeardown(parent, toDisposeOnErrorTeardown(child));
 };
 
-export const addDisposableDisposeParentOnChildError = (parent: DisposableLike, child: DisposableLike) => {
+export const addDisposableDisposeParentOnChildError = (
+  parent: DisposableLike,
+  child: DisposableLike,
+) => {
   addDisposable(parent, child);
   addOnDisposedWithError(child, parent);
 };
 
-export const addOnDisposedWithoutError = (parent: DisposableLike, child: DisposableLike) => {
+export const addOnDisposedWithoutError = (
+  parent: DisposableLike,
+  child: DisposableLike,
+) => {
   addTeardown(parent, e => {
-    if(isNone(e)) {
+    if (isNone(e)) {
       dispose(child);
     }
   });
 };
-
 
 /*
 export function add<T extends DisposableLike>(
@@ -205,8 +225,8 @@ export const createDisposable = (
   onDispose?: (error?: Exception) => void,
 ): DisposableLike => {
   const disposable = new DisposableImpl();
-  if(isSome(onDispose)) {
-    addTeardown(disposable, onDispose)
+  if (isSome(onDispose)) {
+    addTeardown(disposable, onDispose);
   }
   return disposable;
 };

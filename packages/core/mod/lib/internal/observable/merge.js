@@ -1,6 +1,6 @@
-import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable.js";
-import { createDelegatingObserver } from "./observer.js";
+import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, } from "../../disposable.js";
 import { observe } from "./observable.js";
+import { createDelegatingObserver } from "./observer.js";
 const createMergeObserver = (delegate, count, ctx) => {
     const observer = createDelegatingObserver(delegate);
     addOnDisposedWithError(observer, delegate);

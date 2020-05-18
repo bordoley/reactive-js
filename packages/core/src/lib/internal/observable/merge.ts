@@ -1,7 +1,11 @@
-import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable";
+import {
+  dispose,
+  addOnDisposedWithError,
+  addOnDisposedWithoutErrorTeardown,
+} from "../../disposable";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
-import { createDelegatingObserver } from "./observer";
 import { observe } from "./observable";
+import { createDelegatingObserver } from "./observer";
 
 const createMergeObserver = <T>(
   delegate: ObserverLike<T>,
@@ -11,14 +15,14 @@ const createMergeObserver = <T>(
   },
 ) => {
   const observer = createDelegatingObserver(delegate);
-  
+
   addOnDisposedWithError(observer, delegate);
   addOnDisposedWithoutErrorTeardown(observer, () => {
     ctx.completedCount++;
     if (ctx.completedCount >= count) {
       dispose(delegate);
     }
-  })
+  });
   return observer;
 };
 

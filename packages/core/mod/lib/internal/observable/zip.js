@@ -6,9 +6,9 @@ import { runContinuation } from "../../scheduler.js";
 import { zipEnumerators } from "../enumerable/zip.js";
 import { YieldError } from "../scheduler/interfaces.js";
 import { fromEnumerator } from "./fromEnumerable.js";
+import { observe } from "./observable.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 import { using } from "./using.js";
-import { observe } from "./observable.js";
 class EnumeratorObserver extends AbstractDisposable {
     constructor() {
         super(...arguments);

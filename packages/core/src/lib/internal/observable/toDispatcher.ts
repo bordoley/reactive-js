@@ -1,4 +1,11 @@
-import { AbstractDisposable, dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, addTeardown, addDisposable } from "../../disposable";
+import {
+  AbstractDisposable,
+  dispose,
+  addOnDisposedWithError,
+  addOnDisposedWithoutErrorTeardown,
+  addTeardown,
+  addDisposable,
+} from "../../disposable";
 import { YieldableLike, schedule } from "../../scheduler";
 import { DispatcherLike, ObserverLike } from "./interfaces";
 
@@ -7,7 +14,10 @@ const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
     const { observer } = dispatcher;
     const continuationSubcription = schedule(observer, dispatcher.continuation);
     addOnDisposedWithError(continuationSubcription, observer);
-    addOnDisposedWithoutErrorTeardown(continuationSubcription, dispatcher.onContinuationDispose);
+    addOnDisposedWithoutErrorTeardown(
+      continuationSubcription,
+      dispatcher.onContinuationDispose,
+    );
   }
 };
 

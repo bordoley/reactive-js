@@ -7,15 +7,15 @@ import {
   addOnDisposedWithoutErrorTeardown,
 } from "../../disposable";
 import { pipe, Function1 } from "../../functions";
-import {  none } from "../../option";
+import { none } from "../../option";
 import { fromValue } from "./fromValue";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import { never } from "./never";
+import { observeWith } from "./observable";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
-import { observeWith } from "./observable";
 
 class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
   private readonly durationSubscription = createSerialDisposable();

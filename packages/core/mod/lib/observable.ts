@@ -37,7 +37,6 @@ export { throws } from "./internal/observable/throws.ts";
 export { using } from "./internal/observable/using.ts";
 export { observe, observeWith } from "./internal/observable/observable.ts";
 
-
 export { await_ } from "./internal/observable/await.ts";
 export { buffer } from "./internal/observable/buffer.ts";
 export { catchError } from "./internal/observable/catchError.ts";

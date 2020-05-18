@@ -1,16 +1,24 @@
-import { dispose, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError } from "../../disposable";
+import {
+  dispose,
+  addOnDisposedWithoutErrorTeardown,
+  addDisposableDisposeParentOnChildError,
+} from "../../disposable";
 import { pipe, Function2 } from "../../functions";
 import { Option } from "../../option";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer";
+import {
+  AbstractAutoDisposingDelegatingObserver,
+  assertObserverState,
+} from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
-class WithLatestFromObserver<TA, TB, T> extends AbstractAutoDisposingDelegatingObserver<
+class WithLatestFromObserver<
   TA,
+  TB,
   T
-> {
+> extends AbstractAutoDisposingDelegatingObserver<TA, T> {
   private otherLatest: Option<TB>;
   private hasLatest = false;
 
@@ -32,7 +40,7 @@ class WithLatestFromObserver<TA, TB, T> extends AbstractAutoDisposingDelegatingO
       onNotify(this.onNotify),
       subscribe(this),
     );
-   
+
     addOnDisposedWithoutErrorTeardown(otherSubscription, () => {
       if (!this.hasLatest) {
         dispose(this);

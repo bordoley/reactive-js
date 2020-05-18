@@ -1,9 +1,7 @@
 import fs from "fs";
 import { createServer as createHttp1Server } from "http";
 import { createSecureServer as createHttp2Server } from "http2";
-import {
-  dispose,
-} from "@reactive-js/core/lib/disposable";
+import { dispose } from "@reactive-js/core/lib/disposable";
 import {
   pipe,
   Function1,
@@ -66,6 +64,7 @@ import {
   encodeHttpClientRequestContent,
   encodeHttpResponseContent,
   HttpStandardHeader,
+  HttpExtensionHeader,
 } from "@reactive-js/http/lib/http";
 import {
   createHttpRequestListener,
@@ -73,7 +72,7 @@ import {
   createContentEncodingDecompressTransforms,
   createContentEncodingCompressTransforms,
 } from "@reactive-js/http/lib/node";
-import { HttpExtensionHeader } from "@reactive-js/http/lib/http";
+
 import db from "mime-db";
 import mime from "mime-types";
 

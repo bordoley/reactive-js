@@ -112,41 +112,38 @@ const tryDispatch = <TResource extends DisposableLike>(
   // the observer off the request queue
   // and mark the resource as in use
   const observer = resourceRequests.pop(key) as DispatcherLike<TResource>;
-  addTeardown(
-    observer,
-    () => {
-      inUseResources.remove(key, observer);
-      availableResources.push(key, resource);
+  addTeardown(observer, () => {
+    inUseResources.remove(key, observer);
+    availableResources.push(key, resource);
 
-      // Setup the timeout subscription
-      const timeoutSubscription = pipe(
-        fromValue({ delay: maxIdleTime })(none),
-        onNotify(_ => {
-          const resource = availableResources.pop(key);
-          if (isSome(resource)) {
-            dispose(resource);
+    // Setup the timeout subscription
+    const timeoutSubscription = pipe(
+      fromValue({ delay: maxIdleTime })(none),
+      onNotify(_ => {
+        const resource = availableResources.pop(key);
+        if (isSome(resource)) {
+          dispose(resource);
 
-            // Check the global queue for the next key
-            // awaiting a resource and dispatch it.
-            const resourceKey = globalResourceWaitQueue.pop();
-            if (isSome(resourceKey)) {
-              // FIXME: What happens if all requests for this
-              // resource are disposed. We should move on to the next but
-              // don't afaict.
-              tryDispatch(resourceManager, resourceKey);
-            }
+          // Check the global queue for the next key
+          // awaiting a resource and dispatch it.
+          const resourceKey = globalResourceWaitQueue.pop();
+          if (isSome(resourceKey)) {
+            // FIXME: What happens if all requests for this
+            // resource are disposed. We should move on to the next but
+            // don't afaict.
+            tryDispatch(resourceManager, resourceKey);
           }
-        }),
-        subscribe(scheduler),
-      );
-      addTeardown(timeoutSubscription, () => {
-        availableResourcesTimeouts.delete(resource);
+        }
       }),
+      subscribe(scheduler),
+    );
+    addTeardown(timeoutSubscription, () => {
+      availableResourcesTimeouts.delete(resource);
+    }),
       availableResourcesTimeouts.set(resource, timeoutSubscription);
 
-      tryDispatch(resourceManager, key);
-    },
-  );
+    tryDispatch(resourceManager, key);
+  });
 
   inUseResources.add(key, observer);
   dispatch(observer, resource);

@@ -48,7 +48,6 @@ const _fromObservable = <T>(observable: ObservableLike<T>): FlowableLike<T> => {
       modeObs,
       onNotify(onModeChange),
       subscribe(scheduler),
-      
     );
 
     bindDisposables(modeSubscription, pausableScheduler);

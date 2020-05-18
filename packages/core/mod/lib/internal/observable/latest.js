@@ -1,4 +1,4 @@
-import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from "../../disposable.js";
+import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, } from "../../disposable.js";
 import { none } from "../../option.js";
 import { createScheduledObservable, observe } from "./observable.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";

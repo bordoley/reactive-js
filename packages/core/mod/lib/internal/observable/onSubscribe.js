@@ -1,4 +1,4 @@
-import { dispose, addTeardown, addDisposableDisposeParentOnChildError } from "../../disposable.js";
+import { dispose, addTeardown, addDisposableDisposeParentOnChildError, } from "../../disposable.js";
 import { isSome, none } from "../../option.js";
 import { observe } from "./observable.js";
 class OnSubscribeObservable {

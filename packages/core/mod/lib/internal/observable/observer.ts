@@ -106,7 +106,7 @@ export const createDelegatingObserver = <T>(
   const observer = new DelegatingObserver(delegate);
   addDisposable(delegate, observer);
   return observer;
-}
+};
 
 export const createAutoDisposingDelegatingObserver = <T>(
   delegate: ObserverLike<T>,
@@ -114,4 +114,4 @@ export const createAutoDisposingDelegatingObserver = <T>(
   const observer = new DelegatingObserver(delegate);
   bindDisposables(delegate, observer);
   return observer;
-}
+};

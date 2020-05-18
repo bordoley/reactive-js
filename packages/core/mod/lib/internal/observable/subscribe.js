@@ -1,5 +1,5 @@
-import { AbstractObserver, assertObserverState } from "./observer.js";
 import { observe } from "./observable.js";
+import { AbstractObserver, assertObserverState } from "./observer.js";
 class DefaultObserver extends AbstractObserver {
     notify(_) {
         assertObserverState(this);

@@ -11,7 +11,7 @@ export const test = (name, f) => ({
     f: (ctx) => () => {
         ignore(ctx);
         f();
-    }
+    },
 });
 export const testAsync = (name, f) => ({
     type: 3,

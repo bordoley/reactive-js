@@ -1,4 +1,7 @@
-import { DisposableLike, addDisposableDisposeParentOnChildError } from "../../disposable";
+import {
+  DisposableLike,
+  addDisposableDisposeParentOnChildError,
+} from "../../disposable";
 import {
   Function2,
   Function1,

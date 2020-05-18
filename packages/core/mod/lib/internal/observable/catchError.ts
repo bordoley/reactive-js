@@ -1,10 +1,14 @@
-import { dispose, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from "../../disposable.ts";
+import {
+  dispose,
+  addOnDisposedWithoutError,
+  addOnDisposedWithErrorTeardown,
+} from "../../disposable.ts";
 import { Function1 } from "../../functions.ts";
 import { isSome, none } from "../../option.ts";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
-import { createDelegatingObserver } from "./observer.ts";
 import { observe } from "./observable.ts";
+import { createDelegatingObserver } from "./observer.ts";
 
 /**
  * Returns an `ObservableLike` which catches errors produced by the source and either continues with

@@ -44,7 +44,6 @@ const createRepeatObserver = <T>(
     }
   };
 
-
   addTeardown(observer, onDispose);
 
   return observer;

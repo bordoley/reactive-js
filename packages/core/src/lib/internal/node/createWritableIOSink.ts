@@ -1,5 +1,11 @@
 import { Writable } from "stream";
-import { DisposableValueLike, dispose, addTeardown, addDisposable, addDisposableDisposeParentOnChildError } from "../../disposable";
+import {
+  DisposableValueLike,
+  dispose,
+  addTeardown,
+  addDisposable,
+  addDisposableDisposeParentOnChildError,
+} from "../../disposable";
 import { FlowMode } from "../../flowable";
 import { pipe, bind, Factory } from "../../functions";
 import { IOEventType, IOEvent, IOSinkLike } from "../../io";
@@ -20,7 +26,6 @@ const createWritableEventsObservable = (
   writable: DisposableValueLike<Writable>,
 ) =>
   createObservable(dispatcher => {
-   
     const writableValue = writable.value;
 
     const onDrain = bind(dispatch, dispatcher, FlowMode.Resume);
@@ -67,7 +72,6 @@ const createWritableAndSetupEventSubscription = (
       }
     }),
     subscribe(scheduler),
-    
   );
 
   addDisposableDisposeParentOnChildError(writable, streamEventsSubscription);

@@ -1,3 +1,4 @@
+import { dispose } from "../../disposable";
 import { Factory, Updater } from "../../functions";
 import { YieldableLike } from "../scheduler/interfaces";
 import { ObservableLike, ObserverLike } from "./interfaces";
@@ -5,7 +6,6 @@ import {
   createScheduledObservable,
   createDelayedScheduledObservable,
 } from "./observable";
-import { dispose } from "../../disposable";
 
 /**
  * Generates an `ObservableLike` sequence from a generator function

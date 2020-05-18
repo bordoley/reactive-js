@@ -1,4 +1,8 @@
-import { dispose, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError } from "../../disposable";
+import {
+  dispose,
+  addOnDisposedWithoutErrorTeardown,
+  addDisposableDisposeParentOnChildError,
+} from "../../disposable";
 import { pipe, Function2 } from "../../functions";
 import { Option } from "../../option";
 import { ObserverLike, ObservableLike, ObservableOperator } from "./interfaces";
@@ -49,10 +53,10 @@ class ZipWithLatestFromObserver<TA, TB, T> extends AbstractObserver<TA> {
     );
 
     const disposeDelegate = () => {
-      if(this.isDisposed && otherSubscription.isDisposed) {
+      if (this.isDisposed && otherSubscription.isDisposed) {
         dispose(delegate);
       }
-    }
+    };
 
     addDisposableDisposeParentOnChildError(delegate, this);
     addDisposableDisposeParentOnChildError(delegate, otherSubscription);

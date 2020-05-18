@@ -1,5 +1,11 @@
 import { Readable } from "stream";
-import { DisposableValueLike, dispose, addDisposable, addTeardown, addDisposableDisposeParentOnChildError } from "../../disposable";
+import {
+  DisposableValueLike,
+  dispose,
+  addDisposable,
+  addTeardown,
+  addDisposableDisposeParentOnChildError,
+} from "../../disposable";
 import { FlowMode } from "../../flowable";
 import { pipe, compose, Factory } from "../../functions";
 import { next, complete, IOSourceLike } from "../../io";

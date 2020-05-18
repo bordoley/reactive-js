@@ -1,4 +1,9 @@
-import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, Exception } from "../../disposable";
+import {
+  dispose,
+  addOnDisposedWithError,
+  addOnDisposedWithoutErrorTeardown,
+  Exception,
+} from "../../disposable";
 import { Factory } from "../../functions";
 import { none, Option } from "../../option";
 import { ObservableOperator, ObserverLike } from "./interfaces";
@@ -26,7 +31,7 @@ class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
         }
 
         error = { cause };
-      } 
+      }
 
       dispose(delegate, error);
     });

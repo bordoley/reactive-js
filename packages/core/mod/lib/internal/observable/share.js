@@ -1,8 +1,8 @@
 import { dispose, addTeardown } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { none } from "../../option.js";
-import { publish } from "./publish.js";
 import { observe } from "./observable.js";
+import { publish } from "./publish.js";
 class SharedObservable {
     constructor(source, scheduler, replay) {
         this.source = source;

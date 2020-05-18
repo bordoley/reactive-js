@@ -1,4 +1,8 @@
-import { AbstractDisposable, addTeardown, addDisposable } from "../../disposable";
+import {
+  AbstractDisposable,
+  addTeardown,
+  addDisposable,
+} from "../../disposable";
 import { dispatch } from "./dispatcher";
 import { SubjectLike, ObserverLike, DispatcherLike } from "./interfaces";
 import { toDispatcher } from "./toDispatcher";

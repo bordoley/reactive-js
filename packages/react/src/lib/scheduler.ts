@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import {
+  addDisposable,
   createDisposable,
   dispose,
 } from "@reactive-js/core/lib/disposable";
@@ -23,7 +24,6 @@ import {
   unstable_shouldYield,
   unstable_UserBlockingPriority,
 } from "scheduler";
-import { addDisposable } from "@reactive-js/core/lib/disposable";
 
 const getScheduler = (priority: number) => {
   switch (priority) {
@@ -63,7 +63,7 @@ const priorityScheduler = {
 
     const callback = () => {
       dispose(callbackNodeDisposable);
-      
+
       priorityScheduler.inContinuation = true;
       runContinuation(scheduler, continuation);
       priorityScheduler.inContinuation = false;

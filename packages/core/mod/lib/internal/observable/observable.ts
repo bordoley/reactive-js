@@ -5,10 +5,7 @@ import { ObservableLike, ObserverLike } from "./interfaces.ts";
 
 class ScheduledObservable<T> implements ObservableLike<T> {
   constructor(
-    private readonly f: Function1<
-      ObserverLike<T>,
-      SideEffect1<YieldableLike>
-    >,
+    private readonly f: Function1<ObserverLike<T>, SideEffect1<YieldableLike>>,
     readonly isSynchronous: boolean,
     readonly delay: number,
   ) {}
@@ -36,6 +33,6 @@ export const observe = <T>(
 ) => observable.observe(observer);
 
 export const observeWith = <T>(
-  observer: ObserverLike<T>
+  observer: ObserverLike<T>,
 ): SideEffect1<ObservableLike<T>> => observable =>
   observe(observable, observer);
