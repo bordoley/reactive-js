@@ -1,6 +1,6 @@
 import { AbstractDisposable, dispose, addDisposable, addTeardown, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, } from "../../disposable.js";
 import { current } from "../../enumerable.js";
-import { returns } from "../../functions.js";
+import { returns, pipe, defer } from "../../functions.js";
 import { none, isSome, isNone } from "../../option.js";
 import { runContinuation } from "../../scheduler.js";
 import { zipEnumerators } from "../enumerable/zip.js";
@@ -9,6 +9,7 @@ import { fromEnumerator } from "./fromEnumerable.js";
 import { observe } from "./observable.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 import { using } from "./using.js";
+import { map, everySatisfy } from "../../readonlyArray.js";
 class EnumeratorObserver extends AbstractDisposable {
     constructor() {
         super(...arguments);
@@ -121,7 +122,7 @@ class ZipObserver extends AbstractDelegatingObserver {
                 this.current = next;
             }
             if (shouldEmit(enumerators)) {
-                const next = enumerators.map(current);
+                const next = pipe(enumerators, map(current));
                 const shouldCompleteResult = shouldComplete(enumerators);
                 this.delegate.notify(next);
                 if (shouldCompleteResult) {
@@ -137,13 +138,13 @@ class ZipObserver extends AbstractDelegatingObserver {
 class ZipObservable {
     constructor(observables) {
         this.observables = observables;
-        this.isSynchronous = observables.every(obs => obs.isSynchronous);
+        this.isSynchronous = pipe(observables, everySatisfy(obs => obs.isSynchronous));
     }
     observe(observer) {
         const observables = this.observables;
         const count = observables.length;
         if (this.isSynchronous) {
-            const observable = using(_ => this.observables.map(subscribeInteractive), (...enumerators) => fromEnumerator()(returns(zipEnumerators(enumerators))));
+            const observable = using(defer(this.observables, map(subscribeInteractive)), (...enumerators) => pipe(enumerators, zipEnumerators, returns, fromEnumerator()));
             observe(observable, observer);
         }
         else {

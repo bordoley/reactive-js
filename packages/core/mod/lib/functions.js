@@ -30,11 +30,12 @@ export const sum = (...args) => {
     return acc;
 };
 export const arrayEquality = (valuesEquality = strictEquality) => (a, b) => a.length === b.length && a.every((v, i) => valuesEquality(b[i], v));
+export const updaterReducer = (acc, updater) => updater(acc);
 export function pipe(source, ...operators) {
-    return operators.reduce((acc, next) => next(acc), source);
+    return operators.reduce(updaterReducer, source);
 }
 export function compose(...operators) {
-    return source => operators.reduce((acc, next) => next(acc), source);
+    return source => operators.reduce(updaterReducer, source);
 }
 export const composeWith = (op2) => op1 => compose(op1, op2);
 export function defer(source, ...operators) {

@@ -1,3 +1,4 @@
+import { pipe, returns } from "../../../../../core/mod/lib/functions.js";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.js";
 import { writeHttpMessageHeaders, encodeHttpMessageWithUtf8, toIOSourceHttpMessage, decodeHttpMessageWithCharset, } from "./HttpMessage.js";
 import { parseCacheControlFromHeaders, parseCacheDirectiveOrThrow, } from "./cacheDirective.js";
@@ -6,10 +7,11 @@ import { getHeaderValue, filterHeaders, } from "./httpHeaders.js";
 import { parseHttpPreferencesFromHeaders, createHttpPreferences, } from "./httpPreferences.js";
 import { writeHttpRequestPreconditionsHeaders, parseHttpRequestPreconditionsFromHeaders, createHttpRequestPreconditions, } from "./httpRequestPreconditions.js";
 import { createHttpResponse } from "./httpResponse.js";
+import { map, reduceRight } from "../../../../../core/mod/lib/readonlyArray.js";
 export const createHttpRequest = ({ body, cacheControl, contentInfo, expectContinue = false, headers = {}, httpVersionMajor = 1, httpVersionMinor = 1, method, preconditions, preferences, uri, ...rest }) => ({
     ...rest,
     body,
-    cacheControl: (cacheControl !== null && cacheControl !== void 0 ? cacheControl : []).map(cc => typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc),
+    cacheControl: pipe(cacheControl !== null && cacheControl !== void 0 ? cacheControl : [], map(cc => typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc)),
     contentInfo: isSome(contentInfo)
         ? createHttpContentInfo(contentInfo)
         : parseHttpContentInfoFromHeaders(headers),
@@ -120,8 +122,7 @@ export const toIOSourceHttpRequest = (req) => toIOSourceHttpMessage(req);
 export const decodeHttpRequestContent = (decoderProvider) => req => {
     const { body, contentInfo, ...rest } = req;
     if (isSome(contentInfo) && contentInfo.contentEncodings.length > 0) {
-        const newBody = contentInfo.contentEncodings
-            .map(encoding => {
+        const newBody = pipe(contentInfo.contentEncodings, map(encoding => {
             const decoder = decoderProvider[encoding];
             if (isNone(decoder)) {
                 throw createHttpResponse({
@@ -130,8 +131,7 @@ export const decodeHttpRequestContent = (decoderProvider) => req => {
                 });
             }
             return decoder;
-        })
-            .reduceRight((acc, decoder) => decoder(acc), body);
+        }), reduceRight((acc, decoder) => decoder(acc), returns(body)));
         return {
             ...rest,
             contentInfo: {

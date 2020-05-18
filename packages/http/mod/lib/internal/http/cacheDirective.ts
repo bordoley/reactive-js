@@ -15,6 +15,7 @@ import {
 } from "./httpGrammar.ts";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders.ts";
 import { CacheDirective, HttpHeaders } from "./interfaces.ts";
+import { map, join } from "../../../../../core/mod/lib/readonlyArray.ts";
 
 const pOptionalEquals = optional(pEquals);
 
@@ -59,7 +60,7 @@ export const writeHttpCacheControlHeader = (
   if (cacheControl.length > 0) {
     writeHeader(
       HttpStandardHeader.CacheControl,
-      cacheControl.map(cacheDirectiveToString).join(","),
+      pipe(cacheControl, map(cacheDirectiveToString), join(",")),
     );
   }
 };

@@ -1,5 +1,7 @@
 import { pForwardSlash, parseWith, parseWithOrThrow, } from "../../../../../core/mod/lib/internal/parserCombinators.js";
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar.js";
+import { fromObject, map, join } from "../../../../../core/mod/lib/readonlyArray.js";
+import { pipe } from "../../../../../core/mod/lib/functions.js";
 export const pMediaType = charStream => {
     const type = pToken(charStream);
     pForwardSlash(charStream);
@@ -13,12 +15,7 @@ export const pMediaType = charStream => {
 };
 export const parseMediaType = parseWith(pMediaType);
 export const parseMediaTypeOrThrow = parseWithOrThrow(pMediaType);
-export const mediaTypeToString = ({ type, subtype, params, }) => {
-    const stringParams = Object.entries(params)
-        .map(([k, v]) => `${k}=${toTokenOrQuotedString(v)}`)
-        .join("; ");
-    return `${type}/${subtype}${stringParams.length > 0 ? ";" + stringParams : ""}`;
-};
+export const mediaTypeToString = ({ type, subtype, params, }) => pipe(params, fromObject(), map(([k, v]) => `${k}=${toTokenOrQuotedString(v)}`), join("; "), stringParams => `${type}/${subtype}${stringParams.length > 0 ? ";" + stringParams : ""}`);
 const compressionBlacklist = [
     "text/event-stream",
 ];

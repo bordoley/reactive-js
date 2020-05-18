@@ -6,6 +6,8 @@ import {
 } from "@reactive-js/core/lib/internal/parserCombinators";
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar";
 import { MediaType } from "./interfaces";
+import { fromObject, map, join } from "@reactive-js/core/lib/readonlyArray";
+import { pipe } from "@reactive-js/core/lib/functions";
 
 export const pMediaType: Parser<MediaType> = charStream => {
   const type = pToken(charStream);
@@ -27,14 +29,15 @@ export const mediaTypeToString = ({
   type,
   subtype,
   params,
-}: MediaType): string => {
-  const stringParams = Object.entries(params)
-    .map(([k, v]) => `${k}=${toTokenOrQuotedString(v)}`)
-    .join("; ");
-  return `${type}/${subtype}${
-    stringParams.length > 0 ? ";" + stringParams : ""
-  }`;
-};
+}: MediaType): string => pipe(
+    params,
+    fromObject(),
+    map(([k, v]) => `${k}=${toTokenOrQuotedString(v)}`),
+    join("; "),
+    stringParams => `${type}/${subtype}${
+      stringParams.length > 0 ? ";" + stringParams : ""
+    }`
+  );
 
 const compressionBlacklist = [
   "text/event-stream", // Browser's don't seem to support compressed event streams

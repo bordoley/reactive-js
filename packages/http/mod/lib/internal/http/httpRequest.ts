@@ -1,4 +1,4 @@
-import { Function1, SideEffect2 } from "../../../../../core/mod/lib/functions.ts";
+import { Function1, SideEffect2, pipe, returns } from "../../../../../core/mod/lib/functions.ts";
 import { IOSourceLike, IOSourceOperator } from "../../../../../core/mod/lib/io.ts";
 import { isNone, isSome, none } from "../../../../../core/mod/lib/option.ts";
 import {
@@ -48,6 +48,7 @@ import {
   MediaRange,
   MediaType,
 } from "./interfaces.ts";
+import { map, reduceRight } from "../../../../../core/mod/lib/readonlyArray.ts";
 
 declare class URL implements URILike {
   readonly hash: string;
@@ -107,9 +108,9 @@ export const createHttpRequest = <T>({
 }): HttpRequest<T> => ({
   ...rest,
   body,
-  cacheControl: (cacheControl ?? []).map(cc =>
+  cacheControl: pipe(cacheControl ?? [], map(cc =>
     typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc,
-  ),
+  )),
   contentInfo: isSome(contentInfo)
     ? createHttpContentInfo(contentInfo)
     : parseHttpContentInfoFromHeaders(headers),
@@ -315,8 +316,9 @@ export const decodeHttpRequestContent = (decoderProvider: {
   const { body, contentInfo, ...rest } = req;
 
   if (isSome(contentInfo) && contentInfo.contentEncodings.length > 0) {
-    const newBody = contentInfo.contentEncodings
-      .map(encoding => {
+    const newBody = pipe(
+      contentInfo.contentEncodings,
+      map(encoding => {
         const decoder = decoderProvider[encoding];
         if (isNone(decoder)) {
           throw createHttpResponse({
@@ -325,8 +327,9 @@ export const decodeHttpRequestContent = (decoderProvider: {
           });
         }
         return decoder;
-      })
-      .reduceRight((acc, decoder) => decoder(acc), body);
+      }),
+      reduceRight((acc: IOSourceLike<Uint8Array>, decoder) => decoder(acc), returns(body)),
+    );
 
     return {
       ...rest,

@@ -1,4 +1,5 @@
-import { SideEffect2 } from "../../../../../core/mod/lib/functions.ts";
+import { SideEffect2, pipe } from "../../../../../core/mod/lib/functions.ts";
+import { map } from "../../../../../core/mod/lib/readonlyArray.ts";
 import { Option } from "../../../../../core/mod/lib/option.ts";
 import { HttpHeaders } from "./interfaces.ts";
 
@@ -62,27 +63,30 @@ export const enum HttpExtensionHeader {
   XMethodOverride = "X-Method-Override",
 }
 
-const bannedHeaders = [
-  HttpStandardHeader.Accept,
-  HttpStandardHeader.AcceptCharset,
-  HttpStandardHeader.AcceptEncoding,
-  HttpStandardHeader.AcceptLanguage,
-  HttpStandardHeader.CacheControl,
-  HttpStandardHeader.ContentEncoding,
-  HttpStandardHeader.ContentLength,
-  HttpStandardHeader.ContentType,
-  HttpStandardHeader.ETag,
-  HttpStandardHeader.Expect,
-  HttpStandardHeader.Expires,
-  HttpStandardHeader.IfMatch,
-  HttpStandardHeader.IfNoneMatch,
-  HttpStandardHeader.IfModifiedSince,
-  HttpStandardHeader.IfUnmodifiedSince,
-  HttpStandardHeader.IfRange,
-  HttpStandardHeader.LastModified,
-  HttpStandardHeader.TransferEncoding,
-  HttpStandardHeader.Vary,
-].map(s => s.toLowerCase());
+const bannedHeaders = pipe(
+  [
+    HttpStandardHeader.Accept,
+    HttpStandardHeader.AcceptCharset,
+    HttpStandardHeader.AcceptEncoding,
+    HttpStandardHeader.AcceptLanguage,
+    HttpStandardHeader.CacheControl,
+    HttpStandardHeader.ContentEncoding,
+    HttpStandardHeader.ContentLength,
+    HttpStandardHeader.ContentType,
+    HttpStandardHeader.ETag,
+    HttpStandardHeader.Expect,
+    HttpStandardHeader.Expires,
+    HttpStandardHeader.IfMatch,
+    HttpStandardHeader.IfNoneMatch,
+    HttpStandardHeader.IfModifiedSince,
+    HttpStandardHeader.IfUnmodifiedSince,
+    HttpStandardHeader.IfRange,
+    HttpStandardHeader.LastModified,
+    HttpStandardHeader.TransferEncoding,
+    HttpStandardHeader.Vary,
+  ],
+  map(s => s.toLowerCase()),
+);
 
 export function getHeaderValue(
   headers: HttpHeaders,

@@ -1,4 +1,6 @@
-const bannedHeaders = [
+import { pipe } from "../../../../../core/mod/lib/functions.js";
+import { map } from "../../../../../core/mod/lib/readonlyArray.js";
+const bannedHeaders = pipe([
     "Accept",
     "Accept-Charset",
     "Accept-Encoding",
@@ -18,7 +20,7 @@ const bannedHeaders = [
     "Last-Modified",
     "Transfer-Encoding",
     "Vary",
-].map(s => s.toLowerCase());
+], map(s => s.toLowerCase()));
 export function getHeaderValue(headers, key) {
     return headers[key.toLowerCase()];
 }

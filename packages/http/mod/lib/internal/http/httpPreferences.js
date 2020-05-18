@@ -4,6 +4,7 @@ import { isSome, none } from "../../../../../core/mod/lib/option.js";
 import { pToken, pParams, httpList } from "./httpGrammar.js";
 import { getHeaderValue } from "./httpHeaders.js";
 import { pMediaType, parseMediaTypeOrThrow } from "./mediaType.js";
+import { map as mapReadonlyArray } from "../../../../../core/mod/lib/readonlyArray.js";
 const weightedParamComparator = (a, b) => {
     var _a, _b;
     const qA = ((_a = Number.parseFloat(a["q"])) !== null && _a !== void 0 ? _a : 1) * 1000;
@@ -17,13 +18,13 @@ const mediaTypeToMediaRange = ({ type, subtype }) => ({
 });
 const parseAccept = pipe(pMediaType, httpList, map(mediaTypes => {
     mediaTypes.sort(mediaRangeCompare);
-    return mediaTypes.map(mediaTypeToMediaRange);
+    return pipe(mediaTypes, mapReadonlyArray(mediaTypeToMediaRange));
 }), parseWith);
 const weightedTokenComparator = ([, a], [, b]) => weightedParamComparator(a, b);
 const weightedTokenToToken = ([token]) => token;
 const parseWeightedToken = pipe(pToken, concatWith(pParams), httpList, map(values => {
     values.sort(weightedTokenComparator);
-    return values.map(weightedTokenToToken);
+    return pipe(values, mapReadonlyArray(weightedTokenToToken));
 }), parseWith);
 const parseWeightedTokenHeader = (headers, header) => {
     var _a;
@@ -64,7 +65,7 @@ export const createHttpPreferences = ({ acceptedCharsets = [], acceptedEncodings
         acceptedCharsets,
         acceptedEncodings,
         acceptedLanguages,
-        acceptedMediaRanges: acceptedMediaRanges.map(mr => typeof mr === "string" ? parseMediaTypeOrThrow(mr) : mr),
+        acceptedMediaRanges: pipe(acceptedMediaRanges, mapReadonlyArray(mr => typeof mr === "string" ? parseMediaTypeOrThrow(mr) : mr)),
     };
 };
 const writeWeightedTokenHeader = (header, values, writeHeader) => {
@@ -90,6 +91,6 @@ export const writeHttpPreferenceHeaders = (preferences, writeHeader) => {
     writeWeightedTokenHeader("Accept-Charset", acceptedCharsets, writeHeader);
     writeWeightedTokenHeader("Accept-Encoding", acceptedEncodings, writeHeader);
     writeWeightedTokenHeader("Accept-Language", acceptedLanguages, writeHeader);
-    const tokenizedMediaRanges = acceptedMediaRanges.map(({ type, subtype }) => `${type}/${subtype}`);
+    const tokenizedMediaRanges = pipe(acceptedMediaRanges, mapReadonlyArray(({ type, subtype }) => `${type}/${subtype}`));
     writeWeightedTokenHeader("Accept", tokenizedMediaRanges, writeHeader);
 };

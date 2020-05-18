@@ -15,6 +15,7 @@ import {
 } from "./httpGrammar";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders";
 import { CacheDirective, HttpHeaders } from "./interfaces";
+import { map, join } from "@reactive-js/core/lib/readonlyArray";
 
 const pOptionalEquals = optional(pEquals);
 
@@ -59,7 +60,7 @@ export const writeHttpCacheControlHeader = (
   if (cacheControl.length > 0) {
     writeHeader(
       HttpStandardHeader.CacheControl,
-      cacheControl.map(cacheDirectiveToString).join(","),
+      pipe(cacheControl, map(cacheDirectiveToString), join(",")),
     );
   }
 };

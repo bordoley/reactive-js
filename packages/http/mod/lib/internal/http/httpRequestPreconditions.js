@@ -5,9 +5,10 @@ import { entityTagToString, pETag, parseETag, parseETagOrThrow, } from "./entity
 import { httpDateTimeToString, parseHttpDateTime } from "./httpDateTime.js";
 import { httpList } from "./httpGrammar.js";
 import { getHeaderValue } from "./httpHeaders.js";
+import { join, map } from "../../../../../core/mod/lib/readonlyArray.js";
 const writeEtagPreferenceHeader = (header, value, writeHeader) => {
     if (isSome(value)) {
-        writeHeader(header, Array.isArray(value) ? value.map(entityTagToString).join(",") : "*");
+        writeHeader(header, Array.isArray(value) ? pipe(value, map(entityTagToString), join(",")) : "*");
     }
 };
 const writeDateHeader = (header, value, writeHeader) => {
@@ -74,7 +75,7 @@ export const createHttpRequestPreconditions = ({ ifMatch, ifModifiedSince, ifNon
     }
     return {
         ifMatch: Array.isArray(ifMatch)
-            ? ifMatch.map(etag => typeof etag === "string" ? parseETagOrThrow(etag) : etag)
+            ? pipe(ifMatch, map(etag => typeof etag === "string" ? parseETagOrThrow(etag) : etag))
             : ifMatch,
         ifModifiedSince: typeof ifModifiedSince === "string"
             ? parseHttpDateTime(ifModifiedSince)
@@ -82,7 +83,7 @@ export const createHttpRequestPreconditions = ({ ifMatch, ifModifiedSince, ifNon
                 ? ifModifiedSince.getTime()
                 : ifModifiedSince,
         ifNoneMatch: Array.isArray(ifNoneMatch)
-            ? ifNoneMatch.map(etag => typeof etag === "string" ? parseETagOrThrow(etag) : etag)
+            ? pipe(ifNoneMatch, map(etag => typeof etag === "string" ? parseETagOrThrow(etag) : etag))
             : ifNoneMatch,
         ifUnmodifiedSince: typeof ifUnmodifiedSince === "string"
             ? parseHttpDateTime(ifUnmodifiedSince)

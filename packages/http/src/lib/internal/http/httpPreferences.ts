@@ -15,6 +15,7 @@ import {
   HttpContentEncoding,
 } from "./interfaces";
 import { pMediaType, parseMediaTypeOrThrow } from "./mediaType";
+import { map as mapReadonlyArray} from "@reactive-js/core/lib/readonlyArray"
 
 const weightedParamComparator = (
   a: {
@@ -44,7 +45,7 @@ const parseAccept = pipe(
   map(mediaTypes => {
     // Mutate to avoid allocations. Kinda evil.
     (mediaTypes as MediaType[]).sort(mediaRangeCompare);
-    return mediaTypes.map(mediaTypeToMediaRange) as readonly MediaRange[];
+    return pipe(mediaTypes, mapReadonlyArray(mediaTypeToMediaRange));
   }),
   parseWith,
 );
@@ -73,7 +74,7 @@ const parseWeightedToken = pipe(
   map(values => {
     // Mutate to avoid allocations. Kinda evil.
     (values as any[]).sort(weightedTokenComparator);
-    return values.map(weightedTokenToToken);
+    return pipe(values, mapReadonlyArray(weightedTokenToToken));
   }),
   parseWith,
 );
@@ -151,9 +152,9 @@ export const createHttpPreferences = ({
     acceptedCharsets,
     acceptedEncodings,
     acceptedLanguages,
-    acceptedMediaRanges: acceptedMediaRanges.map(mr =>
+    acceptedMediaRanges: pipe(acceptedMediaRanges, mapReadonlyArray(mr =>
       typeof mr === "string" ? parseMediaTypeOrThrow(mr) : mr,
-    ),
+    )),
   };
 };
 
@@ -210,9 +211,9 @@ export const writeHttpPreferenceHeaders = (
     writeHeader,
   );
 
-  const tokenizedMediaRanges = acceptedMediaRanges.map(
+  const tokenizedMediaRanges = pipe(acceptedMediaRanges, mapReadonlyArray(
     ({ type, subtype }) => `${type}/${subtype}`,
-  );
+  ));
   writeWeightedTokenHeader(
     HttpStandardHeader.Accept,
     tokenizedMediaRanges,

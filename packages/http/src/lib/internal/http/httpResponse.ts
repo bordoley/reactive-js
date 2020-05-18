@@ -1,4 +1,4 @@
-import { Function1, SideEffect2 } from "@reactive-js/core/lib/functions";
+import { Function1, SideEffect2, pipe } from "@reactive-js/core/lib/functions";
 import {
   IOSourceLike,
   IOSourceOperator,
@@ -44,6 +44,7 @@ import {
   MediaRange,
   MediaType,
 } from "./interfaces";
+import { everySatisfy, map } from "@reactive-js/core/lib/readonlyArray";
 
 declare class URL implements URILike {
   readonly hash: string;
@@ -97,9 +98,9 @@ export const createHttpResponse = <T>({
 }): HttpResponse<T> => ({
   ...rest,
   body,
-  cacheControl: (cacheControl ?? []).map(cc =>
+  cacheControl: pipe(cacheControl ?? [], map(cc =>
     typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc,
-  ),
+  )),
   contentInfo: isSome(contentInfo)
     ? createHttpContentInfo(contentInfo)
     : parseHttpContentInfoFromHeaders(headers),
@@ -278,10 +279,12 @@ export const decodeHttpResponseContent = (decoderProvider: {
   const { body, contentInfo, ...rest } = resp;
 
   if (isSome(contentInfo) && contentInfo.contentEncodings.length > 0) {
-    const decoders = contentInfo.contentEncodings.map(
+    const decoders = pipe(
+      contentInfo.contentEncodings,
+      map(
       encoding => decoderProvider[encoding],
-    );
-    const supportsDecodings = decoders.every(isSome);
+    ));
+    const supportsDecodings = pipe(decoders, everySatisfy(isSome));
 
     if (supportsDecodings) {
       return {

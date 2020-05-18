@@ -6,6 +6,7 @@ import {
   Equality,
   strictEquality,
   Updater,
+  updaterReducer,
 } from "./functions";
 import {
   onNotify,
@@ -26,8 +27,6 @@ import {
 /** @noInheritDoc */
 export interface StateStoreLike<T> extends StreamableLike<Updater<T>, T> {}
 
-const stateStoreReducer = <T>(state: T, action: Updater<T>) => action(state);
-
 /**
  * Returns a new `StateStoreLike` instance that stores state which can
  * be updated by notifying the instance with a `StateUpdater` that computes a
@@ -41,7 +40,7 @@ export const createStateStore = <T>(
   initialState: Factory<T>,
   equals?: Equality<T>,
 ): StateStoreLike<T> =>
-  createActionReducer(stateStoreReducer, initialState, equals);
+  createActionReducer(updaterReducer, initialState, equals);
 
 /**
  * Converts an `StreamableLike<T, T>` to an `StateStoreLike<T>`.

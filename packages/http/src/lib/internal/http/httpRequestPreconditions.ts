@@ -21,6 +21,7 @@ import {
   EntityTag,
   HttpDateTime,
 } from "./interfaces";
+import { join, map } from "@reactive-js/core/lib/readonlyArray";
 
 const writeEtagPreferenceHeader = (
   header: HttpStandardHeader,
@@ -30,7 +31,7 @@ const writeEtagPreferenceHeader = (
   if (isSome(value)) {
     writeHeader(
       header,
-      Array.isArray(value) ? value.map(entityTagToString).join(",") : "*",
+      Array.isArray(value) ? pipe(value, map(entityTagToString), join(",")) : "*",
     );
   }
 };
@@ -180,9 +181,9 @@ export const createHttpRequestPreconditions = ({
 
   return {
     ifMatch: Array.isArray(ifMatch)
-      ? ifMatch.map(etag =>
+      ? pipe(ifMatch, map(etag =>
           typeof etag === "string" ? parseETagOrThrow(etag) : etag,
-        ) as readonly EntityTag[]
+        ))
       : ifMatch as "*",
     ifModifiedSince:
       typeof ifModifiedSince === "string"
@@ -191,9 +192,9 @@ export const createHttpRequestPreconditions = ({
         ? ifModifiedSince.getTime()
         : ifModifiedSince,
     ifNoneMatch: Array.isArray(ifNoneMatch)
-      ? ifNoneMatch.map(etag =>
+      ? pipe(ifNoneMatch, map(etag =>
           typeof etag === "string" ? parseETagOrThrow(etag) : etag,
-        ) as readonly EntityTag[]
+        ))
       : ifNoneMatch as "*",
     ifUnmodifiedSince:
       typeof ifUnmodifiedSince === "string"
