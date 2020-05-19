@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.39](../README.md) › ["scheduler"](../modules/_scheduler_.md) › [PrioritySchedulerLike](_scheduler_.priorityschedulerlike.md)
+[@reactive-js/core - v0.0.40](../README.md) › ["scheduler"](../modules/_scheduler_.md) › [PrioritySchedulerLike](_scheduler_.priorityschedulerlike.md)
 
 # Interface: PrioritySchedulerLike
 

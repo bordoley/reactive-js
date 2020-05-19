@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.39](../README.md) › ["runnable"](_runnable_.md)
+[@reactive-js/core - v0.0.40](../README.md) › ["runnable"](_runnable_.md)
 
 # Module: "runnable"
 

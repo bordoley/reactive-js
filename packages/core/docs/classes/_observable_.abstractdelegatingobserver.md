@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.39](../README.md) › ["observable"](../modules/_observable_.md) › [AbstractDelegatingObserver](_observable_.abstractdelegatingobserver.md)
+[@reactive-js/core - v0.0.40](../README.md) › ["observable"](../modules/_observable_.md) › [AbstractDelegatingObserver](_observable_.abstractdelegatingobserver.md)
 
 # Class: AbstractDelegatingObserver <**TA, TB**>
 

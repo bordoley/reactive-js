@@ -1,4 +1,4 @@
-[@reactive-js/react - v0.0.39](../README.md) › ["hooks"](_hooks_.md)
+[@reactive-js/react - v0.0.40](../README.md) › ["hooks"](_hooks_.md)
 
 # Module: "hooks"
 
