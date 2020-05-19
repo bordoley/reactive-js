@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/http",
-  "version": "0.0.38",
+  "version": "0.0.39",
   "keywords": [
     "asynchronous",
     "data flow",
@@ -36,7 +36,7 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/core": "^0.0.38"
+    "@reactive-js/core": "^0.0.39"
   },
   "devDependencies": {
     "@types/node": "13.13.2",
