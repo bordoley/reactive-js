@@ -31,7 +31,7 @@
 * [fromObservable](_io_.md#const-fromobservable)
 * [fromValue](_io_.md#const-fromvalue)
 * [map](_io_.md#const-map)
-* [next](_io_.md#const-next)
+* [notify](_io_.md#const-notify)
 
 ## Type aliases
 
@@ -148,9 +148,9 @@ Name | Type |
 
 ___
 
-### `Const` next
+### `Const` notify
 
-▸ **next**<**T**>(`data`: T): *[IOEvent](_io_.md#ioevent)‹T›*
+▸ **notify**<**T**>(`data`: T): *[IOEvent](_io_.md#ioevent)‹T›*
 
 **Type parameters:**
 

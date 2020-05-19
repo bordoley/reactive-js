@@ -26,13 +26,13 @@ import { ObservableOperator } from "../observable/interfaces.ts";
 import { AsyncEnumerableLike } from "./interfaces.ts";
 
 export const enum ConsumeRequestType {
-  Continue = 1,
+  Notify = 1,
   Done = 2,
 }
 
 export type ConsumeRequest<TAcc> =
   | {
-      readonly type: ConsumeRequestType.Continue;
+      readonly type: ConsumeRequestType.Notify;
       readonly acc: TAcc;
     }
   | {
@@ -47,8 +47,8 @@ export type AsyncConsumer<T, TAcc> = Function2<
   ObservableLike<ConsumeRequest<TAcc>>
 >;
 
-export const continue_ = <TAcc>(acc: TAcc): ConsumeRequest<TAcc> => ({
-  type: ConsumeRequestType.Continue,
+export const notify = <TAcc>(acc: TAcc): ConsumeRequest<TAcc> => ({
+  type: ConsumeRequestType.Notify,
   acc,
 });
 
@@ -76,7 +76,7 @@ const consumeImpl = <TSrc, TAcc>(
         consumer(accFeedback),
         onNotify(ev => {
           switch (ev.type) {
-            case ConsumeRequestType.Continue:
+            case ConsumeRequestType.Notify:
               dispatch(accFeedback, ev.acc);
               dispatch(enumerator, none);
               break;

@@ -1,6 +1,6 @@
 import {
   done,
-  continue_,
+  notify,
   consume,
   consumeAsync,
   fromArray,
@@ -35,7 +35,7 @@ export const tests = describe(
 
     pipe(
       enumerable,
-      consume((acc, next) => continue_(acc + next), returns<number>(0)),
+      consume((acc, next) => notify(acc + next), returns<number>(0)),
       toRunnable(),
       last,
       expectEquals(21),
@@ -44,7 +44,7 @@ export const tests = describe(
     pipe(
       enumerable,
       consume(
-        (acc, next) => (acc > 0 ? done(acc + next) : continue_(acc + next)),
+        (acc, next) => (acc > 0 ? done(acc + next) : notify(acc + next)),
         returns<number>(0),
       ),
       toRunnable(),
@@ -62,7 +62,7 @@ export const tests = describe(
         fromIterable(),
         consumeAsync(
           (acc, next) =>
-            fromValue()(acc > 0 ? done(acc + next) : continue_(acc + next)),
+            fromValue()(acc > 0 ? done(acc + next) : notify(acc + next)),
           returns<number>(0),
         ),
         toRunnable(),
@@ -76,7 +76,7 @@ export const tests = describe(
         [1, 2, 3, 4, 5, 6],
         fromIterable(),
         consumeAsync(
-          (acc, next) => pipe(acc + next, continue_, fromValue()),
+          (acc, next) => pipe(acc + next, notify, fromValue()),
           returns<number>(0),
         ),
         toRunnable(),

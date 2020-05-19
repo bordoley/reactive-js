@@ -7,7 +7,7 @@
 ### Enumeration members
 
 * [Done](_io_.ioeventtype.md#done)
-* [Next](_io_.ioeventtype.md#next)
+* [Notify](_io_.ioeventtype.md#notify)
 
 ## Enumeration members
 
@@ -17,6 +17,6 @@
 
 ___
 
-###  Next
+###  Notify
 
-• **Next**: = 1
+• **Notify**: = 1

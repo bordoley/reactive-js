@@ -2,7 +2,7 @@ import { compose, pipe, flip, } from "../../functions.js";
 import { createSubject, map, onNotify, onSubscribe, switchAll, using, zipWithLatestFrom, takeFirst, dispatch, } from "../../observable.js";
 import { none } from "../../option.js";
 import { stream } from "../../streamable.js";
-export const continue_ = (acc) => ({
+export const notify = (acc) => ({
     type: 1,
     acc,
 });

@@ -90,7 +90,7 @@ export const tests = describe(
     scheduler.run();
 
     pipe(f, expectToHaveBeenCalledTimes(2));
-    pipe(f.calls[0][0].type, expectEquals(IOEventType.Next));
+    pipe(f.calls[0][0].type, expectEquals(IOEventType.Notify));
     pipe(f.calls[0][0].data, expectEquals(1));
     pipe(f.calls[1][0].type, expectEquals(IOEventType.Done));
     expectTrue(subscription.isDisposed);
