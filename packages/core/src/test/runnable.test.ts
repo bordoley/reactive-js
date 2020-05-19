@@ -28,7 +28,7 @@ import {
   everySatisfy,
 } from "../lib/runnable";
 import * as Runnable from "../lib/runnable";
-import { createMonadTests } from "./monadTests";
+import { createMonadTests } from "./monad.test";
 
 export const tests = describe(
   "runnable",

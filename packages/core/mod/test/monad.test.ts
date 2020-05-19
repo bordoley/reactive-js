@@ -13,7 +13,7 @@ import { toArray } from "../lib/runnable.ts";
 
 export const createMonadTests = (m: any) =>
   describe(
-    "monadic functions",
+    "monadic",
     test(
       "concat",
       defer(

@@ -179,7 +179,7 @@ export const createHttpClient = (
           requestBody,
           scan(
             ([increment, count], ev): [number, number] =>
-              ev.type === IOEventType.Next
+              ev.type === IOEventType.Notify
                 ? [ev.data.length, count + increment]
                 : [-1, count + increment],
 
