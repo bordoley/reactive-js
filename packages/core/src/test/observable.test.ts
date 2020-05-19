@@ -86,7 +86,7 @@ import {
   createHostScheduler,
   createVirtualTimeScheduler,
 } from "../lib/scheduler";
-import { createMonadTests } from "./monadTests";
+import { createMonadTests } from "./monad.test";
 
 const scheduler = createHostScheduler();
 

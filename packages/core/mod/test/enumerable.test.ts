@@ -10,7 +10,7 @@ import * as Enumerable from "../lib/enumerable.ts";
 import { defer } from "../lib/functions.ts";
 import { test, describe, expectArrayEquals } from "../lib/internal/testing.ts";
 import { toArray } from "../lib/runnable.ts";
-import { createMonadTests } from "./monadTests.ts";
+import { createMonadTests } from "./monad.test.ts";
 
 export const tests = describe(
   "enumerable",

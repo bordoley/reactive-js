@@ -43,6 +43,7 @@ export const map = (n: number) =>
     createMapPerfTest("enumerable", "../lib/enumerable"),
     createMapPerfTest("observable", "../lib/observable"),
     createMapPerfTest("runnable", "../lib/runnable"),
+    createMapPerfTest("sequence", "../lib/sequence"),
     benchmarkTest(
       "rx-js",
       async src => {
@@ -100,6 +101,7 @@ export const filterMapFusion = (n: number) =>
     createFilterMapFusionPerfTest("enumerable", "../lib/enumerable"),
     createFilterMapFusionPerfTest("observable", "../lib/observable"),
     createFilterMapFusionPerfTest("runnable", "../lib/runnable"),
+    createFilterMapFusionPerfTest("sequence", "../lib/sequence"),
     benchmarkTest(
       "rx-js",
       async src => {
@@ -159,7 +161,7 @@ export const filterMapReduce = (n: number) =>
     createFilterMapReducePerfTest("enumerable", "../lib/enumerable"),
     createFilterMapReducePerfTest("observable", "../lib/observable"),
     createFilterMapReducePerfTest("runnable", "../lib/runnable"),
-
+    createFilterMapReducePerfTest("sequence", "../lib/sequence"),
     benchmarkTest(
       "rx-js",
       async src => {
@@ -208,6 +210,7 @@ export const scanReduce = (n: number) =>
     createScanReducePerfTest("enumerable", "../lib/enumerable"),
     createScanReducePerfTest("observable", "../lib/observable"),
     createScanReducePerfTest("runnable", "../lib/runnable"),
+    createScanReducePerfTest("sequence", "../lib/sequence"),
     benchmarkTest(
       "rx-js",
       async src => {
