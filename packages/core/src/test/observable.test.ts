@@ -8,7 +8,6 @@ import {
   identity,
   incrementBy,
   sum,
-  bind,
   defer,
   ignore,
 } from "../lib/functions";
@@ -123,17 +122,17 @@ export const tests = describe(
     ),
     test(
       "when duration observable throws",
-      bind(
-        expectToThrow,
+      defer(
         defer(
           [1, 2, 3, 4],
           fromArray(),
           buffer({ duration: _ => throws()(() => new Error()) }),
           toRunnable(
-            bind(createVirtualTimeScheduler, { maxMicroTaskTicks: 1 }),
+            defer({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
           ),
           toArray(),
         ),
+        expectToThrow,
       ),
     ),
   ),
@@ -233,7 +232,7 @@ export const tests = describe(
           dispatch(dispatcher, 3);
           dispose(dispatcher);
         }),
-        toRunnable(bind(createVirtualTimeScheduler, { maxMicroTaskTicks: 1 })),
+        toRunnable(defer({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler)),
         toArray(),
         expectArrayEquals([1, 2, 3]),
       ),
@@ -345,8 +344,7 @@ export const tests = describe(
     ),
     test(
       "when one source throws",
-      bind(
-        expectToThrow,
+      defer(
         defer(
           [1, 4, 7],
           fromArray({ delay: 2 }),
@@ -354,6 +352,7 @@ export const tests = describe(
           toRunnable(),
           last,
         ),
+        expectToThrow,
       ),
     ),
   ),
@@ -362,8 +361,7 @@ export const tests = describe(
     "mergeMap",
     test(
       "when a mapped observable throws",
-      bind(
-        expectToThrow,
+      defer(
         defer(
           [
             fromArray({ delay: 1 })([1, 2, 3]),
@@ -376,12 +374,12 @@ export const tests = describe(
           toRunnable(),
           last,
         ),
+        expectToThrow,
       ),
     ),
     test(
       "when the map function throws",
-      bind(
-        expectToThrow,
+      defer(
         defer(
           [1, 2, 3, 4],
           fromArray(),
@@ -394,6 +392,7 @@ export const tests = describe(
           toRunnable(),
           last,
         ),
+        expectToThrow,
       ),
     ),
   ),
@@ -548,8 +547,7 @@ export const tests = describe(
 
     test(
       "when source throw",
-      bind(
-        expectToThrow,
+      defer(
         defer(
           () => new Error(),
           throws(),
@@ -558,6 +556,7 @@ export const tests = describe(
           toArray(),
           expectArrayEquals([]),
         ),
+        expectToThrow,
       ),
     ),
   ),
@@ -578,9 +577,9 @@ export const tests = describe(
     "takeLast",
     test(
       "when pipeline throws",
-      bind(
-        expectToThrow,
+      defer(
         defer(() => new Error(), throws(), takeLast(), toRunnable(), last),
+        expectToThrow,
       ),
     ),
   ),
@@ -624,8 +623,7 @@ export const tests = describe(
 
     test(
       "when duration observable throws",
-      bind(
-        expectToThrow,
+      defer( 
         defer(
           [1, 2, 3, 4, 5],
           fromArray({ delay: 1 }),
@@ -633,6 +631,7 @@ export const tests = describe(
           toRunnable(),
           last,
         ),
+        expectToThrow,
       ),
     ),
   ),
@@ -640,14 +639,14 @@ export const tests = describe(
     "throwIfEmpty",
     test(
       "when source is empty",
-      bind(
-        expectToThrow,
+      defer(
         defer(
           empty(),
           throwIfEmpty(() => undefined),
           toRunnable(),
           last,
         ),
+        expectToThrow,
       ),
     ),
 
@@ -669,9 +668,9 @@ export const tests = describe(
     "timeout",
     test(
       "throws when a timeout occurs",
-      bind(
-        expectToThrow,
+      defer(
         defer(1, fromValue({ delay: 2 }), timeout(1), toArray()),
+        expectToThrow,
       ),
     ),
 
@@ -809,8 +808,7 @@ export const tests = describe(
     ),
     test(
       "when source throws",
-      bind(
-        expectToThrow,
+      defer(
         defer(
           () => {
             throw new Error();
@@ -821,6 +819,7 @@ export const tests = describe(
           toRunnable(),
           toArray(),
         ),
+        expectToThrow,
       ),
     ),
   ),
@@ -842,21 +841,20 @@ export const tests = describe(
     "zipWithLatestFrom",
     test(
       "when source throws",
-      bind(
-        expectToThrow,
+      defer(
         defer(
           throws()(() => new Error()),
           zipWithLatestFrom(fromValue()(1), (_, b) => b),
           toRunnable(),
           last,
         ),
+        expectToThrow,
       ),
     ),
 
     test(
       "when other throws",
-      bind(
-        expectToThrow,
+      defer(
         defer(
           [1, 2, 3],
           fromArray({ delay: 1 }),
@@ -867,6 +865,7 @@ export const tests = describe(
           toRunnable(),
           last,
         ),
+        expectToThrow,
       ),
     ),
 

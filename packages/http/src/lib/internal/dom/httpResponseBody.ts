@@ -4,9 +4,9 @@ import {
   dispose,
   bindDisposables,
 } from "@reactive-js/core/lib/disposable";
-import { pipe, bind } from "@reactive-js/core/lib/functions";
+import { pipe, defer } from "@reactive-js/core/lib/functions";
 import {
-  dispatch,
+  dispatchTo,
   ObservableLike,
   fromValue,
   createObservable,
@@ -18,9 +18,9 @@ import { WebResponseBodyLike } from "./interfaces";
 const blobToString = (blob: Blob): ObservableLike<string> => {
   const onSubscribe = (dispatcher: DispatcherLike<string>) => {
     const reader = new FileReader();
-    reader.onload = bind(dispatch, dispatcher, reader.result as string);
+    reader.onload = defer(reader.result as string, dispatchTo(dispatcher));
 
-    reader.onerror = bind(dispose, dispatcher, { cause: reader.error });
+    reader.onerror = () => dispose(dispatcher, { cause: reader.error });
     reader.readAsText(blob);
   };
 
@@ -30,8 +30,8 @@ const blobToString = (blob: Blob): ObservableLike<string> => {
 const blobToArrayBuffer = (body: Blob): ObservableLike<ArrayBuffer> => {
   const onSubscribe = (dispatcher: DispatcherLike<ArrayBuffer>) => {
     const reader = new FileReader();
-    reader.onload = bind(dispatch, dispatcher, reader.result as ArrayBuffer);
-    reader.onerror = bind(dispose, dispatcher, { cause: reader.error });
+    reader.onload = defer(reader.result as ArrayBuffer, dispatchTo(dispatcher));
+    reader.onerror = () => dispose(dispatcher, { cause: reader.error });
     reader.readAsArrayBuffer(body);
   };
 

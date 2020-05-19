@@ -7,7 +7,7 @@ import {
   addDisposableDisposeParentOnChildError,
 } from "../../disposable";
 import { FlowMode } from "../../flowable";
-import { pipe, bind, Factory } from "../../functions";
+import { pipe, Factory, defer } from "../../functions";
 import { IOEventType, IOEvent, IOSinkLike } from "../../io";
 import {
   createObservable,
@@ -19,6 +19,7 @@ import {
 } from "../../observable";
 import { SchedulerLike } from "../../scheduler";
 import { createStreamable } from "../../streamable";
+import { dispatchTo } from "../../observable";
 
 const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
 
@@ -28,13 +29,13 @@ const createWritableEventsObservable = (
   createObservable(dispatcher => {
     const writableValue = writable.value;
 
-    const onDrain = bind(dispatch, dispatcher, FlowMode.Resume);
+    const onDrain = defer(FlowMode.Resume, dispatchTo(dispatcher));
     writableValue.on("drain", onDrain);
 
-    const onFinish = bind(dispose, dispatcher);
+    const onFinish = defer(dispatcher, dispose);
     writableValue.on("finish", onFinish);
 
-    const onPause = bind(dispatch, dispatcher, FlowMode.Pause);
+    const onPause = defer(FlowMode.Pause, dispatchTo(dispatcher));
     writableValue.on(NODE_JS_PAUSE_EVENT, onPause);
 
     addDisposable(writable, dispatcher);

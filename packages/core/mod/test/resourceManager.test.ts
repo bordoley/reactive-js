@@ -1,5 +1,5 @@
 import { createDisposableValue, disposed, dispose } from "../lib/disposable.ts";
-import { pipe, ignore, bind } from "../lib/functions.ts";
+import { pipe, ignore, defer } from "../lib/functions.ts";
 import { createResourceManager } from "../lib/internal/resourceManager.ts";
 import { test, describe } from "../lib/internal/testing.ts";
 import { onNotify, subscribe, fromArray } from "../lib/observable.ts";
@@ -120,7 +120,7 @@ export const tests = describe(
         ignore,
         ignore,
         ignore,
-        bind(dispose, rm),
+        defer(rm, dispose),
       ],
       fromArray({ delay: 1 }),
       onNotify(lib => lib()),

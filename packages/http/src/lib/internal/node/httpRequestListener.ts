@@ -5,7 +5,7 @@ import {
   addDisposable,
 } from "@reactive-js/core/lib/disposable";
 import {
-  bind,
+  defer,
   pipe,
   returns,
   Function1,
@@ -93,7 +93,7 @@ export const createHttpRequestListener = (
     const responseBody = createWritableIOSink(returns(response));
 
     return pipe(
-      bind(parseHttpRequestFromHeaders, {
+      defer({
         method: method as HttpMethod,
         path,
         headers: headers as HttpHeaders,
@@ -101,7 +101,7 @@ export const createHttpRequestListener = (
         httpVersionMinor,
         isTransportSecure,
         body: requestBody,
-      }),
+      }, parseHttpRequestFromHeaders),
       compute(),
       await_(handler),
       onNotify(writeResponseMessage(response.value)),

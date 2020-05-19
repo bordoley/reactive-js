@@ -1,6 +1,6 @@
 import { dispose } from "../lib/disposable";
 import { empty, fromValue, FlowMode, fromObservable } from "../lib/flowable";
-import { increment, pipe, returns, bind } from "../lib/functions";
+import { increment, pipe, returns, defer } from "../lib/functions";
 import {
   test,
   describe,
@@ -9,7 +9,7 @@ import {
   mockFn,
   expectToHaveBeenCalledTimes,
 } from "../lib/internal/testing";
-import { onNotify, subscribe, generate, dispatch } from "../lib/observable";
+import { onNotify, subscribe, generate, dispatch, dispatchTo } from "../lib/observable";
 import { createVirtualTimeScheduler, schedule } from "../lib/scheduler";
 import { stream } from "../lib/streamable";
 
@@ -40,13 +40,13 @@ export const tests = describe(
 
     dispatch(generateStream, FlowMode.Resume);
 
-    schedule(scheduler, bind(dispatch, generateStream, FlowMode.Pause), {
+    schedule(scheduler, defer(FlowMode.Pause, dispatchTo(generateStream)), {
       delay: 2,
     });
-    schedule(scheduler, bind(dispatch, generateStream, FlowMode.Resume), {
+    schedule(scheduler, defer(FlowMode.Resume, dispatchTo(generateStream)), {
       delay: 4,
     });
-    schedule(scheduler, bind(dispose, generateStream), { delay: 5 });
+    schedule(scheduler, defer(generateStream, dispose), { delay: 5 });
 
     const f = mockFn();
     const subscription = pipe(

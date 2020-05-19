@@ -1,5 +1,5 @@
 import { dispose, addTeardown } from "../../../../../core/mod/lib/disposable.js";
-import { bind, pipe } from "../../../../../core/mod/lib/functions.js";
+import { defer, pipe } from "../../../../../core/mod/lib/functions.js";
 import { dispatch, fromPromise, publish, fromValue, concat, map, using, switchMap, createObservable, } from "../../../../../core/mod/lib/observable.js";
 import { isSome } from "../../../../../core/mod/lib/option.js";
 import { httpRequestToUntypedHeaders, parseHttpResponseFromHeaders, } from "../../http.js";
@@ -58,7 +58,7 @@ export const sendHttpRequestUsingFetch = request => {
             dispose(dispatcher, { cause });
         }
     });
-    const mapResponseBody = switchMap((response) => using(scheduler => pipe(bind(loadBodyContent, response), fromPromise, publish(scheduler, 1), body => new HttpResponseBodyImpl(body)), body => fromValue()({
+    const mapResponseBody = switchMap((response) => using(scheduler => pipe(defer(response, loadBodyContent), fromPromise, publish(scheduler, 1), body => new HttpResponseBodyImpl(body)), body => fromValue()({
         ...response,
         body,
     })));

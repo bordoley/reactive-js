@@ -4,7 +4,7 @@ import {
   EnumeratorLike,
   enumerate,
 } from "../enumerable";
-import { bind, pipe } from "../functions";
+import { defer, pipe } from "../functions";
 import { KeyedCollection } from "./collections";
 
 function* iterateSetMultimapValues<K, V>(multimap: SetMultimap<K, V>) {
@@ -40,7 +40,7 @@ class SetMultimap<K, V> implements SetMultimapLike<K, V> {
   readonly keys: EnumerableLike<K> = fromIterator<K>()(() => this.map.keys());
   readonly map: Map<K, Set<V>> = new Map();
   readonly values: EnumerableLike<V> = fromIterator<V>()(
-    bind(iterateSetMultimapValues, this),
+    defer(this, iterateSetMultimapValues),
   );
 
   add(key: K, value: V) {
@@ -62,7 +62,7 @@ class SetMultimap<K, V> implements SetMultimapLike<K, V> {
 
   enumerate(): EnumeratorLike<[K, V]> {
     return pipe(
-      bind(iterateKeyedQueueKeyValuePairs, this),
+      defer(this, iterateKeyedQueueKeyValuePairs),
       fromIterator(),
       enumerate,
     );

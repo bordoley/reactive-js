@@ -1,5 +1,5 @@
 import { dispose, addTeardown } from "../../../../../core/mod/lib/disposable.ts";
-import { bind, pipe } from "../../../../../core/mod/lib/functions.ts";
+import { defer, pipe } from "../../../../../core/mod/lib/functions.ts";
 import {
   dispatch,
   fromPromise,
@@ -114,7 +114,7 @@ export const sendHttpRequestUsingFetch: HttpClient<
       using(
         scheduler =>
           pipe(
-            bind(loadBodyContent, response),
+            defer(response, loadBodyContent),
             fromPromise,
             publish(scheduler, 1),
             body => new HttpResponseBodyImpl(body),

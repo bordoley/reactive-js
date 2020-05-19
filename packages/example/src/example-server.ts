@@ -9,7 +9,6 @@ import {
   increment,
   compose,
   defer,
-  bind,
 } from "@reactive-js/core/lib/functions";
 import {
   encodeUtf8,
@@ -102,8 +101,7 @@ const routerHandlerPrintParams: HttpServer<
 const routerHandlerEventStream: HttpServer<
   HttpRoutedRequest<IOSourceLike<Uint8Array>>,
   HttpResponse<IOSourceLike<Uint8Array>>
-> = bind(
-  fromValue(),
+> = defer(
   createHttpResponse({
     statusCode: HttpStatusCode.OK,
     body: pipe(
@@ -120,6 +118,7 @@ const routerHandlerEventStream: HttpServer<
       contentType: 'text/event-stream; charset="utf-8"',
     },
   }),
+  fromValue(),
 );
 
 const routerHandlerFiles: HttpServer<
@@ -161,7 +160,7 @@ const routerHandlerFiles: HttpServer<
 const routerHandlerThrow: HttpServer<
   HttpRoutedRequest<IOSourceLike<Uint8Array>>,
   HttpResponse<IOSourceLike<Uint8Array>>
-> = returns(throws()(() => new Error("internal error")));
+> = defer(() => new Error("internal error"), throws());
 
 const notFound: Function1<
   HttpRequest<IOSourceLike<Uint8Array>>,

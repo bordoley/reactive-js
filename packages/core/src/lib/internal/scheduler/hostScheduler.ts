@@ -5,7 +5,7 @@ import {
   addDisposable,
   addTeardown,
 } from "../../disposable";
-import { Factory, SideEffect, Function1, bind } from "../../functions";
+import { Factory, SideEffect, Function1, defer } from "../../functions";
 import {
   SchedulerLike,
   SchedulerContinuationLike,
@@ -58,8 +58,8 @@ const createScheduledCallback = (
 
 const scheduleImmediateWithSetImmediate = (cb: SideEffect) => {
   const disposable = createDisposable();
-  const timeout = setImmediate(createScheduledCallback(disposable, cb));
-  addTeardown(disposable, bind(clearImmediate, timeout));
+  const immediate = setImmediate(createScheduledCallback(disposable, cb));
+  addTeardown(disposable, defer(immediate, clearImmediate));
   return disposable;
 };
 
@@ -77,7 +77,7 @@ const scheduleImmediateWithMessageChannel = (channel: MessageChannel) => (
 const scheduleDelayed = (cb: SideEffect, delay: number) => {
   const disposable = createDisposable();
   const timeout = setTimeout(createScheduledCallback(disposable, cb), delay);
-  addTeardown(disposable, bind(clearTimeout, timeout));
+  addTeardown(disposable, defer(timeout, clearTimeout));
   return disposable;
 };
 

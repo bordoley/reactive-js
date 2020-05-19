@@ -4,7 +4,7 @@ import {
   EnumeratorLike,
   enumerate,
 } from "../enumerable";
-import { bind, pipe } from "../functions";
+import { pipe, defer } from "../functions";
 import { Option } from "../option";
 import { KeyedCollection } from "./collections";
 
@@ -43,7 +43,7 @@ class KeyedQueue<K, V> implements KeyedQueueLike<K, V> {
   readonly map: Map<K, V[]> = new Map();
 
   readonly values: EnumerableLike<V> = fromIterator<V>()(
-    bind(iterateKeyedQueueValues, this),
+    defer(this, iterateKeyedQueueValues),
   );
 
   clear() {
@@ -52,7 +52,7 @@ class KeyedQueue<K, V> implements KeyedQueueLike<K, V> {
 
   enumerate(): EnumeratorLike<[K, V]> {
     return pipe(
-      bind(iterateKeyedQueueKeyValuePairs, this),
+      defer(this, iterateKeyedQueueKeyValuePairs),
       fromIterator(),
       enumerate,
     );

@@ -4,7 +4,7 @@ import {
   createDisposable,
   dispose,
 } from "@reactive-js/core/lib/disposable";
-import { pipe, bind } from "@reactive-js/core/lib/functions";
+import { pipe, defer } from "@reactive-js/core/lib/functions";
 import { none } from "@reactive-js/core/lib/option";
 import {
   SchedulerLike,
@@ -76,7 +76,7 @@ const priorityScheduler = {
     );
 
     const callbackNodeDisposable = createDisposable(
-      bind(unstable_cancelCallback, callbackNode),
+      defer(callbackNode, unstable_cancelCallback),
     );
 
     addDisposable(continuation, callbackNodeDisposable);

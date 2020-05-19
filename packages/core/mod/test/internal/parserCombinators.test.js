@@ -1,4 +1,4 @@
-import { bind, defer, pipe, returns } from "../../lib/functions.js";
+import { defer, pipe, returns } from "../../lib/functions.js";
 import { string, map, mapTo, sepBy, pColon, many, or, createCharStream, concat, optional, orCompute, manySatisfy, pForwardSlash, char, pEof, parseWithOrThrow, throwParseError, } from "../../lib/internal/parserCombinators.js";
 import { test, describe, expectToThrow, expectArrayEquals, expectEquals, } from "../../lib/internal/testing.js";
 import { none } from "../../lib/option.js";
@@ -31,4 +31,4 @@ export const tests = describe("parser combinators", test("many", () => {
 }), test("string", () => {
     const parser = concat(string("ab"), string("cd"));
     pipe("abcd", parseWithOrThrow(parser), expectArrayEquals(["ab", "cd"]));
-}), test("throwParseError", bind(expectToThrow, defer("abc", createCharStream, throwParseError))));
+}), test("throwParseError", defer(defer("abc", createCharStream, throwParseError), expectToThrow)));

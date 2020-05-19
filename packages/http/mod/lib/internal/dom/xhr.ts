@@ -3,11 +3,12 @@ import {
   bindDisposables,
   addTeardown,
 } from "../../../../../core/mod/lib/disposable.ts";
-import { bind } from "../../../../../core/mod/lib/functions.ts";
+import { defer } from "../../../../../core/mod/lib/functions.ts";
 import {
   createObservable,
   createSubject,
   dispatch,
+  dispatchTo,
 } from "../../../../../core/mod/lib/observable.ts";
 import { isSome } from "../../../../../core/mod/lib/option.ts";
 import {
@@ -87,9 +88,9 @@ export const sendHttpRequestUsingXHR: HttpClient<
       }
     };
 
-    xhr.onloadstart = bind(dispatch, dispatcher, {
+    xhr.onloadstart = defer( {
       type: HttpClientRequestStatusType.Start,
-    });
+    }, dispatchTo(dispatcher));
 
     xhr.upload.onprogress = ev => {
       const { loaded: count } = ev;
@@ -100,9 +101,9 @@ export const sendHttpRequestUsingXHR: HttpClient<
       });
     };
 
-    xhr.upload.onload = bind(dispatch, dispatcher, {
+    xhr.upload.onload = defer({
       type: HttpClientRequestStatusType.Completed,
-    });
+    }, dispatchTo(dispatcher));
 
     xhr.ontimeout = () => {
       // FIXME: Kind of rather have a state for this

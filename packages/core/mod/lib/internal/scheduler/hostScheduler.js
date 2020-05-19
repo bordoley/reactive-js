@@ -1,5 +1,5 @@
 import { createDisposable, dispose, addDisposable, addTeardown, } from "../../disposable.js";
-import { bind } from "../../functions.js";
+import { defer } from "../../functions.js";
 import { YieldError, } from "./interfaces.js";
 import { runContinuation } from "./schedulerContinuation.js";
 const supportsPerformanceNow = typeof performance === "object" && typeof performance.now === "function";
@@ -22,8 +22,8 @@ const createScheduledCallback = (disposable, cb) => () => {
 };
 const scheduleImmediateWithSetImmediate = (cb) => {
     const disposable = createDisposable();
-    const timeout = setImmediate(createScheduledCallback(disposable, cb));
-    addTeardown(disposable, bind(clearImmediate, timeout));
+    const immediate = setImmediate(createScheduledCallback(disposable, cb));
+    addTeardown(disposable, defer(immediate, clearImmediate));
     return disposable;
 };
 const scheduleImmediateWithMessageChannel = (channel) => (cb) => {
@@ -35,7 +35,7 @@ const scheduleImmediateWithMessageChannel = (channel) => (cb) => {
 const scheduleDelayed = (cb, delay) => {
     const disposable = createDisposable();
     const timeout = setTimeout(createScheduledCallback(disposable, cb), delay);
-    addTeardown(disposable, bind(clearTimeout, timeout));
+    addTeardown(disposable, defer(timeout, clearTimeout));
     return disposable;
 };
 const scheduleImmediateWithSetTimeout = (cb) => scheduleDelayed(cb, 0);

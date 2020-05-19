@@ -1,5 +1,5 @@
 import { Readable, Writable } from "stream";
-import { pipe, bind, returns } from "../lib/functions.js";
+import { pipe, defer, returns } from "../lib/functions.js";
 import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulator.js";
 import { describe, testAsync, expectEquals, expectPromiseToThrow, } from "../lib/internal/testing.js";
 import { fromArray } from "../lib/io.js";
@@ -23,7 +23,7 @@ export const tests = describe("node", describe("createWritableIOSink", testAsync
             callback();
         },
     });
-    const dest = createWritableIOSink(bind(createDisposableNodeStream, writable));
+    const dest = createWritableIOSink(defer(writable, createDisposableNodeStream));
     const lib = pipe([encoder.encode("abc"), encoder.encode("defg")], fromArray());
     await pipe(sink(lib, dest), toPromise(scheduler));
     pipe(data, expectEquals("abcdefg"));
@@ -37,7 +37,7 @@ export const tests = describe("node", describe("createWritableIOSink", testAsync
             callback(cause);
         },
     });
-    const dest = createWritableIOSink(bind(createDisposableNodeStream, writable));
+    const dest = createWritableIOSink(defer(writable, createDisposableNodeStream));
     const lib = pipe([encoder.encode("abc"), encoder.encode("defg")], fromArray());
     const promise = pipe(sink(lib, dest), toPromise(scheduler));
     await expectPromiseToThrow(promise);

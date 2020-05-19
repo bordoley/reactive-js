@@ -1,4 +1,4 @@
-import { bind, SideEffect1, SideEffect } from "./functions";
+import { SideEffect1, SideEffect, defer } from "./functions";
 import { isSome, none, Option, isNone } from "./option";
 
 /**
@@ -298,6 +298,6 @@ export const createDisposableValue = <T>(
   cleanup: SideEffect1<T>,
 ): DisposableValueLike<T> => {
   const retval = new DisposableValueImpl(value);
-  addTeardown(retval, bind(cleanup, value));
+  addTeardown(retval, defer(value, cleanup));
   return retval;
 };
