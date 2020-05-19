@@ -1,6 +1,6 @@
 import { dispose, bindDisposables, addTeardown, } from "../../../../../core/mod/lib/disposable.js";
-import { bind } from "../../../../../core/mod/lib/functions.js";
-import { createObservable, createSubject, dispatch, } from "../../../../../core/mod/lib/observable.js";
+import { defer } from "../../../../../core/mod/lib/functions.js";
+import { createObservable, createSubject, dispatch, dispatchTo, } from "../../../../../core/mod/lib/observable.js";
 import { isSome } from "../../../../../core/mod/lib/option.js";
 import { parseHeaders, parseHttpResponseFromHeaders, writeHttpRequestHeaders, } from "../../http.js";
 import { supportsArrayBuffer, supportsBlob } from "./capabilities.js";
@@ -48,9 +48,9 @@ export const sendHttpRequestUsingXHR = request => createObservable(dispatcher =>
             dispatch(bodyStream, xhr.response);
         }
     };
-    xhr.onloadstart = bind(dispatch, dispatcher, {
+    xhr.onloadstart = defer({
         type: 1,
-    });
+    }, dispatchTo(dispatcher));
     xhr.upload.onprogress = ev => {
         const { loaded: count } = ev;
         dispatch(dispatcher, {
@@ -58,9 +58,9 @@ export const sendHttpRequestUsingXHR = request => createObservable(dispatcher =>
             count,
         });
     };
-    xhr.upload.onload = bind(dispatch, dispatcher, {
+    xhr.upload.onload = defer({
         type: 3,
-    });
+    }, dispatchTo(dispatcher));
     xhr.ontimeout = () => {
         const cause = new Error("Network request failed");
         dispose(dispatcher, { cause });

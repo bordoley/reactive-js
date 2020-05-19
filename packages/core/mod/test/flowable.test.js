@@ -1,8 +1,8 @@
 import { dispose } from "../lib/disposable.js";
 import { empty, fromValue, fromObservable } from "../lib/flowable.js";
-import { increment, pipe, returns, bind } from "../lib/functions.js";
+import { increment, pipe, returns, defer } from "../lib/functions.js";
 import { test, describe, expectEquals, expectTrue, mockFn, expectToHaveBeenCalledTimes, } from "../lib/internal/testing.js";
-import { onNotify, subscribe, generate, dispatch } from "../lib/observable.js";
+import { onNotify, subscribe, generate, dispatch, dispatchTo } from "../lib/observable.js";
 import { createVirtualTimeScheduler, schedule } from "../lib/scheduler.js";
 import { stream } from "../lib/streamable.js";
 export const tests = describe("flowables", test("empty", () => {
@@ -20,13 +20,13 @@ export const tests = describe("flowables", test("empty", () => {
     const scheduler = createVirtualTimeScheduler();
     const generateStream = stream(pipe(generate(increment, returns(-1), { delay: 1 }), fromObservable()), scheduler);
     dispatch(generateStream, 1);
-    schedule(scheduler, bind(dispatch, generateStream, 2), {
+    schedule(scheduler, defer(2, dispatchTo(generateStream)), {
         delay: 2,
     });
-    schedule(scheduler, bind(dispatch, generateStream, 1), {
+    schedule(scheduler, defer(1, dispatchTo(generateStream)), {
         delay: 4,
     });
-    schedule(scheduler, bind(dispose, generateStream), { delay: 5 });
+    schedule(scheduler, defer(generateStream, dispose), { delay: 5 });
     const f = mockFn();
     const subscription = pipe(generateStream, onNotify(x => {
         f(scheduler.now, x);

@@ -1,4 +1,4 @@
-import { bind, defer, pipe, returns } from "../../lib/functions.ts";
+import { defer, pipe, returns } from "../../lib/functions.ts";
 import {
   string,
   map,
@@ -112,6 +112,6 @@ export const tests = describe(
 
   test(
     "throwParseError",
-    bind(expectToThrow, defer("abc", createCharStream, throwParseError)),
+    defer(defer("abc", createCharStream, throwParseError), expectToThrow),
   ),
 );

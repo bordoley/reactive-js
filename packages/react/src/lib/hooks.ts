@@ -9,7 +9,6 @@ import {
   compose,
   defer,
   returns,
-  bind,
   Function1,
   Updater,
 } from "@reactive-js/core/lib/functions";
@@ -74,7 +73,7 @@ export const useObservable = <T>(
       updateError,
       scheduler,
     );
-    return bind(dispose, subscription);
+    return defer(subscription, dispose);
   }, [observable, updateState, updateError, scheduler]);
 
   if (isSome(error)) {

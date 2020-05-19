@@ -1,4 +1,4 @@
-import { bind } from "./functions.js";
+import { defer } from "./functions.js";
 import { isSome, none, isNone } from "./option.js";
 export const dispose = (disposable, e) => {
     disposable.dispose(e);
@@ -143,6 +143,6 @@ class DisposableValueImpl extends AbstractDisposable {
 }
 export const createDisposableValue = (value, cleanup) => {
     const retval = new DisposableValueImpl(value);
-    addTeardown(retval, bind(cleanup, value));
+    addTeardown(retval, defer(value, cleanup));
     return retval;
 };

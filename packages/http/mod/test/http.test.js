@@ -1,9 +1,10 @@
-import { bind, pipe, defer } from "@reactive-js/core/lib/functions.js";
+import { pipe, defer } from "@reactive-js/core/lib/functions.js";
 import { test, describe, expectToThrow, expectEquals, } from "@reactive-js/core/lib/internal/testing.js";
 import { none } from "@reactive-js/core/lib/option.js";
 import { createHttpRequest, createHttpResponse, checkIfNotModified, } from "../lib/http.js";
 import { parseMediaTypeOrThrow } from "../lib/internal/http/mediaType.js";
-export const tests = describe("http", describe("mediaType", test("parseMediaType with params", () => {
+import { map } from "@reactive-js/core/lib/readonlyArray.js";
+const mediaTypeTests = describe("mediaType", test("parseMediaType with params", () => {
     const { type, subtype, params } = parseMediaTypeOrThrow("application/json; charset=UTF-8");
     pipe(type, expectEquals("application"));
     pipe(subtype, expectEquals("json"));
@@ -12,12 +13,13 @@ export const tests = describe("http", describe("mediaType", test("parseMediaType
     const { type, subtype } = parseMediaTypeOrThrow("application/json");
     pipe(type, expectEquals("application"));
     pipe(subtype, expectEquals("json"));
-}), test("parseMediaType with invalid params", bind(expectToThrow, bind(parseMediaTypeOrThrow, "application/json; ="))), test("parseMediaType with empty params", bind(expectToThrow, bind(parseMediaTypeOrThrow, "application/json; charset="))), test("parseMediaRange", () => {
+}), test("parseMediaType with invalid params", defer(defer("application/json; =", parseMediaTypeOrThrow), expectToThrow)), test("parseMediaType with empty params", defer(defer("application/json; charset=", parseMediaTypeOrThrow), expectToThrow)), test("parseMediaRange", () => {
     const { type, subtype, params } = parseMediaTypeOrThrow("*/*; q=0.1; charset=UTF-8");
     pipe(type, expectEquals("*"));
     pipe(subtype, expectEquals("*"));
     pipe(params["q"], expectEquals("0.1"));
-})), describe("checkIfNotModified", ...[
+}));
+const checkIfNotModifiedTests = pipe([
     [
         "when a non-conditional GET is performed",
         createHttpRequest({
@@ -324,4 +326,5 @@ export const tests = describe("http", describe("mediaType", test("parseMediaType
         }),
         200,
     ],
-].map(([name, req, resp, status]) => test(name, defer(resp, checkIfNotModified(req), x => x.statusCode, expectEquals(status))))));
+], map(([name, req, resp, status]) => test(name, defer(resp, checkIfNotModified(req), x => x.statusCode, expectEquals(status)))), tests => describe("checkIfNotModified", ...tests));
+export const tests = describe("http", mediaTypeTests, checkIfNotModifiedTests);

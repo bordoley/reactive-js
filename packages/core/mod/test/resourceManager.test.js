@@ -1,5 +1,5 @@
 import { createDisposableValue, disposed, dispose } from "../lib/disposable.js";
-import { pipe, ignore, bind } from "../lib/functions.js";
+import { pipe, ignore, defer } from "../lib/functions.js";
 import { createResourceManager } from "../lib/internal/resourceManager.js";
 import { test, describe } from "../lib/internal/testing.js";
 import { onNotify, subscribe, fromArray } from "../lib/observable.js";
@@ -67,7 +67,7 @@ export const tests = describe("resource manager", test("integration test", () =>
         ignore,
         ignore,
         ignore,
-        bind(dispose, rm),
+        defer(rm, dispose),
     ], fromArray({ delay: 1 }), onNotify(lib => lib()), subscribe(scheduler));
     scheduler.run();
 }));

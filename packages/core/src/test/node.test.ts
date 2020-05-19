@@ -1,5 +1,5 @@
 import { Readable, Writable } from "stream";
-import { pipe, bind, returns } from "../lib/functions";
+import { pipe, defer, returns } from "../lib/functions";
 import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulator";
 import {
   describe,
@@ -44,7 +44,7 @@ export const tests = describe(
       });
 
       const dest = createWritableIOSink(
-        bind(createDisposableNodeStream, writable),
+        defer(writable, createDisposableNodeStream),
       );
 
       const lib = pipe(
@@ -70,7 +70,7 @@ export const tests = describe(
       });
 
       const dest = createWritableIOSink(
-        bind(createDisposableNodeStream, writable),
+        defer(writable, createDisposableNodeStream),
       );
 
       const lib = pipe(

@@ -11,7 +11,7 @@ import {
   addDisposable,
 } from "@reactive-js/core/lib/disposable";
 import { FlowMode } from "@reactive-js/core/lib/flowable";
-import { bind, pipe, returns } from "@reactive-js/core/lib/functions";
+import { defer, pipe, returns } from "@reactive-js/core/lib/functions";
 import { IOEvent, IOEventType, IOSourceLike } from "@reactive-js/core/lib/io";
 import {
   createWritableIOSink,
@@ -79,7 +79,7 @@ class ResponseBody extends AbstractDisposable
     }
     this.consumed = true;
     const responseStream = stream(
-      createReadableIOSource(bind(createDisposableNodeStream, this.resp)),
+      createReadableIOSource(defer(this.resp, createDisposableNodeStream)),
       scheduler,
       replayCount,
     );
@@ -122,7 +122,7 @@ export const createHttpClient = (
             })();
 
       const requestSink = stream(
-        createWritableIOSink(bind(createDisposableNodeStream, req)),
+        createWritableIOSink(defer(req, createDisposableNodeStream)),
         scheduler,
       );
 

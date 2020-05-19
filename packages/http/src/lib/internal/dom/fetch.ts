@@ -1,5 +1,5 @@
 import { dispose, addTeardown } from "@reactive-js/core/lib/disposable";
-import { bind, pipe } from "@reactive-js/core/lib/functions";
+import { defer, pipe } from "@reactive-js/core/lib/functions";
 import {
   dispatch,
   fromPromise,
@@ -114,7 +114,7 @@ export const sendHttpRequestUsingFetch: HttpClient<
       using(
         scheduler =>
           pipe(
-            bind(loadBodyContent, response),
+            defer(response, loadBodyContent),
             fromPromise,
             publish(scheduler, 1),
             body => new HttpResponseBodyImpl(body),

@@ -6,7 +6,7 @@ import {
   hasCurrent,
   move,
 } from "../../enumerable.ts";
-import { Function1, compose, bind } from "../../functions.ts";
+import { Function1, compose, defer } from "../../functions.ts";
 import {
   withLatestFrom,
   onNotify,
@@ -24,7 +24,7 @@ const _fromEnumerable = <T>(
   createStreamable(
     compose(
       withLatestFrom(
-        compute<EnumeratorLike<T>>()(bind(enumerate, enumerable)),
+        compute<EnumeratorLike<T>>()(defer(enumerable, enumerate)),
         (_, enumerator) => enumerator,
       ),
       onNotify(move),

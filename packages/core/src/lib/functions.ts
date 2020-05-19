@@ -82,60 +82,6 @@ export function callWith<T>(
   return f => f(...args);
 }
 
-export function bind<T>(factory: Factory<T>): Factory<T>;
-export function bind<TA, T>(op: Function1<TA, T>, a: TA): Factory<T>;
-export function bind<TA, TB, T>(
-  func: Function2<TA, TB, T>,
-  a: TA,
-  b: TB,
-): Factory<T>;
-export function bind<TA, TB, TC, T>(
-  func: Function3<TA, TB, TC, T>,
-  a: TA,
-  b: TB,
-  c: TC,
-): Factory<T>;
-export function bind<TA, TB, TC, TD, T>(
-  func: Function4<TA, TB, TC, TD, T>,
-  a: TA,
-  b: TB,
-  c: TC,
-  d: TD,
-): Factory<T>;
-export function bind<TA, TB, TC, TD, TE, T>(
-  func: Function5<TA, TB, TC, TD, TE, T>,
-  a: TA,
-  b: TB,
-  c: TC,
-  d: TD,
-  e: TE,
-): Factory<T>;
-export function bind<TA, TB, TC, TD, TE, TF, T>(
-  func: Function6<TA, TB, TC, TD, TE, TF, T>,
-  a: TA,
-  b: TB,
-  c: TC,
-  d: TD,
-  e: TE,
-  f: TF,
-): Factory<T>;
-export function bind<TA, TB, TC, TD, TE, TF, TG, T>(
-  func: Function7<TA, TB, TC, TD, TE, TF, TG, T>,
-  a: TA,
-  b: TB,
-  c: TC,
-  d: TD,
-  e: TE,
-  f: TF,
-  g: TG,
-): Factory<T>;
-export function bind<T>(
-  func: (...args: any[]) => T,
-  ...args: any[]
-): Factory<T> {
-  return () => func(...args);
-}
-
 export const identity = <T>(v: T): T => v;
 
 export const returns = <T>(v: T): ((..._args: unknown[]) => T) => (

@@ -3,11 +3,12 @@ import {
   bindDisposables,
   addTeardown,
 } from "@reactive-js/core/lib/disposable";
-import { bind } from "@reactive-js/core/lib/functions";
+import { defer } from "@reactive-js/core/lib/functions";
 import {
   createObservable,
   createSubject,
   dispatch,
+  dispatchTo,
 } from "@reactive-js/core/lib/observable";
 import { isSome } from "@reactive-js/core/lib/option";
 import {
@@ -87,9 +88,9 @@ export const sendHttpRequestUsingXHR: HttpClient<
       }
     };
 
-    xhr.onloadstart = bind(dispatch, dispatcher, {
+    xhr.onloadstart = defer( {
       type: HttpClientRequestStatusType.Start,
-    });
+    }, dispatchTo(dispatcher));
 
     xhr.upload.onprogress = ev => {
       const { loaded: count } = ev;
@@ -100,9 +101,9 @@ export const sendHttpRequestUsingXHR: HttpClient<
       });
     };
 
-    xhr.upload.onload = bind(dispatch, dispatcher, {
+    xhr.upload.onload = defer({
       type: HttpClientRequestStatusType.Completed,
-    });
+    }, dispatchTo(dispatcher));
 
     xhr.ontimeout = () => {
       // FIXME: Kind of rather have a state for this

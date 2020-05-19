@@ -6,7 +6,6 @@ import {
   isOdd,
   returns,
   callWith,
-  bind,
 } from "../lib/functions";
 import { benchmarkTest, benchmarkGroup } from "../lib/internal/benchmark";
 
@@ -40,7 +39,7 @@ const createMapPerfTest = (name: string, module: string) =>
 export const map = (n: number) =>
   benchmarkGroup(
     `map ${n} integers`,
-    bind<number, readonly number[]>(createArray, n),
+    defer<number, readonly number[]>(n, createArray),
     createMapPerfTest("enumerable", "../lib/enumerable"),
     createMapPerfTest("observable", "../lib/observable"),
     createMapPerfTest("runnable", "../lib/runnable"),
@@ -100,7 +99,7 @@ const createFilterMapFusionPerfTest = (name: string, module: string) =>
 export const filterMapFusion = (n: number) =>
   benchmarkGroup(
     `filter -> map -> fusion with ${n} integers`,
-    bind<number, readonly number[]>(createArray, n),
+    defer<number, readonly number[]>(n, createArray),
     createFilterMapFusionPerfTest("enumerable", "../lib/enumerable"),
     createFilterMapFusionPerfTest("observable", "../lib/observable"),
     createFilterMapFusionPerfTest("runnable", "../lib/runnable"),
@@ -159,7 +158,7 @@ const createFilterMapReducePerfTest = (name: string, module: string) =>
 export const filterMapReduce = (n: number) =>
   benchmarkGroup(
     `filter -> map -> reduce ${n} integers`,
-    () => createArray(n),
+    defer<number, readonly number[]>(n, createArray),
     createFilterMapReducePerfTest("enumerable", "../lib/enumerable"),
     createFilterMapReducePerfTest("observable", "../lib/observable"),
     createFilterMapReducePerfTest("runnable", "../lib/runnable"),
@@ -208,7 +207,7 @@ const createScanReducePerfTest = (name: string, module: string) =>
 export const scanReduce = (n: number) =>
   benchmarkGroup(
     `scan -> reduce ${n} integers`,
-    () => createArray(n),
+    defer<number, readonly number[]>(n, createArray),
     createScanReducePerfTest("enumerable", "../lib/enumerable"),
     createScanReducePerfTest("observable", "../lib/observable"),
     createScanReducePerfTest("runnable", "../lib/runnable"),
