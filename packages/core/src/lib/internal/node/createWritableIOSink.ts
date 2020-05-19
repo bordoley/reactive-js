@@ -16,10 +16,10 @@ import {
   ObservableLike,
   using,
   dispatch,
+  dispatchTo,
 } from "../../observable";
 import { SchedulerLike } from "../../scheduler";
 import { createStreamable } from "../../streamable";
-import { dispatchTo } from "../../observable";
 
 const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
 

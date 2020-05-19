@@ -6,6 +6,7 @@ import {
   expectEquals,
 } from "@reactive-js/core/lib/internal/testing";
 import { none } from "@reactive-js/core/lib/option";
+import { map } from "@reactive-js/core/lib/readonlyArray";
 import {
   HttpRequest,
   HttpResponse,
@@ -16,7 +17,6 @@ import {
   checkIfNotModified,
 } from "../lib/http";
 import { parseMediaTypeOrThrow } from "../lib/internal/http/mediaType";
-import { map } from "@reactive-js/core/lib/readonlyArray";
 
 const mediaTypeTests = describe(
   "mediaType",
@@ -381,14 +381,7 @@ const checkIfNotModifiedTests = pipe(
       ),
     ),
   ),
-  tests => describe(
-    "checkIfNotModified",
-    ...tests
-  )
+  tests => describe("checkIfNotModified", ...tests),
 );
 
-export const tests = describe(
-  "http",
-  mediaTypeTests,
-  checkIfNotModifiedTests,
-);
+export const tests = describe("http", mediaTypeTests, checkIfNotModifiedTests);

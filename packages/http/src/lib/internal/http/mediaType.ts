@@ -5,10 +5,15 @@ import {
   parseWith,
   parseWithOrThrow,
 } from "@reactive-js/core/lib/internal/parserCombinators";
-import { fromObject, map, join } from "@reactive-js/core/lib/readonlyArray";
+import {
+  fromObject,
+  map,
+  join,
+  keep,
+  length,
+} from "@reactive-js/core/lib/readonlyArray";
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar";
 import { MediaType } from "./interfaces";
-import { keep, length } from "@reactive-js/core/lib/readonlyArray";
 
 export const pMediaType: Parser<MediaType> = charStream => {
   const type = pToken(charStream);
@@ -59,7 +64,11 @@ export const mediaTypeIsCompressible = (
   const compressible = db[mediaType]?.compressible ?? false;
   const typeIsText = type === "text";
   const subtypeIsText =
-    pipe(textSubtypes, keep(x => subtype.endsWith(x)), length) > 0;
+    pipe(
+      textSubtypes,
+      keep(x => subtype.endsWith(x)),
+      length,
+    ) > 0;
 
   return !blackListed && (compressible || typeIsText || subtypeIsText);
 };

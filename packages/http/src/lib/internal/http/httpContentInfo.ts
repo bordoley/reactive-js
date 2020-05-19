@@ -1,6 +1,7 @@
 import { pipe, SideEffect2 } from "@reactive-js/core/lib/functions";
 import { parseWith } from "@reactive-js/core/lib/internal/parserCombinators";
 import { isNone, none, Option } from "@reactive-js/core/lib/option";
+import { join } from "@reactive-js/core/lib/readonlyArray";
 import { pToken, httpList } from "./httpGrammar";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders";
 import {
@@ -15,7 +16,6 @@ import {
   parseMediaTypeOrThrow,
   mediaTypeIsCompressible,
 } from "./mediaType";
-import { join } from "@reactive-js/core/lib/readonlyArray";
 
 const parseTokenList = pipe(pToken, httpList, parseWith);
 
