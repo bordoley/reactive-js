@@ -9,7 +9,7 @@ import {
 } from "../../disposable";
 import { FlowMode } from "../../flowable";
 import { pipe, compose, Factory } from "../../functions";
-import { next, complete, IOSourceLike } from "../../io";
+import { next, done, IOSourceLike } from "../../io";
 import {
   createObservable,
   onNotify,
@@ -33,7 +33,7 @@ const createReadableEventsObservable = (
     readableValue.on("data", onData);
 
     const onEnd = () => {
-      dispatch(dispatcher, complete());
+      dispatch(dispatcher, done());
       dispose(dispatcher);
     };
     readableValue.on("end", onEnd);

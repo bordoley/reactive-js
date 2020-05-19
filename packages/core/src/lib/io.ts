@@ -24,19 +24,19 @@ import {
 
 export const enum IOEventType {
   Next = 1,
-  Complete = 2,
+  Done = 2,
 }
 
 export type IOEvent<T> =
   | { readonly type: IOEventType.Next; readonly data: T }
-  | { readonly type: IOEventType.Complete };
+  | { readonly type: IOEventType.Done };
 
 export const next = <T>(data: T): IOEvent<T> => ({
   type: IOEventType.Next,
   data,
 });
-const _complete: IOEvent<any> = { type: IOEventType.Complete };
-export const complete = <T>(): IOEvent<T> => _complete;
+const _done: IOEvent<any> = { type: IOEventType.Done };
+export const done = <T>(): IOEvent<T> => _done;
 
 /** @noInheritDoc */
 export interface IOSourceLike<T> extends FlowableLike<IOEvent<T>> {}
@@ -65,12 +65,12 @@ export const decodeWithCharset = (
             }
             break;
           }
-          case IOEventType.Complete: {
+          case IOEventType.Done: {
             const data = decoder.decode();
             if (data.length > 0) {
               yield next(data);
             }
-            yield complete<string>();
+            yield done<string>();
             break;
           }
         }
@@ -89,7 +89,7 @@ const _encodeUtf8: IOSourceOperator<string, Uint8Array> = withLatestFrom(
         const data = textEncoder.encode(ev.data);
         return next(data);
       }
-      case IOEventType.Complete: {
+      case IOEventType.Done: {
         return ev;
       }
     }
@@ -106,7 +106,7 @@ export const map = <TA, TB>(
 
 const _fromObservable = compose(
   mapObs(next),
-  endWith(complete()),
+  endWith(done()),
   fromObservableFlowable(),
 );
 export const fromObservable = <T>(): Function1<

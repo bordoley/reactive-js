@@ -67,7 +67,7 @@ const createWritableAndSetupEventSubscription = (
             writableValue.emit(NODE_JS_PAUSE_EVENT);
           }
           break;
-        case IOEventType.Complete:
+        case IOEventType.Done:
           writableValue.end();
           break;
       }

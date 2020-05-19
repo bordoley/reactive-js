@@ -7,8 +7,8 @@ export const next = (data) => ({
     type: 1,
     data,
 });
-const _complete = { type: 2 };
-export const complete = () => _complete;
+const _done = { type: 2 };
+export const done = () => _done;
 export const decodeWithCharset = (charset = "utf-8", options) => pipe(withLatestFromObs(compute()(() => new TextDecoder(charset, options)), function* (ev, decoder) {
     switch (ev.type) {
         case 1: {
@@ -23,7 +23,7 @@ export const decodeWithCharset = (charset = "utf-8", options) => pipe(withLatest
             if (data.length > 0) {
                 yield next(data);
             }
-            yield complete();
+            yield done();
             break;
         }
     }
@@ -41,7 +41,7 @@ const _encodeUtf8 = withLatestFrom(compute()(() => new TextEncoder()), (ev, text
 });
 export const encodeUtf8 = _encodeUtf8;
 export const map = (mapper) => mapStream((ev) => ev.type === 1 ? pipe(ev.data, mapper, next) : ev);
-const _fromObservable = compose(mapObs(next), endWith(complete()), fromObservableFlowable());
+const _fromObservable = compose(mapObs(next), endWith(done()), fromObservableFlowable());
 export const fromObservable = () => _fromObservable;
 const _fromArray = compose(fromArrayObs(), fromObservable());
 export const fromArray = () => _fromArray;
