@@ -18,10 +18,10 @@ import {
 import { SchedulerLike } from "../scheduler.ts";
 import { stream, createStreamable } from "../streamable.ts";
 
-const isNext = <T>(
+const isNotify = <T>(
   ev: IOEvent<T>,
-): ev is { readonly type: IOEventType.Next; readonly data: T } =>
-  ev.type === IOEventType.Next;
+): ev is { readonly type: IOEventType.Notify; readonly data: T } =>
+  ev.type === IOEventType.Notify;
 
 /**
  * @experimental
@@ -43,8 +43,8 @@ class IOSinkAccumulatorImpl<T, TAcc> implements IOSinkAccumulatorLike<T, TAcc> {
         scheduler =>
           pipe(
             events,
-            takeWhile(isNext),
-            keepType(isNext),
+            takeWhile(isNotify),
+            keepType(isNotify),
             mapObs(ev => ev.data),
             reduce(this.reducer, returns(this.acc)),
             onNotify(acc => {

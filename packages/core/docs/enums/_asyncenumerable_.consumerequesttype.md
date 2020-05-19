@@ -6,17 +6,17 @@
 
 ### Enumeration members
 
-* [Continue](_asyncenumerable_.consumerequesttype.md#continue)
 * [Done](_asyncenumerable_.consumerequesttype.md#done)
+* [Notify](_asyncenumerable_.consumerequesttype.md#notify)
 
 ## Enumeration members
-
-###  Continue
-
-• **Continue**: = 1
-
-___
 
 ###  Done
 
 • **Done**: = 2
+
+___
+
+###  Notify
+
+• **Notify**: = 1

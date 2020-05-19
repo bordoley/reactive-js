@@ -3,7 +3,7 @@ import { compose, pipe, returns, composeWith } from "./functions.js";
 import { endWith } from "./internal/observable/endWith.js";
 import { map as mapObs, withLatestFrom as withLatestFromObs, compute, concatMap, fromIterator, fromArray as fromArrayObs, } from "./observable.js";
 import { map as mapStream, lift, withLatestFrom, } from "./streamable.js";
-export const next = (data) => ({
+export const notify = (data) => ({
     type: 1,
     data,
 });
@@ -14,14 +14,14 @@ export const decodeWithCharset = (charset = "utf-8", options) => pipe(withLatest
         case 1: {
             const data = decoder.decode(ev.data, { stream: true });
             if (data.length > 0) {
-                yield next(data);
+                yield notify(data);
             }
             break;
         }
         case 2: {
             const data = decoder.decode();
             if (data.length > 0) {
-                yield next(data);
+                yield notify(data);
             }
             yield done();
             break;
@@ -32,7 +32,7 @@ const _encodeUtf8 = withLatestFrom(compute()(() => new TextEncoder()), (ev, text
     switch (ev.type) {
         case 1: {
             const data = textEncoder.encode(ev.data);
-            return next(data);
+            return notify(data);
         }
         case 2: {
             return ev;
@@ -40,8 +40,8 @@ const _encodeUtf8 = withLatestFrom(compute()(() => new TextEncoder()), (ev, text
     }
 });
 export const encodeUtf8 = _encodeUtf8;
-export const map = (mapper) => mapStream((ev) => ev.type === 1 ? pipe(ev.data, mapper, next) : ev);
-const _fromObservable = compose(mapObs(next), endWith(done()), fromObservableFlowable());
+export const map = (mapper) => mapStream((ev) => ev.type === 1 ? pipe(ev.data, mapper, notify) : ev);
+const _fromObservable = compose(mapObs(notify), endWith(done()), fromObservableFlowable());
 export const fromObservable = () => _fromObservable;
 const _fromArray = compose(fromArrayObs(), fromObservable());
 export const fromArray = () => _fromArray;

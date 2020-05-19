@@ -4,7 +4,7 @@ export {
   ConsumeRequest,
   Consumer,
   AsyncConsumer,
-  continue_,
+  notify,
   done,
   consume,
   consumeAsync,

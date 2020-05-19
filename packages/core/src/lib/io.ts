@@ -23,16 +23,16 @@ import {
 } from "./streamable";
 
 export const enum IOEventType {
-  Next = 1,
+  Notify = 1,
   Done = 2,
 }
 
 export type IOEvent<T> =
-  | { readonly type: IOEventType.Next; readonly data: T }
+  | { readonly type: IOEventType.Notify; readonly data: T }
   | { readonly type: IOEventType.Done };
 
-export const next = <T>(data: T): IOEvent<T> => ({
-  type: IOEventType.Next,
+export const notify = <T>(data: T): IOEvent<T> => ({
+  type: IOEventType.Notify,
   data,
 });
 const _done: IOEvent<any> = { type: IOEventType.Done };
@@ -58,17 +58,17 @@ export const decodeWithCharset = (
       compute<TextDecoder>()(() => new TextDecoder(charset, options)),
       function*(ev: IOEvent<ArrayBuffer>, decoder) {
         switch (ev.type) {
-          case IOEventType.Next: {
+          case IOEventType.Notify: {
             const data = decoder.decode(ev.data, { stream: true });
             if (data.length > 0) {
-              yield next(data);
+              yield notify(data);
             }
             break;
           }
           case IOEventType.Done: {
             const data = decoder.decode();
             if (data.length > 0) {
-              yield next(data);
+              yield notify(data);
             }
             yield done<string>();
             break;
@@ -85,9 +85,9 @@ const _encodeUtf8: IOSourceOperator<string, Uint8Array> = withLatestFrom(
   compute<TextEncoder>()(() => new TextEncoder()),
   (ev, textEncoder) => {
     switch (ev.type) {
-      case IOEventType.Next: {
+      case IOEventType.Notify: {
         const data = textEncoder.encode(ev.data);
-        return next(data);
+        return notify(data);
       }
       case IOEventType.Done: {
         return ev;
@@ -101,11 +101,11 @@ export const map = <TA, TB>(
   mapper: Function1<TA, TB>,
 ): Function1<IOSourceLike<TA>, IOSourceLike<TB>> =>
   mapStream((ev: IOEvent<TA>) =>
-    ev.type === IOEventType.Next ? pipe(ev.data, mapper, next) : ev,
+    ev.type === IOEventType.Notify ? pipe(ev.data, mapper, notify) : ev,
   );
 
 const _fromObservable = compose(
-  mapObs(next),
+  mapObs(notify),
   endWith(done()),
   fromObservableFlowable(),
 );

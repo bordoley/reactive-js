@@ -58,7 +58,7 @@ const createWritableAndSetupEventSubscription = (
     events,
     onNotify(ev => {
       switch (ev.type) {
-        case IOEventType.Next:
+        case IOEventType.Notify:
           // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
           // node throws a type exception regarding expecting a Buffer, though the docs
           // say a UInt8Array should be accepted. Need to file a bug.

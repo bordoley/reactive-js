@@ -22,12 +22,12 @@
 
 * [consume](_asyncenumerable_.md#const-consume)
 * [consumeAsync](_asyncenumerable_.md#const-consumeasync)
-* [continue_](_asyncenumerable_.md#const-continue_)
 * [done](_asyncenumerable_.md#const-done)
 * [fromArray](_asyncenumerable_.md#const-fromarray)
 * [fromEnumerable](_asyncenumerable_.md#const-fromenumerable)
 * [fromIterable](_asyncenumerable_.md#const-fromiterable)
 * [generate](_asyncenumerable_.md#const-generate)
+* [notify](_asyncenumerable_.md#const-notify)
 
 ## Type aliases
 
@@ -88,24 +88,6 @@ Name | Type |
 `initial` | [Factory](_functions_.md#factory)‹TAcc› |
 
 **Returns:** *[Function1](_functions_.md#function1)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
-
-___
-
-### `Const` continue_
-
-▸ **continue_**<**TAcc**>(`acc`: TAcc): *[ConsumeRequest](_asyncenumerable_.md#consumerequest)‹TAcc›*
-
-**Type parameters:**
-
-▪ **TAcc**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`acc` | TAcc |
-
-**Returns:** *[ConsumeRequest](_asyncenumerable_.md#consumerequest)‹TAcc›*
 
 ___
 
@@ -196,3 +178,21 @@ Name | Type | Description |
 `initialValue` | [Factory](_functions_.md#factory)‹T› | Factory function to generate the initial accumulator.  |
 
 **Returns:** *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
+
+___
+
+### `Const` notify
+
+▸ **notify**<**TAcc**>(`acc`: TAcc): *[ConsumeRequest](_asyncenumerable_.md#consumerequest)‹TAcc›*
+
+**Type parameters:**
+
+▪ **TAcc**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`acc` | TAcc |
+
+**Returns:** *[ConsumeRequest](_asyncenumerable_.md#consumerequest)‹TAcc›*
