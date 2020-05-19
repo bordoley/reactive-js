@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.39](../README.md) › ["flowable"](../modules/_flowable_.md) › [FlowableLike](_flowable_.flowablelike.md)
+[@reactive-js/core - v0.0.40](../README.md) › ["flowable"](../modules/_flowable_.md) › [FlowableLike](_flowable_.flowablelike.md)
 
 # Interface: FlowableLike <**T**>
 

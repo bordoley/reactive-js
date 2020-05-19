@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.39](../README.md) › ["streamable"](../modules/_streamable_.md) › [StreamableLike](_streamable_.streamablelike.md)
+[@reactive-js/core - v0.0.40](../README.md) › ["streamable"](../modules/_streamable_.md) › [StreamableLike](_streamable_.streamablelike.md)
 
 # Interface: StreamableLike <**TReq, T**>
 

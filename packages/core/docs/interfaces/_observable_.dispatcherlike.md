@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.39](../README.md) › ["observable"](../modules/_observable_.md) › [DispatcherLike](_observable_.dispatcherlike.md)
+[@reactive-js/core - v0.0.40](../README.md) › ["observable"](../modules/_observable_.md) › [DispatcherLike](_observable_.dispatcherlike.md)
 
 # Interface: DispatcherLike <**T**>
 

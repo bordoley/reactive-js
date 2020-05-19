@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.39](../README.md) › ["enumerable"](_enumerable_.md)
+[@reactive-js/core - v0.0.40](../README.md) › ["enumerable"](_enumerable_.md)
 
 # Module: "enumerable"
 
