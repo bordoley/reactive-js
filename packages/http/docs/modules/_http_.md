@@ -50,6 +50,7 @@
 ### Functions
 
 * [checkIfNotModified](_http_.md#const-checkifnotmodified)
+* [createHttpErrorResponse](_http_.md#const-createhttperrorresponse)
 * [createHttpRequest](_http_.md#const-createhttprequest)
 * [createHttpResponse](_http_.md#const-createhttpresponse)
 * [createRedirectHttpRequest](_http_.md#const-createredirecthttprequest)
@@ -340,6 +341,20 @@ Name | Type |
 `preconditions` | object |
 
 **Returns:** *Function1‹[HttpResponse](_http_.md#httpresponse)‹T›, [HttpResponse](_http_.md#httpresponse)‹T››*
+
+___
+
+### `Const` createHttpErrorResponse
+
+▸ **createHttpErrorResponse**(`e`: unknown): *[HttpResponse](_http_.md#httpresponse)‹unknown›*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`e` | unknown |
+
+**Returns:** *[HttpResponse](_http_.md#httpresponse)‹unknown›*
 
 ___
 
