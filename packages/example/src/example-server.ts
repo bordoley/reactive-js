@@ -17,8 +17,7 @@ import {
   IOSourceLike,
 } from "@reactive-js/core/lib/io";
 import {
-  createReadableIOSource,
-  createDisposableNodeStream,
+  readFileIOSource,
   bindNodeCallback,
 } from "@reactive-js/core/lib/node";
 import {
@@ -134,9 +133,7 @@ const routerHandlerFiles: HttpServer<
       next.isFile() && !next.isDirectory()
         ? createHttpResponse({
             statusCode: HttpStatusCode.OK,
-            body: createReadableIOSource(
-              defer(path, fs.createReadStream, createDisposableNodeStream),
-            ),
+            body: readFileIOSource(path),
             contentInfo: {
               contentLength: next.size,
               contentType,
@@ -294,9 +291,7 @@ pipe(
     createHttpRequest({
       method: HttpMethod.POST,
       uri: "http://localhost:8080/index.html",
-      body: createReadableIOSource(
-        defer(file, fs.createReadStream, createDisposableNodeStream),
-      ),
+      body: readFileIOSource(file),
       contentInfo: {
         contentLength: stats.size,
         contentType: "application/octet-stream",

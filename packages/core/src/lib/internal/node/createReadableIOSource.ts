@@ -1,3 +1,4 @@
+import fs from "fs";
 import { Readable } from "stream";
 import {
   DisposableValueLike,
@@ -20,6 +21,7 @@ import {
 } from "../../observable";
 import { SchedulerLike } from "../../scheduler";
 import { createStreamable } from "../../streamable";
+import { createDisposableNodeStream } from "./nodeStream";
 
 const createReadableEventsObservable = (
   readable: DisposableValueLike<Readable>,
@@ -80,3 +82,10 @@ export const createReadableIOSource = (
       createReadableEventsObservable,
     ),
   );
+
+export const readFileIOSource = (
+  path: fs.PathLike,
+  options?: { flags?: string; mode?: number;  start?: number; end?: number; highWaterMark?: number; }
+) => createReadableIOSource(
+  () => pipe(fs.createReadStream(path, options), createDisposableNodeStream),
+);
