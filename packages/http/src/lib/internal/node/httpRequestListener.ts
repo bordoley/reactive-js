@@ -93,15 +93,18 @@ export const createHttpRequestListener = (
     const responseBody = createWritableIOSink(returns(response));
 
     return pipe(
-      defer({
-        method: method as HttpMethod,
-        path,
-        headers: headers as HttpHeaders,
-        httpVersionMajor,
-        httpVersionMinor,
-        isTransportSecure,
-        body: requestBody,
-      }, parseHttpRequestFromHeaders),
+      defer(
+        {
+          method: method as HttpMethod,
+          path,
+          headers: headers as HttpHeaders,
+          httpVersionMajor,
+          httpVersionMinor,
+          isTransportSecure,
+          body: requestBody,
+        },
+        parseHttpRequestFromHeaders,
+      ),
       compute(),
       await_(handler),
       onNotify(writeResponseMessage(response.value)),

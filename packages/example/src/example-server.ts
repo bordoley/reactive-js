@@ -16,10 +16,7 @@ import {
   map as mapFlowable,
   IOSourceLike,
 } from "@reactive-js/core/lib/io";
-import {
-  readFileIOSource,
-  bindNodeCallback,
-} from "@reactive-js/core/lib/node";
+import { readFileIOSource, bindNodeCallback } from "@reactive-js/core/lib/node";
 import {
   map,
   subscribe,
@@ -206,21 +203,23 @@ const listener = createHttpRequestListener(
       catchError(
         compose(
           createHttpErrorResponse,
-          resp => createHttpResponse({
-            ...resp,
-            contentInfo: {
-              contentType: "text/plain",
-            },
-            body: process.env.NODE_ENV === "production"
-              ? ""
-              : resp.body instanceof Error && isSome(resp.body.stack)
-              ? resp.body.stack
-              : String(resp.body),
-          }),
+          resp =>
+            createHttpResponse({
+              ...resp,
+              contentInfo: {
+                contentType: "text/plain",
+              },
+              body:
+                process.env.NODE_ENV === "production"
+                  ? ""
+                  : resp.body instanceof Error && isSome(resp.body.stack)
+                  ? resp.body.stack
+                  : String(resp.body),
+            }),
           encodeHttpResponseWithUtf8,
           toIOSourceHttpResponse,
           fromValue(),
-        )
+        ),
       ),
     ),
   scheduler,
@@ -277,7 +276,7 @@ pipe(
 const file = "packages/example/build/bundle.js";
 pipe(
   file,
-  bindNodeCallback<fs.PathLike,fs.Stats>(fs.stat),
+  bindNodeCallback<fs.PathLike, fs.Stats>(fs.stat),
   map(stats =>
     createHttpRequest({
       method: HttpMethod.POST,

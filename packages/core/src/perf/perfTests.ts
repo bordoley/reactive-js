@@ -58,12 +58,9 @@ export const map = (n: number) =>
       async src => {
         const { map } = await import("../lib/readonlyArray");
 
-        return defer(
-          src,
-          map(increment),
-        );
+        return defer(src, map(increment));
       },
-      callWith()
+      callWith(),
     ),
     benchmarkTest(
       "array methods",
@@ -255,6 +252,6 @@ export const every = (n: number) =>
       async src => {
         return src;
       },
-      src => src.every(i => i < 0), 
+      src => src.every(i => i < 0),
     ),
   );

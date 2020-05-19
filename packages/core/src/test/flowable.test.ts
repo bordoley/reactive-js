@@ -9,7 +9,13 @@ import {
   mockFn,
   expectToHaveBeenCalledTimes,
 } from "../lib/internal/testing";
-import { onNotify, subscribe, generate, dispatch, dispatchTo } from "../lib/observable";
+import {
+  onNotify,
+  subscribe,
+  generate,
+  dispatch,
+  dispatchTo,
+} from "../lib/observable";
 import { createVirtualTimeScheduler, schedule } from "../lib/scheduler";
 import { stream } from "../lib/streamable";
 

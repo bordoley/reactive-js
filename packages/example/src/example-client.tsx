@@ -27,10 +27,7 @@ import {
   createHttpRequest,
   HttpMethod,
 } from "@reactive-js/http/lib/http";
-import {
-  useObservable,
-  useStreamable,
-} from "@reactive-js/react/lib/hooks";
+import { useObservable, useStreamable } from "@reactive-js/react/lib/hooks";
 import {
   RoutableComponentProps,
   Router,
@@ -85,9 +82,7 @@ const Component1 = (props: RoutableComponentProps) => {
 };
 
 const StatefulComponent = (_props: RoutableComponentProps) => {
-  const [state = "", dispatch] = useStreamable(
-    historyHashStateStore,
-  );
+  const [state = "", dispatch] = useStreamable(historyHashStateStore);
 
   const onChange = useCallback(
     (ev: React.ChangeEvent<HTMLInputElement>) => {

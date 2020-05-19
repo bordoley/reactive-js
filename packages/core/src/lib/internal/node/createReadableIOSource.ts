@@ -85,7 +85,14 @@ export const createReadableIOSource = (
 
 export const readFileIOSource = (
   path: fs.PathLike,
-  options?: { flags?: string; mode?: number;  start?: number; end?: number; highWaterMark?: number; }
-) => createReadableIOSource(
-  () => pipe(fs.createReadStream(path, options), createDisposableNodeStream),
-);
+  options?: {
+    flags?: string;
+    mode?: number;
+    start?: number;
+    end?: number;
+    highWaterMark?: number;
+  },
+) =>
+  createReadableIOSource(() =>
+    pipe(fs.createReadStream(path, options), createDisposableNodeStream),
+  );
