@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.37](../README.md) › ["observable"](../modules/_observable_.md) › [MulticastObservableLike](_observable_.multicastobservablelike.md)
+[@reactive-js/core - v0.0.38](../README.md) › ["observable"](../modules/_observable_.md) › [MulticastObservableLike](_observable_.multicastobservablelike.md)
 
 # Interface: MulticastObservableLike <**T**>
 

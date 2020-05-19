@@ -1,4 +1,4 @@
-[@reactive-js/react - v0.0.37](../README.md) › ["hooks"](_hooks_.md)
+[@reactive-js/react - v0.0.38](../README.md) › ["hooks"](_hooks_.md)
 
 # Module: "hooks"
 
@@ -7,7 +7,6 @@
 ### Functions
 
 * [useObservable](_hooks_.md#const-useobservable)
-* [useSerializedState](_hooks_.md#const-useserializedstate)
 * [useStreamable](_hooks_.md#const-usestreamable)
 
 ## Functions
@@ -30,28 +29,6 @@ Name | Type | Default | Description |
 `scheduler` | SchedulerLike | normalPriority | An optional scheduler used when subscribing to `observable`. The default is React's normal priority scheduler.  |
 
 **Returns:** *Option‹T›*
-
-___
-
-### `Const` useSerializedState
-
-▸ **useSerializedState**<**TSerialized**, **TState**>(`store`: StateStoreLike‹TSerialized›, `parse`: Function1‹TSerialized, TState›, `serialize`: Function1‹TState, TSerialized›): *[Option‹TState›, SideEffect1‹Updater‹TState››]*
-
-**Type parameters:**
-
-▪ **TSerialized**
-
-▪ **TState**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`store` | StateStoreLike‹TSerialized› |
-`parse` | Function1‹TSerialized, TState› |
-`serialize` | Function1‹TState, TSerialized› |
-
-**Returns:** *[Option‹TState›, SideEffect1‹Updater‹TState››]*
 
 ___
 

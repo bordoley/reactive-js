@@ -8,7 +8,6 @@ import {
   pipe,
   returns,
   increment,
-  identity,
   Updater,
 } from "@reactive-js/core/lib/functions";
 import {
@@ -31,7 +30,6 @@ import {
 import {
   useObservable,
   useStreamable,
-  useSerializedState,
 } from "@reactive-js/react/lib/hooks";
 import {
   RoutableComponentProps,
@@ -87,10 +85,8 @@ const Component1 = (props: RoutableComponentProps) => {
 };
 
 const StatefulComponent = (_props: RoutableComponentProps) => {
-  const [state = "", dispatch] = useSerializedState(
+  const [state = "", dispatch] = useStreamable(
     historyHashStateStore,
-    identity,
-    identity,
   );
 
   const onChange = useCallback(

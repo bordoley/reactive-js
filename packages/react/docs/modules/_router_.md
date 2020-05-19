@@ -1,4 +1,4 @@
-[@reactive-js/react - v0.0.37](../README.md) › ["router"](_router_.md)
+[@reactive-js/react - v0.0.38](../README.md) › ["router"](_router_.md)
 
 # Module: "router"
 

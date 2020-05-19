@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.37](../README.md) › ["stateStore"](_statestore_.md)
+[@reactive-js/core - v0.0.38](../README.md) › ["stateStore"](_statestore_.md)
 
 # Module: "stateStore"
 
@@ -11,6 +11,7 @@
 ### Functions
 
 * [createStateStore](_statestore_.md#const-createstatestore)
+* [map](_statestore_.md#const-map)
 * [toStateStore](_statestore_.md#const-tostatestore)
 
 ## Functions
@@ -35,6 +36,28 @@ Name | Type | Description |
 `equals?` | [Equality](_functions_.md#equality)‹T› | Optional equality function that is used to compare if a state value is distinct from the previous one.  |
 
 **Returns:** *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹T›*
+
+___
+
+### `Const` map
+
+▸ **map**<**TA**, **TB**>(`store`: [StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹TA›, `parse`: [Function1](_functions_.md#function1)‹TA, TB›, `serialize`: [Function1](_functions_.md#function1)‹TB, TA›): *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹TB›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`store` | [StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹TA› |
+`parse` | [Function1](_functions_.md#function1)‹TA, TB› |
+`serialize` | [Function1](_functions_.md#function1)‹TB, TA› |
+
+**Returns:** *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹TB›*
 
 ___
 

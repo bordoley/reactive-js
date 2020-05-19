@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.37](../README.md) › ["scheduler"](../modules/_scheduler_.md) › [YieldError](_scheduler_.yielderror.md)
+[@reactive-js/core - v0.0.38](../README.md) › ["scheduler"](../modules/_scheduler_.md) › [YieldError](_scheduler_.yielderror.md)
 
 # Class: YieldError
 
