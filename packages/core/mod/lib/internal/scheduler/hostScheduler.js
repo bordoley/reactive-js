@@ -1,7 +1,6 @@
 import { createDisposable, dispose, addDisposable, addTeardown, } from "../../disposable.js";
 import { defer } from "../../functions.js";
-import { YieldError, } from "./interfaces.js";
-import { runContinuation } from "./schedulerContinuation.js";
+import { continue$ } from "./schedulerContinuation.js";
 const supportsPerformanceNow = typeof performance === "object" && typeof performance.now === "function";
 const supportsProcessHRTime = typeof process === "object" && typeof process.hrtime === "function";
 const supportsMessageChannel = typeof MessageChannel === "function";
@@ -48,7 +47,7 @@ const createCallback = (scheduler, continuation) => () => {
     if (!continuation.isDisposed) {
         scheduler.inContinuation = true;
         scheduler.startTime = scheduler.now;
-        runContinuation(scheduler, continuation);
+        continue$(continuation);
         scheduler.inContinuation = false;
     }
 };
@@ -61,6 +60,9 @@ class HostScheduler {
     get now() {
         return now();
     }
+    get shouldYield() {
+        return this.now > this.startTime + this.yieldInterval;
+    }
     schedule(continuation, { delay } = { delay: 0 }) {
         if (!continuation.isDisposed) {
             const callback = createCallback(this, continuation);
@@ -68,11 +70,6 @@ class HostScheduler {
                 ? scheduleDelayed(callback, delay)
                 : scheduleImmediate(callback);
             addDisposable(continuation, callbackSubscription);
-        }
-    }
-    yield({ delay } = { delay: 0 }) {
-        if (delay > 0 || this.now > this.startTime + this.yieldInterval) {
-            throw new YieldError(delay);
         }
     }
 }

@@ -10,10 +10,7 @@ import { none, Option, isSome } from "../../option";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationRunStatusChangedListenerLike,
-  YieldError,
   SchedulerLike,
-  PrioritySchedulerLike,
-  YieldableLike,
 } from "./interfaces";
 
 const notifyListeners = (
@@ -27,13 +24,21 @@ const notifyListeners = (
 
 const isYieldError = (e: unknown): e is YieldError => e instanceof YieldError;
 
-class SchedulerContinuationImpl extends AbstractDisposable
+class YieldError {
+  constructor(readonly delay: number) {}
+}
+
+class SchedulerContinuationImpl<T extends SchedulerLike>
+  extends AbstractDisposable
   implements SchedulerContinuationLike {
   private listeners: Set<
     SchedulerContinuationRunStatusChangedListenerLike
   > = new Set();
 
-  constructor(private readonly f: SideEffect1<YieldableLike>) {
+  constructor(
+    private readonly scheduler: T,
+    private readonly f: SideEffect1<T>,
+  ) {
     super();
 
     addTeardown(this, _e => {
@@ -57,7 +62,7 @@ class SchedulerContinuationImpl extends AbstractDisposable
     this.listeners.delete(listener);
   }
 
-  continue(state: YieldableLike) {
+  continue() {
     if (!this.isDisposed) {
       const listeners = this.listeners;
       let error: Option<Exception> = none;
@@ -65,7 +70,7 @@ class SchedulerContinuationImpl extends AbstractDisposable
 
       notifyListeners(listeners, true);
       try {
-        this.f(state);
+        this.f(this.scheduler);
       } catch (cause) {
         if (isYieldError(cause)) {
           yieldError = cause;
@@ -76,7 +81,7 @@ class SchedulerContinuationImpl extends AbstractDisposable
       notifyListeners(listeners, false);
 
       if (isSome(yieldError)) {
-        throw yieldError;
+        this.scheduler.schedule(this, yieldError);
       } else {
         dispose(this, error);
       }
@@ -84,37 +89,20 @@ class SchedulerContinuationImpl extends AbstractDisposable
   }
 }
 
-export const runContinuation = (
-  scheduler: SchedulerLike,
-  continuation: SchedulerContinuationLike,
-): void => {
-  try {
-    continuation.continue(scheduler);
-  } catch (cause) {
-    if (isYieldError(cause)) {
-      scheduler.schedule(continuation, cause);
-    } else {
-      continuation.dispose({ cause });
-    }
-  }
+export const continue$ = (continuation: SchedulerContinuationLike): void => {
+  continuation.continue();
 };
 
-export const schedule = (
-  scheduler: SchedulerLike,
-  f: SideEffect1<YieldableLike>,
+export const yield$ = (delay: number) => {
+  throw new YieldError(delay);
+};
+
+export const schedule = <T extends SchedulerLike>(
+  scheduler: T,
+  f: SideEffect1<T>,
   options = { delay: 0 },
 ): DisposableLike => {
-  const continuation = new SchedulerContinuationImpl(f);
-  scheduler.schedule(continuation, options);
-  return continuation;
-};
-
-export const scheduleWithPriority = (
-  scheduler: PrioritySchedulerLike,
-  f: SideEffect1<YieldableLike>,
-  options: { priority: number; delay?: number },
-): DisposableLike => {
-  const continuation = new SchedulerContinuationImpl(f);
+  const continuation = new SchedulerContinuationImpl(scheduler, f);
   scheduler.schedule(continuation, options);
   return continuation;
 };

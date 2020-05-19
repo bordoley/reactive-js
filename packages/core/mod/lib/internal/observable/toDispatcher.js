@@ -1,5 +1,6 @@
 import { AbstractDisposable, dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, addTeardown, addDisposable, } from "../../disposable.js";
 import { schedule } from "../../scheduler.js";
+import { yield$ } from "./observer.js";
 const scheduleDrainQueue = (dispatcher) => {
     if (dispatcher.nextQueue.length === 1) {
         const { observer } = dispatcher;
@@ -12,19 +13,12 @@ class ObserverDelegatingDispatcher extends AbstractDisposable {
     constructor(observer) {
         super();
         this.observer = observer;
-        this.continuation = ($) => {
+        this.continuation = () => {
             const nextQueue = this.nextQueue;
             const observer = this.observer;
-            let observerIsDisposed = observer.isDisposed;
-            let nextQueueLength = nextQueue.length;
-            while (nextQueueLength > 0 && !observerIsDisposed) {
+            while (nextQueue.length > 0) {
                 const next = nextQueue.shift();
-                observer.notify(next);
-                observerIsDisposed = observer.isDisposed;
-                nextQueueLength = nextQueue.length;
-                if (nextQueueLength > 0 && !observerIsDisposed) {
-                    $.yield();
-                }
+                yield$(observer, next);
             }
         };
         this.onContinuationDispose = () => {

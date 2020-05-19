@@ -1,6 +1,7 @@
 import { pipe, SideEffect2 } from "../../../../../core/mod/lib/functions.ts";
 import { parseWith } from "../../../../../core/mod/lib/internal/parserCombinators.ts";
 import { isNone, none, Option } from "../../../../../core/mod/lib/option.ts";
+import { join } from "../../../../../core/mod/lib/readonlyArray.ts";
 import { pToken, httpList } from "./httpGrammar.ts";
 import { getHeaderValue, HttpStandardHeader } from "./httpHeaders.ts";
 import {
@@ -15,7 +16,6 @@ import {
   parseMediaTypeOrThrow,
   mediaTypeIsCompressible,
 } from "./mediaType.ts";
-import { join } from "../../../../../core/mod/lib/readonlyArray.ts";
 
 const parseTokenList = pipe(pToken, httpList, parseWith);
 

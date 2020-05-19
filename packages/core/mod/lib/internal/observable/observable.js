@@ -7,8 +7,8 @@ class ScheduledObservable {
         this.delay = delay;
     }
     observe(observer) {
-        const continuation = this.f(observer);
-        const schedulerSubscription = schedule(observer, continuation, this);
+        const callback = this.f();
+        const schedulerSubscription = schedule(observer, callback, this);
         addOnDisposedWithError(schedulerSubscription, observer);
     }
 }

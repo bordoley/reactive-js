@@ -24,9 +24,7 @@ export const keep = <T>(
   predicate: Predicate<T>,
 ): ReadonlyArrayOperator<T, T> => arr => arr.filter(predicate);
 
-export const length = (
-  arr: readonly unknown[],
-): number => arr.length;
+export const length = (arr: readonly unknown[]): number => arr.length;
 
 export const map = <TA, TB>(
   mapper: Function1<TA, TB>,

@@ -1,7 +1,6 @@
 import { dispose } from "../../disposable";
 import { Function1, Factory } from "../../functions";
 import { none } from "../../option";
-import { YieldableLike } from "../scheduler/interfaces";
 import { ObservableLike, ObserverLike } from "./interfaces";
 import {
   createScheduledObservable,
@@ -17,7 +16,7 @@ import {
 export const throws = <T>(
   { delay }: { delay: number } = { delay: 0 },
 ): Function1<Factory<unknown>, ObservableLike<T>> => errorFactory => {
-  const factory = (observer: ObserverLike<T>) => (_: YieldableLike) => {
+  const factory = () => (observer: ObserverLike<T>) => {
     let cause: unknown = none;
     try {
       cause = errorFactory();

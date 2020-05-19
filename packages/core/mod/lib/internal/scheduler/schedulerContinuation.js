@@ -1,15 +1,20 @@
 import { AbstractDisposable, addTeardown, dispose, } from "../../disposable.js";
 import { none, isSome } from "../../option.js";
-import { YieldError, } from "./interfaces.js";
 const notifyListeners = (listeners, state) => {
     for (const listener of listeners) {
         listener.onRunStatusChanged(state);
     }
 };
 const isYieldError = (e) => e instanceof YieldError;
+class YieldError {
+    constructor(delay) {
+        this.delay = delay;
+    }
+}
 class SchedulerContinuationImpl extends AbstractDisposable {
-    constructor(f) {
+    constructor(scheduler, f) {
         super();
+        this.scheduler = scheduler;
         this.f = f;
         this.listeners = new Set();
         addTeardown(this, _e => {
@@ -24,14 +29,14 @@ class SchedulerContinuationImpl extends AbstractDisposable {
     removeListener(_ev, listener) {
         this.listeners.delete(listener);
     }
-    continue(state) {
+    continue() {
         if (!this.isDisposed) {
             const listeners = this.listeners;
             let error = none;
             let yieldError = none;
             notifyListeners(listeners, true);
             try {
-                this.f(state);
+                this.f(this.scheduler);
             }
             catch (cause) {
                 if (isYieldError(cause)) {
@@ -43,7 +48,7 @@ class SchedulerContinuationImpl extends AbstractDisposable {
             }
             notifyListeners(listeners, false);
             if (isSome(yieldError)) {
-                throw yieldError;
+                this.scheduler.schedule(this, yieldError);
             }
             else {
                 dispose(this, error);
@@ -51,26 +56,14 @@ class SchedulerContinuationImpl extends AbstractDisposable {
         }
     }
 }
-export const runContinuation = (scheduler, continuation) => {
-    try {
-        continuation.continue(scheduler);
-    }
-    catch (cause) {
-        if (isYieldError(cause)) {
-            scheduler.schedule(continuation, cause);
-        }
-        else {
-            continuation.dispose({ cause });
-        }
-    }
+export const continue$ = (continuation) => {
+    continuation.continue();
+};
+export const yield$ = (delay) => {
+    throw new YieldError(delay);
 };
 export const schedule = (scheduler, f, options = { delay: 0 }) => {
-    const continuation = new SchedulerContinuationImpl(f);
-    scheduler.schedule(continuation, options);
-    return continuation;
-};
-export const scheduleWithPriority = (scheduler, f, options) => {
-    const continuation = new SchedulerContinuationImpl(f);
+    const continuation = new SchedulerContinuationImpl(scheduler, f);
     scheduler.schedule(continuation, options);
     return continuation;
 };

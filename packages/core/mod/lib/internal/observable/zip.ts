@@ -11,9 +11,8 @@ import { current, EnumeratorLike } from "../../enumerable.ts";
 import { returns, pipe, defer } from "../../functions.ts";
 import { none, isSome, isNone } from "../../option.ts";
 import { map, everySatisfy } from "../../readonlyArray.ts";
-import { SchedulerContinuationLike, runContinuation } from "../../scheduler.ts";
+import { SchedulerContinuationLike, continue$ } from "../../scheduler.ts";
 import { zipEnumerators } from "../enumerable/zip.ts";
-import { YieldError } from "../scheduler/interfaces.ts";
 import { fromEnumerator } from "./fromEnumerable.ts";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces.ts";
 import { observe } from "./observable.ts";
@@ -27,6 +26,7 @@ class EnumeratorObserver<T> extends AbstractDisposable
   hasCurrent = false;
   inContinuation = false;
   readonly now = 0;
+  readonly shouldYield = true;
 
   move(): boolean {
     const continuations = this.continuations;
@@ -40,7 +40,7 @@ class EnumeratorObserver<T> extends AbstractDisposable
       }
 
       this.inContinuation = true;
-      runContinuation(this, continuation);
+      continue$(continuation);
       this.inContinuation = false;
 
       const error = this.error;
@@ -68,10 +68,6 @@ class EnumeratorObserver<T> extends AbstractDisposable
     } else {
       dispose(continuation);
     }
-  }
-
-  yield() {
-    throw new YieldError(0);
   }
 }
 

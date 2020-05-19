@@ -623,7 +623,7 @@ export const tests = describe(
 
     test(
       "when duration observable throws",
-      defer( 
+      defer(
         defer(
           [1, 2, 3, 4, 5],
           fromArray({ delay: 1 }),

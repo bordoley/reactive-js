@@ -2,17 +2,13 @@ import { dispose } from "../../disposable.js";
 import { enumerate } from "../../enumerable.js";
 import { defer, pipe } from "../../functions.js";
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
+import { yield$ } from "./observer.js";
 export const fromEnumerator = (options = { delay: 0 }) => f => {
-    const factory = (observer) => {
+    const factory = () => {
         const enumerator = f();
-        let observerIsDisposed = observer.isDisposed;
-        return ($) => {
-            while (!observerIsDisposed && enumerator.move()) {
-                observer.notify(enumerator.current);
-                observerIsDisposed = observer.isDisposed;
-                if (!observerIsDisposed) {
-                    $.yield(options);
-                }
+        return (observer) => {
+            while (enumerator.move()) {
+                yield$(observer, enumerator.current, delay);
             }
             dispose(observer);
         };

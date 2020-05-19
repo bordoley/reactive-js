@@ -1,11 +1,10 @@
-import { dispose } from "../../disposable.ts";
 import { Factory, Updater } from "../../functions.ts";
-import { YieldableLike } from "../scheduler/interfaces.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import {
   createScheduledObservable,
   createDelayedScheduledObservable,
 } from "./observable.ts";
+import { yield$ } from "./observer.ts";
 
 /**
  * Generates an `ObservableLike` sequence from a generator function
@@ -21,22 +20,14 @@ export function generate<T>(
   initialValue: Factory<T>,
   options: { delay: number } = { delay: 0 },
 ): ObservableLike<T> {
-  const factory = (observer: ObserverLike<T>) => {
+  const factory = () => {
     let acc = initialValue();
 
-    return ($: YieldableLike) => {
-      let observerIsDisposed = observer.isDisposed;
-
-      while (!observerIsDisposed) {
+    return (observer: ObserverLike<T>) => {
+      while (true) {
         acc = generator(acc);
-        observer.notify(acc);
-
-        observerIsDisposed = observer.isDisposed;
-        if (!observerIsDisposed) {
-          $.yield(options);
-        }
+        yield$(observer, acc, delay);
       }
-      dispose(observer);
     };
   };
 

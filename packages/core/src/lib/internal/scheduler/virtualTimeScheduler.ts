@@ -5,9 +5,8 @@ import {
   SchedulerContinuationLike,
   VirtualTimeSchedulerLike,
   SchedulerLike,
-  YieldError,
 } from "./interfaces";
-import { runContinuation } from "./schedulerContinuation";
+import { continue$ } from "./schedulerContinuation";
 
 type VirtualTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -59,10 +58,15 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable
     super();
   }
 
+  get shouldYield() {
+    this.microTaskTicks++;
+    return this.microTaskTicks >= this.maxMicroTaskTicks;
+  }
+
   run() {
     while (!this.isDisposed && move(this)) {
       this.inContinuation = true;
-      runContinuation(this, this.current);
+      continue$(this.current);
       this.inContinuation = false;
     }
 
@@ -81,14 +85,6 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable
         continuation,
       };
       this.taskQueue.push(work);
-    }
-  }
-
-  yield({ delay } = { delay: 0 }) {
-    this.microTaskTicks++;
-
-    if (delay > 0 || this.microTaskTicks >= this.maxMicroTaskTicks) {
-      throw new YieldError(delay);
     }
   }
 }

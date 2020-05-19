@@ -1,7 +1,7 @@
 import { addTeardown } from "../../disposable.ts";
+import { pipe } from "../../functions.ts";
 import { createObservable, ObservableLike, dispatch } from "../../observable.ts";
 import { keep } from "../../readonlyArray.ts";
-import { pipe } from "../../functions.ts";
 
 const reservedEvents = ["error", "open"];
 
@@ -16,7 +16,10 @@ export const createEventSource = (
   data: string;
 }> => {
   const { events: eventsOption = ["message"] } = options;
-  const events = pipe(eventsOption, keep(x => !reservedEvents.includes(x)));
+  const events = pipe(
+    eventsOption,
+    keep(x => !reservedEvents.includes(x)),
+  );
   const requestURL = url instanceof URL ? url.toString() : url;
 
   return createObservable(dispatcher => {

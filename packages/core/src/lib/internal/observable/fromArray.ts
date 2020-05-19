@@ -1,11 +1,11 @@
 import { dispose } from "../../disposable";
 import { Function1 } from "../../functions";
-import { YieldableLike } from "../scheduler/interfaces";
 import { ObservableLike, ObserverLike } from "./interfaces";
 import {
   createScheduledObservable,
   createDelayedScheduledObservable,
 } from "./observable";
+import { yield$ } from "./observer";
 
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
@@ -24,21 +24,14 @@ export const fromArray = <T>(
   const valuesLength = values.length;
   const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
 
-  const factory = (observer: ObserverLike<T>) => {
-    const yieldOptions = { delay };
-
+  const factory = () => {
     let index = startIndex;
-    let observerIsDisposed = observer.isDisposed;
 
-    return ($: YieldableLike) => {
-      while (index < valuesLength && !observerIsDisposed) {
-        observer.notify(values[index]);
+    return (observer: ObserverLike<T>) => {
+      while (index < valuesLength) {
+        const value = values[index];
         index++;
-
-        observerIsDisposed = observer.isDisposed;
-        if (index < valuesLength && !observerIsDisposed) {
-          $.yield(yieldOptions);
-        }
+        yield$(observer, value, index < valuesLength ? delay : 0);
       }
       dispose(observer);
     };

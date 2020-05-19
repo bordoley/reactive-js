@@ -1,12 +1,12 @@
 import { dispose } from "../../disposable";
 import { EnumeratorLike, EnumerableLike, enumerate } from "../../enumerable";
 import { Function1, Factory, defer, pipe } from "../../functions";
-import { YieldableLike } from "../scheduler/interfaces";
 import { ObservableLike, ObserverLike } from "./interfaces";
 import {
   createScheduledObservable,
   createDelayedScheduledObservable,
 } from "./observable";
+import { yield$ } from "./observer";
 
 /**
  * Creates an `ObservableLike` which enumerates through the values
@@ -17,19 +17,12 @@ import {
 export const fromEnumerator = <T>(
   options = { delay: 0 },
 ): Function1<Factory<EnumeratorLike<T>>, ObservableLike<T>> => f => {
-  const factory = (observer: ObserverLike<T>) => {
+  const factory = () => {
     const enumerator = f();
 
-    let observerIsDisposed = observer.isDisposed;
-
-    return ($: YieldableLike) => {
-      while (!observerIsDisposed && enumerator.move()) {
-        observer.notify(enumerator.current);
-
-        observerIsDisposed = observer.isDisposed;
-        if (!observerIsDisposed) {
-          $.yield(options);
-        }
+    return (observer: ObserverLike<T>) => {
+      while (enumerator.move()) {
+        yield$(observer, enumerator.current, delay);
       }
       dispose(observer);
     };

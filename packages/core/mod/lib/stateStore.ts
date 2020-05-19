@@ -75,9 +75,7 @@ export const toStateStore = <T>(
 const requestMapper = <TA, TB>(
   parse: Function1<TA, TB>,
   serialize: Function1<TB, TA>,
-) => (
-  stateUpdater: Updater<TB>,
-): Updater<TA> => oldStateTA => {
+) => (stateUpdater: Updater<TB>): Updater<TA> => oldStateTA => {
   const oldStateTB = parse(oldStateTA);
   const newStateTB = stateUpdater(oldStateTB);
 
