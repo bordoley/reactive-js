@@ -16,6 +16,7 @@
 * [gunzip](_node_.md#const-gunzip)
 * [gzip](_node_.md#const-gzip)
 * [inflate](_node_.md#const-inflate)
+* [readFileIOSource](_node_.md#const-readfileiosource)
 * [transform](_node_.md#const-transform)
 
 ## Functions
@@ -851,6 +852,28 @@ Name | Type | Default |
 `options` | ZlibOptions | {} |
 
 **Returns:** *[IOSourceOperator](_io_.md#iosourceoperator)‹Uint8Array, Uint8Array›*
+
+___
+
+### `Const` readFileIOSource
+
+▸ **readFileIOSource**(`path`: fs.PathLike, `options?`: object): *[IOSourceLike](../interfaces/_io_.iosourcelike.md)‹Uint8Array‹››*
+
+**Parameters:**
+
+▪ **path**: *fs.PathLike*
+
+▪`Optional`  **options**: *object*
+
+Name | Type |
+------ | ------ |
+`end?` | number |
+`flags?` | string |
+`highWaterMark?` | number |
+`mode?` | number |
+`start?` | number |
+
+**Returns:** *[IOSourceLike](../interfaces/_io_.iosourcelike.md)‹Uint8Array‹››*
 
 ___
 
