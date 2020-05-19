@@ -7,8 +7,8 @@ import {
   Function1,
   returns,
   increment,
-  compose,
   defer,
+  compose,
 } from "@reactive-js/core/lib/functions";
 import {
   encodeUtf8,
@@ -45,6 +45,7 @@ import {
   HttpMethod,
   createHttpRequest,
   createHttpResponse,
+  createHttpErrorResponse,
   decodeHttpRequestContent,
   disallowProtocolAndHostForwarding,
   HttpResponse,
@@ -192,13 +193,9 @@ const listener = createHttpRequestListener(
   req =>
     pipe(
       req,
+      disallowProtocolAndHostForwarding(),
+      decodeHttpRequestContent(createContentEncodingDecompressTransforms()),
       fromValue(),
-      map(
-        compose(
-          disallowProtocolAndHostForwarding(),
-          decodeHttpRequestContent(createContentEncodingDecompressTransforms()),
-        ),
-      ),
       await_(router),
       map(
         encodeHttpResponseContent(
@@ -206,32 +203,25 @@ const listener = createHttpRequestListener(
           db,
         )(req),
       ),
-      catchError((e: unknown) => {
-        const body =
-          process.env.NODE_ENV === "production"
-            ? ""
-            : e instanceof Error && isSome(e.stack)
-            ? e.stack
-            : String(e);
-
-        const statusCode =
-          e instanceof URIError
-            ? HttpStatusCode.BadRequest
-            : HttpStatusCode.InternalServerError;
-
-        return pipe(
-          createHttpResponse({
-            statusCode,
+      catchError(
+        compose(
+          createHttpErrorResponse,
+          resp => createHttpResponse({
+            ...resp,
             contentInfo: {
               contentType: "text/plain",
             },
-            body,
+            body: process.env.NODE_ENV === "production"
+              ? ""
+              : resp.body instanceof Error && isSome(resp.body.stack)
+              ? resp.body.stack
+              : String(resp.body),
           }),
           encodeHttpResponseWithUtf8,
           toIOSourceHttpResponse,
           fromValue(),
-        );
-      }),
+        )
+      ),
     ),
   scheduler,
 );

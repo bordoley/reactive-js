@@ -33,6 +33,7 @@ export {
 export {
   checkIfNotModified,
   createHttpResponse,
+  createHttpErrorResponse,
   decodeHttpResponseContent,
   decodeHttpResponseWithCharset,
   encodeHttpResponseWithUtf8,

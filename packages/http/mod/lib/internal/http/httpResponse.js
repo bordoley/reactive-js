@@ -174,3 +174,12 @@ export const encodeHttpResponseContent = (encoderProvider, db = {}) => {
         };
     };
 };
+export const createHttpErrorResponse = (e) => {
+    const statusCode = e instanceof URIError
+        ? 400
+        : 500;
+    return createHttpResponse({
+        statusCode,
+        body: e,
+    });
+};

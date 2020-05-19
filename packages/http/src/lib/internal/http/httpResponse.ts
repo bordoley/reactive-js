@@ -393,3 +393,15 @@ export const encodeHttpResponseContent = (
     };
   };
 };
+
+export const createHttpErrorResponse = (e: unknown): HttpResponse<unknown> => {
+  const statusCode =
+    e instanceof URIError
+      ? HttpStatusCode.BadRequest
+      : HttpStatusCode.InternalServerError;
+
+  return createHttpResponse({
+    statusCode,
+    body: e,
+  });
+};
