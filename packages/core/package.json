@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/core",
-  "version": "0.0.37",
+  "version": "0.0.38",
   "keywords": [
     "asynchronous",
     "data flow",
@@ -37,12 +37,12 @@
   },
   "devDependencies": {
     "@types/node": "13.13.2",
+    "benchmark": "^2.1.4",
     "jest": "^24.9.0",
     "renamer": "^2.0.0",
     "replace": "^1.2.0",
-    "ts-jest": "^24.1.0",
-    "benchmark": "^2.1.4",
-    "rxjs": "^6.5.3"
+    "rxjs": "^6.5.3",
+    "ts-jest": "^24.1.0"
   },
   "scripts": {
     "build": "yarn compile && yarn lib && yarn mod && yarn docs",
