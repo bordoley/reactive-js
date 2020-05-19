@@ -1,10 +1,10 @@
 {
   "name": "@reactive-js/example",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "private": true,
   "dependencies": {
-    "@reactive-js/core": "^0.0.40",
-    "@reactive-js/http": "^0.0.40",
+    "@reactive-js/core": "^0.0.41",
+    "@reactive-js/http": "^0.0.41",
     "@reactive-js/web": "^0.0.37",
     "mime-db": "^1.43.0",
     "mime-types": "^2.1.26",
