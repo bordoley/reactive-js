@@ -9,8 +9,6 @@ import {
   compose,
   defer,
   returns,
-  Function1,
-  Updater,
 } from "@reactive-js/core/lib/functions";
 import {
   dispatch as dispatchToStream,
@@ -24,14 +22,11 @@ import {
 } from "@reactive-js/core/lib/observable";
 import { none, Option, isSome } from "@reactive-js/core/lib/option";
 import { SchedulerLike } from "@reactive-js/core/lib/scheduler";
-import { StateStoreLike } from "@reactive-js/core/lib/stateStore";
 import {
   StreamableLike,
-  mapReq,
-  map,
   stream as streamableStream,
 } from "@reactive-js/core/lib/streamable";
-import { useCallback, useEffect, useRef, useState, useMemo } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { normalPriority } from "./scheduler";
 
 const subscribeObservable = <T>(
@@ -123,29 +118,4 @@ export const useStreamable = <TReq, T>(
 
   const value = useObservable(stream ?? never<T>(), stateScheduler);
   return [value, dispatch];
-};
-
-const requestMapper = <TSerialized, TState>(
-  parse: Function1<TSerialized, TState>,
-  serialize: Function1<TState, TSerialized>,
-) => (
-  stateUpdater: Updater<TState>,
-): Updater<TSerialized> => oldStateString => {
-  const oldState = parse(oldStateString);
-  const newState = stateUpdater(oldState);
-
-  return oldState === newState ? oldStateString : serialize(newState);
-};
-
-export const useSerializedState = <TSerialized, TState>(
-  store: StateStoreLike<TSerialized>,
-  parse: Function1<TSerialized, TState>,
-  serialize: Function1<TState, TSerialized>,
-): [Option<TState>, SideEffect1<Updater<TState>>] => {
-  const mappedStore = useMemo(
-    defer(store, mapReq(requestMapper(parse, serialize)), map(parse)),
-    [store, parse, serialize],
-  );
-
-  return useStreamable(mappedStore, { replay: 1 });
 };

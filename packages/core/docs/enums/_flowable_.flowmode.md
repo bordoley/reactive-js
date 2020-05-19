@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.37](../README.md) › ["flowable"](../modules/_flowable_.md) › [FlowMode](_flowable_.flowmode.md)
+[@reactive-js/core - v0.0.38](../README.md) › ["flowable"](../modules/_flowable_.md) › [FlowMode](_flowable_.flowmode.md)
 
 # Enumeration: FlowMode
 

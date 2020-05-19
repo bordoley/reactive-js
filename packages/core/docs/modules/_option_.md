@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.37](../README.md) › ["option"](_option_.md)
+[@reactive-js/core - v0.0.38](../README.md) › ["option"](_option_.md)
 
 # Module: "option"
 

@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.37](../README.md) › ["observable"](../modules/_observable_.md) › [ThrottleMode](_observable_.throttlemode.md)
+[@reactive-js/core - v0.0.38](../README.md) › ["observable"](../modules/_observable_.md) › [ThrottleMode](_observable_.throttlemode.md)
 
 # Enumeration: ThrottleMode
 

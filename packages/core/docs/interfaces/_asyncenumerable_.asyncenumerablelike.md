@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.37](../README.md) › ["asyncEnumerable"](../modules/_asyncenumerable_.md) › [AsyncEnumerableLike](_asyncenumerable_.asyncenumerablelike.md)
+[@reactive-js/core - v0.0.38](../README.md) › ["asyncEnumerable"](../modules/_asyncenumerable_.md) › [AsyncEnumerableLike](_asyncenumerable_.asyncenumerablelike.md)
 
 # Interface: AsyncEnumerableLike <**T**>
 

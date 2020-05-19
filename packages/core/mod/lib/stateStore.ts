@@ -7,6 +7,7 @@ import {
   strictEquality,
   Updater,
   updaterReducer,
+  Function1,
 } from "./functions.ts";
 import {
   onNotify,
@@ -22,6 +23,8 @@ import {
   StreamableOperator,
   createStreamable,
   stream as streamStreamable,
+  mapReq,
+  map as mapStream,
 } from "./streamable.ts";
 
 /** @noInheritDoc */
@@ -68,3 +71,22 @@ export const toStateStore = <T>(
       return stream;
     }, identity),
   );
+
+const requestMapper = <TA, TB>(
+  parse: Function1<TA, TB>,
+  serialize: Function1<TB, TA>,
+) => (
+  stateUpdater: Updater<TB>,
+): Updater<TA> => oldStateTA => {
+  const oldStateTB = parse(oldStateTA);
+  const newStateTB = stateUpdater(oldStateTB);
+
+  return oldStateTB === newStateTB ? oldStateTA : serialize(newStateTB);
+};
+
+export const map = <TA, TB>(
+  store: StateStoreLike<TA>,
+  parse: Function1<TA, TB>,
+  serialize: Function1<TB, TA>,
+): StateStoreLike<TB> =>
+  pipe(store, mapReq(requestMapper(parse, serialize)), mapStream(parse));
