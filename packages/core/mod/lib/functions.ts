@@ -58,6 +58,11 @@ export type Function9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T> = (
 export type SideEffect = () => void;
 export type SideEffect1<TA> = (a: TA) => void;
 export type SideEffect2<TA, TB> = (a: TA, b: TB) => void;
+export type SideEffect3<TA, TB, TC> = (a: TA, b: TB, c: TC) => void;
+export type SideEffect4<TA, TB, TC, TD> = (a: TA, b: TB, c: TC, d: TD) => void;
+export type SideEffect5<TA, TB, TC, TD, TE> = (a: TA, b: TB, c: TC, d: TD, e: TE) => void;
+export type SideEffect6<TA, TB, TC, TD, TE, TF> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF) => void;
+export type SideEffect7<TA, TB, TC, TD, TE, TF, TG> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG) => void;
 
 export function callWith<T>(): Function1<Factory<T>, T>;
 export function callWith<TA, T>(a: TA): Function1<Function1<TA, T>, T>;
