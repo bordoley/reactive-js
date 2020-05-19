@@ -23,6 +23,11 @@
 * [SideEffect](_functions_.md#sideeffect)
 * [SideEffect1](_functions_.md#sideeffect1)
 * [SideEffect2](_functions_.md#sideeffect2)
+* [SideEffect3](_functions_.md#sideeffect3)
+* [SideEffect4](_functions_.md#sideeffect4)
+* [SideEffect5](_functions_.md#sideeffect5)
+* [SideEffect6](_functions_.md#sideeffect6)
+* [SideEffect7](_functions_.md#sideeffect7)
 * [TypePredicate](_functions_.md#typepredicate)
 * [Updater](_functions_.md#updater)
 
@@ -354,6 +359,106 @@ Name | Type |
 ------ | ------ |
 `a` | TA |
 `b` | TB |
+
+___
+
+###  SideEffect3
+
+Ƭ **SideEffect3**: *function*
+
+#### Type declaration:
+
+▸ (`a`: TA, `b`: TB, `c`: TC): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+
+___
+
+###  SideEffect4
+
+Ƭ **SideEffect4**: *function*
+
+#### Type declaration:
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+
+___
+
+###  SideEffect5
+
+Ƭ **SideEffect5**: *function*
+
+#### Type declaration:
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+
+___
+
+###  SideEffect6
+
+Ƭ **SideEffect6**: *function*
+
+#### Type declaration:
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+`f` | TF |
+
+___
+
+###  SideEffect7
+
+Ƭ **SideEffect7**: *function*
+
+#### Type declaration:
+
+▸ (`a`: TA, `b`: TB, `c`: TC, `d`: TD, `e`: TE, `f`: TF, `g`: TG): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`a` | TA |
+`b` | TB |
+`c` | TC |
+`d` | TD |
+`e` | TE |
+`f` | TF |
+`g` | TG |
 
 ___
 

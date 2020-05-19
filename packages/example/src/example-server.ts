@@ -128,7 +128,8 @@ const routerHandlerFiles: HttpServer<
   const contentType = mime.lookup(path) || "application/octet-stream";
 
   return pipe(
-    bindNodeCallback(fs.stat, (r: fs.Stats) => r)(path),
+    path,
+    bindNodeCallback<fs.PathLike, fs.Stats>(fs.stat),
     map(next =>
       next.isFile() && !next.isDirectory()
         ? createHttpResponse({
@@ -286,7 +287,7 @@ pipe(
 const file = "packages/example/build/bundle.js";
 pipe(
   file,
-  bindNodeCallback(fs.stat, (r: fs.Stats) => r),
+  bindNodeCallback<fs.PathLike,fs.Stats>(fs.stat),
   map(stats =>
     createHttpRequest({
       method: HttpMethod.POST,
