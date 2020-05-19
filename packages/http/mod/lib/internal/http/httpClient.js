@@ -1,8 +1,9 @@
 import { dispose } from "../../../../../core/mod/lib/disposable.js";
-import { pipe, identity } from "../../../../../core/mod/lib/functions.js";
+import { pipe } from "../../../../../core/mod/lib/functions.js";
 import { fromValue, map, switchMap, concatMap, } from "../../../../../core/mod/lib/observable.js";
-import { isSome } from "../../../../../core/mod/lib/option.js";
+import { isSome, isNone, none } from "../../../../../core/mod/lib/option.js";
 import { createRedirectHttpRequest } from "./httpRequest.js";
+import { contentIsCompressible } from "./httpContentInfo.js";
 const redirectCodes = [
     301,
     302,
@@ -10,8 +11,38 @@ const redirectCodes = [
     307,
     308,
 ];
-export const withDefaultBehaviors = (encodeHttpRequest = identity) => (httpClient) => {
-    const sendRequest = (request) => pipe(request, fromValue(), map(encodeHttpRequest), switchMap(httpClient), concatMap(status => {
+const encodeHttpClientRequestContent = (encoderProvider, db = {}) => {
+    const supportedEncodings = Object.keys(encoderProvider);
+    const httpRequestIsCompressible = ({ contentInfo, }) => isSome(contentInfo) && contentIsCompressible(contentInfo, db);
+    return request => {
+        var _a;
+        const { body, contentInfo } = request;
+        if (isNone(contentInfo)) {
+            return request;
+        }
+        const contentEncoding = ((_a = request === null || request === void 0 ? void 0 : request.acceptedEncodings) !== null && _a !== void 0 ? _a : []).find(encoding => supportedEncodings.includes(encoding));
+        if (isNone(contentEncoding)) {
+            return request;
+        }
+        const encode = isSome(contentEncoding) && httpRequestIsCompressible(request)
+            ? encoderProvider[contentEncoding]
+            : none;
+        if (isNone(encode)) {
+            return request;
+        }
+        return {
+            ...request,
+            body: encode(body),
+            contentInfo: {
+                contentType: contentInfo.contentType,
+                contentEncodings: [contentEncoding],
+                contentLength: -1,
+            },
+        };
+    };
+};
+export const withDefaultBehaviors = (encoderProvider, db = {}) => httpClient => {
+    const sendRequest = (request) => pipe(request, fromValue(), map(encodeHttpClientRequestContent(encoderProvider, db)), switchMap(httpClient), concatMap(status => {
         var _a, _b;
         if (status.type === 4) {
             const { response } = status;

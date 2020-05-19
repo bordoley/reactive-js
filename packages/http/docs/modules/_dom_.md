@@ -1,4 +1,4 @@
-[@reactive-js/http - v0.0.40](../README.md) › ["dom"](_dom_.md)
+[@reactive-js/http - v0.0.41](../README.md) › ["dom"](_dom_.md)
 
 # Module: "dom"
 

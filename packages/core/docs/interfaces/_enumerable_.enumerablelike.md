@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.40](../README.md) › ["enumerable"](../modules/_enumerable_.md) › [EnumerableLike](_enumerable_.enumerablelike.md)
+[@reactive-js/core - v0.0.41](../README.md) › ["enumerable"](../modules/_enumerable_.md) › [EnumerableLike](_enumerable_.enumerablelike.md)
 
 # Interface: EnumerableLike <**T**>
 

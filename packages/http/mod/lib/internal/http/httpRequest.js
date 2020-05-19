@@ -3,7 +3,7 @@ import { isNone, isSome, none } from "../../../../../core/mod/lib/option.js";
 import { map, reduceRight } from "../../../../../core/mod/lib/readonlyArray.js";
 import { writeHttpMessageHeaders, encodeHttpMessageWithUtf8, toIOSourceHttpMessage, decodeHttpMessageWithCharset, } from "./HttpMessage.js";
 import { parseCacheControlFromHeaders, parseCacheDirectiveOrThrow, } from "./cacheDirective.js";
-import { parseHttpContentInfoFromHeaders, contentIsCompressible, createHttpContentInfo, } from "./httpContentInfo.js";
+import { parseHttpContentInfoFromHeaders, createHttpContentInfo, } from "./httpContentInfo.js";
 import { getHeaderValue, filterHeaders, } from "./httpHeaders.js";
 import { parseHttpPreferencesFromHeaders, createHttpPreferences, } from "./httpPreferences.js";
 import { writeHttpRequestPreconditionsHeaders, parseHttpRequestPreconditionsFromHeaders, createHttpRequestPreconditions, } from "./httpRequestPreconditions.js";
@@ -145,34 +145,4 @@ export const decodeHttpRequestContent = (decoderProvider) => req => {
     else {
         return req;
     }
-};
-export const encodeHttpClientRequestContent = (encoderProvider, db = {}) => {
-    const supportedEncodings = Object.keys(encoderProvider);
-    const httpRequestIsCompressible = ({ contentInfo, }) => isSome(contentInfo) && contentIsCompressible(contentInfo, db);
-    return request => {
-        var _a;
-        const { body, contentInfo } = request;
-        if (isNone(contentInfo)) {
-            return request;
-        }
-        const contentEncoding = ((_a = request === null || request === void 0 ? void 0 : request.acceptedEncodings) !== null && _a !== void 0 ? _a : []).find(encoding => supportedEncodings.includes(encoding));
-        if (isNone(contentEncoding)) {
-            return request;
-        }
-        const encode = isSome(contentEncoding) && httpRequestIsCompressible(request)
-            ? encoderProvider[contentEncoding]
-            : none;
-        if (isNone(encode)) {
-            return request;
-        }
-        return {
-            ...request,
-            body: encode(body),
-            contentInfo: {
-                contentType: contentInfo.contentType,
-                contentEncodings: [contentEncoding],
-                contentLength: -1,
-            },
-        };
-    };
 };

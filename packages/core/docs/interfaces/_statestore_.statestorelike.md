@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.40](../README.md) › ["stateStore"](../modules/_statestore_.md) › [StateStoreLike](_statestore_.statestorelike.md)
+[@reactive-js/core - v0.0.41](../README.md) › ["stateStore"](../modules/_statestore_.md) › [StateStoreLike](_statestore_.statestorelike.md)
 
 # Interface: StateStoreLike <**T**>
 

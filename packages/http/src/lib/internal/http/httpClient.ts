@@ -1,5 +1,5 @@
 import { dispose, DisposableLike } from "@reactive-js/core/lib/disposable";
-import { pipe, identity, Function1 } from "@reactive-js/core/lib/functions";
+import { pipe, Function1 } from "@reactive-js/core/lib/functions";
 import {
   ObservableLike,
   fromValue,
@@ -7,7 +7,7 @@ import {
   switchMap,
   concatMap,
 } from "@reactive-js/core/lib/observable";
-import { isSome } from "@reactive-js/core/lib/option";
+import { isSome, isNone, none } from "@reactive-js/core/lib/option";
 import { createRedirectHttpRequest } from "./httpRequest";
 import {
   HttpContentEncoding,
@@ -15,6 +15,8 @@ import {
   HttpResponse,
   HttpStatusCode,
 } from "./interfaces";
+import { IOSourceOperator, IOSourceLike } from "@reactive-js/core/lib/io";
+import { contentIsCompressible } from "./httpContentInfo";
 
 export const enum HttpClientRequestStatusType {
   Start = 1,
@@ -67,21 +69,83 @@ const redirectCodes = [
   HttpStatusCode.PermanentRedirect,
 ];
 
-export const withDefaultBehaviors = <TReq, TResp extends DisposableLike>(
-  encodeHttpRequest: Function1<
-    HttpClientRequest<TReq>,
-    HttpClientRequest<TReq>
-  > = identity,
-) => (
-  httpClient: HttpClient<HttpClientRequest<TReq>, TResp>,
-): HttpClient<HttpClientRequest<TReq>, TResp> => {
+const encodeHttpClientRequestContent = (
+  encoderProvider: {
+    [key: string]: IOSourceOperator<Uint8Array, Uint8Array>;
+  },
+  db: {
+    [key: string]: {
+      compressible?: boolean;
+    };
+  } = {},
+): Function1<
+  HttpClientRequest<IOSourceLike<Uint8Array>>,
+  HttpClientRequest<IOSourceLike<Uint8Array>>
+> => {
+  const supportedEncodings = Object.keys(encoderProvider);
+
+  const httpRequestIsCompressible = <T>({
+    contentInfo,
+  }: HttpRequest<T>): boolean =>
+    isSome(contentInfo) && contentIsCompressible(contentInfo, db);
+
+  return request => {
+    const { body, contentInfo } = request;
+
+    if (isNone(contentInfo)) {
+      return request;
+    }
+
+    const contentEncoding = (request?.acceptedEncodings ?? []).find(encoding =>
+      supportedEncodings.includes(encoding),
+    );
+
+    if (isNone(contentEncoding)) {
+      return request;
+    }
+
+    const encode =
+      isSome(contentEncoding) && httpRequestIsCompressible(request)
+        ? encoderProvider[contentEncoding]
+        : none;
+
+    if (isNone(encode)) {
+      return request;
+    }
+
+    return {
+      ...request,
+      body: encode(body),
+      contentInfo: {
+        contentType: contentInfo.contentType,
+        contentEncodings: [contentEncoding],
+        contentLength: -1,
+      },
+    };
+  };
+};
+
+
+export const withDefaultBehaviors = <TResp extends DisposableLike>(
+  encoderProvider: {
+    [key: string]: IOSourceOperator<Uint8Array, Uint8Array>;
+  },
+  db: {
+    [key: string]: {
+      compressible?: boolean;
+    };
+  } = {},
+): Function1<
+  HttpClient<HttpClientRequest<IOSourceLike<Uint8Array>>, TResp>,
+  HttpClient<HttpClientRequest<IOSourceLike<Uint8Array>>, TResp>
+> => httpClient => {
   const sendRequest = (
-    request: HttpClientRequest<TReq>,
+    request: HttpClientRequest<IOSourceLike<Uint8Array>>,
   ): ObservableLike<HttpClientRequestStatus<TResp>> =>
     pipe(
       request,
       fromValue(),
-      map(encodeHttpRequest),
+      map(encodeHttpClientRequestContent(encoderProvider, db)),
       switchMap(httpClient),
       concatMap(status => {
         if (status.type === HttpClientRequestStatusType.HeadersReceived) {

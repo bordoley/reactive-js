@@ -23,7 +23,6 @@ export {
   decodeHttpRequestWithCharset,
   disallowProtocolAndHostForwarding,
   encodeHttpRequestWithUtf8,
-  encodeHttpClientRequestContent,
   httpRequestToUntypedHeaders,
   parseHttpRequestFromHeaders,
   toIOSourceHttpRequest,

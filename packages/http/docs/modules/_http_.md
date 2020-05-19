@@ -1,4 +1,4 @@
-[@reactive-js/http - v0.0.40](../README.md) › ["http"](_http_.md)
+[@reactive-js/http - v0.0.41](../README.md) › ["http"](_http_.md)
 
 # Module: "http"
 
@@ -58,7 +58,6 @@
 * [decodeHttpRequestContent](_http_.md#const-decodehttprequestcontent)
 * [decodeHttpResponseContent](_http_.md#const-decodehttpresponsecontent)
 * [disallowProtocolAndHostForwarding](_http_.md#const-disallowprotocolandhostforwarding)
-* [encodeHttpClientRequestContent](_http_.md#const-encodehttpclientrequestcontent)
 * [encodeHttpResponseContent](_http_.md#const-encodehttpresponsecontent)
 * [httpRequestToUntypedHeaders](_http_.md#const-httprequesttountypedheaders)
 * [parseHeaders](_http_.md#const-parseheaders)
@@ -502,21 +501,6 @@ ___
 
 ___
 
-### `Const` encodeHttpClientRequestContent
-
-▸ **encodeHttpClientRequestContent**(`encoderProvider`: object, `db`: object): *Function1‹[HttpClientRequest](_http_.md#httpclientrequest)‹IOSourceLike‹Uint8Array››, [HttpClientRequest](_http_.md#httpclientrequest)‹IOSourceLike‹Uint8Array›››*
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`encoderProvider` | object | - |
-`db` | object | {} |
-
-**Returns:** *Function1‹[HttpClientRequest](_http_.md#httpclientrequest)‹IOSourceLike‹Uint8Array››, [HttpClientRequest](_http_.md#httpclientrequest)‹IOSourceLike‹Uint8Array›››*
-
-___
-
 ### `Const` encodeHttpResponseContent
 
 ▸ **encodeHttpResponseContent**(`encoderProvider`: object, `db`: object): *(Anonymous function)*
@@ -646,11 +630,9 @@ ___
 
 ### `Const` withDefaultBehaviors
 
-▸ **withDefaultBehaviors**<**TReq**, **TResp**>(`encodeHttpRequest`: Function1‹[HttpClientRequest](_http_.md#httpclientrequest)‹TReq›, [HttpClientRequest](_http_.md#httpclientrequest)‹TReq››): *(Anonymous function)*
+▸ **withDefaultBehaviors**<**TResp**>(`encoderProvider`: object, `db`: object): *Function1‹[HttpClient](_http_.md#httpclient)‹[HttpClientRequest](_http_.md#httpclientrequest)‹IOSourceLike‹Uint8Array››, TResp›, [HttpClient](_http_.md#httpclient)‹[HttpClientRequest](_http_.md#httpclientrequest)‹IOSourceLike‹Uint8Array››, TResp››*
 
 **Type parameters:**
-
-▪ **TReq**
 
 ▪ **TResp**: *DisposableLike*
 
@@ -658,9 +640,10 @@ ___
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`encodeHttpRequest` | Function1‹[HttpClientRequest](_http_.md#httpclientrequest)‹TReq›, [HttpClientRequest](_http_.md#httpclientrequest)‹TReq›› | identity |
+`encoderProvider` | object | - |
+`db` | object | {} |
 
-**Returns:** *(Anonymous function)*
+**Returns:** *Function1‹[HttpClient](_http_.md#httpclient)‹[HttpClientRequest](_http_.md#httpclientrequest)‹IOSourceLike‹Uint8Array››, TResp›, [HttpClient](_http_.md#httpclient)‹[HttpClientRequest](_http_.md#httpclientrequest)‹IOSourceLike‹Uint8Array››, TResp››*
 
 ___
 

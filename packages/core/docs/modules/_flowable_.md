@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.40](../README.md) › ["flowable"](_flowable_.md)
+[@reactive-js/core - v0.0.41](../README.md) › ["flowable"](_flowable_.md)
 
 # Module: "flowable"
 
