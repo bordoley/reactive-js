@@ -57,7 +57,6 @@ import {
   withDefaultBehaviors,
   toIOSourceHttpResponse,
   toIOSourceHttpRequest,
-  encodeHttpClientRequestContent,
   encodeHttpResponseContent,
   HttpStandardHeader,
   HttpExtensionHeader,
@@ -241,10 +240,8 @@ createHttp2Server(
 const httpClient = pipe(
   createHttpClient(),
   withDefaultBehaviors(
-    encodeHttpClientRequestContent(
-      createContentEncodingCompressTransforms(),
-      db,
-    ),
+    createContentEncodingCompressTransforms(),
+    db,
   ),
 );
 

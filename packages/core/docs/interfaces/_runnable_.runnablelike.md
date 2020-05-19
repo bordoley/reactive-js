@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.40](../README.md) › ["runnable"](../modules/_runnable_.md) › [RunnableLike](_runnable_.runnablelike.md)
+[@reactive-js/core - v0.0.41](../README.md) › ["runnable"](../modules/_runnable_.md) › [RunnableLike](_runnable_.runnablelike.md)
 
 # Interface: RunnableLike <**T**>
 

@@ -17,10 +17,8 @@ import {
   parseCacheControlFromHeaders,
   parseCacheDirectiveOrThrow,
 } from "./cacheDirective.ts";
-import { HttpClientRequest } from "./httpClient.ts";
 import {
   parseHttpContentInfoFromHeaders,
-  contentIsCompressible,
   createHttpContentInfo,
 } from "./httpContentInfo.ts";
 import {
@@ -352,60 +350,4 @@ export const decodeHttpRequestContent = (decoderProvider: {
   } else {
     return req;
   }
-};
-
-export const encodeHttpClientRequestContent = (
-  encoderProvider: {
-    [key: string]: IOSourceOperator<Uint8Array, Uint8Array>;
-  },
-  db: {
-    [key: string]: {
-      compressible?: boolean;
-    };
-  } = {},
-): Function1<
-  HttpClientRequest<IOSourceLike<Uint8Array>>,
-  HttpClientRequest<IOSourceLike<Uint8Array>>
-> => {
-  const supportedEncodings = Object.keys(encoderProvider);
-
-  const httpRequestIsCompressible = <T>({
-    contentInfo,
-  }: HttpRequest<T>): boolean =>
-    isSome(contentInfo) && contentIsCompressible(contentInfo, db);
-
-  return request => {
-    const { body, contentInfo } = request;
-
-    if (isNone(contentInfo)) {
-      return request;
-    }
-
-    const contentEncoding = (request?.acceptedEncodings ?? []).find(encoding =>
-      supportedEncodings.includes(encoding),
-    );
-
-    if (isNone(contentEncoding)) {
-      return request;
-    }
-
-    const encode =
-      isSome(contentEncoding) && httpRequestIsCompressible(request)
-        ? encoderProvider[contentEncoding]
-        : none;
-
-    if (isNone(encode)) {
-      return request;
-    }
-
-    return {
-      ...request,
-      body: encode(body),
-      contentInfo: {
-        contentType: contentInfo.contentType,
-        contentEncodings: [contentEncoding],
-        contentLength: -1,
-      },
-    };
-  };
 };

@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.40](../README.md) › ["scheduler"](../modules/_scheduler_.md) › [SchedulerContinuationRunStatusChangedListenerLike](_scheduler_.schedulercontinuationrunstatuschangedlistenerlike.md)
+[@reactive-js/core - v0.0.41](../README.md) › ["scheduler"](../modules/_scheduler_.md) › [SchedulerContinuationRunStatusChangedListenerLike](_scheduler_.schedulercontinuationrunstatuschangedlistenerlike.md)
 
 # Interface: SchedulerContinuationRunStatusChangedListenerLike
 
