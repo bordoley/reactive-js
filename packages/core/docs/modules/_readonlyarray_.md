@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.38](../README.md) › ["readonlyArray"](_readonlyarray_.md)
+[@reactive-js/core - v0.0.39](../README.md) › ["readonlyArray"](_readonlyarray_.md)
 
 # Module: "readonlyArray"
 

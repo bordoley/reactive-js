@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.38](../README.md) › ["runnable"](../modules/_runnable_.md) › [SinkLike](_runnable_.sinklike.md)
+[@reactive-js/core - v0.0.39](../README.md) › ["runnable"](../modules/_runnable_.md) › [SinkLike](_runnable_.sinklike.md)
 
 # Interface: SinkLike <**T**>
 

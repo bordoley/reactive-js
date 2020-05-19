@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.38](../README.md) › ["io"](../modules/_io_.md) › [IOEventType](_io_.ioeventtype.md)
+[@reactive-js/core - v0.0.39](../README.md) › ["io"](../modules/_io_.md) › [IOEventType](_io_.ioeventtype.md)
 
 # Enumeration: IOEventType
 

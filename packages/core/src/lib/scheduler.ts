@@ -11,7 +11,7 @@ export {
   toPausableScheduler,
 } from "./internal/scheduler/priorityQueueScheduler";
 export {
-  continue$,
+  run,
   schedule,
   yield$,
 } from "./internal/scheduler/schedulerContinuation";

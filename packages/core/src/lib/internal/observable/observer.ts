@@ -128,8 +128,5 @@ export const createAutoDisposingDelegatingObserver = <T>(
 
 export const yield$ = <T>(observer: ObserverLike<T>, next: T, delay = 0) => {
   observer.notify(next);
-
-  if (delay > 0 || observer.shouldYield) {
-    yieldScheduler(delay);
-  }
+  yieldScheduler(observer, delay);
 };

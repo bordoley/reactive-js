@@ -3,7 +3,7 @@ import { current } from "../../enumerable.js";
 import { returns, pipe, defer } from "../../functions.js";
 import { none, isSome, isNone } from "../../option.js";
 import { map, everySatisfy } from "../../readonlyArray.js";
-import { continue$ } from "../../scheduler.js";
+import { run } from "../../scheduler.js";
 import { zipEnumerators } from "../enumerable/zip.js";
 import { fromEnumerator } from "./fromEnumerable.js";
 import { observe } from "./observable.js";
@@ -28,7 +28,7 @@ class EnumeratorObserver extends AbstractDisposable {
                 break;
             }
             this.inContinuation = true;
-            continue$(continuation);
+            run(continuation);
             this.inContinuation = false;
             const error = this.error;
             if (isSome(error)) {

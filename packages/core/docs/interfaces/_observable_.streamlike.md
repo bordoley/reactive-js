@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.38](../README.md) › ["observable"](../modules/_observable_.md) › [StreamLike](_observable_.streamlike.md)
+[@reactive-js/core - v0.0.39](../README.md) › ["observable"](../modules/_observable_.md) › [StreamLike](_observable_.streamlike.md)
 
 # Interface: StreamLike <**TReq, T**>
 

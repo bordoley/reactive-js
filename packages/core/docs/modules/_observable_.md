@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.38](../README.md) › ["observable"](_observable_.md)
+[@reactive-js/core - v0.0.39](../README.md) › ["observable"](_observable_.md)
 
 # Module: "observable"
 

@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.38](../README.md) › ["io"](../modules/_io_.md) › [IOSinkLike](_io_.iosinklike.md)
+[@reactive-js/core - v0.0.39](../README.md) › ["io"](../modules/_io_.md) › [IOSinkLike](_io_.iosinklike.md)
 
 # Interface: IOSinkLike <**T**>
 

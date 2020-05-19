@@ -10,7 +10,7 @@ import {
   SchedulerLike,
   SchedulerContinuationLike,
   toSchedulerWithPriority,
-  continue$,
+  run,
 } from "@reactive-js/core/lib/scheduler";
 import {
   unstable_IdlePriority,
@@ -49,7 +49,7 @@ const priorityScheduler = {
       dispose(callbackNodeDisposable);
 
       priorityScheduler.inContinuation = true;
-      continue$(continuation);
+      run(continuation);
       priorityScheduler.inContinuation = false;
     };
 

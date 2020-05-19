@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.38](../README.md) › ["disposable"](../modules/_disposable_.md) › [DisposableValueLike](_disposable_.disposablevaluelike.md)
+[@reactive-js/core - v0.0.39](../README.md) › ["disposable"](../modules/_disposable_.md) › [DisposableValueLike](_disposable_.disposablevaluelike.md)
 
 # Interface: DisposableValueLike <**T**>
 

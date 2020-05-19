@@ -1,7 +1,7 @@
 import { AbstractDisposable, addDisposable, dispose } from "../../disposable.js";
 import { none, isSome } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
-import { continue$ } from "./schedulerContinuation.js";
+import { run } from "./schedulerContinuation.js";
 const comparator = (a, b) => {
     let diff = 0;
     diff = diff !== 0 ? diff : a.dueTime - b.dueTime;
@@ -45,7 +45,7 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable {
     run() {
         while (!this.isDisposed && move(this)) {
             this.inContinuation = true;
-            continue$(this.current);
+            run(this.current);
             this.inContinuation = false;
         }
         dispose(this);

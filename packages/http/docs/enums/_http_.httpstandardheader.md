@@ -1,4 +1,4 @@
-[@reactive-js/http - v0.0.38](../README.md) › ["http"](../modules/_http_.md) › [HttpStandardHeader](_http_.httpstandardheader.md)
+[@reactive-js/http - v0.0.39](../README.md) › ["http"](../modules/_http_.md) › [HttpStandardHeader](_http_.httpstandardheader.md)
 
 # Enumeration: HttpStandardHeader
 

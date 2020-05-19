@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.38](../README.md) › ["asyncEnumerable"](../modules/_asyncenumerable_.md) › [ConsumeRequestType](_asyncenumerable_.consumerequesttype.md)
+[@reactive-js/core - v0.0.39](../README.md) › ["asyncEnumerable"](../modules/_asyncenumerable_.md) › [ConsumeRequestType](_asyncenumerable_.consumerequesttype.md)
 
 # Enumeration: ConsumeRequestType
 

@@ -7,7 +7,7 @@ import {
 } from "../../disposable.ts";
 import { Factory, SideEffect, Function1, defer } from "../../functions.ts";
 import { SchedulerLike, SchedulerContinuationLike } from "./interfaces.ts";
-import { continue$ } from "./schedulerContinuation.ts";
+import { run } from "./schedulerContinuation.ts";
 
 // FIXME: Only declare these to make Deno happy.
 export declare class MessageChannel {
@@ -96,7 +96,7 @@ const createCallback = (
   if (!continuation.isDisposed) {
     scheduler.inContinuation = true;
     scheduler.startTime = scheduler.now;
-    continue$(continuation);
+    run(continuation);
     scheduler.inContinuation = false;
   }
 };
