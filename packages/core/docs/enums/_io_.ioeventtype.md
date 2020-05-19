@@ -6,14 +6,14 @@
 
 ### Enumeration members
 
-* [Complete](_io_.ioeventtype.md#complete)
+* [Done](_io_.ioeventtype.md#done)
 * [Next](_io_.ioeventtype.md#next)
 
 ## Enumeration members
 
-###  Complete
+###  Done
 
-• **Complete**: = 2
+• **Done**: = 2
 
 ___
 

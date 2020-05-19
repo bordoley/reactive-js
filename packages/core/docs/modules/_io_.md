@@ -24,8 +24,8 @@
 
 ### Functions
 
-* [complete](_io_.md#const-complete)
 * [decodeWithCharset](_io_.md#const-decodewithcharset)
+* [done](_io_.md#const-done)
 * [empty](_io_.md#const-empty)
 * [fromArray](_io_.md#const-fromarray)
 * [fromObservable](_io_.md#const-fromobservable)
@@ -53,18 +53,6 @@ ___
 
 ## Functions
 
-### `Const` complete
-
-▸ **complete**<**T**>(): *[IOEvent](_io_.md#ioevent)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Returns:** *[IOEvent](_io_.md#ioevent)‹T›*
-
-___
-
 ### `Const` decodeWithCharset
 
 ▸ **decodeWithCharset**(`charset`: string, `options?`: TextDecoderOptions): *[IOSourceOperator](_io_.md#iosourceoperator)‹ArrayBuffer, string›*
@@ -77,6 +65,18 @@ Name | Type | Default |
 `options?` | TextDecoderOptions | - |
 
 **Returns:** *[IOSourceOperator](_io_.md#iosourceoperator)‹ArrayBuffer, string›*
+
+___
+
+### `Const` done
+
+▸ **done**<**T**>(): *[IOEvent](_io_.md#ioevent)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *[IOEvent](_io_.md#ioevent)‹T›*
 
 ___
 
