@@ -6,7 +6,7 @@ import {
   VirtualTimeSchedulerLike,
   SchedulerLike,
 } from "./interfaces.ts";
-import { continue$ } from "./schedulerContinuation.ts";
+import { run } from "./schedulerContinuation.ts";
 
 type VirtualTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -66,7 +66,7 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable
   run() {
     while (!this.isDisposed && move(this)) {
       this.inContinuation = true;
-      continue$(this.current);
+      run(this.current);
       this.inContinuation = false;
     }
 

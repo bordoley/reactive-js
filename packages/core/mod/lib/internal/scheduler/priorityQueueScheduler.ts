@@ -13,7 +13,7 @@ import {
   PrioritySchedulerLike,
   PausableSchedulerLike,
 } from "./interfaces.ts";
-import { continue$, schedule, yield$ } from "./schedulerContinuation.ts";
+import { run, schedule, yield$ } from "./schedulerContinuation.ts";
 
 type ScheduledTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -103,7 +103,7 @@ const scheduleContinuation = (
 
 class PriorityScheduler extends AbstractSerialDisposable
   implements PrioritySchedulerLike, PausableSchedulerLike {
-  readonly continuation = () => {
+  readonly continuation = (host: SchedulerLike) => {
     for (
       let task = peek(this);
       isSome(task) && !this.isDisposed;
@@ -116,13 +116,11 @@ class PriorityScheduler extends AbstractSerialDisposable
         move(this);
 
         this.inContinuation = true;
-        continue$(continuation);
+        run(continuation);
         this.inContinuation = false;
       }
 
-      if (delay > 0 || this.host.shouldYield) {
-        yield$(delay);
-      }
+      yield$(host, delay);
     }
   };
   current: ScheduledTask = none as any;

@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.38](../README.md) › ["stateStore"](_statestore_.md)
+[@reactive-js/core - v0.0.39](../README.md) › ["stateStore"](_statestore_.md)
 
 # Module: "stateStore"
 

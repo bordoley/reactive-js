@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.38](../README.md) › ["streamable"](_streamable_.md)
+[@reactive-js/core - v0.0.39](../README.md) › ["streamable"](_streamable_.md)
 
 # Module: "streamable"
 

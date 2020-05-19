@@ -89,12 +89,14 @@ class SchedulerContinuationImpl<T extends SchedulerLike>
   }
 }
 
-export const continue$ = (continuation: SchedulerContinuationLike): void => {
+export const run = (continuation: SchedulerContinuationLike): void => {
   continuation.continue();
 };
 
-export const yield$ = (delay: number) => {
-  throw new YieldError(delay);
+export const yield$ = (scheduler: SchedulerLike, delay: number) => {
+  if (delay > 0 || scheduler.shouldYield) {
+    throw new YieldError(delay);
+  }
 };
 
 export const schedule = <T extends SchedulerLike>(

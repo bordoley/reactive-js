@@ -1,7 +1,7 @@
 import { AbstractSerialDisposable, disposed, addDisposable, addTeardown, } from "../../disposable.js";
 import { none, isSome, isNone } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
-import { continue$, schedule, yield$ } from "./schedulerContinuation.js";
+import { run, schedule, yield$ } from "./schedulerContinuation.js";
 const move = (scheduler) => {
     peek(scheduler);
     const task = scheduler.queue.pop();
@@ -62,19 +62,17 @@ class PriorityScheduler extends AbstractSerialDisposable {
     constructor(host) {
         super();
         this.host = host;
-        this.continuation = () => {
+        this.continuation = (host) => {
             for (let task = peek(this); isSome(task) && !this.isDisposed; task = peek(this)) {
                 const { continuation, dueTime } = task;
                 const delay = Math.max(dueTime - this.now, 0);
                 if (delay === 0) {
                     move(this);
                     this.inContinuation = true;
-                    continue$(continuation);
+                    run(continuation);
                     this.inContinuation = false;
                 }
-                if (delay > 0 || this.host.shouldYield) {
-                    yield$(delay);
-                }
+                yield$(host, delay);
             }
         };
         this.current = none;

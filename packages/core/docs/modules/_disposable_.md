@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.38](../README.md) › ["disposable"](_disposable_.md)
+[@reactive-js/core - v0.0.39](../README.md) › ["disposable"](_disposable_.md)
 
 # Module: "disposable"
 

@@ -11,7 +11,7 @@ import { current, EnumeratorLike } from "../../enumerable";
 import { returns, pipe, defer } from "../../functions";
 import { none, isSome, isNone } from "../../option";
 import { map, everySatisfy } from "../../readonlyArray";
-import { SchedulerContinuationLike, continue$ } from "../../scheduler";
+import { SchedulerContinuationLike, run } from "../../scheduler";
 import { zipEnumerators } from "../enumerable/zip";
 import { fromEnumerator } from "./fromEnumerable";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
@@ -40,7 +40,7 @@ class EnumeratorObserver<T> extends AbstractDisposable
       }
 
       this.inContinuation = true;
-      continue$(continuation);
+      run(continuation);
       this.inContinuation = false;
 
       const error = this.error;

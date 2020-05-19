@@ -1,6 +1,6 @@
 import { createDisposable, dispose, addDisposable, addTeardown, } from "../../disposable.js";
 import { defer } from "../../functions.js";
-import { continue$ } from "./schedulerContinuation.js";
+import { run } from "./schedulerContinuation.js";
 const supportsPerformanceNow = typeof performance === "object" && typeof performance.now === "function";
 const supportsProcessHRTime = typeof process === "object" && typeof process.hrtime === "function";
 const supportsMessageChannel = typeof MessageChannel === "function";
@@ -47,7 +47,7 @@ const createCallback = (scheduler, continuation) => () => {
     if (!continuation.isDisposed) {
         scheduler.inContinuation = true;
         scheduler.startTime = scheduler.now;
-        continue$(continuation);
+        run(continuation);
         scheduler.inContinuation = false;
     }
 };

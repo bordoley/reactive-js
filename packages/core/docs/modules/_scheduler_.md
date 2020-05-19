@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.38](../README.md) › ["scheduler"](_scheduler_.md)
+[@reactive-js/core - v0.0.39](../README.md) › ["scheduler"](_scheduler_.md)
 
 # Module: "scheduler"
 
@@ -15,9 +15,9 @@
 
 ### Functions
 
-* [continue$](_scheduler_.md#const-continue)
 * [createHostScheduler](_scheduler_.md#const-createhostscheduler)
 * [createVirtualTimeScheduler](_scheduler_.md#const-createvirtualtimescheduler)
+* [run](_scheduler_.md#const-run)
 * [schedule](_scheduler_.md#const-schedule)
 * [toPausableScheduler](_scheduler_.md#const-topausablescheduler)
 * [toPriorityScheduler](_scheduler_.md#const-topriorityscheduler)
@@ -25,20 +25,6 @@
 * [yield$](_scheduler_.md#const-yield)
 
 ## Functions
-
-### `Const` continue$
-
-▸ **continue$**(`continuation`: [SchedulerContinuationLike](../interfaces/_scheduler_.schedulercontinuationlike.md)): *void*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`continuation` | [SchedulerContinuationLike](../interfaces/_scheduler_.schedulercontinuationlike.md) |
-
-**Returns:** *void*
-
-___
 
 ### `Const` createHostScheduler
 
@@ -73,6 +59,20 @@ Name | Type |
 `maxMicroTaskTicks` | number |
 
 **Returns:** *[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)*
+
+___
+
+### `Const` run
+
+▸ **run**(`continuation`: [SchedulerContinuationLike](../interfaces/_scheduler_.schedulercontinuationlike.md)): *void*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`continuation` | [SchedulerContinuationLike](../interfaces/_scheduler_.schedulercontinuationlike.md) |
+
+**Returns:** *void*
 
 ___
 
@@ -149,12 +149,13 @@ ___
 
 ### `Const` yield$
 
-▸ **yield$**(`delay`: number): *never*
+▸ **yield$**(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `delay`: number): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
+`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
 `delay` | number |
 
-**Returns:** *never*
+**Returns:** *void*
