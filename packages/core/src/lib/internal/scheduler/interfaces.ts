@@ -4,17 +4,6 @@ export interface SchedulerContinuationRunStatusChangedListenerLike {
   onRunStatusChanged(state: boolean): void;
 }
 
-export interface YieldableLike {
-  readonly inContinuation: boolean;
-  readonly now: number;
-
-  yield(options?: { delay: number }): void;
-}
-
-export class YieldError {
-  constructor(readonly delay: number) {}
-}
-
 /**
  * A unit of work to be executed by a scheduler.
  *
@@ -33,13 +22,17 @@ export interface SchedulerContinuationLike extends DisposableLike {
   /**
    * Work function to be invoked by the scheduler after the specified delay.
    */
-  continue($: YieldableLike): void;
+  continue(): void;
 }
 
 /**
  * An object that schedules units of work on a runloop.
  */
-export interface SchedulerLike extends YieldableLike {
+export interface SchedulerLike {
+  readonly inContinuation: boolean;
+  readonly now: number;
+  readonly shouldYield: boolean;
+
   /**
    * Schedules a continuation to be executed on the scheduler.
    *
@@ -72,7 +65,11 @@ export interface PausableSchedulerLike extends SchedulerLike {
  *
  * @noInheritDoc
  */
-export interface PrioritySchedulerLike extends YieldableLike {
+export interface PrioritySchedulerLike {
+  readonly inContinuation: boolean;
+  readonly now: number;
+  readonly shouldYield: boolean;
+
   /**
    * Schedules a continuation to be executed on the scheduler.
    *

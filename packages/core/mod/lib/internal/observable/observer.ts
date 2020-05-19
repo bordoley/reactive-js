@@ -4,7 +4,11 @@ import {
   bindDisposables,
 } from "../../disposable.ts";
 import { ignore, SideEffect1 } from "../../functions.ts";
-import { SchedulerContinuationLike, SchedulerLike } from "../../scheduler.ts";
+import {
+  SchedulerContinuationLike,
+  SchedulerLike,
+  yield$ as yieldScheduler,
+} from "../../scheduler.ts";
 import { __DEV__ } from "../env.ts";
 import { ObserverLike } from "./interfaces.ts";
 
@@ -34,14 +38,25 @@ export abstract class AbstractObserver<T> extends AbstractDisposable
   implements ObserverLike<T> {
   inContinuation = false;
 
+  private rawScheduler: SchedulerLike;
+
   constructor(readonly scheduler: SchedulerLike) {
     super();
     this.scheduler = scheduler;
+
+    this.rawScheduler =
+      scheduler instanceof AbstractObserver
+        ? scheduler.rawScheduler
+        : scheduler;
   }
 
   /** @ignore */
   get now() {
-    return this.scheduler.now;
+    return this.rawScheduler.now;
+  }
+
+  get shouldYield() {
+    return this.isDisposed || this.rawScheduler.shouldYield;
   }
 
   abstract notify(_: T): void;
@@ -56,11 +71,6 @@ export abstract class AbstractObserver<T> extends AbstractDisposable
     continuation.addListener("onRunStatusChanged", this);
     addDisposable(this, continuation);
     this.scheduler.schedule(continuation, options);
-  }
-
-  /** @ignore */
-  yield(options?: { delay: number }) {
-    return this.scheduler.yield(options);
   }
 }
 
@@ -114,4 +124,12 @@ export const createAutoDisposingDelegatingObserver = <T>(
   const observer = new DelegatingObserver(delegate);
   bindDisposables(delegate, observer);
   return observer;
+};
+
+export const yield$ = <T>(observer: ObserverLike<T>, next: T, delay = 0) => {
+  observer.notify(next);
+
+  if (delay > 0 || observer.shouldYield) {
+    yieldScheduler(delay);
+  }
 };

@@ -6,15 +6,37 @@ A scheduler which schedules work according to it's priority.
 
 ## Hierarchy
 
-* [YieldableLike](_scheduler_.yieldablelike.md)
-
-  ↳ **PrioritySchedulerLike**
+* **PrioritySchedulerLike**
 
 ## Index
+
+### Properties
+
+* [inContinuation](_scheduler_.priorityschedulerlike.md#incontinuation)
+* [now](_scheduler_.priorityschedulerlike.md#now)
+* [shouldYield](_scheduler_.priorityschedulerlike.md#shouldyield)
 
 ### Methods
 
 * [schedule](_scheduler_.priorityschedulerlike.md#schedule)
+
+## Properties
+
+###  inContinuation
+
+• **inContinuation**: *boolean*
+
+___
+
+###  now
+
+• **now**: *number*
+
+___
+
+###  shouldYield
+
+• **shouldYield**: *boolean*
 
 ## Methods
 

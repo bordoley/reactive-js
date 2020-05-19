@@ -6,8 +6,9 @@ import {
   addTeardown,
   addDisposable,
 } from "../../disposable";
-import { YieldableLike, schedule } from "../../scheduler";
+import { schedule } from "../../scheduler";
 import { DispatcherLike, ObserverLike } from "./interfaces";
+import { yield$ } from "./observer";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (dispatcher.nextQueue.length === 1) {
@@ -23,21 +24,13 @@ const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
 
 class ObserverDelegatingDispatcher<T> extends AbstractDisposable
   implements DispatcherLike<T> {
-  readonly continuation = ($: YieldableLike) => {
+  readonly continuation = () => {
     const nextQueue = this.nextQueue;
     const observer = this.observer;
 
-    let observerIsDisposed = observer.isDisposed;
-    let nextQueueLength = nextQueue.length;
-    while (nextQueueLength > 0 && !observerIsDisposed) {
+    while (nextQueue.length > 0) {
       const next = nextQueue.shift() as T;
-      observer.notify(next);
-
-      observerIsDisposed = observer.isDisposed;
-      nextQueueLength = nextQueue.length;
-      if (nextQueueLength > 0 && !observerIsDisposed) {
-        $.yield();
-      }
+      yield$(observer, next);
     }
   };
 

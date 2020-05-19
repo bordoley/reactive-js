@@ -4,7 +4,7 @@
 
 ## Hierarchy
 
-  ↳ [SchedulerLike](_scheduler_.schedulerlike.md)
+* [SchedulerLike](_scheduler_.schedulerlike.md)
 
   ↳ **PausableSchedulerLike**
 
@@ -14,13 +14,13 @@
 
 * [inContinuation](_scheduler_.pausableschedulerlike.md#incontinuation)
 * [now](_scheduler_.pausableschedulerlike.md#now)
+* [shouldYield](_scheduler_.pausableschedulerlike.md#shouldyield)
 
 ### Methods
 
 * [pause](_scheduler_.pausableschedulerlike.md#pause)
 * [resume](_scheduler_.pausableschedulerlike.md#resume)
 * [schedule](_scheduler_.pausableschedulerlike.md#schedule)
-* [yield](_scheduler_.pausableschedulerlike.md#yield)
 
 ## Properties
 
@@ -35,6 +35,14 @@ ___
 ###  now
 
 • **now**: *number*
+
+*Inherited from void*
+
+___
+
+###  shouldYield
+
+• **shouldYield**: *boolean*
 
 *Inherited from void*
 
@@ -69,24 +77,6 @@ Schedules a continuation to be executed on the scheduler.
 ▪ **continuation**: *[SchedulerContinuationLike](_scheduler_.schedulercontinuationlike.md)*
 
 The SchedulerContinuation to be executed.
-
-▪`Optional`  **options**: *object*
-
-Name | Type |
------- | ------ |
-`delay` | number |
-
-**Returns:** *void*
-
-___
-
-###  yield
-
-▸ **yield**(`options?`: object): *void*
-
-*Inherited from void*
-
-**Parameters:**
 
 ▪`Optional`  **options**: *object*
 

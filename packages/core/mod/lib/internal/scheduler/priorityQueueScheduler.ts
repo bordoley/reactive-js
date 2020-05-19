@@ -12,10 +12,8 @@ import {
   SchedulerContinuationLike,
   PrioritySchedulerLike,
   PausableSchedulerLike,
-  YieldError,
-  YieldableLike,
 } from "./interfaces.ts";
-import { runContinuation, schedule } from "./schedulerContinuation.ts";
+import { continue$, schedule, yield$ } from "./schedulerContinuation.ts";
 
 type ScheduledTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -105,7 +103,7 @@ const scheduleContinuation = (
 
 class PriorityScheduler extends AbstractSerialDisposable
   implements PrioritySchedulerLike, PausableSchedulerLike {
-  readonly continuation = ($: YieldableLike) => {
+  readonly continuation = () => {
     for (
       let task = peek(this);
       isSome(task) && !this.isDisposed;
@@ -118,11 +116,13 @@ class PriorityScheduler extends AbstractSerialDisposable
         move(this);
 
         this.inContinuation = true;
-        runContinuation(this, continuation);
+        continue$(continuation);
         this.inContinuation = false;
       }
 
-      $.yield({ delay });
+      if (delay > 0 || this.host.shouldYield) {
+        yield$(delay);
+      }
     }
   };
   current: ScheduledTask = none as any;
@@ -145,6 +145,25 @@ class PriorityScheduler extends AbstractSerialDisposable
 
   get now(): number {
     return this.host.now;
+  }
+
+  get shouldYield() {
+    const current = this.current;
+    const next = peek(this);
+
+    const nextTaskIsHigherPriority =
+      isSome(current) &&
+      isSome(next) &&
+      current !== next &&
+      next.dueTime <= this.now &&
+      next.priority < current.priority;
+
+    return (
+      this.isDisposed ||
+      this.isPaused ||
+      nextTaskIsHigherPriority ||
+      this.host.shouldYield
+    );
   }
 
   pause() {
@@ -216,30 +235,6 @@ class PriorityScheduler extends AbstractSerialDisposable
         scheduleContinuation(this, head);
       }
     }
-  }
-
-  yield(options = { delay: 0 }) {
-    const current = this.current;
-    const { delay } = options;
-    const next = peek(this);
-
-    const nextTaskIsHigherPriority =
-      isSome(current) &&
-      isSome(next) &&
-      current !== next &&
-      next.dueTime <= this.now &&
-      next.priority < current.priority;
-
-    if (
-      delay > 0 ||
-      this.isDisposed ||
-      this.isPaused ||
-      nextTaskIsHigherPriority
-    ) {
-      throw new YieldError(delay);
-    }
-
-    this.host.yield(options);
   }
 }
 

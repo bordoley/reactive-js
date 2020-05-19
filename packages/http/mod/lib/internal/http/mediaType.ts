@@ -5,10 +5,15 @@ import {
   parseWith,
   parseWithOrThrow,
 } from "../../../../../core/mod/lib/internal/parserCombinators.ts";
-import { fromObject, map, join } from "../../../../../core/mod/lib/readonlyArray.ts";
+import {
+  fromObject,
+  map,
+  join,
+  keep,
+  length,
+} from "../../../../../core/mod/lib/readonlyArray.ts";
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar.ts";
 import { MediaType } from "./interfaces.ts";
-import { keep, length } from "../../../../../core/mod/lib/readonlyArray.ts";
 
 export const pMediaType: Parser<MediaType> = charStream => {
   const type = pToken(charStream);
@@ -59,7 +64,11 @@ export const mediaTypeIsCompressible = (
   const compressible = db[mediaType]?.compressible ?? false;
   const typeIsText = type === "text";
   const subtypeIsText =
-    pipe(textSubtypes, keep(x => subtype.endsWith(x)), length) > 0;
+    pipe(
+      textSubtypes,
+      keep(x => subtype.endsWith(x)),
+      length,
+    ) > 0;
 
   return !blackListed && (compressible || typeIsText || subtypeIsText);
 };

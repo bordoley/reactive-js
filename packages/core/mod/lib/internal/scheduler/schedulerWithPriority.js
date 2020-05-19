@@ -9,14 +9,14 @@ class SchedulerWithPriorityImpl {
     get now() {
         return this.priorityScheduler.now;
     }
+    get shouldYield() {
+        return this.priorityScheduler.shouldYield;
+    }
     schedule(continuation, { delay } = { delay: 0 }) {
         this.priorityScheduler.schedule(continuation, {
             priority: this.priority,
             delay,
         });
-    }
-    yield(options) {
-        this.priorityScheduler.yield(options);
     }
 }
 export const toSchedulerWithPriority = (priority) => priorityScheduler => new SchedulerWithPriorityImpl(priorityScheduler, priority);

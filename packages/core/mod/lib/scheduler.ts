@@ -5,17 +5,15 @@ export {
   SchedulerContinuationLike,
   SchedulerLike,
   VirtualTimeSchedulerLike,
-  YieldError,
-  YieldableLike,
 } from "./internal/scheduler/interfaces.ts";
 export {
   toPriorityScheduler,
   toPausableScheduler,
 } from "./internal/scheduler/priorityQueueScheduler.ts";
 export {
-  runContinuation,
+  continue$,
   schedule,
-  scheduleWithPriority,
+  yield$,
 } from "./internal/scheduler/schedulerContinuation.ts";
 export { toSchedulerWithPriority } from "./internal/scheduler/schedulerWithPriority.ts";
 export { createHostScheduler } from "./internal/scheduler/hostScheduler.ts";

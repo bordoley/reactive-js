@@ -3,9 +3,8 @@ import { current } from "../../enumerable.js";
 import { returns, pipe, defer } from "../../functions.js";
 import { none, isSome, isNone } from "../../option.js";
 import { map, everySatisfy } from "../../readonlyArray.js";
-import { runContinuation } from "../../scheduler.js";
+import { continue$ } from "../../scheduler.js";
 import { zipEnumerators } from "../enumerable/zip.js";
-import { YieldError } from "../scheduler/interfaces.js";
 import { fromEnumerator } from "./fromEnumerable.js";
 import { observe } from "./observable.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
@@ -17,6 +16,7 @@ class EnumeratorObserver extends AbstractDisposable {
         this.hasCurrent = false;
         this.inContinuation = false;
         this.now = 0;
+        this.shouldYield = true;
     }
     move() {
         const continuations = this.continuations;
@@ -28,7 +28,7 @@ class EnumeratorObserver extends AbstractDisposable {
                 break;
             }
             this.inContinuation = true;
-            runContinuation(this, continuation);
+            continue$(continuation);
             this.inContinuation = false;
             const error = this.error;
             if (isSome(error)) {
@@ -51,9 +51,6 @@ class EnumeratorObserver extends AbstractDisposable {
         else {
             dispose(continuation);
         }
-    }
-    yield() {
-        throw new YieldError(0);
     }
 }
 const subscribeInteractive = (obs) => {

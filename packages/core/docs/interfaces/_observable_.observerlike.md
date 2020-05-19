@@ -15,7 +15,7 @@ to receive notifications.
 
 * [DisposableLike](_disposable_.disposablelike.md)
 
-  ↳ [SchedulerLike](_scheduler_.schedulerlike.md)
+* [SchedulerLike](_scheduler_.schedulerlike.md)
 
   ↳ **ObserverLike**
 

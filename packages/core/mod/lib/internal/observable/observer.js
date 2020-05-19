@@ -1,5 +1,6 @@
 import { addDisposable, AbstractDisposable, bindDisposables, } from "../../disposable.js";
 import { ignore } from "../../functions.js";
+import { yield$ as yieldScheduler, } from "../../scheduler.js";
 import { __DEV__ } from "../env.js";
 const assertObserverStateProduction = ignore;
 const assertObserverStateDev = (observer) => {
@@ -20,9 +21,16 @@ export class AbstractObserver extends AbstractDisposable {
         this.scheduler = scheduler;
         this.inContinuation = false;
         this.scheduler = scheduler;
+        this.rawScheduler =
+            scheduler instanceof AbstractObserver
+                ? scheduler.rawScheduler
+                : scheduler;
     }
     get now() {
-        return this.scheduler.now;
+        return this.rawScheduler.now;
+    }
+    get shouldYield() {
+        return this.isDisposed || this.rawScheduler.shouldYield;
     }
     onRunStatusChanged(status) {
         this.inContinuation = status;
@@ -31,9 +39,6 @@ export class AbstractObserver extends AbstractDisposable {
         continuation.addListener("onRunStatusChanged", this);
         addDisposable(this, continuation);
         this.scheduler.schedule(continuation, options);
-    }
-    yield(options) {
-        return this.scheduler.yield(options);
     }
 }
 export class AbstractDelegatingObserver extends AbstractObserver {
@@ -68,4 +73,10 @@ export const createAutoDisposingDelegatingObserver = (delegate) => {
     const observer = new DelegatingObserver(delegate);
     bindDisposables(delegate, observer);
     return observer;
+};
+export const yield$ = (observer, next, delay = 0) => {
+    observer.notify(next);
+    if (delay > 0 || observer.shouldYield) {
+        yieldScheduler(delay);
+    }
 };

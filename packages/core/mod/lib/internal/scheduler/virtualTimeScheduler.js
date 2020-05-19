@@ -1,8 +1,7 @@
 import { AbstractDisposable, addDisposable, dispose } from "../../disposable.js";
 import { none, isSome } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
-import { YieldError, } from "./interfaces.js";
-import { runContinuation } from "./schedulerContinuation.js";
+import { continue$ } from "./schedulerContinuation.js";
 const comparator = (a, b) => {
     let diff = 0;
     diff = diff !== 0 ? diff : a.dueTime - b.dueTime;
@@ -39,10 +38,14 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable {
         this.taskIDCount = 0;
         this.taskQueue = createPriorityQueue(comparator);
     }
+    get shouldYield() {
+        this.microTaskTicks++;
+        return this.microTaskTicks >= this.maxMicroTaskTicks;
+    }
     run() {
         while (!this.isDisposed && move(this)) {
             this.inContinuation = true;
-            runContinuation(this, this.current);
+            continue$(this.current);
             this.inContinuation = false;
         }
         dispose(this);
@@ -57,12 +60,6 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable {
                 continuation,
             };
             this.taskQueue.push(work);
-        }
-    }
-    yield({ delay } = { delay: 0 }) {
-        this.microTaskTicks++;
-        if (delay > 0 || this.microTaskTicks >= this.maxMicroTaskTicks) {
-            throw new YieldError(delay);
         }
     }
 }

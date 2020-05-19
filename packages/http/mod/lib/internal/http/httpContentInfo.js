@@ -1,10 +1,10 @@
 import { pipe } from "../../../../../core/mod/lib/functions.js";
 import { parseWith } from "../../../../../core/mod/lib/internal/parserCombinators.js";
 import { isNone, none } from "../../../../../core/mod/lib/option.js";
+import { join } from "../../../../../core/mod/lib/readonlyArray.js";
 import { pToken, httpList } from "./httpGrammar.js";
 import { getHeaderValue } from "./httpHeaders.js";
 import { parseMediaType, mediaTypeToString, parseMediaTypeOrThrow, mediaTypeIsCompressible, } from "./mediaType.js";
-import { join } from "../../../../../core/mod/lib/readonlyArray.js";
 const parseTokenList = pipe(pToken, httpList, parseWith);
 export const parseHttpContentInfoFromHeaders = (headers) => {
     var _a, _b, _c;

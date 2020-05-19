@@ -1,8 +1,7 @@
 import { AbstractSerialDisposable, disposed, addDisposable, addTeardown, } from "../../disposable.js";
 import { none, isSome, isNone } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
-import { YieldError, } from "./interfaces.js";
-import { runContinuation, schedule } from "./schedulerContinuation.js";
+import { continue$, schedule, yield$ } from "./schedulerContinuation.js";
 const move = (scheduler) => {
     peek(scheduler);
     const task = scheduler.queue.pop();
@@ -63,17 +62,19 @@ class PriorityScheduler extends AbstractSerialDisposable {
     constructor(host) {
         super();
         this.host = host;
-        this.continuation = ($) => {
+        this.continuation = () => {
             for (let task = peek(this); isSome(task) && !this.isDisposed; task = peek(this)) {
                 const { continuation, dueTime } = task;
                 const delay = Math.max(dueTime - this.now, 0);
                 if (delay === 0) {
                     move(this);
                     this.inContinuation = true;
-                    runContinuation(this, continuation);
+                    continue$(continuation);
                     this.inContinuation = false;
                 }
-                $.yield({ delay });
+                if (delay > 0 || this.host.shouldYield) {
+                    yield$(delay);
+                }
             }
         };
         this.current = none;
@@ -90,6 +91,19 @@ class PriorityScheduler extends AbstractSerialDisposable {
     }
     get now() {
         return this.host.now;
+    }
+    get shouldYield() {
+        const current = this.current;
+        const next = peek(this);
+        const nextTaskIsHigherPriority = isSome(current) &&
+            isSome(next) &&
+            current !== next &&
+            next.dueTime <= this.now &&
+            next.priority < current.priority;
+        return (this.isDisposed ||
+            this.isPaused ||
+            nextTaskIsHigherPriority ||
+            this.host.shouldYield);
     }
     pause() {
         this.isPaused = true;
@@ -129,23 +143,6 @@ class PriorityScheduler extends AbstractSerialDisposable {
                 scheduleContinuation(this, head);
             }
         }
-    }
-    yield(options = { delay: 0 }) {
-        const current = this.current;
-        const { delay } = options;
-        const next = peek(this);
-        const nextTaskIsHigherPriority = isSome(current) &&
-            isSome(next) &&
-            current !== next &&
-            next.dueTime <= this.now &&
-            next.priority < current.priority;
-        if (delay > 0 ||
-            this.isDisposed ||
-            this.isPaused ||
-            nextTaskIsHigherPriority) {
-            throw new YieldError(delay);
-        }
-        this.host.yield(options);
     }
 }
 export const toPriorityScheduler = (hostScheduler) => new PriorityScheduler(hostScheduler);

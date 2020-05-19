@@ -1,19 +1,13 @@
-import { dispose } from "../../disposable.js";
 import { createScheduledObservable, createDelayedScheduledObservable, } from "./observable.js";
+import { yield$ } from "./observer.js";
 export function generate(generator, initialValue, options = { delay: 0 }) {
-    const factory = (observer) => {
+    const factory = () => {
         let acc = initialValue();
-        return ($) => {
-            let observerIsDisposed = observer.isDisposed;
-            while (!observerIsDisposed) {
+        return (observer) => {
+            while (true) {
                 acc = generator(acc);
-                observer.notify(acc);
-                observerIsDisposed = observer.isDisposed;
-                if (!observerIsDisposed) {
-                    $.yield(options);
-                }
+                yield$(observer, acc, delay);
             }
-            dispose(observer);
         };
     };
     const { delay } = options;

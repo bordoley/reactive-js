@@ -37,15 +37,9 @@ ___
 
 ###  continue
 
-▸ **continue**(`$`: [YieldableLike](_scheduler_.yieldablelike.md)): *void*
+▸ **continue**(): *void*
 
 Work function to be invoked by the scheduler after the specified delay.
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`$` | [YieldableLike](_scheduler_.yieldablelike.md) |
 
 **Returns:** *void*
 

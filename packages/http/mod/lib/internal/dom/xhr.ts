@@ -88,9 +88,12 @@ export const sendHttpRequestUsingXHR: HttpClient<
       }
     };
 
-    xhr.onloadstart = defer( {
-      type: HttpClientRequestStatusType.Start,
-    }, dispatchTo(dispatcher));
+    xhr.onloadstart = defer(
+      {
+        type: HttpClientRequestStatusType.Start,
+      },
+      dispatchTo(dispatcher),
+    );
 
     xhr.upload.onprogress = ev => {
       const { loaded: count } = ev;
@@ -101,9 +104,12 @@ export const sendHttpRequestUsingXHR: HttpClient<
       });
     };
 
-    xhr.upload.onload = defer({
-      type: HttpClientRequestStatusType.Completed,
-    }, dispatchTo(dispatcher));
+    xhr.upload.onload = defer(
+      {
+        type: HttpClientRequestStatusType.Completed,
+      },
+      dispatchTo(dispatcher),
+    );
 
     xhr.ontimeout = () => {
       // FIXME: Kind of rather have a state for this

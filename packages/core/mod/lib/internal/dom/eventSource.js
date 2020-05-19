@@ -1,7 +1,7 @@
 import { addTeardown } from "../../disposable.js";
+import { pipe } from "../../functions.js";
 import { createObservable, dispatch } from "../../observable.js";
 import { keep } from "../../readonlyArray.js";
-import { pipe } from "../../functions.js";
 const reservedEvents = ["error", "open"];
 export const createEventSource = (url, options = {}) => {
     const { events: eventsOption = ["message"] } = options;

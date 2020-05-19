@@ -6,12 +6,8 @@ import {
   addTeardown,
 } from "../../disposable.ts";
 import { Factory, SideEffect, Function1, defer } from "../../functions.ts";
-import {
-  SchedulerLike,
-  SchedulerContinuationLike,
-  YieldError,
-} from "./interfaces.ts";
-import { runContinuation } from "./schedulerContinuation.ts";
+import { SchedulerLike, SchedulerContinuationLike } from "./interfaces.ts";
+import { continue$ } from "./schedulerContinuation.ts";
 
 // FIXME: Only declare these to make Deno happy.
 export declare class MessageChannel {
@@ -100,7 +96,7 @@ const createCallback = (
   if (!continuation.isDisposed) {
     scheduler.inContinuation = true;
     scheduler.startTime = scheduler.now;
-    runContinuation(scheduler, continuation);
+    continue$(continuation);
     scheduler.inContinuation = false;
   }
 };
@@ -115,6 +111,10 @@ class HostScheduler implements SchedulerLike {
     return now();
   }
 
+  get shouldYield() {
+    return this.now > this.startTime + this.yieldInterval;
+  }
+
   schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
     if (!continuation.isDisposed) {
       const callback = createCallback(this, continuation);
@@ -123,12 +123,6 @@ class HostScheduler implements SchedulerLike {
           ? scheduleDelayed(callback, delay)
           : scheduleImmediate(callback);
       addDisposable(continuation, callbackSubscription);
-    }
-  }
-
-  yield({ delay } = { delay: 0 }) {
-    if (delay > 0 || this.now > this.startTime + this.yieldInterval) {
-      throw new YieldError(delay);
     }
   }
 }

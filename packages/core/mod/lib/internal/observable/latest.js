@@ -43,7 +43,7 @@ class LatestObserver extends AbstractDelegatingObserver {
     }
 }
 export const latest = (observables, mode) => {
-    const factory = (observer) => () => {
+    const factory = () => (observer) => {
         const observers = [];
         const ctx = {
             completedCount: 0,

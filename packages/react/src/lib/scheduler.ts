@@ -10,8 +10,7 @@ import {
   SchedulerLike,
   SchedulerContinuationLike,
   toSchedulerWithPriority,
-  YieldError,
-  runContinuation,
+  continue$,
 } from "@reactive-js/core/lib/scheduler";
 import {
   unstable_IdlePriority,
@@ -25,28 +24,15 @@ import {
   unstable_UserBlockingPriority,
 } from "scheduler";
 
-const getScheduler = (priority: number) => {
-  switch (priority) {
-    case unstable_IdlePriority:
-      return idlePriority;
-    case unstable_ImmediatePriority:
-      return immediatePriority;
-    case unstable_NormalPriority:
-      return normalPriority;
-    case unstable_LowPriority:
-      return lowPriority;
-    case unstable_UserBlockingPriority:
-      return userBlockingPriority;
-    default:
-      throw new Error();
-  }
-};
-
 const priorityScheduler = {
   inContinuation: false,
 
   get now(): number {
     return unstable_now();
+  },
+
+  get shouldYield(): boolean {
+    return unstable_shouldYield();
   },
 
   schedule(
@@ -59,13 +45,11 @@ const priorityScheduler = {
       delay?: number;
     },
   ) {
-    const scheduler = getScheduler(priority);
-
     const callback = () => {
       dispose(callbackNodeDisposable);
 
       priorityScheduler.inContinuation = true;
-      runContinuation(scheduler, continuation);
+      continue$(continuation);
       priorityScheduler.inContinuation = false;
     };
 
@@ -80,12 +64,6 @@ const priorityScheduler = {
     );
 
     addDisposable(continuation, callbackNodeDisposable);
-  },
-
-  yield({ delay } = { delay: 0 }) {
-    if (delay > 0 || unstable_shouldYield()) {
-      throw new YieldError(delay);
-    }
   },
 };
 
