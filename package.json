@@ -10,7 +10,7 @@
     "format": "prettier '**' --write",
     "lint": "eslint . --fix -f codeFrame --ext .ts,.tsx,.js,.jsx",
     "perf": "lerna run perf",
-    "publish": "yarn clean && yarn build && lerna publish",
+    "lerna-publish": "yarn clean && yarn build && lerna publish",
     "test": "lerna run test",
     "test-coverage": "lerna run test-coverage",
     "test-deno": "lerna run test-deno"
