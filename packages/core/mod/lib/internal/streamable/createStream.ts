@@ -35,7 +35,8 @@ class StreamImpl<TReq, T> extends AbstractDisposable
     const subject = createSubject<TReq>();
     const observable = pipe(subject, op, publish(scheduler, replayCount));
 
-    addDisposable(observable, this), addDisposable(this, subject);
+    addDisposable(observable, this);
+    addDisposable(this, subject);
 
     this.dispatcher = subject;
     this.observable = observable;

@@ -93,7 +93,7 @@ export const run = (continuation: SchedulerContinuationLike): void => {
   continuation.continue();
 };
 
-export const yield$ = (scheduler: SchedulerLike, delay: number) => {
+export const yield$ = (scheduler: SchedulerLike, delay = 0) => {
   if (delay > 0 || scheduler.shouldYield) {
     throw new YieldError(delay);
   }

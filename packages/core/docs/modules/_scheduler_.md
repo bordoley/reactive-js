@@ -153,9 +153,9 @@ ___
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
-`delay` | number |
+Name | Type | Default |
+------ | ------ | ------ |
+`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | - |
+`delay` | number | 0 |
 
 **Returns:** *void*

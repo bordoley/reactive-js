@@ -7,7 +7,8 @@ class StreamImpl extends AbstractDisposable {
         this.isSynchronous = false;
         const subject = createSubject();
         const observable = pipe(subject, op, publish(scheduler, replayCount));
-        addDisposable(observable, this), addDisposable(this, subject);
+        addDisposable(observable, this);
+        addDisposable(this, subject);
         this.dispatcher = subject;
         this.observable = observable;
     }

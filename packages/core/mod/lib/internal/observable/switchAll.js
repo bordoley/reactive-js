@@ -1,4 +1,4 @@
-import { disposed, dispose, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, } from "../../disposable.js";
+import { disposed, dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, } from "../../disposable.js";
 import { compose, pipe } from "../../functions.js";
 import { lift } from "./lift.js";
 import { map } from "./map.js";
@@ -13,7 +13,7 @@ class SwitchObserver extends AbstractDelegatingObserver {
             this.delegate.notify(next);
         };
         addOnDisposedWithError(this, delegate);
-        addOnDisposedWithErrorTeardown(this, () => {
+        addOnDisposedWithoutErrorTeardown(this, () => {
             if (this.inner.isDisposed) {
                 dispose(delegate);
             }

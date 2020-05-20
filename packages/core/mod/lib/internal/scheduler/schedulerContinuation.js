@@ -59,7 +59,7 @@ class SchedulerContinuationImpl extends AbstractDisposable {
 export const run = (continuation) => {
     continuation.continue();
 };
-export const yield$ = (scheduler, delay) => {
+export const yield$ = (scheduler, delay = 0) => {
     if (delay > 0 || scheduler.shouldYield) {
         throw new YieldError(delay);
     }

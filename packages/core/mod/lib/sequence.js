@@ -28,10 +28,7 @@ export const concatAll = () => seq => {
             return done();
         }
     };
-    return () => {
-        debugger;
-        return flattenIter(seq());
-    };
+    return () => flattenIter(seq());
 };
 const _fromArray = (arr, index) => index < arr.length && index >= 0
     ? notify(arr[index], () => _fromArray(arr, index + 1))
