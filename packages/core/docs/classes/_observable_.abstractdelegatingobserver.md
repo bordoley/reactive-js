@@ -13,7 +13,7 @@ which delegate notifications to a parent `ObserverLike` instance
 
 ## Hierarchy
 
-* AbstractObserver‹TA›
+* AbstractObserver‹TA, [ObserverLike](../interfaces/_observable_.observerlike.md)‹TB››
 
   ↳ **AbstractDelegatingObserver**
 
@@ -27,10 +27,6 @@ which delegate notifications to a parent `ObserverLike` instance
 ### Constructors
 
 * [constructor](_observable_.abstractdelegatingobserver.md#constructor)
-
-### Properties
-
-* [delegate](_observable_.abstractdelegatingobserver.md#delegate)
 
 ## Constructors
 
@@ -47,9 +43,3 @@ Name | Type |
 `delegate` | [ObserverLike](../interfaces/_observable_.observerlike.md)‹TB› |
 
 **Returns:** *[AbstractDelegatingObserver](_observable_.abstractdelegatingobserver.md)*
-
-## Properties
-
-###  delegate
-
-• **delegate**: *[ObserverLike](../interfaces/_observable_.observerlike.md)‹TB›*

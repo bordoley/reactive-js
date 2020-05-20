@@ -5,7 +5,7 @@ import { ObservableLike } from "./interfaces";
 import { observe } from "./observable";
 import { AbstractObserver, assertObserverState } from "./observer";
 
-class DefaultObserver<T> extends AbstractObserver<T> {
+class DefaultObserver<T> extends AbstractObserver<T, SchedulerLike> {
   notify(_: T) {
     assertObserverState(this);
   }

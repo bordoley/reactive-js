@@ -16,19 +16,20 @@ const _assertObserverState = __DEV__
     : assertObserverStateProduction;
 export const assertObserverState = _assertObserverState;
 export class AbstractObserver extends AbstractDisposable {
-    constructor(scheduler) {
+    constructor(delegate) {
         super();
+        this.delegate = delegate;
         this.inContinuation = false;
         this.scheduler =
-            scheduler instanceof AbstractObserver
-                ? scheduler.scheduler
-                : scheduler;
+            delegate instanceof AbstractObserver
+                ? delegate.scheduler
+                : delegate;
     }
     get now() {
         return this.scheduler.now;
     }
     get shouldYield() {
-        return this.isDisposed || this.scheduler.shouldYield;
+        return this.inContinuation && (this.isDisposed || this.scheduler.shouldYield);
     }
     onRunStatusChanged(status) {
         this.inContinuation = status;
@@ -36,28 +37,22 @@ export class AbstractObserver extends AbstractDisposable {
     schedule(continuation, options = { delay: 0 }) {
         continuation.addListener("onRunStatusChanged", this);
         addDisposable(this, continuation);
-        this.scheduler.schedule(continuation, options);
+        this.delegate.schedule(continuation, options);
     }
 }
 export class AbstractDelegatingObserver extends AbstractObserver {
     constructor(delegate) {
         super(delegate);
-        this.delegate = delegate;
         addDisposable(delegate, this);
     }
 }
 export class AbstractAutoDisposingDelegatingObserver extends AbstractObserver {
     constructor(delegate) {
         super(delegate);
-        this.delegate = delegate;
         bindDisposables(this, delegate);
     }
 }
 class DelegatingObserver extends AbstractObserver {
-    constructor(delegate) {
-        super(delegate);
-        this.delegate = delegate;
-    }
     notify(next) {
         this.delegate.notify(next);
     }

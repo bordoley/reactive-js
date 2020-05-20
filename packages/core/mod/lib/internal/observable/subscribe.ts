@@ -5,7 +5,7 @@ import { ObservableLike } from "./interfaces.ts";
 import { observe } from "./observable.ts";
 import { AbstractObserver, assertObserverState } from "./observer.ts";
 
-class DefaultObserver<T> extends AbstractObserver<T> {
+class DefaultObserver<T> extends AbstractObserver<T, SchedulerLike> {
   notify(_: T) {
     assertObserverState(this);
   }
