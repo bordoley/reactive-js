@@ -98,7 +98,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
             current !== next &&
             next.dueTime <= this.now &&
             next.priority < current.priority;
-        return (this.isDisposed ||
+        return this.inContinuation && (this.isDisposed ||
             this.isPaused ||
             nextTaskIsHigherPriority ||
             this.host.shouldYield);

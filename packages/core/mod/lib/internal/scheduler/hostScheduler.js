@@ -61,7 +61,7 @@ class HostScheduler {
         return now();
     }
     get shouldYield() {
-        return this.now > this.startTime + this.yieldInterval;
+        return this.inContinuation && (this.now > this.startTime + this.yieldInterval);
     }
     schedule(continuation, { delay } = { delay: 0 }) {
         if (!continuation.isDisposed) {
