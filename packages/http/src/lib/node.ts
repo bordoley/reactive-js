@@ -1,9 +1,4 @@
 export {
-  HttpClientOptions,
-  createHttpClient,
-} from "./internal/node/httpClient";
-
-export {
   HttpRequestListener,
   HttpRequestListenerOptions,
   createHttpRequestListener,

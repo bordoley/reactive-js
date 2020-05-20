@@ -6,7 +6,6 @@
 
 ### Type aliases
 
-* [HttpClientOptions](_node_.md#httpclientoptions)
 * [HttpRequestListener](_node_.md#httprequestlistener)
 * [HttpRequestListenerOptions](_node_.md#httprequestlisteneroptions)
 
@@ -14,22 +13,9 @@
 
 * [createContentEncodingCompressTransforms](_node_.md#const-createcontentencodingcompresstransforms)
 * [createContentEncodingDecompressTransforms](_node_.md#const-createcontentencodingdecompresstransforms)
-* [createHttpClient](_node_.md#const-createhttpclient)
 * [createHttpRequestListener](_node_.md#const-createhttprequestlistener)
 
 ## Type aliases
-
-###  HttpClientOptions
-
-Ƭ **HttpClientOptions**: *object*
-
-#### Type declaration:
-
-* **insecureHTTPParser**? : *boolean*
-
-* **maxHeaderSize**? : *number*
-
-___
 
 ###  HttpRequestListener
 
@@ -79,29 +65,15 @@ Name | Type | Default |
 
 ___
 
-### `Const` createHttpClient
-
-▸ **createHttpClient**(`options`: [HttpClientOptions](_node_.md#httpclientoptions)): *[HttpClient](_http_.md#httpclient)‹[HttpRequest](_http_.md#httprequest)‹IOSourceLike‹Uint8Array››, IOSourceLike‹Uint8Array› & DisposableLike›*
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`options` | [HttpClientOptions](_node_.md#httpclientoptions) | {} |
-
-**Returns:** *[HttpClient](_http_.md#httpclient)‹[HttpRequest](_http_.md#httprequest)‹IOSourceLike‹Uint8Array››, IOSourceLike‹Uint8Array› & DisposableLike›*
-
-___
-
 ### `Const` createHttpRequestListener
 
-▸ **createHttpRequestListener**(`handler`: [HttpServer](_http_.md#httpserver)‹[HttpServerRequest](_http_.md#httpserverrequest)‹IOSourceLike‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹IOSourceLike‹Uint8Array›››, `scheduler`: SchedulerLike, `options`: [HttpRequestListenerOptions](_node_.md#httprequestlisteneroptions)): *[HttpRequestListener](_node_.md#httprequestlistener)*
+▸ **createHttpRequestListener**(`handler`: [HttpServer](_httpserver_.md#httpserver)‹[HttpServerRequest](_httpserver_.md#httpserverrequest)‹IOSourceLike‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹IOSourceLike‹Uint8Array›››, `scheduler`: SchedulerLike, `options`: [HttpRequestListenerOptions](_node_.md#httprequestlisteneroptions)): *[HttpRequestListener](_node_.md#httprequestlistener)*
 
 **Parameters:**
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`handler` | [HttpServer](_http_.md#httpserver)‹[HttpServerRequest](_http_.md#httpserverrequest)‹IOSourceLike‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹IOSourceLike‹Uint8Array››› | - |
+`handler` | [HttpServer](_httpserver_.md#httpserver)‹[HttpServerRequest](_httpserver_.md#httpserverrequest)‹IOSourceLike‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹IOSourceLike‹Uint8Array››› | - |
 `scheduler` | SchedulerLike | - |
 `options` | [HttpRequestListenerOptions](_node_.md#httprequestlisteneroptions) | {} |
 

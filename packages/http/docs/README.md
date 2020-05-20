@@ -6,6 +6,6 @@
 
 ### Modules
 
-* ["dom"](modules/_dom_.md)
 * ["http"](modules/_http_.md)
+* ["httpServer"](modules/_httpserver_.md)
 * ["node"](modules/_node_.md)

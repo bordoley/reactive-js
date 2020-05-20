@@ -12,21 +12,11 @@ import {
 } from "@reactive-js/core/lib/functions";
 import {
   generate,
+  throttle,
   onNotify,
   subscribe,
-  fromValue,
-  concatMap,
-  using,
-  throttle,
 } from "@reactive-js/core/lib/observable";
-import { none } from "@reactive-js/core/lib/option";
 import { onNotify as onNotifyStream } from "@reactive-js/core/lib/streamable";
-import { sendHttpRequest, WebRequestBody } from "@reactive-js/http/lib/dom";
-import {
-  HttpClientRequestStatusType,
-  createHttpRequest,
-  HttpMethod,
-} from "@reactive-js/http/lib/http";
 import { useObservable, useStreamable } from "@reactive-js/react/lib/hooks";
 import {
   RoutableComponentProps,
@@ -152,23 +142,6 @@ const loggedHistoryStateStore = pipe(
       routes={routes}
     />,
   );
-
-const request = createHttpRequest<WebRequestBody>({
-  method: HttpMethod.GET,
-  uri: "http://localhost:8080/files/packages/example/build/bundle.js",
-  body: none,
-});
-
-pipe(
-  sendHttpRequest(request),
-  concatMap(status =>
-    status.type === HttpClientRequestStatusType.HeadersReceived
-      ? using(returns(status.response.body), body => body.text)
-      : fromValue()(JSON.stringify(status)),
-  ),
-  onNotify(console.log),
-  subscribe(normalPriority),
-);
 
 pipe(
   createEventSource("http://localhost:8080/events", {

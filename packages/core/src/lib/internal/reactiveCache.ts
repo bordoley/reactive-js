@@ -15,11 +15,7 @@ import {
   dispatch,
 } from "../observable";
 import { Option, isNone, isSome } from "../option";
-import {
-  SchedulerLike,
-  schedule,
-  yield$,
-} from "../scheduler";
+import { SchedulerLike, schedule, yield$ } from "../scheduler";
 import {
   createStreamable,
   StreamableLike,
@@ -45,13 +41,13 @@ const markAsGarbage = <T>(
   ) {
     const continuation = (scheduler: SchedulerLike) => {
       const { cache, maxCount, garbage } = reactiveCache;
-  
+
       for (const [, stream] of garbage) {
         dispose(stream);
-  
+
         // only delete as many entries as we need to.
         const hasMoreToCleanup = cache.size > maxCount;
-  
+
         if (hasMoreToCleanup) {
           yield$(scheduler);
         } else if (!hasMoreToCleanup) {
@@ -62,8 +58,10 @@ const markAsGarbage = <T>(
 
     reactiveCache.cleaning = true;
 
-    const schedulerContinuation = 
-      schedule(reactiveCache.cleanupScheduler, continuation);
+    const schedulerContinuation = schedule(
+      reactiveCache.cleanupScheduler,
+      continuation,
+    );
     addTeardown(schedulerContinuation, () => {
       reactiveCache.cleaning = false;
     });
@@ -120,14 +118,14 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
     let cachedValue = this.cache.get(key);
 
     if (isNone(cachedValue)) {
-      const stream = streamStreamable(switchAllStream(), this.dispatchScheduler);
-      addTeardown(
-        stream,
-        () => {
-          this.cache.delete(key);
-          this.garbage.delete(key);
-        },
+      const stream = streamStreamable(
+        switchAllStream(),
+        this.dispatchScheduler,
       );
+      addTeardown(stream, () => {
+        this.cache.delete(key);
+        this.garbage.delete(key);
+      });
 
       const onDisposeCleanup = (_?: Exception) =>
         addDisposable(

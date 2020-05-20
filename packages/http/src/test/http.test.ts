@@ -8,15 +8,15 @@ import {
 import { none } from "@reactive-js/core/lib/option";
 import { map } from "@reactive-js/core/lib/readonlyArray";
 import {
-  HttpRequest,
-  HttpResponse,
   createHttpRequest,
   HttpMethod,
+  HttpRequest,
   createHttpResponse,
   HttpStatusCode,
+  HttpResponse,
   checkIfNotModified,
 } from "../lib/http";
-import { parseMediaTypeOrThrow } from "../lib/internal/http/mediaType";
+import { parseMediaTypeOrThrow } from "../lib/internal/mediaType";
 
 const mediaTypeTests = describe(
   "mediaType",
