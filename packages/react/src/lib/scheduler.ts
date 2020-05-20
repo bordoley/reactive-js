@@ -32,7 +32,7 @@ const priorityScheduler = {
   },
 
   get shouldYield(): boolean {
-    return unstable_shouldYield();
+    return priorityScheduler.inContinuation && unstable_shouldYield();
   },
 
   schedule(

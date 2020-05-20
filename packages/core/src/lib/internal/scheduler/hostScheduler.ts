@@ -112,7 +112,7 @@ class HostScheduler implements SchedulerLike {
   }
 
   get shouldYield() {
-    return this.now > this.startTime + this.yieldInterval;
+    return this.inContinuation && (this.now > this.startTime + this.yieldInterval);
   }
 
   schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {

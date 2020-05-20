@@ -39,8 +39,10 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable {
         this.taskQueue = createPriorityQueue(comparator);
     }
     get shouldYield() {
-        this.microTaskTicks++;
-        return this.microTaskTicks >= this.maxMicroTaskTicks;
+        if (this.inContinuation) {
+            this.microTaskTicks++;
+        }
+        return this.inContinuation && (this.microTaskTicks >= this.maxMicroTaskTicks);
     }
     run() {
         while (!this.isDisposed && move(this)) {

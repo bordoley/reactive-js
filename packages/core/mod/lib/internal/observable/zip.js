@@ -16,7 +16,9 @@ class EnumeratorObserver extends AbstractDisposable {
         this.hasCurrent = false;
         this.inContinuation = false;
         this.now = 0;
-        this.shouldYield = true;
+    }
+    get shouldYield() {
+        return this.inContinuation;
     }
     move() {
         const continuations = this.continuations;
