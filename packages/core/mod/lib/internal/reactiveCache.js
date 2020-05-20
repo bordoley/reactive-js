@@ -2,7 +2,7 @@ import { AbstractDisposable, dispose, addTeardown, addDisposable, } from "../dis
 import { pipe } from "../functions.js";
 import { switchAll, onSubscribe, dispatch, } from "../observable.js";
 import { isNone, isSome } from "../option.js";
-import { schedule, yield$, } from "../scheduler.js";
+import { schedule, yield$ } from "../scheduler.js";
 import { createStreamable, stream as streamStreamable, } from "../streamable.js";
 const markAsGarbage = (reactiveCache, key, stream) => {
     reactiveCache.garbage.set(key, stream);
