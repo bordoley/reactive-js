@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.41](../README.md) › ["sequence"](../modules/_sequence_.md) › [SequenceType](_sequence_.sequencetype.md)
+[@reactive-js/core - v0.0.42](../README.md) › ["sequence"](../modules/_sequence_.md) › [SequenceType](_sequence_.sequencetype.md)
 
 # Enumeration: SequenceType
 

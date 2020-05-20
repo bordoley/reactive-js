@@ -5,7 +5,7 @@ class OnSubscribeObservable {
     constructor(src, f) {
         this.src = src;
         this.f = f;
-        this.isSynchronous = false;
+        this.isSynchronous = src.isSynchronous;
     }
     observe(observer) {
         try {

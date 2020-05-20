@@ -38,25 +38,24 @@ export abstract class AbstractObserver<T> extends AbstractDisposable
   implements ObserverLike<T> {
   inContinuation = false;
 
-  private rawScheduler: SchedulerLike;
+  private readonly scheduler: SchedulerLike;
 
-  constructor(readonly scheduler: SchedulerLike) {
+  constructor(scheduler: SchedulerLike) {
     super();
-    this.scheduler = scheduler;
 
-    this.rawScheduler =
+    this.scheduler =
       scheduler instanceof AbstractObserver
-        ? scheduler.rawScheduler
+        ? scheduler.scheduler
         : scheduler;
   }
 
   /** @ignore */
   get now() {
-    return this.rawScheduler.now;
+    return this.scheduler.now;
   }
 
   get shouldYield() {
-    return this.isDisposed || this.rawScheduler.shouldYield;
+    return this.isDisposed || this.scheduler.shouldYield;
   }
 
   abstract notify(_: T): void;

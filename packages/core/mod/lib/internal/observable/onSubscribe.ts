@@ -10,11 +10,14 @@ import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces.t
 import { observe } from "./observable.ts";
 
 class OnSubscribeObservable<T> implements ObservableLike<T> {
-  readonly isSynchronous = false;
+  readonly isSynchronous: boolean;
+  
   constructor(
     private readonly src: ObservableLike<T>,
     private readonly f: Factory<DisposableOrTeardown | void>,
-  ) {}
+  ) {
+    this.isSynchronous = src.isSynchronous;
+  }
 
   observe(observer: ObserverLike<T>) {
     try {

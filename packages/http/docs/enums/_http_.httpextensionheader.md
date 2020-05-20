@@ -1,4 +1,4 @@
-[@reactive-js/http - v0.0.41](../README.md) › ["http"](../modules/_http_.md) › [HttpExtensionHeader](_http_.httpextensionheader.md)
+[@reactive-js/http - v0.0.42](../README.md) › ["http"](../modules/_http_.md) › [HttpExtensionHeader](_http_.httpextensionheader.md)
 
 # Enumeration: HttpExtensionHeader
 

@@ -1,8 +1,8 @@
 import { Factory, Updater } from "../../functions.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import {
-  createScheduledObservable,
-  createDelayedScheduledObservable,
+  deferSynchronous,
+  defer,
 } from "./observable.ts";
 import { yield$ } from "./observer.ts";
 
@@ -20,6 +20,8 @@ export function generate<T>(
   initialValue: Factory<T>,
   options: { delay: number } = { delay: 0 },
 ): ObservableLike<T> {
+  const { delay } = options;
+
   const factory = () => {
     let acc = initialValue();
 
@@ -31,8 +33,7 @@ export function generate<T>(
     };
   };
 
-  const { delay } = options;
   return delay > 0
-    ? createDelayedScheduledObservable(factory, delay)
-    : createScheduledObservable(factory, true);
+    ? defer(factory, options)
+    : deferSynchronous(factory);
 }

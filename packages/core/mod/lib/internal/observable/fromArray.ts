@@ -2,8 +2,8 @@ import { dispose } from "../../disposable.ts";
 import { Function1 } from "../../functions.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import {
-  createScheduledObservable,
-  createDelayedScheduledObservable,
+  deferSynchronous,
+  defer,
 } from "./observable.ts";
 import { yield$ } from "./observer.ts";
 
@@ -38,6 +38,6 @@ export const fromArray = <T>(
   };
 
   return delay > 0
-    ? createDelayedScheduledObservable(factory, delay)
-    : createScheduledObservable(factory, true);
+    ? defer(factory, { delay })
+    : deferSynchronous(factory);
 };

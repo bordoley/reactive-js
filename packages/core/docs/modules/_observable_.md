@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.41](../README.md) › ["observable"](_observable_.md)
+[@reactive-js/core - v0.0.42](../README.md) › ["observable"](_observable_.md)
 
 # Module: "observable"
 
@@ -1778,7 +1778,7 @@ ___
 
 ### `Const` throws
 
-▸ **throws**<**T**>(`__namedParameters`: object): *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹unknown›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **throws**<**T**>(`options`: object): *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹unknown›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` that emits no items and immediately disposes its subscription with an error.
 
@@ -1788,7 +1788,7 @@ Creates an `ObservableLike` that emits no items and immediately disposes its sub
 
 **Parameters:**
 
-▪`Default value`  **__namedParameters**: *object*= { delay: 0 }
+▪`Default value`  **options**: *object*= { delay: 0 }
 
 Name | Type |
 ------ | ------ |

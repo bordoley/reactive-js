@@ -3,8 +3,8 @@ import { Function1, Factory } from "../../functions.ts";
 import { none } from "../../option.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import {
-  createScheduledObservable,
-  createDelayedScheduledObservable,
+  deferSynchronous,
+  defer,
 } from "./observable.ts";
 
 /**
@@ -14,8 +14,9 @@ import {
  * @param delay The delay before disposing the subscription.
  */
 export const throws = <T>(
-  { delay }: { delay: number } = { delay: 0 },
+  options: { delay: number } = { delay: 0 },
 ): Function1<Factory<unknown>, ObservableLike<T>> => errorFactory => {
+  const { delay } = options;
   const factory = () => (observer: ObserverLike<T>) => {
     let cause: unknown = none;
     try {
@@ -27,6 +28,6 @@ export const throws = <T>(
   };
 
   return delay > 0
-    ? createDelayedScheduledObservable(factory, delay)
-    : createScheduledObservable(factory, true);
+    ? defer(factory, options)
+    : deferSynchronous(factory);
 };

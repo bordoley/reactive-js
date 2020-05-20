@@ -1,4 +1,4 @@
-[@reactive-js/http - v0.0.41](../README.md) › ["http"](_http_.md)
+[@reactive-js/http - v0.0.42](../README.md) › ["http"](_http_.md)
 
 # Module: "http"
 

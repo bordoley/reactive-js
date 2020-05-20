@@ -18,19 +18,17 @@ export const assertObserverState = _assertObserverState;
 export class AbstractObserver extends AbstractDisposable {
     constructor(scheduler) {
         super();
-        this.scheduler = scheduler;
         this.inContinuation = false;
-        this.scheduler = scheduler;
-        this.rawScheduler =
+        this.scheduler =
             scheduler instanceof AbstractObserver
-                ? scheduler.rawScheduler
+                ? scheduler.scheduler
                 : scheduler;
     }
     get now() {
-        return this.rawScheduler.now;
+        return this.scheduler.now;
     }
     get shouldYield() {
-        return this.isDisposed || this.rawScheduler.shouldYield;
+        return this.isDisposed || this.scheduler.shouldYield;
     }
     onRunStatusChanged(status) {
         this.inContinuation = status;
