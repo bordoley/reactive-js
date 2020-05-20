@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.41](../README.md) › ["scheduler"](_scheduler_.md)
+[@reactive-js/core - v0.0.42](../README.md) › ["scheduler"](_scheduler_.md)
 
 # Module: "scheduler"
 

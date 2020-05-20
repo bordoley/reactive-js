@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.41](../README.md) › ["disposable"](../modules/_disposable_.md) › [SerialDisposableLike](_disposable_.serialdisposablelike.md)
+[@reactive-js/core - v0.0.42](../README.md) › ["disposable"](../modules/_disposable_.md) › [SerialDisposableLike](_disposable_.serialdisposablelike.md)
 
 # Interface: SerialDisposableLike
 

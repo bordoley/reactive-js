@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.41](../README.md) › ["functions"](_functions_.md)
+[@reactive-js/core - v0.0.42](../README.md) › ["functions"](_functions_.md)
 
 # Module: "functions"
 

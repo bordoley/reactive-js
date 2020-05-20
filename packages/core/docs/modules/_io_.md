@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.41](../README.md) › ["io"](_io_.md)
+[@reactive-js/core - v0.0.42](../README.md) › ["io"](_io_.md)
 
 # Module: "io"
 

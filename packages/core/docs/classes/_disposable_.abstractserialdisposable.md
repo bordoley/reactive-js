@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.41](../README.md) › ["disposable"](../modules/_disposable_.md) › [AbstractSerialDisposable](_disposable_.abstractserialdisposable.md)
+[@reactive-js/core - v0.0.42](../README.md) › ["disposable"](../modules/_disposable_.md) › [AbstractSerialDisposable](_disposable_.abstractserialdisposable.md)
 
 # Class: AbstractSerialDisposable
 

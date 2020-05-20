@@ -7,7 +7,7 @@ import { pipe } from "../../functions";
 import { none } from "../../option";
 import { everySatisfy, map } from "../../readonlyArray";
 import { ObservableLike, ObserverLike } from "./interfaces";
-import { createScheduledObservable, observe } from "./observable";
+import { deferSynchronous, observe, defer } from "./observable";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
 type LatestCtx = {
@@ -94,11 +94,12 @@ export const latest = (
     }
   };
 
-  return createScheduledObservable(
-    factory,
-    pipe(
-      observables,
-      everySatisfy(obs => obs.isSynchronous),
-    ),
+  const isSynchronous = pipe(
+    observables,
+    everySatisfy(obs => obs.isSynchronous),
   );
+
+  return isSynchronous 
+    ? deferSynchronous(factory)
+    : defer(factory);
 };

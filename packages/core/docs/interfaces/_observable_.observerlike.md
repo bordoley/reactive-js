@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.41](../README.md) › ["observable"](../modules/_observable_.md) › [ObserverLike](_observable_.observerlike.md)
+[@reactive-js/core - v0.0.42](../README.md) › ["observable"](../modules/_observable_.md) › [ObserverLike](_observable_.observerlike.md)
 
 # Interface: ObserverLike <**T**>
 

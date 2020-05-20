@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.41](../README.md) › ["sequence"](_sequence_.md)
+[@reactive-js/core - v0.0.42](../README.md) › ["sequence"](_sequence_.md)
 
 # Module: "sequence"
 

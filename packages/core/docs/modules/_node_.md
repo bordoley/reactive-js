@@ -1,4 +1,4 @@
-[@reactive-js/core - v0.0.41](../README.md) › ["node"](_node_.md)
+[@reactive-js/core - v0.0.42](../README.md) › ["node"](_node_.md)
 
 # Module: "node"
 

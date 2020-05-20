@@ -17,14 +17,15 @@ class ScheduledObservable<T> implements ObservableLike<T> {
   }
 }
 
-export const createScheduledObservable = <T>(
+export const deferSynchronous = <T>(
   factory: Factory<SideEffect1<ObserverLike<T>>>,
-  isSynchronous: boolean,
-): ObservableLike<T> => new ScheduledObservable(factory, isSynchronous, 0);
+): ObservableLike<T> => new ScheduledObservable(factory, true, 0);
 
-export const createDelayedScheduledObservable = <T>(
+export const defer = <T>(
   factory: Factory<SideEffect1<ObserverLike<T>>>,
-  delay: number,
+  { delay } = {
+    delay: 0
+  },
 ): ObservableLike<T> => new ScheduledObservable(factory, false, delay);
 
 export const observe = <T>(

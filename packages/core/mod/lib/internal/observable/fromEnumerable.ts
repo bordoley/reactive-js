@@ -3,8 +3,8 @@ import { EnumeratorLike, EnumerableLike, enumerate } from "../../enumerable.ts";
 import { Function1, Factory, defer, pipe } from "../../functions.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import {
-  createScheduledObservable,
-  createDelayedScheduledObservable,
+  deferSynchronous,
+  defer as deferObs,
 } from "./observable.ts";
 import { yield$ } from "./observer.ts";
 
@@ -30,8 +30,8 @@ export const fromEnumerator = <T>(
 
   const { delay } = options;
   return delay > 0
-    ? createDelayedScheduledObservable(factory, delay)
-    : createScheduledObservable(factory, true);
+    ? deferObs(factory, { delay })
+    : deferSynchronous(factory);
 };
 
 /**
