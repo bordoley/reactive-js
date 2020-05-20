@@ -34,19 +34,19 @@ export const assertObserverState: SideEffect1<ObserverLike<
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
-export abstract class AbstractObserver<T> extends AbstractDisposable
+export abstract class AbstractObserver<T, TDelegate extends SchedulerLike> extends AbstractDisposable
   implements ObserverLike<T> {
   inContinuation = false;
 
   private readonly scheduler: SchedulerLike;
 
-  constructor(scheduler: SchedulerLike) {
+  constructor(readonly delegate: TDelegate) {
     super();
 
     this.scheduler =
-      scheduler instanceof AbstractObserver
-        ? scheduler.scheduler
-        : scheduler;
+      delegate instanceof AbstractObserver
+        ? delegate.scheduler
+        : delegate;
   }
 
   /** @ignore */
@@ -54,8 +54,9 @@ export abstract class AbstractObserver<T> extends AbstractDisposable
     return this.scheduler.now;
   }
 
+  /** @ignore */
   get shouldYield() {
-    return this.isDisposed || this.scheduler.shouldYield;
+    return this.inContinuation && (this.isDisposed || this.scheduler.shouldYield);
   }
 
   abstract notify(_: T): void;
@@ -69,7 +70,10 @@ export abstract class AbstractObserver<T> extends AbstractDisposable
   schedule(continuation: SchedulerContinuationLike, options = { delay: 0 }) {
     continuation.addListener("onRunStatusChanged", this);
     addDisposable(this, continuation);
-    this.scheduler.schedule(continuation, options);
+
+    // Note that we schedule on the delegate so that it too may listen to 
+    // the onRunStatusChanged event.
+    this.delegate.schedule(continuation, options);
   }
 }
 
@@ -82,8 +86,8 @@ export abstract class AbstractObserver<T> extends AbstractDisposable
 export abstract class AbstractDelegatingObserver<
   TA,
   TB
-> extends AbstractObserver<TA> {
-  constructor(readonly delegate: ObserverLike<TB>) {
+> extends AbstractObserver<TA, ObserverLike<TB>> {
+  constructor(delegate: ObserverLike<TB>) {
     super(delegate);
     addDisposable(delegate, this);
   }
@@ -92,18 +96,14 @@ export abstract class AbstractDelegatingObserver<
 export abstract class AbstractAutoDisposingDelegatingObserver<
   TA,
   TB
-> extends AbstractObserver<TA> {
-  constructor(readonly delegate: ObserverLike<TB>) {
+> extends AbstractObserver<TA, ObserverLike<TB>> {
+  constructor(delegate: ObserverLike<TB>) {
     super(delegate);
     bindDisposables(this, delegate);
   }
 }
 
-class DelegatingObserver<T> extends AbstractObserver<T> {
-  constructor(readonly delegate: ObserverLike<T>) {
-    super(delegate);
-  }
-
+class DelegatingObserver<T> extends AbstractObserver<T, ObserverLike<T>> {
   notify(next: T) {
     this.delegate.notify(next);
   }

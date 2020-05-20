@@ -22,7 +22,7 @@ const notifyDelegate = <TA, TB, TC>(
   }
 };
 
-class ZipWithLatestFromObserver<TA, TB, T> extends AbstractObserver<TA> {
+class ZipWithLatestFromObserver<TA, TB, T> extends AbstractObserver<TA, ObserverLike<T>> {
   otherLatest: Option<TB>;
   hasLatest = false;
 
@@ -39,7 +39,7 @@ class ZipWithLatestFromObserver<TA, TB, T> extends AbstractObserver<TA> {
   readonly queue: TA[] = [];
 
   constructor(
-    readonly delegate: ObserverLike<T>,
+    delegate: ObserverLike<T>,
     other: ObservableLike<TB>,
     readonly selector: Function2<TA, TB, T>,
   ) {

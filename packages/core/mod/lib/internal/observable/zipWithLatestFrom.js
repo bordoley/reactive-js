@@ -15,7 +15,6 @@ const notifyDelegate = (observer) => {
 class ZipWithLatestFromObserver extends AbstractObserver {
     constructor(delegate, other, selector) {
         super(delegate);
-        this.delegate = delegate;
         this.selector = selector;
         this.hasLatest = false;
         this.onNotify = (otherLatest) => {
