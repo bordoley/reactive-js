@@ -1,0 +1,287 @@
+import { Function1, pipe, returns } from "../../../../core/mod/lib/functions.ts";
+import { ObservableLike } from "../../../../core/mod/lib/observable.ts";
+import { isNone, isSome, none, Option } from "../../../../core/mod/lib/option.ts";
+import { fromObject, reduce } from "../../../../core/mod/lib/readonlyArray.ts";
+import { parseCacheControlFromHeaders } from "./cacheDirective.ts";
+import { parseHttpContentInfoFromHeaders } from "./httpContentInfo.ts";
+import {
+  getHeaderValue,
+  HttpStandardHeader,
+  HttpExtensionHeader,
+  HttpHeaders,
+} from "./httpHeaders.ts";
+import { URILike } from "./httpMessage.ts";
+import { parseHttpPreferencesFromHeaders } from "./httpPreferences.ts";
+import { HttpMethod, HttpRequest } from "./httpRequest.ts";
+import { parseHttpRequestPreconditionsFromHeaders } from "./httpRequestPreconditions.ts";
+import { HttpResponse } from "./httpResponse.ts";
+
+export type HttpServerRequest<T> = HttpRequest<T> & {
+  readonly isTransportSecure: boolean;
+};
+
+export type HttpServer<
+  THttpRequest extends HttpRequest<unknown>,
+  THttpResponse extends HttpResponse<unknown>
+> = (req: THttpRequest) => ObservableLike<THttpResponse>;
+
+export type HttpRoutedRequest<T> = HttpRequest<T> & {
+  readonly params: { readonly [param: string]: string };
+};
+
+// Prefix tree
+type Router<TReq, TResp> = {
+  readonly name: string;
+  readonly handler?: HttpServer<HttpRoutedRequest<TReq>, HttpResponse<TResp>>;
+  readonly children: { [segment: string]: Router<TReq, TResp> };
+};
+
+type Segment = {
+  readonly name: string;
+  child?: Segment;
+};
+
+const createSegments = (path: string): Segment => {
+  const root: Segment = { name: "" };
+
+  let acc = root;
+  for (const name of path.split("/")) {
+    const child: Segment = { name };
+    acc.child = child;
+    acc = child;
+  }
+
+  return root;
+};
+
+const serializeSegments = (segment: Segment): string => {
+  let result = segment.name;
+  while (isSome(segment.child)) {
+    segment = segment.child;
+    result += `/${segment.name}`;
+  }
+  return result;
+};
+
+const emptyRouter: Router<unknown, unknown> = {
+  name: "",
+  children: {},
+};
+
+const addHandler = <TReq, TResp>(
+  router: Router<TReq, TResp>,
+  { name, child }: Segment,
+  handler: HttpServer<HttpRoutedRequest<TReq>, HttpResponse<TResp>>,
+): Router<TReq, TResp> => {
+  if (isNone(child)) {
+    return {
+      name,
+      handler,
+      children: router.children,
+    };
+  } else {
+    const childName = child.name.startsWith(":") ? ":" : child.name;
+    const childRouter =
+      router.children[childName] ?? (emptyRouter as Router<TReq, TResp>);
+    const newChildRouter = addHandler(childRouter, child, handler);
+
+    return {
+      name,
+      handler: router.handler,
+      children: {
+        ...router.children,
+        [childName]: newChildRouter,
+      },
+    };
+  }
+};
+
+const findHandler = <TReq, TResp>(
+  router: Router<TReq, TResp>,
+  segment: Segment,
+  params: { [param: string]: string },
+): Option<[
+  HttpServer<HttpRoutedRequest<TReq>, HttpResponse<TResp>>,
+  { [param: string]: string },
+]> => {
+  const { child } = segment;
+  const { handler } = router;
+  if (isNone(child) && isSome(handler)) {
+    return [handler, params];
+  }
+  if (isNone(child)) {
+    return none;
+  }
+
+  const nameRouter = router.children[child.name];
+  const nameRouterResult = isSome(nameRouter)
+    ? findHandler(nameRouter, child, params)
+    : none;
+  if (isSome(nameRouterResult)) {
+    return nameRouterResult;
+  }
+
+  const paramRouter = router.children[":"];
+  const paramRouterResult = isSome(paramRouter)
+    ? findHandler(paramRouter, child, {
+        ...params,
+        [paramRouter.name]: child.name,
+      })
+    : none;
+  if (isSome(paramRouterResult)) {
+    return paramRouterResult;
+  }
+
+  const globRouter = router.children["*"];
+  const globRouterHandler = globRouter?.handler;
+  if (isSome(globRouterHandler)) {
+    const newParams = {
+      ...params,
+      ["*"]: serializeSegments(child),
+    };
+
+    return [globRouterHandler, newParams];
+  }
+
+  return none;
+};
+
+export const createRoutingHttpServer = <TReq, TResp>(
+  routes: {
+    [path: string]: HttpServer<HttpRoutedRequest<TReq>, HttpResponse<TResp>>;
+  },
+  notFoundHandler: Function1<
+    HttpRequest<TReq>,
+    ObservableLike<HttpResponse<TResp>>
+  >,
+): HttpServer<HttpRequest<TReq>, HttpResponse<TResp>> => {
+  const router = pipe(
+    routes,
+    fromObject(),
+    reduce(
+      (acc: Router<TReq, TResp>, [path, handler]) =>
+        addHandler(acc, createSegments(path), handler),
+      returns(emptyRouter),
+    ),
+  );
+
+  return (request: HttpRequest<TReq>) => {
+    const segments = createSegments(request.uri.pathname);
+    const result = findHandler(router, segments, {});
+
+    if (isSome(result)) {
+      const [handler, params] = result;
+      const requestWithParams: HttpRoutedRequest<TReq> = {
+        ...request,
+        params,
+      };
+      return handler(requestWithParams);
+    } else {
+      return notFoundHandler(request);
+    }
+  };
+};
+
+const parseURIFromHeaders = (
+  protocol: "http" | "https",
+  path: string,
+  httpVersionMajor: number,
+  headers: HttpHeaders,
+): URILike => {
+  const forwardedProtocol = getHeaderValue(
+    headers,
+    HttpExtensionHeader.XForwardedProto,
+  );
+  const uriProtocol = isSome(forwardedProtocol)
+    ? forwardedProtocol.split(/\s*,\s*/, 1)[0]
+    : protocol;
+  const forwardedHost = getHeaderValue(
+    headers,
+    HttpExtensionHeader.XForwardedHost,
+  );
+  const http2Authority = headers[":authority"];
+  const http1Host = getHeaderValue(headers, HttpStandardHeader.Host);
+  const unfilteredHost = isSome(forwardedHost)
+    ? forwardedHost
+    : isSome(http2Authority) && httpVersionMajor >= 2
+    ? http2Authority
+    : isSome(http1Host)
+    ? http1Host
+    : "";
+  const host = unfilteredHost.split(/\s*,\s*/, 1)[0];
+  return new URL(`${uriProtocol}://${host}${path ?? ""}`);
+};
+
+export const parseHttpServerRequestFromHeaders = <T>({
+  method,
+  path,
+  headers,
+  httpVersionMajor,
+  httpVersionMinor,
+  isTransportSecure,
+  body,
+}: {
+  method: HttpMethod;
+  path: string;
+  headers: HttpHeaders;
+  body: T;
+  httpVersionMajor: number;
+  httpVersionMinor: number;
+  isTransportSecure: boolean;
+}): HttpServerRequest<T> => {
+  const cacheControl = parseCacheControlFromHeaders(headers);
+  const contentInfo = parseHttpContentInfoFromHeaders(headers);
+  const rawExpectHeader = getHeaderValue(headers, HttpStandardHeader.Expect);
+  const expectContinue = rawExpectHeader === "100-continue";
+  const preconditions = parseHttpRequestPreconditionsFromHeaders(headers);
+  const preferences = parseHttpPreferencesFromHeaders(headers);
+  const protocol = isTransportSecure ? "https" : "http";
+  const uri = parseURIFromHeaders(protocol, path, httpVersionMajor, headers);
+
+  return {
+    body,
+    cacheControl,
+    contentInfo,
+    expectContinue,
+    headers,
+    httpVersionMajor,
+    httpVersionMinor,
+    isTransportSecure,
+    method,
+    preconditions,
+    preferences,
+    uri,
+  };
+};
+
+export const disallowProtocolAndHostForwarding = <T>(): Function1<
+  HttpServerRequest<T>,
+  HttpServerRequest<T>
+> => request => {
+  const {
+    httpVersionMajor,
+    headers: oldHeaders,
+    isTransportSecure,
+    uri: oldUri,
+  } = request;
+  const {
+    "x-forwarded-proto": xForwardedProto,
+    "x-forwarded-host": xForwardedHost,
+    ...headers
+  } = oldHeaders;
+
+  const protocol = isTransportSecure ? "https" : "http";
+
+  if (isNone(xForwardedProto) && isNone(xForwardedHost)) {
+    return request;
+  } else {
+    const path = oldUri.pathname;
+    const uri = parseURIFromHeaders(protocol, path, httpVersionMajor, headers);
+
+    return {
+      ...request,
+      uri,
+      headers,
+    };
+  }
+};

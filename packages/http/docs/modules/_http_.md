@@ -6,7 +6,6 @@
 
 ### Enumerations
 
-* [HttpClientRequestStatusType](../enums/_http_.httpclientrequeststatustype.md)
 * [HttpContentEncoding](../enums/_http_.httpcontentencoding.md)
 * [HttpExtensionHeader](../enums/_http_.httpextensionheader.md)
 * [HttpMethod](../enums/_http_.httpmethod.md)
@@ -21,13 +20,6 @@
 
 * [CacheDirective](_http_.md#cachedirective)
 * [EntityTag](_http_.md#entitytag)
-* [HttpClient](_http_.md#httpclient)
-* [HttpClientRequest](_http_.md#httpclientrequest)
-* [HttpClientRequestStatus](_http_.md#httpclientrequeststatus)
-* [HttpClientRequestStatusComplete](_http_.md#httpclientrequeststatuscomplete)
-* [HttpClientRequestStatusHeadersReceived](_http_.md#httpclientrequeststatusheadersreceived)
-* [HttpClientRequestStatusProgress](_http_.md#httpclientrequeststatusprogress)
-* [HttpClientRequestStatusStart](_http_.md#httpclientrequeststatusstart)
 * [HttpContentInfo](_http_.md#httpcontentinfo)
 * [HttpDateTime](_http_.md#httpdatetime)
 * [HttpHeaders](_http_.md#httpheaders)
@@ -35,9 +27,6 @@
 * [HttpPreferences](_http_.md#httppreferences)
 * [HttpRequest](_http_.md#httprequest)
 * [HttpResponse](_http_.md#httpresponse)
-* [HttpRoutedRequest](_http_.md#httproutedrequest)
-* [HttpServer](_http_.md#httpserver)
-* [HttpServerRequest](_http_.md#httpserverrequest)
 * [MediaType](_http_.md#mediatype)
 
 ### Variables
@@ -54,18 +43,13 @@
 * [createHttpRequest](_http_.md#const-createhttprequest)
 * [createHttpResponse](_http_.md#const-createhttpresponse)
 * [createRedirectHttpRequest](_http_.md#const-createredirecthttprequest)
-* [createRoutingHttpServer](_http_.md#const-createroutinghttpserver)
 * [decodeHttpRequestContent](_http_.md#const-decodehttprequestcontent)
 * [decodeHttpResponseContent](_http_.md#const-decodehttpresponsecontent)
-* [disallowProtocolAndHostForwarding](_http_.md#const-disallowprotocolandhostforwarding)
 * [encodeHttpResponseContent](_http_.md#const-encodehttpresponsecontent)
 * [httpRequestToUntypedHeaders](_http_.md#const-httprequesttountypedheaders)
-* [parseHeaders](_http_.md#const-parseheaders)
-* [parseHttpRequestFromHeaders](_http_.md#const-parsehttprequestfromheaders)
 * [parseHttpResponseFromHeaders](_http_.md#const-parsehttpresponsefromheaders)
 * [toIOSourceHttpRequest](_http_.md#const-toiosourcehttprequest)
 * [toIOSourceHttpResponse](_http_.md#const-toiosourcehttpresponse)
-* [withDefaultBehaviors](_http_.md#const-withdefaultbehaviors)
 * [writeHttpRequestHeaders](_http_.md#const-writehttprequestheaders)
 * [writeHttpResponseHeaders](_http_.md#const-writehttpresponseheaders)
 
@@ -92,78 +76,6 @@ ___
 * **isWeak**: *boolean*
 
 * **tag**: *string*
-
-___
-
-###  HttpClient
-
-Ƭ **HttpClient**: *function*
-
-#### Type declaration:
-
-▸ (`req`: THttpRequest): *ObservableLike‹[HttpClientRequestStatus](_http_.md#httpclientrequeststatus)‹TResp››*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`req` | THttpRequest |
-
-___
-
-###  HttpClientRequest
-
-Ƭ **HttpClientRequest**: *[HttpRequest](_http_.md#httprequest)‹T› & object*
-
-___
-
-###  HttpClientRequestStatus
-
-Ƭ **HttpClientRequestStatus**: *[HttpClientRequestStatusStart](_http_.md#httpclientrequeststatusstart) | [HttpClientRequestStatusProgress](_http_.md#httpclientrequeststatusprogress) | [HttpClientRequestStatusComplete](_http_.md#httpclientrequeststatuscomplete) | [HttpClientRequestStatusHeadersReceived](_http_.md#httpclientrequeststatusheadersreceived)‹TResp›*
-
-___
-
-###  HttpClientRequestStatusComplete
-
-Ƭ **HttpClientRequestStatusComplete**: *object*
-
-#### Type declaration:
-
-* **type**: *[Completed](../enums/_http_.httpclientrequeststatustype.md#completed)*
-
-___
-
-###  HttpClientRequestStatusHeadersReceived
-
-Ƭ **HttpClientRequestStatusHeadersReceived**: *object*
-
-#### Type declaration:
-
-* **response**: *[HttpResponse](_http_.md#httpresponse)‹TResp›*
-
-* **type**: *[HeadersReceived](../enums/_http_.httpclientrequeststatustype.md#headersreceived)*
-
-___
-
-###  HttpClientRequestStatusProgress
-
-Ƭ **HttpClientRequestStatusProgress**: *object*
-
-#### Type declaration:
-
-* **count**: *number*
-
-* **type**: *[Progress](../enums/_http_.httpclientrequeststatustype.md#progress)*
-
-___
-
-###  HttpClientRequestStatusStart
-
-Ƭ **HttpClientRequestStatusStart**: *object*
-
-#### Type declaration:
-
-* **type**: *[Start](../enums/_http_.httpclientrequeststatustype.md#start)*
 
 ___
 
@@ -240,34 +152,6 @@ ___
 ###  HttpResponse
 
 Ƭ **HttpResponse**: *[HttpMessage](_http_.md#httpmessage)‹T› & object*
-
-___
-
-###  HttpRoutedRequest
-
-Ƭ **HttpRoutedRequest**: *[HttpRequest](_http_.md#httprequest)‹T› & object*
-
-___
-
-###  HttpServer
-
-Ƭ **HttpServer**: *function*
-
-#### Type declaration:
-
-▸ (`req`: THttpRequest): *ObservableLike‹THttpResponse›*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`req` | THttpRequest |
-
-___
-
-###  HttpServerRequest
-
-Ƭ **HttpServerRequest**: *[HttpRequest](_http_.md#httprequest)‹T› & object*
 
 ___
 
@@ -440,27 +324,6 @@ Name | Type |
 
 ___
 
-### `Const` createRoutingHttpServer
-
-▸ **createRoutingHttpServer**<**TReq**, **TResp**>(`routes`: object, `notFoundHandler`: Function1‹[HttpRequest](_http_.md#httprequest)‹TReq›, ObservableLike‹[HttpResponse](_http_.md#httpresponse)‹TResp›››): *[HttpServer](_http_.md#httpserver)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [HttpResponse](_http_.md#httpresponse)‹TResp››*
-
-**Type parameters:**
-
-▪ **TReq**
-
-▪ **TResp**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`routes` | object |
-`notFoundHandler` | Function1‹[HttpRequest](_http_.md#httprequest)‹TReq›, ObservableLike‹[HttpResponse](_http_.md#httpresponse)‹TResp››› |
-
-**Returns:** *[HttpServer](_http_.md#httpserver)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [HttpResponse](_http_.md#httpresponse)‹TResp››*
-
-___
-
 ### `Const` decodeHttpRequestContent
 
 ▸ **decodeHttpRequestContent**(`decoderProvider`: object): *Function1‹[HttpRequest](_http_.md#httprequest)‹IOSourceLike‹Uint8Array››, [HttpRequest](_http_.md#httprequest)‹IOSourceLike‹Uint8Array›››*
@@ -486,18 +349,6 @@ Name | Type |
 `decoderProvider` | object |
 
 **Returns:** *Function1‹[HttpResponse](_http_.md#httpresponse)‹IOSourceLike‹Uint8Array››, [HttpResponse](_http_.md#httpresponse)‹IOSourceLike‹Uint8Array›››*
-
-___
-
-### `Const` disallowProtocolAndHostForwarding
-
-▸ **disallowProtocolAndHostForwarding**<**T**>(): *Function1‹[HttpServerRequest](_http_.md#httpserverrequest)‹T›, [HttpServerRequest](_http_.md#httpserverrequest)‹T››*
-
-**Type parameters:**
-
-▪ **T**
-
-**Returns:** *Function1‹[HttpServerRequest](_http_.md#httpserverrequest)‹T›, [HttpServerRequest](_http_.md#httpserverrequest)‹T››*
 
 ___
 
@@ -529,46 +380,6 @@ Name | Type |
 **Returns:** *object*
 
 * \[ **key**: *string*\]: string
-
-___
-
-### `Const` parseHeaders
-
-▸ **parseHeaders**(`rawHeaders`: string): *[HttpHeaders](_http_.md#httpheaders)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`rawHeaders` | string |
-
-**Returns:** *[HttpHeaders](_http_.md#httpheaders)*
-
-___
-
-### `Const` parseHttpRequestFromHeaders
-
-▸ **parseHttpRequestFromHeaders**<**T**>(`__namedParameters`: object): *[HttpServerRequest](_http_.md#httpserverrequest)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **__namedParameters**: *object*
-
-Name | Type |
------- | ------ |
-`body` | T |
-`headers` | object |
-`httpVersionMajor` | number |
-`httpVersionMinor` | number |
-`isTransportSecure` | boolean |
-`method` | [HttpMethod](../enums/_http_.httpmethod.md) |
-`path` | string |
-
-**Returns:** *[HttpServerRequest](_http_.md#httpserverrequest)‹T›*
 
 ___
 
@@ -625,25 +436,6 @@ Name | Type |
 `resp` | [HttpResponse](_http_.md#httpresponse)‹TBody› |
 
 **Returns:** *[HttpResponse](_http_.md#httpresponse)‹IOSourceLike‹TBody››*
-
-___
-
-### `Const` withDefaultBehaviors
-
-▸ **withDefaultBehaviors**<**TResp**>(`encoderProvider`: object, `db`: object): *Function1‹[HttpClient](_http_.md#httpclient)‹[HttpClientRequest](_http_.md#httpclientrequest)‹IOSourceLike‹Uint8Array››, TResp›, [HttpClient](_http_.md#httpclient)‹[HttpClientRequest](_http_.md#httpclientrequest)‹IOSourceLike‹Uint8Array››, TResp››*
-
-**Type parameters:**
-
-▪ **TResp**: *DisposableLike*
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`encoderProvider` | object | - |
-`db` | object | {} |
-
-**Returns:** *Function1‹[HttpClient](_http_.md#httpclient)‹[HttpClientRequest](_http_.md#httpclientrequest)‹IOSourceLike‹Uint8Array››, TResp›, [HttpClient](_http_.md#httpclient)‹[HttpClientRequest](_http_.md#httpclientrequest)‹IOSourceLike‹Uint8Array››, TResp››*
 
 ___
 

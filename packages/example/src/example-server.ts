@@ -1,7 +1,6 @@
 import fs from "fs";
 import { createServer as createHttp1Server } from "http";
 import { createSecureServer as createHttp2Server } from "http2";
-import { dispose } from "@reactive-js/core/lib/disposable";
 import {
   pipe,
   Function1,
@@ -19,17 +18,12 @@ import {
 import { readFileIOSource, bindNodeCallback } from "@reactive-js/core/lib/node";
 import {
   map,
-  subscribe,
   fromValue,
   generate,
   ObservableLike,
-  onNotify,
   catchError,
   throws,
   await_,
-  using,
-  concatMap,
-  switchMap,
 } from "@reactive-js/core/lib/observable";
 import { isSome } from "@reactive-js/core/lib/option";
 import {
@@ -37,33 +31,25 @@ import {
   toPriorityScheduler,
   toSchedulerWithPriority,
 } from "@reactive-js/core/lib/scheduler";
-import { stream } from "@reactive-js/core/lib/streamable";
 import {
-  HttpMethod,
-  createHttpRequest,
   createHttpResponse,
   createHttpErrorResponse,
   decodeHttpRequestContent,
-  disallowProtocolAndHostForwarding,
   HttpResponse,
   HttpStatusCode,
   HttpRequest,
-  HttpServer,
-  createRoutingHttpServer,
   encodeHttpResponseWithUtf8,
-  encodeHttpRequestWithUtf8,
-  HttpRoutedRequest,
-  HttpClientRequestStatusType,
-  withDefaultBehaviors,
   toIOSourceHttpResponse,
-  toIOSourceHttpRequest,
   encodeHttpResponseContent,
-  HttpStandardHeader,
-  HttpExtensionHeader,
 } from "@reactive-js/http/lib/http";
 import {
+  disallowProtocolAndHostForwarding,
+  HttpServer,
+  createRoutingHttpServer,
+  HttpRoutedRequest,
+} from "@reactive-js/http/lib/httpServer";
+import {
   createHttpRequestListener,
-  createHttpClient,
   createContentEncodingDecompressTransforms,
   createContentEncodingCompressTransforms,
 } from "@reactive-js/http/lib/node";
@@ -236,71 +222,3 @@ createHttp2Server(
   },
   listener,
 ).listen(8081);
-
-const httpClient = pipe(
-  createHttpClient(),
-  withDefaultBehaviors(
-    createContentEncodingCompressTransforms(),
-    db,
-  ),
-);
-
-pipe(
-  createHttpRequest({
-    method: HttpMethod.POST,
-    uri: "http://localhost:8080/index.html",
-    body: "some text",
-    headers: {
-      [HttpStandardHeader.ContentType.toLowerCase()]: "text/plain",
-      [HttpExtensionHeader.XForwardedHost.toLowerCase()]: "www.google.com",
-      [HttpExtensionHeader.XForwardedProto.toLowerCase()]: "https",
-      [HttpStandardHeader.Accept.toLowerCase()]: "application/json, text/html",
-    },
-  }),
-  encodeHttpRequestWithUtf8,
-  toIOSourceHttpRequest,
-  httpClient,
-  onNotify(status => {
-    console.log("status: " + status.type);
-    if (status.type === HttpClientRequestStatusType.HeadersReceived) {
-      const { response } = status;
-      dispose(response.body);
-    }
-  }),
-  subscribe(scheduler),
-);
-
-const file = "packages/example/build/bundle.js";
-pipe(
-  file,
-  bindNodeCallback<fs.PathLike, fs.Stats>(fs.stat),
-  map(stats =>
-    createHttpRequest({
-      method: HttpMethod.POST,
-      uri: "http://localhost:8080/index.html",
-      body: readFileIOSource(file),
-      contentInfo: {
-        contentLength: stats.size,
-        contentType: "application/octet-stream",
-      },
-      headers: {
-        "x-forwarded-host": "www.google.com",
-        "x-forwarded-proto": "https",
-      },
-      preferences: {
-        acceptedMediaRanges: ["application/json", "text/html"],
-      },
-    }),
-  ),
-  switchMap(httpClient),
-  concatMap(status =>
-    status.type === HttpClientRequestStatusType.HeadersReceived
-      ? using(
-          scheduler => stream(status.response.body, scheduler),
-          pipe("done", fromValue(), returns),
-        )
-      : fromValue()(JSON.stringify(status)),
-  ),
-  onNotify(console.log),
-  subscribe(scheduler),
-);

@@ -3,7 +3,7 @@ import { test, describe, expectToThrow, expectEquals, } from "@reactive-js/core/
 import { none } from "@reactive-js/core/lib/option.js";
 import { map } from "@reactive-js/core/lib/readonlyArray.js";
 import { createHttpRequest, createHttpResponse, checkIfNotModified, } from "../lib/http.js";
-import { parseMediaTypeOrThrow } from "../lib/internal/http/mediaType.js";
+import { parseMediaTypeOrThrow } from "../lib/internal/mediaType.js";
 const mediaTypeTests = describe("mediaType", test("parseMediaType with params", () => {
     const { type, subtype, params } = parseMediaTypeOrThrow("application/json; charset=UTF-8");
     pipe(type, expectEquals("application"));

@@ -28,14 +28,16 @@ import {
 import { SchedulerLike } from "@reactive-js/core/lib/scheduler";
 import { sink } from "@reactive-js/core/lib/streamable";
 import {
-  writeHttpResponseHeaders,
-  HttpMethod,
   HttpHeaders,
-  parseHttpRequestFromHeaders,
+  HttpMethod,
   HttpResponse,
+  writeHttpResponseHeaders,
+} from "../../http";
+import {
+  parseHttpServerRequestFromHeaders,
   HttpServerRequest,
   HttpServer,
-} from "../../http";
+} from "../../httpServer";
 
 const writeResponseMessage = (serverResponse: ServerResponse) => (
   response: HttpResponse<IOSourceLike<Uint8Array>>,
@@ -103,7 +105,7 @@ export const createHttpRequestListener = (
           isTransportSecure,
           body: requestBody,
         },
-        parseHttpRequestFromHeaders,
+        parseHttpServerRequestFromHeaders,
       ),
       compute(),
       await_(handler),
