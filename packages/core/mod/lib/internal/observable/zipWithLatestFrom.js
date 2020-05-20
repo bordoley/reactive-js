@@ -12,22 +12,22 @@ const notifyDelegate = (observer) => {
         observer.delegate.notify(result);
     }
 };
+const onOtherNotify = (self) => (otherLatest) => {
+    self.hasLatest = true;
+    self.otherLatest = otherLatest;
+    notifyDelegate(self);
+    if (self.isDisposed && self.queue.length === 0) {
+        dispose(self.delegate);
+    }
+};
 class ZipWithLatestFromObserver extends AbstractObserver {
     constructor(delegate, other, selector) {
         super(delegate);
         this.selector = selector;
         this.hasLatest = false;
-        this.onNotify = (otherLatest) => {
-            this.hasLatest = true;
-            this.otherLatest = otherLatest;
-            notifyDelegate(this);
-            if (this.isDisposed && this.queue.length === 0) {
-                dispose(this.delegate);
-            }
-        };
         this.queue = [];
         this.selector = selector;
-        const otherSubscription = pipe(other, onNotify(this.onNotify), subscribe(delegate));
+        const otherSubscription = pipe(other, onNotify(onOtherNotify(this)), subscribe(delegate));
         const disposeDelegate = () => {
             if (this.isDisposed && otherSubscription.isDisposed) {
                 dispose(delegate);
