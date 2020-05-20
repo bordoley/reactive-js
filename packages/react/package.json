@@ -1,6 +1,6 @@
 {
   "name": "@reactive-js/react",
-  "version": "0.0.41",
+  "version": "0.0.42",
   "keywords": [
     "asynchronous",
     "data flow",
@@ -36,7 +36,7 @@
     "url": "https://github.com/bordoley/reactive-js.git"
   },
   "dependencies": {
-    "@reactive-js/core": "^0.0.41",
+    "@reactive-js/core": "^0.0.42",
     "react": "^16.11.0",
     "scheduler": "^0.17.0"
   },
