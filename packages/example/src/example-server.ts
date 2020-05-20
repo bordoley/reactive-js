@@ -179,11 +179,13 @@ const listener = createHttpRequestListener(
       decodeHttpRequestContent(createContentEncodingDecompressTransforms()),
       fromValue(),
       await_(router),
-      map(
+      pipe(
+        req,
         encodeHttpResponseContent(
           createContentEncodingCompressTransforms(),
           db,
-        )(req),
+        ),
+        map,
       ),
       catchError(
         compose(
