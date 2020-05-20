@@ -1,9 +1,10 @@
-/*import {
+import {
   DisposableLike,
   Exception,
   AbstractDisposable,
   dispose,
-  add,
+  addTeardown,
+  addDisposable,
 } from "../disposable";
 import { pipe } from "../functions";
 import {
@@ -17,44 +18,15 @@ import { Option, isNone, isSome } from "../option";
 import {
   SchedulerLike,
   schedule,
+  yield$,
 } from "../scheduler";
 import {
   createStreamable,
   StreamableLike,
   stream as streamStreamable,
 } from "../streamable";
-*/
-/*
-class ReactiveCacheSchedulerContinuation<
-  T
-> extends AbstractSchedulerContinuation {
-  constructor(private readonly cache: ReactiveCacheImpl<T>) {
-    super();
-  }
-
-  continueUnsafe(scheduler: SchedulerLike) {
-    const { cache, maxCount, garbage } = this.cache;
-
-    for (const [, stream] of garbage) {
-      dispose(stream);
-
-      // only delete as many entries as we need to.
-      const hasMoreToCleanup = cache.size > maxCount;
-
-      if (hasMoreToCleanup && scheduler.shouldYield()) {
-        schedule(scheduler, this);
-        return;
-      } else if (!hasMoreToCleanup) {
-        break;
-      }
-    }
-
-    dispose(this);
-  }
-}*/
 
 /** @noInheritDoc */
-/*
 export interface ReactiveCacheLike<T> extends DisposableLike {
   get(key: string): Option<ObservableLike<T>>;
   set(key: string, value: ObservableLike<T>): ObservableLike<T>;
@@ -71,23 +43,39 @@ const markAsGarbage = <T>(
     reactiveCache.cache.size > reactiveCache.maxCount &&
     !reactiveCache.cleaning
   ) {
-    const continuation = add(
-      new ReactiveCacheSchedulerContinuation(reactiveCache),
-      () => {
-        reactiveCache.cleaning = false;
-      },
-    );
+    const continuation = (scheduler: SchedulerLike) => {
+      const { cache, maxCount, garbage } = reactiveCache;
+  
+      for (const [, stream] of garbage) {
+        dispose(stream);
+  
+        // only delete as many entries as we need to.
+        const hasMoreToCleanup = cache.size > maxCount;
+  
+        if (hasMoreToCleanup) {
+          yield$(scheduler);
+        } else if (!hasMoreToCleanup) {
+          break;
+        }
+      }
+    };
+
     reactiveCache.cleaning = true;
-    schedule(reactiveCache.cleanupScheduler, continuation);
+
+    const schedulerContinuation = 
+      schedule(reactiveCache.cleanupScheduler, continuation);
+    addTeardown(schedulerContinuation, () => {
+      reactiveCache.cleaning = false;
+    });
   }
 };
 
-const switchAllAsyncEnumerableInstance: StreamableLike<
+const switchAllStreamInstance: StreamableLike<
   ObservableLike<any>,
   any
 > = createStreamable(switchAll());
-const switchAllAsyncEnumerable = <T>(): StreamableLike<ObservableLike<T>, T> =>
-  switchAllAsyncEnumerableInstance;
+const switchAllStream = <T>(): StreamableLike<ObservableLike<T>, T> =>
+  switchAllStreamInstance;
 
 class ReactiveCacheImpl<T> extends AbstractDisposable
   implements ReactiveCacheLike<T> {
@@ -109,7 +97,7 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
   ) {
     super();
 
-    add(this, () => {
+    addTeardown(this, () => {
       for (const value of this.cache.values()) {
         const [stream] = value;
         dispose(stream);
@@ -132,8 +120,9 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
     let cachedValue = this.cache.get(key);
 
     if (isNone(cachedValue)) {
-      const stream = add(
-        streamStreamable(switchAllAsyncEnumerable(), this.dispatchScheduler),
+      const stream = streamStreamable(switchAllStream(), this.dispatchScheduler);
+      addTeardown(
+        stream,
         () => {
           this.cache.delete(key);
           this.garbage.delete(key);
@@ -141,7 +130,7 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
       );
 
       const onDisposeCleanup = (_?: Exception) =>
-        add(
+        addDisposable(
           this,
           schedule(this.cleanupScheduler, () => {
             if (stream.observerCount === 0) {
@@ -186,4 +175,3 @@ export const getOrSet = <T>(
   const observable = cache.get(key);
   return observable ?? cache.set(key, defaultValue);
 };
-*/

@@ -13,7 +13,7 @@ import { tests as queuesTests } from "../src/test/internal/queues.test";
 import { tests as ioTests } from "../src/test/io.test";
 import { tests as nodeTests } from "../src/test/node.test";
 import { tests as observableTests } from "../src/test/observable.test";
-//import { tests as reactiveCacheTests } from "./reactiveCache.test";
+import { tests as reactiveCacheTests } from "../src/test/reactiveCache.test";
 //import { tests as resourceManagerTests } from "./resourceManager.test";
 import { tests as runnableTests } from "../src/test/runnable.test";
 import { tests as sequenceTests } from "../src/test/sequence.test";
@@ -30,7 +30,7 @@ const tests = [
   observableTests,
   parserCombinatorTests,
   queuesTests,
-  //reactiveCacheTests,
+  reactiveCacheTests,
   //resourceManagerTests,
   runnableTests,
   sequenceTests,

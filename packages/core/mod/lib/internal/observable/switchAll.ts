@@ -2,7 +2,6 @@ import {
   disposed,
   dispose,
   addOnDisposedWithError,
-  addOnDisposedWithErrorTeardown,
   addOnDisposedWithoutErrorTeardown,
   addDisposableDisposeParentOnChildError,
 } from "../../disposable.ts";
@@ -27,7 +26,7 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
   constructor(delegate: ObserverLike<T>) {
     super(delegate);
     addOnDisposedWithError(this, delegate);
-    addOnDisposedWithErrorTeardown(this, () => {
+    addOnDisposedWithoutErrorTeardown(this, () => {
       if (this.inner.isDisposed) {
         dispose(delegate);
       }

@@ -77,10 +77,7 @@ export const concatAll = <T>(): SequenceOperator<Sequence<T>, T> => seq => {
     }
   };
 
-  return () => {
-    debugger;
-    return flattenIter(seq());
-  };
+  return () => flattenIter(seq());
 };
 
 const _fromArray = <T>(arr: readonly T[], index: number): SequenceResult<T> =>

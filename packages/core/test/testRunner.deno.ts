@@ -8,7 +8,7 @@ import { tests as flowableTests } from "../mod/test/flowable.test.ts";
 import { tests as parserCombinatorTests } from "../mod/test/internal/parserCombinators.test.ts";
 import { tests as queuesTests } from "../mod/test/internal/queues.test.ts";
 import { tests as observableTests } from "../mod/test/observable.test.ts";
-//import { tests as reactiveCacheTests } from "./reactiveCache.test";
+import { tests as reactiveCacheTests } from "../mod/test/reactiveCache.test.ts";
 //import { tests as resourceManagerTests } from "./resourceManager.test";
 import { tests as runnableTests } from "../mod/test/runnable.test.ts";
 import { tests as sequenceTests } from "../mod/test/sequence.test.ts";
@@ -23,7 +23,7 @@ const tests = [
   observableTests,
   parserCombinatorTests,
   queuesTests,
-  //reactiveCacheTests,
+  reactiveCacheTests,
   //resourceManagerTests,
   runnableTests,
   sequenceTests,

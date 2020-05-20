@@ -1,6 +1,5 @@
-/*
 import { disposed, dispose } from "../lib/disposable.ts";
-import { pipe, returns, bind } from "../lib/functions.ts";
+import { pipe, returns } from "../lib/functions.ts";
 import {
   fromArray,
   subscribe,
@@ -84,7 +83,7 @@ export const tests = describe(
           pipe(cache.get("d"), expectNone);
           pipe(cache.get("e"), expectSome);
         },
-        bind(dispose, cache),
+        () => dispose(cache),
         () => {
           // Ensure that disposing the cache disposes all outstanding subscriptions.
           // Note: check these here as these subscriptions require scheduling by the
@@ -103,7 +102,6 @@ export const tests = describe(
       forEach(x => x()),
     );
   }),
-
   test("subscribing to disposed value", () => {
     const scheduler = createVirtualTimeScheduler();
     const cache = createReactiveCache<string>(scheduler, scheduler, 1);
@@ -165,4 +163,3 @@ export const tests = describe(
     );
   }),
 );
-*/
