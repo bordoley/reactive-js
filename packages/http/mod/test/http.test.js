@@ -52,7 +52,9 @@ const createHttpRequestTests = test("createHttpRequest", () => {
     });
     console.log(request);
     const headers = {};
-    writeHttpRequestHeaders(request, (key, value) => { headers[key] = value; });
+    writeHttpRequestHeaders(request, (key, value) => {
+        headers[key] = value;
+    });
     expectTrue(request.expectContinue);
 });
 const createHttpResponseTests = test("createHttpRequest", () => {
@@ -102,7 +104,9 @@ const createHttpResponseTests = test("createHttpRequest", () => {
     });
     console.log(response);
     const headers = {};
-    writeHttpResponseHeaders(response, (key, value) => { headers[key] = value; });
+    writeHttpResponseHeaders(response, (key, value) => {
+        headers[key] = value;
+    });
 });
 const mediaTypeTests = describe("mediaType", test("parseMediaType with params", () => {
     const { type, subtype, params } = parseMediaTypeOrThrow("application/json; charset=UTF-8");

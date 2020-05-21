@@ -9,8 +9,9 @@ import {
   CharStreamLike,
   parseWithOrThrow,
 } from "@reactive-js/core/lib/internal/parserCombinators";
-import { isSome } from "@reactive-js/core/lib/option";
+import { isSome, none, Option } from "@reactive-js/core/lib/option";
 import { ASCII } from "./httpGrammar";
+import { HttpHeaders, getHeaderValue, HttpStandardHeader } from "./httpHeaders";
 
 export type EntityTag = {
   readonly isWeak: boolean;
@@ -37,3 +38,9 @@ export const pETag = (charStream: CharStreamLike): EntityTag => {
 export const parseETag = parseWith(pETag);
 
 export const parseETagOrThrow = parseWithOrThrow(pETag);
+
+export const parseETagFromHeaders = (headers: HttpHeaders): Option<EntityTag> => {
+  const etagHeader =
+    getHeaderValue(headers, HttpStandardHeader.ETag);
+  return isSome(etagHeader) ? parseETagOrThrow(etagHeader) : none;
+}

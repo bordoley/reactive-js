@@ -127,7 +127,9 @@ export const createHttpServerRequest = ({ path, headers = {}, httpVersionMajor =
         ? uri
         : isSome(path)
             ? parseURIFromHeaders(protocol, path, httpVersionMajor, headers)
-            : (() => { throw new Error(); })();
+            : (() => {
+                throw new Error();
+            })();
     const options = {
         ...rest,
         headers,

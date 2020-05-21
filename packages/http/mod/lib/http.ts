@@ -34,15 +34,15 @@ export {
 } from "./internal/httpRequest.ts";
 
 export {
-  HttpStatusCode,
   HttpResponse,
+  HttpStatusCode,
   checkIfNotModified,
-  createHttpResponse,
   createHttpErrorResponse,
+  createHttpResponse,
   decodeHttpResponseContent,
   decodeHttpResponseWithCharset,
-  encodeHttpResponseWithUtf8,
   encodeHttpResponseContent,
+  encodeHttpResponseWithUtf8,
   toIOSourceHttpResponse,
   writeHttpResponseHeaders,
 } from "./internal/httpResponse.ts";

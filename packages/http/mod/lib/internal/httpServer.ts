@@ -11,7 +11,13 @@ import {
 import { URILike } from "./httpMessage.ts";
 import { HttpMethod, HttpRequest, createHttpRequest } from "./httpRequest.ts";
 import { HttpResponse } from "./httpResponse.ts";
-import { CacheDirective, HttpContentEncoding, MediaType, EntityTag, HttpDateTime } from "../http.ts";
+import {
+  CacheDirective,
+  HttpContentEncoding,
+  MediaType,
+  EntityTag,
+  HttpDateTime,
+} from "../http.ts";
 import { MediaRange } from "./httpPreferences.ts";
 
 export type HttpServerRequest<T> = HttpRequest<T> & {
@@ -231,8 +237,8 @@ export const createHttpServerRequest = <T>({
   httpVersionMajor?: number;
   httpVersionMinor?: number;
   method: HttpMethod;
-  isTransportSecure: boolean,
-  path?: string,
+  isTransportSecure: boolean;
+  path?: string;
   preconditions?: {
     ifMatch?: readonly (string | EntityTag)[] | "*";
     ifModifiedSince?: string | HttpDateTime | Date;
@@ -249,11 +255,13 @@ export const createHttpServerRequest = <T>({
   uri?: string | URILike;
 }): HttpServerRequest<T> => {
   const protocol = isTransportSecure ? "https" : "http";
-  const parseUri = isSome(uri) 
-    ? uri 
+  const parseUri = isSome(uri)
+    ? uri
     : isSome(path)
     ? parseURIFromHeaders(protocol, path, httpVersionMajor, headers)
-    : (() => { throw new Error(); })();
+    : (() => {
+        throw new Error();
+      })();
 
   const options = {
     ...rest,

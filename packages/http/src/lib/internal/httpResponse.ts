@@ -24,9 +24,9 @@ import {
 } from "./cacheDirective";
 import {
   entityTagToString,
-  parseETag,
   parseETagOrThrow,
   EntityTag,
+  parseETagFromHeaders,
 } from "./entityTag";
 import {
   parseHttpContentInfoFromHeaders,
@@ -38,6 +38,7 @@ import {
   parseHttpDateTime,
   httpDateTimeToString,
   HttpDateTime,
+  parseHttpDateTimeFromHeaders,
 } from "./httpDateTime";
 import {
   getHeaderValue,
@@ -155,6 +156,11 @@ declare class URL implements URILike {
   toString(): string;
 }
 
+const parseLocationFromHeaders = (headers: HttpHeaders) => {
+  const locationValue = getHeaderValue(headers, HttpStandardHeader.Location);
+  return isSome(locationValue) ? new URL(locationValue) : none;
+}
+
 export const createHttpResponse = <T>({
   body,
   cacheControl,
@@ -177,7 +183,7 @@ export const createHttpResponse = <T>({
     contentType: MediaType | string;
   };
   etag?: string | EntityTag;
-  expires?: number;
+  expires?: number | string | Date;
   headers?: HttpHeaders;
   lastModified?: number | string | Date;
   location?: string | URILike;
@@ -193,73 +199,49 @@ export const createHttpResponse = <T>({
   ...rest,
   body,
   cacheControl: isSome(cacheControl)
-   ? pipe(
-    cacheControl,
-    map(cc => (typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc)),
-  ) : parseCacheControlFromHeaders(headers),
+    ? pipe(
+        cacheControl,
+        map(cc =>
+          typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc,
+        ),
+      )
+    : parseCacheControlFromHeaders(headers),
   contentInfo: isSome(contentInfo)
     ? createHttpContentInfo(contentInfo)
     : parseHttpContentInfoFromHeaders(headers),
-  etag: typeof etag === "string" ? parseETagOrThrow(etag) : etag,
-  expires,
+  etag: typeof etag === "string" 
+    ? parseETagOrThrow(etag) 
+    : isSome(etag)
+    ? etag
+    : parseETagFromHeaders(headers),
+  expires:
+    typeof expires === "string"
+    ? parseHttpDateTime(expires)
+    : expires instanceof Date
+    ? expires.getTime()
+    : isSome(expires)
+    ? expires
+    : parseHttpDateTimeFromHeaders(headers, HttpStandardHeader.Expires),
   headers: filterHeaders(headers ?? {}),
   lastModified:
     typeof lastModified === "string"
       ? parseHttpDateTime(lastModified)
       : lastModified instanceof Date
       ? lastModified.getTime()
-      : lastModified,
-  location: typeof location === "string" ? new URL(location) : location,
+      : isSome(lastModified)
+      ? lastModified
+      : parseHttpDateTimeFromHeaders(headers, HttpStandardHeader.LastModified),
+  location: typeof location === "string" 
+    ? new URL(location) 
+    : isSome(location)
+    ? location
+    : parseLocationFromHeaders(headers),
   preferences: isSome(preferences)
     ? createHttpPreferences(preferences)
     : parseHttpPreferencesFromHeaders(headers),
   statusCode,
   vary: vary ?? [],
 });
-
-export const parseHttpResponseFromHeaders = <T>(
-  statusCode: number,
-  headers: HttpHeaders,
-  body: T,
-): HttpResponse<T> => {
-  const cacheControl = parseCacheControlFromHeaders(headers);
-
-  const contentInfo = parseHttpContentInfoFromHeaders(headers);
-
-  const etag = parseETag(
-    getHeaderValue(headers, HttpStandardHeader.ETag) ?? "",
-  );
-
-  const expires = parseHttpDateTime(
-    getHeaderValue(headers, HttpStandardHeader.Expires) ?? "",
-  );
-
-  const lastModified = parseHttpDateTime(
-    getHeaderValue(headers, HttpStandardHeader.LastModified) ?? "",
-  );
-
-  const locationHeader = headers.location;
-  const location = isSome(locationHeader) ? new URL(locationHeader) : none;
-
-  const preferences = parseHttpPreferencesFromHeaders(headers);
-
-  // We're not going to use this so just return empty string.
-  const vary: readonly string[] = [];
-
-  return {
-    body,
-    cacheControl,
-    contentInfo,
-    etag,
-    expires,
-    lastModified,
-    headers,
-    location,
-    preferences,
-    statusCode,
-    vary,
-  };
-};
 
 export const writeHttpResponseHeaders = <T>(
   response: HttpResponse<T>,
