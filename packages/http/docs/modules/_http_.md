@@ -372,7 +372,7 @@ ___
 
 ### `Const` encodeHttpResponseContent
 
-▸ **encodeHttpResponseContent**(`encoderProvider`: object, `db`: object): *(Anonymous function)*
+▸ **encodeHttpResponseContent**(`encoderProvider`: object, `db`: object): *Function1‹[HttpRequest](_http_.md#httprequest)‹unknown›, Updater‹[HttpResponse](_http_.md#httpresponse)‹IOSourceLike‹Uint8Array››››*
 
 **Parameters:**
 
@@ -381,7 +381,7 @@ Name | Type | Default |
 `encoderProvider` | object | - |
 `db` | object | {} |
 
-**Returns:** *(Anonymous function)*
+**Returns:** *Function1‹[HttpRequest](_http_.md#httprequest)‹unknown›, Updater‹[HttpResponse](_http_.md#httpresponse)‹IOSourceLike‹Uint8Array››››*
 
 ___
 
