@@ -1,5 +1,5 @@
 import { dispose } from "../../disposable.js";
-import { deferSynchronous, defer, } from "./observable.js";
+import { deferSynchronous, defer } from "./observable.js";
 import { yield$ } from "./observer.js";
 export const fromArray = (options = {}) => values => {
     var _a, _b;
@@ -17,7 +17,5 @@ export const fromArray = (options = {}) => values => {
             dispose(observer);
         };
     };
-    return delay > 0
-        ? defer(factory, { delay })
-        : deferSynchronous(factory);
+    return delay > 0 ? defer(factory, { delay }) : deferSynchronous(factory);
 };

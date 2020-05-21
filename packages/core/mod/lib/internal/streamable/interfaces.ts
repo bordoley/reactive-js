@@ -3,7 +3,10 @@ import { StreamLike } from "../../observable.ts";
 import { SchedulerLike } from "../../scheduler.ts";
 
 export interface StreamableLike<TReq, T> {
-  stream(scheduler: SchedulerLike, options?: { replay: number }): StreamLike<TReq, T>;
+  stream(
+    scheduler: SchedulerLike,
+    options?: { replay: number },
+  ): StreamLike<TReq, T>;
 }
 
 export type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<

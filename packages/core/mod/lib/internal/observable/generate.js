@@ -1,4 +1,4 @@
-import { deferSynchronous, defer, } from "./observable.js";
+import { deferSynchronous, defer } from "./observable.js";
 import { yield$ } from "./observer.js";
 export function generate(generator, initialValue, options = { delay: 0 }) {
     const { delay } = options;
@@ -11,7 +11,5 @@ export function generate(generator, initialValue, options = { delay: 0 }) {
             }
         };
     };
-    return delay > 0
-        ? defer(factory, options)
-        : deferSynchronous(factory);
+    return delay > 0 ? defer(factory, options) : deferSynchronous(factory);
 }

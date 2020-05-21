@@ -28,7 +28,10 @@ class SharedObservable<T> implements ObservableLike<T> {
 
   constructor(
     private readonly source: ObservableLike<T>,
-    private readonly publish: Function1<ObservableLike<T>, MulticastObservableLike<T>>, 
+    private readonly publish: Function1<
+      ObservableLike<T>,
+      MulticastObservableLike<T>
+    >,
   ) {}
 
   observe(observer: ObserverLike<T>) {

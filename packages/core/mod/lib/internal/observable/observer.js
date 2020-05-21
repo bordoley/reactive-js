@@ -21,15 +21,13 @@ export class AbstractObserver extends AbstractDisposable {
         this.delegate = delegate;
         this.inContinuation = false;
         this.scheduler =
-            delegate instanceof AbstractObserver
-                ? delegate.scheduler
-                : delegate;
+            delegate instanceof AbstractObserver ? delegate.scheduler : delegate;
     }
     get now() {
         return this.scheduler.now;
     }
     get shouldYield() {
-        return this.inContinuation && (this.isDisposed || this.scheduler.shouldYield);
+        return (this.inContinuation && (this.isDisposed || this.scheduler.shouldYield));
     }
     onRunStatusChanged(status) {
         this.inContinuation = status;

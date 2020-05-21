@@ -26,7 +26,7 @@ class EnumeratorObserver<T> extends AbstractDisposable
   hasCurrent = false;
   inContinuation = false;
   readonly now = 0;
-  
+
   get shouldYield() {
     return this.inContinuation;
   }

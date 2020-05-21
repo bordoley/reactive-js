@@ -1,4 +1,4 @@
-import { addDisposable, AbstractDisposable, addDisposableDisposeParentOnChildError } from "../disposable.js";
+import { addDisposable, AbstractDisposable, addDisposableDisposeParentOnChildError, } from "../disposable.js";
 import { pipe } from "../functions.js";
 import { using, takeWhile, keepType, map as mapObs, onNotify, subscribe, createObservable, dispatch, reduce, createSubject, dispatchTo, } from "../observable.js";
 import { stream, createStreamable } from "../streamable.js";
