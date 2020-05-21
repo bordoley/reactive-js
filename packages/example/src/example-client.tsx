@@ -166,10 +166,3 @@ pipe(
   onNotify(console.log),
   subscribe(normalPriority),
 );
-
-pipe(
-  { uri: "http://localhost:8080/files/packages/example/build/bundle.js" },
-  fetch(response => response.text()),
-  onNotify(console.log),
-  subscribe(normalPriority),
-);

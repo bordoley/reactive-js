@@ -4,7 +4,6 @@ import {
   identity,
   Factory,
   Equality,
-  strictEquality,
   Updater,
   updaterReducer,
   Function1,
@@ -13,7 +12,6 @@ import {
   onNotify,
   using,
   zipWithLatestFrom,
-  distinctUntilChanged,
   dispatchTo,
   subscribe,
 } from "./observable.ts";
@@ -53,7 +51,6 @@ export const createStateStore = <T>(
  * if a state value is distinct from the previous one.
  */
 export const toStateStore = <T>(
-  equality: Equality<T> = strictEquality,
 ): StreamableOperator<T, T, Updater<T>, T> => streamable =>
   createStreamable(updates =>
     using(scheduler => {
@@ -61,7 +58,6 @@ export const toStateStore = <T>(
       const updatesSubscription = pipe(
         updates,
         zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),
-        distinctUntilChanged(equality),
         onNotify(dispatchTo(stream)),
         subscribe(scheduler),
       );
