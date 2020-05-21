@@ -159,7 +159,7 @@ declare class URL implements URILike {
 const parseLocationFromHeaders = (headers: HttpHeaders) => {
   const locationValue = getHeaderValue(headers, HttpStandardHeader.Location);
   return isSome(locationValue) ? new URL(locationValue) : none;
-}
+};
 
 export const createHttpResponse = <T>({
   body,
@@ -209,19 +209,20 @@ export const createHttpResponse = <T>({
   contentInfo: isSome(contentInfo)
     ? createHttpContentInfo(contentInfo)
     : parseHttpContentInfoFromHeaders(headers),
-  etag: typeof etag === "string" 
-    ? parseETagOrThrow(etag) 
-    : isSome(etag)
-    ? etag
-    : parseETagFromHeaders(headers),
+  etag:
+    typeof etag === "string"
+      ? parseETagOrThrow(etag)
+      : isSome(etag)
+      ? etag
+      : parseETagFromHeaders(headers),
   expires:
     typeof expires === "string"
-    ? parseHttpDateTime(expires)
-    : expires instanceof Date
-    ? expires.getTime()
-    : isSome(expires)
-    ? expires
-    : parseHttpDateTimeFromHeaders(headers, HttpStandardHeader.Expires),
+      ? parseHttpDateTime(expires)
+      : expires instanceof Date
+      ? expires.getTime()
+      : isSome(expires)
+      ? expires
+      : parseHttpDateTimeFromHeaders(headers, HttpStandardHeader.Expires),
   headers: filterHeaders(headers ?? {}),
   lastModified:
     typeof lastModified === "string"
@@ -231,11 +232,12 @@ export const createHttpResponse = <T>({
       : isSome(lastModified)
       ? lastModified
       : parseHttpDateTimeFromHeaders(headers, HttpStandardHeader.LastModified),
-  location: typeof location === "string" 
-    ? new URL(location) 
-    : isSome(location)
-    ? location
-    : parseLocationFromHeaders(headers),
+  location:
+    typeof location === "string"
+      ? new URL(location)
+      : isSome(location)
+      ? location
+      : parseLocationFromHeaders(headers),
   preferences: isSome(preferences)
     ? createHttpPreferences(preferences)
     : parseHttpPreferencesFromHeaders(headers),

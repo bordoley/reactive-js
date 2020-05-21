@@ -3,22 +3,22 @@ import { ObservableLike } from "@reactive-js/core/lib/observable";
 import { isNone, isSome, none, Option } from "@reactive-js/core/lib/option";
 import { fromObject, reduce } from "@reactive-js/core/lib/readonlyArray";
 import {
-  getHeaderValue,
-  HttpStandardHeader,
-  HttpExtensionHeader,
-  HttpHeaders,
-} from "./httpHeaders";
-import { URILike } from "./httpMessage";
-import { HttpMethod, HttpRequest, createHttpRequest } from "./httpRequest";
-import { HttpResponse } from "./httpResponse";
-import {
   CacheDirective,
   HttpContentEncoding,
   MediaType,
   EntityTag,
   HttpDateTime,
 } from "../http";
+import {
+  getHeaderValue,
+  HttpStandardHeader,
+  HttpExtensionHeader,
+  HttpHeaders,
+} from "./httpHeaders";
+import { URILike } from "./httpMessage";
 import { MediaRange } from "./httpPreferences";
+import { HttpMethod, HttpRequest, createHttpRequest } from "./httpRequest";
+import { HttpResponse } from "./httpResponse";
 
 export type HttpServerRequest<T> = HttpRequest<T> & {
   readonly isTransportSecure: boolean;

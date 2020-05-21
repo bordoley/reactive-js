@@ -39,8 +39,9 @@ export const parseETag = parseWith(pETag);
 
 export const parseETagOrThrow = parseWithOrThrow(pETag);
 
-export const parseETagFromHeaders = (headers: HttpHeaders): Option<EntityTag> => {
-  const etagHeader =
-    getHeaderValue(headers, HttpStandardHeader.ETag);
+export const parseETagFromHeaders = (
+  headers: HttpHeaders,
+): Option<EntityTag> => {
+  const etagHeader = getHeaderValue(headers, HttpStandardHeader.ETag);
   return isSome(etagHeader) ? parseETagOrThrow(etagHeader) : none;
-}
+};
