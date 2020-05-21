@@ -4,7 +4,7 @@ import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulator.js";
 import { describe, testAsync, expectEquals, expectPromiseToThrow, } from "../lib/internal/testing.js";
 import { fromArray } from "../lib/io.js";
 import { createReadableIOSource, createWritableIOSink, gzip, gunzip, createDisposableNodeStream, } from "../lib/node.js";
-import { toPromise } from "../lib/observable.js";
+import { toPromise, takeFirst } from "../lib/observable.js";
 import { createHostScheduler } from "../lib/scheduler.js";
 import { sink } from "../lib/streamable.js";
 const scheduler = createHostScheduler();
@@ -24,8 +24,8 @@ export const tests = describe("node", describe("createWritableIOSink", testAsync
         },
     });
     const dest = createWritableIOSink(defer(writable, createDisposableNodeStream));
-    const lib = pipe([encoder.encode("abc"), encoder.encode("defg")], fromArray());
-    await pipe(sink(lib, dest), toPromise(scheduler));
+    const src = pipe([encoder.encode("abc"), encoder.encode("defg")], fromArray());
+    await pipe(sink(src, dest), toPromise(scheduler));
     pipe(data, expectEquals("abcdefg"));
 }), testAsync("sinking to writable that throws", async () => {
     const encoder = new TextEncoder();
@@ -38,34 +38,37 @@ export const tests = describe("node", describe("createWritableIOSink", testAsync
         },
     });
     const dest = createWritableIOSink(defer(writable, createDisposableNodeStream));
-    const lib = pipe([encoder.encode("abc"), encoder.encode("defg")], fromArray());
-    const promise = pipe(sink(lib, dest), toPromise(scheduler));
+    const src = pipe([encoder.encode("abc"), encoder.encode("defg")], fromArray());
+    const promise = pipe(sink(src, dest), toPromise(scheduler));
     await expectPromiseToThrow(promise);
 })), describe("createReadableIOSource", testAsync("reading from readable", async () => {
     function* generate() {
         yield Buffer.from("abc", "utf8");
         yield Buffer.from("defg", "utf8");
     }
-    const lib = createReadableIOSource(() => pipe(generate(), Readable.from, createDisposableNodeStream));
+    const src = createReadableIOSource(() => pipe(generate(), Readable.from, createDisposableNodeStream));
     const textDecoder = new TextDecoder();
-    const dest = createIOSinkAccumulator((acc, next) => acc + textDecoder.decode(next), returns(""));
-    await pipe(sink(lib, dest), toPromise(scheduler));
-    pipe(dest.acc, expectEquals("abcdefg"));
+    const dest = createIOSinkAccumulator((acc, next) => acc + textDecoder.decode(next), returns(""), 1);
+    await pipe(sink(src, dest), toPromise(scheduler));
+    debugger;
+    const acc = await pipe(dest, takeFirst(1), toPromise(scheduler));
+    pipe(acc, expectEquals("abcdefg"));
 }), testAsync("reading from readable that throws", async () => {
     const cause = new Error();
     function* generate() {
         yield Buffer.from("abc", "utf8");
         throw cause;
     }
-    const lib = createReadableIOSource(() => pipe(generate(), Readable.from, createDisposableNodeStream));
+    const src = createReadableIOSource(() => pipe(generate(), Readable.from, createDisposableNodeStream));
     const textDecoder = new TextDecoder();
-    const dest = createIOSinkAccumulator((acc, next) => acc + textDecoder.decode(next), returns(""));
-    await pipe(sink(lib, dest), toPromise(scheduler), expectPromiseToThrow);
+    const dest = createIOSinkAccumulator((acc, next) => acc + textDecoder.decode(next), returns(""), 1);
+    await pipe(sink(src, dest), toPromise(scheduler), expectPromiseToThrow);
 })), testAsync("transform", async () => {
     const encoder = new TextEncoder();
-    const lib = pipe([encoder.encode("abc"), encoder.encode("defg")], fromArray(), gzip(), gunzip());
+    const src = pipe([encoder.encode("abc"), encoder.encode("defg")], fromArray(), gzip(), gunzip());
     const textDecoder = new TextDecoder();
-    const dest = createIOSinkAccumulator((acc, next) => acc + textDecoder.decode(next), returns(""));
-    await pipe(sink(lib, dest), toPromise(scheduler));
-    pipe(dest.acc, expectEquals("abcdefg"));
+    const dest = createIOSinkAccumulator((acc, next) => acc + textDecoder.decode(next), returns(""), 1);
+    await pipe(sink(src, dest), toPromise(scheduler));
+    const acc = await pipe(dest, takeFirst(1), toPromise(scheduler));
+    pipe(acc, expectEquals("abcdefg"));
 }));

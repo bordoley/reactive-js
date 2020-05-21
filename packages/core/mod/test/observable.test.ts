@@ -438,7 +438,7 @@ export const tests = describe(
     "retry",
     test("repeats the observable n times", () => {
       let retried = false;
-      const lib = createObservable(d => {
+      const src = createObservable(d => {
         dispatch(d, 1);
         if (retried) {
           dispatch(d, 2);
@@ -448,7 +448,7 @@ export const tests = describe(
           dispose(d, { cause: new Error() });
         }
       });
-      pipe(lib, retry(), toRunnable(), toArray(), expectArrayEquals([1, 1, 2]));
+      pipe(src, retry(), toRunnable(), toArray(), expectArrayEquals([1, 1, 2]));
     }),
   ),
 
