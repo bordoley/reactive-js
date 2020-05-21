@@ -62,7 +62,6 @@ Name | Type | Default |
 ------ | ------ | ------ |
 `headers` | object | - |
 `httpVersionMajor` | number | 1 |
-`httpVersionMinor` | number | 1 |
 `isTransportSecure` | boolean | - |
 `path` | string | - |
 `rest` | rest | - |
