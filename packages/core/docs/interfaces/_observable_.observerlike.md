@@ -19,10 +19,6 @@ to receive notifications.
 
   ↳ **ObserverLike**
 
-## Implemented by
-
-* [AbstractDelegatingObserver](../classes/_observable_.abstractdelegatingobserver.md)
-
 ## Index
 
 ### Methods

@@ -10,11 +10,6 @@ export {
 } from "./internal/observable/interfaces.ts";
 
 export {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./internal/observable/observer.ts";
-
-export {
   combineLatest,
   combineLatestWith,
 } from "./internal/observable/combineLatest.ts";
