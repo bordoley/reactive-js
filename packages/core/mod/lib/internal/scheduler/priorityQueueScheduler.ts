@@ -65,8 +65,7 @@ const peek = (scheduler: PriorityScheduler): Option<ScheduledTask> => {
       break;
     }
 
-    const taskIsDispose = task.continuation.isDisposed;
-    if (!taskIsDispose) {
+    if (!task.continuation.isDisposed) {
       break;
     }
 
@@ -95,7 +94,7 @@ const scheduleContinuation = (
   task: ScheduledTask,
 ) => {
   const dueTime = task.dueTime;
-  const delay = dueTime - scheduler.now;
+  const delay = Math.max(dueTime - scheduler.now, 0);
 
   scheduler.dueTime = dueTime;
   scheduler.inner = schedule(scheduler.host, scheduler.continuation, { delay });
@@ -118,8 +117,9 @@ class PriorityScheduler extends AbstractSerialDisposable
         this.inContinuation = true;
         run(continuation);
         this.inContinuation = false;
+      } else {
+        this.dueTime = this.now + delay;
       }
-
       yield$(host, delay);
     }
   };
@@ -200,8 +200,8 @@ class PriorityScheduler extends AbstractSerialDisposable
       delay?: number;
     } = {},
   ) {
-    let { delay, priority } = options;
-    delay = Math.max(0, delay ?? 0);
+    let { delay = 0, priority } = options;
+    delay = Math.max(0, delay);
     priority = isSome(priority)
       ? priority
       : this.inContinuation
@@ -212,7 +212,7 @@ class PriorityScheduler extends AbstractSerialDisposable
 
     if (!continuation.isDisposed) {
       const now = this.now;
-      const dueTime = now + delay;
+      const dueTime = Math.max(now + delay, now);
 
       const task = {
         taskID: this.taskIDCounter++,
