@@ -67,7 +67,7 @@ const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
         <button onClick={stream}>Go to stream</button>
       </div>
       <div>
-        <textarea value={someData ?? ""}/>
+        {someData ?? ""}
       </div>
     </div>
   );
@@ -76,7 +76,7 @@ const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
 const obs = generate(increment, returns<number>(0));
 
 const Component1 = (props: RoutableComponentProps) => {
-  const value = useObservable(obs, idlePriority);
+  const value = useObservable(obs, { scheduler: idlePriority });
 
 
   return (

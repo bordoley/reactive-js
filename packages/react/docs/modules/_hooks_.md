@@ -13,7 +13,7 @@
 
 ### `Const` useObservable
 
-▸ **useObservable**<**T**>(`observable`: ObservableLike‹T›, `scheduler`: SchedulerLike): *Option‹T›*
+▸ **useObservable**<**T**>(`observable`: ObservableLike‹T›, `__namedParameters`: object): *Option‹T›*
 
 Returns the current value, if defined, of `observable`.
 
@@ -23,10 +23,15 @@ Returns the current value, if defined, of `observable`.
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`observable` | ObservableLike‹T› | - | The `ObservableLike` to subscribe to. |
-`scheduler` | SchedulerLike | normalPriority | An optional scheduler used when subscribing to `observable`. The default is React's normal priority scheduler.  |
+▪ **observable**: *ObservableLike‹T›*
+
+The `ObservableLike` to subscribe to.
+
+▪`Default value`  **__namedParameters**: *object*= { scheduler: normalPriority}
+
+Name | Type |
+------ | ------ |
+`scheduler` | SchedulerLike |
 
 **Returns:** *Option‹T›*
 
