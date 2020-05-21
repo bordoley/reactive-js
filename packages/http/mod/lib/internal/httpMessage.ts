@@ -1,13 +1,29 @@
-import { SideEffect2 } from "../../../../core/mod/lib/functions.ts";
+import { SideEffect2, pipe } from "../../../../core/mod/lib/functions.ts";
 import { IOSourceLike, fromValue } from "../../../../core/mod/lib/io.ts";
 import { isSome, isNone } from "../../../../core/mod/lib/option.ts";
-import { writeHttpCacheControlHeader, CacheDirective } from "./cacheDirective.ts";
+import { map } from "../../../../core/mod/lib/readonlyArray.ts";
+import {
+  writeHttpCacheControlHeader,
+  CacheDirective,
+  parseCacheDirectiveOrThrow,
+  parseCacheControlFromHeaders,
+} from "./cacheDirective.ts";
 import {
   writeHttpContentInfoHeaders,
   HttpContentInfo,
+  HttpContentEncoding,
+  createHttpContentInfo,
+  parseHttpContentInfoFromHeaders,
 } from "./httpContentInfo.ts";
-import { writeHttpHeaders, HttpHeaders } from "./httpHeaders.ts";
-import { writeHttpPreferenceHeaders, HttpPreferences } from "./httpPreferences.ts";
+import { writeHttpHeaders, HttpHeaders, filterHeaders } from "./httpHeaders.ts";
+import {
+  writeHttpPreferenceHeaders,
+  HttpPreferences,
+  MediaRange,
+  createHttpPreferences,
+  parseHttpPreferencesFromHeaders,
+} from "./httpPreferences.ts";
+import { MediaType } from "./mediaType.ts";
 
 // A Proxy readonly interface for the what-wg URL api.
 export interface URILike {
@@ -31,6 +47,65 @@ export type HttpMessage<T> = {
   readonly headers: HttpHeaders;
   readonly preferences?: HttpPreferences;
 };
+
+export type HttpMessageOptions<T> = {
+  body: T;
+  cacheControl?: readonly (string | CacheDirective)[];
+  contentInfo?: {
+    contentEncodings?: readonly HttpContentEncoding[];
+    contentLength?: number;
+    contentType: MediaType | string;
+  };
+  headers?: HttpHeaders;
+  preferences?: {
+    acceptedCharsets?: readonly string[];
+    acceptedEncodings?: readonly HttpContentEncoding[];
+    acceptedLanguages?: readonly string[];
+    acceptedMediaRanges?: readonly (string | MediaRange)[];
+  };
+};
+
+export const createHttpMessage = <T>({
+  body,
+  cacheControl,
+  contentInfo,
+  headers = {},
+  preferences,
+  ...rest
+}: {
+  body: T;
+  cacheControl?: readonly (string | CacheDirective)[];
+  contentInfo?: {
+    contentEncodings?: readonly HttpContentEncoding[];
+    contentLength?: number;
+    contentType: MediaType | string;
+  };
+  headers?: HttpHeaders;
+  preferences?: {
+    acceptedCharsets?: readonly string[];
+    acceptedEncodings?: readonly HttpContentEncoding[];
+    acceptedLanguages?: readonly string[];
+    acceptedMediaRanges?: readonly (string | MediaRange)[];
+  };
+}): HttpMessage<T> => ({
+  ...rest,
+  body,
+  cacheControl: isSome(cacheControl)
+    ? pipe(
+        cacheControl,
+        map(cc =>
+          typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc,
+        ),
+      )
+    : parseCacheControlFromHeaders(headers),
+  contentInfo: isSome(contentInfo)
+    ? createHttpContentInfo(contentInfo)
+    : parseHttpContentInfoFromHeaders(headers),
+  headers: filterHeaders(headers ?? {}),
+  preferences: isSome(preferences)
+    ? createHttpPreferences(preferences)
+    : parseHttpPreferencesFromHeaders(headers),
+});
 
 export const writeHttpMessageHeaders = <T>(
   { cacheControl, contentInfo, headers, preferences }: HttpMessage<T>,

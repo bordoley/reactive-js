@@ -24,8 +24,10 @@
 * [HttpDateTime](_http_.md#httpdatetime)
 * [HttpHeaders](_http_.md#httpheaders)
 * [HttpMessage](_http_.md#httpmessage)
+* [HttpMessageOptions](_http_.md#httpmessageoptions)
 * [HttpPreferences](_http_.md#httppreferences)
 * [HttpRequest](_http_.md#httprequest)
+* [HttpRequestOptions](_http_.md#httprequestoptions)
 * [HttpResponse](_http_.md#httpresponse)
 * [MediaType](_http_.md#mediatype)
 
@@ -46,7 +48,6 @@
 * [decodeHttpRequestContent](_http_.md#const-decodehttprequestcontent)
 * [decodeHttpResponseContent](_http_.md#const-decodehttpresponsecontent)
 * [encodeHttpResponseContent](_http_.md#const-encodehttpresponsecontent)
-* [httpRequestToUntypedHeaders](_http_.md#const-httprequesttountypedheaders)
 * [toIOSourceHttpRequest](_http_.md#const-toiosourcehttprequest)
 * [toIOSourceHttpResponse](_http_.md#const-toiosourcehttpresponse)
 * [writeHttpRequestHeaders](_http_.md#const-writehttprequestheaders)
@@ -126,6 +127,38 @@ ___
 
 ___
 
+###  HttpMessageOptions
+
+Ƭ **HttpMessageOptions**: *object*
+
+#### Type declaration:
+
+* **body**: *T*
+
+* **cacheControl**? : *keyof (string | object)[]*
+
+* **contentInfo**(): *object*
+
+  * **contentEncodings**? : *keyof HttpContentEncoding[]*
+
+  * **contentLength**? : *number*
+
+  * **contentType**: *[MediaType](_http_.md#mediatype) | string*
+
+* **headers**? : *[HttpHeaders](_http_.md#httpheaders)*
+
+* **preferences**(): *object*
+
+  * **acceptedCharsets**? : *keyof string[]*
+
+  * **acceptedEncodings**? : *keyof HttpContentEncoding[]*
+
+  * **acceptedLanguages**? : *keyof string[]*
+
+  * **acceptedMediaRanges**? : *keyof (string | object)[]*
+
+___
+
 ###  HttpPreferences
 
 Ƭ **HttpPreferences**: *object*
@@ -145,6 +178,12 @@ ___
 ###  HttpRequest
 
 Ƭ **HttpRequest**: *[HttpMessage](_http_.md#httpmessage)‹T› & object*
+
+___
+
+###  HttpRequestOptions
+
+Ƭ **HttpRequestOptions**: *[HttpMessageOptions](_http_.md#httpmessageoptions)‹T› & object*
 
 ___
 
@@ -170,37 +209,25 @@ ___
 
 ### `Const` decodeHttpRequestWithCharset
 
-• **decodeHttpRequestWithCharset**: *Function1‹[HttpRequest](_http_.md#httprequest)‹Uint8Array›, [HttpRequest](_http_.md#httprequest)‹string››* = (decodeHttpMessageWithCharset as unknown) as Function1<
-  HttpRequest<Uint8Array>,
-  HttpRequest<string>
->
+• **decodeHttpRequestWithCharset**: *Function1‹[HttpRequest](_http_.md#httprequest)‹Uint8Array›, [HttpRequest](_http_.md#httprequest)‹string››* = _decodeHttpRequestWithCharset
 
 ___
 
 ### `Const` decodeHttpResponseWithCharset
 
-• **decodeHttpResponseWithCharset**: *Function1‹[HttpResponse](_http_.md#httpresponse)‹Uint8Array›, [HttpResponse](_http_.md#httpresponse)‹string››* = (decodeHttpMessageWithCharset as unknown) as Function1<
-  HttpResponse<Uint8Array>,
-  HttpResponse<string>
->
+• **decodeHttpResponseWithCharset**: *Function1‹[HttpResponse](_http_.md#httpresponse)‹Uint8Array›, [HttpResponse](_http_.md#httpresponse)‹string››* = _decodeHttpResponseWithCharset
 
 ___
 
 ### `Const` encodeHttpRequestWithUtf8
 
-• **encodeHttpRequestWithUtf8**: *Function1‹[HttpRequest](_http_.md#httprequest)‹string›, [HttpRequest](_http_.md#httprequest)‹Uint8Array››* = (encodeHttpMessageWithUtf8 as unknown) as Function1<
-  HttpRequest<string>,
-  HttpRequest<Uint8Array>
->
+• **encodeHttpRequestWithUtf8**: *Function1‹[HttpRequest](_http_.md#httprequest)‹string›, [HttpRequest](_http_.md#httprequest)‹Uint8Array››* = _encodeHttpRequestWithUtf8
 
 ___
 
 ### `Const` encodeHttpResponseWithUtf8
 
-• **encodeHttpResponseWithUtf8**: *Function1‹[HttpResponse](_http_.md#httpresponse)‹string›, [HttpResponse](_http_.md#httpresponse)‹Uint8Array››* = (encodeHttpMessageWithUtf8 as unknown) as Function1<
-  HttpResponse<string>,
-  HttpResponse<Uint8Array>
->
+• **encodeHttpResponseWithUtf8**: *Function1‹[HttpResponse](_http_.md#httpresponse)‹string›, [HttpResponse](_http_.md#httpresponse)‹Uint8Array››* = _encodeHttpResponseWithUtf8
 
 ## Functions
 
@@ -254,16 +281,12 @@ ___
 
 Name | Type | Default |
 ------ | ------ | ------ |
-`body` | T | - |
-`cacheControl` | ReadonlyArray‹string &#124; object› | - |
-`contentInfo` | object | - |
 `expectContinue` | boolean | - |
 `headers` | object | - |
 `httpVersionMajor` | number | 1 |
 `httpVersionMinor` | number | 1 |
 `method` | [HttpMethod](../enums/_http_.httpmethod.md) | - |
 `preconditions` | object | - |
-`preferences` | object | - |
 `rest` | rest | - |
 `uri` | string &#124; [URILike](../interfaces/_http_.urilike.md) | - |
 
@@ -285,15 +308,11 @@ ___
 
 Name | Type |
 ------ | ------ |
-`body` | T |
-`cacheControl` | ReadonlyArray‹string &#124; object› |
-`contentInfo` | object |
 `etag` | string &#124; object |
 `expires` | string &#124; number &#124; Date |
 `headers` | object |
 `lastModified` | string &#124; number &#124; Date |
 `location` | string &#124; [URILike](../interfaces/_http_.urilike.md) |
-`preferences` | object |
 `rest` | rest |
 `statusCode` | [HttpStatusCode](../enums/_http_.httpstatuscode.md) |
 `vary` | ReadonlyArray‹string› |
@@ -363,22 +382,6 @@ Name | Type | Default |
 `db` | object | {} |
 
 **Returns:** *(Anonymous function)*
-
-___
-
-### `Const` httpRequestToUntypedHeaders
-
-▸ **httpRequestToUntypedHeaders**(`request`: [HttpRequest](_http_.md#httprequest)‹unknown›): *object*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`request` | [HttpRequest](_http_.md#httprequest)‹unknown› |
-
-**Returns:** *object*
-
-* \[ **key**: *string*\]: string
 
 ___
 
