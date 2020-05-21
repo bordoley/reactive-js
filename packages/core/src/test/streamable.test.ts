@@ -242,7 +242,7 @@ export const tests = describe(
   test("sink", () => {
     const scheduler = createVirtualTimeScheduler();
 
-    const lib = pipe(
+    const src = pipe(
       identity<void>(),
       scan((acc, _) => acc + 1, returns<number>(0)),
       lift(takeFirst(3)),
@@ -259,7 +259,7 @@ export const tests = describe(
       lift(startWith(none)),
     );
 
-    const subscription = pipe(sink(lib, dest), subscribe(scheduler));
+    const subscription = pipe(sink(src, dest), subscribe(scheduler));
     expectFalse(subscription.isDisposed);
 
     scheduler.run();

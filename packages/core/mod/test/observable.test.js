@@ -92,7 +92,7 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     pipe(subscription.error, expectSome);
 })), describe("retry", test("repeats the observable n times", () => {
     let retried = false;
-    const lib = createObservable(d => {
+    const src = createObservable(d => {
         dispatch(d, 1);
         if (retried) {
             dispatch(d, 2);
@@ -103,7 +103,7 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
             dispose(d, { cause: new Error() });
         }
     });
-    pipe(lib, retry(), toRunnable(), toArray(), expectArrayEquals([1, 1, 2]));
+    pipe(src, retry(), toRunnable(), toArray(), expectArrayEquals([1, 1, 2]));
 })), describe("scanAsync", test("fast lib, slow acc", defer([1, 2, 3], fromArray(), scanAsync((acc, x) => fromValue({ delay: 4 })(x + acc), returns(0)), toRunnable(), toArray(), expectArrayEquals([1, 3, 6]))), test("slow lib, fast acc", defer([1, 2, 3], fromArray({ delay: 4 }), scanAsync((acc, x) => fromValue()(x + acc), returns(0)), toRunnable(), toArray(), expectArrayEquals([1, 3, 6]))), test("slow lib, slow acc", defer([1, 2, 3], fromArray({ delay: 4 }), scanAsync((acc, x) => fromValue({ delay: 4 })(x + acc), returns(0)), toRunnable(), toArray(), expectArrayEquals([1, 3, 6]))), test("fast lib, fast acc", defer([1, 2, 3], fromArray(), scanAsync((acc, x) => fromValue()(x + acc), returns(0)), toRunnable(), toArray(), expectArrayEquals([1, 3, 6])))), test("share", () => {
     const scheduler = createVirtualTimeScheduler();
     const shared = pipe([1, 2, 3], fromArray({ delay: 1 }), share(scheduler, 1));
