@@ -7,7 +7,7 @@ import { createVirtualTimeScheduler } from "../lib/scheduler.js";
 import { sink, stream } from "../lib/streamable.js";
 export const tests = describe("io", test("decodeWithCharset", () => {
     const src = pipe([Uint8Array.from([226]), Uint8Array.from([130]), Uint8Array.from([172])], fromArray(), decodeWithCharset());
-    const dest = createIOSinkAccumulator((acc, next) => acc + next, returns(""), 1);
+    const dest = createIOSinkAccumulator((acc, next) => acc + next, returns(""), { replay: 1 });
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(src, dest), subscribe(scheduler));
     const f = mockFn();
@@ -31,7 +31,7 @@ export const tests = describe("io", test("decodeWithCharset", () => {
 }), test("encodeUtf8", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
     const src = pipe(str, fromValue(), encodeUtf8, decodeWithCharset());
-    const dest = createIOSinkAccumulator((acc, next) => acc + next, returns(""), 1);
+    const dest = createIOSinkAccumulator((acc, next) => acc + next, returns(""), { replay: 1 });
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(src, dest), subscribe(scheduler));
     const f = mockFn();
@@ -55,7 +55,7 @@ export const tests = describe("io", test("decodeWithCharset", () => {
     expectTrue(fromValueStream.isDisposed);
 }), test("map", () => {
     const src = pipe(1, fromValue(), map(returns(2)));
-    const dest = createIOSinkAccumulator(sum, returns(0), 1);
+    const dest = createIOSinkAccumulator(sum, returns(0), { replay: 1 });
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(src, dest), subscribe(scheduler));
     const f = mockFn();

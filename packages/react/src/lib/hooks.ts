@@ -95,7 +95,7 @@ export const useStreamable = <TReq, T>(
   const streamRef = useRef<Option<StreamLike<TReq, T>>>(none);
 
   useEffect(() => {
-    const stream = streamableStream(streamable, scheduler, replay);
+    const stream = streamableStream(streamable, scheduler, { replay });
     streamRef.current = stream;
 
     pipe(stream, returns, updateStream);

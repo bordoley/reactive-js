@@ -40,10 +40,10 @@ class IOSinkAccumulatorImpl<T, TAcc> extends AbstractDisposable implements IOSin
   private readonly subject: StreamLike<TAcc, TAcc>;
   private readonly streamable: StreamableLike<IOEvent<T>, FlowMode>
 
-  constructor(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, replay: number) {
+  constructor(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options: { replay: number }) {
     super();
 
-    const subject = createSubject(replay);
+    const subject = createSubject(options);
     addDisposableDisposeParentOnChildError(this, subject);
 
     const op = (events: ObservableLike<IOEvent<T>>): ObservableLike<FlowMode> =>
@@ -81,9 +81,9 @@ class IOSinkAccumulatorImpl<T, TAcc> extends AbstractDisposable implements IOSin
 
   stream(
     scheduler: SchedulerLike,
-    replayCount?: number,
+    options?: { replay: number }
   ): StreamLike<IOEvent<T>, FlowMode> {
-    const result = stream(this.streamable, scheduler, replayCount);
+    const result = stream(this.streamable, scheduler, options);
     addDisposableDisposeParentOnChildError(this, result);
     return result;
   }
@@ -93,6 +93,6 @@ class IOSinkAccumulatorImpl<T, TAcc> extends AbstractDisposable implements IOSin
 export const createIOSinkAccumulator = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-  replay = 0,
+  options = { replay: 0 },
 ): IOSinkAccumulatorLike<T, TAcc> =>
-  new IOSinkAccumulatorImpl(reducer, initialValue, replay);
+  new IOSinkAccumulatorImpl(reducer, initialValue, options);

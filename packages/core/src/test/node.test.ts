@@ -98,7 +98,7 @@ export const tests = describe(
       const dest = createIOSinkAccumulator(
         (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
         returns(""),
-        1,
+        { replay: 1 },
       );
 
       await pipe(sink(src, dest), toPromise(scheduler));
@@ -123,7 +123,7 @@ export const tests = describe(
       const dest = createIOSinkAccumulator(
         (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
         returns(""),
-        1,
+        { replay: 1 },
       );
 
       await pipe(sink(src, dest), toPromise(scheduler), expectPromiseToThrow);
@@ -142,7 +142,7 @@ export const tests = describe(
     const dest = createIOSinkAccumulator(
       (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
       returns(""),
-      1,
+      { replay: 1 },
     );
 
     await pipe(sink(src, dest), toPromise(scheduler));

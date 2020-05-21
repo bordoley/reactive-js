@@ -35,7 +35,7 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     dispatch(dispatcher, 3);
     dispose(dispatcher);
 }), toRunnable(defer({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler)), toArray(), expectArrayEquals([1, 2, 3])))), describe("createSubject", test("with replay", () => {
-    const subject = createSubject(2);
+    const subject = createSubject({ replay: 2 });
     pipe([1, 2, 3, 4], fromArrayRunnable(), forEach(dispatchTo(subject)));
     dispose(subject);
     pipe(subject, toRunnable(), toArray(), expectArrayEquals([3, 4]));
@@ -106,7 +106,7 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     pipe(src, retry(), toRunnable(), toArray(), expectArrayEquals([1, 1, 2]));
 })), describe("scanAsync", test("fast lib, slow acc", defer([1, 2, 3], fromArray(), scanAsync((acc, x) => fromValue({ delay: 4 })(x + acc), returns(0)), toRunnable(), toArray(), expectArrayEquals([1, 3, 6]))), test("slow lib, fast acc", defer([1, 2, 3], fromArray({ delay: 4 }), scanAsync((acc, x) => fromValue()(x + acc), returns(0)), toRunnable(), toArray(), expectArrayEquals([1, 3, 6]))), test("slow lib, slow acc", defer([1, 2, 3], fromArray({ delay: 4 }), scanAsync((acc, x) => fromValue({ delay: 4 })(x + acc), returns(0)), toRunnable(), toArray(), expectArrayEquals([1, 3, 6]))), test("fast lib, fast acc", defer([1, 2, 3], fromArray(), scanAsync((acc, x) => fromValue()(x + acc), returns(0)), toRunnable(), toArray(), expectArrayEquals([1, 3, 6])))), test("share", () => {
     const scheduler = createVirtualTimeScheduler();
-    const shared = pipe([1, 2, 3], fromArray({ delay: 1 }), share(scheduler, 1));
+    const shared = pipe([1, 2, 3], fromArray({ delay: 1 }), share(scheduler, { replay: 1 }));
     let result = [];
     pipe(zip(shared, shared), map(([a, b]) => a + b), buffer(), onNotify(x => {
         result = x;

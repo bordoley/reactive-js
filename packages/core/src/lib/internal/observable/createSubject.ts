@@ -13,7 +13,7 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
 
   readonly isSynchronous = false;
 
-  constructor(private readonly replayCount: number) {
+  constructor(private readonly replay: number) {
     super();
   }
 
@@ -24,11 +24,11 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
   dispatch(next: T) {
     if (!this.isDisposed) {
       const replayed = this.replayed;
-      const replayCount = this.replayCount;
+      const replay = this.replay;
 
-      if (replayCount > 0) {
+      if (replay > 0) {
         replayed.push(next);
-        if (replayed.length > replayCount) {
+        if (replayed.length > replay) {
           replayed.shift();
         }
       }
@@ -62,5 +62,5 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
   }
 }
 
-export const createSubject = <T>(replayCount = 0): SubjectLike<T> =>
-  new SubjectImpl(replayCount);
+export const createSubject = <T>({ replay } = { replay: 0 }): SubjectLike<T> =>
+  new SubjectImpl(replay);

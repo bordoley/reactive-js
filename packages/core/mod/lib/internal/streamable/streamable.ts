@@ -18,8 +18,8 @@ import { StreamableLike } from "./interfaces.ts";
 class StreamableImpl<TReq, TData> implements StreamableLike<TReq, TData> {
   constructor(private readonly op: ObservableOperator<TReq, TData>) {}
 
-  stream(scheduler: SchedulerLike, replayCount = 0): StreamLike<TReq, TData> {
-    return createStream(this.op, scheduler, replayCount);
+  stream(scheduler: SchedulerLike, options?: { replay: number }): StreamLike<TReq, TData> {
+    return createStream(this.op, scheduler, options);
   }
 }
 
@@ -99,5 +99,5 @@ export const empty = <TReq, T>(options?: {
 export const stream = <TReq, T>(
   streamable: StreamableLike<TReq, T>,
   scheduler: SchedulerLike,
-  replayCount?: number,
-): StreamLike<TReq, T> => streamable.stream(scheduler, replayCount);
+  options?: { replay: number},
+): StreamLike<TReq, T> => streamable.stream(scheduler, options);
