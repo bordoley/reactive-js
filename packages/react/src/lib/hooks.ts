@@ -56,7 +56,7 @@ const subscribeObservable = <T>(
  */
 export const useObservable = <T>(
   observable: ObservableLike<T>,
-  scheduler: SchedulerLike = normalPriority,
+  { scheduler } = { scheduler: normalPriority} ,
 ): Option<T> => {
   const [state, updateState] = useState<Option<T>>(none);
   const [error, updateError] = useState<Option<Exception>>(none);
@@ -99,9 +99,8 @@ export const useStreamable = <TReq, T>(
     streamRef.current = stream;
 
     pipe(stream, returns, updateStream);
-
+ 
     return () => {
-      streamRef.current = none;
       dispose(stream);
     };
   }, [streamable, scheduler, replay, updateStream]);
@@ -116,6 +115,6 @@ export const useStreamable = <TReq, T>(
     [streamRef],
   );
 
-  const value = useObservable(stream ?? never<T>(), stateScheduler);
+  const value = useObservable(stream ?? never<T>(), { scheduler: stateScheduler });
   return [value, dispatch];
 };
