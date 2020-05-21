@@ -1,4 +1,4 @@
-import { pipe, returns, } from "../../../../core/mod/lib/functions.js";
+import { pipe, returns, updaterReducer, } from "../../../../core/mod/lib/functions.js";
 import { isNone, isSome, none } from "../../../../core/mod/lib/option.js";
 import { map, reduceRight } from "../../../../core/mod/lib/readonlyArray.js";
 import { getHeaderValue } from "./httpHeaders.js";
@@ -33,12 +33,14 @@ export const createRedirectHttpRequest = (request, response) => {
         ((statusCode === 301 ||
             302 === 302) &&
             method === "POST");
-    return {
-        ...request,
-        content: redirectToGet ? none : contentInfo,
-        method: redirectToGet ? "GET" : method,
-        uri: location,
-    };
+    return isSome(location)
+        ? {
+            ...request,
+            content: redirectToGet ? none : contentInfo,
+            method: redirectToGet ? "GET" : method,
+            uri: location,
+        }
+        : request;
 };
 export const writeHttpRequestHeaders = (request, writeHeader) => {
     const { expectContinue, preconditions } = request;
@@ -67,7 +69,7 @@ export const decodeHttpRequestContent = (decoderProvider) => req => {
                 });
             }
             return decoder;
-        }), reduceRight((acc, decoder) => decoder(acc), returns(body)));
+        }), reduceRight(updaterReducer, returns(body)));
         return {
             ...rest,
             contentInfo: {

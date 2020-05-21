@@ -3,6 +3,8 @@ import {
   SideEffect2,
   pipe,
   returns,
+  updaterReducer,
+  Updater,
 } from "../../../../core/mod/lib/functions.ts";
 import { IOSourceLike, IOSourceOperator } from "../../../../core/mod/lib/io.ts";
 import { isNone, isSome, none } from "../../../../core/mod/lib/option.ts";
@@ -137,14 +139,14 @@ export const createRedirectHttpRequest = <
       HttpStatusCode.Found === 302) &&
       method === HttpMethod.POST);
 
-  return {
-    ...request,
-    content: redirectToGet ? none : contentInfo,
-    method: redirectToGet ? HttpMethod.GET : method,
-
-    // This function is only called if location is undefined.
-    uri: location as URILike,
-  };
+  return isSome(location)
+    ? {
+        ...request,
+        content: redirectToGet ? none : contentInfo,
+        method: redirectToGet ? HttpMethod.GET : method,
+        uri: location as URILike,
+      }
+    : request;
 };
 
 export const writeHttpRequestHeaders = <T>(
@@ -209,8 +211,8 @@ export const decodeHttpRequestContent = (decoderProvider: {
         }
         return decoder;
       }),
-      reduceRight(
-        (acc: IOSourceLike<Uint8Array>, decoder) => decoder(acc),
+      reduceRight<Updater<IOSourceLike<Uint8Array>>, IOSourceLike<Uint8Array>>(
+        updaterReducer,
         returns(body),
       ),
     );
