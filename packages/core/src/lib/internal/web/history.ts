@@ -1,6 +1,7 @@
 import { pipe, Updater } from "../../functions";
 import {
   compute,
+  concatWith,
   merge,
   ObservableLike,
   onNotify,
@@ -20,12 +21,16 @@ const pushHistoryState = (newLocation: string) => {
   }
 };
 
-const historyFunction = (obs: ObservableLike<string>) =>
-  merge(
-    compute()(getCurrentLocation),
-    pipe(obs, throttle(15), onNotify(pushHistoryState)),
-    fromEvent(window, "popstate", getCurrentLocation),
-  );
+const historyFunction = (obs: ObservableLike<string>) => pipe(
+  getCurrentLocation,
+  compute(),
+  concatWith(
+    merge(
+      pipe(obs, throttle(15), onNotify(pushHistoryState)),
+      fromEvent(window, "popstate", getCurrentLocation),
+    ),
+  ),
+);
 
 const _historyStateStore: StateStoreLike<string> = pipe(
   createStreamable(historyFunction),
