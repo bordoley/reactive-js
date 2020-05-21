@@ -12,9 +12,9 @@
 
 ### Functions
 
+* [createHttpServerRequest](_httpserver_.md#const-createhttpserverrequest)
 * [createRoutingHttpServer](_httpserver_.md#const-createroutinghttpserver)
 * [disallowProtocolAndHostForwarding](_httpserver_.md#const-disallowprotocolandhostforwarding)
-* [parseHttpServerRequestFromHeaders](_httpserver_.md#const-parsehttpserverrequestfromheaders)
 
 ## Type aliases
 
@@ -46,6 +46,32 @@ ___
 
 ## Functions
 
+### `Const` createHttpServerRequest
+
+▸ **createHttpServerRequest**<**T**>(`__namedParameters`: object): *[HttpServerRequest](_httpserver_.md#httpserverrequest)‹T›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+▪ **__namedParameters**: *object*
+
+Name | Type | Default |
+------ | ------ | ------ |
+`headers` | object | - |
+`httpVersionMajor` | number | 1 |
+`httpVersionMinor` | number | 1 |
+`isTransportSecure` | boolean | - |
+`path` | string | - |
+`rest` | rest | - |
+`uri` | string &#124; [URILike](../interfaces/_http_.urilike.md) | - |
+
+**Returns:** *[HttpServerRequest](_httpserver_.md#httpserverrequest)‹T›*
+
+___
+
 ### `Const` createRoutingHttpServer
 
 ▸ **createRoutingHttpServer**<**TReq**, **TResp**>(`routes`: object, `notFoundHandler`: Function1‹[HttpRequest](_http_.md#httprequest)‹TReq›, ObservableLike‹[HttpResponse](_http_.md#httpresponse)‹TResp›››): *[HttpServer](_httpserver_.md#httpserver)‹[HttpRequest](_http_.md#httprequest)‹TReq›, [HttpResponse](_http_.md#httpresponse)‹TResp››*
@@ -76,29 +102,3 @@ ___
 ▪ **T**
 
 **Returns:** *Function1‹[HttpServerRequest](_httpserver_.md#httpserverrequest)‹T›, [HttpServerRequest](_httpserver_.md#httpserverrequest)‹T››*
-
-___
-
-### `Const` parseHttpServerRequestFromHeaders
-
-▸ **parseHttpServerRequestFromHeaders**<**T**>(`__namedParameters`: object): *[HttpServerRequest](_httpserver_.md#httpserverrequest)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-▪ **__namedParameters**: *object*
-
-Name | Type |
------- | ------ |
-`body` | T |
-`headers` | object |
-`httpVersionMajor` | number |
-`httpVersionMinor` | number |
-`isTransportSecure` | boolean |
-`method` | [HttpMethod](../enums/_http_.httpmethod.md) |
-`path` | string |
-
-**Returns:** *[HttpServerRequest](_httpserver_.md#httpserverrequest)‹T›*

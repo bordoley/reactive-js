@@ -12,7 +12,8 @@ import { parseHttpPreferencesFromHeaders, createHttpPreferences, } from "./httpP
 export const createHttpResponse = ({ body, cacheControl, contentInfo, etag, expires, headers = {}, lastModified, location, preferences, statusCode, vary, ...rest }) => ({
     ...rest,
     body,
-    cacheControl: pipe(cacheControl !== null && cacheControl !== void 0 ? cacheControl : [], map(cc => (typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc))),
+    cacheControl: isSome(cacheControl)
+        ? pipe(cacheControl, map(cc => (typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc))) : parseCacheControlFromHeaders(headers),
     contentInfo: isSome(contentInfo)
         ? createHttpContentInfo(contentInfo)
         : parseHttpContentInfoFromHeaders(headers),

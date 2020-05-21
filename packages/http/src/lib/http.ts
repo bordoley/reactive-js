@@ -43,7 +43,6 @@ export {
   decodeHttpResponseWithCharset,
   encodeHttpResponseWithUtf8,
   encodeHttpResponseContent,
-  parseHttpResponseFromHeaders,
   toIOSourceHttpResponse,
   writeHttpResponseHeaders,
 } from "./internal/httpResponse";
