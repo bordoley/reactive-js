@@ -1,19 +1,19 @@
-[@reactive-js/core - v0.0.42](../README.md) › ["dom"](_dom_.md)
+[@reactive-js/core - v0.0.42](../README.md) › ["web"](_web_.md)
 
-# Module: "dom"
+# Module: "web"
 
 ## Index
 
 ### Variables
 
-* [historyHashStateStore](_dom_.md#const-historyhashstatestore)
-* [historySearchStateStore](_dom_.md#const-historysearchstatestore)
-* [historyStateStore](_dom_.md#const-historystatestore)
+* [historyHashStateStore](_web_.md#const-historyhashstatestore)
+* [historySearchStateStore](_web_.md#const-historysearchstatestore)
+* [historyStateStore](_web_.md#const-historystatestore)
 
 ### Functions
 
-* [createEventSource](_dom_.md#const-createeventsource)
-* [fromEvent](_dom_.md#const-fromevent)
+* [createEventSource](_web_.md#const-createeventsource)
+* [fromEvent](_web_.md#const-fromevent)
 
 ## Variables
 

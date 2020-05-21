@@ -2,7 +2,7 @@ import {
   historyStateStore,
   createEventSource,
   historyHashStateStore,
-} from "@reactive-js/core/lib/dom";
+} from "@reactive-js/core/lib/web";
 import { fromObservable, FlowMode } from "@reactive-js/core/lib/flowable";
 import {
   pipe,
