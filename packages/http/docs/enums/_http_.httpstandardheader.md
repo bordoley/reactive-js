@@ -10,7 +10,7 @@
 * [AcceptCharset](_http_.httpstandardheader.md#acceptcharset)
 * [AcceptEncoding](_http_.httpstandardheader.md#acceptencoding)
 * [AcceptLanguage](_http_.httpstandardheader.md#acceptlanguage)
-* [AcceptRange](_http_.httpstandardheader.md#acceptrange)
+* [AcceptRanges](_http_.httpstandardheader.md#acceptranges)
 * [Age](_http_.httpstandardheader.md#age)
 * [Allow](_http_.httpstandardheader.md#allow)
 * [Authorization](_http_.httpstandardheader.md#authorization)
@@ -47,6 +47,7 @@
 * [Server](_http_.httpstandardheader.md#server)
 * [SetCookie](_http_.httpstandardheader.md#setcookie)
 * [TE](_http_.httpstandardheader.md#te)
+* [Trailer](_http_.httpstandardheader.md#trailer)
 * [TransferEncoding](_http_.httpstandardheader.md#transferencoding)
 * [Upgrade](_http_.httpstandardheader.md#upgrade)
 * [UserAgent](_http_.httpstandardheader.md#useragent)
@@ -54,7 +55,6 @@
 * [Via](_http_.httpstandardheader.md#via)
 * [WWWAuthenticate](_http_.httpstandardheader.md#wwwauthenticate)
 * [Warning](_http_.httpstandardheader.md#warning)
-* [railer](_http_.httpstandardheader.md#railer)
 
 ## Enumeration members
 
@@ -82,9 +82,9 @@ ___
 
 ___
 
-###  AcceptRange
+###  AcceptRanges
 
-• **AcceptRange**: = "Accept-Ranges"
+• **AcceptRanges**: = "Accept-Ranges"
 
 ___
 
@@ -304,6 +304,12 @@ ___
 
 ___
 
+###  Trailer
+
+• **Trailer**: = "Trailer"
+
+___
+
 ###  TransferEncoding
 
 • **TransferEncoding**: = "Transfer-Encoding"
@@ -343,9 +349,3 @@ ___
 ###  Warning
 
 • **Warning**: = "Warning"
-
-___
-
-###  railer
-
-• **railer**: = "Trailer"

@@ -258,7 +258,7 @@ Name | Type | Default |
 `body` | T | - |
 `cacheControl` | ReadonlyArray‹string &#124; object› | - |
 `contentInfo` | object | - |
-`expectContinue` | boolean | false |
+`expectContinue` | boolean | - |
 `headers` | object | - |
 `httpVersionMajor` | number | 1 |
 `httpVersionMinor` | number | 1 |

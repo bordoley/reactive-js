@@ -1,11 +1,8 @@
 import { pipe, returns } from "../../../../core/mod/lib/functions.js";
 import { isNone, isSome, none } from "../../../../core/mod/lib/option.js";
 import { fromObject, reduce } from "../../../../core/mod/lib/readonlyArray.js";
-import { parseCacheControlFromHeaders } from "./cacheDirective.js";
-import { parseHttpContentInfoFromHeaders } from "./httpContentInfo.js";
 import { getHeaderValue, } from "./httpHeaders.js";
-import { parseHttpPreferencesFromHeaders } from "./httpPreferences.js";
-import { parseHttpRequestPreconditionsFromHeaders } from "./httpRequestPreconditions.js";
+import { createHttpRequest } from "./httpRequest.js";
 const createSegments = (path) => {
     const root = { name: "" };
     let acc = root;
@@ -125,28 +122,18 @@ const parseURIFromHeaders = (protocol, path, httpVersionMajor, headers) => {
     return new URL(`${uriProtocol}://${host}${path !== null && path !== void 0 ? path : ""}`);
 };
 export const parseHttpServerRequestFromHeaders = ({ method, path, headers, httpVersionMajor, httpVersionMinor, isTransportSecure, body, }) => {
-    const cacheControl = parseCacheControlFromHeaders(headers);
-    const contentInfo = parseHttpContentInfoFromHeaders(headers);
-    const rawExpectHeader = getHeaderValue(headers, "Expect");
-    const expectContinue = rawExpectHeader === "100-continue";
-    const preconditions = parseHttpRequestPreconditionsFromHeaders(headers);
-    const preferences = parseHttpPreferencesFromHeaders(headers);
     const protocol = isTransportSecure ? "https" : "http";
     const uri = parseURIFromHeaders(protocol, path, httpVersionMajor, headers);
-    return {
+    const options = {
         body,
-        cacheControl,
-        contentInfo,
-        expectContinue,
         headers,
-        httpVersionMajor,
-        httpVersionMinor,
         isTransportSecure,
         method,
-        preconditions,
-        preferences,
+        httpVersionMajor,
+        httpVersionMinor,
         uri,
     };
+    return createHttpRequest(options);
 };
 export const disallowProtocolAndHostForwarding = () => request => {
     const { httpVersionMajor, headers: oldHeaders, isTransportSecure, uri: oldUri, } = request;

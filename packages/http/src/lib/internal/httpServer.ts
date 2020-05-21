@@ -2,8 +2,6 @@ import { Function1, pipe, returns } from "@reactive-js/core/lib/functions";
 import { ObservableLike } from "@reactive-js/core/lib/observable";
 import { isNone, isSome, none, Option } from "@reactive-js/core/lib/option";
 import { fromObject, reduce } from "@reactive-js/core/lib/readonlyArray";
-import { parseCacheControlFromHeaders } from "./cacheDirective";
-import { parseHttpContentInfoFromHeaders } from "./httpContentInfo";
 import {
   getHeaderValue,
   HttpStandardHeader,
@@ -11,9 +9,7 @@ import {
   HttpHeaders,
 } from "./httpHeaders";
 import { URILike } from "./httpMessage";
-import { parseHttpPreferencesFromHeaders } from "./httpPreferences";
-import { HttpMethod, HttpRequest } from "./httpRequest";
-import { parseHttpRequestPreconditionsFromHeaders } from "./httpRequestPreconditions";
+import { HttpMethod, HttpRequest, createHttpRequest } from "./httpRequest";
 import { HttpResponse } from "./httpResponse";
 
 export type HttpServerRequest<T> = HttpRequest<T> & {
@@ -229,29 +225,19 @@ export const parseHttpServerRequestFromHeaders = <T>({
   httpVersionMinor: number;
   isTransportSecure: boolean;
 }): HttpServerRequest<T> => {
-  const cacheControl = parseCacheControlFromHeaders(headers);
-  const contentInfo = parseHttpContentInfoFromHeaders(headers);
-  const rawExpectHeader = getHeaderValue(headers, HttpStandardHeader.Expect);
-  const expectContinue = rawExpectHeader === "100-continue";
-  const preconditions = parseHttpRequestPreconditionsFromHeaders(headers);
-  const preferences = parseHttpPreferencesFromHeaders(headers);
   const protocol = isTransportSecure ? "https" : "http";
   const uri = parseURIFromHeaders(protocol, path, httpVersionMajor, headers);
 
-  return {
+  const options = {
     body,
-    cacheControl,
-    contentInfo,
-    expectContinue,
     headers,
-    httpVersionMajor,
-    httpVersionMinor,
     isTransportSecure,
     method,
-    preconditions,
-    preferences,
+    httpVersionMajor,
+    httpVersionMinor,
     uri,
   };
+  return createHttpRequest(options) as HttpServerRequest<T>;
 };
 
 export const disallowProtocolAndHostForwarding = <T>(): Function1<
