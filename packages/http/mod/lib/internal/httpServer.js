@@ -2,7 +2,7 @@ import { pipe, returns } from "../../../../core/mod/lib/functions.js";
 import { isNone, isSome, none } from "../../../../core/mod/lib/option.js";
 import { fromObject, reduce } from "../../../../core/mod/lib/readonlyArray.js";
 import { getHeaderValue, } from "./httpHeaders.js";
-import { createHttpRequest } from "./httpRequest.js";
+import { createHttpRequest, } from "./httpRequest.js";
 const createSegments = (path) => {
     const root = { name: "" };
     let acc = root;

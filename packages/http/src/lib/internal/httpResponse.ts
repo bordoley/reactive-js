@@ -358,9 +358,7 @@ export const encodeHttpResponseContent = (
   } = {},
 ): Function1<
   HttpRequest<unknown>,
-  Updater<
-    HttpResponse<IOSourceLike<Uint8Array>>
-  >
+  Updater<HttpResponse<IOSourceLike<Uint8Array>>>
 > => {
   const supportedEncodings = Object.keys(encoderProvider);
 

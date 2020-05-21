@@ -1,8 +1,3 @@
-import {
-  historyStateStore,
-  createEventSource,
-  historyHashStateStore,
-} from "@reactive-js/core/lib/web";
 import { fromObservable, FlowMode } from "@reactive-js/core/lib/flowable";
 import {
   pipe,
@@ -17,6 +12,12 @@ import {
   subscribe,
 } from "@reactive-js/core/lib/observable";
 import { onNotify as onNotifyStream } from "@reactive-js/core/lib/streamable";
+import {
+  historyStateStore,
+  createEventSource,
+  fetch,
+  historyHashStateStore,
+} from "@reactive-js/core/lib/web";
 import { useObservable, useStreamable } from "@reactive-js/react/lib/hooks";
 import {
   RoutableComponentProps,
@@ -147,6 +148,13 @@ pipe(
   createEventSource("http://localhost:8080/events", {
     events: ["error", "message", "test"],
   }),
+  onNotify(console.log),
+  subscribe(normalPriority),
+);
+
+pipe(
+  { uri: "http://localhost:8080/files/packages/example/build/bundle.js" },
+  fetch(response => response.text()),
   onNotify(console.log),
   subscribe(normalPriority),
 );

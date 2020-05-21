@@ -27,6 +27,7 @@ export { ignoreElements } from "./internal/observable/ignoreElements.js";
 export { keep, keepType } from "./internal/observable/keep.js";
 export { lift } from "./internal/observable/lift.js";
 export { map, mapTo } from "./internal/observable/map.js";
+export { mapAsync } from "./internal/observable/mapAsync.js";
 export { concatAll, concatMap, exhaust, exhaustMap, mergeAll, mergeMap, } from "./internal/observable/mergeAll.js";
 export { onNotify } from "./internal/observable/onNotify.js";
 export { onSubscribe } from "./internal/observable/onSubscribe.js";

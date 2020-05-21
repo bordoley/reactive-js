@@ -5,3 +5,4 @@ export {
   historySearchStateStore,
   historyHashStateStore,
 } from "./internal/web/history.ts";
+export { FetchRequest, fetch } from "./internal/web/fetch.ts";

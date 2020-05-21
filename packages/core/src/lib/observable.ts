@@ -42,6 +42,7 @@ export { ignoreElements } from "./internal/observable/ignoreElements";
 export { keep, keepType } from "./internal/observable/keep";
 export { lift } from "./internal/observable/lift";
 export { map, mapTo } from "./internal/observable/map";
+export { mapAsync } from "./internal/observable/mapAsync";
 export {
   concatAll,
   concatMap,

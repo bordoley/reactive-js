@@ -1,8 +1,9 @@
 import { toErrorHandler, dispose } from "../../disposable";
 import { Factory } from "../../functions";
-import { createObservable } from "./createObservable";
 import { dispatch } from "./dispatcher";
-import { ObservableLike, DispatcherLike } from "./interfaces";
+import { ObservableLike } from "./interfaces";
+import { defer } from "./observable";
+import { toDispatcher } from "./toDispatcher";
 
 /**
  * Converts a `Promise` to an `ObservableLike`. The provided promise factory
@@ -12,15 +13,14 @@ import { ObservableLike, DispatcherLike } from "./interfaces";
  */
 export const fromPromise = <T>(
   factory: Factory<Promise<T>>,
-): ObservableLike<T> => {
-  const onSubscribe = (dispatcher: DispatcherLike<T>) => {
+): ObservableLike<T> =>
+  defer(() => observer => {
+    const dispatcher = toDispatcher(observer);
+
     factory().then(next => {
       if (!dispatcher.isDisposed) {
         dispatch(dispatcher, next);
         dispose(dispatcher);
       }
     }, toErrorHandler(dispatcher));
-  };
-
-  return createObservable(onSubscribe);
-};
+  });
