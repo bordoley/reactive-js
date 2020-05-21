@@ -121,7 +121,7 @@ const parseURIFromHeaders = (protocol, path, httpVersionMajor, headers) => {
     const host = unfilteredHost.split(/\s*,\s*/, 1)[0];
     return new URL(`${uriProtocol}://${host}${path !== null && path !== void 0 ? path : ""}`);
 };
-export const createHttpServerRequest = ({ path, headers = {}, httpVersionMajor = 1, httpVersionMinor = 1, isTransportSecure, uri, ...rest }) => {
+export const createHttpServerRequest = ({ path, headers = {}, httpVersionMajor = 1, isTransportSecure, uri, ...rest }) => {
     const protocol = isTransportSecure ? "https" : "http";
     const parseUri = isSome(uri)
         ? uri
@@ -134,7 +134,6 @@ export const createHttpServerRequest = ({ path, headers = {}, httpVersionMajor =
         ...rest,
         headers,
         httpVersionMajor,
-        httpVersionMinor,
         isTransportSecure,
         uri: parseUri,
     };

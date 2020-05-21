@@ -3,21 +3,13 @@ import { ObservableLike } from "@reactive-js/core/lib/observable";
 import { isNone, isSome, none, Option } from "@reactive-js/core/lib/option";
 import { fromObject, reduce } from "@reactive-js/core/lib/readonlyArray";
 import {
-  CacheDirective,
-  HttpContentEncoding,
-  MediaType,
-  EntityTag,
-  HttpDateTime,
-} from "../http";
-import {
   getHeaderValue,
   HttpStandardHeader,
   HttpExtensionHeader,
   HttpHeaders,
 } from "./httpHeaders";
 import { URILike } from "./httpMessage";
-import { MediaRange } from "./httpPreferences";
-import { HttpMethod, HttpRequest, createHttpRequest } from "./httpRequest";
+import { HttpRequest, createHttpRequest, HttpRequestOptions } from "./httpRequest";
 import { HttpResponse } from "./httpResponse";
 
 export type HttpServerRequest<T> = HttpRequest<T> & {
@@ -220,39 +212,12 @@ export const createHttpServerRequest = <T>({
   path,
   headers = {},
   httpVersionMajor = 1,
-  httpVersionMinor = 1,
   isTransportSecure,
   uri,
   ...rest
-}: {
-  body: T;
-  cacheControl?: readonly (string | CacheDirective)[];
-  contentInfo?: {
-    contentEncodings?: readonly HttpContentEncoding[];
-    contentLength?: number;
-    contentType: MediaType | string;
-  };
-  expectContinue?: boolean;
-  headers?: HttpHeaders;
-  httpVersionMajor?: number;
-  httpVersionMinor?: number;
-  method: HttpMethod;
+}: HttpRequestOptions<T> & { 
+  path: string,
   isTransportSecure: boolean;
-  path?: string;
-  preconditions?: {
-    ifMatch?: readonly (string | EntityTag)[] | "*";
-    ifModifiedSince?: string | HttpDateTime | Date;
-    ifNoneMatch?: readonly (string | EntityTag)[] | "*";
-    ifUnmodifiedSince?: string | HttpDateTime | Date;
-    ifRange?: string | EntityTag | HttpDateTime | Date;
-  };
-  preferences?: {
-    acceptedCharsets?: readonly string[];
-    acceptedEncodings?: readonly HttpContentEncoding[];
-    acceptedLanguages?: readonly string[];
-    acceptedMediaRanges?: readonly (string | MediaRange)[];
-  };
-  uri?: string | URILike;
 }): HttpServerRequest<T> => {
   const protocol = isTransportSecure ? "https" : "http";
   const parseUri = isSome(uri)
@@ -267,7 +232,6 @@ export const createHttpServerRequest = <T>({
     ...rest,
     headers,
     httpVersionMajor,
-    httpVersionMinor,
     isTransportSecure,
     uri: parseUri,
   };
