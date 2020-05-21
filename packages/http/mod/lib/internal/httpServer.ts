@@ -3,22 +3,22 @@ import { ObservableLike } from "../../../../core/mod/lib/observable.ts";
 import { isNone, isSome, none, Option } from "../../../../core/mod/lib/option.ts";
 import { fromObject, reduce } from "../../../../core/mod/lib/readonlyArray.ts";
 import {
-  getHeaderValue,
-  HttpStandardHeader,
-  HttpExtensionHeader,
-  HttpHeaders,
-} from "./httpHeaders.ts";
-import { URILike } from "./httpMessage.ts";
-import { HttpMethod, HttpRequest, createHttpRequest } from "./httpRequest.ts";
-import { HttpResponse } from "./httpResponse.ts";
-import {
   CacheDirective,
   HttpContentEncoding,
   MediaType,
   EntityTag,
   HttpDateTime,
 } from "../http.ts";
+import {
+  getHeaderValue,
+  HttpStandardHeader,
+  HttpExtensionHeader,
+  HttpHeaders,
+} from "./httpHeaders.ts";
+import { URILike } from "./httpMessage.ts";
 import { MediaRange } from "./httpPreferences.ts";
+import { HttpMethod, HttpRequest, createHttpRequest } from "./httpRequest.ts";
+import { HttpResponse } from "./httpResponse.ts";
 
 export type HttpServerRequest<T> = HttpRequest<T> & {
   readonly isTransportSecure: boolean;

@@ -15,8 +15,10 @@ export const httpDateTimeToString = (v: HttpDateTime): string => {
   return date.toUTCString();
 };
 
-export const parseHttpDateTimeFromHeaders = (headers: HttpHeaders, header: HttpStandardHeader): Option<HttpDateTime> => {
-  const headerValue =
-    getHeaderValue(headers, header) ?? "";
-  return parseHttpDateTime(headerValue)
-}
+export const parseHttpDateTimeFromHeaders = (
+  headers: HttpHeaders,
+  header: HttpStandardHeader,
+): Option<HttpDateTime> => {
+  const headerValue = getHeaderValue(headers, header) ?? "";
+  return parseHttpDateTime(headerValue);
+};
