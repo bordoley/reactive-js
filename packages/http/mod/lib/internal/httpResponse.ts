@@ -4,6 +4,7 @@ import {
   pipe,
   returns,
   updaterReducer,
+  Updater,
 } from "../../../../core/mod/lib/functions.ts";
 import {
   IOSourceLike,
@@ -355,7 +356,12 @@ export const encodeHttpResponseContent = (
       compressible?: boolean;
     };
   } = {},
-) => {
+): Function1<
+  HttpRequest<unknown>,
+  Updater<
+    HttpResponse<IOSourceLike<Uint8Array>>
+  >
+> => {
   const supportedEncodings = Object.keys(encoderProvider);
 
   const httpResponseIsCompressible = <T>(
@@ -376,12 +382,7 @@ export const encodeHttpResponseContent = (
     );
   };
 
-  return (
-    request: HttpRequest<unknown>,
-  ): Function1<
-    HttpResponse<IOSourceLike<Uint8Array>>,
-    HttpResponse<IOSourceLike<Uint8Array>>
-  > => response => {
+  return request => response => {
     const { body, contentInfo, vary } = response;
 
     if (isNone(contentInfo)) {

@@ -134,7 +134,7 @@ export const encodeHttpResponseContent = (encoderProvider, db = {}) => {
             isSome(contentInfo) &&
             contentIsCompressible(contentInfo, db));
     };
-    return (request) => response => {
+    return request => response => {
         const { body, contentInfo, vary } = response;
         if (isNone(contentInfo)) {
             return response;
