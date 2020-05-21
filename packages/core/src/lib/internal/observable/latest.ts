@@ -99,7 +99,5 @@ export const latest = (
     everySatisfy(obs => obs.isSynchronous),
   );
 
-  return isSynchronous 
-    ? deferSynchronous(factory)
-    : defer(factory);
+  return isSynchronous ? deferSynchronous(factory) : defer(factory);
 };

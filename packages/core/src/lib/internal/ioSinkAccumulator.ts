@@ -1,4 +1,8 @@
-import { addDisposable, AbstractDisposable, addDisposableDisposeParentOnChildError } from "../disposable";
+import {
+  addDisposable,
+  AbstractDisposable,
+  addDisposableDisposeParentOnChildError,
+} from "../disposable";
 import { FlowMode } from "../flowable";
 import { Reducer, pipe, Factory } from "../functions";
 import { IOEvent, IOEventType, IOSinkLike } from "../io";
@@ -31,16 +35,22 @@ const isNotify = <T>(
  * @experimental
  * @noInheritDoc
  * */
-export interface IOSinkAccumulatorLike<T, TAcc> extends IOSinkLike<T>, MulticastObservableLike<TAcc> {
-}
+export interface IOSinkAccumulatorLike<T, TAcc>
+  extends IOSinkLike<T>,
+    MulticastObservableLike<TAcc> {}
 
-class IOSinkAccumulatorImpl<T, TAcc> extends AbstractDisposable implements IOSinkAccumulatorLike<T, TAcc> {
+class IOSinkAccumulatorImpl<T, TAcc> extends AbstractDisposable
+  implements IOSinkAccumulatorLike<T, TAcc> {
   readonly isSynchronous = false;
 
   private readonly subject: StreamLike<TAcc, TAcc>;
-  private readonly streamable: StreamableLike<IOEvent<T>, FlowMode>
+  private readonly streamable: StreamableLike<IOEvent<T>, FlowMode>;
 
-  constructor(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options: { replay: number }) {
+  constructor(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+    options: { replay: number },
+  ) {
     super();
 
     const subject = createSubject(options);
@@ -81,7 +91,7 @@ class IOSinkAccumulatorImpl<T, TAcc> extends AbstractDisposable implements IOSin
 
   stream(
     scheduler: SchedulerLike,
-    options?: { replay: number }
+    options?: { replay: number },
   ): StreamLike<IOEvent<T>, FlowMode> {
     const result = stream(this.streamable, scheduler, options);
     addDisposableDisposeParentOnChildError(this, result);

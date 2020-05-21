@@ -34,7 +34,8 @@ export const assertObserverState: SideEffect1<ObserverLike<
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
-export abstract class AbstractObserver<T, TDelegate extends SchedulerLike> extends AbstractDisposable
+export abstract class AbstractObserver<T, TDelegate extends SchedulerLike>
+  extends AbstractDisposable
   implements ObserverLike<T> {
   inContinuation = false;
 
@@ -44,9 +45,7 @@ export abstract class AbstractObserver<T, TDelegate extends SchedulerLike> exten
     super();
 
     this.scheduler =
-      delegate instanceof AbstractObserver
-        ? delegate.scheduler
-        : delegate;
+      delegate instanceof AbstractObserver ? delegate.scheduler : delegate;
   }
 
   /** @ignore */
@@ -56,7 +55,9 @@ export abstract class AbstractObserver<T, TDelegate extends SchedulerLike> exten
 
   /** @ignore */
   get shouldYield() {
-    return this.inContinuation && (this.isDisposed || this.scheduler.shouldYield);
+    return (
+      this.inContinuation && (this.isDisposed || this.scheduler.shouldYield)
+    );
   }
 
   abstract notify(_: T): void;
@@ -71,7 +72,7 @@ export abstract class AbstractObserver<T, TDelegate extends SchedulerLike> exten
     continuation.addListener("onRunStatusChanged", this);
     addDisposable(this, continuation);
 
-    // Note that we schedule on the delegate so that it too may listen to 
+    // Note that we schedule on the delegate so that it too may listen to
     // the onRunStatusChanged event.
     this.delegate.schedule(continuation, options);
   }

@@ -41,7 +41,7 @@ export const tests = describe(
 
     const f = mockFn();
     pipe(dest, onNotify(f), subscribe(scheduler));
-    
+
     scheduler.run();
 
     pipe(f, expectToHaveBeenCalledTimes(1));

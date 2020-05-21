@@ -2,10 +2,7 @@ import { dispose } from "../../disposable";
 import { EnumeratorLike, EnumerableLike, enumerate } from "../../enumerable";
 import { Function1, Factory, defer, pipe } from "../../functions";
 import { ObservableLike, ObserverLike } from "./interfaces";
-import {
-  deferSynchronous,
-  defer as deferObs,
-} from "./observable";
+import { deferSynchronous, defer as deferObs } from "./observable";
 import { yield$ } from "./observer";
 
 /**
@@ -29,9 +26,7 @@ export const fromEnumerator = <T>(
   };
 
   const { delay } = options;
-  return delay > 0
-    ? deferObs(factory, { delay })
-    : deferSynchronous(factory);
+  return delay > 0 ? deferObs(factory, { delay }) : deferSynchronous(factory);
 };
 
 /**

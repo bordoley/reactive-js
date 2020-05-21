@@ -2,10 +2,7 @@ import { dispose } from "../../disposable";
 import { Function1, Factory } from "../../functions";
 import { none } from "../../option";
 import { ObservableLike, ObserverLike } from "./interfaces";
-import {
-  deferSynchronous,
-  defer,
-} from "./observable";
+import { deferSynchronous, defer } from "./observable";
 
 /**
  * Creates an `ObservableLike` that emits no items and immediately disposes its subscription with an error.
@@ -27,7 +24,5 @@ export const throws = <T>(
     dispose(observer, { cause });
   };
 
-  return delay > 0
-    ? defer(factory, options)
-    : deferSynchronous(factory);
+  return delay > 0 ? defer(factory, options) : deferSynchronous(factory);
 };
