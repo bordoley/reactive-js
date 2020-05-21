@@ -24,7 +24,6 @@ Represents an unmanaged resource that can be disposed.
 
 ## Implemented by
 
-* [AbstractDelegatingObserver](../classes/_observable_.abstractdelegatingobserver.md)
 * [AbstractDisposable](../classes/_disposable_.abstractdisposable.md)
 * [AbstractSerialDisposable](../classes/_disposable_.abstractserialdisposable.md)
 

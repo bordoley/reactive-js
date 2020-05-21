@@ -8,10 +8,6 @@
 
 * [ThrottleMode](../enums/_observable_.throttlemode.md)
 
-### Classes
-
-* [AbstractDelegatingObserver](../classes/_observable_.abstractdelegatingobserver.md)
-
 ### Interfaces
 
 * [DispatcherLike](../interfaces/_observable_.dispatcherlike.md)
@@ -29,7 +25,6 @@
 
 ### Variables
 
-* [assertObserverState](_observable_.md#const-assertobserverstate)
 * [timeoutError](_observable_.md#const-timeouterror)
 
 ### Functions
@@ -143,12 +138,6 @@ Name | Type |
 * **isSynchronous**: *boolean*
 
 ## Variables
-
-### `Const` assertObserverState
-
-• **assertObserverState**: *[SideEffect1](_functions_.md#sideeffect1)‹[ObserverLike](../interfaces/_observable_.observerlike.md)‹unknown››* = _assertObserverState
-
-___
 
 ### `Const` timeoutError
 

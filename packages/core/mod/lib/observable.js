@@ -1,4 +1,3 @@
-export { AbstractDelegatingObserver, assertObserverState, } from "./internal/observable/observer.js";
 export { combineLatest, combineLatestWith, } from "./internal/observable/combineLatest.js";
 export { compute } from "./internal/observable/compute.js";
 export { concat, concatWith } from "./internal/observable/concat.js";
