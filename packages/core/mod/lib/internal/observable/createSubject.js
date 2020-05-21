@@ -2,9 +2,9 @@ import { AbstractDisposable, addTeardown, addDisposable, } from "../../disposabl
 import { dispatch } from "./dispatcher.js";
 import { toDispatcher } from "./toDispatcher.js";
 class SubjectImpl extends AbstractDisposable {
-    constructor(replayCount) {
+    constructor(replay) {
         super();
-        this.replayCount = replayCount;
+        this.replay = replay;
         this.observers = new Set();
         this.replayed = [];
         this.isSynchronous = false;
@@ -15,10 +15,10 @@ class SubjectImpl extends AbstractDisposable {
     dispatch(next) {
         if (!this.isDisposed) {
             const replayed = this.replayed;
-            const replayCount = this.replayCount;
-            if (replayCount > 0) {
+            const replay = this.replay;
+            if (replay > 0) {
                 replayed.push(next);
-                if (replayed.length > replayCount) {
+                if (replayed.length > replay) {
                     replayed.shift();
                 }
             }
@@ -42,4 +42,4 @@ class SubjectImpl extends AbstractDisposable {
         addDisposable(this, dispatcher);
     }
 }
-export const createSubject = (replayCount = 0) => new SubjectImpl(replayCount);
+export const createSubject = ({ replay } = { replay: 0 }) => new SubjectImpl(replay);

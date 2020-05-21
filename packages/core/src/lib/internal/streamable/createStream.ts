@@ -28,12 +28,12 @@ class StreamImpl<TReq, T> extends AbstractDisposable
   constructor(
     op: ObservableOperator<TReq, T>,
     scheduler: SchedulerLike,
-    replayCount: number,
+    options?: { replay: number },
   ) {
     super();
 
     const subject = createSubject<TReq>();
-    const observable = pipe(subject, op, publish(scheduler, replayCount));
+    const observable = pipe(subject, op, publish(scheduler, options));
 
     addDisposable(observable, this);
     addDisposable(this, subject);
@@ -58,5 +58,5 @@ class StreamImpl<TReq, T> extends AbstractDisposable
 export const createStream = <TReq, T>(
   op: ObservableOperator<TReq, T>,
   scheduler: SchedulerLike,
-  replayCount: number,
-): StreamLike<TReq, T> => new StreamImpl(op, scheduler, replayCount);
+  options?: { replay: number },
+): StreamLike<TReq, T> => new StreamImpl(op, scheduler, options);

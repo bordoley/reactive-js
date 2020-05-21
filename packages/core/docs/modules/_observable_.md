@@ -627,7 +627,7 @@ ___
 
 ### `Const` createSubject
 
-▸ **createSubject**<**T**>(`replayCount`: number): *[SubjectLike](../interfaces/_observable_.subjectlike.md)‹T›*
+▸ **createSubject**<**T**>(`__namedParameters`: object): *[SubjectLike](../interfaces/_observable_.subjectlike.md)‹T›*
 
 **Type parameters:**
 
@@ -635,9 +635,11 @@ ___
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`replayCount` | number | 0 |
+▪`Default value`  **__namedParameters**: *object*= { replay: 0 }
+
+Name | Type |
+------ | ------ |
+`replay` | number |
 
 **Returns:** *[SubjectLike](../interfaces/_observable_.subjectlike.md)‹T›*
 
@@ -1306,7 +1308,7 @@ ___
 
 ### `Const` publish
 
-▸ **publish**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `replayCount`: number): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)‹T››*
+▸ **publish**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `options`: object): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)‹T››*
 
 Returns a `MulticastObservableLike` backed by a single subscription to the source.
 
@@ -1316,10 +1318,15 @@ Returns a `MulticastObservableLike` backed by a single subscription to the sourc
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | - | A `SchedulerLike` that is used to subscribe to the source observable. |
-`replayCount` | number | 0 | The number of events that should be replayed when the `MulticastObservableLike` is subscribed to.  |
+▪ **scheduler**: *[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)*
+
+A `SchedulerLike` that is used to subscribe to the source observable.
+
+▪`Default value`  **options**: *object*= { replay: 0 }
+
+Name | Type | Default |
+------ | ------ | ------ |
+`replay` | number | 0 |
 
 **Returns:** *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)‹T››*
 
@@ -1475,7 +1482,7 @@ ___
 
 ### `Const` share
 
-▸ **share**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `replayCount`: number): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **share**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `options?`: object): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` backed by a shared refcounted subscription to the
 source. When the refcount goes to 0, the underlying subscription
@@ -1487,10 +1494,15 @@ to the source is disposed.
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | - | A `SchedulerLike` that is used to subscribe to the source. |
-`replayCount` | number | 0 | The number of events that should be replayed when the `ObservableLike` is subscribed to.  |
+▪ **scheduler**: *[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)*
+
+A `SchedulerLike` that is used to subscribe to the source.
+
+▪`Optional`  **options**: *object*
+
+Name | Type |
+------ | ------ |
+`replay` | number |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 

@@ -1,5 +1,5 @@
 import { dispose, addTeardown } from "../../disposable";
-import { pipe } from "../../functions";
+import { pipe, Function1 } from "../../functions";
 import { none, Option } from "../../option";
 import { SchedulerLike } from "../../scheduler";
 import {
@@ -28,13 +28,12 @@ class SharedObservable<T> implements ObservableLike<T> {
 
   constructor(
     private readonly source: ObservableLike<T>,
-    private readonly scheduler: SchedulerLike,
-    private readonly replay: number,
+    private readonly publish: Function1<ObservableLike<T>, MulticastObservableLike<T>>, 
   ) {}
 
   observe(observer: ObserverLike<T>) {
     if (this.observerCount === 0) {
-      this.multicast = pipe(this.source, publish(this.scheduler, this.replay));
+      this.multicast = pipe(this.source, this.publish);
     }
     this.observerCount++;
 
@@ -51,11 +50,11 @@ class SharedObservable<T> implements ObservableLike<T> {
  * to the source is disposed.
  *
  * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
- * @param replayCount The number of events that should be replayed when the `ObservableLike`
+ * @param replay The number of events that should be replayed when the `ObservableLike`
  * is subscribed to.
  */
 export const share = <T>(
   scheduler: SchedulerLike,
-  replayCount = 0,
+  options?: { replay: number },
 ): ObservableOperator<T, T> => observable =>
-  new SharedObservable(observable, scheduler, replayCount);
+  new SharedObservable(observable, publish(scheduler, options));

@@ -8,8 +8,8 @@ class StreamableImpl {
     constructor(op) {
         this.op = op;
     }
-    stream(scheduler, replayCount = 0) {
-        return createStream(this.op, scheduler, replayCount);
+    stream(scheduler, options) {
+        return createStream(this.op, scheduler, options);
     }
 }
 export const createStreamable = (op) => new StreamableImpl(op);
@@ -43,4 +43,4 @@ export const mapReq = (op) => streamable => {
 };
 const _empty = createStreamable(_ => emptyObs());
 export const empty = (options) => isNone(options) ? _empty : createStreamable(_ => emptyObs(options));
-export const stream = (streamable, scheduler, replayCount) => streamable.stream(scheduler, replayCount);
+export const stream = (streamable, scheduler, options) => streamable.stream(scheduler, options);

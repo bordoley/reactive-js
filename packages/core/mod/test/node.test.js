@@ -48,7 +48,7 @@ export const tests = describe("node", describe("createWritableIOSink", testAsync
     }
     const src = createReadableIOSource(() => pipe(generate(), Readable.from, createDisposableNodeStream));
     const textDecoder = new TextDecoder();
-    const dest = createIOSinkAccumulator((acc, next) => acc + textDecoder.decode(next), returns(""), 1);
+    const dest = createIOSinkAccumulator((acc, next) => acc + textDecoder.decode(next), returns(""), { replay: 1 });
     await pipe(sink(src, dest), toPromise(scheduler));
     debugger;
     const acc = await pipe(dest, takeFirst(1), toPromise(scheduler));
@@ -61,13 +61,13 @@ export const tests = describe("node", describe("createWritableIOSink", testAsync
     }
     const src = createReadableIOSource(() => pipe(generate(), Readable.from, createDisposableNodeStream));
     const textDecoder = new TextDecoder();
-    const dest = createIOSinkAccumulator((acc, next) => acc + textDecoder.decode(next), returns(""), 1);
+    const dest = createIOSinkAccumulator((acc, next) => acc + textDecoder.decode(next), returns(""), { replay: 1 });
     await pipe(sink(src, dest), toPromise(scheduler), expectPromiseToThrow);
 })), testAsync("transform", async () => {
     const encoder = new TextEncoder();
     const src = pipe([encoder.encode("abc"), encoder.encode("defg")], fromArray(), gzip(), gunzip());
     const textDecoder = new TextDecoder();
-    const dest = createIOSinkAccumulator((acc, next) => acc + textDecoder.decode(next), returns(""), 1);
+    const dest = createIOSinkAccumulator((acc, next) => acc + textDecoder.decode(next), returns(""), { replay: 1 });
     await pipe(sink(src, dest), toPromise(scheduler));
     const acc = await pipe(dest, takeFirst(1), toPromise(scheduler));
     pipe(acc, expectEquals("abcdefg"));

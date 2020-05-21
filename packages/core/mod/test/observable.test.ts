@@ -242,10 +242,9 @@ export const tests = describe(
   describe(
     "createSubject",
     test("with replay", () => {
-      const subject = createSubject(2);
+      const subject = createSubject({ replay: 2 });
       pipe(
         [1, 2, 3, 4],
-
         fromArrayRunnable(),
         forEach(dispatchTo(subject)),
       );
@@ -514,7 +513,7 @@ export const tests = describe(
     const shared = pipe(
       [1, 2, 3],
       fromArray({ delay: 1 }),
-      share(scheduler, 1),
+      share(scheduler, { replay: 1 }),
     );
 
     let result: readonly number[] = [];

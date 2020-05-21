@@ -33,7 +33,7 @@ export const tests = describe(
     const dest = createIOSinkAccumulator(
       (acc: string, next: string) => acc + next,
       returns(""),
-      1,
+      { replay: 1 },
     );
 
     const scheduler = createVirtualTimeScheduler();
@@ -71,7 +71,7 @@ export const tests = describe(
     const dest = createIOSinkAccumulator(
       (acc: string, next: string) => acc + next,
       returns(""),
-      1,
+      { replay: 1 },
     );
 
     const scheduler = createVirtualTimeScheduler();
@@ -109,7 +109,7 @@ export const tests = describe(
   }),
   test("map", () => {
     const src = pipe(1, fromValue(), map(returns(2)));
-    const dest = createIOSinkAccumulator(sum, returns(0), 1);
+    const dest = createIOSinkAccumulator(sum, returns(0), { replay: 1 });
 
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(src, dest), subscribe(scheduler));

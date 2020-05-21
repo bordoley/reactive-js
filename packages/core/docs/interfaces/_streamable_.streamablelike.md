@@ -30,13 +30,16 @@
 
 ###  stream
 
-▸ **stream**(`scheduler`: [SchedulerLike](_scheduler_.schedulerlike.md), `replayCount?`: number): *[StreamLike](_observable_.streamlike.md)‹TReq, T›*
+▸ **stream**(`scheduler`: [SchedulerLike](_scheduler_.schedulerlike.md), `options?`: object): *[StreamLike](_observable_.streamlike.md)‹TReq, T›*
 
 **Parameters:**
 
+▪ **scheduler**: *[SchedulerLike](_scheduler_.schedulerlike.md)*
+
+▪`Optional`  **options**: *object*
+
 Name | Type |
 ------ | ------ |
-`scheduler` | [SchedulerLike](_scheduler_.schedulerlike.md) |
-`replayCount?` | number |
+`replay` | number |
 
 **Returns:** *[StreamLike](_observable_.streamlike.md)‹TReq, T›*
