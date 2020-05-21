@@ -289,7 +289,7 @@ Name | Type |
 `cacheControl` | ReadonlyArray‹string &#124; object› |
 `contentInfo` | object |
 `etag` | string &#124; object |
-`expires` | number |
+`expires` | string &#124; number &#124; Date |
 `headers` | object |
 `lastModified` | string &#124; number &#124; Date |
 `location` | string &#124; [URILike](../interfaces/_http_.urilike.md) |

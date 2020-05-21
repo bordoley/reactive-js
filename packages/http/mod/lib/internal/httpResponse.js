@@ -3,60 +3,56 @@ import { empty, } from "../../../../core/mod/lib/io.js";
 import { isNone, isSome, none } from "../../../../core/mod/lib/option.js";
 import { everySatisfy, map, reduceRight, join, } from "../../../../core/mod/lib/readonlyArray.js";
 import { parseCacheControlFromHeaders, parseCacheDirectiveOrThrow, } from "./cacheDirective.js";
-import { entityTagToString, parseETag, parseETagOrThrow, } from "./entityTag.js";
+import { entityTagToString, parseETagOrThrow, parseETagFromHeaders, } from "./entityTag.js";
 import { parseHttpContentInfoFromHeaders, contentIsCompressible, createHttpContentInfo, } from "./httpContentInfo.js";
-import { parseHttpDateTime, httpDateTimeToString, } from "./httpDateTime.js";
+import { parseHttpDateTime, httpDateTimeToString, parseHttpDateTimeFromHeaders, } from "./httpDateTime.js";
 import { getHeaderValue, filterHeaders, } from "./httpHeaders.js";
 import { writeHttpMessageHeaders, encodeHttpMessageWithUtf8, toIOSourceHttpMessage, decodeHttpMessageWithCharset, } from "./httpMessage.js";
 import { parseHttpPreferencesFromHeaders, createHttpPreferences, } from "./httpPreferences.js";
+const parseLocationFromHeaders = (headers) => {
+    const locationValue = getHeaderValue(headers, "Location");
+    return isSome(locationValue) ? new URL(locationValue) : none;
+};
 export const createHttpResponse = ({ body, cacheControl, contentInfo, etag, expires, headers = {}, lastModified, location, preferences, statusCode, vary, ...rest }) => ({
     ...rest,
     body,
     cacheControl: isSome(cacheControl)
-        ? pipe(cacheControl, map(cc => (typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc))) : parseCacheControlFromHeaders(headers),
+        ? pipe(cacheControl, map(cc => typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc))
+        : parseCacheControlFromHeaders(headers),
     contentInfo: isSome(contentInfo)
         ? createHttpContentInfo(contentInfo)
         : parseHttpContentInfoFromHeaders(headers),
-    etag: typeof etag === "string" ? parseETagOrThrow(etag) : etag,
-    expires,
+    etag: typeof etag === "string"
+        ? parseETagOrThrow(etag)
+        : isSome(etag)
+            ? etag
+            : parseETagFromHeaders(headers),
+    expires: typeof expires === "string"
+        ? parseHttpDateTime(expires)
+        : expires instanceof Date
+            ? expires.getTime()
+            : isSome(expires)
+                ? expires
+                : parseHttpDateTimeFromHeaders(headers, "Expires"),
     headers: filterHeaders(headers !== null && headers !== void 0 ? headers : {}),
     lastModified: typeof lastModified === "string"
         ? parseHttpDateTime(lastModified)
         : lastModified instanceof Date
             ? lastModified.getTime()
-            : lastModified,
-    location: typeof location === "string" ? new URL(location) : location,
+            : isSome(lastModified)
+                ? lastModified
+                : parseHttpDateTimeFromHeaders(headers, "Last-Modified"),
+    location: typeof location === "string"
+        ? new URL(location)
+        : isSome(location)
+            ? location
+            : parseLocationFromHeaders(headers),
     preferences: isSome(preferences)
         ? createHttpPreferences(preferences)
         : parseHttpPreferencesFromHeaders(headers),
     statusCode,
     vary: vary !== null && vary !== void 0 ? vary : [],
 });
-export const parseHttpResponseFromHeaders = (statusCode, headers, body) => {
-    var _a, _b, _c;
-    const cacheControl = parseCacheControlFromHeaders(headers);
-    const contentInfo = parseHttpContentInfoFromHeaders(headers);
-    const etag = parseETag((_a = getHeaderValue(headers, "ETag")) !== null && _a !== void 0 ? _a : "");
-    const expires = parseHttpDateTime((_b = getHeaderValue(headers, "Expires")) !== null && _b !== void 0 ? _b : "");
-    const lastModified = parseHttpDateTime((_c = getHeaderValue(headers, "Last-Modified")) !== null && _c !== void 0 ? _c : "");
-    const locationHeader = headers.location;
-    const location = isSome(locationHeader) ? new URL(locationHeader) : none;
-    const preferences = parseHttpPreferencesFromHeaders(headers);
-    const vary = [];
-    return {
-        body,
-        cacheControl,
-        contentInfo,
-        etag,
-        expires,
-        lastModified,
-        headers,
-        location,
-        preferences,
-        statusCode,
-        vary,
-    };
-};
 export const writeHttpResponseHeaders = (response, writeHeader) => {
     const { etag, expires, lastModified, location, vary } = response;
     if (isSome(etag)) {

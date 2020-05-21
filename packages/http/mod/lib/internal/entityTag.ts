@@ -9,8 +9,9 @@ import {
   CharStreamLike,
   parseWithOrThrow,
 } from "../../../../core/mod/lib/internal/parserCombinators.ts";
-import { isSome } from "../../../../core/mod/lib/option.ts";
+import { isSome, none, Option } from "../../../../core/mod/lib/option.ts";
 import { ASCII } from "./httpGrammar.ts";
+import { HttpHeaders, getHeaderValue, HttpStandardHeader } from "./httpHeaders.ts";
 
 export type EntityTag = {
   readonly isWeak: boolean;
@@ -37,3 +38,9 @@ export const pETag = (charStream: CharStreamLike): EntityTag => {
 export const parseETag = parseWith(pETag);
 
 export const parseETagOrThrow = parseWithOrThrow(pETag);
+
+export const parseETagFromHeaders = (headers: HttpHeaders): Option<EntityTag> => {
+  const etagHeader =
+    getHeaderValue(headers, HttpStandardHeader.ETag);
+  return isSome(etagHeader) ? parseETagOrThrow(etagHeader) : none;
+}

@@ -1,4 +1,6 @@
 import { none, Option } from "@reactive-js/core/lib/option";
+import { HttpHeaders } from "../http";
+import { getHeaderValue, HttpStandardHeader } from "./httpHeaders";
 
 export type HttpDateTime = number;
 
@@ -12,3 +14,9 @@ export const httpDateTimeToString = (v: HttpDateTime): string => {
   const date = new Date(v);
   return date.toUTCString();
 };
+
+export const parseHttpDateTimeFromHeaders = (headers: HttpHeaders, header: HttpStandardHeader): Option<HttpDateTime> => {
+  const headerValue =
+    getHeaderValue(headers, header) ?? "";
+  return parseHttpDateTime(headerValue)
+}
