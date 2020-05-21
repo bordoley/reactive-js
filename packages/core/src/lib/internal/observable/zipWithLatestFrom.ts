@@ -22,7 +22,9 @@ const notifyDelegate = <TA, TB, TC>(
   }
 };
 
-const onOtherNotify = <TA, TB, T>(self: ZipWithLatestFromObserver<TA, TB, T>) => (otherLatest: TB) => {
+const onOtherNotify = <TA, TB, T>(
+  self: ZipWithLatestFromObserver<TA, TB, T>,
+) => (otherLatest: TB) => {
   self.hasLatest = true;
   self.otherLatest = otherLatest;
   notifyDelegate(self);
@@ -32,7 +34,10 @@ const onOtherNotify = <TA, TB, T>(self: ZipWithLatestFromObserver<TA, TB, T>) =>
   }
 };
 
-class ZipWithLatestFromObserver<TA, TB, T> extends AbstractObserver<TA, ObserverLike<T>> {
+class ZipWithLatestFromObserver<TA, TB, T> extends AbstractObserver<
+  TA,
+  ObserverLike<T>
+> {
   otherLatest: Option<TB>;
   hasLatest = false;
 

@@ -1,10 +1,7 @@
 import { dispose } from "../../disposable";
 import { Function1 } from "../../functions";
 import { ObservableLike, ObserverLike } from "./interfaces";
-import {
-  deferSynchronous,
-  defer,
-} from "./observable";
+import { deferSynchronous, defer } from "./observable";
 import { yield$ } from "./observer";
 
 /**
@@ -37,7 +34,5 @@ export const fromArray = <T>(
     };
   };
 
-  return delay > 0
-    ? defer(factory, { delay })
-    : deferSynchronous(factory);
+  return delay > 0 ? defer(factory, { delay }) : deferSynchronous(factory);
 };

@@ -243,11 +243,7 @@ export const tests = describe(
     "createSubject",
     test("with replay", () => {
       const subject = createSubject({ replay: 2 });
-      pipe(
-        [1, 2, 3, 4],
-        fromArrayRunnable(),
-        forEach(dispatchTo(subject)),
-      );
+      pipe([1, 2, 3, 4], fromArrayRunnable(), forEach(dispatchTo(subject)));
       dispose(subject);
 
       pipe(subject, toRunnable(), toArray(), expectArrayEquals([3, 4]));
