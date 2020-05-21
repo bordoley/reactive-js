@@ -42,7 +42,7 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable {
         if (this.inContinuation) {
             this.microTaskTicks++;
         }
-        return this.inContinuation && (this.microTaskTicks >= this.maxMicroTaskTicks);
+        return this.inContinuation && this.microTaskTicks >= this.maxMicroTaskTicks;
     }
     run() {
         while (!this.isDisposed && move(this)) {

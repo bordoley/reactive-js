@@ -1,9 +1,6 @@
 import { Factory, Updater } from "../../functions.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
-import {
-  deferSynchronous,
-  defer,
-} from "./observable.ts";
+import { deferSynchronous, defer } from "./observable.ts";
 import { yield$ } from "./observer.ts";
 
 /**
@@ -33,7 +30,5 @@ export function generate<T>(
     };
   };
 
-  return delay > 0
-    ? defer(factory, options)
-    : deferSynchronous(factory);
+  return delay > 0 ? defer(factory, options) : deferSynchronous(factory);
 }
