@@ -43,26 +43,41 @@ const makeCallbacks = (uriUpdater: (updater: Updater<RelativeURI>) => void) => {
   return { goToRoute1, goToRoute2, goToRoute3, stream };
 };
 
+
+const makeHttpRequest = pipe(
+  { uri: "http://localhost:8080/files/packages/example/build/bundle.js" },
+  fetch(response => response.text()),
+);
+
 const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
   const { goToRoute1, goToRoute2, goToRoute3, stream } = useMemo(
     returns(makeCallbacks(uriUpdater)),
     [uriUpdater],
   );
 
+  const someData = useObservable(makeHttpRequest);
+
   return (
     <div>
-      {"Not Found"}
-      <button onClick={goToRoute1}>Go to route1</button>
-      <button onClick={goToRoute2}>Go to route2</button>
-      <button onClick={goToRoute3}>Go to route3</button>
-      <button onClick={stream}>Go to stream</button>
+      <div>
+        {"Not Found"}
+        <button onClick={goToRoute1}>Go to route1</button>
+        <button onClick={goToRoute2}>Go to route2</button>
+        <button onClick={goToRoute3}>Go to route3</button>
+        <button onClick={stream}>Go to stream</button>
+      </div>
+      <div>
+        <textarea value={someData ?? ""}/>
+      </div>
     </div>
   );
 };
 
 const obs = generate(increment, returns<number>(0));
+
 const Component1 = (props: RoutableComponentProps) => {
   const value = useObservable(obs, idlePriority);
+
 
   return (
     <>
