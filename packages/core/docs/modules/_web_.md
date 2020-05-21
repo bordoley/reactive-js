@@ -4,6 +4,10 @@
 
 ## Index
 
+### Type aliases
+
+* [FetchRequest](_web_.md#fetchrequest)
+
 ### Variables
 
 * [historyHashStateStore](_web_.md#const-historyhashstatestore)
@@ -13,7 +17,14 @@
 ### Functions
 
 * [createEventSource](_web_.md#const-createeventsource)
+* [fetch](_web_.md#const-fetch)
 * [fromEvent](_web_.md#const-fromevent)
+
+## Type aliases
+
+###  FetchRequest
+
+Ƭ **FetchRequest**: *RequestInit & object*
 
 ## Variables
 
@@ -47,6 +58,24 @@ Name | Type | Default |
 `options` | EventSourceInit & object | {} |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹object›*
+
+___
+
+### `Const` fetch
+
+▸ **fetch**<**T**>(`onResponse`: [Function1](_functions_.md#function1)‹Response, Promise‹T› | [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[Function1](_functions_.md#function1)‹[FetchRequest](_web_.md#fetchrequest) | string, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`onResponse` | [Function1](_functions_.md#function1)‹Response, Promise‹T› &#124; [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›› |
+
+**Returns:** *[Function1](_functions_.md#function1)‹[FetchRequest](_web_.md#fetchrequest) | string, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 ___
 

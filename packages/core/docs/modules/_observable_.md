@@ -62,6 +62,7 @@
 * [keepType](_observable_.md#const-keeptype)
 * [lift](_observable_.md#const-lift)
 * [map](_observable_.md#const-map)
+* [mapAsync](_observable_.md#const-mapasync)
 * [mapTo](_observable_.md#const-mapto)
 * [merge](_observable_.md#merge)
 * [mergeAll](_observable_.md#const-mergeall)
@@ -1086,6 +1087,26 @@ value emitted by the source.
 Name | Type | Description |
 ------ | ------ | ------ |
 `mapper` | [Function1](_functions_.md#function1)‹TA, TB› | The map function to apply each value. Must be a pure function.  |
+
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
+
+___
+
+### `Const` mapAsync
+
+▸ **mapAsync**<**TA**, **TB**>(`f`: [Function1](_functions_.md#function1)‹TA, Promise‹TB››): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
+
+**Type parameters:**
+
+▪ **TA**
+
+▪ **TB**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`f` | [Function1](_functions_.md#function1)‹TA, Promise‹TB›› |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 

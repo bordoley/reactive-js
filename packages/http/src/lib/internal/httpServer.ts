@@ -9,7 +9,11 @@ import {
   HttpHeaders,
 } from "./httpHeaders";
 import { URILike } from "./httpMessage";
-import { HttpRequest, createHttpRequest, HttpRequestOptions } from "./httpRequest";
+import {
+  HttpRequest,
+  createHttpRequest,
+  HttpRequestOptions,
+} from "./httpRequest";
 import { HttpResponse } from "./httpResponse";
 
 export type HttpServerRequest<T> = HttpRequest<T> & {
@@ -215,8 +219,8 @@ export const createHttpServerRequest = <T>({
   isTransportSecure,
   uri,
   ...rest
-}: HttpRequestOptions<T> & { 
-  path: string,
+}: HttpRequestOptions<T> & {
+  path: string;
   isTransportSecure: boolean;
 }): HttpServerRequest<T> => {
   const protocol = isTransportSecure ? "https" : "http";
