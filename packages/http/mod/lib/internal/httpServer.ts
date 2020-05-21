@@ -2,8 +2,6 @@ import { Function1, pipe, returns } from "../../../../core/mod/lib/functions.ts"
 import { ObservableLike } from "../../../../core/mod/lib/observable.ts";
 import { isNone, isSome, none, Option } from "../../../../core/mod/lib/option.ts";
 import { fromObject, reduce } from "../../../../core/mod/lib/readonlyArray.ts";
-import { parseCacheControlFromHeaders } from "./cacheDirective.ts";
-import { parseHttpContentInfoFromHeaders } from "./httpContentInfo.ts";
 import {
   getHeaderValue,
   HttpStandardHeader,
@@ -11,9 +9,7 @@ import {
   HttpHeaders,
 } from "./httpHeaders.ts";
 import { URILike } from "./httpMessage.ts";
-import { parseHttpPreferencesFromHeaders } from "./httpPreferences.ts";
-import { HttpMethod, HttpRequest } from "./httpRequest.ts";
-import { parseHttpRequestPreconditionsFromHeaders } from "./httpRequestPreconditions.ts";
+import { HttpMethod, HttpRequest, createHttpRequest } from "./httpRequest.ts";
 import { HttpResponse } from "./httpResponse.ts";
 
 export type HttpServerRequest<T> = HttpRequest<T> & {
@@ -229,29 +225,19 @@ export const parseHttpServerRequestFromHeaders = <T>({
   httpVersionMinor: number;
   isTransportSecure: boolean;
 }): HttpServerRequest<T> => {
-  const cacheControl = parseCacheControlFromHeaders(headers);
-  const contentInfo = parseHttpContentInfoFromHeaders(headers);
-  const rawExpectHeader = getHeaderValue(headers, HttpStandardHeader.Expect);
-  const expectContinue = rawExpectHeader === "100-continue";
-  const preconditions = parseHttpRequestPreconditionsFromHeaders(headers);
-  const preferences = parseHttpPreferencesFromHeaders(headers);
   const protocol = isTransportSecure ? "https" : "http";
   const uri = parseURIFromHeaders(protocol, path, httpVersionMajor, headers);
 
-  return {
+  const options = {
     body,
-    cacheControl,
-    contentInfo,
-    expectContinue,
     headers,
-    httpVersionMajor,
-    httpVersionMinor,
     isTransportSecure,
     method,
-    preconditions,
-    preferences,
+    httpVersionMajor,
+    httpVersionMinor,
     uri,
   };
+  return createHttpRequest(options) as HttpServerRequest<T>;
 };
 
 export const disallowProtocolAndHostForwarding = <T>(): Function1<

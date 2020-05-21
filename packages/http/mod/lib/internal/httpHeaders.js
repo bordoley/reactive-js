@@ -22,7 +22,8 @@ const bannedHeaders = pipe([
     "Vary",
 ], map(s => s.toLowerCase()));
 export function getHeaderValue(headers, key) {
-    return headers[key.toLowerCase()];
+    var _a;
+    return (_a = headers[key]) !== null && _a !== void 0 ? _a : headers[key.toLowerCase()];
 }
 export const writeHttpHeaders = (headers, writeHeader) => {
     for (const header in headers) {

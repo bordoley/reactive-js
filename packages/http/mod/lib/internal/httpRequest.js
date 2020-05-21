@@ -1,21 +1,29 @@
 import { pipe, returns, } from "../../../../core/mod/lib/functions.js";
 import { isNone, isSome, none } from "../../../../core/mod/lib/option.js";
 import { map, reduceRight } from "../../../../core/mod/lib/readonlyArray.js";
-import { parseCacheDirectiveOrThrow } from "./cacheDirective.js";
+import { parseCacheDirectiveOrThrow, parseCacheControlFromHeaders, } from "./cacheDirective.js";
 import { parseHttpContentInfoFromHeaders, createHttpContentInfo, } from "./httpContentInfo.js";
-import { filterHeaders } from "./httpHeaders.js";
+import { filterHeaders, getHeaderValue, } from "./httpHeaders.js";
 import { writeHttpMessageHeaders, encodeHttpMessageWithUtf8, toIOSourceHttpMessage, decodeHttpMessageWithCharset, } from "./httpMessage.js";
 import { parseHttpPreferencesFromHeaders, createHttpPreferences, } from "./httpPreferences.js";
 import { writeHttpRequestPreconditionsHeaders, parseHttpRequestPreconditionsFromHeaders, createHttpRequestPreconditions, } from "./httpRequestPreconditions.js";
 import { createHttpResponse, } from "./httpResponse.js";
-export const createHttpRequest = ({ body, cacheControl, contentInfo, expectContinue = false, headers = {}, httpVersionMajor = 1, httpVersionMinor = 1, method, preconditions, preferences, uri, ...rest }) => ({
+const parseExpectFromHeaders = (headers) => {
+    const rawExpectHeader = getHeaderValue(headers, "Expect");
+    return rawExpectHeader === "100-continue";
+};
+export const createHttpRequest = ({ body, cacheControl, contentInfo, expectContinue, headers = {}, httpVersionMajor = 1, httpVersionMinor = 1, method, preconditions, preferences, uri, ...rest }) => ({
     ...rest,
     body,
-    cacheControl: pipe(cacheControl !== null && cacheControl !== void 0 ? cacheControl : [], map(cc => (typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc))),
+    cacheControl: isSome(cacheControl)
+        ? pipe(cacheControl, map(cc => typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc))
+        : parseCacheControlFromHeaders(headers),
     contentInfo: isSome(contentInfo)
         ? createHttpContentInfo(contentInfo)
         : parseHttpContentInfoFromHeaders(headers),
-    expectContinue: expectContinue,
+    expectContinue: isSome(expectContinue)
+        ? expectContinue
+        : parseExpectFromHeaders(headers),
     headers: filterHeaders(headers),
     httpVersionMajor: httpVersionMajor,
     httpVersionMinor: httpVersionMinor,

@@ -7,7 +7,11 @@ import {
 import { IOSourceLike, IOSourceOperator } from "@reactive-js/core/lib/io";
 import { isNone, isSome, none } from "@reactive-js/core/lib/option";
 import { map, reduceRight } from "@reactive-js/core/lib/readonlyArray";
-import { parseCacheDirectiveOrThrow, CacheDirective } from "./cacheDirective";
+import {
+  parseCacheDirectiveOrThrow,
+  CacheDirective,
+  parseCacheControlFromHeaders,
+} from "./cacheDirective";
 import { EntityTag } from "./entityTag";
 import {
   parseHttpContentInfoFromHeaders,
@@ -15,7 +19,12 @@ import {
   HttpContentEncoding,
 } from "./httpContentInfo";
 import { HttpDateTime } from "./httpDateTime";
-import { HttpStandardHeader, filterHeaders, HttpHeaders } from "./httpHeaders";
+import {
+  HttpStandardHeader,
+  filterHeaders,
+  HttpHeaders,
+  getHeaderValue,
+} from "./httpHeaders";
 import {
   writeHttpMessageHeaders,
   encodeHttpMessageWithUtf8,
@@ -82,12 +91,16 @@ declare class URL implements URILike {
 
   toString(): string;
 }
+const parseExpectFromHeaders = (headers: HttpHeaders): boolean => {
+  const rawExpectHeader = getHeaderValue(headers, HttpStandardHeader.Expect);
+  return rawExpectHeader === "100-continue";
+};
 
 export const createHttpRequest = <T>({
   body,
   cacheControl,
   contentInfo,
-  expectContinue = false,
+  expectContinue,
   headers = {},
   httpVersionMajor = 1,
   httpVersionMinor = 1,
@@ -126,14 +139,20 @@ export const createHttpRequest = <T>({
 }): HttpRequest<T> => ({
   ...rest,
   body,
-  cacheControl: pipe(
-    cacheControl ?? [],
-    map(cc => (typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc)),
-  ),
+  cacheControl: isSome(cacheControl)
+    ? pipe(
+        cacheControl,
+        map(cc =>
+          typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc,
+        ),
+      )
+    : parseCacheControlFromHeaders(headers),
   contentInfo: isSome(contentInfo)
     ? createHttpContentInfo(contentInfo)
     : parseHttpContentInfoFromHeaders(headers),
-  expectContinue: expectContinue,
+  expectContinue: isSome(expectContinue)
+    ? expectContinue
+    : parseExpectFromHeaders(headers),
   headers: filterHeaders(headers),
   httpVersionMajor: httpVersionMajor,
   httpVersionMinor: httpVersionMinor,

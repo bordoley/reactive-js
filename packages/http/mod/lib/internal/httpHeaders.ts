@@ -12,7 +12,7 @@ export const enum HttpStandardHeader {
   AcceptCharset = "Accept-Charset",
   AcceptEncoding = "Accept-Encoding",
   AcceptLanguage = "Accept-Language",
-  AcceptRange = "Accept-Ranges",
+  AcceptRanges = "Accept-Ranges",
   Age = "Age",
   Allow = "Allow",
   Authorization = "Authorization",
@@ -49,7 +49,7 @@ export const enum HttpStandardHeader {
   Server = "Server",
   SetCookie = "Set-Cookie",
   TE = "TE",
-  railer = "Trailer",
+  Trailer = "Trailer",
   TransferEncoding = "Transfer-Encoding",
   Upgrade = "Upgrade",
   UserAgent = "User-Agent",
@@ -106,7 +106,7 @@ export function getHeaderValue(
   headers: HttpHeaders,
   key: string,
 ): Option<string> {
-  return headers[key.toLowerCase()];
+  return headers[key] ?? headers[key.toLowerCase()];
 }
 
 export const writeHttpHeaders = (
