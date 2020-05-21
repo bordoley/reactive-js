@@ -11,6 +11,8 @@ import {
 import { URILike } from "./httpMessage";
 import { HttpMethod, HttpRequest, createHttpRequest } from "./httpRequest";
 import { HttpResponse } from "./httpResponse";
+import { CacheDirective, HttpContentEncoding, MediaType, EntityTag, HttpDateTime } from "../http";
+import { MediaRange } from "./httpPreferences";
 
 export type HttpServerRequest<T> = HttpRequest<T> & {
   readonly isTransportSecure: boolean;
@@ -208,34 +210,58 @@ const parseURIFromHeaders = (
   return new URL(`${uriProtocol}://${host}${path ?? ""}`);
 };
 
-export const parseHttpServerRequestFromHeaders = <T>({
-  method,
+export const createHttpServerRequest = <T>({
   path,
-  headers,
-  httpVersionMajor,
-  httpVersionMinor,
+  headers = {},
+  httpVersionMajor = 1,
+  httpVersionMinor = 1,
   isTransportSecure,
-  body,
+  uri,
+  ...rest
 }: {
-  method: HttpMethod;
-  path: string;
-  headers: HttpHeaders;
   body: T;
-  httpVersionMajor: number;
-  httpVersionMinor: number;
-  isTransportSecure: boolean;
+  cacheControl?: readonly (string | CacheDirective)[];
+  contentInfo?: {
+    contentEncodings?: readonly HttpContentEncoding[];
+    contentLength?: number;
+    contentType: MediaType | string;
+  };
+  expectContinue?: boolean;
+  headers?: HttpHeaders;
+  httpVersionMajor?: number;
+  httpVersionMinor?: number;
+  method: HttpMethod;
+  isTransportSecure: boolean,
+  path?: string,
+  preconditions?: {
+    ifMatch?: readonly (string | EntityTag)[] | "*";
+    ifModifiedSince?: string | HttpDateTime | Date;
+    ifNoneMatch?: readonly (string | EntityTag)[] | "*";
+    ifUnmodifiedSince?: string | HttpDateTime | Date;
+    ifRange?: string | EntityTag | HttpDateTime | Date;
+  };
+  preferences?: {
+    acceptedCharsets?: readonly string[];
+    acceptedEncodings?: readonly HttpContentEncoding[];
+    acceptedLanguages?: readonly string[];
+    acceptedMediaRanges?: readonly (string | MediaRange)[];
+  };
+  uri?: string | URILike;
 }): HttpServerRequest<T> => {
   const protocol = isTransportSecure ? "https" : "http";
-  const uri = parseURIFromHeaders(protocol, path, httpVersionMajor, headers);
+  const parseUri = isSome(uri) 
+    ? uri 
+    : isSome(path)
+    ? parseURIFromHeaders(protocol, path, httpVersionMajor, headers)
+    : (() => { throw new Error(); })();
 
   const options = {
-    body,
+    ...rest,
     headers,
-    isTransportSecure,
-    method,
     httpVersionMajor,
     httpVersionMinor,
-    uri,
+    isTransportSecure,
+    uri: parseUri,
   };
   return createHttpRequest(options) as HttpServerRequest<T>;
 };

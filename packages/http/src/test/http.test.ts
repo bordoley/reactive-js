@@ -18,6 +18,7 @@ import {
   checkIfNotModified,
   HttpStandardHeader,
   writeHttpRequestHeaders,
+  writeHttpResponseHeaders,
 } from "../lib/http";
 import { parseMediaTypeOrThrow } from "../lib/internal/mediaType";
 
@@ -69,10 +70,66 @@ const createHttpRequestTests = test("createHttpRequest", () => {
       [HttpStandardHeader.Vary]: "Content-Encoding",
     },
   });
+
+  console.log(request);
   
   const headers: { [key: string ]: string } = {};
   writeHttpRequestHeaders(request, (key, value) => { headers[key] = value; });
   expectTrue(request.expectContinue);
+});
+
+const createHttpResponseTests = test("createHttpRequest", () => {
+  const response = createHttpResponse({
+    statusCode: HttpStatusCode.OK,
+    body: none,
+    headers: {
+      [HttpStandardHeader.Accept]:
+        "text/*;q=0.3, text/html;q=0.7, text/html;level=1, text/html;level=2;q=0.4, */*;q=0.5",
+      [HttpStandardHeader.AcceptCharset]: "iso-8859-5, unicode-1-1;q=0.8",
+      [HttpStandardHeader.AcceptEncoding]: "gzip;q=1.0, identity; q=0.5, *;q=0",
+      [HttpStandardHeader.AcceptLanguage]: "da, en-gb;q=0.8, en;q=0.7",
+      [HttpStandardHeader.AcceptRanges]: "bytes",
+      [HttpStandardHeader.Age]: "2147483648",
+      [HttpStandardHeader.Allow]: "GET, HEAD, PUT",
+      [HttpStandardHeader.CacheControl]: "max-age=3, no-transform",
+      [HttpStandardHeader.Connection]: "close",
+      [HttpStandardHeader.ContentEncoding]: "gzip",
+      [HttpStandardHeader.ContentLanguage]: "mi, en",
+      [HttpStandardHeader.ContentLength]: "123",
+      [HttpStandardHeader.ContentLocation]: "http://www.example.com",
+      [HttpStandardHeader.ContentMD5]: "asdjbklsjdfs",
+      [HttpStandardHeader.ContentRange]: "bytes 0-499/1234",
+      [HttpStandardHeader.ContentType]: "application/json; charset=UTF-8",
+      [HttpStandardHeader.Date]: "Tue, 15 Nov 1994 08:12:31 GMT",
+      [HttpStandardHeader.ETag]: 'W/"foo"',
+      [HttpStandardHeader.Expect]: "100-continue",
+      [HttpStandardHeader.Expires]: "Thu, 01 Dec 1994 16:00:00 GMT",
+      [HttpStandardHeader.From]: "webmaster@w3.org",
+      [HttpStandardHeader.Host]: "www.w3.org",
+      [HttpStandardHeader.IfMatch]: '"xyzzy", "r2d2xxxx", "c3piozzzz"',
+      [HttpStandardHeader.IfModifiedSince]: "Sat, 29 Oct 1994 19:43:31 GMT",
+      [HttpStandardHeader.IfNoneMatch]: '"xyzzy", "r2d2xxxx", "c3piozzzz"',
+      [HttpStandardHeader.IfRange]: '"xyzzy"',
+      [HttpStandardHeader.IfUnmodifiedSince]: "Sat, 29 Oct 1994 19:43:31 GMT",
+      [HttpStandardHeader.LastModified]: "Sat, 29 Oct 1994 19:43:31 GMT",
+      [HttpStandardHeader.Location]: "http://www.example.com/path",
+      [HttpStandardHeader.MaxForwards]: "10",
+      [HttpStandardHeader.Pragma]: "no-cache",
+      [HttpStandardHeader.Range]: "bytes=0-499",
+      [HttpStandardHeader.Referer]:
+        "http://www.w3.org/hypertext/DataSources/Overview.html",
+      [HttpStandardHeader.RetryAfter]: "120",
+      [HttpStandardHeader.Server]: "CERN/3.0 libwww/2.17",
+      [HttpStandardHeader.Upgrade]: "HTTP/2.0, SHTTP/1.3, IRC/6.9, RTA/x11",
+      [HttpStandardHeader.UserAgent]: "CERN-LineMode/2.15 libwww/2.17b3",
+      [HttpStandardHeader.Vary]: "Content-Encoding",
+    },
+  });
+
+  console.log(response);
+  
+  const headers: { [key: string ]: string } = {};
+  writeHttpResponseHeaders(response, (key, value) => { headers[key] = value; });
 });
 
 const mediaTypeTests = describe(
@@ -446,4 +503,5 @@ export const tests = describe(
   mediaTypeTests,
   checkIfNotModifiedTests,
   createHttpRequestTests,
+  createHttpResponseTests,
 );

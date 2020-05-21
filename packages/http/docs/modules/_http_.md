@@ -47,7 +47,6 @@
 * [decodeHttpResponseContent](_http_.md#const-decodehttpresponsecontent)
 * [encodeHttpResponseContent](_http_.md#const-encodehttpresponsecontent)
 * [httpRequestToUntypedHeaders](_http_.md#const-httprequesttountypedheaders)
-* [parseHttpResponseFromHeaders](_http_.md#const-parsehttpresponsefromheaders)
 * [toIOSourceHttpRequest](_http_.md#const-toiosourcehttprequest)
 * [toIOSourceHttpResponse](_http_.md#const-toiosourcehttpresponse)
 * [writeHttpRequestHeaders](_http_.md#const-writehttprequestheaders)
@@ -380,26 +379,6 @@ Name | Type |
 **Returns:** *object*
 
 * \[ **key**: *string*\]: string
-
-___
-
-### `Const` parseHttpResponseFromHeaders
-
-▸ **parseHttpResponseFromHeaders**<**T**>(`statusCode`: number, `headers`: [HttpHeaders](_http_.md#httpheaders), `body`: T): *[HttpResponse](_http_.md#httpresponse)‹T›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`statusCode` | number |
-`headers` | [HttpHeaders](_http_.md#httpheaders) |
-`body` | T |
-
-**Returns:** *[HttpResponse](_http_.md#httpresponse)‹T›*
 
 ___
 

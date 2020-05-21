@@ -34,7 +34,7 @@ import {
   writeHttpResponseHeaders,
 } from "../../http";
 import {
-  parseHttpServerRequestFromHeaders,
+  createHttpServerRequest,
   HttpServerRequest,
   HttpServer,
 } from "../../httpServer";
@@ -105,7 +105,7 @@ export const createHttpRequestListener = (
           isTransportSecure,
           body: requestBody,
         },
-        parseHttpServerRequestFromHeaders,
+        createHttpServerRequest,
       ),
       compute(),
       await_(handler),

@@ -192,10 +192,11 @@ export const createHttpResponse = <T>({
 }): HttpResponse<T> => ({
   ...rest,
   body,
-  cacheControl: pipe(
-    cacheControl ?? [],
+  cacheControl: isSome(cacheControl)
+   ? pipe(
+    cacheControl,
     map(cc => (typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc)),
-  ),
+  ) : parseCacheControlFromHeaders(headers),
   contentInfo: isSome(contentInfo)
     ? createHttpContentInfo(contentInfo)
     : parseHttpContentInfoFromHeaders(headers),

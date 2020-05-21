@@ -2,7 +2,7 @@ export {
   HttpServer,
   HttpServerRequest,
   HttpRoutedRequest,
+  createHttpServerRequest,
   createRoutingHttpServer,
   disallowProtocolAndHostForwarding,
-  parseHttpServerRequestFromHeaders,
 } from "./internal/httpServer.ts";
