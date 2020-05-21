@@ -18,34 +18,19 @@ import {
   join,
 } from "@reactive-js/core/lib/readonlyArray";
 import {
-  parseCacheControlFromHeaders,
-  parseCacheDirectiveOrThrow,
-  CacheDirective,
-} from "./cacheDirective";
-import {
   entityTagToString,
   parseETagOrThrow,
   EntityTag,
   parseETagFromHeaders,
 } from "./entityTag";
-import {
-  parseHttpContentInfoFromHeaders,
-  contentIsCompressible,
-  createHttpContentInfo,
-  HttpContentEncoding,
-} from "./httpContentInfo";
+import { contentIsCompressible } from "./httpContentInfo";
 import {
   parseHttpDateTime,
   httpDateTimeToString,
   HttpDateTime,
   parseHttpDateTimeFromHeaders,
 } from "./httpDateTime";
-import {
-  getHeaderValue,
-  HttpStandardHeader,
-  filterHeaders,
-  HttpHeaders,
-} from "./httpHeaders";
+import { getHeaderValue, HttpStandardHeader, HttpHeaders } from "./httpHeaders";
 import {
   writeHttpMessageHeaders,
   encodeHttpMessageWithUtf8,
@@ -53,14 +38,10 @@ import {
   decodeHttpMessageWithCharset,
   HttpMessage,
   URILike,
+  HttpMessageOptions,
+  createHttpMessage,
 } from "./httpMessage";
-import {
-  parseHttpPreferencesFromHeaders,
-  createHttpPreferences,
-  MediaRange,
-} from "./httpPreferences";
 import { HttpRequest, HttpMethod } from "./httpRequest";
-import { MediaType } from "./mediaType";
 
 export const enum HttpStatusCode {
   Continue = 100,
@@ -141,6 +122,16 @@ export type HttpResponse<T> = HttpMessage<T> & {
   readonly vary: readonly string[];
 };
 
+export type HttpResponseOptions<T> = HttpMessageOptions<T> & {
+  etag?: string | EntityTag;
+  expires?: number | string | Date;
+  headers?: HttpHeaders;
+  lastModified?: number | string | Date;
+  location?: string | URILike;
+  statusCode: HttpStatusCode;
+  vary?: readonly string[];
+};
+
 declare class URL implements URILike {
   readonly hash: string;
   readonly host: string;
@@ -162,88 +153,55 @@ const parseLocationFromHeaders = (headers: HttpHeaders) => {
 };
 
 export const createHttpResponse = <T>({
-  body,
-  cacheControl,
-  contentInfo,
   etag,
   expires,
   headers = {},
   lastModified,
   location,
-  preferences,
   statusCode,
   vary,
   ...rest
-}: {
-  body: T;
-  cacheControl?: readonly (string | CacheDirective)[];
-  contentInfo?: {
-    contentEncodings?: readonly HttpContentEncoding[];
-    contentLength?: number;
-    contentType: MediaType | string;
+}: HttpResponseOptions<T>): HttpResponse<T> => {
+  const options = {
+    ...rest,
+    etag:
+      typeof etag === "string"
+        ? parseETagOrThrow(etag)
+        : isSome(etag)
+        ? etag
+        : parseETagFromHeaders(headers),
+    expires:
+      typeof expires === "string"
+        ? parseHttpDateTime(expires)
+        : expires instanceof Date
+        ? expires.getTime()
+        : isSome(expires)
+        ? expires
+        : parseHttpDateTimeFromHeaders(headers, HttpStandardHeader.Expires),
+    headers,
+    lastModified:
+      typeof lastModified === "string"
+        ? parseHttpDateTime(lastModified)
+        : lastModified instanceof Date
+        ? lastModified.getTime()
+        : isSome(lastModified)
+        ? lastModified
+        : parseHttpDateTimeFromHeaders(
+            headers,
+            HttpStandardHeader.LastModified,
+          ),
+    location:
+      typeof location === "string"
+        ? new URL(location)
+        : isSome(location)
+        ? location
+        : parseLocationFromHeaders(headers),
+    statusCode,
+    vary: vary ?? [],
   };
-  etag?: string | EntityTag;
-  expires?: number | string | Date;
-  headers?: HttpHeaders;
-  lastModified?: number | string | Date;
-  location?: string | URILike;
-  preferences?: {
-    acceptedCharsets?: readonly string[];
-    acceptedEncodings?: readonly HttpContentEncoding[];
-    acceptedLanguages?: readonly string[];
-    acceptedMediaRanges?: readonly (string | MediaRange)[];
-  };
-  statusCode: HttpStatusCode;
-  vary?: readonly string[];
-}): HttpResponse<T> => ({
-  ...rest,
-  body,
-  cacheControl: isSome(cacheControl)
-    ? pipe(
-        cacheControl,
-        map(cc =>
-          typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc,
-        ),
-      )
-    : parseCacheControlFromHeaders(headers),
-  contentInfo: isSome(contentInfo)
-    ? createHttpContentInfo(contentInfo)
-    : parseHttpContentInfoFromHeaders(headers),
-  etag:
-    typeof etag === "string"
-      ? parseETagOrThrow(etag)
-      : isSome(etag)
-      ? etag
-      : parseETagFromHeaders(headers),
-  expires:
-    typeof expires === "string"
-      ? parseHttpDateTime(expires)
-      : expires instanceof Date
-      ? expires.getTime()
-      : isSome(expires)
-      ? expires
-      : parseHttpDateTimeFromHeaders(headers, HttpStandardHeader.Expires),
-  headers: filterHeaders(headers ?? {}),
-  lastModified:
-    typeof lastModified === "string"
-      ? parseHttpDateTime(lastModified)
-      : lastModified instanceof Date
-      ? lastModified.getTime()
-      : isSome(lastModified)
-      ? lastModified
-      : parseHttpDateTimeFromHeaders(headers, HttpStandardHeader.LastModified),
-  location:
-    typeof location === "string"
-      ? new URL(location)
-      : isSome(location)
-      ? location
-      : parseLocationFromHeaders(headers),
-  preferences: isSome(preferences)
-    ? createHttpPreferences(preferences)
-    : parseHttpPreferencesFromHeaders(headers),
-  statusCode,
-  vary: vary ?? [],
-});
+
+  return createHttpMessage(options) as HttpResponse<T>;
+};
 
 export const writeHttpResponseHeaders = <T>(
   response: HttpResponse<T>,
@@ -329,21 +287,23 @@ export const checkIfNotModified = <T>({
     : response;
 };
 
+const _encodeHttpResponseWithUtf8 = (encodeHttpMessageWithUtf8 as unknown) as Function1<
+  HttpResponse<string>,
+  HttpResponse<Uint8Array>
+>;
 export const encodeHttpResponseWithUtf8: Function1<
   HttpResponse<string>,
   HttpResponse<Uint8Array>
-> = (encodeHttpMessageWithUtf8 as unknown) as Function1<
-  HttpResponse<string>,
-  HttpResponse<Uint8Array>
->;
+> = _encodeHttpResponseWithUtf8;
 
+const _decodeHttpResponseWithCharset = (decodeHttpMessageWithCharset as unknown) as Function1<
+  HttpResponse<Uint8Array>,
+  HttpResponse<string>
+>;
 export const decodeHttpResponseWithCharset: Function1<
   HttpResponse<Uint8Array>,
   HttpResponse<string>
-> = (decodeHttpMessageWithCharset as unknown) as Function1<
-  HttpResponse<Uint8Array>,
-  HttpResponse<string>
->;
+> = _decodeHttpResponseWithCharset;
 
 export const toIOSourceHttpResponse = <TBody>(
   resp: HttpResponse<TBody>,

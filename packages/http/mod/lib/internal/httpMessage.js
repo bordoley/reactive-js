@@ -1,9 +1,25 @@
+import { pipe } from "../../../../core/mod/lib/functions.js";
 import { fromValue } from "../../../../core/mod/lib/io.js";
 import { isSome, isNone } from "../../../../core/mod/lib/option.js";
-import { writeHttpCacheControlHeader } from "./cacheDirective.js";
-import { writeHttpContentInfoHeaders, } from "./httpContentInfo.js";
-import { writeHttpHeaders } from "./httpHeaders.js";
-import { writeHttpPreferenceHeaders } from "./httpPreferences.js";
+import { map } from "../../../../core/mod/lib/readonlyArray.js";
+import { writeHttpCacheControlHeader, parseCacheDirectiveOrThrow, parseCacheControlFromHeaders, } from "./cacheDirective.js";
+import { writeHttpContentInfoHeaders, createHttpContentInfo, parseHttpContentInfoFromHeaders, } from "./httpContentInfo.js";
+import { writeHttpHeaders, filterHeaders } from "./httpHeaders.js";
+import { writeHttpPreferenceHeaders, createHttpPreferences, parseHttpPreferencesFromHeaders, } from "./httpPreferences.js";
+export const createHttpMessage = ({ body, cacheControl, contentInfo, headers = {}, preferences, ...rest }) => ({
+    ...rest,
+    body,
+    cacheControl: isSome(cacheControl)
+        ? pipe(cacheControl, map(cc => typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc))
+        : parseCacheControlFromHeaders(headers),
+    contentInfo: isSome(contentInfo)
+        ? createHttpContentInfo(contentInfo)
+        : parseHttpContentInfoFromHeaders(headers),
+    headers: filterHeaders(headers !== null && headers !== void 0 ? headers : {}),
+    preferences: isSome(preferences)
+        ? createHttpPreferences(preferences)
+        : parseHttpPreferencesFromHeaders(headers),
+});
 export const writeHttpMessageHeaders = ({ cacheControl, contentInfo, headers, preferences }, writeHeader) => {
     writeHttpCacheControlHeader(cacheControl, writeHeader);
     if (isSome(contentInfo)) {
