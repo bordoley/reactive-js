@@ -17,26 +17,34 @@ import {
 import {
   createEventSource,
   fetch,
-  historyPathStateStore,
-  historyHashStateStore,
+  emptyURI,
+  historyStateStore,
+  RelativeURI,
 } from "@reactive-js/core/lib/web";
 import { idlePriority, normalPriority, useObservable, useStreamable } from "@reactive-js/core/lib/react";
 import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { default as ReactDOM } from "react-dom";
 
-const TextInputURIState = (_props: {
-  readonly params: { readonly [key: string]: string };
-  readonly dispatch: SideEffect1<Updater<string>>;
-}) => {
-  const [state = "", dispatch] = useStreamable(historyHashStateStore);
+const updateHash = (hash: string): Updater<RelativeURI> => uri => ({
+  ...uri,
+  hash: hash.length > 0 ? `#${encodeURIComponent(hash)}` : "",
+});
 
+const TextInputURIState = ({ dispatch, uri }: {
+  readonly params: { readonly [key: string]: string };
+  readonly dispatch: SideEffect1<Updater<RelativeURI>>;
+  readonly uri: RelativeURI,
+}) => {
   const onChange = useCallback(
     (ev: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = ev.target;
-      dispatch(returns(value));
+      dispatch(updateHash(value));
     },
     [dispatch],
   );
+
+  const { hash } = uri;
+  const state = hash.length > 0 ? decodeURIComponent(hash.substring(1)) : "";
 
   // FIXME: In the real world, maintain cursor position:
   // http://dimafeldman.com/js/maintain-cursor-position-after-changing-an-input-value-programatically/
@@ -47,10 +55,7 @@ const TextInputURIState = (_props: {
   );
 };
 
-const StreamPauseResume = (_: {
-  readonly params: { readonly [key: string]: string };
-  readonly dispatch: SideEffect1<Updater<string>>;
-}) => {
+const StreamPauseResume = () => {
   const stream = useMemo(
     () =>
       pipe(
@@ -88,17 +93,23 @@ const StreamPauseResume = (_: {
   );
 };
 
+const goToPath = (pathname: string): Updater<RelativeURI> => uri => ({
+  ...uri,
+  pathname,
+});
+
 const NotFound = ({
   dispatch,
 }: {
   readonly params: { readonly [key: string]: string };
-  readonly dispatch: SideEffect1<Updater<string>>;
+  readonly dispatch: SideEffect1<Updater<RelativeURI>>;
+  readonly uri: RelativeURI,
 }) => {
-  const goToStream = useCallback(() => dispatch(returns("/stream")), [
+  const goToStream = useCallback(() => dispatch(goToPath("/stream")), [
     dispatch,
   ]);
 
-  const goToTextInput = useCallback(() => dispatch(returns("/text")), [
+  const goToTextInput = useCallback(() => dispatch(goToPath("/text")), [
     dispatch,
   ]);
 
@@ -129,10 +140,10 @@ const router = createRouter({
 });
 
 const Root = () => {
-  const [path = "", dispatch] = useStreamable(historyPathStateStore);
-  const [Component, params] = find(router, path) ?? [NotFound, {}];
+  const [uri = emptyURI, dispatch] = useStreamable(historyStateStore);
+  const [Component, params] = find(router, uri.pathname) ?? [NotFound, {}];
 
-  return <Component params={params} dispatch={dispatch} />;
+  return <Component params={params} dispatch={dispatch} uri={uri}/>
 };
 
 (ReactDOM as any).createRoot(document.getElementById("root")).render(<Root />);
