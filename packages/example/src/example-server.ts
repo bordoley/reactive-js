@@ -107,7 +107,7 @@ const routerHandlerFiles: HttpServer<
   HttpRoutedRequest<IOSourceLike<Uint8Array>>,
   HttpResponse<IOSourceLike<Uint8Array>>
 > = req => {
-  const path = req.params["*"] || "";
+  const path = req.params["path"] || "";
   const contentType = mime.lookup(path) || "application/octet-stream";
 
   return pipe(
@@ -163,9 +163,9 @@ const notFound: Function1<
 const router = createRoutingHttpServer(
   {
     "/events": routerHandlerEventStream,
-    "/files/*": routerHandlerFiles,
+    "/files/*path": routerHandlerFiles,
     "/users/:username/friends/:friendName": routerHandlerPrintParams,
-    "/users/:username/friends/:friendName/*": routerHandlerPrintParams,
+    "/users/:username/friends/:friendName/*tail": routerHandlerPrintParams,
     "/throws": routerHandlerThrow,
   },
   notFound,

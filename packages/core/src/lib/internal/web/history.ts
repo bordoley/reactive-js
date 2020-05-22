@@ -21,16 +21,17 @@ const pushHistoryState = (newLocation: string) => {
   }
 };
 
-const historyFunction = (obs: ObservableLike<string>) => pipe(
-  getCurrentLocation,
-  compute(),
-  concatWith(
-    merge(
-      pipe(obs, throttle(15), onNotify(pushHistoryState)),
-      fromEvent(window, "popstate", getCurrentLocation),
+const historyFunction = (obs: ObservableLike<string>) =>
+  pipe(
+    getCurrentLocation,
+    compute(),
+    concatWith(
+      merge(
+        pipe(obs, throttle(15), onNotify(pushHistoryState)),
+        fromEvent(window, "popstate", getCurrentLocation),
+      ),
     ),
-  ),
-);
+  );
 
 const _historyStateStore: StateStoreLike<string> = pipe(
   createStreamable(historyFunction),
