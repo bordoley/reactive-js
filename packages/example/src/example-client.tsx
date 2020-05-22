@@ -43,7 +43,6 @@ const makeCallbacks = (uriUpdater: (updater: Updater<RelativeURI>) => void) => {
   return { goToRoute1, goToRoute2, goToRoute3, stream };
 };
 
-
 const makeHttpRequest = pipe(
   { uri: "http://localhost:8080/files/packages/example/build/bundle.js" },
   fetch(response => response.text()),
@@ -66,9 +65,7 @@ const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
         <button onClick={goToRoute3}>Go to route3</button>
         <button onClick={stream}>Go to stream</button>
       </div>
-      <div>
-        {someData ?? ""}
-      </div>
+      <div>{someData ?? ""}</div>
     </div>
   );
 };
@@ -77,7 +74,6 @@ const obs = generate(increment, returns<number>(0));
 
 const Component1 = (props: RoutableComponentProps) => {
   const value = useObservable(obs, { scheduler: idlePriority });
-
 
   return (
     <>
