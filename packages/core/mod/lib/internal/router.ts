@@ -15,7 +15,7 @@ const _empty: Router<unknown> = {
   children: {},
 };
 
-export const empty = <T>(): Router<T> => _empty as Router<T>;
+const empty = <T>(): Router<T> => _empty as Router<T>;
 
 const _add = <T>(
   router: Router<T>,
@@ -50,7 +50,7 @@ const _add = <T>(
   }
 };
 
-export const add = <T>(router: Router<T>, path: string, value: T): Router<T> =>
+const add = <T>(router: Router<T>, path: string, value: T): Router<T> =>
   _add(router, createPath(path), value);
 
 const serializePath = (path: Path): string => {
