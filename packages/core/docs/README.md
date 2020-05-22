@@ -15,6 +15,7 @@
 * ["node"](modules/_node_.md)
 * ["observable"](modules/_observable_.md)
 * ["option"](modules/_option_.md)
+* ["react"](modules/_react_.md)
 * ["readonlyArray"](modules/_readonlyarray_.md)
 * ["runnable"](modules/_runnable_.md)
 * ["scheduler"](modules/_scheduler_.md)
