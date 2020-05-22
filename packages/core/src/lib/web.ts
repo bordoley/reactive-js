@@ -2,8 +2,7 @@ export { fromEvent } from "./internal/web/event";
 export { createEventSource } from "./internal/web/eventSource";
 export {
   historyStateStore,
-  historyPathStateStore,
-  historySearchStateStore,
-  historyHashStateStore,
+  emptyURI,
+  RelativeURI,
 } from "./internal/web/history";
 export { FetchRequest, fetch } from "./internal/web/fetch";

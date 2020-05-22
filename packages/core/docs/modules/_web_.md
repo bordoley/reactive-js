@@ -7,12 +7,10 @@
 ### Type aliases
 
 * [FetchRequest](_web_.md#fetchrequest)
+* [RelativeURI](_web_.md#relativeuri)
 
 ### Variables
 
-* [historyHashStateStore](_web_.md#const-historyhashstatestore)
-* [historyPathStateStore](_web_.md#const-historypathstatestore)
-* [historySearchStateStore](_web_.md#const-historysearchstatestore)
 * [historyStateStore](_web_.md#const-historystatestore)
 
 ### Functions
@@ -21,35 +19,35 @@
 * [fetch](_web_.md#const-fetch)
 * [fromEvent](_web_.md#const-fromevent)
 
+### Object literals
+
+* [emptyURI](_web_.md#const-emptyuri)
+
 ## Type aliases
 
 ###  FetchRequest
 
 Ƭ **FetchRequest**: *RequestInit & object*
 
+___
+
+###  RelativeURI
+
+Ƭ **RelativeURI**: *object*
+
+#### Type declaration:
+
+* **hash**: *string*
+
+* **pathname**: *string*
+
+* **search**: *string*
+
 ## Variables
-
-### `Const` historyHashStateStore
-
-• **historyHashStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹string›* = _historyHashStateStore
-
-___
-
-### `Const` historyPathStateStore
-
-• **historyPathStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹string›* = _historyPathStateStore
-
-___
-
-### `Const` historySearchStateStore
-
-• **historySearchStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹object›* = _historySearchStateStore
-
-___
 
 ### `Const` historyStateStore
 
-• **historyStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹string›* = _historyStateStore
+• **historyStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹[RelativeURI](_web_.md#relativeuri)›* = _historyStateStore
 
 ## Functions
 
@@ -103,3 +101,21 @@ Name | Type |
 `selector` | [Function1](_functions_.md#function1)‹Event, T› |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+
+## Object literals
+
+### `Const` emptyURI
+
+### ▪ **emptyURI**: *object*
+
+###  hash
+
+• **hash**: *string* = ""
+
+###  pathname
+
+• **pathname**: *string* = ""
+
+###  search
+
+• **search**: *string* = ""
