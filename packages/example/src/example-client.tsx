@@ -3,7 +3,6 @@ import {
   pipe,
   returns,
   increment,
-  defer,
   SideEffect1,
   Updater,
 } from "@reactive-js/core/lib/functions";
@@ -11,8 +10,6 @@ import { createRouter, find } from "@reactive-js/core/lib/internal/router";
 import {
   generate,
   throttle,
-  onNotify,
-  subscribe,
 } from "@reactive-js/core/lib/observable";
 import {
   createEventSource,
@@ -21,7 +18,7 @@ import {
   historyStateStore,
   RelativeURI,
 } from "@reactive-js/core/lib/web";
-import { idlePriority, normalPriority, useObservable, useStreamable } from "@reactive-js/core/lib/react";
+import { idlePriority, useObservable, useStreamable } from "@reactive-js/core/lib/react";
 import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { default as ReactDOM } from "react-dom";
 
@@ -105,6 +102,14 @@ const NotFound = ({
   readonly dispatch: SideEffect1<Updater<RelativeURI>>;
   readonly uri: RelativeURI,
 }) => {
+  const goToEvents = useCallback(() => dispatch(goToPath("/events")), [
+    dispatch,
+  ]);
+
+  const goToFetch = useCallback(() => dispatch(goToPath("/fetch")), [
+    dispatch,
+  ]);
+
   const goToStream = useCallback(() => dispatch(goToPath("/stream")), [
     dispatch,
   ]);
@@ -113,8 +118,40 @@ const NotFound = ({
     dispatch,
   ]);
 
+  return (
+    <div>
+      <div>{"Not Found"}</div>
+      <div>
+        <button onClick={goToEvents}>Events Source Example</button>
+        <button onClick={goToFetch}>Fetch Example</button>
+        <button onClick={goToStream}>Stream Example</button>
+        <button onClick={goToTextInput}>Text Input Example</button>
+      </div>
+    </div>
+  );
+};
+
+const EventSourceExample = () => {
+  const eventSource = useMemo(
+    () => (
+      createEventSource("http://localhost:8080/events", {
+        events: ["error", "message", "test"],
+      })),
+    [],
+  );
+
+  const eventData = useObservable(eventSource);
+
+  return (
+    <div>
+      <div>{JSON.stringify(eventData) ?? ""}</div>
+    </div>
+  );
+}
+
+const FetchExample = () => {
   const httpRequest = useMemo(
-    defer(
+    () => pipe(
       { uri: "http://localhost:8080/files/packages/example/build/bundle.js" },
       fetch(response => response.text()),
     ),
@@ -124,17 +161,15 @@ const NotFound = ({
 
   return (
     <div>
-      <div>{"Not Found"}</div>
-      <div>
-        <button onClick={goToStream}>Stream Example</button>
-        <button onClick={goToTextInput}>Text Input Example</button>
-      </div>
       <div>{someData ?? ""}</div>
     </div>
   );
-};
+
+} 
 
 const router = createRouter({
+  "/events": EventSourceExample,
+  "/fetch": FetchExample,
   "/stream": StreamPauseResume,
   "/text": TextInputURIState,
 });
@@ -147,11 +182,3 @@ const Root = () => {
 };
 
 (ReactDOM as any).createRoot(document.getElementById("root")).render(<Root />);
-
-pipe(
-  createEventSource("http://localhost:8080/events", {
-    events: ["error", "message", "test"],
-  }),
-  onNotify(console.log),
-  subscribe(normalPriority),
-);
