@@ -5,7 +5,7 @@ const _empty = {
     name: "",
     children: {},
 };
-export const empty = () => _empty;
+const empty = () => _empty;
 const _add = (router, [name, child], value) => {
     var _a;
     if (isNone(child)) {
@@ -34,7 +34,7 @@ const _add = (router, [name, child], value) => {
         };
     }
 };
-export const add = (router, path, value) => _add(router, createPath(path), value);
+const add = (router, path, value) => _add(router, createPath(path), value);
 const serializePath = (path) => {
     let [result, child] = path;
     while (isSome(child)) {
