@@ -35,8 +35,14 @@
     "type": "git",
     "url": "https://github.com/bordoley/reactive-js.git"
   },
+  "dependencies": {
+    "react": "^16.11.0",
+    "scheduler": "^0.17.0"
+  },
   "devDependencies": {
     "@types/node": "13.13.2",
+    "@types/react": "^16.9.11",
+    "@types/scheduler": "^0.16.1",
     "benchmark": "^2.1.4",
     "jest": "^24.9.0",
     "renamer": "^2.0.0",
@@ -72,7 +78,7 @@
     "mod-ts": "yarn mod-ts-copy && yarn mod-ts-replace",
     "mod-ts-copy": "cp -r ./src/ ./mod",
     "mod-ts-replace": "replace 'from \"(\\.[.\\-/\\w]+)\";' 'from \"$1.ts\";' ./mod -r --include=\"*.ts\"",
-    "mod-rm-unsupported": "rm -rf ./mod/lib/node.* ./mod/lib/internal/node ./mod/lib/internal/testing.jest.* ./mod/perf",
+    "mod-rm-unsupported": "rm -rf ./mod/lib/node.* ./mod/lib/react.* ./mod/lib/internal/node ./mod/lib/internal/testing.jest.* ./mod/perf",
     "perf": "yarn compile-cjs && NODE_ENV=production node ./build/cjs/perf/index.js",
     "test": "jest",
     "test-coverage": "jest --coverage",

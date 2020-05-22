@@ -1,15 +1,17 @@
 import {
-  dispose,
   Exception,
   addTeardown,
-} from "@reactive-js/core/lib/disposable";
+  addDisposable,
+  createDisposable,
+  dispose,
+} from "./disposable";
 import {
   SideEffect1,
   pipe,
   compose,
   defer,
   returns,
-} from "@reactive-js/core/lib/functions";
+} from "./functions";
 import {
   dispatch as dispatchToStream,
   ObservableLike,
@@ -19,15 +21,30 @@ import {
   subscribeOn,
   throttle,
   never,
-} from "@reactive-js/core/lib/observable";
-import { none, Option, isSome } from "@reactive-js/core/lib/option";
-import { SchedulerLike } from "@reactive-js/core/lib/scheduler";
+} from "./observable";
+import { none, Option, isSome } from "./option";
+import {
+  SchedulerLike,
+  SchedulerContinuationLike,
+  toSchedulerWithPriority,
+  run,
+} from "./scheduler";
 import {
   StreamableLike,
   stream as streamableStream,
-} from "@reactive-js/core/lib/streamable";
+} from "./streamable";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { normalPriority } from "./scheduler";
+import {
+  unstable_IdlePriority,
+  unstable_ImmediatePriority,
+  unstable_LowPriority,
+  unstable_NormalPriority,
+  unstable_cancelCallback,
+  unstable_now,
+  unstable_scheduleCallback,
+  unstable_shouldYield,
+  unstable_UserBlockingPriority,
+} from "scheduler";
 
 const subscribeObservable = <T>(
   observable: ObservableLike<T>,
@@ -120,3 +137,76 @@ export const useStreamable = <TReq, T>(
   });
   return [value, dispatch];
 };
+
+const priorityScheduler = {
+  inContinuation: false,
+
+  get now(): number {
+    return unstable_now();
+  },
+
+  get shouldYield(): boolean {
+    return priorityScheduler.inContinuation && unstable_shouldYield();
+  },
+
+  schedule(
+    continuation: SchedulerContinuationLike,
+    {
+      priority,
+      delay = 0,
+    }: {
+      priority: number;
+      delay?: number;
+    },
+  ) {
+    const callback = () => {
+      dispose(callbackNodeDisposable);
+
+      priorityScheduler.inContinuation = true;
+      run(continuation);
+      priorityScheduler.inContinuation = false;
+    };
+
+    const callbackNode = unstable_scheduleCallback(
+      priority,
+      callback,
+      delay > 0 ? { delay } : none,
+    );
+
+    const callbackNodeDisposable = createDisposable(
+      defer(callbackNode, unstable_cancelCallback),
+    );
+
+    addDisposable(continuation, callbackNodeDisposable);
+  },
+};
+
+/** Scheduler that schedules work on React's internal priority scheduler with idle priority. */
+export const idlePriority: SchedulerLike = pipe(
+  priorityScheduler,
+  toSchedulerWithPriority(unstable_IdlePriority),
+);
+
+/** Scheduler that schedules work on React's internal priority scheduler with immediate priority. */
+export const immediatePriority: SchedulerLike = pipe(
+  priorityScheduler,
+  toSchedulerWithPriority(unstable_ImmediatePriority),
+);
+
+/** Scheduler that schedules work on React's internal priority scheduler with normal priority. */
+export const normalPriority: SchedulerLike = pipe(
+  priorityScheduler,
+  toSchedulerWithPriority(unstable_NormalPriority),
+);
+
+/** Scheduler that schedules work on React's internal priority scheduler with low priority. */
+export const lowPriority: SchedulerLike = pipe(
+  priorityScheduler,
+  toSchedulerWithPriority(unstable_LowPriority),
+);
+
+/** Scheduler that schedules work on React's internal priority scheduler with user blocking priority. */
+export const userBlockingPriority: SchedulerLike = pipe(
+  priorityScheduler,
+  toSchedulerWithPriority(unstable_UserBlockingPriority),
+);

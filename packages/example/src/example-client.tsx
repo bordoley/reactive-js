@@ -20,8 +20,7 @@ import {
   historyPathStateStore,
   historyHashStateStore,
 } from "@reactive-js/core/lib/web";
-import { useObservable, useStreamable } from "@reactive-js/react/lib/hooks";
-import { idlePriority, normalPriority } from "@reactive-js/react/lib/scheduler";
+import { idlePriority, normalPriority, useObservable, useStreamable } from "@reactive-js/core/lib/react";
 import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { default as ReactDOM } from "react-dom";
 
