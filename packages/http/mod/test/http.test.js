@@ -1,5 +1,5 @@
 import { pipe, defer } from "@reactive-js/core/lib/functions.js";
-import { test, describe, expectToThrow, expectEquals, expectTrue, } from "@reactive-js/core/lib/internal/testing.js";
+import { test, describe, expectToThrow, expectEquals, expectTrue, } from "@reactive-js/core/lib/experimental/testing.js";
 import { none } from "@reactive-js/core/lib/option.js";
 import { map } from "@reactive-js/core/lib/readonlyArray.js";
 import { createHttpRequest, createHttpResponse, checkIfNotModified, writeHttpRequestHeaders, writeHttpResponseHeaders, } from "../lib/http.js";

@@ -1,5 +1,5 @@
 import { pipe } from "../../../../core/mod/lib/functions.js";
-import { parseWith } from "../../../../core/mod/lib/internal/parserCombinators.js";
+import { parseWith } from "../../../../core/mod/lib/experimental/parserCombinators.js";
 import { isNone, none } from "../../../../core/mod/lib/option.js";
 import { join } from "../../../../core/mod/lib/readonlyArray.js";
 import { pToken, httpList } from "./httpGrammar.js";

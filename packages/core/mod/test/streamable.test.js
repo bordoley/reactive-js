@@ -1,6 +1,6 @@
 import { dispose, addTeardown } from "../lib/disposable.js";
 import { pipe, returns, incrementBy, sum } from "../lib/functions.js";
-import { test, describe, expectArrayEquals, expectEquals, expectTrue, expectFalse, } from "../lib/internal/testing.js";
+import { test, describe, expectArrayEquals, expectEquals, expectTrue, expectFalse, } from "../lib/experimental/testing.js";
 import { subscribe, onNotify as onNotifyObs, buffer, takeFirst, startWith, dispatch, } from "../lib/observable.js";
 import { none } from "../lib/option.js";
 import { createVirtualTimeScheduler } from "../lib/scheduler.js";

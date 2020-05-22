@@ -4,7 +4,7 @@ import {
   Parser,
   parseWith,
   parseWithOrThrow,
-} from "../../../../core/mod/lib/internal/parserCombinators.ts";
+} from "../../../../core/mod/lib/experimental/parserCombinators.ts";
 import {
   fromObject,
   map,

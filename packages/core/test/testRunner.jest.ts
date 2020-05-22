@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { runTests } from "../src/lib/internal/testing.jest";
+import { runTests } from "../src/lib/experimental/testing.jest";
 
 import { tests as asyncEnumerableTests } from "../src/test/asyncEnumerable.test";
 import { tests as disposableTests } from "../src/test/disposable.test";

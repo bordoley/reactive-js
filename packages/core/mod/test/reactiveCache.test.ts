@@ -1,6 +1,6 @@
 import { disposed, dispose } from "../lib/disposable.ts";
 import { pipe, returns } from "../lib/functions.ts";
-import { createReactiveCache, getOrSet } from "../lib/internal/reactiveCache.ts";
+import { createReactiveCache, getOrSet } from "../lib/experimental/reactiveCache.ts";
 import {
   test,
   describe,
@@ -8,7 +8,7 @@ import {
   expectSome,
   expectTrue,
   expectEquals,
-} from "../lib/internal/testing.ts";
+} from "../lib/experimental/testing.ts";
 import {
   fromArray,
   subscribe,

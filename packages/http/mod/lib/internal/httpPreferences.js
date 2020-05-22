@@ -1,5 +1,5 @@
 import { pipe } from "../../../../core/mod/lib/functions.js";
-import { concatWith, map, parseWith, } from "../../../../core/mod/lib/internal/parserCombinators.js";
+import { concatWith, map, parseWith, } from "../../../../core/mod/lib/experimental/parserCombinators.js";
 import { isSome, none } from "../../../../core/mod/lib/option.js";
 import { map as mapReadonlyArray } from "../../../../core/mod/lib/readonlyArray.js";
 import { pToken, pParams, httpList } from "./httpGrammar.js";

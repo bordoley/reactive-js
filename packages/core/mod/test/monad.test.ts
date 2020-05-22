@@ -7,7 +7,7 @@ import {
   defer,
   incrementBy,
 } from "../lib/functions.ts";
-import { test, describe, expectArrayEquals } from "../lib/internal/testing.ts";
+import { test, describe, expectArrayEquals } from "../lib/experimental/testing.ts";
 
 import { toArray } from "../lib/runnable.ts";
 

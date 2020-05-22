@@ -1,7 +1,7 @@
 import { done, notify, consume, consumeAsync, fromArray, fromIterable, generate, } from "../lib/asyncEnumerable.js";
 import { addTeardown } from "../lib/disposable.js";
 import { pipe, increment, returns, defer } from "../lib/functions.js";
-import { test, describe, expectEquals, expectNone, expectArrayEquals, } from "../lib/internal/testing.js";
+import { test, describe, expectEquals, expectNone, expectArrayEquals, } from "../lib/experimental/testing.js";
 import { fromValue, subscribe, onNotify, toRunnable, dispatch, } from "../lib/observable.js";
 import { none } from "../lib/option.js";
 import { last } from "../lib/runnable.js";

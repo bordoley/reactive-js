@@ -15,7 +15,7 @@ import {
   expectToHaveBeenCalledTimes,
   expectTrue,
   expectFalse,
-} from "../lib/internal/testing.ts";
+} from "../lib/experimental/testing.ts";
 import {
   compute,
   contains,

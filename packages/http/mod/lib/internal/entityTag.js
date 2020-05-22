@@ -1,5 +1,5 @@
 import { pipe } from "../../../../core/mod/lib/functions.js";
-import { satisfy, string, manySatisfy, pDquote, optional, parseWith, parseWithOrThrow, } from "../../../../core/mod/lib/internal/parserCombinators.js";
+import { satisfy, string, manySatisfy, pDquote, optional, parseWith, parseWithOrThrow, } from "../../../../core/mod/lib/experimental/parserCombinators.js";
 import { isSome, none } from "../../../../core/mod/lib/option.js";
 import { getHeaderValue } from "./httpHeaders.js";
 export const entityTagToString = ({ isWeak, tag }) => isWeak ? `\\W"${tag}"` : `"${tag}"`;

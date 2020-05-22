@@ -5,7 +5,7 @@ import {
   pEquals,
   parseWith,
   parseWithOrThrow,
-} from "@reactive-js/core/lib/internal/parserCombinators";
+} from "@reactive-js/core/lib/experimental/parserCombinators";
 import { isSome } from "@reactive-js/core/lib/option";
 import { map, join } from "@reactive-js/core/lib/readonlyArray";
 import {

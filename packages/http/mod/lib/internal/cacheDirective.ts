@@ -5,7 +5,7 @@ import {
   pEquals,
   parseWith,
   parseWithOrThrow,
-} from "../../../../core/mod/lib/internal/parserCombinators.ts";
+} from "../../../../core/mod/lib/experimental/parserCombinators.ts";
 import { isSome } from "../../../../core/mod/lib/option.ts";
 import { map, join } from "../../../../core/mod/lib/readonlyArray.ts";
 import {

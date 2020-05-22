@@ -1,7 +1,7 @@
 import { disposed, dispose } from "../lib/disposable.js";
 import { pipe, returns } from "../lib/functions.js";
-import { createReactiveCache, getOrSet } from "../lib/internal/reactiveCache.js";
-import { test, describe, expectNone, expectSome, expectTrue, expectEquals, } from "../lib/internal/testing.js";
+import { createReactiveCache, getOrSet } from "../lib/experimental/reactiveCache.js";
+import { test, describe, expectNone, expectSome, expectTrue, expectEquals, } from "../lib/experimental/testing.js";
 import { fromArray, subscribe, fromValue, toRunnable, onNotify, never, } from "../lib/observable.js";
 import { forEach } from "../lib/runnable.js";
 import { createVirtualTimeScheduler } from "../lib/scheduler.js";

@@ -19,9 +19,9 @@ import {
 import { isSome, isNone, none } from "../option";
 import { first, forEach } from "../runnable";
 import { SchedulerLike } from "../scheduler";
-import { createKeyedQueue } from "./keyedQueue";
-import { createSetMultimap } from "./multimaps";
-import { createUniqueQueue } from "./queues";
+import { createKeyedQueue } from "../internal/keyedQueue";
+import { createSetMultimap } from "../internal/multimaps";
+import { createUniqueQueue } from "../internal/queues";
 
 const tryDispatch = <TResource extends DisposableLike>(
   resourceManager: ResourceManagerImpl<TResource>,

@@ -17,14 +17,14 @@ import {
   pEof,
   parseWithOrThrow,
   throwParseError,
-} from "../../lib/internal/parserCombinators";
+} from "../../lib/experimental/parserCombinators";
 import {
   test,
   describe,
   expectToThrow,
   expectArrayEquals,
   expectEquals,
-} from "../../lib/internal/testing";
+} from "../../lib/experimental/testing";
 import { none } from "../../lib/option";
 
 export const tests = describe(

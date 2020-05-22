@@ -1,4 +1,4 @@
-import { runTests } from "../mod/lib/internal/testing.deno.ts";
+import { runTests } from "../mod/lib/experimental/testing.deno.ts";
 
 import { tests as asyncEnumerableTests } from "../mod/test/asyncEnumerable.test.ts";
 import { tests as disposableTests } from "../mod/test/disposable.test.ts";

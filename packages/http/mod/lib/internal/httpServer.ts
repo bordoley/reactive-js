@@ -1,5 +1,5 @@
 import { Function1 } from "../../../../core/mod/lib/functions.ts";
-import { createRouter, find } from "../../../../core/mod/lib/internal/router.ts";
+import { createRouter, find } from "../../../../core/mod/lib/experimental/router.ts";
 import { ObservableLike } from "../../../../core/mod/lib/observable.ts";
 import { isNone, isSome } from "../../../../core/mod/lib/option.ts";
 import {

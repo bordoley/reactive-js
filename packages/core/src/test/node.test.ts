@@ -6,7 +6,7 @@ import {
   testAsync,
   expectEquals,
   expectPromiseToThrow,
-} from "../lib/internal/testing";
+} from "../lib/experimental/testing";
 import { fromArray } from "../lib/io";
 import {
   createReadableIOSource,

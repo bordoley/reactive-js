@@ -15,7 +15,7 @@ import {
   expectToHaveBeenCalledTimes,
   expectTrue,
   expectFalse,
-} from "../lib/internal/testing";
+} from "../lib/experimental/testing";
 import {
   compute,
   contains,

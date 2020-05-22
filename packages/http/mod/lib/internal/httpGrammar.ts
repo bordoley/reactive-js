@@ -17,7 +17,7 @@ import {
   pColon,
   isParseError,
   string,
-} from "../../../../core/mod/lib/internal/parserCombinators.ts";
+} from "../../../../core/mod/lib/experimental/parserCombinators.ts";
 import { isNone, isSome, none, Option } from "../../../../core/mod/lib/option.ts";
 import { HttpHeaders } from "./httpHeaders.ts";
 

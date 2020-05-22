@@ -18,7 +18,7 @@ import {
   expectArrayEquals,
   expectEquals,
   expectNone,
-} from "../lib/internal/testing.ts";
+} from "../lib/experimental/testing.ts";
 
 export const tests = describe(
   "Disposable",

@@ -1,6 +1,6 @@
 import { createDisposable, createDisposableValue, createSerialDisposable, disposed, dispose, addDisposable, addTeardown, } from "../lib/disposable.js";
 import { pipe } from "../lib/functions.js";
-import { test, describe, expectFalse, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectArrayEquals, expectEquals, expectNone, } from "../lib/internal/testing.js";
+import { test, describe, expectFalse, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectArrayEquals, expectEquals, expectNone, } from "../lib/experimental/testing.js";
 export const tests = describe("Disposable", describe("AbstractDisposable", test("disposes child disposable when disposed", () => {
     const disposable = createDisposable();
     const child = createDisposable();

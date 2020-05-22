@@ -8,7 +8,7 @@ import {
   expectTrue,
   mockFn,
   expectToHaveBeenCalledTimes,
-} from "../lib/internal/testing";
+} from "../lib/experimental/testing";
 import {
   decodeWithCharset,
   empty,

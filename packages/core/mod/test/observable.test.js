@@ -1,6 +1,6 @@
 import { dispose } from "../lib/disposable.js";
 import { compose, pipe, returns, increment, arrayEquality, identity, incrementBy, sum, defer, ignore, } from "../lib/functions.js";
-import { test, describe, testAsync, expectArrayEquals, expectToThrowError, expectEquals, expectToThrow, expectPromiseToThrow, mockFn, expectToHaveBeenCalledTimes, expectSome, expectNone, } from "../lib/internal/testing.js";
+import { test, describe, testAsync, expectArrayEquals, expectToThrowError, expectEquals, expectToThrow, expectPromiseToThrow, mockFn, expectToHaveBeenCalledTimes, expectSome, expectNone, } from "../lib/experimental/testing.js";
 import * as Observable from "../lib/observable.js";
 import { await_, buffer, combineLatestWith, compute, concat, concatWith, createObservable, empty, fromArray, fromIterable, fromPromise, generate, ignoreElements, map, merge, mergeWith, never, fromValue, onNotify, retry, scanAsync, share, subscribe, takeFirst, takeLast, throttle, throwIfEmpty, throws, timeout, toPromise, withLatestFrom, zip, catchError, genMap, endWith, switchMap, onSubscribe, createSubject, exhaustMap, mergeMap, switchAll, zipWith, zipWithLatestFrom, dispatchTo, dispatch, zipLatestWith, toRunnable, } from "../lib/observable.js";
 import { fromArray as fromArrayRunnable, forEach, last, toArray, } from "../lib/runnable.js";

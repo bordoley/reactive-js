@@ -1,4 +1,4 @@
-import { EnumeratorLike } from "../enumerable.ts";
+import { EnumeratorLike } from "../enumerable";
 import {
   Factory,
   Function1,
@@ -7,10 +7,10 @@ import {
   pipe,
   returns,
   Predicate,
-} from "../functions.ts";
+} from "../functions";
 
-import { Option, none, orCompute as orComputeOption } from "../option.ts";
-import { __DEV__ } from "./env.ts";
+import { Option, none, orCompute as orComputeOption } from "../option";
+import { __DEV__ } from "../internal/env";
 
 export type CharCode = number;
 

@@ -1,4 +1,4 @@
-import { createRouter, find } from "../../../../core/mod/lib/internal/router.js";
+import { createRouter, find } from "../../../../core/mod/lib/experimental/router.js";
 import { isNone, isSome } from "../../../../core/mod/lib/option.js";
 import { getHeaderValue, } from "./httpHeaders.js";
 import { createHttpRequest, } from "./httpRequest.js";

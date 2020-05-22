@@ -7,7 +7,7 @@ import {
   expectEquals,
   expectTrue,
   expectFalse,
-} from "../lib/internal/testing";
+} from "../lib/experimental/testing";
 import {
   subscribe,
   onNotify as onNotifyObs,
