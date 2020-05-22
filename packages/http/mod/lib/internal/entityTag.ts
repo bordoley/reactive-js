@@ -8,7 +8,7 @@ import {
   parseWith,
   CharStreamLike,
   parseWithOrThrow,
-} from "../../../../core/mod/lib/internal/parserCombinators.ts";
+} from "../../../../core/mod/lib/experimental/parserCombinators.ts";
 import { isSome, none, Option } from "../../../../core/mod/lib/option.ts";
 import { ASCII } from "./httpGrammar.ts";
 import { HttpHeaders, getHeaderValue, HttpStandardHeader } from "./httpHeaders.ts";

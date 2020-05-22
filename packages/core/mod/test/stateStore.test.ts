@@ -5,7 +5,7 @@ import {
   describe,
   expectArrayEquals,
   expectTrue,
-} from "../lib/internal/testing.ts";
+} from "../lib/experimental/testing.ts";
 import { onNotify, subscribe, startWith, dispatch } from "../lib/observable.ts";
 import { createVirtualTimeScheduler } from "../lib/scheduler.ts";
 import { toStateStore } from "../lib/stateStore.ts";

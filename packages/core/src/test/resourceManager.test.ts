@@ -1,7 +1,7 @@
 import { createDisposableValue, disposed, dispose } from "../lib/disposable";
 import { pipe, ignore, defer } from "../lib/functions";
-import { createResourceManager } from "../lib/internal/resourceManager";
-import { test, describe } from "../lib/internal/testing";
+import { createResourceManager } from "../lib/experimental/resourceManager";
+import { test, describe } from "../lib/experimental/testing";
 import { onNotify, subscribe, fromArray } from "../lib/observable";
 import { createVirtualTimeScheduler } from "../lib/scheduler";
 

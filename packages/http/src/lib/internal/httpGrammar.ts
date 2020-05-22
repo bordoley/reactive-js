@@ -17,7 +17,7 @@ import {
   pColon,
   isParseError,
   string,
-} from "@reactive-js/core/lib/internal/parserCombinators";
+} from "@reactive-js/core/lib/experimental/parserCombinators";
 import { isNone, isSome, none, Option } from "@reactive-js/core/lib/option";
 import { HttpHeaders } from "./httpHeaders";
 

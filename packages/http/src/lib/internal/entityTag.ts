@@ -8,7 +8,7 @@ import {
   parseWith,
   CharStreamLike,
   parseWithOrThrow,
-} from "@reactive-js/core/lib/internal/parserCombinators";
+} from "@reactive-js/core/lib/experimental/parserCombinators";
 import { isSome, none, Option } from "@reactive-js/core/lib/option";
 import { ASCII } from "./httpGrammar";
 import { HttpHeaders, getHeaderValue, HttpStandardHeader } from "./httpHeaders";

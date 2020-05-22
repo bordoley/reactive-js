@@ -1,5 +1,5 @@
 import { pipe } from "../../../../core/mod/lib/functions.js";
-import { pForwardSlash, parseWith, parseWithOrThrow, } from "../../../../core/mod/lib/internal/parserCombinators.js";
+import { pForwardSlash, parseWith, parseWithOrThrow, } from "../../../../core/mod/lib/experimental/parserCombinators.js";
 import { fromObject, map, join, keep, length, } from "../../../../core/mod/lib/readonlyArray.js";
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar.js";
 export const pMediaType = charStream => {

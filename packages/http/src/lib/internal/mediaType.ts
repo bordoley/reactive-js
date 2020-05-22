@@ -4,7 +4,7 @@ import {
   Parser,
   parseWith,
   parseWithOrThrow,
-} from "@reactive-js/core/lib/internal/parserCombinators";
+} from "@reactive-js/core/lib/experimental/parserCombinators";
 import {
   fromObject,
   map,

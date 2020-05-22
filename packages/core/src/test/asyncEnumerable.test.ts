@@ -15,7 +15,7 @@ import {
   expectEquals,
   expectNone,
   expectArrayEquals,
-} from "../lib/internal/testing";
+} from "../lib/experimental/testing";
 import {
   fromValue,
   subscribe,

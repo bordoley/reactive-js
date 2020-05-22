@@ -1,4 +1,4 @@
-import { BenchmarkGroup } from "../lib/internal/benchmark";
+import { BenchmarkGroup } from "../lib/experimental/benchmark";
 const Benchmark = require("benchmark");
 
 const padl = (n: number, s: string) => {

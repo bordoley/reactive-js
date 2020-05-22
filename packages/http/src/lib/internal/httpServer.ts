@@ -1,5 +1,5 @@
 import { Function1 } from "@reactive-js/core/lib/functions";
-import { createRouter, find } from "@reactive-js/core/lib/internal/router";
+import { createRouter, find } from "@reactive-js/core/lib/experimental/router";
 import { ObservableLike } from "@reactive-js/core/lib/observable";
 import { isNone, isSome } from "@reactive-js/core/lib/option";
 import {

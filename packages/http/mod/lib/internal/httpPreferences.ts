@@ -3,7 +3,7 @@ import {
   concatWith,
   map,
   parseWith,
-} from "../../../../core/mod/lib/internal/parserCombinators.ts";
+} from "../../../../core/mod/lib/experimental/parserCombinators.ts";
 import { isSome, Option, none } from "../../../../core/mod/lib/option.ts";
 import { map as mapReadonlyArray } from "../../../../core/mod/lib/readonlyArray.ts";
 import { HttpContentEncoding } from "./httpContentInfo.ts";

@@ -5,7 +5,7 @@ import {
   expectToThrow,
   expectEquals,
   expectTrue,
-} from "@reactive-js/core/lib/internal/testing.ts";
+} from "@reactive-js/core/lib/experimental/testing.ts";
 import { none } from "@reactive-js/core/lib/option.ts";
 import { map } from "@reactive-js/core/lib/readonlyArray.ts";
 import {

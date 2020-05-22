@@ -24,7 +24,7 @@ import {
   expectToHaveBeenCalledTimes,
   expectSome,
   expectNone,
-} from "../lib/internal/testing.ts";
+} from "../lib/experimental/testing.ts";
 import * as Observable from "../lib/observable.ts";
 import {
   await_,

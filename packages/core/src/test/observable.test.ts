@@ -24,7 +24,7 @@ import {
   expectToHaveBeenCalledTimes,
   expectSome,
   expectNone,
-} from "../lib/internal/testing";
+} from "../lib/experimental/testing";
 import * as Observable from "../lib/observable";
 import {
   await_,

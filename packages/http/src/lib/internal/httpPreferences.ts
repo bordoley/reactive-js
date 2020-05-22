@@ -3,7 +3,7 @@ import {
   concatWith,
   map,
   parseWith,
-} from "@reactive-js/core/lib/internal/parserCombinators";
+} from "@reactive-js/core/lib/experimental/parserCombinators";
 import { isSome, Option, none } from "@reactive-js/core/lib/option";
 import { map as mapReadonlyArray } from "@reactive-js/core/lib/readonlyArray";
 import { HttpContentEncoding } from "./httpContentInfo";

@@ -5,7 +5,7 @@ import {
   describe,
   expectArrayEquals,
   expectTrue,
-} from "../lib/internal/testing";
+} from "../lib/experimental/testing";
 import { onNotify, subscribe, startWith, dispatch } from "../lib/observable";
 import { createVirtualTimeScheduler } from "../lib/scheduler";
 import { toStateStore } from "../lib/stateStore";

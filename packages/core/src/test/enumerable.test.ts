@@ -8,7 +8,7 @@ import {
 } from "../lib/enumerable";
 import * as Enumerable from "../lib/enumerable";
 import { defer } from "../lib/functions";
-import { test, describe, expectArrayEquals } from "../lib/internal/testing";
+import { test, describe, expectArrayEquals } from "../lib/experimental/testing";
 import { toArray } from "../lib/runnable";
 import { createMonadTests } from "./monad.test";
 

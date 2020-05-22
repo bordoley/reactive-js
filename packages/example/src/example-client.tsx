@@ -6,7 +6,7 @@ import {
   SideEffect1,
   Updater,
 } from "@reactive-js/core/lib/functions";
-import { createRouter, find } from "@reactive-js/core/lib/internal/router";
+import { createRouter, find } from "@reactive-js/core/lib/experimental/router";
 import {
   generate,
   throttle,

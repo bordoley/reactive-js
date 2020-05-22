@@ -1,5 +1,5 @@
 import { pipe } from "../../../../core/mod/lib/functions.js";
-import { pEquals, or, throwParseError, map, satisfy, parseWith, manySatisfy, many, pComma, sepBy, manyIgnore, pSemicolon, pColon, isParseError, string, } from "../../../../core/mod/lib/internal/parserCombinators.js";
+import { pEquals, or, throwParseError, map, satisfy, parseWith, manySatisfy, many, pComma, sepBy, manyIgnore, pSemicolon, pColon, isParseError, string, } from "../../../../core/mod/lib/experimental/parserCombinators.js";
 import { isNone, isSome, none } from "../../../../core/mod/lib/option.js";
 const pTChar = satisfy(c => c === 33 ||
     c === 35 ||

@@ -1,5 +1,5 @@
 import { pipe } from "../../../../core/mod/lib/functions.js";
-import { parseWith, pAsterisk, or, mapTo, } from "../../../../core/mod/lib/internal/parserCombinators.js";
+import { parseWith, pAsterisk, or, mapTo, } from "../../../../core/mod/lib/experimental/parserCombinators.js";
 import { isNone, isSome, none } from "../../../../core/mod/lib/option.js";
 import { join, map } from "../../../../core/mod/lib/readonlyArray.js";
 import { entityTagToString, pETag, parseETag, parseETagOrThrow, } from "./entityTag.js";

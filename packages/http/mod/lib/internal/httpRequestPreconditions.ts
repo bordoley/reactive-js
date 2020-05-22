@@ -4,7 +4,7 @@ import {
   pAsterisk,
   or,
   mapTo,
-} from "../../../../core/mod/lib/internal/parserCombinators.ts";
+} from "../../../../core/mod/lib/experimental/parserCombinators.ts";
 import { isNone, isSome, none, Option } from "../../../../core/mod/lib/option.ts";
 import { join, map } from "../../../../core/mod/lib/readonlyArray.ts";
 import {

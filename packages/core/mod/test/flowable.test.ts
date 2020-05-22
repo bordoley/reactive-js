@@ -8,7 +8,7 @@ import {
   expectTrue,
   mockFn,
   expectToHaveBeenCalledTimes,
-} from "../lib/internal/testing.ts";
+} from "../lib/experimental/testing.ts";
 import {
   onNotify,
   subscribe,
