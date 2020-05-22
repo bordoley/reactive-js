@@ -31,6 +31,7 @@ export { mapAsync } from "./internal/observable/mapAsync.js";
 export { concatAll, concatMap, exhaust, exhaustMap, mergeAll, mergeMap, } from "./internal/observable/mergeAll.js";
 export { onNotify } from "./internal/observable/onNotify.js";
 export { onSubscribe } from "./internal/observable/onSubscribe.js";
+export { pairwise } from "./internal/observable/pairwise.js";
 export { publish } from "./internal/observable/publish.js";
 export { reduce } from "./internal/observable/reduce.js";
 export { repeat, retry } from "./internal/observable/repeat.js";

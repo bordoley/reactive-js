@@ -1,7 +1,7 @@
-import { Function1, pipe } from "../../../../core/mod/lib/functions.ts";
+import { Function1 } from "../../../../core/mod/lib/functions.ts";
+import { createRouter, find } from "../../../../core/mod/lib/internal/router.ts";
 import { ObservableLike } from "../../../../core/mod/lib/observable.ts";
 import { isNone, isSome } from "../../../../core/mod/lib/option.ts";
-import { fromObject, reduce } from "../../../../core/mod/lib/readonlyArray.ts";
 import {
   getHeaderValue,
   HttpStandardHeader,
@@ -15,7 +15,6 @@ import {
   HttpRequestOptions,
 } from "./httpRequest.ts";
 import { HttpResponse } from "./httpResponse.ts";
-import { Trie, add, empty, find } from "../../../../core/mod/lib/internal/trie.ts";
 
 export type HttpServerRequest<T> = HttpRequest<T> & {
   readonly isTransportSecure: boolean;
@@ -39,14 +38,7 @@ export const createRoutingHttpServer = <TReq, TResp>(
     ObservableLike<HttpResponse<TResp>>
   >,
 ): HttpServer<HttpRequest<TReq>, HttpResponse<TResp>> => {
-  const router = pipe(
-    routes,
-    fromObject(),
-    reduce<
-      [string, HttpServer<HttpRoutedRequest<TReq>, HttpResponse<TResp>>],
-      Trie<HttpServer<HttpRoutedRequest<TReq>, HttpResponse<TResp>>>
-    >((acc, [path, handler]) => add(acc, path, handler), empty),
-  );
+  const router = createRouter(routes);
 
   return (request: HttpRequest<TReq>) => {
     const result = find(router, request.uri.pathname);

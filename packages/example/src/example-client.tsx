@@ -3,87 +3,32 @@ import {
   pipe,
   returns,
   increment,
+  defer,
+  SideEffect1,
   Updater,
 } from "@reactive-js/core/lib/functions";
+import { createRouter, find } from "@reactive-js/core/lib/internal/router";
 import {
   generate,
   throttle,
   onNotify,
   subscribe,
 } from "@reactive-js/core/lib/observable";
-import { onNotify as onNotifyStream } from "@reactive-js/core/lib/streamable";
 import {
-  historyStateStore,
   createEventSource,
   fetch,
+  historyPathStateStore,
   historyHashStateStore,
 } from "@reactive-js/core/lib/web";
 import { useObservable, useStreamable } from "@reactive-js/react/lib/hooks";
-import {
-  RoutableComponentProps,
-  Router,
-  RelativeURI,
-} from "@reactive-js/react/lib/router";
 import { idlePriority, normalPriority } from "@reactive-js/react/lib/scheduler";
 import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { default as ReactDOM } from "react-dom";
 
-const makeCallbacks = (uriUpdater: (updater: Updater<RelativeURI>) => void) => {
-  const liftUpdater = (updater: Updater<RelativeURI>) => () =>
-    uriUpdater(updater);
-
-  const goToPath = (pathname: string) =>
-    liftUpdater(state => ({ ...state, pathname }));
-
-  const goToRoute1 = goToPath("/route1");
-  const goToRoute2 = goToPath("/route2");
-  const goToRoute3 = goToPath("/route3");
-  const stream = goToPath("/stream");
-
-  return { goToRoute1, goToRoute2, goToRoute3, stream };
-};
-
-const makeHttpRequest = pipe(
-  { uri: "http://localhost:8080/files/packages/example/build/bundle.js" },
-  fetch(response => response.text()),
-);
-
-const NotFound = ({ uriUpdater }: RoutableComponentProps) => {
-  const { goToRoute1, goToRoute2, goToRoute3, stream } = useMemo(
-    returns(makeCallbacks(uriUpdater)),
-    [uriUpdater],
-  );
-
-  const someData = useObservable(makeHttpRequest);
-
-  return (
-    <div>
-      <div>
-        {"Not Found"}
-        <button onClick={goToRoute1}>Go to route1</button>
-        <button onClick={goToRoute2}>Go to route2</button>
-        <button onClick={goToRoute3}>Go to route3</button>
-        <button onClick={stream}>Go to stream</button>
-      </div>
-      <div>{someData ?? ""}</div>
-    </div>
-  );
-};
-
-const obs = generate(increment, returns<number>(0));
-
-const Component1 = (props: RoutableComponentProps) => {
-  const value = useObservable(obs, { scheduler: idlePriority });
-
-  return (
-    <>
-      <div>{props.uri.pathname}</div>
-      <div>{value}</div>
-    </>
-  );
-};
-
-const StatefulComponent = (_props: RoutableComponentProps) => {
+const TextInputURIState = (_props: {
+  readonly params: { readonly [key: string]: string };
+  readonly dispatch: SideEffect1<Updater<string>>;
+}) => {
   const [state = "", dispatch] = useStreamable(historyHashStateStore);
 
   const onChange = useCallback(
@@ -103,8 +48,19 @@ const StatefulComponent = (_props: RoutableComponentProps) => {
   );
 };
 
-const StreamPauseResume = (_props: RoutableComponentProps) => {
-  const stream = useMemo(() => pipe(obs, throttle(15), fromObservable()), []);
+const StreamPauseResume = (_: {
+  readonly params: { readonly [key: string]: string };
+  readonly dispatch: SideEffect1<Updater<string>>;
+}) => {
+  const stream = useMemo(
+    () =>
+      pipe(
+        generate(increment, returns<number>(0)),
+        throttle(15),
+        fromObservable(),
+      ),
+    [],
+  );
   const [value, setMode] = useStreamable(stream, {
     scheduler: idlePriority,
   });
@@ -133,27 +89,54 @@ const StreamPauseResume = (_props: RoutableComponentProps) => {
   );
 };
 
-const routes = {
-  "/route1": Component1,
-  "/route2": Component1,
-  "/route3": StatefulComponent,
-  "/stream": StreamPauseResume,
+const NotFound = ({
+  dispatch,
+}: {
+  readonly params: { readonly [key: string]: string };
+  readonly dispatch: SideEffect1<Updater<string>>;
+}) => {
+  const goToStream = useCallback(() => dispatch(returns("/stream")), [
+    dispatch,
+  ]);
+
+  const goToTextInput = useCallback(() => dispatch(returns("/text")), [
+    dispatch,
+  ]);
+
+  const httpRequest = useMemo(
+    defer(
+      { uri: "http://localhost:8080/files/packages/example/build/bundle.js" },
+      fetch(response => response.text()),
+    ),
+    [],
+  );
+  const someData = useObservable(httpRequest);
+
+  return (
+    <div>
+      <div>{"Not Found"}</div>
+      <div>
+        <button onClick={goToStream}>Stream Example</button>
+        <button onClick={goToTextInput}>Text Input Example</button>
+      </div>
+      <div>{someData ?? ""}</div>
+    </div>
+  );
 };
 
-const loggedHistoryStateStore = pipe(
-  historyStateStore,
-  onNotifyStream(console.log),
-);
+const router = createRouter({
+  "/stream": StreamPauseResume,
+  "/text": TextInputURIState,
+});
 
-(ReactDOM as any)
-  .createRoot(document.getElementById("root"))
-  .render(
-    <Router
-      stateStore={loggedHistoryStateStore}
-      notFound={NotFound}
-      routes={routes}
-    />,
-  );
+const Root = () => {
+  const [path = "", dispatch] = useStreamable(historyPathStateStore);
+  const [Component, params] = find(router, path) ?? [NotFound, {}];
+
+  return <Component params={params} dispatch={dispatch} />;
+};
+
+(ReactDOM as any).createRoot(document.getElementById("root")).render(<Root />);
 
 pipe(
   createEventSource("http://localhost:8080/events", {

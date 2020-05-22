@@ -1,16 +1,18 @@
+import { pipe } from "../functions.js";
 import { isNone, isSome, none } from "../option.js";
+import { fromObject, reduce } from "../readonlyArray.js";
 const _empty = {
     name: "",
     children: {},
 };
 export const empty = () => _empty;
-const _add = (trie, [name, child], value) => {
+const _add = (router, [name, child], value) => {
     var _a;
     if (isNone(child)) {
         return {
             name,
             value,
-            children: trie.children,
+            children: router.children,
         };
     }
     else {
@@ -20,19 +22,19 @@ const _add = (trie, [name, child], value) => {
             : childName.startsWith("*")
                 ? "*"
                 : childName;
-        const childTrie = (_a = trie.children[computedChildName]) !== null && _a !== void 0 ? _a : empty();
-        const newChildTrie = _add(childTrie, child, value);
+        const childRouter = (_a = router.children[computedChildName]) !== null && _a !== void 0 ? _a : empty();
+        const newChildRouter = _add(childRouter, child, value);
         return {
             name,
-            value: trie.value,
+            value: router.value,
             children: {
-                ...trie.children,
-                [computedChildName]: newChildTrie,
+                ...router.children,
+                [computedChildName]: newChildRouter,
             },
         };
     }
 };
-export const add = (trie, path, value) => _add(trie, createPath(path), value);
+export const add = (router, path, value) => _add(router, createPath(path), value);
 const serializePath = (path) => {
     let [result, child] = path;
     while (isSome(child)) {
@@ -42,9 +44,9 @@ const serializePath = (path) => {
     }
     return result;
 };
-const _find = (trie, path, params) => {
+const _find = (router, path, params) => {
     const [, child] = path;
-    const { value } = trie;
+    const { value } = router;
     if (isNone(child) && isSome(value)) {
         return [value, params];
     }
@@ -52,14 +54,14 @@ const _find = (trie, path, params) => {
         return none;
     }
     const [childName] = child;
-    const nameRouter = trie.children[childName];
+    const nameRouter = router.children[childName];
     const nameRouterResult = isSome(nameRouter)
         ? _find(nameRouter, child, params)
         : none;
     if (isSome(nameRouterResult)) {
         return nameRouterResult;
     }
-    const paramRouter = trie.children[":"];
+    const paramRouter = router.children[":"];
     const paramRouterResult = isSome(paramRouter)
         ? _find(paramRouter, child, {
             ...params,
@@ -69,7 +71,7 @@ const _find = (trie, path, params) => {
     if (isSome(paramRouterResult)) {
         return paramRouterResult;
     }
-    const globRouter = trie.children["*"];
+    const globRouter = router.children["*"];
     const globRouterHandler = globRouter === null || globRouter === void 0 ? void 0 : globRouter.value;
     if (isSome(globRouterHandler)) {
         const newParams = {
@@ -90,4 +92,5 @@ const createPath = (path) => {
     }
     return root;
 };
-export const find = (trie, path) => _find(trie, createPath(path), {});
+export const find = (router, path) => _find(router, createPath(path), {});
+export const createRouter = (routeMap) => pipe(routeMap, fromObject(), reduce((acc, [path, f]) => add(acc, path, f), empty));

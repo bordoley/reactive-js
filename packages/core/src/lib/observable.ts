@@ -53,6 +53,7 @@ export {
 } from "./internal/observable/mergeAll";
 export { onNotify } from "./internal/observable/onNotify";
 export { onSubscribe } from "./internal/observable/onSubscribe";
+export { pairwise } from "./internal/observable/pairwise";
 export { publish } from "./internal/observable/publish";
 export { reduce } from "./internal/observable/reduce";
 export { repeat, retry } from "./internal/observable/repeat";

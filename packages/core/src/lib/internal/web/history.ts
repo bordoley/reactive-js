@@ -1,9 +1,8 @@
-import { pipe, Updater } from "../../functions";
+import { pipe, Updater, compose } from "../../functions";
 import {
   compute,
   concatWith,
-  merge,
-  ObservableLike,
+  mergeWith,
   onNotify,
   throttle,
 } from "../../observable";
@@ -21,17 +20,17 @@ const pushHistoryState = (newLocation: string) => {
   }
 };
 
-const historyFunction = (obs: ObservableLike<string>) =>
-  pipe(
-    getCurrentLocation,
-    compute(),
-    concatWith(
-      merge(
-        pipe(obs, throttle(15), onNotify(pushHistoryState)),
-        fromEvent(window, "popstate", getCurrentLocation),
-      ),
+const historyFunction = compose(
+  throttle<string>(15),
+  onNotify(pushHistoryState),
+  mergeWith(
+    pipe(
+      getCurrentLocation,
+      compute(),
+      concatWith(fromEvent(window, "popstate", getCurrentLocation)),
     ),
-  );
+  ),
+);
 
 const _historyStateStore: StateStoreLike<string> = pipe(
   createStreamable(historyFunction),
@@ -39,6 +38,35 @@ const _historyStateStore: StateStoreLike<string> = pipe(
 );
 
 export const historyStateStore: StateStoreLike<string> = _historyStateStore;
+
+const getPathState = (state: string): string => {
+  const url = new URL(state);
+  return url.pathname;
+};
+
+const pathStateRequestMapper = (
+  stateUpdater: Updater<string>,
+): Updater<string> => (prevStateString: string) => {
+  const prevStateURL = new URL(prevStateString);
+  const prevState = prevStateURL.pathname;
+  const newState = stateUpdater(prevState);
+
+  if (newState === prevState) {
+    return prevStateString;
+  } else {
+    const newURL = new URL("", prevStateURL);
+    newURL.pathname = newState;
+    return newURL.href;
+  }
+};
+
+const _historyPathStateStore = pipe(
+  historyStateStore,
+  mapReq(pathStateRequestMapper),
+  map(getPathState),
+);
+
+export const historyPathStateStore: StateStoreLike<string> = _historyPathStateStore;
 
 type ParamMap = { readonly [key: string]: string };
 

@@ -7,5 +7,4 @@
 ### Modules
 
 * ["hooks"](modules/_hooks_.md)
-* ["router"](modules/_router_.md)
 * ["scheduler"](modules/_scheduler_.md)

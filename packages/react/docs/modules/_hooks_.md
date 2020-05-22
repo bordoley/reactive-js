@@ -27,7 +27,7 @@ Returns the current value, if defined, of `observable`.
 
 The `ObservableLike` to subscribe to.
 
-▪`Default value`  **__namedParameters**: *object*= { scheduler: normalPriority}
+▪`Default value`  **__namedParameters**: *object*= { scheduler: normalPriority }
 
 Name | Type |
 ------ | ------ |

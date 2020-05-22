@@ -1,7 +1,7 @@
-import { Function1, pipe } from "@reactive-js/core/lib/functions";
+import { Function1 } from "@reactive-js/core/lib/functions";
+import { createRouter, find } from "@reactive-js/core/lib/internal/router";
 import { ObservableLike } from "@reactive-js/core/lib/observable";
 import { isNone, isSome } from "@reactive-js/core/lib/option";
-import { fromObject, reduce } from "@reactive-js/core/lib/readonlyArray";
 import {
   getHeaderValue,
   HttpStandardHeader,
@@ -15,7 +15,6 @@ import {
   HttpRequestOptions,
 } from "./httpRequest";
 import { HttpResponse } from "./httpResponse";
-import { Trie, add, empty, find } from "@reactive-js/core/lib/internal/trie";
 
 export type HttpServerRequest<T> = HttpRequest<T> & {
   readonly isTransportSecure: boolean;
@@ -39,14 +38,7 @@ export const createRoutingHttpServer = <TReq, TResp>(
     ObservableLike<HttpResponse<TResp>>
   >,
 ): HttpServer<HttpRequest<TReq>, HttpResponse<TResp>> => {
-  const router = pipe(
-    routes,
-    fromObject(),
-    reduce<
-      [string, HttpServer<HttpRoutedRequest<TReq>, HttpResponse<TResp>>],
-      Trie<HttpServer<HttpRoutedRequest<TReq>, HttpResponse<TResp>>>
-    >((acc, [path, handler]) => add(acc, path, handler), empty),
-  );
+  const router = createRouter(routes);
 
   return (request: HttpRequest<TReq>) => {
     const result = find(router, request.uri.pathname);

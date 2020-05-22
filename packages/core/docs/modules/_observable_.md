@@ -73,6 +73,7 @@
 * [observeWith](_observable_.md#const-observewith)
 * [onNotify](_observable_.md#onnotify)
 * [onSubscribe](_observable_.md#const-onsubscribe)
+* [pairwise](_observable_.md#const-pairwise)
 * [publish](_observable_.md#const-publish)
 * [reduce](_observable_.md#const-reduce)
 * [repeat](_observable_.md#repeat)
@@ -1313,6 +1314,18 @@ Name | Type | Description |
 `f` | [Factory](_functions_.md#factory)‹[DisposableOrTeardown](_disposable_.md#disposableorteardown) &#124; void› |   |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+
+___
+
+### `Const` pairwise
+
+▸ **pairwise**<**T**>(): *[ObservableOperator](_observable_.md#observableoperator)‹T, [[Option](_option_.md#option)‹T›, T]›*
+
+**Type parameters:**
+
+▪ **T**
+
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, [[Option](_option_.md#option)‹T›, T]›*
 
 ___
 

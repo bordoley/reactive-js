@@ -1,11 +1,9 @@
-import { pipe } from "../../../../core/mod/lib/functions.js";
+import { createRouter, find } from "../../../../core/mod/lib/internal/router.js";
 import { isNone, isSome } from "../../../../core/mod/lib/option.js";
-import { fromObject, reduce } from "../../../../core/mod/lib/readonlyArray.js";
 import { getHeaderValue, } from "./httpHeaders.js";
 import { createHttpRequest, } from "./httpRequest.js";
-import { add, empty, find } from "../../../../core/mod/lib/internal/trie.js";
 export const createRoutingHttpServer = (routes, notFoundHandler) => {
-    const router = pipe(routes, fromObject(), reduce((acc, [path, handler]) => add(acc, path, handler), empty));
+    const router = createRouter(routes);
     return (request) => {
         const result = find(router, request.uri.pathname);
         if (isSome(result)) {
