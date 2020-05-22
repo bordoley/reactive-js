@@ -1,5 +1,5 @@
-import { pipe } from "../../functions.js";
-import { compute, concatWith, merge, onNotify, throttle, } from "../../observable.js";
+import { pipe, compose } from "../../functions.js";
+import { compute, concatWith, mergeWith, onNotify, throttle, } from "../../observable.js";
 import { none } from "../../option.js";
 import { toStateStore } from "../../stateStore.js";
 import { createStreamable, map, mapReq } from "../../streamable.js";
@@ -11,9 +11,28 @@ const pushHistoryState = (newLocation) => {
         window.history.pushState(none, "", newLocation);
     }
 };
-const historyFunction = (obs) => pipe(getCurrentLocation, compute(), concatWith(merge(pipe(obs, throttle(15), onNotify(pushHistoryState)), fromEvent(window, "popstate", getCurrentLocation))));
+const historyFunction = compose(throttle(15), onNotify(pushHistoryState), mergeWith(pipe(getCurrentLocation, compute(), concatWith(fromEvent(window, "popstate", getCurrentLocation)))));
 const _historyStateStore = pipe(createStreamable(historyFunction), toStateStore());
 export const historyStateStore = _historyStateStore;
+const getPathState = (state) => {
+    const url = new URL(state);
+    return url.pathname;
+};
+const pathStateRequestMapper = (stateUpdater) => (prevStateString) => {
+    const prevStateURL = new URL(prevStateString);
+    const prevState = prevStateURL.pathname;
+    const newState = stateUpdater(prevState);
+    if (newState === prevState) {
+        return prevStateString;
+    }
+    else {
+        const newURL = new URL("", prevStateURL);
+        newURL.pathname = newState;
+        return newURL.href;
+    }
+};
+const _historyPathStateStore = pipe(historyStateStore, mapReq(pathStateRequestMapper), map(getPathState));
+export const historyPathStateStore = _historyPathStateStore;
 const parseQueryState = (searchParams) => {
     const retval = {};
     searchParams.forEach((v, k) => {

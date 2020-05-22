@@ -50,8 +50,12 @@ export const createStateStore = <T>(
  * @param equals Optional equality function that is used to compare
  * if a state value is distinct from the previous one.
  */
-export const toStateStore = <T>(
-): StreamableOperator<T, T, Updater<T>, T> => streamable =>
+export const toStateStore = <T>(): StreamableOperator<
+  T,
+  T,
+  Updater<T>,
+  T
+> => streamable =>
   createStreamable(updates =>
     using(scheduler => {
       const stream = streamStreamable(streamable, scheduler);

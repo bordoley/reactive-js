@@ -1,26 +1,32 @@
-import { isNone, isSome, none, Option } from "../option";
+import { pipe } from "../functions.ts";
+import { isNone, isSome, none, Option } from "../option.ts";
+import { fromObject, reduce } from "../readonlyArray.ts";
 
-export type Trie<T> = {
+export type Router<T> = {
   readonly name: string;
   readonly value?: T;
-  readonly children: { [segment: string]: Trie<T> };
+  readonly children: { readonly [segment: string]: Router<T> };
 };
 
-export type Path = [string, Option<Path>];
+type Path = [string, Option<Path>];
 
-const _empty: Trie<unknown> = {
+const _empty: Router<unknown> = {
   name: "",
   children: {},
 };
 
-export const empty = <T>(): Trie<T> => _empty as Trie<T>;
+export const empty = <T>(): Router<T> => _empty as Router<T>;
 
-const _add = <T>(trie: Trie<T>, [name, child]: Path, value: T): Trie<T> => {
+const _add = <T>(
+  router: Router<T>,
+  [name, child]: Path,
+  value: T,
+): Router<T> => {
   if (isNone(child)) {
     return {
       name,
       value,
-      children: trie.children,
+      children: router.children,
     };
   } else {
     const [childName] = child;
@@ -30,22 +36,22 @@ const _add = <T>(trie: Trie<T>, [name, child]: Path, value: T): Trie<T> => {
       ? "*"
       : childName;
 
-    const childTrie = trie.children[computedChildName] ?? empty();
-    const newChildTrie = _add(childTrie, child, value);
+    const childRouter = router.children[computedChildName] ?? empty();
+    const newChildRouter = _add(childRouter, child, value);
 
     return {
       name,
-      value: trie.value,
+      value: router.value,
       children: {
-        ...trie.children,
-        [computedChildName]: newChildTrie,
+        ...router.children,
+        [computedChildName]: newChildRouter,
       },
     };
   }
 };
 
-export const add = <T>(trie: Trie<T>, path: string, value: T): Trie<T> =>
-  _add(trie, createPath(path), value);
+export const add = <T>(router: Router<T>, path: string, value: T): Router<T> =>
+  _add(router, createPath(path), value);
 
 const serializePath = (path: Path): string => {
   let [result, child] = path;
@@ -58,12 +64,12 @@ const serializePath = (path: Path): string => {
 };
 
 const _find = <T>(
-  trie: Trie<T>,
+  router: Router<T>,
   path: Path,
   params: { readonly [param: string]: string },
 ): Option<[T, { [param: string]: string }]> => {
   const [, child] = path;
-  const { value } = trie;
+  const { value } = router;
 
   if (isNone(child) && isSome(value)) {
     return [value, params];
@@ -74,7 +80,7 @@ const _find = <T>(
 
   const [childName] = child;
 
-  const nameRouter = trie.children[childName];
+  const nameRouter = router.children[childName];
   const nameRouterResult = isSome(nameRouter)
     ? _find(nameRouter, child, params)
     : none;
@@ -82,7 +88,7 @@ const _find = <T>(
     return nameRouterResult;
   }
 
-  const paramRouter = trie.children[":"];
+  const paramRouter = router.children[":"];
   const paramRouterResult = isSome(paramRouter)
     ? _find(paramRouter, child, {
         ...params,
@@ -93,7 +99,7 @@ const _find = <T>(
     return paramRouterResult;
   }
 
-  const globRouter = trie.children["*"];
+  const globRouter = router.children["*"];
   const globRouterHandler = globRouter?.value;
   if (isSome(globRouterHandler)) {
     const newParams = {
@@ -121,7 +127,17 @@ const createPath = (path: string): Path => {
 };
 
 export const find = <T>(
-  trie: Trie<T>,
+  router: Router<T>,
   path: string,
-): Option<[T, { [param: string]: string }]> =>
-  _find(trie, createPath(path), {});
+): Option<[T, { readonly [param: string]: string }]> =>
+  _find(router, createPath(path), {});
+
+export const createRouter = <T>(routeMap: { readonly [key: string]: T }) =>
+  pipe(
+    routeMap,
+    fromObject(),
+    reduce<[string, T], Router<T>>(
+      (acc, [path, f]) => add(acc, path, f),
+      empty,
+    ),
+  );

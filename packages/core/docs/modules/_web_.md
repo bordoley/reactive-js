@@ -11,6 +11,7 @@
 ### Variables
 
 * [historyHashStateStore](_web_.md#const-historyhashstatestore)
+* [historyPathStateStore](_web_.md#const-historypathstatestore)
 * [historySearchStateStore](_web_.md#const-historysearchstatestore)
 * [historyStateStore](_web_.md#const-historystatestore)
 
@@ -31,6 +32,12 @@
 ### `Const` historyHashStateStore
 
 • **historyHashStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹string›* = _historyHashStateStore
+
+___
+
+### `Const` historyPathStateStore
+
+• **historyPathStateStore**: *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹string›* = _historyPathStateStore
 
 ___
 
