@@ -38,6 +38,7 @@ import {
   HttpResponse,
   HttpStatusCode,
 } from "./httpResponse.ts";
+import { ReadonlyObjectMap } from "../../../readonlyObjectMap.ts";
 
 export const enum HttpMethod {
   GET = "GET",
@@ -275,9 +276,7 @@ export const toIOSourceHttpRequest = <TBody>(
 ): HttpRequest<IOSourceLike<TBody>> =>
   toIOSourceHttpMessage(req) as HttpRequest<IOSourceLike<TBody>>;
 
-export const decodeHttpRequestContent = (decoderProvider: {
-  [key: string]: IOSourceOperator<Uint8Array, Uint8Array>;
-}): Function1<
+export const decodeHttpRequestContent = (decoderProvider: ReadonlyObjectMap<IOSourceOperator<Uint8Array, Uint8Array>>): Function1<
   HttpRequest<IOSourceLike<Uint8Array>>,
   HttpRequest<IOSourceLike<Uint8Array>>
 > => req => {

@@ -1,4 +1,5 @@
 import { Function1, Reducer, Factory, Predicate } from "./functions";
+import { ReadonlyObjectMap } from "./readonlyObjectMap";
 
 export type ReadonlyArrayOperator<TA, TB> = Function1<
   readonly TA[],
@@ -9,10 +10,10 @@ export const everySatisfy = <T>(
   predicate: Predicate<T>,
 ): Function1<readonly T[], boolean> => arr => arr.every(predicate);
 
-const _fromObject = <T>(object: { [key: string]: T }): readonly [string, T][] =>
+const _fromObject = <T>(object: ReadonlyObjectMap<T>): readonly [string, T][] =>
   Object.entries<T>(object);
 export const fromObject = <T>(): Function1<
-  { [key: string]: T },
+  ReadonlyObjectMap<T>,
   readonly [string, T][]
 > => _fromObject;
 

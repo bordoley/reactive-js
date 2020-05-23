@@ -34,6 +34,7 @@ import {
   createHttpMessage,
 } from "./httpMessage.ts";
 import { HttpRequest, HttpMethod } from "./httpRequest.ts";
+import { ReadonlyObjectMap } from "../../../readonlyObjectMap.ts";
 
 export const enum HttpStatusCode {
   Continue = 100,
@@ -302,9 +303,7 @@ export const toIOSourceHttpResponse = <TBody>(
 ): HttpResponse<IOSourceLike<TBody>> =>
   toIOSourceHttpMessage(resp) as HttpResponse<IOSourceLike<TBody>>;
 
-export const decodeHttpResponseContent = (decoderProvider: {
-  [key: string]: IOSourceOperator<Uint8Array, Uint8Array>;
-}): Function1<
+export const decodeHttpResponseContent = (decoderProvider: ReadonlyObjectMap<IOSourceOperator<Uint8Array, Uint8Array>>): Function1<
   HttpResponse<IOSourceLike<Uint8Array>>,
   HttpResponse<IOSourceLike<Uint8Array>>
 > => resp => {
@@ -339,14 +338,10 @@ export const decodeHttpResponseContent = (decoderProvider: {
 };
 
 export const encodeHttpResponseContent = (
-  encoderProvider: {
-    [key: string]: IOSourceOperator<Uint8Array, Uint8Array>;
-  },
-  db: {
-    [key: string]: {
+  encoderProvider: ReadonlyObjectMap<IOSourceOperator<Uint8Array, Uint8Array>>,
+  db: ReadonlyObjectMap<{
       compressible?: boolean;
-    };
-  } = {},
+  }> = {},
 ): Function1<
   HttpRequest<unknown>,
   Updater<HttpResponse<IOSourceLike<Uint8Array>>>

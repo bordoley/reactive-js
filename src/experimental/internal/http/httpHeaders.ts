@@ -1,11 +1,10 @@
 import { SideEffect2, pipe } from "../../../functions";
 import { Option } from "../../../option";
 import { map } from "../../../readonlyArray";
+import { ReadonlyObjectMap } from "../../../readonlyObjectMap";
 
 // FIXME: filter out headers for which we have strongly typed apis.
-export type HttpHeaders = {
-  readonly [header: string]: string;
-};
+export type HttpHeaders = ReadonlyObjectMap<string>;
 
 export const enum HttpStandardHeader {
   Accept = "Accept",
