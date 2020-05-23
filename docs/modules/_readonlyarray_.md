@@ -47,13 +47,13 @@ ___
 
 ### `Const` fromObject
 
-▸ **fromObject**<**T**>(): *[Function1](_functions_.md#function1)‹object, keyof [string, T][]›*
+▸ **fromObject**<**T**>(): *[Function1](_functions_.md#function1)‹[ReadonlyObjectMap](_readonlyobjectmap_.md#readonlyobjectmap)‹T›, keyof [string, T][]›*
 
 **Type parameters:**
 
 ▪ **T**
 
-**Returns:** *[Function1](_functions_.md#function1)‹object, keyof [string, T][]›*
+**Returns:** *[Function1](_functions_.md#function1)‹[ReadonlyObjectMap](_readonlyobjectmap_.md#readonlyobjectmap)‹T›, keyof [string, T][]›*
 
 ___
 

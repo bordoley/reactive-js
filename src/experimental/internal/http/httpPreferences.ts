@@ -6,6 +6,7 @@ import { HttpContentEncoding } from "./httpContentInfo";
 import { pToken, pParams, httpList } from "./httpGrammar";
 import { HttpStandardHeader, getHeaderValue, HttpHeaders } from "./httpHeaders";
 import { MediaType, pMediaType, parseMediaTypeOrThrow } from "./mediaType";
+import { ReadonlyObjectMap } from "../../../readonlyObjectMap";
 
 // Strictly speaking MediaRanges may have parameters, but no one uses them.
 export type MediaRange = {
@@ -24,12 +25,8 @@ export type HttpPreferences = {
 };
 
 const weightedParamComparator = (
-  a: {
-    readonly [key: string]: string;
-  },
-  b: {
-    readonly [key: string]: string;
-  },
+  a: ReadonlyObjectMap<string>,
+  b: ReadonlyObjectMap<string>,
 ) => {
   const qA = (Number.parseFloat(a["q"]) ?? 1) * 1000;
   const qB = (Number.parseFloat(b["q"]) ?? 1) * 1000;
@@ -59,15 +56,11 @@ const parseAccept = pipe(
 const weightedTokenComparator = (
   [, a]: [
     string,
-    {
-      readonly [key: string]: string;
-    },
+    ReadonlyObjectMap<string>
   ],
   [, b]: [
     string,
-    {
-      readonly [key: string]: string;
-    },
+    ReadonlyObjectMap<string>
   ],
 ) => weightedParamComparator(a, b);
 

@@ -12,6 +12,7 @@ import {
   parseMediaTypeOrThrow,
   mediaTypeIsCompressible,
 } from "./mediaType";
+import { ReadonlyObjectMap } from "../../../readonlyObjectMap";
 
 export const enum HttpContentEncoding {
   Brotli = "br",
@@ -93,11 +94,9 @@ export const createHttpContentInfo = ({
 
 export const contentIsCompressible = (
   content: HttpContentInfo,
-  db: {
-    [key: string]: {
+  db: ReadonlyObjectMap<{
       compressible?: boolean;
-    };
-  },
+    }>
 ): boolean =>
   content.contentEncodings.length === 0 && // Don't double encode
   mediaTypeIsCompressible(content.contentType, db);

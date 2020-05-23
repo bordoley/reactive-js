@@ -53,11 +53,9 @@ const textSubtypes = ["html", "json", "text", "xml"];
 
 export const mediaTypeIsCompressible = (
   { type, subtype }: MediaType,
-  db: {
-    [key: string]: {
+  db: ReadonlyObjectMap<{
       compressible?: boolean;
-    };
-  },
+    }>
 ) => {
   const mediaType = mediaTypeToString({ type, subtype, params: {} });
   const blackListed = compressionBlacklist.includes(mediaType);
