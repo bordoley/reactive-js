@@ -1244,6 +1244,10 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/benchmark@^1.0.33":
+  version "1.0.33"
+  resolved "https://registry.yarnpkg.com/@types/benchmark/-/benchmark-1.0.33.tgz#437641cb977db0267b8146f963763aafd0f02fef"
+
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"

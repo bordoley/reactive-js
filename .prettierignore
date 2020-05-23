@@ -13,8 +13,8 @@ yarn-error.log
 .prettierignore
 .npmignore
 
-packages/*/build
-packages/*/coverage
-packages/*/docs
-packages/*/lib
-packages/*/mod
+./build
+./coverage
+./docs
+./mod
+./packages/core
