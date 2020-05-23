@@ -1142,6 +1142,12 @@
     "@reactive-js/option" "^0.0.37"
     "@reactive-js/pipe" "^0.0.37"
 
+"@reactive-js/http@^0.0.42":
+  version "0.0.42"
+  resolved "https://registry.yarnpkg.com/@reactive-js/http/-/http-0.0.42.tgz#06f4916fc34ed7ff748e91166d7001c1dd556747"
+  dependencies:
+    "@reactive-js/core" "^0.0.42"
+
 "@reactive-js/observable@^0.0.37":
   version "0.0.37"
   resolved "https://registry.yarnpkg.com/@reactive-js/observable/-/observable-0.0.37.tgz#f39fa350c0a950ea521be9f904048bbcdbd0fc66"

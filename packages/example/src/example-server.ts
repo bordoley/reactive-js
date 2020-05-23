@@ -50,6 +50,7 @@ import {
 } from "@reactive-js/core/lib/scheduler";
 import db from "mime-db";
 import mime from "mime-types";
+import { ReadonlyObjectMap } from "@reactive-js/core/src/lib/readonlyObjectMap";
 
 const scheduler = pipe(
   createHostScheduler(),
@@ -59,7 +60,7 @@ const scheduler = pipe(
 
 const PrintParams = (
   _: HttpRequest<IOSourceLike<Uint8Array>>,
-  params: { readonly [key: string]: string },
+  params: ReadonlyObjectMap<string>,
 ): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> =>
   pipe(
     createHttpResponse({
@@ -76,7 +77,7 @@ const PrintParams = (
 
 const EventStream = (
   _req: HttpRequest<IOSourceLike<Uint8Array>>,
-  _params: { readonly [key: string]: string },
+  _params: ReadonlyObjectMap<string>,
 ): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> =>
   pipe(
     createHttpResponse({
@@ -100,7 +101,7 @@ const EventStream = (
 
 const FileServer = (
   _req: HttpRequest<IOSourceLike<Uint8Array>>,
-  params: { readonly [key: string]: string },
+  params: ReadonlyObjectMap<string>,
 ): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> => {
   const path = params["path"] || "";
   const contentType = mime.lookup(path) || "application/octet-stream";
@@ -131,13 +132,13 @@ const FileServer = (
 
 const Throws = (
   _req: HttpRequest<IOSourceLike<Uint8Array>>,
-  _params: { readonly [key: string]: string },
+  _params: ReadonlyObjectMap<string>,
 ): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> =>
   pipe(() => new Error("internal error"), throws());
 
 const NotFound = (
   req: HttpRequest<IOSourceLike<Uint8Array>>,
-  _params: { readonly [key: string]: string },
+  _params: ReadonlyObjectMap<string>,
 ): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> =>
   pipe(
     createHttpResponse({
