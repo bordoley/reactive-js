@@ -1,25 +1,25 @@
-import { createRouter, find } from "@reactive-js/core/lib/experimental/router";
-import { fromObservable, FlowMode } from "@reactive-js/core/lib/flowable";
+import { createRouter, find } from "@reactive-js/core/experimental/router";
+import { fromObservable, FlowMode } from "@reactive-js/core/flowable";
 import {
   pipe,
   returns,
   increment,
   SideEffect1,
   Updater,
-} from "@reactive-js/core/lib/functions";
-import { generate, throttle } from "@reactive-js/core/lib/observable";
+} from "@reactive-js/core/functions";
+import { generate, throttle } from "@reactive-js/core/observable";
 import {
   idlePriority,
   useObservable,
   useStreamable,
-} from "@reactive-js/core/lib/react";
+} from "@reactive-js/core/react";
 import {
   createEventSource,
   fetch,
   emptyURI,
   historyStateStore,
   RelativeURI,
-} from "@reactive-js/core/lib/web";
+} from "@reactive-js/core/web";
 import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { default as ReactDOM } from "react-dom";
 

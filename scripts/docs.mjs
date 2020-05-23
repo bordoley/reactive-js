@@ -18,9 +18,9 @@ app.bootstrap({
 });
 
 const files = fs
-  .readdirSync("./src/lib")
+  .readdirSync("./src")
   .filter(file => file.endsWith(".ts"))
-  .map(file => `./src/lib/${file}`);
+  .map(file => `./src/${file}`);
 
 const project = app.convert(app.expandInputFiles(files));
 

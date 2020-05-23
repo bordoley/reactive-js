@@ -12,27 +12,27 @@ import {
   toIOSourceHttpResponse,
   encodeHttpResponseContent,
   disallowProtocolAndHostForwarding,
-} from "@reactive-js/core/lib/experimental/http";
+} from "@reactive-js/core/experimental/http";
 import {
   createHttpRequestListener,
   createContentEncodingDecompressTransforms,
   createContentEncodingCompressTransforms,
-} from "@reactive-js/core/lib/experimental/node";
-import { createRouter, find } from "@reactive-js/core/lib/experimental/router";
+} from "@reactive-js/core/experimental/node";
+import { createRouter, find } from "@reactive-js/core/experimental/router";
 import {
   pipe,
   returns,
   increment,
   compose,
-} from "@reactive-js/core/lib/functions";
+} from "@reactive-js/core/functions";
 import {
   encodeUtf8,
   fromObservable,
   map as mapFlowable,
   IOSourceLike,
   fromValue as ioSourceFromValue,
-} from "@reactive-js/core/lib/io";
-import { readFileIOSource, bindNodeCallback } from "@reactive-js/core/lib/node";
+} from "@reactive-js/core/io";
+import { readFileIOSource, bindNodeCallback } from "@reactive-js/core/node";
 import {
   map,
   fromValue,
@@ -41,16 +41,16 @@ import {
   catchError,
   throws,
   await_,
-} from "@reactive-js/core/lib/observable";
-import { isSome } from "@reactive-js/core/lib/option";
+} from "@reactive-js/core/observable";
+import { isSome } from "@reactive-js/core/option";
 import {
   createHostScheduler,
   toPriorityScheduler,
   toSchedulerWithPriority,
-} from "@reactive-js/core/lib/scheduler";
+} from "@reactive-js/core/scheduler";
 import db from "mime-db";
 import mime from "mime-types";
-import { ReadonlyObjectMap } from "@reactive-js/core/src/lib/readonlyObjectMap";
+import { ReadonlyObjectMap } from "@reactive-js/core/readonlyObjectMap";
 
 const scheduler = pipe(
   createHostScheduler(),

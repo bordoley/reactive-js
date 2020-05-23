@@ -1,0 +1,45 @@
+{
+  "name": "@reactive-js/core",
+  "version": "0.0.42",
+  "keywords": [
+    "asynchronous",
+    "data flow",
+    "data-flow",
+    "frp",
+    "functional programming",
+    "functional-reactive-programming",
+    "ix",
+    "observable",
+    "observables",
+    "react",
+    "reactjs",
+    "reactive",
+    "reactive-extensions",
+    "reactive-js",
+    "reactive-x",
+    "rx",
+    "rxjs",
+    "scheduler",
+    "state management",
+    "state-management",
+    "stream",
+    "streams",
+    "web"
+  ],
+  "author": {
+    "name": "David Bordoley",
+    "email": "bordoley@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bordoley/reactive-js.git"
+  },
+  "dependencies": {
+    "react": "^16.11.0",
+    "scheduler": "^0.17.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
