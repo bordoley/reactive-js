@@ -1,6 +1,24 @@
 # Reactive JS:
 
-Fast modern reactive Javascript programming library
+Fast modern reactive Javascript programming library.
+
+## Platform Support
+
+ReactiveJS is an isomorphic library which supports all modern ecmascript platforms including [Node.js](https://nodejs.org/)  (v14 and up), [Deno](https://deno.land/), and modern browsers.
+
+## Installing
+
+### NPM JS
+
+Reactive JS can be added to your npm based project using the [@reactive-js/core](https://www.npmjs.com/@reactive-js/core) packages.
+
+```
+yarn add @reactive-js/core
+```
+
+### ES6 Modules
+
+Both Ecmascript and Typescript modules that may be directly imported into your project are available in the [mod](./mod) directory of this repo. These modules are all [Deno](https://deno.land/) compatible. Only modules in the toplevel directory are supported. Modules in the internal or experimental folders include API that is subject to change at any time. We recommend referencing specifically tagged releases of these files in your projects.
 
 ## Example Usage
 
@@ -37,39 +55,3 @@ const subscription = pipe(
  subscribe(normalPriority);
 );
 ```
-
-## Packages
-
-### Reactive Asynchronous Programming (RX)
-
-- [@reactive-js/observable](./packages/observable)
-
-### Interactive Synchronous Programming
-
-- [@reactive-js/enumerable](./packages/enumerable)
-
-### Interactive Asynchronous Programming (IX)
-
-- [@reactive-js/async-enumerable](./packages/async-enumerable)
-
-### Utilities
-
-- [@reactive-js/disposable](./packages/disposable)
-- [@reactive-js/pipe](./packages/pipe)
-- [@reactive-js/scheduler](./packages/scheduler)
-
-### Platform Integrations
-
-#### Node.js
-
-- [@reactive-js/node](./packages/node)
-
-#### React
-
-- [@reactive-js/react](./packages/react)
-- [@reactive-js/react-router](./packages/react-router)
-- [@reactive-js/react-scheduler](./packages/react-scheduler)
-
-#### Web
-
-- [@reactive-js/web](./packages/web)
