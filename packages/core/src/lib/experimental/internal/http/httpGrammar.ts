@@ -20,6 +20,7 @@ import {
   string,
 } from "../../parserCombinators";
 import { HttpHeaders } from "./httpHeaders";
+import { ReadonlyObjectMap } from "../../../readonlyObjectMap";
 
 export const enum ASCII {
   HTAB = 9,
@@ -194,7 +195,7 @@ const pParamsParam = (charStream: CharStreamLike) => {
   return pParameter(charStream);
 };
 
-export const pParams: Parser<{ readonly [key: string]: string }> = pipe(
+export const pParams: Parser<ReadonlyObjectMap<string>> = pipe(
   pParamsParam,
   many(),
   map(results => {

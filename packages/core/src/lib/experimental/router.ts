@@ -1,11 +1,12 @@
 import { pipe } from "../functions";
 import { isNone, isSome, none, Option } from "../option";
 import { fromObject, reduce } from "../readonlyArray";
+import { ReadonlyObjectMap } from "../readonlyObjectMap";
 
 export type Router<T> = {
   readonly name: string;
   readonly value?: T;
-  readonly children: { readonly [segment: string]: Router<T> };
+  readonly children: ReadonlyObjectMap<Router<T>>;
 };
 
 type Path = [string, Option<Path>];
@@ -66,8 +67,8 @@ const serializePath = (path: Path): string => {
 const _find = <T>(
   router: Router<T>,
   path: Path,
-  params: { readonly [param: string]: string },
-): Option<[T, { [param: string]: string }]> => {
+  params: ReadonlyObjectMap<string>,
+): Option<[T, ReadonlyObjectMap<string>]> => {
   const [, child] = path;
   const { value } = router;
 
@@ -129,10 +130,10 @@ const createPath = (path: string): Path => {
 export const find = <T>(
   router: Router<T>,
   path: string,
-): Option<[T, { readonly [param: string]: string }]> =>
+): Option<[T, ReadonlyObjectMap<string>]> =>
   _find(router, createPath(path), {});
 
-export const createRouter = <T>(routeMap: { readonly [key: string]: T }) =>
+export const createRouter = <T>(routeMap: ReadonlyObjectMap<T>) =>
   pipe(
     routeMap,
     fromObject(),

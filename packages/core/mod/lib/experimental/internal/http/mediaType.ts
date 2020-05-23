@@ -7,11 +7,12 @@ import {
   parseWithOrThrow,
 } from "../../parserCombinators.ts";
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar.ts";
+import { ReadonlyObjectMap } from "../../../readonlyObjectMap.ts";
 
 export type MediaType = {
   readonly type: string;
   readonly subtype: string;
-  readonly params: { readonly [key: string]: string };
+  readonly params: ReadonlyObjectMap<string>;
 };
 
 export const pMediaType: Parser<MediaType> = charStream => {
