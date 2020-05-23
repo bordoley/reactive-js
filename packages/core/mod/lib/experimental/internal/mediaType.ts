@@ -1,17 +1,11 @@
 import { pipe } from "../../functions.ts";
+import { fromObject, map, join, keep, length } from "../../readonlyArray.ts";
 import {
   pForwardSlash,
   Parser,
   parseWith,
   parseWithOrThrow,
 } from "../parserCombinators.ts";
-import {
-  fromObject,
-  map,
-  join,
-  keep,
-  length,
-} from "../../readonlyArray.ts";
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar.ts";
 
 export type MediaType = {

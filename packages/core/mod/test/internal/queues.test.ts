@@ -1,6 +1,10 @@
+import {
+  test,
+  describe,
+  expectArrayEquals,
+} from "../../lib/experimental/testing.ts";
 import { pipe } from "../../lib/functions.ts";
 import { createPriorityQueue } from "../../lib/internal/queues.ts";
-import { test, describe, expectArrayEquals } from "../../lib/experimental/testing.ts";
 
 const compare = (a: number, b: number): number => a - b;
 

@@ -1,7 +1,7 @@
 import { pipe, SideEffect2 } from "../../functions";
-import { parseWith } from "../parserCombinators";
 import { isNone, none, Option } from "../../option";
 import { join } from "../../readonlyArray";
+import { parseWith } from "../parserCombinators";
 import { pToken, httpList } from "./httpGrammar";
 import { getHeaderValue, HttpStandardHeader, HttpHeaders } from "./httpHeaders";
 

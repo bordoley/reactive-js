@@ -1,5 +1,5 @@
-import { pipe, returns, alwaysFalse, alwaysTrue, increment, defer, } from "../lib/functions.js";
 import { test, describe, expectNone, expectEquals, mockFn, expectToHaveBeenCalledTimes, expectTrue, expectFalse, } from "../lib/experimental/testing.js";
+import { pipe, returns, alwaysFalse, alwaysTrue, increment, defer, } from "../lib/functions.js";
 import { compute, contains, first, fromArray, empty, forEach, noneSatisfy, generate, everySatisfy, } from "../lib/runnable.js";
 import * as Runnable from "../lib/runnable.js";
 import { createMonadTests } from "./monad.test.js";

@@ -1,6 +1,6 @@
 import { pipe } from "../../functions.js";
-import { pEquals, or, throwParseError, map, satisfy, parseWith, manySatisfy, many, pComma, sepBy, manyIgnore, pSemicolon, pColon, isParseError, string, } from "../parserCombinators.js";
 import { isNone, isSome, none } from "../../option.js";
+import { pEquals, or, throwParseError, map, satisfy, parseWith, manySatisfy, many, pComma, sepBy, manyIgnore, pSemicolon, pColon, isParseError, string, } from "../parserCombinators.js";
 const pTChar = satisfy(c => c === 33 ||
     c === 35 ||
     c === 36 ||

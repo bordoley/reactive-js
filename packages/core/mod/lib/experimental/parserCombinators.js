@@ -1,6 +1,6 @@
 import { compose, isEqualTo, pipe, returns, } from "../functions.js";
-import { none, orCompute as orComputeOption } from "../option.js";
 import { __DEV__ } from "../internal/env.js";
+import { none, orCompute as orComputeOption } from "../option.js";
 class CharStreamImpl {
     constructor(src) {
         this.src = src;

@@ -1,3 +1,4 @@
+import { test, describe, expectArrayEquals } from "../lib/experimental/testing";
 import {
   pipe,
   returns,
@@ -7,7 +8,6 @@ import {
   defer,
   incrementBy,
 } from "../lib/functions";
-import { test, describe, expectArrayEquals } from "../lib/experimental/testing";
 
 import { toArray } from "../lib/runnable";
 

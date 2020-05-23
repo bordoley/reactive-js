@@ -1,7 +1,7 @@
 import { pipe } from "../../functions.js";
-import { parseWith, pAsterisk, or, mapTo, } from "../parserCombinators.js";
 import { isNone, isSome, none } from "../../option.js";
 import { join, map } from "../../readonlyArray.js";
+import { parseWith, pAsterisk, or, mapTo } from "../parserCombinators.js";
 import { entityTagToString, pETag, parseETag, parseETagOrThrow, } from "./entityTag.js";
 import { httpDateTimeToString, parseHttpDateTime, } from "./httpDateTime.js";
 import { httpList } from "./httpGrammar.js";

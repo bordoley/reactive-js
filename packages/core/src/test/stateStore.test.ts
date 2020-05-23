@@ -1,11 +1,11 @@
 import { dispose } from "../lib/disposable";
-import { pipe, incrementBy } from "../lib/functions";
 import {
   test,
   describe,
   expectArrayEquals,
   expectTrue,
 } from "../lib/experimental/testing";
+import { pipe, incrementBy } from "../lib/functions";
 import { onNotify, subscribe, startWith, dispatch } from "../lib/observable";
 import { createVirtualTimeScheduler } from "../lib/scheduler";
 import { toStateStore } from "../lib/stateStore";

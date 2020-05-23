@@ -1,17 +1,5 @@
 import { dispose } from "../lib/disposable";
 import {
-  compose,
-  pipe,
-  returns,
-  increment,
-  arrayEquality,
-  identity,
-  incrementBy,
-  sum,
-  defer,
-  ignore,
-} from "../lib/functions";
-import {
   test,
   describe,
   testAsync,
@@ -25,6 +13,18 @@ import {
   expectSome,
   expectNone,
 } from "../lib/experimental/testing";
+import {
+  compose,
+  pipe,
+  returns,
+  increment,
+  arrayEquality,
+  identity,
+  incrementBy,
+  sum,
+  defer,
+  ignore,
+} from "../lib/functions";
 import * as Observable from "../lib/observable";
 import {
   await_,

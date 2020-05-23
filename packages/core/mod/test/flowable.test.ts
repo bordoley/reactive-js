@@ -1,6 +1,4 @@
 import { dispose } from "../lib/disposable.ts";
-import { empty, fromValue, FlowMode, fromObservable } from "../lib/flowable.ts";
-import { increment, pipe, returns, defer } from "../lib/functions.ts";
 import {
   test,
   describe,
@@ -9,6 +7,8 @@ import {
   mockFn,
   expectToHaveBeenCalledTimes,
 } from "../lib/experimental/testing.ts";
+import { empty, fromValue, FlowMode, fromObservable } from "../lib/flowable.ts";
+import { increment, pipe, returns, defer } from "../lib/functions.ts";
 import {
   onNotify,
   subscribe,

@@ -1,7 +1,7 @@
 import { pipe, returns, updaterReducer, } from "../../functions.js";
-import { empty, } from "../../io.js";
+import { empty } from "../../io.js";
 import { isNone, isSome, none } from "../../option.js";
-import { everySatisfy, map, reduceRight, join, } from "../../readonlyArray.js";
+import { everySatisfy, map, reduceRight, join } from "../../readonlyArray.js";
 import { entityTagToString, parseETagOrThrow, parseETagFromHeaders, } from "./entityTag.js";
 import { contentIsCompressible } from "./httpContentInfo.js";
 import { parseHttpDateTime, httpDateTimeToString, parseHttpDateTimeFromHeaders, } from "./httpDateTime.js";

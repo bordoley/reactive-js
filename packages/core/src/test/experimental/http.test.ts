@@ -1,12 +1,3 @@
-import { pipe, defer } from "../../lib/functions";
-import {
-  test,
-  describe,
-  expectEquals,
-  expectTrue,
-} from "../../lib/experimental/testing";
-import { none } from "../../lib/option";
-import { map } from "../../lib/readonlyArray";
 import {
   createHttpRequest,
   HttpMethod,
@@ -19,6 +10,15 @@ import {
   writeHttpRequestHeaders,
   writeHttpResponseHeaders,
 } from "../../lib/experimental/http";
+import {
+  test,
+  describe,
+  expectEquals,
+  expectTrue,
+} from "../../lib/experimental/testing";
+import { pipe, defer } from "../../lib/functions";
+import { none } from "../../lib/option";
+import { map } from "../../lib/readonlyArray";
 
 const createHttpRequestTests = test("createHttpRequest", () => {
   const request = createHttpRequest({

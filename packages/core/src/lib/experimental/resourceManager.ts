@@ -7,6 +7,9 @@ import {
 } from "../disposable";
 import { fromIterable, toRunnable } from "../enumerable";
 import { pipe, Function1 } from "../functions";
+import { createKeyedQueue } from "../internal/keyedQueue";
+import { createSetMultimap } from "../internal/multimaps";
+import { createUniqueQueue } from "../internal/queues";
 import {
   DispatcherLike,
   ObservableLike,
@@ -19,9 +22,6 @@ import {
 import { isSome, isNone, none } from "../option";
 import { first, forEach } from "../runnable";
 import { SchedulerLike } from "../scheduler";
-import { createKeyedQueue } from "../internal/keyedQueue";
-import { createSetMultimap } from "../internal/multimaps";
-import { createUniqueQueue } from "../internal/queues";
 
 const tryDispatch = <TResource extends DisposableLike>(
   resourceManager: ResourceManagerImpl<TResource>,

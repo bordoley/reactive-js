@@ -1,6 +1,6 @@
 import { dispose } from "../lib/disposable.js";
-import { pipe, incrementBy } from "../lib/functions.js";
 import { test, describe, expectArrayEquals, expectTrue, } from "../lib/experimental/testing.js";
+import { pipe, incrementBy } from "../lib/functions.js";
 import { onNotify, subscribe, startWith, dispatch } from "../lib/observable.js";
 import { createVirtualTimeScheduler } from "../lib/scheduler.js";
 import { toStateStore } from "../lib/stateStore.js";

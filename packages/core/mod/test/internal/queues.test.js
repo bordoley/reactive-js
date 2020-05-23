@@ -1,6 +1,6 @@
+import { test, describe, expectArrayEquals, } from "../../lib/experimental/testing.js";
 import { pipe } from "../../lib/functions.js";
 import { createPriorityQueue } from "../../lib/internal/queues.js";
-import { test, describe, expectArrayEquals } from "../../lib/experimental/testing.js";
 const compare = (a, b) => a - b;
 const makeSortedArray = (n) => {
     const result = new Array(n);

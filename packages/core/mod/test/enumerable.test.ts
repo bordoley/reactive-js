@@ -7,8 +7,8 @@ import {
   zipWith,
 } from "../lib/enumerable.ts";
 import * as Enumerable from "../lib/enumerable.ts";
-import { defer } from "../lib/functions.ts";
 import { test, describe, expectArrayEquals } from "../lib/experimental/testing.ts";
+import { defer } from "../lib/functions.ts";
 import { toArray } from "../lib/runnable.ts";
 import { createMonadTests } from "./monad.test.ts";
 

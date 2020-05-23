@@ -1,6 +1,6 @@
 import { pipe } from "../../functions.js";
+import { fromObject, map, join, keep, length } from "../../readonlyArray.js";
 import { pForwardSlash, parseWith, parseWithOrThrow, } from "../parserCombinators.js";
-import { fromObject, map, join, keep, length, } from "../../readonlyArray.js";
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar.js";
 export const pMediaType = charStream => {
     const type = pToken(charStream);

@@ -1,7 +1,7 @@
 import { pipe } from "../../functions.js";
-import { optional, pEquals, parseWith, parseWithOrThrow, } from "../parserCombinators.js";
 import { isSome } from "../../option.js";
 import { map, join } from "../../readonlyArray.js";
+import { optional, pEquals, parseWith, parseWithOrThrow, } from "../parserCombinators.js";
 import { pToken, pTokenOrQuotedString, toTokenOrQuotedString, httpList, } from "./httpGrammar.js";
 import { getHeaderValue } from "./httpHeaders.js";
 const pOptionalEquals = optional(pEquals);

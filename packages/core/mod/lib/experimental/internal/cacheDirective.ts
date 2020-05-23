@@ -1,4 +1,6 @@
 import { pipe, SideEffect2 } from "../../functions.ts";
+import { isSome } from "../../option.ts";
+import { map, join } from "../../readonlyArray.ts";
 import {
   CharStreamLike,
   optional,
@@ -6,8 +8,6 @@ import {
   parseWith,
   parseWithOrThrow,
 } from "../parserCombinators.ts";
-import { isSome } from "../../option.ts";
-import { map, join } from "../../readonlyArray.ts";
 import {
   pToken,
   pTokenOrQuotedString,

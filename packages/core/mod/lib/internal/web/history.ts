@@ -33,16 +33,16 @@ const historyFunction = compose(
 );
 
 export type RelativeURI = {
-  pathname: string,
-  search: string,
-  hash: string,
+  pathname: string;
+  search: string;
+  hash: string;
 };
 
 export const emptyURI = {
   pathname: "",
   search: "",
-  hash: ""
-}
+  hash: "",
+};
 
 const toRelativeURI = (href: string): RelativeURI => {
   const uri = new URL(href);
@@ -53,9 +53,9 @@ const toRelativeURI = (href: string): RelativeURI => {
   };
 };
 
-const requestMapper = (
-  stateUpdater: Updater<RelativeURI>,
-): Updater<string> => (prevStateString: string) => {
+const requestMapper = (stateUpdater: Updater<RelativeURI>): Updater<string> => (
+  prevStateString: string,
+) => {
   const prevStateURI = toRelativeURI(prevStateString);
   const newStateURI = stateUpdater(prevStateURI);
 

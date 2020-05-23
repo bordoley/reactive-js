@@ -1,12 +1,4 @@
 import {
-  pipe,
-  returns,
-  alwaysFalse,
-  alwaysTrue,
-  increment,
-  defer,
-} from "../lib/functions";
-import {
   test,
   describe,
   expectNone,
@@ -16,6 +8,14 @@ import {
   expectTrue,
   expectFalse,
 } from "../lib/experimental/testing";
+import {
+  pipe,
+  returns,
+  alwaysFalse,
+  alwaysTrue,
+  increment,
+  defer,
+} from "../lib/functions";
 import {
   compute,
   contains,

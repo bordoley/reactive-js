@@ -1,4 +1,3 @@
-import { defer, pipe, returns } from "../../lib/functions";
 import {
   string,
   map,
@@ -25,6 +24,7 @@ import {
   expectArrayEquals,
   expectEquals,
 } from "../../lib/experimental/testing";
+import { defer, pipe, returns } from "../../lib/functions";
 import { none } from "../../lib/option";
 
 export const tests = describe(

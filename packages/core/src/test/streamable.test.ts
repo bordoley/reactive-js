@@ -1,5 +1,4 @@
 import { dispose, addTeardown } from "../lib/disposable";
-import { pipe, returns, incrementBy, sum } from "../lib/functions";
 import {
   test,
   describe,
@@ -8,6 +7,7 @@ import {
   expectTrue,
   expectFalse,
 } from "../lib/experimental/testing";
+import { pipe, returns, incrementBy, sum } from "../lib/functions";
 import {
   subscribe,
   onNotify as onNotifyObs,

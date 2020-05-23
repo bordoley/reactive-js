@@ -6,18 +6,9 @@ import {
   updaterReducer,
   Updater,
 } from "../../functions";
-import {
-  IOSourceLike,
-  IOSourceOperator,
-  empty,
-} from "../../io";
+import { IOSourceLike, IOSourceOperator, empty } from "../../io";
 import { isNone, isSome, none } from "../../option";
-import {
-  everySatisfy,
-  map,
-  reduceRight,
-  join,
-} from "../../readonlyArray";
+import { everySatisfy, map, reduceRight, join } from "../../readonlyArray";
 import {
   entityTagToString,
   parseETagOrThrow,

@@ -8,7 +8,6 @@ import {
   generate,
 } from "../lib/asyncEnumerable";
 import { Exception, addTeardown } from "../lib/disposable";
-import { pipe, increment, returns, defer } from "../lib/functions";
 import {
   test,
   describe,
@@ -16,6 +15,7 @@ import {
   expectNone,
   expectArrayEquals,
 } from "../lib/experimental/testing";
+import { pipe, increment, returns, defer } from "../lib/functions";
 import {
   fromValue,
   subscribe,

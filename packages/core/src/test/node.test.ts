@@ -1,12 +1,12 @@
 import { Readable, Writable } from "stream";
-import { pipe, defer, returns } from "../lib/functions";
-import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulator";
 import {
   describe,
   testAsync,
   expectEquals,
   expectPromiseToThrow,
 } from "../lib/experimental/testing";
+import { pipe, defer, returns } from "../lib/functions";
+import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulator";
 import { fromArray } from "../lib/io";
 import {
   createReadableIOSource,

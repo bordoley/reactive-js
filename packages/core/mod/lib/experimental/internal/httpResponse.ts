@@ -6,18 +6,9 @@ import {
   updaterReducer,
   Updater,
 } from "../../functions.ts";
-import {
-  IOSourceLike,
-  IOSourceOperator,
-  empty,
-} from "../../io.ts";
+import { IOSourceLike, IOSourceOperator, empty } from "../../io.ts";
 import { isNone, isSome, none } from "../../option.ts";
-import {
-  everySatisfy,
-  map,
-  reduceRight,
-  join,
-} from "../../readonlyArray.ts";
+import { everySatisfy, map, reduceRight, join } from "../../readonlyArray.ts";
 import {
   entityTagToString,
   parseETagOrThrow,

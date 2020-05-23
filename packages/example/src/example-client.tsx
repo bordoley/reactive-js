@@ -1,3 +1,4 @@
+import { createRouter, find } from "@reactive-js/core/lib/experimental/router";
 import { fromObservable, FlowMode } from "@reactive-js/core/lib/flowable";
 import {
   pipe,
@@ -6,11 +7,12 @@ import {
   SideEffect1,
   Updater,
 } from "@reactive-js/core/lib/functions";
-import { createRouter, find } from "@reactive-js/core/lib/experimental/router";
+import { generate, throttle } from "@reactive-js/core/lib/observable";
 import {
-  generate,
-  throttle,
-} from "@reactive-js/core/lib/observable";
+  idlePriority,
+  useObservable,
+  useStreamable,
+} from "@reactive-js/core/lib/react";
 import {
   createEventSource,
   fetch,
@@ -18,7 +20,6 @@ import {
   historyStateStore,
   RelativeURI,
 } from "@reactive-js/core/lib/web";
-import { idlePriority, useObservable, useStreamable } from "@reactive-js/core/lib/react";
 import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { default as ReactDOM } from "react-dom";
 
@@ -27,10 +28,13 @@ const updateHash = (hash: string): Updater<RelativeURI> => uri => ({
   hash: hash.length > 0 ? `#${encodeURIComponent(hash)}` : "",
 });
 
-const TextInputURIState = ({ dispatch, uri }: {
+const TextInputURIState = ({
+  dispatch,
+  uri,
+}: {
   readonly params: { readonly [key: string]: string };
   readonly dispatch: SideEffect1<Updater<RelativeURI>>;
-  readonly uri: RelativeURI,
+  readonly uri: RelativeURI;
 }) => {
   const onChange = useCallback(
     (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,15 +104,13 @@ const NotFound = ({
 }: {
   readonly params: { readonly [key: string]: string };
   readonly dispatch: SideEffect1<Updater<RelativeURI>>;
-  readonly uri: RelativeURI,
+  readonly uri: RelativeURI;
 }) => {
   const goToEvents = useCallback(() => dispatch(goToPath("/events")), [
     dispatch,
   ]);
 
-  const goToFetch = useCallback(() => dispatch(goToPath("/fetch")), [
-    dispatch,
-  ]);
+  const goToFetch = useCallback(() => dispatch(goToPath("/fetch")), [dispatch]);
 
   const goToStream = useCallback(() => dispatch(goToPath("/stream")), [
     dispatch,
@@ -133,10 +135,10 @@ const NotFound = ({
 
 const EventSourceExample = () => {
   const eventSource = useMemo(
-    () => (
+    () =>
       createEventSource("http://localhost:8080/events", {
         events: ["error", "message", "test"],
-      })),
+      }),
     [],
   );
 
@@ -147,14 +149,15 @@ const EventSourceExample = () => {
       <div>{JSON.stringify(eventData) ?? ""}</div>
     </div>
   );
-}
+};
 
 const FetchExample = () => {
   const httpRequest = useMemo(
-    () => pipe(
-      { uri: "http://localhost:8080/files/packages/example/build/bundle.js" },
-      fetch(response => response.text()),
-    ),
+    () =>
+      pipe(
+        { uri: "http://localhost:8080/files/packages/example/build/bundle.js" },
+        fetch(response => response.text()),
+      ),
     [],
   );
   const someData = useObservable(httpRequest);
@@ -164,8 +167,7 @@ const FetchExample = () => {
       <div>{someData ?? ""}</div>
     </div>
   );
-
-} 
+};
 
 const router = createRouter({
   "/events": EventSourceExample,
@@ -178,7 +180,7 @@ const Root = () => {
   const [uri = emptyURI, dispatch] = useStreamable(historyStateStore);
   const [Component, params] = find(router, uri.pathname) ?? [NotFound, {}];
 
-  return <Component params={params} dispatch={dispatch} uri={uri}/>
+  return <Component params={params} dispatch={dispatch} uri={uri} />;
 };
 
 (ReactDOM as any).createRoot(document.getElementById("root")).render(<Root />);

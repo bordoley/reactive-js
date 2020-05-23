@@ -2,6 +2,24 @@ import fs from "fs";
 import { createServer as createHttp1Server } from "http";
 import { createSecureServer as createHttp2Server } from "http2";
 import {
+  createHttpResponse,
+  createHttpErrorResponse,
+  decodeHttpRequestContent,
+  HttpResponse,
+  HttpStatusCode,
+  HttpRequest,
+  encodeHttpResponseWithUtf8,
+  toIOSourceHttpResponse,
+  encodeHttpResponseContent,
+  disallowProtocolAndHostForwarding,
+} from "@reactive-js/core/lib/experimental/http";
+import {
+  createHttpRequestListener,
+  createContentEncodingDecompressTransforms,
+  createContentEncodingCompressTransforms,
+} from "@reactive-js/core/lib/experimental/node";
+import { createRouter, find } from "@reactive-js/core/lib/experimental/router";
+import {
   pipe,
   returns,
   increment,
@@ -12,6 +30,7 @@ import {
   fromObservable,
   map as mapFlowable,
   IOSourceLike,
+  fromValue as ioSourceFromValue,
 } from "@reactive-js/core/lib/io";
 import { readFileIOSource, bindNodeCallback } from "@reactive-js/core/lib/node";
 import {
@@ -29,26 +48,8 @@ import {
   toPriorityScheduler,
   toSchedulerWithPriority,
 } from "@reactive-js/core/lib/scheduler";
-import {
-  createHttpResponse,
-  createHttpErrorResponse,
-  decodeHttpRequestContent,
-  HttpResponse,
-  HttpStatusCode,
-  HttpRequest,
-  encodeHttpResponseWithUtf8,
-  toIOSourceHttpResponse,
-  encodeHttpResponseContent,
-  disallowProtocolAndHostForwarding,
-} from "@reactive-js/core/lib/experimental/http";
-import {
-  createHttpRequestListener,
-  createContentEncodingDecompressTransforms,
-  createContentEncodingCompressTransforms,
-} from "@reactive-js/core/lib/experimental/node";
 import db from "mime-db";
 import mime from "mime-types";
-import { createRouter, find } from "@reactive-js/core/lib/experimental/router";
 
 const scheduler = pipe(
   createHostScheduler(),
@@ -76,25 +77,26 @@ const PrintParams = (
 const EventStream = (
   _req: HttpRequest<IOSourceLike<Uint8Array>>,
   _params: { readonly [key: string]: string },
-): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> => pipe(
-  createHttpResponse({
-    statusCode: HttpStatusCode.OK,
-    body: pipe(
-      generate(increment, returns<number>(0), { delay: 1000 }),
-      fromObservable(),
-      mapFlowable(
-        data =>
-          `id: ${data.toString()}\nevent: test\ndata: ${data.toString()}\n\n`,
+): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> =>
+  pipe(
+    createHttpResponse({
+      statusCode: HttpStatusCode.OK,
+      body: pipe(
+        generate(increment, returns<number>(0), { delay: 1000 }),
+        fromObservable(),
+        mapFlowable(
+          data =>
+            `id: ${data.toString()}\nevent: test\ndata: ${data.toString()}\n\n`,
+        ),
+        encodeUtf8,
       ),
-      encodeUtf8,
-    ),
-    cacheControl: ["no-cache"],
-    contentInfo: {
-      contentType: 'text/event-stream; charset="utf-8"',
-    },
-  }),
-  fromValue(),
-);
+      cacheControl: ["no-cache"],
+      contentInfo: {
+        contentType: 'text/event-stream; charset="utf-8"',
+      },
+    }),
+    fromValue(),
+  );
 
 const FileServer = (
   _req: HttpRequest<IOSourceLike<Uint8Array>>,
@@ -116,17 +118,13 @@ const FileServer = (
               contentType,
             },
           })
-        : pipe(
-            createHttpResponse({
-              statusCode: HttpStatusCode.NotFound,
-              contentInfo: {
-                contentType: "text/plain",
-              },
-              body: JSON.stringify(params),
-            }),
-            encodeHttpResponseWithUtf8,
-            toIOSourceHttpResponse,
-          ),
+        : createHttpResponse({
+            statusCode: HttpStatusCode.NotFound,
+            contentInfo: {
+              contentType: "text/plain",
+            },
+            body: pipe(params, JSON.stringify, encodeUtf8, ioSourceFromValue),
+          }),
     ),
   );
 };
@@ -134,13 +132,13 @@ const FileServer = (
 const Throws = (
   _req: HttpRequest<IOSourceLike<Uint8Array>>,
   _params: { readonly [key: string]: string },
-): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> => 
+): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> =>
   pipe(() => new Error("internal error"), throws());
 
 const NotFound = (
   req: HttpRequest<IOSourceLike<Uint8Array>>,
   _params: { readonly [key: string]: string },
-): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> => 
+): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> =>
   pipe(
     createHttpResponse({
       statusCode: HttpStatusCode.NotFound,
@@ -154,20 +152,21 @@ const NotFound = (
     fromValue(),
   );
 
-const router = createRouter(
-  {
-    "/events": EventStream,
-    "/files/*path": FileServer,
-    "/users/:username/friends/:friendName": PrintParams,
-    "/users/:username/friends/:friendName/*tail": PrintParams,
-    "/throws": Throws,
-  },
-);
+const router = createRouter({
+  "/events": EventStream,
+  "/files/*path": FileServer,
+  "/users/:username/friends/:friendName": PrintParams,
+  "/users/:username/friends/:friendName/*tail": PrintParams,
+  "/throws": Throws,
+});
 
 const Router = (
   request: HttpRequest<IOSourceLike<Uint8Array>>,
 ): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> => {
-  const [handler, params] = find(router, request.uri.pathname) ?? [NotFound, {}];
+  const [handler, params] = find(router, request.uri.pathname) ?? [
+    NotFound,
+    {},
+  ];
   return handler(request, params);
 };
 

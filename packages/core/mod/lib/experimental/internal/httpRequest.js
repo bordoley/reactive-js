@@ -1,7 +1,7 @@
 import { pipe, returns, updaterReducer, } from "../../functions.js";
 import { isNone, isSome, none } from "../../option.js";
 import { map, reduceRight } from "../../readonlyArray.js";
-import { getHeaderValue } from "./httpHeaders.js";
+import { getHeaderValue, } from "./httpHeaders.js";
 import { writeHttpMessageHeaders, encodeHttpMessageWithUtf8, toIOSourceHttpMessage, decodeHttpMessageWithCharset, createHttpMessage, } from "./httpMessage.js";
 import { writeHttpRequestPreconditionsHeaders, parseHttpRequestPreconditionsFromHeaders, createHttpRequestPreconditions, } from "./httpRequestPreconditions.js";
 import { createHttpResponse, } from "./httpResponse.js";
@@ -58,7 +58,7 @@ export const disallowProtocolAndHostForwarding = () => request => {
     const { httpVersionMajor, headers: { "x-forwarded-proto": xForwardedProto, "x-forwarded-host": xForwardedHost, ...headers }, isTransportSecure, uri, } = request;
     return isNone(xForwardedProto) && isNone(xForwardedHost)
         ? request
-        : ({
+        : {
             ...request,
             uri: parseURIFromHeaders({
                 headers,
@@ -67,7 +67,7 @@ export const disallowProtocolAndHostForwarding = () => request => {
                 uri,
             }),
             headers,
-        });
+        };
 };
 export const createRedirectHttpRequest = (request, response) => {
     const { contentInfo, method } = request;

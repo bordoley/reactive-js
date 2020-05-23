@@ -1,4 +1,5 @@
 import { pipe } from "../../functions";
+import { isNone, isSome, none, Option } from "../../option";
 import {
   Parser,
   pEquals,
@@ -18,7 +19,6 @@ import {
   isParseError,
   string,
 } from "../parserCombinators";
-import { isNone, isSome, none, Option } from "../../option";
 import { HttpHeaders } from "./httpHeaders";
 
 export const enum ASCII {

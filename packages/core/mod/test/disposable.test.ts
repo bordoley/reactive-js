@@ -7,7 +7,6 @@ import {
   addDisposable,
   addTeardown,
 } from "../lib/disposable.ts";
-import { pipe } from "../lib/functions.ts";
 import {
   test,
   describe,
@@ -19,6 +18,7 @@ import {
   expectEquals,
   expectNone,
 } from "../lib/experimental/testing.ts";
+import { pipe } from "../lib/functions.ts";
 
 export const tests = describe(
   "Disposable",

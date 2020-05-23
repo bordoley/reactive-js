@@ -1,5 +1,4 @@
 import { dispose, addTeardown } from "../lib/disposable.ts";
-import { pipe, returns, incrementBy, sum } from "../lib/functions.ts";
 import {
   test,
   describe,
@@ -8,6 +7,7 @@ import {
   expectTrue,
   expectFalse,
 } from "../lib/experimental/testing.ts";
+import { pipe, returns, incrementBy, sum } from "../lib/functions.ts";
 import {
   subscribe,
   onNotify as onNotifyObs,

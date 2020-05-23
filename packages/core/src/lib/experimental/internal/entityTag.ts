@@ -1,4 +1,5 @@
 import { pipe } from "../../functions";
+import { isSome, none, Option } from "../../option";
 import {
   satisfy,
   string,
@@ -9,7 +10,6 @@ import {
   CharStreamLike,
   parseWithOrThrow,
 } from "../parserCombinators";
-import { isSome, none, Option } from "../../option";
 import { ASCII } from "./httpGrammar";
 import { HttpHeaders, getHeaderValue, HttpStandardHeader } from "./httpHeaders";
 

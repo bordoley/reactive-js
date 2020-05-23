@@ -7,8 +7,8 @@ import {
   zipWith,
 } from "../lib/enumerable";
 import * as Enumerable from "../lib/enumerable";
-import { defer } from "../lib/functions";
 import { test, describe, expectArrayEquals } from "../lib/experimental/testing";
+import { defer } from "../lib/functions";
 import { toArray } from "../lib/runnable";
 import { createMonadTests } from "./monad.test";
 
