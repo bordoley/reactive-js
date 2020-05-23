@@ -12,4 +12,7 @@ yarn-error.log
 *.tsbuildinfo
 
 build
-packages/core
+packages/core/**/*.ts
+packages/core/**/*.js
+packages/core/**/*.mjs
+packages/core/README.md
