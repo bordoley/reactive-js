@@ -39,7 +39,7 @@ export interface DisposableLike {
   /**
    * Dispose the resource. Must be idempotent.
    *
-   * @param error An optional error that to signal that the resource is being disposed due to an error.
+   * @param error An optional error that signals the resource is being disposed due to an error.
    */
   dispose(error?: Error): void;
 }
@@ -257,24 +257,24 @@ const _disposed: DisposableLike = {
 export const disposed: DisposableLike = _disposed;
 
 /**
- * A Disposable container that allows replacing an inner Disposable with another,
- * disposing the previous inner disposable in the process. Disposing the
- * container also disposes the inner disposable. Disposing the inner disposable 
+ * A `DisposableLike` container that allows replacing an inner `DisposableLike` with another,
+ * disposing the previous inner `DisposableLike` in the process. Disposing the
+ * container also disposes the inner `DisposableLike`. Disposing the inner `DisposableLike` 
  * with an error, disposes the container with the error.
  *
  * @noInheritDoc
  */
 export interface SerialDisposableLike extends DisposableLike {
   /**
-   *  The inner disposable that may be get or set. Setting the inner
-   *  disposable disposes the old disposable unless it is reference equal
+   *  The inner `DisposableLike` that may be get or set. Setting the inner
+   *  `DisposableLike` disposes the old `DisposableLike` unless it is strictly equal
    *  to the new one.
    */
   inner: DisposableLike;
 }
 
 /**
- * Abstract base class for implementing the SerialDisposableLike interface.
+ * Abstract base class for implementing the `SerialDisposableLike` interface.
  *
  * @noInheritDoc
  * */
