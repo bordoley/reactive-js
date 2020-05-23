@@ -1,4 +1,4 @@
-import { SideEffect2, pipe } from "../../../functions.ts";
+import { SideEffect2, pipe, raise } from "../../../functions.ts";
 import { IOSourceLike, fromValue } from "../../../io.ts";
 import { isSome, isNone } from "../../../option.ts";
 import { map } from "../../../readonlyArray.ts";
@@ -125,12 +125,12 @@ export const writeHttpMessageHeaders = <T>(
 };
 
 export const encodeHttpMessageWithUtf8 = ({
-  contentInfo,
+  contentInfo: contentInfoOption,
   ...msg
 }: HttpMessage<string>): HttpMessage<Uint8Array> => {
-  if (isNone(contentInfo)) {
-    throw new Error("HttpMessage has not contentInfo");
-  }
+  const contentInfo = isNone(contentInfoOption)
+    ? raise<HttpContentInfo>("HttpMessage has no contentInfo")
+    : contentInfoOption;
 
   const { contentType } = contentInfo;
   const textEncoder = new TextEncoder();

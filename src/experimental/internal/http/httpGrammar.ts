@@ -1,4 +1,4 @@
-import { pipe } from "../../../functions";
+import { pipe, raise } from "../../../functions";
 import { isNone, isSome, none, Option } from "../../../option";
 import { ReadonlyObjectMap } from "../../../readonlyObjectMap";
 import {
@@ -172,7 +172,7 @@ export const toTokenOrQuotedString = (input: string): string => {
       buffer.push(ASCII.BACKSLASH);
     } else if (!isQDText) {
       // FIXME: Error type?
-      throw new Error();
+      raise();
     }
 
     if (isSome(buffer)) {

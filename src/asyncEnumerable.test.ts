@@ -7,7 +7,7 @@ import {
   fromIterable,
   generate,
 } from "./asyncEnumerable";
-import { Exception, addTeardown } from "./disposable";
+import { Error, addTeardown } from "./disposable";
 import {
   test,
   describe,
@@ -115,7 +115,7 @@ export const tests = describe(
     );
 
     const result: number[] = [];
-    let error: Option<Exception> = none;
+    let error: Option<Error> = none;
     const subscription = pipe(
       enumerator,
       onNotify(x => result.push(x)),

@@ -1,6 +1,7 @@
 import { createDisposable, createDisposableValue, createSerialDisposable, disposed, dispose, addDisposable, addTeardown, } from "./disposable.js";
 import { test, describe, expectFalse, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectArrayEquals, expectEquals, expectNone, } from "./experimental/testing.js";
-import { pipe } from "./functions.js";
+import { pipe, defer, raise } from "./functions.js";
+import { none } from "./option.js";
 export const tests = describe("Disposable", describe("AbstractDisposable", test("disposes child disposable when disposed", () => {
     const disposable = createDisposable();
     const child = createDisposable();
@@ -19,14 +20,12 @@ export const tests = describe("Disposable", describe("AbstractDisposable", test(
     addTeardown(disposable, teardown);
     dispose(disposable);
     pipe(teardown, expectToHaveBeenCalledTimes(1));
-}), test("catches and swallows exceptions thrown by teardown function", () => {
-    const teardown = () => {
-        throw new Error();
-    };
+}), test("catches and swallows Errors thrown by teardown function", () => {
+    const teardown = defer(none, raise);
     const disposable = createDisposable(teardown);
     dispose(disposable);
     pipe(disposable.error, expectNone);
-}), test("propogates errors when disposed with an exception", () => {
+}), test("propogates errors when disposed with an Error", () => {
     const error = { cause: null };
     const childTeardown = mockFn();
     const disposable = createDisposable(childTeardown);

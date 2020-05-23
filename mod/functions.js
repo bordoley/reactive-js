@@ -16,6 +16,9 @@ export const isEqualTo = (b, equality = strictEquality) => equality === strictEq
 export const isEven = (x) => x % 2 === 0;
 export const isOdd = (x) => x % 2 !== 0;
 export const negate = (v) => !v;
+export const raise = (message) => {
+    throw new Error(message);
+};
 export const sum = (...args) => {
     let acc = 0;
     for (let i = 0; i < args.length; i++) {

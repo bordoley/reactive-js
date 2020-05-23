@@ -11,7 +11,7 @@ import {
   unstable_UserBlockingPriority,
 } from "scheduler";
 import {
-  Exception,
+  Error,
   addTeardown,
   addDisposable,
   createDisposable,
@@ -40,7 +40,7 @@ import { StreamableLike, stream as streamableStream } from "./streamable";
 const subscribeObservable = <T>(
   observable: ObservableLike<T>,
   updateState: React.Dispatch<React.SetStateAction<Option<T>>>,
-  updateError: React.Dispatch<React.SetStateAction<Option<Exception>>>,
+  updateError: React.Dispatch<React.SetStateAction<Option<Error>>>,
   scheduler: SchedulerLike,
 ) => {
   const subscription = pipe(
@@ -67,7 +67,7 @@ export const useObservable = <T>(
   { scheduler } = { scheduler: normalPriority },
 ): Option<T> => {
   const [state, updateState] = useState<Option<T>>(none);
-  const [error, updateError] = useState<Option<Exception>>(none);
+  const [error, updateError] = useState<Option<Error>>(none);
 
   useEffect(() => {
     const subscription = subscribeObservable(

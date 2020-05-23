@@ -305,6 +305,13 @@ export const isOdd = (x: number): boolean => x % 2 !== 0;
 export const negate = (v: boolean): boolean => !v;
 
 /**
+ * Throws a javascript error using the provided message.
+ */
+export const raise = <T>(message?: string): T => {
+  throw new Error(message);
+}
+
+/**
  * A function that returns the result of summing 
  * it's arguments.
  */

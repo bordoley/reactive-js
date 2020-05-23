@@ -1,4 +1,4 @@
-import { pipe } from "../../../functions.ts";
+import { pipe, raise } from "../../../functions.ts";
 import { isNone, isSome, none, Option } from "../../../option.ts";
 import { ReadonlyObjectMap } from "../../../readonlyObjectMap.ts";
 import {
@@ -172,7 +172,7 @@ export const toTokenOrQuotedString = (input: string): string => {
       buffer.push(ASCII.BACKSLASH);
     } else if (!isQDText) {
       // FIXME: Error type?
-      throw new Error();
+      raise();
     }
 
     if (isSome(buffer)) {

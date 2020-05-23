@@ -52,6 +52,7 @@
 * [isOdd](_functions_.md#const-isodd)
 * [negate](_functions_.md#const-negate)
 * [pipe](_functions_.md#pipe)
+* [raise](_functions_.md#const-raise)
 * [returns](_functions_.md#const-returns)
 * [strictEquality](_functions_.md#const-strictequality)
 * [sum](_functions_.md#const-sum)
@@ -2260,6 +2261,26 @@ Name | Type |
 `...operators` | [Function1](_functions_.md#function1)‹any, unknown›[] |
 
 **Returns:** *unknown*
+
+___
+
+### `Const` raise
+
+▸ **raise**<**T**>(`message?`: string): *T*
+
+Throws a javascript error using the provided message.
+
+**Type parameters:**
+
+▪ **T**
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`message?` | string |
+
+**Returns:** *T*
 
 ___
 

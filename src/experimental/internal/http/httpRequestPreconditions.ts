@@ -1,4 +1,4 @@
-import { pipe, SideEffect2 } from "../../../functions";
+import { pipe, SideEffect2, raise } from "../../../functions";
 import { isNone, isSome, none, Option } from "../../../option";
 import { join, map } from "../../../readonlyArray";
 import { parseWith, pAsterisk, or, mapTo } from "../../parserCombinators";
@@ -180,7 +180,7 @@ export const createHttpRequestPreconditions = ({
     (Array.isArray(ifMatch) && ifMatch.length === 0) ||
     (Array.isArray(ifNoneMatch) && ifNoneMatch.length === 0)
   ) {
-    throw new Error();
+    raise();
   }
 
   return {

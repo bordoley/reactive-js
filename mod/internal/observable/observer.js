@@ -1,14 +1,14 @@
 import { addDisposable, AbstractDisposable, bindDisposables, } from "../../disposable.js";
-import { ignore } from "../../functions.js";
+import { ignore, raise } from "../../functions.js";
 import { yield$ as yieldScheduler, } from "../../scheduler.js";
 import { __DEV__ } from "../env.js";
 const assertObserverStateProduction = ignore;
 const assertObserverStateDev = (observer) => {
     if (!observer.inContinuation) {
-        throw new Error("Observer.notify() may only be invoked within a scheduled SchedulerContinuation");
+        raise("Observer.notify() may only be invoked within a scheduled SchedulerContinuation");
     }
     else if (observer.isDisposed) {
-        throw new Error("Observer is disposed");
+        raise("Observer is disposed");
     }
 };
 const _assertObserverState = __DEV__

@@ -1,4 +1,4 @@
-import { pipe } from "../../../functions.js";
+import { pipe, raise } from "../../../functions.js";
 import { isNone, isSome, none } from "../../../option.js";
 import { join, map } from "../../../readonlyArray.js";
 import { parseWith, pAsterisk, or, mapTo } from "../../parserCombinators.js";
@@ -73,7 +73,7 @@ export const createHttpRequestPreconditions = ({ ifMatch, ifModifiedSince, ifNon
     ].findIndex(isSome) < 0 ||
         (Array.isArray(ifMatch) && ifMatch.length === 0) ||
         (Array.isArray(ifNoneMatch) && ifNoneMatch.length === 0)) {
-        throw new Error();
+        raise();
     }
     return {
         ifMatch: Array.isArray(ifMatch)

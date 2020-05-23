@@ -5,14 +5,14 @@ import { isSome, none, Option, isNone } from "./option.ts";
  * A wrapper around a caught error to handle corner cases such
  * as a function which throws undefined or string.
  */
-export type Exception = {
+export type Error = {
   /** The underlying cause of the error. */
   readonly cause: unknown;
 };
 
 export type DisposableOrTeardown =
   | DisposableLike
-  | SideEffect1<Option<Exception>>;
+  | SideEffect1<Option<Error>>;
 
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -21,7 +21,7 @@ export interface DisposableLike {
   /**
    * The error the disposable was disposed with if disposed.
    */
-  readonly error: Option<Exception>;
+  readonly error: Option<Error>;
 
   /**
    * `true` if this resource has been disposed, otherwise false
@@ -41,10 +41,10 @@ export interface DisposableLike {
    *
    * @param error An optional error that to signal that the resource is being disposed due to an error.
    */
-  dispose(error?: Exception): void;
+  dispose(error?: Error): void;
 }
 
-export const dispose = (disposable: DisposableLike, e?: Exception) => {
+export const dispose = (disposable: DisposableLike, e?: Error) => {
   disposable.dispose(e);
 };
 
@@ -57,7 +57,7 @@ export const addDisposable = (
 
 export const addTeardown = (
   parent: DisposableLike,
-  teardown: SideEffect1<Option<Exception>>,
+  teardown: SideEffect1<Option<Error>>,
 ) => {
   parent.add(teardown);
 };
@@ -91,7 +91,7 @@ export const bindDisposables = (a: DisposableLike, b: DisposableLike) => {
 
 export const toDisposeOnErrorTeardown = (
   disposable: DisposableLike,
-): SideEffect1<Option<Exception>> => (error?: Exception) => {
+): SideEffect1<Option<Error>> => (error?: Error) => {
   if (isSome(error)) {
     dispose(disposable, error);
   }
@@ -127,13 +127,13 @@ export const toErrorHandler = (
   disposable: DisposableLike,
 ): SideEffect1<unknown> => cause => dispose(disposable, { cause });
 
-const doDispose = (disposable: DisposableOrTeardown, error?: Exception) => {
+const doDispose = (disposable: DisposableOrTeardown, error?: Error) => {
   if (disposable instanceof Function) {
     try {
       disposable(error);
     } catch (_) {
-      /* Proactively catch exceptions thrown in teardown logic. Teardown functions
-       * shouldn't throw, so this is to prevent unexpected exceptions.
+      /* Proactively catch Errors thrown in teardown logic. Teardown functions
+       * shouldn't throw, so this is to prevent unexpected Errors.
        */
     }
   } else {
@@ -149,7 +149,7 @@ const doDispose = (disposable: DisposableOrTeardown, error?: Exception) => {
 export abstract class AbstractDisposable implements DisposableLike {
   private _isDisposed = false;
   private readonly disposables: Set<DisposableOrTeardown> = new Set();
-  private _error: Option<Exception> = none;
+  private _error: Option<Error> = none;
 
   /** @ignore */
   get error() {
@@ -179,7 +179,7 @@ export abstract class AbstractDisposable implements DisposableLike {
   }
 
   /** @ignore */
-  dispose(error?: Exception) {
+  dispose(error?: Error) {
     if (!this.isDisposed) {
       this._isDisposed = true;
       this._error = error;
@@ -201,7 +201,7 @@ class DisposableImpl extends AbstractDisposable {}
  * @param onDispose Optional teardown logic to attach to the newly created disposable.
  */
 export const createDisposable = (
-  onDispose?: (error?: Exception) => void,
+  onDispose?: (error?: Error) => void,
 ): DisposableLike => {
   const disposable = new DisposableImpl();
   if (isSome(onDispose)) {
@@ -216,7 +216,7 @@ const _disposed: DisposableLike = {
   },
   error: none,
   isDisposed: true,
-  dispose(_?: Exception) {},
+  dispose(_?: Error) {},
 };
 
 /**
