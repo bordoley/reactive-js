@@ -1617,7 +1617,7 @@ ___
 
 ### `Const` switchAll
 
-▸ **switchAll**<**T**>(): *function*
+▸ **switchAll**<**T**>(): *[ObservableOperator](_observable_.md#observableoperator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, T›*
 
 Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
 values only from the most recent source.
@@ -1626,21 +1626,13 @@ values only from the most recent source.
 
 ▪ **T**
 
-**Returns:** *function*
-
-▸ (`a`: TA): *TB*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, T›*
 
 ___
 
 ### `Const` switchMap
 
-▸ **switchMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››): *function*
+▸ **switchMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -1654,15 +1646,7 @@ Name | Type |
 ------ | ------ |
 `mapper` | [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›› |
 
-**Returns:** *function*
-
-▸ (`a`: TA): *TB*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`a` | TA |
+**Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 ___
 

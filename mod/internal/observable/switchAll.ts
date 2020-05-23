@@ -58,8 +58,8 @@ const switchAllInstance = lift(operator);
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
  * values only from the most recent source.
  */
-export const switchAll = <T>() =>
+export const switchAll = <T>(): ObservableOperator<ObservableLike<T>, T> =>
   switchAllInstance as ObservableOperator<ObservableLike<T>, T>;
 
-export const switchMap = <TA, TB>(mapper: Function1<TA, ObservableLike<TB>>) =>
+export const switchMap = <TA, TB>(mapper: Function1<TA, ObservableLike<TB>>): ObservableOperator<TA, TB>  =>
   compose(map(mapper), switchAll());
