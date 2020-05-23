@@ -1,6 +1,4 @@
 import { dispose } from "../lib/disposable";
-import { empty, fromValue, FlowMode, fromObservable } from "../lib/flowable";
-import { increment, pipe, returns, defer } from "../lib/functions";
 import {
   test,
   describe,
@@ -9,6 +7,8 @@ import {
   mockFn,
   expectToHaveBeenCalledTimes,
 } from "../lib/experimental/testing";
+import { empty, fromValue, FlowMode, fromObservable } from "../lib/flowable";
+import { increment, pipe, returns, defer } from "../lib/functions";
 import {
   onNotify,
   subscribe,

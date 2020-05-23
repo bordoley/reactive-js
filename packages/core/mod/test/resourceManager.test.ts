@@ -1,7 +1,7 @@
 import { createDisposableValue, disposed, dispose } from "../lib/disposable.ts";
-import { pipe, ignore, defer } from "../lib/functions.ts";
 import { createResourceManager } from "../lib/experimental/resourceManager.ts";
 import { test, describe } from "../lib/experimental/testing.ts";
+import { pipe, ignore, defer } from "../lib/functions.ts";
 import { onNotify, subscribe, fromArray } from "../lib/observable.ts";
 import { createVirtualTimeScheduler } from "../lib/scheduler.ts";
 

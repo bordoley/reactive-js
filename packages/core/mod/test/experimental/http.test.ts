@@ -1,12 +1,3 @@
-import { pipe, defer } from "../../lib/functions.ts";
-import {
-  test,
-  describe,
-  expectEquals,
-  expectTrue,
-} from "../../lib/experimental/testing.ts";
-import { none } from "../../lib/option.ts";
-import { map } from "../../lib/readonlyArray.ts";
 import {
   createHttpRequest,
   HttpMethod,
@@ -19,6 +10,15 @@ import {
   writeHttpRequestHeaders,
   writeHttpResponseHeaders,
 } from "../../lib/experimental/http.ts";
+import {
+  test,
+  describe,
+  expectEquals,
+  expectTrue,
+} from "../../lib/experimental/testing.ts";
+import { pipe, defer } from "../../lib/functions.ts";
+import { none } from "../../lib/option.ts";
+import { map } from "../../lib/readonlyArray.ts";
 
 const createHttpRequestTests = test("createHttpRequest", () => {
   const request = createHttpRequest({

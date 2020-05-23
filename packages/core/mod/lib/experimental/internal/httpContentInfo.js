@@ -1,7 +1,7 @@
 import { pipe } from "../../functions.js";
-import { parseWith } from "../parserCombinators.js";
 import { isNone, none } from "../../option.js";
 import { join } from "../../readonlyArray.js";
+import { parseWith } from "../parserCombinators.js";
 import { pToken, httpList } from "./httpGrammar.js";
 import { getHeaderValue } from "./httpHeaders.js";
 import { parseMediaType, mediaTypeToString, parseMediaTypeOrThrow, mediaTypeIsCompressible, } from "./mediaType.js";

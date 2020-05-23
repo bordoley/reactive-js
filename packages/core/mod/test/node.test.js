@@ -1,7 +1,7 @@
 import { Readable, Writable } from "stream";
+import { describe, testAsync, expectEquals, expectPromiseToThrow, } from "../lib/experimental/testing.js";
 import { pipe, defer, returns } from "../lib/functions.js";
 import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulator.js";
-import { describe, testAsync, expectEquals, expectPromiseToThrow, } from "../lib/experimental/testing.js";
 import { fromArray } from "../lib/io.js";
 import { createReadableIOSource, createWritableIOSink, gzip, gunzip, createDisposableNodeStream, } from "../lib/node.js";
 import { toPromise, takeFirst } from "../lib/observable.js";

@@ -8,7 +8,6 @@ import {
   generate,
 } from "../lib/asyncEnumerable.ts";
 import { Exception, addTeardown } from "../lib/disposable.ts";
-import { pipe, increment, returns, defer } from "../lib/functions.ts";
 import {
   test,
   describe,
@@ -16,6 +15,7 @@ import {
   expectNone,
   expectArrayEquals,
 } from "../lib/experimental/testing.ts";
+import { pipe, increment, returns, defer } from "../lib/functions.ts";
 import {
   fromValue,
   subscribe,

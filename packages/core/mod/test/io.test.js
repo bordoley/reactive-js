@@ -1,6 +1,6 @@
+import { test, describe, expectEquals, expectTrue, mockFn, expectToHaveBeenCalledTimes, } from "../lib/experimental/testing.js";
 import { pipe, returns, sum } from "../lib/functions.js";
 import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulator.js";
-import { test, describe, expectEquals, expectTrue, mockFn, expectToHaveBeenCalledTimes, } from "../lib/experimental/testing.js";
 import { decodeWithCharset, empty, encodeUtf8, fromArray, fromValue, map, } from "../lib/io.js";
 import { onNotify, subscribe, dispatch } from "../lib/observable.js";
 import { createVirtualTimeScheduler } from "../lib/scheduler.js";

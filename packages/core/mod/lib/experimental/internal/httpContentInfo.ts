@@ -1,7 +1,7 @@
 import { pipe, SideEffect2 } from "../../functions.ts";
-import { parseWith } from "../parserCombinators.ts";
 import { isNone, none, Option } from "../../option.ts";
 import { join } from "../../readonlyArray.ts";
+import { parseWith } from "../parserCombinators.ts";
 import { pToken, httpList } from "./httpGrammar.ts";
 import { getHeaderValue, HttpStandardHeader, HttpHeaders } from "./httpHeaders.ts";
 

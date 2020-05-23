@@ -1,12 +1,7 @@
 import { pipe, SideEffect2 } from "../../functions.ts";
-import {
-  parseWith,
-  pAsterisk,
-  or,
-  mapTo,
-} from "../parserCombinators.ts";
 import { isNone, isSome, none, Option } from "../../option.ts";
 import { join, map } from "../../readonlyArray.ts";
+import { parseWith, pAsterisk, or, mapTo } from "../parserCombinators.ts";
 import {
   entityTagToString,
   pETag,

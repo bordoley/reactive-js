@@ -1,6 +1,6 @@
 import { pipe } from "../../functions.js";
-import { satisfy, string, manySatisfy, pDquote, optional, parseWith, parseWithOrThrow, } from "../parserCombinators.js";
 import { isSome, none } from "../../option.js";
+import { satisfy, string, manySatisfy, pDquote, optional, parseWith, parseWithOrThrow, } from "../parserCombinators.js";
 import { getHeaderValue } from "./httpHeaders.js";
 export const entityTagToString = ({ isWeak, tag }) => isWeak ? `\\W"${tag}"` : `"${tag}"`;
 const pETagc = satisfy(c => c >= 33 && c <= 256 && c !== 34);

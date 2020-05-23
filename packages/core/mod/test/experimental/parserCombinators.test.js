@@ -1,6 +1,6 @@
-import { defer, pipe, returns } from "../../lib/functions.js";
 import { string, map, mapTo, sepBy, pColon, many, or, createCharStream, concat, optional, orCompute, manySatisfy, pForwardSlash, char, pEof, parseWithOrThrow, throwParseError, } from "../../lib/experimental/parserCombinators.js";
 import { test, describe, expectToThrow, expectArrayEquals, expectEquals, } from "../../lib/experimental/testing.js";
+import { defer, pipe, returns } from "../../lib/functions.js";
 import { none } from "../../lib/option.js";
 export const tests = describe("parser combinators", test("many", () => {
     const parser = pipe(string("abc"), many());

@@ -1,17 +1,5 @@
 import { dispose } from "../lib/disposable.ts";
 import {
-  compose,
-  pipe,
-  returns,
-  increment,
-  arrayEquality,
-  identity,
-  incrementBy,
-  sum,
-  defer,
-  ignore,
-} from "../lib/functions.ts";
-import {
   test,
   describe,
   testAsync,
@@ -25,6 +13,18 @@ import {
   expectSome,
   expectNone,
 } from "../lib/experimental/testing.ts";
+import {
+  compose,
+  pipe,
+  returns,
+  increment,
+  arrayEquality,
+  identity,
+  incrementBy,
+  sum,
+  defer,
+  ignore,
+} from "../lib/functions.ts";
 import * as Observable from "../lib/observable.ts";
 import {
   await_,

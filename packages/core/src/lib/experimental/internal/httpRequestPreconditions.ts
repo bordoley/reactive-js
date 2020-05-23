@@ -1,12 +1,7 @@
 import { pipe, SideEffect2 } from "../../functions";
-import {
-  parseWith,
-  pAsterisk,
-  or,
-  mapTo,
-} from "../parserCombinators";
 import { isNone, isSome, none, Option } from "../../option";
 import { join, map } from "../../readonlyArray";
+import { parseWith, pAsterisk, or, mapTo } from "../parserCombinators";
 import {
   entityTagToString,
   pETag,

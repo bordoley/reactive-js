@@ -1,6 +1,3 @@
-import { FlowMode } from "../lib/flowable";
-import { pipe, returns, sum } from "../lib/functions";
-import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulator";
 import {
   test,
   describe,
@@ -9,6 +6,9 @@ import {
   mockFn,
   expectToHaveBeenCalledTimes,
 } from "../lib/experimental/testing";
+import { FlowMode } from "../lib/flowable";
+import { pipe, returns, sum } from "../lib/functions";
+import { createIOSinkAccumulator } from "../lib/internal/ioSinkAccumulator";
 import {
   decodeWithCharset,
   empty,

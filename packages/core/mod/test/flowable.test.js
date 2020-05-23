@@ -1,7 +1,7 @@
 import { dispose } from "../lib/disposable.js";
+import { test, describe, expectEquals, expectTrue, mockFn, expectToHaveBeenCalledTimes, } from "../lib/experimental/testing.js";
 import { empty, fromValue, fromObservable } from "../lib/flowable.js";
 import { increment, pipe, returns, defer } from "../lib/functions.js";
-import { test, describe, expectEquals, expectTrue, mockFn, expectToHaveBeenCalledTimes, } from "../lib/experimental/testing.js";
 import { onNotify, subscribe, generate, dispatch, dispatchTo, } from "../lib/observable.js";
 import { createVirtualTimeScheduler, schedule } from "../lib/scheduler.js";
 import { stream } from "../lib/streamable.js";

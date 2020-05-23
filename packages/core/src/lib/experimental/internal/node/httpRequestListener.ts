@@ -1,9 +1,6 @@
 import { ServerResponse, IncomingMessage } from "http";
 import { Http2ServerRequest, Http2ServerResponse } from "http2";
-import {
-  DisposableValueLike,
-  addDisposable,
-} from "../../../disposable";
+import { DisposableValueLike, addDisposable } from "../../../disposable";
 import {
   defer,
   pipe,
@@ -70,7 +67,7 @@ export const createHttpRequestListener = (
 ): SideEffect2<
   IncomingMessage | Http2ServerRequest,
   ServerResponse | Http2ServerResponse
->=> {
+> => {
   const { onError = defaultOnError } = options;
 
   const handleRequest = (

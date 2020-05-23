@@ -1,3 +1,15 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  unstable_IdlePriority,
+  unstable_ImmediatePriority,
+  unstable_LowPriority,
+  unstable_NormalPriority,
+  unstable_cancelCallback,
+  unstable_now,
+  unstable_scheduleCallback,
+  unstable_shouldYield,
+  unstable_UserBlockingPriority,
+} from "scheduler";
 import {
   Exception,
   addTeardown,
@@ -5,13 +17,7 @@ import {
   createDisposable,
   dispose,
 } from "./disposable";
-import {
-  SideEffect1,
-  pipe,
-  compose,
-  defer,
-  returns,
-} from "./functions";
+import { SideEffect1, pipe, compose, defer, returns } from "./functions";
 import {
   dispatch as dispatchToStream,
   ObservableLike,
@@ -29,22 +35,7 @@ import {
   toSchedulerWithPriority,
   run,
 } from "./scheduler";
-import {
-  StreamableLike,
-  stream as streamableStream,
-} from "./streamable";
-import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  unstable_IdlePriority,
-  unstable_ImmediatePriority,
-  unstable_LowPriority,
-  unstable_NormalPriority,
-  unstable_cancelCallback,
-  unstable_now,
-  unstable_scheduleCallback,
-  unstable_shouldYield,
-  unstable_UserBlockingPriority,
-} from "scheduler";
+import { StreamableLike, stream as streamableStream } from "./streamable";
 
 const subscribeObservable = <T>(
   observable: ObservableLike<T>,

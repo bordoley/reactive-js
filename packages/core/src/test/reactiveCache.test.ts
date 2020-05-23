@@ -1,6 +1,8 @@
 import { disposed, dispose } from "../lib/disposable";
-import { pipe, returns } from "../lib/functions";
-import { createReactiveCache, getOrSet } from "../lib/experimental/reactiveCache";
+import {
+  createReactiveCache,
+  getOrSet,
+} from "../lib/experimental/reactiveCache";
 import {
   test,
   describe,
@@ -9,6 +11,7 @@ import {
   expectTrue,
   expectEquals,
 } from "../lib/experimental/testing";
+import { pipe, returns } from "../lib/functions";
 import {
   fromArray,
   subscribe,

@@ -15,7 +15,7 @@ const historyFunction = compose(throttle(15), onNotify(pushHistoryState), mergeW
 export const emptyURI = {
     pathname: "",
     search: "",
-    hash: ""
+    hash: "",
 };
 const toRelativeURI = (href) => {
     const uri = new URL(href);

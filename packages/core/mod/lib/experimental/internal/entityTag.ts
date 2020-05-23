@@ -1,4 +1,5 @@
 import { pipe } from "../../functions.ts";
+import { isSome, none, Option } from "../../option.ts";
 import {
   satisfy,
   string,
@@ -9,7 +10,6 @@ import {
   CharStreamLike,
   parseWithOrThrow,
 } from "../parserCombinators.ts";
-import { isSome, none, Option } from "../../option.ts";
 import { ASCII } from "./httpGrammar.ts";
 import { HttpHeaders, getHeaderValue, HttpStandardHeader } from "./httpHeaders.ts";
 

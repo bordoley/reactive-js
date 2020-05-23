@@ -1,7 +1,7 @@
 import { createDisposableValue, disposed, dispose } from "../lib/disposable.js";
-import { pipe, ignore, defer } from "../lib/functions.js";
 import { createResourceManager } from "../lib/experimental/resourceManager.js";
 import { test, describe } from "../lib/experimental/testing.js";
+import { pipe, ignore, defer } from "../lib/functions.js";
 import { onNotify, subscribe, fromArray } from "../lib/observable.js";
 import { createVirtualTimeScheduler } from "../lib/scheduler.js";
 export const tests = describe("resource manager", test("integration test", () => {

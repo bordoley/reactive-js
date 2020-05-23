@@ -1,11 +1,7 @@
 import { pipe, SideEffect2 } from "../../functions";
-import {
-  concatWith,
-  map,
-  parseWith,
-} from "../parserCombinators";
 import { isSome, Option, none } from "../../option";
 import { map as mapReadonlyArray } from "../../readonlyArray";
+import { concatWith, map, parseWith } from "../parserCombinators";
 import { HttpContentEncoding } from "./httpContentInfo";
 import { pToken, pParams, httpList } from "./httpGrammar";
 import { HttpStandardHeader, getHeaderValue, HttpHeaders } from "./httpHeaders";

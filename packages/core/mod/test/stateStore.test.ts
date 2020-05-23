@@ -1,11 +1,11 @@
 import { dispose } from "../lib/disposable.ts";
-import { pipe, incrementBy } from "../lib/functions.ts";
 import {
   test,
   describe,
   expectArrayEquals,
   expectTrue,
 } from "../lib/experimental/testing.ts";
+import { pipe, incrementBy } from "../lib/functions.ts";
 import { onNotify, subscribe, startWith, dispatch } from "../lib/observable.ts";
 import { createVirtualTimeScheduler } from "../lib/scheduler.ts";
 import { toStateStore } from "../lib/stateStore.ts";
