@@ -1,6 +1,6 @@
 import {
   AbstractDisposable,
-  Exception,
+  Error,
   addTeardown,
   dispose,
   DisposableLike,
@@ -65,7 +65,7 @@ class SchedulerContinuationImpl<T extends SchedulerLike>
   continue() {
     if (!this.isDisposed) {
       const listeners = this.listeners;
-      let error: Option<Exception> = none;
+      let error: Option<Error> = none;
       let yieldError: Option<YieldError> = none;
 
       notifyListeners(listeners, true);

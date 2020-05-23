@@ -18,7 +18,8 @@ import {
   expectEquals,
   expectNone,
 } from "./experimental/testing.ts";
-import { pipe } from "./functions.ts";
+import { pipe, defer, raise } from "./functions.ts";
+import { none } from "./option.ts";
 
 export const tests = describe(
   "Disposable",
@@ -54,17 +55,19 @@ export const tests = describe(
       pipe(teardown, expectToHaveBeenCalledTimes(1));
     }),
 
-    test("catches and swallows exceptions thrown by teardown function", () => {
-      const teardown = () => {
-        throw new Error();
-      };
+    test("catches and swallows Errors thrown by teardown function", () => {
+      const teardown = defer(
+        none,
+        raise
+      );
+
       const disposable = createDisposable(teardown);
 
       dispose(disposable);
       pipe(disposable.error, expectNone);
     }),
 
-    test("propogates errors when disposed with an exception", () => {
+    test("propogates errors when disposed with an Error", () => {
       const error = { cause: null };
 
       const childTeardown = mockFn();

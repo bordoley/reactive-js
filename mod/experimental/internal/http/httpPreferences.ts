@@ -1,4 +1,4 @@
-import { pipe, SideEffect2 } from "../../../functions.ts";
+import { pipe, SideEffect2, raise } from "../../../functions.ts";
 import { isSome, Option, none } from "../../../option.ts";
 import { map as mapReadonlyArray } from "../../../readonlyArray.ts";
 import { ReadonlyObjectMap } from "../../../readonlyObjectMap.ts";
@@ -138,7 +138,7 @@ export const createHttpPreferences = ({
       acceptedMediaRanges,
     ].findIndex(x => x.length > 0) < 0
   ) {
-    throw new Error();
+    raise();
   }
 
   return {

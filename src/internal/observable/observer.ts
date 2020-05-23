@@ -3,7 +3,7 @@ import {
   AbstractDisposable,
   bindDisposables,
 } from "../../disposable";
-import { ignore, SideEffect1 } from "../../functions";
+import { ignore, SideEffect1, raise } from "../../functions";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
@@ -15,11 +15,11 @@ import { ObserverLike } from "./interfaces";
 const assertObserverStateProduction = ignore;
 const assertObserverStateDev = <T>(observer: ObserverLike<T>) => {
   if (!observer.inContinuation) {
-    throw new Error(
+    raise(
       "Observer.notify() may only be invoked within a scheduled SchedulerContinuation",
     );
   } else if (observer.isDisposed) {
-    throw new Error("Observer is disposed");
+    raise("Observer is disposed");
   }
 };
 

@@ -24,6 +24,7 @@ import {
   sum,
   defer,
   ignore,
+  raise,
 } from "./functions.ts";
 import { createMonadTests } from "./monad.test.ts";
 import * as Observable from "./observable.ts";
@@ -123,7 +124,7 @@ export const tests = describe(
         defer(
           [1, 2, 3, 4],
           fromArray(),
-          buffer({ duration: _ => throws()(() => new Error()) }),
+          buffer({ duration: _ => throws()(raise) }),
           toRunnable(
             defer({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
           ),
@@ -340,7 +341,7 @@ export const tests = describe(
         defer(
           [1, 4, 7],
           fromArray({ delay: 2 }),
-          mergeWith(throws({ delay: 5 })(() => new Error())),
+          mergeWith(throws({ delay: 5 })(raise)),
           toRunnable(),
           last,
         ),
@@ -357,9 +358,7 @@ export const tests = describe(
         defer(
           [
             fromArray({ delay: 1 })([1, 2, 3]),
-            throws({ delay: 2 })(() => {
-              throw new Error();
-            }),
+            throws({ delay: 2 })(raise),
           ],
           fromArray(),
           mergeMap(identity),
@@ -377,7 +376,7 @@ export const tests = describe(
           fromArray(),
           mergeMap(x => {
             if (x > 2) {
-              throw new Error();
+              raise();
             }
             return fromValue()(x);
           }),
@@ -412,13 +411,10 @@ export const tests = describe(
 
     test("when callback function throws", () => {
       const scheduler = createVirtualTimeScheduler();
-      const f = () => {
-        throw new Error();
-      };
       const subscription = pipe(
         1,
         fromValue(),
-        onSubscribe(f),
+        onSubscribe(raise),
         subscribe(scheduler),
       );
 
@@ -541,7 +537,7 @@ export const tests = describe(
       "when source throw",
       defer(
         defer(
-          () => new Error(),
+          raise,
           throws(),
           switchAll(),
           toRunnable(),
@@ -570,7 +566,7 @@ export const tests = describe(
     test(
       "when pipeline throws",
       defer(
-        defer(() => new Error(), throws(), takeLast(), toRunnable(), last),
+        defer(raise, throws(), takeLast(), toRunnable(), last),
         expectToThrow,
       ),
     ),
@@ -619,7 +615,7 @@ export const tests = describe(
         defer(
           [1, 2, 3, 4, 5],
           fromArray({ delay: 1 }),
-          throttle(_ => throws()(() => new Error())),
+          throttle(_ => throws()(raise)),
           toRunnable(),
           last,
         ),
@@ -802,9 +798,7 @@ export const tests = describe(
       "when source throws",
       defer(
         defer(
-          () => {
-            throw new Error();
-          },
+          raise,
           throws(),
           zipWith(fromArray()([1, 2, 3])),
           map(([, b]) => b),
@@ -835,7 +829,7 @@ export const tests = describe(
       "when source throws",
       defer(
         defer(
-          throws()(() => new Error()),
+          throws()(raise),
           zipWithLatestFrom(fromValue()(1), (_, b) => b),
           toRunnable(),
           last,
@@ -851,7 +845,7 @@ export const tests = describe(
           [1, 2, 3],
           fromArray({ delay: 1 }),
           zipWithLatestFrom(
-            throws()(() => new Error()),
+            throws()(raise),
             (_, b) => b,
           ),
           toRunnable(),

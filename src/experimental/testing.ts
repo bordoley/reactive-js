@@ -6,6 +6,7 @@ import {
   SideEffect,
   Function1,
   ignore,
+  raise,
 } from "../functions";
 import { Option, isSome, isNone, none } from "../option";
 
@@ -71,7 +72,7 @@ export const expectToThrow = (f: SideEffect) => {
   }
 
   if (!didThrow) {
-    throw new Error("expected function to throw");
+    raise("expected function to throw");
   }
 };
 
@@ -86,9 +87,9 @@ export const expectToThrowError = (error: unknown) => (f: SideEffect) => {
   }
 
   if (!didThrow) {
-    throw new Error("expected function to throw");
+    raise("expected function to throw");
   } else if (errorThrown !== error) {
-    throw new Error(
+    raise(
       `expected ${JSON.stringify(error)}\nreceieved: ${JSON.stringify(
         errorThrown,
       )}`,
@@ -100,7 +101,7 @@ export const expectEquals = <T>(b: T, valueEquality = strictEquality) => (
   a: T,
 ) => {
   if (!valueEquality(a, b)) {
-    throw new Error(
+    raise(
       `expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`,
     );
   }
@@ -112,7 +113,7 @@ export const expectArrayEquals = <T>(
 ) => (a: readonly T[]) => {
   const equals = arrayEquality(valueEquality);
   if (!equals(a, b)) {
-    throw new Error(
+    raise(
       `expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`,
     );
   }
@@ -120,25 +121,25 @@ export const expectArrayEquals = <T>(
 
 export const expectTrue = (v: boolean) => {
   if (!v) {
-    throw new Error("expected true");
+    raise("expected true");
   }
 };
 
 export const expectFalse = (v: boolean) => {
   if (v) {
-    throw new Error("expected false");
+    raise("expected false");
   }
 };
 
 export const expectNone = (v: Option<unknown>) => {
   if (isSome(v)) {
-    throw new Error(`expected none but recieved ${v}`);
+    raise(`expected none but recieved ${v}`);
   }
 };
 
 export const expectSome = (v: Option<unknown>) => {
   if (isNone(v)) {
-    throw new Error(`expected Some(?) but recieved None`);
+    raise(`expected Some(?) but recieved None`);
   }
 };
 
@@ -162,7 +163,7 @@ export const expectToHaveBeenCalledTimes = (times: number) => (
   fn: MockFunction,
 ) => {
   if (fn.calls.length !== times) {
-    throw new Error(
+    raise(
       `expected fn to be called ${times} times, but was only called ${fn.calls.length} times.`,
     );
   }
@@ -177,6 +178,6 @@ export const expectPromiseToThrow = async (promise: Promise<any>) => {
   }
 
   if (!didThrow) {
-    throw new Error("expected function to throw");
+    raise("expected function to throw");
   }
 };

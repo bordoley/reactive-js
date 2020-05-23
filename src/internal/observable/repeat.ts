@@ -1,5 +1,5 @@
 import {
-  Exception,
+  Error,
   dispose,
   addDisposable,
   addTeardown,
@@ -15,19 +15,19 @@ import { subscribe } from "./subscribe";
 const createRepeatObserver = <T>(
   delegate: ObserverLike<T>,
   observable: ObservableLike<T>,
-  shouldRepeat: (count: number, error?: Exception) => boolean,
+  shouldRepeat: (count: number, error?: Error) => boolean,
 ) => {
   const observer = createDelegatingObserver(delegate);
 
   let count = 1;
 
-  const onDispose = (error?: Exception) => {
+  const onDispose = (error?: Error) => {
     let shouldComplete = false;
     try {
       shouldComplete = !shouldRepeat(count, error);
     } catch (cause) {
       shouldComplete = true;
-      error = { cause, parent: error } as Exception;
+      error = { cause, parent: error } as Error;
     }
 
     if (shouldComplete) {
@@ -50,7 +50,7 @@ const createRepeatObserver = <T>(
 };
 
 const repeatObs = <T>(
-  shouldRepeat: (count: number, error?: Exception) => boolean,
+  shouldRepeat: (count: number, error?: Error) => boolean,
 ): ObservableOperator<T, T> => observable => {
   const operator = (observer: ObserverLike<T>) =>
     createRepeatObserver(observer, observable, shouldRepeat);
@@ -58,7 +58,7 @@ const repeatObs = <T>(
   return lift(operator)(observable);
 };
 
-const defaultRepeatPredicate = (_: number, error?: Exception): boolean =>
+const defaultRepeatPredicate = (_: number, error?: Error): boolean =>
   isNone(error);
 
 /**
@@ -88,13 +88,13 @@ export function repeat<T>(
   const repeatPredicate = isNone(predicate)
     ? defaultRepeatPredicate
     : typeof predicate === "number"
-    ? (count: number, error?: Exception) => isNone(error) && count < predicate
-    : (count: number, error?: Exception) => isNone(error) && predicate(count);
+    ? (count: number, error?: Error) => isNone(error) && count < predicate
+    : (count: number, error?: Error) => isNone(error) && predicate(count);
 
   return repeatObs(repeatPredicate);
 }
 
-const defaultRetryPredicate = (_: number, error?: Exception): boolean =>
+const defaultRetryPredicate = (_: number, error?: Error): boolean =>
   isSome(error);
 
 /**
@@ -118,7 +118,7 @@ export function retry<T>(
 ): ObservableOperator<T, T> {
   const retryPredicate = isNone(predicate)
     ? defaultRetryPredicate
-    : (count: number, error?: Exception) =>
+    : (count: number, error?: Error) =>
         isSome(error) && predicate(count, error.cause);
 
   return repeatObs(retryPredicate);

@@ -1,4 +1,4 @@
-import { strictEquality, arrayEquality, ignore, } from "../functions.js";
+import { strictEquality, arrayEquality, ignore, raise, } from "../functions.js";
 import { isSome, isNone, none } from "../option.js";
 export const describe = (name, ...tests) => ({
     type: 1,
@@ -30,7 +30,7 @@ export const expectToThrow = (f) => {
         didThrow = true;
     }
     if (!didThrow) {
-        throw new Error("expected function to throw");
+        raise("expected function to throw");
     }
 };
 export const expectToThrowError = (error) => (f) => {
@@ -44,41 +44,41 @@ export const expectToThrowError = (error) => (f) => {
         errorThrown = e;
     }
     if (!didThrow) {
-        throw new Error("expected function to throw");
+        raise("expected function to throw");
     }
     else if (errorThrown !== error) {
-        throw new Error(`expected ${JSON.stringify(error)}\nreceieved: ${JSON.stringify(errorThrown)}`);
+        raise(`expected ${JSON.stringify(error)}\nreceieved: ${JSON.stringify(errorThrown)}`);
     }
 };
 export const expectEquals = (b, valueEquality = strictEquality) => (a) => {
     if (!valueEquality(a, b)) {
-        throw new Error(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
+        raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
     }
 };
 export const expectArrayEquals = (b, valueEquality = strictEquality) => (a) => {
     const equals = arrayEquality(valueEquality);
     if (!equals(a, b)) {
-        throw new Error(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
+        raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
     }
 };
 export const expectTrue = (v) => {
     if (!v) {
-        throw new Error("expected true");
+        raise("expected true");
     }
 };
 export const expectFalse = (v) => {
     if (v) {
-        throw new Error("expected false");
+        raise("expected false");
     }
 };
 export const expectNone = (v) => {
     if (isSome(v)) {
-        throw new Error(`expected none but recieved ${v}`);
+        raise(`expected none but recieved ${v}`);
     }
 };
 export const expectSome = (v) => {
     if (isNone(v)) {
-        throw new Error(`expected Some(?) but recieved None`);
+        raise(`expected Some(?) but recieved None`);
     }
 };
 export const mockFn = (retval) => {
@@ -92,7 +92,7 @@ export const mockFn = (retval) => {
 };
 export const expectToHaveBeenCalledTimes = (times) => (fn) => {
     if (fn.calls.length !== times) {
-        throw new Error(`expected fn to be called ${times} times, but was only called ${fn.calls.length} times.`);
+        raise(`expected fn to be called ${times} times, but was only called ${fn.calls.length} times.`);
     }
 };
 export const expectPromiseToThrow = async (promise) => {
@@ -104,6 +104,6 @@ export const expectPromiseToThrow = async (promise) => {
         didThrow = true;
     }
     if (!didThrow) {
-        throw new Error("expected function to throw");
+        raise("expected function to throw");
     }
 };

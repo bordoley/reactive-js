@@ -1,4 +1,4 @@
-import { pipe } from "../../../functions.js";
+import { pipe, raise } from "../../../functions.js";
 import { isNone, isSome, none } from "../../../option.js";
 import { pEquals, or, throwParseError, map, satisfy, parseWith, manySatisfy, many, pComma, sepBy, manyIgnore, pSemicolon, pColon, isParseError, string, } from "../../parserCombinators.js";
 const pTChar = satisfy(c => c === 33 ||
@@ -100,7 +100,7 @@ export const toTokenOrQuotedString = (input) => {
             buffer.push(92);
         }
         else if (!isQDText) {
-            throw new Error();
+            raise();
         }
         if (isSome(buffer)) {
             buffer.push(c);

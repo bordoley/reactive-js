@@ -2,7 +2,7 @@ import {
   dispose,
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
-  Exception,
+  Error,
 } from "../../disposable";
 import { Factory } from "../../functions";
 import { none, Option } from "../../option";
@@ -20,7 +20,7 @@ class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
     super(delegate);
     addOnDisposedWithError(this, delegate);
     addOnDisposedWithoutErrorTeardown(this, () => {
-      let error: Option<Exception> = none;
+      let error: Option<Error> = none;
 
       if (this.isEmpty) {
         let cause: unknown = none;

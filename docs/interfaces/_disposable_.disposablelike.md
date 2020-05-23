@@ -43,7 +43,7 @@ Represents an unmanaged resource that can be disposed.
 
 ###  error
 
-• **error**: *[Option](../modules/_option_.md#option)‹[Exception](../modules/_disposable_.md#exception)›*
+• **error**: *[Option](../modules/_option_.md#option)‹[Error](../modules/_disposable_.md#error)›*
 
 The error the disposable was disposed with if disposed.
 
@@ -77,7 +77,7 @@ ___
 
 ###  dispose
 
-▸ **dispose**(`error?`: [Exception](../modules/_disposable_.md#exception)): *void*
+▸ **dispose**(`error?`: [Error](../modules/_disposable_.md#error)): *void*
 
 Dispose the resource. The operation is idempotent.
 
@@ -85,6 +85,6 @@ Dispose the resource. The operation is idempotent.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`error?` | [Exception](../modules/_disposable_.md#exception) | An optional error that to signal that the resource is being disposed due to an error.  |
+`error?` | [Error](../modules/_disposable_.md#error) | An optional error that to signal that the resource is being disposed due to an error.  |
 
 **Returns:** *void*

@@ -18,7 +18,7 @@
 ### Type aliases
 
 * [DisposableOrTeardown](_disposable_.md#disposableorteardown)
-* [Exception](_disposable_.md#exception)
+* [Error](_disposable_.md#error)
 
 ### Variables
 
@@ -45,13 +45,13 @@
 
 ###  DisposableOrTeardown
 
-Ƭ **DisposableOrTeardown**: *[DisposableLike](../interfaces/_disposable_.disposablelike.md) | [SideEffect1](_functions_.md#sideeffect1)‹[Option](_option_.md#option)‹[Exception](_disposable_.md#exception)››*
+Ƭ **DisposableOrTeardown**: *[DisposableLike](../interfaces/_disposable_.disposablelike.md) | [SideEffect1](_functions_.md#sideeffect1)‹[Option](_option_.md#option)‹[Error](_disposable_.md#error)››*
 
 ___
 
-###  Exception
+###  Error
 
-Ƭ **Exception**: *object*
+Ƭ **Error**: *object*
 
 A wrapper around a caught error to handle corner cases such
 as a function which throws undefined or string.
@@ -162,14 +162,14 @@ ___
 
 ### `Const` addTeardown
 
-▸ **addTeardown**(`parent`: [DisposableLike](../interfaces/_disposable_.disposablelike.md), `teardown`: [SideEffect1](_functions_.md#sideeffect1)‹[Option](_option_.md#option)‹[Exception](_disposable_.md#exception)››): *void*
+▸ **addTeardown**(`parent`: [DisposableLike](../interfaces/_disposable_.disposablelike.md), `teardown`: [SideEffect1](_functions_.md#sideeffect1)‹[Option](_option_.md#option)‹[Error](_disposable_.md#error)››): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
 `parent` | [DisposableLike](../interfaces/_disposable_.disposablelike.md) |
-`teardown` | [SideEffect1](_functions_.md#sideeffect1)‹[Option](_option_.md#option)‹[Exception](_disposable_.md#exception)›› |
+`teardown` | [SideEffect1](_functions_.md#sideeffect1)‹[Option](_option_.md#option)‹[Error](_disposable_.md#error)›› |
 
 **Returns:** *void*
 
@@ -202,13 +202,13 @@ Creates an empty DisposableLike instance.
 
 Optional teardown logic to attach to the newly created disposable.
 
-▸ (`error?`: [Exception](_disposable_.md#exception)): *void*
+▸ (`error?`: [Error](_disposable_.md#error)): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`error?` | [Exception](_disposable_.md#exception) |
+`error?` | [Error](_disposable_.md#error) |
 
 **Returns:** *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
 
@@ -247,14 +247,14 @@ ___
 
 ### `Const` dispose
 
-▸ **dispose**(`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md), `e?`: [Exception](_disposable_.md#exception)): *void*
+▸ **dispose**(`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md), `e?`: [Error](_disposable_.md#error)): *void*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
 `disposable` | [DisposableLike](../interfaces/_disposable_.disposablelike.md) |
-`e?` | [Exception](_disposable_.md#exception) |
+`e?` | [Error](_disposable_.md#error) |
 
 **Returns:** *void*
 
@@ -262,7 +262,7 @@ ___
 
 ### `Const` toDisposeOnErrorTeardown
 
-▸ **toDisposeOnErrorTeardown**(`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *[SideEffect1](_functions_.md#sideeffect1)‹[Option](_option_.md#option)‹[Exception](_disposable_.md#exception)››*
+▸ **toDisposeOnErrorTeardown**(`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *[SideEffect1](_functions_.md#sideeffect1)‹[Option](_option_.md#option)‹[Error](_disposable_.md#error)››*
 
 **Parameters:**
 
@@ -270,7 +270,7 @@ Name | Type |
 ------ | ------ |
 `disposable` | [DisposableLike](../interfaces/_disposable_.disposablelike.md) |
 
-**Returns:** *[SideEffect1](_functions_.md#sideeffect1)‹[Option](_option_.md#option)‹[Exception](_disposable_.md#exception)››*
+**Returns:** *[SideEffect1](_functions_.md#sideeffect1)‹[Option](_option_.md#option)‹[Error](_disposable_.md#error)››*
 
 ___
 

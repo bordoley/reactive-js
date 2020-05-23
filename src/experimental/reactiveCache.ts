@@ -1,6 +1,6 @@
 import {
   DisposableLike,
-  Exception,
+  Error,
   AbstractDisposable,
   dispose,
   addTeardown,
@@ -127,7 +127,7 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
         this.garbage.delete(key);
       });
 
-      const onDisposeCleanup = (_?: Exception) =>
+      const onDisposeCleanup = (_?: Error) =>
         addDisposable(
           this,
           schedule(this.cleanupScheduler, () => {

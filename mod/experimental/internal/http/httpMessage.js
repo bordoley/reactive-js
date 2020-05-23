@@ -1,4 +1,4 @@
-import { pipe } from "../../../functions.js";
+import { pipe, raise } from "../../../functions.js";
 import { fromValue } from "../../../io.js";
 import { isSome, isNone } from "../../../option.js";
 import { map } from "../../../readonlyArray.js";
@@ -30,10 +30,10 @@ export const writeHttpMessageHeaders = ({ cacheControl, contentInfo, headers, pr
     }
     writeHttpHeaders(headers, writeHeader);
 };
-export const encodeHttpMessageWithUtf8 = ({ contentInfo, ...msg }) => {
-    if (isNone(contentInfo)) {
-        throw new Error("HttpMessage has not contentInfo");
-    }
+export const encodeHttpMessageWithUtf8 = ({ contentInfo: contentInfoOption, ...msg }) => {
+    const contentInfo = isNone(contentInfoOption)
+        ? raise("HttpMessage has no contentInfo")
+        : contentInfoOption;
     const { contentType } = contentInfo;
     const textEncoder = new TextEncoder();
     return {

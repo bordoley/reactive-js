@@ -1,4 +1,4 @@
-import { pipe } from "../../../functions.js";
+import { pipe, raise } from "../../../functions.js";
 import { isSome, none } from "../../../option.js";
 import { map as mapReadonlyArray } from "../../../readonlyArray.js";
 import { concatWith, map, parseWith } from "../../parserCombinators.js";
@@ -59,7 +59,7 @@ export const createHttpPreferences = ({ acceptedCharsets = [], acceptedEncodings
         acceptedLanguages,
         acceptedMediaRanges,
     ].findIndex(x => x.length > 0) < 0) {
-        throw new Error();
+        raise();
     }
     return {
         acceptedCharsets,
