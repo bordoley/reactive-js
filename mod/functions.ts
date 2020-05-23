@@ -1,5 +1,5 @@
 /**
- * Compare two objects to determine their relative ordering.
+ * Compare two values to determine their relative ordering.
  * 
  * @returns A signed number indicating the relative order of `a` and `b`:
  *   - If less than 0, `a` is less `b`.
@@ -9,7 +9,7 @@
 export type Comparator<T> = (a: T, b: T) => number;
 
 /**
- * Compare two objects for equality.
+ * Compare two values for equality.
  * 
  * @returns true if `a` is equals to `b`, otherwise false
  */
@@ -31,8 +31,8 @@ export type Updater<T> = (prev: T) => T;
 export type Predicate<T> = (a: T) => boolean;
 
 /**
- * A type guard function that performs a runtime check that guarantees
- * that guarantees `v` if of type `TB`.
+ * A type guard function that performs a runtime check
+ * guaranteeing `v` is of type `TB`.
  * 
  * @returns `true` if v is an instance of type `TB`, otherwise false. 
  */
@@ -228,7 +228,7 @@ export function callWith<T>(
 export const identity = <T>(v: T): T => v;
 
 /**
- * @returns A function that takes an arbitrary number of arguments and always returns `v`.
+ * Returns a function that takes an arbitrary number of arguments and always returns `v`.
  */
 export const returns = <T>(v: T): ((..._args: unknown[]) => T) => (
   ..._args: unknown[]
@@ -246,7 +246,7 @@ export const alwaysFalse = (..._args: unknown[]) => false;
 export const alwaysTrue = (..._args: unknown[]) => true;
 
 /**
- * A function that always return undefined
+ * A function that always returns `undefined`.
  */
 export const ignore = (..._args: unknown[]) =>  { return undefined };
 
@@ -262,7 +262,7 @@ export const incrementBy = (incr: number): Updater<number> => (x: number) =>
   x + incr;
 
 /**
- * An updater function that returns the result of decrements `x`.
+ * An updater function that returns the result of decrementing `x`.
  */
 export const decrement = (x: number) => x - 1;
 
@@ -317,7 +317,7 @@ export const sum = (...args: number[]) => {
 };
 
 /**
- * Returns an equality function that compares two readonly arrays for equality
+ * Returns an equality function that compares two readonly arrays for equality,
  * comparing their values using `valuesEquality`.
  */
 export const arrayEquality = <T>(
@@ -568,7 +568,7 @@ export function compose(
 }
 
 /**
- * Returns a function that composes its operator with `op1`.
+ * Returns a function that composes its operator with `op2`.
  */
 export const composeWith = <T, A, B>(
   op2: Function1<A, B>,

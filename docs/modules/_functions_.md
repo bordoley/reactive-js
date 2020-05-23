@@ -63,7 +63,7 @@
 
 Ƭ **Comparator**: *function*
 
-Compare two objects to determine their relative ordering.
+Compare two values to determine their relative ordering.
 
 **`returns`** A signed number indicating the relative order of `a` and `b`:
   - If less than 0, `a` is less `b`.
@@ -87,7 +87,7 @@ ___
 
 Ƭ **Equality**: *function*
 
-Compare two objects for equality.
+Compare two values for equality.
 
 **`returns`** true if `a` is equals to `b`, otherwise false
 
@@ -515,8 +515,8 @@ ___
 
 Ƭ **TypePredicate**: *function*
 
-A type guard function that performs a runtime check that guarantees
-that guarantees `v` if of type `TB`.
+A type guard function that performs a runtime check
+guaranteeing `v` is of type `TB`.
 
 **`returns`** `true` if v is an instance of type `TB`, otherwise false.
 
@@ -586,7 +586,7 @@ ___
 
 ▸ **arrayEquality**<**T**>(`valuesEquality`: [Equality](_functions_.md#equality)‹T›): *[Equality](_functions_.md#equality)‹keyof T[]›*
 
-Returns an equality function that compares two readonly arrays for equality
+Returns an equality function that compares two readonly arrays for equality,
 comparing their values using `valuesEquality`.
 
 **Type parameters:**
@@ -1126,7 +1126,7 @@ ___
 
 ▸ **composeWith**<**T**, **A**, **B**>(`op2`: [Function1](_functions_.md#function1)‹A, B›): *[Function1](_functions_.md#function1)‹[Function1](_functions_.md#function1)‹T, A›, [Function1](_functions_.md#function1)‹T, B››*
 
-Returns a function that composes its operator with `op1`.
+Returns a function that composes its operator with `op2`.
 
 **Type parameters:**
 
@@ -1150,7 +1150,7 @@ ___
 
 ▸ **decrement**(`x`: number): *number*
 
-An updater function that returns the result of decrements `x`.
+An updater function that returns the result of decrementing `x`.
 
 **Parameters:**
 
@@ -1706,7 +1706,7 @@ ___
 
 ▸ **ignore**(...`_args`: unknown[]): *any*
 
-A function that always return undefined
+A function that always returns `undefined`.
 
 **Parameters:**
 
@@ -2267,6 +2267,8 @@ ___
 
 ▸ **returns**<**T**>(`v`: T): *function*
 
+Returns a function that takes an arbitrary number of arguments and always returns `v`.
+
 **Type parameters:**
 
 ▪ **T**
@@ -2278,8 +2280,6 @@ Name | Type |
 `v` | T |
 
 **Returns:** *function*
-
-A function that takes an arbitrary number of arguments and always returns `v`.
 
 ▸ (...`_args`: unknown[]): *T*
 
