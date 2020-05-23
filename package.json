@@ -35,7 +35,7 @@
     "pkg-mjs-rename": "renamer --find \".js\" --replace \".mjs\" \"./packages/core/**/*.js\"",
     "pkg-mjs-replace": "replace 'from \"(\\.[.\\-/\\w]+)\";' 'from \"$1.mjs\";' ./packages/core -r --include=\"*.mjs\"",
     "pkg-types": "cp -r ./build/types/ ./packages/core",
-    "pkg-rm-unsupport": "rm -rf ./packages/core/experimental/testing.deno.* ./packages/core/perf",
+    "pkg-rm-unsupport": "rm -rf ./packages/core/*.test.* ./packages/core/experimental/*.test.* /packages/core/experimental/testing.deno.* ./packages/core/perf",
     "pkg-cp-files": "cp README.md ./packages/core",
     "perf": "yarn compile-cjs && NODE_ENV=production node ./build/cjs/perf/index.js",
     "test": "jest",
