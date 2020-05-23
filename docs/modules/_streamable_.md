@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["streamable"](_streamable_.md)
+[reactive-js](../README.md) › ["streamable"](_streamable_.md)
 
 # Module: "streamable"
 

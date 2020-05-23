@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["flowable"](../modules/_flowable_.md) › [FlowableLike](_flowable_.flowablelike.md)
+[reactive-js](../README.md) › ["flowable"](../modules/_flowable_.md) › [FlowableLike](_flowable_.flowablelike.md)
 
 # Interface: FlowableLike <**T**>
 

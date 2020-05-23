@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["readonlyArray"](_readonlyarray_.md)
+[reactive-js](../README.md) › ["readonlyArray"](_readonlyarray_.md)
 
 # Module: "readonlyArray"
 

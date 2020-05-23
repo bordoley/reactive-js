@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["observable"](../modules/_observable_.md) › [StreamLike](_observable_.streamlike.md)
+[reactive-js](../README.md) › ["observable"](../modules/_observable_.md) › [StreamLike](_observable_.streamlike.md)
 
 # Interface: StreamLike <**TReq, T**>
 

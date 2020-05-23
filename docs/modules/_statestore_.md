@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["stateStore"](_statestore_.md)
+[reactive-js](../README.md) › ["stateStore"](_statestore_.md)
 
 # Module: "stateStore"
 

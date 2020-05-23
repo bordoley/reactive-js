@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["io"](../modules/_io_.md) › [IOEventType](_io_.ioeventtype.md)
+[reactive-js](../README.md) › ["io"](../modules/_io_.md) › [IOEventType](_io_.ioeventtype.md)
 
 # Enumeration: IOEventType
 

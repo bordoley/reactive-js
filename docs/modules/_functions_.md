@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["functions"](_functions_.md)
+[reactive-js](../README.md) › ["functions"](_functions_.md)
 
 # Module: "functions"
 

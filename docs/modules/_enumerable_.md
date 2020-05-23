@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["enumerable"](_enumerable_.md)
+[reactive-js](../README.md) › ["enumerable"](_enumerable_.md)
 
 # Module: "enumerable"
 

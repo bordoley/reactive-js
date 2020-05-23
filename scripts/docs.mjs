@@ -7,7 +7,6 @@ app.bootstrap({
   excludePrivate: true,
   hideSources: true,
   ignoreCompilerErrors: "true",
-  includeVersion: "false",
   mode: "library",
   module: "commonjs",
   moduleResolution: "node",

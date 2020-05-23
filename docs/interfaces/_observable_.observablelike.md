@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["observable"](../modules/_observable_.md) › [ObservableLike](_observable_.observablelike.md)
+[reactive-js](../README.md) › ["observable"](../modules/_observable_.md) › [ObservableLike](_observable_.observablelike.md)
 
 # Interface: ObservableLike <**T**>
 

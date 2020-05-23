@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["runnable"](../modules/_runnable_.md) › [AbstractDelegatingSink](_runnable_.abstractdelegatingsink.md)
+[reactive-js](../README.md) › ["runnable"](../modules/_runnable_.md) › [AbstractDelegatingSink](_runnable_.abstractdelegatingsink.md)
 
 # Class: AbstractDelegatingSink <**TA, TB**>
 

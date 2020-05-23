@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["io"](../modules/_io_.md) › [IOSourceLike](_io_.iosourcelike.md)
+[reactive-js](../README.md) › ["io"](../modules/_io_.md) › [IOSourceLike](_io_.iosourcelike.md)
 
 # Interface: IOSourceLike <**T**>
 

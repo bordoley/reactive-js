@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["observable.test"](_observable_test_.md)
+[reactive-js](../README.md) › ["observable.test"](_observable_test_.md)
 
 # Module: "observable.test"
 

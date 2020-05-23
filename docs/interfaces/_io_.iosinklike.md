@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["io"](../modules/_io_.md) › [IOSinkLike](_io_.iosinklike.md)
+[reactive-js](../README.md) › ["io"](../modules/_io_.md) › [IOSinkLike](_io_.iosinklike.md)
 
 # Interface: IOSinkLike <**T**>
 

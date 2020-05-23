@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["sequence.test"](_sequence_test_.md)
+[reactive-js](../README.md) › ["sequence.test"](_sequence_test_.md)
 
 # Module: "sequence.test"
 

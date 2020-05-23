@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["scheduler"](_scheduler_.md)
+[reactive-js](../README.md) › ["scheduler"](_scheduler_.md)
 
 # Module: "scheduler"
 

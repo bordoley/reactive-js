@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["disposable"](_disposable_.md)
+[reactive-js](../README.md) › ["disposable"](_disposable_.md)
 
 # Module: "disposable"
 
