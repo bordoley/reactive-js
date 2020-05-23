@@ -1,4 +1,5 @@
 .DS_Store
+.merlin
 coverage
 node_modules
 
@@ -11,8 +12,14 @@ yarn-error.log
 *.key
 *.tsbuildinfo
 
-build
+bs/*.bs.js
+build/
+lib/
 packages/core/**/*.ts
 packages/core/**/*.js
 packages/core/**/*.mjs
+packages/core/**/*.re
+packages/core/**/*.rei
+packages/core/bsconfig.json
 packages/core/README.md
+

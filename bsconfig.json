@@ -1,0 +1,14 @@
+{
+  "name" : "@reactive-js/core",
+  "refmt": 3,
+  "bsc-flags": ["-bs-super-errors", "-bs-no-version-header"],
+  "namespace": "Reactive",
+  "package-specs": {
+    "module": "es6",
+    "in-source": true
+  },
+  "sources": {
+    "dir" : "bs"
+  },
+  "suffix": ".bs.js"
+}
