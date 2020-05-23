@@ -1,21 +1,21 @@
-export { CacheDirective } from "./internal/cacheDirective";
-export { EntityTag } from "./internal/entityTag";
+export { CacheDirective } from "./internal/http/cacheDirective";
+export { EntityTag } from "./internal/http/entityTag";
 export {
   HttpContentEncoding,
   HttpContentInfo,
-} from "./internal/httpContentInfo";
-export { HttpDateTime } from "./internal/httpDateTime";
+} from "./internal/http/httpContentInfo";
+export { HttpDateTime } from "./internal/http/httpDateTime";
 export {
   HttpStandardHeader,
   HttpExtensionHeader,
   HttpHeaders,
-} from "./internal/httpHeaders";
+} from "./internal/http/httpHeaders";
 export {
   HttpMessage,
   HttpMessageOptions,
   URILike,
-} from "./internal/httpMessage";
-export { HttpPreferences } from "./internal/httpPreferences";
+} from "./internal/http/httpMessage";
+export { HttpPreferences } from "./internal/http/httpPreferences";
 export {
   HttpMethod,
   HttpRequest,
@@ -28,7 +28,7 @@ export {
   encodeHttpRequestWithUtf8,
   toIOSourceHttpRequest,
   writeHttpRequestHeaders,
-} from "./internal/httpRequest";
+} from "./internal/http/httpRequest";
 export {
   HttpResponse,
   HttpResponseOptions,
@@ -42,5 +42,5 @@ export {
   encodeHttpResponseWithUtf8,
   toIOSourceHttpResponse,
   writeHttpResponseHeaders,
-} from "./internal/httpResponse";
-export { MediaType } from "./internal/mediaType";
+} from "./internal/http/httpResponse";
+export { MediaType } from "./internal/http/mediaType";

@@ -1,21 +1,21 @@
-export { CacheDirective } from "./internal/cacheDirective.ts";
-export { EntityTag } from "./internal/entityTag.ts";
+export { CacheDirective } from "./internal/http/cacheDirective.ts";
+export { EntityTag } from "./internal/http/entityTag.ts";
 export {
   HttpContentEncoding,
   HttpContentInfo,
-} from "./internal/httpContentInfo.ts";
-export { HttpDateTime } from "./internal/httpDateTime.ts";
+} from "./internal/http/httpContentInfo.ts";
+export { HttpDateTime } from "./internal/http/httpDateTime.ts";
 export {
   HttpStandardHeader,
   HttpExtensionHeader,
   HttpHeaders,
-} from "./internal/httpHeaders.ts";
+} from "./internal/http/httpHeaders.ts";
 export {
   HttpMessage,
   HttpMessageOptions,
   URILike,
-} from "./internal/httpMessage.ts";
-export { HttpPreferences } from "./internal/httpPreferences.ts";
+} from "./internal/http/httpMessage.ts";
+export { HttpPreferences } from "./internal/http/httpPreferences.ts";
 export {
   HttpMethod,
   HttpRequest,
@@ -28,7 +28,7 @@ export {
   encodeHttpRequestWithUtf8,
   toIOSourceHttpRequest,
   writeHttpRequestHeaders,
-} from "./internal/httpRequest.ts";
+} from "./internal/http/httpRequest.ts";
 export {
   HttpResponse,
   HttpResponseOptions,
@@ -42,5 +42,5 @@ export {
   encodeHttpResponseWithUtf8,
   toIOSourceHttpResponse,
   writeHttpResponseHeaders,
-} from "./internal/httpResponse.ts";
-export { MediaType } from "./internal/mediaType.ts";
+} from "./internal/http/httpResponse.ts";
+export { MediaType } from "./internal/http/mediaType.ts";
