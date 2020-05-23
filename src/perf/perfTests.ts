@@ -55,6 +55,18 @@ export const map = (n: number) =>
       x => x.subscribe(),
     ),
     benchmarkTest(
+      "wonka",
+      async src => {
+        const Wonka = await import ("wonka");
+        return () => Wonka.pipe(
+          Wonka.fromArray(src as number[]),
+          Wonka.map(increment),
+          Wonka.toArray
+        );
+      },
+      x => x(),
+    ),
+    benchmarkTest(
       "readonlyArray",
       async src => {
         const { map } = await import("../readonlyArray");
@@ -120,6 +132,24 @@ export const filterMapFusion = (n: number) =>
       x => x.subscribe(),
     ),
     benchmarkTest(
+      "wonka",
+      async src => {
+        const Wonka = await import ("wonka");
+        return () => Wonka.pipe(
+          Wonka.fromArray(src as number[]),
+          Wonka.map(increment),
+          Wonka.filter(isOdd),
+          Wonka.map(increment),
+          Wonka.map(increment),
+          Wonka.filter(isEven),
+          Wonka.scan(sum, 0),
+          Wonka.takeLast(1),
+          Wonka.toArray,
+        );
+      },
+      x => x(),
+    ),
+    benchmarkTest(
       "array methods",
       async src => {
         return src;
@@ -183,6 +213,21 @@ export const filterMapReduce = (n: number) =>
           .map(increment)
           .reduce((a, b) => sum(a, b), 0),
     ),
+    benchmarkTest(
+      "wonka",
+      async src => {
+        const Wonka = await import ("wonka");
+        return () => Wonka.pipe(
+          Wonka.fromArray(src as number[]),
+          Wonka.filter(isEven),
+          Wonka.map(increment),
+          Wonka.scan(sum, 0),
+          Wonka.takeLast(1),
+          Wonka.toArray,
+        );
+      },
+      x => x(),
+    ),
   );
 
 const createScanReducePerfTest = (name: string, module: string) =>
@@ -220,6 +265,20 @@ export const scanReduce = (n: number) =>
         return from(src).pipe(scan(sum, 0), reduce(passthrough, 0));
       },
       x => x.subscribe(),
+    ),
+    benchmarkTest(
+      "wonka",
+      async src => {
+        const Wonka = await import ("wonka");
+        return () => Wonka.pipe(
+          Wonka.fromArray(src as number[]),
+          Wonka.scan(sum, 0),
+          Wonka.scan(passthrough, 0),
+          Wonka.takeLast(1),
+          Wonka.toArray,
+        );
+      },
+      x => x(),
     ),
   );
 

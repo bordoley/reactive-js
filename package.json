@@ -68,7 +68,8 @@
     "typedoc": "0.17.0-3",
     "typedoc-plugin-markdown": "^2.2.11",
     "typedoc-plugin-no-inherit": "^1.1.10",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "wonka": "^4.0.13"
   },
   "jest": {
     "preset": "ts-jest",
