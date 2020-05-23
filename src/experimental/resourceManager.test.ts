@@ -1,9 +1,9 @@
-import { createDisposableValue, disposed, dispose } from "./disposable.ts";
-import { createResourceManager } from "./experimental/resourceManager.ts";
-import { test, describe } from "./experimental/testing.ts";
-import { pipe, ignore, defer } from "./functions.ts";
-import { onNotify, subscribe, fromArray } from "./observable.ts";
-import { createVirtualTimeScheduler } from "./scheduler.ts";
+import { createDisposableValue, disposed, dispose } from "../disposable";
+import { createResourceManager } from "./resourceManager";
+import { test, describe } from "./testing";
+import { pipe, ignore, defer } from "../functions";
+import { onNotify, subscribe, fromArray } from "../observable";
+import { createVirtualTimeScheduler } from "../scheduler";
 
 export const tests = describe(
   "resource manager",
