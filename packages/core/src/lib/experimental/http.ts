@@ -24,12 +24,14 @@ export {
   createRedirectHttpRequest,
   decodeHttpRequestContent,
   decodeHttpRequestWithCharset,
+  disallowProtocolAndHostForwarding,
   encodeHttpRequestWithUtf8,
   toIOSourceHttpRequest,
   writeHttpRequestHeaders,
 } from "./internal/httpRequest";
 export {
   HttpResponse,
+  HttpResponseOptions,
   HttpStatusCode,
   checkIfNotModified,
   createHttpErrorResponse,
@@ -42,12 +44,3 @@ export {
   writeHttpResponseHeaders,
 } from "./internal/httpResponse";
 export { MediaType } from "./internal/mediaType";
-
-export {
-  HttpServer,
-  HttpServerRequest,
-  HttpRoutedRequest,
-  createHttpServerRequest,
-  createRoutingHttpServer,
-  disallowProtocolAndHostForwarding,
-} from "./internal/httpServer";

@@ -11,7 +11,7 @@ import { isNone, isSome, none } from "../../option.ts";
 import { map, reduceRight } from "../../readonlyArray.ts";
 import { EntityTag } from "./entityTag.ts";
 import { HttpDateTime } from "./httpDateTime.ts";
-import { HttpStandardHeader, HttpHeaders, getHeaderValue } from "./httpHeaders.ts";
+import { HttpStandardHeader, HttpHeaders, getHeaderValue, HttpExtensionHeader } from "./httpHeaders.ts";
 import {
   writeHttpMessageHeaders,
   encodeHttpMessageWithUtf8,
@@ -57,6 +57,7 @@ export type HttpRequest<T> = HttpMessage<T> & {
   // referer
   readonly httpVersionMajor: number;
   readonly httpVersionMinor: number;
+  readonly isTransportSecure: boolean;
 };
 
 export type HttpRequestOptions<T> = HttpMessageOptions<T> & {
@@ -64,6 +65,7 @@ export type HttpRequestOptions<T> = HttpMessageOptions<T> & {
   headers?: HttpHeaders;
   httpVersionMajor?: number;
   httpVersionMinor?: number;
+  isTransportSecure?: boolean;
   method: HttpMethod;
   preconditions?: {
     ifMatch?: readonly (string | EntityTag)[] | "*";
@@ -95,17 +97,64 @@ const parseExpectFromHeaders = (headers: HttpHeaders): boolean => {
   return rawExpectHeader === "100-continue";
 };
 
-export const createHttpRequest = <T>({
-  expectContinue,
+const parseURIFromHeaders = ({
   headers = {},
   httpVersionMajor = 1,
-  httpVersionMinor = 1,
-  method,
-  preconditions,
+  isTransportSecure = false,
   uri,
-  ...rest
-}: HttpRequestOptions<T>): HttpRequest<T> => {
-  const options = {
+}: {
+  headers?: HttpHeaders;
+  httpVersionMajor?: number;
+  isTransportSecure?: boolean;
+  uri: string | URILike,
+}): URILike => {
+  const protocol = isTransportSecure ? "https" : "http";
+  const forwardedProtocol = getHeaderValue(
+    headers,
+    HttpExtensionHeader.XForwardedProto,
+  );
+  const uriProtocol = isSome(forwardedProtocol)
+    ? forwardedProtocol.split(/\s*,\s*/, 1)[0]
+    : protocol;
+  const forwardedHost = getHeaderValue(
+    headers,
+    HttpExtensionHeader.XForwardedHost,
+  );
+  const http2Authority = headers[":authority"];
+  const http1Host = getHeaderValue(headers, HttpStandardHeader.Host);
+  const unfilteredHost = isSome(forwardedHost)
+    ? forwardedHost
+    : isSome(http2Authority) && httpVersionMajor >= 2
+    ? http2Authority
+    : isSome(http1Host)
+    ? http1Host
+    : "";
+  const host = unfilteredHost.split(/\s*,\s*/, 1)[0];
+  return new URL(`${uriProtocol}://${host}${String(uri) ?? ""}`);
+};
+
+export const createHttpRequest = <T>(
+  options: HttpRequestOptions<T>
+): HttpRequest<T> => {
+  const {
+    expectContinue,
+    headers = {},
+    httpVersionMajor = 1,
+    httpVersionMinor = 1,
+    isTransportSecure = false,
+    method,
+    preconditions,
+    ...rest
+  } = options;
+
+  const { uri: uriOption } = options;
+  const uri = typeof uriOption === "string" && uriOption.startsWith("/")
+    ? parseURIFromHeaders(options)
+    : typeof uriOption === "string"
+    ? new URL(uriOption)
+    : uriOption;
+
+  const msgOptions = {
     ...rest,
     expectContinue: isSome(expectContinue)
       ? expectContinue
@@ -113,14 +162,44 @@ export const createHttpRequest = <T>({
     headers,
     httpVersionMajor: httpVersionMajor,
     httpVersionMinor: httpVersionMinor,
+    isTransportSecure,
     method,
     preconditions: isSome(preconditions)
       ? createHttpRequestPreconditions(preconditions)
       : parseHttpRequestPreconditionsFromHeaders(headers),
-    uri: typeof uri === "string" ? new URL(uri) : uri,
+    uri,
   };
 
-  return createHttpMessage(options) as HttpRequest<T>;
+  return createHttpMessage(msgOptions) as HttpRequest<T>;
+};
+
+export const disallowProtocolAndHostForwarding = <T>(): Function1<
+  HttpRequest<T>,
+  HttpRequest<T>
+> => request => {
+  const {
+    httpVersionMajor,
+    headers:  {
+      "x-forwarded-proto": xForwardedProto,
+      "x-forwarded-host": xForwardedHost,
+      ...headers
+    },
+    isTransportSecure,
+    uri,
+  } = request;
+
+  return isNone(xForwardedProto) && isNone(xForwardedHost)
+    ? request
+    : ({
+      ...request,
+      uri: parseURIFromHeaders({
+        headers,
+        httpVersionMajor,
+        isTransportSecure,
+        uri,
+      }),
+      headers,
+    });
 };
 
 export const createRedirectHttpRequest = <
