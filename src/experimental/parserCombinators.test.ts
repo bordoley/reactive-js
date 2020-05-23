@@ -1,3 +1,5 @@
+import { defer, pipe, returns } from "../functions";
+import { none } from "../option";
 import {
   string,
   map,
@@ -24,8 +26,6 @@ import {
   expectArrayEquals,
   expectEquals,
 } from "./testing";
-import { defer, pipe, returns } from "../functions";
-import { none } from "../option";
 
 export const tests = describe(
   "parser combinators",

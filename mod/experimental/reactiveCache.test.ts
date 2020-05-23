@@ -1,16 +1,4 @@
 import { disposed, dispose } from "../disposable.ts";
-import {
-  createReactiveCache,
-  getOrSet,
-} from "./reactiveCache.ts";
-import {
-  test,
-  describe,
-  expectNone,
-  expectSome,
-  expectTrue,
-  expectEquals,
-} from "./testing.ts";
 import { pipe, returns } from "../functions.ts";
 import {
   fromArray,
@@ -23,6 +11,15 @@ import {
 } from "../observable.ts";
 import { forEach } from "../runnable.ts";
 import { createVirtualTimeScheduler } from "../scheduler.ts";
+import { createReactiveCache, getOrSet } from "./reactiveCache.ts";
+import {
+  test,
+  describe,
+  expectNone,
+  expectSome,
+  expectTrue,
+  expectEquals,
+} from "./testing.ts";
 
 export const tests = describe(
   "reactive-cache",

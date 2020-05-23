@@ -1,5 +1,6 @@
 import { pipe } from "../../../functions.ts";
 import { isNone, isSome, none, Option } from "../../../option.ts";
+import { ReadonlyObjectMap } from "../../../readonlyObjectMap.ts";
 import {
   Parser,
   pEquals,
@@ -20,7 +21,6 @@ import {
   string,
 } from "../../parserCombinators.ts";
 import { HttpHeaders } from "./httpHeaders.ts";
-import { ReadonlyObjectMap } from "../../../readonlyObjectMap.ts";
 
 export const enum ASCII {
   HTAB = 9,

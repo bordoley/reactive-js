@@ -1,8 +1,4 @@
-import {
-  test,
-  describe,
-  expectArrayEquals,
-} from "../experimental/testing.ts";
+import { test, describe, expectArrayEquals } from "../experimental/testing.ts";
 import { pipe } from "../functions.ts";
 import { createPriorityQueue } from "./queues.ts";
 

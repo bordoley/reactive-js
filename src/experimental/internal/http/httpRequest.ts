@@ -9,6 +9,7 @@ import {
 import { IOSourceLike, IOSourceOperator } from "../../../io";
 import { isNone, isSome, none } from "../../../option";
 import { map, reduceRight } from "../../../readonlyArray";
+import { ReadonlyObjectMap } from "../../../readonlyObjectMap";
 import { EntityTag } from "./entityTag";
 import { HttpDateTime } from "./httpDateTime";
 import {
@@ -38,7 +39,6 @@ import {
   HttpResponse,
   HttpStatusCode,
 } from "./httpResponse";
-import { ReadonlyObjectMap } from "../../../readonlyObjectMap";
 
 export const enum HttpMethod {
   GET = "GET",
@@ -276,7 +276,9 @@ export const toIOSourceHttpRequest = <TBody>(
 ): HttpRequest<IOSourceLike<TBody>> =>
   toIOSourceHttpMessage(req) as HttpRequest<IOSourceLike<TBody>>;
 
-export const decodeHttpRequestContent = (decoderProvider: ReadonlyObjectMap<IOSourceOperator<Uint8Array, Uint8Array>>): Function1<
+export const decodeHttpRequestContent = (
+  decoderProvider: ReadonlyObjectMap<IOSourceOperator<Uint8Array, Uint8Array>>,
+): Function1<
   HttpRequest<IOSourceLike<Uint8Array>>,
   HttpRequest<IOSourceLike<Uint8Array>>
 > => req => {

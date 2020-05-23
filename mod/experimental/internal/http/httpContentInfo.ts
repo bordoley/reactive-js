@@ -1,6 +1,7 @@
 import { pipe, SideEffect2 } from "../../../functions.ts";
 import { isNone, none, Option } from "../../../option.ts";
 import { join } from "../../../readonlyArray.ts";
+import { ReadonlyObjectMap } from "../../../readonlyObjectMap.ts";
 import { parseWith } from "../../parserCombinators.ts";
 import { pToken, httpList } from "./httpGrammar.ts";
 import { getHeaderValue, HttpStandardHeader, HttpHeaders } from "./httpHeaders.ts";
@@ -12,7 +13,6 @@ import {
   parseMediaTypeOrThrow,
   mediaTypeIsCompressible,
 } from "./mediaType.ts";
-import { ReadonlyObjectMap } from "../../../readonlyObjectMap.ts";
 
 export const enum HttpContentEncoding {
   Brotli = "br",
@@ -95,8 +95,8 @@ export const createHttpContentInfo = ({
 export const contentIsCompressible = (
   content: HttpContentInfo,
   db: ReadonlyObjectMap<{
-      compressible?: boolean;
-    }>
+    compressible?: boolean;
+  }>,
 ): boolean =>
   content.contentEncodings.length === 0 && // Don't double encode
   mediaTypeIsCompressible(content.contentType, db);

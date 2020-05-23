@@ -1,7 +1,7 @@
-import { string, map, mapTo, sepBy, pColon, many, or, createCharStream, concat, optional, orCompute, manySatisfy, pForwardSlash, char, pEof, parseWithOrThrow, throwParseError, } from "./parserCombinators.js";
-import { test, describe, expectToThrow, expectArrayEquals, expectEquals, } from "./testing.js";
 import { defer, pipe, returns } from "../functions.js";
 import { none } from "../option.js";
+import { string, map, mapTo, sepBy, pColon, many, or, createCharStream, concat, optional, orCompute, manySatisfy, pForwardSlash, char, pEof, parseWithOrThrow, throwParseError, } from "./parserCombinators.js";
+import { test, describe, expectToThrow, expectArrayEquals, expectEquals, } from "./testing.js";
 export const tests = describe("parser combinators", test("many", () => {
     const parser = pipe(string("abc"), many());
     pipe("abcabcabcabc", parseWithOrThrow(parser), expectArrayEquals(["abc", "abc", "abc", "abc"]));

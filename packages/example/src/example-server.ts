@@ -19,12 +19,7 @@ import {
   createContentEncodingCompressTransforms,
 } from "@reactive-js/core/experimental/node";
 import { createRouter, find } from "@reactive-js/core/experimental/router";
-import {
-  pipe,
-  returns,
-  increment,
-  compose,
-} from "@reactive-js/core/functions";
+import { pipe, returns, increment, compose } from "@reactive-js/core/functions";
 import {
   encodeUtf8,
   fromObservable,
@@ -43,6 +38,7 @@ import {
   await_,
 } from "@reactive-js/core/observable";
 import { isSome } from "@reactive-js/core/option";
+import { ReadonlyObjectMap } from "@reactive-js/core/readonlyObjectMap";
 import {
   createHostScheduler,
   toPriorityScheduler,
@@ -50,7 +46,6 @@ import {
 } from "@reactive-js/core/scheduler";
 import db from "mime-db";
 import mime from "mime-types";
-import { ReadonlyObjectMap } from "@reactive-js/core/readonlyObjectMap";
 
 const scheduler = pipe(
   createHostScheduler(),

@@ -13,7 +13,7 @@ module.exports = {
     "build",
     "coverage",
     "docs",
-    "packages/*/lib",
+    "packages/core",
     "mod",
     "node_modules",
   ],

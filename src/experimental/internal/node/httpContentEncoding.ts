@@ -8,8 +8,8 @@ import {
   gzip,
   deflate,
 } from "../../../node";
-import { HttpContentEncoding } from "../../http";
 import { ReadonlyObjectMap } from "../../../readonlyObjectMap";
+import { HttpContentEncoding } from "../../http";
 
 export const createContentEncodingDecompressTransforms = (
   options: BrotliOptions | ZlibOptions = {},

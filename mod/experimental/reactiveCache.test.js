@@ -1,10 +1,10 @@
 import { disposed, dispose } from "../disposable.js";
-import { createReactiveCache, getOrSet, } from "./reactiveCache.js";
-import { test, describe, expectNone, expectSome, expectTrue, expectEquals, } from "./testing.js";
 import { pipe, returns } from "../functions.js";
 import { fromArray, subscribe, fromValue, toRunnable, onNotify, never, } from "../observable.js";
 import { forEach } from "../runnable.js";
 import { createVirtualTimeScheduler } from "../scheduler.js";
+import { createReactiveCache, getOrSet } from "./reactiveCache.js";
+import { test, describe, expectNone, expectSome, expectTrue, expectEquals, } from "./testing.js";
 export const tests = describe("reactive-cache", test("lifecycle integration", () => {
     const scheduler = createVirtualTimeScheduler({ maxMicroTaskTicks: 1 });
     const cache = createReactiveCache(scheduler, scheduler, 2);

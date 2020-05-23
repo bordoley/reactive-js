@@ -1,3 +1,6 @@
+import { pipe, defer } from "../functions";
+import { none } from "../option";
+import { map } from "../readonlyArray";
 import {
   createHttpRequest,
   HttpMethod,
@@ -10,15 +13,7 @@ import {
   writeHttpRequestHeaders,
   writeHttpResponseHeaders,
 } from "./http";
-import {
-  test,
-  describe,
-  expectEquals,
-  expectTrue,
-} from "./testing";
-import { pipe, defer } from "../functions";
-import { none } from "../option";
-import { map } from "../readonlyArray";
+import { test, describe, expectEquals, expectTrue } from "./testing";
 
 const createHttpRequestTests = test("createHttpRequest", () => {
   const request = createHttpRequest({
