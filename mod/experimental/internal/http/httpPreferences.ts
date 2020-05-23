@@ -1,12 +1,12 @@
 import { pipe, SideEffect2 } from "../../../functions.ts";
 import { isSome, Option, none } from "../../../option.ts";
 import { map as mapReadonlyArray } from "../../../readonlyArray.ts";
+import { ReadonlyObjectMap } from "../../../readonlyObjectMap.ts";
 import { concatWith, map, parseWith } from "../../parserCombinators.ts";
 import { HttpContentEncoding } from "./httpContentInfo.ts";
 import { pToken, pParams, httpList } from "./httpGrammar.ts";
 import { HttpStandardHeader, getHeaderValue, HttpHeaders } from "./httpHeaders.ts";
 import { MediaType, pMediaType, parseMediaTypeOrThrow } from "./mediaType.ts";
-import { ReadonlyObjectMap } from "../../../readonlyObjectMap.ts";
 
 // Strictly speaking MediaRanges may have parameters, but no one uses them.
 export type MediaRange = {
@@ -54,14 +54,8 @@ const parseAccept = pipe(
 );
 
 const weightedTokenComparator = (
-  [, a]: [
-    string,
-    ReadonlyObjectMap<string>
-  ],
-  [, b]: [
-    string,
-    ReadonlyObjectMap<string>
-  ],
+  [, a]: [string, ReadonlyObjectMap<string>],
+  [, b]: [string, ReadonlyObjectMap<string>],
 ) => weightedParamComparator(a, b);
 
 const weightedTokenToToken = ([token]: [string, unknown]) => token;

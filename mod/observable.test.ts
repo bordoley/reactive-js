@@ -25,6 +25,7 @@ import {
   defer,
   ignore,
 } from "./functions.ts";
+import { createMonadTests } from "./monad.test.ts";
 import * as Observable from "./observable.ts";
 import {
   await_,
@@ -82,11 +83,7 @@ import {
   last,
   toArray,
 } from "./runnable.ts";
-import {
-  createHostScheduler,
-  createVirtualTimeScheduler,
-} from "./scheduler.ts";
-import { createMonadTests } from "./monad.test.ts";
+import { createHostScheduler, createVirtualTimeScheduler } from "./scheduler.ts";
 
 const scheduler = createHostScheduler();
 

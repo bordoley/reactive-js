@@ -1,8 +1,4 @@
-import {
-  test,
-  describe,
-  expectArrayEquals,
-} from "../experimental/testing";
+import { test, describe, expectArrayEquals } from "../experimental/testing";
 import { pipe } from "../functions";
 import { createPriorityQueue } from "./queues";
 

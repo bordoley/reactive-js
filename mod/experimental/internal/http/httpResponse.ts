@@ -9,6 +9,7 @@ import {
 import { IOSourceLike, IOSourceOperator, empty } from "../../../io.ts";
 import { isNone, isSome, none } from "../../../option.ts";
 import { everySatisfy, map, reduceRight, join } from "../../../readonlyArray.ts";
+import { ReadonlyObjectMap } from "../../../readonlyObjectMap.ts";
 import {
   entityTagToString,
   parseETagOrThrow,
@@ -34,7 +35,6 @@ import {
   createHttpMessage,
 } from "./httpMessage.ts";
 import { HttpRequest, HttpMethod } from "./httpRequest.ts";
-import { ReadonlyObjectMap } from "../../../readonlyObjectMap.ts";
 
 export const enum HttpStatusCode {
   Continue = 100,
@@ -303,7 +303,9 @@ export const toIOSourceHttpResponse = <TBody>(
 ): HttpResponse<IOSourceLike<TBody>> =>
   toIOSourceHttpMessage(resp) as HttpResponse<IOSourceLike<TBody>>;
 
-export const decodeHttpResponseContent = (decoderProvider: ReadonlyObjectMap<IOSourceOperator<Uint8Array, Uint8Array>>): Function1<
+export const decodeHttpResponseContent = (
+  decoderProvider: ReadonlyObjectMap<IOSourceOperator<Uint8Array, Uint8Array>>,
+): Function1<
   HttpResponse<IOSourceLike<Uint8Array>>,
   HttpResponse<IOSourceLike<Uint8Array>>
 > => resp => {
@@ -340,7 +342,7 @@ export const decodeHttpResponseContent = (decoderProvider: ReadonlyObjectMap<IOS
 export const encodeHttpResponseContent = (
   encoderProvider: ReadonlyObjectMap<IOSourceOperator<Uint8Array, Uint8Array>>,
   db: ReadonlyObjectMap<{
-      compressible?: boolean;
+    compressible?: boolean;
   }> = {},
 ): Function1<
   HttpRequest<unknown>,

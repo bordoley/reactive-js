@@ -1,11 +1,11 @@
 import { dispose } from "./disposable.js";
 import { test, describe, testAsync, expectArrayEquals, expectToThrowError, expectEquals, expectToThrow, expectPromiseToThrow, mockFn, expectToHaveBeenCalledTimes, expectSome, expectNone, } from "./experimental/testing.js";
 import { compose, pipe, returns, increment, arrayEquality, identity, incrementBy, sum, defer, ignore, } from "./functions.js";
+import { createMonadTests } from "./monad.test.js";
 import * as Observable from "./observable.js";
 import { await_, buffer, combineLatestWith, compute, concat, concatWith, createObservable, empty, fromArray, fromIterable, fromPromise, generate, ignoreElements, map, merge, mergeWith, never, fromValue, onNotify, retry, scanAsync, share, subscribe, takeFirst, takeLast, throttle, throwIfEmpty, throws, timeout, toPromise, withLatestFrom, zip, catchError, genMap, endWith, switchMap, onSubscribe, createSubject, exhaustMap, mergeMap, switchAll, zipWith, zipWithLatestFrom, dispatchTo, dispatch, zipLatestWith, toRunnable, } from "./observable.js";
 import { fromArray as fromArrayRunnable, forEach, last, toArray, } from "./runnable.js";
-import { createHostScheduler, createVirtualTimeScheduler, } from "./scheduler.js";
-import { createMonadTests } from "./monad.test.js";
+import { createHostScheduler, createVirtualTimeScheduler } from "./scheduler.js";
 const scheduler = createHostScheduler();
 export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4], fromArray(), await_(compose(fromValue(), endWith(1))), toRunnable(), last, expectEquals(0))), describe("buffer", test("with duration and maxBufferSize", defer(concat(pipe([1, 2, 3, 4], fromArray()), pipe([1, 2, 3], fromArray({ delay: 1 })), pipe(4, fromValue({ delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toRunnable(), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", defer(defer([1, 2, 3, 4], fromArray(), buffer({ duration: _ => throws()(() => new Error()) }), toRunnable(defer({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler)), toArray()), expectToThrow))), describe("catchError", test("source completes successfully", defer(pipe(1, fromValue()), catchError(_ => fromValue()(2)), toRunnable(), toArray(), expectArrayEquals([1]))), test("source throws, error caught and ignored", () => {
     const error = new Error();

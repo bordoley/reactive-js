@@ -3,9 +3,7 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
-
     "build": "yarn compile && yarn mod && yarn pkg && yarn docs",
-
     "clean": "yarn clean-build && yarn clean-coverage && yarn clean-docs && yarn clean-mod && yarn clean-pkg",
     "clean-build": "rm -rf ./build",
     "clean-coverage": "rm -rf ./coverage",
@@ -22,7 +20,6 @@
     "example-debug": "yarn bootstrap && lerna run build --scope @reactive-js/example && node --inspect-brk ./packages/example/build/cjs/example-server",
     "format": "prettier '**' --write",
     "lint": "eslint . --fix -f codeFrame --ext .ts,.tsx,.js,.jsx",
-
     "mod": "yarn clean-mod && yarn mod-esm && yarn mod-ts && yarn mod-rm-unsupported",
     "mod-esm": "yarn mod-esm-copy && yarn mod-esm-replace",
     "mod-esm-copy": "cp -r ./build/esm/ ./mod",
@@ -31,7 +28,6 @@
     "mod-ts-copy": "cp -r ./src/ ./mod",
     "mod-ts-replace": "replace 'from \"(\\.[.\\-/\\w]+)\";' 'from \"$1.ts\";' ./mod -r --include=\"*.ts\"",
     "mod-rm-unsupported": "rm -rf ./mod/experimental/testing.jest.* ./mod/experimental/node.* ./mod/experimental/internal/node ./mod/node.* ./mod/react.* ./mod/internal/node ./mod/perf",
-
     "pkg": "yarn clean-pkg && yarn pkg-mjs && yarn pkg-js && yarn pkg-types && yarn pkg-rm-unsupport && yarn pkg-cp-files",
     "pkg-js": "cp -r ./build/cjs/ ./packages/core",
     "pkg-mjs": "yarn pkg-mjs-copy && yarn pkg-mjs-rename && yarn pkg-mjs-replace",
@@ -41,9 +37,7 @@
     "pkg-types": "cp -r ./build/types/ ./packages/core",
     "pkg-rm-unsupport": "rm -rf ./packages/core/experimental/testing.deno.* ./packages/core/perf",
     "pkg-cp-files": "cp README.md ./packages/core && cp core.package.json ./packages/core/package.json",
-
     "perf": "yarn compile-cjs && NODE_ENV=production node ./build/cjs/perf/index.js",
-
     "test": "jest",
     "test-coverage": "jest --coverage",
     "test-debug": "node --inspect-brk ./node_modules/.bin/jest",

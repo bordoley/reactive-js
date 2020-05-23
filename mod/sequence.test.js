@@ -1,4 +1,4 @@
 import { describe } from "./experimental/testing.js";
-import * as Sequence from "./sequence.js";
 import { createMonadTests } from "./monad.test.js";
+import * as Sequence from "./sequence.js";
 export const tests = describe("sequence", createMonadTests(Sequence));

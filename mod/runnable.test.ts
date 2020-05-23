@@ -16,6 +16,7 @@ import {
   increment,
   defer,
 } from "./functions.ts";
+import { createMonadTests } from "./monad.test.ts";
 import {
   compute,
   contains,
@@ -28,7 +29,6 @@ import {
   everySatisfy,
 } from "./runnable.ts";
 import * as Runnable from "./runnable.ts";
-import { createMonadTests } from "./monad.test.ts";
 
 export const tests = describe(
   "runnable",

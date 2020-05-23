@@ -1,5 +1,6 @@
 import { pipe } from "../../../functions.ts";
 import { fromObject, map, join, keep, length } from "../../../readonlyArray.ts";
+import { ReadonlyObjectMap } from "../../../readonlyObjectMap.ts";
 import {
   pForwardSlash,
   Parser,
@@ -7,7 +8,6 @@ import {
   parseWithOrThrow,
 } from "../../parserCombinators.ts";
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar.ts";
-import { ReadonlyObjectMap } from "../../../readonlyObjectMap.ts";
 
 export type MediaType = {
   readonly type: string;
@@ -54,8 +54,8 @@ const textSubtypes = ["html", "json", "text", "xml"];
 export const mediaTypeIsCompressible = (
   { type, subtype }: MediaType,
   db: ReadonlyObjectMap<{
-      compressible?: boolean;
-    }>
+    compressible?: boolean;
+  }>,
 ) => {
   const mediaType = mediaTypeToString({ type, subtype, params: {} });
   const blackListed = compressionBlacklist.includes(mediaType);

@@ -1,3 +1,6 @@
+import { pipe, defer } from "../functions.ts";
+import { none } from "../option.ts";
+import { map } from "../readonlyArray.ts";
 import {
   createHttpRequest,
   HttpMethod,
@@ -10,15 +13,7 @@ import {
   writeHttpRequestHeaders,
   writeHttpResponseHeaders,
 } from "./http.ts";
-import {
-  test,
-  describe,
-  expectEquals,
-  expectTrue,
-} from "./testing.ts";
-import { pipe, defer } from "../functions.ts";
-import { none } from "../option.ts";
-import { map } from "../readonlyArray.ts";
+import { test, describe, expectEquals, expectTrue } from "./testing.ts";
 
 const createHttpRequestTests = test("createHttpRequest", () => {
   const request = createHttpRequest({

@@ -1,4 +1,4 @@
-import { test, describe, expectArrayEquals, } from "../experimental/testing.js";
+import { test, describe, expectArrayEquals } from "../experimental/testing.js";
 import { pipe } from "../functions.js";
 import { createPriorityQueue } from "./queues.js";
 const compare = (a, b) => a - b;
