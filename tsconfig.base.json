@@ -4,5 +4,5 @@
     "lib": ["DOM"],
     "rootDir": "./src"
   },
-  "exclude": ["./build", "./mod", "./packages", "./test"]
+  "exclude": ["./build", "./mod", "./packages", "./scripts"]
 }
