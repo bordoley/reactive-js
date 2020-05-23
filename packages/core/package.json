@@ -78,7 +78,7 @@
     "mod-ts": "yarn mod-ts-copy && yarn mod-ts-replace",
     "mod-ts-copy": "cp -r ./src/ ./mod",
     "mod-ts-replace": "replace 'from \"(\\.[.\\-/\\w]+)\";' 'from \"$1.ts\";' ./mod -r --include=\"*.ts\"",
-    "mod-rm-unsupported": "rm -rf ./mod/lib/experimental/node.* ./mod/lib/experimental/internal/node ./mod/lib/node.* ./mod/lib/react.* ./mod/lib/internal/node ./mod/lib/internal/testing.jest.* ./mod/perf",
+    "mod-rm-unsupported": "rm -rf ./mod/lib/experimental/testing.jest.* ./mod/lib/experimental/node.* ./mod/lib/experimental/internal/node ./mod/lib/node.* ./mod/lib/react.* ./mod/lib/internal/node ./mod/perf ./mod/test/node.*",
     "perf": "yarn compile-cjs && NODE_ENV=production node ./build/cjs/perf/index.js",
     "test": "jest",
     "test-coverage": "jest --coverage",
