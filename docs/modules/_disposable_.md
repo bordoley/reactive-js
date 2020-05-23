@@ -38,7 +38,6 @@
 * [createDisposableValue](_disposable_.md#const-createdisposablevalue)
 * [createSerialDisposable](_disposable_.md#const-createserialdisposable)
 * [dispose](_disposable_.md#const-dispose)
-* [toDisposeOnErrorTeardown](_disposable_.md#const-todisposeonerrorteardown)
 * [toErrorHandler](_disposable_.md#const-toerrorhandler)
 
 ## Type aliases
@@ -66,13 +65,15 @@ as a function which throws undefined or string.
 
 • **disposed**: *[DisposableLike](../interfaces/_disposable_.disposablelike.md)* = _disposed
 
-A disposed DisposableLike instance.
+A disposed `DisposableLike` instance.
 
 ## Functions
 
 ### `Const` addDisposable
 
 ▸ **addDisposable**(`parent`: [DisposableLike](../interfaces/_disposable_.disposablelike.md), `child`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *void*
+
+Add `child` to `parent`, disposing the child when the parent is disposed.
 
 **Parameters:**
 
@@ -89,6 +90,8 @@ ___
 
 ▸ **addDisposableDisposeParentOnChildError**(`parent`: [DisposableLike](../interfaces/_disposable_.disposablelike.md), `child`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *void*
 
+Add `child` to `parent`. If `child` is disposed with an error it disposed `parent`.
+
 **Parameters:**
 
 Name | Type |
@@ -103,6 +106,8 @@ ___
 ### `Const` addOnDisposedWithError
 
 ▸ **addOnDisposedWithError**(`parent`: [DisposableLike](../interfaces/_disposable_.disposablelike.md), `child`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *void*
+
+Add `child` to `parent`, only disposing child when `parent` is disposed with an error.
 
 **Parameters:**
 
@@ -119,6 +124,8 @@ ___
 
 ▸ **addOnDisposedWithErrorTeardown**(`parent`: [DisposableLike](../interfaces/_disposable_.disposablelike.md), `teardown`: [SideEffect1](_functions_.md#sideeffect1)‹unknown›): *void*
 
+Add `teardown` to `parent` that is only invoked if `parent` is disposed with an error.
+
 **Parameters:**
 
 Name | Type |
@@ -133,6 +140,8 @@ ___
 ### `Const` addOnDisposedWithoutError
 
 ▸ **addOnDisposedWithoutError**(`parent`: [DisposableLike](../interfaces/_disposable_.disposablelike.md), `child`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *void*
+
+Add `child` to `parent`, only disposing child when `parent` is disposed without an error.
 
 **Parameters:**
 
@@ -149,6 +158,8 @@ ___
 
 ▸ **addOnDisposedWithoutErrorTeardown**(`parent`: [DisposableLike](../interfaces/_disposable_.disposablelike.md), `teardown`: [SideEffect](_functions_.md#sideeffect)): *void*
 
+Add `teardown` to `parent` that is only invoked if `parent` is disposed without an error.
+
 **Parameters:**
 
 Name | Type |
@@ -163,6 +174,8 @@ ___
 ### `Const` addTeardown
 
 ▸ **addTeardown**(`parent`: [DisposableLike](../interfaces/_disposable_.disposablelike.md), `teardown`: [SideEffect1](_functions_.md#sideeffect1)‹[Option](_option_.md#option)‹[Error](_disposable_.md#error)››): *void*
+
+Add `teardown` to `parent`, invoking `teardown` when `parent` is disposed.
 
 **Parameters:**
 
@@ -179,6 +192,9 @@ ___
 
 ▸ **bindDisposables**(`a`: [DisposableLike](../interfaces/_disposable_.disposablelike.md), `b`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *void*
 
+Bind the provided disposables such that if either disposable is disposed,
+it disposes the other.
+
 **Parameters:**
 
 Name | Type |
@@ -194,7 +210,7 @@ ___
 
 ▸ **createDisposable**(`onDispose?`: function): *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
 
-Creates an empty DisposableLike instance.
+Creates an empty `DisposableLike` instance.
 
 **Parameters:**
 
@@ -218,7 +234,8 @@ ___
 
 ▸ **createDisposableValue**<**T**>(`value`: T, `cleanup`: [SideEffect1](_functions_.md#sideeffect1)‹T›): *[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹T›*
 
-Creates a new DisposableValueLike instance.
+Creates a new DisposableValueLike instance, which applies
+the supplied `cleanup` side effect to `value` when disposed.
 
 **Type parameters:**
 
@@ -239,7 +256,7 @@ ___
 
 ▸ **createSerialDisposable**(): *[SerialDisposableLike](../interfaces/_disposable_.serialdisposablelike.md)*
 
-Creates a new SerialDisposableLike instance containing a disposed instance.
+Creates a new `SerialDisposableLike` instance containing a disposed instance.
 
 **Returns:** *[SerialDisposableLike](../interfaces/_disposable_.serialdisposablelike.md)*
 
@@ -248,6 +265,8 @@ ___
 ### `Const` dispose
 
 ▸ **dispose**(`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md), `e?`: [Error](_disposable_.md#error)): *void*
+
+Dispose `disposable` with an optional error.
 
 **Parameters:**
 
@@ -260,23 +279,11 @@ Name | Type |
 
 ___
 
-### `Const` toDisposeOnErrorTeardown
-
-▸ **toDisposeOnErrorTeardown**(`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *[SideEffect1](_functions_.md#sideeffect1)‹[Option](_option_.md#option)‹[Error](_disposable_.md#error)››*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`disposable` | [DisposableLike](../interfaces/_disposable_.disposablelike.md) |
-
-**Returns:** *[SideEffect1](_functions_.md#sideeffect1)‹[Option](_option_.md#option)‹[Error](_disposable_.md#error)››*
-
-___
-
 ### `Const` toErrorHandler
 
 ▸ **toErrorHandler**(`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md)): *[SideEffect1](_functions_.md#sideeffect1)‹unknown›*
+
+Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
 
 **Parameters:**
 

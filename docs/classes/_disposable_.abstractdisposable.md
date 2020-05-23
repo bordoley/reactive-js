@@ -2,7 +2,7 @@
 
 # Class: AbstractDisposable
 
-Abstract base class for implementing the DisposableLike interface.
+Abstract base class for implementing the `DisposableLike` interface.
 
 ## Hierarchy
 

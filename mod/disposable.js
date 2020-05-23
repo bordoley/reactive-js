@@ -27,7 +27,7 @@ export const bindDisposables = (a, b) => {
     addDisposable(a, b);
     addDisposable(b, a);
 };
-export const toDisposeOnErrorTeardown = (disposable) => (error) => {
+const toDisposeOnErrorTeardown = (disposable) => (error) => {
     if (isSome(error)) {
         dispose(disposable, error);
     }

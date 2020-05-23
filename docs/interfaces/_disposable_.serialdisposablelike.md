@@ -4,7 +4,8 @@
 
 A Disposable container that allows replacing an inner Disposable with another,
 disposing the previous inner disposable in the process. Disposing the
-container also disposes the inner disposable.
+container also disposes the inner disposable. Disposing the inner disposable
+with an error, disposes the container with the error.
 
 ## Hierarchy
 

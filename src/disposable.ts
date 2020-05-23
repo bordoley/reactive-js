@@ -19,7 +19,7 @@ export type DisposableOrTeardown =
  */
 export interface DisposableLike {
   /**
-   * The error the disposable was disposed with if disposed.
+   * The error the `DisposableLike` was disposed with if disposed.
    */
   readonly error: Option<Error>;
 
@@ -29,7 +29,7 @@ export interface DisposableLike {
   readonly isDisposed: boolean;
 
   /**
-   * Adds the given disposable to this container or disposes it if the container has been disposed.
+   * Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
    *
    * @param disposable
    * @returns `this`
@@ -37,17 +37,23 @@ export interface DisposableLike {
   add(disposable: DisposableOrTeardown): void;
 
   /**
-   * Dispose the resource. The operation is idempotent.
+   * Dispose the resource. Must be idempotent.
    *
    * @param error An optional error that to signal that the resource is being disposed due to an error.
    */
   dispose(error?: Error): void;
 }
 
+/**
+ * Dispose `disposable` with an optional error.
+ */
 export const dispose = (disposable: DisposableLike, e?: Error) => {
   disposable.dispose(e);
 };
 
+/**
+ * Add `child` to `parent`, disposing the child when the parent is disposed.
+ */
 export const addDisposable = (
   parent: DisposableLike,
   child: DisposableLike,
@@ -55,6 +61,9 @@ export const addDisposable = (
   parent.add(child);
 };
 
+/** 
+ * Add `teardown` to `parent`, invoking `teardown` when `parent` is disposed.
+ */
 export const addTeardown = (
   parent: DisposableLike,
   teardown: SideEffect1<Option<Error>>,
@@ -62,6 +71,9 @@ export const addTeardown = (
   parent.add(teardown);
 };
 
+/**
+ * Add `teardown` to `parent` that is only invoked if `parent` is disposed with an error.
+ */
 export const addOnDisposedWithErrorTeardown = (
   parent: DisposableLike,
   teardown: SideEffect1<unknown>,
@@ -73,6 +85,9 @@ export const addOnDisposedWithErrorTeardown = (
   });
 };
 
+/**
+ * Add `teardown` to `parent` that is only invoked if `parent` is disposed without an error.
+ */
 export const addOnDisposedWithoutErrorTeardown = (
   parent: DisposableLike,
   teardown: SideEffect,
@@ -84,12 +99,17 @@ export const addOnDisposedWithoutErrorTeardown = (
   });
 };
 
+/**
+ * Bind the provided disposables such that if either disposable is disposed,
+ * it disposes the other.
+ */
 export const bindDisposables = (a: DisposableLike, b: DisposableLike) => {
   addDisposable(a, b);
   addDisposable(b, a);
 };
 
-export const toDisposeOnErrorTeardown = (
+
+const toDisposeOnErrorTeardown = (
   disposable: DisposableLike,
 ): SideEffect1<Option<Error>> => (error?: Error) => {
   if (isSome(error)) {
@@ -97,6 +117,9 @@ export const toDisposeOnErrorTeardown = (
   }
 };
 
+/**
+ * Add `child` to `parent`, only disposing child when `parent` is disposed with an error.
+ */
 export const addOnDisposedWithError = (
   parent: DisposableLike,
   child: DisposableLike,
@@ -104,6 +127,9 @@ export const addOnDisposedWithError = (
   addTeardown(parent, toDisposeOnErrorTeardown(child));
 };
 
+/**
+ * Add `child` to `parent`. If `child` is disposed with an error it disposed `parent`.
+ */
 export const addDisposableDisposeParentOnChildError = (
   parent: DisposableLike,
   child: DisposableLike,
@@ -112,6 +138,9 @@ export const addDisposableDisposeParentOnChildError = (
   addOnDisposedWithError(child, parent);
 };
 
+/**
+ * Add `child` to `parent`, only disposing child when `parent` is disposed without an error.
+ */
 export const addOnDisposedWithoutError = (
   parent: DisposableLike,
   child: DisposableLike,
@@ -123,6 +152,9 @@ export const addOnDisposedWithoutError = (
   });
 };
 
+/**
+ * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
+ */
 export const toErrorHandler = (
   disposable: DisposableLike,
 ): SideEffect1<unknown> => cause => dispose(disposable, { cause });
@@ -142,10 +174,10 @@ const doDispose = (disposable: DisposableOrTeardown, error?: Error) => {
 };
 
 /**
- * Abstract base class for implementing the DisposableLike interface.
+ * Abstract base class for implementing the `DisposableLike` interface.
  *
  * @noInheritDoc
- * */
+ */
 export abstract class AbstractDisposable implements DisposableLike {
   private _isDisposed = false;
   private readonly disposables: Set<DisposableOrTeardown> = new Set();
@@ -196,7 +228,7 @@ export abstract class AbstractDisposable implements DisposableLike {
 class DisposableImpl extends AbstractDisposable {}
 
 /**
- * Creates an empty DisposableLike instance.
+ * Creates an empty `DisposableLike` instance.
  *
  * @param onDispose Optional teardown logic to attach to the newly created disposable.
  */
@@ -220,14 +252,15 @@ const _disposed: DisposableLike = {
 };
 
 /**
- * A disposed DisposableLike instance.
+ * A disposed `DisposableLike` instance.
  */
 export const disposed: DisposableLike = _disposed;
 
 /**
  * A Disposable container that allows replacing an inner Disposable with another,
  * disposing the previous inner disposable in the process. Disposing the
- * container also disposes the inner disposable.
+ * container also disposes the inner disposable. Disposing the inner disposable 
+ * with an error, disposes the container with the error.
  *
  * @noInheritDoc
  */
@@ -269,17 +302,18 @@ export abstract class AbstractSerialDisposable extends AbstractDisposable
 class SerialDisposableImpl extends AbstractSerialDisposable {}
 
 /**
- * Creates a new SerialDisposableLike instance containing a disposed instance.
+ * Creates a new `SerialDisposableLike` instance containing a disposed instance.
  */
 export const createSerialDisposable = (): SerialDisposableLike =>
   new SerialDisposableImpl();
 
 /**
- * A Disposable that provides disposable semantics to an underlying resource.
+ * A `DisposableLike` that provides disposable semantics to an underlying resource.
  *
  * @noInheritDoc
  */
 export interface DisposableValueLike<T> extends DisposableLike {
+  /** The underlying resource */
   readonly value: T;
 }
 
@@ -291,7 +325,8 @@ class DisposableValueImpl<T> extends AbstractDisposable
 }
 
 /**
- * Creates a new DisposableValueLike instance.
+ * Creates a new DisposableValueLike instance, which applies
+ * the supplied `cleanup` side effect to `value` when disposed.
  */
 export const createDisposableValue = <T>(
   value: T,
