@@ -2,7 +2,7 @@
 
 # Class: AbstractSerialDisposable
 
-Abstract base class for implementing the SerialDisposableLike interface.
+Abstract base class for implementing the `SerialDisposableLike` interface.
 
 ## Hierarchy
 

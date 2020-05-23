@@ -85,6 +85,6 @@ Dispose the resource. Must be idempotent.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`error?` | [Error](../modules/_disposable_.md#error) | An optional error that to signal that the resource is being disposed due to an error.  |
+`error?` | [Error](../modules/_disposable_.md#error) | An optional error that signals the resource is being disposed due to an error.  |
 
 **Returns:** *void*
