@@ -30,11 +30,10 @@ import { sink } from "../../../streamable";
 import {
   HttpHeaders,
   HttpMethod,
+  HttpRequest,
   HttpResponse,
   writeHttpResponseHeaders,
-  createHttpServerRequest,
-  HttpServerRequest,
-  HttpServer,
+  createHttpRequest,
 } from "../../http";
 
 const writeResponseMessage = (serverResponse: ServerResponse) => (
@@ -61,19 +60,17 @@ export type HttpRequestListenerOptions = {
   readonly onError?: Function1<unknown, void | ObservableLike<unknown>>;
 };
 
-export type HttpRequestListener = SideEffect2<
-  IncomingMessage | Http2ServerRequest,
-  ServerResponse | Http2ServerResponse
->;
-
 export const createHttpRequestListener = (
-  handler: HttpServer<
-    HttpServerRequest<IOSourceLike<Uint8Array>>,
-    HttpResponse<IOSourceLike<Uint8Array>>
+  handler: Function1<
+    HttpRequest<IOSourceLike<Uint8Array>>,
+    ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>>
   >,
   scheduler: SchedulerLike,
   options: HttpRequestListenerOptions = {},
-): HttpRequestListener => {
+): SideEffect2<
+  IncomingMessage | Http2ServerRequest,
+  ServerResponse | Http2ServerResponse
+>=> {
   const { onError = defaultOnError } = options;
 
   const handleRequest = (
@@ -82,7 +79,7 @@ export const createHttpRequestListener = (
   ) => {
     const {
       method,
-      url: path = "/",
+      url: uri = "/",
       headers,
       httpVersionMajor,
       httpVersionMinor,
@@ -96,14 +93,14 @@ export const createHttpRequestListener = (
       defer(
         {
           method: method as HttpMethod,
-          path,
+          uri,
           headers: headers as HttpHeaders,
           httpVersionMajor,
           httpVersionMinor,
           isTransportSecure,
           body: requestBody,
         },
-        createHttpServerRequest,
+        createHttpRequest,
       ),
       compute(),
       await_(handler),

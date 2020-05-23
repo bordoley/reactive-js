@@ -3,10 +3,8 @@ import { createServer as createHttp1Server } from "http";
 import { createSecureServer as createHttp2Server } from "http2";
 import {
   pipe,
-  Function1,
   returns,
   increment,
-  defer,
   compose,
 } from "@reactive-js/core/lib/functions";
 import {
@@ -42,18 +40,15 @@ import {
   toIOSourceHttpResponse,
   encodeHttpResponseContent,
   disallowProtocolAndHostForwarding,
-  HttpServer,
-  createRoutingHttpServer,
-  HttpRoutedRequest,
 } from "@reactive-js/core/lib/experimental/http";
 import {
   createHttpRequestListener,
   createContentEncodingDecompressTransforms,
   createContentEncodingCompressTransforms,
 } from "@reactive-js/core/lib/experimental/node";
-
 import db from "mime-db";
 import mime from "mime-types";
+import { createRouter, find } from "@reactive-js/core/lib/experimental/router";
 
 const scheduler = pipe(
   createHostScheduler(),
@@ -61,27 +56,27 @@ const scheduler = pipe(
   toSchedulerWithPriority(1),
 );
 
-const routerHandlerPrintParams: HttpServer<
-  HttpRoutedRequest<IOSourceLike<Uint8Array>>,
-  HttpResponse<IOSourceLike<Uint8Array>>
-> = req =>
+const PrintParams = (
+  _: HttpRequest<IOSourceLike<Uint8Array>>,
+  params: { readonly [key: string]: string },
+): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> =>
   pipe(
     createHttpResponse({
       statusCode: HttpStatusCode.OK,
       contentInfo: {
         contentType: "application/json",
       },
-      body: JSON.stringify(req.params),
+      body: JSON.stringify(params),
     }),
     encodeHttpResponseWithUtf8,
     toIOSourceHttpResponse,
     fromValue(),
   );
 
-const routerHandlerEventStream: HttpServer<
-  HttpRoutedRequest<IOSourceLike<Uint8Array>>,
-  HttpResponse<IOSourceLike<Uint8Array>>
-> = defer(
+const EventStream = (
+  _req: HttpRequest<IOSourceLike<Uint8Array>>,
+  _params: { readonly [key: string]: string },
+): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> => pipe(
   createHttpResponse({
     statusCode: HttpStatusCode.OK,
     body: pipe(
@@ -101,11 +96,11 @@ const routerHandlerEventStream: HttpServer<
   fromValue(),
 );
 
-const routerHandlerFiles: HttpServer<
-  HttpRoutedRequest<IOSourceLike<Uint8Array>>,
-  HttpResponse<IOSourceLike<Uint8Array>>
-> = req => {
-  const path = req.params["path"] || "";
+const FileServer = (
+  _req: HttpRequest<IOSourceLike<Uint8Array>>,
+  params: { readonly [key: string]: string },
+): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> => {
+  const path = params["path"] || "";
   const contentType = mime.lookup(path) || "application/octet-stream";
 
   return pipe(
@@ -127,7 +122,7 @@ const routerHandlerFiles: HttpServer<
               contentInfo: {
                 contentType: "text/plain",
               },
-              body: JSON.stringify(req.params),
+              body: JSON.stringify(params),
             }),
             encodeHttpResponseWithUtf8,
             toIOSourceHttpResponse,
@@ -136,15 +131,16 @@ const routerHandlerFiles: HttpServer<
   );
 };
 
-const routerHandlerThrow: HttpServer<
-  HttpRoutedRequest<IOSourceLike<Uint8Array>>,
-  HttpResponse<IOSourceLike<Uint8Array>>
-> = defer(() => new Error("internal error"), throws());
+const Throws = (
+  _req: HttpRequest<IOSourceLike<Uint8Array>>,
+  _params: { readonly [key: string]: string },
+): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> => 
+  pipe(() => new Error("internal error"), throws());
 
-const notFound: Function1<
-  HttpRequest<IOSourceLike<Uint8Array>>,
-  ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>>
-> = req =>
+const NotFound = (
+  req: HttpRequest<IOSourceLike<Uint8Array>>,
+  _params: { readonly [key: string]: string },
+): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> => 
   pipe(
     createHttpResponse({
       statusCode: HttpStatusCode.NotFound,
@@ -158,16 +154,22 @@ const notFound: Function1<
     fromValue(),
   );
 
-const router = createRoutingHttpServer(
+const router = createRouter(
   {
-    "/events": routerHandlerEventStream,
-    "/files/*path": routerHandlerFiles,
-    "/users/:username/friends/:friendName": routerHandlerPrintParams,
-    "/users/:username/friends/:friendName/*tail": routerHandlerPrintParams,
-    "/throws": routerHandlerThrow,
+    "/events": EventStream,
+    "/files/*path": FileServer,
+    "/users/:username/friends/:friendName": PrintParams,
+    "/users/:username/friends/:friendName/*tail": PrintParams,
+    "/throws": Throws,
   },
-  notFound,
 );
+
+const Router = (
+  request: HttpRequest<IOSourceLike<Uint8Array>>,
+): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> => {
+  const [handler, params] = find(router, request.uri.pathname) ?? [NotFound, {}];
+  return handler(request, params);
+};
 
 const listener = createHttpRequestListener(
   req =>
@@ -176,7 +178,7 @@ const listener = createHttpRequestListener(
       disallowProtocolAndHostForwarding(),
       decodeHttpRequestContent(createContentEncodingDecompressTransforms()),
       fromValue(),
-      await_(router),
+      await_(Router),
       pipe(
         req,
         encodeHttpResponseContent(

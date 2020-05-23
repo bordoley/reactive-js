@@ -1,5 +1,4 @@
 export {
-  HttpRequestListener,
   HttpRequestListenerOptions,
   createHttpRequestListener,
 } from "./internal/node/httpRequestListener";
