@@ -41,18 +41,16 @@ import {
   encodeHttpResponseWithUtf8,
   toIOSourceHttpResponse,
   encodeHttpResponseContent,
-} from "@reactive-js/http/lib/http";
-import {
   disallowProtocolAndHostForwarding,
   HttpServer,
   createRoutingHttpServer,
   HttpRoutedRequest,
-} from "@reactive-js/http/lib/httpServer";
+} from "@reactive-js/core/lib/experimental/http";
 import {
   createHttpRequestListener,
   createContentEncodingDecompressTransforms,
   createContentEncodingCompressTransforms,
-} from "@reactive-js/http/lib/node";
+} from "@reactive-js/core/lib/experimental/node";
 
 import db from "mime-db";
 import mime from "mime-types";
