@@ -8,7 +8,7 @@ import {
 } from "./experimental/testing.ts";
 import { FlowMode } from "./flowable.ts";
 import { pipe, returns, sum } from "./functions.ts";
-import { createIOSinkAccumulator } from "./internal/ioSinkAccumulator.ts";
+import { createIOSinkAccumulator } from "./experimental/ioSinkAccumulator.ts";
 import {
   decodeWithCharset,
   empty,

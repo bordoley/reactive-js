@@ -6,7 +6,7 @@ import {
   expectPromiseToThrow,
 } from "./experimental/testing";
 import { pipe, defer, returns } from "./functions";
-import { createIOSinkAccumulator } from "./internal/ioSinkAccumulator";
+import { createIOSinkAccumulator } from "./experimental/ioSinkAccumulator";
 import { fromArray } from "./io";
 import {
   createReadableIOSource,

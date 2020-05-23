@@ -8,7 +8,7 @@ import {
 } from "./experimental/testing";
 import { FlowMode } from "./flowable";
 import { pipe, returns, sum } from "./functions";
-import { createIOSinkAccumulator } from "./internal/ioSinkAccumulator";
+import { createIOSinkAccumulator } from "./experimental/ioSinkAccumulator";
 import {
   decodeWithCharset,
   empty,
