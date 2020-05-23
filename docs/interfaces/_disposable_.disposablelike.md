@@ -45,7 +45,7 @@ Represents an unmanaged resource that can be disposed.
 
 • **error**: *[Option](../modules/_option_.md#option)‹[Error](../modules/_disposable_.md#error)›*
 
-The error the disposable was disposed with if disposed.
+The error the `DisposableLike` was disposed with if disposed.
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 ▸ **add**(`disposable`: [DisposableOrTeardown](../modules/_disposable_.md#disposableorteardown)): *void*
 
-Adds the given disposable to this container or disposes it if the container has been disposed.
+Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
 
 **Parameters:**
 
@@ -79,7 +79,7 @@ ___
 
 ▸ **dispose**(`error?`: [Error](../modules/_disposable_.md#error)): *void*
 
-Dispose the resource. The operation is idempotent.
+Dispose the resource. Must be idempotent.
 
 **Parameters:**
 

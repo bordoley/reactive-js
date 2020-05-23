@@ -2,7 +2,7 @@
 
 # Interface: DisposableValueLike <**T**>
 
-A Disposable that provides disposable semantics to an underlying resource.
+A `DisposableLike` that provides disposable semantics to an underlying resource.
 
 ## Type parameters
 
@@ -25,3 +25,5 @@ A Disposable that provides disposable semantics to an underlying resource.
 ###  value
 
 • **value**: *T*
+
+The underlying resource
