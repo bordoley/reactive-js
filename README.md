@@ -5,7 +5,7 @@ Fast modern reactive Javascript programming library
 ## Example Usage
 
 ```typescript
-import { pipe } from "@reactive-js/pipe";
+import { increment, pipe, returns } from "@reactive-js/core/functions";
 import {
   exhaust,
   fromArray,
@@ -13,8 +13,8 @@ import {
   map,
   onNotify,
   subscribe
-} from "@reactive-js/observable";
-import { normalPriority } from "@reactive-js/react-scheduler";
+} from "@reactive-js/core/observable";
+import { normalPriority } from "@reactive-js/core/react";
 
 // The pipe function can be used to compose operators.
 const subscription = pipe(
@@ -24,7 +24,7 @@ const subscription = pipe(
   // to the scheduler to let it do other work such as letting
   // the browser paint or allowing react to render component
   // trees.
-  generate(x => x + 1, 0),
+  generate(increment, returns(0)),
   map(x => fromArray([x, x, x, x])),
   exhaust(),
 

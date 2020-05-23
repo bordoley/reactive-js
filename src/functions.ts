@@ -1,14 +1,72 @@
+/**
+ * Compare two objects to determine their relative ordering.
+ * 
+ * @returns A signed number indicating the relative order of `a` and `b`:
+ *   - If less than 0, `a` is less `b`.
+ *   - If 0, `a` equals `b`.
+ *   - If greater than 0, `a` is greater than `b`.
+ */
 export type Comparator<T> = (a: T, b: T) => number;
+
+/**
+ * Compare two objects for equality.
+ * 
+ * @returns true if `a` is equals to `b`, otherwise false
+ */
 export type Equality<T> = (a: T, b: T) => boolean;
+
+/**
+ * A function that returns instances of type `T`.
+ */
 export type Factory<T> = () => T;
+
+/**
+ * Computes a new value of type `T` from the previous value of type `T`.
+ */
 export type Updater<T> = (prev: T) => T;
+
+/**
+ * A one argument predicate function.
+ */
 export type Predicate<T> = (a: T) => boolean;
+
+/**
+ * A type guard function that performs a runtime check that guarantees
+ * that guarantees `v` if of type `TB`.
+ * 
+ * @returns `true` if v is an instance of type `TB`, otherwise false. 
+ */
 export type TypePredicate<TA, TB extends TA> = (v: TA) => v is TB;
+
+/**
+ * A pure function that takes the current accumulator and next value, 
+ * returning the next accumulated value.
+ */
 export type Reducer<T, TAcc> = (acc: TAcc, next: T) => TAcc;
-export type Function1<TA, TB> = (a: TA) => TB;
+
+/**
+ * A one argument function that returns a value of type `T`.
+ */
+export type Function1<TA, T> = (a: TA) => T;
+
+/**
+ * A two argument function that returns a value of type `T`.
+ */
 export type Function2<TA, TB, T> = (a: TA, b: TB) => T;
+
+/**
+ * A three argument function that returns a value of type `T`.
+ */
 export type Function3<TA, TB, TC, T> = (a: TA, b: TB, c: TC) => T;
+
+/**
+ * A four argument function that returns a value of type `T`.
+ */
 export type Function4<TA, TB, TC, TD, T> = (a: TA, b: TB, c: TC, d: TD) => T;
+
+/**
+ * A five argument function that returns a value of type `T`.
+ */
 export type Function5<TA, TB, TC, TD, TE, T> = (
   a: TA,
   b: TB,
@@ -16,6 +74,10 @@ export type Function5<TA, TB, TC, TD, TE, T> = (
   d: TD,
   e: TE,
 ) => T;
+
+/**
+ * A six argument function that returns a value of type `T`.
+ */
 export type Function6<TA, TB, TC, TD, TE, TF, T> = (
   a: TA,
   b: TB,
@@ -24,6 +86,10 @@ export type Function6<TA, TB, TC, TD, TE, TF, T> = (
   e: TE,
   f: TF,
 ) => T;
+
+/**
+ * A seven argument function that returns a value of type `T`.
+ */
 export type Function7<TA, TB, TC, TD, TE, TF, TG, T> = (
   a: TA,
   b: TB,
@@ -33,6 +99,10 @@ export type Function7<TA, TB, TC, TD, TE, TF, TG, T> = (
   f: TF,
   g: TG,
 ) => T;
+
+/**
+ * An eight argument function that returns a value of type `T`.
+ */
 export type Function8<TA, TB, TC, TD, TE, TF, TG, TH, T> = (
   a: TA,
   b: TB,
@@ -43,6 +113,10 @@ export type Function8<TA, TB, TC, TD, TE, TF, TG, TH, T> = (
   g: TG,
   h: TH,
 ) => T;
+
+/**
+ * A nine argument function that returns a value of type `T`.
+ */
 export type Function9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T> = (
   a: TA,
   b: TB,
@@ -55,11 +129,34 @@ export type Function9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T> = (
   i: TI,
 ) => T;
 
+/**
+ * A function that takes no arguments and performs a side-effect.
+ */
 export type SideEffect = () => void;
+
+/**
+ * A function that takes one argument and performs a side-effect.
+ */
 export type SideEffect1<TA> = (a: TA) => void;
+
+/**
+ * A function that takes two arguments and performs a side-effect.
+ */
 export type SideEffect2<TA, TB> = (a: TA, b: TB) => void;
+
+/**
+ * A function that takes three arguments and performs a side-effect.
+ */
 export type SideEffect3<TA, TB, TC> = (a: TA, b: TB, c: TC) => void;
+
+/**
+ * A function that takes four arguments and performs a side-effect.
+ */
 export type SideEffect4<TA, TB, TC, TD> = (a: TA, b: TB, c: TC, d: TD) => void;
+
+/**
+ * A function that takes five arguments and performs a side-effect.
+ */
 export type SideEffect5<TA, TB, TC, TD, TE> = (
   a: TA,
   b: TB,
@@ -67,6 +164,10 @@ export type SideEffect5<TA, TB, TC, TD, TE> = (
   d: TD,
   e: TE,
 ) => void;
+
+/**
+ * A function that takes six arguments and performs a side-effect.
+ */
 export type SideEffect6<TA, TB, TC, TD, TE, TF> = (
   a: TA,
   b: TB,
@@ -75,6 +176,10 @@ export type SideEffect6<TA, TB, TC, TD, TE, TF> = (
   e: TE,
   f: TF,
 ) => void;
+
+/**
+ * A function that takes seven arguments and performs a side-effect.
+ */
 export type SideEffect7<TA, TB, TC, TD, TE, TF, TG> = (
   a: TA,
   b: TB,
@@ -102,52 +207,107 @@ export function callWith<TA, TB, TC, TD, T>(
   c: TC,
   d: TD,
 ): Function1<Function4<TA, TB, TC, TD, T>, T>;
+
+/**
+ * A function operator that invokes a function with a given list of arguments.
+ * 
+ * @returns A function that takes a function `f` as an argument 
+ * and invokes it with the provided arguments, returning the result.
+ */
 export function callWith<T>(
   ...args: readonly any[]
 ): Function1<(...args: readonly any[]) => T, T> {
   return f => f(...args);
 }
 
+/**
+ * The identity function.
+ * 
+ * @returns `v`
+ */
 export const identity = <T>(v: T): T => v;
 
+/**
+ * @returns A function that takes an arbitrary number of arguments and always returns `v`.
+ */
 export const returns = <T>(v: T): ((..._args: unknown[]) => T) => (
   ..._args: unknown[]
 ) => v;
 
-const _alwaysFalse = returns(false);
-export const alwaysFalse: (..._args: unknown[]) => boolean = _alwaysFalse;
+/**
+ * A function that always returns `false`.
+ */
+export const alwaysFalse = (..._args: unknown[]) => false;
 
-const _alwaysTrue = returns(true);
-export const alwaysTrue: (..._args: unknown[]) => boolean = _alwaysTrue;
 
-const _ignore = returns<void>(undefined);
-export const ignore: (..._args: unknown[]) => void = _ignore;
+/**
+ * A function that always returns `true`.
+ */
+export const alwaysTrue = (..._args: unknown[]) => true;
 
+/**
+ * A function that always return undefined
+ */
+export const ignore = (..._args: unknown[]) =>  { return undefined };
+
+/**
+ * An updater function that returns the result of incrementing `x`.
+ */
 export const increment = (x: number) => x + 1;
 
+/**
+ * Returns a function that increments a number `x` by the value `incr`.
+ */
 export const incrementBy = (incr: number): Updater<number> => (x: number) =>
   x + incr;
 
+/**
+ * An updater function that returns the result of decrements `x`.
+ */
 export const decrement = (x: number) => x - 1;
 
+/**
+ * Returns a function that decrements a number `x` by the value `decr`.
+ */
 export const decrementBy = (decr: number): Updater<number> => (x: number) =>
   x - decr;
 
+/**
+ * The javascript strict equality function.
+ */
 export const strictEquality = <T>(a: T, b: T) => a === b;
 
 const isStrictlyEqualTo = <T>(b: T): Predicate<T> => a => a === b;
 
+/**
+ * Returns a predicate function comparing its argument to `b` using the
+ * provided `equality` function.
+ */
 export const isEqualTo = <T>(
   b: T,
   equality: Equality<T> = strictEquality,
 ): Predicate<T> =>
   equality === strictEquality ? isStrictlyEqualTo(b) : (a: T) => equality(a, b);
 
+/**
+ * Returns `true` if `x` is an even number, otherwise `false`.
+ */ 
 export const isEven = (x: number): boolean => x % 2 === 0;
+
+/**
+ * Returns `true` if `x` is an odd number, otherwise `false`.
+ */
 export const isOdd = (x: number): boolean => x % 2 !== 0;
 
+/**
+ * Applies logical negation to the value `v`.
+ */
 export const negate = (v: boolean): boolean => !v;
 
+/**
+ * A function that returns the result of summing 
+ * it's arguments.
+ */
 export const sum = (...args: number[]) => {
   let acc = 0;
   for (let i = 0; i < args.length; i++) {
@@ -156,11 +316,19 @@ export const sum = (...args: number[]) => {
   return acc;
 };
 
+/**
+ * Returns an equality function that compares two readonly arrays for equality
+ * comparing their values using `valuesEquality`.
+ */
 export const arrayEquality = <T>(
   valuesEquality: Equality<T> = strictEquality,
 ): Equality<readonly T[]> => (a: readonly T[], b: readonly T[]) =>
   a.length === b.length && a.every((v, i) => valuesEquality(b[i], v));
 
+/**
+ * A `Reducer` functions that applies `updater` to `acc` to compute the next
+ * accumulator value.
+ */
 export const updaterReducer = <T>(acc: T, updater: Updater<T>) => updater(acc);
 
 export function pipe<T, A>(src: T, op1: Function1<T, A>): A;
@@ -281,7 +449,7 @@ export function pipe(
 ): unknown;
 
 /**
- * Pipes the source value through a series of unary functions.
+ * Pipes `source` through a series of unary functions.
  */
 export function pipe(
   source: unknown,
@@ -391,7 +559,7 @@ export function compose<T, A, B, C, D, E, F, G, H, I, J, K, L>(
 ): Function1<T, L>;
 
 /**
- * composes the source value through a series of unary functions.
+ * Composes a series of unary functions.
  */
 export function compose(
   ...operators: Function1<unknown, unknown>[]
@@ -399,6 +567,9 @@ export function compose(
   return source => pipe(source, ...operators);
 }
 
+/**
+ * Returns a function that composes its operator with `op1`.
+ */
 export const composeWith = <T, A, B>(
   op2: Function1<A, B>,
 ): Function1<Function1<T, A>, Function1<T, B>> => op1 => compose(op1, op2);
@@ -514,14 +685,14 @@ export function defer<T, A, B, C, D, E, F, G, H, I, J, K, L>(
   op11: Function1<J, K>,
   op12: Function1<K, L>,
 ): Factory<L>;
-
 export function defer(
   source: unknown,
   ...operators: Function1<any, unknown>[]
 ): Factory<unknown>;
 
 /**
- * Pipes the source value through a series of unary functions.
+ * Returns a `Factory` function that defers the evaluation of piping 
+ * `source` through the provided operators.
  */
 export function defer(
   source: unknown,
@@ -534,6 +705,10 @@ export function flip<TA, TB, T>(f: Function2<TA, TB, T>): Function2<TB, TA, T>;
 export function flip<TA, TB, TC, T>(
   f: Function3<TA, TB, TC, T>,
 ): Function3<TC, TB, TA, T>;
+
+/**
+ * Returns a function that flips the order of arguments passed to `f`.
+ */
 export function flip<T>(f: (...args: any[]) => T): (...args: any[]) => T {
   return (...args) => {
     args.reverse();
