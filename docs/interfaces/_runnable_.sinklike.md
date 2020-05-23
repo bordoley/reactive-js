@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["runnable"](../modules/_runnable_.md) › [SinkLike](_runnable_.sinklike.md)
+[reactive-js](../README.md) › ["runnable"](../modules/_runnable_.md) › [SinkLike](_runnable_.sinklike.md)
 
 # Interface: SinkLike <**T**>
 

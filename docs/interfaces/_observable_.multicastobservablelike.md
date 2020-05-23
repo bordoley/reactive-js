@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["observable"](../modules/_observable_.md) › [MulticastObservableLike](_observable_.multicastobservablelike.md)
+[reactive-js](../README.md) › ["observable"](../modules/_observable_.md) › [MulticastObservableLike](_observable_.multicastobservablelike.md)
 
 # Interface: MulticastObservableLike <**T**>
 

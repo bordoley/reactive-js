@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["react"](_react_.md)
+[reactive-js](../README.md) › ["react"](_react_.md)
 
 # Module: "react"
 

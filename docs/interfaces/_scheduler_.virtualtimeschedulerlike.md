@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["scheduler"](../modules/_scheduler_.md) › [VirtualTimeSchedulerLike](_scheduler_.virtualtimeschedulerlike.md)
+[reactive-js](../README.md) › ["scheduler"](../modules/_scheduler_.md) › [VirtualTimeSchedulerLike](_scheduler_.virtualtimeschedulerlike.md)
 
 # Interface: VirtualTimeSchedulerLike
 

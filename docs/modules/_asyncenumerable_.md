@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["asyncEnumerable"](_asyncenumerable_.md)
+[reactive-js](../README.md) › ["asyncEnumerable"](_asyncenumerable_.md)
 
 # Module: "asyncEnumerable"
 

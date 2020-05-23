@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["disposable"](../modules/_disposable_.md) › [DisposableLike](_disposable_.disposablelike.md)
+[reactive-js](../README.md) › ["disposable"](../modules/_disposable_.md) › [DisposableLike](_disposable_.disposablelike.md)
 
 # Interface: DisposableLike
 

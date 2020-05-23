@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["disposable"](../modules/_disposable_.md) › [AbstractDisposable](_disposable_.abstractdisposable.md)
+[reactive-js](../README.md) › ["disposable"](../modules/_disposable_.md) › [AbstractDisposable](_disposable_.abstractdisposable.md)
 
 # Class: AbstractDisposable
 

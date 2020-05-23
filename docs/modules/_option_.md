@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["option"](_option_.md)
+[reactive-js](../README.md) › ["option"](_option_.md)
 
 # Module: "option"
 

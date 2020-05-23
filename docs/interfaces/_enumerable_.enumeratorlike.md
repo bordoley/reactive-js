@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["enumerable"](../modules/_enumerable_.md) › [EnumeratorLike](_enumerable_.enumeratorlike.md)
+[reactive-js](../README.md) › ["enumerable"](../modules/_enumerable_.md) › [EnumeratorLike](_enumerable_.enumeratorlike.md)
 
 # Interface: EnumeratorLike <**T**>
 

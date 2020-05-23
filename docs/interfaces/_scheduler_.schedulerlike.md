@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["scheduler"](../modules/_scheduler_.md) › [SchedulerLike](_scheduler_.schedulerlike.md)
+[reactive-js](../README.md) › ["scheduler"](../modules/_scheduler_.md) › [SchedulerLike](_scheduler_.schedulerlike.md)
 
 # Interface: SchedulerLike
 

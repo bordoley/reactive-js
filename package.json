@@ -1,4 +1,5 @@
 {
+  "name": "reactive-js",
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",

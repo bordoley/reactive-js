@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["observable"](../modules/_observable_.md) › [ThrottleMode](_observable_.throttlemode.md)
+[reactive-js](../README.md) › ["observable"](../modules/_observable_.md) › [ThrottleMode](_observable_.throttlemode.md)
 
 # Enumeration: ThrottleMode
 

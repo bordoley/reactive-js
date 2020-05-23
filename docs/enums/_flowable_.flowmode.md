@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["flowable"](../modules/_flowable_.md) › [FlowMode](_flowable_.flowmode.md)
+[reactive-js](../README.md) › ["flowable"](../modules/_flowable_.md) › [FlowMode](_flowable_.flowmode.md)
 
 # Enumeration: FlowMode
 

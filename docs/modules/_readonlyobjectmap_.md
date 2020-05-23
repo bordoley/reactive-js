@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["readonlyObjectMap"](_readonlyobjectmap_.md)
+[reactive-js](../README.md) › ["readonlyObjectMap"](_readonlyobjectmap_.md)
 
 # Module: "readonlyObjectMap"
 

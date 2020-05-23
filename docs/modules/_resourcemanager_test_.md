@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["resourceManager.test"](_resourcemanager_test_.md)
+[reactive-js](../README.md) › ["resourceManager.test"](_resourcemanager_test_.md)
 
 # Module: "resourceManager.test"
 

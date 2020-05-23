@@ -1,4 +1,4 @@
-[undefined - vundefined](../README.md) › ["sequence"](../modules/_sequence_.md) › [SequenceType](_sequence_.sequencetype.md)
+[reactive-js](../README.md) › ["sequence"](../modules/_sequence_.md) › [SequenceType](_sequence_.sequencetype.md)
 
 # Enumeration: SequenceType
 
