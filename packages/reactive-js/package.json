@@ -1,0 +1,100 @@
+{
+  "name": "reactive-js",
+  "version": "0.0.42",
+  "keywords": [
+    "asynchronous",
+    "data flow",
+    "data-flow",
+    "frp",
+    "functional programming",
+    "functional-reactive-programming",
+    "ix",
+    "observable",
+    "observables",
+    "react",
+    "reactjs",
+    "reactive",
+    "reactive-extensions",
+    "reactive-js",
+    "reactive-x",
+    "rx",
+    "rxjs",
+    "scheduler",
+    "state management",
+    "state-management",
+    "stream",
+    "streams",
+    "web"
+  ],
+  "author": {
+    "name": "David Bordoley",
+    "email": "bordoley@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bordoley/reactive-js.git"
+  },
+  "dependencies": {
+    "react": "^16.11.0",
+    "scheduler": "^0.17.0"
+  },
+  "devDependencies": {
+    "@types/node": "13.13.2",
+    "@types/react": "^16.9.11",
+    "@types/scheduler": "^0.16.1",
+    "benchmark": "^2.1.4",
+    "jest": "^24.9.0",
+    "renamer": "^2.0.0",
+    "replace": "^1.2.0",
+    "rxjs": "^6.5.3",
+    "ts-jest": "^24.1.0"
+  },
+  "scripts": {
+    "build": "yarn compile && yarn lib && yarn mod && yarn docs",
+    "clean": "yarn clean-build && yarn clean-coverage && yarn clean-docs && yarn clean-mod && yarn clean-lib",
+    "clean-build": "rm -rf ./build",
+    "clean-coverage": "rm -rf ./coverage",
+    "clean-docs": "rm -rf ./docs",
+    "clean-mod": "rm -rf ./mod",
+    "clean-lib": "rm -rf ./lib",
+    "compile": "yarn compile-cjs && yarn compile-esm && yarn compile-types",
+    "compile-cjs": "tsc -p tsconfig.cjs.json",
+    "compile-esm": "tsc -p tsconfig.esm.json",
+    "compile-types": "tsc -p tsconfig.types.json",
+    "docs": "node ../../scripts/docs.mjs",
+    "lib": "yarn clean-lib && yarn lib-mjs && yarn lib-js && yarn lib-types && yarn lib-rm-unsupport",
+    "lib-js": "cp -r ./build/cjs/lib/ ./lib",
+    "lib-mjs": "yarn lib-mjs-copy && yarn lib-mjs-rename && yarn lib-mjs-replace",
+    "lib-mjs-copy": "cp -r ./build/esm/lib/ ./lib",
+    "lib-mjs-rename": "renamer --find \".js\" --replace \".mjs\" \"./lib/**\"",
+    "lib-mjs-replace": "replace 'from \"(\\.[.\\-/\\w]+)\";' 'from \"$1.mjs\";' ./lib -r --include=\"*.mjs\"",
+    "lib-types": "cp -r ./build/types/lib/ ./lib",
+    "lib-rm-unsupport": "rm -rf ./lib/internal/testing.deno.*",
+    "mod": "yarn clean-mod && yarn mod-esm && yarn mod-ts && yarn mod-rm-unsupported",
+    "mod-esm": "yarn mod-esm-copy && yarn mod-esm-replace",
+    "mod-esm-copy": "cp -r ./build/esm/ ./mod",
+    "mod-esm-replace": "replace 'from \"(\\.[.\\-/\\w]+)\";' 'from \"$1.js\";' ./mod -r --include=\"*.js\"",
+    "mod-ts": "yarn mod-ts-copy && yarn mod-ts-replace",
+    "mod-ts-copy": "cp -r ./src/ ./mod",
+    "mod-ts-replace": "replace 'from \"(\\.[.\\-/\\w]+)\";' 'from \"$1.ts\";' ./mod -r --include=\"*.ts\"",
+    "mod-rm-unsupported": "rm -rf ./mod/lib/experimental/testing.jest.* ./mod/lib/experimental/node.* ./mod/lib/experimental/internal/node ./mod/lib/node.* ./mod/lib/react.* ./mod/lib/internal/node ./mod/perf ./mod/test/node.*",
+    "perf": "yarn compile-cjs && NODE_ENV=production node ./build/cjs/perf/index.js",
+    "test": "jest",
+    "test-coverage": "jest --coverage",
+    "test-debug": "node --inspect-brk ./node_modules/.bin/jest",
+    "test-deno": "deno test -r ./test/testRunner.deno.ts"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testRegex": "testRunner.jest.ts",
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "./tsconfig.esm.json"
+      }
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
