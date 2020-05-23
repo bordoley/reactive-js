@@ -67,7 +67,7 @@
     "lib-js": "cp -r ./build/cjs/lib/ ./lib",
     "lib-mjs": "yarn lib-mjs-copy && yarn lib-mjs-rename && yarn lib-mjs-replace",
     "lib-mjs-copy": "cp -r ./build/esm/lib/ ./lib",
-    "lib-mjs-rename": "renamer --find \".js\" --replace \".mjs\" ./lib/**/**/**/*",
+    "lib-mjs-rename": "renamer --find \".js\" --replace \".mjs\" \"./lib/**\"",
     "lib-mjs-replace": "replace 'from \"(\\.[.\\-/\\w]+)\";' 'from \"$1.mjs\";' ./lib -r --include=\"*.mjs\"",
     "lib-types": "cp -r ./build/types/lib/ ./lib",
     "lib-rm-unsupport": "rm -rf ./lib/internal/testing.deno.*",

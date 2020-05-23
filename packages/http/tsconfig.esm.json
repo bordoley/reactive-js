@@ -1,8 +1,0 @@
-{
-  "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "module": "ES2015",
-    "outDir": "./build/esm",
-    "target": "ES2019"
-  }
-}
