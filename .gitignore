@@ -12,3 +12,4 @@ yarn-error.log
 *.tsbuildinfo
 
 build
+packages/core
