@@ -16,17 +16,19 @@ import {
 import {
   createEventSource,
   fetch,
-  emptyURI,
   historyStateStore,
-  RelativeURI,
 } from "@reactive-js/core/web";
+import {
+  empty as emptyURI,
+  decodeAndGetHash,
+  encodeAndSetHash,
+  RelativeURI
+} from "@reactive-js/core/relativeURI";
 import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { default as ReactDOM } from "react-dom";
 
-const updateHash = (hash: string): Updater<RelativeURI> => uri => ({
-  ...uri,
-  hash: hash.length > 0 ? `#${encodeURIComponent(hash)}` : "",
-});
+const updateHash = (hash: string): Updater<RelativeURI> => uri =>
+  encodeAndSetHash(uri, hash);
 
 const TextInputURIState = ({
   dispatch,
@@ -44,8 +46,7 @@ const TextInputURIState = ({
     [dispatch],
   );
 
-  const { hash } = uri;
-  const state = hash.length > 0 ? decodeURIComponent(hash.substring(1)) : "";
+  const state = decodeAndGetHash(uri);
 
   // FIXME: In the real world, maintain cursor position:
   // http://dimafeldman.com/js/maintain-cursor-position-after-changing-an-input-value-programatically/
