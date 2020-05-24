@@ -18,6 +18,7 @@
 * ["react"](modules/_react_.md)
 * ["readonlyArray"](modules/_readonlyarray_.md)
 * ["readonlyObjectMap"](modules/_readonlyobjectmap_.md)
+* ["relativeURI"](modules/_relativeuri_.md)
 * ["runnable"](modules/_runnable_.md)
 * ["scheduler"](modules/_scheduler_.md)
 * ["sequence"](modules/_sequence_.md)

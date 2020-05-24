@@ -10,6 +10,7 @@ import { none } from "../../option.ts";
 import { StateStoreLike, toStateStore } from "../../stateStore.ts";
 import { createStreamable, map, mapReq } from "../../streamable.ts";
 import { fromEvent } from "./event.ts";
+import { RelativeURI, fromHref, toHref } from "../../relativeURI.ts";
 
 const getCurrentLocation = (_?: unknown): string => window.location.href;
 
@@ -32,47 +33,23 @@ const historyFunction = compose(
   ),
 );
 
-export type RelativeURI = {
-  pathname: string;
-  search: string;
-  hash: string;
-};
-
-export const emptyURI = {
-  pathname: "",
-  search: "",
-  hash: "",
-};
-
-const toRelativeURI = (href: string): RelativeURI => {
-  const uri = new URL(href);
-  return {
-    pathname: uri.pathname,
-    search: uri.search,
-    hash: uri.hash,
-  };
-};
 
 const requestMapper = (stateUpdater: Updater<RelativeURI>): Updater<string> => (
   prevStateString: string,
 ) => {
-  const prevStateURI = toRelativeURI(prevStateString);
+  const prevStateURI = fromHref(prevStateString);
   const newStateURI = stateUpdater(prevStateURI);
 
-  if (newStateURI === prevStateURI) {
-    return prevStateString;
-  } else {
-    const { pathname, search, hash } = newStateURI;
-    const newURL = new URL(`${pathname}${search}${hash}`, prevStateString);
-    return newURL.href;
-  }
+  return newStateURI === prevStateURI
+    ? prevStateString
+    : toHref(newStateURI, prevStateString);
 };
 
 const _historyStateStore: StateStoreLike<RelativeURI> = pipe(
   createStreamable(historyFunction),
   toStateStore(),
   mapReq(requestMapper),
-  map(toRelativeURI),
+  map(fromHref),
 );
 
 export const historyStateStore: StateStoreLike<RelativeURI> = _historyStateStore;
