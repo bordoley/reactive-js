@@ -1,9 +1,9 @@
 import { createDisposableValue, disposed, dispose } from "../disposable.js";
-import { createResourceManager } from "./resourceManager.js";
-import { test, describe } from "./testing.js";
 import { pipe, ignore, defer } from "../functions.js";
 import { onNotify, subscribe, fromArray } from "../observable.js";
 import { createVirtualTimeScheduler } from "../scheduler.js";
+import { createResourceManager } from "./resourceManager.js";
+import { test, describe } from "./testing.js";
 export const tests = describe("resource manager", test("integration test", () => {
     const scheduler = createVirtualTimeScheduler();
     const rm = createResourceManager((k) => createDisposableValue(k, ignore), scheduler, { maxIdleTime: 10, maxResourcesPerKey: 1, maxTotalResources: 2 });

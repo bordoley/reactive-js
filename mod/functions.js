@@ -5,7 +5,9 @@ export const identity = (v) => v;
 export const returns = (v) => (..._args) => v;
 export const alwaysFalse = (..._args) => false;
 export const alwaysTrue = (..._args) => true;
-export const ignore = (..._args) => { return undefined; };
+export const ignore = (..._args) => {
+    return undefined;
+};
 export const increment = (x) => x + 1;
 export const incrementBy = (incr) => (x) => x + incr;
 export const decrement = (x) => x - 1;

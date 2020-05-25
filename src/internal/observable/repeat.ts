@@ -1,9 +1,4 @@
-import {
-  Error,
-  dispose,
-  addDisposable,
-  addTeardown,
-} from "../../disposable";
+import { Error, dispose, addDisposable, addTeardown } from "../../disposable";
 import { pipe, Predicate, Function2 } from "../../functions";
 import { isNone, isSome } from "../../option";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";

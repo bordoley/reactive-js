@@ -1,4 +1,4 @@
-import { dispose, addDisposable, addTeardown, } from "../../disposable.js";
+import { dispose, addDisposable, addTeardown } from "../../disposable.js";
 import { pipe } from "../../functions.js";
 import { isNone, isSome } from "../../option.js";
 import { lift } from "./lift.js";

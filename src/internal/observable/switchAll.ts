@@ -61,5 +61,6 @@ const switchAllInstance = lift(operator);
 export const switchAll = <T>(): ObservableOperator<ObservableLike<T>, T> =>
   switchAllInstance as ObservableOperator<ObservableLike<T>, T>;
 
-export const switchMap = <TA, TB>(mapper: Function1<TA, ObservableLike<TB>>): ObservableOperator<TA, TB>  =>
-  compose(map(mapper), switchAll());
+export const switchMap = <TA, TB>(
+  mapper: Function1<TA, ObservableLike<TB>>,
+): ObservableOperator<TA, TB> => compose(map(mapper), switchAll());

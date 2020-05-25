@@ -10,9 +10,7 @@ export type Error = {
   readonly cause: unknown;
 };
 
-export type DisposableOrTeardown =
-  | DisposableLike
-  | SideEffect1<Option<Error>>;
+export type DisposableOrTeardown = DisposableLike | SideEffect1<Option<Error>>;
 
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -61,7 +59,7 @@ export const addDisposable = (
   parent.add(child);
 };
 
-/** 
+/**
  * Add `teardown` to `parent`, invoking `teardown` when `parent` is disposed.
  */
 export const addTeardown = (
@@ -107,7 +105,6 @@ export const bindDisposables = (a: DisposableLike, b: DisposableLike) => {
   addDisposable(a, b);
   addDisposable(b, a);
 };
-
 
 const toDisposeOnErrorTeardown = (
   disposable: DisposableLike,
@@ -259,7 +256,7 @@ export const disposed: DisposableLike = _disposed;
 /**
  * A `DisposableLike` container that allows replacing an inner `DisposableLike` with another,
  * disposing the previous inner `DisposableLike` in the process. Disposing the
- * container also disposes the inner `DisposableLike`. Disposing the inner `DisposableLike` 
+ * container also disposes the inner `DisposableLike`. Disposing the inner `DisposableLike`
  * with an error, disposes the container with the error.
  *
  * @noInheritDoc

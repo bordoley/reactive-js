@@ -56,10 +56,7 @@ export const tests = describe(
     }),
 
     test("catches and swallows Errors thrown by teardown function", () => {
-      const teardown = defer(
-        none,
-        raise
-      );
+      const teardown = defer(none, raise);
 
       const disposable = createDisposable(teardown);
 

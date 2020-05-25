@@ -1,5 +1,5 @@
 import { bindDisposables } from "./disposable.js";
-import { pipe, identity, updaterReducer, } from "./functions.js";
+import { pipe, identity, updaterReducer, compose, } from "./functions.js";
 import { onNotify, using, zipWithLatestFrom, dispatchTo, subscribe, } from "./observable.js";
 import { createActionReducer, createStreamable, stream as streamStreamable, mapReq, map as mapStream, } from "./streamable.js";
 export const createStateStore = (initialState, equals) => createActionReducer(updaterReducer, initialState, equals);
@@ -14,4 +14,4 @@ const requestMapper = (parse, serialize) => (stateUpdater) => oldStateTA => {
     const newStateTB = stateUpdater(oldStateTB);
     return oldStateTB === newStateTB ? oldStateTA : serialize(newStateTB);
 };
-export const map = (store, parse, serialize) => pipe(store, mapReq(requestMapper(parse, serialize)), mapStream(parse));
+export const map = (parse, serialize) => compose(mapReq(requestMapper(parse, serialize)), mapStream(parse));

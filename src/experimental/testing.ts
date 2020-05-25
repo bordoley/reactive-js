@@ -101,9 +101,7 @@ export const expectEquals = <T>(b: T, valueEquality = strictEquality) => (
   a: T,
 ) => {
   if (!valueEquality(a, b)) {
-    raise(
-      `expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`,
-    );
+    raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
   }
 };
 
@@ -113,9 +111,7 @@ export const expectArrayEquals = <T>(
 ) => (a: readonly T[]) => {
   const equals = arrayEquality(valueEquality);
   if (!equals(a, b)) {
-    raise(
-      `expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`,
-    );
+    raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
   }
 };
 

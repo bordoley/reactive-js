@@ -1,9 +1,4 @@
-import {
-  Error,
-  dispose,
-  addDisposable,
-  addTeardown,
-} from "../../disposable.ts";
+import { Error, dispose, addDisposable, addTeardown } from "../../disposable.ts";
 import { pipe, Predicate, Function2 } from "../../functions.ts";
 import { isNone, isSome } from "../../option.ts";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces.ts";

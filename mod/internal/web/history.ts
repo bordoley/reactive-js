@@ -7,10 +7,10 @@ import {
   throttle,
 } from "../../observable.ts";
 import { none } from "../../option.ts";
+import { RelativeURI, fromHref, toHref } from "../../relativeURI.ts";
 import { StateStoreLike, toStateStore } from "../../stateStore.ts";
 import { createStreamable, map, mapReq } from "../../streamable.ts";
 import { fromEvent } from "./event.ts";
-import { RelativeURI, fromHref, toHref } from "../../relativeURI.ts";
 
 const getCurrentLocation = (_?: unknown): string => window.location.href;
 
@@ -32,7 +32,6 @@ const historyFunction = compose(
     ),
   ),
 );
-
 
 const requestMapper = (stateUpdater: Updater<RelativeURI>): Updater<string> => (
   prevStateString: string,

@@ -1,7 +1,7 @@
 import { Factory, Function1 } from "./functions";
 
 /**
- * Represents an unboxed value of type T or undefined. 
+ * Represents an unboxed value of type T or undefined.
  */
 export type Option<T> = T | undefined;
 

@@ -1,3 +1,4 @@
+import { createIOSinkAccumulator } from "./experimental/ioSinkAccumulator";
 import {
   test,
   describe,
@@ -8,7 +9,6 @@ import {
 } from "./experimental/testing";
 import { FlowMode } from "./flowable";
 import { pipe, returns, sum } from "./functions";
-import { createIOSinkAccumulator } from "./experimental/ioSinkAccumulator";
 import {
   decodeWithCharset,
   empty,
