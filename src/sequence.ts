@@ -80,20 +80,27 @@ export const concatAll = <T>(): SequenceOperator<Sequence<T>, T> => seq => {
   return () => flattenIter(seq());
 };
 
-const _fromArray = <T>(arr: readonly T[], index: number, endIndex: number): SequenceResult<T> =>
+const _fromArray = <T>(
+  arr: readonly T[],
+  index: number,
+  endIndex: number,
+): SequenceResult<T> =>
   index < endIndex && index >= 0
     ? notify(arr[index], () => _fromArray(arr, index + 1, endIndex))
     : done();
 
 export const fromArray = <T>(
   options: {
-    startIndex?: number;
-    endIndex?: number
+    readonly startIndex?: number;
+    readonly endIndex?: number;
   } = {},
 ): Function1<readonly T[], Sequence<T>> => values => {
   const valuesLength = values.length;
   const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
-  const endIndex = Math.max(Math.min(options.endIndex ?? valuesLength, valuesLength), 0);
+  const endIndex = Math.max(
+    Math.min(options.endIndex ?? valuesLength, valuesLength),
+    0,
+  );
 
   return () => _fromArray(values, startIndex, endIndex);
 };
@@ -133,8 +140,9 @@ const _distinctUntilChanged = <T>(
 };
 
 export const distinctUntilChanged = <T>(
-  equality: Equality<T> = strictEquality,
+  options: { readonly equality?: Equality<T> } = {},
 ): SequenceOperator<T, T> => seq => () => {
+  const { equality = strictEquality } = options;
   const result = seq();
   return isNotify(result)
     ? notify(
@@ -241,8 +249,12 @@ const _takeFirst = <T>(count: number, seq: Sequence<T>): Sequence<T> => () => {
   }
 };
 
-export const takeFirst = <T>(count: number): SequenceOperator<T, T> => seq =>
-  _takeFirst(count, seq);
+export const takeFirst = <T>(
+  options: { readonly count?: number } = {},
+): SequenceOperator<T, T> => seq => {
+  const { count = 1 } = options;
+  return _takeFirst(count, seq);
+};
 
 const _repeat = <T>(
   predicate: Predicate<number>,
@@ -296,8 +308,11 @@ export const scan = <T, TAcc>(
   _scan(reducer, initialValue(), seq)();
 
 export const skipFirst = <T>(
-  count: number,
-): SequenceOperator<T, T> => seq => () => seek<T>(count)(seq)();
+  options: { readonly count?: number } = {},
+): SequenceOperator<T, T> => seq => () => {
+  const { count = 1 } = options;
+  return seek<T>(count)(seq)();
+};
 
 const _takeLast = <T>(
   maxCount: number,
@@ -317,8 +332,12 @@ const _takeLast = <T>(
   }
   return _fromArray(last, 0, last.length);
 };
-export const takeLast = <T>(count: number): SequenceOperator<T, T> => seq =>
-  _takeLast(count, seq);
+export const takeLast = <T>(
+  options: { readonly count?: number } = {},
+): SequenceOperator<T, T> => seq => {
+  const { count = 1 } = options;
+  return _takeLast(count, seq);
+};
 
 const _takeWhile = <T>(
   predicate: Predicate<T>,
@@ -336,8 +355,11 @@ const _takeWhile = <T>(
 
 export const takeWhile = <T>(
   predicate: Predicate<T>,
-  { inclusive } = { inclusive: false },
-): SequenceOperator<T, T> => seq => _takeWhile(predicate, inclusive, seq);
+  options: { readonly inclusive?: boolean } = {},
+): SequenceOperator<T, T> => seq => {
+  const { inclusive = false } = options;
+  return _takeWhile(predicate, inclusive, seq);
+};
 
 export const toRunnable = <T>(): Function1<
   Sequence<T>,

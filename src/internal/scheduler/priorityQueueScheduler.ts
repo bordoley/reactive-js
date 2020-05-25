@@ -183,21 +183,21 @@ class PriorityScheduler extends AbstractSerialDisposable
   schedule(
     continuation: SchedulerContinuationLike,
     options?: {
-      delay: number;
+      readonly delay?: number;
     },
   ): void;
   schedule(
     continuation: SchedulerContinuationLike,
     options: {
-      priority: number;
-      delay?: number;
+      readonly priority: number;
+      readonly delay?: number;
     },
   ): void;
   schedule(
     continuation: SchedulerContinuationLike,
     options: {
-      priority?: number;
-      delay?: number;
+      readonly priority?: number;
+      readonly delay?: number;
     } = {},
   ) {
     let { delay = 0, priority } = options;

@@ -18,7 +18,7 @@
 
 ### `Const` createStateStore
 
-▸ **createStateStore**<**T**>(`initialState`: [Factory](_functions_.md#factory)‹T›, `equals?`: [Equality](_functions_.md#equality)‹T›): *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹T›*
+▸ **createStateStore**<**T**>(`initialState`: [Factory](_functions_.md#factory)‹T›, `options?`: object): *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹T›*
 
 Returns a new `StateStoreLike` instance that stores state which can
 be updated by notifying the instance with a `StateUpdater` that computes a
@@ -30,10 +30,15 @@ new state based upon the previous state.
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`initialState` | [Factory](_functions_.md#factory)‹T› | The initial accumulation value. |
-`equals?` | [Equality](_functions_.md#equality)‹T› | Optional equality function that is used to compare if a state value is distinct from the previous one.  |
+▪ **initialState**: *[Factory](_functions_.md#factory)‹T›*
+
+The initial accumulation value.
+
+▪`Optional`  **options**: *object*
+
+Name | Type |
+------ | ------ |
+`equality?` | [Equality](_functions_.md#equality)‹T› |
 
 **Returns:** *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹T›*
 

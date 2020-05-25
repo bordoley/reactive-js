@@ -20,7 +20,7 @@ class StreamableImpl<TReq, TData> implements StreamableLike<TReq, TData> {
 
   stream(
     scheduler: SchedulerLike,
-    options?: { replay: number },
+    options?: { readonly replay?: number },
   ): StreamLike<TReq, TData> {
     return createStream(this.op, scheduler, options);
   }
@@ -95,12 +95,12 @@ const _empty = createStreamable<any, any>(_ => emptyObs());
  * a disposed `StreamLike` instance.
  */
 export const empty = <TReq, T>(options?: {
-  delay: number;
+  readonly delay?: number;
 }): StreamableLike<TReq, T> =>
   isNone(options) ? _empty : createStreamable<TReq, T>(_ => emptyObs(options));
 
 export const stream = <TReq, T>(
   streamable: StreamableLike<TReq, T>,
   scheduler: SchedulerLike,
-  options?: { replay: number },
+  options?: { readonly replay?: number },
 ): StreamLike<TReq, T> => streamable.stream(scheduler, options);

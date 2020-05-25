@@ -117,7 +117,11 @@ class HostScheduler implements SchedulerLike {
     );
   }
 
-  schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
+  schedule(
+    continuation: SchedulerContinuationLike,
+    options: { readonly delay?: number } = {},
+  ) {
+    const { delay = 0 } = options;
     if (!continuation.isDisposed) {
       const callback = createCallback(this, continuation);
       const callbackSubscription =
@@ -130,9 +134,10 @@ class HostScheduler implements SchedulerLike {
 }
 
 export const createHostScheduler = (
-  config: {
-    yieldInterval: number;
-  } = {
-    yieldInterval: 5,
-  },
-): SchedulerLike => new HostScheduler(config.yieldInterval);
+  options: {
+    readonly yieldInterval?: number;
+  } = {},
+): SchedulerLike => {
+  const { yieldInterval = 5 } = options;
+  return new HostScheduler(yieldInterval);
+};

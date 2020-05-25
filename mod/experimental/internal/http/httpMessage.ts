@@ -52,16 +52,16 @@ export type HttpMessageOptions<T> = {
   body: T;
   cacheControl?: readonly (string | CacheDirective)[];
   contentInfo?: {
-    contentEncodings?: readonly HttpContentEncoding[];
-    contentLength?: number;
-    contentType: MediaType | string;
+    readonly contentEncodings?: readonly HttpContentEncoding[];
+    readonly contentLength?: number;
+    readonly contentType: MediaType | string;
   };
   headers?: HttpHeaders;
   preferences?: {
-    acceptedCharsets?: readonly string[];
-    acceptedEncodings?: readonly HttpContentEncoding[];
-    acceptedLanguages?: readonly string[];
-    acceptedMediaRanges?: readonly (string | MediaRange)[];
+    readonly acceptedCharsets?: readonly string[];
+    readonly acceptedEncodings?: readonly HttpContentEncoding[];
+    readonly acceptedLanguages?: readonly string[];
+    readonly acceptedMediaRanges?: readonly (string | MediaRange)[];
   };
 };
 
@@ -72,22 +72,7 @@ export const createHttpMessage = <T>({
   headers = {},
   preferences,
   ...rest
-}: {
-  body: T;
-  cacheControl?: readonly (string | CacheDirective)[];
-  contentInfo?: {
-    contentEncodings?: readonly HttpContentEncoding[];
-    contentLength?: number;
-    contentType: MediaType | string;
-  };
-  headers?: HttpHeaders;
-  preferences?: {
-    acceptedCharsets?: readonly string[];
-    acceptedEncodings?: readonly HttpContentEncoding[];
-    acceptedLanguages?: readonly string[];
-    acceptedMediaRanges?: readonly (string | MediaRange)[];
-  };
-}): HttpMessage<T> => ({
+}: HttpMessageOptions<T>): HttpMessage<T> => ({
   ...rest,
   body,
   cacheControl: isSome(cacheControl)

@@ -42,4 +42,7 @@ class SubjectImpl extends AbstractDisposable {
         addDisposable(this, dispatcher);
     }
 }
-export const createSubject = ({ replay } = { replay: 0 }) => new SubjectImpl(replay);
+export const createSubject = (options = {}) => {
+    const { replay = 0 } = options;
+    return new SubjectImpl(replay);
+};

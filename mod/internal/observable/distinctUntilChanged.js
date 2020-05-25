@@ -17,7 +17,8 @@ class DistinctUntilChangedObserver extends AbstractAutoDisposingDelegatingObserv
         }
     }
 }
-export const distinctUntilChanged = (equality = strictEquality) => {
+export const distinctUntilChanged = (options = {}) => {
+    const { equality = strictEquality } = options;
     const operator = (observer) => new DistinctUntilChangedObserver(observer, equality);
     operator.isSynchronous = true;
     return lift(operator);

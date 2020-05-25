@@ -28,7 +28,7 @@ class StreamImpl<TReq, T> extends AbstractDisposable
   constructor(
     op: ObservableOperator<TReq, T>,
     scheduler: SchedulerLike,
-    options?: { replay: number },
+    options?: { readonly replay?: number },
   ) {
     super();
 
@@ -58,5 +58,5 @@ class StreamImpl<TReq, T> extends AbstractDisposable
 export const createStream = <TReq, T>(
   op: ObservableOperator<TReq, T>,
   scheduler: SchedulerLike,
-  options?: { replay: number },
+  options?: { readonly replay?: number },
 ): StreamLike<TReq, T> => new StreamImpl(op, scheduler, options);

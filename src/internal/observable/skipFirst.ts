@@ -30,7 +30,10 @@ class SkipFirstObserver<T> extends AbstractAutoDisposingDelegatingObserver<
  *
  * @param count The number of items emitted by source that should be skipped.
  */
-export const skipFirst = <T>(count = 1): ObservableOperator<T, T> => {
+export const skipFirst = <T>(
+  options: { readonly count?: number } = {},
+): ObservableOperator<T, T> => {
+  const { count = 1 } = options;
   const operator = (observer: ObserverLike<T>) =>
     new SkipFirstObserver(observer, count);
   operator.isSynchronous = false;

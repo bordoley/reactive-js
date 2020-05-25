@@ -108,7 +108,7 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
  */
 export function throttle<T>(
   duration: Function1<T, ObservableLike<unknown>>,
-  mode?: ThrottleMode,
+  options?: { readonly mode?: ThrottleMode },
 ): ObservableOperator<T, T>;
 
 /**
@@ -121,13 +121,14 @@ export function throttle<T>(
  */
 export function throttle<T>(
   duration: number,
-  mode?: ThrottleMode,
+  options?: { readonly mode?: ThrottleMode },
 ): ObservableOperator<T, T>;
 
 export function throttle<T>(
   duration: Function1<T, ObservableLike<unknown>> | number,
-  mode: ThrottleMode = ThrottleMode.Interval,
+  options: { readonly mode?: ThrottleMode } = {},
 ): ObservableOperator<T, T> {
+  const { mode = ThrottleMode.Interval } = options;
   const durationFunction =
     typeof duration === "number"
       ? (_: T) => fromValue({ delay: duration })(none)

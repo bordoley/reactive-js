@@ -47,8 +47,9 @@ class TakeWhileEnumerator<T> implements EnumeratorLike<T> {
  */
 export const takeWhile = <T>(
   predicate: Predicate<T>,
-  { inclusive } = { inclusive: false },
+  options: { readonly inclusive?: boolean } = {},
 ): EnumerableOperator<T, T> => {
+  const { inclusive = false } = options;
   const operator = (observer: EnumeratorLike<T>) =>
     new TakeWhileEnumerator(observer, predicate, inclusive);
   return lift(operator);

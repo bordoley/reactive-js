@@ -116,13 +116,13 @@ export type HttpResponse<T> = HttpMessage<T> & {
 };
 
 export type HttpResponseOptions<T> = HttpMessageOptions<T> & {
-  etag?: string | EntityTag;
-  expires?: number | string | Date;
-  headers?: HttpHeaders;
-  lastModified?: number | string | Date;
-  location?: string | URILike;
-  statusCode: HttpStatusCode;
-  vary?: readonly string[];
+  readonly etag?: string | EntityTag;
+  readonly expires?: number | string | Date;
+  readonly headers?: HttpHeaders;
+  readonly lastModified?: number | string | Date;
+  readonly location?: string | URILike;
+  readonly statusCode: HttpStatusCode;
+  readonly vary?: readonly string[];
 };
 
 declare class URL implements URILike {

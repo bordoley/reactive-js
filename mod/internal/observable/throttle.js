@@ -53,7 +53,8 @@ class ThrottleObserver extends AbstractDelegatingObserver {
         }
     }
 }
-export function throttle(duration, mode = 3) {
+export function throttle(duration, options = {}) {
+    const { mode = 3 } = options;
     const durationFunction = typeof duration === "number"
         ? (_) => fromValue({ delay: duration })(none)
         : duration;

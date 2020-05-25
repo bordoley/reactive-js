@@ -62,5 +62,9 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
   }
 }
 
-export const createSubject = <T>({ replay } = { replay: 0 }): SubjectLike<T> =>
-  new SubjectImpl(replay);
+export const createSubject = <T>(
+  options: { readonly replay?: number } = {},
+): SubjectLike<T> => {
+  const { replay = 0 } = options;
+  return new SubjectImpl(replay);
+};

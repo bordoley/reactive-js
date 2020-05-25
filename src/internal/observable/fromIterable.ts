@@ -12,10 +12,10 @@ import { ObservableLike } from "./interfaces";
  *
  * @param delay The requested delay between emitted items by the observable.
  */
-export const fromIterator = <T, TReturn = any, TNext = unknown>(
-  config = { delay: 0 },
-): Function1<Factory<Iterator<T, TReturn, TNext>>, ObservableLike<T>> => {
-  const call = fromEnumerable(config);
+export const fromIterator = <T, TReturn = any, TNext = unknown>(options?: {
+  readonly delay?: number;
+}): Function1<Factory<Iterator<T, TReturn, TNext>>, ObservableLike<T>> => {
+  const call = fromEnumerable(options);
   return compose(enumerableFromIterator(), call);
 };
 
@@ -25,9 +25,9 @@ export const fromIterator = <T, TReturn = any, TNext = unknown>(
  *
  * @param delay The requested delay between emitted items by the observable.
  */
-export const fromIterable = <T>(
-  config = { delay: 0 },
-): Function1<Iterable<T>, ObservableLike<T>> => {
-  const call = fromEnumerable(config);
+export const fromIterable = <T>(options?: {
+  readonly delay?: number;
+}): Function1<Iterable<T>, ObservableLike<T>> => {
+  const call = fromEnumerable(options);
   return compose(enumerableFromIterable(), call);
 };

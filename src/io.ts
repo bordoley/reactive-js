@@ -114,14 +114,16 @@ export const fromObservable = <T>(): Function1<
   IOSourceLike<T>
 > => _fromObservable;
 
-export const fromArray = <T>(
-  options?: { delay?: number, startIndex?: number , endIndex?: number},
-): Function1<readonly T[], IOSourceLike<T>> =>
+export const fromArray = <T>(options?: {
+  readonly delay?: number;
+  readonly startIndex?: number;
+  readonly endIndex?: number;
+}): Function1<readonly T[], IOSourceLike<T>> =>
   compose(fromArrayObs(options), fromObservable());
 
-export const fromValue = <T>(
-  config?: { delay?: number}
-): Function1<T, IOSourceLike<T>> => v => fromArray<T>(config)([v]);
+export const fromValue = <T>(options?: {
+  readonly delay?: number;
+}): Function1<T, IOSourceLike<T>> => v => fromArray<T>(options)([v]);
 
 const _empty: IOSourceLike<any> = fromArray()([]);
 export const empty = <T>(): IOSourceLike<T> => _empty;

@@ -5,7 +5,11 @@ class ArrayEnumerator<T> implements EnumeratorLike<T> {
   current: any = none;
   hasCurrent = false;
 
-  constructor(private readonly array: readonly T[], private index: number, private readonly endIndex: number) {}
+  constructor(
+    private readonly array: readonly T[],
+    private index: number,
+    private readonly endIndex: number,
+  ) {}
 
   move(): boolean {
     const array = this.array;
@@ -46,15 +50,16 @@ class ArrayEnumerable<T> implements EnumerableLike<T> {
  */
 export const fromArray = <T>(
   options: {
-    startIndex?: number;
-    endIndex?: number;
+    readonly startIndex?: number;
+    readonly endIndex?: number;
   } = {},
-) => (
-  values: readonly T[],
-): EnumerableLike<T> => {
+) => (values: readonly T[]): EnumerableLike<T> => {
   const valuesLength = values.length;
   const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
-  const endIndex = Math.max(Math.min(options.endIndex ?? values.length, valuesLength), 0);
+  const endIndex = Math.max(
+    Math.min(options.endIndex ?? values.length, valuesLength),
+    0,
+  );
 
   return new ArrayEnumerable(values, startIndex - 1, endIndex);
 };

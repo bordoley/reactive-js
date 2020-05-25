@@ -38,8 +38,9 @@ class DistinctUntilChangedEnumerator<T> implements EnumeratorLike<T> {
  * if an item is distinct from the previous item.
  */
 export const distinctUntilChanged = <T>(
-  equality: Equality<T> = strictEquality,
+  options: { readonly equality?: Equality<T> } = {},
 ): EnumerableOperator<T, T> => {
+  const { equality = strictEquality } = options;
   const operator = (enumerator: EnumeratorLike<T>) =>
     new DistinctUntilChangedEnumerator(enumerator, equality);
   return lift(operator);

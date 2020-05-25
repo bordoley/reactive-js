@@ -12,12 +12,12 @@ import { yield$ } from "./observer";
  * @param initialValue Factory function used to generate the initial accumulator.
  * @param delay The requested delay between emitted items by the observable.
  */
-export function generate<T>(
+export const generate = <T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
-  options: { delay: number } = { delay: 0 },
-): ObservableLike<T> {
-  const { delay } = options;
+  options: { readonly delay?: number } = {},
+): ObservableLike<T> => {
+  const { delay = 0 } = options;
 
   const factory = () => {
     let acc = initialValue();
@@ -31,4 +31,4 @@ export function generate<T>(
   };
 
   return delay > 0 ? defer(factory, options) : deferSynchronous(factory);
-}
+};

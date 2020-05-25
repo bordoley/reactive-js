@@ -11,11 +11,12 @@ import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
 
 export const toRunnable = <T>(
-  schedulerFactory: Factory<
-    VirtualTimeSchedulerLike
-  > = createVirtualTimeScheduler,
+  options: {
+    readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
+  } = {},
 ): Function1<ObservableLike<T>, RunnableLike<T>> => source =>
   createRunnable(sink => {
+    const { schedulerFactory = createVirtualTimeScheduler } = options;
     const scheduler = schedulerFactory();
 
     const subscription = pipe(

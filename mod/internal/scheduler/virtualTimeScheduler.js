@@ -65,4 +65,7 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable {
         }
     }
 }
-export const createVirtualTimeScheduler = ({ maxMicroTaskTicks } = { maxMicroTaskTicks: Number.MAX_SAFE_INTEGER }) => new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
+export const createVirtualTimeScheduler = (options = {}) => {
+    const { maxMicroTaskTicks = Number.MAX_SAFE_INTEGER } = options;
+    return new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
+};

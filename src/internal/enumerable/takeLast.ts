@@ -46,7 +46,10 @@ class TakeLastEnumerator<T> implements EnumeratorLike<T> {
  *
  * @param count The maximum number of values to emit.
  */
-export const takeLast = <T>(count = 1): EnumerableOperator<T, T> => {
+export const takeLast = <T>(
+  options: { readonly count?: number } = {},
+): EnumerableOperator<T, T> => {
+  const { count = 1 } = options;
   const operator = (enumerator: EnumeratorLike<T>) =>
     new TakeLastEnumerator(enumerator, count);
   return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());

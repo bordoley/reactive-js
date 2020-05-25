@@ -14,7 +14,8 @@ class SkipFirstSink extends AbstractDelegatingSink {
         }
     }
 }
-export const skipFirst = (count = 1) => {
+export const skipFirst = (options = {}) => {
+    const { count = 1 } = options;
     const operator = (sink) => new SkipFirstSink(sink, count);
     return runnable => (count > 0 ? pipe(runnable, lift(operator)) : runnable);
 };

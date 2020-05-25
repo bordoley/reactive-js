@@ -211,9 +211,9 @@ export const createResourceManager = <TResource extends DisposableLike>(
   createResource: Function1<string, TResource>,
   scheduler: SchedulerLike,
   options: {
-    maxIdleTime?: number;
-    maxResourcesPerKey?: number;
-    maxTotalResources?: number;
+    readonly maxIdleTime?: number;
+    readonly maxResourcesPerKey?: number;
+    readonly maxTotalResources?: number;
   } = {},
 ): ResourceManagerLike<TResource> => {
   const {

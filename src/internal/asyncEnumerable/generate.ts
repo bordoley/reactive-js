@@ -1,10 +1,18 @@
-import { Factory, Updater } from "../../functions";
-import { scan } from "../../observable";
+import { Factory, Updater, pipe } from "../../functions";
+import { fromValue, scan, scanAsync } from "../../observable";
 import { createStreamable } from "../../streamable";
 import { AsyncEnumerableLike } from "./interfaces";
 
 const generateScanner = <T>(generator: Updater<T>) => (acc: T, _: unknown) =>
   generator(acc);
+
+const asyncGeneratorScanner = <T>(
+  generator: Updater<T>,
+  options: { readonly delay?: number },
+) => {
+  const fromValueWithDelay = fromValue<T>(options);
+  return (acc: T, _: unknown) => pipe(acc, generator, fromValueWithDelay);
+};
 
 /**
  * Generates an `AsyncEnumerableLike` sequence from a generator function
@@ -16,5 +24,15 @@ const generateScanner = <T>(generator: Updater<T>) => (acc: T, _: unknown) =>
 export const generate = <T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
-): AsyncEnumerableLike<T> =>
-  createStreamable(scan(generateScanner(generator), initialValue));
+  options: { readonly delay?: number } = {},
+): AsyncEnumerableLike<T> => {
+  const { delay = 0 } = options;
+  const op =
+    delay > 0
+      ? scanAsync<void, T>(
+          asyncGeneratorScanner(generator, options),
+          initialValue,
+        )
+      : scan(generateScanner(generator), initialValue);
+  return createStreamable(op);
+};

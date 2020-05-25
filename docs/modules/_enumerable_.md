@@ -178,7 +178,7 @@ ___
 
 ### `Const` distinctUntilChanged
 
-▸ **distinctUntilChanged**<**T**>(`equality`: [Equality](_functions_.md#equality)‹T›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **distinctUntilChanged**<**T**>(`options`: object): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an `ObservableLike` that emits all items emitted by the source that
 are distinct by comparison from the previous item.
@@ -189,9 +189,11 @@ are distinct by comparison from the previous item.
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`equality` | [Equality](_functions_.md#equality)‹T› | strictEquality |
+▪`Default value`  **options**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`equality?` | [Equality](_functions_.md#equality)‹T› |
 
 **Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
@@ -562,7 +564,7 @@ ___
 
 ### `Const` skipFirst
 
-▸ **skipFirst**<**T**>(`count`: number): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **skipFirst**<**T**>(`options`: object): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an EnumerableLike that skips the first `count` values emitted by the source.
 
@@ -572,9 +574,11 @@ Returns an EnumerableLike that skips the first `count` values emitted by the sou
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`count` | number | 1 | The maximum number of values to emit.  |
+▪`Default value`  **options**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`count?` | number |
 
 **Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
@@ -603,7 +607,7 @@ ___
 
 ### `Const` takeFirst
 
-▸ **takeFirst**<**T**>(`count`: number): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **takeFirst**<**T**>(`options`: object): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an EnumerableLike that only yields the first `count` values emitted by the source.
 
@@ -613,9 +617,11 @@ Returns an EnumerableLike that only yields the first `count` values emitted by t
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`count` | number | 1 | The maximum number of values to emit.  |
+▪`Default value`  **options**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`count?` | number |
 
 **Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
@@ -623,7 +629,7 @@ ___
 
 ### `Const` takeLast
 
-▸ **takeLast**<**T**>(`count`: number): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **takeLast**<**T**>(`options`: object): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an EnumerableLike that only yields the last `count` items yielded by the source.
 
@@ -633,9 +639,11 @@ Returns an EnumerableLike that only yields the last `count` items yielded by the
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`count` | number | 1 | The maximum number of values to emit.  |
+▪`Default value`  **options**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`count?` | number |
 
 **Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
@@ -643,7 +651,7 @@ ___
 
 ### `Const` takeWhile
 
-▸ **takeWhile**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›, `__namedParameters`: object): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **takeWhile**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›, `options`: object): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an EnumerableLike which yields values emitted by the source as long
 as each value satisfies the given predicate.
@@ -658,11 +666,11 @@ as each value satisfies the given predicate.
 
 The predicate function.
 
-▪`Default value`  **__namedParameters**: *object*= { inclusive: false }
+▪`Default value`  **options**: *object*= {}
 
 Name | Type |
 ------ | ------ |
-`inclusive` | boolean |
+`inclusive?` | boolean |
 
 **Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 

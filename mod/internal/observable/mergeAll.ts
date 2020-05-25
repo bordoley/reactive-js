@@ -100,8 +100,8 @@ class MergeObserver<T> extends AbstractDelegatingObserver<
  */
 export const mergeAll = <T>(
   options: {
-    maxBufferSize?: number;
-    maxConcurrency?: number;
+    readonly maxBufferSize?: number;
+    readonly maxConcurrency?: number;
   } = {},
 ): ObservableOperator<ObservableLike<T>, T> => {
   const {
@@ -129,14 +129,16 @@ export const mergeMap = <TA, TB>(
  * @param maxBufferSize The number of source observables that may be queued before dropping previous observables.
  */
 export const concatAll = <T>(
-  maxBufferSize = Number.MAX_SAFE_INTEGER,
-): ObservableOperator<ObservableLike<T>, T> =>
-  mergeAll({ maxBufferSize, maxConcurrency: 1 });
+  options: { readonly maxBufferSize?: number } = {},
+): ObservableOperator<ObservableLike<T>, T> => {
+  const { maxBufferSize = Number.MAX_SAFE_INTEGER } = options;
+  return mergeAll({ maxBufferSize, maxConcurrency: 1 });
+};
 
 export const concatMap = <TA, TB>(
   mapper: Function1<TA, ObservableLike<TB>>,
-  maxBufferSize?: number,
-): ObservableOperator<TA, TB> => compose(map(mapper), concatAll(maxBufferSize));
+  options?: { readonly maxBufferSize?: number },
+): ObservableOperator<TA, TB> => compose(map(mapper), concatAll(options));
 
 const _exhaust = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
 

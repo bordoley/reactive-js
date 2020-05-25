@@ -38,8 +38,9 @@ class DistinctUntilChangedObserver<
  * if an item is distinct from the previous item.
  */
 export const distinctUntilChanged = <T>(
-  equality: Equality<T> = strictEquality,
+  options: { readonly equality?: Equality<T> } = {},
 ): ObservableOperator<T, T> => {
+  const { equality = strictEquality } = options;
   const operator = (observer: ObserverLike<T>) =>
     new DistinctUntilChangedObserver(observer, equality);
   operator.isSynchronous = true;

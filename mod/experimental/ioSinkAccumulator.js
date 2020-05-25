@@ -29,4 +29,4 @@ class IOSinkAccumulatorImpl extends AbstractDisposable {
         return result;
     }
 }
-export const createIOSinkAccumulator = (reducer, initialValue, options = { replay: 0 }) => new IOSinkAccumulatorImpl(reducer, initialValue, options);
+export const createIOSinkAccumulator = (reducer, initialValue, options) => new IOSinkAccumulatorImpl(reducer, initialValue, options);

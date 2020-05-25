@@ -26,7 +26,8 @@ class TakeLastSink {
         }
     }
 }
-export const takeLast = (count = 1) => {
+export const takeLast = (options = {}) => {
+    const { count = 1 } = options;
     const operator = (sink) => new TakeLastSink(sink, count);
     return runnable => (count > 0 ? pipe(runnable, lift(operator)) : empty());
 };

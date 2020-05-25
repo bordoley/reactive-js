@@ -64,8 +64,10 @@ const subscribeObservable = <T>(
  */
 export const useObservable = <T>(
   observable: ObservableLike<T>,
-  { scheduler } = { scheduler: normalPriority },
+  options: { readonly scheduler?: SchedulerLike } = {},
 ): Option<T> => {
+  const { scheduler = normalPriority } = options;
+
   const [state, updateState] = useState<Option<T>>(none);
   const [error, updateError] = useState<Option<Error>>(none);
 
@@ -89,21 +91,20 @@ export const useObservable = <T>(
 
 export const useStreamable = <TReq, T>(
   streamable: StreamableLike<TReq, T>,
-  config: {
-    scheduler?: SchedulerLike;
-    replay?: number;
-    stateScheduler?: SchedulerLike;
+  options: {
+    readonly scheduler?: SchedulerLike;
+    readonly replay?: number;
+    readonly stateScheduler?: SchedulerLike;
   } = {},
 ): [Option<T>, SideEffect1<TReq>] => {
-  const scheduler = config.scheduler ?? normalPriority;
-  const stateScheduler = config.stateScheduler ?? scheduler;
-  const replay = config.replay ?? 0;
+  const { replay = 0, scheduler = normalPriority } = options;
+  const stateScheduler = options.stateScheduler ?? scheduler;
 
   const [stream, updateStream] = useState<Option<StreamLike<TReq, T>>>(none);
   const streamRef = useRef<Option<StreamLike<TReq, T>>>(none);
 
   useEffect(() => {
-    const stream = streamableStream(streamable, scheduler, { replay });
+    const stream = streamableStream(streamable, scheduler, options);
     streamRef.current = stream;
 
     pipe(stream, returns, updateStream);

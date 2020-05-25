@@ -118,7 +118,7 @@ export const createMonadTests = (m: any) =>
           [1, 2, 3],
           m.fromArray(),
           m.repeat(),
-          m.takeFirst(6),
+          m.takeFirst({ count: 6 }),
           m.toRunnable(),
           toArray(),
           expectArrayEquals([1, 2, 3, 1, 2, 3]),
@@ -167,7 +167,7 @@ export const createMonadTests = (m: any) =>
         defer(
           [1, 2, 3],
           m.fromArray(),
-          m.skipFirst(2),
+          m.skipFirst({ count: 2 }),
           m.toRunnable(),
           toArray(),
           expectArrayEquals([3]),
@@ -178,7 +178,7 @@ export const createMonadTests = (m: any) =>
         defer(
           [1, 2, 3],
           m.fromArray(),
-          m.skipFirst(4),
+          m.skipFirst({ count: 4 }),
           m.toRunnable(),
           toArray(),
           expectArrayEquals([]),
@@ -204,7 +204,7 @@ export const createMonadTests = (m: any) =>
         "when taking fewer than the total number of elements in the source",
         defer(
           m.generate(increment, returns(0)),
-          m.takeFirst(3),
+          m.takeFirst({ count: 3 }),
           m.toRunnable(),
           toArray(),
           expectArrayEquals([1, 2, 3]),
@@ -215,7 +215,7 @@ export const createMonadTests = (m: any) =>
         defer(
           1,
           m.fromValue(),
-          m.takeFirst(3),
+          m.takeFirst({ count: 3 }),
           m.toRunnable(),
           toArray(),
           expectArrayEquals([1]),
@@ -227,7 +227,7 @@ export const createMonadTests = (m: any) =>
       defer(
         [1, 2, 3, 4, 5],
         m.fromArray(),
-        m.takeLast(3),
+        m.takeLast({ count: 3 }),
         m.toRunnable(),
         toArray(),
         expectArrayEquals([3, 4, 5]),
@@ -276,9 +276,9 @@ export const createMonadTests = (m: any) =>
       defer(
         m.generate(increment, returns(0)),
         m.map((x: any) => x * 2),
-        m.takeFirst(3),
-        m.concatMap((x: any) =>
-          pipe(m.generate(incrementBy(1), returns(0)), m.takeFirst(x)),
+        m.takeFirst({ count: 3 }),
+        m.concatMap((count: any) =>
+          pipe(m.generate(incrementBy(1), returns(0)), m.takeFirst({ count })),
         ),
         m.toRunnable(),
         toArray(),

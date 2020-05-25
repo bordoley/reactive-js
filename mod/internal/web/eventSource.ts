@@ -8,12 +8,12 @@ const reservedEvents = ["error", "open"];
 export const createEventSource = (
   url: string | URL,
   options: EventSourceInit & {
-    events?: readonly string[];
+    readonly events?: readonly string[];
   } = {},
 ): ObservableLike<{
-  id: string;
-  type: string;
-  data: string;
+  readonly id: string;
+  readonly type: string;
+  readonly data: string;
 }> => {
   const { events: eventsOption = ["message"] } = options;
   const events = pipe(

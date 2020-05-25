@@ -32,5 +32,8 @@ export const someSatisfy = <T>(
 
 export const contains = <T>(
   value: T,
-  equality: Equality<T> = strictEquality,
-): Predicate<RunnableLike<T>> => someSatisfy(isEqualTo(value, equality));
+  options: { readonly equality?: Equality<T> } = {},
+): Predicate<RunnableLike<T>> => {
+  const { equality = strictEquality } = options;
+  return someSatisfy(isEqualTo(value, equality));
+};

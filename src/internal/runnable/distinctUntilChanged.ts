@@ -24,8 +24,9 @@ class DistinctUntilChangedSink<T> extends AbstractDelegatingSink<T, T> {
 }
 
 export const distinctUntilChanged = <T>(
-  equality: Equality<T> = strictEquality,
+  options: { readonly equality?: Equality<T> } = {},
 ): RunnableOperator<T, T> => {
+  const { equality = strictEquality } = options;
   const operator = (sink: SinkLike<T>) =>
     new DistinctUntilChangedSink(sink, equality);
   return lift(operator);

@@ -21,7 +21,7 @@ import { createStreamable } from "./streamable.ts";
 export const createActionReducer = <TAction, T>(
   reducer: Reducer<TAction, T>,
   initialState: Factory<T>,
-  equals?: Equality<T>,
+  options?: { readonly equality?: Equality<T> },
 ): StreamableLike<TAction, T> => {
   const operator = (src: ObservableLike<TAction>) => {
     const acc = initialState();
@@ -36,7 +36,7 @@ export const createActionReducer = <TAction, T>(
       src,
       scan(reducer, returns(acc)),
       mergeWith(fromValue()(acc)),
-      distinctUntilChanged(equals),
+      distinctUntilChanged(options),
     );
   };
 

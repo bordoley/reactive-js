@@ -18,7 +18,8 @@ class TakeFirstObserver extends AbstractAutoDisposingDelegatingObserver {
         }
     }
 }
-export const takeFirst = (count = 1) => {
+export const takeFirst = (options = {}) => {
+    const { count = 1 } = options;
     const operator = (observer) => new TakeFirstObserver(observer, count);
     operator.isSynchronous = true;
     return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());

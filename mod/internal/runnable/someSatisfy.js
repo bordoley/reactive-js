@@ -18,4 +18,7 @@ export const someSatisfy = (predicate) => runnable => {
     runnable.run(sink);
     return sink.result;
 };
-export const contains = (value, equality = strictEquality) => someSatisfy(isEqualTo(value, equality));
+export const contains = (value, options = {}) => {
+    const { equality = strictEquality } = options;
+    return someSatisfy(isEqualTo(value, equality));
+};

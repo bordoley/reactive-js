@@ -16,7 +16,7 @@ import { subscribe } from "./subscribe.ts";
  */
 export const publish = <T>(
   scheduler: SchedulerLike,
-  options = { replay: 0 },
+  options?: { readonly replay?: number },
 ): Function1<ObservableLike<T>, MulticastObservableLike<T>> => observable => {
   const subject = createSubject<T>(options);
   const srcSubscription = pipe(

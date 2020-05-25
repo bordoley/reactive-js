@@ -82,6 +82,6 @@ The SchedulerContinuation to be executed.
 
 Name | Type |
 ------ | ------ |
-`delay` | number |
+`delay?` | number |
 
 **Returns:** *void*

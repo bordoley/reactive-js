@@ -63,7 +63,8 @@ class HostScheduler {
     get shouldYield() {
         return (this.inContinuation && this.now > this.startTime + this.yieldInterval);
     }
-    schedule(continuation, { delay } = { delay: 0 }) {
+    schedule(continuation, options = {}) {
+        const { delay = 0 } = options;
         if (!continuation.isDisposed) {
             const callback = createCallback(this, continuation);
             const callbackSubscription = delay > 0
@@ -73,6 +74,7 @@ class HostScheduler {
         }
     }
 }
-export const createHostScheduler = (config = {
-    yieldInterval: 5,
-}) => new HostScheduler(config.yieldInterval);
+export const createHostScheduler = (options = {}) => {
+    const { yieldInterval = 5 } = options;
+    return new HostScheduler(yieldInterval);
+};

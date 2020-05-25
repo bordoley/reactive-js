@@ -27,8 +27,9 @@ class TakeWhileSink<T> extends AbstractDelegatingSink<T, T> {
 
 export const takeWhile = <T>(
   predicate: Predicate<T>,
-  { inclusive } = { inclusive: false },
+  options: { readonly inclusive?: boolean } = {},
 ): RunnableOperator<T, T> => {
+  const { inclusive = false } = options;
   const operator = (sink: SinkLike<T>) =>
     new TakeWhileSink(sink, predicate, inclusive);
   return lift(operator);

@@ -13,15 +13,18 @@ import { yield$ } from "./observer";
  */
 export const fromArray = <T>(
   options: {
-    delay?: number;
-    startIndex?: number;
-    endIndex?: number;
+    readonly delay?: number;
+    readonly startIndex?: number;
+    readonly endIndex?: number;
   } = {},
 ): Function1<readonly T[], ObservableLike<T>> => values => {
   const delay = Math.max(options.delay ?? 0, 0);
   const valuesLength = values.length;
   const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
-  const endIndex = Math.max(Math.min(options.endIndex ?? values.length, valuesLength), 0);
+  const endIndex = Math.max(
+    Math.min(options.endIndex ?? values.length, valuesLength),
+    0,
+  );
 
   const factory = () => {
     let index = startIndex;

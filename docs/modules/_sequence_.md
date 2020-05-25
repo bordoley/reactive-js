@@ -135,7 +135,7 @@ ___
 
 ### `Const` distinctUntilChanged
 
-▸ **distinctUntilChanged**<**T**>(`equality`: [Equality](_functions_.md#equality)‹T›): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **distinctUntilChanged**<**T**>(`options`: object): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -143,9 +143,11 @@ ___
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`equality` | [Equality](_functions_.md#equality)‹T› | strictEquality |
+▪`Default value`  **options**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`equality?` | [Equality](_functions_.md#equality)‹T› |
 
 **Returns:** *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
@@ -440,7 +442,7 @@ ___
 
 ### `Const` skipFirst
 
-▸ **skipFirst**<**T**>(`count`: number): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **skipFirst**<**T**>(`options`: object): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -448,9 +450,11 @@ ___
 
 **Parameters:**
 
+▪`Default value`  **options**: *object*= {}
+
 Name | Type |
 ------ | ------ |
-`count` | number |
+`count?` | number |
 
 **Returns:** *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
@@ -477,7 +481,7 @@ ___
 
 ### `Const` takeFirst
 
-▸ **takeFirst**<**T**>(`count`: number): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **takeFirst**<**T**>(`options`: object): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -485,9 +489,11 @@ ___
 
 **Parameters:**
 
+▪`Default value`  **options**: *object*= {}
+
 Name | Type |
 ------ | ------ |
-`count` | number |
+`count?` | number |
 
 **Returns:** *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
@@ -495,7 +501,7 @@ ___
 
 ### `Const` takeLast
 
-▸ **takeLast**<**T**>(`count`: number): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **takeLast**<**T**>(`options`: object): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -503,9 +509,11 @@ ___
 
 **Parameters:**
 
+▪`Default value`  **options**: *object*= {}
+
 Name | Type |
 ------ | ------ |
-`count` | number |
+`count?` | number |
 
 **Returns:** *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
@@ -513,7 +521,7 @@ ___
 
 ### `Const` takeWhile
 
-▸ **takeWhile**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›, `__namedParameters`: object): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **takeWhile**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›, `options`: object): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -523,11 +531,11 @@ ___
 
 ▪ **predicate**: *[Predicate](_functions_.md#predicate)‹T›*
 
-▪`Default value`  **__namedParameters**: *object*= { inclusive: false }
+▪`Default value`  **options**: *object*= {}
 
 Name | Type |
 ------ | ------ |
-`inclusive` | boolean |
+`inclusive?` | boolean |
 
 **Returns:** *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 

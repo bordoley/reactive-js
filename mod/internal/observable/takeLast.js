@@ -28,7 +28,8 @@ class TakeLastObserver extends AbstractDelegatingObserver {
         }
     }
 }
-export const takeLast = (count = 1) => {
+export const takeLast = (options = {}) => {
+    const { count = 1 } = options;
     const operator = (observer) => new TakeLastObserver(observer, count);
     operator.isSynchronous = false;
     return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());

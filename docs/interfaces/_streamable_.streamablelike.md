@@ -40,6 +40,6 @@
 
 Name | Type |
 ------ | ------ |
-`replay` | number |
+`replay?` | number |
 
 **Returns:** *[StreamLike](_observable_.streamlike.md)‹TReq, T›*

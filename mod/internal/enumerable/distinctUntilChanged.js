@@ -22,7 +22,8 @@ class DistinctUntilChangedEnumerator {
         return this.hasCurrent;
     }
 }
-export const distinctUntilChanged = (equality = strictEquality) => {
+export const distinctUntilChanged = (options = {}) => {
+    const { equality = strictEquality } = options;
     const operator = (enumerator) => new DistinctUntilChangedEnumerator(enumerator, equality);
     return lift(operator);
 };

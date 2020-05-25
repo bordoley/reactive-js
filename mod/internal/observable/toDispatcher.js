@@ -18,7 +18,7 @@ class ObserverDelegatingDispatcher extends AbstractDisposable {
             const observer = this.observer;
             while (nextQueue.length > 0) {
                 const next = nextQueue.shift();
-                yield$(observer, next);
+                yield$(observer, next, 0);
             }
         };
         this.onContinuationDispose = () => {

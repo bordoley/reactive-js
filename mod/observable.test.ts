@@ -125,9 +125,12 @@ export const tests = describe(
           [1, 2, 3, 4],
           fromArray(),
           buffer({ duration: _ => throws()(raise) }),
-          toRunnable(
-            defer({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
-          ),
+          toRunnable({
+            schedulerFactory: defer(
+              { maxMicroTaskTicks: 1 },
+              createVirtualTimeScheduler,
+            ),
+          }),
           toArray(),
         ),
         expectToThrow,
@@ -192,9 +195,12 @@ export const tests = describe(
     "combineLatest",
     defer(
       generate(incrementBy(2), returns(1), { delay: 2 }),
-      takeFirst(3),
+      takeFirst({ count: 3 }),
       combineLatestWith(
-        pipe(generate(incrementBy(2), returns(0), { delay: 3 }), takeFirst(2)),
+        pipe(
+          generate(incrementBy(2), returns(0), { delay: 3 }),
+          takeFirst({ count: 2 }),
+        ),
       ),
       toRunnable(),
       toArray(),
@@ -230,7 +236,12 @@ export const tests = describe(
           dispatch(dispatcher, 3);
           dispose(dispatcher);
         }),
-        toRunnable(defer({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler)),
+        toRunnable({
+          schedulerFactory: defer(
+            { maxMicroTaskTicks: 1 },
+            createVirtualTimeScheduler,
+          ),
+        }),
         toArray(),
         expectArrayEquals([1, 2, 3]),
       ),
@@ -574,8 +585,8 @@ export const tests = describe(
       "first",
       defer(
         generate(increment, returns<number>(-1), { delay: 1 }),
-        takeFirst(100),
-        throttle(50, ThrottleMode.First),
+        takeFirst({ count: 100 }),
+        throttle(50, { mode: ThrottleMode.First }),
         toRunnable(),
         toArray(),
         expectArrayEquals([0, 49]),
@@ -586,8 +597,8 @@ export const tests = describe(
       "last",
       defer(
         generate(increment, returns<number>(-1), { delay: 1 }),
-        takeFirst(200),
-        throttle(50, ThrottleMode.Last),
+        takeFirst({ count: 200 }),
+        throttle(50, { mode: ThrottleMode.Last }),
         toRunnable(),
         toArray(),
         expectArrayEquals([49, 99, 149, 199]),
@@ -598,8 +609,8 @@ export const tests = describe(
       "interval",
       defer(
         generate(increment, returns<number>(-1), { delay: 1 }),
-        takeFirst(200),
-        throttle(75, ThrottleMode.Interval),
+        takeFirst({ count: 200 }),
+        throttle(75, { mode: ThrottleMode.Interval }),
         toRunnable(),
         toArray(),
         expectArrayEquals([0, 74, 149, 199]),

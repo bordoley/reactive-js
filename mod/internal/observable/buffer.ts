@@ -78,8 +78,8 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
  */
 export function buffer<T>(
   options: {
-    duration?: Function1<T, ObservableLike<unknown>> | number;
-    maxBufferSize?: number;
+    readonly duration?: Function1<T, ObservableLike<unknown>> | number;
+    readonly maxBufferSize?: number;
   } = {},
 ): ObservableOperator<T, readonly T[]> {
   const delay = options.duration ?? Number.MAX_SAFE_INTEGER;

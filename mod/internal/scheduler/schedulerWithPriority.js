@@ -12,7 +12,8 @@ class SchedulerWithPriorityImpl {
     get shouldYield() {
         return this.priorityScheduler.shouldYield;
     }
-    schedule(continuation, { delay } = { delay: 0 }) {
+    schedule(continuation, options = {}) {
+        const { delay } = options;
         this.priorityScheduler.schedule(continuation, {
             priority: this.priority,
             delay,

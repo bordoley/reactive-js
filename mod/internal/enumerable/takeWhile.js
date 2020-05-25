@@ -30,7 +30,8 @@ class TakeWhileEnumerator {
         return this.hasCurrent;
     }
 }
-export const takeWhile = (predicate, { inclusive } = { inclusive: false }) => {
+export const takeWhile = (predicate, options = {}) => {
+    const { inclusive = false } = options;
     const operator = (observer) => new TakeWhileEnumerator(observer, predicate, inclusive);
     return lift(operator);
 };

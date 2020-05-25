@@ -93,7 +93,7 @@ export const run = (continuation: SchedulerContinuationLike): void => {
   continuation.continue();
 };
 
-export const yield$ = (scheduler: SchedulerLike, delay = 0) => {
+export const yield$ = (scheduler: SchedulerLike, delay: number) => {
   if (delay > 0 || scheduler.shouldYield) {
     throw new YieldError(delay);
   }
@@ -102,7 +102,7 @@ export const yield$ = (scheduler: SchedulerLike, delay = 0) => {
 export const schedule = <T extends SchedulerLike>(
   scheduler: T,
   f: SideEffect1<T>,
-  options = { delay: 0 },
+  options?: { readonly delay?: number },
 ): DisposableLike => {
   const continuation = new SchedulerContinuationImpl(scheduler, f);
   scheduler.schedule(continuation, options);

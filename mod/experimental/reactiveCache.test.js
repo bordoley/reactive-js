@@ -7,7 +7,9 @@ import { createReactiveCache, getOrSet } from "./reactiveCache.js";
 import { test, describe, expectNone, expectSome, expectTrue, expectEquals, } from "./testing.js";
 export const tests = describe("reactive-cache", test("lifecycle integration", () => {
     const scheduler = createVirtualTimeScheduler({ maxMicroTaskTicks: 1 });
-    const cache = createReactiveCache(scheduler, scheduler, 2);
+    const cache = createReactiveCache(scheduler, scheduler, {
+        maxCount: 2,
+    });
     let bSubscription = disposed;
     let cSubscription = disposed;
     let dSubscription = disposed;
@@ -53,10 +55,12 @@ export const tests = describe("reactive-cache", test("lifecycle integration", ()
             pipe(cache.get("d"), expectNone);
             pipe(cache.get("e"), expectNone);
         },
-    ], fromArray({ delay: 1 }), toRunnable(returns(scheduler)), forEach(x => x()));
+    ], fromArray({ delay: 1 }), toRunnable({ schedulerFactory: returns(scheduler) }), forEach(x => x()));
 }), test("subscribing to disposed value", () => {
     const scheduler = createVirtualTimeScheduler();
-    const cache = createReactiveCache(scheduler, scheduler, 1);
+    const cache = createReactiveCache(scheduler, scheduler, {
+        maxCount: 1,
+    });
     let observable = never();
     let value = "";
     pipe([
@@ -72,10 +76,12 @@ export const tests = describe("reactive-cache", test("lifecycle integration", ()
         () => {
             pipe(value, expectEquals(""));
         },
-    ], fromArray(), toRunnable(returns(scheduler)), forEach(x => x()));
+    ], fromArray(), toRunnable({ schedulerFactory: returns(scheduler) }), forEach(x => x()));
 }), test("getOrSet", () => {
     const scheduler = createVirtualTimeScheduler();
-    const cache = createReactiveCache(scheduler, scheduler, 2);
+    const cache = createReactiveCache(scheduler, scheduler, {
+        maxCount: 2,
+    });
     let value = "";
     pipe([
         () => {
@@ -88,5 +94,5 @@ export const tests = describe("reactive-cache", test("lifecycle integration", ()
         () => {
             pipe(value, expectEquals("a"));
         },
-    ], fromArray({ delay: 1 }), toRunnable(returns(scheduler)), forEach(x => x()));
+    ], fromArray({ delay: 1 }), toRunnable({ schedulerFactory: returns(scheduler) }), forEach(x => x()));
 }));
