@@ -71,12 +71,13 @@ export const fromObservable = <T>(): Function1<
   FlowableLike<T>
 > => _fromObservable;
 
-const _fromArray = compose(fromArrayObs(), fromObservable());
-export const fromArray = <T>(): Function1<readonly T[], FlowableLike<T>> =>
-  _fromArray;
+export const fromArray = <T>(
+  options = { startIndex: 0 },
+): Function1<readonly T[], FlowableLike<T>> =>
+  compose(fromArrayObs(options), fromObservable());
 
-const _fromValue = <T>(v: T) => _fromArray([v]);
+const _fromValue = <T>(v: T) => fromArray()([v]);
 export const fromValue = <T>(): Function1<T, FlowableLike<T>> => _fromValue;
 
-const _empty: FlowableLike<any> = _fromArray([]);
+const _empty: FlowableLike<any> = fromArray()([]);
 export const empty = <T>(): FlowableLike<T> => _empty;
