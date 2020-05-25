@@ -1,5 +1,5 @@
 import { Function1, compose, returns } from "../../functions.ts";
-import { scan, map, takeFirst } from "../../observable.ts";
+import { scan, concatMap, fromValue as fromValueObs, takeFirst } from "../../observable.ts";
 import { createStreamable } from "../../streamable.ts";
 import { AsyncEnumerableLike } from "./interfaces.ts";
 
@@ -11,12 +11,23 @@ const fromArrayScanner = (acc: number, _: void): number => acc + 1;
  * @param values The array.
  */
 export const fromArray = <T>(
-  { startIndex } = { startIndex: 0 },
-): Function1<readonly T[], AsyncEnumerableLike<T>> => values =>
-  createStreamable(
+  options: {
+    delay?: number,
+    startIndex?: number;
+    endIndex?: number
+  } = {},
+): Function1<readonly T[], AsyncEnumerableLike<T>> => values => {
+  const valuesLength = values.length;
+  const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
+  const endIndex = Math.max(Math.min(options.endIndex ?? valuesLength, valuesLength), 0);
+
+  const fromValueWithDelay = fromValueObs<T>(options);
+
+  return createStreamable(
     compose(
       scan(fromArrayScanner, returns(startIndex - 1)),
-      map(i => values[i]),
-      takeFirst(values.length - startIndex),
+      concatMap(i => fromValueWithDelay(values[i])),
+      takeFirst(endIndex - startIndex),
     ),
   );
+};

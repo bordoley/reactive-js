@@ -80,17 +80,23 @@ export const concatAll = <T>(): SequenceOperator<Sequence<T>, T> => seq => {
   return () => flattenIter(seq());
 };
 
-const _fromArray = <T>(arr: readonly T[], index: number): SequenceResult<T> =>
-  index < arr.length && index >= 0
-    ? notify(arr[index], () => _fromArray(arr, index + 1))
+const _fromArray = <T>(arr: readonly T[], index: number, endIndex: number): SequenceResult<T> =>
+  index < endIndex && index >= 0
+    ? notify(arr[index], () => _fromArray(arr, index + 1, endIndex))
     : done();
 
 export const fromArray = <T>(
-  { startIndex } = {
-    startIndex: 0,
-  },
-): Function1<readonly T[], Sequence<T>> => arr => () =>
-  _fromArray(arr, startIndex);
+  options: {
+    startIndex?: number;
+    endIndex?: number
+  } = {},
+): Function1<readonly T[], Sequence<T>> => values => {
+  const valuesLength = values.length;
+  const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
+  const endIndex = Math.max(Math.min(options.endIndex ?? valuesLength, valuesLength), 0);
+
+  return () => _fromArray(values, startIndex, endIndex);
+};
 
 export function concat<T>(
   fst: Sequence<T>,
@@ -194,7 +200,7 @@ export function startWith<T>(...values: readonly T[]): SequenceOperator<T, T> {
 }
 
 export const fromValue = <T>(): Function1<T, Sequence<T>> => v => () =>
-  _fromArray([v], 0);
+  _fromArray([v], 0, 1);
 
 const _generate = <T>(generator: Updater<T>, acc: T): Sequence<T> => () =>
   notify(acc, _generate(generator, generator(acc)));
@@ -309,7 +315,7 @@ const _takeLast = <T>(
     }
     result = result.next();
   }
-  return _fromArray(last, 0);
+  return _fromArray(last, 0, last.length);
 };
 export const takeLast = <T>(count: number): SequenceOperator<T, T> => seq =>
   _takeLast(count, seq);

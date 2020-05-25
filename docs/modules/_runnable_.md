@@ -313,13 +313,12 @@ ___
 
 **Parameters:**
 
-▪`Default value`  **options**: *object*= {
-    startIndex: 0,
-  }
+▪`Default value`  **options**: *object*= {}
 
 Name | Type |
 ------ | ------ |
-`startIndex` | number |
+`endIndex?` | number |
+`startIndex?` | number |
 
 **Returns:** *[Function1](_functions_.md#function1)‹keyof T[], [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 

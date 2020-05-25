@@ -111,7 +111,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`__namedParameters`: object): *[Function1](_functions_.md#function1)‹keyof T[], [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
+▸ **fromArray**<**T**>(`options`: object): *[Function1](_functions_.md#function1)‹keyof T[], [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
 
 Returns an `AsyncEnumerableLike` from the provided array.
 
@@ -121,11 +121,13 @@ Returns an `AsyncEnumerableLike` from the provided array.
 
 **Parameters:**
 
-▪`Default value`  **__namedParameters**: *object*= { startIndex: 0 }
+▪`Default value`  **options**: *object*= {}
 
 Name | Type |
 ------ | ------ |
-`startIndex` | number |
+`delay?` | number |
+`endIndex?` | number |
+`startIndex?` | number |
 
 **Returns:** *[Function1](_functions_.md#function1)‹keyof T[], [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
 

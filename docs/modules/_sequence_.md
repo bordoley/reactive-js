@@ -196,7 +196,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`__namedParameters`: object): *[Function1](_functions_.md#function1)‹keyof T[], [Sequence](_sequence_.md#sequence)‹T››*
+▸ **fromArray**<**T**>(`options`: object): *[Function1](_functions_.md#function1)‹keyof T[], [Sequence](_sequence_.md#sequence)‹T››*
 
 **Type parameters:**
 
@@ -204,13 +204,12 @@ ___
 
 **Parameters:**
 
-▪`Default value`  **__namedParameters**: *object*= {
-    startIndex: 0,
-  }
+▪`Default value`  **options**: *object*= {}
 
 Name | Type |
 ------ | ------ |
-`startIndex` | number |
+`endIndex?` | number |
+`startIndex?` | number |
 
 **Returns:** *[Function1](_functions_.md#function1)‹keyof T[], [Sequence](_sequence_.md#sequence)‹T››*
 
