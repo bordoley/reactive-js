@@ -28,17 +28,15 @@
 
 ### `Const` createHostScheduler
 
-▸ **createHostScheduler**(`config`: object): *[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)*
+▸ **createHostScheduler**(`options`: object): *[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)*
 
 **Parameters:**
 
-▪`Default value`  **config**: *object*= {
-    yieldInterval: 5,
-  }
+▪`Default value`  **options**: *object*= {}
 
 Name | Type |
 ------ | ------ |
-`yieldInterval` | number |
+`yieldInterval?` | number |
 
 **Returns:** *[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)*
 
@@ -46,17 +44,17 @@ ___
 
 ### `Const` createVirtualTimeScheduler
 
-▸ **createVirtualTimeScheduler**(`__namedParameters`: object): *[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)*
+▸ **createVirtualTimeScheduler**(`options`: object): *[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)*
 
 Creates a new virtual time scheduler instance.
 
 **Parameters:**
 
-▪`Default value`  **__namedParameters**: *object*= { maxMicroTaskTicks: Number.MAX_SAFE_INTEGER }
+▪`Default value`  **options**: *object*= {}
 
 Name | Type |
 ------ | ------ |
-`maxMicroTaskTicks` | number |
+`maxMicroTaskTicks?` | number |
 
 **Returns:** *[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)*
 
@@ -78,7 +76,7 @@ ___
 
 ### `Const` schedule
 
-▸ **schedule**<**T**>(`scheduler`: T, `f`: [SideEffect1](_functions_.md#sideeffect1)‹T›, `options`: object): *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
+▸ **schedule**<**T**>(`scheduler`: T, `f`: [SideEffect1](_functions_.md#sideeffect1)‹T›, `options?`: object): *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
 
 **Type parameters:**
 
@@ -90,11 +88,11 @@ ___
 
 ▪ **f**: *[SideEffect1](_functions_.md#sideeffect1)‹T›*
 
-▪`Default value`  **options**: *object*= { delay: 0 }
+▪`Optional`  **options**: *object*
 
-Name | Type | Default |
------- | ------ | ------ |
-`delay` | number | 0 |
+Name | Type |
+------ | ------ |
+`delay?` | number |
 
 **Returns:** *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
 
@@ -153,9 +151,9 @@ ___
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) | - |
-`delay` | number | 0 |
+Name | Type |
+------ | ------ |
+`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
+`delay` | number |
 
 **Returns:** *void*

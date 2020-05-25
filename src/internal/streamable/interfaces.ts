@@ -5,7 +5,7 @@ import { SchedulerLike } from "../../scheduler";
 export interface StreamableLike<TReq, T> {
   stream(
     scheduler: SchedulerLike,
-    options?: { replay: number },
+    options?: { readonly replay?: number },
   ): StreamLike<TReq, T>;
 }
 

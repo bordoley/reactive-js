@@ -38,7 +38,7 @@
 
 ### `Const` createActionReducer
 
-▸ **createActionReducer**<**TAction**, **T**>(`reducer`: [Reducer](_functions_.md#reducer)‹TAction, T›, `initialState`: [Factory](_functions_.md#factory)‹T›, `equals?`: [Equality](_functions_.md#equality)‹T›): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TAction, T›*
+▸ **createActionReducer**<**TAction**, **T**>(`reducer`: [Reducer](_functions_.md#reducer)‹TAction, T›, `initialState`: [Factory](_functions_.md#factory)‹T›, `options?`: object): *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TAction, T›*
 
 Returns a new `StreamableLike` instance that applies an accumulator function
 over the notified actions, emitting each intermediate result.
@@ -51,11 +51,19 @@ over the notified actions, emitting each intermediate result.
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`reducer` | [Reducer](_functions_.md#reducer)‹TAction, T› | The accumulator function called on each notified action. |
-`initialState` | [Factory](_functions_.md#factory)‹T› | The initial accumulation value. |
-`equals?` | [Equality](_functions_.md#equality)‹T› | Optional equality function that is used to compare if a state value is distinct from the previous one.  |
+▪ **reducer**: *[Reducer](_functions_.md#reducer)‹TAction, T›*
+
+The accumulator function called on each notified action.
+
+▪ **initialState**: *[Factory](_functions_.md#factory)‹T›*
+
+The initial accumulation value.
+
+▪`Optional`  **options**: *object*
+
+Name | Type |
+------ | ------ |
+`equality?` | [Equality](_functions_.md#equality)‹T› |
 
 **Returns:** *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TAction, T›*
 
@@ -100,7 +108,7 @@ a disposed `StreamLike` instance.
 
 Name | Type |
 ------ | ------ |
-`delay` | number |
+`delay?` | number |
 
 **Returns:** *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›*
 
@@ -290,7 +298,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`replay` | number |
+`replay?` | number |
 
 **Returns:** *[StreamLike](../interfaces/_observable_.streamlike.md)‹TReq, T›*
 

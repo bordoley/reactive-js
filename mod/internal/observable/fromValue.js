@@ -1,5 +1,5 @@
 import { fromArray } from "./fromArray.js";
-export const fromValue = (config = {}) => {
-    const call = fromArray(config);
+export const fromValue = (options = {}) => {
+    const call = fromArray(options);
     return v => call([v]);
 };

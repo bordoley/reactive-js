@@ -56,7 +56,7 @@
 * [fromPromise](_observable_.md#const-frompromise)
 * [fromValue](_observable_.md#const-fromvalue)
 * [genMap](_observable_.md#const-genmap)
-* [generate](_observable_.md#generate)
+* [generate](_observable_.md#const-generate)
 * [ignoreElements](_observable_.md#const-ignoreelements)
 * [keep](_observable_.md#const-keep)
 * [keepType](_observable_.md#const-keeptype)
@@ -504,7 +504,7 @@ ___
 
 Name | Type |
 ------ | ------ |
-`delay` | number |
+`delay?` | number |
 
 **Returns:** *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
@@ -534,7 +534,7 @@ ___
 
 ### `Const` concatAll
 
-▸ **concatAll**<**T**>(`maxBufferSize`: number): *[ObservableOperator](_observable_.md#observableoperator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, T›*
+▸ **concatAll**<**T**>(`options`: object): *[ObservableOperator](_observable_.md#observableoperator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, T›*
 
 Converts a higher-order `ObservableLike` into a first-order
 `ObservableLike` by concatenating the inner sources in order.
@@ -545,9 +545,11 @@ Converts a higher-order `ObservableLike` into a first-order
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`maxBufferSize` | number | Number.MAX_SAFE_INTEGER | The number of source observables that may be queued before dropping previous observables.  |
+▪`Default value`  **options**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`maxBufferSize?` | number |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, T›*
 
@@ -555,7 +557,7 @@ ___
 
 ### `Const` concatMap
 
-▸ **concatMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››, `maxBufferSize?`: number): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
+▸ **concatMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››, `options?`: object): *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -565,9 +567,12 @@ ___
 
 **Parameters:**
 
+▪ **mapper**: *[Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB››*
+
+▪`Optional`  **options**: *object*
+
 Name | Type |
 ------ | ------ |
-`mapper` | [Function1](_functions_.md#function1)‹TA, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TB›› |
 `maxBufferSize?` | number |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹TA, TB›*
@@ -618,7 +623,7 @@ ___
 
 ### `Const` createSubject
 
-▸ **createSubject**<**T**>(`__namedParameters`: object): *[SubjectLike](../interfaces/_observable_.subjectlike.md)‹T›*
+▸ **createSubject**<**T**>(`options`: object): *[SubjectLike](../interfaces/_observable_.subjectlike.md)‹T›*
 
 **Type parameters:**
 
@@ -626,11 +631,11 @@ ___
 
 **Parameters:**
 
-▪`Default value`  **__namedParameters**: *object*= { replay: 0 }
+▪`Default value`  **options**: *object*= {}
 
 Name | Type |
 ------ | ------ |
-`replay` | number |
+`replay?` | number |
 
 **Returns:** *[SubjectLike](../interfaces/_observable_.subjectlike.md)‹T›*
 
@@ -675,7 +680,7 @@ ___
 
 ### `Const` distinctUntilChanged
 
-▸ **distinctUntilChanged**<**T**>(`equality`: [Equality](_functions_.md#equality)‹T›): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **distinctUntilChanged**<**T**>(`options`: object): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that emits all items emitted by the source that
 are distinct by comparison from the previous item.
@@ -686,9 +691,11 @@ are distinct by comparison from the previous item.
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`equality` | [Equality](_functions_.md#equality)‹T› | strictEquality |
+▪`Default value`  **options**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`equality?` | [Equality](_functions_.md#equality)‹T› |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
@@ -696,7 +703,7 @@ ___
 
 ### `Const` empty
 
-▸ **empty**<**T**>(`__namedParameters`: object): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **empty**<**T**>(`options`: object): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Return an `ObservableLike` that emits no items and disposes the subscription after a specified delay.
 
@@ -706,11 +713,11 @@ Return an `ObservableLike` that emits no items and disposes the subscription aft
 
 **Parameters:**
 
-▪`Default value`  **__namedParameters**: *object*= { delay: 0 }
+▪`Default value`  **options**: *object*= {}
 
 Name | Type |
 ------ | ------ |
-`delay` | number |
+`delay?` | number |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
@@ -818,7 +825,7 @@ ___
 
 ### `Const` fromEnumerable
 
-▸ **fromEnumerable**<**T**>(`options`: object): *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **fromEnumerable**<**T**>(`options?`: object): *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` which enumerates through the values
 produced by the provided `Enumerable` with a specified `delay` between emitted items.
@@ -829,11 +836,11 @@ produced by the provided `Enumerable` with a specified `delay` between emitted i
 
 **Parameters:**
 
-▪`Default value`  **options**: *object*= { delay: 0 }
+▪`Optional`  **options**: *object*
 
-Name | Type | Default |
------- | ------ | ------ |
-`delay` | number | 0 |
+Name | Type |
+------ | ------ |
+`delay?` | number |
 
 **Returns:** *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
@@ -841,7 +848,7 @@ ___
 
 ### `Const` fromIterable
 
-▸ **fromIterable**<**T**>(`config`: object): *[Function1](_functions_.md#function1)‹Iterable‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **fromIterable**<**T**>(`options?`: object): *[Function1](_functions_.md#function1)‹Iterable‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` which iterates through the values
 produced by the provided `Iterable` with a specified `delay` between emitted items.
@@ -852,11 +859,11 @@ produced by the provided `Iterable` with a specified `delay` between emitted ite
 
 **Parameters:**
 
-▪`Default value`  **config**: *object*= { delay: 0 }
+▪`Optional`  **options**: *object*
 
-Name | Type | Default |
------- | ------ | ------ |
-`delay` | number | 0 |
+Name | Type |
+------ | ------ |
+`delay?` | number |
 
 **Returns:** *[Function1](_functions_.md#function1)‹Iterable‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
@@ -864,7 +871,7 @@ ___
 
 ### `Const` fromIterator
 
-▸ **fromIterator**<**T**, **TReturn**, **TNext**>(`config`: object): *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **fromIterator**<**T**, **TReturn**, **TNext**>(`options?`: object): *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 Creates an `ObservableLike` which iterates through the values
 produced by the provided `Iterator` with a specified `delay` between emitted items.
@@ -879,11 +886,11 @@ produced by the provided `Iterator` with a specified `delay` between emitted ite
 
 **Parameters:**
 
-▪`Default value`  **config**: *object*= { delay: 0 }
+▪`Optional`  **options**: *object*
 
-Name | Type | Default |
------- | ------ | ------ |
-`delay` | number | 0 |
+Name | Type |
+------ | ------ |
+`delay?` | number |
 
 **Returns:** *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
@@ -912,7 +919,7 @@ ___
 
 ### `Const` fromValue
 
-▸ **fromValue**<**T**>(`config`: object): *[Function1](_functions_.md#function1)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **fromValue**<**T**>(`options`: object): *[Function1](_functions_.md#function1)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the observer.
 
@@ -922,7 +929,7 @@ ___
 
 **Parameters:**
 
-▪`Default value`  **config**: *object*= {}
+▪`Default value`  **options**: *object*= {}
 
 Name | Type |
 ------ | ------ |
@@ -956,7 +963,7 @@ Name | Type |
 
 ___
 
-###  generate
+### `Const` generate
 
 ▸ **generate**<**T**>(`generator`: [Updater](_functions_.md#updater)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›, `options`: object): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
@@ -978,11 +985,11 @@ the generator function.
 
 Factory function used to generate the initial accumulator.
 
-▪`Default value`  **options**: *object*= { delay: 0 }
+▪`Default value`  **options**: *object*= {}
 
 Name | Type |
 ------ | ------ |
-`delay` | number |
+`delay?` | number |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
@@ -1332,7 +1339,7 @@ ___
 
 ### `Const` publish
 
-▸ **publish**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `options`: object): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)‹T››*
+▸ **publish**<**T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `options?`: object): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)‹T››*
 
 Returns a `MulticastObservableLike` backed by a single subscription to the source.
 
@@ -1346,11 +1353,11 @@ Returns a `MulticastObservableLike` backed by a single subscription to the sourc
 
 A `SchedulerLike` that is used to subscribe to the source observable.
 
-▪`Default value`  **options**: *object*= { replay: 0 }
+▪`Optional`  **options**: *object*
 
-Name | Type | Default |
------- | ------ | ------ |
-`replay` | number | 0 |
+Name | Type |
+------ | ------ |
+`replay?` | number |
 
 **Returns:** *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)‹T››*
 
@@ -1526,7 +1533,7 @@ A `SchedulerLike` that is used to subscribe to the source.
 
 Name | Type |
 ------ | ------ |
-`replay` | number |
+`replay?` | number |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
@@ -1534,7 +1541,7 @@ ___
 
 ### `Const` skipFirst
 
-▸ **skipFirst**<**T**>(`count`: number): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **skipFirst**<**T**>(`options`: object): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that skips the first count items emitted by the source.
 
@@ -1544,9 +1551,11 @@ Returns an `ObservableLike` that skips the first count items emitted by the sour
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`count` | number | 1 | The number of items emitted by source that should be skipped.  |
+▪`Default value`  **options**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`count?` | number |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
@@ -1653,7 +1662,7 @@ ___
 
 ### `Const` takeFirst
 
-▸ **takeFirst**<**T**>(`count`: number): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **takeFirst**<**T**>(`options`: object): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that only emits the first `count` values emitted by the source.
 
@@ -1663,9 +1672,11 @@ Returns an `ObservableLike` that only emits the first `count` values emitted by 
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`count` | number | 1 | The maximum number of values to emit.  |
+▪`Default value`  **options**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`count?` | number |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
@@ -1673,7 +1684,7 @@ ___
 
 ### `Const` takeLast
 
-▸ **takeLast**<**T**>(`count`: number): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **takeLast**<**T**>(`options`: object): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
 
@@ -1683,9 +1694,11 @@ Returns an `ObservableLike` that only emits the last `count` items emitted by th
 
 **Parameters:**
 
-Name | Type | Default | Description |
------- | ------ | ------ | ------ |
-`count` | number | 1 | The maximum number of values to emit.  |
+▪`Default value`  **options**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`count?` | number |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
@@ -1711,7 +1724,7 @@ ___
 
 ### `Const` takeWhile
 
-▸ **takeWhile**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›, `__namedParameters`: object): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **takeWhile**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›, `options`: object): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` which emits values emitted by the source as long
 as each value satisfies the given predicate, and then completes as soon as
@@ -1727,11 +1740,11 @@ this predicate is not satisfied.
 
 The predicate function.
 
-▪`Default value`  **__namedParameters**: *object*= { inclusive: false }
+▪`Default value`  **options**: *object*= {}
 
 Name | Type |
 ------ | ------ |
-`inclusive` | boolean |
+`inclusive?` | boolean |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
@@ -1739,7 +1752,7 @@ ___
 
 ###  throttle
 
-▸ **throttle**<**T**>(`duration`: [Function1](_functions_.md#function1)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown››, `mode?`: [ThrottleMode](../enums/_observable_.throttlemode.md)): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **throttle**<**T**>(`duration`: [Function1](_functions_.md#function1)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown››, `options?`: object): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
 
@@ -1749,14 +1762,19 @@ Emits a value from the source, then ignores subsequent source values for a durat
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`duration` | [Function1](_functions_.md#function1)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown›› | Function function that is used to determine the silence duration in between emitted values. |
-`mode?` | [ThrottleMode](../enums/_observable_.throttlemode.md) | The throttle mode.  |
+▪ **duration**: *[Function1](_functions_.md#function1)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹unknown››*
+
+Function function that is used to determine the silence duration in between emitted values.
+
+▪`Optional`  **options**: *object*
+
+Name | Type |
+------ | ------ |
+`mode?` | [ThrottleMode](../enums/_observable_.throttlemode.md) |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
-▸ **throttle**<**T**>(`duration`: number, `mode?`: [ThrottleMode](../enums/_observable_.throttlemode.md)): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
+▸ **throttle**<**T**>(`duration`: number, `options?`: object): *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
 Returns an `ObservableLike` which emits a value from the source,
 then ignores subsequent source values for `duration` milliseconds.
@@ -1767,10 +1785,16 @@ then ignores subsequent source values for `duration` milliseconds.
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`duration` | number | Time to wait before emitting another value after emitting the last value, measured in milliseconds. |
-`mode?` | [ThrottleMode](../enums/_observable_.throttlemode.md) | The throttle mode.  |
+▪ **duration**: *number*
+
+Time to wait before emitting another value after
+emitting the last value, measured in milliseconds.
+
+▪`Optional`  **options**: *object*
+
+Name | Type |
+------ | ------ |
+`mode?` | [ThrottleMode](../enums/_observable_.throttlemode.md) |
 
 **Returns:** *[ObservableOperator](_observable_.md#observableoperator)‹T, T›*
 
@@ -1808,11 +1832,11 @@ Creates an `ObservableLike` that emits no items and immediately disposes its sub
 
 **Parameters:**
 
-▪`Default value`  **options**: *object*= { delay: 0 }
+▪`Default value`  **options**: *object*= {}
 
 Name | Type |
 ------ | ------ |
-`delay` | number |
+`delay?` | number |
 
 **Returns:** *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹unknown›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
@@ -1876,7 +1900,7 @@ ___
 
 ### `Const` toRunnable
 
-▸ **toRunnable**<**T**>(`schedulerFactory`: [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)›): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+▸ **toRunnable**<**T**>(`options`: object): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -1884,9 +1908,11 @@ ___
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`schedulerFactory` | [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)› | createVirtualTimeScheduler |
+▪`Default value`  **options**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`schedulerFactory?` | [Factory](_functions_.md#factory)‹[VirtualTimeSchedulerLike](../interfaces/_scheduler_.virtualtimeschedulerlike.md)› |
 
 **Returns:** *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 

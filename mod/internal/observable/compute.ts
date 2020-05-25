@@ -10,6 +10,6 @@ import { map } from "./map.ts";
  * @param delay The delay before emitting the value.
  */
 export const compute = <T>(options?: {
-  delay: number;
+  readonly delay?: number;
 }): Function1<Factory<T>, ObservableLike<T>> =>
   compose(fromValue(options), map(callWith()));

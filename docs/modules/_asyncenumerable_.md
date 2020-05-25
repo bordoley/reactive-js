@@ -163,7 +163,7 @@ ___
 
 ### `Const` generate
 
-▸ **generate**<**T**>(`generator`: [Updater](_functions_.md#updater)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›): *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
+▸ **generate**<**T**>(`generator`: [Updater](_functions_.md#updater)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›, `options`: object): *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
 
 Generates an `AsyncEnumerableLike` sequence from a generator function
 that is applied to an accumulator value.
@@ -174,10 +174,19 @@ that is applied to an accumulator value.
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`generator` | [Updater](_functions_.md#updater)‹T› | The generator function. |
-`initialValue` | [Factory](_functions_.md#factory)‹T› | Factory function to generate the initial accumulator.  |
+▪ **generator**: *[Updater](_functions_.md#updater)‹T›*
+
+The generator function.
+
+▪ **initialValue**: *[Factory](_functions_.md#factory)‹T›*
+
+Factory function to generate the initial accumulator.
+
+▪`Default value`  **options**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`delay?` | number |
 
 **Returns:** *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
 

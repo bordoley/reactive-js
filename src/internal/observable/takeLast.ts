@@ -43,7 +43,10 @@ class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
  *
  * @param count The maximum number of values to emit.
  */
-export const takeLast = <T>(count = 1): ObservableOperator<T, T> => {
+export const takeLast = <T>(
+  options: { readonly count?: number } = {},
+): ObservableOperator<T, T> => {
+  const { count = 1 } = options;
   const operator = (observer: ObserverLike<T>) =>
     new TakeLastObserver(observer, count);
   operator.isSynchronous = false;

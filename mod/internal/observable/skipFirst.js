@@ -15,7 +15,8 @@ class SkipFirstObserver extends AbstractAutoDisposingDelegatingObserver {
         }
     }
 }
-export const skipFirst = (count = 1) => {
+export const skipFirst = (options = {}) => {
+    const { count = 1 } = options;
     const operator = (observer) => new SkipFirstObserver(observer, count);
     operator.isSynchronous = false;
     return observable => count > 0 ? pipe(observable, lift(operator)) : observable;

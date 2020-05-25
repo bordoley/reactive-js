@@ -219,8 +219,8 @@ export const or = <TA, TB>(
 
 export const many = <T>(
   options: {
-    min?: number;
-    max?: number;
+    readonly min?: number;
+    readonly max?: number;
   } = {},
 ): Function1<Parser<T>, Parser<readonly T[]>> => parse => charStream => {
   const { min = 0, max = Number.MAX_SAFE_INTEGER } = options;
@@ -348,8 +348,8 @@ export const satisfy = (
 
 export const manySatisfy = (
   options: {
-    min?: number;
-    max?: number;
+    readonly min?: number;
+    readonly max?: number;
   } = {},
 ): Function1<Parser<CharCode>, Parser<string>> => parser => {
   const parse = manyIgnore(options)(parser);

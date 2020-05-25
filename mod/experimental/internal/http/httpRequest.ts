@@ -67,20 +67,20 @@ export type HttpRequest<T> = HttpMessage<T> & {
 };
 
 export type HttpRequestOptions<T> = HttpMessageOptions<T> & {
-  expectContinue?: boolean;
-  headers?: HttpHeaders;
-  httpVersionMajor?: number;
-  httpVersionMinor?: number;
-  isTransportSecure?: boolean;
-  method: HttpMethod;
-  preconditions?: {
-    ifMatch?: readonly (string | EntityTag)[] | "*";
-    ifModifiedSince?: string | HttpDateTime | Date;
-    ifNoneMatch?: readonly (string | EntityTag)[] | "*";
-    ifUnmodifiedSince?: string | HttpDateTime | Date;
-    ifRange?: string | EntityTag | HttpDateTime | Date;
+  readonly expectContinue?: boolean;
+  readonly headers?: HttpHeaders;
+  readonly httpVersionMajor?: number;
+  readonly httpVersionMinor?: number;
+  readonly isTransportSecure?: boolean;
+  readonly method: HttpMethod;
+  readonly preconditions?: {
+    readonly ifMatch?: readonly (string | EntityTag)[] | "*";
+    readonly ifModifiedSince?: string | HttpDateTime | Date;
+    readonly ifNoneMatch?: readonly (string | EntityTag)[] | "*";
+    readonly ifUnmodifiedSince?: string | HttpDateTime | Date;
+    readonly ifRange?: string | EntityTag | HttpDateTime | Date;
   };
-  uri: string | URILike;
+  readonly uri: string | URILike;
 };
 
 declare class URL implements URILike {

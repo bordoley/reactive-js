@@ -16,7 +16,8 @@ class TakeFirstSink extends AbstractDelegatingSink {
         }
     }
 }
-export const takeFirst = (count = 1) => {
+export const takeFirst = (options = {}) => {
+    const { count = 1 } = options;
     const operator = (sink) => new TakeFirstSink(sink, count);
     return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());
 };

@@ -79,7 +79,7 @@ ___
 
 ### `Const` fromValue
 
-▸ **fromValue**<**T**>(`config?`: object): *[Function1](_functions_.md#function1)‹T, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
+▸ **fromValue**<**T**>(`options?`: object): *[Function1](_functions_.md#function1)‹T, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -87,7 +87,7 @@ ___
 
 **Parameters:**
 
-▪`Optional`  **config**: *object*
+▪`Optional`  **options**: *object*
 
 Name | Type |
 ------ | ------ |

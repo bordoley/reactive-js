@@ -23,10 +23,11 @@ export const deferSynchronous = <T>(
 
 export const defer = <T>(
   factory: Factory<SideEffect1<ObserverLike<T>>>,
-  { delay } = {
-    delay: 0,
-  },
-): ObservableLike<T> => new ScheduledObservable(factory, false, delay);
+  options: { readonly delay?: number } = {},
+): ObservableLike<T> => {
+  const { delay = 0 } = options;
+  return new ScheduledObservable(factory, false, delay);
+};
 
 export const observe = <T>(
   observable: ObservableLike<T>,

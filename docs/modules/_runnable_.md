@@ -165,7 +165,7 @@ ___
 
 ### `Const` contains
 
-▸ **contains**<**T**>(`value`: T, `equality`: [Equality](_functions_.md#equality)‹T›): *[Predicate](_functions_.md#predicate)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+▸ **contains**<**T**>(`value`: T, `options`: object): *[Predicate](_functions_.md#predicate)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -173,10 +173,13 @@ ___
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`value` | T | - |
-`equality` | [Equality](_functions_.md#equality)‹T› | strictEquality |
+▪ **value**: *T*
+
+▪`Default value`  **options**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`equality?` | [Equality](_functions_.md#equality)‹T› |
 
 **Returns:** *[Predicate](_functions_.md#predicate)‹[RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
@@ -202,7 +205,7 @@ ___
 
 ### `Const` distinctUntilChanged
 
-▸ **distinctUntilChanged**<**T**>(`equality`: [Equality](_functions_.md#equality)‹T›): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
+▸ **distinctUntilChanged**<**T**>(`options`: object): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -210,9 +213,11 @@ ___
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`equality` | [Equality](_functions_.md#equality)‹T› | strictEquality |
+▪`Default value`  **options**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`equality?` | [Equality](_functions_.md#equality)‹T› |
 
 **Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
@@ -580,7 +585,7 @@ ___
 
 ### `Const` skipFirst
 
-▸ **skipFirst**<**T**>(`count`: number): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
+▸ **skipFirst**<**T**>(`options`: object): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -588,9 +593,11 @@ ___
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`count` | number | 1 |
+▪`Default value`  **options**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`count?` | number |
 
 **Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
@@ -635,7 +642,7 @@ ___
 
 ### `Const` takeFirst
 
-▸ **takeFirst**<**T**>(`count`: number): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
+▸ **takeFirst**<**T**>(`options`: object): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -643,9 +650,11 @@ ___
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`count` | number | 1 |
+▪`Default value`  **options**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`count?` | number |
 
 **Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
@@ -653,7 +662,7 @@ ___
 
 ### `Const` takeLast
 
-▸ **takeLast**<**T**>(`count`: number): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
+▸ **takeLast**<**T**>(`options`: object): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -661,9 +670,11 @@ ___
 
 **Parameters:**
 
-Name | Type | Default |
------- | ------ | ------ |
-`count` | number | 1 |
+▪`Default value`  **options**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`count?` | number |
 
 **Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
@@ -671,7 +682,7 @@ ___
 
 ### `Const` takeWhile
 
-▸ **takeWhile**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›, `__namedParameters`: object): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
+▸ **takeWhile**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›, `options`: object): *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -681,11 +692,11 @@ ___
 
 ▪ **predicate**: *[Predicate](_functions_.md#predicate)‹T›*
 
-▪`Default value`  **__namedParameters**: *object*= { inclusive: false }
+▪`Default value`  **options**: *object*= {}
 
 Name | Type |
 ------ | ------ |
-`inclusive` | boolean |
+`inclusive?` | boolean |
 
 **Returns:** *[RunnableOperator](_runnable_.md#runnableoperator)‹T, T›*
 

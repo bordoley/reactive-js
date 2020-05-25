@@ -105,7 +105,11 @@ export const tests = describe(
 
       debugger;
 
-      const acc = await pipe(dest, takeFirst(1), toPromise(scheduler));
+      const acc = await pipe(
+        dest,
+        takeFirst({ count: 1 }),
+        toPromise(scheduler),
+      );
       pipe(acc, expectEquals("abcdefg"));
     }),
     testAsync("reading from readable that throws", async () => {
@@ -147,7 +151,7 @@ export const tests = describe(
 
     await pipe(sink(src, dest), toPromise(scheduler));
 
-    const acc = await pipe(dest, takeFirst(1), toPromise(scheduler));
+    const acc = await pipe(dest, takeFirst({ count: 1 }), toPromise(scheduler));
     pipe(acc, expectEquals("abcdefg"));
   }),
 );

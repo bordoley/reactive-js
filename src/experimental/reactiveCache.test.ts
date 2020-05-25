@@ -26,7 +26,9 @@ export const tests = describe(
   test("lifecycle integration", () => {
     // Use microticks to test yielding
     const scheduler = createVirtualTimeScheduler({ maxMicroTaskTicks: 1 });
-    const cache = createReactiveCache<string>(scheduler, scheduler, 2);
+    const cache = createReactiveCache<string>(scheduler, scheduler, {
+      maxCount: 2,
+    });
 
     let bSubscription = disposed;
     let cSubscription = disposed;
@@ -98,13 +100,15 @@ export const tests = describe(
         },
       ],
       fromArray({ delay: 1 }),
-      toRunnable(returns(scheduler)),
+      toRunnable({ schedulerFactory: returns(scheduler) }),
       forEach(x => x()),
     );
   }),
   test("subscribing to disposed value", () => {
     const scheduler = createVirtualTimeScheduler();
-    const cache = createReactiveCache<string>(scheduler, scheduler, 1);
+    const cache = createReactiveCache<string>(scheduler, scheduler, {
+      maxCount: 1,
+    });
 
     let observable = never<string>();
     let value = "";
@@ -129,14 +133,16 @@ export const tests = describe(
         },
       ],
       fromArray(),
-      toRunnable(returns(scheduler)),
+      toRunnable({ schedulerFactory: returns(scheduler) }),
       forEach(x => x()),
     );
   }),
 
   test("getOrSet", () => {
     const scheduler = createVirtualTimeScheduler();
-    const cache = createReactiveCache<string>(scheduler, scheduler, 2);
+    const cache = createReactiveCache<string>(scheduler, scheduler, {
+      maxCount: 2,
+    });
 
     let value = "";
     pipe(
@@ -158,7 +164,7 @@ export const tests = describe(
         },
       ],
       fromArray({ delay: 1 }),
-      toRunnable(returns(scheduler)),
+      toRunnable({ schedulerFactory: returns(scheduler) }),
       forEach(x => x()),
     );
   }),

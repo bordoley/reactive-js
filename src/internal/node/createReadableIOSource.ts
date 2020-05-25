@@ -86,11 +86,11 @@ export const createReadableIOSource = (
 export const readFileIOSource = (
   path: fs.PathLike,
   options?: {
-    flags?: string;
-    mode?: number;
-    start?: number;
-    end?: number;
-    highWaterMark?: number;
+    readonly flags?: string;
+    readonly mode?: number;
+    readonly start?: number;
+    readonly end?: number;
+    readonly highWaterMark?: number;
   },
 ) =>
   createReadableIOSource(() =>

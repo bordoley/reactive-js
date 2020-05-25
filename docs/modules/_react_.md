@@ -76,7 +76,7 @@ Scheduler that schedules work on React's internal priority scheduler with user b
 
 ### `Const` useObservable
 
-▸ **useObservable**<**T**>(`observable`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, `__namedParameters`: object): *[Option](_option_.md#option)‹T›*
+▸ **useObservable**<**T**>(`observable`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, `options`: object): *[Option](_option_.md#option)‹T›*
 
 Returns the current value, if defined, of `observable`.
 
@@ -90,11 +90,11 @@ Returns the current value, if defined, of `observable`.
 
 The `ObservableLike` to subscribe to.
 
-▪`Default value`  **__namedParameters**: *object*= { scheduler: normalPriority }
+▪`Default value`  **options**: *object*= {}
 
 Name | Type |
 ------ | ------ |
-`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
+`scheduler?` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
 
 **Returns:** *[Option](_option_.md#option)‹T›*
 
@@ -102,7 +102,7 @@ ___
 
 ### `Const` useStreamable
 
-▸ **useStreamable**<**TReq**, **T**>(`streamable`: [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›, `config`: object): *[[Option](_option_.md#option)‹T›, [SideEffect1](_functions_.md#sideeffect1)‹TReq›]*
+▸ **useStreamable**<**TReq**, **T**>(`streamable`: [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›, `options`: object): *[[Option](_option_.md#option)‹T›, [SideEffect1](_functions_.md#sideeffect1)‹TReq›]*
 
 **Type parameters:**
 
@@ -114,7 +114,7 @@ ___
 
 ▪ **streamable**: *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›*
 
-▪`Default value`  **config**: *object*= {}
+▪`Default value`  **options**: *object*= {}
 
 Name | Type |
 ------ | ------ |

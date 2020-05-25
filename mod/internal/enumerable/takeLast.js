@@ -33,7 +33,8 @@ class TakeLastEnumerator {
         return this.hasCurrent;
     }
 }
-export const takeLast = (count = 1) => {
+export const takeLast = (options = {}) => {
+    const { count = 1 } = options;
     const operator = (enumerator) => new TakeLastEnumerator(enumerator, count);
     return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());
 };

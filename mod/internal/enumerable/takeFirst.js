@@ -18,7 +18,8 @@ class TakeFirstEnumerator {
         return this.hasCurrent;
     }
 }
-export const takeFirst = (count = 1) => {
+export const takeFirst = (options = {}) => {
+    const { count = 1 } = options;
     const operator = (enumerator) => new TakeFirstEnumerator(enumerator, count);
     return lift(operator);
 };

@@ -25,6 +25,6 @@ const _fromObservable = (observable) => {
 };
 export const fromObservable = () => _fromObservable;
 export const fromArray = (options) => compose(fromArrayObs(options), fromObservable());
-export const fromValue = (config) => v => fromArray(config)([v]);
+export const fromValue = (options) => v => fromArray(options)([v]);
 const _empty = fromArray()([]);
 export const empty = () => _empty;

@@ -32,7 +32,7 @@ export class AbstractObserver extends AbstractDisposable {
     onRunStatusChanged(status) {
         this.inContinuation = status;
     }
-    schedule(continuation, options = { delay: 0 }) {
+    schedule(continuation, options) {
         continuation.addListener("onRunStatusChanged", this);
         addDisposable(this, continuation);
         this.delegate.schedule(continuation, options);
@@ -65,7 +65,7 @@ export const createAutoDisposingDelegatingObserver = (delegate) => {
     bindDisposables(delegate, observer);
     return observer;
 };
-export const yield$ = (observer, next, delay = 0) => {
+export const yield$ = (observer, next, delay) => {
     observer.notify(next);
     yieldScheduler(observer, delay);
 };

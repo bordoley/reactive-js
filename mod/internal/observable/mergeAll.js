@@ -61,8 +61,11 @@ export const mergeAll = (options = {}) => {
     return lift(operator);
 };
 export const mergeMap = (mapper, options = {}) => compose(map(mapper), mergeAll(options));
-export const concatAll = (maxBufferSize = Number.MAX_SAFE_INTEGER) => mergeAll({ maxBufferSize, maxConcurrency: 1 });
-export const concatMap = (mapper, maxBufferSize) => compose(map(mapper), concatAll(maxBufferSize));
+export const concatAll = (options = {}) => {
+    const { maxBufferSize = Number.MAX_SAFE_INTEGER } = options;
+    return mergeAll({ maxBufferSize, maxConcurrency: 1 });
+};
+export const concatMap = (mapper, options) => compose(map(mapper), concatAll(options));
 const _exhaust = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
 export const exhaust = () => _exhaust;
 export const exhaustMap = (mapper) => compose(map(mapper), exhaust());

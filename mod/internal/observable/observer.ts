@@ -68,7 +68,10 @@ export abstract class AbstractObserver<T, TDelegate extends SchedulerLike>
   }
 
   /** @ignore */
-  schedule(continuation: SchedulerContinuationLike, options = { delay: 0 }) {
+  schedule(
+    continuation: SchedulerContinuationLike,
+    options?: { readonly delay?: number },
+  ) {
     continuation.addListener("onRunStatusChanged", this);
     addDisposable(this, continuation);
 
@@ -126,7 +129,11 @@ export const createAutoDisposingDelegatingObserver = <T>(
   return observer;
 };
 
-export const yield$ = <T>(observer: ObserverLike<T>, next: T, delay = 0) => {
+export const yield$ = <T>(
+  observer: ObserverLike<T>,
+  next: T,
+  delay: number,
+) => {
   observer.notify(next);
   yieldScheduler(observer, delay);
 };

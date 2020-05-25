@@ -49,7 +49,7 @@ const markAsGarbage = <T>(
         const hasMoreToCleanup = cache.size > maxCount;
 
         if (hasMoreToCleanup) {
-          yield$(scheduler);
+          yield$(scheduler, 0);
         } else if (!hasMoreToCleanup) {
           break;
         }
@@ -161,9 +161,11 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
 export const createReactiveCache = <T>(
   dispatchScheduler: SchedulerLike,
   cleanupScheduler: SchedulerLike,
-  maxCount: number = Number.MAX_SAFE_INTEGER,
-): ReactiveCacheLike<T> =>
-  new ReactiveCacheImpl(dispatchScheduler, cleanupScheduler, maxCount);
+  options: { readonly maxCount?: number } = {},
+): ReactiveCacheLike<T> => {
+  const { maxCount = Number.MAX_SAFE_INTEGER } = options;
+  return new ReactiveCacheImpl(dispatchScheduler, cleanupScheduler, maxCount);
+};
 
 export const getOrSet = <T>(
   cache: ReactiveCacheLike<T>,

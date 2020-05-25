@@ -44,6 +44,6 @@ export const map = (mapper) => mapStream((ev) => ev.type === 1 ? pipe(ev.data, m
 const _fromObservable = compose(mapObs(notify), endWith(done()), fromObservableFlowable());
 export const fromObservable = () => _fromObservable;
 export const fromArray = (options) => compose(fromArrayObs(options), fromObservable());
-export const fromValue = (config) => v => fromArray(config)([v]);
+export const fromValue = (options) => v => fromArray(options)([v]);
 const _empty = fromArray()([]);
 export const empty = () => _empty;

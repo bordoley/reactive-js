@@ -9,8 +9,8 @@ import { ObservableLike } from "./interfaces.ts";
  * @param delay The delay before emitting the value.
  */
 export const fromValue = <T>(
-  config: { delay?: number} = {}
+  options: { readonly delay?: number } = {},
 ): Function1<T, ObservableLike<T>> => {
-  const call = fromArray(config);
+  const call = fromArray(options);
   return v => call([v]);
 };

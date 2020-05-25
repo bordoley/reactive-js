@@ -18,7 +18,10 @@ class SkipFirstSink<T> extends AbstractDelegatingSink<T, T> {
   }
 }
 
-export const skipFirst = <T>(count = 1): RunnableOperator<T, T> => {
+export const skipFirst = <T>(
+  options: { readonly count?: number } = {},
+): RunnableOperator<T, T> => {
+  const { count = 1 } = options;
   const operator = (sink: SinkLike<T>) => new SkipFirstSink(sink, count);
   return runnable => (count > 0 ? pipe(runnable, lift(operator)) : runnable);
 };

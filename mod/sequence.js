@@ -56,7 +56,8 @@ const _distinctUntilChanged = (equality, prevValue, next) => () => {
         retval = retval.next();
     }
 };
-export const distinctUntilChanged = (equality = strictEquality) => seq => () => {
+export const distinctUntilChanged = (options = {}) => seq => () => {
+    const { equality = strictEquality } = options;
     const result = seq();
     return isNotify(result)
         ? notify(result.data, _distinctUntilChanged(equality, result.data, result.next))
@@ -122,7 +123,10 @@ const _takeFirst = (count, seq) => () => {
         return done();
     }
 };
-export const takeFirst = (count) => seq => _takeFirst(count, seq);
+export const takeFirst = (options = {}) => seq => {
+    const { count = 1 } = options;
+    return _takeFirst(count, seq);
+};
 const _repeat = (predicate, count, src, seq) => () => {
     const result = seq();
     if (isNotify(result)) {
@@ -154,7 +158,10 @@ const _scan = (reducer, acc, seq) => () => {
     }
 };
 export const scan = (reducer, initialValue) => seq => () => _scan(reducer, initialValue(), seq)();
-export const skipFirst = (count) => seq => () => seek(count)(seq)();
+export const skipFirst = (options = {}) => seq => () => {
+    const { count = 1 } = options;
+    return seek(count)(seq)();
+};
 const _takeLast = (maxCount, seq) => () => {
     const last = [];
     let result = seq();
@@ -170,7 +177,10 @@ const _takeLast = (maxCount, seq) => () => {
     }
     return _fromArray(last, 0, last.length);
 };
-export const takeLast = (count) => seq => _takeLast(count, seq);
+export const takeLast = (options = {}) => seq => {
+    const { count = 1 } = options;
+    return _takeLast(count, seq);
+};
 const _takeWhile = (predicate, inclusive, seq) => () => {
     const result = seq();
     return isNotify(result) && predicate(result.data)
@@ -179,7 +189,10 @@ const _takeWhile = (predicate, inclusive, seq) => () => {
             ? notify(result.data, done)
             : done();
 };
-export const takeWhile = (predicate, { inclusive } = { inclusive: false }) => seq => _takeWhile(predicate, inclusive, seq);
+export const takeWhile = (predicate, options = {}) => seq => {
+    const { inclusive = false } = options;
+    return _takeWhile(predicate, inclusive, seq);
+};
 export const toRunnable = () => seq => createRunnable(sink => {
     let result = seq();
     while (isNotify(result)) {

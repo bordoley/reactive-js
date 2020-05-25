@@ -34,7 +34,10 @@ class TakeFirstObserver<T> extends AbstractAutoDisposingDelegatingObserver<
  *
  * @param count The maximum number of values to emit.
  */
-export const takeFirst = <T>(count = 1): ObservableOperator<T, T> => {
+export const takeFirst = <T>(
+  options: { readonly count?: number } = {},
+): ObservableOperator<T, T> => {
+  const { count = 1 } = options;
   const operator = (observer: ObserverLike<T>) =>
     new TakeFirstObserver(observer, count);
   operator.isSynchronous = true;

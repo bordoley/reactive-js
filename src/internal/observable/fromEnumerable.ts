@@ -12,7 +12,7 @@ import { yield$ } from "./observer";
  * @param delay The requested delay between emitted items by the observable.
  */
 export const fromEnumerator = <T>(
-  options = { delay: 0 },
+  options: { readonly delay?: number } = {},
 ): Function1<Factory<EnumeratorLike<T>>, ObservableLike<T>> => f => {
   const factory = () => {
     const enumerator = f();
@@ -25,7 +25,7 @@ export const fromEnumerator = <T>(
     };
   };
 
-  const { delay } = options;
+  const { delay = 0 } = options;
   return delay > 0 ? deferObs(factory, { delay }) : deferSynchronous(factory);
 };
 
@@ -36,7 +36,7 @@ export const fromEnumerator = <T>(
  * @param values The `Enumerable`.
  * @param delay The requested delay between emitted items by the observable.
  */
-export const fromEnumerable = <T>(
-  options = { delay: 0 },
-): Function1<EnumerableLike<T>, ObservableLike<T>> => enumerable =>
+export const fromEnumerable = <T>(options?: {
+  readonly delay?: number;
+}): Function1<EnumerableLike<T>, ObservableLike<T>> => enumerable =>
   pipe(defer(enumerable, enumerate), fromEnumerator(options));

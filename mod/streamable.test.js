@@ -114,7 +114,7 @@ export const tests = describe("streamable", test("createActionReducer", () => {
     pipe(result, expectArrayEquals([1, 3, 6]));
 }), test("sink", () => {
     const scheduler = createVirtualTimeScheduler();
-    const src = pipe(identity(), scan((acc, _) => acc + 1, returns(0)), lift(takeFirst(3)));
+    const src = pipe(identity(), scan((acc, _) => acc + 1, returns(0)), lift(takeFirst({ count: 3 })));
     let result = 0;
     const dest = pipe(identity(), scan((acc, _) => acc + 1, returns(0)), onNotify(v => {
         result = v;

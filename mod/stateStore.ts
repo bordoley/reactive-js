@@ -40,9 +40,9 @@ export interface StateStoreLike<T> extends StreamableLike<Updater<T>, T> {}
  */
 export const createStateStore = <T>(
   initialState: Factory<T>,
-  equals?: Equality<T>,
+  options?: { readonly equality?: Equality<T> },
 ): StateStoreLike<T> =>
-  createActionReducer(updaterReducer, initialState, equals);
+  createActionReducer(updaterReducer, initialState, options);
 
 /**
  * Converts an `StreamableLike<T, T>` to an `StateStoreLike<T>`.

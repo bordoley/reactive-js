@@ -31,7 +31,10 @@ class TakeFirstEnumerator<T> implements EnumeratorLike<T> {
  *
  * @param count The maximum number of values to emit.
  */
-export const takeFirst = <T>(count = 1): EnumerableOperator<T, T> => {
+export const takeFirst = <T>(
+  options: { readonly count?: number } = {},
+): EnumerableOperator<T, T> => {
+  const { count = 1 } = options;
   const operator = (enumerator: EnumeratorLike<T>) =>
     new TakeFirstEnumerator(enumerator, count);
   return lift(operator);

@@ -4,7 +4,8 @@ import { createRunnable } from "../../runnable.js";
 import { createVirtualTimeScheduler, } from "../../scheduler.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
-export const toRunnable = (schedulerFactory = createVirtualTimeScheduler) => source => createRunnable(sink => {
+export const toRunnable = (options = {}) => source => createRunnable(sink => {
+    const { schedulerFactory = createVirtualTimeScheduler } = options;
     const scheduler = schedulerFactory();
     const subscription = pipe(source, onNotify((next) => {
         sink.notify(next);

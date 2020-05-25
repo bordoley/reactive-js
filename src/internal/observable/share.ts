@@ -58,6 +58,6 @@ class SharedObservable<T> implements ObservableLike<T> {
  */
 export const share = <T>(
   scheduler: SchedulerLike,
-  options?: { replay: number },
+  options?: { readonly replay?: number },
 ): ObservableOperator<T, T> => observable =>
   new SharedObservable(observable, publish(scheduler, options));

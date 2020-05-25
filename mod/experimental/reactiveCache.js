@@ -14,7 +14,7 @@ const markAsGarbage = (reactiveCache, key, stream) => {
                 dispose(stream);
                 const hasMoreToCleanup = cache.size > maxCount;
                 if (hasMoreToCleanup) {
-                    yield$(scheduler);
+                    yield$(scheduler, 0);
                 }
                 else if (!hasMoreToCleanup) {
                     break;
@@ -83,7 +83,10 @@ class ReactiveCacheImpl extends AbstractDisposable {
         return observable;
     }
 }
-export const createReactiveCache = (dispatchScheduler, cleanupScheduler, maxCount = Number.MAX_SAFE_INTEGER) => new ReactiveCacheImpl(dispatchScheduler, cleanupScheduler, maxCount);
+export const createReactiveCache = (dispatchScheduler, cleanupScheduler, options = {}) => {
+    const { maxCount = Number.MAX_SAFE_INTEGER } = options;
+    return new ReactiveCacheImpl(dispatchScheduler, cleanupScheduler, maxCount);
+};
 export const getOrSet = (cache, key, defaultValue) => {
     const observable = cache.get(key);
     return observable !== null && observable !== void 0 ? observable : cache.set(key, defaultValue);

@@ -16,7 +16,8 @@ class TakeWhileSink extends AbstractDelegatingSink {
         }
     }
 }
-export const takeWhile = (predicate, { inclusive } = { inclusive: false }) => {
+export const takeWhile = (predicate, options = {}) => {
+    const { inclusive = false } = options;
     const operator = (sink) => new TakeWhileSink(sink, predicate, inclusive);
     return lift(operator);
 };

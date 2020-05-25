@@ -18,7 +18,8 @@ class DistinctUntilChangedSink extends AbstractDelegatingSink {
         }
     }
 }
-export const distinctUntilChanged = (equality = strictEquality) => {
+export const distinctUntilChanged = (options = {}) => {
+    const { equality = strictEquality } = options;
     const operator = (sink) => new DistinctUntilChangedSink(sink, equality);
     return lift(operator);
 };

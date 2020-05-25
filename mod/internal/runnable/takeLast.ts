@@ -34,7 +34,10 @@ class TakeLastSink<T> implements SinkLike<T> {
   }
 }
 
-export const takeLast = <T>(count = 1): RunnableOperator<T, T> => {
+export const takeLast = <T>(
+  options: { readonly count?: number } = {},
+): RunnableOperator<T, T> => {
+  const { count = 1 } = options;
   const operator = (sink: SinkLike<T>) => new TakeLastSink(sink, count);
   return runnable => (count > 0 ? pipe(runnable, lift(operator)) : empty());
 };

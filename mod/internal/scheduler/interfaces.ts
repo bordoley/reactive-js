@@ -40,7 +40,7 @@ export interface SchedulerLike {
    */
   schedule(
     continuation: SchedulerContinuationLike,
-    options?: { delay: number },
+    options?: { readonly delay?: number },
   ): void;
 }
 
@@ -82,6 +82,6 @@ export interface PrioritySchedulerLike {
    */
   schedule(
     continuation: SchedulerContinuationLike,
-    options: { priority: number; delay?: number },
+    options: { readonly priority: number; readonly delay?: number },
   ): void;
 }

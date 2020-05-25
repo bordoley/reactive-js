@@ -245,7 +245,7 @@ export const tests = describe(
     const src = pipe(
       identity<void>(),
       scan((acc, _) => acc + 1, returns<number>(0)),
-      lift(takeFirst(3)),
+      lift(takeFirst({ count: 3 })),
     );
 
     let result = 0;

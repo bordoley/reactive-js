@@ -100,5 +100,8 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable
  * for testing cooperative multitasking.
  */
 export const createVirtualTimeScheduler = (
-  { maxMicroTaskTicks } = { maxMicroTaskTicks: Number.MAX_SAFE_INTEGER },
-): VirtualTimeSchedulerLike => new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
+  options: { readonly maxMicroTaskTicks?: number } = {},
+): VirtualTimeSchedulerLike => {
+  const { maxMicroTaskTicks = Number.MAX_SAFE_INTEGER } = options;
+  return new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
+};

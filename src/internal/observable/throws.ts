@@ -11,9 +11,9 @@ import { deferSynchronous, defer } from "./observable";
  * @param delay The delay before disposing the subscription.
  */
 export const throws = <T>(
-  options: { delay: number } = { delay: 0 },
+  options: { readonly delay?: number } = {},
 ): Function1<Factory<unknown>, ObservableLike<T>> => errorFactory => {
-  const { delay } = options;
+  const { delay = 0 } = options;
   const factory = () => (observer: ObserverLike<T>) => {
     let cause: unknown = none;
     try {

@@ -18,7 +18,8 @@ class TakeWhileObserver extends AbstractAutoDisposingDelegatingObserver {
         }
     }
 }
-export const takeWhile = (predicate, { inclusive } = { inclusive: false }) => {
+export const takeWhile = (predicate, options = {}) => {
+    const { inclusive = false } = options;
     const operator = (observer) => new TakeWhileObserver(observer, predicate, inclusive);
     operator.isSynchronous = true;
     return lift(operator);

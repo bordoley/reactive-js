@@ -128,7 +128,7 @@ ___
 
 ### `Const` fromValue
 
-▸ **fromValue**<**T**>(`config?`: object): *[Function1](_functions_.md#function1)‹T, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
+▸ **fromValue**<**T**>(`options?`: object): *[Function1](_functions_.md#function1)‹T, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
 
 **Type parameters:**
 
@@ -136,7 +136,7 @@ ___
 
 **Parameters:**
 
-▪`Optional`  **config**: *object*
+▪`Optional`  **options**: *object*
 
 Name | Type |
 ------ | ------ |

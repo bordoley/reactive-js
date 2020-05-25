@@ -22,7 +22,8 @@ class SkipFirstEnumerator {
         return this.delegate.move();
     }
 }
-export const skipFirst = (count = 1) => {
+export const skipFirst = (options = {}) => {
+    const { count = 1 } = options;
     const operator = (enumerator) => new SkipFirstEnumerator(enumerator, count);
     return lift(operator);
 };

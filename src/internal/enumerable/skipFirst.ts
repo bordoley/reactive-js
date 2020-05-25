@@ -36,7 +36,10 @@ class SkipFirstEnumerator<T> implements EnumeratorLike<T> {
  *
  * @param count The maximum number of values to emit.
  */
-export const skipFirst = <T>(count = 1): EnumerableOperator<T, T> => {
+export const skipFirst = <T>(
+  options: { readonly count?: number } = {},
+): EnumerableOperator<T, T> => {
+  const { count = 1 } = options;
   const operator = (enumerator: EnumeratorLike<T>) =>
     new SkipFirstEnumerator(enumerator, count);
   return lift(operator);
