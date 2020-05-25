@@ -1,10 +1,10 @@
 import { pipe, compose } from "../../functions.js";
 import { compute, concatWith, mergeWith, onNotify, throttle, } from "../../observable.js";
 import { none } from "../../option.js";
+import { fromHref, toHref } from "../../relativeURI.js";
 import { toStateStore } from "../../stateStore.js";
 import { createStreamable, map, mapReq } from "../../streamable.js";
 import { fromEvent } from "./event.js";
-import { fromHref, toHref } from "../../relativeURI.js";
 const getCurrentLocation = (_) => window.location.href;
 const pushHistoryState = (newLocation) => {
     const currentLocation = getCurrentLocation();

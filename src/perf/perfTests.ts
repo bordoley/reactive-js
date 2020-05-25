@@ -57,12 +57,13 @@ export const map = (n: number) =>
     benchmarkTest(
       "wonka",
       async src => {
-        const Wonka = await import ("wonka");
-        return () => Wonka.pipe(
-          Wonka.fromArray(src as number[]),
-          Wonka.map(increment),
-          Wonka.toArray
-        );
+        const Wonka = await import("wonka");
+        return () =>
+          Wonka.pipe(
+            Wonka.fromArray(src as number[]),
+            Wonka.map(increment),
+            Wonka.toArray,
+          );
       },
       x => x(),
     ),
@@ -134,18 +135,19 @@ export const filterMapFusion = (n: number) =>
     benchmarkTest(
       "wonka",
       async src => {
-        const Wonka = await import ("wonka");
-        return () => Wonka.pipe(
-          Wonka.fromArray(src as number[]),
-          Wonka.map(increment),
-          Wonka.filter(isOdd),
-          Wonka.map(increment),
-          Wonka.map(increment),
-          Wonka.filter(isEven),
-          Wonka.scan(sum, 0),
-          Wonka.takeLast(1),
-          Wonka.toArray,
-        );
+        const Wonka = await import("wonka");
+        return () =>
+          Wonka.pipe(
+            Wonka.fromArray(src as number[]),
+            Wonka.map(increment),
+            Wonka.filter(isOdd),
+            Wonka.map(increment),
+            Wonka.map(increment),
+            Wonka.filter(isEven),
+            Wonka.scan(sum, 0),
+            Wonka.takeLast(1),
+            Wonka.toArray,
+          );
       },
       x => x(),
     ),
@@ -216,15 +218,16 @@ export const filterMapReduce = (n: number) =>
     benchmarkTest(
       "wonka",
       async src => {
-        const Wonka = await import ("wonka");
-        return () => Wonka.pipe(
-          Wonka.fromArray(src as number[]),
-          Wonka.filter(isEven),
-          Wonka.map(increment),
-          Wonka.scan(sum, 0),
-          Wonka.takeLast(1),
-          Wonka.toArray,
-        );
+        const Wonka = await import("wonka");
+        return () =>
+          Wonka.pipe(
+            Wonka.fromArray(src as number[]),
+            Wonka.filter(isEven),
+            Wonka.map(increment),
+            Wonka.scan(sum, 0),
+            Wonka.takeLast(1),
+            Wonka.toArray,
+          );
       },
       x => x(),
     ),
@@ -269,14 +272,15 @@ export const scanReduce = (n: number) =>
     benchmarkTest(
       "wonka",
       async src => {
-        const Wonka = await import ("wonka");
-        return () => Wonka.pipe(
-          Wonka.fromArray(src as number[]),
-          Wonka.scan(sum, 0),
-          Wonka.scan(passthrough, 0),
-          Wonka.takeLast(1),
-          Wonka.toArray,
-        );
+        const Wonka = await import("wonka");
+        return () =>
+          Wonka.pipe(
+            Wonka.fromArray(src as number[]),
+            Wonka.scan(sum, 0),
+            Wonka.scan(passthrough, 0),
+            Wonka.takeLast(1),
+            Wonka.toArray,
+          );
       },
       x => x(),
     ),

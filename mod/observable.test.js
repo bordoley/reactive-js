@@ -63,10 +63,7 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     yield 1;
     yield 2;
     yield 3;
-}), toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), test("ignoreElements", defer([1, 2, 3], fromArray(), ignoreElements(), endWith(4), toRunnable(), toArray(), expectArrayEquals([4]))), describe("merge", test("two arrays", defer(merge(pipe([0, 2, 3, 5, 6], fromArray({ delay: 1 })), pipe([1, 4, 7], fromArray({ delay: 2 }))), toRunnable(), toArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), test("when one source throws", defer(defer([1, 4, 7], fromArray({ delay: 2 }), mergeWith(throws({ delay: 5 })(raise)), toRunnable(), last), expectToThrow))), describe("mergeMap", test("when a mapped observable throws", defer(defer([
-    fromArray({ delay: 1 })([1, 2, 3]),
-    throws({ delay: 2 })(raise),
-], fromArray(), mergeMap(identity), toRunnable(), last), expectToThrow)), test("when the map function throws", defer(defer([1, 2, 3, 4], fromArray(), mergeMap(x => {
+}), toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), test("ignoreElements", defer([1, 2, 3], fromArray(), ignoreElements(), endWith(4), toRunnable(), toArray(), expectArrayEquals([4]))), describe("merge", test("two arrays", defer(merge(pipe([0, 2, 3, 5, 6], fromArray({ delay: 1 })), pipe([1, 4, 7], fromArray({ delay: 2 }))), toRunnable(), toArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), test("when one source throws", defer(defer([1, 4, 7], fromArray({ delay: 2 }), mergeWith(throws({ delay: 5 })(raise)), toRunnable(), last), expectToThrow))), describe("mergeMap", test("when a mapped observable throws", defer(defer([fromArray({ delay: 1 })([1, 2, 3]), throws({ delay: 2 })(raise)], fromArray(), mergeMap(identity), toRunnable(), last), expectToThrow)), test("when the map function throws", defer(defer([1, 2, 3, 4], fromArray(), mergeMap(x => {
     if (x > 2) {
         raise();
     }

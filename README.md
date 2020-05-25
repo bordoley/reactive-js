@@ -4,7 +4,7 @@ Fast modern reactive Javascript programming library.
 
 ## Platform Support
 
-ReactiveJS is an isomorphic library which supports all modern ecmascript platforms including [Node.js](https://nodejs.org/)  (v14 and up), [Deno](https://deno.land/), and modern browsers.
+ReactiveJS is an isomorphic library which supports all modern ecmascript platforms including [Node.js](https://nodejs.org/) (v14 and up), [Deno](https://deno.land/), and modern browsers.
 
 ## Installing
 

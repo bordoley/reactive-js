@@ -1,6 +1,6 @@
 /**
  * Compare two values to determine their relative ordering.
- * 
+ *
  * @returns A signed number indicating the relative order of `a` and `b`:
  *   - If less than 0, `a` is less `b`.
  *   - If 0, `a` equals `b`.
@@ -10,7 +10,7 @@ export type Comparator<T> = (a: T, b: T) => number;
 
 /**
  * Compare two values for equality.
- * 
+ *
  * @returns true if `a` is equals to `b`, otherwise false
  */
 export type Equality<T> = (a: T, b: T) => boolean;
@@ -33,13 +33,13 @@ export type Predicate<T> = (a: T) => boolean;
 /**
  * A type guard function that performs a runtime check
  * guaranteeing `v` is of type `TB`.
- * 
- * @returns `true` if v is an instance of type `TB`, otherwise false. 
+ *
+ * @returns `true` if v is an instance of type `TB`, otherwise false.
  */
 export type TypePredicate<TA, TB extends TA> = (v: TA) => v is TB;
 
 /**
- * A pure function that takes the current accumulator and next value, 
+ * A pure function that takes the current accumulator and next value,
  * returning the next accumulated value.
  */
 export type Reducer<T, TAcc> = (acc: TAcc, next: T) => TAcc;
@@ -210,8 +210,8 @@ export function callWith<TA, TB, TC, TD, T>(
 
 /**
  * A function operator that invokes a function with a given list of arguments.
- * 
- * @returns A function that takes a function `f` as an argument 
+ *
+ * @returns A function that takes a function `f` as an argument
  * and invokes it with the provided arguments, returning the result.
  */
 export function callWith<T>(
@@ -222,7 +222,7 @@ export function callWith<T>(
 
 /**
  * The identity function.
- * 
+ *
  * @returns `v`
  */
 export const identity = <T>(v: T): T => v;
@@ -239,7 +239,6 @@ export const returns = <T>(v: T): ((..._args: unknown[]) => T) => (
  */
 export const alwaysFalse = (..._args: unknown[]) => false;
 
-
 /**
  * A function that always returns `true`.
  */
@@ -248,7 +247,9 @@ export const alwaysTrue = (..._args: unknown[]) => true;
 /**
  * A function that always returns `undefined`.
  */
-export const ignore = (..._args: unknown[]) =>  { return undefined };
+export const ignore = (..._args: unknown[]) => {
+  return undefined;
+};
 
 /**
  * An updater function that returns the result of incrementing `x`.
@@ -291,7 +292,8 @@ export const isEqualTo = <T>(
 
 /**
  * Returns `true` if `x` is an even number, otherwise `false`.
- */ 
+ */
+
 export const isEven = (x: number): boolean => x % 2 === 0;
 
 /**
@@ -309,10 +311,10 @@ export const negate = (v: boolean): boolean => !v;
  */
 export const raise = <T>(message?: string): T => {
   throw new Error(message);
-}
+};
 
 /**
- * A function that returns the result of summing 
+ * A function that returns the result of summing
  * it's arguments.
  */
 export const sum = (...args: number[]) => {
@@ -698,7 +700,7 @@ export function defer(
 ): Factory<unknown>;
 
 /**
- * Returns a `Factory` function that defers the evaluation of piping 
+ * Returns a `Factory` function that defers the evaluation of piping
  * `source` through the provided operators.
  */
 export function defer(

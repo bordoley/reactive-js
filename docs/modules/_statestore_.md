@@ -41,7 +41,7 @@ ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`store`: [StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹TA›, `parse`: [Function1](_functions_.md#function1)‹TA, TB›, `serialize`: [Function1](_functions_.md#function1)‹TB, TA›): *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹TB›*
+▸ **map**<**TA**, **TB**>(`parse`: [Function1](_functions_.md#function1)‹TA, TB›, `serialize`: [Function1](_functions_.md#function1)‹TB, TA›): *[Function1](_functions_.md#function1)‹[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹TA›, [StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹TB››*
 
 **Type parameters:**
 
@@ -53,11 +53,10 @@ ___
 
 Name | Type |
 ------ | ------ |
-`store` | [StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹TA› |
 `parse` | [Function1](_functions_.md#function1)‹TA, TB› |
 `serialize` | [Function1](_functions_.md#function1)‹TB, TA› |
 
-**Returns:** *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹TB›*
+**Returns:** *[Function1](_functions_.md#function1)‹[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹TA›, [StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹TB››*
 
 ___
 

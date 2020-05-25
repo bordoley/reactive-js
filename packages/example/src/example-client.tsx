@@ -14,16 +14,16 @@ import {
   useStreamable,
 } from "@reactive-js/core/react";
 import {
+  empty as emptyURI,
+  decodeAndGetHash,
+  encodeAndSetHash,
+  RelativeURI,
+} from "@reactive-js/core/relativeURI";
+import {
   createEventSource,
   fetch,
   historyStateStore,
 } from "@reactive-js/core/web";
-import {
-  empty as emptyURI,
-  decodeAndGetHash,
-  encodeAndSetHash,
-  RelativeURI
-} from "@reactive-js/core/relativeURI";
 import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { default as ReactDOM } from "react-dom";
 

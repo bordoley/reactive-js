@@ -7,6 +7,7 @@ import {
   Updater,
   updaterReducer,
   Function1,
+  compose,
 } from "./functions.ts";
 import {
   onNotify,
@@ -83,8 +84,7 @@ const requestMapper = <TA, TB>(
 };
 
 export const map = <TA, TB>(
-  store: StateStoreLike<TA>,
   parse: Function1<TA, TB>,
   serialize: Function1<TB, TA>,
-): StateStoreLike<TB> =>
-  pipe(store, mapReq(requestMapper(parse, serialize)), mapStream(parse));
+): Function1<StateStoreLike<TA>, StateStoreLike<TB>> =>
+  compose(mapReq(requestMapper(parse, serialize)), mapStream(parse));

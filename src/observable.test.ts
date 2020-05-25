@@ -356,10 +356,7 @@ export const tests = describe(
       "when a mapped observable throws",
       defer(
         defer(
-          [
-            fromArray({ delay: 1 })([1, 2, 3]),
-            throws({ delay: 2 })(raise),
-          ],
+          [fromArray({ delay: 1 })([1, 2, 3]), throws({ delay: 2 })(raise)],
           fromArray(),
           mergeMap(identity),
           toRunnable(),
@@ -844,10 +841,7 @@ export const tests = describe(
         defer(
           [1, 2, 3],
           fromArray({ delay: 1 }),
-          zipWithLatestFrom(
-            throws()(raise),
-            (_, b) => b,
-          ),
+          zipWithLatestFrom(throws()(raise), (_, b) => b),
           toRunnable(),
           last,
         ),

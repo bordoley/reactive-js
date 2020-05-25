@@ -1,9 +1,9 @@
 import { createDisposableValue, disposed, dispose } from "../disposable";
-import { createResourceManager } from "./resourceManager";
-import { test, describe } from "./testing";
 import { pipe, ignore, defer } from "../functions";
 import { onNotify, subscribe, fromArray } from "../observable";
 import { createVirtualTimeScheduler } from "../scheduler";
+import { createResourceManager } from "./resourceManager";
+import { test, describe } from "./testing";
 
 export const tests = describe(
   "resource manager",
