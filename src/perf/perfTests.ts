@@ -231,6 +231,18 @@ export const filterMapReduce = (n: number) =>
       },
       x => x(),
     ),
+    benchmarkTest(
+      "most",
+      async src => {
+        const {map, filter} = await import("@most/core");
+        const { reduce } = await import ("./most/reduce");
+        const { fromArray } = await import("./most/fromArray");
+
+        return  () => reduce(sum, 0, map(increment, filter(isEven, fromArray(src))));
+
+      },
+      f => f(),
+    ),
   );
 
 const createScanReducePerfTest = (name: string, module: string) =>
@@ -283,6 +295,17 @@ export const scanReduce = (n: number) =>
           );
       },
       x => x(),
+    ),
+    benchmarkTest(
+      "most",
+      async src => {
+        const {scan} = await import("@most/core");
+        const { reduce } = await import ("./most/reduce");
+        const { fromArray } = await import("./most/fromArray");
+
+        return  () => reduce<number, number>(passthrough, 0, scan(sum, 0, fromArray(src)));
+      },
+      f => f(),
     ),
   );
 
