@@ -9,7 +9,7 @@ import { ObservableLike } from "./interfaces";
  * @param delay The delay before emitting the value.
  */
 export const fromValue = <T>(
-  config = { delay: 0 },
+  config: { delay?: number} = {}
 ): Function1<T, ObservableLike<T>> => {
   const call = fromArray(config);
   return v => call([v]);

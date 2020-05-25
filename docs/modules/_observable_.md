@@ -795,6 +795,7 @@ an optional `startIndex` into the array.
 Name | Type |
 ------ | ------ |
 `delay?` | number |
+`endIndex?` | number |
 `startIndex?` | number |
 
 **Returns:** *[Function1](_functions_.md#function1)‹keyof T[], [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
@@ -921,11 +922,11 @@ ___
 
 **Parameters:**
 
-▪`Default value`  **config**: *object*= { delay: 0 }
+▪`Default value`  **config**: *object*= {}
 
-Name | Type | Default |
------- | ------ | ------ |
-`delay` | number | 0 |
+Name | Type |
+------ | ------ |
+`delay?` | number |
 
 **Returns:** *[Function1](_functions_.md#function1)‹T, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 

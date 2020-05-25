@@ -1,12 +1,11 @@
 import { createRunnable } from "./createRunnable.js";
-export const fromArray = (options = {
-    startIndex: 0,
-}) => values => {
+export const fromArray = (options = {}) => values => {
+    var _a, _b;
     const valuesLength = values.length;
-    const startIndex = Math.max(Math.min(options.startIndex, valuesLength), 0);
+    const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
+    const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : values.length, valuesLength), 0);
     const run = (sink) => {
-        const valuesLength = values.length;
-        for (let index = startIndex; index < valuesLength; index++) {
+        for (let index = startIndex; index < endIndex; index++) {
             sink.notify(values[index]);
         }
         sink.done();

@@ -30,12 +30,16 @@ export const concatAll = () => seq => {
     };
     return () => flattenIter(seq());
 };
-const _fromArray = (arr, index) => index < arr.length && index >= 0
-    ? notify(arr[index], () => _fromArray(arr, index + 1))
+const _fromArray = (arr, index, endIndex) => index < endIndex && index >= 0
+    ? notify(arr[index], () => _fromArray(arr, index + 1, endIndex))
     : done();
-export const fromArray = ({ startIndex } = {
-    startIndex: 0,
-}) => arr => () => _fromArray(arr, startIndex);
+export const fromArray = (options = {}) => values => {
+    var _a, _b;
+    const valuesLength = values.length;
+    const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
+    const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : valuesLength, valuesLength), 0);
+    return () => _fromArray(values, startIndex, endIndex);
+};
 export function concat(...sequences) {
     return pipe(sequences, fromArray(), concatAll());
 }
@@ -86,7 +90,7 @@ export const concatMap = (mapper) => compose(map(mapper), concatAll());
 export function startWith(...values) {
     return seq => concat(fromArray()(values), seq);
 }
-export const fromValue = () => v => () => _fromArray([v], 0);
+export const fromValue = () => v => () => _fromArray([v], 0, 1);
 const _generate = (generator, acc) => () => notify(acc, _generate(generator, generator(acc)));
 export const generate = (generator, initialValue) => () => {
     const acc = generator(initialValue());
@@ -164,7 +168,7 @@ const _takeLast = (maxCount, seq) => () => {
         }
         result = result.next();
     }
-    return _fromArray(last, 0);
+    return _fromArray(last, 0, last.length);
 };
 export const takeLast = (count) => seq => _takeLast(count, seq);
 const _takeWhile = (predicate, inclusive, seq) => () => {

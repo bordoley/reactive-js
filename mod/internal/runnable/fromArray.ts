@@ -4,17 +4,17 @@ import { RunnableLike, SinkLike } from "./interfaces.ts";
 
 export const fromArray = <T>(
   options: {
-    startIndex: number;
-  } = {
-    startIndex: 0,
-  },
+    startIndex?: number;
+    endIndex?: number
+
+  } = {},
 ): Function1<readonly T[], RunnableLike<T>> => values => {
   const valuesLength = values.length;
-  const startIndex = Math.max(Math.min(options.startIndex, valuesLength), 0);
+  const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
+  const endIndex = Math.max(Math.min(options.endIndex ?? values.length, valuesLength), 0);
 
   const run = (sink: SinkLike<T>) => {
-    const valuesLength = values.length;
-    for (let index = startIndex; index < valuesLength; index++) {
+    for (let index = startIndex; index < endIndex; index++) {
       sink.notify(values[index]);
     }
     sink.done();

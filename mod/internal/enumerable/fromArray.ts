@@ -5,7 +5,7 @@ class ArrayEnumerator<T> implements EnumeratorLike<T> {
   current: any = none;
   hasCurrent = false;
 
-  constructor(private readonly array: readonly T[], private index: number) {}
+  constructor(private readonly array: readonly T[], private index: number, private readonly endIndex: number) {}
 
   move(): boolean {
     const array = this.array;
@@ -15,7 +15,7 @@ class ArrayEnumerator<T> implements EnumeratorLike<T> {
     this.index++;
     const index = this.index;
 
-    if (index < array.length) {
+    if (index < this.endIndex) {
       hasCurrent = true;
       this.hasCurrent = true;
       this.current = array[index];
@@ -30,11 +30,12 @@ class ArrayEnumerator<T> implements EnumeratorLike<T> {
 class ArrayEnumerable<T> implements EnumerableLike<T> {
   constructor(
     private readonly values: readonly T[],
-    private startIndex: number,
+    private readonly startIndex: number,
+    private readonly endIndex: number,
   ) {}
 
   enumerate() {
-    return new ArrayEnumerator(this.values, this.startIndex);
+    return new ArrayEnumerator(this.values, this.startIndex, this.endIndex);
   }
 }
 
@@ -43,9 +44,20 @@ class ArrayEnumerable<T> implements EnumerableLike<T> {
  *
  * @param values
  */
-export const fromArray = <T>({ startIndex } = { startIndex: 0 }) => (
+export const fromArray = <T>(
+  options: {
+    startIndex?: number;
+    endIndex?: number;
+  } = {},
+) => (
   values: readonly T[],
-): EnumerableLike<T> => new ArrayEnumerable(values, startIndex - 1);
+): EnumerableLike<T> => {
+  const valuesLength = values.length;
+  const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
+  const endIndex = Math.max(Math.min(options.endIndex ?? values.length, valuesLength), 0);
+
+  return new ArrayEnumerable(values, startIndex - 1, endIndex);
+};
 
 const _empty = fromArray()([]);
 

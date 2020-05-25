@@ -253,7 +253,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`__namedParameters`: object): *(Anonymous function)*
+▸ **fromArray**<**T**>(`options`: object): *(Anonymous function)*
 
 Returns an EnumerableLike view over the `values` array.
 
@@ -263,11 +263,12 @@ Returns an EnumerableLike view over the `values` array.
 
 **Parameters:**
 
-▪`Default value`  **__namedParameters**: *object*= { startIndex: 0 }
+▪`Default value`  **options**: *object*= {}
 
 Name | Type |
 ------ | ------ |
-`startIndex` | number |
+`endIndex?` | number |
+`startIndex?` | number |
 
 **Returns:** *(Anonymous function)*
 

@@ -94,7 +94,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`options`: object): *[Function1](_functions_.md#function1)‹keyof T[], [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
+▸ **fromArray**<**T**>(`options?`: object): *[Function1](_functions_.md#function1)‹keyof T[], [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
 
 **Type parameters:**
 
@@ -102,11 +102,13 @@ ___
 
 **Parameters:**
 
-▪`Default value`  **options**: *object*= { startIndex: 0 }
+▪`Optional`  **options**: *object*
 
-Name | Type | Default |
------- | ------ | ------ |
-`startIndex` | number | 0 |
+Name | Type |
+------ | ------ |
+`delay?` | number |
+`endIndex?` | number |
+`startIndex?` | number |
 
 **Returns:** *[Function1](_functions_.md#function1)‹keyof T[], [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
 
@@ -126,11 +128,19 @@ ___
 
 ### `Const` fromValue
 
-▸ **fromValue**<**T**>(): *[Function1](_functions_.md#function1)‹T, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
+▸ **fromValue**<**T**>(`config?`: object): *[Function1](_functions_.md#function1)‹T, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
+
+**Parameters:**
+
+▪`Optional`  **config**: *object*
+
+Name | Type |
+------ | ------ |
+`delay?` | number |
 
 **Returns:** *[Function1](_functions_.md#function1)‹T, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
 

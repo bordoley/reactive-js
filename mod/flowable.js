@@ -24,8 +24,7 @@ const _fromObservable = (observable) => {
     return createStreamable(op);
 };
 export const fromObservable = () => _fromObservable;
-export const fromArray = (options = { startIndex: 0 }) => compose(fromArrayObs(options), fromObservable());
-const _fromValue = (v) => fromArray()([v]);
-export const fromValue = () => _fromValue;
+export const fromArray = (options) => compose(fromArrayObs(options), fromObservable());
+export const fromValue = (config) => v => fromArray(config)([v]);
 const _empty = fromArray()([]);
 export const empty = () => _empty;
