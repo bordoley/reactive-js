@@ -114,12 +114,13 @@ export const fromObservable = <T>(): Function1<
   IOSourceLike<T>
 > => _fromObservable;
 
-const _fromArray = compose(fromArrayObs(), fromObservable());
-export const fromArray = <T>(): Function1<readonly T[], IOSourceLike<T>> =>
-  _fromArray;
+export const fromArray = <T>(
+  options = { startIndex: 0 },
+): Function1<readonly T[], IOSourceLike<T>> =>
+  compose(fromArrayObs(options), fromObservable());
 
 const _fromValue = <T>(v: T) => pipe([v], fromArray());
 export const fromValue = <T>(): Function1<T, IOSourceLike<T>> => _fromValue;
 
-const _empty: IOSourceLike<any> = _fromArray([]);
+const _empty: IOSourceLike<any> = fromArray()([]);
 export const empty = <T>(): IOSourceLike<T> => _empty;

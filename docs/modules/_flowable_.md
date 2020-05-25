@@ -45,11 +45,19 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(): *[Function1](_functions_.md#function1)‹keyof T[], [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
+▸ **fromArray**<**T**>(`options`: object): *[Function1](_functions_.md#function1)‹keyof T[], [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
+
+**Parameters:**
+
+▪`Default value`  **options**: *object*= { startIndex: 0 }
+
+Name | Type | Default |
+------ | ------ | ------ |
+`startIndex` | number | 0 |
 
 **Returns:** *[Function1](_functions_.md#function1)‹keyof T[], [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
 
