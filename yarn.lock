@@ -1018,6 +1018,37 @@
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
 
+"@most/core@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@most/core/-/core-1.5.0.tgz#b36b3620724e37ac3552659c1d71948958beb345"
+  dependencies:
+    "@most/disposable" "^1.2.2"
+    "@most/prelude" "^1.7.3"
+    "@most/scheduler" "^1.2.3"
+    "@most/types" "^1.0.2"
+
+"@most/disposable@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@most/disposable/-/disposable-1.2.2.tgz#1f9dfcc1b9d73165436eee34ddedc2e70d7be695"
+  dependencies:
+    "@most/prelude" "^1.7.3"
+    "@most/types" "^1.0.2"
+
+"@most/prelude@^1.7.3":
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/@most/prelude/-/prelude-1.7.3.tgz#51db3f3ba3ed65431b6eea89ecb0a31826af640c"
+
+"@most/scheduler@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@most/scheduler/-/scheduler-1.2.3.tgz#7cb97904a23bbfcb2664c60ea4fe047d7b5572f7"
+  dependencies:
+    "@most/prelude" "^1.7.3"
+    "@most/types" "^1.0.2"
+
+"@most/types@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@most/types/-/types-1.0.2.tgz#a272c919a3dafe942bd02d63402f0548593af870"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
