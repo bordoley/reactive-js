@@ -1,6 +1,6 @@
 import { dispose } from "../../disposable.js";
 import { deferSynchronous, defer } from "./observable.js";
-import { yield$ } from "./observer.js";
+import { YieldError } from "../../internal/scheduler/schedulerContinuation.js";
 export const fromArray = (options = {}) => values => {
     var _a, _b, _c;
     const delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0);
@@ -13,7 +13,10 @@ export const fromArray = (options = {}) => values => {
             while (index < endIndex) {
                 const value = values[index];
                 index++;
-                yield$(observer, value, index < valuesLength ? delay : 0);
+                observer.notify(value);
+                if (index < endIndex && (delay > 0 || observer.shouldYield)) {
+                    throw new YieldError(delay);
+                }
             }
             dispose(observer);
         };

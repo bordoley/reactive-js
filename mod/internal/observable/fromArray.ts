@@ -2,7 +2,7 @@ import { dispose } from "../../disposable.ts";
 import { Function1 } from "../../functions.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import { deferSynchronous, defer } from "./observable.ts";
-import { yield$ } from "./observer.ts";
+import { YieldError } from "../../internal/scheduler/schedulerContinuation.ts";
 
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
@@ -33,7 +33,12 @@ export const fromArray = <T>(
       while (index < endIndex) {
         const value = values[index];
         index++;
-        yield$(observer, value, index < valuesLength ? delay : 0);
+
+        observer.notify(value);
+
+        if (index < endIndex && (delay > 0 || observer.shouldYield)) {
+          throw new YieldError(delay);
+        }
       }
       dispose(observer);
     };

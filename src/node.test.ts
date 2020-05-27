@@ -103,8 +103,6 @@ export const tests = describe(
 
       await pipe(sink(src, dest), toPromise(scheduler));
 
-      debugger;
-
       const acc = await pipe(
         dest,
         takeFirst({ count: 1 }),
