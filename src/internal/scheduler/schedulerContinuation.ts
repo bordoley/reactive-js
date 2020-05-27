@@ -24,7 +24,7 @@ const notifyListeners = (
 
 const isYieldError = (e: unknown): e is YieldError => e instanceof YieldError;
 
-class YieldError {
+export class YieldError {
   constructor(readonly delay: number) {}
 }
 

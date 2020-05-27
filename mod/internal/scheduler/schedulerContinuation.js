@@ -6,7 +6,7 @@ const notifyListeners = (listeners, state) => {
     }
 };
 const isYieldError = (e) => e instanceof YieldError;
-class YieldError {
+export class YieldError {
     constructor(delay) {
         this.delay = delay;
     }
