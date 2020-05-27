@@ -1,17 +1,23 @@
 import { Function1 } from "../../functions.ts";
 import { RunnableLike } from "./interfaces.ts";
-import { reduce } from "./reduce.ts";
+import { AbstractSink } from "./sink.ts";
 
-const toArrayReducer = <T>(acc: readonly T[], next: T) => {
-  (acc as T[]).push(next);
-  return acc;
+class ToArraySink<T> extends AbstractSink<T> {
+  public readonly acc: T[] = [];
+  constructor() {
+    super();
+  }
+
+  notify(next: T) {
+    this.acc.push(next);
+  }
+}
+
+const _toArray = <T>(runnable: RunnableLike<T>): readonly T[] => {
+  const sink = new ToArraySink<T>();
+  runnable.run(sink);
+  return sink.acc;
 };
-
-const _toArray = reduce<any, readonly any[]>(
-  toArrayReducer,
-  (): readonly any[] => [],
-);
-
 /**
  * Accumulates all values emitted by `runnable` into an array.
  *
