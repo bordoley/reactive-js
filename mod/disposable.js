@@ -61,15 +61,12 @@ const doDispose = (disposable, error) => {
 };
 export class AbstractDisposable {
     constructor() {
-        this._isDisposed = false;
+        this.isDisposed = false;
         this.disposables = new Set();
         this._error = none;
     }
     get error() {
         return this._error;
-    }
-    get isDisposed() {
-        return this._isDisposed;
     }
     add(disposable) {
         const disposables = this.disposables;
@@ -87,7 +84,7 @@ export class AbstractDisposable {
     }
     dispose(error) {
         if (!this.isDisposed) {
-            this._isDisposed = true;
+            this.isDisposed = true;
             this._error = error;
             const disposables = this.disposables;
             for (const disposable of disposables) {

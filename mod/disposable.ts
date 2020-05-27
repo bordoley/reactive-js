@@ -176,18 +176,15 @@ const doDispose = (disposable: DisposableOrTeardown, error?: Error) => {
  * @noInheritDoc
  */
 export abstract class AbstractDisposable implements DisposableLike {
-  private _isDisposed = false;
+  /** @ignore */
+  public isDisposed = false;
+  
   private readonly disposables: Set<DisposableOrTeardown> = new Set();
   private _error: Option<Error> = none;
 
   /** @ignore */
   get error() {
     return this._error;
-  }
-
-  /** @ignore */
-  get isDisposed() {
-    return this._isDisposed;
   }
 
   /** @ignore */
@@ -210,7 +207,7 @@ export abstract class AbstractDisposable implements DisposableLike {
   /** @ignore */
   dispose(error?: Error) {
     if (!this.isDisposed) {
-      this._isDisposed = true;
+      this.isDisposed = true;
       this._error = error;
 
       const disposables = this.disposables;
