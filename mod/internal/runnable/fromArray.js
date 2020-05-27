@@ -6,7 +6,6 @@ export const fromArray = (options = {}) => values => {
     const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : values.length, valuesLength), 0);
     const run = (sink) => {
         for (let index = startIndex; index < endIndex; index++) {
-            debugger;
             sink.notify(values[index]);
         }
         sink.done();

@@ -34,6 +34,7 @@ export const fromArray = <T>(
         const value = values[index];
         index++;
 
+        // Inline yielding logic for performance reasons
         observer.notify(value);
 
         if (index < endIndex && (delay > 0 || observer.shouldYield)) {

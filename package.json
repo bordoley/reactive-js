@@ -38,6 +38,7 @@
     "pkg-rm-unsupport": "rm -rf ./packages/core/*.test.* ./packages/core/experimental/*.test.* /packages/core/experimental/testing.deno.* ./packages/core/perf",
     "pkg-cp-files": "cp README.md ./packages/core",
     "perf": "yarn compile-cjs && NODE_ENV=production node ./build/cjs/perf/index.js",
+    "perf-debug": "yarn compile-cjs && NODE_ENV=production node --inspect-brk ./build/cjs/perf/index.js",
     "release": "lerna publish --force-publish",
     "test": "jest",
     "test-coverage": "jest --coverage",
