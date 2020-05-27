@@ -1,7 +1,16 @@
-import { reduce } from "./reduce.js";
-const toArrayReducer = (acc, next) => {
-    acc.push(next);
-    return acc;
+import { AbstractSink } from "./sink.js";
+class ToArraySink extends AbstractSink {
+    constructor() {
+        super();
+        this.acc = [];
+    }
+    notify(next) {
+        this.acc.push(next);
+    }
+}
+const _toArray = (runnable) => {
+    const sink = new ToArraySink();
+    runnable.run(sink);
+    return sink.acc;
 };
-const _toArray = reduce(toArrayReducer, () => []);
 export const toArray = () => _toArray;
