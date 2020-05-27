@@ -5,10 +5,27 @@ import {
   createVirtualTimeScheduler,
   VirtualTimeSchedulerLike,
 } from "../../scheduler";
-import { RunnableLike } from "../runnable/interfaces";
-import { ObservableLike } from "./interfaces";
-import { onNotify } from "./onNotify";
+import { RunnableLike, SinkLike } from "../runnable/interfaces";
+import { ObservableLike, ObserverLike } from "./interfaces";
 import { subscribe } from "./subscribe";
+import { AbstractAutoDisposingDelegatingObserver } from "./observer";
+import { lift } from "./lift";
+
+class ToRunnableObserver<T> extends AbstractAutoDisposingDelegatingObserver<
+  T,
+  T
+> {
+  constructor(
+    delegate: ObserverLike<T>,
+    private readonly sink: SinkLike<T>
+  ) {
+    super(delegate);
+  }
+
+  notify(next: T) {
+    this.sink.notify(next);
+  }
+}
 
 export const toRunnable = <T>(
   options: {
@@ -19,11 +36,13 @@ export const toRunnable = <T>(
     const { schedulerFactory = createVirtualTimeScheduler } = options;
     const scheduler = schedulerFactory();
 
+    const operator = (delegate: ObserverLike<T>) =>
+      new ToRunnableObserver(delegate, sink);
+    operator.isSynchronous = true;
+
     const subscription = pipe(
       source,
-      onNotify((next: T) => {
-        sink.notify(next);
-      }),
+      lift(operator),
       subscribe(scheduler),
     );
 
