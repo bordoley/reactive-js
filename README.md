@@ -2,6 +2,13 @@
 
 Fast modern reactive Javascript programming library.
 
+
+[![NPM Version](https://img.shields.io/npm/v/@reactive-js/core.svg)](https://npmjs.com/package/@reactive-js/core)
+[![License](https://img.shields.io/npm/l/@reactive-js/core.svg)](https://npmjs.com/package/@reactive-js/core)
+[![Coverage Status](https://coveralls.io/repos/github/bordoley/reactive-js/badge.svg?branch=master)](https://coveralls.io/github/bordoley/reactive-js?branch=master)
+[![Build Status](https://travis-ci.org/bordoley/reactive-js.svg?branch=master)](https://travis-ci.org/bordoley/reactive-js)
+
+
 ## Platform Support
 
 ReactiveJS is an isomorphic library which supports all modern ecmascript platforms including [Node.js](https://nodejs.org/) (v14 and up), [Deno](https://deno.land/), and modern browsers.
