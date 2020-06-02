@@ -12,7 +12,7 @@ yarn-error.log
 *.key
 *.tsbuildinfo
 
-bs/*.bs.js
+*.bs.js
 build/
 lib/
 packages/core/**/*.ts
