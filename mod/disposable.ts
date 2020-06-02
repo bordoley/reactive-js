@@ -178,7 +178,7 @@ const doDispose = (disposable: DisposableOrTeardown, error?: Error) => {
 export abstract class AbstractDisposable implements DisposableLike {
   /** @ignore */
   public isDisposed = false;
-  
+
   private readonly disposables: Set<DisposableOrTeardown> = new Set();
   private _error: Option<Error> = none;
 

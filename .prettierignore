@@ -3,18 +3,23 @@ lerna-debug.log
 yarn.lock
 yarn-error.log
 
+*.bs.js
 *.crt
 *.key
+*.re
+*.rei
 *.tsbuildinfo
 
 .DS_Store
 .gitattributes
 .gitignore
-.prettierignore
+.merlin
 .npmignore
+.prettierignore
 
 build
 coverage
 docs
+lib/
 mod
 packages/core

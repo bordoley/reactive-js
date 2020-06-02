@@ -2,9 +2,9 @@ import { pipe } from "../../functions.js";
 import { isSome } from "../../option.js";
 import { createRunnable } from "../../runnable.js";
 import { createVirtualTimeScheduler, } from "../../scheduler.js";
-import { subscribe } from "./subscribe.js";
-import { AbstractAutoDisposingDelegatingObserver } from "./observer.js";
 import { lift } from "./lift.js";
+import { AbstractAutoDisposingDelegatingObserver } from "./observer.js";
+import { subscribe } from "./subscribe.js";
 class ToRunnableObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, sink) {
         super(delegate);

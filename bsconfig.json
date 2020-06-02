@@ -1,5 +1,5 @@
 {
-  "name" : "@reactive-js/core",
+  "name": "@reactive-js/core",
   "refmt": 3,
   "bsc-flags": ["-bs-super-errors", "-bs-no-version-header"],
   "namespace": "Reactive",
@@ -8,7 +8,7 @@
     "in-source": true
   },
   "sources": {
-    "dir" : "bs"
+    "dir": "bs"
   },
   "suffix": ".bs.js"
 }

@@ -7,18 +7,15 @@ import {
 } from "../../scheduler.ts";
 import { RunnableLike, SinkLike } from "../runnable/interfaces.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
-import { subscribe } from "./subscribe.ts";
-import { AbstractAutoDisposingDelegatingObserver } from "./observer.ts";
 import { lift } from "./lift.ts";
+import { AbstractAutoDisposingDelegatingObserver } from "./observer.ts";
+import { subscribe } from "./subscribe.ts";
 
 class ToRunnableObserver<T> extends AbstractAutoDisposingDelegatingObserver<
   T,
   T
 > {
-  constructor(
-    delegate: ObserverLike<T>,
-    private readonly sink: SinkLike<T>
-  ) {
+  constructor(delegate: ObserverLike<T>, private readonly sink: SinkLike<T>) {
     super(delegate);
   }
 
@@ -40,11 +37,7 @@ export const toRunnable = <T>(
       new ToRunnableObserver(delegate, sink);
     operator.isSynchronous = true;
 
-    const subscription = pipe(
-      source,
-      lift(operator),
-      subscribe(scheduler),
-    );
+    const subscription = pipe(source, lift(operator), subscribe(scheduler));
 
     scheduler.run();
 

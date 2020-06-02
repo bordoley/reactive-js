@@ -4,9 +4,6 @@ import { AbstractSink } from "./sink";
 
 class ToArraySink<T> extends AbstractSink<T> {
   public readonly acc: T[] = [];
-  constructor() {
-    super();
-  }
 
   notify(next: T) {
     this.acc.push(next);

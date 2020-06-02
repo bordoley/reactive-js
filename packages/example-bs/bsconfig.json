@@ -1,17 +1,15 @@
 {
-  "name" : "@reactive-js/example-bs",
+  "name": "@reactive-js/example-bs",
   "refmt": 3,
   "bsc-flags": ["-bs-super-errors", "-bs-no-version-header"],
   "namespace": "false",
-  "bs-dependencies":[
-    "@reactive-js/core"
-  ],
+  "bs-dependencies": ["@reactive-js/core"],
   "package-specs": {
     "module": "es6",
     "in-source": true
   },
   "sources": {
-    "dir" : "src"
+    "dir": "src"
   },
   "suffix": ".bs.js"
 }
