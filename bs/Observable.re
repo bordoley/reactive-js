@@ -45,7 +45,7 @@ module SubjectLike = {
 external await:
   ([@bs.uncurry] ('a => ObservableLike.t('b))) =>
   Function1.t(ObservableLike.t('a), ObservableLike.t('b)) =
-  "await";
+  "await_";
 
 let await = (mapper, obs) => (await(mapper))(. obs);
 
