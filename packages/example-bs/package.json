@@ -1,9 +1,9 @@
 {
   "name": "@reactive-js/example-bs",
-  "version": "0.0.46",
+  "version": "0.0.47",
   "private": true,
   "dependencies": {
-    "@reactive-js/core": "0.0.46"
+    "@reactive-js/core": "^0.0.47"
   },
   "devDependencies": {
     "bs-platform": "^7.3.2"
