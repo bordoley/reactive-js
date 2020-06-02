@@ -1,8 +1,8 @@
 import { dispose } from "../../disposable";
 import { Function1 } from "../../functions";
+import { YieldError } from "../../internal/scheduler/schedulerContinuation";
 import { ObservableLike, ObserverLike } from "./interfaces";
 import { deferSynchronous, defer } from "./observable";
-import { YieldError } from "../../internal/scheduler/schedulerContinuation";
 
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.

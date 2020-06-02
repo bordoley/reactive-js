@@ -1,6 +1,6 @@
 import { dispose } from "../../disposable.js";
-import { deferSynchronous, defer } from "./observable.js";
 import { YieldError } from "../../internal/scheduler/schedulerContinuation.js";
+import { deferSynchronous, defer } from "./observable.js";
 export const fromArray = (options = {}) => values => {
     var _a, _b, _c;
     const delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0);

@@ -1,7 +1,7 @@
 import { AbstractSink } from "./sink.js";
 class ToArraySink extends AbstractSink {
     constructor() {
-        super();
+        super(...arguments);
         this.acc = [];
     }
     notify(next) {
