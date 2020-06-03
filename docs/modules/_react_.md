@@ -118,8 +118,6 @@ ___
 
 Name | Type |
 ------ | ------ |
-`replay?` | number |
 `scheduler?` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
-`stateScheduler?` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
 
 **Returns:** *[[Option](_option_.md#option)‹T›, [SideEffect1](_functions_.md#sideeffect1)‹TReq›]*

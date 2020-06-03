@@ -7,11 +7,11 @@ import {
   SideEffect1,
   Updater,
 } from "@reactive-js/core/functions";
-import { generate, throttle } from "@reactive-js/core/observable";
+import { generate, throttle, subscribeOn } from "@reactive-js/core/observable";
 import {
-  idlePriority,
   useObservable,
   useStreamable,
+  idlePriority,
 } from "@reactive-js/core/react";
 import {
   empty as emptyURI,
@@ -63,22 +63,21 @@ const StreamPauseResume = () => {
       pipe(
         generate(increment, returns<number>(0)),
         throttle(15),
+        subscribeOn(idlePriority),
         fromObservable(),
       ),
     [],
   );
-  const [value, setMode] = useStreamable(stream, {
-    scheduler: idlePriority,
-  });
+  const [value, setMode] = useStreamable(stream);
   const [{ mode }, updateMode] = useState({ mode: FlowMode.Pause });
 
   const onClick = useCallback(
     () =>
-      updateMode(({ mode }) => {
-        const newMode =
-          mode === FlowMode.Pause ? FlowMode.Resume : FlowMode.Pause;
-        return { mode: newMode };
-      }),
+      updateMode(({ mode }) => ({ 
+        mode: mode === FlowMode.Pause 
+          ? FlowMode.Resume 
+          : FlowMode.Pause,
+        })),
     [updateMode],
   );
 
