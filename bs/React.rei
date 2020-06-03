@@ -23,9 +23,7 @@ let useObservable:
 
 let useStreamable:
   (
-    ~replay: int=?,
     ~scheduler: Scheduler.SchedulerLike.t=?,
-    ~stateScheduler: Scheduler.SchedulerLike.t=?,
     Streamable.StreamableLike.t('req, 'resp)
   ) =>
   (option('resp), 'req => unit);
