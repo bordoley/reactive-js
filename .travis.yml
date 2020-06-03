@@ -11,7 +11,7 @@ language: node_js
 cache:
   yarn: true
 node_js:
-  - '14'
+  - "14"
 
 matrix:
   fast_finish: true

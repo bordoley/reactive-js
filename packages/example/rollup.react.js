@@ -1,15 +1,13 @@
-// rollup.config.js
-
+import resolve from "@rollup/plugin-node-resolve";
 import replace from "@rollup/plugin-replace";
-import resolve from "rollup-plugin-node-resolve";
 import { terser } from "rollup-plugin-terser";
 
 export default {
   external: ["react", "react-dom", "scheduler"],
 
-  input: "build/esm/example-client.js",
+  input: "build/esm/react/example.js",
   output: {
-    file: "build/bundle.js",
+    file: "build/react.js",
     format: "iife",
     name: "ExampleReact",
     globals: {
@@ -24,10 +22,10 @@ export default {
     replace({
       "process.env.NODE_ENV": JSON.stringify("production"),
     }),
-    //terser({
-    //output: {
-    //comments: false,
-    //},
-    //}),
+    terser({
+      output: {
+        comments: false,
+      },
+    }),
   ],
 };

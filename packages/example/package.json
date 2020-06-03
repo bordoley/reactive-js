@@ -12,20 +12,22 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-replace": "^2.2.1",
+    "@rollup/plugin-node-resolve": "^8.0.0",
     "@types/mime-db": "^1.27.1",
     "@types/mime-types": "^2.1.0",
     "@types/node": "13.13.2",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.4",
     "rollup": "^1.27.4",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-terser": "^5.1.2"
+    "rollup-plugin-terser": "^5.1.2",
+    "rollup-plugin-svelte": "^5.0.3",
+    "svelte": "^3.0.0"
   },
   "scripts": {
-    "build": "yarn build-server && yarn build-client && yarn rollup",
+    "build": "yarn build-server && yarn build-react && yarn build-svelte",
     "build-server": "tsc -p tsconfig.server.json",
-    "build-client": "tsc -p tsconfig.client.json",
-    "clean": "rm -rf build",
-    "rollup": "rollup -c"
+    "build-react": "tsc -p tsconfig.react.json && rollup -c rollup.react.js",
+    "build-svelte": "rollup -c rollup.svelte.js",
+    "clean": "rm -rf build"
   }
 }
