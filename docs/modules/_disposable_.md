@@ -264,7 +264,7 @@ ___
 
 ### `Const` dispose
 
-▸ **dispose**(`disposable`: [DisposableLike](../interfaces/_disposable_.disposablelike.md), `e?`: [Error](_disposable_.md#error)): *void*
+▸ **dispose**(`e?`: [Error](_disposable_.md#error)): *[SideEffect1](_functions_.md#sideeffect1)‹[DisposableLike](../interfaces/_disposable_.disposablelike.md)›*
 
 Dispose `disposable` with an optional error.
 
@@ -272,10 +272,9 @@ Dispose `disposable` with an optional error.
 
 Name | Type |
 ------ | ------ |
-`disposable` | [DisposableLike](../interfaces/_disposable_.disposablelike.md) |
 `e?` | [Error](_disposable_.md#error) |
 
-**Returns:** *void*
+**Returns:** *[SideEffect1](_functions_.md#sideeffect1)‹[DisposableLike](../interfaces/_disposable_.disposablelike.md)›*
 
 ___
 

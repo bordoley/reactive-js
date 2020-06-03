@@ -31,7 +31,7 @@ export const tests = describe(
       const child = createDisposable();
 
       addDisposable(disposable, child);
-      dispose(disposable);
+      pipe(disposable, dispose());
 
       expectTrue(child.isDisposed);
     }),
@@ -40,7 +40,7 @@ export const tests = describe(
       const disposable = createDisposable();
       const child = createDisposable();
 
-      dispose(disposable);
+      pipe(disposable, dispose());
       addDisposable(disposable, child);
 
       expectTrue(child.isDisposed);
@@ -50,7 +50,7 @@ export const tests = describe(
       const teardown = mockFn();
       const disposable = createDisposable(teardown);
       addTeardown(disposable, teardown);
-      dispose(disposable);
+      pipe(disposable, dispose());
 
       pipe(teardown, expectToHaveBeenCalledTimes(1));
     }),
@@ -60,7 +60,7 @@ export const tests = describe(
 
       const disposable = createDisposable(teardown);
 
-      dispose(disposable);
+      pipe(disposable, dispose());
       pipe(disposable.error, expectNone);
     }),
 
@@ -70,7 +70,7 @@ export const tests = describe(
       const childTeardown = mockFn();
       const disposable = createDisposable(childTeardown);
 
-      dispose(disposable, error);
+      pipe(disposable, dispose(error));
 
       pipe(disposable.error, expectEquals(error));
       pipe(childTeardown, expectToHaveBeenCalledTimes(1));
@@ -109,9 +109,9 @@ export const tests = describe(
 
     test("disposes the value when disposed", () => {
       const value = createDisposable();
-      const disposable = createDisposableValue(value, dispose);
+      const disposable = createDisposableValue(value, dispose());
 
-      dispose(disposable);
+      pipe(disposable, dispose());
 
       pipe(disposable.value, expectEquals(value));
       pipe(value.isDisposed, expectTrue);

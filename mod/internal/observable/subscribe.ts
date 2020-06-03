@@ -1,5 +1,5 @@
 import { DisposableLike } from "../../disposable.ts";
-import { Function1 } from "../../functions.ts";
+import { Function1, pipe } from "../../functions.ts";
 import { SchedulerLike } from "../../scheduler.ts";
 import { ObservableLike } from "./interfaces.ts";
 import { observe } from "./observable.ts";
@@ -24,6 +24,6 @@ export const subscribe = <T>(
   observable: ObservableLike<T>,
 ): DisposableLike => {
   const observer = new DefaultObserver(scheduler);
-  observe(observable, observer);
+  pipe(observable, observe(observer));
   return observer;
 };

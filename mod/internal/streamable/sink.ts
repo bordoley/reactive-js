@@ -24,8 +24,8 @@ export const sink = <TReq, T>(
   dest: StreamableLike<T, TReq>,
 ): ObservableLike<void> =>
   using(scheduler => {
-    const srcStream = stream(src, scheduler);
-    const destStream = stream(dest, scheduler);
+    const srcStream = pipe(src, stream(scheduler));
+    const destStream = pipe(dest, stream(scheduler));
 
     const srcSubscription = pipe(
       srcStream,

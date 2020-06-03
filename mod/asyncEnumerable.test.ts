@@ -89,7 +89,7 @@ export const tests = describe(
   test("fromArray", () => {
     const scheduler = createVirtualTimeScheduler();
     const enumerable = pipe([1, 2, 3, 4, 5, 6], fromArray<number>());
-    const enumerator = stream(enumerable, scheduler);
+    const enumerator = pipe(enumerable, stream(scheduler));
 
     const result: number[] = [];
     pipe(
@@ -109,9 +109,9 @@ export const tests = describe(
 
   test("fromIterable", () => {
     const scheduler = createVirtualTimeScheduler();
-    const enumerator = stream(
+    const enumerator = pipe(
       fromIterable<number>()([1, 2, 3, 4, 5, 6]),
-      scheduler,
+      stream(scheduler),
     );
 
     const result: number[] = [];
@@ -141,9 +141,9 @@ export const tests = describe(
 
   test("generate", () => {
     const scheduler = createVirtualTimeScheduler();
-    const enumerator = stream(
+    const enumerator = pipe(
       generate(increment, returns<number>(0)),
-      scheduler,
+      stream(scheduler),
     );
 
     const result: number[] = [];

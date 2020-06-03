@@ -32,7 +32,7 @@ const createWritableEventsObservable = (
     const onDrain = defer(FlowMode.Resume, dispatchTo(dispatcher));
     writableValue.on("drain", onDrain);
 
-    const onFinish = defer(dispatcher, dispose);
+    const onFinish = defer(dispatcher, dispose());
     writableValue.on("finish", onFinish);
 
     const onPause = defer(FlowMode.Pause, dispatchTo(dispatcher));

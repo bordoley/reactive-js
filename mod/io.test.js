@@ -3,6 +3,7 @@ import { test, describe, expectEquals, expectTrue, mockFn, expectToHaveBeenCalle
 import { pipe, returns, sum } from "./functions.js";
 import { decodeWithCharset, empty, encodeUtf8, fromArray, fromValue, map, } from "./io.js";
 import { onNotify, subscribe, dispatch } from "./observable.js";
+import { none } from "./option.js";
 import { createVirtualTimeScheduler } from "./scheduler.js";
 import { sink, stream } from "./streamable.js";
 export const tests = describe("io", test("decodeWithCharset", () => {
@@ -18,7 +19,7 @@ export const tests = describe("io", test("decodeWithCharset", () => {
     expectTrue(subscription.isDisposed);
 }), test("empty", () => {
     const scheduler = createVirtualTimeScheduler();
-    const emptyStream = stream(empty(), scheduler);
+    const emptyStream = pipe(none, empty, stream(scheduler));
     dispatch(emptyStream, 2);
     dispatch(emptyStream, 1);
     const f = mockFn();
@@ -42,7 +43,7 @@ export const tests = describe("io", test("decodeWithCharset", () => {
     expectTrue(subscription.isDisposed);
 }), test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
-    const fromValueStream = stream(fromValue()(1), scheduler);
+    const fromValueStream = pipe(1, fromValue(), stream(scheduler));
     dispatch(fromValueStream, 1);
     const f = mockFn();
     const subscription = pipe(fromValueStream, onNotify(f), subscribe(scheduler));

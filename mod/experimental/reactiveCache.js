@@ -11,7 +11,7 @@ const markAsGarbage = (reactiveCache, key, stream) => {
         const continuation = (scheduler) => {
             const { cache, maxCount, garbage } = reactiveCache;
             for (const [, stream] of garbage) {
-                dispose(stream);
+                pipe(stream, dispose());
                 const hasMoreToCleanup = cache.size > maxCount;
                 if (hasMoreToCleanup) {
                     yield$(scheduler, 0);
@@ -22,7 +22,7 @@ const markAsGarbage = (reactiveCache, key, stream) => {
             }
         };
         reactiveCache.cleaning = true;
-        const schedulerContinuation = schedule(reactiveCache.cleanupScheduler, continuation);
+        const schedulerContinuation = pipe(reactiveCache.cleanupScheduler, schedule(continuation));
         addTeardown(schedulerContinuation, () => {
             reactiveCache.cleaning = false;
         });
@@ -42,7 +42,7 @@ class ReactiveCacheImpl extends AbstractDisposable {
         addTeardown(this, () => {
             for (const value of this.cache.values()) {
                 const [stream] = value;
-                dispose(stream);
+                pipe(stream, dispose());
             }
             this.cache.clear();
             this.garbage.clear();
@@ -59,16 +59,16 @@ class ReactiveCacheImpl extends AbstractDisposable {
     set(key, value) {
         let cachedValue = this.cache.get(key);
         if (isNone(cachedValue)) {
-            const stream = streamStreamable(switchAllStream(), this.dispatchScheduler);
+            const stream = pipe(switchAllStream(), streamStreamable(this.dispatchScheduler));
             addTeardown(stream, () => {
                 this.cache.delete(key);
                 this.garbage.delete(key);
             });
-            const onDisposeCleanup = (_) => addDisposable(this, schedule(this.cleanupScheduler, () => {
+            const onDisposeCleanup = (_) => addDisposable(this, pipe(this.cleanupScheduler, schedule(() => {
                 if (stream.observerCount === 0) {
                     markAsGarbage(this, key, stream);
                 }
-            }));
+            })));
             const onSubscribeUnmark = () => {
                 this.garbage.delete(key);
                 return onDisposeCleanup;

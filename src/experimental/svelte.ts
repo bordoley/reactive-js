@@ -11,7 +11,12 @@ import {
 } from "../observable";
 import { Option, none, isSome } from "../option";
 import { SchedulerLike } from "../scheduler";
-import { StreamableLike, lift, onNotify, stream as streamableStream } from "../streamable";
+import {
+  StreamableLike,
+  lift,
+  onNotify,
+  stream as streamableStream,
+} from "../streamable";
 
 class ObservableSvelteStore<T> implements Readable<Option<T>> {
   constructor(
@@ -55,12 +60,12 @@ export const stream = <TReq, T>(
   let stream: Option<StreamLike<TReq, T>> = none;
 
   onMount(() => {
-    stream = streamableStream(liftedStreamable, scheduler, options);
+    stream = pipe(liftedStreamable, streamableStream(scheduler, options));
   });
 
   onDestroy(() => {
     if (isSome(stream)) {
-      dispose(stream);
+      pipe(stream, dispose());
     }
   });
 

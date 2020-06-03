@@ -14,7 +14,7 @@ class TakeFirstObserver extends AbstractAutoDisposingDelegatingObserver {
         this.count++;
         this.delegate.notify(next);
         if (this.count >= this.maxCount) {
-            dispose(this);
+            pipe(this, dispose());
         }
     }
 }

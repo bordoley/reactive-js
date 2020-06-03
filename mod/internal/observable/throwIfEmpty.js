@@ -1,4 +1,5 @@
 import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, } from "../../disposable.js";
+import { pipe } from "../../functions.js";
 import { none } from "../../option.js";
 import { lift } from "./lift.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
@@ -20,7 +21,7 @@ class ThrowIfEmptyObserver extends AbstractDelegatingObserver {
                 }
                 error = { cause };
             }
-            dispose(delegate, error);
+            pipe(delegate, dispose(error));
         });
     }
     notify(next) {

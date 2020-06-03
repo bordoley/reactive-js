@@ -1,4 +1,5 @@
 import { dispose, addTeardown } from "../../disposable.js";
+import { pipe } from "../../functions.js";
 import { createObservable, dispatch } from "../../observable.js";
 export const fromEvent = (target, eventName, selector) => createObservable(dispatcher => {
     const listener = (event) => {
@@ -7,7 +8,7 @@ export const fromEvent = (target, eventName, selector) => createObservable(dispa
             dispatch(dispatcher, result);
         }
         catch (cause) {
-            dispose(dispatcher, { cause });
+            pipe(dispatcher, dispose({ cause }));
         }
     };
     target.addEventListener(eventName, listener, { passive: true });

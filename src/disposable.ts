@@ -1,4 +1,4 @@
-import { SideEffect1, SideEffect, defer } from "./functions";
+import { SideEffect1, SideEffect, defer, pipe } from "./functions";
 import { isSome, none, Option, isNone } from "./option";
 
 /**
@@ -45,7 +45,9 @@ export interface DisposableLike {
 /**
  * Dispose `disposable` with an optional error.
  */
-export const dispose = (disposable: DisposableLike, e?: Error) => {
+export const dispose = (
+  e?: Error,
+): SideEffect1<DisposableLike> => disposable => {
   disposable.dispose(e);
 };
 
@@ -110,7 +112,7 @@ const toDisposeOnErrorTeardown = (
   disposable: DisposableLike,
 ): SideEffect1<Option<Error>> => (error?: Error) => {
   if (isSome(error)) {
-    dispose(disposable, error);
+    pipe(disposable, dispose(error));
   }
 };
 
@@ -144,7 +146,7 @@ export const addOnDisposedWithoutError = (
 ) => {
   addTeardown(parent, e => {
     if (isNone(e)) {
-      dispose(child);
+      pipe(child, dispose());
     }
   });
 };
@@ -154,7 +156,7 @@ export const addOnDisposedWithoutError = (
  */
 export const toErrorHandler = (
   disposable: DisposableLike,
-): SideEffect1<unknown> => cause => dispose(disposable, { cause });
+): SideEffect1<unknown> => cause => pipe(disposable, dispose({ cause }));
 
 const doDispose = (disposable: DisposableOrTeardown, error?: Error) => {
   if (disposable instanceof Function) {
@@ -166,7 +168,7 @@ const doDispose = (disposable: DisposableOrTeardown, error?: Error) => {
        */
     }
   } else {
-    dispose(disposable, error);
+    pipe(disposable, dispose(error));
   }
 };
 
@@ -288,7 +290,7 @@ export abstract class AbstractSerialDisposable extends AbstractDisposable
 
     if (oldInner !== newInner) {
       addDisposableDisposeParentOnChildError(this, newInner);
-      dispose(oldInner);
+      pipe(oldInner, dispose());
     }
   }
 }

@@ -43,7 +43,7 @@ const markAsGarbage = <T>(
       const { cache, maxCount, garbage } = reactiveCache;
 
       for (const [, stream] of garbage) {
-        dispose(stream);
+        pipe(stream, dispose());
 
         // only delete as many entries as we need to.
         const hasMoreToCleanup = cache.size > maxCount;
@@ -58,9 +58,9 @@ const markAsGarbage = <T>(
 
     reactiveCache.cleaning = true;
 
-    const schedulerContinuation = schedule(
+    const schedulerContinuation = pipe(
       reactiveCache.cleanupScheduler,
-      continuation,
+      schedule(continuation),
     );
     addTeardown(schedulerContinuation, () => {
       reactiveCache.cleaning = false;
@@ -98,7 +98,7 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
     addTeardown(this, () => {
       for (const value of this.cache.values()) {
         const [stream] = value;
-        dispose(stream);
+        pipe(stream, dispose());
       }
       this.cache.clear();
       this.garbage.clear();
@@ -118,9 +118,9 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
     let cachedValue = this.cache.get(key);
 
     if (isNone(cachedValue)) {
-      const stream = streamStreamable(
+      const stream = pipe(
         switchAllStream(),
-        this.dispatchScheduler,
+        streamStreamable(this.dispatchScheduler),
       );
       addTeardown(stream, () => {
         this.cache.delete(key);
@@ -130,11 +130,14 @@ class ReactiveCacheImpl<T> extends AbstractDisposable
       const onDisposeCleanup = (_?: Error) =>
         addDisposable(
           this,
-          schedule(this.cleanupScheduler, () => {
-            if (stream.observerCount === 0) {
-              markAsGarbage(this, key, stream);
-            }
-          }),
+          pipe(
+            this.cleanupScheduler,
+            schedule(() => {
+              if (stream.observerCount === 0) {
+                markAsGarbage(this, key, stream);
+              }
+            }),
+          ),
         );
 
       const onSubscribeUnmark = () => {

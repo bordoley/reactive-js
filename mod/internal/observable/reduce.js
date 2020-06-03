@@ -2,7 +2,7 @@ import { addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, } from "../.
 import { pipe } from "../../functions.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
-import { observeWith } from "./observable.js";
+import { observe } from "./observable.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 class ReduceObserver extends AbstractDelegatingObserver {
     constructor(delegate, reducer, acc) {
@@ -11,7 +11,7 @@ class ReduceObserver extends AbstractDelegatingObserver {
         this.acc = acc;
         addOnDisposedWithError(this, delegate);
         addOnDisposedWithoutErrorTeardown(this, () => {
-            pipe(this.acc, fromValue(), observeWith(delegate));
+            pipe(this.acc, fromValue(), observe(delegate));
         });
     }
     notify(next) {

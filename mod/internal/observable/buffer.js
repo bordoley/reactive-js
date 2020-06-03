@@ -4,7 +4,7 @@ import { none } from "../../option.js";
 import { fromValue } from "./fromValue.js";
 import { lift } from "./lift.js";
 import { never } from "./never.js";
-import { observeWith } from "./observable.js";
+import { observe } from "./observable.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 import { onNotify } from "./onNotify.js";
 import { subscribe } from "./subscribe.js";
@@ -27,10 +27,10 @@ class BufferObserver extends AbstractDelegatingObserver {
             const buffer = this.buffer;
             this.buffer = [];
             if (buffer.length > 0) {
-                pipe(buffer, fromValue(), observeWith(delegate));
+                pipe(buffer, fromValue(), observe(delegate));
             }
             else {
-                dispose(delegate);
+                pipe(delegate, dispose());
             }
         });
     }

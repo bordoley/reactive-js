@@ -19,7 +19,7 @@ class SharedObservable<T> implements ObservableLike<T> {
     this.observerCount--;
 
     if (this.observerCount === 0) {
-      dispose(this.multicast as MulticastObservableLike<T>);
+      pipe(this.multicast as MulticastObservableLike<T>, dispose());
       this.multicast = none;
     }
   };
@@ -42,7 +42,7 @@ class SharedObservable<T> implements ObservableLike<T> {
 
     const multicast = this.multicast as SubjectLike<T>;
 
-    observe(multicast, observer);
+    pipe(multicast, observe(observer));
     addTeardown(observer, this.teardown);
   }
 }

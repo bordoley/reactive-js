@@ -1,4 +1,5 @@
 import { AbstractDisposable, addTeardown, dispose, } from "../../disposable.js";
+import { pipe } from "../../functions.js";
 import { none, isSome } from "../../option.js";
 const notifyListeners = (listeners, state) => {
     for (const listener of listeners) {
@@ -51,7 +52,7 @@ class SchedulerContinuationImpl extends AbstractDisposable {
                 this.scheduler.schedule(this, yieldError);
             }
             else {
-                dispose(this, error);
+                pipe(this, dispose(error));
             }
         }
     }
@@ -64,7 +65,7 @@ export const yield$ = (scheduler, delay) => {
         throw new YieldError(delay);
     }
 };
-export const schedule = (scheduler, f, options) => {
+export const schedule = (f, options) => scheduler => {
     const continuation = new SchedulerContinuationImpl(scheduler, f);
     scheduler.schedule(continuation, options);
     return continuation;

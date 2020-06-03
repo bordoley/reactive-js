@@ -17,7 +17,7 @@ const onOtherNotify = (self) => (otherLatest) => {
     self.otherLatest = otherLatest;
     notifyDelegate(self);
     if (self.isDisposed && self.queue.length === 0) {
-        dispose(self.delegate);
+        pipe(self.delegate, dispose());
     }
 };
 class ZipWithLatestFromObserver extends AbstractObserver {
@@ -30,7 +30,7 @@ class ZipWithLatestFromObserver extends AbstractObserver {
         const otherSubscription = pipe(other, onNotify(onOtherNotify(this)), subscribe(delegate));
         const disposeDelegate = () => {
             if (this.isDisposed && otherSubscription.isDisposed) {
-                dispose(delegate);
+                pipe(delegate, dispose());
             }
         };
         addDisposableDisposeParentOnChildError(delegate, this);

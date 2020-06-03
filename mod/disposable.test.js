@@ -6,30 +6,30 @@ export const tests = describe("Disposable", describe("AbstractDisposable", test(
     const disposable = createDisposable();
     const child = createDisposable();
     addDisposable(disposable, child);
-    dispose(disposable);
+    pipe(disposable, dispose());
     expectTrue(child.isDisposed);
 }), test("adding to disposed disposable disposes the child", () => {
     const disposable = createDisposable();
     const child = createDisposable();
-    dispose(disposable);
+    pipe(disposable, dispose());
     addDisposable(disposable, child);
     expectTrue(child.isDisposed);
 }), test("disposes teardown function exactly once when disposed", () => {
     const teardown = mockFn();
     const disposable = createDisposable(teardown);
     addTeardown(disposable, teardown);
-    dispose(disposable);
+    pipe(disposable, dispose());
     pipe(teardown, expectToHaveBeenCalledTimes(1));
 }), test("catches and swallows Errors thrown by teardown function", () => {
     const teardown = defer(none, raise);
     const disposable = createDisposable(teardown);
-    dispose(disposable);
+    pipe(disposable, dispose());
     pipe(disposable.error, expectNone);
 }), test("propogates errors when disposed with an Error", () => {
     const error = { cause: null };
     const childTeardown = mockFn();
     const disposable = createDisposable(childTeardown);
-    dispose(disposable, error);
+    pipe(disposable, dispose(error));
     pipe(disposable.error, expectEquals(error));
     pipe(childTeardown, expectToHaveBeenCalledTimes(1));
     pipe(childTeardown.calls[0], expectArrayEquals([error]));
@@ -49,8 +49,8 @@ export const tests = describe("Disposable", describe("AbstractDisposable", test(
     pipe(child.isDisposed, expectFalse);
 })), describe("DisposableValue", test("disposes the value when disposed", () => {
     const value = createDisposable();
-    const disposable = createDisposableValue(value, dispose);
-    dispose(disposable);
+    const disposable = createDisposableValue(value, dispose());
+    pipe(disposable, dispose());
     pipe(disposable.value, expectEquals(value));
     pipe(value.isDisposed, expectTrue);
 })));

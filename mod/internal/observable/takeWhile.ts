@@ -1,5 +1,5 @@
 import { dispose } from "../../disposable.ts";
-import { Predicate } from "../../functions.ts";
+import { Predicate, pipe } from "../../functions.ts";
 import { ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import {
@@ -29,7 +29,7 @@ class TakeWhileObserver<T> extends AbstractAutoDisposingDelegatingObserver<
     }
 
     if (!satisfiesPredicate) {
-      dispose(this);
+      pipe(this, dispose());
     }
   }
 }

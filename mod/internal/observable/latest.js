@@ -16,7 +16,7 @@ class LatestObserver extends AbstractDelegatingObserver {
             const ctx = this.ctx;
             ctx.completedCount++;
             if (ctx.completedCount === ctx.observers.length) {
-                dispose(delegate);
+                pipe(delegate, dispose());
             }
         });
     }
@@ -53,7 +53,7 @@ export const latest = (observables, mode) => {
         for (const observable of observables) {
             const innerObserver = new LatestObserver(observer, ctx, mode);
             observers.push(innerObserver);
-            observe(observable, innerObserver);
+            pipe(observable, observe(innerObserver));
         }
     };
     const isSynchronous = pipe(observables, everySatisfy(obs => obs.isSynchronous));

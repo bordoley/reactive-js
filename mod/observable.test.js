@@ -35,13 +35,13 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     dispatch(dispatcher, 1);
     dispatch(dispatcher, 2);
     dispatch(dispatcher, 3);
-    dispose(dispatcher);
+    pipe(dispatcher, dispose());
 }), toRunnable({
     schedulerFactory: defer({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
 }), toArray(), expectArrayEquals([1, 2, 3])))), describe("createSubject", test("with replay", () => {
     const subject = createSubject({ replay: 2 });
     pipe([1, 2, 3, 4], fromArrayRunnable(), forEach(dispatchTo(subject)));
-    dispose(subject);
+    pipe(subject, dispose());
     pipe(subject, toRunnable(), toArray(), expectArrayEquals([3, 4]));
 }), test("with multiple observers", () => {
     const scheduler = createVirtualTimeScheduler();
@@ -51,9 +51,9 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     pipe(subject.observerCount, expectEquals(1));
     const sub2 = pipe(subject, subscribe(scheduler));
     pipe(subject.observerCount, expectEquals(2));
-    dispose(sub1);
+    pipe(sub1, dispose());
     pipe(subject.observerCount, expectEquals(1));
-    dispose(sub2);
+    pipe(sub2, dispose());
     pipe(subject.observerCount, expectEquals(0));
 })), test("exhaustMap", defer([fromArray()([1, 2, 3]), fromArray()([4, 5, 6]), fromArray()([7, 8, 9])], fromArray(), exhaustMap(identity), toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), describe("fromPromise", testAsync("when the promise resolves", async () => {
     const factory = () => Promise.resolve(1);
@@ -92,11 +92,11 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
         dispatch(d, 1);
         if (retried) {
             dispatch(d, 2);
-            dispose(d);
+            pipe(d, dispose());
         }
         else {
             retried = true;
-            dispose(d, { cause: new Error() });
+            pipe(d, dispose({ cause: new Error() }));
         }
     });
     pipe(src, retry(), toRunnable(), toArray(), expectArrayEquals([1, 1, 2]));

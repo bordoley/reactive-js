@@ -23,7 +23,7 @@ export const tests = describe(
   "flowables",
   test("empty", () => {
     const scheduler = createVirtualTimeScheduler();
-    const emptyStream = stream(empty(), scheduler);
+    const emptyStream = pipe(empty(), stream(scheduler));
 
     dispatch(emptyStream, FlowMode.Pause);
     dispatch(emptyStream, FlowMode.Resume);
@@ -39,20 +39,28 @@ export const tests = describe(
 
   test("fromObservable", () => {
     const scheduler = createVirtualTimeScheduler();
-    const generateStream = stream(
-      pipe(generate(increment, returns(-1), { delay: 1 }), fromObservable()),
-      scheduler,
+    const generateStream = pipe(
+      generate(increment, returns(-1), { delay: 1 }),
+      fromObservable(),
+      stream(scheduler),
     );
 
     dispatch(generateStream, FlowMode.Resume);
 
-    schedule(scheduler, defer(FlowMode.Pause, dispatchTo(generateStream)), {
-      delay: 2,
-    });
-    schedule(scheduler, defer(FlowMode.Resume, dispatchTo(generateStream)), {
-      delay: 4,
-    });
-    schedule(scheduler, defer(generateStream, dispose), { delay: 5 });
+    pipe(
+      scheduler,
+      schedule(defer(FlowMode.Pause, dispatchTo(generateStream)), {
+        delay: 2,
+      }),
+    );
+
+    pipe(
+      scheduler,
+      schedule(defer(FlowMode.Resume, dispatchTo(generateStream)), {
+        delay: 4,
+      }),
+    );
+    pipe(scheduler, schedule(defer(generateStream, dispose()), { delay: 5 }));
 
     const f = mockFn();
     const subscription = pipe(
@@ -75,7 +83,7 @@ export const tests = describe(
 
   test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
-    const fromValueStream = stream(fromValue<number>()(1), scheduler);
+    const fromValueStream = pipe(1, fromValue<number>(), stream(scheduler));
 
     dispatch(fromValueStream, FlowMode.Resume);
     dispatch(fromValueStream, FlowMode.Resume);

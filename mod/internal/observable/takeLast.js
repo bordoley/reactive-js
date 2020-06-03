@@ -3,7 +3,7 @@ import { pipe } from "../../functions.js";
 import { empty } from "./empty.js";
 import { fromArray } from "./fromArray.js";
 import { lift } from "./lift.js";
-import { observeWith } from "./observable.js";
+import { observe } from "./observable.js";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.js";
 class TakeLastObserver extends AbstractDelegatingObserver {
     constructor(delegate, maxCount) {
@@ -13,7 +13,7 @@ class TakeLastObserver extends AbstractDelegatingObserver {
         const last = this.last;
         addOnDisposedWithError(this, delegate);
         addOnDisposedWithoutErrorTeardown(this, () => {
-            pipe(last, fromArray(), observeWith(delegate));
+            pipe(last, fromArray(), observe(delegate));
         });
         addTeardown(delegate, () => {
             last.length = 0;

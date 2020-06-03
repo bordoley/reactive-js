@@ -26,7 +26,7 @@ const createRepeatObserver = <T>(
     }
 
     if (shouldComplete) {
-      dispose(delegate, error);
+      pipe(delegate, dispose(error));
     } else {
       count++;
       const subscription = pipe(

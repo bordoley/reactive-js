@@ -5,7 +5,7 @@ import {
   addDisposable,
   addTeardown,
 } from "../../disposable";
-import { Factory, SideEffect, Function1, defer } from "../../functions";
+import { Factory, SideEffect, Function1, defer, pipe } from "../../functions";
 import { SchedulerLike, SchedulerContinuationLike } from "./interfaces";
 import { run } from "./schedulerContinuation";
 
@@ -47,7 +47,7 @@ const createScheduledCallback = (
   cb: SideEffect,
 ): SideEffect => () => {
   if (!disposable.isDisposed) {
-    dispose(disposable);
+    pipe(disposable, dispose());
     cb();
   }
 };

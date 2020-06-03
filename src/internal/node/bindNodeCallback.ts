@@ -12,6 +12,7 @@ import {
   SideEffect4,
   SideEffect5,
   SideEffect6,
+  pipe,
 } from "../../functions";
 import { createObservable, ObservableLike, dispatch } from "../../observable";
 
@@ -64,10 +65,10 @@ export function bindNodeCallback<T>(
     return createObservable(dispatcher => {
       const handler = (cause: unknown, arg: any) => {
         if (cause) {
-          dispose(dispatcher, { cause });
+          pipe(dispatcher, dispose({ cause }));
         } else {
           dispatch(dispatcher, arg);
-          dispose(dispatcher);
+          pipe(dispatcher, dispose());
         }
       };
 

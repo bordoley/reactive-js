@@ -19,7 +19,7 @@ class StreamImpl extends AbstractDisposable {
         dispatch(this.dispatcher, req);
     }
     observe(observer) {
-        observe(this.observable, observer);
+        pipe(this.observable, observe(observer));
     }
 }
 export const createStream = (op, scheduler, options) => new StreamImpl(op, scheduler, options);

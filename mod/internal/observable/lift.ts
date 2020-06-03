@@ -19,7 +19,7 @@ class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
       any
     >;
 
-    observe(this.source, liftedSubscrber);
+    pipe(this.source, observe(liftedSubscrber));
   }
 }
 

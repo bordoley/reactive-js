@@ -51,7 +51,7 @@ export const tests = describe(
           );
         },
         () => {
-          dispose(da1);
+          pipe(da1, dispose());
 
           db1 = pipe(
             rm.get("b"),
@@ -84,16 +84,16 @@ export const tests = describe(
           );
         },
         () => {
-          dispose(da2);
-          dispose(db1);
+          pipe(da2, dispose());
+          pipe(db1, dispose());
         },
         () => {
-          dispose(db2);
+          pipe(db2, dispose());
         },
         () => {
-          dispose(da3);
-          dispose(db2);
-          dispose(db3);
+          pipe(da3, dispose());
+          pipe(db2, dispose());
+          pipe(db3, dispose());
         },
         ignore,
         ignore,
@@ -107,8 +107,8 @@ export const tests = describe(
             subscribe(scheduler),
           );
 
-          dispose(dc);
-          dispose(dd);
+          pipe(dc, dispose());
+          pipe(dd, dispose());
         },
         ignore,
         ignore,
@@ -120,7 +120,7 @@ export const tests = describe(
         ignore,
         ignore,
         ignore,
-        defer(rm, dispose),
+        defer(rm, dispose()),
       ],
       fromArray({ delay: 1 }),
       onNotify(lib => lib()),

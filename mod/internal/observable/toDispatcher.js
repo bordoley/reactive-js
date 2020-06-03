@@ -1,10 +1,11 @@
 import { AbstractDisposable, dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, addTeardown, addDisposable, } from "../../disposable.js";
+import { pipe } from "../../functions.js";
 import { schedule } from "../../scheduler.js";
 import { yield$ } from "./observer.js";
 const scheduleDrainQueue = (dispatcher) => {
     if (dispatcher.nextQueue.length === 1) {
         const { observer } = dispatcher;
-        const continuationSubcription = schedule(observer, dispatcher.continuation);
+        const continuationSubcription = pipe(observer, schedule(dispatcher.continuation));
         addOnDisposedWithError(continuationSubcription, observer);
         addOnDisposedWithoutErrorTeardown(continuationSubcription, dispatcher.onContinuationDispose);
     }
@@ -23,13 +24,13 @@ class ObserverDelegatingDispatcher extends AbstractDisposable {
         };
         this.onContinuationDispose = () => {
             if (this.isDisposed) {
-                dispose(this.observer, this.error);
+                pipe(this.observer, dispose(this.error));
             }
         };
         this.nextQueue = [];
         addTeardown(this, e => {
             if (this.nextQueue.length === 0) {
-                dispose(observer, e);
+                pipe(observer, dispose(e));
             }
         });
         addDisposable(observer, this);

@@ -3,7 +3,7 @@ import {
   addOnDisposedWithoutError,
   addOnDisposedWithErrorTeardown,
 } from "../../disposable";
-import { Function1 } from "../../functions";
+import { Function1, pipe } from "../../functions";
 import { isSome, none } from "../../option";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
@@ -28,12 +28,12 @@ export const catchError = <T>(
       try {
         const result = onError(cause) || none;
         if (isSome(result)) {
-          observe(result, delegate);
+          pipe(result, observe(delegate));
         } else {
-          dispose(delegate);
+          pipe(delegate, dispose());
         }
       } catch (cause) {
-        dispose(delegate, { cause: { parent: cause, cause } });
+        pipe(delegate, dispose({ cause: { parent: cause, cause } }));
       }
     });
 

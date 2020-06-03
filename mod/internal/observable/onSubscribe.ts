@@ -4,7 +4,7 @@ import {
   addTeardown,
   addDisposableDisposeParentOnChildError,
 } from "../../disposable.ts";
-import { Factory } from "../../functions.ts";
+import { Factory, pipe } from "../../functions.ts";
 import { isSome, none } from "../../option.ts";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces.ts";
 import { observe } from "./observable.ts";
@@ -21,7 +21,7 @@ class OnSubscribeObservable<T> implements ObservableLike<T> {
 
   observe(observer: ObserverLike<T>) {
     try {
-      observe(this.src, observer);
+      pipe(this.src, observe(observer));
       const disposable = this.f() || none;
       if (disposable instanceof Function) {
         addTeardown(observer, disposable);
@@ -29,7 +29,7 @@ class OnSubscribeObservable<T> implements ObservableLike<T> {
         addDisposableDisposeParentOnChildError(observer, disposable);
       }
     } catch (cause) {
-      dispose(observer, { cause });
+      pipe(observer, dispose({ cause }));
     }
   }
 }

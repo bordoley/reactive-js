@@ -1,5 +1,5 @@
 import { createDisposable, dispose, addDisposable, addTeardown, } from "../../disposable.js";
-import { defer } from "../../functions.js";
+import { defer, pipe } from "../../functions.js";
 import { run } from "./schedulerContinuation.js";
 const supportsPerformanceNow = typeof performance === "object" && typeof performance.now === "function";
 const supportsProcessHRTime = typeof process === "object" && typeof process.hrtime === "function";
@@ -15,7 +15,7 @@ const now = supportsPerformanceNow
         : () => Date.now();
 const createScheduledCallback = (disposable, cb) => () => {
     if (!disposable.isDisposed) {
-        dispose(disposable);
+        pipe(disposable, dispose());
         cb();
     }
 };

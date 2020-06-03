@@ -1,5 +1,5 @@
 import { disposed, dispose } from "../disposable.ts";
-import { pipe, returns } from "../functions.ts";
+import { pipe, returns, defer } from "../functions.ts";
 import {
   fromArray,
   subscribe,
@@ -72,8 +72,8 @@ export const tests = describe(
           pipe(cache.get("c"), expectSome);
           pipe(cache.get("d"), expectSome);
 
-          dispose(cSubscription);
-          dispose(dSubscription);
+          pipe(cSubscription, dispose());
+          pipe(dSubscription, dispose());
 
           const entryE = cache.set("e", fromValue()("e"));
           eSubscription = pipe(entryE, subscribe(scheduler));
@@ -85,7 +85,7 @@ export const tests = describe(
           pipe(cache.get("d"), expectNone);
           pipe(cache.get("e"), expectSome);
         },
-        () => dispose(cache),
+        defer(cache, dispose()),
         () => {
           // Ensure that disposing the cache disposes all outstanding subscriptions.
           // Note: check these here as these subscriptions require scheduling by the

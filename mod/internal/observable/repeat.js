@@ -18,7 +18,7 @@ const createRepeatObserver = (delegate, observable, shouldRepeat) => {
             error = { cause, parent: error };
         }
         if (shouldComplete) {
-            dispose(delegate, error);
+            pipe(delegate, dispose(error));
         }
         else {
             count++;

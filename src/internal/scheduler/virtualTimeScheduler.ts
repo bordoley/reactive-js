@@ -1,4 +1,5 @@
 import { AbstractDisposable, addDisposable, dispose } from "../../disposable";
+import { pipe } from "../../functions";
 import { none, isSome } from "../../option";
 import { createPriorityQueue, QueueLike } from "../queues";
 import {
@@ -37,7 +38,7 @@ const move = (scheduler: VirtualTimeSchedulerImpl) => {
       scheduler.microTaskTicks = 0;
       scheduler.now = dueTime;
     } else {
-      dispose(scheduler);
+      pipe(scheduler, dispose());
     }
   }
 
@@ -73,7 +74,7 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable
       this.inContinuation = false;
     }
 
-    dispose(this);
+    pipe(this, dispose());
   }
 
   schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {

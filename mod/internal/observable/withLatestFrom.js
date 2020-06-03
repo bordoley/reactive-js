@@ -17,7 +17,7 @@ class WithLatestFromObserver extends AbstractAutoDisposingDelegatingObserver {
         const otherSubscription = pipe(other, onNotify(this.onNotify), subscribe(this));
         addOnDisposedWithoutErrorTeardown(otherSubscription, () => {
             if (!this.hasLatest) {
-                dispose(this);
+                pipe(this, dispose());
             }
         });
         addDisposableDisposeParentOnChildError(this, otherSubscription);

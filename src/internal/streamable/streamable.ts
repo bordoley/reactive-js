@@ -51,7 +51,7 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
 
   const op: ObservableOperator<TReqB, TB> = requests =>
     using(scheduler => {
-      const srcStream = stream(src, scheduler);
+      const srcStream = pipe(src, stream(scheduler));
       const requestSubscription = pipe(
         requests,
         map((compose as any)(...reqOps)),
@@ -100,7 +100,7 @@ export const empty = <TReq, T>(options?: {
   isNone(options) ? _empty : createStreamable<TReq, T>(_ => emptyObs(options));
 
 export const stream = <TReq, T>(
-  streamable: StreamableLike<TReq, T>,
   scheduler: SchedulerLike,
   options?: { readonly replay?: number },
-): StreamLike<TReq, T> => streamable.stream(scheduler, options);
+): Function1<StreamableLike<TReq, T>, StreamLike<TReq, T>> => streamable =>
+  streamable.stream(scheduler, options);

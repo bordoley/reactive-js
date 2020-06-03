@@ -40,7 +40,7 @@ class LatestObserver extends AbstractDelegatingObserver<
       ctx.completedCount++;
 
       if (ctx.completedCount === ctx.observers.length) {
-        dispose(delegate);
+        pipe(delegate, dispose());
       }
     });
   }
@@ -90,7 +90,7 @@ export const latest = (
     for (const observable of observables) {
       const innerObserver = new LatestObserver(observer, ctx, mode);
       observers.push(innerObserver);
-      observe(observable, innerObserver);
+      pipe(observable, observe(innerObserver));
     }
   };
 

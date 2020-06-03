@@ -4,7 +4,7 @@ import { onNotify, using, zipWithLatestFrom, dispatchTo, subscribe, } from "./ob
 import { createActionReducer, createStreamable, stream as streamStreamable, mapReq, map as mapStream, } from "./streamable.js";
 export const createStateStore = (initialState, options) => createActionReducer(updaterReducer, initialState, options);
 export const toStateStore = () => streamable => createStreamable(updates => using(scheduler => {
-    const stream = streamStreamable(streamable, scheduler);
+    const stream = pipe(streamable, streamStreamable(scheduler));
     const updatesSubscription = pipe(updates, zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)), onNotify(dispatchTo(stream)), subscribe(scheduler));
     bindDisposables(updatesSubscription, stream);
     return stream;

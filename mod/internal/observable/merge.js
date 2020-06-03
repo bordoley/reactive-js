@@ -1,4 +1,5 @@
 import { dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, } from "../../disposable.js";
+import { pipe } from "../../functions.js";
 import { observe } from "./observable.js";
 import { createDelegatingObserver } from "./observer.js";
 const createMergeObserver = (delegate, count, ctx) => {
@@ -7,7 +8,7 @@ const createMergeObserver = (delegate, count, ctx) => {
     addOnDisposedWithoutErrorTeardown(observer, () => {
         ctx.completedCount++;
         if (ctx.completedCount >= count) {
-            dispose(delegate);
+            pipe(delegate, dispose());
         }
     });
     return observer;
@@ -23,7 +24,7 @@ class MergeObservable {
         const ctx = { completedCount: 0 };
         for (const observable of observables) {
             const mergeObserver = createMergeObserver(observer, count, ctx);
-            observe(observable, mergeObserver);
+            pipe(observable, observe(mergeObserver));
         }
     }
 }

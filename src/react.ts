@@ -78,7 +78,7 @@ export const useObservable = <T>(
       updateError,
       scheduler,
     );
-    return defer(subscription, dispose);
+    return defer(subscription, dispose());
   }, [observable, updateState, updateError, scheduler]);
 
   if (isSome(error)) {
@@ -104,14 +104,12 @@ export const useStreamable = <TReq, T>(
   const streamRef = useRef<Option<StreamLike<TReq, T>>>(none);
 
   useEffect(() => {
-    const stream = streamableStream(streamable, scheduler, options);
+    const stream = pipe(streamable, streamableStream(scheduler, options));
     streamRef.current = stream;
 
     pipe(stream, returns, updateStream);
 
-    return () => {
-      dispose(stream);
-    };
+    return defer(stream, dispose());
   }, [streamable, scheduler, replay, updateStream]);
 
   const dispatch = useCallback(
@@ -152,7 +150,7 @@ const priorityScheduler = {
     },
   ) {
     const callback = () => {
-      dispose(callbackNodeDisposable);
+      pipe(callbackNodeDisposable, dispose());
 
       priorityScheduler.inContinuation = true;
       run(continuation);

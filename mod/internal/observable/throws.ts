@@ -1,5 +1,5 @@
 import { dispose } from "../../disposable.ts";
-import { Function1, Factory } from "../../functions.ts";
+import { Function1, Factory, pipe } from "../../functions.ts";
 import { none } from "../../option.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import { deferSynchronous, defer } from "./observable.ts";
@@ -21,7 +21,7 @@ export const throws = <T>(
     } catch (e) {
       cause = e;
     }
-    dispose(observer, { cause });
+    pipe(observer, dispose({ cause }));
   };
 
   return delay > 0 ? defer(factory, options) : deferSynchronous(factory);

@@ -49,9 +49,9 @@ export const transform = (
         },
       );
 
-      const transformReadableStream = stream(
+      const transformReadableStream = pipe(
         createReadableIOSource(returns(transform)),
-        scheduler,
+        stream(scheduler),
       );
 
       const sinkSubscription = pipe(

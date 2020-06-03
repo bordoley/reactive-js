@@ -24,7 +24,7 @@ class IOSinkAccumulatorImpl extends AbstractDisposable {
         this.subject.observe(observer);
     }
     stream(scheduler, options) {
-        const result = stream(this.streamable, scheduler, options);
+        const result = pipe(this.streamable, stream(scheduler, options));
         addDisposableDisposeParentOnChildError(this, result);
         return result;
     }

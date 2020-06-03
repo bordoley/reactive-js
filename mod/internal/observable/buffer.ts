@@ -12,7 +12,7 @@ import { fromValue } from "./fromValue.ts";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
 import { never } from "./never.ts";
-import { observeWith } from "./observable.ts";
+import { observe } from "./observable.ts";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer.ts";
 import { onNotify } from "./onNotify.ts";
 import { subscribe } from "./subscribe.ts";
@@ -43,9 +43,9 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
       this.buffer = [];
 
       if (buffer.length > 0) {
-        pipe(buffer, fromValue(), observeWith(delegate));
+        pipe(buffer, fromValue(), observe(delegate));
       } else {
-        dispose(delegate);
+        pipe(delegate, dispose());
       }
     });
   }

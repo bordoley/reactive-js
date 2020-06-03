@@ -21,7 +21,7 @@ export const tests = describe("resource manager", test("integration test", () =>
             }), subscribe(scheduler));
         },
         () => {
-            dispose(da1);
+            pipe(da1, dispose());
             db1 = pipe(rm.get("b"), onNotify(_ => {
                 console.log("b1: " + scheduler.now);
             }), subscribe(scheduler));
@@ -36,16 +36,16 @@ export const tests = describe("resource manager", test("integration test", () =>
             }), subscribe(scheduler));
         },
         () => {
-            dispose(da2);
-            dispose(db1);
+            pipe(da2, dispose());
+            pipe(db1, dispose());
         },
         () => {
-            dispose(db2);
+            pipe(db2, dispose());
         },
         () => {
-            dispose(da3);
-            dispose(db2);
-            dispose(db3);
+            pipe(da3, dispose());
+            pipe(db2, dispose());
+            pipe(db3, dispose());
         },
         ignore,
         ignore,
@@ -54,8 +54,8 @@ export const tests = describe("resource manager", test("integration test", () =>
             pipe(rm.get("e"), onNotify(_ => {
                 console.log("e1: " + scheduler.now);
             }), subscribe(scheduler));
-            dispose(dc);
-            dispose(dd);
+            pipe(dc, dispose());
+            pipe(dd, dispose());
         },
         ignore,
         ignore,
@@ -67,7 +67,7 @@ export const tests = describe("resource manager", test("integration test", () =>
         ignore,
         ignore,
         ignore,
-        defer(rm, dispose),
+        defer(rm, dispose()),
     ], fromArray({ delay: 1 }), onNotify(lib => lib()), subscribe(scheduler));
     scheduler.run();
 }));

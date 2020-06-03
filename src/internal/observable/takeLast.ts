@@ -8,7 +8,7 @@ import { empty } from "./empty";
 import { fromArray } from "./fromArray";
 import { ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import { observeWith } from "./observable";
+import { observe } from "./observable";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
 class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
@@ -19,7 +19,7 @@ class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
     const last = this.last;
     addOnDisposedWithError(this, delegate);
     addOnDisposedWithoutErrorTeardown(this, () => {
-      pipe(last, fromArray(), observeWith(delegate));
+      pipe(last, fromArray(), observe(delegate));
     });
     addTeardown(delegate, () => {
       last.length = 0;

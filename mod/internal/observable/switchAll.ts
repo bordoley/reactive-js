@@ -28,7 +28,7 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
     addOnDisposedWithError(this, delegate);
     addOnDisposedWithoutErrorTeardown(this, () => {
       if (this.inner.isDisposed) {
-        dispose(delegate);
+        pipe(delegate, dispose());
       }
     });
   }
@@ -36,13 +36,13 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
   notify(next: ObservableLike<T>) {
     assertObserverState(this);
 
-    dispose(this.inner);
+    pipe(this.inner, dispose());
 
     const inner = pipe(next, onNotify(this.onNotify), subscribe(this.delegate));
     addDisposableDisposeParentOnChildError(this.delegate, inner);
     addOnDisposedWithoutErrorTeardown(inner, () => {
       if (this.isDisposed) {
-        dispose(this.delegate);
+        pipe(this.delegate, dispose());
       }
     });
 

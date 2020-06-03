@@ -1,5 +1,5 @@
 import { addOnDisposedWithError } from "../../disposable";
-import { SideEffect1, Factory } from "../../functions";
+import { SideEffect1, Factory, pipe } from "../../functions";
 import { schedule } from "../../scheduler";
 import { ObservableLike, ObserverLike } from "./interfaces";
 
@@ -12,7 +12,7 @@ class ScheduledObservable<T> implements ObservableLike<T> {
 
   observe(observer: ObserverLike<T>) {
     const callback = this.f();
-    const schedulerSubscription = schedule(observer, callback, this);
+    const schedulerSubscription = pipe(observer, schedule(callback, this));
     addOnDisposedWithError(schedulerSubscription, observer);
   }
 }
@@ -30,11 +30,5 @@ export const defer = <T>(
 };
 
 export const observe = <T>(
-  observable: ObservableLike<T>,
   observer: ObserverLike<T>,
-) => observable.observe(observer);
-
-export const observeWith = <T>(
-  observer: ObserverLike<T>,
-): SideEffect1<ObservableLike<T>> => observable =>
-  observe(observable, observer);
+): SideEffect1<ObservableLike<T>> => observable => observable.observe(observer);
