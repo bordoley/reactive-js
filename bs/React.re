@@ -28,9 +28,7 @@ let useObservable = (~scheduler=?, observable) =>
 
 module UseStreamableOptions = {
   type t = {
-    replay: option(int),
     scheduler: option(Scheduler.SchedulerLike.t),
-    stateScheduler: option(Scheduler.SchedulerLike.t),
   };
 };
 
@@ -40,5 +38,5 @@ external useStreamableInternal:
   (option('resp), 'req => unit) =
   "useStreamable";
 
-let useStreamable = (~replay=?, ~scheduler=?, ~stateScheduler=?, streamable) =>
-  useStreamableInternal(streamable, {replay, scheduler, stateScheduler});
+let useStreamable = (~scheduler=?, streamable) =>
+  useStreamableInternal(streamable, {scheduler: scheduler});
