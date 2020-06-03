@@ -8,5 +8,5 @@
     "rootDir": "./src",
     "target": "ES2019"
   },
-  "include": ["./src/example-client.tsx"]
+  "include": ["./src/react/example.tsx"]
 }

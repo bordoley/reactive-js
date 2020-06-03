@@ -8,6 +8,7 @@ yarn-error.log
 *.key
 *.re
 *.rei
+*.svelte
 *.tsbuildinfo
 
 .DS_Store
