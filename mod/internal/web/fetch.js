@@ -1,5 +1,5 @@
 import { dispose, addTeardown } from "../../disposable.js";
-import { returns } from "../../functions.js";
+import { returns, pipe } from "../../functions.js";
 import { fromPromise, observe } from "../../observable.js";
 import { none } from "../../option.js";
 import { defer } from "../observable/observable.js";
@@ -23,9 +23,9 @@ export const fetch = (onResponse) => fetchRequest => defer(() => async (observer
         const resultObs = onResponseResult instanceof Promise
             ? fromPromise(returns(onResponseResult))
             : onResponseResult;
-        observe(resultObs, observer);
+        pipe(resultObs, observe(observer));
     }
     catch (cause) {
-        dispose(observer, { cause });
+        pipe(observer, dispose({ cause }));
     }
 });

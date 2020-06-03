@@ -11,7 +11,7 @@ class SharedObservable {
         this.teardown = () => {
             this.observerCount--;
             if (this.observerCount === 0) {
-                dispose(this.multicast);
+                pipe(this.multicast, dispose());
                 this.multicast = none;
             }
         };
@@ -23,7 +23,7 @@ class SharedObservable {
         }
         this.observerCount++;
         const multicast = this.multicast;
-        observe(multicast, observer);
+        pipe(multicast, observe(observer));
         addTeardown(observer, this.teardown);
     }
 }

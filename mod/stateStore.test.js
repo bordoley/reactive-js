@@ -7,7 +7,7 @@ import { toStateStore } from "./stateStore.js";
 import { identity, lift, stream } from "./streamable.js";
 export const tests = describe("stateStore", test("toStateStore", () => {
     const scheduler = createVirtualTimeScheduler({ maxMicroTaskTicks: 0 });
-    const stateStream = stream(pipe(identity(), lift(startWith(0)), toStateStore()), scheduler);
+    const stateStream = pipe(identity(), lift(startWith(0)), toStateStore(), stream(scheduler));
     dispatch(stateStream, incrementBy(1));
     dispatch(stateStream, incrementBy(2));
     dispatch(stateStream, incrementBy(3));
@@ -18,7 +18,7 @@ export const tests = describe("stateStore", test("toStateStore", () => {
     dispatch(stateStream, incrementBy(8));
     dispatch(stateStream, incrementBy(9));
     dispatch(stateStream, incrementBy(10));
-    dispose(stateStream);
+    pipe(stateStream, dispose());
     let result = [];
     const subscription = pipe(stateStream, onNotify(x => {
         result.push(x);

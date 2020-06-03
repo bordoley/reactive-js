@@ -9,10 +9,10 @@ const createConcatObserver = (delegate, observables, next) => {
     addOnDisposedWithoutErrorTeardown(observer, () => {
         if (next < observables.length) {
             const concatObserver = createConcatObserver(delegate, observables, next + 1);
-            observe(observables[next], concatObserver);
+            pipe(observables[next], observe(concatObserver));
         }
         else {
-            dispose(delegate);
+            pipe(delegate, dispose());
         }
     });
     return observer;
@@ -26,10 +26,10 @@ class ConcatObservable {
         const observables = this.observables;
         if (observables.length > 0) {
             const concatObserver = createConcatObserver(observer, observables, 1);
-            observe(observables[0], concatObserver);
+            pipe(observables[0], observe(concatObserver));
         }
         else {
-            dispose(observer);
+            pipe(observer, dispose());
         }
     }
 }

@@ -1,4 +1,5 @@
 import { dispose } from "../../disposable.js";
+import { pipe } from "../../functions.js";
 import { lift } from "./lift.js";
 import { AbstractAutoDisposingDelegatingObserver, assertObserverState, } from "./observer.js";
 class TakeWhileObserver extends AbstractAutoDisposingDelegatingObserver {
@@ -14,7 +15,7 @@ class TakeWhileObserver extends AbstractAutoDisposingDelegatingObserver {
             this.delegate.notify(next);
         }
         if (!satisfiesPredicate) {
-            dispose(this);
+            pipe(this, dispose());
         }
     }
 }

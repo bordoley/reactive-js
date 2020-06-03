@@ -30,7 +30,7 @@ const onOtherNotify = <TA, TB, T>(
   notifyDelegate(self);
 
   if (self.isDisposed && self.queue.length === 0) {
-    dispose(self.delegate);
+    pipe(self.delegate, dispose());
   }
 };
 
@@ -59,7 +59,7 @@ class ZipWithLatestFromObserver<TA, TB, T> extends AbstractObserver<
 
     const disposeDelegate = () => {
       if (this.isDisposed && otherSubscription.isDisposed) {
-        dispose(delegate);
+        pipe(delegate, dispose());
       }
     };
 

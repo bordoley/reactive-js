@@ -16,7 +16,7 @@ const subscribeNext = (observer) => {
             addDisposableDisposeParentOnChildError(observer.delegate, nextObsSubscription);
         }
         else if (observer.isDisposed) {
-            dispose(observer.delegate);
+            pipe(observer.delegate, dispose());
         }
     }
 };
@@ -37,7 +37,7 @@ class MergeObserver extends AbstractDelegatingObserver {
         addOnDisposedWithError(this, delegate);
         addOnDisposedWithoutErrorTeardown(this, () => {
             if (this.queue.length + this.activeCount === 0) {
-                dispose(delegate);
+                pipe(delegate, dispose());
             }
         });
         addTeardown(delegate, () => {

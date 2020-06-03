@@ -11,7 +11,7 @@ import { none, Option } from "../../option";
 import { fromValue } from "./fromValue";
 import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
-import { observeWith } from "./observable";
+import { observe } from "./observable";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
@@ -73,9 +73,9 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
     addOnDisposedWithError(this, delegate);
     addOnDisposedWithoutErrorTeardown(this, () => {
       if (mode !== ThrottleMode.First && this.hasValue) {
-        pipe(this.value, fromValue(), observeWith(delegate));
+        pipe(this.value, fromValue(), observe(delegate));
       } else {
-        dispose(delegate);
+        pipe(delegate, dispose());
       }
     });
   }

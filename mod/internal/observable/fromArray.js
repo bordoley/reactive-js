@@ -1,4 +1,5 @@
 import { dispose } from "../../disposable.js";
+import { pipe } from "../../functions.js";
 import { YieldError } from "../../internal/scheduler/schedulerContinuation.js";
 import { deferSynchronous, defer } from "./observable.js";
 export const fromArray = (options = {}) => values => {
@@ -18,7 +19,7 @@ export const fromArray = (options = {}) => values => {
                     throw new YieldError(delay);
                 }
             }
-            dispose(observer);
+            pipe(observer, dispose());
         };
     };
     return delay > 0 ? defer(factory, { delay }) : deferSynchronous(factory);

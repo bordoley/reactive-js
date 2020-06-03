@@ -16,7 +16,7 @@ export { fromValue } from "./internal/observable/fromValue.js";
 export { subscribe } from "./internal/observable/subscribe.js";
 export { throws } from "./internal/observable/throws.js";
 export { using } from "./internal/observable/using.js";
-export { observe, observeWith } from "./internal/observable/observable.js";
+export { observe } from "./internal/observable/observable.js";
 export { await_ } from "./internal/observable/await.js";
 export { buffer } from "./internal/observable/buffer.js";
 export { catchError } from "./internal/observable/catchError.js";

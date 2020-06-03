@@ -23,9 +23,9 @@ const createConcatObserver = <T>(
         observables,
         next + 1,
       );
-      observe(observables[next], concatObserver);
+      pipe(observables[next], observe(concatObserver));
     } else {
-      dispose(delegate);
+      pipe(delegate, dispose());
     }
   });
   return observer;
@@ -46,9 +46,9 @@ class ConcatObservable<T> implements ObservableLike<T> {
 
     if (observables.length > 0) {
       const concatObserver = createConcatObserver(observer, observables, 1);
-      observe(observables[0], concatObserver);
+      pipe(observables[0], observe(concatObserver));
     } else {
-      dispose(observer);
+      pipe(observer, dispose());
     }
   }
 }

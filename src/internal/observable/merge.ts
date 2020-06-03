@@ -3,6 +3,7 @@ import {
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
 } from "../../disposable";
+import { pipe } from "../../functions";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
 import { observe } from "./observable";
 import { createDelegatingObserver } from "./observer";
@@ -20,7 +21,7 @@ const createMergeObserver = <T>(
   addOnDisposedWithoutErrorTeardown(observer, () => {
     ctx.completedCount++;
     if (ctx.completedCount >= count) {
-      dispose(delegate);
+      pipe(delegate, dispose());
     }
   });
   return observer;
@@ -39,7 +40,7 @@ class MergeObservable<T> implements ObservableLike<T> {
     for (const observable of observables) {
       const mergeObserver = createMergeObserver(observer, count, ctx);
 
-      observe(observable, mergeObserver);
+      pipe(observable, observe(mergeObserver));
     }
   }
 }

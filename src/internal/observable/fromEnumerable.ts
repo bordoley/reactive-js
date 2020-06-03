@@ -21,7 +21,7 @@ export const fromEnumerator = <T>(
       while (enumerator.move()) {
         yield$(observer, enumerator.current, delay);
       }
-      dispose(observer);
+      pipe(observer, dispose());
     };
   };
 

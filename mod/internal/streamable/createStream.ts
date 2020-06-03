@@ -51,7 +51,7 @@ class StreamImpl<TReq, T> extends AbstractDisposable
   }
 
   observe(observer: ObserverLike<T>) {
-    observe(this.observable, observer);
+    pipe(this.observable, observe(observer));
   }
 }
 

@@ -51,13 +51,13 @@ class EnumeratorObserver extends AbstractDisposable {
             this.continuations.push(continuation);
         }
         else {
-            dispose(continuation);
+            pipe(continuation, dispose());
         }
     }
 }
 const subscribeInteractive = (obs) => {
     const observer = new EnumeratorObserver();
-    observe(obs, observer);
+    pipe(obs, observe(observer));
     return observer;
 };
 const shouldEmit = (enumerators) => {
@@ -91,7 +91,7 @@ class ZipObserver extends AbstractDelegatingObserver {
         addOnDisposedWithError(this, delegate);
         addOnDisposedWithoutErrorTeardown(this, () => {
             if (this.buffer.length === 0 && !this.hasCurrent) {
-                dispose(delegate);
+                pipe(delegate, dispose());
             }
         });
     }
@@ -128,7 +128,7 @@ class ZipObserver extends AbstractDelegatingObserver {
                     this.hasCurrent = false;
                     this.current = none;
                     this.buffer.length = 0;
-                    dispose(this);
+                    pipe(this, dispose());
                 }
             }
         }
@@ -144,7 +144,7 @@ class ZipObservable {
         const count = observables.length;
         if (this.isSynchronous) {
             const observable = using(defer(this.observables, map(subscribeInteractive)), (...enumerators) => pipe(enumerators, zipEnumerators, returns, fromEnumerator()));
-            observe(observable, observer);
+            pipe(observable, observe(observer));
         }
         else {
             const enumerators = [];
@@ -157,7 +157,7 @@ class ZipObservable {
                 }
                 else {
                     const innerObserver = new ZipObserver(observer, enumerators);
-                    observe(observable, innerObserver);
+                    pipe(observable, observe(innerObserver));
                     enumerators.push(innerObserver);
                 }
             }

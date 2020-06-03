@@ -59,7 +59,7 @@ export const toStateStore = <T>(): StreamableOperator<
 > => streamable =>
   createStreamable(updates =>
     using(scheduler => {
-      const stream = streamStreamable(streamable, scheduler);
+      const stream = pipe(streamable, streamStreamable(scheduler));
       const updatesSubscription = pipe(
         updates,
         zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),

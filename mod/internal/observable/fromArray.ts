@@ -1,5 +1,5 @@
 import { dispose } from "../../disposable.ts";
-import { Function1 } from "../../functions.ts";
+import { Function1, pipe } from "../../functions.ts";
 import { YieldError } from "../../internal/scheduler/schedulerContinuation.ts";
 import { ObservableLike, ObserverLike } from "./interfaces.ts";
 import { deferSynchronous, defer } from "./observable.ts";
@@ -41,7 +41,7 @@ export const fromArray = <T>(
           throw new YieldError(delay);
         }
       }
-      dispose(observer);
+      pipe(observer, dispose());
     };
   };
 

@@ -43,7 +43,7 @@ class WithLatestFromObserver<
 
     addOnDisposedWithoutErrorTeardown(otherSubscription, () => {
       if (!this.hasLatest) {
-        dispose(this);
+        pipe(this, dispose());
       }
     });
 

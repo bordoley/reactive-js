@@ -6,7 +6,7 @@ import { Reducer, Factory, pipe } from "../../functions";
 import { fromValue } from "./fromValue";
 import { ObserverLike, ObservableOperator } from "./interfaces";
 import { lift } from "./lift";
-import { observeWith } from "./observable";
+import { observe } from "./observable";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
 class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
@@ -18,7 +18,7 @@ class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
     super(delegate);
     addOnDisposedWithError(this, delegate);
     addOnDisposedWithoutErrorTeardown(this, () => {
-      pipe(this.acc, fromValue(), observeWith(delegate));
+      pipe(this.acc, fromValue(), observe(delegate));
     });
   }
 

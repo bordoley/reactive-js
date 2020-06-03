@@ -6,6 +6,7 @@ import {
   addTeardown,
   addDisposable,
 } from "../../disposable";
+import { pipe } from "../../functions";
 import { schedule } from "../../scheduler";
 import { DispatcherLike, ObserverLike } from "./interfaces";
 import { yield$ } from "./observer";
@@ -13,7 +14,10 @@ import { yield$ } from "./observer";
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (dispatcher.nextQueue.length === 1) {
     const { observer } = dispatcher;
-    const continuationSubcription = schedule(observer, dispatcher.continuation);
+    const continuationSubcription = pipe(
+      observer,
+      schedule(dispatcher.continuation),
+    );
     addOnDisposedWithError(continuationSubcription, observer);
     addOnDisposedWithoutErrorTeardown(
       continuationSubcription,
@@ -36,7 +40,7 @@ class ObserverDelegatingDispatcher<T> extends AbstractDisposable
 
   readonly onContinuationDispose = () => {
     if (this.isDisposed) {
-      dispose(this.observer as ObserverLike<T>, this.error);
+      pipe(this.observer as ObserverLike<T>, dispose(this.error));
     }
   };
 
@@ -46,7 +50,7 @@ class ObserverDelegatingDispatcher<T> extends AbstractDisposable
     super();
     addTeardown(this, e => {
       if (this.nextQueue.length === 0) {
-        dispose(observer, e);
+        pipe(observer, dispose(e));
       }
     });
     addDisposable(observer, this);

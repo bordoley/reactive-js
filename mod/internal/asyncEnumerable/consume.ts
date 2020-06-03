@@ -65,7 +65,7 @@ const consumeImpl = <TSrc, TAcc>(
 ): Function1<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> => enumerable =>
   using(
     scheduler => {
-      const enumerator = stream(enumerable, scheduler);
+      const enumerator = pipe(enumerable, stream(scheduler));
       const accFeedback = createSubject<TAcc>();
 
       return [accFeedback, enumerator];

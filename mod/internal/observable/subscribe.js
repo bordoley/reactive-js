@@ -1,3 +1,4 @@
+import { pipe } from "../../functions.js";
 import { observe } from "./observable.js";
 import { AbstractObserver, assertObserverState } from "./observer.js";
 class DefaultObserver extends AbstractObserver {
@@ -7,6 +8,6 @@ class DefaultObserver extends AbstractObserver {
 }
 export const subscribe = (scheduler) => (observable) => {
     const observer = new DefaultObserver(scheduler);
-    observe(observable, observer);
+    pipe(observable, observe(observer));
     return observer;
 };

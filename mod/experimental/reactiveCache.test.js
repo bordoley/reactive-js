@@ -1,5 +1,5 @@
 import { disposed, dispose } from "../disposable.js";
-import { pipe, returns } from "../functions.js";
+import { pipe, returns, defer } from "../functions.js";
 import { fromArray, subscribe, fromValue, toRunnable, onNotify, never, } from "../observable.js";
 import { forEach } from "../runnable.js";
 import { createVirtualTimeScheduler } from "../scheduler.js";
@@ -35,8 +35,8 @@ export const tests = describe("reactive-cache", test("lifecycle integration", ()
             pipe(cache.get("b"), expectSome);
             pipe(cache.get("c"), expectSome);
             pipe(cache.get("d"), expectSome);
-            dispose(cSubscription);
-            dispose(dSubscription);
+            pipe(cSubscription, dispose());
+            pipe(dSubscription, dispose());
             const entryE = cache.set("e", fromValue()("e"));
             eSubscription = pipe(entryE, subscribe(scheduler));
         },
@@ -46,7 +46,7 @@ export const tests = describe("reactive-cache", test("lifecycle integration", ()
             pipe(cache.get("d"), expectNone);
             pipe(cache.get("e"), expectSome);
         },
-        () => dispose(cache),
+        defer(cache, dispose()),
         () => {
             pipe(bSubscription.isDisposed, expectTrue);
             pipe(eSubscription.isDisposed, expectTrue);

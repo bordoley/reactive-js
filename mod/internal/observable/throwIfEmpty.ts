@@ -4,7 +4,7 @@ import {
   addOnDisposedWithoutErrorTeardown,
   Error,
 } from "../../disposable.ts";
-import { Factory } from "../../functions.ts";
+import { Factory, pipe } from "../../functions.ts";
 import { none, Option } from "../../option.ts";
 import { ObservableOperator, ObserverLike } from "./interfaces.ts";
 import { lift } from "./lift.ts";
@@ -33,7 +33,7 @@ class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
         error = { cause };
       }
 
-      dispose(delegate, error);
+      pipe(delegate, dispose(error));
     });
   }
 

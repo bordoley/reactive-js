@@ -1,4 +1,5 @@
 import { addOnDisposedWithError } from "../../disposable.js";
+import { pipe } from "../../functions.js";
 import { schedule } from "../../scheduler.js";
 class ScheduledObservable {
     constructor(f, isSynchronous, delay) {
@@ -8,7 +9,7 @@ class ScheduledObservable {
     }
     observe(observer) {
         const callback = this.f();
-        const schedulerSubscription = schedule(observer, callback, this);
+        const schedulerSubscription = pipe(observer, schedule(callback, this));
         addOnDisposedWithError(schedulerSubscription, observer);
     }
 }
@@ -17,5 +18,4 @@ export const defer = (factory, options = {}) => {
     const { delay = 0 } = options;
     return new ScheduledObservable(factory, false, delay);
 };
-export const observe = (observable, observer) => observable.observe(observer);
-export const observeWith = (observer) => observable => observe(observable, observer);
+export const observe = (observer) => observable => observable.observe(observer);

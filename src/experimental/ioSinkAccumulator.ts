@@ -93,7 +93,7 @@ class IOSinkAccumulatorImpl<T, TAcc> extends AbstractDisposable
     scheduler: SchedulerLike,
     options?: { readonly replay: number },
   ): StreamLike<IOEvent<T>, FlowMode> {
-    const result = stream(this.streamable, scheduler, options);
+    const result = pipe(this.streamable, stream(scheduler, options));
     addDisposableDisposeParentOnChildError(this, result);
     return result;
   }

@@ -76,15 +76,13 @@ ___
 
 ### `Const` schedule
 
-▸ **schedule**<**T**>(`scheduler`: T, `f`: [SideEffect1](_functions_.md#sideeffect1)‹T›, `options?`: object): *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
+▸ **schedule**<**T**>(`f`: [SideEffect1](_functions_.md#sideeffect1)‹T›, `options?`: object): *[Function1](_functions_.md#function1)‹T, [DisposableLike](../interfaces/_disposable_.disposablelike.md)›*
 
 **Type parameters:**
 
 ▪ **T**: *[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)*
 
 **Parameters:**
-
-▪ **scheduler**: *T*
 
 ▪ **f**: *[SideEffect1](_functions_.md#sideeffect1)‹T›*
 
@@ -94,7 +92,7 @@ Name | Type |
 ------ | ------ |
 `delay?` | number |
 
-**Returns:** *[DisposableLike](../interfaces/_disposable_.disposablelike.md)*
+**Returns:** *[Function1](_functions_.md#function1)‹T, [DisposableLike](../interfaces/_disposable_.disposablelike.md)›*
 
 ___
 

@@ -1,4 +1,5 @@
 import { AbstractSerialDisposable, disposed, addDisposable, addTeardown, } from "../../disposable.js";
+import { pipe } from "../../functions.js";
 import { none, isSome, isNone } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
 import { run, schedule, yield$ } from "./schedulerContinuation.js";
@@ -55,7 +56,7 @@ const scheduleContinuation = (scheduler, task) => {
     const dueTime = task.dueTime;
     const delay = Math.max(dueTime - scheduler.now, 0);
     scheduler.dueTime = dueTime;
-    scheduler.inner = schedule(scheduler.host, scheduler.continuation, { delay });
+    scheduler.inner = pipe(scheduler.host, schedule(scheduler.continuation, { delay }));
 };
 class PriorityScheduler extends AbstractSerialDisposable {
     constructor(host) {

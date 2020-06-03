@@ -69,7 +69,7 @@ class EnumeratorObserver<T> extends AbstractDisposable
     if (!continuation.isDisposed && delay === 0) {
       this.continuations.push(continuation);
     } else {
-      dispose(continuation);
+      pipe(continuation, dispose());
     }
   }
 }
@@ -78,7 +78,7 @@ const subscribeInteractive = <T>(
   obs: ObservableLike<T>,
 ): EnumeratorObserver<T> => {
   const observer = new EnumeratorObserver<T>();
-  observe(obs, observer);
+  pipe(obs, observe(observer));
   return observer;
 };
 
@@ -124,7 +124,7 @@ class ZipObserver
     addOnDisposedWithError(this, delegate);
     addOnDisposedWithoutErrorTeardown(this, () => {
       if (this.buffer.length === 0 && !this.hasCurrent) {
-        dispose(delegate);
+        pipe(delegate, dispose());
       }
     });
   }
@@ -166,7 +166,7 @@ class ZipObserver
           this.hasCurrent = false;
           this.current = none;
           this.buffer.length = 0;
-          dispose(this);
+          pipe(this, dispose());
         }
       }
     }
@@ -194,7 +194,7 @@ class ZipObservable implements ObservableLike<readonly unknown[]> {
           pipe(enumerators, zipEnumerators, returns, fromEnumerator()),
       );
 
-      observe(observable, observer);
+      pipe(observable, observe(observer));
     } else {
       const enumerators: (DisposableLike & EnumeratorLike<unknown>)[] = [];
       for (let index = 0; index < count; index++) {
@@ -208,7 +208,7 @@ class ZipObservable implements ObservableLike<readonly unknown[]> {
         } else {
           const innerObserver = new ZipObserver(observer, enumerators);
 
-          observe(observable, innerObserver);
+          pipe(observable, observe(innerObserver));
           enumerators.push(innerObserver);
         }
       }

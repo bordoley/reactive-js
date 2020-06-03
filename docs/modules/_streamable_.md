@@ -280,7 +280,7 @@ ___
 
 ### `Const` stream
 
-▸ **stream**<**TReq**, **T**>(`streamable`: [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›, `scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `options?`: object): *[StreamLike](../interfaces/_observable_.streamlike.md)‹TReq, T›*
+▸ **stream**<**TReq**, **T**>(`scheduler`: [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md), `options?`: object): *[Function1](_functions_.md#function1)‹[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›, [StreamLike](../interfaces/_observable_.streamlike.md)‹TReq, T››*
 
 **Type parameters:**
 
@@ -290,8 +290,6 @@ ___
 
 **Parameters:**
 
-▪ **streamable**: *[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›*
-
 ▪ **scheduler**: *[SchedulerLike](../interfaces/_scheduler_.schedulerlike.md)*
 
 ▪`Optional`  **options**: *object*
@@ -300,7 +298,7 @@ Name | Type |
 ------ | ------ |
 `replay?` | number |
 
-**Returns:** *[StreamLike](../interfaces/_observable_.streamlike.md)‹TReq, T›*
+**Returns:** *[Function1](_functions_.md#function1)‹[StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›, [StreamLike](../interfaces/_observable_.streamlike.md)‹TReq, T››*
 
 ___
 

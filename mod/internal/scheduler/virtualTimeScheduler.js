@@ -1,4 +1,5 @@
 import { AbstractDisposable, addDisposable, dispose } from "../../disposable.js";
+import { pipe } from "../../functions.js";
 import { none, isSome } from "../../option.js";
 import { createPriorityQueue } from "../queues.js";
 import { run } from "./schedulerContinuation.js";
@@ -21,7 +22,7 @@ const move = (scheduler) => {
             scheduler.now = dueTime;
         }
         else {
-            dispose(scheduler);
+            pipe(scheduler, dispose());
         }
     }
     return scheduler.hasCurrent;
@@ -50,7 +51,7 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable {
             run(this.current);
             this.inContinuation = false;
         }
-        dispose(this);
+        pipe(this, dispose());
     }
     schedule(continuation, { delay } = { delay: 0 }) {
         delay = Math.max(0, delay);

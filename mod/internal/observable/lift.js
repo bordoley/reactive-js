@@ -8,7 +8,7 @@ class LiftedObservable {
     }
     observe(observer) {
         const liftedSubscrber = pipe(observer, ...this.operators);
-        observe(this.source, liftedSubscrber);
+        pipe(this.source, observe(liftedSubscrber));
     }
 }
 export const lift = (operator) => source => {

@@ -30,7 +30,7 @@ export { fromValue } from "./internal/observable/fromValue.ts";
 export { subscribe } from "./internal/observable/subscribe.ts";
 export { throws } from "./internal/observable/throws.ts";
 export { using } from "./internal/observable/using.ts";
-export { observe, observeWith } from "./internal/observable/observable.ts";
+export { observe } from "./internal/observable/observable.ts";
 
 export { await_ } from "./internal/observable/await.ts";
 export { buffer } from "./internal/observable/buffer.ts";

@@ -88,7 +88,7 @@ const tryDispatch = <TResource extends DisposableLike>(
       first,
     ) as [TResource, DisposableLike];
     availableResourcesTimeouts.delete(resource);
-    dispose(disposable);
+    pipe(disposable, dispose());
   }
 
   const resource =
@@ -106,7 +106,7 @@ const tryDispatch = <TResource extends DisposableLike>(
   const timeoutSubscription =
     availableResourcesTimeouts.get(resource) ?? disposed;
   availableResourcesTimeouts.delete(resource);
-  dispose(timeoutSubscription);
+  pipe(timeoutSubscription, dispose());
 
   // We have resource to allocate so pop
   // the observer off the request queue
@@ -122,7 +122,7 @@ const tryDispatch = <TResource extends DisposableLike>(
       onNotify(_ => {
         const resource = availableResources.pop(key);
         if (isSome(resource)) {
-          dispose(resource);
+          pipe(resource, dispose());
 
           // Check the global queue for the next key
           // awaiting a resource and dispatch it.
@@ -182,7 +182,7 @@ class ResourceManagerImpl<TResource extends DisposableLike>
     super();
 
     addTeardown(this, e => {
-      const forEachDispose = forEach((s: DisposableLike) => dispose(s, e));
+      const forEachDispose = forEach(dispose(e));
 
       pipe(this.resourceRequests.values, forEachDispose);
       this.resourceRequests.clear();

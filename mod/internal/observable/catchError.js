@@ -1,4 +1,5 @@
 import { dispose, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown, } from "../../disposable.js";
+import { pipe } from "../../functions.js";
 import { isSome, none } from "../../option.js";
 import { lift } from "./lift.js";
 import { observe } from "./observable.js";
@@ -11,14 +12,14 @@ export const catchError = (onError) => {
             try {
                 const result = onError(cause) || none;
                 if (isSome(result)) {
-                    observe(result, delegate);
+                    pipe(result, observe(delegate));
                 }
                 else {
-                    dispose(delegate);
+                    pipe(delegate, dispose());
                 }
             }
             catch (cause) {
-                dispose(delegate, { cause: { parent: cause, cause } });
+                pipe(delegate, dispose({ cause: { parent: cause, cause } }));
             }
         });
         return observer;

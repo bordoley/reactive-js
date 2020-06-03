@@ -1,5 +1,5 @@
 import { dispose } from "../../disposable";
-import { Predicate } from "../../functions";
+import { Predicate, pipe } from "../../functions";
 import { ObservableOperator, ObserverLike } from "./interfaces";
 import { lift } from "./lift";
 import {
@@ -29,7 +29,7 @@ class TakeWhileObserver<T> extends AbstractAutoDisposingDelegatingObserver<
     }
 
     if (!satisfiesPredicate) {
-      dispose(this);
+      pipe(this, dispose());
     }
   }
 }

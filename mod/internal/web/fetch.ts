@@ -1,5 +1,5 @@
 import { dispose, addTeardown } from "../../disposable.ts";
-import { Function1, returns } from "../../functions.ts";
+import { Function1, returns, pipe } from "../../functions.ts";
 import { fromPromise, observe, ObservableLike } from "../../observable.ts";
 import { Option, none } from "../../option.ts";
 import { defer } from "../observable/observable.ts";
@@ -37,8 +37,8 @@ export const fetch = <T>(
           ? fromPromise(returns(onResponseResult))
           : onResponseResult;
 
-      observe(resultObs, observer);
+      pipe(resultObs, observe(observer));
     } catch (cause) {
-      dispose(observer, { cause });
+      pipe(observer, dispose({ cause }));
     }
   });

@@ -20,7 +20,7 @@ class TimeoutObserver extends AbstractAutoDisposingDelegatingObserver {
     }
     notify(next) {
         assertObserverState(this);
-        dispose(this.durationSubscription);
+        pipe(this.durationSubscription, dispose());
         this.delegate.notify(next);
     }
 }

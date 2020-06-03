@@ -5,6 +5,17 @@ module Error = {
 module DisposableLike = {
   type t;
 
+  [@bs.send]
+  external addDisposable: (t, t) => unit = "add";
+
+  [@bs.send]
+  external addTeardown:
+  (t, [@bs.uncurry] (option(Error.t) => unit)) => unit =
+  "add";
+
+  [@bs.send]
+  external dispose: (t, option(Error.t)) => unit = "dispose";
+
   [@bs.get] external error: t => option(Error.t) = "error";
 
   [@bs.get] external isDisposed: t => bool = "isDisposed";
@@ -34,11 +45,6 @@ external addDisposableDisposeParentOnChildError:
 // FIXME: addOnDisposedWithoutError
 // FIXME: addOnDisposedWithoutErrorTeardown
 
-[@bs.send]
-external addTeardown:
-  (DisposableLike.t, [@bs.uncurry] (option(Error.t) => unit)) => unit =
-  "add";
-
 [@bs.module "@reactive-js/core/disposable"] [@bs.val]
 external bindDisposables: (DisposableLike.t, DisposableLike.t) => unit =
   "bindDisposables";
@@ -56,9 +62,6 @@ external createDisposableWithTeardown:
 [@bs.module "@reactive-js/core/disposable"] [@bs.val]
 external createSerialDisposable: unit => SerialDisposableLike.t =
   "createSerialDisposable";
-
-[@bs.send]
-external dispose: (DisposableLike.t, option(Error.t)) => unit = "dispose";
 
 [@bs.module "@reactive-js/core/disposable"] [@bs.val]
 external disposed: DisposableLike.t = "disposed" /*FIXME: toErrorHandle*/;

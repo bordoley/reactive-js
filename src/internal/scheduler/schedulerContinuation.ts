@@ -5,7 +5,7 @@ import {
   dispose,
   DisposableLike,
 } from "../../disposable";
-import { SideEffect1 } from "../../functions";
+import { SideEffect1, Function1, pipe } from "../../functions";
 import { none, Option, isSome } from "../../option";
 import {
   SchedulerContinuationLike,
@@ -83,7 +83,7 @@ class SchedulerContinuationImpl<T extends SchedulerLike>
       if (isSome(yieldError)) {
         this.scheduler.schedule(this, yieldError);
       } else {
-        dispose(this, error);
+        pipe(this, dispose(error));
       }
     }
   }
@@ -100,10 +100,9 @@ export const yield$ = (scheduler: SchedulerLike, delay: number) => {
 };
 
 export const schedule = <T extends SchedulerLike>(
-  scheduler: T,
   f: SideEffect1<T>,
   options?: { readonly delay?: number },
-): DisposableLike => {
+): Function1<T, DisposableLike> => scheduler => {
   const continuation = new SchedulerContinuationImpl(scheduler, f);
   scheduler.schedule(continuation, options);
   return continuation;

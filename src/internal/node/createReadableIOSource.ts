@@ -34,7 +34,7 @@ const createReadableEventsObservable = (
 
     const onEnd = () => {
       dispatch(dispatcher, done());
-      dispose(dispatcher);
+      pipe(dispatcher, dispose());
     };
     readableValue.on("end", onEnd);
 

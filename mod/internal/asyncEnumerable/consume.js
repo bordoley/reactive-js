@@ -11,7 +11,7 @@ export const done = (acc) => ({
     acc,
 });
 const consumeImpl = (consumer, initial) => enumerable => using(scheduler => {
-    const enumerator = stream(enumerable, scheduler);
+    const enumerator = pipe(enumerable, stream(scheduler));
     const accFeedback = createSubject();
     return [accFeedback, enumerator];
 }, (accFeedback, enumerator) => pipe(enumerator, consumer(accFeedback), onNotify(ev => {

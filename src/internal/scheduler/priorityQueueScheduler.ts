@@ -5,6 +5,7 @@ import {
   addDisposable,
   addTeardown,
 } from "../../disposable";
+import { pipe } from "../../functions";
 import { none, Option, isSome, isNone } from "../../option";
 import { createPriorityQueue, QueueLike } from "../queues";
 import {
@@ -97,7 +98,10 @@ const scheduleContinuation = (
   const delay = Math.max(dueTime - scheduler.now, 0);
 
   scheduler.dueTime = dueTime;
-  scheduler.inner = schedule(scheduler.host, scheduler.continuation, { delay });
+  scheduler.inner = pipe(
+    scheduler.host,
+    schedule(scheduler.continuation, { delay }),
+  );
 };
 
 class PriorityScheduler extends AbstractSerialDisposable

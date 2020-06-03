@@ -1,4 +1,5 @@
 import { dispose } from "../../disposable.js";
+import { pipe } from "../../functions.js";
 import { none } from "../../option.js";
 import { deferSynchronous, defer } from "./observable.js";
 export const throws = (options = {}) => errorFactory => {
@@ -11,7 +12,7 @@ export const throws = (options = {}) => errorFactory => {
         catch (e) {
             cause = e;
         }
-        dispose(observer, { cause });
+        pipe(observer, dispose({ cause }));
     };
     return delay > 0 ? defer(factory, options) : deferSynchronous(factory);
 };

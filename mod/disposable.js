@@ -1,6 +1,6 @@
-import { defer } from "./functions.js";
+import { defer, pipe } from "./functions.js";
 import { isSome, none, isNone } from "./option.js";
-export const dispose = (disposable, e) => {
+export const dispose = (e) => disposable => {
     disposable.dispose(e);
 };
 export const addDisposable = (parent, child) => {
@@ -29,7 +29,7 @@ export const bindDisposables = (a, b) => {
 };
 const toDisposeOnErrorTeardown = (disposable) => (error) => {
     if (isSome(error)) {
-        dispose(disposable, error);
+        pipe(disposable, dispose(error));
     }
 };
 export const addOnDisposedWithError = (parent, child) => {
@@ -42,11 +42,11 @@ export const addDisposableDisposeParentOnChildError = (parent, child) => {
 export const addOnDisposedWithoutError = (parent, child) => {
     addTeardown(parent, e => {
         if (isNone(e)) {
-            dispose(child);
+            pipe(child, dispose());
         }
     });
 };
-export const toErrorHandler = (disposable) => cause => dispose(disposable, { cause });
+export const toErrorHandler = (disposable) => cause => pipe(disposable, dispose({ cause }));
 const doDispose = (disposable, error) => {
     if (disposable instanceof Function) {
         try {
@@ -56,7 +56,7 @@ const doDispose = (disposable, error) => {
         }
     }
     else {
-        dispose(disposable, error);
+        pipe(disposable, dispose(error));
     }
 };
 export class AbstractDisposable {
@@ -125,7 +125,7 @@ export class AbstractSerialDisposable extends AbstractDisposable {
         this._inner = newInner;
         if (oldInner !== newInner) {
             addDisposableDisposeParentOnChildError(this, newInner);
-            dispose(oldInner);
+            pipe(oldInner, dispose());
         }
     }
 }

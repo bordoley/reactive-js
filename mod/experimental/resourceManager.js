@@ -36,7 +36,7 @@ const tryDispatch = (resourceManager, key) => {
         resourceManager.count >= maxTotalResources) {
         const [resource, disposable] = pipe(availableResourcesTimeouts, fromIterable, toRunnable(), first);
         availableResourcesTimeouts.delete(resource);
-        dispose(disposable);
+        pipe(disposable, dispose());
     }
     const resource = isNone(peekedResource) && inUseCount < maxResourcesPerKey
         ? resourceManager.createResource(key)
@@ -46,7 +46,7 @@ const tryDispatch = (resourceManager, key) => {
     }
     const timeoutSubscription = (_a = availableResourcesTimeouts.get(resource)) !== null && _a !== void 0 ? _a : disposed;
     availableResourcesTimeouts.delete(resource);
-    dispose(timeoutSubscription);
+    pipe(timeoutSubscription, dispose());
     const observer = resourceRequests.pop(key);
     addTeardown(observer, () => {
         inUseResources.remove(key, observer);
@@ -54,7 +54,7 @@ const tryDispatch = (resourceManager, key) => {
         const timeoutSubscription = pipe(fromValue({ delay: maxIdleTime })(none), onNotify(_ => {
             const resource = availableResources.pop(key);
             if (isSome(resource)) {
-                dispose(resource);
+                pipe(resource, dispose());
                 const resourceKey = globalResourceWaitQueue.pop();
                 if (isSome(resourceKey)) {
                     tryDispatch(resourceManager, resourceKey);
@@ -84,7 +84,7 @@ class ResourceManagerImpl extends AbstractDisposable {
         this.resourceRequests = createKeyedQueue();
         this.globalResourceWaitQueue = createUniqueQueue();
         addTeardown(this, e => {
-            const forEachDispose = forEach((s) => dispose(s, e));
+            const forEachDispose = forEach(dispose(e));
             pipe(this.resourceRequests.values, forEachDispose);
             this.resourceRequests.clear();
             pipe(this.inUseResources.values, forEachDispose);

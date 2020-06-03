@@ -10,7 +10,7 @@ export const fromEnumerator = (options = {}) => f => {
             while (enumerator.move()) {
                 yield$(observer, enumerator.current, delay);
             }
-            dispose(observer);
+            pipe(observer, dispose());
         };
     };
     const { delay = 0 } = options;

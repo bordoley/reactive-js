@@ -1,5 +1,5 @@
 import { toErrorHandler, dispose } from "../../disposable";
-import { Factory } from "../../functions";
+import { Factory, pipe } from "../../functions";
 import { dispatch } from "./dispatcher";
 import { ObservableLike } from "./interfaces";
 import { defer } from "./observable";
@@ -20,7 +20,7 @@ export const fromPromise = <T>(
     factory().then(next => {
       if (!dispatcher.isDisposed) {
         dispatch(dispatcher, next);
-        dispose(dispatcher);
+        pipe(dispatcher, dispose());
       }
     }, toErrorHandler(dispatcher));
   });

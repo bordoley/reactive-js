@@ -7,7 +7,7 @@ import { createVirtualTimeScheduler, schedule } from "./scheduler.js";
 import { stream } from "./streamable.js";
 export const tests = describe("flowables", test("empty", () => {
     const scheduler = createVirtualTimeScheduler();
-    const emptyStream = stream(empty(), scheduler);
+    const emptyStream = pipe(empty(), stream(scheduler));
     dispatch(emptyStream, 2);
     dispatch(emptyStream, 1);
     const f = mockFn();
@@ -18,15 +18,15 @@ export const tests = describe("flowables", test("empty", () => {
     expectTrue(emptyStream.isDisposed);
 }), test("fromObservable", () => {
     const scheduler = createVirtualTimeScheduler();
-    const generateStream = stream(pipe(generate(increment, returns(-1), { delay: 1 }), fromObservable()), scheduler);
+    const generateStream = pipe(generate(increment, returns(-1), { delay: 1 }), fromObservable(), stream(scheduler));
     dispatch(generateStream, 1);
-    schedule(scheduler, defer(2, dispatchTo(generateStream)), {
+    pipe(scheduler, schedule(defer(2, dispatchTo(generateStream)), {
         delay: 2,
-    });
-    schedule(scheduler, defer(1, dispatchTo(generateStream)), {
+    }));
+    pipe(scheduler, schedule(defer(1, dispatchTo(generateStream)), {
         delay: 4,
-    });
-    schedule(scheduler, defer(generateStream, dispose), { delay: 5 });
+    }));
+    pipe(scheduler, schedule(defer(generateStream, dispose()), { delay: 5 }));
     const f = mockFn();
     const subscription = pipe(generateStream, onNotify(x => {
         f(scheduler.now, x);
@@ -39,7 +39,7 @@ export const tests = describe("flowables", test("empty", () => {
     expectTrue(subscription.isDisposed);
 }), test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
-    const fromValueStream = stream(fromValue()(1), scheduler);
+    const fromValueStream = pipe(1, fromValue(), stream(scheduler));
     dispatch(fromValueStream, 1);
     dispatch(fromValueStream, 1);
     const f = mockFn();

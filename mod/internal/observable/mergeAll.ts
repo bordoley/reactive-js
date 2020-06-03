@@ -35,7 +35,7 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
         nextObsSubscription,
       );
     } else if (observer.isDisposed) {
-      dispose(observer.delegate);
+      pipe(observer.delegate, dispose());
     }
   }
 };
@@ -67,7 +67,7 @@ class MergeObserver<T> extends AbstractDelegatingObserver<
     addOnDisposedWithError(this, delegate);
     addOnDisposedWithoutErrorTeardown(this, () => {
       if (this.queue.length + this.activeCount === 0) {
-        dispose(delegate);
+        pipe(delegate, dispose());
       }
     });
     addTeardown(delegate, () => {
