@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   unstable_IdlePriority,
   unstable_ImmediatePriority,
@@ -24,9 +24,6 @@ import {
   onNotify,
   StreamLike,
   subscribe,
-  subscribeOn,
-  throttle,
-  never,
 } from "./observable";
 import { none, Option, isSome } from "./option";
 import {
@@ -35,25 +32,7 @@ import {
   toSchedulerWithPriority,
   run,
 } from "./scheduler";
-import { StreamableLike, stream as streamableStream } from "./streamable";
-
-const subscribeObservable = <T>(
-  observable: ObservableLike<T>,
-  updateState: React.Dispatch<React.SetStateAction<Option<T>>>,
-  updateError: React.Dispatch<React.SetStateAction<Option<Error>>>,
-  scheduler: SchedulerLike,
-) => {
-  const subscription = pipe(
-    observable,
-    throttle(8),
-    subscribeOn(scheduler),
-    onNotify(compose(returns, updateState)),
-    subscribe(normalPriority),
-  );
-
-  addTeardown(subscription, compose(returns, updateError));
-  return subscription;
-};
+import { onNotify as onNotifyStream, StreamableLike, stream as streamableStream } from "./streamable";
 
 /**
  * Returns the current value, if defined, of `observable`.
@@ -72,12 +51,14 @@ export const useObservable = <T>(
   const [error, updateError] = useState<Option<Error>>(none);
 
   useEffect(() => {
-    const subscription = subscribeObservable(
+    const subscription = pipe(
       observable,
-      updateState,
-      updateError,
-      scheduler,
+      onNotify(compose(returns, updateState)),
+      subscribe(scheduler),
     );
+
+    addTeardown(subscription, compose(returns, updateError));
+
     return defer(subscription, dispose());
   }, [observable, updateState, updateError, scheduler]);
 
@@ -93,39 +74,42 @@ export const useStreamable = <TReq, T>(
   streamable: StreamableLike<TReq, T>,
   options: {
     readonly scheduler?: SchedulerLike;
-    readonly replay?: number;
-    readonly stateScheduler?: SchedulerLike;
   } = {},
 ): [Option<T>, SideEffect1<TReq>] => {
-  const { replay = 0, scheduler = normalPriority } = options;
-  const stateScheduler = options.stateScheduler ?? scheduler;
+  const { scheduler = normalPriority } = options;
 
-  const [stream, updateStream] = useState<Option<StreamLike<TReq, T>>>(none);
-  const streamRef = useRef<Option<StreamLike<TReq, T>>>(none);
-
-  useEffect(() => {
-    const stream = pipe(streamable, streamableStream(scheduler, options));
-    streamRef.current = stream;
-
-    pipe(stream, returns, updateStream);
-
-    return defer(stream, dispose());
-  }, [streamable, scheduler, replay, updateStream]);
+  const [stream, setStream] = useState<Option<StreamLike<TReq, T>>>(none);
+  const [state, updateState] = useState<Option<T>>(none);
+  const [error, updateError] = useState<Option<Error>>(none);
 
   const dispatch = useCallback(
     req => {
-      const stream = streamRef.current;
       if (isSome(stream)) {
         dispatchToStream(stream, req);
       }
     },
-    [streamRef],
+    [stream],
   );
 
-  const value = useObservable(stream ?? never<T>(), {
-    scheduler: stateScheduler,
-  });
-  return [value, dispatch];
+  useEffect(() => {
+    const stream = pipe(
+      streamable,
+      onNotifyStream(compose(returns, updateState)),
+      streamableStream(scheduler)
+    );
+
+    addTeardown(stream, compose(returns, updateError));
+    setStream(stream)
+
+    return defer(stream, dispose());
+  }, [streamable, scheduler, setStream]);
+
+  if (isSome(error)) {
+    const { cause } = error;
+    throw cause;
+  }
+
+  return [state, dispatch];
 };
 
 const priorityScheduler = {
