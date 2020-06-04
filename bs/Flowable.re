@@ -36,12 +36,18 @@ external fromArray:
 let fromArray = (~delay=?, ~startIndex=?, ~endIndex=?, arr) =>
   (fromArray({delay, startIndex, endIndex}))(. arr);
 
+module FromObservableOptions = {
+  type t = {scheduler: option(Scheduler.SchedulerLike.t)};
+};
+
 [@bs.module "@reactive-js/core/flowable"] [@bs.val]
 external fromObservable:
-  unit => Function1.t(Observable.ObservableLike.t('a), FlowableLike.t('a)) =
+  FromObservableOptions.t =>
+  Function1.t(Observable.ObservableLike.t('a), FlowableLike.t('a)) =
   "fromObservable";
 
-let fromObservable = obs => (fromObservable())(. obs);
+let fromObservable = (~scheduler=?, obs) =>
+  (fromObservable({scheduler: scheduler}))(. obs);
 
 module FromValueOptions = {
   type t = {delay: option(int)};

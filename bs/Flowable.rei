@@ -12,8 +12,14 @@ module FlowableLike: {
 external empty: unit => FlowableLike.t('a) = "empty";
 
 let fromArray:
-  (~delay: int=?, ~startIndex: int=?, ~endIndex: int=?, array('a)) => FlowableLike.t('a);
+  (~delay: int=?, ~startIndex: int=?, ~endIndex: int=?, array('a)) =>
+  FlowableLike.t('a);
 
-let fromObservable: Observable.ObservableLike.t('a) => FlowableLike.t('a);
+let fromObservable:
+  (
+    ~scheduler: Scheduler.SchedulerLike.t=?,
+    Observable.ObservableLike.t('a)
+  ) =>
+  FlowableLike.t('a);
 
 let fromValue: (~delay: int=?, 'a) => FlowableLike.t('a);

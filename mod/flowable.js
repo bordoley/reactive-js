@@ -3,9 +3,9 @@ import { compose, pipe } from "./functions.js";
 import { fromArray as fromArrayObs, fromDisposable, onNotify, subscribe, subscribeOn, takeUntil, using, } from "./observable.js";
 import { toPausableScheduler } from "./scheduler.js";
 import { createStreamable } from "./streamable.js";
-const _fromObservable = (observable) => {
-    const createScheduler = (modeObs) => (scheduler) => {
-        const pausableScheduler = toPausableScheduler(scheduler);
+export const fromObservable = ({ scheduler } = {}) => observable => {
+    const createScheduler = (modeObs) => (modeScheduler) => {
+        const pausableScheduler = toPausableScheduler(scheduler !== null && scheduler !== void 0 ? scheduler : modeScheduler);
         const onModeChange = (mode) => {
             switch (mode) {
                 case 2:
@@ -16,14 +16,13 @@ const _fromObservable = (observable) => {
                     break;
             }
         };
-        const modeSubscription = pipe(modeObs, onNotify(onModeChange), subscribe(scheduler));
+        const modeSubscription = pipe(modeObs, onNotify(onModeChange), subscribe(modeScheduler));
         bindDisposables(modeSubscription, pausableScheduler);
         return pausableScheduler;
     };
     const op = (modeObs) => using(createScheduler(modeObs), pausableScheduler => pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil)));
     return createStreamable(op);
 };
-export const fromObservable = () => _fromObservable;
 export const fromArray = (options) => compose(fromArrayObs(options), fromObservable());
 export const fromValue = (options) => v => fromArray(options)([v]);
 const _empty = fromArray()([]);
