@@ -11,10 +11,11 @@ yarn-error.log
 *.crt
 *.key
 *.tsbuildinfo
-
 *.bs.js
+
 build/
 lib/
+
 packages/core/**/*.ts
 packages/core/**/*.js
 packages/core/**/*.mjs
@@ -23,3 +24,12 @@ packages/core/**/*.rei
 packages/core/bsconfig.json
 packages/core/README.md
 
+mod/experimental/internal/node/
+mod/internal/node/
+mod/perf/
+
+mod/experimental/testing.jest.* 
+mod/experimental/node.* 
+mod/experimental/svelte.* 
+mod/node.* 
+mod/react.* 
