@@ -67,11 +67,19 @@ ___
 
 ### `Const` fromObservable
 
-▸ **fromObservable**<**T**>(): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
+▸ **fromObservable**<**T**>(`__namedParameters`: object): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
 
 **Type parameters:**
 
 ▪ **T**
+
+**Parameters:**
+
+▪`Default value`  **__namedParameters**: *object*= {}
+
+Name | Type |
+------ | ------ |
+`scheduler` | [SchedulerLike](../interfaces/_scheduler_.schedulerlike.md) |
 
 **Returns:** *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
 

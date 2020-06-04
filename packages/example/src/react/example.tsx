@@ -7,7 +7,7 @@ import {
   SideEffect1,
   Updater,
 } from "@reactive-js/core/functions";
-import { generate, throttle, subscribeOn } from "@reactive-js/core/observable";
+import { generate } from "@reactive-js/core/observable";
 import {
   useObservable,
   useStreamable,
@@ -62,9 +62,7 @@ const StreamPauseResume = () => {
     () =>
       pipe(
         generate(increment, returns<number>(0)),
-        throttle(15),
-        subscribeOn(idlePriority),
-        fromObservable(),
+        fromObservable({ scheduler: idlePriority }),
       ),
     [],
   );
