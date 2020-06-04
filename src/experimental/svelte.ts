@@ -7,13 +7,11 @@ import {
   ObservableLike,
   subscribe as subscribeObs,
   StreamLike,
-  throttle,
 } from "../observable";
 import { Option, none, isSome } from "../option";
 import { SchedulerLike } from "../scheduler";
 import {
   StreamableLike,
-  lift,
   onNotify,
   stream as streamableStream,
 } from "../streamable";
@@ -53,7 +51,6 @@ export const stream = <TReq, T>(
   const store: Writable<Option<T>> = writable(none);
   const liftedStreamable = pipe(
     streamable,
-    lift(throttle(8)),
     onNotify(v => store.set(v)),
   );
 
