@@ -1,5 +1,4 @@
 import { AbstractDisposable, addTeardown, addDisposable, } from "../../disposable.js";
-import { dispatch } from "./dispatcher.js";
 import { toDispatcher } from "./toDispatcher.js";
 class SubjectImpl extends AbstractDisposable {
     constructor(replay) {
@@ -23,7 +22,7 @@ class SubjectImpl extends AbstractDisposable {
                 }
             }
             for (const observer of this.observers) {
-                dispatch(observer, next);
+                observer.dispatch(next);
             }
         }
     }
@@ -37,7 +36,7 @@ class SubjectImpl extends AbstractDisposable {
             });
         }
         for (const next of this.replayed) {
-            dispatch(dispatcher, next);
+            dispatcher.dispatch(next);
         }
         addDisposable(this, dispatcher);
     }

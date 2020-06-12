@@ -71,11 +71,9 @@ const StreamPauseResume = () => {
 
   const onClick = useCallback(
     () =>
-      updateMode(({ mode }) => ({ 
-        mode: mode === FlowMode.Pause 
-          ? FlowMode.Resume 
-          : FlowMode.Pause,
-        })),
+      updateMode(({ mode }) => ({
+        mode: mode === FlowMode.Pause ? FlowMode.Resume : FlowMode.Pause,
+      })),
     [updateMode],
   );
 

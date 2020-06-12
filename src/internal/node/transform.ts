@@ -9,6 +9,7 @@ import {
   ZlibOptions,
   BrotliOptions,
 } from "zlib";
+import { dispatchTo } from "../../dispatcher";
 import {
   DisposableValueLike,
   createDisposableValue,
@@ -24,7 +25,7 @@ import {
   identity,
 } from "../../functions";
 import { IOSourceOperator } from "../../io";
-import { using, subscribe, onNotify, dispatchTo } from "../../observable";
+import { using, subscribe, onNotify } from "../../observable";
 import { createStreamable, sink, stream } from "../../streamable";
 import { createReadableIOSource } from "./createReadableIOSource";
 import { createWritableIOSink } from "./createWritableIOSink";

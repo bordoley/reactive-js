@@ -2,7 +2,7 @@ import { createIOSinkAccumulator } from "./experimental/ioSinkAccumulator.js";
 import { test, describe, expectEquals, expectTrue, mockFn, expectToHaveBeenCalledTimes, } from "./experimental/testing.js";
 import { pipe, returns, sum } from "./functions.js";
 import { decodeWithCharset, empty, encodeUtf8, fromArray, fromValue, map, } from "./io.js";
-import { onNotify, subscribe, dispatch } from "./observable.js";
+import { onNotify, subscribe } from "./observable.js";
 import { none } from "./option.js";
 import { createVirtualTimeScheduler } from "./scheduler.js";
 import { sink, stream } from "./streamable.js";
@@ -20,8 +20,8 @@ export const tests = describe("io", test("decodeWithCharset", () => {
 }), test("empty", () => {
     const scheduler = createVirtualTimeScheduler();
     const emptyStream = pipe(none, empty, stream(scheduler));
-    dispatch(emptyStream, 2);
-    dispatch(emptyStream, 1);
+    emptyStream.dispatch(2);
+    emptyStream.dispatch(1);
     const f = mockFn();
     const subscription = pipe(emptyStream, onNotify(f), subscribe(scheduler));
     scheduler.run();
@@ -44,7 +44,7 @@ export const tests = describe("io", test("decodeWithCharset", () => {
 }), test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
     const fromValueStream = pipe(1, fromValue(), stream(scheduler));
-    dispatch(fromValueStream, 1);
+    fromValueStream.dispatch(1);
     const f = mockFn();
     const subscription = pipe(fromValueStream, onNotify(f), subscribe(scheduler));
     scheduler.run();

@@ -1,3 +1,4 @@
+import { dispatchTo } from "../dispatcher";
 import {
   addDisposable,
   AbstractDisposable,
@@ -16,11 +17,9 @@ import {
   onNotify,
   subscribe,
   createObservable,
-  dispatch,
   reduce,
   ObserverLike,
   createSubject,
-  dispatchTo,
   ObservableLike,
 } from "../observable";
 import { SchedulerLike } from "../scheduler";
@@ -71,8 +70,8 @@ class IOSinkAccumulatorImpl<T, TAcc> extends AbstractDisposable
 
         eventsSubscription =>
           createObservable(dispatcher => {
-            dispatch(dispatcher, FlowMode.Pause);
-            dispatch(dispatcher, FlowMode.Resume);
+            dispatcher.dispatch(FlowMode.Pause);
+            dispatcher.dispatch(FlowMode.Resume);
             addDisposable(eventsSubscription, dispatcher);
           }),
       );

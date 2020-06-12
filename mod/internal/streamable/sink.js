@@ -1,6 +1,7 @@
+import { dispatchTo } from "../../dispatcher.js";
 import { addDisposable } from "../../disposable.js";
 import { compose, pipe } from "../../functions.js";
-import { onNotify, using, endWith, dispatchTo, } from "../../observable.js";
+import { onNotify, using, endWith } from "../../observable.js";
 import { none } from "../../option.js";
 import { ignoreElements } from "../observable/ignoreElements.js";
 import { subscribe } from "../observable/subscribe.js";

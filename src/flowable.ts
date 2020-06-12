@@ -20,23 +20,21 @@ export const enum FlowMode {
 }
 
 /** @noInheritDoc */
-export interface FlowableLike<T> extends StreamableLike<FlowMode, T> { }
+export interface FlowableLike<T> extends StreamableLike<FlowMode, T> {}
 
 export type FlowableOperator<TA, TB> = Function1<
   FlowableLike<TA>,
   FlowableLike<TB>
 >;
 
-export const fromObservable = <T>({ scheduler }: {
-  scheduler?: SchedulerLike
-} = {}): Function1<
-  ObservableLike<T>,
-  FlowableLike<T>
-> => observable => {
+export const fromObservable = <T>({
+  scheduler,
+}: {
+  scheduler?: SchedulerLike;
+} = {}): Function1<ObservableLike<T>, FlowableLike<T>> => observable => {
   const createScheduler = (modeObs: ObservableLike<FlowMode>) => (
     modeScheduler: SchedulerLike,
   ) => {
-
     const pausableScheduler = toPausableScheduler(scheduler ?? modeScheduler);
 
     const onModeChange = (mode: FlowMode) => {
@@ -72,7 +70,6 @@ export const fromObservable = <T>({ scheduler }: {
 
   return createStreamable(op);
 };
-
 
 export const fromArray = <T>(options?: {
   readonly delay?: number;

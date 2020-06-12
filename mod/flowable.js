@@ -3,7 +3,7 @@ import { compose, pipe } from "./functions.js";
 import { fromArray as fromArrayObs, fromDisposable, onNotify, subscribe, subscribeOn, takeUntil, using, } from "./observable.js";
 import { toPausableScheduler } from "./scheduler.js";
 import { createStreamable } from "./streamable.js";
-export const fromObservable = ({ scheduler } = {}) => observable => {
+export const fromObservable = ({ scheduler, } = {}) => observable => {
     const createScheduler = (modeObs) => (modeScheduler) => {
         const pausableScheduler = toPausableScheduler(scheduler !== null && scheduler !== void 0 ? scheduler : modeScheduler);
         const onModeChange = (mode) => {

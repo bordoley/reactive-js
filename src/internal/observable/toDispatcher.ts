@@ -1,3 +1,4 @@
+import { DispatcherLike } from "../../dispatcher";
 import {
   AbstractDisposable,
   dispose,
@@ -8,7 +9,7 @@ import {
 } from "../../disposable";
 import { pipe } from "../../functions";
 import { schedule } from "../../scheduler";
-import { DispatcherLike, ObserverLike } from "./interfaces";
+import { ObserverLike } from "./interfaces";
 import { yield$ } from "./observer";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {

@@ -1,6 +1,7 @@
+import { dispatchTo } from "../dispatcher.js";
 import { addDisposable, AbstractDisposable, addDisposableDisposeParentOnChildError, } from "../disposable.js";
 import { pipe } from "../functions.js";
-import { using, takeWhile, keepType, map as mapObs, onNotify, subscribe, createObservable, dispatch, reduce, createSubject, dispatchTo, } from "../observable.js";
+import { using, takeWhile, keepType, map as mapObs, onNotify, subscribe, createObservable, reduce, createSubject, } from "../observable.js";
 import { stream, createStreamable } from "../streamable.js";
 const isNotify = (ev) => ev.type === 1;
 class IOSinkAccumulatorImpl extends AbstractDisposable {
@@ -10,8 +11,8 @@ class IOSinkAccumulatorImpl extends AbstractDisposable {
         const subject = createSubject(options);
         addDisposableDisposeParentOnChildError(this, subject);
         const op = (events) => using(scheduler => pipe(events, takeWhile(isNotify), keepType(isNotify), mapObs(ev => ev.data), reduce(reducer, initialValue), onNotify(dispatchTo(subject)), subscribe(scheduler)), eventsSubscription => createObservable(dispatcher => {
-            dispatch(dispatcher, 2);
-            dispatch(dispatcher, 1);
+            dispatcher.dispatch(2);
+            dispatcher.dispatch(1);
             addDisposable(eventsSubscription, dispatcher);
         }));
         this.streamable = createStreamable(op);

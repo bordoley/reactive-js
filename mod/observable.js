@@ -55,4 +55,3 @@ export { zipLatest, zipLatestWith } from "./internal/observable/zipLatest.js";
 export { zipWithLatestFrom } from "./internal/observable/zipWithLatestFrom.js";
 export { toRunnable } from "./internal/observable/toRunnable.js";
 export { toPromise } from "./internal/observable/toPromise.js";
-export { dispatch, dispatchTo } from "./internal/observable/dispatcher.js";

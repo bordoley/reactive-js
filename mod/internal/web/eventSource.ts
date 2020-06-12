@@ -1,6 +1,6 @@
 import { addTeardown } from "../../disposable.ts";
 import { pipe } from "../../functions.ts";
-import { createObservable, ObservableLike, dispatch } from "../../observable.ts";
+import { createObservable, ObservableLike } from "../../observable.ts";
 import { keep } from "../../readonlyArray.ts";
 
 const reservedEvents = ["error", "open"];
@@ -25,7 +25,7 @@ export const createEventSource = (
   return createObservable(dispatcher => {
     const eventSource = new EventSource(requestURL, options);
     const listener = (ev: MessageEvent) => {
-      dispatch(dispatcher, {
+      dispatcher.dispatch({
         id: ev.lastEventId ?? "",
         type: ev.type ?? "",
         data: ev.data ?? "",

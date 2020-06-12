@@ -1,12 +1,7 @@
+import { dispatchTo } from "../../dispatcher.ts";
 import { addDisposable } from "../../disposable.ts";
 import { compose, pipe, Function1 } from "../../functions.ts";
-import {
-  ObservableLike,
-  onNotify,
-  using,
-  endWith,
-  dispatchTo,
-} from "../../observable.ts";
+import { ObservableLike, onNotify, using, endWith } from "../../observable.ts";
 import { none } from "../../option.ts";
 import { ignoreElements } from "../observable/ignoreElements.ts";
 import { StreamLike } from "../observable/interfaces.ts";

@@ -1,15 +1,16 @@
+import { dispatchTo } from "./dispatcher.js";
 import { dispose } from "./disposable.js";
 import { test, describe, expectEquals, expectTrue, mockFn, expectToHaveBeenCalledTimes, } from "./experimental/testing.js";
 import { empty, fromValue, fromObservable } from "./flowable.js";
 import { increment, pipe, returns, defer } from "./functions.js";
-import { onNotify, subscribe, generate, dispatch, dispatchTo, } from "./observable.js";
+import { onNotify, subscribe, generate } from "./observable.js";
 import { createVirtualTimeScheduler, schedule } from "./scheduler.js";
 import { stream } from "./streamable.js";
 export const tests = describe("flowables", test("empty", () => {
     const scheduler = createVirtualTimeScheduler();
     const emptyStream = pipe(empty(), stream(scheduler));
-    dispatch(emptyStream, 2);
-    dispatch(emptyStream, 1);
+    emptyStream.dispatch(2);
+    emptyStream.dispatch(1);
     const f = mockFn();
     const subscription = pipe(emptyStream, onNotify(f), subscribe(scheduler));
     scheduler.run();
@@ -19,7 +20,7 @@ export const tests = describe("flowables", test("empty", () => {
 }), test("fromObservable", () => {
     const scheduler = createVirtualTimeScheduler();
     const generateStream = pipe(generate(increment, returns(-1), { delay: 1 }), fromObservable(), stream(scheduler));
-    dispatch(generateStream, 1);
+    generateStream.dispatch(1);
     pipe(scheduler, schedule(defer(2, dispatchTo(generateStream)), {
         delay: 2,
     }));
@@ -40,8 +41,8 @@ export const tests = describe("flowables", test("empty", () => {
 }), test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
     const fromValueStream = pipe(1, fromValue(), stream(scheduler));
-    dispatch(fromValueStream, 1);
-    dispatch(fromValueStream, 1);
+    fromValueStream.dispatch(1);
+    fromValueStream.dispatch(1);
     const f = mockFn();
     const subscription = pipe(fromValueStream, onNotify(f), subscribe(scheduler));
     scheduler.run();

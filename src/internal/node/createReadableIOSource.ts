@@ -1,5 +1,6 @@
 import fs from "fs";
 import { Readable } from "stream";
+import { dispatchTo } from "../../dispatcher";
 import {
   DisposableValueLike,
   dispose,
@@ -16,8 +17,6 @@ import {
   subscribe,
   using,
   ObservableLike,
-  dispatchTo,
-  dispatch,
 } from "../../observable";
 import { SchedulerLike } from "../../scheduler";
 import { createStreamable } from "../../streamable";
@@ -33,7 +32,7 @@ const createReadableEventsObservable = (
     readableValue.on("data", onData);
 
     const onEnd = () => {
-      dispatch(dispatcher, done());
+      dispatcher.dispatch(done());
       pipe(dispatcher, dispose());
     };
     readableValue.on("end", onEnd);

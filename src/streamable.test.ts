@@ -14,7 +14,6 @@ import {
   buffer,
   takeFirst,
   startWith,
-  dispatch,
 } from "./observable";
 import { none } from "./option";
 import { createVirtualTimeScheduler } from "./scheduler";
@@ -41,8 +40,8 @@ export const tests = describe(
       stream(scheduler),
     );
 
-    dispatch(actionReducerStream, 1);
-    dispatch(actionReducerStream, 2);
+    actionReducerStream.dispatch(1);
+    actionReducerStream.dispatch(2);
     pipe(actionReducerStream, dispose());
 
     let result: number[] = [];
@@ -64,8 +63,8 @@ export const tests = describe(
       const scheduler = createVirtualTimeScheduler();
       const emptyStream = pipe(empty<void, number>(), stream(scheduler));
 
-      dispatch(emptyStream, none);
-      dispatch(emptyStream, none);
+      emptyStream.dispatch(none);
+      emptyStream.dispatch(none);
 
       let result: number[] = [];
       const subscription = pipe(
@@ -89,8 +88,8 @@ export const tests = describe(
         stream(scheduler),
       );
 
-      dispatch(emptyStream, none);
-      dispatch(emptyStream, none);
+      emptyStream.dispatch(none);
+      emptyStream.dispatch(none);
 
       let result: number[] = [];
       let disposedTime = 0;
@@ -140,9 +139,9 @@ export const tests = describe(
       stream(scheduler),
     );
 
-    dispatch(incrStream, 10);
-    dispatch(incrStream, 20);
-    dispatch(incrStream, 30);
+    incrStream.dispatch(10);
+    incrStream.dispatch(20);
+    incrStream.dispatch(30);
     pipe(incrStream, dispose());
 
     let result: readonly number[] = [];
@@ -171,9 +170,9 @@ export const tests = describe(
       stream(scheduler),
     );
 
-    dispatch(incrStream, "10");
-    dispatch(incrStream, "20");
-    dispatch(incrStream, "30");
+    incrStream.dispatch("10");
+    incrStream.dispatch("20");
+    incrStream.dispatch("30");
     pipe(incrStream, dispose());
 
     let result: readonly number[] = [];
@@ -203,9 +202,9 @@ export const tests = describe(
       stream(scheduler),
     );
 
-    dispatch(notifyStream, 1);
-    dispatch(notifyStream, 2);
-    dispatch(notifyStream, 3);
+    notifyStream.dispatch(1);
+    notifyStream.dispatch(2);
+    notifyStream.dispatch(3);
     pipe(notifyStream, dispose());
 
     expectTrue(notifyStream.isDisposed);
@@ -227,9 +226,9 @@ export const tests = describe(
       stream(scheduler),
     );
 
-    dispatch(scanStream, 1);
-    dispatch(scanStream, 2);
-    dispatch(scanStream, 3);
+    scanStream.dispatch(1);
+    scanStream.dispatch(2);
+    scanStream.dispatch(3);
 
     scheduler.run();
 

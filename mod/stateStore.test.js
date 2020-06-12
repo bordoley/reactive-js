@@ -1,23 +1,23 @@
 import { dispose } from "./disposable.js";
 import { test, describe, expectArrayEquals, expectTrue, } from "./experimental/testing.js";
 import { pipe, incrementBy } from "./functions.js";
-import { onNotify, subscribe, startWith, dispatch } from "./observable.js";
+import { onNotify, subscribe, startWith } from "./observable.js";
 import { createVirtualTimeScheduler } from "./scheduler.js";
 import { toStateStore } from "./stateStore.js";
 import { identity, lift, stream } from "./streamable.js";
 export const tests = describe("stateStore", test("toStateStore", () => {
     const scheduler = createVirtualTimeScheduler({ maxMicroTaskTicks: 0 });
     const stateStream = pipe(identity(), lift(startWith(0)), toStateStore(), stream(scheduler));
-    dispatch(stateStream, incrementBy(1));
-    dispatch(stateStream, incrementBy(2));
-    dispatch(stateStream, incrementBy(3));
-    dispatch(stateStream, incrementBy(4));
-    dispatch(stateStream, incrementBy(5));
-    dispatch(stateStream, incrementBy(6));
-    dispatch(stateStream, incrementBy(7));
-    dispatch(stateStream, incrementBy(8));
-    dispatch(stateStream, incrementBy(9));
-    dispatch(stateStream, incrementBy(10));
+    stateStream.dispatch(incrementBy(1));
+    stateStream.dispatch(incrementBy(2));
+    stateStream.dispatch(incrementBy(3));
+    stateStream.dispatch(incrementBy(4));
+    stateStream.dispatch(incrementBy(5));
+    stateStream.dispatch(incrementBy(6));
+    stateStream.dispatch(incrementBy(7));
+    stateStream.dispatch(incrementBy(8));
+    stateStream.dispatch(incrementBy(9));
+    stateStream.dispatch(incrementBy(10));
     pipe(stateStream, dispose());
     let result = [];
     const subscription = pipe(stateStream, onNotify(x => {

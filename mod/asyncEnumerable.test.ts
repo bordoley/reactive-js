@@ -16,13 +16,7 @@ import {
   expectArrayEquals,
 } from "./experimental/testing.ts";
 import { pipe, increment, returns, defer } from "./functions.ts";
-import {
-  fromValue,
-  subscribe,
-  onNotify,
-  toRunnable,
-  dispatch,
-} from "./observable.ts";
+import { fromValue, subscribe, onNotify, toRunnable } from "./observable.ts";
 import { none, Option } from "./option.ts";
 import { last } from "./runnable.ts";
 import { createVirtualTimeScheduler } from "./scheduler.ts";
@@ -98,9 +92,9 @@ export const tests = describe(
       subscribe(scheduler),
     );
 
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
 
     scheduler.run();
 
@@ -126,12 +120,12 @@ export const tests = describe(
       error = e;
     });
 
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
 
     scheduler.run();
 
@@ -153,9 +147,9 @@ export const tests = describe(
       subscribe(scheduler),
     );
 
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
 
     scheduler.run();
 

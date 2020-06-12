@@ -18,7 +18,7 @@ import {
   IOEventType,
   map,
 } from "./io.ts";
-import { onNotify, subscribe, dispatch } from "./observable.ts";
+import { onNotify, subscribe } from "./observable.ts";
 import { none } from "./option.ts";
 import { createVirtualTimeScheduler } from "./scheduler.ts";
 import { sink, stream } from "./streamable.ts";
@@ -53,8 +53,8 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
     const emptyStream = pipe(none, empty, stream(scheduler));
 
-    dispatch(emptyStream, FlowMode.Pause);
-    dispatch(emptyStream, FlowMode.Resume);
+    emptyStream.dispatch(FlowMode.Pause);
+    emptyStream.dispatch(FlowMode.Resume);
 
     const f = mockFn();
     const subscription = pipe(emptyStream, onNotify(f), subscribe(scheduler));
@@ -90,7 +90,7 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
     const fromValueStream = pipe(1, fromValue(), stream(scheduler));
 
-    dispatch(fromValueStream, FlowMode.Resume);
+    fromValueStream.dispatch(FlowMode.Resume);
 
     const f = mockFn();
     const subscription = pipe(

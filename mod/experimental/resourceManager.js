@@ -4,7 +4,7 @@ import { pipe } from "../functions.js";
 import { createKeyedQueue } from "../internal/keyedQueue.js";
 import { createSetMultimap } from "../internal/multimaps.js";
 import { createUniqueQueue } from "../internal/queues.js";
-import { createObservable, subscribe, fromValue, onNotify, dispatch, } from "../observable.js";
+import { createObservable, subscribe, fromValue, onNotify, } from "../observable.js";
 import { isSome, isNone, none } from "../option.js";
 import { first, forEach } from "../runnable.js";
 const tryDispatch = (resourceManager, key) => {
@@ -68,7 +68,7 @@ const tryDispatch = (resourceManager, key) => {
         tryDispatch(resourceManager, key);
     });
     inUseResources.add(key, observer);
-    dispatch(observer, resource);
+    observer.dispatch(resource);
 };
 class ResourceManagerImpl extends AbstractDisposable {
     constructor(createResource, scheduler, maxIdleTime, maxResourcesPerKey, maxTotalResources) {
