@@ -1,3 +1,4 @@
+import { DispatcherLike } from "../../dispatcher.ts";
 import { DisposableLike } from "../../disposable.ts";
 import { Function1 } from "../../functions.ts";
 import { SchedulerLike } from "../../scheduler.ts";
@@ -64,15 +65,6 @@ export interface MulticastObservableLike<T>
    * The number of observers currently observing.
    */
   readonly observerCount: number;
-}
-
-/** @noInheritDoc */
-export interface DispatcherLike<T> extends DisposableLike {
-  /**
-   * Dispatches the next request
-   * @param req
-   */
-  dispatch(req: T): void;
 }
 
 /**

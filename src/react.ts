@@ -18,13 +18,7 @@ import {
   dispose,
 } from "./disposable";
 import { SideEffect1, pipe, compose, defer, returns } from "./functions";
-import {
-  dispatch as dispatchToStream,
-  ObservableLike,
-  onNotify,
-  StreamLike,
-  subscribe,
-} from "./observable";
+import { ObservableLike, onNotify, StreamLike, subscribe } from "./observable";
 import { none, Option, isSome } from "./option";
 import {
   SchedulerLike,
@@ -32,7 +26,11 @@ import {
   toSchedulerWithPriority,
   run,
 } from "./scheduler";
-import { onNotify as onNotifyStream, StreamableLike, stream as streamableStream } from "./streamable";
+import {
+  onNotify as onNotifyStream,
+  StreamableLike,
+  stream as streamableStream,
+} from "./streamable";
 
 /**
  * Returns the current value, if defined, of `observable`.
@@ -85,7 +83,7 @@ export const useStreamable = <TReq, T>(
   const dispatch = useCallback(
     req => {
       if (isSome(stream)) {
-        dispatchToStream(stream, req);
+        stream.dispatch(req);
       }
     },
     [stream],
@@ -95,11 +93,11 @@ export const useStreamable = <TReq, T>(
     const stream = pipe(
       streamable,
       onNotifyStream(compose(returns, updateState)),
-      streamableStream(scheduler)
+      streamableStream(scheduler),
     );
 
     addTeardown(stream, compose(returns, updateError));
-    setStream(stream)
+    setStream(stream);
 
     return defer(stream, dispose());
   }, [streamable, scheduler, setStream]);

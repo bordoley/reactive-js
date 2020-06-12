@@ -1,4 +1,5 @@
 import { Writable } from "stream";
+import { dispatchTo } from "../../dispatcher";
 import {
   DisposableValueLike,
   dispose,
@@ -15,8 +16,6 @@ import {
   subscribe,
   ObservableLike,
   using,
-  dispatch,
-  dispatchTo,
 } from "../../observable";
 import { SchedulerLike } from "../../scheduler";
 import { createStreamable } from "../../streamable";
@@ -45,7 +44,7 @@ const createWritableEventsObservable = (
       writableValue.removeListener(NODE_JS_PAUSE_EVENT, onPause);
     });
 
-    dispatch(dispatcher, FlowMode.Resume);
+    dispatcher.dispatch(FlowMode.Resume);
   });
 
 const createWritableAndSetupEventSubscription = (

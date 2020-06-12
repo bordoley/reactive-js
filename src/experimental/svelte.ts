@@ -3,7 +3,6 @@ import { writable, Readable, Writable } from "svelte/store";
 import { dispose } from "../disposable";
 import { Function1, Factory, pipe, defer, SideEffect1 } from "../functions";
 import {
-  dispatch as dispatchToStream,
   ObservableLike,
   subscribe as subscribeObs,
   StreamLike,
@@ -68,7 +67,7 @@ export const stream = <TReq, T>(
 
   const dispatch = (req: TReq) => {
     if (isSome(stream)) {
-      dispatchToStream(stream, req);
+      stream.dispatch(req);
     }
   };
 

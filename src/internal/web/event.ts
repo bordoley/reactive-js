@@ -1,6 +1,6 @@
 import { dispose, addTeardown } from "../../disposable";
 import { Function1, pipe } from "../../functions";
-import { createObservable, ObservableLike, dispatch } from "../../observable";
+import { createObservable, ObservableLike } from "../../observable";
 
 export const fromEvent = <T>(
   target: EventTarget,
@@ -11,7 +11,7 @@ export const fromEvent = <T>(
     const listener = (event: Event) => {
       try {
         const result = selector(event);
-        dispatch(dispatcher, result);
+        dispatcher.dispatch(result);
       } catch (cause) {
         pipe(dispatcher, dispose({ cause }));
       }

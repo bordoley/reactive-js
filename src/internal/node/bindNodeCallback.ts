@@ -14,7 +14,7 @@ import {
   SideEffect6,
   pipe,
 } from "../../functions";
-import { createObservable, ObservableLike, dispatch } from "../../observable";
+import { createObservable, ObservableLike } from "../../observable";
 
 export function bindNodeCallback<T>(
   callbackFunc: SideEffect1<SideEffect2<unknown, T>>,
@@ -67,7 +67,7 @@ export function bindNodeCallback<T>(
         if (cause) {
           pipe(dispatcher, dispose({ cause }));
         } else {
-          dispatch(dispatcher, arg);
+          dispatcher.dispatch(arg);
           pipe(dispatcher, dispose());
         }
       };

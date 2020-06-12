@@ -1,3 +1,4 @@
+import { dispatchTo } from "./dispatcher";
 import { bindDisposables } from "./disposable";
 import {
   pipe,
@@ -9,13 +10,7 @@ import {
   Function1,
   compose,
 } from "./functions";
-import {
-  onNotify,
-  using,
-  zipWithLatestFrom,
-  dispatchTo,
-  subscribe,
-} from "./observable";
+import { onNotify, using, zipWithLatestFrom, subscribe } from "./observable";
 import {
   StreamableLike,
   createActionReducer,

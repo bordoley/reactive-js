@@ -1,3 +1,4 @@
+import { dispatchTo } from "./dispatcher.ts";
 import { dispose } from "./disposable.ts";
 import {
   test,
@@ -73,8 +74,6 @@ import {
   switchAll,
   zipWith,
   zipWithLatestFrom,
-  dispatchTo,
-  dispatch,
   zipLatestWith,
   toRunnable,
 } from "./observable.ts";
@@ -231,9 +230,9 @@ export const tests = describe(
       "when queuing multiple events",
       defer(
         createObservable(dispatcher => {
-          dispatch(dispatcher, 1);
-          dispatch(dispatcher, 2);
-          dispatch(dispatcher, 3);
+          dispatcher.dispatch(1);
+          dispatcher.dispatch(2);
+          dispatcher.dispatch(3);
           pipe(dispatcher, dispose());
         }),
         toRunnable({
@@ -435,10 +434,10 @@ export const tests = describe(
     test("repeats the observable n times", () => {
       let retried = false;
       const src = createObservable(d => {
-        dispatch(d, 1);
+        d.dispatch(1);
         if (retried) {
-          dispatch(d, 2);
-          pipe(d, dispose());
+          d.dispatch(2);
+          d.dispose();
         } else {
           retried = true;
           pipe(d, dispose({ cause: new Error() }));

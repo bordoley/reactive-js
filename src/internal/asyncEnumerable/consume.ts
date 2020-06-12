@@ -18,7 +18,6 @@ import {
   using,
   zipWithLatestFrom,
   takeFirst,
-  dispatch,
 } from "../../observable";
 import { none } from "../../option";
 import { stream } from "../../streamable";
@@ -77,15 +76,15 @@ const consumeImpl = <TSrc, TAcc>(
         onNotify(ev => {
           switch (ev.type) {
             case ConsumeRequestType.Notify:
-              dispatch(accFeedback, ev.acc);
-              dispatch(enumerator, none);
+              accFeedback.dispatch(ev.acc);
+              enumerator.dispatch(none);
               break;
           }
         }),
         map(ev => ev.acc),
         onSubscribe(() => {
-          dispatch(accFeedback, initial());
-          dispatch(enumerator, none);
+          accFeedback.dispatch(initial());
+          enumerator.dispatch(none);
         }),
       ),
   );

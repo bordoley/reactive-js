@@ -12,7 +12,7 @@ Represents a duplex stream
 
 ## Hierarchy
 
-  ↳ [DispatcherLike](_observable_.dispatcherlike.md)‹TReq›
+  ↳ [DispatcherLike](_dispatcher_.dispatcherlike.md)‹TReq›
 
   ↳ [MulticastObservableLike](_observable_.multicastobservablelike.md)‹T›
 

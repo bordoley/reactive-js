@@ -8,11 +8,11 @@ Represents an unmanaged resource that can be disposed.
 
 * **DisposableLike**
 
+  ↳ [DispatcherLike](_dispatcher_.dispatcherlike.md)
+
   ↳ [SerialDisposableLike](_disposable_.serialdisposablelike.md)
 
   ↳ [DisposableValueLike](_disposable_.disposablevaluelike.md)
-
-  ↳ [DispatcherLike](_observable_.dispatcherlike.md)
 
   ↳ [MulticastObservableLike](_observable_.multicastobservablelike.md)
 

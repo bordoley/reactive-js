@@ -10,7 +10,6 @@
 
 ### Interfaces
 
-* [DispatcherLike](../interfaces/_observable_.dispatcherlike.md)
 * [MulticastObservableLike](../interfaces/_observable_.multicastobservablelike.md)
 * [ObservableLike](../interfaces/_observable_.observablelike.md)
 * [ObserverLike](../interfaces/_observable_.observerlike.md)
@@ -41,8 +40,6 @@
 * [concatWith](_observable_.md#const-concatwith)
 * [createObservable](_observable_.md#const-createobservable)
 * [createSubject](_observable_.md#const-createsubject)
-* [dispatch](_observable_.md#const-dispatch)
-* [dispatchTo](_observable_.md#const-dispatchto)
 * [distinctUntilChanged](_observable_.md#const-distinctuntilchanged)
 * [empty](_observable_.md#const-empty)
 * [endWith](_observable_.md#endwith)
@@ -598,7 +595,7 @@ ___
 
 ### `Const` createObservable
 
-▸ **createObservable**<**T**>(`onSubscribe`: [SideEffect1](_functions_.md#sideeffect1)‹[DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **createObservable**<**T**>(`onSubscribe`: [SideEffect1](_functions_.md#sideeffect1)‹[DispatcherLike](../interfaces/_dispatcher_.dispatcherlike.md)‹T››): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 Factory for safely creating new `ObservableLike` instances. The onSubscribe function
 is called with a `SafeObserverLike` that may be notified from any context.
@@ -614,7 +611,7 @@ the onSubscribe function.
 
 Name | Type | Description |
 ------ | ------ | ------ |
-`onSubscribe` | [SideEffect1](_functions_.md#sideeffect1)‹[DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T›› |   |
+`onSubscribe` | [SideEffect1](_functions_.md#sideeffect1)‹[DispatcherLike](../interfaces/_dispatcher_.dispatcherlike.md)‹T›› |   |
 
 **Returns:** *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
@@ -637,43 +634,6 @@ Name | Type |
 `replay?` | number |
 
 **Returns:** *[SubjectLike](../interfaces/_observable_.subjectlike.md)‹T›*
-
-___
-
-### `Const` dispatch
-
-▸ **dispatch**<**T**>(`dispatcher`: [DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T›, `v`: T): *void*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`dispatcher` | [DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T› |
-`v` | T |
-
-**Returns:** *void*
-
-___
-
-### `Const` dispatchTo
-
-▸ **dispatchTo**<**T**>(`dispatcher`: [DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T›): *[Function1](_functions_.md#function1)‹T, void›*
-
-**Type parameters:**
-
-▪ **T**
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`dispatcher` | [DispatcherLike](../interfaces/_observable_.dispatcherlike.md)‹T› |
-
-**Returns:** *[Function1](_functions_.md#function1)‹T, void›*
 
 ___
 

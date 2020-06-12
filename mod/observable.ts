@@ -1,5 +1,4 @@
 export {
-  DispatcherLike,
   MulticastObservableLike,
   ObservableLike,
   ObservableOperator,
@@ -78,5 +77,3 @@ export { zipWithLatestFrom } from "./internal/observable/zipWithLatestFrom.ts";
 
 export { toRunnable } from "./internal/observable/toRunnable.ts";
 export { toPromise } from "./internal/observable/toPromise.ts";
-
-export { dispatch, dispatchTo } from "./internal/observable/dispatcher.ts";

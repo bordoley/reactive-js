@@ -1,5 +1,6 @@
+import { DispatcherLike } from "../../dispatcher";
 import { SideEffect1 } from "../../functions";
-import { ObservableLike, DispatcherLike } from "./interfaces";
+import { ObservableLike } from "./interfaces";
 import { defer } from "./observable";
 import { toDispatcher } from "./toDispatcher";
 

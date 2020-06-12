@@ -1,9 +1,10 @@
+import { dispatchTo } from "./dispatcher.js";
 import { dispose } from "./disposable.js";
 import { test, describe, testAsync, expectArrayEquals, expectToThrowError, expectEquals, expectToThrow, expectPromiseToThrow, mockFn, expectToHaveBeenCalledTimes, expectSome, expectNone, } from "./experimental/testing.js";
 import { compose, pipe, returns, increment, arrayEquality, identity, incrementBy, sum, defer, ignore, raise, } from "./functions.js";
 import { createMonadTests } from "./monad.test.js";
 import * as Observable from "./observable.js";
-import { await_, buffer, combineLatestWith, compute, concat, concatWith, createObservable, empty, fromArray, fromIterable, fromPromise, generate, ignoreElements, map, merge, mergeWith, never, fromValue, onNotify, retry, scanAsync, share, subscribe, takeFirst, takeLast, throttle, throwIfEmpty, throws, timeout, toPromise, withLatestFrom, zip, catchError, genMap, endWith, switchMap, onSubscribe, createSubject, exhaustMap, mergeMap, switchAll, zipWith, zipWithLatestFrom, dispatchTo, dispatch, zipLatestWith, toRunnable, } from "./observable.js";
+import { await_, buffer, combineLatestWith, compute, concat, concatWith, createObservable, empty, fromArray, fromIterable, fromPromise, generate, ignoreElements, map, merge, mergeWith, never, fromValue, onNotify, retry, scanAsync, share, subscribe, takeFirst, takeLast, throttle, throwIfEmpty, throws, timeout, toPromise, withLatestFrom, zip, catchError, genMap, endWith, switchMap, onSubscribe, createSubject, exhaustMap, mergeMap, switchAll, zipWith, zipWithLatestFrom, zipLatestWith, toRunnable, } from "./observable.js";
 import { fromArray as fromArrayRunnable, forEach, last, toArray, } from "./runnable.js";
 import { createHostScheduler, createVirtualTimeScheduler } from "./scheduler.js";
 const scheduler = createHostScheduler();
@@ -32,9 +33,9 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
     });
     pipe(() => pipe(observable, toRunnable(), last), expectToThrowError(cause));
 }), test("when queuing multiple events", defer(createObservable(dispatcher => {
-    dispatch(dispatcher, 1);
-    dispatch(dispatcher, 2);
-    dispatch(dispatcher, 3);
+    dispatcher.dispatch(1);
+    dispatcher.dispatch(2);
+    dispatcher.dispatch(3);
     pipe(dispatcher, dispose());
 }), toRunnable({
     schedulerFactory: defer({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
@@ -89,10 +90,10 @@ export const tests = describe("observable", test("await_", defer([0, 1, 2, 3, 4]
 })), describe("retry", test("repeats the observable n times", () => {
     let retried = false;
     const src = createObservable(d => {
-        dispatch(d, 1);
+        d.dispatch(1);
         if (retried) {
-            dispatch(d, 2);
-            pipe(d, dispose());
+            d.dispatch(2);
+            d.dispose();
         }
         else {
             retried = true;

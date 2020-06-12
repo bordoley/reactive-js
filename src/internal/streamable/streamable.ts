@@ -1,3 +1,4 @@
+import { dispatchTo } from "../../dispatcher";
 import { bindDisposables } from "../../disposable";
 import { pipe, compose, Function1 } from "../../functions";
 import {
@@ -7,7 +8,6 @@ import {
   empty as emptyObs,
   map,
   using,
-  dispatchTo,
 } from "../../observable";
 import { isNone } from "../../option";
 import { SchedulerLike } from "../../scheduler";

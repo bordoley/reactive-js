@@ -1,15 +1,15 @@
 import { dispose, addTeardown } from "./disposable.js";
 import { test, describe, expectArrayEquals, expectEquals, expectTrue, expectFalse, } from "./experimental/testing.js";
 import { pipe, returns, incrementBy, sum } from "./functions.js";
-import { subscribe, onNotify as onNotifyObs, buffer, takeFirst, startWith, dispatch, } from "./observable.js";
+import { subscribe, onNotify as onNotifyObs, buffer, takeFirst, startWith, } from "./observable.js";
 import { none } from "./option.js";
 import { createVirtualTimeScheduler } from "./scheduler.js";
 import { empty, identity, lift, map, mapReq, onNotify, scan, createActionReducer, mapTo, sink, stream, } from "./streamable.js";
 export const tests = describe("streamable", test("createActionReducer", () => {
     const scheduler = createVirtualTimeScheduler();
     const actionReducerStream = pipe(createActionReducer(sum, returns(0)), stream(scheduler));
-    dispatch(actionReducerStream, 1);
-    dispatch(actionReducerStream, 2);
+    actionReducerStream.dispatch(1);
+    actionReducerStream.dispatch(2);
     pipe(actionReducerStream, dispose());
     let result = [];
     pipe(actionReducerStream, onNotifyObs(x => {
@@ -20,8 +20,8 @@ export const tests = describe("streamable", test("createActionReducer", () => {
 }), describe("empty", test("with no delay", () => {
     const scheduler = createVirtualTimeScheduler();
     const emptyStream = pipe(empty(), stream(scheduler));
-    dispatch(emptyStream, none);
-    dispatch(emptyStream, none);
+    emptyStream.dispatch(none);
+    emptyStream.dispatch(none);
     let result = [];
     const subscription = pipe(emptyStream, onNotifyObs(x => {
         result.push(x);
@@ -33,8 +33,8 @@ export const tests = describe("streamable", test("createActionReducer", () => {
 }), test("with delay", () => {
     const scheduler = createVirtualTimeScheduler();
     const emptyStream = pipe(empty({ delay: 4 }), stream(scheduler));
-    dispatch(emptyStream, none);
-    dispatch(emptyStream, none);
+    emptyStream.dispatch(none);
+    emptyStream.dispatch(none);
     let result = [];
     let disposedTime = 0;
     const subscription = pipe(emptyStream, onNotifyObs(x => {
@@ -63,9 +63,9 @@ export const tests = describe("streamable", test("createActionReducer", () => {
 }), test("map", () => {
     const scheduler = createVirtualTimeScheduler();
     const incrStream = pipe(identity(), map(incrementBy(100)), stream(scheduler));
-    dispatch(incrStream, 10);
-    dispatch(incrStream, 20);
-    dispatch(incrStream, 30);
+    incrStream.dispatch(10);
+    incrStream.dispatch(20);
+    incrStream.dispatch(30);
     pipe(incrStream, dispose());
     let result = [];
     const subscription = pipe(incrStream, buffer(), onNotifyObs(x => {
@@ -77,9 +77,9 @@ export const tests = describe("streamable", test("createActionReducer", () => {
 }), test("mapReq", () => {
     const scheduler = createVirtualTimeScheduler();
     const incrStream = pipe(identity(), mapReq(incrementBy(100)), mapReq(x => Number.parseInt(x)), stream(scheduler));
-    dispatch(incrStream, "10");
-    dispatch(incrStream, "20");
-    dispatch(incrStream, "30");
+    incrStream.dispatch("10");
+    incrStream.dispatch("20");
+    incrStream.dispatch("30");
     pipe(incrStream, dispose());
     let result = [];
     const subscription = pipe(incrStream, buffer(), onNotifyObs(x => {
@@ -94,9 +94,9 @@ export const tests = describe("streamable", test("createActionReducer", () => {
     const notifyStream = pipe(identity(), onNotify(x => {
         result.push(x);
     }), stream(scheduler));
-    dispatch(notifyStream, 1);
-    dispatch(notifyStream, 2);
-    dispatch(notifyStream, 3);
+    notifyStream.dispatch(1);
+    notifyStream.dispatch(2);
+    notifyStream.dispatch(3);
     pipe(notifyStream, dispose());
     expectTrue(notifyStream.isDisposed);
     scheduler.run();
@@ -107,9 +107,9 @@ export const tests = describe("streamable", test("createActionReducer", () => {
     const scanStream = pipe(identity(), scan(sum, returns(0)), onNotify(x => {
         result.push(x);
     }), stream(scheduler));
-    dispatch(scanStream, 1);
-    dispatch(scanStream, 2);
-    dispatch(scanStream, 3);
+    scanStream.dispatch(1);
+    scanStream.dispatch(2);
+    scanStream.dispatch(3);
     scheduler.run();
     pipe(result, expectArrayEquals([1, 3, 6]));
 }), test("sink", () => {

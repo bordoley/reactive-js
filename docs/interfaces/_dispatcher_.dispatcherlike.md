@@ -1,4 +1,4 @@
-[reactive-js](../README.md) › ["observable"](../modules/_observable_.md) › [DispatcherLike](_observable_.dispatcherlike.md)
+[reactive-js](../README.md) › ["dispatcher"](../modules/_dispatcher_.md) › [DispatcherLike](_dispatcher_.dispatcherlike.md)
 
 # Interface: DispatcherLike <**T**>
 
@@ -18,7 +18,7 @@
 
 ### Methods
 
-* [dispatch](_observable_.dispatcherlike.md#dispatch)
+* [dispatch](_dispatcher_.dispatcherlike.md#dispatch)
 
 ## Methods
 

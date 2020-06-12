@@ -2,7 +2,7 @@ import { done, notify, consume, consumeAsync, fromArray, fromIterable, generate,
 import { addTeardown } from "./disposable.js";
 import { test, describe, expectEquals, expectNone, expectArrayEquals, } from "./experimental/testing.js";
 import { pipe, increment, returns, defer } from "./functions.js";
-import { fromValue, subscribe, onNotify, toRunnable, dispatch, } from "./observable.js";
+import { fromValue, subscribe, onNotify, toRunnable } from "./observable.js";
 import { none } from "./option.js";
 import { last } from "./runnable.js";
 import { createVirtualTimeScheduler } from "./scheduler.js";
@@ -17,9 +17,9 @@ export const tests = describe("async-enumerable", test("consume", () => {
     const enumerator = pipe(enumerable, stream(scheduler));
     const result = [];
     pipe(enumerator, onNotify(x => result.push(x)), subscribe(scheduler));
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
     scheduler.run();
     pipe(result, expectArrayEquals([1, 2, 3]));
 }), test("fromIterable", () => {
@@ -31,12 +31,12 @@ export const tests = describe("async-enumerable", test("consume", () => {
     addTeardown(subscription, e => {
         error = e;
     });
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
     scheduler.run();
     pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
     pipe(error, expectNone);
@@ -45,9 +45,9 @@ export const tests = describe("async-enumerable", test("consume", () => {
     const enumerator = pipe(generate(increment, returns(0)), stream(scheduler));
     const result = [];
     pipe(enumerator, onNotify(x => result.push(x)), subscribe(scheduler));
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
-    dispatch(enumerator, none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
     scheduler.run();
     pipe(result, expectArrayEquals([1, 2, 3]));
 }));

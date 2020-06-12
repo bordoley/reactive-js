@@ -1,3 +1,4 @@
+import { dispatchTo } from "../../dispatcher.ts";
 import { bindDisposables } from "../../disposable.ts";
 import { pipe, compose, Function1 } from "../../functions.ts";
 import {
@@ -7,7 +8,6 @@ import {
   empty as emptyObs,
   map,
   using,
-  dispatchTo,
 } from "../../observable.ts";
 import { isNone } from "../../option.ts";
 import { SchedulerLike } from "../../scheduler.ts";

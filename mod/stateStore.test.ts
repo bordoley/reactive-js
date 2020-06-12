@@ -6,7 +6,7 @@ import {
   expectTrue,
 } from "./experimental/testing.ts";
 import { pipe, incrementBy } from "./functions.ts";
-import { onNotify, subscribe, startWith, dispatch } from "./observable.ts";
+import { onNotify, subscribe, startWith } from "./observable.ts";
 import { createVirtualTimeScheduler } from "./scheduler.ts";
 import { toStateStore } from "./stateStore.ts";
 import { identity, lift, stream } from "./streamable.ts";
@@ -22,16 +22,16 @@ export const tests = describe(
       stream(scheduler),
     );
 
-    dispatch(stateStream, incrementBy(1));
-    dispatch(stateStream, incrementBy(2));
-    dispatch(stateStream, incrementBy(3));
-    dispatch(stateStream, incrementBy(4));
-    dispatch(stateStream, incrementBy(5));
-    dispatch(stateStream, incrementBy(6));
-    dispatch(stateStream, incrementBy(7));
-    dispatch(stateStream, incrementBy(8));
-    dispatch(stateStream, incrementBy(9));
-    dispatch(stateStream, incrementBy(10));
+    stateStream.dispatch(incrementBy(1));
+    stateStream.dispatch(incrementBy(2));
+    stateStream.dispatch(incrementBy(3));
+    stateStream.dispatch(incrementBy(4));
+    stateStream.dispatch(incrementBy(5));
+    stateStream.dispatch(incrementBy(6));
+    stateStream.dispatch(incrementBy(7));
+    stateStream.dispatch(incrementBy(8));
+    stateStream.dispatch(incrementBy(9));
+    stateStream.dispatch(incrementBy(10));
     pipe(stateStream, dispose());
 
     let result: number[] = [];

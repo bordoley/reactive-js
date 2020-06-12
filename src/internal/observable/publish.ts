@@ -1,8 +1,8 @@
+import { dispatchTo } from "../../dispatcher";
 import { bindDisposables } from "../../disposable";
 import { Function1, pipe } from "../../functions";
 import { SchedulerLike } from "../../scheduler";
 import { createSubject } from "./createSubject";
-import { dispatchTo } from "./dispatcher";
 import { MulticastObservableLike, ObservableLike } from "./interfaces";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";

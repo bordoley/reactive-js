@@ -1,14 +1,13 @@
+import { DispatcherLike } from "../../dispatcher";
 import { AbstractDisposable, addDisposable } from "../../disposable";
 import { pipe } from "../../functions";
 import {
   StreamLike,
-  DispatcherLike,
   MulticastObservableLike,
   ObservableOperator,
   createSubject,
   publish,
   ObserverLike,
-  dispatch,
   observe,
 } from "../../observable";
 import { SchedulerLike } from "../../scheduler";
@@ -47,7 +46,7 @@ class StreamImpl<TReq, T> extends AbstractDisposable
   }
 
   dispatch(req: TReq) {
-    dispatch(this.dispatcher, req);
+    this.dispatcher.dispatch(req);
   }
 
   observe(observer: ObserverLike<T>) {

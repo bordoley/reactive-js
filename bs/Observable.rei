@@ -9,19 +9,10 @@ module MulticastObservableLike: {
   external asObservableLike: t('a) => ObservableLike.t('a) = "%identity";
 };
 
-module DispatcherLike: {
-  type t('a);
-
-  external asDisposableLike: t('a) => Disposable.DisposableLike.t =
-    "%identity";
-
-  [@bs.send] external dispatch: (t('a), 'a) => unit = "dispatch";
-};
-
 module StreamLike: {
   type t('req, 'resp);
 
-  external asDispatcherLike: t('req, 'resp) => DispatcherLike.t('req);
+  external asDispatcherLike: t('req, 'resp) => Dispatcher.DispatcherLike.t('req);
   external asDisposableLike: t('req, 'resp) => Disposable.DisposableLike.t =
     "%identity";
   external asMulticastObservableLike:
@@ -111,7 +102,7 @@ let concatWith:
 
 [@bs.module "@reactive-js/core/observable"] [@bs.val]
 external createObservable:
-  ([@bs.uncurry] (DispatcherLike.t('a) => unit)) => ObservableLike.t('a) =
+  ([@bs.uncurry] (Dispatcher.DispatcherLike.t('a) => unit)) => ObservableLike.t('a) =
   "createObservable";
 
 let createSubject: (~replay: int=?, unit) => SubjectLike.t('a);

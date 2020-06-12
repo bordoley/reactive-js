@@ -1,3 +1,4 @@
+import { DispatcherLike } from "../dispatcher.ts";
 import {
   AbstractDisposable,
   DisposableLike,
@@ -11,13 +12,11 @@ import { createKeyedQueue } from "../internal/keyedQueue.ts";
 import { createSetMultimap } from "../internal/multimaps.ts";
 import { createUniqueQueue } from "../internal/queues.ts";
 import {
-  DispatcherLike,
   ObservableLike,
   createObservable,
   subscribe,
   fromValue,
   onNotify,
-  dispatch,
 } from "../observable.ts";
 import { isSome, isNone, none } from "../option.ts";
 import { first, forEach } from "../runnable.ts";
@@ -111,7 +110,8 @@ const tryDispatch = <TResource extends DisposableLike>(
   // We have resource to allocate so pop
   // the observer off the request queue
   // and mark the resource as in use
-  const observer = resourceRequests.pop(key) as DispatcherLike<TResource>;
+  const observer = resourceRequests.pop(key) as DispatcherLike<TResource> &
+    DisposableLike;
   addTeardown(observer, () => {
     inUseResources.remove(key, observer);
     availableResources.push(key, resource);
@@ -146,7 +146,7 @@ const tryDispatch = <TResource extends DisposableLike>(
   });
 
   inUseResources.add(key, observer);
-  dispatch(observer, resource);
+  observer.dispatch(resource);
 };
 
 export interface ResourceManagerLike<TResource> extends DisposableLike {
@@ -168,7 +168,7 @@ class ResourceManagerImpl<TResource extends DisposableLike>
 
   readonly resourceRequests = createKeyedQueue<
     string,
-    DispatcherLike<TResource>
+    DispatcherLike<TResource> & DisposableLike
   >();
   readonly globalResourceWaitQueue = createUniqueQueue<string>();
 

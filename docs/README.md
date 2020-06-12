@@ -7,6 +7,7 @@
 ### Modules
 
 * ["asyncEnumerable"](modules/_asyncenumerable_.md)
+* ["dispatcher"](modules/_dispatcher_.md)
 * ["disposable"](modules/_disposable_.md)
 * ["enumerable"](modules/_enumerable_.md)
 * ["flowable"](modules/_flowable_.md)
