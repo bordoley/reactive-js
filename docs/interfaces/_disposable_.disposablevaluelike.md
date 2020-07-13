@@ -1,6 +1,6 @@
 [reactive-js](../README.md) › ["disposable"](../modules/_disposable_.md) › [DisposableValueLike](_disposable_.disposablevaluelike.md)
 
-# Interface: DisposableValueLike <**T**>
+# Interface: DisposableValueLike ‹**T**›
 
 A `DisposableLike` that provides disposable semantics to an underlying resource.
 

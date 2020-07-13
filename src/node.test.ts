@@ -27,17 +27,12 @@ export const tests = describe(
     "createWritableIOSink",
     testAsync("sinking to writable", async () => {
       const encoder = new TextEncoder();
-      const decoder = new TextDecoder();
-
       let data = "";
       const writable = new Writable({
         autoDestroy: true,
         highWaterMark: 4,
 
-        write(chunk, encoding, callback) {
-          if (encoding === "buffer") {
-            chunk = decoder.decode(chunk);
-          }
+        write(chunk, _encoding, callback) {
           data += chunk;
           callback();
         },

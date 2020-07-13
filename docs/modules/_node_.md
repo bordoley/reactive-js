@@ -23,7 +23,7 @@
 
 ###  bindNodeCallback
 
-▸ **bindNodeCallback**<**T**>(`callbackFunc`: [SideEffect1](_functions_.md#sideeffect1)‹[SideEffect2](_functions_.md#sideeffect2)‹unknown, T››): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**‹**T**›(`callbackFunc`: [SideEffect1](_functions_.md#sideeffect1)‹[SideEffect2](_functions_.md#sideeffect2)‹unknown, T››): *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -47,7 +47,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
-▸ **bindNodeCallback**<**A1**, **T**>(`callbackFunc`: [SideEffect2](_functions_.md#sideeffect2)‹A1, [SideEffect2](_functions_.md#sideeffect2)‹unknown, T››): *[Function1](_functions_.md#function1)‹A1, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**‹**A1**, **T**›(`callbackFunc`: [SideEffect2](_functions_.md#sideeffect2)‹A1, [SideEffect2](_functions_.md#sideeffect2)‹unknown, T››): *[Function1](_functions_.md#function1)‹A1, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -63,7 +63,7 @@ Name | Type |
 
 **Returns:** *[Function1](_functions_.md#function1)‹A1, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ **bindNodeCallback**<**A1**>(`callbackFunc`: [SideEffect2](_functions_.md#sideeffect2)‹A1, [SideEffect1](_functions_.md#sideeffect1)‹unknown››): *[Function1](_functions_.md#function1)‹A1, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
+▸ **bindNodeCallback**‹**A1**›(`callbackFunc`: [SideEffect2](_functions_.md#sideeffect2)‹A1, [SideEffect1](_functions_.md#sideeffect1)‹unknown››): *[Function1](_functions_.md#function1)‹A1, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
 **Type parameters:**
 
@@ -77,7 +77,7 @@ Name | Type |
 
 **Returns:** *[Function1](_functions_.md#function1)‹A1, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
-▸ **bindNodeCallback**<**A1**, **A2**, **T**>(`callbackFunc`: [SideEffect3](_functions_.md#sideeffect3)‹A1, A2, [SideEffect2](_functions_.md#sideeffect2)‹unknown, T››): *[Function2](_functions_.md#function2)‹A1, A2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**‹**A1**, **A2**, **T**›(`callbackFunc`: [SideEffect3](_functions_.md#sideeffect3)‹A1, A2, [SideEffect2](_functions_.md#sideeffect2)‹unknown, T››): *[Function2](_functions_.md#function2)‹A1, A2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -95,7 +95,7 @@ Name | Type |
 
 **Returns:** *[Function2](_functions_.md#function2)‹A1, A2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ **bindNodeCallback**<**A1**, **A2**>(`callbackFunc`: [SideEffect3](_functions_.md#sideeffect3)‹A1, A2, [SideEffect1](_functions_.md#sideeffect1)‹unknown››): *[Function2](_functions_.md#function2)‹A1, A2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
+▸ **bindNodeCallback**‹**A1**, **A2**›(`callbackFunc`: [SideEffect3](_functions_.md#sideeffect3)‹A1, A2, [SideEffect1](_functions_.md#sideeffect1)‹unknown››): *[Function2](_functions_.md#function2)‹A1, A2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
 **Type parameters:**
 
@@ -111,7 +111,7 @@ Name | Type |
 
 **Returns:** *[Function2](_functions_.md#function2)‹A1, A2, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **T**>(`callbackFunc`: [SideEffect4](_functions_.md#sideeffect4)‹A1, A2, A3, [SideEffect2](_functions_.md#sideeffect2)‹unknown, T››): *[Function3](_functions_.md#function3)‹A1, A2, A3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**‹**A1**, **A2**, **A3**, **T**›(`callbackFunc`: [SideEffect4](_functions_.md#sideeffect4)‹A1, A2, A3, [SideEffect2](_functions_.md#sideeffect2)‹unknown, T››): *[Function3](_functions_.md#function3)‹A1, A2, A3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -131,7 +131,7 @@ Name | Type |
 
 **Returns:** *[Function3](_functions_.md#function3)‹A1, A2, A3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**>(`callbackFunc`: [SideEffect4](_functions_.md#sideeffect4)‹A1, A2, A3, [SideEffect1](_functions_.md#sideeffect1)‹unknown››): *[Function3](_functions_.md#function3)‹A1, A2, A3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
+▸ **bindNodeCallback**‹**A1**, **A2**, **A3**›(`callbackFunc`: [SideEffect4](_functions_.md#sideeffect4)‹A1, A2, A3, [SideEffect1](_functions_.md#sideeffect1)‹unknown››): *[Function3](_functions_.md#function3)‹A1, A2, A3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
 **Type parameters:**
 
@@ -149,7 +149,7 @@ Name | Type |
 
 **Returns:** *[Function3](_functions_.md#function3)‹A1, A2, A3, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **T**>(`callbackFunc`: [SideEffect5](_functions_.md#sideeffect5)‹A1, A2, A3, A4, [SideEffect2](_functions_.md#sideeffect2)‹unknown, T››): *[Function4](_functions_.md#function4)‹A1, A2, A3, A4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**‹**A1**, **A2**, **A3**, **A4**, **T**›(`callbackFunc`: [SideEffect5](_functions_.md#sideeffect5)‹A1, A2, A3, A4, [SideEffect2](_functions_.md#sideeffect2)‹unknown, T››): *[Function4](_functions_.md#function4)‹A1, A2, A3, A4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -171,7 +171,7 @@ Name | Type |
 
 **Returns:** *[Function4](_functions_.md#function4)‹A1, A2, A3, A4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**>(`callbackFunc`: [SideEffect5](_functions_.md#sideeffect5)‹A1, A2, A3, A4, [SideEffect1](_functions_.md#sideeffect1)‹unknown››): *[Function4](_functions_.md#function4)‹A1, A2, A3, A4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
+▸ **bindNodeCallback**‹**A1**, **A2**, **A3**, **A4**›(`callbackFunc`: [SideEffect5](_functions_.md#sideeffect5)‹A1, A2, A3, A4, [SideEffect1](_functions_.md#sideeffect1)‹unknown››): *[Function4](_functions_.md#function4)‹A1, A2, A3, A4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
 **Type parameters:**
 
@@ -191,7 +191,7 @@ Name | Type |
 
 **Returns:** *[Function4](_functions_.md#function4)‹A1, A2, A3, A4, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**, **T**>(`callbackFunc`: [SideEffect6](_functions_.md#sideeffect6)‹A1, A2, A3, A4, A5, [SideEffect2](_functions_.md#sideeffect2)‹unknown, T››): *[Function5](_functions_.md#function5)‹A1, A2, A3, A4, A5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **bindNodeCallback**‹**A1**, **A2**, **A3**, **A4**, **A5**, **T**›(`callbackFunc`: [SideEffect6](_functions_.md#sideeffect6)‹A1, A2, A3, A4, A5, [SideEffect2](_functions_.md#sideeffect2)‹unknown, T››): *[Function5](_functions_.md#function5)‹A1, A2, A3, A4, A5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -215,7 +215,7 @@ Name | Type |
 
 **Returns:** *[Function5](_functions_.md#function5)‹A1, A2, A3, A4, A5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
-▸ **bindNodeCallback**<**A1**, **A2**, **A3**, **A4**, **A5**>(`callbackFunc`: [SideEffect6](_functions_.md#sideeffect6)‹A1, A2, A3, A4, A5, [SideEffect1](_functions_.md#sideeffect1)‹unknown››): *[Function5](_functions_.md#function5)‹A1, A2, A3, A4, A5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
+▸ **bindNodeCallback**‹**A1**, **A2**, **A3**, **A4**, **A5**›(`callbackFunc`: [SideEffect6](_functions_.md#sideeffect6)‹A1, A2, A3, A4, A5, [SideEffect1](_functions_.md#sideeffect1)‹unknown››): *[Function5](_functions_.md#function5)‹A1, A2, A3, A4, A5, [ObservableLike](../interfaces/_observable_.observablelike.md)‹void››*
 
 **Type parameters:**
 
@@ -269,7 +269,7 @@ ___
 
 ### `Const` createDisposableNodeStream
 
-▸ **createDisposableNodeStream**<**T**>(`stream`: T): *[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹T›*
+▸ **createDisposableNodeStream**‹**T**›(`stream`: T): *[DisposableValueLike](../interfaces/_disposable_.disposablevaluelike.md)‹T›*
 
 **Type parameters:**
 

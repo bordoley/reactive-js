@@ -33,7 +33,7 @@
 
 ### `Const` empty
 
-▸ **empty**<**T**>(): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
+▸ **empty**‹**T**›(): *[FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T›*
 
 **Type parameters:**
 
@@ -45,7 +45,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`options?`: object): *[Function1](_functions_.md#function1)‹keyof T[], [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
+▸ **fromArray**‹**T**›(`options?`: object): *[Function1](_functions_.md#function1)‹keyof T[], [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -67,7 +67,7 @@ ___
 
 ### `Const` fromObservable
 
-▸ **fromObservable**<**T**>(`__namedParameters`: object): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
+▸ **fromObservable**‹**T**›(`__namedParameters`: object): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -87,7 +87,7 @@ ___
 
 ### `Const` fromValue
 
-▸ **fromValue**<**T**>(`options?`: object): *[Function1](_functions_.md#function1)‹T, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
+▸ **fromValue**‹**T**›(`options?`: object): *[Function1](_functions_.md#function1)‹T, [FlowableLike](../interfaces/_flowable_.flowablelike.md)‹T››*
 
 **Type parameters:**
 

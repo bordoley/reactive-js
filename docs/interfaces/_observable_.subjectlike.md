@@ -1,6 +1,6 @@
 [reactive-js](../README.md) › ["observable"](../modules/_observable_.md) › [SubjectLike](_observable_.subjectlike.md)
 
-# Interface: SubjectLike <**T**>
+# Interface: SubjectLike ‹**T**›
 
 ## Type parameters
 

@@ -1,6 +1,6 @@
 [reactive-js](../README.md) › ["streamable"](../modules/_streamable_.md) › [StreamableLike](_streamable_.streamablelike.md)
 
-# Interface: StreamableLike <**TReq, T**>
+# Interface: StreamableLike ‹**TReq, T**›
 
 ## Type parameters
 

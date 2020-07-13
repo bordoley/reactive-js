@@ -65,7 +65,7 @@ ___
 
 ###  concat
 
-▸ **concat**<**T**>(`fst`: [Sequence](_sequence_.md#sequence)‹T›, `snd`: [Sequence](_sequence_.md#sequence)‹T›, ...`tail`: keyof Sequence<T>[]): *[Sequence](_sequence_.md#sequence)‹T›*
+▸ **concat**‹**T**›(`fst`: [Sequence](_sequence_.md#sequence)‹T›, `snd`: [Sequence](_sequence_.md#sequence)‹T›, ...`tail`: keyof Sequence<T>[]): *[Sequence](_sequence_.md#sequence)‹T›*
 
 **Type parameters:**
 
@@ -85,7 +85,7 @@ ___
 
 ### `Const` concatAll
 
-▸ **concatAll**<**T**>(): *[SequenceOperator](_sequence_.md#sequenceoperator)‹[Sequence](_sequence_.md#sequence)‹T›, T›*
+▸ **concatAll**‹**T**›(): *[SequenceOperator](_sequence_.md#sequenceoperator)‹[Sequence](_sequence_.md#sequence)‹T›, T›*
 
 **Type parameters:**
 
@@ -97,7 +97,7 @@ ___
 
 ### `Const` concatMap
 
-▸ **concatMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [Sequence](_sequence_.md#sequence)‹TB››): *[SequenceOperator](_sequence_.md#sequenceoperator)‹TA, TB›*
+▸ **concatMap**‹**TA**, **TB**›(`mapper`: [Function1](_functions_.md#function1)‹TA, [Sequence](_sequence_.md#sequence)‹TB››): *[SequenceOperator](_sequence_.md#sequenceoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -117,7 +117,7 @@ ___
 
 ### `Const` concatWith
 
-▸ **concatWith**<**T**>(`snd`: [Sequence](_sequence_.md#sequence)‹T›): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **concatWith**‹**T**›(`snd`: [Sequence](_sequence_.md#sequence)‹T›): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -135,7 +135,7 @@ ___
 
 ### `Const` distinctUntilChanged
 
-▸ **distinctUntilChanged**<**T**>(`options`: object): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **distinctUntilChanged**‹**T**›(`options`: object): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -155,7 +155,7 @@ ___
 
 ### `Const` done
 
-▸ **done**<**T**>(): *[SequenceResult](_sequence_.md#sequenceresult)‹T›*
+▸ **done**‹**T**›(): *[SequenceResult](_sequence_.md#sequenceresult)‹T›*
 
 **Type parameters:**
 
@@ -167,7 +167,7 @@ ___
 
 ### `Const` empty
 
-▸ **empty**<**T**>(): *[Sequence](_sequence_.md#sequence)‹T›*
+▸ **empty**‹**T**›(): *[Sequence](_sequence_.md#sequence)‹T›*
 
 **Type parameters:**
 
@@ -179,7 +179,7 @@ ___
 
 ###  endWith
 
-▸ **endWith**<**T**>(`value`: T, ...`values`: keyof T[]): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **endWith**‹**T**›(`value`: T, ...`values`: keyof T[]): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -198,7 +198,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`options`: object): *[Function1](_functions_.md#function1)‹keyof T[], [Sequence](_sequence_.md#sequence)‹T››*
+▸ **fromArray**‹**T**›(`options`: object): *[Function1](_functions_.md#function1)‹keyof T[], [Sequence](_sequence_.md#sequence)‹T››*
 
 **Type parameters:**
 
@@ -219,7 +219,7 @@ ___
 
 ### `Const` fromValue
 
-▸ **fromValue**<**T**>(): *[Function1](_functions_.md#function1)‹T, [Sequence](_sequence_.md#sequence)‹T››*
+▸ **fromValue**‹**T**›(): *[Function1](_functions_.md#function1)‹T, [Sequence](_sequence_.md#sequence)‹T››*
 
 **Type parameters:**
 
@@ -231,7 +231,7 @@ ___
 
 ### `Const` generate
 
-▸ **generate**<**T**>(`generator`: [Updater](_functions_.md#updater)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›): *[Sequence](_sequence_.md#sequence)‹T›*
+▸ **generate**‹**T**›(`generator`: [Updater](_functions_.md#updater)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›): *[Sequence](_sequence_.md#sequence)‹T›*
 
 **Type parameters:**
 
@@ -250,7 +250,7 @@ ___
 
 ### `Const` isDone
 
-▸ **isDone**<**T**>(`result`: [SequenceResult](_sequence_.md#sequenceresult)‹T›): *result is object*
+▸ **isDone**‹**T**›(`result`: [SequenceResult](_sequence_.md#sequenceresult)‹T›): *result is object*
 
 **Type parameters:**
 
@@ -268,7 +268,7 @@ ___
 
 ### `Const` isNotify
 
-▸ **isNotify**<**T**>(`result`: [SequenceResult](_sequence_.md#sequenceresult)‹T›): *result is object*
+▸ **isNotify**‹**T**›(`result`: [SequenceResult](_sequence_.md#sequenceresult)‹T›): *result is object*
 
 **Type parameters:**
 
@@ -286,7 +286,7 @@ ___
 
 ### `Const` keep
 
-▸ **keep**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **keep**‹**T**›(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -304,7 +304,7 @@ ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[SequenceOperator](_sequence_.md#sequenceoperator)‹TA, TB›*
+▸ **map**‹**TA**, **TB**›(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[SequenceOperator](_sequence_.md#sequenceoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -324,7 +324,7 @@ ___
 
 ### `Const` mapTo
 
-▸ **mapTo**<**TA**, **TB**>(`v`: TB): *[SequenceOperator](_sequence_.md#sequenceoperator)‹TA, TB›*
+▸ **mapTo**‹**TA**, **TB**›(`v`: TB): *[SequenceOperator](_sequence_.md#sequenceoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -344,7 +344,7 @@ ___
 
 ### `Const` notify
 
-▸ **notify**<**T**>(`data`: T, `next`: [Sequence](_sequence_.md#sequence)‹T›): *[SequenceResult](_sequence_.md#sequenceresult)‹T›*
+▸ **notify**‹**T**›(`data`: T, `next`: [Sequence](_sequence_.md#sequence)‹T›): *[SequenceResult](_sequence_.md#sequenceresult)‹T›*
 
 **Type parameters:**
 
@@ -363,7 +363,7 @@ ___
 
 ###  repeat
 
-▸ **repeat**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹number›): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **repeat**‹**T**›(`predicate`: [Predicate](_functions_.md#predicate)‹number›): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -377,7 +377,7 @@ Name | Type |
 
 **Returns:** *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
-▸ **repeat**<**T**>(`count`: number): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **repeat**‹**T**›(`count`: number): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -391,7 +391,7 @@ Name | Type |
 
 **Returns:** *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
-▸ **repeat**<**T**>(): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **repeat**‹**T**›(): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -403,7 +403,7 @@ ___
 
 ### `Const` scan
 
-▸ **scan**<**T**, **TAcc**>(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, TAcc›*
+▸ **scan**‹**T**, **TAcc**›(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, TAcc›*
 
 **Type parameters:**
 
@@ -424,7 +424,7 @@ ___
 
 ### `Const` seek
 
-▸ **seek**<**T**>(`count`: number): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **seek**‹**T**›(`count`: number): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -442,7 +442,7 @@ ___
 
 ### `Const` skipFirst
 
-▸ **skipFirst**<**T**>(`options`: object): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **skipFirst**‹**T**›(`options`: object): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -462,7 +462,7 @@ ___
 
 ###  startWith
 
-▸ **startWith**<**T**>(`value`: T, ...`values`: keyof T[]): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **startWith**‹**T**›(`value`: T, ...`values`: keyof T[]): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -481,7 +481,7 @@ ___
 
 ### `Const` takeFirst
 
-▸ **takeFirst**<**T**>(`options`: object): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **takeFirst**‹**T**›(`options`: object): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -501,7 +501,7 @@ ___
 
 ### `Const` takeLast
 
-▸ **takeLast**<**T**>(`options`: object): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **takeLast**‹**T**›(`options`: object): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -521,7 +521,7 @@ ___
 
 ### `Const` takeWhile
 
-▸ **takeWhile**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›, `options`: object): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
+▸ **takeWhile**‹**T**›(`predicate`: [Predicate](_functions_.md#predicate)‹T›, `options`: object): *[SequenceOperator](_sequence_.md#sequenceoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -543,7 +543,7 @@ ___
 
 ### `Const` toRunnable
 
-▸ **toRunnable**<**T**>(): *[Function1](_functions_.md#function1)‹[Sequence](_sequence_.md#sequence)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+▸ **toRunnable**‹**T**›(): *[Function1](_functions_.md#function1)‹[Sequence](_sequence_.md#sequence)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 **Type parameters:**
 

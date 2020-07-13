@@ -51,7 +51,7 @@ ___
 
 ### `Const` consume
 
-▸ **consume**<**T**, **TAcc**>(`consumer`: [Consumer](_asyncenumerable_.md#consumer)‹T, TAcc›, `initial`: [Factory](_functions_.md#factory)‹TAcc›): *[Function1](_functions_.md#function1)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
+▸ **consume**‹**T**, **TAcc**›(`consumer`: [Consumer](_asyncenumerable_.md#consumer)‹T, TAcc›, `initial`: [Factory](_functions_.md#factory)‹TAcc›): *[Function1](_functions_.md#function1)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
 
 **Type parameters:**
 
@@ -72,7 +72,7 @@ ___
 
 ### `Const` consumeAsync
 
-▸ **consumeAsync**<**T**, **TAcc**>(`consumer`: [AsyncConsumer](_asyncenumerable_.md#asyncconsumer)‹T, TAcc›, `initial`: [Factory](_functions_.md#factory)‹TAcc›): *[Function1](_functions_.md#function1)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
+▸ **consumeAsync**‹**T**, **TAcc**›(`consumer`: [AsyncConsumer](_asyncenumerable_.md#asyncconsumer)‹T, TAcc›, `initial`: [Factory](_functions_.md#factory)‹TAcc›): *[Function1](_functions_.md#function1)‹[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›, [ObservableLike](../interfaces/_observable_.observablelike.md)‹TAcc››*
 
 **Type parameters:**
 
@@ -93,7 +93,7 @@ ___
 
 ### `Const` done
 
-▸ **done**<**TAcc**>(`acc`: TAcc): *[ConsumeRequest](_asyncenumerable_.md#consumerequest)‹TAcc›*
+▸ **done**‹**TAcc**›(`acc`: TAcc): *[ConsumeRequest](_asyncenumerable_.md#consumerequest)‹TAcc›*
 
 **Type parameters:**
 
@@ -111,7 +111,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`options`: object): *[Function1](_functions_.md#function1)‹keyof T[], [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
+▸ **fromArray**‹**T**›(`options`: object): *[Function1](_functions_.md#function1)‹keyof T[], [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
 
 Returns an `AsyncEnumerableLike` from the provided array.
 
@@ -135,7 +135,7 @@ ___
 
 ### `Const` fromEnumerable
 
-▸ **fromEnumerable**<**T**>(): *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
+▸ **fromEnumerable**‹**T**›(): *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
 
 Returns an `AsyncEnumerableLike` from the provided iterable.
 
@@ -149,7 +149,7 @@ ___
 
 ### `Const` fromIterable
 
-▸ **fromIterable**<**T**>(): *[Function1](_functions_.md#function1)‹Iterable‹T›, [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
+▸ **fromIterable**‹**T**›(): *[Function1](_functions_.md#function1)‹Iterable‹T›, [AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T››*
 
 Returns an `AsyncEnumerableLike` from the provided iterable.
 
@@ -163,7 +163,7 @@ ___
 
 ### `Const` generate
 
-▸ **generate**<**T**>(`generator`: [Updater](_functions_.md#updater)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›, `options`: object): *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
+▸ **generate**‹**T**›(`generator`: [Updater](_functions_.md#updater)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›, `options`: object): *[AsyncEnumerableLike](../interfaces/_asyncenumerable_.asyncenumerablelike.md)‹T›*
 
 Generates an `AsyncEnumerableLike` sequence from a generator function
 that is applied to an accumulator value.
@@ -194,7 +194,7 @@ ___
 
 ### `Const` notify
 
-▸ **notify**<**TAcc**>(`acc`: TAcc): *[ConsumeRequest](_asyncenumerable_.md#consumerequest)‹TAcc›*
+▸ **notify**‹**TAcc**›(`acc`: TAcc): *[ConsumeRequest](_asyncenumerable_.md#consumerequest)‹TAcc›*
 
 **Type parameters:**
 

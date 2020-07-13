@@ -1,6 +1,6 @@
 [reactive-js](../README.md) › ["runnable"](../modules/_runnable_.md) › [RunnableLike](_runnable_.runnablelike.md)
 
-# Interface: RunnableLike <**T**>
+# Interface: RunnableLike ‹**T**›
 
 ## Type parameters
 

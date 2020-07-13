@@ -61,7 +61,7 @@ export function bindNodeCallback<A1, A2, A3, A4, A5>(
 export function bindNodeCallback<T>(
   callback: (...args: readonly any[]) => any,
 ): (...args: readonly unknown[]) => ObservableLike<T | void> {
-  return function(this: unknown, ...args: readonly unknown[]) {
+  return function (this: unknown, ...args: readonly unknown[]) {
     return createObservable(dispatcher => {
       const handler = (cause: unknown, arg: any) => {
         if (cause) {

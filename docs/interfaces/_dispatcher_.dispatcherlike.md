@@ -1,6 +1,6 @@
 [reactive-js](../README.md) › ["dispatcher"](../modules/_dispatcher_.md) › [DispatcherLike](_dispatcher_.dispatcherlike.md)
 
-# Interface: DispatcherLike <**T**>
+# Interface: DispatcherLike ‹**T**›
 
 ## Type parameters
 

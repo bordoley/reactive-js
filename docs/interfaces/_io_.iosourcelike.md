@@ -1,6 +1,6 @@
 [reactive-js](../README.md) › ["io"](../modules/_io_.md) › [IOSourceLike](_io_.iosourcelike.md)
 
-# Interface: IOSourceLike <**T**>
+# Interface: IOSourceLike ‹**T**›
 
 ## Type parameters
 

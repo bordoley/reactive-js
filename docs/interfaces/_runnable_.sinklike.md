@@ -1,6 +1,6 @@
 [reactive-js](../README.md) › ["runnable"](../modules/_runnable_.md) › [SinkLike](_runnable_.sinklike.md)
 
-# Interface: SinkLike <**T**>
+# Interface: SinkLike ‹**T**›
 
 ## Type parameters
 

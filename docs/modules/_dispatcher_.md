@@ -16,7 +16,7 @@
 
 ### `Const` dispatchTo
 
-▸ **dispatchTo**<**T**>(`dispatcher`: [DispatcherLike](../interfaces/_dispatcher_.dispatcherlike.md)‹T›): *[SideEffect1](_functions_.md#sideeffect1)‹T›*
+▸ **dispatchTo**‹**T**›(`dispatcher`: [DispatcherLike](../interfaces/_dispatcher_.dispatcherlike.md)‹T›): *[SideEffect1](_functions_.md#sideeffect1)‹T›*
 
 **Type parameters:**
 
