@@ -1,6 +1,6 @@
 [reactive-js](../README.md) › ["observable"](../modules/_observable_.md) › [ObserverLike](_observable_.observerlike.md)
 
-# Interface: ObserverLike <**T**>
+# Interface: ObserverLike ‹**T**›
 
 The underlying mechanism for receiving and transforming notifications from an
 observable source. The `ObserverLike` interface composes the `SchedulerLike` and

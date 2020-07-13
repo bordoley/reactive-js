@@ -49,7 +49,7 @@ ___
 
 ### `Const` fetch
 
-▸ **fetch**<**T**>(`onResponse`: [Function1](_functions_.md#function1)‹Response, Promise‹T› | [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[Function1](_functions_.md#function1)‹[FetchRequest](_web_.md#fetchrequest) | string, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
+▸ **fetch**‹**T**›(`onResponse`: [Function1](_functions_.md#function1)‹Response, Promise‹T› | [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››): *[Function1](_functions_.md#function1)‹[FetchRequest](_web_.md#fetchrequest) | string, [ObservableLike](../interfaces/_observable_.observablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -67,7 +67,7 @@ ___
 
 ### `Const` fromEvent
 
-▸ **fromEvent**<**T**>(`target`: EventTarget, `eventName`: string, `selector`: [Function1](_functions_.md#function1)‹Event, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
+▸ **fromEvent**‹**T**›(`target`: EventTarget, `eventName`: string, `selector`: [Function1](_functions_.md#function1)‹Event, T›): *[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›*
 
 **Type parameters:**
 

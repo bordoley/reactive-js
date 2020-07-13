@@ -70,7 +70,7 @@ A unary function that transforms an EnumeratorLike<TA> into a EnumeratorLike<TB>
 
 ### `Const` compute
 
-▸ **compute**<**T**>(): *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹T›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
+▸ **compute**‹**T**›(): *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹T›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 Creates an EnumerableLike that emits the computed value.
 
@@ -84,7 +84,7 @@ ___
 
 ###  concat
 
-▸ **concat**<**T**>(`fst`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, `snd`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, ...`tail`: keyof EnumerableLike<T>[]): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+▸ **concat**‹**T**›(`fst`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, `snd`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, ...`tail`: keyof EnumerableLike<T>[]): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
 
 Creates an EnumerableLike which yields all values from each source sequentially.
 
@@ -106,7 +106,7 @@ ___
 
 ### `Const` concatAll
 
-▸ **concatAll**<**T**>(): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, T›*
+▸ **concatAll**‹**T**›(): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, T›*
 
 Converts a higher-order EnumerableLike into a first-order EnumerableLike.
 
@@ -120,7 +120,7 @@ ___
 
 ### `Const` concatMap
 
-▸ **concatMap**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB››): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, TB›*
+▸ **concatMap**‹**TA**, **TB**›(`mapper`: [Function1](_functions_.md#function1)‹TA, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB››): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, TB›*
 
 Maps each item yielded by the sourc using a mapping function, then flattens the result.
 
@@ -142,7 +142,7 @@ ___
 
 ### `Const` concatWith
 
-▸ **concatWith**<**T**>(`snd`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **concatWith**‹**T**›(`snd`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -160,7 +160,7 @@ ___
 
 ### `Const` current
 
-▸ **current**<**T**>(`enumerator`: [EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T›): *T*
+▸ **current**‹**T**›(`enumerator`: [EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T›): *T*
 
 **Type parameters:**
 
@@ -178,7 +178,7 @@ ___
 
 ### `Const` distinctUntilChanged
 
-▸ **distinctUntilChanged**<**T**>(`options`: object): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **distinctUntilChanged**‹**T**›(`options`: object): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an `ObservableLike` that emits all items emitted by the source that
 are distinct by comparison from the previous item.
@@ -201,7 +201,7 @@ ___
 
 ### `Const` empty
 
-▸ **empty**<**T**>(): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+▸ **empty**‹**T**›(): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
 
 Returns an empty EnumerableLike.
 
@@ -215,7 +215,7 @@ ___
 
 ###  endWith
 
-▸ **endWith**<**T**>(`value`: T, ...`values`: keyof T[]): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **endWith**‹**T**›(`value`: T, ...`values`: keyof T[]): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an EnumerableLike that yields items from the source,
 concatenated with the values specified as arguments.
@@ -237,7 +237,7 @@ ___
 
 ### `Const` enumerate
 
-▸ **enumerate**<**T**>(`enumerable`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›): *[EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T›*
+▸ **enumerate**‹**T**›(`enumerable`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›): *[EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T›*
 
 **Type parameters:**
 
@@ -255,7 +255,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`options`: object): *(Anonymous function)*
+▸ **fromArray**‹**T**›(`options`: object): *(Anonymous function)*
 
 Returns an EnumerableLike view over the `values` array.
 
@@ -278,7 +278,7 @@ ___
 
 ### `Const` fromIterable
 
-▸ **fromIterable**<**T**>(): *[Function1](_functions_.md#function1)‹Iterable‹T›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
+▸ **fromIterable**‹**T**›(): *[Function1](_functions_.md#function1)‹Iterable‹T›, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 Converts a javascript Iterable to an EnumerableLike.
 
@@ -292,7 +292,7 @@ ___
 
 ### `Const` fromIterator
 
-▸ **fromIterator**<**T**, **TReturn**, **TNext**>(): *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
+▸ **fromIterator**‹**T**, **TReturn**, **TNext**›(): *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹Iterator‹T, TReturn, TNext››, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 Returns a single use EnumerableLike over the javascript Iterator
 returned by the function `f`.
@@ -311,7 +311,7 @@ ___
 
 ### `Const` fromValue
 
-▸ **fromValue**<**T**>(): *[Function1](_functions_.md#function1)‹T, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
+▸ **fromValue**‹**T**›(): *[Function1](_functions_.md#function1)‹T, [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T››*
 
 Creates an EnumerableLike that yields `value`.
 
@@ -325,7 +325,7 @@ ___
 
 ### `Const` generate
 
-▸ **generate**<**T**>(`generator`: [Updater](_functions_.md#updater)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
+▸ **generate**‹**T**›(`generator`: [Updater](_functions_.md#updater)‹T›, `initialValue`: [Factory](_functions_.md#factory)‹T›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›*
 
 Generates an EnumerableLike from a generator function
 that is applied to an accumulator value.
@@ -347,7 +347,7 @@ ___
 
 ### `Const` hasCurrent
 
-▸ **hasCurrent**<**T**>(`enumerator`: [EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T›): *boolean*
+▸ **hasCurrent**‹**T**›(`enumerator`: [EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T›): *boolean*
 
 **Type parameters:**
 
@@ -365,7 +365,7 @@ ___
 
 ### `Const` keep
 
-▸ **keep**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **keep**‹**T**›(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an `EnumerableLike` that only emits items produced by the
 source that satisfy the specified predicate.
@@ -386,7 +386,7 @@ ___
 
 ### `Const` keepType
 
-▸ **keepType**<**TA**, **TB**>(`predicate`: [TypePredicate](_functions_.md#typepredicate)‹TA, TB›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, TB›*
+▸ **keepType**‹**TA**, **TB**›(`predicate`: [TypePredicate](_functions_.md#typepredicate)‹TA, TB›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, TB›*
 
 Returns an `EnumerableLike` that only emits items from the
 source that satisfy the specified type predicate.
@@ -409,7 +409,7 @@ ___
 
 ### `Const` lift
 
-▸ **lift**<**TA**, **TB**>(`operator`: [EnumeratorOperator](_enumerable_.md#enumeratoroperator)‹TA, TB›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, TB›*
+▸ **lift**‹**TA**, **TB**›(`operator`: [EnumeratorOperator](_enumerable_.md#enumeratoroperator)‹TA, TB›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, TB›*
 
 Returns an EnumerableOperator that applies `operator` to
 the EnumeratorLike returned by the source when enumerated.
@@ -432,7 +432,7 @@ ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, TB›*
+▸ **map**‹**TA**, **TB**›(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, TB›*
 
 Returns an `EnumerableLike` that applies the `mapper` function to each
 value emitted by the source.
@@ -455,7 +455,7 @@ ___
 
 ### `Const` mapTo
 
-▸ **mapTo**<**TA**, **TB**>(`v`: TB): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, TB›*
+▸ **mapTo**‹**TA**, **TB**›(`v`: TB): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -475,7 +475,7 @@ ___
 
 ### `Const` move
 
-▸ **move**<**T**>(`enumerator`: [EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T›): *boolean*
+▸ **move**‹**T**›(`enumerator`: [EnumeratorLike](../interfaces/_enumerable_.enumeratorlike.md)‹T›): *boolean*
 
 **Type parameters:**
 
@@ -493,7 +493,7 @@ ___
 
 ###  repeat
 
-▸ **repeat**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹number›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **repeat**‹**T**›(`predicate`: [Predicate](_functions_.md#predicate)‹number›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an EnumerableLike that applies the predicate function each time the source
 completes to determine if the enumerable should be repeated.
@@ -510,7 +510,7 @@ Name | Type | Description |
 
 **Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
-▸ **repeat**<**T**>(`count`: number): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **repeat**‹**T**›(`count`: number): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an EnumerableLike that repeats the source count times.
 
@@ -526,7 +526,7 @@ Name | Type | Description |
 
 **Returns:** *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
-▸ **repeat**<**T**>(): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **repeat**‹**T**›(): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an EnumerableLike` that continually repeats the source.
 
@@ -540,7 +540,7 @@ ___
 
 ### `Const` scan
 
-▸ **scan**<**T**, **TAcc**>(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, TAcc›*
+▸ **scan**‹**T**, **TAcc**›(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, TAcc›*
 
 Returns an EnumerableLike which yields values emitted by the source as long
 as each value satisfies the given predicate.
@@ -564,7 +564,7 @@ ___
 
 ### `Const` skipFirst
 
-▸ **skipFirst**<**T**>(`options`: object): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **skipFirst**‹**T**›(`options`: object): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an EnumerableLike that skips the first `count` values emitted by the source.
 
@@ -586,7 +586,7 @@ ___
 
 ###  startWith
 
-▸ **startWith**<**T**>(`value`: T, ...`values`: keyof T[]): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **startWith**‹**T**›(`value`: T, ...`values`: keyof T[]): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an EnumerableLike that yields the values followed by items from the source.
 
@@ -607,7 +607,7 @@ ___
 
 ### `Const` takeFirst
 
-▸ **takeFirst**<**T**>(`options`: object): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **takeFirst**‹**T**›(`options`: object): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an EnumerableLike that only yields the first `count` values emitted by the source.
 
@@ -629,7 +629,7 @@ ___
 
 ### `Const` takeLast
 
-▸ **takeLast**<**T**>(`options`: object): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **takeLast**‹**T**›(`options`: object): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an EnumerableLike that only yields the last `count` items yielded by the source.
 
@@ -651,7 +651,7 @@ ___
 
 ### `Const` takeWhile
 
-▸ **takeWhile**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›, `options`: object): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
+▸ **takeWhile**‹**T**›(`predicate`: [Predicate](_functions_.md#predicate)‹T›, `options`: object): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹T, T›*
 
 Returns an EnumerableLike which yields values emitted by the source as long
 as each value satisfies the given predicate.
@@ -678,7 +678,7 @@ ___
 
 ### `Const` toIterable
 
-▸ **toIterable**<**T**>(): *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, Iterable‹T››*
+▸ **toIterable**‹**T**›(): *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, Iterable‹T››*
 
 Converts an EnumerableLike into a javascript Iterable.
 
@@ -692,7 +692,7 @@ ___
 
 ### `Const` toRunnable
 
-▸ **toRunnable**<**T**>(): *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
+▸ **toRunnable**‹**T**›(): *[Function1](_functions_.md#function1)‹[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹T›, [RunnableLike](../interfaces/_runnable_.runnablelike.md)‹T››*
 
 **Type parameters:**
 
@@ -704,7 +704,7 @@ ___
 
 ###  zip
 
-▸ **zip**<**TA**, **TB**>(`a`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, `b`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB]›*
+▸ **zip**‹**TA**, **TB**›(`a`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, `b`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB]›*
 
 Combines multiple EnumerableLikes to create an EnumerableLike whose values are calculated from the values,
 in order, of each of its inputs.
@@ -724,7 +724,7 @@ Name | Type |
 
 **Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB]›*
 
-▸ **zip**<**TA**, **TB**, **TC**>(`a`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, `b`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›, `c`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TC›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC]›*
+▸ **zip**‹**TA**, **TB**, **TC**›(`a`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, `b`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›, `c`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TC›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC]›*
 
 Combines multiple EnumerableLikes to create an EnumerableLike whose values are calculated from the values,
 in order, of each of its inputs.
@@ -747,7 +747,7 @@ Name | Type |
 
 **Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC]›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**>(`a`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, `b`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›, `c`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TC›, `d`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TD›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC, TD]›*
+▸ **zip**‹**TA**, **TB**, **TC**, **TD**›(`a`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, `b`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›, `c`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TC›, `d`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TD›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC, TD]›*
 
 Combines multiple EnumerableLikes to create an EnumerableLike whose values are calculated from the values,
 in order, of each of its inputs.
@@ -773,7 +773,7 @@ Name | Type |
 
 **Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC, TD]›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**>(`a`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, `b`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›, `c`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TC›, `d`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TD›, `e`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TE›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC, TD, TE]›*
+▸ **zip**‹**TA**, **TB**, **TC**, **TD**, **TE**›(`a`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, `b`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›, `c`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TC›, `d`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TD›, `e`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TE›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC, TD, TE]›*
 
 Combines multiple EnumerableLikes to create an EnumerableLike whose values are calculated from the values,
 in order, of each of its inputs.
@@ -802,7 +802,7 @@ Name | Type |
 
 **Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC, TD, TE]›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**>(`a`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, `b`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›, `c`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TC›, `d`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TD›, `e`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TE›, `f`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TF›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC, TD, TE, TF]›*
+▸ **zip**‹**TA**, **TB**, **TC**, **TD**, **TE**, **TF**›(`a`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, `b`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›, `c`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TC›, `d`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TD›, `e`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TE›, `f`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TF›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC, TD, TE, TF]›*
 
 Combines multiple EnumerableLikes to create an EnumerableLike whose values are calculated from the values,
 in order, of each of its inputs.
@@ -834,7 +834,7 @@ Name | Type |
 
 **Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC, TD, TE, TF]›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**>(`a`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, `b`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›, `c`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TC›, `d`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TD›, `e`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TE›, `f`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TF›, `g`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TG›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC, TD, TE, TF, TG]›*
+▸ **zip**‹**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**›(`a`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, `b`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›, `c`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TC›, `d`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TD›, `e`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TE›, `f`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TF›, `g`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TG›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC, TD, TE, TF, TG]›*
 
 Combines multiple EnumerableLikes to create an EnumerableLike whose values are calculated from the values,
 in order, of each of its inputs.
@@ -869,7 +869,7 @@ Name | Type |
 
 **Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC, TD, TE, TF, TG]›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**>(`a`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, `b`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›, `c`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TC›, `d`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TD›, `e`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TE›, `f`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TF›, `g`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TG›, `h`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TH›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC, TD, TE, TF, TG, TH]›*
+▸ **zip**‹**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**›(`a`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, `b`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›, `c`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TC›, `d`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TD›, `e`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TE›, `f`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TF›, `g`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TG›, `h`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TH›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC, TD, TE, TF, TG, TH]›*
 
 Combines multiple EnumerableLikes to create an EnumerableLike whose values are calculated from the values,
 in order, of each of its inputs.
@@ -907,7 +907,7 @@ Name | Type |
 
 **Returns:** *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC, TD, TE, TF, TG, TH]›*
 
-▸ **zip**<**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**>(`a`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, `b`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›, `c`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TC›, `d`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TD›, `e`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TE›, `f`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TF›, `g`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TG›, `h`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TH›, `i`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TI›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC, TD, TE, TF, TG, TH, TI]›*
+▸ **zip**‹**TA**, **TB**, **TC**, **TD**, **TE**, **TF**, **TG**, **TH**, **TI**›(`a`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TA›, `b`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›, `c`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TC›, `d`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TD›, `e`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TE›, `f`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TF›, `g`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TG›, `h`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TH›, `i`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TI›): *[EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹[TA, TB, TC, TD, TE, TF, TG, TH, TI]›*
 
 Combines multiple EnumerableLikes to create an EnumerableLike whose values are calculated from the values,
 in order, of each of its inputs.
@@ -952,7 +952,7 @@ ___
 
 ### `Const` zipWith
 
-▸ **zipWith**<**TA**, **TB**>(`snd`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, [TA, TB]›*
+▸ **zipWith**‹**TA**, **TB**›(`snd`: [EnumerableLike](../interfaces/_enumerable_.enumerablelike.md)‹TB›): *[EnumerableOperator](_enumerable_.md#enumerableoperator)‹TA, [TA, TB]›*
 
 **Type parameters:**
 

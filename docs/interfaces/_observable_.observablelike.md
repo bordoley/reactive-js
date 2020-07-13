@@ -1,6 +1,6 @@
 [reactive-js](../README.md) › ["observable"](../modules/_observable_.md) › [ObservableLike](_observable_.observablelike.md)
 
-# Interface: ObservableLike <**T**>
+# Interface: ObservableLike ‹**T**›
 
 The source of notifications which notifies a `ObserverLike` instance.
 

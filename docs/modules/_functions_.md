@@ -585,7 +585,7 @@ ___
 
 ### `Const` arrayEquality
 
-▸ **arrayEquality**<**T**>(`valuesEquality`: [Equality](_functions_.md#equality)‹T›): *[Equality](_functions_.md#equality)‹keyof T[]›*
+▸ **arrayEquality**‹**T**›(`valuesEquality`: [Equality](_functions_.md#equality)‹T›): *[Equality](_functions_.md#equality)‹keyof T[]›*
 
 Returns an equality function that compares two readonly arrays for equality,
 comparing their values using `valuesEquality`.
@@ -606,7 +606,7 @@ ___
 
 ###  callWith
 
-▸ **callWith**<**T**>(): *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹T›, T›*
+▸ **callWith**‹**T**›(): *[Function1](_functions_.md#function1)‹[Factory](_functions_.md#factory)‹T›, T›*
 
 A function operator that invokes a function with a given list of arguments.
 
@@ -619,7 +619,7 @@ A function operator that invokes a function with a given list of arguments.
 A function that takes a function `f` as an argument
 and invokes it with the provided arguments, returning the result.
 
-▸ **callWith**<**TA**, **T**>(`a`: TA): *[Function1](_functions_.md#function1)‹[Function1](_functions_.md#function1)‹TA, T›, T›*
+▸ **callWith**‹**TA**, **T**›(`a`: TA): *[Function1](_functions_.md#function1)‹[Function1](_functions_.md#function1)‹TA, T›, T›*
 
 A function operator that invokes a function with a given list of arguments.
 
@@ -640,7 +640,7 @@ Name | Type |
 A function that takes a function `f` as an argument
 and invokes it with the provided arguments, returning the result.
 
-▸ **callWith**<**TA**, **TB**, **T**>(`a`: TA, `b`: TB): *[Function1](_functions_.md#function1)‹[Function2](_functions_.md#function2)‹TA, TB, T›, T›*
+▸ **callWith**‹**TA**, **TB**, **T**›(`a`: TA, `b`: TB): *[Function1](_functions_.md#function1)‹[Function2](_functions_.md#function2)‹TA, TB, T›, T›*
 
 A function operator that invokes a function with a given list of arguments.
 
@@ -664,7 +664,7 @@ Name | Type |
 A function that takes a function `f` as an argument
 and invokes it with the provided arguments, returning the result.
 
-▸ **callWith**<**TA**, **TB**, **TC**, **T**>(`a`: TA, `b`: TB, `c`: TC): *[Function1](_functions_.md#function1)‹[Function3](_functions_.md#function3)‹TA, TB, TC, T›, T›*
+▸ **callWith**‹**TA**, **TB**, **TC**, **T**›(`a`: TA, `b`: TB, `c`: TC): *[Function1](_functions_.md#function1)‹[Function3](_functions_.md#function3)‹TA, TB, TC, T›, T›*
 
 A function operator that invokes a function with a given list of arguments.
 
@@ -691,7 +691,7 @@ Name | Type |
 A function that takes a function `f` as an argument
 and invokes it with the provided arguments, returning the result.
 
-▸ **callWith**<**TA**, **TB**, **TC**, **TD**, **T**>(`a`: TA, `b`: TB, `c`: TC, `d`: TD): *[Function1](_functions_.md#function1)‹[Function4](_functions_.md#function4)‹TA, TB, TC, TD, T›, T›*
+▸ **callWith**‹**TA**, **TB**, **TC**, **TD**, **T**›(`a`: TA, `b`: TB, `c`: TC, `d`: TD): *[Function1](_functions_.md#function1)‹[Function4](_functions_.md#function4)‹TA, TB, TC, TD, T›, T›*
 
 A function operator that invokes a function with a given list of arguments.
 
@@ -725,7 +725,7 @@ ___
 
 ###  compose
 
-▸ **compose**<**T**, **A**, **B**>(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›): *[Function1](_functions_.md#function1)‹T, B›*
+▸ **compose**‹**T**, **A**, **B**›(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›): *[Function1](_functions_.md#function1)‹T, B›*
 
 Composes a series of unary functions.
 
@@ -746,7 +746,7 @@ Name | Type |
 
 **Returns:** *[Function1](_functions_.md#function1)‹T, B›*
 
-▸ **compose**<**T**, **A**, **B**, **C**>(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›): *[Function1](_functions_.md#function1)‹T, C›*
+▸ **compose**‹**T**, **A**, **B**, **C**›(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›): *[Function1](_functions_.md#function1)‹T, C›*
 
 Composes a series of unary functions.
 
@@ -770,7 +770,7 @@ Name | Type |
 
 **Returns:** *[Function1](_functions_.md#function1)‹T, C›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**>(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›): *[Function1](_functions_.md#function1)‹T, D›*
+▸ **compose**‹**T**, **A**, **B**, **C**, **D**›(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›): *[Function1](_functions_.md#function1)‹T, D›*
 
 Composes a series of unary functions.
 
@@ -797,7 +797,7 @@ Name | Type |
 
 **Returns:** *[Function1](_functions_.md#function1)‹T, D›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**>(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›): *[Function1](_functions_.md#function1)‹T, E›*
+▸ **compose**‹**T**, **A**, **B**, **C**, **D**, **E**›(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›): *[Function1](_functions_.md#function1)‹T, E›*
 
 Composes a series of unary functions.
 
@@ -827,7 +827,7 @@ Name | Type |
 
 **Returns:** *[Function1](_functions_.md#function1)‹T, E›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›): *[Function1](_functions_.md#function1)‹T, F›*
+▸ **compose**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**›(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›): *[Function1](_functions_.md#function1)‹T, F›*
 
 Composes a series of unary functions.
 
@@ -860,7 +860,7 @@ Name | Type |
 
 **Returns:** *[Function1](_functions_.md#function1)‹T, F›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›): *[Function1](_functions_.md#function1)‹T, G›*
+▸ **compose**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**›(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›): *[Function1](_functions_.md#function1)‹T, G›*
 
 Composes a series of unary functions.
 
@@ -896,7 +896,7 @@ Name | Type |
 
 **Returns:** *[Function1](_functions_.md#function1)‹T, G›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›): *[Function1](_functions_.md#function1)‹T, H›*
+▸ **compose**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**›(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›): *[Function1](_functions_.md#function1)‹T, H›*
 
 Composes a series of unary functions.
 
@@ -935,7 +935,7 @@ Name | Type |
 
 **Returns:** *[Function1](_functions_.md#function1)‹T, H›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›): *[Function1](_functions_.md#function1)‹T, I›*
+▸ **compose**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**›(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›): *[Function1](_functions_.md#function1)‹T, I›*
 
 Composes a series of unary functions.
 
@@ -977,7 +977,7 @@ Name | Type |
 
 **Returns:** *[Function1](_functions_.md#function1)‹T, I›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**>(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›): *[Function1](_functions_.md#function1)‹T, J›*
+▸ **compose**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**›(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›): *[Function1](_functions_.md#function1)‹T, J›*
 
 Composes a series of unary functions.
 
@@ -1022,7 +1022,7 @@ Name | Type |
 
 **Returns:** *[Function1](_functions_.md#function1)‹T, J›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**>(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›, `op11`: [Function1](_functions_.md#function1)‹J, K›): *[Function1](_functions_.md#function1)‹T, K›*
+▸ **compose**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**›(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›, `op11`: [Function1](_functions_.md#function1)‹J, K›): *[Function1](_functions_.md#function1)‹T, K›*
 
 Composes a series of unary functions.
 
@@ -1070,7 +1070,7 @@ Name | Type |
 
 **Returns:** *[Function1](_functions_.md#function1)‹T, K›*
 
-▸ **compose**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**, **L**>(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›, `op11`: [Function1](_functions_.md#function1)‹J, K›, `op12`: [Function1](_functions_.md#function1)‹K, L›): *[Function1](_functions_.md#function1)‹T, L›*
+▸ **compose**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**, **L**›(`op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›, `op11`: [Function1](_functions_.md#function1)‹J, K›, `op12`: [Function1](_functions_.md#function1)‹K, L›): *[Function1](_functions_.md#function1)‹T, L›*
 
 Composes a series of unary functions.
 
@@ -1125,7 +1125,7 @@ ___
 
 ### `Const` composeWith
 
-▸ **composeWith**<**T**, **A**, **B**>(`op2`: [Function1](_functions_.md#function1)‹A, B›): *[Function1](_functions_.md#function1)‹[Function1](_functions_.md#function1)‹T, A›, [Function1](_functions_.md#function1)‹T, B››*
+▸ **composeWith**‹**T**, **A**, **B**›(`op2`: [Function1](_functions_.md#function1)‹A, B›): *[Function1](_functions_.md#function1)‹[Function1](_functions_.md#function1)‹T, A›, [Function1](_functions_.md#function1)‹T, B››*
 
 Returns a function that composes its operator with `op2`.
 
@@ -1181,7 +1181,7 @@ ___
 
 ###  defer
 
-▸ **defer**<**T**, **A**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›): *[Factory](_functions_.md#factory)‹A›*
+▸ **defer**‹**T**, **A**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›): *[Factory](_functions_.md#factory)‹A›*
 
 Returns a `Factory` function that defers the evaluation of piping
 `source` through the provided operators.
@@ -1201,7 +1201,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹A›*
 
-▸ **defer**<**T**, **A**, **B**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›): *[Factory](_functions_.md#factory)‹B›*
+▸ **defer**‹**T**, **A**, **B**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›): *[Factory](_functions_.md#factory)‹B›*
 
 Returns a `Factory` function that defers the evaluation of piping
 `source` through the provided operators.
@@ -1224,7 +1224,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹B›*
 
-▸ **defer**<**T**, **A**, **B**, **C**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›): *[Factory](_functions_.md#factory)‹C›*
+▸ **defer**‹**T**, **A**, **B**, **C**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›): *[Factory](_functions_.md#factory)‹C›*
 
 Returns a `Factory` function that defers the evaluation of piping
 `source` through the provided operators.
@@ -1250,7 +1250,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹C›*
 
-▸ **defer**<**T**, **A**, **B**, **C**, **D**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›): *[Factory](_functions_.md#factory)‹D›*
+▸ **defer**‹**T**, **A**, **B**, **C**, **D**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›): *[Factory](_functions_.md#factory)‹D›*
 
 Returns a `Factory` function that defers the evaluation of piping
 `source` through the provided operators.
@@ -1279,7 +1279,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹D›*
 
-▸ **defer**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›): *[Factory](_functions_.md#factory)‹E›*
+▸ **defer**‹**T**, **A**, **B**, **C**, **D**, **E**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›): *[Factory](_functions_.md#factory)‹E›*
 
 Returns a `Factory` function that defers the evaluation of piping
 `source` through the provided operators.
@@ -1311,7 +1311,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹E›*
 
-▸ **defer**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›): *[Factory](_functions_.md#factory)‹F›*
+▸ **defer**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›): *[Factory](_functions_.md#factory)‹F›*
 
 Returns a `Factory` function that defers the evaluation of piping
 `source` through the provided operators.
@@ -1346,7 +1346,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹F›*
 
-▸ **defer**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›): *[Factory](_functions_.md#factory)‹G›*
+▸ **defer**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›): *[Factory](_functions_.md#factory)‹G›*
 
 Returns a `Factory` function that defers the evaluation of piping
 `source` through the provided operators.
@@ -1384,7 +1384,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹G›*
 
-▸ **defer**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›): *[Factory](_functions_.md#factory)‹H›*
+▸ **defer**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›): *[Factory](_functions_.md#factory)‹H›*
 
 Returns a `Factory` function that defers the evaluation of piping
 `source` through the provided operators.
@@ -1425,7 +1425,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹H›*
 
-▸ **defer**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›): *[Factory](_functions_.md#factory)‹I›*
+▸ **defer**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›): *[Factory](_functions_.md#factory)‹I›*
 
 Returns a `Factory` function that defers the evaluation of piping
 `source` through the provided operators.
@@ -1469,7 +1469,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹I›*
 
-▸ **defer**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›): *[Factory](_functions_.md#factory)‹J›*
+▸ **defer**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›): *[Factory](_functions_.md#factory)‹J›*
 
 Returns a `Factory` function that defers the evaluation of piping
 `source` through the provided operators.
@@ -1516,7 +1516,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹J›*
 
-▸ **defer**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›, `op11`: [Function1](_functions_.md#function1)‹J, K›): *[Factory](_functions_.md#factory)‹K›*
+▸ **defer**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›, `op11`: [Function1](_functions_.md#function1)‹J, K›): *[Factory](_functions_.md#factory)‹K›*
 
 Returns a `Factory` function that defers the evaluation of piping
 `source` through the provided operators.
@@ -1566,7 +1566,7 @@ Name | Type |
 
 **Returns:** *[Factory](_functions_.md#factory)‹K›*
 
-▸ **defer**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**, **L**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›, `op11`: [Function1](_functions_.md#function1)‹J, K›, `op12`: [Function1](_functions_.md#function1)‹K, L›): *[Factory](_functions_.md#factory)‹L›*
+▸ **defer**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**, **L**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›, `op11`: [Function1](_functions_.md#function1)‹J, K›, `op12`: [Function1](_functions_.md#function1)‹K, L›): *[Factory](_functions_.md#factory)‹L›*
 
 Returns a `Factory` function that defers the evaluation of piping
 `source` through the provided operators.
@@ -1637,7 +1637,7 @@ ___
 
 ###  flip
 
-▸ **flip**<**TA**, **TB**, **T**>(`f`: [Function2](_functions_.md#function2)‹TA, TB, T›): *[Function2](_functions_.md#function2)‹TB, TA, T›*
+▸ **flip**‹**TA**, **TB**, **T**›(`f`: [Function2](_functions_.md#function2)‹TA, TB, T›): *[Function2](_functions_.md#function2)‹TB, TA, T›*
 
 Returns a function that flips the order of arguments passed to `f`.
 
@@ -1657,7 +1657,7 @@ Name | Type |
 
 **Returns:** *[Function2](_functions_.md#function2)‹TB, TA, T›*
 
-▸ **flip**<**TA**, **TB**, **TC**, **T**>(`f`: [Function3](_functions_.md#function3)‹TA, TB, TC, T›): *[Function3](_functions_.md#function3)‹TC, TB, TA, T›*
+▸ **flip**‹**TA**, **TB**, **TC**, **T**›(`f`: [Function3](_functions_.md#function3)‹TA, TB, TC, T›): *[Function3](_functions_.md#function3)‹TC, TB, TA, T›*
 
 Returns a function that flips the order of arguments passed to `f`.
 
@@ -1683,7 +1683,7 @@ ___
 
 ### `Const` identity
 
-▸ **identity**<**T**>(`v`: T): *T*
+▸ **identity**‹**T**›(`v`: T): *T*
 
 The identity function.
 
@@ -1753,7 +1753,7 @@ ___
 
 ### `Const` isEqualTo
 
-▸ **isEqualTo**<**T**>(`b`: T, `equality`: [Equality](_functions_.md#equality)‹T›): *[Predicate](_functions_.md#predicate)‹T›*
+▸ **isEqualTo**‹**T**›(`b`: T, `equality`: [Equality](_functions_.md#equality)‹T›): *[Predicate](_functions_.md#predicate)‹T›*
 
 Returns a predicate function comparing its argument to `b` using the
 provided `equality` function.
@@ -1823,7 +1823,7 @@ ___
 
 ###  pipe
 
-▸ **pipe**<**T**, **A**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›): *A*
+▸ **pipe**‹**T**, **A**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›): *A*
 
 Pipes `source` through a series of unary functions.
 
@@ -1842,7 +1842,7 @@ Name | Type |
 
 **Returns:** *A*
 
-▸ **pipe**<**T**, **A**, **B**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›): *B*
+▸ **pipe**‹**T**, **A**, **B**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›): *B*
 
 Pipes `source` through a series of unary functions.
 
@@ -1864,7 +1864,7 @@ Name | Type |
 
 **Returns:** *B*
 
-▸ **pipe**<**T**, **A**, **B**, **C**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›): *C*
+▸ **pipe**‹**T**, **A**, **B**, **C**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›): *C*
 
 Pipes `source` through a series of unary functions.
 
@@ -1889,7 +1889,7 @@ Name | Type |
 
 **Returns:** *C*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›): *D*
+▸ **pipe**‹**T**, **A**, **B**, **C**, **D**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›): *D*
 
 Pipes `source` through a series of unary functions.
 
@@ -1917,7 +1917,7 @@ Name | Type |
 
 **Returns:** *D*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›): *E*
+▸ **pipe**‹**T**, **A**, **B**, **C**, **D**, **E**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›): *E*
 
 Pipes `source` through a series of unary functions.
 
@@ -1948,7 +1948,7 @@ Name | Type |
 
 **Returns:** *E*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›): *F*
+▸ **pipe**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›): *F*
 
 Pipes `source` through a series of unary functions.
 
@@ -1982,7 +1982,7 @@ Name | Type |
 
 **Returns:** *F*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›): *G*
+▸ **pipe**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›): *G*
 
 Pipes `source` through a series of unary functions.
 
@@ -2019,7 +2019,7 @@ Name | Type |
 
 **Returns:** *G*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›): *H*
+▸ **pipe**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›): *H*
 
 Pipes `source` through a series of unary functions.
 
@@ -2059,7 +2059,7 @@ Name | Type |
 
 **Returns:** *H*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›): *I*
+▸ **pipe**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›): *I*
 
 Pipes `source` through a series of unary functions.
 
@@ -2102,7 +2102,7 @@ Name | Type |
 
 **Returns:** *I*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›): *J*
+▸ **pipe**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›): *J*
 
 Pipes `source` through a series of unary functions.
 
@@ -2148,7 +2148,7 @@ Name | Type |
 
 **Returns:** *J*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›, `op11`: [Function1](_functions_.md#function1)‹J, K›): *K*
+▸ **pipe**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›, `op11`: [Function1](_functions_.md#function1)‹J, K›): *K*
 
 Pipes `source` through a series of unary functions.
 
@@ -2197,7 +2197,7 @@ Name | Type |
 
 **Returns:** *K*
 
-▸ **pipe**<**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**, **L**>(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›, `op11`: [Function1](_functions_.md#function1)‹J, K›, `op12`: [Function1](_functions_.md#function1)‹K, L›): *L*
+▸ **pipe**‹**T**, **A**, **B**, **C**, **D**, **E**, **F**, **G**, **H**, **I**, **J**, **K**, **L**›(`src`: T, `op1`: [Function1](_functions_.md#function1)‹T, A›, `op2`: [Function1](_functions_.md#function1)‹A, B›, `op3`: [Function1](_functions_.md#function1)‹B, C›, `op4`: [Function1](_functions_.md#function1)‹C, D›, `op5`: [Function1](_functions_.md#function1)‹D, E›, `op6`: [Function1](_functions_.md#function1)‹E, F›, `op7`: [Function1](_functions_.md#function1)‹F, G›, `op8`: [Function1](_functions_.md#function1)‹G, H›, `op9`: [Function1](_functions_.md#function1)‹H, I›, `op10`: [Function1](_functions_.md#function1)‹I, J›, `op11`: [Function1](_functions_.md#function1)‹J, K›, `op12`: [Function1](_functions_.md#function1)‹K, L›): *L*
 
 Pipes `source` through a series of unary functions.
 
@@ -2266,7 +2266,7 @@ ___
 
 ### `Const` raise
 
-▸ **raise**<**T**>(`message?`: string): *T*
+▸ **raise**‹**T**›(`message?`: string): *T*
 
 Throws a javascript error using the provided message.
 
@@ -2286,7 +2286,7 @@ ___
 
 ### `Const` returns
 
-▸ **returns**<**T**>(`v`: T): *function*
+▸ **returns**‹**T**›(`v`: T): *function*
 
 Returns a function that takes an arbitrary number of arguments and always returns `v`.
 
@@ -2314,7 +2314,7 @@ ___
 
 ### `Const` strictEquality
 
-▸ **strictEquality**<**T**>(`a`: T, `b`: T): *boolean*
+▸ **strictEquality**‹**T**›(`a`: T, `b`: T): *boolean*
 
 The javascript strict equality function.
 
@@ -2352,7 +2352,7 @@ ___
 
 ### `Const` updaterReducer
 
-▸ **updaterReducer**<**T**>(`acc`: T, `updater`: [Updater](_functions_.md#updater)‹T›): *T*
+▸ **updaterReducer**‹**T**›(`acc`: T, `updater`: [Updater](_functions_.md#updater)‹T›): *T*
 
 A `Reducer` functions that applies `updater` to `acc` to compute the next
 accumulator value.

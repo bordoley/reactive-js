@@ -38,7 +38,7 @@ An alias for undefined.
 
 ### `Const` isNone
 
-▸ **isNone**<**T**>(`option`: [Option](_option_.md#option)‹T›): *option is undefined*
+▸ **isNone**‹**T**›(`option`: [Option](_option_.md#option)‹T›): *option is undefined*
 
 Returns true if `option` is `none`.
 
@@ -58,7 +58,7 @@ ___
 
 ### `Const` isSome
 
-▸ **isSome**<**T**>(`option`: [Option](_option_.md#option)‹T›): *option is T*
+▸ **isSome**‹**T**›(`option`: [Option](_option_.md#option)‹T›): *option is T*
 
 Returns true if `option` is not `none`.
 
@@ -78,7 +78,7 @@ ___
 
 ### `Const` orCompute
 
-▸ **orCompute**<**T**>(`compute`: [Factory](_functions_.md#factory)‹T›): *[Function1](_functions_.md#function1)‹[Option](_option_.md#option)‹T›, T›*
+▸ **orCompute**‹**T**›(`compute`: [Factory](_functions_.md#factory)‹T›): *[Function1](_functions_.md#function1)‹[Option](_option_.md#option)‹T›, T›*
 
 Returns a function that takes an `Option<T>`, returning it's value
 if not `none`, otherwise returns the result of invoking the function `compute`.

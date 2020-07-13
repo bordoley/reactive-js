@@ -1,6 +1,6 @@
 [reactive-js](../README.md) › ["enumerable"](../modules/_enumerable_.md) › [EnumeratorLike](_enumerable_.enumeratorlike.md)
 
-# Interface: EnumeratorLike <**T**>
+# Interface: EnumeratorLike ‹**T**›
 
 Inteface that enables iteration over a collection.
 

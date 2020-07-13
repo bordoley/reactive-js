@@ -1,6 +1,6 @@
 [reactive-js](../README.md) › ["observable"](../modules/_observable_.md) › [StreamLike](_observable_.streamlike.md)
 
-# Interface: StreamLike <**TReq, T**>
+# Interface: StreamLike ‹**TReq, T**›
 
 Represents a duplex stream
 

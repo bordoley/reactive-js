@@ -10,6 +10,7 @@ module.exports = {
     "prettier/@typescript-eslint",
   ],
   ignorePatterns: [
+    ".eslintrc.js",
     "bs",
     "build",
     "coverage",

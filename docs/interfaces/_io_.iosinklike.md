@@ -1,6 +1,6 @@
 [reactive-js](../README.md) › ["io"](../modules/_io_.md) › [IOSinkLike](_io_.iosinklike.md)
 
-# Interface: IOSinkLike <**T**>
+# Interface: IOSinkLike ‹**T**›
 
 ## Type parameters
 

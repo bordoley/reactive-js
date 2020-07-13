@@ -29,7 +29,7 @@
 
 ### `Const` everySatisfy
 
-▸ **everySatisfy**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[Function1](_functions_.md#function1)‹keyof T[], boolean›*
+▸ **everySatisfy**‹**T**›(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[Function1](_functions_.md#function1)‹keyof T[], boolean›*
 
 **Type parameters:**
 
@@ -47,7 +47,7 @@ ___
 
 ### `Const` fromObject
 
-▸ **fromObject**<**T**>(): *[Function1](_functions_.md#function1)‹[ReadonlyObjectMap](_readonlyobjectmap_.md#readonlyobjectmap)‹T›, keyof [string, T][]›*
+▸ **fromObject**‹**T**›(): *[Function1](_functions_.md#function1)‹[ReadonlyObjectMap](_readonlyobjectmap_.md#readonlyobjectmap)‹T›, keyof [string, T][]›*
 
 **Type parameters:**
 
@@ -73,7 +73,7 @@ ___
 
 ### `Const` keep
 
-▸ **keep**<**T**>(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ReadonlyArrayOperator](_readonlyarray_.md#readonlyarrayoperator)‹T, T›*
+▸ **keep**‹**T**›(`predicate`: [Predicate](_functions_.md#predicate)‹T›): *[ReadonlyArrayOperator](_readonlyarray_.md#readonlyarrayoperator)‹T, T›*
 
 **Type parameters:**
 
@@ -105,7 +105,7 @@ ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[ReadonlyArrayOperator](_readonlyarray_.md#readonlyarrayoperator)‹TA, TB›*
+▸ **map**‹**TA**, **TB**›(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[ReadonlyArrayOperator](_readonlyarray_.md#readonlyarrayoperator)‹TA, TB›*
 
 **Type parameters:**
 
@@ -125,7 +125,7 @@ ___
 
 ### `Const` reduce
 
-▸ **reduce**<**T**, **TAcc**>(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[Function1](_functions_.md#function1)‹keyof T[], TAcc›*
+▸ **reduce**‹**T**, **TAcc**›(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[Function1](_functions_.md#function1)‹keyof T[], TAcc›*
 
 **Type parameters:**
 
@@ -146,7 +146,7 @@ ___
 
 ### `Const` reduceRight
 
-▸ **reduceRight**<**T**, **TAcc**>(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[Function1](_functions_.md#function1)‹keyof T[], TAcc›*
+▸ **reduceRight**‹**T**, **TAcc**›(`reducer`: [Reducer](_functions_.md#reducer)‹T, TAcc›, `initialValue`: [Factory](_functions_.md#factory)‹TAcc›): *[Function1](_functions_.md#function1)‹keyof T[], TAcc›*
 
 **Type parameters:**
 

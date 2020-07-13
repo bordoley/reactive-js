@@ -76,7 +76,7 @@ ___
 
 ### `Const` schedule
 
-▸ **schedule**<**T**>(`f`: [SideEffect1](_functions_.md#sideeffect1)‹T›, `options?`: object): *[Function1](_functions_.md#function1)‹T, [DisposableLike](../interfaces/_disposable_.disposablelike.md)›*
+▸ **schedule**‹**T**›(`f`: [SideEffect1](_functions_.md#sideeffect1)‹T›, `options?`: object): *[Function1](_functions_.md#function1)‹T, [DisposableLike](../interfaces/_disposable_.disposablelike.md)›*
 
 **Type parameters:**
 

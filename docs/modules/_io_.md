@@ -70,7 +70,7 @@ ___
 
 ### `Const` done
 
-▸ **done**<**T**>(): *[IOEvent](_io_.md#ioevent)‹T›*
+▸ **done**‹**T**›(): *[IOEvent](_io_.md#ioevent)‹T›*
 
 **Type parameters:**
 
@@ -82,7 +82,7 @@ ___
 
 ### `Const` empty
 
-▸ **empty**<**T**>(): *[IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T›*
+▸ **empty**‹**T**›(): *[IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T›*
 
 **Type parameters:**
 
@@ -94,7 +94,7 @@ ___
 
 ### `Const` fromArray
 
-▸ **fromArray**<**T**>(`options?`: object): *[Function1](_functions_.md#function1)‹keyof T[], [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
+▸ **fromArray**‹**T**›(`options?`: object): *[Function1](_functions_.md#function1)‹keyof T[], [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
 
 **Type parameters:**
 
@@ -116,7 +116,7 @@ ___
 
 ### `Const` fromObservable
 
-▸ **fromObservable**<**T**>(): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
+▸ **fromObservable**‹**T**›(): *[Function1](_functions_.md#function1)‹[ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
 
 **Type parameters:**
 
@@ -128,7 +128,7 @@ ___
 
 ### `Const` fromValue
 
-▸ **fromValue**<**T**>(`options?`: object): *[Function1](_functions_.md#function1)‹T, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
+▸ **fromValue**‹**T**›(`options?`: object): *[Function1](_functions_.md#function1)‹T, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹T››*
 
 **Type parameters:**
 
@@ -148,7 +148,7 @@ ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[Function1](_functions_.md#function1)‹[IOSourceLike](../interfaces/_io_.iosourcelike.md)‹TA›, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹TB››*
+▸ **map**‹**TA**, **TB**›(`mapper`: [Function1](_functions_.md#function1)‹TA, TB›): *[Function1](_functions_.md#function1)‹[IOSourceLike](../interfaces/_io_.iosourcelike.md)‹TA›, [IOSourceLike](../interfaces/_io_.iosourcelike.md)‹TB››*
 
 **Type parameters:**
 
@@ -168,7 +168,7 @@ ___
 
 ### `Const` notify
 
-▸ **notify**<**T**>(`data`: T): *[IOEvent](_io_.md#ioevent)‹T›*
+▸ **notify**‹**T**›(`data`: T): *[IOEvent](_io_.md#ioevent)‹T›*
 
 **Type parameters:**
 

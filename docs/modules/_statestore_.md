@@ -18,7 +18,7 @@
 
 ### `Const` createStateStore
 
-▸ **createStateStore**<**T**>(`initialState`: [Factory](_functions_.md#factory)‹T›, `options?`: object): *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹T›*
+▸ **createStateStore**‹**T**›(`initialState`: [Factory](_functions_.md#factory)‹T›, `options?`: object): *[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹T›*
 
 Returns a new `StateStoreLike` instance that stores state which can
 be updated by notifying the instance with a `StateUpdater` that computes a
@@ -46,7 +46,7 @@ ___
 
 ### `Const` map
 
-▸ **map**<**TA**, **TB**>(`parse`: [Function1](_functions_.md#function1)‹TA, TB›, `serialize`: [Function1](_functions_.md#function1)‹TB, TA›): *[Function1](_functions_.md#function1)‹[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹TA›, [StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹TB››*
+▸ **map**‹**TA**, **TB**›(`parse`: [Function1](_functions_.md#function1)‹TA, TB›, `serialize`: [Function1](_functions_.md#function1)‹TB, TA›): *[Function1](_functions_.md#function1)‹[StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹TA›, [StateStoreLike](../interfaces/_statestore_.statestorelike.md)‹TB››*
 
 **Type parameters:**
 
@@ -67,7 +67,7 @@ ___
 
 ### `Const` toStateStore
 
-▸ **toStateStore**<**T**>(): *[StreamableOperator](_streamable_.md#streamableoperator)‹T, T, [Updater](_functions_.md#updater)‹T›, T›*
+▸ **toStateStore**‹**T**›(): *[StreamableOperator](_streamable_.md#streamableoperator)‹T, T, [Updater](_functions_.md#updater)‹T›, T›*
 
 Converts an `StreamableLike<T, T>` to an `StateStoreLike<T>`.
 

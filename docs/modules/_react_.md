@@ -76,7 +76,7 @@ Scheduler that schedules work on React's internal priority scheduler with user b
 
 ### `Const` useObservable
 
-▸ **useObservable**<**T**>(`observable`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, `options`: object): *[Option](_option_.md#option)‹T›*
+▸ **useObservable**‹**T**›(`observable`: [ObservableLike](../interfaces/_observable_.observablelike.md)‹T›, `options`: object): *[Option](_option_.md#option)‹T›*
 
 Returns the current value, if defined, of `observable`.
 
@@ -102,7 +102,7 @@ ___
 
 ### `Const` useStreamable
 
-▸ **useStreamable**<**TReq**, **T**>(`streamable`: [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›, `options`: object): *[[Option](_option_.md#option)‹T›, [SideEffect1](_functions_.md#sideeffect1)‹TReq›]*
+▸ **useStreamable**‹**TReq**, **T**›(`streamable`: [StreamableLike](../interfaces/_streamable_.streamablelike.md)‹TReq, T›, `options`: object): *[[Option](_option_.md#option)‹T›, [SideEffect1](_functions_.md#sideeffect1)‹TReq›]*
 
 **Type parameters:**
 

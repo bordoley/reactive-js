@@ -1,6 +1,6 @@
 [reactive-js](../README.md) › ["observable"](../modules/_observable_.md) › [MulticastObservableLike](_observable_.multicastobservablelike.md)
 
-# Interface: MulticastObservableLike <**T**>
+# Interface: MulticastObservableLike ‹**T**›
 
 An `ObservableLike` that shares a common subscription to an underlying observable source.
 
