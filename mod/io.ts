@@ -56,7 +56,7 @@ export const decodeWithCharset = (
   pipe(
     withLatestFromObs(
       compute<TextDecoder>()(() => new TextDecoder(charset, options)),
-      function*(ev: IOEvent<ArrayBuffer>, decoder) {
+      function* (ev: IOEvent<ArrayBuffer>, decoder) {
         switch (ev.type) {
           case IOEventType.Notify: {
             const data = decoder.decode(ev.data, { stream: true });
