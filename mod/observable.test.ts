@@ -307,7 +307,7 @@ export const tests = describe(
     defer(
       undefined,
       fromValue(),
-      genMap(function*(_) {
+      genMap(function* (_) {
         yield 1;
         yield 2;
         yield 3;
