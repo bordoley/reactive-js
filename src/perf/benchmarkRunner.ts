@@ -42,7 +42,7 @@ const logResults = (e: any) => {
 };
 
 export const run = (group: BenchmarkGroup<any>) =>
-  new Promise(resolve => {
+  new Promise<void>(resolve => {
     const suite = new Benchmark.Suite(group.name);
     const data = group.setup();
 
