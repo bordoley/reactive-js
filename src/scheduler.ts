@@ -89,13 +89,13 @@ export interface PrioritySchedulerLike {
 export {
   toPriorityScheduler,
   toPausableScheduler,
-} from "./internal/scheduler/priorityQueueScheduler";
+} from "./scheduler/priorityQueueScheduler";
 export {
   run,
   schedule,
   yield$,
   YieldError,
-} from "./internal/scheduler/schedulerContinuation";
-export { toSchedulerWithPriority } from "./internal/scheduler/schedulerWithPriority";
-export { createHostScheduler } from "./internal/scheduler/hostScheduler";
-export { createVirtualTimeScheduler } from "./internal/scheduler/virtualTimeScheduler";
+} from "./scheduler/schedulerContinuation";
+export { toSchedulerWithPriority } from "./scheduler/schedulerWithPriority";
+export { createHostScheduler } from "./scheduler/hostScheduler";
+export { createVirtualTimeScheduler } from "./scheduler/virtualTimeScheduler";

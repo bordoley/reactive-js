@@ -1,12 +1,3 @@
-import { createIOSinkAccumulator } from "./experimental/ioSinkAccumulator";
-import {
-  test,
-  describe,
-  expectEquals,
-  expectTrue,
-  mockFn,
-  expectToHaveBeenCalledTimes,
-} from "./experimental/testing";
 import { FlowMode } from "./flowable";
 import { pipe, returns, sum } from "./functions";
 import {
@@ -18,10 +9,19 @@ import {
   IOEventType,
   map,
 } from "./io";
+import { createIOSinkAccumulator } from "./ioSinkAccumulator";
 import { onNotify, subscribe } from "./observable";
 import { none } from "./option";
 import { createVirtualTimeScheduler } from "./scheduler";
 import { sink, stream } from "./streamable";
+import {
+  test,
+  describe,
+  expectEquals,
+  expectTrue,
+  mockFn,
+  expectToHaveBeenCalledTimes,
+} from "./testing";
 
 export const tests = describe(
   "io",

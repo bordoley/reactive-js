@@ -1,14 +1,4 @@
 import {
-  test,
-  describe,
-  expectNone,
-  expectEquals,
-  mockFn,
-  expectToHaveBeenCalledTimes,
-  expectTrue,
-  expectFalse,
-} from "./experimental/testing";
-import {
   pipe,
   returns,
   alwaysFalse,
@@ -27,8 +17,56 @@ import {
   noneSatisfy,
   generate,
   everySatisfy,
+  concat,
+  concatMap,
+  distinctUntilChanged,
+  endWith,
+  fromValue,
+  keep,
+  map,
+  mapTo,
+  repeat,
+  scan,
+  skipFirst,
+  startWith,
+  takeFirst,
+  takeLast,
+  takeWhile,
+  toRunnable,
 } from "./runnable";
-import * as Runnable from "./runnable";
+import {
+  test,
+  describe,
+  expectNone,
+  expectEquals,
+  mockFn,
+  expectToHaveBeenCalledTimes,
+  expectTrue,
+  expectFalse,
+} from "./testing";
+
+const Runnable = {
+  concat,
+  concatMap,
+  distinctUntilChanged,
+  empty,
+  endWith,
+  fromArray,
+  fromValue,
+  generate,
+
+  keep,
+  map,
+  mapTo,
+  repeat,
+  scan,
+  skipFirst,
+  startWith,
+  takeFirst,
+  takeLast,
+  takeWhile,
+  toRunnable,
+};
 
 export const tests = describe(
   "runnable",

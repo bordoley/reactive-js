@@ -7,6 +7,8 @@ import {
   addDisposable,
   addTeardown,
 } from "./disposable";
+import { pipe, defer, raise } from "./functions";
+import { none } from "./option";
 import {
   test,
   describe,
@@ -17,9 +19,7 @@ import {
   expectArrayEquals,
   expectEquals,
   expectNone,
-} from "./experimental/testing";
-import { pipe, defer, raise } from "./functions";
-import { none } from "./option";
+} from "./testing";
 
 export const tests = describe(
   "Disposable",

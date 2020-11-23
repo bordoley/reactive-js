@@ -1,4 +1,3 @@
-import { test, describe, expectArrayEquals } from "./experimental/testing";
 import {
   pipe,
   returns,
@@ -10,6 +9,7 @@ import {
 } from "./functions";
 
 import { toArray } from "./runnable";
+import { test, describe, expectArrayEquals } from "./testing";
 
 export const createMonadTests = (m: any) =>
   describe(

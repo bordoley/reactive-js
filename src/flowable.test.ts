@@ -1,5 +1,10 @@
 import { dispatchTo } from "./dispatcher";
 import { dispose } from "./disposable";
+import { empty, fromValue, FlowMode, fromObservable } from "./flowable";
+import { increment, pipe, returns, defer } from "./functions";
+import { onNotify, subscribe, generate } from "./observable";
+import { createVirtualTimeScheduler, schedule } from "./scheduler";
+import { stream } from "./streamable";
 import {
   test,
   describe,
@@ -7,12 +12,7 @@ import {
   expectTrue,
   mockFn,
   expectToHaveBeenCalledTimes,
-} from "./experimental/testing";
-import { empty, fromValue, FlowMode, fromObservable } from "./flowable";
-import { increment, pipe, returns, defer } from "./functions";
-import { onNotify, subscribe, generate } from "./observable";
-import { createVirtualTimeScheduler, schedule } from "./scheduler";
-import { stream } from "./streamable";
+} from "./testing";
 
 export const tests = describe(
   "flowables",

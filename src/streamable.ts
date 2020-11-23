@@ -14,20 +14,20 @@ export type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<
   StreamableLike<TReq, T>
 >;
 
-export { createActionReducer } from "./internal/streamable/createActionReducer";
+export { createActionReducer } from "./streamable/createActionReducer";
 export {
   createStreamable,
   empty,
   lift,
   mapReq,
   stream,
-} from "./internal/streamable/streamable";
-export { identity } from "./internal/streamable/identity";
+} from "./streamable/streamable";
+export { identity } from "./streamable/identity";
 export {
   map,
   mapTo,
   onNotify,
   scan,
   withLatestFrom,
-} from "./internal/streamable/operators";
-export { sink } from "./internal/streamable/sink";
+} from "./streamable/operators";
+export { sink } from "./streamable/sink";

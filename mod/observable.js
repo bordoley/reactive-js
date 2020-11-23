@@ -1745,6 +1745,7 @@ exports.concatMap = concatMap;
 exports.concatWith = concatWith;
 exports.createObservable = createObservable;
 exports.createSubject = createSubject;
+exports.defer = defer;
 exports.distinctUntilChanged = distinctUntilChanged;
 exports.empty = empty;
 exports.endWith = endWith;

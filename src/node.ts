@@ -1,10 +1,10 @@
-export { bindNodeCallback } from "./internal/node/bindNodeCallback";
+export { bindNodeCallback } from "./node/bindNodeCallback";
 export {
   createReadableIOSource,
   readFileIOSource,
-} from "./internal/node/createReadableIOSource";
-export { createWritableIOSink } from "./internal/node/createWritableIOSink";
-export { createDisposableNodeStream } from "./internal/node/nodeStream";
+} from "./node/createReadableIOSource";
+export { createWritableIOSink } from "./node/createWritableIOSink";
+export { createDisposableNodeStream } from "./node/nodeStream";
 export {
   brotliDecompress,
   gunzip,
@@ -13,4 +13,4 @@ export {
   gzip,
   deflate,
   transform,
-} from "./internal/node/transform";
+} from "./node/transform";

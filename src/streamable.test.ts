@@ -1,12 +1,4 @@
 import { dispose, addTeardown } from "./disposable";
-import {
-  test,
-  describe,
-  expectArrayEquals,
-  expectEquals,
-  expectTrue,
-  expectFalse,
-} from "./experimental/testing";
 import { pipe, returns, incrementBy, sum } from "./functions";
 import {
   subscribe,
@@ -30,6 +22,14 @@ import {
   sink,
   stream,
 } from "./streamable";
+import {
+  test,
+  describe,
+  expectArrayEquals,
+  expectEquals,
+  expectTrue,
+  expectFalse,
+} from "./testing";
 
 export const tests = describe(
   "streamable",

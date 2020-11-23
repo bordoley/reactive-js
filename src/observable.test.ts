@@ -1,20 +1,6 @@
 import { dispatchTo } from "./dispatcher";
 import { dispose } from "./disposable";
 import {
-  test,
-  describe,
-  testAsync,
-  expectArrayEquals,
-  expectToThrowError,
-  expectEquals,
-  expectToThrow,
-  expectPromiseToThrow,
-  mockFn,
-  expectToHaveBeenCalledTimes,
-  expectSome,
-  expectNone,
-} from "./experimental/testing";
-import {
   compose,
   pipe,
   returns,
@@ -28,33 +14,41 @@ import {
   raise,
 } from "./functions";
 import { createMonadTests } from "./monad.test";
-import * as Observable from "./observable";
 import {
   await_,
   buffer,
   combineLatestWith,
   compute,
   concat,
+  concatMap,
   concatWith,
   createObservable,
+  distinctUntilChanged,
   empty,
   fromArray,
   fromIterable,
   fromPromise,
   generate,
   ignoreElements,
+  keep,
   map,
+  mapTo,
   merge,
   mergeWith,
   never,
   fromValue,
   onNotify,
+  repeat,
   retry,
+  scan,
   scanAsync,
   share,
+  skipFirst,
+  startWith,
   subscribe,
   takeFirst,
   takeLast,
+  takeWhile,
   throttle,
   ThrottleMode,
   throwIfEmpty,
@@ -84,8 +78,45 @@ import {
   toArray,
 } from "./runnable";
 import { createHostScheduler, createVirtualTimeScheduler } from "./scheduler";
+import {
+  test,
+  describe,
+  testAsync,
+  expectArrayEquals,
+  expectToThrowError,
+  expectEquals,
+  expectToThrow,
+  expectPromiseToThrow,
+  mockFn,
+  expectToHaveBeenCalledTimes,
+  expectSome,
+  expectNone,
+} from "./testing";
 
 const scheduler = createHostScheduler();
+
+const Observable = {
+  concat,
+  concatMap,
+  distinctUntilChanged,
+  empty,
+  endWith,
+  fromArray,
+  fromValue,
+  generate,
+
+  keep,
+  map,
+  mapTo,
+  repeat,
+  scan,
+  skipFirst,
+  startWith,
+  takeFirst,
+  takeLast,
+  takeWhile,
+  toRunnable,
+};
 
 export const tests = describe(
   "observable",

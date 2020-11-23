@@ -1,13 +1,7 @@
 import { Readable, Writable } from "stream";
-import { createIOSinkAccumulator } from "./experimental/ioSinkAccumulator";
-import {
-  describe,
-  testAsync,
-  expectEquals,
-  expectPromiseToThrow,
-} from "./experimental/testing";
 import { pipe, defer, returns } from "./functions";
 import { fromArray } from "./io";
+import { createIOSinkAccumulator } from "./ioSinkAccumulator";
 import {
   createReadableIOSource,
   createWritableIOSink,
@@ -18,6 +12,12 @@ import {
 import { toPromise, takeFirst } from "./observable";
 import { createHostScheduler } from "./scheduler";
 import { sink } from "./streamable";
+import {
+  describe,
+  testAsync,
+  expectEquals,
+  expectPromiseToThrow,
+} from "./testing";
 
 const scheduler = createHostScheduler();
 

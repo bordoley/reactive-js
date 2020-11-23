@@ -1,15 +1,10 @@
 import { dispose } from "./disposable";
-import {
-  test,
-  describe,
-  expectArrayEquals,
-  expectTrue,
-} from "./experimental/testing";
 import { pipe, incrementBy } from "./functions";
 import { onNotify, subscribe, startWith } from "./observable";
 import { createVirtualTimeScheduler } from "./scheduler";
 import { toStateStore } from "./stateStore";
 import { identity, lift, stream } from "./streamable";
+import { test, describe, expectArrayEquals, expectTrue } from "./testing";
 
 export const tests = describe(
   "stateStore",

@@ -8,19 +8,19 @@ import {
   generate,
 } from "./asyncEnumerable";
 import { Error, addTeardown } from "./disposable";
-import {
-  test,
-  describe,
-  expectEquals,
-  expectNone,
-  expectArrayEquals,
-} from "./experimental/testing";
 import { pipe, increment, returns, defer } from "./functions";
 import { fromValue, subscribe, onNotify, toRunnable } from "./observable";
 import { none, Option } from "./option";
 import { last } from "./runnable";
 import { createVirtualTimeScheduler } from "./scheduler";
 import { stream } from "./streamable";
+import {
+  test,
+  describe,
+  expectEquals,
+  expectNone,
+  expectArrayEquals,
+} from "./testing";
 
 export const tests = describe(
   "async-enumerable",

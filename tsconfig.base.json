@@ -1,5 +1,5 @@
 {
-  "compilerOptions":  {
+  "compilerOptions": {
     "alwaysStrict": true,
     "composite": false,
     "esModuleInterop": true,
@@ -18,5 +18,5 @@
     "strictNullChecks": true,
     "target": "ES2019"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*"]
 }
