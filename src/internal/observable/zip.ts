@@ -7,12 +7,11 @@ import {
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
 } from "../../disposable";
-import { current, EnumeratorLike } from "../../enumerable";
+import { current, EnumeratorLike, zipEnumerators } from "../../enumerable";
 import { returns, pipe, defer } from "../../functions";
 import { none, isSome, isNone } from "../../option";
 import { map, everySatisfy } from "../../readonlyArray";
 import { SchedulerContinuationLike, run } from "../../scheduler";
-import { zipEnumerators } from "../enumerable/zip";
 import { fromEnumerator } from "./fromEnumerable";
 import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
 import { observe } from "./observable";

@@ -7,11 +7,11 @@ import {
   onNotify,
   empty as emptyObs,
   map,
+  subscribe,
   using,
 } from "../../observable";
 import { isNone } from "../../option";
 import { SchedulerLike } from "../../scheduler";
-import { subscribe } from "../observable/subscribe";
 import { createStream, StreamableOperator } from "./createStream";
 import { StreamableLike } from "./interfaces";
 

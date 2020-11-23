@@ -1,6 +1,6 @@
 import { dispose } from "../../disposable";
 import { Function1, pipe } from "../../functions";
-import { YieldError } from "../../internal/scheduler/schedulerContinuation";
+import { YieldError } from "../../scheduler";
 import { ObservableLike, ObserverLike } from "./interfaces";
 import { deferSynchronous, defer } from "./observable";
 

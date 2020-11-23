@@ -31,4 +31,4 @@ export { takeLast } from "./internal/enumerable/takeLast";
 export { takeWhile } from "./internal/enumerable/takeWhile";
 export { toRunnable } from "./internal/enumerable/toRunnable";
 export { toIterable } from "./internal/enumerable/toIterable";
-export { zip, zipWith } from "./internal/enumerable/zip";
+export { zip, zipEnumerators, zipWith } from "./internal/enumerable/zip";

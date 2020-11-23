@@ -18,10 +18,10 @@ import {
   using,
   zipWithLatestFrom,
   takeFirst,
+  ObservableOperator,
 } from "../../observable";
 import { none } from "../../option";
 import { stream } from "../../streamable";
-import { ObservableOperator } from "../observable/interfaces";
 import { AsyncEnumerableLike } from "./interfaces";
 
 export const enum ConsumeRequestType {

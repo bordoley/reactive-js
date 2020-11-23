@@ -14,6 +14,7 @@ export {
   run,
   schedule,
   yield$,
+  YieldError,
 } from "./internal/scheduler/schedulerContinuation";
 export { toSchedulerWithPriority } from "./internal/scheduler/schedulerWithPriority";
 export { createHostScheduler } from "./internal/scheduler/hostScheduler";
