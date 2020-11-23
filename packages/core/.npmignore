@@ -1,5 +1,4 @@
-*.bs.js
 *.test.* 
 
-experimental/testing.deno.* 
+testing.deno.* 
 perf
