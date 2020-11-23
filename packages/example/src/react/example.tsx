@@ -1,4 +1,4 @@
-import { createRouter, find } from "@reactive-js/core/experimental/router";
+import { createRouter, find } from "@reactive-js/core/router";
 import { fromObservable, FlowMode } from "@reactive-js/core/flowable";
 import {
   pipe,
