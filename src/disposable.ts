@@ -274,7 +274,8 @@ export interface SerialDisposableLike extends DisposableLike {
  *
  * @noInheritDoc
  * */
-export abstract class AbstractSerialDisposable extends AbstractDisposable
+export abstract class AbstractSerialDisposable
+  extends AbstractDisposable
   implements SerialDisposableLike {
   private _inner: DisposableLike = disposed;
 
@@ -313,7 +314,8 @@ export interface DisposableValueLike<T> extends DisposableLike {
   readonly value: T;
 }
 
-class DisposableValueImpl<T> extends AbstractDisposable
+class DisposableValueImpl<T>
+  extends AbstractDisposable
   implements DisposableValueLike<T> {
   constructor(readonly value: T) {
     super();

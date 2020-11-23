@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "outDir": "./build"
+  },
+  "include": ["./mod/*.d.ts"]
+}

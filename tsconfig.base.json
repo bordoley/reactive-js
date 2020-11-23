@@ -1,8 +1,21 @@
 {
-  "extends": "./tsconfig.compiler.json",
   "compilerOptions": {
+    "alwaysStrict": true,
+    "composite": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "lib": ["DOM"],
-    "rootDir": "./src"
-  },
-  "exclude": ["./build", "./mod", "./packages", "./scripts"]
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "newLine": "LF",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "ES2019"
+  }
 }
