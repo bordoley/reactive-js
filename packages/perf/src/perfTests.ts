@@ -1,4 +1,4 @@
-import { benchmarkTest, benchmarkGroup } from "../benchmark";
+import { benchmarkTest, benchmarkGroup } from "@reactive-js/core/benchmark";
 import {
   defer,
   isEven,
@@ -7,7 +7,7 @@ import {
   isOdd,
   returns,
   callWith,
-} from "../functions";
+} from "@reactive-js/core/functions";
 
 export const passthrough = <T>(_: T, x: T) => x;
 export const createArray = (n: number): ReadonlyArray<number> => {
@@ -23,7 +23,7 @@ const createMapPerfTest = (name: string, module: string) =>
     name,
     async (src: readonly number[]) => {
       const m: any = await import(module);
-      const { toArray } = await import("../runnable");
+      const { toArray } = await import("@reactive-js/core/runnable");
 
       return defer(
         src,
@@ -40,10 +40,10 @@ export const map = (n: number) =>
   benchmarkGroup(
     `map ${n} integers`,
     defer<number, readonly number[]>(n, createArray),
-    createMapPerfTest("enumerable", "../enumerable"),
-    createMapPerfTest("observable", "../observable"),
-    createMapPerfTest("runnable", "../runnable"),
-    createMapPerfTest("sequence", "../sequence"),
+    createMapPerfTest("enumerable", "@reactive-js/core/enumerable"),
+    createMapPerfTest("observable", "@reactive-js/core/observable"),
+    createMapPerfTest("runnable", "@reactive-js/core/runnable"),
+    createMapPerfTest("sequence", "@reactive-js/core/sequence"),
     benchmarkTest(
       "rx-js",
       async src => {
@@ -70,7 +70,7 @@ export const map = (n: number) =>
     benchmarkTest(
       "readonlyArray",
       async src => {
-        const { map } = await import("../readonlyArray");
+        const { map } = await import("@reactive-js/core/readonlyArray");
 
         return defer(src, map(increment));
       },
@@ -90,7 +90,7 @@ const createFilterMapFusionPerfTest = (name: string, module: string) =>
     name,
     async (src: readonly number[]) => {
       const m: any = await import(module);
-      const { reduce } = await import("../runnable");
+      const { reduce } = await import("@reactive-js/core/runnable");
 
       return defer(
         src,
@@ -111,10 +111,10 @@ export const filterMapFusion = (n: number) =>
   benchmarkGroup(
     `filter -> map -> fusion with ${n} integers`,
     defer<number, readonly number[]>(n, createArray),
-    createFilterMapFusionPerfTest("enumerable", "../enumerable"),
-    createFilterMapFusionPerfTest("observable", "../observable"),
-    createFilterMapFusionPerfTest("runnable", "../runnable"),
-    createFilterMapFusionPerfTest("sequence", "../sequence"),
+    createFilterMapFusionPerfTest("enumerable", "@reactive-js/core/enumerable"),
+    createFilterMapFusionPerfTest("observable", "@reactive-js/core/observable"),
+    createFilterMapFusionPerfTest("runnable", "@reactive-js/core/runnable"),
+    createFilterMapFusionPerfTest("sequence", "@reactive-js/core/sequence"),
     benchmarkTest(
       "rx-js",
       async src => {
@@ -172,7 +172,7 @@ const createFilterMapReducePerfTest = (name: string, module: string) =>
     name,
     async (src: readonly number[]) => {
       const m: any = await import(module);
-      const { reduce } = await import("../runnable");
+      const { reduce } = await import("@reactive-js/core/runnable");
 
       return defer(
         src,
@@ -190,10 +190,10 @@ export const filterMapReduce = (n: number) =>
   benchmarkGroup(
     `filter -> map -> reduce ${n} integers`,
     defer<number, readonly number[]>(n, createArray),
-    createFilterMapReducePerfTest("enumerable", "../enumerable"),
-    createFilterMapReducePerfTest("observable", "../observable"),
-    createFilterMapReducePerfTest("runnable", "../runnable"),
-    createFilterMapReducePerfTest("sequence", "../sequence"),
+    createFilterMapReducePerfTest("enumerable", "@reactive-js/core/enumerable"),
+    createFilterMapReducePerfTest("observable", "@reactive-js/core/observable"),
+    createFilterMapReducePerfTest("runnable", "@reactive-js/core/runnable"),
+    createFilterMapReducePerfTest("sequence", "@reactive-js/core/sequence"),
     benchmarkTest(
       "rx-js",
       async src => {
@@ -250,7 +250,7 @@ const createScanReducePerfTest = (name: string, module: string) =>
     name,
     async (src: readonly number[]) => {
       const m: any = await import(module);
-      const { reduce } = await import("../runnable");
+      const { reduce } = await import("@reactive-js/core/runnable");
 
       return defer(
         src,
@@ -267,10 +267,10 @@ export const scanReduce = (n: number) =>
   benchmarkGroup(
     `scan -> reduce ${n} integers`,
     defer<number, readonly number[]>(n, createArray),
-    createScanReducePerfTest("enumerable", "../enumerable"),
-    createScanReducePerfTest("observable", "../observable"),
-    createScanReducePerfTest("runnable", "../runnable"),
-    createScanReducePerfTest("sequence", "../sequence"),
+    createScanReducePerfTest("enumerable", "@reactive-js/core/enumerable"),
+    createScanReducePerfTest("observable", "@reactive-js/core/observable"),
+    createScanReducePerfTest("runnable", "@reactive-js/core/runnable"),
+    createScanReducePerfTest("sequence", "@reactive-js/core/sequence"),
     benchmarkTest(
       "rx-js",
       async src => {
@@ -317,7 +317,7 @@ export const every = (n: number) =>
     benchmarkTest(
       "runnable",
       async src => {
-        const { fromArray, everySatisfy } = await import("../runnable");
+        const { fromArray, everySatisfy } = await import("@reactive-js/core/runnable");
         return defer(
           src,
           fromArray(),
@@ -329,7 +329,7 @@ export const every = (n: number) =>
     benchmarkTest(
       "readonlyArray",
       async src => {
-        const { everySatisfy } = await import("../readonlyArray");
+        const { everySatisfy } = await import("@reactive-js/core/readonlyArray");
         return defer(
           src,
           everySatisfy(i => i < 0),
