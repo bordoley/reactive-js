@@ -1,4 +1,4 @@
-import { EnumeratorLike, EnumerableOperator } from "./interfaces";
+import { EnumeratorLike, EnumerableOperator } from "../../enumerable";
 import { lift } from "./lift";
 
 class TakeFirstEnumerator<T> implements EnumeratorLike<T> {

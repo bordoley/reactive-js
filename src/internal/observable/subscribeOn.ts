@@ -3,7 +3,7 @@ import { bindDisposables } from "../../disposable";
 import { pipe } from "../../functions";
 import { SchedulerLike } from "../../scheduler";
 import { createObservable } from "./createObservable";
-import { ObservableOperator } from "./interfaces";
+import { ObservableOperator } from "../../observable";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 

@@ -1,6 +1,6 @@
 import { DisposableLike, addDisposable } from "../../disposable";
 import { createObservable } from "./createObservable";
-import { ObservableLike } from "./interfaces";
+import { ObservableLike } from "../../observable";
 
 export const fromDisposable = (
   disposable: DisposableLike,

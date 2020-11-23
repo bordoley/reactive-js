@@ -4,7 +4,7 @@ import {
   strictEquality,
   isEqualTo,
 } from "../../functions";
-import { RunnableLike } from "./interfaces";
+import { RunnableLike } from "../../runnable";
 import { AbstractSink } from "./sink";
 
 class SomeSatisfySink<T> extends AbstractSink<T> {

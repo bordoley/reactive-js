@@ -10,7 +10,7 @@ import {
   yield$ as yieldScheduler,
 } from "../../scheduler";
 import { __DEV__ } from "../env";
-import { ObserverLike } from "./interfaces";
+import { ObserverLike } from "../../observable";
 
 const assertObserverStateProduction = ignore;
 const assertObserverStateDev = <T>(observer: ObserverLike<T>) => {

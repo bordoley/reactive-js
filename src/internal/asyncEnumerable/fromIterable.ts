@@ -1,7 +1,7 @@
 import { fromIterable as fromIterableEnumerable } from "../../enumerable";
 import { Function1, pipe } from "../../functions";
 import { fromEnumerable } from "./fromEnumerable";
-import { AsyncEnumerableLike } from "./interfaces";
+import { AsyncEnumerableLike } from "../../asyncEnumerable";
 
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.

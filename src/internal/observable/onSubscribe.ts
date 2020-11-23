@@ -6,7 +6,7 @@ import {
 } from "../../disposable";
 import { Factory, pipe } from "../../functions";
 import { isSome, none } from "../../option";
-import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
+import { ObservableLike, ObserverLike, ObservableOperator } from "../../observable";
 import { observe } from "./observable";
 
 class OnSubscribeObservable<T> implements ObservableLike<T> {

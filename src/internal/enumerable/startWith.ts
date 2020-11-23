@@ -1,6 +1,6 @@
 import { concat } from "./concat";
 import { fromArray } from "./fromArray";
-import { EnumerableOperator } from "./interfaces";
+import { EnumerableOperator } from "../../enumerable";
 
 /**
  * Returns an EnumerableLike that yields the values followed by items from the source.

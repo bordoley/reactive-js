@@ -1,7 +1,7 @@
 import { Factory, Function1, pipe } from "../../functions";
 import { enumerate } from "./enumerator";
 import { fromArray } from "./fromArray";
-import { EnumerableLike } from "./interfaces";
+import { EnumerableLike } from "../../enumerable";
 
 class ComputeEnumerable<T> implements EnumerableLike<T> {
   constructor(private readonly f: Factory<T>) {}

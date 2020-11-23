@@ -5,7 +5,7 @@ import {
 } from "../../disposable";
 import { Function1, pipe } from "../../functions";
 import { isSome, none } from "../../option";
-import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
+import { ObservableLike, ObservableOperator, ObserverLike } from "../../observable";
 import { lift } from "./lift";
 import { observe } from "./observable";
 import { createDelegatingObserver } from "./observer";

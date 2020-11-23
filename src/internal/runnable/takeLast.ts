@@ -1,8 +1,9 @@
 import { pipe } from "../../functions";
 import { empty } from "./empty";
 import { fromArray } from "./fromArray";
-import { RunnableOperator, SinkLike, sinkDone } from "./interfaces";
+import { RunnableOperator, SinkLike } from "../../runnable";
 import { lift } from "./lift";
+import { sinkDone } from "./sink";
 
 class TakeLastSink<T> implements SinkLike<T> {
   private readonly last: T[] = [];

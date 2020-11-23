@@ -5,7 +5,7 @@ import {
   EnumeratorLike,
   EnumerableOperator,
   EnumeratorOperator,
-} from "./interfaces";
+} from "../../enumerable";
 
 class LiftedEnumerableLike<T> implements EnumerableLike<T> {
   constructor(

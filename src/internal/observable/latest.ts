@@ -6,7 +6,7 @@ import {
 import { pipe } from "../../functions";
 import { none } from "../../option";
 import { everySatisfy, map } from "../../readonlyArray";
-import { ObservableLike, ObserverLike } from "./interfaces";
+import { ObservableLike, ObserverLike } from "../../observable";
 import { deferSynchronous, observe, defer } from "./observable";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 

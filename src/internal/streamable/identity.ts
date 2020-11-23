@@ -1,6 +1,6 @@
 import { createSubject } from "../../observable";
 import { SchedulerLike } from "../../scheduler";
-import { StreamableLike } from "./interfaces";
+import { StreamableLike } from "../../streamable";
 
 const _identity = {
   stream(_: SchedulerLike, options?: { readonly replay: number }) {

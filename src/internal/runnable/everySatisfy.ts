@@ -1,5 +1,5 @@
 import { Predicate, compose, negate } from "../../functions";
-import { RunnableLike } from "./interfaces";
+import { RunnableLike } from "../../runnable";
 import { AbstractSink } from "./sink";
 
 class EverySatisfySink<T> extends AbstractSink<T> {

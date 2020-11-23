@@ -1,5 +1,5 @@
 import { SideEffect1 } from "../../functions";
-import { ObservableOperator, ObserverLike } from "./interfaces";
+import { ObservableOperator, ObserverLike } from "../../observable";
 import { lift } from "./lift";
 import {
   AbstractAutoDisposingDelegatingObserver,

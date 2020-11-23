@@ -4,7 +4,7 @@ import {
 } from "../../disposable";
 import { Reducer, Factory, pipe } from "../../functions";
 import { fromValue } from "./fromValue";
-import { ObserverLike, ObservableOperator } from "./interfaces";
+import { ObserverLike, ObservableOperator } from "../../observable";
 import { lift } from "./lift";
 import { observe } from "./observable";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";

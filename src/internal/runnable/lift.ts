@@ -4,7 +4,7 @@ import {
   RunnableLike,
   SinkOperator,
   SinkLike,
-} from "./interfaces";
+} from "../../runnable";
 
 class LiftedRunnable<T> implements RunnableLike<T> {
   constructor(

@@ -13,7 +13,7 @@ import {
   SchedulerContinuationLike,
   PrioritySchedulerLike,
   PausableSchedulerLike,
-} from "./interfaces";
+} from "../../scheduler";
 import { run, schedule, yield$ } from "./schedulerContinuation";
 
 type ScheduledTask = {

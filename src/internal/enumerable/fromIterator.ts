@@ -1,6 +1,6 @@
 import { Factory, Function1 } from "../../functions";
 import { none } from "../../option";
-import { EnumerableLike, EnumeratorLike } from "./interfaces";
+import { EnumerableLike, EnumeratorLike } from "../../enumerable";
 
 class IteratorEnumerator<T, TReturn = any, TNext = unknown>
   implements EnumeratorLike<T> {

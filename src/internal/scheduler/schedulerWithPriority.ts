@@ -3,7 +3,7 @@ import {
   SchedulerContinuationLike,
   SchedulerLike,
   PrioritySchedulerLike,
-} from "./interfaces";
+} from "../../scheduler";
 
 class SchedulerWithPriorityImpl implements SchedulerLike {
   constructor(

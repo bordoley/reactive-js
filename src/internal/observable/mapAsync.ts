@@ -1,6 +1,6 @@
 import { Function1 } from "../../functions";
 import { fromPromise } from "./fromPromise";
-import { ObservableOperator } from "./interfaces";
+import { ObservableOperator } from "../../observable";
 import { switchMap } from "./switchAll";
 
 export const mapAsync = <TA, TB>(

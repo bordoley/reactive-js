@@ -1,6 +1,6 @@
 import { Function1 } from "../../functions";
 import { fromArray } from "./fromArray";
-import { ObservableLike } from "./interfaces";
+import { ObservableLike } from "../../observable";
 
 /**
  *  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the observer.

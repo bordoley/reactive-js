@@ -5,7 +5,7 @@ import {
 } from "../../disposable";
 import { pipe } from "../../functions";
 import { everySatisfy } from "../../readonlyArray";
-import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
+import { ObservableLike, ObserverLike, ObservableOperator } from "../../observable";
 import { observe } from "./observable";
 import { createDelegatingObserver } from "./observer";
 

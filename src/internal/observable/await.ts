@@ -1,5 +1,5 @@
 import { compose, Function1 } from "../../functions";
-import { ObservableLike, ObservableOperator } from "./interfaces";
+import { ObservableLike, ObservableOperator } from "../../observable";
 import { switchMap } from "./switchAll";
 import { takeFirst } from "./takeFirst";
 

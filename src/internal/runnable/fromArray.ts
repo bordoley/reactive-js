@@ -1,6 +1,6 @@
 import { Function1 } from "../../functions";
 import { createRunnable } from "./createRunnable";
-import { RunnableLike, SinkLike } from "./interfaces";
+import { RunnableLike, SinkLike } from "../../runnable";
 
 export const fromArray = <T>(
   options: {

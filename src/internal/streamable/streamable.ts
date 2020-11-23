@@ -13,7 +13,7 @@ import {
 import { isNone } from "../../option";
 import { SchedulerLike } from "../../scheduler";
 import { createStream, StreamableOperator } from "./createStream";
-import { StreamableLike } from "./interfaces";
+import { StreamableLike } from "../../streamable";
 
 class StreamableImpl<TReq, TData> implements StreamableLike<TReq, TData> {
   constructor(private readonly op: ObservableOperator<TReq, TData>) {}

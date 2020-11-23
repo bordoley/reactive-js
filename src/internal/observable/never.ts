@@ -1,4 +1,4 @@
-import { ObservableLike, ObserverLike } from "./interfaces";
+import { ObservableLike, ObserverLike } from "../../observable";
 
 class NeverObservable<T> implements ObservableLike<T> {
   readonly isSynchronous = false;

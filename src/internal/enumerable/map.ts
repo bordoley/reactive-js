@@ -1,6 +1,6 @@
 import { Function1, returns } from "../../functions";
 import { none } from "../../option";
-import { EnumeratorLike, EnumerableOperator } from "./interfaces";
+import { EnumeratorLike, EnumerableOperator } from "../../enumerable";
 import { lift } from "./lift";
 
 class MapEnumerator<TA, TB> implements EnumeratorLike<TB> {

@@ -1,5 +1,5 @@
 import { Factory, Updater } from "../../functions";
-import { EnumerableLike, EnumeratorLike } from "./interfaces";
+import { EnumerableLike, EnumeratorLike } from "../../enumerable";
 
 class GenerateEnumerator<T> implements EnumeratorLike<T> {
   current: T;

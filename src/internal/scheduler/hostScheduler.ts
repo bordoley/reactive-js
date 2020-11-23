@@ -6,7 +6,7 @@ import {
   addTeardown,
 } from "../../disposable";
 import { Factory, SideEffect, Function1, defer, pipe } from "../../functions";
-import { SchedulerLike, SchedulerContinuationLike } from "./interfaces";
+import { SchedulerLike, SchedulerContinuationLike } from "../../scheduler";
 import { run } from "./schedulerContinuation";
 
 // FIXME: Only declare these to make Deno happy.

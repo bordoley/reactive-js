@@ -22,7 +22,7 @@ import {
 } from "../../observable";
 import { none } from "../../option";
 import { stream } from "../../streamable";
-import { AsyncEnumerableLike } from "./interfaces";
+import { AsyncEnumerableLike } from "../../asyncEnumerable";
 
 export const enum ConsumeRequestType {
   Notify = 1,

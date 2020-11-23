@@ -6,7 +6,7 @@ import {
   distinctUntilChanged,
   mergeWith,
 } from "../../observable";
-import { StreamableLike } from "./interfaces";
+import { StreamableLike } from "../../streamable";
 import { createStreamable } from "./streamable";
 
 /**

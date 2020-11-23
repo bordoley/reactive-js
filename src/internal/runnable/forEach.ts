@@ -1,5 +1,5 @@
 import { Function1, SideEffect1 } from "../../functions";
-import { RunnableLike } from "./interfaces";
+import { RunnableLike } from "../../runnable";
 import { AbstractSink } from "./sink";
 
 class ForEachSink<T> extends AbstractSink<T> {

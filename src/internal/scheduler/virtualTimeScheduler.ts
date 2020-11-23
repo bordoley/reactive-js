@@ -6,7 +6,7 @@ import {
   SchedulerContinuationLike,
   VirtualTimeSchedulerLike,
   SchedulerLike,
-} from "./interfaces";
+} from "../../scheduler";
 import { run } from "./schedulerContinuation";
 
 type VirtualTask = {

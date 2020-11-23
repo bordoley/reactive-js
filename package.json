@@ -2,7 +2,7 @@
   "name": "reactive-js",
   "private": true,
   "scripts": {
-    "build": "tsc -p tsconfig.compile.json && rm -rf ./build && rollup -c rollup.config.js",
+    "build": "rm -rf ./build ./mod && tsc -p tsconfig.compile.json && rollup -c rollup.config.js",
     "bootstrap": "lerna bootstrap",
     "deno-install": "curl -fsSL https://deno.land/x/install/install.sh | sh",
     "format": "prettier '**' --write",

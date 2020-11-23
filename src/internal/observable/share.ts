@@ -8,7 +8,7 @@ import {
   SubjectLike,
   ObserverLike,
   MulticastObservableLike,
-} from "./interfaces";
+} from "../../observable";
 import { observe } from "./observable";
 import { publish } from "./publish";
 

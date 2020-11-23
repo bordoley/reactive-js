@@ -1,6 +1,6 @@
 import { compose, returns, Function1 } from "../../functions";
 import { fromIterator } from "./fromIterable";
-import { ObservableOperator } from "./interfaces";
+import { ObservableOperator } from "../../observable";
 import { map } from "./map";
 import { concatMap } from "./mergeAll";
 

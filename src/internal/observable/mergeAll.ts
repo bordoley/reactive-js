@@ -7,7 +7,7 @@ import {
 } from "../../disposable";
 import { compose, pipe, Function1 } from "../../functions";
 import { isSome } from "../../option";
-import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
+import { ObservableLike, ObservableOperator, ObserverLike } from "../../observable";
 import { lift } from "./lift";
 import { map } from "./map";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";

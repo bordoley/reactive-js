@@ -1,4 +1,4 @@
-import { ObservableLike, ObservableOperator } from "./interfaces";
+import { ObservableLike, ObservableOperator } from "../../observable";
 import { LatestMode, latest } from "./latest";
 
 export function combineLatest<TA, TB>(

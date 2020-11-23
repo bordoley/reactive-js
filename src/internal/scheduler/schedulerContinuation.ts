@@ -11,7 +11,7 @@ import {
   SchedulerContinuationLike,
   SchedulerContinuationRunStatusChangedListenerLike,
   SchedulerLike,
-} from "./interfaces";
+} from "../../scheduler";
 
 const notifyListeners = (
   listeners: Set<SchedulerContinuationRunStatusChangedListenerLike>,

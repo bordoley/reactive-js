@@ -5,7 +5,7 @@ import {
   EnumerableLike,
   EnumeratorLike,
   EnumerableOperator,
-} from "./interfaces";
+} from "../../enumerable";
 import { lift } from "./lift";
 import { map } from "./map";
 

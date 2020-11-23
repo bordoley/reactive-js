@@ -1,6 +1,6 @@
 import { Function1, pipe } from "../../functions";
 import { fromArray } from "./fromArray";
-import { EnumerableLike } from "./interfaces";
+import { EnumerableLike } from "../../enumerable";
 
 const _fromValue = <T>(value: T): EnumerableLike<T> =>
   pipe([value], fromArray());

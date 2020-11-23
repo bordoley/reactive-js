@@ -6,7 +6,7 @@ import {
   addDisposableDisposeParentOnChildError,
 } from "../../disposable";
 import { compose, pipe, Function1 } from "../../functions";
-import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
+import { ObservableLike, ObserverLike, ObservableOperator } from "../../observable";
 import { lift } from "./lift";
 import { map } from "./map";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";

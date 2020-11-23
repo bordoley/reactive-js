@@ -1,4 +1,4 @@
-import { EnumerableLike, EnumeratorLike } from "./interfaces";
+import { EnumerableLike, EnumeratorLike } from "../../enumerable";
 
 export const enumerate = <T>(
   enumerable: EnumerableLike<T>,

@@ -6,7 +6,7 @@ import {
 } from "../../disposable";
 import { Factory, pipe } from "../../functions";
 import { none, Option } from "../../option";
-import { ObservableOperator, ObserverLike } from "./interfaces";
+import { ObservableOperator, ObserverLike } from "../../observable";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 

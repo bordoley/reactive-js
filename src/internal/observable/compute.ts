@@ -1,6 +1,6 @@
 import { Function1, compose, callWith, Factory } from "../../functions";
 import { fromValue } from "./fromValue";
-import { ObservableLike } from "./interfaces";
+import { ObservableLike } from "../../observable";
 import { map } from "./map";
 
 /**

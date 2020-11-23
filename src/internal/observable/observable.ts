@@ -1,7 +1,7 @@
 import { addOnDisposedWithError } from "../../disposable";
 import { SideEffect1, Factory, pipe } from "../../functions";
 import { schedule } from "../../scheduler";
-import { ObservableLike, ObserverLike } from "./interfaces";
+import { ObservableLike, ObserverLike } from "../../observable";
 
 class ScheduledObservable<T> implements ObservableLike<T> {
   constructor(

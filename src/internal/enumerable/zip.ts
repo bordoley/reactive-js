@@ -5,7 +5,7 @@ import {
   EnumerableLike,
   EnumeratorLike,
   EnumerableOperator,
-} from "./interfaces";
+} from "../../enumerable";
 
 const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {
   for (const enumerator of enumerators) {

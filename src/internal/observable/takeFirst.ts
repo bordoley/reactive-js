@@ -1,7 +1,7 @@
 import { dispose } from "../../disposable";
 import { pipe } from "../../functions";
 import { empty } from "./empty";
-import { ObservableOperator, ObserverLike } from "./interfaces";
+import { ObservableOperator, ObserverLike } from "../../observable";
 import { lift } from "./lift";
 import {
   AbstractAutoDisposingDelegatingObserver,

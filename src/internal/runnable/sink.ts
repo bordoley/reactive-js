@@ -1,4 +1,6 @@
-import { SinkLike, sinkDone } from "./interfaces";
+import { SinkLike } from "../../runnable";
+
+export const sinkDone = Symbol("@reactive-js/core/lib/runnable/sinkDone");
 
 export abstract class AbstractSink<T> implements SinkLike<T> {
   isDone = false;

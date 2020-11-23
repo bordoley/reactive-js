@@ -1,5 +1,5 @@
 import { TypePredicate, Predicate } from "../../functions";
-import { SinkLike, RunnableOperator } from "./interfaces";
+import { SinkLike, RunnableOperator } from "../../runnable";
 import { lift } from "./lift";
 import { AbstractDelegatingSink } from "./sink";
 

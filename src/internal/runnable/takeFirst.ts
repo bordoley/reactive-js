@@ -1,6 +1,6 @@
 import { pipe } from "../../functions";
 import { empty } from "./empty";
-import { RunnableOperator, SinkLike } from "./interfaces";
+import { RunnableOperator, SinkLike } from "../../runnable";
 import { lift } from "./lift";
 import { AbstractDelegatingSink } from "./sink";
 

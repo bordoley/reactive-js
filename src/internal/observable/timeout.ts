@@ -6,7 +6,7 @@ import {
 } from "../../disposable";
 import { pipe, returns } from "../../functions";
 import { concat } from "./concat";
-import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
+import { ObservableLike, ObservableOperator, ObserverLike } from "../../observable";
 import { lift } from "./lift";
 import {
   AbstractAutoDisposingDelegatingObserver,

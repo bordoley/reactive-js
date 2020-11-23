@@ -1,6 +1,6 @@
 import { strictEquality, Equality } from "../../functions";
 import { Option } from "../../option";
-import { ObservableOperator, ObserverLike } from "./interfaces";
+import { ObservableOperator, ObserverLike } from "../../observable";
 import { lift } from "./lift";
 import {
   AbstractAutoDisposingDelegatingObserver,

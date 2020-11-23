@@ -1,5 +1,5 @@
 import { Function1, Reducer, Factory } from "../../functions";
-import { RunnableLike } from "./interfaces";
+import { RunnableLike } from "../../runnable";
 import { AbstractSink } from "./sink";
 
 class ReducerSink<T, TAcc> extends AbstractSink<T> {

@@ -1,7 +1,7 @@
 import { Error, dispose, addDisposable, addTeardown } from "../../disposable";
 import { pipe, Predicate, Function2 } from "../../functions";
 import { isNone, isSome } from "../../option";
-import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
+import { ObservableLike, ObservableOperator, ObserverLike } from "../../observable";
 import { lift } from "./lift";
 import { createDelegatingObserver } from "./observer";
 import { onNotify } from "./onNotify";

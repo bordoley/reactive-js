@@ -1,5 +1,5 @@
 import { Factory, Updater } from "../../functions";
-import { ObservableLike, ObserverLike } from "./interfaces";
+import { ObservableLike, ObserverLike } from "../../observable";
 import { deferSynchronous, defer } from "./observable";
 import { yield$ } from "./observer";
 

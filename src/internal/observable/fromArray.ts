@@ -1,7 +1,7 @@
 import { dispose } from "../../disposable";
 import { Function1, pipe } from "../../functions";
 import { YieldError } from "../../scheduler";
-import { ObservableLike, ObserverLike } from "./interfaces";
+import { ObservableLike, ObserverLike } from "../../observable";
 import { deferSynchronous, defer } from "./observable";
 
 /**

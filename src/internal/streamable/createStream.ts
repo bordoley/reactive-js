@@ -11,7 +11,7 @@ import {
   observe,
 } from "../../observable";
 import { SchedulerLike } from "../../scheduler";
-import { StreamableLike } from "./interfaces";
+import { StreamableLike } from "../../streamable";
 
 export type StreamableOperator<TSrcReq, TSrc, TReq, T> = {
   (streamable: StreamableLike<TSrcReq, TSrc>): StreamableLike<TReq, T>;

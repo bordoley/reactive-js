@@ -3,7 +3,7 @@ import { addDisposable } from "../../disposable";
 import { compose, pipe, Function1 } from "../../functions";
 import { none } from "../../option";
 import { StreamLike, subscribe, ignoreElements, ObservableLike, onNotify, using, endWith } from "../../observable";
-import { StreamableLike } from "./interfaces";
+import { StreamableLike } from "../../streamable";
 import { stream } from "./streamable";
 
 const ignoreAndNotifyVoid: Function1<

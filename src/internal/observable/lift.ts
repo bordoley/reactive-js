@@ -4,7 +4,7 @@ import {
   ObservableOperator,
   ObserverLike,
   ObserverOperator,
-} from "./interfaces";
+} from "../../observable";
 import { observe } from "./observable";
 
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {

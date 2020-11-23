@@ -6,7 +6,7 @@ import {
   takeFirst,
 } from "../../observable";
 import { createStreamable } from "../../streamable";
-import { AsyncEnumerableLike } from "./interfaces";
+import { AsyncEnumerableLike } from "../../asyncEnumerable";
 
 const fromArrayScanner = (acc: number, _: void): number => acc + 1;
 

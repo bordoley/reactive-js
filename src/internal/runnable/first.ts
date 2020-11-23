@@ -1,5 +1,5 @@
 import { none, Option } from "../../option";
-import { RunnableLike } from "./interfaces";
+import { RunnableLike } from "../../runnable";
 import { AbstractSink } from "./sink";
 
 class FirstSink<T> extends AbstractSink<T> {

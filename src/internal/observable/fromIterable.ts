@@ -4,7 +4,7 @@ import {
 } from "../../enumerable";
 import { Function1, compose, Factory } from "../../functions";
 import { fromEnumerable } from "./fromEnumerable";
-import { ObservableLike } from "./interfaces";
+import { ObservableLike } from "../../observable";
 
 /**
  * Creates an `ObservableLike` which iterates through the values

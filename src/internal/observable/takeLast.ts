@@ -6,7 +6,7 @@ import {
 import { pipe } from "../../functions";
 import { empty } from "./empty";
 import { fromArray } from "./fromArray";
-import { ObservableOperator, ObserverLike } from "./interfaces";
+import { ObservableOperator, ObserverLike } from "../../observable";
 import { lift } from "./lift";
 import { observe } from "./observable";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";

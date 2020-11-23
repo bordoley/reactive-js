@@ -1,5 +1,5 @@
 import { none } from "../../option";
-import { EnumerableLike, EnumeratorLike } from "./interfaces";
+import { EnumerableLike, EnumeratorLike } from "../../enumerable";
 
 class ArrayEnumerator<T> implements EnumeratorLike<T> {
   current: any = none;

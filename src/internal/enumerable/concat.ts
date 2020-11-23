@@ -1,7 +1,7 @@
 import { pipe } from "../../functions";
 import { concatAll } from "./concatAll";
 import { fromArray } from "./fromArray";
-import { EnumerableLike, EnumerableOperator } from "./interfaces";
+import { EnumerableLike, EnumerableOperator } from "../../enumerable";
 
 /**
  * Creates an EnumerableLike which yields all values from each source sequentially.

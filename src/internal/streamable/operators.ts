@@ -13,7 +13,7 @@ import {
   scan as scanObs,
   withLatestFrom as withLatestFromObs,
 } from "../../observable";
-import { StreamableOperator } from "./interfaces";
+import { StreamableOperator } from "../../streamable";
 import { lift } from "./streamable";
 
 export const map = <TReq, TA, TB>(

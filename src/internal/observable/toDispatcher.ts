@@ -9,7 +9,7 @@ import {
 } from "../../disposable";
 import { pipe } from "../../functions";
 import { schedule } from "../../scheduler";
-import { ObserverLike } from "./interfaces";
+import { ObserverLike } from "../../observable";
 import { yield$ } from "./observer";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {

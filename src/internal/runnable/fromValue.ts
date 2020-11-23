@@ -1,6 +1,6 @@
 import { Function1 } from "../../functions";
 import { createRunnable } from "./createRunnable";
-import { RunnableLike } from "./interfaces";
+import { RunnableLike } from "../../runnable";
 
 const _fromValue = <T>(value: T): RunnableLike<T> =>
   createRunnable(sink => {

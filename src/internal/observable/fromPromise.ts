@@ -1,6 +1,6 @@
 import { toErrorHandler, dispose } from "../../disposable";
 import { Factory, pipe } from "../../functions";
-import { ObservableLike } from "./interfaces";
+import { ObservableLike } from "../../observable";
 import { defer } from "./observable";
 import { toDispatcher } from "./toDispatcher";
 

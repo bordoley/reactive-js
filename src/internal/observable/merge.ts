@@ -4,7 +4,7 @@ import {
   addOnDisposedWithoutErrorTeardown,
 } from "../../disposable";
 import { pipe } from "../../functions";
-import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
+import { ObservableLike, ObserverLike, ObservableOperator } from "../../observable";
 import { observe } from "./observable";
 import { createDelegatingObserver } from "./observer";
 

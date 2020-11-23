@@ -1,6 +1,6 @@
 import { concatWith } from "./concat";
 import { fromArray } from "./fromArray";
-import { ObservableOperator } from "./interfaces";
+import { ObservableOperator } from "../../observable";
 
 /**
  * Returns an `ObservableLike` that emits items from the source,

@@ -16,7 +16,7 @@ import {
 } from "../../observable";
 import { createStreamable } from "../../streamable";
 
-import { AsyncEnumerableLike } from "./interfaces";
+import { AsyncEnumerableLike } from "../../asyncEnumerable";
 
 const _fromEnumerable = <T>(
   enumerable: EnumerableLike<T>,

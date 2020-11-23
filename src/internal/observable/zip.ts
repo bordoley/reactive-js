@@ -13,7 +13,7 @@ import { none, isSome, isNone } from "../../option";
 import { map, everySatisfy } from "../../readonlyArray";
 import { SchedulerContinuationLike, run } from "../../scheduler";
 import { fromEnumerator } from "./fromEnumerable";
-import { ObservableLike, ObserverLike, ObservableOperator } from "./interfaces";
+import { ObservableLike, ObserverLike, ObservableOperator } from "../../observable";
 import { observe } from "./observable";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 import { using } from "./using";

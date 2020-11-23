@@ -5,7 +5,7 @@ import {
   EnumerableLike,
   EnumeratorLike,
   EnumerableOperator,
-} from "./interfaces";
+} from "../../enumerable";
 
 class RepeatEnumerator<T> implements EnumeratorLike<T> {
   private enumerator: EnumeratorLike<T>;

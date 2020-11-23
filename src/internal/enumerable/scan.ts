@@ -1,5 +1,5 @@
 import { Factory, Reducer } from "../../functions";
-import { EnumeratorLike, EnumerableOperator } from "./interfaces";
+import { EnumeratorLike, EnumerableOperator } from "../../enumerable";
 import { lift } from "./lift";
 
 class ScanEnumerator<T, TAcc> implements EnumeratorLike<TAcc> {

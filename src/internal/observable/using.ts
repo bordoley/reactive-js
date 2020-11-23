@@ -11,7 +11,7 @@ import {
   pipe,
 } from "../../functions";
 import { SchedulerLike } from "../../scheduler";
-import { ObservableLike, ObserverLike } from "./interfaces";
+import { ObservableLike, ObserverLike } from "../../observable";
 import { observe } from "./observable";
 
 class UsingObservable<TResource extends DisposableLike, T>

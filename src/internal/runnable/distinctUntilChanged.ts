@@ -1,6 +1,6 @@
 import { Equality, strictEquality } from "../../functions";
 import { Option, none } from "../../option";
-import { RunnableOperator, SinkLike } from "./interfaces";
+import { RunnableOperator, SinkLike } from "../../runnable";
 import { lift } from "./lift";
 import { AbstractDelegatingSink } from "./sink";
 

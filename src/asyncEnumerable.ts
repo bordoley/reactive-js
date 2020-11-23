@@ -1,4 +1,8 @@
-export { AsyncEnumerableLike } from "./internal/asyncEnumerable/interfaces";
+import { StreamableLike } from "./streamable";
+
+/** @noInheritDoc */
+export interface AsyncEnumerableLike<T> extends StreamableLike<void, T> {}
+
 export {
   ConsumeRequestType,
   ConsumeRequest,

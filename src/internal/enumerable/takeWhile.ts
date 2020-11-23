@@ -1,5 +1,5 @@
 import { Predicate } from "../../functions";
-import { EnumeratorLike, EnumerableOperator } from "./interfaces";
+import { EnumeratorLike, EnumerableOperator } from "../../enumerable";
 import { lift } from "./lift";
 
 class TakeWhileEnumerator<T> implements EnumeratorLike<T> {

@@ -1,6 +1,6 @@
 import { Predicate, TypePredicate } from "../../functions";
 import { none } from "../../option";
-import { EnumeratorLike, EnumerableOperator } from "./interfaces";
+import { EnumeratorLike, EnumerableOperator } from "../../enumerable";
 import { lift } from "./lift";
 
 class KeepTypeEnumerator<TA, TB extends TA> implements EnumeratorLike<TB> {

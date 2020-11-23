@@ -1,6 +1,6 @@
 import { dispose, bindDisposables } from "../../disposable";
 import { pipe, defer } from "../../functions";
-import { ObservableLike, ObservableOperator, ObserverLike } from "./interfaces";
+import { ObservableLike, ObservableOperator, ObserverLike } from "../../observable";
 import { lift } from "./lift";
 import { createAutoDisposingDelegatingObserver } from "./observer";
 import { onNotify } from "./onNotify";
