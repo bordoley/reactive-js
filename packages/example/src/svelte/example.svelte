@@ -13,7 +13,7 @@
     toSchedulerWithPriority,
   } from "@reactive-js/core/scheduler";
   import { writable } from "svelte/store";
-  import { stream } from "@reactive-js/core/experimental/svelte";
+  import { stream } from "@reactive-js/core/svelte";
 
   const priorityScheduler = pipe(
     createHostScheduler({ yieldInterval: 15 }),

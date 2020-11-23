@@ -1,4 +1,4 @@
-import { createRouter, find } from "@reactive-js/core/experimental/router";
+import { createRouter, find } from "@reactive-js/core/router";
 import { fromObservable, FlowMode } from "@reactive-js/core/flowable";
 import {
   pipe,
@@ -151,7 +151,7 @@ const FetchExample = () => {
   const httpRequest = useMemo(
     () =>
       pipe(
-        { uri: "http://localhost:8080/files/packages/example/build/bundle.js" },
+        { uri: "http://localhost:8080/files/packages/example/build/react.js" },
         fetch(response => response.text()),
       ),
     [],

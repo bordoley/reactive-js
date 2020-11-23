@@ -1,0 +1,21 @@
+{
+  "name": "@reactive-js/perf",
+  "version": "0.0.47",
+  "private": true,
+  "dependencies": {
+    "@most/core": "^1.6.1 ",
+    "@most/scheduler": "^1.3.0 ",
+    "@reactive-js/core": "^0.0.47",
+    "@types/benchmark": "^2.1.0",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^14.14.9",
+    "benchmark": "^2.1.4",
+    "rxjs": "^6.6.3",
+    "wonka": "^4.0.15"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "perf": "yarn build && NODE_ENV=production node ./build/cjs/index.js",
+    "perf-debug": "yarn build && NODE_ENV=production node --inspect-brk ./build/cjs/index.js"
+  }
+}

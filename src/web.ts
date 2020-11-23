@@ -1,4 +1,4 @@
-export { fromEvent } from "./internal/web/event";
-export { createEventSource } from "./internal/web/eventSource";
-export { historyStateStore } from "./internal/web/history";
-export { FetchRequest, fetch } from "./internal/web/fetch";
+export { fromEvent } from "./web/event";
+export { createEventSource } from "./web/eventSource";
+export { historyStateStore } from "./web/history";
+export { FetchRequest, fetch } from "./web/fetch";

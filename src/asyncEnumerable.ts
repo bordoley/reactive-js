@@ -1,4 +1,8 @@
-export { AsyncEnumerableLike } from "./internal/asyncEnumerable/interfaces";
+import { StreamableLike } from "./streamable";
+
+/** @noInheritDoc */
+export interface AsyncEnumerableLike<T> extends StreamableLike<void, T> {}
+
 export {
   ConsumeRequestType,
   ConsumeRequest,
@@ -8,8 +12,8 @@ export {
   done,
   consume,
   consumeAsync,
-} from "./internal/asyncEnumerable/consume";
-export { fromArray } from "./internal/asyncEnumerable/fromArray";
-export { fromEnumerable } from "./internal/asyncEnumerable/fromEnumerable";
-export { fromIterable } from "./internal/asyncEnumerable/fromIterable";
-export { generate } from "./internal/asyncEnumerable/generate";
+} from "./asyncEnumerable/consume";
+export { fromArray } from "./asyncEnumerable/fromArray";
+export { fromEnumerable } from "./asyncEnumerable/fromEnumerable";
+export { fromIterable } from "./asyncEnumerable/fromIterable";
+export { generate } from "./asyncEnumerable/generate";
