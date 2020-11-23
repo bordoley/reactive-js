@@ -4,8 +4,8 @@ import { dispose, addTeardown } from './disposable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { createObservable, throttle, onNotify, mergeWith, compute, concatWith, defer, fromPromise, observe } from './observable.mjs';
 import { createStreamable, mapReq, map } from './streamable.mjs';
-import { fromHref, toHref } from './relativeURI.mjs';
 import { toStateStore } from './stateStore.mjs';
+import { fromHref, toHref } from './relativeURI.mjs';
 
 const fromEvent = (target, eventName, selector) => createObservable(dispatcher => {
     const listener = (event) => {

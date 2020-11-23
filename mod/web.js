@@ -8,8 +8,8 @@ var disposable = require('./disposable.js');
 var readonlyArray = require('./readonlyArray.js');
 var observable = require('./observable.js');
 var streamable = require('./streamable.js');
-var relativeURI = require('./relativeURI.js');
 var stateStore = require('./stateStore.js');
+var relativeURI = require('./relativeURI.js');
 
 const fromEvent = (target, eventName, selector) => observable.createObservable(dispatcher => {
     const listener = (event) => {
