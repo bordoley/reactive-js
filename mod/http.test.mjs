@@ -62,7 +62,6 @@ const createHttpRequestTests = test("createHttpRequest", () => {
             ["Vary" /* Vary */]: "Content-Encoding",
         },
     });
-    console.log(request);
     const headers = {};
     writeHttpRequestHeaders(request, (key, value) => {
         headers[key] = value;
@@ -114,7 +113,6 @@ const createHttpResponseTests = test("createHttpRequest", () => {
             ["Vary" /* Vary */]: "Content-Encoding",
         },
     });
-    console.log(response);
     const headers = {};
     writeHttpResponseHeaders(response, (key, value) => {
         headers[key] = value;

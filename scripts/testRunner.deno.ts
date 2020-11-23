@@ -1,7 +1,7 @@
 import { tests as asyncEnumerableTests } from "../mod/asyncEnumerable.test.mjs";
 import { tests as disposableTests } from "../mod/disposable.test.mjs";
 import { tests as enumerableTests } from "../mod/enumerable.test.mjs";
-//import { tests as httpTests } from "../mod/experimental/http.test.mjs";
+import { tests as httpTests } from "../mod/http.test.mjs";
 import { tests as parserCombinatorTests } from "../mod/parserCombinators.test.mjs";
 import { tests as reactiveCacheTests } from "../mod/reactiveCache.test.mjs";
 import { runTests } from "../mod/testing.deno.mjs";
@@ -20,7 +20,7 @@ const tests = [
   disposableTests,
   enumerableTests,
   flowableTests,
-  //httpTests,
+  httpTests,
   //ioTests,
   observableTests,
   parserCombinatorTests,

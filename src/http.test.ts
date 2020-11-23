@@ -64,8 +64,6 @@ const createHttpRequestTests = test("createHttpRequest", () => {
     },
   });
 
-  console.log(request);
-
   const headers: { [key: string]: string } = {};
   writeHttpRequestHeaders(request, (key, value) => {
     headers[key] = value;
@@ -120,8 +118,6 @@ const createHttpResponseTests = test("createHttpRequest", () => {
       [HttpStandardHeader.Vary]: "Content-Encoding",
     },
   });
-
-  console.log(response);
 
   const headers: { [key: string]: string } = {};
   writeHttpResponseHeaders(response, (key, value) => {
