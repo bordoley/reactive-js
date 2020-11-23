@@ -27,3 +27,4 @@ packages/core/README.md
 mod/*.js
 mod/node.*
 mod/react.*
+mod/svelte.*
