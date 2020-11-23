@@ -2,6 +2,8 @@
 import { Function1, SideEffect, Factory, Equality } from './functions';
 import { Option } from './option';
 
+declare const runTests: (testGroups: TestGroup[]) => void;
+
 declare const enum TestGroupType {
     Describe = 1,
     Test = 2,
@@ -42,4 +44,4 @@ declare const mockFn: (retval?: any) => MockFunction;
 declare const expectToHaveBeenCalledTimes: (times: number) => (fn: MockFunction) => void;
 declare const expectPromiseToThrow: (promise: Promise<any>) => Promise<void>;
 
-export { Describe, Test, TestAsync, TestGroup, TestGroupType, describe, expectArrayEquals, expectEquals, expectFalse, expectNone, expectPromiseToThrow, expectSome, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, test, testAsync };
+export { Describe, Test, TestAsync, TestGroup, TestGroupType, describe, expectArrayEquals, expectEquals, expectFalse, expectNone, expectPromiseToThrow, expectSome, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, runTests, test, testAsync };

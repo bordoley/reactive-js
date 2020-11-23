@@ -1,12 +1,60 @@
 import { ignore, raise, strictEquality, arrayEquality } from './functions.mjs';
 import { none, isSome, isNone } from './option.mjs';
+import { isDeno } from './env.mjs';
 
-const describe = (name, ...tests) => ({
+const toJestTest = (testGroup, parents) => {
+    const path = [...parents, testGroup.name];
+    if (testGroup.type === 1 /* Describe */) {
+        describe(testGroup.name, () => {
+            const tests = testGroup.tests;
+            for (const testGroup of tests) {
+                toJestTest(testGroup, path);
+            }
+        });
+    }
+    else {
+        const name = path.join(":");
+        test(testGroup.name, testGroup.f(name));
+    }
+};
+const runTestsWithJest = (testGroups) => {
+    for (const test of testGroups) {
+        toJestTest(test, []);
+    }
+};
+const toDenoTest = (testGroup, parents) => {
+    const path = [...parents, testGroup.name];
+    if (testGroup.type === 1 /* Describe */) {
+        const { tests } = testGroup;
+        for (const test of tests) {
+            toDenoTest(test, path);
+        }
+    }
+    else {
+        const name = path.join(":");
+        Deno.test(name, testGroup.f(name));
+    }
+};
+const runTestsWithDeno = (testGroups) => {
+    for (const test of testGroups) {
+        toDenoTest(test, []);
+    }
+};
+const runTests = (testGroups) => {
+    if (isDeno) {
+        runTestsWithDeno(testGroups);
+    }
+    else {
+        runTestsWithJest(testGroups);
+    }
+};
+
+const describe$1 = (name, ...tests) => ({
     type: 1 /* Describe */,
     name,
     tests,
 });
-const test = (name, f) => ({
+const test$1 = (name, f) => ({
     type: 2 /* Test */,
     name,
     f: (ctx) => () => {
@@ -109,4 +157,4 @@ const expectPromiseToThrow = async (promise) => {
     }
 };
 
-export { describe, expectArrayEquals, expectEquals, expectFalse, expectNone, expectPromiseToThrow, expectSome, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, test, testAsync };
+export { describe$1 as describe, expectArrayEquals, expectEquals, expectFalse, expectNone, expectPromiseToThrow, expectSome, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, runTests, test$1 as test, testAsync };

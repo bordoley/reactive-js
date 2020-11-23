@@ -177,3 +177,5 @@ export const expectPromiseToThrow = async (promise: Promise<any>) => {
     raise("expected function to throw");
   }
 };
+
+export { runTests } from "./testing/testRunner";

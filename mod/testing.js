@@ -4,13 +4,61 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var functions = require('./functions.js');
 var option = require('./option.js');
+var env = require('./env.js');
 
-const describe = (name, ...tests) => ({
+const toJestTest = (testGroup, parents) => {
+    const path = [...parents, testGroup.name];
+    if (testGroup.type === 1 /* Describe */) {
+        describe(testGroup.name, () => {
+            const tests = testGroup.tests;
+            for (const testGroup of tests) {
+                toJestTest(testGroup, path);
+            }
+        });
+    }
+    else {
+        const name = path.join(":");
+        test(testGroup.name, testGroup.f(name));
+    }
+};
+const runTestsWithJest = (testGroups) => {
+    for (const test of testGroups) {
+        toJestTest(test, []);
+    }
+};
+const toDenoTest = (testGroup, parents) => {
+    const path = [...parents, testGroup.name];
+    if (testGroup.type === 1 /* Describe */) {
+        const { tests } = testGroup;
+        for (const test of tests) {
+            toDenoTest(test, path);
+        }
+    }
+    else {
+        const name = path.join(":");
+        Deno.test(name, testGroup.f(name));
+    }
+};
+const runTestsWithDeno = (testGroups) => {
+    for (const test of testGroups) {
+        toDenoTest(test, []);
+    }
+};
+const runTests = (testGroups) => {
+    if (env.isDeno) {
+        runTestsWithDeno(testGroups);
+    }
+    else {
+        runTestsWithJest(testGroups);
+    }
+};
+
+const describe$1 = (name, ...tests) => ({
     type: 1 /* Describe */,
     name,
     tests,
 });
-const test = (name, f) => ({
+const test$1 = (name, f) => ({
     type: 2 /* Test */,
     name,
     f: (ctx) => () => {
@@ -113,7 +161,7 @@ const expectPromiseToThrow = async (promise) => {
     }
 };
 
-exports.describe = describe;
+exports.describe = describe$1;
 exports.expectArrayEquals = expectArrayEquals;
 exports.expectEquals = expectEquals;
 exports.expectFalse = expectFalse;
@@ -125,5 +173,6 @@ exports.expectToThrow = expectToThrow;
 exports.expectToThrowError = expectToThrowError;
 exports.expectTrue = expectTrue;
 exports.mockFn = mockFn;
-exports.test = test;
+exports.runTests = runTests;
+exports.test = test$1;
 exports.testAsync = testAsync;
