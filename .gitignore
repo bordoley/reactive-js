@@ -25,6 +25,7 @@ packages/core/bsconfig.json
 packages/core/README.md
 
 mod/*.js
+mod/http-node.*
 mod/node.*
 mod/react.*
 mod/svelte.*
