@@ -2,7 +2,9 @@
   "name": "reactive-js",
   "private": true,
   "scripts": {
-    "build": "rm -rf ./build ./mod && tsc -p tsconfig.compile.json && rollup -c rollup.config.js",
+    "build": "yarn clean && yarn typecheck && rollup -c rollup.config.js",
+    "clean": "rm -rf ./build ./mod ./docs",
+    "doc": "node ./scripts/docs.mjs",
     "bootstrap": "lerna bootstrap",
     "deno-install": "curl -fsSL https://deno.land/x/install/install.sh | sh",
     "format": "prettier '**' --write",
@@ -11,7 +13,8 @@
     "test": "jest",
     "test-coverage": "jest --coverage",
     "test-debug": "node --inspect-brk ./node_modules/.bin/jest",
-    "test-deno": "deno test -r ./scripts/testRunner.deno.ts"
+    "test-deno": "deno test -r ./scripts/testRunner.deno.ts",
+    "typecheck": "tsc -p tsconfig.compile.json"
   },
   "devDependencies": {
     "@most/core": "^1.6.1 ",
@@ -41,7 +44,7 @@
     "scheduler": "^0.20.1",
     "svelte": "^3.29.7",
     "ts-jest": "^26.4.4",
-    "typedoc": "0.20.0-beta.8",
+    "typedoc": "^0.19.2",
     "typedoc-plugin-markdown": "^3.0.11",
     "typedoc-plugin-no-inherit": "^1.2.0",
     "typescript": "^4.1.2",

@@ -3521,7 +3521,7 @@ has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
-highlight.js@^10.3.1:
+highlight.js@^10.2.0:
   version "10.4.0"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-10.4.0.tgz#ef3ce475e5dfa7a48484260b49ea242ddab823a0"
 
@@ -4760,7 +4760,7 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-marked@^1.2.2:
+marked@^1.1.1:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/marked/-/marked-1.2.5.tgz#a44b31f2a0b8b5bfd610f00d55d1952d1ac1dfdb"
 
@@ -6888,9 +6888,9 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typedoc-default-themes@0.12.0-beta.6:
-  version "0.12.0-beta.6"
-  resolved "https://registry.yarnpkg.com/typedoc-default-themes/-/typedoc-default-themes-0.12.0-beta.6.tgz#b8a0b49e00f85b0a906f3f33b13d83cf877b44de"
+typedoc-default-themes@^0.11.4:
+  version "0.11.4"
+  resolved "https://registry.yarnpkg.com/typedoc-default-themes/-/typedoc-default-themes-0.11.4.tgz#1bc55b7c8d1132844616ff6f570e1e2cd0eb7343"
 
 typedoc-plugin-markdown@^3.0.11:
   version "3.0.11"
@@ -6902,21 +6902,21 @@ typedoc-plugin-no-inherit@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/typedoc-plugin-no-inherit/-/typedoc-plugin-no-inherit-1.2.0.tgz#7f73809c04cb29c03afe5eea356534968cb717a9"
 
-typedoc@0.20.0-beta.8:
-  version "0.20.0-beta.8"
-  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.20.0-beta.8.tgz#6fc92f37eff43901fd9f5ec9fd6690671363d8db"
+typedoc@^0.19.2:
+  version "0.19.2"
+  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.19.2.tgz#842a63a581f4920f76b0346bb80eb2a49afc2c28"
   dependencies:
     fs-extra "^9.0.1"
     handlebars "^4.7.6"
-    highlight.js "^10.3.1"
+    highlight.js "^10.2.0"
     lodash "^4.17.20"
     lunr "^2.3.9"
-    marked "^1.2.2"
+    marked "^1.1.1"
     minimatch "^3.0.0"
     progress "^2.0.3"
     semver "^7.3.2"
     shelljs "^0.8.4"
-    typedoc-default-themes "0.12.0-beta.6"
+    typedoc-default-themes "^0.11.4"
 
 typescript@^4.1.2:
   version "4.1.2"

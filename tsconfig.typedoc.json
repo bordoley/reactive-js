@@ -1,9 +1,8 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "emitDeclarationOnly": true,
-    "declaration": true,
+    "noEmit": true,
     "outDir": "./build"
   },
-  "include": ["./src/**/*"]
+  "include": ["./mod/*.d.ts"]
 }
