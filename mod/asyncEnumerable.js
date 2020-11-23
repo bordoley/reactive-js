@@ -4,15 +4,8 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var functions = require('./functions.js');
 var option = require('./option.js');
-require('./disposable.js');
-require('./readonlyArray.js');
 var enumerable = require('./enumerable.js');
-require('./runnable.js');
-require('./queues.js');
-require('./scheduler.js');
 var observable = require('./observable.js');
-require('./env.js');
-require('./dispatcher.js');
 var streamable = require('./streamable.js');
 
 const notify = (acc) => ({

@@ -1,14 +1,6 @@
 /// <reference types="node" />
 import { Reducer, Factory } from './functions';
-import './option';
-import './disposable';
-import './dispatcher';
-import './scheduler';
 import { MulticastObservableLike } from './observable';
-import './enumerable';
-import './runnable';
-import './streamable';
-import './flowable';
 import { IOSinkLike } from './io';
 
 /**

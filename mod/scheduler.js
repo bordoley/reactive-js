@@ -5,9 +5,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var functions = require('./functions.js');
 var option = require('./option.js');
 var disposable = require('./disposable.js');
-require('./readonlyArray.js');
-require('./enumerable.js');
-require('./runnable.js');
 var queues = require('./queues.js');
 
 const notifyListeners = (listeners, state) => {

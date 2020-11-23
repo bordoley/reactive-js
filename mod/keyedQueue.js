@@ -3,10 +3,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var functions = require('./functions.js');
-require('./option.js');
-require('./readonlyArray.js');
 var enumerable = require('./enumerable.js');
-require('./runnable.js');
 
 function* iterateKeyedQueueValues(queue) {
     for (const values of queue.map.values()) {

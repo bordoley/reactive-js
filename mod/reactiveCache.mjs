@@ -1,14 +1,8 @@
 import { pipe } from './functions.mjs';
 import { isSome, isNone } from './option.mjs';
 import { dispose, addTeardown, AbstractDisposable, addDisposable } from './disposable.mjs';
-import './readonlyArray.mjs';
-import './enumerable.mjs';
-import './runnable.mjs';
-import './queues.mjs';
 import { yield$, schedule } from './scheduler.mjs';
 import { switchAll, onSubscribe } from './observable.mjs';
-import './env.mjs';
-import './dispatcher.mjs';
 import { createStreamable, stream } from './streamable.mjs';
 
 const markAsGarbage = (reactiveCache, key, stream) => {

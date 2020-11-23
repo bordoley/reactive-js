@@ -1,6 +1,5 @@
 /// <reference types="node" />
 import { SideEffect1 } from './functions';
-import './option';
 import { DisposableLike } from './disposable';
 
 /** @noInheritDoc */

@@ -1,6 +1,4 @@
 import { defer } from './functions.mjs';
-import './option.mjs';
-import './readonlyArray.mjs';
 import { concat, concatMap, distinctUntilChanged, empty, endWith, fromArray, fromValue, generate, keep, map, mapTo, repeat, scan, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable, toIterable, fromIterable, zipWith } from './enumerable.mjs';
 import { toArray } from './runnable.mjs';
 import { describe, test, expectArrayEquals } from './testing.mjs';

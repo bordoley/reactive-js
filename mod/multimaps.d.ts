@@ -1,8 +1,4 @@
 /// <reference types="node" />
-import './functions';
-import './option';
-import './enumerable';
-import './runnable';
 import { KeyedCollection } from './collections';
 
 interface SetMultimapLike<K, V> extends KeyedCollection<K, V> {

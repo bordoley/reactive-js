@@ -1,14 +1,7 @@
 import { pipe, defer } from './functions.mjs';
 import { none, isSome } from './option.mjs';
 import { dispose } from './disposable.mjs';
-import './readonlyArray.mjs';
-import './enumerable.mjs';
-import './runnable.mjs';
-import './queues.mjs';
-import './scheduler.mjs';
 import { subscribe as subscribe$1 } from './observable.mjs';
-import './env.mjs';
-import './dispatcher.mjs';
 import { onNotify, stream as stream$1 } from './streamable.mjs';
 import { onMount, onDestroy } from 'svelte';
 import { writable } from 'svelte/store';

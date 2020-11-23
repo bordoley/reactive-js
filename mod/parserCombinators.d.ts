@@ -2,7 +2,6 @@
 import { Predicate, Function1, Factory } from './functions';
 import { Option } from './option';
 import { EnumeratorLike } from './enumerable';
-import './runnable';
 
 declare type CharCode = number;
 interface CharStreamLike extends EnumeratorLike<CharCode> {

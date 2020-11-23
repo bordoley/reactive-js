@@ -1,5 +1,4 @@
 import { defer, increment, sum, returns, pipe, alwaysTrue, incrementBy } from './functions.mjs';
-import './option.mjs';
 import { toArray } from './runnable.mjs';
 import { describe, test, expectArrayEquals } from './testing.mjs';
 

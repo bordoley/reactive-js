@@ -1,12 +1,5 @@
 /// <reference types="node" />
 import { Updater, Factory, Equality, Function1 } from './functions';
-import './option';
-import './disposable';
-import './dispatcher';
-import './scheduler';
-import './observable';
-import './enumerable';
-import './runnable';
 import { StreamableLike } from './streamable';
 
 /** @noInheritDoc */

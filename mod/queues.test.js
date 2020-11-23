@@ -3,10 +3,6 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var functions = require('./functions.js');
-require('./option.js');
-require('./readonlyArray.js');
-require('./enumerable.js');
-require('./runnable.js');
 var queues = require('./queues.js');
 var testing = require('./testing.js');
 

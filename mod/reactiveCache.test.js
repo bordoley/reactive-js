@@ -3,17 +3,10 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var functions = require('./functions.js');
-require('./option.js');
 var disposable = require('./disposable.js');
-require('./readonlyArray.js');
-require('./enumerable.js');
 var runnable = require('./runnable.js');
-require('./queues.js');
 var scheduler = require('./scheduler.js');
 var observable = require('./observable.js');
-require('./env.js');
-require('./dispatcher.js');
-require('./streamable.js');
 var testing = require('./testing.js');
 var reactiveCache = require('./reactiveCache.js');
 

@@ -1,8 +1,4 @@
 import { pipe } from './functions.mjs';
-import './option.mjs';
-import './readonlyArray.mjs';
-import './enumerable.mjs';
-import './runnable.mjs';
 import { createPriorityQueue } from './queues.mjs';
 import { describe, test, expectArrayEquals } from './testing.mjs';
 

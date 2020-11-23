@@ -3,19 +3,10 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var functions = require('./functions.js');
-require('./option.js');
 var disposable = require('./disposable.js');
-require('./readonlyArray.js');
-require('./enumerable.js');
-require('./runnable.js');
-require('./queues.js');
 var scheduler = require('./scheduler.js');
 var observable = require('./observable.js');
-require('./env.js');
-require('./dispatcher.js');
 var testing = require('./testing.js');
-require('./keyedQueue.js');
-require('./multimaps.js');
 var resourceManager = require('./resourceManager.js');
 
 const tests = testing.describe("resource manager", testing.test("integration test", () => {

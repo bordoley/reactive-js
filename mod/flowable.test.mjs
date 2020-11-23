@@ -1,13 +1,7 @@
 import { pipe, increment, returns, defer } from './functions.mjs';
-import './option.mjs';
 import { dispose } from './disposable.mjs';
-import './readonlyArray.mjs';
-import './enumerable.mjs';
-import './runnable.mjs';
-import './queues.mjs';
 import { createVirtualTimeScheduler, schedule } from './scheduler.mjs';
 import { onNotify, subscribe, generate } from './observable.mjs';
-import './env.mjs';
 import { dispatchTo } from './dispatcher.mjs';
 import { stream } from './streamable.mjs';
 import { describe, test, mockFn, expectToHaveBeenCalledTimes, expectTrue, expectEquals } from './testing.mjs';

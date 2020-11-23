@@ -1,5 +1,4 @@
 /// <reference types="node" />
-import './functions';
 import { Option } from './option';
 import { ReadonlyObjectMap } from './readonlyObjectMap';
 

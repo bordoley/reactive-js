@@ -1,9 +1,6 @@
 import { pipe, defer } from './functions.mjs';
 import { none, isSome, isNone } from './option.mjs';
 import { AbstractDisposable, addTeardown, dispose, AbstractSerialDisposable, disposed, addDisposable, createDisposable } from './disposable.mjs';
-import './readonlyArray.mjs';
-import './enumerable.mjs';
-import './runnable.mjs';
 import { createPriorityQueue } from './queues.mjs';
 
 const notifyListeners = (listeners, state) => {

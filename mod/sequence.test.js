@@ -2,9 +2,6 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-require('./functions.js');
-require('./option.js');
-require('./runnable.js');
 var testing = require('./testing.js');
 var monad_test = require('./monad.test.js');
 var sequence = require('./sequence.js');

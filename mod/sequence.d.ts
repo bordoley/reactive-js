@@ -1,6 +1,5 @@
 /// <reference types="node" />
 import { Factory, Function1, Equality, Predicate, Updater, Reducer } from './functions';
-import './option';
 import { RunnableLike } from './runnable';
 
 declare const enum SequenceType {

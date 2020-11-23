@@ -1,14 +1,5 @@
 /// <reference types="node" />
 import { Function1, SideEffect2, Updater } from './functions';
-import './option';
-import './disposable';
-import './dispatcher';
-import './scheduler';
-import './observable';
-import './enumerable';
-import './runnable';
-import './streamable';
-import './flowable';
 import { ReadonlyObjectMap } from './readonlyObjectMap';
 import { IOSourceLike, IOSourceOperator } from './io';
 

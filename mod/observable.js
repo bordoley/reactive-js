@@ -8,7 +8,6 @@ var disposable = require('./disposable.js');
 var readonlyArray = require('./readonlyArray.js');
 var enumerable = require('./enumerable.js');
 var runnable = require('./runnable.js');
-require('./queues.js');
 var scheduler = require('./scheduler.js');
 var env = require('./env.js');
 var dispatcher = require('./dispatcher.js');

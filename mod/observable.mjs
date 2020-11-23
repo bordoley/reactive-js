@@ -4,7 +4,6 @@ import { addOnDisposedWithError, AbstractDisposable, addDisposable, bindDisposab
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
 import { enumerate, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
-import './queues.mjs';
 import { schedule, yield$ as yield$$1, YieldError, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { dispatchTo } from './dispatcher.mjs';

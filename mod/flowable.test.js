@@ -3,15 +3,9 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var functions = require('./functions.js');
-require('./option.js');
 var disposable = require('./disposable.js');
-require('./readonlyArray.js');
-require('./enumerable.js');
-require('./runnable.js');
-require('./queues.js');
 var scheduler = require('./scheduler.js');
 var observable = require('./observable.js');
-require('./env.js');
 var dispatcher = require('./dispatcher.js');
 var streamable = require('./streamable.js');
 var testing = require('./testing.js');

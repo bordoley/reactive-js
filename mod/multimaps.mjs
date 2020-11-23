@@ -1,8 +1,5 @@
 import { defer, pipe } from './functions.mjs';
-import './option.mjs';
-import './readonlyArray.mjs';
 import { fromIterator, enumerate } from './enumerable.mjs';
-import './runnable.mjs';
 
 function* iterateSetMultimapValues(multimap) {
     for (const values of multimap.map.values()) {

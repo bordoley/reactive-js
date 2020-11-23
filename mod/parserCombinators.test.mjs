@@ -1,6 +1,5 @@
 import { pipe, returns, defer } from './functions.mjs';
 import { none } from './option.mjs';
-import './env.mjs';
 import { describe, test, expectArrayEquals, expectEquals, expectToThrow } from './testing.mjs';
 import { string, many, parseWithOrThrow, concat, manySatisfy, pForwardSlash, char, map, mapTo, optional, orCompute, pEof, or, sepBy, pColon, createCharStream, throwParseError } from './parserCombinators.mjs';
 

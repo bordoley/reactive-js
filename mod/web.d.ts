@@ -1,13 +1,6 @@
 /// <reference types="node" />
 import { Function1 } from './functions';
-import './option';
-import './disposable';
-import './dispatcher';
-import './scheduler';
 import { ObservableLike } from './observable';
-import './enumerable';
-import './runnable';
-import './streamable';
 import { RelativeURI } from './relativeURI';
 import { StateStoreLike } from './stateStore';
 

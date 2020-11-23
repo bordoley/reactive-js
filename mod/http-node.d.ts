@@ -1,14 +1,7 @@
 /// <reference types="node" />
 import { Function1, SideEffect2 } from './functions';
-import './option';
-import './disposable';
-import './dispatcher';
 import { SchedulerLike } from './scheduler';
 import { ObservableLike } from './observable';
-import './enumerable';
-import './runnable';
-import './streamable';
-import './flowable';
 import { IncomingMessage, ServerResponse } from 'http';
 import { Http2ServerRequest, Http2ServerResponse } from 'http2';
 import { ReadonlyObjectMap } from './readonlyObjectMap';

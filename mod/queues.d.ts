@@ -1,8 +1,6 @@
 /// <reference types="node" />
 import { Comparator } from './functions';
 import { Option } from './option';
-import './enumerable';
-import './runnable';
 import { Collection } from './collections';
 
 declare const createPriorityQueue: <T>(comparator: Comparator<T>) => QueueLike<T>;

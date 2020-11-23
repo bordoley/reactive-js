@@ -1,8 +1,5 @@
 /// <reference types="node" />
-import './functions';
 import { Option } from './option';
-import './enumerable';
-import './runnable';
 import { KeyedCollection } from './collections';
 
 interface KeyedQueueLike<K, V> extends KeyedCollection<K, V> {

@@ -1,8 +1,5 @@
 /// <reference types="node" />
-import './functions';
-import './option';
 import { EnumerableLike } from './enumerable';
-import './runnable';
 
 interface KeyedEnumerableLike<K, V> extends EnumerableLike<[K, V]> {
     readonly keys: EnumerableLike<K>;

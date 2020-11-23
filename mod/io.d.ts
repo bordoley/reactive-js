@@ -1,12 +1,6 @@
 /// <reference types="node" />
 import { Function1 } from './functions';
-import './option';
-import './disposable';
-import './dispatcher';
-import './scheduler';
 import { ObservableLike } from './observable';
-import './enumerable';
-import './runnable';
 import { StreamableLike } from './streamable';
 import { FlowableLike, FlowMode } from './flowable';
 

@@ -11,6 +11,7 @@ const types = modules.map(m => `./build/${m}.d.ts`);
 
 const output = {
   dir: "./mod",
+  hoistTransitiveImports: false,
 };
 
 const typescriptConfig = {
@@ -18,7 +19,7 @@ const typescriptConfig = {
 };
 
 export default [
-  {
+  { 
     treeshake: false,
     input,
     output: {

@@ -5,13 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var functions = require('./functions.js');
 var option = require('./option.js');
 var disposable = require('./disposable.js');
-require('./readonlyArray.js');
-require('./enumerable.js');
-require('./runnable.js');
-require('./queues.js');
-require('./scheduler.js');
 var observable = require('./observable.js');
-require('./env.js');
 var dispatcher = require('./dispatcher.js');
 
 class StreamImpl extends disposable.AbstractDisposable {

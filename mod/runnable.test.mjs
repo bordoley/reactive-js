@@ -1,5 +1,4 @@
 import { defer, increment, returns, alwaysFalse, alwaysTrue, pipe } from './functions.mjs';
-import './option.mjs';
 import { concat, concatMap, distinctUntilChanged, empty, endWith, fromArray, fromValue, generate, keep, map, mapTo, repeat, scan, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable, contains, everySatisfy, compute, first, forEach, noneSatisfy } from './runnable.mjs';
 import { describe, test, expectFalse, expectTrue, expectEquals, expectNone, mockFn, expectToHaveBeenCalledTimes } from './testing.mjs';
 import { createMonadTests } from './monad.test.mjs';

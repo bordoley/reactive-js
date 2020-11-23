@@ -1,12 +1,8 @@
 /// <reference types="node" />
 import { Function1, SideEffect1 } from './functions';
 import { Option } from './option';
-import './disposable';
-import './dispatcher';
 import { SchedulerLike } from './scheduler';
 import { ObservableLike } from './observable';
-import './enumerable';
-import './runnable';
 import { StreamableLike } from './streamable';
 import { Readable } from 'svelte/store';
 

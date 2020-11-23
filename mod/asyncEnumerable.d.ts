@@ -1,12 +1,7 @@
 /// <reference types="node" />
 import { Function2, Factory, Function1, Updater } from './functions';
-import './option';
-import './disposable';
-import './dispatcher';
-import './scheduler';
 import { ObservableLike } from './observable';
 import { EnumerableLike } from './enumerable';
-import './runnable';
 import { StreamableLike } from './streamable';
 
 declare const enum ConsumeRequestType {

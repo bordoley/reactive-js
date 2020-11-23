@@ -1,6 +1,5 @@
 /// <reference types="node" />
 import { Function1, Factory, Equality, Updater, TypePredicate, Predicate, Reducer } from './functions';
-import './option';
 import { RunnableLike } from './runnable';
 
 /**

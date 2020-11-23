@@ -1,12 +1,8 @@
 /// <reference types="node" />
-import './functions';
 import { Option } from './option';
 import { DisposableLike } from './disposable';
-import './dispatcher';
 import { SchedulerLike } from './scheduler';
 import { ObservableLike } from './observable';
-import './enumerable';
-import './runnable';
 
 /** @noInheritDoc */
 interface ReactiveCacheLike<T> extends DisposableLike {

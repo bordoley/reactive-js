@@ -1,12 +1,7 @@
 /// <reference types="node" />
 import { Reducer, Factory, Equality, Function1, SideEffect1, Function2 } from './functions';
-import './option';
-import './disposable';
-import './dispatcher';
 import { SchedulerLike } from './scheduler';
 import { ObservableLike, StreamLike } from './observable';
-import './enumerable';
-import './runnable';
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function

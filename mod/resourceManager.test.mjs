@@ -1,17 +1,8 @@
 import { ignore, pipe, defer } from './functions.mjs';
-import './option.mjs';
 import { createDisposableValue, disposed, dispose } from './disposable.mjs';
-import './readonlyArray.mjs';
-import './enumerable.mjs';
-import './runnable.mjs';
-import './queues.mjs';
 import { createVirtualTimeScheduler } from './scheduler.mjs';
 import { onNotify, subscribe, fromArray } from './observable.mjs';
-import './env.mjs';
-import './dispatcher.mjs';
 import { describe, test } from './testing.mjs';
-import './keyedQueue.mjs';
-import './multimaps.mjs';
 import { createResourceManager } from './resourceManager.mjs';
 
 const tests = describe("resource manager", test("integration test", () => {

@@ -3,15 +3,10 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var functions = require('./functions.js');
-require('./option.js');
 var disposable = require('./disposable.js');
-require('./readonlyArray.js');
-require('./enumerable.js');
 var runnable = require('./runnable.js');
-require('./queues.js');
 var scheduler$1 = require('./scheduler.js');
 var observable = require('./observable.js');
-require('./env.js');
 var dispatcher = require('./dispatcher.js');
 var testing = require('./testing.js');
 var monad_test = require('./monad.test.js');

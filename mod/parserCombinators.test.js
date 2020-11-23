@@ -4,7 +4,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var functions = require('./functions.js');
 var option = require('./option.js');
-require('./env.js');
 var testing = require('./testing.js');
 var parserCombinators = require('./parserCombinators.js');
 

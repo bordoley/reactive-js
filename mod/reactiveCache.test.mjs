@@ -1,15 +1,8 @@
 import { pipe, defer, returns } from './functions.mjs';
-import './option.mjs';
 import { disposed, dispose } from './disposable.mjs';
-import './readonlyArray.mjs';
-import './enumerable.mjs';
 import { forEach } from './runnable.mjs';
-import './queues.mjs';
 import { createVirtualTimeScheduler } from './scheduler.mjs';
 import { fromValue, subscribe, fromArray, toRunnable, never, onNotify } from './observable.mjs';
-import './env.mjs';
-import './dispatcher.mjs';
-import './streamable.mjs';
 import { describe, test, expectNone, expectSome, expectTrue, expectEquals } from './testing.mjs';
 import { createReactiveCache, getOrSet } from './reactiveCache.mjs';
 
