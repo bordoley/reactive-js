@@ -59,7 +59,7 @@
     "testRegex": "testRunner.jest.ts",
     "globals": {
       "ts-jest": {
-        "tsConfig": "./tsconfig.compile.json"
+        "tsconfig": "./tsconfig.compile.json"
       }
     }
   },
