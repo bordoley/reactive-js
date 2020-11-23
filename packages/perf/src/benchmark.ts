@@ -1,4 +1,4 @@
-import { Factory, Function1, SideEffect, SideEffect1 } from "./functions";
+import { Factory, Function1, SideEffect, SideEffect1 } from "@reactive-js/core/functions";
 
 export type BenchmarkTest<TData> = {
   name: string;

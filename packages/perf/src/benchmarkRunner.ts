@@ -1,5 +1,5 @@
 import * as Benchmark from "benchmark";
-import { BenchmarkGroup } from "@reactive-js/core/benchmark";
+import { BenchmarkGroup } from "./benchmark";
 
 const padl = (n: number, s: string) => {
   while (s.length < n) {

@@ -1,4 +1,4 @@
-import { benchmarkTest, benchmarkGroup } from "@reactive-js/core/benchmark";
+import { benchmarkTest, benchmarkGroup } from "./benchmark";
 import {
   defer,
   isEven,
