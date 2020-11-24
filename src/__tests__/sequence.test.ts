@@ -1,4 +1,3 @@
-import { createMonadTests } from "./monad.test";
 import {
   concat,
   concatMap,
@@ -21,6 +20,7 @@ import {
   toRunnable,
 } from "../sequence";
 import { describe } from "../testing";
+import { createMonadTests } from "./monad.test";
 
 const Sequence = {
   concat,

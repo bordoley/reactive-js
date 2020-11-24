@@ -21,6 +21,11 @@ export const isSome = <T>(option: Option<T>): option is T => option !== none;
 export const isNone = <T>(option: Option<T>): option is undefined =>
   option === none;
 
+export const map = <TA, TB>(
+  f: Function1<TA, TB>,
+): Function1<Option<TA>, Option<TB>> => value =>
+  isSome(value) ? f(value) : none;
+
 /**
  * Returns a function that takes an `Option<T>`, returning it's value
  * if not `none`, otherwise returns the result of invoking the function `compute`.

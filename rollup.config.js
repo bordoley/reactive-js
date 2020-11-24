@@ -19,7 +19,7 @@ const typescriptConfig = {
 };
 
 export default [
-  { 
+  {
     treeshake: false,
     input,
     output: {

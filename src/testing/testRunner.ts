@@ -46,9 +46,9 @@ const runTestsWithDeno = (testGroups: TestGroup[]) => {
 };
 
 export const runTests = (testGroups: TestGroup[]) => {
-  if(isDeno) {
+  if (isDeno) {
     runTestsWithDeno(testGroups);
   } else {
     runTestsWithJest(testGroups);
   }
-}
+};

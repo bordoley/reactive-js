@@ -1,7 +1,7 @@
 import { ServerResponse, IncomingMessage } from "http";
 import { Http2ServerRequest, Http2ServerResponse } from "http2";
 import { DisposableValueLike, addDisposable } from "../disposable";
-import { defer, pipe, returns, Function1, SideEffect2 } from "../functions";
+import { pipe, returns, Function1, SideEffect2 } from "../functions";
 import {
   HttpHeaders,
   HttpMethod,
@@ -10,7 +10,7 @@ import {
   writeHttpResponseHeaders,
   createHttpRequest,
 } from "../http";
-import { IOSourceLike, IOSinkLike } from "../io";
+import { IOSourceLike } from "../io";
 import {
   createReadableIOSource,
   createWritableIOSink,
@@ -18,30 +18,38 @@ import {
 } from "../node";
 import {
   ObservableLike,
-  await_,
   catchError,
-  onNotify,
+  defer,
+  empty,
   subscribe,
-  compute,
+  async,
 } from "../observable";
+import { map as mapOption } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { sink } from "../streamable";
 
-const writeResponseMessage = (serverResponse: ServerResponse) => (
-  response: HttpResponse<IOSourceLike<Uint8Array>>,
+const writeToServerResponse = (
+  serverResponse: DisposableValueLike<ServerResponse>,
 ) => {
-  serverResponse.statusCode = response.statusCode;
+  const responseBody = createWritableIOSink(returns(serverResponse));
 
-  writeHttpResponseHeaders(response, (header, value) =>
-    serverResponse.setHeader(header, value),
-  );
+  return (response: HttpResponse<IOSourceLike<Uint8Array>>) =>
+    defer(() => observer => {
+      serverResponse.value.statusCode = response.statusCode;
 
-  serverResponse.flushHeaders();
+      writeHttpResponseHeaders(response, (header, value) =>
+        serverResponse.value.setHeader(header, value),
+      );
+
+      serverResponse.value.flushHeaders();
+
+      const sinkSubscription = pipe(
+        sink(response.body, responseBody),
+        subscribe(observer),
+      );
+      observer.add(sinkSubscription);
+    });
 };
-
-const writeResponseBody = (responseBody: IOSinkLike<Uint8Array>) => ({
-  body,
-}: HttpResponse<IOSourceLike<Uint8Array>>) => sink(body, responseBody);
 
 const defaultOnError = (e: unknown) => {
   console.log(e);
@@ -76,27 +84,28 @@ export const createHttpRequestListener = (
       httpVersionMinor,
     } = request.value;
     const isTransportSecure = (request.value.socket as any).encrypted ?? false;
-
     const requestBody = createReadableIOSource(returns(request));
-    const responseBody = createWritableIOSink(returns(response));
+
+    const requestOptions = {
+      method: method as HttpMethod,
+      uri,
+      headers: headers as HttpHeaders,
+      httpVersionMajor,
+      httpVersionMinor,
+      isTransportSecure,
+      body: requestBody,
+    };
+
+    const writeResponse = pipe(response, writeToServerResponse, mapOption);
 
     return pipe(
-      defer(
-        {
-          method: method as HttpMethod,
-          uri,
-          headers: headers as HttpHeaders,
-          httpVersionMajor,
-          httpVersionMinor,
-          isTransportSecure,
-          body: requestBody,
-        },
-        createHttpRequest,
-      ),
-      compute(),
-      await_(handler),
-      onNotify(writeResponseMessage(response.value)),
-      await_(writeResponseBody(responseBody)),
+      async(use => {
+        const request = use.memo(createHttpRequest, requestOptions);
+        const handlerResponseObs = use.memo(handler, request);
+        const response = use.observe(handlerResponseObs);
+        const writeResponseObs = use.memo(writeResponse, response) ?? empty();
+        use.observe(writeResponseObs);
+      }),
       catchError(onError),
     );
   };
