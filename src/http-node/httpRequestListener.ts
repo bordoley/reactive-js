@@ -102,9 +102,9 @@ export const createHttpRequestListener = (
       async(use => {
         const request = use.memo(createHttpRequest, requestOptions);
         const handlerResponseObs = use.memo(handler, request);
-        const response = use.observe(handlerResponseObs);
+        const response = use.await(handlerResponseObs);
         const writeResponseObs = use.memo(writeResponse, response) ?? empty();
-        use.observe(writeResponseObs);
+        use.await(writeResponseObs);
       }),
       catchError(onError),
     );
