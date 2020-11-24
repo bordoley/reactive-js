@@ -131,10 +131,10 @@ export const tests = describe(
         takeFirst({ count }),
       );
     const computedObservable = async(use => {
-      const incrementBy = use.memo(obsFactoryIncrement, 10);
-      const result1 = use.observe(incrementBy) ?? 0;
-      const incrementBy2 = use.memo(obsFactoryIncrementBy2, 10);
-      const result2 = use.observe(incrementBy2) ?? 0;
+      const incrementBy = use.memo(obsFactoryIncrement, 5);
+      const result1 = use.await(incrementBy) ?? 0;
+      const incrementBy2 = use.memo(obsFactoryIncrementBy2, result1);
+      const result2 = use.await(incrementBy2) ?? 0;
 
       return result1 + result2;
     });

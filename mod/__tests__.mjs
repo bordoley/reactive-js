@@ -694,9 +694,9 @@ const tests$6 = describe("observable", test("asynchronous", () => {
     const computedObservable = async(use => {
         var _a, _b;
         const incrementBy = use.memo(obsFactoryIncrement, 10);
-        const result1 = (_a = use.observe(incrementBy)) !== null && _a !== void 0 ? _a : 0;
+        const result1 = (_a = use.await(incrementBy)) !== null && _a !== void 0 ? _a : 0;
         const incrementBy2 = use.memo(obsFactoryIncrementBy2, 10);
-        const result2 = (_b = use.observe(incrementBy2)) !== null && _b !== void 0 ? _b : 0;
+        const result2 = (_b = use.await(incrementBy2)) !== null && _b !== void 0 ? _b : 0;
         return result1 + result2;
     });
     const result = pipe(computedObservable, toRunnable(), toArray());

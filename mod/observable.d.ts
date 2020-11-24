@@ -7,13 +7,13 @@ import { SchedulerLike, VirtualTimeSchedulerLike } from './scheduler';
 import { EnumerableLike } from './enumerable';
 import { RunnableLike } from './runnable';
 
-interface AsyncContext {
+interface AsyncContextLike {
+    await<T>(observable: ObservableLike<T>): Option<T>;
     memo<T>(f: Factory<T>): T;
     memo<TA, T>(f: Function1<TA, T>, a: TA): T;
     memo<TA, TB, T>(f: Function2<TA, TB, T>, a: TA, b: TB): T;
-    observe<T>(observable: ObservableLike<T>): Option<T>;
 }
-declare const async: <T>(computation: Function1<AsyncContext, T>) => ObservableLike<T>;
+declare const async: <T>(computation: Function1<AsyncContextLike, T>) => ObservableLike<T>;
 
 declare function combineLatest<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<[TA, TB]>;
 declare function combineLatest<TA, TB, TC, T>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): ObservableLike<[TA, TB, TC]>;

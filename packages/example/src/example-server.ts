@@ -178,7 +178,7 @@ const processRequest = (req: HttpRequest<IOSourceLike<Uint8Array>>) => {
 
   return async(use => {
     const responseObs = use.memo(routeRequest, req);
-    const response = use.observe(responseObs);
+    const response = use.await(responseObs);
     return encodeResponse(response);
   });
 };
