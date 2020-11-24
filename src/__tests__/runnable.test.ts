@@ -6,7 +6,6 @@ import {
   increment,
   defer,
 } from "../functions";
-import { createMonadTests } from "./monad.test";
 import {
   compute,
   contains,
@@ -44,6 +43,7 @@ import {
   expectTrue,
   expectFalse,
 } from "../testing";
+import { createMonadTests } from "./monad.test";
 
 const Runnable = {
   concat,

@@ -1,7 +1,6 @@
 import { dispatchTo } from "../dispatcher";
 import { dispose } from "../disposable";
 import {
-  compose,
   pipe,
   returns,
   increment,
@@ -13,9 +12,8 @@ import {
   ignore,
   raise,
 } from "../functions";
-import { createMonadTests } from "./monad.test";
 import {
-  await_,
+  async,
   buffer,
   combineLatestWith,
   compute,
@@ -92,6 +90,7 @@ import {
   expectSome,
   expectNone,
 } from "../testing";
+import { createMonadTests } from "./monad.test";
 
 const scheduler = createHostScheduler();
 
@@ -120,18 +119,28 @@ const Observable = {
 
 export const tests = describe(
   "observable",
-  test(
-    "await_",
-    defer(
-      [0, 1, 2, 3, 4],
-      fromArray(),
-      await_(compose(fromValue(), endWith(1))),
-      toRunnable(),
-      last,
-      expectEquals(0),
-    ),
-  ),
+  test("asynchronous", () => {
+    const obsFactoryIncrement = (count: number) =>
+      pipe(
+        generate(increment, () => 0, { delay: 2 }),
+        takeFirst({ count }),
+      );
+    const obsFactoryIncrementBy2 = (count: number) =>
+      pipe(
+        generate(incrementBy(2), () => 0, { delay: 2 }),
+        takeFirst({ count }),
+      );
+    const computedObservable = async(use => {
+      const incrementBy = use.memo(obsFactoryIncrement, 10);
+      const result1 = use.observe(incrementBy) ?? 0;
+      const incrementBy2 = use.memo(obsFactoryIncrementBy2, 10);
+      const result2 = use.observe(incrementBy2) ?? 0;
 
+      return result1 + result2;
+    });
+    const result = pipe(computedObservable, toRunnable(), toArray());
+    console.log(result);
+  }),
   describe(
     "buffer",
     test(

@@ -35,9 +35,10 @@ import {
   ObservableLike,
   catchError,
   throws,
-  await_,
+  async,
+  keepType,
 } from "@reactive-js/core/observable";
-import { isSome } from "@reactive-js/core/option";
+import { isSome, map as mapOption } from "@reactive-js/core/option";
 import { ReadonlyObjectMap } from "@reactive-js/core/readonlyObjectMap";
 import {
   createHostScheduler,
@@ -156,59 +157,58 @@ const router = createRouter({
   "/throws": Throws,
 });
 
-const Router = (
-  request: HttpRequest<IOSourceLike<Uint8Array>>,
-): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> => {
-  const [handler, params] = find(router, request.uri.pathname) ?? [
-    NotFound,
-    {},
-  ];
-  return handler(request, params);
+const routeRequest = compose(
+  disallowProtocolAndHostForwarding(),
+  decodeHttpRequestContent(createContentEncodingDecompressTransforms()),
+  request => {
+    const [handler, params] = find(router, request.uri.pathname) ?? [
+      NotFound,
+      {},
+    ];
+    return handler(request, params);
+  },
+);
+
+const processRequest = (req: HttpRequest<IOSourceLike<Uint8Array>>) => {
+  const encodeResponse = pipe(
+    req,
+    encodeHttpResponseContent(createContentEncodingCompressTransforms(), db),
+    mapOption,
+  );
+
+  return async(use => {
+    const responseObs = use.memo(routeRequest, req);
+    const response = use.observe(responseObs);
+    return encodeResponse(response);
+  });
 };
 
+const errorHandler = compose(
+  createHttpErrorResponse,
+  resp =>
+    createHttpResponse({
+      ...resp,
+      contentInfo: {
+        contentType: "text/plain",
+      },
+      body:
+        process.env.NODE_ENV === "production"
+          ? ""
+          : resp.body instanceof Error && isSome(resp.body.stack)
+          ? resp.body.stack
+          : String(resp.body),
+    }),
+  encodeHttpResponseWithUtf8,
+  toIOSourceHttpResponse,
+  fromValue(),
+);
+
 const listener = createHttpRequestListener(
-  req =>
-    pipe(
-      req,
-      disallowProtocolAndHostForwarding(),
-      decodeHttpRequestContent(createContentEncodingDecompressTransforms()),
-      fromValue(),
-      await_(Router),
-      pipe(
-        req,
-        encodeHttpResponseContent(
-          createContentEncodingCompressTransforms(),
-          db,
-        ),
-        map,
-      ),
-      catchError(
-        compose(
-          createHttpErrorResponse,
-          resp =>
-            createHttpResponse({
-              ...resp,
-              contentInfo: {
-                contentType: "text/plain",
-              },
-              body:
-                process.env.NODE_ENV === "production"
-                  ? ""
-                  : resp.body instanceof Error && isSome(resp.body.stack)
-                  ? resp.body.stack
-                  : String(resp.body),
-            }),
-          encodeHttpResponseWithUtf8,
-          toIOSourceHttpResponse,
-          fromValue(),
-        ),
-      ),
-    ),
+  compose(processRequest, keepType(isSome), catchError(errorHandler)),
   scheduler,
 );
 
 createHttp1Server({}, listener).listen(8080);
-
 
 // For instructions on generating local certs see:
 // https://letsencrypt.org/docs/certificates-for-localhost/

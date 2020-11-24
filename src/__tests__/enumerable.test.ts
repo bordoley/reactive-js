@@ -23,9 +23,9 @@ import {
   toRunnable,
 } from "../enumerable";
 import { defer } from "../functions";
-import { createMonadTests } from "./monad.test";
 import { toArray } from "../runnable";
 import { test, describe, expectArrayEquals } from "../testing";
+import { createMonadTests } from "./monad.test";
 
 const Enumerable = {
   concat,

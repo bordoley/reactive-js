@@ -1,12 +1,12 @@
-import { pipe, returns, defer, increment, raise, sum, alwaysTrue, incrementBy, compose, arrayEquality, ignore, identity, alwaysFalse } from './functions.mjs';
+import { pipe, returns, defer, increment, raise, sum, alwaysTrue, incrementBy, arrayEquality, ignore, identity, alwaysFalse } from './functions.mjs';
 import { none } from './option.mjs';
 import { addTeardown, createDisposable, addDisposable, dispose, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
-import { map as map$1 } from './readonlyArray.mjs';
 import { concat, concatMap, distinctUntilChanged, empty, endWith, fromArray as fromArray$1, fromValue as fromValue$1, generate as generate$1, keep, map, mapTo, repeat, scan, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable as toRunnable$1, toIterable, fromIterable as fromIterable$1, zipWith } from './enumerable.mjs';
 import { last, toArray, fromArray as fromArray$4, forEach, concat as concat$3, concatMap as concatMap$2, distinctUntilChanged as distinctUntilChanged$2, empty as empty$4, endWith as endWith$2, fromValue as fromValue$4, generate as generate$3, keep as keep$2, map as map$5, mapTo as mapTo$3, repeat as repeat$2, scan as scan$2, skipFirst as skipFirst$2, startWith as startWith$2, takeFirst as takeFirst$2, takeLast as takeLast$2, takeWhile as takeWhile$2, toRunnable as toRunnable$2, contains, everySatisfy, compute as compute$1, first, noneSatisfy } from './runnable.mjs';
+import { map as map$1 } from './readonlyArray.mjs';
 import { createPriorityQueue } from './queues.mjs';
 import { createVirtualTimeScheduler, schedule, createHostScheduler } from './scheduler.mjs';
-import { toRunnable, fromValue, onNotify, subscribe, generate as generate$2, concat as concat$1, concatMap as concatMap$1, distinctUntilChanged as distinctUntilChanged$1, empty as empty$3, endWith as endWith$1, fromArray as fromArray$3, keep as keep$1, map as map$3, mapTo as mapTo$1, repeat as repeat$1, scan as scan$1, skipFirst as skipFirst$1, startWith as startWith$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, await_, buffer, throws, catchError, concatWith, combineLatestWith, createObservable, createSubject, exhaustMap, fromPromise, toPromise, genMap, ignoreElements, merge, mergeWith, mergeMap, never, onSubscribe, retry, scanAsync, share, zip, switchAll, switchMap, throttle, throwIfEmpty, compute, timeout, withLatestFrom, fromIterable as fromIterable$2, zipWith as zipWith$1, zipLatestWith, zipWithLatestFrom } from './observable.mjs';
+import { toRunnable, fromValue, onNotify, subscribe, generate as generate$2, concat as concat$1, concatMap as concatMap$1, distinctUntilChanged as distinctUntilChanged$1, empty as empty$3, endWith as endWith$1, fromArray as fromArray$3, keep as keep$1, map as map$3, mapTo as mapTo$1, repeat as repeat$1, scan as scan$1, skipFirst as skipFirst$1, startWith as startWith$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, async, buffer, throws, catchError, concatWith, combineLatestWith, createObservable, createSubject, exhaustMap, fromPromise, toPromise, genMap, ignoreElements, merge, mergeWith, mergeMap, never, onSubscribe, retry, scanAsync, share, zip, switchAll, switchMap, throttle, throwIfEmpty, compute, timeout, withLatestFrom, fromIterable as fromIterable$2, zipWith as zipWith$1, zipLatestWith, zipWithLatestFrom } from './observable.mjs';
 import { dispatchTo } from './dispatcher.mjs';
 import { stream, sink, identity as identity$1, lift, createActionReducer, empty as empty$6, map as map$7, mapReq, onNotify as onNotify$1, scan as scan$4, mapTo as mapTo$5 } from './streamable.mjs';
 import { fromIterable, consume, notify, done, consumeAsync, fromArray, generate } from './asyncEnumerable.mjs';
@@ -688,7 +688,20 @@ const Observable = {
     takeWhile: takeWhile$1,
     toRunnable,
 };
-const tests$6 = describe("observable", test("await_", defer([0, 1, 2, 3, 4], fromArray$3(), await_(compose(fromValue(), endWith$1(1))), toRunnable(), last, expectEquals(0))), describe("buffer", test("with duration and maxBufferSize", defer(concat$1(pipe([1, 2, 3, 4], fromArray$3()), pipe([1, 2, 3], fromArray$3({ delay: 1 })), pipe(4, fromValue({ delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toRunnable(), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", defer(defer([1, 2, 3, 4], fromArray$3(), buffer({ duration: _ => throws()(raise) }), toRunnable({
+const tests$6 = describe("observable", test("asynchronous", () => {
+    const obsFactoryIncrement = (count) => pipe(generate$2(increment, () => 0, { delay: 2 }), takeFirst$1({ count }));
+    const obsFactoryIncrementBy2 = (count) => pipe(generate$2(incrementBy(2), () => 0, { delay: 2 }), takeFirst$1({ count }));
+    const computedObservable = async(use => {
+        var _a, _b;
+        const incrementBy = use.memo(obsFactoryIncrement, 10);
+        const result1 = (_a = use.observe(incrementBy)) !== null && _a !== void 0 ? _a : 0;
+        const incrementBy2 = use.memo(obsFactoryIncrementBy2, 10);
+        const result2 = (_b = use.observe(incrementBy2)) !== null && _b !== void 0 ? _b : 0;
+        return result1 + result2;
+    });
+    const result = pipe(computedObservable, toRunnable(), toArray());
+    console.log(result);
+}), describe("buffer", test("with duration and maxBufferSize", defer(concat$1(pipe([1, 2, 3, 4], fromArray$3()), pipe([1, 2, 3], fromArray$3({ delay: 1 })), pipe(4, fromValue({ delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toRunnable(), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", defer(defer([1, 2, 3, 4], fromArray$3(), buffer({ duration: _ => throws()(raise) }), toRunnable({
     schedulerFactory: defer({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
 }), toArray()), expectToThrow))), describe("catchError", test("source completes successfully", defer(pipe(1, fromValue()), catchError(_ => fromValue()(2)), toRunnable(), toArray(), expectArrayEquals([1]))), test("source throws, error caught and ignored", () => {
     const error = new Error();

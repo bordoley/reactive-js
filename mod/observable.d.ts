@@ -1,11 +1,19 @@
 /// <reference types="node" />
-import { Function1, Factory, SideEffect1, Updater, Function2, Function3, Function4, Function5, Equality, TypePredicate, Predicate, Reducer } from './functions';
+import { Function1, Factory, Function2, SideEffect1, Updater, Function3, Function4, Function5, Equality, TypePredicate, Predicate, Reducer } from './functions';
 import { Option } from './option';
 import { DisposableLike, DisposableOrTeardown } from './disposable';
 import { DispatcherLike } from './dispatcher';
 import { SchedulerLike, VirtualTimeSchedulerLike } from './scheduler';
 import { EnumerableLike } from './enumerable';
 import { RunnableLike } from './runnable';
+
+interface AsyncContext {
+    memo<T>(f: Factory<T>): T;
+    memo<TA, T>(f: Function1<TA, T>, a: TA): T;
+    memo<TA, TB, T>(f: Function2<TA, TB, T>, a: TA, b: TB): T;
+    observe<T>(observable: ObservableLike<T>): Option<T>;
+}
+declare const async: <T>(computation: Function1<AsyncContext, T>) => ObservableLike<T>;
 
 declare function combineLatest<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<[TA, TB]>;
 declare function combineLatest<TA, TB, TC, T>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): ObservableLike<[TA, TB, TC]>;
@@ -187,8 +195,6 @@ declare const defer: <T>(factory: Factory<SideEffect1<ObserverLike<T>>>, options
     readonly delay?: number;
 }) => ObservableLike<T>;
 declare const observe: <T>(observer: ObserverLike<T>) => SideEffect1<ObservableLike<T>>;
-
-declare const await_: <TA, TB>(mapper: Function1<TA, ObservableLike<TB>>) => Function1<ObservableLike<TA>, ObservableLike<TB>>;
 
 /**
  * Returns an `ObservableLike` which buffers items produced by the source until either the
@@ -628,4 +634,4 @@ interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableL
 interface SubjectLike<T> extends StreamLike<T, T> {
 }
 
-export { AsyncReducer, MulticastObservableLike, ObservableLike, ObservableOperator, ObserverLike, ObserverOperator, StreamLike, SubjectLike, ThrottleMode, await_, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };
+export { AsyncReducer, MulticastObservableLike, ObservableLike, ObservableOperator, ObserverLike, ObserverOperator, StreamLike, SubjectLike, ThrottleMode, async, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };

@@ -15,7 +15,6 @@ import { tests as sequenceTests } from "./__tests__/sequence.test";
 import { tests as stateStoreTests } from "./__tests__/stateStore.test";
 import { tests as streamableTests } from "./__tests__/streamable.test";
 
-
 export const tests = [
   asyncEnumerableTests,
   disposableTests,
