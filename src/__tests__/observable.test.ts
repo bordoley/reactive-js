@@ -119,7 +119,7 @@ const Observable = {
 
 export const tests = describe(
   "observable",
-  test("asynchronous", () => {
+  test("async", () => {
     const obsFactoryIncrement = (count: number) =>
       pipe(
         generate(increment, () => 0, { delay: 2 }),
@@ -138,8 +138,7 @@ export const tests = describe(
 
       return result1 + result2;
     });
-    const result = pipe(computedObservable, toRunnable(), toArray());
-    console.log(result);
+    pipe(computedObservable, takeLast(), toRunnable(), last, expectEquals(15)) ;
   }),
   describe(
     "buffer",
