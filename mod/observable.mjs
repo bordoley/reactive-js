@@ -250,9 +250,10 @@ class AsyncContextImpl {
     }
     memo(f, ...args) {
         const effect = validateState(this, 1 /* Memo */);
-        const fEqual = f === effect.f;
-        const argsEqual = arrayStrictEquality(args, effect.args);
-        if (fEqual && argsEqual) {
+        if (f !== effect.f) {
+            throw new Error();
+        }
+        if (arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
         else {
