@@ -29,7 +29,7 @@ import {
 } from "@reactive-js/core/io";
 import { readFileIOSource, bindNodeCallback } from "@reactive-js/core/node";
 import {
-  async, 
+  async,
   __await,
   __memo,
   map,

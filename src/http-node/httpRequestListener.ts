@@ -17,7 +17,7 @@ import {
   createDisposableNodeStream,
 } from "../node";
 import {
-  async, 
+  async,
   __await,
   __memo,
   ObservableLike,

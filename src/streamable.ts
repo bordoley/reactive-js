@@ -21,6 +21,7 @@ export {
   lift,
   mapReq,
   stream,
+  __stream,
 } from "./streamable/streamable";
 export { identity } from "./streamable/identity";
 export {

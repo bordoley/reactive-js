@@ -1,14 +1,14 @@
 import { pipe, returns, defer, increment, raise, sum, alwaysTrue, incrementBy, arrayEquality, ignore, identity, alwaysFalse } from './functions.mjs';
-import { none } from './option.mjs';
+import { none, isSome } from './option.mjs';
 import { addTeardown, createDisposable, addDisposable, dispose, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
 import { concat, concatMap, distinctUntilChanged, empty, endWith, fromArray as fromArray$1, fromValue as fromValue$1, generate as generate$1, keep, map, mapTo, repeat, scan, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable as toRunnable$1, toIterable, fromIterable as fromIterable$1, zipWith } from './enumerable.mjs';
 import { last, toArray, fromArray as fromArray$4, forEach, concat as concat$3, concatMap as concatMap$2, distinctUntilChanged as distinctUntilChanged$2, empty as empty$4, endWith as endWith$2, fromValue as fromValue$4, generate as generate$3, keep as keep$2, map as map$5, mapTo as mapTo$3, repeat as repeat$2, scan as scan$2, skipFirst as skipFirst$2, startWith as startWith$2, takeFirst as takeFirst$2, takeLast as takeLast$2, takeWhile as takeWhile$2, toRunnable as toRunnable$2, contains, everySatisfy, compute as compute$1, first, noneSatisfy } from './runnable.mjs';
 import { map as map$1 } from './readonlyArray.mjs';
 import { createPriorityQueue } from './queues.mjs';
 import { createVirtualTimeScheduler, schedule, createHostScheduler } from './scheduler.mjs';
-import { toRunnable, fromValue, onNotify, subscribe, generate as generate$2, concat as concat$1, concatMap as concatMap$1, distinctUntilChanged as distinctUntilChanged$1, empty as empty$3, endWith as endWith$1, fromArray as fromArray$3, keep as keep$1, map as map$3, mapTo as mapTo$1, repeat as repeat$1, scan as scan$1, skipFirst as skipFirst$1, startWith as startWith$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, async, __memo, __await, buffer, throws, catchError, concatWith, combineLatestWith, createObservable, createSubject, exhaustMap, fromPromise, toPromise, genMap, ignoreElements, merge, mergeWith, mergeMap, never, onSubscribe, retry, scanAsync, share, zip, switchAll, switchMap, throttle, throwIfEmpty, compute, timeout, withLatestFrom, fromIterable as fromIterable$2, zipWith as zipWith$1, zipLatestWith, zipWithLatestFrom } from './observable.mjs';
+import { toRunnable, fromValue, onNotify, subscribe, generate as generate$2, concat as concat$1, concatMap as concatMap$1, distinctUntilChanged as distinctUntilChanged$1, empty as empty$3, endWith as endWith$1, fromArray as fromArray$3, keep as keep$1, map as map$3, mapTo as mapTo$1, repeat as repeat$1, scan as scan$1, skipFirst as skipFirst$1, startWith as startWith$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, async, __memo, __await, buffer, throws, catchError, concatWith, combineLatestWith, createObservable, createSubject, exhaustMap, fromPromise, toPromise, genMap, ignoreElements, merge, mergeWith, mergeMap, never, onSubscribe, retry, scanAsync, share, zip, switchAll, switchMap, throttle, throwIfEmpty, compute, timeout, withLatestFrom, fromIterable as fromIterable$2, zipWith as zipWith$1, zipLatestWith, zipWithLatestFrom, __observe } from './observable.mjs';
 import { dispatchTo } from './dispatcher.mjs';
-import { stream, sink, identity as identity$1, lift, createActionReducer, empty as empty$6, map as map$7, mapReq, onNotify as onNotify$1, scan as scan$4, mapTo as mapTo$5 } from './streamable.mjs';
+import { stream, sink, identity as identity$1, lift, __stream, createActionReducer, empty as empty$6, map as map$7, mapReq, onNotify as onNotify$1, scan as scan$4, mapTo as mapTo$5 } from './streamable.mjs';
 import { fromIterable, consume, notify, done, consumeAsync, fromArray, generate } from './asyncEnumerable.mjs';
 import { describe, test, expectEquals, expectArrayEquals, expectNone, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
 import { empty as empty$1, fromObservable, fromValue as fromValue$2 } from './flowable.mjs';
@@ -1062,7 +1062,22 @@ const tests$c = describe("stateStore", test("toStateStore", () => {
     expectTrue(subscription.isDisposed);
 }));
 
-const tests$d = describe("streamable", test("createActionReducer", () => {
+const tests$d = describe("streamable", test("__stream", () => {
+    const streamable = identity$1();
+    const createLooper = (stream) => pipe([0, 1, 2, 3], fromArray$3({ delay: 10 }), onNotify(x => {
+        if (isSome(stream)) {
+            stream.dispatch(x);
+        }
+    }));
+    const obs = async(() => {
+        debugger;
+        const stream = __stream(streamable);
+        const looper = __memo(createLooper, stream);
+        __await(looper);
+        return __observe(stream !== null && stream !== void 0 ? stream : empty$3());
+    });
+    pipe(obs, toRunnable(), toArray(), console.log);
+}), test("createActionReducer", () => {
     const scheduler = createVirtualTimeScheduler();
     const actionReducerStream = pipe(createActionReducer(sum, returns(0)), stream(scheduler));
     actionReducerStream.dispatch(1);

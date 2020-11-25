@@ -1,6 +1,6 @@
 import { ignore, raise, pipe, arrayEquality, returns, compose, callWith, defer as defer$1, strictEquality } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
-import { AbstractDisposable, addDisposable, bindDisposables, addOnDisposedWithError, dispose, addOnDisposedWithoutErrorTeardown, disposed, addTeardown, toErrorHandler, addDisposableDisposeParentOnChildError, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
+import { AbstractDisposable, addDisposable, bindDisposables, addOnDisposedWithError, dispose, addOnDisposedWithoutErrorTeardown, addTeardown, disposed, toErrorHandler, addDisposableDisposeParentOnChildError, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 import { enumerate, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
@@ -110,24 +110,125 @@ const defer = (factory, options = {}) => {
 };
 const observe = (observer) => observable => observable.observe(observer);
 
+/**
+ * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
+ * An optional `startIndex` in the array maybe specified,
+ *
+ * @param options Config object that specifies an optional `delay` between emitted items and
+ * an optional `startIndex` into the array.
+ */
+const fromArray = (options = {}) => values => {
+    var _a, _b, _c;
+    const delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0);
+    const valuesLength = values.length;
+    const startIndex = Math.min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, valuesLength);
+    const endIndex = Math.max(Math.min((_c = options.endIndex) !== null && _c !== void 0 ? _c : values.length, valuesLength), 0);
+    const factory = () => {
+        let index = startIndex;
+        return (observer) => {
+            while (index < endIndex) {
+                const value = values[index];
+                index++;
+                // Inline yielding logic for performance reasons
+                observer.notify(value);
+                if (index < endIndex && (delay > 0 || observer.shouldYield)) {
+                    throw new YieldError(delay);
+                }
+            }
+            pipe(observer, dispose());
+        };
+    };
+    return delay > 0 ? defer(factory, { delay }) : deferSynchronous(factory);
+};
+
+const defaultEmpty = fromArray()([]);
+/**
+ * Return an `ObservableLike` that emits no items and disposes the subscription after a specified delay.
+ */
+const empty = (options = {}) => {
+    const { delay = 0 } = options;
+    return delay > 0 ? fromArray({ delay })([]) : defaultEmpty;
+};
+
+class LiftedObservable {
+    constructor(source, operators, isSynchronous) {
+        this.source = source;
+        this.operators = operators;
+        this.isSynchronous = isSynchronous;
+    }
+    observe(observer) {
+        const liftedSubscrber = pipe(observer, ...this.operators);
+        pipe(this.source, observe(liftedSubscrber));
+    }
+}
+/**
+ * Creates a new `ObservableLike` which applies the provided the operator function to
+ * observer when the source is subscribed to.
+ *
+ * @param operator The operator function to apply.
+ */
+const lift = (operator) => source => {
+    const sourceSource = source instanceof LiftedObservable ? source.source : source;
+    const allFunctions = source instanceof LiftedObservable
+        ? [operator, ...source.operators]
+        : [operator];
+    const isSynchronous = source.isSynchronous && operator.isSynchronous;
+    return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
+};
+
+class TakeLastObserver extends AbstractDelegatingObserver {
+    constructor(delegate, maxCount) {
+        super(delegate);
+        this.maxCount = maxCount;
+        this.last = [];
+        const last = this.last;
+        addOnDisposedWithError(this, delegate);
+        addOnDisposedWithoutErrorTeardown(this, () => {
+            pipe(last, fromArray(), observe(delegate));
+        });
+        addTeardown(delegate, () => {
+            last.length = 0;
+        });
+    }
+    notify(next) {
+        assertObserverState(this);
+        const last = this.last;
+        last.push(next);
+        if (last.length > this.maxCount) {
+            last.shift();
+        }
+    }
+}
+/**
+ * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
+ *
+ * @param count The maximum number of values to emit.
+ */
+const takeLast = (options = {}) => {
+    const { count = 1 } = options;
+    const operator = (observer) => new TakeLastObserver(observer, count);
+    operator.isSynchronous = false;
+    return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());
+};
+
 const arrayStrictEquality = arrayEquality();
 class InitialAsyncContextImpl {
     constructor(effects) {
         this.effects = effects;
     }
-    await(observable) {
+    memo(f, ...args) {
+        const value = f(...args);
+        this.effects.push({ type: 1 /* Memo */, f, args, value });
+        return value;
+    }
+    observe(observable) {
         this.effects.push({
-            type: 1 /* Await */,
+            type: 2 /* Observe */,
             observable,
             subscription: none,
             value: none,
         });
         return none;
-    }
-    memo(f, ...args) {
-        const value = f(...args);
-        this.effects.push({ type: 2 /* Memo */, f, args, value });
-        return value;
     }
 }
 const validateState = (ctx, type) => {
@@ -147,21 +248,8 @@ class AsyncContextImpl {
         this.effects = effects;
         this.index = 0;
     }
-    await(observable) {
-        const effect = validateState(this, 1 /* Await */);
-        if (observable === effect.observable) {
-            return effect.value;
-        }
-        else {
-            const oldSubscription = effect.subscription;
-            effect.subscription = none;
-            effect.observable = observable;
-            pipe(oldSubscription, dispose());
-            return none;
-        }
-    }
     memo(f, ...args) {
-        const effect = validateState(this, 2 /* Memo */);
+        const effect = validateState(this, 1 /* Memo */);
         const fEqual = f === effect.f;
         const argsEqual = arrayStrictEquality(args, effect.args);
         if (fEqual && argsEqual) {
@@ -173,6 +261,19 @@ class AsyncContextImpl {
             effect.args = args;
             effect.value = value;
             return value;
+        }
+    }
+    observe(observable) {
+        const effect = validateState(this, 2 /* Observe */);
+        if (observable === effect.observable) {
+            return effect.value;
+        }
+        else {
+            const oldSubscription = effect.subscription;
+            effect.subscription = none;
+            effect.observable = observable;
+            pipe(oldSubscription, dispose());
+            return none;
         }
     }
 }
@@ -198,7 +299,7 @@ const hasOutstandingEffects = (effects) => {
     const effectsLength = effects.length;
     for (let i = 0; i < effectsLength; i++) {
         const effect = effects[i];
-        if (effect.type === 1 /* Await */) {
+        if (effect.type === 2 /* Observe */) {
             const { subscription } = effect;
             const effectIsOutstanding = isNone(subscription) || !subscription.isDisposed;
             if (effectIsOutstanding) {
@@ -215,7 +316,8 @@ const async = (computation) => {
         let initialized = false;
         let scheduledComputationSubscription = disposed;
         const isDone = () => {
-            return !hasOutstandingEffects(effects) && scheduledComputationSubscription.isDisposed;
+            return (!hasOutstandingEffects(effects) &&
+                scheduledComputationSubscription.isDisposed);
         };
         const scheduleComputation = (observer) => {
             if (scheduledComputationSubscription.isDisposed) {
@@ -244,7 +346,7 @@ const async = (computation) => {
                 const effectsLength = effects.length;
                 for (let i = 0; i < effectsLength; i++) {
                     const effect = effects[i];
-                    if (effect.type === 1 /* Await */ &&
+                    if (effect.type === 2 /* Observe */ &&
                         isNone(effect.subscription)) {
                         const innerObserver = new AsynchronousObserver(observer, scheduleComputation, isDone, effect);
                         const { observable } = effect;
@@ -268,9 +370,14 @@ function __memo(f, ...args) {
     const ctx = assertCurrentContext();
     return ctx.memo(f, ...args);
 }
-const __await = (observable) => {
+const __observe = (observable) => {
     const ctx = assertCurrentContext();
-    return ctx.await(observable);
+    return ctx.observe(observable);
+};
+const createAwaitedObservable = (observable) => pipe(observable, takeLast());
+const __await = (observable) => {
+    const awaitedObservable = __memo(createAwaitedObservable, observable);
+    return __observe(awaitedObservable);
 };
 
 class LatestObserver extends AbstractDelegatingObserver {
@@ -339,37 +446,6 @@ function combineLatest(...observables) {
 const combineLatestWith = (snd) => fst => combineLatest(fst, snd);
 
 /**
- * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
- * An optional `startIndex` in the array maybe specified,
- *
- * @param options Config object that specifies an optional `delay` between emitted items and
- * an optional `startIndex` into the array.
- */
-const fromArray = (options = {}) => values => {
-    var _a, _b, _c;
-    const delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0);
-    const valuesLength = values.length;
-    const startIndex = Math.min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, valuesLength);
-    const endIndex = Math.max(Math.min((_c = options.endIndex) !== null && _c !== void 0 ? _c : values.length, valuesLength), 0);
-    const factory = () => {
-        let index = startIndex;
-        return (observer) => {
-            while (index < endIndex) {
-                const value = values[index];
-                index++;
-                // Inline yielding logic for performance reasons
-                observer.notify(value);
-                if (index < endIndex && (delay > 0 || observer.shouldYield)) {
-                    throw new YieldError(delay);
-                }
-            }
-            pipe(observer, dispose());
-        };
-    };
-    return delay > 0 ? defer(factory, { delay }) : deferSynchronous(factory);
-};
-
-/**
  *  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the observer.
  *
  * @param value The value to emit.
@@ -378,32 +454,6 @@ const fromArray = (options = {}) => values => {
 const fromValue = (options = {}) => {
     const call = fromArray(options);
     return v => call([v]);
-};
-
-class LiftedObservable {
-    constructor(source, operators, isSynchronous) {
-        this.source = source;
-        this.operators = operators;
-        this.isSynchronous = isSynchronous;
-    }
-    observe(observer) {
-        const liftedSubscrber = pipe(observer, ...this.operators);
-        pipe(this.source, observe(liftedSubscrber));
-    }
-}
-/**
- * Creates a new `ObservableLike` which applies the provided the operator function to
- * observer when the source is subscribed to.
- *
- * @param operator The operator function to apply.
- */
-const lift = (operator) => source => {
-    const sourceSource = source instanceof LiftedObservable ? source.source : source;
-    const allFunctions = source instanceof LiftedObservable
-        ? [operator, ...source.operators]
-        : [operator];
-    const isSynchronous = source.isSynchronous && operator.isSynchronous;
-    return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
 };
 
 class MapObserver extends AbstractAutoDisposingDelegatingObserver {
@@ -581,15 +631,6 @@ class SubjectImpl extends AbstractDisposable {
 const createSubject = (options = {}) => {
     const { replay = 0 } = options;
     return new SubjectImpl(replay);
-};
-
-const defaultEmpty = fromArray()([]);
-/**
- * Return an `ObservableLike` that emits no items and disposes the subscription after a specified delay.
- */
-const empty = (options = {}) => {
-    const { delay = 0 } = options;
-    return delay > 0 ? fromArray({ delay })([]) : defaultEmpty;
 };
 
 const fromDisposable = (disposable) => createObservable(dispatcher => {
@@ -1425,41 +1466,6 @@ const subscribeOn = (scheduler) => observable => createObservable(dispatcher => 
     bindDisposables(subscription, dispatcher);
 });
 
-class TakeLastObserver extends AbstractDelegatingObserver {
-    constructor(delegate, maxCount) {
-        super(delegate);
-        this.maxCount = maxCount;
-        this.last = [];
-        const last = this.last;
-        addOnDisposedWithError(this, delegate);
-        addOnDisposedWithoutErrorTeardown(this, () => {
-            pipe(last, fromArray(), observe(delegate));
-        });
-        addTeardown(delegate, () => {
-            last.length = 0;
-        });
-    }
-    notify(next) {
-        assertObserverState(this);
-        const last = this.last;
-        last.push(next);
-        if (last.length > this.maxCount) {
-            last.shift();
-        }
-    }
-}
-/**
- * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
- *
- * @param count The maximum number of values to emit.
- */
-const takeLast = (options = {}) => {
-    const { count = 1 } = options;
-    const operator = (observer) => new TakeLastObserver(observer, count);
-    operator.isSynchronous = false;
-    return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());
-};
-
 const takeUntil = (notifier) => {
     const operator = (observer) => {
         const takeUntilObserver = createAutoDisposingDelegatingObserver(observer);
@@ -1889,4 +1895,4 @@ const toPromise = (scheduler) => observable => new Promise((resolve, reject) => 
     });
 });
 
-export { __await, __memo, async, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };
+export { __await, __memo, __observe, async, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };

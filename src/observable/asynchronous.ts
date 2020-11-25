@@ -17,38 +17,22 @@ import {
   pipe,
   SideEffect1,
 } from "../functions";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observer";
-import {
-  observe,
-  defer,
-} from "./observable";
-import {
-  ObservableLike,
-  ObserverLike,
-} from "../observable";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer";
+import { observe, defer } from "./observable";
+import { ObservableLike, ObserverLike } from "../observable";
 import { Option, none, isNone } from "../option";
 import { schedule } from "../scheduler";
+import { takeLast } from "./takeLast";
 
 interface AsyncContextLike {
-  await<T>(observable: ObservableLike<T>): Option<T>;
   memo<T>(f: (...args: any[]) => T, ...args: any[]): T;
+  observe<T>(observable: ObservableLike<T>): Option<T>;
 }
 
 const enum AsyncEffectType {
-  Await = 1,
-  Memo = 2,
-  Stream = 3,
+  Memo = 1,
+  Observe = 2,
 }
-
-type AwaitAsyncEffect = {
-  type: AsyncEffectType.Await;
-  observable: ObservableLike<unknown>;
-  subscription: Option<DisposableLike>;
-  value: Option<unknown>;
-};
 
 type MemoAsyncEffect = {
   type: AsyncEffectType.Memo;
@@ -56,28 +40,34 @@ type MemoAsyncEffect = {
   args: any[];
   value: unknown;
 };
+type ObserveAsyncEffect = {
+  type: AsyncEffectType.Observe;
+  observable: ObservableLike<unknown>;
+  subscription: Option<DisposableLike>;
+  value: Option<unknown>;
+};
 
-type AsyncEffect = AwaitAsyncEffect | MemoAsyncEffect;
+type AsyncEffect = MemoAsyncEffect | ObserveAsyncEffect;
 
 const arrayStrictEquality = arrayEquality();
 
 class InitialAsyncContextImpl implements AsyncContextLike {
   constructor(private readonly effects: AsyncEffect[]) {}
 
-  await<T>(observable: ObservableLike<T>): Option<T> {
+  memo<T>(f: (...args: any[]) => T, ...args: any[]): T {
+    const value = f(...args);
+    this.effects.push({ type: AsyncEffectType.Memo, f, args, value });
+    return value;
+  }
+
+  observe<T>(observable: ObservableLike<T>): Option<T> {
     this.effects.push({
-      type: AsyncEffectType.Await,
+      type: AsyncEffectType.Observe,
       observable,
       subscription: none,
       value: none,
     });
     return none;
-  }
-
-  memo<T>(f: (...args: any[]) => T, ...args: any[]): T {
-    const value = f(...args);
-    this.effects.push({ type: AsyncEffectType.Memo, f, args, value });
-    return value;
   }
 }
 
@@ -102,24 +92,6 @@ class AsyncContextImpl implements AsyncContextLike {
 
   constructor(readonly effects: readonly AsyncEffect[]) {}
 
-  await<T>(observable: ObservableLike<T>): Option<T> {
-    const effect = validateState(
-      this,
-      AsyncEffectType.Await,
-    ) as AwaitAsyncEffect;
-
-    if (observable === effect.observable) {
-      return effect.value as Option<T>;
-    } else {
-      const oldSubscription = effect.subscription;
-      effect.subscription = none;
-      effect.observable = observable;
-
-      pipe(oldSubscription, dispose());
-      return none;
-    }
-  }
-
   memo<T>(f: (...args: any[]) => T, ...args: any[]): T {
     const effect = validateState(this, AsyncEffectType.Memo) as MemoAsyncEffect;
 
@@ -136,6 +108,24 @@ class AsyncContextImpl implements AsyncContextLike {
       return value;
     }
   }
+
+  observe<T>(observable: ObservableLike<T>): Option<T> {
+    const effect = validateState(
+      this,
+      AsyncEffectType.Observe,
+    ) as ObserveAsyncEffect;
+
+    if (observable === effect.observable) {
+      return effect.value as Option<T>;
+    } else {
+      const oldSubscription = effect.subscription;
+      effect.subscription = none;
+      effect.observable = observable;
+
+      pipe(oldSubscription, dispose());
+      return none;
+    }
+  }
 }
 
 class AsynchronousObserver<T> extends AbstractDelegatingObserver<unknown, T> {
@@ -143,7 +133,7 @@ class AsynchronousObserver<T> extends AbstractDelegatingObserver<unknown, T> {
     delegate: ObserverLike<T>,
     private readonly scheduleComputation: SideEffect1<ObserverLike<T>>,
     isDone: Factory<boolean>,
-    private readonly effect: AwaitAsyncEffect,
+    private readonly effect: ObserveAsyncEffect,
   ) {
     super(delegate);
     addOnDisposedWithError(this, delegate);
@@ -167,7 +157,7 @@ const hasOutstandingEffects = (effects: readonly AsyncEffect[]) => {
   for (let i = 0; i < effectsLength; i++) {
     const effect = effects[i];
 
-    if (effect.type === AsyncEffectType.Await) {
+    if (effect.type === AsyncEffectType.Observe) {
       const { subscription } = effect;
       const effectIsOutstanding =
         isNone(subscription) || !subscription.isDisposed;
@@ -190,7 +180,10 @@ export const async = <T>(computation: Factory<T>): ObservableLike<T> => {
     let scheduledComputationSubscription = disposed;
 
     const isDone = () => {
-      return !hasOutstandingEffects(effects) && scheduledComputationSubscription.isDisposed
+      return (
+        !hasOutstandingEffects(effects) &&
+        scheduledComputationSubscription.isDisposed
+      );
     };
 
     const scheduleComputation = (observer: ObserverLike<T>) => {
@@ -229,7 +222,7 @@ export const async = <T>(computation: Factory<T>): ObservableLike<T> => {
           const effect = effects[i];
 
           if (
-            effect.type === AsyncEffectType.Await &&
+            effect.type === AsyncEffectType.Observe &&
             isNone(effect.subscription)
           ) {
             const innerObserver = new AsynchronousObserver(
@@ -296,7 +289,16 @@ export function __memo<T>(f: (...args: any[]) => T, ...args: any[]): T {
   return ctx.memo(f, ...args);
 }
 
-export const __await = <T>(observable: ObservableLike<T>): Option<T> => {
+export const __observe = <T>(observable: ObservableLike<T>): Option<T> => {
   const ctx = assertCurrentContext();
-  return ctx.await(observable);
+  return ctx.observe(observable);
+};
+
+const createAwaitedObservable = <T>(
+  observable: ObservableLike<T>,
+): ObservableLike<T> => pipe(observable, takeLast());
+
+export const __await = <T>(observable: ObservableLike<T>): Option<T> => {
+  const awaitedObservable = __memo(createAwaitedObservable, observable);
+  return __observe(awaitedObservable);
 };
