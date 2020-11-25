@@ -71,17 +71,21 @@ class AsyncContextImpl {
     }
 }
 class AsynchronousObserver extends AbstractDelegatingObserver {
-    constructor(delegate, scheduleComputation, disposeIfDone, effect) {
+    constructor(delegate, scheduleComputation, isDone, effect) {
         super(delegate);
         this.scheduleComputation = scheduleComputation;
         this.effect = effect;
         addOnDisposedWithError(this, delegate);
-        addOnDisposedWithoutErrorTeardown(this, disposeIfDone);
+        addOnDisposedWithoutErrorTeardown(this, () => {
+            if (isDone()) {
+                pipe(delegate, dispose());
+            }
+        });
     }
     notify(next) {
         assertObserverState(this);
         this.effect.value = next;
-        this.scheduleComputation();
+        this.scheduleComputation(this.delegate);
     }
 }
 const hasOutstandingEffects = (effects) => {
@@ -100,47 +104,51 @@ const hasOutstandingEffects = (effects) => {
 };
 let currentCtx = none;
 const async = (computation) => {
-    const factory = () => (observer) => {
+    const factory = () => {
         const effects = [];
+        let initialized = false;
         let scheduledComputationSubscription = disposed;
-        const disposeIfDone = () => {
-            if (!hasOutstandingEffects(effects) &&
-                scheduledComputationSubscription.isDisposed) {
-                pipe(observer, dispose());
-            }
+        const isDone = () => {
+            return !hasOutstandingEffects(effects) && scheduledComputationSubscription.isDisposed;
         };
-        const scheduledCallback = () => {
-            const ctx = new AsyncContextImpl(effects);
-            runComputation(ctx);
-        };
-        const scheduleComputation = () => {
+        const scheduleComputation = (observer) => {
             if (scheduledComputationSubscription.isDisposed) {
-                scheduledComputationSubscription = pipe(observer, schedule(scheduledCallback));
+                scheduledComputationSubscription = pipe(observer, schedule(runComputation));
             }
         };
-        const runComputation = (ctx) => {
+        const runComputation = (observer) => {
+            const ctx = !initialized
+                ? new InitialAsyncContextImpl(effects)
+                : new AsyncContextImpl(effects);
+            initialized = true;
+            let result = none;
             currentCtx = ctx;
-            // FIXME: What if computation throws an exception?
-            const result = computation();
-            currentCtx = none;
-            const effectsLength = effects.length;
-            for (let i = 0; i < effectsLength; i++) {
-                const effect = effects[i];
-                if (effect.type === 1 /* Await */ &&
-                    isNone(effect.subscription)) {
-                    const innerObserver = new AsynchronousObserver(observer, scheduleComputation, disposeIfDone, effect);
-                    const { observable } = effect;
-                    pipe(observable, observe(innerObserver));
-                    effect.subscription = innerObserver;
-                }
+            try {
+                result = computation();
+            }
+            catch (e) {
+                currentCtx = none;
+                throw e;
             }
             observer.notify(result);
             if (!hasOutstandingEffects(effects)) {
                 pipe(observer, dispose());
             }
+            else {
+                const effectsLength = effects.length;
+                for (let i = 0; i < effectsLength; i++) {
+                    const effect = effects[i];
+                    if (effect.type === 1 /* Await */ &&
+                        isNone(effect.subscription)) {
+                        const innerObserver = new AsynchronousObserver(observer, scheduleComputation, isDone, effect);
+                        const { observable } = effect;
+                        pipe(observable, observe(innerObserver));
+                        effect.subscription = innerObserver;
+                    }
+                }
+            }
         };
-        const ctx = new InitialAsyncContextImpl(effects);
-        runComputation(ctx);
+        return runComputation;
     };
     return defer(factory);
 };
