@@ -94,11 +94,12 @@ class AsyncContextImpl implements AsyncContextLike {
 
   memo<T>(f: (...args: any[]) => T, ...args: any[]): T {
     const effect = validateState(this, AsyncEffectType.Memo) as MemoAsyncEffect;
+   
+    if(f !== effect.f) {
+      throw new Error();
+    }
 
-    const fEqual = f === effect.f;
-    const argsEqual = arrayStrictEquality(args, effect.args);
-
-    if (fEqual && argsEqual) {
+    if (arrayStrictEquality(args, effect.args)) {
       return effect.value as T;
     } else {
       const value = f(...args);
