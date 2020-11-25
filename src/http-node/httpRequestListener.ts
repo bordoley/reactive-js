@@ -1,6 +1,5 @@
 import { ServerResponse, IncomingMessage } from "http";
 import { Http2ServerRequest, Http2ServerResponse } from "http2";
-import { async, __await, __memo } from "../asynchronous";
 import { DisposableValueLike, addDisposable } from "../disposable";
 import { pipe, returns, Function1, SideEffect2 } from "../functions";
 import {
@@ -18,6 +17,9 @@ import {
   createDisposableNodeStream,
 } from "../node";
 import {
+  async, 
+  __await,
+  __memo,
   ObservableLike,
   catchError,
   defer,
