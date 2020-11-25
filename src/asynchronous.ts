@@ -4,7 +4,7 @@ import {
   DisposableLike,
   dispose,
   disposed,
-} from "../disposable";
+} from "./disposable";
 import {
   arrayEquality,
   Factory,
@@ -16,51 +16,27 @@ import {
   Function6,
   pipe,
   SideEffect,
-} from "../functions";
-import { ObservableLike, ObserverLike } from "../observable";
-import { Option, none, isNone } from "../option";
-import { observe, defer } from "./observable";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
-import { schedule } from "../scheduler";
-import { takeLast } from "./takeLast";
+} from "./functions";
+import {
+  observe,
+  defer,
+  ObservableLike,
+  ObserverLike,
+  AbstractDelegatingObserver,
+  assertObserverState,
+} from "./observable";
+import { Option, none, isNone } from "./option";
+import { schedule } from "./scheduler";
 
-export interface AsyncContextLike {
+interface AsyncContextLike {
   await<T>(observable: ObservableLike<T>): Option<T>;
-  memo<T>(fn: Factory<T>): T;
-  memo<TA, T>(fn: Function1<TA, T>, a: TA): T;
-  memo<TA, TB, T>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
-  memo<TA, TB, TC, T>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
-  memo<TA, TB, TC, TD, T>(
-    fn: Function4<TA, TB, TC, TD, T>,
-    a: TA,
-    b: TB,
-    c: TC,
-    d: TD,
-  ): T;
-  memo<TA, TB, TC, TD, TE, T>(
-    fn: Function5<TA, TB, TC, TD, TE, T>,
-    a: TA,
-    b: TB,
-    c: TC,
-    d: TD,
-    e: TE,
-  ): T;
-  memo<TA, TB, TC, TD, TE, TF, T>(
-    fn: Function6<TA, TB, TC, TD, TE, TF, T>,
-    a: TA,
-    b: TB,
-    c: TC,
-    d: TD,
-    e: TE,
-    f: TF,
-  ): T;
-  observe<T>(observable: ObservableLike<T>): Option<T>;
+  memo<T>(f: (...args: any[]) => T, ...args: any[]): T;
 }
 
-export const enum AsyncEffectType {
+const enum AsyncEffectType {
   Await = 1,
   Memo = 2,
-  Observe = 3,
+  Stream = 3,
 }
 
 type AwaitAsyncEffect = {
@@ -77,19 +53,14 @@ type MemoAsyncEffect = {
   value: unknown;
 };
 
-type ObserveAsyncEffect = {
-  type: AsyncEffectType.Observe;
-  observable: ObservableLike<unknown>;
-  subscription: Option<DisposableLike>;
-  value: Option<unknown>;
-};
-
-type AsyncEffect = AwaitAsyncEffect | MemoAsyncEffect | ObserveAsyncEffect;
+type AsyncEffect = AwaitAsyncEffect | MemoAsyncEffect;
 
 const arrayStrictEquality = arrayEquality();
 
 class InitialAsyncContextImpl implements AsyncContextLike {
-  constructor(private readonly effects: AsyncEffect[]) {}
+  constructor(
+    private readonly effects: AsyncEffect[],
+  ) {}
 
   await<T>(observable: ObservableLike<T>): Option<T> {
     this.effects.push({
@@ -105,16 +76,6 @@ class InitialAsyncContextImpl implements AsyncContextLike {
     const value = f(...args);
     this.effects.push({ type: AsyncEffectType.Memo, f, args, value });
     return value;
-  }
-
-  observe<T>(observable: ObservableLike<T>): Option<T> {
-    this.effects.push({
-      type: AsyncEffectType.Observe,
-      observable,
-      subscription: none,
-      value: none,
-    });
-    return none;
   }
 }
 
@@ -134,33 +95,29 @@ const validateState = (ctx: AsyncContextImpl, type: AsyncEffectType) => {
   return effect;
 };
 
-const getObservableEffectValue = <T>(
-  observable: ObservableLike<T>,
-  effect: AwaitAsyncEffect | ObserveAsyncEffect,
-): Option<T> => {
-  if (observable === effect.observable) {
-    return effect.value as Option<T>;
-  } else {
-    const oldSubscription = effect.subscription;
-    effect.subscription = none;
-    effect.observable = observable;
-
-    pipe(oldSubscription, dispose());
-    return none;
-  }
-};
-
 class AsyncContextImpl implements AsyncContextLike {
   index = 0;
 
-  constructor(readonly effects: readonly AsyncEffect[]) {}
+  constructor(
+    readonly effects: readonly AsyncEffect[],
+  ) {}
 
   await<T>(observable: ObservableLike<T>): Option<T> {
     const effect = validateState(
       this,
       AsyncEffectType.Await,
     ) as AwaitAsyncEffect;
-    return getObservableEffectValue(observable, effect);
+
+    if (observable === effect.observable) {
+      return effect.value as Option<T>;
+    } else {
+      const oldSubscription = effect.subscription;
+      effect.subscription = none;
+      effect.observable = observable;
+
+      pipe(oldSubscription, dispose());
+      return none;
+    }
   }
 
   memo<T>(f: (...args: any[]) => T, ...args: any[]): T {
@@ -179,14 +136,6 @@ class AsyncContextImpl implements AsyncContextLike {
       return value;
     }
   }
-
-  observe<T>(observable: ObservableLike<T>): Option<T> {
-    const effect = validateState(
-      this,
-      AsyncEffectType.Await,
-    ) as AwaitAsyncEffect;
-    return getObservableEffectValue(observable, effect);
-  }
 }
 
 class AsynchronousObserver<T> extends AbstractDelegatingObserver<unknown, T> {
@@ -194,7 +143,7 @@ class AsynchronousObserver<T> extends AbstractDelegatingObserver<unknown, T> {
     delegate: ObserverLike<T>,
     private readonly scheduleComputation: SideEffect,
     disposeIfDone: SideEffect,
-    private readonly effect: AsyncEffect,
+    private readonly effect: AwaitAsyncEffect,
   ) {
     super(delegate);
     addOnDisposedWithError(this, delegate);
@@ -228,9 +177,9 @@ const hasOutstandingEffects = (effects: readonly AsyncEffect[]) => {
   return false;
 };
 
-export const async = <T>(
-  computation: Function1<AsyncContextLike, T>,
-): ObservableLike<T> => {
+let currentCtx: Option<AsyncContextLike> = none;
+
+export const async = <T>(computation: Factory<T>): ObservableLike<T> => {
   const factory = () => (observer: ObserverLike<T>) => {
     const effects: AsyncEffect[] = [];
     let scheduledComputationSubscription = disposed;
@@ -259,14 +208,18 @@ export const async = <T>(
     };
 
     const runComputation = (ctx: AsyncContextLike) => {
-      const result = computation(ctx);
+      currentCtx = ctx;
+      // FIXME: What if computation throws an exception?
+      const result = computation();
+      currentCtx = none;
+
       const effectsLength = effects.length;
 
       for (let i = 0; i < effectsLength; i++) {
         const effect = effects[i];
 
         if (
-          effect.type !== AsyncEffectType.Memo &&
+          effect.type === AsyncEffectType.Await &&
           isNone(effect.subscription)
         ) {
           const innerObserver = new AsynchronousObserver(
@@ -277,12 +230,7 @@ export const async = <T>(
           );
           const { observable } = effect;
 
-          pipe(
-            effect.type === AsyncEffectType.Await
-              ? pipe(observable, takeLast())
-              : observable,
-            observe(innerObserver),
-          );
+          pipe(observable, observe(innerObserver));
           effect.subscription = innerObserver;
         }
       }
@@ -298,4 +246,53 @@ export const async = <T>(
     runComputation(ctx);
   };
   return defer(factory);
+};
+
+const assertCurrentContext = (): AsyncContextLike => {
+  if (isNone(currentCtx)) {
+    throw new Error();
+  }
+  return currentCtx;
+};
+
+export function __memo<TA, T>(fn: Function1<TA, T>, a: TA): T;
+export function __memo<TA, TB, T>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
+export function __memo<TA, TB, TC, T>(
+  fn: Function3<TA, TB, TC, T>,
+  a: TA,
+  b: TB,
+  c: TC,
+): T;
+export function __memo<TA, TB, TC, TD, T>(
+  fn: Function4<TA, TB, TC, TD, T>,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+): T;
+export function __memo<TA, TB, TC, TD, TE, T>(
+  fn: Function5<TA, TB, TC, TD, TE, T>,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+): T;
+export function __memo<TA, TB, TC, TD, TE, TF, T>(
+  fn: Function6<TA, TB, TC, TD, TE, TF, T>,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+): T;
+export function __memo<T>(f: (...args: any[]) => T, ...args: any[]): T {
+  const ctx = assertCurrentContext();
+  return ctx.memo(f, ...args);
+}
+
+export const __await = <T>(observable: ObservableLike<T>): Option<T> => {
+  const ctx = assertCurrentContext();
+  return ctx.await(observable);
 };

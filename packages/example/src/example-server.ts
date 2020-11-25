@@ -35,7 +35,6 @@ import {
   ObservableLike,
   catchError,
   throws,
-  async,
   keepType,
 } from "@reactive-js/core/observable";
 import { isSome, map as mapOption } from "@reactive-js/core/option";
@@ -45,6 +44,7 @@ import {
   toPriorityScheduler,
   toSchedulerWithPriority,
 } from "@reactive-js/core/scheduler";
+import { async, __await, __memo } from "@reactive-js/core/asynchronous";
 import db from "mime-db";
 import mime from "mime-types";
 
@@ -176,9 +176,9 @@ const processRequest = (req: HttpRequest<IOSourceLike<Uint8Array>>) => {
     mapOption,
   );
 
-  return async(use => {
-    const responseObs = use.memo(routeRequest, req);
-    const response = use.await(responseObs);
+  return async(() => {
+    const responseObs = __memo(routeRequest, req);
+    const response = __await(responseObs);
     return encodeResponse(response);
   });
 };
