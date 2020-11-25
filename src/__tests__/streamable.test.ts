@@ -1,13 +1,22 @@
 import { dispose, addTeardown } from "../disposable";
 import { pipe, returns, incrementBy, sum } from "../functions";
 import {
+  __await,
+  __memo,
+  __observe,
+  async,
+  empty as emptyObs,
   subscribe,
+  fromArray,
   onNotify as onNotifyObs,
   buffer,
   takeFirst,
   startWith,
+  StreamLike,
+  toRunnable,
 } from "../observable";
-import { none } from "../option";
+import { toArray } from "../runnable";
+import { Option, isSome, none } from "../option";
 import { createVirtualTimeScheduler } from "../scheduler";
 import {
   empty,
@@ -21,6 +30,7 @@ import {
   mapTo,
   sink,
   stream,
+  __stream,
 } from "../streamable";
 import {
   test,
@@ -33,6 +43,31 @@ import {
 
 export const tests = describe(
   "streamable",
+  test("__stream", () => {
+    const streamable = identity<number>();
+    const createLooper = (stream: Option<StreamLike<number, number>>) =>
+      pipe(
+        [0, 1, 2, 3],
+        fromArray({ delay: 10 }),
+        onNotifyObs(x => {
+          if (isSome(stream)) {
+            stream.dispatch(x);
+          }
+        }),
+      );
+
+    const obs = async(() => {
+      debugger;
+      const stream = __stream(streamable);
+      const looper = __memo(createLooper, stream);
+      
+      __await(looper);
+
+      return __observe(stream ?? emptyObs());
+    });
+
+    pipe(obs, toRunnable(), toArray(), console.log);
+  }),
   test("createActionReducer", () => {
     const scheduler = createVirtualTimeScheduler();
     const actionReducerStream = pipe(

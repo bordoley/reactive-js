@@ -1,5 +1,6 @@
 /// <reference types="node" />
 import { Reducer, Factory, Equality, Function1, SideEffect1, Function2 } from './functions';
+import { Option } from './option';
 import { SchedulerLike } from './scheduler';
 import { ObservableLike, StreamLike } from './observable';
 
@@ -33,6 +34,7 @@ declare const empty: <TReq, T>(options?: {
 declare const stream: <TReq, T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number | undefined;
 } | undefined) => Function1<StreamableLike<TReq, T>, StreamLike<TReq, T>>;
+declare const __stream: <TReq, T>(streamable: StreamableLike<TReq, T>) => Option<StreamLike<TReq, T>>;
 
 declare const identity: <T>() => StreamableLike<T, T>;
 
@@ -51,4 +53,4 @@ interface StreamableLike<TReq, T> {
 }
 declare type StreamableOperator$1<TSrcReq, TSrc, TReq, T> = Function1<StreamableLike<TSrcReq, TSrc>, StreamableLike<TReq, T>>;
 
-export { StreamableLike, StreamableOperator$1 as StreamableOperator, createActionReducer, createStreamable, empty, identity, lift, map, mapReq, mapTo, onNotify, scan, sink, stream, withLatestFrom };
+export { StreamableLike, StreamableOperator$1 as StreamableOperator, __stream, createActionReducer, createStreamable, empty, identity, lift, map, mapReq, mapTo, onNotify, scan, sink, stream, withLatestFrom };
