@@ -4,7 +4,7 @@ import {
   DisposableLike,
   dispose,
   disposed,
-} from "./disposable";
+} from "../disposable";
 import {
   arrayEquality,
   Factory,
@@ -16,17 +16,21 @@ import {
   Function6,
   pipe,
   SideEffect1,
-} from "./functions";
+} from "../functions";
+import {
+  AbstractDelegatingObserver,
+  assertObserverState,
+} from "./observer";
 import {
   observe,
   defer,
+} from "./observable";
+import {
   ObservableLike,
   ObserverLike,
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observable";
-import { Option, none, isNone } from "./option";
-import { schedule } from "./scheduler";
+} from "../observable";
+import { Option, none, isNone } from "../option";
+import { schedule } from "../scheduler";
 
 interface AsyncContextLike {
   await<T>(observable: ObservableLike<T>): Option<T>;

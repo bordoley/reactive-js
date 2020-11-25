@@ -29,6 +29,9 @@ import {
 } from "@reactive-js/core/io";
 import { readFileIOSource, bindNodeCallback } from "@reactive-js/core/node";
 import {
+  async, 
+  __await,
+  __memo,
   map,
   fromValue,
   generate,
@@ -44,7 +47,6 @@ import {
   toPriorityScheduler,
   toSchedulerWithPriority,
 } from "@reactive-js/core/scheduler";
-import { async, __await, __memo } from "@reactive-js/core/asynchronous";
 import db from "mime-db";
 import mime from "mime-types";
 

@@ -79,6 +79,7 @@ export interface StreamLike<TReq, T>
 /** @noInheritDoc */
 export interface SubjectLike<T> extends StreamLike<T, T> {}
 
+export { async, __await, __memo } from "./observable/asynchronous";
 export { combineLatest, combineLatestWith } from "./observable/combineLatest";
 export { compute } from "./observable/compute";
 export { concat, concatWith } from "./observable/concat";
@@ -92,10 +93,6 @@ export { fromIterable, fromIterator } from "./observable/fromIterable";
 export { fromPromise } from "./observable/fromPromise";
 export { generate } from "./observable/generate";
 export { merge, mergeWith } from "./observable/merge";
-export {
-  AbstractDelegatingObserver,
-  assertObserverState,
-} from "./observable/observer";
 export { never } from "./observable/never";
 export { fromValue } from "./observable/fromValue";
 export { subscribe } from "./observable/subscribe";
