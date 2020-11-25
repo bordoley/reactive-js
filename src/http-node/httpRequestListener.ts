@@ -1,5 +1,6 @@
 import { ServerResponse, IncomingMessage } from "http";
 import { Http2ServerRequest, Http2ServerResponse } from "http2";
+import { async, __await, __memo } from "../asynchronous";
 import { DisposableValueLike, addDisposable } from "../disposable";
 import { pipe, returns, Function1, SideEffect2 } from "../functions";
 import {
@@ -22,7 +23,6 @@ import {
   defer,
   empty,
   subscribe,
-  async,
 } from "../observable";
 import { map as mapOption } from "../option";
 import { SchedulerLike } from "../scheduler";
@@ -99,12 +99,12 @@ export const createHttpRequestListener = (
     const writeResponse = pipe(response, writeToServerResponse, mapOption);
 
     return pipe(
-      async(use => {
-        const request = use.memo(createHttpRequest, requestOptions);
-        const handlerResponseObs = use.memo(handler, request);
-        const response = use.await(handlerResponseObs);
-        const writeResponseObs = use.memo(writeResponse, response) ?? empty();
-        use.await(writeResponseObs);
+      async(() => {
+        const request = __memo(createHttpRequest, requestOptions);
+        const handlerResponseObs = __memo(handler, request);
+        const response = __await(handlerResponseObs);
+        const writeResponseObs = __memo(writeResponse, response) ?? empty();
+        __await(writeResponseObs);
       }),
       catchError(onError),
     );

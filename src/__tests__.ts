@@ -1,4 +1,5 @@
 import { tests as asyncEnumerableTests } from "./__tests__/asyncEnumerable.test";
+import { tests as asynchronousTests } from "./__tests__/asynchronous.test";
 import { tests as disposableTests } from "./__tests__/disposable.test";
 import { tests as enumerableTests } from "./__tests__/enumerable.test";
 import { tests as flowableTests } from "./__tests__/flowable.test";
@@ -17,6 +18,7 @@ import { tests as streamableTests } from "./__tests__/streamable.test";
 
 export const tests = [
   asyncEnumerableTests,
+  asynchronousTests,
   disposableTests,
   enumerableTests,
   flowableTests,
