@@ -1,6 +1,8 @@
 import { pipe, composeWith, returns, compose } from './functions.mjs';
-import { withLatestFrom, compute, map as map$1, concatMap, fromIterator, endWith, fromArray as fromArray$1 } from './observable.mjs';
-import { lift, withLatestFrom as withLatestFrom$1, map as map$2 } from './streamable.mjs';
+import { AbstractDisposable, addDisposableDisposeParentOnChildError, addDisposable } from './disposable.mjs';
+import { withLatestFrom, compute, map as map$1, concatMap, fromIterator, endWith, fromArray as fromArray$1, createSubject, using, takeWhile, keepType, reduce, onNotify, subscribe, createObservable } from './observable.mjs';
+import { dispatchTo } from './dispatcher.mjs';
+import { lift, withLatestFrom as withLatestFrom$1, map as map$2, createStreamable, stream } from './streamable.mjs';
 import { fromObservable as fromObservable$1 } from './flowable.mjs';
 
 const notify = (data) => ({
@@ -47,5 +49,34 @@ const fromArray = (options) => compose(fromArray$1(options), fromObservable());
 const fromValue = (options) => v => fromArray(options)([v]);
 const _empty = fromArray()([]);
 const empty = () => _empty;
+const isNotify = (ev) => ev.type === 1 /* Notify */;
+class IOSinkAccumulatorImpl extends AbstractDisposable {
+    constructor(reducer, initialValue, options) {
+        super();
+        this.isSynchronous = false;
+        const subject = createSubject(options);
+        addDisposableDisposeParentOnChildError(this, subject);
+        const op = (events) => using(scheduler => pipe(events, takeWhile(isNotify), keepType(isNotify), map$1(ev => ev.data), reduce(reducer, initialValue), onNotify(dispatchTo(subject)), subscribe(scheduler)), eventsSubscription => createObservable(dispatcher => {
+            dispatcher.dispatch(2 /* Pause */);
+            dispatcher.dispatch(1 /* Resume */);
+            addDisposable(eventsSubscription, dispatcher);
+        }));
+        this.streamable = createStreamable(op);
+        this.subject = subject;
+    }
+    get observerCount() {
+        return this.subject.observerCount;
+    }
+    observe(observer) {
+        this.subject.observe(observer);
+    }
+    stream(scheduler, options) {
+        const result = pipe(this.streamable, stream(scheduler, options));
+        addDisposableDisposeParentOnChildError(this, result);
+        return result;
+    }
+}
+/** @experimental */
+const createIOSinkAccumulator = (reducer, initialValue, options) => new IOSinkAccumulatorImpl(reducer, initialValue, options);
 
-export { decodeWithCharset, done, empty, encodeUtf8, fromArray, fromObservable, fromValue, map, notify };
+export { createIOSinkAccumulator, decodeWithCharset, done, empty, encodeUtf8, fromArray, fromObservable, fromValue, map, notify };
