@@ -13,9 +13,8 @@ import { fromIterable, consume, notify, done, consumeAsync, fromArray, generate 
 import { describe, test, expectEquals, expectArrayEquals, expectNone, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
 import { empty as empty$1, fromObservable, fromValue as fromValue$2 } from './flowable.mjs';
 import { createHttpRequest, writeHttpRequestHeaders, createHttpResponse, writeHttpResponseHeaders, checkIfNotModified } from './http.mjs';
-import { fromArray as fromArray$2, decodeWithCharset, empty as empty$2, fromValue as fromValue$3, encodeUtf8, map as map$2 } from './io.mjs';
+import { fromArray as fromArray$2, decodeWithCharset, createIOSinkAccumulator, empty as empty$2, fromValue as fromValue$3, encodeUtf8, map as map$2 } from './io.mjs';
 import { string, many, parseWithOrThrow, concat as concat$2, manySatisfy, pForwardSlash, char, map as map$4, mapTo as mapTo$2, optional, orCompute, pEof, or, sepBy, pColon, createCharStream, throwParseError } from './parserCombinators.mjs';
-import { createIOSinkAccumulator } from './ioSinkAccumulator.mjs';
 import { createReactiveCache, getOrSet } from './reactiveCache.mjs';
 import { concat as concat$4, concatMap as concatMap$3, distinctUntilChanged as distinctUntilChanged$3, empty as empty$5, endWith as endWith$3, fromArray as fromArray$5, fromValue as fromValue$5, generate as generate$4, keep as keep$3, map as map$6, mapTo as mapTo$4, repeat as repeat$3, scan as scan$3, skipFirst as skipFirst$3, startWith as startWith$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$3, toRunnable as toRunnable$3 } from './sequence.mjs';
 import { toStateStore } from './stateStore.mjs';

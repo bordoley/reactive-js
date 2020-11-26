@@ -1,7 +1,6 @@
 import { Readable, Writable } from "stream";
 import { pipe, defer, returns } from "../functions";
-import { fromArray } from "../io";
-import { createIOSinkAccumulator } from "../ioSinkAccumulator";
+import { createIOSinkAccumulator, fromArray } from "../io";
 import {
   createReadableIOSource,
   createWritableIOSink,

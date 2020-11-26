@@ -1,6 +1,7 @@
 import { FlowMode } from "../flowable";
 import { pipe, returns, sum } from "../functions";
 import {
+  createIOSinkAccumulator,
   decodeWithCharset,
   empty,
   encodeUtf8,
@@ -8,8 +9,7 @@ import {
   fromValue,
   IOEventType,
   map,
-} from "../io";
-import { createIOSinkAccumulator } from "../ioSinkAccumulator";
+} from "../io"
 import { onNotify, subscribe } from "../observable";
 import { none } from "../option";
 import { createVirtualTimeScheduler } from "../scheduler";
