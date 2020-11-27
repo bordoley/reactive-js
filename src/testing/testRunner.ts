@@ -1,14 +1,14 @@
-import { isDeno } from "../env";
+import { __DENO__ } from "../env";
 import { TestGroup, TestGroupType } from "../testing";
 
-const toJestTest = (testGroup: TestGroup, parents: readonly string[]) => {
+const createJasmineTests = (testGroup: TestGroup, parents: readonly string[]) => {
   const path = [...parents, testGroup.name];
 
   if (testGroup.type === TestGroupType.Describe) {
     describe(testGroup.name, () => {
       const tests = testGroup.tests;
       for (const testGroup of tests) {
-        toJestTest(testGroup, path);
+        createJasmineTests(testGroup, path);
       }
     });
   } else {
@@ -17,21 +17,16 @@ const toJestTest = (testGroup: TestGroup, parents: readonly string[]) => {
   }
 };
 
-const runTestsWithJest = (testGroups: readonly TestGroup[]) => {
-  for (const test of testGroups) {
-    toJestTest(test, []);
-  }
-};
 
-declare var Deno: any;
+declare const Deno: any;
 
-const toDenoTest = (testGroup: TestGroup, parents: readonly string[]) => {
+const createDenoTests = (testGroup: TestGroup, parents: readonly string[]) => {
   const path = [...parents, testGroup.name];
 
   if (testGroup.type === TestGroupType.Describe) {
     const { tests } = testGroup;
     for (const test of tests) {
-      toDenoTest(test, path);
+      createDenoTests(test, path);
     }
   } else {
     const name = path.join(":");
@@ -39,16 +34,14 @@ const toDenoTest = (testGroup: TestGroup, parents: readonly string[]) => {
   }
 };
 
-const runTestsWithDeno = (testGroups: TestGroup[]) => {
-  for (const test of testGroups) {
-    toDenoTest(test, []);
-  }
-};
-
 export const runTests = (testGroups: TestGroup[]) => {
-  if (isDeno) {
-    runTestsWithDeno(testGroups);
+  if (__DENO__) {
+    for (const test of testGroups) {
+      createDenoTests(test, []);
+    }
   } else {
-    runTestsWithJest(testGroups);
+    for (const test of testGroups) {
+      createJasmineTests(test, []);
+    }
   }
 };

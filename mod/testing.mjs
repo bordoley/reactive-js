@@ -1,14 +1,14 @@
 import { ignore, raise, strictEquality, arrayEquality } from './functions.mjs';
 import { none, isSome, isNone } from './option.mjs';
-import { isDeno } from './env.mjs';
+import { __DENO__ } from './env.mjs';
 
-const toJestTest = (testGroup, parents) => {
+const createJasmineTests = (testGroup, parents) => {
     const path = [...parents, testGroup.name];
     if (testGroup.type === 1 /* Describe */) {
         describe(testGroup.name, () => {
             const tests = testGroup.tests;
             for (const testGroup of tests) {
-                toJestTest(testGroup, path);
+                createJasmineTests(testGroup, path);
             }
         });
     }
@@ -17,17 +17,12 @@ const toJestTest = (testGroup, parents) => {
         test(testGroup.name, testGroup.f(name));
     }
 };
-const runTestsWithJest = (testGroups) => {
-    for (const test of testGroups) {
-        toJestTest(test, []);
-    }
-};
-const toDenoTest = (testGroup, parents) => {
+const createDenoTests = (testGroup, parents) => {
     const path = [...parents, testGroup.name];
     if (testGroup.type === 1 /* Describe */) {
         const { tests } = testGroup;
         for (const test of tests) {
-            toDenoTest(test, path);
+            createDenoTests(test, path);
         }
     }
     else {
@@ -35,17 +30,16 @@ const toDenoTest = (testGroup, parents) => {
         Deno.test(name, testGroup.f(name));
     }
 };
-const runTestsWithDeno = (testGroups) => {
-    for (const test of testGroups) {
-        toDenoTest(test, []);
-    }
-};
 const runTests = (testGroups) => {
-    if (isDeno) {
-        runTestsWithDeno(testGroups);
+    if (__DENO__) {
+        for (const test of testGroups) {
+            createDenoTests(test, []);
+        }
     }
     else {
-        runTestsWithJest(testGroups);
+        for (const test of testGroups) {
+            createJasmineTests(test, []);
+        }
     }
 };
 

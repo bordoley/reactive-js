@@ -1,7 +1,7 @@
-declare var process: any;
+declare const process: any;
 
 export const __DEV__ =
   typeof process === "object" ? process.env.NODE_ENV !== "production" : false;
 
-declare var Deno: any;
-export const isDeno = typeof Deno === "object";
+declare const Deno: any;
+export const __DENO__ = typeof Deno === "object";
