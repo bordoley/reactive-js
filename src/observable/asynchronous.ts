@@ -13,7 +13,13 @@ import {
   Function4,
   Function5,
   Function6,
+  SideEffect,
   SideEffect1,
+  SideEffect2,
+  SideEffect3,
+  SideEffect4,
+  SideEffect5,
+  SideEffect6,
   arrayEquality,
   pipe,
 } from "../functions";
@@ -303,3 +309,48 @@ export const __await = <T>(observable: ObservableLike<T>): Option<T> => {
   const awaitedObservable = __memo(createAwaitedObservable, observable);
   return __observe(awaitedObservable);
 };
+
+const deferSideEffect = (f: (...args: any[]) => void, ...args: any[]) =>
+  defer(() => observer => {
+    f(...args);
+    observer.dispose();
+  });
+
+export function __effect(fn: SideEffect): void;
+export function __effect<TA>(fn: SideEffect1<TA>, a: TA): void;
+export function __effect<TA, TB>(fn: SideEffect2<TA, TB>, a: TA, b: TB): void;
+export function __effect<TA, TB, TC>(
+  fn: SideEffect3<TA, TB, TC>,
+  a: TA,
+  b: TB,
+  c: TC,
+): void;
+export function __effect<TA, TB, TC, TD>(
+  fn: SideEffect4<TA, TB, TC, TD>,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+): void;
+export function __effect<TA, TB, TC, TD, TE>(
+  fn: SideEffect5<TA, TB, TC, TD, TE>,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+): void;
+export function __effect<TA, TB, TC, TD, TE, TF>(
+  fn: SideEffect6<TA, TB, TC, TD, TE, TF>,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+): void;
+export function __effect(f: (...args: any[]) => void, ...args: any[]): void {
+  const ctx = assertCurrentContext();
+  const observable = ctx.memo(deferSideEffect, f, ...args);
+  __observe(observable);
+}

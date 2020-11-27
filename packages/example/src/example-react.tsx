@@ -1,18 +1,11 @@
 import { createRouter, find } from "@reactive-js/core/router";
-import { fromObservable, FlowMode } from "@reactive-js/core/flowable";
 import {
+  ignore,
   pipe,
-  returns,
-  increment,
   SideEffect1,
   Updater,
 } from "@reactive-js/core/functions";
-import { generate } from "@reactive-js/core/observable";
-import {
-  useObservable,
-  useStreamable,
-  idlePriority,
-} from "@reactive-js/core/react";
+import { useObservable, idlePriority } from "@reactive-js/core/react";
 import {
   empty as emptyURI,
   decodeAndGetHash,
@@ -24,8 +17,14 @@ import {
   fetch,
   historyStateStore,
 } from "@reactive-js/core/web";
-import React, { useCallback, useMemo, useState, useEffect } from "react";
+import React, { useCallback, useMemo } from "react";
 import { default as ReactDOM } from "react-dom";
+import { appState } from "./example.state";
+import { isNone, map as mapOption } from "@reactive-js/core/option";
+import { FlowMode } from "@reactive-js/core/flowable";
+import { async, empty, __memo, __observe } from "@reactive-js/core/observable";
+import { __stream } from "@reactive-js/core/streamable";
+import { dispatchTo } from "@reactive-js/core/dispatcher";
 
 const updateHash = (hash: string): Updater<RelativeURI> => uri =>
   encodeAndSetHash(uri, hash);
@@ -57,37 +56,23 @@ const TextInputURIState = ({
   );
 };
 
+const appStateOnScheduler = appState(idlePriority);
 const StreamPauseResume = () => {
-  const stream = useMemo(
-    () =>
-      pipe(
-        generate(increment, returns<number>(0)),
-        fromObservable({ scheduler: idlePriority }),
-      ),
-    [],
-  );
-  const [value, setMode] = useStreamable(stream);
-  const [{ mode }, updateMode] = useState({ mode: FlowMode.Pause });
+  const state = useObservable(appStateOnScheduler);
+  if (isNone(state)) {
+    return null;
+  } else {
+    const { onClick, value, mode } = state;
 
-  const onClick = useCallback(
-    () =>
-      updateMode(({ mode }) => ({
-        mode: mode === FlowMode.Pause ? FlowMode.Resume : FlowMode.Pause,
-      })),
-    [updateMode],
-  );
+    const label = mode === FlowMode.Resume ? "PAUSE" : "RESUME";
 
-  useEffect(() => setMode(mode), [mode, setMode]);
-
-  const label = mode === FlowMode.Pause ? "RESUME" : "PAUSE";
-  const displayValue = value ?? 0;
-
-  return (
-    <>
-      <div>{displayValue}</div>
-      <button onClick={onClick}>{label}</button>
-    </>
-  );
+    return (
+      <>
+        <div>{value}</div>
+        <button onClick={onClick}>{label}</button>
+      </>
+    );
+  }
 };
 
 const goToPath = (pathname: string): Updater<RelativeURI> => uri => ({
@@ -151,7 +136,7 @@ const FetchExample = () => {
   const httpRequest = useMemo(
     () =>
       pipe(
-        { uri: "http://localhost:8080/files/packages/example/build/react.js" },
+        { uri: "http://localhost:8080/files/packages/example/build/bundle.js" },
         fetch(response => response.text()),
       ),
     [],
@@ -172,11 +157,21 @@ const router = createRouter({
   "/text": TextInputURIState,
 });
 
-const Root = () => {
-  const [uri = emptyURI, dispatch] = useStreamable(historyStateStore);
-  const [Component, params] = find(router, uri.pathname) ?? [NotFound, {}];
+const createDispatchFn = mapOption(dispatchTo);
+
+const rootState = async(() => {
+  const historyStream = __stream(historyStateStore);
+  const dispatch = __memo(createDispatchFn, historyStream) ?? ignore;
+
+  const uri = __observe(historyStream ?? empty<RelativeURI>()) ?? emptyURI;
+  const [Component, params] = __memo(find, router, uri.pathname) ?? [
+    NotFound,
+    {},
+  ];
 
   return <Component params={params} dispatch={dispatch} uri={uri} />;
-};
+});
+
+const Root = () => useObservable(rootState) ?? null;
 
 (ReactDOM as any).createRoot(document.getElementById("root")).render(<Root />);
