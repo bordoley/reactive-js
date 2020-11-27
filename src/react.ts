@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   unstable_IdlePriority,
   unstable_ImmediatePriority,
@@ -17,8 +17,8 @@ import {
   createDisposable,
   dispose,
 } from "./disposable";
-import { SideEffect1, compose, defer, pipe, returns } from "./functions";
-import { ObservableLike, StreamLike, onNotify, subscribe } from "./observable";
+import { compose, defer, pipe, returns } from "./functions";
+import { ObservableLike, onNotify, subscribe } from "./observable";
 import { Option, isSome, none } from "./option";
 import {
   SchedulerContinuationLike,
@@ -26,11 +26,6 @@ import {
   run,
   toSchedulerWithPriority,
 } from "./scheduler";
-import {
-  StreamableLike,
-  onNotify as onNotifyStream,
-  stream as streamableStream,
-} from "./streamable";
 
 /**
  * Returns the current value, if defined, of `observable`.
@@ -66,48 +61,6 @@ export const useObservable = <T>(
   }
 
   return state;
-};
-
-export const useStreamable = <TReq, T>(
-  streamable: StreamableLike<TReq, T>,
-  options: {
-    readonly scheduler?: SchedulerLike;
-  } = {},
-): [Option<T>, SideEffect1<TReq>] => {
-  const { scheduler = normalPriority } = options;
-
-  const [stream, setStream] = useState<Option<StreamLike<TReq, T>>>(none);
-  const [state, updateState] = useState<Option<T>>(none);
-  const [error, updateError] = useState<Option<Error>>(none);
-
-  const dispatch = useCallback(
-    req => {
-      if (isSome(stream)) {
-        stream.dispatch(req);
-      }
-    },
-    [stream],
-  );
-
-  useEffect(() => {
-    const stream = pipe(
-      streamable,
-      onNotifyStream(compose(returns, updateState)),
-      streamableStream(scheduler),
-    );
-
-    addTeardown(stream, compose(returns, updateError));
-    setStream(stream);
-
-    return defer(stream, dispose());
-  }, [streamable, scheduler, setStream]);
-
-  if (isSome(error)) {
-    const { cause } = error;
-    throw cause;
-  }
-
-  return [state, dispatch];
 };
 
 const priorityScheduler = {

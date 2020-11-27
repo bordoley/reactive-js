@@ -24,10 +24,7 @@
     "svelte": "^3.29.7"
   },
   "scripts": {
-    "build": "yarn build-server && yarn build-react && yarn build-svelte",
-    "build-server": "tsc -p tsconfig.server.json",
-    "build-react": "tsc -p tsconfig.react.json && rollup -c rollup.react.js",
-    "build-svelte": "rollup -c rollup.svelte.js",
+    "build": "rollup -c rollup.config.js",
     "clean": "rm -rf build"
   }
 }
