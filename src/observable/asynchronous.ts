@@ -17,11 +17,11 @@ import {
   pipe,
   SideEffect1,
 } from "../functions";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
-import { observe, defer } from "./observable";
 import { ObservableLike, ObserverLike } from "../observable";
 import { Option, none, isNone } from "../option";
 import { schedule } from "../scheduler";
+import { observe, defer } from "./observable";
+import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 import { takeLast } from "./takeLast";
 
 interface AsyncContextLike {
@@ -94,8 +94,8 @@ class AsyncContextImpl implements AsyncContextLike {
 
   memo<T>(f: (...args: any[]) => T, ...args: any[]): T {
     const effect = validateState(this, AsyncEffectType.Memo) as MemoAsyncEffect;
-   
-    if(f !== effect.f) {
+
+    if (f !== effect.f) {
       throw new Error();
     }
 

@@ -15,8 +15,8 @@ import {
   StreamLike,
   toRunnable,
 } from "../observable";
-import { toArray } from "../runnable";
 import { Option, isSome, none } from "../option";
+import { toArray } from "../runnable";
 import { createVirtualTimeScheduler } from "../scheduler";
 import {
   empty,
@@ -60,7 +60,7 @@ export const tests = describe(
       debugger;
       const stream = __stream(streamable);
       const looper = __memo(createLooper, stream);
-      
+
       __await(looper);
 
       return __observe(stream ?? emptyObs());

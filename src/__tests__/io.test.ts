@@ -9,7 +9,7 @@ import {
   fromValue,
   IOEventType,
   map,
-} from "../io"
+} from "../io";
 import { onNotify, subscribe } from "../observable";
 import { none } from "../option";
 import { createVirtualTimeScheduler } from "../scheduler";
