@@ -1,4 +1,4 @@
-import { pipe, defer } from './functions.mjs';
+import { pipe, alwaysFalse, defer } from './functions.mjs';
 import { none, isSome, isNone } from './option.mjs';
 import { AbstractDisposable, addTeardown, dispose, AbstractSerialDisposable, disposed, addDisposable, createDisposable } from './disposable.mjs';
 import { createPriorityQueue } from './queues.mjs';
@@ -266,6 +266,12 @@ const supportsPerformanceNow = typeof performance === "object" && typeof perform
 const supportsProcessHRTime = typeof process === "object" && typeof process.hrtime === "function";
 const supportsMessageChannel = typeof MessageChannel === "function";
 const supportsSetImmediate = typeof setImmediate === "function";
+const supportsIsInputPending = typeof navigator === "object" &&
+    navigator.scheduling !== undefined &&
+    navigator.scheduling.isInputPending !== undefined;
+const inputIsPending = supportsIsInputPending
+    ? () => navigator.scheduling.isInputPending()
+    : alwaysFalse;
 const now = supportsPerformanceNow
     ? () => performance.now()
     : supportsProcessHRTime
@@ -322,7 +328,8 @@ class HostScheduler {
         return now();
     }
     get shouldYield() {
-        return (this.inContinuation && this.now > this.startTime + this.yieldInterval);
+        return (this.inContinuation && ((this.now > this.startTime + this.yieldInterval) ||
+            inputIsPending()));
     }
     schedule(continuation, options = {}) {
         const { delay = 0 } = options;
