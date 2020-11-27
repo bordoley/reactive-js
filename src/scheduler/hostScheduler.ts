@@ -5,7 +5,7 @@ import {
   addDisposable,
   addTeardown,
 } from "../disposable";
-import { Factory, SideEffect, Function1, defer, pipe } from "../functions";
+import { Factory, SideEffect, Function1, defer, pipe, alwaysFalse } from "../functions";
 import { SchedulerLike, SchedulerContinuationLike } from "../scheduler";
 import { run } from "./schedulerContinuation";
 
@@ -18,6 +18,15 @@ const supportsProcessHRTime =
 const supportsMessageChannel = typeof MessageChannel === "function";
 
 const supportsSetImmediate = typeof setImmediate === "function";
+
+const supportsIsInputPending = 
+  typeof navigator === "object" &&
+  (navigator as any).scheduling !== undefined &&
+  (navigator as any).scheduling.isInputPending !== undefined;
+
+const inputIsPending = supportsIsInputPending
+  ? () => (navigator as any).scheduling.isInputPending() 
+  : alwaysFalse;
 
 const now: Factory<number> = supportsPerformanceNow
   ? () => performance.now()
@@ -99,7 +108,10 @@ class HostScheduler implements SchedulerLike {
 
   get shouldYield() {
     return (
-      this.inContinuation && this.now > this.startTime + this.yieldInterval
+      this.inContinuation && (
+        (this.now > this.startTime + this.yieldInterval) ||
+        inputIsPending()
+      )
     );
   }
 
