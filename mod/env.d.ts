@@ -1,5 +1,5 @@
 /// <reference types="node" />
 declare const __DEV__: boolean;
-declare const isDeno: boolean;
+declare const __DENO__: boolean;
 
-export { __DEV__, isDeno };
+export { __DENO__, __DEV__ };
