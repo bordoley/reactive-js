@@ -11,12 +11,10 @@ module.exports = {
   ],
   ignorePatterns: [
     ".eslintrc.js",
-    "bs",
     "build",
     "coverage",
     "docs",
-    "packages/core",
-    "packages/example",
+    "packages/*",
     "mod",
     "node_modules",
     "rollup.config.js",

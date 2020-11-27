@@ -9,7 +9,15 @@ import {
   FlowMode,
   fromObservable as fromObservableFlowable,
 } from "./flowable";
-import { Function1, Reducer, Factory, compose, pipe, returns, composeWith } from "./functions";
+import {
+  Function1,
+  Reducer,
+  Factory,
+  compose,
+  pipe,
+  returns,
+  composeWith,
+} from "./functions";
 import {
   map as mapObs,
   withLatestFrom as withLatestFromObs,
@@ -31,15 +39,15 @@ import {
   ObserverLike,
   createSubject,
 } from "./observable";
+import { SchedulerLike } from "./scheduler";
 import {
   map as mapStream,
   lift,
-  stream, 
+  stream,
   createStreamable,
   withLatestFrom,
   StreamableLike,
 } from "./streamable";
-import { SchedulerLike } from "./scheduler";
 
 export const enum IOEventType {
   Notify = 1,
@@ -146,7 +154,6 @@ export const fromValue = <T>(options?: {
 
 const _empty: IOSourceLike<any> = fromArray()([]);
 export const empty = <T>(): IOSourceLike<T> => _empty;
-
 
 const isNotify = <T>(
   ev: IOEvent<T>,

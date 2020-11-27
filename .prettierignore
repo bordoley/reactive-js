@@ -3,11 +3,8 @@ lerna-debug.log
 yarn.lock
 yarn-error.log
 
-*.bs.js
 *.crt
 *.key
-*.re
-*.rei
 *.svelte
 *.tsbuildinfo
 
@@ -21,6 +18,5 @@ yarn-error.log
 build
 coverage
 docs
-lib/
 mod
 packages/core

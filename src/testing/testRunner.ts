@@ -1,7 +1,10 @@
 import { __DENO__ } from "../env";
 import { TestGroup, TestGroupType } from "../testing";
 
-const createJasmineTests = (testGroup: TestGroup, parents: readonly string[]) => {
+const createJasmineTests = (
+  testGroup: TestGroup,
+  parents: readonly string[],
+) => {
   const path = [...parents, testGroup.name];
 
   if (testGroup.type === TestGroupType.Describe) {
@@ -16,7 +19,6 @@ const createJasmineTests = (testGroup: TestGroup, parents: readonly string[]) =>
     test(testGroup.name, testGroup.f(name));
   }
 };
-
 
 declare const Deno: any;
 
