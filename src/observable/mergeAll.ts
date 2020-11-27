@@ -1,11 +1,11 @@
 import {
-  dispose,
+  addDisposableDisposeParentOnChildError,
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
-  addDisposableDisposeParentOnChildError,
+  dispose,
 } from "../disposable";
-import { compose, pipe, Function1 } from "../functions";
+import { Function1, compose, pipe } from "../functions";
 import {
   ObservableLike,
   ObservableOperator,

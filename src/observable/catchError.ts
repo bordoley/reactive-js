@@ -1,7 +1,7 @@
 import {
-  dispose,
-  addOnDisposedWithoutError,
   addOnDisposedWithErrorTeardown,
+  addOnDisposedWithoutError,
+  dispose,
 } from "../disposable";
 import { Function1, pipe } from "../functions";
 import {

@@ -1,10 +1,10 @@
 import { dispose } from "../disposable";
-import { pipe, incrementBy } from "../functions";
-import { onNotify, subscribe, startWith } from "../observable";
+import { incrementBy, pipe } from "../functions";
+import { onNotify, startWith, subscribe } from "../observable";
 import { createVirtualTimeScheduler } from "../scheduler";
 import { toStateStore } from "../stateStore";
 import { identity, lift, stream } from "../streamable";
-import { test, describe, expectArrayEquals, expectTrue } from "../testing";
+import { describe, expectArrayEquals, expectTrue, test } from "../testing";
 
 export const tests = describe(
   "stateStore",

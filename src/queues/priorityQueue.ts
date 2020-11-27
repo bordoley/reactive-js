@@ -1,4 +1,4 @@
-import { EnumeratorLike, fromArray, enumerate } from "../enumerable";
+import { EnumeratorLike, enumerate, fromArray } from "../enumerable";
 import { Comparator, pipe } from "../functions";
 import { isSome, none } from "../option";
 import { QueueLike } from "../queues";

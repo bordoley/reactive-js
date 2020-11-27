@@ -1,4 +1,4 @@
-import { compose, returns, Function1 } from "../functions";
+import { Function1, compose, returns } from "../functions";
 import { ObservableOperator } from "../observable";
 import { fromIterator } from "./fromIterable";
 import { map } from "./map";

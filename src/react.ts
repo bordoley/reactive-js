@@ -4,31 +4,31 @@ import {
   unstable_ImmediatePriority,
   unstable_LowPriority,
   unstable_NormalPriority,
+  unstable_UserBlockingPriority,
   unstable_cancelCallback,
   unstable_now,
   unstable_scheduleCallback,
   unstable_shouldYield,
-  unstable_UserBlockingPriority,
 } from "scheduler";
 import {
   Error,
-  addTeardown,
   addDisposable,
+  addTeardown,
   createDisposable,
   dispose,
 } from "./disposable";
-import { SideEffect1, pipe, compose, defer, returns } from "./functions";
-import { ObservableLike, onNotify, StreamLike, subscribe } from "./observable";
-import { none, Option, isSome } from "./option";
+import { SideEffect1, compose, defer, pipe, returns } from "./functions";
+import { ObservableLike, StreamLike, onNotify, subscribe } from "./observable";
+import { Option, isSome, none } from "./option";
 import {
-  SchedulerLike,
   SchedulerContinuationLike,
-  toSchedulerWithPriority,
+  SchedulerLike,
   run,
+  toSchedulerWithPriority,
 } from "./scheduler";
 import {
-  onNotify as onNotifyStream,
   StreamableLike,
+  onNotify as onNotifyStream,
   stream as streamableStream,
 } from "./streamable";
 

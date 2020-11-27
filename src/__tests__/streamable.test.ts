@@ -1,44 +1,44 @@
-import { dispose, addTeardown } from "../disposable";
-import { pipe, returns, incrementBy, sum } from "../functions";
+import { addTeardown, dispose } from "../disposable";
+import { incrementBy, pipe, returns, sum } from "../functions";
 import {
+  StreamLike,
   __await,
   __memo,
   __observe,
   async,
+  buffer,
   empty as emptyObs,
-  subscribe,
   fromArray,
   onNotify as onNotifyObs,
-  buffer,
-  takeFirst,
   startWith,
-  StreamLike,
+  subscribe,
+  takeFirst,
   toRunnable,
 } from "../observable";
 import { Option, isSome, none } from "../option";
 import { toArray } from "../runnable";
 import { createVirtualTimeScheduler } from "../scheduler";
 import {
+  __stream,
+  createActionReducer,
   empty,
   identity,
   lift,
   map,
   mapReq,
+  mapTo,
   onNotify,
   scan,
-  createActionReducer,
-  mapTo,
   sink,
   stream,
-  __stream,
 } from "../streamable";
 import {
-  test,
   describe,
   expectArrayEquals,
   expectEquals,
-  expectTrue,
   expectFalse,
+  expectTrue,
+  test,
 } from "../testing";
 
 export const tests = describe(

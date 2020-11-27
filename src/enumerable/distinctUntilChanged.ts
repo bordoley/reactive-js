@@ -1,5 +1,5 @@
 import { EnumerableOperator, EnumeratorLike } from "../enumerable";
-import { strictEquality, Equality } from "../functions";
+import { Equality, strictEquality } from "../functions";
 import { lift } from "./lift";
 
 class DistinctUntilChangedEnumerator<T> implements EnumeratorLike<T> {

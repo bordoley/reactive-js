@@ -1,9 +1,9 @@
 import {
   EnumerableLike,
-  EnumeratorLike,
   EnumerableOperator,
+  EnumeratorLike,
 } from "../enumerable";
-import { alwaysTrue, Predicate } from "../functions";
+import { Predicate, alwaysTrue } from "../functions";
 import { isNone } from "../option";
 import { enumerate } from "./enumerator";
 

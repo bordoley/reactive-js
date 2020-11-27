@@ -1,8 +1,8 @@
 import {
-  createSerialDisposable,
   SerialDisposableLike,
-  dispose,
   addDisposableDisposeParentOnChildError,
+  createSerialDisposable,
+  dispose,
 } from "../disposable";
 import { pipe, returns } from "../functions";
 import {

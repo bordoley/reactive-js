@@ -1,12 +1,12 @@
 import {
-  createSerialDisposable,
-  disposed,
-  dispose,
   addDisposableDisposeParentOnChildError,
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
+  createSerialDisposable,
+  dispose,
+  disposed,
 } from "../disposable";
-import { pipe, Function1 } from "../functions";
+import { Function1, pipe } from "../functions";
 import {
   ObservableLike,
   ObservableOperator,

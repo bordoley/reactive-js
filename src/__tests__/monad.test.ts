@@ -1,15 +1,15 @@
 import {
+  alwaysTrue,
+  defer,
+  increment,
+  incrementBy,
   pipe,
   returns,
-  alwaysTrue,
-  increment,
   sum,
-  defer,
-  incrementBy,
 } from "../functions";
 
 import { toArray } from "../runnable";
-import { test, describe, expectArrayEquals } from "../testing";
+import { describe, expectArrayEquals, test } from "../testing";
 
 export const createMonadTests = (m: any) =>
   describe(

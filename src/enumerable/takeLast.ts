@@ -1,8 +1,8 @@
-import { EnumeratorLike, EnumerableOperator } from "../enumerable";
+import { EnumerableOperator, EnumeratorLike } from "../enumerable";
 import { pipe } from "../functions";
-import { isNone, Option, none } from "../option";
+import { Option, isNone, none } from "../option";
 import { enumerate } from "./enumerator";
-import { fromArray, empty } from "./fromArray";
+import { empty, fromArray } from "./fromArray";
 import { lift } from "./lift";
 
 class TakeLastEnumerator<T> implements EnumeratorLike<T> {

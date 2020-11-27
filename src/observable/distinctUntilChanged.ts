@@ -1,4 +1,4 @@
-import { strictEquality, Equality } from "../functions";
+import { Equality, strictEquality } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
 import { Option } from "../option";
 import { lift } from "./lift";

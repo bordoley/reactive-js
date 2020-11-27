@@ -2,7 +2,7 @@ import { dispose } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { YieldError } from "../scheduler";
-import { deferSynchronous, defer } from "./observable";
+import { defer, deferSynchronous } from "./observable";
 
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.

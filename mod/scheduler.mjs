@@ -328,8 +328,8 @@ class HostScheduler {
         return now();
     }
     get shouldYield() {
-        return (this.inContinuation && ((this.now > this.startTime + this.yieldInterval) ||
-            inputIsPending()));
+        return (this.inContinuation &&
+            (this.now > this.startTime + this.yieldInterval || inputIsPending()));
     }
     schedule(continuation, options = {}) {
         const { delay = 0 } = options;

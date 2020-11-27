@@ -1,10 +1,10 @@
-import { pipe, returns, Factory, Reducer, Equality } from "../functions";
+import { Equality, Factory, Reducer, pipe, returns } from "../functions";
 import {
   ObservableLike,
-  fromValue,
-  scan,
   distinctUntilChanged,
+  fromValue,
   mergeWith,
+  scan,
 } from "../observable";
 import { StreamableLike } from "../streamable";
 import { createStreamable } from "./streamable";

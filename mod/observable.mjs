@@ -1,12 +1,31 @@
-import { ignore, raise, pipe, arrayEquality, returns, compose, callWith, defer as defer$1, strictEquality } from './functions.mjs';
+import { pipe, ignore, raise, arrayEquality, returns, compose, callWith, defer as defer$1, strictEquality } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
-import { AbstractDisposable, addDisposable, bindDisposables, addOnDisposedWithError, dispose, addOnDisposedWithoutErrorTeardown, addTeardown, disposed, toErrorHandler, addDisposableDisposeParentOnChildError, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
-import { __DEV__ } from './env.mjs';
+import { addOnDisposedWithError, AbstractDisposable, addDisposable, bindDisposables, dispose, addOnDisposedWithoutErrorTeardown, addTeardown, disposed, toErrorHandler, addDisposableDisposeParentOnChildError, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
 import { enumerate, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
-import { yield$ as yield$$1, schedule, YieldError, run, createVirtualTimeScheduler } from './scheduler.mjs';
+import { schedule, yield$ as yield$$1, YieldError, run, createVirtualTimeScheduler } from './scheduler.mjs';
+import { __DEV__ } from './env.mjs';
 import { dispatchTo } from './dispatcher.mjs';
+
+class ScheduledObservable {
+    constructor(f, isSynchronous, delay) {
+        this.f = f;
+        this.isSynchronous = isSynchronous;
+        this.delay = delay;
+    }
+    observe(observer) {
+        const callback = this.f();
+        const schedulerSubscription = pipe(observer, schedule(callback, this));
+        addOnDisposedWithError(schedulerSubscription, observer);
+    }
+}
+const deferSynchronous = (factory) => new ScheduledObservable(factory, true, 0);
+const defer = (factory, options = {}) => {
+    const { delay = 0 } = options;
+    return new ScheduledObservable(factory, false, delay);
+};
+const observe = (observer) => observable => observable.observe(observer);
 
 const assertObserverStateProduction = ignore;
 const assertObserverStateDev = (observer) => {
@@ -90,25 +109,6 @@ const yield$ = (observer, next, delay) => {
     observer.notify(next);
     yield$$1(observer, delay);
 };
-
-class ScheduledObservable {
-    constructor(f, isSynchronous, delay) {
-        this.f = f;
-        this.isSynchronous = isSynchronous;
-        this.delay = delay;
-    }
-    observe(observer) {
-        const callback = this.f();
-        const schedulerSubscription = pipe(observer, schedule(callback, this));
-        addOnDisposedWithError(schedulerSubscription, observer);
-    }
-}
-const deferSynchronous = (factory) => new ScheduledObservable(factory, true, 0);
-const defer = (factory, options = {}) => {
-    const { delay = 0 } = options;
-    return new ScheduledObservable(factory, false, delay);
-};
-const observe = (observer) => observable => observable.observe(observer);
 
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.

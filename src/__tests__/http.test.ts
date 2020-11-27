@@ -1,19 +1,19 @@
-import { pipe, defer } from "../functions";
+import { defer, pipe } from "../functions";
 import {
-  createHttpRequest,
   HttpMethod,
   HttpRequest,
-  createHttpResponse,
-  HttpStatusCode,
   HttpResponse,
-  checkIfNotModified,
   HttpStandardHeader,
+  HttpStatusCode,
+  checkIfNotModified,
+  createHttpRequest,
+  createHttpResponse,
   writeHttpRequestHeaders,
   writeHttpResponseHeaders,
 } from "../http";
 import { none } from "../option";
 import { map } from "../readonlyArray";
-import { test, describe, expectEquals, expectTrue } from "../testing";
+import { describe, expectEquals, expectTrue, test } from "../testing";
 
 const createHttpRequestTests = test("createHttpRequest", () => {
   const request = createHttpRequest({

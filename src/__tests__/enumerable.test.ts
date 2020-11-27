@@ -1,13 +1,11 @@
 import {
-  fromIterable,
-  toIterable,
-  zipWith,
   concat,
   concatMap,
   distinctUntilChanged,
   empty,
   endWith,
   fromArray,
+  fromIterable,
   fromValue,
   generate,
   keep,
@@ -20,11 +18,13 @@ import {
   takeFirst,
   takeLast,
   takeWhile,
+  toIterable,
   toRunnable,
+  zipWith,
 } from "../enumerable";
 import { defer } from "../functions";
 import { toArray } from "../runnable";
-import { test, describe, expectArrayEquals } from "../testing";
+import { describe, expectArrayEquals, test } from "../testing";
 import { createMonadTests } from "./monad.test";
 
 const Enumerable = {

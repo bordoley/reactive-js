@@ -1,4 +1,4 @@
-import { Predicate, Equality, strictEquality, isEqualTo } from "../functions";
+import { Equality, Predicate, isEqualTo, strictEquality } from "../functions";
 import { RunnableLike } from "../runnable";
 import { AbstractSink } from "./sink";
 

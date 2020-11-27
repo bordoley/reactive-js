@@ -1,24 +1,24 @@
-import { disposed, dispose } from "../disposable";
-import { pipe, returns, defer } from "../functions";
+import { dispose, disposed } from "../disposable";
+import { defer, pipe, returns } from "../functions";
 import {
-  fromArray,
-  subscribe,
-  fromValue,
   ObservableLike,
-  toRunnable,
-  onNotify,
+  fromArray,
+  fromValue,
   never,
+  onNotify,
+  subscribe,
+  toRunnable,
 } from "../observable";
 import { createReactiveCache, getOrSet } from "../reactiveCache";
 import { forEach } from "../runnable";
 import { createVirtualTimeScheduler } from "../scheduler";
 import {
-  test,
   describe,
+  expectEquals,
   expectNone,
   expectSome,
   expectTrue,
-  expectEquals,
+  test,
 } from "../testing";
 
 export const tests = describe(

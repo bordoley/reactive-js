@@ -1,6 +1,6 @@
-import { alwaysTrue, Predicate } from "../functions";
+import { Predicate, alwaysTrue } from "../functions";
 import { isNone } from "../option";
-import { SinkLike, RunnableOperator } from "../runnable";
+import { RunnableOperator, SinkLike } from "../runnable";
 import { createRunnable } from "./createRunnable";
 
 class RepeatSink<T> implements SinkLike<T> {

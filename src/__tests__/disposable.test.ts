@@ -1,24 +1,24 @@
 import {
+  addDisposable,
+  addTeardown,
   createDisposable,
   createDisposableValue,
   createSerialDisposable,
-  disposed,
   dispose,
-  addDisposable,
-  addTeardown,
+  disposed,
 } from "../disposable";
-import { pipe, defer, raise } from "../functions";
+import { defer, pipe, raise } from "../functions";
 import { none } from "../option";
 import {
-  test,
   describe,
-  expectFalse,
-  expectTrue,
-  mockFn,
-  expectToHaveBeenCalledTimes,
   expectArrayEquals,
   expectEquals,
+  expectFalse,
   expectNone,
+  expectToHaveBeenCalledTimes,
+  expectTrue,
+  mockFn,
+  test,
 } from "../testing";
 
 export const tests = describe(

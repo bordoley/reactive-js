@@ -1,5 +1,5 @@
 import { addOnDisposedWithError } from "../disposable";
-import { SideEffect1, Factory, pipe } from "../functions";
+import { Factory, SideEffect1, pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { schedule } from "../scheduler";
 

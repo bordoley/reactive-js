@@ -1,14 +1,14 @@
 import {
-  strictEquality,
-  arrayEquality,
-  Factory,
   Equality,
-  SideEffect,
+  Factory,
   Function1,
+  SideEffect,
+  arrayEquality,
   ignore,
   raise,
+  strictEquality,
 } from "./functions";
-import { Option, isSome, isNone, none } from "./option";
+import { Option, isNone, isSome, none } from "./option";
 
 export const enum TestGroupType {
   Describe = 1,

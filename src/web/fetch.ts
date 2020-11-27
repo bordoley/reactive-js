@@ -1,6 +1,6 @@
-import { dispose, addTeardown } from "../disposable";
-import { Function1, returns, pipe } from "../functions";
-import { defer, fromPromise, observe, ObservableLike } from "../observable";
+import { addTeardown, dispose } from "../disposable";
+import { Function1, pipe, returns } from "../functions";
+import { ObservableLike, defer, fromPromise, observe } from "../observable";
 import { Option, none } from "../option";
 
 const globalFetch = self.fetch;

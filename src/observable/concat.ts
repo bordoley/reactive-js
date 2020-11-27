@@ -1,13 +1,13 @@
 import {
-  dispose,
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
+  dispose,
 } from "../disposable";
 import { pipe } from "../functions";
 import {
   ObservableLike,
-  ObserverLike,
   ObservableOperator,
+  ObserverLike,
 } from "../observable";
 import { everySatisfy } from "../readonlyArray";
 import { observe } from "./observable";

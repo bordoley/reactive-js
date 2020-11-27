@@ -1,19 +1,19 @@
 import {
   DisposableLike,
-  createDisposable,
-  dispose,
   addDisposable,
   addTeardown,
+  createDisposable,
+  dispose,
 } from "../disposable";
 import {
   Factory,
-  SideEffect,
   Function1,
+  SideEffect,
+  alwaysFalse,
   defer,
   pipe,
-  alwaysFalse,
 } from "../functions";
-import { SchedulerLike, SchedulerContinuationLike } from "../scheduler";
+import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
 import { run } from "./schedulerContinuation";
 
 const supportsPerformanceNow =

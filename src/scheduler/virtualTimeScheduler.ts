@@ -1,11 +1,11 @@
 import { AbstractDisposable, addDisposable, dispose } from "../disposable";
 import { pipe } from "../functions";
-import { none, isSome } from "../option";
-import { createPriorityQueue, QueueLike } from "../queues";
+import { isSome, none } from "../option";
+import { QueueLike, createPriorityQueue } from "../queues";
 import {
   SchedulerContinuationLike,
-  VirtualTimeSchedulerLike,
   SchedulerLike,
+  VirtualTimeSchedulerLike,
 } from "../scheduler";
 import { run } from "./schedulerContinuation";
 

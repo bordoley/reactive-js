@@ -1,9 +1,9 @@
 import { pipe } from "../functions";
 import {
-  RunnableOperator,
   RunnableLike,
-  SinkOperator,
+  RunnableOperator,
   SinkLike,
+  SinkOperator,
 } from "../runnable";
 
 class LiftedRunnable<T> implements RunnableLike<T> {

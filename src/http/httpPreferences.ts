@@ -1,4 +1,4 @@
-import { pipe, SideEffect2, raise } from "../functions";
+import { SideEffect2, pipe, raise } from "../functions";
 import {
   HttpContentEncoding,
   HttpHeaders,
@@ -7,11 +7,11 @@ import {
   MediaRange,
   MediaType,
 } from "../http";
-import { isSome, Option, none } from "../option";
+import { Option, isSome, none } from "../option";
 import { concatWith, map, parseWith } from "../parserCombinators";
 import { map as mapReadonlyArray } from "../readonlyArray";
 import { ReadonlyObjectMap } from "../readonlyObjectMap";
-import { pToken, pParams, httpList } from "./httpGrammar";
+import { httpList, pParams, pToken } from "./httpGrammar";
 import { getHeaderValue } from "./httpHeaders";
 import { pMediaType, parseMediaTypeOrThrow } from "./mediaType";
 

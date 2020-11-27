@@ -1,14 +1,14 @@
 import { dispatchTo } from "../dispatcher";
 import { addDisposable } from "../disposable";
-import { compose, pipe, Function1 } from "../functions";
+import { Function1, compose, pipe } from "../functions";
 import {
-  StreamLike,
-  subscribe,
-  ignoreElements,
   ObservableLike,
-  onNotify,
-  using,
+  StreamLike,
   endWith,
+  ignoreElements,
+  onNotify,
+  subscribe,
+  using,
 } from "../observable";
 import { none } from "../option";
 import { StreamableLike } from "../streamable";

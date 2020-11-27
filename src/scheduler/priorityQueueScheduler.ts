@@ -1,18 +1,18 @@
 import {
   AbstractSerialDisposable,
   DisposableLike,
-  disposed,
   addDisposable,
   addTeardown,
+  disposed,
 } from "../disposable";
 import { pipe } from "../functions";
-import { none, Option, isSome, isNone } from "../option";
-import { createPriorityQueue, QueueLike } from "../queues";
+import { Option, isNone, isSome, none } from "../option";
+import { QueueLike, createPriorityQueue } from "../queues";
 import {
-  SchedulerLike,
-  SchedulerContinuationLike,
-  PrioritySchedulerLike,
   PausableSchedulerLike,
+  PrioritySchedulerLike,
+  SchedulerContinuationLike,
+  SchedulerLike,
 } from "../scheduler";
 import { run, schedule, yield$ } from "./schedulerContinuation";
 

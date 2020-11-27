@@ -1,7 +1,7 @@
 import {
   EnumerableLike,
-  EnumeratorLike,
   EnumerableOperator,
+  EnumeratorLike,
   EnumeratorOperator,
 } from "../enumerable";
 import { pipe } from "../functions";

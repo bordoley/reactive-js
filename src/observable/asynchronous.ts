@@ -1,12 +1,11 @@
 import {
+  DisposableLike,
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
-  DisposableLike,
   dispose,
   disposed,
 } from "../disposable";
 import {
-  arrayEquality,
   Factory,
   Function1,
   Function2,
@@ -14,13 +13,14 @@ import {
   Function4,
   Function5,
   Function6,
-  pipe,
   SideEffect1,
+  arrayEquality,
+  pipe,
 } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
-import { Option, none, isNone } from "../option";
+import { Option, isNone, none } from "../option";
 import { schedule } from "../scheduler";
-import { observe, defer } from "./observable";
+import { defer, observe } from "./observable";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 import { takeLast } from "./takeLast";
 

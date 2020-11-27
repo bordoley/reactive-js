@@ -1,8 +1,8 @@
 import { dispose } from "../disposable";
-import { Function1, Factory, pipe } from "../functions";
+import { Factory, Function1, pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { none } from "../option";
-import { deferSynchronous, defer } from "./observable";
+import { defer, deferSynchronous } from "./observable";
 
 /**
  * Creates an `ObservableLike` that emits no items and immediately disposes its subscription with an error.

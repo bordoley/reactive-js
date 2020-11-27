@@ -1,7 +1,7 @@
 import { addTeardown } from "../disposable";
-import { pipe, Function1 } from "../functions";
+import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
-import { none, Option, isSome } from "../option";
+import { Option, isSome, none } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";

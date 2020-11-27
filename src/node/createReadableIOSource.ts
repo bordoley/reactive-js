@@ -3,20 +3,20 @@ import { Readable } from "stream";
 import { dispatchTo } from "../dispatcher";
 import {
   DisposableValueLike,
-  dispose,
   addDisposable,
-  addTeardown,
   addDisposableDisposeParentOnChildError,
+  addTeardown,
+  dispose,
 } from "../disposable";
 import { FlowMode } from "../flowable";
-import { pipe, compose, Factory } from "../functions";
-import { notify, done, IOSourceLike } from "../io";
+import { Factory, compose, pipe } from "../functions";
+import { IOSourceLike, done, notify } from "../io";
 import {
+  ObservableLike,
   createObservable,
   onNotify,
   subscribe,
   using,
-  ObservableLike,
 } from "../observable";
 import { SchedulerLike } from "../scheduler";
 import { createStreamable } from "../streamable";

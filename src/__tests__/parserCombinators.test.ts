@@ -1,30 +1,30 @@
 import { defer, pipe, returns } from "../functions";
 import { none } from "../option";
 import {
-  string,
+  char,
+  concat,
+  createCharStream,
+  many,
+  manySatisfy,
   map,
   mapTo,
-  sepBy,
-  pColon,
-  many,
-  or,
-  createCharStream,
-  concat,
   optional,
+  or,
   orCompute,
-  manySatisfy,
-  pForwardSlash,
-  char,
+  pColon,
   pEof,
+  pForwardSlash,
   parseWithOrThrow,
+  sepBy,
+  string,
   throwParseError,
 } from "../parserCombinators";
 import {
-  test,
   describe,
-  expectToThrow,
   expectArrayEquals,
   expectEquals,
+  expectToThrow,
+  test,
 } from "../testing";
 
 export const tests = describe(

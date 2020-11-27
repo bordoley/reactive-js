@@ -1,5 +1,5 @@
 import { HttpDateTime, HttpHeaders, HttpStandardHeader } from "../http";
-import { none, Option } from "../option";
+import { Option, none } from "../option";
 import { getHeaderValue } from "./httpHeaders";
 
 export const parseHttpDateTime = (v: string): Option<HttpDateTime> => {

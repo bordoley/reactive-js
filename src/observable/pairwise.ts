@@ -1,4 +1,4 @@
-import { ObserverLike, ObservableOperator } from "../observable";
+import { ObservableOperator, ObserverLike } from "../observable";
 import { Option, none } from "../option";
 import { lift } from "./lift";
 import { AbstractAutoDisposingDelegatingObserver } from "./observer";

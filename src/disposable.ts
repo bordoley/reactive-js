@@ -1,5 +1,5 @@
-import { SideEffect1, SideEffect, defer, pipe } from "./functions";
-import { isSome, none, Option, isNone } from "./option";
+import { SideEffect, SideEffect1, defer, pipe } from "./functions";
+import { Option, isNone, isSome, none } from "./option";
 
 /**
  * A wrapper around a caught error to handle corner cases such

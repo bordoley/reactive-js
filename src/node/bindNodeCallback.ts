@@ -14,7 +14,7 @@ import {
   SideEffect6,
   pipe,
 } from "../functions";
-import { createObservable, ObservableLike } from "../observable";
+import { ObservableLike, createObservable } from "../observable";
 
 export function bindNodeCallback<T>(
   callbackFunc: SideEffect1<SideEffect2<unknown, T>>,

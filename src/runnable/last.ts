@@ -1,4 +1,4 @@
-import { none, Option } from "../option";
+import { Option, none } from "../option";
 import { RunnableLike } from "../runnable";
 import { AbstractSink } from "./sink";
 

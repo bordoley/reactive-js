@@ -1,4 +1,4 @@
-import { pipe, SideEffect2 } from "../functions";
+import { SideEffect2, pipe } from "../functions";
 import { CacheDirective, HttpHeaders, HttpStandardHeader } from "../http";
 import { isSome } from "../option";
 import {
@@ -8,12 +8,12 @@ import {
   parseWith,
   parseWithOrThrow,
 } from "../parserCombinators";
-import { map, join } from "../readonlyArray";
+import { join, map } from "../readonlyArray";
 import {
+  httpList,
   pToken,
   pTokenOrQuotedString,
   toTokenOrQuotedString,
-  httpList,
 } from "./httpGrammar";
 import { getHeaderValue } from "./httpHeaders";
 

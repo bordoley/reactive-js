@@ -1,13 +1,13 @@
 import { FlowMode } from "../flowable";
 import { pipe, returns, sum } from "../functions";
 import {
+  IOEventType,
   createIOSinkAccumulator,
   decodeWithCharset,
   empty,
   encodeUtf8,
   fromArray,
   fromValue,
-  IOEventType,
   map,
 } from "../io";
 import { onNotify, subscribe } from "../observable";
@@ -15,12 +15,12 @@ import { none } from "../option";
 import { createVirtualTimeScheduler } from "../scheduler";
 import { sink, stream } from "../streamable";
 import {
-  test,
   describe,
   expectEquals,
+  expectToHaveBeenCalledTimes,
   expectTrue,
   mockFn,
-  expectToHaveBeenCalledTimes,
+  test,
 } from "../testing";
 
 export const tests = describe(

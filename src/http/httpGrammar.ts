@@ -1,24 +1,24 @@
 import { pipe, raise } from "../functions";
 import { HttpHeaders } from "../http";
-import { isNone, isSome, none, Option } from "../option";
+import { Option, isNone, isSome, none } from "../option";
 import {
-  Parser,
-  pEquals,
-  or,
-  throwParseError,
-  map,
-  satisfy,
-  parseWith,
-  manySatisfy,
-  many,
-  pComma,
-  sepBy,
-  manyIgnore,
   CharStreamLike,
-  pSemicolon,
-  pColon,
+  Parser,
   isParseError,
+  many,
+  manyIgnore,
+  manySatisfy,
+  map,
+  or,
+  pColon,
+  pComma,
+  pEquals,
+  pSemicolon,
+  parseWith,
+  satisfy,
+  sepBy,
   string,
+  throwParseError,
 } from "../parserCombinators";
 import { ReadonlyObjectMap } from "../readonlyObjectMap";
 

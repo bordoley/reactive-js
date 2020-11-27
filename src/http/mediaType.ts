@@ -1,12 +1,12 @@
 import { pipe } from "../functions";
 import { MediaType } from "../http";
 import {
-  pForwardSlash,
   Parser,
+  pForwardSlash,
   parseWith,
   parseWithOrThrow,
 } from "../parserCombinators";
-import { fromObject, map, join, keep, length } from "../readonlyArray";
+import { fromObject, join, keep, length, map } from "../readonlyArray";
 import { ReadonlyObjectMap } from "../readonlyObjectMap";
 import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar";
 

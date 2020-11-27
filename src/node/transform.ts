@@ -1,24 +1,24 @@
 import { Transform } from "stream";
 import {
-  createBrotliCompress,
-  createDeflate,
-  createGzip,
-  createBrotliDecompress,
-  createInflate,
-  createGunzip,
-  ZlibOptions,
   BrotliOptions,
+  ZlibOptions,
+  createBrotliCompress,
+  createBrotliDecompress,
+  createDeflate,
+  createGunzip,
+  createGzip,
+  createInflate,
 } from "zlib";
 import { dispatchTo } from "../dispatcher";
 import {
   DisposableValueLike,
-  createDisposableValue,
-  addOnDisposedWithError,
   addDisposableDisposeParentOnChildError,
+  addOnDisposedWithError,
+  createDisposableValue,
 } from "../disposable";
-import { defer, ignore, pipe, returns, Factory, identity } from "../functions";
+import { Factory, defer, identity, ignore, pipe, returns } from "../functions";
 import { IOSourceOperator } from "../io";
-import { using, subscribe, onNotify } from "../observable";
+import { onNotify, subscribe, using } from "../observable";
 import { createStreamable, sink, stream } from "../streamable";
 import { createReadableIOSource } from "./createReadableIOSource";
 import { createWritableIOSink } from "./createWritableIOSink";
