@@ -2,22 +2,22 @@ import { DispatcherLike } from "./dispatcher";
 import {
   AbstractDisposable,
   DisposableLike,
-  disposed,
-  dispose,
   addTeardown,
+  dispose,
+  disposed,
 } from "./disposable";
 import { fromIterable, toRunnable } from "./enumerable";
-import { pipe, Function1 } from "./functions";
+import { Function1, pipe } from "./functions";
 import { createKeyedQueue } from "./keyedQueue";
 import { createSetMultimap } from "./multimaps";
 import {
   ObservableLike,
   createObservable,
-  subscribe,
   fromValue,
   onNotify,
+  subscribe,
 } from "./observable";
-import { isSome, isNone, none } from "./option";
+import { isNone, isSome, none } from "./option";
 import { createUniqueQueue } from "./queues";
 import { first, forEach } from "./runnable";
 import { SchedulerLike } from "./scheduler";

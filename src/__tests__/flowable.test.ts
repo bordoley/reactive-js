@@ -1,17 +1,17 @@
 import { dispatchTo } from "../dispatcher";
 import { dispose } from "../disposable";
-import { empty, fromValue, FlowMode, fromObservable } from "../flowable";
-import { increment, pipe, returns, defer } from "../functions";
-import { onNotify, subscribe, generate } from "../observable";
+import { FlowMode, empty, fromObservable, fromValue } from "../flowable";
+import { defer, increment, pipe, returns } from "../functions";
+import { generate, onNotify, subscribe } from "../observable";
 import { createVirtualTimeScheduler, schedule } from "../scheduler";
 import { stream } from "../streamable";
 import {
-  test,
   describe,
   expectEquals,
+  expectToHaveBeenCalledTimes,
   expectTrue,
   mockFn,
-  expectToHaveBeenCalledTimes,
+  test,
 } from "../testing";
 
 export const tests = describe(

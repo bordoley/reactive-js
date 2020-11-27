@@ -1,8 +1,8 @@
 import {
-  fromIterable,
-  toRunnable,
   EnumeratorLike,
   enumerate,
+  fromIterable,
+  toRunnable,
 } from "../enumerable";
 import { pipe } from "../functions";
 import { isSome } from "../option";

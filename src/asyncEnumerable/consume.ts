@@ -1,25 +1,25 @@
 import { AsyncEnumerableLike } from "../asyncEnumerable";
 import {
-  compose,
-  Function1,
-  pipe,
   Factory,
-  flip,
+  Function1,
   Function2,
+  compose,
+  flip,
+  pipe,
 } from "../functions";
 import {
+  ObservableLike,
+  ObservableOperator,
+  StreamLike,
+  SubjectLike,
   createSubject,
   map,
-  ObservableLike,
   onNotify,
   onSubscribe,
   switchAll,
-  SubjectLike,
-  StreamLike,
+  takeFirst,
   using,
   zipWithLatestFrom,
-  takeFirst,
-  ObservableOperator,
 } from "../observable";
 import { none } from "../option";
 import { stream } from "../streamable";

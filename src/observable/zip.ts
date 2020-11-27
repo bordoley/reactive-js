@@ -1,21 +1,21 @@
 import {
-  DisposableLike,
   AbstractDisposable,
-  dispose,
+  DisposableLike,
   addDisposable,
-  addTeardown,
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
+  addTeardown,
+  dispose,
 } from "../disposable";
-import { current, EnumeratorLike, zipEnumerators } from "../enumerable";
-import { returns, pipe, defer } from "../functions";
+import { EnumeratorLike, current, zipEnumerators } from "../enumerable";
+import { defer, pipe, returns } from "../functions";
 import {
   ObservableLike,
-  ObserverLike,
   ObservableOperator,
+  ObserverLike,
 } from "../observable";
-import { none, isSome, isNone } from "../option";
-import { map, everySatisfy } from "../readonlyArray";
+import { isNone, isSome, none } from "../option";
+import { everySatisfy, map } from "../readonlyArray";
 import { SchedulerContinuationLike, run } from "../scheduler";
 import { fromEnumerator } from "./fromEnumerable";
 import { observe } from "./observable";

@@ -1,5 +1,5 @@
-import { dispose, bindDisposables } from "../disposable";
-import { pipe, defer } from "../functions";
+import { bindDisposables, dispose } from "../disposable";
+import { defer, pipe } from "../functions";
 import {
   ObservableLike,
   ObservableOperator,

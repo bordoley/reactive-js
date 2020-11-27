@@ -1,13 +1,13 @@
-import { dispose, addTeardown } from "../disposable";
-import { pipe, Function1 } from "../functions";
+import { addTeardown, dispose } from "../disposable";
+import { Function1, pipe } from "../functions";
 import {
+  MulticastObservableLike,
   ObservableLike,
   ObservableOperator,
-  SubjectLike,
   ObserverLike,
-  MulticastObservableLike,
+  SubjectLike,
 } from "../observable";
-import { none, Option } from "../option";
+import { Option, none } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { observe } from "./observable";
 import { publish } from "./publish";

@@ -1,24 +1,24 @@
 import { dispatchTo } from "../dispatcher";
 import { bindDisposables } from "../disposable";
-import { pipe, compose, Function1 } from "../functions";
+import { Function1, compose, pipe } from "../functions";
 import {
   ObservableOperator,
   StreamLike,
+  __memo,
+  __observe,
   concatWith,
-  onNotify,
   empty as emptyObs,
   fromValue,
   map,
+  never,
+  onNotify,
   subscribe,
   using,
-  __observe,
-  __memo,
-  never,
 } from "../observable";
 import { Option, isNone } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { StreamableLike } from "../streamable";
-import { createStream, StreamableOperator } from "./createStream";
+import { StreamableOperator, createStream } from "./createStream";
 
 class StreamableImpl<TReq, TData> implements StreamableLike<TReq, TData> {
   constructor(private readonly op: ObservableOperator<TReq, TData>) {}

@@ -1,15 +1,15 @@
 import { pipe } from "../functions";
 import { EntityTag, HttpHeaders, HttpStandardHeader } from "../http";
-import { isSome, none, Option } from "../option";
+import { Option, isSome, none } from "../option";
 import {
+  CharStreamLike,
+  manySatisfy,
+  optional,
+  pDquote,
+  parseWith,
+  parseWithOrThrow,
   satisfy,
   string,
-  manySatisfy,
-  pDquote,
-  optional,
-  parseWith,
-  CharStreamLike,
-  parseWithOrThrow,
 } from "../parserCombinators";
 import { ASCII } from "./httpGrammar";
 import { getHeaderValue } from "./httpHeaders";

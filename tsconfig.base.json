@@ -17,5 +17,6 @@
     "strict": true,
     "strictNullChecks": true,
     "target": "ES2019"
-  }
+  },
+  "include": ["./src/**/*"]
 }

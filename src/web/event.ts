@@ -1,6 +1,6 @@
-import { dispose, addTeardown } from "../disposable";
+import { addTeardown, dispose } from "../disposable";
 import { Function1, pipe } from "../functions";
-import { createObservable, ObservableLike } from "../observable";
+import { ObservableLike, createObservable } from "../observable";
 
 export const fromEvent = <T>(
   target: EventTarget,

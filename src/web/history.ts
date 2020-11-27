@@ -1,4 +1,4 @@
-import { pipe, Updater, compose } from "../functions";
+import { Updater, compose, pipe } from "../functions";
 import {
   compute,
   concatWith,

@@ -1,9 +1,9 @@
 import {
   Factory,
   Function1,
+  Function2,
   Reducer,
   SideEffect1,
-  Function2,
 } from "../functions";
 import {
   ObservableLike,

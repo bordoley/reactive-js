@@ -1,12 +1,12 @@
 import {
   AbstractDisposable,
+  DisposableLike,
   Error,
   addTeardown,
   dispose,
-  DisposableLike,
 } from "../disposable";
-import { SideEffect1, Function1, pipe } from "../functions";
-import { none, Option, isSome } from "../option";
+import { Function1, SideEffect1, pipe } from "../functions";
+import { Option, isSome, none } from "../option";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationRunStatusChangedListenerLike,

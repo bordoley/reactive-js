@@ -1,9 +1,9 @@
 import { AsyncEnumerableLike } from "../asyncEnumerable";
 import { Function1, compose, returns } from "../functions";
 import {
-  scan,
   concatMap,
   fromValue as fromValueObs,
+  scan,
   takeFirst,
 } from "../observable";
 import { createStreamable } from "../streamable";

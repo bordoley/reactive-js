@@ -31,6 +31,16 @@ module.exports = {
   plugins: ["@typescript-eslint", "import"],
   root: true,
   rules: {
+    "sort-imports": [
+      "error",
+      {
+        ignoreCase: false,
+        ignoreDeclarationSort: true,
+        ignoreMemberSort: false,
+        memberSyntaxSortOrder: ["none", "all", "multiple", "single"],
+        allowSeparatedGroups: false,
+      },
+    ],
     "import/no-duplicates": "error",
     "import/order": [
       "error",

@@ -1,10 +1,10 @@
 import { Factory, Function1, pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { isSome } from "../option";
-import { createRunnable, RunnableLike, SinkLike } from "../runnable";
+import { RunnableLike, SinkLike, createRunnable } from "../runnable";
 import {
-  createVirtualTimeScheduler,
   VirtualTimeSchedulerLike,
+  createVirtualTimeScheduler,
 } from "../scheduler";
 import { lift } from "./lift";
 import { AbstractAutoDisposingDelegatingObserver } from "./observer";

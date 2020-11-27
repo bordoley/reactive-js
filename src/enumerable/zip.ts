@@ -1,7 +1,7 @@
 import {
   EnumerableLike,
-  EnumeratorLike,
   EnumerableOperator,
+  EnumeratorLike,
 } from "../enumerable";
 import { pipe } from "../functions";
 import { everySatisfy, map } from "../readonlyArray";

@@ -1,4 +1,4 @@
-import { returns, Function1 } from "../functions";
+import { Function1, returns } from "../functions";
 import { RunnableOperator, SinkLike } from "../runnable";
 import { lift } from "./lift";
 import { AbstractDelegatingSink } from "./sink";

@@ -1,13 +1,13 @@
 import {
-  dispose,
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
+  dispose,
 } from "../disposable";
 import { pipe } from "../functions";
 import {
   ObservableLike,
-  ObserverLike,
   ObservableOperator,
+  ObserverLike,
 } from "../observable";
 import { observe } from "./observable";
 import { createDelegatingObserver } from "./observer";

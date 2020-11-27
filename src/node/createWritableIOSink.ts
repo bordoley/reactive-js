@@ -2,19 +2,19 @@ import { Writable } from "stream";
 import { dispatchTo } from "../dispatcher";
 import {
   DisposableValueLike,
-  dispose,
-  addTeardown,
   addDisposable,
   addDisposableDisposeParentOnChildError,
+  addTeardown,
+  dispose,
 } from "../disposable";
 import { FlowMode } from "../flowable";
-import { pipe, Factory, defer } from "../functions";
-import { IOEventType, IOEvent, IOSinkLike } from "../io";
+import { Factory, defer, pipe } from "../functions";
+import { IOEvent, IOEventType, IOSinkLike } from "../io";
 import {
+  ObservableLike,
   createObservable,
   onNotify,
   subscribe,
-  ObservableLike,
   using,
 } from "../observable";
 import { SchedulerLike } from "../scheduler";

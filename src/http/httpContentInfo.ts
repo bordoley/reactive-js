@@ -1,4 +1,4 @@
-import { pipe, SideEffect2 } from "../functions";
+import { SideEffect2, pipe } from "../functions";
 import {
   HttpContentEncoding,
   HttpContentInfo,
@@ -6,18 +6,18 @@ import {
   HttpStandardHeader,
   MediaType,
 } from "../http";
-import { isNone, none, Option } from "../option";
+import { Option, isNone, none } from "../option";
 import { parseWith } from "../parserCombinators";
 import { join } from "../readonlyArray";
 import { ReadonlyObjectMap } from "../readonlyObjectMap";
-import { pToken, httpList } from "./httpGrammar";
+import { httpList, pToken } from "./httpGrammar";
 import { getHeaderValue } from "./httpHeaders";
 
 import {
-  parseMediaType,
-  mediaTypeToString,
-  parseMediaTypeOrThrow,
   mediaTypeIsCompressible,
+  mediaTypeToString,
+  parseMediaType,
+  parseMediaTypeOrThrow,
 } from "./mediaType";
 
 const parseTokenList = pipe(pToken, httpList, parseWith);

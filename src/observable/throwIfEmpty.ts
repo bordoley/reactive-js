@@ -1,12 +1,12 @@
 import {
-  dispose,
+  Error,
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
-  Error,
+  dispose,
 } from "../disposable";
 import { Factory, pipe } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
-import { none, Option } from "../option";
+import { Option, none } from "../option";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 

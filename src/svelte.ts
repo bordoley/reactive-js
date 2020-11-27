@@ -1,13 +1,13 @@
 import { onDestroy, onMount } from "svelte";
-import { writable, Readable, Writable } from "svelte/store";
+import { Readable, Writable, writable } from "svelte/store";
 import { dispose } from "./disposable";
-import { Function1, Factory, pipe, defer, SideEffect1 } from "./functions";
+import { Factory, Function1, SideEffect1, defer, pipe } from "./functions";
 import {
   ObservableLike,
-  subscribe as subscribeObs,
   StreamLike,
+  subscribe as subscribeObs,
 } from "./observable";
-import { Option, none, isSome } from "./option";
+import { Option, isSome, none } from "./option";
 import { SchedulerLike } from "./scheduler";
 import {
   StreamableLike,

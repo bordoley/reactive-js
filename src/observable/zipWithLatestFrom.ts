@@ -1,13 +1,13 @@
 import {
-  dispose,
-  addOnDisposedWithoutErrorTeardown,
   addDisposableDisposeParentOnChildError,
+  addOnDisposedWithoutErrorTeardown,
+  dispose,
 } from "../disposable";
-import { pipe, Function2 } from "../functions";
+import { Function2, pipe } from "../functions";
 import {
-  ObserverLike,
   ObservableLike,
   ObservableOperator,
+  ObserverLike,
 } from "../observable";
 import { Option } from "../option";
 import { lift } from "./lift";

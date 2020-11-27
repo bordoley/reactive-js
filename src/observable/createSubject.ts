@@ -1,6 +1,6 @@
 import { DispatcherLike } from "../dispatcher";
-import { AbstractDisposable, addTeardown, addDisposable } from "../disposable";
-import { SubjectLike, ObserverLike } from "../observable";
+import { AbstractDisposable, addDisposable, addTeardown } from "../disposable";
+import { ObserverLike, SubjectLike } from "../observable";
 import { toDispatcher } from "./toDispatcher";
 
 class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {

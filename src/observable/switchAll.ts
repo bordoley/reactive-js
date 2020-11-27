@@ -1,15 +1,15 @@
 import {
-  disposed,
-  dispose,
+  addDisposableDisposeParentOnChildError,
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
-  addDisposableDisposeParentOnChildError,
+  dispose,
+  disposed,
 } from "../disposable";
-import { compose, pipe, Function1 } from "../functions";
+import { Function1, compose, pipe } from "../functions";
 import {
   ObservableLike,
-  ObserverLike,
   ObservableOperator,
+  ObserverLike,
 } from "../observable";
 import { lift } from "./lift";
 import { map } from "./map";

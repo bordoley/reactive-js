@@ -2,8 +2,8 @@ import {
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
 } from "../disposable";
-import { Reducer, Factory, pipe } from "../functions";
-import { ObserverLike, ObservableOperator } from "../observable";
+import { Factory, Reducer, pipe } from "../functions";
+import { ObservableOperator, ObserverLike } from "../observable";
 import { fromValue } from "./fromValue";
 import { lift } from "./lift";
 import { observe } from "./observable";

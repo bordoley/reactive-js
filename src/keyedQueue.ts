@@ -1,11 +1,11 @@
 import { KeyedCollection } from "./collections";
 import {
   EnumerableLike,
-  fromIterator,
   EnumeratorLike,
   enumerate,
+  fromIterator,
 } from "./enumerable";
-import { pipe, defer } from "./functions";
+import { defer, pipe } from "./functions";
 import { Option } from "./option";
 
 export interface KeyedQueueLike<K, V> extends KeyedCollection<K, V> {

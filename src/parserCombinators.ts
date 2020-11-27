@@ -3,11 +3,11 @@ import { __DEV__ } from "./env";
 import {
   Factory,
   Function1,
+  Predicate,
   compose,
   isEqualTo,
   pipe,
   returns,
-  Predicate,
 } from "./functions";
 
 import { Option, none, orCompute as orComputeOption } from "./option";

@@ -1,23 +1,23 @@
 import { SideEffect2, pipe, raise } from "../functions";
 import { HttpContentInfo, HttpMessage, HttpMessageOptions } from "../http";
 import { IOSourceLike, fromValue } from "../io";
-import { isSome, isNone } from "../option";
+import { isNone, isSome } from "../option";
 import { map } from "../readonlyArray";
 import {
-  writeHttpCacheControlHeader,
-  parseCacheDirectiveOrThrow,
   parseCacheControlFromHeaders,
+  parseCacheDirectiveOrThrow,
+  writeHttpCacheControlHeader,
 } from "./cacheDirective";
 import {
-  writeHttpContentInfoHeaders,
   createHttpContentInfo,
   parseHttpContentInfoFromHeaders,
+  writeHttpContentInfoHeaders,
 } from "./httpContentInfo";
-import { writeHttpHeaders, filterHeaders } from "./httpHeaders";
+import { filterHeaders, writeHttpHeaders } from "./httpHeaders";
 import {
-  writeHttpPreferenceHeaders,
   createHttpPreferences,
   parseHttpPreferencesFromHeaders,
+  writeHttpPreferenceHeaders,
 } from "./httpPreferences";
 
 export const createHttpMessage = <T>({

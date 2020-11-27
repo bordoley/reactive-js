@@ -1,52 +1,52 @@
 import { dispatchTo } from "./dispatcher";
 import {
-  addDisposable,
   AbstractDisposable,
+  addDisposable,
   addDisposableDisposeParentOnChildError,
 } from "./disposable";
 import {
-  FlowableLike,
   FlowMode,
+  FlowableLike,
   fromObservable as fromObservableFlowable,
 } from "./flowable";
 import {
+  Factory,
   Function1,
   Reducer,
-  Factory,
   compose,
+  composeWith,
   pipe,
   returns,
-  composeWith,
 } from "./functions";
 import {
-  map as mapObs,
-  withLatestFrom as withLatestFromObs,
+  MulticastObservableLike,
+  ObservableLike,
+  ObserverLike,
+  StreamLike,
   compute,
   concatMap,
-  endWith,
-  fromIterator,
-  fromArray as fromArrayObs,
-  ObservableLike,
-  StreamLike,
-  MulticastObservableLike,
-  using,
-  takeWhile,
-  keepType,
-  onNotify,
-  subscribe,
   createObservable,
-  reduce,
-  ObserverLike,
   createSubject,
+  endWith,
+  fromArray as fromArrayObs,
+  fromIterator,
+  keepType,
+  map as mapObs,
+  onNotify,
+  reduce,
+  subscribe,
+  takeWhile,
+  using,
+  withLatestFrom as withLatestFromObs,
 } from "./observable";
 import { SchedulerLike } from "./scheduler";
 import {
-  map as mapStream,
-  lift,
-  stream,
-  createStreamable,
-  withLatestFrom,
   StreamableLike,
+  createStreamable,
+  lift,
+  map as mapStream,
+  stream,
+  withLatestFrom,
 } from "./streamable";
 
 export const enum IOEventType {

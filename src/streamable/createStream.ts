@@ -2,13 +2,13 @@ import { DispatcherLike } from "../dispatcher";
 import { AbstractDisposable, addDisposable } from "../disposable";
 import { pipe } from "../functions";
 import {
-  StreamLike,
   MulticastObservableLike,
   ObservableOperator,
-  createSubject,
-  publish,
   ObserverLike,
+  StreamLike,
+  createSubject,
   observe,
+  publish,
 } from "../observable";
 import { SchedulerLike } from "../scheduler";
 import { StreamableLike } from "../streamable";

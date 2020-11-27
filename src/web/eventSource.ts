@@ -1,6 +1,6 @@
 import { addTeardown } from "../disposable";
 import { pipe } from "../functions";
-import { createObservable, ObservableLike } from "../observable";
+import { ObservableLike, createObservable } from "../observable";
 import { keep } from "../readonlyArray";
 
 const reservedEvents = ["error", "open"];

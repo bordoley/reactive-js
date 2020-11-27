@@ -1,4 +1,4 @@
-import { toErrorHandler, dispose } from "../disposable";
+import { dispose, toErrorHandler } from "../disposable";
 import { Factory, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { defer } from "./observable";

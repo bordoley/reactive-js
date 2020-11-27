@@ -1,5 +1,5 @@
 import { SideEffect1 } from "../functions";
-import { SinkLike, RunnableLike } from "../runnable";
+import { RunnableLike, SinkLike } from "../runnable";
 import { sinkDone } from "./sink";
 
 class RunnableImpl<T> implements RunnableLike<T> {

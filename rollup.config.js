@@ -9,6 +9,18 @@ const modules = files
 const input = modules.map(m => `./src/${m}.ts`);
 const types = modules.map(m => `./build/${m}.d.ts`);
 
+const external = [
+  "http",
+  "http2",
+  "stream",
+  "react",
+  "scheduler",
+  "svelte",
+  "svelte/store",
+  "fs",
+  "zlib",
+];
+
 const output = {
   dir: "./mod",
   hoistTransitiveImports: false,
@@ -20,6 +32,7 @@ const typescriptConfig = {
 
 export default [
   {
+    external,
     treeshake: false,
     input,
     output: {
@@ -31,6 +44,7 @@ export default [
     plugins: [typescript(typescriptConfig)],
   },
   {
+    external,
     treeshake: false,
     input,
     output: {
@@ -42,6 +56,7 @@ export default [
     plugins: [typescript(typescriptConfig)],
   },
   {
+    external,
     input: types,
     output: {
       ...output,

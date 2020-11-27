@@ -1,25 +1,25 @@
 import {
-  done,
-  notify,
   consume,
   consumeAsync,
+  done,
   fromArray,
   fromIterable,
   generate,
+  notify,
 } from "../asyncEnumerable";
 import { Error, addTeardown } from "../disposable";
-import { pipe, increment, returns, defer } from "../functions";
-import { fromValue, subscribe, onNotify, toRunnable } from "../observable";
-import { none, Option } from "../option";
+import { defer, increment, pipe, returns } from "../functions";
+import { fromValue, onNotify, subscribe, toRunnable } from "../observable";
+import { Option, none } from "../option";
 import { last } from "../runnable";
 import { createVirtualTimeScheduler } from "../scheduler";
 import { stream } from "../streamable";
 import {
-  test,
   describe,
+  expectArrayEquals,
   expectEquals,
   expectNone,
-  expectArrayEquals,
+  test,
 } from "../testing";
 
 export const tests = describe(

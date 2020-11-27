@@ -1,5 +1,5 @@
-import { Error, dispose, addDisposable, addTeardown } from "../disposable";
-import { pipe, Predicate, Function2 } from "../functions";
+import { Error, addDisposable, addTeardown, dispose } from "../disposable";
+import { Function2, Predicate, pipe } from "../functions";
 import {
   ObservableLike,
   ObservableOperator,

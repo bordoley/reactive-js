@@ -3,8 +3,8 @@ import {
   addDisposableDisposeParentOnChildError,
 } from "../disposable";
 import {
-  Function2,
   Function1,
+  Function2,
   Function3,
   Function4,
   Function5,

@@ -1,5 +1,5 @@
 import { pipe } from "./functions";
-import { isNone, isSome, none, Option } from "./option";
+import { Option, isNone, isSome, none } from "./option";
 import { fromObject, reduce } from "./readonlyArray";
 import { ReadonlyObjectMap } from "./readonlyObjectMap";
 

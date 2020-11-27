@@ -1,24 +1,24 @@
 import { dispatchTo } from "./dispatcher";
 import { bindDisposables } from "./disposable";
 import {
-  pipe,
-  identity,
-  Factory,
   Equality,
-  Updater,
-  updaterReducer,
+  Factory,
   Function1,
+  Updater,
   compose,
+  identity,
+  pipe,
+  updaterReducer,
 } from "./functions";
-import { onNotify, using, zipWithLatestFrom, subscribe } from "./observable";
+import { onNotify, subscribe, using, zipWithLatestFrom } from "./observable";
 import {
   StreamableLike,
-  createActionReducer,
   StreamableOperator,
+  createActionReducer,
   createStreamable,
-  stream as streamStreamable,
   mapReq,
   map as mapStream,
+  stream as streamStreamable,
 } from "./streamable";
 
 /** @noInheritDoc */

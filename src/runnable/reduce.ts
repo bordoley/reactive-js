@@ -1,4 +1,4 @@
-import { Function1, Reducer, Factory } from "../functions";
+import { Factory, Function1, Reducer } from "../functions";
 import { RunnableLike } from "../runnable";
 import { AbstractSink } from "./sink";
 

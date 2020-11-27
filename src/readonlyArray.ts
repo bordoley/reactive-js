@@ -1,4 +1,4 @@
-import { Function1, Reducer, Factory, Predicate } from "./functions";
+import { Factory, Function1, Predicate, Reducer } from "./functions";
 import { ReadonlyObjectMap } from "./readonlyObjectMap";
 
 export type ReadonlyArrayOperator<TA, TB> = Function1<

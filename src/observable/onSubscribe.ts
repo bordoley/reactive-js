@@ -1,14 +1,14 @@
 import {
   DisposableOrTeardown,
-  dispose,
-  addTeardown,
   addDisposableDisposeParentOnChildError,
+  addTeardown,
+  dispose,
 } from "../disposable";
 import { Factory, pipe } from "../functions";
 import {
   ObservableLike,
-  ObserverLike,
   ObservableOperator,
+  ObserverLike,
 } from "../observable";
 import { isSome, none } from "../option";
 import { observe } from "./observable";

@@ -1,5 +1,5 @@
 import { Function1, compose } from "../functions";
-import { RunnableLike, SinkLike, RunnableOperator } from "../runnable";
+import { RunnableLike, RunnableOperator, SinkLike } from "../runnable";
 import { createRunnable } from "./createRunnable";
 import { fromArray } from "./fromArray";
 import { lift } from "./lift";

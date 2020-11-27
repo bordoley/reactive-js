@@ -1,13 +1,13 @@
-import { ZlibOptions, BrotliOptions } from "zlib";
+import { BrotliOptions, ZlibOptions } from "zlib";
 import { HttpContentEncoding } from "../http";
 import { IOSourceOperator } from "../io";
 import {
-  brotliDecompress,
-  gunzip,
-  inflate,
   brotliCompress,
-  gzip,
+  brotliDecompress,
   deflate,
+  gunzip,
+  gzip,
+  inflate,
 } from "../node";
 import { ReadonlyObjectMap } from "../readonlyObjectMap";
 

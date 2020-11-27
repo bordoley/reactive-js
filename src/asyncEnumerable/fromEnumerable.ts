@@ -1,19 +1,19 @@
 import { AsyncEnumerableLike } from "../asyncEnumerable";
 import {
-  EnumeratorLike,
   EnumerableLike,
-  enumerate,
+  EnumeratorLike,
   current,
+  enumerate,
   hasCurrent,
   move,
 } from "../enumerable";
 import { Function1, compose, defer } from "../functions";
 import {
-  withLatestFrom,
+  compute,
+  map,
   onNotify,
   takeWhile,
-  map,
-  compute,
+  withLatestFrom,
 } from "../observable";
 import { createStreamable } from "../streamable";
 

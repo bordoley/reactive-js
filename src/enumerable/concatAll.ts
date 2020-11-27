@@ -1,10 +1,10 @@
 import {
   EnumerableLike,
-  EnumeratorLike,
   EnumerableOperator,
+  EnumeratorLike,
 } from "../enumerable";
-import { compose, Function1 } from "../functions";
-import { isNone, isSome, none, Option } from "../option";
+import { Function1, compose } from "../functions";
+import { Option, isNone, isSome, none } from "../option";
 import { enumerate } from "./enumerator";
 import { lift } from "./lift";
 import { map } from "./map";

@@ -1,11 +1,11 @@
 import { DispatcherLike } from "../dispatcher";
 import {
   AbstractDisposable,
-  dispose,
+  addDisposable,
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
-  addDisposable,
+  dispose,
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObserverLike } from "../observable";

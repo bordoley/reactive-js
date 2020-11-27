@@ -1,10 +1,10 @@
 import {
   Function1,
   SideEffect2,
+  Updater,
   pipe,
   returns,
   updaterReducer,
-  Updater,
 } from "../functions";
 import {
   HttpHeaders,
@@ -18,26 +18,26 @@ import {
 } from "../http";
 import { IOSourceLike, IOSourceOperator, empty } from "../io";
 import { isNone, isSome, none } from "../option";
-import { everySatisfy, map, reduceRight, join } from "../readonlyArray";
+import { everySatisfy, join, map, reduceRight } from "../readonlyArray";
 import { ReadonlyObjectMap } from "../readonlyObjectMap";
 import {
   entityTagToString,
-  parseETagOrThrow,
   parseETagFromHeaders,
+  parseETagOrThrow,
 } from "./entityTag";
 import { contentIsCompressible } from "./httpContentInfo";
 import {
-  parseHttpDateTime,
   httpDateTimeToString,
+  parseHttpDateTime,
   parseHttpDateTimeFromHeaders,
 } from "./httpDateTime";
 import { getHeaderValue } from "./httpHeaders";
 import {
-  writeHttpMessageHeaders,
+  createHttpMessage,
+  decodeHttpMessageWithCharset,
   encodeHttpMessageWithUtf8,
   toIOSourceHttpMessage,
-  decodeHttpMessageWithCharset,
-  createHttpMessage,
+  writeHttpMessageHeaders,
 } from "./httpMessage";
 
 declare class URL implements URILike {

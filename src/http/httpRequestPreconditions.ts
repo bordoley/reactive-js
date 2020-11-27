@@ -1,4 +1,4 @@
-import { pipe, SideEffect2, raise } from "../functions";
+import { SideEffect2, pipe, raise } from "../functions";
 import {
   EntityTag,
   HttpDateTime,
@@ -6,8 +6,8 @@ import {
   HttpRequestPreconditions,
   HttpStandardHeader,
 } from "../http";
-import { isNone, isSome, none, Option } from "../option";
-import { parseWith, pAsterisk, or, mapTo } from "../parserCombinators";
+import { Option, isNone, isSome, none } from "../option";
+import { mapTo, or, pAsterisk, parseWith } from "../parserCombinators";
 import { join, map } from "../readonlyArray";
 import {
   entityTagToString,

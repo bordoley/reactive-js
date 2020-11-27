@@ -1,10 +1,10 @@
 import {
-  addDisposable,
   AbstractDisposable,
+  addDisposable,
   bindDisposables,
 } from "../disposable";
 import { __DEV__ } from "../env";
-import { ignore, SideEffect1, raise } from "../functions";
+import { SideEffect1, ignore, raise } from "../functions";
 import { ObserverLike } from "../observable";
 import {
   SchedulerContinuationLike,

@@ -1,23 +1,23 @@
 import {
+  AbstractDisposable,
   DisposableLike,
   Error,
-  AbstractDisposable,
-  dispose,
-  addTeardown,
   addDisposable,
+  addTeardown,
+  dispose,
 } from "./disposable";
 import { pipe } from "./functions";
 import {
   ObservableLike,
   StreamLike,
-  switchAll,
   onSubscribe,
+  switchAll,
 } from "./observable";
 import { Option, isNone, isSome } from "./option";
 import { SchedulerLike, schedule, yield$ } from "./scheduler";
 import {
-  createStreamable,
   StreamableLike,
+  createStreamable,
   stream as streamStreamable,
 } from "./streamable";
 

@@ -4,6 +4,5 @@
     "emitDeclarationOnly": true,
     "declaration": true,
     "outDir": "./build"
-  },
-  "include": ["./src/**/*"]
+  }
 }

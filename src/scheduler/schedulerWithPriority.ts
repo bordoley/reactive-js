@@ -1,8 +1,8 @@
 import { Function1 } from "../functions";
 import {
+  PrioritySchedulerLike,
   SchedulerContinuationLike,
   SchedulerLike,
-  PrioritySchedulerLike,
 } from "../scheduler";
 
 class SchedulerWithPriorityImpl implements SchedulerLike {

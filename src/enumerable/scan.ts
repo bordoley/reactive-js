@@ -1,4 +1,4 @@
-import { EnumeratorLike, EnumerableOperator } from "../enumerable";
+import { EnumerableOperator, EnumeratorLike } from "../enumerable";
 import { Factory, Reducer } from "../functions";
 import { lift } from "./lift";
 

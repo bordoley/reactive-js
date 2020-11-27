@@ -1,9 +1,9 @@
 import { KeyedCollection } from "./collections";
 import {
   EnumerableLike,
-  fromIterator,
   EnumeratorLike,
   enumerate,
+  fromIterator,
 } from "./enumerable";
 import { defer, pipe } from "./functions";
 

@@ -1,17 +1,17 @@
 import {
-  Factory,
-  Updater,
-  Function1,
-  compose,
-  pipe,
   Equality,
-  strictEquality,
+  Factory,
+  Function1,
   Predicate,
   Reducer,
+  Updater,
   alwaysTrue,
+  compose,
+  pipe,
+  strictEquality,
 } from "./functions";
 import { isNone } from "./option";
-import { createRunnable, RunnableLike } from "./runnable";
+import { RunnableLike, createRunnable } from "./runnable";
 
 export const enum SequenceType {
   Notify = 1,

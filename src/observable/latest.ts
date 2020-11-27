@@ -1,13 +1,13 @@
 import {
-  dispose,
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
+  dispose,
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
-import { deferSynchronous, observe, defer } from "./observable";
+import { defer, deferSynchronous, observe } from "./observable";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
 type LatestCtx = {
