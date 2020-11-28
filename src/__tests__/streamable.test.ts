@@ -14,7 +14,7 @@ import {
   takeFirst,
   toRunnable,
 } from "../observable";
-import { Option, isSome, none } from "../option";
+import { none } from "../option";
 import { toArray } from "../runnable";
 import { createVirtualTimeScheduler } from "../scheduler";
 import {
@@ -44,19 +44,17 @@ export const tests = describe(
   "streamable",
   test("__stream", () => {
     const streamable = identity<number>();
-    const createLooper = (stream: Option<StreamLike<number, number>>) =>
+    const createLooper = (stream: StreamLike<number, number>) =>
       pipe(
         [0, 1, 2, 3],
         fromArray({ delay: 10 }),
         onNotifyObs(x => {
-          if (isSome(stream)) {
-            stream.dispatch(x);
-          }
+          stream.dispatch(x);
         }),
       );
 
-    const obs = async(() => {
-      const stream = __stream(streamable);
+    const obs = async(scheduler => {
+      const stream = __stream(streamable, scheduler);
       const looper = __memo(createLooper, stream);
 
       __await(looper);

@@ -6,16 +6,14 @@ import {
   StreamLike,
   __memo,
   __observe,
-  concatWith,
+  __using,
   empty as emptyObs,
-  fromValue,
   map,
-  never,
   onNotify,
   subscribe,
   using,
 } from "../observable";
-import { Option, isNone } from "../option";
+import { isNone } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { StreamableLike } from "../streamable";
 import { StreamableOperator, createStream } from "./createStream";
@@ -110,17 +108,15 @@ export const stream = <TReq, T>(
 ): Function1<StreamableLike<TReq, T>, StreamLike<TReq, T>> => streamable =>
   streamable.stream(scheduler, options);
 
-const createObservableOfStream = <TReq, T>(
+const streamOnSchedulerFactory = <TReq, T>(
   streamable: StreamableLike<TReq, T>,
-) =>
-  using(
-    scheduler => streamable.stream(scheduler),
-    compose(fromValue(), concatWith(never())),
-  );
+  scheduler: SchedulerLike,
+  replay: number,
+) => pipe(streamable, stream(scheduler, { replay }));
 
 export const __stream = <TReq, T>(
   streamable: StreamableLike<TReq, T>,
-): Option<StreamLike<TReq, T>> => {
-  const streamObs = __memo(createObservableOfStream, streamable);
-  return __observe(streamObs);
-};
+  scheduler: SchedulerLike,
+  { replay = 0 }: { readonly replay?: number } = {},
+): StreamLike<TReq, T> =>
+  __using(streamOnSchedulerFactory, streamable, scheduler, replay);

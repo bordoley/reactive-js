@@ -39,8 +39,8 @@ import {
   __memo,
   __observe,
 } from "@reactive-js/core/observable";
-import { __stream } from "@reactive-js/core/streamable";
 import { dispatchTo } from "@reactive-js/core/dispatcher";
+import { __stream } from "@reactive-js/core/streamable";
 
 const updateHash = (hash: string): Updater<RelativeURI> => uri =>
   encodeAndSetHash(uri, hash);
@@ -165,12 +165,10 @@ const router = createRouter({
   "/text": TextInputURIState,
 });
 
-const createDispatchFn = mapOption(dispatchTo);
-
 const Root = createComponent(() =>
-  async(() => {
-    const historyStream = __stream(historyStateStore);
-    const dispatch = __memo(createDispatchFn, historyStream);
+  async(scheduler => {
+    const historyStream = __stream(historyStateStore, scheduler);
+    const dispatch = __memo(dispatchTo, historyStream);
 
     const uri = __observe(historyStream) ?? emptyURI;
     const [Component, params] = __memo(find, router, uri.pathname) ?? [

@@ -1,10 +1,9 @@
 import { pipe, returns, increment, Updater } from "@reactive-js/core/functions";
 import {
-  __effect,
+  __do,
   __memo,
   __observe,
   async,
-  empty,
   generate,
   ObservableLike,
   StreamLike,
@@ -12,33 +11,30 @@ import {
 import { FlowMode, fromObservable } from "@reactive-js/core/flowable";
 import { __stream } from "@reactive-js/core/streamable";
 import { createStateStore } from "@reactive-js/core/stateStore";
-import { Option } from "@reactive-js/core/option";
 import { SchedulerLike } from "@reactive-js/core/scheduler";
 
 const stateStore = createStateStore(() => ({
   mode: FlowMode.Pause,
 }));
 
-const setCounterModeFromStateEffect = (
-  counter: Option<StreamLike<FlowMode, number>>,
+const setCounterMode = (
+  counter: StreamLike<FlowMode, number>,
   mode: FlowMode,
 ) => {
-  counter?.dispatch(mode);
+  counter.dispatch(mode);
 };
 
 const createOnClick = (
-  state: Option<
-    StreamLike<
-      Updater<{
-        mode: FlowMode;
-      }>,
-      {
-        mode: FlowMode;
-      }
-    >
+  state: StreamLike<
+    Updater<{
+      mode: FlowMode;
+    }>,
+    {
+      mode: FlowMode;
+    }
   >,
 ) => () => {
-  state?.dispatch(({ mode }) => ({
+  state.dispatch(({ mode }) => ({
     mode: mode === FlowMode.Pause ? FlowMode.Resume : FlowMode.Pause,
   }));
 };
@@ -55,9 +51,9 @@ export const appState = (
     fromObservable({ scheduler }),
   );
 
-  return async(() => {
-    const counter = __stream(counterFlowable);
-    const state = __stream(stateStore);
+  return async(scheduler => {
+    const counter = __stream(counterFlowable, scheduler);
+    const state = __stream(stateStore, scheduler);
 
     const onClick = __memo(createOnClick, state);
 
@@ -66,7 +62,7 @@ export const appState = (
       mode: FlowMode.Pause,
     };
 
-    __effect(setCounterModeFromStateEffect, counter, mode);
+    __do(setCounterMode, counter, mode);
 
     return {
       mode,
