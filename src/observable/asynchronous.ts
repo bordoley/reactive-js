@@ -24,7 +24,7 @@ import {
   pipe,
 } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
-import { Option, isNone, none, isSome } from "../option";
+import { Option, isNone, isSome, none } from "../option";
 import { schedule } from "../scheduler";
 import { defer } from "./observable";
 import { onNotify } from "./onNotify";
@@ -134,7 +134,9 @@ class AsyncContextImpl implements AsyncContextLike {
 
 let currentCtx: Option<AsyncContextLike> = none;
 
-export const async = <T>(computation: Factory<Option<T>>): ObservableLike<T> => {
+export const async = <T>(
+  computation: Factory<Option<T>>,
+): ObservableLike<T> => {
   const factory = () => {
     const effects: AsyncEffect[] = [];
     let initialized = false;
