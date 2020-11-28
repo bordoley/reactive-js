@@ -38,7 +38,6 @@ import {
   ObservableLike,
   catchError,
   throws,
-  keepType,
 } from "@reactive-js/core/observable";
 import { isSome, map as mapOption } from "@reactive-js/core/option";
 import { ReadonlyObjectMap } from "@reactive-js/core/readonlyObjectMap";
@@ -205,7 +204,7 @@ const errorHandler = compose(
 );
 
 const listener = createHttpRequestListener(
-  compose(processRequest, keepType(isSome), catchError(errorHandler)),
+  compose(processRequest, catchError(errorHandler)),
   scheduler,
 );
 
