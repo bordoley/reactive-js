@@ -1,11 +1,15 @@
 import { createRouter, find } from "@reactive-js/core/router";
 import {
-  ignore,
+  compose,
   pipe,
   SideEffect1,
   Updater,
 } from "@reactive-js/core/functions";
-import { useObservable, idlePriority } from "@reactive-js/core/react";
+import {
+  createComponent,
+  useObservable,
+  idlePriority,
+} from "@reactive-js/core/react";
 import {
   empty as emptyURI,
   decodeAndGetHash,
@@ -17,12 +21,25 @@ import {
   fetch,
   historyStateStore,
 } from "@reactive-js/core/web";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { default as ReactDOM } from "react-dom";
 import { appState } from "./example.state";
-import { isNone, map as mapOption } from "@reactive-js/core/option";
+import {
+  isNone,
+  isSome,
+  map as mapOption,
+  none,
+} from "@reactive-js/core/option";
 import { FlowMode } from "@reactive-js/core/flowable";
-import { async, empty, __memo, __observe } from "@reactive-js/core/observable";
+import {
+  async,
+  distinctUntilChanged,
+  empty,
+  map as mapObs,
+  __await,
+  __memo,
+  __observe,
+} from "@reactive-js/core/observable";
 import { __stream } from "@reactive-js/core/streamable";
 import { dispatchTo } from "@reactive-js/core/dispatcher";
 
@@ -80,75 +97,67 @@ const goToPath = (pathname: string): Updater<RelativeURI> => uri => ({
   pathname,
 });
 
-const NotFound = ({
-  dispatch,
-}: {
-  readonly params: { readonly [key: string]: string };
+const NotFound = createComponent<{
   readonly dispatch: SideEffect1<Updater<RelativeURI>>;
-  readonly uri: RelativeURI;
-}) => {
-  const goToEvents = useCallback(() => dispatch(goToPath("/events")), [
-    dispatch,
-  ]);
+}>(
+  compose(
+    mapObs(props => props.dispatch),
+    distinctUntilChanged(),
+    mapObs(dispatch => {
+      const goToEvents = () => dispatch(goToPath("/events"));
+      const goToFetch = () => dispatch(goToPath("/fetch"));
+      const goToStream = () => dispatch(goToPath("/stream"));
+      const goToTextInput = () => dispatch(goToPath("/text"));
 
-  const goToFetch = useCallback(() => dispatch(goToPath("/fetch")), [dispatch]);
+      return (
+        <div>
+          <div>{"Not Found"}</div>
+          <div>
+            <button onClick={goToEvents}>Events Source Example</button>
+            <button onClick={goToFetch}>Fetch Example</button>
+            <button onClick={goToStream}>Stream Example</button>
+            <button onClick={goToTextInput}>Text Input Example</button>
+          </div>
+        </div>
+      );
+    }),
+  ),
+);
 
-  const goToStream = useCallback(() => dispatch(goToPath("/stream")), [
-    dispatch,
-  ]);
+const eventSource = createEventSource("http://localhost:8080/events", {
+  events: ["error", "message", "test"],
+});
 
-  const goToTextInput = useCallback(() => dispatch(goToPath("/text")), [
-    dispatch,
-  ]);
+const EventSourceExample = createComponent(() =>
+  async(() => {
+    const eventData = __observe(eventSource);
 
-  return (
-    <div>
-      <div>{"Not Found"}</div>
+    return (
       <div>
-        <button onClick={goToEvents}>Events Source Example</button>
-        <button onClick={goToFetch}>Fetch Example</button>
-        <button onClick={goToStream}>Stream Example</button>
-        <button onClick={goToTextInput}>Text Input Example</button>
+        <div>{JSON.stringify(eventData) ?? ""}</div>
       </div>
-    </div>
-  );
-};
+    );
+  }),
+);
 
-const EventSourceExample = () => {
-  const eventSource = useMemo(
-    () =>
-      createEventSource("http://localhost:8080/events", {
-        events: ["error", "message", "test"],
-      }),
-    [],
-  );
+const fetchFile = pipe(
+  {
+    uri: "http://localhost:8080/files/packages/example/build/example-react.js",
+  },
+  fetch(response => response.text()),
+);
 
-  const eventData = useObservable(eventSource);
+const FetchExample = createComponent(() =>
+  async(() => {
+    const someData = __await(fetchFile);
 
-  return (
-    <div>
-      <div>{JSON.stringify(eventData) ?? ""}</div>
-    </div>
-  );
-};
-
-const FetchExample = () => {
-  const httpRequest = useMemo(
-    () =>
-      pipe(
-        { uri: "http://localhost:8080/files/packages/example/build/bundle.js" },
-        fetch(response => response.text()),
-      ),
-    [],
-  );
-  const someData = useObservable(httpRequest);
-
-  return (
-    <div>
-      <div>{someData ?? ""}</div>
-    </div>
-  );
-};
+    return (
+      <div>
+        <div>{someData ?? ""}</div>
+      </div>
+    );
+  }),
+);
 
 const router = createRouter({
   "/events": EventSourceExample,
@@ -159,19 +168,23 @@ const router = createRouter({
 
 const createDispatchFn = mapOption(dispatchTo);
 
-const rootState = async(() => {
-  const historyStream = __stream(historyStateStore);
-  const dispatch = __memo(createDispatchFn, historyStream) ?? ignore;
+const Root = createComponent(() =>
+  async(() => {
+    const historyStream = __stream(historyStateStore);
+    const dispatch = __memo(createDispatchFn, historyStream);
 
-  const uri = __observe(historyStream ?? empty<RelativeURI>()) ?? emptyURI;
-  const [Component, params] = __memo(find, router, uri.pathname) ?? [
-    NotFound,
-    {},
-  ];
+    const uri = __observe(historyStream ?? empty<RelativeURI>()) ?? emptyURI;
+    const [Component, params] = __memo(find, router, uri.pathname) ?? [
+      NotFound,
+      {},
+    ];
 
-  return <Component params={params} dispatch={dispatch} uri={uri} />;
-});
-
-const Root = () => useObservable(rootState) ?? null;
+    return isSome(dispatch) ? (
+      <Component params={params} dispatch={dispatch} uri={uri} />
+    ) : (
+      none
+    );
+  }),
+);
 
 (ReactDOM as any).createRoot(document.getElementById("root")).render(<Root />);

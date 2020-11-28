@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useMemo, useState } from "react";
 import {
   unstable_IdlePriority,
   unstable_ImmediatePriority,
@@ -18,7 +18,13 @@ import {
   dispose,
 } from "./disposable";
 import { compose, defer, pipe, returns } from "./functions";
-import { ObservableLike, onNotify, subscribe } from "./observable";
+import {
+  ObservableLike,
+  SubjectLike,
+  createSubject,
+  onNotify,
+  subscribe,
+} from "./observable";
 import { Option, isSome, none } from "./option";
 import {
   SchedulerContinuationLike,
@@ -61,6 +67,27 @@ export const useObservable = <T>(
   }
 
   return state;
+};
+
+const createReplaySubject = () => createSubject({ replay: 1 });
+
+export const createComponent = <TProps>(
+  fn: (props: ObservableLike<TProps>) => ObservableLike<ReactElement>,
+) => {
+  const ObservableComponent = (props: TProps) => {
+    const propsSubject = useMemo<SubjectLike<TProps>>(createReplaySubject, [
+      createReplaySubject,
+    ]);
+
+    useEffect(() => {
+      propsSubject.dispatch(props);
+    }, [propsSubject, props]);
+
+    const elementObservable = useMemo(() => fn(propsSubject), [propsSubject]);
+    return useObservable(elementObservable) ?? null;
+  };
+
+  return ObservableComponent;
 };
 
 const priorityScheduler = {
