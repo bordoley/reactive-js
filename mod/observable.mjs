@@ -409,11 +409,11 @@ function __memo(f, ...args) {
 }
 const __observe = (observable) => {
     const ctx = assertCurrentContext();
-    return ctx.observe(observable);
+    return ctx.observe(observable !== null && observable !== void 0 ? observable : empty());
 };
 const createAwaitedObservable = (observable) => pipe(observable, takeLast());
 const __await = (observable) => {
-    const awaitedObservable = __memo(createAwaitedObservable, observable);
+    const awaitedObservable = __memo(createAwaitedObservable, observable !== null && observable !== void 0 ? observable : empty());
     return __observe(awaitedObservable);
 };
 const deferSideEffect = (f, ...args) => defer(() => observer => {

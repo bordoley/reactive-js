@@ -1072,7 +1072,7 @@ const tests$d = describe("streamable", test("__stream", () => {
         const stream = __stream(streamable);
         const looper = __memo(createLooper, stream);
         __await(looper);
-        return __observe(stream !== null && stream !== void 0 ? stream : empty$3());
+        return __observe(stream);
     });
     pipe(obs, toRunnable(), toArray(), console.log);
 }), test("createActionReducer", () => {
