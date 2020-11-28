@@ -16,7 +16,13 @@ declare function __memo<TA, TB, TC, TD, T>(fn: Function4<TA, TB, TC, TD, T>, a: 
 declare function __memo<TA, TB, TC, TD, TE, T>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
 declare function __memo<TA, TB, TC, TD, TE, TF, T>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
 declare const __observe: <T>(observable: Option<ObservableLike<T>>) => Option<T>;
-declare const __await: <T>(observable: Option<ObservableLike<T>>) => Option<T>;
+declare function __await<T>(fn: Factory<ObservableLike<T>>): Option<T>;
+declare function __await<TA, T>(fn: Function1<TA, ObservableLike<T>>, a: TA): Option<T>;
+declare function __await<TA, TB, T>(fn: Function2<TA, TB, ObservableLike<T>>, a: TA, b: TB): Option<T>;
+declare function __await<TA, TB, TC, T>(fn: Function3<TA, TB, TC, ObservableLike<T>>, a: TA, b: TB, c: TC): Option<T>;
+declare function __await<TA, TB, TC, TD, T>(fn: Function4<TA, TB, TC, TD, ObservableLike<T>>, a: TA, b: TB, c: TC, d: TD): Option<T>;
+declare function __await<TA, TB, TC, TD, TE, T>(fn: Function5<TA, TB, TC, TD, TE, ObservableLike<T>>, a: TA, b: TB, c: TC, d: TD, e: TE): Option<T>;
+declare function __await<TA, TB, TC, TD, TE, TF, T>(fn: Function6<TA, TB, TC, TD, TE, TF, ObservableLike<T>>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): Option<T>;
 declare function __do(fn: SideEffect): void;
 declare function __do<TA>(fn: SideEffect1<TA>, a: TA): void;
 declare function __do<TA, TB>(fn: SideEffect2<TA, TB>, a: TA, b: TB): void;

@@ -55,9 +55,7 @@ export const tests = describe(
 
     const obs = async(scheduler => {
       const stream = __stream(streamable, scheduler);
-      const looper = __memo(createLooper, stream);
-
-      __await(looper);
+      __await(createLooper, stream);
 
       return __observe(stream);
     });

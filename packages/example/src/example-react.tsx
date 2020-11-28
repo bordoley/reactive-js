@@ -139,16 +139,18 @@ const EventSourceExample = createComponent(() =>
   }),
 );
 
-const fetchFile = pipe(
-  {
-    uri: "http://localhost:8080/files/packages/example/build/example-react.js",
-  },
-  fetch(response => response.text()),
-);
+const fetchFile = (uri: string) =>
+  pipe(
+    { uri },
+    fetch(response => response.text()),
+  );
 
 const FetchExample = createComponent(() =>
   async(() => {
-    const someData = __await(fetchFile);
+    const someData = __await(
+      fetchFile,
+      "http://localhost:8080/files/packages/example/build/example-react.js",
+    );
 
     return (
       <div>
