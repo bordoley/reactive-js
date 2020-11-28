@@ -1069,7 +1069,6 @@ const tests$d = describe("streamable", test("__stream", () => {
         }
     }));
     const obs = async(() => {
-        debugger;
         const stream = __stream(streamable);
         const looper = __memo(createLooper, stream);
         __await(looper);

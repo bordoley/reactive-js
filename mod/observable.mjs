@@ -1,5 +1,5 @@
 import { pipe, ignore, raise, arrayEquality, returns, compose, callWith, defer as defer$1, strictEquality } from './functions.mjs';
-import { none, isNone, isSome } from './option.mjs';
+import { none, isSome, isNone } from './option.mjs';
 import { addOnDisposedWithError, AbstractDisposable, addDisposable, bindDisposables, dispose, addOnDisposedWithoutErrorTeardown, addTeardown, disposed, toErrorHandler, addDisposableDisposeParentOnChildError, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
 import { enumerate, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
@@ -26,6 +26,32 @@ const defer = (factory, options = {}) => {
     return new ScheduledObservable(factory, false, delay);
 };
 const observe = (observer) => observable => observable.observe(observer);
+
+class LiftedObservable {
+    constructor(source, operators, isSynchronous) {
+        this.source = source;
+        this.operators = operators;
+        this.isSynchronous = isSynchronous;
+    }
+    observe(observer) {
+        const liftedSubscrber = pipe(observer, ...this.operators);
+        pipe(this.source, observe(liftedSubscrber));
+    }
+}
+/**
+ * Creates a new `ObservableLike` which applies the provided the operator function to
+ * observer when the source is subscribed to.
+ *
+ * @param operator The operator function to apply.
+ */
+const lift = (operator) => source => {
+    const sourceSource = source instanceof LiftedObservable ? source.source : source;
+    const allFunctions = source instanceof LiftedObservable
+        ? [operator, ...source.operators]
+        : [operator];
+    const isSynchronous = source.isSynchronous && operator.isSynchronous;
+    return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
+};
 
 const assertObserverStateProduction = ignore;
 const assertObserverStateDev = (observer) => {
@@ -110,6 +136,46 @@ const yield$ = (observer, next, delay) => {
     yield$$1(observer, delay);
 };
 
+class OnNotifyObserver extends AbstractAutoDisposingDelegatingObserver {
+    constructor(delegate, onNotify) {
+        super(delegate);
+        this.onNotify = onNotify;
+    }
+    notify(next) {
+        assertObserverState(this);
+        this.onNotify(next);
+        this.delegate.notify(next);
+    }
+}
+/**
+ * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
+ *
+ * @param onNotify The function that is invoked when the observable source produces values.
+ */
+function onNotify(onNotify) {
+    const operator = (observer) => new OnNotifyObserver(observer, onNotify);
+    operator.isSynchronous = true;
+    return lift(operator);
+}
+
+class DefaultObserver extends AbstractObserver {
+    notify(_) {
+        assertObserverState(this);
+    }
+}
+/**
+ * Safely subscribes to an `ObservableLike` with a `ObserverLike` instance
+ * using the provided scheduler. The returned `DisposableLike`
+ * may used to cancel the subscription.
+ *
+ * @param scheduler The SchedulerLike instance that should be used by the source to notify it's observer.
+ */
+const subscribe = (scheduler) => (observable) => {
+    const observer = new DefaultObserver(scheduler);
+    pipe(observable, observe(observer));
+    return observer;
+};
+
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
  * An optional `startIndex` in the array maybe specified,
@@ -148,32 +214,6 @@ const defaultEmpty = fromArray()([]);
 const empty = (options = {}) => {
     const { delay = 0 } = options;
     return delay > 0 ? fromArray({ delay })([]) : defaultEmpty;
-};
-
-class LiftedObservable {
-    constructor(source, operators, isSynchronous) {
-        this.source = source;
-        this.operators = operators;
-        this.isSynchronous = isSynchronous;
-    }
-    observe(observer) {
-        const liftedSubscrber = pipe(observer, ...this.operators);
-        pipe(this.source, observe(liftedSubscrber));
-    }
-}
-/**
- * Creates a new `ObservableLike` which applies the provided the operator function to
- * observer when the source is subscribed to.
- *
- * @param operator The operator function to apply.
- */
-const lift = (operator) => source => {
-    const sourceSource = source instanceof LiftedObservable ? source.source : source;
-    const allFunctions = source instanceof LiftedObservable
-        ? [operator, ...source.operators]
-        : [operator];
-    const isSynchronous = source.isSynchronous && operator.isSynchronous;
-    return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
 };
 
 class TakeLastObserver extends AbstractDelegatingObserver {
@@ -275,54 +315,42 @@ class AsyncContextImpl {
         }
     }
 }
-class AsynchronousObserver extends AbstractDelegatingObserver {
-    constructor(delegate, scheduleComputation, isDone, effect) {
-        super(delegate);
-        this.scheduleComputation = scheduleComputation;
-        this.effect = effect;
-        addOnDisposedWithError(this, delegate);
-        addOnDisposedWithoutErrorTeardown(this, () => {
-            if (isDone()) {
-                pipe(delegate, dispose());
-            }
-        });
-    }
-    notify(next) {
-        assertObserverState(this);
-        this.effect.value = next;
-        this.scheduleComputation(this.delegate);
-    }
-}
-const hasOutstandingEffects = (effects) => {
-    const effectsLength = effects.length;
-    for (let i = 0; i < effectsLength; i++) {
-        const effect = effects[i];
-        if (effect.type === 2 /* Observe */) {
-            const { subscription } = effect;
-            const effectIsOutstanding = isNone(subscription) || !subscription.isDisposed;
-            if (effectIsOutstanding) {
-                return true;
-            }
-        }
-    }
-    return false;
-};
 let currentCtx = none;
 const async = (computation) => {
     const factory = () => {
         const effects = [];
         let initialized = false;
         let scheduledComputationSubscription = disposed;
-        const isDone = () => {
-            return (!hasOutstandingEffects(effects) &&
-                scheduledComputationSubscription.isDisposed);
-        };
+        let onDisposeWithoutError = none;
         const scheduleComputation = (observer) => {
             if (scheduledComputationSubscription.isDisposed) {
                 scheduledComputationSubscription = pipe(observer, schedule(runComputation));
             }
         };
+        const createOnDisposeWithoutError = (observer) => () => {
+            var _a;
+            if (!scheduledComputationSubscription.isDisposed) {
+                return;
+            }
+            const effectsLength = effects.length;
+            let hasOutstandingEffects = false;
+            for (let i = 0; i < effectsLength; i++) {
+                const effect = effects[i];
+                if (effect.type !== 2 /* Observe */) {
+                    continue;
+                }
+                const { subscription } = effect;
+                hasOutstandingEffects = !((_a = subscription === null || subscription === void 0 ? void 0 : subscription.isDisposed) !== null && _a !== void 0 ? _a : false);
+                if (hasOutstandingEffects) {
+                    break;
+                }
+            }
+            if (!hasOutstandingEffects) {
+                pipe(observer, dispose());
+            }
+        };
         const runComputation = (observer) => {
+            onDisposeWithoutError = onDisposeWithoutError !== null && onDisposeWithoutError !== void 0 ? onDisposeWithoutError : createOnDisposeWithoutError(observer);
             const ctx = !initialized
                 ? new InitialAsyncContextImpl(effects)
                 : new AsyncContextImpl(effects);
@@ -336,22 +364,33 @@ const async = (computation) => {
                 currentCtx = none;
                 throw e;
             }
-            observer.notify(result);
-            if (!hasOutstandingEffects(effects)) {
-                pipe(observer, dispose());
+            if (isSome(result)) {
+                observer.notify(result);
             }
-            else {
-                const effectsLength = effects.length;
-                for (let i = 0; i < effectsLength; i++) {
-                    const effect = effects[i];
-                    if (effect.type === 2 /* Observe */ &&
-                        isNone(effect.subscription)) {
-                        const innerObserver = new AsynchronousObserver(observer, scheduleComputation, isDone, effect);
-                        const { observable } = effect;
-                        pipe(observable, observe(innerObserver));
-                        effect.subscription = innerObserver;
-                    }
+            const effectsLength = effects.length;
+            let hasOutstandingEffects = false;
+            for (let i = 0; i < effectsLength; i++) {
+                const effect = effects[i];
+                if (effect.type !== 2 /* Observe */) {
+                    continue;
                 }
+                if (isNone(effect.subscription)) {
+                    const { observable } = effect;
+                    const subscription = pipe(observable, onNotify(next => {
+                        effect.value = next;
+                        scheduleComputation(observer);
+                    }), subscribe(observer));
+                    addOnDisposedWithoutErrorTeardown(subscription, onDisposeWithoutError);
+                    addOnDisposedWithError(subscription, observer);
+                    effect.subscription = subscription;
+                    hasOutstandingEffects = true;
+                }
+                else if (!effect.subscription.isDisposed) {
+                    hasOutstandingEffects = true;
+                }
+            }
+            if (!hasOutstandingEffects) {
+                pipe(observer, dispose());
             }
         };
         return runComputation;
@@ -775,24 +814,6 @@ const neverInstance = new NeverObservable();
  */
 const never = () => neverInstance;
 
-class DefaultObserver extends AbstractObserver {
-    notify(_) {
-        assertObserverState(this);
-    }
-}
-/**
- * Safely subscribes to an `ObservableLike` with a `ObserverLike` instance
- * using the provided scheduler. The returned `DisposableLike`
- * may used to cancel the subscription.
- *
- * @param scheduler The SchedulerLike instance that should be used by the source to notify it's observer.
- */
-const subscribe = (scheduler) => (observable) => {
-    const observer = new DefaultObserver(scheduler);
-    pipe(observable, observe(observer));
-    return observer;
-};
-
 /**
  * Creates an `ObservableLike` that emits no items and immediately disposes its subscription with an error.
  *
@@ -836,28 +857,6 @@ class UsingObservable {
  */
 function using(resourceFactory, observableFactory) {
     return new UsingObservable(resourceFactory, observableFactory);
-}
-
-class OnNotifyObserver extends AbstractAutoDisposingDelegatingObserver {
-    constructor(delegate, onNotify) {
-        super(delegate);
-        this.onNotify = onNotify;
-    }
-    notify(next) {
-        assertObserverState(this);
-        this.onNotify(next);
-        this.delegate.notify(next);
-    }
-}
-/**
- * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
- *
- * @param onNotify The function that is invoked when the observable source produces values.
- */
-function onNotify(onNotify) {
-    const operator = (observer) => new OnNotifyObserver(observer, onNotify);
-    operator.isSynchronous = true;
-    return lift(operator);
 }
 
 class BufferObserver extends AbstractDelegatingObserver {

@@ -57,7 +57,6 @@ export const tests = describe(
       );
 
     const obs = async(() => {
-      debugger;
       const stream = __stream(streamable);
       const looper = __memo(createLooper, stream);
 

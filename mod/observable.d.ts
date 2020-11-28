@@ -7,7 +7,7 @@ import { SchedulerLike, VirtualTimeSchedulerLike } from './scheduler';
 import { EnumerableLike } from './enumerable';
 import { RunnableLike } from './runnable';
 
-declare const async: <T>(computation: Factory<T>) => ObservableLike<T>;
+declare const async: <T>(computation: Factory<Option<T>>) => ObservableLike<T>;
 declare function __memo<TA, T>(fn: Function1<TA, T>, a: TA): T;
 declare function __memo<TA, TB, T>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
 declare function __memo<TA, TB, TC, T>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
