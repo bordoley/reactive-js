@@ -1,6 +1,6 @@
 import { pipe, ignore, raise, arrayEquality, returns, compose, callWith, defer as defer$1, strictEquality } from './functions.mjs';
 import { none, isSome, isNone } from './option.mjs';
-import { addOnDisposedWithError, AbstractDisposable, addDisposable, bindDisposables, dispose, addOnDisposedWithoutErrorTeardown, addTeardown, disposed, toErrorHandler, addDisposableDisposeParentOnChildError, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
+import { addOnDisposedWithError, AbstractDisposable, addDisposable, bindDisposables, dispose, addOnDisposedWithoutErrorTeardown, addTeardown, disposed, addDisposableDisposeParentOnChildError, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
 import { enumerate, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
@@ -270,6 +270,17 @@ class InitialAsyncContextImpl {
         });
         return none;
     }
+    using(f, ...args) {
+        const value = f(...args);
+        this.effects.push({
+            type: 3 /* Using */,
+            f,
+            args,
+            value,
+            dirty: true,
+        });
+        return value;
+    }
 }
 const validateState = (ctx, type) => {
     const { effects, index } = ctx;
@@ -314,6 +325,21 @@ class AsyncContextImpl {
             return none;
         }
     }
+    using(f, ...args) {
+        const effect = validateState(this, 3 /* Using */);
+        if (f === effect.f && arrayStrictEquality(args, effect.args)) {
+            return effect.value;
+        }
+        else {
+            pipe(effect.value, dispose());
+            const value = f(...args);
+            effect.f = f;
+            effect.args = args;
+            effect.value = value;
+            effect.dirty = true;
+            return value;
+        }
+    }
 }
 let currentCtx = none;
 const async = (computation) => {
@@ -356,13 +382,16 @@ const async = (computation) => {
                 : new AsyncContextImpl(effects);
             initialized = true;
             let result = none;
+            let error;
             currentCtx = ctx;
             try {
-                result = computation();
+                result = computation(observer);
             }
-            catch (e) {
+            catch (cause) {
                 currentCtx = none;
-                throw e;
+                error = { cause };
+                // We still want to setup all the subscriptions in this case
+                // because using effects need to be disposed in the case of error.
             }
             if (isSome(result)) {
                 observer.notify(result);
@@ -371,6 +400,11 @@ const async = (computation) => {
             let hasOutstandingEffects = false;
             for (let i = 0; i < effectsLength; i++) {
                 const effect = effects[i];
+                if (effect.type === 3 /* Using */ && effect.dirty) {
+                    effect.dirty = false;
+                    addDisposableDisposeParentOnChildError(observer, effect.value);
+                    continue;
+                }
                 if (effect.type !== 2 /* Observe */) {
                     continue;
                 }
@@ -380,8 +414,8 @@ const async = (computation) => {
                         effect.value = next;
                         scheduleComputation(observer);
                     }), subscribe(observer));
+                    addDisposableDisposeParentOnChildError(observer, subscription);
                     addOnDisposedWithoutErrorTeardown(subscription, onDisposeWithoutError);
-                    addOnDisposedWithError(subscription, observer);
                     effect.subscription = subscription;
                     hasOutstandingEffects = true;
                 }
@@ -389,8 +423,8 @@ const async = (computation) => {
                     hasOutstandingEffects = true;
                 }
             }
-            if (!hasOutstandingEffects) {
-                pipe(observer, dispose());
+            if (!hasOutstandingEffects || isSome(error)) {
+                pipe(observer, dispose(error));
             }
         };
         return runComputation;
@@ -420,10 +454,14 @@ const deferSideEffect = (f, ...args) => defer(() => observer => {
     f(...args);
     observer.dispose();
 });
-function __effect(f, ...args) {
+function __do(f, ...args) {
     const ctx = assertCurrentContext();
     const observable = ctx.memo(deferSideEffect, f, ...args);
     __observe(observable);
+}
+function __using(f, ...args) {
+    const ctx = assertCurrentContext();
+    return ctx.using(f, ...args);
 }
 
 class LatestObserver extends AbstractDelegatingObserver {
@@ -1901,4 +1939,4 @@ const toPromise = (scheduler) => observable => new Promise((resolve, reject) => 
     });
 });
 
-export { __await, __effect, __memo, __observe, async, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };
+export { __await, __do, __memo, __observe, __using, async, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };

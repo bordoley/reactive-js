@@ -1,7 +1,7 @@
 import { pipe, compose, returns } from './functions.mjs';
 import { isNone, none } from './option.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables } from './disposable.mjs';
-import { createSubject, publish, observe, using, map as map$1, onNotify as onNotify$1, subscribe, empty as empty$1, fromValue, concatWith, never, __memo, __observe, scan as scan$1, mergeWith, distinctUntilChanged, mapTo as mapTo$1, withLatestFrom as withLatestFrom$1, ignoreElements, endWith } from './observable.mjs';
+import { createSubject, publish, observe, using, map as map$1, onNotify as onNotify$1, subscribe, empty as empty$1, __using, scan as scan$1, mergeWith, fromValue, distinctUntilChanged, mapTo as mapTo$1, withLatestFrom as withLatestFrom$1, ignoreElements, endWith } from './observable.mjs';
 import { dispatchTo } from './dispatcher.mjs';
 
 class StreamImpl extends AbstractDisposable {
@@ -71,11 +71,8 @@ const _empty = createStreamable(_ => empty$1());
  */
 const empty = (options) => isNone(options) ? _empty : createStreamable(_ => empty$1(options));
 const stream = (scheduler, options) => streamable => streamable.stream(scheduler, options);
-const createObservableOfStream = (streamable) => using(scheduler => streamable.stream(scheduler), compose(fromValue(), concatWith(never())));
-const __stream = (streamable) => {
-    const streamObs = __memo(createObservableOfStream, streamable);
-    return __observe(streamObs);
-};
+const streamOnSchedulerFactory = (streamable, scheduler, replay) => pipe(streamable, stream(scheduler, { replay }));
+const __stream = (streamable, scheduler, { replay = 0 } = {}) => __using(streamOnSchedulerFactory, streamable, scheduler, replay);
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function

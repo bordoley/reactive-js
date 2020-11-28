@@ -1,12 +1,12 @@
 import {
   DisposableLike,
-  addOnDisposedWithError,
+  Error,
   addOnDisposedWithoutErrorTeardown,
   dispose,
   disposed,
+  addDisposableDisposeParentOnChildError,
 } from "../disposable";
 import {
-  Factory,
   Function1,
   Function2,
   Function3,
@@ -22,10 +22,11 @@ import {
   SideEffect6,
   arrayEquality,
   pipe,
+  Factory,
 } from "../functions";
 import { ObservableLike, ObserverLike, empty } from "../observable";
 import { Option, isNone, isSome, none } from "../option";
-import { schedule } from "../scheduler";
+import { schedule, SchedulerLike } from "../scheduler";
 import { defer } from "./observable";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
@@ -34,28 +35,38 @@ import { takeLast } from "./takeLast";
 interface AsyncContextLike {
   memo<T>(f: (...args: any[]) => T, ...args: any[]): T;
   observe<T>(observable: ObservableLike<T>): Option<T>;
+  using<T extends DisposableLike>(f: (...args: any[]) => T, ...args: any[]): T;
 }
 
 const enum AsyncEffectType {
   Memo = 1,
   Observe = 2,
+  Using = 3,
 }
 
 type MemoAsyncEffect = {
-  type: AsyncEffectType.Memo;
+  readonly type: AsyncEffectType.Memo;
   f: (...args: any[]) => unknown;
   args: any[];
   value: unknown;
 };
 
 type ObserveAsyncEffect = {
-  type: AsyncEffectType.Observe;
+  readonly type: AsyncEffectType.Observe;
   observable: ObservableLike<unknown>;
   subscription: Option<DisposableLike>;
   value: Option<unknown>;
 };
 
-type AsyncEffect = MemoAsyncEffect | ObserveAsyncEffect;
+type UsingAsyncEffect = {
+  readonly type: AsyncEffectType.Using;
+  f: (...args: any[]) => unknown;
+  args: any[];
+  value: DisposableLike;
+  dirty: boolean;
+};
+
+type AsyncEffect = MemoAsyncEffect | ObserveAsyncEffect | UsingAsyncEffect;
 
 const arrayStrictEquality = arrayEquality();
 
@@ -76,6 +87,18 @@ class InitialAsyncContextImpl implements AsyncContextLike {
       value: none,
     });
     return none;
+  }
+
+  using<T extends DisposableLike>(f: (...args: any[]) => T, ...args: any[]): T {
+    const value = f(...args);
+    this.effects.push({
+      type: AsyncEffectType.Using,
+      f,
+      args,
+      value,
+      dirty: true,
+    });
+    return value;
   }
 }
 
@@ -131,12 +154,34 @@ class AsyncContextImpl implements AsyncContextLike {
       return none;
     }
   }
+
+  using<T extends DisposableLike>(f: (...args: any[]) => T, ...args: any[]): T {
+    const effect = validateState(
+      this,
+      AsyncEffectType.Using,
+    ) as UsingAsyncEffect;
+
+    if (f === effect.f && arrayStrictEquality(args, effect.args)) {
+      return effect.value as T;
+    } else {
+      pipe(effect.value, dispose());
+
+      const value = f(...args);
+
+      effect.f = f;
+      effect.args = args;
+      effect.value = value;
+      effect.dirty = true;
+
+      return value;
+    }
+  }
 }
 
 let currentCtx: Option<AsyncContextLike> = none;
 
 export const async = <T>(
-  computation: Factory<Option<T>>,
+  computation: Function1<SchedulerLike, Option<T>>,
 ): ObservableLike<T> => {
   const factory = () => {
     const effects: AsyncEffect[] = [];
@@ -191,13 +236,16 @@ export const async = <T>(
       initialized = true;
 
       let result: Option<T> = none;
+      let error: Option<Error>;
 
       currentCtx = ctx;
       try {
-        result = computation();
-      } catch (e) {
+        result = computation(observer);
+      } catch (cause) {
         currentCtx = none;
-        throw e;
+        error = { cause };
+        // We still want to setup all the subscriptions in this case
+        // because using effects need to be disposed in the case of error.
       }
 
       if (isSome(result)) {
@@ -209,6 +257,12 @@ export const async = <T>(
 
       for (let i = 0; i < effectsLength; i++) {
         const effect = effects[i];
+
+        if (effect.type === AsyncEffectType.Using && effect.dirty) {
+          effect.dirty = false;
+          addDisposableDisposeParentOnChildError(observer, effect.value);
+          continue;
+        }
 
         if (effect.type !== AsyncEffectType.Observe) {
           continue;
@@ -226,11 +280,13 @@ export const async = <T>(
             subscribe(observer),
           );
 
+          addDisposableDisposeParentOnChildError(observer, subscription);
+
           addOnDisposedWithoutErrorTeardown(
             subscription,
             onDisposeWithoutError,
           );
-          addOnDisposedWithError(subscription, observer);
+
           effect.subscription = subscription;
 
           hasOutstandingEffects = true;
@@ -239,8 +295,8 @@ export const async = <T>(
         }
       }
 
-      if (!hasOutstandingEffects) {
-        pipe(observer, dispose());
+      if (!hasOutstandingEffects || isSome(error)) {
+        pipe(observer, dispose(error));
       }
     };
 
@@ -256,6 +312,7 @@ const assertCurrentContext = (): AsyncContextLike => {
   return currentCtx;
 };
 
+export function __memo<T>(fn: Factory<T>): T;
 export function __memo<TA, T>(fn: Function1<TA, T>, a: TA): T;
 export function __memo<TA, TB, T>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
 export function __memo<TA, TB, TC, T>(
@@ -293,7 +350,9 @@ export function __memo<T>(f: (...args: any[]) => T, ...args: any[]): T {
   return ctx.memo(f, ...args);
 }
 
-export const __observe = <T>(observable: Option<ObservableLike<T>>): Option<T> => {
+export const __observe = <T>(
+  observable: Option<ObservableLike<T>>,
+): Option<T> => {
   const ctx = assertCurrentContext();
   return ctx.observe(observable ?? empty());
 };
@@ -302,8 +361,13 @@ const createAwaitedObservable = <T>(
   observable: ObservableLike<T>,
 ): ObservableLike<T> => pipe(observable, takeLast());
 
-export const __await = <T>(observable: Option<ObservableLike<T>>): Option<T> => {
-  const awaitedObservable = __memo(createAwaitedObservable, observable ?? empty<T>());
+export const __await = <T>(
+  observable: Option<ObservableLike<T>>,
+): Option<T> => {
+  const awaitedObservable = __memo(
+    createAwaitedObservable,
+    observable ?? empty<T>(),
+  );
   return __observe(awaitedObservable);
 };
 
@@ -313,23 +377,23 @@ const deferSideEffect = (f: (...args: any[]) => void, ...args: any[]) =>
     observer.dispose();
   });
 
-export function __effect(fn: SideEffect): void;
-export function __effect<TA>(fn: SideEffect1<TA>, a: TA): void;
-export function __effect<TA, TB>(fn: SideEffect2<TA, TB>, a: TA, b: TB): void;
-export function __effect<TA, TB, TC>(
+export function __do(fn: SideEffect): void;
+export function __do<TA>(fn: SideEffect1<TA>, a: TA): void;
+export function __do<TA, TB>(fn: SideEffect2<TA, TB>, a: TA, b: TB): void;
+export function __do<TA, TB, TC>(
   fn: SideEffect3<TA, TB, TC>,
   a: TA,
   b: TB,
   c: TC,
 ): void;
-export function __effect<TA, TB, TC, TD>(
+export function __do<TA, TB, TC, TD>(
   fn: SideEffect4<TA, TB, TC, TD>,
   a: TA,
   b: TB,
   c: TC,
   d: TD,
 ): void;
-export function __effect<TA, TB, TC, TD, TE>(
+export function __do<TA, TB, TC, TD, TE>(
   fn: SideEffect5<TA, TB, TC, TD, TE>,
   a: TA,
   b: TB,
@@ -337,7 +401,7 @@ export function __effect<TA, TB, TC, TD, TE>(
   d: TD,
   e: TE,
 ): void;
-export function __effect<TA, TB, TC, TD, TE, TF>(
+export function __do<TA, TB, TC, TD, TE, TF>(
   fn: SideEffect6<TA, TB, TC, TD, TE, TF>,
   a: TA,
   b: TB,
@@ -346,8 +410,56 @@ export function __effect<TA, TB, TC, TD, TE, TF>(
   e: TE,
   f: TF,
 ): void;
-export function __effect(f: (...args: any[]) => void, ...args: any[]): void {
+export function __do(f: (...args: any[]) => void, ...args: any[]): void {
   const ctx = assertCurrentContext();
   const observable = ctx.memo(deferSideEffect, f, ...args);
   __observe(observable);
+}
+
+export function __using<T extends DisposableLike>(fn: Factory<T>): T;
+export function __using<TA, T extends DisposableLike>(
+  fn: Function1<TA, T>,
+  a: TA,
+): T;
+export function __using<TA, TB, T extends DisposableLike>(
+  fn: Function2<TA, TB, T>,
+  a: TA,
+  b: TB,
+): T;
+export function __using<TA, TB, TC, T extends DisposableLike>(
+  fn: Function3<TA, TB, TC, T>,
+  a: TA,
+  b: TB,
+  c: TC,
+): T;
+export function __using<TA, TB, TC, TD, T extends DisposableLike>(
+  fn: Function4<TA, TB, TC, TD, T>,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+): T;
+export function __using<TA, TB, TC, TD, TE, T extends DisposableLike>(
+  fn: Function5<TA, TB, TC, TD, TE, T>,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+): T;
+export function __using<TA, TB, TC, TD, TE, TF, T extends DisposableLike>(
+  fn: Function6<TA, TB, TC, TD, TE, TF, T>,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+): T;
+export function __using<T extends DisposableLike>(
+  f: (...args: any[]) => T,
+  ...args: any[]
+): T {
+  const ctx = assertCurrentContext();
+  return ctx.using(f, ...args);
 }

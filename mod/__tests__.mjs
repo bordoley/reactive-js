@@ -1,5 +1,5 @@
 import { pipe, returns, defer, increment, raise, sum, alwaysTrue, incrementBy, arrayEquality, ignore, identity, alwaysFalse } from './functions.mjs';
-import { none, isSome } from './option.mjs';
+import { none } from './option.mjs';
 import { addTeardown, createDisposable, addDisposable, dispose, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
 import { concat, concatMap, distinctUntilChanged, empty, endWith, fromArray as fromArray$1, fromValue as fromValue$1, generate as generate$1, keep, map, mapTo, repeat, scan, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable as toRunnable$1, toIterable, fromIterable as fromIterable$1, zipWith } from './enumerable.mjs';
 import { last, toArray, fromArray as fromArray$4, forEach, concat as concat$3, concatMap as concatMap$2, distinctUntilChanged as distinctUntilChanged$2, empty as empty$4, endWith as endWith$2, fromValue as fromValue$4, generate as generate$3, keep as keep$2, map as map$5, mapTo as mapTo$3, repeat as repeat$2, scan as scan$2, skipFirst as skipFirst$2, startWith as startWith$2, takeFirst as takeFirst$2, takeLast as takeLast$2, takeWhile as takeWhile$2, toRunnable as toRunnable$2, contains, everySatisfy, compute as compute$1, first, noneSatisfy } from './runnable.mjs';
@@ -1064,12 +1064,10 @@ const tests$c = describe("stateStore", test("toStateStore", () => {
 const tests$d = describe("streamable", test("__stream", () => {
     const streamable = identity$1();
     const createLooper = (stream) => pipe([0, 1, 2, 3], fromArray$3({ delay: 10 }), onNotify(x => {
-        if (isSome(stream)) {
-            stream.dispatch(x);
-        }
+        stream.dispatch(x);
     }));
-    const obs = async(() => {
-        const stream = __stream(streamable);
+    const obs = async(scheduler => {
+        const stream = __stream(streamable, scheduler);
         const looper = __memo(createLooper, stream);
         __await(looper);
         return __observe(stream);
