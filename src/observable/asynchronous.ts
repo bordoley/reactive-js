@@ -23,7 +23,7 @@ import {
   arrayEquality,
   pipe,
 } from "../functions";
-import { ObservableLike, ObserverLike } from "../observable";
+import { ObservableLike, ObserverLike, empty } from "../observable";
 import { Option, isNone, isSome, none } from "../option";
 import { schedule } from "../scheduler";
 import { defer } from "./observable";
@@ -47,6 +47,7 @@ type MemoAsyncEffect = {
   args: any[];
   value: unknown;
 };
+
 type ObserveAsyncEffect = {
   type: AsyncEffectType.Observe;
   observable: ObservableLike<unknown>;
@@ -292,17 +293,17 @@ export function __memo<T>(f: (...args: any[]) => T, ...args: any[]): T {
   return ctx.memo(f, ...args);
 }
 
-export const __observe = <T>(observable: ObservableLike<T>): Option<T> => {
+export const __observe = <T>(observable: Option<ObservableLike<T>>): Option<T> => {
   const ctx = assertCurrentContext();
-  return ctx.observe(observable);
+  return ctx.observe(observable ?? empty());
 };
 
 const createAwaitedObservable = <T>(
   observable: ObservableLike<T>,
 ): ObservableLike<T> => pipe(observable, takeLast());
 
-export const __await = <T>(observable: ObservableLike<T>): Option<T> => {
-  const awaitedObservable = __memo(createAwaitedObservable, observable);
+export const __await = <T>(observable: Option<ObservableLike<T>>): Option<T> => {
+  const awaitedObservable = __memo(createAwaitedObservable, observable ?? empty<T>());
   return __observe(awaitedObservable);
 };
 

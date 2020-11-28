@@ -61,8 +61,8 @@ export const appState = (
 
     const onClick = __memo(createOnClick, state);
 
-    const value = __observe(counter ?? empty<number>()) ?? 0;
-    const { mode } = __observe(state ?? empty<{ mode: FlowMode }>()) ?? {
+    const value = __observe(counter) ?? 0;
+    const { mode } = __observe(state) ?? {
       mode: FlowMode.Pause,
     };
 

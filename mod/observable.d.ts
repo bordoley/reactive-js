@@ -14,8 +14,8 @@ declare function __memo<TA, TB, TC, T>(fn: Function3<TA, TB, TC, T>, a: TA, b: T
 declare function __memo<TA, TB, TC, TD, T>(fn: Function4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
 declare function __memo<TA, TB, TC, TD, TE, T>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
 declare function __memo<TA, TB, TC, TD, TE, TF, T>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
-declare const __observe: <T>(observable: ObservableLike<T>) => Option<T>;
-declare const __await: <T>(observable: ObservableLike<T>) => Option<T>;
+declare const __observe: <T>(observable: Option<ObservableLike<T>>) => Option<T>;
+declare const __await: <T>(observable: Option<ObservableLike<T>>) => Option<T>;
 declare function __effect(fn: SideEffect): void;
 declare function __effect<TA>(fn: SideEffect1<TA>, a: TA): void;
 declare function __effect<TA, TB>(fn: SideEffect2<TA, TB>, a: TA, b: TB): void;

@@ -34,7 +34,6 @@ import { FlowMode } from "@reactive-js/core/flowable";
 import {
   async,
   distinctUntilChanged,
-  empty,
   map as mapObs,
   __await,
   __memo,
@@ -173,7 +172,7 @@ const Root = createComponent(() =>
     const historyStream = __stream(historyStateStore);
     const dispatch = __memo(createDispatchFn, historyStream);
 
-    const uri = __observe(historyStream ?? empty<RelativeURI>()) ?? emptyURI;
+    const uri = __observe(historyStream) ?? emptyURI;
     const [Component, params] = __memo(find, router, uri.pathname) ?? [
       NotFound,
       {},

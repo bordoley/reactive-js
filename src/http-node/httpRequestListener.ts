@@ -23,7 +23,6 @@ import {
   async,
   catchError,
   defer,
-  empty,
   subscribe,
 } from "../observable";
 import { map as mapOption } from "../option";
@@ -105,7 +104,7 @@ export const createHttpRequestListener = (
         const request = __memo(createHttpRequest, requestOptions);
         const handlerResponseObs = __memo(handler, request);
         const response = __await(handlerResponseObs);
-        const writeResponseObs = __memo(writeResponse, response) ?? empty();
+        const writeResponseObs = __memo(writeResponse, response);
         __await(writeResponseObs);
       }),
       catchError(onError),

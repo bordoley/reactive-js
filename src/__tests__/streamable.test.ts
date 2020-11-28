@@ -7,7 +7,6 @@ import {
   __observe,
   async,
   buffer,
-  empty as emptyObs,
   fromArray,
   onNotify as onNotifyObs,
   startWith,
@@ -62,7 +61,7 @@ export const tests = describe(
 
       __await(looper);
 
-      return __observe(stream ?? emptyObs());
+      return __observe(stream);
     });
 
     pipe(obs, toRunnable(), toArray(), console.log);
