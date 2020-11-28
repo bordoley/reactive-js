@@ -24,10 +24,11 @@ import {
   pipe,
 } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
-import { Option, isNone, none } from "../option";
+import { Option, isNone, none, isSome } from "../option";
 import { schedule } from "../scheduler";
-import { defer, observe } from "./observable";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
+import { defer } from "./observable";
+import { onNotify } from "./onNotify";
+import { subscribe } from "./subscribe";
 import { takeLast } from "./takeLast";
 
 interface AsyncContextLike {
@@ -131,63 +132,14 @@ class AsyncContextImpl implements AsyncContextLike {
   }
 }
 
-class AsynchronousObserver<T> extends AbstractDelegatingObserver<unknown, T> {
-  constructor(
-    delegate: ObserverLike<T>,
-    private readonly scheduleComputation: SideEffect1<ObserverLike<T>>,
-    isDone: Factory<boolean>,
-    private readonly effect: ObserveAsyncEffect,
-  ) {
-    super(delegate);
-    addOnDisposedWithError(this, delegate);
-    addOnDisposedWithoutErrorTeardown(this, () => {
-      if (isDone()) {
-        pipe(delegate, dispose());
-      }
-    });
-  }
-
-  notify(next: unknown) {
-    assertObserverState(this);
-    this.effect.value = next;
-    this.scheduleComputation(this.delegate);
-  }
-}
-
-const hasOutstandingEffects = (effects: readonly AsyncEffect[]) => {
-  const effectsLength = effects.length;
-
-  for (let i = 0; i < effectsLength; i++) {
-    const effect = effects[i];
-
-    if (effect.type === AsyncEffectType.Observe) {
-      const { subscription } = effect;
-      const effectIsOutstanding =
-        isNone(subscription) || !subscription.isDisposed;
-
-      if (effectIsOutstanding) {
-        return true;
-      }
-    }
-  }
-
-  return false;
-};
-
 let currentCtx: Option<AsyncContextLike> = none;
 
-export const async = <T>(computation: Factory<T>): ObservableLike<T> => {
+export const async = <T>(computation: Factory<Option<T>>): ObservableLike<T> => {
   const factory = () => {
     const effects: AsyncEffect[] = [];
     let initialized = false;
     let scheduledComputationSubscription = disposed;
-
-    const isDone = () => {
-      return (
-        !hasOutstandingEffects(effects) &&
-        scheduledComputationSubscription.isDisposed
-      );
-    };
+    let onDisposeWithoutError: Option<SideEffect> = none;
 
     const scheduleComputation = (observer: ObserverLike<T>) => {
       if (scheduledComputationSubscription.isDisposed) {
@@ -198,7 +150,38 @@ export const async = <T>(computation: Factory<T>): ObservableLike<T> => {
       }
     };
 
+    const createOnDisposeWithoutError = (observer: ObserverLike<T>) => () => {
+      if (!scheduledComputationSubscription.isDisposed) {
+        return;
+      }
+
+      const effectsLength = effects.length;
+      let hasOutstandingEffects = false;
+
+      for (let i = 0; i < effectsLength; i++) {
+        const effect = effects[i];
+
+        if (effect.type !== AsyncEffectType.Observe) {
+          continue;
+        }
+
+        const { subscription } = effect;
+        hasOutstandingEffects = !(subscription?.isDisposed ?? false);
+
+        if (hasOutstandingEffects) {
+          break;
+        }
+      }
+
+      if (!hasOutstandingEffects) {
+        pipe(observer, dispose());
+      }
+    };
+
     const runComputation = (observer: ObserverLike<T>) => {
+      onDisposeWithoutError =
+        onDisposeWithoutError ?? createOnDisposeWithoutError(observer);
+
       const ctx = !initialized
         ? new InitialAsyncContextImpl(effects)
         : new AsyncContextImpl(effects);
@@ -214,32 +197,47 @@ export const async = <T>(computation: Factory<T>): ObservableLike<T> => {
         throw e;
       }
 
-      observer.notify(result);
+      if (isSome(result)) {
+        observer.notify(result);
+      }
 
-      if (!hasOutstandingEffects(effects)) {
-        pipe(observer, dispose());
-      } else {
-        const effectsLength = effects.length;
+      const effectsLength = effects.length;
+      let hasOutstandingEffects = false;
 
-        for (let i = 0; i < effectsLength; i++) {
-          const effect = effects[i];
+      for (let i = 0; i < effectsLength; i++) {
+        const effect = effects[i];
 
-          if (
-            effect.type === AsyncEffectType.Observe &&
-            isNone(effect.subscription)
-          ) {
-            const innerObserver = new AsynchronousObserver(
-              observer,
-              scheduleComputation,
-              isDone,
-              effect,
-            );
-            const { observable } = effect;
-
-            pipe(observable, observe(innerObserver));
-            effect.subscription = innerObserver;
-          }
+        if (effect.type !== AsyncEffectType.Observe) {
+          continue;
         }
+
+        if (isNone(effect.subscription)) {
+          const { observable } = effect;
+
+          const subscription = pipe(
+            observable,
+            onNotify(next => {
+              effect.value = next;
+              scheduleComputation(observer);
+            }),
+            subscribe(observer),
+          );
+
+          addOnDisposedWithoutErrorTeardown(
+            subscription,
+            onDisposeWithoutError,
+          );
+          addOnDisposedWithError(subscription, observer);
+          effect.subscription = subscription;
+
+          hasOutstandingEffects = true;
+        } else if (!effect.subscription.isDisposed) {
+          hasOutstandingEffects = true;
+        }
+      }
+
+      if (!hasOutstandingEffects) {
+        pipe(observer, dispose());
       }
     };
 
