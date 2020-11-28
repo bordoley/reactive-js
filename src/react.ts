@@ -22,6 +22,7 @@ import {
   ObservableLike,
   SubjectLike,
   createSubject,
+  distinctUntilChanged,
   onNotify,
   subscribe,
 } from "./observable";
@@ -79,11 +80,12 @@ export const createComponent = <TProps>(
       createReplaySubject,
     ]);
 
-    useEffect(() => {
-      propsSubject.dispatch(props);
-    }, [propsSubject, props]);
+    propsSubject.dispatch(props);
 
-    const elementObservable = useMemo(() => fn(propsSubject), [propsSubject]);
+    const elementObservable = useMemo(
+      () => pipe(propsSubject, distinctUntilChanged(), fn),
+      [propsSubject],
+    );
     return useObservable(elementObservable) ?? null;
   };
 
