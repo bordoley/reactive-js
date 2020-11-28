@@ -358,18 +358,63 @@ export const __observe = <T>(
 };
 
 const createAwaitedObservable = <T>(
-  observable: ObservableLike<T>,
-): ObservableLike<T> => pipe(observable, takeLast());
+  f: (...args: any[]) => ObservableLike<T>,
+  ...args: any[]
+): ObservableLike<T> => pipe(f(...args), takeLast());
 
-export const __await = <T>(
-  observable: Option<ObservableLike<T>>,
-): Option<T> => {
-  const awaitedObservable = __memo(
+export function __await<T>(fn: Factory<ObservableLike<T>>): Option<T>;
+export function __await<TA, T>(
+  fn: Function1<TA, ObservableLike<T>>,
+  a: TA,
+): Option<T>;
+export function __await<TA, TB, T>(
+  fn: Function2<TA, TB, ObservableLike<T>>,
+  a: TA,
+  b: TB,
+): Option<T>;
+export function __await<TA, TB, TC, T>(
+  fn: Function3<TA, TB, TC, ObservableLike<T>>,
+  a: TA,
+  b: TB,
+  c: TC,
+): Option<T>;
+export function __await<TA, TB, TC, TD, T>(
+  fn: Function4<TA, TB, TC, TD, ObservableLike<T>>,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+): Option<T>;
+export function __await<TA, TB, TC, TD, TE, T>(
+  fn: Function5<TA, TB, TC, TD, TE, ObservableLike<T>>,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+): Option<T>;
+export function __await<TA, TB, TC, TD, TE, TF, T>(
+  fn: Function6<TA, TB, TC, TD, TE, TF, ObservableLike<T>>,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+  e: TE,
+  f: TF,
+): Option<T>;
+export function __await<T>(
+  f: (...args: any[]) => ObservableLike<T>,
+  ...args: any[]
+): Option<T> {
+  const ctx = assertCurrentContext();
+  const awaitedObservable = ctx.memo<ObservableLike<T>>(
     createAwaitedObservable,
-    observable ?? empty<T>(),
+    f,
+    ...args,
   );
+
   return __observe(awaitedObservable);
-};
+}
 
 const deferSideEffect = (f: (...args: any[]) => void, ...args: any[]) =>
   defer(() => observer => {

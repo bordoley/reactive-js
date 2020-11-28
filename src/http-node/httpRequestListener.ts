@@ -23,9 +23,10 @@ import {
   async,
   catchError,
   defer,
+  empty,
   subscribe,
 } from "../observable";
-import { map as mapOption } from "../option";
+import { Option, isSome } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { sink } from "../streamable";
 
@@ -75,7 +76,7 @@ export const createHttpRequestListener = (
 
   const handleRequest = (
     request: DisposableValueLike<IncomingMessage>,
-    response: DisposableValueLike<ServerResponse>,
+    serverResponse: DisposableValueLike<ServerResponse>,
   ) => {
     const {
       method,
@@ -97,15 +98,18 @@ export const createHttpRequestListener = (
       body: requestBody,
     };
 
-    const writeResponse = pipe(response, writeToServerResponse, mapOption);
+    const writeResponse = (
+      response: Option<HttpResponse<IOSourceLike<Uint8Array>>>,
+    ) =>
+      isSome(response)
+        ? pipe(response, writeToServerResponse(serverResponse))
+        : empty();
 
     return pipe(
       async(() => {
         const request = __memo(createHttpRequest, requestOptions);
-        const handlerResponseObs = __memo(handler, request);
-        const response = __await(handlerResponseObs);
-        const writeResponseObs = __memo(writeResponse, response);
-        __await(writeResponseObs);
+        const response = __await(handler, request);
+        __await(writeResponse, response);
       }),
       catchError(onError),
     );
