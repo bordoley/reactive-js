@@ -2,12 +2,12 @@ import { addTeardown, dispose } from "../disposable";
 import { incrementBy, pipe, returns, sum } from "../functions";
 import {
   StreamLike,
-  __await,
   __memo,
   __observe,
   async,
   buffer,
   fromArray,
+  ignoreElements,
   onNotify as onNotifyObs,
   startWith,
   subscribe,
@@ -51,13 +51,15 @@ export const tests = describe(
         onNotifyObs(x => {
           stream.dispatch(x);
         }),
+        ignoreElements(),
       );
 
     const obs = async(scheduler => {
       const stream = __stream(streamable, scheduler);
-      __await(createLooper, stream);
+      const runLooper = __memo(createLooper, stream);
+      __observe(runLooper);
 
-      return __observe(stream);
+      return __observe(stream) ?? -1;
     });
 
     pipe(obs, toRunnable(), toArray(), console.log);

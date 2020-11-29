@@ -26,7 +26,7 @@ import {
   empty,
   subscribe,
 } from "../observable";
-import { Option, isSome } from "../option";
+import { Option, isSome, none } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { sink } from "../streamable";
 
@@ -50,6 +50,7 @@ const writeToServerResponse = (
         subscribe(observer),
       );
       observer.add(sinkSubscription);
+      observer.notify(none);
     });
 };
 

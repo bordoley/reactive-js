@@ -174,7 +174,6 @@ const processRequest = (req: HttpRequest<IOSourceLike<Uint8Array>>) => {
   const encodeResponse = pipe(
     req,
     encodeHttpResponseContent(createContentEncodingCompressTransforms(), db),
-    mapOption,
   );
 
   return async(() => {
