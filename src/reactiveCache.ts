@@ -14,7 +14,7 @@ import {
   switchAll,
 } from "./observable";
 import { Option, isNone, isSome } from "./option";
-import { SchedulerLike, schedule, yield$ } from "./scheduler";
+import { SchedulerLike, schedule, __yield } from "./scheduler";
 import {
   StreamableLike,
   createStreamable,
@@ -48,7 +48,7 @@ const markAsGarbage = <T>(
         const hasMoreToCleanup = cache.size > maxCount;
 
         if (hasMoreToCleanup) {
-          yield$(scheduler, 0);
+          __yield(scheduler, 0);
         } else if (!hasMoreToCleanup) {
           break;
         }

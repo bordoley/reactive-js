@@ -9,7 +9,7 @@ import { ObserverLike } from "../observable";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
-  yield$ as yieldScheduler,
+  __yield as yieldScheduler,
 } from "../scheduler";
 
 const assertObserverStateProduction = ignore;
@@ -129,7 +129,7 @@ export const createAutoDisposingDelegatingObserver = <T>(
   return observer;
 };
 
-export const yield$ = <T>(
+export const __yield = <T>(
   observer: ObserverLike<T>,
   next: T,
   delay: number,

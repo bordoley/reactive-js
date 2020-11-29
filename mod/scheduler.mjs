@@ -62,7 +62,7 @@ class SchedulerContinuationImpl extends AbstractDisposable {
 const run = (continuation) => {
     continuation.continue();
 };
-const yield$ = (scheduler, delay) => {
+const __yield = (scheduler, delay) => {
     if (delay > 0 || scheduler.shouldYield) {
         throw new YieldError(delay);
     }
@@ -146,7 +146,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
                 else {
                     this.dueTime = this.now + delay;
                 }
-                yield$(host, delay);
+                __yield(host, delay);
             }
         };
         this.current = none;
@@ -422,4 +422,4 @@ const createVirtualTimeScheduler = (options = {}) => {
     return new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
 };
 
-export { YieldError, createHostScheduler, createVirtualTimeScheduler, run, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority, yield$ };
+export { YieldError, __yield, createHostScheduler, createVirtualTimeScheduler, run, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };

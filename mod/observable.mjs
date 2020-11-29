@@ -4,7 +4,7 @@ import { addOnDisposedWithError, AbstractDisposable, addDisposable, bindDisposab
 import { enumerate, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
-import { schedule, yield$ as yield$$1, YieldError, run, createVirtualTimeScheduler } from './scheduler.mjs';
+import { schedule, __yield as __yield$1, YieldError, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { dispatchTo } from './dispatcher.mjs';
 
@@ -131,9 +131,9 @@ const createAutoDisposingDelegatingObserver = (delegate) => {
     bindDisposables(delegate, observer);
     return observer;
 };
-const yield$ = (observer, next, delay) => {
+const __yield = (observer, next, delay) => {
     observer.notify(next);
-    yield$$1(observer, delay);
+    __yield$1(observer, delay);
 };
 
 class OnNotifyObserver extends AbstractAutoDisposingDelegatingObserver {
@@ -633,7 +633,7 @@ class ObserverDelegatingDispatcher extends AbstractDisposable {
             const observer = this.observer;
             while (nextQueue.length > 0) {
                 const next = nextQueue.shift();
-                yield$(observer, next, 0);
+                __yield(observer, next, 0);
             }
         };
         this.onContinuationDispose = () => {
@@ -750,7 +750,7 @@ const fromEnumerator = (options = {}) => f => {
         const enumerator = f();
         return (observer) => {
             while (enumerator.move()) {
-                yield$(observer, enumerator.current, delay);
+                __yield(observer, enumerator.current, delay);
             }
             pipe(observer, dispose());
         };
@@ -820,7 +820,7 @@ const generate = (generator, initialValue, options = {}) => {
         return (observer) => {
             while (true) {
                 acc = generator(acc);
-                yield$(observer, acc, delay);
+                __yield(observer, acc, delay);
             }
         };
     };

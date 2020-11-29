@@ -93,7 +93,7 @@ export {
 export {
   run,
   schedule,
-  yield$,
+  __yield,
   YieldError,
 } from "./scheduler/schedulerContinuation";
 export { toSchedulerWithPriority } from "./scheduler/schedulerWithPriority";
