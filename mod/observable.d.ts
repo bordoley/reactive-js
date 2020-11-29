@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { Function1, Factory, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Equality, TypePredicate, Predicate, Reducer } from './functions';
+import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Equality, TypePredicate, Predicate, Reducer } from './functions';
 import { Option } from './option';
 import { DisposableLike, DisposableOrTeardown } from './disposable';
 import { DispatcherLike } from './dispatcher';
@@ -7,7 +7,8 @@ import { SchedulerLike, VirtualTimeSchedulerLike } from './scheduler';
 import { EnumerableLike } from './enumerable';
 import { RunnableLike } from './runnable';
 
-declare const async: <T>(computation: Function1<SchedulerLike, T>) => ObservableLike<T>;
+declare const async: <T>(computation: Factory<T>) => ObservableLike<T>;
+declare const observable: <T>(computation: Factory<T>) => ObservableLike<T>;
 declare function __memo<T>(fn: Factory<T>): T;
 declare function __memo<TA, T>(fn: Function1<TA, T>, a: TA): T;
 declare function __memo<TA, TB, T>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
@@ -37,6 +38,7 @@ declare function __using<TA, TB, TC, T extends DisposableLike>(fn: Function3<TA,
 declare function __using<TA, TB, TC, TD, T extends DisposableLike>(fn: Function4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
 declare function __using<TA, TB, TC, TD, TE, T extends DisposableLike>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
 declare function __using<TA, TB, TC, TD, TE, TF, T extends DisposableLike>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
+declare function __currentScheduler(): SchedulerLike;
 
 declare function combineLatest<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<[TA, TB]>;
 declare function combineLatest<TA, TB, TC, T>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): ObservableLike<[TA, TB, TC]>;
@@ -657,4 +659,4 @@ interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableL
 interface SubjectLike<T> extends StreamLike<T, T> {
 }
 
-export { AsyncReducer, MulticastObservableLike, ObservableLike, ObservableOperator, ObserverLike, ObserverOperator, StreamLike, SubjectLike, ThrottleMode, __await, __do, __memo, __observe, __using, async, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };
+export { AsyncReducer, MulticastObservableLike, ObservableLike, ObservableOperator, ObserverLike, ObserverOperator, StreamLike, SubjectLike, ThrottleMode, __await, __currentScheduler, __do, __memo, __observe, __using, async, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observable, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };

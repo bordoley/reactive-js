@@ -132,7 +132,7 @@ declare const alwaysTrue: (..._args: unknown[]) => boolean;
 /**
  * A function that always returns `undefined`.
  */
-declare const ignore: (..._args: unknown[]) => undefined;
+declare const ignore: (..._args: unknown[]) => void;
 /**
  * An updater function that returns the result of incrementing `x`.
  */

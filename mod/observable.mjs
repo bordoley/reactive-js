@@ -1,11 +1,11 @@
 import { pipe, ignore, raise, arrayEquality, returns, compose, callWith, defer as defer$1, strictEquality } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
-import { addOnDisposedWithError, AbstractDisposable, addDisposable, bindDisposables, dispose, disposed, addDisposableDisposeParentOnChildError, addOnDisposedWithoutErrorTeardown, addTeardown, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
+import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, bindDisposables, addTeardown, addDisposableDisposeParentOnChildError, disposed, addOnDisposedWithoutErrorTeardown, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
+import { __DEV__ } from './env.mjs';
 import { enumerate, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
-import { schedule, __yield as __yield$1, YieldError, run, createVirtualTimeScheduler } from './scheduler.mjs';
-import { __DEV__ } from './env.mjs';
+import { schedule, YieldError, __yield as __yield$1, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { dispatchTo } from './dispatcher.mjs';
 
 class ScheduledObservable {
@@ -26,6 +26,46 @@ const defer = (factory, options = {}) => {
     return new ScheduledObservable(factory, false, delay);
 };
 const observe = (observer) => observable => observable.observe(observer);
+
+/**
+ * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
+ * An optional `startIndex` in the array maybe specified,
+ *
+ * @param options Config object that specifies an optional `delay` between emitted items and
+ * an optional `startIndex` into the array.
+ */
+const fromArray = (options = {}) => values => {
+    var _a, _b, _c;
+    const delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0);
+    const valuesLength = values.length;
+    const startIndex = Math.min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, valuesLength);
+    const endIndex = Math.max(Math.min((_c = options.endIndex) !== null && _c !== void 0 ? _c : values.length, valuesLength), 0);
+    const factory = () => {
+        let index = startIndex;
+        return (observer) => {
+            while (index < endIndex) {
+                const value = values[index];
+                index++;
+                // Inline yielding logic for performance reasons
+                observer.notify(value);
+                if (index < endIndex && (delay > 0 || observer.shouldYield)) {
+                    throw new YieldError(delay);
+                }
+            }
+            pipe(observer, dispose());
+        };
+    };
+    return delay > 0 ? defer(factory, { delay }) : deferSynchronous(factory);
+};
+
+const defaultEmpty = fromArray()([]);
+/**
+ * Return an `ObservableLike` that emits no items and disposes the subscription after a specified delay.
+ */
+const empty = (options = {}) => {
+    const { delay = 0 } = options;
+    return delay > 0 ? fromArray({ delay })([]) : defaultEmpty;
+};
 
 class LiftedObservable {
     constructor(source, operators, isSynchronous) {
@@ -176,67 +216,195 @@ const subscribe = (scheduler) => (observable) => {
     return observer;
 };
 
-const asyncAwaitSymbol = Symbol("@reactive-js/core/asynchronous/await");
 const arrayStrictEquality = arrayEquality();
-function validateState(ctx, type) {
+const asyncAwaitSymbol = Symbol("@reactive-js/core/observable/effect/await");
+function validateAsyncEffect(ctx, type) {
     const { effects, index } = ctx;
+    ctx.index++;
     if (index >= effects.length) {
-        ctx.index++;
         return none;
     }
-    const effect = effects[index];
-    ctx.index++;
-    if (effect.type !== type) {
-        throw new Error();
+    else {
+        const effect = effects[index];
+        return effect.type !== type
+            ? raise("Async effect called out of order")
+            : effect;
     }
-    return effect;
 }
-class AsyncContextImpl {
-    constructor(effects) {
+class BaseContext {
+}
+class AsyncContext extends BaseContext {
+    constructor(effects, observer, runComputation) {
+        super();
         this.effects = effects;
+        this.observer = observer;
+        this.runComputation = runComputation;
         this.index = 0;
     }
-    await(f, ...args) {
-        const effect = validateState(this, 0 /* Await */);
+    await(observable) {
+        const effect = validateAsyncEffect(this, 0 /* Await */);
         if (isNone(effect)) {
-            const observable = f(...args);
-            this.effects.push({
+            const subscription = pipe(observable, onNotify(next => {
+                effect.value = next;
+                effect.hasValue = true;
+            }), subscribe(this.observer));
+            addTeardown(subscription, () => {
+                pipe(this.observer, schedule(this.runComputation));
+            });
+            addDisposable(this.observer, subscription);
+            const effect = {
                 type: 0 /* Await */,
-                f,
-                args,
                 observable,
-                subscription: none,
+                subscription,
                 value: none,
                 hasValue: false,
-            });
+            };
+            this.effects.push(effect);
             throw asyncAwaitSymbol;
         }
-        else if (f === effect.f && arrayStrictEquality(args, effect.args)) {
-            const { hasValue, subscription } = effect;
-            if (hasValue && isSome(subscription) && subscription.isDisposed) {
+        else {
+            const { subscription } = effect;
+            const { error } = subscription;
+            if (__DEV__ && observable !== effect.observable) {
+                return raise("async effect called with different observable");
+            }
+            else if (isSome(error)) {
+                throw error.cause;
+            }
+            else if (effect.hasValue) {
                 return effect.value;
             }
-            else if (isSome(subscription) && subscription.isDisposed) {
-                throw new Error();
-            }
             else {
-                throw asyncAwaitSymbol;
+                return raise("observable completed without producing a value.");
             }
-        }
-        else {
-            // This could happen if a state (__observe) variable is used prior to an __await effect.
-            // We probably should trim the effect list and re-initialize at this point.
-            throw new Error();
         }
     }
     memo(f, ...args) {
-        const effect = validateState(this, 1 /* Memo */);
+        const effect = validateAsyncEffect(this, 1 /* Memo */);
         if (isNone(effect)) {
             const value = f(...args);
             this.effects.push({ type: 1 /* Memo */, f, args, value });
             return value;
         }
-        else if (f === effect.f && arrayStrictEquality(args, effect.args)) {
+        else if (__DEV__ && (f !== effect.f || !arrayStrictEquality(args, effect.args))) {
+            return raise("memo arguments changed in async computation");
+        }
+        else {
+            return effect.value;
+        }
+    }
+    using(f, ...args) {
+        const effect = validateAsyncEffect(this, 3 /* Using */);
+        if (isNone(effect)) {
+            const value = f(...args);
+            addDisposableDisposeParentOnChildError(this.observer, value);
+            this.effects.push({
+                type: 3 /* Using */,
+                f,
+                args,
+                value,
+            });
+            return value;
+        }
+        else if (__DEV__ && (f !== effect.f || !arrayStrictEquality(args, effect.args))) {
+            return raise("using arguments changed in async computation");
+        }
+        else {
+            return effect.value;
+        }
+    }
+}
+let currentCtx = none;
+const async = (computation) => defer(() => {
+    const effects = [];
+    const runComputation = (observer) => {
+        const ctx = new AsyncContext(effects, observer, runComputation);
+        let result = none;
+        let isAwaiting = false;
+        let error = none;
+        currentCtx = ctx;
+        try {
+            result = computation();
+        }
+        catch (cause) {
+            isAwaiting = cause === asyncAwaitSymbol;
+            if (!isAwaiting) {
+                error = { cause };
+            }
+        }
+        currentCtx = none;
+        if (isSome(error)) {
+            observer.dispose(error);
+        }
+        else if (!isAwaiting) {
+            observer.notify(result);
+            observer.dispose();
+        }
+    };
+    return runComputation;
+});
+function validateObservableEffect(ctx, type) {
+    const { effects, index } = ctx;
+    ctx.index++;
+    if (index >= effects.length) {
+        const effect = type === 1 /* Memo */
+            ? {
+                type: 1 /* Memo */,
+                f: ignore,
+                args: [],
+                value: none,
+            }
+            : type === 2 /* Observe */
+                ? {
+                    type: 2 /* Observe */,
+                    observable: empty(),
+                    subscription: disposed,
+                    value: none,
+                }
+                : type === 3 /* Using */
+                    ? {
+                        type: 3 /* Using */,
+                        f: ignore,
+                        args: [],
+                        value: disposed,
+                    }
+                    : raise("invalid effect type");
+        effects.push(effect);
+        return effect;
+    }
+    else {
+        const effect = effects[index];
+        if (effect.type !== type) {
+            // if effects are out of order dispose any subsequent effects
+            // and continue on.
+            for (let i = index; i < effects.length; i++) {
+                const effect = effects[i];
+                const subscription = effect.type === 2 /* Observe */
+                    ? effect.subscription
+                    : effect.type === 3 /* Using */
+                        ? effect.value
+                        : disposed;
+                subscription.dispose();
+            }
+            effects.length = index;
+            return validateObservableEffect(ctx, type);
+        }
+        else {
+            return effect;
+        }
+    }
+}
+class ObservableContext extends BaseContext {
+    constructor(effects, scheduler, runComputation) {
+        super();
+        this.effects = effects;
+        this.scheduler = scheduler;
+        this.runComputation = runComputation;
+        this.index = 0;
+    }
+    memo(f, ...args) {
+        const effect = validateObservableEffect(this, 1 /* Memo */);
+        if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
         else {
@@ -248,198 +416,114 @@ class AsyncContextImpl {
         }
     }
     observe(observable) {
-        const effect = validateState(this, 2 /* Observe */);
-        if (isNone(effect)) {
-            this.effects.push({
-                type: 2 /* Observe */,
-                observable,
-                subscription: none,
-                value: none,
-            });
-            return none;
-        }
-        else if (observable === effect.observable) {
+        const effect = validateObservableEffect(this, 2 /* Observe */);
+        if (effect.observable === observable) {
             return effect.value;
         }
         else {
-            const oldSubscription = effect.subscription;
-            effect.subscription = none;
+            pipe(effect.subscription, dispose());
+            const subscription = pipe(observable, onNotify(next => {
+                effect.value = next;
+                this.runComputation(this.scheduler);
+            }), subscribe(this.scheduler));
+            addDisposableDisposeParentOnChildError(this.scheduler, subscription);
             effect.observable = observable;
-            pipe(oldSubscription, dispose());
+            effect.subscription = subscription;
+            effect.value = none;
             return none;
         }
     }
     using(f, ...args) {
-        const effect = validateState(this, 3 /* Using */);
-        if (isNone(effect)) {
-            const value = f(...args);
-            this.effects.push({
-                type: 3 /* Using */,
-                f,
-                args,
-                value,
-                dirty: true,
-            });
-            return value;
-        }
-        else if (f === effect.f && arrayStrictEquality(args, effect.args)) {
+        const effect = validateObservableEffect(this, 3 /* Using */);
+        if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
         else {
             pipe(effect.value, dispose());
             const value = f(...args);
+            addDisposableDisposeParentOnChildError(this.scheduler, value);
             effect.f = f;
             effect.args = args;
             effect.value = value;
-            effect.dirty = true;
             return value;
         }
     }
 }
-let currentCtx = none;
-const async = (computation) => {
-    const factory = () => {
-        const effects = [];
-        let scheduledComputationSubscription = disposed;
-        let onDisposeWithoutError = none;
-        const scheduleComputation = (observer) => {
-            if (scheduledComputationSubscription.isDisposed) {
-                scheduledComputationSubscription = pipe(observer, schedule(runComputation));
-            }
-        };
-        const createOnDisposeWithoutError = (observer) => () => {
-            var _a;
-            if (!scheduledComputationSubscription.isDisposed) {
-                return;
-            }
-            const effectsLength = effects.length;
-            let hasOutstandingEffects = false;
-            for (let i = 0; i < effectsLength; i++) {
-                const effect = effects[i];
-                if (effect.type !== 2 /* Observe */) {
-                    continue;
-                }
-                const { subscription } = effect;
-                hasOutstandingEffects = !((_a = subscription === null || subscription === void 0 ? void 0 : subscription.isDisposed) !== null && _a !== void 0 ? _a : false);
-                if (hasOutstandingEffects) {
-                    break;
-                }
-            }
-            if (!hasOutstandingEffects) {
-                pipe(observer, dispose());
-            }
-        };
-        const runComputation = (observer) => {
-            onDisposeWithoutError = onDisposeWithoutError !== null && onDisposeWithoutError !== void 0 ? onDisposeWithoutError : createOnDisposeWithoutError(observer);
-            const ctx = new AsyncContextImpl(effects);
-            let result = none;
-            let error = none;
-            let waitingForAwait = false;
-            currentCtx = ctx;
-            try {
-                result = computation(observer);
-            }
-            catch (cause) {
-                currentCtx = none;
-                if (cause === asyncAwaitSymbol) {
-                    waitingForAwait = true;
-                }
-                else {
-                    error = { cause };
-                    // We still want to setup all the subscriptions in this case
-                    // because using effects need to be disposed in the case of error.
-                }
-            }
-            if (isNone(error) && !waitingForAwait) {
-                observer.notify(result);
-            }
-            const effectsLength = effects.length;
-            let hasOutstandingEffects = false;
-            for (let i = 0; i < effectsLength; i++) {
-                const effect = effects[i];
-                if (effect.type === 3 /* Using */ && effect.dirty) {
-                    effect.dirty = false;
-                    addDisposableDisposeParentOnChildError(observer, effect.value);
-                    continue;
-                }
-                if (effect.type === 0 /* Await */ &&
-                    isNone(effect.subscription)) {
-                    const { observable } = effect;
-                    const subscription = pipe(observable, onNotify(next => {
-                        effect.value = next;
-                        effect.hasValue = true;
-                        scheduleComputation(observer);
-                    }), subscribe(observer));
-                    addDisposableDisposeParentOnChildError(observer, subscription);
-                    addOnDisposedWithoutErrorTeardown(subscription, onDisposeWithoutError);
-                    effect.subscription = subscription;
-                    hasOutstandingEffects = true;
-                    continue;
-                }
-                else if (effect.type === 0 /* Await */ &&
-                    isSome(effect.subscription) &&
-                    !effect.subscription.isDisposed) {
-                    hasOutstandingEffects = true;
-                    continue;
-                }
-                if (effect.type === 2 /* Observe */ &&
-                    isNone(effect.subscription)) {
-                    const { observable } = effect;
-                    const subscription = pipe(observable, onNotify(next => {
-                        effect.value = next;
-                        scheduleComputation(observer);
-                    }), subscribe(observer));
-                    addDisposableDisposeParentOnChildError(observer, subscription);
-                    addOnDisposedWithoutErrorTeardown(subscription, onDisposeWithoutError);
-                    effect.subscription = subscription;
-                    hasOutstandingEffects = true;
-                    continue;
-                }
-                else if (effect.type === 2 /* Observe */ &&
-                    isSome(effect.subscription) &&
-                    !effect.subscription.isDisposed) {
-                    hasOutstandingEffects = true;
-                    continue;
-                }
-            }
-            if (!hasOutstandingEffects || isSome(error)) {
-                pipe(observer, dispose(error));
-            }
-        };
-        return runComputation;
+const observable = (computation) => defer(() => {
+    const effects = [];
+    let scheduledComputationSubscription = disposed;
+    const scheduleComputation = (observer) => {
+        if (scheduledComputationSubscription.isDisposed) {
+            scheduledComputationSubscription = pipe(observer, schedule(runComputation));
+        }
     };
-    return defer(factory);
-};
-const assertCurrentContext = () => {
-    if (isNone(currentCtx)) {
-        throw new Error();
-    }
-    return currentCtx;
-};
+    const runComputation = (observer) => {
+        const ctx = new ObservableContext(effects, observer, scheduleComputation);
+        let result = none;
+        let error = none;
+        currentCtx = ctx;
+        try {
+            result = computation();
+        }
+        catch (cause) {
+            error = { cause };
+        }
+        currentCtx = none;
+        if (isSome(error)) {
+            observer.dispose(error);
+        }
+        else {
+            const hasOutstandingEffects = effects.findIndex(effect => effect.type === 2 /* Observe */ &&
+                !effect.subscription.isDisposed) >= 0;
+            observer.notify(result);
+            if (!hasOutstandingEffects) {
+                observer.dispose(error);
+            }
+        }
+    };
+    return runComputation;
+});
+const assertCurrentContext = () => isNone(currentCtx) ? raise() : currentCtx;
 function __memo(f, ...args) {
     const ctx = assertCurrentContext();
     return ctx.memo(f, ...args);
 }
 const __observe = (observable) => {
     const ctx = assertCurrentContext();
-    return ctx.observe(observable);
+    return ctx instanceof ObservableContext
+        ? ctx.observe(observable)
+        : raise("observe can only be called in observable computations");
 };
 function __await(f, ...args) {
     const ctx = assertCurrentContext();
-    return ctx.await(f, ...args);
+    return ctx instanceof AsyncContext
+        ? ctx.await(ctx.memo(f, ...args))
+        : raise("await can only be called in async computations");
 }
 const deferSideEffect = (f, ...args) => defer(() => observer => {
     f(...args);
+    observer.notify(none);
     observer.dispose();
 });
 function __do(f, ...args) {
     const ctx = assertCurrentContext();
-    const observable = ctx.memo(deferSideEffect, f, ...args);
-    __observe(observable);
+    if (ctx instanceof AsyncContext) {
+        ctx.memo(f, ...args);
+    }
+    else if (ctx instanceof ObservableContext) {
+        const observable = ctx.memo(deferSideEffect, f, ...args);
+        ctx.observe(observable);
+    }
 }
 function __using(f, ...args) {
     const ctx = assertCurrentContext();
     return ctx.using(f, ...args);
+}
+function __currentScheduler() {
+    const ctx = assertCurrentContext();
+    return ctx instanceof ObservableContext
+        ? ctx.scheduler
+        : raise("currentScheduler only supported in observable computations");
 }
 
 class LatestObserver extends AbstractDelegatingObserver {
@@ -506,37 +590,6 @@ function combineLatest(...observables) {
     return latest(observables, 1 /* Combine */);
 }
 const combineLatestWith = (snd) => fst => combineLatest(fst, snd);
-
-/**
- * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
- * An optional `startIndex` in the array maybe specified,
- *
- * @param options Config object that specifies an optional `delay` between emitted items and
- * an optional `startIndex` into the array.
- */
-const fromArray = (options = {}) => values => {
-    var _a, _b, _c;
-    const delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0);
-    const valuesLength = values.length;
-    const startIndex = Math.min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, valuesLength);
-    const endIndex = Math.max(Math.min((_c = options.endIndex) !== null && _c !== void 0 ? _c : values.length, valuesLength), 0);
-    const factory = () => {
-        let index = startIndex;
-        return (observer) => {
-            while (index < endIndex) {
-                const value = values[index];
-                index++;
-                // Inline yielding logic for performance reasons
-                observer.notify(value);
-                if (index < endIndex && (delay > 0 || observer.shouldYield)) {
-                    throw new YieldError(delay);
-                }
-            }
-            pipe(observer, dispose());
-        };
-    };
-    return delay > 0 ? defer(factory, { delay }) : deferSynchronous(factory);
-};
 
 /**
  *  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the observer.
@@ -724,15 +777,6 @@ class SubjectImpl extends AbstractDisposable {
 const createSubject = (options = {}) => {
     const { replay = 0 } = options;
     return new SubjectImpl(replay);
-};
-
-const defaultEmpty = fromArray()([]);
-/**
- * Return an `ObservableLike` that emits no items and disposes the subscription after a specified delay.
- */
-const empty = (options = {}) => {
-    const { delay = 0 } = options;
-    return delay > 0 ? fromArray({ delay })([]) : defaultEmpty;
 };
 
 const fromDisposable = (disposable) => createObservable(dispatcher => {
@@ -1992,4 +2036,4 @@ const toPromise = (scheduler) => observable => new Promise((resolve, reject) => 
     });
 });
 
-export { __await, __do, __memo, __observe, __using, async, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };
+export { __await, __currentScheduler, __do, __memo, __observe, __using, async, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observable, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };

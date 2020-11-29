@@ -33,8 +33,9 @@ declare const empty: <TReq, T>(options?: {
 declare const stream: <TReq, T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number | undefined;
 } | undefined) => Function1<StreamableLike<TReq, T>, StreamLike<TReq, T>>;
-declare const __stream: <TReq, T>(streamable: StreamableLike<TReq, T>, scheduler: SchedulerLike, { replay }?: {
+declare const __stream: <TReq, T>(streamable: StreamableLike<TReq, T>, { replay, scheduler, }?: {
     readonly replay?: number | undefined;
+    readonly scheduler?: SchedulerLike | undefined;
 }) => StreamLike<TReq, T>;
 
 declare const identity: <T>() => StreamableLike<T, T>;

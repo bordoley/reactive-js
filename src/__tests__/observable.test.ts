@@ -122,23 +122,18 @@ const Observable = {
 export const tests = describe(
   "observable",
   test("async", () => {
-    const obsFactoryIncrement = (count: number) =>
-      pipe(
-        generate(increment, () => 0, { delay: 2 }),
-        takeFirst({ count }),
-      );
-    const obsFactoryIncrementBy2 = (count: number) =>
-      pipe(
-        generate(incrementBy(2), () => 0, { delay: 2 }),
-        takeFirst({ count }),
-      );
+    const fromValueWithDelay = fromValue<any>({ delay: 2 });
+    
     const computedObservable = async(() => {
-      const result1 = __await(obsFactoryIncrement, 5);
-      const result2 = __await(obsFactoryIncrementBy2, result1);
+      const result1 = __await(fromValueWithDelay, 5);
+      let result2 = 5;
+      if (result1 > 4) {
+        result2 = __await(fromValueWithDelay, result1);
+      } 
 
       return result1 + result2;
     });
-    pipe(computedObservable, takeLast(), toRunnable(), last, expectEquals(15));
+    pipe(computedObservable, takeLast(), toRunnable(), last, expectEquals(10));
   }),
   describe(
     "buffer",

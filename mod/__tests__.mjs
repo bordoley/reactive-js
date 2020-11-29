@@ -6,7 +6,7 @@ import { last, toArray, fromArray as fromArray$4, forEach, concat as concat$3, c
 import { map as map$1 } from './readonlyArray.mjs';
 import { createPriorityQueue } from './queues.mjs';
 import { createVirtualTimeScheduler, schedule, createHostScheduler } from './scheduler.mjs';
-import { toRunnable, fromValue, onNotify, subscribe, generate as generate$2, concat as concat$1, concatMap as concatMap$1, distinctUntilChanged as distinctUntilChanged$1, empty as empty$3, endWith as endWith$1, fromArray as fromArray$3, keep as keep$1, map as map$3, mapTo as mapTo$1, repeat as repeat$1, scan as scan$1, skipFirst as skipFirst$1, startWith as startWith$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, async, __await, buffer, throws, catchError, concatWith, combineLatestWith, createObservable, createSubject, exhaustMap, fromPromise, toPromise, genMap, ignoreElements, merge, mergeWith, mergeMap, never, onSubscribe, retry, scanAsync, share, zip, switchAll, switchMap, throttle, throwIfEmpty, compute, timeout, withLatestFrom, fromIterable as fromIterable$2, zipWith as zipWith$1, zipLatestWith, zipWithLatestFrom, __memo, __observe } from './observable.mjs';
+import { toRunnable, fromValue, onNotify, subscribe, generate as generate$2, concat as concat$1, concatMap as concatMap$1, distinctUntilChanged as distinctUntilChanged$1, empty as empty$3, endWith as endWith$1, fromArray as fromArray$3, keep as keep$1, map as map$3, mapTo as mapTo$1, repeat as repeat$1, scan as scan$1, skipFirst as skipFirst$1, startWith as startWith$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, async, __await, buffer, throws, catchError, concatWith, combineLatestWith, createObservable, createSubject, exhaustMap, fromPromise, toPromise, genMap, ignoreElements, merge, mergeWith, mergeMap, never, onSubscribe, retry, scanAsync, share, zip, switchAll, switchMap, throttle, throwIfEmpty, compute, timeout, withLatestFrom, fromIterable as fromIterable$2, zipWith as zipWith$1, zipLatestWith, zipWithLatestFrom, observable, __memo, __observe } from './observable.mjs';
 import { dispatchTo } from './dispatcher.mjs';
 import { stream, sink, identity as identity$1, lift, __stream, createActionReducer, empty as empty$6, map as map$7, mapReq, onNotify as onNotify$1, scan as scan$4, mapTo as mapTo$5 } from './streamable.mjs';
 import { fromIterable, consume, notify, done, consumeAsync, fromArray, generate } from './asyncEnumerable.mjs';
@@ -688,14 +688,16 @@ const Observable = {
     toRunnable,
 };
 const tests$6 = describe("observable", test("async", () => {
-    const obsFactoryIncrement = (count) => pipe(generate$2(increment, () => 0, { delay: 2 }), takeFirst$1({ count }));
-    const obsFactoryIncrementBy2 = (count) => pipe(generate$2(incrementBy(2), () => 0, { delay: 2 }), takeFirst$1({ count }));
+    const fromValueWithDelay = fromValue({ delay: 2 });
     const computedObservable = async(() => {
-        const result1 = __await(obsFactoryIncrement, 5);
-        const result2 = __await(obsFactoryIncrementBy2, result1);
+        const result1 = __await(fromValueWithDelay, 5);
+        let result2 = 5;
+        if (result1 > 4) {
+            result2 = __await(fromValueWithDelay, result1);
+        }
         return result1 + result2;
     });
-    pipe(computedObservable, takeLast$1(), toRunnable(), last, expectEquals(15));
+    pipe(computedObservable, takeLast$1(), toRunnable(), last, expectEquals(10));
 }), describe("buffer", test("with duration and maxBufferSize", defer(concat$1(pipe([1, 2, 3, 4], fromArray$3()), pipe([1, 2, 3], fromArray$3({ delay: 1 })), pipe(4, fromValue({ delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toRunnable(), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", defer(defer([1, 2, 3, 4], fromArray$3(), buffer({ duration: _ => throws()(raise) }), toRunnable({
     schedulerFactory: defer({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
 }), toArray()), expectToThrow))), describe("catchError", test("source completes successfully", defer(pipe(1, fromValue()), catchError(_ => fromValue()(2)), toRunnable(), toArray(), expectArrayEquals([1]))), test("source throws, error caught and ignored", () => {
@@ -1063,9 +1065,9 @@ const tests$d = describe("streamable", test("__stream", () => {
     const createLooper = (stream) => pipe([0, 1, 2, 3], fromArray$3({ delay: 10 }), onNotify(x => {
         stream.dispatch(x);
     }), ignoreElements());
-    const obs = async(scheduler => {
+    const obs = observable(() => {
         var _a;
-        const stream = __stream(streamable, scheduler);
+        const stream = __stream(streamable);
         const runLooper = __memo(createLooper, stream);
         __observe(runLooper);
         return (_a = __observe(stream)) !== null && _a !== void 0 ? _a : -1;

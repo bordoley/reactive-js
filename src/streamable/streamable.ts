@@ -4,6 +4,7 @@ import { Function1, compose, pipe } from "../functions";
 import {
   ObservableOperator,
   StreamLike,
+  __currentScheduler,
   __memo,
   __observe,
   __using,
@@ -116,7 +117,16 @@ const streamOnSchedulerFactory = <TReq, T>(
 
 export const __stream = <TReq, T>(
   streamable: StreamableLike<TReq, T>,
-  scheduler: SchedulerLike,
-  { replay = 0 }: { readonly replay?: number } = {},
-): StreamLike<TReq, T> =>
-  __using(streamOnSchedulerFactory, streamable, scheduler, replay);
+  {
+    replay = 0,
+    scheduler,
+  }: { readonly replay?: number; readonly scheduler?: SchedulerLike } = {},
+): StreamLike<TReq, T> => {
+  const currentScheduler = __currentScheduler();
+  return __using(
+    streamOnSchedulerFactory,
+    streamable,
+    scheduler ?? currentScheduler,
+    replay,
+  );
+};

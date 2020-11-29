@@ -10,7 +10,6 @@
     "react-dom": "^17.0.1"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@rollup/plugin-replace": "^2.3.4",
     "@types/mime-db": "^1.43.0",

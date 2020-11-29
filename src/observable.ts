@@ -81,12 +81,14 @@ export interface SubjectLike<T> extends StreamLike<T, T> {}
 
 export {
   async,
+  observable,
   __await,
+  __currentScheduler,
   __do,
   __memo,
   __observe,
   __using,
-} from "./observable/asynchronous";
+} from "./observable/effects";
 export { combineLatest, combineLatestWith } from "./observable/combineLatest";
 export { compute } from "./observable/compute";
 export { concat, concatWith } from "./observable/concat";
