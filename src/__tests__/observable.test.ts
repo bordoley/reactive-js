@@ -133,8 +133,8 @@ export const tests = describe(
         takeFirst({ count }),
       );
     const computedObservable = async(() => {
-      const result1 = __await(obsFactoryIncrement, 5) ?? 0;
-      const result2 = __await(obsFactoryIncrementBy2, result1) ?? 0;
+      const result1 = __await(obsFactoryIncrement, 5);
+      const result2 = __await(obsFactoryIncrementBy2, result1);
 
       return result1 + result2;
     });
