@@ -4,7 +4,7 @@ import {
   StreamLike,
   __memo,
   __observe,
-  async,
+  observable,
   buffer,
   fromArray,
   ignoreElements,
@@ -54,8 +54,8 @@ export const tests = describe(
         ignoreElements(),
       );
 
-    const obs = async(scheduler => {
-      const stream = __stream(streamable, scheduler);
+    const obs = observable(() => {
+      const stream = __stream(streamable);
       const runLooper = __memo(createLooper, stream);
       __observe(runLooper);
 

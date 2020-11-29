@@ -247,7 +247,7 @@ export const alwaysTrue = (..._args: unknown[]) => true;
 /**
  * A function that always returns `undefined`.
  */
-export const ignore = (..._args: unknown[]) => {
+export const ignore = (..._args: unknown[]): void => {
   return undefined;
 };
 

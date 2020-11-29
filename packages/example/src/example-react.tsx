@@ -24,17 +24,13 @@ import {
 import React, { useCallback } from "react";
 import { default as ReactDOM } from "react-dom";
 import { appState } from "./example.state";
-import {
-  isNone,
-  isSome,
-  map as mapOption,
-  none,
-} from "@reactive-js/core/option";
+import { isNone, isSome, none } from "@reactive-js/core/option";
 import { FlowMode } from "@reactive-js/core/flowable";
 import {
   async,
   distinctUntilChanged,
   map as mapObs,
+  observable,
   __await,
   __memo,
   __observe,
@@ -128,7 +124,7 @@ const eventSource = createEventSource("http://localhost:8080/events", {
 });
 
 const EventSourceExample = createComponent(() =>
-  async(() => {
+  observable(() => {
     const eventData = __observe(eventSource);
 
     return (
@@ -168,8 +164,8 @@ const router = createRouter({
 });
 
 const Root = createComponent(() =>
-  async(scheduler => {
-    const historyStream = __stream(historyStateStore, scheduler);
+  observable(() => {
+    const historyStream = __stream(historyStateStore);
     const dispatch = __memo(dispatchTo, historyStream);
 
     const uri = __observe(historyStream) ?? emptyURI;

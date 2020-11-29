@@ -3,7 +3,7 @@ import {
   __do,
   __memo,
   __observe,
-  async,
+  observable,
   generate,
   ObservableLike,
   StreamLike,
@@ -51,9 +51,9 @@ export const appState = (
     fromObservable({ scheduler }),
   );
 
-  return async(scheduler => {
-    const counter = __stream(counterFlowable, scheduler);
-    const state = __stream(stateStore, scheduler);
+  return observable(() => {
+    const counter = __stream(counterFlowable);
+    const state = __stream(stateStore);
 
     const onClick = __memo(createOnClick, state);
 
