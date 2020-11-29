@@ -14,7 +14,7 @@ import {
   SchedulerContinuationLike,
   SchedulerLike,
 } from "../scheduler";
-import { run, schedule, yield$ } from "./schedulerContinuation";
+import { run, schedule, __yield } from "./schedulerContinuation";
 
 type ScheduledTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -125,7 +125,7 @@ class PriorityScheduler
       } else {
         this.dueTime = this.now + delay;
       }
-      yield$(host, delay);
+      __yield(host, delay);
     }
   };
   current: ScheduledTask = none as any;

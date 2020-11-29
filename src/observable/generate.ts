@@ -1,7 +1,7 @@
 import { Factory, Updater } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { defer, deferSynchronous } from "./observable";
-import { yield$ } from "./observer";
+import { __yield } from "./observer";
 
 /**
  * Generates an `ObservableLike` sequence from a generator function
@@ -25,7 +25,7 @@ export const generate = <T>(
     return (observer: ObserverLike<T>) => {
       while (true) {
         acc = generator(acc);
-        yield$(observer, acc, delay);
+        __yield(observer, acc, delay);
       }
     };
   };

@@ -10,7 +10,7 @@ import {
 import { pipe } from "../functions";
 import { ObserverLike } from "../observable";
 import { schedule } from "../scheduler";
-import { yield$ } from "./observer";
+import { __yield } from "./observer";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (dispatcher.nextQueue.length === 1) {
@@ -36,7 +36,7 @@ class ObserverDelegatingDispatcher<T>
 
     while (nextQueue.length > 0) {
       const next = nextQueue.shift() as T;
-      yield$(observer, next, 0);
+      __yield(observer, next, 0);
     }
   };
 

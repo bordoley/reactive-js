@@ -3,7 +3,7 @@ import { EnumerableLike, EnumeratorLike, enumerate } from "../enumerable";
 import { Factory, Function1, defer, pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { defer as deferObs, deferSynchronous } from "./observable";
-import { yield$ } from "./observer";
+import { __yield } from "./observer";
 
 /**
  * Creates an `ObservableLike` which enumerates through the values
@@ -19,7 +19,7 @@ export const fromEnumerator = <T>(
 
     return (observer: ObserverLike<T>) => {
       while (enumerator.move()) {
-        yield$(observer, enumerator.current, delay);
+        __yield(observer, enumerator.current, delay);
       }
       pipe(observer, dispose());
     };
