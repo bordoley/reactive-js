@@ -66,11 +66,10 @@ class SchedulerContinuationImpl extends AbstractDisposable {
 const run = (continuation) => {
     continuation.continue();
 };
-const __currentScheduler = () => isNone(currentScheduler)
-    ? raise("__currentScheduler effect may only be invoked from within a SchedulerContinuation")
-    : currentScheduler;
 const __yield = (delay = 0) => {
-    const scheduler = __currentScheduler();
+    const scheduler = isNone(currentScheduler)
+        ? raise("__currentScheduler effect may only be invoked from within a SchedulerContinuation")
+        : currentScheduler;
     if (delay > 0 || scheduler.shouldYield) {
         throw new YieldError(delay);
     }
@@ -430,4 +429,4 @@ const createVirtualTimeScheduler = (options = {}) => {
     return new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
 };
 
-export { YieldError, __currentScheduler, __yield, createHostScheduler, createVirtualTimeScheduler, run, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };
+export { YieldError, __yield, createHostScheduler, createVirtualTimeScheduler, run, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };

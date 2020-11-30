@@ -17,7 +17,6 @@ declare class YieldError {
     constructor(delay: number);
 }
 declare const run: (continuation: SchedulerContinuationLike) => void;
-declare const __currentScheduler: () => SchedulerLike;
 declare const __yield: (delay?: number) => void;
 declare const schedule: (f: SideEffect, options?: {
     readonly delay?: number | undefined;
@@ -115,4 +114,4 @@ interface PrioritySchedulerLike {
     }): void;
 }
 
-export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerContinuationRunStatusChangedListenerLike, SchedulerLike, VirtualTimeSchedulerLike, YieldError, __currentScheduler, __yield, createHostScheduler, createVirtualTimeScheduler, run, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };
+export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerContinuationRunStatusChangedListenerLike, SchedulerLike, VirtualTimeSchedulerLike, YieldError, __yield, createHostScheduler, createVirtualTimeScheduler, run, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };

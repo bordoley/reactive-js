@@ -97,15 +97,13 @@ export const run = (continuation: SchedulerContinuationLike): void => {
   continuation.continue();
 };
 
-export const __currentScheduler = (): SchedulerLike =>
-  isNone(currentScheduler)
-    ? raise(
+export const __yield = (delay = 0) => {
+  const scheduler = isNone(currentScheduler)
+    ? raise<SchedulerLike>(
         "__currentScheduler effect may only be invoked from within a SchedulerContinuation",
       )
     : currentScheduler;
 
-export const __yield = (delay = 0) => {
-  const scheduler = __currentScheduler();
   if (delay > 0 || scheduler.shouldYield) {
     throw new YieldError(delay);
   }
