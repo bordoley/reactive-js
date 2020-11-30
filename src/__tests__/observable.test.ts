@@ -439,8 +439,9 @@ export const tests = describe(
 
   test("never", defer(never(), toRunnable(), last, expectNone)),
   test("observable", () => {
-    const fromValueWithDelay = (delay: number, value: number) => fromValue<number>({ delay })(value);
-    const emptyDelayed = empty({delay: 100});
+    const fromValueWithDelay = (delay: number, value: number) =>
+      fromValue<number>({ delay })(value);
+    const emptyDelayed = empty({ delay: 100 });
 
     const computedObservable = observable(() => {
       const obs1 = __memo(fromValueWithDelay, 10, 5);

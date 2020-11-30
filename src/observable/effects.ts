@@ -305,9 +305,9 @@ function validateObservableEffect(
 
 class ObservableContext extends BaseContext {
   index = 0;
-  readonly effects: ObservableEffect[] = []
+  readonly effects: ObservableEffect[] = [];
 
-  constructor( 
+  constructor(
     readonly scheduler: SchedulerLike & DisposableLike,
     private readonly scheduleComputation: () => void,
   ) {
