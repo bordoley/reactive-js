@@ -1,14 +1,14 @@
 import { pipe } from "../functions";
 import { MediaType } from "../http";
+import { fromObject, join, keep, length, map } from "../readonlyArray";
+import { ReadonlyObjectMap } from "../readonlyObjectMap";
+import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar";
 import {
   Parser,
   pForwardSlash,
   parseWith,
   parseWithOrThrow,
-} from "../parserCombinators";
-import { fromObject, join, keep, length, map } from "../readonlyArray";
-import { ReadonlyObjectMap } from "../readonlyObjectMap";
-import { pParams, pToken, toTokenOrQuotedString } from "./httpGrammar";
+} from "./parserCombinators";
 
 export const pMediaType: Parser<MediaType> = charStream => {
   const type = pToken(charStream);

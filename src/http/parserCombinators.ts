@@ -1,5 +1,5 @@
-import { EnumeratorLike } from "./enumerable";
-import { __DEV__ } from "./env";
+import { EnumeratorLike } from "../enumerable";
+import { __DEV__ } from "../env";
 import {
   Factory,
   Function1,
@@ -8,9 +8,9 @@ import {
   isEqualTo,
   pipe,
   returns,
-} from "./functions";
+} from "../functions";
 
-import { Option, none, orCompute as orComputeOption } from "./option";
+import { Option, none, orCompute as orComputeOption } from "../option";
 
 export type CharCode = number;
 

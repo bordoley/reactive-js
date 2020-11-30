@@ -1,7 +1,5 @@
-import { EnumeratorLike, enumerate, fromArray } from "../enumerable";
-import { Comparator, pipe } from "../functions";
-import { isSome, none } from "../option";
-import { QueueLike } from "../queues";
+import { Comparator } from "../functions";
+import { Option, isSome, none } from "../option";
 
 const computeParentIndex = (index: number) => Math.floor((index - 1) / 2);
 
@@ -53,7 +51,16 @@ const siftUp = <T>(queue: PriorityQueueImpl<T>, item: T) => {
   }
 };
 
-class PriorityQueueImpl<T> implements QueueLike<T> {
+export interface PriorityQueueLike<T> {
+  readonly count: number;
+
+  clear(): void;
+  peek(): Option<T>;
+  pop(): Option<T>;
+  push(item: T): void;
+}
+
+class PriorityQueueImpl<T> implements PriorityQueueLike<T> {
   readonly values: T[] = [];
 
   constructor(readonly compare: Comparator<T>) {}
@@ -64,10 +71,6 @@ class PriorityQueueImpl<T> implements QueueLike<T> {
 
   clear() {
     this.values.length = 0;
-  }
-
-  enumerate(): EnumeratorLike<T> {
-    return pipe(this.values, fromArray(), enumerate);
   }
 
   peek() {
@@ -101,4 +104,4 @@ class PriorityQueueImpl<T> implements QueueLike<T> {
 
 export const createPriorityQueue = <T>(
   comparator: Comparator<T>,
-): QueueLike<T> => new PriorityQueueImpl(comparator);
+): PriorityQueueLike<T> => new PriorityQueueImpl(comparator);

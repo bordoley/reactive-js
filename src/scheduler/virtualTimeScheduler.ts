@@ -1,12 +1,12 @@
 import { AbstractDisposable, addDisposable, dispose } from "../disposable";
 import { pipe } from "../functions";
 import { isSome, none } from "../option";
-import { QueueLike, createPriorityQueue } from "../queues";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
   VirtualTimeSchedulerLike,
 } from "../scheduler";
+import { PriorityQueueLike, createPriorityQueue } from "./priorityQueue";
 import { run } from "./schedulerContinuation";
 
 type VirtualTask = {
@@ -54,7 +54,9 @@ class VirtualTimeSchedulerImpl
   microTaskTicks = 0;
   now = 0;
   private taskIDCount = 0;
-  readonly taskQueue: QueueLike<VirtualTask> = createPriorityQueue(comparator);
+  readonly taskQueue: PriorityQueueLike<VirtualTask> = createPriorityQueue(
+    comparator,
+  );
 
   constructor(private readonly maxMicroTaskTicks: number) {
     super();

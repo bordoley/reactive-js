@@ -1,5 +1,4 @@
 import { defer, pipe, returns } from "../functions";
-import { none } from "../option";
 import {
   char,
   concat,
@@ -18,7 +17,8 @@ import {
   sepBy,
   string,
   throwParseError,
-} from "../parserCombinators";
+} from "../http/parserCombinators";
+import { none } from "../option";
 import {
   describe,
   expectArrayEquals,

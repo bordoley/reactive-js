@@ -6,10 +6,15 @@ import {
   dispose,
   disposed,
 } from "./disposable";
-import { fromIterable, toRunnable } from "./enumerable";
-import { Function1, pipe } from "./functions";
-import { createKeyedQueue } from "./keyedQueue";
-import { createSetMultimap } from "./multimaps";
+import {
+  EnumerableLike,
+  EnumeratorLike,
+  enumerate,
+  fromIterable,
+  fromIterator,
+  toRunnable,
+} from "./enumerable";
+import { Function1, defer, pipe } from "./functions";
 import {
   ObservableLike,
   createObservable,
@@ -17,10 +22,240 @@ import {
   onNotify,
   subscribe,
 } from "./observable";
-import { isNone, isSome, none } from "./option";
-import { createUniqueQueue } from "./queues";
+import { Option, isNone, isSome, none } from "./option";
 import { first, forEach } from "./runnable";
 import { SchedulerLike } from "./scheduler";
+
+interface QueueLike<T> {
+  readonly count: number;
+
+  clear(): void;
+  peek(): Option<T>;
+  pop(): Option<T>;
+  push(item: T): void;
+}
+
+class UniqueQueueImpl<T> implements QueueLike<T> {
+  readonly values: Set<T> = new Set();
+
+  get count(): number {
+    return this.values.size;
+  }
+
+  clear() {
+    this.values.clear();
+  }
+
+  enumerate(): EnumeratorLike<T> {
+    return pipe(this.values, fromIterable(), enumerate);
+  }
+
+  peek() {
+    return pipe(this.values, fromIterable(), toRunnable(), first);
+  }
+
+  pop() {
+    const head = this.peek();
+    if (isSome(head)) {
+      this.values.delete(head);
+    }
+    return head;
+  }
+
+  push(item: T) {
+    if (!this.values.has(item)) {
+      this.values.add(item);
+    }
+  }
+}
+
+const createUniqueQueue = <T>(): QueueLike<T> => new UniqueQueueImpl();
+
+interface KeyedEnumerableLike<K, V> extends EnumerableLike<[K, V]> {
+  readonly keys: EnumerableLike<K>;
+  readonly values: EnumerableLike<V>;
+}
+
+interface KeyedCollection<K, V> extends KeyedEnumerableLike<K, V> {
+  readonly count: number;
+}
+
+interface KeyedQueueLike<K, V> extends KeyedCollection<K, V> {
+  clear(): void;
+  peek(key: K): Option<V>;
+  pop(key: K): Option<V>;
+  push(key: K, value: V): void;
+}
+
+function* iterateKeyedQueueValues<K, V>(queue: KeyedQueue<K, V>) {
+  for (const values of queue.map.values()) {
+    for (const value of values) {
+      yield value;
+    }
+  }
+}
+
+function* iterateKeyedQueueKeyValuePairs<K, V>(
+  queue: KeyedQueue<K, V>,
+): Generator<[K, V]> {
+  const map = queue.map;
+  for (const key of map.keys()) {
+    const values = map.get(key) ?? [];
+    for (const value of values) {
+      yield [key, value];
+    }
+  }
+}
+
+class KeyedQueue<K, V> implements KeyedQueueLike<K, V> {
+  count = 0;
+
+  readonly keys: EnumerableLike<K> = fromIterator<K>()(() => this.map.keys());
+
+  readonly map: Map<K, V[]> = new Map();
+
+  readonly values: EnumerableLike<V> = fromIterator<V>()(
+    defer(this, iterateKeyedQueueValues),
+  );
+
+  clear() {
+    this.map.clear();
+  }
+
+  enumerate(): EnumeratorLike<[K, V]> {
+    return pipe(
+      defer(this, iterateKeyedQueueKeyValuePairs),
+      fromIterator(),
+      enumerate,
+    );
+  }
+
+  peek(key: K): Option<V> {
+    const map = this.map;
+    const values = map.get(key) ?? [];
+    return values[0];
+  }
+
+  pop(key: K): Option<V> {
+    const map = this.map;
+    const values = map.get(key) ?? [];
+    const valuesOldSize = values.length;
+    const result = values.shift();
+    const valuesNewSize = values.length;
+
+    this.count -= valuesOldSize - valuesNewSize;
+
+    if (valuesNewSize === 0) {
+      map.delete(key);
+    }
+    return result;
+  }
+
+  push(key: K, value: V) {
+    const map = this.map;
+    const values = map.get(key) ?? [];
+    const valuesOldSize = values.length;
+    values.push(value);
+    const valuesNewSize = values.length;
+    this.count += valuesNewSize - valuesOldSize;
+
+    if (valuesOldSize === 0) {
+      map.set(key, values);
+    }
+  }
+}
+
+const createKeyedQueue = <K, V>(): KeyedQueueLike<K, V> => new KeyedQueue();
+
+function* iterateSetMultimapValues<K, V>(multimap: SetMultimap<K, V>) {
+  for (const values of multimap.map.values()) {
+    for (const value of values) {
+      yield value;
+    }
+  }
+}
+
+function* iterateSetMultimapKeyValuePairs<K, V>(
+  queue: SetMultimap<K, V>,
+): Generator<[K, V]> {
+  const map = queue.map;
+  for (const key of map.keys()) {
+    const values = map.get(key) ?? new Set();
+    for (const value of values) {
+      yield [key, value];
+    }
+  }
+}
+
+interface SetMultimapLike<K, V> extends KeyedCollection<K, V> {
+  add(key: K, value: V): void;
+  clear(): void;
+  get(key: K): ReadonlySet<V>;
+  remove(key: K, value: V): void;
+  removeAll(key: K): void;
+}
+
+class SetMultimap<K, V> implements SetMultimapLike<K, V> {
+  count = 0;
+  readonly keys: EnumerableLike<K> = fromIterator<K>()(() => this.map.keys());
+  readonly map: Map<K, Set<V>> = new Map();
+  readonly values: EnumerableLike<V> = fromIterator<V>()(
+    defer(this, iterateSetMultimapValues),
+  );
+
+  add(key: K, value: V) {
+    const map = this.map;
+    const values = map.get(key) ?? new Set<V>();
+    const valuesOldSize = values.size;
+    values.add(value);
+    const valuesNewSize = values.size;
+    this.count += valuesNewSize - valuesOldSize;
+
+    if (valuesOldSize === 0) {
+      map.set(key, values);
+    }
+  }
+
+  clear() {
+    this.map.clear();
+  }
+
+  enumerate(): EnumeratorLike<[K, V]> {
+    return pipe(
+      defer(this, iterateSetMultimapKeyValuePairs),
+      fromIterator(),
+      enumerate,
+    );
+  }
+
+  get(key: K): ReadonlySet<V> {
+    return this.map.get(key) ?? new Set<V>();
+  }
+
+  remove(key: K, value: V) {
+    const map = this.map;
+    const values = map.get(key) ?? new Set<V>();
+    const valuesOldSize = values.size;
+    values.delete(value);
+    const valuesNewSize = values.size;
+
+    this.count -= valuesOldSize - valuesNewSize;
+
+    if (valuesNewSize === 0) {
+      map.delete(key);
+    }
+  }
+
+  removeAll(key: K) {
+    const map = this.map;
+    const values = map.get(key) ?? new Set<V>();
+    const valuesSize = values.size;
+    this.count -= valuesSize;
+    map.delete(key);
+  }
+}
+
+const createSetMultimap = <K, V>(): SetMultimapLike<K, V> => new SetMultimap();
 
 const tryDispatch = <TResource extends DisposableLike>(
   resourceManager: ResourceManagerImpl<TResource>,

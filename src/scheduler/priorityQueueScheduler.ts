@@ -7,13 +7,13 @@ import {
 } from "../disposable";
 import { pipe } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
-import { QueueLike, createPriorityQueue } from "../queues";
 import {
   PausableSchedulerLike,
   PrioritySchedulerLike,
   SchedulerContinuationLike,
   SchedulerLike,
 } from "../scheduler";
+import { PriorityQueueLike, createPriorityQueue } from "./priorityQueue";
 import { __yield, run, schedule } from "./schedulerContinuation";
 
 type ScheduledTask = {
@@ -129,13 +129,15 @@ class PriorityScheduler
     }
   };
   current: ScheduledTask = none as any;
-  readonly delayed: QueueLike<ScheduledTask> = createPriorityQueue(
+  readonly delayed: PriorityQueueLike<ScheduledTask> = createPriorityQueue(
     delayedComparator,
   );
   dueTime = 0;
   inContinuation = false;
   isPaused = false;
-  readonly queue: QueueLike<ScheduledTask> = createPriorityQueue(comparator);
+  readonly queue: PriorityQueueLike<ScheduledTask> = createPriorityQueue(
+    comparator,
+  );
   taskIDCounter = 0;
 
   constructor(readonly host: SchedulerLike) {

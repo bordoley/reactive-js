@@ -1,13 +1,6 @@
 import { SideEffect2, pipe } from "../functions";
 import { CacheDirective, HttpHeaders, HttpStandardHeader } from "../http";
 import { isSome } from "../option";
-import {
-  CharStreamLike,
-  optional,
-  pEquals,
-  parseWith,
-  parseWithOrThrow,
-} from "../parserCombinators";
 import { join, map } from "../readonlyArray";
 import {
   httpList,
@@ -16,6 +9,13 @@ import {
   toTokenOrQuotedString,
 } from "./httpGrammar";
 import { getHeaderValue } from "./httpHeaders";
+import {
+  CharStreamLike,
+  optional,
+  pEquals,
+  parseWith,
+  parseWithOrThrow,
+} from "./parserCombinators";
 
 const pOptionalEquals = optional(pEquals);
 

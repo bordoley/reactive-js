@@ -7,7 +7,6 @@ import {
   MediaType,
 } from "../http";
 import { Option, isNone, none } from "../option";
-import { parseWith } from "../parserCombinators";
 import { join } from "../readonlyArray";
 import { ReadonlyObjectMap } from "../readonlyObjectMap";
 import { httpList, pToken } from "./httpGrammar";
@@ -19,6 +18,7 @@ import {
   parseMediaType,
   parseMediaTypeOrThrow,
 } from "./mediaType";
+import { parseWith } from "./parserCombinators";
 
 const parseTokenList = pipe(pToken, httpList, parseWith);
 

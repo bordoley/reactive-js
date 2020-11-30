@@ -2,10 +2,10 @@ import { isNone, none, isSome } from './option.mjs';
 import { pipe, ignore, raise, arrayEquality, returns, compose, callWith, defer as defer$1, strictEquality } from './functions.mjs';
 import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, bindDisposables, addTeardown, addDisposableDisposeParentOnChildError, disposed, addOnDisposedWithoutErrorTeardown, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
 import { __DEV__, warn } from './env.mjs';
+import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
+import { map as map$1, everySatisfy } from './readonlyArray.mjs';
 import { enumerate, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
-import { map as map$1, everySatisfy } from './readonlyArray.mjs';
-import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { dispatchTo } from './dispatcher.mjs';
 
 class ScheduledObservable {
