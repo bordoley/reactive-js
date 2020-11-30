@@ -1,4 +1,3 @@
-import { DispatcherLike } from "./dispatcher";
 import {
   AbstractDisposable,
   DisposableLike,
@@ -16,12 +15,14 @@ import {
 } from "./enumerable";
 import { Function1, defer, pipe } from "./functions";
 import {
+  DispatcherLike,
   ObservableLike,
   createObservable,
   fromValue,
   onNotify,
   subscribe,
 } from "./observable";
+
 import { Option, isNone, isSome, none } from "./option";
 import { first, forEach } from "./runnable";
 import { SchedulerLike } from "./scheduler";

@@ -1,7 +1,6 @@
 import { pipe, composeWith, returns, compose } from './functions.mjs';
+import { withLatestFrom, compute, map as map$1, concatMap, fromIterator, endWith, fromArray as fromArray$1, createSubject, using, takeWhile, keepType, reduce, onNotify, dispatchTo, subscribe, createObservable } from './observable.mjs';
 import { AbstractDisposable, addDisposableDisposeParentOnChildError, addDisposable } from './disposable.mjs';
-import { withLatestFrom, compute, map as map$1, concatMap, fromIterator, endWith, fromArray as fromArray$1, createSubject, using, takeWhile, keepType, reduce, onNotify, subscribe, createObservable } from './observable.mjs';
-import { dispatchTo } from './dispatcher.mjs';
 import { lift, withLatestFrom as withLatestFrom$1, map as map$2, createStreamable, stream } from './streamable.mjs';
 import { fromObservable as fromObservable$1 } from './flowable.mjs';
 

@@ -1,6 +1,6 @@
-import { dispatchTo } from "../dispatcher";
 import { Factory, Function2, pipe } from "../functions";
-import { ObservableLike, ObservableOperator } from "../observable";
+import { ObservableLike, ObservableOperator, dispatchTo } from "../observable";
+
 import { createSubject } from "./createSubject";
 import { onNotify } from "./onNotify";
 import { onSubscribe } from "./onSubscribe";

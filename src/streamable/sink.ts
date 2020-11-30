@@ -1,15 +1,16 @@
-import { dispatchTo } from "../dispatcher";
 import { addDisposable } from "../disposable";
 import { Function1, compose, pipe } from "../functions";
 import {
   ObservableLike,
   StreamLike,
+  dispatchTo,
   endWith,
   ignoreElements,
   onNotify,
   subscribe,
   using,
 } from "../observable";
+
 import { none } from "../option";
 import { StreamableLike } from "../streamable";
 import { stream } from "./streamable";

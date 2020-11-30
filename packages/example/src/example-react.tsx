@@ -35,7 +35,7 @@ import {
   __memo,
   __observe,
 } from "@reactive-js/core/observable";
-import { dispatchTo } from "@reactive-js/core/dispatcher";
+import { dispatchTo } from "@reactive-js/core/observable";
 import { __stream } from "@reactive-js/core/streamable";
 
 const updateHash = (hash: string): Updater<RelativeURI> => uri =>

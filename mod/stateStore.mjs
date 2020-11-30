@@ -1,7 +1,6 @@
 import { updaterReducer, pipe, identity, compose } from './functions.mjs';
+import { using, zipWithLatestFrom, onNotify, dispatchTo, subscribe } from './observable.mjs';
 import { bindDisposables } from './disposable.mjs';
-import { using, zipWithLatestFrom, onNotify, subscribe } from './observable.mjs';
-import { dispatchTo } from './dispatcher.mjs';
 import { createActionReducer, createStreamable, stream, mapReq, map as map$1 } from './streamable.mjs';
 
 /**

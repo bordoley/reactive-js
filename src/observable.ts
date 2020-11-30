@@ -1,4 +1,3 @@
-import { DispatcherLike } from "./dispatcher";
 import { DisposableLike } from "./disposable";
 import { Function1 } from "./functions";
 import { SchedulerLike } from "./scheduler";
@@ -67,6 +66,15 @@ export interface MulticastObservableLike<T>
   readonly observerCount: number;
 }
 
+/** @noInheritDoc */
+export interface DispatcherLike<T> extends DisposableLike {
+  /**
+   * Dispatches the next request
+   * @param req
+   */
+  dispatch(req: T): void;
+}
+
 /**
  * Represents a duplex stream
  *
@@ -79,6 +87,7 @@ export interface StreamLike<TReq, T>
 /** @noInheritDoc */
 export interface SubjectLike<T> extends StreamLike<T, T> {}
 
+export { dispatchTo } from "./observable/dispatcher";
 export {
   async,
   observable,

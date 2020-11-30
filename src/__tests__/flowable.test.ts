@@ -1,8 +1,8 @@
-import { dispatchTo } from "../dispatcher";
 import { dispose } from "../disposable";
 import { FlowMode, empty, fromObservable, fromValue } from "../flowable";
 import { defer, increment, pipe, returns } from "../functions";
-import { generate, onNotify, subscribe } from "../observable";
+import { dispatchTo, generate, onNotify, subscribe } from "../observable";
+
 import { createVirtualTimeScheduler, schedule } from "../scheduler";
 import { stream } from "../streamable";
 import {

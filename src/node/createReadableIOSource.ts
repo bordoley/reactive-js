@@ -1,6 +1,5 @@
 import fs from "fs";
 import { Readable } from "stream";
-import { dispatchTo } from "../dispatcher";
 import {
   DisposableValueLike,
   addDisposable,
@@ -14,10 +13,12 @@ import { IOSourceLike, done, notify } from "../io";
 import {
   ObservableLike,
   createObservable,
+  dispatchTo,
   onNotify,
   subscribe,
   using,
 } from "../observable";
+
 import { SchedulerLike } from "../scheduler";
 import { createStreamable } from "../streamable";
 import { createDisposableNodeStream } from "./nodeStream";

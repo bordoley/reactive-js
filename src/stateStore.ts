@@ -1,4 +1,3 @@
-import { dispatchTo } from "./dispatcher";
 import { bindDisposables } from "./disposable";
 import {
   Equality,
@@ -10,7 +9,14 @@ import {
   pipe,
   updaterReducer,
 } from "./functions";
-import { onNotify, subscribe, using, zipWithLatestFrom } from "./observable";
+import {
+  dispatchTo,
+  onNotify,
+  subscribe,
+  using,
+  zipWithLatestFrom,
+} from "./observable";
+
 import {
   StreamableLike,
   StreamableOperator,
