@@ -16,7 +16,7 @@ import { toDispatcher } from "./toDispatcher";
 export const createObservable = <T>(
   onSubscribe: SideEffect1<DispatcherLike<T>>,
 ): ObservableLike<T> =>
-  defer(() => observer => {
+  defer(observer => () => {
     const dispatcher = toDispatcher(observer);
     onSubscribe(dispatcher);
   });

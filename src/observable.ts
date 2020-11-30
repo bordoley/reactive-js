@@ -107,7 +107,8 @@ export { fromValue } from "./observable/fromValue";
 export { subscribe } from "./observable/subscribe";
 export { throws } from "./observable/throws";
 export { using } from "./observable/using";
-export { defer, observe } from "./observable/observable";
+export { defer } from "./observable/observable";
+export { observe } from "./observable/observer";
 
 export { buffer } from "./observable/buffer";
 export { catchError } from "./observable/catchError";

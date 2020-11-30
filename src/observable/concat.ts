@@ -10,7 +10,7 @@ import {
   ObserverLike,
 } from "../observable";
 import { everySatisfy } from "../readonlyArray";
-import { observe } from "./observable";
+import { observe } from "./observer";
 import { createDelegatingObserver } from "./observer";
 
 const createConcatObserver = <T>(

@@ -14,7 +14,7 @@ export const throws = <T>(
   options: { readonly delay?: number } = {},
 ): Function1<Factory<unknown>, ObservableLike<T>> => errorFactory => {
   const { delay = 0 } = options;
-  const factory = () => (observer: ObserverLike<T>) => {
+  const factory = (observer: ObserverLike<T>) => () => {
     let cause: unknown = none;
     try {
       cause = errorFactory();

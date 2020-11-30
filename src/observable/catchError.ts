@@ -11,7 +11,7 @@ import {
 } from "../observable";
 import { isSome, none } from "../option";
 import { lift } from "./lift";
-import { observe } from "./observable";
+import { observe } from "./observer";
 import { createDelegatingObserver } from "./observer";
 
 /**

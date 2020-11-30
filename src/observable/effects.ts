@@ -79,19 +79,19 @@ type AsyncEffect = AwaitEffect | MemoEffect | UsingEffect;
 const asyncAwaitSymbol = Symbol("@reactive-js/core/observable/effect/await");
 
 function validateAsyncEffect(
-  ctx: AsyncContext<unknown>,
+  ctx: AsyncContext,
   type: EffectType.Await,
 ): Option<AwaitEffect>;
 function validateAsyncEffect(
-  ctx: AsyncContext<unknown>,
+  ctx: AsyncContext,
   type: EffectType.Memo,
 ): Option<MemoEffect>;
 function validateAsyncEffect(
-  ctx: AsyncContext<unknown>,
+  ctx: AsyncContext,
   type: EffectType.Using,
 ): Option<UsingEffect>;
 function validateAsyncEffect(
-  ctx: AsyncContext<unknown>,
+  ctx: AsyncContext,
   type: EffectType,
 ): Option<AsyncEffect> {
   const { effects, index } = ctx;
@@ -114,13 +114,13 @@ abstract class BaseContext {
   ): T;
 }
 
-class AsyncContext<T> extends BaseContext {
+class AsyncContext extends BaseContext {
   index = 0;
 
   constructor(
     readonly effects: AsyncEffect[],
-    private readonly observer: ObserverLike<T>,
-    private readonly runComputation: (observer: ObserverLike<T>) => void,
+    private readonly observer: SchedulerLike & DisposableLike,
+    private readonly runComputation: SideEffect,
   ) {
     super();
   }
@@ -212,15 +212,13 @@ class AsyncContext<T> extends BaseContext {
   }
 }
 
-let currentCtx: Option<
-  AsyncContext<unknown> | ObservableContext<unknown>
-> = none;
+let currentCtx: Option<AsyncContext | ObservableContext> = none;
 
 export const async = <T>(computation: Factory<T>): ObservableLike<T> =>
-  defer(() => {
+  defer((observer: ObserverLike<T>) => {
     const effects: AsyncEffect[] = [];
 
-    const runComputation = (observer: ObserverLike<T>) => {
+    const runComputation = () => {
       const ctx = new AsyncContext(effects, observer, runComputation);
 
       let result: Option<T> = none;
@@ -252,19 +250,19 @@ export const async = <T>(computation: Factory<T>): ObservableLike<T> =>
 type ObservableEffect = ObserveEffect | MemoEffect | UsingEffect;
 
 function validateObservableEffect(
-  ctx: ObservableContext<unknown>,
+  ctx: ObservableContext,
   type: EffectType.Observe,
 ): ObserveEffect;
 function validateObservableEffect(
-  ctx: ObservableContext<unknown>,
+  ctx: ObservableContext,
   type: EffectType.Memo,
 ): MemoEffect;
 function validateObservableEffect(
-  ctx: ObservableContext<unknown>,
+  ctx: ObservableContext,
   type: EffectType.Using,
 ): UsingEffect;
 function validateObservableEffect(
-  ctx: ObservableContext<unknown>,
+  ctx: ObservableContext,
   type: EffectType,
 ): ObservableEffect {
   const { effects, index } = ctx;
@@ -306,13 +304,13 @@ function validateObservableEffect(
   }
 }
 
-class ObservableContext<T> extends BaseContext {
+class ObservableContext extends BaseContext {
   index = 0;
 
   constructor(
     readonly effects: ObservableEffect[],
-    readonly scheduler: ObserverLike<T>,
-    private readonly runComputation: (observer: ObserverLike<T>) => void,
+    readonly scheduler: SchedulerLike & DisposableLike,
+    private readonly runComputation: () => void,
   ) {
     super();
   }
@@ -343,7 +341,7 @@ class ObservableContext<T> extends BaseContext {
         observable,
         onNotify(next => {
           effect.value = next;
-          this.runComputation(this.scheduler);
+          this.runComputation();
         }),
         subscribe(this.scheduler),
       );
@@ -378,20 +376,17 @@ class ObservableContext<T> extends BaseContext {
 }
 
 export const observable = <T>(computation: Factory<T>): ObservableLike<T> =>
-  defer(() => {
+  defer((observer: ObserverLike<T>) => {
     const effects: ObservableEffect[] = [];
     let scheduledComputationSubscription = disposed;
 
-    const scheduleComputation = (observer: ObserverLike<T>) => {
-      if (scheduledComputationSubscription.isDisposed) {
-        scheduledComputationSubscription = pipe(
-          observer,
-          schedule(runComputation),
-        );
-      }
+    const scheduleComputation = () => {
+      scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
+        ? pipe(observer, schedule(runComputation))
+        : scheduledComputationSubscription;
     };
 
-    const runComputation = (observer: ObserverLike<T>) => {
+    const runComputation = () => {
       const ctx = new ObservableContext(effects, observer, scheduleComputation);
 
       let result: Option<T> = none;
@@ -524,7 +519,7 @@ export function __await<T>(
 }
 
 const deferSideEffect = (f: (...args: any[]) => void, ...args: any[]) =>
-  defer(() => observer => {
+  defer(observer => () => {
     f(...args);
     observer.notify(none);
     observer.dispose();

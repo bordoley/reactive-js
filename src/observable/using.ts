@@ -12,7 +12,7 @@ import {
 } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { SchedulerLike } from "../scheduler";
-import { observe } from "./observable";
+import { observe } from "./observer";
 
 class UsingObservable<TResource extends DisposableLike, T>
   implements ObservableLike<T> {

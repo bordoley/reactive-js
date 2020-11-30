@@ -7,8 +7,12 @@ import { pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
-import { defer, deferSynchronous, observe } from "./observable";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
+import { defer, deferSynchronous } from "./observable";
+import {
+  AbstractDelegatingObserver,
+  assertObserverState,
+  observe,
+} from "./observer";
 
 type LatestCtx = {
   completedCount: number;
@@ -79,7 +83,7 @@ export const latest = (
   observables: readonly ObservableLike<any>[],
   mode: LatestMode,
 ): ObservableLike<readonly unknown[]> => {
-  const factory = () => (observer: ObserverLike<readonly unknown[]>) => {
+  const factory = (observer: ObserverLike<readonly unknown[]>) => () => {
     const observers: LatestObserver[] = [];
     const ctx = {
       completedCount: 0,

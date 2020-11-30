@@ -5,7 +5,7 @@ import { __DEV__, warn } from './env.mjs';
 import { enumerate, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
-import { schedule, YieldError, __yield as __yield$1, run, createVirtualTimeScheduler } from './scheduler.mjs';
+import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { dispatchTo } from './dispatcher.mjs';
 
 class ScheduledObservable {
@@ -15,7 +15,7 @@ class ScheduledObservable {
         this.delay = delay;
     }
     observe(observer) {
-        const callback = this.f();
+        const callback = this.f(observer);
         const schedulerSubscription = pipe(observer, schedule(callback, this));
         addOnDisposedWithError(schedulerSubscription, observer);
     }
@@ -25,7 +25,6 @@ const defer = (factory, options = {}) => {
     const { delay = 0 } = options;
     return new ScheduledObservable(factory, false, delay);
 };
-const observe = (observer) => observable => observable.observe(observer);
 
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
@@ -40,9 +39,9 @@ const fromArray = (options = {}) => values => {
     const valuesLength = values.length;
     const startIndex = Math.min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, valuesLength);
     const endIndex = Math.max(Math.min((_c = options.endIndex) !== null && _c !== void 0 ? _c : values.length, valuesLength), 0);
-    const factory = () => {
+    const factory = (observer) => {
         let index = startIndex;
-        return (observer) => {
+        return () => {
             while (index < endIndex) {
                 const value = values[index];
                 index++;
@@ -65,32 +64,6 @@ const defaultEmpty = fromArray()([]);
 const empty = (options = {}) => {
     const { delay = 0 } = options;
     return delay > 0 ? fromArray({ delay })([]) : defaultEmpty;
-};
-
-class LiftedObservable {
-    constructor(source, operators, isSynchronous) {
-        this.source = source;
-        this.operators = operators;
-        this.isSynchronous = isSynchronous;
-    }
-    observe(observer) {
-        const liftedSubscrber = pipe(observer, ...this.operators);
-        pipe(this.source, observe(liftedSubscrber));
-    }
-}
-/**
- * Creates a new `ObservableLike` which applies the provided the operator function to
- * observer when the source is subscribed to.
- *
- * @param operator The operator function to apply.
- */
-const lift = (operator) => source => {
-    const sourceSource = source instanceof LiftedObservable ? source.source : source;
-    const allFunctions = source instanceof LiftedObservable
-        ? [operator, ...source.operators]
-        : [operator];
-    const isSynchronous = source.isSynchronous && operator.isSynchronous;
-    return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
 };
 
 const assertObserverStateProduction = ignore;
@@ -171,9 +144,32 @@ const createAutoDisposingDelegatingObserver = (delegate) => {
     bindDisposables(delegate, observer);
     return observer;
 };
-const __yield = (observer, next, delay) => {
-    observer.notify(next);
-    __yield$1(observer, delay);
+const observe = (observer) => observable => observable.observe(observer);
+
+class LiftedObservable {
+    constructor(source, operators, isSynchronous) {
+        this.source = source;
+        this.operators = operators;
+        this.isSynchronous = isSynchronous;
+    }
+    observe(observer) {
+        const liftedSubscrber = pipe(observer, ...this.operators);
+        pipe(this.source, observe(liftedSubscrber));
+    }
+}
+/**
+ * Creates a new `ObservableLike` which applies the provided the operator function to
+ * observer when the source is subscribed to.
+ *
+ * @param operator The operator function to apply.
+ */
+const lift = (operator) => source => {
+    const sourceSource = source instanceof LiftedObservable ? source.source : source;
+    const allFunctions = source instanceof LiftedObservable
+        ? [operator, ...source.operators]
+        : [operator];
+    const isSynchronous = source.isSynchronous && operator.isSynchronous;
+    return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
 };
 
 class OnNotifyObserver extends AbstractAutoDisposingDelegatingObserver {
@@ -308,9 +304,9 @@ class AsyncContext extends BaseContext {
     }
 }
 let currentCtx = none;
-const async = (computation) => defer(() => {
+const async = (computation) => defer((observer) => {
     const effects = [];
-    const runComputation = (observer) => {
+    const runComputation = () => {
         const ctx = new AsyncContext(effects, observer, runComputation);
         let result = none;
         let isAwaiting = false;
@@ -402,7 +398,7 @@ class ObservableContext extends BaseContext {
             pipe(effect.subscription, dispose());
             const subscription = pipe(observable, onNotify(next => {
                 effect.value = next;
-                this.runComputation(this.scheduler);
+                this.runComputation();
             }), subscribe(this.scheduler));
             addDisposableDisposeParentOnChildError(this.scheduler, subscription);
             effect.observable = observable;
@@ -427,15 +423,15 @@ class ObservableContext extends BaseContext {
         }
     }
 }
-const observable = (computation) => defer(() => {
+const observable = (computation) => defer((observer) => {
     const effects = [];
     let scheduledComputationSubscription = disposed;
-    const scheduleComputation = (observer) => {
-        if (scheduledComputationSubscription.isDisposed) {
-            scheduledComputationSubscription = pipe(observer, schedule(runComputation));
-        }
+    const scheduleComputation = () => {
+        scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
+            ? pipe(observer, schedule(runComputation))
+            : scheduledComputationSubscription;
     };
-    const runComputation = (observer) => {
+    const runComputation = () => {
         const ctx = new ObservableContext(effects, observer, scheduleComputation);
         let result = none;
         let error = none;
@@ -480,7 +476,7 @@ function __await(f, ...args) {
         ? ctx.await(ctx.memo(f, ...args))
         : raise("__await may only be called within an async computation");
 }
-const deferSideEffect = (f, ...args) => defer(() => observer => {
+const deferSideEffect = (f, ...args) => defer(observer => () => {
     f(...args);
     observer.notify(none);
     observer.dispose();
@@ -545,7 +541,7 @@ class LatestObserver extends AbstractDelegatingObserver {
     }
 }
 const latest = (observables, mode) => {
-    const factory = () => (observer) => {
+    const factory = (observer) => () => {
         const observers = [];
         const ctx = {
             completedCount: 0,
@@ -663,10 +659,10 @@ class ObserverDelegatingDispatcher extends AbstractDisposable {
         this.observer = observer;
         this.continuation = () => {
             const nextQueue = this.nextQueue;
-            const observer = this.observer;
             while (nextQueue.length > 0) {
                 const next = nextQueue.shift();
-                __yield(observer, next, 0);
+                this.observer.notify(next);
+                __yield();
             }
         };
         this.onContinuationDispose = () => {
@@ -705,7 +701,7 @@ const toDispatcher = (observer) => new ObserverDelegatingDispatcher(observer);
  *
  * @param onSubscribe
  */
-const createObservable = (onSubscribe) => defer(() => observer => {
+const createObservable = (onSubscribe) => defer(observer => () => {
     const dispatcher = toDispatcher(observer);
     onSubscribe(dispatcher);
 });
@@ -770,11 +766,12 @@ const fromDisposable = (disposable) => createObservable(dispatcher => {
  * @param delay The requested delay between emitted items by the observable.
  */
 const fromEnumerator = (options = {}) => f => {
-    const factory = () => {
+    const factory = (observer) => {
         const enumerator = f();
-        return (observer) => {
+        return () => {
             while (enumerator.move()) {
-                __yield(observer, enumerator.current, delay);
+                observer.notify(enumerator.current);
+                __yield(delay);
             }
             pipe(observer, dispose());
         };
@@ -818,7 +815,7 @@ const fromIterable = (options) => {
  *
  * @param factory Factory function to create a new `Promise` instance.
  */
-const fromPromise = (factory) => defer(() => observer => {
+const fromPromise = (factory) => defer(observer => () => {
     const dispatcher = toDispatcher(observer);
     factory().then(next => {
         if (!dispatcher.isDisposed) {
@@ -839,12 +836,13 @@ const fromPromise = (factory) => defer(() => observer => {
  */
 const generate = (generator, initialValue, options = {}) => {
     const { delay = 0 } = options;
-    const factory = () => {
+    const factory = (observer) => {
         let acc = initialValue();
-        return (observer) => {
+        return () => {
             while (true) {
                 acc = generator(acc);
-                __yield(observer, acc, delay);
+                observer.notify(acc);
+                __yield(delay);
             }
         };
     };
@@ -902,7 +900,7 @@ const never = () => neverInstance;
  */
 const throws = (options = {}) => errorFactory => {
     const { delay = 0 } = options;
-    const factory = () => (observer) => {
+    const factory = (observer) => () => {
         let cause = none;
         try {
             cause = errorFactory();

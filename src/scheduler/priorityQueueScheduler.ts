@@ -107,7 +107,7 @@ const scheduleContinuation = (
 class PriorityScheduler
   extends AbstractSerialDisposable
   implements PrioritySchedulerLike, PausableSchedulerLike {
-  readonly continuation = (host: SchedulerLike) => {
+  readonly continuation = () => {
     for (
       let task = peek(this);
       isSome(task) && !this.isDisposed;
@@ -125,7 +125,7 @@ class PriorityScheduler
       } else {
         this.dueTime = this.now + delay;
       }
-      __yield(host, delay);
+      __yield(delay);
     }
   };
   current: ScheduledTask = none as any;

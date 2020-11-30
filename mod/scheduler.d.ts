@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { SideEffect1, Function1 } from './functions';
+import { SideEffect, Function1 } from './functions';
 import { DisposableLike } from './disposable';
 
 /**
@@ -17,8 +17,9 @@ declare class YieldError {
     constructor(delay: number);
 }
 declare const run: (continuation: SchedulerContinuationLike) => void;
-declare const __yield: (scheduler: SchedulerLike, delay: number) => void;
-declare const schedule: <T extends SchedulerLike>(f: SideEffect1<T>, options?: {
+declare const __currentScheduler: () => SchedulerLike;
+declare const __yield: (delay?: number) => void;
+declare const schedule: <T extends SchedulerLike>(f: SideEffect, options?: {
     readonly delay?: number | undefined;
 } | undefined) => Function1<T, DisposableLike>;
 
@@ -114,4 +115,4 @@ interface PrioritySchedulerLike {
     }): void;
 }
 
-export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerContinuationRunStatusChangedListenerLike, SchedulerLike, VirtualTimeSchedulerLike, YieldError, __yield, createHostScheduler, createVirtualTimeScheduler, run, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };
+export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerContinuationRunStatusChangedListenerLike, SchedulerLike, VirtualTimeSchedulerLike, YieldError, __currentScheduler, __yield, createHostScheduler, createVirtualTimeScheduler, run, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };

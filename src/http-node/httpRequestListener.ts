@@ -36,7 +36,7 @@ const writeToServerResponse = (
   const responseBody = createWritableIOSink(returns(serverResponse));
 
   return (response: HttpResponse<IOSourceLike<Uint8Array>>) =>
-    defer(() => observer => {
+    defer(observer => () => {
       serverResponse.value.statusCode = response.statusCode;
 
       writeHttpResponseHeaders(response, (header, value) =>

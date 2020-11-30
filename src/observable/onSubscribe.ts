@@ -11,7 +11,7 @@ import {
   ObserverLike,
 } from "../observable";
 import { isSome, none } from "../option";
-import { observe } from "./observable";
+import { observe } from "./observer";
 
 class OnSubscribeObservable<T> implements ObservableLike<T> {
   readonly isSynchronous: boolean;

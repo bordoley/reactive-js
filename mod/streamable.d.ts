@@ -1,5 +1,6 @@
 /// <reference types="node" />
 import { Reducer, Factory, Equality, Function1, SideEffect1, Function2 } from './functions';
+import { Option } from './option';
 import { SchedulerLike } from './scheduler';
 import { ObservableLike, StreamLike } from './observable';
 
@@ -35,7 +36,7 @@ declare const stream: <TReq, T>(scheduler: SchedulerLike, options?: {
 } | undefined) => Function1<StreamableLike<TReq, T>, StreamLike<TReq, T>>;
 declare const __stream: <TReq, T>(streamable: StreamableLike<TReq, T>, { replay, scheduler, }?: {
     readonly replay?: number | undefined;
-    readonly scheduler?: SchedulerLike | undefined;
+    readonly scheduler?: Option<SchedulerLike>;
 }) => StreamLike<TReq, T>;
 
 declare const identity: <T>() => StreamableLike<T, T>;

@@ -9,7 +9,7 @@ import {
   ObservableOperator,
   ObserverLike,
 } from "../observable";
-import { observe } from "./observable";
+import { observe } from "./observer";
 import { createDelegatingObserver } from "./observer";
 
 const createMergeObserver = <T>(

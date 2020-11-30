@@ -6,7 +6,7 @@ import { Factory, Reducer, pipe } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
 import { fromValue } from "./fromValue";
 import { lift } from "./lift";
-import { observe } from "./observable";
+import { observe } from "./observer";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
 class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
