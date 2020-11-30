@@ -7,7 +7,6 @@ import {
   HttpStandardHeader,
 } from "../http";
 import { Option, isNone, isSome, none } from "../option";
-import { mapTo, or, pAsterisk, parseWith } from "../parserCombinators";
 import { join, map } from "../readonlyArray";
 import {
   entityTagToString,
@@ -18,6 +17,7 @@ import {
 import { httpDateTimeToString, parseHttpDateTime } from "./httpDateTime";
 import { httpList } from "./httpGrammar";
 import { getHeaderValue } from "./httpHeaders";
+import { mapTo, or, pAsterisk, parseWith } from "./parserCombinators";
 
 const writeEtagPreferenceHeader = (
   header: HttpStandardHeader,

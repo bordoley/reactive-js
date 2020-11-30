@@ -1,6 +1,7 @@
 import { pipe, raise } from "../functions";
 import { HttpHeaders } from "../http";
 import { Option, isNone, isSome, none } from "../option";
+import { ReadonlyObjectMap } from "../readonlyObjectMap";
 import {
   CharStreamLike,
   Parser,
@@ -19,8 +20,7 @@ import {
   sepBy,
   string,
   throwParseError,
-} from "../parserCombinators";
-import { ReadonlyObjectMap } from "../readonlyObjectMap";
+} from "./parserCombinators";
 
 export const enum ASCII {
   HTAB = 9,

@@ -1,6 +1,8 @@
 import { pipe } from "../functions";
 import { EntityTag, HttpHeaders, HttpStandardHeader } from "../http";
 import { Option, isSome, none } from "../option";
+import { ASCII } from "./httpGrammar";
+import { getHeaderValue } from "./httpHeaders";
 import {
   CharStreamLike,
   manySatisfy,
@@ -10,9 +12,7 @@ import {
   parseWithOrThrow,
   satisfy,
   string,
-} from "../parserCombinators";
-import { ASCII } from "./httpGrammar";
-import { getHeaderValue } from "./httpHeaders";
+} from "./parserCombinators";
 
 export const entityTagToString = ({ isWeak, tag }: EntityTag): string =>
   isWeak ? `\\W"${tag}"` : `"${tag}"`;

@@ -1,13 +1,171 @@
 import { isSome, isNone, none } from './option.mjs';
-import { pipe } from './functions.mjs';
+import { pipe, defer } from './functions.mjs';
 import { dispose, disposed, addTeardown, AbstractDisposable } from './disposable.mjs';
-import { fromIterable, toRunnable } from './enumerable.mjs';
-import { first, forEach } from './runnable.mjs';
-import { createUniqueQueue } from './queues.mjs';
 import { fromValue, onNotify, subscribe, createObservable } from './observable.mjs';
-import { createKeyedQueue } from './keyedQueue.mjs';
-import { createSetMultimap } from './multimaps.mjs';
+import { fromIterable, enumerate, toRunnable, fromIterator } from './enumerable.mjs';
+import { first, forEach } from './runnable.mjs';
 
+class UniqueQueueImpl {
+    constructor() {
+        this.values = new Set();
+    }
+    get count() {
+        return this.values.size;
+    }
+    clear() {
+        this.values.clear();
+    }
+    enumerate() {
+        return pipe(this.values, fromIterable(), enumerate);
+    }
+    peek() {
+        return pipe(this.values, fromIterable(), toRunnable(), first);
+    }
+    pop() {
+        const head = this.peek();
+        if (isSome(head)) {
+            this.values.delete(head);
+        }
+        return head;
+    }
+    push(item) {
+        if (!this.values.has(item)) {
+            this.values.add(item);
+        }
+    }
+}
+const createUniqueQueue = () => new UniqueQueueImpl();
+function* iterateKeyedQueueValues(queue) {
+    for (const values of queue.map.values()) {
+        for (const value of values) {
+            yield value;
+        }
+    }
+}
+function* iterateKeyedQueueKeyValuePairs(queue) {
+    var _a;
+    const map = queue.map;
+    for (const key of map.keys()) {
+        const values = (_a = map.get(key)) !== null && _a !== void 0 ? _a : [];
+        for (const value of values) {
+            yield [key, value];
+        }
+    }
+}
+class KeyedQueue {
+    constructor() {
+        this.count = 0;
+        this.keys = fromIterator()(() => this.map.keys());
+        this.map = new Map();
+        this.values = fromIterator()(defer(this, iterateKeyedQueueValues));
+    }
+    clear() {
+        this.map.clear();
+    }
+    enumerate() {
+        return pipe(defer(this, iterateKeyedQueueKeyValuePairs), fromIterator(), enumerate);
+    }
+    peek(key) {
+        var _a;
+        const map = this.map;
+        const values = (_a = map.get(key)) !== null && _a !== void 0 ? _a : [];
+        return values[0];
+    }
+    pop(key) {
+        var _a;
+        const map = this.map;
+        const values = (_a = map.get(key)) !== null && _a !== void 0 ? _a : [];
+        const valuesOldSize = values.length;
+        const result = values.shift();
+        const valuesNewSize = values.length;
+        this.count -= valuesOldSize - valuesNewSize;
+        if (valuesNewSize === 0) {
+            map.delete(key);
+        }
+        return result;
+    }
+    push(key, value) {
+        var _a;
+        const map = this.map;
+        const values = (_a = map.get(key)) !== null && _a !== void 0 ? _a : [];
+        const valuesOldSize = values.length;
+        values.push(value);
+        const valuesNewSize = values.length;
+        this.count += valuesNewSize - valuesOldSize;
+        if (valuesOldSize === 0) {
+            map.set(key, values);
+        }
+    }
+}
+const createKeyedQueue = () => new KeyedQueue();
+function* iterateSetMultimapValues(multimap) {
+    for (const values of multimap.map.values()) {
+        for (const value of values) {
+            yield value;
+        }
+    }
+}
+function* iterateSetMultimapKeyValuePairs(queue) {
+    var _a;
+    const map = queue.map;
+    for (const key of map.keys()) {
+        const values = (_a = map.get(key)) !== null && _a !== void 0 ? _a : new Set();
+        for (const value of values) {
+            yield [key, value];
+        }
+    }
+}
+class SetMultimap {
+    constructor() {
+        this.count = 0;
+        this.keys = fromIterator()(() => this.map.keys());
+        this.map = new Map();
+        this.values = fromIterator()(defer(this, iterateSetMultimapValues));
+    }
+    add(key, value) {
+        var _a;
+        const map = this.map;
+        const values = (_a = map.get(key)) !== null && _a !== void 0 ? _a : new Set();
+        const valuesOldSize = values.size;
+        values.add(value);
+        const valuesNewSize = values.size;
+        this.count += valuesNewSize - valuesOldSize;
+        if (valuesOldSize === 0) {
+            map.set(key, values);
+        }
+    }
+    clear() {
+        this.map.clear();
+    }
+    enumerate() {
+        return pipe(defer(this, iterateSetMultimapKeyValuePairs), fromIterator(), enumerate);
+    }
+    get(key) {
+        var _a;
+        return (_a = this.map.get(key)) !== null && _a !== void 0 ? _a : new Set();
+    }
+    remove(key, value) {
+        var _a;
+        const map = this.map;
+        const values = (_a = map.get(key)) !== null && _a !== void 0 ? _a : new Set();
+        const valuesOldSize = values.size;
+        values.delete(value);
+        const valuesNewSize = values.size;
+        this.count -= valuesOldSize - valuesNewSize;
+        if (valuesNewSize === 0) {
+            map.delete(key);
+        }
+    }
+    removeAll(key) {
+        var _a;
+        const map = this.map;
+        const values = (_a = map.get(key)) !== null && _a !== void 0 ? _a : new Set();
+        const valuesSize = values.size;
+        this.count -= valuesSize;
+        map.delete(key);
+    }
+}
+const createSetMultimap = () => new SetMultimap();
 const tryDispatch = (resourceManager, key) => {
     var _a;
     const { availableResources, availableResourcesTimeouts, maxIdleTime, maxResourcesPerKey, maxTotalResources, inUseResources, scheduler, resourceRequests, globalResourceWaitQueue, } = resourceManager;

@@ -8,12 +8,12 @@ import {
   MediaType,
 } from "../http";
 import { Option, isSome, none } from "../option";
-import { concatWith, map, parseWith } from "../parserCombinators";
 import { map as mapReadonlyArray } from "../readonlyArray";
 import { ReadonlyObjectMap } from "../readonlyObjectMap";
 import { httpList, pParams, pToken } from "./httpGrammar";
 import { getHeaderValue } from "./httpHeaders";
 import { pMediaType, parseMediaTypeOrThrow } from "./mediaType";
+import { concatWith, map, parseWith } from "./parserCombinators";
 
 const weightedParamComparator = (
   a: ReadonlyObjectMap<string>,

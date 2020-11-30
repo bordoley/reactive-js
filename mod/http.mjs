@@ -1,8 +1,8 @@
-import { none, isSome, isNone } from './option.mjs';
-import { pipe, raise, updaterReducer, returns } from './functions.mjs';
-import { map, join, fromObject, keep, length, everySatisfy, reduceRight } from './readonlyArray.mjs';
+import { none, orCompute as orCompute$1, isSome, isNone } from './option.mjs';
+import { pipe, compose, returns, isEqualTo, raise, updaterReducer } from './functions.mjs';
+import { __DEV__ } from './env.mjs';
+import { map as map$1, join, fromObject, keep, length, everySatisfy, reduceRight } from './readonlyArray.mjs';
 import { fromValue, empty } from './io.mjs';
-import { satisfy, manyIgnore, throwParseError, manySatisfy, or, pEquals, pSemicolon, many, map as map$1, pComma, sepBy, string, pColon, isParseError, parseWith, optional, parseWithOrThrow, pForwardSlash, concatWith, pDquote, pAsterisk, mapTo } from './parserCombinators.mjs';
 
 const bannedHeaders = pipe([
     "Accept" /* Accept */,
@@ -24,7 +24,7 @@ const bannedHeaders = pipe([
     "Last-Modified" /* LastModified */,
     "Transfer-Encoding" /* TransferEncoding */,
     "Vary" /* Vary */,
-], map(s => s.toLowerCase()));
+], map$1(s => s.toLowerCase()));
 function getHeaderValue(headers, key) {
     var _a;
     return (_a = headers[key]) !== null && _a !== void 0 ? _a : headers[key.toLowerCase()];
@@ -45,6 +45,222 @@ const filterHeaders = (headers) => {
     writeHttpHeaders(headers, writeHeader);
     return result;
 };
+
+class CharStreamImpl {
+    constructor(src) {
+        this.src = src;
+        this.index = -1;
+        this.current = -1;
+        this.hasCurrent = false;
+    }
+    move() {
+        this.hasCurrent = false;
+        this.current = -1;
+        this.index++;
+        const index = this.index;
+        const src = this.src;
+        if (this.index < src.length) {
+            this.hasCurrent = true;
+            this.current = src.charCodeAt(index);
+        }
+        return this.hasCurrent;
+    }
+}
+class ParserError {
+    constructor(index) {
+        this.index = index;
+        this.error = new Error();
+    }
+    get stack() {
+        return this.error.stack;
+    }
+}
+const throwParseErrorDev = (charStream) => {
+    const error = new ParserError(charStream.index);
+    throw error;
+};
+const parseErrorSymbol = Symbol("@reactive-js/core/lib/parserCombinator/parseError");
+const throwParseErrorProd = (_) => {
+    throw parseErrorSymbol;
+};
+const _throwParseError = __DEV__ ? throwParseErrorDev : throwParseErrorProd;
+const throwParseError = _throwParseError;
+const isParseErrorDev = (e) => e instanceof ParserError;
+const isParseErrorProd = (e) => e === parseErrorSymbol;
+const _isParseError = __DEV__ ? isParseErrorDev : isParseErrorProd;
+const isParseError = _isParseError;
+const createCharStream = (input) => new CharStreamImpl(input);
+function concat(...parsers) {
+    return charStream => {
+        const result = [];
+        for (const parse of parsers) {
+            const next = parse(charStream);
+            result.push(next);
+        }
+        return result;
+    };
+}
+const concatWith = (other) => parser => concat(parser, other);
+const followedBy = (other) => parser => charStream => {
+    const result = parser(charStream);
+    other(charStream);
+    return result;
+};
+const map = (mapper) => parser => compose(parser, mapper);
+const mapTo = (v) => map(returns(v));
+const parseWithOrThrow = (parser) => {
+    const parse = pipe(parser, followedBy(pEof));
+    return input => {
+        const charStream = createCharStream(input);
+        return parse(charStream);
+    };
+};
+const parseWith = (parse) => {
+    const doParse = parseWithOrThrow(parse);
+    return input => {
+        try {
+            return doParse(input);
+        }
+        catch (e) {
+            if (isParseError(e)) {
+                return none;
+            }
+            throw e;
+        }
+    };
+};
+const or = (otherParse) => parse => charStream => {
+    const index = charStream.index;
+    try {
+        return parse(charStream);
+    }
+    catch (e) {
+        if (isParseError(e)) {
+            charStream.index = index;
+            return otherParse(charStream);
+        }
+        else {
+            throw e;
+        }
+    }
+};
+const many = (options = {}) => parse => charStream => {
+    const { min = 0, max = Number.MAX_SAFE_INTEGER } = options;
+    const retval = [];
+    let count = 0;
+    let index = -1;
+    try {
+        while (count < max) {
+            index = charStream.index;
+            const next = parse(charStream);
+            count++;
+            retval.push(next);
+        }
+    }
+    catch (e) {
+        if (isParseError(e)) {
+            charStream.index = index;
+        }
+        else {
+            throw e;
+        }
+    }
+    return count < min ? throwParseError(charStream) : retval;
+};
+const manyIgnore = (options = {}) => parse => charStream => {
+    const { min = 0, max = Number.MAX_SAFE_INTEGER } = options;
+    let count = 0;
+    let index = -1;
+    try {
+        while (count < max) {
+            index = charStream.index;
+            parse(charStream);
+            count++;
+        }
+    }
+    catch (e) {
+        if (isParseError(e)) {
+            charStream.index = index;
+        }
+        else {
+            throw e;
+        }
+    }
+    return count < min ? throwParseError(charStream) : none;
+};
+const optional = (parse) => charStream => {
+    const index = charStream.index;
+    try {
+        return parse(charStream);
+    }
+    catch (e) {
+        if (isParseError(e)) {
+            charStream.index = index;
+            return none;
+        }
+        else {
+            throw e;
+        }
+    }
+};
+const orCompute = (compute) => compose(optional, map(orCompute$1(compute)));
+const sepBy1 = (separator) => parser => {
+    const parseTailValue = (charStream) => {
+        separator(charStream);
+        return parser(charStream);
+    };
+    const parseTail = many()(parseTailValue);
+    return charStream => {
+        const first = parser(charStream);
+        const tail = parseTail(charStream);
+        // Perf hack to avoid allocations
+        tail.unshift(first);
+        return tail;
+    };
+};
+const sepBy = (separator) => compose(sepBy1(separator), orCompute(returns([])));
+const string = (str) => charStream => {
+    charStream.move();
+    const match = charStream.src.startsWith(str, charStream.index);
+    if (match) {
+        charStream.index += str.length - 1;
+        return str;
+    }
+    else {
+        return throwParseError(charStream);
+    }
+};
+const satisfy = (f) => charStream => {
+    if (charStream.move()) {
+        const current = charStream.current;
+        if (f(current)) {
+            return current;
+        }
+    }
+    return throwParseError(charStream);
+};
+const manySatisfy = (options = {}) => parser => {
+    const parse = manyIgnore(options)(parser);
+    return charStream => {
+        const start = charStream.index + 1;
+        parse(charStream);
+        return charStream.src.substring(start, charStream.index + 1);
+    };
+};
+const char = (c) => pipe(c.charCodeAt(0), isEqualTo, satisfy);
+const pEof = (charStream) => charStream.move() ? throwParseError(charStream) : none;
+const pSemicolon = char(";");
+const pComma = char(",");
+const pSpace = char(" ");
+const pColon = char(":");
+const pPeriod = char(".");
+const pEquals = char("=");
+const pForwardSlash = char("/");
+const pDash = char("-");
+const pOpenParen = char("(");
+const pCloseParen = char(")");
+const pDquote = char('"');
+const pAsterisk = char("*");
 
 const pTChar = satisfy(c => c === 33 /* EXCLAMATION_MARK */ ||
     c === 35 /* HASH */ ||
@@ -166,7 +382,7 @@ const pParamsParam = (charStream) => {
     pOWS(charStream);
     return pParameter(charStream);
 };
-const pParams = pipe(pParamsParam, many(), map$1(results => {
+const pParams = pipe(pParamsParam, many(), map(results => {
     const params = {};
     for (const [k, v] of results) {
         params[k] = v;
@@ -254,7 +470,7 @@ const parseCacheControlFromHeaders = (headers) => {
 };
 const writeHttpCacheControlHeader = (cacheControl, writeHeader) => {
     if (cacheControl.length > 0) {
-        writeHeader("Cache-Control" /* CacheControl */, pipe(cacheControl, map(cacheDirectiveToString), join(",")));
+        writeHeader("Cache-Control" /* CacheControl */, pipe(cacheControl, map$1(cacheDirectiveToString), join(",")));
     }
 };
 
@@ -271,7 +487,7 @@ const pMediaType = charStream => {
 };
 const parseMediaType = parseWith(pMediaType);
 const parseMediaTypeOrThrow = parseWithOrThrow(pMediaType);
-const mediaTypeToString = ({ type, subtype, params, }) => pipe(params, fromObject(), map(([k, v]) => `${k}=${toTokenOrQuotedString(v)}`), join("; "), stringParams => `${type}/${subtype}${stringParams.length > 0 ? ";" + stringParams : ""}`);
+const mediaTypeToString = ({ type, subtype, params, }) => pipe(params, fromObject(), map$1(([k, v]) => `${k}=${toTokenOrQuotedString(v)}`), join("; "), stringParams => `${type}/${subtype}${stringParams.length > 0 ? ";" + stringParams : ""}`);
 const compressionBlacklist = [
     "text/event-stream",
 ];
@@ -333,17 +549,17 @@ const mediaTypeToMediaRange = ({ type, subtype }) => ({
     type,
     subtype,
 });
-const parseAccept = pipe(pMediaType, httpList, map$1(mediaTypes => {
+const parseAccept = pipe(pMediaType, httpList, map(mediaTypes => {
     // Mutate to avoid allocations. Kinda evil.
     mediaTypes.sort(mediaRangeCompare);
-    return pipe(mediaTypes, map(mediaTypeToMediaRange));
+    return pipe(mediaTypes, map$1(mediaTypeToMediaRange));
 }), parseWith);
 const weightedTokenComparator = ([, a], [, b]) => weightedParamComparator(a, b);
 const weightedTokenToToken = ([token]) => token;
-const parseWeightedToken = pipe(pToken, concatWith(pParams), httpList, map$1(values => {
+const parseWeightedToken = pipe(pToken, concatWith(pParams), httpList, map(values => {
     // Mutate to avoid allocations. Kinda evil.
     values.sort(weightedTokenComparator);
-    return pipe(values, map(weightedTokenToToken));
+    return pipe(values, map$1(weightedTokenToToken));
 }), parseWith);
 const parseWeightedTokenHeader = (headers, header) => {
     var _a;
@@ -385,7 +601,7 @@ const createHttpPreferences = ({ acceptedCharsets = [], acceptedEncodings = [], 
         acceptedCharsets,
         acceptedEncodings,
         acceptedLanguages,
-        acceptedMediaRanges: pipe(acceptedMediaRanges, map(mr => typeof mr === "string" ? parseMediaTypeOrThrow(mr) : mr)),
+        acceptedMediaRanges: pipe(acceptedMediaRanges, map$1(mr => typeof mr === "string" ? parseMediaTypeOrThrow(mr) : mr)),
     };
 };
 const writeWeightedTokenHeader = (header, values, writeHeader) => {
@@ -411,7 +627,7 @@ const writeHttpPreferenceHeaders = (preferences, writeHeader) => {
     writeWeightedTokenHeader("Accept-Charset" /* AcceptCharset */, acceptedCharsets, writeHeader);
     writeWeightedTokenHeader("Accept-Encoding" /* AcceptEncoding */, acceptedEncodings, writeHeader);
     writeWeightedTokenHeader("Accept-Language" /* AcceptLanguage */, acceptedLanguages, writeHeader);
-    const tokenizedMediaRanges = pipe(acceptedMediaRanges, map(({ type, subtype }) => `${type}/${subtype}`));
+    const tokenizedMediaRanges = pipe(acceptedMediaRanges, map$1(({ type, subtype }) => `${type}/${subtype}`));
     writeWeightedTokenHeader("Accept" /* Accept */, tokenizedMediaRanges, writeHeader);
 };
 
@@ -419,7 +635,7 @@ const createHttpMessage = ({ body, cacheControl, contentInfo, headers = {}, pref
     ...rest,
     body,
     cacheControl: isSome(cacheControl)
-        ? pipe(cacheControl, map(cc => typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc))
+        ? pipe(cacheControl, map$1(cc => typeof cc === "string" ? parseCacheDirectiveOrThrow(cc) : cc))
         : parseCacheControlFromHeaders(headers),
     contentInfo: isSome(contentInfo)
         ? createHttpContentInfo(contentInfo)
@@ -517,7 +733,7 @@ const parseHttpDateTimeFromHeaders = (headers, header) => {
 
 const writeEtagPreferenceHeader = (header, value, writeHeader) => {
     if (isSome(value)) {
-        writeHeader(header, value !== "*" ? pipe(value, map(entityTagToString), join(",")) : "*");
+        writeHeader(header, value !== "*" ? pipe(value, map$1(entityTagToString), join(",")) : "*");
     }
 };
 const writeDateHeader = (header, value, writeHeader) => {
@@ -585,7 +801,7 @@ const createHttpRequestPreconditions = ({ ifMatch, ifModifiedSince, ifNoneMatch,
     }
     return {
         ifMatch: Array.isArray(ifMatch)
-            ? pipe(ifMatch, map(etag => typeof etag === "string" ? parseETagOrThrow(etag) : etag))
+            ? pipe(ifMatch, map$1(etag => typeof etag === "string" ? parseETagOrThrow(etag) : etag))
             : ifMatch,
         ifModifiedSince: typeof ifModifiedSince === "string"
             ? parseHttpDateTime(ifModifiedSince)
@@ -593,7 +809,7 @@ const createHttpRequestPreconditions = ({ ifMatch, ifModifiedSince, ifNoneMatch,
                 ? ifModifiedSince.getTime()
                 : ifModifiedSince,
         ifNoneMatch: Array.isArray(ifNoneMatch)
-            ? pipe(ifNoneMatch, map(etag => typeof etag === "string" ? parseETagOrThrow(etag) : etag))
+            ? pipe(ifNoneMatch, map$1(etag => typeof etag === "string" ? parseETagOrThrow(etag) : etag))
             : ifNoneMatch,
         ifUnmodifiedSince: typeof ifUnmodifiedSince === "string"
             ? parseHttpDateTime(ifUnmodifiedSince)
@@ -782,7 +998,7 @@ const toIOSourceHttpResponse = (resp) => toIOSourceHttpMessage(resp);
 const decodeHttpResponseContent = (decoderProvider) => resp => {
     const { body, contentInfo, ...rest } = resp;
     if (isSome(contentInfo) && contentInfo.contentEncodings.length > 0) {
-        const decoders = pipe(contentInfo.contentEncodings, map(encoding => decoderProvider[encoding]));
+        const decoders = pipe(contentInfo.contentEncodings, map$1(encoding => decoderProvider[encoding]));
         const supportsDecodings = pipe(decoders, everySatisfy(isSome));
         if (supportsDecodings) {
             return {
@@ -875,7 +1091,7 @@ const createRedirectHttpRequest = (request, response) => {
 const decodeHttpRequestContent = (decoderProvider) => req => {
     const { body, contentInfo, ...rest } = req;
     if (isSome(contentInfo) && contentInfo.contentEncodings.length > 0) {
-        const newBody = pipe(contentInfo.contentEncodings, map(encoding => {
+        const newBody = pipe(contentInfo.contentEncodings, map$1(encoding => {
             const decoder = decoderProvider[encoding];
             if (isNone(decoder)) {
                 throw createHttpResponse({
