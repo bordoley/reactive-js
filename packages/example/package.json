@@ -1,9 +1,9 @@
 {
   "name": "@reactive-js/example",
-  "version": "0.0.47",
+  "version": "0.0.48",
   "private": true,
   "dependencies": {
-    "@reactive-js/core": "^0.0.47",
+    "@reactive-js/core": "^0.0.48",
     "mime-db": "^1.45.0",
     "mime-types": "^2.1.27",
     "react": "^17.0.1",
