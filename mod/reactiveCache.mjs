@@ -1,5 +1,5 @@
-import { pipe } from './functions.mjs';
 import { isSome, isNone } from './option.mjs';
+import { pipe } from './functions.mjs';
 import { dispose, addTeardown, AbstractDisposable, addDisposable } from './disposable.mjs';
 import { __yield, schedule } from './scheduler.mjs';
 import { switchAll, onSubscribe } from './observable.mjs';

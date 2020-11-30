@@ -1,5 +1,5 @@
-import { pipe } from './functions.mjs';
 import { isSome, none } from './option.mjs';
+import { pipe } from './functions.mjs';
 import { fromArray, enumerate, fromIterable, toRunnable } from './enumerable.mjs';
 import { first } from './runnable.mjs';
 

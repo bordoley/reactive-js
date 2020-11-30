@@ -1,5 +1,5 @@
-import { pipe, returns, compose, strictEquality, alwaysTrue } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
+import { pipe, returns, compose, strictEquality, alwaysTrue } from './functions.mjs';
 import { createRunnable } from './runnable.mjs';
 import { everySatisfy, map as map$1 } from './readonlyArray.mjs';
 

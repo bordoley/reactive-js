@@ -14,7 +14,7 @@ import {
   switchAll,
 } from "./observable";
 import { Option, isNone, isSome } from "./option";
-import { SchedulerLike, schedule, __yield } from "./scheduler";
+import { SchedulerLike, __yield, schedule } from "./scheduler";
 import {
   StreamableLike,
   createStreamable,

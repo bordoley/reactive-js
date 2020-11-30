@@ -1,5 +1,5 @@
-import { pipe, alwaysFalse, defer } from './functions.mjs';
 import { none, isSome, isNone } from './option.mjs';
+import { pipe, alwaysFalse, defer } from './functions.mjs';
 import { AbstractDisposable, addTeardown, dispose, AbstractSerialDisposable, disposed, addDisposable, createDisposable } from './disposable.mjs';
 import { createPriorityQueue } from './queues.mjs';
 

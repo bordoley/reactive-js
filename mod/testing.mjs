@@ -1,5 +1,5 @@
-import { ignore, raise, strictEquality, arrayEquality } from './functions.mjs';
 import { none, isSome, isNone } from './option.mjs';
+import { ignore, raise, strictEquality, arrayEquality } from './functions.mjs';
 import { __DENO__ } from './env.mjs';
 
 const createJasmineTests = (testGroup, parents) => {

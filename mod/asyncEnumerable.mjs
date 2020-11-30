@@ -1,5 +1,5 @@
-import { pipe, flip, compose, returns, defer } from './functions.mjs';
 import { none } from './option.mjs';
+import { pipe, flip, compose, returns, defer } from './functions.mjs';
 import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
 import { using, createSubject, onNotify, map, onSubscribe, zipWithLatestFrom, takeFirst, switchAll, fromValue, scan, concatMap, withLatestFrom, compute, takeWhile, scanAsync } from './observable.mjs';
 import { stream, createStreamable } from './streamable.mjs';

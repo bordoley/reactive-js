@@ -1,5 +1,5 @@
-import { pipe, defer } from './functions.mjs';
 import { isSome, isNone, none } from './option.mjs';
+import { pipe, defer } from './functions.mjs';
 
 /**
  * Dispose `disposable` with an optional error.
