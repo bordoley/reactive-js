@@ -141,10 +141,7 @@ class AsyncContext<T> extends BaseContext {
       );
 
       addTeardown(subscription, () => {
-        pipe(
-          this.observer,
-          schedule(this.runComputation),
-        );
+        pipe(this.observer, schedule(this.runComputation));
       });
 
       addDisposable(this.observer, subscription);
@@ -161,7 +158,7 @@ class AsyncContext<T> extends BaseContext {
 
       throw asyncAwaitSymbol;
     } else {
-      const { subscription }  = effect;
+      const { subscription } = effect;
       const { error } = subscription;
 
       if (__DEV__ && observable !== effect.observable) {
@@ -173,7 +170,7 @@ class AsyncContext<T> extends BaseContext {
       } else {
         return raise("observable completed without producing a value.");
       }
-    } 
+    }
   }
 
   memo<T>(f: (...args: any[]) => T, ...args: any[]): T {
@@ -183,7 +180,10 @@ class AsyncContext<T> extends BaseContext {
       const value = f(...args);
       this.effects.push({ type: EffectType.Memo, f, args, value });
       return value;
-    } else if (__DEV__ && (f !== effect.f || !arrayStrictEquality(args, effect.args))) {
+    } else if (
+      __DEV__ &&
+      (f !== effect.f || !arrayStrictEquality(args, effect.args))
+    ) {
       return raise("memo arguments changed in async computation");
     } else {
       return effect.value as T;
@@ -204,7 +204,10 @@ class AsyncContext<T> extends BaseContext {
         value,
       });
       return value;
-    } else if (__DEV__ && (f !== effect.f || !arrayStrictEquality(args, effect.args))) {
+    } else if (
+      __DEV__ &&
+      (f !== effect.f || !arrayStrictEquality(args, effect.args))
+    ) {
       return raise("using arguments changed in async computation");
     } else {
       return effect.value as T;

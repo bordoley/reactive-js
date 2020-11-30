@@ -130,9 +130,9 @@ export const tests = describe(
       let result2 = 5;
       if (result1 > 4) {
         result2 = __await(fromValueWithDelay, result1);
-      } 
+      }
 
-      let result3 = 0
+      let result3 = 0;
       for (let i = 0; i < result2; i++) {
         result3 += __await(fromValueWithDelay, i);
       }
