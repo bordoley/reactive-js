@@ -11,8 +11,7 @@ import {
 } from "../observable";
 import { isSome, none } from "../option";
 import { lift } from "./lift";
-import { observe } from "./observer";
-import { createDelegatingObserver } from "./observer";
+import { createDelegatingObserver, observe } from "./observer";
 
 /**
  * Returns an `ObservableLike` which catches errors produced by the source and either continues with

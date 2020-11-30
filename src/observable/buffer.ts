@@ -16,8 +16,12 @@ import { none } from "../option";
 import { fromValue } from "./fromValue";
 import { lift } from "./lift";
 import { never } from "./never";
-import { observe } from "./observer";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
+import {
+  AbstractDelegatingObserver,
+  assertObserverState,
+  observe,
+} from "./observer";
+
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 

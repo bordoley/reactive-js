@@ -2,8 +2,7 @@ import { DisposableLike } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { SchedulerLike } from "../scheduler";
-import { observe } from "./observer";
-import { AbstractObserver, assertObserverState } from "./observer";
+import { AbstractObserver, assertObserverState, observe } from "./observer";
 
 class DefaultObserver<T> extends AbstractObserver<T, SchedulerLike> {
   notify(_: T) {
