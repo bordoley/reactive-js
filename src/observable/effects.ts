@@ -116,9 +116,9 @@ abstract class BaseContext {
 
 class AsyncContext extends BaseContext {
   index = 0;
+  readonly effects: AsyncEffect[] = [];
 
   constructor(
-    readonly effects: AsyncEffect[],
     private readonly observer: SchedulerLike & DisposableLike,
     private readonly runComputation: SideEffect,
   ) {
@@ -216,11 +216,7 @@ let currentCtx: Option<AsyncContext | ObservableContext> = none;
 
 export const async = <T>(computation: Factory<T>): ObservableLike<T> =>
   defer((observer: ObserverLike<T>) => {
-    const effects: AsyncEffect[] = [];
-
     const runComputation = () => {
-      const ctx = new AsyncContext(effects, observer, runComputation);
-
       let result: Option<T> = none;
       let isAwaiting = false;
       let error: Option<Error> = none;
@@ -235,6 +231,7 @@ export const async = <T>(computation: Factory<T>): ObservableLike<T> =>
         }
       }
       currentCtx = none;
+      ctx.index = 0;
 
       if (isSome(error)) {
         observer.dispose(error);
@@ -243,6 +240,8 @@ export const async = <T>(computation: Factory<T>): ObservableLike<T> =>
         observer.dispose();
       }
     };
+
+    const ctx = new AsyncContext(observer, runComputation);
 
     return runComputation;
   });
@@ -306,9 +305,9 @@ function validateObservableEffect(
 
 class ObservableContext extends BaseContext {
   index = 0;
+  readonly effects: ObservableEffect[] = []
 
-  constructor(
-    readonly effects: ObservableEffect[],
+  constructor( 
     readonly scheduler: SchedulerLike & DisposableLike,
     private readonly runComputation: () => void,
   ) {
@@ -377,7 +376,6 @@ class ObservableContext extends BaseContext {
 
 export const observable = <T>(computation: Factory<T>): ObservableLike<T> =>
   defer((observer: ObserverLike<T>) => {
-    const effects: ObservableEffect[] = [];
     let scheduledComputationSubscription = disposed;
 
     const scheduleComputation = () => {
@@ -387,8 +385,6 @@ export const observable = <T>(computation: Factory<T>): ObservableLike<T> =>
     };
 
     const runComputation = () => {
-      const ctx = new ObservableContext(effects, observer, scheduleComputation);
-
       let result: Option<T> = none;
       let error: Option<Error> = none;
 
@@ -399,12 +395,13 @@ export const observable = <T>(computation: Factory<T>): ObservableLike<T> =>
         error = { cause };
       }
       currentCtx = none;
+      ctx.index = 0;
 
       if (isSome(error)) {
         observer.dispose(error);
       } else {
         const hasOutstandingEffects =
-          effects.findIndex(
+          ctx.effects.findIndex(
             effect =>
               effect.type === EffectType.Observe &&
               !effect.subscription.isDisposed,
@@ -416,6 +413,8 @@ export const observable = <T>(computation: Factory<T>): ObservableLike<T> =>
         }
       }
     };
+
+    const ctx = new ObservableContext(observer, scheduleComputation);
 
     return runComputation;
   });

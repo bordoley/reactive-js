@@ -228,12 +228,12 @@ function validateAsyncEffect(ctx, type) {
 class BaseContext {
 }
 class AsyncContext extends BaseContext {
-    constructor(effects, observer, runComputation) {
+    constructor(observer, runComputation) {
         super();
-        this.effects = effects;
         this.observer = observer;
         this.runComputation = runComputation;
         this.index = 0;
+        this.effects = [];
     }
     await(observable) {
         const effect = validateAsyncEffect(this, 0 /* Await */);
@@ -306,9 +306,7 @@ class AsyncContext extends BaseContext {
 }
 let currentCtx = none;
 const async = (computation) => defer((observer) => {
-    const effects = [];
     const runComputation = () => {
-        const ctx = new AsyncContext(effects, observer, runComputation);
         let result = none;
         let isAwaiting = false;
         let error = none;
@@ -323,6 +321,7 @@ const async = (computation) => defer((observer) => {
             }
         }
         currentCtx = none;
+        ctx.index = 0;
         if (isSome(error)) {
             observer.dispose(error);
         }
@@ -331,6 +330,7 @@ const async = (computation) => defer((observer) => {
             observer.dispose();
         }
     };
+    const ctx = new AsyncContext(observer, runComputation);
     return runComputation;
 });
 function validateObservableEffect(ctx, type) {
