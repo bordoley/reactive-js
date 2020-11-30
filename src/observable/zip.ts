@@ -18,8 +18,12 @@ import { isNone, isSome, none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
 import { SchedulerContinuationLike, run } from "../scheduler";
 import { fromEnumerator } from "./fromEnumerable";
-import { observe } from "./observer";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
+import {
+  AbstractDelegatingObserver,
+  assertObserverState,
+  observe,
+} from "./observer";
+
 import { using } from "./using";
 
 class EnumeratorObserver<T>

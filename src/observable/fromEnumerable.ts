@@ -2,8 +2,8 @@ import { dispose } from "../disposable";
 import { EnumerableLike, EnumeratorLike, enumerate } from "../enumerable";
 import { Factory, Function1, defer, pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
-import { defer as deferObs, deferSynchronous } from "./observable";
 import { __yield } from "../scheduler";
+import { defer as deferObs, deferSynchronous } from "./observable";
 
 /**
  * Creates an `ObservableLike` which enumerates through the values

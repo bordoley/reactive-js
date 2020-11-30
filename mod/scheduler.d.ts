@@ -19,9 +19,9 @@ declare class YieldError {
 declare const run: (continuation: SchedulerContinuationLike) => void;
 declare const __currentScheduler: () => SchedulerLike;
 declare const __yield: (delay?: number) => void;
-declare const schedule: <T extends SchedulerLike>(f: SideEffect, options?: {
+declare const schedule: (f: SideEffect, options?: {
     readonly delay?: number | undefined;
-} | undefined) => Function1<T, DisposableLike>;
+} | undefined) => Function1<SchedulerLike, DisposableLike>;
 
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.

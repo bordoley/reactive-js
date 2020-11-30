@@ -30,12 +30,15 @@ export class YieldError {
 
 let currentScheduler: Option<SchedulerLike> = none;
 
-class SchedulerContinuationImpl<T extends SchedulerLike>
+class SchedulerContinuationImpl
   extends AbstractDisposable
   implements SchedulerContinuationLike {
   private listeners: Set<SchedulerContinuationRunStatusChangedListenerLike> = new Set();
 
-  constructor(private readonly scheduler: T, private readonly f: SideEffect) {
+  constructor(
+    private readonly scheduler: SchedulerLike,
+    private readonly f: SideEffect,
+  ) {
     super();
 
     addTeardown(this, _e => {
@@ -101,17 +104,17 @@ export const __currentScheduler = (): SchedulerLike =>
       )
     : currentScheduler;
 
-export const __yield = (delay: number = 0) => {
+export const __yield = (delay = 0) => {
   const scheduler = __currentScheduler();
   if (delay > 0 || scheduler.shouldYield) {
     throw new YieldError(delay);
   }
 };
 
-export const schedule = <T extends SchedulerLike>(
+export const schedule = (
   f: SideEffect,
   options?: { readonly delay?: number },
-): Function1<T, DisposableLike> => scheduler => {
+): Function1<SchedulerLike, DisposableLike> => scheduler => {
   const continuation = new SchedulerContinuationImpl(scheduler, f);
   scheduler.schedule(continuation, options);
   return continuation;
