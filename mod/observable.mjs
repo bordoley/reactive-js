@@ -370,12 +370,12 @@ function validateObservableEffect(ctx, type) {
     }
 }
 class ObservableContext extends BaseContext {
-    constructor(effects, scheduler, runComputation) {
+    constructor(scheduler, scheduleComputation) {
         super();
-        this.effects = effects;
         this.scheduler = scheduler;
-        this.runComputation = runComputation;
+        this.scheduleComputation = scheduleComputation;
         this.index = 0;
+        this.effects = [];
     }
     memo(f, ...args) {
         const effect = validateObservableEffect(this, 1 /* Memo */);
@@ -399,8 +399,11 @@ class ObservableContext extends BaseContext {
             pipe(effect.subscription, dispose());
             const subscription = pipe(observable, onNotify(next => {
                 effect.value = next;
-                this.runComputation();
+                this.scheduleComputation();
             }), subscribe(this.scheduler));
+            addTeardown(subscription, () => {
+                this.scheduleComputation();
+            });
             addDisposableDisposeParentOnChildError(this.scheduler, subscription);
             effect.observable = observable;
             effect.subscription = subscription;
@@ -425,7 +428,6 @@ class ObservableContext extends BaseContext {
     }
 }
 const observable = (computation) => defer((observer) => {
-    const effects = [];
     let scheduledComputationSubscription = disposed;
     const scheduleComputation = () => {
         scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
@@ -433,7 +435,6 @@ const observable = (computation) => defer((observer) => {
             : scheduledComputationSubscription;
     };
     const runComputation = () => {
-        const ctx = new ObservableContext(effects, observer, scheduleComputation);
         let result = none;
         let error = none;
         currentCtx = ctx;
@@ -444,11 +445,12 @@ const observable = (computation) => defer((observer) => {
             error = { cause };
         }
         currentCtx = none;
+        ctx.index = 0;
         if (isSome(error)) {
             observer.dispose(error);
         }
         else {
-            const hasOutstandingEffects = effects.findIndex(effect => effect.type === 2 /* Observe */ &&
+            const hasOutstandingEffects = ctx.effects.findIndex(effect => effect.type === 2 /* Observe */ &&
                 !effect.subscription.isDisposed) >= 0;
             observer.notify(result);
             if (!hasOutstandingEffects) {
@@ -456,6 +458,7 @@ const observable = (computation) => defer((observer) => {
             }
         }
     };
+    const ctx = new ObservableContext(observer, scheduleComputation);
     return runComputation;
 });
 const assertCurrentContext = () => isNone(currentCtx)
