@@ -695,7 +695,11 @@ const tests$6 = describe("observable", test("async", () => {
         if (result1 > 4) {
             result2 = __await(fromValueWithDelay, result1);
         }
-        return result1 + result2;
+        let result3 = 0;
+        for (let i = 0; i < result2; i++) {
+            result3 += __await(fromValueWithDelay, i);
+        }
+        return result3;
     });
     pipe(computedObservable, takeLast$1(), toRunnable(), last, expectEquals(10));
 }), describe("buffer", test("with duration and maxBufferSize", defer(concat$1(pipe([1, 2, 3, 4], fromArray$3()), pipe([1, 2, 3], fromArray$3({ delay: 1 })), pipe(4, fromValue({ delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toRunnable(), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", defer(defer([1, 2, 3, 4], fromArray$3(), buffer({ duration: _ => throws()(raise) }), toRunnable({

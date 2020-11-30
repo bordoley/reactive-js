@@ -71,6 +71,7 @@ import {
   zipWith,
   zipWithLatestFrom,
 } from "../observable";
+import { __do } from "../observable/effects";
 import {
   forEach,
   fromArray as fromArrayRunnable,
@@ -123,7 +124,7 @@ export const tests = describe(
   "observable",
   test("async", () => {
     const fromValueWithDelay = fromValue<any>({ delay: 2 });
-    
+
     const computedObservable = async(() => {
       const result1 = __await(fromValueWithDelay, 5);
       let result2 = 5;
@@ -131,7 +132,12 @@ export const tests = describe(
         result2 = __await(fromValueWithDelay, result1);
       } 
 
-      return result1 + result2;
+      let result3 = 0
+      for (let i = 0; i < result2; i++) {
+        result3 += __await(fromValueWithDelay, i);
+      }
+
+      return result3;
     });
     pipe(computedObservable, takeLast(), toRunnable(), last, expectEquals(10));
   }),
