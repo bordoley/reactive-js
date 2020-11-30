@@ -216,9 +216,10 @@ declare function using<TResource1 extends DisposableLike, TResource2 extends Dis
 ]>, observableFactory: Function5<TResource1, TResource2, TResource3, TResource4, TResource5, ObservableLike<T>>): ObservableLike<T>;
 declare function using<TResource extends DisposableLike, T>(resourceFactory: Function1<SchedulerLike, TResource | readonly TResource[]>, observableFactory: (...resources: readonly TResource[]) => ObservableLike<T>): ObservableLike<T>;
 
-declare const defer: <T>(factory: Factory<SideEffect1<ObserverLike<T>>>, options?: {
+declare const defer: <T>(factory: Function1<ObserverLike<T>, SideEffect>, options?: {
     readonly delay?: number;
 }) => ObservableLike<T>;
+
 declare const observe: <T>(observer: ObserverLike<T>) => SideEffect1<ObservableLike<T>>;
 
 /**

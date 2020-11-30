@@ -12,7 +12,7 @@ export type FetchRequest = RequestInit & {
 export const fetch = <T>(
   onResponse: Function1<Response, Promise<T> | ObservableLike<T>>,
 ): Function1<FetchRequest | string, ObservableLike<T>> => fetchRequest =>
-  defer(() => async observer => {
+  defer(observer => async () => {
     const abortController = new AbortController();
     addTeardown(observer, () => abortController.abort());
 

@@ -1,5 +1,6 @@
 /// <reference types="node" />
 import { Function1 } from './functions';
+import { Option } from './option';
 import { SchedulerLike } from './scheduler';
 import { ObservableLike } from './observable';
 import { StreamableLike } from './streamable';
@@ -13,7 +14,7 @@ interface FlowableLike<T> extends StreamableLike<FlowMode, T> {
 }
 declare type FlowableOperator<TA, TB> = Function1<FlowableLike<TA>, FlowableLike<TB>>;
 declare const fromObservable: <T>({ scheduler, }?: {
-    scheduler?: SchedulerLike | undefined;
+    scheduler?: Option<SchedulerLike>;
 }) => Function1<ObservableLike<T>, FlowableLike<T>>;
 declare const fromArray: <T>(options?: {
     readonly delay?: number | undefined;

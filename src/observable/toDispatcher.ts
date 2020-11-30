@@ -9,8 +9,7 @@ import {
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObserverLike } from "../observable";
-import { schedule } from "../scheduler";
-import { __yield } from "./observer";
+import { __yield, schedule } from "../scheduler";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (dispatcher.nextQueue.length === 1) {
@@ -32,11 +31,11 @@ class ObserverDelegatingDispatcher<T>
   implements DispatcherLike<T> {
   readonly continuation = () => {
     const nextQueue = this.nextQueue;
-    const observer = this.observer;
 
     while (nextQueue.length > 0) {
       const next = nextQueue.shift() as T;
-      __yield(observer, next, 0);
+      this.observer.notify(next);
+      __yield();
     }
   };
 

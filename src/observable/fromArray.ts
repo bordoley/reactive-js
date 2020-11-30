@@ -26,10 +26,10 @@ export const fromArray = <T>(
     0,
   );
 
-  const factory = () => {
+  const factory = (observer: ObserverLike<T>) => {
     let index = startIndex;
 
-    return (observer: ObserverLike<T>) => {
+    return () => {
       while (index < endIndex) {
         const value = values[index];
         index++;

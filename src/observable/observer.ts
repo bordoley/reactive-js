@@ -5,12 +5,8 @@ import {
 } from "../disposable";
 import { __DEV__ } from "../env";
 import { SideEffect1, ignore, raise } from "../functions";
-import { ObserverLike } from "../observable";
-import {
-  SchedulerContinuationLike,
-  SchedulerLike,
-  __yield as yieldScheduler,
-} from "../scheduler";
+import { ObservableLike, ObserverLike } from "../observable";
+import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
 
 const assertObserverStateProduction = ignore;
 const assertObserverStateDev = <T>(observer: ObserverLike<T>) => {
@@ -129,11 +125,6 @@ export const createAutoDisposingDelegatingObserver = <T>(
   return observer;
 };
 
-export const __yield = <T>(
+export const observe = <T>(
   observer: ObserverLike<T>,
-  next: T,
-  delay: number,
-) => {
-  observer.notify(next);
-  yieldScheduler(observer, delay);
-};
+): SideEffect1<ObservableLike<T>> => observable => observable.observe(observer);

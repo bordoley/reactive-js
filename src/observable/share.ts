@@ -9,7 +9,7 @@ import {
 } from "../observable";
 import { Option, none } from "../option";
 import { SchedulerLike } from "../scheduler";
-import { observe } from "./observable";
+import { observe } from "./observer";
 import { publish } from "./publish";
 
 class SharedObservable<T> implements ObservableLike<T> {

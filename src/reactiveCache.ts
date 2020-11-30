@@ -38,7 +38,7 @@ const markAsGarbage = <T>(
     reactiveCache.cache.size > reactiveCache.maxCount &&
     !reactiveCache.cleaning
   ) {
-    const continuation = (scheduler: SchedulerLike) => {
+    const continuation = () => {
       const { cache, maxCount, garbage } = reactiveCache;
 
       for (const [, stream] of garbage) {
@@ -48,7 +48,7 @@ const markAsGarbage = <T>(
         const hasMoreToCleanup = cache.size > maxCount;
 
         if (hasMoreToCleanup) {
-          __yield(scheduler, 0);
+          __yield(0);
         } else if (!hasMoreToCleanup) {
           break;
         }

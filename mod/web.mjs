@@ -69,7 +69,7 @@ const _historyStateStore = pipe(createStreamable(historyFunction), toStateStore(
 const historyStateStore = _historyStateStore;
 
 const globalFetch = self.fetch;
-const fetch = (onResponse) => fetchRequest => defer(() => async (observer) => {
+const fetch = (onResponse) => fetchRequest => defer(observer => async () => {
     const abortController = new AbortController();
     addTeardown(observer, () => abortController.abort());
     let request = none;

@@ -5,8 +5,8 @@ import {
   addTeardown,
   dispose,
 } from "../disposable";
-import { Function1, SideEffect1, pipe } from "../functions";
-import { Option, isSome, none } from "../option";
+import { Function1, SideEffect, pipe, raise } from "../functions";
+import { Option, isNone, isSome, none } from "../option";
 import {
   SchedulerContinuationLike,
   SchedulerContinuationRunStatusChangedListenerLike,
@@ -28,15 +28,14 @@ export class YieldError {
   constructor(readonly delay: number) {}
 }
 
+let currentScheduler: Option<SchedulerLike> = none;
+
 class SchedulerContinuationImpl<T extends SchedulerLike>
   extends AbstractDisposable
   implements SchedulerContinuationLike {
   private listeners: Set<SchedulerContinuationRunStatusChangedListenerLike> = new Set();
 
-  constructor(
-    private readonly scheduler: T,
-    private readonly f: SideEffect1<T>,
-  ) {
+  constructor(private readonly scheduler: T, private readonly f: SideEffect) {
     super();
 
     addTeardown(this, _e => {
@@ -67,8 +66,11 @@ class SchedulerContinuationImpl<T extends SchedulerLike>
       let yieldError: Option<YieldError> = none;
 
       notifyListeners(listeners, true);
+
+      const oldCurrentScheduler = currentScheduler;
+      currentScheduler = this.scheduler;
       try {
-        this.f(this.scheduler);
+        this.f();
       } catch (cause) {
         if (isYieldError(cause)) {
           yieldError = cause;
@@ -76,6 +78,7 @@ class SchedulerContinuationImpl<T extends SchedulerLike>
           error = { cause };
         }
       }
+      currentScheduler = oldCurrentScheduler;
       notifyListeners(listeners, false);
 
       if (isSome(yieldError)) {
@@ -91,14 +94,22 @@ export const run = (continuation: SchedulerContinuationLike): void => {
   continuation.continue();
 };
 
-export const __yield = (scheduler: SchedulerLike, delay: number) => {
+export const __currentScheduler = (): SchedulerLike =>
+  isNone(currentScheduler)
+    ? raise(
+        "__currentScheduler effect may only be invoked from within a SchedulerContinuation",
+      )
+    : currentScheduler;
+
+export const __yield = (delay: number = 0) => {
+  const scheduler = __currentScheduler();
   if (delay > 0 || scheduler.shouldYield) {
     throw new YieldError(delay);
   }
 };
 
 export const schedule = <T extends SchedulerLike>(
-  f: SideEffect1<T>,
+  f: SideEffect,
   options?: { readonly delay?: number },
 ): Function1<T, DisposableLike> => scheduler => {
   const continuation = new SchedulerContinuationImpl(scheduler, f);

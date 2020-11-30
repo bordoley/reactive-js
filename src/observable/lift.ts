@@ -5,7 +5,7 @@ import {
   ObserverLike,
   ObserverOperator,
 } from "../observable";
-import { observe } from "./observable";
+import { observe } from "./observer";
 
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
   constructor(

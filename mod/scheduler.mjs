@@ -1,5 +1,5 @@
 import { none, isSome, isNone } from './option.mjs';
-import { pipe, alwaysFalse, defer } from './functions.mjs';
+import { pipe, raise, alwaysFalse, defer } from './functions.mjs';
 import { AbstractDisposable, addTeardown, dispose, AbstractSerialDisposable, disposed, addDisposable, createDisposable } from './disposable.mjs';
 import { createPriorityQueue } from './queues.mjs';
 
@@ -14,6 +14,7 @@ class YieldError {
         this.delay = delay;
     }
 }
+let currentScheduler = none;
 class SchedulerContinuationImpl extends AbstractDisposable {
     constructor(scheduler, f) {
         super();
@@ -38,8 +39,10 @@ class SchedulerContinuationImpl extends AbstractDisposable {
             let error = none;
             let yieldError = none;
             notifyListeners(listeners, true);
+            const oldCurrentScheduler = currentScheduler;
+            currentScheduler = this.scheduler;
             try {
-                this.f(this.scheduler);
+                this.f();
             }
             catch (cause) {
                 if (isYieldError(cause)) {
@@ -49,6 +52,7 @@ class SchedulerContinuationImpl extends AbstractDisposable {
                     error = { cause };
                 }
             }
+            currentScheduler = oldCurrentScheduler;
             notifyListeners(listeners, false);
             if (isSome(yieldError)) {
                 this.scheduler.schedule(this, yieldError);
@@ -62,7 +66,11 @@ class SchedulerContinuationImpl extends AbstractDisposable {
 const run = (continuation) => {
     continuation.continue();
 };
-const __yield = (scheduler, delay) => {
+const __currentScheduler = () => isNone(currentScheduler)
+    ? raise("__currentScheduler effect may only be invoked from within a SchedulerContinuation")
+    : currentScheduler;
+const __yield = (delay = 0) => {
+    const scheduler = __currentScheduler();
     if (delay > 0 || scheduler.shouldYield) {
         throw new YieldError(delay);
     }
@@ -133,7 +141,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
     constructor(host) {
         super();
         this.host = host;
-        this.continuation = (host) => {
+        this.continuation = () => {
             for (let task = peek(this); isSome(task) && !this.isDisposed; task = peek(this)) {
                 const { continuation, dueTime } = task;
                 const delay = Math.max(dueTime - this.now, 0);
@@ -146,7 +154,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
                 else {
                     this.dueTime = this.now + delay;
                 }
-                __yield(host, delay);
+                __yield(delay);
             }
         };
         this.current = none;
@@ -422,4 +430,4 @@ const createVirtualTimeScheduler = (options = {}) => {
     return new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
 };
 
-export { YieldError, __yield, createHostScheduler, createVirtualTimeScheduler, run, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };
+export { YieldError, __currentScheduler, __yield, createHostScheduler, createVirtualTimeScheduler, run, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };

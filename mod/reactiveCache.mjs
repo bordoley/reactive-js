@@ -9,14 +9,14 @@ const markAsGarbage = (reactiveCache, key, stream) => {
     reactiveCache.garbage.set(key, stream);
     if (reactiveCache.cache.size > reactiveCache.maxCount &&
         !reactiveCache.cleaning) {
-        const continuation = (scheduler) => {
+        const continuation = () => {
             const { cache, maxCount, garbage } = reactiveCache;
             for (const [, stream] of garbage) {
                 pipe(stream, dispose());
                 // only delete as many entries as we need to.
                 const hasMoreToCleanup = cache.size > maxCount;
                 if (hasMoreToCleanup) {
-                    __yield(scheduler, 0);
+                    __yield(0);
                 }
                 else if (!hasMoreToCleanup) {
                     break;

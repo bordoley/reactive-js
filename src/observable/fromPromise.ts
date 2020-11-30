@@ -13,7 +13,7 @@ import { toDispatcher } from "./toDispatcher";
 export const fromPromise = <T>(
   factory: Factory<Promise<T>>,
 ): ObservableLike<T> =>
-  defer(() => observer => {
+  defer(observer => () => {
     const dispatcher = toDispatcher(observer);
 
     factory().then(next => {

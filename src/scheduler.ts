@@ -93,6 +93,7 @@ export {
 export {
   run,
   schedule,
+  __currentScheduler,
   __yield,
   YieldError,
 } from "./scheduler/schedulerContinuation";

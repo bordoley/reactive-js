@@ -8,7 +8,7 @@ import { ObservableOperator, ObserverLike } from "../observable";
 import { empty } from "./empty";
 import { fromArray } from "./fromArray";
 import { lift } from "./lift";
-import { observe } from "./observable";
+import { observe } from "./observer";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
 class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {

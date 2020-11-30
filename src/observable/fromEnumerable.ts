@@ -3,7 +3,7 @@ import { EnumerableLike, EnumeratorLike, enumerate } from "../enumerable";
 import { Factory, Function1, defer, pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { defer as deferObs, deferSynchronous } from "./observable";
-import { __yield } from "./observer";
+import { __yield } from "../scheduler";
 
 /**
  * Creates an `ObservableLike` which enumerates through the values
@@ -14,12 +14,13 @@ import { __yield } from "./observer";
 export const fromEnumerator = <T>(
   options: { readonly delay?: number } = {},
 ): Function1<Factory<EnumeratorLike<T>>, ObservableLike<T>> => f => {
-  const factory = () => {
+  const factory = (observer: ObserverLike<T>) => {
     const enumerator = f();
 
-    return (observer: ObserverLike<T>) => {
+    return () => {
       while (enumerator.move()) {
-        __yield(observer, enumerator.current, delay);
+        observer.notify(enumerator.current);
+        __yield(delay);
       }
       pipe(observer, dispose());
     };
