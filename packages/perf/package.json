@@ -1,11 +1,11 @@
 {
   "name": "@reactive-js/perf",
-  "version": "0.0.48",
+  "version": "0.0.49",
   "private": true,
   "dependencies": {
     "@most/core": "^1.6.1 ",
     "@most/scheduler": "^1.3.0 ",
-    "@reactive-js/core": "^0.0.48",
+    "@reactive-js/core": "^0.0.49",
     "@types/benchmark": "^2.1.0",
     "@types/jest": "^26.0.15",
     "@types/node": "^14.14.9",
