@@ -309,7 +309,7 @@ class ObservableContext extends BaseContext {
 
   constructor( 
     readonly scheduler: SchedulerLike & DisposableLike,
-    private readonly runComputation: () => void,
+    private readonly scheduleComputation: () => void,
   ) {
     super();
   }
@@ -340,11 +340,13 @@ class ObservableContext extends BaseContext {
         observable,
         onNotify(next => {
           effect.value = next;
-          this.runComputation();
+          this.scheduleComputation();
         }),
         subscribe(this.scheduler),
       );
-
+      addTeardown(subscription, () => {
+        this.scheduleComputation();
+      });
       addDisposableDisposeParentOnChildError(this.scheduler, subscription);
 
       effect.observable = observable;

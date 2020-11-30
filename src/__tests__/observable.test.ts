@@ -14,7 +14,9 @@ import {
 import {
   ThrottleMode,
   __await,
+  __do,
   __memo,
+  __observe,
   async,
   buffer,
   catchError,
@@ -44,6 +46,7 @@ import {
   mergeMap,
   mergeWith,
   never,
+  observable,
   onNotify,
   onSubscribe,
   repeat,
@@ -71,8 +74,6 @@ import {
   zipWith,
   zipWithLatestFrom,
 } from "../observable";
-
-import { __do } from "../observable/effects";
 import {
   forEach,
   fromArray as fromArrayRunnable,
@@ -437,6 +438,23 @@ export const tests = describe(
   ),
 
   test("never", defer(never(), toRunnable(), last, expectNone)),
+  test("observable", () => {
+    const fromValueWithDelay = (delay: number, value: number) => fromValue<number>({ delay })(value);
+    const emptyDelayed = empty({delay: 100});
+
+    const computedObservable = observable(() => {
+      const obs1 = __memo(fromValueWithDelay, 10, 5);
+      const result1 = __observe(obs1) ?? 0;
+      const obs2 = __memo(fromValueWithDelay, 20, 10);
+      const result2 = __observe(obs2) ?? 0;
+      const obs3 = __memo(fromValueWithDelay, 30, 7);
+      const result3 = __observe(obs3) ?? 0;
+      __observe(emptyDelayed);
+
+      return result1 + result2 + result3;
+    });
+    pipe(computedObservable, takeLast(), toRunnable(), last, expectEquals(22));
+  }),
 
   describe(
     "onSubscribe",
