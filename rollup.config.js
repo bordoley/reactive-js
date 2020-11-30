@@ -35,24 +35,20 @@ export default [
     external,
     treeshake: false,
     input,
-    output: {
-      ...output,
-      chunkFileNames: "[name]-[hash].mjs",
-      entryFileNames: "[name].mjs",
-      format: "esm",
-    },
-    plugins: [typescript(typescriptConfig)],
-  },
-  {
-    external,
-    treeshake: false,
-    input,
-    output: {
-      ...output,
-      chunkFileNames: "[name]-[hash].js",
-      entryFileNames: "[name].js",
-      format: "cjs",
-    },
+    output: [
+      {
+        ...output,
+        chunkFileNames: "[name]-[hash].mjs",
+        entryFileNames: "[name].mjs",
+        format: "esm",
+      },
+      {
+        ...output,
+        chunkFileNames: "[name]-[hash].js",
+        entryFileNames: "[name].js",
+        format: "cjs",
+      },
+    ],
     plugins: [typescript(typescriptConfig)],
   },
   {

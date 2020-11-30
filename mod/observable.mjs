@@ -286,7 +286,8 @@ class AsyncContext extends BaseContext {
             this.effects.push({ type: 1 /* Memo */, f, args, value });
             return value;
         }
-        else if (__DEV__ && (f !== effect.f || !arrayStrictEquality(args, effect.args))) {
+        else if (__DEV__ &&
+            (f !== effect.f || !arrayStrictEquality(args, effect.args))) {
             return raise("memo arguments changed in async computation");
         }
         else {
@@ -306,7 +307,8 @@ class AsyncContext extends BaseContext {
             });
             return value;
         }
-        else if (__DEV__ && (f !== effect.f || !arrayStrictEquality(args, effect.args))) {
+        else if (__DEV__ &&
+            (f !== effect.f || !arrayStrictEquality(args, effect.args))) {
             return raise("using arguments changed in async computation");
         }
         else {
