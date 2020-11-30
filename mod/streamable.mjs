@@ -1,8 +1,7 @@
 import { isNone, none } from './option.mjs';
 import { pipe, compose, returns } from './functions.mjs';
+import { createSubject, publish, observe, using, map as map$1, onNotify as onNotify$1, dispatchTo, subscribe, empty as empty$1, __currentScheduler, __using, scan as scan$1, mergeWith, fromValue, distinctUntilChanged, mapTo as mapTo$1, withLatestFrom as withLatestFrom$1, ignoreElements, endWith } from './observable.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables } from './disposable.mjs';
-import { createSubject, publish, observe, using, map as map$1, onNotify as onNotify$1, subscribe, empty as empty$1, __currentScheduler, __using, scan as scan$1, mergeWith, fromValue, distinctUntilChanged, mapTo as mapTo$1, withLatestFrom as withLatestFrom$1, ignoreElements, endWith } from './observable.mjs';
-import { dispatchTo } from './dispatcher.mjs';
 
 class StreamImpl extends AbstractDisposable {
     constructor(op, scheduler, options) {

@@ -1,4 +1,3 @@
-import { dispatchTo } from "./dispatcher";
 import {
   AbstractDisposable,
   addDisposable,
@@ -27,6 +26,7 @@ import {
   concatMap,
   createObservable,
   createSubject,
+  dispatchTo,
   endWith,
   fromArray as fromArrayObs,
   fromIterator,
@@ -39,6 +39,7 @@ import {
   using,
   withLatestFrom as withLatestFromObs,
 } from "./observable";
+
 import { SchedulerLike } from "./scheduler";
 import {
   StreamableLike,

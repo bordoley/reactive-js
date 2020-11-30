@@ -1,7 +1,11 @@
-import { dispatchTo } from "../dispatcher";
 import { bindDisposables } from "../disposable";
 import { Function1, pipe } from "../functions";
-import { MulticastObservableLike, ObservableLike } from "../observable";
+import {
+  MulticastObservableLike,
+  ObservableLike,
+  dispatchTo,
+} from "../observable";
+
 import { SchedulerLike } from "../scheduler";
 import { createSubject } from "./createSubject";
 import { onNotify } from "./onNotify";

@@ -1,11 +1,12 @@
 /// <reference types="node" />
-import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Equality, TypePredicate, Predicate, Reducer } from './functions';
+import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Equality, TypePredicate, Predicate, Reducer } from './functions';
 import { Option } from './option';
 import { DisposableLike, DisposableOrTeardown } from './disposable';
-import { DispatcherLike } from './dispatcher';
 import { SchedulerLike, VirtualTimeSchedulerLike } from './scheduler';
 import { EnumerableLike } from './enumerable';
 import { RunnableLike } from './runnable';
+
+declare const dispatchTo: <T>(dispatcher: DispatcherLike<T>) => SideEffect1<T>;
 
 declare const async: <T>(computation: Factory<T>) => ObservableLike<T>;
 declare const observable: <T>(computation: Factory<T>) => ObservableLike<T>;
@@ -649,6 +650,14 @@ interface MulticastObservableLike<T> extends ObservableLike<T>, DisposableLike {
      */
     readonly observerCount: number;
 }
+/** @noInheritDoc */
+interface DispatcherLike<T> extends DisposableLike {
+    /**
+     * Dispatches the next request
+     * @param req
+     */
+    dispatch(req: T): void;
+}
 /**
  * Represents a duplex stream
  *
@@ -660,4 +669,4 @@ interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableL
 interface SubjectLike<T> extends StreamLike<T, T> {
 }
 
-export { AsyncReducer, MulticastObservableLike, ObservableLike, ObservableOperator, ObserverLike, ObserverOperator, StreamLike, SubjectLike, ThrottleMode, __await, __currentScheduler, __do, __memo, __observe, __using, async, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observable, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };
+export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableLike, ObservableOperator, ObserverLike, ObserverOperator, StreamLike, SubjectLike, ThrottleMode, __await, __currentScheduler, __do, __memo, __observe, __using, async, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, dispatchTo, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observable, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };

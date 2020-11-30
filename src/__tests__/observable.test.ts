@@ -1,4 +1,3 @@
-import { dispatchTo } from "../dispatcher";
 import { dispose } from "../disposable";
 import {
   arrayEquality,
@@ -26,6 +25,7 @@ import {
   concatWith,
   createObservable,
   createSubject,
+  dispatchTo,
   distinctUntilChanged,
   empty,
   endWith,
@@ -71,6 +71,7 @@ import {
   zipWith,
   zipWithLatestFrom,
 } from "../observable";
+
 import { __do } from "../observable/effects";
 import {
   forEach,

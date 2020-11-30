@@ -1,7 +1,7 @@
 import { isSome, isNone, none } from './option.mjs';
 import { pipe, defer } from './functions.mjs';
-import { dispose, disposed, addTeardown, AbstractDisposable } from './disposable.mjs';
 import { fromValue, onNotify, subscribe, createObservable } from './observable.mjs';
+import { dispose, disposed, addTeardown, AbstractDisposable } from './disposable.mjs';
 import { fromIterable, enumerate, toRunnable, fromIterator } from './enumerable.mjs';
 import { first, forEach } from './runnable.mjs';
 

@@ -1,4 +1,3 @@
-import { dispatchTo } from "../dispatcher";
 import { bindDisposables } from "../disposable";
 import { Function1, compose, pipe } from "../functions";
 import {
@@ -8,12 +7,14 @@ import {
   __memo,
   __observe,
   __using,
+  dispatchTo,
   empty as emptyObs,
   map,
   onNotify,
   subscribe,
   using,
 } from "../observable";
+
 import { isNone } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { StreamableLike } from "../streamable";

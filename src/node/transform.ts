@@ -9,7 +9,6 @@ import {
   createGzip,
   createInflate,
 } from "zlib";
-import { dispatchTo } from "../dispatcher";
 import {
   DisposableValueLike,
   addDisposableDisposeParentOnChildError,
@@ -18,7 +17,8 @@ import {
 } from "../disposable";
 import { Factory, defer, identity, ignore, pipe, returns } from "../functions";
 import { IOSourceOperator } from "../io";
-import { onNotify, subscribe, using } from "../observable";
+import { dispatchTo, onNotify, subscribe, using } from "../observable";
+
 import { createStreamable, sink, stream } from "../streamable";
 import { createReadableIOSource } from "./createReadableIOSource";
 import { createWritableIOSink } from "./createWritableIOSink";

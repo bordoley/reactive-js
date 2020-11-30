@@ -1,7 +1,7 @@
 import { pipe, compose } from './functions.mjs';
+import { onNotify, subscribe, using, subscribeOn, fromDisposable, takeUntil, fromArray as fromArray$1 } from './observable.mjs';
 import { bindDisposables } from './disposable.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
-import { onNotify, subscribe, using, subscribeOn, fromDisposable, takeUntil, fromArray as fromArray$1 } from './observable.mjs';
 import { createStreamable } from './streamable.mjs';
 
 const fromObservable = ({ scheduler, } = {}) => observable => {

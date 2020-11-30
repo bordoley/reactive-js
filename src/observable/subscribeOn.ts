@@ -1,7 +1,7 @@
-import { dispatchTo } from "../dispatcher";
 import { bindDisposables } from "../disposable";
 import { pipe } from "../functions";
-import { ObservableOperator } from "../observable";
+import { ObservableOperator, dispatchTo } from "../observable";
+
 import { SchedulerLike } from "../scheduler";
 import { createObservable } from "./createObservable";
 import { onNotify } from "./onNotify";

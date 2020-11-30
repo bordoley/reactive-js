@@ -1,7 +1,7 @@
-import { DispatcherLike } from "../dispatcher";
 import { AbstractDisposable, addDisposable } from "../disposable";
 import { pipe } from "../functions";
 import {
+  DispatcherLike,
   MulticastObservableLike,
   ObservableOperator,
   ObserverLike,
@@ -10,6 +10,7 @@ import {
   observe,
   publish,
 } from "../observable";
+
 import { SchedulerLike } from "../scheduler";
 import { StreamableLike } from "../streamable";
 

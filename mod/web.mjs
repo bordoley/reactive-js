@@ -1,7 +1,7 @@
 import { none } from './option.mjs';
 import { pipe, compose, returns } from './functions.mjs';
-import { dispose, addTeardown } from './disposable.mjs';
 import { createObservable, throttle, onNotify, mergeWith, compute, concatWith, defer, fromPromise, observe } from './observable.mjs';
+import { dispose, addTeardown } from './disposable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { createStreamable, mapReq, map } from './streamable.mjs';
 import { toStateStore } from './stateStore.mjs';
