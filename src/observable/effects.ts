@@ -1,13 +1,13 @@
 import {
   DisposableLike,
   Error,
+  addDisposable,
   addDisposableDisposeParentOnChildError,
+  addTeardown,
   dispose,
   disposed,
-  addTeardown,
-  addDisposable,
 } from "../disposable";
-import { __DEV__ } from "../env";
+import { __DEV__, warn } from "../env";
 import {
   Factory,
   Function1,
@@ -24,9 +24,9 @@ import {
   SideEffect5,
   SideEffect6,
   arrayEquality,
+  ignore,
   pipe,
   raise,
-  ignore,
 } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { Option, isNone, isSome, none } from "../option";
@@ -97,15 +97,13 @@ function validateAsyncEffect(
   const { effects, index } = ctx;
   ctx.index++;
 
-  if (index >= effects.length) {
-    return none;
-  } else {
-    const effect = effects[index];
+  const effect = effects[index];
 
-    return effect.type !== type
-      ? raise("Async effect called out of order")
-      : effect;
-  }
+  return isNone(effect)
+    ? none
+    : effect.type !== type
+    ? raise("async effect called out of order")
+    : effect;
 }
 
 abstract class BaseContext {
@@ -161,15 +159,15 @@ class AsyncContext<T> extends BaseContext {
       const { subscription } = effect;
       const { error } = subscription;
 
-      if (__DEV__ && observable !== effect.observable) {
-        return raise("async effect called with different observable");
-      } else if (isSome(error)) {
-        throw error.cause;
-      } else if (effect.hasValue) {
-        return effect.value as T;
-      } else {
-        return raise("observable completed without producing a value.");
+      if (observable !== effect.observable) {
+        warn("async await effect invoked with different observable.");
       }
+
+      return isSome(error)
+        ? raise(error.cause)
+        : effect.hasValue
+        ? (effect.value as T)
+        : raise("observable completed without producing a value.");
     }
   }
 
@@ -180,12 +178,10 @@ class AsyncContext<T> extends BaseContext {
       const value = f(...args);
       this.effects.push({ type: EffectType.Memo, f, args, value });
       return value;
-    } else if (
-      __DEV__ &&
-      (f !== effect.f || !arrayStrictEquality(args, effect.args))
-    ) {
-      return raise("memo arguments changed in async computation");
     } else {
+      if (f !== effect.f || !arrayStrictEquality(args, effect.args)) {
+        warn("async memo effect invoked with different function or arguments.");
+      }
       return effect.value as T;
     }
   }
@@ -204,12 +200,13 @@ class AsyncContext<T> extends BaseContext {
         value,
       });
       return value;
-    } else if (
-      __DEV__ &&
-      (f !== effect.f || !arrayStrictEquality(args, effect.args))
-    ) {
-      return raise("using arguments changed in async computation");
     } else {
+      if (f !== effect.f || !arrayStrictEquality(args, effect.args)) {
+        warn(
+          "async using effect invoked with different function or arguments.",
+        );
+      }
+
       return effect.value as T;
     }
   }
@@ -273,53 +270,39 @@ function validateObservableEffect(
   const { effects, index } = ctx;
   ctx.index++;
 
-  if (index >= effects.length) {
-    const effect: ObservableEffect =
+  const effect = effects[index];
+
+  if (isNone(effect)) {
+    const newEffect: ObservableEffect =
       type === EffectType.Memo
         ? {
-            type: EffectType.Memo,
+            type,
             f: ignore,
             args: [],
             value: none,
           }
         : type === EffectType.Observe
         ? {
-            type: EffectType.Observe,
+            type,
             observable: empty(),
             subscription: disposed,
             value: none,
           }
         : type === EffectType.Using
         ? {
-            type: EffectType.Using,
+            type,
             f: ignore,
             args: [],
             value: disposed,
           }
         : raise("invalid effect type");
 
-    effects.push(effect);
-    return effect;
+    effects.push(newEffect);
+    return newEffect;
   } else {
-    const effect = effects[index];
-    if (effect.type !== type) {
-      // if effects are out of order dispose any subsequent effects
-      // and continue on.
-      for (let i = index; i < effects.length; i++) {
-        const effect = effects[i];
-        const subscription =
-          effect.type === EffectType.Observe
-            ? effect.subscription
-            : effect.type === EffectType.Using
-            ? effect.value
-            : disposed;
-        subscription.dispose();
-      }
-      effects.length = index;
-      return validateObservableEffect(ctx, type as any);
-    } else {
-      return effect;
-    }
+    return effect.type !== type
+      ? raise("observable effect called out of order")
+      : effect;
   }
 }
 
@@ -443,7 +426,9 @@ export const observable = <T>(computation: Factory<T>): ObservableLike<T> =>
   });
 
 const assertCurrentContext = (): BaseContext =>
-  isNone(currentCtx) ? raise() : currentCtx;
+  isNone(currentCtx)
+    ? raise("effect must be called within a computational expression")
+    : currentCtx;
 
 export function __memo<T>(fn: Factory<T>): T;
 export function __memo<TA, T>(fn: Function1<TA, T>, a: TA): T;
@@ -487,7 +472,7 @@ export const __observe = <T>(observable: ObservableLike<T>): Option<T> => {
   const ctx = assertCurrentContext();
   return ctx instanceof ObservableContext
     ? ctx.observe(observable)
-    : raise("observe can only be called in observable computations");
+    : raise("__observe may only be called within an observable computation");
 };
 
 export function __await<T>(fn: Factory<ObservableLike<T>>): T;
@@ -535,7 +520,7 @@ export function __await<T>(
 
   return ctx instanceof AsyncContext
     ? ctx.await(ctx.memo(f, ...args))
-    : raise("await can only be called in async computations");
+    : raise("__await may only be called within an async computation");
 }
 
 const deferSideEffect = (f: (...args: any[]) => void, ...args: any[]) =>
@@ -640,5 +625,7 @@ export function __currentScheduler(): SchedulerLike {
   const ctx = assertCurrentContext();
   return ctx instanceof ObservableContext
     ? ctx.scheduler
-    : raise("currentScheduler only supported in observable computations");
+    : raise(
+        "__currentScheduler may only be called within an observable computation",
+      );
 }

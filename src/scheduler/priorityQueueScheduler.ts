@@ -14,7 +14,7 @@ import {
   SchedulerContinuationLike,
   SchedulerLike,
 } from "../scheduler";
-import { run, schedule, __yield } from "./schedulerContinuation";
+import { __yield, run, schedule } from "./schedulerContinuation";
 
 type ScheduledTask = {
   readonly continuation: SchedulerContinuationLike;

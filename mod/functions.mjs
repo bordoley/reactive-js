@@ -1,3 +1,5 @@
+import { isNone } from './option.mjs';
+
 /**
  * A function operator that invokes a function with a given list of arguments.
  *
@@ -73,7 +75,12 @@ const negate = (v) => !v;
  * Throws a javascript error using the provided message.
  */
 const raise = (message) => {
-    throw new Error(message);
+    if (isNone(message) || typeof message === "string") {
+        throw new Error(message);
+    }
+    else {
+        throw message;
+    }
 };
 /**
  * A function that returns the result of summing

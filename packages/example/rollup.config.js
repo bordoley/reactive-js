@@ -2,6 +2,7 @@ import typescript from "@rollup/plugin-typescript";
 import replace from "@rollup/plugin-replace";
 import resolve from "@rollup/plugin-node-resolve";
 import svelte from "rollup-plugin-svelte";
+import { terser } from "rollup-plugin-terser";
 
 const typescriptConfig = {
   tsconfig: "tsconfig.json",
@@ -21,6 +22,7 @@ export default [
       replace({
         "process.env.NODE_ENV": JSON.stringify("production"),
       }),
+      terser(),
     ],
   },
   {
@@ -43,6 +45,7 @@ export default [
       replace({
         "process.env.NODE_ENV": JSON.stringify("production"),
       }),
+      terser(),
     ],
   },
   {
@@ -64,6 +67,7 @@ export default [
       replace({
         "process.env.NODE_ENV": JSON.stringify("production"),
       }),
+      terser(),
     ],
   },
 ];

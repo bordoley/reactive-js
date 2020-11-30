@@ -1,5 +1,5 @@
-import { pipe } from './functions.mjs';
 import { isSome, isNone, none } from './option.mjs';
+import { pipe } from './functions.mjs';
 import { dispose, disposed, addTeardown, AbstractDisposable } from './disposable.mjs';
 import { fromIterable, toRunnable } from './enumerable.mjs';
 import { first, forEach } from './runnable.mjs';

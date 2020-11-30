@@ -1,5 +1,5 @@
-import { pipe, returns, compose, strictEquality, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
 import { none, isNone } from './option.mjs';
+import { pipe, returns, compose, strictEquality, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
 
 const sinkDone = Symbol("@reactive-js/core/lib/runnable/sinkDone");
 class AbstractSink {

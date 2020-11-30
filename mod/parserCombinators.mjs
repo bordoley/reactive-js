@@ -1,5 +1,5 @@
-import { compose, returns, pipe, isEqualTo } from './functions.mjs';
 import { none, orCompute as orCompute$1 } from './option.mjs';
+import { compose, returns, pipe, isEqualTo } from './functions.mjs';
 import { __DEV__ } from './env.mjs';
 
 class CharStreamImpl {

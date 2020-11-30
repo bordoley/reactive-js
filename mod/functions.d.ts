@@ -173,7 +173,7 @@ declare const negate: (v: boolean) => boolean;
 /**
  * Throws a javascript error using the provided message.
  */
-declare const raise: <T>(message?: string | undefined) => T;
+declare const raise: <T>(message?: unknown) => T;
 /**
  * A function that returns the result of summing
  * it's arguments.

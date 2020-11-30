@@ -1,5 +1,5 @@
-import { pipe, strictEquality, compose, alwaysTrue } from './functions.mjs';
 import { isNone } from './option.mjs';
+import { pipe, strictEquality, compose, alwaysTrue } from './functions.mjs';
 import { createRunnable } from './runnable.mjs';
 
 const isDone = (result) => result.type === 2 /* Done */;
