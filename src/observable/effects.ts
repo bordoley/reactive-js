@@ -383,7 +383,7 @@ export const enum ObservableEffectMode {
 
 export const observable = <T>(
   computation: Factory<T>,
-  { mode = ObservableEffectMode.Batched }: { mode?: number } = {},
+  { mode = ObservableEffectMode.Batched }: { mode?: ObservableEffectMode } = {},
 ): ObservableLike<T> =>
   defer((observer: ObserverLike<T>) => {
     let scheduledComputationSubscription = disposed;
