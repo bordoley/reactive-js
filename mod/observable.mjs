@@ -410,6 +410,7 @@ class ObservableContext extends BaseContext {
             effect.observable = observable;
             effect.subscription = subscription;
             effect.value = none;
+            effect.hasValue = false;
             return none;
         }
     }
