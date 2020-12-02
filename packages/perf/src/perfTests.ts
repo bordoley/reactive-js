@@ -63,7 +63,7 @@ export const map = (n: number) =>
               const v = __observe(arrObs) ?? 0;
               return increment(v);
             },
-            { mode: ObservableEffectMode.Latest },
+            { mode: ObservableEffectMode.CombineLatest },
           ),
           toRunnable(),
           toArray(),
@@ -298,6 +298,44 @@ export const scanReduce = (n: number) =>
     createScanReducePerfTest("observable", "@reactive-js/core/observable"),
     createScanReducePerfTest("runnable", "@reactive-js/core/runnable"),
     createScanReducePerfTest("sequence", "@reactive-js/core/sequence"),
+    benchmarkTest(
+      "observable__observe",
+      async src => {
+        const {
+          ObservableEffectMode,
+          fromArray,
+          toRunnable,
+          __memo,
+          __observe,
+          observable,
+        } = await import("@reactive-js/core/observable");
+        const { reduce } = await import("@reactive-js/core/runnable");
+
+        const arrObs = fromArray<number>()(src);
+        const createRef = (current: number) => ({ current });
+
+        return defer(
+          observable(
+            () => {
+              const ref = __memo(createRef, 0);
+              const v = __observe(arrObs) ?? 0;
+              const result = sum(ref.current, v);
+
+              // mutating variables in effects like this isn't really safe
+              // it only works because the mode is combine latest, running with a
+              // hot source that never yields to the scheduler, and the scheduler
+              // never requests the source to yield.
+              ref.current = result;
+              return result;
+            },
+            { mode: ObservableEffectMode.CombineLatest },
+          ),
+          toRunnable(),
+          reduce<number, number>(passthrough, returns(0)),
+        );
+      },
+      callWith(),
+    ),
     benchmarkTest(
       "rx-js",
       async src => {

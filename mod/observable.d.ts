@@ -11,7 +11,7 @@ declare const dispatchTo: <T>(dispatcher: DispatcherLike<T>) => SideEffect1<T>;
 declare const async: <T>(computation: Factory<T>) => ObservableLike<T>;
 declare const enum ObservableEffectMode {
     Batched = 0,
-    Latest = 1
+    CombineLatest = 1
 }
 declare const observable: <T>(computation: Factory<T>, { mode }?: {
     mode?: ObservableEffectMode | undefined;

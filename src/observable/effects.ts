@@ -65,6 +65,7 @@ type ObserveEffect = {
   observable: ObservableLike<unknown>;
   subscription: DisposableLike;
   value: Option<unknown>;
+  hasValue: boolean;
 };
 
 type UsingEffect = {
@@ -284,6 +285,7 @@ function validateObservableEffect(
             observable: empty(),
             subscription: disposed,
             value: none,
+            hasValue: false,
           }
         : type === EffectType.Using
         ? {
@@ -340,6 +342,7 @@ class ObservableContext extends BaseContext {
         observable,
         onNotify(next => {
           effect.value = next;
+          effect.hasValue = true;
           this.scheduleComputation();
         }),
         subscribe(this.scheduler),
@@ -378,7 +381,7 @@ class ObservableContext extends BaseContext {
 
 export const enum ObservableEffectMode {
   Batched = 0,
-  Latest = 1,
+  CombineLatest = 1,
 }
 
 export const observable = <T>(
@@ -389,16 +392,9 @@ export const observable = <T>(
     let scheduledComputationSubscription = disposed;
 
     const scheduleComputation = () => {
-      switch (mode) {
-        case ObservableEffectMode.Batched:
-          scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
-            ? pipe(observer, schedule(runComputation))
-            : scheduledComputationSubscription;
-          break;
-        case ObservableEffectMode.Latest:
-          runComputation();
-          break;
-      }
+      scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
+        ? pipe(observer, schedule(runComputation))
+        : scheduledComputationSubscription;
     };
 
     const runComputation = () => {
@@ -414,24 +410,57 @@ export const observable = <T>(
       currentCtx = none;
       ctx.index = 0;
 
-      if (isSome(error)) {
-        observer.dispose(error);
-      } else {
-        const hasOutstandingEffects =
-          ctx.effects.findIndex(
-            effect =>
-              effect.type === EffectType.Observe &&
-              !effect.subscription.isDisposed,
-          ) >= 0;
+      const { effects } = ctx;
+      const effectsLength = effects.length;
+      
+      // Inline this for perf
+      let allObserveEffectsHaveValues = true;
+      let hasOutstandingEffects = false;
+      for (let i = 0; i < effectsLength; i++) {
+        const effect = effects[i];
+        const { type } = effect;
 
-        observer.notify(result as T);
-        if (!hasOutstandingEffects) {
-          observer.dispose(error);
+        if (type === EffectType.Observe && !(effect as ObserveEffect).hasValue) {
+          allObserveEffectsHaveValues = false;
         }
+
+        if (type === EffectType.Observe && !(effect as ObserveEffect).subscription.isDisposed) {
+          hasOutstandingEffects = true;
+        }
+
+        if (!allObserveEffectsHaveValues && hasOutstandingEffects) {
+          break;
+        }
+      }
+
+      const combineLatestModeShouldNotify =
+        mode === ObservableEffectMode.CombineLatest &&
+        allObserveEffectsHaveValues &&
+        hasOutstandingEffects;
+
+      const hasError = isSome(error);
+
+      const shouldNotify =
+        !hasError &&
+        (combineLatestModeShouldNotify || mode === ObservableEffectMode.Batched);
+
+      const shouldDispose = !hasOutstandingEffects || hasError;
+
+      if (shouldNotify) {
+        observer.notify(result as T);
+      }
+
+      if (shouldDispose) {
+        observer.dispose(error);
       }
     };
 
-    const ctx = new ObservableContext(observer, scheduleComputation);
+    const ctx = new ObservableContext(
+      observer,
+      mode === ObservableEffectMode.CombineLatest
+        ? runComputation
+        : scheduleComputation,
+    );
 
     return runComputation;
   });
@@ -579,8 +608,10 @@ export function __do(f: (...args: any[]) => void, ...args: any[]): void {
   if (ctx instanceof AsyncContext) {
     ctx.memo(f, ...args);
   } else if (ctx instanceof ObservableContext) {
+    const scheduler = __currentScheduler();
     const observable = ctx.memo(deferSideEffect, f, ...args);
-    ctx.observe(observable);
+    const subscribeOnScheduler = ctx.memo(subscribe, scheduler);
+    ctx.using(subscribeOnScheduler, observable);
   }
 }
 
