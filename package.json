@@ -19,6 +19,7 @@
     "test-coverage": "jest --coverage",
     "test-debug": "node --inspect-brk ./node_modules/.bin/jest",
     "test-deno": "deno test -r ./scripts/testRunner.deno.ts",
+    "test-prod": "NODE_ENV=production node ./node_modules/.bin/jest",
     "typecheck": "tsc -p tsconfig.compile.json"
   },
   "devDependencies": {
