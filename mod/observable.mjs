@@ -583,8 +583,7 @@ function __await(f, ...args) {
             : raise("__await may only be called within an async computation");
 }
 function __concurrent(...observables) {
-    const observable = __memo(latest, observables, 1 /* Combine */);
-    return __await(observable);
+    return __await(latest, observables, 1 /* Combine */);
 }
 const deferSideEffect = (f, ...args) => defer(observer => () => {
     f(...args);
