@@ -1,4 +1,4 @@
-import { none } from './option.mjs';
+import { none, isSome } from './option.mjs';
 import { pipe, returns, defer, increment, raise, sum, alwaysTrue, incrementBy, arrayEquality, ignore, identity, alwaysFalse } from './functions.mjs';
 import { toRunnable, fromValue, onNotify, subscribe, generate as generate$2, dispatchTo, concat as concat$1, concatMap as concatMap$1, distinctUntilChanged as distinctUntilChanged$1, empty as empty$3, endWith as endWith$1, fromArray as fromArray$3, keep as keep$1, map as map$3, mapTo as mapTo$1, repeat as repeat$1, scan as scan$1, skipFirst as skipFirst$1, startWith as startWith$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, async, __await, buffer, throws, catchError, concatWith, combineLatestWith, createObservable, createSubject, exhaustMap, fromPromise, toPromise, genMap, ignoreElements, merge, mergeWith, mergeMap, never, observable, __memo, __observe, onSubscribe, retry, scanAsync, share, zip, switchAll, switchMap, throttle, throwIfEmpty, compute, timeout, withLatestFrom, fromIterable as fromIterable$2, zipWith as zipWith$1, zipLatestWith, zipWithLatestFrom } from './observable.mjs';
 import { addTeardown, createDisposable, addDisposable, dispose, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
@@ -779,6 +779,14 @@ const tests$6 = describe("observable", test("async", () => {
         return result1 + result2 + result3;
     });
     pipe(computedObservable, takeLast$1(), toRunnable(), last, expectEquals(22));
+    const oneTwoThreeDelayed = fromArray$3({ delay: 1 })([1, 2, 3]);
+    const createOneTwoThree = (x) => isSome(x) ? fromArray$3()([1, 2, 3]) : empty$3();
+    pipe(observable(() => {
+        debugger;
+        const v = __observe(oneTwoThreeDelayed);
+        const next = __memo(createOneTwoThree, v);
+        return __observe(next);
+    }, { mode: 1 /* CombineLatest */ }), toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
 }), describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
     const scheduler = createVirtualTimeScheduler();
     const disp = mockFn();

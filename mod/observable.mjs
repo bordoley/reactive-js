@@ -377,6 +377,15 @@ class ObservableContext extends BaseContext {
         this.scheduleComputation = scheduleComputation;
         this.index = 0;
         this.effects = [];
+        this.scheduledComputationSubscription = disposed;
+        this.cleanup = () => {
+            const { effects } = this;
+            const hasOutstandingEffects = effects.findIndex(effect => effect.type === 2 /* Observe */ && !effect.subscription.isDisposed) >= 0;
+            if (!hasOutstandingEffects &&
+                this.scheduledComputationSubscription.isDisposed) {
+                this.scheduler.dispose();
+            }
+        };
     }
     memo(f, ...args) {
         const effect = validateObservableEffect(this, 1 /* Memo */);
@@ -403,9 +412,7 @@ class ObservableContext extends BaseContext {
                 effect.hasValue = true;
                 this.scheduleComputation();
             }), subscribe(this.scheduler));
-            addTeardown(subscription, () => {
-                this.scheduleComputation();
-            });
+            addOnDisposedWithoutErrorTeardown(subscription, this.cleanup);
             addDisposableDisposeParentOnChildError(this.scheduler, subscription);
             effect.observable = observable;
             effect.subscription = subscription;
@@ -431,9 +438,9 @@ class ObservableContext extends BaseContext {
     }
 }
 const observable = (computation, { mode = 0 /* Batched */ } = {}) => defer((observer) => {
-    let scheduledComputationSubscription = disposed;
     const scheduleComputation = () => {
-        scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
+        const { scheduledComputationSubscription } = ctx;
+        ctx.scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
             ? pipe(observer, schedule(runComputation))
             : scheduledComputationSubscription;
     };
@@ -457,10 +464,12 @@ const observable = (computation, { mode = 0 /* Batched */ } = {}) => defer((obse
         for (let i = 0; i < effectsLength; i++) {
             const effect = effects[i];
             const { type } = effect;
-            if (type === 2 /* Observe */ && !effect.hasValue) {
+            if (type === 2 /* Observe */ &&
+                !effect.hasValue) {
                 allObserveEffectsHaveValues = false;
             }
-            if (type === 2 /* Observe */ && !effect.subscription.isDisposed) {
+            if (type === 2 /* Observe */ &&
+                !effect.subscription.isDisposed) {
                 hasOutstandingEffects = true;
             }
             if (!allObserveEffectsHaveValues && hasOutstandingEffects) {
@@ -472,7 +481,8 @@ const observable = (computation, { mode = 0 /* Batched */ } = {}) => defer((obse
             hasOutstandingEffects;
         const hasError = isSome(error);
         const shouldNotify = !hasError &&
-            (combineLatestModeShouldNotify || mode === 0 /* Batched */);
+            (combineLatestModeShouldNotify ||
+                mode === 0 /* Batched */);
         const shouldDispose = !hasOutstandingEffects || hasError;
         if (shouldNotify) {
             observer.notify(result);
