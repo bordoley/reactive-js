@@ -656,8 +656,7 @@ export function __concurrent<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
 export function __concurrent(
   ...observables: readonly ObservableLike<unknown>[]
 ): readonly unknown[] {
-  const observable = __memo(latest, observables, LatestMode.Combine);
-  return __await(observable);
+  return __await(latest, observables, LatestMode.Combine);
 }
 
 const deferSideEffect = (f: (...args: any[]) => void, ...args: any[]) =>
