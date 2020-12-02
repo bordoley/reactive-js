@@ -33,6 +33,7 @@ import { ObservableLike, ObserverLike } from "../observable";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerLike, schedule } from "../scheduler";
 import { empty } from "./empty";
+import { latest, LatestMode } from "./latest";
 import { defer } from "./observable";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
@@ -101,30 +102,33 @@ function validateAsyncEffect(
 
   const effect = effects[index];
 
-  return isNone(effect)
-    ? none
-    : effect.type !== type
-    ? raise("async effect called out of order")
-    : effect;
+  if (isSome(effect) && effect.type === type) {
+    return effect;
+  } else if (isNone(effect)) {
+    return none;
+  } else {
+    return raise("async effect called out of order");
+  }
 }
 
-abstract class BaseContext {
-  abstract memo<T>(f: (...args: any[]) => T, ...args: any[]): T;
-  abstract using<T extends DisposableLike>(
-    f: (...args: any[]) => T,
-    ...args: any[]
-  ): T;
-}
-
-class AsyncContext extends BaseContext {
+class AsyncContext {
   index = 0;
   readonly effects: AsyncEffect[] = [];
 
+  private readonly runComputation: SideEffect;
+  private scheduledComputationSubscription = disposed;
+
   constructor(
-    private readonly observer: SchedulerLike & DisposableLike,
-    private readonly runComputation: SideEffect,
+    private readonly scheduler: SchedulerLike & DisposableLike,
+    runComputation: SideEffect,
   ) {
-    super();
+    this.runComputation = () => {
+      const { scheduledComputationSubscription } = this;
+
+      this.scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
+        ? pipe(this.scheduler, schedule(runComputation))
+        : scheduledComputationSubscription;
+    };
   }
 
   await<T>(observable: ObservableLike<T>): T {
@@ -137,14 +141,11 @@ class AsyncContext extends BaseContext {
           effect.value = next;
           effect.hasValue = true;
         }),
-        subscribe(this.observer),
+        subscribe(this.scheduler),
       );
 
-      addTeardown(subscription, () => {
-        pipe(this.observer, schedule(this.runComputation));
-      });
-
-      addDisposable(this.observer, subscription);
+      addTeardown(subscription, this.runComputation);
+      addDisposable(this.scheduler, subscription);
 
       const effect: AwaitEffect = {
         type: EffectType.Await,
@@ -165,11 +166,13 @@ class AsyncContext extends BaseContext {
         warn("async await effect invoked with different observable.");
       }
 
-      return isSome(error)
-        ? raise(error.cause)
-        : effect.hasValue
-        ? (effect.value as T)
-        : raise("observable completed without producing a value.");
+      if (isNone(error) && effect.hasValue) {
+        return effect.value as T;
+      } else if (isSome(error)) {
+        return raise(error.cause);
+      } else {
+        return raise("observable completed without producing a value.");
+      }
     }
   }
 
@@ -193,7 +196,7 @@ class AsyncContext extends BaseContext {
 
     if (isNone(effect)) {
       const value = f(...args);
-      addDisposableDisposeParentOnChildError(this.observer, value);
+      addDisposableDisposeParentOnChildError(this.scheduler, value);
 
       this.effects.push({
         type: EffectType.Using,
@@ -300,25 +303,24 @@ function validateObservableEffect(
     effects.push(newEffect);
     return newEffect;
   } else {
-    return effect.type !== type
-      ? raise("observable effect called out of order")
-      : effect;
+    return effect.type === type
+      ? effect
+      : raise("observable effect called out of order");
   }
 }
 
-class ObservableContext extends BaseContext {
+class ObservableContext {
   index = 0;
   readonly effects: ObservableEffect[] = [];
-  scheduledComputationSubscription = disposed;
+  private scheduledComputationSubscription = disposed;
 
   constructor(
     readonly scheduler: SchedulerLike & DisposableLike,
-    private readonly scheduleComputation: () => void,
-  ) {
-    super();
-  }
+    private readonly runComputation: () => void,
+    private readonly mode: ObservableEffectMode,
+  ) {}
 
-  cleanup = () => {
+  private readonly cleanup = () => {
     const { effects } = this;
 
     const hasOutstandingEffects =
@@ -362,7 +364,16 @@ class ObservableContext extends BaseContext {
         onNotify(next => {
           effect.value = next;
           effect.hasValue = true;
-          this.scheduleComputation();
+
+          if (this.mode === ObservableEffectMode.CombineLatest) {
+            this.runComputation();
+          } else {
+            const { scheduledComputationSubscription } = this;
+
+            this.scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
+              ? pipe(this.scheduler, schedule(this.runComputation))
+              : scheduledComputationSubscription;
+          }
         }),
         subscribe(this.scheduler),
       );
@@ -409,14 +420,6 @@ export const observable = <T>(
   { mode = ObservableEffectMode.Batched }: { mode?: ObservableEffectMode } = {},
 ): ObservableLike<T> =>
   defer((observer: ObserverLike<T>) => {
-    const scheduleComputation = () => {
-      const { scheduledComputationSubscription } = ctx;
-
-      ctx.scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
-        ? pipe(observer, schedule(runComputation))
-        : scheduledComputationSubscription;
-    };
-
     const runComputation = () => {
       let result: Option<T> = none;
       let error: Option<Error> = none;
@@ -482,17 +485,12 @@ export const observable = <T>(
       }
     };
 
-    const ctx = new ObservableContext(
-      observer,
-      mode === ObservableEffectMode.CombineLatest
-        ? runComputation
-        : scheduleComputation,
-    );
+    const ctx = new ObservableContext(observer, runComputation, mode);
 
     return runComputation;
   });
 
-const assertCurrentContext = (): BaseContext =>
+const assertCurrentContext = (): AsyncContext | ObservableContext =>
   isNone(currentCtx)
     ? raise("effect must be called within a computational expression")
     : currentCtx;
@@ -539,7 +537,9 @@ export const __observe = <T>(observable: ObservableLike<T>): Option<T> => {
   const ctx = assertCurrentContext();
   return ctx instanceof ObservableContext
     ? ctx.observe(observable)
-    : raise("__observe may only be called within an observable computation");
+    : raise(
+        "__observe may only be called within an observable or concurrent computation",
+      );
 };
 
 export function __await<T>(fn: Factory<ObservableLike<T>>): T;
@@ -579,15 +579,85 @@ export function __await<TA, TB, TC, TD, TE, TF, T>(
   e: TE,
   f: TF,
 ): T;
+export function __await<T>(observable: ObservableLike<T>): T;
 export function __await<T>(
-  f: (...args: any[]) => ObservableLike<T>,
+  f: ((...args: any[]) => ObservableLike<T>) | ObservableLike<T>,
   ...args: any[]
 ): T {
   const ctx = assertCurrentContext();
 
-  return ctx instanceof AsyncContext
+  return typeof f === "function" && ctx instanceof AsyncContext
     ? ctx.await(ctx.memo(f, ...args))
+    : typeof f !== "function" && ctx instanceof AsyncContext
+    ? ctx.await(f)
     : raise("__await may only be called within an async computation");
+}
+
+export function __concurrent<TA, TB>(
+  a: ObservableLike<TA>,
+  b: ObservableLike<TB>,
+): [TA, TB];
+export function __concurrent<TA, TB, TC, T>(
+  a: ObservableLike<TA>,
+  b: ObservableLike<TB>,
+  c: ObservableLike<TC>,
+): [TA, TB, TC];
+export function __concurrent<TA, TB, TC, TD>(
+  a: ObservableLike<TA>,
+  b: ObservableLike<TB>,
+  c: ObservableLike<TC>,
+  d: ObservableLike<TD>,
+): [TA, TB, TC, TD];
+export function __concurrent<TA, TB, TC, TD, TE>(
+  a: ObservableLike<TA>,
+  b: ObservableLike<TB>,
+  c: ObservableLike<TC>,
+  d: ObservableLike<TD>,
+  e: ObservableLike<TE>,
+): [TA, TB, TC, TD, TE];
+export function __concurrent<TA, TB, TC, TD, TE, TF>(
+  a: ObservableLike<TA>,
+  b: ObservableLike<TB>,
+  c: ObservableLike<TC>,
+  d: ObservableLike<TD>,
+  e: ObservableLike<TE>,
+  f: ObservableLike<TF>,
+): [TA, TB, TC, TD, TE, TF];
+export function __concurrent<TA, TB, TC, TD, TE, TF, TG>(
+  a: ObservableLike<TA>,
+  b: ObservableLike<TB>,
+  c: ObservableLike<TC>,
+  d: ObservableLike<TD>,
+  e: ObservableLike<TE>,
+  f: ObservableLike<TF>,
+  g: ObservableLike<TG>,
+): [TA, TB, TC, TD, TE, TF, TG];
+export function __concurrent<TA, TB, TC, TD, TE, TF, TG, TH>(
+  a: ObservableLike<TA>,
+  b: ObservableLike<TB>,
+  c: ObservableLike<TC>,
+  d: ObservableLike<TD>,
+  e: ObservableLike<TE>,
+  f: ObservableLike<TF>,
+  g: ObservableLike<TG>,
+  h: ObservableLike<TH>,
+): [TA, TB, TC, TD, TE, TF, TG, TH];
+export function __concurrent<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+  a: ObservableLike<TA>,
+  b: ObservableLike<TB>,
+  c: ObservableLike<TC>,
+  d: ObservableLike<TD>,
+  e: ObservableLike<TE>,
+  f: ObservableLike<TF>,
+  g: ObservableLike<TG>,
+  h: ObservableLike<TH>,
+  i: ObservableLike<TI>,
+): [TA, TB, TC, TD, TE, TF, TG, TH, TI];
+export function __concurrent(
+  ...observables: readonly ObservableLike<unknown>[]
+): readonly unknown[] {
+  const observable = __memo(latest, observables, LatestMode.Combine);
+  return __await(observable);
 }
 
 const deferSideEffect = (f: (...args: any[]) => void, ...args: any[]) =>
