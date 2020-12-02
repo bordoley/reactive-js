@@ -221,12 +221,18 @@ class PriorityScheduler
       const now = this.now;
       const dueTime = Math.max(now + delay, now);
 
-      const task = {
-        taskID: this.taskIDCounter++,
-        continuation,
-        priority,
-        dueTime,
-      };
+      const task =
+        this.inContinuation &&
+        isSome(this.current) &&
+        this.current.continuation === continuation &&
+        delay <= 0
+          ? this.current
+          : {
+              taskID: this.taskIDCounter++,
+              continuation,
+              priority,
+              dueTime,
+            };
 
       const { delayed, queue } = this;
       const targetQueue = dueTime > now ? delayed : queue;

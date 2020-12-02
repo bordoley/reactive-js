@@ -376,14 +376,29 @@ class ObservableContext extends BaseContext {
   }
 }
 
-export const observable = <T>(computation: Factory<T>): ObservableLike<T> =>
+export const enum ObservableEffectMode {
+  Batched = 0,
+  Latest = 1,
+}
+
+export const observable = <T>(
+  computation: Factory<T>,
+  { mode = ObservableEffectMode.Batched }: { mode?: number } = {},
+): ObservableLike<T> =>
   defer((observer: ObserverLike<T>) => {
     let scheduledComputationSubscription = disposed;
 
     const scheduleComputation = () => {
-      scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
-        ? pipe(observer, schedule(runComputation))
-        : scheduledComputationSubscription;
+      switch (mode) {
+        case ObservableEffectMode.Batched:
+          scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
+            ? pipe(observer, schedule(runComputation))
+            : scheduledComputationSubscription;
+          break;
+        case ObservableEffectMode.Latest:
+          runComputation();
+          break;
+      }
     };
 
     const runComputation = () => {
