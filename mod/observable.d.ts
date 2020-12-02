@@ -14,7 +14,7 @@ declare const enum ObservableEffectMode {
     Latest = 1
 }
 declare const observable: <T>(computation: Factory<T>, { mode }?: {
-    mode?: number | undefined;
+    mode?: ObservableEffectMode | undefined;
 }) => ObservableLike<T>;
 declare function __memo<T>(fn: Factory<T>): T;
 declare function __memo<TA, T>(fn: Function1<TA, T>, a: TA): T;
