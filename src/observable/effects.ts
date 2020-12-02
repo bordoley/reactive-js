@@ -6,6 +6,7 @@ import {
   addTeardown,
   dispose,
   disposed,
+  addOnDisposedWithoutErrorTeardown,
 } from "../disposable";
 import { __DEV__, warn } from "../env";
 import {
@@ -308,6 +309,7 @@ function validateObservableEffect(
 class ObservableContext extends BaseContext {
   index = 0;
   readonly effects: ObservableEffect[] = [];
+  scheduledComputationSubscription = disposed;
 
   constructor(
     readonly scheduler: SchedulerLike & DisposableLike,
@@ -315,6 +317,23 @@ class ObservableContext extends BaseContext {
   ) {
     super();
   }
+
+  cleanup = () => {
+    const { effects } = this;
+
+    const hasOutstandingEffects =
+      effects.findIndex(
+        effect =>
+          effect.type === EffectType.Observe && !effect.subscription.isDisposed,
+      ) >= 0;
+
+    if (
+      !hasOutstandingEffects &&
+      this.scheduledComputationSubscription.isDisposed
+    ) {
+      this.scheduler.dispose();
+    }
+  };
 
   memo<T>(f: (...args: any[]) => T, ...args: any[]): T {
     const effect = validateObservableEffect(this, EffectType.Memo);
@@ -347,9 +366,9 @@ class ObservableContext extends BaseContext {
         }),
         subscribe(this.scheduler),
       );
-      addTeardown(subscription, () => {
-        this.scheduleComputation();
-      });
+
+      addOnDisposedWithoutErrorTeardown(subscription, this.cleanup);
+
       addDisposableDisposeParentOnChildError(this.scheduler, subscription);
 
       effect.observable = observable;
@@ -390,10 +409,10 @@ export const observable = <T>(
   { mode = ObservableEffectMode.Batched }: { mode?: ObservableEffectMode } = {},
 ): ObservableLike<T> =>
   defer((observer: ObserverLike<T>) => {
-    let scheduledComputationSubscription = disposed;
-
     const scheduleComputation = () => {
-      scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
+      const { scheduledComputationSubscription } = ctx;
+
+      ctx.scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
         ? pipe(observer, schedule(runComputation))
         : scheduledComputationSubscription;
     };
@@ -413,7 +432,7 @@ export const observable = <T>(
 
       const { effects } = ctx;
       const effectsLength = effects.length;
-      
+
       // Inline this for perf
       let allObserveEffectsHaveValues = true;
       let hasOutstandingEffects = false;
@@ -421,11 +440,17 @@ export const observable = <T>(
         const effect = effects[i];
         const { type } = effect;
 
-        if (type === EffectType.Observe && !(effect as ObserveEffect).hasValue) {
+        if (
+          type === EffectType.Observe &&
+          !(effect as ObserveEffect).hasValue
+        ) {
           allObserveEffectsHaveValues = false;
         }
 
-        if (type === EffectType.Observe && !(effect as ObserveEffect).subscription.isDisposed) {
+        if (
+          type === EffectType.Observe &&
+          !(effect as ObserveEffect).subscription.isDisposed
+        ) {
           hasOutstandingEffects = true;
         }
 
@@ -443,7 +468,8 @@ export const observable = <T>(
 
       const shouldNotify =
         !hasError &&
-        (combineLatestModeShouldNotify || mode === ObservableEffectMode.Batched);
+        (combineLatestModeShouldNotify ||
+          mode === ObservableEffectMode.Batched);
 
       const shouldDispose = !hasOutstandingEffects || hasError;
 

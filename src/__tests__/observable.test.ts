@@ -12,6 +12,7 @@ import {
   sum,
 } from "../functions";
 import {
+  ObservableEffectMode,
   ThrottleMode,
   __await,
   __do,
@@ -96,6 +97,7 @@ import {
   testAsync,
 } from "../testing";
 import { createMonadTests } from "./monad.test";
+import { Option, isSome } from "../option";
 
 const scheduler = createHostScheduler();
 
@@ -455,6 +457,24 @@ export const tests = describe(
       return result1 + result2 + result3;
     });
     pipe(computedObservable, takeLast(), toRunnable(), last, expectEquals(22));
+
+    // switch map test
+    const oneTwoThreeDelayed = fromArray({ delay: 1 })([1, 2, 3]);
+    const createOneTwoThree = (x: Option<unknown>) =>
+      isSome(x) ? fromArray()([1, 2, 3]) : empty();
+    pipe(
+      observable(
+        () => {
+          const v = __observe(oneTwoThreeDelayed);
+          const next = __memo(createOneTwoThree, v);
+          return __observe(next);
+        },
+        { mode: ObservableEffectMode.CombineLatest },
+      ),
+      toRunnable(),
+      toArray(),
+      expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
+    );
   }),
 
   describe(
