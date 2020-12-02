@@ -9,7 +9,13 @@ import { RunnableLike } from './runnable';
 declare const dispatchTo: <T>(dispatcher: DispatcherLike<T>) => SideEffect1<T>;
 
 declare const async: <T>(computation: Factory<T>) => ObservableLike<T>;
-declare const observable: <T>(computation: Factory<T>) => ObservableLike<T>;
+declare const enum ObservableEffectMode {
+    Batched = 0,
+    Latest = 1
+}
+declare const observable: <T>(computation: Factory<T>, { mode }?: {
+    mode?: number | undefined;
+}) => ObservableLike<T>;
 declare function __memo<T>(fn: Factory<T>): T;
 declare function __memo<TA, T>(fn: Function1<TA, T>, a: TA): T;
 declare function __memo<TA, TB, T>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
@@ -669,4 +675,4 @@ interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableL
 interface SubjectLike<T> extends StreamLike<T, T> {
 }
 
-export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableLike, ObservableOperator, ObserverLike, ObserverOperator, StreamLike, SubjectLike, ThrottleMode, __await, __currentScheduler, __do, __memo, __observe, __using, async, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, dispatchTo, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observable, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };
+export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, ObserverLike, ObserverOperator, StreamLike, SubjectLike, ThrottleMode, __await, __currentScheduler, __do, __memo, __observe, __using, async, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, dispatchTo, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observable, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };

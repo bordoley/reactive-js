@@ -45,6 +45,33 @@ export const map = (n: number) =>
     createMapPerfTest("runnable", "@reactive-js/core/runnable"),
     createMapPerfTest("sequence", "@reactive-js/core/sequence"),
     benchmarkTest(
+      "observable__observe",
+      async src => {
+        const {
+          ObservableEffectMode,
+          fromArray,
+          toRunnable,
+          __observe,
+          observable,
+        } = await import("@reactive-js/core/observable");
+        const { toArray } = await import("@reactive-js/core/runnable");
+
+        const arrObs = fromArray<number>()(src);
+        return defer(
+          observable(
+            () => {
+              const v = __observe(arrObs) ?? 0;
+              return increment(v);
+            },
+            { mode: ObservableEffectMode.Latest },
+          ),
+          toRunnable(),
+          toArray(),
+        );
+      },
+      callWith(),
+    ),
+    benchmarkTest(
       "rx-js",
       async src => {
         const { from } = await import("rxjs");

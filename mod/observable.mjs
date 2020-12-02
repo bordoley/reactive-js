@@ -427,12 +427,19 @@ class ObservableContext extends BaseContext {
         }
     }
 }
-const observable = (computation) => defer((observer) => {
+const observable = (computation, { mode = 0 /* Batched */ } = {}) => defer((observer) => {
     let scheduledComputationSubscription = disposed;
     const scheduleComputation = () => {
-        scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
-            ? pipe(observer, schedule(runComputation))
-            : scheduledComputationSubscription;
+        switch (mode) {
+            case 0 /* Batched */:
+                scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
+                    ? pipe(observer, schedule(runComputation))
+                    : scheduledComputationSubscription;
+                break;
+            case 1 /* Latest */:
+                runComputation();
+                break;
+        }
     };
     const runComputation = () => {
         let result = none;
