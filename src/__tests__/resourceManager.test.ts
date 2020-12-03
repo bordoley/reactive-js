@@ -1,6 +1,6 @@
 import { createDisposableValue, dispose, disposed } from "../disposable";
 import { defer, ignore, pipe } from "../functions";
-import { fromArray, onNotify, subscribe } from "../observable";
+import { fromArray, subscribe } from "../observable";
 import { createResourceManager } from "../resourceManager";
 import { createVirtualTimeScheduler } from "../scheduler";
 import { describe, test } from "../testing";
@@ -30,24 +30,22 @@ export const tests = describe(
         () => {
           da1 = pipe(
             rm.get("a"),
-            onNotify(_ => {
+    
+            subscribe(scheduler, _ => {
               console.log("a1: " + scheduler.now);
             }),
-            subscribe(scheduler),
           );
           da2 = pipe(
             rm.get("a"),
-            onNotify(_ => {
+            subscribe(scheduler, _ => {
               console.log("a2: " + scheduler.now);
             }),
-            subscribe(scheduler),
           );
           da3 = pipe(
             rm.get("a"),
-            onNotify(_ => {
+            subscribe(scheduler, _ => {
               console.log("a3: " + scheduler.now);
             }),
-            subscribe(scheduler),
           );
         },
         () => {
@@ -55,32 +53,28 @@ export const tests = describe(
 
           db1 = pipe(
             rm.get("b"),
-            onNotify(_ => {
+            subscribe(scheduler, _ => {
               console.log("b1: " + scheduler.now);
             }),
-            subscribe(scheduler),
           );
           db2 = pipe(
             rm.get("b"),
-            onNotify(_ => {
+            subscribe(scheduler, _ => {
               console.log("b2: " + scheduler.now);
             }),
-            subscribe(scheduler),
           );
 
           dc = pipe(
             rm.get("c"),
-            onNotify(_ => {
+            subscribe(scheduler, _ => {
               console.log("c1: " + scheduler.now);
             }),
-            subscribe(scheduler),
           );
           dd = pipe(
             rm.get("d"),
-            onNotify(_ => {
+            subscribe(scheduler, _ => {
               console.log("d1: " + scheduler.now);
             }),
-            subscribe(scheduler),
           );
         },
         () => {
@@ -101,10 +95,9 @@ export const tests = describe(
           console.log(rm);
           pipe(
             rm.get("e"),
-            onNotify(_ => {
+            subscribe(scheduler, _ => {
               console.log("e1: " + scheduler.now);
             }),
-            subscribe(scheduler),
           );
 
           pipe(dc, dispose());
@@ -123,8 +116,7 @@ export const tests = describe(
         defer(rm, dispose()),
       ],
       fromArray({ delay: 1 }),
-      onNotify(lib => lib()),
-      subscribe(scheduler),
+      subscribe(scheduler, lib => lib()),
     );
 
     scheduler.run();

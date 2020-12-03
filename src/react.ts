@@ -23,7 +23,6 @@ import {
   SubjectLike,
   createSubject,
   distinctUntilChanged,
-  onNotify,
   subscribe,
 } from "./observable";
 import { Option, isSome, none } from "./option";
@@ -53,8 +52,7 @@ export const useObservable = <T>(
   useEffect(() => {
     const subscription = pipe(
       observable,
-      onNotify(compose(returns, updateState)),
-      subscribe(scheduler),
+      subscribe(scheduler, compose(returns, updateState)),
     );
 
     addTeardown(subscription, compose(returns, updateError));

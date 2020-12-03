@@ -4,7 +4,6 @@ import {
   ObservableLike,
   fromArray as fromArrayObs,
   fromDisposable,
-  onNotify,
   subscribe,
   subscribeOn,
   takeUntil,
@@ -50,8 +49,7 @@ export const fromObservable = <T>({
 
     const modeSubscription = pipe(
       modeObs,
-      onNotify(onModeChange),
-      subscribe(modeScheduler),
+      subscribe(modeScheduler, onModeChange),
     );
 
     bindDisposables(modeSubscription, pausableScheduler);

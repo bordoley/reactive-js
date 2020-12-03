@@ -17,7 +17,7 @@ import {
 } from "../disposable";
 import { Factory, defer, identity, ignore, pipe, returns } from "../functions";
 import { IOSourceOperator } from "../io";
-import { dispatchTo, onNotify, subscribe, using } from "../observable";
+import { dispatchTo, subscribe, using } from "../observable";
 
 import { createStreamable, sink, stream } from "../streamable";
 import { createReadableIOSource } from "./createReadableIOSource";
@@ -55,8 +55,7 @@ export const transform = (
 
       const modeSubscription = pipe(
         modeObs,
-        onNotify(dispatchTo(transformReadableStream)),
-        subscribe(scheduler),
+        subscribe(scheduler, dispatchTo(transformReadableStream)),
       );
 
       addDisposableDisposeParentOnChildError(

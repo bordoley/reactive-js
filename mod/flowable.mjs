@@ -1,5 +1,5 @@
 import { pipe, compose } from './functions.mjs';
-import { onNotify, subscribe, using, subscribeOn, fromDisposable, takeUntil, fromArray as fromArray$1 } from './observable.mjs';
+import { subscribe, using, subscribeOn, fromDisposable, takeUntil, fromArray as fromArray$1 } from './observable.mjs';
 import { bindDisposables } from './disposable.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
 import { createStreamable } from './streamable.mjs';
@@ -17,7 +17,7 @@ const fromObservable = ({ scheduler, } = {}) => observable => {
                     break;
             }
         };
-        const modeSubscription = pipe(modeObs, onNotify(onModeChange), subscribe(modeScheduler));
+        const modeSubscription = pipe(modeObs, subscribe(modeScheduler, onModeChange));
         bindDisposables(modeSubscription, pausableScheduler);
         return pausableScheduler;
     };

@@ -32,7 +32,6 @@ import {
   fromIterator,
   keepType,
   map as mapObs,
-  onNotify,
   reduce,
   subscribe,
   takeWhile,
@@ -196,8 +195,7 @@ class IOSinkAccumulatorImpl<T, TAcc>
             keepType(isNotify),
             mapObs(ev => ev.data),
             reduce(reducer, initialValue),
-            onNotify(dispatchTo(subject)),
-            subscribe(scheduler),
+            subscribe(scheduler, dispatchTo(subject)),
           ),
 
         eventsSubscription =>

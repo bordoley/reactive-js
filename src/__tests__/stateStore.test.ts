@@ -1,6 +1,6 @@
 import { dispose } from "../disposable";
 import { incrementBy, pipe } from "../functions";
-import { onNotify, startWith, subscribe } from "../observable";
+import { startWith, subscribe } from "../observable";
 import { createVirtualTimeScheduler } from "../scheduler";
 import { toStateStore } from "../stateStore";
 import { identity, lift, stream } from "../streamable";
@@ -33,10 +33,9 @@ export const tests = describe(
 
     const subscription = pipe(
       stateStream,
-      onNotify(x => {
+      subscribe(scheduler, x => {
         result.push(x);
       }),
-      subscribe(scheduler),
     );
 
     scheduler.run();

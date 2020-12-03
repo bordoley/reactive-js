@@ -22,7 +22,6 @@ import {
   observe,
 } from "./observer";
 
-import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
@@ -70,8 +69,7 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
     } else if (this.durationSubscription.inner.isDisposed) {
       this.durationSubscription.inner = pipe(
         this.durationFunction(next),
-        onNotify(this.onNotify),
-        subscribe(this.delegate),
+        subscribe(this.delegate, this.onNotify),
       );
     }
   }

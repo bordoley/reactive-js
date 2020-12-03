@@ -1,6 +1,6 @@
 import { isSome, isNone, none } from './option.mjs';
 import { pipe, defer } from './functions.mjs';
-import { fromValue, onNotify, subscribe, createObservable } from './observable.mjs';
+import { fromValue, subscribe, createObservable } from './observable.mjs';
 import { dispose, disposed, addTeardown, AbstractDisposable } from './disposable.mjs';
 import { fromIterable, enumerate, toRunnable, fromIterator } from './enumerable.mjs';
 import { first, forEach } from './runnable.mjs';
@@ -226,7 +226,7 @@ const tryDispatch = (resourceManager, key) => {
         inUseResources.remove(key, observer);
         availableResources.push(key, resource);
         // Setup the timeout subscription
-        const timeoutSubscription = pipe(fromValue({ delay: maxIdleTime })(none), onNotify(_ => {
+        const timeoutSubscription = pipe(fromValue({ delay: maxIdleTime })(none), subscribe(scheduler, _ => {
             const resource = availableResources.pop(key);
             if (isSome(resource)) {
                 pipe(resource, dispose());
@@ -240,7 +240,7 @@ const tryDispatch = (resourceManager, key) => {
                     tryDispatch(resourceManager, resourceKey);
                 }
             }
-        }), subscribe(scheduler));
+        }));
         addTeardown(timeoutSubscription, () => {
             availableResourcesTimeouts.delete(resource);
         }),

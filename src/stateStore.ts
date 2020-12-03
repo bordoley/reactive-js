@@ -11,7 +11,6 @@ import {
 } from "./functions";
 import {
   dispatchTo,
-  onNotify,
   subscribe,
   using,
   zipWithLatestFrom,
@@ -64,8 +63,7 @@ export const toStateStore = <T>(): StreamableOperator<
       const updatesSubscription = pipe(
         updates,
         zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),
-        onNotify(dispatchTo(stream)),
-        subscribe(scheduler),
+        subscribe(scheduler, dispatchTo(stream)),
       );
 
       bindDisposables(updatesSubscription, stream);

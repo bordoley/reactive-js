@@ -48,7 +48,6 @@ import {
   mergeWith,
   never,
   observable,
-  onNotify,
   onSubscribe,
   repeat,
   retry,
@@ -632,10 +631,9 @@ export const tests = describe(
       zip(shared, shared),
       map(([a, b]) => a + b),
       buffer(),
-      onNotify(x => {
+      subscribe(scheduler, x => {
         result = x;
       }),
-      subscribe(scheduler),
     );
 
     scheduler.run();

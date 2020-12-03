@@ -8,7 +8,6 @@ import {
 import { isNone, isSome } from "../option";
 import { lift } from "./lift";
 import { createDelegatingObserver } from "./observer";
-import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 const createRepeatObserver = <T>(
@@ -35,8 +34,7 @@ const createRepeatObserver = <T>(
       count++;
       const subscription = pipe(
         observable,
-        onNotify((next: T) => delegate.notify(next)),
-        subscribe(delegate),
+        subscribe(delegate, (next: T) => delegate.notify(next)),
       );
       addTeardown(subscription, onDispose);
       addDisposable(delegate, subscription);

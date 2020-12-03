@@ -14,7 +14,6 @@ import {
   ObservableLike,
   createObservable,
   dispatchTo,
-  onNotify,
   subscribe,
   using,
 } from "../observable";
@@ -55,7 +54,7 @@ const createReadableAndSetupModeSubscription = (
 
   const modeSubscription = pipe(
     mode,
-    onNotify(ev => {
+    subscribe(scheduler, ev => {
       switch (ev) {
         case FlowMode.Pause:
           readableValue.pause();
@@ -65,7 +64,6 @@ const createReadableAndSetupModeSubscription = (
           break;
       }
     }),
-    subscribe(scheduler),
   );
 
   addDisposableDisposeParentOnChildError(readable, modeSubscription);

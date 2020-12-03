@@ -10,7 +10,7 @@ import {
   fromValue,
   map,
 } from "../io";
-import { onNotify, subscribe } from "../observable";
+import { subscribe } from "../observable";
 import { none } from "../option";
 import { createVirtualTimeScheduler } from "../scheduler";
 import { sink, stream } from "../streamable";
@@ -41,7 +41,7 @@ export const tests = describe(
     const subscription = pipe(sink(src, dest), subscribe(scheduler));
 
     const f = mockFn();
-    pipe(dest, onNotify(f), subscribe(scheduler));
+    pipe(dest, subscribe(scheduler,f));
 
     scheduler.run();
 
@@ -57,7 +57,7 @@ export const tests = describe(
     emptyStream.dispatch(FlowMode.Resume);
 
     const f = mockFn();
-    const subscription = pipe(emptyStream, onNotify(f), subscribe(scheduler));
+    const subscription = pipe(emptyStream, subscribe(scheduler, f));
     scheduler.run();
 
     pipe(f, expectToHaveBeenCalledTimes(1));
@@ -79,7 +79,7 @@ export const tests = describe(
     const subscription = pipe(sink(src, dest), subscribe(scheduler));
 
     const f = mockFn();
-    pipe(dest, onNotify(f), subscribe(scheduler));
+    pipe(dest, subscribe(scheduler, f));
     scheduler.run();
 
     pipe(f, expectToHaveBeenCalledTimes(1));
@@ -95,8 +95,7 @@ export const tests = describe(
     const f = mockFn();
     const subscription = pipe(
       fromValueStream,
-      onNotify(f),
-      subscribe(scheduler),
+      subscribe(scheduler, f),
     );
 
     scheduler.run();
@@ -116,7 +115,7 @@ export const tests = describe(
     const subscription = pipe(sink(src, dest), subscribe(scheduler));
 
     const f = mockFn();
-    pipe(dest, onNotify(f), subscribe(scheduler));
+    pipe(dest, subscribe(scheduler, f));
     scheduler.run();
 
     pipe(f, expectToHaveBeenCalledTimes(1));
