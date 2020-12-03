@@ -10,7 +10,6 @@ import {
   dispatchTo,
   empty as emptyObs,
   map,
-  onNotify,
   subscribe,
   using,
 } from "../observable";
@@ -60,8 +59,7 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
       const requestSubscription = pipe(
         requests,
         map((compose as any)(...reqOps)),
-        onNotify(dispatchTo(srcStream)),
-        subscribe(scheduler),
+        subscribe(scheduler, dispatchTo(srcStream)),
       );
 
       bindDisposables(srcStream, requestSubscription);

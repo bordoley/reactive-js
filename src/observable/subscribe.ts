@@ -1,12 +1,21 @@
 import { DisposableLike } from "../disposable";
-import { Function1, pipe } from "../functions";
+import { Function1, ignore, pipe, SideEffect1 } from "../functions";
 import { ObservableLike } from "../observable";
 import { SchedulerLike } from "../scheduler";
 import { AbstractObserver, assertObserverState, observe } from "./observer";
 
 class DefaultObserver<T> extends AbstractObserver<T, SchedulerLike> {
-  notify(_: T) {
+  constructor(
+    scheduler: SchedulerLike,
+    private readonly onNotify: SideEffect1<T>,
+  ) {
+    super(scheduler);
+  }
+
+  notify(next: T) {
     assertObserverState(this);
+
+    this.onNotify(next);
   }
 }
 
@@ -19,10 +28,11 @@ class DefaultObserver<T> extends AbstractObserver<T, SchedulerLike> {
  */
 export const subscribe = <T>(
   scheduler: SchedulerLike,
+  onNotify: SideEffect1<T> = ignore,
 ): Function1<ObservableLike<T>, DisposableLike> => (
   observable: ObservableLike<T>,
 ): DisposableLike => {
-  const observer = new DefaultObserver(scheduler);
+  const observer = new DefaultObserver(scheduler, onNotify);
   pipe(observable, observe(observer));
   return observer;
 };

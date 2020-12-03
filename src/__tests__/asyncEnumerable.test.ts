@@ -9,7 +9,7 @@ import {
 } from "../asyncEnumerable";
 import { Error, addTeardown } from "../disposable";
 import { defer, increment, pipe, returns } from "../functions";
-import { fromValue, onNotify, subscribe, toRunnable } from "../observable";
+import { fromValue, subscribe, toRunnable } from "../observable";
 import { Option, none } from "../option";
 import { last } from "../runnable";
 import { createVirtualTimeScheduler } from "../scheduler";
@@ -88,8 +88,7 @@ export const tests = describe(
     const result: number[] = [];
     pipe(
       enumerator,
-      onNotify(x => result.push(x)),
-      subscribe(scheduler),
+      subscribe(scheduler, x => result.push(x)),
     );
 
     enumerator.dispatch(none);
@@ -112,8 +111,7 @@ export const tests = describe(
     let error: Option<Error> = none;
     const subscription = pipe(
       enumerator,
-      onNotify(x => result.push(x)),
-      subscribe(scheduler),
+      subscribe(scheduler, x => result.push(x)),
     );
 
     addTeardown(subscription, e => {
@@ -143,8 +141,7 @@ export const tests = describe(
     const result: number[] = [];
     pipe(
       enumerator,
-      onNotify(x => result.push(x)),
-      subscribe(scheduler),
+      subscribe(scheduler, x => result.push(x)),
     );
 
     enumerator.dispatch(none);

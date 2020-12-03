@@ -21,7 +21,6 @@ import {
   observe,
 } from "./observer";
 
-import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 /**
@@ -50,8 +49,7 @@ const setupDurationSubscription = <T>(
 ) => {
   observer.durationSubscription.inner = pipe(
     observer.durationFunction(next),
-    onNotify(observer.onNotify),
-    subscribe(observer),
+    subscribe(observer, observer.onNotify),
   );
 };
 

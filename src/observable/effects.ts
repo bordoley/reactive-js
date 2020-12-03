@@ -35,7 +35,6 @@ import { SchedulerLike, schedule } from "../scheduler";
 import { empty } from "./empty";
 import { latest, LatestMode } from "./latest";
 import { defer } from "./observable";
-import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 const arrayStrictEquality = arrayEquality();
@@ -137,11 +136,10 @@ class AsyncContext {
     if (isNone(effect)) {
       const subscription = pipe(
         observable,
-        onNotify(next => {
+        subscribe(this.scheduler, next => {
           effect.value = next;
           effect.hasValue = true;
         }),
-        subscribe(this.scheduler),
       );
 
       addTeardown(subscription, this.runComputation);
@@ -361,7 +359,7 @@ class ObservableContext {
 
       const subscription = pipe(
         observable,
-        onNotify(next => {
+        subscribe(this.scheduler, next => {
           effect.value = next;
           effect.hasValue = true;
 
@@ -375,7 +373,6 @@ class ObservableContext {
               : scheduledComputationSubscription;
           }
         }),
-        subscribe(this.scheduler),
       );
 
       addOnDisposedWithoutErrorTeardown(subscription, this.cleanup);

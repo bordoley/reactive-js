@@ -13,7 +13,6 @@ import {
   ObservableLike,
   createObservable,
   dispatchTo,
-  onNotify,
   subscribe,
   using,
 } from "../observable";
@@ -56,7 +55,7 @@ const createWritableAndSetupEventSubscription = (
   const writableValue = writable.value;
   const streamEventsSubscription = pipe(
     events,
-    onNotify(ev => {
+    subscribe(scheduler, ev => {
       switch (ev.type) {
         case IOEventType.Notify:
           // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
@@ -72,7 +71,6 @@ const createWritableAndSetupEventSubscription = (
           break;
       }
     }),
-    subscribe(scheduler),
   );
 
   addDisposableDisposeParentOnChildError(writable, streamEventsSubscription);

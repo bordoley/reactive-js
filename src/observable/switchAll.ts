@@ -14,7 +14,6 @@ import {
 import { lift } from "./lift";
 import { map } from "./map";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
-import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 class SwitchObserver<T> extends AbstractDelegatingObserver<
@@ -42,7 +41,7 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
 
     pipe(this.inner, dispose());
 
-    const inner = pipe(next, onNotify(this.onNotify), subscribe(this.delegate));
+    const inner = pipe(next, subscribe(this.delegate, this.onNotify));
     addDisposableDisposeParentOnChildError(this.delegate, inner);
     addOnDisposedWithoutErrorTeardown(inner, () => {
       if (this.isDisposed) {

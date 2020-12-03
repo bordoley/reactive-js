@@ -6,7 +6,6 @@ import {
   dispatchTo,
   endWith,
   ignoreElements,
-  onNotify,
   subscribe,
   using,
 } from "../observable";
@@ -30,14 +29,12 @@ export const sink = <TReq, T>(
 
     const srcSubscription = pipe(
       srcStream,
-      onNotify(dispatchTo(destStream)),
-      subscribe(scheduler),
+      subscribe(scheduler, dispatchTo(destStream)),
     );
 
     const destSubscription = pipe(
       destStream,
-      onNotify(dispatchTo(srcStream)),
-      subscribe(scheduler),
+      subscribe(scheduler, dispatchTo(srcStream)),
     );
 
     addDisposable(srcSubscription, destStream);

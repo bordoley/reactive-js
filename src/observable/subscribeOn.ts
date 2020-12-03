@@ -4,7 +4,6 @@ import { ObservableOperator, dispatchTo } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
 import { createObservable } from "./createObservable";
-import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 /**
@@ -18,8 +17,7 @@ export const subscribeOn = <T>(
   createObservable(dispatcher => {
     const subscription = pipe(
       observable,
-      onNotify(dispatchTo(dispatcher)),
-      subscribe(scheduler),
+      subscribe(scheduler, dispatchTo(dispatcher)),
     );
 
     bindDisposables(subscription, dispatcher);

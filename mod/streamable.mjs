@@ -1,6 +1,6 @@
 import { isNone, none } from './option.mjs';
 import { pipe, compose, returns } from './functions.mjs';
-import { createSubject, publish, observe, using, map as map$1, onNotify as onNotify$1, dispatchTo, subscribe, empty as empty$1, __currentScheduler, __using, scan as scan$1, mergeWith, fromValue, distinctUntilChanged, mapTo as mapTo$1, withLatestFrom as withLatestFrom$1, ignoreElements, endWith } from './observable.mjs';
+import { createSubject, publish, observe, using, map as map$1, subscribe, dispatchTo, empty as empty$1, __currentScheduler, __using, scan as scan$1, mergeWith, fromValue, distinctUntilChanged, mapTo as mapTo$1, onNotify as onNotify$1, withLatestFrom as withLatestFrom$1, ignoreElements, endWith } from './observable.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables } from './disposable.mjs';
 
 class StreamImpl extends AbstractDisposable {
@@ -47,7 +47,7 @@ const liftImpl = (streamable, obsOps, reqOps) => {
     const src = streamable instanceof LiftedStreamable ? streamable.src : streamable;
     const op = requests => using(scheduler => {
         const srcStream = pipe(src, stream(scheduler));
-        const requestSubscription = pipe(requests, map$1(compose(...reqOps)), onNotify$1(dispatchTo(srcStream)), subscribe(scheduler));
+        const requestSubscription = pipe(requests, map$1(compose(...reqOps)), subscribe(scheduler, dispatchTo(srcStream)));
         bindDisposables(srcStream, requestSubscription);
         return srcStream;
     }, compose(...obsOps));
@@ -119,8 +119,8 @@ const ignoreAndNotifyVoid = compose(ignoreElements(), endWith(none));
 const sink = (src, dest) => using(scheduler => {
     const srcStream = pipe(src, stream(scheduler));
     const destStream = pipe(dest, stream(scheduler));
-    const srcSubscription = pipe(srcStream, onNotify$1(dispatchTo(destStream)), subscribe(scheduler));
-    const destSubscription = pipe(destStream, onNotify$1(dispatchTo(srcStream)), subscribe(scheduler));
+    const srcSubscription = pipe(srcStream, subscribe(scheduler, dispatchTo(destStream)));
+    const destSubscription = pipe(destStream, subscribe(scheduler, dispatchTo(srcStream)));
     addDisposable(srcSubscription, destStream);
     addDisposable(destSubscription, srcStream);
     return destStream;

@@ -8,7 +8,6 @@ import {
 
 import { SchedulerLike } from "../scheduler";
 import { createSubject } from "./createSubject";
-import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 /**
@@ -25,8 +24,7 @@ export const publish = <T>(
   const subject = createSubject<T>(options);
   const srcSubscription = pipe(
     observable,
-    onNotify(dispatchTo(subject)),
-    subscribe(scheduler),
+    subscribe(scheduler, dispatchTo(subject)),
   );
 
   bindDisposables(srcSubscription, subject);

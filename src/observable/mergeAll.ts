@@ -15,7 +15,6 @@ import { isSome } from "../option";
 import { lift } from "./lift";
 import { map } from "./map";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
-import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 const subscribeNext = <T>(observer: MergeObserver<T>) => {
@@ -27,8 +26,7 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
 
       const nextObsSubscription = pipe(
         nextObs,
-        onNotify(observer.onNotify),
-        subscribe(observer.delegate),
+        subscribe(observer.delegate, observer.onNotify),
       );
       addOnDisposedWithoutErrorTeardown(
         nextObsSubscription,

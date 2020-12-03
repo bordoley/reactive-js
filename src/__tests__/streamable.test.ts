@@ -78,10 +78,9 @@ export const tests = describe(
     let result: number[] = [];
     pipe(
       actionReducerStream,
-      onNotifyObs(x => {
+      subscribe(scheduler, x => {
         result.push(x);
       }),
-      subscribe(scheduler),
     );
 
     scheduler.run();
@@ -100,10 +99,9 @@ export const tests = describe(
       let result: number[] = [];
       const subscription = pipe(
         emptyStream,
-        onNotifyObs(x => {
+        subscribe(scheduler, x => {
           result.push(x);
         }),
-        subscribe(scheduler),
       );
       scheduler.run();
 
@@ -126,10 +124,9 @@ export const tests = describe(
       let disposedTime = 0;
       const subscription = pipe(
         emptyStream,
-        onNotifyObs(x => {
+        subscribe(scheduler, x => {
           result.push(x);
         }),
-        subscribe(scheduler),
       );
       addTeardown(subscription, _ => {
         disposedTime = scheduler.now;
@@ -179,10 +176,9 @@ export const tests = describe(
     const subscription = pipe(
       incrStream,
       buffer(),
-      onNotifyObs(x => {
+      subscribe(scheduler, x => {
         result = x;
       }),
-      subscribe(scheduler),
     );
 
     scheduler.run();
@@ -210,10 +206,9 @@ export const tests = describe(
     const subscription = pipe(
       incrStream,
       buffer(),
-      onNotifyObs(x => {
+      subscribe(scheduler, x => {
         result = x;
       }),
-      subscribe(scheduler),
     );
 
     scheduler.run();

@@ -5,7 +5,6 @@ import {
   fromArray,
   fromValue,
   never,
-  onNotify,
   subscribe,
   toRunnable,
 } from "../observable";
@@ -122,10 +121,9 @@ export const tests = describe(
         () => {
           pipe(
             observable,
-            onNotify(x => {
+            subscribe(scheduler, x => {
               value = x;
             }),
-            subscribe(scheduler),
           );
         },
         () => {
@@ -153,10 +151,9 @@ export const tests = describe(
 
           pipe(
             obs,
-            onNotify(x => {
+            subscribe(scheduler, x => {
               value = x;
             }),
-            subscribe(scheduler),
           );
         },
         () => {

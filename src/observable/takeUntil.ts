@@ -7,7 +7,6 @@ import {
 } from "../observable";
 import { lift } from "./lift";
 import { createAutoDisposingDelegatingObserver } from "./observer";
-import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 export const takeUntil = <T>(
@@ -18,8 +17,7 @@ export const takeUntil = <T>(
 
     const otherSubscription = pipe(
       notifier,
-      onNotify(defer(takeUntilObserver, dispose)),
-      subscribe(takeUntilObserver),
+      subscribe(takeUntilObserver, defer(takeUntilObserver, dispose)),
     );
 
     bindDisposables(takeUntilObserver, otherSubscription);

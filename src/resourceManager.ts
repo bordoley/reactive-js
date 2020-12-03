@@ -19,7 +19,6 @@ import {
   ObservableLike,
   createObservable,
   fromValue,
-  onNotify,
   subscribe,
 } from "./observable";
 
@@ -355,7 +354,7 @@ const tryDispatch = <TResource extends DisposableLike>(
     // Setup the timeout subscription
     const timeoutSubscription = pipe(
       fromValue({ delay: maxIdleTime })(none),
-      onNotify(_ => {
+      subscribe(scheduler,_ => {
         const resource = availableResources.pop(key);
         if (isSome(resource)) {
           pipe(resource, dispose());
@@ -371,7 +370,6 @@ const tryDispatch = <TResource extends DisposableLike>(
           }
         }
       }),
-      subscribe(scheduler),
     );
     addTeardown(timeoutSubscription, () => {
       availableResourcesTimeouts.delete(resource);

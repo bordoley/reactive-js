@@ -198,7 +198,7 @@ declare const fromValue: <T>(options?: {
  *
  * @param scheduler The SchedulerLike instance that should be used by the source to notify it's observer.
  */
-declare const subscribe: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, DisposableLike>;
+declare const subscribe: <T>(scheduler: SchedulerLike, onNotify?: SideEffect1<T>) => Function1<ObservableLike<T>, DisposableLike>;
 
 /**
  * Creates an `ObservableLike` that emits no items and immediately disposes its subscription with an error.

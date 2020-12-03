@@ -15,7 +15,6 @@ import {
   AbstractAutoDisposingDelegatingObserver,
   assertObserverState,
 } from "./observer";
-import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 class WithLatestFromObserver<
@@ -41,8 +40,7 @@ class WithLatestFromObserver<
 
     const otherSubscription = pipe(
       other,
-      onNotify(this.onNotify),
-      subscribe(this),
+      subscribe(this, this.onNotify),
     );
 
     addOnDisposedWithoutErrorTeardown(otherSubscription, () => {

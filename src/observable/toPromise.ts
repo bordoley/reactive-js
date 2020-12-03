@@ -3,7 +3,6 @@ import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Option, isSome, none } from "../option";
 import { SchedulerLike } from "../scheduler";
-import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 /**
@@ -21,11 +20,10 @@ export const toPromise = <T>(
 
     const subscription = pipe(
       observable,
-      onNotify(next => {
+      subscribe(scheduler, next => {
         hasResult = true;
         result = next;
       }),
-      subscribe(scheduler),
     );
 
     addTeardown(subscription, err => {

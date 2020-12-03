@@ -203,57 +203,14 @@ const latest = (observables, mode) => {
     return isSynchronous ? deferSynchronous(factory) : defer(factory);
 };
 
-class LiftedObservable {
-    constructor(source, operators, isSynchronous) {
-        this.source = source;
-        this.operators = operators;
-        this.isSynchronous = isSynchronous;
-    }
-    observe(observer) {
-        const liftedSubscrber = pipe(observer, ...this.operators);
-        pipe(this.source, observe(liftedSubscrber));
-    }
-}
-/**
- * Creates a new `ObservableLike` which applies the provided the operator function to
- * observer when the source is subscribed to.
- *
- * @param operator The operator function to apply.
- */
-const lift = (operator) => source => {
-    const sourceSource = source instanceof LiftedObservable ? source.source : source;
-    const allFunctions = source instanceof LiftedObservable
-        ? [operator, ...source.operators]
-        : [operator];
-    const isSynchronous = source.isSynchronous && operator.isSynchronous;
-    return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
-};
-
-class OnNotifyObserver extends AbstractAutoDisposingDelegatingObserver {
-    constructor(delegate, onNotify) {
-        super(delegate);
+class DefaultObserver extends AbstractObserver {
+    constructor(scheduler, onNotify) {
+        super(scheduler);
         this.onNotify = onNotify;
     }
     notify(next) {
         assertObserverState(this);
         this.onNotify(next);
-        this.delegate.notify(next);
-    }
-}
-/**
- * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
- *
- * @param onNotify The function that is invoked when the observable source produces values.
- */
-function onNotify(onNotify) {
-    const operator = (observer) => new OnNotifyObserver(observer, onNotify);
-    operator.isSynchronous = true;
-    return lift(operator);
-}
-
-class DefaultObserver extends AbstractObserver {
-    notify(_) {
-        assertObserverState(this);
     }
 }
 /**
@@ -263,8 +220,8 @@ class DefaultObserver extends AbstractObserver {
  *
  * @param scheduler The SchedulerLike instance that should be used by the source to notify it's observer.
  */
-const subscribe = (scheduler) => (observable) => {
-    const observer = new DefaultObserver(scheduler);
+const subscribe = (scheduler, onNotify = ignore) => (observable) => {
+    const observer = new DefaultObserver(scheduler, onNotify);
     pipe(observable, observe(observer));
     return observer;
 };
@@ -301,10 +258,10 @@ class AsyncContext {
     await(observable) {
         const effect = validateAsyncEffect(this, 0 /* Await */);
         if (isNone(effect)) {
-            const subscription = pipe(observable, onNotify(next => {
+            const subscription = pipe(observable, subscribe(this.scheduler, next => {
                 effect.value = next;
                 effect.hasValue = true;
-            }), subscribe(this.scheduler));
+            }));
             addTeardown(subscription, this.runComputation);
             addDisposable(this.scheduler, subscription);
             const effect = {
@@ -472,7 +429,7 @@ class ObservableContext {
         }
         else {
             pipe(effect.subscription, dispose());
-            const subscription = pipe(observable, onNotify(next => {
+            const subscription = pipe(observable, subscribe(this.scheduler, next => {
                 effect.value = next;
                 effect.hasValue = true;
                 if (this.mode === 1 /* CombineLatest */) {
@@ -484,7 +441,7 @@ class ObservableContext {
                         ? pipe(this.scheduler, schedule(this.runComputation))
                         : scheduledComputationSubscription;
                 }
-            }), subscribe(this.scheduler));
+            }));
             addOnDisposedWithoutErrorTeardown(subscription, this.cleanup);
             addDisposableDisposeParentOnChildError(this.scheduler, subscription);
             effect.observable = observable;
@@ -631,6 +588,32 @@ const combineLatestWith = (snd) => fst => combineLatest(fst, snd);
 const fromValue = (options = {}) => {
     const call = fromArray(options);
     return v => call([v]);
+};
+
+class LiftedObservable {
+    constructor(source, operators, isSynchronous) {
+        this.source = source;
+        this.operators = operators;
+        this.isSynchronous = isSynchronous;
+    }
+    observe(observer) {
+        const liftedSubscrber = pipe(observer, ...this.operators);
+        pipe(this.source, observe(liftedSubscrber));
+    }
+}
+/**
+ * Creates a new `ObservableLike` which applies the provided the operator function to
+ * observer when the source is subscribed to.
+ *
+ * @param operator The operator function to apply.
+ */
+const lift = (operator) => source => {
+    const sourceSource = source instanceof LiftedObservable ? source.source : source;
+    const allFunctions = source instanceof LiftedObservable
+        ? [operator, ...source.operators]
+        : [operator];
+    const isSynchronous = source.isSynchronous && operator.isSynchronous;
+    return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
 };
 
 class MapObserver extends AbstractAutoDisposingDelegatingObserver {
@@ -1026,7 +1009,7 @@ class BufferObserver extends AbstractDelegatingObserver {
             this.onNotify();
         }
         else if (this.durationSubscription.inner.isDisposed) {
-            this.durationSubscription.inner = pipe(this.durationFunction(next), onNotify(this.onNotify), subscribe(this.delegate));
+            this.durationSubscription.inner = pipe(this.durationFunction(next), subscribe(this.delegate, this.onNotify));
         }
     }
 }
@@ -1122,7 +1105,7 @@ const subscribeNext = (observer) => {
         const nextObs = observer.queue.shift();
         if (isSome(nextObs)) {
             observer.activeCount++;
-            const nextObsSubscription = pipe(nextObs, onNotify(observer.onNotify), subscribe(observer.delegate));
+            const nextObsSubscription = pipe(nextObs, subscribe(observer.delegate, observer.onNotify));
             addOnDisposedWithoutErrorTeardown(nextObsSubscription, observer.onDispose);
             addDisposableDisposeParentOnChildError(observer.delegate, nextObsSubscription);
         }
@@ -1263,7 +1246,7 @@ class SwitchObserver extends AbstractDelegatingObserver {
     notify(next) {
         assertObserverState(this);
         pipe(this.inner, dispose());
-        const inner = pipe(next, onNotify(this.onNotify), subscribe(this.delegate));
+        const inner = pipe(next, subscribe(this.delegate, this.onNotify));
         addDisposableDisposeParentOnChildError(this.delegate, inner);
         addOnDisposedWithoutErrorTeardown(inner, () => {
             if (this.isDisposed) {
@@ -1284,6 +1267,28 @@ const switchAll = () => switchAllInstance;
 const switchMap = (mapper) => compose(map(mapper), switchAll());
 
 const mapAsync = (f) => switchMap(a => fromPromise(() => f(a)));
+
+class OnNotifyObserver extends AbstractAutoDisposingDelegatingObserver {
+    constructor(delegate, onNotify) {
+        super(delegate);
+        this.onNotify = onNotify;
+    }
+    notify(next) {
+        assertObserverState(this);
+        this.onNotify(next);
+        this.delegate.notify(next);
+    }
+}
+/**
+ * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
+ *
+ * @param onNotify The function that is invoked when the observable source produces values.
+ */
+function onNotify(onNotify) {
+    const operator = (observer) => new OnNotifyObserver(observer, onNotify);
+    operator.isSynchronous = true;
+    return lift(operator);
+}
 
 class OnSubscribeObservable {
     constructor(src, f) {
@@ -1340,7 +1345,7 @@ const pairwise = () => {
  */
 const publish = (scheduler, options) => observable => {
     const subject = createSubject(options);
-    const srcSubscription = pipe(observable, onNotify(dispatchTo(subject)), subscribe(scheduler));
+    const srcSubscription = pipe(observable, subscribe(scheduler, dispatchTo(subject)));
     bindDisposables(srcSubscription, subject);
     return subject;
 };
@@ -1383,7 +1388,7 @@ const createRepeatObserver = (delegate, observable, shouldRepeat) => {
         }
         else {
             count++;
-            const subscription = pipe(observable, onNotify((next) => delegate.notify(next)), subscribe(delegate));
+            const subscription = pipe(observable, subscribe(delegate, (next) => delegate.notify(next)));
             addTeardown(subscription, onDispose);
             addDisposable(delegate, subscription);
         }
@@ -1474,14 +1479,6 @@ const notifyDelegate = (observer) => {
         observer.delegate.notify(result);
     }
 };
-const onOtherNotify = (self) => (otherLatest) => {
-    self.hasLatest = true;
-    self.otherLatest = otherLatest;
-    notifyDelegate(self);
-    if (self.isDisposed && self.queue.length === 0) {
-        pipe(self.delegate, dispose());
-    }
-};
 class ZipWithLatestFromObserver extends AbstractObserver {
     constructor(delegate, other, selector) {
         super(delegate);
@@ -1489,7 +1486,14 @@ class ZipWithLatestFromObserver extends AbstractObserver {
         this.hasLatest = false;
         this.queue = [];
         this.selector = selector;
-        const otherSubscription = pipe(other, onNotify(onOtherNotify(this)), subscribe(delegate));
+        const otherSubscription = pipe(other, subscribe(delegate, (otherLatest) => {
+            this.hasLatest = true;
+            this.otherLatest = otherLatest;
+            notifyDelegate(this);
+            if (this.isDisposed && this.queue.length === 0) {
+                pipe(this.delegate, dispose());
+            }
+        }));
         const disposeDelegate = () => {
             if (this.isDisposed && otherSubscription.isDisposed) {
                 pipe(delegate, dispose());
@@ -1601,7 +1605,7 @@ function startWith(...values) {
  * @param scheduler `SchedulerLike` instance to use when subscribing to the source.
  */
 const subscribeOn = (scheduler) => observable => createObservable(dispatcher => {
-    const subscription = pipe(observable, onNotify(dispatchTo(dispatcher)), subscribe(scheduler));
+    const subscription = pipe(observable, subscribe(scheduler, dispatchTo(dispatcher)));
     bindDisposables(subscription, dispatcher);
 });
 
@@ -1643,7 +1647,7 @@ const takeLast = (options = {}) => {
 const takeUntil = (notifier) => {
     const operator = (observer) => {
         const takeUntilObserver = createAutoDisposingDelegatingObserver(observer);
-        const otherSubscription = pipe(notifier, onNotify(defer$1(takeUntilObserver, dispose)), subscribe(takeUntilObserver));
+        const otherSubscription = pipe(notifier, subscribe(takeUntilObserver, defer$1(takeUntilObserver, dispose)));
         bindDisposables(takeUntilObserver, otherSubscription);
         return takeUntilObserver;
     };
@@ -1683,7 +1687,7 @@ const takeWhile = (predicate, options = {}) => {
 };
 
 const setupDurationSubscription = (observer, next) => {
-    observer.durationSubscription.inner = pipe(observer.durationFunction(next), onNotify(observer.onNotify), subscribe(observer));
+    observer.durationSubscription.inner = pipe(observer.durationFunction(next), subscribe(observer, observer.onNotify));
 };
 class ThrottleObserver extends AbstractDelegatingObserver {
     constructor(delegate, durationFunction, mode) {
@@ -1816,7 +1820,7 @@ class WithLatestFromObserver extends AbstractAutoDisposingDelegatingObserver {
             this.otherLatest = next;
         };
         this.selector = selector;
-        const otherSubscription = pipe(other, onNotify(this.onNotify), subscribe(this));
+        const otherSubscription = pipe(other, subscribe(this, this.onNotify));
         addOnDisposedWithoutErrorTeardown(otherSubscription, () => {
             if (!this.hasLatest) {
                 pipe(this, dispose());
@@ -2018,21 +2022,10 @@ function zipLatest(...observables) {
 }
 const zipLatestWith = (snd) => fst => zipLatest(fst, snd);
 
-class ToRunnableObserver extends AbstractAutoDisposingDelegatingObserver {
-    constructor(delegate, sink) {
-        super(delegate);
-        this.sink = sink;
-    }
-    notify(next) {
-        this.sink.notify(next);
-    }
-}
 const toRunnable = (options = {}) => source => createRunnable(sink => {
     const { schedulerFactory = createVirtualTimeScheduler } = options;
     const scheduler = schedulerFactory();
-    const operator = (delegate) => new ToRunnableObserver(delegate, sink);
-    operator.isSynchronous = true;
-    const subscription = pipe(source, lift(operator), subscribe(scheduler));
+    const subscription = pipe(source, subscribe(scheduler, e => sink.notify(e)));
     scheduler.run();
     const { error } = subscription;
     if (isSome(error)) {
@@ -2051,10 +2044,10 @@ const toRunnable = (options = {}) => source => createRunnable(sink => {
 const toPromise = (scheduler) => observable => new Promise((resolve, reject) => {
     let result = none;
     let hasResult = false;
-    const subscription = pipe(observable, onNotify(next => {
+    const subscription = pipe(observable, subscribe(scheduler, next => {
         hasResult = true;
         result = next;
-    }), subscribe(scheduler));
+    }));
     addTeardown(subscription, err => {
         if (isSome(err)) {
             const { cause } = err;

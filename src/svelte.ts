@@ -3,7 +3,6 @@ import { dispose } from "./disposable";
 import { Factory, Function1, defer, pipe } from "./functions";
 import {
   ObservableLike,
-  onNotify,
   subscribe as subscribeObs,
 } from "./observable";
 import { Option, none } from "./option";
@@ -19,8 +18,7 @@ class ObservableSvelteStore<T> implements Readable<Option<T>> {
     callback(none);
     const subscription = pipe(
       this.observable,
-      onNotify(callback),
-      subscribeObs(this.scheduler),
+      subscribeObs(this.scheduler, callback),
     );
 
     return defer(subscription, dispose);
