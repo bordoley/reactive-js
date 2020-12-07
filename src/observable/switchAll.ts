@@ -1,7 +1,8 @@
 import {
+  Error,
   addDisposableDisposeParentOnChildError,
-  addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
+  addTeardown,
   dispose,
   disposed,
 } from "../disposable";
@@ -11,16 +12,23 @@ import {
   ObservableOperator,
   ObserverLike,
 } from "../observable";
+import { Option, isSome } from "../option";
 import { lift } from "./lift";
 import { map } from "./map";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 import { subscribe } from "./subscribe";
 
+function onDispose(this: SwitchObserver<unknown>, error: Option<Error>) {
+  if (isSome(error) || this.inner.isDisposed) {
+    pipe(this.delegate, dispose(error));
+  }
+}
+
 class SwitchObserver<T> extends AbstractDelegatingObserver<
   ObservableLike<T>,
   T
 > {
-  private inner = disposed;
+  inner = disposed;
 
   private readonly onNotify = (next: T) => {
     this.delegate.notify(next);
@@ -28,12 +36,7 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
 
   constructor(delegate: ObserverLike<T>) {
     super(delegate);
-    addOnDisposedWithError(this, delegate);
-    addOnDisposedWithoutErrorTeardown(this, () => {
-      if (this.inner.isDisposed) {
-        pipe(delegate, dispose());
-      }
-    });
+    addTeardown(this, onDispose);
   }
 
   notify(next: ObservableLike<T>) {

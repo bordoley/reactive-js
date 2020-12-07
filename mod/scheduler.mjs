@@ -93,30 +93,41 @@ class YieldError {
     }
 }
 let currentScheduler = none;
+function clearListeners() {
+    this.listeners = none;
+}
 class SchedulerContinuationImpl extends AbstractDisposable {
     constructor(scheduler, f) {
         super();
         this.scheduler = scheduler;
         this.f = f;
-        this.listeners = new Set();
-        addTeardown(this, _e => {
-            this.listeners.clear();
-        });
+        this.listeners = none;
+        addTeardown(this, clearListeners);
     }
     addListener(_ev, listener) {
         if (!this.isDisposed) {
-            this.listeners.add(listener);
+            let { listeners } = this;
+            if (isNone(listeners)) {
+                this.listeners = new Set();
+            }
+            this
+                .listeners.add(listener);
         }
     }
     removeListener(_ev, listener) {
-        this.listeners.delete(listener);
+        let { listeners } = this;
+        if (isSome(listeners)) {
+            listeners.delete(listener);
+        }
     }
     continue() {
         if (!this.isDisposed) {
             const listeners = this.listeners;
             let error = none;
             let yieldError = none;
-            notifyListeners(listeners, true);
+            if (isSome(listeners)) {
+                notifyListeners(listeners, true);
+            }
             const oldCurrentScheduler = currentScheduler;
             currentScheduler = this.scheduler;
             try {
@@ -131,7 +142,9 @@ class SchedulerContinuationImpl extends AbstractDisposable {
                 }
             }
             currentScheduler = oldCurrentScheduler;
-            notifyListeners(listeners, false);
+            if (isSome(listeners)) {
+                notifyListeners(listeners, false);
+            }
             if (isSome(yieldError)) {
                 this.scheduler.schedule(this, yieldError);
             }
@@ -146,7 +159,7 @@ const run = (continuation) => {
 };
 const __yield = (delay = 0) => {
     const scheduler = isNone(currentScheduler)
-        ? raise("__currentScheduler effect may only be invoked from within a SchedulerContinuation")
+        ? raise("__yield effect may only be invoked from within a SchedulerContinuation")
         : currentScheduler;
     if (delay > 0 || scheduler.shouldYield) {
         throw new YieldError(delay);
@@ -214,6 +227,10 @@ const scheduleContinuation = (scheduler, task) => {
     scheduler.dueTime = dueTime;
     scheduler.inner = pipe(scheduler.host, schedule(scheduler.continuation, { delay }));
 };
+function clearQueues() {
+    this.queue.clear();
+    this.delayed.clear();
+}
 class PriorityScheduler extends AbstractSerialDisposable {
     constructor(host) {
         super();
@@ -241,10 +258,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
         this.isPaused = false;
         this.queue = createPriorityQueue(comparator);
         this.taskIDCounter = 0;
-        addTeardown(this, _e => {
-            this.queue.clear();
-            this.delayed.clear();
-        });
+        addTeardown(this, clearQueues);
     }
     get now() {
         return this.host.now;

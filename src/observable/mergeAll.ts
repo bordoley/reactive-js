@@ -1,6 +1,6 @@
 import {
+  Error,
   addDisposableDisposeParentOnChildError,
-  addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
   dispose,
@@ -11,7 +11,7 @@ import {
   ObservableOperator,
   ObserverLike,
 } from "../observable";
-import { isSome } from "../option";
+import { Option, isSome } from "../option";
 import { lift } from "./lift";
 import { map } from "./map";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
@@ -42,6 +42,12 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
   }
 };
 
+function onDispose(this: MergeObserver<unknown>, error: Option<Error>) {
+  if (isSome(error) || this.queue.length + this.activeCount === 0) {
+    pipe(this.delegate, dispose(error));
+  }
+}
+
 class MergeObserver<T> extends AbstractDelegatingObserver<
   ObservableLike<T>,
   T
@@ -65,13 +71,7 @@ class MergeObserver<T> extends AbstractDelegatingObserver<
     readonly maxConcurrency: number,
   ) {
     super(delegate);
-
-    addOnDisposedWithError(this, delegate);
-    addOnDisposedWithoutErrorTeardown(this, () => {
-      if (this.queue.length + this.activeCount === 0) {
-        pipe(delegate, dispose());
-      }
-    });
+    addTeardown(this, onDispose);
     addTeardown(delegate, () => {
       this.queue.length = 0;
     });

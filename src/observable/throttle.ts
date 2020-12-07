@@ -1,8 +1,8 @@
 import {
+  Error,
   SerialDisposableLike,
   addDisposableDisposeParentOnChildError,
-  addOnDisposedWithError,
-  addOnDisposedWithoutErrorTeardown,
+  addTeardown,
   createSerialDisposable,
   dispose,
 } from "../disposable";
@@ -12,7 +12,7 @@ import {
   ObservableOperator,
   ObserverLike,
 } from "../observable";
-import { Option, none } from "../option";
+import { Option, isNone, none } from "../option";
 import { fromValue } from "./fromValue";
 import { lift } from "./lift";
 import {
@@ -53,10 +53,18 @@ const setupDurationSubscription = <T>(
   );
 };
 
+function onDispose(this: ThrottleObserver<unknown>, e: Option<Error>) {
+  if (isNone(e) && this.mode !== ThrottleMode.First && this.hasValue) {
+    pipe(this.value, fromValue(), observe(this.delegate));
+  } else {
+    pipe(this.delegate, dispose(e));
+  }
+}
+
 class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
   readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
-  private value: Option<T> = none;
-  private hasValue = false;
+  value: Option<T> = none;
+  hasValue = false;
 
   readonly onNotify = (_?: unknown) => {
     if (this.hasValue) {
@@ -72,18 +80,11 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
   constructor(
     delegate: ObserverLike<T>,
     readonly durationFunction: Function1<T, ObservableLike<unknown>>,
-    private readonly mode: ThrottleMode,
+    readonly mode: ThrottleMode,
   ) {
     super(delegate);
     addDisposableDisposeParentOnChildError(this, this.durationSubscription);
-    addOnDisposedWithError(this, delegate);
-    addOnDisposedWithoutErrorTeardown(this, () => {
-      if (mode !== ThrottleMode.First && this.hasValue) {
-        pipe(this.value, fromValue(), observe(delegate));
-      } else {
-        pipe(delegate, dispose());
-      }
-    });
+    addTeardown(this, onDispose);
   }
 
   notify(next: T) {

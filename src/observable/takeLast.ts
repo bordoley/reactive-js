@@ -1,10 +1,7 @@
-import {
-  addOnDisposedWithError,
-  addOnDisposedWithoutErrorTeardown,
-  addTeardown,
-} from "../disposable";
+import { Error, addTeardown, dispose } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
+import { Option, isSome } from "../option";
 import { empty } from "./empty";
 import { fromArray } from "./fromArray";
 import { lift } from "./lift";
@@ -14,19 +11,21 @@ import {
   observe,
 } from "./observer";
 
+function onDispose(this: TakeLastObserver<unknown>, error: Option<Error>) {
+  if (isSome(error)) {
+    this.last.length = 0;
+    pipe(this.delegate, dispose(error));
+  } else {
+    pipe(this.last, fromArray(), observe(this.delegate));
+  }
+}
+
 class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
   readonly last: T[] = [];
 
   constructor(delegate: ObserverLike<T>, readonly maxCount: number) {
     super(delegate);
-    const last = this.last;
-    addOnDisposedWithError(this, delegate);
-    addOnDisposedWithoutErrorTeardown(this, () => {
-      pipe(last, fromArray(), observe(delegate));
-    });
-    addTeardown(delegate, () => {
-      last.length = 0;
-    });
+    addTeardown(this, onDispose);
   }
 
   notify(next: T) {

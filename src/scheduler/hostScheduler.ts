@@ -1,8 +1,4 @@
-import {
-  Factory,
-  SideEffect2,
-  alwaysFalse,
-} from "../functions";
+import { Factory, SideEffect2, alwaysFalse } from "../functions";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
 import { run } from "./schedulerContinuation";
 

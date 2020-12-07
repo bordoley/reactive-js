@@ -32,6 +32,14 @@ const markAsGarbage = (reactiveCache, key, stream) => {
 };
 const switchAllStreamInstance = createStreamable(switchAll());
 const switchAllStream = () => switchAllStreamInstance;
+function onDispose() {
+    for (const value of this.cache.values()) {
+        const [stream] = value;
+        pipe(stream, dispose());
+    }
+    this.cache.clear();
+    this.garbage.clear();
+}
 class ReactiveCacheImpl extends AbstractDisposable {
     constructor(dispatchScheduler, cleanupScheduler, 
     // The ideal max number of cache entries.
@@ -45,14 +53,7 @@ class ReactiveCacheImpl extends AbstractDisposable {
         this.cleaning = false;
         // Set of keys that are eligible to be garbage collected
         this.garbage = new Map();
-        addTeardown(this, () => {
-            for (const value of this.cache.values()) {
-                const [stream] = value;
-                pipe(stream, dispose());
-            }
-            this.cache.clear();
-            this.garbage.clear();
-        });
+        addTeardown(this, onDispose);
     }
     get(key) {
         const cachedValue = this.cache.get(key);

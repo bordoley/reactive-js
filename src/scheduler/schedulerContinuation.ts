@@ -30,10 +30,16 @@ export class YieldError {
 
 let currentScheduler: Option<SchedulerLike> = none;
 
+function clearListeners(this: SchedulerContinuationImpl) {
+  this.listeners = none;
+}
+
 class SchedulerContinuationImpl
   extends AbstractDisposable
   implements SchedulerContinuationLike {
-  private listeners: Set<SchedulerContinuationRunStatusChangedListenerLike> = new Set();
+  listeners: Option<
+    Set<SchedulerContinuationRunStatusChangedListenerLike>
+  > = none;
 
   constructor(
     private readonly scheduler: SchedulerLike,
@@ -41,9 +47,7 @@ class SchedulerContinuationImpl
   ) {
     super();
 
-    addTeardown(this, _e => {
-      this.listeners.clear();
-    });
+    addTeardown(this, clearListeners);
   }
 
   addListener(
@@ -51,7 +55,15 @@ class SchedulerContinuationImpl
     listener: SchedulerContinuationRunStatusChangedListenerLike,
   ) {
     if (!this.isDisposed) {
-      this.listeners.add(listener);
+      let { listeners } = this;
+      if (isNone(listeners)) {
+        this.listeners = new Set();
+      }
+
+      (this
+        .listeners as Set<SchedulerContinuationRunStatusChangedListenerLike>).add(
+        listener,
+      );
     }
   }
 
@@ -59,7 +71,10 @@ class SchedulerContinuationImpl
     _ev: "onRunStatusChanged",
     listener: SchedulerContinuationRunStatusChangedListenerLike,
   ) {
-    this.listeners.delete(listener);
+    let { listeners } = this;
+    if (isSome(listeners)) {
+      listeners.delete(listener);
+    }
   }
 
   continue() {
@@ -68,7 +83,9 @@ class SchedulerContinuationImpl
       let error: Option<Error> = none;
       let yieldError: Option<YieldError> = none;
 
-      notifyListeners(listeners, true);
+      if (isSome(listeners)) {
+        notifyListeners(listeners, true);
+      }
 
       const oldCurrentScheduler = currentScheduler;
       currentScheduler = this.scheduler;
@@ -82,7 +99,10 @@ class SchedulerContinuationImpl
         }
       }
       currentScheduler = oldCurrentScheduler;
-      notifyListeners(listeners, false);
+
+      if (isSome(listeners)) {
+        notifyListeners(listeners, false);
+      }
 
       if (isSome(yieldError)) {
         this.scheduler.schedule(this, yieldError);
@@ -100,7 +120,7 @@ export const run = (continuation: SchedulerContinuationLike): void => {
 export const __yield = (delay = 0) => {
   const scheduler = isNone(currentScheduler)
     ? raise<SchedulerLike>(
-        "__currentScheduler effect may only be invoked from within a SchedulerContinuation",
+        "__yield effect may only be invoked from within a SchedulerContinuation",
       )
     : currentScheduler;
 

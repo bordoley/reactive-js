@@ -1,6 +1,7 @@
 import {
   AbstractDisposable,
   DisposableLike,
+  Error,
   addTeardown,
   dispose,
   disposed,
@@ -389,6 +390,22 @@ export interface ResourceManagerLike<TResource> extends DisposableLike {
   get(key: string): ObservableLike<TResource>;
 }
 
+function onDispose<T extends DisposableLike>(
+  this: ResourceManagerImpl<T>,
+  error: Option<Error>,
+) {
+  const forEachDispose = forEach(dispose(error));
+
+  pipe(this.resourceRequests.values, forEachDispose);
+  this.resourceRequests.clear();
+
+  pipe(this.inUseResources.values, forEachDispose);
+  this.inUseResources.clear();
+
+  pipe(this.availableResources.values, forEachDispose);
+  this.availableResources.clear();
+}
+
 class ResourceManagerImpl<TResource extends DisposableLike>
   extends AbstractDisposable
   implements ResourceManagerLike<TResource> {
@@ -415,18 +432,7 @@ class ResourceManagerImpl<TResource extends DisposableLike>
   ) {
     super();
 
-    addTeardown(this, e => {
-      const forEachDispose = forEach(dispose(e));
-
-      pipe(this.resourceRequests.values, forEachDispose);
-      this.resourceRequests.clear();
-
-      pipe(this.inUseResources.values, forEachDispose);
-      this.inUseResources.clear();
-
-      pipe(this.availableResources.values, forEachDispose);
-      this.availableResources.clear();
-    });
+    addTeardown(this, onDispose);
   }
 
   get count() {

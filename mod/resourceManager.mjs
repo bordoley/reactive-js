@@ -250,6 +250,15 @@ const tryDispatch = (resourceManager, key) => {
     inUseResources.add(key, observer);
     observer.dispatch(resource);
 };
+function onDispose(error) {
+    const forEachDispose = forEach(dispose(error));
+    pipe(this.resourceRequests.values, forEachDispose);
+    this.resourceRequests.clear();
+    pipe(this.inUseResources.values, forEachDispose);
+    this.inUseResources.clear();
+    pipe(this.availableResources.values, forEachDispose);
+    this.availableResources.clear();
+}
 class ResourceManagerImpl extends AbstractDisposable {
     constructor(createResource, scheduler, maxIdleTime, maxResourcesPerKey, maxTotalResources) {
         super();
@@ -263,15 +272,7 @@ class ResourceManagerImpl extends AbstractDisposable {
         this.inUseResources = createSetMultimap();
         this.resourceRequests = createKeyedQueue();
         this.globalResourceWaitQueue = createUniqueQueue();
-        addTeardown(this, e => {
-            const forEachDispose = forEach(dispose(e));
-            pipe(this.resourceRequests.values, forEachDispose);
-            this.resourceRequests.clear();
-            pipe(this.inUseResources.values, forEachDispose);
-            this.inUseResources.clear();
-            pipe(this.availableResources.values, forEachDispose);
-            this.availableResources.clear();
-        });
+        addTeardown(this, onDispose);
     }
     get count() {
         return this.availableResources.count + this.inUseResources.count;

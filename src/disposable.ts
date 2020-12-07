@@ -158,10 +158,14 @@ export const toErrorHandler = (
   disposable: DisposableLike,
 ): SideEffect1<unknown> => cause => pipe(disposable, dispose({ cause }));
 
-const doDispose = (disposable: DisposableOrTeardown, error?: Error) => {
+const doDispose = (
+  self: DisposableLike,
+  disposable: DisposableOrTeardown,
+  error?: Error,
+) => {
   if (disposable instanceof Function) {
     try {
-      disposable(error);
+      disposable.call(self, error);
     } catch (_) {
       /* Proactively catch Errors thrown in teardown logic. Teardown functions
        * shouldn't throw, so this is to prevent unexpected Errors.
@@ -194,7 +198,7 @@ export abstract class AbstractDisposable implements DisposableLike {
     const disposables = this.disposables;
 
     if (this.isDisposed) {
-      doDispose(disposable, this.error);
+      doDispose(this, disposable, this.error);
     } else if (!disposables.has(disposable)) {
       disposables.add(disposable);
 
@@ -215,7 +219,7 @@ export abstract class AbstractDisposable implements DisposableLike {
       const disposables = this.disposables;
       for (const disposable of disposables) {
         disposables.delete(disposable);
-        doDispose(disposable, error);
+        doDispose(this, disposable, error);
       }
     }
   }
@@ -240,7 +244,7 @@ export const createDisposable = (
 
 const _disposed: DisposableLike = {
   add(disposable: DisposableOrTeardown) {
-    doDispose(disposable);
+    doDispose(_disposed, disposable);
   },
   error: none,
   isDisposed: true,

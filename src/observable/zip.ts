@@ -1,9 +1,8 @@
 import {
   AbstractDisposable,
   DisposableLike,
+  Error,
   addDisposable,
-  addOnDisposedWithError,
-  addOnDisposedWithoutErrorTeardown,
   addTeardown,
   dispose,
 } from "../disposable";
@@ -14,7 +13,7 @@ import {
   ObservableOperator,
   ObserverLike,
 } from "../observable";
-import { isNone, isSome, none } from "../option";
+import { Option, isNone, isSome, none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
 import { SchedulerContinuationLike, run } from "../scheduler";
 import { fromEnumerator } from "./fromEnumerable";
@@ -111,11 +110,17 @@ const shouldComplete = (
   return false;
 };
 
+function onDisposed(this: ZipObserver, error: Option<Error>) {
+  if (isSome(error) || (this.buffer.length === 0 && !this.hasCurrent)) {
+    pipe(this.delegate, dispose(error));
+  }
+}
+
 class ZipObserver
   extends AbstractDelegatingObserver<unknown, readonly unknown[]>
   implements EnumeratorLike<unknown> {
   current: unknown;
-  private readonly buffer: unknown[] = [];
+  readonly buffer: unknown[] = [];
   hasCurrent = false;
 
   constructor(
@@ -129,12 +134,7 @@ class ZipObserver
       this.current = none;
       this.buffer.length = 0;
     });
-    addOnDisposedWithError(this, delegate);
-    addOnDisposedWithoutErrorTeardown(this, () => {
-      if (this.buffer.length === 0 && !this.hasCurrent) {
-        pipe(delegate, dispose());
-      }
-    });
+    addTeardown(this, onDisposed);
   }
 
   move(): boolean {
