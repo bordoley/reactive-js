@@ -1,11 +1,7 @@
-import {
-  addOnDisposedWithError,
-  addOnDisposedWithoutErrorTeardown,
-  dispose,
-} from "../disposable";
+import { Error, addTeardown, dispose } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
-import { none } from "../option";
+import { Option, isSome, none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
 import { defer, deferSynchronous } from "./observable";
 import {
@@ -25,6 +21,15 @@ export const enum LatestMode {
   Zip = 2,
 }
 
+function onDispose(this: LatestObserver, error: Option<Error>) {
+  const { ctx } = this;
+  ctx.completedCount++;
+
+  if (isSome(error) || ctx.completedCount === ctx.observers.length) {
+    pipe(this.delegate, dispose(error));
+  }
+}
+
 class LatestObserver extends AbstractDelegatingObserver<
   unknown,
   readonly unknown[]
@@ -34,19 +39,11 @@ class LatestObserver extends AbstractDelegatingObserver<
 
   constructor(
     delegate: ObserverLike<readonly unknown[]>,
-    private readonly ctx: LatestCtx,
+    readonly ctx: LatestCtx,
     private readonly mode: LatestMode,
   ) {
     super(delegate);
-    addOnDisposedWithError(this, delegate);
-    addOnDisposedWithoutErrorTeardown(this, () => {
-      const ctx = this.ctx;
-      ctx.completedCount++;
-
-      if (ctx.completedCount === ctx.observers.length) {
-        pipe(delegate, dispose());
-      }
-    });
+    addTeardown(this, onDispose);
   }
 
   notify(next: unknown) {

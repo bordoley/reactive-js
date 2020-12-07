@@ -74,6 +74,15 @@ const switchAllStreamInstance: StreamableLike<
 const switchAllStream = <T>(): StreamableLike<ObservableLike<T>, T> =>
   switchAllStreamInstance;
 
+function onDispose(this: ReactiveCacheImpl<unknown>) {
+  for (const value of this.cache.values()) {
+    const [stream] = value;
+    pipe(stream, dispose());
+  }
+  this.cache.clear();
+  this.garbage.clear();
+}
+
 class ReactiveCacheImpl<T>
   extends AbstractDisposable
   implements ReactiveCacheLike<T> {
@@ -95,14 +104,7 @@ class ReactiveCacheImpl<T>
   ) {
     super();
 
-    addTeardown(this, () => {
-      for (const value of this.cache.values()) {
-        const [stream] = value;
-        pipe(stream, dispose());
-      }
-      this.cache.clear();
-      this.garbage.clear();
-    });
+    addTeardown(this, onDispose);
   }
 
   get(key: string): Option<ObservableLike<T>> {

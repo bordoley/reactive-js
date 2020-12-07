@@ -1,7 +1,7 @@
 import {
+  Error,
   addDisposableDisposeParentOnChildError,
-  addOnDisposedWithError,
-  addOnDisposedWithoutErrorTeardown,
+  addTeardown,
   createSerialDisposable,
   dispose,
   disposed,
@@ -12,7 +12,7 @@ import {
   ObservableOperator,
   ObserverLike,
 } from "../observable";
-import { none } from "../option";
+import { Option, isSome, none } from "../option";
 import { fromValue } from "./fromValue";
 import { lift } from "./lift";
 import { never } from "./never";
@@ -24,9 +24,20 @@ import {
 
 import { subscribe } from "./subscribe";
 
+function onDispose(this: BufferObserver<void>, error: Option<Error>) {
+  const buffer = this.buffer;
+  this.buffer = [];
+
+  if (isSome(error) || buffer.length === 0) {
+    pipe(this.delegate, dispose(error));
+  } else {
+    pipe(buffer, fromValue(), observe(this.delegate));
+  }
+}
+
 class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
   private readonly durationSubscription = createSerialDisposable();
-  private buffer: T[] = [];
+  buffer: T[] = [];
   private readonly onNotify = () => {
     this.durationSubscription.inner = disposed;
 
@@ -44,17 +55,7 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
     super(delegate);
 
     addDisposableDisposeParentOnChildError(this, this.durationSubscription);
-    addOnDisposedWithError(this, delegate);
-    addOnDisposedWithoutErrorTeardown(this, () => {
-      const buffer = this.buffer;
-      this.buffer = [];
-
-      if (buffer.length > 0) {
-        pipe(buffer, fromValue(), observe(delegate));
-      } else {
-        pipe(delegate, dispose());
-      }
-    });
+    addTeardown(this, onDispose);
   }
 
   notify(next: T) {

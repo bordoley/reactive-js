@@ -104,6 +104,11 @@ const scheduleContinuation = (
   );
 };
 
+function clearQueues(this: PriorityScheduler) {
+  this.queue.clear();
+  this.delayed.clear();
+}
+
 class PriorityScheduler
   extends AbstractSerialDisposable
   implements PrioritySchedulerLike, PausableSchedulerLike {
@@ -142,10 +147,7 @@ class PriorityScheduler
 
   constructor(readonly host: SchedulerLike) {
     super();
-    addTeardown(this, _e => {
-      this.queue.clear();
-      this.delayed.clear();
-    });
+    addTeardown(this, clearQueues);
   }
 
   get now(): number {

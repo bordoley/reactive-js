@@ -1,5 +1,6 @@
 import {
   AbstractDisposable,
+  Error,
   addDisposable,
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
@@ -8,7 +9,7 @@ import {
 } from "../disposable";
 import { pipe } from "../functions";
 import { DispatcherLike, ObserverLike } from "../observable";
-
+import { Option } from "../option";
 import { __yield, schedule } from "../scheduler";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
@@ -25,6 +26,15 @@ const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
     );
   }
 };
+
+function onDispose(
+  this: ObserverDelegatingDispatcher<unknown>,
+  e: Option<Error>,
+) {
+  if (this.nextQueue.length === 0) {
+    pipe(this.observer, dispose(e));
+  }
+}
 
 class ObserverDelegatingDispatcher<T>
   extends AbstractDisposable
@@ -49,11 +59,7 @@ class ObserverDelegatingDispatcher<T>
 
   constructor(readonly observer: ObserverLike<T>) {
     super();
-    addTeardown(this, e => {
-      if (this.nextQueue.length === 0) {
-        pipe(observer, dispose(e));
-      }
-    });
+    addTeardown(this, onDispose);
     addDisposable(observer, this);
   }
 

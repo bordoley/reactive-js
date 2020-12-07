@@ -1,40 +1,31 @@
-import {
-  Error,
-  addOnDisposedWithError,
-  addOnDisposedWithoutErrorTeardown,
-  dispose,
-} from "../disposable";
-import { Factory, pipe } from "../functions";
+import { Error, addTeardown } from "../disposable";
+import { Factory } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
-import { Option, none } from "../option";
+import { Option, isNone, none } from "../option";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 
+function onDispose(this: ThrowIfEmptyObserver<unknown>, error: Option<Error>) {
+  if (isNone(error) && this.isEmpty) {
+    let cause: unknown = none;
+    try {
+      cause = this.factory();
+    } catch (e) {
+      cause = e;
+    }
+
+    error = { cause };
+  }
+
+  this.delegate.dispose(error);
+}
+
 class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
-  private isEmpty = true;
+  isEmpty = true;
 
-  constructor(
-    delegate: ObserverLike<T>,
-    private readonly factory: Factory<unknown>,
-  ) {
+  constructor(delegate: ObserverLike<T>, readonly factory: Factory<unknown>) {
     super(delegate);
-    addOnDisposedWithError(this, delegate);
-    addOnDisposedWithoutErrorTeardown(this, () => {
-      let error: Option<Error> = none;
-
-      if (this.isEmpty) {
-        let cause: unknown = none;
-        try {
-          cause = this.factory();
-        } catch (e) {
-          cause = e;
-        }
-
-        error = { cause };
-      }
-
-      pipe(delegate, dispose(error));
-    });
+    addTeardown(this, onDispose);
   }
 
   notify(next: T) {

@@ -79,10 +79,10 @@ const addOnDisposedWithoutError = (parent, child) => {
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
  */
 const toErrorHandler = (disposable) => cause => pipe(disposable, dispose({ cause }));
-const doDispose = (disposable, error) => {
+const doDispose = (self, disposable, error) => {
     if (disposable instanceof Function) {
         try {
-            disposable(error);
+            disposable.call(self, error);
         }
         catch (_) {
             /* Proactively catch Errors thrown in teardown logic. Teardown functions
@@ -114,7 +114,7 @@ class AbstractDisposable {
     add(disposable) {
         const disposables = this.disposables;
         if (this.isDisposed) {
-            doDispose(disposable, this.error);
+            doDispose(this, disposable, this.error);
         }
         else if (!disposables.has(disposable)) {
             disposables.add(disposable);
@@ -133,7 +133,7 @@ class AbstractDisposable {
             const disposables = this.disposables;
             for (const disposable of disposables) {
                 disposables.delete(disposable);
-                doDispose(disposable, error);
+                doDispose(this, disposable, error);
             }
         }
     }
@@ -154,7 +154,7 @@ const createDisposable = (onDispose) => {
 };
 const _disposed = {
     add(disposable) {
-        doDispose(disposable);
+        doDispose(_disposed, disposable);
     },
     error: none,
     isDisposed: true,

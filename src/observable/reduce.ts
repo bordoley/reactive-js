@@ -1,9 +1,7 @@
-import {
-  addOnDisposedWithError,
-  addOnDisposedWithoutErrorTeardown,
-} from "../disposable";
+import { Error, addTeardown } from "../disposable";
 import { Factory, Reducer, pipe } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
+import { Option, isSome } from "../option";
 import { fromValue } from "./fromValue";
 import { lift } from "./lift";
 import {
@@ -12,17 +10,25 @@ import {
   observe,
 } from "./observer";
 
+function onDispose(
+  this: ReduceObserver<unknown, unknown>,
+  error: Option<Error>,
+) {
+  if (isSome(error)) {
+    this.delegate.dispose();
+  } else {
+    pipe(this.acc, fromValue(), observe(this.delegate));
+  }
+}
+
 class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
   constructor(
     delegate: ObserverLike<TAcc>,
-    private readonly reducer: Reducer<T, TAcc>,
-    private acc: TAcc,
+    readonly reducer: Reducer<T, TAcc>,
+    public acc: TAcc,
   ) {
     super(delegate);
-    addOnDisposedWithError(this, delegate);
-    addOnDisposedWithoutErrorTeardown(this, () => {
-      pipe(this.acc, fromValue(), observe(delegate));
-    });
+    addTeardown(this, onDispose);
   }
 
   notify(next: T) {

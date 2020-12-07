@@ -1,6 +1,6 @@
-import { none, isSome, isNone } from './option.mjs';
+import { isSome, none, isNone } from './option.mjs';
 import { pipe, ignore, raise, arrayEquality, returns, compose, callWith, defer as defer$1, strictEquality } from './functions.mjs';
-import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, bindDisposables, addOnDisposedWithoutErrorTeardown, disposed, addTeardown, addDisposableDisposeParentOnChildError, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
+import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, bindDisposables, addTeardown, disposed, addDisposableDisposeParentOnChildError, addOnDisposedWithoutErrorTeardown, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
 import { __DEV__, warn } from './env.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
@@ -147,6 +147,13 @@ const createAutoDisposingDelegatingObserver = (delegate) => {
 };
 const observe = (observer) => observable => observable.observe(observer);
 
+function onDispose(error) {
+    const { ctx } = this;
+    ctx.completedCount++;
+    if (isSome(error) || ctx.completedCount === ctx.observers.length) {
+        pipe(this.delegate, dispose(error));
+    }
+}
 class LatestObserver extends AbstractDelegatingObserver {
     constructor(delegate, ctx, mode) {
         super(delegate);
@@ -154,14 +161,7 @@ class LatestObserver extends AbstractDelegatingObserver {
         this.mode = mode;
         this.ready = false;
         this.latest = none;
-        addOnDisposedWithError(this, delegate);
-        addOnDisposedWithoutErrorTeardown(this, () => {
-            const ctx = this.ctx;
-            ctx.completedCount++;
-            if (ctx.completedCount === ctx.observers.length) {
-                pipe(delegate, dispose());
-            }
-        });
+        addTeardown(this, onDispose);
     }
     notify(next) {
         assertObserverState(this);
@@ -691,6 +691,11 @@ const scheduleDrainQueue = (dispatcher) => {
         addOnDisposedWithoutErrorTeardown(continuationSubcription, dispatcher.onContinuationDispose);
     }
 };
+function onDispose$1(e) {
+    if (this.nextQueue.length === 0) {
+        pipe(this.observer, dispose(e));
+    }
+}
 class ObserverDelegatingDispatcher extends AbstractDisposable {
     constructor(observer) {
         super();
@@ -709,11 +714,7 @@ class ObserverDelegatingDispatcher extends AbstractDisposable {
             }
         };
         this.nextQueue = [];
-        addTeardown(this, e => {
-            if (this.nextQueue.length === 0) {
-                pipe(observer, dispose(e));
-            }
-        });
+        addTeardown(this, onDispose$1);
         addDisposable(observer, this);
     }
     dispatch(next) {
@@ -975,6 +976,16 @@ function using(resourceFactory, observableFactory) {
     return new UsingObservable(resourceFactory, observableFactory);
 }
 
+function onDispose$2(error) {
+    const buffer = this.buffer;
+    this.buffer = [];
+    if (isSome(error) || buffer.length === 0) {
+        pipe(this.delegate, dispose(error));
+    }
+    else {
+        pipe(buffer, fromValue(), observe(this.delegate));
+    }
+}
 class BufferObserver extends AbstractDelegatingObserver {
     constructor(delegate, durationFunction, maxBufferSize) {
         super(delegate);
@@ -989,17 +1000,7 @@ class BufferObserver extends AbstractDelegatingObserver {
             this.delegate.notify(buffer);
         };
         addDisposableDisposeParentOnChildError(this, this.durationSubscription);
-        addOnDisposedWithError(this, delegate);
-        addOnDisposedWithoutErrorTeardown(this, () => {
-            const buffer = this.buffer;
-            this.buffer = [];
-            if (buffer.length > 0) {
-                pipe(buffer, fromValue(), observe(delegate));
-            }
-            else {
-                pipe(delegate, dispose());
-            }
-        });
+        addTeardown(this, onDispose$2);
     }
     notify(next) {
         assertObserverState(this);
@@ -1114,6 +1115,11 @@ const subscribeNext = (observer) => {
         }
     }
 };
+function onDispose$3(error) {
+    if (isSome(error) || this.queue.length + this.activeCount === 0) {
+        pipe(this.delegate, dispose(error));
+    }
+}
 class MergeObserver extends AbstractDelegatingObserver {
     constructor(delegate, maxBufferSize, maxConcurrency) {
         super(delegate);
@@ -1128,12 +1134,7 @@ class MergeObserver extends AbstractDelegatingObserver {
             this.delegate.notify(next);
         };
         this.queue = [];
-        addOnDisposedWithError(this, delegate);
-        addOnDisposedWithoutErrorTeardown(this, () => {
-            if (this.queue.length + this.activeCount === 0) {
-                pipe(delegate, dispose());
-            }
-        });
+        addTeardown(this, onDispose$3);
         addTeardown(delegate, () => {
             this.queue.length = 0;
         });
@@ -1229,6 +1230,11 @@ const keepType = (predicate) => {
  */
 const keep = (predicate) => keepType(predicate);
 
+function onDispose$4(error) {
+    if (isSome(error) || this.inner.isDisposed) {
+        pipe(this.delegate, dispose(error));
+    }
+}
 class SwitchObserver extends AbstractDelegatingObserver {
     constructor(delegate) {
         super(delegate);
@@ -1236,12 +1242,7 @@ class SwitchObserver extends AbstractDelegatingObserver {
         this.onNotify = (next) => {
             this.delegate.notify(next);
         };
-        addOnDisposedWithError(this, delegate);
-        addOnDisposedWithoutErrorTeardown(this, () => {
-            if (this.inner.isDisposed) {
-                pipe(delegate, dispose());
-            }
-        });
+        addTeardown(this, onDispose$4);
     }
     notify(next) {
         assertObserverState(this);
@@ -1350,15 +1351,20 @@ const publish = (scheduler, options) => observable => {
     return subject;
 };
 
+function onDispose$5(error) {
+    if (isSome(error)) {
+        this.delegate.dispose();
+    }
+    else {
+        pipe(this.acc, fromValue(), observe(this.delegate));
+    }
+}
 class ReduceObserver extends AbstractDelegatingObserver {
     constructor(delegate, reducer, acc) {
         super(delegate);
         this.reducer = reducer;
         this.acc = acc;
-        addOnDisposedWithError(this, delegate);
-        addOnDisposedWithoutErrorTeardown(this, () => {
-            pipe(this.acc, fromValue(), observe(delegate));
-        });
+        addTeardown(this, onDispose$5);
     }
     notify(next) {
         assertObserverState(this);
@@ -1609,19 +1615,21 @@ const subscribeOn = (scheduler) => observable => createObservable(dispatcher => 
     bindDisposables(subscription, dispatcher);
 });
 
+function onDispose$6(error) {
+    if (isSome(error)) {
+        this.last.length = 0;
+        pipe(this.delegate, dispose(error));
+    }
+    else {
+        pipe(this.last, fromArray(), observe(this.delegate));
+    }
+}
 class TakeLastObserver extends AbstractDelegatingObserver {
     constructor(delegate, maxCount) {
         super(delegate);
         this.maxCount = maxCount;
         this.last = [];
-        const last = this.last;
-        addOnDisposedWithError(this, delegate);
-        addOnDisposedWithoutErrorTeardown(this, () => {
-            pipe(last, fromArray(), observe(delegate));
-        });
-        addTeardown(delegate, () => {
-            last.length = 0;
-        });
+        addTeardown(this, onDispose$6);
     }
     notify(next) {
         assertObserverState(this);
@@ -1689,6 +1697,14 @@ const takeWhile = (predicate, options = {}) => {
 const setupDurationSubscription = (observer, next) => {
     observer.durationSubscription.inner = pipe(observer.durationFunction(next), subscribe(observer, observer.onNotify));
 };
+function onDispose$7(e) {
+    if (isNone(e) && this.mode !== 1 /* First */ && this.hasValue) {
+        pipe(this.value, fromValue(), observe(this.delegate));
+    }
+    else {
+        pipe(this.delegate, dispose(e));
+    }
+}
 class ThrottleObserver extends AbstractDelegatingObserver {
     constructor(delegate, durationFunction, mode) {
         super(delegate);
@@ -1707,15 +1723,7 @@ class ThrottleObserver extends AbstractDelegatingObserver {
             }
         };
         addDisposableDisposeParentOnChildError(this, this.durationSubscription);
-        addOnDisposedWithError(this, delegate);
-        addOnDisposedWithoutErrorTeardown(this, () => {
-            if (mode !== 1 /* First */ && this.hasValue) {
-                pipe(this.value, fromValue(), observe(delegate));
-            }
-            else {
-                pipe(delegate, dispose());
-            }
-        });
+        addTeardown(this, onDispose$7);
     }
     notify(next) {
         assertObserverState(this);
@@ -1742,26 +1750,25 @@ function throttle(duration, options = {}) {
     return lift(operator);
 }
 
+function onDispose$8(error) {
+    if (isNone(error) && this.isEmpty) {
+        let cause = none;
+        try {
+            cause = this.factory();
+        }
+        catch (e) {
+            cause = e;
+        }
+        error = { cause };
+    }
+    this.delegate.dispose(error);
+}
 class ThrowIfEmptyObserver extends AbstractDelegatingObserver {
     constructor(delegate, factory) {
         super(delegate);
         this.factory = factory;
         this.isEmpty = true;
-        addOnDisposedWithError(this, delegate);
-        addOnDisposedWithoutErrorTeardown(this, () => {
-            let error = none;
-            if (this.isEmpty) {
-                let cause = none;
-                try {
-                    cause = this.factory();
-                }
-                catch (e) {
-                    cause = e;
-                }
-                error = { cause };
-            }
-            pipe(delegate, dispose(error));
-        });
+        addTeardown(this, onDispose$8);
     }
     notify(next) {
         assertObserverState(this);
@@ -1917,6 +1924,11 @@ const shouldComplete = (enumerators) => {
     }
     return false;
 };
+function onDisposed(error) {
+    if (isSome(error) || (this.buffer.length === 0 && !this.hasCurrent)) {
+        pipe(this.delegate, dispose(error));
+    }
+}
 class ZipObserver extends AbstractDelegatingObserver {
     constructor(delegate, enumerators) {
         super(delegate);
@@ -1928,12 +1940,7 @@ class ZipObserver extends AbstractDelegatingObserver {
             this.current = none;
             this.buffer.length = 0;
         });
-        addOnDisposedWithError(this, delegate);
-        addOnDisposedWithoutErrorTeardown(this, () => {
-            if (this.buffer.length === 0 && !this.hasCurrent) {
-                pipe(delegate, dispose());
-            }
-        });
+        addTeardown(this, onDisposed);
     }
     move() {
         const buffer = this.buffer;
