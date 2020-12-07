@@ -209,5 +209,10 @@ const createDisposableValue = (value, cleanup) => {
     addTeardown(retval, defer(value, cleanup));
     return retval;
 };
+const toAbortSignal = (disposable) => {
+    const abortController = new AbortController();
+    addTeardown(disposable, () => abortController.abort());
+    return abortController.signal;
+};
 
-export { AbstractDisposable, AbstractSerialDisposable, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addOnDisposedWithoutError, addOnDisposedWithoutErrorTeardown, addTeardown, bindDisposables, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, toErrorHandler };
+export { AbstractDisposable, AbstractSerialDisposable, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addOnDisposedWithoutError, addOnDisposedWithoutErrorTeardown, addTeardown, bindDisposables, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, toAbortSignal, toErrorHandler };

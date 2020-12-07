@@ -1,7 +1,7 @@
 import { none } from './option.mjs';
 import { pipe, compose, returns } from './functions.mjs';
 import { createObservable, throttle, onNotify, mergeWith, compute, concatWith, defer, fromPromise, observe } from './observable.mjs';
-import { dispose, addTeardown } from './disposable.mjs';
+import { dispose, addTeardown, toAbortSignal } from './disposable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { createStreamable, mapReq, map } from './streamable.mjs';
 import { toStateStore } from './stateStore.mjs';
@@ -70,8 +70,7 @@ const historyStateStore = _historyStateStore;
 
 const globalFetch = self.fetch;
 const fetch = (onResponse) => fetchRequest => defer(observer => async () => {
-    const abortController = new AbortController();
-    addTeardown(observer, () => abortController.abort());
+    const signal = toAbortSignal(observer);
     let request = none;
     if (typeof fetchRequest === "string") {
         request = fetchRequest;
@@ -82,9 +81,7 @@ const fetch = (onResponse) => fetchRequest => defer(observer => async () => {
     }
     // This try/catch is necessary because we await in the try block.
     try {
-        const response = await globalFetch(request, {
-            signal: abortController.signal,
-        });
+        const response = await globalFetch(request, { signal });
         const onResponseResult = onResponse(response);
         const resultObs = onResponseResult instanceof Promise
             ? fromPromise(returns(onResponseResult))
