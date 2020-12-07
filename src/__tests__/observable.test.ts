@@ -74,6 +74,8 @@ import {
   zipWith,
   zipWithLatestFrom,
 } from "../observable";
+import { __concurrent } from "../observable/effects";
+import { Option, isSome } from "../option";
 import {
   forEach,
   fromArray as fromArrayRunnable,
@@ -96,8 +98,6 @@ import {
   testAsync,
 } from "../testing";
 import { createMonadTests } from "./monad.test";
-import { Option, isSome } from "../option";
-import { __concurrent } from "../observable/effects";
 
 const scheduler = createHostScheduler();
 

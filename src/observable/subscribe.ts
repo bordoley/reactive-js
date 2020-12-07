@@ -1,5 +1,5 @@
 import { DisposableLike } from "../disposable";
-import { Function1, ignore, pipe, SideEffect1 } from "../functions";
+import { Function1, SideEffect1, ignore, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { SchedulerLike } from "../scheduler";
 import { AbstractObserver, assertObserverState, observe } from "./observer";

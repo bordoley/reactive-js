@@ -354,7 +354,7 @@ const tryDispatch = <TResource extends DisposableLike>(
     // Setup the timeout subscription
     const timeoutSubscription = pipe(
       fromValue({ delay: maxIdleTime })(none),
-      subscribe(scheduler,_ => {
+      subscribe(scheduler, _ => {
         const resource = availableResources.pop(key);
         if (isSome(resource)) {
           pipe(resource, dispose());

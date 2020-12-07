@@ -9,12 +9,7 @@ import {
   pipe,
   updaterReducer,
 } from "./functions";
-import {
-  dispatchTo,
-  subscribe,
-  using,
-  zipWithLatestFrom,
-} from "./observable";
+import { dispatchTo, subscribe, using, zipWithLatestFrom } from "./observable";
 
 import {
   StreamableLike,

@@ -30,7 +30,7 @@ export const tests = describe(
         () => {
           da1 = pipe(
             rm.get("a"),
-    
+
             subscribe(scheduler, _ => {
               console.log("a1: " + scheduler.now);
             }),

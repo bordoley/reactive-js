@@ -83,10 +83,7 @@ export const tests = describe(
     fromValueStream.dispatch(FlowMode.Resume);
 
     const f = mockFn();
-    const subscription = pipe(
-      fromValueStream,
-      subscribe(scheduler, f),
-    );
+    const subscription = pipe(fromValueStream, subscribe(scheduler, f));
 
     scheduler.run();
 

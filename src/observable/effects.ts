@@ -3,10 +3,10 @@ import {
   Error,
   addDisposable,
   addDisposableDisposeParentOnChildError,
+  addOnDisposedWithoutErrorTeardown,
   addTeardown,
   dispose,
   disposed,
-  addOnDisposedWithoutErrorTeardown,
 } from "../disposable";
 import { __DEV__, warn } from "../env";
 import {
@@ -33,7 +33,7 @@ import { ObservableLike, ObserverLike } from "../observable";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerLike, schedule } from "../scheduler";
 import { empty } from "./empty";
-import { latest, LatestMode } from "./latest";
+import { LatestMode, latest } from "./latest";
 import { defer } from "./observable";
 import { subscribe } from "./subscribe";
 
