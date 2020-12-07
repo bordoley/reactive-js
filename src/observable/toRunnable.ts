@@ -8,7 +8,6 @@ import {
 } from "../scheduler";
 import { subscribe } from "./subscribe";
 
-
 export const toRunnable = <T>(
   options: {
     readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
@@ -18,7 +17,10 @@ export const toRunnable = <T>(
     const { schedulerFactory = createVirtualTimeScheduler } = options;
     const scheduler = schedulerFactory();
 
-    const subscription = pipe(source, subscribe(scheduler, e => sink.notify(e)));
+    const subscription = pipe(
+      source,
+      subscribe(scheduler, e => sink.notify(e)),
+    );
 
     scheduler.run();
 

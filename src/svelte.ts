@@ -1,10 +1,7 @@
 import { Readable } from "svelte/store";
 import { dispose } from "./disposable";
 import { Factory, Function1, defer, pipe } from "./functions";
-import {
-  ObservableLike,
-  subscribe as subscribeObs,
-} from "./observable";
+import { ObservableLike, subscribe as subscribeObs } from "./observable";
 import { Option, none } from "./option";
 import { SchedulerLike } from "./scheduler";
 

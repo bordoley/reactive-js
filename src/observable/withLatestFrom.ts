@@ -38,10 +38,7 @@ class WithLatestFromObserver<
     super(delegate);
     this.selector = selector;
 
-    const otherSubscription = pipe(
-      other,
-      subscribe(this, this.onNotify),
-    );
+    const otherSubscription = pipe(other, subscribe(this, this.onNotify));
 
     addOnDisposedWithoutErrorTeardown(otherSubscription, () => {
       if (!this.hasLatest) {

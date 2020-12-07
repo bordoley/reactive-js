@@ -1,17 +1,7 @@
 import {
-  DisposableLike,
-  addDisposable,
-  addTeardown,
-  createDisposable,
-  dispose,
-} from "../disposable";
-import {
   Factory,
-  Function1,
-  SideEffect,
+  SideEffect2,
   alwaysFalse,
-  defer,
-  pipe,
 } from "../functions";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
 import { run } from "./schedulerContinuation";
@@ -44,57 +34,45 @@ const now: Factory<number> = supportsPerformanceNow
     }
   : () => Date.now();
 
-const createScheduledCallback = (
-  disposable: DisposableLike,
-  cb: SideEffect,
-): SideEffect => () => {
-  if (!disposable.isDisposed) {
-    pipe(disposable, dispose());
-    cb();
-  }
-};
-
-const scheduleImmediateWithSetImmediate = (cb: SideEffect) => {
-  const disposable = createDisposable();
-  const immediate = setImmediate(createScheduledCallback(disposable, cb));
-  addTeardown(disposable, defer(immediate, clearImmediate));
-  return disposable;
-};
+const scheduleImmediateWithSetImmediate = (
+  scheduler: HostScheduler,
+  continuation: SchedulerContinuationLike,
+) => setImmediate(runContinuation, scheduler, continuation);
 
 const scheduleImmediateWithMessageChannel = (channel: MessageChannel) => (
-  cb: SideEffect,
+  scheduler: HostScheduler,
+  continuation: SchedulerContinuationLike,
 ) => {
-  const disposable = createDisposable();
-
-  channel.port1.onmessage = createScheduledCallback(disposable, cb);
+  channel.port1.onmessage = () => runContinuation(scheduler, continuation);
   channel.port2.postMessage(null);
-
-  return disposable;
 };
 
-const scheduleDelayed = (cb: SideEffect, delay: number) => {
-  const disposable = createDisposable();
-  const timeout = setTimeout(createScheduledCallback(disposable, cb), delay);
-  addTeardown(disposable, defer(timeout, clearTimeout));
-  return disposable;
+const scheduleDelayed = (
+  scheduler: HostScheduler,
+  continuation: SchedulerContinuationLike,
+  delay: number,
+) => {
+  setTimeout(runContinuation, delay, scheduler, continuation);
 };
 
-const scheduleImmediateWithSetTimeout = (cb: SideEffect) =>
-  scheduleDelayed(cb, 0);
+const scheduleImmediateWithSetTimeout = (
+  scheduler: HostScheduler,
+  continuation: SchedulerContinuationLike,
+) => scheduleDelayed(scheduler, continuation, 0);
 
-const scheduleImmediate: Function1<
-  SideEffect,
-  DisposableLike
+const scheduleImmediate: SideEffect2<
+  HostScheduler,
+  SchedulerContinuationLike
 > = supportsSetImmediate
   ? scheduleImmediateWithSetImmediate
   : supportsMessageChannel
   ? scheduleImmediateWithMessageChannel(new MessageChannel())
   : scheduleImmediateWithSetTimeout;
 
-const createCallback = (
+const runContinuation = (
   scheduler: HostScheduler,
   continuation: SchedulerContinuationLike,
-): SideEffect => () => {
+) => {
   if (!continuation.isDisposed) {
     scheduler.inContinuation = true;
     scheduler.startTime = scheduler.now;
@@ -125,13 +103,11 @@ class HostScheduler implements SchedulerLike {
     options: { readonly delay?: number } = {},
   ) {
     const { delay = 0 } = options;
-    if (!continuation.isDisposed) {
-      const callback = createCallback(this, continuation);
-      const callbackSubscription =
-        delay > 0
-          ? scheduleDelayed(callback, delay)
-          : scheduleImmediate(callback);
-      addDisposable(continuation, callbackSubscription);
+    const continuationIsDisposed = continuation.isDisposed;
+    if (!continuationIsDisposed && delay > 0) {
+      scheduleDelayed(this, continuation, delay);
+    } else if (!continuationIsDisposed) {
+      scheduleImmediate(this, continuation);
     }
   }
 }

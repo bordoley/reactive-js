@@ -1,6 +1,6 @@
 import { isSome, none, isNone } from './option.mjs';
-import { pipe, raise, alwaysFalse, defer } from './functions.mjs';
-import { AbstractDisposable, addTeardown, dispose, AbstractSerialDisposable, disposed, addDisposable, createDisposable } from './disposable.mjs';
+import { pipe, raise, alwaysFalse } from './functions.mjs';
+import { AbstractDisposable, addTeardown, dispose, AbstractSerialDisposable, disposed, addDisposable } from './disposable.mjs';
 
 const computeParentIndex = (index) => Math.floor((index - 1) / 2);
 const siftDown = (queue, item) => {
@@ -370,37 +370,21 @@ const now = supportsPerformanceNow
             return hr[0] * 1000 + hr[1] / 1e6;
         }
         : () => Date.now();
-const createScheduledCallback = (disposable, cb) => () => {
-    if (!disposable.isDisposed) {
-        pipe(disposable, dispose());
-        cb();
-    }
-};
-const scheduleImmediateWithSetImmediate = (cb) => {
-    const disposable = createDisposable();
-    const immediate = setImmediate(createScheduledCallback(disposable, cb));
-    addTeardown(disposable, defer(immediate, clearImmediate));
-    return disposable;
-};
-const scheduleImmediateWithMessageChannel = (channel) => (cb) => {
-    const disposable = createDisposable();
-    channel.port1.onmessage = createScheduledCallback(disposable, cb);
+const scheduleImmediateWithSetImmediate = (scheduler, continuation) => setImmediate(runContinuation, scheduler, continuation);
+const scheduleImmediateWithMessageChannel = (channel) => (scheduler, continuation) => {
+    channel.port1.onmessage = () => runContinuation(scheduler, continuation);
     channel.port2.postMessage(null);
-    return disposable;
 };
-const scheduleDelayed = (cb, delay) => {
-    const disposable = createDisposable();
-    const timeout = setTimeout(createScheduledCallback(disposable, cb), delay);
-    addTeardown(disposable, defer(timeout, clearTimeout));
-    return disposable;
+const scheduleDelayed = (scheduler, continuation, delay) => {
+    setTimeout(runContinuation, delay, scheduler, continuation);
 };
-const scheduleImmediateWithSetTimeout = (cb) => scheduleDelayed(cb, 0);
+const scheduleImmediateWithSetTimeout = (scheduler, continuation) => scheduleDelayed(scheduler, continuation, 0);
 const scheduleImmediate = supportsSetImmediate
     ? scheduleImmediateWithSetImmediate
     : supportsMessageChannel
         ? scheduleImmediateWithMessageChannel(new MessageChannel())
         : scheduleImmediateWithSetTimeout;
-const createCallback = (scheduler, continuation) => () => {
+const runContinuation = (scheduler, continuation) => {
     if (!continuation.isDisposed) {
         scheduler.inContinuation = true;
         scheduler.startTime = scheduler.now;
@@ -423,12 +407,12 @@ class HostScheduler {
     }
     schedule(continuation, options = {}) {
         const { delay = 0 } = options;
-        if (!continuation.isDisposed) {
-            const callback = createCallback(this, continuation);
-            const callbackSubscription = delay > 0
-                ? scheduleDelayed(callback, delay)
-                : scheduleImmediate(callback);
-            addDisposable(continuation, callbackSubscription);
+        const continuationIsDisposed = continuation.isDisposed;
+        if (!continuationIsDisposed && delay > 0) {
+            scheduleDelayed(this, continuation, delay);
+        }
+        else if (!continuationIsDisposed) {
+            scheduleImmediate(this, continuation);
         }
     }
 }

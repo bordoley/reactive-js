@@ -47,7 +47,7 @@ class ZipWithLatestFromObserver<TA, TB, T> extends AbstractObserver<
         this.hasLatest = true;
         this.otherLatest = otherLatest;
         notifyDelegate(this);
-      
+
         if (this.isDisposed && this.queue.length === 0) {
           pipe(this.delegate, dispose());
         }
