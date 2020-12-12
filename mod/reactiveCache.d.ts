@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Option } from './option';
 import { DisposableLike } from './disposable';
 import { SchedulerLike } from './scheduler';

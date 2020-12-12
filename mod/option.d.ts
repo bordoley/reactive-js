@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Function1, Factory } from './functions';
 
 /**

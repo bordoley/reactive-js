@@ -1,4 +1,3 @@
-/// <reference types="node" />
 declare type RelativeURI = {
     pathname: string;
     search: string;

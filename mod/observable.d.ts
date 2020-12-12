@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Equality, TypePredicate, Predicate, Reducer } from './functions';
 import { Option } from './option';
 import { DisposableLike, DisposableOrTeardown } from './disposable';

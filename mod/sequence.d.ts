@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Factory, Function1, Equality, Predicate, Updater, Reducer } from './functions';
 import { RunnableLike } from './runnable';
 

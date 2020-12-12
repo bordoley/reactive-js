@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Function1, Factory, SideEffect1, Equality, Predicate, Updater, TypePredicate, Reducer } from './functions';
 import { Option } from './option';
 

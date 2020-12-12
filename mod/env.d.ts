@@ -1,4 +1,3 @@
-/// <reference types="node" />
 declare const __DEV__: boolean;
 declare const warn: (message: string) => void;
 declare const __DENO__: boolean;

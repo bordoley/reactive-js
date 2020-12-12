@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Function1, Reducer, Factory } from './functions';
 import { ObservableLike, MulticastObservableLike } from './observable';
 import { StreamableLike } from './streamable';
