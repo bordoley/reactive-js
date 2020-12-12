@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Function1, SideEffect2, Updater } from './functions';
 import { ReadonlyObjectMap } from './readonlyObjectMap';
 import { IOSourceLike, IOSourceOperator } from './io';

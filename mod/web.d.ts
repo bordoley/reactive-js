@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Function1 } from './functions';
 import { ObservableLike } from './observable';
 import { RelativeURI } from './relativeURI';

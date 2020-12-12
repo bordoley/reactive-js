@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Function1, Predicate, Reducer, Factory } from './functions';
 import { ReadonlyObjectMap } from './readonlyObjectMap';
 

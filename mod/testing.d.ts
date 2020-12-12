@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Function1, SideEffect, Factory, Equality } from './functions';
 import { Option } from './option';
 

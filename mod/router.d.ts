@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Option } from './option';
 import { ReadonlyObjectMap } from './readonlyObjectMap';
 

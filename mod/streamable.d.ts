@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Reducer, Factory, Equality, Function1, SideEffect1, Function2 } from './functions';
 import { Option } from './option';
 import { SchedulerLike } from './scheduler';

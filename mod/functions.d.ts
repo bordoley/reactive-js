@@ -1,4 +1,3 @@
-/// <reference types="node" />
 /**
  * Compare two values to determine their relative ordering.
  *

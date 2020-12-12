@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { SideEffect, Function1 } from './functions';
 import { DisposableLike } from './disposable';
 

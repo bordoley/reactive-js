@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Function1 } from './functions';
 import { DisposableLike } from './disposable';
 import { SchedulerLike } from './scheduler';

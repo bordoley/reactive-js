@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Updater, Factory, Equality, Function1 } from './functions';
 import { StreamableLike } from './streamable';
 

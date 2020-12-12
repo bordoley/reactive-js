@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { Function2, Factory, Function1, Updater } from './functions';
 import { ObservableLike } from './observable';
 import { EnumerableLike } from './enumerable';
