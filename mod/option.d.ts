@@ -1,5 +1,4 @@
-import { Function1, Factory } from './functions';
-
+import { Function1, Factory } from "./functions.mjs";
 /**
  * Represents an unboxed value of type T or undefined.
  */
@@ -22,5 +21,4 @@ declare const map: <TA, TB>(f: Function1<TA, TB>) => Function1<Option<TA>, Optio
  * if not `none`, otherwise returns the result of invoking the function `compute`.
  */
 declare const orCompute: <T>(compute: Factory<T>) => Function1<Option<T>, T>;
-
 export { Option, isNone, isSome, map, none, orCompute };

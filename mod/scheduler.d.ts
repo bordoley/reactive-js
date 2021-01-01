@@ -1,6 +1,5 @@
-import { SideEffect, Function1 } from './functions';
-import { DisposableLike } from './disposable';
-
+import { SideEffect, Function1 } from "./functions.mjs";
+import { DisposableLike } from "./disposable.mjs";
 /**
  * Creates a new priority scheduler which schedules work using the provided
  * host scheduler.
@@ -10,7 +9,6 @@ import { DisposableLike } from './disposable';
  */
 declare const toPriorityScheduler: (hostScheduler: SchedulerLike) => DisposableLike & PrioritySchedulerLike;
 declare const toPausableScheduler: (hostScheduler: SchedulerLike) => DisposableLike & PausableSchedulerLike;
-
 declare class YieldError {
     readonly delay: number;
     constructor(delay: number);
@@ -20,7 +18,6 @@ declare const __yield: (delay?: number) => void;
 declare const schedule: (f: SideEffect, options?: {
     readonly delay?: number | undefined;
 } | undefined) => Function1<SchedulerLike, DisposableLike>;
-
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
  *
@@ -28,11 +25,9 @@ declare const schedule: (f: SideEffect, options?: {
  * @param priority The priority to schedule work at.
  */
 declare const toSchedulerWithPriority: (priority: number) => Function1<PrioritySchedulerLike, SchedulerLike>;
-
 declare const createHostScheduler: (options?: {
     readonly yieldInterval?: number;
 }) => SchedulerLike;
-
 /**
  * Creates a new virtual time scheduler instance.
  *
@@ -43,7 +38,6 @@ declare const createHostScheduler: (options?: {
 declare const createVirtualTimeScheduler: (options?: {
     readonly maxMicroTaskTicks?: number;
 }) => VirtualTimeSchedulerLike;
-
 interface SchedulerContinuationRunStatusChangedListenerLike {
     onRunStatusChanged(state: boolean): void;
 }
@@ -112,5 +106,4 @@ interface PrioritySchedulerLike {
         readonly delay?: number;
     }): void;
 }
-
 export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerContinuationRunStatusChangedListenerLike, SchedulerLike, VirtualTimeSchedulerLike, YieldError, __yield, createHostScheduler, createVirtualTimeScheduler, run, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };

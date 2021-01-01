@@ -1,8 +1,7 @@
-import { Function1, Reducer, Factory } from './functions';
-import { ObservableLike, MulticastObservableLike } from './observable';
-import { StreamableLike } from './streamable';
-import { FlowableLike, FlowMode } from './flowable';
-
+import { Function1, Reducer, Factory } from "./functions.mjs";
+import { ObservableLike, MulticastObservableLike } from "./observable.mjs";
+import { StreamableLike } from "./streamable.mjs";
+import { FlowableLike, FlowMode } from "./flowable.mjs";
 declare const enum IOEventType {
     Notify = 1,
     Done = 2
@@ -45,5 +44,4 @@ interface IOSinkAccumulatorLike<T, TAcc> extends IOSinkLike<T>, MulticastObserva
 declare const createIOSinkAccumulator: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: {
     readonly replay?: number | undefined;
 } | undefined) => IOSinkAccumulatorLike<T, TAcc>;
-
 export { IOEvent, IOEventType, IOSinkAccumulatorLike, IOSinkLike, IOSourceLike, IOSourceOperator, createIOSinkAccumulator, decodeWithCharset, done, empty, encodeUtf8, fromArray, fromObservable, fromValue, map, notify };

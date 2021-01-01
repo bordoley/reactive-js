@@ -1,12 +1,10 @@
-import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Equality, TypePredicate, Predicate, Reducer } from './functions';
-import { Option } from './option';
-import { DisposableLike, DisposableOrTeardown } from './disposable';
-import { SchedulerLike, VirtualTimeSchedulerLike } from './scheduler';
-import { EnumerableLike } from './enumerable';
-import { RunnableLike } from './runnable';
-
+import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Equality, TypePredicate, Predicate, Reducer } from "./functions.mjs";
+import { Option } from "./option.mjs";
+import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
+import { SchedulerLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
+import { EnumerableLike } from "./enumerable.mjs";
+import { RunnableLike } from "./runnable.mjs";
 declare const dispatchTo: <T>(dispatcher: DispatcherLike<T>) => SideEffect1<T>;
-
 declare const async: <T>(computation: Factory<T>) => ObservableLike<T>;
 declare const enum ObservableEffectMode {
     Batched = 0,
@@ -31,14 +29,66 @@ declare function __await<TA, TB, TC, TD, T>(fn: Function4<TA, TB, TC, TD, Observ
 declare function __await<TA, TB, TC, TD, TE, T>(fn: Function5<TA, TB, TC, TD, TE, ObservableLike<T>>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
 declare function __await<TA, TB, TC, TD, TE, TF, T>(fn: Function6<TA, TB, TC, TD, TE, TF, ObservableLike<T>>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
 declare function __await<T>(observable: ObservableLike<T>): T;
-declare function __concurrent<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): [TA, TB];
-declare function __concurrent<TA, TB, TC, T>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): [TA, TB, TC];
-declare function __concurrent<TA, TB, TC, TD>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>): [TA, TB, TC, TD];
-declare function __concurrent<TA, TB, TC, TD, TE>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>): [TA, TB, TC, TD, TE];
-declare function __concurrent<TA, TB, TC, TD, TE, TF>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>): [TA, TB, TC, TD, TE, TF];
-declare function __concurrent<TA, TB, TC, TD, TE, TF, TG>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>): [TA, TB, TC, TD, TE, TF, TG];
-declare function __concurrent<TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>): [TA, TB, TC, TD, TE, TF, TG, TH];
-declare function __concurrent<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): [TA, TB, TC, TD, TE, TF, TG, TH, TI];
+declare function __concurrent<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): [
+    TA,
+    TB
+];
+declare function __concurrent<TA, TB, TC, T>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): [
+    TA,
+    TB,
+    TC
+];
+declare function __concurrent<TA, TB, TC, TD>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>): [
+    TA,
+    TB,
+    TC,
+    TD
+];
+declare function __concurrent<TA, TB, TC, TD, TE>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>): [
+    TA,
+    TB,
+    TC,
+    TD,
+    TE
+];
+declare function __concurrent<TA, TB, TC, TD, TE, TF>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>): [
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF
+];
+declare function __concurrent<TA, TB, TC, TD, TE, TF, TG>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>): [
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG
+];
+declare function __concurrent<TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>): [
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG,
+    TH
+];
+declare function __concurrent<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): [
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG,
+    TH,
+    TI
+];
 declare function __do(fn: SideEffect): void;
 declare function __do<TA>(fn: SideEffect1<TA>, a: TA): void;
 declare function __do<TA, TB>(fn: SideEffect2<TA, TB>, a: TA, b: TB): void;
@@ -54,17 +104,70 @@ declare function __using<TA, TB, TC, TD, T extends DisposableLike>(fn: Function4
 declare function __using<TA, TB, TC, TD, TE, T extends DisposableLike>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
 declare function __using<TA, TB, TC, TD, TE, TF, T extends DisposableLike>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
 declare function __currentScheduler(): SchedulerLike;
-
-declare function combineLatest<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<[TA, TB]>;
-declare function combineLatest<TA, TB, TC, T>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): ObservableLike<[TA, TB, TC]>;
-declare function combineLatest<TA, TB, TC, TD>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>): ObservableLike<[TA, TB, TC, TD]>;
-declare function combineLatest<TA, TB, TC, TD, TE>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>): ObservableLike<[TA, TB, TC, TD, TE]>;
-declare function combineLatest<TA, TB, TC, TD, TE, TF>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>): ObservableLike<[TA, TB, TC, TD, TE, TF]>;
-declare function combineLatest<TA, TB, TC, TD, TE, TF, TG>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>): ObservableLike<[TA, TB, TC, TD, TE, TF, TG]>;
-declare function combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>): ObservableLike<[TA, TB, TC, TD, TE, TF, TG, TH]>;
-declare function combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): ObservableLike<[TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-declare const combineLatestWith: <TA, TB>(snd: ObservableLike<TB>) => Function1<ObservableLike<TA>, ObservableLike<[TA, TB]>>;
-
+declare function combineLatest<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<[
+    TA,
+    TB
+]>;
+declare function combineLatest<TA, TB, TC, T>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): ObservableLike<[
+    TA,
+    TB,
+    TC
+]>;
+declare function combineLatest<TA, TB, TC, TD>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD
+]>;
+declare function combineLatest<TA, TB, TC, TD, TE>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE
+]>;
+declare function combineLatest<TA, TB, TC, TD, TE, TF>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF
+]>;
+declare function combineLatest<TA, TB, TC, TD, TE, TF, TG>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG
+]>;
+declare function combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG,
+    TH
+]>;
+declare function combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG,
+    TH,
+    TI
+]>;
+declare const combineLatestWith: <TA, TB>(snd: ObservableLike<TB>) => Function1<ObservableLike<TA>, ObservableLike<[
+    TA,
+    TB
+]>>;
 /**
  *  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the observer.
  *
@@ -74,13 +177,11 @@ declare const combineLatestWith: <TA, TB>(snd: ObservableLike<TB>) => Function1<
 declare const compute: <T>(options?: {
     readonly delay?: number | undefined;
 } | undefined) => Function1<Factory<T>, ObservableLike<T>>;
-
 /**
  * Creates an `ObservableLike` which emits all values from each source sequentially.
  */
 declare function concat<T>(fst: ObservableLike<T>, snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): ObservableLike<T>;
 declare const concatWith: <T>(snd: ObservableLike<T>) => Function1<ObservableLike<T>, ObservableLike<T>>;
-
 /**
  * Factory for safely creating new `ObservableLike` instances. The onSubscribe function
  * is called with a `SafeObserverLike` that may be notified from any context.
@@ -91,18 +192,15 @@ declare const concatWith: <T>(snd: ObservableLike<T>) => Function1<ObservableLik
  * @param onSubscribe
  */
 declare const createObservable: <T>(onSubscribe: SideEffect1<DispatcherLike<T>>) => ObservableLike<T>;
-
 declare const createSubject: <T>(options?: {
     readonly replay?: number;
 }) => SubjectLike<T>;
-
 /**
  * Return an `ObservableLike` that emits no items and disposes the subscription after a specified delay.
  */
 declare const empty: <T>(options?: {
     readonly delay?: number;
 }) => ObservableLike<T>;
-
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
  * An optional `startIndex` in the array maybe specified,
@@ -115,9 +213,7 @@ declare const fromArray: <T>(options?: {
     readonly startIndex?: number;
     readonly endIndex?: number;
 }) => Function1<readonly T[], ObservableLike<T>>;
-
 declare const fromDisposable: (disposable: DisposableLike) => ObservableLike<unknown>;
-
 /**
  * Creates an `ObservableLike` which enumerates through the values
  * produced by the provided `Enumerable` with a specified `delay` between emitted items.
@@ -128,7 +224,6 @@ declare const fromDisposable: (disposable: DisposableLike) => ObservableLike<unk
 declare const fromEnumerable: <T>(options?: {
     readonly delay?: number | undefined;
 } | undefined) => Function1<EnumerableLike<T>, ObservableLike<T>>;
-
 /**
  * Creates an `ObservableLike` which iterates through the values
  * produced by the provided `Iterator` with a specified `delay` between emitted items.
@@ -147,7 +242,6 @@ declare const fromIterator: <T, TReturn = any, TNext = unknown>(options?: {
 declare const fromIterable: <T>(options?: {
     readonly delay?: number | undefined;
 } | undefined) => Function1<Iterable<T>, ObservableLike<T>>;
-
 /**
  * Converts a `Promise` to an `ObservableLike`. The provided promise factory
  * is invoked for each observer to the observable.
@@ -155,7 +249,6 @@ declare const fromIterable: <T>(options?: {
  * @param factory Factory function to create a new `Promise` instance.
  */
 declare const fromPromise: <T>(factory: Factory<Promise<T>>) => ObservableLike<T>;
-
 /**
  * Generates an `ObservableLike` sequence from a generator function
  * that is applied to an accumulator value with a specified `delay`
@@ -168,18 +261,15 @@ declare const fromPromise: <T>(factory: Factory<Promise<T>>) => ObservableLike<T
 declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
     readonly delay?: number;
 }) => ObservableLike<T>;
-
 /**
  *  Creates an `ObservableLike` which concurrently emits values from the sources.
  */
 declare function merge<T>(fst: ObservableLike<T>, snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): ObservableLike<T>;
 declare const mergeWith: <T>(snd: ObservableLike<T>) => Function1<ObservableLike<T>, ObservableLike<T>>;
-
 /**
  * Returna an `ObservableLike` instance that emits no items and never disposes its observer.
  */
 declare const never: <T>() => ObservableLike<T>;
-
 /**
  *  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the observer.
  *
@@ -189,7 +279,6 @@ declare const never: <T>() => ObservableLike<T>;
 declare const fromValue: <T>(options?: {
     readonly delay?: number;
 }) => Function1<T, ObservableLike<T>>;
-
 /**
  * Safely subscribes to an `ObservableLike` with a `ObserverLike` instance
  * using the provided scheduler. The returned `DisposableLike`
@@ -198,7 +287,6 @@ declare const fromValue: <T>(options?: {
  * @param scheduler The SchedulerLike instance that should be used by the source to notify it's observer.
  */
 declare const subscribe: <T>(scheduler: SchedulerLike, onNotify?: SideEffect1<T>) => Function1<ObservableLike<T>, DisposableLike>;
-
 /**
  * Creates an `ObservableLike` that emits no items and immediately disposes its subscription with an error.
  *
@@ -208,9 +296,11 @@ declare const subscribe: <T>(scheduler: SchedulerLike, onNotify?: SideEffect1<T>
 declare const throws: <T>(options?: {
     readonly delay?: number;
 }) => Function1<Factory<unknown>, ObservableLike<T>>;
-
 declare function using<TResource extends DisposableLike, T>(resourceFactory: Function1<SchedulerLike, TResource>, observableFactory: Function1<TResource, ObservableLike<T>>): ObservableLike<T>;
-declare function using<TResource1 extends DisposableLike, TResource2 extends DisposableLike, T>(resourceFactory: Function1<SchedulerLike, [TResource1, TResource2]>, observableFactory: Function2<TResource1, TResource2, ObservableLike<T>>): ObservableLike<T>;
+declare function using<TResource1 extends DisposableLike, TResource2 extends DisposableLike, T>(resourceFactory: Function1<SchedulerLike, [
+    TResource1,
+    TResource2
+]>, observableFactory: Function2<TResource1, TResource2, ObservableLike<T>>): ObservableLike<T>;
 declare function using<TResource1 extends DisposableLike, TResource2 extends DisposableLike, TResource3 extends DisposableLike, T>(resourceFactory: Function1<SchedulerLike, [
     TResource1,
     TResource2,
@@ -230,13 +320,10 @@ declare function using<TResource1 extends DisposableLike, TResource2 extends Dis
     TResource5
 ]>, observableFactory: Function5<TResource1, TResource2, TResource3, TResource4, TResource5, ObservableLike<T>>): ObservableLike<T>;
 declare function using<TResource extends DisposableLike, T>(resourceFactory: Function1<SchedulerLike, TResource | readonly TResource[]>, observableFactory: (...resources: readonly TResource[]) => ObservableLike<T>): ObservableLike<T>;
-
 declare const defer: <T>(factory: Function1<ObserverLike<T>, SideEffect>, options?: {
     readonly delay?: number;
 }) => ObservableLike<T>;
-
 declare const observe: <T>(observer: ObserverLike<T>) => SideEffect1<ObservableLike<T>>;
-
 /**
  * Returns an `ObservableLike` which buffers items produced by the source until either the
  * number of items reaches the specified maximum buffer size or the duration time expires.
@@ -248,7 +335,6 @@ declare function buffer<T>(options?: {
     readonly duration?: Function1<T, ObservableLike<unknown>> | number;
     readonly maxBufferSize?: number;
 }): ObservableOperator<T, readonly T[]>;
-
 /**
  * Returns an `ObservableLike` which catches errors produced by the source and either continues with
  * the `ObservableLike` returned from the `onError` callback or swallows the error if
@@ -258,7 +344,6 @@ declare function buffer<T>(options?: {
  * to continue with or void if the error should be propagated.
  */
 declare const catchError: <T>(onError: Function1<unknown, void | ObservableLike<T>>) => Function1<ObservableLike<T>, ObservableLike<T>>;
-
 /**
  * Returns an `ObservableLike` that emits all items emitted by the source that
  * are distinct by comparison from the previous item.
@@ -269,20 +354,16 @@ declare const catchError: <T>(onError: Function1<unknown, void | ObservableLike<
 declare const distinctUntilChanged: <T>(options?: {
     readonly equality?: Equality<T> | undefined;
 }) => Function1<ObservableLike<T>, ObservableLike<T>>;
-
 /**
  * Returns an `ObservableLike` that emits items from the source,
  * concatenated with the values specified as arguments.
  */
 declare function endWith<T>(value: T, ...values: readonly T[]): ObservableOperator<T, T>;
-
 declare const genMap: <TA, TB, TReturn = any, TNext = unknown>(mapper: Function1<TA, Generator<TB, TReturn, TNext>>) => Function1<ObservableLike<TA>, ObservableLike<TB>>;
-
 /**
  * Returns an `ObservableLike` that ignores all items emitted by the source.
  */
 declare const ignoreElements: <TA, TB>() => Function1<ObservableLike<TA>, ObservableLike<TB>>;
-
 /**
  * Returns an `ObservableLike` that only emits items from the
  * source that satisfy the specified type predicate.
@@ -297,7 +378,6 @@ declare const keepType: <TA, TB extends TA>(predicate: TypePredicate<TA, TB>) =>
  * @param predicate The predicate function.
  */
 declare const keep: <T>(predicate: Predicate<T>) => Function1<ObservableLike<T>, ObservableLike<T>>;
-
 /**
  * Creates a new `ObservableLike` which applies the provided the operator function to
  * observer when the source is subscribed to.
@@ -305,7 +385,6 @@ declare const keep: <T>(predicate: Predicate<T>) => Function1<ObservableLike<T>,
  * @param operator The operator function to apply.
  */
 declare const lift: <TA, TB>(operator: ObserverOperator<TA, TB>) => Function1<ObservableLike<TA>, ObservableLike<TB>>;
-
 /**
  * Returns an `ObservableLike` that applies the `mapper` function to each
  * value emitted by the source.
@@ -314,9 +393,7 @@ declare const lift: <TA, TB>(operator: ObserverOperator<TA, TB>) => Function1<Ob
  */
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => Function1<ObservableLike<TA>, ObservableLike<TB>>;
 declare const mapTo: <TA, TB>(value: TB) => Function1<ObservableLike<TA>, ObservableLike<TB>>;
-
 declare const mapAsync: <TA, TB>(f: Function1<TA, Promise<TB>>) => Function1<ObservableLike<TA>, ObservableLike<TB>>;
-
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
  * which concurrently delivers values emitted by the inner sources.
@@ -352,22 +429,21 @@ declare const concatMap: <TA, TB>(mapper: Function1<TA, ObservableLike<TB>>, opt
  */
 declare const exhaust: <T>() => Function1<ObservableLike<ObservableLike<T>>, ObservableLike<T>>;
 declare const exhaustMap: <TA, TB>(mapper: Function1<TA, ObservableLike<TB>>) => Function1<ObservableLike<TA>, ObservableLike<TB>>;
-
 /**
  * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
  *
  * @param onNotify The function that is invoked when the observable source produces values.
  */
 declare function onNotify<T>(onNotify: SideEffect1<T>): ObservableOperator<T, T>;
-
 /**
  * Executes a side-effect when the observable is subscribed.
  * @param f
  */
 declare const onSubscribe: <T>(f: Factory<DisposableOrTeardown | void>) => Function1<ObservableLike<T>, ObservableLike<T>>;
-
-declare const pairwise: <T>() => Function1<ObservableLike<T>, ObservableLike<[Option<T>, T]>>;
-
+declare const pairwise: <T>() => Function1<ObservableLike<T>, ObservableLike<[
+    Option<T>,
+    T
+]>>;
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
  *
@@ -378,9 +454,7 @@ declare const pairwise: <T>() => Function1<ObservableLike<T>, ObservableLike<[Op
 declare const publish: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number | undefined;
 } | undefined) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
-
 declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => Function1<ObservableLike<T>, ObservableLike<TAcc>>;
-
 /**
  * Returns an `ObservableLike` that applies the predicate function each time the source
  * completes to determine if the subscription should be renewed.
@@ -409,7 +483,6 @@ declare function retry<T>(): ObservableOperator<T, T>;
  * @param predicate
  */
 declare function retry<T>(predicate: Function2<number, unknown, boolean>): ObservableOperator<T, T>;
-
 /**
  * Returns an `ObservableLike` that applies an accumulator function over the source,
  * and emits each intermediate result.
@@ -418,7 +491,6 @@ declare function retry<T>(predicate: Function2<number, unknown, boolean>): Obser
  * @param initialValue The initial accumulation value.
  */
 declare const scan: <T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => Function1<ObservableLike<T>, ObservableLike<TAcc>>;
-
 declare type AsyncReducer<TAcc, T> = Function2<TAcc, T, ObservableLike<TAcc>>;
 /**
  * Returns the `ObservableLike` that applies an asynchronous accumulator function
@@ -428,7 +500,6 @@ declare type AsyncReducer<TAcc, T> = Function2<TAcc, T, ObservableLike<TAcc>>;
  * @param initialValue The initial accumulation value.
  */
 declare const scanAsync: <T, TAcc>(scanner: Function2<TAcc, T, ObservableLike<TAcc>>, initialValue: Factory<TAcc>) => Function1<ObservableLike<T>, ObservableLike<TAcc>>;
-
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
  * source. When the refcount goes to 0, the underlying subscription
@@ -441,7 +512,6 @@ declare const scanAsync: <T, TAcc>(scanner: Function2<TAcc, T, ObservableLike<TA
 declare const share: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number | undefined;
 } | undefined) => Function1<ObservableLike<T>, ObservableLike<T>>;
-
 /**
  * Returns an `ObservableLike` that skips the first count items emitted by the source.
  *
@@ -450,27 +520,23 @@ declare const share: <T>(scheduler: SchedulerLike, options?: {
 declare const skipFirst: <T>(options?: {
     readonly count?: number;
 }) => Function1<ObservableLike<T>, ObservableLike<T>>;
-
 /**
  * Returns an `ObservableLike` that emits the values specified as arguments,
  * concatenated with items from the source.
  */
 declare function startWith<T>(value: T, ...values: readonly T[]): ObservableOperator<T, T>;
-
 /**
  * Returns an `ObservableLike` instance that subscribes to the source on the specified `SchedulerLike`.
  *
  * @param scheduler `SchedulerLike` instance to use when subscribing to the source.
  */
 declare const subscribeOn: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, ObservableLike<T>>;
-
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
  * values only from the most recent source.
  */
 declare const switchAll: <T>() => Function1<ObservableLike<ObservableLike<T>>, ObservableLike<T>>;
 declare const switchMap: <TA, TB>(mapper: Function1<TA, ObservableLike<TB>>) => Function1<ObservableLike<TA>, ObservableLike<TB>>;
-
 /**
  * Returns an `ObservableLike` that only emits the first `count` values emitted by the source.
  *
@@ -479,7 +545,6 @@ declare const switchMap: <TA, TB>(mapper: Function1<TA, ObservableLike<TB>>) => 
 declare const takeFirst: <T>(options?: {
     readonly count?: number;
 }) => Function1<ObservableLike<T>, ObservableLike<T>>;
-
 /**
  * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
  *
@@ -488,9 +553,7 @@ declare const takeFirst: <T>(options?: {
 declare const takeLast: <T>(options?: {
     readonly count?: number;
 }) => Function1<ObservableLike<T>, ObservableLike<T>>;
-
 declare const takeUntil: <T>(notifier: ObservableLike<unknown>) => Function1<ObservableLike<T>, ObservableLike<T>>;
-
 /**
  * Returns an `ObservableLike` which emits values emitted by the source as long
  * as each value satisfies the given predicate, and then completes as soon as
@@ -501,7 +564,6 @@ declare const takeUntil: <T>(notifier: ObservableLike<unknown>) => Function1<Obs
 declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
     readonly inclusive?: boolean;
 }) => Function1<ObservableLike<T>, ObservableLike<T>>;
-
 /**
  * The throttle mode used by the `throttle` operator.
  */
@@ -539,14 +601,12 @@ declare function throttle<T>(duration: Function1<T, ObservableLike<unknown>>, op
 declare function throttle<T>(duration: number, options?: {
     readonly mode?: ThrottleMode;
 }): ObservableOperator<T, T>;
-
 /**
  * Returns an `ObservableLike` that emits an error if the source completes without emitting a value.
  *
  * @param factory A factory function invoked to produce the error to be thrown.
  */
 declare const throwIfEmpty: <T>(factory: Factory<unknown>) => Function1<ObservableLike<T>, ObservableLike<T>>;
-
 /** Symbol thrown when the timeout operator times out */
 declare const timeoutError: symbol;
 /**
@@ -561,7 +621,6 @@ declare function timeout<T>(duration: number): ObservableOperator<T, T>;
  * @param duration
  */
 declare function timeout<T>(duration: ObservableLike<unknown>): ObservableOperator<T, T>;
-
 /**
  * Returns an `ObservableLike` which combines the source with
  * the latest value from another `ObservableLike`.
@@ -570,27 +629,134 @@ declare function timeout<T>(duration: ObservableLike<unknown>): ObservableOperat
  * @param selector
  */
 declare const withLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => Function1<ObservableLike<TA>, ObservableLike<T>>;
-
-declare function zip<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<[TA, TB]>;
-declare function zip<TA, TB, TC>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): ObservableLike<[TA, TB, TC]>;
-declare function zip<TA, TB, TC, TD>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>): ObservableLike<[TA, TB, TC, TD]>;
-declare function zip<TA, TB, TC, TD, TE>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>): ObservableLike<[TA, TB, TC, TD, TE]>;
-declare function zip<TA, TB, TC, TD, TE, TF>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>): ObservableLike<[TA, TB, TC, TD, TE, TF]>;
-declare function zip<TA, TB, TC, TD, TE, TF, TG>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>): ObservableLike<[TA, TB, TC, TD, TE, TF, TG]>;
-declare function zip<TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>): ObservableLike<[TA, TB, TC, TD, TE, TF, TG, TH]>;
-declare function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): ObservableLike<[TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-declare const zipWith: <TA, TB>(snd: ObservableLike<TB>) => Function1<ObservableLike<TA>, ObservableLike<[TA, TB]>>;
-
-declare function zipLatest<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<[TA, TB]>;
-declare function zipLatest<TA, TB, TC, T>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): ObservableLike<[TA, TB, TC]>;
-declare function zipLatest<TA, TB, TC, TD>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>): ObservableLike<[TA, TB, TC, TD]>;
-declare function zipLatest<TA, TB, TC, TD, TE>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>): ObservableLike<[TA, TB, TC, TD, TE]>;
-declare function zipLatest<TA, TB, TC, TD, TE, TF>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>): ObservableLike<[TA, TB, TC, TD, TE, TF]>;
-declare function zipLatest<TA, TB, TC, TD, TE, TF, TG>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>): ObservableLike<[TA, TB, TC, TD, TE, TF, TG]>;
-declare function zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>): ObservableLike<[TA, TB, TC, TD, TE, TF, TG, TH]>;
-declare function zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): ObservableLike<[TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-declare const zipLatestWith: <TA, TB>(snd: ObservableLike<TB>) => Function1<ObservableLike<TA>, ObservableLike<[TA, TB]>>;
-
+declare function zip<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<[
+    TA,
+    TB
+]>;
+declare function zip<TA, TB, TC>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): ObservableLike<[
+    TA,
+    TB,
+    TC
+]>;
+declare function zip<TA, TB, TC, TD>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD
+]>;
+declare function zip<TA, TB, TC, TD, TE>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE
+]>;
+declare function zip<TA, TB, TC, TD, TE, TF>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF
+]>;
+declare function zip<TA, TB, TC, TD, TE, TF, TG>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG
+]>;
+declare function zip<TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG,
+    TH
+]>;
+declare function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG,
+    TH,
+    TI
+]>;
+declare const zipWith: <TA, TB>(snd: ObservableLike<TB>) => Function1<ObservableLike<TA>, ObservableLike<[
+    TA,
+    TB
+]>>;
+declare function zipLatest<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<[
+    TA,
+    TB
+]>;
+declare function zipLatest<TA, TB, TC, T>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): ObservableLike<[
+    TA,
+    TB,
+    TC
+]>;
+declare function zipLatest<TA, TB, TC, TD>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD
+]>;
+declare function zipLatest<TA, TB, TC, TD, TE>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE
+]>;
+declare function zipLatest<TA, TB, TC, TD, TE, TF>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF
+]>;
+declare function zipLatest<TA, TB, TC, TD, TE, TF, TG>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG
+]>;
+declare function zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG,
+    TH
+]>;
+declare function zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG,
+    TH,
+    TI
+]>;
+declare const zipLatestWith: <TA, TB>(snd: ObservableLike<TB>) => Function1<ObservableLike<TA>, ObservableLike<[
+    TA,
+    TB
+]>>;
 /**
  * Returns an `ObservableLike` which combines the source with
  * the latest value from another `ObservableLike`.
@@ -599,11 +765,9 @@ declare const zipLatestWith: <TA, TB>(snd: ObservableLike<TB>) => Function1<Obse
  * @param selector
  */
 declare const zipWithLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => Function1<ObservableLike<TA>, ObservableLike<T>>;
-
 declare const toRunnable: <T>(options?: {
     readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
 }) => Function1<ObservableLike<T>, RunnableLike<T>>;
-
 /**
  * Returns a Promise that completes with the last value produced by
  * the source.
@@ -611,7 +775,6 @@ declare const toRunnable: <T>(options?: {
  * @param scheduler The scheduler upon which to subscribe to the source.
  */
 declare const toPromise: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, Promise<T>>;
-
 /**
  * The underlying mechanism for receiving and transforming notifications from an
  * observable source. The `ObserverLike` interface composes the `SchedulerLike` and
@@ -682,5 +845,4 @@ interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableL
 /** @noInheritDoc */
 interface SubjectLike<T> extends StreamLike<T, T> {
 }
-
 export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, ObserverLike, ObserverOperator, StreamLike, SubjectLike, ThrottleMode, __await, __concurrent, __currentScheduler, __do, __memo, __observe, __using, async, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, dispatchTo, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observable, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };

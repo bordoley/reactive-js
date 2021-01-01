@@ -1,3 +1,4 @@
+/// <reference types="./runnable.d.ts" />
 import { none, isNone } from './option.mjs';
 import { pipe, returns, compose, strictEquality, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
 

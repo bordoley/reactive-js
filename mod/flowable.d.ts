@@ -1,9 +1,8 @@
-import { Function1 } from './functions';
-import { Option } from './option';
-import { SchedulerLike } from './scheduler';
-import { ObservableLike } from './observable';
-import { StreamableLike } from './streamable';
-
+import { Function1 } from "./functions.mjs";
+import { Option } from "./option.mjs";
+import { SchedulerLike } from "./scheduler.mjs";
+import { ObservableLike } from "./observable.mjs";
+import { StreamableLike } from "./streamable.mjs";
 declare const enum FlowMode {
     Resume = 1,
     Pause = 2
@@ -24,5 +23,4 @@ declare const fromValue: <T>(options?: {
     readonly delay?: number | undefined;
 } | undefined) => Function1<T, FlowableLike<T>>;
 declare const empty: <T>() => FlowableLike<T>;
-
 export { FlowMode, FlowableLike, FlowableOperator, empty, fromArray, fromObservable, fromValue };

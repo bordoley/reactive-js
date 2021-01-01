@@ -1,3 +1,4 @@
+/// <reference types="./router.d.ts" />
 import { isNone, isSome, none } from './option.mjs';
 import { pipe } from './functions.mjs';
 import { fromObject, reduce } from './readonlyArray.mjs';

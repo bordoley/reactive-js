@@ -1,3 +1,4 @@
+/// <reference types="./testing.d.ts" />
 import { none, isSome, isNone } from './option.mjs';
 import { ignore, raise, strictEquality, arrayEquality } from './functions.mjs';
 import { __DENO__ } from './env.mjs';

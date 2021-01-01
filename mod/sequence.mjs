@@ -1,3 +1,4 @@
+/// <reference types="./sequence.d.ts" />
 import { isNone } from './option.mjs';
 import { pipe, strictEquality, compose, alwaysTrue } from './functions.mjs';
 import { createRunnable } from './runnable.mjs';

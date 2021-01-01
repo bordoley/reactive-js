@@ -1,3 +1,4 @@
+/// <reference types="./observable.d.ts" />
 import { isSome, none, isNone } from './option.mjs';
 import { pipe, ignore, raise, arrayEquality, returns, compose, callWith, defer as defer$1, strictEquality } from './functions.mjs';
 import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, bindDisposables, addTeardown, disposed, addDisposableDisposeParentOnChildError, addOnDisposedWithoutErrorTeardown, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';

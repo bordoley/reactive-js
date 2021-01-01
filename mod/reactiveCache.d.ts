@@ -1,8 +1,7 @@
-import { Option } from './option';
-import { DisposableLike } from './disposable';
-import { SchedulerLike } from './scheduler';
-import { ObservableLike } from './observable';
-
+import { Option } from "./option.mjs";
+import { DisposableLike } from "./disposable.mjs";
+import { SchedulerLike } from "./scheduler.mjs";
+import { ObservableLike } from "./observable.mjs";
 /** @noInheritDoc */
 interface ReactiveCacheLike<T> extends DisposableLike {
     get(key: string): Option<ObservableLike<T>>;
@@ -12,5 +11,4 @@ declare const createReactiveCache: <T>(dispatchScheduler: SchedulerLike, cleanup
     readonly maxCount?: number;
 }) => ReactiveCacheLike<T>;
 declare const getOrSet: <T>(cache: ReactiveCacheLike<T>, key: string, defaultValue: ObservableLike<T>) => ObservableLike<T>;
-
 export { ReactiveCacheLike, createReactiveCache, getOrSet };

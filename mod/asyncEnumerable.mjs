@@ -1,3 +1,4 @@
+/// <reference types="./asyncEnumerable.d.ts" />
 import { none } from './option.mjs';
 import { pipe, flip, compose, returns, defer } from './functions.mjs';
 import { using, createSubject, onNotify, map, onSubscribe, zipWithLatestFrom, takeFirst, switchAll, fromValue, scan, concatMap, withLatestFrom, compute, takeWhile, scanAsync } from './observable.mjs';

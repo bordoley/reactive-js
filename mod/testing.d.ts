@@ -1,13 +1,11 @@
-import { Function1, SideEffect, Factory, Equality } from './functions';
-import { Option } from './option';
-
-declare const runTests: (testGroups: TestGroup[]) => void;
-
+import { Function1, SideEffect, Factory, Equality } from "./functions.mjs";
+import { Option } from "./option.mjs";
 declare const enum TestGroupType {
     Describe = 1,
     Test = 2,
     TestAsync = 3
 }
+declare const runTests: (testGroups: TestGroup[]) => void;
 declare type Describe = {
     readonly type: TestGroupType.Describe;
     readonly name: string;
@@ -42,5 +40,4 @@ declare type MockFunction = {
 declare const mockFn: (retval?: any) => MockFunction;
 declare const expectToHaveBeenCalledTimes: (times: number) => (fn: MockFunction) => void;
 declare const expectPromiseToThrow: (promise: Promise<any>) => Promise<void>;
-
-export { Describe, Test, TestAsync, TestGroup, TestGroupType, describe, expectArrayEquals, expectEquals, expectFalse, expectNone, expectPromiseToThrow, expectSome, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, runTests, test, testAsync };
+export { Describe, Test, TestAsync, TestGroup, describe, expectArrayEquals, expectEquals, expectFalse, expectNone, expectPromiseToThrow, expectSome, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, runTests, test, testAsync };

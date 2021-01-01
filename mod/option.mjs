@@ -1,3 +1,4 @@
+/// <reference types="./option.d.ts" />
 /**
  * An alias for undefined.
  */

@@ -1,3 +1,4 @@
+/// <reference types="./relativeURI.d.ts" />
 const empty = {
     pathname: "",
     search: "",

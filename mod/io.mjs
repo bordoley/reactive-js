@@ -1,3 +1,4 @@
+/// <reference types="./io.d.ts" />
 import { pipe, composeWith, returns, compose } from './functions.mjs';
 import { withLatestFrom, compute, map as map$1, concatMap, fromIterator, endWith, fromArray as fromArray$1, createSubject, using, takeWhile, keepType, reduce, subscribe, dispatchTo, createObservable } from './observable.mjs';
 import { AbstractDisposable, addDisposableDisposeParentOnChildError, addDisposable } from './disposable.mjs';

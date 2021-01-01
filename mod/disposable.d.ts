@@ -1,6 +1,5 @@
-import { SideEffect1, SideEffect } from './functions';
-import { Option } from './option';
-
+import { SideEffect1, SideEffect } from "./functions.mjs";
+import { Option } from "./option.mjs";
 /**
  * A wrapper around a caught error to handle corner cases such
  * as a function which throws undefined or string.
@@ -151,5 +150,4 @@ interface DisposableValueLike<T> extends DisposableLike {
  */
 declare const createDisposableValue: <T>(value: T, cleanup: SideEffect1<T>) => DisposableValueLike<T>;
 declare const toAbortSignal: (disposable: DisposableLike) => AbortSignal;
-
 export { AbstractDisposable, AbstractSerialDisposable, DisposableLike, DisposableOrTeardown, DisposableValueLike, Error, SerialDisposableLike, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addOnDisposedWithoutError, addOnDisposedWithoutErrorTeardown, addTeardown, bindDisposables, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, toAbortSignal, toErrorHandler };

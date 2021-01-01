@@ -1,6 +1,5 @@
-import { Updater, Factory, Equality, Function1 } from './functions';
-import { StreamableLike } from './streamable';
-
+import { Updater, Factory, Equality, Function1 } from "./functions.mjs";
+import { StreamableLike } from "./streamable.mjs";
 /** @noInheritDoc */
 interface StateStoreLike<T> extends StreamableLike<Updater<T>, T> {
 }
@@ -25,5 +24,4 @@ declare const createStateStore: <T>(initialState: Factory<T>, options?: {
  */
 declare const toStateStore: <T>() => Function1<StreamableLike<T, T>, StreamableLike<Updater<T>, T>>;
 declare const map: <TA, TB>(parse: Function1<TA, TB>, serialize: Function1<TB, TA>) => Function1<StateStoreLike<TA>, StateStoreLike<TB>>;
-
 export { StateStoreLike, createStateStore, map, toStateStore };

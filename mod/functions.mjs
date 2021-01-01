@@ -1,3 +1,4 @@
+/// <reference types="./functions.d.ts" />
 import { isNone } from './option.mjs';
 
 /**

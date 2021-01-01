@@ -343,4 +343,4 @@ export const toAbortSignal = (disposable: DisposableLike): AbortSignal => {
   const abortController = new AbortController();
   addTeardown(disposable, () => abortController.abort());
   return abortController.signal;
-}
+};

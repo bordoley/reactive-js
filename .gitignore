@@ -12,7 +12,8 @@ yarn-error.log
 *.key
 *.tsbuildinfo
 
-build/
+build-types/
+mod-types/
 
 packages/core/*.ts
 packages/core/*.js

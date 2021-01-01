@@ -231,5 +231,4 @@ declare function defer<T, A, B, C, D, E, F, G, H, I, J, K, L>(src: T, op1: Funct
 declare function defer(source: unknown, ...operators: Function1<any, unknown>[]): Factory<unknown>;
 declare function flip<TA, TB, T>(f: Function2<TA, TB, T>): Function2<TB, TA, T>;
 declare function flip<TA, TB, TC, T>(f: Function3<TA, TB, TC, T>): Function3<TC, TB, TA, T>;
-
 export { Comparator, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeWith, decrement, decrementBy, defer, flip, identity, ignore, increment, incrementBy, isEqualTo, isEven, isOdd, negate, pipe, raise, returns, strictEquality, sum, updaterReducer };
