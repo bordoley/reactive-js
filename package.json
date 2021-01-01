@@ -2,10 +2,10 @@
   "name": "reactive-js",
   "private": true,
   "scripts": {
-    "build": "yarn clean && yarn build-types && rollup -c rollup.config.js && yarn pkg",
+    "build": "yarn clean && yarn build-types && rollup -c rollup.config.js && yarn pkg && yarn docs",
     "build-types": "tsc -p tsconfig.build-types.json",
     "clean": "rm -rf ./build-types ./mod ./docs ./packages/core/README.md ./packages/core/*.js ./packages/core/*.ts ./packages/core/*.mjs",
-    "doc": "node ./scripts/docs.mjs",
+    "docs": "typedoc",
     "bootstrap": "lerna bootstrap",
     "deno-install": "curl -fsSL https://deno.land/x/install/install.sh | sh",
     "example": "yarn bootstrap && lerna run build --scope @reactive-js/example && node ./packages/example/build/example-server.js",

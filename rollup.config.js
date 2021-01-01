@@ -26,15 +26,15 @@ const input = {
 };
 
 const output = {
+  mod: {
+    dir: "./mod",
+    hoistTransitiveImports: false,
+  },
   packages: {
     core: {
       dir: "./packages/core",
       hoistTransitiveImports: false,
     },
-  },
-  mod: {
-    dir: "./mod",
-    hoistTransitiveImports: false,
   },
 };
 

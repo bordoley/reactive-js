@@ -13,7 +13,6 @@ yarn-error.log
 *.tsbuildinfo
 
 build-types/
-mod-types/
 
 packages/core/*.ts
 packages/core/*.js
