@@ -1,3 +1,4 @@
+/// <reference types="./reactiveCache.d.ts" />
 import { isSome, isNone } from './option.mjs';
 import { pipe } from './functions.mjs';
 import { switchAll, onSubscribe } from './observable.mjs';

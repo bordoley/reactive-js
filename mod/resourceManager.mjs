@@ -1,3 +1,4 @@
+/// <reference types="./resourceManager.d.ts" />
 import { isSome, isNone, none } from './option.mjs';
 import { pipe, defer } from './functions.mjs';
 import { fromValue, subscribe, createObservable } from './observable.mjs';

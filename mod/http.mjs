@@ -1,3 +1,4 @@
+/// <reference types="./http.d.ts" />
 import { none, orCompute as orCompute$1, isSome, isNone } from './option.mjs';
 import { pipe, compose, returns, isEqualTo, raise, updaterReducer } from './functions.mjs';
 import { __DEV__ } from './env.mjs';

@@ -1,3 +1,4 @@
+/// <reference types="./readonlyArray.d.ts" />
 const everySatisfy = (predicate) => arr => arr.every(predicate);
 const _fromObject = (object) => Object.entries(object);
 const fromObject = () => _fromObject;

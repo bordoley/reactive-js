@@ -1,3 +1,4 @@
+/// <reference types="./web.d.ts" />
 import { none } from './option.mjs';
 import { pipe, compose, returns } from './functions.mjs';
 import { createObservable, throttle, onNotify, mergeWith, compute, concatWith, defer, fromPromise, observe } from './observable.mjs';

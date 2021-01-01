@@ -1,3 +1,4 @@
+/// <reference types="./env.d.ts" />
 const __DEV__ = typeof process === "object" ? process.env.NODE_ENV !== "production" : false;
 const warn = (message) => {
     if (__DEV__) {

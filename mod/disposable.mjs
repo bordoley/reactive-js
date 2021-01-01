@@ -1,3 +1,4 @@
+/// <reference types="./disposable.d.ts" />
 import { isSome, isNone, none } from './option.mjs';
 import { pipe, defer } from './functions.mjs';
 

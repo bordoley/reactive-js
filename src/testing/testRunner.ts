@@ -1,5 +1,6 @@
 import { __DENO__ } from "../env";
-import { TestGroup, TestGroupType } from "../testing";
+import { TestGroup } from "../testing";
+import { TestGroupType } from "./testGroup";
 
 const createJasmineTests = (
   testGroup: TestGroup,

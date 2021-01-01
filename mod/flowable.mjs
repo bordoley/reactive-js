@@ -1,3 +1,4 @@
+/// <reference types="./flowable.d.ts" />
 import { pipe, compose } from './functions.mjs';
 import { subscribe, using, subscribeOn, fromDisposable, takeUntil, fromArray as fromArray$1 } from './observable.mjs';
 import { bindDisposables } from './disposable.mjs';

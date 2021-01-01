@@ -9,12 +9,7 @@ import {
   strictEquality,
 } from "./functions";
 import { Option, isNone, isSome, none } from "./option";
-
-export const enum TestGroupType {
-  Describe = 1,
-  Test = 2,
-  TestAsync = 3,
-}
+import { TestGroupType } from "./testing/testGroup";
 
 export type Describe = {
   readonly type: TestGroupType.Describe;

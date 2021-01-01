@@ -1,14 +1,12 @@
-import { Function1, SideEffect2, Updater } from './functions';
-import { ReadonlyObjectMap } from './readonlyObjectMap';
-import { IOSourceLike, IOSourceOperator } from './io';
-
+import { Function1, SideEffect2, Updater } from "./functions.mjs";
+import { ReadonlyObjectMap } from "./readonlyObjectMap.mjs";
+import { IOSourceLike, IOSourceOperator } from "./io.mjs";
 declare const createHttpRequest: <T>(options: HttpRequestOptions<T>) => HttpRequest<T>;
 declare const disallowProtocolAndHostForwarding: <T>() => Function1<HttpRequest<T>, HttpRequest<T>>;
 declare const writeHttpRequestHeaders: <T>(request: HttpRequest<T>, writeHeader: SideEffect2<string, string>) => void;
 declare const encodeHttpRequestWithUtf8: Function1<HttpRequest<string>, HttpRequest<Uint8Array>>;
 declare const decodeHttpRequestWithCharset: Function1<HttpRequest<Uint8Array>, HttpRequest<string>>;
 declare const toIOSourceHttpRequest: <TBody>(req: HttpRequest<TBody>) => HttpRequest<IOSourceLike<TBody>>;
-
 declare const createHttpResponse: <T>({ etag, expires, headers, lastModified, location, statusCode, vary, ...rest }: HttpResponseOptions<T>) => HttpResponse<T>;
 declare const writeHttpResponseHeaders: <T>(response: HttpResponse<T>, writeHeader: SideEffect2<string, string>) => void;
 declare const checkIfNotModified: <T>({ cacheControl, method, preconditions, }: HttpRequest<unknown>) => Function1<HttpResponse<T>, HttpResponse<T>>;
@@ -22,7 +20,6 @@ declare const encodeHttpResponseContent: (encoderProvider: ReadonlyObjectMap<IOS
 declare const createHttpErrorResponse: (e: unknown) => HttpResponse<unknown>;
 declare const createRedirectHttpRequest: <THttpRequest extends HttpRequest<TReq>, TReq>(request: THttpRequest, response: HttpResponse<unknown>) => THttpRequest;
 declare const decodeHttpRequestContent: (decoderProvider: ReadonlyObjectMap<IOSourceOperator<Uint8Array, Uint8Array>>) => Function1<HttpRequest<IOSourceLike<Uint8Array>>, HttpRequest<IOSourceLike<Uint8Array>>>;
-
 declare type CacheDirective = {
     readonly directive: string;
     readonly value: string;
@@ -268,5 +265,4 @@ declare type HttpResponseOptions<T> = HttpMessageOptions<T> & {
     readonly statusCode: HttpStatusCode;
     readonly vary?: readonly string[];
 };
-
 export { CacheDirective, EntityTag, HttpContentEncoding, HttpContentInfo, HttpDateTime, HttpExtensionHeader, HttpHeaders, HttpMessage, HttpMessageOptions, HttpMethod, HttpPreferences, HttpRequest, HttpRequestOptions, HttpRequestPreconditions, HttpResponse, HttpResponseOptions, HttpStandardHeader, HttpStatusCode, MediaRange, MediaType, URILike, checkIfNotModified, createHttpErrorResponse, createHttpRequest, createHttpResponse, createRedirectHttpRequest, decodeHttpRequestContent, decodeHttpRequestWithCharset, decodeHttpResponseContent, decodeHttpResponseWithCharset, disallowProtocolAndHostForwarding, encodeHttpRequestWithUtf8, encodeHttpResponseContent, encodeHttpResponseWithUtf8, toIOSourceHttpRequest, toIOSourceHttpResponse, writeHttpRequestHeaders, writeHttpResponseHeaders };

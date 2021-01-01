@@ -1,3 +1,4 @@
+/// <reference types="./stateStore.d.ts" />
 import { updaterReducer, pipe, identity, compose } from './functions.mjs';
 import { using, zipWithLatestFrom, subscribe, dispatchTo } from './observable.mjs';
 import { bindDisposables } from './disposable.mjs';

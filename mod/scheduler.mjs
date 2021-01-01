@@ -1,3 +1,4 @@
+/// <reference types="./scheduler.d.ts" />
 import { isSome, none, isNone } from './option.mjs';
 import { pipe, raise, alwaysFalse } from './functions.mjs';
 import { AbstractDisposable, addTeardown, dispose, AbstractSerialDisposable, disposed, addDisposable } from './disposable.mjs';

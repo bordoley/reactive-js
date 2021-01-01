@@ -1,8 +1,7 @@
-import { Function1 } from './functions';
-import { DisposableLike } from './disposable';
-import { SchedulerLike } from './scheduler';
-import { ObservableLike } from './observable';
-
+import { Function1 } from "./functions.mjs";
+import { DisposableLike } from "./disposable.mjs";
+import { SchedulerLike } from "./scheduler.mjs";
+import { ObservableLike } from "./observable.mjs";
 interface ResourceManagerLike<TResource> extends DisposableLike {
     readonly count: number;
     get(key: string): ObservableLike<TResource>;
@@ -12,5 +11,4 @@ declare const createResourceManager: <TResource extends DisposableLike>(createRe
     readonly maxResourcesPerKey?: number;
     readonly maxTotalResources?: number;
 }) => ResourceManagerLike<TResource>;
-
 export { ResourceManagerLike, createResourceManager };

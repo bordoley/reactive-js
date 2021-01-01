@@ -2,8 +2,9 @@
   "name": "reactive-js",
   "private": true,
   "scripts": {
-    "build": "yarn clean && yarn typecheck && rollup -c rollup.config.js && yarn pkg",
-    "clean": "rm -rf ./build ./mod ./docs",
+    "build": "yarn clean && yarn build-types && rollup -c rollup.config.js && yarn pkg",
+    "build-types": "tsc -p tsconfig.build-types.json",
+    "clean": "rm -rf ./build-types ./mod ./docs ./packages/core/README.md ./packages/core/*.js ./packages/core/*.ts ./packages/core/*.mjs",
     "doc": "node ./scripts/docs.mjs",
     "bootstrap": "lerna bootstrap",
     "deno-install": "curl -fsSL https://deno.land/x/install/install.sh | sh",
@@ -12,15 +13,13 @@
     "format": "prettier '**' --write",
     "lint": "eslint . --fix -f codeFrame --ext .ts,.tsx,.js,.jsx",
     "perf": "yarn bootstrap && lerna run build --scope @reactive-js/perf && lerna run perf --scope @reactive-js/perf",
-    "pkg": "yarn pkg-clean &&  cp README.md ./packages/core && cp -r ./mod/ ./packages/core ",
-    "pkg-clean": "rm -rf ./packages/core/README.md ./packages/core/*.js ./packages/core/*.ts ./packages/core/*.mjs",
+    "pkg": "cp README.md ./packages/core",
     "release": "lerna publish --force-publish",
     "test": "jest",
     "test-coverage": "jest --coverage",
     "test-debug": "node --inspect-brk ./node_modules/.bin/jest",
     "test-deno": "deno test -r ./scripts/testRunner.deno.ts",
-    "test-prod": "NODE_ENV=production node ./node_modules/.bin/jest",
-    "typecheck": "tsc -p tsconfig.compile.json"
+    "test-prod": "NODE_ENV=production node ./node_modules/.bin/jest"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.1.0",
@@ -55,7 +54,7 @@
     "testRegex": "testRunner.jest.ts",
     "globals": {
       "ts-jest": {
-        "tsconfig": "./tsconfig.compile.json"
+        "tsconfig": "./tsconfig.base.json"
       }
     }
   },
