@@ -1,7 +1,5 @@
-import { FlowMode } from "../flowable";
 import { pipe, returns, sum } from "../functions";
 import {
-  IOEventType,
   createIOSinkAccumulator,
   decodeWithCharset,
   empty,
@@ -53,15 +51,15 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
     const emptyStream = pipe(none, empty, stream(scheduler));
 
-    emptyStream.dispatch(FlowMode.Pause);
-    emptyStream.dispatch(FlowMode.Resume);
+    emptyStream.dispatch('pause');
+    emptyStream.dispatch('resume');
 
     const f = mockFn();
     const subscription = pipe(emptyStream, subscribe(scheduler, f));
     scheduler.run();
 
     pipe(f, expectToHaveBeenCalledTimes(1));
-    pipe(f.calls[0][0].type, expectEquals(IOEventType.Done));
+    pipe(f.calls[0][0].type, expectEquals('done'));
     expectTrue(subscription.isDisposed);
     expectTrue(emptyStream.isDisposed);
   }),
@@ -90,7 +88,7 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
     const fromValueStream = pipe(1, fromValue(), stream(scheduler));
 
-    fromValueStream.dispatch(FlowMode.Resume);
+    fromValueStream.dispatch('resume');
 
     const f = mockFn();
     const subscription = pipe(fromValueStream, subscribe(scheduler, f));
@@ -98,9 +96,9 @@ export const tests = describe(
     scheduler.run();
 
     pipe(f, expectToHaveBeenCalledTimes(2));
-    pipe(f.calls[0][0].type, expectEquals(IOEventType.Notify));
+    pipe(f.calls[0][0].type, expectEquals('notify'));
     pipe(f.calls[0][0].data, expectEquals(1));
-    pipe(f.calls[1][0].type, expectEquals(IOEventType.Done));
+    pipe(f.calls[1][0].type, expectEquals('done'));
     expectTrue(subscription.isDisposed);
     expectTrue(fromValueStream.isDisposed);
   }),

@@ -4,16 +4,13 @@
 
 ## Index
 
-### Enumerations
-
-* [FlowMode](../enums/flowable.flowmode.md)
-
 ### Interfaces
 
 * [FlowableLike](../interfaces/flowable.flowablelike.md)
 
 ### Type aliases
 
+* [FlowMode](flowable.md#flowmode)
 * [FlowableOperator](flowable.md#flowableoperator)
 
 ### Functions
@@ -24,6 +21,12 @@
 * [fromValue](flowable.md#fromvalue)
 
 ## Type aliases
+
+### FlowMode
+
+Ƭ **FlowMode**: *resume* \| *pause*
+
+___
 
 ### FlowableOperator
 

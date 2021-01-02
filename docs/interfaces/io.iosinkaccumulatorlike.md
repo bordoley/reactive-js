@@ -133,7 +133,7 @@ ___
 
 ### stream
 
-▸ **stream**(`scheduler`: [*SchedulerLike*](scheduler.schedulerlike.md), `options?`: { `replay?`: *undefined* \| *number*  }): [*StreamLike*](observable.streamlike.md)<[*IOEvent*](../modules/io.md#ioevent)<T\>, [*FlowMode*](../enums/flowable.flowmode.md)\>
+▸ **stream**(`scheduler`: [*SchedulerLike*](scheduler.schedulerlike.md), `options?`: { `replay?`: *undefined* \| *number*  }): [*StreamLike*](observable.streamlike.md)<[*IOEvent*](../modules/io.md#ioevent)<T\>, [*FlowMode*](../modules/flowable.md#flowmode)\>
 
 #### Parameters:
 
@@ -142,6 +142,6 @@ Name | Type |
 `scheduler` | [*SchedulerLike*](scheduler.schedulerlike.md) |
 `options?` | { `replay?`: *undefined* \| *number*  } |
 
-**Returns:** [*StreamLike*](observable.streamlike.md)<[*IOEvent*](../modules/io.md#ioevent)<T\>, [*FlowMode*](../enums/flowable.flowmode.md)\>
+**Returns:** [*StreamLike*](observable.streamlike.md)<[*IOEvent*](../modules/io.md#ioevent)<T\>, [*FlowMode*](../modules/flowable.md#flowmode)\>
 
 Inherited from: [IOSinkLike](io.iosinklike.md)

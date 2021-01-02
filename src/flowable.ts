@@ -13,10 +13,7 @@ import { SchedulerLike, toPausableScheduler } from "./scheduler";
 
 import { StreamableLike, createStreamable } from "./streamable";
 
-export const enum FlowMode {
-  Resume = 1,
-  Pause = 2,
-}
+export type FlowMode = 'resume' | 'pause';
 
 /** @noInheritDoc */
 export interface FlowableLike<T> extends StreamableLike<FlowMode, T> {}
@@ -38,10 +35,10 @@ export const fromObservable = <T>({
 
     const onModeChange = (mode: FlowMode) => {
       switch (mode) {
-        case FlowMode.Pause:
+        case 'pause':
           pausableScheduler.pause();
           break;
-        case FlowMode.Resume:
+        case 'resume':
           pausableScheduler.resume();
           break;
       }

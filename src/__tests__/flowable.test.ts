@@ -1,5 +1,5 @@
 import { dispose } from "../disposable";
-import { FlowMode, empty, fromObservable, fromValue } from "../flowable";
+import { empty, fromObservable, fromValue } from "../flowable";
 import { defer, increment, pipe, returns } from "../functions";
 import { dispatchTo, generate, subscribe } from "../observable";
 
@@ -20,8 +20,8 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
     const emptyStream = pipe(empty(), stream(scheduler));
 
-    emptyStream.dispatch(FlowMode.Pause);
-    emptyStream.dispatch(FlowMode.Resume);
+    emptyStream.dispatch('pause');
+    emptyStream.dispatch('resume');
 
     const f = mockFn();
     const subscription = pipe(emptyStream, subscribe(scheduler, f));
@@ -40,18 +40,18 @@ export const tests = describe(
       stream(scheduler),
     );
 
-    generateStream.dispatch(FlowMode.Resume);
+    generateStream.dispatch('resume');
 
     pipe(
       scheduler,
-      schedule(defer(FlowMode.Pause, dispatchTo(generateStream)), {
+      schedule(defer('pause', dispatchTo(generateStream)), {
         delay: 2,
       }),
     );
 
     pipe(
       scheduler,
-      schedule(defer(FlowMode.Resume, dispatchTo(generateStream)), {
+      schedule(defer('resume', dispatchTo(generateStream)), {
         delay: 4,
       }),
     );
@@ -79,8 +79,8 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
     const fromValueStream = pipe(1, fromValue<number>(), stream(scheduler));
 
-    fromValueStream.dispatch(FlowMode.Resume);
-    fromValueStream.dispatch(FlowMode.Resume);
+    fromValueStream.dispatch('resume');
+    fromValueStream.dispatch('resume');
 
     const f = mockFn();
     const subscription = pipe(fromValueStream, subscribe(scheduler, f));

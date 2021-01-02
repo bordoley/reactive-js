@@ -4,10 +4,6 @@
 
 ## Index
 
-### Enumerations
-
-* [ConsumeRequestType](../enums/asyncenumerable.consumerequesttype.md)
-
 ### Interfaces
 
 * [AsyncEnumerableLike](../interfaces/asyncenumerable.asyncenumerablelike.md)
@@ -46,7 +42,7 @@ ___
 
 ### ConsumeRequest
 
-Ƭ **ConsumeRequest**<TAcc\>: { `acc`: TAcc ; `type`: [*Notify*](../enums/asyncenumerable.consumerequesttype.md#notify)  } \| { `acc`: TAcc ; `type`: [*Done*](../enums/asyncenumerable.consumerequesttype.md#done)  }
+Ƭ **ConsumeRequest**<TAcc\>: { `acc`: TAcc ; `type`: *notify*  } \| { `acc`: TAcc ; `type`: *done*  }
 
 #### Type parameters:
 

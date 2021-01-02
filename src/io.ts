@@ -49,20 +49,17 @@ import {
   withLatestFrom,
 } from "./streamable";
 
-export const enum IOEventType {
-  Notify = 1,
-  Done = 2,
-}
+export type IOEventType = 'notify' | 'done'; 
 
 export type IOEvent<T> =
-  | { readonly type: IOEventType.Notify; readonly data: T }
-  | { readonly type: IOEventType.Done };
+  | { readonly type: 'notify'; readonly data: T }
+  | { readonly type: 'done' };
 
 export const notify = <T>(data: T): IOEvent<T> => ({
-  type: IOEventType.Notify,
+  type: 'notify',
   data,
 });
-const _done: IOEvent<any> = { type: IOEventType.Done };
+const _done: IOEvent<any> = { type: 'done' };
 export const done = <T>(): IOEvent<T> => _done;
 
 /** @noInheritDoc */
@@ -85,14 +82,14 @@ export const decodeWithCharset = (
       compute<TextDecoder>()(() => new TextDecoder(charset, options)),
       function* (ev: IOEvent<ArrayBuffer>, decoder) {
         switch (ev.type) {
-          case IOEventType.Notify: {
+          case 'notify': {
             const data = decoder.decode(ev.data, { stream: true });
             if (data.length > 0) {
               yield notify(data);
             }
             break;
           }
-          case IOEventType.Done: {
+          case 'done': {
             const data = decoder.decode();
             if (data.length > 0) {
               yield notify(data);
@@ -112,11 +109,11 @@ const _encodeUtf8: IOSourceOperator<string, Uint8Array> = withLatestFrom(
   compute<TextEncoder>()(() => new TextEncoder()),
   (ev, textEncoder) => {
     switch (ev.type) {
-      case IOEventType.Notify: {
+      case 'notify': {
         const data = textEncoder.encode(ev.data);
         return notify(data);
       }
-      case IOEventType.Done: {
+      case 'done': {
         return ev;
       }
     }
@@ -128,7 +125,7 @@ export const map = <TA, TB>(
   mapper: Function1<TA, TB>,
 ): Function1<IOSourceLike<TA>, IOSourceLike<TB>> =>
   mapStream((ev: IOEvent<TA>) =>
-    ev.type === IOEventType.Notify ? pipe(ev.data, mapper, notify) : ev,
+    ev.type === 'notify' ? pipe(ev.data, mapper, notify) : ev,
   );
 
 const _fromObservable = compose(
@@ -157,8 +154,8 @@ export const empty = <T>(): IOSourceLike<T> => _empty;
 
 const isNotify = <T>(
   ev: IOEvent<T>,
-): ev is { readonly type: IOEventType.Notify; readonly data: T } =>
-  ev.type === IOEventType.Notify;
+): ev is { readonly type: 'notify'; readonly data: T } =>
+  ev.type === 'notify';
 
 /**
  * @experimental
@@ -200,8 +197,8 @@ class IOSinkAccumulatorImpl<T, TAcc>
 
         eventsSubscription =>
           createObservable(dispatcher => {
-            dispatcher.dispatch(FlowMode.Pause);
-            dispatcher.dispatch(FlowMode.Resume);
+            dispatcher.dispatch('pause');
+            dispatcher.dispatch('resume');
             addDisposable(eventsSubscription, dispatcher);
           }),
       );

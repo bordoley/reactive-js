@@ -76,7 +76,7 @@ const StreamPauseResume = () => {
   } else {
     const { onClick, value, mode } = state;
 
-    const label = mode === FlowMode.Resume ? "PAUSE" : "RESUME";
+    const label = mode === 'resume' ? "PAUSE" : "RESUME";
 
     return (
       <>

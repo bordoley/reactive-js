@@ -14,7 +14,7 @@ import { createStateStore } from "@reactive-js/core/stateStore";
 import { SchedulerLike } from "@reactive-js/core/scheduler";
 
 const stateStore = createStateStore(() => ({
-  mode: FlowMode.Pause,
+  mode: 'pause',
 }));
 
 const setCounterMode = (
@@ -35,7 +35,7 @@ const createOnClick = (
   >,
 ) => () => {
   state.dispatch(({ mode }) => ({
-    mode: mode === FlowMode.Pause ? FlowMode.Resume : FlowMode.Pause,
+    mode: mode === 'pause' ? 'resume' : 'pause',
   }));
 };
 
@@ -59,7 +59,7 @@ export const appState = (
 
     const value = __observe(counter) ?? 0;
     const { mode } = __observe(state) ?? {
-      mode: FlowMode.Pause,
+      mode: 'pause',
     };
 
     __do(setCounterMode, counter, mode);
