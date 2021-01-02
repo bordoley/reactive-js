@@ -16,7 +16,7 @@
 
 ### createResourceManager
 
-▸ `Const`**createResourceManager**<TResource\>(`createResource`: [*Function1*](functions.md#function1)<*string*, TResource\>, `scheduler`: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md), `options?`: { `maxIdleTime?`: *undefined* \| *number* ; `maxResourcesPerKey?`: *undefined* \| *number* ; `maxTotalResources?`: *undefined* \| *number*  }): [*ResourceManagerLike*](../interfaces/resourcemanager.resourcemanagerlike.md)<TResource\>
+▸ `Const`**createResourceManager**\<TResource>(`createResource`: [*Function1*](functions.md#function1)<*string*, TResource\>, `scheduler`: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md), `options?`: { `maxIdleTime?`: *undefined* \| *number* ; `maxResourcesPerKey?`: *undefined* \| *number* ; `maxTotalResources?`: *undefined* \| *number*  }): [*ResourceManagerLike*](../interfaces/resourcemanager.resourcemanagerlike.md)<TResource\>
 
 #### Type parameters:
 

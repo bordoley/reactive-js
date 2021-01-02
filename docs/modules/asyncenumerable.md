@@ -67,7 +67,7 @@ Name |
 
 ### consume
 
-▸ `Const`**consume**<T, TAcc\>(`consumer`: [*Function2*](functions.md#function2)<TAcc, T, [*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>\>, `initial`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<[*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>, [*ObservableLike*](../interfaces/observable.observablelike.md)<TAcc\>\>
+▸ `Const`**consume**\<T, TAcc>(`consumer`: [*Function2*](functions.md#function2)<TAcc, T, [*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>\>, `initial`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<[*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>, [*ObservableLike*](../interfaces/observable.observablelike.md)<TAcc\>\>
 
 #### Type parameters:
 
@@ -89,7 +89,7 @@ ___
 
 ### consumeAsync
 
-▸ `Const`**consumeAsync**<T, TAcc\>(`consumer`: [*Function2*](functions.md#function2)<TAcc, T, [*ObservableLike*](../interfaces/observable.observablelike.md)<[*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>\>\>, `initial`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<[*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>, [*ObservableLike*](../interfaces/observable.observablelike.md)<TAcc\>\>
+▸ `Const`**consumeAsync**\<T, TAcc>(`consumer`: [*Function2*](functions.md#function2)<TAcc, T, [*ObservableLike*](../interfaces/observable.observablelike.md)<[*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>\>\>, `initial`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<[*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>, [*ObservableLike*](../interfaces/observable.observablelike.md)<TAcc\>\>
 
 #### Type parameters:
 
@@ -111,7 +111,7 @@ ___
 
 ### done
 
-▸ `Const`**done**<TAcc\>(`acc`: TAcc): [*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>
+▸ `Const`**done**\<TAcc>(`acc`: TAcc): [*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>
 
 #### Type parameters:
 
@@ -131,7 +131,7 @@ ___
 
 ### fromArray
 
-▸ `Const`**fromArray**<T\>(`options?`: { `delay?`: *undefined* \| *number* ; `endIndex?`: *undefined* \| *number* ; `startIndex?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<readonly T[], [*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>\>
+▸ `Const`**fromArray**\<T>(`options?`: { `delay?`: *undefined* \| *number* ; `endIndex?`: *undefined* \| *number* ; `startIndex?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<readonly T[], [*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>\>
 
 Returns an `AsyncEnumerableLike` from the provided array.
 
@@ -153,7 +153,7 @@ ___
 
 ### fromEnumerable
 
-▸ `Const`**fromEnumerable**<T\>(): [*Function1*](functions.md#function1)<[*EnumerableLike*](../interfaces/enumerable.enumerablelike.md)<T\>, [*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>\>
+▸ `Const`**fromEnumerable**\<T>(): [*Function1*](functions.md#function1)<[*EnumerableLike*](../interfaces/enumerable.enumerablelike.md)<T\>, [*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>\>
 
 Returns an `AsyncEnumerableLike` from the provided iterable.
 
@@ -169,7 +169,7 @@ ___
 
 ### fromIterable
 
-▸ `Const`**fromIterable**<T\>(): [*Function1*](functions.md#function1)<*Iterable*<T\>, [*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>\>
+▸ `Const`**fromIterable**\<T>(): [*Function1*](functions.md#function1)<*Iterable*<T\>, [*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>\>
 
 Returns an `AsyncEnumerableLike` from the provided iterable.
 
@@ -185,7 +185,7 @@ ___
 
 ### generate
 
-▸ `Const`**generate**<T\>(`generator`: [*Updater*](functions.md#updater)<T\>, `initialValue`: [*Factory*](functions.md#factory)<T\>, `options?`: { `delay?`: *undefined* \| *number*  }): [*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>
+▸ `Const`**generate**\<T>(`generator`: [*Updater*](functions.md#updater)<T\>, `initialValue`: [*Factory*](functions.md#factory)<T\>, `options?`: { `delay?`: *undefined* \| *number*  }): [*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>
 
 Generates an `AsyncEnumerableLike` sequence from a generator function
 that is applied to an accumulator value.
@@ -210,7 +210,7 @@ ___
 
 ### notify
 
-▸ `Const`**notify**<TAcc\>(`acc`: TAcc): [*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>
+▸ `Const`**notify**\<TAcc>(`acc`: TAcc): [*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>
 
 #### Type parameters:
 
