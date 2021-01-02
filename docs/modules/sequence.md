@@ -4,10 +4,6 @@
 
 ## Index
 
-### Enumerations
-
-* [SequenceType](../enums/sequence.sequencetype.md)
-
 ### Type aliases
 
 * [Sequence](sequence.md#sequence)
@@ -72,7 +68,7 @@ ___
 
 ### SequenceResult
 
-Ƭ **SequenceResult**<T\>: { `data`: T ; `next`: [*Sequence*](sequence.md#sequence)<T\> ; `type`: [*Notify*](../enums/sequence.sequencetype.md#notify)  } \| { `type`: [*Done*](../enums/sequence.sequencetype.md#done)  }
+Ƭ **SequenceResult**<T\>: { `data`: T ; `next`: [*Sequence*](sequence.md#sequence)<T\> ; `type`: SequenceType.Notify  } \| { `type`: SequenceType.Done  }
 
 #### Type parameters:
 

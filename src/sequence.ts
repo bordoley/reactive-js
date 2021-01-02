@@ -13,7 +13,7 @@ import {
 import { isNone } from "./option";
 import { RunnableLike, createRunnable } from "./runnable";
 
-export const enum SequenceType {
+const enum SequenceType {
   Notify = 1,
   Done = 2,
 }

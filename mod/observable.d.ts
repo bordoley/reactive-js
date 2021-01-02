@@ -6,12 +6,9 @@ import { EnumerableLike } from "./enumerable.mjs";
 import { RunnableLike } from "./runnable.mjs";
 declare const dispatchTo: <T>(dispatcher: DispatcherLike<T>) => SideEffect1<T>;
 declare const async: <T>(computation: Factory<T>) => ObservableLike<T>;
-declare const enum ObservableEffectMode {
-    Batched = 0,
-    CombineLatest = 1
-}
+declare type ObservableEffectMode = 'batched' | 'combine-latest';
 declare const observable: <T>(computation: Factory<T>, { mode }?: {
-    mode?: ObservableEffectMode | undefined;
+    mode?: "batched" | "combine-latest" | undefined;
 }) => ObservableLike<T>;
 declare function __memo<T>(fn: Factory<T>): T;
 declare function __memo<TA, T>(fn: Function1<TA, T>, a: TA): T;
@@ -566,21 +563,11 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
 }) => Function1<ObservableLike<T>, ObservableLike<T>>;
 /**
  * The throttle mode used by the `throttle` operator.
+ * first - Takes a leading value.
+ * last - Takes the trailing value.
+ * interval -  Takes both the leading and trailing values.
  */
-declare const enum ThrottleMode {
-    /**
-     * Takes a leading value.
-     */
-    First = 1,
-    /**
-     * Takes the trailing value.
-     */
-    Last = 2,
-    /**
-     * Takes both the leading and trailing values.
-     */
-    Interval = 3
-}
+declare type ThrottleMode = 'first' | 'last' | 'interval';
 /**
  * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
  *

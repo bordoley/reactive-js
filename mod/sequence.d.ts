@@ -60,4 +60,4 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
     readonly inclusive?: boolean;
 }) => Function1<Factory<SequenceResult<T>>, Factory<SequenceResult<T>>>;
 declare const toRunnable: <T>() => Function1<Factory<SequenceResult<T>>, RunnableLike<T>>;
-export { Sequence, SequenceOperator, SequenceResult, SequenceType, concat, concatAll, concatMap, concatWith, distinctUntilChanged, done, empty, endWith, fromArray, fromValue, generate, isDone, isNotify, keep, map, mapTo, notify, repeat, scan, seek, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable };
+export { Sequence, SequenceOperator, SequenceResult, concat, concatAll, concatMap, concatWith, distinctUntilChanged, done, empty, endWith, fromArray, fromValue, generate, isDone, isNotify, keep, map, mapTo, notify, repeat, scan, seek, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable };

@@ -433,7 +433,7 @@ class ObservableContext {
             const subscription = pipe(observable, subscribe(this.scheduler, next => {
                 effect.value = next;
                 effect.hasValue = true;
-                if (this.mode === 1 /* CombineLatest */) {
+                if (this.mode === 'combine-latest') {
                     this.runComputation();
                 }
                 else {
@@ -468,7 +468,7 @@ class ObservableContext {
         }
     }
 }
-const observable = (computation, { mode = 0 /* Batched */ } = {}) => defer((observer) => {
+const observable = (computation, { mode = 'batched' } = {}) => defer((observer) => {
     const runComputation = () => {
         let result = none;
         let error = none;
@@ -501,13 +501,13 @@ const observable = (computation, { mode = 0 /* Batched */ } = {}) => defer((obse
                 break;
             }
         }
-        const combineLatestModeShouldNotify = mode === 1 /* CombineLatest */ &&
+        const combineLatestModeShouldNotify = mode === 'combine-latest' &&
             allObserveEffectsHaveValues &&
             hasOutstandingEffects;
         const hasError = isSome(error);
         const shouldNotify = !hasError &&
             (combineLatestModeShouldNotify ||
-                mode === 0 /* Batched */);
+                mode === 'batched');
         const shouldDispose = !hasOutstandingEffects || hasError;
         if (shouldNotify) {
             observer.notify(result);
@@ -1699,7 +1699,7 @@ const setupDurationSubscription = (observer, next) => {
     observer.durationSubscription.inner = pipe(observer.durationFunction(next), subscribe(observer, observer.onNotify));
 };
 function onDispose$7(e) {
-    if (isNone(e) && this.mode !== 1 /* First */ && this.hasValue) {
+    if (isNone(e) && this.mode !== 'first' && this.hasValue) {
         pipe(this.value, fromValue(), observe(this.delegate));
     }
     else {
@@ -1733,7 +1733,7 @@ class ThrottleObserver extends AbstractDelegatingObserver {
         const durationSubscriptionDisposableIsDisposed = this.durationSubscription
             .inner.isDisposed;
         if (durationSubscriptionDisposableIsDisposed &&
-            this.mode !== 2 /* Last */) {
+            this.mode !== 'last') {
             this.onNotify();
         }
         else if (durationSubscriptionDisposableIsDisposed) {
@@ -1742,7 +1742,7 @@ class ThrottleObserver extends AbstractDelegatingObserver {
     }
 }
 function throttle(duration, options = {}) {
-    const { mode = 3 /* Interval */ } = options;
+    const { mode = 'interval' } = options;
     const durationFunction = typeof duration === "number"
         ? (_) => fromValue({ delay: duration })(none)
         : duration;
