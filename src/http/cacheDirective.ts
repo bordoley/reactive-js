@@ -1,5 +1,5 @@
 import { SideEffect2, pipe } from "../functions";
-import { CacheDirective, HttpHeaders, HttpStandardHeader } from "../http";
+import { CacheDirective, HttpHeaders, HttpStandardHeaders } from "../http";
 import { isSome } from "../option";
 import { join, map } from "../readonlyArray";
 import {
@@ -46,7 +46,7 @@ const parseCacheDirectiveList = pipe(pCacheDirective, httpList, parseWith);
 export const parseCacheControlFromHeaders = (
   headers: HttpHeaders,
 ): readonly CacheDirective[] => {
-  const cacheControl = getHeaderValue(headers, HttpStandardHeader.CacheControl);
+  const cacheControl = getHeaderValue(headers, HttpStandardHeaders.CacheControl);
 
   return isSome(cacheControl)
     ? parseCacheDirectiveList(cacheControl) ?? []
@@ -59,7 +59,7 @@ export const writeHttpCacheControlHeader = (
 ) => {
   if (cacheControl.length > 0) {
     writeHeader(
-      HttpStandardHeader.CacheControl,
+      HttpStandardHeaders.CacheControl,
       pipe(cacheControl, map(cacheDirectiveToString), join(",")),
     );
   }

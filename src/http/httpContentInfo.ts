@@ -3,7 +3,7 @@ import {
   HttpContentEncoding,
   HttpContentInfo,
   HttpHeaders,
-  HttpStandardHeader,
+  HttpStandardHeaders,
   MediaType,
 } from "../http";
 import { Option, isNone, none } from "../option";
@@ -26,17 +26,17 @@ export const parseHttpContentInfoFromHeaders = (
   headers: HttpHeaders,
 ): Option<HttpContentInfo> => {
   const contentEncodingString =
-    getHeaderValue(headers, HttpStandardHeader.ContentEncoding) ?? "";
+    getHeaderValue(headers, HttpStandardHeaders.ContentEncoding) ?? "";
   const contentEncodings = parseTokenList(
     contentEncodingString,
   ) as readonly HttpContentEncoding[];
 
   const contentLengthHeader =
-    getHeaderValue(headers, HttpStandardHeader.ContentLength) ?? "-1";
+    getHeaderValue(headers, HttpStandardHeaders.ContentLength) ?? "-1";
   const contentLength = ~~contentLengthHeader;
 
   const contentType = parseMediaType(
-    getHeaderValue(headers, HttpStandardHeader.ContentType) ?? "",
+    getHeaderValue(headers, HttpStandardHeaders.ContentType) ?? "",
   );
 
   return isNone(contentType)
@@ -54,14 +54,14 @@ export const writeHttpContentInfoHeaders = (
 ) => {
   const { contentLength, contentType, contentEncodings } = content;
   if (contentLength > 0) {
-    writeHeader(HttpStandardHeader.ContentLength, contentLength.toString(10));
+    writeHeader(HttpStandardHeaders.ContentLength, contentLength.toString(10));
   }
 
-  writeHeader(HttpStandardHeader.ContentType, mediaTypeToString(contentType));
+  writeHeader(HttpStandardHeaders.ContentType, mediaTypeToString(contentType));
 
   if (contentEncodings.length > 0) {
     writeHeader(
-      HttpStandardHeader.ContentEncoding,
+      HttpStandardHeaders.ContentEncoding,
       pipe(contentEncodings, join(", ")),
     );
   }

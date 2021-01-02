@@ -4,6 +4,7 @@ import {
   HttpDateTime,
   HttpHeaders,
   HttpRequestPreconditions,
+  HttpStandardHeaders,
   HttpStandardHeader,
 } from "../http";
 import { Option, isNone, isSome, none } from "../option";
@@ -52,26 +53,26 @@ export const writeHttpRequestPreconditionsHeaders = (
   }: HttpRequestPreconditions,
   writeHeader: SideEffect2<string, string>,
 ) => {
-  writeEtagPreferenceHeader(HttpStandardHeader.IfMatch, ifMatch, writeHeader);
+  writeEtagPreferenceHeader(HttpStandardHeaders.IfMatch, ifMatch, writeHeader);
   writeEtagPreferenceHeader(
-    HttpStandardHeader.IfNoneMatch,
+    HttpStandardHeaders.IfNoneMatch,
     ifNoneMatch,
     writeHeader,
   );
   writeDateHeader(
-    HttpStandardHeader.IfModifiedSince,
+    HttpStandardHeaders.IfModifiedSince,
     ifModifiedSince,
     writeHeader,
   );
   writeDateHeader(
-    HttpStandardHeader.IfUnmodifiedSince,
+    HttpStandardHeaders.IfUnmodifiedSince,
     ifUnmodifiedSince,
     writeHeader,
   );
 
   if (isSome(ifRange)) {
     writeHeader(
-      HttpStandardHeader.IfRange,
+      HttpStandardHeaders.IfRange,
       typeof ifRange === "number"
         ? httpDateTimeToString(ifRange)
         : entityTagToString(ifRange),
@@ -104,22 +105,22 @@ export const parseHttpRequestPreconditionsFromHeaders = (
 ): Option<HttpRequestPreconditions> => {
   const ifMatch = parseOptionalETagPreference(
     headers,
-    HttpStandardHeader.IfMatch,
+    HttpStandardHeaders.IfMatch,
   );
   const ifNoneMatch = parseOptionalETagPreference(
     headers,
-    HttpStandardHeader.IfNoneMatch,
+    HttpStandardHeaders.IfNoneMatch,
   );
   const ifModifiedSince = parseOptionalDatePreference(
     headers,
-    HttpStandardHeader.IfModifiedSince,
+    HttpStandardHeaders.IfModifiedSince,
   );
   const ifUnmodifiedSince = parseOptionalDatePreference(
     headers,
-    HttpStandardHeader.IfUnmodifiedSince,
+    HttpStandardHeaders.IfUnmodifiedSince,
   );
 
-  const ifRangeHeader = getHeaderValue(headers, HttpStandardHeader.IfRange);
+  const ifRangeHeader = getHeaderValue(headers, HttpStandardHeaders.IfRange);
   const ifRange = isSome(ifRangeHeader)
     ? // FIXME: This is sketchy
       parseHttpDateTime(ifRangeHeader) ?? parseETag(ifRangeHeader)

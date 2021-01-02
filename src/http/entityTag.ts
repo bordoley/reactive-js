@@ -1,5 +1,5 @@
 import { pipe } from "../functions";
-import { EntityTag, HttpHeaders, HttpStandardHeader } from "../http";
+import { EntityTag, HttpHeaders, HttpStandardHeaders } from "../http";
 import { Option, isSome, none } from "../option";
 import { ASCII } from "./httpGrammar";
 import { getHeaderValue } from "./httpHeaders";
@@ -38,6 +38,6 @@ export const parseETagOrThrow = parseWithOrThrow(pETag);
 export const parseETagFromHeaders = (
   headers: HttpHeaders,
 ): Option<EntityTag> => {
-  const etagHeader = getHeaderValue(headers, HttpStandardHeader.ETag);
+  const etagHeader = getHeaderValue(headers, HttpStandardHeaders.ETag);
   return isSome(etagHeader) ? parseETagOrThrow(etagHeader) : none;
 };

@@ -1,10 +1,10 @@
 import { Function1, SideEffect2 } from "../functions";
 import {
-  HttpExtensionHeader,
+  HttpExtensionHeaders,
   HttpHeaders,
   HttpRequest,
   HttpRequestOptions,
-  HttpStandardHeader,
+  HttpStandardHeaders,
   URILike,
 } from "../http";
 import { IOSourceLike } from "../io";
@@ -39,7 +39,7 @@ declare class URL implements URILike {
 }
 
 const parseExpectFromHeaders = (headers: HttpHeaders): boolean => {
-  const rawExpectHeader = getHeaderValue(headers, HttpStandardHeader.Expect);
+  const rawExpectHeader = getHeaderValue(headers, HttpStandardHeaders.Expect);
   return rawExpectHeader === "100-continue";
 };
 
@@ -57,17 +57,17 @@ const parseURIFromHeaders = ({
   const protocol = isTransportSecure ? "https" : "http";
   const forwardedProtocol = getHeaderValue(
     headers,
-    HttpExtensionHeader.XForwardedProto,
+    HttpExtensionHeaders.XForwardedProto,
   );
   const uriProtocol = isSome(forwardedProtocol)
     ? forwardedProtocol.split(/\s*,\s*/, 1)[0]
     : protocol;
   const forwardedHost = getHeaderValue(
     headers,
-    HttpExtensionHeader.XForwardedHost,
+    HttpExtensionHeaders.XForwardedHost,
   );
   const http2Authority = headers[":authority"];
-  const http1Host = getHeaderValue(headers, HttpStandardHeader.Host);
+  const http1Host = getHeaderValue(headers, HttpStandardHeaders.Host);
   const unfilteredHost = isSome(forwardedHost)
     ? forwardedHost
     : isSome(http2Authority) && httpVersionMajor >= 2
@@ -156,7 +156,7 @@ export const writeHttpRequestHeaders = <T>(
   const { expectContinue, preconditions } = request;
 
   if (expectContinue) {
-    writeHeader(HttpStandardHeader.Expect, "100-continue");
+    writeHeader(HttpStandardHeaders.Expect, "100-continue");
   }
 
   if (isSome(preconditions)) {

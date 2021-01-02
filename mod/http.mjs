@@ -2,29 +2,87 @@
 import { none, orCompute as orCompute$1, isSome, isNone } from './option.mjs';
 import { pipe, compose, returns, isEqualTo, raise, updaterReducer } from './functions.mjs';
 import { __DEV__ } from './env.mjs';
-import { map as map$1, join, fromObject, keep, length, everySatisfy, reduceRight } from './readonlyArray.mjs';
+import { map as map$1, fromObject, join, keep, length, everySatisfy, reduceRight } from './readonlyArray.mjs';
 import { fromValue, empty } from './io.mjs';
 
+const HttpStandardHeaders = {
+    Accept: "Accept",
+    AcceptCharset: "Accept-Charset",
+    AcceptEncoding: "Accept-Encoding",
+    AcceptLanguage: "Accept-Language",
+    AcceptRanges: "Accept-Ranges",
+    Age: "Age",
+    Allow: "Allow",
+    Authorization: "Authorization",
+    CacheControl: "Cache-Control",
+    Connection: "Connection",
+    ContentEncoding: "Content-Encoding",
+    ContentLanguage: "Content-Language",
+    ContentLength: "Content-Length",
+    ContentLocation: "Content-Location",
+    ContentMD5: "Content-MD5",
+    ContentRange: "Content-Range",
+    ContentType: "Content-Type",
+    Cookie: "Cookie",
+    Date: "Date",
+    ETag: "ETag",
+    Expect: "Expect",
+    Expires: "Expires",
+    From: "From",
+    Host: "Host",
+    IfMatch: "If-Match",
+    IfModifiedSince: "If-Modified-Since",
+    IfNoneMatch: "If-None-Match",
+    IfRange: "If-Range",
+    IfUnmodifiedSince: "If-Unmodified-Since",
+    LastModified: "Last-Modified",
+    Location: "Location",
+    MaxForwards: "Max-Forwards",
+    Pragma: "Pragma",
+    ProxyAuthenticate: "Proxy-Authenticate",
+    ProxyAuthorization: "Proxy-Authorization",
+    Range: "Range",
+    Referer: "Referer",
+    RetryAfter: "Retry-After",
+    Server: "Server",
+    SetCookie: "Set-Cookie",
+    TE: "TE",
+    Trailer: "Trailer",
+    TransferEncoding: "Transfer-Encoding",
+    Upgrade: "Upgrade",
+    UserAgent: "User-Agent",
+    Vary: "Vary",
+    Via: "Via",
+    Warning: "Warning",
+    WWWAuthenticate: "WWW-Authenticate",
+};
+const HttpExtensionHeaders = {
+    XForwardedProto: "X-Forwarded-Proto",
+    XForwardedHost: "X-Forwarded-Host",
+    XHttpMethod: "X-HTTP-Method",
+    XHttpMethodOverride: "X-HTTP-Method-Override",
+    XMethodOverride: "X-Method-Override",
+};
 const bannedHeaders = pipe([
-    HttpStandardHeader.Accept,
-    HttpStandardHeader.AcceptCharset,
-    HttpStandardHeader.AcceptEncoding,
-    HttpStandardHeader.AcceptLanguage,
-    HttpStandardHeader.CacheControl,
-    HttpStandardHeader.ContentEncoding,
-    HttpStandardHeader.ContentLength,
-    HttpStandardHeader.ContentType,
-    HttpStandardHeader.ETag,
-    HttpStandardHeader.Expect,
-    HttpStandardHeader.Expires,
-    HttpStandardHeader.IfMatch,
-    HttpStandardHeader.IfNoneMatch,
-    HttpStandardHeader.IfModifiedSince,
-    HttpStandardHeader.IfUnmodifiedSince,
-    HttpStandardHeader.IfRange,
-    HttpStandardHeader.LastModified,
-    HttpStandardHeader.TransferEncoding,
-    HttpStandardHeader.Vary,
+    HttpStandardHeaders.Accept,
+    HttpStandardHeaders.AcceptCharset,
+    HttpStandardHeaders.AcceptEncoding,
+    HttpStandardHeaders.AcceptLanguage,
+    HttpStandardHeaders.CacheControl,
+    HttpStandardHeaders.ContentEncoding,
+    HttpStandardHeaders.ContentLength,
+    HttpStandardHeaders.ContentType,
+    HttpStandardHeaders.ETag,
+    HttpStandardHeaders.Expect,
+    HttpStandardHeaders.Expires,
+    HttpStandardHeaders.IfMatch,
+    HttpStandardHeaders.IfNoneMatch,
+    HttpStandardHeaders.IfModifiedSince,
+    HttpStandardHeaders.IfUnmodifiedSince,
+    HttpStandardHeaders.IfRange,
+    HttpStandardHeaders.LastModified,
+    HttpStandardHeaders.TransferEncoding,
+    HttpStandardHeaders.Vary,
 ], map$1(s => s.toLowerCase()));
 function getHeaderValue(headers, key) {
     var _a;
@@ -263,6 +321,24 @@ const pCloseParen = char(")");
 const pDquote = char('"');
 const pAsterisk = char("*");
 
+const entityTagToString = ({ isWeak, tag }) => isWeak ? `\\W"${tag}"` : `"${tag}"`;
+const pETagc = satisfy(c => c >= 33 && c <= 256 /* VCHAR */ && c !== ASCII.DQOUTE);
+const parseIsWeak = optional(string("W/"));
+const parseTag = manySatisfy()(pETagc);
+const pETag = (charStream) => {
+    const isWeak = pipe(charStream, parseIsWeak, isSome);
+    pDquote(charStream);
+    const tag = parseTag(charStream);
+    pDquote(charStream);
+    return { isWeak, tag };
+};
+const parseETag = parseWith(pETag);
+const parseETagOrThrow = parseWithOrThrow(pETag);
+const parseETagFromHeaders = (headers) => {
+    const etagHeader = getHeaderValue(headers, HttpStandardHeaders.ETag);
+    return isSome(etagHeader) ? parseETagOrThrow(etagHeader) : none;
+};
+
 var ASCII$1;
 (function (ASCII) {
     ASCII[ASCII["HTAB"] = 9] = "HTAB";
@@ -478,31 +554,6 @@ const parseHeaders = (rawHeaders) => {
     return (_b = parsePreProcessedHeaders(preProcessedHeaders)) !== null && _b !== void 0 ? _b : {};
 };
 
-const pOptionalEquals = optional(pEquals);
-const pCacheDirective = (charStream) => {
-    const directive = pToken(charStream);
-    const hasValue = isSome(pOptionalEquals(charStream));
-    const value = hasValue ? pTokenOrQuotedString(charStream) : "";
-    return { directive, value };
-};
-const parseCacheDirective = parseWith(pCacheDirective);
-const parseCacheDirectiveOrThrow = parseWithOrThrow(pCacheDirective);
-const cacheDirectiveToString = ({ directive, value, }) => value.length > 0
-    ? `${directive}=${toTokenOrQuotedString(value)}`
-    : `${directive}`;
-const parseCacheDirectiveList = pipe(pCacheDirective, httpList, parseWith);
-const parseCacheControlFromHeaders = (headers) => {
-    var _a;
-    const cacheControl = getHeaderValue(headers, HttpStandardHeader.CacheControl);
-    return isSome(cacheControl)
-        ? (_a = parseCacheDirectiveList(cacheControl)) !== null && _a !== void 0 ? _a : [] : [];
-};
-const writeHttpCacheControlHeader = (cacheControl, writeHeader) => {
-    if (cacheControl.length > 0) {
-        writeHeader(HttpStandardHeader.CacheControl, pipe(cacheControl, map$1(cacheDirectiveToString), join(",")));
-    }
-};
-
 const pMediaType = charStream => {
     const type = pToken(charStream);
     pForwardSlash(charStream);
@@ -534,11 +585,11 @@ const mediaTypeIsCompressible = ({ type, subtype }, db) => {
 const parseTokenList = pipe(pToken, httpList, parseWith);
 const parseHttpContentInfoFromHeaders = (headers) => {
     var _a, _b, _c;
-    const contentEncodingString = (_a = getHeaderValue(headers, HttpStandardHeader.ContentEncoding)) !== null && _a !== void 0 ? _a : "";
+    const contentEncodingString = (_a = getHeaderValue(headers, HttpStandardHeaders.ContentEncoding)) !== null && _a !== void 0 ? _a : "";
     const contentEncodings = parseTokenList(contentEncodingString);
-    const contentLengthHeader = (_b = getHeaderValue(headers, HttpStandardHeader.ContentLength)) !== null && _b !== void 0 ? _b : "-1";
+    const contentLengthHeader = (_b = getHeaderValue(headers, HttpStandardHeaders.ContentLength)) !== null && _b !== void 0 ? _b : "-1";
     const contentLength = ~~contentLengthHeader;
-    const contentType = parseMediaType((_c = getHeaderValue(headers, HttpStandardHeader.ContentType)) !== null && _c !== void 0 ? _c : "");
+    const contentType = parseMediaType((_c = getHeaderValue(headers, HttpStandardHeaders.ContentType)) !== null && _c !== void 0 ? _c : "");
     return isNone(contentType)
         ? none
         : {
@@ -550,11 +601,11 @@ const parseHttpContentInfoFromHeaders = (headers) => {
 const writeHttpContentInfoHeaders = (content, writeHeader) => {
     const { contentLength, contentType, contentEncodings } = content;
     if (contentLength > 0) {
-        writeHeader(HttpStandardHeader.ContentLength, contentLength.toString(10));
+        writeHeader(HttpStandardHeaders.ContentLength, contentLength.toString(10));
     }
-    writeHeader(HttpStandardHeader.ContentType, mediaTypeToString(contentType));
+    writeHeader(HttpStandardHeaders.ContentType, mediaTypeToString(contentType));
     if (contentEncodings.length > 0) {
-        writeHeader(HttpStandardHeader.ContentEncoding, pipe(contentEncodings, join(", ")));
+        writeHeader(HttpStandardHeaders.ContentEncoding, pipe(contentEncodings, join(", ")));
     }
 };
 const createHttpContentInfo = ({ contentEncodings, contentLength, contentType, }) => ({
@@ -566,6 +617,46 @@ const createHttpContentInfo = ({ contentEncodings, contentLength, contentType, }
 });
 const contentIsCompressible = (content, db) => content.contentEncodings.length === 0 && // Don't double encode
     mediaTypeIsCompressible(content.contentType, db);
+
+const parseHttpDateTime = (v) => {
+    const asDate = new Date(v);
+    const result = asDate.getTime();
+    return v !== "" && !Number.isNaN(result) ? result : none;
+};
+const httpDateTimeToString = (v) => {
+    const date = new Date(v);
+    return date.toUTCString();
+};
+const parseHttpDateTimeFromHeaders = (headers, header) => {
+    var _a;
+    const headerValue = (_a = getHeaderValue(headers, header)) !== null && _a !== void 0 ? _a : "";
+    return parseHttpDateTime(headerValue);
+};
+
+const pOptionalEquals = optional(pEquals);
+const pCacheDirective = (charStream) => {
+    const directive = pToken(charStream);
+    const hasValue = isSome(pOptionalEquals(charStream));
+    const value = hasValue ? pTokenOrQuotedString(charStream) : "";
+    return { directive, value };
+};
+const parseCacheDirective = parseWith(pCacheDirective);
+const parseCacheDirectiveOrThrow = parseWithOrThrow(pCacheDirective);
+const cacheDirectiveToString = ({ directive, value, }) => value.length > 0
+    ? `${directive}=${toTokenOrQuotedString(value)}`
+    : `${directive}`;
+const parseCacheDirectiveList = pipe(pCacheDirective, httpList, parseWith);
+const parseCacheControlFromHeaders = (headers) => {
+    var _a;
+    const cacheControl = getHeaderValue(headers, HttpStandardHeaders.CacheControl);
+    return isSome(cacheControl)
+        ? (_a = parseCacheDirectiveList(cacheControl)) !== null && _a !== void 0 ? _a : [] : [];
+};
+const writeHttpCacheControlHeader = (cacheControl, writeHeader) => {
+    if (cacheControl.length > 0) {
+        writeHeader(HttpStandardHeaders.CacheControl, pipe(cacheControl, map$1(cacheDirectiveToString), join(",")));
+    }
+};
 
 const weightedParamComparator = (a, b) => {
     var _a, _b;
@@ -597,11 +688,11 @@ const parseWeightedTokenHeader = (headers, header) => {
 };
 const parseHttpPreferencesFromHeaders = (headers) => {
     var _a;
-    const acceptedCharsets = parseWeightedTokenHeader(headers, HttpStandardHeader.AcceptCharset);
-    const acceptedEncodings = parseWeightedTokenHeader(headers, HttpStandardHeader.AcceptEncoding);
+    const acceptedCharsets = parseWeightedTokenHeader(headers, HttpStandardHeaders.AcceptCharset);
+    const acceptedEncodings = parseWeightedTokenHeader(headers, HttpStandardHeaders.AcceptEncoding);
     // FIXME: This is overly lax. See: https://tools.ietf.org/html/draft-ietf-httpbis-semantics-07#section-8.4.5
-    const acceptedLanguages = parseWeightedTokenHeader(headers, HttpStandardHeader.AcceptLanguage);
-    const rawAccept = getHeaderValue(headers, HttpStandardHeader.Accept);
+    const acceptedLanguages = parseWeightedTokenHeader(headers, HttpStandardHeaders.AcceptLanguage);
+    const rawAccept = getHeaderValue(headers, HttpStandardHeaders.Accept);
     const acceptedMediaRanges = isSome(rawAccept)
         ? (_a = parseAccept(rawAccept)) !== null && _a !== void 0 ? _a : [] : [];
     const isUndefined = acceptedCharsets.length === 0 &&
@@ -653,11 +744,11 @@ const writeWeightedTokenHeader = (header, values, writeHeader) => {
 };
 const writeHttpPreferenceHeaders = (preferences, writeHeader) => {
     const { acceptedCharsets, acceptedEncodings, acceptedLanguages, acceptedMediaRanges, } = preferences;
-    writeWeightedTokenHeader(HttpStandardHeader.AcceptCharset, acceptedCharsets, writeHeader);
-    writeWeightedTokenHeader(HttpStandardHeader.AcceptEncoding, acceptedEncodings, writeHeader);
-    writeWeightedTokenHeader(HttpStandardHeader.AcceptLanguage, acceptedLanguages, writeHeader);
+    writeWeightedTokenHeader(HttpStandardHeaders.AcceptCharset, acceptedCharsets, writeHeader);
+    writeWeightedTokenHeader(HttpStandardHeaders.AcceptEncoding, acceptedEncodings, writeHeader);
+    writeWeightedTokenHeader(HttpStandardHeaders.AcceptLanguage, acceptedLanguages, writeHeader);
     const tokenizedMediaRanges = pipe(acceptedMediaRanges, map$1(({ type, subtype }) => `${type}/${subtype}`));
-    writeWeightedTokenHeader(HttpStandardHeader.Accept, tokenizedMediaRanges, writeHeader);
+    writeWeightedTokenHeader(HttpStandardHeaders.Accept, tokenizedMediaRanges, writeHeader);
 };
 
 const createHttpMessage = ({ body, cacheControl, contentInfo, headers = {}, preferences, ...rest }) => ({
@@ -727,37 +818,275 @@ const toIOSourceHttpMessage = ({ body, ...msg }) => ({
     body: fromValue()(body),
 });
 
-const entityTagToString = ({ isWeak, tag }) => isWeak ? `\\W"${tag}"` : `"${tag}"`;
-const pETagc = satisfy(c => c >= 33 && c <= 256 /* VCHAR */ && c !== ASCII.DQOUTE);
-const parseIsWeak = optional(string("W/"));
-const parseTag = manySatisfy()(pETagc);
-const pETag = (charStream) => {
-    const isWeak = pipe(charStream, parseIsWeak, isSome);
-    pDquote(charStream);
-    const tag = parseTag(charStream);
-    pDquote(charStream);
-    return { isWeak, tag };
+const parseLocationFromHeaders = (headers) => {
+    const locationValue = getHeaderValue(headers, HttpStandardHeaders.Location);
+    return isSome(locationValue) ? new URL(locationValue) : none;
 };
-const parseETag = parseWith(pETag);
-const parseETagOrThrow = parseWithOrThrow(pETag);
-const parseETagFromHeaders = (headers) => {
-    const etagHeader = getHeaderValue(headers, HttpStandardHeader.ETag);
-    return isSome(etagHeader) ? parseETagOrThrow(etagHeader) : none;
+const HttpStatusCodes = {
+    Continue: 100,
+    SwitchingProtocols: 101,
+    Processing: 102,
+    OK: 200,
+    Created: 201,
+    Accepted: 202,
+    NonAuthoritativeInformation: 203,
+    NoContent: 204,
+    ResetContent: 205,
+    PartialContent: 206,
+    MultiStatus: 207,
+    AlreadyReported: 208,
+    IMUsed: 226,
+    MultipleChoices: 300,
+    MovedPermanently: 301,
+    Found: 302,
+    SeeOther: 303,
+    NotModified: 304,
+    UseProxy: 305,
+    TemporaryRedirect: 307,
+    PermanentRedirect: 308,
+    BadRequest: 400,
+    Unauthorized: 401,
+    Forbidden: 403,
+    NotFound: 404,
+    MethodNotAllowed: 405,
+    NotAcceptable: 406,
+    ProxyAuthenticationRequired: 407,
+    RequestTimeout: 408,
+    Conflict: 409,
+    Gone: 410,
+    LengthRequired: 411,
+    PreconditionFailed: 412,
+    RequestEntityTooLarge: 413,
+    RequestURITooLong: 414,
+    UnsupportedMediaType: 415,
+    RequestedRangeNotSatisfiable: 416,
+    ExpectationFailed: 417,
+    UnprocessableEntity: 422,
+    Locked: 423,
+    FailedDependency: 424,
+    UpgradeRequired: 426,
+    PreconditionRequired: 428,
+    TooManyRequests: 429,
+    RequestHeaderFieldsTooLarge: 431,
+    UnavailableForLegalReasons: 451,
+    InternalServerError: 500,
+    NotImplemented: 501,
+    BadGateway: 502,
+    ServiceUnavailable: 503,
+    GatewayTimeout: 504,
+    HTTPVersionNotSupported: 505,
+    VariantAlsoNegotiates: 506,
+    InsufficientStorage: 507,
+    LoopDetected: 508,
+    NotExtended: 510,
+    NetworkAuthenticationRequired: 511,
 };
-
-const parseHttpDateTime = (v) => {
-    const asDate = new Date(v);
-    const result = asDate.getTime();
-    return v !== "" && !Number.isNaN(result) ? result : none;
+const createHttpResponse = ({ etag, expires, headers = {}, lastModified, location, statusCode, vary, ...rest }) => {
+    const options = {
+        ...rest,
+        etag: typeof etag === "string"
+            ? parseETagOrThrow(etag)
+            : isSome(etag)
+                ? etag
+                : parseETagFromHeaders(headers),
+        expires: typeof expires === "string"
+            ? parseHttpDateTime(expires)
+            : expires instanceof Date
+                ? expires.getTime()
+                : isSome(expires)
+                    ? expires
+                    : parseHttpDateTimeFromHeaders(headers, HttpStandardHeaders.Expires),
+        headers,
+        lastModified: typeof lastModified === "string"
+            ? parseHttpDateTime(lastModified)
+            : lastModified instanceof Date
+                ? lastModified.getTime()
+                : isSome(lastModified)
+                    ? lastModified
+                    : parseHttpDateTimeFromHeaders(headers, HttpStandardHeaders.LastModified),
+        location: typeof location === "string"
+            ? new URL(location)
+            : isSome(location)
+                ? location
+                : parseLocationFromHeaders(headers),
+        statusCode,
+        vary: vary !== null && vary !== void 0 ? vary : [],
+    };
+    return createHttpMessage(options);
 };
-const httpDateTimeToString = (v) => {
-    const date = new Date(v);
-    return date.toUTCString();
+const writeHttpResponseHeaders = (response, writeHeader) => {
+    const { etag, expires, lastModified, location, vary } = response;
+    if (isSome(etag)) {
+        writeHeader(HttpStandardHeaders.ETag, entityTagToString(etag));
+    }
+    if (isSome(expires)) {
+        writeHeader(HttpStandardHeaders.Expires, httpDateTimeToString(expires));
+    }
+    if (isSome(lastModified)) {
+        writeHeader(HttpStandardHeaders.LastModified, httpDateTimeToString(lastModified));
+    }
+    if (isSome(location)) {
+        writeHeader(HttpStandardHeaders.Location, location.toString());
+    }
+    if (vary.length > 0) {
+        writeHeader(HttpStandardHeaders.Vary, pipe(vary, join(",")));
+    }
+    writeHttpMessageHeaders(response, writeHeader);
 };
-const parseHttpDateTimeFromHeaders = (headers, header) => {
-    var _a;
-    const headerValue = (_a = getHeaderValue(headers, header)) !== null && _a !== void 0 ? _a : "";
-    return parseHttpDateTime(headerValue);
+const checkIfNotModified = ({ cacheControl, method, preconditions, }) => response => {
+    var _a, _b;
+    const { etag, lastModified } = response;
+    const { statusCode, contentInfo: _, ...responseWithoutContent } = response;
+    const methodSupportsConditionalResponse = method === "GET" || method === "HEAD";
+    const statusCodeSupportsConditionalResponse = statusCode >= 200 && statusCode < 300;
+    const isNoCacheRequest = cacheControl.findIndex(({ directive }) => directive === "no-cache") >= 0;
+    const etagMatch = isSome(etag) &&
+        ((preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifNoneMatch) === "*" ||
+            ((_a = preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifNoneMatch) !== null && _a !== void 0 ? _a : []).findIndex(({ tag }) => tag === etag.tag) >= 0);
+    const notModifiedSince = (lastModified !== null && lastModified !== void 0 ? lastModified : Number.MAX_SAFE_INTEGER) <=
+        ((_b = preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifModifiedSince) !== null && _b !== void 0 ? _b : Number.MIN_SAFE_INTEGER);
+    const match = isSome(etag) &&
+        isSome(preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifNoneMatch) &&
+        isSome(lastModified) &&
+        isSome(preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifModifiedSince)
+        ? notModifiedSince && etagMatch
+        : isSome(etag) && isSome(preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifNoneMatch)
+            ? etagMatch
+            : notModifiedSince;
+    return methodSupportsConditionalResponse &&
+        statusCodeSupportsConditionalResponse &&
+        !isNoCacheRequest &&
+        match
+        ? {
+            ...responseWithoutContent,
+            statusCode: HttpStatusCodes.NotModified,
+        }
+        : response;
+};
+const _encodeHttpResponseWithUtf8 = encodeHttpMessageWithUtf8;
+const encodeHttpResponseWithUtf8 = _encodeHttpResponseWithUtf8;
+const _decodeHttpResponseWithCharset = decodeHttpMessageWithCharset;
+const decodeHttpResponseWithCharset = _decodeHttpResponseWithCharset;
+const toIOSourceHttpResponse = (resp) => toIOSourceHttpMessage(resp);
+const decodeHttpResponseContent = (decoderProvider) => resp => {
+    const { body, contentInfo, ...rest } = resp;
+    if (isSome(contentInfo) && contentInfo.contentEncodings.length > 0) {
+        const decoders = pipe(contentInfo.contentEncodings, map$1(encoding => decoderProvider[encoding]));
+        const supportsDecodings = pipe(decoders, everySatisfy(isSome));
+        if (supportsDecodings) {
+            return {
+                ...rest,
+                contentInfo: {
+                    contentType: contentInfo.contentType,
+                    contentEncodings: [],
+                    contentLength: -1,
+                },
+                body: pipe(decoders, reduceRight(updaterReducer, returns(body))),
+            };
+        }
+        else {
+            return createHttpResponse({
+                statusCode: HttpStatusCodes.UnsupportedMediaType,
+                body: empty(),
+            });
+        }
+    }
+    else {
+        return resp;
+    }
+};
+const encodeHttpResponseContent = (encoderProvider, db = {}) => {
+    const supportedEncodings = Object.keys(encoderProvider);
+    const httpResponseIsCompressible = (response) => {
+        // Don't compress for Cache-Control: no-transform
+        // https://tools.ietf.org/html/rfc7234#section-5.2.2.4
+        const noTransformResponse = response.cacheControl.findIndex(({ directive }) => directive === "no-transform") >= 0;
+        const { contentInfo } = response;
+        return (!noTransformResponse &&
+            isSome(contentInfo) &&
+            contentIsCompressible(contentInfo, db));
+    };
+    return request => response => {
+        const { body, contentInfo, vary } = response;
+        if (isNone(contentInfo)) {
+            return response;
+        }
+        const { preferences } = request;
+        const shouldEncode = httpResponseIsCompressible(response);
+        const acceptedEncodings = shouldEncode && isSome(preferences) ? preferences.acceptedEncodings : [];
+        const contentEncoding = acceptedEncodings.find(encoding => supportedEncodings.includes(encoding));
+        if (isNone(contentEncoding)) {
+            return response;
+        }
+        const encode = isSome(contentEncoding)
+            ? encoderProvider[contentEncoding]
+            : none;
+        if (isNone(encode)) {
+            return response;
+        }
+        return {
+            ...response,
+            body: encode(body),
+            contentInfo: {
+                contentType: contentInfo.contentType,
+                contentEncodings: [contentEncoding],
+                contentLength: -1,
+            },
+            vary: [...vary, HttpStandardHeaders.AcceptEncoding],
+        };
+    };
+};
+const createHttpErrorResponse = (e) => {
+    const statusCode = e instanceof URIError
+        ? HttpStatusCodes.BadRequest
+        : HttpStatusCodes.InternalServerError;
+    return createHttpResponse({
+        statusCode,
+        body: e,
+    });
+};
+const createRedirectHttpRequest = (request, response) => {
+    const { contentInfo, method } = request;
+    const { location, statusCode } = response;
+    const redirectToGet = statusCode === HttpStatusCodes.SeeOther ||
+        ((statusCode === HttpStatusCodes.MovedPermanently ||
+            HttpStatusCodes.Found === 302) &&
+            method === "POST");
+    return isSome(location)
+        ? {
+            ...request,
+            content: redirectToGet ? none : contentInfo,
+            method: redirectToGet ? "GET" : method,
+            uri: location,
+        }
+        : request;
+};
+const decodeHttpRequestContent = (decoderProvider) => req => {
+    const { body, contentInfo, ...rest } = req;
+    if (isSome(contentInfo) && contentInfo.contentEncodings.length > 0) {
+        const newBody = pipe(contentInfo.contentEncodings, map$1(encoding => {
+            const decoder = decoderProvider[encoding];
+            if (isNone(decoder)) {
+                throw createHttpResponse({
+                    statusCode: HttpStatusCodes.UnsupportedMediaType,
+                    body: none,
+                });
+            }
+            return decoder;
+        }), reduceRight(updaterReducer, returns(body)));
+        return {
+            ...rest,
+            contentInfo: {
+                contentType: contentInfo.contentType,
+                contentEncodings: [],
+                contentLength: -1,
+            },
+            body: newBody,
+        };
+    }
+    else {
+        return req;
+    }
 };
 
 const writeEtagPreferenceHeader = (header, value, writeHeader) => {
@@ -771,12 +1100,12 @@ const writeDateHeader = (header, value, writeHeader) => {
     }
 };
 const writeHttpRequestPreconditionsHeaders = ({ ifMatch, ifModifiedSince, ifNoneMatch, ifUnmodifiedSince, ifRange, }, writeHeader) => {
-    writeEtagPreferenceHeader(HttpStandardHeader.IfMatch, ifMatch, writeHeader);
-    writeEtagPreferenceHeader(HttpStandardHeader.IfNoneMatch, ifNoneMatch, writeHeader);
-    writeDateHeader(HttpStandardHeader.IfModifiedSince, ifModifiedSince, writeHeader);
-    writeDateHeader(HttpStandardHeader.IfUnmodifiedSince, ifUnmodifiedSince, writeHeader);
+    writeEtagPreferenceHeader(HttpStandardHeaders.IfMatch, ifMatch, writeHeader);
+    writeEtagPreferenceHeader(HttpStandardHeaders.IfNoneMatch, ifNoneMatch, writeHeader);
+    writeDateHeader(HttpStandardHeaders.IfModifiedSince, ifModifiedSince, writeHeader);
+    writeDateHeader(HttpStandardHeaders.IfUnmodifiedSince, ifUnmodifiedSince, writeHeader);
     if (isSome(ifRange)) {
-        writeHeader(HttpStandardHeader.IfRange, typeof ifRange === "number"
+        writeHeader(HttpStandardHeaders.IfRange, typeof ifRange === "number"
             ? httpDateTimeToString(ifRange)
             : entityTagToString(ifRange));
     }
@@ -789,11 +1118,11 @@ const parseOptionalETagPreference = (headers, header) => {
 const parseOptionalDatePreference = (headers, header) => { var _a; return pipe((_a = getHeaderValue(headers, header)) !== null && _a !== void 0 ? _a : "", parseHttpDateTime); };
 const parseHttpRequestPreconditionsFromHeaders = (headers) => {
     var _a;
-    const ifMatch = parseOptionalETagPreference(headers, HttpStandardHeader.IfMatch);
-    const ifNoneMatch = parseOptionalETagPreference(headers, HttpStandardHeader.IfNoneMatch);
-    const ifModifiedSince = parseOptionalDatePreference(headers, HttpStandardHeader.IfModifiedSince);
-    const ifUnmodifiedSince = parseOptionalDatePreference(headers, HttpStandardHeader.IfUnmodifiedSince);
-    const ifRangeHeader = getHeaderValue(headers, HttpStandardHeader.IfRange);
+    const ifMatch = parseOptionalETagPreference(headers, HttpStandardHeaders.IfMatch);
+    const ifNoneMatch = parseOptionalETagPreference(headers, HttpStandardHeaders.IfNoneMatch);
+    const ifModifiedSince = parseOptionalDatePreference(headers, HttpStandardHeaders.IfModifiedSince);
+    const ifUnmodifiedSince = parseOptionalDatePreference(headers, HttpStandardHeaders.IfUnmodifiedSince);
+    const ifRangeHeader = getHeaderValue(headers, HttpStandardHeaders.IfRange);
     const ifRange = isSome(ifRangeHeader)
         ? // FIXME: This is sketchy
          (_a = parseHttpDateTime(ifRangeHeader)) !== null && _a !== void 0 ? _a : parseETag(ifRangeHeader) : none;
@@ -854,19 +1183,19 @@ const createHttpRequestPreconditions = ({ ifMatch, ifModifiedSince, ifNoneMatch,
 };
 
 const parseExpectFromHeaders = (headers) => {
-    const rawExpectHeader = getHeaderValue(headers, HttpStandardHeader.Expect);
+    const rawExpectHeader = getHeaderValue(headers, HttpStandardHeaders.Expect);
     return rawExpectHeader === "100-continue";
 };
 const parseURIFromHeaders = ({ headers = {}, httpVersionMajor = 1, isTransportSecure = false, uri, }) => {
     var _a;
     const protocol = isTransportSecure ? "https" : "http";
-    const forwardedProtocol = getHeaderValue(headers, HttpExtensionHeader.XForwardedProto);
+    const forwardedProtocol = getHeaderValue(headers, HttpExtensionHeaders.XForwardedProto);
     const uriProtocol = isSome(forwardedProtocol)
         ? forwardedProtocol.split(/\s*,\s*/, 1)[0]
         : protocol;
-    const forwardedHost = getHeaderValue(headers, HttpExtensionHeader.XForwardedHost);
+    const forwardedHost = getHeaderValue(headers, HttpExtensionHeaders.XForwardedHost);
     const http2Authority = headers[":authority"];
-    const http1Host = getHeaderValue(headers, HttpStandardHeader.Host);
+    const http1Host = getHeaderValue(headers, HttpStandardHeaders.Host);
     const unfilteredHost = isSome(forwardedHost)
         ? forwardedHost
         : isSome(http2Authority) && httpVersionMajor >= 2
@@ -920,7 +1249,7 @@ const disallowProtocolAndHostForwarding = () => request => {
 const writeHttpRequestHeaders = (request, writeHeader) => {
     const { expectContinue, preconditions } = request;
     if (expectContinue) {
-        writeHeader(HttpStandardHeader.Expect, "100-continue");
+        writeHeader(HttpStandardHeaders.Expect, "100-continue");
     }
     if (isSome(preconditions)) {
         writeHttpRequestPreconditionsHeaders(preconditions, writeHeader);
@@ -933,337 +1262,4 @@ const _decodeHttpRequestWithCharset = decodeHttpMessageWithCharset;
 const decodeHttpRequestWithCharset = _decodeHttpRequestWithCharset;
 const toIOSourceHttpRequest = (req) => toIOSourceHttpMessage(req);
 
-const parseLocationFromHeaders = (headers) => {
-    const locationValue = getHeaderValue(headers, HttpStandardHeader.Location);
-    return isSome(locationValue) ? new URL(locationValue) : none;
-};
-const createHttpResponse = ({ etag, expires, headers = {}, lastModified, location, statusCode, vary, ...rest }) => {
-    const options = {
-        ...rest,
-        etag: typeof etag === "string"
-            ? parseETagOrThrow(etag)
-            : isSome(etag)
-                ? etag
-                : parseETagFromHeaders(headers),
-        expires: typeof expires === "string"
-            ? parseHttpDateTime(expires)
-            : expires instanceof Date
-                ? expires.getTime()
-                : isSome(expires)
-                    ? expires
-                    : parseHttpDateTimeFromHeaders(headers, HttpStandardHeader.Expires),
-        headers,
-        lastModified: typeof lastModified === "string"
-            ? parseHttpDateTime(lastModified)
-            : lastModified instanceof Date
-                ? lastModified.getTime()
-                : isSome(lastModified)
-                    ? lastModified
-                    : parseHttpDateTimeFromHeaders(headers, HttpStandardHeader.LastModified),
-        location: typeof location === "string"
-            ? new URL(location)
-            : isSome(location)
-                ? location
-                : parseLocationFromHeaders(headers),
-        statusCode,
-        vary: vary !== null && vary !== void 0 ? vary : [],
-    };
-    return createHttpMessage(options);
-};
-const writeHttpResponseHeaders = (response, writeHeader) => {
-    const { etag, expires, lastModified, location, vary } = response;
-    if (isSome(etag)) {
-        writeHeader(HttpStandardHeader.ETag, entityTagToString(etag));
-    }
-    if (isSome(expires)) {
-        writeHeader(HttpStandardHeader.Expires, httpDateTimeToString(expires));
-    }
-    if (isSome(lastModified)) {
-        writeHeader(HttpStandardHeader.LastModified, httpDateTimeToString(lastModified));
-    }
-    if (isSome(location)) {
-        writeHeader(HttpStandardHeader.Location, location.toString());
-    }
-    if (vary.length > 0) {
-        writeHeader(HttpStandardHeader.Vary, pipe(vary, join(",")));
-    }
-    writeHttpMessageHeaders(response, writeHeader);
-};
-const checkIfNotModified = ({ cacheControl, method, preconditions, }) => response => {
-    var _a, _b;
-    const { etag, lastModified } = response;
-    const { statusCode, contentInfo: _, ...responseWithoutContent } = response;
-    const methodSupportsConditionalResponse = method === "GET" || method === "HEAD";
-    const statusCodeSupportsConditionalResponse = statusCode >= 200 && statusCode < 300;
-    const isNoCacheRequest = cacheControl.findIndex(({ directive }) => directive === "no-cache") >= 0;
-    const etagMatch = isSome(etag) &&
-        ((preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifNoneMatch) === "*" ||
-            ((_a = preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifNoneMatch) !== null && _a !== void 0 ? _a : []).findIndex(({ tag }) => tag === etag.tag) >= 0);
-    const notModifiedSince = (lastModified !== null && lastModified !== void 0 ? lastModified : Number.MAX_SAFE_INTEGER) <=
-        ((_b = preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifModifiedSince) !== null && _b !== void 0 ? _b : Number.MIN_SAFE_INTEGER);
-    const match = isSome(etag) &&
-        isSome(preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifNoneMatch) &&
-        isSome(lastModified) &&
-        isSome(preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifModifiedSince)
-        ? notModifiedSince && etagMatch
-        : isSome(etag) && isSome(preconditions === null || preconditions === void 0 ? void 0 : preconditions.ifNoneMatch)
-            ? etagMatch
-            : notModifiedSince;
-    return methodSupportsConditionalResponse &&
-        statusCodeSupportsConditionalResponse &&
-        !isNoCacheRequest &&
-        match
-        ? {
-            ...responseWithoutContent,
-            statusCode: HttpStatusCode.NotModified,
-        }
-        : response;
-};
-const _encodeHttpResponseWithUtf8 = encodeHttpMessageWithUtf8;
-const encodeHttpResponseWithUtf8 = _encodeHttpResponseWithUtf8;
-const _decodeHttpResponseWithCharset = decodeHttpMessageWithCharset;
-const decodeHttpResponseWithCharset = _decodeHttpResponseWithCharset;
-const toIOSourceHttpResponse = (resp) => toIOSourceHttpMessage(resp);
-const decodeHttpResponseContent = (decoderProvider) => resp => {
-    const { body, contentInfo, ...rest } = resp;
-    if (isSome(contentInfo) && contentInfo.contentEncodings.length > 0) {
-        const decoders = pipe(contentInfo.contentEncodings, map$1(encoding => decoderProvider[encoding]));
-        const supportsDecodings = pipe(decoders, everySatisfy(isSome));
-        if (supportsDecodings) {
-            return {
-                ...rest,
-                contentInfo: {
-                    contentType: contentInfo.contentType,
-                    contentEncodings: [],
-                    contentLength: -1,
-                },
-                body: pipe(decoders, reduceRight(updaterReducer, returns(body))),
-            };
-        }
-        else {
-            return createHttpResponse({
-                statusCode: HttpStatusCode.UnsupportedMediaType,
-                body: empty(),
-            });
-        }
-    }
-    else {
-        return resp;
-    }
-};
-const encodeHttpResponseContent = (encoderProvider, db = {}) => {
-    const supportedEncodings = Object.keys(encoderProvider);
-    const httpResponseIsCompressible = (response) => {
-        // Don't compress for Cache-Control: no-transform
-        // https://tools.ietf.org/html/rfc7234#section-5.2.2.4
-        const noTransformResponse = response.cacheControl.findIndex(({ directive }) => directive === "no-transform") >= 0;
-        const { contentInfo } = response;
-        return (!noTransformResponse &&
-            isSome(contentInfo) &&
-            contentIsCompressible(contentInfo, db));
-    };
-    return request => response => {
-        const { body, contentInfo, vary } = response;
-        if (isNone(contentInfo)) {
-            return response;
-        }
-        const { preferences } = request;
-        const shouldEncode = httpResponseIsCompressible(response);
-        const acceptedEncodings = shouldEncode && isSome(preferences) ? preferences.acceptedEncodings : [];
-        const contentEncoding = acceptedEncodings.find(encoding => supportedEncodings.includes(encoding));
-        if (isNone(contentEncoding)) {
-            return response;
-        }
-        const encode = isSome(contentEncoding)
-            ? encoderProvider[contentEncoding]
-            : none;
-        if (isNone(encode)) {
-            return response;
-        }
-        return {
-            ...response,
-            body: encode(body),
-            contentInfo: {
-                contentType: contentInfo.contentType,
-                contentEncodings: [contentEncoding],
-                contentLength: -1,
-            },
-            vary: [...vary, HttpStandardHeader.AcceptEncoding],
-        };
-    };
-};
-const createHttpErrorResponse = (e) => {
-    const statusCode = e instanceof URIError
-        ? HttpStatusCode.BadRequest
-        : HttpStatusCode.InternalServerError;
-    return createHttpResponse({
-        statusCode,
-        body: e,
-    });
-};
-const createRedirectHttpRequest = (request, response) => {
-    const { contentInfo, method } = request;
-    const { location, statusCode } = response;
-    const redirectToGet = statusCode === HttpStatusCode.SeeOther ||
-        ((statusCode === HttpStatusCode.MovedPermanently ||
-            HttpStatusCode.Found === 302) &&
-            method === "POST");
-    return isSome(location)
-        ? {
-            ...request,
-            content: redirectToGet ? none : contentInfo,
-            method: redirectToGet ? "GET" : method,
-            uri: location,
-        }
-        : request;
-};
-const decodeHttpRequestContent = (decoderProvider) => req => {
-    const { body, contentInfo, ...rest } = req;
-    if (isSome(contentInfo) && contentInfo.contentEncodings.length > 0) {
-        const newBody = pipe(contentInfo.contentEncodings, map$1(encoding => {
-            const decoder = decoderProvider[encoding];
-            if (isNone(decoder)) {
-                throw createHttpResponse({
-                    statusCode: HttpStatusCode.UnsupportedMediaType,
-                    body: none,
-                });
-            }
-            return decoder;
-        }), reduceRight(updaterReducer, returns(body)));
-        return {
-            ...rest,
-            contentInfo: {
-                contentType: contentInfo.contentType,
-                contentEncodings: [],
-                contentLength: -1,
-            },
-            body: newBody,
-        };
-    }
-    else {
-        return req;
-    }
-};
-
-var HttpStandardHeader;
-(function (HttpStandardHeader) {
-    HttpStandardHeader["Accept"] = "Accept";
-    HttpStandardHeader["AcceptCharset"] = "Accept-Charset";
-    HttpStandardHeader["AcceptEncoding"] = "Accept-Encoding";
-    HttpStandardHeader["AcceptLanguage"] = "Accept-Language";
-    HttpStandardHeader["AcceptRanges"] = "Accept-Ranges";
-    HttpStandardHeader["Age"] = "Age";
-    HttpStandardHeader["Allow"] = "Allow";
-    HttpStandardHeader["Authorization"] = "Authorization";
-    HttpStandardHeader["CacheControl"] = "Cache-Control";
-    HttpStandardHeader["Connection"] = "Connection";
-    HttpStandardHeader["ContentEncoding"] = "Content-Encoding";
-    HttpStandardHeader["ContentLanguage"] = "Content-Language";
-    HttpStandardHeader["ContentLength"] = "Content-Length";
-    HttpStandardHeader["ContentLocation"] = "Content-Location";
-    HttpStandardHeader["ContentMD5"] = "Content-MD5";
-    HttpStandardHeader["ContentRange"] = "Content-Range";
-    HttpStandardHeader["ContentType"] = "Content-Type";
-    HttpStandardHeader["Cookie"] = "Cookie";
-    HttpStandardHeader["Date"] = "Date";
-    HttpStandardHeader["ETag"] = "ETag";
-    HttpStandardHeader["Expect"] = "Expect";
-    HttpStandardHeader["Expires"] = "Expires";
-    HttpStandardHeader["From"] = "From";
-    HttpStandardHeader["Host"] = "Host";
-    HttpStandardHeader["IfMatch"] = "If-Match";
-    HttpStandardHeader["IfModifiedSince"] = "If-Modified-Since";
-    HttpStandardHeader["IfNoneMatch"] = "If-None-Match";
-    HttpStandardHeader["IfRange"] = "If-Range";
-    HttpStandardHeader["IfUnmodifiedSince"] = "If-Unmodified-Since";
-    HttpStandardHeader["LastModified"] = "Last-Modified";
-    HttpStandardHeader["Location"] = "Location";
-    HttpStandardHeader["MaxForwards"] = "Max-Forwards";
-    HttpStandardHeader["Pragma"] = "Pragma";
-    HttpStandardHeader["ProxyAuthenticate"] = "Proxy-Authenticate";
-    HttpStandardHeader["ProxyAuthorization"] = "Proxy-Authorization";
-    HttpStandardHeader["Range"] = "Range";
-    HttpStandardHeader["Referer"] = "Referer";
-    HttpStandardHeader["RetryAfter"] = "Retry-After";
-    HttpStandardHeader["Server"] = "Server";
-    HttpStandardHeader["SetCookie"] = "Set-Cookie";
-    HttpStandardHeader["TE"] = "TE";
-    HttpStandardHeader["Trailer"] = "Trailer";
-    HttpStandardHeader["TransferEncoding"] = "Transfer-Encoding";
-    HttpStandardHeader["Upgrade"] = "Upgrade";
-    HttpStandardHeader["UserAgent"] = "User-Agent";
-    HttpStandardHeader["Vary"] = "Vary";
-    HttpStandardHeader["Via"] = "Via";
-    HttpStandardHeader["Warning"] = "Warning";
-    HttpStandardHeader["WWWAuthenticate"] = "WWW-Authenticate";
-})(HttpStandardHeader || (HttpStandardHeader = {}));
-var HttpExtensionHeader;
-(function (HttpExtensionHeader) {
-    HttpExtensionHeader["XForwardedProto"] = "X-Forwarded-Proto";
-    HttpExtensionHeader["XForwardedHost"] = "X-Forwarded-Host";
-    HttpExtensionHeader["XHttpMethod"] = "X-HTTP-Method";
-    HttpExtensionHeader["XHttpMethodOverride"] = "X-HTTP-Method-Override";
-    HttpExtensionHeader["XMethodOverride"] = "X-Method-Override";
-})(HttpExtensionHeader || (HttpExtensionHeader = {}));
-var HttpStatusCode;
-(function (HttpStatusCode) {
-    HttpStatusCode[HttpStatusCode["Continue"] = 100] = "Continue";
-    HttpStatusCode[HttpStatusCode["SwitchingProtocols"] = 101] = "SwitchingProtocols";
-    HttpStatusCode[HttpStatusCode["Processing"] = 102] = "Processing";
-    HttpStatusCode[HttpStatusCode["OK"] = 200] = "OK";
-    HttpStatusCode[HttpStatusCode["Created"] = 201] = "Created";
-    HttpStatusCode[HttpStatusCode["Accepted"] = 202] = "Accepted";
-    HttpStatusCode[HttpStatusCode["NonAuthoritativeInformation"] = 203] = "NonAuthoritativeInformation";
-    HttpStatusCode[HttpStatusCode["NoContent"] = 204] = "NoContent";
-    HttpStatusCode[HttpStatusCode["ResetContent"] = 205] = "ResetContent";
-    HttpStatusCode[HttpStatusCode["PartialContent"] = 206] = "PartialContent";
-    HttpStatusCode[HttpStatusCode["MultiStatus"] = 207] = "MultiStatus";
-    HttpStatusCode[HttpStatusCode["AlreadyReported"] = 208] = "AlreadyReported";
-    HttpStatusCode[HttpStatusCode["IMUsed"] = 226] = "IMUsed";
-    HttpStatusCode[HttpStatusCode["MultipleChoices"] = 300] = "MultipleChoices";
-    HttpStatusCode[HttpStatusCode["MovedPermanently"] = 301] = "MovedPermanently";
-    HttpStatusCode[HttpStatusCode["Found"] = 302] = "Found";
-    HttpStatusCode[HttpStatusCode["SeeOther"] = 303] = "SeeOther";
-    HttpStatusCode[HttpStatusCode["NotModified"] = 304] = "NotModified";
-    HttpStatusCode[HttpStatusCode["UseProxy"] = 305] = "UseProxy";
-    HttpStatusCode[HttpStatusCode["TemporaryRedirect"] = 307] = "TemporaryRedirect";
-    HttpStatusCode[HttpStatusCode["PermanentRedirect"] = 308] = "PermanentRedirect";
-    HttpStatusCode[HttpStatusCode["BadRequest"] = 400] = "BadRequest";
-    HttpStatusCode[HttpStatusCode["Unauthorized"] = 401] = "Unauthorized";
-    HttpStatusCode[HttpStatusCode["Forbidden"] = 403] = "Forbidden";
-    HttpStatusCode[HttpStatusCode["NotFound"] = 404] = "NotFound";
-    HttpStatusCode[HttpStatusCode["MethodNotAllowed"] = 405] = "MethodNotAllowed";
-    HttpStatusCode[HttpStatusCode["NotAcceptable"] = 406] = "NotAcceptable";
-    HttpStatusCode[HttpStatusCode["ProxyAuthenticationRequired"] = 407] = "ProxyAuthenticationRequired";
-    HttpStatusCode[HttpStatusCode["RequestTimeout"] = 408] = "RequestTimeout";
-    HttpStatusCode[HttpStatusCode["Conflict"] = 409] = "Conflict";
-    HttpStatusCode[HttpStatusCode["Gone"] = 410] = "Gone";
-    HttpStatusCode[HttpStatusCode["LengthRequired"] = 411] = "LengthRequired";
-    HttpStatusCode[HttpStatusCode["PreconditionFailed"] = 412] = "PreconditionFailed";
-    HttpStatusCode[HttpStatusCode["RequestEntityTooLarge"] = 413] = "RequestEntityTooLarge";
-    HttpStatusCode[HttpStatusCode["RequestURITooLong"] = 414] = "RequestURITooLong";
-    HttpStatusCode[HttpStatusCode["UnsupportedMediaType"] = 415] = "UnsupportedMediaType";
-    HttpStatusCode[HttpStatusCode["RequestedRangeNotSatisfiable"] = 416] = "RequestedRangeNotSatisfiable";
-    HttpStatusCode[HttpStatusCode["ExpectationFailed"] = 417] = "ExpectationFailed";
-    HttpStatusCode[HttpStatusCode["UnprocessableEntity"] = 422] = "UnprocessableEntity";
-    HttpStatusCode[HttpStatusCode["Locked"] = 423] = "Locked";
-    HttpStatusCode[HttpStatusCode["FailedDependency"] = 424] = "FailedDependency";
-    HttpStatusCode[HttpStatusCode["UpgradeRequired"] = 426] = "UpgradeRequired";
-    HttpStatusCode[HttpStatusCode["PreconditionRequired"] = 428] = "PreconditionRequired";
-    HttpStatusCode[HttpStatusCode["TooManyRequests"] = 429] = "TooManyRequests";
-    HttpStatusCode[HttpStatusCode["RequestHeaderFieldsTooLarge"] = 431] = "RequestHeaderFieldsTooLarge";
-    HttpStatusCode[HttpStatusCode["UnavailableForLegalReasons"] = 451] = "UnavailableForLegalReasons";
-    HttpStatusCode[HttpStatusCode["InternalServerError"] = 500] = "InternalServerError";
-    HttpStatusCode[HttpStatusCode["NotImplemented"] = 501] = "NotImplemented";
-    HttpStatusCode[HttpStatusCode["BadGateway"] = 502] = "BadGateway";
-    HttpStatusCode[HttpStatusCode["ServiceUnavailable"] = 503] = "ServiceUnavailable";
-    HttpStatusCode[HttpStatusCode["GatewayTimeout"] = 504] = "GatewayTimeout";
-    HttpStatusCode[HttpStatusCode["HTTPVersionNotSupported"] = 505] = "HTTPVersionNotSupported";
-    HttpStatusCode[HttpStatusCode["VariantAlsoNegotiates"] = 506] = "VariantAlsoNegotiates";
-    HttpStatusCode[HttpStatusCode["InsufficientStorage"] = 507] = "InsufficientStorage";
-    HttpStatusCode[HttpStatusCode["LoopDetected"] = 508] = "LoopDetected";
-    HttpStatusCode[HttpStatusCode["NotExtended"] = 510] = "NotExtended";
-    HttpStatusCode[HttpStatusCode["NetworkAuthenticationRequired"] = 511] = "NetworkAuthenticationRequired";
-})(HttpStatusCode || (HttpStatusCode = {}));
-
-export { HttpExtensionHeader, HttpStandardHeader, HttpStatusCode, checkIfNotModified, createHttpErrorResponse, createHttpRequest, createHttpResponse, createRedirectHttpRequest, decodeHttpRequestContent, decodeHttpRequestWithCharset, decodeHttpResponseContent, decodeHttpResponseWithCharset, disallowProtocolAndHostForwarding, encodeHttpRequestWithUtf8, encodeHttpResponseContent, encodeHttpResponseWithUtf8, toIOSourceHttpRequest, toIOSourceHttpResponse, writeHttpRequestHeaders, writeHttpResponseHeaders };
+export { HttpExtensionHeaders, HttpStandardHeaders, HttpStatusCodes, checkIfNotModified, createHttpErrorResponse, createHttpRequest, createHttpResponse, createRedirectHttpRequest, decodeHttpRequestContent, decodeHttpRequestWithCharset, decodeHttpResponseContent, decodeHttpResponseWithCharset, disallowProtocolAndHostForwarding, encodeHttpRequestWithUtf8, encodeHttpResponseContent, encodeHttpResponseWithUtf8, toIOSourceHttpRequest, toIOSourceHttpResponse, writeHttpRequestHeaders, writeHttpResponseHeaders };

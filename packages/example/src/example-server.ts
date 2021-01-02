@@ -6,7 +6,7 @@ import {
   createHttpErrorResponse,
   decodeHttpRequestContent,
   HttpResponse,
-  HttpStatusCode,
+  HttpStatusCodes,
   HttpRequest,
   encodeHttpResponseWithUtf8,
   toIOSourceHttpResponse,
@@ -39,7 +39,7 @@ import {
   catchError,
   throws,
 } from "@reactive-js/core/observable";
-import { isSome, map as mapOption } from "@reactive-js/core/option";
+import { isSome } from "@reactive-js/core/option";
 import { ReadonlyObjectMap } from "@reactive-js/core/readonlyObjectMap";
 import {
   createHostScheduler,
@@ -61,7 +61,7 @@ const PrintParams = (
 ): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> =>
   pipe(
     createHttpResponse({
-      statusCode: HttpStatusCode.OK,
+      statusCode: HttpStatusCodes.OK,
       contentInfo: {
         contentType: "application/json",
       },
@@ -78,7 +78,7 @@ const EventStream = (
 ): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> =>
   pipe(
     createHttpResponse({
-      statusCode: HttpStatusCode.OK,
+      statusCode: HttpStatusCodes.OK,
       body: pipe(
         generate(increment, returns<number>(0), { delay: 1000 }),
         fromObservable(),
@@ -109,7 +109,7 @@ const FileServer = (
     map(next =>
       next.isFile() && !next.isDirectory()
         ? createHttpResponse({
-            statusCode: HttpStatusCode.OK,
+            statusCode: HttpStatusCodes.OK,
             body: readFileIOSource(path),
             contentInfo: {
               contentLength: next.size,
@@ -117,7 +117,7 @@ const FileServer = (
             },
           })
         : createHttpResponse({
-            statusCode: HttpStatusCode.NotFound,
+            statusCode: HttpStatusCodes.NotFound,
             contentInfo: {
               contentType: "text/plain",
             },
@@ -139,7 +139,7 @@ const NotFound = (
 ): ObservableLike<HttpResponse<IOSourceLike<Uint8Array>>> =>
   pipe(
     createHttpResponse({
-      statusCode: HttpStatusCode.NotFound,
+      statusCode: HttpStatusCodes.NotFound,
       contentInfo: {
         contentType: "text/plain",
       },

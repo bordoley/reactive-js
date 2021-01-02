@@ -11,8 +11,7 @@ import {
   HttpRequest,
   HttpResponse,
   HttpResponseOptions,
-  HttpStandardHeader,
-  HttpStatusCode,
+  HttpStandardHeaders,
   URILike,
 } from "../http";
 import { IOSourceLike, IOSourceOperator, empty } from "../io";
@@ -55,9 +54,69 @@ declare class URL implements URILike {
 }
 
 const parseLocationFromHeaders = (headers: HttpHeaders) => {
-  const locationValue = getHeaderValue(headers, HttpStandardHeader.Location);
+  const locationValue = getHeaderValue(headers, HttpStandardHeaders.Location);
   return isSome(locationValue) ? new URL(locationValue) : none;
 };
+
+export const HttpStatusCodes = {
+  Continue : 100,
+  SwitchingProtocols : 101,
+  Processing : 102,
+  OK : 200,
+  Created : 201,
+  Accepted : 202,
+  NonAuthoritativeInformation : 203,
+  NoContent : 204,
+  ResetContent : 205,
+  PartialContent : 206,
+  MultiStatus : 207,
+  AlreadyReported : 208,
+  IMUsed : 226,
+  MultipleChoices : 300,
+  MovedPermanently : 301,
+  Found : 302,
+  SeeOther : 303,
+  NotModified : 304,
+  UseProxy : 305,
+  TemporaryRedirect : 307,
+  PermanentRedirect : 308,
+  BadRequest : 400,
+  Unauthorized : 401,
+  Forbidden : 403,
+  NotFound : 404,
+  MethodNotAllowed : 405,
+  NotAcceptable : 406,
+  ProxyAuthenticationRequired : 407,
+  RequestTimeout : 408,
+  Conflict : 409,
+  Gone : 410,
+  LengthRequired : 411,
+  PreconditionFailed : 412,
+  RequestEntityTooLarge : 413,
+  RequestURITooLong : 414,
+  UnsupportedMediaType : 415,
+  RequestedRangeNotSatisfiable : 416,
+  ExpectationFailed : 417,
+  UnprocessableEntity : 422,
+  Locked : 423,
+  FailedDependency : 424,
+  UpgradeRequired : 426,
+  PreconditionRequired : 428,
+  TooManyRequests : 429,
+  RequestHeaderFieldsTooLarge : 431,
+  UnavailableForLegalReasons : 451,
+  InternalServerError : 500,
+  NotImplemented : 501,
+  BadGateway : 502,
+  ServiceUnavailable : 503,
+  GatewayTimeout : 504,
+  HTTPVersionNotSupported : 505,
+  VariantAlsoNegotiates : 506,
+  InsufficientStorage : 507,
+  LoopDetected : 508,
+  NotExtended : 510,
+  NetworkAuthenticationRequired : 511,
+} as const;
 
 export const createHttpResponse = <T>({
   etag,
@@ -84,7 +143,7 @@ export const createHttpResponse = <T>({
         ? expires.getTime()
         : isSome(expires)
         ? expires
-        : parseHttpDateTimeFromHeaders(headers, HttpStandardHeader.Expires),
+        : parseHttpDateTimeFromHeaders(headers, HttpStandardHeaders.Expires),
     headers,
     lastModified:
       typeof lastModified === "string"
@@ -95,7 +154,7 @@ export const createHttpResponse = <T>({
         ? lastModified
         : parseHttpDateTimeFromHeaders(
             headers,
-            HttpStandardHeader.LastModified,
+            HttpStandardHeaders.LastModified,
           ),
     location:
       typeof location === "string"
@@ -117,26 +176,26 @@ export const writeHttpResponseHeaders = <T>(
   const { etag, expires, lastModified, location, vary } = response;
 
   if (isSome(etag)) {
-    writeHeader(HttpStandardHeader.ETag, entityTagToString(etag));
+    writeHeader(HttpStandardHeaders.ETag, entityTagToString(etag));
   }
 
   if (isSome(expires)) {
-    writeHeader(HttpStandardHeader.Expires, httpDateTimeToString(expires));
+    writeHeader(HttpStandardHeaders.Expires, httpDateTimeToString(expires));
   }
 
   if (isSome(lastModified)) {
     writeHeader(
-      HttpStandardHeader.LastModified,
+      HttpStandardHeaders.LastModified,
       httpDateTimeToString(lastModified),
     );
   }
 
   if (isSome(location)) {
-    writeHeader(HttpStandardHeader.Location, location.toString());
+    writeHeader(HttpStandardHeaders.Location, location.toString());
   }
 
   if (vary.length > 0) {
-    writeHeader(HttpStandardHeader.Vary, pipe(vary, join(",")));
+    writeHeader(HttpStandardHeaders.Vary, pipe(vary, join(",")));
   }
 
   writeHttpMessageHeaders(response, writeHeader);
@@ -189,7 +248,7 @@ export const checkIfNotModified = <T>({
     match
     ? {
         ...responseWithoutContent,
-        statusCode: HttpStatusCode.NotModified,
+        statusCode: HttpStatusCodes.NotModified,
       }
     : response;
 };
@@ -244,7 +303,7 @@ export const decodeHttpResponseContent = (
       };
     } else {
       return createHttpResponse({
-        statusCode: HttpStatusCode.UnsupportedMediaType,
+        statusCode: HttpStatusCodes.UnsupportedMediaType,
         body: empty<Uint8Array>(),
       });
     }
@@ -318,7 +377,7 @@ export const encodeHttpResponseContent = (
         contentEncodings: [contentEncoding],
         contentLength: -1,
       },
-      vary: [...vary, HttpStandardHeader.AcceptEncoding],
+      vary: [...vary, HttpStandardHeaders.AcceptEncoding],
     };
   };
 };
@@ -326,8 +385,8 @@ export const encodeHttpResponseContent = (
 export const createHttpErrorResponse = (e: unknown): HttpResponse<unknown> => {
   const statusCode =
     e instanceof URIError
-      ? HttpStatusCode.BadRequest
-      : HttpStatusCode.InternalServerError;
+      ? HttpStatusCodes.BadRequest
+      : HttpStatusCodes.InternalServerError;
 
   return createHttpResponse({
     statusCode,
@@ -346,9 +405,9 @@ export const createRedirectHttpRequest = <
   const { location, statusCode } = response;
 
   const redirectToGet =
-    statusCode === HttpStatusCode.SeeOther ||
-    ((statusCode === HttpStatusCode.MovedPermanently ||
-      HttpStatusCode.Found === 302) &&
+    statusCode === HttpStatusCodes.SeeOther ||
+    ((statusCode === HttpStatusCodes.MovedPermanently ||
+      HttpStatusCodes.Found === 302) &&
       method === "POST");
 
   return isSome(location)
@@ -376,7 +435,7 @@ export const decodeHttpRequestContent = (
         const decoder = decoderProvider[encoding];
         if (isNone(decoder)) {
           throw createHttpResponse({
-            statusCode: HttpStatusCode.UnsupportedMediaType,
+            statusCode: HttpStatusCodes.UnsupportedMediaType,
             body: none,
           });
         }
