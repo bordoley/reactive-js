@@ -11,7 +11,7 @@ module.exports = {
   ],
   ignorePatterns: [
     ".eslintrc.js",
-    "build",
+    "build-types",
     "coverage",
     "docs",
     "packages/*",
@@ -25,7 +25,7 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    project: "./tsconfig.compile.json",
+    project: "./tsconfig.typecheck.json",
     sourceType: "module",
   },
   plugins: ["@typescript-eslint", "import"],
