@@ -2,15 +2,11 @@ import { Function2, Factory, Function1, Updater } from "./functions.mjs";
 import { ObservableLike } from "./observable.mjs";
 import { EnumerableLike } from "./enumerable.mjs";
 import { StreamableLike } from "./streamable.mjs";
-declare const enum ConsumeRequestType {
-    Notify = 1,
-    Done = 2
-}
 declare type ConsumeRequest<TAcc> = {
-    readonly type: ConsumeRequestType.Notify;
+    readonly type: 'notify';
     readonly acc: TAcc;
 } | {
-    readonly type: ConsumeRequestType.Done;
+    readonly type: 'done';
     readonly acc: TAcc;
 };
 declare type Consumer<T, TAcc> = Function2<TAcc, T, ConsumeRequest<TAcc>>;
@@ -54,4 +50,4 @@ declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>, opt
 /** @noInheritDoc */
 interface AsyncEnumerableLike<T> extends StreamableLike<void, T> {
 }
-export { AsyncConsumer, AsyncEnumerableLike, ConsumeRequest, ConsumeRequestType, Consumer, consume, consumeAsync, done, fromArray, fromEnumerable, fromIterable, generate, notify };
+export { AsyncConsumer, AsyncEnumerableLike, ConsumeRequest, Consumer, consume, consumeAsync, done, fromArray, fromEnumerable, fromIterable, generate, notify };

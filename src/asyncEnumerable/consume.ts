@@ -24,18 +24,13 @@ import {
 import { none } from "../option";
 import { stream } from "../streamable";
 
-export const enum ConsumeRequestType {
-  Notify = 1,
-  Done = 2,
-}
-
 export type ConsumeRequest<TAcc> =
   | {
-      readonly type: ConsumeRequestType.Notify;
+      readonly type: 'notify';
       readonly acc: TAcc;
     }
   | {
-      readonly type: ConsumeRequestType.Done;
+      readonly type: 'done';
       readonly acc: TAcc;
     };
 
@@ -47,12 +42,12 @@ export type AsyncConsumer<T, TAcc> = Function2<
 >;
 
 export const notify = <TAcc>(acc: TAcc): ConsumeRequest<TAcc> => ({
-  type: ConsumeRequestType.Notify,
+  type: 'notify',
   acc,
 });
 
 export const done = <TAcc>(acc: TAcc): ConsumeRequest<TAcc> => ({
-  type: ConsumeRequestType.Done,
+  type: 'done',
   acc,
 });
 
@@ -75,7 +70,7 @@ const consumeImpl = <TSrc, TAcc>(
         consumer(accFeedback),
         onNotify(ev => {
           switch (ev.type) {
-            case ConsumeRequestType.Notify:
+            case 'notify':
               accFeedback.dispatch(ev.acc);
               enumerator.dispatch(none);
               break;

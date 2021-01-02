@@ -24,7 +24,7 @@ Name |
 
 ### stream
 
-▸ **stream**(`scheduler`: [*SchedulerLike*](scheduler.schedulerlike.md), `options?`: { `replay?`: *undefined* \| *number*  }): [*StreamLike*](observable.streamlike.md)<[*FlowMode*](../enums/flowable.flowmode.md), [*IOEvent*](../modules/io.md#ioevent)<T\>\>
+▸ **stream**(`scheduler`: [*SchedulerLike*](scheduler.schedulerlike.md), `options?`: { `replay?`: *undefined* \| *number*  }): [*StreamLike*](observable.streamlike.md)<[*FlowMode*](../modules/flowable.md#flowmode), [*IOEvent*](../modules/io.md#ioevent)<T\>\>
 
 #### Parameters:
 
@@ -33,6 +33,6 @@ Name | Type |
 `scheduler` | [*SchedulerLike*](scheduler.schedulerlike.md) |
 `options?` | { `replay?`: *undefined* \| *number*  } |
 
-**Returns:** [*StreamLike*](observable.streamlike.md)<[*FlowMode*](../enums/flowable.flowmode.md), [*IOEvent*](../modules/io.md#ioevent)<T\>\>
+**Returns:** [*StreamLike*](observable.streamlike.md)<[*FlowMode*](../modules/flowable.md#flowmode), [*IOEvent*](../modules/io.md#ioevent)<T\>\>
 
 Inherited from: [FlowableLike](flowable.flowablelike.md)

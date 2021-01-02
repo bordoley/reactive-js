@@ -56,10 +56,10 @@ const createReadableAndSetupModeSubscription = (
     mode,
     subscribe(scheduler, ev => {
       switch (ev) {
-        case FlowMode.Pause:
+        case 'pause':
           readableValue.pause();
           break;
-        case FlowMode.Resume:
+        case 'resume':
           readableValue.resume();
           break;
       }

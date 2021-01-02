@@ -2,15 +2,12 @@ import { Function1, Reducer, Factory } from "./functions.mjs";
 import { ObservableLike, MulticastObservableLike } from "./observable.mjs";
 import { StreamableLike } from "./streamable.mjs";
 import { FlowableLike, FlowMode } from "./flowable.mjs";
-declare const enum IOEventType {
-    Notify = 1,
-    Done = 2
-}
+declare type IOEventType = 'notify' | 'done';
 declare type IOEvent<T> = {
-    readonly type: IOEventType.Notify;
+    readonly type: 'notify';
     readonly data: T;
 } | {
-    readonly type: IOEventType.Done;
+    readonly type: 'done';
 };
 declare const notify: <T>(data: T) => IOEvent<T>;
 declare const done: <T>() => IOEvent<T>;

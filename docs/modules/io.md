@@ -4,10 +4,6 @@
 
 ## Index
 
-### Enumerations
-
-* [IOEventType](../enums/io.ioeventtype.md)
-
 ### Interfaces
 
 * [IOSinkAccumulatorLike](../interfaces/io.iosinkaccumulatorlike.md)
@@ -17,6 +13,7 @@
 ### Type aliases
 
 * [IOEvent](io.md#ioevent)
+* [IOEventType](io.md#ioeventtype)
 * [IOSourceOperator](io.md#iosourceoperator)
 
 ### Functions
@@ -36,13 +33,19 @@
 
 ### IOEvent
 
-Ƭ **IOEvent**<T\>: { `data`: T ; `type`: [*Notify*](../enums/io.ioeventtype.md#notify)  } \| { `type`: [*Done*](../enums/io.ioeventtype.md#done)  }
+Ƭ **IOEvent**<T\>: { `data`: T ; `type`: *notify*  } \| { `type`: *done*  }
 
 #### Type parameters:
 
 Name |
 ------ |
 `T` |
+
+___
+
+### IOEventType
+
+Ƭ **IOEventType**: *notify* \| *done*
 
 ___
 
