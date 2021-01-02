@@ -437,7 +437,7 @@ Name | Type | Value |
 
 ### checkIfNotModified
 
-▸ `Const`**checkIfNotModified**<T\>(`__namedParameters`: [*HttpRequest*](http.md#httprequest)<*unknown*\>): [*Function1*](functions.md#function1)<[*HttpResponse*](http.md#httpresponse)<T\>, [*HttpResponse*](http.md#httpresponse)<T\>\>
+▸ `Const`**checkIfNotModified**\<T>(`__namedParameters`: [*HttpRequest*](http.md#httprequest)<*unknown*\>): [*Function1*](functions.md#function1)<[*HttpResponse*](http.md#httpresponse)<T\>, [*HttpResponse*](http.md#httpresponse)<T\>\>
 
 #### Type parameters:
 
@@ -471,7 +471,7 @@ ___
 
 ### createHttpRequest
 
-▸ `Const`**createHttpRequest**<T\>(`options`: [*HttpRequestOptions*](http.md#httprequestoptions)<T\>): [*HttpRequest*](http.md#httprequest)<T\>
+▸ `Const`**createHttpRequest**\<T>(`options`: [*HttpRequestOptions*](http.md#httprequestoptions)<T\>): [*HttpRequest*](http.md#httprequest)<T\>
 
 #### Type parameters:
 
@@ -491,7 +491,7 @@ ___
 
 ### createHttpResponse
 
-▸ `Const`**createHttpResponse**<T\>(`__namedParameters`: [*HttpResponseOptions*](http.md#httpresponseoptions)<T\>): [*HttpResponse*](http.md#httpresponse)<T\>
+▸ `Const`**createHttpResponse**\<T>(`__namedParameters`: [*HttpResponseOptions*](http.md#httpresponseoptions)<T\>): [*HttpResponse*](http.md#httpresponse)<T\>
 
 #### Type parameters:
 
@@ -511,7 +511,7 @@ ___
 
 ### createRedirectHttpRequest
 
-▸ `Const`**createRedirectHttpRequest**<THttpRequest, TReq\>(`request`: THttpRequest, `response`: [*HttpResponse*](http.md#httpresponse)<*unknown*\>): THttpRequest
+▸ `Const`**createRedirectHttpRequest**\<THttpRequest, TReq>(`request`: THttpRequest, `response`: [*HttpResponse*](http.md#httpresponse)<*unknown*\>): THttpRequest
 
 #### Type parameters:
 
@@ -589,7 +589,7 @@ ___
 
 ### disallowProtocolAndHostForwarding
 
-▸ `Const`**disallowProtocolAndHostForwarding**<T\>(): [*Function1*](functions.md#function1)<[*HttpRequest*](http.md#httprequest)<T\>, [*HttpRequest*](http.md#httprequest)<T\>\>
+▸ `Const`**disallowProtocolAndHostForwarding**\<T>(): [*Function1*](functions.md#function1)<[*HttpRequest*](http.md#httprequest)<T\>, [*HttpRequest*](http.md#httprequest)<T\>\>
 
 #### Type parameters:
 
@@ -646,7 +646,7 @@ ___
 
 ### toIOSourceHttpRequest
 
-▸ `Const`**toIOSourceHttpRequest**<TBody\>(`req`: [*HttpRequest*](http.md#httprequest)<TBody\>): [*HttpRequest*](http.md#httprequest)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<TBody\>\>
+▸ `Const`**toIOSourceHttpRequest**\<TBody>(`req`: [*HttpRequest*](http.md#httprequest)<TBody\>): [*HttpRequest*](http.md#httprequest)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<TBody\>\>
 
 #### Type parameters:
 
@@ -666,7 +666,7 @@ ___
 
 ### toIOSourceHttpResponse
 
-▸ `Const`**toIOSourceHttpResponse**<TBody\>(`resp`: [*HttpResponse*](http.md#httpresponse)<TBody\>): [*HttpResponse*](http.md#httpresponse)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<TBody\>\>
+▸ `Const`**toIOSourceHttpResponse**\<TBody>(`resp`: [*HttpResponse*](http.md#httpresponse)<TBody\>): [*HttpResponse*](http.md#httpresponse)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<TBody\>\>
 
 #### Type parameters:
 
@@ -686,7 +686,7 @@ ___
 
 ### writeHttpRequestHeaders
 
-▸ `Const`**writeHttpRequestHeaders**<T\>(`request`: [*HttpRequest*](http.md#httprequest)<T\>, `writeHeader`: [*SideEffect2*](functions.md#sideeffect2)<*string*, *string*\>): *void*
+▸ `Const`**writeHttpRequestHeaders**\<T>(`request`: [*HttpRequest*](http.md#httprequest)<T\>, `writeHeader`: [*SideEffect2*](functions.md#sideeffect2)<*string*, *string*\>): *void*
 
 #### Type parameters:
 
@@ -707,7 +707,7 @@ ___
 
 ### writeHttpResponseHeaders
 
-▸ `Const`**writeHttpResponseHeaders**<T\>(`response`: [*HttpResponse*](http.md#httpresponse)<T\>, `writeHeader`: [*SideEffect2*](functions.md#sideeffect2)<*string*, *string*\>): *void*
+▸ `Const`**writeHttpResponseHeaders**\<T>(`response`: [*HttpResponse*](http.md#httpresponse)<T\>, `writeHeader`: [*SideEffect2*](functions.md#sideeffect2)<*string*, *string*\>): *void*
 
 #### Type parameters:
 

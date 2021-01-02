@@ -43,9 +43,9 @@ Name |
 
 • `Readonly` **error**: [*Option*](../modules/option.md#option)<[*Error*](../modules/disposable.md#error)\>
 
-The error the `DisposableLike` was disposed with if disposed.
-
 Inherited from: [MulticastObservableLike](observable.multicastobservablelike.md).[error](observable.multicastobservablelike.md#error)
+
+The error the `DisposableLike` was disposed with if disposed.
 
 ___
 
@@ -53,9 +53,9 @@ ___
 
 • `Readonly` **isDisposed**: *boolean*
 
-`true` if this resource has been disposed, otherwise false
-
 Inherited from: [MulticastObservableLike](observable.multicastobservablelike.md).[isDisposed](observable.multicastobservablelike.md#isdisposed)
+
+`true` if this resource has been disposed, otherwise false
 
 ___
 
@@ -71,15 +71,17 @@ ___
 
 • `Readonly` **observerCount**: *number*
 
-The number of observers currently observing.
-
 Inherited from: [MulticastObservableLike](observable.multicastobservablelike.md).[observerCount](observable.multicastobservablelike.md#observercount)
+
+The number of observers currently observing.
 
 ## Methods
 
 ### add
 
 ▸ **add**(`disposable`: [*DisposableOrTeardown*](../modules/disposable.md#disposableorteardown)): *void*
+
+Inherited from: [MulticastObservableLike](observable.multicastobservablelike.md)
 
 Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
 
@@ -93,13 +95,13 @@ Name | Type |
 
 `this`
 
-Inherited from: [MulticastObservableLike](observable.multicastobservablelike.md)
-
 ___
 
 ### dispatch
 
 ▸ **dispatch**(`req`: TReq): *void*
+
+Inherited from: [DispatcherLike](observable.dispatcherlike.md)
 
 Dispatches the next request
 
@@ -111,13 +113,13 @@ Name | Type | Description |
 
 **Returns:** *void*
 
-Inherited from: [DispatcherLike](observable.dispatcherlike.md)
-
 ___
 
 ### dispose
 
 ▸ **dispose**(`error?`: [*Option*](../modules/option.md#option)<[*Error*](../modules/disposable.md#error)\>): *void*
+
+Inherited from: [MulticastObservableLike](observable.multicastobservablelike.md)
 
 Dispose the resource. Must be idempotent.
 
@@ -129,13 +131,13 @@ Name | Type | Description |
 
 **Returns:** *void*
 
-Inherited from: [MulticastObservableLike](observable.multicastobservablelike.md)
-
 ___
 
 ### observe
 
 ▸ **observe**(`observer`: [*ObserverLike*](observable.observerlike.md)<T\>): *void*
+
+Inherited from: [MulticastObservableLike](observable.multicastobservablelike.md)
 
 Subscribes the `ObserverLike` instance to the observable.
 
@@ -146,5 +148,3 @@ Name | Type | Description |
 `observer` | [*ObserverLike*](observable.observerlike.md)<T\> | The observer which should be notified by the observable source.    |
 
 **Returns:** *void*
-
-Inherited from: [MulticastObservableLike](observable.multicastobservablelike.md)

@@ -227,7 +227,7 @@ ___
 
 ### createDisposableValue
 
-▸ `Const`**createDisposableValue**<T\>(`value`: T, `cleanup`: [*SideEffect1*](functions.md#sideeffect1)<T\>): [*DisposableValueLike*](../interfaces/disposable.disposablevaluelike.md)<T\>
+▸ `Const`**createDisposableValue**\<T>(`value`: T, `cleanup`: [*SideEffect1*](functions.md#sideeffect1)<T\>): [*DisposableValueLike*](../interfaces/disposable.disposablevaluelike.md)<T\>
 
 Creates a new DisposableValueLike instance, which applies
 the supplied `cleanup` side effect to `value` when disposed.

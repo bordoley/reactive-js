@@ -68,6 +68,8 @@ ___
 
 ▸ **schedule**(`continuation`: [*SchedulerContinuationLike*](scheduler.schedulercontinuationlike.md), `options?`: { `delay?`: *undefined* \| *number*  }): *void*
 
+Inherited from: [SchedulerLike](scheduler.schedulerlike.md)
+
 Schedules a continuation to be executed on the scheduler.
 
 #### Parameters:
@@ -78,5 +80,3 @@ Name | Type | Description |
 `options?` | { `delay?`: *undefined* \| *number*  } | - |
 
 **Returns:** *void*
-
-Inherited from: [SchedulerLike](scheduler.schedulerlike.md)

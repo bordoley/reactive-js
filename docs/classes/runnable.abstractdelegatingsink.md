@@ -40,7 +40,7 @@ Name |
 
 ### constructor
 
-\+ **new AbstractDelegatingSink**<TA, TB\>(`delegate`: [*SinkLike*](../interfaces/runnable.sinklike.md)<TB\>): [*AbstractDelegatingSink*](runnable.abstractdelegatingsink.md)<TA, TB\>
+\+ **new AbstractDelegatingSink**\<TA, TB>(`delegate`: [*SinkLike*](../interfaces/runnable.sinklike.md)<TB\>): [*AbstractDelegatingSink*](runnable.abstractdelegatingsink.md)<TA, TB\>
 
 #### Type parameters:
 
@@ -77,9 +77,9 @@ Name | Type |
 
 ▸ **done**(): *void*
 
-**Returns:** *void*
-
 Implementation of: [SinkLike](../interfaces/runnable.sinklike.md)
+
+**Returns:** *void*
 
 ___
 

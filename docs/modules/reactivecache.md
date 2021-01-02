@@ -17,7 +17,7 @@
 
 ### createReactiveCache
 
-▸ `Const`**createReactiveCache**<T\>(`dispatchScheduler`: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md), `cleanupScheduler`: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md), `options?`: { `maxCount?`: *undefined* \| *number*  }): [*ReactiveCacheLike*](../interfaces/reactivecache.reactivecachelike.md)<T\>
+▸ `Const`**createReactiveCache**\<T>(`dispatchScheduler`: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md), `cleanupScheduler`: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md), `options?`: { `maxCount?`: *undefined* \| *number*  }): [*ReactiveCacheLike*](../interfaces/reactivecache.reactivecachelike.md)<T\>
 
 #### Type parameters:
 
@@ -39,7 +39,7 @@ ___
 
 ### getOrSet
 
-▸ `Const`**getOrSet**<T\>(`cache`: [*ReactiveCacheLike*](../interfaces/reactivecache.reactivecachelike.md)<T\>, `key`: *string*, `defaultValue`: [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>): [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>
+▸ `Const`**getOrSet**\<T>(`cache`: [*ReactiveCacheLike*](../interfaces/reactivecache.reactivecachelike.md)<T\>, `key`: *string*, `defaultValue`: [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>): [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>
 
 #### Type parameters:
 

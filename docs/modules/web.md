@@ -49,7 +49,7 @@ ___
 
 ### fetch
 
-▸ `Const`**fetch**<T\>(`onResponse`: [*Function1*](functions.md#function1)<Response, *Promise*<T\> \| [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>): [*Function1*](functions.md#function1)<*string* \| [*FetchRequest*](web.md#fetchrequest), [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
+▸ `Const`**fetch**\<T>(`onResponse`: [*Function1*](functions.md#function1)<Response, *Promise*<T\> \| [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>): [*Function1*](functions.md#function1)<*string* \| [*FetchRequest*](web.md#fetchrequest), [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -69,7 +69,7 @@ ___
 
 ### fromEvent
 
-▸ `Const`**fromEvent**<T\>(`target`: EventTarget, `eventName`: *string*, `selector`: [*Function1*](functions.md#function1)<Event, T\>): [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>
+▸ `Const`**fromEvent**\<T>(`target`: EventTarget, `eventName`: *string*, `selector`: [*Function1*](functions.md#function1)<Event, T\>): [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>
 
 #### Type parameters:
 

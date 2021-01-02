@@ -80,7 +80,7 @@ Name |
 
 ### concat
 
-▸ **concat**<T\>(`fst`: [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, `snd`: [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, ...`tail`: readonly [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>[]): [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>
+▸ **concat**\<T>(`fst`: [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, `snd`: [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, ...`tail`: readonly [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>[]): [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>
 
 #### Type parameters:
 
@@ -102,7 +102,7 @@ ___
 
 ### concatAll
 
-▸ `Const`**concatAll**<T\>(): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ `Const`**concatAll**\<T>(): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
 #### Type parameters:
 
@@ -116,7 +116,7 @@ ___
 
 ### concatMap
 
-▸ `Const`**concatMap**<TA, TB\>(`mapper`: [*Function1*](functions.md#function1)<TA, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TB\>\>\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TA\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TB\>\>\>
+▸ `Const`**concatMap**\<TA, TB>(`mapper`: [*Function1*](functions.md#function1)<TA, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TB\>\>\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TA\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TB\>\>\>
 
 #### Type parameters:
 
@@ -137,7 +137,7 @@ ___
 
 ### concatWith
 
-▸ `Const`**concatWith**<T\>(`snd`: [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ `Const`**concatWith**\<T>(`snd`: [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
 #### Type parameters:
 
@@ -157,7 +157,7 @@ ___
 
 ### distinctUntilChanged
 
-▸ `Const`**distinctUntilChanged**<T\>(`options?`: { `equality?`: *undefined* \| [*Equality*](functions.md#equality)<T\>  }): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ `Const`**distinctUntilChanged**\<T>(`options?`: { `equality?`: *undefined* \| [*Equality*](functions.md#equality)<T\>  }): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
 #### Type parameters:
 
@@ -177,7 +177,7 @@ ___
 
 ### done
 
-▸ `Const`**done**<T\>(): [*SequenceResult*](sequence.md#sequenceresult)<T\>
+▸ `Const`**done**\<T>(): [*SequenceResult*](sequence.md#sequenceresult)<T\>
 
 #### Type parameters:
 
@@ -191,7 +191,7 @@ ___
 
 ### empty
 
-▸ `Const`**empty**<T\>(): [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>
+▸ `Const`**empty**\<T>(): [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>
 
 #### Type parameters:
 
@@ -205,7 +205,7 @@ ___
 
 ### endWith
 
-▸ **endWith**<T\>(`value`: T, ...`values`: readonly T[]): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **endWith**\<T>(`value`: T, ...`values`: readonly T[]): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
 #### Type parameters:
 
@@ -226,7 +226,7 @@ ___
 
 ### fromArray
 
-▸ `Const`**fromArray**<T\>(`options?`: { `endIndex?`: *undefined* \| *number* ; `startIndex?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<readonly T[], [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ `Const`**fromArray**\<T>(`options?`: { `endIndex?`: *undefined* \| *number* ; `startIndex?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<readonly T[], [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
 #### Type parameters:
 
@@ -246,7 +246,7 @@ ___
 
 ### fromValue
 
-▸ `Const`**fromValue**<T\>(): [*Function1*](functions.md#function1)<T, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ `Const`**fromValue**\<T>(): [*Function1*](functions.md#function1)<T, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
 #### Type parameters:
 
@@ -260,7 +260,7 @@ ___
 
 ### generate
 
-▸ `Const`**generate**<T\>(`generator`: [*Updater*](functions.md#updater)<T\>, `initialValue`: [*Factory*](functions.md#factory)<T\>): [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>
+▸ `Const`**generate**\<T>(`generator`: [*Updater*](functions.md#updater)<T\>, `initialValue`: [*Factory*](functions.md#factory)<T\>): [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>
 
 #### Type parameters:
 
@@ -281,7 +281,7 @@ ___
 
 ### isDone
 
-▸ `Const`**isDone**<T\>(`result`: [*SequenceResult*](sequence.md#sequenceresult)<T\>): result is object
+▸ `Const`**isDone**\<T>(`result`: [*SequenceResult*](sequence.md#sequenceresult)<T\>): result is object
 
 #### Type parameters:
 
@@ -301,7 +301,7 @@ ___
 
 ### isNotify
 
-▸ `Const`**isNotify**<T\>(`result`: [*SequenceResult*](sequence.md#sequenceresult)<T\>): result is object
+▸ `Const`**isNotify**\<T>(`result`: [*SequenceResult*](sequence.md#sequenceresult)<T\>): result is object
 
 #### Type parameters:
 
@@ -321,7 +321,7 @@ ___
 
 ### keep
 
-▸ `Const`**keep**<T\>(`predicate`: [*Predicate*](functions.md#predicate)<T\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ `Const`**keep**\<T>(`predicate`: [*Predicate*](functions.md#predicate)<T\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
 #### Type parameters:
 
@@ -341,7 +341,7 @@ ___
 
 ### map
 
-▸ `Const`**map**<TA, TB\>(`mapper`: [*Function1*](functions.md#function1)<TA, TB\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TA\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TB\>\>\>
+▸ `Const`**map**\<TA, TB>(`mapper`: [*Function1*](functions.md#function1)<TA, TB\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TA\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TB\>\>\>
 
 #### Type parameters:
 
@@ -362,7 +362,7 @@ ___
 
 ### mapTo
 
-▸ `Const`**mapTo**<TA, TB\>(`v`: TB): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TA\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TB\>\>\>
+▸ `Const`**mapTo**\<TA, TB>(`v`: TB): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TA\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TB\>\>\>
 
 #### Type parameters:
 
@@ -383,7 +383,7 @@ ___
 
 ### notify
 
-▸ `Const`**notify**<T\>(`data`: T, `next`: [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>): [*SequenceResult*](sequence.md#sequenceresult)<T\>
+▸ `Const`**notify**\<T>(`data`: T, `next`: [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>): [*SequenceResult*](sequence.md#sequenceresult)<T\>
 
 #### Type parameters:
 
@@ -404,7 +404,7 @@ ___
 
 ### repeat
 
-▸ **repeat**<T\>(`predicate`: [*Predicate*](functions.md#predicate)<*number*\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **repeat**\<T>(`predicate`: [*Predicate*](functions.md#predicate)<*number*\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
 #### Type parameters:
 
@@ -420,7 +420,7 @@ Name | Type |
 
 **Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
-▸ **repeat**<T\>(`count`: *number*): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **repeat**\<T>(`count`: *number*): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
 #### Type parameters:
 
@@ -436,7 +436,7 @@ Name | Type |
 
 **Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
-▸ **repeat**<T\>(): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **repeat**\<T>(): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
 #### Type parameters:
 
@@ -450,7 +450,7 @@ ___
 
 ### scan
 
-▸ `Const`**scan**<T, TAcc\>(`reducer`: [*Reducer*](functions.md#reducer)<T, TAcc\>, `initialValue`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TAcc\>\>\>
+▸ `Const`**scan**\<T, TAcc>(`reducer`: [*Reducer*](functions.md#reducer)<T, TAcc\>, `initialValue`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TAcc\>\>\>
 
 #### Type parameters:
 
@@ -472,7 +472,7 @@ ___
 
 ### seek
 
-▸ `Const`**seek**<T\>(`count`: *number*): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ `Const`**seek**\<T>(`count`: *number*): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
 #### Type parameters:
 
@@ -492,7 +492,7 @@ ___
 
 ### skipFirst
 
-▸ `Const`**skipFirst**<T\>(`options?`: { `count?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ `Const`**skipFirst**\<T>(`options?`: { `count?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
 #### Type parameters:
 
@@ -512,7 +512,7 @@ ___
 
 ### startWith
 
-▸ **startWith**<T\>(`value`: T, ...`values`: readonly T[]): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **startWith**\<T>(`value`: T, ...`values`: readonly T[]): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
 #### Type parameters:
 
@@ -533,7 +533,7 @@ ___
 
 ### takeFirst
 
-▸ `Const`**takeFirst**<T\>(`options?`: { `count?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ `Const`**takeFirst**\<T>(`options?`: { `count?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
 #### Type parameters:
 
@@ -553,7 +553,7 @@ ___
 
 ### takeLast
 
-▸ `Const`**takeLast**<T\>(`options?`: { `count?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ `Const`**takeLast**\<T>(`options?`: { `count?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
 #### Type parameters:
 
@@ -573,7 +573,7 @@ ___
 
 ### takeWhile
 
-▸ `Const`**takeWhile**<T\>(`predicate`: [*Predicate*](functions.md#predicate)<T\>, `options?`: { `inclusive?`: *undefined* \| *boolean*  }): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ `Const`**takeWhile**\<T>(`predicate`: [*Predicate*](functions.md#predicate)<T\>, `options?`: { `inclusive?`: *undefined* \| *boolean*  }): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
 
 #### Type parameters:
 
@@ -594,7 +594,7 @@ ___
 
 ### toRunnable
 
-▸ `Const`**toRunnable**<T\>(): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ `Const`**toRunnable**\<T>(): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 

@@ -45,7 +45,7 @@ An alias for undefined.
 
 ### isNone
 
-▸ `Const`**isNone**<T\>(`option`: [*Option*](option.md#option)<T\>): option is undefined
+▸ `Const`**isNone**\<T>(`option`: [*Option*](option.md#option)<T\>): option is undefined
 
 Returns true if `option` is `none`.
 
@@ -67,7 +67,7 @@ ___
 
 ### isSome
 
-▸ `Const`**isSome**<T\>(`option`: [*Option*](option.md#option)<T\>): option is T
+▸ `Const`**isSome**\<T>(`option`: [*Option*](option.md#option)<T\>): option is T
 
 Returns true if `option` is not `none`.
 
@@ -89,7 +89,7 @@ ___
 
 ### map
 
-▸ `Const`**map**<TA, TB\>(`f`: [*Function1*](functions.md#function1)<TA, TB\>): [*Function1*](functions.md#function1)<[*Option*](option.md#option)<TA\>, [*Option*](option.md#option)<TB\>\>
+▸ `Const`**map**\<TA, TB>(`f`: [*Function1*](functions.md#function1)<TA, TB\>): [*Function1*](functions.md#function1)<[*Option*](option.md#option)<TA\>, [*Option*](option.md#option)<TB\>\>
 
 #### Type parameters:
 
@@ -110,7 +110,7 @@ ___
 
 ### orCompute
 
-▸ `Const`**orCompute**<T\>(`compute`: [*Factory*](functions.md#factory)<T\>): [*Function1*](functions.md#function1)<[*Option*](option.md#option)<T\>, T\>
+▸ `Const`**orCompute**\<T>(`compute`: [*Factory*](functions.md#factory)<T\>): [*Function1*](functions.md#function1)<[*Option*](option.md#option)<T\>, T\>
 
 Returns a function that takes an `Option<T>`, returning it's value
 if not `none`, otherwise returns the result of invoking the function `compute`.

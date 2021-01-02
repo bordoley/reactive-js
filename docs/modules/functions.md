@@ -503,7 +503,7 @@ ___
 
 ### arrayEquality
 
-▸ `Const`**arrayEquality**<T\>(`valuesEquality?`: [*Equality*](functions.md#equality)<T\>): [*Equality*](functions.md#equality)<readonly T[]\>
+▸ `Const`**arrayEquality**\<T>(`valuesEquality?`: [*Equality*](functions.md#equality)<T\>): [*Equality*](functions.md#equality)<readonly T[]\>
 
 Returns an equality function that compares two readonly arrays for equality,
 comparing their values using `valuesEquality`.
@@ -526,7 +526,7 @@ ___
 
 ### callWith
 
-▸ **callWith**<T\>(): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<T\>, T\>
+▸ **callWith**\<T>(): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<T\>, T\>
 
 #### Type parameters:
 
@@ -536,7 +536,7 @@ Name |
 
 **Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<T\>, T\>
 
-▸ **callWith**<TA, T\>(`a`: TA): [*Function1*](functions.md#function1)<[*Function1*](functions.md#function1)<TA, T\>, T\>
+▸ **callWith**\<TA, T>(`a`: TA): [*Function1*](functions.md#function1)<[*Function1*](functions.md#function1)<TA, T\>, T\>
 
 #### Type parameters:
 
@@ -553,7 +553,7 @@ Name | Type |
 
 **Returns:** [*Function1*](functions.md#function1)<[*Function1*](functions.md#function1)<TA, T\>, T\>
 
-▸ **callWith**<TA, TB, T\>(`a`: TA, `b`: TB): [*Function1*](functions.md#function1)<[*Function2*](functions.md#function2)<TA, TB, T\>, T\>
+▸ **callWith**\<TA, TB, T>(`a`: TA, `b`: TB): [*Function1*](functions.md#function1)<[*Function2*](functions.md#function2)<TA, TB, T\>, T\>
 
 #### Type parameters:
 
@@ -572,7 +572,7 @@ Name | Type |
 
 **Returns:** [*Function1*](functions.md#function1)<[*Function2*](functions.md#function2)<TA, TB, T\>, T\>
 
-▸ **callWith**<TA, TB, TC, T\>(`a`: TA, `b`: TB, `c`: TC): [*Function1*](functions.md#function1)<[*Function3*](functions.md#function3)<TA, TB, TC, T\>, T\>
+▸ **callWith**\<TA, TB, TC, T>(`a`: TA, `b`: TB, `c`: TC): [*Function1*](functions.md#function1)<[*Function3*](functions.md#function3)<TA, TB, TC, T\>, T\>
 
 #### Type parameters:
 
@@ -593,7 +593,7 @@ Name | Type |
 
 **Returns:** [*Function1*](functions.md#function1)<[*Function3*](functions.md#function3)<TA, TB, TC, T\>, T\>
 
-▸ **callWith**<TA, TB, TC, TD, T\>(`a`: TA, `b`: TB, `c`: TC, `d`: TD): [*Function1*](functions.md#function1)<[*Function4*](functions.md#function4)<TA, TB, TC, TD, T\>, T\>
+▸ **callWith**\<TA, TB, TC, TD, T>(`a`: TA, `b`: TB, `c`: TC, `d`: TD): [*Function1*](functions.md#function1)<[*Function4*](functions.md#function4)<TA, TB, TC, TD, T\>, T\>
 
 #### Type parameters:
 
@@ -620,7 +620,7 @@ ___
 
 ### compose
 
-▸ **compose**<T, A, B\>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>): [*Function1*](functions.md#function1)<T, B\>
+▸ **compose**\<T, A, B>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>): [*Function1*](functions.md#function1)<T, B\>
 
 #### Type parameters:
 
@@ -639,7 +639,7 @@ Name | Type |
 
 **Returns:** [*Function1*](functions.md#function1)<T, B\>
 
-▸ **compose**<T, A, B, C\>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>): [*Function1*](functions.md#function1)<T, C\>
+▸ **compose**\<T, A, B, C>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>): [*Function1*](functions.md#function1)<T, C\>
 
 #### Type parameters:
 
@@ -660,7 +660,7 @@ Name | Type |
 
 **Returns:** [*Function1*](functions.md#function1)<T, C\>
 
-▸ **compose**<T, A, B, C, D\>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>): [*Function1*](functions.md#function1)<T, D\>
+▸ **compose**\<T, A, B, C, D>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>): [*Function1*](functions.md#function1)<T, D\>
 
 #### Type parameters:
 
@@ -683,7 +683,7 @@ Name | Type |
 
 **Returns:** [*Function1*](functions.md#function1)<T, D\>
 
-▸ **compose**<T, A, B, C, D, E\>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>): [*Function1*](functions.md#function1)<T, E\>
+▸ **compose**\<T, A, B, C, D, E>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>): [*Function1*](functions.md#function1)<T, E\>
 
 #### Type parameters:
 
@@ -708,7 +708,7 @@ Name | Type |
 
 **Returns:** [*Function1*](functions.md#function1)<T, E\>
 
-▸ **compose**<T, A, B, C, D, E, F\>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>): [*Function1*](functions.md#function1)<T, F\>
+▸ **compose**\<T, A, B, C, D, E, F>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>): [*Function1*](functions.md#function1)<T, F\>
 
 #### Type parameters:
 
@@ -735,7 +735,7 @@ Name | Type |
 
 **Returns:** [*Function1*](functions.md#function1)<T, F\>
 
-▸ **compose**<T, A, B, C, D, E, F, G\>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>): [*Function1*](functions.md#function1)<T, G\>
+▸ **compose**\<T, A, B, C, D, E, F, G>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>): [*Function1*](functions.md#function1)<T, G\>
 
 #### Type parameters:
 
@@ -764,7 +764,7 @@ Name | Type |
 
 **Returns:** [*Function1*](functions.md#function1)<T, G\>
 
-▸ **compose**<T, A, B, C, D, E, F, G, H\>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>): [*Function1*](functions.md#function1)<T, H\>
+▸ **compose**\<T, A, B, C, D, E, F, G, H>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>): [*Function1*](functions.md#function1)<T, H\>
 
 #### Type parameters:
 
@@ -795,7 +795,7 @@ Name | Type |
 
 **Returns:** [*Function1*](functions.md#function1)<T, H\>
 
-▸ **compose**<T, A, B, C, D, E, F, G, H, I\>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>): [*Function1*](functions.md#function1)<T, I\>
+▸ **compose**\<T, A, B, C, D, E, F, G, H, I>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>): [*Function1*](functions.md#function1)<T, I\>
 
 #### Type parameters:
 
@@ -828,7 +828,7 @@ Name | Type |
 
 **Returns:** [*Function1*](functions.md#function1)<T, I\>
 
-▸ **compose**<T, A, B, C, D, E, F, G, H, I, J\>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>): [*Function1*](functions.md#function1)<T, J\>
+▸ **compose**\<T, A, B, C, D, E, F, G, H, I, J>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>): [*Function1*](functions.md#function1)<T, J\>
 
 #### Type parameters:
 
@@ -863,7 +863,7 @@ Name | Type |
 
 **Returns:** [*Function1*](functions.md#function1)<T, J\>
 
-▸ **compose**<T, A, B, C, D, E, F, G, H, I, J, K\>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>, `op11`: [*Function1*](functions.md#function1)<J, K\>): [*Function1*](functions.md#function1)<T, K\>
+▸ **compose**\<T, A, B, C, D, E, F, G, H, I, J, K>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>, `op11`: [*Function1*](functions.md#function1)<J, K\>): [*Function1*](functions.md#function1)<T, K\>
 
 #### Type parameters:
 
@@ -900,7 +900,7 @@ Name | Type |
 
 **Returns:** [*Function1*](functions.md#function1)<T, K\>
 
-▸ **compose**<T, A, B, C, D, E, F, G, H, I, J, K, L\>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>, `op11`: [*Function1*](functions.md#function1)<J, K\>, `op12`: [*Function1*](functions.md#function1)<K, L\>): [*Function1*](functions.md#function1)<T, L\>
+▸ **compose**\<T, A, B, C, D, E, F, G, H, I, J, K, L>(`op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>, `op11`: [*Function1*](functions.md#function1)<J, K\>, `op12`: [*Function1*](functions.md#function1)<K, L\>): [*Function1*](functions.md#function1)<T, L\>
 
 #### Type parameters:
 
@@ -943,7 +943,7 @@ ___
 
 ### composeWith
 
-▸ `Const`**composeWith**<T, A, B\>(`op2`: [*Function1*](functions.md#function1)<A, B\>): [*Function1*](functions.md#function1)<[*Function1*](functions.md#function1)<T, A\>, [*Function1*](functions.md#function1)<T, B\>\>
+▸ `Const`**composeWith**\<T, A, B>(`op2`: [*Function1*](functions.md#function1)<A, B\>): [*Function1*](functions.md#function1)<[*Function1*](functions.md#function1)<T, A\>, [*Function1*](functions.md#function1)<T, B\>\>
 
 Returns a function that composes its operator with `op2`.
 
@@ -999,7 +999,7 @@ ___
 
 ### defer
 
-▸ **defer**<T, A\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>): [*Factory*](functions.md#factory)<A\>
+▸ **defer**\<T, A>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>): [*Factory*](functions.md#factory)<A\>
 
 #### Type parameters:
 
@@ -1017,7 +1017,7 @@ Name | Type |
 
 **Returns:** [*Factory*](functions.md#factory)<A\>
 
-▸ **defer**<T, A, B\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>): [*Factory*](functions.md#factory)<B\>
+▸ **defer**\<T, A, B>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>): [*Factory*](functions.md#factory)<B\>
 
 #### Type parameters:
 
@@ -1037,7 +1037,7 @@ Name | Type |
 
 **Returns:** [*Factory*](functions.md#factory)<B\>
 
-▸ **defer**<T, A, B, C\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>): [*Factory*](functions.md#factory)<C\>
+▸ **defer**\<T, A, B, C>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>): [*Factory*](functions.md#factory)<C\>
 
 #### Type parameters:
 
@@ -1059,7 +1059,7 @@ Name | Type |
 
 **Returns:** [*Factory*](functions.md#factory)<C\>
 
-▸ **defer**<T, A, B, C, D\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>): [*Factory*](functions.md#factory)<D\>
+▸ **defer**\<T, A, B, C, D>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>): [*Factory*](functions.md#factory)<D\>
 
 #### Type parameters:
 
@@ -1083,7 +1083,7 @@ Name | Type |
 
 **Returns:** [*Factory*](functions.md#factory)<D\>
 
-▸ **defer**<T, A, B, C, D, E\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>): [*Factory*](functions.md#factory)<E\>
+▸ **defer**\<T, A, B, C, D, E>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>): [*Factory*](functions.md#factory)<E\>
 
 #### Type parameters:
 
@@ -1109,7 +1109,7 @@ Name | Type |
 
 **Returns:** [*Factory*](functions.md#factory)<E\>
 
-▸ **defer**<T, A, B, C, D, E, F\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>): [*Factory*](functions.md#factory)<F\>
+▸ **defer**\<T, A, B, C, D, E, F>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>): [*Factory*](functions.md#factory)<F\>
 
 #### Type parameters:
 
@@ -1137,7 +1137,7 @@ Name | Type |
 
 **Returns:** [*Factory*](functions.md#factory)<F\>
 
-▸ **defer**<T, A, B, C, D, E, F, G\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>): [*Factory*](functions.md#factory)<G\>
+▸ **defer**\<T, A, B, C, D, E, F, G>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>): [*Factory*](functions.md#factory)<G\>
 
 #### Type parameters:
 
@@ -1167,7 +1167,7 @@ Name | Type |
 
 **Returns:** [*Factory*](functions.md#factory)<G\>
 
-▸ **defer**<T, A, B, C, D, E, F, G, H\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>): [*Factory*](functions.md#factory)<H\>
+▸ **defer**\<T, A, B, C, D, E, F, G, H>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>): [*Factory*](functions.md#factory)<H\>
 
 #### Type parameters:
 
@@ -1199,7 +1199,7 @@ Name | Type |
 
 **Returns:** [*Factory*](functions.md#factory)<H\>
 
-▸ **defer**<T, A, B, C, D, E, F, G, H, I\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>): [*Factory*](functions.md#factory)<I\>
+▸ **defer**\<T, A, B, C, D, E, F, G, H, I>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>): [*Factory*](functions.md#factory)<I\>
 
 #### Type parameters:
 
@@ -1233,7 +1233,7 @@ Name | Type |
 
 **Returns:** [*Factory*](functions.md#factory)<I\>
 
-▸ **defer**<T, A, B, C, D, E, F, G, H, I, J\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>): [*Factory*](functions.md#factory)<J\>
+▸ **defer**\<T, A, B, C, D, E, F, G, H, I, J>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>): [*Factory*](functions.md#factory)<J\>
 
 #### Type parameters:
 
@@ -1269,7 +1269,7 @@ Name | Type |
 
 **Returns:** [*Factory*](functions.md#factory)<J\>
 
-▸ **defer**<T, A, B, C, D, E, F, G, H, I, J, K\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>, `op11`: [*Function1*](functions.md#function1)<J, K\>): [*Factory*](functions.md#factory)<K\>
+▸ **defer**\<T, A, B, C, D, E, F, G, H, I, J, K>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>, `op11`: [*Function1*](functions.md#function1)<J, K\>): [*Factory*](functions.md#factory)<K\>
 
 #### Type parameters:
 
@@ -1307,7 +1307,7 @@ Name | Type |
 
 **Returns:** [*Factory*](functions.md#factory)<K\>
 
-▸ **defer**<T, A, B, C, D, E, F, G, H, I, J, K, L\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>, `op11`: [*Function1*](functions.md#function1)<J, K\>, `op12`: [*Function1*](functions.md#function1)<K, L\>): [*Factory*](functions.md#factory)<L\>
+▸ **defer**\<T, A, B, C, D, E, F, G, H, I, J, K, L>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>, `op11`: [*Function1*](functions.md#function1)<J, K\>, `op12`: [*Function1*](functions.md#function1)<K, L\>): [*Factory*](functions.md#factory)<L\>
 
 #### Type parameters:
 
@@ -1362,7 +1362,7 @@ ___
 
 ### flip
 
-▸ **flip**<TA, TB, T\>(`f`: [*Function2*](functions.md#function2)<TA, TB, T\>): [*Function2*](functions.md#function2)<TB, TA, T\>
+▸ **flip**\<TA, TB, T>(`f`: [*Function2*](functions.md#function2)<TA, TB, T\>): [*Function2*](functions.md#function2)<TB, TA, T\>
 
 #### Type parameters:
 
@@ -1380,7 +1380,7 @@ Name | Type |
 
 **Returns:** [*Function2*](functions.md#function2)<TB, TA, T\>
 
-▸ **flip**<TA, TB, TC, T\>(`f`: [*Function3*](functions.md#function3)<TA, TB, TC, T\>): [*Function3*](functions.md#function3)<TC, TB, TA, T\>
+▸ **flip**\<TA, TB, TC, T>(`f`: [*Function3*](functions.md#function3)<TA, TB, TC, T\>): [*Function3*](functions.md#function3)<TC, TB, TA, T\>
 
 #### Type parameters:
 
@@ -1403,7 +1403,7 @@ ___
 
 ### identity
 
-▸ `Const`**identity**<T\>(`v`: T): T
+▸ `Const`**identity**\<T>(`v`: T): T
 
 The identity function.
 
@@ -1475,7 +1475,7 @@ ___
 
 ### isEqualTo
 
-▸ `Const`**isEqualTo**<T\>(`b`: T, `equality?`: [*Equality*](functions.md#equality)<T\>): [*Predicate*](functions.md#predicate)<T\>
+▸ `Const`**isEqualTo**\<T>(`b`: T, `equality?`: [*Equality*](functions.md#equality)<T\>): [*Predicate*](functions.md#predicate)<T\>
 
 Returns a predicate function comparing its argument to `b` using the
 provided `equality` function.
@@ -1547,7 +1547,7 @@ ___
 
 ### pipe
 
-▸ **pipe**<T, A\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>): A
+▸ **pipe**\<T, A>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>): A
 
 #### Type parameters:
 
@@ -1565,7 +1565,7 @@ Name | Type |
 
 **Returns:** A
 
-▸ **pipe**<T, A, B\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>): B
+▸ **pipe**\<T, A, B>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>): B
 
 #### Type parameters:
 
@@ -1585,7 +1585,7 @@ Name | Type |
 
 **Returns:** B
 
-▸ **pipe**<T, A, B, C\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>): C
+▸ **pipe**\<T, A, B, C>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>): C
 
 #### Type parameters:
 
@@ -1607,7 +1607,7 @@ Name | Type |
 
 **Returns:** C
 
-▸ **pipe**<T, A, B, C, D\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>): D
+▸ **pipe**\<T, A, B, C, D>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>): D
 
 #### Type parameters:
 
@@ -1631,7 +1631,7 @@ Name | Type |
 
 **Returns:** D
 
-▸ **pipe**<T, A, B, C, D, E\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>): E
+▸ **pipe**\<T, A, B, C, D, E>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>): E
 
 #### Type parameters:
 
@@ -1657,7 +1657,7 @@ Name | Type |
 
 **Returns:** E
 
-▸ **pipe**<T, A, B, C, D, E, F\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>): F
+▸ **pipe**\<T, A, B, C, D, E, F>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>): F
 
 #### Type parameters:
 
@@ -1685,7 +1685,7 @@ Name | Type |
 
 **Returns:** F
 
-▸ **pipe**<T, A, B, C, D, E, F, G\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>): G
+▸ **pipe**\<T, A, B, C, D, E, F, G>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>): G
 
 #### Type parameters:
 
@@ -1715,7 +1715,7 @@ Name | Type |
 
 **Returns:** G
 
-▸ **pipe**<T, A, B, C, D, E, F, G, H\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>): H
+▸ **pipe**\<T, A, B, C, D, E, F, G, H>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>): H
 
 #### Type parameters:
 
@@ -1747,7 +1747,7 @@ Name | Type |
 
 **Returns:** H
 
-▸ **pipe**<T, A, B, C, D, E, F, G, H, I\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>): I
+▸ **pipe**\<T, A, B, C, D, E, F, G, H, I>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>): I
 
 #### Type parameters:
 
@@ -1781,7 +1781,7 @@ Name | Type |
 
 **Returns:** I
 
-▸ **pipe**<T, A, B, C, D, E, F, G, H, I, J\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>): J
+▸ **pipe**\<T, A, B, C, D, E, F, G, H, I, J>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>): J
 
 #### Type parameters:
 
@@ -1817,7 +1817,7 @@ Name | Type |
 
 **Returns:** J
 
-▸ **pipe**<T, A, B, C, D, E, F, G, H, I, J, K\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>, `op11`: [*Function1*](functions.md#function1)<J, K\>): K
+▸ **pipe**\<T, A, B, C, D, E, F, G, H, I, J, K>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>, `op11`: [*Function1*](functions.md#function1)<J, K\>): K
 
 #### Type parameters:
 
@@ -1855,7 +1855,7 @@ Name | Type |
 
 **Returns:** K
 
-▸ **pipe**<T, A, B, C, D, E, F, G, H, I, J, K, L\>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>, `op11`: [*Function1*](functions.md#function1)<J, K\>, `op12`: [*Function1*](functions.md#function1)<K, L\>): L
+▸ **pipe**\<T, A, B, C, D, E, F, G, H, I, J, K, L>(`src`: T, `op1`: [*Function1*](functions.md#function1)<T, A\>, `op2`: [*Function1*](functions.md#function1)<A, B\>, `op3`: [*Function1*](functions.md#function1)<B, C\>, `op4`: [*Function1*](functions.md#function1)<C, D\>, `op5`: [*Function1*](functions.md#function1)<D, E\>, `op6`: [*Function1*](functions.md#function1)<E, F\>, `op7`: [*Function1*](functions.md#function1)<F, G\>, `op8`: [*Function1*](functions.md#function1)<G, H\>, `op9`: [*Function1*](functions.md#function1)<H, I\>, `op10`: [*Function1*](functions.md#function1)<I, J\>, `op11`: [*Function1*](functions.md#function1)<J, K\>, `op12`: [*Function1*](functions.md#function1)<K, L\>): L
 
 #### Type parameters:
 
@@ -1910,7 +1910,7 @@ ___
 
 ### raise
 
-▸ `Const`**raise**<T\>(`message?`: *unknown*): T
+▸ `Const`**raise**\<T>(`message?`: *unknown*): T
 
 Throws a javascript error using the provided message.
 
@@ -1932,7 +1932,7 @@ ___
 
 ### returns
 
-▸ `Const`**returns**<T\>(`v`: T): function
+▸ `Const`**returns**\<T>(`v`: T): function
 
 Returns a function that takes an arbitrary number of arguments and always returns `v`.
 
@@ -1954,7 +1954,7 @@ ___
 
 ### strictEquality
 
-▸ `Const`**strictEquality**<T\>(`a`: T, `b`: T): *boolean*
+▸ `Const`**strictEquality**\<T>(`a`: T, `b`: T): *boolean*
 
 The javascript strict equality function.
 
@@ -1994,7 +1994,7 @@ ___
 
 ### updaterReducer
 
-▸ `Const`**updaterReducer**<T\>(`acc`: T, `updater`: [*Updater*](functions.md#updater)<T\>): T
+▸ `Const`**updaterReducer**\<T>(`acc`: T, `updater`: [*Updater*](functions.md#updater)<T\>): T
 
 A `Reducer` functions that applies `updater` to `acc` to compute the next
 accumulator value.
