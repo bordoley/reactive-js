@@ -5,7 +5,7 @@ import { __DENO__ } from './env.mjs';
 
 const createJasmineTests = (testGroup, parents) => {
     const path = [...parents, testGroup.name];
-    if (testGroup.type === TestGroupType.Describe) {
+    if (testGroup.type === 1 /* Describe */) {
         describe(testGroup.name, () => {
             const tests = testGroup.tests;
             for (const testGroup of tests) {
@@ -20,7 +20,7 @@ const createJasmineTests = (testGroup, parents) => {
 };
 const createDenoTests = (testGroup, parents) => {
     const path = [...parents, testGroup.name];
-    if (testGroup.type === TestGroupType.Describe) {
+    if (testGroup.type === 1 /* Describe */) {
         const { tests } = testGroup;
         for (const test of tests) {
             createDenoTests(test, path);
@@ -45,12 +45,12 @@ const runTests = (testGroups) => {
 };
 
 const describe$1 = (name, ...tests) => ({
-    type: TestGroupType.Describe,
+    type: 1 /* Describe */,
     name,
     tests,
 });
 const test$1 = (name, f) => ({
-    type: TestGroupType.Test,
+    type: 2 /* Test */,
     name,
     f: (ctx) => () => {
         ignore(ctx);
@@ -58,7 +58,7 @@ const test$1 = (name, f) => ({
     },
 });
 const testAsync = (name, f) => ({
-    type: TestGroupType.TestAsync,
+    type: 3 /* TestAsync */,
     name,
     f: (ctx) => async () => {
         ignore(ctx);

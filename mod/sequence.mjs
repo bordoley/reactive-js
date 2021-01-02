@@ -3,19 +3,14 @@ import { isNone } from './option.mjs';
 import { pipe, strictEquality, compose, alwaysTrue } from './functions.mjs';
 import { createRunnable } from './runnable.mjs';
 
-var SequenceType;
-(function (SequenceType) {
-    SequenceType[SequenceType["Notify"] = 1] = "Notify";
-    SequenceType[SequenceType["Done"] = 2] = "Done";
-})(SequenceType || (SequenceType = {}));
-const isDone = (result) => result.type === SequenceType.Done;
-const isNotify = (result) => result.type === SequenceType.Notify;
+const isDone = (result) => result.type === 2 /* Done */;
+const isNotify = (result) => result.type === 1 /* Notify */;
 const notify = (data, next) => ({
-    type: SequenceType.Notify,
+    type: 1 /* Notify */,
     data,
     next,
 });
-const _done = { type: SequenceType.Done };
+const _done = { type: 2 /* Done */ };
 const done = () => _done;
 const empty = () => done;
 const concatAll = () => seq => {

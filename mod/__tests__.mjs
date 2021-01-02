@@ -1,7 +1,7 @@
 /// <reference types="./__tests__.d.ts" />
 import { none, isSome } from './option.mjs';
 import { pipe, returns, defer, increment, raise, sum, alwaysTrue, incrementBy, arrayEquality, ignore, identity, alwaysFalse } from './functions.mjs';
-import { toRunnable, fromValue, subscribe, generate as generate$2, dispatchTo, concat as concat$1, concatMap as concatMap$1, distinctUntilChanged as distinctUntilChanged$1, empty as empty$3, endWith as endWith$1, fromArray as fromArray$3, keep as keep$1, map as map$3, mapTo as mapTo$1, repeat as repeat$1, scan as scan$1, skipFirst as skipFirst$1, startWith as startWith$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, async, __await, __concurrent, buffer, throws, catchError, concatWith, combineLatestWith, createObservable, createSubject, exhaustMap, fromPromise, toPromise, genMap, ignoreElements, merge, mergeWith, mergeMap, never, observable, __memo, __observe, onSubscribe, retry, scanAsync, share, zip, switchAll, switchMap, throttle, throwIfEmpty, compute, timeout, withLatestFrom, fromIterable as fromIterable$2, zipWith as zipWith$1, zipLatestWith, zipWithLatestFrom, onNotify } from './observable.mjs';
+import { toRunnable, fromValue, subscribe, generate as generate$2, dispatchTo, concat as concat$1, concatMap as concatMap$1, distinctUntilChanged as distinctUntilChanged$1, empty as empty$3, endWith as endWith$1, fromArray as fromArray$3, keep as keep$1, map as map$3, mapTo as mapTo$1, repeat as repeat$1, scan as scan$1, skipFirst as skipFirst$1, startWith as startWith$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, buffer, throws, catchError, concatWith, combineLatestWith, createObservable, createSubject, exhaustMap, fromPromise, toPromise, genMap, ignoreElements, merge, mergeWith, mergeMap, never, observable, __memo, __observe, onSubscribe, retry, scanAsync, share, zip, switchAll, switchMap, throttle, throwIfEmpty, compute, timeout, withLatestFrom, fromIterable as fromIterable$2, zipWith as zipWith$1, zipLatestWith, zipWithLatestFrom, onNotify } from './observable.mjs';
 import { addTeardown, createDisposable, addDisposable, dispose, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
 import { createVirtualTimeScheduler, schedule, createHostScheduler } from './scheduler.mjs';
 import { map as map$1 } from './readonlyArray.mjs';
@@ -685,29 +685,7 @@ const Observable = {
     takeWhile: takeWhile$1,
     toRunnable,
 };
-const tests$6 = describe("observable", describe("async", test("multiple awaits", () => {
-    const fromValueWithDelay = (delay, value) => fromValue({ delay })(value);
-    const computedObservable = async(() => {
-        const result1 = __await(fromValueWithDelay, 2, 5);
-        let result2 = 5;
-        if (result1 > 4) {
-            result2 = __await(fromValueWithDelay, 2, result1);
-        }
-        let result3 = 0;
-        for (let i = 0; i < result2; i++) {
-            result3 += __await(fromValueWithDelay, 2, i);
-        }
-        return result3;
-    });
-    pipe(computedObservable, takeLast$1(), toRunnable(), last, expectEquals(10));
-}), test("concurrent", () => {
-    const first = pipe(generate$2(incrementBy(2), returns(1), { delay: 2 }), takeFirst$1({ count: 3 }));
-    const second = pipe(generate$2(incrementBy(2), returns(0), { delay: 3 }), takeFirst$1({ count: 2 }));
-    const computation = async(() => {
-        return __concurrent(first, second);
-    });
-    pipe(computation, toRunnable(), toArray(), expectArrayEquals([[7, 4]], arrayEquality()));
-})), describe("buffer", test("with duration and maxBufferSize", defer(concat$1(pipe([1, 2, 3, 4], fromArray$3()), pipe([1, 2, 3], fromArray$3({ delay: 1 })), pipe(4, fromValue({ delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toRunnable(), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", defer(defer([1, 2, 3, 4], fromArray$3(), buffer({ duration: _ => throws()(raise) }), toRunnable({
+const tests$6 = describe("observable", describe("buffer", test("with duration and maxBufferSize", defer(concat$1(pipe([1, 2, 3, 4], fromArray$3()), pipe([1, 2, 3], fromArray$3({ delay: 1 })), pipe(4, fromValue({ delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toRunnable(), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", defer(defer([1, 2, 3, 4], fromArray$3(), buffer({ duration: _ => throws()(raise) }), toRunnable({
     schedulerFactory: defer({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
 }), toArray()), expectToThrow))), describe("catchError", test("source completes successfully", defer(pipe(1, fromValue()), catchError(_ => fromValue()(2)), toRunnable(), toArray(), expectArrayEquals([1]))), test("source throws, error caught and ignored", () => {
     const error = new Error();

@@ -3,8 +3,8 @@ import {
   HttpContentEncoding,
   HttpHeaders,
   HttpPreferences,
-  HttpStandardHeaders,
   HttpStandardHeader,
+  HttpStandardHeaders,
   MediaRange,
   MediaType,
 } from "../http";

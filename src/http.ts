@@ -1,8 +1,8 @@
+import { HttpExtensionHeaders, HttpStandardHeaders } from "./http/httpHeaders";
+export { HttpStandardHeaders, HttpExtensionHeaders } from "./http/httpHeaders";
+import { HttpStatusCodes } from "./http/httpResponse";
+export { HttpStatusCodes } from "./http/httpResponse";
 import { ReadonlyObjectMap } from "./readonlyObjectMap";
-import { HttpStandardHeaders, HttpExtensionHeaders}  from "./http/httpHeaders";
-export { HttpStandardHeaders, HttpExtensionHeaders}  from "./http/httpHeaders";
-import {HttpStatusCodes} from "./http/httpResponse";
-export {HttpStatusCodes} from "./http/httpResponse";
 
 export type CacheDirective = {
   readonly directive: string;
@@ -41,10 +41,8 @@ export type HttpHeaders = ReadonlyObjectMap<string>;
 type HttpStandardHeadersKeys = keyof typeof HttpStandardHeaders;
 export type HttpStandardHeader = typeof HttpStandardHeaders[HttpStandardHeadersKeys];
 
-
 type HttpExtensionHeadersKeys = keyof typeof HttpExtensionHeaders;
 export type HttpExtensionHeader = typeof HttpExtensionHeaders[HttpExtensionHeadersKeys];
-
 
 // A Proxy readonly interface for the what-wg URL api.
 export interface URILike {
@@ -149,7 +147,6 @@ export type HttpRequestOptions<T> = HttpMessageOptions<T> & {
 
 type HttpStatusCodesKeys = keyof typeof HttpStatusCodes;
 export type HttpStatusCode = typeof HttpStatusCodes[HttpStatusCodesKeys];
-
 
 export type HttpResponse<T> = HttpMessage<T> & {
   // age:Option<TimeSpan>

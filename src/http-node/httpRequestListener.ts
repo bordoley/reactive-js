@@ -18,14 +18,12 @@ import {
 } from "../node";
 import {
   ObservableLike,
-  __await,
-  __memo,
-  async,
   catchError,
   defer,
   empty,
   subscribe,
 } from "../observable";
+import { switchMap } from "../observable/switchAll";
 import { Option, isSome, none } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { sink } from "../streamable";
@@ -107,11 +105,10 @@ export const createHttpRequestListener = (
         : empty();
 
     return pipe(
-      async(() => {
-        const request = __memo(createHttpRequest, requestOptions);
-        const response = __await(handler, request);
-        __await(writeResponse, response);
-      }),
+      requestOptions,
+      createHttpRequest,
+      handler,
+      switchMap(writeResponse),
       catchError(onError),
     );
   };

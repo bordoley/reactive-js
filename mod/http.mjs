@@ -322,7 +322,7 @@ const pDquote = char('"');
 const pAsterisk = char("*");
 
 const entityTagToString = ({ isWeak, tag }) => isWeak ? `\\W"${tag}"` : `"${tag}"`;
-const pETagc = satisfy(c => c >= 33 && c <= 256 /* VCHAR */ && c !== ASCII.DQOUTE);
+const pETagc = satisfy(c => c >= 33 && c <= 256 /* VCHAR */ && c !== 34 /* DQOUTE */);
 const parseIsWeak = optional(string("W/"));
 const parseTag = manySatisfy()(pETagc);
 const pETag = (charStream) => {
@@ -339,70 +339,42 @@ const parseETagFromHeaders = (headers) => {
     return isSome(etagHeader) ? parseETagOrThrow(etagHeader) : none;
 };
 
-var ASCII$1;
-(function (ASCII) {
-    ASCII[ASCII["HTAB"] = 9] = "HTAB";
-    ASCII[ASCII["SPACE"] = 32] = "SPACE";
-    ASCII[ASCII["EXCLAMATION_MARK"] = 33] = "EXCLAMATION_MARK";
-    ASCII[ASCII["DQOUTE"] = 34] = "DQOUTE";
-    ASCII[ASCII["HASH"] = 35] = "HASH";
-    ASCII[ASCII["DOLLAR_SIGN"] = 36] = "DOLLAR_SIGN";
-    ASCII[ASCII["PERCENT_SIGN"] = 37] = "PERCENT_SIGN";
-    ASCII[ASCII["AMPERSAND"] = 38] = "AMPERSAND";
-    ASCII[ASCII["APOSTROPHE"] = 39] = "APOSTROPHE";
-    ASCII[ASCII["ASTERISK"] = 42] = "ASTERISK";
-    ASCII[ASCII["PLUS_SIGN"] = 43] = "PLUS_SIGN";
-    ASCII[ASCII["MINUS_SIGN"] = 45] = "MINUS_SIGN";
-    ASCII[ASCII["PERIOD"] = 46] = "PERIOD";
-    ASCII[ASCII["BACKSLASH"] = 92] = "BACKSLASH";
-    ASCII[ASCII["CARET"] = 94] = "CARET";
-    ASCII[ASCII["UNDERSCORE"] = 95] = "UNDERSCORE";
-    ASCII[ASCII["GRAVE_ACCENT"] = 96] = "GRAVE_ACCENT";
-    ASCII[ASCII["PIPE"] = 124] = "PIPE";
-    ASCII[ASCII["TILDE"] = 126] = "TILDE";
-    ASCII[ASCII["_a"] = 97] = "_a";
-    ASCII[ASCII["_z"] = 122] = "_z";
-    ASCII[ASCII["_A"] = 65] = "_A";
-    ASCII[ASCII["_Z"] = 90] = "_Z";
-    ASCII[ASCII["_0"] = 48] = "_0";
-    ASCII[ASCII["_9"] = 57] = "_9";
-})(ASCII$1 || (ASCII$1 = {}));
-const pTChar = satisfy(c => c === ASCII$1.EXCLAMATION_MARK ||
-    c === ASCII$1.HASH ||
-    c === ASCII$1.DOLLAR_SIGN ||
-    c === ASCII$1.PERCENT_SIGN ||
-    c === ASCII$1.AMPERSAND ||
-    c === ASCII$1.APOSTROPHE ||
-    c === ASCII$1.ASTERISK ||
-    c === ASCII$1.PLUS_SIGN ||
-    c === ASCII$1.MINUS_SIGN ||
-    c === ASCII$1.PERIOD ||
-    c === ASCII$1.CARET ||
-    c === ASCII$1.UNDERSCORE ||
-    c === ASCII$1.GRAVE_ACCENT ||
-    c === ASCII$1.PIPE ||
-    c === ASCII$1.TILDE ||
-    (c >= ASCII$1._0 && c <= ASCII$1._9) ||
-    (c >= ASCII$1._a && c <= ASCII$1._z) ||
-    (c >= ASCII$1._A && c <= ASCII$1._Z));
-const pWS = satisfy(c => c === ASCII$1.SPACE || c === ASCII$1.HTAB);
+const pTChar = satisfy(c => c === 33 /* EXCLAMATION_MARK */ ||
+    c === 35 /* HASH */ ||
+    c === 36 /* DOLLAR_SIGN */ ||
+    c === 37 /* PERCENT_SIGN */ ||
+    c === 38 /* AMPERSAND */ ||
+    c === 39 /* APOSTROPHE */ ||
+    c === 42 /* ASTERISK */ ||
+    c === 43 /* PLUS_SIGN */ ||
+    c === 45 /* MINUS_SIGN */ ||
+    c === 46 /* PERIOD */ ||
+    c === 94 /* CARET */ ||
+    c === 95 /* UNDERSCORE */ ||
+    c === 96 /* GRAVE_ACCENT */ ||
+    c === 124 /* PIPE */ ||
+    c === 126 /* TILDE */ ||
+    (c >= 48 /* _0 */ && c <= 57 /* _9 */) ||
+    (c >= 97 /* _a */ && c <= 122 /* _z */) ||
+    (c >= 65 /* _A */ && c <= 90 /* _Z */));
+const pWS = satisfy(c => c === 32 /* SPACE */ || c === 9 /* HTAB */);
 const pOWS = manyIgnore()(pWS);
 const pQuotedString = charStream => {
     let builder = none;
     charStream.move();
     const initialIndex = charStream.index;
-    if (charStream.current !== ASCII$1.DQOUTE) {
+    if (charStream.current !== 34 /* DQOUTE */) {
         throwParseError(charStream);
     }
     while (charStream.move()) {
         const c = charStream.current;
-        const isQDText = c === ASCII$1.HTAB ||
-            c === ASCII$1.SPACE ||
-            c === ASCII$1.EXCLAMATION_MARK ||
+        const isQDText = c === 9 /* HTAB */ ||
+            c === 32 /* SPACE */ ||
+            c === 33 /* EXCLAMATION_MARK */ ||
             (c >= 0x23 && c <= 0x5b) ||
             (c >= 0x5d && c <= 0x7e) ||
             (c >= 0x80 && c <= 0xff); // obs-text
-        if (c === ASCII$1.DQOUTE) {
+        if (c === 34 /* DQOUTE */) {
             break;
         }
         else if (isQDText) {
@@ -411,13 +383,13 @@ const pQuotedString = charStream => {
                 refinableBuilder.push(c);
             }
         }
-        else if (c === ASCII$1.BACKSLASH && charStream.move()) {
+        else if (c === 92 /* BACKSLASH */ && charStream.move()) {
             if (isNone(builder)) {
                 builder = [];
             }
             const c = charStream.current;
-            const isQuotedPairChar = c === ASCII$1.HTAB ||
-                c === ASCII$1.SPACE ||
+            const isQuotedPairChar = c === 9 /* HTAB */ ||
+                c === 32 /* SPACE */ ||
                 (c >= 0x21 && c <= 0x7e) || // VCHAR
                 (c >= 0x80 && c <= 0xff); // obs-text
             if (!isQuotedPairChar) {
@@ -445,25 +417,25 @@ const toTokenOrQuotedString = (input) => {
     let buffer = none;
     for (let i = 0; i < input.length; i++) {
         const c = input.charCodeAt(i);
-        const isQuotedPairChar = c === ASCII$1.HTAB ||
-            c === ASCII$1.SPACE ||
+        const isQuotedPairChar = c === 9 /* HTAB */ ||
+            c === 32 /* SPACE */ ||
             (c >= 0x21 && c <= 0x7e) || // VCHAR
             (c >= 0x80 && c <= 0xff); // obs-text
-        const isQDText = c === ASCII$1.HTAB ||
-            c === ASCII$1.SPACE ||
-            c === ASCII$1.EXCLAMATION_MARK ||
+        const isQDText = c === 9 /* HTAB */ ||
+            c === 32 /* SPACE */ ||
+            c === 33 /* EXCLAMATION_MARK */ ||
             (c >= 0x23 && c <= 0x5b) ||
             (c >= 0x5d && c <= 0x7e) ||
             (c >= 0x80 && c <= 0xff); // obs-text
         if (isQuotedPairChar && !isQDText) {
             if (isNone(buffer)) {
-                buffer = [ASCII$1.DQOUTE];
+                buffer = [34 /* DQOUTE */];
                 for (let j = 0; j < i; j++) {
                     const c = input.charCodeAt(j);
                     buffer.push(c);
                 }
             }
-            buffer.push(ASCII$1.BACKSLASH);
+            buffer.push(92 /* BACKSLASH */);
         }
         else if (!isQDText) {
             // FIXME: Error type?
@@ -474,7 +446,7 @@ const toTokenOrQuotedString = (input) => {
         }
     }
     if (isSome(buffer)) {
-        buffer.push(ASCII$1.DQOUTE);
+        buffer.push(34 /* DQOUTE */);
         return String.fromCharCode(...buffer);
     }
     else {
@@ -501,8 +473,8 @@ const owsCommaOws = (charStream) => {
 };
 const httpList = (parser) => pipe(parser, sepBy(owsCommaOws));
 const pFieldVchar = satisfy(c => (c >= 0x21 && c <= 0x7e) || (c >= 0x80 && c <= 0xff));
-const pFieldVCharSpHTab = satisfy(c => c === ASCII$1.SPACE ||
-    c === ASCII$1.HTAB ||
+const pFieldVCharSpHTab = satisfy(c => c === 32 /* SPACE */ ||
+    c === 9 /* HTAB */ ||
     (c >= 0x21 && c <= 0x7e) ||
     (c >= 0x80 && c <= 0xff));
 const parseManyFieldVCharSpHTab = manyIgnore()(pFieldVCharSpHTab);

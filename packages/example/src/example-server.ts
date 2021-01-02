@@ -29,9 +29,6 @@ import {
 } from "@reactive-js/core/io";
 import { readFileIOSource, bindNodeCallback } from "@reactive-js/core/node";
 import {
-  async,
-  __await,
-  __memo,
   map,
   fromValue,
   generate,
@@ -176,10 +173,11 @@ const processRequest = (req: HttpRequest<IOSourceLike<Uint8Array>>) => {
     encodeHttpResponseContent(createContentEncodingCompressTransforms(), db),
   );
 
-  return async(() => {
-    const response = __await(routeRequest, req);
-    return encodeResponse(response);
-  });
+  return pipe(
+    req,
+    routeRequest,
+    map(encodeResponse),
+  )
 };
 
 const errorHandler = compose(

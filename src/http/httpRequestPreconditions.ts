@@ -4,8 +4,8 @@ import {
   HttpDateTime,
   HttpHeaders,
   HttpRequestPreconditions,
-  HttpStandardHeaders,
   HttpStandardHeader,
+  HttpStandardHeaders,
 } from "../http";
 import { Option, isNone, isSome, none } from "../option";
 import { join, map } from "../readonlyArray";

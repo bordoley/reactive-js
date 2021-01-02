@@ -1,9 +1,9 @@
 /// <reference types="./observable.d.ts" />
-import { isSome, none, isNone } from './option.mjs';
+import { none, isNone, isSome } from './option.mjs';
 import { pipe, ignore, raise, arrayEquality, returns, compose, callWith, defer as defer$1, strictEquality } from './functions.mjs';
-import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, bindDisposables, addTeardown, disposed, addDisposableDisposeParentOnChildError, addOnDisposedWithoutErrorTeardown, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
-import { __DEV__, warn } from './env.mjs';
+import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, bindDisposables, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
+import { __DEV__ } from './env.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
 import { enumerate, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
@@ -148,67 +148,6 @@ const createAutoDisposingDelegatingObserver = (delegate) => {
 };
 const observe = (observer) => observable => observable.observe(observer);
 
-var LatestMode$1;
-(function (LatestMode) {
-    LatestMode[LatestMode["Combine"] = 1] = "Combine";
-    LatestMode[LatestMode["Zip"] = 2] = "Zip";
-})(LatestMode$1 || (LatestMode$1 = {}));
-function onDispose(error) {
-    const { ctx } = this;
-    ctx.completedCount++;
-    if (isSome(error) || ctx.completedCount === ctx.observers.length) {
-        pipe(this.delegate, dispose(error));
-    }
-}
-class LatestObserver extends AbstractDelegatingObserver {
-    constructor(delegate, ctx, mode) {
-        super(delegate);
-        this.ctx = ctx;
-        this.mode = mode;
-        this.ready = false;
-        this.latest = none;
-        addTeardown(this, onDispose);
-    }
-    notify(next) {
-        assertObserverState(this);
-        const ctx = this.ctx;
-        this.latest = next;
-        if (!this.ready) {
-            ctx.readyCount++;
-            this.ready = true;
-        }
-        const observers = ctx.observers;
-        if (ctx.readyCount === observers.length) {
-            const result = pipe(observers, map$1(observer => observer.latest));
-            this.delegate.notify(result);
-            if (this.mode === LatestMode$1.Zip) {
-                for (const sub of observers) {
-                    sub.ready = false;
-                    sub.latest = none;
-                }
-                ctx.readyCount = 0;
-            }
-        }
-    }
-}
-const latest = (observables, mode) => {
-    const factory = (observer) => () => {
-        const observers = [];
-        const ctx = {
-            completedCount: 0,
-            observers,
-            readyCount: 0,
-        };
-        for (const observable of observables) {
-            const innerObserver = new LatestObserver(observer, ctx, mode);
-            observers.push(innerObserver);
-            pipe(observable, observe(innerObserver));
-        }
-    };
-    const isSynchronous = pipe(observables, everySatisfy(obs => obs.isSynchronous));
-    return isSynchronous ? deferSynchronous(factory) : defer(factory);
-};
-
 class DefaultObserver extends AbstractObserver {
     constructor(scheduler, onNotify) {
         super(scheduler);
@@ -233,154 +172,20 @@ const subscribe = (scheduler, onNotify = ignore) => (observable) => {
 };
 
 const arrayStrictEquality = arrayEquality();
-var EffectType;
-(function (EffectType) {
-    EffectType[EffectType["Await"] = 0] = "Await";
-    EffectType[EffectType["Memo"] = 1] = "Memo";
-    EffectType[EffectType["Observe"] = 2] = "Observe";
-    EffectType[EffectType["Using"] = 3] = "Using";
-})(EffectType || (EffectType = {}));
-const asyncAwaitSymbol = Symbol("@reactive-js/core/observable/effect/await");
-function validateAsyncEffect(ctx, type) {
-    const { effects, index } = ctx;
-    ctx.index++;
-    const effect = effects[index];
-    if (isSome(effect) && effect.type === type) {
-        return effect;
-    }
-    else if (isNone(effect)) {
-        return none;
-    }
-    else {
-        return raise("async effect called out of order");
-    }
-}
-class AsyncContext {
-    constructor(scheduler, runComputation) {
-        this.scheduler = scheduler;
-        this.index = 0;
-        this.effects = [];
-        this.scheduledComputationSubscription = disposed;
-        this.runComputation = () => {
-            const { scheduledComputationSubscription } = this;
-            this.scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
-                ? pipe(this.scheduler, schedule(runComputation))
-                : scheduledComputationSubscription;
-        };
-    }
-    await(observable) {
-        const effect = validateAsyncEffect(this, EffectType.Await);
-        if (isNone(effect)) {
-            const subscription = pipe(observable, subscribe(this.scheduler, next => {
-                effect.value = next;
-                effect.hasValue = true;
-            }));
-            addTeardown(subscription, this.runComputation);
-            addDisposable(this.scheduler, subscription);
-            const effect = {
-                type: EffectType.Await,
-                observable,
-                subscription,
-                value: none,
-                hasValue: false,
-            };
-            this.effects.push(effect);
-            throw asyncAwaitSymbol;
-        }
-        else {
-            const { subscription } = effect;
-            const { error } = subscription;
-            if (observable !== effect.observable) {
-                warn("async await effect invoked with different observable.");
-            }
-            if (isNone(error) && effect.hasValue) {
-                return effect.value;
-            }
-            else if (isSome(error)) {
-                return raise(error.cause);
-            }
-            else {
-                return raise("observable completed without producing a value.");
-            }
-        }
-    }
-    memo(f, ...args) {
-        const effect = validateAsyncEffect(this, EffectType.Memo);
-        if (isNone(effect)) {
-            const value = f(...args);
-            this.effects.push({ type: EffectType.Memo, f, args, value });
-            return value;
-        }
-        else {
-            if (f !== effect.f || !arrayStrictEquality(args, effect.args)) {
-                warn("async memo effect invoked with different function or arguments.");
-            }
-            return effect.value;
-        }
-    }
-    using(f, ...args) {
-        const effect = validateAsyncEffect(this, EffectType.Using);
-        if (isNone(effect)) {
-            const value = f(...args);
-            addDisposableDisposeParentOnChildError(this.scheduler, value);
-            this.effects.push({
-                type: EffectType.Using,
-                f,
-                args,
-                value,
-            });
-            return value;
-        }
-        else {
-            if (f !== effect.f || !arrayStrictEquality(args, effect.args)) {
-                warn("async using effect invoked with different function or arguments.");
-            }
-            return effect.value;
-        }
-    }
-}
 let currentCtx = none;
-const async = (computation) => defer((observer) => {
-    const runComputation = () => {
-        let result = none;
-        let isAwaiting = false;
-        let error = none;
-        currentCtx = ctx;
-        try {
-            result = computation();
-        }
-        catch (cause) {
-            isAwaiting = cause === asyncAwaitSymbol;
-            if (!isAwaiting) {
-                error = { cause };
-            }
-        }
-        currentCtx = none;
-        ctx.index = 0;
-        if (isSome(error)) {
-            observer.dispose(error);
-        }
-        else if (!isAwaiting) {
-            observer.notify(result);
-            observer.dispose();
-        }
-    };
-    const ctx = new AsyncContext(observer, runComputation);
-    return runComputation;
-});
 function validateObservableEffect(ctx, type) {
     const { effects, index } = ctx;
     ctx.index++;
     const effect = effects[index];
     if (isNone(effect)) {
-        const newEffect = type === EffectType.Memo
+        const newEffect = type === 1 /* Memo */
             ? {
                 type,
                 f: ignore,
                 args: [],
                 value: none,
             }
-            : type === EffectType.Observe
+            : type === 2 /* Observe */
                 ? {
                     type,
                     observable: empty(),
@@ -388,7 +193,7 @@ function validateObservableEffect(ctx, type) {
                     value: none,
                     hasValue: false,
                 }
-                : type === EffectType.Using
+                : type === 3 /* Using */
                     ? {
                         type,
                         f: ignore,
@@ -415,7 +220,7 @@ class ObservableContext {
         this.scheduledComputationSubscription = disposed;
         this.cleanup = () => {
             const { effects } = this;
-            const hasOutstandingEffects = effects.findIndex(effect => effect.type === EffectType.Observe && !effect.subscription.isDisposed) >= 0;
+            const hasOutstandingEffects = effects.findIndex(effect => effect.type === 2 /* Observe */ && !effect.subscription.isDisposed) >= 0;
             if (!hasOutstandingEffects &&
                 this.scheduledComputationSubscription.isDisposed) {
                 this.scheduler.dispose();
@@ -423,7 +228,7 @@ class ObservableContext {
         };
     }
     memo(f, ...args) {
-        const effect = validateObservableEffect(this, EffectType.Memo);
+        const effect = validateObservableEffect(this, 1 /* Memo */);
         if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
@@ -436,7 +241,7 @@ class ObservableContext {
         }
     }
     observe(observable) {
-        const effect = validateObservableEffect(this, EffectType.Observe);
+        const effect = validateObservableEffect(this, 2 /* Observe */);
         if (effect.observable === observable) {
             return effect.value;
         }
@@ -465,7 +270,7 @@ class ObservableContext {
         }
     }
     using(f, ...args) {
-        const effect = validateObservableEffect(this, EffectType.Using);
+        const effect = validateObservableEffect(this, 3 /* Using */);
         if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
@@ -501,11 +306,11 @@ const observable = (computation, { mode = "batched" } = {}) => defer((observer) 
         for (let i = 0; i < effectsLength; i++) {
             const effect = effects[i];
             const { type } = effect;
-            if (type === EffectType.Observe &&
+            if (type === 2 /* Observe */ &&
                 !effect.hasValue) {
                 allObserveEffectsHaveValues = false;
             }
-            if (type === EffectType.Observe &&
+            if (type === 2 /* Observe */ &&
                 !effect.subscription.isDisposed) {
                 hasOutstandingEffects = true;
             }
@@ -542,17 +347,6 @@ const __observe = (observable) => {
         ? ctx.observe(observable)
         : raise("__observe may only be called within an observable or concurrent computation");
 };
-function __await(f, ...args) {
-    const ctx = assertCurrentContext();
-    return typeof f === "function" && ctx instanceof AsyncContext
-        ? ctx.await(ctx.memo(f, ...args))
-        : typeof f !== "function" && ctx instanceof AsyncContext
-            ? ctx.await(f)
-            : raise("__await may only be called within an async computation");
-}
-function __concurrent(...observables) {
-    return __await(latest, observables, LatestMode.Combine);
-}
 const deferSideEffect = (f, ...args) => defer(observer => () => {
     f(...args);
     observer.notify(none);
@@ -560,15 +354,10 @@ const deferSideEffect = (f, ...args) => defer(observer => () => {
 });
 function __do(f, ...args) {
     const ctx = assertCurrentContext();
-    if (ctx instanceof AsyncContext) {
-        ctx.memo(f, ...args);
-    }
-    else if (ctx instanceof ObservableContext) {
-        const scheduler = __currentScheduler();
-        const observable = ctx.memo(deferSideEffect, f, ...args);
-        const subscribeOnScheduler = ctx.memo(subscribe, scheduler);
-        ctx.using(subscribeOnScheduler, observable);
-    }
+    const scheduler = __currentScheduler();
+    const observable = ctx.memo(deferSideEffect, f, ...args);
+    const subscribeOnScheduler = ctx.memo(subscribe, scheduler);
+    ctx.using(subscribeOnScheduler, observable);
 }
 function __using(f, ...args) {
     const ctx = assertCurrentContext();
@@ -581,12 +370,68 @@ function __currentScheduler() {
         : raise("__currentScheduler may only be called within an observable computation");
 }
 
+function onDispose(error) {
+    const { ctx } = this;
+    ctx.completedCount++;
+    if (isSome(error) || ctx.completedCount === ctx.observers.length) {
+        pipe(this.delegate, dispose(error));
+    }
+}
+class LatestObserver extends AbstractDelegatingObserver {
+    constructor(delegate, ctx, mode) {
+        super(delegate);
+        this.ctx = ctx;
+        this.mode = mode;
+        this.ready = false;
+        this.latest = none;
+        addTeardown(this, onDispose);
+    }
+    notify(next) {
+        assertObserverState(this);
+        const ctx = this.ctx;
+        this.latest = next;
+        if (!this.ready) {
+            ctx.readyCount++;
+            this.ready = true;
+        }
+        const observers = ctx.observers;
+        if (ctx.readyCount === observers.length) {
+            const result = pipe(observers, map$1(observer => observer.latest));
+            this.delegate.notify(result);
+            if (this.mode === 2 /* Zip */) {
+                for (const sub of observers) {
+                    sub.ready = false;
+                    sub.latest = none;
+                }
+                ctx.readyCount = 0;
+            }
+        }
+    }
+}
+const latest = (observables, mode) => {
+    const factory = (observer) => () => {
+        const observers = [];
+        const ctx = {
+            completedCount: 0,
+            observers,
+            readyCount: 0,
+        };
+        for (const observable of observables) {
+            const innerObserver = new LatestObserver(observer, ctx, mode);
+            observers.push(innerObserver);
+            pipe(observable, observe(innerObserver));
+        }
+    };
+    const isSynchronous = pipe(observables, everySatisfy(obs => obs.isSynchronous));
+    return isSynchronous ? deferSynchronous(factory) : defer(factory);
+};
+
 /**
  * Returns an `ObservableLike` that combines the latest values from
  * multiple sources.
  */
 function combineLatest(...observables) {
-    return latest(observables, LatestMode.Combine);
+    return latest(observables, 1 /* Combine */);
 }
 const combineLatestWith = (snd) => fst => combineLatest(fst, snd);
 
@@ -2035,7 +1880,7 @@ const zipWith = (snd) => fst => zip(fst, snd);
  * multiple sources.
  */
 function zipLatest(...observables) {
-    return latest(observables, LatestMode.Zip);
+    return latest(observables, 2 /* Zip */);
 }
 const zipLatestWith = (snd) => fst => zipLatest(fst, snd);
 
@@ -2079,4 +1924,4 @@ const toPromise = (scheduler) => observable => new Promise((resolve, reject) => 
     });
 });
 
-export { __await, __concurrent, __currentScheduler, __do, __memo, __observe, __using, async, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, dispatchTo, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observable, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };
+export { __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, dispatchTo, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observable, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };
