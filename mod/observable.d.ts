@@ -5,7 +5,6 @@ import { SchedulerLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
 import { EnumerableLike } from "./enumerable.mjs";
 import { RunnableLike } from "./runnable.mjs";
 declare const dispatchTo: <T>(dispatcher: DispatcherLike<T>) => SideEffect1<T>;
-declare const async: <T>(computation: Factory<T>) => ObservableLike<T>;
 declare type ObservableEffectMode = "batched" | "combine-latest";
 declare const observable: <T>(computation: Factory<T>, { mode }?: {
     mode?: "batched" | "combine-latest" | undefined;
@@ -18,74 +17,6 @@ declare function __memo<TA, TB, TC, TD, T>(fn: Function4<TA, TB, TC, TD, T>, a: 
 declare function __memo<TA, TB, TC, TD, TE, T>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
 declare function __memo<TA, TB, TC, TD, TE, TF, T>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
 declare const __observe: <T>(observable: ObservableLike<T>) => Option<T>;
-declare function __await<T>(fn: Factory<ObservableLike<T>>): T;
-declare function __await<TA, T>(fn: Function1<TA, ObservableLike<T>>, a: TA): T;
-declare function __await<TA, TB, T>(fn: Function2<TA, TB, ObservableLike<T>>, a: TA, b: TB): T;
-declare function __await<TA, TB, TC, T>(fn: Function3<TA, TB, TC, ObservableLike<T>>, a: TA, b: TB, c: TC): T;
-declare function __await<TA, TB, TC, TD, T>(fn: Function4<TA, TB, TC, TD, ObservableLike<T>>, a: TA, b: TB, c: TC, d: TD): T;
-declare function __await<TA, TB, TC, TD, TE, T>(fn: Function5<TA, TB, TC, TD, TE, ObservableLike<T>>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
-declare function __await<TA, TB, TC, TD, TE, TF, T>(fn: Function6<TA, TB, TC, TD, TE, TF, ObservableLike<T>>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
-declare function __await<T>(observable: ObservableLike<T>): T;
-declare function __concurrent<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): [
-    TA,
-    TB
-];
-declare function __concurrent<TA, TB, TC, T>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): [
-    TA,
-    TB,
-    TC
-];
-declare function __concurrent<TA, TB, TC, TD>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>): [
-    TA,
-    TB,
-    TC,
-    TD
-];
-declare function __concurrent<TA, TB, TC, TD, TE>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>): [
-    TA,
-    TB,
-    TC,
-    TD,
-    TE
-];
-declare function __concurrent<TA, TB, TC, TD, TE, TF>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>): [
-    TA,
-    TB,
-    TC,
-    TD,
-    TE,
-    TF
-];
-declare function __concurrent<TA, TB, TC, TD, TE, TF, TG>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>): [
-    TA,
-    TB,
-    TC,
-    TD,
-    TE,
-    TF,
-    TG
-];
-declare function __concurrent<TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>): [
-    TA,
-    TB,
-    TC,
-    TD,
-    TE,
-    TF,
-    TG,
-    TH
-];
-declare function __concurrent<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): [
-    TA,
-    TB,
-    TC,
-    TD,
-    TE,
-    TF,
-    TG,
-    TH,
-    TI
-];
 declare function __do(fn: SideEffect): void;
 declare function __do<TA>(fn: SideEffect1<TA>, a: TA): void;
 declare function __do<TA, TB>(fn: SideEffect2<TA, TB>, a: TA, b: TB): void;
@@ -832,4 +763,4 @@ interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableL
 /** @noInheritDoc */
 interface SubjectLike<T> extends StreamLike<T, T> {
 }
-export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, ObserverLike, ObserverOperator, StreamLike, SubjectLike, ThrottleMode, __await, __concurrent, __currentScheduler, __do, __memo, __observe, __using, async, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, dispatchTo, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observable, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };
+export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, ObserverLike, ObserverOperator, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, dispatchTo, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observable, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };

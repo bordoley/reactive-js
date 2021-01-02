@@ -46,7 +46,10 @@ const parseCacheDirectiveList = pipe(pCacheDirective, httpList, parseWith);
 export const parseCacheControlFromHeaders = (
   headers: HttpHeaders,
 ): readonly CacheDirective[] => {
-  const cacheControl = getHeaderValue(headers, HttpStandardHeaders.CacheControl);
+  const cacheControl = getHeaderValue(
+    headers,
+    HttpStandardHeaders.CacheControl,
+  );
 
   return isSome(cacheControl)
     ? parseCacheDirectiveList(cacheControl) ?? []

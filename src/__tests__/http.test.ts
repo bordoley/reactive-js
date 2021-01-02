@@ -23,7 +23,8 @@ const createHttpRequestTests = test("createHttpRequest", () => {
       [HttpStandardHeaders.Accept]:
         "text/*;q=0.3, text/html;q=0.7, text/html;level=1, text/html;level=2;q=0.4, */*;q=0.5",
       [HttpStandardHeaders.AcceptCharset]: "iso-8859-5, unicode-1-1;q=0.8",
-      [HttpStandardHeaders.AcceptEncoding]: "gzip;q=1.0, identity; q=0.5, *;q=0",
+      [HttpStandardHeaders.AcceptEncoding]:
+        "gzip;q=1.0, identity; q=0.5, *;q=0",
       [HttpStandardHeaders.AcceptLanguage]: "da, en-gb;q=0.8, en;q=0.7",
       [HttpStandardHeaders.AcceptRanges]: "bytes",
       [HttpStandardHeaders.Age]: "2147483648",
@@ -78,7 +79,8 @@ const createHttpResponseTests = test("createHttpRequest", () => {
       [HttpStandardHeaders.Accept]:
         "text/*;q=0.3, text/html;q=0.7, text/html;level=1, text/html;level=2;q=0.4, */*;q=0.5",
       [HttpStandardHeaders.AcceptCharset]: "iso-8859-5, unicode-1-1;q=0.8",
-      [HttpStandardHeaders.AcceptEncoding]: "gzip;q=1.0, identity; q=0.5, *;q=0",
+      [HttpStandardHeaders.AcceptEncoding]:
+        "gzip;q=1.0, identity; q=0.5, *;q=0",
       [HttpStandardHeaders.AcceptLanguage]: "da, en-gb;q=0.8, en;q=0.7",
       [HttpStandardHeaders.AcceptRanges]: "bytes",
       [HttpStandardHeaders.Age]: "2147483648",

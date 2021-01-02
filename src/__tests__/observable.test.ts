@@ -12,11 +12,9 @@ import {
   sum,
 } from "../functions";
 import {
-  __await,
   __do,
   __memo,
   __observe,
-  async,
   buffer,
   catchError,
   combineLatestWith,
@@ -72,7 +70,6 @@ import {
   zipWith,
   zipWithLatestFrom,
 } from "../observable";
-import { __concurrent } from "../observable/effects";
 import { Option, isSome } from "../option";
 import {
   forEach,
@@ -124,58 +121,6 @@ const Observable = {
 
 export const tests = describe(
   "observable",
-  describe(
-    "async",
-    test("multiple awaits", () => {
-      const fromValueWithDelay = (delay: number, value: number) =>
-        fromValue<any>({ delay })(value);
-
-      const computedObservable = async(() => {
-        const result1 = __await(fromValueWithDelay, 2, 5);
-        let result2 = 5;
-        if (result1 > 4) {
-          result2 = __await(fromValueWithDelay, 2, result1);
-        }
-
-        let result3 = 0;
-        for (let i = 0; i < result2; i++) {
-          result3 += __await(fromValueWithDelay, 2, i);
-        }
-
-        return result3;
-      });
-
-      pipe(
-        computedObservable,
-        takeLast(),
-        toRunnable(),
-        last,
-        expectEquals(10),
-      );
-    }),
-
-    test("concurrent", () => {
-      const first = pipe(
-        generate(incrementBy(2), returns(1), { delay: 2 }),
-        takeFirst({ count: 3 }),
-      );
-      const second = pipe(
-        generate(incrementBy(2), returns(0), { delay: 3 }),
-        takeFirst({ count: 2 }),
-      );
-
-      const computation = async(() => {
-        return __concurrent(first, second);
-      });
-
-      pipe(
-        computation,
-        toRunnable(),
-        toArray(),
-        expectArrayEquals([[7, 4]], arrayEquality()),
-      );
-    }),
-  ),
 
   describe(
     "buffer",

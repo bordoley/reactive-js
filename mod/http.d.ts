@@ -1,6 +1,6 @@
 import { SideEffect2, Function1, Updater } from "./functions.mjs";
-import { ReadonlyObjectMap } from "./readonlyObjectMap.mjs";
 import { IOSourceLike, IOSourceOperator } from "./io.mjs";
+import { ReadonlyObjectMap } from "./readonlyObjectMap.mjs";
 declare const HttpStandardHeaders: {
     readonly Accept: "Accept";
     readonly AcceptCharset: "Accept-Charset";

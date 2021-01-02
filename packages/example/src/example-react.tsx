@@ -25,13 +25,10 @@ import React, { useCallback } from "react";
 import { default as ReactDOM } from "react-dom";
 import { appState } from "./example.state";
 import { isNone, isSome, none } from "@reactive-js/core/option";
-import { FlowMode } from "@reactive-js/core/flowable";
 import {
-  async,
   distinctUntilChanged,
   map as mapObs,
   observable,
-  __await,
   __memo,
   __observe,
 } from "@reactive-js/core/observable";
@@ -142,11 +139,10 @@ const fetchFile = (uri: string) =>
   );
 
 const FetchExample = createComponent(() =>
-  async(() => {
-    const someData = __await(
-      fetchFile,
-      "http://localhost:8080/files/packages/example/build/example-react.js",
-    );
+  observable(() => {
+    const obs = __memo(fetchFile,
+      "http://localhost:8080/files/packages/example/build/example-react.js");
+    const someData = __observe(obs);
 
     return (
       <div>
@@ -177,8 +173,8 @@ const Root = createComponent(() =>
     return isSome(dispatch) ? (
       <Component params={params} dispatch={dispatch} uri={uri} />
     ) : (
-      none
-    );
+        none
+      );
   }),
 );
 

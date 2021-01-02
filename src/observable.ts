@@ -90,10 +90,7 @@ export interface SubjectLike<T> extends StreamLike<T, T> {}
 export { dispatchTo } from "./observable/dispatcher";
 export type { ObservableEffectMode } from "./observable/effects";
 export {
-  async,
   observable,
-  __await,
-  __concurrent,
   __currentScheduler,
   __do,
   __memo,
