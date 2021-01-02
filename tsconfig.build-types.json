@@ -4,5 +4,6 @@
     "emitDeclarationOnly": true,
     "declaration": true,
     "outDir": "./build-types"
-  }
+  },
+  "include":  ["./src/**/*"]
 }

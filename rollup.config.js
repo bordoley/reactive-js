@@ -129,7 +129,7 @@ export default [
     ],
     plugins: [
       typescript({
-        tsconfig: "tsconfig.base.json",
+        tsconfig: "tsconfig.typecheck.json",
       }),
     ],
   },

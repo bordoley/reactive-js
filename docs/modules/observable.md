@@ -4,11 +4,6 @@
 
 ## Index
 
-### Enumerations
-
-* [ObservableEffectMode](../enums/observable.observableeffectmode.md)
-* [ThrottleMode](../enums/observable.throttlemode.md)
-
 ### Interfaces
 
 * [DispatcherLike](../interfaces/observable.dispatcherlike.md)
@@ -21,8 +16,10 @@
 ### Type aliases
 
 * [AsyncReducer](observable.md#asyncreducer)
+* [ObservableEffectMode](observable.md#observableeffectmode)
 * [ObservableOperator](observable.md#observableoperator)
 * [ObserverOperator](observable.md#observeroperator)
+* [ThrottleMode](observable.md#throttlemode)
 
 ### Variables
 
@@ -128,6 +125,12 @@ Name |
 
 ___
 
+### ObservableEffectMode
+
+Ƭ **ObservableEffectMode**: *batched* \| *combine-latest*
+
+___
+
 ### ObservableOperator
 
 Ƭ **ObservableOperator**<A, B\>: [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<A\>, [*ObservableLike*](../interfaces/observable.observablelike.md)<B\>\>
@@ -161,6 +164,17 @@ Name |
 Name | Type |
 ------ | ------ |
 `isSynchronous` | *boolean* |
+
+___
+
+### ThrottleMode
+
+Ƭ **ThrottleMode**: *first* \| *last* \| *interval*
+
+The throttle mode used by the `throttle` operator.
+first - Takes a leading value.
+last - Takes the trailing value.
+interval -  Takes both the leading and trailing values.
 
 ## Variables
 
@@ -2103,7 +2117,7 @@ ___
 
 ### observable
 
-▸ `Const`**observable**<T\>(`computation`: [*Factory*](functions.md#factory)<T\>, `__namedParameters?`: { `mode?`: *undefined* \| [*Batched*](../enums/observable.observableeffectmode.md#batched) \| [*CombineLatest*](../enums/observable.observableeffectmode.md#combinelatest)  }): [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>
+▸ `Const`**observable**<T\>(`computation`: [*Factory*](functions.md#factory)<T\>, `__namedParameters?`: { `mode?`: *undefined* \| *batched* \| *combine-latest*  }): [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>
 
 #### Type parameters:
 
@@ -2116,7 +2130,7 @@ Name |
 Name | Type |
 ------ | ------ |
 `computation` | [*Factory*](functions.md#factory)<T\> |
-`__namedParameters?` | { `mode?`: *undefined* \| [*Batched*](../enums/observable.observableeffectmode.md#batched) \| [*CombineLatest*](../enums/observable.observableeffectmode.md#combinelatest)  } |
+`__namedParameters?` | { `mode?`: *undefined* \| *batched* \| *combine-latest*  } |
 
 **Returns:** [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>
 
@@ -2631,7 +2645,7 @@ ___
 
 ### throttle
 
-▸ **throttle**<T\>(`duration`: [*Function1*](functions.md#function1)<T, [*ObservableLike*](../interfaces/observable.observablelike.md)<*unknown*\>\>, `options?`: { `mode?`: *undefined* \| [*First*](../enums/observable.throttlemode.md#first) \| [*Last*](../enums/observable.throttlemode.md#last) \| [*Interval*](../enums/observable.throttlemode.md#interval)  }): [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
+▸ **throttle**<T\>(`duration`: [*Function1*](functions.md#function1)<T, [*ObservableLike*](../interfaces/observable.observablelike.md)<*unknown*\>\>, `options?`: { `mode?`: *undefined* \| *first* \| *last* \| *interval*  }): [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
 
 Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
 
@@ -2646,11 +2660,11 @@ Name |
 Name | Type | Description |
 ------ | ------ | ------ |
 `duration` | [*Function1*](functions.md#function1)<T, [*ObservableLike*](../interfaces/observable.observablelike.md)<*unknown*\>\> | Function function that is used to determine the silence duration in between emitted values.   |
-`options?` | { `mode?`: *undefined* \| [*First*](../enums/observable.throttlemode.md#first) \| [*Last*](../enums/observable.throttlemode.md#last) \| [*Interval*](../enums/observable.throttlemode.md#interval)  } | - |
+`options?` | { `mode?`: *undefined* \| *first* \| *last* \| *interval*  } | - |
 
 **Returns:** [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
 
-▸ **throttle**<T\>(`duration`: *number*, `options?`: { `mode?`: *undefined* \| [*First*](../enums/observable.throttlemode.md#first) \| [*Last*](../enums/observable.throttlemode.md#last) \| [*Interval*](../enums/observable.throttlemode.md#interval)  }): [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
+▸ **throttle**<T\>(`duration`: *number*, `options?`: { `mode?`: *undefined* \| *first* \| *last* \| *interval*  }): [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
 
 Returns an `ObservableLike` which emits a value from the source,
 then ignores subsequent source values for `duration` milliseconds.
@@ -2666,7 +2680,7 @@ Name |
 Name | Type | Description |
 ------ | ------ | ------ |
 `duration` | *number* | Time to wait before emitting another value after emitting the last value, measured in milliseconds.   |
-`options?` | { `mode?`: *undefined* \| [*First*](../enums/observable.throttlemode.md#first) \| [*Last*](../enums/observable.throttlemode.md#last) \| [*Interval*](../enums/observable.throttlemode.md#interval)  } | - |
+`options?` | { `mode?`: *undefined* \| *first* \| *last* \| *interval*  } | - |
 
 **Returns:** [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
 
