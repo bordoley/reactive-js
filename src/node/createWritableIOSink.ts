@@ -27,13 +27,13 @@ const createWritableEventsObservable = (
   createObservable(dispatcher => {
     const writableValue = writable.value;
 
-    const onDrain = defer('resume', dispatchTo(dispatcher));
+    const onDrain = defer("resume", dispatchTo(dispatcher));
     writableValue.on("drain", onDrain);
 
     const onFinish = defer(dispatcher, dispose());
     writableValue.on("finish", onFinish);
 
-    const onPause = defer('pause', dispatchTo(dispatcher));
+    const onPause = defer("pause", dispatchTo(dispatcher));
     writableValue.on(NODE_JS_PAUSE_EVENT, onPause);
 
     addDisposable(writable, dispatcher);
@@ -43,7 +43,7 @@ const createWritableEventsObservable = (
       writableValue.removeListener(NODE_JS_PAUSE_EVENT, onPause);
     });
 
-    dispatcher.dispatch('resume');
+    dispatcher.dispatch("resume");
   });
 
 const createWritableAndSetupEventSubscription = (
@@ -56,7 +56,7 @@ const createWritableAndSetupEventSubscription = (
     events,
     subscribe(scheduler, ev => {
       switch (ev.type) {
-        case 'notify':
+        case "notify":
           // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
           // node throws a type Error regarding expecting a Buffer, though the docs
           // say a UInt8Array should be accepted. Need to file a bug.
@@ -65,7 +65,7 @@ const createWritableAndSetupEventSubscription = (
             writableValue.emit(NODE_JS_PAUSE_EVENT);
           }
           break;
-        case 'done':
+        case "done":
           writableValue.end();
           break;
       }

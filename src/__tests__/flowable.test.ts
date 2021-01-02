@@ -20,8 +20,8 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
     const emptyStream = pipe(empty(), stream(scheduler));
 
-    emptyStream.dispatch('pause');
-    emptyStream.dispatch('resume');
+    emptyStream.dispatch("pause");
+    emptyStream.dispatch("resume");
 
     const f = mockFn();
     const subscription = pipe(emptyStream, subscribe(scheduler, f));
@@ -40,18 +40,18 @@ export const tests = describe(
       stream(scheduler),
     );
 
-    generateStream.dispatch('resume');
+    generateStream.dispatch("resume");
 
     pipe(
       scheduler,
-      schedule(defer('pause', dispatchTo(generateStream)), {
+      schedule(defer("pause", dispatchTo(generateStream)), {
         delay: 2,
       }),
     );
 
     pipe(
       scheduler,
-      schedule(defer('resume', dispatchTo(generateStream)), {
+      schedule(defer("resume", dispatchTo(generateStream)), {
         delay: 4,
       }),
     );
@@ -79,8 +79,8 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
     const fromValueStream = pipe(1, fromValue<number>(), stream(scheduler));
 
-    fromValueStream.dispatch('resume');
-    fromValueStream.dispatch('resume');
+    fromValueStream.dispatch("resume");
+    fromValueStream.dispatch("resume");
 
     const f = mockFn();
     const subscription = pipe(fromValueStream, subscribe(scheduler, f));

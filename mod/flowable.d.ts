@@ -3,7 +3,7 @@ import { Option } from "./option.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
 import { ObservableLike } from "./observable.mjs";
 import { StreamableLike } from "./streamable.mjs";
-declare type FlowMode = 'resume' | 'pause';
+declare type FlowMode = "resume" | "pause";
 /** @noInheritDoc */
 interface FlowableLike<T> extends StreamableLike<FlowMode, T> {
 }

@@ -3,15 +3,12 @@ import { StreamableLike } from "./streamable";
 /** @noInheritDoc */
 export interface AsyncEnumerableLike<T> extends StreamableLike<void, T> {}
 
-export {
+export type {
   ConsumeRequest,
   Consumer,
   AsyncConsumer,
-  notify,
-  done,
-  consume,
-  consumeAsync,
 } from "./asyncEnumerable/consume";
+export { notify, done, consume, consumeAsync } from "./asyncEnumerable/consume";
 export { fromArray } from "./asyncEnumerable/fromArray";
 export { fromEnumerable } from "./asyncEnumerable/fromEnumerable";
 export { fromIterable } from "./asyncEnumerable/fromIterable";

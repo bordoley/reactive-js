@@ -6,11 +6,11 @@ import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } 
 import { stream, createStreamable } from './streamable.mjs';
 
 const notify = (acc) => ({
-    type: 'notify',
+    type: "notify",
     acc,
 });
 const done = (acc) => ({
-    type: 'done',
+    type: "done",
     acc,
 });
 const consumeImpl = (consumer, initial) => enumerable => using(scheduler => {
@@ -19,7 +19,7 @@ const consumeImpl = (consumer, initial) => enumerable => using(scheduler => {
     return [accFeedback, enumerator];
 }, (accFeedback, enumerator) => pipe(enumerator, consumer(accFeedback), onNotify(ev => {
     switch (ev.type) {
-        case 'notify':
+        case "notify":
             accFeedback.dispatch(ev.acc);
             enumerator.dispatch(none);
             break;

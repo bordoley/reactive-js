@@ -29,8 +29,7 @@ import { subscribe } from "./subscribe";
  * last - Takes the trailing value.
  * interval -  Takes both the leading and trailing values.
  */
-export type ThrottleMode = 'first' | 'last' | 'interval';
-
+export type ThrottleMode = "first" | "last" | "interval";
 
 const setupDurationSubscription = <T>(
   observer: ThrottleObserver<T>,
@@ -43,7 +42,7 @@ const setupDurationSubscription = <T>(
 };
 
 function onDispose(this: ThrottleObserver<unknown>, e: Option<Error>) {
-  if (isNone(e) && this.mode !== 'first' && this.hasValue) {
+  if (isNone(e) && this.mode !== "first" && this.hasValue) {
     pipe(this.value, fromValue(), observe(this.delegate));
   } else {
     pipe(this.delegate, dispose(e));
@@ -85,10 +84,7 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
     const durationSubscriptionDisposableIsDisposed = this.durationSubscription
       .inner.isDisposed;
 
-    if (
-      durationSubscriptionDisposableIsDisposed &&
-      this.mode !== 'last'
-    ) {
+    if (durationSubscriptionDisposableIsDisposed && this.mode !== "last") {
       this.onNotify();
     } else if (durationSubscriptionDisposableIsDisposed) {
       setupDurationSubscription(this, next);
@@ -124,7 +120,7 @@ export function throttle<T>(
   duration: Function1<T, ObservableLike<unknown>> | number,
   options: { readonly mode?: ThrottleMode } = {},
 ): ObservableOperator<T, T> {
-  const { mode = 'interval' } = options;
+  const { mode = "interval" } = options;
   const durationFunction =
     typeof duration === "number"
       ? (_: T) => fromValue({ delay: duration })(none)

@@ -1,6 +1,5 @@
 import { defer, pipe } from "../functions";
 import {
-  HttpMethod,
   HttpRequest,
   HttpResponse,
   HttpStandardHeader,
@@ -17,7 +16,7 @@ import { describe, expectEquals, expectTrue, test } from "../testing";
 
 const createHttpRequestTests = test("createHttpRequest", () => {
   const request = createHttpRequest({
-    method: HttpMethod.GET,
+    method: "GET",
     uri: "http://www.example.com",
     body: none,
     headers: {
@@ -130,7 +129,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when a non-conditional GET is performed",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
       }),
@@ -140,7 +139,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when ETags match",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         preconditions: {
@@ -157,7 +156,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when ETags mismatch",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         preconditions: {
@@ -174,7 +173,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when at least one matches",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         preconditions: {
@@ -191,7 +190,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when etag is missing",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         preconditions: {
@@ -207,7 +206,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when ETag is weak on exact match",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         preconditions: {
@@ -224,7 +223,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when ETag is weak on strong match",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         preconditions: {
@@ -241,7 +240,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when ETag is strong on exact match",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         preconditions: {
@@ -258,7 +257,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when ETag is strong on weak match",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         preconditions: {
@@ -275,7 +274,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when * is given",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         preconditions: {
@@ -292,7 +291,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when modified since the date",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         preconditions: {
@@ -309,7 +308,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when unmodified since the date",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         preconditions: {
@@ -326,7 +325,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when Last-Modified is missing",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         preconditions: {
@@ -343,7 +342,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when requested with If-Modified-Since and If-None-Match and both match",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         preconditions: {
@@ -363,7 +362,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when requested with If-Modified-Since and If-None-Match when only ETag matches",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         preconditions: {
@@ -383,7 +382,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when requested with If-Modified-Since and If-None-Match when only Last-Modified matches",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         preconditions: {
@@ -402,7 +401,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when none match",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         preconditions: {
@@ -421,7 +420,7 @@ const checkIfNotModifiedTests = pipe(
     [
       "when requested with Cache-Control: no-cache",
       createHttpRequest({
-        method: HttpMethod.GET,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         cacheControl: ["no-cache"],

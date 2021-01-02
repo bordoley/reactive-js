@@ -10,13 +10,12 @@ export type EntityTag = {
   readonly tag: string;
 };
 
-export const enum HttpContentEncoding {
-  Brotli = "br",
-  Compress = "compress",
-  Deflate = "deflate",
-  GZip = "gzip",
-  Identity = "identity",
-}
+export type HttpContentEncoding =
+  | "br"
+  | "compress"
+  | "deflate"
+  | "gzip"
+  | "identify";
 
 export type MediaType = {
   readonly type: string;
@@ -35,7 +34,7 @@ export type HttpDateTime = number;
 // FIXME: filter out headers for which we have strongly typed apis.
 export type HttpHeaders = ReadonlyObjectMap<string>;
 
-export const enum HttpStandardHeader {
+export enum HttpStandardHeader {
   Accept = "Accept",
   AcceptCharset = "Accept-Charset",
   AcceptEncoding = "Accept-Encoding",
@@ -87,7 +86,7 @@ export const enum HttpStandardHeader {
   WWWAuthenticate = "WWW-Authenticate",
 }
 
-export const enum HttpExtensionHeader {
+export enum HttpExtensionHeader {
   XForwardedProto = "X-Forwarded-Proto",
   XForwardedHost = "X-Forwarded-Host",
   XHttpMethod = "X-HTTP-Method",
@@ -151,13 +150,7 @@ export type HttpMessageOptions<T> = {
   };
 };
 
-export const enum HttpMethod {
-  GET = "GET",
-  HEAD = "HEAD",
-  POST = "POST",
-  PUT = "PUT",
-  DELETE = "DELETE",
-}
+export type HttpMethod = "GET" | "HEAD" | "POST" | "PUT" | "DELETE";
 
 export type HttpRequestPreconditions = {
   readonly ifMatch?: readonly EntityTag[] | "*";
@@ -202,7 +195,7 @@ export type HttpRequestOptions<T> = HttpMessageOptions<T> & {
   readonly uri: string | URILike;
 };
 
-export const enum HttpStatusCode {
+export enum HttpStatusCode {
   Continue = 100,
   SwitchingProtocols = 101,
   Processing = 102,

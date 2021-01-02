@@ -10,10 +10,10 @@ const fromObservable = ({ scheduler, } = {}) => observable => {
         const pausableScheduler = toPausableScheduler(scheduler !== null && scheduler !== void 0 ? scheduler : modeScheduler);
         const onModeChange = (mode) => {
             switch (mode) {
-                case 'pause':
+                case "pause":
                     pausableScheduler.pause();
                     break;
-                case 'resume':
+                case "resume":
                     pausableScheduler.resume();
                     break;
             }

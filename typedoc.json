@@ -1,15 +1,15 @@
 {
   "name": "Reactive-JS",
   "entryPoints": "./packages/core",
-	"readme": "none",
-	"out": "docs",
-	"excludeExternals": true,
-	"excludePrivate": true,
-	"excludeProtected": true,
-	"disableSources": true,
-	"listInvalidSymbolLinks": true,
-	"markedOptions": {
-		"mangle": false
+  "readme": "none",
+  "out": "docs",
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "disableSources": true,
+  "listInvalidSymbolLinks": true,
+  "markedOptions": {
+    "mangle": false
   },
   "tsconfig": "tsconfig.typedoc.json"
 }

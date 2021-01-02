@@ -28,13 +28,7 @@ declare type EntityTag = {
     readonly isWeak: boolean;
     readonly tag: string;
 };
-declare const enum HttpContentEncoding {
-    Brotli = "br",
-    Compress = "compress",
-    Deflate = "deflate",
-    GZip = "gzip",
-    Identity = "identity"
-}
+declare type HttpContentEncoding = "br" | "compress" | "deflate" | "gzip" | "identify";
 declare type MediaType = {
     readonly type: string;
     readonly subtype: string;
@@ -47,7 +41,7 @@ declare type HttpContentInfo = {
 };
 declare type HttpDateTime = number;
 declare type HttpHeaders = ReadonlyObjectMap<string>;
-declare const enum HttpStandardHeader {
+declare enum HttpStandardHeader {
     Accept = "Accept",
     AcceptCharset = "Accept-Charset",
     AcceptEncoding = "Accept-Encoding",
@@ -98,7 +92,7 @@ declare const enum HttpStandardHeader {
     Warning = "Warning",
     WWWAuthenticate = "WWW-Authenticate"
 }
-declare const enum HttpExtensionHeader {
+declare enum HttpExtensionHeader {
     XForwardedProto = "X-Forwarded-Proto",
     XForwardedHost = "X-Forwarded-Host",
     XHttpMethod = "X-HTTP-Method",
@@ -150,13 +144,7 @@ declare type HttpMessageOptions<T> = {
         readonly acceptedMediaRanges?: readonly (string | MediaRange)[];
     };
 };
-declare const enum HttpMethod {
-    GET = "GET",
-    HEAD = "HEAD",
-    POST = "POST",
-    PUT = "PUT",
-    DELETE = "DELETE"
-}
+declare type HttpMethod = "GET" | "HEAD" | "POST" | "PUT" | "DELETE";
 declare type HttpRequestPreconditions = {
     readonly ifMatch?: readonly EntityTag[] | "*";
     readonly ifModifiedSince?: HttpDateTime;
@@ -189,7 +177,7 @@ declare type HttpRequestOptions<T> = HttpMessageOptions<T> & {
     };
     readonly uri: string | URILike;
 };
-declare const enum HttpStatusCode {
+declare enum HttpStatusCode {
     Continue = 100,
     SwitchingProtocols = 101,
     Processing = 102,

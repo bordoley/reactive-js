@@ -6,9 +6,7 @@
 
 ### Enumerations
 
-* [HttpContentEncoding](../enums/http.httpcontentencoding.md)
 * [HttpExtensionHeader](../enums/http.httpextensionheader.md)
-* [HttpMethod](../enums/http.httpmethod.md)
 * [HttpStandardHeader](../enums/http.httpstandardheader.md)
 * [HttpStatusCode](../enums/http.httpstatuscode.md)
 
@@ -20,11 +18,13 @@
 
 * [CacheDirective](http.md#cachedirective)
 * [EntityTag](http.md#entitytag)
+* [HttpContentEncoding](http.md#httpcontentencoding)
 * [HttpContentInfo](http.md#httpcontentinfo)
 * [HttpDateTime](http.md#httpdatetime)
 * [HttpHeaders](http.md#httpheaders)
 * [HttpMessage](http.md#httpmessage)
 * [HttpMessageOptions](http.md#httpmessageoptions)
+* [HttpMethod](http.md#httpmethod)
 * [HttpPreferences](http.md#httppreferences)
 * [HttpRequest](http.md#httprequest)
 * [HttpRequestOptions](http.md#httprequestoptions)
@@ -82,15 +82,21 @@ Name | Type |
 
 ___
 
+### HttpContentEncoding
+
+Ƭ **HttpContentEncoding**: *br* \| *compress* \| *deflate* \| *gzip* \| *identify*
+
+___
+
 ### HttpContentInfo
 
-Ƭ **HttpContentInfo**: { `contentEncodings`: readonly [*HttpContentEncoding*](../enums/http.httpcontentencoding.md)[] ; `contentLength`: *number* ; `contentType`: [*MediaType*](http.md#mediatype)  }
+Ƭ **HttpContentInfo**: { `contentEncodings`: readonly [*HttpContentEncoding*](http.md#httpcontentencoding)[] ; `contentLength`: *number* ; `contentType`: [*MediaType*](http.md#mediatype)  }
 
 #### Type declaration:
 
 Name | Type |
 ------ | ------ |
-`contentEncodings` | readonly [*HttpContentEncoding*](../enums/http.httpcontentencoding.md)[] |
+`contentEncodings` | readonly [*HttpContentEncoding*](http.md#httpcontentencoding)[] |
 `contentLength` | *number* |
 `contentType` | [*MediaType*](http.md#mediatype) |
 
@@ -132,7 +138,7 @@ ___
 
 ### HttpMessageOptions
 
-Ƭ **HttpMessageOptions**<T\>: { `body`: T ; `cacheControl?`: readonly (*string* \| [*CacheDirective*](http.md#cachedirective))[] ; `contentInfo?`: { `contentEncodings?`: readonly [*HttpContentEncoding*](../enums/http.httpcontentencoding.md)[] ; `contentLength?`: *number* ; `contentType`: [*MediaType*](http.md#mediatype) \| *string*  } ; `headers?`: [*HttpHeaders*](http.md#httpheaders) ; `preferences?`: { `acceptedCharsets?`: readonly *string*[] ; `acceptedEncodings?`: readonly [*HttpContentEncoding*](../enums/http.httpcontentencoding.md)[] ; `acceptedLanguages?`: readonly *string*[] ; `acceptedMediaRanges?`: readonly (*string* \| [*MediaRange*](http.md#mediarange))[]  }  }
+Ƭ **HttpMessageOptions**<T\>: { `body`: T ; `cacheControl?`: readonly (*string* \| [*CacheDirective*](http.md#cachedirective))[] ; `contentInfo?`: { `contentEncodings?`: readonly [*HttpContentEncoding*](http.md#httpcontentencoding)[] ; `contentLength?`: *number* ; `contentType`: [*MediaType*](http.md#mediatype) \| *string*  } ; `headers?`: [*HttpHeaders*](http.md#httpheaders) ; `preferences?`: { `acceptedCharsets?`: readonly *string*[] ; `acceptedEncodings?`: readonly [*HttpContentEncoding*](http.md#httpcontentencoding)[] ; `acceptedLanguages?`: readonly *string*[] ; `acceptedMediaRanges?`: readonly (*string* \| [*MediaRange*](http.md#mediarange))[]  }  }
 
 #### Type parameters:
 
@@ -146,22 +152,28 @@ Name | Type |
 ------ | ------ |
 `body` | T |
 `cacheControl?` | readonly (*string* \| [*CacheDirective*](http.md#cachedirective))[] |
-`contentInfo?` | { `contentEncodings?`: readonly [*HttpContentEncoding*](../enums/http.httpcontentencoding.md)[] ; `contentLength?`: *number* ; `contentType`: [*MediaType*](http.md#mediatype) \| *string*  } |
+`contentInfo?` | { `contentEncodings?`: readonly [*HttpContentEncoding*](http.md#httpcontentencoding)[] ; `contentLength?`: *number* ; `contentType`: [*MediaType*](http.md#mediatype) \| *string*  } |
 `headers?` | [*HttpHeaders*](http.md#httpheaders) |
-`preferences?` | { `acceptedCharsets?`: readonly *string*[] ; `acceptedEncodings?`: readonly [*HttpContentEncoding*](../enums/http.httpcontentencoding.md)[] ; `acceptedLanguages?`: readonly *string*[] ; `acceptedMediaRanges?`: readonly (*string* \| [*MediaRange*](http.md#mediarange))[]  } |
+`preferences?` | { `acceptedCharsets?`: readonly *string*[] ; `acceptedEncodings?`: readonly [*HttpContentEncoding*](http.md#httpcontentencoding)[] ; `acceptedLanguages?`: readonly *string*[] ; `acceptedMediaRanges?`: readonly (*string* \| [*MediaRange*](http.md#mediarange))[]  } |
+
+___
+
+### HttpMethod
+
+Ƭ **HttpMethod**: *GET* \| *HEAD* \| *POST* \| *PUT* \| *DELETE*
 
 ___
 
 ### HttpPreferences
 
-Ƭ **HttpPreferences**: { `acceptedCharsets`: readonly *string*[] ; `acceptedEncodings`: readonly [*HttpContentEncoding*](../enums/http.httpcontentencoding.md)[] ; `acceptedLanguages`: readonly *string*[] ; `acceptedMediaRanges`: readonly [*MediaRange*](http.md#mediarange)[]  }
+Ƭ **HttpPreferences**: { `acceptedCharsets`: readonly *string*[] ; `acceptedEncodings`: readonly [*HttpContentEncoding*](http.md#httpcontentencoding)[] ; `acceptedLanguages`: readonly *string*[] ; `acceptedMediaRanges`: readonly [*MediaRange*](http.md#mediarange)[]  }
 
 #### Type declaration:
 
 Name | Type |
 ------ | ------ |
 `acceptedCharsets` | readonly *string*[] |
-`acceptedEncodings` | readonly [*HttpContentEncoding*](../enums/http.httpcontentencoding.md)[] |
+`acceptedEncodings` | readonly [*HttpContentEncoding*](http.md#httpcontentencoding)[] |
 `acceptedLanguages` | readonly *string*[] |
 `acceptedMediaRanges` | readonly [*MediaRange*](http.md#mediarange)[] |
 
@@ -169,7 +181,7 @@ ___
 
 ### HttpRequest
 
-Ƭ **HttpRequest**<T\>: [*HttpMessage*](http.md#httpmessage)<T\> & { `expectContinue`: *boolean* ; `httpVersionMajor`: *number* ; `httpVersionMinor`: *number* ; `isTransportSecure`: *boolean* ; `method`: [*HttpMethod*](../enums/http.httpmethod.md) ; `preconditions?`: [*HttpRequestPreconditions*](http.md#httprequestpreconditions) ; `uri`: [*URILike*](../interfaces/http.urilike.md)  }
+Ƭ **HttpRequest**<T\>: [*HttpMessage*](http.md#httpmessage)<T\> & { `expectContinue`: *boolean* ; `httpVersionMajor`: *number* ; `httpVersionMinor`: *number* ; `isTransportSecure`: *boolean* ; `method`: [*HttpMethod*](http.md#httpmethod) ; `preconditions?`: [*HttpRequestPreconditions*](http.md#httprequestpreconditions) ; `uri`: [*URILike*](../interfaces/http.urilike.md)  }
 
 #### Type parameters:
 
@@ -181,7 +193,7 @@ ___
 
 ### HttpRequestOptions
 
-Ƭ **HttpRequestOptions**<T\>: [*HttpMessageOptions*](http.md#httpmessageoptions)<T\> & { `expectContinue?`: *boolean* ; `headers?`: [*HttpHeaders*](http.md#httpheaders) ; `httpVersionMajor?`: *number* ; `httpVersionMinor?`: *number* ; `isTransportSecure?`: *boolean* ; `method`: [*HttpMethod*](../enums/http.httpmethod.md) ; `preconditions?`: { `ifMatch?`: readonly (*string* \| [*EntityTag*](http.md#entitytag))[] \| *** ; `ifModifiedSince?`: *string* \| [*HttpDateTime*](http.md#httpdatetime) \| Date ; `ifNoneMatch?`: readonly (*string* \| [*EntityTag*](http.md#entitytag))[] \| *** ; `ifRange?`: *string* \| [*EntityTag*](http.md#entitytag) \| [*HttpDateTime*](http.md#httpdatetime) \| Date ; `ifUnmodifiedSince?`: *string* \| [*HttpDateTime*](http.md#httpdatetime) \| Date  } ; `uri`: *string* \| [*URILike*](../interfaces/http.urilike.md)  }
+Ƭ **HttpRequestOptions**<T\>: [*HttpMessageOptions*](http.md#httpmessageoptions)<T\> & { `expectContinue?`: *boolean* ; `headers?`: [*HttpHeaders*](http.md#httpheaders) ; `httpVersionMajor?`: *number* ; `httpVersionMinor?`: *number* ; `isTransportSecure?`: *boolean* ; `method`: [*HttpMethod*](http.md#httpmethod) ; `preconditions?`: { `ifMatch?`: readonly (*string* \| [*EntityTag*](http.md#entitytag))[] \| *** ; `ifModifiedSince?`: *string* \| [*HttpDateTime*](http.md#httpdatetime) \| Date ; `ifNoneMatch?`: readonly (*string* \| [*EntityTag*](http.md#entitytag))[] \| *** ; `ifRange?`: *string* \| [*EntityTag*](http.md#entitytag) \| [*HttpDateTime*](http.md#httpdatetime) \| Date ; `ifUnmodifiedSince?`: *string* \| [*HttpDateTime*](http.md#httpdatetime) \| Date  } ; `uri`: *string* \| [*URILike*](../interfaces/http.urilike.md)  }
 
 #### Type parameters:
 

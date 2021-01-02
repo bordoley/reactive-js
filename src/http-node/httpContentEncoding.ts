@@ -1,5 +1,4 @@
 import { BrotliOptions, ZlibOptions } from "zlib";
-import { HttpContentEncoding } from "../http";
 import { IOSourceOperator } from "../io";
 import {
   brotliCompress,
@@ -14,15 +13,15 @@ import { ReadonlyObjectMap } from "../readonlyObjectMap";
 export const createContentEncodingDecompressTransforms = (
   options: BrotliOptions | ZlibOptions = {},
 ): ReadonlyObjectMap<IOSourceOperator<Uint8Array, Uint8Array>> => ({
-  [HttpContentEncoding.Brotli]: brotliDecompress(options),
-  [HttpContentEncoding.Deflate]: deflate(options),
-  [HttpContentEncoding.GZip]: gunzip(options),
+  ["br"]: brotliDecompress(options),
+  ["deflate"]: deflate(options),
+  ["gzip"]: gunzip(options),
 });
 
 export const createContentEncodingCompressTransforms = (
   options: BrotliOptions | ZlibOptions = {},
 ): ReadonlyObjectMap<IOSourceOperator<Uint8Array, Uint8Array>> => ({
-  [HttpContentEncoding.Brotli]: brotliCompress(options),
-  [HttpContentEncoding.Deflate]: inflate(options),
-  [HttpContentEncoding.GZip]: gzip(options),
+  ["br"]: brotliCompress(options),
+  ["deflate"]: inflate(options),
+  ["gzip"]: gzip(options),
 });

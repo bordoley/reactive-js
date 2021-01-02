@@ -6,25 +6,25 @@ import { map as map$1, join, fromObject, keep, length, everySatisfy, reduceRight
 import { fromValue, empty } from './io.mjs';
 
 const bannedHeaders = pipe([
-    "Accept" /* Accept */,
-    "Accept-Charset" /* AcceptCharset */,
-    "Accept-Encoding" /* AcceptEncoding */,
-    "Accept-Language" /* AcceptLanguage */,
-    "Cache-Control" /* CacheControl */,
-    "Content-Encoding" /* ContentEncoding */,
-    "Content-Length" /* ContentLength */,
-    "Content-Type" /* ContentType */,
-    "ETag" /* ETag */,
-    "Expect" /* Expect */,
-    "Expires" /* Expires */,
-    "If-Match" /* IfMatch */,
-    "If-None-Match" /* IfNoneMatch */,
-    "If-Modified-Since" /* IfModifiedSince */,
-    "If-Unmodified-Since" /* IfUnmodifiedSince */,
-    "If-Range" /* IfRange */,
-    "Last-Modified" /* LastModified */,
-    "Transfer-Encoding" /* TransferEncoding */,
-    "Vary" /* Vary */,
+    HttpStandardHeader.Accept,
+    HttpStandardHeader.AcceptCharset,
+    HttpStandardHeader.AcceptEncoding,
+    HttpStandardHeader.AcceptLanguage,
+    HttpStandardHeader.CacheControl,
+    HttpStandardHeader.ContentEncoding,
+    HttpStandardHeader.ContentLength,
+    HttpStandardHeader.ContentType,
+    HttpStandardHeader.ETag,
+    HttpStandardHeader.Expect,
+    HttpStandardHeader.Expires,
+    HttpStandardHeader.IfMatch,
+    HttpStandardHeader.IfNoneMatch,
+    HttpStandardHeader.IfModifiedSince,
+    HttpStandardHeader.IfUnmodifiedSince,
+    HttpStandardHeader.IfRange,
+    HttpStandardHeader.LastModified,
+    HttpStandardHeader.TransferEncoding,
+    HttpStandardHeader.Vary,
 ], map$1(s => s.toLowerCase()));
 function getHeaderValue(headers, key) {
     var _a;
@@ -263,42 +263,70 @@ const pCloseParen = char(")");
 const pDquote = char('"');
 const pAsterisk = char("*");
 
-const pTChar = satisfy(c => c === 33 /* EXCLAMATION_MARK */ ||
-    c === 35 /* HASH */ ||
-    c === 36 /* DOLLAR_SIGN */ ||
-    c === 37 /* PERCENT_SIGN */ ||
-    c === 38 /* AMPERSAND */ ||
-    c === 39 /* APOSTROPHE */ ||
-    c === 42 /* ASTERISK */ ||
-    c === 43 /* PLUS_SIGN */ ||
-    c === 45 /* MINUS_SIGN */ ||
-    c === 46 /* PERIOD */ ||
-    c === 94 /* CARET */ ||
-    c === 95 /* UNDERSCORE */ ||
-    c === 96 /* GRAVE_ACCENT */ ||
-    c === 124 /* PIPE */ ||
-    c === 126 /* TILDE */ ||
-    (c >= 48 /* _0 */ && c <= 57 /* _9 */) ||
-    (c >= 97 /* _a */ && c <= 122 /* _z */) ||
-    (c >= 65 /* _A */ && c <= 90 /* _Z */));
-const pWS = satisfy(c => c === 32 /* SPACE */ || c === 9 /* HTAB */);
+var ASCII$1;
+(function (ASCII) {
+    ASCII[ASCII["HTAB"] = 9] = "HTAB";
+    ASCII[ASCII["SPACE"] = 32] = "SPACE";
+    ASCII[ASCII["EXCLAMATION_MARK"] = 33] = "EXCLAMATION_MARK";
+    ASCII[ASCII["DQOUTE"] = 34] = "DQOUTE";
+    ASCII[ASCII["HASH"] = 35] = "HASH";
+    ASCII[ASCII["DOLLAR_SIGN"] = 36] = "DOLLAR_SIGN";
+    ASCII[ASCII["PERCENT_SIGN"] = 37] = "PERCENT_SIGN";
+    ASCII[ASCII["AMPERSAND"] = 38] = "AMPERSAND";
+    ASCII[ASCII["APOSTROPHE"] = 39] = "APOSTROPHE";
+    ASCII[ASCII["ASTERISK"] = 42] = "ASTERISK";
+    ASCII[ASCII["PLUS_SIGN"] = 43] = "PLUS_SIGN";
+    ASCII[ASCII["MINUS_SIGN"] = 45] = "MINUS_SIGN";
+    ASCII[ASCII["PERIOD"] = 46] = "PERIOD";
+    ASCII[ASCII["BACKSLASH"] = 92] = "BACKSLASH";
+    ASCII[ASCII["CARET"] = 94] = "CARET";
+    ASCII[ASCII["UNDERSCORE"] = 95] = "UNDERSCORE";
+    ASCII[ASCII["GRAVE_ACCENT"] = 96] = "GRAVE_ACCENT";
+    ASCII[ASCII["PIPE"] = 124] = "PIPE";
+    ASCII[ASCII["TILDE"] = 126] = "TILDE";
+    ASCII[ASCII["_a"] = 97] = "_a";
+    ASCII[ASCII["_z"] = 122] = "_z";
+    ASCII[ASCII["_A"] = 65] = "_A";
+    ASCII[ASCII["_Z"] = 90] = "_Z";
+    ASCII[ASCII["_0"] = 48] = "_0";
+    ASCII[ASCII["_9"] = 57] = "_9";
+})(ASCII$1 || (ASCII$1 = {}));
+const pTChar = satisfy(c => c === ASCII$1.EXCLAMATION_MARK ||
+    c === ASCII$1.HASH ||
+    c === ASCII$1.DOLLAR_SIGN ||
+    c === ASCII$1.PERCENT_SIGN ||
+    c === ASCII$1.AMPERSAND ||
+    c === ASCII$1.APOSTROPHE ||
+    c === ASCII$1.ASTERISK ||
+    c === ASCII$1.PLUS_SIGN ||
+    c === ASCII$1.MINUS_SIGN ||
+    c === ASCII$1.PERIOD ||
+    c === ASCII$1.CARET ||
+    c === ASCII$1.UNDERSCORE ||
+    c === ASCII$1.GRAVE_ACCENT ||
+    c === ASCII$1.PIPE ||
+    c === ASCII$1.TILDE ||
+    (c >= ASCII$1._0 && c <= ASCII$1._9) ||
+    (c >= ASCII$1._a && c <= ASCII$1._z) ||
+    (c >= ASCII$1._A && c <= ASCII$1._Z));
+const pWS = satisfy(c => c === ASCII$1.SPACE || c === ASCII$1.HTAB);
 const pOWS = manyIgnore()(pWS);
 const pQuotedString = charStream => {
     let builder = none;
     charStream.move();
     const initialIndex = charStream.index;
-    if (charStream.current !== 34 /* DQOUTE */) {
+    if (charStream.current !== ASCII$1.DQOUTE) {
         throwParseError(charStream);
     }
     while (charStream.move()) {
         const c = charStream.current;
-        const isQDText = c === 9 /* HTAB */ ||
-            c === 32 /* SPACE */ ||
-            c === 33 /* EXCLAMATION_MARK */ ||
+        const isQDText = c === ASCII$1.HTAB ||
+            c === ASCII$1.SPACE ||
+            c === ASCII$1.EXCLAMATION_MARK ||
             (c >= 0x23 && c <= 0x5b) ||
             (c >= 0x5d && c <= 0x7e) ||
             (c >= 0x80 && c <= 0xff); // obs-text
-        if (c === 34 /* DQOUTE */) {
+        if (c === ASCII$1.DQOUTE) {
             break;
         }
         else if (isQDText) {
@@ -307,13 +335,13 @@ const pQuotedString = charStream => {
                 refinableBuilder.push(c);
             }
         }
-        else if (c === 92 /* BACKSLASH */ && charStream.move()) {
+        else if (c === ASCII$1.BACKSLASH && charStream.move()) {
             if (isNone(builder)) {
                 builder = [];
             }
             const c = charStream.current;
-            const isQuotedPairChar = c === 9 /* HTAB */ ||
-                c === 32 /* SPACE */ ||
+            const isQuotedPairChar = c === ASCII$1.HTAB ||
+                c === ASCII$1.SPACE ||
                 (c >= 0x21 && c <= 0x7e) || // VCHAR
                 (c >= 0x80 && c <= 0xff); // obs-text
             if (!isQuotedPairChar) {
@@ -341,25 +369,25 @@ const toTokenOrQuotedString = (input) => {
     let buffer = none;
     for (let i = 0; i < input.length; i++) {
         const c = input.charCodeAt(i);
-        const isQuotedPairChar = c === 9 /* HTAB */ ||
-            c === 32 /* SPACE */ ||
+        const isQuotedPairChar = c === ASCII$1.HTAB ||
+            c === ASCII$1.SPACE ||
             (c >= 0x21 && c <= 0x7e) || // VCHAR
             (c >= 0x80 && c <= 0xff); // obs-text
-        const isQDText = c === 9 /* HTAB */ ||
-            c === 32 /* SPACE */ ||
-            c === 33 /* EXCLAMATION_MARK */ ||
+        const isQDText = c === ASCII$1.HTAB ||
+            c === ASCII$1.SPACE ||
+            c === ASCII$1.EXCLAMATION_MARK ||
             (c >= 0x23 && c <= 0x5b) ||
             (c >= 0x5d && c <= 0x7e) ||
             (c >= 0x80 && c <= 0xff); // obs-text
         if (isQuotedPairChar && !isQDText) {
             if (isNone(buffer)) {
-                buffer = [34 /* DQOUTE */];
+                buffer = [ASCII$1.DQOUTE];
                 for (let j = 0; j < i; j++) {
                     const c = input.charCodeAt(j);
                     buffer.push(c);
                 }
             }
-            buffer.push(92 /* BACKSLASH */);
+            buffer.push(ASCII$1.BACKSLASH);
         }
         else if (!isQDText) {
             // FIXME: Error type?
@@ -370,7 +398,7 @@ const toTokenOrQuotedString = (input) => {
         }
     }
     if (isSome(buffer)) {
-        buffer.push(34 /* DQOUTE */);
+        buffer.push(ASCII$1.DQOUTE);
         return String.fromCharCode(...buffer);
     }
     else {
@@ -397,8 +425,8 @@ const owsCommaOws = (charStream) => {
 };
 const httpList = (parser) => pipe(parser, sepBy(owsCommaOws));
 const pFieldVchar = satisfy(c => (c >= 0x21 && c <= 0x7e) || (c >= 0x80 && c <= 0xff));
-const pFieldVCharSpHTab = satisfy(c => c === 32 /* SPACE */ ||
-    c === 9 /* HTAB */ ||
+const pFieldVCharSpHTab = satisfy(c => c === ASCII$1.SPACE ||
+    c === ASCII$1.HTAB ||
     (c >= 0x21 && c <= 0x7e) ||
     (c >= 0x80 && c <= 0xff));
 const parseManyFieldVCharSpHTab = manyIgnore()(pFieldVCharSpHTab);
@@ -465,13 +493,13 @@ const cacheDirectiveToString = ({ directive, value, }) => value.length > 0
 const parseCacheDirectiveList = pipe(pCacheDirective, httpList, parseWith);
 const parseCacheControlFromHeaders = (headers) => {
     var _a;
-    const cacheControl = getHeaderValue(headers, "Cache-Control" /* CacheControl */);
+    const cacheControl = getHeaderValue(headers, HttpStandardHeader.CacheControl);
     return isSome(cacheControl)
         ? (_a = parseCacheDirectiveList(cacheControl)) !== null && _a !== void 0 ? _a : [] : [];
 };
 const writeHttpCacheControlHeader = (cacheControl, writeHeader) => {
     if (cacheControl.length > 0) {
-        writeHeader("Cache-Control" /* CacheControl */, pipe(cacheControl, map$1(cacheDirectiveToString), join(",")));
+        writeHeader(HttpStandardHeader.CacheControl, pipe(cacheControl, map$1(cacheDirectiveToString), join(",")));
     }
 };
 
@@ -506,11 +534,11 @@ const mediaTypeIsCompressible = ({ type, subtype }, db) => {
 const parseTokenList = pipe(pToken, httpList, parseWith);
 const parseHttpContentInfoFromHeaders = (headers) => {
     var _a, _b, _c;
-    const contentEncodingString = (_a = getHeaderValue(headers, "Content-Encoding" /* ContentEncoding */)) !== null && _a !== void 0 ? _a : "";
+    const contentEncodingString = (_a = getHeaderValue(headers, HttpStandardHeader.ContentEncoding)) !== null && _a !== void 0 ? _a : "";
     const contentEncodings = parseTokenList(contentEncodingString);
-    const contentLengthHeader = (_b = getHeaderValue(headers, "Content-Length" /* ContentLength */)) !== null && _b !== void 0 ? _b : "-1";
+    const contentLengthHeader = (_b = getHeaderValue(headers, HttpStandardHeader.ContentLength)) !== null && _b !== void 0 ? _b : "-1";
     const contentLength = ~~contentLengthHeader;
-    const contentType = parseMediaType((_c = getHeaderValue(headers, "Content-Type" /* ContentType */)) !== null && _c !== void 0 ? _c : "");
+    const contentType = parseMediaType((_c = getHeaderValue(headers, HttpStandardHeader.ContentType)) !== null && _c !== void 0 ? _c : "");
     return isNone(contentType)
         ? none
         : {
@@ -522,11 +550,11 @@ const parseHttpContentInfoFromHeaders = (headers) => {
 const writeHttpContentInfoHeaders = (content, writeHeader) => {
     const { contentLength, contentType, contentEncodings } = content;
     if (contentLength > 0) {
-        writeHeader("Content-Length" /* ContentLength */, contentLength.toString(10));
+        writeHeader(HttpStandardHeader.ContentLength, contentLength.toString(10));
     }
-    writeHeader("Content-Type" /* ContentType */, mediaTypeToString(contentType));
+    writeHeader(HttpStandardHeader.ContentType, mediaTypeToString(contentType));
     if (contentEncodings.length > 0) {
-        writeHeader("Content-Encoding" /* ContentEncoding */, pipe(contentEncodings, join(", ")));
+        writeHeader(HttpStandardHeader.ContentEncoding, pipe(contentEncodings, join(", ")));
     }
 };
 const createHttpContentInfo = ({ contentEncodings, contentLength, contentType, }) => ({
@@ -569,11 +597,11 @@ const parseWeightedTokenHeader = (headers, header) => {
 };
 const parseHttpPreferencesFromHeaders = (headers) => {
     var _a;
-    const acceptedCharsets = parseWeightedTokenHeader(headers, "Accept-Charset" /* AcceptCharset */);
-    const acceptedEncodings = parseWeightedTokenHeader(headers, "Accept-Encoding" /* AcceptEncoding */);
+    const acceptedCharsets = parseWeightedTokenHeader(headers, HttpStandardHeader.AcceptCharset);
+    const acceptedEncodings = parseWeightedTokenHeader(headers, HttpStandardHeader.AcceptEncoding);
     // FIXME: This is overly lax. See: https://tools.ietf.org/html/draft-ietf-httpbis-semantics-07#section-8.4.5
-    const acceptedLanguages = parseWeightedTokenHeader(headers, "Accept-Language" /* AcceptLanguage */);
-    const rawAccept = getHeaderValue(headers, "Accept" /* Accept */);
+    const acceptedLanguages = parseWeightedTokenHeader(headers, HttpStandardHeader.AcceptLanguage);
+    const rawAccept = getHeaderValue(headers, HttpStandardHeader.Accept);
     const acceptedMediaRanges = isSome(rawAccept)
         ? (_a = parseAccept(rawAccept)) !== null && _a !== void 0 ? _a : [] : [];
     const isUndefined = acceptedCharsets.length === 0 &&
@@ -625,11 +653,11 @@ const writeWeightedTokenHeader = (header, values, writeHeader) => {
 };
 const writeHttpPreferenceHeaders = (preferences, writeHeader) => {
     const { acceptedCharsets, acceptedEncodings, acceptedLanguages, acceptedMediaRanges, } = preferences;
-    writeWeightedTokenHeader("Accept-Charset" /* AcceptCharset */, acceptedCharsets, writeHeader);
-    writeWeightedTokenHeader("Accept-Encoding" /* AcceptEncoding */, acceptedEncodings, writeHeader);
-    writeWeightedTokenHeader("Accept-Language" /* AcceptLanguage */, acceptedLanguages, writeHeader);
+    writeWeightedTokenHeader(HttpStandardHeader.AcceptCharset, acceptedCharsets, writeHeader);
+    writeWeightedTokenHeader(HttpStandardHeader.AcceptEncoding, acceptedEncodings, writeHeader);
+    writeWeightedTokenHeader(HttpStandardHeader.AcceptLanguage, acceptedLanguages, writeHeader);
     const tokenizedMediaRanges = pipe(acceptedMediaRanges, map$1(({ type, subtype }) => `${type}/${subtype}`));
-    writeWeightedTokenHeader("Accept" /* Accept */, tokenizedMediaRanges, writeHeader);
+    writeWeightedTokenHeader(HttpStandardHeader.Accept, tokenizedMediaRanges, writeHeader);
 };
 
 const createHttpMessage = ({ body, cacheControl, contentInfo, headers = {}, preferences, ...rest }) => ({
@@ -700,7 +728,7 @@ const toIOSourceHttpMessage = ({ body, ...msg }) => ({
 });
 
 const entityTagToString = ({ isWeak, tag }) => isWeak ? `\\W"${tag}"` : `"${tag}"`;
-const pETagc = satisfy(c => c >= 33 && c <= 256 /* VCHAR */ && c !== 34 /* DQOUTE */);
+const pETagc = satisfy(c => c >= 33 && c <= 256 /* VCHAR */ && c !== ASCII.DQOUTE);
 const parseIsWeak = optional(string("W/"));
 const parseTag = manySatisfy()(pETagc);
 const pETag = (charStream) => {
@@ -713,7 +741,7 @@ const pETag = (charStream) => {
 const parseETag = parseWith(pETag);
 const parseETagOrThrow = parseWithOrThrow(pETag);
 const parseETagFromHeaders = (headers) => {
-    const etagHeader = getHeaderValue(headers, "ETag" /* ETag */);
+    const etagHeader = getHeaderValue(headers, HttpStandardHeader.ETag);
     return isSome(etagHeader) ? parseETagOrThrow(etagHeader) : none;
 };
 
@@ -743,12 +771,12 @@ const writeDateHeader = (header, value, writeHeader) => {
     }
 };
 const writeHttpRequestPreconditionsHeaders = ({ ifMatch, ifModifiedSince, ifNoneMatch, ifUnmodifiedSince, ifRange, }, writeHeader) => {
-    writeEtagPreferenceHeader("If-Match" /* IfMatch */, ifMatch, writeHeader);
-    writeEtagPreferenceHeader("If-None-Match" /* IfNoneMatch */, ifNoneMatch, writeHeader);
-    writeDateHeader("If-Modified-Since" /* IfModifiedSince */, ifModifiedSince, writeHeader);
-    writeDateHeader("If-Unmodified-Since" /* IfUnmodifiedSince */, ifUnmodifiedSince, writeHeader);
+    writeEtagPreferenceHeader(HttpStandardHeader.IfMatch, ifMatch, writeHeader);
+    writeEtagPreferenceHeader(HttpStandardHeader.IfNoneMatch, ifNoneMatch, writeHeader);
+    writeDateHeader(HttpStandardHeader.IfModifiedSince, ifModifiedSince, writeHeader);
+    writeDateHeader(HttpStandardHeader.IfUnmodifiedSince, ifUnmodifiedSince, writeHeader);
     if (isSome(ifRange)) {
-        writeHeader("If-Range" /* IfRange */, typeof ifRange === "number"
+        writeHeader(HttpStandardHeader.IfRange, typeof ifRange === "number"
             ? httpDateTimeToString(ifRange)
             : entityTagToString(ifRange));
     }
@@ -761,11 +789,11 @@ const parseOptionalETagPreference = (headers, header) => {
 const parseOptionalDatePreference = (headers, header) => { var _a; return pipe((_a = getHeaderValue(headers, header)) !== null && _a !== void 0 ? _a : "", parseHttpDateTime); };
 const parseHttpRequestPreconditionsFromHeaders = (headers) => {
     var _a;
-    const ifMatch = parseOptionalETagPreference(headers, "If-Match" /* IfMatch */);
-    const ifNoneMatch = parseOptionalETagPreference(headers, "If-None-Match" /* IfNoneMatch */);
-    const ifModifiedSince = parseOptionalDatePreference(headers, "If-Modified-Since" /* IfModifiedSince */);
-    const ifUnmodifiedSince = parseOptionalDatePreference(headers, "If-Unmodified-Since" /* IfUnmodifiedSince */);
-    const ifRangeHeader = getHeaderValue(headers, "If-Range" /* IfRange */);
+    const ifMatch = parseOptionalETagPreference(headers, HttpStandardHeader.IfMatch);
+    const ifNoneMatch = parseOptionalETagPreference(headers, HttpStandardHeader.IfNoneMatch);
+    const ifModifiedSince = parseOptionalDatePreference(headers, HttpStandardHeader.IfModifiedSince);
+    const ifUnmodifiedSince = parseOptionalDatePreference(headers, HttpStandardHeader.IfUnmodifiedSince);
+    const ifRangeHeader = getHeaderValue(headers, HttpStandardHeader.IfRange);
     const ifRange = isSome(ifRangeHeader)
         ? // FIXME: This is sketchy
          (_a = parseHttpDateTime(ifRangeHeader)) !== null && _a !== void 0 ? _a : parseETag(ifRangeHeader) : none;
@@ -826,19 +854,19 @@ const createHttpRequestPreconditions = ({ ifMatch, ifModifiedSince, ifNoneMatch,
 };
 
 const parseExpectFromHeaders = (headers) => {
-    const rawExpectHeader = getHeaderValue(headers, "Expect" /* Expect */);
+    const rawExpectHeader = getHeaderValue(headers, HttpStandardHeader.Expect);
     return rawExpectHeader === "100-continue";
 };
 const parseURIFromHeaders = ({ headers = {}, httpVersionMajor = 1, isTransportSecure = false, uri, }) => {
     var _a;
     const protocol = isTransportSecure ? "https" : "http";
-    const forwardedProtocol = getHeaderValue(headers, "X-Forwarded-Proto" /* XForwardedProto */);
+    const forwardedProtocol = getHeaderValue(headers, HttpExtensionHeader.XForwardedProto);
     const uriProtocol = isSome(forwardedProtocol)
         ? forwardedProtocol.split(/\s*,\s*/, 1)[0]
         : protocol;
-    const forwardedHost = getHeaderValue(headers, "X-Forwarded-Host" /* XForwardedHost */);
+    const forwardedHost = getHeaderValue(headers, HttpExtensionHeader.XForwardedHost);
     const http2Authority = headers[":authority"];
-    const http1Host = getHeaderValue(headers, "Host" /* Host */);
+    const http1Host = getHeaderValue(headers, HttpStandardHeader.Host);
     const unfilteredHost = isSome(forwardedHost)
         ? forwardedHost
         : isSome(http2Authority) && httpVersionMajor >= 2
@@ -892,7 +920,7 @@ const disallowProtocolAndHostForwarding = () => request => {
 const writeHttpRequestHeaders = (request, writeHeader) => {
     const { expectContinue, preconditions } = request;
     if (expectContinue) {
-        writeHeader("Expect" /* Expect */, "100-continue");
+        writeHeader(HttpStandardHeader.Expect, "100-continue");
     }
     if (isSome(preconditions)) {
         writeHttpRequestPreconditionsHeaders(preconditions, writeHeader);
@@ -906,7 +934,7 @@ const decodeHttpRequestWithCharset = _decodeHttpRequestWithCharset;
 const toIOSourceHttpRequest = (req) => toIOSourceHttpMessage(req);
 
 const parseLocationFromHeaders = (headers) => {
-    const locationValue = getHeaderValue(headers, "Location" /* Location */);
+    const locationValue = getHeaderValue(headers, HttpStandardHeader.Location);
     return isSome(locationValue) ? new URL(locationValue) : none;
 };
 const createHttpResponse = ({ etag, expires, headers = {}, lastModified, location, statusCode, vary, ...rest }) => {
@@ -923,7 +951,7 @@ const createHttpResponse = ({ etag, expires, headers = {}, lastModified, locatio
                 ? expires.getTime()
                 : isSome(expires)
                     ? expires
-                    : parseHttpDateTimeFromHeaders(headers, "Expires" /* Expires */),
+                    : parseHttpDateTimeFromHeaders(headers, HttpStandardHeader.Expires),
         headers,
         lastModified: typeof lastModified === "string"
             ? parseHttpDateTime(lastModified)
@@ -931,7 +959,7 @@ const createHttpResponse = ({ etag, expires, headers = {}, lastModified, locatio
                 ? lastModified.getTime()
                 : isSome(lastModified)
                     ? lastModified
-                    : parseHttpDateTimeFromHeaders(headers, "Last-Modified" /* LastModified */),
+                    : parseHttpDateTimeFromHeaders(headers, HttpStandardHeader.LastModified),
         location: typeof location === "string"
             ? new URL(location)
             : isSome(location)
@@ -945,19 +973,19 @@ const createHttpResponse = ({ etag, expires, headers = {}, lastModified, locatio
 const writeHttpResponseHeaders = (response, writeHeader) => {
     const { etag, expires, lastModified, location, vary } = response;
     if (isSome(etag)) {
-        writeHeader("ETag" /* ETag */, entityTagToString(etag));
+        writeHeader(HttpStandardHeader.ETag, entityTagToString(etag));
     }
     if (isSome(expires)) {
-        writeHeader("Expires" /* Expires */, httpDateTimeToString(expires));
+        writeHeader(HttpStandardHeader.Expires, httpDateTimeToString(expires));
     }
     if (isSome(lastModified)) {
-        writeHeader("Last-Modified" /* LastModified */, httpDateTimeToString(lastModified));
+        writeHeader(HttpStandardHeader.LastModified, httpDateTimeToString(lastModified));
     }
     if (isSome(location)) {
-        writeHeader("Location" /* Location */, location.toString());
+        writeHeader(HttpStandardHeader.Location, location.toString());
     }
     if (vary.length > 0) {
-        writeHeader("Vary" /* Vary */, pipe(vary, join(",")));
+        writeHeader(HttpStandardHeader.Vary, pipe(vary, join(",")));
     }
     writeHttpMessageHeaders(response, writeHeader);
 };
@@ -965,7 +993,7 @@ const checkIfNotModified = ({ cacheControl, method, preconditions, }) => respons
     var _a, _b;
     const { etag, lastModified } = response;
     const { statusCode, contentInfo: _, ...responseWithoutContent } = response;
-    const methodSupportsConditionalResponse = method === "GET" /* GET */ || method === "HEAD" /* HEAD */;
+    const methodSupportsConditionalResponse = method === "GET" || method === "HEAD";
     const statusCodeSupportsConditionalResponse = statusCode >= 200 && statusCode < 300;
     const isNoCacheRequest = cacheControl.findIndex(({ directive }) => directive === "no-cache") >= 0;
     const etagMatch = isSome(etag) &&
@@ -987,7 +1015,7 @@ const checkIfNotModified = ({ cacheControl, method, preconditions, }) => respons
         match
         ? {
             ...responseWithoutContent,
-            statusCode: 304 /* NotModified */,
+            statusCode: HttpStatusCode.NotModified,
         }
         : response;
 };
@@ -1014,7 +1042,7 @@ const decodeHttpResponseContent = (decoderProvider) => resp => {
         }
         else {
             return createHttpResponse({
-                statusCode: 415 /* UnsupportedMediaType */,
+                statusCode: HttpStatusCode.UnsupportedMediaType,
                 body: empty(),
             });
         }
@@ -1060,14 +1088,14 @@ const encodeHttpResponseContent = (encoderProvider, db = {}) => {
                 contentEncodings: [contentEncoding],
                 contentLength: -1,
             },
-            vary: [...vary, "Accept-Encoding" /* AcceptEncoding */],
+            vary: [...vary, HttpStandardHeader.AcceptEncoding],
         };
     };
 };
 const createHttpErrorResponse = (e) => {
     const statusCode = e instanceof URIError
-        ? 400 /* BadRequest */
-        : 500 /* InternalServerError */;
+        ? HttpStatusCode.BadRequest
+        : HttpStatusCode.InternalServerError;
     return createHttpResponse({
         statusCode,
         body: e,
@@ -1076,15 +1104,15 @@ const createHttpErrorResponse = (e) => {
 const createRedirectHttpRequest = (request, response) => {
     const { contentInfo, method } = request;
     const { location, statusCode } = response;
-    const redirectToGet = statusCode === 303 /* SeeOther */ ||
-        ((statusCode === 301 /* MovedPermanently */ ||
-            302 /* Found */ === 302) &&
-            method === "POST" /* POST */);
+    const redirectToGet = statusCode === HttpStatusCode.SeeOther ||
+        ((statusCode === HttpStatusCode.MovedPermanently ||
+            HttpStatusCode.Found === 302) &&
+            method === "POST");
     return isSome(location)
         ? {
             ...request,
             content: redirectToGet ? none : contentInfo,
-            method: redirectToGet ? "GET" /* GET */ : method,
+            method: redirectToGet ? "GET" : method,
             uri: location,
         }
         : request;
@@ -1096,7 +1124,7 @@ const decodeHttpRequestContent = (decoderProvider) => req => {
             const decoder = decoderProvider[encoding];
             if (isNone(decoder)) {
                 throw createHttpResponse({
-                    statusCode: 415 /* UnsupportedMediaType */,
+                    statusCode: HttpStatusCode.UnsupportedMediaType,
                     body: none,
                 });
             }
@@ -1117,4 +1145,125 @@ const decodeHttpRequestContent = (decoderProvider) => req => {
     }
 };
 
-export { checkIfNotModified, createHttpErrorResponse, createHttpRequest, createHttpResponse, createRedirectHttpRequest, decodeHttpRequestContent, decodeHttpRequestWithCharset, decodeHttpResponseContent, decodeHttpResponseWithCharset, disallowProtocolAndHostForwarding, encodeHttpRequestWithUtf8, encodeHttpResponseContent, encodeHttpResponseWithUtf8, toIOSourceHttpRequest, toIOSourceHttpResponse, writeHttpRequestHeaders, writeHttpResponseHeaders };
+var HttpStandardHeader;
+(function (HttpStandardHeader) {
+    HttpStandardHeader["Accept"] = "Accept";
+    HttpStandardHeader["AcceptCharset"] = "Accept-Charset";
+    HttpStandardHeader["AcceptEncoding"] = "Accept-Encoding";
+    HttpStandardHeader["AcceptLanguage"] = "Accept-Language";
+    HttpStandardHeader["AcceptRanges"] = "Accept-Ranges";
+    HttpStandardHeader["Age"] = "Age";
+    HttpStandardHeader["Allow"] = "Allow";
+    HttpStandardHeader["Authorization"] = "Authorization";
+    HttpStandardHeader["CacheControl"] = "Cache-Control";
+    HttpStandardHeader["Connection"] = "Connection";
+    HttpStandardHeader["ContentEncoding"] = "Content-Encoding";
+    HttpStandardHeader["ContentLanguage"] = "Content-Language";
+    HttpStandardHeader["ContentLength"] = "Content-Length";
+    HttpStandardHeader["ContentLocation"] = "Content-Location";
+    HttpStandardHeader["ContentMD5"] = "Content-MD5";
+    HttpStandardHeader["ContentRange"] = "Content-Range";
+    HttpStandardHeader["ContentType"] = "Content-Type";
+    HttpStandardHeader["Cookie"] = "Cookie";
+    HttpStandardHeader["Date"] = "Date";
+    HttpStandardHeader["ETag"] = "ETag";
+    HttpStandardHeader["Expect"] = "Expect";
+    HttpStandardHeader["Expires"] = "Expires";
+    HttpStandardHeader["From"] = "From";
+    HttpStandardHeader["Host"] = "Host";
+    HttpStandardHeader["IfMatch"] = "If-Match";
+    HttpStandardHeader["IfModifiedSince"] = "If-Modified-Since";
+    HttpStandardHeader["IfNoneMatch"] = "If-None-Match";
+    HttpStandardHeader["IfRange"] = "If-Range";
+    HttpStandardHeader["IfUnmodifiedSince"] = "If-Unmodified-Since";
+    HttpStandardHeader["LastModified"] = "Last-Modified";
+    HttpStandardHeader["Location"] = "Location";
+    HttpStandardHeader["MaxForwards"] = "Max-Forwards";
+    HttpStandardHeader["Pragma"] = "Pragma";
+    HttpStandardHeader["ProxyAuthenticate"] = "Proxy-Authenticate";
+    HttpStandardHeader["ProxyAuthorization"] = "Proxy-Authorization";
+    HttpStandardHeader["Range"] = "Range";
+    HttpStandardHeader["Referer"] = "Referer";
+    HttpStandardHeader["RetryAfter"] = "Retry-After";
+    HttpStandardHeader["Server"] = "Server";
+    HttpStandardHeader["SetCookie"] = "Set-Cookie";
+    HttpStandardHeader["TE"] = "TE";
+    HttpStandardHeader["Trailer"] = "Trailer";
+    HttpStandardHeader["TransferEncoding"] = "Transfer-Encoding";
+    HttpStandardHeader["Upgrade"] = "Upgrade";
+    HttpStandardHeader["UserAgent"] = "User-Agent";
+    HttpStandardHeader["Vary"] = "Vary";
+    HttpStandardHeader["Via"] = "Via";
+    HttpStandardHeader["Warning"] = "Warning";
+    HttpStandardHeader["WWWAuthenticate"] = "WWW-Authenticate";
+})(HttpStandardHeader || (HttpStandardHeader = {}));
+var HttpExtensionHeader;
+(function (HttpExtensionHeader) {
+    HttpExtensionHeader["XForwardedProto"] = "X-Forwarded-Proto";
+    HttpExtensionHeader["XForwardedHost"] = "X-Forwarded-Host";
+    HttpExtensionHeader["XHttpMethod"] = "X-HTTP-Method";
+    HttpExtensionHeader["XHttpMethodOverride"] = "X-HTTP-Method-Override";
+    HttpExtensionHeader["XMethodOverride"] = "X-Method-Override";
+})(HttpExtensionHeader || (HttpExtensionHeader = {}));
+var HttpStatusCode;
+(function (HttpStatusCode) {
+    HttpStatusCode[HttpStatusCode["Continue"] = 100] = "Continue";
+    HttpStatusCode[HttpStatusCode["SwitchingProtocols"] = 101] = "SwitchingProtocols";
+    HttpStatusCode[HttpStatusCode["Processing"] = 102] = "Processing";
+    HttpStatusCode[HttpStatusCode["OK"] = 200] = "OK";
+    HttpStatusCode[HttpStatusCode["Created"] = 201] = "Created";
+    HttpStatusCode[HttpStatusCode["Accepted"] = 202] = "Accepted";
+    HttpStatusCode[HttpStatusCode["NonAuthoritativeInformation"] = 203] = "NonAuthoritativeInformation";
+    HttpStatusCode[HttpStatusCode["NoContent"] = 204] = "NoContent";
+    HttpStatusCode[HttpStatusCode["ResetContent"] = 205] = "ResetContent";
+    HttpStatusCode[HttpStatusCode["PartialContent"] = 206] = "PartialContent";
+    HttpStatusCode[HttpStatusCode["MultiStatus"] = 207] = "MultiStatus";
+    HttpStatusCode[HttpStatusCode["AlreadyReported"] = 208] = "AlreadyReported";
+    HttpStatusCode[HttpStatusCode["IMUsed"] = 226] = "IMUsed";
+    HttpStatusCode[HttpStatusCode["MultipleChoices"] = 300] = "MultipleChoices";
+    HttpStatusCode[HttpStatusCode["MovedPermanently"] = 301] = "MovedPermanently";
+    HttpStatusCode[HttpStatusCode["Found"] = 302] = "Found";
+    HttpStatusCode[HttpStatusCode["SeeOther"] = 303] = "SeeOther";
+    HttpStatusCode[HttpStatusCode["NotModified"] = 304] = "NotModified";
+    HttpStatusCode[HttpStatusCode["UseProxy"] = 305] = "UseProxy";
+    HttpStatusCode[HttpStatusCode["TemporaryRedirect"] = 307] = "TemporaryRedirect";
+    HttpStatusCode[HttpStatusCode["PermanentRedirect"] = 308] = "PermanentRedirect";
+    HttpStatusCode[HttpStatusCode["BadRequest"] = 400] = "BadRequest";
+    HttpStatusCode[HttpStatusCode["Unauthorized"] = 401] = "Unauthorized";
+    HttpStatusCode[HttpStatusCode["Forbidden"] = 403] = "Forbidden";
+    HttpStatusCode[HttpStatusCode["NotFound"] = 404] = "NotFound";
+    HttpStatusCode[HttpStatusCode["MethodNotAllowed"] = 405] = "MethodNotAllowed";
+    HttpStatusCode[HttpStatusCode["NotAcceptable"] = 406] = "NotAcceptable";
+    HttpStatusCode[HttpStatusCode["ProxyAuthenticationRequired"] = 407] = "ProxyAuthenticationRequired";
+    HttpStatusCode[HttpStatusCode["RequestTimeout"] = 408] = "RequestTimeout";
+    HttpStatusCode[HttpStatusCode["Conflict"] = 409] = "Conflict";
+    HttpStatusCode[HttpStatusCode["Gone"] = 410] = "Gone";
+    HttpStatusCode[HttpStatusCode["LengthRequired"] = 411] = "LengthRequired";
+    HttpStatusCode[HttpStatusCode["PreconditionFailed"] = 412] = "PreconditionFailed";
+    HttpStatusCode[HttpStatusCode["RequestEntityTooLarge"] = 413] = "RequestEntityTooLarge";
+    HttpStatusCode[HttpStatusCode["RequestURITooLong"] = 414] = "RequestURITooLong";
+    HttpStatusCode[HttpStatusCode["UnsupportedMediaType"] = 415] = "UnsupportedMediaType";
+    HttpStatusCode[HttpStatusCode["RequestedRangeNotSatisfiable"] = 416] = "RequestedRangeNotSatisfiable";
+    HttpStatusCode[HttpStatusCode["ExpectationFailed"] = 417] = "ExpectationFailed";
+    HttpStatusCode[HttpStatusCode["UnprocessableEntity"] = 422] = "UnprocessableEntity";
+    HttpStatusCode[HttpStatusCode["Locked"] = 423] = "Locked";
+    HttpStatusCode[HttpStatusCode["FailedDependency"] = 424] = "FailedDependency";
+    HttpStatusCode[HttpStatusCode["UpgradeRequired"] = 426] = "UpgradeRequired";
+    HttpStatusCode[HttpStatusCode["PreconditionRequired"] = 428] = "PreconditionRequired";
+    HttpStatusCode[HttpStatusCode["TooManyRequests"] = 429] = "TooManyRequests";
+    HttpStatusCode[HttpStatusCode["RequestHeaderFieldsTooLarge"] = 431] = "RequestHeaderFieldsTooLarge";
+    HttpStatusCode[HttpStatusCode["UnavailableForLegalReasons"] = 451] = "UnavailableForLegalReasons";
+    HttpStatusCode[HttpStatusCode["InternalServerError"] = 500] = "InternalServerError";
+    HttpStatusCode[HttpStatusCode["NotImplemented"] = 501] = "NotImplemented";
+    HttpStatusCode[HttpStatusCode["BadGateway"] = 502] = "BadGateway";
+    HttpStatusCode[HttpStatusCode["ServiceUnavailable"] = 503] = "ServiceUnavailable";
+    HttpStatusCode[HttpStatusCode["GatewayTimeout"] = 504] = "GatewayTimeout";
+    HttpStatusCode[HttpStatusCode["HTTPVersionNotSupported"] = 505] = "HTTPVersionNotSupported";
+    HttpStatusCode[HttpStatusCode["VariantAlsoNegotiates"] = 506] = "VariantAlsoNegotiates";
+    HttpStatusCode[HttpStatusCode["InsufficientStorage"] = 507] = "InsufficientStorage";
+    HttpStatusCode[HttpStatusCode["LoopDetected"] = 508] = "LoopDetected";
+    HttpStatusCode[HttpStatusCode["NotExtended"] = 510] = "NotExtended";
+    HttpStatusCode[HttpStatusCode["NetworkAuthenticationRequired"] = 511] = "NetworkAuthenticationRequired";
+})(HttpStatusCode || (HttpStatusCode = {}));
+
+export { HttpExtensionHeader, HttpStandardHeader, HttpStatusCode, checkIfNotModified, createHttpErrorResponse, createHttpRequest, createHttpResponse, createRedirectHttpRequest, decodeHttpRequestContent, decodeHttpRequestWithCharset, decodeHttpResponseContent, decodeHttpResponseWithCharset, disallowProtocolAndHostForwarding, encodeHttpRequestWithUtf8, encodeHttpResponseContent, encodeHttpResponseWithUtf8, toIOSourceHttpRequest, toIOSourceHttpResponse, writeHttpRequestHeaders, writeHttpResponseHeaders };

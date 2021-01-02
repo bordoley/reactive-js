@@ -501,7 +501,7 @@ export const tests = describe(
           const next = __memo(createOneTwoThree, v);
           return __observe(next);
         },
-        { mode: 'combine-latest' },
+        { mode: "combine-latest" },
       ),
       toRunnable(),
       toArray(),
@@ -696,7 +696,7 @@ export const tests = describe(
       defer(
         generate(increment, returns<number>(-1), { delay: 1 }),
         takeFirst({ count: 100 }),
-        throttle(50, { mode: 'first' }),
+        throttle(50, { mode: "first" }),
         toRunnable(),
         toArray(),
         expectArrayEquals([0, 49]),
@@ -708,7 +708,7 @@ export const tests = describe(
       defer(
         generate(increment, returns<number>(-1), { delay: 1 }),
         takeFirst({ count: 200 }),
-        throttle(50, { mode: 'last' }),
+        throttle(50, { mode: "last" }),
         toRunnable(),
         toArray(),
         expectArrayEquals([49, 99, 149, 199]),
@@ -720,7 +720,7 @@ export const tests = describe(
       defer(
         generate(increment, returns<number>(-1), { delay: 1 }),
         takeFirst({ count: 200 }),
-        throttle(75, { mode: 'interval'}),
+        throttle(75, { mode: "interval" }),
         toRunnable(),
         toArray(),
         expectArrayEquals([0, 74, 149, 199]),
