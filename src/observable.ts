@@ -88,8 +88,8 @@ export interface StreamLike<TReq, T>
 export interface SubjectLike<T> extends StreamLike<T, T> {}
 
 export { dispatchTo } from "./observable/dispatcher";
+export type { ObservableEffectMode } from "./observable/effects";
 export {
-  ObservableEffectMode,
   async,
   observable,
   __await,
@@ -146,7 +146,8 @@ export { publish } from "./observable/publish";
 export { reduce } from "./observable/reduce";
 export { repeat, retry } from "./observable/repeat";
 export { scan } from "./observable/scan";
-export { AsyncReducer, scanAsync } from "./observable/scanAsync";
+export type { AsyncReducer } from "./observable/scanAsync";
+export { scanAsync } from "./observable/scanAsync";
 export { share } from "./observable/share";
 export { skipFirst } from "./observable/skipFirst";
 export { startWith } from "./observable/startWith";
@@ -156,7 +157,8 @@ export { takeFirst } from "./observable/takeFirst";
 export { takeLast } from "./observable/takeLast";
 export { takeUntil } from "./observable/takeUntil";
 export { takeWhile } from "./observable/takeWhile";
-export { ThrottleMode, throttle } from "./observable/throttle";
+export type { ThrottleMode } from "./observable/throttle";
+export { throttle } from "./observable/throttle";
 export { throwIfEmpty } from "./observable/throwIfEmpty";
 export { timeout, timeoutError } from "./observable/timeout";
 export { withLatestFrom } from "./observable/withLatestFrom";

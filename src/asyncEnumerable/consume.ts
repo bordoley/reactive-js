@@ -26,11 +26,11 @@ import { stream } from "../streamable";
 
 export type ConsumeRequest<TAcc> =
   | {
-      readonly type: 'notify';
+      readonly type: "notify";
       readonly acc: TAcc;
     }
   | {
-      readonly type: 'done';
+      readonly type: "done";
       readonly acc: TAcc;
     };
 
@@ -42,12 +42,12 @@ export type AsyncConsumer<T, TAcc> = Function2<
 >;
 
 export const notify = <TAcc>(acc: TAcc): ConsumeRequest<TAcc> => ({
-  type: 'notify',
+  type: "notify",
   acc,
 });
 
 export const done = <TAcc>(acc: TAcc): ConsumeRequest<TAcc> => ({
-  type: 'done',
+  type: "done",
   acc,
 });
 
@@ -70,7 +70,7 @@ const consumeImpl = <TSrc, TAcc>(
         consumer(accFeedback),
         onNotify(ev => {
           switch (ev.type) {
-            case 'notify':
+            case "notify":
               accFeedback.dispatch(ev.acc);
               enumerator.dispatch(none);
               break;

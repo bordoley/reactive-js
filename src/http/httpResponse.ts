@@ -8,7 +8,6 @@ import {
 } from "../functions";
 import {
   HttpHeaders,
-  HttpMethod,
   HttpRequest,
   HttpResponse,
   HttpResponseOptions,
@@ -155,7 +154,7 @@ export const checkIfNotModified = <T>({
   const { statusCode, contentInfo: _, ...responseWithoutContent } = response;
 
   const methodSupportsConditionalResponse =
-    method === HttpMethod.GET || method === HttpMethod.HEAD;
+    method === "GET" || method === "HEAD";
 
   const statusCodeSupportsConditionalResponse =
     statusCode >= 200 && statusCode < 300;
@@ -350,13 +349,13 @@ export const createRedirectHttpRequest = <
     statusCode === HttpStatusCode.SeeOther ||
     ((statusCode === HttpStatusCode.MovedPermanently ||
       HttpStatusCode.Found === 302) &&
-      method === HttpMethod.POST);
+      method === "POST");
 
   return isSome(location)
     ? {
         ...request,
         content: redirectToGet ? none : contentInfo,
-        method: redirectToGet ? HttpMethod.GET : method,
+        method: redirectToGet ? "GET" : method,
         uri: location as URILike,
       }
     : request;

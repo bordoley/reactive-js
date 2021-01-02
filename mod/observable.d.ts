@@ -6,7 +6,7 @@ import { EnumerableLike } from "./enumerable.mjs";
 import { RunnableLike } from "./runnable.mjs";
 declare const dispatchTo: <T>(dispatcher: DispatcherLike<T>) => SideEffect1<T>;
 declare const async: <T>(computation: Factory<T>) => ObservableLike<T>;
-declare type ObservableEffectMode = 'batched' | 'combine-latest';
+declare type ObservableEffectMode = "batched" | "combine-latest";
 declare const observable: <T>(computation: Factory<T>, { mode }?: {
     mode?: "batched" | "combine-latest" | undefined;
 }) => ObservableLike<T>;
@@ -567,7 +567,7 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
  * last - Takes the trailing value.
  * interval -  Takes both the leading and trailing values.
  */
-declare type ThrottleMode = 'first' | 'last' | 'interval';
+declare type ThrottleMode = "first" | "last" | "interval";
 /**
  * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
  *

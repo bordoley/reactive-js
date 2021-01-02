@@ -51,15 +51,15 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
     const emptyStream = pipe(none, empty, stream(scheduler));
 
-    emptyStream.dispatch('pause');
-    emptyStream.dispatch('resume');
+    emptyStream.dispatch("pause");
+    emptyStream.dispatch("resume");
 
     const f = mockFn();
     const subscription = pipe(emptyStream, subscribe(scheduler, f));
     scheduler.run();
 
     pipe(f, expectToHaveBeenCalledTimes(1));
-    pipe(f.calls[0][0].type, expectEquals('done'));
+    pipe(f.calls[0][0].type, expectEquals("done"));
     expectTrue(subscription.isDisposed);
     expectTrue(emptyStream.isDisposed);
   }),
@@ -88,7 +88,7 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
     const fromValueStream = pipe(1, fromValue(), stream(scheduler));
 
-    fromValueStream.dispatch('resume');
+    fromValueStream.dispatch("resume");
 
     const f = mockFn();
     const subscription = pipe(fromValueStream, subscribe(scheduler, f));
@@ -96,9 +96,9 @@ export const tests = describe(
     scheduler.run();
 
     pipe(f, expectToHaveBeenCalledTimes(2));
-    pipe(f.calls[0][0].type, expectEquals('notify'));
+    pipe(f.calls[0][0].type, expectEquals("notify"));
     pipe(f.calls[0][0].data, expectEquals(1));
-    pipe(f.calls[1][0].type, expectEquals('done'));
+    pipe(f.calls[1][0].type, expectEquals("done"));
     expectTrue(subscription.isDisposed);
     expectTrue(fromValueStream.isDisposed);
   }),

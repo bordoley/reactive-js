@@ -148,6 +148,11 @@ const createAutoDisposingDelegatingObserver = (delegate) => {
 };
 const observe = (observer) => observable => observable.observe(observer);
 
+var LatestMode$1;
+(function (LatestMode) {
+    LatestMode[LatestMode["Combine"] = 1] = "Combine";
+    LatestMode[LatestMode["Zip"] = 2] = "Zip";
+})(LatestMode$1 || (LatestMode$1 = {}));
 function onDispose(error) {
     const { ctx } = this;
     ctx.completedCount++;
@@ -176,7 +181,7 @@ class LatestObserver extends AbstractDelegatingObserver {
         if (ctx.readyCount === observers.length) {
             const result = pipe(observers, map$1(observer => observer.latest));
             this.delegate.notify(result);
-            if (this.mode === 2 /* Zip */) {
+            if (this.mode === LatestMode$1.Zip) {
                 for (const sub of observers) {
                     sub.ready = false;
                     sub.latest = none;
@@ -228,6 +233,13 @@ const subscribe = (scheduler, onNotify = ignore) => (observable) => {
 };
 
 const arrayStrictEquality = arrayEquality();
+var EffectType;
+(function (EffectType) {
+    EffectType[EffectType["Await"] = 0] = "Await";
+    EffectType[EffectType["Memo"] = 1] = "Memo";
+    EffectType[EffectType["Observe"] = 2] = "Observe";
+    EffectType[EffectType["Using"] = 3] = "Using";
+})(EffectType || (EffectType = {}));
 const asyncAwaitSymbol = Symbol("@reactive-js/core/observable/effect/await");
 function validateAsyncEffect(ctx, type) {
     const { effects, index } = ctx;
@@ -257,7 +269,7 @@ class AsyncContext {
         };
     }
     await(observable) {
-        const effect = validateAsyncEffect(this, 0 /* Await */);
+        const effect = validateAsyncEffect(this, EffectType.Await);
         if (isNone(effect)) {
             const subscription = pipe(observable, subscribe(this.scheduler, next => {
                 effect.value = next;
@@ -266,7 +278,7 @@ class AsyncContext {
             addTeardown(subscription, this.runComputation);
             addDisposable(this.scheduler, subscription);
             const effect = {
-                type: 0 /* Await */,
+                type: EffectType.Await,
                 observable,
                 subscription,
                 value: none,
@@ -293,10 +305,10 @@ class AsyncContext {
         }
     }
     memo(f, ...args) {
-        const effect = validateAsyncEffect(this, 1 /* Memo */);
+        const effect = validateAsyncEffect(this, EffectType.Memo);
         if (isNone(effect)) {
             const value = f(...args);
-            this.effects.push({ type: 1 /* Memo */, f, args, value });
+            this.effects.push({ type: EffectType.Memo, f, args, value });
             return value;
         }
         else {
@@ -307,12 +319,12 @@ class AsyncContext {
         }
     }
     using(f, ...args) {
-        const effect = validateAsyncEffect(this, 3 /* Using */);
+        const effect = validateAsyncEffect(this, EffectType.Using);
         if (isNone(effect)) {
             const value = f(...args);
             addDisposableDisposeParentOnChildError(this.scheduler, value);
             this.effects.push({
-                type: 3 /* Using */,
+                type: EffectType.Using,
                 f,
                 args,
                 value,
@@ -361,14 +373,14 @@ function validateObservableEffect(ctx, type) {
     ctx.index++;
     const effect = effects[index];
     if (isNone(effect)) {
-        const newEffect = type === 1 /* Memo */
+        const newEffect = type === EffectType.Memo
             ? {
                 type,
                 f: ignore,
                 args: [],
                 value: none,
             }
-            : type === 2 /* Observe */
+            : type === EffectType.Observe
                 ? {
                     type,
                     observable: empty(),
@@ -376,7 +388,7 @@ function validateObservableEffect(ctx, type) {
                     value: none,
                     hasValue: false,
                 }
-                : type === 3 /* Using */
+                : type === EffectType.Using
                     ? {
                         type,
                         f: ignore,
@@ -403,7 +415,7 @@ class ObservableContext {
         this.scheduledComputationSubscription = disposed;
         this.cleanup = () => {
             const { effects } = this;
-            const hasOutstandingEffects = effects.findIndex(effect => effect.type === 2 /* Observe */ && !effect.subscription.isDisposed) >= 0;
+            const hasOutstandingEffects = effects.findIndex(effect => effect.type === EffectType.Observe && !effect.subscription.isDisposed) >= 0;
             if (!hasOutstandingEffects &&
                 this.scheduledComputationSubscription.isDisposed) {
                 this.scheduler.dispose();
@@ -411,7 +423,7 @@ class ObservableContext {
         };
     }
     memo(f, ...args) {
-        const effect = validateObservableEffect(this, 1 /* Memo */);
+        const effect = validateObservableEffect(this, EffectType.Memo);
         if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
@@ -424,7 +436,7 @@ class ObservableContext {
         }
     }
     observe(observable) {
-        const effect = validateObservableEffect(this, 2 /* Observe */);
+        const effect = validateObservableEffect(this, EffectType.Observe);
         if (effect.observable === observable) {
             return effect.value;
         }
@@ -433,7 +445,7 @@ class ObservableContext {
             const subscription = pipe(observable, subscribe(this.scheduler, next => {
                 effect.value = next;
                 effect.hasValue = true;
-                if (this.mode === 'combine-latest') {
+                if (this.mode === "combine-latest") {
                     this.runComputation();
                 }
                 else {
@@ -453,7 +465,7 @@ class ObservableContext {
         }
     }
     using(f, ...args) {
-        const effect = validateObservableEffect(this, 3 /* Using */);
+        const effect = validateObservableEffect(this, EffectType.Using);
         if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
@@ -468,7 +480,7 @@ class ObservableContext {
         }
     }
 }
-const observable = (computation, { mode = 'batched' } = {}) => defer((observer) => {
+const observable = (computation, { mode = "batched" } = {}) => defer((observer) => {
     const runComputation = () => {
         let result = none;
         let error = none;
@@ -489,11 +501,11 @@ const observable = (computation, { mode = 'batched' } = {}) => defer((observer) 
         for (let i = 0; i < effectsLength; i++) {
             const effect = effects[i];
             const { type } = effect;
-            if (type === 2 /* Observe */ &&
+            if (type === EffectType.Observe &&
                 !effect.hasValue) {
                 allObserveEffectsHaveValues = false;
             }
-            if (type === 2 /* Observe */ &&
+            if (type === EffectType.Observe &&
                 !effect.subscription.isDisposed) {
                 hasOutstandingEffects = true;
             }
@@ -501,13 +513,11 @@ const observable = (computation, { mode = 'batched' } = {}) => defer((observer) 
                 break;
             }
         }
-        const combineLatestModeShouldNotify = mode === 'combine-latest' &&
+        const combineLatestModeShouldNotify = mode === "combine-latest" &&
             allObserveEffectsHaveValues &&
             hasOutstandingEffects;
         const hasError = isSome(error);
-        const shouldNotify = !hasError &&
-            (combineLatestModeShouldNotify ||
-                mode === 'batched');
+        const shouldNotify = !hasError && (combineLatestModeShouldNotify || mode === "batched");
         const shouldDispose = !hasOutstandingEffects || hasError;
         if (shouldNotify) {
             observer.notify(result);
@@ -541,7 +551,7 @@ function __await(f, ...args) {
             : raise("__await may only be called within an async computation");
 }
 function __concurrent(...observables) {
-    return __await(latest, observables, 1 /* Combine */);
+    return __await(latest, observables, LatestMode.Combine);
 }
 const deferSideEffect = (f, ...args) => defer(observer => () => {
     f(...args);
@@ -576,7 +586,7 @@ function __currentScheduler() {
  * multiple sources.
  */
 function combineLatest(...observables) {
-    return latest(observables, 1 /* Combine */);
+    return latest(observables, LatestMode.Combine);
 }
 const combineLatestWith = (snd) => fst => combineLatest(fst, snd);
 
@@ -1699,7 +1709,7 @@ const setupDurationSubscription = (observer, next) => {
     observer.durationSubscription.inner = pipe(observer.durationFunction(next), subscribe(observer, observer.onNotify));
 };
 function onDispose$7(e) {
-    if (isNone(e) && this.mode !== 'first' && this.hasValue) {
+    if (isNone(e) && this.mode !== "first" && this.hasValue) {
         pipe(this.value, fromValue(), observe(this.delegate));
     }
     else {
@@ -1732,8 +1742,7 @@ class ThrottleObserver extends AbstractDelegatingObserver {
         this.hasValue = true;
         const durationSubscriptionDisposableIsDisposed = this.durationSubscription
             .inner.isDisposed;
-        if (durationSubscriptionDisposableIsDisposed &&
-            this.mode !== 'last') {
+        if (durationSubscriptionDisposableIsDisposed && this.mode !== "last") {
             this.onNotify();
         }
         else if (durationSubscriptionDisposableIsDisposed) {
@@ -1742,7 +1751,7 @@ class ThrottleObserver extends AbstractDelegatingObserver {
     }
 }
 function throttle(duration, options = {}) {
-    const { mode = 'interval' } = options;
+    const { mode = "interval" } = options;
     const durationFunction = typeof duration === "number"
         ? (_) => fromValue({ delay: duration })(none)
         : duration;
@@ -2026,7 +2035,7 @@ const zipWith = (snd) => fst => zip(fst, snd);
  * multiple sources.
  */
 function zipLatest(...observables) {
-    return latest(observables, 2 /* Zip */);
+    return latest(observables, LatestMode.Zip);
 }
 const zipLatestWith = (snd) => fst => zipLatest(fst, snd);
 

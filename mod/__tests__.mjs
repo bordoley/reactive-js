@@ -11,7 +11,7 @@ import { stream, sink, identity as identity$1, lift, __stream, createActionReduc
 import { fromIterable, consume, notify, done, consumeAsync, fromArray, generate } from './asyncEnumerable.mjs';
 import { describe, test, expectEquals, expectArrayEquals, expectNone, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
 import { empty as empty$1, fromObservable, fromValue as fromValue$2 } from './flowable.mjs';
-import { createHttpRequest, writeHttpRequestHeaders, createHttpResponse, writeHttpResponseHeaders, checkIfNotModified } from './http.mjs';
+import { createHttpRequest, HttpStandardHeader, writeHttpRequestHeaders, createHttpResponse, HttpStatusCode, writeHttpResponseHeaders, checkIfNotModified } from './http.mjs';
 import { fromArray as fromArray$2, decodeWithCharset, createIOSinkAccumulator, empty as empty$2, fromValue as fromValue$3, encodeUtf8, map as map$2 } from './io.mjs';
 import { createReactiveCache, getOrSet } from './reactiveCache.mjs';
 import { concat as concat$3, concatMap as concatMap$3, distinctUntilChanged as distinctUntilChanged$3, empty as empty$5, endWith as endWith$3, fromArray as fromArray$5, fromValue as fromValue$5, generate as generate$4, keep as keep$3, map as map$5, mapTo as mapTo$3, repeat as repeat$3, scan as scan$3, skipFirst as skipFirst$3, startWith as startWith$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$3, toRunnable as toRunnable$3 } from './sequence.mjs';
@@ -147,8 +147,8 @@ const tests$2 = describe("enumerable", test("toIterable", defer([1, 2, 3], fromA
 const tests$3 = describe("flowables", test("empty", () => {
     const scheduler = createVirtualTimeScheduler();
     const emptyStream = pipe(empty$1(), stream(scheduler));
-    emptyStream.dispatch('pause');
-    emptyStream.dispatch('resume');
+    emptyStream.dispatch("pause");
+    emptyStream.dispatch("resume");
     const f = mockFn();
     const subscription = pipe(emptyStream, subscribe(scheduler, f));
     scheduler.run();
@@ -158,11 +158,11 @@ const tests$3 = describe("flowables", test("empty", () => {
 }), test("fromObservable", () => {
     const scheduler = createVirtualTimeScheduler();
     const generateStream = pipe(generate$2(increment, returns(-1), { delay: 1 }), fromObservable(), stream(scheduler));
-    generateStream.dispatch('resume');
-    pipe(scheduler, schedule(defer('pause', dispatchTo(generateStream)), {
+    generateStream.dispatch("resume");
+    pipe(scheduler, schedule(defer("pause", dispatchTo(generateStream)), {
         delay: 2,
     }));
-    pipe(scheduler, schedule(defer('resume', dispatchTo(generateStream)), {
+    pipe(scheduler, schedule(defer("resume", dispatchTo(generateStream)), {
         delay: 4,
     }));
     pipe(scheduler, schedule(defer(generateStream, dispose()), { delay: 5 }));
@@ -179,8 +179,8 @@ const tests$3 = describe("flowables", test("empty", () => {
 }), test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
     const fromValueStream = pipe(1, fromValue$2(), stream(scheduler));
-    fromValueStream.dispatch('resume');
-    fromValueStream.dispatch('resume');
+    fromValueStream.dispatch("resume");
+    fromValueStream.dispatch("resume");
     const f = mockFn();
     const subscription = pipe(fromValueStream, subscribe(scheduler, f));
     scheduler.run();
@@ -192,48 +192,48 @@ const tests$3 = describe("flowables", test("empty", () => {
 
 const createHttpRequestTests = test("createHttpRequest", () => {
     const request = createHttpRequest({
-        method: "GET" /* GET */,
+        method: "GET",
         uri: "http://www.example.com",
         body: none,
         headers: {
-            ["Accept" /* Accept */]: "text/*;q=0.3, text/html;q=0.7, text/html;level=1, text/html;level=2;q=0.4, */*;q=0.5",
-            ["Accept-Charset" /* AcceptCharset */]: "iso-8859-5, unicode-1-1;q=0.8",
-            ["Accept-Encoding" /* AcceptEncoding */]: "gzip;q=1.0, identity; q=0.5, *;q=0",
-            ["Accept-Language" /* AcceptLanguage */]: "da, en-gb;q=0.8, en;q=0.7",
-            ["Accept-Ranges" /* AcceptRanges */]: "bytes",
-            ["Age" /* Age */]: "2147483648",
-            ["Allow" /* Allow */]: "GET, HEAD, PUT",
-            ["Cache-Control" /* CacheControl */]: "max-age=3, no-transform",
-            ["Connection" /* Connection */]: "close",
-            ["Content-Encoding" /* ContentEncoding */]: "gzip",
-            ["Content-Language" /* ContentLanguage */]: "mi, en",
-            ["Content-Length" /* ContentLength */]: "123",
-            ["Content-Location" /* ContentLocation */]: "http://www.example.com",
-            ["Content-MD5" /* ContentMD5 */]: "asdjbklsjdfs",
-            ["Content-Range" /* ContentRange */]: "bytes 0-499/1234",
-            ["Content-Type" /* ContentType */]: "application/json; charset=UTF-8",
-            ["Date" /* Date */]: "Tue, 15 Nov 1994 08:12:31 GMT",
-            ["ETag" /* ETag */]: 'W/"foo"',
-            ["Expect" /* Expect */]: "100-continue",
-            ["Expires" /* Expires */]: "Thu, 01 Dec 1994 16:00:00 GMT",
-            ["From" /* From */]: "webmaster@w3.org",
-            ["Host" /* Host */]: "www.w3.org",
-            ["If-Match" /* IfMatch */]: '"xyzzy", "r2d2xxxx", "c3piozzzz"',
-            ["If-Modified-Since" /* IfModifiedSince */]: "Sat, 29 Oct 1994 19:43:31 GMT",
-            ["If-None-Match" /* IfNoneMatch */]: '"xyzzy", "r2d2xxxx", "c3piozzzz"',
-            ["If-Range" /* IfRange */]: '"xyzzy"',
-            ["If-Unmodified-Since" /* IfUnmodifiedSince */]: "Sat, 29 Oct 1994 19:43:31 GMT",
-            ["Last-Modified" /* LastModified */]: "Sat, 29 Oct 1994 19:43:31 GMT",
-            ["Location" /* Location */]: "http://www.example.com/path",
-            ["Max-Forwards" /* MaxForwards */]: "10",
-            ["Pragma" /* Pragma */]: "no-cache",
-            ["Range" /* Range */]: "bytes=0-499",
-            ["Referer" /* Referer */]: "http://www.w3.org/hypertext/DataSources/Overview.html",
-            ["Retry-After" /* RetryAfter */]: "120",
-            ["Server" /* Server */]: "CERN/3.0 libwww/2.17",
-            ["Upgrade" /* Upgrade */]: "HTTP/2.0, SHTTP/1.3, IRC/6.9, RTA/x11",
-            ["User-Agent" /* UserAgent */]: "CERN-LineMode/2.15 libwww/2.17b3",
-            ["Vary" /* Vary */]: "Content-Encoding",
+            [HttpStandardHeader.Accept]: "text/*;q=0.3, text/html;q=0.7, text/html;level=1, text/html;level=2;q=0.4, */*;q=0.5",
+            [HttpStandardHeader.AcceptCharset]: "iso-8859-5, unicode-1-1;q=0.8",
+            [HttpStandardHeader.AcceptEncoding]: "gzip;q=1.0, identity; q=0.5, *;q=0",
+            [HttpStandardHeader.AcceptLanguage]: "da, en-gb;q=0.8, en;q=0.7",
+            [HttpStandardHeader.AcceptRanges]: "bytes",
+            [HttpStandardHeader.Age]: "2147483648",
+            [HttpStandardHeader.Allow]: "GET, HEAD, PUT",
+            [HttpStandardHeader.CacheControl]: "max-age=3, no-transform",
+            [HttpStandardHeader.Connection]: "close",
+            [HttpStandardHeader.ContentEncoding]: "gzip",
+            [HttpStandardHeader.ContentLanguage]: "mi, en",
+            [HttpStandardHeader.ContentLength]: "123",
+            [HttpStandardHeader.ContentLocation]: "http://www.example.com",
+            [HttpStandardHeader.ContentMD5]: "asdjbklsjdfs",
+            [HttpStandardHeader.ContentRange]: "bytes 0-499/1234",
+            [HttpStandardHeader.ContentType]: "application/json; charset=UTF-8",
+            [HttpStandardHeader.Date]: "Tue, 15 Nov 1994 08:12:31 GMT",
+            [HttpStandardHeader.ETag]: 'W/"foo"',
+            [HttpStandardHeader.Expect]: "100-continue",
+            [HttpStandardHeader.Expires]: "Thu, 01 Dec 1994 16:00:00 GMT",
+            [HttpStandardHeader.From]: "webmaster@w3.org",
+            [HttpStandardHeader.Host]: "www.w3.org",
+            [HttpStandardHeader.IfMatch]: '"xyzzy", "r2d2xxxx", "c3piozzzz"',
+            [HttpStandardHeader.IfModifiedSince]: "Sat, 29 Oct 1994 19:43:31 GMT",
+            [HttpStandardHeader.IfNoneMatch]: '"xyzzy", "r2d2xxxx", "c3piozzzz"',
+            [HttpStandardHeader.IfRange]: '"xyzzy"',
+            [HttpStandardHeader.IfUnmodifiedSince]: "Sat, 29 Oct 1994 19:43:31 GMT",
+            [HttpStandardHeader.LastModified]: "Sat, 29 Oct 1994 19:43:31 GMT",
+            [HttpStandardHeader.Location]: "http://www.example.com/path",
+            [HttpStandardHeader.MaxForwards]: "10",
+            [HttpStandardHeader.Pragma]: "no-cache",
+            [HttpStandardHeader.Range]: "bytes=0-499",
+            [HttpStandardHeader.Referer]: "http://www.w3.org/hypertext/DataSources/Overview.html",
+            [HttpStandardHeader.RetryAfter]: "120",
+            [HttpStandardHeader.Server]: "CERN/3.0 libwww/2.17",
+            [HttpStandardHeader.Upgrade]: "HTTP/2.0, SHTTP/1.3, IRC/6.9, RTA/x11",
+            [HttpStandardHeader.UserAgent]: "CERN-LineMode/2.15 libwww/2.17b3",
+            [HttpStandardHeader.Vary]: "Content-Encoding",
         },
     });
     const headers = {};
@@ -244,47 +244,47 @@ const createHttpRequestTests = test("createHttpRequest", () => {
 });
 const createHttpResponseTests = test("createHttpRequest", () => {
     const response = createHttpResponse({
-        statusCode: 200 /* OK */,
+        statusCode: HttpStatusCode.OK,
         body: none,
         headers: {
-            ["Accept" /* Accept */]: "text/*;q=0.3, text/html;q=0.7, text/html;level=1, text/html;level=2;q=0.4, */*;q=0.5",
-            ["Accept-Charset" /* AcceptCharset */]: "iso-8859-5, unicode-1-1;q=0.8",
-            ["Accept-Encoding" /* AcceptEncoding */]: "gzip;q=1.0, identity; q=0.5, *;q=0",
-            ["Accept-Language" /* AcceptLanguage */]: "da, en-gb;q=0.8, en;q=0.7",
-            ["Accept-Ranges" /* AcceptRanges */]: "bytes",
-            ["Age" /* Age */]: "2147483648",
-            ["Allow" /* Allow */]: "GET, HEAD, PUT",
-            ["Cache-Control" /* CacheControl */]: "max-age=3, no-transform",
-            ["Connection" /* Connection */]: "close",
-            ["Content-Encoding" /* ContentEncoding */]: "gzip",
-            ["Content-Language" /* ContentLanguage */]: "mi, en",
-            ["Content-Length" /* ContentLength */]: "123",
-            ["Content-Location" /* ContentLocation */]: "http://www.example.com",
-            ["Content-MD5" /* ContentMD5 */]: "asdjbklsjdfs",
-            ["Content-Range" /* ContentRange */]: "bytes 0-499/1234",
-            ["Content-Type" /* ContentType */]: "application/json; charset=UTF-8",
-            ["Date" /* Date */]: "Tue, 15 Nov 1994 08:12:31 GMT",
-            ["ETag" /* ETag */]: 'W/"foo"',
-            ["Expect" /* Expect */]: "100-continue",
-            ["Expires" /* Expires */]: "Thu, 01 Dec 1994 16:00:00 GMT",
-            ["From" /* From */]: "webmaster@w3.org",
-            ["Host" /* Host */]: "www.w3.org",
-            ["If-Match" /* IfMatch */]: '"xyzzy", "r2d2xxxx", "c3piozzzz"',
-            ["If-Modified-Since" /* IfModifiedSince */]: "Sat, 29 Oct 1994 19:43:31 GMT",
-            ["If-None-Match" /* IfNoneMatch */]: '"xyzzy", "r2d2xxxx", "c3piozzzz"',
-            ["If-Range" /* IfRange */]: '"xyzzy"',
-            ["If-Unmodified-Since" /* IfUnmodifiedSince */]: "Sat, 29 Oct 1994 19:43:31 GMT",
-            ["Last-Modified" /* LastModified */]: "Sat, 29 Oct 1994 19:43:31 GMT",
-            ["Location" /* Location */]: "http://www.example.com/path",
-            ["Max-Forwards" /* MaxForwards */]: "10",
-            ["Pragma" /* Pragma */]: "no-cache",
-            ["Range" /* Range */]: "bytes=0-499",
-            ["Referer" /* Referer */]: "http://www.w3.org/hypertext/DataSources/Overview.html",
-            ["Retry-After" /* RetryAfter */]: "120",
-            ["Server" /* Server */]: "CERN/3.0 libwww/2.17",
-            ["Upgrade" /* Upgrade */]: "HTTP/2.0, SHTTP/1.3, IRC/6.9, RTA/x11",
-            ["User-Agent" /* UserAgent */]: "CERN-LineMode/2.15 libwww/2.17b3",
-            ["Vary" /* Vary */]: "Content-Encoding",
+            [HttpStandardHeader.Accept]: "text/*;q=0.3, text/html;q=0.7, text/html;level=1, text/html;level=2;q=0.4, */*;q=0.5",
+            [HttpStandardHeader.AcceptCharset]: "iso-8859-5, unicode-1-1;q=0.8",
+            [HttpStandardHeader.AcceptEncoding]: "gzip;q=1.0, identity; q=0.5, *;q=0",
+            [HttpStandardHeader.AcceptLanguage]: "da, en-gb;q=0.8, en;q=0.7",
+            [HttpStandardHeader.AcceptRanges]: "bytes",
+            [HttpStandardHeader.Age]: "2147483648",
+            [HttpStandardHeader.Allow]: "GET, HEAD, PUT",
+            [HttpStandardHeader.CacheControl]: "max-age=3, no-transform",
+            [HttpStandardHeader.Connection]: "close",
+            [HttpStandardHeader.ContentEncoding]: "gzip",
+            [HttpStandardHeader.ContentLanguage]: "mi, en",
+            [HttpStandardHeader.ContentLength]: "123",
+            [HttpStandardHeader.ContentLocation]: "http://www.example.com",
+            [HttpStandardHeader.ContentMD5]: "asdjbklsjdfs",
+            [HttpStandardHeader.ContentRange]: "bytes 0-499/1234",
+            [HttpStandardHeader.ContentType]: "application/json; charset=UTF-8",
+            [HttpStandardHeader.Date]: "Tue, 15 Nov 1994 08:12:31 GMT",
+            [HttpStandardHeader.ETag]: 'W/"foo"',
+            [HttpStandardHeader.Expect]: "100-continue",
+            [HttpStandardHeader.Expires]: "Thu, 01 Dec 1994 16:00:00 GMT",
+            [HttpStandardHeader.From]: "webmaster@w3.org",
+            [HttpStandardHeader.Host]: "www.w3.org",
+            [HttpStandardHeader.IfMatch]: '"xyzzy", "r2d2xxxx", "c3piozzzz"',
+            [HttpStandardHeader.IfModifiedSince]: "Sat, 29 Oct 1994 19:43:31 GMT",
+            [HttpStandardHeader.IfNoneMatch]: '"xyzzy", "r2d2xxxx", "c3piozzzz"',
+            [HttpStandardHeader.IfRange]: '"xyzzy"',
+            [HttpStandardHeader.IfUnmodifiedSince]: "Sat, 29 Oct 1994 19:43:31 GMT",
+            [HttpStandardHeader.LastModified]: "Sat, 29 Oct 1994 19:43:31 GMT",
+            [HttpStandardHeader.Location]: "http://www.example.com/path",
+            [HttpStandardHeader.MaxForwards]: "10",
+            [HttpStandardHeader.Pragma]: "no-cache",
+            [HttpStandardHeader.Range]: "bytes=0-499",
+            [HttpStandardHeader.Referer]: "http://www.w3.org/hypertext/DataSources/Overview.html",
+            [HttpStandardHeader.RetryAfter]: "120",
+            [HttpStandardHeader.Server]: "CERN/3.0 libwww/2.17",
+            [HttpStandardHeader.Upgrade]: "HTTP/2.0, SHTTP/1.3, IRC/6.9, RTA/x11",
+            [HttpStandardHeader.UserAgent]: "CERN-LineMode/2.15 libwww/2.17b3",
+            [HttpStandardHeader.Vary]: "Content-Encoding",
         },
     });
     const headers = {};
@@ -296,17 +296,17 @@ const checkIfNotModifiedTests = pipe([
     [
         "when a non-conditional GET is performed",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
         }),
-        createHttpResponse({ statusCode: 200 /* OK */, body: none }),
-        200 /* OK */,
+        createHttpResponse({ statusCode: HttpStatusCode.OK, body: none }),
+        HttpStatusCode.OK,
     ],
     [
         "when ETags match",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
             preconditions: {
@@ -314,16 +314,16 @@ const checkIfNotModifiedTests = pipe([
             },
         }),
         createHttpResponse({
-            statusCode: 200 /* OK */,
+            statusCode: HttpStatusCode.OK,
             body: none,
             etag: '"foo"',
         }),
-        304 /* NotModified */,
+        HttpStatusCode.NotModified,
     ],
     [
         "when ETags mismatch",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
             preconditions: {
@@ -331,16 +331,16 @@ const checkIfNotModifiedTests = pipe([
             },
         }),
         createHttpResponse({
-            statusCode: 200 /* OK */,
+            statusCode: HttpStatusCode.OK,
             body: none,
             etag: '"bar"',
         }),
-        200 /* OK */,
+        HttpStatusCode.OK,
     ],
     [
         "when at least one matches",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
             preconditions: {
@@ -348,16 +348,16 @@ const checkIfNotModifiedTests = pipe([
             },
         }),
         createHttpResponse({
-            statusCode: 200 /* OK */,
+            statusCode: HttpStatusCode.OK,
             body: none,
             etag: '"foo"',
         }),
-        304 /* NotModified */,
+        HttpStatusCode.NotModified,
     ],
     [
         "when etag is missing",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
             preconditions: {
@@ -365,15 +365,15 @@ const checkIfNotModifiedTests = pipe([
             },
         }),
         createHttpResponse({
-            statusCode: 200 /* OK */,
+            statusCode: HttpStatusCode.OK,
             body: none,
         }),
-        200 /* OK */,
+        HttpStatusCode.OK,
     ],
     [
         "when ETag is weak on exact match",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
             preconditions: {
@@ -381,16 +381,16 @@ const checkIfNotModifiedTests = pipe([
             },
         }),
         createHttpResponse({
-            statusCode: 200 /* OK */,
+            statusCode: HttpStatusCode.OK,
             body: none,
             etag: 'W/"foo"',
         }),
-        304 /* NotModified */,
+        HttpStatusCode.NotModified,
     ],
     [
         "when ETag is weak on strong match",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
             preconditions: {
@@ -398,16 +398,16 @@ const checkIfNotModifiedTests = pipe([
             },
         }),
         createHttpResponse({
-            statusCode: 200 /* OK */,
+            statusCode: HttpStatusCode.OK,
             body: none,
             etag: '"foo"',
         }),
-        304 /* NotModified */,
+        HttpStatusCode.NotModified,
     ],
     [
         "when ETag is strong on exact match",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
             preconditions: {
@@ -415,16 +415,16 @@ const checkIfNotModifiedTests = pipe([
             },
         }),
         createHttpResponse({
-            statusCode: 200 /* OK */,
+            statusCode: HttpStatusCode.OK,
             body: none,
             etag: '"foo"',
         }),
-        304 /* NotModified */,
+        HttpStatusCode.NotModified,
     ],
     [
         "when ETag is strong on weak match",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
             preconditions: {
@@ -432,16 +432,16 @@ const checkIfNotModifiedTests = pipe([
             },
         }),
         createHttpResponse({
-            statusCode: 200 /* OK */,
+            statusCode: HttpStatusCode.OK,
             body: none,
             etag: 'W/"foo"',
         }),
-        304 /* NotModified */,
+        HttpStatusCode.NotModified,
     ],
     [
         "when * is given",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
             preconditions: {
@@ -449,16 +449,16 @@ const checkIfNotModifiedTests = pipe([
             },
         }),
         createHttpResponse({
-            statusCode: 200 /* OK */,
+            statusCode: HttpStatusCode.OK,
             body: none,
             etag: '"foo"',
         }),
-        304 /* NotModified */,
+        HttpStatusCode.NotModified,
     ],
     [
         "when modified since the date",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
             preconditions: {
@@ -466,16 +466,16 @@ const checkIfNotModifiedTests = pipe([
             },
         }),
         createHttpResponse({
-            statusCode: 200 /* OK */,
+            statusCode: HttpStatusCode.OK,
             body: none,
             lastModified: 1,
         }),
-        200 /* OK */,
+        HttpStatusCode.OK,
     ],
     [
         "when unmodified since the date",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
             preconditions: {
@@ -483,16 +483,16 @@ const checkIfNotModifiedTests = pipe([
             },
         }),
         createHttpResponse({
-            statusCode: 200 /* OK */,
+            statusCode: HttpStatusCode.OK,
             body: none,
             lastModified: 1,
         }),
-        304 /* NotModified */,
+        HttpStatusCode.NotModified,
     ],
     [
         "when Last-Modified is missing",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
             preconditions: {
@@ -500,15 +500,15 @@ const checkIfNotModifiedTests = pipe([
             },
         }),
         createHttpResponse({
-            statusCode: 200 /* OK */,
+            statusCode: HttpStatusCode.OK,
             body: none,
         }),
-        200 /* OK */,
+        HttpStatusCode.OK,
     ],
     [
         "when requested with If-Modified-Since and If-None-Match and both match",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
             preconditions: {
@@ -517,17 +517,17 @@ const checkIfNotModifiedTests = pipe([
             },
         }),
         createHttpResponse({
-            statusCode: 200 /* OK */,
+            statusCode: HttpStatusCode.OK,
             body: none,
             etag: '"foo"',
             lastModified: 1,
         }),
-        304 /* NotModified */,
+        HttpStatusCode.NotModified,
     ],
     [
         "when requested with If-Modified-Since and If-None-Match when only ETag matches",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
             preconditions: {
@@ -536,17 +536,17 @@ const checkIfNotModifiedTests = pipe([
             },
         }),
         createHttpResponse({
-            statusCode: 200 /* OK */,
+            statusCode: HttpStatusCode.OK,
             body: none,
             etag: '"foo"',
             lastModified: 1,
         }),
-        200 /* OK */,
+        HttpStatusCode.OK,
     ],
     [
         "when requested with If-Modified-Since and If-None-Match when only Last-Modified matches",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
             preconditions: {
@@ -555,17 +555,17 @@ const checkIfNotModifiedTests = pipe([
             },
         }),
         createHttpResponse({
-            statusCode: 200 /* OK */,
+            statusCode: HttpStatusCode.OK,
             body: none,
             etag: '"bar"',
             lastModified: 0,
         }),
-        200 /* OK */,
+        HttpStatusCode.OK,
     ],
     [
         "when none match",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
             preconditions: {
@@ -574,17 +574,17 @@ const checkIfNotModifiedTests = pipe([
             },
         }),
         createHttpResponse({
-            statusCode: 200 /* OK */,
+            statusCode: HttpStatusCode.OK,
             body: none,
             etag: '"bar"',
             lastModified: 1,
         }),
-        200 /* OK */,
+        HttpStatusCode.OK,
     ],
     [
         "when requested with Cache-Control: no-cache",
         createHttpRequest({
-            method: "GET" /* GET */,
+            method: "GET",
             uri: "http://www.example.com",
             body: none,
             cacheControl: ["no-cache"],
@@ -593,11 +593,11 @@ const checkIfNotModifiedTests = pipe([
             },
         }),
         createHttpResponse({
-            statusCode: 200 /* OK */,
+            statusCode: HttpStatusCode.OK,
             body: none,
             etag: '"foo"',
         }),
-        200 /* OK */,
+        HttpStatusCode.OK,
     ],
 ], map$1(([name, req, resp, status]) => test(name, defer(resp, checkIfNotModified(req), x => x.statusCode, expectEquals(status)))), tests => describe("checkIfNotModified", ...tests));
 const tests$4 = describe("http", checkIfNotModifiedTests, createHttpRequestTests, createHttpResponseTests);
@@ -616,13 +616,13 @@ const tests$5 = describe("io", test("decodeWithCharset", () => {
 }), test("empty", () => {
     const scheduler = createVirtualTimeScheduler();
     const emptyStream = pipe(none, empty$2, stream(scheduler));
-    emptyStream.dispatch('pause');
-    emptyStream.dispatch('resume');
+    emptyStream.dispatch("pause");
+    emptyStream.dispatch("resume");
     const f = mockFn();
     const subscription = pipe(emptyStream, subscribe(scheduler, f));
     scheduler.run();
     pipe(f, expectToHaveBeenCalledTimes(1));
-    pipe(f.calls[0][0].type, expectEquals('done'));
+    pipe(f.calls[0][0].type, expectEquals("done"));
     expectTrue(subscription.isDisposed);
     expectTrue(emptyStream.isDisposed);
 }), test("encodeUtf8", () => {
@@ -640,14 +640,14 @@ const tests$5 = describe("io", test("decodeWithCharset", () => {
 }), test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
     const fromValueStream = pipe(1, fromValue$3(), stream(scheduler));
-    fromValueStream.dispatch('resume');
+    fromValueStream.dispatch("resume");
     const f = mockFn();
     const subscription = pipe(fromValueStream, subscribe(scheduler, f));
     scheduler.run();
     pipe(f, expectToHaveBeenCalledTimes(2));
-    pipe(f.calls[0][0].type, expectEquals('notify'));
+    pipe(f.calls[0][0].type, expectEquals("notify"));
     pipe(f.calls[0][0].data, expectEquals(1));
-    pipe(f.calls[1][0].type, expectEquals('done'));
+    pipe(f.calls[1][0].type, expectEquals("done"));
     expectTrue(subscription.isDisposed);
     expectTrue(fromValueStream.isDisposed);
 }), test("map", () => {
@@ -794,7 +794,7 @@ const tests$6 = describe("observable", describe("async", test("multiple awaits",
         const v = __observe(oneTwoThreeDelayed);
         const next = __memo(createOneTwoThree, v);
         return __observe(next);
-    }, { mode: 'combine-latest' }), toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
+    }, { mode: "combine-latest" }), toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
 }), describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
     const scheduler = createVirtualTimeScheduler();
     const disp = mockFn();
@@ -832,7 +832,7 @@ const tests$6 = describe("observable", describe("async", test("multiple awaits",
     }));
     scheduler.run();
     pipe(result, expectArrayEquals([2, 4, 6]));
-}), describe("switchAll", test("with empty source", defer(empty$3(), switchAll(), toRunnable(), toArray(), expectArrayEquals([]))), test("when source throw", defer(defer(raise, throws(), switchAll(), toRunnable(), toArray(), expectArrayEquals([])), expectToThrow))), test("switchMap", defer([1, 2, 3], fromArray$3({ delay: 1 }), switchMap(_ => pipe([1, 2, 3], fromArray$3())), toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), describe("takeLast", test("when pipeline throws", defer(defer(raise, throws(), takeLast$1(), toRunnable(), last), expectToThrow))), describe("throttle", test("first", defer(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$1({ count: 100 }), throttle(50, { mode: 'first' }), toRunnable(), toArray(), expectArrayEquals([0, 49]))), test("last", defer(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$1({ count: 200 }), throttle(50, { mode: 'last' }), toRunnable(), toArray(), expectArrayEquals([49, 99, 149, 199]))), test("interval", defer(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$1({ count: 200 }), throttle(75, { mode: 'interval' }), toRunnable(), toArray(), expectArrayEquals([0, 74, 149, 199]))), test("when duration observable throws", defer(defer([1, 2, 3, 4, 5], fromArray$3({ delay: 1 }), throttle(_ => throws()(raise)), toRunnable(), last), expectToThrow))), describe("throwIfEmpty", test("when source is empty", defer(defer(empty$3(), throwIfEmpty(() => undefined), toRunnable(), last), expectToThrow)), test("when source is not empty", defer(1, returns, compute(), throwIfEmpty(() => undefined), toRunnable(), last, expectEquals(1)))), describe("timeout", test("throws when a timeout occurs", defer(defer(1, fromValue({ delay: 2 }), timeout(1), toArray()), expectToThrow)), test("when timeout is greater than observed time", defer(1, fromValue({ delay: 2 }), timeout(3), toRunnable(), last, expectEquals(1)))), describe("toPromise", testAsync("when observable completes without producing a value", async () => {
+}), describe("switchAll", test("with empty source", defer(empty$3(), switchAll(), toRunnable(), toArray(), expectArrayEquals([]))), test("when source throw", defer(defer(raise, throws(), switchAll(), toRunnable(), toArray(), expectArrayEquals([])), expectToThrow))), test("switchMap", defer([1, 2, 3], fromArray$3({ delay: 1 }), switchMap(_ => pipe([1, 2, 3], fromArray$3())), toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), describe("takeLast", test("when pipeline throws", defer(defer(raise, throws(), takeLast$1(), toRunnable(), last), expectToThrow))), describe("throttle", test("first", defer(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$1({ count: 100 }), throttle(50, { mode: "first" }), toRunnable(), toArray(), expectArrayEquals([0, 49]))), test("last", defer(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$1({ count: 200 }), throttle(50, { mode: "last" }), toRunnable(), toArray(), expectArrayEquals([49, 99, 149, 199]))), test("interval", defer(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$1({ count: 200 }), throttle(75, { mode: "interval" }), toRunnable(), toArray(), expectArrayEquals([0, 74, 149, 199]))), test("when duration observable throws", defer(defer([1, 2, 3, 4, 5], fromArray$3({ delay: 1 }), throttle(_ => throws()(raise)), toRunnable(), last), expectToThrow))), describe("throwIfEmpty", test("when source is empty", defer(defer(empty$3(), throwIfEmpty(() => undefined), toRunnable(), last), expectToThrow)), test("when source is not empty", defer(1, returns, compute(), throwIfEmpty(() => undefined), toRunnable(), last, expectEquals(1)))), describe("timeout", test("throws when a timeout occurs", defer(defer(1, fromValue({ delay: 2 }), timeout(1), toArray()), expectToThrow)), test("when timeout is greater than observed time", defer(1, fromValue({ delay: 2 }), timeout(3), toRunnable(), last, expectEquals(1)))), describe("toPromise", testAsync("when observable completes without producing a value", async () => {
     await pipe(pipe(empty$3(), toPromise(scheduler)), expectPromiseToThrow);
 })), describe("withLatestFrom", test("when source and latest are interlaced", defer([0, 1, 2, 3], fromArray$3({ delay: 1 }), withLatestFrom(pipe([0, 1, 2, 3], fromArray$3({ delay: 2 })), (a, b) => [
     a,

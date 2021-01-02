@@ -363,7 +363,7 @@ class ObservableContext {
           effect.value = next;
           effect.hasValue = true;
 
-          if (this.mode === 'combine-latest') {
+          if (this.mode === "combine-latest") {
             this.runComputation();
           } else {
             const { scheduledComputationSubscription } = this;
@@ -407,11 +407,11 @@ class ObservableContext {
   }
 }
 
-export type ObservableEffectMode = 'batched' | 'combine-latest';
+export type ObservableEffectMode = "batched" | "combine-latest";
 
 export const observable = <T>(
   computation: Factory<T>,
-  { mode = 'batched'}: { mode?: ObservableEffectMode } = {},
+  { mode = "batched" }: { mode?: ObservableEffectMode } = {},
 ): ObservableLike<T> =>
   defer((observer: ObserverLike<T>) => {
     const runComputation = () => {
@@ -457,16 +457,14 @@ export const observable = <T>(
       }
 
       const combineLatestModeShouldNotify =
-        mode === 'combine-latest' &&
+        mode === "combine-latest" &&
         allObserveEffectsHaveValues &&
         hasOutstandingEffects;
 
       const hasError = isSome(error);
 
       const shouldNotify =
-        !hasError &&
-        (combineLatestModeShouldNotify ||
-          mode === 'batched');
+        !hasError && (combineLatestModeShouldNotify || mode === "batched");
 
       const shouldDispose = !hasOutstandingEffects || hasError;
 

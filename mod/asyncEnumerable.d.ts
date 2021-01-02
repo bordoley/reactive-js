@@ -3,10 +3,10 @@ import { ObservableLike } from "./observable.mjs";
 import { EnumerableLike } from "./enumerable.mjs";
 import { StreamableLike } from "./streamable.mjs";
 declare type ConsumeRequest<TAcc> = {
-    readonly type: 'notify';
+    readonly type: "notify";
     readonly acc: TAcc;
 } | {
-    readonly type: 'done';
+    readonly type: "done";
     readonly acc: TAcc;
 };
 declare type Consumer<T, TAcc> = Function2<TAcc, T, ConsumeRequest<TAcc>>;
