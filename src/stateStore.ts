@@ -9,7 +9,7 @@ import {
   pipe,
   updaterReducer,
 } from "./functions";
-import { dispatchTo, subscribe, using, zipWithLatestFrom } from "./observable";
+import { subscribe, using, zipWithLatestFrom } from "./observable";
 
 import {
   StreamableLike,
@@ -58,7 +58,7 @@ export const toStateStore = <T>(): StreamableOperator<
       const updatesSubscription = pipe(
         updates,
         zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),
-        subscribe(scheduler, dispatchTo(stream)),
+        subscribe(scheduler, stream.dispatch, stream),
       );
 
       bindDisposables(updatesSubscription, stream);

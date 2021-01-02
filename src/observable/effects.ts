@@ -64,8 +64,6 @@ type UsingEffect = {
   value: DisposableLike;
 };
 
-
-
 let currentCtx: Option<ObservableContext> = none;
 
 type ObservableEffect = ObserveEffect | MemoEffect | UsingEffect;
@@ -396,10 +394,10 @@ export function __do<TA, TB, TC, TD, TE, TF>(
 export function __do(f: (...args: any[]) => void, ...args: any[]): void {
   const ctx = assertCurrentContext();
 
-    const scheduler = __currentScheduler();
-    const observable = ctx.memo(deferSideEffect, f, ...args);
-    const subscribeOnScheduler = ctx.memo(subscribe, scheduler);
-    ctx.using(subscribeOnScheduler, observable);
+  const scheduler = __currentScheduler();
+  const observable = ctx.memo(deferSideEffect, f, ...args);
+  const subscribeOnScheduler = ctx.memo(subscribe, scheduler);
+  ctx.using(subscribeOnScheduler, observable);
 }
 
 export function __using<T extends DisposableLike>(fn: Factory<T>): T;

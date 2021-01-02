@@ -24,6 +24,17 @@ const notifyDelegate = <TA, TB, TC>(
     observer.delegate.notify(result);
   }
 };
+
+function onNotify<TA, TB, T>(this: ZipWithLatestFromObserver<TA, TB, T>, otherLatest: TB) {
+  this.hasLatest = true;
+  this.otherLatest = otherLatest;
+  notifyDelegate(this);
+
+  if (this.isDisposed && this.queue.length === 0) {
+    pipe(this.delegate, dispose());
+  }
+}
+
 class ZipWithLatestFromObserver<TA, TB, T> extends AbstractObserver<
   TA,
   ObserverLike<T>
@@ -43,15 +54,7 @@ class ZipWithLatestFromObserver<TA, TB, T> extends AbstractObserver<
 
     const otherSubscription = pipe(
       other,
-      subscribe(delegate, (otherLatest: TB) => {
-        this.hasLatest = true;
-        this.otherLatest = otherLatest;
-        notifyDelegate(this);
-
-        if (this.isDisposed && this.queue.length === 0) {
-          pipe(this.delegate, dispose());
-        }
-      }),
+      subscribe(delegate, onNotify, this),
     );
 
     const disposeDelegate = () => {

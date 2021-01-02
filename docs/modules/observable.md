@@ -2069,7 +2069,7 @@ ___
 
 ### subscribe
 
-▸ `Const`**subscribe**<T\>(`scheduler`: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md), `onNotify?`: [*SideEffect1*](functions.md#sideeffect1)<T\>): [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*DisposableLike*](../interfaces/disposable.disposablelike.md)\>
+▸ **subscribe**<T\>(`scheduler`: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)): [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*DisposableLike*](../interfaces/disposable.disposablelike.md)\>
 
 Safely subscribes to an `ObservableLike` with a `ObserverLike` instance
 using the provided scheduler. The returned `DisposableLike`
@@ -2086,7 +2086,42 @@ Name |
 Name | Type | Description |
 ------ | ------ | ------ |
 `scheduler` | [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md) | The SchedulerLike instance that should be used by the source to notify it's observer.    |
-`onNotify?` | [*SideEffect1*](functions.md#sideeffect1)<T\> | - |
+
+**Returns:** [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*DisposableLike*](../interfaces/disposable.disposablelike.md)\>
+
+▸ **subscribe**<T\>(`scheduler`: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md), `onNotify`: [*SideEffect1*](functions.md#sideeffect1)<T\>): [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*DisposableLike*](../interfaces/disposable.disposablelike.md)\>
+
+#### Type parameters:
+
+Name |
+------ |
+`T` |
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`scheduler` | [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md) |
+`onNotify` | [*SideEffect1*](functions.md#sideeffect1)<T\> |
+
+**Returns:** [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*DisposableLike*](../interfaces/disposable.disposablelike.md)\>
+
+▸ **subscribe**<This, T\>(`scheduler`: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md), `onNotify`: (`value`: T) => *void*, `onNotifyThis`: This): [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*DisposableLike*](../interfaces/disposable.disposablelike.md)\>
+
+#### Type parameters:
+
+Name |
+------ |
+`This` |
+`T` |
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`scheduler` | [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md) |
+`onNotify` | (`value`: T) => *void* |
+`onNotifyThis` | This |
 
 **Returns:** [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*DisposableLike*](../interfaces/disposable.disposablelike.md)\>
 

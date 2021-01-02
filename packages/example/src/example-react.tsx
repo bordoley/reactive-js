@@ -140,8 +140,10 @@ const fetchFile = (uri: string) =>
 
 const FetchExample = createComponent(() =>
   observable(() => {
-    const obs = __memo(fetchFile,
-      "http://localhost:8080/files/packages/example/build/example-react.js");
+    const obs = __memo(
+      fetchFile,
+      "http://localhost:8080/files/packages/example/build/example-react.js",
+    );
     const someData = __observe(obs);
 
     return (
@@ -173,8 +175,8 @@ const Root = createComponent(() =>
     return isSome(dispatch) ? (
       <Component params={params} dispatch={dispatch} uri={uri} />
     ) : (
-        none
-      );
+      none
+    );
   }),
 );
 

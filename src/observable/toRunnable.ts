@@ -19,7 +19,7 @@ export const toRunnable = <T>(
 
     const subscription = pipe(
       source,
-      subscribe(scheduler, e => sink.notify(e)),
+      subscribe(scheduler, sink.notify, sink),
     );
 
     scheduler.run();

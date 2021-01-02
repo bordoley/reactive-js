@@ -173,11 +173,7 @@ const processRequest = (req: HttpRequest<IOSourceLike<Uint8Array>>) => {
     encodeHttpResponseContent(createContentEncodingCompressTransforms(), db),
   );
 
-  return pipe(
-    req,
-    routeRequest,
-    map(encodeResponse),
-  )
+  return pipe(req, routeRequest, map(encodeResponse));
 };
 
 const errorHandler = compose(

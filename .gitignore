@@ -19,6 +19,7 @@ packages/core/*.js
 packages/core/*.mjs
 packages/core/README.md
 packages/example/build
+packages/perf/build/
 
 mod/*.js
 mod/http-node.*

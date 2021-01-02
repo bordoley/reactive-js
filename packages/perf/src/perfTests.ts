@@ -48,7 +48,6 @@ export const map = (n: number) =>
       "observable__observe",
       async src => {
         const {
-          ObservableEffectMode,
           fromArray,
           toRunnable,
           __observe,
@@ -63,7 +62,7 @@ export const map = (n: number) =>
               const v = __observe(arrObs) ?? 0;
               return increment(v);
             },
-            { mode: ObservableEffectMode.CombineLatest },
+            { mode: 'combine-latest' },
           ),
           toRunnable(),
           toArray(),
@@ -302,7 +301,6 @@ export const scanReduce = (n: number) =>
       "observable__observe",
       async src => {
         const {
-          ObservableEffectMode,
           fromArray,
           toRunnable,
           __memo,
@@ -328,7 +326,7 @@ export const scanReduce = (n: number) =>
               ref.current = result;
               return result;
             },
-            { mode: ObservableEffectMode.CombineLatest },
+            { mode: 'combine-latest' },
           ),
           toRunnable(),
           reduce<number, number>(passthrough, returns(0)),
