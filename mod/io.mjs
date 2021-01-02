@@ -1,6 +1,6 @@
 /// <reference types="./io.d.ts" />
 import { pipe, composeWith, returns, compose } from './functions.mjs';
-import { withLatestFrom, compute, map as map$1, concatMap, fromIterator, endWith, fromArray as fromArray$1, createSubject, using, takeWhile, keepType, reduce, subscribe, dispatchTo, createObservable } from './observable.mjs';
+import { withLatestFrom, compute, map as map$1, concatMap, fromIterator, endWith, fromArray as fromArray$1, createSubject, using, takeWhile, keepType, reduce, subscribe, createObservable } from './observable.mjs';
 import { AbstractDisposable, addDisposableDisposeParentOnChildError, addDisposable } from './disposable.mjs';
 import { lift, withLatestFrom as withLatestFrom$1, map as map$2, createStreamable, stream } from './streamable.mjs';
 import { fromObservable as fromObservable$1 } from './flowable.mjs';
@@ -56,7 +56,7 @@ class IOSinkAccumulatorImpl extends AbstractDisposable {
         this.isSynchronous = false;
         const subject = createSubject(options);
         addDisposableDisposeParentOnChildError(this, subject);
-        const op = (events) => using(scheduler => pipe(events, takeWhile(isNotify), keepType(isNotify), map$1(ev => ev.data), reduce(reducer, initialValue), subscribe(scheduler, dispatchTo(subject))), eventsSubscription => createObservable(dispatcher => {
+        const op = (events) => using(scheduler => pipe(events, takeWhile(isNotify), keepType(isNotify), map$1(ev => ev.data), reduce(reducer, initialValue), subscribe(scheduler, subject.dispatch, subject)), eventsSubscription => createObservable(dispatcher => {
             dispatcher.dispatch("pause");
             dispatcher.dispatch("resume");
             addDisposable(eventsSubscription, dispatcher);

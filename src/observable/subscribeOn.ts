@@ -1,6 +1,6 @@
 import { bindDisposables } from "../disposable";
 import { pipe } from "../functions";
-import { ObservableOperator, dispatchTo } from "../observable";
+import { ObservableOperator } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
 import { createObservable } from "./createObservable";
@@ -17,7 +17,7 @@ export const subscribeOn = <T>(
   createObservable(dispatcher => {
     const subscription = pipe(
       observable,
-      subscribe(scheduler, dispatchTo(dispatcher)),
+      subscribe(scheduler, dispatcher.dispatch, dispatcher),
     );
 
     bindDisposables(subscription, dispatcher);

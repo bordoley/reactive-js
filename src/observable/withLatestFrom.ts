@@ -17,18 +17,18 @@ import {
 } from "./observer";
 import { subscribe } from "./subscribe";
 
+function onNotify<TA, TB, T>(this: WithLatestFromObserver<TA, TB, T>, next: TB) {
+  this.hasLatest = true;
+  this.otherLatest = next;
+};
+
 class WithLatestFromObserver<
   TA,
   TB,
   T
 > extends AbstractAutoDisposingDelegatingObserver<TA, T> {
-  private otherLatest: Option<TB>;
-  private hasLatest = false;
-
-  private readonly onNotify = (next: TB) => {
-    this.hasLatest = true;
-    this.otherLatest = next;
-  };
+  otherLatest: Option<TB>;
+  hasLatest = false;
 
   constructor(
     delegate: ObserverLike<T>,
@@ -38,7 +38,7 @@ class WithLatestFromObserver<
     super(delegate);
     this.selector = selector;
 
-    const otherSubscription = pipe(other, subscribe(this, this.onNotify));
+    const otherSubscription = pipe(other, subscribe(this, onNotify, this));
 
     addOnDisposedWithoutErrorTeardown(otherSubscription, () => {
       if (!this.hasLatest) {

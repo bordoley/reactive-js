@@ -149,27 +149,23 @@ const createAutoDisposingDelegatingObserver = (delegate) => {
 const observe = (observer) => observable => observable.observe(observer);
 
 class DefaultObserver extends AbstractObserver {
-    constructor(scheduler, onNotify) {
+    constructor(scheduler, onNotify, onNotifyThis) {
         super(scheduler);
         this.onNotify = onNotify;
+        this.onNotifyThis = onNotifyThis;
     }
     notify(next) {
         assertObserverState(this);
-        this.onNotify(next);
+        this.onNotify.call(this.onNotifyThis, next);
     }
 }
-/**
- * Safely subscribes to an `ObservableLike` with a `ObserverLike` instance
- * using the provided scheduler. The returned `DisposableLike`
- * may used to cancel the subscription.
- *
- * @param scheduler The SchedulerLike instance that should be used by the source to notify it's observer.
- */
-const subscribe = (scheduler, onNotify = ignore) => (observable) => {
-    const observer = new DefaultObserver(scheduler, onNotify);
-    pipe(observable, observe(observer));
-    return observer;
-};
+function subscribe(scheduler, onNotify = ignore, onNotifyThis = none) {
+    return (observable) => {
+        const observer = new DefaultObserver(scheduler, onNotify, onNotifyThis);
+        pipe(observable, observe(observer));
+        return observer;
+    };
+}
 
 const arrayStrictEquality = arrayEquality();
 let currentCtx = none;
@@ -842,6 +838,13 @@ function onDispose$2(error) {
         pipe(buffer, fromValue(), observe(this.delegate));
     }
 }
+function onNotify() {
+    this.durationSubscription.inner = disposed;
+    const buffer = this.buffer;
+    this.buffer = [];
+    this.delegate.notify(buffer);
+}
+;
 class BufferObserver extends AbstractDelegatingObserver {
     constructor(delegate, durationFunction, maxBufferSize) {
         super(delegate);
@@ -849,12 +852,6 @@ class BufferObserver extends AbstractDelegatingObserver {
         this.maxBufferSize = maxBufferSize;
         this.durationSubscription = createSerialDisposable();
         this.buffer = [];
-        this.onNotify = () => {
-            this.durationSubscription.inner = disposed;
-            const buffer = this.buffer;
-            this.buffer = [];
-            this.delegate.notify(buffer);
-        };
         addDisposableDisposeParentOnChildError(this, this.durationSubscription);
         addTeardown(this, onDispose$2);
     }
@@ -863,10 +860,10 @@ class BufferObserver extends AbstractDelegatingObserver {
         const buffer = this.buffer;
         buffer.push(next);
         if (buffer.length === this.maxBufferSize) {
-            this.onNotify();
+            onNotify.call(this);
         }
         else if (this.durationSubscription.inner.isDisposed) {
-            this.durationSubscription.inner = pipe(this.durationFunction(next), subscribe(this.delegate, this.onNotify));
+            this.durationSubscription.inner = pipe(next, this.durationFunction, subscribe(this.delegate, onNotify, this));
         }
     }
 }
@@ -1091,19 +1088,19 @@ function onDispose$4(error) {
         pipe(this.delegate, dispose(error));
     }
 }
+function onNotify$1(next) {
+    this.delegate.notify(next);
+}
 class SwitchObserver extends AbstractDelegatingObserver {
     constructor(delegate) {
         super(delegate);
         this.inner = disposed;
-        this.onNotify = (next) => {
-            this.delegate.notify(next);
-        };
         addTeardown(this, onDispose$4);
     }
     notify(next) {
         assertObserverState(this);
         pipe(this.inner, dispose());
-        const inner = pipe(next, subscribe(this.delegate, this.onNotify));
+        const inner = pipe(next, subscribe(this.delegate, onNotify$1, this));
         addDisposableDisposeParentOnChildError(this.delegate, inner);
         addOnDisposedWithoutErrorTeardown(inner, () => {
             if (this.isDisposed) {
@@ -1141,7 +1138,7 @@ class OnNotifyObserver extends AbstractAutoDisposingDelegatingObserver {
  *
  * @param onNotify The function that is invoked when the observable source produces values.
  */
-function onNotify(onNotify) {
+function onNotify$2(onNotify) {
     const operator = (observer) => new OnNotifyObserver(observer, onNotify);
     operator.isSynchronous = true;
     return lift(operator);
@@ -1202,7 +1199,7 @@ const pairwise = () => {
  */
 const publish = (scheduler, options) => observable => {
     const subject = createSubject(options);
-    const srcSubscription = pipe(observable, subscribe(scheduler, dispatchTo(subject)));
+    const srcSubscription = pipe(observable, subscribe(scheduler, subject.dispatch, subject));
     bindDisposables(srcSubscription, subject);
     return subject;
 };
@@ -1250,7 +1247,7 @@ const createRepeatObserver = (delegate, observable, shouldRepeat) => {
         }
         else {
             count++;
-            const subscription = pipe(observable, subscribe(delegate, (next) => delegate.notify(next)));
+            const subscription = pipe(observable, subscribe(delegate, delegate.notify, delegate));
             addTeardown(subscription, onDispose);
             addDisposable(delegate, subscription);
         }
@@ -1341,6 +1338,14 @@ const notifyDelegate = (observer) => {
         observer.delegate.notify(result);
     }
 };
+function onNotify$3(otherLatest) {
+    this.hasLatest = true;
+    this.otherLatest = otherLatest;
+    notifyDelegate(this);
+    if (this.isDisposed && this.queue.length === 0) {
+        pipe(this.delegate, dispose());
+    }
+}
 class ZipWithLatestFromObserver extends AbstractObserver {
     constructor(delegate, other, selector) {
         super(delegate);
@@ -1348,14 +1353,7 @@ class ZipWithLatestFromObserver extends AbstractObserver {
         this.hasLatest = false;
         this.queue = [];
         this.selector = selector;
-        const otherSubscription = pipe(other, subscribe(delegate, (otherLatest) => {
-            this.hasLatest = true;
-            this.otherLatest = otherLatest;
-            notifyDelegate(this);
-            if (this.isDisposed && this.queue.length === 0) {
-                pipe(this.delegate, dispose());
-            }
-        }));
+        const otherSubscription = pipe(other, subscribe(delegate, onNotify$3, this));
         const disposeDelegate = () => {
             if (this.isDisposed && otherSubscription.isDisposed) {
                 pipe(delegate, dispose());
@@ -1392,7 +1390,7 @@ const zipWithLatestFrom = (other, selector) => {
  * @param scanner The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.
  */
-const scanAsync = (scanner, initialValue) => observable => using(_ => createSubject(), accFeedbackStream => pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), switchAll(), onNotify(dispatchTo(accFeedbackStream)), onSubscribe(() => {
+const scanAsync = (scanner, initialValue) => observable => using(_ => createSubject(), accFeedbackStream => pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), switchAll(), onNotify$2(dispatchTo(accFeedbackStream)), onSubscribe(() => {
     accFeedbackStream.dispatch(initialValue());
 })));
 
@@ -1467,7 +1465,7 @@ function startWith(...values) {
  * @param scheduler `SchedulerLike` instance to use when subscribing to the source.
  */
 const subscribeOn = (scheduler) => observable => createObservable(dispatcher => {
-    const subscription = pipe(observable, subscribe(scheduler, dispatchTo(dispatcher)));
+    const subscription = pipe(observable, subscribe(scheduler, dispatcher.dispatch, dispatcher));
     bindDisposables(subscription, dispatcher);
 });
 
@@ -1672,17 +1670,18 @@ function timeout(duration) {
     return lift(operator);
 }
 
+function onNotify$4(next) {
+    this.hasLatest = true;
+    this.otherLatest = next;
+}
+;
 class WithLatestFromObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, other, selector) {
         super(delegate);
         this.selector = selector;
         this.hasLatest = false;
-        this.onNotify = (next) => {
-            this.hasLatest = true;
-            this.otherLatest = next;
-        };
         this.selector = selector;
-        const otherSubscription = pipe(other, subscribe(this, this.onNotify));
+        const otherSubscription = pipe(other, subscribe(this, onNotify$4, this));
         addOnDisposedWithoutErrorTeardown(otherSubscription, () => {
             if (!this.hasLatest) {
                 pipe(this, dispose());
@@ -1887,7 +1886,7 @@ const zipLatestWith = (snd) => fst => zipLatest(fst, snd);
 const toRunnable = (options = {}) => source => createRunnable(sink => {
     const { schedulerFactory = createVirtualTimeScheduler } = options;
     const scheduler = schedulerFactory();
-    const subscription = pipe(source, subscribe(scheduler, e => sink.notify(e)));
+    const subscription = pipe(source, subscribe(scheduler, sink.notify, sink));
     scheduler.run();
     const { error } = subscription;
     if (isSome(error)) {
@@ -1924,4 +1923,4 @@ const toPromise = (scheduler) => observable => new Promise((resolve, reject) => 
     });
 });
 
-export { __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, dispatchTo, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observable, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };
+export { __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, dispatchTo, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observable, observe, onNotify$2 as onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };

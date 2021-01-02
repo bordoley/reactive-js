@@ -21,7 +21,6 @@ import {
   assertObserverState,
   observe,
 } from "./observer";
-
 import { subscribe } from "./subscribe";
 
 function onDispose(this: BufferObserver<void>, error: Option<Error>) {
@@ -35,17 +34,18 @@ function onDispose(this: BufferObserver<void>, error: Option<Error>) {
   }
 }
 
+function onNotify(this: BufferObserver<any>) {
+  this.durationSubscription.inner = disposed;
+
+  const buffer = this.buffer;
+  this.buffer = [];
+
+  this.delegate.notify(buffer);
+};
+
 class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
-  private readonly durationSubscription = createSerialDisposable();
+  readonly durationSubscription = createSerialDisposable();
   buffer: T[] = [];
-  private readonly onNotify = () => {
-    this.durationSubscription.inner = disposed;
-
-    const buffer = this.buffer;
-    this.buffer = [];
-
-    this.delegate.notify(buffer);
-  };
 
   constructor(
     delegate: ObserverLike<readonly T[]>,
@@ -66,11 +66,12 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
     buffer.push(next);
 
     if (buffer.length === this.maxBufferSize) {
-      this.onNotify();
+      onNotify.call(this);
     } else if (this.durationSubscription.inner.isDisposed) {
       this.durationSubscription.inner = pipe(
-        this.durationFunction(next),
-        subscribe(this.delegate, this.onNotify),
+        next,
+        this.durationFunction,
+        subscribe(this.delegate, onNotify, this),
       );
     }
   }

@@ -7,7 +7,6 @@ import {
   __memo,
   __observe,
   __using,
-  dispatchTo,
   empty as emptyObs,
   map,
   subscribe,
@@ -59,7 +58,7 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
       const requestSubscription = pipe(
         requests,
         map((compose as any)(...reqOps)),
-        subscribe(scheduler, dispatchTo(srcStream)),
+        subscribe(scheduler, srcStream.dispatch, srcStream),
       );
 
       bindDisposables(srcStream, requestSubscription);

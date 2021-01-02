@@ -3,7 +3,6 @@ import { Function1, compose, pipe } from "../functions";
 import {
   ObservableLike,
   StreamLike,
-  dispatchTo,
   endWith,
   ignoreElements,
   subscribe,
@@ -29,12 +28,12 @@ export const sink = <TReq, T>(
 
     const srcSubscription = pipe(
       srcStream,
-      subscribe(scheduler, dispatchTo(destStream)),
+      subscribe(scheduler, destStream.dispatch, destStream),
     );
 
     const destSubscription = pipe(
       destStream,
-      subscribe(scheduler, dispatchTo(srcStream)),
+      subscribe(scheduler, srcStream.dispatch, srcStream),
     );
 
     addDisposable(srcSubscription, destStream);

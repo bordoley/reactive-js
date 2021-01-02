@@ -3,7 +3,6 @@ import { Function1, pipe } from "../functions";
 import {
   MulticastObservableLike,
   ObservableLike,
-  dispatchTo,
 } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
@@ -24,7 +23,7 @@ export const publish = <T>(
   const subject = createSubject<T>(options);
   const srcSubscription = pipe(
     observable,
-    subscribe(scheduler, dispatchTo(subject)),
+    subscribe(scheduler, subject.dispatch, subject),
   );
 
   bindDisposables(srcSubscription, subject);

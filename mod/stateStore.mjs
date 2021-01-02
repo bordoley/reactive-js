@@ -1,6 +1,6 @@
 /// <reference types="./stateStore.d.ts" />
 import { updaterReducer, pipe, identity, compose } from './functions.mjs';
-import { using, zipWithLatestFrom, subscribe, dispatchTo } from './observable.mjs';
+import { using, zipWithLatestFrom, subscribe } from './observable.mjs';
 import { bindDisposables } from './disposable.mjs';
 import { createActionReducer, createStreamable, stream, mapReq, map as map$1 } from './streamable.mjs';
 
@@ -23,7 +23,7 @@ const createStateStore = (initialState, options) => createActionReducer(updaterR
  */
 const toStateStore = () => streamable => createStreamable(updates => using(scheduler => {
     const stream$1 = pipe(streamable, stream(scheduler));
-    const updatesSubscription = pipe(updates, zipWithLatestFrom(stream$1, (updateState, prev) => updateState(prev)), subscribe(scheduler, dispatchTo(stream$1)));
+    const updatesSubscription = pipe(updates, zipWithLatestFrom(stream$1, (updateState, prev) => updateState(prev)), subscribe(scheduler, stream$1.dispatch, stream$1));
     bindDisposables(updatesSubscription, stream$1);
     return stream$1;
 }, identity));

@@ -26,7 +26,6 @@ import {
   concatMap,
   createObservable,
   createSubject,
-  dispatchTo,
   endWith,
   fromArray as fromArrayObs,
   fromIterator,
@@ -191,7 +190,7 @@ class IOSinkAccumulatorImpl<T, TAcc>
             keepType(isNotify),
             mapObs(ev => ev.data),
             reduce(reducer, initialValue),
-            subscribe(scheduler, dispatchTo(subject)),
+            subscribe(scheduler, subject.dispatch, subject),
           ),
 
         eventsSubscription =>

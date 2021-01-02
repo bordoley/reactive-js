@@ -24,15 +24,15 @@ function onDispose(this: SwitchObserver<unknown>, error: Option<Error>) {
   }
 }
 
+function onNotify<T>(this: SwitchObserver<T>, next: T) {
+  this.delegate.notify(next);
+}
+
 class SwitchObserver<T> extends AbstractDelegatingObserver<
   ObservableLike<T>,
   T
 > {
   inner = disposed;
-
-  private readonly onNotify = (next: T) => {
-    this.delegate.notify(next);
-  };
 
   constructor(delegate: ObserverLike<T>) {
     super(delegate);
@@ -44,7 +44,7 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
 
     pipe(this.inner, dispose());
 
-    const inner = pipe(next, subscribe(this.delegate, this.onNotify));
+    const inner = pipe(next, subscribe(this.delegate, onNotify, this));
     addDisposableDisposeParentOnChildError(this.delegate, inner);
     addOnDisposedWithoutErrorTeardown(inner, () => {
       if (this.isDisposed) {
