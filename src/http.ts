@@ -1,4 +1,8 @@
 import { ReadonlyObjectMap } from "./readonlyObjectMap";
+import { HttpStandardHeaders, HttpExtensionHeaders}  from "./http/httpHeaders";
+export { HttpStandardHeaders, HttpExtensionHeaders}  from "./http/httpHeaders";
+import {HttpStatusCodes} from "./http/httpResponse";
+export {HttpStatusCodes} from "./http/httpResponse";
 
 export type CacheDirective = {
   readonly directive: string;
@@ -34,65 +38,13 @@ export type HttpDateTime = number;
 // FIXME: filter out headers for which we have strongly typed apis.
 export type HttpHeaders = ReadonlyObjectMap<string>;
 
-export enum HttpStandardHeader {
-  Accept = "Accept",
-  AcceptCharset = "Accept-Charset",
-  AcceptEncoding = "Accept-Encoding",
-  AcceptLanguage = "Accept-Language",
-  AcceptRanges = "Accept-Ranges",
-  Age = "Age",
-  Allow = "Allow",
-  Authorization = "Authorization",
-  CacheControl = "Cache-Control",
-  Connection = "Connection",
-  ContentEncoding = "Content-Encoding",
-  ContentLanguage = "Content-Language",
-  ContentLength = "Content-Length",
-  ContentLocation = "Content-Location",
-  ContentMD5 = "Content-MD5",
-  ContentRange = "Content-Range",
-  ContentType = "Content-Type",
-  Cookie = "Cookie",
-  Date = "Date",
-  ETag = "ETag",
-  Expect = "Expect",
-  Expires = "Expires",
-  From = "From",
-  Host = "Host",
-  IfMatch = "If-Match",
-  IfModifiedSince = "If-Modified-Since",
-  IfNoneMatch = "If-None-Match",
-  IfRange = "If-Range",
-  IfUnmodifiedSince = "If-Unmodified-Since",
-  LastModified = "Last-Modified",
-  Location = "Location",
-  MaxForwards = "Max-Forwards",
-  Pragma = "Pragma",
-  ProxyAuthenticate = "Proxy-Authenticate",
-  ProxyAuthorization = "Proxy-Authorization",
-  Range = "Range",
-  Referer = "Referer",
-  RetryAfter = "Retry-After",
-  Server = "Server",
-  SetCookie = "Set-Cookie",
-  TE = "TE",
-  Trailer = "Trailer",
-  TransferEncoding = "Transfer-Encoding",
-  Upgrade = "Upgrade",
-  UserAgent = "User-Agent",
-  Vary = "Vary",
-  Via = "Via",
-  Warning = "Warning",
-  WWWAuthenticate = "WWW-Authenticate",
-}
+type HttpStandardHeadersKeys = keyof typeof HttpStandardHeaders;
+export type HttpStandardHeader = typeof HttpStandardHeaders[HttpStandardHeadersKeys];
 
-export enum HttpExtensionHeader {
-  XForwardedProto = "X-Forwarded-Proto",
-  XForwardedHost = "X-Forwarded-Host",
-  XHttpMethod = "X-HTTP-Method",
-  XHttpMethodOverride = "X-HTTP-Method-Override",
-  XMethodOverride = "X-Method-Override",
-}
+
+type HttpExtensionHeadersKeys = keyof typeof HttpExtensionHeaders;
+export type HttpExtensionHeader = typeof HttpExtensionHeaders[HttpExtensionHeadersKeys];
+
 
 // A Proxy readonly interface for the what-wg URL api.
 export interface URILike {
@@ -195,65 +147,9 @@ export type HttpRequestOptions<T> = HttpMessageOptions<T> & {
   readonly uri: string | URILike;
 };
 
-export enum HttpStatusCode {
-  Continue = 100,
-  SwitchingProtocols = 101,
-  Processing = 102,
-  OK = 200,
-  Created = 201,
-  Accepted = 202,
-  NonAuthoritativeInformation = 203,
-  NoContent = 204,
-  ResetContent = 205,
-  PartialContent = 206,
-  MultiStatus = 207,
-  AlreadyReported = 208,
-  IMUsed = 226,
-  MultipleChoices = 300,
-  MovedPermanently = 301,
-  Found = 302,
-  SeeOther = 303,
-  NotModified = 304,
-  UseProxy = 305,
-  TemporaryRedirect = 307,
-  PermanentRedirect = 308,
-  BadRequest = 400,
-  Unauthorized = 401,
-  Forbidden = 403,
-  NotFound = 404,
-  MethodNotAllowed = 405,
-  NotAcceptable = 406,
-  ProxyAuthenticationRequired = 407,
-  RequestTimeout = 408,
-  Conflict = 409,
-  Gone = 410,
-  LengthRequired = 411,
-  PreconditionFailed = 412,
-  RequestEntityTooLarge = 413,
-  RequestURITooLong = 414,
-  UnsupportedMediaType = 415,
-  RequestedRangeNotSatisfiable = 416,
-  ExpectationFailed = 417,
-  UnprocessableEntity = 422,
-  Locked = 423,
-  FailedDependency = 424,
-  UpgradeRequired = 426,
-  PreconditionRequired = 428,
-  TooManyRequests = 429,
-  RequestHeaderFieldsTooLarge = 431,
-  UnavailableForLegalReasons = 451,
-  InternalServerError = 500,
-  NotImplemented = 501,
-  BadGateway = 502,
-  ServiceUnavailable = 503,
-  GatewayTimeout = 504,
-  HTTPVersionNotSupported = 505,
-  VariantAlsoNegotiates = 506,
-  InsufficientStorage = 507,
-  LoopDetected = 508,
-  NotExtended = 510,
-  NetworkAuthenticationRequired = 511,
-}
+type HttpStatusCodesKeys = keyof typeof HttpStatusCodes;
+export type HttpStatusCode = typeof HttpStatusCodes[HttpStatusCodesKeys];
+
 
 export type HttpResponse<T> = HttpMessage<T> & {
   // age:Option<TimeSpan>

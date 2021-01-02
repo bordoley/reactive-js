@@ -1,12 +1,123 @@
-import { Function1, SideEffect2, Updater } from "./functions.mjs";
+import { SideEffect2, Function1, Updater } from "./functions.mjs";
 import { ReadonlyObjectMap } from "./readonlyObjectMap.mjs";
 import { IOSourceLike, IOSourceOperator } from "./io.mjs";
-declare const createHttpRequest: <T>(options: HttpRequestOptions<T>) => HttpRequest<T>;
-declare const disallowProtocolAndHostForwarding: <T>() => Function1<HttpRequest<T>, HttpRequest<T>>;
-declare const writeHttpRequestHeaders: <T>(request: HttpRequest<T>, writeHeader: SideEffect2<string, string>) => void;
-declare const encodeHttpRequestWithUtf8: Function1<HttpRequest<string>, HttpRequest<Uint8Array>>;
-declare const decodeHttpRequestWithCharset: Function1<HttpRequest<Uint8Array>, HttpRequest<string>>;
-declare const toIOSourceHttpRequest: <TBody>(req: HttpRequest<TBody>) => HttpRequest<IOSourceLike<TBody>>;
+declare const HttpStandardHeaders: {
+    readonly Accept: "Accept";
+    readonly AcceptCharset: "Accept-Charset";
+    readonly AcceptEncoding: "Accept-Encoding";
+    readonly AcceptLanguage: "Accept-Language";
+    readonly AcceptRanges: "Accept-Ranges";
+    readonly Age: "Age";
+    readonly Allow: "Allow";
+    readonly Authorization: "Authorization";
+    readonly CacheControl: "Cache-Control";
+    readonly Connection: "Connection";
+    readonly ContentEncoding: "Content-Encoding";
+    readonly ContentLanguage: "Content-Language";
+    readonly ContentLength: "Content-Length";
+    readonly ContentLocation: "Content-Location";
+    readonly ContentMD5: "Content-MD5";
+    readonly ContentRange: "Content-Range";
+    readonly ContentType: "Content-Type";
+    readonly Cookie: "Cookie";
+    readonly Date: "Date";
+    readonly ETag: "ETag";
+    readonly Expect: "Expect";
+    readonly Expires: "Expires";
+    readonly From: "From";
+    readonly Host: "Host";
+    readonly IfMatch: "If-Match";
+    readonly IfModifiedSince: "If-Modified-Since";
+    readonly IfNoneMatch: "If-None-Match";
+    readonly IfRange: "If-Range";
+    readonly IfUnmodifiedSince: "If-Unmodified-Since";
+    readonly LastModified: "Last-Modified";
+    readonly Location: "Location";
+    readonly MaxForwards: "Max-Forwards";
+    readonly Pragma: "Pragma";
+    readonly ProxyAuthenticate: "Proxy-Authenticate";
+    readonly ProxyAuthorization: "Proxy-Authorization";
+    readonly Range: "Range";
+    readonly Referer: "Referer";
+    readonly RetryAfter: "Retry-After";
+    readonly Server: "Server";
+    readonly SetCookie: "Set-Cookie";
+    readonly TE: "TE";
+    readonly Trailer: "Trailer";
+    readonly TransferEncoding: "Transfer-Encoding";
+    readonly Upgrade: "Upgrade";
+    readonly UserAgent: "User-Agent";
+    readonly Vary: "Vary";
+    readonly Via: "Via";
+    readonly Warning: "Warning";
+    readonly WWWAuthenticate: "WWW-Authenticate";
+};
+declare const HttpExtensionHeaders: {
+    XForwardedProto: string;
+    XForwardedHost: string;
+    XHttpMethod: string;
+    XHttpMethodOverride: string;
+    XMethodOverride: string;
+};
+declare const HttpStatusCodes: {
+    readonly Continue: 100;
+    readonly SwitchingProtocols: 101;
+    readonly Processing: 102;
+    readonly OK: 200;
+    readonly Created: 201;
+    readonly Accepted: 202;
+    readonly NonAuthoritativeInformation: 203;
+    readonly NoContent: 204;
+    readonly ResetContent: 205;
+    readonly PartialContent: 206;
+    readonly MultiStatus: 207;
+    readonly AlreadyReported: 208;
+    readonly IMUsed: 226;
+    readonly MultipleChoices: 300;
+    readonly MovedPermanently: 301;
+    readonly Found: 302;
+    readonly SeeOther: 303;
+    readonly NotModified: 304;
+    readonly UseProxy: 305;
+    readonly TemporaryRedirect: 307;
+    readonly PermanentRedirect: 308;
+    readonly BadRequest: 400;
+    readonly Unauthorized: 401;
+    readonly Forbidden: 403;
+    readonly NotFound: 404;
+    readonly MethodNotAllowed: 405;
+    readonly NotAcceptable: 406;
+    readonly ProxyAuthenticationRequired: 407;
+    readonly RequestTimeout: 408;
+    readonly Conflict: 409;
+    readonly Gone: 410;
+    readonly LengthRequired: 411;
+    readonly PreconditionFailed: 412;
+    readonly RequestEntityTooLarge: 413;
+    readonly RequestURITooLong: 414;
+    readonly UnsupportedMediaType: 415;
+    readonly RequestedRangeNotSatisfiable: 416;
+    readonly ExpectationFailed: 417;
+    readonly UnprocessableEntity: 422;
+    readonly Locked: 423;
+    readonly FailedDependency: 424;
+    readonly UpgradeRequired: 426;
+    readonly PreconditionRequired: 428;
+    readonly TooManyRequests: 429;
+    readonly RequestHeaderFieldsTooLarge: 431;
+    readonly UnavailableForLegalReasons: 451;
+    readonly InternalServerError: 500;
+    readonly NotImplemented: 501;
+    readonly BadGateway: 502;
+    readonly ServiceUnavailable: 503;
+    readonly GatewayTimeout: 504;
+    readonly HTTPVersionNotSupported: 505;
+    readonly VariantAlsoNegotiates: 506;
+    readonly InsufficientStorage: 507;
+    readonly LoopDetected: 508;
+    readonly NotExtended: 510;
+    readonly NetworkAuthenticationRequired: 511;
+};
 declare const createHttpResponse: <T>({ etag, expires, headers, lastModified, location, statusCode, vary, ...rest }: HttpResponseOptions<T>) => HttpResponse<T>;
 declare const writeHttpResponseHeaders: <T>(response: HttpResponse<T>, writeHeader: SideEffect2<string, string>) => void;
 declare const checkIfNotModified: <T>({ cacheControl, method, preconditions, }: HttpRequest<unknown>) => Function1<HttpResponse<T>, HttpResponse<T>>;
@@ -20,6 +131,12 @@ declare const encodeHttpResponseContent: (encoderProvider: ReadonlyObjectMap<IOS
 declare const createHttpErrorResponse: (e: unknown) => HttpResponse<unknown>;
 declare const createRedirectHttpRequest: <THttpRequest extends HttpRequest<TReq>, TReq>(request: THttpRequest, response: HttpResponse<unknown>) => THttpRequest;
 declare const decodeHttpRequestContent: (decoderProvider: ReadonlyObjectMap<IOSourceOperator<Uint8Array, Uint8Array>>) => Function1<HttpRequest<IOSourceLike<Uint8Array>>, HttpRequest<IOSourceLike<Uint8Array>>>;
+declare const createHttpRequest: <T>(options: HttpRequestOptions<T>) => HttpRequest<T>;
+declare const disallowProtocolAndHostForwarding: <T>() => Function1<HttpRequest<T>, HttpRequest<T>>;
+declare const writeHttpRequestHeaders: <T>(request: HttpRequest<T>, writeHeader: SideEffect2<string, string>) => void;
+declare const encodeHttpRequestWithUtf8: Function1<HttpRequest<string>, HttpRequest<Uint8Array>>;
+declare const decodeHttpRequestWithCharset: Function1<HttpRequest<Uint8Array>, HttpRequest<string>>;
+declare const toIOSourceHttpRequest: <TBody>(req: HttpRequest<TBody>) => HttpRequest<IOSourceLike<TBody>>;
 declare type CacheDirective = {
     readonly directive: string;
     readonly value: string;
@@ -41,64 +158,10 @@ declare type HttpContentInfo = {
 };
 declare type HttpDateTime = number;
 declare type HttpHeaders = ReadonlyObjectMap<string>;
-declare enum HttpStandardHeader {
-    Accept = "Accept",
-    AcceptCharset = "Accept-Charset",
-    AcceptEncoding = "Accept-Encoding",
-    AcceptLanguage = "Accept-Language",
-    AcceptRanges = "Accept-Ranges",
-    Age = "Age",
-    Allow = "Allow",
-    Authorization = "Authorization",
-    CacheControl = "Cache-Control",
-    Connection = "Connection",
-    ContentEncoding = "Content-Encoding",
-    ContentLanguage = "Content-Language",
-    ContentLength = "Content-Length",
-    ContentLocation = "Content-Location",
-    ContentMD5 = "Content-MD5",
-    ContentRange = "Content-Range",
-    ContentType = "Content-Type",
-    Cookie = "Cookie",
-    Date = "Date",
-    ETag = "ETag",
-    Expect = "Expect",
-    Expires = "Expires",
-    From = "From",
-    Host = "Host",
-    IfMatch = "If-Match",
-    IfModifiedSince = "If-Modified-Since",
-    IfNoneMatch = "If-None-Match",
-    IfRange = "If-Range",
-    IfUnmodifiedSince = "If-Unmodified-Since",
-    LastModified = "Last-Modified",
-    Location = "Location",
-    MaxForwards = "Max-Forwards",
-    Pragma = "Pragma",
-    ProxyAuthenticate = "Proxy-Authenticate",
-    ProxyAuthorization = "Proxy-Authorization",
-    Range = "Range",
-    Referer = "Referer",
-    RetryAfter = "Retry-After",
-    Server = "Server",
-    SetCookie = "Set-Cookie",
-    TE = "TE",
-    Trailer = "Trailer",
-    TransferEncoding = "Transfer-Encoding",
-    Upgrade = "Upgrade",
-    UserAgent = "User-Agent",
-    Vary = "Vary",
-    Via = "Via",
-    Warning = "Warning",
-    WWWAuthenticate = "WWW-Authenticate"
-}
-declare enum HttpExtensionHeader {
-    XForwardedProto = "X-Forwarded-Proto",
-    XForwardedHost = "X-Forwarded-Host",
-    XHttpMethod = "X-HTTP-Method",
-    XHttpMethodOverride = "X-HTTP-Method-Override",
-    XMethodOverride = "X-Method-Override"
-}
+declare type HttpStandardHeadersKeys = keyof typeof HttpStandardHeaders;
+declare type HttpStandardHeader = typeof HttpStandardHeaders[HttpStandardHeadersKeys];
+declare type HttpExtensionHeadersKeys = keyof typeof HttpExtensionHeaders;
+declare type HttpExtensionHeader = typeof HttpExtensionHeaders[HttpExtensionHeadersKeys];
 interface URILike {
     readonly hash: string;
     readonly host: string;
@@ -177,65 +240,8 @@ declare type HttpRequestOptions<T> = HttpMessageOptions<T> & {
     };
     readonly uri: string | URILike;
 };
-declare enum HttpStatusCode {
-    Continue = 100,
-    SwitchingProtocols = 101,
-    Processing = 102,
-    OK = 200,
-    Created = 201,
-    Accepted = 202,
-    NonAuthoritativeInformation = 203,
-    NoContent = 204,
-    ResetContent = 205,
-    PartialContent = 206,
-    MultiStatus = 207,
-    AlreadyReported = 208,
-    IMUsed = 226,
-    MultipleChoices = 300,
-    MovedPermanently = 301,
-    Found = 302,
-    SeeOther = 303,
-    NotModified = 304,
-    UseProxy = 305,
-    TemporaryRedirect = 307,
-    PermanentRedirect = 308,
-    BadRequest = 400,
-    Unauthorized = 401,
-    Forbidden = 403,
-    NotFound = 404,
-    MethodNotAllowed = 405,
-    NotAcceptable = 406,
-    ProxyAuthenticationRequired = 407,
-    RequestTimeout = 408,
-    Conflict = 409,
-    Gone = 410,
-    LengthRequired = 411,
-    PreconditionFailed = 412,
-    RequestEntityTooLarge = 413,
-    RequestURITooLong = 414,
-    UnsupportedMediaType = 415,
-    RequestedRangeNotSatisfiable = 416,
-    ExpectationFailed = 417,
-    UnprocessableEntity = 422,
-    Locked = 423,
-    FailedDependency = 424,
-    UpgradeRequired = 426,
-    PreconditionRequired = 428,
-    TooManyRequests = 429,
-    RequestHeaderFieldsTooLarge = 431,
-    UnavailableForLegalReasons = 451,
-    InternalServerError = 500,
-    NotImplemented = 501,
-    BadGateway = 502,
-    ServiceUnavailable = 503,
-    GatewayTimeout = 504,
-    HTTPVersionNotSupported = 505,
-    VariantAlsoNegotiates = 506,
-    InsufficientStorage = 507,
-    LoopDetected = 508,
-    NotExtended = 510,
-    NetworkAuthenticationRequired = 511
-}
+declare type HttpStatusCodesKeys = keyof typeof HttpStatusCodes;
+declare type HttpStatusCode = typeof HttpStatusCodes[HttpStatusCodesKeys];
 declare type HttpResponse<T> = HttpMessage<T> & {
     readonly etag?: EntityTag;
     readonly expires?: HttpDateTime;
@@ -253,4 +259,4 @@ declare type HttpResponseOptions<T> = HttpMessageOptions<T> & {
     readonly statusCode: HttpStatusCode;
     readonly vary?: readonly string[];
 };
-export { CacheDirective, EntityTag, HttpContentEncoding, HttpContentInfo, HttpDateTime, HttpExtensionHeader, HttpHeaders, HttpMessage, HttpMessageOptions, HttpMethod, HttpPreferences, HttpRequest, HttpRequestOptions, HttpRequestPreconditions, HttpResponse, HttpResponseOptions, HttpStandardHeader, HttpStatusCode, MediaRange, MediaType, URILike, checkIfNotModified, createHttpErrorResponse, createHttpRequest, createHttpResponse, createRedirectHttpRequest, decodeHttpRequestContent, decodeHttpRequestWithCharset, decodeHttpResponseContent, decodeHttpResponseWithCharset, disallowProtocolAndHostForwarding, encodeHttpRequestWithUtf8, encodeHttpResponseContent, encodeHttpResponseWithUtf8, toIOSourceHttpRequest, toIOSourceHttpResponse, writeHttpRequestHeaders, writeHttpResponseHeaders };
+export { CacheDirective, EntityTag, HttpContentEncoding, HttpContentInfo, HttpDateTime, HttpExtensionHeader, HttpExtensionHeaders, HttpHeaders, HttpMessage, HttpMessageOptions, HttpMethod, HttpPreferences, HttpRequest, HttpRequestOptions, HttpRequestPreconditions, HttpResponse, HttpResponseOptions, HttpStandardHeader, HttpStandardHeaders, HttpStatusCode, HttpStatusCodes, MediaRange, MediaType, URILike, checkIfNotModified, createHttpErrorResponse, createHttpRequest, createHttpResponse, createRedirectHttpRequest, decodeHttpRequestContent, decodeHttpRequestWithCharset, decodeHttpResponseContent, decodeHttpResponseWithCharset, disallowProtocolAndHostForwarding, encodeHttpRequestWithUtf8, encodeHttpResponseContent, encodeHttpResponseWithUtf8, toIOSourceHttpRequest, toIOSourceHttpResponse, writeHttpRequestHeaders, writeHttpResponseHeaders };

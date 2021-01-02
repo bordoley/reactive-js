@@ -18,6 +18,7 @@ packages/core/*.ts
 packages/core/*.js
 packages/core/*.mjs
 packages/core/README.md
+packages/example/build
 
 mod/*.js
 mod/http-node.*

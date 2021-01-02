@@ -4,12 +4,6 @@
 
 ## Index
 
-### Enumerations
-
-* [HttpExtensionHeader](../enums/http.httpextensionheader.md)
-* [HttpStandardHeader](../enums/http.httpstandardheader.md)
-* [HttpStatusCode](../enums/http.httpstatuscode.md)
-
 ### Interfaces
 
 * [URILike](../interfaces/http.urilike.md)
@@ -21,6 +15,7 @@
 * [HttpContentEncoding](http.md#httpcontentencoding)
 * [HttpContentInfo](http.md#httpcontentinfo)
 * [HttpDateTime](http.md#httpdatetime)
+* [HttpExtensionHeader](http.md#httpextensionheader)
 * [HttpHeaders](http.md#httpheaders)
 * [HttpMessage](http.md#httpmessage)
 * [HttpMessageOptions](http.md#httpmessageoptions)
@@ -31,8 +26,16 @@
 * [HttpRequestPreconditions](http.md#httprequestpreconditions)
 * [HttpResponse](http.md#httpresponse)
 * [HttpResponseOptions](http.md#httpresponseoptions)
+* [HttpStandardHeader](http.md#httpstandardheader)
+* [HttpStatusCode](http.md#httpstatuscode)
 * [MediaRange](http.md#mediarange)
 * [MediaType](http.md#mediatype)
+
+### Variables
+
+* [HttpExtensionHeaders](http.md#httpextensionheaders)
+* [HttpStandardHeaders](http.md#httpstandardheaders)
+* [HttpStatusCodes](http.md#httpstatuscodes)
 
 ### Functions
 
@@ -105,6 +108,12 @@ ___
 ### HttpDateTime
 
 Ƭ **HttpDateTime**: *number*
+
+___
+
+### HttpExtensionHeader
+
+Ƭ **HttpExtensionHeader**: *typeof* [*HttpExtensionHeaders*](http.md#httpextensionheaders)[HttpExtensionHeadersKeys]
 
 ___
 
@@ -221,7 +230,7 @@ ___
 
 ### HttpResponse
 
-Ƭ **HttpResponse**<T\>: [*HttpMessage*](http.md#httpmessage)<T\> & { `etag?`: [*EntityTag*](http.md#entitytag) ; `expires?`: [*HttpDateTime*](http.md#httpdatetime) ; `lastModified?`: [*HttpDateTime*](http.md#httpdatetime) ; `location?`: [*URILike*](../interfaces/http.urilike.md) ; `statusCode`: [*HttpStatusCode*](../enums/http.httpstatuscode.md) ; `vary`: readonly *string*[]  }
+Ƭ **HttpResponse**<T\>: [*HttpMessage*](http.md#httpmessage)<T\> & { `etag?`: [*EntityTag*](http.md#entitytag) ; `expires?`: [*HttpDateTime*](http.md#httpdatetime) ; `lastModified?`: [*HttpDateTime*](http.md#httpdatetime) ; `location?`: [*URILike*](../interfaces/http.urilike.md) ; `statusCode`: [*HttpStatusCode*](http.md#httpstatuscode) ; `vary`: readonly *string*[]  }
 
 #### Type parameters:
 
@@ -233,13 +242,25 @@ ___
 
 ### HttpResponseOptions
 
-Ƭ **HttpResponseOptions**<T\>: [*HttpMessageOptions*](http.md#httpmessageoptions)<T\> & { `etag?`: *string* \| [*EntityTag*](http.md#entitytag) ; `expires?`: *number* \| *string* \| Date ; `headers?`: [*HttpHeaders*](http.md#httpheaders) ; `lastModified?`: *number* \| *string* \| Date ; `location?`: *string* \| [*URILike*](../interfaces/http.urilike.md) ; `statusCode`: [*HttpStatusCode*](../enums/http.httpstatuscode.md) ; `vary?`: readonly *string*[]  }
+Ƭ **HttpResponseOptions**<T\>: [*HttpMessageOptions*](http.md#httpmessageoptions)<T\> & { `etag?`: *string* \| [*EntityTag*](http.md#entitytag) ; `expires?`: *number* \| *string* \| Date ; `headers?`: [*HttpHeaders*](http.md#httpheaders) ; `lastModified?`: *number* \| *string* \| Date ; `location?`: *string* \| [*URILike*](../interfaces/http.urilike.md) ; `statusCode`: [*HttpStatusCode*](http.md#httpstatuscode) ; `vary?`: readonly *string*[]  }
 
 #### Type parameters:
 
 Name |
 ------ |
 `T` |
+
+___
+
+### HttpStandardHeader
+
+Ƭ **HttpStandardHeader**: *typeof* [*HttpStandardHeaders*](http.md#httpstandardheaders)[HttpStandardHeadersKeys]
+
+___
+
+### HttpStatusCode
+
+Ƭ **HttpStatusCode**: *typeof* [*HttpStatusCodes*](http.md#httpstatuscodes)[HttpStatusCodesKeys]
 
 ___
 
@@ -267,6 +288,150 @@ Name | Type |
 `params` | [*ReadonlyObjectMap*](readonlyobjectmap.md#readonlyobjectmap)<*string*\> |
 `subtype` | *string* |
 `type` | *string* |
+
+## Variables
+
+### HttpExtensionHeaders
+
+• `Const` **HttpExtensionHeaders**: object
+
+#### Type declaration:
+
+Name | Type | Value |
+------ | ------ | ------ |
+`XForwardedHost` | *string* | *string* |
+`XForwardedProto` | *string* | *string* |
+`XHttpMethod` | *string* | *string* |
+`XHttpMethodOverride` | *string* | *string* |
+`XMethodOverride` | *string* | *string* |
+
+___
+
+### HttpStandardHeaders
+
+• `Const` **HttpStandardHeaders**: object
+
+#### Type declaration:
+
+Name | Type | Value |
+------ | ------ | ------ |
+`Accept` | *Accept* | *Accept* |
+`AcceptCharset` | *Accept-Charset* | *Accept-Charset* |
+`AcceptEncoding` | *Accept-Encoding* | *Accept-Encoding* |
+`AcceptLanguage` | *Accept-Language* | *Accept-Language* |
+`AcceptRanges` | *Accept-Ranges* | *Accept-Ranges* |
+`Age` | *Age* | *Age* |
+`Allow` | *Allow* | *Allow* |
+`Authorization` | *Authorization* | *Authorization* |
+`CacheControl` | *Cache-Control* | *Cache-Control* |
+`Connection` | *Connection* | *Connection* |
+`ContentEncoding` | *Content-Encoding* | *Content-Encoding* |
+`ContentLanguage` | *Content-Language* | *Content-Language* |
+`ContentLength` | *Content-Length* | *Content-Length* |
+`ContentLocation` | *Content-Location* | *Content-Location* |
+`ContentMD5` | *Content-MD5* | *Content-MD5* |
+`ContentRange` | *Content-Range* | *Content-Range* |
+`ContentType` | *Content-Type* | *Content-Type* |
+`Cookie` | *Cookie* | *Cookie* |
+`Date` | *Date* | *Date* |
+`ETag` | *ETag* | *ETag* |
+`Expect` | *Expect* | *Expect* |
+`Expires` | *Expires* | *Expires* |
+`From` | *From* | *From* |
+`Host` | *Host* | *Host* |
+`IfMatch` | *If-Match* | *If-Match* |
+`IfModifiedSince` | *If-Modified-Since* | *If-Modified-Since* |
+`IfNoneMatch` | *If-None-Match* | *If-None-Match* |
+`IfRange` | *If-Range* | *If-Range* |
+`IfUnmodifiedSince` | *If-Unmodified-Since* | *If-Unmodified-Since* |
+`LastModified` | *Last-Modified* | *Last-Modified* |
+`Location` | *Location* | *Location* |
+`MaxForwards` | *Max-Forwards* | *Max-Forwards* |
+`Pragma` | *Pragma* | *Pragma* |
+`ProxyAuthenticate` | *Proxy-Authenticate* | *Proxy-Authenticate* |
+`ProxyAuthorization` | *Proxy-Authorization* | *Proxy-Authorization* |
+`Range` | *Range* | *Range* |
+`Referer` | *Referer* | *Referer* |
+`RetryAfter` | *Retry-After* | *Retry-After* |
+`Server` | *Server* | *Server* |
+`SetCookie` | *Set-Cookie* | *Set-Cookie* |
+`TE` | *TE* | *TE* |
+`Trailer` | *Trailer* | *Trailer* |
+`TransferEncoding` | *Transfer-Encoding* | *Transfer-Encoding* |
+`Upgrade` | *Upgrade* | *Upgrade* |
+`UserAgent` | *User-Agent* | *User-Agent* |
+`Vary` | *Vary* | *Vary* |
+`Via` | *Via* | *Via* |
+`WWWAuthenticate` | *WWW-Authenticate* | *WWW-Authenticate* |
+`Warning` | *Warning* | *Warning* |
+
+___
+
+### HttpStatusCodes
+
+• `Const` **HttpStatusCodes**: object
+
+#### Type declaration:
+
+Name | Type | Value |
+------ | ------ | ------ |
+`Accepted` | *202* | *202* |
+`AlreadyReported` | *208* | *208* |
+`BadGateway` | *502* | *502* |
+`BadRequest` | *400* | *400* |
+`Conflict` | *409* | *409* |
+`Continue` | *100* | *100* |
+`Created` | *201* | *201* |
+`ExpectationFailed` | *417* | *417* |
+`FailedDependency` | *424* | *424* |
+`Forbidden` | *403* | *403* |
+`Found` | *302* | *302* |
+`GatewayTimeout` | *504* | *504* |
+`Gone` | *410* | *410* |
+`HTTPVersionNotSupported` | *505* | *505* |
+`IMUsed` | *226* | *226* |
+`InsufficientStorage` | *507* | *507* |
+`InternalServerError` | *500* | *500* |
+`LengthRequired` | *411* | *411* |
+`Locked` | *423* | *423* |
+`LoopDetected` | *508* | *508* |
+`MethodNotAllowed` | *405* | *405* |
+`MovedPermanently` | *301* | *301* |
+`MultiStatus` | *207* | *207* |
+`MultipleChoices` | *300* | *300* |
+`NetworkAuthenticationRequired` | *511* | *511* |
+`NoContent` | *204* | *204* |
+`NonAuthoritativeInformation` | *203* | *203* |
+`NotAcceptable` | *406* | *406* |
+`NotExtended` | *510* | *510* |
+`NotFound` | *404* | *404* |
+`NotImplemented` | *501* | *501* |
+`NotModified` | *304* | *304* |
+`OK` | *200* | *200* |
+`PartialContent` | *206* | *206* |
+`PermanentRedirect` | *308* | *308* |
+`PreconditionFailed` | *412* | *412* |
+`PreconditionRequired` | *428* | *428* |
+`Processing` | *102* | *102* |
+`ProxyAuthenticationRequired` | *407* | *407* |
+`RequestEntityTooLarge` | *413* | *413* |
+`RequestHeaderFieldsTooLarge` | *431* | *431* |
+`RequestTimeout` | *408* | *408* |
+`RequestURITooLong` | *414* | *414* |
+`RequestedRangeNotSatisfiable` | *416* | *416* |
+`ResetContent` | *205* | *205* |
+`SeeOther` | *303* | *303* |
+`ServiceUnavailable` | *503* | *503* |
+`SwitchingProtocols` | *101* | *101* |
+`TemporaryRedirect` | *307* | *307* |
+`TooManyRequests` | *429* | *429* |
+`Unauthorized` | *401* | *401* |
+`UnavailableForLegalReasons` | *451* | *451* |
+`UnprocessableEntity` | *422* | *422* |
+`UnsupportedMediaType` | *415* | *415* |
+`UpgradeRequired` | *426* | *426* |
+`UseProxy` | *305* | *305* |
+`VariantAlsoNegotiates` | *506* | *506* |
 
 ## Functions
 

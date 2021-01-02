@@ -3,6 +3,7 @@ import {
   HttpContentEncoding,
   HttpHeaders,
   HttpPreferences,
+  HttpStandardHeaders,
   HttpStandardHeader,
   MediaRange,
   MediaType,
@@ -76,20 +77,20 @@ export const parseHttpPreferencesFromHeaders = (
 ): Option<HttpPreferences> => {
   const acceptedCharsets = parseWeightedTokenHeader(
     headers,
-    HttpStandardHeader.AcceptCharset,
+    HttpStandardHeaders.AcceptCharset,
   );
   const acceptedEncodings = parseWeightedTokenHeader(
     headers,
-    HttpStandardHeader.AcceptEncoding,
+    HttpStandardHeaders.AcceptEncoding,
   ) as readonly HttpContentEncoding[];
 
   // FIXME: This is overly lax. See: https://tools.ietf.org/html/draft-ietf-httpbis-semantics-07#section-8.4.5
   const acceptedLanguages = parseWeightedTokenHeader(
     headers,
-    HttpStandardHeader.AcceptLanguage,
+    HttpStandardHeaders.AcceptLanguage,
   );
 
-  const rawAccept = getHeaderValue(headers, HttpStandardHeader.Accept);
+  const rawAccept = getHeaderValue(headers, HttpStandardHeaders.Accept);
   const acceptedMediaRanges = isSome(rawAccept)
     ? parseAccept(rawAccept) ?? []
     : [];
@@ -183,17 +184,17 @@ export const writeHttpPreferenceHeaders = (
   } = preferences;
 
   writeWeightedTokenHeader(
-    HttpStandardHeader.AcceptCharset,
+    HttpStandardHeaders.AcceptCharset,
     acceptedCharsets,
     writeHeader,
   );
   writeWeightedTokenHeader(
-    HttpStandardHeader.AcceptEncoding,
+    HttpStandardHeaders.AcceptEncoding,
     acceptedEncodings,
     writeHeader,
   );
   writeWeightedTokenHeader(
-    HttpStandardHeader.AcceptLanguage,
+    HttpStandardHeaders.AcceptLanguage,
     acceptedLanguages,
     writeHeader,
   );
@@ -203,7 +204,7 @@ export const writeHttpPreferenceHeaders = (
     mapReadonlyArray(({ type, subtype }) => `${type}/${subtype}`),
   );
   writeWeightedTokenHeader(
-    HttpStandardHeader.Accept,
+    HttpStandardHeaders.Accept,
     tokenizedMediaRanges,
     writeHeader,
   );
