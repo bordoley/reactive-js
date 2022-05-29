@@ -1,20 +1,18 @@
 /// <reference types="./__tests__.d.ts" />
 import { none, isSome } from './option.mjs';
 import { pipe, returns, defer, increment, raise, sum, alwaysTrue, incrementBy, arrayEquality, ignore, identity, alwaysFalse } from './functions.mjs';
-import { toRunnable, fromValue, subscribe, generate as generate$2, dispatchTo, concat as concat$1, concatMap as concatMap$1, distinctUntilChanged as distinctUntilChanged$1, empty as empty$3, endWith as endWith$1, fromArray as fromArray$3, keep as keep$1, map as map$3, mapTo as mapTo$1, repeat as repeat$1, scan as scan$1, skipFirst as skipFirst$1, startWith as startWith$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, buffer, throws, catchError, concatWith, combineLatestWith, createObservable, createSubject, exhaustMap, fromPromise, toPromise, genMap, ignoreElements, merge, mergeWith, mergeMap, never, observable, __memo, __observe, onSubscribe, retry, scanAsync, share, zip, switchAll, switchMap, throttle, throwIfEmpty, compute, timeout, withLatestFrom, fromIterable as fromIterable$2, zipWith as zipWith$1, zipLatestWith, zipWithLatestFrom, onNotify } from './observable.mjs';
+import { toRunnable, fromValue, subscribe, generate as generate$2, dispatchTo, concat as concat$1, concatMap as concatMap$1, distinctUntilChanged as distinctUntilChanged$1, empty as empty$3, endWith as endWith$1, fromArray as fromArray$3, keep as keep$1, map as map$2, mapTo as mapTo$1, repeat as repeat$1, scan as scan$1, skipFirst as skipFirst$1, startWith as startWith$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, buffer, throws, catchError, concatWith, combineLatestWith, createObservable, createSubject, exhaustMap, fromPromise, toPromise, genMap, ignoreElements, merge, mergeWith, mergeMap, never, observable, __memo, __observe, onSubscribe, retry, scanAsync, share, zip, switchAll, switchMap, throttle, throwIfEmpty, compute, timeout, withLatestFrom, fromIterable as fromIterable$2, zipWith as zipWith$1, zipLatestWith, zipWithLatestFrom, onNotify } from './observable.mjs';
 import { addTeardown, createDisposable, addDisposable, dispose, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
 import { createVirtualTimeScheduler, schedule, createHostScheduler } from './scheduler.mjs';
-import { map as map$1 } from './readonlyArray.mjs';
 import { concat, concatMap, distinctUntilChanged, empty, endWith, fromArray as fromArray$1, fromValue as fromValue$1, generate as generate$1, keep, map, mapTo, repeat, scan, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable as toRunnable$1, toIterable, fromIterable as fromIterable$1, zipWith } from './enumerable.mjs';
-import { last, toArray, fromArray as fromArray$4, forEach, concat as concat$2, concatMap as concatMap$2, distinctUntilChanged as distinctUntilChanged$2, empty as empty$4, endWith as endWith$2, fromValue as fromValue$4, generate as generate$3, keep as keep$2, map as map$4, mapTo as mapTo$2, repeat as repeat$2, scan as scan$2, skipFirst as skipFirst$2, startWith as startWith$2, takeFirst as takeFirst$2, takeLast as takeLast$2, takeWhile as takeWhile$2, toRunnable as toRunnable$2, contains, everySatisfy, compute as compute$1, first, noneSatisfy } from './runnable.mjs';
-import { stream, sink, identity as identity$1, lift, __stream, createActionReducer, empty as empty$6, map as map$6, mapReq, onNotify as onNotify$1, scan as scan$4, mapTo as mapTo$4 } from './streamable.mjs';
+import { last, toArray, fromArray as fromArray$4, forEach, concat as concat$2, concatMap as concatMap$2, distinctUntilChanged as distinctUntilChanged$2, empty as empty$4, endWith as endWith$2, fromValue as fromValue$4, generate as generate$3, keep as keep$2, map as map$3, mapTo as mapTo$2, repeat as repeat$2, scan as scan$2, skipFirst as skipFirst$2, startWith as startWith$2, takeFirst as takeFirst$2, takeLast as takeLast$2, takeWhile as takeWhile$2, toRunnable as toRunnable$2, contains, everySatisfy, compute as compute$1, first, noneSatisfy } from './runnable.mjs';
+import { stream, sink, identity as identity$1, lift, __stream, createActionReducer, empty as empty$6, map as map$5, mapReq, onNotify as onNotify$1, scan as scan$4, mapTo as mapTo$4 } from './streamable.mjs';
 import { fromIterable, consume, notify, done, consumeAsync, fromArray, generate } from './asyncEnumerable.mjs';
 import { describe, test, expectEquals, expectArrayEquals, expectNone, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
 import { empty as empty$1, fromObservable, fromValue as fromValue$2 } from './flowable.mjs';
-import { createHttpRequest, HttpStandardHeaders, writeHttpRequestHeaders, createHttpResponse, HttpStatusCodes, writeHttpResponseHeaders, checkIfNotModified } from './http.mjs';
-import { fromArray as fromArray$2, decodeWithCharset, createIOSinkAccumulator, empty as empty$2, fromValue as fromValue$3, encodeUtf8, map as map$2 } from './io.mjs';
+import { fromArray as fromArray$2, decodeWithCharset, createIOSinkAccumulator, empty as empty$2, fromValue as fromValue$3, encodeUtf8, map as map$1 } from './io.mjs';
 import { createReactiveCache, getOrSet } from './reactiveCache.mjs';
-import { concat as concat$3, concatMap as concatMap$3, distinctUntilChanged as distinctUntilChanged$3, empty as empty$5, endWith as endWith$3, fromArray as fromArray$5, fromValue as fromValue$5, generate as generate$4, keep as keep$3, map as map$5, mapTo as mapTo$3, repeat as repeat$3, scan as scan$3, skipFirst as skipFirst$3, startWith as startWith$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$3, toRunnable as toRunnable$3 } from './sequence.mjs';
+import { concat as concat$3, concatMap as concatMap$3, distinctUntilChanged as distinctUntilChanged$3, empty as empty$5, endWith as endWith$3, fromArray as fromArray$5, fromValue as fromValue$5, generate as generate$4, keep as keep$3, map as map$4, mapTo as mapTo$3, repeat as repeat$3, scan as scan$3, skipFirst as skipFirst$3, startWith as startWith$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$3, toRunnable as toRunnable$3 } from './sequence.mjs';
 import { toStateStore } from './stateStore.mjs';
 
 const tests = describe("async-enumerable", test("consume", () => {
@@ -190,419 +188,7 @@ const tests$3 = describe("flowables", test("empty", () => {
     expectTrue(fromValueStream.isDisposed);
 }));
 
-const createHttpRequestTests = test("createHttpRequest", () => {
-    const request = createHttpRequest({
-        method: "GET",
-        uri: "http://www.example.com",
-        body: none,
-        headers: {
-            [HttpStandardHeaders.Accept]: "text/*;q=0.3, text/html;q=0.7, text/html;level=1, text/html;level=2;q=0.4, */*;q=0.5",
-            [HttpStandardHeaders.AcceptCharset]: "iso-8859-5, unicode-1-1;q=0.8",
-            [HttpStandardHeaders.AcceptEncoding]: "gzip;q=1.0, identity; q=0.5, *;q=0",
-            [HttpStandardHeaders.AcceptLanguage]: "da, en-gb;q=0.8, en;q=0.7",
-            [HttpStandardHeaders.AcceptRanges]: "bytes",
-            [HttpStandardHeaders.Age]: "2147483648",
-            [HttpStandardHeaders.Allow]: "GET, HEAD, PUT",
-            [HttpStandardHeaders.CacheControl]: "max-age=3, no-transform",
-            [HttpStandardHeaders.Connection]: "close",
-            [HttpStandardHeaders.ContentEncoding]: "gzip",
-            [HttpStandardHeaders.ContentLanguage]: "mi, en",
-            [HttpStandardHeaders.ContentLength]: "123",
-            [HttpStandardHeaders.ContentLocation]: "http://www.example.com",
-            [HttpStandardHeaders.ContentMD5]: "asdjbklsjdfs",
-            [HttpStandardHeaders.ContentRange]: "bytes 0-499/1234",
-            [HttpStandardHeaders.ContentType]: "application/json; charset=UTF-8",
-            [HttpStandardHeaders.Date]: "Tue, 15 Nov 1994 08:12:31 GMT",
-            [HttpStandardHeaders.ETag]: 'W/"foo"',
-            [HttpStandardHeaders.Expect]: "100-continue",
-            [HttpStandardHeaders.Expires]: "Thu, 01 Dec 1994 16:00:00 GMT",
-            [HttpStandardHeaders.From]: "webmaster@w3.org",
-            [HttpStandardHeaders.Host]: "www.w3.org",
-            [HttpStandardHeaders.IfMatch]: '"xyzzy", "r2d2xxxx", "c3piozzzz"',
-            [HttpStandardHeaders.IfModifiedSince]: "Sat, 29 Oct 1994 19:43:31 GMT",
-            [HttpStandardHeaders.IfNoneMatch]: '"xyzzy", "r2d2xxxx", "c3piozzzz"',
-            [HttpStandardHeaders.IfRange]: '"xyzzy"',
-            [HttpStandardHeaders.IfUnmodifiedSince]: "Sat, 29 Oct 1994 19:43:31 GMT",
-            [HttpStandardHeaders.LastModified]: "Sat, 29 Oct 1994 19:43:31 GMT",
-            [HttpStandardHeaders.Location]: "http://www.example.com/path",
-            [HttpStandardHeaders.MaxForwards]: "10",
-            [HttpStandardHeaders.Pragma]: "no-cache",
-            [HttpStandardHeaders.Range]: "bytes=0-499",
-            [HttpStandardHeaders.Referer]: "http://www.w3.org/hypertext/DataSources/Overview.html",
-            [HttpStandardHeaders.RetryAfter]: "120",
-            [HttpStandardHeaders.Server]: "CERN/3.0 libwww/2.17",
-            [HttpStandardHeaders.Upgrade]: "HTTP/2.0, SHTTP/1.3, IRC/6.9, RTA/x11",
-            [HttpStandardHeaders.UserAgent]: "CERN-LineMode/2.15 libwww/2.17b3",
-            [HttpStandardHeaders.Vary]: "Content-Encoding",
-        },
-    });
-    const headers = {};
-    writeHttpRequestHeaders(request, (key, value) => {
-        headers[key] = value;
-    });
-    expectTrue(request.expectContinue);
-});
-const createHttpResponseTests = test("createHttpRequest", () => {
-    const response = createHttpResponse({
-        statusCode: HttpStatusCodes.OK,
-        body: none,
-        headers: {
-            [HttpStandardHeaders.Accept]: "text/*;q=0.3, text/html;q=0.7, text/html;level=1, text/html;level=2;q=0.4, */*;q=0.5",
-            [HttpStandardHeaders.AcceptCharset]: "iso-8859-5, unicode-1-1;q=0.8",
-            [HttpStandardHeaders.AcceptEncoding]: "gzip;q=1.0, identity; q=0.5, *;q=0",
-            [HttpStandardHeaders.AcceptLanguage]: "da, en-gb;q=0.8, en;q=0.7",
-            [HttpStandardHeaders.AcceptRanges]: "bytes",
-            [HttpStandardHeaders.Age]: "2147483648",
-            [HttpStandardHeaders.Allow]: "GET, HEAD, PUT",
-            [HttpStandardHeaders.CacheControl]: "max-age=3, no-transform",
-            [HttpStandardHeaders.Connection]: "close",
-            [HttpStandardHeaders.ContentEncoding]: "gzip",
-            [HttpStandardHeaders.ContentLanguage]: "mi, en",
-            [HttpStandardHeaders.ContentLength]: "123",
-            [HttpStandardHeaders.ContentLocation]: "http://www.example.com",
-            [HttpStandardHeaders.ContentMD5]: "asdjbklsjdfs",
-            [HttpStandardHeaders.ContentRange]: "bytes 0-499/1234",
-            [HttpStandardHeaders.ContentType]: "application/json; charset=UTF-8",
-            [HttpStandardHeaders.Date]: "Tue, 15 Nov 1994 08:12:31 GMT",
-            [HttpStandardHeaders.ETag]: 'W/"foo"',
-            [HttpStandardHeaders.Expect]: "100-continue",
-            [HttpStandardHeaders.Expires]: "Thu, 01 Dec 1994 16:00:00 GMT",
-            [HttpStandardHeaders.From]: "webmaster@w3.org",
-            [HttpStandardHeaders.Host]: "www.w3.org",
-            [HttpStandardHeaders.IfMatch]: '"xyzzy", "r2d2xxxx", "c3piozzzz"',
-            [HttpStandardHeaders.IfModifiedSince]: "Sat, 29 Oct 1994 19:43:31 GMT",
-            [HttpStandardHeaders.IfNoneMatch]: '"xyzzy", "r2d2xxxx", "c3piozzzz"',
-            [HttpStandardHeaders.IfRange]: '"xyzzy"',
-            [HttpStandardHeaders.IfUnmodifiedSince]: "Sat, 29 Oct 1994 19:43:31 GMT",
-            [HttpStandardHeaders.LastModified]: "Sat, 29 Oct 1994 19:43:31 GMT",
-            [HttpStandardHeaders.Location]: "http://www.example.com/path",
-            [HttpStandardHeaders.MaxForwards]: "10",
-            [HttpStandardHeaders.Pragma]: "no-cache",
-            [HttpStandardHeaders.Range]: "bytes=0-499",
-            [HttpStandardHeaders.Referer]: "http://www.w3.org/hypertext/DataSources/Overview.html",
-            [HttpStandardHeaders.RetryAfter]: "120",
-            [HttpStandardHeaders.Server]: "CERN/3.0 libwww/2.17",
-            [HttpStandardHeaders.Upgrade]: "HTTP/2.0, SHTTP/1.3, IRC/6.9, RTA/x11",
-            [HttpStandardHeaders.UserAgent]: "CERN-LineMode/2.15 libwww/2.17b3",
-            [HttpStandardHeaders.Vary]: "Content-Encoding",
-        },
-    });
-    const headers = {};
-    writeHttpResponseHeaders(response, (key, value) => {
-        headers[key] = value;
-    });
-});
-const checkIfNotModifiedTests = pipe([
-    [
-        "when a non-conditional GET is performed",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-        }),
-        createHttpResponse({ statusCode: HttpStatusCodes.OK, body: none }),
-        HttpStatusCodes.OK,
-    ],
-    [
-        "when ETags match",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-            preconditions: {
-                ifNoneMatch: ['"foo"'],
-            },
-        }),
-        createHttpResponse({
-            statusCode: HttpStatusCodes.OK,
-            body: none,
-            etag: '"foo"',
-        }),
-        HttpStatusCodes.NotModified,
-    ],
-    [
-        "when ETags mismatch",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-            preconditions: {
-                ifNoneMatch: ['"foo"'],
-            },
-        }),
-        createHttpResponse({
-            statusCode: HttpStatusCodes.OK,
-            body: none,
-            etag: '"bar"',
-        }),
-        HttpStatusCodes.OK,
-    ],
-    [
-        "when at least one matches",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-            preconditions: {
-                ifNoneMatch: ['"foo"', '"bar"'],
-            },
-        }),
-        createHttpResponse({
-            statusCode: HttpStatusCodes.OK,
-            body: none,
-            etag: '"foo"',
-        }),
-        HttpStatusCodes.NotModified,
-    ],
-    [
-        "when etag is missing",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-            preconditions: {
-                ifNoneMatch: ['"foo"'],
-            },
-        }),
-        createHttpResponse({
-            statusCode: HttpStatusCodes.OK,
-            body: none,
-        }),
-        HttpStatusCodes.OK,
-    ],
-    [
-        "when ETag is weak on exact match",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-            preconditions: {
-                ifNoneMatch: ['W/"foo"'],
-            },
-        }),
-        createHttpResponse({
-            statusCode: HttpStatusCodes.OK,
-            body: none,
-            etag: 'W/"foo"',
-        }),
-        HttpStatusCodes.NotModified,
-    ],
-    [
-        "when ETag is weak on strong match",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-            preconditions: {
-                ifNoneMatch: ['W/"foo"'],
-            },
-        }),
-        createHttpResponse({
-            statusCode: HttpStatusCodes.OK,
-            body: none,
-            etag: '"foo"',
-        }),
-        HttpStatusCodes.NotModified,
-    ],
-    [
-        "when ETag is strong on exact match",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-            preconditions: {
-                ifNoneMatch: ['"foo"'],
-            },
-        }),
-        createHttpResponse({
-            statusCode: HttpStatusCodes.OK,
-            body: none,
-            etag: '"foo"',
-        }),
-        HttpStatusCodes.NotModified,
-    ],
-    [
-        "when ETag is strong on weak match",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-            preconditions: {
-                ifNoneMatch: ['"foo"'],
-            },
-        }),
-        createHttpResponse({
-            statusCode: HttpStatusCodes.OK,
-            body: none,
-            etag: 'W/"foo"',
-        }),
-        HttpStatusCodes.NotModified,
-    ],
-    [
-        "when * is given",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-            preconditions: {
-                ifNoneMatch: "*",
-            },
-        }),
-        createHttpResponse({
-            statusCode: HttpStatusCodes.OK,
-            body: none,
-            etag: '"foo"',
-        }),
-        HttpStatusCodes.NotModified,
-    ],
-    [
-        "when modified since the date",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-            preconditions: {
-                ifModifiedSince: 0,
-            },
-        }),
-        createHttpResponse({
-            statusCode: HttpStatusCodes.OK,
-            body: none,
-            lastModified: 1,
-        }),
-        HttpStatusCodes.OK,
-    ],
-    [
-        "when unmodified since the date",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-            preconditions: {
-                ifModifiedSince: 1,
-            },
-        }),
-        createHttpResponse({
-            statusCode: HttpStatusCodes.OK,
-            body: none,
-            lastModified: 1,
-        }),
-        HttpStatusCodes.NotModified,
-    ],
-    [
-        "when Last-Modified is missing",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-            preconditions: {
-                ifModifiedSince: 1,
-            },
-        }),
-        createHttpResponse({
-            statusCode: HttpStatusCodes.OK,
-            body: none,
-        }),
-        HttpStatusCodes.OK,
-    ],
-    [
-        "when requested with If-Modified-Since and If-None-Match and both match",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-            preconditions: {
-                ifModifiedSince: 1,
-                ifNoneMatch: ['"foo"'],
-            },
-        }),
-        createHttpResponse({
-            statusCode: HttpStatusCodes.OK,
-            body: none,
-            etag: '"foo"',
-            lastModified: 1,
-        }),
-        HttpStatusCodes.NotModified,
-    ],
-    [
-        "when requested with If-Modified-Since and If-None-Match when only ETag matches",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-            preconditions: {
-                ifModifiedSince: 0,
-                ifNoneMatch: ['"foo"'],
-            },
-        }),
-        createHttpResponse({
-            statusCode: HttpStatusCodes.OK,
-            body: none,
-            etag: '"foo"',
-            lastModified: 1,
-        }),
-        HttpStatusCodes.OK,
-    ],
-    [
-        "when requested with If-Modified-Since and If-None-Match when only Last-Modified matches",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-            preconditions: {
-                ifModifiedSince: 0,
-                ifNoneMatch: ['"foo"'],
-            },
-        }),
-        createHttpResponse({
-            statusCode: HttpStatusCodes.OK,
-            body: none,
-            etag: '"bar"',
-            lastModified: 0,
-        }),
-        HttpStatusCodes.OK,
-    ],
-    [
-        "when none match",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-            preconditions: {
-                ifModifiedSince: 0,
-                ifNoneMatch: ['"foo"'],
-            },
-        }),
-        createHttpResponse({
-            statusCode: HttpStatusCodes.OK,
-            body: none,
-            etag: '"bar"',
-            lastModified: 1,
-        }),
-        HttpStatusCodes.OK,
-    ],
-    [
-        "when requested with Cache-Control: no-cache",
-        createHttpRequest({
-            method: "GET",
-            uri: "http://www.example.com",
-            body: none,
-            cacheControl: ["no-cache"],
-            preconditions: {
-                ifNoneMatch: ['"foo"'],
-            },
-        }),
-        createHttpResponse({
-            statusCode: HttpStatusCodes.OK,
-            body: none,
-            etag: '"foo"',
-        }),
-        HttpStatusCodes.OK,
-    ],
-], map$1(([name, req, resp, status]) => test(name, defer(resp, checkIfNotModified(req), x => x.statusCode, expectEquals(status)))), tests => describe("checkIfNotModified", ...tests));
-const tests$4 = describe("http", checkIfNotModifiedTests, createHttpRequestTests, createHttpResponseTests);
-
-const tests$5 = describe("io", test("decodeWithCharset", () => {
+const tests$4 = describe("io", test("decodeWithCharset", () => {
     const src = pipe([Uint8Array.from([226]), Uint8Array.from([130]), Uint8Array.from([172])], fromArray$2(), decodeWithCharset());
     const dest = createIOSinkAccumulator((acc, next) => acc + next, returns(""), { replay: 1 });
     const scheduler = createVirtualTimeScheduler();
@@ -651,7 +237,7 @@ const tests$5 = describe("io", test("decodeWithCharset", () => {
     expectTrue(subscription.isDisposed);
     expectTrue(fromValueStream.isDisposed);
 }), test("map", () => {
-    const src = pipe(1, fromValue$3(), map$2(returns(2)));
+    const src = pipe(1, fromValue$3(), map$1(returns(2)));
     const dest = createIOSinkAccumulator(sum, returns(0), { replay: 1 });
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(src, dest), subscribe(scheduler));
@@ -674,7 +260,7 @@ const Observable = {
     fromValue,
     generate: generate$2,
     keep: keep$1,
-    map: map$3,
+    map: map$2,
     mapTo: mapTo$1,
     repeat: repeat$1,
     scan: scan$1,
@@ -685,7 +271,7 @@ const Observable = {
     takeWhile: takeWhile$1,
     toRunnable,
 };
-const tests$6 = describe("observable", describe("buffer", test("with duration and maxBufferSize", defer(concat$1(pipe([1, 2, 3, 4], fromArray$3()), pipe([1, 2, 3], fromArray$3({ delay: 1 })), pipe(4, fromValue({ delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toRunnable(), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", defer(defer([1, 2, 3, 4], fromArray$3(), buffer({ duration: _ => throws()(raise) }), toRunnable({
+const tests$5 = describe("observable", describe("buffer", test("with duration and maxBufferSize", defer(concat$1(pipe([1, 2, 3, 4], fromArray$3()), pipe([1, 2, 3], fromArray$3({ delay: 1 })), pipe(4, fromValue({ delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toRunnable(), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", defer(defer([1, 2, 3, 4], fromArray$3(), buffer({ duration: _ => throws()(raise) }), toRunnable({
     schedulerFactory: defer({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
 }), toArray()), expectToThrow))), describe("catchError", test("source completes successfully", defer(pipe(1, fromValue()), catchError(_ => fromValue()(2)), toRunnable(), toArray(), expectArrayEquals([1]))), test("source throws, error caught and ignored", () => {
     const error = new Error();
@@ -805,7 +391,7 @@ const tests$6 = describe("observable", describe("buffer", test("with duration an
     const scheduler = createVirtualTimeScheduler();
     const shared = pipe([1, 2, 3], fromArray$3({ delay: 1 }), share(scheduler, { replay: 1 }));
     let result = [];
-    pipe(zip(shared, shared), map$3(([a, b]) => a + b), buffer(), subscribe(scheduler, x => {
+    pipe(zip(shared, shared), map$2(([a, b]) => a + b), buffer(), subscribe(scheduler, x => {
         result = x;
     }));
     scheduler.run();
@@ -822,7 +408,7 @@ const tests$6 = describe("observable", describe("buffer", test("with duration an
 ], arrayEquality()))), test("when latest produces no values", defer([0], fromArray$3({ delay: 1 }), withLatestFrom(empty$3(), sum), toRunnable(), toArray(), expectArrayEquals([]))), test("when latest throws", () => {
     const error = new Error();
     pipe(defer([0], fromArray$3({ delay: 1 }), withLatestFrom(throws()(returns(error)), sum), toRunnable(), toArray(), expectArrayEquals([])), expectToThrowError(error));
-})), describe("zip", test("with non-delayed sources", defer(zip(pipe([1, 2], fromArray$3()), pipe([1, 2], fromArray$3(), map$3(increment)), generate$2(increment, returns(2))), toRunnable(), toArray(), expectArrayEquals([
+})), describe("zip", test("with non-delayed sources", defer(zip(pipe([1, 2], fromArray$3()), pipe([1, 2], fromArray$3(), map$2(increment)), generate$2(increment, returns(2))), toRunnable(), toArray(), expectArrayEquals([
     [1, 2, 3],
     [2, 3, 4],
 ], arrayEquality()))), test("with synchronous and non-synchronous sources", defer(zip(pipe([1, 2], fromArray$3({ delay: 1 })), pipe([2, 3], fromIterable$2()), pipe([3, 4, 5], fromArray$3({ delay: 1 }))), toRunnable(), toArray(), expectArrayEquals([
@@ -832,9 +418,9 @@ const tests$6 = describe("observable", describe("buffer", test("with duration an
     [1, 1],
     [2, 2],
     [3, 3],
-], arrayEquality()))), test("when source throws", defer(defer(raise, throws(), zipWith$1(fromArray$3()([1, 2, 3])), map$3(([, b]) => b), toRunnable(), toArray()), expectToThrow))), test("zipLatestWith", defer([1, 2, 3, 4, 5, 6, 7, 8], fromArray$3({ delay: 1 }), zipLatestWith(pipe([1, 2, 3, 4], fromArray$3({ delay: 2 }))), map$3(([a, b]) => a + b), toRunnable(), toArray(), expectArrayEquals([2, 5, 8, 11]))), describe("zipWithLatestFrom", test("when source throws", defer(defer(throws()(raise), zipWithLatestFrom(fromValue()(1), (_, b) => b), toRunnable(), last), expectToThrow)), test("when other throws", defer(defer([1, 2, 3], fromArray$3({ delay: 1 }), zipWithLatestFrom(throws()(raise), (_, b) => b), toRunnable(), last), expectToThrow)), test("when other completes first", defer([1], fromArray$3({ delay: 1 }), zipWithLatestFrom(fromArray$3()([2]), (_, b) => b), toRunnable(), last, expectEquals(2)))), createMonadTests(Observable));
+], arrayEquality()))), test("when source throws", defer(defer(raise, throws(), zipWith$1(fromArray$3()([1, 2, 3])), map$2(([, b]) => b), toRunnable(), toArray()), expectToThrow))), test("zipLatestWith", defer([1, 2, 3, 4, 5, 6, 7, 8], fromArray$3({ delay: 1 }), zipLatestWith(pipe([1, 2, 3, 4], fromArray$3({ delay: 2 }))), map$2(([a, b]) => a + b), toRunnable(), toArray(), expectArrayEquals([2, 5, 8, 11]))), describe("zipWithLatestFrom", test("when source throws", defer(defer(throws()(raise), zipWithLatestFrom(fromValue()(1), (_, b) => b), toRunnable(), last), expectToThrow)), test("when other throws", defer(defer([1, 2, 3], fromArray$3({ delay: 1 }), zipWithLatestFrom(throws()(raise), (_, b) => b), toRunnable(), last), expectToThrow)), test("when other completes first", defer([1], fromArray$3({ delay: 1 }), zipWithLatestFrom(fromArray$3()([2]), (_, b) => b), toRunnable(), last, expectEquals(2)))), createMonadTests(Observable));
 
-const tests$7 = describe("reactive-cache", test("lifecycle integration", () => {
+const tests$6 = describe("reactive-cache", test("lifecycle integration", () => {
     // Use microticks to test yielding
     const scheduler = createVirtualTimeScheduler({ maxMicroTaskTicks: 1 });
     const cache = createReactiveCache(scheduler, scheduler, {
@@ -945,7 +531,7 @@ const Runnable = {
     fromValue: fromValue$4,
     generate: generate$3,
     keep: keep$2,
-    map: map$4,
+    map: map$3,
     mapTo: mapTo$2,
     repeat: repeat$2,
     scan: scan$2,
@@ -956,7 +542,7 @@ const Runnable = {
     takeWhile: takeWhile$2,
     toRunnable: toRunnable$2,
 };
-const tests$8 = describe("runnable", describe("contains", test("source is empty", defer(empty$4(), contains(1), expectFalse)), test("source contains value", defer(generate$3(increment, returns(0)), contains(1), expectTrue)), test("source does not contain value", defer([2, 3, 4], fromArray$4(), contains(1), expectFalse))), describe("everySatisfy", test("source is empty", defer(empty$4(), everySatisfy(alwaysFalse), expectTrue)), test("source values pass predicate", defer([1, 2, 3], fromArray$4(), everySatisfy(alwaysTrue), expectTrue)), test("source values fail predicate", defer([1, 2, 3], fromArray$4(), everySatisfy(alwaysFalse), expectFalse))), describe("first", test("when enumerable is not empty", defer(returns(1), compute$1(), first, expectEquals(1))), test("when enumerable is empty", defer(empty$4(), first, expectNone))), test("forEach", () => {
+const tests$7 = describe("runnable", describe("contains", test("source is empty", defer(empty$4(), contains(1), expectFalse)), test("source contains value", defer(generate$3(increment, returns(0)), contains(1), expectTrue)), test("source does not contain value", defer([2, 3, 4], fromArray$4(), contains(1), expectFalse))), describe("everySatisfy", test("source is empty", defer(empty$4(), everySatisfy(alwaysFalse), expectTrue)), test("source values pass predicate", defer([1, 2, 3], fromArray$4(), everySatisfy(alwaysTrue), expectTrue)), test("source values fail predicate", defer([1, 2, 3], fromArray$4(), everySatisfy(alwaysFalse), expectFalse))), describe("first", test("when enumerable is not empty", defer(returns(1), compute$1(), first, expectEquals(1))), test("when enumerable is empty", defer(empty$4(), first, expectNone))), test("forEach", () => {
     const fn = mockFn();
     pipe([1, 2, 3], fromArray$4(), forEach(fn));
     pipe(fn, expectToHaveBeenCalledTimes(3));
@@ -972,7 +558,7 @@ const Sequence = {
     fromValue: fromValue$5,
     generate: generate$4,
     keep: keep$3,
-    map: map$5,
+    map: map$4,
     mapTo: mapTo$3,
     repeat: repeat$3,
     scan: scan$3,
@@ -983,9 +569,9 @@ const Sequence = {
     takeWhile: takeWhile$3,
     toRunnable: toRunnable$3,
 };
-const tests$9 = describe("sequence", createMonadTests(Sequence));
+const tests$8 = describe("sequence", createMonadTests(Sequence));
 
-const tests$a = describe("stateStore", test("toStateStore", () => {
+const tests$9 = describe("stateStore", test("toStateStore", () => {
     const scheduler = createVirtualTimeScheduler({ maxMicroTaskTicks: 0 });
     const stateStream = pipe(identity$1(), lift(startWith$1(0)), toStateStore(), stream(scheduler));
     stateStream.dispatch(incrementBy(1));
@@ -1008,7 +594,7 @@ const tests$a = describe("stateStore", test("toStateStore", () => {
     expectTrue(subscription.isDisposed);
 }));
 
-const tests$b = describe("streamable", test("__stream", () => {
+const tests$a = describe("streamable", test("__stream", () => {
     const streamable = identity$1();
     const createLooper = (stream) => pipe([0, 1, 2, 3], fromArray$3({ delay: 10 }), onNotify(x => {
         stream.dispatch(x);
@@ -1066,7 +652,7 @@ const tests$b = describe("streamable", test("__stream", () => {
     pipe(disposedTime, expectEquals(4));
 })), test("with multiple observers", () => {
     const scheduler = createVirtualTimeScheduler();
-    const incrStream = pipe(identity$1(), map$6(incrementBy(100)), stream(scheduler));
+    const incrStream = pipe(identity$1(), map$5(incrementBy(100)), stream(scheduler));
     pipe(incrStream.observerCount, expectEquals(0));
     const sub1 = pipe(incrStream, subscribe(scheduler));
     pipe(incrStream.observerCount, expectEquals(1));
@@ -1078,7 +664,7 @@ const tests$b = describe("streamable", test("__stream", () => {
     pipe(incrStream.observerCount, expectEquals(0));
 }), test("map", () => {
     const scheduler = createVirtualTimeScheduler();
-    const incrStream = pipe(identity$1(), map$6(incrementBy(100)), stream(scheduler));
+    const incrStream = pipe(identity$1(), map$5(incrementBy(100)), stream(scheduler));
     incrStream.dispatch(10);
     incrStream.dispatch(20);
     incrStream.dispatch(30);
@@ -1142,7 +728,7 @@ const tests$b = describe("streamable", test("__stream", () => {
     pipe(result, expectEquals(3));
 }));
 
-const tests$c = [
+const tests$b = [
     tests,
     tests$1,
     tests$2,
@@ -1150,12 +736,11 @@ const tests$c = [
     tests$4,
     tests$5,
     tests$6,
-    tests$7,
     //resourceManagerTests,
+    tests$7,
     tests$8,
     tests$9,
     tests$a,
-    tests$b,
 ];
 
-export { tests$c as tests };
+export { tests$b as tests };

@@ -95,7 +95,7 @@ Name |
 
 ### compute
 
-▸ `Const`**compute**\<T>(): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ `Const`**compute**<T\>(): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -109,7 +109,7 @@ ___
 
 ### concat
 
-▸ **concat**\<T>(`fst`: [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, `snd`: [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, ...`tail`: readonly [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>[]): [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>
+▸ **concat**<T\>(`fst`: [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, `snd`: [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, ...`tail`: readonly [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>[]): [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>
 
 Creates an `RunnableLike` which emits all values from each source sequentially.
 
@@ -133,7 +133,7 @@ ___
 
 ### concatAll
 
-▸ `Const`**concatAll**\<T>(): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ `Const`**concatAll**<T\>(): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -147,7 +147,7 @@ ___
 
 ### concatMap
 
-▸ `Const`**concatMap**\<TA, TB>(`mapper`: [*Function1*](functions.md#function1)<TA, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<TB\>\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<TA\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<TB\>\>
+▸ `Const`**concatMap**<TA, TB\>(`mapper`: [*Function1*](functions.md#function1)<TA, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<TB\>\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<TA\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<TB\>\>
 
 #### Type parameters:
 
@@ -168,7 +168,7 @@ ___
 
 ### concatWith
 
-▸ `Const`**concatWith**\<T>(`snd`: [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ `Const`**concatWith**<T\>(`snd`: [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -188,7 +188,7 @@ ___
 
 ### contains
 
-▸ `Const`**contains**\<T>(`value`: T, `options?`: { `equality?`: *undefined* \| [*Equality*](functions.md#equality)<T\>  }): [*Predicate*](functions.md#predicate)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ `Const`**contains**<T\>(`value`: T, `options?`: { `equality?`: *undefined* \| [*Equality*](functions.md#equality)<T\>  }): [*Predicate*](functions.md#predicate)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -209,7 +209,7 @@ ___
 
 ### createRunnable
 
-▸ `Const`**createRunnable**\<T>(`run`: [*SideEffect1*](functions.md#sideeffect1)<[*SinkLike*](../interfaces/runnable.sinklike.md)<T\>\>): [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>
+▸ `Const`**createRunnable**<T\>(`run`: [*SideEffect1*](functions.md#sideeffect1)<[*SinkLike*](../interfaces/runnable.sinklike.md)<T\>\>): [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>
 
 #### Type parameters:
 
@@ -229,7 +229,7 @@ ___
 
 ### distinctUntilChanged
 
-▸ `Const`**distinctUntilChanged**\<T>(`options?`: { `equality?`: *undefined* \| [*Equality*](functions.md#equality)<T\>  }): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ `Const`**distinctUntilChanged**<T\>(`options?`: { `equality?`: *undefined* \| [*Equality*](functions.md#equality)<T\>  }): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -249,7 +249,7 @@ ___
 
 ### empty
 
-▸ `Const`**empty**\<T>(): [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>
+▸ `Const`**empty**<T\>(): [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>
 
 #### Type parameters:
 
@@ -263,7 +263,7 @@ ___
 
 ### endWith
 
-▸ **endWith**\<T>(`value`: T, ...`values`: readonly T[]): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ **endWith**<T\>(`value`: T, ...`values`: readonly T[]): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -284,7 +284,7 @@ ___
 
 ### everySatisfy
 
-▸ `Const`**everySatisfy**\<T>(`predicate`: [*Predicate*](functions.md#predicate)<T\>): [*Predicate*](functions.md#predicate)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ `Const`**everySatisfy**<T\>(`predicate`: [*Predicate*](functions.md#predicate)<T\>): [*Predicate*](functions.md#predicate)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -304,7 +304,7 @@ ___
 
 ### first
 
-▸ `Const`**first**\<T>(`runnable`: [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>): [*Option*](option.md#option)<T\>
+▸ `Const`**first**<T\>(`runnable`: [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>): [*Option*](option.md#option)<T\>
 
 #### Type parameters:
 
@@ -324,7 +324,7 @@ ___
 
 ### forEach
 
-▸ `Const`**forEach**\<T>(`f`: [*SideEffect1*](functions.md#sideeffect1)<T\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, *void*\>
+▸ `Const`**forEach**<T\>(`f`: [*SideEffect1*](functions.md#sideeffect1)<T\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, *void*\>
 
 #### Type parameters:
 
@@ -344,7 +344,7 @@ ___
 
 ### fromArray
 
-▸ `Const`**fromArray**\<T>(`options?`: { `endIndex?`: *undefined* \| *number* ; `startIndex?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<readonly T[], [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ `Const`**fromArray**<T\>(`options?`: { `endIndex?`: *undefined* \| *number* ; `startIndex?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<readonly T[], [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -364,7 +364,7 @@ ___
 
 ### fromValue
 
-▸ `Const`**fromValue**\<T>(): [*Function1*](functions.md#function1)<T, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ `Const`**fromValue**<T\>(): [*Function1*](functions.md#function1)<T, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -378,7 +378,7 @@ ___
 
 ### generate
 
-▸ `Const`**generate**\<T>(`generator`: [*Updater*](functions.md#updater)<T\>, `initialValue`: [*Factory*](functions.md#factory)<T\>): [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>
+▸ `Const`**generate**<T\>(`generator`: [*Updater*](functions.md#updater)<T\>, `initialValue`: [*Factory*](functions.md#factory)<T\>): [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>
 
 #### Type parameters:
 
@@ -399,7 +399,7 @@ ___
 
 ### keep
 
-▸ `Const`**keep**\<T>(`predicate`: [*Predicate*](functions.md#predicate)<T\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ `Const`**keep**<T\>(`predicate`: [*Predicate*](functions.md#predicate)<T\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -419,7 +419,7 @@ ___
 
 ### keepType
 
-▸ `Const`**keepType**\<TA, TB>(`predicate`: [*TypePredicate*](functions.md#typepredicate)<TA, TB\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<TA\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<TB\>\>
+▸ `Const`**keepType**<TA, TB\>(`predicate`: [*TypePredicate*](functions.md#typepredicate)<TA, TB\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<TA\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<TB\>\>
 
 #### Type parameters:
 
@@ -440,7 +440,7 @@ ___
 
 ### last
 
-▸ `Const`**last**\<T>(`runnable`: [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>): [*Option*](option.md#option)<T\>
+▸ `Const`**last**<T\>(`runnable`: [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>): [*Option*](option.md#option)<T\>
 
 #### Type parameters:
 
@@ -460,7 +460,7 @@ ___
 
 ### lift
 
-▸ `Const`**lift**\<TA, TB>(`operator`: [*Function1*](functions.md#function1)<[*SinkLike*](../interfaces/runnable.sinklike.md)<TB\>, [*SinkLike*](../interfaces/runnable.sinklike.md)<TA\>\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<TA\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<TB\>\>
+▸ `Const`**lift**<TA, TB\>(`operator`: [*Function1*](functions.md#function1)<[*SinkLike*](../interfaces/runnable.sinklike.md)<TB\>, [*SinkLike*](../interfaces/runnable.sinklike.md)<TA\>\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<TA\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<TB\>\>
 
 #### Type parameters:
 
@@ -481,7 +481,7 @@ ___
 
 ### map
 
-▸ `Const`**map**\<TA, TB>(`mapper`: [*Function1*](functions.md#function1)<TA, TB\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<TA\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<TB\>\>
+▸ `Const`**map**<TA, TB\>(`mapper`: [*Function1*](functions.md#function1)<TA, TB\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<TA\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<TB\>\>
 
 #### Type parameters:
 
@@ -502,7 +502,7 @@ ___
 
 ### mapTo
 
-▸ `Const`**mapTo**\<TA, TB>(`value`: TB): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<TA\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<TB\>\>
+▸ `Const`**mapTo**<TA, TB\>(`value`: TB): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<TA\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<TB\>\>
 
 #### Type parameters:
 
@@ -523,7 +523,7 @@ ___
 
 ### noneSatisfy
 
-▸ `Const`**noneSatisfy**\<T>(`predicate`: [*Predicate*](functions.md#predicate)<T\>): [*Predicate*](functions.md#predicate)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ `Const`**noneSatisfy**<T\>(`predicate`: [*Predicate*](functions.md#predicate)<T\>): [*Predicate*](functions.md#predicate)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -543,7 +543,7 @@ ___
 
 ### reduce
 
-▸ `Const`**reduce**\<T, TAcc>(`reducer`: [*Reducer*](functions.md#reducer)<T, TAcc\>, `initialValue`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, TAcc\>
+▸ `Const`**reduce**<T, TAcc\>(`reducer`: [*Reducer*](functions.md#reducer)<T, TAcc\>, `initialValue`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, TAcc\>
 
 #### Type parameters:
 
@@ -565,7 +565,7 @@ ___
 
 ### repeat
 
-▸ **repeat**\<T>(`predicate`: [*Predicate*](functions.md#predicate)<*number*\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ **repeat**<T\>(`predicate`: [*Predicate*](functions.md#predicate)<*number*\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 Returns an RunnableLike that applies the predicate function each time the source
 completes to determine if the enumerable should be repeated.
@@ -584,7 +584,7 @@ Name | Type | Description |
 
 **Returns:** [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
-▸ **repeat**\<T>(`count`: *number*): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ **repeat**<T\>(`count`: *number*): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 Returns an RunnableLike that repeats the source count times.
 
@@ -602,7 +602,7 @@ Name | Type | Description |
 
 **Returns:** [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
-▸ **repeat**\<T>(): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ **repeat**<T\>(): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 Returns an RunnableLike that continually repeats the source.
 
@@ -618,7 +618,7 @@ ___
 
 ### scan
 
-▸ `Const`**scan**\<T, TAcc>(`scanner`: [*Reducer*](functions.md#reducer)<T, TAcc\>, `initialValue`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<TAcc\>\>
+▸ `Const`**scan**<T, TAcc\>(`scanner`: [*Reducer*](functions.md#reducer)<T, TAcc\>, `initialValue`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<TAcc\>\>
 
 #### Type parameters:
 
@@ -640,7 +640,7 @@ ___
 
 ### skipFirst
 
-▸ `Const`**skipFirst**\<T>(`options?`: { `count?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ `Const`**skipFirst**<T\>(`options?`: { `count?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -660,7 +660,7 @@ ___
 
 ### someSatisfy
 
-▸ `Const`**someSatisfy**\<T>(`predicate`: [*Predicate*](functions.md#predicate)<T\>): [*Predicate*](functions.md#predicate)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ `Const`**someSatisfy**<T\>(`predicate`: [*Predicate*](functions.md#predicate)<T\>): [*Predicate*](functions.md#predicate)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -680,7 +680,7 @@ ___
 
 ### startWith
 
-▸ **startWith**\<T>(`value`: T, ...`values`: readonly T[]): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ **startWith**<T\>(`value`: T, ...`values`: readonly T[]): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -701,7 +701,7 @@ ___
 
 ### takeFirst
 
-▸ `Const`**takeFirst**\<T>(`options?`: { `count?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ `Const`**takeFirst**<T\>(`options?`: { `count?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -721,7 +721,7 @@ ___
 
 ### takeLast
 
-▸ `Const`**takeLast**\<T>(`options?`: { `count?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ `Const`**takeLast**<T\>(`options?`: { `count?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -741,7 +741,7 @@ ___
 
 ### takeWhile
 
-▸ `Const`**takeWhile**\<T>(`predicate`: [*Predicate*](functions.md#predicate)<T\>, `options?`: { `inclusive?`: *undefined* \| *boolean*  }): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ `Const`**takeWhile**<T\>(`predicate`: [*Predicate*](functions.md#predicate)<T\>, `options?`: { `inclusive?`: *undefined* \| *boolean*  }): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -762,7 +762,7 @@ ___
 
 ### toArray
 
-▸ `Const`**toArray**\<T>(): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, readonly T[]\>
+▸ `Const`**toArray**<T\>(): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, readonly T[]\>
 
 Accumulates all values emitted by `runnable` into an array.
 
@@ -778,7 +778,7 @@ ___
 
 ### toRunnable
 
-▸ `Const`**toRunnable**\<T>(): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ `Const`**toRunnable**<T\>(): [*Function1*](functions.md#function1)<[*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
 
 #### Type parameters:
 

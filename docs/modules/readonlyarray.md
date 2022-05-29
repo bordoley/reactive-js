@@ -36,7 +36,7 @@ Name |
 
 ### everySatisfy
 
-▸ `Const`**everySatisfy**\<T>(`predicate`: [*Predicate*](functions.md#predicate)<T\>): [*Function1*](functions.md#function1)<readonly T[], *boolean*\>
+▸ `Const`**everySatisfy**<T\>(`predicate`: [*Predicate*](functions.md#predicate)<T\>): [*Function1*](functions.md#function1)<readonly T[], *boolean*\>
 
 #### Type parameters:
 
@@ -56,7 +56,7 @@ ___
 
 ### fromObject
 
-▸ `Const`**fromObject**\<T>(): [*Function1*](functions.md#function1)<[*ReadonlyObjectMap*](readonlyobjectmap.md#readonlyobjectmap)<T\>, readonly [*string*, T][]\>
+▸ `Const`**fromObject**<T\>(): [*Function1*](functions.md#function1)<[*ReadonlyObjectMap*](readonlyobjectmap.md#readonlyobjectmap)<T\>, readonly [*string*, T][]\>
 
 #### Type parameters:
 
@@ -84,7 +84,7 @@ ___
 
 ### keep
 
-▸ `Const`**keep**\<T>(`predicate`: [*Predicate*](functions.md#predicate)<T\>): [*Function1*](functions.md#function1)<readonly T[], readonly T[]\>
+▸ `Const`**keep**<T\>(`predicate`: [*Predicate*](functions.md#predicate)<T\>): [*Function1*](functions.md#function1)<readonly T[], readonly T[]\>
 
 #### Type parameters:
 
@@ -118,7 +118,7 @@ ___
 
 ### map
 
-▸ `Const`**map**\<TA, TB>(`mapper`: [*Function1*](functions.md#function1)<TA, TB\>): [*Function1*](functions.md#function1)<readonly TA[], readonly TB[]\>
+▸ `Const`**map**<TA, TB\>(`mapper`: [*Function1*](functions.md#function1)<TA, TB\>): [*Function1*](functions.md#function1)<readonly TA[], readonly TB[]\>
 
 #### Type parameters:
 
@@ -139,7 +139,7 @@ ___
 
 ### reduce
 
-▸ `Const`**reduce**\<T, TAcc>(`reducer`: [*Reducer*](functions.md#reducer)<T, TAcc\>, `initialValue`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<readonly T[], TAcc\>
+▸ `Const`**reduce**<T, TAcc\>(`reducer`: [*Reducer*](functions.md#reducer)<T, TAcc\>, `initialValue`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<readonly T[], TAcc\>
 
 #### Type parameters:
 
@@ -161,7 +161,7 @@ ___
 
 ### reduceRight
 
-▸ `Const`**reduceRight**\<T, TAcc>(`reducer`: [*Reducer*](functions.md#reducer)<T, TAcc\>, `initialValue`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<readonly T[], TAcc\>
+▸ `Const`**reduceRight**<T, TAcc\>(`reducer`: [*Reducer*](functions.md#reducer)<T, TAcc\>, `initialValue`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<readonly T[], TAcc\>
 
 #### Type parameters:
 

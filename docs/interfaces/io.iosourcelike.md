@@ -26,8 +26,6 @@ Name |
 
 ▸ **stream**(`scheduler`: [*SchedulerLike*](scheduler.schedulerlike.md), `options?`: { `replay?`: *undefined* \| *number*  }): [*StreamLike*](observable.streamlike.md)<[*FlowMode*](../modules/flowable.md#flowmode), [*IOEvent*](../modules/io.md#ioevent)<T\>\>
 
-Inherited from: [FlowableLike](flowable.flowablelike.md)
-
 #### Parameters:
 
 Name | Type |
@@ -36,3 +34,5 @@ Name | Type |
 `options?` | { `replay?`: *undefined* \| *number*  } |
 
 **Returns:** [*StreamLike*](observable.streamlike.md)<[*FlowMode*](../modules/flowable.md#flowmode), [*IOEvent*](../modules/io.md#ioevent)<T\>\>
+
+Inherited from: [FlowableLike](flowable.flowablelike.md)

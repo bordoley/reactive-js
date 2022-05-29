@@ -64,7 +64,7 @@ Name |
 
 ### createIOSinkAccumulator
 
-▸ `Const`**createIOSinkAccumulator**\<T, TAcc>(`reducer`: [*Reducer*](functions.md#reducer)<T, TAcc\>, `initialValue`: [*Factory*](functions.md#factory)<TAcc\>, `options?`: { `replay?`: *undefined* \| *number*  }): [*IOSinkAccumulatorLike*](../interfaces/io.iosinkaccumulatorlike.md)<T, TAcc\>
+▸ `Const`**createIOSinkAccumulator**<T, TAcc\>(`reducer`: [*Reducer*](functions.md#reducer)<T, TAcc\>, `initialValue`: [*Factory*](functions.md#factory)<TAcc\>, `options?`: { `replay?`: *undefined* \| *number*  }): [*IOSinkAccumulatorLike*](../interfaces/io.iosinkaccumulatorlike.md)<T, TAcc\>
 
 **`experimental`** 
 
@@ -104,7 +104,7 @@ ___
 
 ### done
 
-▸ `Const`**done**\<T>(): [*IOEvent*](io.md#ioevent)<T\>
+▸ `Const`**done**<T\>(): [*IOEvent*](io.md#ioevent)<T\>
 
 #### Type parameters:
 
@@ -118,7 +118,7 @@ ___
 
 ### empty
 
-▸ `Const`**empty**\<T>(): [*IOSourceLike*](../interfaces/io.iosourcelike.md)<T\>
+▸ `Const`**empty**<T\>(): [*IOSourceLike*](../interfaces/io.iosourcelike.md)<T\>
 
 #### Type parameters:
 
@@ -146,7 +146,7 @@ ___
 
 ### fromArray
 
-▸ `Const`**fromArray**\<T>(`options?`: { `delay?`: *undefined* \| *number* ; `endIndex?`: *undefined* \| *number* ; `startIndex?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<readonly T[], [*IOSourceLike*](../interfaces/io.iosourcelike.md)<T\>\>
+▸ `Const`**fromArray**<T\>(`options?`: { `delay?`: *undefined* \| *number* ; `endIndex?`: *undefined* \| *number* ; `startIndex?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<readonly T[], [*IOSourceLike*](../interfaces/io.iosourcelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -166,7 +166,7 @@ ___
 
 ### fromObservable
 
-▸ `Const`**fromObservable**\<T>(): [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<T\>\>
+▸ `Const`**fromObservable**<T\>(): [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -180,7 +180,7 @@ ___
 
 ### fromValue
 
-▸ `Const`**fromValue**\<T>(`options?`: { `delay?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<T, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<T\>\>
+▸ `Const`**fromValue**<T\>(`options?`: { `delay?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<T, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<T\>\>
 
 #### Type parameters:
 
@@ -200,7 +200,7 @@ ___
 
 ### map
 
-▸ `Const`**map**\<TA, TB>(`mapper`: [*Function1*](functions.md#function1)<TA, TB\>): [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<TA\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<TB\>\>
+▸ `Const`**map**<TA, TB\>(`mapper`: [*Function1*](functions.md#function1)<TA, TB\>): [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<TA\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<TB\>\>
 
 #### Type parameters:
 
@@ -221,7 +221,7 @@ ___
 
 ### notify
 
-▸ `Const`**notify**\<T>(`data`: T): [*IOEvent*](io.md#ioevent)<T\>
+▸ `Const`**notify**<T\>(`data`: T): [*IOEvent*](io.md#ioevent)<T\>
 
 #### Type parameters:
 
