@@ -27,6 +27,5 @@ Reactive-JS
 * [sequence](modules/sequence.md)
 * [stateStore](modules/statestore.md)
 * [streamable](modules/streamable.md)
-* [svelte](modules/svelte.md)
 * [testing](modules/testing.md)
 * [web](modules/web.md)
