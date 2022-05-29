@@ -35,9 +35,9 @@ A scheduler that uses a virtual clock to simulate time. Useful for testing.
 
 • `Readonly` **error**: [*Option*](../modules/option.md#option)<[*Error*](../modules/disposable.md#error)\>
 
-Inherited from: [DisposableLike](disposable.disposablelike.md).[error](disposable.disposablelike.md#error)
-
 The error the `DisposableLike` was disposed with if disposed.
+
+Inherited from: [DisposableLike](disposable.disposablelike.md).[error](disposable.disposablelike.md#error)
 
 ___
 
@@ -53,9 +53,9 @@ ___
 
 • `Readonly` **isDisposed**: *boolean*
 
-Inherited from: [DisposableLike](disposable.disposablelike.md).[isDisposed](disposable.disposablelike.md#isdisposed)
-
 `true` if this resource has been disposed, otherwise false
+
+Inherited from: [DisposableLike](disposable.disposablelike.md).[isDisposed](disposable.disposablelike.md#isdisposed)
 
 ___
 
@@ -79,8 +79,6 @@ Inherited from: [SchedulerLike](scheduler.schedulerlike.md).[shouldYield](schedu
 
 ▸ **add**(`disposable`: [*DisposableOrTeardown*](../modules/disposable.md#disposableorteardown)): *void*
 
-Inherited from: [DisposableLike](disposable.disposablelike.md)
-
 Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
 
 #### Parameters:
@@ -93,13 +91,13 @@ Name | Type |
 
 `this`
 
+Inherited from: [DisposableLike](disposable.disposablelike.md)
+
 ___
 
 ### dispose
 
 ▸ **dispose**(`error?`: [*Option*](../modules/option.md#option)<[*Error*](../modules/disposable.md#error)\>): *void*
-
-Inherited from: [DisposableLike](disposable.disposablelike.md)
 
 Dispose the resource. Must be idempotent.
 
@@ -110,6 +108,8 @@ Name | Type | Description |
 `error?` | [*Option*](../modules/option.md#option)<[*Error*](../modules/disposable.md#error)\> | An optional error that signals the resource is being disposed due to an error.    |
 
 **Returns:** *void*
+
+Inherited from: [DisposableLike](disposable.disposablelike.md)
 
 ___
 
@@ -125,8 +125,6 @@ ___
 
 ▸ **schedule**(`continuation`: [*SchedulerContinuationLike*](scheduler.schedulercontinuationlike.md), `options?`: { `delay?`: *undefined* \| *number*  }): *void*
 
-Inherited from: [SchedulerLike](scheduler.schedulerlike.md)
-
 Schedules a continuation to be executed on the scheduler.
 
 #### Parameters:
@@ -137,3 +135,5 @@ Name | Type | Description |
 `options?` | { `delay?`: *undefined* \| *number*  } | - |
 
 **Returns:** *void*
+
+Inherited from: [SchedulerLike](scheduler.schedulerlike.md)

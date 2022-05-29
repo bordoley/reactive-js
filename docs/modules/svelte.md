@@ -12,7 +12,7 @@
 
 ### subscribe
 
-▸ `Const`**subscribe**\<T>(`scheduler`: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)): [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, *Readable*<[*Option*](option.md#option)<T\>\>\>
+▸ `Const`**subscribe**<T\>(`scheduler`: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)): [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, *Readable*<[*Option*](option.md#option)<T\>\>\>
 
 #### Type parameters:
 

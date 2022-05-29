@@ -61,7 +61,7 @@ Scheduler that schedules work on React's internal priority scheduler with user b
 
 ### createComponent
 
-▸ `Const`**createComponent**\<TProps>(`fn`: (`props`: [*ObservableLike*](../interfaces/observable.observablelike.md)<TProps\>) => [*ObservableLike*](../interfaces/observable.observablelike.md)<*ReactElement*<*any*, *string* \| (`props`: *any*) => *null* \| *ReactElement*<*any*, *string* \| (props: any) => ReactElement\<any, string \| ... \| (new (props: any) => Component\<any, any, any>)> \| null \| (`props`: *any*) => *Component*<*any*, *any*, *any*\>\> \| (`props`: *any*) => *Component*<*any*, *any*, *any*\>\>\>): function
+▸ `Const`**createComponent**<TProps\>(`fn`: (`props`: [*ObservableLike*](../interfaces/observable.observablelike.md)<TProps\>) => [*ObservableLike*](../interfaces/observable.observablelike.md)<*ReactElement*<*any*, *string* \| (`props`: *any*) => *null* \| *ReactElement*<*any*, *string* \| (props: any) =\> ReactElement<any, string \| ... \| (new (props: any) =\> Component<any, any, any\>)\> \| null \| (`props`: *any*) => *Component*<*any*, *any*, *any*\>\> \| (`props`: *any*) => *Component*<*any*, *any*, *any*\>\>\>): function
 
 #### Type parameters:
 
@@ -73,7 +73,7 @@ Name |
 
 Name | Type |
 ------ | ------ |
-`fn` | (`props`: [*ObservableLike*](../interfaces/observable.observablelike.md)<TProps\>) => [*ObservableLike*](../interfaces/observable.observablelike.md)<*ReactElement*<*any*, *string* \| (`props`: *any*) => *null* \| *ReactElement*<*any*, *string* \| (props: any) => ReactElement\<any, string \| ... \| (new (props: any) => Component\<any, any, any>)> \| null \| (`props`: *any*) => *Component*<*any*, *any*, *any*\>\> \| (`props`: *any*) => *Component*<*any*, *any*, *any*\>\>\> |
+`fn` | (`props`: [*ObservableLike*](../interfaces/observable.observablelike.md)<TProps\>) => [*ObservableLike*](../interfaces/observable.observablelike.md)<*ReactElement*<*any*, *string* \| (`props`: *any*) => *null* \| *ReactElement*<*any*, *string* \| (props: any) =\> ReactElement<any, string \| ... \| (new (props: any) =\> Component<any, any, any\>)\> \| null \| (`props`: *any*) => *Component*<*any*, *any*, *any*\>\> \| (`props`: *any*) => *Component*<*any*, *any*, *any*\>\>\> |
 
 **Returns:** function
 
@@ -81,7 +81,7 @@ ___
 
 ### useObservable
 
-▸ `Const`**useObservable**\<T>(`observable`: [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, `options?`: { `scheduler?`: [*Option*](option.md#option)<[*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)\>  }): [*Option*](option.md#option)<T\>
+▸ `Const`**useObservable**<T\>(`observable`: [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, `options?`: { `scheduler?`: [*Option*](option.md#option)<[*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)\>  }): [*Option*](option.md#option)<T\>
 
 Returns the current value, if defined, of `observable`.
 

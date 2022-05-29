@@ -96,7 +96,7 @@ ___
 
 ### expectArrayEquals
 
-▸ `Const`**expectArrayEquals**\<T>(`b`: readonly T[], `valueEquality?`: [*Equality*](functions.md#equality)<T\>): function
+▸ `Const`**expectArrayEquals**<T\>(`b`: readonly T[], `valueEquality?`: [*Equality*](functions.md#equality)<T\>): function
 
 #### Type parameters:
 
@@ -117,7 +117,7 @@ ___
 
 ### expectEquals
 
-▸ `Const`**expectEquals**\<T>(`b`: T, `valueEquality?`: <T_1\>(`a`: T\_1, `b`: T\_1) => *boolean*): function
+▸ `Const`**expectEquals**<T\>(`b`: T, `valueEquality?`: <T_1\>(`a`: T\_1, `b`: T\_1) => *boolean*): function
 
 #### Type parameters:
 

@@ -37,7 +37,7 @@ Name | Type |
 
 ### createRouter
 
-▸ `Const`**createRouter**\<T>(`routeMap`: [*ReadonlyObjectMap*](readonlyobjectmap.md#readonlyobjectmap)<T\>): [*Router*](router.md#router)<T\>
+▸ `Const`**createRouter**<T\>(`routeMap`: [*ReadonlyObjectMap*](readonlyobjectmap.md#readonlyobjectmap)<T\>): [*Router*](router.md#router)<T\>
 
 #### Type parameters:
 
@@ -57,7 +57,7 @@ ___
 
 ### find
 
-▸ `Const`**find**\<T>(`router`: [*Router*](router.md#router)<T\>, `path`: *string*): [*Option*](option.md#option)<[T, [*ReadonlyObjectMap*](readonlyobjectmap.md#readonlyobjectmap)<*string*\>]\>
+▸ `Const`**find**<T\>(`router`: [*Router*](router.md#router)<T\>, `path`: *string*): [*Option*](option.md#option)<[T, [*ReadonlyObjectMap*](readonlyobjectmap.md#readonlyobjectmap)<*string*\>]\>
 
 #### Type parameters:
 

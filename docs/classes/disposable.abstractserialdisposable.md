@@ -26,6 +26,6 @@ Abstract base class for implementing the `SerialDisposableLike` interface.
 
 \+ **new AbstractSerialDisposable**(): [*AbstractSerialDisposable*](disposable.abstractserialdisposable.md)
 
-Inherited from: [AbstractDisposable](disposable.abstractdisposable.md)
-
 **Returns:** [*AbstractSerialDisposable*](disposable.abstractserialdisposable.md)
+
+Inherited from: [AbstractDisposable](disposable.abstractdisposable.md)

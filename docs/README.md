@@ -13,8 +13,6 @@ Reactive-JS
 * [env](modules/env.md)
 * [flowable](modules/flowable.md)
 * [functions](modules/functions.md)
-* [http](modules/http.md)
-* [http-node](modules/http_node.md)
 * [io](modules/io.md)
 * [node](modules/node.md)
 * [observable](modules/observable.md)
