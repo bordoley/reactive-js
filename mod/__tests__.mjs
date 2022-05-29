@@ -11,7 +11,6 @@ import { fromIterable, consume, notify, done, consumeAsync, fromArray, generate 
 import { describe, test, expectEquals, expectArrayEquals, expectNone, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
 import { empty as empty$1, fromObservable, fromValue as fromValue$2 } from './flowable.mjs';
 import { fromArray as fromArray$2, decodeWithCharset, createIOSinkAccumulator, empty as empty$2, fromValue as fromValue$3, encodeUtf8, map as map$1 } from './io.mjs';
-import { createReactiveCache, getOrSet } from './reactiveCache.mjs';
 import { concat as concat$3, concatMap as concatMap$3, distinctUntilChanged as distinctUntilChanged$3, empty as empty$5, endWith as endWith$3, fromArray as fromArray$5, fromValue as fromValue$5, generate as generate$4, keep as keep$3, map as map$4, mapTo as mapTo$3, repeat as repeat$3, scan as scan$3, skipFirst as skipFirst$3, startWith as startWith$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$3, toRunnable as toRunnable$3 } from './sequence.mjs';
 import { toStateStore } from './stateStore.mjs';
 
@@ -420,107 +419,6 @@ const tests$5 = describe("observable", describe("buffer", test("with duration an
     [3, 3],
 ], arrayEquality()))), test("when source throws", defer(defer(raise, throws(), zipWith$1(fromArray$3()([1, 2, 3])), map$2(([, b]) => b), toRunnable(), toArray()), expectToThrow))), test("zipLatestWith", defer([1, 2, 3, 4, 5, 6, 7, 8], fromArray$3({ delay: 1 }), zipLatestWith(pipe([1, 2, 3, 4], fromArray$3({ delay: 2 }))), map$2(([a, b]) => a + b), toRunnable(), toArray(), expectArrayEquals([2, 5, 8, 11]))), describe("zipWithLatestFrom", test("when source throws", defer(defer(throws()(raise), zipWithLatestFrom(fromValue()(1), (_, b) => b), toRunnable(), last), expectToThrow)), test("when other throws", defer(defer([1, 2, 3], fromArray$3({ delay: 1 }), zipWithLatestFrom(throws()(raise), (_, b) => b), toRunnable(), last), expectToThrow)), test("when other completes first", defer([1], fromArray$3({ delay: 1 }), zipWithLatestFrom(fromArray$3()([2]), (_, b) => b), toRunnable(), last, expectEquals(2)))), createMonadTests(Observable));
 
-const tests$6 = describe("reactive-cache", test("lifecycle integration", () => {
-    // Use microticks to test yielding
-    const scheduler = createVirtualTimeScheduler({ maxMicroTaskTicks: 1 });
-    const cache = createReactiveCache(scheduler, scheduler, {
-        maxCount: 2,
-    });
-    let bSubscription = disposed;
-    let cSubscription = disposed;
-    let dSubscription = disposed;
-    let eSubscription = disposed;
-    pipe([
-        () => {
-            cache.set("a", fromValue()("a"));
-            cache.set("b", fromValue()("b"));
-            cache.set("c", fromValue()("c"));
-        },
-        () => {
-            // Max size is 2. A is never subscribed to so it is garbage collected.
-            pipe(cache.get("a"), expectNone);
-            const entryB = cache.get("b");
-            pipe(entryB, expectSome);
-            bSubscription = pipe(entryB, subscribe(scheduler));
-            const entryC = cache.get("c");
-            pipe(entryC, expectSome);
-            cSubscription = pipe(entryC, subscribe(scheduler));
-            const entryD = cache.set("d", fromValue({ delay: 3 })("d"));
-            dSubscription = pipe(entryD, subscribe(scheduler));
-        },
-        () => {
-            // Assert that the cache maintain all active values
-            // given the active subscription, despite the capacity
-            // exceeding the cache's max size.
-            pipe(cache.get("b"), expectSome);
-            pipe(cache.get("c"), expectSome);
-            pipe(cache.get("d"), expectSome);
-            pipe(cSubscription, dispose());
-            pipe(dSubscription, dispose());
-            const entryE = cache.set("e", fromValue()("e"));
-            eSubscription = pipe(entryE, subscribe(scheduler));
-        },
-        () => {
-            // c and d were disposed so ensure they return undefined
-            pipe(cache.get("b"), expectSome);
-            pipe(cache.get("c"), expectNone);
-            pipe(cache.get("d"), expectNone);
-            pipe(cache.get("e"), expectSome);
-        },
-        defer(cache, dispose()),
-        () => {
-            // Ensure that disposing the cache disposes all outstanding subscriptions.
-            // Note: check these here as these subscriptions require scheduling by the
-            // cache to dispose (not done synchronously).
-            pipe(bSubscription.isDisposed, expectTrue);
-            pipe(eSubscription.isDisposed, expectTrue);
-            pipe(cache.get("b"), expectNone);
-            pipe(cache.get("c"), expectNone);
-            pipe(cache.get("d"), expectNone);
-            pipe(cache.get("e"), expectNone);
-        },
-    ], fromArray$3({ delay: 1 }), toRunnable({ schedulerFactory: returns(scheduler) }), forEach(x => x()));
-}), test("subscribing to disposed value", () => {
-    const scheduler = createVirtualTimeScheduler();
-    const cache = createReactiveCache(scheduler, scheduler, {
-        maxCount: 1,
-    });
-    let observable = never();
-    let value = "";
-    pipe([
-        () => {
-            observable = getOrSet(cache, "a", fromValue()("a"));
-            getOrSet(cache, "b", fromValue()("b"));
-        },
-        () => {
-            pipe(observable, subscribe(scheduler, x => {
-                value = x;
-            }));
-        },
-        () => {
-            pipe(value, expectEquals(""));
-        },
-    ], fromArray$3(), toRunnable({ schedulerFactory: returns(scheduler) }), forEach(x => x()));
-}), test("getOrSet", () => {
-    const scheduler = createVirtualTimeScheduler();
-    const cache = createReactiveCache(scheduler, scheduler, {
-        maxCount: 2,
-    });
-    let value = "";
-    pipe([
-        () => {
-            let obs = getOrSet(cache, "a", fromValue()("a"));
-            obs = getOrSet(cache, "a", fromValue()("b"));
-            pipe(obs, subscribe(scheduler, x => {
-                value = x;
-            }));
-        },
-        () => {
-            pipe(value, expectEquals("a"));
-        },
-    ], fromArray$3({ delay: 1 }), toRunnable({ schedulerFactory: returns(scheduler) }), forEach(x => x()));
-}));
-
 const Runnable = {
     concat: concat$2,
     concatMap: concatMap$2,
@@ -542,7 +440,7 @@ const Runnable = {
     takeWhile: takeWhile$2,
     toRunnable: toRunnable$2,
 };
-const tests$7 = describe("runnable", describe("contains", test("source is empty", defer(empty$4(), contains(1), expectFalse)), test("source contains value", defer(generate$3(increment, returns(0)), contains(1), expectTrue)), test("source does not contain value", defer([2, 3, 4], fromArray$4(), contains(1), expectFalse))), describe("everySatisfy", test("source is empty", defer(empty$4(), everySatisfy(alwaysFalse), expectTrue)), test("source values pass predicate", defer([1, 2, 3], fromArray$4(), everySatisfy(alwaysTrue), expectTrue)), test("source values fail predicate", defer([1, 2, 3], fromArray$4(), everySatisfy(alwaysFalse), expectFalse))), describe("first", test("when enumerable is not empty", defer(returns(1), compute$1(), first, expectEquals(1))), test("when enumerable is empty", defer(empty$4(), first, expectNone))), test("forEach", () => {
+const tests$6 = describe("runnable", describe("contains", test("source is empty", defer(empty$4(), contains(1), expectFalse)), test("source contains value", defer(generate$3(increment, returns(0)), contains(1), expectTrue)), test("source does not contain value", defer([2, 3, 4], fromArray$4(), contains(1), expectFalse))), describe("everySatisfy", test("source is empty", defer(empty$4(), everySatisfy(alwaysFalse), expectTrue)), test("source values pass predicate", defer([1, 2, 3], fromArray$4(), everySatisfy(alwaysTrue), expectTrue)), test("source values fail predicate", defer([1, 2, 3], fromArray$4(), everySatisfy(alwaysFalse), expectFalse))), describe("first", test("when enumerable is not empty", defer(returns(1), compute$1(), first, expectEquals(1))), test("when enumerable is empty", defer(empty$4(), first, expectNone))), test("forEach", () => {
     const fn = mockFn();
     pipe([1, 2, 3], fromArray$4(), forEach(fn));
     pipe(fn, expectToHaveBeenCalledTimes(3));
@@ -569,9 +467,9 @@ const Sequence = {
     takeWhile: takeWhile$3,
     toRunnable: toRunnable$3,
 };
-const tests$8 = describe("sequence", createMonadTests(Sequence));
+const tests$7 = describe("sequence", createMonadTests(Sequence));
 
-const tests$9 = describe("stateStore", test("toStateStore", () => {
+const tests$8 = describe("stateStore", test("toStateStore", () => {
     const scheduler = createVirtualTimeScheduler({ maxMicroTaskTicks: 0 });
     const stateStream = pipe(identity$1(), lift(startWith$1(0)), toStateStore(), stream(scheduler));
     stateStream.dispatch(incrementBy(1));
@@ -594,7 +492,7 @@ const tests$9 = describe("stateStore", test("toStateStore", () => {
     expectTrue(subscription.isDisposed);
 }));
 
-const tests$a = describe("streamable", test("__stream", () => {
+const tests$9 = describe("streamable", test("__stream", () => {
     const streamable = identity$1();
     const createLooper = (stream) => pipe([0, 1, 2, 3], fromArray$3({ delay: 10 }), onNotify(x => {
         stream.dispatch(x);
@@ -728,7 +626,7 @@ const tests$a = describe("streamable", test("__stream", () => {
     pipe(result, expectEquals(3));
 }));
 
-const tests$b = [
+const tests$a = [
     tests,
     tests$1,
     tests$2,
@@ -736,11 +634,9 @@ const tests$b = [
     tests$4,
     tests$5,
     tests$6,
-    //resourceManagerTests,
     tests$7,
     tests$8,
     tests$9,
-    tests$a,
 ];
 
-export { tests$b as tests };
+export { tests$a as tests };
