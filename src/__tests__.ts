@@ -4,8 +4,6 @@ import { tests as enumerableTests } from "./__tests__/enumerable.test";
 import { tests as flowableTests } from "./__tests__/flowable.test";
 import { tests as ioTests } from "./__tests__/io.test";
 import { tests as observableTests } from "./__tests__/observable.test";
-import { tests as reactiveCacheTests } from "./__tests__/reactiveCache.test";
-//import { tests as resourceManagerTests } from "./resourceManager.test";
 import { tests as runnableTests } from "./__tests__/runnable.test";
 import { tests as sequenceTests } from "./__tests__/sequence.test";
 import { tests as stateStoreTests } from "./__tests__/stateStore.test";
@@ -18,8 +16,6 @@ export const tests = [
   flowableTests,
   ioTests,
   observableTests,
-  reactiveCacheTests,
-  //resourceManagerTests,
   runnableTests,
   sequenceTests,
   stateStoreTests,
