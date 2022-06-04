@@ -12,7 +12,7 @@ import { Option, isNone, none, isSome } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { createStateStore } from "../stateStore";
 import { lift, map, onNotify as onNotifyStream, stream } from "../streamable";
-import { HistoryStreamLike, WindowLocationURI } from "../web";
+import { WindowLocationStreamLike, WindowLocationURI } from "../web";
 import { fromEvent } from "./event";
 
 const windowLocationURIToString = ({
@@ -48,7 +48,7 @@ type TState = {
 };
 
 function getStateStream(
-  this: HistoryStream,
+  this: WindowLocationStream,
 ): StreamLike<Updater<TState>, WindowLocationURI> {
   const { stateStream } = this;
   return isNone(stateStream)
@@ -57,7 +57,7 @@ function getStateStream(
 }
 
 function windowHistoryReplaceState(
-  this: HistoryStream,
+  this: WindowLocationStream,
   uri: WindowLocationURI,
 ) {
   const { title } = uri;
@@ -68,7 +68,7 @@ function windowHistoryReplaceState(
   );
 }
 
-function windowHistoryPushState(this: HistoryStream, uri: WindowLocationURI) {
+function windowHistoryPushState(this: WindowLocationStream, uri: WindowLocationURI) {
   const { title } = uri;
   this.historyCounter++;
   window.history.pushState(
@@ -78,7 +78,7 @@ function windowHistoryPushState(this: HistoryStream, uri: WindowLocationURI) {
   );
 }
 
-class HistoryStream implements HistoryStreamLike {
+class WindowLocationStream implements WindowLocationStreamLike {
   historyCounter = -1;
   stateStream: Option<StreamLike<Updater<TState>, WindowLocationURI>> = none;
 
@@ -202,4 +202,4 @@ class HistoryStream implements HistoryStreamLike {
   }
 }
 
-export const historyStream: HistoryStreamLike = new HistoryStream();
+export const windowLocationStream: WindowLocationStreamLike = new WindowLocationStream();

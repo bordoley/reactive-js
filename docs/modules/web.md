@@ -6,7 +6,7 @@
 
 ### Interfaces
 
-* [HistoryStreamLike](../interfaces/web.historystreamlike.md)
+* [WindowLocationStreamLike](../interfaces/web.windowlocationstreamlike.md)
 
 ### Type aliases
 
@@ -15,7 +15,7 @@
 
 ### Variables
 
-* [historyStream](web.md#historystream)
+* [windowLocationStream](web.md#windowlocationstream)
 
 ### Functions
 
@@ -46,9 +46,9 @@ Name | Type |
 
 ## Variables
 
-### historyStream
+### windowLocationStream
 
-• `Const` **historyStream**: [*HistoryStreamLike*](../interfaces/web.historystreamlike.md)
+• `Const` **windowLocationStream**: [*WindowLocationStreamLike*](../interfaces/web.windowlocationstreamlike.md)
 
 ## Functions
 

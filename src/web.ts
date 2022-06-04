@@ -10,7 +10,7 @@ export type WindowLocationURI = {
   fragment: string;
 };
 
-export interface HistoryStreamLike extends ObservableLike<WindowLocationURI> {
+export interface WindowLocationStreamLike extends ObservableLike<WindowLocationURI> {
   dispatch(
     stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI,
     options?: { readonly replace?: boolean },
@@ -23,6 +23,6 @@ export interface HistoryStreamLike extends ObservableLike<WindowLocationURI> {
 
 export { fromEvent } from "./web/event";
 export { createEventSource } from "./web/eventSource";
-export { historyStream } from "./web/history";
+export { windowLocationStream } from "./web/windowLocation";
 export type { FetchRequest } from "./web/fetch";
 export { fetch } from "./web/fetch";

@@ -10,7 +10,7 @@ declare const createEventSource: (url: string | URL, options?: EventSourceInit &
     readonly type: string;
     readonly data: string;
 }>;
-declare const historyStream: HistoryStreamLike;
+declare const windowLocationStream: WindowLocationStreamLike;
 declare type FetchRequest = RequestInit & {
     uri: string;
 };
@@ -21,11 +21,11 @@ declare type WindowLocationURI = {
     query: string;
     fragment: string;
 };
-interface HistoryStreamLike extends ObservableLike<WindowLocationURI> {
+interface WindowLocationStreamLike extends ObservableLike<WindowLocationURI> {
     dispatch(stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI, options?: {
         readonly replace?: boolean;
     }): void;
     goBack(): boolean;
     init(scheduler: SchedulerLike): DisposableLike;
 }
-export { FetchRequest, HistoryStreamLike, WindowLocationURI, createEventSource, fetch, fromEvent, historyStream };
+export { FetchRequest, WindowLocationStreamLike, WindowLocationURI, createEventSource, fetch, fromEvent, windowLocationStream };
