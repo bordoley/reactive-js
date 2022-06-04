@@ -20,7 +20,6 @@ Reactive-JS
 * [react](modules/react.md)
 * [readonlyArray](modules/readonlyarray.md)
 * [readonlyObjectMap](modules/readonlyobjectmap.md)
-* [relativeURI](modules/relativeuri.md)
 * [runnable](modules/runnable.md)
 * [scheduler](modules/scheduler.md)
 * [sequence](modules/sequence.md)

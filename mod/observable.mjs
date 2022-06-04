@@ -844,7 +844,6 @@ function onNotify() {
     this.buffer = [];
     this.delegate.notify(buffer);
 }
-;
 class BufferObserver extends AbstractDelegatingObserver {
     constructor(delegate, durationFunction, maxBufferSize) {
         super(delegate);
@@ -1674,7 +1673,6 @@ function onNotify$4(next) {
     this.hasLatest = true;
     this.otherLatest = next;
 }
-;
 class WithLatestFromObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, other, selector) {
         super(delegate);

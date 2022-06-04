@@ -25,7 +25,10 @@ const notifyDelegate = <TA, TB, TC>(
   }
 };
 
-function onNotify<TA, TB, T>(this: ZipWithLatestFromObserver<TA, TB, T>, otherLatest: TB) {
+function onNotify<TA, TB, T>(
+  this: ZipWithLatestFromObserver<TA, TB, T>,
+  otherLatest: TB,
+) {
   this.hasLatest = true;
   this.otherLatest = otherLatest;
   notifyDelegate(this);
@@ -52,10 +55,7 @@ class ZipWithLatestFromObserver<TA, TB, T> extends AbstractObserver<
     super(delegate);
     this.selector = selector;
 
-    const otherSubscription = pipe(
-      other,
-      subscribe(delegate, onNotify, this),
-    );
+    const otherSubscription = pipe(other, subscribe(delegate, onNotify, this));
 
     const disposeDelegate = () => {
       if (this.isDisposed && otherSubscription.isDisposed) {

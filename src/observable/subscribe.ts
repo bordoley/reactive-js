@@ -33,7 +33,7 @@ export function subscribe<T>(
 ): Function1<ObservableLike<T>, DisposableLike>;
 export function subscribe<T>(
   scheduler: SchedulerLike,
-  onNotify: SideEffect1<T> ,
+  onNotify: SideEffect1<T>,
 ): Function1<ObservableLike<T>, DisposableLike>;
 export function subscribe<This, T>(
   scheduler: SchedulerLike,

@@ -37,8 +37,7 @@
   },
   "dependencies": {
     "react": "^17.0.1",
-    "scheduler": "^0.20.1",
-    "svelte": "^3.0.0"
+    "scheduler": "^0.20.1"
   },
   "publishConfig": {
     "access": "public"

@@ -47,12 +47,9 @@ export const map = (n: number) =>
     benchmarkTest(
       "observable__observe",
       async src => {
-        const {
-          fromArray,
-          toRunnable,
-          __observe,
-          observable,
-        } = await import("@reactive-js/core/observable");
+        const { fromArray, toRunnable, __observe, observable } = await import(
+          "@reactive-js/core/observable"
+        );
         const { toArray } = await import("@reactive-js/core/runnable");
 
         const arrObs = fromArray<number>()(src);
@@ -62,7 +59,7 @@ export const map = (n: number) =>
               const v = __observe(arrObs) ?? 0;
               return increment(v);
             },
-            { mode: 'combine-latest' },
+            { mode: "combine-latest" },
           ),
           toRunnable(),
           toArray(),
@@ -326,7 +323,7 @@ export const scanReduce = (n: number) =>
               ref.current = result;
               return result;
             },
-            { mode: 'combine-latest' },
+            { mode: "combine-latest" },
           ),
           toRunnable(),
           reduce<number, number>(passthrough, returns(0)),
