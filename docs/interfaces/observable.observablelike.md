@@ -16,7 +16,7 @@ Name |
 
   ↳ [*MulticastObservableLike*](observable.multicastobservablelike.md)
 
-  ↳ [*HistoryStreamLike*](web.historystreamlike.md)
+  ↳ [*WindowLocationStreamLike*](web.windowlocationstreamlike.md)
 
 ## Index
 

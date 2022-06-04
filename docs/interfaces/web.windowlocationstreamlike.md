@@ -1,25 +1,25 @@
-[Reactive-JS](../README.md) / [web](../modules/web.md) / HistoryStreamLike
+[Reactive-JS](../README.md) / [web](../modules/web.md) / WindowLocationStreamLike
 
-# Interface: HistoryStreamLike
+# Interface: WindowLocationStreamLike
 
 ## Hierarchy
 
 * [*ObservableLike*](observable.observablelike.md)<[*WindowLocationURI*](../modules/web.md#windowlocationuri)\>
 
-  ↳ **HistoryStreamLike**
+  ↳ **WindowLocationStreamLike**
 
 ## Index
 
 ### Properties
 
-* [isSynchronous](web.historystreamlike.md#issynchronous)
+* [isSynchronous](web.windowlocationstreamlike.md#issynchronous)
 
 ### Methods
 
-* [dispatch](web.historystreamlike.md#dispatch)
-* [goBack](web.historystreamlike.md#goback)
-* [init](web.historystreamlike.md#init)
-* [observe](web.historystreamlike.md#observe)
+* [dispatch](web.windowlocationstreamlike.md#dispatch)
+* [goBack](web.windowlocationstreamlike.md#goback)
+* [init](web.windowlocationstreamlike.md#init)
+* [observe](web.windowlocationstreamlike.md#observe)
 
 ## Properties
 

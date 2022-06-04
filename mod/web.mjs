@@ -80,7 +80,7 @@ function windowHistoryPushState(uri) {
     this.historyCounter++;
     window.history.pushState({ counter: this.historyCounter, title }, "", windowLocationURIToString(uri));
 }
-class HistoryStream {
+class WindowLocationStream {
     constructor() {
         this.historyCounter = -1;
         this.stateStream = none;
@@ -162,7 +162,7 @@ class HistoryStream {
         return stateStream;
     }
 }
-const historyStream = new HistoryStream();
+const windowLocationStream = new WindowLocationStream();
 
 const globalFetch = self.fetch;
 const fetch = (onResponse) => fetchRequest => defer(observer => async () => {
@@ -189,4 +189,4 @@ const fetch = (onResponse) => fetchRequest => defer(observer => async () => {
     }
 });
 
-export { createEventSource, fetch, fromEvent, historyStream };
+export { createEventSource, fetch, fromEvent, windowLocationStream };
