@@ -17,10 +17,7 @@ export const toRunnable = <T>(
     const { schedulerFactory = createVirtualTimeScheduler } = options;
     const scheduler = schedulerFactory();
 
-    const subscription = pipe(
-      source,
-      subscribe(scheduler, sink.notify, sink),
-    );
+    const subscription = pipe(source, subscribe(scheduler, sink.notify, sink));
 
     scheduler.run();
 

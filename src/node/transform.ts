@@ -55,7 +55,11 @@ export const transform = (
 
       const modeSubscription = pipe(
         modeObs,
-        subscribe(scheduler, transformReadableStream.dispatch, transformReadableStream),
+        subscribe(
+          scheduler,
+          transformReadableStream.dispatch,
+          transformReadableStream,
+        ),
       );
 
       addDisposableDisposeParentOnChildError(

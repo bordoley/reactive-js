@@ -41,7 +41,7 @@ function onNotify(this: BufferObserver<any>) {
   this.buffer = [];
 
   this.delegate.notify(buffer);
-};
+}
 
 class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
   readonly durationSubscription = createSerialDisposable();

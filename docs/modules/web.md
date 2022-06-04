@@ -4,13 +4,18 @@
 
 ## Index
 
+### Interfaces
+
+* [HistoryStreamLike](../interfaces/web.historystreamlike.md)
+
 ### Type aliases
 
 * [FetchRequest](web.md#fetchrequest)
+* [WindowLocationURI](web.md#windowlocationuri)
 
 ### Variables
 
-* [historyStateStore](web.md#historystatestore)
+* [historyStream](web.md#historystream)
 
 ### Functions
 
@@ -24,11 +29,26 @@
 
 Ƭ **FetchRequest**: RequestInit & { `uri`: *string*  }
 
+___
+
+### WindowLocationURI
+
+Ƭ **WindowLocationURI**: { `fragment`: *string* ; `path`: *string* ; `query`: *string* ; `title`: *string*  }
+
+#### Type declaration:
+
+Name | Type |
+------ | ------ |
+`fragment` | *string* |
+`path` | *string* |
+`query` | *string* |
+`title` | *string* |
+
 ## Variables
 
-### historyStateStore
+### historyStream
 
-• `Const` **historyStateStore**: [*StateStoreLike*](../interfaces/statestore.statestorelike.md)<[*RelativeURI*](relativeuri.md#relativeuri)\>
+• `Const` **historyStream**: [*HistoryStreamLike*](../interfaces/web.historystreamlike.md)
 
 ## Functions
 

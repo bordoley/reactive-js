@@ -1,12 +1,11 @@
 /// <reference types="./web.d.ts" />
-import { none } from './option.mjs';
-import { pipe, compose, returns } from './functions.mjs';
-import { createObservable, throttle, onNotify, mergeWith, compute, concatWith, defer, fromPromise, observe } from './observable.mjs';
+import { isNone, none } from './option.mjs';
+import { pipe, raise, returns } from './functions.mjs';
+import { createObservable, keep as keep$1, throttle, onNotify as onNotify$1, subscribe, defer, fromPromise, observe } from './observable.mjs';
 import { dispose, addTeardown, toAbortSignal } from './disposable.mjs';
 import { keep } from './readonlyArray.mjs';
-import { createStreamable, mapReq, map } from './streamable.mjs';
-import { toStateStore } from './stateStore.mjs';
-import { fromHref, toHref } from './relativeURI.mjs';
+import { onNotify, lift, map, stream } from './streamable.mjs';
+import { createStateStore } from './stateStore.mjs';
 
 const fromEvent = (target, eventName, selector) => createObservable(dispatcher => {
     const listener = (event) => {
@@ -51,23 +50,116 @@ const createEventSource = (url, options = {}) => {
     });
 };
 
-const getCurrentLocation = (_) => window.location.href;
-const pushHistoryState = (newLocation) => {
-    const currentLocation = getCurrentLocation();
-    if (currentLocation !== newLocation) {
-        window.history.pushState(none, "", newLocation);
+const windowLocationURIToString = ({ path, query, fragment, }) => new URL(`${path}${query}${fragment}`, window.location.href).toString();
+const getCurrentWindowLocationURI = () => {
+    const uri = new URL(window.location.href);
+    return {
+        title: document.title,
+        path: uri.pathname,
+        query: uri.search,
+        fragment: uri.hash,
+    };
+};
+const areWindowLocationURIsEqual = (a, b) => a === b ||
+    (a.title === b.title &&
+        a.path === b.path &&
+        a.query === b.query &&
+        a.fragment === b.fragment);
+function getStateStream() {
+    const { stateStream } = this;
+    return isNone(stateStream)
+        ? raise("HistoryStream is not initialized")
+        : stateStream;
+}
+function windowHistoryReplaceState(uri) {
+    const { title } = uri;
+    window.history.replaceState({ counter: this.historyCounter, title }, "", windowLocationURIToString(uri));
+}
+function windowHistoryPushState(uri) {
+    const { title } = uri;
+    this.historyCounter++;
+    window.history.pushState({ counter: this.historyCounter, title }, "", windowLocationURIToString(uri));
+}
+class HistoryStream {
+    constructor() {
+        this.historyCounter = -1;
+        this.stateStream = none;
     }
-};
-const historyFunction = compose(throttle(15), onNotify(pushHistoryState), mergeWith(pipe(getCurrentLocation, compute(), concatWith(fromEvent(window, "popstate", getCurrentLocation)))));
-const requestMapper = (stateUpdater) => (prevStateString) => {
-    const prevStateURI = fromHref(prevStateString);
-    const newStateURI = stateUpdater(prevStateURI);
-    return newStateURI === prevStateURI
-        ? prevStateString
-        : toHref(newStateURI, prevStateString);
-};
-const _historyStateStore = pipe(createStreamable(historyFunction), toStateStore(), mapReq(requestMapper), map(fromHref));
-const historyStateStore = _historyStateStore;
+    get isSynchronous() {
+        return false;
+    }
+    dispatch(stateOrUpdater, { replace } = { replace: false }) {
+        const stateStream = getStateStream.call(this);
+        stateStream.dispatch(state => {
+            const { uri: stateURI } = state;
+            const newURI = typeof stateOrUpdater === "function"
+                ? stateOrUpdater(stateURI)
+                : stateOrUpdater;
+            return areWindowLocationURIsEqual(stateURI, newURI)
+                ? state
+                : {
+                    uri: newURI,
+                    replace,
+                };
+        });
+    }
+    goBack() {
+        const canGoBack = this.historyCounter > 0;
+        if (canGoBack) {
+            window.history.back();
+        }
+        return canGoBack;
+    }
+    observe(observer) {
+        getStateStream.call(this).observe(observer);
+    }
+    init(scheduler) {
+        // raise if stateStream isSome
+        const stateStream = pipe(() => ({
+            replace: true,
+            uri: getCurrentWindowLocationURI(),
+        }), createStateStore, onNotify(({ uri }) => {
+            // Initialize the history state on page load
+            const isInitialPageLoad = this.historyCounter === -1;
+            if (isInitialPageLoad) {
+                this.historyCounter === 0;
+                windowHistoryReplaceState.call(this, uri);
+            }
+        }), lift(keep$1(({ uri }) => {
+            const { title } = uri;
+            const uriString = windowLocationURIToString(uri);
+            const titleChanged = document.title !== title;
+            const uriChanged = uriString !== window.location.href;
+            return titleChanged || uriChanged;
+        })), lift(throttle(300)), onNotify(({ replace, uri }) => {
+            const { title } = uri;
+            const uriString = windowLocationURIToString(uri);
+            const titleChanged = document.title !== title;
+            const uriChanged = uriString !== window.location.href;
+            const shouldReplace = replace || (titleChanged && !uriChanged);
+            const updateHistoryState = shouldReplace
+                ? windowHistoryReplaceState
+                : windowHistoryPushState;
+            document.title = title;
+            updateHistoryState.call(this, uri);
+        }), map(({ uri }) => uri), stream(scheduler));
+        const historySubscription = pipe(fromEvent(window, "popstate", (e) => {
+            const { counter, title } = e.state;
+            const uri = {
+                ...getCurrentWindowLocationURI(),
+                title,
+            };
+            return { counter, uri };
+        }), onNotify$1(({ counter, uri }) => {
+            this.historyCounter = counter;
+            this.dispatch(uri, { replace: true });
+        }), subscribe(scheduler));
+        stateStream.add(historySubscription);
+        this.stateStream = stateStream;
+        return stateStream;
+    }
+}
+const historyStream = new HistoryStream();
 
 const globalFetch = self.fetch;
 const fetch = (onResponse) => fetchRequest => defer(observer => async () => {
@@ -94,4 +186,4 @@ const fetch = (onResponse) => fetchRequest => defer(observer => async () => {
     }
 });
 
-export { createEventSource, fetch, fromEvent, historyStateStore };
+export { createEventSource, fetch, fromEvent, historyStream };

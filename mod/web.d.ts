@@ -1,7 +1,7 @@
-import { Function1 } from "./functions.mjs";
+import { Function1, Updater } from "./functions.mjs";
+import { DisposableLike } from "./disposable.mjs";
+import { SchedulerLike } from "./scheduler.mjs";
 import { ObservableLike } from "./observable.mjs";
-import { RelativeURI } from "./relativeURI.mjs";
-import { StateStoreLike } from "./stateStore.mjs";
 declare const fromEvent: <T>(target: EventTarget, eventName: string, selector: Function1<Event, T>) => ObservableLike<T>;
 declare const createEventSource: (url: string | URL, options?: EventSourceInit & {
     readonly events?: readonly string[];
@@ -10,9 +10,22 @@ declare const createEventSource: (url: string | URL, options?: EventSourceInit &
     readonly type: string;
     readonly data: string;
 }>;
-declare const historyStateStore: StateStoreLike<RelativeURI>;
+declare const historyStream: HistoryStreamLike;
 declare type FetchRequest = RequestInit & {
     uri: string;
 };
 declare const fetch: <T>(onResponse: Function1<Response, Promise<T> | ObservableLike<T>>) => Function1<string | FetchRequest, ObservableLike<T>>;
-export { FetchRequest, createEventSource, fetch, fromEvent, historyStateStore };
+declare type WindowLocationURI = {
+    title: string;
+    path: string;
+    query: string;
+    fragment: string;
+};
+interface HistoryStreamLike extends ObservableLike<WindowLocationURI> {
+    dispatch(stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI, options?: {
+        readonly replace?: boolean;
+    }): void;
+    goBack(): boolean;
+    init(scheduler: SchedulerLike): DisposableLike;
+}
+export { FetchRequest, HistoryStreamLike, WindowLocationURI, createEventSource, fetch, fromEvent, historyStream };

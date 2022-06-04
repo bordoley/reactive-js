@@ -17,10 +17,13 @@ import {
 } from "./observer";
 import { subscribe } from "./subscribe";
 
-function onNotify<TA, TB, T>(this: WithLatestFromObserver<TA, TB, T>, next: TB) {
+function onNotify<TA, TB, T>(
+  this: WithLatestFromObserver<TA, TB, T>,
+  next: TB,
+) {
   this.hasLatest = true;
   this.otherLatest = next;
-};
+}
 
 class WithLatestFromObserver<
   TA,
