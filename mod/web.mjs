@@ -1,5 +1,5 @@
 /// <reference types="./web.d.ts" />
-import { isNone, none } from './option.mjs';
+import { isNone, none, isSome } from './option.mjs';
 import { pipe, raise, returns } from './functions.mjs';
 import { createObservable, keep as keep$1, throttle, onNotify as onNotify$1, subscribe, defer, fromPromise, observe } from './observable.mjs';
 import { dispose, addTeardown, toAbortSignal } from './disposable.mjs';
@@ -86,7 +86,7 @@ class HistoryStream {
         this.stateStream = none;
     }
     get isSynchronous() {
-        return false;
+        return getStateStream.call(this).isSynchronous;
     }
     dispatch(stateOrUpdater, { replace } = { replace: false }) {
         const stateStream = getStateStream.call(this);
@@ -114,8 +114,11 @@ class HistoryStream {
         getStateStream.call(this).observe(observer);
     }
     init(scheduler) {
-        // raise if stateStream isSome
-        const stateStream = pipe(() => ({
+        let stateStream = this.stateStream;
+        if (isSome(stateStream) && !stateStream.isDisposed) {
+            raise("HistoryStream is already initialized");
+        }
+        stateStream = pipe(() => ({
             replace: true,
             uri: getCurrentWindowLocationURI(),
         }), createStateStore, onNotify(({ uri }) => {

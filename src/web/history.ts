@@ -8,7 +8,7 @@ import {
   subscribe,
   throttle,
 } from "../observable";
-import { Option, isNone, none } from "../option";
+import { Option, isNone, none, isSome } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { createStateStore } from "../stateStore";
 import { lift, map, onNotify as onNotifyStream, stream } from "../streamable";
@@ -50,7 +50,7 @@ type TState = {
 function getStateStream(
   this: HistoryStream,
 ): StreamLike<Updater<TState>, WindowLocationURI> {
-  const {stateStream } = this;
+  const { stateStream } = this;
   return isNone(stateStream)
     ? raise("HistoryStream is not initialized")
     : stateStream;
@@ -83,9 +83,9 @@ class HistoryStream implements HistoryStreamLike {
   stateStream: Option<StreamLike<Updater<TState>, WindowLocationURI>> = none;
 
   get isSynchronous() {
-    return false;
+    return getStateStream.call(this).isSynchronous;
   }
- 
+
   dispatch(
     stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
     { replace }: { replace: boolean } = { replace: false },
@@ -122,8 +122,13 @@ class HistoryStream implements HistoryStreamLike {
   }
 
   init(scheduler: SchedulerLike): DisposableLike {
-    // raise if stateStream isSome
-    const stateStream = pipe(
+    let stateStream = this.stateStream;
+
+    if (isSome(stateStream) && !stateStream.isDisposed) {
+      raise("HistoryStream is already initialized");
+    }
+
+    stateStream = pipe(
       () => ({
         replace: true,
         uri: getCurrentWindowLocationURI(),
