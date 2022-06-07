@@ -1,6 +1,6 @@
 /// <reference types="./web.d.ts" />
-import { none } from './option.mjs';
-import { pipe, returns } from './functions.mjs';
+import { none, isNone } from './option.mjs';
+import { pipe, raise, returns } from './functions.mjs';
 import { createObservable, keep as keep$1, throttle, onNotify as onNotify$1, subscribe, defer, fromPromise, observe } from './observable.mjs';
 import { dispose, addTeardown, AbstractDisposable, toAbortSignal } from './disposable.mjs';
 import { keep } from './readonlyArray.mjs';
@@ -50,7 +50,7 @@ const createEventSource = (url, options = {}) => {
     });
 };
 
-const windowLocationURIToString = ({ path, query, fragment, }) => new URL(`${path}${query}${fragment}`, window.location.href).toString();
+const windowLocationURIToString = ({ path, query, fragment, }) => new URL(`${path}?${query}#${fragment}`, window.location.href).toString();
 const getCurrentWindowLocationURI = () => {
     const uri = new URL(window.location.href);
     return {
@@ -77,6 +77,8 @@ function windowHistoryPushState(uri) {
 class WindowLocationStream extends AbstractDisposable {
     constructor(scheduler, options) {
         super();
+        this.scheduler = scheduler;
+        this.options = options;
         this.historyCounter = -1;
         this.stateStream = pipe(() => ({
             replace: true,
@@ -152,8 +154,24 @@ class WindowLocationStream extends AbstractDisposable {
     }
 }
 class WindowLocationStreamable {
+    constructor() {
+        this.currentStream = none;
+    }
     stream(scheduler, options) {
-        return new WindowLocationStream(scheduler, options);
+        var _a;
+        let { currentStream } = this;
+        if (isNone(currentStream)) {
+            currentStream = new WindowLocationStream(scheduler, options);
+            this.currentStream = currentStream;
+            return currentStream;
+        }
+        else if (currentStream.scheduler === scheduler &&
+            ((_a = currentStream.options) === null || _a === void 0 ? void 0 : _a.replay) === (options === null || options === void 0 ? void 0 : options.replay)) {
+            return currentStream;
+        }
+        else {
+            return raise("Cannot stream more than once");
+        }
     }
 }
 const windowLocation = new WindowLocationStreamable();
