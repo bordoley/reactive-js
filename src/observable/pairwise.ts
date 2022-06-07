@@ -1,7 +1,10 @@
 import { ObservableOperator, ObserverLike } from "../observable";
 import { Option, none } from "../option";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer";
+import {
+  AbstractAutoDisposingDelegatingObserver,
+  assertObserverState,
+} from "./observer";
 
 class PairwiseObserver<T> extends AbstractAutoDisposingDelegatingObserver<
   T,

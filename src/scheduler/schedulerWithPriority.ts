@@ -23,6 +23,10 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
     return this.priorityScheduler.shouldYield;
   }
 
+  requestYield(): void {
+    this.priorityScheduler.requestYield();
+  }
+
   schedule(
     continuation: SchedulerContinuationLike,
     options: { readonly delay?: number } = {},

@@ -54,6 +54,8 @@ class VirtualTimeSchedulerImpl
   microTaskTicks = 0;
   now = 0;
   private taskIDCount = 0;
+  private yieldRequested = false;
+
   readonly taskQueue: PriorityQueueLike<VirtualTask> = createPriorityQueue(
     comparator,
   );
@@ -63,11 +65,21 @@ class VirtualTimeSchedulerImpl
   }
 
   get shouldYield() {
+    const { yieldRequested } = this;
+
     if (this.inContinuation) {
       this.microTaskTicks++;
+      this.yieldRequested = false;
     }
 
-    return this.inContinuation && this.microTaskTicks >= this.maxMicroTaskTicks;
+    return (
+      this.inContinuation &&
+      (yieldRequested || this.microTaskTicks >= this.maxMicroTaskTicks)
+    );
+  }
+
+  requestYield(): void {
+    this.yieldRequested = true;
   }
 
   run() {

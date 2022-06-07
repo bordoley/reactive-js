@@ -36,6 +36,7 @@ Name |
 * [add](observable.observerlike.md#add)
 * [dispose](observable.observerlike.md#dispose)
 * [notify](observable.observerlike.md#notify)
+* [requestYield](observable.observerlike.md#requestyield)
 * [schedule](observable.observerlike.md#schedule)
 
 ## Properties
@@ -138,6 +139,18 @@ Name | Type | Description |
 `next` | T | The next notification value.    |
 
 **Returns:** *void*
+
+___
+
+### requestYield
+
+▸ **requestYield**(): *void*
+
+Request the scheduler to yield.
+
+**Returns:** *void*
+
+Inherited from: [SchedulerLike](scheduler.schedulerlike.md)
 
 ___
 
