@@ -21,6 +21,8 @@ Name |
 
   ↳↳ [*SubjectLike*](observable.subjectlike.md)
 
+  ↳↳ [*WindowLocationStreamLike*](web.windowlocationstreamlike.md)
+
 ## Index
 
 ### Properties

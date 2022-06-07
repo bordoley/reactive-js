@@ -21,6 +21,8 @@ Name |
 
   ↳ [*StateStoreLike*](statestore.statestorelike.md)
 
+  ↳ [*WindowLocationStreamableLike*](web.windowlocationstreamablelike.md)
+
 ## Index
 
 ### Methods

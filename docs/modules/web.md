@@ -7,6 +7,7 @@
 ### Interfaces
 
 * [WindowLocationStreamLike](../interfaces/web.windowlocationstreamlike.md)
+* [WindowLocationStreamableLike](../interfaces/web.windowlocationstreamablelike.md)
 
 ### Type aliases
 
@@ -15,7 +16,7 @@
 
 ### Variables
 
-* [windowLocationStream](web.md#windowlocationstream)
+* [windowLocation](web.md#windowlocation)
 
 ### Functions
 
@@ -46,9 +47,9 @@ Name | Type |
 
 ## Variables
 
-### windowLocationStream
+### windowLocation
 
-• `Const` **windowLocationStream**: [*WindowLocationStreamLike*](../interfaces/web.windowlocationstreamlike.md)
+• `Const` **windowLocation**: [*WindowLocationStreamableLike*](../interfaces/web.windowlocationstreamablelike.md)
 
 ## Functions
 

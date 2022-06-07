@@ -1,5 +1,5 @@
-import { DisposableLike } from "../disposable";
-import { Updater, pipe, raise } from "../functions";
+import { AbstractDisposable } from "../disposable";
+import { Updater, pipe } from "../functions";
 import {
   ObserverLike,
   StreamLike,
@@ -8,11 +8,14 @@ import {
   subscribe,
   throttle,
 } from "../observable";
-import { Option, isNone, none, isSome } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { createStateStore } from "../stateStore";
 import { lift, map, onNotify as onNotifyStream, stream } from "../streamable";
-import { WindowLocationStreamLike, WindowLocationURI } from "../web";
+import {
+  WindowLocationStreamableLike,
+  WindowLocationStreamLike,
+  WindowLocationURI,
+} from "../web";
 import { fromEvent } from "./event";
 
 const windowLocationURIToString = ({
@@ -47,15 +50,6 @@ type TState = {
   uri: WindowLocationURI;
 };
 
-function getStateStream(
-  this: WindowLocationStream,
-): StreamLike<Updater<TState>, WindowLocationURI> {
-  const { stateStream } = this;
-  return isNone(stateStream)
-    ? raise("HistoryStream is not initialized")
-    : stateStream;
-}
-
 function windowHistoryReplaceState(
   this: WindowLocationStream,
   uri: WindowLocationURI,
@@ -68,7 +62,10 @@ function windowHistoryReplaceState(
   );
 }
 
-function windowHistoryPushState(this: WindowLocationStream, uri: WindowLocationURI) {
+function windowHistoryPushState(
+  this: WindowLocationStream,
+  uri: WindowLocationURI,
+) {
   const { title } = uri;
   this.historyCounter++;
   window.history.pushState(
@@ -78,57 +75,19 @@ function windowHistoryPushState(this: WindowLocationStream, uri: WindowLocationU
   );
 }
 
-class WindowLocationStream implements WindowLocationStreamLike {
+class WindowLocationStream
+  extends AbstractDisposable
+  implements WindowLocationStreamLike {
   historyCounter = -1;
-  stateStream: Option<StreamLike<Updater<TState>, WindowLocationURI>> = none;
+  readonly stateStream: StreamLike<Updater<TState>, WindowLocationURI>;
 
-  get isSynchronous() {
-    return getStateStream.call(this).isSynchronous;
-  }
+  constructor(
+    scheduler: SchedulerLike,
+    options?: { readonly replay?: number },
+  ) {
+    super();
 
-  dispatch(
-    stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
-    { replace }: { replace: boolean } = { replace: false },
-  ): void {
-    const stateStream = getStateStream.call(this);
-
-    stateStream.dispatch(state => {
-      const { uri: stateURI } = state;
-      const newURI =
-        typeof stateOrUpdater === "function"
-          ? stateOrUpdater(stateURI)
-          : stateOrUpdater;
-      return areWindowLocationURIsEqual(stateURI, newURI)
-        ? state
-        : {
-            uri: newURI,
-            replace,
-          };
-    });
-  }
-
-  goBack(): boolean {
-    const canGoBack = this.historyCounter > 0;
-
-    if (canGoBack) {
-      window.history.back();
-    }
-
-    return canGoBack;
-  }
-
-  observe(observer: ObserverLike<WindowLocationURI>): void {
-    getStateStream.call(this).observe(observer);
-  }
-
-  init(scheduler: SchedulerLike): DisposableLike {
-    let stateStream = this.stateStream;
-
-    if (isSome(stateStream) && !stateStream.isDisposed) {
-      raise("HistoryStream is already initialized");
-    }
-
-    stateStream = pipe(
+    this.stateStream = pipe(
       () => ({
         replace: true,
         uri: getCurrentWindowLocationURI(),
@@ -171,7 +130,7 @@ class WindowLocationStream implements WindowLocationStreamLike {
         updateHistoryState.call(this, uri);
       }),
       map(({ uri }) => uri),
-      stream(scheduler),
+      stream(scheduler, options),
     );
 
     const historySubscription = pipe(
@@ -195,11 +154,60 @@ class WindowLocationStream implements WindowLocationStreamLike {
       subscribe(scheduler),
     );
 
-    stateStream.add(historySubscription);
-    this.stateStream = stateStream;
+    this.stateStream.add(historySubscription);
+  }
 
-    return stateStream;
+  get isSynchronous() {
+    return this.stateStream.isSynchronous;
+  }
+
+  get observerCount() {
+    return this.stateStream.observerCount;
+  }
+
+  dispatch(
+    stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
+    { replace }: { replace: boolean } = { replace: false },
+  ): void {
+    const stateStream = this.stateStream;
+
+    stateStream.dispatch(state => {
+      const { uri: stateURI } = state;
+      const newURI =
+        typeof stateOrUpdater === "function"
+          ? stateOrUpdater(stateURI)
+          : stateOrUpdater;
+      return areWindowLocationURIsEqual(stateURI, newURI)
+        ? state
+        : {
+            uri: newURI,
+            replace,
+          };
+    });
+  }
+
+  goBack(): boolean {
+    const canGoBack = this.historyCounter > 0;
+
+    if (canGoBack) {
+      window.history.back();
+    }
+
+    return canGoBack;
+  }
+
+  observe(observer: ObserverLike<WindowLocationURI>): void {
+    this.stateStream.observe(observer);
   }
 }
 
-export const windowLocationStream: WindowLocationStreamLike = new WindowLocationStream();
+class WindowLocationStreamable implements WindowLocationStreamableLike {
+  stream(
+    scheduler: SchedulerLike,
+    options?: { readonly replay?: number },
+  ): WindowLocationStreamLike {
+    return new WindowLocationStream(scheduler, options);
+  }
+}
+
+export const windowLocation: WindowLocationStreamableLike = new WindowLocationStreamable();

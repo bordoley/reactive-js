@@ -1,7 +1,7 @@
 import { Function1, Updater } from "./functions.mjs";
-import { DisposableLike } from "./disposable.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
-import { ObservableLike } from "./observable.mjs";
+import { ObservableLike, StreamLike } from "./observable.mjs";
+import { StreamableLike } from "./streamable.mjs";
 declare const fromEvent: <T>(target: EventTarget, eventName: string, selector: Function1<Event, T>) => ObservableLike<T>;
 declare const createEventSource: (url: string | URL, options?: EventSourceInit & {
     readonly events?: readonly string[];
@@ -10,7 +10,7 @@ declare const createEventSource: (url: string | URL, options?: EventSourceInit &
     readonly type: string;
     readonly data: string;
 }>;
-declare const windowLocationStream: WindowLocationStreamLike;
+declare const windowLocation: WindowLocationStreamableLike;
 declare type FetchRequest = RequestInit & {
     uri: string;
 };
@@ -21,11 +21,15 @@ declare type WindowLocationURI = {
     query: string;
     fragment: string;
 };
-interface WindowLocationStreamLike extends ObservableLike<WindowLocationURI> {
+interface WindowLocationStreamLike extends StreamLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI> {
     dispatch(stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI, options?: {
         readonly replace?: boolean;
     }): void;
     goBack(): boolean;
-    init(scheduler: SchedulerLike): DisposableLike;
 }
-export { FetchRequest, WindowLocationStreamLike, WindowLocationURI, createEventSource, fetch, fromEvent, windowLocationStream };
+interface WindowLocationStreamableLike extends StreamableLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI> {
+    stream(scheduler: SchedulerLike, options?: {
+        readonly replay?: number;
+    }): WindowLocationStreamLike;
+}
+export { FetchRequest, WindowLocationStreamLike, WindowLocationStreamableLike, WindowLocationURI, createEventSource, fetch, fromEvent, windowLocation };
