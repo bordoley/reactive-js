@@ -2,7 +2,7 @@
 import { none, isNone } from './option.mjs';
 import { pipe, raise, returns } from './functions.mjs';
 import { createObservable, keep as keep$1, throttle, onNotify as onNotify$1, subscribe, defer, fromPromise, observe } from './observable.mjs';
-import { dispose, addTeardown, AbstractDisposable, toAbortSignal } from './disposable.mjs';
+import { dispose, addTeardown, addDisposableDisposeParentOnChildError, toAbortSignal } from './disposable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { onNotify, lift, map, stream } from './streamable.mjs';
 import { createStateStore } from './stateStore.mjs';
@@ -65,18 +65,17 @@ const areWindowLocationURIsEqual = (a, b) => a === b ||
         a.path === b.path &&
         a.query === b.query &&
         a.fragment === b.fragment);
-function windowHistoryReplaceState(uri) {
+const windowHistoryReplaceState = (self, uri) => {
     const { title } = uri;
-    window.history.replaceState({ counter: this.historyCounter, title }, "", windowLocationURIToString(uri));
-}
-function windowHistoryPushState(uri) {
+    window.history.replaceState({ counter: self.historyCounter, title }, "", windowLocationURIToString(uri));
+};
+const windowHistoryPushState = (self, uri) => {
     const { title } = uri;
-    this.historyCounter++;
-    window.history.pushState({ counter: this.historyCounter, title }, "", windowLocationURIToString(uri));
-}
-class WindowLocationStream extends AbstractDisposable {
+    self.historyCounter++;
+    window.history.pushState({ counter: self.historyCounter, title }, "", windowLocationURIToString(uri));
+};
+class WindowLocationStream {
     constructor(scheduler, options) {
-        super();
         this.scheduler = scheduler;
         this.options = options;
         this.historyCounter = -1;
@@ -88,7 +87,7 @@ class WindowLocationStream extends AbstractDisposable {
             const isInitialPageLoad = this.historyCounter === -1;
             if (isInitialPageLoad) {
                 this.historyCounter === 0;
-                windowHistoryReplaceState.call(this, uri);
+                windowHistoryReplaceState(this, uri);
             }
         }), lift(keep$1(({ uri }) => {
             const { title } = uri;
@@ -106,7 +105,7 @@ class WindowLocationStream extends AbstractDisposable {
                 ? windowHistoryReplaceState
                 : windowHistoryPushState;
             document.title = title;
-            updateHistoryState.call(this, uri);
+            updateHistoryState(this, uri);
         }), map(({ uri }) => uri), stream(scheduler, options));
         const historySubscription = pipe(fromEvent(window, "popstate", (e) => {
             const { counter, title } = e.state;
@@ -119,7 +118,13 @@ class WindowLocationStream extends AbstractDisposable {
             this.historyCounter = counter;
             this.dispatch(uri, { replace: true });
         }), subscribe(scheduler));
-        this.stateStream.add(historySubscription);
+        addDisposableDisposeParentOnChildError(this, historySubscription);
+    }
+    get error() {
+        return this.stateStream.error;
+    }
+    get isDisposed() {
+        return this.stateStream.isDisposed;
     }
     get isSynchronous() {
         return this.stateStream.isSynchronous;
@@ -127,9 +132,11 @@ class WindowLocationStream extends AbstractDisposable {
     get observerCount() {
         return this.stateStream.observerCount;
     }
+    add(disposable) {
+        this.stateStream.add(disposable);
+    }
     dispatch(stateOrUpdater, { replace } = { replace: false }) {
-        const stateStream = this.stateStream;
-        stateStream.dispatch(state => {
+        this.stateStream.dispatch(state => {
             const { uri: stateURI } = state;
             const newURI = typeof stateOrUpdater === "function"
                 ? stateOrUpdater(stateURI)
@@ -141,6 +148,9 @@ class WindowLocationStream extends AbstractDisposable {
                     replace,
                 };
         });
+    }
+    dispose(error) {
+        this.stateStream.dispose(error);
     }
     goBack() {
         const canGoBack = this.historyCounter > 0;
