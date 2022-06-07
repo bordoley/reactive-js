@@ -1,7 +1,7 @@
 import { ObservableOperator, ObserverLike } from "../observable";
 import { Option, none } from "../option";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingObserver } from "./observer";
+import { AbstractAutoDisposingDelegatingObserver, assertObserverState } from "./observer";
 
 class PairwiseObserver<T> extends AbstractAutoDisposingDelegatingObserver<
   T,
@@ -11,6 +11,7 @@ class PairwiseObserver<T> extends AbstractAutoDisposingDelegatingObserver<
   private hasPrev = false;
 
   notify(value: T): void {
+    assertObserverState(this);
     const prev = this.hasPrev ? this.prev : none;
 
     this.hasPrev = true;
