@@ -1,4 +1,8 @@
-import { AbstractDisposable } from "../disposable";
+import {
+  addDisposableDisposeParentOnChildError,
+  DisposableOrTeardown,
+  Error,
+} from "../disposable";
 import { Updater, pipe, raise } from "../functions";
 import {
   ObserverLike,
@@ -61,7 +65,7 @@ const windowHistoryReplaceState = (
     "",
     windowLocationURIToString(uri),
   );
-}
+};
 
 const windowHistoryPushState = (
   self: WindowLocationStream,
@@ -74,11 +78,9 @@ const windowHistoryPushState = (
     "",
     windowLocationURIToString(uri),
   );
-}
+};
 
-class WindowLocationStream
-  extends AbstractDisposable
-  implements WindowLocationStreamLike {
+class WindowLocationStream implements WindowLocationStreamLike {
   historyCounter = -1;
   readonly stateStream: StreamLike<Updater<TState>, WindowLocationURI>;
 
@@ -86,8 +88,6 @@ class WindowLocationStream
     readonly scheduler: SchedulerLike,
     readonly options?: { readonly replay?: number },
   ) {
-    super();
-
     this.stateStream = pipe(
       () => ({
         replace: true,
@@ -155,7 +155,15 @@ class WindowLocationStream
       subscribe(scheduler),
     );
 
-    this.stateStream.add(historySubscription);
+    addDisposableDisposeParentOnChildError(this, historySubscription);
+  }
+
+  get error() {
+    return this.stateStream.error;
+  }
+
+  get isDisposed() {
+    return this.stateStream.isDisposed;
   }
 
   get isSynchronous() {
@@ -166,13 +174,15 @@ class WindowLocationStream
     return this.stateStream.observerCount;
   }
 
+  add(disposable: DisposableOrTeardown): void {
+    this.stateStream.add(disposable);
+  }
+
   dispatch(
     stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
     { replace }: { replace: boolean } = { replace: false },
   ): void {
-    const stateStream = this.stateStream;
-
-    stateStream.dispatch(state => {
+    this.stateStream.dispatch(state => {
       const { uri: stateURI } = state;
       const newURI =
         typeof stateOrUpdater === "function"
@@ -185,6 +195,10 @@ class WindowLocationStream
             replace,
           };
     });
+  }
+
+  dispose(error?: Error): void {
+    this.stateStream.dispose(error);
   }
 
   goBack(): boolean {
@@ -209,8 +223,8 @@ class WindowLocationStreamable implements WindowLocationStreamableLike {
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
   ): WindowLocationStreamLike {
-    let { currentStream } = this; 
-    
+    let { currentStream } = this;
+
     if (isNone(currentStream)) {
       currentStream = new WindowLocationStream(scheduler, options);
       this.currentStream = currentStream;
@@ -222,7 +236,7 @@ class WindowLocationStreamable implements WindowLocationStreamableLike {
       return currentStream;
     } else {
       return raise("Cannot stream more than once");
-    }    
+    }
   }
 }
 
