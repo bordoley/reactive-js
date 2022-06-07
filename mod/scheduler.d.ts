@@ -62,6 +62,10 @@ interface SchedulerLike {
     readonly now: number;
     readonly shouldYield: boolean;
     /**
+     * Request the scheduler to yield.
+     */
+    requestYield(): void;
+    /**
      * Schedules a continuation to be executed on the scheduler.
      *
      * @param continuation The SchedulerContinuation to be executed.
@@ -91,6 +95,10 @@ interface PrioritySchedulerLike {
     readonly inContinuation: boolean;
     readonly now: number;
     readonly shouldYield: boolean;
+    /**
+     * Request the scheduler to yield.
+     */
+    requestYield(): void;
     /**
      * Schedules a continuation to be executed on the scheduler.
      *

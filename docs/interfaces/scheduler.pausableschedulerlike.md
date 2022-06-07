@@ -19,6 +19,7 @@
 ### Methods
 
 * [pause](scheduler.pausableschedulerlike.md#pause)
+* [requestYield](scheduler.pausableschedulerlike.md#requestyield)
 * [resume](scheduler.pausableschedulerlike.md#resume)
 * [schedule](scheduler.pausableschedulerlike.md#schedule)
 
@@ -53,6 +54,18 @@ Inherited from: [SchedulerLike](scheduler.schedulerlike.md).[shouldYield](schedu
 ▸ **pause**(): *void*
 
 **Returns:** *void*
+
+___
+
+### requestYield
+
+▸ **requestYield**(): *void*
+
+Request the scheduler to yield.
+
+**Returns:** *void*
+
+Inherited from: [SchedulerLike](scheduler.schedulerlike.md)
 
 ___
 

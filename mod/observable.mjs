@@ -105,6 +105,10 @@ class AbstractObserver extends AbstractDisposable {
         this.inContinuation = status;
     }
     /** @ignore */
+    requestYield() {
+        this.delegate.requestYield();
+    }
+    /** @ignore */
     schedule(continuation, options) {
         continuation.addListener("onRunStatusChanged", this);
         addDisposable(this, continuation);
@@ -1177,6 +1181,7 @@ class PairwiseObserver extends AbstractAutoDisposingDelegatingObserver {
         this.hasPrev = false;
     }
     notify(value) {
+        assertObserverState(this);
         const prev = this.hasPrev ? this.prev : none;
         this.hasPrev = true;
         this.prev = value;
@@ -1743,6 +1748,9 @@ class EnumeratorObserver extends AbstractDisposable {
         assertObserverState(this);
         this.current = next;
         this.hasCurrent = true;
+    }
+    requestYield() {
+        // No-Op: We yield whenever the continuation is running.
     }
     schedule(continuation, { delay } = { delay: 0 }) {
         addDisposable(this, continuation);

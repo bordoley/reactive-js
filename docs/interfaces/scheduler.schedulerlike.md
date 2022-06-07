@@ -24,6 +24,7 @@ An object that schedules units of work on a runloop.
 
 ### Methods
 
+* [requestYield](scheduler.schedulerlike.md#requestyield)
 * [schedule](scheduler.schedulerlike.md#schedule)
 
 ## Properties
@@ -45,6 +46,16 @@ ___
 • `Readonly` **shouldYield**: *boolean*
 
 ## Methods
+
+### requestYield
+
+▸ **requestYield**(): *void*
+
+Request the scheduler to yield.
+
+**Returns:** *void*
+
+___
 
 ### schedule
 

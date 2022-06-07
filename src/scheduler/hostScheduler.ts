@@ -80,6 +80,7 @@ const runContinuation = (
 class HostScheduler implements SchedulerLike {
   inContinuation = false;
   startTime = this.now;
+  private yieldRequested = false;
 
   constructor(private readonly yieldInterval: number) {}
 
@@ -88,10 +89,22 @@ class HostScheduler implements SchedulerLike {
   }
 
   get shouldYield() {
+    const { yieldRequested } = this;
+
+    if (this.inContinuation) {
+      this.yieldRequested = false;
+    }
+
     return (
       this.inContinuation &&
-      (this.now > this.startTime + this.yieldInterval || inputIsPending())
+      (yieldRequested ||
+        this.now > this.startTime + this.yieldInterval ||
+        inputIsPending())
     );
+  }
+
+  requestYield(): void {
+    this.yieldRequested = true;
   }
 
   schedule(

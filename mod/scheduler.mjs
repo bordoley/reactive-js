@@ -259,6 +259,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
         this.isPaused = false;
         this.queue = createPriorityQueue(comparator);
         this.taskIDCounter = 0;
+        this.yieldRequested = false;
         addTeardown(this, clearQueues);
     }
     get now() {
@@ -272,8 +273,13 @@ class PriorityScheduler extends AbstractSerialDisposable {
             current !== next &&
             next.dueTime <= this.now &&
             next.priority < current.priority;
+        const { yieldRequested } = this;
+        if (this.inContinuation) {
+            this.yieldRequested = false;
+        }
         return (this.inContinuation &&
-            (this.isDisposed ||
+            (yieldRequested ||
+                this.isDisposed ||
                 this.isPaused ||
                 nextTaskIsHigherPriority ||
                 this.host.shouldYield));
@@ -288,6 +294,9 @@ class PriorityScheduler extends AbstractSerialDisposable {
         if (this.inner.isDisposed && isSome(head)) {
             scheduleContinuation(this, head);
         }
+    }
+    requestYield() {
+        this.yieldRequested = true;
     }
     schedule(continuation, options = {}) {
         let { delay = 0, priority } = options;
@@ -351,6 +360,9 @@ class SchedulerWithPriorityImpl {
     get shouldYield() {
         return this.priorityScheduler.shouldYield;
     }
+    requestYield() {
+        this.priorityScheduler.requestYield();
+    }
     schedule(continuation, options = {}) {
         const { delay } = options;
         this.priorityScheduler.schedule(continuation, {
@@ -412,13 +424,23 @@ class HostScheduler {
         this.yieldInterval = yieldInterval;
         this.inContinuation = false;
         this.startTime = this.now;
+        this.yieldRequested = false;
     }
     get now() {
         return now();
     }
     get shouldYield() {
+        const { yieldRequested } = this;
+        if (this.inContinuation) {
+            this.yieldRequested = false;
+        }
         return (this.inContinuation &&
-            (this.now > this.startTime + this.yieldInterval || inputIsPending()));
+            (yieldRequested ||
+                this.now > this.startTime + this.yieldInterval ||
+                inputIsPending()));
+    }
+    requestYield() {
+        this.yieldRequested = true;
     }
     schedule(continuation, options = {}) {
         const { delay = 0 } = options;
@@ -470,13 +492,20 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable {
         this.microTaskTicks = 0;
         this.now = 0;
         this.taskIDCount = 0;
+        this.yieldRequested = false;
         this.taskQueue = createPriorityQueue(comparator$1);
     }
     get shouldYield() {
+        const { yieldRequested } = this;
         if (this.inContinuation) {
             this.microTaskTicks++;
+            this.yieldRequested = false;
         }
-        return this.inContinuation && this.microTaskTicks >= this.maxMicroTaskTicks;
+        return (this.inContinuation &&
+            (yieldRequested || this.microTaskTicks >= this.maxMicroTaskTicks));
+    }
+    requestYield() {
+        this.yieldRequested = true;
     }
     run() {
         while (!this.isDisposed && move$1(this)) {

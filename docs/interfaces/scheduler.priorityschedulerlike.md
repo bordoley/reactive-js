@@ -18,6 +18,7 @@ A scheduler which schedules work according to it's priority.
 
 ### Methods
 
+* [requestYield](scheduler.priorityschedulerlike.md#requestyield)
 * [schedule](scheduler.priorityschedulerlike.md#schedule)
 
 ## Properties
@@ -39,6 +40,16 @@ ___
 • `Readonly` **shouldYield**: *boolean*
 
 ## Methods
+
+### requestYield
+
+▸ **requestYield**(): *void*
+
+Request the scheduler to yield.
+
+**Returns:** *void*
+
+___
 
 ### schedule
 

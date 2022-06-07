@@ -64,6 +64,11 @@ export abstract class AbstractObserver<T, TDelegate extends SchedulerLike>
   }
 
   /** @ignore */
+  requestYield(): void {
+    this.delegate.requestYield();
+  }
+
+  /** @ignore */
   schedule(
     continuation: SchedulerContinuationLike,
     options?: { readonly delay?: number },

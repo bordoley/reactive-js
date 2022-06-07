@@ -26,6 +26,7 @@ A scheduler that uses a virtual clock to simulate time. Useful for testing.
 
 * [add](scheduler.virtualtimeschedulerlike.md#add)
 * [dispose](scheduler.virtualtimeschedulerlike.md#dispose)
+* [requestYield](scheduler.virtualtimeschedulerlike.md#requestyield)
 * [run](scheduler.virtualtimeschedulerlike.md#run)
 * [schedule](scheduler.virtualtimeschedulerlike.md#schedule)
 
@@ -110,6 +111,18 @@ Name | Type | Description |
 **Returns:** *void*
 
 Inherited from: [DisposableLike](disposable.disposablelike.md)
+
+___
+
+### requestYield
+
+▸ **requestYield**(): *void*
+
+Request the scheduler to yield.
+
+**Returns:** *void*
+
+Inherited from: [SchedulerLike](scheduler.schedulerlike.md)
 
 ___
 

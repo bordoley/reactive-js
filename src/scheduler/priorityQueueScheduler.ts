@@ -144,6 +144,7 @@ class PriorityScheduler
     comparator,
   );
   taskIDCounter = 0;
+  private yieldRequested = false;
 
   constructor(readonly host: SchedulerLike) {
     super();
@@ -165,9 +166,15 @@ class PriorityScheduler
       next.dueTime <= this.now &&
       next.priority < current.priority;
 
+    const { yieldRequested } = this;
+    if (this.inContinuation) {
+      this.yieldRequested = false;
+    }
+
     return (
       this.inContinuation &&
-      (this.isDisposed ||
+      (yieldRequested ||
+        this.isDisposed ||
         this.isPaused ||
         nextTaskIsHigherPriority ||
         this.host.shouldYield)
@@ -187,6 +194,10 @@ class PriorityScheduler
     if (this.inner.isDisposed && isSome(head)) {
       scheduleContinuation(this, head);
     }
+  }
+
+  requestYield(): void {
+    this.yieldRequested = true;
   }
 
   schedule(

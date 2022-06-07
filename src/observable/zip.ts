@@ -70,6 +70,10 @@ class EnumeratorObserver<T>
     this.hasCurrent = true;
   }
 
+  requestYield(): void {
+    // No-Op: We yield whenever the continuation is running.
+  }
+
   schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
     addDisposable(this, continuation);
 

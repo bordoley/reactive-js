@@ -7,6 +7,7 @@ import {
   unstable_UserBlockingPriority,
   unstable_cancelCallback,
   unstable_now,
+  //unstable_requestPaint,
   unstable_scheduleCallback,
   unstable_shouldYield,
 } from "scheduler";
@@ -99,6 +100,10 @@ const priorityScheduler = {
 
   get shouldYield(): boolean {
     return priorityScheduler.inContinuation && unstable_shouldYield();
+  },
+
+  requestYield() {
+    // unstable_requestPaint()
   },
 
   schedule(
