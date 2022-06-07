@@ -1,5 +1,5 @@
 import { AbstractDisposable } from "../disposable";
-import { Updater, pipe } from "../functions";
+import { Updater, pipe, raise } from "../functions";
 import {
   ObserverLike,
   StreamLike,
@@ -8,6 +8,7 @@ import {
   subscribe,
   throttle,
 } from "../observable";
+import { Option, none, isNone } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { createStateStore } from "../stateStore";
 import { lift, map, onNotify as onNotifyStream, stream } from "../streamable";
@@ -23,7 +24,7 @@ const windowLocationURIToString = ({
   query,
   fragment,
 }: WindowLocationURI): string =>
-  new URL(`${path}${query}${fragment}`, window.location.href).toString();
+  new URL(`${path}?${query}#${fragment}`, window.location.href).toString();
 
 const getCurrentWindowLocationURI = (): WindowLocationURI => {
   const uri = new URL(window.location.href);
@@ -82,8 +83,8 @@ class WindowLocationStream
   readonly stateStream: StreamLike<Updater<TState>, WindowLocationURI>;
 
   constructor(
-    scheduler: SchedulerLike,
-    options?: { readonly replay?: number },
+    readonly scheduler: SchedulerLike,
+    readonly options?: { readonly replay?: number },
   ) {
     super();
 
@@ -202,11 +203,26 @@ class WindowLocationStream
 }
 
 class WindowLocationStreamable implements WindowLocationStreamableLike {
+  currentStream: Option<WindowLocationStream> = none;
+
   stream(
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
   ): WindowLocationStreamLike {
-    return new WindowLocationStream(scheduler, options);
+    let { currentStream } = this; 
+    
+    if (isNone(currentStream)) {
+      currentStream = new WindowLocationStream(scheduler, options);
+      this.currentStream = currentStream;
+      return currentStream;
+    } else if (
+      currentStream.scheduler === scheduler &&
+      currentStream.options?.replay === options?.replay
+    ) {
+      return currentStream;
+    } else {
+      return raise("Cannot stream more than once");
+    }    
   }
 }
 
