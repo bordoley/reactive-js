@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useMemo, useState } from "react";
+import { ComponentType, ReactElement, useEffect, useMemo, useState } from "react";
 import {
   unstable_IdlePriority,
   unstable_ImmediatePriority,
@@ -7,7 +7,8 @@ import {
   unstable_UserBlockingPriority,
   unstable_cancelCallback,
   unstable_now,
-  //unstable_requestPaint,
+  // @ts-ignore-next-line
+  unstable_requestPaint,
   unstable_scheduleCallback,
   unstable_shouldYield,
 } from "scheduler";
@@ -73,7 +74,7 @@ const createReplaySubject = () => createSubject({ replay: 1 });
 
 export const createComponent = <TProps>(
   fn: (props: ObservableLike<TProps>) => ObservableLike<ReactElement>,
-) => {
+): ComponentType<TProps> => {
   const ObservableComponent = (props: TProps) => {
     const propsSubject = useMemo<SubjectLike<TProps>>(createReplaySubject, [
       createReplaySubject,
@@ -103,7 +104,7 @@ const priorityScheduler = {
   },
 
   requestYield() {
-    // unstable_requestPaint()
+    unstable_requestPaint();
   },
 
   schedule(
