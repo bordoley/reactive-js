@@ -61,7 +61,7 @@ Scheduler that schedules work on React's internal priority scheduler with user b
 
 ### createComponent
 
-▸ `Const`**createComponent**<TProps\>(`fn`: (`props`: [*ObservableLike*](../interfaces/observable.observablelike.md)<TProps\>) => [*ObservableLike*](../interfaces/observable.observablelike.md)<*ReactElement*<*any*, *string* \| (`props`: *any*) => *null* \| *ReactElement*<*any*, *string* \| (props: any) =\> ReactElement<any, string \| ... \| (new (props: any) =\> Component<any, any, any\>)\> \| null \| (`props`: *any*) => *Component*<*any*, *any*, *any*\>\> \| (`props`: *any*) => *Component*<*any*, *any*, *any*\>\>\>): function
+▸ `Const`**createComponent**<TProps\>(`fn`: (`props`: [*ObservableLike*](../interfaces/observable.observablelike.md)<TProps\>) => [*ObservableLike*](../interfaces/observable.observablelike.md)<*ReactElement*<*any*, *string* \| (`props`: *any*) => *null* \| *ReactElement*<*any*, *any*\> \| (`props`: *any*) => *Component*<*any*, *any*, *any*\>\>\>): *ComponentType*<TProps\>
 
 #### Type parameters:
 
@@ -73,9 +73,9 @@ Name |
 
 Name | Type |
 ------ | ------ |
-`fn` | (`props`: [*ObservableLike*](../interfaces/observable.observablelike.md)<TProps\>) => [*ObservableLike*](../interfaces/observable.observablelike.md)<*ReactElement*<*any*, *string* \| (`props`: *any*) => *null* \| *ReactElement*<*any*, *string* \| (props: any) =\> ReactElement<any, string \| ... \| (new (props: any) =\> Component<any, any, any\>)\> \| null \| (`props`: *any*) => *Component*<*any*, *any*, *any*\>\> \| (`props`: *any*) => *Component*<*any*, *any*, *any*\>\>\> |
+`fn` | (`props`: [*ObservableLike*](../interfaces/observable.observablelike.md)<TProps\>) => [*ObservableLike*](../interfaces/observable.observablelike.md)<*ReactElement*<*any*, *string* \| (`props`: *any*) => *null* \| *ReactElement*<*any*, *any*\> \| (`props`: *any*) => *Component*<*any*, *any*, *any*\>\>\> |
 
-**Returns:** function
+**Returns:** *ComponentType*<TProps\>
 
 ___
 
