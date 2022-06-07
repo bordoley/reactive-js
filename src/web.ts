@@ -1,7 +1,7 @@
-import { DisposableLike } from "./disposable";
 import { Updater } from "./functions";
-import { ObservableLike } from "./observable";
+import { StreamLike } from "./observable";
 import { SchedulerLike } from "./scheduler";
+import { StreamableLike } from "./streamable";
 
 export type WindowLocationURI = {
   title: string;
@@ -10,19 +10,32 @@ export type WindowLocationURI = {
   fragment: string;
 };
 
-export interface WindowLocationStreamLike extends ObservableLike<WindowLocationURI> {
+export interface WindowLocationStreamLike
+  extends StreamLike<
+    Updater<WindowLocationURI> | WindowLocationURI,
+    WindowLocationURI
+  > {
   dispatch(
     stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI,
     options?: { readonly replace?: boolean },
   ): void;
 
   goBack(): boolean;
+}
 
-  init(scheduler: SchedulerLike): DisposableLike;
+export interface WindowLocationStreamableLike
+  extends StreamableLike<
+    Updater<WindowLocationURI> | WindowLocationURI,
+    WindowLocationURI
+  > {
+  stream(
+    scheduler: SchedulerLike,
+    options?: { readonly replay?: number },
+  ): WindowLocationStreamLike;
 }
 
 export { fromEvent } from "./web/event";
 export { createEventSource } from "./web/eventSource";
-export { windowLocationStream } from "./web/windowLocation";
+export { windowLocation } from "./web/windowLocation";
 export type { FetchRequest } from "./web/fetch";
 export { fetch } from "./web/fetch";

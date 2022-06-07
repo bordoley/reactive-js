@@ -16,8 +16,6 @@ Name |
 
   ↳ [*MulticastObservableLike*](observable.multicastobservablelike.md)
 
-  ↳ [*WindowLocationStreamLike*](web.windowlocationstreamlike.md)
-
 ## Index
 
 ### Properties

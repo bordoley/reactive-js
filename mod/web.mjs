@@ -1,8 +1,8 @@
 /// <reference types="./web.d.ts" />
-import { isNone, none, isSome } from './option.mjs';
-import { pipe, raise, returns } from './functions.mjs';
+import { none } from './option.mjs';
+import { pipe, returns } from './functions.mjs';
 import { createObservable, keep as keep$1, throttle, onNotify as onNotify$1, subscribe, defer, fromPromise, observe } from './observable.mjs';
-import { dispose, addTeardown, toAbortSignal } from './disposable.mjs';
+import { dispose, addTeardown, AbstractDisposable, toAbortSignal } from './disposable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { onNotify, lift, map, stream } from './streamable.mjs';
 import { createStateStore } from './stateStore.mjs';
@@ -65,12 +65,6 @@ const areWindowLocationURIsEqual = (a, b) => a === b ||
         a.path === b.path &&
         a.query === b.query &&
         a.fragment === b.fragment);
-function getStateStream() {
-    const { stateStream } = this;
-    return isNone(stateStream)
-        ? raise("HistoryStream is not initialized")
-        : stateStream;
-}
 function windowHistoryReplaceState(uri) {
     const { title } = uri;
     window.history.replaceState({ counter: this.historyCounter, title }, "", windowLocationURIToString(uri));
@@ -80,45 +74,11 @@ function windowHistoryPushState(uri) {
     this.historyCounter++;
     window.history.pushState({ counter: this.historyCounter, title }, "", windowLocationURIToString(uri));
 }
-class WindowLocationStream {
-    constructor() {
+class WindowLocationStream extends AbstractDisposable {
+    constructor(scheduler, options) {
+        super();
         this.historyCounter = -1;
-        this.stateStream = none;
-    }
-    get isSynchronous() {
-        return getStateStream.call(this).isSynchronous;
-    }
-    dispatch(stateOrUpdater, { replace } = { replace: false }) {
-        const stateStream = getStateStream.call(this);
-        stateStream.dispatch(state => {
-            const { uri: stateURI } = state;
-            const newURI = typeof stateOrUpdater === "function"
-                ? stateOrUpdater(stateURI)
-                : stateOrUpdater;
-            return areWindowLocationURIsEqual(stateURI, newURI)
-                ? state
-                : {
-                    uri: newURI,
-                    replace,
-                };
-        });
-    }
-    goBack() {
-        const canGoBack = this.historyCounter > 0;
-        if (canGoBack) {
-            window.history.back();
-        }
-        return canGoBack;
-    }
-    observe(observer) {
-        getStateStream.call(this).observe(observer);
-    }
-    init(scheduler) {
-        let stateStream = this.stateStream;
-        if (isSome(stateStream) && !stateStream.isDisposed) {
-            raise("HistoryStream is already initialized");
-        }
-        stateStream = pipe(() => ({
+        this.stateStream = pipe(() => ({
             replace: true,
             uri: getCurrentWindowLocationURI(),
         }), createStateStore, onNotify(({ uri }) => {
@@ -145,7 +105,7 @@ class WindowLocationStream {
                 : windowHistoryPushState;
             document.title = title;
             updateHistoryState.call(this, uri);
-        }), map(({ uri }) => uri), stream(scheduler));
+        }), map(({ uri }) => uri), stream(scheduler, options));
         const historySubscription = pipe(fromEvent(window, "popstate", (e) => {
             const { counter, title } = e.state;
             const uri = {
@@ -157,12 +117,46 @@ class WindowLocationStream {
             this.historyCounter = counter;
             this.dispatch(uri, { replace: true });
         }), subscribe(scheduler));
-        stateStream.add(historySubscription);
-        this.stateStream = stateStream;
-        return stateStream;
+        this.stateStream.add(historySubscription);
+    }
+    get isSynchronous() {
+        return this.stateStream.isSynchronous;
+    }
+    get observerCount() {
+        return this.stateStream.observerCount;
+    }
+    dispatch(stateOrUpdater, { replace } = { replace: false }) {
+        const stateStream = this.stateStream;
+        stateStream.dispatch(state => {
+            const { uri: stateURI } = state;
+            const newURI = typeof stateOrUpdater === "function"
+                ? stateOrUpdater(stateURI)
+                : stateOrUpdater;
+            return areWindowLocationURIsEqual(stateURI, newURI)
+                ? state
+                : {
+                    uri: newURI,
+                    replace,
+                };
+        });
+    }
+    goBack() {
+        const canGoBack = this.historyCounter > 0;
+        if (canGoBack) {
+            window.history.back();
+        }
+        return canGoBack;
+    }
+    observe(observer) {
+        this.stateStream.observe(observer);
     }
 }
-const windowLocationStream = new WindowLocationStream();
+class WindowLocationStreamable {
+    stream(scheduler, options) {
+        return new WindowLocationStream(scheduler, options);
+    }
+}
+const windowLocation = new WindowLocationStreamable();
 
 const globalFetch = self.fetch;
 const fetch = (onResponse) => fetchRequest => defer(observer => async () => {
@@ -189,4 +183,4 @@ const fetch = (onResponse) => fetchRequest => defer(observer => async () => {
     }
 });
 
-export { createEventSource, fetch, fromEvent, windowLocationStream };
+export { createEventSource, fetch, fromEvent, windowLocation };
