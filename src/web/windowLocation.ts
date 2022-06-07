@@ -51,26 +51,26 @@ type TState = {
   uri: WindowLocationURI;
 };
 
-function windowHistoryReplaceState(
-  this: WindowLocationStream,
+const windowHistoryReplaceState = (
+  self: WindowLocationStream,
   uri: WindowLocationURI,
-) {
+) => {
   const { title } = uri;
   window.history.replaceState(
-    { counter: this.historyCounter, title },
+    { counter: self.historyCounter, title },
     "",
     windowLocationURIToString(uri),
   );
 }
 
-function windowHistoryPushState(
-  this: WindowLocationStream,
+const windowHistoryPushState = (
+  self: WindowLocationStream,
   uri: WindowLocationURI,
-) {
+) => {
   const { title } = uri;
-  this.historyCounter++;
+  self.historyCounter++;
   window.history.pushState(
-    { counter: this.historyCounter, title },
+    { counter: self.historyCounter, title },
     "",
     windowLocationURIToString(uri),
   );
@@ -99,7 +99,7 @@ class WindowLocationStream
         const isInitialPageLoad = this.historyCounter === -1;
         if (isInitialPageLoad) {
           this.historyCounter === 0;
-          windowHistoryReplaceState.call(this, uri);
+          windowHistoryReplaceState(this, uri);
         }
       }),
       lift(
@@ -128,7 +128,7 @@ class WindowLocationStream
           : windowHistoryPushState;
 
         document.title = title;
-        updateHistoryState.call(this, uri);
+        updateHistoryState(this, uri);
       }),
       map(({ uri }) => uri),
       stream(scheduler, options),
