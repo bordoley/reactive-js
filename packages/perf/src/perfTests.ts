@@ -68,29 +68,6 @@ export const map = (n: number) =>
       callWith(),
     ),
     benchmarkTest(
-      "rx-js",
-      async src => {
-        const { from } = await import("rxjs");
-        const { map, toArray } = await import("rxjs/operators");
-
-        return from(src).pipe(map(increment), toArray());
-      },
-      x => x.subscribe(),
-    ),
-    benchmarkTest(
-      "wonka",
-      async src => {
-        const Wonka = await import("wonka");
-        return () =>
-          Wonka.pipe(
-            Wonka.fromArray(src as number[]),
-            Wonka.map(increment),
-            Wonka.toArray,
-          );
-      },
-      x => x(),
-    ),
-    benchmarkTest(
       "readonlyArray",
       async src => {
         const { map } = await import("@reactive-js/core/readonlyArray");
@@ -139,42 +116,6 @@ export const filterMapFusion = (n: number) =>
     createFilterMapFusionPerfTest("runnable", "@reactive-js/core/runnable"),
     createFilterMapFusionPerfTest("sequence", "@reactive-js/core/sequence"),
     benchmarkTest(
-      "rx-js",
-      async src => {
-        const { from } = await import("rxjs");
-        const { filter, map, reduce } = await import("rxjs/operators");
-
-        return from(src).pipe(
-          map(increment),
-          filter(isOdd),
-          map(increment),
-          map(increment),
-          filter(isEven),
-          reduce(sum, 0),
-        );
-      },
-      x => x.subscribe(),
-    ),
-    benchmarkTest(
-      "wonka",
-      async src => {
-        const Wonka = await import("wonka");
-        return () =>
-          Wonka.pipe(
-            Wonka.fromArray(src as number[]),
-            Wonka.map(increment),
-            Wonka.filter(isOdd),
-            Wonka.map(increment),
-            Wonka.map(increment),
-            Wonka.filter(isEven),
-            Wonka.scan(sum, 0),
-            Wonka.takeLast(1),
-            Wonka.toArray,
-          );
-      },
-      x => x(),
-    ),
-    benchmarkTest(
       "array methods",
       async src => {
         return src;
@@ -218,16 +159,6 @@ export const filterMapReduce = (n: number) =>
     createFilterMapReducePerfTest("runnable", "@reactive-js/core/runnable"),
     createFilterMapReducePerfTest("sequence", "@reactive-js/core/sequence"),
     benchmarkTest(
-      "rx-js",
-      async src => {
-        const { from } = await import("rxjs");
-        const { filter, map, reduce } = await import("rxjs/operators");
-
-        return from(src).pipe(filter(isEven), map(increment), reduce(sum, 0));
-      },
-      x => x.subscribe(),
-    ),
-    benchmarkTest(
       "array methods",
       async src => {
         return src;
@@ -237,22 +168,6 @@ export const filterMapReduce = (n: number) =>
           .filter(isEven)
           .map(increment)
           .reduce((a, b) => sum(a, b), 0),
-    ),
-    benchmarkTest(
-      "wonka",
-      async src => {
-        const Wonka = await import("wonka");
-        return () =>
-          Wonka.pipe(
-            Wonka.fromArray(src as number[]),
-            Wonka.filter(isEven),
-            Wonka.map(increment),
-            Wonka.scan(sum, 0),
-            Wonka.takeLast(1),
-            Wonka.toArray,
-          );
-      },
-      x => x(),
     ),
     benchmarkTest(
       "most",
@@ -330,31 +245,6 @@ export const scanReduce = (n: number) =>
         );
       },
       callWith(),
-    ),
-    benchmarkTest(
-      "rx-js",
-      async src => {
-        const { from } = await import("rxjs");
-        const { scan, reduce } = await import("rxjs/operators");
-
-        return from(src).pipe(scan(sum, 0), reduce(passthrough, 0));
-      },
-      x => x.subscribe(),
-    ),
-    benchmarkTest(
-      "wonka",
-      async src => {
-        const Wonka = await import("wonka");
-        return () =>
-          Wonka.pipe(
-            Wonka.fromArray(src as number[]),
-            Wonka.scan(sum, 0),
-            Wonka.scan(passthrough, 0),
-            Wonka.takeLast(1),
-            Wonka.toArray,
-          );
-      },
-      x => x(),
     ),
     benchmarkTest(
       "most",

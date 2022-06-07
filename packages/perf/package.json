@@ -9,9 +9,7 @@
     "@types/benchmark": "^2.1.1",
     "@types/jest": "^28.1.0",
     "@types/node": "^17.0.39",
-    "benchmark": "^2.1.4",
-    "rxjs": "^7.5.5",
-    "wonka": "^4.0.15"
+    "benchmark": "^2.1.4"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
