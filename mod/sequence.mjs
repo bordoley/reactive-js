@@ -1,16 +1,16 @@
 /// <reference types="./sequence.d.ts" />
-import { isNone } from './option.mjs';
 import { pipe, strictEquality, compose, alwaysTrue } from './functions.mjs';
+import { isNone } from './option.mjs';
 import { createRunnable } from './runnable.mjs';
 
-const isDone = (result) => result.type === 2 /* Done */;
-const isNotify = (result) => result.type === 1 /* Notify */;
+const isDone = (result) => result.type === 2 /* SequenceType.Done */;
+const isNotify = (result) => result.type === 1 /* SequenceType.Notify */;
 const notify = (data, next) => ({
-    type: 1 /* Notify */,
+    type: 1 /* SequenceType.Notify */,
     data,
     next,
 });
-const _done = { type: 2 /* Done */ };
+const _done = { type: 2 /* SequenceType.Done */ };
 const done = () => _done;
 const empty = () => done;
 const concatAll = () => seq => {

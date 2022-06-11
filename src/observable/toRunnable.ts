@@ -8,23 +8,28 @@ import {
 } from "../scheduler";
 import { subscribe } from "./subscribe";
 
-export const toRunnable = <T>(
-  options: {
-    readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
-  } = {},
-): Function1<ObservableLike<T>, RunnableLike<T>> => source =>
-  createRunnable(sink => {
-    const { schedulerFactory = createVirtualTimeScheduler } = options;
-    const scheduler = schedulerFactory();
+export const toRunnable =
+  <T>(
+    options: {
+      readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
+    } = {},
+  ): Function1<ObservableLike<T>, RunnableLike<T>> =>
+  source =>
+    createRunnable(sink => {
+      const { schedulerFactory = createVirtualTimeScheduler } = options;
+      const scheduler = schedulerFactory();
 
-    const subscription = pipe(source, subscribe(scheduler, sink.notify, sink));
+      const subscription = pipe(
+        source,
+        subscribe(scheduler, sink.notify, sink),
+      );
 
-    scheduler.run();
+      scheduler.run();
 
-    const { error } = subscription;
-    if (isSome(error)) {
-      const { cause } = error;
-      throw cause;
-    }
-    sink.done();
-  });
+      const { error } = subscription;
+      if (isSome(error)) {
+        const { cause } = error;
+        throw cause;
+      }
+      sink.done();
+    });

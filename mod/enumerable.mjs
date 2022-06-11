@@ -1,8 +1,8 @@
 /// <reference types="./enumerable.d.ts" />
-import { none, isNone, isSome } from './option.mjs';
 import { pipe, returns, compose, strictEquality, alwaysTrue } from './functions.mjs';
-import { everySatisfy, map as map$1 } from './readonlyArray.mjs';
+import { none, isNone, isSome } from './option.mjs';
 import { createRunnable } from './runnable.mjs';
+import { everySatisfy, map as map$1 } from './readonlyArray.mjs';
 
 const enumerate = (enumerable) => enumerable.enumerate();
 const current = (enumerator) => enumerator.current;

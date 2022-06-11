@@ -47,7 +47,8 @@ const move = (scheduler: VirtualTimeSchedulerImpl) => {
 
 class VirtualTimeSchedulerImpl
   extends AbstractDisposable
-  implements SchedulerLike {
+  implements SchedulerLike
+{
   current: SchedulerContinuationLike = none as any;
   hasCurrent = false;
   inContinuation = false;
@@ -56,9 +57,8 @@ class VirtualTimeSchedulerImpl
   private taskIDCount = 0;
   private yieldRequested = false;
 
-  readonly taskQueue: PriorityQueueLike<VirtualTask> = createPriorityQueue(
-    comparator,
-  );
+  readonly taskQueue: PriorityQueueLike<VirtualTask> =
+    createPriorityQueue(comparator);
 
   constructor(private readonly maxMicroTaskTicks: number) {
     super();

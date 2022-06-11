@@ -13,17 +13,19 @@ import { subscribe } from "./subscribe";
  * @param replay The number of events that should be replayed when the `MulticastObservableLike`
  * is subscribed to.
  */
-export const publish = <T>(
-  scheduler: SchedulerLike,
-  options?: { readonly replay?: number },
-): Function1<ObservableLike<T>, MulticastObservableLike<T>> => observable => {
-  const subject = createSubject<T>(options);
-  const srcSubscription = pipe(
-    observable,
-    subscribe(scheduler, subject.dispatch, subject),
-  );
+export const publish =
+  <T>(
+    scheduler: SchedulerLike,
+    options?: { readonly replay?: number },
+  ): Function1<ObservableLike<T>, MulticastObservableLike<T>> =>
+  observable => {
+    const subject = createSubject<T>(options);
+    const srcSubscription = pipe(
+      observable,
+      subscribe(scheduler, subject.dispatch, subject),
+    );
 
-  bindDisposables(srcSubscription, subject);
+    bindDisposables(srcSubscription, subject);
 
-  return subject;
-};
+    return subject;
+  };

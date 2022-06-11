@@ -28,7 +28,7 @@ function onNotify<TA, TB, T>(
 class WithLatestFromObserver<
   TA,
   TB,
-  T
+  T,
 > extends AbstractAutoDisposingDelegatingObserver<TA, T> {
   otherLatest: Option<TB>;
   hasLatest = false;

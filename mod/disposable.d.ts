@@ -38,7 +38,7 @@ interface DisposableLike {
 /**
  * Dispose `disposable` with an optional error.
  */
-declare const dispose: (e?: Option<Error>) => SideEffect1<DisposableLike>;
+declare const dispose: (e?: Error) => SideEffect1<DisposableLike>;
 /**
  * Add `child` to `parent`, disposing the child when the parent is disposed.
  */
@@ -98,7 +98,7 @@ declare abstract class AbstractDisposable implements DisposableLike {
  *
  * @param onDispose Optional teardown logic to attach to the newly created disposable.
  */
-declare const createDisposable: (onDispose?: ((error?: Option<Error>) => void) | undefined) => DisposableLike;
+declare const createDisposable: (onDispose?: ((error?: Error) => void) | undefined) => DisposableLike;
 /**
  * A disposed `DisposableLike` instance.
  */

@@ -71,6 +71,7 @@ export function concat<T>(
   return new ConcatObservable(observables);
 }
 
-export const concatWith = <T>(
-  snd: ObservableLike<T>,
-): ObservableOperator<T, T> => first => concat(first, snd);
+export const concatWith =
+  <T>(snd: ObservableLike<T>): ObservableOperator<T, T> =>
+  first =>
+    concat(first, snd);

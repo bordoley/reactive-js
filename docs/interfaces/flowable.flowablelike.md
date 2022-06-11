@@ -2,39 +2,18 @@
 
 # Interface: FlowableLike<T\>
 
+[flowable](../modules/flowable.md).FlowableLike
+
 ## Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
 ## Hierarchy
 
-* [*StreamableLike*](streamable.streamablelike.md)<[*FlowMode*](../modules/flowable.md#flowmode), T\>
+- [`StreamableLike`](streamable.StreamableLike.md)<[`FlowMode`](../modules/flowable.md#flowmode), `T`\>
 
-  ↳ **FlowableLike**
+  ↳ **`FlowableLike`**
 
-  ↳↳ [*IOSourceLike*](io.iosourcelike.md)
-
-## Index
-
-### Methods
-
-* [stream](flowable.flowablelike.md#stream)
-
-## Methods
-
-### stream
-
-▸ **stream**(`scheduler`: [*SchedulerLike*](scheduler.schedulerlike.md), `options?`: { `replay?`: *undefined* \| *number*  }): [*StreamLike*](observable.streamlike.md)<[*FlowMode*](../modules/flowable.md#flowmode), T\>
-
-#### Parameters:
-
-Name | Type |
------- | ------ |
-`scheduler` | [*SchedulerLike*](scheduler.schedulerlike.md) |
-`options?` | { `replay?`: *undefined* \| *number*  } |
-
-**Returns:** [*StreamLike*](observable.streamlike.md)<[*FlowMode*](../modules/flowable.md#flowmode), T\>
-
-Inherited from: [StreamableLike](streamable.streamablelike.md)
+  ↳↳ [`IOSourceLike`](io.IOSourceLike.md)

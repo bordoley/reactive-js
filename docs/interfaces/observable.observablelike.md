@@ -2,48 +2,52 @@
 
 # Interface: ObservableLike<T\>
 
+[observable](../modules/observable.md).ObservableLike
+
 The source of notifications which notifies a `ObserverLike` instance.
 
 ## Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
 ## Hierarchy
 
-* **ObservableLike**
+- **`ObservableLike`**
 
-  ↳ [*MulticastObservableLike*](observable.multicastobservablelike.md)
+  ↳ [`MulticastObservableLike`](observable.MulticastObservableLike.md)
 
-## Index
+## Table of contents
 
 ### Properties
 
-* [isSynchronous](observable.observablelike.md#issynchronous)
+- [isSynchronous](observable.ObservableLike.md#issynchronous)
 
 ### Methods
 
-* [observe](observable.observablelike.md#observe)
+- [observe](observable.ObservableLike.md#observe)
 
 ## Properties
 
 ### isSynchronous
 
-• `Readonly` **isSynchronous**: *boolean*
+• `Readonly` **isSynchronous**: `boolean`
 
 ## Methods
 
 ### observe
 
-▸ **observe**(`observer`: [*ObserverLike*](observable.observerlike.md)<T\>): *void*
+▸ **observe**(`observer`): `void`
 
 Subscribes the `ObserverLike` instance to the observable.
 
-#### Parameters:
+#### Parameters
 
-Name | Type | Description |
------- | ------ | ------ |
-`observer` | [*ObserverLike*](observable.observerlike.md)<T\> | The observer which should be notified by the observable source.    |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `observer` | [`ObserverLike`](observable.ObserverLike.md)<`T`\> | The observer which should be notified by the observable source. |
 
-**Returns:** *void*
+#### Returns
+
+`void`

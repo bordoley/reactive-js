@@ -2,226 +2,246 @@
 
 # Module: asyncEnumerable
 
-## Index
+## Table of contents
 
 ### Interfaces
 
-* [AsyncEnumerableLike](../interfaces/asyncenumerable.asyncenumerablelike.md)
+- [AsyncEnumerableLike](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)
 
-### Type aliases
+### Type Aliases
 
-* [AsyncConsumer](asyncenumerable.md#asyncconsumer)
-* [ConsumeRequest](asyncenumerable.md#consumerequest)
-* [Consumer](asyncenumerable.md#consumer)
+- [AsyncConsumer](asyncEnumerable.md#asyncconsumer)
+- [ConsumeRequest](asyncEnumerable.md#consumerequest)
+- [Consumer](asyncEnumerable.md#consumer)
 
 ### Functions
 
-* [consume](asyncenumerable.md#consume)
-* [consumeAsync](asyncenumerable.md#consumeasync)
-* [done](asyncenumerable.md#done)
-* [fromArray](asyncenumerable.md#fromarray)
-* [fromEnumerable](asyncenumerable.md#fromenumerable)
-* [fromIterable](asyncenumerable.md#fromiterable)
-* [generate](asyncenumerable.md#generate)
-* [notify](asyncenumerable.md#notify)
+- [consume](asyncEnumerable.md#consume)
+- [consumeAsync](asyncEnumerable.md#consumeasync)
+- [done](asyncEnumerable.md#done)
+- [fromArray](asyncEnumerable.md#fromarray)
+- [fromEnumerable](asyncEnumerable.md#fromenumerable)
+- [fromIterable](asyncEnumerable.md#fromiterable)
+- [generate](asyncEnumerable.md#generate)
+- [notify](asyncEnumerable.md#notify)
 
-## Type aliases
+## Type Aliases
 
 ### AsyncConsumer
 
-Ƭ **AsyncConsumer**<T, TAcc\>: [*Function2*](functions.md#function2)<TAcc, T, [*ObservableLike*](../interfaces/observable.observablelike.md)<[*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>\>\>
+Ƭ **AsyncConsumer**<`T`, `TAcc`\>: [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`ConsumeRequest`](asyncEnumerable.md#consumerequest)<`TAcc`\>\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
-`TAcc` |
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
 
 ___
 
 ### ConsumeRequest
 
-Ƭ **ConsumeRequest**<TAcc\>: { `acc`: TAcc ; `type`: *notify*  } \| { `acc`: TAcc ; `type`: *done*  }
+Ƭ **ConsumeRequest**<`TAcc`\>: { `acc`: `TAcc` ; `type`: ``"notify"``  } \| { `acc`: `TAcc` ; `type`: ``"done"``  }
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`TAcc` |
+| Name |
+| :------ |
+| `TAcc` |
 
 ___
 
 ### Consumer
 
-Ƭ **Consumer**<T, TAcc\>: [*Function2*](functions.md#function2)<TAcc, T, [*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>\>
+Ƭ **Consumer**<`T`, `TAcc`\>: [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ConsumeRequest`](asyncEnumerable.md#consumerequest)<`TAcc`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
-`TAcc` |
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
 
 ## Functions
 
 ### consume
 
-▸ `Const`**consume**<T, TAcc\>(`consumer`: [*Function2*](functions.md#function2)<TAcc, T, [*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>\>, `initial`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<[*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>, [*ObservableLike*](../interfaces/observable.observablelike.md)<TAcc\>\>
+▸ **consume**<`T`, `TAcc`\>(`consumer`, `initial`): [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
-`TAcc` |
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`consumer` | [*Function2*](functions.md#function2)<TAcc, T, [*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>\> |
-`initial` | [*Factory*](functions.md#factory)<TAcc\> |
+| Name | Type |
+| :------ | :------ |
+| `consumer` | [`Consumer`](asyncEnumerable.md#consumer)<`T`, `TAcc`\> |
+| `initial` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
-**Returns:** [*Function1*](functions.md#function1)<[*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>, [*ObservableLike*](../interfaces/observable.observablelike.md)<TAcc\>\>
+#### Returns
+
+[`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
 
 ___
 
 ### consumeAsync
 
-▸ `Const`**consumeAsync**<T, TAcc\>(`consumer`: [*Function2*](functions.md#function2)<TAcc, T, [*ObservableLike*](../interfaces/observable.observablelike.md)<[*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>\>\>, `initial`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<[*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>, [*ObservableLike*](../interfaces/observable.observablelike.md)<TAcc\>\>
+▸ **consumeAsync**<`T`, `TAcc`\>(`consumer`, `initial`): [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
-`TAcc` |
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`consumer` | [*Function2*](functions.md#function2)<TAcc, T, [*ObservableLike*](../interfaces/observable.observablelike.md)<[*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>\>\> |
-`initial` | [*Factory*](functions.md#factory)<TAcc\> |
+| Name | Type |
+| :------ | :------ |
+| `consumer` | [`AsyncConsumer`](asyncEnumerable.md#asyncconsumer)<`T`, `TAcc`\> |
+| `initial` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
-**Returns:** [*Function1*](functions.md#function1)<[*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>, [*ObservableLike*](../interfaces/observable.observablelike.md)<TAcc\>\>
+#### Returns
+
+[`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
 
 ___
 
 ### done
 
-▸ `Const`**done**<TAcc\>(`acc`: TAcc): [*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>
+▸ **done**<`TAcc`\>(`acc`): [`ConsumeRequest`](asyncEnumerable.md#consumerequest)<`TAcc`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`TAcc` |
+| Name |
+| :------ |
+| `TAcc` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`acc` | TAcc |
+| Name | Type |
+| :------ | :------ |
+| `acc` | `TAcc` |
 
-**Returns:** [*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>
+#### Returns
+
+[`ConsumeRequest`](asyncEnumerable.md#consumerequest)<`TAcc`\>
 
 ___
 
 ### fromArray
 
-▸ `Const`**fromArray**<T\>(`options?`: { `delay?`: *undefined* \| *number* ; `endIndex?`: *undefined* \| *number* ; `startIndex?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<readonly T[], [*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>\>
+▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>\>
 
 Returns an `AsyncEnumerableLike` from the provided array.
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | { `delay?`: *undefined* \| *number* ; `endIndex?`: *undefined* \| *number* ; `startIndex?`: *undefined* \| *number*  } |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.endIndex?` | `number` |
+| `options.startIndex?` | `number` |
 
-**Returns:** [*Function1*](functions.md#function1)<readonly T[], [*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>\>
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>\>
 
 ___
 
 ### fromEnumerable
 
-▸ `Const`**fromEnumerable**<T\>(): [*Function1*](functions.md#function1)<[*EnumerableLike*](../interfaces/enumerable.enumerablelike.md)<T\>, [*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>\>
+▸ **fromEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>\>
 
 Returns an `AsyncEnumerableLike` from the provided iterable.
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*EnumerableLike*](../interfaces/enumerable.enumerablelike.md)<T\>, [*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>\>
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>\>
 
 ___
 
 ### fromIterable
 
-▸ `Const`**fromIterable**<T\>(): [*Function1*](functions.md#function1)<*Iterable*<T\>, [*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>\>
+▸ **fromIterable**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>\>
 
 Returns an `AsyncEnumerableLike` from the provided iterable.
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-**Returns:** [*Function1*](functions.md#function1)<*Iterable*<T\>, [*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>\>
+#### Returns
+
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>\>
 
 ___
 
 ### generate
 
-▸ `Const`**generate**<T\>(`generator`: [*Updater*](functions.md#updater)<T\>, `initialValue`: [*Factory*](functions.md#factory)<T\>, `options?`: { `delay?`: *undefined* \| *number*  }): [*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>
+▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>
 
 Generates an `AsyncEnumerableLike` sequence from a generator function
 that is applied to an accumulator value.
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type | Description |
------- | ------ | ------ |
-`generator` | [*Updater*](functions.md#updater)<T\> | The generator function.   |
-`initialValue` | [*Factory*](functions.md#factory)<T\> | Factory function to generate the initial accumulator.    |
-`options?` | { `delay?`: *undefined* \| *number*  } | - |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> | The generator function. |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function to generate the initial accumulator. |
+| `options?` | `Object` | - |
+| `options.delay?` | `number` | - |
 
-**Returns:** [*AsyncEnumerableLike*](../interfaces/asyncenumerable.asyncenumerablelike.md)<T\>
+#### Returns
+
+[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>
 
 ___
 
 ### notify
 
-▸ `Const`**notify**<TAcc\>(`acc`: TAcc): [*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>
+▸ **notify**<`TAcc`\>(`acc`): [`ConsumeRequest`](asyncEnumerable.md#consumerequest)<`TAcc`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`TAcc` |
+| Name |
+| :------ |
+| `TAcc` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`acc` | TAcc |
+| Name | Type |
+| :------ | :------ |
+| `acc` | `TAcc` |
 
-**Returns:** [*ConsumeRequest*](asyncenumerable.md#consumerequest)<TAcc\>
+#### Returns
+
+[`ConsumeRequest`](asyncEnumerable.md#consumerequest)<`TAcc`\>

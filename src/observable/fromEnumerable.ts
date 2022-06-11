@@ -11,24 +11,26 @@ import { defer as deferObs, deferSynchronous } from "./observable";
  *
  * @param delay The requested delay between emitted items by the observable.
  */
-export const fromEnumerator = <T>(
-  options: { readonly delay?: number } = {},
-): Function1<Factory<EnumeratorLike<T>>, ObservableLike<T>> => f => {
-  const factory = (observer: ObserverLike<T>) => {
-    const enumerator = f();
+export const fromEnumerator =
+  <T>(
+    options: { readonly delay?: number } = {},
+  ): Function1<Factory<EnumeratorLike<T>>, ObservableLike<T>> =>
+  f => {
+    const factory = (observer: ObserverLike<T>) => {
+      const enumerator = f();
 
-    return () => {
-      while (enumerator.move()) {
-        observer.notify(enumerator.current);
-        __yield(delay);
-      }
-      pipe(observer, dispose());
+      return () => {
+        while (enumerator.move()) {
+          observer.notify(enumerator.current);
+          __yield(delay);
+        }
+        pipe(observer, dispose());
+      };
     };
-  };
 
-  const { delay = 0 } = options;
-  return delay > 0 ? deferObs(factory, { delay }) : deferSynchronous(factory);
-};
+    const { delay = 0 } = options;
+    return delay > 0 ? deferObs(factory, { delay }) : deferSynchronous(factory);
+  };
 
 /**
  * Creates an `ObservableLike` which enumerates through the values
@@ -37,7 +39,9 @@ export const fromEnumerator = <T>(
  * @param values The `Enumerable`.
  * @param delay The requested delay between emitted items by the observable.
  */
-export const fromEnumerable = <T>(options?: {
-  readonly delay?: number;
-}): Function1<EnumerableLike<T>, ObservableLike<T>> => enumerable =>
-  pipe(defer(enumerable, enumerate), fromEnumerator(options));
+export const fromEnumerable =
+  <T>(options?: {
+    readonly delay?: number;
+  }): Function1<EnumerableLike<T>, ObservableLike<T>> =>
+  enumerable =>
+    pipe(defer(enumerable, enumerate), fromEnumerator(options));

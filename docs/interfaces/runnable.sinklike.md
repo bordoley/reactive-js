@@ -2,55 +2,57 @@
 
 # Interface: SinkLike<T\>
 
+[runnable](../modules/runnable.md).SinkLike
+
 ## Type parameters
 
-Name |
------- |
-`T` |
-
-## Hierarchy
-
-* **SinkLike**
+| Name |
+| :------ |
+| `T` |
 
 ## Implemented by
 
-* [*AbstractDelegatingSink*](../classes/runnable.abstractdelegatingsink.md)
+- [`AbstractDelegatingSink`](../classes/runnable.AbstractDelegatingSink.md)
 
-## Index
+## Table of contents
 
 ### Properties
 
-* [isDone](runnable.sinklike.md#isdone)
+- [isDone](runnable.SinkLike.md#isdone)
 
 ### Methods
 
-* [done](runnable.sinklike.md#done)
-* [notify](runnable.sinklike.md#notify)
+- [done](runnable.SinkLike.md#done)
+- [notify](runnable.SinkLike.md#notify)
 
 ## Properties
 
 ### isDone
 
-• `Readonly` **isDone**: *boolean*
+• `Readonly` **isDone**: `boolean`
 
 ## Methods
 
 ### done
 
-▸ **done**(): *void*
+▸ **done**(): `void`
 
-**Returns:** *void*
+#### Returns
+
+`void`
 
 ___
 
 ### notify
 
-▸ **notify**(`next`: T): *void*
+▸ **notify**(`next`): `void`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`next` | T |
+| Name | Type |
+| :------ | :------ |
+| `next` | `T` |
 
-**Returns:** *void*
+#### Returns
+
+`void`

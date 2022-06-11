@@ -15,8 +15,8 @@ import {
 
 import { isNone } from "../option";
 import { SchedulerLike } from "../scheduler";
-import { StreamableLike } from "../streamable";
-import { StreamableOperator, createStream } from "./createStream";
+import { StreamableLike, StreamableOperator } from "../streamable";
+import { createStream } from "./createStream";
 
 class StreamableImpl<TReq, TData> implements StreamableLike<TReq, TData> {
   constructor(private readonly op: ObservableOperator<TReq, TData>) {}
@@ -68,27 +68,35 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
   return new LiftedStreamable(op, src, obsOps, reqOps);
 };
 
-export const lift = <TReq, TA, TB>(
-  op: ObservableOperator<TA, TB>,
-): StreamableOperator<TReq, TA, TReq, TB> => streamable => {
-  const obsOps =
-    streamable instanceof LiftedStreamable ? [...streamable.obsOps, op] : [op];
-  const reqOps =
-    streamable instanceof LiftedStreamable ? streamable.reqOps : [];
+export const lift =
+  <TReq, TA, TB>(
+    op: ObservableOperator<TA, TB>,
+  ): StreamableOperator<TReq, TA, TReq, TB> =>
+  streamable => {
+    const obsOps =
+      streamable instanceof LiftedStreamable
+        ? [...streamable.obsOps, op]
+        : [op];
+    const reqOps =
+      streamable instanceof LiftedStreamable ? streamable.reqOps : [];
 
-  return liftImpl(streamable, obsOps, reqOps);
-};
+    return liftImpl(streamable, obsOps, reqOps);
+  };
 
-export const mapReq = <TReqA, TReqB, T>(
-  op: Function1<TReqB, TReqA>,
-): StreamableOperator<TReqA, T, TReqB, T> => streamable => {
-  const obsOps =
-    streamable instanceof LiftedStreamable ? streamable.obsOps : [];
-  const reqOps =
-    streamable instanceof LiftedStreamable ? [op, ...streamable.reqOps] : [op];
+export const mapReq =
+  <TReqA, TReqB, T>(
+    op: Function1<TReqB, TReqA>,
+  ): StreamableOperator<TReqA, T, TReqB, T> =>
+  streamable => {
+    const obsOps =
+      streamable instanceof LiftedStreamable ? streamable.obsOps : [];
+    const reqOps =
+      streamable instanceof LiftedStreamable
+        ? [op, ...streamable.reqOps]
+        : [op];
 
-  return liftImpl(streamable, obsOps, reqOps);
-};
+    return liftImpl(streamable, obsOps, reqOps);
+  };
 
 const _empty = createStreamable<any, any>(_ => emptyObs());
 
@@ -101,11 +109,13 @@ export const empty = <TReq, T>(options?: {
 }): StreamableLike<TReq, T> =>
   isNone(options) ? _empty : createStreamable<TReq, T>(_ => emptyObs(options));
 
-export const stream = <TReq, T>(
-  scheduler: SchedulerLike,
-  options?: { readonly replay?: number },
-): Function1<StreamableLike<TReq, T>, StreamLike<TReq, T>> => streamable =>
-  streamable.stream(scheduler, options);
+export const stream =
+  <TReq, T>(
+    scheduler: SchedulerLike,
+    options?: { readonly replay?: number },
+  ): Function1<StreamableLike<TReq, T>, StreamLike<TReq, T>> =>
+  streamable =>
+    streamable.stream(scheduler, options);
 
 const streamOnSchedulerFactory = <TReq, T>(
   streamable: StreamableLike<TReq, T>,

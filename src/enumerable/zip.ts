@@ -123,6 +123,7 @@ export function zip(
   return new ZipEnumerable(enumerables);
 }
 
-export const zipWith = <TA, TB>(
-  snd: EnumerableLike<TB>,
-): EnumerableOperator<TA, [TA, TB]> => fst => zip(fst, snd);
+export const zipWith =
+  <TA, TB>(snd: EnumerableLike<TB>): EnumerableOperator<TA, [TA, TB]> =>
+  fst =>
+    zip(fst, snd);

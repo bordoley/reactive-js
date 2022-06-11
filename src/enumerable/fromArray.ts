@@ -48,21 +48,23 @@ class ArrayEnumerable<T> implements EnumerableLike<T> {
  *
  * @param values
  */
-export const fromArray = <T>(
-  options: {
-    readonly startIndex?: number;
-    readonly endIndex?: number;
-  } = {},
-) => (values: readonly T[]): EnumerableLike<T> => {
-  const valuesLength = values.length;
-  const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
-  const endIndex = Math.max(
-    Math.min(options.endIndex ?? values.length, valuesLength),
-    0,
-  );
+export const fromArray =
+  <T>(
+    options: {
+      readonly startIndex?: number;
+      readonly endIndex?: number;
+    } = {},
+  ) =>
+  (values: readonly T[]): EnumerableLike<T> => {
+    const valuesLength = values.length;
+    const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
+    const endIndex = Math.max(
+      Math.min(options.endIndex ?? values.length, valuesLength),
+      0,
+    );
 
-  return new ArrayEnumerable(values, startIndex - 1, endIndex);
-};
+    return new ArrayEnumerable(values, startIndex - 1, endIndex);
+  };
 
 const _empty = fromArray()([]);
 

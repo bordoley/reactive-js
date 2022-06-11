@@ -2,39 +2,18 @@
 
 # Interface: IOSinkLike<T\>
 
+[io](../modules/io.md).IOSinkLike
+
 ## Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
 ## Hierarchy
 
-* [*StreamableLike*](streamable.streamablelike.md)<[*IOEvent*](../modules/io.md#ioevent)<T\>, [*FlowMode*](../modules/flowable.md#flowmode)\>
+- [`StreamableLike`](streamable.StreamableLike.md)<[`IOEvent`](../modules/io.md#ioevent)<`T`\>, [`FlowMode`](../modules/flowable.md#flowmode)\>
 
-  ↳ **IOSinkLike**
+  ↳ **`IOSinkLike`**
 
-  ↳↳ [*IOSinkAccumulatorLike*](io.iosinkaccumulatorlike.md)
-
-## Index
-
-### Methods
-
-* [stream](io.iosinklike.md#stream)
-
-## Methods
-
-### stream
-
-▸ **stream**(`scheduler`: [*SchedulerLike*](scheduler.schedulerlike.md), `options?`: { `replay?`: *undefined* \| *number*  }): [*StreamLike*](observable.streamlike.md)<[*IOEvent*](../modules/io.md#ioevent)<T\>, [*FlowMode*](../modules/flowable.md#flowmode)\>
-
-#### Parameters:
-
-Name | Type |
------- | ------ |
-`scheduler` | [*SchedulerLike*](scheduler.schedulerlike.md) |
-`options?` | { `replay?`: *undefined* \| *number*  } |
-
-**Returns:** [*StreamLike*](observable.streamlike.md)<[*IOEvent*](../modules/io.md#ioevent)<T\>, [*FlowMode*](../modules/flowable.md#flowmode)\>
-
-Inherited from: [StreamableLike](streamable.streamablelike.md)
+  ↳↳ [`IOSinkAccumulatorLike`](io.IOSinkAccumulatorLike.md)

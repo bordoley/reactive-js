@@ -2,179 +2,195 @@
 
 # Module: readonlyArray
 
-## Index
+## Table of contents
 
-### Type aliases
+### Type Aliases
 
-* [ReadonlyArrayOperator](readonlyarray.md#readonlyarrayoperator)
+- [ReadonlyArrayOperator](readonlyArray.md#readonlyarrayoperator)
 
 ### Functions
 
-* [everySatisfy](readonlyarray.md#everysatisfy)
-* [fromObject](readonlyarray.md#fromobject)
-* [join](readonlyarray.md#join)
-* [keep](readonlyarray.md#keep)
-* [length](readonlyarray.md#length)
-* [map](readonlyarray.md#map)
-* [reduce](readonlyarray.md#reduce)
-* [reduceRight](readonlyarray.md#reduceright)
+- [everySatisfy](readonlyArray.md#everysatisfy)
+- [fromObject](readonlyArray.md#fromobject)
+- [join](readonlyArray.md#join)
+- [keep](readonlyArray.md#keep)
+- [length](readonlyArray.md#length)
+- [map](readonlyArray.md#map)
+- [reduce](readonlyArray.md#reduce)
+- [reduceRight](readonlyArray.md#reduceright)
 
-## Type aliases
+## Type Aliases
 
 ### ReadonlyArrayOperator
 
-Ƭ **ReadonlyArrayOperator**<TA, TB\>: [*Function1*](functions.md#function1)<readonly TA[], readonly TB[]\>
+Ƭ **ReadonlyArrayOperator**<`TA`, `TB`\>: [`Function1`](functions.md#function1)<readonly `TA`[], readonly `TB`[]\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`TA` |
-`TB` |
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
 
 ## Functions
 
 ### everySatisfy
 
-▸ `Const`**everySatisfy**<T\>(`predicate`: [*Predicate*](functions.md#predicate)<T\>): [*Function1*](functions.md#function1)<readonly T[], *boolean*\>
+▸ **everySatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<readonly `T`[], `boolean`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`predicate` | [*Predicate*](functions.md#predicate)<T\> |
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
 
-**Returns:** [*Function1*](functions.md#function1)<readonly T[], *boolean*\>
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], `boolean`\>
 
 ___
 
 ### fromObject
 
-▸ `Const`**fromObject**<T\>(): [*Function1*](functions.md#function1)<[*ReadonlyObjectMap*](readonlyobjectmap.md#readonlyobjectmap)<T\>, readonly [*string*, T][]\>
+▸ **fromObject**<`T`\>(): [`Function1`](functions.md#function1)<[`ReadonlyObjectMap`](readonlyObjectMap.md#readonlyobjectmap)<`T`\>, readonly [`string`, `T`][]\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*ReadonlyObjectMap*](readonlyobjectmap.md#readonlyobjectmap)<T\>, readonly [*string*, T][]\>
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyObjectMap`](readonlyObjectMap.md#readonlyobjectmap)<`T`\>, readonly [`string`, `T`][]\>
 
 ___
 
 ### join
 
-▸ `Const`**join**(`separator?`: *string*): [*Function1*](functions.md#function1)<readonly *string*[], *string*\>
+▸ **join**(`separator?`): [`Function1`](functions.md#function1)<readonly `string`[], `string`\>
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`separator?` | *string* |
+| Name | Type |
+| :------ | :------ |
+| `separator?` | `string` |
 
-**Returns:** [*Function1*](functions.md#function1)<readonly *string*[], *string*\>
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `string`[], `string`\>
 
 ___
 
 ### keep
 
-▸ `Const`**keep**<T\>(`predicate`: [*Predicate*](functions.md#predicate)<T\>): [*Function1*](functions.md#function1)<readonly T[], readonly T[]\>
+▸ **keep**<`T`\>(`predicate`): [`ReadonlyArrayOperator`](readonlyArray.md#readonlyarrayoperator)<`T`, `T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`predicate` | [*Predicate*](functions.md#predicate)<T\> |
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
 
-**Returns:** [*Function1*](functions.md#function1)<readonly T[], readonly T[]\>
+#### Returns
+
+[`ReadonlyArrayOperator`](readonlyArray.md#readonlyarrayoperator)<`T`, `T`\>
 
 ___
 
 ### length
 
-▸ `Const`**length**(`arr`: readonly *unknown*[]): *number*
+▸ **length**(`arr`): `number`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`arr` | readonly *unknown*[] |
+| Name | Type |
+| :------ | :------ |
+| `arr` | readonly `unknown`[] |
 
-**Returns:** *number*
+#### Returns
+
+`number`
 
 ___
 
 ### map
 
-▸ `Const`**map**<TA, TB\>(`mapper`: [*Function1*](functions.md#function1)<TA, TB\>): [*Function1*](functions.md#function1)<readonly TA[], readonly TB[]\>
+▸ **map**<`TA`, `TB`\>(`mapper`): [`ReadonlyArrayOperator`](readonlyArray.md#readonlyarrayoperator)<`TA`, `TB`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`TA` |
-`TB` |
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`mapper` | [*Function1*](functions.md#function1)<TA, TB\> |
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
 
-**Returns:** [*Function1*](functions.md#function1)<readonly TA[], readonly TB[]\>
+#### Returns
+
+[`ReadonlyArrayOperator`](readonlyArray.md#readonlyarrayoperator)<`TA`, `TB`\>
 
 ___
 
 ### reduce
 
-▸ `Const`**reduce**<T, TAcc\>(`reducer`: [*Reducer*](functions.md#reducer)<T, TAcc\>, `initialValue`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<readonly T[], TAcc\>
+▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<readonly `T`[], `TAcc`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
-`TAcc` |
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`reducer` | [*Reducer*](functions.md#reducer)<T, TAcc\> |
-`initialValue` | [*Factory*](functions.md#factory)<TAcc\> |
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
-**Returns:** [*Function1*](functions.md#function1)<readonly T[], TAcc\>
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], `TAcc`\>
 
 ___
 
 ### reduceRight
 
-▸ `Const`**reduceRight**<T, TAcc\>(`reducer`: [*Reducer*](functions.md#reducer)<T, TAcc\>, `initialValue`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<readonly T[], TAcc\>
+▸ **reduceRight**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<readonly `T`[], `TAcc`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
-`TAcc` |
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`reducer` | [*Reducer*](functions.md#reducer)<T, TAcc\> |
-`initialValue` | [*Factory*](functions.md#factory)<TAcc\> |
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
-**Returns:** [*Function1*](functions.md#function1)<readonly T[], TAcc\>
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], `TAcc`\>

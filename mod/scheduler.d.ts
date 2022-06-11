@@ -1,5 +1,5 @@
-import { SideEffect, Function1 } from "./functions.mjs";
 import { DisposableLike } from "./disposable.mjs";
+import { SideEffect, Function1 } from "./functions.mjs";
 /**
  * Creates a new priority scheduler which schedules work using the provided
  * host scheduler.
@@ -16,8 +16,8 @@ declare class YieldError {
 declare const run: (continuation: SchedulerContinuationLike) => void;
 declare const __yield: (delay?: number) => void;
 declare const schedule: (f: SideEffect, options?: {
-    readonly delay?: number | undefined;
-} | undefined) => Function1<SchedulerLike, DisposableLike>;
+    readonly delay?: number;
+}) => Function1<SchedulerLike, DisposableLike>;
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
  *

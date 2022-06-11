@@ -72,6 +72,7 @@ export function combineLatest(
   return latest(observables, LatestMode.Combine);
 }
 
-export const combineLatestWith = <TA, TB>(
-  snd: ObservableLike<TB>,
-): ObservableOperator<TA, [TA, TB]> => fst => combineLatest(fst, snd);
+export const combineLatestWith =
+  <TA, TB>(snd: ObservableLike<TB>): ObservableOperator<TA, [TA, TB]> =>
+  fst =>
+    combineLatest(fst, snd);

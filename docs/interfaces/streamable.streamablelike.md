@@ -2,44 +2,49 @@
 
 # Interface: StreamableLike<TReq, T\>
 
+[streamable](../modules/streamable.md).StreamableLike
+
 ## Type parameters
 
-Name |
------- |
-`TReq` |
-`T` |
+| Name |
+| :------ |
+| `TReq` |
+| `T` |
 
 ## Hierarchy
 
-* **StreamableLike**
+- **`StreamableLike`**
 
-  ↳ [*AsyncEnumerableLike*](asyncenumerable.asyncenumerablelike.md)
+  ↳ [`AsyncEnumerableLike`](asyncEnumerable.AsyncEnumerableLike.md)
 
-  ↳ [*FlowableLike*](flowable.flowablelike.md)
+  ↳ [`FlowableLike`](flowable.FlowableLike.md)
 
-  ↳ [*IOSinkLike*](io.iosinklike.md)
+  ↳ [`IOSinkLike`](io.IOSinkLike.md)
 
-  ↳ [*StateStoreLike*](statestore.statestorelike.md)
+  ↳ [`StateStoreLike`](stateStore.StateStoreLike.md)
 
-  ↳ [*WindowLocationStreamableLike*](web.windowlocationstreamablelike.md)
+  ↳ [`WindowLocationStreamableLike`](web.WindowLocationStreamableLike.md)
 
-## Index
+## Table of contents
 
 ### Methods
 
-* [stream](streamable.streamablelike.md#stream)
+- [stream](streamable.StreamableLike.md#stream)
 
 ## Methods
 
 ### stream
 
-▸ **stream**(`scheduler`: [*SchedulerLike*](scheduler.schedulerlike.md), `options?`: { `replay?`: *undefined* \| *number*  }): [*StreamLike*](observable.streamlike.md)<TReq, T\>
+▸ **stream**(`scheduler`, `options?`): [`StreamLike`](observable.StreamLike.md)<`TReq`, `T`\>
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`scheduler` | [*SchedulerLike*](scheduler.schedulerlike.md) |
-`options?` | { `replay?`: *undefined* \| *number*  } |
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](scheduler.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.replay?` | `number` |
 
-**Returns:** [*StreamLike*](observable.streamlike.md)<TReq, T\>
+#### Returns
+
+[`StreamLike`](observable.StreamLike.md)<`TReq`, `T`\>

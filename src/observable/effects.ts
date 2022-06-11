@@ -185,9 +185,10 @@ class ObservableContext {
           } else {
             const { scheduledComputationSubscription } = this;
 
-            this.scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
-              ? pipe(this.scheduler, schedule(this.runComputation))
-              : scheduledComputationSubscription;
+            this.scheduledComputationSubscription =
+              scheduledComputationSubscription.isDisposed
+                ? pipe(this.scheduler, schedule(this.runComputation))
+                : scheduledComputationSubscription;
           }
         }),
       );

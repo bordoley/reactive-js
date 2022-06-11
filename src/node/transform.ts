@@ -24,56 +24,58 @@ import { createReadableIOSource } from "./createReadableIOSource";
 import { createWritableIOSink } from "./createWritableIOSink";
 import { createDisposableNodeStream } from "./nodeStream";
 
-export const transform = (
-  factory: Factory<DisposableValueLike<Transform>>,
-): IOSourceOperator<Uint8Array, Uint8Array> => src =>
-  createStreamable(modeObs =>
-    using(scheduler => {
-      const transform = factory();
+export const transform =
+  (
+    factory: Factory<DisposableValueLike<Transform>>,
+  ): IOSourceOperator<Uint8Array, Uint8Array> =>
+  src =>
+    createStreamable(modeObs =>
+      using(scheduler => {
+        const transform = factory();
 
-      const transformSink = createWritableIOSink(
-        // don't dispose the transform when the writable is disposed.
-        () => {
-          const disposable = createDisposableValue<Transform>(
-            transform.value,
-            ignore,
-          );
-          addOnDisposedWithError(disposable, transform);
-          return disposable;
-        },
-      );
+        const transformSink = createWritableIOSink(
+          // don't dispose the transform when the writable is disposed.
+          () => {
+            const disposable = createDisposableValue<Transform>(
+              transform.value,
+              ignore,
+            );
+            addOnDisposedWithError(disposable, transform);
+            return disposable;
+          },
+        );
 
-      const transformReadableStream = pipe(
-        createReadableIOSource(returns(transform)),
-        stream(scheduler),
-      );
+        const transformReadableStream = pipe(
+          createReadableIOSource(returns(transform)),
+          stream(scheduler),
+        );
 
-      const sinkSubscription = pipe(
-        sink(src, transformSink),
-        subscribe(scheduler),
-      );
+        const sinkSubscription = pipe(
+          sink(src, transformSink),
+          subscribe(scheduler),
+        );
 
-      const modeSubscription = pipe(
-        modeObs,
-        subscribe(
-          scheduler,
-          transformReadableStream.dispatch,
+        const modeSubscription = pipe(
+          modeObs,
+          subscribe(
+            scheduler,
+            transformReadableStream.dispatch,
+            transformReadableStream,
+          ),
+        );
+
+        addDisposableDisposeParentOnChildError(
           transformReadableStream,
-        ),
-      );
+          sinkSubscription,
+        );
+        addDisposableDisposeParentOnChildError(
+          transformReadableStream,
+          modeSubscription,
+        );
 
-      addDisposableDisposeParentOnChildError(
-        transformReadableStream,
-        sinkSubscription,
-      );
-      addDisposableDisposeParentOnChildError(
-        transformReadableStream,
-        modeSubscription,
-      );
-
-      return transformReadableStream;
-    }, identity),
-  );
+        return transformReadableStream;
+      }, identity),
+    );
 
 export const brotliDecompress = (
   options: BrotliOptions = {},

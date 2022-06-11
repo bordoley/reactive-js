@@ -12,11 +12,13 @@ class ReducerSink<T, TAcc> extends AbstractSink<T> {
   }
 }
 
-export const reduce = <T, TAcc>(
-  reducer: Reducer<T, TAcc>,
-  initialValue: Factory<TAcc>,
-): Function1<RunnableLike<T>, TAcc> => runnable => {
-  const sink = new ReducerSink(initialValue(), reducer);
-  runnable.run(sink);
-  return sink.acc;
-};
+export const reduce =
+  <T, TAcc>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): Function1<RunnableLike<T>, TAcc> =>
+  runnable => {
+    const sink = new ReducerSink(initialValue(), reducer);
+    runnable.run(sink);
+    return sink.acc;
+  };

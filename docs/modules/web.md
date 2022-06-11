@@ -2,108 +2,114 @@
 
 # Module: web
 
-## Index
+## Table of contents
 
 ### Interfaces
 
-* [WindowLocationStreamLike](../interfaces/web.windowlocationstreamlike.md)
-* [WindowLocationStreamableLike](../interfaces/web.windowlocationstreamablelike.md)
+- [WindowLocationStreamLike](../interfaces/web.WindowLocationStreamLike.md)
+- [WindowLocationStreamableLike](../interfaces/web.WindowLocationStreamableLike.md)
 
-### Type aliases
+### Type Aliases
 
-* [FetchRequest](web.md#fetchrequest)
-* [WindowLocationURI](web.md#windowlocationuri)
+- [FetchRequest](web.md#fetchrequest)
+- [WindowLocationURI](web.md#windowlocationuri)
 
 ### Variables
 
-* [windowLocation](web.md#windowlocation)
+- [windowLocation](web.md#windowlocation)
 
 ### Functions
 
-* [createEventSource](web.md#createeventsource)
-* [fetch](web.md#fetch)
-* [fromEvent](web.md#fromevent)
+- [createEventSource](web.md#createeventsource)
+- [fetch](web.md#fetch)
+- [fromEvent](web.md#fromevent)
 
-## Type aliases
+## Type Aliases
 
 ### FetchRequest
 
-Ƭ **FetchRequest**: RequestInit & { `uri`: *string*  }
+Ƭ **FetchRequest**: `RequestInit` & { `uri`: `string`  }
 
 ___
 
 ### WindowLocationURI
 
-Ƭ **WindowLocationURI**: { `fragment`: *string* ; `path`: *string* ; `query`: *string* ; `title`: *string*  }
+Ƭ **WindowLocationURI**: `Object`
 
-#### Type declaration:
+#### Type declaration
 
-Name | Type |
------- | ------ |
-`fragment` | *string* |
-`path` | *string* |
-`query` | *string* |
-`title` | *string* |
+| Name | Type |
+| :------ | :------ |
+| `fragment` | `string` |
+| `path` | `string` |
+| `query` | `string` |
+| `title` | `string` |
 
 ## Variables
 
 ### windowLocation
 
-• `Const` **windowLocation**: [*WindowLocationStreamableLike*](../interfaces/web.windowlocationstreamablelike.md)
+• `Const` **windowLocation**: [`WindowLocationStreamableLike`](../interfaces/web.WindowLocationStreamableLike.md)
 
 ## Functions
 
 ### createEventSource
 
-▸ `Const`**createEventSource**(`url`: *string* \| URL, `options?`: EventSourceInit & { `events?`: *undefined* \| readonly *string*[]  }): [*ObservableLike*](../interfaces/observable.observablelike.md)<{ `data`: *string* ; `id`: *string* ; `type`: *string*  }\>
+▸ **createEventSource**(`url`, `options?`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<{ `data`: `string` ; `id`: `string` ; `type`: `string`  }\>
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`url` | *string* \| URL |
-`options?` | EventSourceInit & { `events?`: *undefined* \| readonly *string*[]  } |
+| Name | Type |
+| :------ | :------ |
+| `url` | `string` \| `URL` |
+| `options?` | `EventSourceInit` & { `events?`: readonly `string`[]  } |
 
-**Returns:** [*ObservableLike*](../interfaces/observable.observablelike.md)<{ `data`: *string* ; `id`: *string* ; `type`: *string*  }\>
+#### Returns
+
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<{ `data`: `string` ; `id`: `string` ; `type`: `string`  }\>
 
 ___
 
 ### fetch
 
-▸ `Const`**fetch**<T\>(`onResponse`: [*Function1*](functions.md#function1)<Response, *Promise*<T\> \| [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>): [*Function1*](functions.md#function1)<*string* \| [*FetchRequest*](web.md#fetchrequest), [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
+▸ **fetch**<`T`\>(`onResponse`): [`Function1`](functions.md#function1)<`string` \| [`FetchRequest`](web.md#fetchrequest), [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`onResponse` | [*Function1*](functions.md#function1)<Response, *Promise*<T\> \| [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\> |
+| Name | Type |
+| :------ | :------ |
+| `onResponse` | [`Function1`](functions.md#function1)<`Response`, `Promise`<`T`\> \| [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\> |
 
-**Returns:** [*Function1*](functions.md#function1)<*string* \| [*FetchRequest*](web.md#fetchrequest), [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
+#### Returns
+
+[`Function1`](functions.md#function1)<`string` \| [`FetchRequest`](web.md#fetchrequest), [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
 ___
 
 ### fromEvent
 
-▸ `Const`**fromEvent**<T\>(`target`: EventTarget, `eventName`: *string*, `selector`: [*Function1*](functions.md#function1)<Event, T\>): [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>
+▸ **fromEvent**<`T`\>(`target`, `eventName`, `selector`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`target` | EventTarget |
-`eventName` | *string* |
-`selector` | [*Function1*](functions.md#function1)<Event, T\> |
+| Name | Type |
+| :------ | :------ |
+| `target` | `EventTarget` |
+| `eventName` | `string` |
+| `selector` | [`Function1`](functions.md#function1)<`Event`, `T`\> |
 
-**Returns:** [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>
+#### Returns
+
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>

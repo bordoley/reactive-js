@@ -8,7 +8,7 @@ import {
 
 class KeepTypeObserver<
   TA,
-  TB extends TA
+  TB extends TA,
 > extends AbstractAutoDisposingDelegatingObserver<TA, TB> {
   constructor(
     delegate: ObserverLike<TB>,

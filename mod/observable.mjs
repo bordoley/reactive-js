@@ -1,7 +1,7 @@
 /// <reference types="./observable.d.ts" />
-import { none, isNone, isSome } from './option.mjs';
-import { pipe, ignore, raise, arrayEquality, returns, compose, callWith, defer as defer$1, strictEquality } from './functions.mjs';
 import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, bindDisposables, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
+import { pipe, ignore, raise, arrayEquality, returns, compose, callWith, defer as defer$1, strictEquality } from './functions.mjs';
+import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
@@ -178,14 +178,14 @@ function validateObservableEffect(ctx, type) {
     ctx.index++;
     const effect = effects[index];
     if (isNone(effect)) {
-        const newEffect = type === 1 /* Memo */
+        const newEffect = type === 1 /* EffectType.Memo */
             ? {
                 type,
                 f: ignore,
                 args: [],
                 value: none,
             }
-            : type === 2 /* Observe */
+            : type === 2 /* EffectType.Observe */
                 ? {
                     type,
                     observable: empty(),
@@ -193,7 +193,7 @@ function validateObservableEffect(ctx, type) {
                     value: none,
                     hasValue: false,
                 }
-                : type === 3 /* Using */
+                : type === 3 /* EffectType.Using */
                     ? {
                         type,
                         f: ignore,
@@ -220,7 +220,7 @@ class ObservableContext {
         this.scheduledComputationSubscription = disposed;
         this.cleanup = () => {
             const { effects } = this;
-            const hasOutstandingEffects = effects.findIndex(effect => effect.type === 2 /* Observe */ && !effect.subscription.isDisposed) >= 0;
+            const hasOutstandingEffects = effects.findIndex(effect => effect.type === 2 /* EffectType.Observe */ && !effect.subscription.isDisposed) >= 0;
             if (!hasOutstandingEffects &&
                 this.scheduledComputationSubscription.isDisposed) {
                 this.scheduler.dispose();
@@ -228,7 +228,7 @@ class ObservableContext {
         };
     }
     memo(f, ...args) {
-        const effect = validateObservableEffect(this, 1 /* Memo */);
+        const effect = validateObservableEffect(this, 1 /* EffectType.Memo */);
         if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
@@ -241,7 +241,7 @@ class ObservableContext {
         }
     }
     observe(observable) {
-        const effect = validateObservableEffect(this, 2 /* Observe */);
+        const effect = validateObservableEffect(this, 2 /* EffectType.Observe */);
         if (effect.observable === observable) {
             return effect.value;
         }
@@ -255,9 +255,10 @@ class ObservableContext {
                 }
                 else {
                     const { scheduledComputationSubscription } = this;
-                    this.scheduledComputationSubscription = scheduledComputationSubscription.isDisposed
-                        ? pipe(this.scheduler, schedule(this.runComputation))
-                        : scheduledComputationSubscription;
+                    this.scheduledComputationSubscription =
+                        scheduledComputationSubscription.isDisposed
+                            ? pipe(this.scheduler, schedule(this.runComputation))
+                            : scheduledComputationSubscription;
                 }
             }));
             addOnDisposedWithoutErrorTeardown(subscription, this.cleanup);
@@ -270,7 +271,7 @@ class ObservableContext {
         }
     }
     using(f, ...args) {
-        const effect = validateObservableEffect(this, 3 /* Using */);
+        const effect = validateObservableEffect(this, 3 /* EffectType.Using */);
         if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
@@ -306,11 +307,11 @@ const observable = (computation, { mode = "batched" } = {}) => defer((observer) 
         for (let i = 0; i < effectsLength; i++) {
             const effect = effects[i];
             const { type } = effect;
-            if (type === 2 /* Observe */ &&
+            if (type === 2 /* EffectType.Observe */ &&
                 !effect.hasValue) {
                 allObserveEffectsHaveValues = false;
             }
-            if (type === 2 /* Observe */ &&
+            if (type === 2 /* EffectType.Observe */ &&
                 !effect.subscription.isDisposed) {
                 hasOutstandingEffects = true;
             }
@@ -370,7 +371,7 @@ function __currentScheduler() {
         : raise("__currentScheduler may only be called within an observable computation");
 }
 
-function onDispose(error) {
+function onDispose$8(error) {
     const { ctx } = this;
     ctx.completedCount++;
     if (isSome(error) || ctx.completedCount === ctx.observers.length) {
@@ -384,7 +385,7 @@ class LatestObserver extends AbstractDelegatingObserver {
         this.mode = mode;
         this.ready = false;
         this.latest = none;
-        addTeardown(this, onDispose);
+        addTeardown(this, onDispose$8);
     }
     notify(next) {
         assertObserverState(this);
@@ -398,7 +399,7 @@ class LatestObserver extends AbstractDelegatingObserver {
         if (ctx.readyCount === observers.length) {
             const result = pipe(observers, map$1(observer => observer.latest));
             this.delegate.notify(result);
-            if (this.mode === 2 /* Zip */) {
+            if (this.mode === 2 /* LatestMode.Zip */) {
                 for (const sub of observers) {
                     sub.ready = false;
                     sub.latest = none;
@@ -431,7 +432,7 @@ const latest = (observables, mode) => {
  * multiple sources.
  */
 function combineLatest(...observables) {
-    return latest(observables, 1 /* Combine */);
+    return latest(observables, 1 /* LatestMode.Combine */);
 }
 const combineLatestWith = (snd) => fst => combineLatest(fst, snd);
 
@@ -547,7 +548,7 @@ const scheduleDrainQueue = (dispatcher) => {
         addOnDisposedWithoutErrorTeardown(continuationSubcription, dispatcher.onContinuationDispose);
     }
 };
-function onDispose$1(e) {
+function onDispose$7(e) {
     if (this.nextQueue.length === 0) {
         pipe(this.observer, dispose(e));
     }
@@ -570,7 +571,7 @@ class ObserverDelegatingDispatcher extends AbstractDisposable {
             }
         };
         this.nextQueue = [];
-        addTeardown(this, onDispose$1);
+        addTeardown(this, onDispose$7);
         addDisposable(observer, this);
     }
     dispatch(next) {
@@ -832,7 +833,7 @@ function using(resourceFactory, observableFactory) {
     return new UsingObservable(resourceFactory, observableFactory);
 }
 
-function onDispose$2(error) {
+function onDispose$6(error) {
     const buffer = this.buffer;
     this.buffer = [];
     if (isSome(error) || buffer.length === 0) {
@@ -842,7 +843,7 @@ function onDispose$2(error) {
         pipe(buffer, fromValue(), observe(this.delegate));
     }
 }
-function onNotify() {
+function onNotify$4() {
     this.durationSubscription.inner = disposed;
     const buffer = this.buffer;
     this.buffer = [];
@@ -856,17 +857,17 @@ class BufferObserver extends AbstractDelegatingObserver {
         this.durationSubscription = createSerialDisposable();
         this.buffer = [];
         addDisposableDisposeParentOnChildError(this, this.durationSubscription);
-        addTeardown(this, onDispose$2);
+        addTeardown(this, onDispose$6);
     }
     notify(next) {
         assertObserverState(this);
         const buffer = this.buffer;
         buffer.push(next);
         if (buffer.length === this.maxBufferSize) {
-            onNotify.call(this);
+            onNotify$4.call(this);
         }
         else if (this.durationSubscription.inner.isDisposed) {
-            this.durationSubscription.inner = pipe(next, this.durationFunction, subscribe(this.delegate, onNotify, this));
+            this.durationSubscription.inner = pipe(next, this.durationFunction, subscribe(this.delegate, onNotify$4, this));
         }
     }
 }
@@ -971,7 +972,7 @@ const subscribeNext = (observer) => {
         }
     }
 };
-function onDispose$3(error) {
+function onDispose$5(error) {
     if (isSome(error) || this.queue.length + this.activeCount === 0) {
         pipe(this.delegate, dispose(error));
     }
@@ -990,7 +991,7 @@ class MergeObserver extends AbstractDelegatingObserver {
             this.delegate.notify(next);
         };
         this.queue = [];
-        addTeardown(this, onDispose$3);
+        addTeardown(this, onDispose$5);
         addTeardown(delegate, () => {
             this.queue.length = 0;
         });
@@ -1048,12 +1049,12 @@ class IgnoreObserver extends AbstractAutoDisposingDelegatingObserver {
         assertObserverState(this);
     }
 }
-const operator = (observer) => new IgnoreObserver(observer);
-operator.isSynchronous = true;
+const operator$1 = (observer) => new IgnoreObserver(observer);
+operator$1.isSynchronous = true;
 /**
  * Returns an `ObservableLike` that ignores all items emitted by the source.
  */
-const ignoreElements = () => lift(operator);
+const ignoreElements = () => lift(operator$1);
 
 class KeepTypeObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, predicate) {
@@ -1091,7 +1092,7 @@ function onDispose$4(error) {
         pipe(this.delegate, dispose(error));
     }
 }
-function onNotify$1(next) {
+function onNotify$3(next) {
     this.delegate.notify(next);
 }
 class SwitchObserver extends AbstractDelegatingObserver {
@@ -1103,7 +1104,7 @@ class SwitchObserver extends AbstractDelegatingObserver {
     notify(next) {
         assertObserverState(this);
         pipe(this.inner, dispose());
-        const inner = pipe(next, subscribe(this.delegate, onNotify$1, this));
+        const inner = pipe(next, subscribe(this.delegate, onNotify$3, this));
         addDisposableDisposeParentOnChildError(this.delegate, inner);
         addOnDisposedWithoutErrorTeardown(inner, () => {
             if (this.isDisposed) {
@@ -1113,9 +1114,9 @@ class SwitchObserver extends AbstractDelegatingObserver {
         this.inner = inner;
     }
 }
-const operator$1 = (observer) => new SwitchObserver(observer);
-operator$1.isSynchronous = false;
-const switchAllInstance = lift(operator$1);
+const operator = (observer) => new SwitchObserver(observer);
+operator.isSynchronous = false;
+const switchAllInstance = lift(operator);
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
  * values only from the most recent source.
@@ -1208,7 +1209,7 @@ const publish = (scheduler, options) => observable => {
     return subject;
 };
 
-function onDispose$5(error) {
+function onDispose$3(error) {
     if (isSome(error)) {
         this.delegate.dispose();
     }
@@ -1221,7 +1222,7 @@ class ReduceObserver extends AbstractDelegatingObserver {
         super(delegate);
         this.reducer = reducer;
         this.acc = acc;
-        addTeardown(this, onDispose$5);
+        addTeardown(this, onDispose$3);
     }
     notify(next) {
         assertObserverState(this);
@@ -1342,7 +1343,7 @@ const notifyDelegate = (observer) => {
         observer.delegate.notify(result);
     }
 };
-function onNotify$3(otherLatest) {
+function onNotify$1(otherLatest) {
     this.hasLatest = true;
     this.otherLatest = otherLatest;
     notifyDelegate(this);
@@ -1357,7 +1358,7 @@ class ZipWithLatestFromObserver extends AbstractObserver {
         this.hasLatest = false;
         this.queue = [];
         this.selector = selector;
-        const otherSubscription = pipe(other, subscribe(delegate, onNotify$3, this));
+        const otherSubscription = pipe(other, subscribe(delegate, onNotify$1, this));
         const disposeDelegate = () => {
             if (this.isDisposed && otherSubscription.isDisposed) {
                 pipe(delegate, dispose());
@@ -1473,7 +1474,7 @@ const subscribeOn = (scheduler) => observable => createObservable(dispatcher => 
     bindDisposables(subscription, dispatcher);
 });
 
-function onDispose$6(error) {
+function onDispose$2(error) {
     if (isSome(error)) {
         this.last.length = 0;
         pipe(this.delegate, dispose(error));
@@ -1487,7 +1488,7 @@ class TakeLastObserver extends AbstractDelegatingObserver {
         super(delegate);
         this.maxCount = maxCount;
         this.last = [];
-        addTeardown(this, onDispose$6);
+        addTeardown(this, onDispose$2);
     }
     notify(next) {
         assertObserverState(this);
@@ -1552,10 +1553,10 @@ const takeWhile = (predicate, options = {}) => {
     return lift(operator);
 };
 
-const setupDurationSubscription = (observer, next) => {
+const setupDurationSubscription$1 = (observer, next) => {
     observer.durationSubscription.inner = pipe(observer.durationFunction(next), subscribe(observer, observer.onNotify));
 };
-function onDispose$7(e) {
+function onDispose$1(e) {
     if (isNone(e) && this.mode !== "first" && this.hasValue) {
         pipe(this.value, fromValue(), observe(this.delegate));
     }
@@ -1576,24 +1577,23 @@ class ThrottleObserver extends AbstractDelegatingObserver {
                 const value = this.value;
                 this.value = none;
                 this.hasValue = false;
-                setupDurationSubscription(this, value);
+                setupDurationSubscription$1(this, value);
                 this.delegate.notify(value);
             }
         };
         addDisposableDisposeParentOnChildError(this, this.durationSubscription);
-        addTeardown(this, onDispose$7);
+        addTeardown(this, onDispose$1);
     }
     notify(next) {
         assertObserverState(this);
         this.value = next;
         this.hasValue = true;
-        const durationSubscriptionDisposableIsDisposed = this.durationSubscription
-            .inner.isDisposed;
+        const durationSubscriptionDisposableIsDisposed = this.durationSubscription.inner.isDisposed;
         if (durationSubscriptionDisposableIsDisposed && this.mode !== "last") {
             this.onNotify();
         }
         else if (durationSubscriptionDisposableIsDisposed) {
-            setupDurationSubscription(this, next);
+            setupDurationSubscription$1(this, next);
         }
     }
 }
@@ -1607,7 +1607,7 @@ function throttle(duration, options = {}) {
     return lift(operator);
 }
 
-function onDispose$8(error) {
+function onDispose(error) {
     if (isNone(error) && this.isEmpty) {
         let cause = none;
         try {
@@ -1625,7 +1625,7 @@ class ThrowIfEmptyObserver extends AbstractDelegatingObserver {
         super(delegate);
         this.factory = factory;
         this.isEmpty = true;
-        addTeardown(this, onDispose$8);
+        addTeardown(this, onDispose);
     }
     notify(next) {
         assertObserverState(this);
@@ -1647,7 +1647,7 @@ const throwIfEmpty = (factory) => {
 const _timeoutError = Symbol("@reactive-js/core/lib/observable/timeoutError");
 /** Symbol thrown when the timeout operator times out */
 const timeoutError = _timeoutError;
-const setupDurationSubscription$1 = (observer) => {
+const setupDurationSubscription = (observer) => {
     observer.durationSubscription.inner = pipe(observer.duration, subscribe(observer));
 };
 class TimeoutObserver extends AbstractAutoDisposingDelegatingObserver {
@@ -1656,7 +1656,7 @@ class TimeoutObserver extends AbstractAutoDisposingDelegatingObserver {
         this.duration = duration;
         this.durationSubscription = createSerialDisposable();
         addDisposableDisposeParentOnChildError(this, this.durationSubscription);
-        setupDurationSubscription$1(this);
+        setupDurationSubscription(this);
     }
     notify(next) {
         assertObserverState(this);
@@ -1674,7 +1674,7 @@ function timeout(duration) {
     return lift(operator);
 }
 
-function onNotify$4(next) {
+function onNotify(next) {
     this.hasLatest = true;
     this.otherLatest = next;
 }
@@ -1684,7 +1684,7 @@ class WithLatestFromObserver extends AbstractAutoDisposingDelegatingObserver {
         this.selector = selector;
         this.hasLatest = false;
         this.selector = selector;
-        const otherSubscription = pipe(other, subscribe(this, onNotify$4, this));
+        const otherSubscription = pipe(other, subscribe(this, onNotify, this));
         addOnDisposedWithoutErrorTeardown(otherSubscription, () => {
             if (!this.hasLatest) {
                 pipe(this, dispose());
@@ -1885,7 +1885,7 @@ const zipWith = (snd) => fst => zip(fst, snd);
  * multiple sources.
  */
 function zipLatest(...observables) {
-    return latest(observables, 2 /* Zip */);
+    return latest(observables, 2 /* LatestMode.Zip */);
 }
 const zipLatestWith = (snd) => fst => zipLatest(fst, snd);
 

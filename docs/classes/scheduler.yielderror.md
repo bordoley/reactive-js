@@ -2,36 +2,32 @@
 
 # Class: YieldError
 
-## Hierarchy
+[scheduler](../modules/scheduler.md).YieldError
 
-* **YieldError**
-
-## Index
+## Table of contents
 
 ### Constructors
 
-* [constructor](scheduler.yielderror.md#constructor)
+- [constructor](scheduler.YieldError.md#constructor)
 
 ### Properties
 
-* [delay](scheduler.yielderror.md#delay)
+- [delay](scheduler.YieldError.md#delay)
 
 ## Constructors
 
 ### constructor
 
-\+ **new YieldError**(`delay`: *number*): [*YieldError*](scheduler.yielderror.md)
+• **new YieldError**(`delay`)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`delay` | *number* |
-
-**Returns:** [*YieldError*](scheduler.yielderror.md)
+| Name | Type |
+| :------ | :------ |
+| `delay` | `number` |
 
 ## Properties
 
 ### delay
 
-• `Readonly` **delay**: *number*
+• `Readonly` **delay**: `number`

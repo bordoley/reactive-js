@@ -1,8 +1,8 @@
 /// <reference types="./streamable.d.ts" />
-import { isNone, none } from './option.mjs';
 import { pipe, compose, returns } from './functions.mjs';
 import { createSubject, publish, observe, using, map as map$1, subscribe, empty as empty$1, __currentScheduler, __using, scan as scan$1, mergeWith, fromValue, distinctUntilChanged, mapTo as mapTo$1, onNotify as onNotify$1, withLatestFrom as withLatestFrom$1, ignoreElements, endWith } from './observable.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables } from './disposable.mjs';
+import { isNone, none } from './option.mjs';
 
 class StreamImpl extends AbstractDisposable {
     constructor(op, scheduler, options) {
@@ -55,13 +55,17 @@ const liftImpl = (streamable, obsOps, reqOps) => {
     return new LiftedStreamable(op, src, obsOps, reqOps);
 };
 const lift = (op) => streamable => {
-    const obsOps = streamable instanceof LiftedStreamable ? [...streamable.obsOps, op] : [op];
+    const obsOps = streamable instanceof LiftedStreamable
+        ? [...streamable.obsOps, op]
+        : [op];
     const reqOps = streamable instanceof LiftedStreamable ? streamable.reqOps : [];
     return liftImpl(streamable, obsOps, reqOps);
 };
 const mapReq = (op) => streamable => {
     const obsOps = streamable instanceof LiftedStreamable ? streamable.obsOps : [];
-    const reqOps = streamable instanceof LiftedStreamable ? [op, ...streamable.reqOps] : [op];
+    const reqOps = streamable instanceof LiftedStreamable
+        ? [op, ...streamable.reqOps]
+        : [op];
     return liftImpl(streamable, obsOps, reqOps);
 };
 const _empty = createStreamable(_ => empty$1());

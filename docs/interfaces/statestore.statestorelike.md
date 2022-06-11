@@ -1,38 +1,17 @@
-[Reactive-JS](../README.md) / [stateStore](../modules/statestore.md) / StateStoreLike
+[Reactive-JS](../README.md) / [stateStore](../modules/stateStore.md) / StateStoreLike
 
 # Interface: StateStoreLike<T\>
 
+[stateStore](../modules/stateStore.md).StateStoreLike
+
 ## Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
 ## Hierarchy
 
-* [*StreamableLike*](streamable.streamablelike.md)<[*Updater*](../modules/functions.md#updater)<T\>, T\>
+- [`StreamableLike`](streamable.StreamableLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`\>
 
-  ↳ **StateStoreLike**
-
-## Index
-
-### Methods
-
-* [stream](statestore.statestorelike.md#stream)
-
-## Methods
-
-### stream
-
-▸ **stream**(`scheduler`: [*SchedulerLike*](scheduler.schedulerlike.md), `options?`: { `replay?`: *undefined* \| *number*  }): [*StreamLike*](observable.streamlike.md)<[*Updater*](../modules/functions.md#updater)<T\>, T\>
-
-#### Parameters:
-
-Name | Type |
------- | ------ |
-`scheduler` | [*SchedulerLike*](scheduler.schedulerlike.md) |
-`options?` | { `replay?`: *undefined* \| *number*  } |
-
-**Returns:** [*StreamLike*](observable.streamlike.md)<[*Updater*](../modules/functions.md#updater)<T\>, T\>
-
-Inherited from: [StreamableLike](streamable.streamablelike.md)
+  ↳ **`StateStoreLike`**

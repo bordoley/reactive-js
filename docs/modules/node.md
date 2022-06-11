@@ -2,395 +2,446 @@
 
 # Module: node
 
-## Index
+## Table of contents
 
 ### Functions
 
-* [bindNodeCallback](node.md#bindnodecallback)
-* [brotliCompress](node.md#brotlicompress)
-* [brotliDecompress](node.md#brotlidecompress)
-* [createDisposableNodeStream](node.md#createdisposablenodestream)
-* [createReadableIOSource](node.md#createreadableiosource)
-* [createWritableIOSink](node.md#createwritableiosink)
-* [deflate](node.md#deflate)
-* [gunzip](node.md#gunzip)
-* [gzip](node.md#gzip)
-* [inflate](node.md#inflate)
-* [readFileIOSource](node.md#readfileiosource)
-* [transform](node.md#transform)
+- [bindNodeCallback](node.md#bindnodecallback)
+- [brotliCompress](node.md#brotlicompress)
+- [brotliDecompress](node.md#brotlidecompress)
+- [createDisposableNodeStream](node.md#createdisposablenodestream)
+- [createReadableIOSource](node.md#createreadableiosource)
+- [createWritableIOSink](node.md#createwritableiosink)
+- [deflate](node.md#deflate)
+- [gunzip](node.md#gunzip)
+- [gzip](node.md#gzip)
+- [inflate](node.md#inflate)
+- [readFileIOSource](node.md#readfileiosource)
+- [transform](node.md#transform)
 
 ## Functions
 
 ### bindNodeCallback
 
-▸ **bindNodeCallback**<T\>(`callbackFunc`: [*SideEffect1*](functions.md#sideeffect1)<[*SideEffect2*](functions.md#sideeffect2)<*unknown*, T\>\>): [*Factory*](functions.md#factory)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
+▸ **bindNodeCallback**<`T`\>(`callbackFunc`): [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`callbackFunc` | [*SideEffect1*](functions.md#sideeffect1)<[*SideEffect2*](functions.md#sideeffect2)<*unknown*, T\>\> |
+| Name | Type |
+| :------ | :------ |
+| `callbackFunc` | [`SideEffect1`](functions.md#sideeffect1)<[`SideEffect2`](functions.md#sideeffect2)<`unknown`, `T`\>\> |
 
-**Returns:** [*Factory*](functions.md#factory)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
+#### Returns
 
-▸ **bindNodeCallback**(`callbackFunc`: [*SideEffect1*](functions.md#sideeffect1)<[*SideEffect1*](functions.md#sideeffect1)<*unknown*\>\>): [*Factory*](functions.md#factory)<[*ObservableLike*](../interfaces/observable.observablelike.md)<*void*\>\>
+[`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
-#### Parameters:
+▸ **bindNodeCallback**(`callbackFunc`): [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>\>
 
-Name | Type |
------- | ------ |
-`callbackFunc` | [*SideEffect1*](functions.md#sideeffect1)<[*SideEffect1*](functions.md#sideeffect1)<*unknown*\>\> |
+#### Parameters
 
-**Returns:** [*Factory*](functions.md#factory)<[*ObservableLike*](../interfaces/observable.observablelike.md)<*void*\>\>
+| Name | Type |
+| :------ | :------ |
+| `callbackFunc` | [`SideEffect1`](functions.md#sideeffect1)<[`SideEffect1`](functions.md#sideeffect1)<`unknown`\>\> |
 
-▸ **bindNodeCallback**<A1, T\>(`callbackFunc`: [*SideEffect2*](functions.md#sideeffect2)<A1, [*SideEffect2*](functions.md#sideeffect2)<*unknown*, T\>\>): [*Function1*](functions.md#function1)<A1, [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
+#### Returns
 
-#### Type parameters:
+[`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>\>
 
-Name |
------- |
-`A1` |
-`T` |
+▸ **bindNodeCallback**<`A1`, `T`\>(`callbackFunc`): [`Function1`](functions.md#function1)<`A1`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
-#### Parameters:
+#### Type parameters
 
-Name | Type |
------- | ------ |
-`callbackFunc` | [*SideEffect2*](functions.md#sideeffect2)<A1, [*SideEffect2*](functions.md#sideeffect2)<*unknown*, T\>\> |
+| Name |
+| :------ |
+| `A1` |
+| `T` |
 
-**Returns:** [*Function1*](functions.md#function1)<A1, [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
+#### Parameters
 
-▸ **bindNodeCallback**<A1\>(`callbackFunc`: [*SideEffect2*](functions.md#sideeffect2)<A1, [*SideEffect1*](functions.md#sideeffect1)<*unknown*\>\>): [*Function1*](functions.md#function1)<A1, [*ObservableLike*](../interfaces/observable.observablelike.md)<*void*\>\>
+| Name | Type |
+| :------ | :------ |
+| `callbackFunc` | [`SideEffect2`](functions.md#sideeffect2)<`A1`, [`SideEffect2`](functions.md#sideeffect2)<`unknown`, `T`\>\> |
 
-#### Type parameters:
+#### Returns
 
-Name |
------- |
-`A1` |
+[`Function1`](functions.md#function1)<`A1`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
-#### Parameters:
+▸ **bindNodeCallback**<`A1`\>(`callbackFunc`): [`Function1`](functions.md#function1)<`A1`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>\>
 
-Name | Type |
------- | ------ |
-`callbackFunc` | [*SideEffect2*](functions.md#sideeffect2)<A1, [*SideEffect1*](functions.md#sideeffect1)<*unknown*\>\> |
+#### Type parameters
 
-**Returns:** [*Function1*](functions.md#function1)<A1, [*ObservableLike*](../interfaces/observable.observablelike.md)<*void*\>\>
+| Name |
+| :------ |
+| `A1` |
 
-▸ **bindNodeCallback**<A1, A2, T\>(`callbackFunc`: [*SideEffect3*](functions.md#sideeffect3)<A1, A2, [*SideEffect2*](functions.md#sideeffect2)<*unknown*, T\>\>): [*Function2*](functions.md#function2)<A1, A2, [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
+#### Parameters
 
-#### Type parameters:
+| Name | Type |
+| :------ | :------ |
+| `callbackFunc` | [`SideEffect2`](functions.md#sideeffect2)<`A1`, [`SideEffect1`](functions.md#sideeffect1)<`unknown`\>\> |
 
-Name |
------- |
-`A1` |
-`A2` |
-`T` |
+#### Returns
 
-#### Parameters:
+[`Function1`](functions.md#function1)<`A1`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>\>
 
-Name | Type |
------- | ------ |
-`callbackFunc` | [*SideEffect3*](functions.md#sideeffect3)<A1, A2, [*SideEffect2*](functions.md#sideeffect2)<*unknown*, T\>\> |
+▸ **bindNodeCallback**<`A1`, `A2`, `T`\>(`callbackFunc`): [`Function2`](functions.md#function2)<`A1`, `A2`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
-**Returns:** [*Function2*](functions.md#function2)<A1, A2, [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
+#### Type parameters
 
-▸ **bindNodeCallback**<A1, A2\>(`callbackFunc`: [*SideEffect3*](functions.md#sideeffect3)<A1, A2, [*SideEffect1*](functions.md#sideeffect1)<*unknown*\>\>): [*Function2*](functions.md#function2)<A1, A2, [*ObservableLike*](../interfaces/observable.observablelike.md)<*void*\>\>
+| Name |
+| :------ |
+| `A1` |
+| `A2` |
+| `T` |
 
-#### Type parameters:
+#### Parameters
 
-Name |
------- |
-`A1` |
-`A2` |
+| Name | Type |
+| :------ | :------ |
+| `callbackFunc` | [`SideEffect3`](functions.md#sideeffect3)<`A1`, `A2`, [`SideEffect2`](functions.md#sideeffect2)<`unknown`, `T`\>\> |
 
-#### Parameters:
+#### Returns
 
-Name | Type |
------- | ------ |
-`callbackFunc` | [*SideEffect3*](functions.md#sideeffect3)<A1, A2, [*SideEffect1*](functions.md#sideeffect1)<*unknown*\>\> |
+[`Function2`](functions.md#function2)<`A1`, `A2`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
-**Returns:** [*Function2*](functions.md#function2)<A1, A2, [*ObservableLike*](../interfaces/observable.observablelike.md)<*void*\>\>
+▸ **bindNodeCallback**<`A1`, `A2`\>(`callbackFunc`): [`Function2`](functions.md#function2)<`A1`, `A2`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>\>
 
-▸ **bindNodeCallback**<A1, A2, A3, T\>(`callbackFunc`: [*SideEffect4*](functions.md#sideeffect4)<A1, A2, A3, [*SideEffect2*](functions.md#sideeffect2)<*unknown*, T\>\>): [*Function3*](functions.md#function3)<A1, A2, A3, [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
+#### Type parameters
 
-#### Type parameters:
+| Name |
+| :------ |
+| `A1` |
+| `A2` |
 
-Name |
------- |
-`A1` |
-`A2` |
-`A3` |
-`T` |
+#### Parameters
 
-#### Parameters:
+| Name | Type |
+| :------ | :------ |
+| `callbackFunc` | [`SideEffect3`](functions.md#sideeffect3)<`A1`, `A2`, [`SideEffect1`](functions.md#sideeffect1)<`unknown`\>\> |
 
-Name | Type |
------- | ------ |
-`callbackFunc` | [*SideEffect4*](functions.md#sideeffect4)<A1, A2, A3, [*SideEffect2*](functions.md#sideeffect2)<*unknown*, T\>\> |
+#### Returns
 
-**Returns:** [*Function3*](functions.md#function3)<A1, A2, A3, [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
+[`Function2`](functions.md#function2)<`A1`, `A2`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>\>
 
-▸ **bindNodeCallback**<A1, A2, A3\>(`callbackFunc`: [*SideEffect4*](functions.md#sideeffect4)<A1, A2, A3, [*SideEffect1*](functions.md#sideeffect1)<*unknown*\>\>): [*Function3*](functions.md#function3)<A1, A2, A3, [*ObservableLike*](../interfaces/observable.observablelike.md)<*void*\>\>
+▸ **bindNodeCallback**<`A1`, `A2`, `A3`, `T`\>(`callbackFunc`): [`Function3`](functions.md#function3)<`A1`, `A2`, `A3`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`A1` |
-`A2` |
-`A3` |
+| Name |
+| :------ |
+| `A1` |
+| `A2` |
+| `A3` |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`callbackFunc` | [*SideEffect4*](functions.md#sideeffect4)<A1, A2, A3, [*SideEffect1*](functions.md#sideeffect1)<*unknown*\>\> |
+| Name | Type |
+| :------ | :------ |
+| `callbackFunc` | [`SideEffect4`](functions.md#sideeffect4)<`A1`, `A2`, `A3`, [`SideEffect2`](functions.md#sideeffect2)<`unknown`, `T`\>\> |
 
-**Returns:** [*Function3*](functions.md#function3)<A1, A2, A3, [*ObservableLike*](../interfaces/observable.observablelike.md)<*void*\>\>
+#### Returns
 
-▸ **bindNodeCallback**<A1, A2, A3, A4, T\>(`callbackFunc`: [*SideEffect5*](functions.md#sideeffect5)<A1, A2, A3, A4, [*SideEffect2*](functions.md#sideeffect2)<*unknown*, T\>\>): [*Function4*](functions.md#function4)<A1, A2, A3, A4, [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
+[`Function3`](functions.md#function3)<`A1`, `A2`, `A3`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
-#### Type parameters:
+▸ **bindNodeCallback**<`A1`, `A2`, `A3`\>(`callbackFunc`): [`Function3`](functions.md#function3)<`A1`, `A2`, `A3`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>\>
 
-Name |
------- |
-`A1` |
-`A2` |
-`A3` |
-`A4` |
-`T` |
+#### Type parameters
 
-#### Parameters:
+| Name |
+| :------ |
+| `A1` |
+| `A2` |
+| `A3` |
 
-Name | Type |
------- | ------ |
-`callbackFunc` | [*SideEffect5*](functions.md#sideeffect5)<A1, A2, A3, A4, [*SideEffect2*](functions.md#sideeffect2)<*unknown*, T\>\> |
+#### Parameters
 
-**Returns:** [*Function4*](functions.md#function4)<A1, A2, A3, A4, [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
+| Name | Type |
+| :------ | :------ |
+| `callbackFunc` | [`SideEffect4`](functions.md#sideeffect4)<`A1`, `A2`, `A3`, [`SideEffect1`](functions.md#sideeffect1)<`unknown`\>\> |
 
-▸ **bindNodeCallback**<A1, A2, A3, A4\>(`callbackFunc`: [*SideEffect5*](functions.md#sideeffect5)<A1, A2, A3, A4, [*SideEffect1*](functions.md#sideeffect1)<*unknown*\>\>): [*Function4*](functions.md#function4)<A1, A2, A3, A4, [*ObservableLike*](../interfaces/observable.observablelike.md)<*void*\>\>
+#### Returns
 
-#### Type parameters:
+[`Function3`](functions.md#function3)<`A1`, `A2`, `A3`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>\>
 
-Name |
------- |
-`A1` |
-`A2` |
-`A3` |
-`A4` |
+▸ **bindNodeCallback**<`A1`, `A2`, `A3`, `A4`, `T`\>(`callbackFunc`): [`Function4`](functions.md#function4)<`A1`, `A2`, `A3`, `A4`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
-#### Parameters:
+#### Type parameters
 
-Name | Type |
------- | ------ |
-`callbackFunc` | [*SideEffect5*](functions.md#sideeffect5)<A1, A2, A3, A4, [*SideEffect1*](functions.md#sideeffect1)<*unknown*\>\> |
+| Name |
+| :------ |
+| `A1` |
+| `A2` |
+| `A3` |
+| `A4` |
+| `T` |
 
-**Returns:** [*Function4*](functions.md#function4)<A1, A2, A3, A4, [*ObservableLike*](../interfaces/observable.observablelike.md)<*void*\>\>
+#### Parameters
 
-▸ **bindNodeCallback**<A1, A2, A3, A4, A5, T\>(`callbackFunc`: [*SideEffect6*](functions.md#sideeffect6)<A1, A2, A3, A4, A5, [*SideEffect2*](functions.md#sideeffect2)<*unknown*, T\>\>): [*Function5*](functions.md#function5)<A1, A2, A3, A4, A5, [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
+| Name | Type |
+| :------ | :------ |
+| `callbackFunc` | [`SideEffect5`](functions.md#sideeffect5)<`A1`, `A2`, `A3`, `A4`, [`SideEffect2`](functions.md#sideeffect2)<`unknown`, `T`\>\> |
 
-#### Type parameters:
+#### Returns
 
-Name |
------- |
-`A1` |
-`A2` |
-`A3` |
-`A4` |
-`A5` |
-`T` |
+[`Function4`](functions.md#function4)<`A1`, `A2`, `A3`, `A4`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
-#### Parameters:
+▸ **bindNodeCallback**<`A1`, `A2`, `A3`, `A4`\>(`callbackFunc`): [`Function4`](functions.md#function4)<`A1`, `A2`, `A3`, `A4`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>\>
 
-Name | Type |
------- | ------ |
-`callbackFunc` | [*SideEffect6*](functions.md#sideeffect6)<A1, A2, A3, A4, A5, [*SideEffect2*](functions.md#sideeffect2)<*unknown*, T\>\> |
+#### Type parameters
 
-**Returns:** [*Function5*](functions.md#function5)<A1, A2, A3, A4, A5, [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>\>
+| Name |
+| :------ |
+| `A1` |
+| `A2` |
+| `A3` |
+| `A4` |
 
-▸ **bindNodeCallback**<A1, A2, A3, A4, A5\>(`callbackFunc`: [*SideEffect6*](functions.md#sideeffect6)<A1, A2, A3, A4, A5, [*SideEffect1*](functions.md#sideeffect1)<*unknown*\>\>): [*Function5*](functions.md#function5)<A1, A2, A3, A4, A5, [*ObservableLike*](../interfaces/observable.observablelike.md)<*void*\>\>
+#### Parameters
 
-#### Type parameters:
+| Name | Type |
+| :------ | :------ |
+| `callbackFunc` | [`SideEffect5`](functions.md#sideeffect5)<`A1`, `A2`, `A3`, `A4`, [`SideEffect1`](functions.md#sideeffect1)<`unknown`\>\> |
 
-Name |
------- |
-`A1` |
-`A2` |
-`A3` |
-`A4` |
-`A5` |
+#### Returns
 
-#### Parameters:
+[`Function4`](functions.md#function4)<`A1`, `A2`, `A3`, `A4`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>\>
 
-Name | Type |
------- | ------ |
-`callbackFunc` | [*SideEffect6*](functions.md#sideeffect6)<A1, A2, A3, A4, A5, [*SideEffect1*](functions.md#sideeffect1)<*unknown*\>\> |
+▸ **bindNodeCallback**<`A1`, `A2`, `A3`, `A4`, `A5`, `T`\>(`callbackFunc`): [`Function5`](functions.md#function5)<`A1`, `A2`, `A3`, `A4`, `A5`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
-**Returns:** [*Function5*](functions.md#function5)<A1, A2, A3, A4, A5, [*ObservableLike*](../interfaces/observable.observablelike.md)<*void*\>\>
+#### Type parameters
+
+| Name |
+| :------ |
+| `A1` |
+| `A2` |
+| `A3` |
+| `A4` |
+| `A5` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `callbackFunc` | [`SideEffect6`](functions.md#sideeffect6)<`A1`, `A2`, `A3`, `A4`, `A5`, [`SideEffect2`](functions.md#sideeffect2)<`unknown`, `T`\>\> |
+
+#### Returns
+
+[`Function5`](functions.md#function5)<`A1`, `A2`, `A3`, `A4`, `A5`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
+
+▸ **bindNodeCallback**<`A1`, `A2`, `A3`, `A4`, `A5`\>(`callbackFunc`): [`Function5`](functions.md#function5)<`A1`, `A2`, `A3`, `A4`, `A5`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `A1` |
+| `A2` |
+| `A3` |
+| `A4` |
+| `A5` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `callbackFunc` | [`SideEffect6`](functions.md#sideeffect6)<`A1`, `A2`, `A3`, `A4`, `A5`, [`SideEffect1`](functions.md#sideeffect1)<`unknown`\>\> |
+
+#### Returns
+
+[`Function5`](functions.md#function5)<`A1`, `A2`, `A3`, `A4`, `A5`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>\>
 
 ___
 
 ### brotliCompress
 
-▸ `Const`**brotliCompress**(`options?`: BrotliOptions): [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>\>
+▸ **brotliCompress**(`options?`): [`IOSourceOperator`](io.md#iosourceoperator)<`Uint8Array`, `Uint8Array`\>
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | BrotliOptions |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `BrotliOptions` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>\>
+#### Returns
+
+[`IOSourceOperator`](io.md#iosourceoperator)<`Uint8Array`, `Uint8Array`\>
 
 ___
 
 ### brotliDecompress
 
-▸ `Const`**brotliDecompress**(`options?`: BrotliOptions): [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>\>
+▸ **brotliDecompress**(`options?`): [`IOSourceOperator`](io.md#iosourceoperator)<`Uint8Array`, `Uint8Array`\>
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | BrotliOptions |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `BrotliOptions` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>\>
+#### Returns
+
+[`IOSourceOperator`](io.md#iosourceoperator)<`Uint8Array`, `Uint8Array`\>
 
 ___
 
 ### createDisposableNodeStream
 
-▸ `Const`**createDisposableNodeStream**<T\>(`stream`: T): [*DisposableValueLike*](../interfaces/disposable.disposablevaluelike.md)<T\>
+▸ **createDisposableNodeStream**<`T`\>(`stream`): [`DisposableValueLike`](../interfaces/disposable.DisposableValueLike.md)<`T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name | Type |
------- | ------ |
-`T` | *Readable* \| *Writable* \| *Transform* |
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `Writable` \| `Readable` \| `Transform` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`stream` | T |
+| Name | Type |
+| :------ | :------ |
+| `stream` | `T` |
 
-**Returns:** [*DisposableValueLike*](../interfaces/disposable.disposablevaluelike.md)<T\>
+#### Returns
+
+[`DisposableValueLike`](../interfaces/disposable.DisposableValueLike.md)<`T`\>
 
 ___
 
 ### createReadableIOSource
 
-▸ `Const`**createReadableIOSource**(`factory`: [*Factory*](functions.md#factory)<[*DisposableValueLike*](../interfaces/disposable.disposablevaluelike.md)<*Readable*\>\>): [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>
+▸ **createReadableIOSource**(`factory`): [`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`Uint8Array`\>
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`factory` | [*Factory*](functions.md#factory)<[*DisposableValueLike*](../interfaces/disposable.disposablevaluelike.md)<*Readable*\>\> |
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`DisposableValueLike`](../interfaces/disposable.DisposableValueLike.md)<`Readable`\>\> |
 
-**Returns:** [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>
+#### Returns
+
+[`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`Uint8Array`\>
 
 ___
 
 ### createWritableIOSink
 
-▸ `Const`**createWritableIOSink**(`factory`: [*Factory*](functions.md#factory)<[*DisposableValueLike*](../interfaces/disposable.disposablevaluelike.md)<*Writable*\>\>): [*IOSinkLike*](../interfaces/io.iosinklike.md)<*Uint8Array*\>
+▸ **createWritableIOSink**(`factory`): [`IOSinkLike`](../interfaces/io.IOSinkLike.md)<`Uint8Array`\>
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`factory` | [*Factory*](functions.md#factory)<[*DisposableValueLike*](../interfaces/disposable.disposablevaluelike.md)<*Writable*\>\> |
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`DisposableValueLike`](../interfaces/disposable.DisposableValueLike.md)<`Writable`\>\> |
 
-**Returns:** [*IOSinkLike*](../interfaces/io.iosinklike.md)<*Uint8Array*\>
+#### Returns
+
+[`IOSinkLike`](../interfaces/io.IOSinkLike.md)<`Uint8Array`\>
 
 ___
 
 ### deflate
 
-▸ `Const`**deflate**(`options?`: ZlibOptions): [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>\>
+▸ **deflate**(`options?`): [`IOSourceOperator`](io.md#iosourceoperator)<`Uint8Array`, `Uint8Array`\>
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | ZlibOptions |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `ZlibOptions` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>\>
+#### Returns
+
+[`IOSourceOperator`](io.md#iosourceoperator)<`Uint8Array`, `Uint8Array`\>
 
 ___
 
 ### gunzip
 
-▸ `Const`**gunzip**(`options?`: ZlibOptions): [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>\>
+▸ **gunzip**(`options?`): [`IOSourceOperator`](io.md#iosourceoperator)<`Uint8Array`, `Uint8Array`\>
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | ZlibOptions |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `ZlibOptions` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>\>
+#### Returns
+
+[`IOSourceOperator`](io.md#iosourceoperator)<`Uint8Array`, `Uint8Array`\>
 
 ___
 
 ### gzip
 
-▸ `Const`**gzip**(`options?`: ZlibOptions): [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>\>
+▸ **gzip**(`options?`): [`IOSourceOperator`](io.md#iosourceoperator)<`Uint8Array`, `Uint8Array`\>
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | ZlibOptions |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `ZlibOptions` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>\>
+#### Returns
+
+[`IOSourceOperator`](io.md#iosourceoperator)<`Uint8Array`, `Uint8Array`\>
 
 ___
 
 ### inflate
 
-▸ `Const`**inflate**(`options?`: ZlibOptions): [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>\>
+▸ **inflate**(`options?`): [`IOSourceOperator`](io.md#iosourceoperator)<`Uint8Array`, `Uint8Array`\>
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | ZlibOptions |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `ZlibOptions` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>\>
+#### Returns
+
+[`IOSourceOperator`](io.md#iosourceoperator)<`Uint8Array`, `Uint8Array`\>
 
 ___
 
 ### readFileIOSource
 
-▸ `Const`**readFileIOSource**(`path`: PathLike, `options?`: { `end?`: *undefined* \| *number* ; `flags?`: *undefined* \| *string* ; `highWaterMark?`: *undefined* \| *number* ; `mode?`: *undefined* \| *number* ; `start?`: *undefined* \| *number*  }): [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>
+▸ **readFileIOSource**(`path`, `options?`): [`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`Uint8Array`\>
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`path` | PathLike |
-`options?` | { `end?`: *undefined* \| *number* ; `flags?`: *undefined* \| *string* ; `highWaterMark?`: *undefined* \| *number* ; `mode?`: *undefined* \| *number* ; `start?`: *undefined* \| *number*  } |
+| Name | Type |
+| :------ | :------ |
+| `path` | `PathLike` |
+| `options?` | `Object` |
+| `options.end?` | `number` |
+| `options.flags?` | `string` |
+| `options.highWaterMark?` | `number` |
+| `options.mode?` | `number` |
+| `options.start?` | `number` |
 
-**Returns:** [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>
+#### Returns
+
+[`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`Uint8Array`\>
 
 ___
 
 ### transform
 
-▸ `Const`**transform**(`factory`: [*Factory*](functions.md#factory)<[*DisposableValueLike*](../interfaces/disposable.disposablevaluelike.md)<*Transform*\>\>): [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>\>
+▸ **transform**(`factory`): [`IOSourceOperator`](io.md#iosourceoperator)<`Uint8Array`, `Uint8Array`\>
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`factory` | [*Factory*](functions.md#factory)<[*DisposableValueLike*](../interfaces/disposable.disposablevaluelike.md)<*Transform*\>\> |
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`DisposableValueLike`](../interfaces/disposable.DisposableValueLike.md)<`Transform`\>\> |
 
-**Returns:** [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>\>
+#### Returns
+
+[`IOSourceOperator`](io.md#iosourceoperator)<`Uint8Array`, `Uint8Array`\>

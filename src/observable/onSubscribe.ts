@@ -42,7 +42,7 @@ class OnSubscribeObservable<T> implements ObservableLike<T> {
  * Executes a side-effect when the observable is subscribed.
  * @param f
  */
-export const onSubscribe = <T>(
-  f: Factory<DisposableOrTeardown | void>,
-): ObservableOperator<T, T> => observable =>
-  new OnSubscribeObservable(observable, f);
+export const onSubscribe =
+  <T>(f: Factory<DisposableOrTeardown | void>): ObservableOperator<T, T> =>
+  observable =>
+    new OnSubscribeObservable(observable, f);

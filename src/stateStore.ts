@@ -46,36 +46,33 @@ export const createStateStore = <T>(
  * @param equals Optional equality function that is used to compare
  * if a state value is distinct from the previous one.
  */
-export const toStateStore = <T>(): StreamableOperator<
-  T,
-  T,
-  Updater<T>,
-  T
-> => streamable =>
-  createStreamable(updates =>
-    using(scheduler => {
-      const stream = pipe(streamable, streamStreamable(scheduler));
-      const updatesSubscription = pipe(
-        updates,
-        zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),
-        subscribe(scheduler, stream.dispatch, stream),
-      );
+export const toStateStore =
+  <T>(): StreamableOperator<T, T, Updater<T>, T> =>
+  streamable =>
+    createStreamable(updates =>
+      using(scheduler => {
+        const stream = pipe(streamable, streamStreamable(scheduler));
+        const updatesSubscription = pipe(
+          updates,
+          zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),
+          subscribe(scheduler, stream.dispatch, stream),
+        );
 
-      bindDisposables(updatesSubscription, stream);
+        bindDisposables(updatesSubscription, stream);
 
-      return stream;
-    }, identity),
-  );
+        return stream;
+      }, identity),
+    );
 
-const requestMapper = <TA, TB>(
-  parse: Function1<TA, TB>,
-  serialize: Function1<TB, TA>,
-) => (stateUpdater: Updater<TB>): Updater<TA> => oldStateTA => {
-  const oldStateTB = parse(oldStateTA);
-  const newStateTB = stateUpdater(oldStateTB);
+const requestMapper =
+  <TA, TB>(parse: Function1<TA, TB>, serialize: Function1<TB, TA>) =>
+  (stateUpdater: Updater<TB>): Updater<TA> =>
+  oldStateTA => {
+    const oldStateTB = parse(oldStateTA);
+    const newStateTB = stateUpdater(oldStateTB);
 
-  return oldStateTB === newStateTB ? oldStateTA : serialize(newStateTB);
-};
+    return oldStateTB === newStateTB ? oldStateTA : serialize(newStateTB);
+  };
 
 export const map = <TA, TB>(
   parse: Function1<TA, TB>,

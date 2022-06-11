@@ -2,28 +2,7 @@ import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
 import fs from "fs";
 import * as ts from "typescript";
-
-const files = fs.readdirSync("./src");
-const modules = files
-  .filter(file => file.endsWith(".ts"))
-  .map(file => file.replace(".ts", ""));
-
-const external = [
-  "http",
-  "http2",
-  "stream",
-  "react",
-  "scheduler",
-  "svelte",
-  "svelte/store",
-  "fs",
-  "zlib",
-];
-
-const input = {
-  src: modules.map(m => `./src/${m}.ts`),
-  "build-types": modules.map(m => `./build-types/${m}.d.ts`),
-};
+import path from "path";
 
 const output = {
   mod: {
@@ -101,52 +80,104 @@ const transformDTSImportsForDeno = () => {
   };
 };
 
+const allModules = fs.readdirSync("./src")
+  .filter(file => file.endsWith(".ts"))
+  .map(file => file.replace(".ts", ""));
+
+const external = ["stream", "react", "scheduler", "fs", "zlib"];
+
+const makeInput = modules => ({
+  src: modules.map(m => `./src/${m}.ts`),
+  // Resolve absolute path to work around oddness in rollup-plugin-dts
+  // https://github.com/Swatinem/rollup-plugin-dts/blob/ced8c9d5aef7a5f65f9decfc7cc1d2ef46226bc8/src/index.ts#L66
+  "build-types": modules.map(m => path.resolve(`./build-types/${m}.d.ts`)),
+});
+
+const makeCoreNPMPackage = () => {
+  const packageModules = allModules.filter(
+    file => !file.startsWith("__") && !file.startsWith('testing')
+  );
+  const input = makeInput(packageModules);
+
+  return [
+    {
+      external,
+      treeshake: false,
+      input: input.src,
+      output: [
+        {
+          ...output.packages.core,
+          chunkFileNames: "[name]-[hash].mjs",
+          entryFileNames: "[name].mjs",
+          format: "esm",
+        },
+        {
+          ...output.packages.core,
+          chunkFileNames: "[name]-[hash].js",
+          entryFileNames: "[name].js",
+          format: "cjs",
+        },
+      ],
+      plugins: [
+        typescript({
+          tsconfig: "tsconfig.typecheck.json",
+        }),
+      ],
+    },
+
+    {
+      external,
+      input: input["build-types"],
+      output: [
+        {
+          ...output.packages.core,
+          format: "esm",
+        },
+      ],
+      plugins: [dts()],
+    },
+  ];
+};
+
+const makeModules = () => {
+  const input = makeInput(allModules);
+  return [
+    {
+      external,
+      treeshake: false,
+      input: input.src,
+      output: [
+        {
+          ...output.mod,
+          chunkFileNames: "[name]-[hash].mjs",
+          entryFileNames: "[name].mjs",
+          format: "esm",
+          plugins: [addDTSReferencesToMJSFilesForDeno()],
+        },
+      ],
+      plugins: [
+        typescript({
+          tsconfig: "tsconfig.typecheck.json",
+        }),
+      ],
+    },
+    {
+      external,
+      treeshake: false,
+      input: input["build-types"],
+      output: [
+        {
+          ...output.mod,
+          format: "esm",
+          plugins: [transformDTSImportsForDeno()],
+        },
+      ],
+      plugins: [dts()],
+    },
+  ];  
+}
+
 export default [
-  {
-    external,
-    treeshake: false,
-    input: input.src,
-    output: [
-      {
-        ...output.packages.core,
-        chunkFileNames: "[name]-[hash].mjs",
-        entryFileNames: "[name].mjs",
-        format: "esm",
-      },
-      {
-        ...output.packages.core,
-        chunkFileNames: "[name]-[hash].js",
-        entryFileNames: "[name].js",
-        format: "cjs",
-      },
-      {
-        ...output.mod,
-        chunkFileNames: "[name]-[hash].mjs",
-        entryFileNames: "[name].mjs",
-        format: "esm",
-        plugins: [addDTSReferencesToMJSFilesForDeno()],
-      },
-    ],
-    plugins: [
-      typescript({
-        tsconfig: "tsconfig.typecheck.json",
-      }),
-    ],
-  },
-  {
-    external,
-    input: input["build-types"],
-    output: [
-      {
-        ...output.packages.core,
-        format: "esm",
-      },
-      {
-        ...output.mod,
-        format: "esm",
-        plugins: [transformDTSImportsForDeno()],
-      },
-    ],
-    plugins: [dts()],
-  },
+  ...makeCoreNPMPackage(),
+  ...makeModules(),
 ];

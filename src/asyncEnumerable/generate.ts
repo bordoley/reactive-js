@@ -3,8 +3,10 @@ import { Factory, Updater, pipe } from "../functions";
 import { fromValue, scan, scanAsync } from "../observable";
 import { createStreamable } from "../streamable";
 
-const generateScanner = <T>(generator: Updater<T>) => (acc: T, _: unknown) =>
-  generator(acc);
+const generateScanner =
+  <T>(generator: Updater<T>) =>
+  (acc: T, _: unknown) =>
+    generator(acc);
 
 const asyncGeneratorScanner = <T>(
   generator: Updater<T>,

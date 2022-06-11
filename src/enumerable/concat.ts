@@ -18,6 +18,7 @@ export function concat<T>(
   return pipe(enumerables, fromArray(), concatAll());
 }
 
-export const concatWith = <T>(
-  snd: EnumerableLike<T>,
-): EnumerableOperator<T, T> => first => concat(first, snd);
+export const concatWith =
+  <T>(snd: EnumerableLike<T>): EnumerableOperator<T, T> =>
+  first =>
+    concat(first, snd);

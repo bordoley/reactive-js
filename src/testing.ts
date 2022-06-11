@@ -73,7 +73,7 @@ export const expectToThrow = (f: SideEffect) => {
 
 export const expectToThrowError = (error: unknown) => (f: SideEffect) => {
   let didThrow = false;
-  let errorThrown = none;
+  let errorThrown: Option<unknown> = none;
   try {
     f();
   } catch (e) {
@@ -92,23 +92,22 @@ export const expectToThrowError = (error: unknown) => (f: SideEffect) => {
   }
 };
 
-export const expectEquals = <T>(b: T, valueEquality = strictEquality) => (
-  a: T,
-) => {
-  if (!valueEquality(a, b)) {
-    raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
-  }
-};
+export const expectEquals =
+  <T>(b: T, valueEquality = strictEquality) =>
+  (a: T) => {
+    if (!valueEquality(a, b)) {
+      raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
+    }
+  };
 
-export const expectArrayEquals = <T>(
-  b: readonly T[],
-  valueEquality: Equality<T> = strictEquality,
-) => (a: readonly T[]) => {
-  const equals = arrayEquality(valueEquality);
-  if (!equals(a, b)) {
-    raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
-  }
-};
+export const expectArrayEquals =
+  <T>(b: readonly T[], valueEquality: Equality<T> = strictEquality) =>
+  (a: readonly T[]) => {
+    const equals = arrayEquality(valueEquality);
+    if (!equals(a, b)) {
+      raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
+    }
+  };
 
 export const expectTrue = (v: boolean) => {
   if (!v) {
@@ -150,15 +149,14 @@ export const mockFn = (retval?: any): MockFunction => {
   return cb;
 };
 
-export const expectToHaveBeenCalledTimes = (times: number) => (
-  fn: MockFunction,
-) => {
-  if (fn.calls.length !== times) {
-    raise(
-      `expected fn to be called ${times} times, but was only called ${fn.calls.length} times.`,
-    );
-  }
-};
+export const expectToHaveBeenCalledTimes =
+  (times: number) => (fn: MockFunction) => {
+    if (fn.calls.length !== times) {
+      raise(
+        `expected fn to be called ${times} times, but was only called ${fn.calls.length} times.`,
+      );
+    }
+  };
 
 export const expectPromiseToThrow = async (promise: Promise<any>) => {
   let didThrow = false;

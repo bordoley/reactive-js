@@ -19,7 +19,7 @@ const dispose = (writable: Readable | Writable | Transform) => {
 };
 
 export const createDisposableNodeStream = <
-  T extends Readable | Writable | Transform
+  T extends Readable | Writable | Transform,
 >(
   stream: T,
 ): DisposableValueLike<T> => {

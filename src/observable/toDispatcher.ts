@@ -38,7 +38,8 @@ function onDispose(
 
 class ObserverDelegatingDispatcher<T>
   extends AbstractDisposable
-  implements DispatcherLike<T> {
+  implements DispatcherLike<T>
+{
   readonly continuation = () => {
     const nextQueue = this.nextQueue;
 

@@ -11,14 +11,14 @@ import { subscribe } from "./subscribe";
  *
  * @param scheduler `SchedulerLike` instance to use when subscribing to the source.
  */
-export const subscribeOn = <T>(
-  scheduler: SchedulerLike,
-): ObservableOperator<T, T> => observable =>
-  createObservable(dispatcher => {
-    const subscription = pipe(
-      observable,
-      subscribe(scheduler, dispatcher.dispatch, dispatcher),
-    );
+export const subscribeOn =
+  <T>(scheduler: SchedulerLike): ObservableOperator<T, T> =>
+  observable =>
+    createObservable(dispatcher => {
+      const subscription = pipe(
+        observable,
+        subscribe(scheduler, dispatcher.dispatch, dispatcher),
+      );
 
-    bindDisposables(subscription, dispatcher);
-  });
+      bindDisposables(subscription, dispatcher);
+    });

@@ -27,7 +27,8 @@ import { using } from "./using";
 
 class EnumeratorObserver<T>
   extends AbstractDisposable
-  implements EnumeratorLike<T>, ObserverLike<T> {
+  implements EnumeratorLike<T>, ObserverLike<T>
+{
   private continuations: SchedulerContinuationLike[] = [];
   current: any;
   hasCurrent = false;
@@ -122,7 +123,8 @@ function onDisposed(this: ZipObserver, error: Option<Error>) {
 
 class ZipObserver
   extends AbstractDelegatingObserver<unknown, readonly unknown[]>
-  implements EnumeratorLike<unknown> {
+  implements EnumeratorLike<unknown>
+{
   current: unknown;
   readonly buffer: unknown[] = [];
   hasCurrent = false;
@@ -299,6 +301,7 @@ export function zip(
   return new ZipObservable(observables);
 }
 
-export const zipWith = <TA, TB>(
-  snd: ObservableLike<TB>,
-): ObservableOperator<TA, [TA, TB]> => fst => zip(fst, snd);
+export const zipWith =
+  <TA, TB>(snd: ObservableLike<TB>): ObservableOperator<TA, [TA, TB]> =>
+  fst =>
+    zip(fst, snd);

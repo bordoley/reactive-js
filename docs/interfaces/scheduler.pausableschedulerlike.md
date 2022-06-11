@@ -2,94 +2,115 @@
 
 # Interface: PausableSchedulerLike
 
+[scheduler](../modules/scheduler.md).PausableSchedulerLike
+
 ## Hierarchy
 
-* [*SchedulerLike*](scheduler.schedulerlike.md)
+- [`SchedulerLike`](scheduler.SchedulerLike.md)
 
-  ↳ **PausableSchedulerLike**
+  ↳ **`PausableSchedulerLike`**
 
-## Index
+## Table of contents
 
 ### Properties
 
-* [inContinuation](scheduler.pausableschedulerlike.md#incontinuation)
-* [now](scheduler.pausableschedulerlike.md#now)
-* [shouldYield](scheduler.pausableschedulerlike.md#shouldyield)
+- [inContinuation](scheduler.PausableSchedulerLike.md#incontinuation)
+- [now](scheduler.PausableSchedulerLike.md#now)
+- [shouldYield](scheduler.PausableSchedulerLike.md#shouldyield)
 
 ### Methods
 
-* [pause](scheduler.pausableschedulerlike.md#pause)
-* [requestYield](scheduler.pausableschedulerlike.md#requestyield)
-* [resume](scheduler.pausableschedulerlike.md#resume)
-* [schedule](scheduler.pausableschedulerlike.md#schedule)
+- [pause](scheduler.PausableSchedulerLike.md#pause)
+- [requestYield](scheduler.PausableSchedulerLike.md#requestyield)
+- [resume](scheduler.PausableSchedulerLike.md#resume)
+- [schedule](scheduler.PausableSchedulerLike.md#schedule)
 
 ## Properties
 
 ### inContinuation
 
-• `Readonly` **inContinuation**: *boolean*
+• `Readonly` **inContinuation**: `boolean`
 
-Inherited from: [SchedulerLike](scheduler.schedulerlike.md).[inContinuation](scheduler.schedulerlike.md#incontinuation)
+#### Inherited from
+
+[SchedulerLike](scheduler.SchedulerLike.md).[inContinuation](scheduler.SchedulerLike.md#incontinuation)
 
 ___
 
 ### now
 
-• `Readonly` **now**: *number*
+• `Readonly` **now**: `number`
 
-Inherited from: [SchedulerLike](scheduler.schedulerlike.md).[now](scheduler.schedulerlike.md#now)
+#### Inherited from
+
+[SchedulerLike](scheduler.SchedulerLike.md).[now](scheduler.SchedulerLike.md#now)
 
 ___
 
 ### shouldYield
 
-• `Readonly` **shouldYield**: *boolean*
+• `Readonly` **shouldYield**: `boolean`
 
-Inherited from: [SchedulerLike](scheduler.schedulerlike.md).[shouldYield](scheduler.schedulerlike.md#shouldyield)
+#### Inherited from
+
+[SchedulerLike](scheduler.SchedulerLike.md).[shouldYield](scheduler.SchedulerLike.md#shouldyield)
 
 ## Methods
 
 ### pause
 
-▸ **pause**(): *void*
+▸ **pause**(): `void`
 
-**Returns:** *void*
+#### Returns
+
+`void`
 
 ___
 
 ### requestYield
 
-▸ **requestYield**(): *void*
+▸ **requestYield**(): `void`
 
 Request the scheduler to yield.
 
-**Returns:** *void*
+#### Returns
 
-Inherited from: [SchedulerLike](scheduler.schedulerlike.md)
+`void`
+
+#### Inherited from
+
+[SchedulerLike](scheduler.SchedulerLike.md).[requestYield](scheduler.SchedulerLike.md#requestyield)
 
 ___
 
 ### resume
 
-▸ **resume**(): *void*
+▸ **resume**(): `void`
 
-**Returns:** *void*
+#### Returns
+
+`void`
 
 ___
 
 ### schedule
 
-▸ **schedule**(`continuation`: [*SchedulerContinuationLike*](scheduler.schedulercontinuationlike.md), `options?`: { `delay?`: *undefined* \| *number*  }): *void*
+▸ **schedule**(`continuation`, `options?`): `void`
 
 Schedules a continuation to be executed on the scheduler.
 
-#### Parameters:
+#### Parameters
 
-Name | Type | Description |
------- | ------ | ------ |
-`continuation` | [*SchedulerContinuationLike*](scheduler.schedulercontinuationlike.md) | The SchedulerContinuation to be executed.    |
-`options?` | { `delay?`: *undefined* \| *number*  } | - |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `continuation` | [`SchedulerContinuationLike`](scheduler.SchedulerContinuationLike.md) | The SchedulerContinuation to be executed. |
+| `options?` | `Object` | - |
+| `options.delay?` | `number` | - |
 
-**Returns:** *void*
+#### Returns
 
-Inherited from: [SchedulerLike](scheduler.schedulerlike.md)
+`void`
+
+#### Inherited from
+
+[SchedulerLike](scheduler.SchedulerLike.md).[schedule](scheduler.SchedulerLike.md#schedule)

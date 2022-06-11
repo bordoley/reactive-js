@@ -3,7 +3,8 @@ import { Factory, Function1 } from "../functions";
 import { none } from "../option";
 
 class IteratorEnumerator<T, TReturn = any, TNext = unknown>
-  implements EnumeratorLike<T> {
+  implements EnumeratorLike<T>
+{
   current: any = none;
   hasCurrent = false;
 
@@ -25,7 +26,8 @@ class IteratorEnumerator<T, TReturn = any, TNext = unknown>
 }
 
 class IteratorEnumerable<T, TReturn = any, TNext = unknown>
-  implements EnumerableLike<T> {
+  implements EnumerableLike<T>
+{
   constructor(private readonly f: Factory<Iterator<T, TReturn, TNext>>) {}
 
   enumerate() {

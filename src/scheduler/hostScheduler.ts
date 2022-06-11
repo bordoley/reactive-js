@@ -35,13 +35,12 @@ const scheduleImmediateWithSetImmediate = (
   continuation: SchedulerContinuationLike,
 ) => setImmediate(runContinuation, scheduler, continuation);
 
-const scheduleImmediateWithMessageChannel = (channel: MessageChannel) => (
-  scheduler: HostScheduler,
-  continuation: SchedulerContinuationLike,
-) => {
-  channel.port1.onmessage = () => runContinuation(scheduler, continuation);
-  channel.port2.postMessage(null);
-};
+const scheduleImmediateWithMessageChannel =
+  (channel: MessageChannel) =>
+  (scheduler: HostScheduler, continuation: SchedulerContinuationLike) => {
+    channel.port1.onmessage = () => runContinuation(scheduler, continuation);
+    channel.port2.postMessage(null);
+  };
 
 const scheduleDelayed = (
   scheduler: HostScheduler,
@@ -56,14 +55,12 @@ const scheduleImmediateWithSetTimeout = (
   continuation: SchedulerContinuationLike,
 ) => scheduleDelayed(scheduler, continuation, 0);
 
-const scheduleImmediate: SideEffect2<
-  HostScheduler,
-  SchedulerContinuationLike
-> = supportsSetImmediate
-  ? scheduleImmediateWithSetImmediate
-  : supportsMessageChannel
-  ? scheduleImmediateWithMessageChannel(new MessageChannel())
-  : scheduleImmediateWithSetTimeout;
+const scheduleImmediate: SideEffect2<HostScheduler, SchedulerContinuationLike> =
+  supportsSetImmediate
+    ? scheduleImmediateWithSetImmediate
+    : supportsMessageChannel
+    ? scheduleImmediateWithMessageChannel(new MessageChannel())
+    : scheduleImmediateWithSetTimeout;
 
 const runContinuation = (
   scheduler: HostScheduler,

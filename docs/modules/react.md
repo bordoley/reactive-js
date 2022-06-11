@@ -2,26 +2,26 @@
 
 # Module: react
 
-## Index
+## Table of contents
 
 ### Variables
 
-* [idlePriority](react.md#idlepriority)
-* [immediatePriority](react.md#immediatepriority)
-* [lowPriority](react.md#lowpriority)
-* [normalPriority](react.md#normalpriority)
-* [userBlockingPriority](react.md#userblockingpriority)
+- [idlePriority](react.md#idlepriority)
+- [immediatePriority](react.md#immediatepriority)
+- [lowPriority](react.md#lowpriority)
+- [normalPriority](react.md#normalpriority)
+- [userBlockingPriority](react.md#userblockingpriority)
 
 ### Functions
 
-* [createComponent](react.md#createcomponent)
-* [useObservable](react.md#useobservable)
+- [createComponent](react.md#createcomponent)
+- [useObservable](react.md#useobservable)
 
 ## Variables
 
 ### idlePriority
 
-• `Const` **idlePriority**: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)
+• `Const` **idlePriority**: [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
 
 Scheduler that schedules work on React's internal priority scheduler with idle priority.
 
@@ -29,7 +29,7 @@ ___
 
 ### immediatePriority
 
-• `Const` **immediatePriority**: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)
+• `Const` **immediatePriority**: [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
 
 Scheduler that schedules work on React's internal priority scheduler with immediate priority.
 
@@ -37,7 +37,7 @@ ___
 
 ### lowPriority
 
-• `Const` **lowPriority**: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)
+• `Const` **lowPriority**: [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
 
 Scheduler that schedules work on React's internal priority scheduler with low priority.
 
@@ -45,7 +45,7 @@ ___
 
 ### normalPriority
 
-• `Const` **normalPriority**: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)
+• `Const` **normalPriority**: [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
 
 Scheduler that schedules work on React's internal priority scheduler with normal priority.
 
@@ -53,7 +53,7 @@ ___
 
 ### userBlockingPriority
 
-• `Const` **userBlockingPriority**: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)
+• `Const` **userBlockingPriority**: [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
 
 Scheduler that schedules work on React's internal priority scheduler with user blocking priority.
 
@@ -61,41 +61,46 @@ Scheduler that schedules work on React's internal priority scheduler with user b
 
 ### createComponent
 
-▸ `Const`**createComponent**<TProps\>(`fn`: (`props`: [*ObservableLike*](../interfaces/observable.observablelike.md)<TProps\>) => [*ObservableLike*](../interfaces/observable.observablelike.md)<*ReactElement*<*any*, *string* \| (`props`: *any*) => *null* \| *ReactElement*<*any*, *any*\> \| (`props`: *any*) => *Component*<*any*, *any*, *any*\>\>\>): *ComponentType*<TProps\>
+▸ **createComponent**<`TProps`\>(`fn`): `ComponentType`<`TProps`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`TProps` |
+| Name |
+| :------ |
+| `TProps` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`fn` | (`props`: [*ObservableLike*](../interfaces/observable.observablelike.md)<TProps\>) => [*ObservableLike*](../interfaces/observable.observablelike.md)<*ReactElement*<*any*, *string* \| (`props`: *any*) => *null* \| *ReactElement*<*any*, *any*\> \| (`props`: *any*) => *Component*<*any*, *any*, *any*\>\>\> |
+| Name | Type |
+| :------ | :------ |
+| `fn` | (`props`: [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TProps`\>) => [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\> |
 
-**Returns:** *ComponentType*<TProps\>
+#### Returns
+
+`ComponentType`<`TProps`\>
 
 ___
 
 ### useObservable
 
-▸ `Const`**useObservable**<T\>(`observable`: [*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, `options?`: { `scheduler?`: [*Option*](option.md#option)<[*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)\>  }): [*Option*](option.md#option)<T\>
+▸ **useObservable**<`T`\>(`observable`, `options?`): [`Option`](option.md#option)<`T`\>
 
 Returns the current value, if defined, of `observable`.
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type | Description |
------- | ------ | ------ |
-`observable` | [*ObservableLike*](../interfaces/observable.observablelike.md)<T\> | The `ObservableLike` to subscribe to.   |
-`options?` | { `scheduler?`: [*Option*](option.md#option)<[*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)\>  } | - |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `observable` | [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\> | The `ObservableLike` to subscribe to. |
+| `options?` | `Object` | - |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) | - |
 
-**Returns:** [*Option*](option.md#option)<T\>
+#### Returns
+
+[`Option`](option.md#option)<`T`\>

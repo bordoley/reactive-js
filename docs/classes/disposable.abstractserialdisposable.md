@@ -2,30 +2,16 @@
 
 # Class: AbstractSerialDisposable
 
+[disposable](../modules/disposable.md).AbstractSerialDisposable
+
 Abstract base class for implementing the `SerialDisposableLike` interface.
 
 ## Hierarchy
 
-* [*AbstractDisposable*](disposable.abstractdisposable.md)
+- [`AbstractDisposable`](disposable.AbstractDisposable.md)
 
-  ↳ **AbstractSerialDisposable**
+  ↳ **`AbstractSerialDisposable`**
 
 ## Implements
 
-* [*SerialDisposableLike*](../interfaces/disposable.serialdisposablelike.md)
-
-## Index
-
-### Constructors
-
-* [constructor](disposable.abstractserialdisposable.md#constructor)
-
-## Constructors
-
-### constructor
-
-\+ **new AbstractSerialDisposable**(): [*AbstractSerialDisposable*](disposable.abstractserialdisposable.md)
-
-**Returns:** [*AbstractSerialDisposable*](disposable.abstractserialdisposable.md)
-
-Inherited from: [AbstractDisposable](disposable.abstractdisposable.md)
+- [`SerialDisposableLike`](../interfaces/disposable.SerialDisposableLike.md)

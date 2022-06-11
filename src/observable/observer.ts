@@ -23,16 +23,16 @@ const _assertObserverState = __DEV__
   ? assertObserverStateDev
   : assertObserverStateProduction;
 
-export const assertObserverState: SideEffect1<
-  ObserverLike<unknown>
-> = _assertObserverState;
+export const assertObserverState: SideEffect1<ObserverLike<unknown>> =
+  _assertObserverState;
 
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
 export abstract class AbstractObserver<T, TDelegate extends SchedulerLike>
   extends AbstractDisposable
-  implements ObserverLike<T> {
+  implements ObserverLike<T>
+{
   inContinuation = false;
 
   private readonly scheduler: SchedulerLike;
@@ -90,7 +90,7 @@ export abstract class AbstractObserver<T, TDelegate extends SchedulerLike>
  */
 export abstract class AbstractDelegatingObserver<
   TA,
-  TB
+  TB,
 > extends AbstractObserver<TA, ObserverLike<TB>> {
   constructor(delegate: ObserverLike<TB>) {
     super(delegate);
@@ -100,7 +100,7 @@ export abstract class AbstractDelegatingObserver<
 
 export abstract class AbstractAutoDisposingDelegatingObserver<
   TA,
-  TB
+  TB,
 > extends AbstractObserver<TA, ObserverLike<TB>> {
   constructor(delegate: ObserverLike<TB>) {
     super(delegate);
@@ -130,6 +130,7 @@ export const createAutoDisposingDelegatingObserver = <T>(
   return observer;
 };
 
-export const observe = <T>(
-  observer: ObserverLike<T>,
-): SideEffect1<ObservableLike<T>> => observable => observable.observe(observer);
+export const observe =
+  <T>(observer: ObserverLike<T>): SideEffect1<ObservableLike<T>> =>
+  observable =>
+    observable.observe(observer);

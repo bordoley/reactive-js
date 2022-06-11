@@ -23,48 +23,51 @@ export type FlowableOperator<TA, TB> = Function1<
   FlowableLike<TB>
 >;
 
-export const fromObservable = <T>({
-  scheduler,
-}: {
-  scheduler?: SchedulerLike;
-} = {}): Function1<ObservableLike<T>, FlowableLike<T>> => observable => {
-  const createScheduler = (modeObs: ObservableLike<FlowMode>) => (
-    modeScheduler: SchedulerLike,
-  ) => {
-    const pausableScheduler = toPausableScheduler(scheduler ?? modeScheduler);
+export const fromObservable =
+  <T>({
+    scheduler,
+  }: {
+    scheduler?: SchedulerLike;
+  } = {}): Function1<ObservableLike<T>, FlowableLike<T>> =>
+  observable => {
+    const createScheduler =
+      (modeObs: ObservableLike<FlowMode>) => (modeScheduler: SchedulerLike) => {
+        const pausableScheduler = toPausableScheduler(
+          scheduler ?? modeScheduler,
+        );
 
-    const onModeChange = (mode: FlowMode) => {
-      switch (mode) {
-        case "pause":
-          pausableScheduler.pause();
-          break;
-        case "resume":
-          pausableScheduler.resume();
-          break;
-      }
-    };
+        const onModeChange = (mode: FlowMode) => {
+          switch (mode) {
+            case "pause":
+              pausableScheduler.pause();
+              break;
+            case "resume":
+              pausableScheduler.resume();
+              break;
+          }
+        };
 
-    const modeSubscription = pipe(
-      modeObs,
-      subscribe(modeScheduler, onModeChange),
-    );
+        const modeSubscription = pipe(
+          modeObs,
+          subscribe(modeScheduler, onModeChange),
+        );
 
-    bindDisposables(modeSubscription, pausableScheduler);
+        bindDisposables(modeSubscription, pausableScheduler);
 
-    return pausableScheduler;
+        return pausableScheduler;
+      };
+
+    const op = (modeObs: ObservableLike<FlowMode>) =>
+      using(createScheduler(modeObs), pausableScheduler =>
+        pipe(
+          observable,
+          subscribeOn(pausableScheduler),
+          pipe(pausableScheduler, fromDisposable, takeUntil),
+        ),
+      );
+
+    return createStreamable(op);
   };
-
-  const op = (modeObs: ObservableLike<FlowMode>) =>
-    using(createScheduler(modeObs), pausableScheduler =>
-      pipe(
-        observable,
-        subscribeOn(pausableScheduler),
-        pipe(pausableScheduler, fromDisposable, takeUntil),
-      ),
-    );
-
-  return createStreamable(op);
-};
 
 export const fromArray = <T>(options?: {
   readonly delay?: number;
@@ -73,9 +76,10 @@ export const fromArray = <T>(options?: {
 }): Function1<readonly T[], FlowableLike<T>> =>
   compose(fromArrayObs(options), fromObservable());
 
-export const fromValue = <T>(options?: {
-  readonly delay?: number;
-}): Function1<T, FlowableLike<T>> => v => fromArray<T>(options)([v]);
+export const fromValue =
+  <T>(options?: { readonly delay?: number }): Function1<T, FlowableLike<T>> =>
+  v =>
+    fromArray<T>(options)([v]);
 
 const _empty: FlowableLike<any> = fromArray()([]);
 export const empty = <T>(): FlowableLike<T> => _empty;

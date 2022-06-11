@@ -36,10 +36,10 @@ function clearListeners(this: SchedulerContinuationImpl) {
 
 class SchedulerContinuationImpl
   extends AbstractDisposable
-  implements SchedulerContinuationLike {
-  listeners: Option<
-    Set<SchedulerContinuationRunStatusChangedListenerLike>
-  > = none;
+  implements SchedulerContinuationLike
+{
+  listeners: Option<Set<SchedulerContinuationRunStatusChangedListenerLike>> =
+    none;
 
   constructor(
     private readonly scheduler: SchedulerLike,
@@ -60,10 +60,9 @@ class SchedulerContinuationImpl
         this.listeners = new Set();
       }
 
-      (this
-        .listeners as Set<SchedulerContinuationRunStatusChangedListenerLike>).add(
-        listener,
-      );
+      (
+        this.listeners as Set<SchedulerContinuationRunStatusChangedListenerLike>
+      ).add(listener);
     }
   }
 
@@ -129,11 +128,13 @@ export const __yield = (delay = 0) => {
   }
 };
 
-export const schedule = (
-  f: SideEffect,
-  options?: { readonly delay?: number },
-): Function1<SchedulerLike, DisposableLike> => scheduler => {
-  const continuation = new SchedulerContinuationImpl(scheduler, f);
-  scheduler.schedule(continuation, options);
-  return continuation;
-};
+export const schedule =
+  (
+    f: SideEffect,
+    options?: { readonly delay?: number },
+  ): Function1<SchedulerLike, DisposableLike> =>
+  scheduler => {
+    const continuation = new SchedulerContinuationImpl(scheduler, f);
+    scheduler.schedule(continuation, options);
+    return continuation;
+  };

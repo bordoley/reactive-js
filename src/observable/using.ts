@@ -15,7 +15,8 @@ import { SchedulerLike } from "../scheduler";
 import { observe } from "./observer";
 
 class UsingObservable<TResource extends DisposableLike, T>
-  implements ObservableLike<T> {
+  implements ObservableLike<T>
+{
   readonly isSynchronous = false;
 
   constructor(
@@ -50,7 +51,7 @@ export function using<TResource extends DisposableLike, T>(
 export function using<
   TResource1 extends DisposableLike,
   TResource2 extends DisposableLike,
-  T
+  T,
 >(
   resourceFactory: Function1<SchedulerLike, [TResource1, TResource2]>,
   observableFactory: Function2<TResource1, TResource2, ObservableLike<T>>,
@@ -60,7 +61,7 @@ export function using<
   TResource1 extends DisposableLike,
   TResource2 extends DisposableLike,
   TResource3 extends DisposableLike,
-  T
+  T,
 >(
   resourceFactory: Function1<
     SchedulerLike,
@@ -79,7 +80,7 @@ export function using<
   TResource2 extends DisposableLike,
   TResource3 extends DisposableLike,
   TResource4 extends DisposableLike,
-  T
+  T,
 >(
   resourceFactory: Function1<
     SchedulerLike,
@@ -100,7 +101,7 @@ export function using<
   TResource3 extends DisposableLike,
   TResource4 extends DisposableLike,
   TResource5 extends DisposableLike,
-  T
+  T,
 >(
   resourceFactory: Function1<
     SchedulerLike,

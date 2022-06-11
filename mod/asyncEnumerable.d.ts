@@ -1,7 +1,7 @@
-import { Function2, Factory, Function1, Updater } from "./functions.mjs";
-import { ObservableLike } from "./observable.mjs";
-import { EnumerableLike } from "./enumerable.mjs";
 import { StreamableLike } from "./streamable.mjs";
+import { Function2, Factory, Function1, Updater } from "./functions.mjs";
+import { EnumerableLike } from "./enumerable.mjs";
+import { ObservableLike } from "./observable.mjs";
 declare type ConsumeRequest<TAcc> = {
     readonly type: "notify";
     readonly acc: TAcc;
@@ -13,8 +13,8 @@ declare type Consumer<T, TAcc> = Function2<TAcc, T, ConsumeRequest<TAcc>>;
 declare type AsyncConsumer<T, TAcc> = Function2<TAcc, T, ObservableLike<ConsumeRequest<TAcc>>>;
 declare const notify: <TAcc>(acc: TAcc) => ConsumeRequest<TAcc>;
 declare const done: <TAcc>(acc: TAcc) => ConsumeRequest<TAcc>;
-declare const consume: <T, TAcc>(consumer: Function2<TAcc, T, ConsumeRequest<TAcc>>, initial: Factory<TAcc>) => Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>>;
-declare const consumeAsync: <T, TAcc>(consumer: Function2<TAcc, T, ObservableLike<ConsumeRequest<TAcc>>>, initial: Factory<TAcc>) => Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>>;
+declare const consume: <T, TAcc>(consumer: Consumer<T, TAcc>, initial: Factory<TAcc>) => Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>>;
+declare const consumeAsync: <T, TAcc>(consumer: AsyncConsumer<T, TAcc>, initial: Factory<TAcc>) => Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>>;
 /**
  * Returns an `AsyncEnumerableLike` from the provided array.
  *

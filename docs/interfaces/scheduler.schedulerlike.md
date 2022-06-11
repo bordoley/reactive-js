@@ -2,72 +2,79 @@
 
 # Interface: SchedulerLike
 
+[scheduler](../modules/scheduler.md).SchedulerLike
+
 An object that schedules units of work on a runloop.
 
 ## Hierarchy
 
-* **SchedulerLike**
+- **`SchedulerLike`**
 
-  ↳ [*ObserverLike*](observable.observerlike.md)
+  ↳ [`ObserverLike`](observable.ObserverLike.md)
 
-  ↳ [*PausableSchedulerLike*](scheduler.pausableschedulerlike.md)
+  ↳ [`PausableSchedulerLike`](scheduler.PausableSchedulerLike.md)
 
-  ↳ [*VirtualTimeSchedulerLike*](scheduler.virtualtimeschedulerlike.md)
+  ↳ [`VirtualTimeSchedulerLike`](scheduler.VirtualTimeSchedulerLike.md)
 
-## Index
+## Table of contents
 
 ### Properties
 
-* [inContinuation](scheduler.schedulerlike.md#incontinuation)
-* [now](scheduler.schedulerlike.md#now)
-* [shouldYield](scheduler.schedulerlike.md#shouldyield)
+- [inContinuation](scheduler.SchedulerLike.md#incontinuation)
+- [now](scheduler.SchedulerLike.md#now)
+- [shouldYield](scheduler.SchedulerLike.md#shouldyield)
 
 ### Methods
 
-* [requestYield](scheduler.schedulerlike.md#requestyield)
-* [schedule](scheduler.schedulerlike.md#schedule)
+- [requestYield](scheduler.SchedulerLike.md#requestyield)
+- [schedule](scheduler.SchedulerLike.md#schedule)
 
 ## Properties
 
 ### inContinuation
 
-• `Readonly` **inContinuation**: *boolean*
+• `Readonly` **inContinuation**: `boolean`
 
 ___
 
 ### now
 
-• `Readonly` **now**: *number*
+• `Readonly` **now**: `number`
 
 ___
 
 ### shouldYield
 
-• `Readonly` **shouldYield**: *boolean*
+• `Readonly` **shouldYield**: `boolean`
 
 ## Methods
 
 ### requestYield
 
-▸ **requestYield**(): *void*
+▸ **requestYield**(): `void`
 
 Request the scheduler to yield.
 
-**Returns:** *void*
+#### Returns
+
+`void`
 
 ___
 
 ### schedule
 
-▸ **schedule**(`continuation`: [*SchedulerContinuationLike*](scheduler.schedulercontinuationlike.md), `options?`: { `delay?`: *undefined* \| *number*  }): *void*
+▸ **schedule**(`continuation`, `options?`): `void`
 
 Schedules a continuation to be executed on the scheduler.
 
-#### Parameters:
+#### Parameters
 
-Name | Type | Description |
------- | ------ | ------ |
-`continuation` | [*SchedulerContinuationLike*](scheduler.schedulercontinuationlike.md) | The SchedulerContinuation to be executed.    |
-`options?` | { `delay?`: *undefined* \| *number*  } | - |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `continuation` | [`SchedulerContinuationLike`](scheduler.SchedulerContinuationLike.md) | The SchedulerContinuation to be executed. |
+| `options?` | `Object` | - |
+| `options.delay?` | `number` | - |
 
-**Returns:** *void*
+#### Returns
+
+`void`

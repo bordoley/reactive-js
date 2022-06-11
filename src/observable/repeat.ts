@@ -46,14 +46,16 @@ const createRepeatObserver = <T>(
   return observer;
 };
 
-const repeatObs = <T>(
-  shouldRepeat: (count: number, error?: Error) => boolean,
-): ObservableOperator<T, T> => observable => {
-  const operator = (observer: ObserverLike<T>) =>
-    createRepeatObserver(observer, observable, shouldRepeat);
-  operator.isSynchronous = true;
-  return lift(operator)(observable);
-};
+const repeatObs =
+  <T>(
+    shouldRepeat: (count: number, error?: Error) => boolean,
+  ): ObservableOperator<T, T> =>
+  observable => {
+    const operator = (observer: ObserverLike<T>) =>
+      createRepeatObserver(observer, observable, shouldRepeat);
+    operator.isSynchronous = true;
+    return lift(operator)(observable);
+  };
 
 const defaultRepeatPredicate = (_: number, error?: Error): boolean =>
   isNone(error);

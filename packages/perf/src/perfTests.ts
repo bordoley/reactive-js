@@ -212,13 +212,8 @@ export const scanReduce = (n: number) =>
     benchmarkTest(
       "observable__observe",
       async src => {
-        const {
-          fromArray,
-          toRunnable,
-          __memo,
-          __observe,
-          observable,
-        } = await import("@reactive-js/core/observable");
+        const { fromArray, toRunnable, __memo, __observe, observable } =
+          await import("@reactive-js/core/observable");
         const { reduce } = await import("@reactive-js/core/runnable");
 
         const arrObs = fromArray<number>()(src);

@@ -1,7 +1,7 @@
 /// <reference types="./flowable.d.ts" />
+import { bindDisposables } from './disposable.mjs';
 import { pipe, compose } from './functions.mjs';
 import { subscribe, using, subscribeOn, fromDisposable, takeUntil, fromArray as fromArray$1 } from './observable.mjs';
-import { bindDisposables } from './disposable.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
 import { createStreamable } from './streamable.mjs';
 

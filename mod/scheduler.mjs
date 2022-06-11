@@ -1,7 +1,7 @@
 /// <reference types="./scheduler.d.ts" />
-import { isSome, none, isNone } from './option.mjs';
-import { pipe, raise, alwaysFalse } from './functions.mjs';
 import { AbstractDisposable, addTeardown, dispose, AbstractSerialDisposable, disposed, addDisposable } from './disposable.mjs';
+import { pipe, raise, alwaysFalse } from './functions.mjs';
+import { isSome, none, isNone } from './option.mjs';
 
 const computeParentIndex = (index) => Math.floor((index - 1) / 2);
 const siftDown = (queue, item) => {
@@ -111,8 +111,7 @@ class SchedulerContinuationImpl extends AbstractDisposable {
             if (isNone(listeners)) {
                 this.listeners = new Set();
             }
-            this
-                .listeners.add(listener);
+            this.listeners.add(listener);
         }
     }
     removeListener(_ev, listener) {
@@ -172,7 +171,7 @@ const schedule = (f, options) => scheduler => {
     return continuation;
 };
 
-const move = (scheduler) => {
+const move$1 = (scheduler) => {
     // First fast forward through any disposed tasks.
     peek(scheduler);
     const task = scheduler.queue.pop();
@@ -210,7 +209,7 @@ const peek = (scheduler) => {
     }
     return task !== null && task !== void 0 ? task : delayed.peek();
 };
-const comparator = (a, b) => {
+const comparator$1 = (a, b) => {
     let diff = 0;
     diff = diff !== 0 ? diff : a.priority - b.priority;
     diff = diff !== 0 ? diff : a.taskID - b.taskID;
@@ -241,7 +240,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
                 const { continuation, dueTime } = task;
                 const delay = Math.max(dueTime - this.now, 0);
                 if (delay === 0) {
-                    move(this);
+                    move$1(this);
                     this.inContinuation = true;
                     run(continuation);
                     this.inContinuation = false;
@@ -257,7 +256,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
         this.dueTime = 0;
         this.inContinuation = false;
         this.isPaused = false;
-        this.queue = createPriorityQueue(comparator);
+        this.queue = createPriorityQueue(comparator$1);
         this.taskIDCounter = 0;
         this.yieldRequested = false;
         addTeardown(this, clearQueues);
@@ -458,13 +457,13 @@ const createHostScheduler = (options = {}) => {
     return new HostScheduler(yieldInterval);
 };
 
-const comparator$1 = (a, b) => {
+const comparator = (a, b) => {
     let diff = 0;
     diff = diff !== 0 ? diff : a.dueTime - b.dueTime;
     diff = diff !== 0 ? diff : a.id - b.id;
     return diff;
 };
-const move$1 = (scheduler) => {
+const move = (scheduler) => {
     const taskQueue = scheduler.taskQueue;
     scheduler.hasCurrent = false;
     if (!scheduler.isDisposed) {
@@ -493,7 +492,7 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable {
         this.now = 0;
         this.taskIDCount = 0;
         this.yieldRequested = false;
-        this.taskQueue = createPriorityQueue(comparator$1);
+        this.taskQueue = createPriorityQueue(comparator);
     }
     get shouldYield() {
         const { yieldRequested } = this;
@@ -508,7 +507,7 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable {
         this.yieldRequested = true;
     }
     run() {
-        while (!this.isDisposed && move$1(this)) {
+        while (!this.isDisposed && move(this)) {
             this.inContinuation = true;
             run(this.current);
             this.inContinuation = false;
