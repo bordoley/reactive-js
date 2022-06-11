@@ -2,26 +2,26 @@
 
 # Interface: SchedulerContinuationRunStatusChangedListenerLike
 
-## Hierarchy
+[scheduler](../modules/scheduler.md).SchedulerContinuationRunStatusChangedListenerLike
 
-* **SchedulerContinuationRunStatusChangedListenerLike**
-
-## Index
+## Table of contents
 
 ### Methods
 
-* [onRunStatusChanged](scheduler.schedulercontinuationrunstatuschangedlistenerlike.md#onrunstatuschanged)
+- [onRunStatusChanged](scheduler.SchedulerContinuationRunStatusChangedListenerLike.md#onrunstatuschanged)
 
 ## Methods
 
 ### onRunStatusChanged
 
-▸ **onRunStatusChanged**(`state`: *boolean*): *void*
+▸ **onRunStatusChanged**(`state`): `void`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`state` | *boolean* |
+| Name | Type |
+| :------ | :------ |
+| `state` | `boolean` |
 
-**Returns:** *void*
+#### Returns
+
+`void`

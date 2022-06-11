@@ -11,29 +11,29 @@ import { subscribe } from "./subscribe";
  *
  * @param scheduler The scheduler upon which to subscribe to the source.
  */
-export const toPromise = <T>(
-  scheduler: SchedulerLike,
-): Function1<ObservableLike<T>, Promise<T>> => observable =>
-  new Promise((resolve, reject) => {
-    let result: Option<T> = none;
-    let hasResult = false;
+export const toPromise =
+  <T>(scheduler: SchedulerLike): Function1<ObservableLike<T>, Promise<T>> =>
+  observable =>
+    new Promise((resolve, reject) => {
+      let result: Option<T> = none;
+      let hasResult = false;
 
-    const subscription = pipe(
-      observable,
-      subscribe(scheduler, next => {
-        hasResult = true;
-        result = next;
-      }),
-    );
+      const subscription = pipe(
+        observable,
+        subscribe(scheduler, next => {
+          hasResult = true;
+          result = next;
+        }),
+      );
 
-    addTeardown(subscription, err => {
-      if (isSome(err)) {
-        const { cause } = err;
-        reject(cause);
-      } else if (!hasResult) {
-        reject(new Error("Observable completed without producing a value"));
-      } else {
-        resolve(result as T);
-      }
+      addTeardown(subscription, err => {
+        if (isSome(err)) {
+          const { cause } = err;
+          reject(cause);
+        } else if (!hasResult) {
+          reject(new Error("Observable completed without producing a value"));
+        } else {
+          resolve(result as T);
+        }
+      });
     });
-  });

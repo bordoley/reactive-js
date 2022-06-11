@@ -50,7 +50,8 @@ function onDispose(this: ThrottleObserver<unknown>, e: Option<Error>) {
 }
 
 class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
-  readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
+  readonly durationSubscription: SerialDisposableLike =
+    createSerialDisposable();
   value: Option<T> = none;
   hasValue = false;
 
@@ -81,8 +82,8 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
     this.value = next;
     this.hasValue = true;
 
-    const durationSubscriptionDisposableIsDisposed = this.durationSubscription
-      .inner.isDisposed;
+    const durationSubscriptionDisposableIsDisposed =
+      this.durationSubscription.inner.isDisposed;
 
     if (durationSubscriptionDisposableIsDisposed && this.mode !== "last") {
       this.onNotify();

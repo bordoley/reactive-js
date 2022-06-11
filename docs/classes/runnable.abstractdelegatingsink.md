@@ -2,95 +2,107 @@
 
 # Class: AbstractDelegatingSink<TA, TB\>
 
+[runnable](../modules/runnable.md).AbstractDelegatingSink
+
 ## Type parameters
 
-Name |
------- |
-`TA` |
-`TB` |
-
-## Hierarchy
-
-* **AbstractDelegatingSink**
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
 
 ## Implements
 
-* [*SinkLike*](../interfaces/runnable.sinklike.md)<TA\>
+- [`SinkLike`](../interfaces/runnable.SinkLike.md)<`TA`\>
 
-## Index
+## Table of contents
 
 ### Constructors
 
-* [constructor](runnable.abstractdelegatingsink.md#constructor)
+- [constructor](runnable.AbstractDelegatingSink.md#constructor)
 
 ### Properties
 
-* [delegate](runnable.abstractdelegatingsink.md#delegate)
+- [delegate](runnable.AbstractDelegatingSink.md#delegate)
 
 ### Accessors
 
-* [isDone](runnable.abstractdelegatingsink.md#isdone)
+- [isDone](runnable.AbstractDelegatingSink.md#isdone)
 
 ### Methods
 
-* [done](runnable.abstractdelegatingsink.md#done)
-* [notify](runnable.abstractdelegatingsink.md#notify)
+- [done](runnable.AbstractDelegatingSink.md#done)
+- [notify](runnable.AbstractDelegatingSink.md#notify)
 
 ## Constructors
 
 ### constructor
 
-\+ **new AbstractDelegatingSink**<TA, TB\>(`delegate`: [*SinkLike*](../interfaces/runnable.sinklike.md)<TB\>): [*AbstractDelegatingSink*](runnable.abstractdelegatingsink.md)<TA, TB\>
+• **new AbstractDelegatingSink**<`TA`, `TB`\>(`delegate`)
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`TA` |
-`TB` |
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`delegate` | [*SinkLike*](../interfaces/runnable.sinklike.md)<TB\> |
-
-**Returns:** [*AbstractDelegatingSink*](runnable.abstractdelegatingsink.md)<TA, TB\>
+| Name | Type |
+| :------ | :------ |
+| `delegate` | [`SinkLike`](../interfaces/runnable.SinkLike.md)<`TB`\> |
 
 ## Properties
 
 ### delegate
 
-• `Readonly` **delegate**: [*SinkLike*](../interfaces/runnable.sinklike.md)<TB\>
+• `Readonly` **delegate**: [`SinkLike`](../interfaces/runnable.SinkLike.md)<`TB`\>
 
 ## Accessors
 
 ### isDone
 
-• **isDone**(): *boolean*
+• `get` **isDone**(): `boolean`
 
-**Returns:** *boolean*
+#### Returns
+
+`boolean`
+
+#### Implementation of
+
+[SinkLike](../interfaces/runnable.SinkLike.md).[isDone](../interfaces/runnable.SinkLike.md#isdone)
 
 ## Methods
 
 ### done
 
-▸ **done**(): *void*
+▸ **done**(): `void`
 
-**Returns:** *void*
+#### Returns
 
-Implementation of: [SinkLike](../interfaces/runnable.sinklike.md)
+`void`
+
+#### Implementation of
+
+[SinkLike](../interfaces/runnable.SinkLike.md).[done](../interfaces/runnable.SinkLike.md#done)
 
 ___
 
 ### notify
 
-▸ `Abstract`**notify**(`next`: TA): *void*
+▸ `Abstract` **notify**(`next`): `void`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`next` | TA |
+| Name | Type |
+| :------ | :------ |
+| `next` | `TA` |
 
-**Returns:** *void*
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[SinkLike](../interfaces/runnable.SinkLike.md).[notify](../interfaces/runnable.SinkLike.md#notify)

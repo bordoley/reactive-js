@@ -1,11 +1,11 @@
 /// <reference types="./testing.d.ts" />
-import { none, isSome, isNone } from './option.mjs';
 import { ignore, raise, strictEquality, arrayEquality } from './functions.mjs';
+import { none, isSome, isNone } from './option.mjs';
 import { __DENO__ } from './env.mjs';
 
 const createJasmineTests = (testGroup, parents) => {
     const path = [...parents, testGroup.name];
-    if (testGroup.type === 1 /* Describe */) {
+    if (testGroup.type === 1 /* TestGroupType.Describe */) {
         describe(testGroup.name, () => {
             const tests = testGroup.tests;
             for (const testGroup of tests) {
@@ -20,7 +20,7 @@ const createJasmineTests = (testGroup, parents) => {
 };
 const createDenoTests = (testGroup, parents) => {
     const path = [...parents, testGroup.name];
-    if (testGroup.type === 1 /* Describe */) {
+    if (testGroup.type === 1 /* TestGroupType.Describe */) {
         const { tests } = testGroup;
         for (const test of tests) {
             createDenoTests(test, path);
@@ -45,12 +45,12 @@ const runTests = (testGroups) => {
 };
 
 const describe$1 = (name, ...tests) => ({
-    type: 1 /* Describe */,
+    type: 1 /* TestGroupType.Describe */,
     name,
     tests,
 });
 const test$1 = (name, f) => ({
-    type: 2 /* Test */,
+    type: 2 /* TestGroupType.Test */,
     name,
     f: (ctx) => () => {
         ignore(ctx);
@@ -58,7 +58,7 @@ const test$1 = (name, f) => ({
     },
 });
 const testAsync = (name, f) => ({
-    type: 3 /* TestAsync */,
+    type: 3 /* TestGroupType.TestAsync */,
     name,
     f: (ctx) => async () => {
         ignore(ctx);

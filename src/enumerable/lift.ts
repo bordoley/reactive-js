@@ -25,16 +25,16 @@ class LiftedEnumerableLike<T> implements EnumerableLike<T> {
  *
  * @param operator
  */
-export const lift = <TA, TB>(
-  operator: EnumeratorOperator<TA, TB>,
-): EnumerableOperator<TA, TB> => enumerable => {
-  const src =
-    enumerable instanceof LiftedEnumerableLike ? enumerable.src : enumerable;
+export const lift =
+  <TA, TB>(operator: EnumeratorOperator<TA, TB>): EnumerableOperator<TA, TB> =>
+  enumerable => {
+    const src =
+      enumerable instanceof LiftedEnumerableLike ? enumerable.src : enumerable;
 
-  const allFunctions =
-    enumerable instanceof LiftedEnumerableLike
-      ? [...enumerable.operators, operator]
-      : [operator];
+    const allFunctions =
+      enumerable instanceof LiftedEnumerableLike
+        ? [...enumerable.operators, operator]
+        : [operator];
 
-  return new LiftedEnumerableLike(src, allFunctions);
-};
+    return new LiftedEnumerableLike(src, allFunctions);
+  };

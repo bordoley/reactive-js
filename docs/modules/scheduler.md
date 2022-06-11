@@ -2,148 +2,167 @@
 
 # Module: scheduler
 
-## Index
+## Table of contents
 
 ### Classes
 
-* [YieldError](../classes/scheduler.yielderror.md)
+- [YieldError](../classes/scheduler.YieldError.md)
 
 ### Interfaces
 
-* [PausableSchedulerLike](../interfaces/scheduler.pausableschedulerlike.md)
-* [PrioritySchedulerLike](../interfaces/scheduler.priorityschedulerlike.md)
-* [SchedulerContinuationLike](../interfaces/scheduler.schedulercontinuationlike.md)
-* [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/scheduler.schedulercontinuationrunstatuschangedlistenerlike.md)
-* [SchedulerLike](../interfaces/scheduler.schedulerlike.md)
-* [VirtualTimeSchedulerLike](../interfaces/scheduler.virtualtimeschedulerlike.md)
+- [PausableSchedulerLike](../interfaces/scheduler.PausableSchedulerLike.md)
+- [PrioritySchedulerLike](../interfaces/scheduler.PrioritySchedulerLike.md)
+- [SchedulerContinuationLike](../interfaces/scheduler.SchedulerContinuationLike.md)
+- [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/scheduler.SchedulerContinuationRunStatusChangedListenerLike.md)
+- [SchedulerLike](../interfaces/scheduler.SchedulerLike.md)
+- [VirtualTimeSchedulerLike](../interfaces/scheduler.VirtualTimeSchedulerLike.md)
 
 ### Functions
 
-* [\_\_yield](scheduler.md#__yield)
-* [createHostScheduler](scheduler.md#createhostscheduler)
-* [createVirtualTimeScheduler](scheduler.md#createvirtualtimescheduler)
-* [run](scheduler.md#run)
-* [schedule](scheduler.md#schedule)
-* [toPausableScheduler](scheduler.md#topausablescheduler)
-* [toPriorityScheduler](scheduler.md#topriorityscheduler)
-* [toSchedulerWithPriority](scheduler.md#toschedulerwithpriority)
+- [\_\_yield](scheduler.md#__yield)
+- [createHostScheduler](scheduler.md#createhostscheduler)
+- [createVirtualTimeScheduler](scheduler.md#createvirtualtimescheduler)
+- [run](scheduler.md#run)
+- [schedule](scheduler.md#schedule)
+- [toPausableScheduler](scheduler.md#topausablescheduler)
+- [toPriorityScheduler](scheduler.md#topriorityscheduler)
+- [toSchedulerWithPriority](scheduler.md#toschedulerwithpriority)
 
 ## Functions
 
 ### \_\_yield
 
-▸ `Const`**__yield**(`delay?`: *number*): *void*
+▸ **__yield**(`delay?`): `void`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`delay?` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `delay?` | `number` |
 
-**Returns:** *void*
+#### Returns
+
+`void`
 
 ___
 
 ### createHostScheduler
 
-▸ `Const`**createHostScheduler**(`options?`: { `yieldInterval?`: *undefined* \| *number*  }): [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)
+▸ **createHostScheduler**(`options?`): [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | { `yieldInterval?`: *undefined* \| *number*  } |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.yieldInterval?` | `number` |
 
-**Returns:** [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)
+#### Returns
+
+[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
 
 ___
 
 ### createVirtualTimeScheduler
 
-▸ `Const`**createVirtualTimeScheduler**(`options?`: { `maxMicroTaskTicks?`: *undefined* \| *number*  }): [*VirtualTimeSchedulerLike*](../interfaces/scheduler.virtualtimeschedulerlike.md)
+▸ **createVirtualTimeScheduler**(`options?`): [`VirtualTimeSchedulerLike`](../interfaces/scheduler.VirtualTimeSchedulerLike.md)
 
 Creates a new virtual time scheduler instance.
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | { `maxMicroTaskTicks?`: *undefined* \| *number*  } |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.maxMicroTaskTicks?` | `number` |
 
-**Returns:** [*VirtualTimeSchedulerLike*](../interfaces/scheduler.virtualtimeschedulerlike.md)
+#### Returns
+
+[`VirtualTimeSchedulerLike`](../interfaces/scheduler.VirtualTimeSchedulerLike.md)
 
 ___
 
 ### run
 
-▸ `Const`**run**(`continuation`: [*SchedulerContinuationLike*](../interfaces/scheduler.schedulercontinuationlike.md)): *void*
+▸ **run**(`continuation`): `void`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`continuation` | [*SchedulerContinuationLike*](../interfaces/scheduler.schedulercontinuationlike.md) |
+| Name | Type |
+| :------ | :------ |
+| `continuation` | [`SchedulerContinuationLike`](../interfaces/scheduler.SchedulerContinuationLike.md) |
 
-**Returns:** *void*
+#### Returns
+
+`void`
 
 ___
 
 ### schedule
 
-▸ `Const`**schedule**(`f`: [*SideEffect*](functions.md#sideeffect), `options?`: { `delay?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<[*SchedulerLike*](../interfaces/scheduler.schedulerlike.md), [*DisposableLike*](../interfaces/disposable.disposablelike.md)\>
+▸ **schedule**(`f`, `options?`): [`Function1`](functions.md#function1)<[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md), [`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`f` | [*SideEffect*](functions.md#sideeffect) |
-`options?` | { `delay?`: *undefined* \| *number*  } |
+| Name | Type |
+| :------ | :------ |
+| `f` | [`SideEffect`](functions.md#sideeffect) |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*SchedulerLike*](../interfaces/scheduler.schedulerlike.md), [*DisposableLike*](../interfaces/disposable.disposablelike.md)\>
+#### Returns
+
+[`Function1`](functions.md#function1)<[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md), [`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
 
 ___
 
 ### toPausableScheduler
 
-▸ `Const`**toPausableScheduler**(`hostScheduler`: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)): [*DisposableLike*](../interfaces/disposable.disposablelike.md) & [*PausableSchedulerLike*](../interfaces/scheduler.pausableschedulerlike.md)
+▸ **toPausableScheduler**(`hostScheduler`): [`DisposableLike`](../interfaces/disposable.DisposableLike.md) & [`PausableSchedulerLike`](../interfaces/scheduler.PausableSchedulerLike.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`hostScheduler` | [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md) |
+| Name | Type |
+| :------ | :------ |
+| `hostScheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) |
 
-**Returns:** [*DisposableLike*](../interfaces/disposable.disposablelike.md) & [*PausableSchedulerLike*](../interfaces/scheduler.pausableschedulerlike.md)
+#### Returns
+
+[`DisposableLike`](../interfaces/disposable.DisposableLike.md) & [`PausableSchedulerLike`](../interfaces/scheduler.PausableSchedulerLike.md)
 
 ___
 
 ### toPriorityScheduler
 
-▸ `Const`**toPriorityScheduler**(`hostScheduler`: [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)): [*DisposableLike*](../interfaces/disposable.disposablelike.md) & [*PrioritySchedulerLike*](../interfaces/scheduler.priorityschedulerlike.md)
+▸ **toPriorityScheduler**(`hostScheduler`): [`DisposableLike`](../interfaces/disposable.DisposableLike.md) & [`PrioritySchedulerLike`](../interfaces/scheduler.PrioritySchedulerLike.md)
 
 Creates a new priority scheduler which schedules work using the provided
 host scheduler.
 
-#### Parameters:
+#### Parameters
 
-Name | Type | Description |
------- | ------ | ------ |
-`hostScheduler` | [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md) | The underlying platform scheduler used by the priority scheduler to schedule work.    |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `hostScheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) | The underlying platform scheduler used by the priority scheduler to schedule work. |
 
-**Returns:** [*DisposableLike*](../interfaces/disposable.disposablelike.md) & [*PrioritySchedulerLike*](../interfaces/scheduler.priorityschedulerlike.md)
+#### Returns
+
+[`DisposableLike`](../interfaces/disposable.DisposableLike.md) & [`PrioritySchedulerLike`](../interfaces/scheduler.PrioritySchedulerLike.md)
 
 ___
 
 ### toSchedulerWithPriority
 
-▸ `Const`**toSchedulerWithPriority**(`priority`: *number*): [*Function1*](functions.md#function1)<[*PrioritySchedulerLike*](../interfaces/scheduler.priorityschedulerlike.md), [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)\>
+▸ **toSchedulerWithPriority**(`priority`): [`Function1`](functions.md#function1)<[`PrioritySchedulerLike`](../interfaces/scheduler.PrioritySchedulerLike.md), [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)\>
 
 Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
 
-#### Parameters:
+#### Parameters
 
-Name | Type | Description |
------- | ------ | ------ |
-`priority` | *number* | The priority to schedule work at.    |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `priority` | `number` | The priority to schedule work at. |
 
-**Returns:** [*Function1*](functions.md#function1)<[*PrioritySchedulerLike*](../interfaces/scheduler.priorityschedulerlike.md), [*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)\>
+#### Returns
+
+[`Function1`](functions.md#function1)<[`PrioritySchedulerLike`](../interfaces/scheduler.PrioritySchedulerLike.md), [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)\>

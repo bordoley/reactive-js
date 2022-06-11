@@ -2,237 +2,262 @@
 
 # Module: io
 
-## Index
+## Table of contents
 
 ### Interfaces
 
-* [IOSinkAccumulatorLike](../interfaces/io.iosinkaccumulatorlike.md)
-* [IOSinkLike](../interfaces/io.iosinklike.md)
-* [IOSourceLike](../interfaces/io.iosourcelike.md)
+- [IOSinkAccumulatorLike](../interfaces/io.IOSinkAccumulatorLike.md)
+- [IOSinkLike](../interfaces/io.IOSinkLike.md)
+- [IOSourceLike](../interfaces/io.IOSourceLike.md)
 
-### Type aliases
+### Type Aliases
 
-* [IOEvent](io.md#ioevent)
-* [IOEventType](io.md#ioeventtype)
-* [IOSourceOperator](io.md#iosourceoperator)
+- [IOEvent](io.md#ioevent)
+- [IOEventType](io.md#ioeventtype)
+- [IOSourceOperator](io.md#iosourceoperator)
 
 ### Functions
 
-* [createIOSinkAccumulator](io.md#createiosinkaccumulator)
-* [decodeWithCharset](io.md#decodewithcharset)
-* [done](io.md#done)
-* [empty](io.md#empty)
-* [encodeUtf8](io.md#encodeutf8)
-* [fromArray](io.md#fromarray)
-* [fromObservable](io.md#fromobservable)
-* [fromValue](io.md#fromvalue)
-* [map](io.md#map)
-* [notify](io.md#notify)
+- [createIOSinkAccumulator](io.md#createiosinkaccumulator)
+- [decodeWithCharset](io.md#decodewithcharset)
+- [done](io.md#done)
+- [empty](io.md#empty)
+- [encodeUtf8](io.md#encodeutf8)
+- [fromArray](io.md#fromarray)
+- [fromObservable](io.md#fromobservable)
+- [fromValue](io.md#fromvalue)
+- [map](io.md#map)
+- [notify](io.md#notify)
 
-## Type aliases
+## Type Aliases
 
 ### IOEvent
 
-Ƭ **IOEvent**<T\>: { `data`: T ; `type`: *notify*  } \| { `type`: *done*  }
+Ƭ **IOEvent**<`T`\>: { `data`: `T` ; `type`: ``"notify"``  } \| { `type`: ``"done"``  }
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
 ___
 
 ### IOEventType
 
-Ƭ **IOEventType**: *notify* \| *done*
+Ƭ **IOEventType**: ``"notify"`` \| ``"done"``
 
 ___
 
 ### IOSourceOperator
 
-Ƭ **IOSourceOperator**<TA, TB\>: [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<TA\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<TB\>\>
+Ƭ **IOSourceOperator**<`TA`, `TB`\>: [`Function1`](functions.md#function1)<[`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`TA`\>, [`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`TB`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`TA` |
-`TB` |
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
 
 ## Functions
 
 ### createIOSinkAccumulator
 
-▸ `Const`**createIOSinkAccumulator**<T, TAcc\>(`reducer`: [*Reducer*](functions.md#reducer)<T, TAcc\>, `initialValue`: [*Factory*](functions.md#factory)<TAcc\>, `options?`: { `replay?`: *undefined* \| *number*  }): [*IOSinkAccumulatorLike*](../interfaces/io.iosinkaccumulatorlike.md)<T, TAcc\>
+▸ **createIOSinkAccumulator**<`T`, `TAcc`\>(`reducer`, `initialValue`, `options?`): [`IOSinkAccumulatorLike`](../interfaces/io.IOSinkAccumulatorLike.md)<`T`, `TAcc`\>
 
-**`experimental`** 
+**`experimental`**
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
-`TAcc` |
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`reducer` | [*Reducer*](functions.md#reducer)<T, TAcc\> |
-`initialValue` | [*Factory*](functions.md#factory)<TAcc\> |
-`options?` | { `replay?`: *undefined* \| *number*  } |
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+| `options?` | `Object` |
+| `options.replay?` | `number` |
 
-**Returns:** [*IOSinkAccumulatorLike*](../interfaces/io.iosinkaccumulatorlike.md)<T, TAcc\>
+#### Returns
+
+[`IOSinkAccumulatorLike`](../interfaces/io.IOSinkAccumulatorLike.md)<`T`, `TAcc`\>
 
 ___
 
 ### decodeWithCharset
 
-▸ `Const`**decodeWithCharset**(`charset?`: *string*, `options?`: TextDecoderOptions): [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<ArrayBuffer\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*string*\>\>
+▸ **decodeWithCharset**(`charset?`, `options?`): [`IOSourceOperator`](io.md#iosourceoperator)<`ArrayBuffer`, `string`\>
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`charset?` | *string* |
-`options?` | TextDecoderOptions |
+| Name | Type |
+| :------ | :------ |
+| `charset?` | `string` |
+| `options?` | `TextDecoderOptions` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<ArrayBuffer\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*string*\>\>
+#### Returns
+
+[`IOSourceOperator`](io.md#iosourceoperator)<`ArrayBuffer`, `string`\>
 
 ___
 
 ### done
 
-▸ `Const`**done**<T\>(): [*IOEvent*](io.md#ioevent)<T\>
+▸ **done**<`T`\>(): [`IOEvent`](io.md#ioevent)<`T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-**Returns:** [*IOEvent*](io.md#ioevent)<T\>
+#### Returns
+
+[`IOEvent`](io.md#ioevent)<`T`\>
 
 ___
 
 ### empty
 
-▸ `Const`**empty**<T\>(): [*IOSourceLike*](../interfaces/io.iosourcelike.md)<T\>
+▸ **empty**<`T`\>(): [`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-**Returns:** [*IOSourceLike*](../interfaces/io.iosourcelike.md)<T\>
+#### Returns
+
+[`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`T`\>
 
 ___
 
 ### encodeUtf8
 
-▸ `Const`**encodeUtf8**(`a`: [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*string*\>): [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>
+▸ **encodeUtf8**(`a`): [`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`Uint8Array`\>
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`a` | [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*string*\> |
+| Name | Type |
+| :------ | :------ |
+| `a` | [`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`string`\> |
 
-**Returns:** [*IOSourceLike*](../interfaces/io.iosourcelike.md)<*Uint8Array*\>
+#### Returns
+
+[`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`Uint8Array`\>
 
 ___
 
 ### fromArray
 
-▸ `Const`**fromArray**<T\>(`options?`: { `delay?`: *undefined* \| *number* ; `endIndex?`: *undefined* \| *number* ; `startIndex?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<readonly T[], [*IOSourceLike*](../interfaces/io.iosourcelike.md)<T\>\>
+▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`T`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | { `delay?`: *undefined* \| *number* ; `endIndex?`: *undefined* \| *number* ; `startIndex?`: *undefined* \| *number*  } |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.endIndex?` | `number` |
+| `options.startIndex?` | `number` |
 
-**Returns:** [*Function1*](functions.md#function1)<readonly T[], [*IOSourceLike*](../interfaces/io.iosourcelike.md)<T\>\>
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`T`\>\>
 
 ___
 
 ### fromObservable
 
-▸ `Const`**fromObservable**<T\>(): [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<T\>\>
+▸ **fromObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`T`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<T\>\>
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`T`\>\>
 
 ___
 
 ### fromValue
 
-▸ `Const`**fromValue**<T\>(`options?`: { `delay?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<T, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<T\>\>
+▸ **fromValue**<`T`\>(`options?`): [`Function1`](functions.md#function1)<`T`, [`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`T`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | { `delay?`: *undefined* \| *number*  } |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
 
-**Returns:** [*Function1*](functions.md#function1)<T, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<T\>\>
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, [`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`T`\>\>
 
 ___
 
 ### map
 
-▸ `Const`**map**<TA, TB\>(`mapper`: [*Function1*](functions.md#function1)<TA, TB\>): [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<TA\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<TB\>\>
+▸ **map**<`TA`, `TB`\>(`mapper`): [`Function1`](functions.md#function1)<[`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`TA`\>, [`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`TB`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`TA` |
-`TB` |
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`mapper` | [*Function1*](functions.md#function1)<TA, TB\> |
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
 
-**Returns:** [*Function1*](functions.md#function1)<[*IOSourceLike*](../interfaces/io.iosourcelike.md)<TA\>, [*IOSourceLike*](../interfaces/io.iosourcelike.md)<TB\>\>
+#### Returns
+
+[`Function1`](functions.md#function1)<[`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`TA`\>, [`IOSourceLike`](../interfaces/io.IOSourceLike.md)<`TB`\>\>
 
 ___
 
 ### notify
 
-▸ `Const`**notify**<T\>(`data`: T): [*IOEvent*](io.md#ioevent)<T\>
+▸ **notify**<`T`\>(`data`): [`IOEvent`](io.md#ioevent)<`T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`data` | T |
+| Name | Type |
+| :------ | :------ |
+| `data` | `T` |
 
-**Returns:** [*IOEvent*](io.md#ioevent)<T\>
+#### Returns
+
+[`IOEvent`](io.md#ioevent)<`T`\>

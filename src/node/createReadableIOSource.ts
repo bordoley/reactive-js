@@ -44,32 +44,34 @@ const createReadableEventsObservable = (
     });
   });
 
-const createReadableAndSetupModeSubscription = (
-  factory: Factory<DisposableValueLike<Readable>>,
-  mode: ObservableLike<FlowMode>,
-) => (scheduler: SchedulerLike) => {
-  const readable = factory();
-  const readableValue = readable.value;
-  readableValue.pause();
+const createReadableAndSetupModeSubscription =
+  (
+    factory: Factory<DisposableValueLike<Readable>>,
+    mode: ObservableLike<FlowMode>,
+  ) =>
+  (scheduler: SchedulerLike) => {
+    const readable = factory();
+    const readableValue = readable.value;
+    readableValue.pause();
 
-  const modeSubscription = pipe(
-    mode,
-    subscribe(scheduler, ev => {
-      switch (ev) {
-        case "pause":
-          readableValue.pause();
-          break;
-        case "resume":
-          readableValue.resume();
-          break;
-      }
-    }),
-  );
+    const modeSubscription = pipe(
+      mode,
+      subscribe(scheduler, ev => {
+        switch (ev) {
+          case "pause":
+            readableValue.pause();
+            break;
+          case "resume":
+            readableValue.resume();
+            break;
+        }
+      }),
+    );
 
-  addDisposableDisposeParentOnChildError(readable, modeSubscription);
+    addDisposableDisposeParentOnChildError(readable, modeSubscription);
 
-  return readable;
-};
+    return readable;
+  };
 
 export const createReadableIOSource = (
   factory: Factory<DisposableValueLike<Readable>>,

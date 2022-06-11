@@ -62,6 +62,7 @@ export function merge<T>(
   return new MergeObservable(observables);
 }
 
-export const mergeWith = <T>(
-  snd: ObservableLike<T>,
-): ObservableOperator<T, T> => fst => merge(fst, snd);
+export const mergeWith =
+  <T>(snd: ObservableLike<T>): ObservableOperator<T, T> =>
+  fst =>
+    merge(fst, snd);

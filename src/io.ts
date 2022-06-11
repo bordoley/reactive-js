@@ -144,9 +144,10 @@ export const fromArray = <T>(options?: {
 }): Function1<readonly T[], IOSourceLike<T>> =>
   compose(fromArrayObs(options), fromObservable());
 
-export const fromValue = <T>(options?: {
-  readonly delay?: number;
-}): Function1<T, IOSourceLike<T>> => v => fromArray<T>(options)([v]);
+export const fromValue =
+  <T>(options?: { readonly delay?: number }): Function1<T, IOSourceLike<T>> =>
+  v =>
+    fromArray<T>(options)([v]);
 
 const _empty: IOSourceLike<any> = fromArray()([]);
 export const empty = <T>(): IOSourceLike<T> => _empty;
@@ -165,7 +166,8 @@ export interface IOSinkAccumulatorLike<T, TAcc>
 
 class IOSinkAccumulatorImpl<T, TAcc>
   extends AbstractDisposable
-  implements IOSinkAccumulatorLike<T, TAcc> {
+  implements IOSinkAccumulatorLike<T, TAcc>
+{
   readonly isSynchronous = false;
 
   private readonly subject: StreamLike<TAcc, TAcc>;

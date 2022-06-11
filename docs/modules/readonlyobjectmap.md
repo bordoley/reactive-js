@@ -2,20 +2,24 @@
 
 # Module: readonlyObjectMap
 
-## Index
+## Table of contents
 
-### Type aliases
+### Type Aliases
 
-* [ReadonlyObjectMap](readonlyobjectmap.md#readonlyobjectmap)
+- [ReadonlyObjectMap](readonlyObjectMap.md#readonlyobjectmap)
 
-## Type aliases
+## Type Aliases
 
 ### ReadonlyObjectMap
 
-Ƭ **ReadonlyObjectMap**<T\>: { [key: string]: T;  }
+Ƭ **ReadonlyObjectMap**<`T`\>: `Object`
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
+
+#### Index signature
+
+▪ [key: `string`]: `T`

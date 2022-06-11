@@ -232,9 +232,10 @@ export const identity = <T>(v: T): T => v;
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
  */
-export const returns = <T>(v: T): ((..._args: unknown[]) => T) => (
-  ..._args: unknown[]
-) => v;
+export const returns =
+  <T>(v: T): ((..._args: unknown[]) => T) =>
+  (..._args: unknown[]) =>
+    v;
 
 /**
  * A function that always returns `false`.
@@ -261,8 +262,10 @@ export const increment = (x: number) => x + 1;
 /**
  * Returns a function that increments a number `x` by the value `incr`.
  */
-export const incrementBy = (incr: number): Updater<number> => (x: number) =>
-  x + incr;
+export const incrementBy =
+  (incr: number): Updater<number> =>
+  (x: number) =>
+    x + incr;
 
 /**
  * An updater function that returns the result of decrementing `x`.
@@ -272,15 +275,20 @@ export const decrement = (x: number) => x - 1;
 /**
  * Returns a function that decrements a number `x` by the value `decr`.
  */
-export const decrementBy = (decr: number): Updater<number> => (x: number) =>
-  x - decr;
+export const decrementBy =
+  (decr: number): Updater<number> =>
+  (x: number) =>
+    x - decr;
 
 /**
  * The javascript strict equality function.
  */
 export const strictEquality = <T>(a: T, b: T) => a === b;
 
-const isStrictlyEqualTo = <T>(b: T): Predicate<T> => a => a === b;
+const isStrictlyEqualTo =
+  <T>(b: T): Predicate<T> =>
+  a =>
+    a === b;
 
 /**
  * Returns a predicate function comparing its argument to `b` using the
@@ -335,10 +343,10 @@ export const sum = (...args: number[]) => {
  * Returns an equality function that compares two readonly arrays for equality,
  * comparing their values using `valuesEquality`.
  */
-export const arrayEquality = <T>(
-  valuesEquality: Equality<T> = strictEquality,
-): Equality<readonly T[]> => (a: readonly T[], b: readonly T[]) =>
-  a.length === b.length && a.every((v, i) => valuesEquality(b[i], v));
+export const arrayEquality =
+  <T>(valuesEquality: Equality<T> = strictEquality): Equality<readonly T[]> =>
+  (a: readonly T[], b: readonly T[]) =>
+    a.length === b.length && a.every((v, i) => valuesEquality(b[i], v));
 
 /**
  * A `Reducer` functions that applies `updater` to `acc` to compute the next
@@ -585,9 +593,12 @@ export function compose(
 /**
  * Returns a function that composes its operator with `op2`.
  */
-export const composeWith = <T, A, B>(
-  op2: Function1<A, B>,
-): Function1<Function1<T, A>, Function1<T, B>> => op1 => compose(op1, op2);
+export const composeWith =
+  <T, A, B>(
+    op2: Function1<A, B>,
+  ): Function1<Function1<T, A>, Function1<T, B>> =>
+  op1 =>
+    compose(op1, op2);
 
 export function defer<T, A>(src: T, op1: Function1<T, A>): Factory<A>;
 export function defer<T, A, B>(

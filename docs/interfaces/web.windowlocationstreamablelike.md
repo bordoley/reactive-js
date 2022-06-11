@@ -2,31 +2,38 @@
 
 # Interface: WindowLocationStreamableLike
 
+[web](../modules/web.md).WindowLocationStreamableLike
+
 ## Hierarchy
 
-* [*StreamableLike*](streamable.streamablelike.md)<[*Updater*](../modules/functions.md#updater)<[*WindowLocationURI*](../modules/web.md#windowlocationuri)\> \| [*WindowLocationURI*](../modules/web.md#windowlocationuri), [*WindowLocationURI*](../modules/web.md#windowlocationuri)\>
+- [`StreamableLike`](streamable.StreamableLike.md)<[`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](../modules/web.md#windowlocationuri)\> \| [`WindowLocationURI`](../modules/web.md#windowlocationuri), [`WindowLocationURI`](../modules/web.md#windowlocationuri)\>
 
-  ↳ **WindowLocationStreamableLike**
+  ↳ **`WindowLocationStreamableLike`**
 
-## Index
+## Table of contents
 
 ### Methods
 
-* [stream](web.windowlocationstreamablelike.md#stream)
+- [stream](web.WindowLocationStreamableLike.md#stream)
 
 ## Methods
 
 ### stream
 
-▸ **stream**(`scheduler`: [*SchedulerLike*](scheduler.schedulerlike.md), `options?`: { `replay?`: *undefined* \| *number*  }): [*WindowLocationStreamLike*](web.windowlocationstreamlike.md)
+▸ **stream**(`scheduler`, `options?`): [`WindowLocationStreamLike`](web.WindowLocationStreamLike.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`scheduler` | [*SchedulerLike*](scheduler.schedulerlike.md) |
-`options?` | { `replay?`: *undefined* \| *number*  } |
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](scheduler.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.replay?` | `number` |
 
-**Returns:** [*WindowLocationStreamLike*](web.windowlocationstreamlike.md)
+#### Returns
 
-Overrides: [StreamableLike](streamable.streamablelike.md)
+[`WindowLocationStreamLike`](web.WindowLocationStreamLike.md)
+
+#### Overrides
+
+[StreamableLike](streamable.StreamableLike.md).[stream](streamable.StreamableLike.md#stream)

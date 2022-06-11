@@ -2,28 +2,28 @@
 
 # Class: AbstractDisposable
 
+[disposable](../modules/disposable.md).AbstractDisposable
+
 Abstract base class for implementing the `DisposableLike` interface.
 
 ## Hierarchy
 
-* **AbstractDisposable**
+- **`AbstractDisposable`**
 
-  ↳ [*AbstractSerialDisposable*](disposable.abstractserialdisposable.md)
+  ↳ [`AbstractSerialDisposable`](disposable.AbstractSerialDisposable.md)
 
 ## Implements
 
-* [*DisposableLike*](../interfaces/disposable.disposablelike.md)
+- [`DisposableLike`](../interfaces/disposable.DisposableLike.md)
 
-## Index
+## Table of contents
 
 ### Constructors
 
-* [constructor](disposable.abstractdisposable.md#constructor)
+- [constructor](disposable.AbstractDisposable.md#constructor)
 
 ## Constructors
 
 ### constructor
 
-\+ **new AbstractDisposable**(): [*AbstractDisposable*](disposable.abstractdisposable.md)
-
-**Returns:** [*AbstractDisposable*](disposable.abstractdisposable.md)
+• **new AbstractDisposable**()

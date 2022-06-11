@@ -45,11 +45,11 @@ export interface DisposableLike {
 /**
  * Dispose `disposable` with an optional error.
  */
-export const dispose = (
-  e?: Error,
-): SideEffect1<DisposableLike> => disposable => {
-  disposable.dispose(e);
-};
+export const dispose =
+  (e?: Error): SideEffect1<DisposableLike> =>
+  disposable => {
+    disposable.dispose(e);
+  };
 
 /**
  * Add `child` to `parent`, disposing the child when the parent is disposed.
@@ -108,13 +108,13 @@ export const bindDisposables = (a: DisposableLike, b: DisposableLike) => {
   addDisposable(b, a);
 };
 
-const toDisposeOnErrorTeardown = (
-  disposable: DisposableLike,
-): SideEffect1<Option<Error>> => (error?: Error) => {
-  if (isSome(error)) {
-    pipe(disposable, dispose(error));
-  }
-};
+const toDisposeOnErrorTeardown =
+  (disposable: DisposableLike): SideEffect1<Option<Error>> =>
+  (error?: Error) => {
+    if (isSome(error)) {
+      pipe(disposable, dispose(error));
+    }
+  };
 
 /**
  * Add `child` to `parent`, only disposing child when `parent` is disposed with an error.
@@ -154,9 +154,10 @@ export const addOnDisposedWithoutError = (
 /**
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
  */
-export const toErrorHandler = (
-  disposable: DisposableLike,
-): SideEffect1<unknown> => cause => pipe(disposable, dispose({ cause }));
+export const toErrorHandler =
+  (disposable: DisposableLike): SideEffect1<unknown> =>
+  cause =>
+    pipe(disposable, dispose({ cause }));
 
 const doDispose = (
   self: DisposableLike,
@@ -280,7 +281,8 @@ export interface SerialDisposableLike extends DisposableLike {
  * */
 export abstract class AbstractSerialDisposable
   extends AbstractDisposable
-  implements SerialDisposableLike {
+  implements SerialDisposableLike
+{
   private _inner: DisposableLike = disposed;
 
   /** @ignore */
@@ -320,7 +322,8 @@ export interface DisposableValueLike<T> extends DisposableLike {
 
 class DisposableValueImpl<T>
   extends AbstractDisposable
-  implements DisposableValueLike<T> {
+  implements DisposableValueLike<T>
+{
   constructor(readonly value: T) {
     super();
   }

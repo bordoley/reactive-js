@@ -8,7 +8,7 @@ class ForEachSink<T> extends AbstractSink<T> {
   }
 }
 
-export const forEach = <T>(
-  f: SideEffect1<T>,
-): Function1<RunnableLike<T>, void> => runnable =>
-  runnable.run(new ForEachSink(f));
+export const forEach =
+  <T>(f: SideEffect1<T>): Function1<RunnableLike<T>, void> =>
+  runnable =>
+    runnable.run(new ForEachSink(f));

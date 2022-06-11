@@ -2,68 +2,72 @@
 
 # Interface: PrioritySchedulerLike
 
+[scheduler](../modules/scheduler.md).PrioritySchedulerLike
+
 A scheduler which schedules work according to it's priority.
 
-## Hierarchy
-
-* **PrioritySchedulerLike**
-
-## Index
+## Table of contents
 
 ### Properties
 
-* [inContinuation](scheduler.priorityschedulerlike.md#incontinuation)
-* [now](scheduler.priorityschedulerlike.md#now)
-* [shouldYield](scheduler.priorityschedulerlike.md#shouldyield)
+- [inContinuation](scheduler.PrioritySchedulerLike.md#incontinuation)
+- [now](scheduler.PrioritySchedulerLike.md#now)
+- [shouldYield](scheduler.PrioritySchedulerLike.md#shouldyield)
 
 ### Methods
 
-* [requestYield](scheduler.priorityschedulerlike.md#requestyield)
-* [schedule](scheduler.priorityschedulerlike.md#schedule)
+- [requestYield](scheduler.PrioritySchedulerLike.md#requestyield)
+- [schedule](scheduler.PrioritySchedulerLike.md#schedule)
 
 ## Properties
 
 ### inContinuation
 
-• `Readonly` **inContinuation**: *boolean*
+• `Readonly` **inContinuation**: `boolean`
 
 ___
 
 ### now
 
-• `Readonly` **now**: *number*
+• `Readonly` **now**: `number`
 
 ___
 
 ### shouldYield
 
-• `Readonly` **shouldYield**: *boolean*
+• `Readonly` **shouldYield**: `boolean`
 
 ## Methods
 
 ### requestYield
 
-▸ **requestYield**(): *void*
+▸ **requestYield**(): `void`
 
 Request the scheduler to yield.
 
-**Returns:** *void*
+#### Returns
+
+`void`
 
 ___
 
 ### schedule
 
-▸ **schedule**(`continuation`: [*SchedulerContinuationLike*](scheduler.schedulercontinuationlike.md), `options`: { `delay?`: *undefined* \| *number* ; `priority`: *number*  }): *void*
+▸ **schedule**(`continuation`, `options`): `void`
 
 Schedules a continuation to be executed on the scheduler.
 
-#### Parameters:
+#### Parameters
 
-Name | Type | Description |
------- | ------ | ------ |
-`continuation` | [*SchedulerContinuationLike*](scheduler.schedulercontinuationlike.md) | The SchedulerContinuation to be executed.   |
-`options` | { `delay?`: *undefined* \| *number* ; `priority`: *number*  } | - |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `continuation` | [`SchedulerContinuationLike`](scheduler.SchedulerContinuationLike.md) | The SchedulerContinuation to be executed. |
+| `options` | `Object` | - |
+| `options.delay?` | `number` | - |
+| `options.priority` | `number` | - |
 
-**Returns:** *void*
+#### Returns
+
+`void`
 
 A `DisposableLike` that can be disposed to cancel the scheduled work.

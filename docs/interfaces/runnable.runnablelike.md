@@ -2,32 +2,32 @@
 
 # Interface: RunnableLike<T\>
 
+[runnable](../modules/runnable.md).RunnableLike
+
 ## Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-## Hierarchy
-
-* **RunnableLike**
-
-## Index
+## Table of contents
 
 ### Methods
 
-* [run](runnable.runnablelike.md#run)
+- [run](runnable.RunnableLike.md#run)
 
 ## Methods
 
 ### run
 
-▸ **run**(`sink`: [*SinkLike*](runnable.sinklike.md)<T\>): *void*
+▸ **run**(`sink`): `void`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`sink` | [*SinkLike*](runnable.sinklike.md)<T\> |
+| Name | Type |
+| :------ | :------ |
+| `sink` | [`SinkLike`](runnable.SinkLike.md)<`T`\> |
 
-**Returns:** *void*
+#### Returns
+
+`void`

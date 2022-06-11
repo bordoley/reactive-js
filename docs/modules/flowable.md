@@ -2,113 +2,126 @@
 
 # Module: flowable
 
-## Index
+## Table of contents
 
 ### Interfaces
 
-* [FlowableLike](../interfaces/flowable.flowablelike.md)
+- [FlowableLike](../interfaces/flowable.FlowableLike.md)
 
-### Type aliases
+### Type Aliases
 
-* [FlowMode](flowable.md#flowmode)
-* [FlowableOperator](flowable.md#flowableoperator)
+- [FlowMode](flowable.md#flowmode)
+- [FlowableOperator](flowable.md#flowableoperator)
 
 ### Functions
 
-* [empty](flowable.md#empty)
-* [fromArray](flowable.md#fromarray)
-* [fromObservable](flowable.md#fromobservable)
-* [fromValue](flowable.md#fromvalue)
+- [empty](flowable.md#empty)
+- [fromArray](flowable.md#fromarray)
+- [fromObservable](flowable.md#fromobservable)
+- [fromValue](flowable.md#fromvalue)
 
-## Type aliases
+## Type Aliases
 
 ### FlowMode
 
-Ƭ **FlowMode**: *resume* \| *pause*
+Ƭ **FlowMode**: ``"resume"`` \| ``"pause"``
 
 ___
 
 ### FlowableOperator
 
-Ƭ **FlowableOperator**<TA, TB\>: [*Function1*](functions.md#function1)<[*FlowableLike*](../interfaces/flowable.flowablelike.md)<TA\>, [*FlowableLike*](../interfaces/flowable.flowablelike.md)<TB\>\>
+Ƭ **FlowableOperator**<`TA`, `TB`\>: [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`TA`\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`TB`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`TA` |
-`TB` |
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
 
 ## Functions
 
 ### empty
 
-▸ `Const`**empty**<T\>(): [*FlowableLike*](../interfaces/flowable.flowablelike.md)<T\>
+▸ **empty**<`T`\>(): [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-**Returns:** [*FlowableLike*](../interfaces/flowable.flowablelike.md)<T\>
+#### Returns
+
+[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`T`\>
 
 ___
 
 ### fromArray
 
-▸ `Const`**fromArray**<T\>(`options?`: { `delay?`: *undefined* \| *number* ; `endIndex?`: *undefined* \| *number* ; `startIndex?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<readonly T[], [*FlowableLike*](../interfaces/flowable.flowablelike.md)<T\>\>
+▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`T`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | { `delay?`: *undefined* \| *number* ; `endIndex?`: *undefined* \| *number* ; `startIndex?`: *undefined* \| *number*  } |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.endIndex?` | `number` |
+| `options.startIndex?` | `number` |
 
-**Returns:** [*Function1*](functions.md#function1)<readonly T[], [*FlowableLike*](../interfaces/flowable.flowablelike.md)<T\>\>
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`T`\>\>
 
 ___
 
 ### fromObservable
 
-▸ `Const`**fromObservable**<T\>(`__namedParameters?`: { `scheduler?`: [*Option*](option.md#option)<[*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)\>  }): [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*FlowableLike*](../interfaces/flowable.flowablelike.md)<T\>\>
+▸ **fromObservable**<`T`\>(`__namedParameters?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`T`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`__namedParameters?` | { `scheduler?`: [*Option*](option.md#option)<[*SchedulerLike*](../interfaces/scheduler.schedulerlike.md)\>  } |
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters?` | `Object` |
+| `__namedParameters.scheduler?` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) |
 
-**Returns:** [*Function1*](functions.md#function1)<[*ObservableLike*](../interfaces/observable.observablelike.md)<T\>, [*FlowableLike*](../interfaces/flowable.flowablelike.md)<T\>\>
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`T`\>\>
 
 ___
 
 ### fromValue
 
-▸ `Const`**fromValue**<T\>(`options?`: { `delay?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<T, [*FlowableLike*](../interfaces/flowable.flowablelike.md)<T\>\>
+▸ **fromValue**<`T`\>(`options?`): [`Function1`](functions.md#function1)<`T`, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`T`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | { `delay?`: *undefined* \| *number*  } |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
 
-**Returns:** [*Function1*](functions.md#function1)<T, [*FlowableLike*](../interfaces/flowable.flowablelike.md)<T\>\>
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`T`\>\>

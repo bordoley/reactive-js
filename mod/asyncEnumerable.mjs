@@ -1,9 +1,9 @@
 /// <reference types="./asyncEnumerable.d.ts" />
-import { none } from './option.mjs';
 import { pipe, flip, compose, returns, defer } from './functions.mjs';
 import { using, createSubject, onNotify, map, onSubscribe, zipWithLatestFrom, takeFirst, switchAll, fromValue, scan, concatMap, withLatestFrom, compute, takeWhile, scanAsync } from './observable.mjs';
-import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
+import { none } from './option.mjs';
 import { stream, createStreamable } from './streamable.mjs';
+import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
 
 const notify = (acc) => ({
     type: "notify",

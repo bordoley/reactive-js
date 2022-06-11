@@ -4,7 +4,7 @@ import { none } from "../option";
 import { lift } from "./lift";
 
 class MapEnumerator<TA, TB> implements EnumeratorLike<TB> {
-  current = (none as unknown) as TB;
+  current = none as unknown as TB;
   hasCurrent = false;
 
   constructor(
@@ -13,7 +13,7 @@ class MapEnumerator<TA, TB> implements EnumeratorLike<TB> {
   ) {}
 
   move(): boolean {
-    this.current = (none as unknown) as TB;
+    this.current = none as unknown as TB;
 
     const hasCurrent = this.delegate.move();
     this.hasCurrent = hasCurrent;

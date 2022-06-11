@@ -55,9 +55,10 @@ export function concat<T>(
   });
 }
 
-export const concatWith = <T>(
-  snd: RunnableLike<T>,
-): RunnableOperator<T, T> => first => concat(first, snd);
+export const concatWith =
+  <T>(snd: RunnableLike<T>): RunnableOperator<T, T> =>
+  first =>
+    concat(first, snd);
 
 export function endWith<T>(
   value: T,

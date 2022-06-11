@@ -72,6 +72,7 @@ export function zipLatest(
   return latest(observables, LatestMode.Zip);
 }
 
-export const zipLatestWith = <TA, TB>(
-  snd: ObservableLike<TB>,
-): ObservableOperator<TA, [TA, TB]> => fst => zipLatest(fst, snd);
+export const zipLatestWith =
+  <TA, TB>(snd: ObservableLike<TB>): ObservableOperator<TA, [TA, TB]> =>
+  fst =>
+    zipLatest(fst, snd);

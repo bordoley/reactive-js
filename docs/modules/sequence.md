@@ -2,604 +2,667 @@
 
 # Module: sequence
 
-## Index
+## Table of contents
 
-### Type aliases
+### Type Aliases
 
-* [Sequence](sequence.md#sequence)
-* [SequenceOperator](sequence.md#sequenceoperator)
-* [SequenceResult](sequence.md#sequenceresult)
+- [Sequence](sequence.md#sequence)
+- [SequenceOperator](sequence.md#sequenceoperator)
+- [SequenceResult](sequence.md#sequenceresult)
 
 ### Functions
 
-* [concat](sequence.md#concat)
-* [concatAll](sequence.md#concatall)
-* [concatMap](sequence.md#concatmap)
-* [concatWith](sequence.md#concatwith)
-* [distinctUntilChanged](sequence.md#distinctuntilchanged)
-* [done](sequence.md#done)
-* [empty](sequence.md#empty)
-* [endWith](sequence.md#endwith)
-* [fromArray](sequence.md#fromarray)
-* [fromValue](sequence.md#fromvalue)
-* [generate](sequence.md#generate)
-* [isDone](sequence.md#isdone)
-* [isNotify](sequence.md#isnotify)
-* [keep](sequence.md#keep)
-* [map](sequence.md#map)
-* [mapTo](sequence.md#mapto)
-* [notify](sequence.md#notify)
-* [repeat](sequence.md#repeat)
-* [scan](sequence.md#scan)
-* [seek](sequence.md#seek)
-* [skipFirst](sequence.md#skipfirst)
-* [startWith](sequence.md#startwith)
-* [takeFirst](sequence.md#takefirst)
-* [takeLast](sequence.md#takelast)
-* [takeWhile](sequence.md#takewhile)
-* [toRunnable](sequence.md#torunnable)
+- [concat](sequence.md#concat)
+- [concatAll](sequence.md#concatall)
+- [concatMap](sequence.md#concatmap)
+- [concatWith](sequence.md#concatwith)
+- [distinctUntilChanged](sequence.md#distinctuntilchanged)
+- [done](sequence.md#done)
+- [empty](sequence.md#empty)
+- [endWith](sequence.md#endwith)
+- [fromArray](sequence.md#fromarray)
+- [fromValue](sequence.md#fromvalue)
+- [generate](sequence.md#generate)
+- [isDone](sequence.md#isdone)
+- [isNotify](sequence.md#isnotify)
+- [keep](sequence.md#keep)
+- [map](sequence.md#map)
+- [mapTo](sequence.md#mapto)
+- [notify](sequence.md#notify)
+- [repeat](sequence.md#repeat)
+- [scan](sequence.md#scan)
+- [seek](sequence.md#seek)
+- [skipFirst](sequence.md#skipfirst)
+- [startWith](sequence.md#startwith)
+- [takeFirst](sequence.md#takefirst)
+- [takeLast](sequence.md#takelast)
+- [takeWhile](sequence.md#takewhile)
+- [toRunnable](sequence.md#torunnable)
 
-## Type aliases
+## Type Aliases
 
 ### Sequence
 
-Ƭ **Sequence**<T\>: [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>
+Ƭ **Sequence**<`T`\>: [`Factory`](functions.md#factory)<[`SequenceResult`](sequence.md#sequenceresult)<`T`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
 ___
 
 ### SequenceOperator
 
-Ƭ **SequenceOperator**<TA, TB\>: [*Function1*](functions.md#function1)<[*Sequence*](sequence.md#sequence)<TA\>, [*Sequence*](sequence.md#sequence)<TB\>\>
+Ƭ **SequenceOperator**<`TA`, `TB`\>: [`Function1`](functions.md#function1)<[`Sequence`](sequence.md#sequence)<`TA`\>, [`Sequence`](sequence.md#sequence)<`TB`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`TA` |
-`TB` |
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
 
 ___
 
 ### SequenceResult
 
-Ƭ **SequenceResult**<T\>: { `data`: T ; `next`: [*Sequence*](sequence.md#sequence)<T\> ; `type`: SequenceType.Notify  } \| { `type`: SequenceType.Done  }
+Ƭ **SequenceResult**<`T`\>: { `data`: `T` ; `next`: [`Sequence`](sequence.md#sequence)<`T`\> ; `type`: `SequenceType.Notify`  } \| { `type`: `SequenceType.Done`  }
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
 ## Functions
 
 ### concat
 
-▸ **concat**<T\>(`fst`: [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, `snd`: [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, ...`tail`: readonly [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>[]): [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>
+▸ **concat**<`T`\>(`fst`, `snd`, ...`tail`): [`Sequence`](sequence.md#sequence)<`T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`fst` | [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\> |
-`snd` | [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\> |
-`...tail` | readonly [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>[] |
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`Sequence`](sequence.md#sequence)<`T`\> |
+| `snd` | [`Sequence`](sequence.md#sequence)<`T`\> |
+| `...tail` | readonly [`Sequence`](sequence.md#sequence)<`T`\>[] |
 
-**Returns:** [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>
+#### Returns
+
+[`Sequence`](sequence.md#sequence)<`T`\>
 
 ___
 
 ### concatAll
 
-▸ `Const`**concatAll**<T\>(): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **concatAll**<`T`\>(): [`SequenceOperator`](sequence.md#sequenceoperator)<[`Sequence`](sequence.md#sequence)<`T`\>, `T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+#### Returns
+
+[`SequenceOperator`](sequence.md#sequenceoperator)<[`Sequence`](sequence.md#sequence)<`T`\>, `T`\>
 
 ___
 
 ### concatMap
 
-▸ `Const`**concatMap**<TA, TB\>(`mapper`: [*Function1*](functions.md#function1)<TA, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TB\>\>\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TA\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TB\>\>\>
+▸ **concatMap**<`TA`, `TB`\>(`mapper`): [`SequenceOperator`](sequence.md#sequenceoperator)<`TA`, `TB`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`TA` |
-`TB` |
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`mapper` | [*Function1*](functions.md#function1)<TA, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TB\>\>\> |
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`Sequence`](sequence.md#sequence)<`TB`\>\> |
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TA\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TB\>\>\>
+#### Returns
+
+[`SequenceOperator`](sequence.md#sequenceoperator)<`TA`, `TB`\>
 
 ___
 
 ### concatWith
 
-▸ `Const`**concatWith**<T\>(`snd`: [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **concatWith**<`T`\>(`snd`): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`snd` | [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\> |
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`Sequence`](sequence.md#sequence)<`T`\> |
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+#### Returns
+
+[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
 ___
 
 ### distinctUntilChanged
 
-▸ `Const`**distinctUntilChanged**<T\>(`options?`: { `equality?`: *undefined* \| [*Equality*](functions.md#equality)<T\>  }): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | { `equality?`: *undefined* \| [*Equality*](functions.md#equality)<T\>  } |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+#### Returns
+
+[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
 ___
 
 ### done
 
-▸ `Const`**done**<T\>(): [*SequenceResult*](sequence.md#sequenceresult)<T\>
+▸ **done**<`T`\>(): [`SequenceResult`](sequence.md#sequenceresult)<`T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-**Returns:** [*SequenceResult*](sequence.md#sequenceresult)<T\>
+#### Returns
+
+[`SequenceResult`](sequence.md#sequenceresult)<`T`\>
 
 ___
 
 ### empty
 
-▸ `Const`**empty**<T\>(): [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>
+▸ **empty**<`T`\>(): [`Sequence`](sequence.md#sequence)<`T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-**Returns:** [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>
+#### Returns
+
+[`Sequence`](sequence.md#sequence)<`T`\>
 
 ___
 
 ### endWith
 
-▸ **endWith**<T\>(`value`: T, ...`values`: readonly T[]): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **endWith**<`T`\>(`value`, ...`values`): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`value` | T |
-`...values` | readonly T[] |
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+#### Returns
+
+[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
 ___
 
 ### fromArray
 
-▸ `Const`**fromArray**<T\>(`options?`: { `endIndex?`: *undefined* \| *number* ; `startIndex?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<readonly T[], [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`Sequence`](sequence.md#sequence)<`T`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | { `endIndex?`: *undefined* \| *number* ; `startIndex?`: *undefined* \| *number*  } |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.endIndex?` | `number` |
+| `options.startIndex?` | `number` |
 
-**Returns:** [*Function1*](functions.md#function1)<readonly T[], [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`Sequence`](sequence.md#sequence)<`T`\>\>
 
 ___
 
 ### fromValue
 
-▸ `Const`**fromValue**<T\>(): [*Function1*](functions.md#function1)<T, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **fromValue**<`T`\>(): [`Function1`](functions.md#function1)<`T`, [`Sequence`](sequence.md#sequence)<`T`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-**Returns:** [*Function1*](functions.md#function1)<T, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, [`Sequence`](sequence.md#sequence)<`T`\>\>
 
 ___
 
 ### generate
 
-▸ `Const`**generate**<T\>(`generator`: [*Updater*](functions.md#updater)<T\>, `initialValue`: [*Factory*](functions.md#factory)<T\>): [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`Sequence`](sequence.md#sequence)<`T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`generator` | [*Updater*](functions.md#updater)<T\> |
-`initialValue` | [*Factory*](functions.md#factory)<T\> |
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
 
-**Returns:** [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>
+#### Returns
+
+[`Sequence`](sequence.md#sequence)<`T`\>
 
 ___
 
 ### isDone
 
-▸ `Const`**isDone**<T\>(`result`: [*SequenceResult*](sequence.md#sequenceresult)<T\>): result is object
+▸ **isDone**<`T`\>(`result`): result is Object
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`result` | [*SequenceResult*](sequence.md#sequenceresult)<T\> |
+| Name | Type |
+| :------ | :------ |
+| `result` | [`SequenceResult`](sequence.md#sequenceresult)<`T`\> |
 
-**Returns:** result is object
+#### Returns
+
+result is Object
 
 ___
 
 ### isNotify
 
-▸ `Const`**isNotify**<T\>(`result`: [*SequenceResult*](sequence.md#sequenceresult)<T\>): result is object
+▸ **isNotify**<`T`\>(`result`): result is Object
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`result` | [*SequenceResult*](sequence.md#sequenceresult)<T\> |
+| Name | Type |
+| :------ | :------ |
+| `result` | [`SequenceResult`](sequence.md#sequenceresult)<`T`\> |
 
-**Returns:** result is object
+#### Returns
+
+result is Object
 
 ___
 
 ### keep
 
-▸ `Const`**keep**<T\>(`predicate`: [*Predicate*](functions.md#predicate)<T\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **keep**<`T`\>(`predicate`): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`predicate` | [*Predicate*](functions.md#predicate)<T\> |
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+#### Returns
+
+[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
 ___
 
 ### map
 
-▸ `Const`**map**<TA, TB\>(`mapper`: [*Function1*](functions.md#function1)<TA, TB\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TA\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TB\>\>\>
+▸ **map**<`TA`, `TB`\>(`mapper`): [`SequenceOperator`](sequence.md#sequenceoperator)<`TA`, `TB`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`TA` |
-`TB` |
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`mapper` | [*Function1*](functions.md#function1)<TA, TB\> |
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TA\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TB\>\>\>
+#### Returns
+
+[`SequenceOperator`](sequence.md#sequenceoperator)<`TA`, `TB`\>
 
 ___
 
 ### mapTo
 
-▸ `Const`**mapTo**<TA, TB\>(`v`: TB): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TA\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TB\>\>\>
+▸ **mapTo**<`TA`, `TB`\>(`v`): [`SequenceOperator`](sequence.md#sequenceoperator)<`TA`, `TB`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`TA` |
-`TB` |
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`v` | TB |
+| Name | Type |
+| :------ | :------ |
+| `v` | `TB` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TA\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TB\>\>\>
+#### Returns
+
+[`SequenceOperator`](sequence.md#sequenceoperator)<`TA`, `TB`\>
 
 ___
 
 ### notify
 
-▸ `Const`**notify**<T\>(`data`: T, `next`: [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>): [*SequenceResult*](sequence.md#sequenceresult)<T\>
+▸ **notify**<`T`\>(`data`, `next`): [`SequenceResult`](sequence.md#sequenceresult)<`T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`data` | T |
-`next` | [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\> |
+| Name | Type |
+| :------ | :------ |
+| `data` | `T` |
+| `next` | [`Sequence`](sequence.md#sequence)<`T`\> |
 
-**Returns:** [*SequenceResult*](sequence.md#sequenceresult)<T\>
+#### Returns
+
+[`SequenceResult`](sequence.md#sequenceresult)<`T`\>
 
 ___
 
 ### repeat
 
-▸ **repeat**<T\>(`predicate`: [*Predicate*](functions.md#predicate)<*number*\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **repeat**<`T`\>(`predicate`): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`predicate` | [*Predicate*](functions.md#predicate)<*number*\> |
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`number`\> |
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+#### Returns
 
-▸ **repeat**<T\>(`count`: *number*): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
-#### Type parameters:
+▸ **repeat**<`T`\>(`count`): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
-Name |
------- |
-`T` |
+#### Type parameters
 
-#### Parameters:
+| Name |
+| :------ |
+| `T` |
 
-Name | Type |
------- | ------ |
-`count` | *number* |
+#### Parameters
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
 
-▸ **repeat**<T\>(): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+#### Returns
 
-#### Type parameters:
+[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
-Name |
------- |
-`T` |
+▸ **repeat**<`T`\>(): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
 ___
 
 ### scan
 
-▸ `Const`**scan**<T, TAcc\>(`reducer`: [*Reducer*](functions.md#reducer)<T, TAcc\>, `initialValue`: [*Factory*](functions.md#factory)<TAcc\>): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TAcc\>\>\>
+▸ **scan**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `TAcc`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
-`TAcc` |
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`reducer` | [*Reducer*](functions.md#reducer)<T, TAcc\> |
-`initialValue` | [*Factory*](functions.md#factory)<TAcc\> |
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<TAcc\>\>\>
+#### Returns
+
+[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `TAcc`\>
 
 ___
 
 ### seek
 
-▸ `Const`**seek**<T\>(`count`: *number*): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **seek**<`T`\>(`count`): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`count` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+#### Returns
+
+[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
 ___
 
 ### skipFirst
 
-▸ `Const`**skipFirst**<T\>(`options?`: { `count?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **skipFirst**<`T`\>(`options?`): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | { `count?`: *undefined* \| *number*  } |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+#### Returns
+
+[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
 ___
 
 ### startWith
 
-▸ **startWith**<T\>(`value`: T, ...`values`: readonly T[]): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **startWith**<`T`\>(`value`, ...`values`): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`value` | T |
-`...values` | readonly T[] |
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+#### Returns
+
+[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
 ___
 
 ### takeFirst
 
-▸ `Const`**takeFirst**<T\>(`options?`: { `count?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **takeFirst**<`T`\>(`options?`): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | { `count?`: *undefined* \| *number*  } |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+#### Returns
+
+[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
 ___
 
 ### takeLast
 
-▸ `Const`**takeLast**<T\>(`options?`: { `count?`: *undefined* \| *number*  }): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **takeLast**<`T`\>(`options?`): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`options?` | { `count?`: *undefined* \| *number*  } |
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+#### Returns
+
+[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
 ___
 
 ### takeWhile
 
-▸ `Const`**takeWhile**<T\>(`predicate`: [*Predicate*](functions.md#predicate)<T\>, `options?`: { `inclusive?`: *undefined* \| *boolean*  }): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
------- | ------ |
-`predicate` | [*Predicate*](functions.md#predicate)<T\> |
-`options?` | { `inclusive?`: *undefined* \| *boolean*  } |
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+| `options?` | `Object` |
+| `options.inclusive?` | `boolean` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>\>
+#### Returns
+
+[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
 
 ___
 
 ### toRunnable
 
-▸ `Const`**toRunnable**<T\>(): [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+▸ **toRunnable**<`T`\>(): [`Function1`](functions.md#function1)<[`Sequence`](sequence.md#sequence)<`T`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
 
-#### Type parameters:
+#### Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-**Returns:** [*Function1*](functions.md#function1)<[*Factory*](functions.md#factory)<[*SequenceResult*](sequence.md#sequenceresult)<T\>\>, [*RunnableLike*](../interfaces/runnable.runnablelike.md)<T\>\>
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Sequence`](sequence.md#sequence)<`T`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>

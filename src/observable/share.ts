@@ -56,8 +56,10 @@ class SharedObservable<T> implements ObservableLike<T> {
  * @param replay The number of events that should be replayed when the `ObservableLike`
  * is subscribed to.
  */
-export const share = <T>(
-  scheduler: SchedulerLike,
-  options?: { readonly replay?: number },
-): ObservableOperator<T, T> => observable =>
-  new SharedObservable(observable, publish(scheduler, options));
+export const share =
+  <T>(
+    scheduler: SchedulerLike,
+    options?: { readonly replay?: number },
+  ): ObservableOperator<T, T> =>
+  observable =>
+    new SharedObservable(observable, publish(scheduler, options));

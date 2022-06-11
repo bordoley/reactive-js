@@ -18,23 +18,25 @@ export type AsyncReducer<TAcc, T> = Function2<TAcc, T, ObservableLike<TAcc>>;
  * @param scanner The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.
  */
-export const scanAsync = <T, TAcc>(
-  scanner: AsyncReducer<TAcc, T>,
-  initialValue: Factory<TAcc>,
-): ObservableOperator<T, TAcc> => observable =>
-  using(
-    _ => createSubject<TAcc>(),
-    accFeedbackStream =>
-      pipe(
-        observable,
-        zipWithLatestFrom<T, TAcc, ObservableLike<TAcc>>(
-          accFeedbackStream,
-          (next, acc) => pipe(scanner(acc, next), takeFirst()),
+export const scanAsync =
+  <T, TAcc>(
+    scanner: AsyncReducer<TAcc, T>,
+    initialValue: Factory<TAcc>,
+  ): ObservableOperator<T, TAcc> =>
+  observable =>
+    using(
+      _ => createSubject<TAcc>(),
+      accFeedbackStream =>
+        pipe(
+          observable,
+          zipWithLatestFrom<T, TAcc, ObservableLike<TAcc>>(
+            accFeedbackStream,
+            (next, acc) => pipe(scanner(acc, next), takeFirst()),
+          ),
+          switchAll<TAcc>(),
+          onNotify(dispatchTo(accFeedbackStream)),
+          onSubscribe(() => {
+            accFeedbackStream.dispatch(initialValue());
+          }),
         ),
-        switchAll<TAcc>(),
-        onNotify(dispatchTo(accFeedbackStream)),
-        onSubscribe(() => {
-          accFeedbackStream.dispatch(initialValue());
-        }),
-      ),
-  );
+    );

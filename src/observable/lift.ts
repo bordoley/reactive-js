@@ -30,18 +30,18 @@ class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
  *
  * @param operator The operator function to apply.
  */
-export const lift = <TA, TB>(
-  operator: ObserverOperator<TA, TB>,
-): ObservableOperator<TA, TB> => source => {
-  const sourceSource =
-    source instanceof LiftedObservable ? source.source : source;
+export const lift =
+  <TA, TB>(operator: ObserverOperator<TA, TB>): ObservableOperator<TA, TB> =>
+  source => {
+    const sourceSource =
+      source instanceof LiftedObservable ? source.source : source;
 
-  const allFunctions =
-    source instanceof LiftedObservable
-      ? [operator, ...source.operators]
-      : [operator];
+    const allFunctions =
+      source instanceof LiftedObservable
+        ? [operator, ...source.operators]
+        : [operator];
 
-  const isSynchronous = source.isSynchronous && operator.isSynchronous;
+    const isSynchronous = source.isSynchronous && operator.isSynchronous;
 
-  return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
-};
+    return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
+  };

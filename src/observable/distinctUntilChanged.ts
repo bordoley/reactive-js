@@ -8,7 +8,7 @@ import {
 } from "./observer";
 
 class DistinctUntilChangedObserver<
-  T
+  T,
 > extends AbstractAutoDisposingDelegatingObserver<T, T> {
   prev: Option<T>;
   hasValue = false;

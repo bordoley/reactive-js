@@ -45,7 +45,7 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
  * @param priorityScheduler The underlying scheduler upon which to scheduler work.
  * @param priority The priority to schedule work at.
  */
-export const toSchedulerWithPriority = (
-  priority: number,
-): Function1<PrioritySchedulerLike, SchedulerLike> => priorityScheduler =>
-  new SchedulerWithPriorityImpl(priorityScheduler, priority);
+export const toSchedulerWithPriority =
+  (priority: number): Function1<PrioritySchedulerLike, SchedulerLike> =>
+  priorityScheduler =>
+    new SchedulerWithPriorityImpl(priorityScheduler, priority);

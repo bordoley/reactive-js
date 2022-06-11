@@ -111,7 +111,8 @@ function clearQueues(this: PriorityScheduler) {
 
 class PriorityScheduler
   extends AbstractSerialDisposable
-  implements PrioritySchedulerLike, PausableSchedulerLike {
+  implements PrioritySchedulerLike, PausableSchedulerLike
+{
   readonly continuation = () => {
     for (
       let task = peek(this);
@@ -134,15 +135,13 @@ class PriorityScheduler
     }
   };
   current: ScheduledTask = none as any;
-  readonly delayed: PriorityQueueLike<ScheduledTask> = createPriorityQueue(
-    delayedComparator,
-  );
+  readonly delayed: PriorityQueueLike<ScheduledTask> =
+    createPriorityQueue(delayedComparator);
   dueTime = 0;
   inContinuation = false;
   isPaused = false;
-  readonly queue: PriorityQueueLike<ScheduledTask> = createPriorityQueue(
-    comparator,
-  );
+  readonly queue: PriorityQueueLike<ScheduledTask> =
+    createPriorityQueue(comparator);
   taskIDCounter = 0;
   private yieldRequested = false;
 

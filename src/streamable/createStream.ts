@@ -20,7 +20,8 @@ export type StreamableOperator<TSrcReq, TSrc, TReq, T> = {
 
 class StreamImpl<TReq, T>
   extends AbstractDisposable
-  implements StreamLike<TReq, T> {
+  implements StreamLike<TReq, T>
+{
   readonly isSynchronous = false;
 
   private readonly dispatcher: DispatcherLike<TReq>;

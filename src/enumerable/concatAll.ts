@@ -10,7 +10,7 @@ import { lift } from "./lift";
 import { map } from "./map";
 
 class ConcatAllEnumerator<T> implements EnumeratorLike<T> {
-  current = (none as unknown) as T;
+  current = none as unknown as T;
   hasCurrent = false;
 
   private enumerator: Option<EnumeratorLike<T>> = none;
@@ -18,7 +18,7 @@ class ConcatAllEnumerator<T> implements EnumeratorLike<T> {
   constructor(private readonly delegate: EnumeratorLike<EnumerableLike<T>>) {}
 
   move(): boolean {
-    this.current = (none as unknown) as T;
+    this.current = none as unknown as T;
     this.hasCurrent = false;
 
     const delegate = this.delegate;

@@ -2,30 +2,30 @@
 
 # Interface: EnumerableLike<T\>
 
+[enumerable](../modules/enumerable.md).EnumerableLike
+
 Interface for iterating a collection of items.
 
 ## Type parameters
 
-Name |
------- |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
-## Hierarchy
-
-* **EnumerableLike**
-
-## Index
+## Table of contents
 
 ### Methods
 
-* [enumerate](enumerable.enumerablelike.md#enumerate)
+- [enumerate](enumerable.EnumerableLike.md#enumerate)
 
 ## Methods
 
 ### enumerate
 
-▸ **enumerate**(): [*EnumeratorLike*](enumerable.enumeratorlike.md)<T\>
+▸ **enumerate**(): [`EnumeratorLike`](enumerable.EnumeratorLike.md)<`T`\>
 
 Returns an `EnumeratorLike` to iterate through the collection.
 
-**Returns:** [*EnumeratorLike*](enumerable.enumeratorlike.md)<T\>
+#### Returns
+
+[`EnumeratorLike`](enumerable.EnumeratorLike.md)<`T`\>

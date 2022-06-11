@@ -240,4 +240,5 @@ class WindowLocationStreamable implements WindowLocationStreamableLike {
   }
 }
 
-export const windowLocation: WindowLocationStreamableLike = new WindowLocationStreamable();
+export const windowLocation: WindowLocationStreamableLike =
+  new WindowLocationStreamable();

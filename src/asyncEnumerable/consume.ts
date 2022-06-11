@@ -51,38 +51,40 @@ export const done = <TAcc>(acc: TAcc): ConsumeRequest<TAcc> => ({
   acc,
 });
 
-const consumeImpl = <TSrc, TAcc>(
-  consumer: (
-    acc: ObservableLike<TAcc>,
-  ) => ObservableOperator<TSrc, ConsumeRequest<TAcc>>,
-  initial: Factory<TAcc>,
-): Function1<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> => enumerable =>
-  using(
-    scheduler => {
-      const enumerator = pipe(enumerable, stream(scheduler));
-      const accFeedback = createSubject<TAcc>();
+const consumeImpl =
+  <TSrc, TAcc>(
+    consumer: (
+      acc: ObservableLike<TAcc>,
+    ) => ObservableOperator<TSrc, ConsumeRequest<TAcc>>,
+    initial: Factory<TAcc>,
+  ): Function1<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> =>
+  enumerable =>
+    using(
+      scheduler => {
+        const enumerator = pipe(enumerable, stream(scheduler));
+        const accFeedback = createSubject<TAcc>();
 
-      return [accFeedback, enumerator];
-    },
-    (accFeedback: SubjectLike<TAcc>, enumerator: StreamLike<void, TSrc>) =>
-      pipe(
-        enumerator,
-        consumer(accFeedback),
-        onNotify(ev => {
-          switch (ev.type) {
-            case "notify":
-              accFeedback.dispatch(ev.acc);
-              enumerator.dispatch(none);
-              break;
-          }
-        }),
-        map(ev => ev.acc),
-        onSubscribe(() => {
-          accFeedback.dispatch(initial());
-          enumerator.dispatch(none);
-        }),
-      ),
-  );
+        return [accFeedback, enumerator];
+      },
+      (accFeedback: SubjectLike<TAcc>, enumerator: StreamLike<void, TSrc>) =>
+        pipe(
+          enumerator,
+          consumer(accFeedback),
+          onNotify(ev => {
+            switch (ev.type) {
+              case "notify":
+                accFeedback.dispatch(ev.acc);
+                enumerator.dispatch(none);
+                break;
+            }
+          }),
+          map(ev => ev.acc),
+          onSubscribe(() => {
+            accFeedback.dispatch(initial());
+            enumerator.dispatch(none);
+          }),
+        ),
+    );
 
 export const consume = <T, TAcc>(
   consumer: Consumer<T, TAcc>,

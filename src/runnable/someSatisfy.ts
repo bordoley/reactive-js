@@ -17,13 +17,13 @@ class SomeSatisfySink<T> extends AbstractSink<T> {
   }
 }
 
-export const someSatisfy = <T>(
-  predicate: Predicate<T>,
-): Predicate<RunnableLike<T>> => runnable => {
-  const sink = new SomeSatisfySink(predicate);
-  runnable.run(sink);
-  return sink.result;
-};
+export const someSatisfy =
+  <T>(predicate: Predicate<T>): Predicate<RunnableLike<T>> =>
+  runnable => {
+    const sink = new SomeSatisfySink(predicate);
+    runnable.run(sink);
+    return sink.result;
+  };
 
 export const contains = <T>(
   value: T,

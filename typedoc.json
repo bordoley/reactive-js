@@ -1,13 +1,13 @@
 {
   "name": "Reactive-JS",
   "entryPoints": "./packages/core",
+  "entryPointStrategy": "expand",
   "readme": "none",
   "out": "docs",
   "excludeExternals": true,
   "excludePrivate": true,
   "excludeProtected": true,
   "disableSources": true,
-  "listInvalidSymbolLinks": true,
   "markedOptions": {
     "mangle": false
   },

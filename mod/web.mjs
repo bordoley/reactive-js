@@ -1,11 +1,11 @@
 /// <reference types="./web.d.ts" />
-import { none, isNone } from './option.mjs';
+import { dispose, addTeardown, addDisposableDisposeParentOnChildError, toAbortSignal } from './disposable.mjs';
 import { pipe, raise, returns } from './functions.mjs';
 import { createObservable, keep as keep$1, throttle, onNotify as onNotify$1, subscribe, defer, fromPromise, observe } from './observable.mjs';
-import { dispose, addTeardown, addDisposableDisposeParentOnChildError, toAbortSignal } from './disposable.mjs';
 import { keep } from './readonlyArray.mjs';
-import { onNotify, lift, map, stream } from './streamable.mjs';
+import { none, isNone } from './option.mjs';
 import { createStateStore } from './stateStore.mjs';
+import { onNotify, lift, map, stream } from './streamable.mjs';
 
 const fromEvent = (target, eventName, selector) => createObservable(dispatcher => {
     const listener = (event) => {

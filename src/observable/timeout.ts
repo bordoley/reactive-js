@@ -32,7 +32,8 @@ const setupDurationSubscription = <T>(observer: TimeoutObserver<T>) => {
 };
 
 class TimeoutObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T> {
-  readonly durationSubscription: SerialDisposableLike = createSerialDisposable();
+  readonly durationSubscription: SerialDisposableLike =
+    createSerialDisposable();
 
   constructor(
     delegate: ObserverLike<T>,
