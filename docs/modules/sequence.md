@@ -4,15 +4,12 @@
 
 ## Table of contents
 
-### Classes
-
-- [SequenceResultNotify](../classes/sequence.SequenceResultNotify.md)
-
 ### Type Aliases
 
 - [Sequence](sequence.md#sequence)
 - [SequenceOperator](sequence.md#sequenceoperator)
 - [SequenceResult](sequence.md#sequenceresult)
+- [SequenceResultNotify](sequence.md#sequenceresultnotify)
 
 ### Variables
 
@@ -72,13 +69,32 @@ ___
 
 ### SequenceResult
 
-Ƭ **SequenceResult**<`T`\>: [`SequenceResultNotify`](../classes/sequence.SequenceResultNotify.md)<`T`\> \| typeof [`sequenceResultDone`](sequence.md#sequenceresultdone)
+Ƭ **SequenceResult**<`T`\>: [`SequenceResultNotify`](sequence.md#sequenceresultnotify)<`T`\> \| typeof [`sequenceResultDone`](sequence.md#sequenceresultdone)
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
+
+___
+
+### SequenceResultNotify
+
+Ƭ **SequenceResultNotify**<`T`\>: `Object`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `data` | `T` |
+| `next` | [`Sequence`](sequence.md#sequence)<`T`\> |
 
 ## Variables
 
