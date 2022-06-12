@@ -13,47 +13,25 @@ import {
 import { isNone } from "./option";
 import { RunnableLike, createRunnable } from "./runnable";
 
-const enum SequenceType {
-  Notify = 1,
-  Done = 2,
+export class SequenceResultNotify<T> {
+  constructor(public readonly data: T, public readonly next: Sequence<T>) {}
 }
 
-declare const __type__: unique symbol;
+export const sequenceResultDone = Symbol('SequenceResultDone');
 
-export type SequenceResult<_T> = {
-  [__type__]: never;
-};
-
-type SequenceNotify<T> = {
-  readonly type: SequenceType.Notify;
-  readonly data: T;
-  readonly next: Sequence<T>;
-} & SequenceResult<T>;
-
-type SequenceDone<T> = {
-  readonly type: SequenceType.Done;
-} & SequenceResult<T>;
+export type SequenceResult<T> = SequenceResultNotify<T> | typeof sequenceResultDone;
 
 export type Sequence<T> = Factory<SequenceResult<T>>;
 export type SequenceOperator<TA, TB> = Function1<Sequence<TA>, Sequence<TB>>;
 
-const isDone = <T>(result: SequenceResult<T>): result is SequenceDone<T> =>
-  (result as any).type === SequenceType.Done;
+const isNotify = <T>(
+  result: SequenceResult<T>,
+): result is SequenceResultNotify<T> => result instanceof SequenceResultNotify;
 
-const isNotify = <T>(result: SequenceResult<T>): result is SequenceNotify<T> =>
-  (result as any).type === SequenceType.Notify;
+const notify = <T>(data: T, next: Sequence<T>): SequenceResult<T> =>
+  new SequenceResultNotify(data, next);
 
-export const notify = <T>(data: T, next: Sequence<T>): SequenceResult<T> =>
-  ({
-    type: SequenceType.Notify,
-    data,
-    next,
-  } as unknown as SequenceResult<T>);
-
-const _done: SequenceResult<any> = {
-  type: SequenceType.Done,
-} as unknown as SequenceResult<any>;
-export const done = <T>(): SequenceResult<T> => _done;
+const done = <T>(): SequenceResult<T> => sequenceResultDone;
 
 export const empty = <T>(): Sequence<T> => done as Sequence<T>;
 
@@ -133,9 +111,7 @@ const _distinctUntilChanged =
   () => {
     let retval = next();
     while (true) {
-      if (isDone(retval)) {
-        return retval;
-      } else if (isNotify(retval)) {
+      if (isNotify(retval)) {
         if (!equality(prevValue, retval.data)) {
           return notify(
             retval.data,
@@ -144,6 +120,8 @@ const _distinctUntilChanged =
         } else {
           retval = retval.next();
         }
+      } else {
+        return retval;
       }
     }
   };
@@ -177,14 +155,14 @@ const _keep =
   () => {
     let result = seq();
     while (true) {
-      if (isDone(result)) {
-        return result;
-      } else if (isNotify(result)) {
+      if (isNotify(result)) {
         if (predicate(result.data)) {
           return notify(result.data, _keep(predicate, result.next));
         } else {
           result = result.next();
         }
+      } else {
+        return result;
       }
     }
   };
