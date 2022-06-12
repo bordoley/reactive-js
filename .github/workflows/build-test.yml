@@ -1,0 +1,24 @@
+name: Build/Test Workflow
+'on':
+  push:
+    branches:
+      - master
+jobs:
+  Build:
+    runs-on: '${{ matrix.os }}'
+    strategy:
+      matrix:
+        os:
+          - ubuntu-18.04
+        node-version:
+          - 14.x
+    steps:
+      - name: 'Set up Node.js ${{ matrix.node-version }}'
+        uses: actions/setup-node@v1
+        with:
+          node-version: '${{ matrix.node-version }}'
+      - uses: actions/checkout@v2
+      - run: yarn install --frozen-lockfile --non-interactive
+      - run: yarn run build
+      - run: yarn run test-coverage
+      - run: cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
