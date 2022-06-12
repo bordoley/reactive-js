@@ -248,7 +248,6 @@ const tests$6 = describe("io", test("decodeWithCharset", () => {
     expectTrue(subscription.isDisposed);
 }));
 
-const scheduler = createHostScheduler();
 const Observable = {
     concat: concat$1,
     concatMap: concatMap$1,
@@ -319,13 +318,17 @@ const tests$5 = describe("observable", describe("buffer", test("with duration an
     pipe(sub2, dispose());
     pipe(subject.observerCount, expectEquals(0));
 })), test("exhaustMap", defer([fromArray$3()([1, 2, 3]), fromArray$3()([4, 5, 6]), fromArray$3()([7, 8, 9])], fromArray$3(), exhaustMap(identity), toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), describe("fromPromise", testAsync("when the promise resolves", async () => {
+    const scheduler = createHostScheduler();
     const factory = () => Promise.resolve(1);
     const result = await pipe(factory, fromPromise, toPromise(scheduler));
     pipe(result, expectEquals(1));
+    scheduler.dispose();
 }), testAsync("when the promise reject", async () => {
     const error = new Error();
     const factory = () => Promise.reject(error);
+    const scheduler = createHostScheduler();
     await pipe(pipe(factory, fromPromise, toPromise(scheduler)), expectPromiseToThrow);
+    scheduler.dispose();
 })), test("genMap", defer(undefined, fromValue(), genMap(function* (_) {
     yield 1;
     yield 2;
@@ -396,7 +399,9 @@ const tests$5 = describe("observable", describe("buffer", test("with duration an
     scheduler.run();
     pipe(result, expectArrayEquals([2, 4, 6]));
 }), describe("switchAll", test("with empty source", defer(empty$3(), switchAll(), toRunnable(), toArray(), expectArrayEquals([]))), test("when source throw", defer(defer(raise, throws(), switchAll(), toRunnable(), toArray(), expectArrayEquals([])), expectToThrow))), test("switchMap", defer([1, 2, 3], fromArray$3({ delay: 1 }), switchMap(_ => pipe([1, 2, 3], fromArray$3())), toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), describe("takeLast", test("when pipeline throws", defer(defer(raise, throws(), takeLast$1(), toRunnable(), last), expectToThrow))), describe("throttle", test("first", defer(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$1({ count: 100 }), throttle(50, { mode: "first" }), toRunnable(), toArray(), expectArrayEquals([0, 49]))), test("last", defer(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$1({ count: 200 }), throttle(50, { mode: "last" }), toRunnable(), toArray(), expectArrayEquals([49, 99, 149, 199]))), test("interval", defer(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$1({ count: 200 }), throttle(75, { mode: "interval" }), toRunnable(), toArray(), expectArrayEquals([0, 74, 149, 199]))), test("when duration observable throws", defer(defer([1, 2, 3, 4, 5], fromArray$3({ delay: 1 }), throttle(_ => throws()(raise)), toRunnable(), last), expectToThrow))), describe("throwIfEmpty", test("when source is empty", defer(defer(empty$3(), throwIfEmpty(() => undefined), toRunnable(), last), expectToThrow)), test("when source is not empty", defer(1, returns, compute(), throwIfEmpty(() => undefined), toRunnable(), last, expectEquals(1)))), describe("timeout", test("throws when a timeout occurs", defer(defer(1, fromValue({ delay: 2 }), timeout(1), toArray()), expectToThrow)), test("when timeout is greater than observed time", defer(1, fromValue({ delay: 2 }), timeout(3), toRunnable(), last, expectEquals(1)))), describe("toPromise", testAsync("when observable completes without producing a value", async () => {
+    const scheduler = createHostScheduler();
     await pipe(pipe(empty$3(), toPromise(scheduler)), expectPromiseToThrow);
+    scheduler.dispose();
 })), describe("withLatestFrom", test("when source and latest are interlaced", defer([0, 1, 2, 3], fromArray$3({ delay: 1 }), withLatestFrom(pipe([0, 1, 2, 3], fromArray$3({ delay: 2 })), (a, b) => [
     a,
     b,

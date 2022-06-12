@@ -27,7 +27,7 @@ declare const schedule: (f: SideEffect, options?: {
 declare const toSchedulerWithPriority: (priority: number) => Function1<PrioritySchedulerLike, SchedulerLike>;
 declare const createHostScheduler: (options?: {
     readonly yieldInterval?: number;
-}) => SchedulerLike;
+}) => SchedulerLike & DisposableLike;
 /**
  * Creates a new virtual time scheduler instance.
  *
