@@ -3,15 +3,9 @@ import { pipe, strictEquality, compose, alwaysTrue } from './functions.mjs';
 import { isNone } from './option.mjs';
 import { createRunnable } from './runnable.mjs';
 
-class SequenceResultNotify {
-    constructor(data, next) {
-        this.data = data;
-        this.next = next;
-    }
-}
 const sequenceResultDone = Symbol('SequenceResultDone');
-const isNotify = (result) => result instanceof SequenceResultNotify;
-const notify = (data, next) => new SequenceResultNotify(data, next);
+const isNotify = (result) => result != sequenceResultDone;
+const notify = (data, next) => ({ data, next });
 const done = () => sequenceResultDone;
 const empty = () => done;
 const concatAll = () => seq => {
@@ -215,4 +209,4 @@ const toRunnable = () => seq => createRunnable(sink => {
     sink.done();
 });
 
-export { SequenceResultNotify, concat, concatAll, concatMap, concatWith, distinctUntilChanged, empty, endWith, fromArray, fromValue, generate, keep, map, mapTo, repeat, scan, seek, sequenceResultDone, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable };
+export { concat, concatAll, concatMap, concatWith, distinctUntilChanged, empty, endWith, fromArray, fromValue, generate, keep, map, mapTo, repeat, scan, seek, sequenceResultDone, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable };
