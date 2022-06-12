@@ -1,4 +1,9 @@
-import { AbstractDisposable, addDisposable, addTeardown, DisposableLike } from "../disposable";
+import {
+  AbstractDisposable,
+  addDisposable,
+  addTeardown,
+  DisposableLike,
+} from "../disposable";
 import { Factory, alwaysFalse } from "../functions";
 import { Option, none, isSome } from "../option";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
@@ -24,11 +29,11 @@ const inputIsPending = supportsIsInputPending
 const now: Factory<number> = supportsPerformanceNow
   ? () => performance.now()
   : supportsProcessHRTime
-    ? () => {
+  ? () => {
       const hr = process.hrtime();
       return hr[0] * 1000 + hr[1] / 1e6;
     }
-    : () => Date.now();
+  : () => Date.now();
 
 const scheduleImmediateWithSetImmediate = (
   scheduler: HostScheduler,
@@ -38,11 +43,14 @@ const scheduleImmediateWithSetImmediate = (
   addTeardown(scheduler, () => clearImmediate(immmediate));
 };
 
-const scheduleImmediateWithMessageChannel =
-  (scheduler: HostScheduler, channel: MessageChannel, continuation: SchedulerContinuationLike) => {
-    channel.port1.onmessage = () => runContinuation(scheduler, continuation);
-    channel.port2.postMessage(null);
-  };
+const scheduleImmediateWithMessageChannel = (
+  scheduler: HostScheduler,
+  channel: MessageChannel,
+  continuation: SchedulerContinuationLike,
+) => {
+  channel.port1.onmessage = () => runContinuation(scheduler, continuation);
+  channel.port2.postMessage(null);
+};
 
 const scheduleDelayed = (
   scheduler: HostScheduler,
@@ -57,12 +65,16 @@ const scheduleImmediate = (
   scheduler: HostScheduler,
   continuation: SchedulerContinuationLike,
 ) => {
-  const {messageChannel} = scheduler;
-  
+  const { messageChannel } = scheduler;
+
   if (supportsSetImmediate) {
     scheduleImmediateWithSetImmediate(scheduler, continuation);
   } else if (isSome(messageChannel)) {
-    scheduleImmediateWithMessageChannel(scheduler, messageChannel, continuation);
+    scheduleImmediateWithMessageChannel(
+      scheduler,
+      messageChannel,
+      continuation,
+    );
   } else {
     scheduleDelayed(scheduler, continuation, 0);
   }
