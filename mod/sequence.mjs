@@ -3,17 +3,16 @@ import { pipe, strictEquality, compose, alwaysTrue } from './functions.mjs';
 import { isNone } from './option.mjs';
 import { createRunnable } from './runnable.mjs';
 
-const isDone = (result) => result.type === 2 /* SequenceType.Done */;
-const isNotify = (result) => result.type === 1 /* SequenceType.Notify */;
-const notify = (data, next) => ({
-    type: 1 /* SequenceType.Notify */,
-    data,
-    next,
-});
-const _done = {
-    type: 2 /* SequenceType.Done */,
-};
-const done = () => _done;
+class SequenceResultNotify {
+    constructor(data, next) {
+        this.data = data;
+        this.next = next;
+    }
+}
+const sequenceResultDone = Symbol('SequenceResultDone');
+const isNotify = (result) => result instanceof SequenceResultNotify;
+const notify = (data, next) => new SequenceResultNotify(data, next);
+const done = () => sequenceResultDone;
 const empty = () => done;
 const concatAll = () => seq => {
     const continueWith = (result, continuation) => {
@@ -51,16 +50,16 @@ const concatWith = (snd) => first => concat(first, snd);
 const _distinctUntilChanged = (equality, prevValue, next) => () => {
     let retval = next();
     while (true) {
-        if (isDone(retval)) {
-            return retval;
-        }
-        else if (isNotify(retval)) {
+        if (isNotify(retval)) {
             if (!equality(prevValue, retval.data)) {
                 return notify(retval.data, _distinctUntilChanged(equality, retval.data, retval.next));
             }
             else {
                 retval = retval.next();
             }
+        }
+        else {
+            return retval;
         }
     }
 };
@@ -77,16 +76,16 @@ function endWith(...values) {
 const _keep = (predicate, seq) => () => {
     let result = seq();
     while (true) {
-        if (isDone(result)) {
-            return result;
-        }
-        else if (isNotify(result)) {
+        if (isNotify(result)) {
             if (predicate(result.data)) {
                 return notify(result.data, _keep(predicate, result.next));
             }
             else {
                 result = result.next();
             }
+        }
+        else {
+            return result;
         }
     }
 };
@@ -216,4 +215,4 @@ const toRunnable = () => seq => createRunnable(sink => {
     sink.done();
 });
 
-export { concat, concatAll, concatMap, concatWith, distinctUntilChanged, done, empty, endWith, fromArray, fromValue, generate, keep, map, mapTo, notify, repeat, scan, seek, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable };
+export { SequenceResultNotify, concat, concatAll, concatMap, concatWith, distinctUntilChanged, empty, endWith, fromArray, fromValue, generate, keep, map, mapTo, repeat, scan, seek, sequenceResultDone, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable };

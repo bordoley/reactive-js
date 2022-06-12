@@ -4,11 +4,19 @@
 
 ## Table of contents
 
+### Classes
+
+- [SequenceResultNotify](../classes/sequence.SequenceResultNotify.md)
+
 ### Type Aliases
 
 - [Sequence](sequence.md#sequence)
 - [SequenceOperator](sequence.md#sequenceoperator)
 - [SequenceResult](sequence.md#sequenceresult)
+
+### Variables
+
+- [sequenceResultDone](sequence.md#sequenceresultdone)
 
 ### Functions
 
@@ -17,7 +25,6 @@
 - [concatMap](sequence.md#concatmap)
 - [concatWith](sequence.md#concatwith)
 - [distinctUntilChanged](sequence.md#distinctuntilchanged)
-- [done](sequence.md#done)
 - [empty](sequence.md#empty)
 - [endWith](sequence.md#endwith)
 - [fromArray](sequence.md#fromarray)
@@ -26,7 +33,6 @@
 - [keep](sequence.md#keep)
 - [map](sequence.md#map)
 - [mapTo](sequence.md#mapto)
-- [notify](sequence.md#notify)
 - [repeat](sequence.md#repeat)
 - [scan](sequence.md#scan)
 - [seek](sequence.md#seek)
@@ -66,19 +72,19 @@ ___
 
 ### SequenceResult
 
-Ƭ **SequenceResult**<`_T`\>: `Object`
+Ƭ **SequenceResult**<`T`\>: [`SequenceResultNotify`](../classes/sequence.SequenceResultNotify.md)<`T`\> \| typeof [`sequenceResultDone`](sequence.md#sequenceresultdone)
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `_T` |
+| `T` |
 
-#### Type declaration
+## Variables
 
-| Name | Type |
-| :------ | :------ |
-| `[___type__]` | `never` |
+### sequenceResultDone
+
+• `Const` **sequenceResultDone**: unique `symbol`
 
 ## Functions
 
@@ -187,22 +193,6 @@ ___
 #### Returns
 
 [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
-
-___
-
-### done
-
-▸ **done**<`T`\>(): [`SequenceResult`](sequence.md#sequenceresult)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`SequenceResult`](sequence.md#sequenceresult)<`T`\>
 
 ___
 
@@ -373,29 +363,6 @@ ___
 #### Returns
 
 [`SequenceOperator`](sequence.md#sequenceoperator)<`TA`, `TB`\>
-
-___
-
-### notify
-
-▸ **notify**<`T`\>(`data`, `next`): [`SequenceResult`](sequence.md#sequenceresult)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `data` | `T` |
-| `next` | [`Sequence`](sequence.md#sequence)<`T`\> |
-
-#### Returns
-
-[`SequenceResult`](sequence.md#sequenceresult)<`T`\>
 
 ___
 
