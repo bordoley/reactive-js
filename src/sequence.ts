@@ -18,37 +18,41 @@ const enum SequenceType {
   Done = 2,
 }
 
-export type SequenceResult<T> =
-  | {
-      readonly type: SequenceType.Notify;
-      readonly data: T;
-      readonly next: Sequence<T>;
-    }
-  | { readonly type: SequenceType.Done };
+declare const __type__: unique symbol;
+
+export type SequenceResult<_T> = {
+  [__type__]: never;
+};
+
+type SequenceNotify<T> = {
+  readonly type: SequenceType.Notify;
+  readonly data: T;
+  readonly next: Sequence<T>;
+} & SequenceResult<T>;
+
+type SequenceDone<T> = {
+  readonly type: SequenceType.Done;
+} & SequenceResult<T>;
 
 export type Sequence<T> = Factory<SequenceResult<T>>;
 export type SequenceOperator<TA, TB> = Function1<Sequence<TA>, Sequence<TB>>;
 
-export const isDone = <T>(
-  result: SequenceResult<T>,
-): result is { readonly type: SequenceType.Done } =>
-  result.type === SequenceType.Done;
+const isDone = <T>(result: SequenceResult<T>): result is SequenceDone<T> =>
+  (result as any).type === SequenceType.Done;
 
-export const isNotify = <T>(
-  result: SequenceResult<T>,
-): result is {
-  readonly type: SequenceType.Notify;
-  readonly data: T;
-  readonly next: Sequence<T>;
-} => result.type === SequenceType.Notify;
+const isNotify = <T>(result: SequenceResult<T>): result is SequenceNotify<T> =>
+  (result as any).type === SequenceType.Notify;
 
-export const notify = <T>(data: T, next: Sequence<T>): SequenceResult<T> => ({
-  type: SequenceType.Notify,
-  data,
-  next,
-});
+export const notify = <T>(data: T, next: Sequence<T>): SequenceResult<T> =>
+  ({
+    type: SequenceType.Notify,
+    data,
+    next,
+  } as unknown as SequenceResult<T>);
 
-const _done: SequenceResult<any> = { type: SequenceType.Done };
+const _done: SequenceResult<any> = {
+  type: SequenceType.Done,
+} as unknown as SequenceResult<any>;
 export const done = <T>(): SequenceResult<T> => _done;
 
 export const empty = <T>(): Sequence<T> => done as Sequence<T>;
@@ -131,14 +135,16 @@ const _distinctUntilChanged =
     while (true) {
       if (isDone(retval)) {
         return retval;
-      } else if (!equality(prevValue, retval.data)) {
-        return notify(
-          retval.data,
-          _distinctUntilChanged(equality, retval.data, retval.next),
-        );
+      } else if (isNotify(retval)) {
+        if (!equality(prevValue, retval.data)) {
+          return notify(
+            retval.data,
+            _distinctUntilChanged(equality, retval.data, retval.next),
+          );
+        } else {
+          retval = retval.next();
+        }
       }
-
-      retval = retval.next();
     }
   };
 
@@ -173,10 +179,13 @@ const _keep =
     while (true) {
       if (isDone(result)) {
         return result;
-      } else if (predicate(result.data)) {
-        return notify(result.data, _keep(predicate, result.next));
+      } else if (isNotify(result)) {
+        if (predicate(result.data)) {
+          return notify(result.data, _keep(predicate, result.next));
+        } else {
+          result = result.next();
+        }
       }
-      result = result.next();
     }
   };
 export const keep =
@@ -257,9 +266,9 @@ const _takeFirst =
   () => {
     if (count > 0) {
       const result = seq();
-      return isDone(result)
-        ? done()
-        : notify(result.data, _takeFirst(count - 1, result.next));
+      return isNotify(result)
+        ? notify(result.data, _takeFirst(count - 1, result.next))
+        : done();
     } else {
       return done();
     }
@@ -344,14 +353,15 @@ const _takeLast =
     const last: T[] = [];
     let result = seq();
     while (true) {
-      if (isDone(result)) {
+      if (isNotify(result)) {
+        last.push(result.data);
+        if (last.length > maxCount) {
+          last.shift();
+        }
+        result = result.next();
+      } else {
         break;
       }
-      last.push(result.data);
-      if (last.length > maxCount) {
-        last.shift();
-      }
-      result = result.next();
     }
     return _fromArray(last, 0, last.length);
   };
