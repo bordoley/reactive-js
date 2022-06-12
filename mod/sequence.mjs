@@ -10,7 +10,9 @@ const notify = (data, next) => ({
     data,
     next,
 });
-const _done = { type: 2 /* SequenceType.Done */ };
+const _done = {
+    type: 2 /* SequenceType.Done */,
+};
 const done = () => _done;
 const empty = () => done;
 const concatAll = () => seq => {
@@ -52,10 +54,14 @@ const _distinctUntilChanged = (equality, prevValue, next) => () => {
         if (isDone(retval)) {
             return retval;
         }
-        else if (!equality(prevValue, retval.data)) {
-            return notify(retval.data, _distinctUntilChanged(equality, retval.data, retval.next));
+        else if (isNotify(retval)) {
+            if (!equality(prevValue, retval.data)) {
+                return notify(retval.data, _distinctUntilChanged(equality, retval.data, retval.next));
+            }
+            else {
+                retval = retval.next();
+            }
         }
-        retval = retval.next();
     }
 };
 const distinctUntilChanged = (options = {}) => seq => () => {
@@ -74,10 +80,14 @@ const _keep = (predicate, seq) => () => {
         if (isDone(result)) {
             return result;
         }
-        else if (predicate(result.data)) {
-            return notify(result.data, _keep(predicate, result.next));
+        else if (isNotify(result)) {
+            if (predicate(result.data)) {
+                return notify(result.data, _keep(predicate, result.next));
+            }
+            else {
+                result = result.next();
+            }
         }
-        result = result.next();
     }
 };
 const keep = (predicate) => seq => _keep(predicate, seq);
@@ -117,9 +127,9 @@ const seek = (count) => seq => {
 const _takeFirst = (count, seq) => () => {
     if (count > 0) {
         const result = seq();
-        return isDone(result)
-            ? done()
-            : notify(result.data, _takeFirst(count - 1, result.next));
+        return isNotify(result)
+            ? notify(result.data, _takeFirst(count - 1, result.next))
+            : done();
     }
     else {
         return done();
@@ -168,14 +178,16 @@ const _takeLast = (maxCount, seq) => () => {
     const last = [];
     let result = seq();
     while (true) {
-        if (isDone(result)) {
+        if (isNotify(result)) {
+            last.push(result.data);
+            if (last.length > maxCount) {
+                last.shift();
+            }
+            result = result.next();
+        }
+        else {
             break;
         }
-        last.push(result.data);
-        if (last.length > maxCount) {
-            last.shift();
-        }
-        result = result.next();
     }
     return _fromArray(last, 0, last.length);
 };
@@ -204,4 +216,4 @@ const toRunnable = () => seq => createRunnable(sink => {
     sink.done();
 });
 
-export { concat, concatAll, concatMap, concatWith, distinctUntilChanged, done, empty, endWith, fromArray, fromValue, generate, isDone, isNotify, keep, map, mapTo, notify, repeat, scan, seek, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable };
+export { concat, concatAll, concatMap, concatWith, distinctUntilChanged, done, empty, endWith, fromArray, fromValue, generate, keep, map, mapTo, notify, repeat, scan, seek, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable };

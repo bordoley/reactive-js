@@ -23,8 +23,6 @@
 - [fromArray](sequence.md#fromarray)
 - [fromValue](sequence.md#fromvalue)
 - [generate](sequence.md#generate)
-- [isDone](sequence.md#isdone)
-- [isNotify](sequence.md#isnotify)
 - [keep](sequence.md#keep)
 - [map](sequence.md#map)
 - [mapTo](sequence.md#mapto)
@@ -68,13 +66,19 @@ ___
 
 ### SequenceResult
 
-Ƭ **SequenceResult**<`T`\>: { `data`: `T` ; `next`: [`Sequence`](sequence.md#sequence)<`T`\> ; `type`: `SequenceType.Notify`  } \| { `type`: `SequenceType.Done`  }
+Ƭ **SequenceResult**<`_T`\>: `Object`
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `T` |
+| `_T` |
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `[___type__]` | `never` |
 
 ## Functions
 
@@ -301,50 +305,6 @@ ___
 #### Returns
 
 [`Sequence`](sequence.md#sequence)<`T`\>
-
-___
-
-### isDone
-
-▸ **isDone**<`T`\>(`result`): result is Object
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `result` | [`SequenceResult`](sequence.md#sequenceresult)<`T`\> |
-
-#### Returns
-
-result is Object
-
-___
-
-### isNotify
-
-▸ **isNotify**<`T`\>(`result`): result is Object
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `result` | [`SequenceResult`](sequence.md#sequenceresult)<`T`\> |
-
-#### Returns
-
-result is Object
 
 ___
 

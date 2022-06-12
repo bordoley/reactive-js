@@ -80,7 +80,8 @@ const transformDTSImportsForDeno = () => {
   };
 };
 
-const allModules = fs.readdirSync("./src")
+const allModules = fs
+  .readdirSync("./src")
   .filter(file => file.endsWith(".ts"))
   .map(file => file.replace(".ts", ""));
 
@@ -95,7 +96,7 @@ const makeInput = modules => ({
 
 const makeCoreNPMPackage = () => {
   const packageModules = allModules.filter(
-    file => !file.startsWith("__") && !file.startsWith('testing')
+    file => !file.startsWith("__") && !file.startsWith("testing"),
   );
   const input = makeInput(packageModules);
 
@@ -174,10 +175,7 @@ const makeModules = () => {
       ],
       plugins: [dts()],
     },
-  ];  
-}
+  ];
+};
 
-export default [
-  ...makeCoreNPMPackage(),
-  ...makeModules(),
-];
+export default [...makeCoreNPMPackage(), ...makeModules()];

@@ -1,26 +1,11 @@
 import { Factory, Function1, Equality, Predicate, Updater, Reducer } from "./functions.mjs";
 import { RunnableLike } from "./runnable.mjs";
-declare const enum SequenceType {
-    Notify = 1,
-    Done = 2
-}
-declare type SequenceResult<T> = {
-    readonly type: SequenceType.Notify;
-    readonly data: T;
-    readonly next: Sequence<T>;
-} | {
-    readonly type: SequenceType.Done;
+declare const __type__: unique symbol;
+declare type SequenceResult<_T> = {
+    [__type__]: never;
 };
 declare type Sequence<T> = Factory<SequenceResult<T>>;
 declare type SequenceOperator<TA, TB> = Function1<Sequence<TA>, Sequence<TB>>;
-declare const isDone: <T>(result: SequenceResult<T>) => result is {
-    readonly type: SequenceType.Done;
-};
-declare const isNotify: <T>(result: SequenceResult<T>) => result is {
-    readonly type: SequenceType.Notify;
-    readonly data: T;
-    readonly next: Sequence<T>;
-};
 declare const notify: <T>(data: T, next: Sequence<T>) => SequenceResult<T>;
 declare const done: <T>() => SequenceResult<T>;
 declare const empty: <T>() => Sequence<T>;
@@ -60,4 +45,4 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
     readonly inclusive?: boolean;
 }) => SequenceOperator<T, T>;
 declare const toRunnable: <T>() => Function1<Sequence<T>, RunnableLike<T>>;
-export { Sequence, SequenceOperator, SequenceResult, concat, concatAll, concatMap, concatWith, distinctUntilChanged, done, empty, endWith, fromArray, fromValue, generate, isDone, isNotify, keep, map, mapTo, notify, repeat, scan, seek, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable };
+export { Sequence, SequenceOperator, SequenceResult, concat, concatAll, concatMap, concatWith, distinctUntilChanged, done, empty, endWith, fromArray, fromValue, generate, keep, map, mapTo, notify, repeat, scan, seek, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable };
