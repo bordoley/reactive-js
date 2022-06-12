@@ -48,7 +48,7 @@ ___
 
 ### createHostScheduler
 
-▸ **createHostScheduler**(`options?`): [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+▸ **createHostScheduler**(`options?`): [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) & [`DisposableLike`](../interfaces/disposable.DisposableLike.md)
 
 #### Parameters
 
@@ -59,7 +59,7 @@ ___
 
 #### Returns
 
-[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) & [`DisposableLike`](../interfaces/disposable.DisposableLike.md)
 
 ___
 

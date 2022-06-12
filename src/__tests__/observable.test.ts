@@ -94,8 +94,6 @@ import {
 } from "../testing";
 import { createMonadTests } from "./monad.test";
 
-const scheduler = createHostScheduler();
-
 const Observable = {
   concat,
   concatMap,
@@ -306,20 +304,24 @@ export const tests = describe(
   describe(
     "fromPromise",
     testAsync("when the promise resolves", async () => {
+      const scheduler = createHostScheduler();
       const factory = () => Promise.resolve(1);
       const result = await pipe(factory, fromPromise, toPromise(scheduler));
 
       pipe(result, expectEquals(1));
+      scheduler.dispose();
     }),
 
     testAsync("when the promise reject", async () => {
       const error = new Error();
       const factory = () => Promise.reject(error);
+      const scheduler = createHostScheduler();
 
       await pipe(
         pipe(factory, fromPromise, toPromise(scheduler)),
         expectPromiseToThrow,
       );
+      scheduler.dispose();
     }),
   ),
 
@@ -743,7 +745,9 @@ export const tests = describe(
     testAsync(
       "when observable completes without producing a value",
       async () => {
+        const scheduler = createHostScheduler();
         await pipe(pipe(empty(), toPromise(scheduler)), expectPromiseToThrow);
+        scheduler.dispose();
       },
     ),
   ),

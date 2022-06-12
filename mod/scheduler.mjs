@@ -380,7 +380,6 @@ const toSchedulerWithPriority = (priority) => priorityScheduler => new Scheduler
 
 const supportsPerformanceNow = typeof performance === "object" && typeof performance.now === "function";
 const supportsProcessHRTime = typeof process === "object" && typeof process.hrtime === "function";
-const supportsMessageChannel = typeof MessageChannel === "function";
 const supportsSetImmediate = typeof setImmediate === "function";
 const supportsIsInputPending = typeof navigator === "object" &&
     navigator.scheduling !== undefined &&
@@ -396,20 +395,30 @@ const now = supportsPerformanceNow
             return hr[0] * 1000 + hr[1] / 1e6;
         }
         : () => Date.now();
-const scheduleImmediateWithSetImmediate = (scheduler, continuation) => setImmediate(runContinuation, scheduler, continuation);
-const scheduleImmediateWithMessageChannel = (channel) => (scheduler, continuation) => {
+const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
+    const immmediate = setImmediate(runContinuation, scheduler, continuation);
+    addTeardown(scheduler, () => clearImmediate(immmediate));
+};
+const scheduleImmediateWithMessageChannel = (scheduler, channel, continuation) => {
     channel.port1.onmessage = () => runContinuation(scheduler, continuation);
     channel.port2.postMessage(null);
 };
 const scheduleDelayed = (scheduler, continuation, delay) => {
-    setTimeout(runContinuation, delay, scheduler, continuation);
+    const timeout = setTimeout(runContinuation, delay, scheduler, continuation);
+    addTeardown(scheduler, () => clearTimeout(timeout));
 };
-const scheduleImmediateWithSetTimeout = (scheduler, continuation) => scheduleDelayed(scheduler, continuation, 0);
-const scheduleImmediate = supportsSetImmediate
-    ? scheduleImmediateWithSetImmediate
-    : supportsMessageChannel
-        ? scheduleImmediateWithMessageChannel(new MessageChannel())
-        : scheduleImmediateWithSetTimeout;
+const scheduleImmediate = (scheduler, continuation) => {
+    const { messageChannel } = scheduler;
+    if (supportsSetImmediate) {
+        scheduleImmediateWithSetImmediate(scheduler, continuation);
+    }
+    else if (isSome(messageChannel)) {
+        scheduleImmediateWithMessageChannel(scheduler, messageChannel, continuation);
+    }
+    else {
+        scheduleDelayed(scheduler, continuation, 0);
+    }
+};
 const runContinuation = (scheduler, continuation) => {
     if (!continuation.isDisposed) {
         scheduler.inContinuation = true;
@@ -418,12 +427,23 @@ const runContinuation = (scheduler, continuation) => {
         scheduler.inContinuation = false;
     }
 };
-class HostScheduler {
+class HostScheduler extends AbstractDisposable {
     constructor(yieldInterval) {
+        super();
         this.yieldInterval = yieldInterval;
         this.inContinuation = false;
+        this.messageChannel = none;
         this.startTime = this.now;
         this.yieldRequested = false;
+        const supportsMessageChannel = typeof MessageChannel === "function";
+        if (supportsMessageChannel) {
+            const messageChannel = new MessageChannel();
+            this.messageChannel = messageChannel;
+            addTeardown(this, () => {
+                messageChannel.port1.close();
+                messageChannel.port2.close();
+            });
+        }
     }
     get now() {
         return now();
@@ -442,6 +462,7 @@ class HostScheduler {
         this.yieldRequested = true;
     }
     schedule(continuation, options = {}) {
+        addDisposable(this, continuation);
         const { delay = 0 } = options;
         const continuationIsDisposed = continuation.isDisposed;
         if (!continuationIsDisposed && delay > 0) {
