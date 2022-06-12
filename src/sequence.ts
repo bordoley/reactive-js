@@ -15,12 +15,14 @@ import { RunnableLike, createRunnable } from "./runnable";
 
 export type SequenceResultNotify<T> = {
   readonly data: T;
-  readonly next: Sequence<T>
+  readonly next: Sequence<T>;
 };
 
-export const sequenceResultDone = Symbol('SequenceResultDone');
+export const sequenceResultDone = Symbol("SequenceResultDone");
 
-export type SequenceResult<T> = SequenceResultNotify<T> | typeof sequenceResultDone;
+export type SequenceResult<T> =
+  | SequenceResultNotify<T>
+  | typeof sequenceResultDone;
 
 export type Sequence<T> = Factory<SequenceResult<T>>;
 export type SequenceOperator<TA, TB> = Function1<Sequence<TA>, Sequence<TB>>;
@@ -29,7 +31,10 @@ const isNotify = <T>(
   result: SequenceResult<T>,
 ): result is SequenceResultNotify<T> => result != sequenceResultDone;
 
-const notify = <T>(data: T, next: Sequence<T>): SequenceResult<T> => ({data, next})
+const notify = <T>(data: T, next: Sequence<T>): SequenceResult<T> => ({
+  data,
+  next,
+});
 
 const done = <T>(): SequenceResult<T> => sequenceResultDone;
 
