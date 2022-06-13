@@ -8,8 +8,6 @@ A scheduler that uses a virtual clock to simulate time. Useful for testing.
 
 ## Hierarchy
 
-- [`DisposableLike`](disposable.DisposableLike.md)
-
 - [`SchedulerLike`](scheduler.SchedulerLike.md)
 
   ↳ **`VirtualTimeSchedulerLike`**

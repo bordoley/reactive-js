@@ -24,8 +24,9 @@ import {
   addTeardown,
   createDisposable,
   dispose,
+  AbstractDisposable,
 } from "./disposable";
-import { compose, defer, pipe, returns } from "./functions";
+import { compose, defer, Factory, pipe, returns } from "./functions";
 import {
   ObservableLike,
   SubjectLike,
@@ -39,6 +40,7 @@ import {
   SchedulerLike,
   run,
   toSchedulerWithPriority,
+  PrioritySchedulerLike,
 } from "./scheduler";
 
 /**
@@ -50,14 +52,21 @@ import {
  */
 export const useObservable = <T>(
   observable: ObservableLike<T>,
-  options: { readonly scheduler?: SchedulerLike } = {},
+  options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},
 ): Option<T> => {
-  const { scheduler = normalPriority } = options;
-
   const [state, updateState] = useState<Option<T>>(none);
   const [error, updateError] = useState<Option<Error>>(none);
 
   useEffect(() => {
+    const { scheduler: schedulerOption } = options;
+
+    const scheduler =
+      isSome(schedulerOption) && schedulerOption instanceof Function
+        ? schedulerOption()
+        : isSome(schedulerOption)
+        ? schedulerOption
+        : createReactNormalPriorityScheduler();
+
     const subscription = pipe(
       observable,
       subscribe(scheduler, compose(returns, updateState)),
@@ -65,8 +74,14 @@ export const useObservable = <T>(
 
     addTeardown(subscription, compose(returns, updateError));
 
-    return defer(subscription, dispose());
-  }, [observable, updateState, updateError, scheduler]);
+    return defer(
+      // If a scheduler is allocated, then dispose the new scheduler
+      // which will also dispose any subscriptions. Otherwise
+      // only dispose the subscription.
+      scheduler === schedulerOption ? subscription : scheduler,
+      dispose(),
+    );
+  }, [observable, updateState, updateError, options]);
 
   if (isSome(error)) {
     const { cause } = error;
@@ -98,20 +113,23 @@ export const createComponent = <TProps>(
   return ObservableComponent;
 };
 
-const priorityScheduler = {
-  inContinuation: false,
+class ReactPriorityScheduler
+  extends AbstractDisposable
+  implements PrioritySchedulerLike
+{
+  inContinuation = false;
 
   get now(): number {
     return unstable_now();
-  },
+  }
 
   get shouldYield(): boolean {
-    return priorityScheduler.inContinuation && unstable_shouldYield();
-  },
+    return this.inContinuation && unstable_shouldYield();
+  }
 
   requestYield() {
     unstable_requestPaint();
-  },
+  }
 
   schedule(
     continuation: SchedulerContinuationLike,
@@ -126,9 +144,9 @@ const priorityScheduler = {
     const callback = () => {
       pipe(callbackNodeDisposable, dispose());
 
-      priorityScheduler.inContinuation = true;
+      this.inContinuation = true;
       run(continuation);
-      priorityScheduler.inContinuation = false;
+      this.inContinuation = false;
     };
 
     const callbackNode = unstable_scheduleCallback(
@@ -142,35 +160,33 @@ const priorityScheduler = {
     );
 
     addDisposable(continuation, callbackNodeDisposable);
-  },
-};
+  }
+}
 
-/** Scheduler that schedules work on React's internal priority scheduler with idle priority. */
-export const idlePriority: SchedulerLike = pipe(
-  priorityScheduler,
-  toSchedulerWithPriority(unstable_IdlePriority),
+const createReactPriorityScheduler: Factory<PrioritySchedulerLike> = () =>
+  new ReactPriorityScheduler();
+
+const createReactSchedulerFactory =
+  (priority: number): Factory<SchedulerLike> =>
+  () =>
+    pipe(
+      createReactPriorityScheduler(),
+      toSchedulerWithPriority(priority),
+    );
+
+export const createReactIdlePriorityScheduler = createReactSchedulerFactory(
+  unstable_IdlePriority,
 );
 
-/** Scheduler that schedules work on React's internal priority scheduler with immediate priority. */
-export const immediatePriority: SchedulerLike = pipe(
-  priorityScheduler,
-  toSchedulerWithPriority(unstable_ImmediatePriority),
+export const createReactImmediatePriorityScheduler =
+  createReactSchedulerFactory(unstable_ImmediatePriority);
+
+export const createReactNormalPriorityScheduler = createReactSchedulerFactory(
+  unstable_NormalPriority,
 );
 
-/** Scheduler that schedules work on React's internal priority scheduler with normal priority. */
-export const normalPriority: SchedulerLike = pipe(
-  priorityScheduler,
-  toSchedulerWithPriority(unstable_NormalPriority),
-);
+export const createReactLowPriorityScheduler =
+  createReactSchedulerFactory(unstable_LowPriority);
 
-/** Scheduler that schedules work on React's internal priority scheduler with low priority. */
-export const lowPriority: SchedulerLike = pipe(
-  priorityScheduler,
-  toSchedulerWithPriority(unstable_LowPriority),
-);
-
-/** Scheduler that schedules work on React's internal priority scheduler with user blocking priority. */
-export const userBlockingPriority: SchedulerLike = pipe(
-  priorityScheduler,
-  toSchedulerWithPriority(unstable_UserBlockingPriority),
-);
+export const createReactUserBlockingPriorityScheduler =
+  createReactSchedulerFactory(unstable_UserBlockingPriority);

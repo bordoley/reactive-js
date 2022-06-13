@@ -1,9 +1,4 @@
-import {
-  AbstractDisposable,
-  addDisposable,
-  addTeardown,
-  DisposableLike,
-} from "../disposable";
+import { AbstractDisposable, addDisposable, addTeardown } from "../disposable";
 import { Factory, alwaysFalse } from "../functions";
 import { Option, none, isSome } from "../option";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
@@ -157,7 +152,7 @@ export const createHostScheduler = (
   options: {
     readonly yieldInterval?: number;
   } = {},
-): SchedulerLike & DisposableLike => {
+): SchedulerLike => {
   const { yieldInterval = 5 } = options;
   return new HostScheduler(yieldInterval);
 };

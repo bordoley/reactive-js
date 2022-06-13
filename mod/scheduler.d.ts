@@ -7,8 +7,8 @@ import { SideEffect, Function1 } from "./functions.mjs";
  * @param hostScheduler The underlying platform scheduler used by the priority
  * scheduler to schedule work.
  */
-declare const toPriorityScheduler: (hostScheduler: SchedulerLike) => DisposableLike & PrioritySchedulerLike;
-declare const toPausableScheduler: (hostScheduler: SchedulerLike) => DisposableLike & PausableSchedulerLike;
+declare const toPriorityScheduler: (hostScheduler: SchedulerLike) => PrioritySchedulerLike;
+declare const toPausableScheduler: (hostScheduler: SchedulerLike) => PausableSchedulerLike;
 declare class YieldError {
     readonly delay: number;
     constructor(delay: number);
@@ -27,7 +27,7 @@ declare const schedule: (f: SideEffect, options?: {
 declare const toSchedulerWithPriority: (priority: number) => Function1<PrioritySchedulerLike, SchedulerLike>;
 declare const createHostScheduler: (options?: {
     readonly yieldInterval?: number;
-}) => SchedulerLike & DisposableLike;
+}) => SchedulerLike;
 /**
  * Creates a new virtual time scheduler instance.
  *
@@ -57,7 +57,7 @@ interface SchedulerContinuationLike extends DisposableLike {
 /**
  * An object that schedules units of work on a runloop.
  */
-interface SchedulerLike {
+interface SchedulerLike extends DisposableLike {
     readonly inContinuation: boolean;
     readonly now: number;
     readonly shouldYield: boolean;
@@ -79,7 +79,7 @@ interface SchedulerLike {
  *
  * @noInheritDoc
  */
-interface VirtualTimeSchedulerLike extends DisposableLike, SchedulerLike {
+interface VirtualTimeSchedulerLike extends SchedulerLike {
     run(): void;
 }
 interface PausableSchedulerLike extends SchedulerLike {
@@ -91,7 +91,7 @@ interface PausableSchedulerLike extends SchedulerLike {
  *
  * @noInheritDoc
  */
-interface PrioritySchedulerLike {
+interface PrioritySchedulerLike extends DisposableLike {
     readonly inContinuation: boolean;
     readonly now: number;
     readonly shouldYield: boolean;
@@ -106,8 +106,6 @@ interface PrioritySchedulerLike {
      * @param priority An optional priority that is used when prioritizing which work
      * to execute next. The definition of the priority value along with it's default
      * value is implementation specific.
-     *
-     * @returns A `DisposableLike` that can be disposed to cancel the scheduled work.
      */
     schedule(continuation: SchedulerContinuationLike, options: {
         readonly priority: number;

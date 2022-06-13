@@ -28,7 +28,7 @@ export interface SchedulerContinuationLike extends DisposableLike {
 /**
  * An object that schedules units of work on a runloop.
  */
-export interface SchedulerLike {
+export interface SchedulerLike extends DisposableLike {
   readonly inContinuation: boolean;
   readonly now: number;
   readonly shouldYield: boolean;
@@ -54,9 +54,7 @@ export interface SchedulerLike {
  *
  * @noInheritDoc
  */
-export interface VirtualTimeSchedulerLike
-  extends DisposableLike,
-    SchedulerLike {
+export interface VirtualTimeSchedulerLike extends SchedulerLike {
   run(): void;
 }
 
@@ -70,7 +68,7 @@ export interface PausableSchedulerLike extends SchedulerLike {
  *
  * @noInheritDoc
  */
-export interface PrioritySchedulerLike {
+export interface PrioritySchedulerLike extends DisposableLike {
   readonly inContinuation: boolean;
   readonly now: number;
   readonly shouldYield: boolean;
@@ -87,8 +85,6 @@ export interface PrioritySchedulerLike {
    * @param priority An optional priority that is used when prioritizing which work
    * to execute next. The definition of the priority value along with it's default
    * value is implementation specific.
-   *
-   * @returns A `DisposableLike` that can be disposed to cancel the scheduled work.
    */
   schedule(
     continuation: SchedulerContinuationLike,
