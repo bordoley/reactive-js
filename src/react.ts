@@ -63,9 +63,7 @@ export const useObservable = <T>(
     const scheduler =
       isSome(schedulerOption) && schedulerOption instanceof Function
         ? schedulerOption()
-        : isSome(schedulerOption)
-        ? schedulerOption
-        : createReactNormalPriorityScheduler();
+        : schedulerOption ?? createReactNormalPriorityScheduler();
 
     const subscription = pipe(
       observable,
@@ -170,10 +168,7 @@ const createReactPriorityScheduler: Factory<PrioritySchedulerLike> = () =>
 const createReactSchedulerFactory =
   (priority: number): Factory<SchedulerLike> =>
   () =>
-    pipe(
-      createReactPriorityScheduler(),
-      toSchedulerWithPriority(priority),
-    );
+    pipe(createReactPriorityScheduler(), toSchedulerWithPriority(priority));
 
 export const createReactIdlePriorityScheduler = createReactSchedulerFactory(
   unstable_IdlePriority,
