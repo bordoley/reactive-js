@@ -95,6 +95,7 @@ const createReplaySubject = () => createSubject({ replay: 1 });
 
 export const createComponent = <TProps>(
   fn: (props: ObservableLike<TProps>) => ObservableLike<ReactElement>,
+  options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},
 ): ComponentType<TProps> => {
   const ObservableComponent = (props: TProps) => {
     const propsSubject = useMemo<SubjectLike<TProps>>(createReplaySubject, [
@@ -107,7 +108,7 @@ export const createComponent = <TProps>(
       () => pipe(propsSubject, distinctUntilChanged(), fn),
       [propsSubject],
     );
-    return useObservable(elementObservable) ?? null;
+    return useObservable(elementObservable, options) ?? null;
   };
 
   return ObservableComponent;
