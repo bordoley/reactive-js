@@ -4,58 +4,15 @@
 
 ## Table of contents
 
-### Variables
-
-- [idlePriority](react.md#idlepriority)
-- [immediatePriority](react.md#immediatepriority)
-- [lowPriority](react.md#lowpriority)
-- [normalPriority](react.md#normalpriority)
-- [userBlockingPriority](react.md#userblockingpriority)
-
 ### Functions
 
 - [createComponent](react.md#createcomponent)
+- [createReactIdlePriorityScheduler](react.md#createreactidlepriorityscheduler)
+- [createReactImmediatePriorityScheduler](react.md#createreactimmediatepriorityscheduler)
+- [createReactLowPriorityScheduler](react.md#createreactlowpriorityscheduler)
+- [createReactNormalPriorityScheduler](react.md#createreactnormalpriorityscheduler)
+- [createReactUserBlockingPriorityScheduler](react.md#createreactuserblockingpriorityscheduler)
 - [useObservable](react.md#useobservable)
-
-## Variables
-
-### idlePriority
-
-• `Const` **idlePriority**: [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
-
-Scheduler that schedules work on React's internal priority scheduler with idle priority.
-
-___
-
-### immediatePriority
-
-• `Const` **immediatePriority**: [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
-
-Scheduler that schedules work on React's internal priority scheduler with immediate priority.
-
-___
-
-### lowPriority
-
-• `Const` **lowPriority**: [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
-
-Scheduler that schedules work on React's internal priority scheduler with low priority.
-
-___
-
-### normalPriority
-
-• `Const` **normalPriority**: [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
-
-Scheduler that schedules work on React's internal priority scheduler with normal priority.
-
-___
-
-### userBlockingPriority
-
-• `Const` **userBlockingPriority**: [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
-
-Scheduler that schedules work on React's internal priority scheduler with user blocking priority.
 
 ## Functions
 
@@ -81,6 +38,56 @@ Scheduler that schedules work on React's internal priority scheduler with user b
 
 ___
 
+### createReactIdlePriorityScheduler
+
+▸ **createReactIdlePriorityScheduler**(): [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+
+___
+
+### createReactImmediatePriorityScheduler
+
+▸ **createReactImmediatePriorityScheduler**(): [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+
+___
+
+### createReactLowPriorityScheduler
+
+▸ **createReactLowPriorityScheduler**(): [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+
+___
+
+### createReactNormalPriorityScheduler
+
+▸ **createReactNormalPriorityScheduler**(): [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+
+___
+
+### createReactUserBlockingPriorityScheduler
+
+▸ **createReactUserBlockingPriorityScheduler**(): [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+
+___
+
 ### useObservable
 
 ▸ **useObservable**<`T`\>(`observable`, `options?`): [`Option`](option.md#option)<`T`\>
@@ -99,7 +106,7 @@ Returns the current value, if defined, of `observable`.
 | :------ | :------ | :------ |
 | `observable` | [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\> | The `ObservableLike` to subscribe to. |
 | `options?` | `Object` | - |
-| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) | - |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)\> | - |
 
 #### Returns
 

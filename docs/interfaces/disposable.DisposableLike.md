@@ -20,9 +20,11 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`ObserverLike`](observable.ObserverLike.md)
 
+  ↳ [`PrioritySchedulerLike`](scheduler.PrioritySchedulerLike.md)
+
   ↳ [`SchedulerContinuationLike`](scheduler.SchedulerContinuationLike.md)
 
-  ↳ [`VirtualTimeSchedulerLike`](scheduler.VirtualTimeSchedulerLike.md)
+  ↳ [`SchedulerLike`](scheduler.SchedulerLike.md)
 
 ## Implemented by
 

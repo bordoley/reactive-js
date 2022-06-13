@@ -46,7 +46,6 @@ class SchedulerContinuationImpl
     private readonly f: SideEffect,
   ) {
     super();
-
     addTeardown(this, clearListeners);
   }
 

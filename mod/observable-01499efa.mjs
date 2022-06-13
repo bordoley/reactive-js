@@ -156,6 +156,7 @@ class DefaultObserver extends AbstractObserver {
         super(scheduler);
         this.onNotify = onNotify;
         this.onNotifyThis = onNotifyThis;
+        addDisposable(scheduler, this);
     }
     notify(next) {
         assertObserverState(this);

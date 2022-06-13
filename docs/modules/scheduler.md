@@ -48,7 +48,7 @@ ___
 
 ### createHostScheduler
 
-▸ **createHostScheduler**(`options?`): [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) & [`DisposableLike`](../interfaces/disposable.DisposableLike.md)
+▸ **createHostScheduler**(`options?`): [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
 
 #### Parameters
 
@@ -59,7 +59,7 @@ ___
 
 #### Returns
 
-[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) & [`DisposableLike`](../interfaces/disposable.DisposableLike.md)
+[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
 
 ___
 
@@ -118,7 +118,7 @@ ___
 
 ### toPausableScheduler
 
-▸ **toPausableScheduler**(`hostScheduler`): [`DisposableLike`](../interfaces/disposable.DisposableLike.md) & [`PausableSchedulerLike`](../interfaces/scheduler.PausableSchedulerLike.md)
+▸ **toPausableScheduler**(`hostScheduler`): [`PausableSchedulerLike`](../interfaces/scheduler.PausableSchedulerLike.md)
 
 #### Parameters
 
@@ -128,13 +128,13 @@ ___
 
 #### Returns
 
-[`DisposableLike`](../interfaces/disposable.DisposableLike.md) & [`PausableSchedulerLike`](../interfaces/scheduler.PausableSchedulerLike.md)
+[`PausableSchedulerLike`](../interfaces/scheduler.PausableSchedulerLike.md)
 
 ___
 
 ### toPriorityScheduler
 
-▸ **toPriorityScheduler**(`hostScheduler`): [`DisposableLike`](../interfaces/disposable.DisposableLike.md) & [`PrioritySchedulerLike`](../interfaces/scheduler.PrioritySchedulerLike.md)
+▸ **toPriorityScheduler**(`hostScheduler`): [`PrioritySchedulerLike`](../interfaces/scheduler.PrioritySchedulerLike.md)
 
 Creates a new priority scheduler which schedules work using the provided
 host scheduler.
@@ -147,7 +147,7 @@ host scheduler.
 
 #### Returns
 
-[`DisposableLike`](../interfaces/disposable.DisposableLike.md) & [`PrioritySchedulerLike`](../interfaces/scheduler.PrioritySchedulerLike.md)
+[`PrioritySchedulerLike`](../interfaces/scheduler.PrioritySchedulerLike.md)
 
 ___
 

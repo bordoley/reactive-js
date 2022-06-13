@@ -6,6 +6,12 @@
 
 A scheduler which schedules work according to it's priority.
 
+## Hierarchy
+
+- [`DisposableLike`](disposable.DisposableLike.md)
+
+  ↳ **`PrioritySchedulerLike`**
+
 ## Table of contents
 
 ### Properties
@@ -69,5 +75,3 @@ Schedules a continuation to be executed on the scheduler.
 #### Returns
 
 `void`
-
-A `DisposableLike` that can be disposed to cancel the scheduled work.

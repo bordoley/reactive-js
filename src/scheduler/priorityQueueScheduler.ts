@@ -1,6 +1,5 @@
 import {
   AbstractSerialDisposable,
-  DisposableLike,
   addDisposable,
   addTeardown,
   disposed,
@@ -148,6 +147,7 @@ class PriorityScheduler
   constructor(readonly host: SchedulerLike) {
     super();
     addTeardown(this, clearQueues);
+    addDisposable(host, this);
   }
 
   get now(): number {
@@ -271,12 +271,11 @@ class PriorityScheduler
  */
 export const toPriorityScheduler = (
   hostScheduler: SchedulerLike,
-): DisposableLike & PrioritySchedulerLike =>
-  new PriorityScheduler(hostScheduler);
+): PrioritySchedulerLike => new PriorityScheduler(hostScheduler);
 
 export const toPausableScheduler = (
   hostScheduler: SchedulerLike,
-): DisposableLike & PausableSchedulerLike => {
+): PausableSchedulerLike => {
   const scheduler = new PriorityScheduler(hostScheduler);
   scheduler.pause();
   return scheduler;

@@ -1,5 +1,5 @@
 /// <reference types="./scheduler.d.ts" />
-import { AbstractDisposable, addTeardown, dispose, AbstractSerialDisposable, disposed, addDisposable } from './disposable.mjs';
+import { AbstractDisposable, addTeardown, dispose, AbstractSerialDisposable, addDisposable, disposed } from './disposable.mjs';
 import { pipe, raise, alwaysFalse } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 
@@ -260,6 +260,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
         this.taskIDCounter = 0;
         this.yieldRequested = false;
         addTeardown(this, clearQueues);
+        addDisposable(host, this);
     }
     get now() {
         return this.host.now;
@@ -345,10 +346,12 @@ const toPausableScheduler = (hostScheduler) => {
     return scheduler;
 };
 
-class SchedulerWithPriorityImpl {
+class SchedulerWithPriorityImpl extends AbstractDisposable {
     constructor(priorityScheduler, priority) {
+        super();
         this.priorityScheduler = priorityScheduler;
         this.priority = priority;
+        addDisposable(priorityScheduler, this);
     }
     get inContinuation() {
         return this.priorityScheduler.inContinuation;
@@ -363,6 +366,7 @@ class SchedulerWithPriorityImpl {
         this.priorityScheduler.requestYield();
     }
     schedule(continuation, options = {}) {
+        addDisposable(this, continuation);
         const { delay } = options;
         this.priorityScheduler.schedule(continuation, {
             priority: this.priority,

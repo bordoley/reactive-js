@@ -1,3 +1,4 @@
+import { AbstractDisposable, addDisposable } from "../disposable";
 import { Function1 } from "../functions";
 import {
   PrioritySchedulerLike,
@@ -5,11 +6,17 @@ import {
   SchedulerLike,
 } from "../scheduler";
 
-class SchedulerWithPriorityImpl implements SchedulerLike {
+class SchedulerWithPriorityImpl
+  extends AbstractDisposable
+  implements SchedulerLike
+{
   constructor(
     private readonly priorityScheduler: PrioritySchedulerLike,
     private readonly priority: number,
-  ) {}
+  ) {
+    super();
+    addDisposable(priorityScheduler, this);
+  }
 
   get inContinuation() {
     return this.priorityScheduler.inContinuation;
@@ -31,6 +38,8 @@ class SchedulerWithPriorityImpl implements SchedulerLike {
     continuation: SchedulerContinuationLike,
     options: { readonly delay?: number } = {},
   ) {
+    addDisposable(this, continuation);
+
     const { delay } = options;
     this.priorityScheduler.schedule(continuation, {
       priority: this.priority,

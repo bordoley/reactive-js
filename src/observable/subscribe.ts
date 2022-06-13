@@ -1,4 +1,4 @@
-import { DisposableLike } from "../disposable";
+import { addDisposable, DisposableLike } from "../disposable";
 import { Function1, SideEffect1, ignore, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { none } from "../option";
@@ -12,6 +12,7 @@ class DefaultObserver<T> extends AbstractObserver<T, SchedulerLike> {
     private readonly onNotifyThis: unknown,
   ) {
     super(scheduler);
+    addDisposable(scheduler, this);
   }
 
   notify(next: T) {
