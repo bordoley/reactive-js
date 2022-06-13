@@ -1,7 +1,7 @@
 import { pipe } from "../functions";
 import { RunnableOperator, SinkLike } from "../runnable";
-import { empty } from "./empty";
-import { fromArray } from "./fromArray";
+import { empty } from "../container";
+import { fromArray, fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { sinkDone } from "./sink";
 
@@ -40,5 +40,6 @@ export const takeLast = <T>(
 ): RunnableOperator<T, T> => {
   const { count = 1 } = options;
   const operator = (sink: SinkLike<T>) => new TakeLastSink(sink, count);
-  return runnable => (count > 0 ? pipe(runnable, lift(operator)) : empty());
+  return runnable =>
+    count > 0 ? pipe(runnable, lift(operator)) : empty(fromArrayT);
 };

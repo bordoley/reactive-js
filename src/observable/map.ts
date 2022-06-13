@@ -1,5 +1,10 @@
-import { Function1, returns } from "../functions";
-import { ObservableOperator, ObserverLike } from "../observable";
+import { Map } from "../container";
+import { Function1 } from "../functions";
+import {
+  ObservableLike,
+  ObservableOperator,
+  ObserverLike,
+} from "../observable";
 import { lift } from "./lift";
 import {
   AbstractAutoDisposingDelegatingObserver,
@@ -36,5 +41,6 @@ export const map = <TA, TB>(
   return lift(operator);
 };
 
-export const mapTo = <TA, TB>(value: TB): ObservableOperator<TA, TB> =>
-  map(returns(value));
+export const mapT: Map<ObservableLike<unknown>> = {
+  map,
+};

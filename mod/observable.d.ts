@@ -1,5 +1,6 @@
+import { Concat, FromArray, FromIterator, Keep, Map, ConcatAll, Zip, ContainerLike } from "./container.mjs";
 import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
-import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Equality, TypePredicate, Predicate, Reducer } from "./functions.mjs";
+import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Equality, Predicate, Reducer } from "./functions.mjs";
 import { SchedulerLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
 import { Option } from "./option.mjs";
 import { EnumerableLike } from "./enumerable.mjs";
@@ -96,19 +97,10 @@ declare const combineLatestWith: <TA, TB>(snd: ObservableLike<TB>) => Observable
     TB
 ]>;
 /**
- *  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the observer.
- *
- * @param value The value to emit.
- * @param delay The delay before emitting the value.
- */
-declare const compute: <T>(options?: {
-    readonly delay?: number;
-}) => Function1<Factory<T>, ObservableLike<T>>;
-/**
  * Creates an `ObservableLike` which emits all values from each source sequentially.
  */
 declare function concat<T>(fst: ObservableLike<T>, snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): ObservableLike<T>;
-declare const concatWith: <T>(snd: ObservableLike<T>) => ObservableOperator<T, T>;
+declare const concatT: Concat<ObservableLike<unknown>>;
 /**
  * Factory for safely creating new `ObservableLike` instances. The onSubscribe function
  * is called with a `SafeObserverLike` that may be notified from any context.
@@ -123,12 +115,6 @@ declare const createSubject: <T>(options?: {
     readonly replay?: number;
 }) => SubjectLike<T>;
 /**
- * Return an `ObservableLike` that emits no items and disposes the subscription after a specified delay.
- */
-declare const empty: <T>(options?: {
-    readonly delay?: number;
-}) => ObservableLike<T>;
-/**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
  * An optional `startIndex` in the array maybe specified,
  *
@@ -140,6 +126,11 @@ declare const fromArray: <T>(options?: {
     readonly startIndex?: number;
     readonly endIndex?: number;
 }) => Function1<readonly T[], ObservableLike<T>>;
+declare const fromArrayT: FromArray<ObservableLike<unknown>, {
+    readonly delay: number;
+    readonly startIndex: number;
+    readonly endIndex: number;
+}>;
 declare const fromDisposable: (disposable: DisposableLike) => ObservableLike<unknown>;
 /**
  * Creates an `ObservableLike` which enumerates through the values
@@ -160,6 +151,9 @@ declare const fromEnumerable: <T>(options?: {
 declare const fromIterator: <T, TReturn = any, TNext = unknown>(options?: {
     readonly delay?: number;
 }) => Function1<Factory<Iterator<T, TReturn, TNext>>, ObservableLike<T>>;
+declare const fromIteratorT: FromIterator<ObservableLike<unknown>, {
+    readonly delay: number;
+}>;
 /**
  * Creates an `ObservableLike` which iterates through the values
  * produced by the provided `Iterable` with a specified `delay` between emitted items.
@@ -198,15 +192,6 @@ declare const mergeWith: <T>(snd: ObservableLike<T>) => ObservableOperator<T, T>
  */
 declare const never: <T>() => ObservableLike<T>;
 /**
- *  Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the observer.
- *
- * @param value The value to emit.
- * @param delay The delay before emitting the value.
- */
-declare const fromValue: <T>(options?: {
-    readonly delay?: number;
-}) => Function1<T, ObservableLike<T>>;
-/**
  * Safely subscribes to an `ObservableLike` with a `ObserverLike` instance
  * using the provided scheduler. The returned `DisposableLike`
  * may used to cancel the subscription.
@@ -216,15 +201,6 @@ declare const fromValue: <T>(options?: {
 declare function subscribe<T>(scheduler: SchedulerLike): Function1<ObservableLike<T>, DisposableLike>;
 declare function subscribe<T>(scheduler: SchedulerLike, onNotify: SideEffect1<T>): Function1<ObservableLike<T>, DisposableLike>;
 declare function subscribe<This, T>(scheduler: SchedulerLike, onNotify: (this: This, value: T) => void, onNotifyThis: This): Function1<ObservableLike<T>, DisposableLike>;
-/**
- * Creates an `ObservableLike` that emits no items and immediately disposes its subscription with an error.
- *
- * @param factory Factory function to generate the error to emit.
- * @param delay The delay before disposing the subscription.
- */
-declare const throws: <T>(options?: {
-    readonly delay?: number;
-}) => Function1<Factory<unknown>, ObservableLike<T>>;
 declare function using<TResource extends DisposableLike, T>(resourceFactory: Function1<SchedulerLike, TResource>, observableFactory: Function1<TResource, ObservableLike<T>>): ObservableLike<T>;
 declare function using<TResource1 extends DisposableLike, TResource2 extends DisposableLike, T>(resourceFactory: Function1<SchedulerLike, [
     TResource1,
@@ -284,29 +260,13 @@ declare const distinctUntilChanged: <T>(options?: {
     readonly equality?: Equality<T> | undefined;
 }) => ObservableOperator<T, T>;
 /**
- * Returns an `ObservableLike` that emits items from the source,
- * concatenated with the values specified as arguments.
- */
-declare function endWith<T>(value: T, ...values: readonly T[]): ObservableOperator<T, T>;
-declare const genMap: <TA, TB, TReturn = any, TNext = unknown>(mapper: Function1<TA, Generator<TB, TReturn, TNext>>) => ObservableOperator<TA, TB>;
-/**
- * Returns an `ObservableLike` that ignores all items emitted by the source.
- */
-declare const ignoreElements: <TA, TB>() => ObservableOperator<TA, TB>;
-/**
  * Returns an `ObservableLike` that only emits items from the
  * source that satisfy the specified type predicate.
  *
  * @param predicate The predicate function.
  */
-declare const keepType: <TA, TB extends TA>(predicate: TypePredicate<TA, TB>) => ObservableOperator<TA, TB>;
-/**
- * Returns an `ObservableLike` that only emits items produced by the
- * source that satisfy the specified predicate.
- *
- * @param predicate The predicate function.
- */
 declare const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T>;
+declare const keepT: Keep<ObservableLike<unknown>>;
 /**
  * Creates a new `ObservableLike` which applies the provided the operator function to
  * observer when the source is subscribed to.
@@ -321,7 +281,7 @@ declare const lift: <TA, TB>(operator: ObserverOperator<TA, TB>) => ObservableOp
  * @param mapper The map function to apply each value. Must be a pure function.
  */
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => ObservableOperator<TA, TB>;
-declare const mapTo: <TA, TB>(value: TB) => ObservableOperator<TA, TB>;
+declare const mapT: Map<ObservableLike<unknown>>;
 declare const mapAsync: <TA, TB>(f: Function1<TA, Promise<TB>>) => ObservableOperator<TA, TB>;
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
@@ -335,10 +295,10 @@ declare const mergeAll: <T>(options?: {
     readonly maxBufferSize?: number;
     readonly maxConcurrency?: number;
 }) => ObservableOperator<ObservableLike<T>, T>;
-declare const mergeMap: <TA, TB>(mapper: Function1<TA, ObservableLike<TB>>, options?: {
-    maxBufferSize?: number;
-    maxConcurrency?: number;
-}) => ObservableOperator<TA, TB>;
+declare const mergeAllT: ConcatAll<ObservableLike<unknown>, {
+    readonly maxBufferSize: number;
+    readonly maxConcurrency: number;
+}>;
 /**
  * Converts a higher-order `ObservableLike` into a first-order
  * `ObservableLike` by concatenating the inner sources in order.
@@ -348,16 +308,16 @@ declare const mergeMap: <TA, TB>(mapper: Function1<TA, ObservableLike<TB>>, opti
 declare const concatAll: <T>(options?: {
     readonly maxBufferSize?: number;
 }) => ObservableOperator<ObservableLike<T>, T>;
-declare const concatMap: <TA, TB>(mapper: Function1<TA, ObservableLike<TB>>, options?: {
-    readonly maxBufferSize?: number;
-}) => ObservableOperator<TA, TB>;
+declare const concatAllT: ConcatAll<ObservableLike<unknown>, {
+    readonly maxBufferSize: number;
+}>;
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
  * by dropping inner sources while the previous inner source
  * has not yet been disposed.
  */
 declare const exhaust: <T>() => ObservableOperator<ObservableLike<T>, T>;
-declare const exhaustMap: <TA, TB>(mapper: Function1<TA, ObservableLike<TB>>) => ObservableOperator<TA, TB>;
+declare const exhaustT: ConcatAll<ObservableLike<unknown>, {}>;
 /**
  * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
  *
@@ -449,11 +409,6 @@ declare const skipFirst: <T>(options?: {
     readonly count?: number;
 }) => ObservableOperator<T, T>;
 /**
- * Returns an `ObservableLike` that emits the values specified as arguments,
- * concatenated with items from the source.
- */
-declare function startWith<T>(value: T, ...values: readonly T[]): ObservableOperator<T, T>;
-/**
  * Returns an `ObservableLike` instance that subscribes to the source on the specified `SchedulerLike`.
  *
  * @param scheduler `SchedulerLike` instance to use when subscribing to the source.
@@ -464,7 +419,7 @@ declare const subscribeOn: <T>(scheduler: SchedulerLike) => ObservableOperator<T
  * values only from the most recent source.
  */
 declare const switchAll: <T>() => ObservableOperator<ObservableLike<T>, T>;
-declare const switchMap: <TA, TB>(mapper: Function1<TA, ObservableLike<TB>>) => ObservableOperator<TA, TB>;
+declare const switchAllT: ConcatAll<ObservableLike<unknown>, {}>;
 /**
  * Returns an `ObservableLike` that only emits the first `count` values emitted by the source.
  *
@@ -600,10 +555,7 @@ declare function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, 
     TH,
     TI
 ]>;
-declare const zipWith: <TA, TB>(snd: ObservableLike<TB>) => ObservableOperator<TA, [
-    TA,
-    TB
-]>;
+declare const zipT: Zip<ObservableLike<unknown>>;
 declare function zipLatest<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<[
     TA,
     TB
@@ -676,6 +628,7 @@ declare const zipLatestWith: <TA, TB>(snd: ObservableLike<TB>) => ObservableOper
  * @param selector
  */
 declare const zipWithLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ObservableOperator<TA, T>;
+declare const toEnumerable: <T>() => Function1<ObservableLike<T>, EnumerableLike<T>>;
 declare const toRunnable: <T>(options?: {
     readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
 }) => Function1<ObservableLike<T>, RunnableLike<T>>;
@@ -686,7 +639,6 @@ declare const toRunnable: <T>(options?: {
  * @param scheduler The scheduler upon which to subscribe to the source.
  */
 declare const toPromise: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, Promise<T>>;
-declare const toEnumerable: <T>() => Function1<ObservableLike<T>, EnumerableLike<T>>;
 /**
  * The underlying mechanism for receiving and transforming notifications from an
  * observable source. The `ObserverLike` interface composes the `SchedulerLike` and
@@ -718,7 +670,9 @@ interface ObserverOperator<A, B> {
  *
  * @noInheritDoc
  */
-interface ObservableLike<T> {
+interface ObservableLike<T> extends ContainerLike {
+    readonly T: unknown;
+    readonly type: ObservableLike<this["T"]>;
     readonly isSynchronous: boolean;
     /**
      * Subscribes the `ObserverLike` instance to the observable.
@@ -726,6 +680,7 @@ interface ObservableLike<T> {
      */
     observe(this: ObservableLike<T>, observer: ObserverLike<T>): void;
 }
+declare const type: ObservableLike<unknown>;
 /** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
 declare type ObservableOperator<A, B> = Function1<ObservableLike<A>, ObservableLike<B>>;
 /**
@@ -766,4 +721,4 @@ declare type ObservableEffectMode = "batched" | "combine-latest";
  * interval -  Takes both the leading and trailing values.
  */
 declare type ThrottleMode = "first" | "last" | "interval";
-export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, ObserverLike, ObserverOperator, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, dispatchTo, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observable, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toEnumerable, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };
+export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, ObserverLike, ObserverOperator, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, defer, dispatchTo, distinctUntilChanged, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, lift, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

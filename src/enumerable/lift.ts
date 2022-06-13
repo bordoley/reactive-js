@@ -8,6 +8,9 @@ import { pipe } from "../functions";
 import { enumerate } from "./enumerator";
 
 class LiftedEnumerableLike<T> implements EnumerableLike<T> {
+  readonly type = this;
+  readonly T = undefined as any;
+
   constructor(
     readonly src: EnumerableLike<any>,
     readonly operators: readonly EnumeratorOperator<any, any>[],

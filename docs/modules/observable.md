@@ -23,7 +23,18 @@
 
 ### Variables
 
+- [concatAllT](observable.md#concatallt)
+- [concatT](observable.md#concatt)
+- [exhaustT](observable.md#exhaustt)
+- [fromArrayT](observable.md#fromarrayt)
+- [fromIteratorT](observable.md#fromiteratort)
+- [keepT](observable.md#keept)
+- [mapT](observable.md#mapt)
+- [mergeAllT](observable.md#mergeallt)
+- [switchAllT](observable.md#switchallt)
 - [timeoutError](observable.md#timeouterror)
+- [type](observable.md#type)
+- [zipT](observable.md#zipt)
 
 ### Functions
 
@@ -36,39 +47,27 @@
 - [catchError](observable.md#catcherror)
 - [combineLatest](observable.md#combinelatest)
 - [combineLatestWith](observable.md#combinelatestwith)
-- [compute](observable.md#compute)
 - [concat](observable.md#concat)
 - [concatAll](observable.md#concatall)
-- [concatMap](observable.md#concatmap)
-- [concatWith](observable.md#concatwith)
 - [createObservable](observable.md#createobservable)
 - [createSubject](observable.md#createsubject)
 - [defer](observable.md#defer)
 - [dispatchTo](observable.md#dispatchto)
 - [distinctUntilChanged](observable.md#distinctuntilchanged)
-- [empty](observable.md#empty)
-- [endWith](observable.md#endwith)
 - [exhaust](observable.md#exhaust)
-- [exhaustMap](observable.md#exhaustmap)
 - [fromArray](observable.md#fromarray)
 - [fromDisposable](observable.md#fromdisposable)
 - [fromEnumerable](observable.md#fromenumerable)
 - [fromIterable](observable.md#fromiterable)
 - [fromIterator](observable.md#fromiterator)
 - [fromPromise](observable.md#frompromise)
-- [fromValue](observable.md#fromvalue)
-- [genMap](observable.md#genmap)
 - [generate](observable.md#generate)
-- [ignoreElements](observable.md#ignoreelements)
 - [keep](observable.md#keep)
-- [keepType](observable.md#keeptype)
 - [lift](observable.md#lift)
 - [map](observable.md#map)
 - [mapAsync](observable.md#mapasync)
-- [mapTo](observable.md#mapto)
 - [merge](observable.md#merge)
 - [mergeAll](observable.md#mergeall)
-- [mergeMap](observable.md#mergemap)
 - [mergeWith](observable.md#mergewith)
 - [never](observable.md#never)
 - [observable](observable.md#observable)
@@ -84,18 +83,15 @@
 - [scanAsync](observable.md#scanasync)
 - [share](observable.md#share)
 - [skipFirst](observable.md#skipfirst)
-- [startWith](observable.md#startwith)
 - [subscribe](observable.md#subscribe)
 - [subscribeOn](observable.md#subscribeon)
 - [switchAll](observable.md#switchall)
-- [switchMap](observable.md#switchmap)
 - [takeFirst](observable.md#takefirst)
 - [takeLast](observable.md#takelast)
 - [takeUntil](observable.md#takeuntil)
 - [takeWhile](observable.md#takewhile)
 - [throttle](observable.md#throttle)
 - [throwIfEmpty](observable.md#throwifempty)
-- [throws](observable.md#throws)
 - [timeout](observable.md#timeout)
 - [toEnumerable](observable.md#toenumerable)
 - [toPromise](observable.md#topromise)
@@ -105,7 +101,6 @@
 - [zip](observable.md#zip)
 - [zipLatest](observable.md#ziplatest)
 - [zipLatestWith](observable.md#ziplatestwith)
-- [zipWith](observable.md#zipwith)
 - [zipWithLatestFrom](observable.md#zipwithlatestfrom)
 
 ## Type Aliases
@@ -155,11 +150,77 @@ interval -  Takes both the leading and trailing values.
 
 ## Variables
 
+### concatAllT
+
+• `Const` **concatAllT**: [`ConcatAll`](../interfaces/container.ConcatAll.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, { `maxBufferSize`: `number`  }\>
+
+___
+
+### concatT
+
+• `Const` **concatT**: [`Concat`](../interfaces/container.Concat.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### exhaustT
+
+• `Const` **exhaustT**: [`ConcatAll`](../interfaces/container.ConcatAll.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, {}\>
+
+___
+
+### fromArrayT
+
+• `Const` **fromArrayT**: [`FromArray`](../interfaces/container.FromArray.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, { `delay`: `number` ; `endIndex`: `number` ; `startIndex`: `number`  }\>
+
+___
+
+### fromIteratorT
+
+• `Const` **fromIteratorT**: [`FromIterator`](../interfaces/container.FromIterator.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, { `delay`: `number`  }\>
+
+___
+
+### keepT
+
+• `Const` **keepT**: [`Keep`](../interfaces/container.Keep.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### mapT
+
+• `Const` **mapT**: [`Map`](../interfaces/container.Map.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### mergeAllT
+
+• `Const` **mergeAllT**: [`ConcatAll`](../interfaces/container.ConcatAll.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, { `maxBufferSize`: `number` ; `maxConcurrency`: `number`  }\>
+
+___
+
+### switchAllT
+
+• `Const` **switchAllT**: [`ConcatAll`](../interfaces/container.ConcatAll.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, {}\>
+
+___
+
 ### timeoutError
 
 • `Const` **timeoutError**: `symbol`
 
 Symbol thrown when the timeout operator times out
+
+___
+
+### type
+
+• `Const` **type**: [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
+
+___
+
+### zipT
+
+• `Const` **zipT**: [`Zip`](../interfaces/container.Zip.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ## Functions
 
@@ -996,31 +1057,6 @@ ___
 
 ___
 
-### compute
-
-▸ **compute**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
-
- Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the observer.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
-
-___
-
 ### concat
 
 ▸ **concat**<`T`\>(`fst`, `snd`, ...`tail`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
@@ -1070,53 +1106,6 @@ Converts a higher-order `ObservableLike` into a first-order
 #### Returns
 
 [`ObservableOperator`](observable.md#observableoperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, `T`\>
-
-___
-
-### concatMap
-
-▸ **concatMap**<`TA`, `TB`\>(`mapper`, `options?`): [`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TB`\>\> |
-| `options?` | `Object` |
-| `options.maxBufferSize?` | `number` |
-
-#### Returns
-
-[`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
-
-___
-
-### concatWith
-
-▸ **concatWith**<`T`\>(`snd`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `snd` | [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\> |
-
-#### Returns
-
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
 
 ___
 
@@ -1243,57 +1232,6 @@ are distinct by comparison from the previous item.
 
 ___
 
-### empty
-
-▸ **empty**<`T`\>(`options?`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
-
-Return an `ObservableLike` that emits no items and disposes the subscription after a specified delay.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
-
-___
-
-### endWith
-
-▸ **endWith**<`T`\>(`value`, ...`values`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
-
-Returns an `ObservableLike` that emits items from the source,
-concatenated with the values specified as arguments.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `T` |
-| `...values` | readonly `T`[] |
-
-#### Returns
-
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
-
-___
-
 ### exhaust
 
 ▸ **exhaust**<`T`\>(): [`ObservableOperator`](observable.md#observableoperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, `T`\>
@@ -1311,29 +1249,6 @@ has not yet been disposed.
 #### Returns
 
 [`ObservableOperator`](observable.md#observableoperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, `T`\>
-
-___
-
-### exhaustMap
-
-▸ **exhaustMap**<`TA`, `TB`\>(`mapper`): [`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TB`\>\> |
-
-#### Returns
-
-[`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
 
 ___
 
@@ -1486,56 +1401,6 @@ is invoked for each observer to the observable.
 
 ___
 
-### fromValue
-
-▸ **fromValue**<`T`\>(`options?`): [`Function1`](functions.md#function1)<`T`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
-
- Creates an `ObservableLike` that emits `value` after the specified `delay` then disposes the observer.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`T`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
-
-___
-
-### genMap
-
-▸ **genMap**<`TA`, `TB`, `TReturn`, `TNext`\>(`mapper`): [`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TReturn` | `any` |
-| `TNext` | `unknown` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, `Generator`<`TB`, `TReturn`, `TNext`\>\> |
-
-#### Returns
-
-[`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
-
-___
-
 ### generate
 
 ▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
@@ -1565,31 +1430,12 @@ between emitted items.
 
 ___
 
-### ignoreElements
-
-▸ **ignoreElements**<`TA`, `TB`\>(): [`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
-
-Returns an `ObservableLike` that ignores all items emitted by the source.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Returns
-
-[`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
-
-___
-
 ### keep
 
 ▸ **keep**<`T`\>(`predicate`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
 
-Returns an `ObservableLike` that only emits items produced by the
-source that satisfy the specified predicate.
+Returns an `ObservableLike` that only emits items from the
+source that satisfy the specified type predicate.
 
 #### Type parameters
 
@@ -1606,32 +1452,6 @@ source that satisfy the specified predicate.
 #### Returns
 
 [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
-
-___
-
-### keepType
-
-▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
-
-Returns an `ObservableLike` that only emits items from the
-source that satisfy the specified type predicate.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> | The predicate function. |
-
-#### Returns
-
-[`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
 
 ___
 
@@ -1710,29 +1530,6 @@ ___
 
 ___
 
-### mapTo
-
-▸ **mapTo**<`TA`, `TB`\>(`value`): [`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `TB` |
-
-#### Returns
-
-[`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
-
-___
-
 ### merge
 
 ▸ **merge**<`T`\>(`fst`, `snd`, ...`tail`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
@@ -1783,32 +1580,6 @@ which concurrently delivers values emitted by the inner sources.
 #### Returns
 
 [`ObservableOperator`](observable.md#observableoperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, `T`\>
-
-___
-
-### mergeMap
-
-▸ **mergeMap**<`TA`, `TB`\>(`mapper`, `options?`): [`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TB`\>\> |
-| `options?` | `Object` |
-| `options.maxBufferSize?` | `number` |
-| `options.maxConcurrency?` | `number` |
-
-#### Returns
-
-[`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
 
 ___
 
@@ -2218,32 +1989,6 @@ Returns an `ObservableLike` that skips the first count items emitted by the sour
 
 ___
 
-### startWith
-
-▸ **startWith**<`T`\>(`value`, ...`values`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
-
-Returns an `ObservableLike` that emits the values specified as arguments,
-concatenated with items from the source.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `T` |
-| `...values` | readonly `T`[] |
-
-#### Returns
-
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
-
-___
-
 ### subscribe
 
 ▸ **subscribe**<`T`\>(`scheduler`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
@@ -2350,29 +2095,6 @@ values only from the most recent source.
 #### Returns
 
 [`ObservableOperator`](observable.md#observableoperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, `T`\>
-
-___
-
-### switchMap
-
-▸ **switchMap**<`TA`, `TB`\>(`mapper`): [`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TB`\>\> |
-
-#### Returns
-
-[`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
 
 ___
 
@@ -2546,31 +2268,6 @@ Returns an `ObservableLike` that emits an error if the source completes without 
 #### Returns
 
 [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
-
-___
-
-### throws
-
-▸ **throws**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`unknown`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
-
-Creates an `ObservableLike` that emits no items and immediately disposes its subscription with an error.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`unknown`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
 ___
 
@@ -3287,29 +2984,6 @@ ___
 ### zipLatestWith
 
 ▸ **zipLatestWith**<`TA`, `TB`\>(`snd`): [`ObservableOperator`](observable.md#observableoperator)<`TA`, [`TA`, `TB`]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `snd` | [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TB`\> |
-
-#### Returns
-
-[`ObservableOperator`](observable.md#observableoperator)<`TA`, [`TA`, `TB`]\>
-
-___
-
-### zipWith
-
-▸ **zipWith**<`TA`, `TB`\>(`snd`): [`ObservableOperator`](observable.md#observableoperator)<`TA`, [`TA`, `TB`]\>
 
 #### Type parameters
 

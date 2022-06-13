@@ -3,12 +3,17 @@ import {
   addDisposableDisposeParentOnChildError,
   bindDisposables,
 } from "../disposable";
-import { EnumerableOperator, EnumeratorLike } from "../enumerable";
+import {
+  EnumerableLike,
+  EnumerableOperator,
+  EnumeratorLike,
+} from "../enumerable";
 import { pipe } from "../functions";
 import { Option, isNone, none } from "../option";
 import { enumerate } from "./enumerator";
-import { empty, fromArray } from "./fromArray";
+import { fromArray, fromArrayT } from "./fromArray";
 import { lift } from "./lift";
+import { empty } from "../container";
 
 class TakeLastEnumerator<T>
   extends AbstractDisposable
@@ -65,5 +70,9 @@ export const takeLast = <T>(
   const { count = 1 } = options;
   const operator = (enumerator: EnumeratorLike<T>) =>
     new TakeLastEnumerator(enumerator, count);
-  return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());
+  return enumerable =>
+    count > 0
+      ? pipe(enumerable, lift(operator))
+      : // FIXME: why do we need the annotations?
+        empty<EnumerableLike<unknown>, T>(fromArrayT);
 };

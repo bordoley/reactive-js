@@ -1,3 +1,4 @@
+import { ContainerLike } from "./container";
 import {
   Equality,
   Factory,
@@ -6,7 +7,6 @@ import {
   Reducer,
   Updater,
   alwaysTrue,
-  compose,
   pipe,
   strictEquality,
 } from "./functions";
@@ -24,21 +24,32 @@ export type SequenceResult<T> =
   | SequenceResultNotify<T>
   | typeof sequenceResultDone;
 
-export type Sequence<T> = Factory<SequenceResult<T>>;
+export interface SequenceLike extends ContainerLike {
+  readonly T: unknown;
+  readonly type: Sequence<this["T"]>;
+}
+
+export type Sequence<T> = Factory<SequenceResult<T>> & SequenceLike;
 export type SequenceOperator<TA, TB> = Function1<Sequence<TA>, Sequence<TB>>;
+
+export const type: Sequence<unknown> = undefined as any;
 
 const isNotify = <T>(
   result: SequenceResult<T>,
 ): result is SequenceResultNotify<T> => result != sequenceResultDone;
 
-const notify = <T>(data: T, next: Sequence<T>): SequenceResult<T> => ({
+const notify = <T>(
+  data: T,
+  next: Factory<SequenceResult<T>>,
+): SequenceResult<T> => ({
   data,
-  next,
+  next: castToSequence(next),
 });
 
 const done = <T>(): SequenceResult<T> => sequenceResultDone;
 
-export const empty = <T>(): Sequence<T> => done as Sequence<T>;
+const castToSequence = <T>(f: Factory<SequenceResult<T>>): Sequence<T> =>
+  f as Sequence<T>;
 
 export const concatAll =
   <T>(): SequenceOperator<Sequence<T>, T> =>
@@ -66,7 +77,7 @@ export const concatAll =
       }
     };
 
-    return () => flattenIter(seq());
+    return castToSequence(() => flattenIter(seq()));
   };
 
 const _fromArray = <T>(
@@ -93,7 +104,7 @@ export const fromArray =
       0,
     );
 
-    return () => _fromArray(values, startIndex, endIndex);
+    return castToSequence(() => _fromArray(values, startIndex, endIndex));
   };
 
 export function concat<T>(
@@ -106,14 +117,12 @@ export function concat<T>(...sequences: readonly Sequence<T>[]): Sequence<T> {
   return pipe(sequences, fromArray(), concatAll());
 }
 
-export const concatWith =
-  <T>(snd: Sequence<T>): SequenceOperator<T, T> =>
-  first =>
-    concat(first, snd);
-
-const _distinctUntilChanged =
-  <T>(equality: Equality<T>, prevValue: T, next: Sequence<T>): Sequence<T> =>
-  () => {
+const _distinctUntilChanged = <T>(
+  equality: Equality<T>,
+  prevValue: T,
+  next: Sequence<T>,
+): Sequence<T> =>
+  castToSequence(() => {
     let retval = next();
     while (true) {
       if (isNotify(retval)) {
@@ -129,35 +138,26 @@ const _distinctUntilChanged =
         return retval;
       }
     }
-  };
+  });
 
 export const distinctUntilChanged =
   <T>(
     options: { readonly equality?: Equality<T> } = {},
   ): SequenceOperator<T, T> =>
   seq =>
-  () => {
-    const { equality = strictEquality } = options;
-    const result = seq();
-    return isNotify(result)
-      ? notify(
-          result.data,
-          _distinctUntilChanged(equality, result.data, result.next),
-        )
-      : done();
-  };
+    castToSequence(() => {
+      const { equality = strictEquality } = options;
+      const result = seq();
+      return isNotify(result)
+        ? notify(
+            result.data,
+            _distinctUntilChanged(equality, result.data, result.next),
+          )
+        : done();
+    });
 
-export function endWith<T>(
-  value: T,
-  ...values: readonly T[]
-): SequenceOperator<T, T>;
-export function endWith<T>(...values: readonly T[]): SequenceOperator<T, T> {
-  return pipe(values, fromArray(), concatWith);
-}
-
-const _keep =
-  <T>(predicate: Predicate<T>, seq: Sequence<T>): Sequence<T> =>
-  () => {
+const _keep = <T>(predicate: Predicate<T>, seq: Sequence<T>): Sequence<T> =>
+  castToSequence(() => {
     let result = seq();
     while (true) {
       if (isNotify(result)) {
@@ -170,60 +170,40 @@ const _keep =
         return result;
       }
     }
-  };
+  });
+
 export const keep =
   <T>(predicate: Predicate<T>): SequenceOperator<T, T> =>
   seq =>
     _keep(predicate, seq);
 
-const _map =
-  <TA, TB>(mapper: Function1<TA, TB>, seq: Sequence<TA>): Sequence<TB> =>
-  () => {
+const _map = <TA, TB>(
+  mapper: Function1<TA, TB>,
+  seq: Sequence<TA>,
+): Sequence<TB> =>
+  castToSequence(() => {
     const result = seq();
 
     return isNotify(result)
       ? notify(mapper(result.data), _map(mapper, result.next))
       : done();
-  };
+  });
 export const map =
   <TA, TB>(mapper: Function1<TA, TB>): SequenceOperator<TA, TB> =>
   seq =>
     _map(mapper, seq);
 
-export const mapTo =
-  <TA, TB>(v: TB): SequenceOperator<TA, TB> =>
-  seq =>
-    _map(_ => v, seq);
+const _generate = <T>(generator: Updater<T>, acc: T): Sequence<T> =>
+  castToSequence(() => notify(acc, _generate(generator, generator(acc))));
 
-export const concatMap = <TA, TB>(
-  mapper: Function1<TA, Sequence<TB>>,
-): SequenceOperator<TA, TB> => compose(map(mapper), concatAll());
-
-export function startWith<T>(
-  value: T,
-  ...values: readonly T[]
-): SequenceOperator<T, T>;
-export function startWith<T>(...values: readonly T[]): SequenceOperator<T, T> {
-  return seq => concat(fromArray<T>()(values), seq);
-}
-
-export const fromValue =
-  <T>(): Function1<T, Sequence<T>> =>
-  v =>
-  () =>
-    _fromArray([v], 0, 1);
-
-const _generate =
-  <T>(generator: Updater<T>, acc: T): Sequence<T> =>
-  () =>
-    notify(acc, _generate(generator, generator(acc)));
-
-export const generate =
-  <T>(generator: Updater<T>, initialValue: Factory<T>): Sequence<T> =>
-  () => {
+export const generate = <T>(
+  generator: Updater<T>,
+  initialValue: Factory<T>,
+): Sequence<T> =>
+  castToSequence(() => {
     const acc = generator(initialValue());
     return _generate(generator, acc)();
-  };
+  });
 
 export const seek =
   <T>(count: number): SequenceOperator<T, T> =>
@@ -244,9 +224,8 @@ export const seek =
     }
   };
 
-const _takeFirst =
-  <T>(count: number, seq: Sequence<T>): Sequence<T> =>
-  () => {
+const _takeFirst = <T>(count: number, seq: Sequence<T>): Sequence<T> =>
+  castToSequence(() => {
     if (count > 0) {
       const result = seq();
       return isNotify(result)
@@ -255,7 +234,7 @@ const _takeFirst =
     } else {
       return done();
     }
-  };
+  });
 
 export const takeFirst =
   <T>(options: { readonly count?: number } = {}): SequenceOperator<T, T> =>
@@ -264,14 +243,13 @@ export const takeFirst =
     return _takeFirst(count, seq);
   };
 
-const _repeat =
-  <T>(
-    predicate: Predicate<number>,
-    count: number,
-    src: Sequence<T>,
-    seq: Sequence<T>,
-  ): Sequence<T> =>
-  () => {
+const _repeat = <T>(
+  predicate: Predicate<number>,
+  count: number,
+  src: Sequence<T>,
+  seq: Sequence<T>,
+): Sequence<T> =>
+  castToSequence(() => {
     const result = seq();
     if (isNotify(result)) {
       return notify(result.data, _repeat(predicate, count, src, result.next));
@@ -280,7 +258,7 @@ const _repeat =
     } else {
       return done();
     }
-  };
+  });
 
 export function repeat<T>(predicate: Predicate<number>): SequenceOperator<T, T>;
 export function repeat<T>(count: number): SequenceOperator<T, T>;
@@ -297,13 +275,12 @@ export function repeat<T>(
   return seq => _repeat(repeatPredicate, 1, seq, seq);
 }
 
-const _scan =
-  <T, TAcc>(
-    reducer: Reducer<T, TAcc>,
-    acc: TAcc,
-    seq: Sequence<T>,
-  ): Sequence<TAcc> =>
-  () => {
+const _scan = <T, TAcc>(
+  reducer: Reducer<T, TAcc>,
+  acc: TAcc,
+  seq: Sequence<T>,
+): Sequence<TAcc> =>
+  castToSequence(() => {
     const result = seq();
     if (isNotify(result)) {
       const nextAcc = reducer(acc, result.data);
@@ -311,7 +288,7 @@ const _scan =
     } else {
       return done();
     }
-  };
+  });
 
 export const scan =
   <T, TAcc>(
@@ -319,20 +296,18 @@ export const scan =
     initialValue: Factory<TAcc>,
   ): SequenceOperator<T, TAcc> =>
   seq =>
-  () =>
-    _scan(reducer, initialValue(), seq)();
+    castToSequence(() => _scan(reducer, initialValue(), seq)());
 
 export const skipFirst =
   <T>(options: { readonly count?: number } = {}): SequenceOperator<T, T> =>
   seq =>
-  () => {
-    const { count = 1 } = options;
-    return seek<T>(count)(seq)();
-  };
+    castToSequence(() => {
+      const { count = 1 } = options;
+      return seek<T>(count)(seq)();
+    });
 
-const _takeLast =
-  <T>(maxCount: number, seq: Sequence<T>): Sequence<T> =>
-  () => {
+const _takeLast = <T>(maxCount: number, seq: Sequence<T>): Sequence<T> =>
+  castToSequence(() => {
     const last: T[] = [];
     let result = seq();
     while (true) {
@@ -347,7 +322,7 @@ const _takeLast =
       }
     }
     return _fromArray(last, 0, last.length);
-  };
+  });
 export const takeLast =
   <T>(options: { readonly count?: number } = {}): SequenceOperator<T, T> =>
   seq => {
@@ -355,13 +330,12 @@ export const takeLast =
     return _takeLast(count, seq);
   };
 
-const _takeWhile =
-  <T>(
-    predicate: Predicate<T>,
-    inclusive: boolean,
-    seq: Sequence<T>,
-  ): Sequence<T> =>
-  () => {
+const _takeWhile = <T>(
+  predicate: Predicate<T>,
+  inclusive: boolean,
+  seq: Sequence<T>,
+): Sequence<T> =>
+  castToSequence(() => {
     const result = seq();
 
     return isNotify(result) && predicate(result.data)
@@ -369,7 +343,7 @@ const _takeWhile =
       : isNotify(result) && inclusive
       ? notify<T>(result.data, done)
       : done();
-  };
+  });
 
 export const takeWhile =
   <T>(

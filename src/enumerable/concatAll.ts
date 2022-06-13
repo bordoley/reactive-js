@@ -8,11 +8,9 @@ import {
   EnumerableOperator,
   EnumeratorLike,
 } from "../enumerable";
-import { Function1, compose } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
 import { enumerate } from "./enumerator";
 import { lift } from "./lift";
-import { map } from "./map";
 
 class ConcatAllEnumerator<T>
   extends AbstractDisposable
@@ -74,12 +72,3 @@ const _concatAll = lift(operator);
  */
 export const concatAll = <T>(): EnumerableOperator<EnumerableLike<T>, T> =>
   _concatAll;
-
-/**
- * Maps each item yielded by the sourc using a mapping function, then flattens the result.
- *
- * @param mapper
- */
-export const concatMap = <TA, TB>(
-  mapper: Function1<TA, EnumerableLike<TB>>,
-): EnumerableOperator<TA, TB> => compose(map(mapper), concatAll());

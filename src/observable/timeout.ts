@@ -17,7 +17,9 @@ import {
   assertObserverState,
 } from "./observer";
 import { subscribe } from "./subscribe";
-import { throws } from "./throws";
+import { throws } from "../container";
+import { mapT } from "./map";
+import { fromArrayT } from "./fromArray";
 
 const _timeoutError = Symbol("@reactive-js/core/lib/observable/timeoutError");
 
@@ -75,8 +77,14 @@ export function timeout<T>(
 ): ObservableOperator<T, T> {
   const durationObs =
     typeof duration === "number"
-      ? throws({ delay: duration })(returnTimeoutError)
-      : concat(duration, throws()(returnTimeoutError));
+      ? throws(
+          { ...fromArrayT, ...mapT },
+          { delay: duration },
+        )(returnTimeoutError)
+      : concat(
+          duration,
+          throws({ ...fromArrayT, ...mapT })(returnTimeoutError),
+        );
   const operator = (observer: ObserverLike<T>) =>
     new TimeoutObserver(observer, durationObs);
   operator.isSynchronous = false;

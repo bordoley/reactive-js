@@ -12,10 +12,24 @@
 
 ## Table of contents
 
+### Properties
+
+- [T](web.WindowLocationStreamLike.md#t)
+
 ### Methods
 
 - [dispatch](web.WindowLocationStreamLike.md#dispatch)
 - [goBack](web.WindowLocationStreamLike.md#goback)
+
+## Properties
+
+### T
+
+• **T**: `unknown`
+
+#### Inherited from
+
+StreamLike.T
 
 ## Methods
 

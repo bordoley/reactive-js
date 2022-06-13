@@ -14,15 +14,19 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 ## Hierarchy
 
-- **`ObservableLike`**
+- [`ContainerLike`](container.ContainerLike.md)
 
-  ↳ [`MulticastObservableLike`](observable.MulticastObservableLike.md)
+  ↳ **`ObservableLike`**
+
+  ↳↳ [`MulticastObservableLike`](observable.MulticastObservableLike.md)
 
 ## Table of contents
 
 ### Properties
 
+- [T](observable.ObservableLike.md#t)
 - [isSynchronous](observable.ObservableLike.md#issynchronous)
+- [type](observable.ObservableLike.md#type)
 
 ### Methods
 
@@ -30,9 +34,29 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 ## Properties
 
+### T
+
+• **T**: `unknown`
+
+#### Overrides
+
+[ContainerLike](container.ContainerLike.md).[T](container.ContainerLike.md#t)
+
+___
+
 ### isSynchronous
 
 • `Readonly` **isSynchronous**: `boolean`
+
+___
+
+### type
+
+• `Readonly` **type**: [`ObservableLike`](observable.ObservableLike.md)<`unknown`\>
+
+#### Overrides
+
+[ContainerLike](container.ContainerLike.md).[type](container.ContainerLike.md#type)
 
 ## Methods
 

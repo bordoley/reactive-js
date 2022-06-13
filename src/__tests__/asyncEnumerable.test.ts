@@ -9,7 +9,7 @@ import {
 } from "../asyncEnumerable";
 import { Error, addTeardown } from "../disposable";
 import { defer, increment, pipe, returns } from "../functions";
-import { fromValue, subscribe, toRunnable } from "../observable";
+import { fromArrayT, subscribe, toRunnable } from "../observable";
 import { Option, none } from "../option";
 import { last } from "../runnable";
 import { createVirtualTimeScheduler } from "../scheduler";
@@ -21,6 +21,7 @@ import {
   expectNone,
   test,
 } from "../testing";
+import { fromValue } from "../container";
 
 export const tests = describe(
   "async-enumerable",
@@ -56,7 +57,9 @@ export const tests = describe(
         fromIterable(),
         consumeAsync(
           (acc, next) =>
-            fromValue()(acc > 0 ? done(acc + next) : notify(acc + next)),
+            fromValue(fromArrayT)(
+              acc > 0 ? done(acc + next) : notify(acc + next),
+            ),
           returns<number>(0),
         ),
         toRunnable(),
@@ -70,7 +73,7 @@ export const tests = describe(
         [1, 2, 3, 4, 5, 6],
         fromIterable(),
         consumeAsync(
-          (acc, next) => pipe(acc + next, notify, fromValue()),
+          (acc, next) => pipe(acc + next, notify, fromValue(fromArrayT)),
           returns<number>(0),
         ),
         toRunnable(),

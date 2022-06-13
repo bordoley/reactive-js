@@ -12,6 +12,7 @@
 
 - [RunnableLike](../interfaces/runnable.RunnableLike.md)
 - [SinkLike](../interfaces/runnable.SinkLike.md)
+- [ToRunnable](../interfaces/runnable.ToRunnable.md)
 
 ### Type Aliases
 
@@ -20,39 +21,33 @@
 
 ### Variables
 
+- [fromArrayT](runnable.md#fromarrayt)
+- [keepT](runnable.md#keept)
 - [sinkDone](runnable.md#sinkdone)
+- [type](runnable.md#type)
 
 ### Functions
 
-- [compute](runnable.md#compute)
 - [concat](runnable.md#concat)
 - [concatAll](runnable.md#concatall)
-- [concatMap](runnable.md#concatmap)
-- [concatWith](runnable.md#concatwith)
 - [contains](runnable.md#contains)
 - [createRunnable](runnable.md#createrunnable)
 - [distinctUntilChanged](runnable.md#distinctuntilchanged)
-- [empty](runnable.md#empty)
-- [endWith](runnable.md#endwith)
 - [everySatisfy](runnable.md#everysatisfy)
 - [first](runnable.md#first)
 - [forEach](runnable.md#foreach)
 - [fromArray](runnable.md#fromarray)
-- [fromValue](runnable.md#fromvalue)
 - [generate](runnable.md#generate)
 - [keep](runnable.md#keep)
-- [keepType](runnable.md#keeptype)
 - [last](runnable.md#last)
 - [lift](runnable.md#lift)
 - [map](runnable.md#map)
-- [mapTo](runnable.md#mapto)
 - [noneSatisfy](runnable.md#nonesatisfy)
 - [reduce](runnable.md#reduce)
 - [repeat](runnable.md#repeat)
 - [scan](runnable.md#scan)
 - [skipFirst](runnable.md#skipfirst)
 - [someSatisfy](runnable.md#somesatisfy)
-- [startWith](runnable.md#startwith)
 - [takeFirst](runnable.md#takefirst)
 - [takeLast](runnable.md#takelast)
 - [takeWhile](runnable.md#takewhile)
@@ -87,27 +82,29 @@ ___
 
 ## Variables
 
+### fromArrayT
+
+• `Const` **fromArrayT**: [`FromArray`](../interfaces/container.FromArray.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\>
+
+___
+
+### keepT
+
+• `Const` **keepT**: [`Keep`](../interfaces/container.Keep.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
 ### sinkDone
 
 • `Const` **sinkDone**: unique `symbol`
 
-## Functions
-
-### compute
-
-▸ **compute**<`T`\>(): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
-
 ___
+
+### type
+
+• `Const` **type**: [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
+
+## Functions
 
 ### concat
 
@@ -148,51 +145,6 @@ ___
 #### Returns
 
 [`RunnableOperator`](runnable.md#runnableoperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>, `T`\>
-
-___
-
-### concatMap
-
-▸ **concatMap**<`TA`, `TB`\>(`mapper`): [`RunnableOperator`](runnable.md#runnableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`TB`\>\> |
-
-#### Returns
-
-[`RunnableOperator`](runnable.md#runnableoperator)<`TA`, `TB`\>
-
-___
-
-### concatWith
-
-▸ **concatWith**<`T`\>(`snd`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `snd` | [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\> |
-
-#### Returns
-
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
 
 ___
 
@@ -258,45 +210,6 @@ ___
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
-
-#### Returns
-
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
-
-___
-
-### empty
-
-▸ **empty**<`T`\>(): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
-
-___
-
-### endWith
-
-▸ **endWith**<`T`\>(`value`, ...`values`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `T` |
-| `...values` | readonly `T`[] |
 
 #### Returns
 
@@ -394,22 +307,6 @@ ___
 
 ___
 
-### fromValue
-
-▸ **fromValue**<`T`\>(): [`Function1`](functions.md#function1)<`T`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`T`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
-
-___
-
 ### generate
 
 ▸ **generate**<`T`\>(`generator`, `initialValue`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
@@ -452,29 +349,6 @@ ___
 #### Returns
 
 [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
-
-___
-
-### keepType
-
-▸ **keepType**<`TA`, `TB`\>(`predicate`): [`RunnableOperator`](runnable.md#runnableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
-
-#### Returns
-
-[`RunnableOperator`](runnable.md#runnableoperator)<`TA`, `TB`\>
 
 ___
 
@@ -539,29 +413,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
-
-#### Returns
-
-[`RunnableOperator`](runnable.md#runnableoperator)<`TA`, `TB`\>
-
-___
-
-### mapTo
-
-▸ **mapTo**<`TA`, `TB`\>(`value`): [`RunnableOperator`](runnable.md#runnableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `TB` |
 
 #### Returns
 
@@ -740,29 +591,6 @@ ___
 #### Returns
 
 [`Predicate`](functions.md#predicate)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
-
-___
-
-### startWith
-
-▸ **startWith**<`T`\>(`value`, ...`values`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `T` |
-| `...values` | readonly `T`[] |
-
-#### Returns
-
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
 
 ___
 

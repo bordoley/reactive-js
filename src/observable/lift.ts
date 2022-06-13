@@ -8,6 +8,9 @@ import {
 import { observe } from "./observer";
 
 class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
+  readonly type = this;
+  readonly T = undefined as any;
+
   constructor(
     readonly source: ObservableLike<TIn>,
     readonly operators: readonly ObserverOperator<any, any>[],

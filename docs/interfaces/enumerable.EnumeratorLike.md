@@ -4,7 +4,7 @@
 
 [enumerable](../modules/enumerable.md).EnumeratorLike
 
-Inteface that enables iteration over a collection.
+Inteface that enables iteration over a Container.
 
 ## Type parameters
 

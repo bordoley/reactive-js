@@ -1,3 +1,4 @@
+import { FromIterator } from "../container";
 import {
   fromIterable as enumerableFromIterable,
   fromIterator as enumerableFromIterator,
@@ -17,6 +18,15 @@ export const fromIterator = <T, TReturn = any, TNext = unknown>(options?: {
 }): Function1<Factory<Iterator<T, TReturn, TNext>>, ObservableLike<T>> => {
   const call = fromEnumerable(options);
   return compose(enumerableFromIterator(), call);
+};
+
+export const fromIteratorT: FromIterator<
+  ObservableLike<unknown>,
+  {
+    readonly delay: number;
+  }
+> = {
+  fromIterator,
 };
 
 /**

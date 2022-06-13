@@ -1,3 +1,4 @@
+import { FromArrayOptions, FromArray } from "../container";
 import { Function1 } from "../functions";
 import { RunnableLike, SinkLike } from "../runnable";
 import { createRunnable } from "./createRunnable";
@@ -25,3 +26,7 @@ export const fromArray =
     };
     return createRunnable(run);
   };
+
+export const fromArrayT: FromArray<RunnableLike<unknown>, FromArrayOptions> = {
+  fromArray,
+};

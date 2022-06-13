@@ -31,6 +31,8 @@ const createMergeObserver = <T>(
 };
 
 class MergeObservable<T> implements ObservableLike<T> {
+  readonly type = this;
+  readonly T = undefined as any;
   readonly isSynchronous = false;
 
   constructor(readonly observables: readonly ObservableLike<T>[]) {}

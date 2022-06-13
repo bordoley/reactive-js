@@ -1,6 +1,7 @@
 import { pipe } from "../functions";
 import { RunnableOperator, SinkLike } from "../runnable";
-import { empty } from "./empty";
+import { empty } from "../container";
+import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { AbstractDelegatingSink } from "./sink";
 
@@ -25,5 +26,6 @@ export const takeFirst = <T>(
 ): RunnableOperator<T, T> => {
   const { count = 1 } = options;
   const operator = (sink: SinkLike<T>) => new TakeFirstSink(sink, count);
-  return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());
+  return observable =>
+    count > 0 ? pipe(observable, lift(operator)) : empty(fromArrayT);
 };

@@ -1,9 +1,6 @@
-import { Function1, compose } from "../functions";
 import { RunnableLike, RunnableOperator, SinkLike } from "../runnable";
 import { createRunnable } from "./createRunnable";
-import { fromArray } from "./fromArray";
 import { lift } from "./lift";
-import { map } from "./map";
 import { AbstractDelegatingSink } from "./sink";
 
 const concatSinkDone = Symbol("@reactive-js/core/lib/runnable/concatSinkDone");
@@ -55,27 +52,6 @@ export function concat<T>(
   });
 }
 
-export const concatWith =
-  <T>(snd: RunnableLike<T>): RunnableOperator<T, T> =>
-  first =>
-    concat(first, snd);
-
-export function endWith<T>(
-  value: T,
-  ...values: readonly T[]
-): RunnableOperator<T, T>;
-export function endWith<T>(...values: readonly T[]): RunnableOperator<T, T> {
-  return concatWith(fromArray()(values));
-}
-
-export function startWith<T>(
-  value: T,
-  ...values: readonly T[]
-): RunnableOperator<T, T>;
-export function startWith<T>(...values: readonly T[]): RunnableOperator<T, T> {
-  return obs => concat(fromArray()(values), obs);
-}
-
 class FlattenSink<T> extends AbstractDelegatingSink<RunnableLike<T>, T> {
   notify(next: RunnableLike<T>) {
     runConcatUnsafe(next, this.delegate);
@@ -85,7 +61,3 @@ class FlattenSink<T> extends AbstractDelegatingSink<RunnableLike<T>, T> {
 const _concatAll = lift(s => new FlattenSink(s));
 export const concatAll = <T>(): RunnableOperator<RunnableLike<T>, T> =>
   _concatAll;
-
-export const concatMap = <TA, TB>(
-  mapper: Function1<TA, RunnableLike<TB>>,
-): RunnableOperator<TA, TB> => compose(map(mapper), concatAll());

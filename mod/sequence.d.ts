@@ -1,3 +1,4 @@
+import { ContainerLike } from "./container.mjs";
 import { Factory, Function1, Equality, Predicate, Updater, Reducer } from "./functions.mjs";
 import { RunnableLike } from "./runnable.mjs";
 interface SequenceResultNotify<T> {
@@ -6,26 +7,24 @@ interface SequenceResultNotify<T> {
 }
 declare const sequenceResultDone: unique symbol;
 declare type SequenceResult<T> = SequenceResultNotify<T> | typeof sequenceResultDone;
-declare type Sequence<T> = Factory<SequenceResult<T>>;
+interface SequenceLike extends ContainerLike {
+    readonly T: unknown;
+    readonly type: Sequence<this["T"]>;
+}
+declare type Sequence<T> = Factory<SequenceResult<T>> & SequenceLike;
 declare type SequenceOperator<TA, TB> = Function1<Sequence<TA>, Sequence<TB>>;
-declare const empty: <T>() => Sequence<T>;
+declare const type: Sequence<unknown>;
 declare const concatAll: <T>() => SequenceOperator<Sequence<T>, T>;
 declare const fromArray: <T>(options?: {
     readonly startIndex?: number;
     readonly endIndex?: number;
 }) => Function1<readonly T[], Sequence<T>>;
 declare function concat<T>(fst: Sequence<T>, snd: Sequence<T>, ...tail: readonly Sequence<T>[]): Sequence<T>;
-declare const concatWith: <T>(snd: Sequence<T>) => SequenceOperator<T, T>;
 declare const distinctUntilChanged: <T>(options?: {
     readonly equality?: Equality<T> | undefined;
 }) => SequenceOperator<T, T>;
-declare function endWith<T>(value: T, ...values: readonly T[]): SequenceOperator<T, T>;
 declare const keep: <T>(predicate: Predicate<T>) => SequenceOperator<T, T>;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => SequenceOperator<TA, TB>;
-declare const mapTo: <TA, TB>(v: TB) => SequenceOperator<TA, TB>;
-declare const concatMap: <TA, TB>(mapper: Function1<TA, Sequence<TB>>) => SequenceOperator<TA, TB>;
-declare function startWith<T>(value: T, ...values: readonly T[]): SequenceOperator<T, T>;
-declare const fromValue: <T>() => Function1<T, Sequence<T>>;
 declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>) => Sequence<T>;
 declare const seek: <T>(count: number) => SequenceOperator<T, T>;
 declare const takeFirst: <T>(options?: {
@@ -45,4 +44,4 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
     readonly inclusive?: boolean;
 }) => SequenceOperator<T, T>;
 declare const toRunnable: <T>() => Function1<Sequence<T>, RunnableLike<T>>;
-export { Sequence, SequenceOperator, SequenceResult, SequenceResultNotify, concat, concatAll, concatMap, concatWith, distinctUntilChanged, empty, endWith, fromArray, fromValue, generate, keep, map, mapTo, repeat, scan, seek, sequenceResultDone, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable };
+export { Sequence, SequenceLike, SequenceOperator, SequenceResult, SequenceResultNotify, concat, concatAll, distinctUntilChanged, fromArray, generate, keep, map, repeat, scan, seek, sequenceResultDone, skipFirst, takeFirst, takeLast, takeWhile, toRunnable, type };

@@ -1,23 +1,22 @@
-import { Predicate, TypePredicate } from "../functions";
-import { ObservableOperator, ObserverLike } from "../observable";
+import { Keep } from "../container";
+import { Predicate } from "../functions";
+import {
+  ObservableLike,
+  ObservableOperator,
+  ObserverLike,
+} from "../observable";
 import { lift } from "./lift";
 import {
   AbstractAutoDisposingDelegatingObserver,
   assertObserverState,
 } from "./observer";
 
-class KeepTypeObserver<
-  TA,
-  TB extends TA,
-> extends AbstractAutoDisposingDelegatingObserver<TA, TB> {
-  constructor(
-    delegate: ObserverLike<TB>,
-    readonly predicate: TypePredicate<TA, TB>,
-  ) {
+class KeepObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T> {
+  constructor(delegate: ObserverLike<T>, readonly predicate: Predicate<T>) {
     super(delegate);
   }
 
-  notify(next: TA) {
+  notify(next: T) {
     assertObserverState(this);
     if (this.predicate(next)) {
       this.delegate.notify(next);
@@ -31,20 +30,13 @@ class KeepTypeObserver<
  *
  * @param predicate The predicate function.
  */
-export const keepType = <TA, TB extends TA>(
-  predicate: TypePredicate<TA, TB>,
-): ObservableOperator<TA, TB> => {
-  const operator = (observer: ObserverLike<TB>) =>
-    new KeepTypeObserver(observer, predicate);
+export const keep = <T>(predicate: Predicate<T>): ObservableOperator<T, T> => {
+  const operator = (observer: ObserverLike<T>) =>
+    new KeepObserver(observer, predicate);
   operator.isSynchronous = true;
   return lift(operator);
 };
 
-/**
- * Returns an `ObservableLike` that only emits items produced by the
- * source that satisfy the specified predicate.
- *
- * @param predicate The predicate function.
- */
-export const keep = <T>(predicate: Predicate<T>): ObservableOperator<T, T> =>
-  keepType(predicate as TypePredicate<T, T>);
+export const keepT: Keep<ObservableLike<unknown>> = {
+  keep,
+};

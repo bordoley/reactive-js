@@ -1,3 +1,4 @@
+import { ContainerLike } from "./container";
 import { DisposableLike } from "./disposable";
 import { Function1, Function2 } from "./functions";
 import { SchedulerLike } from "./scheduler";
@@ -36,7 +37,10 @@ export interface ObserverOperator<A, B> {
  *
  * @noInheritDoc
  */
-export interface ObservableLike<T> {
+export interface ObservableLike<T> extends ContainerLike {
+  readonly T: unknown;
+  readonly type: ObservableLike<this["T"]>;
+
   readonly isSynchronous: boolean;
 
   /**
@@ -45,6 +49,8 @@ export interface ObservableLike<T> {
    */
   observe(this: ObservableLike<T>, observer: ObserverLike<T>): void;
 }
+
+export const type: ObservableLike<unknown> = undefined as any;
 
 /** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
 export type ObservableOperator<A, B> = Function1<
@@ -108,22 +114,22 @@ export {
   __using,
 } from "./observable/effects";
 export { combineLatest, combineLatestWith } from "./observable/combineLatest";
-export { compute } from "./observable/compute";
-export { concat, concatWith } from "./observable/concat";
+export { concat, concatT } from "./observable/concat";
 export { createObservable } from "./observable/createObservable";
 export { createSubject } from "./observable/createSubject";
-export { empty } from "./observable/empty";
-export { fromArray } from "./observable/fromArray";
+export { fromArray, fromArrayT } from "./observable/fromArray";
 export { fromDisposable } from "./observable/fromDisposable";
 export { fromEnumerable } from "./observable/fromEnumerable";
-export { fromIterable, fromIterator } from "./observable/fromIterable";
+export {
+  fromIterable,
+  fromIterator,
+  fromIteratorT,
+} from "./observable/fromIterable";
 export { fromPromise } from "./observable/fromPromise";
 export { generate } from "./observable/generate";
 export { merge, mergeWith } from "./observable/merge";
 export { never } from "./observable/never";
-export { fromValue } from "./observable/fromValue";
 export { subscribe } from "./observable/subscribe";
-export { throws } from "./observable/throws";
 export { using } from "./observable/using";
 export { defer } from "./observable/observable";
 export { observe } from "./observable/observer";
@@ -131,20 +137,17 @@ export { observe } from "./observable/observer";
 export { buffer } from "./observable/buffer";
 export { catchError } from "./observable/catchError";
 export { distinctUntilChanged } from "./observable/distinctUntilChanged";
-export { endWith } from "./observable/endWith";
-export { genMap } from "./observable/genMap";
-export { ignoreElements } from "./observable/ignoreElements";
-export { keep, keepType } from "./observable/keep";
+export { keep, keepT } from "./observable/keep";
 export { lift } from "./observable/lift";
-export { map, mapTo } from "./observable/map";
+export { map, mapT } from "./observable/map";
 export { mapAsync } from "./observable/mapAsync";
 export {
   concatAll,
-  concatMap,
+  concatAllT,
   exhaust,
-  exhaustMap,
+  exhaustT,
   mergeAll,
-  mergeMap,
+  mergeAllT,
 } from "./observable/mergeAll";
 export { onNotify } from "./observable/onNotify";
 export { onSubscribe } from "./observable/onSubscribe";
@@ -156,9 +159,8 @@ export { scan } from "./observable/scan";
 export { scanAsync } from "./observable/scanAsync";
 export { share } from "./observable/share";
 export { skipFirst } from "./observable/skipFirst";
-export { startWith } from "./observable/startWith";
 export { subscribeOn } from "./observable/subscribeOn";
-export { switchAll, switchMap } from "./observable/switchAll";
+export { switchAll, switchAllT } from "./observable/switchAll";
 export { takeFirst } from "./observable/takeFirst";
 export { takeLast } from "./observable/takeLast";
 export { takeUntil } from "./observable/takeUntil";
@@ -167,10 +169,10 @@ export { throttle } from "./observable/throttle";
 export { throwIfEmpty } from "./observable/throwIfEmpty";
 export { timeout, timeoutError } from "./observable/timeout";
 export { withLatestFrom } from "./observable/withLatestFrom";
-export { zip, zipWith } from "./observable/zip";
+export { zip, zipT } from "./observable/zip";
 export { zipLatest, zipLatestWith } from "./observable/zipLatest";
 export { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
 
+export { toEnumerable } from "./observable/toEnumerable";
 export { toRunnable } from "./observable/toRunnable";
 export { toPromise } from "./observable/toPromise";
-export { toEnumerable } from "./observable/toEnumerable";

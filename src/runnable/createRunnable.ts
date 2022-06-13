@@ -4,6 +4,8 @@ import { sinkDone } from "./sink";
 
 class RunnableImpl<T> implements RunnableLike<T> {
   constructor(private readonly _run: SideEffect1<SinkLike<T>>) {}
+  readonly type = this;
+  readonly T = undefined as any;
 
   run(sink: SinkLike<T>) {
     try {

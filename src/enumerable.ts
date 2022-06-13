@@ -1,8 +1,9 @@
 import { DisposableLike } from "./disposable";
-import { Function1 } from "./functions";
+import { ContainerLike, ContainerOf, Container } from "./container";
+import { Function1, identity } from "./functions";
 
 /**
- * Inteface that enables iteration over a collection.
+ * Inteface that enables iteration over a Container.
  */
 export interface EnumeratorLike<T> extends DisposableLike {
   /**
@@ -24,11 +25,14 @@ export interface EnumeratorLike<T> extends DisposableLike {
 }
 
 /**
- * Interface for iterating a collection of items.
+ * Interface for iterating a Container of items.
  */
-export interface EnumerableLike<T> {
+export interface EnumerableLike<T> extends ContainerLike {
+  readonly T: unknown;
+  readonly type: EnumerableLike<this["T"]>;
+
   /**
-   * Returns an `EnumeratorLike` to iterate through the collection.
+   * Returns an `EnumeratorLike` to iterate through the Container.
    */
   enumerate(this: EnumerableLike<T>): EnumeratorLike<T>;
 }
@@ -45,26 +49,33 @@ export type EnumerableOperator<TA, TB> = Function1<
   EnumerableLike<TB>
 >;
 
-export { compute } from "./enumerable/compute";
-export { concat, concatWith } from "./enumerable/concat";
+export interface ToEnumerable<C extends ContainerLike> extends Container<C> {
+  toEnumerable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
+}
+
+export { concat } from "./enumerable/concat";
 export { distinctUntilChanged } from "./enumerable/distinctUntilChanged";
 export { enumerate, hasCurrent, current, move } from "./enumerable/enumerator";
-export { endWith } from "./enumerable/endWith";
-export { concatAll, concatMap } from "./enumerable/concatAll";
-export { empty, fromArray } from "./enumerable/fromArray";
+export { concatAll } from "./enumerable/concatAll";
+export { fromArray, fromArrayT } from "./enumerable/fromArray";
 export { fromIterable, fromIterator } from "./enumerable/fromIterator";
 export { generate } from "./enumerable/generate";
 export { lift } from "./enumerable/lift";
-export { keep, keepType } from "./enumerable/keep";
-export { map, mapTo } from "./enumerable/map";
-export { fromValue } from "./enumerable/fromValue";
+export { keep, keepT } from "./enumerable/keep";
+export { map } from "./enumerable/map";
 export { repeat } from "./enumerable/repeat";
 export { scan } from "./enumerable/scan";
 export { skipFirst } from "./enumerable/skipFirst";
-export { startWith } from "./enumerable/startWith";
 export { takeFirst } from "./enumerable/takeFirst";
 export { takeLast } from "./enumerable/takeLast";
 export { takeWhile } from "./enumerable/takeWhile";
 export { toRunnable } from "./enumerable/toRunnable";
 export { toIterable } from "./enumerable/toIterable";
-export { zip, zipEnumerators, zipWith } from "./enumerable/zip";
+export { zip, zipEnumerators } from "./enumerable/zip";
+
+export const toEnumerable = <T>(): Function1<
+  EnumerableLike<T>,
+  EnumerableLike<T>
+> => identity;
+
+export const type: EnumerableLike<unknown> = undefined as any;

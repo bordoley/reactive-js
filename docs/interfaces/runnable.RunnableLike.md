@@ -10,11 +10,42 @@
 | :------ |
 | `T` |
 
+## Hierarchy
+
+- [`ContainerLike`](container.ContainerLike.md)
+
+  ↳ **`RunnableLike`**
+
 ## Table of contents
+
+### Properties
+
+- [T](runnable.RunnableLike.md#t)
+- [type](runnable.RunnableLike.md#type)
 
 ### Methods
 
 - [run](runnable.RunnableLike.md#run)
+
+## Properties
+
+### T
+
+• **T**: `unknown`
+
+#### Overrides
+
+[ContainerLike](container.ContainerLike.md).[T](container.ContainerLike.md#t)
+
+___
+
+### type
+
+• `Readonly` **type**: [`RunnableLike`](runnable.RunnableLike.md)<`unknown`\>
+
+#### Overrides
+
+[ContainerLike](container.ContainerLike.md).[type](container.ContainerLike.md#type)
 
 ## Methods
 
@@ -26,8 +57,8 @@
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`RunnableLike`](runnable.RunnableLike.md)<`T`\> |
-| `sink` | [`SinkLike`](runnable.SinkLike.md)<`T`\> |
+| `this` | [`RunnableLike`](runnable.RunnableLike.md)<[`T`](runnable.RunnableLike.md#t)\> |
+| `sink` | [`SinkLike`](runnable.SinkLike.md)<[`T`](runnable.RunnableLike.md#t)\> |
 
 #### Returns
 

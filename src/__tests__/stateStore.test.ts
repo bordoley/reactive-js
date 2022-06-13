@@ -1,6 +1,7 @@
+import { startWith } from "../container";
 import { dispose } from "../disposable";
 import { incrementBy, pipe } from "../functions";
-import { startWith, subscribe } from "../observable";
+import { fromArrayT, concatT, subscribe } from "../observable";
 import { createVirtualTimeScheduler } from "../scheduler";
 import { toStateStore } from "../stateStore";
 import { identity, lift, stream } from "../streamable";
@@ -12,7 +13,7 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler({ maxMicroTaskTicks: 0 });
     const stateStream = pipe(
       identity<number>(),
-      lift(startWith(0)),
+      lift(startWith({ ...fromArrayT, ...concatT }, 0)),
       toStateStore<number>(),
       stream(scheduler),
     );

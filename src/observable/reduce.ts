@@ -2,13 +2,14 @@ import { Error, addTeardown } from "../disposable";
 import { Factory, Reducer, pipe } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
 import { Option, isSome } from "../option";
-import { fromValue } from "./fromValue";
+import { fromValue } from "../container";
 import { lift } from "./lift";
 import {
   AbstractDelegatingObserver,
   assertObserverState,
   observe,
 } from "./observer";
+import { fromArrayT } from "./fromArray";
 
 function onDispose(
   this: ReduceObserver<unknown, unknown>,
@@ -17,7 +18,7 @@ function onDispose(
   if (isSome(error)) {
     this.delegate.dispose();
   } else {
-    pipe(this.acc, fromValue(), observe(this.delegate));
+    pipe(this.acc, fromValue(fromArrayT), observe(this.delegate));
   }
 }
 
