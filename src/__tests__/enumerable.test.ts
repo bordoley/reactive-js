@@ -1,23 +1,7 @@
 import {
-  concat,
-  concatMap,
-  distinctUntilChanged,
-  empty,
-  endWith,
   fromArray,
   fromIterable,
-  fromValue,
-  generate,
-  keep,
   map,
-  mapTo,
-  repeat,
-  scan,
-  skipFirst,
-  startWith,
-  takeFirst,
-  takeLast,
-  takeWhile,
   toIterable,
   toRunnable,
   zipWith,
@@ -27,28 +11,7 @@ import { toArray } from "../runnable";
 import { describe, expectArrayEquals, test } from "../testing";
 import { createMonadTests } from "./monad.test";
 
-const Enumerable = {
-  concat,
-  concatMap,
-  distinctUntilChanged,
-  empty,
-  endWith,
-  fromArray,
-  fromValue,
-  generate,
-
-  keep,
-  map,
-  mapTo,
-  repeat,
-  scan,
-  skipFirst,
-  startWith,
-  takeFirst,
-  takeLast,
-  takeWhile,
-  toRunnable,
-};
+import * as Enumerable from "../enumerable";
 
 export const tests = describe(
   "enumerable",

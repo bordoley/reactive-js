@@ -8,30 +8,14 @@ import {
 } from "../functions";
 import {
   compute,
-  concat,
-  concatMap,
   contains,
-  distinctUntilChanged,
   empty,
-  endWith,
   everySatisfy,
   first,
   forEach,
   fromArray,
-  fromValue,
   generate,
-  keep,
-  map,
-  mapTo,
   noneSatisfy,
-  repeat,
-  scan,
-  skipFirst,
-  startWith,
-  takeFirst,
-  takeLast,
-  takeWhile,
-  toRunnable,
 } from "../runnable";
 import {
   describe,
@@ -45,28 +29,7 @@ import {
 } from "../testing";
 import { createMonadTests } from "./monad.test";
 
-const Runnable = {
-  concat,
-  concatMap,
-  distinctUntilChanged,
-  empty,
-  endWith,
-  fromArray,
-  fromValue,
-  generate,
-
-  keep,
-  map,
-  mapTo,
-  repeat,
-  scan,
-  skipFirst,
-  startWith,
-  takeFirst,
-  takeLast,
-  takeWhile,
-  toRunnable,
-};
+import * as Runnable from "../runnable";
 
 export const tests = describe(
   "runnable",

@@ -2,16 +2,16 @@
 import { fromIterable, consume, notify, done, consumeAsync, fromArray, generate } from './asyncEnumerable.mjs';
 import { addTeardown, createDisposable, addDisposable, dispose, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
 import { pipe, returns, defer, increment, raise, sum, alwaysTrue, incrementBy, arrayEquality, ignore, identity, alwaysFalse } from './functions.mjs';
-import { toRunnable, fromValue, subscribe, generate as generate$2, dispatchTo, concat as concat$1, concatMap as concatMap$1, distinctUntilChanged as distinctUntilChanged$1, empty as empty$3, endWith as endWith$1, fromArray as fromArray$3, keep as keep$1, map as map$2, mapTo as mapTo$1, repeat as repeat$1, scan as scan$1, skipFirst as skipFirst$1, startWith as startWith$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, buffer, throws, catchError, concatWith, combineLatestWith, createObservable, createSubject, exhaustMap, fromPromise, toPromise, genMap, ignoreElements, merge, mergeWith, mergeMap, never, observable, __memo, __observe, onSubscribe, retry, scanAsync, share, zip, switchAll, switchMap, throttle, throwIfEmpty, compute, timeout, withLatestFrom, fromIterable as fromIterable$2, zipWith as zipWith$1, zipLatestWith, zipWithLatestFrom, onNotify } from './observable.mjs';
+import { t as toRunnable, f as fromValue, s as subscribe, g as generate$1, d as dispatchTo, c as concat, a as fromArray$3, b as buffer, e as throws, h as catchError, i as concatWith, j as takeFirst, k as combineLatestWith, l as createObservable, m as createSubject, n as exhaustMap, o as fromPromise, p as toPromise, q as genMap, r as ignoreElements, u as endWith, v as merge, w as mergeWith, x as mergeMap, y as never, z as empty$2, A as observable, _ as __memo, B as __observe, C as takeLast, D as onSubscribe, E as retry, F as scanAsync, G as share, H as zip, I as map$2, J as switchAll, K as switchMap, L as throttle, M as throwIfEmpty, N as compute, O as timeout, P as withLatestFrom, Q as fromIterable$2, R as zipWith$1, S as zipLatestWith, T as zipWithLatestFrom, U as Observable, V as startWith, W as onNotify } from './observable-6cd062de.mjs';
 import { none, isSome } from './option.mjs';
-import { last, toArray, fromArray as fromArray$4, forEach, concat as concat$2, concatMap as concatMap$2, distinctUntilChanged as distinctUntilChanged$2, empty as empty$4, endWith as endWith$2, fromValue as fromValue$4, generate as generate$3, keep as keep$2, map as map$3, mapTo as mapTo$2, repeat as repeat$2, scan as scan$2, skipFirst as skipFirst$2, startWith as startWith$2, takeFirst as takeFirst$2, takeLast as takeLast$2, takeWhile as takeWhile$2, toRunnable as toRunnable$2, contains, everySatisfy, compute as compute$1, first, noneSatisfy } from './runnable.mjs';
+import { l as last, t as toArray, f as fromArray$4, a as forEach, e as empty$3, c as contains, g as generate$2, b as everySatisfy, d as compute$1, h as first, n as noneSatisfy, R as Runnable } from './runnable-90bcb00d.mjs';
 import { createVirtualTimeScheduler, schedule, createHostScheduler } from './scheduler.mjs';
-import { stream, sink, identity as identity$1, lift, __stream, createActionReducer, empty as empty$6, map as map$5, mapReq, onNotify as onNotify$1, scan as scan$4, mapTo as mapTo$4 } from './streamable.mjs';
+import { stream, sink, identity as identity$1, lift, __stream, createActionReducer, empty as empty$4, map as map$3, mapReq, onNotify as onNotify$1, scan, mapTo } from './streamable.mjs';
 import { describe, test, expectEquals, expectArrayEquals, expectNone, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
-import { concat, concatMap, distinctUntilChanged, empty, endWith, fromArray as fromArray$1, fromValue as fromValue$1, generate as generate$1, keep, map, mapTo, repeat, scan, skipFirst, startWith, takeFirst, takeLast, takeWhile, toRunnable as toRunnable$1, toIterable, fromIterable as fromIterable$1, zipWith } from './enumerable.mjs';
-import { empty as empty$1, fromObservable, fromValue as fromValue$2 } from './flowable.mjs';
-import { fromArray as fromArray$2, decodeWithCharset, createIOSinkAccumulator, empty as empty$2, fromValue as fromValue$3, encodeUtf8, map as map$1 } from './io.mjs';
-import { concat as concat$3, concatMap as concatMap$3, distinctUntilChanged as distinctUntilChanged$3, empty as empty$5, endWith as endWith$3, fromArray as fromArray$5, fromValue as fromValue$5, generate as generate$4, keep as keep$3, map as map$4, mapTo as mapTo$3, repeat as repeat$3, scan as scan$3, skipFirst as skipFirst$3, startWith as startWith$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$3, toRunnable as toRunnable$3 } from './sequence.mjs';
+import { f as fromArray$1, t as toIterable, a as fromIterable$1, b as toRunnable$1, z as zipWith, m as map, E as Enumerable } from './enumerable-1c943b67.mjs';
+import { empty, fromObservable, fromValue as fromValue$1 } from './flowable.mjs';
+import { fromArray as fromArray$2, decodeWithCharset, createIOSinkAccumulator, empty as empty$1, fromValue as fromValue$2, encodeUtf8, map as map$1 } from './io.mjs';
+import { S as Sequence } from './sequence-7715f886.mjs';
 import { toStateStore } from './stateStore.mjs';
 
 const tests$a = describe("async-enumerable", test("consume", () => {
@@ -118,32 +118,11 @@ const createMonadTests = (m) => describe("monadic", test("concat", defer(m.conca
     pipe(m.empty(), m.takeWhile(alwaysTrue), m.toRunnable(), toArray(), expectArrayEquals([]));
 }), test("inclusive", defer(m.generate(increment, returns(0)), m.takeWhile((x) => x < 4, { inclusive: true }), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4])))), test("lift", defer(m.generate(increment, returns(0)), m.map((x) => x * 2), m.takeFirst({ count: 3 }), m.concatMap((count) => pipe(m.generate(incrementBy(1), returns(0)), m.takeFirst({ count }))), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 1, 2, 3, 4, 1, 2, 3, 4, 5, 6]))));
 
-const Enumerable = {
-    concat,
-    concatMap,
-    distinctUntilChanged,
-    empty,
-    endWith,
-    fromArray: fromArray$1,
-    fromValue: fromValue$1,
-    generate: generate$1,
-    keep,
-    map,
-    mapTo,
-    repeat,
-    scan,
-    skipFirst,
-    startWith,
-    takeFirst,
-    takeLast,
-    takeWhile,
-    toRunnable: toRunnable$1,
-};
 const tests$8 = describe("enumerable", test("toIterable", defer([1, 2, 3], fromArray$1(), toIterable(), fromIterable$1(), toRunnable$1(), toArray(), expectArrayEquals([1, 2, 3]))), test("zip", defer([1, 2, 3], fromArray$1(), zipWith(fromArray$1()([1, 2, 3, 4, 5])), map(([a, b]) => a + b), toRunnable$1(), toArray(), expectArrayEquals([2, 4, 6]))), createMonadTests(Enumerable));
 
 const tests$7 = describe("flowables", test("empty", () => {
     const scheduler = createVirtualTimeScheduler();
-    const emptyStream = pipe(empty$1(), stream(scheduler));
+    const emptyStream = pipe(empty(), stream(scheduler));
     emptyStream.dispatch("pause");
     emptyStream.dispatch("resume");
     const f = mockFn();
@@ -154,7 +133,7 @@ const tests$7 = describe("flowables", test("empty", () => {
     expectTrue(emptyStream.isDisposed);
 }), test("fromObservable", () => {
     const scheduler = createVirtualTimeScheduler();
-    const generateStream = pipe(generate$2(increment, returns(-1), { delay: 1 }), fromObservable(), stream(scheduler));
+    const generateStream = pipe(generate$1(increment, returns(-1), { delay: 1 }), fromObservable(), stream(scheduler));
     generateStream.dispatch("resume");
     pipe(scheduler, schedule(defer("pause", dispatchTo(generateStream)), {
         delay: 2,
@@ -175,7 +154,7 @@ const tests$7 = describe("flowables", test("empty", () => {
     expectTrue(subscription.isDisposed);
 }), test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
-    const fromValueStream = pipe(1, fromValue$2(), stream(scheduler));
+    const fromValueStream = pipe(1, fromValue$1(), stream(scheduler));
     fromValueStream.dispatch("resume");
     fromValueStream.dispatch("resume");
     const f = mockFn();
@@ -200,7 +179,7 @@ const tests$6 = describe("io", test("decodeWithCharset", () => {
     expectTrue(subscription.isDisposed);
 }), test("empty", () => {
     const scheduler = createVirtualTimeScheduler();
-    const emptyStream = pipe(none, empty$2, stream(scheduler));
+    const emptyStream = pipe(none, empty$1, stream(scheduler));
     emptyStream.dispatch("pause");
     emptyStream.dispatch("resume");
     const f = mockFn();
@@ -212,7 +191,7 @@ const tests$6 = describe("io", test("decodeWithCharset", () => {
     expectTrue(emptyStream.isDisposed);
 }), test("encodeUtf8", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
-    const src = pipe(str, fromValue$3(), encodeUtf8, decodeWithCharset());
+    const src = pipe(str, fromValue$2(), encodeUtf8, decodeWithCharset());
     const dest = createIOSinkAccumulator((acc, next) => acc + next, returns(""), { replay: 1 });
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(src, dest), subscribe(scheduler));
@@ -224,7 +203,7 @@ const tests$6 = describe("io", test("decodeWithCharset", () => {
     expectTrue(subscription.isDisposed);
 }), test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
-    const fromValueStream = pipe(1, fromValue$3(), stream(scheduler));
+    const fromValueStream = pipe(1, fromValue$2(), stream(scheduler));
     fromValueStream.dispatch("resume");
     const f = mockFn();
     const subscription = pipe(fromValueStream, subscribe(scheduler, f));
@@ -236,7 +215,7 @@ const tests$6 = describe("io", test("decodeWithCharset", () => {
     expectTrue(subscription.isDisposed);
     expectTrue(fromValueStream.isDisposed);
 }), test("map", () => {
-    const src = pipe(1, fromValue$3(), map$1(returns(2)));
+    const src = pipe(1, fromValue$2(), map$1(returns(2)));
     const dest = createIOSinkAccumulator(sum, returns(0), { replay: 1 });
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(src, dest), subscribe(scheduler));
@@ -248,28 +227,7 @@ const tests$6 = describe("io", test("decodeWithCharset", () => {
     expectTrue(subscription.isDisposed);
 }));
 
-const Observable = {
-    concat: concat$1,
-    concatMap: concatMap$1,
-    distinctUntilChanged: distinctUntilChanged$1,
-    empty: empty$3,
-    endWith: endWith$1,
-    fromArray: fromArray$3,
-    fromValue,
-    generate: generate$2,
-    keep: keep$1,
-    map: map$2,
-    mapTo: mapTo$1,
-    repeat: repeat$1,
-    scan: scan$1,
-    skipFirst: skipFirst$1,
-    startWith: startWith$1,
-    takeFirst: takeFirst$1,
-    takeLast: takeLast$1,
-    takeWhile: takeWhile$1,
-    toRunnable,
-};
-const tests$5 = describe("observable", describe("buffer", test("with duration and maxBufferSize", defer(concat$1(pipe([1, 2, 3, 4], fromArray$3()), pipe([1, 2, 3], fromArray$3({ delay: 1 })), pipe(4, fromValue({ delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toRunnable(), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", defer(defer([1, 2, 3, 4], fromArray$3(), buffer({ duration: _ => throws()(raise) }), toRunnable({
+const tests$5 = describe("observable", describe("buffer", test("with duration and maxBufferSize", defer(concat(pipe([1, 2, 3, 4], fromArray$3()), pipe([1, 2, 3], fromArray$3({ delay: 1 })), pipe(4, fromValue({ delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toRunnable(), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", defer(defer([1, 2, 3, 4], fromArray$3(), buffer({ duration: _ => throws()(raise) }), toRunnable({
     schedulerFactory: defer({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
 }), toArray()), expectToThrow))), describe("catchError", test("source completes successfully", defer(pipe(1, fromValue()), catchError(_ => fromValue()(2)), toRunnable(), toArray(), expectArrayEquals([1]))), test("source throws, error caught and ignored", () => {
     const error = new Error();
@@ -282,7 +240,7 @@ const tests$5 = describe("observable", describe("buffer", test("with duration an
     expectToThrow(() => pipe(1, fromValue(), concatWith(pipe(error, returns, throws())), catchError(_ => {
         throw error;
     }), toRunnable(), toArray()));
-})), test("combineLatest", defer(generate$2(incrementBy(2), returns(1), { delay: 2 }), takeFirst$1({ count: 3 }), combineLatestWith(pipe(generate$2(incrementBy(2), returns(0), { delay: 3 }), takeFirst$1({ count: 2 }))), toRunnable(), toArray(), expectArrayEquals([
+})), test("combineLatest", defer(generate$1(incrementBy(2), returns(1), { delay: 2 }), takeFirst({ count: 3 }), combineLatestWith(pipe(generate$1(incrementBy(2), returns(0), { delay: 3 }), takeFirst({ count: 2 }))), toRunnable(), toArray(), expectArrayEquals([
     [3, 2],
     [5, 2],
     [5, 4],
@@ -333,14 +291,14 @@ const tests$5 = describe("observable", describe("buffer", test("with duration an
     yield 1;
     yield 2;
     yield 3;
-}), toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), test("ignoreElements", defer([1, 2, 3], fromArray$3(), ignoreElements(), endWith$1(4), toRunnable(), toArray(), expectArrayEquals([4]))), describe("merge", test("two arrays", defer(merge(pipe([0, 2, 3, 5, 6], fromArray$3({ delay: 1 })), pipe([1, 4, 7], fromArray$3({ delay: 2 }))), toRunnable(), toArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), test("when one source throws", defer(defer([1, 4, 7], fromArray$3({ delay: 2 }), mergeWith(throws({ delay: 5 })(raise)), toRunnable(), last), expectToThrow))), describe("mergeMap", test("when a mapped observable throws", defer(defer([fromArray$3({ delay: 1 })([1, 2, 3]), throws({ delay: 2 })(raise)], fromArray$3(), mergeMap(identity), toRunnable(), last), expectToThrow)), test("when the map function throws", defer(defer([1, 2, 3, 4], fromArray$3(), mergeMap(x => {
+}), toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), test("ignoreElements", defer([1, 2, 3], fromArray$3(), ignoreElements(), endWith(4), toRunnable(), toArray(), expectArrayEquals([4]))), describe("merge", test("two arrays", defer(merge(pipe([0, 2, 3, 5, 6], fromArray$3({ delay: 1 })), pipe([1, 4, 7], fromArray$3({ delay: 2 }))), toRunnable(), toArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), test("when one source throws", defer(defer([1, 4, 7], fromArray$3({ delay: 2 }), mergeWith(throws({ delay: 5 })(raise)), toRunnable(), last), expectToThrow))), describe("mergeMap", test("when a mapped observable throws", defer(defer([fromArray$3({ delay: 1 })([1, 2, 3]), throws({ delay: 2 })(raise)], fromArray$3(), mergeMap(identity), toRunnable(), last), expectToThrow)), test("when the map function throws", defer(defer([1, 2, 3, 4], fromArray$3(), mergeMap(x => {
     if (x > 2) {
         raise();
     }
     return fromValue()(x);
 }), toRunnable(), last), expectToThrow))), test("never", defer(never(), toRunnable(), last, expectNone)), test("observable", () => {
     const fromValueWithDelay = (delay, value) => fromValue({ delay })(value);
-    const emptyDelayed = empty$3({ delay: 100 });
+    const emptyDelayed = empty$2({ delay: 100 });
     const computedObservable = observable(() => {
         var _a, _b, _c;
         const obs1 = __memo(fromValueWithDelay, 10, 5);
@@ -352,10 +310,10 @@ const tests$5 = describe("observable", describe("buffer", test("with duration an
         __observe(emptyDelayed);
         return result1 + result2 + result3;
     });
-    pipe(computedObservable, takeLast$1(), toRunnable(), last, expectEquals(22));
+    pipe(computedObservable, takeLast(), toRunnable(), last, expectEquals(22));
     // switch map test
     const oneTwoThreeDelayed = fromArray$3({ delay: 1 })([1, 2, 3]);
-    const createOneTwoThree = (x) => isSome(x) ? fromArray$3()([1, 2, 3]) : empty$3();
+    const createOneTwoThree = (x) => isSome(x) ? fromArray$3()([1, 2, 3]) : empty$2();
     pipe(observable(() => {
         const v = __observe(oneTwoThreeDelayed);
         const next = __memo(createOneTwoThree, v);
@@ -398,9 +356,9 @@ const tests$5 = describe("observable", describe("buffer", test("with duration an
     }));
     scheduler.run();
     pipe(result, expectArrayEquals([2, 4, 6]));
-}), describe("switchAll", test("with empty source", defer(empty$3(), switchAll(), toRunnable(), toArray(), expectArrayEquals([]))), test("when source throw", defer(defer(raise, throws(), switchAll(), toRunnable(), toArray(), expectArrayEquals([])), expectToThrow))), test("switchMap", defer([1, 2, 3], fromArray$3({ delay: 1 }), switchMap(_ => pipe([1, 2, 3], fromArray$3())), toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), describe("takeLast", test("when pipeline throws", defer(defer(raise, throws(), takeLast$1(), toRunnable(), last), expectToThrow))), describe("throttle", test("first", defer(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$1({ count: 100 }), throttle(50, { mode: "first" }), toRunnable(), toArray(), expectArrayEquals([0, 49]))), test("last", defer(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$1({ count: 200 }), throttle(50, { mode: "last" }), toRunnable(), toArray(), expectArrayEquals([49, 99, 149, 199]))), test("interval", defer(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$1({ count: 200 }), throttle(75, { mode: "interval" }), toRunnable(), toArray(), expectArrayEquals([0, 74, 149, 199]))), test("when duration observable throws", defer(defer([1, 2, 3, 4, 5], fromArray$3({ delay: 1 }), throttle(_ => throws()(raise)), toRunnable(), last), expectToThrow))), describe("throwIfEmpty", test("when source is empty", defer(defer(empty$3(), throwIfEmpty(() => undefined), toRunnable(), last), expectToThrow)), test("when source is not empty", defer(1, returns, compute(), throwIfEmpty(() => undefined), toRunnable(), last, expectEquals(1)))), describe("timeout", test("throws when a timeout occurs", defer(defer(1, fromValue({ delay: 2 }), timeout(1), toArray()), expectToThrow)), test("when timeout is greater than observed time", defer(1, fromValue({ delay: 2 }), timeout(3), toRunnable(), last, expectEquals(1)))), describe("toPromise", testAsync("when observable completes without producing a value", async () => {
+}), describe("switchAll", test("with empty source", defer(empty$2(), switchAll(), toRunnable(), toArray(), expectArrayEquals([]))), test("when source throw", defer(defer(raise, throws(), switchAll(), toRunnable(), toArray(), expectArrayEquals([])), expectToThrow))), test("switchMap", defer([1, 2, 3], fromArray$3({ delay: 1 }), switchMap(_ => pipe([1, 2, 3], fromArray$3())), toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), describe("takeLast", test("when pipeline throws", defer(defer(raise, throws(), takeLast(), toRunnable(), last), expectToThrow))), describe("throttle", test("first", defer(generate$1(increment, returns(-1), { delay: 1 }), takeFirst({ count: 100 }), throttle(50, { mode: "first" }), toRunnable(), toArray(), expectArrayEquals([0, 49]))), test("last", defer(generate$1(increment, returns(-1), { delay: 1 }), takeFirst({ count: 200 }), throttle(50, { mode: "last" }), toRunnable(), toArray(), expectArrayEquals([49, 99, 149, 199]))), test("interval", defer(generate$1(increment, returns(-1), { delay: 1 }), takeFirst({ count: 200 }), throttle(75, { mode: "interval" }), toRunnable(), toArray(), expectArrayEquals([0, 74, 149, 199]))), test("when duration observable throws", defer(defer([1, 2, 3, 4, 5], fromArray$3({ delay: 1 }), throttle(_ => throws()(raise)), toRunnable(), last), expectToThrow))), describe("throwIfEmpty", test("when source is empty", defer(defer(empty$2(), throwIfEmpty(() => undefined), toRunnable(), last), expectToThrow)), test("when source is not empty", defer(1, returns, compute(), throwIfEmpty(() => undefined), toRunnable(), last, expectEquals(1)))), describe("timeout", test("throws when a timeout occurs", defer(defer(1, fromValue({ delay: 2 }), timeout(1), toArray()), expectToThrow)), test("when timeout is greater than observed time", defer(1, fromValue({ delay: 2 }), timeout(3), toRunnable(), last, expectEquals(1)))), describe("toPromise", testAsync("when observable completes without producing a value", async () => {
     const scheduler = createHostScheduler();
-    await pipe(pipe(empty$3(), toPromise(scheduler)), expectPromiseToThrow);
+    await pipe(pipe(empty$2(), toPromise(scheduler)), expectPromiseToThrow);
     scheduler.dispose();
 })), describe("withLatestFrom", test("when source and latest are interlaced", defer([0, 1, 2, 3], fromArray$3({ delay: 1 }), withLatestFrom(pipe([0, 1, 2, 3], fromArray$3({ delay: 2 })), (a, b) => [
     a,
@@ -409,10 +367,10 @@ const tests$5 = describe("observable", describe("buffer", test("with duration an
     [1, 0],
     [2, 0],
     [3, 1],
-], arrayEquality()))), test("when latest produces no values", defer([0], fromArray$3({ delay: 1 }), withLatestFrom(empty$3(), sum), toRunnable(), toArray(), expectArrayEquals([]))), test("when latest throws", () => {
+], arrayEquality()))), test("when latest produces no values", defer([0], fromArray$3({ delay: 1 }), withLatestFrom(empty$2(), sum), toRunnable(), toArray(), expectArrayEquals([]))), test("when latest throws", () => {
     const error = new Error();
     pipe(defer([0], fromArray$3({ delay: 1 }), withLatestFrom(throws()(returns(error)), sum), toRunnable(), toArray(), expectArrayEquals([])), expectToThrowError(error));
-})), describe("zip", test("with non-delayed sources", defer(zip(pipe([1, 2], fromArray$3()), pipe([1, 2], fromArray$3(), map$2(increment)), generate$2(increment, returns(2))), toRunnable(), toArray(), expectArrayEquals([
+})), describe("zip", test("with non-delayed sources", defer(zip(pipe([1, 2], fromArray$3()), pipe([1, 2], fromArray$3(), map$2(increment)), generate$1(increment, returns(2))), toRunnable(), toArray(), expectArrayEquals([
     [1, 2, 3],
     [2, 3, 4],
 ], arrayEquality()))), test("with synchronous and non-synchronous sources", defer(zip(pipe([1, 2], fromArray$3({ delay: 1 })), pipe([2, 3], fromIterable$2()), pipe([3, 4, 5], fromArray$3({ delay: 1 }))), toRunnable(), toArray(), expectArrayEquals([
@@ -424,59 +382,17 @@ const tests$5 = describe("observable", describe("buffer", test("with duration an
     [3, 3],
 ], arrayEquality()))), test("when source throws", defer(defer(raise, throws(), zipWith$1(fromArray$3()([1, 2, 3])), map$2(([, b]) => b), toRunnable(), toArray()), expectToThrow))), test("zipLatestWith", defer([1, 2, 3, 4, 5, 6, 7, 8], fromArray$3({ delay: 1 }), zipLatestWith(pipe([1, 2, 3, 4], fromArray$3({ delay: 2 }))), map$2(([a, b]) => a + b), toRunnable(), toArray(), expectArrayEquals([2, 5, 8, 11]))), describe("zipWithLatestFrom", test("when source throws", defer(defer(throws()(raise), zipWithLatestFrom(fromValue()(1), (_, b) => b), toRunnable(), last), expectToThrow)), test("when other throws", defer(defer([1, 2, 3], fromArray$3({ delay: 1 }), zipWithLatestFrom(throws()(raise), (_, b) => b), toRunnable(), last), expectToThrow)), test("when other completes first", defer([1], fromArray$3({ delay: 1 }), zipWithLatestFrom(fromArray$3()([2]), (_, b) => b), toRunnable(), last, expectEquals(2)))), createMonadTests(Observable));
 
-const Runnable = {
-    concat: concat$2,
-    concatMap: concatMap$2,
-    distinctUntilChanged: distinctUntilChanged$2,
-    empty: empty$4,
-    endWith: endWith$2,
-    fromArray: fromArray$4,
-    fromValue: fromValue$4,
-    generate: generate$3,
-    keep: keep$2,
-    map: map$3,
-    mapTo: mapTo$2,
-    repeat: repeat$2,
-    scan: scan$2,
-    skipFirst: skipFirst$2,
-    startWith: startWith$2,
-    takeFirst: takeFirst$2,
-    takeLast: takeLast$2,
-    takeWhile: takeWhile$2,
-    toRunnable: toRunnable$2,
-};
-const tests$4 = describe("runnable", describe("contains", test("source is empty", defer(empty$4(), contains(1), expectFalse)), test("source contains value", defer(generate$3(increment, returns(0)), contains(1), expectTrue)), test("source does not contain value", defer([2, 3, 4], fromArray$4(), contains(1), expectFalse))), describe("everySatisfy", test("source is empty", defer(empty$4(), everySatisfy(alwaysFalse), expectTrue)), test("source values pass predicate", defer([1, 2, 3], fromArray$4(), everySatisfy(alwaysTrue), expectTrue)), test("source values fail predicate", defer([1, 2, 3], fromArray$4(), everySatisfy(alwaysFalse), expectFalse))), describe("first", test("when enumerable is not empty", defer(returns(1), compute$1(), first, expectEquals(1))), test("when enumerable is empty", defer(empty$4(), first, expectNone))), test("forEach", () => {
+const tests$4 = describe("runnable", describe("contains", test("source is empty", defer(empty$3(), contains(1), expectFalse)), test("source contains value", defer(generate$2(increment, returns(0)), contains(1), expectTrue)), test("source does not contain value", defer([2, 3, 4], fromArray$4(), contains(1), expectFalse))), describe("everySatisfy", test("source is empty", defer(empty$3(), everySatisfy(alwaysFalse), expectTrue)), test("source values pass predicate", defer([1, 2, 3], fromArray$4(), everySatisfy(alwaysTrue), expectTrue)), test("source values fail predicate", defer([1, 2, 3], fromArray$4(), everySatisfy(alwaysFalse), expectFalse))), describe("first", test("when enumerable is not empty", defer(returns(1), compute$1(), first, expectEquals(1))), test("when enumerable is empty", defer(empty$3(), first, expectNone))), test("forEach", () => {
     const fn = mockFn();
     pipe([1, 2, 3], fromArray$4(), forEach(fn));
     pipe(fn, expectToHaveBeenCalledTimes(3));
-}), describe("noneSatisfy", test("source is empty", defer(empty$4(), noneSatisfy(alwaysFalse), expectTrue)), test("source values pass predicate", defer([1, 2, 3], fromArray$4(), noneSatisfy(alwaysTrue), expectFalse)), test("source values fail predicate", defer([1, 2, 3], fromArray$4(), noneSatisfy(alwaysFalse), expectTrue))), createMonadTests(Runnable));
+}), describe("noneSatisfy", test("source is empty", defer(empty$3(), noneSatisfy(alwaysFalse), expectTrue)), test("source values pass predicate", defer([1, 2, 3], fromArray$4(), noneSatisfy(alwaysTrue), expectFalse)), test("source values fail predicate", defer([1, 2, 3], fromArray$4(), noneSatisfy(alwaysFalse), expectTrue))), createMonadTests(Runnable));
 
-const Sequence = {
-    concat: concat$3,
-    concatMap: concatMap$3,
-    distinctUntilChanged: distinctUntilChanged$3,
-    empty: empty$5,
-    endWith: endWith$3,
-    fromArray: fromArray$5,
-    fromValue: fromValue$5,
-    generate: generate$4,
-    keep: keep$3,
-    map: map$4,
-    mapTo: mapTo$3,
-    repeat: repeat$3,
-    scan: scan$3,
-    skipFirst: skipFirst$3,
-    startWith: startWith$3,
-    takeFirst: takeFirst$3,
-    takeLast: takeLast$3,
-    takeWhile: takeWhile$3,
-    toRunnable: toRunnable$3,
-};
 const tests$3 = describe("sequence", createMonadTests(Sequence));
 
 const tests$2 = describe("stateStore", test("toStateStore", () => {
     const scheduler = createVirtualTimeScheduler({ maxMicroTaskTicks: 0 });
-    const stateStream = pipe(identity$1(), lift(startWith$1(0)), toStateStore(), stream(scheduler));
+    const stateStream = pipe(identity$1(), lift(startWith(0)), toStateStore(), stream(scheduler));
     stateStream.dispatch(incrementBy(1));
     stateStream.dispatch(incrementBy(2));
     stateStream.dispatch(incrementBy(3));
@@ -524,7 +440,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(result, expectArrayEquals([0, 1, 3]));
 }), describe("empty", test("with no delay", () => {
     const scheduler = createVirtualTimeScheduler();
-    const emptyStream = pipe(empty$6(), stream(scheduler));
+    const emptyStream = pipe(empty$4(), stream(scheduler));
     emptyStream.dispatch(none);
     emptyStream.dispatch(none);
     let result = [];
@@ -537,7 +453,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     expectTrue(subscription.isDisposed);
 }), test("with delay", () => {
     const scheduler = createVirtualTimeScheduler();
-    const emptyStream = pipe(empty$6({ delay: 4 }), stream(scheduler));
+    const emptyStream = pipe(empty$4({ delay: 4 }), stream(scheduler));
     emptyStream.dispatch(none);
     emptyStream.dispatch(none);
     let result = [];
@@ -555,7 +471,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(disposedTime, expectEquals(4));
 })), test("with multiple observers", () => {
     const scheduler = createVirtualTimeScheduler();
-    const incrStream = pipe(identity$1(), map$5(incrementBy(100)), stream(scheduler));
+    const incrStream = pipe(identity$1(), map$3(incrementBy(100)), stream(scheduler));
     pipe(incrStream.observerCount, expectEquals(0));
     const sub1 = pipe(incrStream, subscribe(scheduler));
     pipe(incrStream.observerCount, expectEquals(1));
@@ -567,7 +483,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(incrStream.observerCount, expectEquals(0));
 }), test("map", () => {
     const scheduler = createVirtualTimeScheduler();
-    const incrStream = pipe(identity$1(), map$5(incrementBy(100)), stream(scheduler));
+    const incrStream = pipe(identity$1(), map$3(incrementBy(100)), stream(scheduler));
     incrStream.dispatch(10);
     incrStream.dispatch(20);
     incrStream.dispatch(30);
@@ -609,7 +525,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
 }), test("scan", () => {
     const scheduler = createVirtualTimeScheduler();
     let result = [];
-    const scanStream = pipe(identity$1(), scan$4(sum, returns(0)), onNotify$1(x => {
+    const scanStream = pipe(identity$1(), scan(sum, returns(0)), onNotify$1(x => {
         result.push(x);
     }), stream(scheduler));
     scanStream.dispatch(1);
@@ -619,11 +535,11 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(result, expectArrayEquals([1, 3, 6]));
 }), test("sink", () => {
     const scheduler = createVirtualTimeScheduler();
-    const src = pipe(identity$1(), scan$4((acc, _) => acc + 1, returns(0)), lift(takeFirst$1({ count: 3 })));
+    const src = pipe(identity$1(), scan((acc, _) => acc + 1, returns(0)), lift(takeFirst({ count: 3 })));
     let result = 0;
-    const dest = pipe(identity$1(), scan$4((acc, _) => acc + 1, returns(0)), onNotify$1(v => {
+    const dest = pipe(identity$1(), scan((acc, _) => acc + 1, returns(0)), onNotify$1(v => {
         result = v;
-    }), mapTo$4(none), lift(startWith$1(none)));
+    }), mapTo(none), lift(startWith(none)));
     const subscription = pipe(sink(src, dest), subscribe(scheduler));
     expectFalse(subscription.isDisposed);
     scheduler.run();
