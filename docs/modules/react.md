@@ -18,7 +18,7 @@
 
 ### createComponent
 
-▸ **createComponent**<`TProps`\>(`fn`): `ComponentType`<`TProps`\>
+▸ **createComponent**<`TProps`\>(`fn`, `options?`): `ComponentType`<`TProps`\>
 
 #### Type parameters
 
@@ -31,6 +31,8 @@
 | Name | Type |
 | :------ | :------ |
 | `fn` | (`props`: [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TProps`\>) => [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\> |
+| `options?` | `Object` |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)\> |
 
 #### Returns
 
