@@ -22,6 +22,8 @@ class StreamImpl<TReq, T>
   extends AbstractDisposable
   implements StreamLike<TReq, T>
 {
+  readonly type = this;
+  readonly T = undefined as any;
   readonly isSynchronous = false;
 
   private readonly dispatcher: DispatcherLike<TReq>;

@@ -1,4 +1,4 @@
-import { EnumerableLike, EnumerableOperator } from "../enumerable";
+import { EnumerableLike } from "../enumerable";
 import { pipe } from "../functions";
 import { concatAll } from "./concatAll";
 import { fromArray } from "./fromArray";
@@ -17,8 +17,3 @@ export function concat<T>(
 ): EnumerableLike<T> {
   return pipe(enumerables, fromArray(), concatAll());
 }
-
-export const concatWith =
-  <T>(snd: EnumerableLike<T>): EnumerableOperator<T, T> =>
-  first =>
-    concat(first, snd);

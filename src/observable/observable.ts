@@ -4,6 +4,9 @@ import { ObservableLike, ObserverLike } from "../observable";
 import { schedule } from "../scheduler";
 
 class ScheduledObservable<T> implements ObservableLike<T> {
+  readonly type = this;
+  readonly T = undefined as any;
+
   constructor(
     private readonly f: Function1<ObserverLike<T>, SideEffect>,
     readonly isSynchronous: boolean,

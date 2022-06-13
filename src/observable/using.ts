@@ -17,6 +17,8 @@ import { observe } from "./observer";
 class UsingObservable<TResource extends DisposableLike, T>
   implements ObservableLike<T>
 {
+  readonly type = this;
+  readonly T = undefined as any;
   readonly isSynchronous = false;
 
   constructor(

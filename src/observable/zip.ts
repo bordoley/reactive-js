@@ -1,11 +1,8 @@
+import { Zip } from "../container";
 import { Error, addTeardown, dispose } from "../disposable";
 import { EnumeratorLike, current, zipEnumerators } from "../enumerable";
 import { defer, pipe, returns } from "../functions";
-import {
-  ObservableLike,
-  ObservableOperator,
-  ObserverLike,
-} from "../observable";
+import { ObservableLike, ObserverLike } from "../observable";
 import { Option, isSome, none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
 import { fromEnumerator } from "./fromEnumerable";
@@ -109,6 +106,8 @@ class ZipObserver
 }
 
 class ZipObservable implements ObservableLike<readonly unknown[]> {
+  readonly type = this;
+  readonly T = undefined as any;
   readonly isSynchronous: boolean;
 
   constructor(private readonly observables: readonly ObservableLike<any>[]) {
@@ -222,7 +221,6 @@ export function zip(
   return new ZipObservable(observables);
 }
 
-export const zipWith =
-  <TA, TB>(snd: ObservableLike<TB>): ObservableOperator<TA, [TA, TB]> =>
-  fst =>
-    zip(fst, snd);
+export const zipT: Zip<ObservableLike<unknown>> = {
+  zip,
+};

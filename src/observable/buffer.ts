@@ -13,7 +13,7 @@ import {
   ObserverLike,
 } from "../observable";
 import { Option, isSome, none } from "../option";
-import { fromValue } from "./fromValue";
+import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { never } from "./never";
 import {
@@ -22,6 +22,7 @@ import {
   observe,
 } from "./observer";
 import { subscribe } from "./subscribe";
+import { fromValue } from "../container";
 
 function onDispose(this: BufferObserver<void>, error: Option<Error>) {
   const buffer = this.buffer;
@@ -30,7 +31,7 @@ function onDispose(this: BufferObserver<void>, error: Option<Error>) {
   if (isSome(error) || buffer.length === 0) {
     pipe(this.delegate, dispose(error));
   } else {
-    pipe(buffer, fromValue(), observe(this.delegate));
+    pipe(buffer, fromValue(fromArrayT), observe(this.delegate));
   }
 }
 
@@ -95,7 +96,7 @@ export function buffer<T>(
     delay === Number.MAX_SAFE_INTEGER
       ? never
       : typeof delay === "number"
-      ? (_: T) => fromValue({ delay })(none)
+      ? (_: T) => fromValue(fromArrayT, { delay })(none)
       : delay;
 
   const maxBufferSize = options.maxBufferSize ?? Number.MAX_SAFE_INTEGER;

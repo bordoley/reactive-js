@@ -1,3 +1,4 @@
+import { FromArrayOptions, FromArray } from "../container";
 import { AbstractDisposable } from "../disposable";
 import { EnumerableLike, EnumeratorLike } from "../enumerable";
 import { none } from "../option";
@@ -41,6 +42,9 @@ class ArrayEnumerator<T>
 }
 
 class ArrayEnumerable<T> implements EnumerableLike<T> {
+  readonly type = this;
+  readonly T = this as any;
+
   constructor(
     private readonly values: readonly T[],
     private readonly startIndex: number,
@@ -75,9 +79,9 @@ export const fromArray =
     return new ArrayEnumerable(values, startIndex - 1, endIndex);
   };
 
-const _empty = fromArray()([]);
-
-/**
- * Returns an empty EnumerableLike.
- */
-export const empty = <T>(): EnumerableLike<T> => _empty as EnumerableLike<T>;
+export const fromArrayT: FromArray<
+  EnumerableLike<unknown>,
+  FromArrayOptions
+> = {
+  fromArray,
+};

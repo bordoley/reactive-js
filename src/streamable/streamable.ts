@@ -7,8 +7,8 @@ import {
   __memo,
   __observe,
   __using,
-  empty as emptyObs,
   map,
+  fromArrayT,
   subscribe,
   using,
 } from "../observable";
@@ -17,6 +17,8 @@ import { isNone } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { StreamableLike, StreamableOperator } from "../streamable";
 import { createStream } from "./createStream";
+
+import { empty as emptyContainer } from "../container";
 
 class StreamableImpl<TReq, TData> implements StreamableLike<TReq, TData> {
   constructor(private readonly op: ObservableOperator<TReq, TData>) {}
@@ -98,7 +100,7 @@ export const mapReq =
     return liftImpl(streamable, obsOps, reqOps);
   };
 
-const _empty = createStreamable<any, any>(_ => emptyObs());
+const _empty = createStreamable<any, any>(_ => emptyContainer(fromArrayT));
 
 /**
  * Returns an empty `StreamableLike` that always returns
@@ -107,7 +109,9 @@ const _empty = createStreamable<any, any>(_ => emptyObs());
 export const empty = <TReq, T>(options?: {
   readonly delay?: number;
 }): StreamableLike<TReq, T> =>
-  isNone(options) ? _empty : createStreamable<TReq, T>(_ => emptyObs(options));
+  isNone(options)
+    ? _empty
+    : createStreamable<TReq, T>(_ => emptyContainer(fromArrayT, options));
 
 export const stream =
   <TReq, T>(

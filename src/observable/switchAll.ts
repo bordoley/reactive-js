@@ -1,3 +1,4 @@
+import { ConcatAll } from "../container";
 import {
   Error,
   addDisposableDisposeParentOnChildError,
@@ -6,7 +7,7 @@ import {
   dispose,
   disposed,
 } from "../disposable";
-import { Function1, compose, pipe } from "../functions";
+import { pipe } from "../functions";
 import {
   ObservableLike,
   ObservableOperator,
@@ -14,7 +15,6 @@ import {
 } from "../observable";
 import { Option, isSome } from "../option";
 import { lift } from "./lift";
-import { map } from "./map";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 import { subscribe } from "./subscribe";
 
@@ -67,6 +67,6 @@ const switchAllInstance = lift(operator);
 export const switchAll = <T>(): ObservableOperator<ObservableLike<T>, T> =>
   switchAllInstance as ObservableOperator<ObservableLike<T>, T>;
 
-export const switchMap = <TA, TB>(
-  mapper: Function1<TA, ObservableLike<TB>>,
-): ObservableOperator<TA, TB> => compose(map(mapper), switchAll());
+export const switchAllT: ConcatAll<ObservableLike<unknown>, {}> = {
+  concatAll: switchAll,
+};

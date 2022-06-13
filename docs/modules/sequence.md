@@ -6,6 +6,7 @@
 
 ### Interfaces
 
+- [SequenceLike](../interfaces/sequence.SequenceLike.md)
 - [SequenceResultNotify](../interfaces/sequence.SequenceResultNotify.md)
 
 ### Type Aliases
@@ -17,27 +18,21 @@
 ### Variables
 
 - [sequenceResultDone](sequence.md#sequenceresultdone)
+- [type](sequence.md#type)
 
 ### Functions
 
 - [concat](sequence.md#concat)
 - [concatAll](sequence.md#concatall)
-- [concatMap](sequence.md#concatmap)
-- [concatWith](sequence.md#concatwith)
 - [distinctUntilChanged](sequence.md#distinctuntilchanged)
-- [empty](sequence.md#empty)
-- [endWith](sequence.md#endwith)
 - [fromArray](sequence.md#fromarray)
-- [fromValue](sequence.md#fromvalue)
 - [generate](sequence.md#generate)
 - [keep](sequence.md#keep)
 - [map](sequence.md#map)
-- [mapTo](sequence.md#mapto)
 - [repeat](sequence.md#repeat)
 - [scan](sequence.md#scan)
 - [seek](sequence.md#seek)
 - [skipFirst](sequence.md#skipfirst)
-- [startWith](sequence.md#startwith)
 - [takeFirst](sequence.md#takefirst)
 - [takeLast](sequence.md#takelast)
 - [takeWhile](sequence.md#takewhile)
@@ -47,7 +42,7 @@
 
 ### Sequence
 
-Ƭ **Sequence**<`T`\>: [`Factory`](functions.md#factory)<[`SequenceResult`](sequence.md#sequenceresult)<`T`\>\>
+Ƭ **Sequence**<`T`\>: [`Factory`](functions.md#factory)<[`SequenceResult`](sequence.md#sequenceresult)<`T`\>\> & [`SequenceLike`](../interfaces/sequence.SequenceLike.md)
 
 #### Type parameters
 
@@ -85,6 +80,12 @@ ___
 ### sequenceResultDone
 
 • `Const` **sequenceResultDone**: unique `symbol`
+
+___
+
+### type
+
+• `Const` **type**: [`Sequence`](sequence.md#sequence)<`unknown`\>
 
 ## Functions
 
@@ -128,51 +129,6 @@ ___
 
 ___
 
-### concatMap
-
-▸ **concatMap**<`TA`, `TB`\>(`mapper`): [`SequenceOperator`](sequence.md#sequenceoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`Sequence`](sequence.md#sequence)<`TB`\>\> |
-
-#### Returns
-
-[`SequenceOperator`](sequence.md#sequenceoperator)<`TA`, `TB`\>
-
-___
-
-### concatWith
-
-▸ **concatWith**<`T`\>(`snd`): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `snd` | [`Sequence`](sequence.md#sequence)<`T`\> |
-
-#### Returns
-
-[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
-
-___
-
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
@@ -189,45 +145,6 @@ ___
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
-
-#### Returns
-
-[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
-
-___
-
-### empty
-
-▸ **empty**<`T`\>(): [`Sequence`](sequence.md#sequence)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Sequence`](sequence.md#sequence)<`T`\>
-
-___
-
-### endWith
-
-▸ **endWith**<`T`\>(`value`, ...`values`): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `T` |
-| `...values` | readonly `T`[] |
 
 #### Returns
 
@@ -256,22 +173,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], [`Sequence`](sequence.md#sequence)<`T`\>\>
-
-___
-
-### fromValue
-
-▸ **fromValue**<`T`\>(): [`Function1`](functions.md#function1)<`T`, [`Sequence`](sequence.md#sequence)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`T`, [`Sequence`](sequence.md#sequence)<`T`\>\>
 
 ___
 
@@ -336,29 +237,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
-
-#### Returns
-
-[`SequenceOperator`](sequence.md#sequenceoperator)<`TA`, `TB`\>
-
-___
-
-### mapTo
-
-▸ **mapTo**<`TA`, `TB`\>(`v`): [`SequenceOperator`](sequence.md#sequenceoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `v` | `TB` |
 
 #### Returns
 
@@ -480,29 +358,6 @@ ___
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.count?` | `number` |
-
-#### Returns
-
-[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
-
-___
-
-### startWith
-
-▸ **startWith**<`T`\>(`value`, ...`values`): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `T` |
-| `...values` | readonly `T`[] |
 
 #### Returns
 

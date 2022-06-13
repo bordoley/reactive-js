@@ -8,48 +8,46 @@
 
 - [EnumerableLike](../interfaces/enumerable.EnumerableLike.md)
 - [EnumeratorLike](../interfaces/enumerable.EnumeratorLike.md)
+- [ToEnumerable](../interfaces/enumerable.ToEnumerable.md)
 
 ### Type Aliases
 
 - [EnumerableOperator](enumerable.md#enumerableoperator)
 - [EnumeratorOperator](enumerable.md#enumeratoroperator)
 
+### Variables
+
+- [fromArrayT](enumerable.md#fromarrayt)
+- [keepT](enumerable.md#keept)
+- [type](enumerable.md#type)
+
 ### Functions
 
-- [compute](enumerable.md#compute)
 - [concat](enumerable.md#concat)
 - [concatAll](enumerable.md#concatall)
-- [concatMap](enumerable.md#concatmap)
-- [concatWith](enumerable.md#concatwith)
 - [current](enumerable.md#current)
 - [distinctUntilChanged](enumerable.md#distinctuntilchanged)
-- [empty](enumerable.md#empty)
-- [endWith](enumerable.md#endwith)
 - [enumerate](enumerable.md#enumerate)
 - [fromArray](enumerable.md#fromarray)
 - [fromIterable](enumerable.md#fromiterable)
 - [fromIterator](enumerable.md#fromiterator)
-- [fromValue](enumerable.md#fromvalue)
 - [generate](enumerable.md#generate)
 - [hasCurrent](enumerable.md#hascurrent)
 - [keep](enumerable.md#keep)
-- [keepType](enumerable.md#keeptype)
 - [lift](enumerable.md#lift)
 - [map](enumerable.md#map)
-- [mapTo](enumerable.md#mapto)
 - [move](enumerable.md#move)
 - [repeat](enumerable.md#repeat)
 - [scan](enumerable.md#scan)
 - [skipFirst](enumerable.md#skipfirst)
-- [startWith](enumerable.md#startwith)
 - [takeFirst](enumerable.md#takefirst)
 - [takeLast](enumerable.md#takelast)
 - [takeWhile](enumerable.md#takewhile)
+- [toEnumerable](enumerable.md#toenumerable)
 - [toIterable](enumerable.md#toiterable)
 - [toRunnable](enumerable.md#torunnable)
 - [zip](enumerable.md#zip)
 - [zipEnumerators](enumerable.md#zipenumerators)
-- [zipWith](enumerable.md#zipwith)
 
 ## Type Aliases
 
@@ -81,25 +79,25 @@ A unary function that transforms an EnumeratorLike<TA> into a EnumeratorLike<TB>
 | `TA` |
 | `TB` |
 
-## Functions
+## Variables
 
-### compute
+### fromArrayT
 
-▸ **compute**<`T`\>(): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
-
-Creates an EnumerableLike that emits the computed value.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
+• `Const` **fromArrayT**: [`FromArray`](../interfaces/container.FromArray.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\>
 
 ___
+
+### keepT
+
+• `Const` **keepT**: [`Keep`](../interfaces/container.Keep.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
+### type
+
+• `Const` **type**: [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>
+
+## Functions
 
 ### concat
 
@@ -145,53 +143,6 @@ Converts a higher-order EnumerableLike into a first-order EnumerableLike.
 
 ___
 
-### concatMap
-
-▸ **concatMap**<`TA`, `TB`\>(`mapper`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`TA`, `TB`\>
-
-Maps each item yielded by the sourc using a mapping function, then flattens the result.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`TB`\>\> |
-
-#### Returns
-
-[`EnumerableOperator`](enumerable.md#enumerableoperator)<`TA`, `TB`\>
-
-___
-
-### concatWith
-
-▸ **concatWith**<`T`\>(`snd`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `snd` | [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\> |
-
-#### Returns
-
-[`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
-
-___
-
 ### current
 
 ▸ **current**<`T`\>(`enumerator`): `T`
@@ -233,50 +184,6 @@ are distinct by comparison from the previous item.
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
-
-#### Returns
-
-[`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
-
-___
-
-### empty
-
-▸ **empty**<`T`\>(): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
-
-Returns an empty EnumerableLike.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
-
-___
-
-### endWith
-
-▸ **endWith**<`T`\>(`value`, ...`values`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
-
-Returns an EnumerableLike that yields items from the source,
-concatenated with the values specified as arguments.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `T` |
-| `...values` | readonly `T`[] |
 
 #### Returns
 
@@ -383,24 +290,6 @@ returned by the function `f`.
 
 ___
 
-### fromValue
-
-▸ **fromValue**<`T`\>(): [`Function1`](functions.md#function1)<`T`, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
-
-Creates an EnumerableLike that yields `value`.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`T`, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
-
-___
-
 ### generate
 
 ▸ **generate**<`T`\>(`generator`, `initialValue`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
@@ -453,8 +342,8 @@ ___
 
 ▸ **keep**<`T`\>(`predicate`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
 
-Returns an `EnumerableLike` that only emits items produced by the
-source that satisfy the specified predicate.
+Returns an `EnumerableLike` that only emits items from the
+source that satisfy the specified type predicate.
 
 #### Type parameters
 
@@ -471,32 +360,6 @@ source that satisfy the specified predicate.
 #### Returns
 
 [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
-
-___
-
-### keepType
-
-▸ **keepType**<`TA`, `TB`\>(`predicate`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`TA`, `TB`\>
-
-Returns an `EnumerableLike` that only emits items from the
-source that satisfy the specified type predicate.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> | The predicate function. |
-
-#### Returns
-
-[`EnumerableOperator`](enumerable.md#enumerableoperator)<`TA`, `TB`\>
 
 ___
 
@@ -545,29 +408,6 @@ value emitted by the source.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | The map function to apply each value. Must be a pure function. |
-
-#### Returns
-
-[`EnumerableOperator`](enumerable.md#enumerableoperator)<`TA`, `TB`\>
-
-___
-
-### mapTo
-
-▸ **mapTo**<`TA`, `TB`\>(`v`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `v` | `TB` |
 
 #### Returns
 
@@ -708,31 +548,6 @@ Returns an EnumerableLike that skips the first `count` values emitted by the sou
 
 ___
 
-### startWith
-
-▸ **startWith**<`T`\>(`value`, ...`values`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
-
-Returns an EnumerableLike that yields the values followed by items from the source.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `T` |
-| `...values` | readonly `T`[] |
-
-#### Returns
-
-[`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
-
-___
-
 ### takeFirst
 
 ▸ **takeFirst**<`T`\>(`options?`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
@@ -807,6 +622,22 @@ as each value satisfies the given predicate.
 #### Returns
 
 [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
+
+___
+
+### toEnumerable
+
+▸ **toEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
 
 ___
 
@@ -1077,26 +908,3 @@ ___
 #### Returns
 
 [`EnumeratorLike`](../interfaces/enumerable.EnumeratorLike.md)<readonly `unknown`[]\>
-
-___
-
-### zipWith
-
-▸ **zipWith**<`TA`, `TB`\>(`snd`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`TA`, [`TA`, `TB`]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `snd` | [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`TB`\> |
-
-#### Returns
-
-[`EnumerableOperator`](enumerable.md#enumerableoperator)<`TA`, [`TA`, `TB`]\>

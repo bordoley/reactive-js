@@ -1,7 +1,7 @@
 /// <reference types="./web.d.ts" />
 import { dispose, addTeardown, addDisposableDisposeParentOnChildError, toAbortSignal } from './disposable.mjs';
 import { pipe, raise, returns } from './functions.mjs';
-import { l as createObservable, ac as keep$1, L as throttle, W as onNotify$1, s as subscribe, ad as defer, o as fromPromise, a1 as observe } from './observable-21f83e42.mjs';
+import { createObservable, keep as keep$1, throttle, onNotify as onNotify$1, subscribe, defer, fromPromise, observe } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { none, isNone } from './option.mjs';
 import { createStateStore } from './stateStore.mjs';
@@ -78,6 +78,8 @@ class WindowLocationStream {
     constructor(scheduler, options) {
         this.scheduler = scheduler;
         this.options = options;
+        this.type = this;
+        this.T = undefined;
         this.historyCounter = -1;
         this.stateStream = pipe(() => ({
             replace: true,

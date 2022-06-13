@@ -1,21 +1,26 @@
-import { EnumerableOperator, EnumeratorLike } from "../enumerable";
-import { Predicate, TypePredicate } from "../functions";
+import { Keep } from "../container";
+import {
+  EnumerableLike,
+  EnumerableOperator,
+  EnumeratorLike,
+} from "../enumerable";
+import { Predicate } from "../functions";
 import { AbstractDelegatingEnumerator } from "./enumerator";
 import { lift } from "./lift";
 
-class KeepTypeEnumerator<TA, TB extends TA>
-  extends AbstractDelegatingEnumerator<TA, TB>
-  implements EnumeratorLike<TB>
+class KeepEnumerator<T>
+  extends AbstractDelegatingEnumerator<T, T>
+  implements EnumeratorLike<T>
 {
   constructor(
-    delegate: EnumeratorLike<TA>,
-    private readonly predicate: TypePredicate<TA, TB>,
+    delegate: EnumeratorLike<T>,
+    private readonly predicate: Predicate<T>,
   ) {
     super(delegate);
   }
 
   get current() {
-    return this.delegate.current as TB;
+    return this.delegate.current;
   }
 
   get hasCurrent() {
@@ -42,19 +47,12 @@ class KeepTypeEnumerator<TA, TB extends TA>
  *
  * @param predicate The predicate function.
  */
-export const keepType = <TA, TB extends TA>(
-  predicate: TypePredicate<TA, TB>,
-): EnumerableOperator<TA, TB> => {
-  const operator = (enumerator: EnumeratorLike<TA>) =>
-    new KeepTypeEnumerator(enumerator, predicate);
+export const keep = <T>(predicate: Predicate<T>): EnumerableOperator<T, T> => {
+  const operator = (enumerator: EnumeratorLike<T>) =>
+    new KeepEnumerator(enumerator, predicate);
   return lift(operator);
 };
 
-/**
- * Returns an `EnumerableLike` that only emits items produced by the
- * source that satisfy the specified predicate.
- *
- * @param predicate The predicate function.
- */
-export const keep = <T>(predicate: Predicate<T>): EnumerableOperator<T, T> =>
-  keepType(predicate as TypePredicate<T, T>);
+export const keepT: Keep<EnumerableLike<unknown>> = {
+  keep,
+};

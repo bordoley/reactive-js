@@ -2,11 +2,7 @@ import {
   AbstractDisposable,
   addDisposableDisposeParentOnChildError,
 } from "../disposable";
-import {
-  EnumerableLike,
-  EnumerableOperator,
-  EnumeratorLike,
-} from "../enumerable";
+import { EnumerableLike, EnumeratorLike } from "../enumerable";
 import { pipe } from "../functions";
 import { everySatisfy, map } from "../readonlyArray";
 import { current, enumerate, hasCurrent } from "./enumerator";
@@ -60,6 +56,9 @@ export function zipEnumerators(
 }
 
 class ZipEnumerable implements EnumerableLike<readonly unknown[]> {
+  readonly type = this;
+  readonly T = undefined as any;
+
   constructor(
     private readonly enumerables: readonly EnumerableLike<unknown>[],
   ) {}
@@ -139,8 +138,3 @@ export function zip(
 ): EnumerableLike<readonly unknown[]> {
   return new ZipEnumerable(enumerables);
 }
-
-export const zipWith =
-  <TA, TB>(snd: EnumerableLike<TB>): EnumerableOperator<TA, [TA, TB]> =>
-  fst =>
-    zip(fst, snd);

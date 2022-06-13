@@ -30,6 +30,9 @@ class GenerateEnumerator<T>
 }
 
 class GenerateEnumerable<T> implements EnumerableLike<T> {
+  readonly type = this;
+  readonly T = undefined as any;
+
   constructor(
     private readonly f: Updater<T>,
     private readonly acc: Factory<T>,

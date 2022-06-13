@@ -1,13 +1,17 @@
+import { endWith } from "../container";
 import { addDisposable } from "../disposable";
 import { Function1, compose, pipe } from "../functions";
 import {
   ObservableLike,
   StreamLike,
-  endWith,
-  ignoreElements,
+  concatT,
+  fromArrayT,
+  keepT,
   subscribe,
   using,
 } from "../observable";
+
+import { ignoreElements } from "../container";
 
 import { none } from "../option";
 import { StreamableLike } from "../streamable";
@@ -16,7 +20,10 @@ import { stream } from "./streamable";
 const ignoreAndNotifyVoid: Function1<
   StreamLike<any, any>,
   ObservableLike<void>
-> = compose(ignoreElements(), endWith(none as void));
+> = compose(
+  ignoreElements(keepT),
+  endWith({ ...fromArrayT, ...concatT }, none as void),
+);
 
 export const sink = <TReq, T>(
   src: StreamableLike<TReq, T>,

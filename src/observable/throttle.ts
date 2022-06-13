@@ -14,13 +14,14 @@ import {
   ThrottleMode,
 } from "../observable";
 import { Option, isNone, none } from "../option";
-import { fromValue } from "./fromValue";
+import { fromValue } from "../container";
 import { lift } from "./lift";
 import {
   AbstractDelegatingObserver,
   assertObserverState,
   observe,
 } from "./observer";
+import { fromArrayT } from "../observable";
 
 import { subscribe } from "./subscribe";
 
@@ -36,7 +37,7 @@ const setupDurationSubscription = <T>(
 
 function onDispose(this: ThrottleObserver<unknown>, e: Option<Error>) {
   if (isNone(e) && this.mode !== "first" && this.hasValue) {
-    pipe(this.value, fromValue(), observe(this.delegate));
+    pipe(this.value, fromValue(fromArrayT), observe(this.delegate));
   } else {
     pipe(this.delegate, dispose(e));
   }
@@ -117,7 +118,7 @@ export function throttle<T>(
   const { mode = "interval" } = options;
   const durationFunction =
     typeof duration === "number"
-      ? (_: T) => fromValue({ delay: duration })(none)
+      ? (_: T) => fromValue(fromArrayT, { delay: duration })(none)
       : duration;
   const operator = (observer: ObserverLike<T>) =>
     new ThrottleObserver(observer, durationFunction, mode);

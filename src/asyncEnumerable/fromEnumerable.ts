@@ -1,29 +1,34 @@
 import { AsyncEnumerableLike } from "../asyncEnumerable";
 import {
   EnumerableLike,
-  EnumeratorLike,
   current,
   enumerate,
   hasCurrent,
   move,
+  EnumeratorLike,
 } from "../enumerable";
 import { Function1, compose, defer } from "../functions";
 import {
-  compute,
+  fromArrayT,
   map,
+  mapT,
   onNotify,
   takeWhile,
   withLatestFrom,
 } from "../observable";
 import { createStreamable } from "../streamable";
+import { compute } from "../container";
 
 const _fromEnumerable = <T>(
   enumerable: EnumerableLike<T>,
 ): AsyncEnumerableLike<T> =>
   createStreamable(
     compose(
-      withLatestFrom(
-        compute<EnumeratorLike<T>>()(defer(enumerable, enumerate)),
+      withLatestFrom<void, EnumeratorLike<T>, EnumeratorLike<T>>(
+        compute({
+          ...fromArrayT,
+          ...mapT,
+        })(defer(enumerable, enumerate)),
         (_, enumerator) => enumerator,
       ),
       onNotify(move),

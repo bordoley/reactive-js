@@ -13,6 +13,8 @@ import { observe } from "./observer";
 import { publish } from "./publish";
 
 class SharedObservable<T> implements ObservableLike<T> {
+  readonly type = this;
+  readonly T = undefined as any;
   private observerCount = 0;
   private multicast: Option<MulticastObservableLike<T>>;
   private readonly teardown = () => {

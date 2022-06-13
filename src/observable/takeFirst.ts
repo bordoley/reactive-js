@@ -1,7 +1,8 @@
 import { dispose } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
-import { empty } from "./empty";
+import { empty } from "../container";
+import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import {
   AbstractAutoDisposingDelegatingObserver,
@@ -41,5 +42,6 @@ export const takeFirst = <T>(
   const operator = (observer: ObserverLike<T>) =>
     new TakeFirstObserver(observer, count);
   operator.isSynchronous = true;
-  return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());
+  return observable =>
+    count > 0 ? pipe(observable, lift(operator)) : empty(fromArrayT);
 };

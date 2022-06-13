@@ -1,3 +1,4 @@
+import { concatMap, compute, endWith, keepType } from "./container";
 import {
   AbstractDisposable,
   addDisposable,
@@ -22,15 +23,16 @@ import {
   ObservableLike,
   ObserverLike,
   StreamLike,
-  compute,
-  concatMap,
+  concatAllT,
   createObservable,
   createSubject,
-  endWith,
+  concatT,
   fromArray as fromArrayObs,
+  fromArrayT,
   fromIterator,
-  keepType,
+  keepT,
   map as mapObs,
+  mapT,
   reduce,
   subscribe,
   takeWhile,
@@ -78,8 +80,11 @@ export const decodeWithCharset = (
 ): IOSourceOperator<ArrayBuffer, string> =>
   pipe(
     withLatestFromObs(
-      compute<TextDecoder>()(() => new TextDecoder(charset, options)),
-      function* (ev: IOEvent<ArrayBuffer>, decoder) {
+      compute({
+        ...fromArrayT,
+        ...mapT,
+      })(() => new TextDecoder(charset, options)),
+      function* (ev: IOEvent<ArrayBuffer>, decoder: TextDecoder) {
         switch (ev.type) {
           case "notify": {
             const data = decoder.decode(ev.data, { stream: true });
@@ -100,13 +105,16 @@ export const decodeWithCharset = (
       },
     ),
     composeWith(mapObs(returns)),
-    composeWith(concatMap(fromIterator())),
+    composeWith(concatMap({ ...concatAllT, ...mapT }, fromIterator())),
     lift,
   );
 
 const _encodeUtf8: IOSourceOperator<string, Uint8Array> = withLatestFrom(
-  compute<TextEncoder>()(() => new TextEncoder()),
-  (ev, textEncoder) => {
+  compute({
+    ...fromArrayT,
+    ...mapT,
+  })(() => new TextEncoder()),
+  (ev, textEncoder: TextEncoder) => {
     switch (ev.type) {
       case "notify": {
         const data = textEncoder.encode(ev.data);
@@ -129,7 +137,7 @@ export const map = <TA, TB>(
 
 const _fromObservable = compose(
   mapObs(notify),
-  endWith(done()),
+  endWith({ ...fromArrayT, ...concatT }, done()),
   fromObservableFlowable(),
 );
 export const fromObservable = <T>(): Function1<
@@ -168,6 +176,8 @@ class IOSinkAccumulatorImpl<T, TAcc>
   extends AbstractDisposable
   implements IOSinkAccumulatorLike<T, TAcc>
 {
+  readonly type = this;
+  readonly T = undefined as any;
   readonly isSynchronous = false;
 
   private readonly subject: StreamLike<TAcc, TAcc>;
@@ -189,7 +199,7 @@ class IOSinkAccumulatorImpl<T, TAcc>
           pipe(
             events,
             takeWhile(isNotify),
-            keepType(isNotify),
+            keepType(keepT, isNotify),
             mapObs(ev => ev.data),
             reduce(reducer, initialValue),
             subscribe(scheduler, subject.dispatch, subject),
