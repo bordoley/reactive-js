@@ -36,6 +36,9 @@ class IteratorEnumerator<T, TReturn = any, TNext = unknown>
 class IteratorEnumerable<T, TReturn = any, TNext = unknown>
   implements EnumerableLike<T>
 {
+  readonly type = this;
+  readonly T = undefined as any;
+
   constructor(private readonly f: Factory<Iterator<T, TReturn, TNext>>) {}
 
   enumerate() {

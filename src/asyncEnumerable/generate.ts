@@ -1,7 +1,8 @@
 import { AsyncEnumerableLike } from "../asyncEnumerable";
 import { Factory, Updater, pipe } from "../functions";
-import { fromValue, scan, scanAsync } from "../observable";
+import { fromArrayT, scan, scanAsync } from "../observable";
 import { createStreamable } from "../streamable";
+import { fromValue } from "../container";
 
 const generateScanner =
   <T>(generator: Updater<T>) =>
@@ -12,7 +13,7 @@ const asyncGeneratorScanner = <T>(
   generator: Updater<T>,
   options: { readonly delay?: number },
 ) => {
-  const fromValueWithDelay = fromValue<T>(options);
+  const fromValueWithDelay = fromValue(fromArrayT, options);
   return (acc: T, _: unknown) => pipe(acc, generator, fromValueWithDelay);
 };
 

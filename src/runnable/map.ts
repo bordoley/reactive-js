@@ -1,4 +1,4 @@
-import { Function1, returns } from "../functions";
+import { Function1 } from "../functions";
 import { RunnableOperator, SinkLike } from "../runnable";
 import { lift } from "./lift";
 import { AbstractDelegatingSink } from "./sink";
@@ -20,6 +20,3 @@ export const map = <TA, TB>(
   const operator = (sink: SinkLike<TB>) => new MapSink(sink, mapper);
   return lift(operator);
 };
-
-export const mapTo = <TA, TB>(value: TB): RunnableOperator<TA, TB> =>
-  map(returns(value));

@@ -1,17 +1,74 @@
 import {
+  concat,
+  concatAll,
+  distinctUntilChanged,
   fromArray,
+  fromArrayT,
   fromIterable,
+  generate,
+  keepT,
   map,
+  repeat,
+  scan,
+  skipFirst,
+  takeFirst,
+  takeLast,
+  takeWhile,
   toIterable,
   toRunnable,
-  zipWith,
+  zip,
 } from "../enumerable";
-import { defer } from "../functions";
-import { toArray } from "../runnable";
+import { arrayEquality, defer, increment, pipe, returns } from "../functions";
+import { ToRunnable, toArray } from "../runnable";
 import { describe, expectArrayEquals, test } from "../testing";
-import { createMonadTests } from "./monad.test";
+import { createRunnableTests } from "./runnable.test";
 
-import * as Enumerable from "../enumerable";
+import {
+  ContainerLike,
+  FromArray,
+  Generate,
+  Map,
+  Zip,
+  zipWith,
+} from "../container";
+
+export const createZippableTests = <C extends ContainerLike>(
+  m: FromArray<C> & Generate<C> & Map<C> & ToRunnable<C> & Zip<C>,
+) =>
+  describe(
+    "ZippableContainer",
+    test(
+      "zip",
+      defer(
+        [1, 2, 3],
+        m.fromArray(),
+        zipWith(m, m.fromArray<number>()([1, 2, 3, 4, 5])),
+        m.map(([a, b]) => a + b),
+        m.toRunnable(),
+        toArray(),
+        expectArrayEquals([2, 4, 6]),
+      ),
+    ),
+    test(
+      "with non-delayed sources",
+      defer(
+        m.zip(
+          pipe([1, 2], m.fromArray()),
+          pipe([1, 2], m.fromArray(), m.map(increment)),
+          m.generate(increment, returns<number>(2)),
+        ),
+        m.toRunnable(),
+        toArray(),
+        expectArrayEquals(
+          [
+            [1, 2, 3],
+            [2, 3, 4],
+          ],
+          arrayEquality(),
+        ),
+      ),
+    ),
+  );
 
 export const tests = describe(
   "enumerable",
@@ -27,17 +84,21 @@ export const tests = describe(
       expectArrayEquals([1, 2, 3]),
     ),
   ),
-  test(
-    "zip",
-    defer(
-      [1, 2, 3],
-      fromArray(),
-      zipWith(fromArray<number>()([1, 2, 3, 4, 5])),
-      map(([a, b]) => a + b),
-      toRunnable(),
-      toArray(),
-      expectArrayEquals([2, 4, 6]),
-    ),
-  ),
-  createMonadTests(Enumerable),
+  createRunnableTests({
+    ...fromArrayT,
+    ...keepT,
+    concat,
+    concatAll,
+    distinctUntilChanged,
+    generate,
+    map,
+    repeat,
+    scan,
+    skipFirst,
+    takeFirst,
+    takeLast,
+    takeWhile,
+    toRunnable,
+  }),
+  createZippableTests({ ...fromArrayT, generate, map, toRunnable, zip }),
 );

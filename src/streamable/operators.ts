@@ -1,3 +1,4 @@
+import { mapTo as mapToContainer } from "../container";
 import {
   Factory,
   Function1,
@@ -8,7 +9,7 @@ import {
 import {
   ObservableLike,
   map as mapObs,
-  mapTo as mapToObs,
+  mapT,
   onNotify as onNotifyObs,
   scan as scanObs,
   withLatestFrom as withLatestFromObs,
@@ -22,7 +23,7 @@ export const map = <TReq, TA, TB>(
 
 export const mapTo = <TReq, TA, TB>(
   v: TB,
-): StreamableOperator<TReq, TA, TReq, TB> => lift(mapToObs(v));
+): StreamableOperator<TReq, TA, TReq, TB> => lift(mapToContainer(mapT, v));
 
 export const onNotify = <TReq, T>(
   onNotify: SideEffect1<T>,

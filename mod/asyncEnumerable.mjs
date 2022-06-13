@@ -1,9 +1,10 @@
 /// <reference types="./asyncEnumerable.d.ts" />
 import { pipe, flip, compose, returns, defer } from './functions.mjs';
-import { X as using, m as createSubject, W as onNotify, I as map, D as onSubscribe, T as zipWithLatestFrom, j as takeFirst, J as switchAll, f as fromValue, Y as scan, Z as concatMap, P as withLatestFrom, N as compute, $ as takeWhile, F as scanAsync } from './observable-21f83e42.mjs';
+import { using, createSubject, onNotify, map, onSubscribe, zipWithLatestFrom, takeFirst, switchAll, fromArrayT, scan, mapT, concatAllT, withLatestFrom, takeWhile, scanAsync } from './observable.mjs';
 import { none } from './option.mjs';
 import { stream, createStreamable } from './streamable.mjs';
-import { e as enumerate, c as move, h as hasCurrent, d as current, a as fromIterable$1 } from './enumerable-03c94f82.mjs';
+import { fromValue, concatMap, compute } from './container.mjs';
+import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
 
 const notify = (acc) => ({
     type: "notify",
@@ -42,11 +43,14 @@ const fromArray = (options = {}) => values => {
     const valuesLength = values.length;
     const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
     const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : valuesLength, valuesLength), 0);
-    const fromValueWithDelay = fromValue(options);
-    return createStreamable(compose(scan(fromArrayScanner, returns(startIndex - 1)), concatMap(i => fromValueWithDelay(values[i])), takeFirst({ count: endIndex - startIndex })));
+    const fromValueWithDelay = fromValue(fromArrayT, options);
+    return createStreamable(compose(scan(fromArrayScanner, returns(startIndex - 1)), concatMap({ ...mapT, ...concatAllT }, (i) => fromValueWithDelay(values[i])), takeFirst({ count: endIndex - startIndex })));
 };
 
-const _fromEnumerable = (enumerable) => createStreamable(compose(withLatestFrom(compute()(defer(enumerable, enumerate)), (_, enumerator) => enumerator), onNotify(move), takeWhile(hasCurrent), map(current)));
+const _fromEnumerable = (enumerable) => createStreamable(compose(withLatestFrom(compute({
+    ...fromArrayT,
+    ...mapT,
+})(defer(enumerable, enumerate)), (_, enumerator) => enumerator), onNotify(move), takeWhile(hasCurrent), map(current)));
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
  *
@@ -69,7 +73,7 @@ const fromIterable = () => _fromIterable;
 
 const generateScanner = (generator) => (acc, _) => generator(acc);
 const asyncGeneratorScanner = (generator, options) => {
-    const fromValueWithDelay = fromValue(options);
+    const fromValueWithDelay = fromValue(fromArrayT, options);
     return (acc, _) => pipe(acc, generator, fromValueWithDelay);
 };
 /**

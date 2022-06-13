@@ -1,12 +1,8 @@
 import { AsyncEnumerableLike } from "../asyncEnumerable";
 import { Function1, compose, returns } from "../functions";
-import {
-  concatMap,
-  fromValue as fromValueObs,
-  scan,
-  takeFirst,
-} from "../observable";
+import { mapT, concatAllT, fromArrayT, scan, takeFirst } from "../observable";
 import { createStreamable } from "../streamable";
+import { concatMap, fromValue as fromValueContainer } from "../container";
 
 const fromArrayScanner = (acc: number, _: void): number => acc + 1;
 
@@ -31,12 +27,14 @@ export const fromArray =
       0,
     );
 
-    const fromValueWithDelay = fromValueObs<T>(options);
+    const fromValueWithDelay = fromValueContainer(fromArrayT, options);
 
     return createStreamable(
       compose(
         scan(fromArrayScanner, returns(startIndex - 1)),
-        concatMap(i => fromValueWithDelay(values[i])),
+        concatMap({ ...mapT, ...concatAllT }, (i: number) =>
+          fromValueWithDelay(values[i]),
+        ),
         takeFirst({ count: endIndex - startIndex }),
       ),
     );

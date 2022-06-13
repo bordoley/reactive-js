@@ -1,3 +1,4 @@
+import { FromArray } from "../container";
 import { dispose } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
@@ -49,3 +50,14 @@ export const fromArray =
 
     return delay > 0 ? defer(factory, { delay }) : deferSynchronous(factory);
   };
+
+export const fromArrayT: FromArray<
+  ObservableLike<unknown>,
+  {
+    readonly delay: number;
+    readonly startIndex: number;
+    readonly endIndex: number;
+  }
+> = {
+  fromArray,
+};

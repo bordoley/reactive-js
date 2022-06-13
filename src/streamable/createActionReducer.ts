@@ -2,12 +2,13 @@ import { Equality, Factory, Reducer, pipe, returns } from "../functions";
 import {
   ObservableLike,
   distinctUntilChanged,
-  fromValue,
+  fromArrayT,
   mergeWith,
   scan,
 } from "../observable";
 import { StreamableLike } from "../streamable";
 import { createStreamable } from "./streamable";
+import { fromValue } from "../container";
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
@@ -35,7 +36,7 @@ export const createActionReducer = <TAction, T>(
     return pipe(
       src,
       scan(reducer, returns(acc)),
-      mergeWith(fromValue()(acc)),
+      mergeWith(fromValue(fromArrayT)(acc)),
       distinctUntilChanged(options),
     );
   };

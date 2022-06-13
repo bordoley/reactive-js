@@ -34,9 +34,10 @@ import {
 } from "../observable";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerLike, schedule } from "../scheduler";
-import { empty } from "./empty";
+import { empty } from "../container";
 import { defer } from "./observable";
 import { subscribe } from "./subscribe";
+import { fromArrayT } from "./fromArray";
 
 const arrayStrictEquality = arrayEquality();
 
@@ -105,7 +106,7 @@ function validateObservableEffect(
         : type === EffectType.Observe
         ? {
             type,
-            observable: empty(),
+            observable: empty(fromArrayT),
             subscription: disposed,
             value: none,
             hasValue: false,

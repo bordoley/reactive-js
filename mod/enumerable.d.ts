@@ -1,17 +1,11 @@
 import { DisposableLike } from "./disposable.mjs";
-import { Function1, Factory, Equality, Updater, TypePredicate, Predicate, Reducer } from "./functions.mjs";
+import { FromArray, FromArrayOptions, Keep, ContainerLike, Container, ContainerOf } from "./container.mjs";
+import { Equality, Function1, Factory, Updater, Predicate, Reducer } from "./functions.mjs";
 import { RunnableLike } from "./runnable.mjs";
-/**
- * Creates an EnumerableLike that emits the computed value.
- *
- * @param valueFactory
- */
-declare const compute: <T>() => Function1<Factory<T>, EnumerableLike<T>>;
 /**
  * Creates an EnumerableLike which yields all values from each source sequentially.
  */
 declare function concat<T>(fst: EnumerableLike<T>, snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableLike<T>;
-declare const concatWith: <T>(snd: EnumerableLike<T>) => EnumerableOperator<T, T>;
 /**
  * Returns an `ObservableLike` that emits all items emitted by the source that
  * are distinct by comparison from the previous item.
@@ -27,20 +21,9 @@ declare const current: <T>(enumerator: EnumeratorLike<T>) => T;
 declare const hasCurrent: <T>(enumerator: EnumeratorLike<T>) => boolean;
 declare const move: <T>(enumerator: EnumeratorLike<T>) => boolean;
 /**
- * Returns an EnumerableLike that yields items from the source,
- * concatenated with the values specified as arguments.
- */
-declare function endWith<T>(value: T, ...values: readonly T[]): EnumerableOperator<T, T>;
-/**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
  */
 declare const concatAll: <T>() => EnumerableOperator<EnumerableLike<T>, T>;
-/**
- * Maps each item yielded by the sourc using a mapping function, then flattens the result.
- *
- * @param mapper
- */
-declare const concatMap: <TA, TB>(mapper: Function1<TA, EnumerableLike<TB>>) => EnumerableOperator<TA, TB>;
 /**
  * Returns an EnumerableLike view over the `values` array.
  *
@@ -50,10 +33,7 @@ declare const fromArray: <T>(options?: {
     readonly startIndex?: number;
     readonly endIndex?: number;
 }) => (values: readonly T[]) => EnumerableLike<T>;
-/**
- * Returns an empty EnumerableLike.
- */
-declare const empty: <T>() => EnumerableLike<T>;
+declare const fromArrayT: FromArray<EnumerableLike<unknown>, FromArrayOptions>;
 /**
  * Returns a single use EnumerableLike over the javascript Iterator
  * returned by the function `f`.
@@ -88,14 +68,8 @@ declare const lift: <TA, TB>(operator: EnumeratorOperator<TA, TB>) => Enumerable
  *
  * @param predicate The predicate function.
  */
-declare const keepType: <TA, TB extends TA>(predicate: TypePredicate<TA, TB>) => EnumerableOperator<TA, TB>;
-/**
- * Returns an `EnumerableLike` that only emits items produced by the
- * source that satisfy the specified predicate.
- *
- * @param predicate The predicate function.
- */
 declare const keep: <T>(predicate: Predicate<T>) => EnumerableOperator<T, T>;
+declare const keepT: Keep<EnumerableLike<unknown>>;
 /**
  * Returns an `EnumerableLike` that applies the `mapper` function to each
  * value emitted by the source.
@@ -103,13 +77,6 @@ declare const keep: <T>(predicate: Predicate<T>) => EnumerableOperator<T, T>;
  * @param mapper The map function to apply each value. Must be a pure function.
  */
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => EnumerableOperator<TA, TB>;
-declare const mapTo: <TA, TB>(v: TB) => EnumerableOperator<TA, TB>;
-/**
- * Creates an EnumerableLike that yields `value`.
- *
- * @param value The value to emit.
- */
-declare const fromValue: <T>() => Function1<T, EnumerableLike<T>>;
 /**
  * Returns an EnumerableLike that applies the predicate function each time the source
  * completes to determine if the enumerable should be repeated.
@@ -141,10 +108,6 @@ declare const scan: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<T
 declare const skipFirst: <T>(options?: {
     readonly count?: number;
 }) => EnumerableOperator<T, T>;
-/**
- * Returns an EnumerableLike that yields the values followed by items from the source.
- */
-declare function startWith<T>(value: T, ...values: readonly T[]): EnumerableOperator<T, T>;
 /**
  * Returns an EnumerableLike that only yields the first `count` values emitted by the source.
  *
@@ -236,12 +199,8 @@ declare function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: EnumerableLike<TA>, 
     TH,
     TI
 ]>;
-declare const zipWith: <TA, TB>(snd: EnumerableLike<TB>) => EnumerableOperator<TA, [
-    TA,
-    TB
-]>;
 /**
- * Inteface that enables iteration over a collection.
+ * Inteface that enables iteration over a Container.
  */
 interface EnumeratorLike<T> extends DisposableLike {
     /**
@@ -260,11 +219,13 @@ interface EnumeratorLike<T> extends DisposableLike {
     move(this: EnumeratorLike<T>): boolean;
 }
 /**
- * Interface for iterating a collection of items.
+ * Interface for iterating a Container of items.
  */
-interface EnumerableLike<T> {
+interface EnumerableLike<T> extends ContainerLike {
+    readonly T: unknown;
+    readonly type: EnumerableLike<this["T"]>;
     /**
-     * Returns an `EnumeratorLike` to iterate through the collection.
+     * Returns an `EnumeratorLike` to iterate through the Container.
      */
     enumerate(this: EnumerableLike<T>): EnumeratorLike<T>;
 }
@@ -272,4 +233,9 @@ interface EnumerableLike<T> {
 declare type EnumeratorOperator<TA, TB> = Function1<EnumeratorLike<TA>, EnumeratorLike<TB>>;
 /** A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB> */
 declare type EnumerableOperator<TA, TB> = Function1<EnumerableLike<TA>, EnumerableLike<TB>>;
-export { EnumerableLike, EnumerableOperator, EnumeratorLike, EnumeratorOperator, compute, concat, concatAll, concatMap, concatWith, current, distinctUntilChanged, empty, endWith, enumerate, fromArray, fromIterable, fromIterator, fromValue, generate, hasCurrent, keep, keepType, lift, map, mapTo, move, repeat, scan, skipFirst, startWith, takeFirst, takeLast, takeWhile, toIterable, toRunnable, zip, zipEnumerators, zipWith };
+interface ToEnumerable<C extends ContainerLike> extends Container<C> {
+    toEnumerable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
+}
+declare const toEnumerable: <T>() => Function1<EnumerableLike<T>, EnumerableLike<T>>;
+declare const type: EnumerableLike<unknown>;
+export { EnumerableLike, EnumerableOperator, EnumeratorLike, EnumeratorOperator, ToEnumerable, concat, concatAll, current, distinctUntilChanged, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, lift, map, move, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toIterable, toRunnable, type, zip, zipEnumerators };

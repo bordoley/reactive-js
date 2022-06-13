@@ -14,6 +14,8 @@ import { isSome, none } from "../option";
 import { observe } from "./observer";
 
 class OnSubscribeObservable<T> implements ObservableLike<T> {
+  readonly type = this;
+  readonly T = undefined as any;
   readonly isSynchronous: boolean;
 
   constructor(

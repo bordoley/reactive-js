@@ -81,6 +81,9 @@ const windowHistoryPushState = (
 };
 
 class WindowLocationStream implements WindowLocationStreamLike {
+  readonly type = this;
+  readonly T = undefined as any;
+
   historyCounter = -1;
   readonly stateStream: StreamLike<Updater<TState>, WindowLocationURI>;
 

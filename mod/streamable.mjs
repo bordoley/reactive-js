@@ -1,12 +1,15 @@
 /// <reference types="./streamable.d.ts" />
 import { pipe, compose, returns } from './functions.mjs';
-import { m as createSubject, a0 as publish, a1 as observe, X as using, I as map$1, s as subscribe, z as empty$1, a2 as __currentScheduler, a3 as __using, Y as scan$1, w as mergeWith, f as fromValue, a4 as distinctUntilChanged, a5 as mapTo$1, W as onNotify$1, P as withLatestFrom$1, r as ignoreElements, u as endWith } from './observable-21f83e42.mjs';
+import { createSubject, publish, observe, using, map as map$1, subscribe, fromArrayT, __currentScheduler, __using, scan as scan$1, mergeWith, distinctUntilChanged, mapT, onNotify as onNotify$1, withLatestFrom as withLatestFrom$1, keepT, concatT } from './observable.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables } from './disposable.mjs';
 import { isNone, none } from './option.mjs';
+import { empty as empty$1, fromValue, mapTo as mapTo$1, ignoreElements, endWith } from './container.mjs';
 
 class StreamImpl extends AbstractDisposable {
     constructor(op, scheduler, options) {
         super();
+        this.type = this;
+        this.T = undefined;
         this.isSynchronous = false;
         const subject = createSubject();
         const observable = pipe(subject, op, publish(scheduler, options));
@@ -68,12 +71,14 @@ const mapReq = (op) => streamable => {
         : [op];
     return liftImpl(streamable, obsOps, reqOps);
 };
-const _empty = createStreamable(_ => empty$1());
+const _empty = createStreamable(_ => empty$1(fromArrayT));
 /**
  * Returns an empty `StreamableLike` that always returns
  * a disposed `StreamLike` instance.
  */
-const empty = (options) => isNone(options) ? _empty : createStreamable(_ => empty$1(options));
+const empty = (options) => isNone(options)
+    ? _empty
+    : createStreamable(_ => empty$1(fromArrayT, options));
 const stream = (scheduler, options) => streamable => streamable.stream(scheduler, options);
 const streamOnSchedulerFactory = (streamable, scheduler, replay) => pipe(streamable, stream(scheduler, { replay }));
 const __stream = (streamable, { replay = 0, scheduler, } = {}) => {
@@ -99,7 +104,7 @@ const createActionReducer = (reducer, initialState, options) => {
         // Hence we merge the two observables and take advantage
         // of the fact that merge notifies in the order of
         // the observables merged.
-        return pipe(src, scan$1(reducer, returns(acc)), mergeWith(fromValue()(acc)), distinctUntilChanged(options));
+        return pipe(src, scan$1(reducer, returns(acc)), mergeWith(fromValue(fromArrayT)(acc)), distinctUntilChanged(options));
     };
     return createStreamable(operator);
 };
@@ -115,12 +120,12 @@ const _identity = {
 const identity = () => _identity;
 
 const map = (mapper) => lift(map$1(mapper));
-const mapTo = (v) => lift(mapTo$1(v));
+const mapTo = (v) => lift(mapTo$1(mapT, v));
 const onNotify = (onNotify) => lift(onNotify$1(onNotify));
 const scan = (scanner, initalValue) => lift(scan$1(scanner, initalValue));
 const withLatestFrom = (other, selector) => lift(withLatestFrom$1(other, selector));
 
-const ignoreAndNotifyVoid = compose(ignoreElements(), endWith(none));
+const ignoreAndNotifyVoid = compose(ignoreElements(keepT), endWith({ ...fromArrayT, ...concatT }, none));
 const sink = (src, dest) => using(scheduler => {
     const srcStream = pipe(src, stream(scheduler));
     const destStream = pipe(dest, stream(scheduler));

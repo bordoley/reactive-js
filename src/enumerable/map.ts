@@ -1,5 +1,5 @@
 import { EnumerableOperator, EnumeratorLike } from "../enumerable";
-import { Function1, returns } from "../functions";
+import { Function1 } from "../functions";
 import { none } from "../option";
 import { AbstractDelegatingEnumerator } from "./enumerator";
 import { lift } from "./lift";
@@ -48,6 +48,3 @@ export const map = <TA, TB>(
     new MapEnumerator(enumerator, mapper);
   return lift(operator);
 };
-
-export const mapTo = <TA, TB>(v: TB): EnumerableOperator<TA, TB> =>
-  map(returns(v));

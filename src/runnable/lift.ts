@@ -7,6 +7,9 @@ import {
 } from "../runnable";
 
 class LiftedRunnable<T> implements RunnableLike<T> {
+  readonly type = this;
+  readonly T = undefined as any;
+
   constructor(
     readonly src: RunnableLike<any>,
     readonly operators: readonly SinkOperator<any, any>[],

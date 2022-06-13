@@ -2,8 +2,8 @@ import { Error, addTeardown, dispose } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
 import { Option, isSome } from "../option";
-import { empty } from "./empty";
-import { fromArray } from "./fromArray";
+import { empty } from "../container";
+import { fromArray, fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import {
   AbstractDelegatingObserver,
@@ -52,5 +52,6 @@ export const takeLast = <T>(
   const operator = (observer: ObserverLike<T>) =>
     new TakeLastObserver(observer, count);
   operator.isSynchronous = false;
-  return observable => (count > 0 ? pipe(observable, lift(operator)) : empty());
+  return observable =>
+    count > 0 ? pipe(observable, lift(operator)) : empty(fromArrayT);
 };

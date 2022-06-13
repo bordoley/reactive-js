@@ -1,3 +1,4 @@
+import { ignoreElements, startWith } from "../container";
 import { addTeardown, dispose } from "../disposable";
 import { incrementBy, pipe, returns, sum } from "../functions";
 import {
@@ -5,11 +6,12 @@ import {
   __memo,
   __observe,
   buffer,
+  concatT,
   fromArray,
-  ignoreElements,
+  fromArrayT,
+  keepT,
   observable,
   onNotify as onNotifyObs,
-  startWith,
   subscribe,
   takeFirst,
   toRunnable,
@@ -51,7 +53,7 @@ export const tests = describe(
         onNotifyObs(x => {
           stream.dispatch(x);
         }),
-        ignoreElements(),
+        ignoreElements(keepT),
       );
 
     const obs = observable(() => {
@@ -277,7 +279,7 @@ export const tests = describe(
         result = v;
       }),
       mapTo(none),
-      lift(startWith(none)),
+      lift(startWith({ ...concatT, ...fromArrayT }, none)),
     );
 
     const subscription = pipe(sink(src, dest), subscribe(scheduler));

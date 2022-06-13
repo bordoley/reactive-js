@@ -1,3 +1,4 @@
+import { ConcatAll } from "../container";
 import {
   Error,
   addDisposableDisposeParentOnChildError,
@@ -5,7 +6,7 @@ import {
   addTeardown,
   dispose,
 } from "../disposable";
-import { Function1, compose, pipe } from "../functions";
+import { pipe } from "../functions";
 import {
   ObservableLike,
   ObservableOperator,
@@ -13,7 +14,6 @@ import {
 } from "../observable";
 import { Option, isSome } from "../option";
 import { lift } from "./lift";
-import { map } from "./map";
 import { AbstractDelegatingObserver, assertObserverState } from "./observer";
 import { subscribe } from "./subscribe";
 
@@ -116,13 +116,15 @@ export const mergeAll = <T>(
   return lift(operator);
 };
 
-export const mergeMap = <TA, TB>(
-  mapper: Function1<TA, ObservableLike<TB>>,
-  options: {
-    maxBufferSize?: number;
-    maxConcurrency?: number;
-  } = {},
-): ObservableOperator<TA, TB> => compose(map(mapper), mergeAll(options));
+export const mergeAllT: ConcatAll<
+  ObservableLike<unknown>,
+  {
+    readonly maxBufferSize: number;
+    readonly maxConcurrency: number;
+  }
+> = {
+  concatAll: mergeAll,
+};
 
 /**
  * Converts a higher-order `ObservableLike` into a first-order
@@ -137,10 +139,12 @@ export const concatAll = <T>(
   return mergeAll({ maxBufferSize, maxConcurrency: 1 });
 };
 
-export const concatMap = <TA, TB>(
-  mapper: Function1<TA, ObservableLike<TB>>,
-  options?: { readonly maxBufferSize?: number },
-): ObservableOperator<TA, TB> => compose(map(mapper), concatAll(options));
+export const concatAllT: ConcatAll<
+  ObservableLike<unknown>,
+  { readonly maxBufferSize: number }
+> = {
+  concatAll,
+};
 
 const _exhaust = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
 
@@ -152,6 +156,6 @@ const _exhaust = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
 export const exhaust = <T>(): ObservableOperator<ObservableLike<T>, T> =>
   _exhaust as ObservableOperator<ObservableLike<T>, T>;
 
-export const exhaustMap = <TA, TB>(
-  mapper: Function1<TA, ObservableLike<TB>>,
-): ObservableOperator<TA, TB> => compose(map(mapper), exhaust());
+export const exhaustT: ConcatAll<ObservableLike<unknown>, {}> = {
+  concatAll: exhaust,
+};

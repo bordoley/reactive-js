@@ -1,20 +1,15 @@
-import { Function1, Factory, SideEffect1, Equality, Predicate, Updater, TypePredicate, Reducer } from "./functions.mjs";
+import { FromArray, FromArrayOptions, Keep, ContainerLike, Container, ContainerOf } from "./container.mjs";
+import { SideEffect1, Equality, Predicate, Function1, Updater, Factory, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
-declare const compute: <T>() => Function1<Factory<T>, RunnableLike<T>>;
 /**
  * Creates an `RunnableLike` which emits all values from each source sequentially.
  */
 declare function concat<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
-declare const concatWith: <T>(snd: RunnableLike<T>) => RunnableOperator<T, T>;
-declare function endWith<T>(value: T, ...values: readonly T[]): RunnableOperator<T, T>;
-declare function startWith<T>(value: T, ...values: readonly T[]): RunnableOperator<T, T>;
 declare const concatAll: <T>() => RunnableOperator<RunnableLike<T>, T>;
-declare const concatMap: <TA, TB>(mapper: Function1<TA, RunnableLike<TB>>) => RunnableOperator<TA, TB>;
 declare const createRunnable: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T>;
 declare const distinctUntilChanged: <T>(options?: {
     readonly equality?: Equality<T> | undefined;
 }) => RunnableOperator<T, T>;
-declare const empty: <T>() => RunnableLike<T>;
 declare const everySatisfy: <T>(predicate: Predicate<T>) => Predicate<RunnableLike<T>>;
 declare const noneSatisfy: <T>(predicate: Predicate<T>) => Predicate<RunnableLike<T>>;
 declare const first: <T>(runnable: RunnableLike<T>) => Option<T>;
@@ -23,14 +18,13 @@ declare const fromArray: <T>(options?: {
     readonly startIndex?: number;
     readonly endIndex?: number;
 }) => Function1<readonly T[], RunnableLike<T>>;
-declare const fromValue: <T>() => Function1<T, RunnableLike<T>>;
+declare const fromArrayT: FromArray<RunnableLike<unknown>, FromArrayOptions>;
 declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>) => RunnableLike<T>;
 declare const lift: <TA, TB>(operator: SinkOperator<TA, TB>) => RunnableOperator<TA, TB>;
-declare const keepType: <TA, TB extends TA>(predicate: TypePredicate<TA, TB>) => RunnableOperator<TA, TB>;
 declare const keep: <T>(predicate: Predicate<T>) => RunnableOperator<T, T>;
+declare const keepT: Keep<RunnableLike<unknown>>;
 declare const last: <T>(runnable: RunnableLike<T>) => Option<T>;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => RunnableOperator<TA, TB>;
-declare const mapTo: <TA, TB>(value: TB) => RunnableOperator<TA, TB>;
 declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => Function1<RunnableLike<T>, TAcc>;
 /**
  * Returns an RunnableLike that applies the predicate function each time the source
@@ -84,9 +78,15 @@ interface SinkLike<T> {
     done(this: SinkLike<T>): void;
 }
 declare type SinkOperator<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
-interface RunnableLike<T> {
+interface RunnableLike<T> extends ContainerLike {
+    readonly T: unknown;
+    readonly type: RunnableLike<this["T"]>;
     run(this: RunnableLike<T>, sink: SinkLike<T>): void;
 }
 declare type RunnableOperator<TA, TB> = Function1<RunnableLike<TA>, RunnableLike<TB>>;
+interface ToRunnable<C extends ContainerLike> extends Container<C> {
+    toRunnable<T>(): Function1<ContainerOf<C, T>, RunnableLike<T>>;
+}
 declare const toRunnable: <T>() => Function1<RunnableLike<T>, RunnableLike<T>>;
-export { AbstractDelegatingSink, RunnableLike, RunnableOperator, SinkLike, SinkOperator, compute, concat, concatAll, concatMap, concatWith, contains, createRunnable, distinctUntilChanged, empty, endWith, everySatisfy, first, forEach, fromArray, fromValue, generate, keep, keepType, last, lift, map, mapTo, noneSatisfy, reduce, repeat, scan, sinkDone, skipFirst, someSatisfy, startWith, takeFirst, takeLast, takeWhile, toArray, toRunnable };
+declare const type: RunnableLike<unknown>;
+export { AbstractDelegatingSink, RunnableLike, RunnableOperator, SinkLike, SinkOperator, ToRunnable, concat, concatAll, contains, createRunnable, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, lift, map, noneSatisfy, reduce, repeat, scan, sinkDone, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type };

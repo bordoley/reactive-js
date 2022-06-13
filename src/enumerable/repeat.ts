@@ -60,6 +60,9 @@ class RepeatEnumerator<T>
 }
 
 class RepeatEnumerable<T> implements EnumerableLike<T> {
+  readonly type = this;
+  readonly T = undefined as any;
+
   constructor(
     private readonly src: EnumerableLike<T>,
     private readonly shouldRepeat: Predicate<number>,

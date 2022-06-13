@@ -1,14 +1,11 @@
+import { Concat } from "../container";
 import {
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
   dispose,
 } from "../disposable";
 import { pipe } from "../functions";
-import {
-  ObservableLike,
-  ObservableOperator,
-  ObserverLike,
-} from "../observable";
+import { ObservableLike, ObserverLike } from "../observable";
 import { everySatisfy } from "../readonlyArray";
 import { createDelegatingObserver, observe } from "./observer";
 
@@ -35,6 +32,8 @@ const createConcatObserver = <T>(
 };
 
 class ConcatObservable<T> implements ObservableLike<T> {
+  readonly type = this;
+  readonly T = undefined as any;
   readonly isSynchronous: boolean;
 
   constructor(private readonly observables: readonly ObservableLike<T>[]) {
@@ -71,7 +70,6 @@ export function concat<T>(
   return new ConcatObservable(observables);
 }
 
-export const concatWith =
-  <T>(snd: ObservableLike<T>): ObservableOperator<T, T> =>
-  first =>
-    concat(first, snd);
+export const concatT: Concat<ObservableLike<unknown>> = {
+  concat,
+};
