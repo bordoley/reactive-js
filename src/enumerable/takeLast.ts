@@ -1,3 +1,8 @@
+import {
+  AbstractDisposable,
+  addDisposableDisposeParentOnChildError,
+  bindDisposables,
+} from "../disposable";
 import { EnumerableOperator, EnumeratorLike } from "../enumerable";
 import { pipe } from "../functions";
 import { Option, isNone, none } from "../option";
@@ -5,13 +10,19 @@ import { enumerate } from "./enumerator";
 import { empty, fromArray } from "./fromArray";
 import { lift } from "./lift";
 
-class TakeLastEnumerator<T> implements EnumeratorLike<T> {
+class TakeLastEnumerator<T>
+  extends AbstractDisposable
+  implements EnumeratorLike<T>
+{
   private enumerator: Option<EnumeratorLike<T>> = none;
 
   constructor(
     private readonly delegate: EnumeratorLike<T>,
     private readonly maxCount: number,
-  ) {}
+  ) {
+    super();
+    addDisposableDisposeParentOnChildError(this, delegate);
+  }
 
   get current() {
     return this.enumerator?.current as any;
@@ -25,7 +36,8 @@ class TakeLastEnumerator<T> implements EnumeratorLike<T> {
     const delegate = this.delegate;
 
     if (isNone(this.enumerator)) {
-      const last = [];
+      const last: Array<T> = [];
+
       while (delegate.move()) {
         last.push(delegate.current);
 
@@ -34,6 +46,7 @@ class TakeLastEnumerator<T> implements EnumeratorLike<T> {
         }
       }
       this.enumerator = pipe(last, fromArray(), enumerate);
+      bindDisposables(this, this.enumerator);
     }
 
     this.enumerator.move();

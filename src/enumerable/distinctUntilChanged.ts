@@ -1,12 +1,18 @@
 import { EnumerableOperator, EnumeratorLike } from "../enumerable";
 import { Equality, strictEquality } from "../functions";
+import { AbstractDelegatingEnumerator } from "./enumerator";
 import { lift } from "./lift";
 
-class DistinctUntilChangedEnumerator<T> implements EnumeratorLike<T> {
+class DistinctUntilChangedEnumerator<T>
+  extends AbstractDelegatingEnumerator<T, T>
+  implements EnumeratorLike<T>
+{
   constructor(
-    private readonly delegate: EnumeratorLike<T>,
+    delegate: EnumeratorLike<T>,
     private readonly equality: Equality<T>,
-  ) {}
+  ) {
+    super(delegate);
+  }
 
   get current() {
     return this.delegate.current;

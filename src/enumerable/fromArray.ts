@@ -1,7 +1,11 @@
+import { AbstractDisposable } from "../disposable";
 import { EnumerableLike, EnumeratorLike } from "../enumerable";
 import { none } from "../option";
 
-class ArrayEnumerator<T> implements EnumeratorLike<T> {
+class ArrayEnumerator<T>
+  extends AbstractDisposable
+  implements EnumeratorLike<T>
+{
   current: any = none;
   hasCurrent = false;
 
@@ -9,22 +13,27 @@ class ArrayEnumerator<T> implements EnumeratorLike<T> {
     private readonly array: readonly T[],
     private index: number,
     private readonly endIndex: number,
-  ) {}
+  ) {
+    super();
+  }
 
   move(): boolean {
     const array = this.array;
 
     let hasCurrent = false;
 
-    this.index++;
-    const index = this.index;
+    if (!this.isDisposed) {
+      this.index++;
+      const index = this.index;
 
-    if (index < this.endIndex) {
-      hasCurrent = true;
-      this.hasCurrent = true;
-      this.current = array[index];
-    } else {
-      this.hasCurrent = false;
+      if (index < this.endIndex) {
+        hasCurrent = true;
+        this.hasCurrent = true;
+        this.current = array[index];
+      } else {
+        this.hasCurrent = false;
+        this.dispose();
+      }
     }
 
     return hasCurrent;

@@ -1,4 +1,9 @@
 import {
+  AbstractDisposable,
+  addDisposableDisposeParentOnChildError,
+  addTeardown,
+} from "../disposable";
+import {
   EnumerableLike,
   EnumerableOperator,
   EnumeratorLike,
@@ -9,13 +14,22 @@ import { enumerate } from "./enumerator";
 import { lift } from "./lift";
 import { map } from "./map";
 
-class ConcatAllEnumerator<T> implements EnumeratorLike<T> {
+class ConcatAllEnumerator<T>
+  extends AbstractDisposable
+  implements EnumeratorLike<T>
+{
   current = none as unknown as T;
   hasCurrent = false;
 
   private enumerator: Option<EnumeratorLike<T>> = none;
 
-  constructor(private readonly delegate: EnumeratorLike<EnumerableLike<T>>) {}
+  constructor(private readonly delegate: EnumeratorLike<EnumerableLike<T>>) {
+    super();
+    addDisposableDisposeParentOnChildError(this, delegate);
+    addTeardown(this, () => {
+      this.enumerator = none;
+    });
+  }
 
   move(): boolean {
     this.current = none as unknown as T;
@@ -23,7 +37,9 @@ class ConcatAllEnumerator<T> implements EnumeratorLike<T> {
 
     const delegate = this.delegate;
     if (isNone(this.enumerator) && delegate.move()) {
-      this.enumerator = enumerate(delegate.current);
+      const enumerator = enumerate(delegate.current);
+      addDisposableDisposeParentOnChildError(this, enumerator);
+      this.enumerator = enumerator;
     }
 
     while (isSome(this.enumerator)) {
@@ -38,6 +54,10 @@ class ConcatAllEnumerator<T> implements EnumeratorLike<T> {
       } else {
         this.enumerator = none;
       }
+    }
+
+    if (!this.hasCurrent) {
+      this.dispose();
     }
 
     return this.hasCurrent;

@@ -130,7 +130,7 @@ class ObservableContext {
   private scheduledComputationSubscription = disposed;
 
   constructor(
-    readonly scheduler: SchedulerLike & DisposableLike,
+    readonly scheduler: SchedulerLike,
     private readonly runComputation: () => void,
     private readonly mode: ObservableEffectMode,
   ) {}

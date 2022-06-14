@@ -1,27 +1,37 @@
 import { EnumerableOperator, EnumeratorLike } from "../enumerable";
 import { Function1, returns } from "../functions";
 import { none } from "../option";
+import { AbstractDelegatingEnumerator } from "./enumerator";
 import { lift } from "./lift";
 
-class MapEnumerator<TA, TB> implements EnumeratorLike<TB> {
+class MapEnumerator<TA, TB>
+  extends AbstractDelegatingEnumerator<TA, TB>
+  implements EnumeratorLike<TB>
+{
   current = none as unknown as TB;
   hasCurrent = false;
 
   constructor(
-    readonly delegate: EnumeratorLike<TA>,
+    delegate: EnumeratorLike<TA>,
     readonly mapper: Function1<TA, TB>,
-  ) {}
+  ) {
+    super(delegate);
+  }
 
   move(): boolean {
     this.current = none as unknown as TB;
+    this.hasCurrent = false;
 
-    const hasCurrent = this.delegate.move();
-    this.hasCurrent = hasCurrent;
-
-    if (hasCurrent) {
-      this.current = this.mapper(this.delegate.current);
+    try {
+      if (this.delegate.move()) {
+        this.current = this.mapper(this.delegate.current);
+        this.hasCurrent = true;
+      }
+    } catch (cause) {
+      this.hasCurrent = false;
     }
-    return hasCurrent;
+
+    return this.hasCurrent;
   }
 }
 

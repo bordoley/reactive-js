@@ -4,7 +4,7 @@ import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
-import { e as enumerate, g as fromIterator$1, a as fromIterable$1, d as current, i as zipEnumerators } from './enumerable-1c943b67.mjs';
+import { e as enumerate$1, g as fromIterator$1, a as fromIterable$1, d as current, i as zipEnumerators } from './enumerable-03c94f82.mjs';
 import { i as createRunnable } from './runnable-90bcb00d.mjs';
 
 const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
@@ -682,7 +682,7 @@ const fromEnumerator = (options = {}) => f => {
  * @param values The `Enumerable`.
  * @param delay The requested delay between emitted items by the observable.
  */
-const fromEnumerable = (options) => enumerable => pipe(defer$1(enumerable, enumerate), fromEnumerator(options));
+const fromEnumerable = (options) => enumerable => pipe(defer$1(enumerable, enumerate$1), fromEnumerator(options));
 
 /**
  * Creates an `ObservableLike` which iterates through the values
@@ -1762,11 +1762,23 @@ class EnumeratorObserver extends AbstractDisposable {
         }
     }
 }
-const subscribeInteractive = (obs) => {
+const enumerate = (obs) => {
     const observer = new EnumeratorObserver();
     pipe(obs, observe(observer));
     return observer;
 };
+class ObservableEnumerable {
+    constructor(obs) {
+        this.obs = obs;
+        this.type = this;
+        this.T = undefined;
+    }
+    enumerate() {
+        return enumerate(this.obs);
+    }
+}
+const toEnumerable = () => obs => new ObservableEnumerable(obs);
+
 const shouldEmit = (enumerators) => {
     for (const enumerator of enumerators) {
         if (!enumerator.hasCurrent) {
@@ -1850,7 +1862,7 @@ class ZipObservable {
         const observables = this.observables;
         const count = observables.length;
         if (this.isSynchronous) {
-            const observable = using(defer$1(this.observables, map$1(subscribeInteractive)), (...enumerators) => pipe(enumerators, zipEnumerators, returns, fromEnumerator()));
+            const observable = using(defer$1(this.observables, map$1(enumerate)), (...enumerators) => pipe(enumerators, zipEnumerators, returns, fromEnumerator()));
             pipe(observable, observe(observer));
         }
         else {
@@ -1858,7 +1870,7 @@ class ZipObservable {
             for (let index = 0; index < count; index++) {
                 const observable = observables[index];
                 if (observable.isSynchronous) {
-                    const enumerator = subscribeInteractive(observable);
+                    const enumerator = enumerate(observable);
                     enumerator.move();
                     enumerators.push(enumerator);
                 }
@@ -2010,7 +2022,8 @@ var Observable = /*#__PURE__*/Object.freeze({
     zipLatestWith: zipLatestWith,
     zipWithLatestFrom: zipWithLatestFrom,
     toRunnable: toRunnable,
-    toPromise: toPromise
+    toPromise: toPromise,
+    toEnumerable: toEnumerable
 });
 
-export { takeWhile as $, observable as A, __observe as B, takeLast as C, onSubscribe as D, retry as E, scanAsync as F, share as G, zip as H, map as I, switchAll as J, switchMap as K, throttle as L, throwIfEmpty as M, compute as N, timeout as O, withLatestFrom as P, fromIterable as Q, zipWith as R, zipLatestWith as S, zipWithLatestFrom as T, Observable as U, startWith as V, onNotify$2 as W, using as X, scan as Y, concatMap as Z, __memo as _, fromArray as a, publish as a0, observe as a1, __currentScheduler as a2, __using as a3, distinctUntilChanged as a4, mapTo as a5, subscribeOn as a6, fromDisposable as a7, takeUntil as a8, fromIterator as a9, keepType as aa, reduce as ab, keep as ac, defer as ad, __do as ae, combineLatest as af, fromEnumerable as ag, lift as ah, mapAsync as ai, concatAll as aj, exhaust as ak, mergeAll as al, pairwise as am, repeat as an, skipFirst as ao, timeoutError as ap, zipLatest as aq, buffer as b, concat as c, dispatchTo as d, throws as e, fromValue as f, generate as g, catchError as h, concatWith as i, takeFirst as j, combineLatestWith as k, createObservable as l, createSubject as m, exhaustMap as n, fromPromise as o, toPromise as p, genMap as q, ignoreElements as r, subscribe as s, toRunnable as t, endWith as u, merge as v, mergeWith as w, mergeMap as x, never as y, empty as z };
+export { takeWhile as $, observable as A, __observe as B, takeLast as C, onSubscribe as D, retry as E, scanAsync as F, share as G, zip as H, map as I, switchAll as J, switchMap as K, throttle as L, throwIfEmpty as M, compute as N, timeout as O, withLatestFrom as P, fromIterable as Q, zipWith as R, zipLatestWith as S, zipWithLatestFrom as T, Observable as U, startWith as V, onNotify$2 as W, using as X, scan as Y, concatMap as Z, __memo as _, fromArray as a, publish as a0, observe as a1, __currentScheduler as a2, __using as a3, distinctUntilChanged as a4, mapTo as a5, subscribeOn as a6, fromDisposable as a7, takeUntil as a8, fromIterator as a9, keepType as aa, reduce as ab, keep as ac, defer as ad, __do as ae, combineLatest as af, fromEnumerable as ag, lift as ah, mapAsync as ai, concatAll as aj, exhaust as ak, mergeAll as al, pairwise as am, repeat as an, skipFirst as ao, timeoutError as ap, zipLatest as aq, toEnumerable as ar, buffer as b, concat as c, dispatchTo as d, throws as e, fromValue as f, generate as g, catchError as h, concatWith as i, takeFirst as j, combineLatestWith as k, createObservable as l, createSubject as m, exhaustMap as n, fromPromise as o, toPromise as p, genMap as q, ignoreElements as r, subscribe as s, toRunnable as t, endWith as u, merge as v, mergeWith as w, mergeMap as x, never as y, empty as z };

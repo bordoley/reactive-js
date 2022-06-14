@@ -1,26 +1,38 @@
 import { EnumerableOperator, EnumeratorLike } from "../enumerable";
 import { Predicate, TypePredicate } from "../functions";
-import { none } from "../option";
+import { AbstractDelegatingEnumerator } from "./enumerator";
 import { lift } from "./lift";
 
-class KeepTypeEnumerator<TA, TB extends TA> implements EnumeratorLike<TB> {
-  hasCurrent = false;
-  current: any = none;
-
+class KeepTypeEnumerator<TA, TB extends TA>
+  extends AbstractDelegatingEnumerator<TA, TB>
+  implements EnumeratorLike<TB>
+{
   constructor(
-    private readonly delegate: EnumeratorLike<TA>,
+    delegate: EnumeratorLike<TA>,
     private readonly predicate: TypePredicate<TA, TB>,
-  ) {}
+  ) {
+    super(delegate);
+  }
+
+  get current() {
+    return this.delegate.current as TB;
+  }
+
+  get hasCurrent() {
+    return this.delegate.hasCurrent;
+  }
 
   move(): boolean {
     const delegate = this.delegate;
     const predicate = this.predicate;
 
-    let hasCurrent = false;
-    while ((hasCurrent = delegate.move()) && !predicate(delegate.current)) {}
-    this.hasCurrent = hasCurrent;
-    this.current = delegate.current;
-    return hasCurrent;
+    try {
+      while (delegate.move() && !predicate(delegate.current)) {}
+    } catch (cause) {
+      this.dispose({ cause });
+    }
+
+    return this.hasCurrent;
   }
 }
 

@@ -1,13 +1,19 @@
 import { EnumerableOperator, EnumeratorLike } from "../enumerable";
 import { Factory, Reducer } from "../functions";
+import { AbstractDelegatingEnumerator } from "./enumerator";
 import { lift } from "./lift";
 
-class ScanEnumerator<T, TAcc> implements EnumeratorLike<TAcc> {
+class ScanEnumerator<T, TAcc>
+  extends AbstractDelegatingEnumerator<T, TAcc>
+  implements EnumeratorLike<TAcc>
+{
   constructor(
-    private readonly delegate: EnumeratorLike<T>,
+    delegate: EnumeratorLike<T>,
     private readonly reducer: Reducer<T, TAcc>,
     public current: TAcc,
-  ) {}
+  ) {
+    super(delegate);
+  }
 
   get hasCurrent() {
     return this.delegate.hasCurrent;
@@ -15,8 +21,13 @@ class ScanEnumerator<T, TAcc> implements EnumeratorLike<TAcc> {
 
   move(): boolean {
     const delegate = this.delegate;
+
     if (delegate.move()) {
-      this.current = this.reducer(this.current, this.delegate.current);
+      try {
+        this.current = this.reducer(this.current, this.delegate.current);
+      } catch (cause) {
+        this.dispose({ cause });
+      }
     }
 
     return this.hasCurrent;

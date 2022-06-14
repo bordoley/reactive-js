@@ -1,14 +1,17 @@
 import { EnumerableOperator, EnumeratorLike } from "../enumerable";
+import { AbstractDelegatingEnumerator } from "./enumerator";
 import { lift } from "./lift";
 
-class TakeFirstEnumerator<T> implements EnumeratorLike<T> {
+class TakeFirstEnumerator<T>
+  extends AbstractDelegatingEnumerator<T, T>
+  implements EnumeratorLike<T>
+{
   private count = 0;
   hasCurrent = false;
 
-  constructor(
-    private readonly delegate: EnumeratorLike<T>,
-    private readonly maxCount: number,
-  ) {}
+  constructor(delegate: EnumeratorLike<T>, private readonly maxCount: number) {
+    super(delegate);
+  }
 
   get current() {
     return this.delegate.current;
@@ -20,6 +23,8 @@ class TakeFirstEnumerator<T> implements EnumeratorLike<T> {
     if (this.count < this.maxCount && this.delegate.move()) {
       this.count++;
       this.hasCurrent = this.delegate.hasCurrent;
+    } else {
+      this.dispose();
     }
 
     return this.hasCurrent;
