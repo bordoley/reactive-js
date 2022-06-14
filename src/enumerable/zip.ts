@@ -1,4 +1,8 @@
 import {
+  AbstractDisposable,
+  addDisposableDisposeParentOnChildError,
+} from "../disposable";
+import {
   EnumerableLike,
   EnumerableOperator,
   EnumeratorLike,
@@ -16,11 +20,20 @@ const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {
 const allHaveCurrent = (enumerators: readonly EnumeratorLike<any>[]) =>
   pipe(enumerators, everySatisfy(hasCurrent));
 
-class ZipEnumerator implements EnumeratorLike<readonly unknown[]> {
+class ZipEnumerator
+  extends AbstractDisposable
+  implements EnumeratorLike<readonly unknown[]>
+{
   current: readonly unknown[] = [];
   hasCurrent = false;
 
-  constructor(private readonly enumerators: readonly EnumeratorLike<any>[]) {}
+  constructor(private readonly enumerators: readonly EnumeratorLike<any>[]) {
+    super();
+
+    for (const enumerator of enumerators) {
+      addDisposableDisposeParentOnChildError(this, enumerator);
+    }
+  }
 
   move(): boolean {
     this.hasCurrent = false;
@@ -31,6 +44,10 @@ class ZipEnumerator implements EnumeratorLike<readonly unknown[]> {
     this.hasCurrent = hasCurrent;
 
     this.current = hasCurrent ? pipe(enumerators, map(current)) : [];
+
+    if (!hasCurrent) {
+      this.dispose();
+    }
 
     return hasCurrent;
   }

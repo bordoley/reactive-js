@@ -1,4 +1,8 @@
 import {
+  AbstractDisposable,
+  addDisposableDisposeParentOnChildError,
+} from "../disposable";
+import {
   EnumerableLike,
   EnumerableOperator,
   EnumeratorLike,
@@ -7,7 +11,10 @@ import { Predicate, alwaysTrue } from "../functions";
 import { isNone } from "../option";
 import { enumerate } from "./enumerator";
 
-class RepeatEnumerator<T> implements EnumeratorLike<T> {
+class RepeatEnumerator<T>
+  extends AbstractDisposable
+  implements EnumeratorLike<T>
+{
   private enumerator: EnumeratorLike<T>;
   private count = 0;
 
@@ -15,7 +22,10 @@ class RepeatEnumerator<T> implements EnumeratorLike<T> {
     private readonly src: EnumerableLike<T>,
     private readonly shouldRepeat: Predicate<number>,
   ) {
+    super();
     this.enumerator = enumerate(src);
+
+    addDisposableDisposeParentOnChildError(this, this.enumerator);
   }
 
   get current() {
@@ -29,8 +39,18 @@ class RepeatEnumerator<T> implements EnumeratorLike<T> {
   move(): boolean {
     if (!this.enumerator.move()) {
       this.count++;
-      if (this.shouldRepeat(this.count)) {
+
+      let doRepeat = false;
+      try {
+        doRepeat = this.shouldRepeat(this.count);
+      } catch (cause) {
+        this.dispose({ cause });
+      }
+
+      if (doRepeat) {
         this.enumerator = enumerate(this.src);
+        addDisposableDisposeParentOnChildError(this, this.enumerator);
+
         this.enumerator.move();
       }
     }

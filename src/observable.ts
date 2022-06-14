@@ -165,3 +165,4 @@ export { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
 
 export { toRunnable } from "./observable/toRunnable";
 export { toPromise } from "./observable/toPromise";
+export { toEnumerable } from "./observable/toEnumerable";

@@ -97,6 +97,7 @@
 - [throwIfEmpty](observable.md#throwifempty)
 - [throws](observable.md#throws)
 - [timeout](observable.md#timeout)
+- [toEnumerable](observable.md#toenumerable)
 - [toPromise](observable.md#topromise)
 - [toRunnable](observable.md#torunnable)
 - [using](observable.md#using)
@@ -2648,6 +2649,22 @@ does not emit a value in given time span.
 #### Returns
 
 [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+
+___
+
+### toEnumerable
+
+▸ **toEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
 
 ___
 

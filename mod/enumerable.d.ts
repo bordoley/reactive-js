@@ -1,3 +1,4 @@
+import { DisposableLike } from "./disposable.mjs";
 import { Function1, Factory, Equality, Updater, TypePredicate, Predicate, Reducer } from "./functions.mjs";
 import { RunnableLike } from "./runnable.mjs";
 /**
@@ -242,7 +243,7 @@ declare const zipWith: <TA, TB>(snd: EnumerableLike<TB>) => EnumerableOperator<T
 /**
  * Inteface that enables iteration over a collection.
  */
-interface EnumeratorLike<T> {
+interface EnumeratorLike<T> extends DisposableLike {
     /**
      * The current item, if present, at the current position of the enumerator.
      */

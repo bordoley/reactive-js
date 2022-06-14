@@ -1,11 +1,4 @@
-import {
-  AbstractDisposable,
-  DisposableLike,
-  Error,
-  addDisposable,
-  addTeardown,
-  dispose,
-} from "../disposable";
+import { Error, addTeardown, dispose } from "../disposable";
 import { EnumeratorLike, current, zipEnumerators } from "../enumerable";
 import { defer, pipe, returns } from "../functions";
 import {
@@ -13,86 +6,17 @@ import {
   ObservableOperator,
   ObserverLike,
 } from "../observable";
-import { Option, isNone, isSome, none } from "../option";
+import { Option, isSome, none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
-import { SchedulerContinuationLike, run } from "../scheduler";
 import { fromEnumerator } from "./fromEnumerable";
 import {
   AbstractDelegatingObserver,
   assertObserverState,
   observe,
 } from "./observer";
+import { enumerate } from "./toEnumerable";
 
 import { using } from "./using";
-
-class EnumeratorObserver<T>
-  extends AbstractDisposable
-  implements EnumeratorLike<T>, ObserverLike<T>
-{
-  private continuations: SchedulerContinuationLike[] = [];
-  current: any;
-  hasCurrent = false;
-  inContinuation = false;
-  readonly now = 0;
-
-  get shouldYield() {
-    return this.inContinuation;
-  }
-
-  move(): boolean {
-    const continuations = this.continuations;
-    this.hasCurrent = false;
-    this.current = none;
-
-    while (!this.hasCurrent) {
-      const continuation = continuations.shift();
-      if (isNone(continuation) || continuation.isDisposed) {
-        break;
-      }
-
-      this.inContinuation = true;
-      run(continuation);
-      this.inContinuation = false;
-
-      const error = this.error;
-      if (isSome(error)) {
-        const { cause } = error;
-        throw cause;
-      }
-    }
-
-    return this.hasCurrent;
-  }
-
-  notify(next: T) {
-    assertObserverState(this);
-
-    this.current = next;
-    this.hasCurrent = true;
-  }
-
-  requestYield(): void {
-    // No-Op: We yield whenever the continuation is running.
-  }
-
-  schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
-    addDisposable(this, continuation);
-
-    if (!continuation.isDisposed && delay === 0) {
-      this.continuations.push(continuation);
-    } else {
-      pipe(continuation, dispose());
-    }
-  }
-}
-
-const subscribeInteractive = <T>(
-  obs: ObservableLike<T>,
-): EnumeratorObserver<T> => {
-  const observer = new EnumeratorObserver<T>();
-  pipe(obs, observe(observer));
-  return observer;
-};
 
 const shouldEmit = (enumerators: readonly EnumeratorLike<unknown>[]) => {
   for (const enumerator of enumerators) {
@@ -104,7 +28,7 @@ const shouldEmit = (enumerators: readonly EnumeratorLike<unknown>[]) => {
 };
 
 const shouldComplete = (
-  enumerators: readonly (DisposableLike & EnumeratorLike<unknown>)[],
+  enumerators: readonly (EnumeratorLike<unknown>)[],
 ) => {
   for (const enumerator of enumerators) {
     enumerator.move();
@@ -131,8 +55,7 @@ class ZipObserver
 
   constructor(
     delegate: ObserverLike<readonly unknown[]>,
-    private readonly enumerators: readonly (DisposableLike &
-      EnumeratorLike<any>)[],
+    private readonly enumerators: readonly EnumeratorLike<any>[],
   ) {
     super(delegate);
     addTeardown(delegate, () => {
@@ -203,19 +126,19 @@ class ZipObservable implements ObservableLike<readonly unknown[]> {
 
     if (this.isSynchronous) {
       const observable = using(
-        defer(this.observables, map(subscribeInteractive)),
-        (...enumerators: readonly EnumeratorObserver<any>[]) =>
+        defer(this.observables, map(enumerate)),
+        (...enumerators: readonly EnumeratorLike<any>[]) =>
           pipe(enumerators, zipEnumerators, returns, fromEnumerator()),
       );
 
       pipe(observable, observe(observer));
     } else {
-      const enumerators: (DisposableLike & EnumeratorLike<unknown>)[] = [];
+      const enumerators: (EnumeratorLike<unknown>)[] = [];
       for (let index = 0; index < count; index++) {
         const observable = observables[index];
 
         if (observable.isSynchronous) {
-          const enumerator = subscribeInteractive(observable);
+          const enumerator = enumerate(observable);
 
           enumerator.move();
           enumerators.push(enumerator);

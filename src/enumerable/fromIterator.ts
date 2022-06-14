@@ -1,24 +1,32 @@
+import { AbstractDisposable } from "../disposable";
 import { EnumerableLike, EnumeratorLike } from "../enumerable";
 import { Factory, Function1 } from "../functions";
 import { none } from "../option";
 
 class IteratorEnumerator<T, TReturn = any, TNext = unknown>
+  extends AbstractDisposable
   implements EnumeratorLike<T>
 {
   current: any = none;
   hasCurrent = false;
 
-  constructor(private readonly iterator: Iterator<T, TReturn, TNext>) {}
+  constructor(private readonly iterator: Iterator<T, TReturn, TNext>) {
+    super();
+  }
 
   move(): boolean {
     this.hasCurrent = false;
     this.current = none;
 
-    const next = this.iterator.next();
+    if (!this.isDisposed) {
+      const next = this.iterator.next();
 
-    if (!next.done) {
-      this.hasCurrent = true;
-      this.current = next.value;
+      if (!next.done) {
+        this.hasCurrent = true;
+        this.current = next.value;
+      } else {
+        this.dispose();
+      }
     }
 
     return this.hasCurrent;

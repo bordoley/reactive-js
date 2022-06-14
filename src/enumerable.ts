@@ -1,9 +1,10 @@
+import { DisposableLike } from "./disposable";
 import { Function1 } from "./functions";
 
 /**
  * Inteface that enables iteration over a collection.
  */
-export interface EnumeratorLike<T> {
+export interface EnumeratorLike<T> extends DisposableLike {
   /**
    * The current item, if present, at the current position of the enumerator.
    */

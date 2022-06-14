@@ -1,13 +1,16 @@
 import { EnumerableOperator, EnumeratorLike } from "../enumerable";
+import { AbstractDelegatingEnumerator } from "./enumerator";
 import { lift } from "./lift";
 
-class SkipFirstEnumerator<T> implements EnumeratorLike<T> {
+class SkipFirstEnumerator<T>
+  extends AbstractDelegatingEnumerator<T, T>
+  implements EnumeratorLike<T>
+{
   private count = 0;
 
-  constructor(
-    private readonly delegate: EnumeratorLike<T>,
-    private readonly skipCount: number,
-  ) {}
+  constructor(delegate: EnumeratorLike<T>, private readonly skipCount: number) {
+    super(delegate);
+  }
 
   get current() {
     return this.delegate.current;

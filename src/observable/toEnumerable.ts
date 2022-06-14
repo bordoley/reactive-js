@@ -1,0 +1,96 @@
+import {
+  AbstractDisposable,
+  addDisposable,
+  dispose,
+} from "../disposable";
+import { EnumerableLike, EnumeratorLike } from "../enumerable";
+import { Function1, pipe } from "../functions";
+import { ObservableLike, ObserverLike } from "../observable";
+import { isNone, isSome, none } from "../option";
+import { SchedulerContinuationLike, run } from "../scheduler";
+import { assertObserverState, observe } from "./observer";
+
+class EnumeratorObserver<T>
+  extends AbstractDisposable
+  implements EnumeratorLike<T>, ObserverLike<T>
+{
+  private continuations: SchedulerContinuationLike[] = [];
+  current: any;
+  hasCurrent = false;
+  inContinuation = false;
+  readonly now = 0;
+
+  get shouldYield() {
+    return this.inContinuation;
+  }
+
+  move(): boolean {
+    const continuations = this.continuations;
+    this.hasCurrent = false;
+    this.current = none;
+
+    while (!this.hasCurrent) {
+      const continuation = continuations.shift();
+      if (isNone(continuation) || continuation.isDisposed) {
+        break;
+      }
+
+      this.inContinuation = true;
+      run(continuation);
+      this.inContinuation = false;
+
+      const error = this.error;
+      if (isSome(error)) {
+        const { cause } = error;
+        throw cause;
+      }
+    }
+
+    return this.hasCurrent;
+  }
+
+  notify(next: T) {
+    assertObserverState(this);
+
+    this.current = next;
+    this.hasCurrent = true;
+  }
+
+  requestYield(): void {
+    // No-Op: We yield whenever the continuation is running.
+  }
+
+  schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
+    addDisposable(this, continuation);
+
+    if (!continuation.isDisposed && delay === 0) {
+      this.continuations.push(continuation);
+    } else {
+      pipe(continuation, dispose());
+    }
+  }
+}
+
+export const enumerate = <T>(
+  obs: ObservableLike<T>,
+): EnumeratorLike<T> => {
+  const observer = new EnumeratorObserver<T>();
+  pipe(obs, observe(observer));
+  return observer;
+};
+
+class ObservableEnumerable<T> implements EnumerableLike<T> {
+  readonly type = this;
+  readonly T = undefined as any;
+
+  constructor(private readonly obs: ObservableLike<T>) {}
+
+  enumerate() {
+    return enumerate(this.obs);
+  }
+}
+
+export const toEnumerable =
+  <T>(): Function1<ObservableLike<T>, EnumerableLike<T>> =>
+  obs =>
+    new ObservableEnumerable(obs);
