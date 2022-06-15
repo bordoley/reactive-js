@@ -27,9 +27,7 @@ const shouldEmit = (enumerators: readonly EnumeratorLike<unknown>[]) => {
   return true;
 };
 
-const shouldComplete = (
-  enumerators: readonly (EnumeratorLike<unknown>)[],
-) => {
+const shouldComplete = (enumerators: readonly EnumeratorLike<unknown>[]) => {
   for (const enumerator of enumerators) {
     enumerator.move();
     if (enumerator.isDisposed && !enumerator.hasCurrent) {
@@ -133,7 +131,7 @@ class ZipObservable implements ObservableLike<readonly unknown[]> {
 
       pipe(observable, observe(observer));
     } else {
-      const enumerators: (EnumeratorLike<unknown>)[] = [];
+      const enumerators: EnumeratorLike<unknown>[] = [];
       for (let index = 0; index < count; index++) {
         const observable = observables[index];
 
