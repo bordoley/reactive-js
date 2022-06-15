@@ -1,4 +1,4 @@
-import { AbstractDisposable, addDisposable, addTeardown } from "../disposable";
+import { AbstractDisposable, addDisposable, addTeardown, createDisposable, DisposableLike, disposed } from "../disposable";
 import { Factory, alwaysFalse } from "../functions";
 import { Option, none, isSome } from "../option";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
@@ -34,8 +34,11 @@ const scheduleImmediateWithSetImmediate = (
   scheduler: HostScheduler,
   continuation: SchedulerContinuationLike,
 ) => {
-  const immmediate = setImmediate(runContinuation, scheduler, continuation);
-  addTeardown(scheduler, () => clearImmediate(immmediate));
+  const disposable = createDisposable();
+  const immmediate = setImmediate(runContinuation, scheduler, continuation, disposable);
+
+  addTeardown(disposable, () => clearImmediate(immmediate));
+  addDisposable(continuation, disposable);
 };
 
 const scheduleImmediateWithMessageChannel = (
@@ -43,7 +46,7 @@ const scheduleImmediateWithMessageChannel = (
   channel: MessageChannel,
   continuation: SchedulerContinuationLike,
 ) => {
-  channel.port1.onmessage = () => runContinuation(scheduler, continuation);
+  channel.port1.onmessage = () => runContinuation(scheduler, continuation, disposed);
   channel.port2.postMessage(null);
 };
 
@@ -52,8 +55,11 @@ const scheduleDelayed = (
   continuation: SchedulerContinuationLike,
   delay: number,
 ) => {
-  const timeout = setTimeout(runContinuation, delay, scheduler, continuation);
-  addTeardown(scheduler, () => clearTimeout(timeout));
+  const disposable = createDisposable();
+  const timeout = setTimeout(runContinuation, delay, scheduler, continuation, disposable);
+
+  addTeardown(disposable, () => clearTimeout(timeout));
+  addDisposable(continuation, disposable);
 };
 
 const scheduleImmediate = (
@@ -78,7 +84,11 @@ const scheduleImmediate = (
 const runContinuation = (
   scheduler: HostScheduler,
   continuation: SchedulerContinuationLike,
+  immmediateOrTimerDisposable: DisposableLike, 
 ) => {
+  // clear the immediateOrTimer disposable 
+  immmediateOrTimerDisposable.dispose();
+
   if (!continuation.isDisposed) {
     scheduler.inContinuation = true;
     scheduler.startTime = scheduler.now;
