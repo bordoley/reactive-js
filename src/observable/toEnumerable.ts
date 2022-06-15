@@ -1,8 +1,4 @@
-import {
-  AbstractDisposable,
-  addDisposable,
-  dispose,
-} from "../disposable";
+import { AbstractDisposable, addDisposable, dispose } from "../disposable";
 import { EnumerableLike, EnumeratorLike } from "../enumerable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
@@ -71,9 +67,7 @@ class EnumeratorObserver<T>
   }
 }
 
-export const enumerate = <T>(
-  obs: ObservableLike<T>,
-): EnumeratorLike<T> => {
+export const enumerate = <T>(obs: ObservableLike<T>): EnumeratorLike<T> => {
   const observer = new EnumeratorObserver<T>();
   pipe(obs, observe(observer));
   return observer;
