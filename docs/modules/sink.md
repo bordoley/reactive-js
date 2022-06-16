@@ -9,10 +9,6 @@
 - [DelegatingSinkLike](../interfaces/sink.DelegatingSinkLike.md)
 - [SinkLike](../interfaces/sink.SinkLike.md)
 
-### Type Aliases
-
-- [SinkOperator](sink.md#sinkoperator)
-
 ### Functions
 
 - [notifyDistinctUntilChanged](sink.md#notifydistinctuntilchanged)
@@ -26,19 +22,6 @@
 - [notifyTakeFirst](sink.md#notifytakefirst)
 - [notifyTakeLast](sink.md#notifytakelast)
 - [notifyTakeWhile](sink.md#notifytakewhile)
-
-## Type Aliases
-
-### SinkOperator
-
-Ƭ **SinkOperator**<`TA`, `TB`\>: [`Function1`](functions.md#function1)<[`SinkLike`](../interfaces/sink.SinkLike.md)<`TB`\>, [`SinkLike`](../interfaces/sink.SinkLike.md)<`TA`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
 
 ## Functions
 

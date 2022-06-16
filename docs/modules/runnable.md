@@ -354,7 +354,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `operator` | [`SinkOperator`](sink.md#sinkoperator)<`TA`, `TB`\> |
+| `operator` | `SinkOperator`<`TA`, `TB`\> |
 
 #### Returns
 

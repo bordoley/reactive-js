@@ -1,6 +1,6 @@
 import { FromArray, FromArrayOptions, Keep, ContainerLike, Container, ContainerOf } from "./container.mjs";
 import { SideEffect1, Equality, Predicate, Function1, Updater, Factory, Reducer, Function2, Function3, Function4, Function5 } from "./functions.mjs";
-import { SinkLike, SinkOperator } from "./sink.mjs";
+import { SinkLike } from "./sink.mjs";
 import { Option } from "./option.mjs";
 import { DisposableLike } from "./disposable.mjs";
 /**
@@ -22,6 +22,7 @@ declare const fromArray: <T>(options?: {
 }) => Function1<readonly T[], RunnableLike<T>>;
 declare const fromArrayT: FromArray<RunnableLike<unknown>, FromArrayOptions>;
 declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>) => RunnableLike<T>;
+declare type SinkOperator<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
 declare const lift: <TA, TB>(operator: SinkOperator<TA, TB>) => RunnableOperator<TA, TB>;
 declare const keep: <T>(predicate: Predicate<T>) => RunnableOperator<T, T>;
 declare const keepT: Keep<RunnableLike<unknown>>;
