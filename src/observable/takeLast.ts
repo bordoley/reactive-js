@@ -6,6 +6,7 @@ import { empty } from "../container";
 import { fromArray, fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver, observe } from "./observer";
+import { notifyTakeLast } from "../sink";
 
 function onDispose(this: TakeLastObserver<unknown>, error: Option<Error>) {
   if (isSome(error)) {
@@ -23,18 +24,8 @@ class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
     super(delegate);
     addTeardown(this, onDispose);
   }
-
-  notify(next: T) {
-    this.assertState();
-    const last = this.last;
-
-    last.push(next);
-
-    if (last.length > this.maxCount) {
-      last.shift();
-    }
-  }
 }
+TakeLastObserver.prototype.notify = notifyTakeLast;
 
 /**
  * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.

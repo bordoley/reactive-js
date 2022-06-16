@@ -13,9 +13,8 @@ class KeepObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T> {
   constructor(delegate: ObserverLike<T>, readonly predicate: Predicate<T>) {
     super(delegate);
   }
-
-  notify = notifyKeep;
 }
+KeepObserver.prototype.notify = notifyKeep;
 
 /**
  * Returns an `ObservableLike` that only emits items from the

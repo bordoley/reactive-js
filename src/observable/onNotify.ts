@@ -11,9 +11,8 @@ class OnNotifyObserver<T> extends AbstractAutoDisposingDelegatingObserver<
   constructor(delegate: ObserverLike<T>, readonly onNotify: SideEffect1<T>) {
     super(delegate);
   }
-
-  notify = notifyOnNotify;
 }
+OnNotifyObserver.prototype.notify = notifyOnNotify;
 
 /**
  * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.

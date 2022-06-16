@@ -1,8 +1,11 @@
 import { Predicate } from "../functions";
 import { RunnableOperator } from "../runnable";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingSink } from "./sink";
-import { notifyTakeWhile, SinkLike } from "../sink";
+import {
+  AbstractAutoDisposingDelegatingSink,
+  notifyTakeWhile,
+  SinkLike,
+} from "../sink";
 
 class TakeWhileSink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
   constructor(
@@ -12,9 +15,8 @@ class TakeWhileSink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
   ) {
     super(delegate);
   }
-
-  notify = notifyTakeWhile;
 }
+TakeWhileSink.prototype.notify = notifyTakeWhile;
 
 export const takeWhile = <T>(
   predicate: Predicate<T>,

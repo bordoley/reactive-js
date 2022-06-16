@@ -2,7 +2,7 @@ import { Equality, strictEquality } from "../functions";
 import { Option, none } from "../option";
 import { RunnableOperator } from "../runnable";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingSink } from "./sink";
+import { AbstractAutoDisposingDelegatingSink } from "../sink";
 import { notifyDistinctUntilChanged, SinkLike } from "../sink";
 
 class DistinctUntilChangedSink<T> extends AbstractAutoDisposingDelegatingSink<
@@ -15,9 +15,8 @@ class DistinctUntilChangedSink<T> extends AbstractAutoDisposingDelegatingSink<
   constructor(delegate: SinkLike<T>, readonly equality: Equality<T>) {
     super(delegate);
   }
-
-  notify = notifyDistinctUntilChanged;
 }
+DistinctUntilChangedSink.prototype.notify = notifyDistinctUntilChanged;
 
 export const distinctUntilChanged = <T>(
   options: { readonly equality?: Equality<T> } = {},

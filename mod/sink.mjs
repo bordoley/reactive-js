@@ -1,8 +1,48 @@
 /// <reference types="./sink.d.ts" />
-import { dispose } from './disposable.mjs';
-import { pipe } from './functions.mjs';
+import { AbstractDisposable, addDisposable, bindDisposables, dispose } from './disposable.mjs';
+import { ignore, raise, pipe } from './functions.mjs';
 import { none } from './option.mjs';
+import { __DEV__ } from './env.mjs';
 
+const assertStateProduction = ignore;
+const assertStateDev = function () {
+    if (this.isDisposed) {
+        raise("Sink is disposed");
+    }
+};
+const assertState = __DEV__ ? assertStateDev : assertStateProduction;
+class AbstractSink extends AbstractDisposable {
+    constructor() {
+        super(...arguments);
+        this.assertState = assertState;
+    }
+    notify(_) { }
+}
+class AbstractDelegatingSink extends AbstractSink {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+        addDisposable(delegate, this);
+    }
+}
+class AbstractAutoDisposingDelegatingSink extends AbstractSink {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+        bindDisposables(this, delegate);
+    }
+}
+class DelegatingSink extends AbstractSink {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+        addDisposable(delegate, this);
+    }
+    notify(next) {
+        this.delegate.notify(next);
+    }
+}
+const createDelegatingSink = (delegate) => new DelegatingSink(delegate);
 function notifyDistinctUntilChanged(next) {
     this.assertState();
     const shouldEmit = !this.hasValue || !this.equality(this.prev, next);
@@ -45,12 +85,26 @@ function notifyScan(next) {
     this.acc = nextAcc;
     this.delegate.notify(nextAcc);
 }
+function notifySkipFirst(next) {
+    this.count++;
+    if (this.count > this.skipCount) {
+        this.delegate.notify(next);
+    }
+}
 function notifyTakeFirst(next) {
     this.assertState();
     this.count++;
     this.delegate.notify(next);
     if (this.count >= this.maxCount) {
         pipe(this, dispose());
+    }
+}
+function notifyTakeLast(next) {
+    this.assertState();
+    const last = this.last;
+    last.push(next);
+    if (last.length > this.maxCount) {
+        last.shift();
     }
 }
 function notifyTakeWhile(next) {
@@ -64,4 +118,4 @@ function notifyTakeWhile(next) {
     }
 }
 
-export { notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifyTakeFirst, notifyTakeWhile };
+export { AbstractAutoDisposingDelegatingSink, AbstractDelegatingSink, AbstractSink, createDelegatingSink, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile };

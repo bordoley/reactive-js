@@ -1,7 +1,7 @@
 import { Factory, Reducer } from "../functions";
 import { RunnableOperator } from "../runnable";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingSink } from "./sink";
+import { AbstractAutoDisposingDelegatingSink } from "../sink";
 import { notifyScan, SinkLike } from "../sink";
 
 class ScanSink<T, TAcc> extends AbstractAutoDisposingDelegatingSink<T, TAcc> {
@@ -12,9 +12,8 @@ class ScanSink<T, TAcc> extends AbstractAutoDisposingDelegatingSink<T, TAcc> {
   ) {
     super(delegate);
   }
-
-  notify = notifyScan;
 }
+ScanSink.prototype.notify = notifyScan;
 
 export const scan = <T, TAcc>(
   reducer: Reducer<T, TAcc>,

@@ -1,13 +1,13 @@
 /// <reference types="./observable.d.ts" />
-import { addOnDisposedWithError, AbstractDisposable, addDisposable, bindDisposables, dispose, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
+import { addOnDisposedWithError, addDisposable, bindDisposables, dispose, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, AbstractDisposable, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
 import { pipe, ignore, raise, arrayEquality, defer as defer$1, compose, strictEquality, returns } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { empty, fromValue, concatMap, throws } from './container.mjs';
 import { __DEV__ } from './env.mjs';
+import { AbstractSink, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifyTakeFirst, notifySkipFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
-import { notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifyTakeFirst, notifyTakeWhile } from './sink.mjs';
 import { createRunnable } from './runnable.mjs';
 
 const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
@@ -42,7 +42,7 @@ function assertStateDev() {
     }
 }
 const assertState = __DEV__ ? assertStateDev : assertStateProduction;
-class AbstractObserver extends AbstractDisposable {
+class AbstractObserver extends AbstractSink {
     constructor() {
         super();
         this.assertState = assertState;
@@ -890,9 +890,9 @@ class DistinctUntilChangedObserver extends AbstractAutoDisposingDelegatingObserv
         super(delegate);
         this.equality = equality;
         this.hasValue = false;
-        this.notify = notifyDistinctUntilChanged;
     }
 }
+DistinctUntilChangedObserver.prototype.notify = notifyDistinctUntilChanged;
 /**
  * Returns an `ObservableLike` that emits all items emitted by the source that
  * are distinct by comparison from the previous item.
@@ -911,9 +911,9 @@ class KeepObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, predicate) {
         super(delegate);
         this.predicate = predicate;
-        this.notify = notifyKeep;
     }
 }
+KeepObserver.prototype.notify = notifyKeep;
 /**
  * Returns an `ObservableLike` that only emits items from the
  * source that satisfy the specified type predicate.
@@ -933,9 +933,9 @@ class MapObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, mapper) {
         super(delegate);
         this.mapper = mapper;
-        this.notify = notifyMap;
     }
 }
+MapObserver.prototype.notify = notifyMap;
 /**
  * Returns an `ObservableLike` that applies the `mapper` function to each
  * value emitted by the source.
@@ -1086,9 +1086,9 @@ class OnNotifyObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor(delegate, onNotify) {
         super(delegate);
         this.onNotify = onNotify;
-        this.notify = notifyOnNotify;
     }
 }
+OnNotifyObserver.prototype.notify = notifyOnNotify;
 /**
  * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
  *
@@ -1134,9 +1134,9 @@ class PairwiseObserver extends AbstractAutoDisposingDelegatingObserver {
     constructor() {
         super(...arguments);
         this.hasPrev = false;
-        this.notify = notifyPairwise;
     }
 }
+PairwiseObserver.prototype.notify = notifyPairwise;
 const pairwise = () => {
     const operator = (observer) => new PairwiseObserver(observer);
     operator.isSynchronous = true;
@@ -1170,10 +1170,10 @@ class ReduceObserver extends AbstractDelegatingObserver {
         super(delegate);
         this.reducer = reducer;
         this.acc = acc;
-        this.notify = notifyReduce;
         addTeardown(this, onDispose$3);
     }
 }
+ReduceObserver.prototype.notify = notifyReduce;
 const reduce = (reducer, initialValue) => {
     const operator = (observer) => new ReduceObserver(observer, reducer, initialValue());
     operator.isSynchronous = true;
@@ -1232,9 +1232,9 @@ class ScanObserver extends AbstractAutoDisposingDelegatingObserver {
         super(delegate);
         this.reducer = reducer;
         this.acc = acc;
-        this.notify = notifyScan;
     }
 }
+ScanObserver.prototype.notify = notifyScan;
 /**
  * Returns an `ObservableLike` that applies an accumulator function over the source,
  * and emits each intermediate result.
@@ -1253,9 +1253,9 @@ class TakeFirstObserver extends AbstractAutoDisposingDelegatingObserver {
         super(delegate);
         this.maxCount = maxCount;
         this.count = 0;
-        this.notify = notifyTakeFirst;
     }
 }
+TakeFirstObserver.prototype.notify = notifyTakeFirst;
 /**
  * Returns an `ObservableLike` that only emits the first `count` values emitted by the source.
  *
@@ -1375,14 +1375,8 @@ class SkipFirstObserver extends AbstractAutoDisposingDelegatingObserver {
         this.skipCount = skipCount;
         this.count = 0;
     }
-    notify(next) {
-        this.assertState();
-        this.count++;
-        if (this.count > this.skipCount) {
-            this.delegate.notify(next);
-        }
-    }
 }
+SkipFirstObserver.prototype.notify = notifySkipFirst;
 /**
  * Returns an `ObservableLike` that skips the first count items emitted by the source.
  *
@@ -1391,7 +1385,7 @@ class SkipFirstObserver extends AbstractAutoDisposingDelegatingObserver {
 const skipFirst = (options = {}) => {
     const { count = 1 } = options;
     const operator = (observer) => new SkipFirstObserver(observer, count);
-    operator.isSynchronous = false;
+    operator.isSynchronous = true;
     return observable => count > 0 ? pipe(observable, lift(operator)) : observable;
 };
 
@@ -1421,15 +1415,8 @@ class TakeLastObserver extends AbstractDelegatingObserver {
         this.last = [];
         addTeardown(this, onDispose$2);
     }
-    notify(next) {
-        this.assertState();
-        const last = this.last;
-        last.push(next);
-        if (last.length > this.maxCount) {
-            last.shift();
-        }
-    }
 }
+TakeLastObserver.prototype.notify = notifyTakeLast;
 /**
  * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
  *
@@ -1458,9 +1445,9 @@ class TakeWhileObserver extends AbstractAutoDisposingDelegatingObserver {
         super(delegate);
         this.predicate = predicate;
         this.inclusive = inclusive;
-        this.notify = notifyTakeWhile;
     }
 }
+TakeWhileObserver.prototype.notify = notifyTakeWhile;
 /**
  * Returns an `ObservableLike` which emits values emitted by the source as long
  * as each value satisfies the given predicate, and then completes as soon as

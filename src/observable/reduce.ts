@@ -28,9 +28,8 @@ class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
     super(delegate);
     addTeardown(this, onDispose);
   }
-
-  notify = notifyReduce;
 }
+ReduceObserver.prototype.notify = notifyReduce;
 
 export const reduce = <T, TAcc>(
   reducer: Reducer<T, TAcc>,

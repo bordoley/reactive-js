@@ -37,7 +37,6 @@ export { repeat } from "./runnable/repeat";
 export { scan } from "./runnable/scan";
 export { skipFirst } from "./runnable/skipFirst";
 export { someSatisfy, contains } from "./runnable/someSatisfy";
-export { AbstractDelegatingSink } from "./runnable/sink";
 export { takeFirst } from "./runnable/takeFirst";
 export { takeLast } from "./runnable/takeLast";
 export { takeWhile } from "./runnable/takeWhile";
