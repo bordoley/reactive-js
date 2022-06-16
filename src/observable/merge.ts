@@ -1,3 +1,4 @@
+import { AbstractContainer } from "../container";
 import {
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
@@ -30,12 +31,15 @@ const createMergeObserver = <T>(
   return observer;
 };
 
-class MergeObservable<T> implements ObservableLike<T> {
-  readonly type = this;
-  readonly T = undefined as any;
+class MergeObservable<T>
+  extends AbstractContainer
+  implements ObservableLike<T>
+{
   readonly isSynchronous = false;
 
-  constructor(readonly observables: readonly ObservableLike<T>[]) {}
+  constructor(readonly observables: readonly ObservableLike<T>[]) {
+    super();
+  }
 
   observe(observer: ObserverLike<T>) {
     const observables = this.observables;

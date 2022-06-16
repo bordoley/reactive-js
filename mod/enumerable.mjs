@@ -2,7 +2,7 @@
 import { pipe, strictEquality, alwaysTrue, identity } from './functions.mjs';
 import { AbstractDisposable, addDisposableDisposeParentOnChildError, addTeardown, bindDisposables } from './disposable.mjs';
 import { none, isNone, isSome } from './option.mjs';
-import { empty } from './container.mjs';
+import { AbstractContainer, empty } from './container.mjs';
 import { createRunnable } from './runnable.mjs';
 import { everySatisfy, map as map$1 } from './readonlyArray.mjs';
 
@@ -28,12 +28,11 @@ class AbstractDelegatingEnumerator {
     }
 }
 
-class LiftedEnumerableLike {
+class LiftedEnumerableLike extends AbstractContainer {
     constructor(src, operators) {
+        super();
         this.src = src;
         this.operators = operators;
-        this.type = this;
-        this.T = undefined;
     }
     enumerate() {
         const src = enumerate(this.src);
@@ -130,13 +129,12 @@ class ArrayEnumerator extends AbstractDisposable {
         return hasCurrent;
     }
 }
-class ArrayEnumerable {
+class ArrayEnumerable extends AbstractContainer {
     constructor(values, startIndex, endIndex) {
+        super();
         this.values = values;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
-        this.type = this;
-        this.T = this;
     }
     enumerate() {
         return new ArrayEnumerator(this.values, this.startIndex, this.endIndex);
@@ -220,11 +218,10 @@ class IteratorEnumerator extends AbstractDisposable {
         return this.hasCurrent;
     }
 }
-class IteratorEnumerable {
+class IteratorEnumerable extends AbstractContainer {
     constructor(f) {
+        super();
         this.f = f;
-        this.type = this;
-        this.T = undefined;
     }
     enumerate() {
         const iterator = this.f();
@@ -271,12 +268,11 @@ class GenerateEnumerator extends AbstractDisposable {
         return this.hasCurrent;
     }
 }
-class GenerateEnumerable {
+class GenerateEnumerable extends AbstractContainer {
     constructor(f, acc) {
+        super();
         this.f = f;
         this.acc = acc;
-        this.type = this;
-        this.T = undefined;
     }
     enumerate() {
         return new GenerateEnumerator(this.f, this.acc());
@@ -395,12 +391,11 @@ class RepeatEnumerator extends AbstractDisposable {
         return this.hasCurrent;
     }
 }
-class RepeatEnumerable {
+class RepeatEnumerable extends AbstractContainer {
     constructor(src, shouldRepeat) {
+        super();
         this.src = src;
         this.shouldRepeat = shouldRepeat;
-        this.type = this;
-        this.T = undefined;
     }
     enumerate() {
         return new RepeatEnumerator(this.src, this.shouldRepeat);
@@ -674,11 +669,10 @@ class ZipEnumerator extends AbstractDisposable {
 function zipEnumerators(enumerators) {
     return new ZipEnumerator(enumerators);
 }
-class ZipEnumerable {
+class ZipEnumerable extends AbstractContainer {
     constructor(enumerables) {
+        super();
         this.enumerables = enumerables;
-        this.type = this;
-        this.T = undefined;
     }
     enumerate() {
         return pipe(this.enumerables, map$1(enumerate), zipEnumerators);

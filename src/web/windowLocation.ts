@@ -1,3 +1,4 @@
+import { AbstractContainer } from "../container";
 import {
   addDisposableDisposeParentOnChildError,
   DisposableOrTeardown,
@@ -85,10 +86,10 @@ const windowHistoryPushState = (
   );
 };
 
-class WindowLocationStream implements WindowLocationStreamLike {
-  readonly type = this;
-  readonly T = undefined as any;
-
+class WindowLocationStream
+  extends AbstractContainer
+  implements WindowLocationStreamLike
+{
   historyCounter = -1;
   readonly stateStream: StreamLike<Updater<TState>, WindowLocationURI>;
 
@@ -96,6 +97,7 @@ class WindowLocationStream implements WindowLocationStreamLike {
     readonly scheduler: SchedulerLike,
     readonly options?: { readonly replay?: number },
   ) {
+    super();
     this.stateStream = pipe(
       () => ({
         replace: true,

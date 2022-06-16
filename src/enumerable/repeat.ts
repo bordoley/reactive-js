@@ -1,3 +1,4 @@
+import { AbstractContainer } from "../container";
 import {
   AbstractDisposable,
   addDisposableDisposeParentOnChildError,
@@ -59,14 +60,16 @@ class RepeatEnumerator<T>
   }
 }
 
-class RepeatEnumerable<T> implements EnumerableLike<T> {
-  readonly type = this;
-  readonly T = undefined as any;
-
+class RepeatEnumerable<T>
+  extends AbstractContainer
+  implements EnumerableLike<T>
+{
   constructor(
     private readonly src: EnumerableLike<T>,
     private readonly shouldRepeat: Predicate<number>,
-  ) {}
+  ) {
+    super();
+  }
 
   enumerate() {
     return new RepeatEnumerator(this.src, this.shouldRepeat);

@@ -1,3 +1,4 @@
+import { AbstractContainer } from "../container";
 import {
   EnumerableLike,
   EnumerableOperator,
@@ -7,14 +8,16 @@ import {
 import { pipe } from "../functions";
 import { enumerate } from "./enumerator";
 
-class LiftedEnumerableLike<T> implements EnumerableLike<T> {
-  readonly type = this;
-  readonly T = undefined as any;
-
+class LiftedEnumerableLike<T>
+  extends AbstractContainer
+  implements EnumerableLike<T>
+{
   constructor(
     readonly src: EnumerableLike<any>,
     readonly operators: readonly EnumeratorOperator<any, any>[],
-  ) {}
+  ) {
+    super();
+  }
 
   enumerate(): EnumeratorLike<T> {
     const src = enumerate(this.src);

@@ -1,4 +1,4 @@
-import { Concat } from "../container";
+import { AbstractContainer, Concat } from "../container";
 import {
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
@@ -31,12 +31,14 @@ const createConcatObserver = <T>(
   return observer;
 };
 
-class ConcatObservable<T> implements ObservableLike<T> {
-  readonly type = this;
-  readonly T = undefined as any;
+class ConcatObservable<T>
+  extends AbstractContainer
+  implements ObservableLike<T>
+{
   readonly isSynchronous: boolean;
 
   constructor(private readonly observables: readonly ObservableLike<T>[]) {
+    super();
     this.isSynchronous = pipe(
       observables,
       everySatisfy(obs => obs.isSynchronous),

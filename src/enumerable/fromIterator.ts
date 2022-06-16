@@ -1,3 +1,4 @@
+import { AbstractContainer } from "../container";
 import { AbstractDisposable } from "../disposable";
 import { EnumerableLike, EnumeratorLike } from "../enumerable";
 import { Factory, Function1 } from "../functions";
@@ -33,13 +34,14 @@ class IteratorEnumerator<T, TReturn = any, TNext = unknown>
   }
 }
 
-class IteratorEnumerable<T, TReturn = any, TNext = unknown>
-  implements EnumerableLike<T>
-{
-  readonly type = this;
-  readonly T = undefined as any;
-
-  constructor(private readonly f: Factory<Iterator<T, TReturn, TNext>>) {}
+class IteratorEnumerable<
+  T,
+  TReturn = any,
+  TNext = unknown,
+> extends AbstractContainer {
+  constructor(private readonly f: Factory<Iterator<T, TReturn, TNext>>) {
+    super();
+  }
 
   enumerate() {
     const iterator = this.f();

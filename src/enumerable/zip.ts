@@ -1,3 +1,4 @@
+import { AbstractContainer } from "../container";
 import {
   AbstractDisposable,
   addDisposableDisposeParentOnChildError,
@@ -55,13 +56,15 @@ export function zipEnumerators(
   return new ZipEnumerator(enumerators);
 }
 
-class ZipEnumerable implements EnumerableLike<readonly unknown[]> {
-  readonly type = this;
-  readonly T = undefined as any;
-
+class ZipEnumerable
+  extends AbstractContainer
+  implements EnumerableLike<readonly unknown[]>
+{
   constructor(
     private readonly enumerables: readonly EnumerableLike<unknown>[],
-  ) {}
+  ) {
+    super();
+  }
 
   enumerate() {
     return pipe(this.enumerables, map(enumerate), zipEnumerators);

@@ -1,8 +1,10 @@
+import { AbstractContainer } from "../container";
 import { ObservableLike, ObserverLike } from "../observable";
 
-class NeverObservable<T> implements ObservableLike<T> {
-  readonly type = this;
-  readonly T = undefined as any;
+class NeverObservable<T>
+  extends AbstractContainer
+  implements ObservableLike<T>
+{
   readonly isSynchronous = false;
 
   observe(_: ObserverLike<T>) {}

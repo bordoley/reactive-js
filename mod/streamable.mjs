@@ -9,8 +9,6 @@ import { toPausableScheduler } from './scheduler.mjs';
 class StreamImpl extends AbstractDisposable {
     constructor(op, scheduler, options) {
         super();
-        this.type = this;
-        this.T = undefined;
         this.isSynchronous = false;
         const subject = createSubject();
         const observable = pipe(subject, op, publish(scheduler, options));
@@ -18,6 +16,12 @@ class StreamImpl extends AbstractDisposable {
         addDisposable(this, subject);
         this.dispatcher = subject;
         this.observable = observable;
+    }
+    get type() {
+        return this;
+    }
+    get T() {
+        return undefined;
     }
     get observerCount() {
         return this.observable.observerCount;

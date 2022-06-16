@@ -2,6 +2,14 @@
 import { compose, callWith, pipe, defer, alwaysFalse, returns } from './functions.mjs';
 import { isSome } from './option.mjs';
 
+class AbstractContainer {
+    get type() {
+        return this;
+    }
+    get T() {
+        return undefined;
+    }
+}
 const compute = (m, options) => compose(fromValue(m, options), m.map(callWith()));
 const concatMap = ({ map, concatAll }, mapper, options) => compose(map(mapper), concatAll(options));
 const concatWith = ({ concat }, snd) => first => concat(first, snd);
@@ -28,4 +36,4 @@ const throws = (m, options) => errorFactory => pipe(() => {
 }, compute(m, options));
 const zipWith = ({ zip }, snd) => fst => zip(fst, snd);
 
-export { compute, concatMap, concatWith, empty, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, startWith, throws, zipWith };
+export { AbstractContainer, compute, concatMap, concatWith, empty, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, startWith, throws, zipWith };

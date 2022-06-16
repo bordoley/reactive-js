@@ -1,3 +1,4 @@
+import { AbstractContainer } from "../container";
 import {
   DisposableLike,
   addDisposableDisposeParentOnChildError,
@@ -15,10 +16,9 @@ import { SchedulerLike } from "../scheduler";
 import { observe } from "./observer";
 
 class UsingObservable<TResource extends DisposableLike, T>
+  extends AbstractContainer
   implements ObservableLike<T>
 {
-  readonly type = this;
-  readonly T = undefined as any;
   readonly isSynchronous = false;
 
   constructor(
@@ -29,7 +29,9 @@ class UsingObservable<TResource extends DisposableLike, T>
     private readonly observableFactory: (
       ...resources: readonly TResource[]
     ) => ObservableLike<T>,
-  ) {}
+  ) {
+    super();
+  }
 
   observe(observer: ObserverLike<T>) {
     const resources = this.resourceFactory(observer);

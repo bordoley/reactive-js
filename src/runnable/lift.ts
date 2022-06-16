@@ -1,15 +1,15 @@
+import { AbstractContainer } from "../container";
 import { pipe } from "../functions";
 import { RunnableLike, RunnableOperator } from "../runnable";
 import { SinkLike, SinkOperator } from "../sink";
 
-class LiftedRunnable<T> implements RunnableLike<T> {
-  readonly type = this;
-  readonly T = undefined as any;
-
+class LiftedRunnable<T> extends AbstractContainer implements RunnableLike<T> {
   constructor(
     readonly src: RunnableLike<any>,
     readonly operators: readonly SinkOperator<any, any>[],
-  ) {}
+  ) {
+    super();
+  }
 
   run(sink: SinkLike<T>) {
     const liftedSink = pipe(sink, ...this.operators) as SinkLike<T>;

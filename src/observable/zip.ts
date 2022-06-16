@@ -1,4 +1,4 @@
-import { Zip } from "../container";
+import { AbstractContainer, Zip } from "../container";
 import { Error, addTeardown, dispose } from "../disposable";
 import { EnumeratorLike, current, zipEnumerators } from "../enumerable";
 import { defer, pipe, returns } from "../functions";
@@ -101,12 +101,14 @@ class ZipObserver
   }
 }
 
-class ZipObservable implements ObservableLike<readonly unknown[]> {
-  readonly type = this;
-  readonly T = undefined as any;
+class ZipObservable
+  extends AbstractContainer
+  implements ObservableLike<readonly unknown[]>
+{
   readonly isSynchronous: boolean;
 
   constructor(private readonly observables: readonly ObservableLike<any>[]) {
+    super();
     this.isSynchronous = pipe(
       observables,
       everySatisfy(obs => obs.isSynchronous),

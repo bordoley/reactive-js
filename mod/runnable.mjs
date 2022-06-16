@@ -1,15 +1,14 @@
 /// <reference types="./runnable.d.ts" />
 import { pipe, strictEquality, compose, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
 import { addDisposableDisposeParentOnChildError, dispose, addTeardown } from './disposable.mjs';
+import { AbstractContainer, empty } from './container.mjs';
 import { createDelegatingSink, AbstractDelegatingSink, AbstractAutoDisposingDelegatingSink, notifyDistinctUntilChanged, AbstractSink, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
 import { none, isSome, isNone } from './option.mjs';
-import { empty } from './container.mjs';
 
-class RunnableImpl {
+class RunnableImpl extends AbstractContainer {
     constructor(_run) {
+        super();
         this._run = _run;
-        this.type = this;
-        this.T = undefined;
     }
     run(sink) {
         try {
@@ -22,12 +21,11 @@ class RunnableImpl {
 }
 const createRunnable = (run) => new RunnableImpl(run);
 
-class LiftedRunnable {
+class LiftedRunnable extends AbstractContainer {
     constructor(src, operators) {
+        super();
         this.src = src;
         this.operators = operators;
-        this.type = this;
-        this.T = undefined;
     }
     run(sink) {
         const liftedSink = pipe(sink, ...this.operators);
