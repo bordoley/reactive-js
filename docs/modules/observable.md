@@ -10,6 +10,7 @@
 - [MulticastObservableLike](../interfaces/observable.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/observable.ObservableLike.md)
 - [ObserverLike](../interfaces/observable.ObserverLike.md)
+- [ObserverOperator](../interfaces/observable.ObserverOperator.md)
 - [StreamLike](../interfaces/observable.StreamLike.md)
 - [SubjectLike](../interfaces/observable.SubjectLike.md)
 
@@ -18,7 +19,6 @@
 - [AsyncReducer](observable.md#asyncreducer)
 - [ObservableEffectMode](observable.md#observableeffectmode)
 - [ObservableOperator](observable.md#observableoperator)
-- [ObserverOperator](observable.md#observeroperator)
 - [ThrottleMode](observable.md#throttlemode)
 
 ### Variables
@@ -141,41 +141,6 @@ A function which converts an ObservableLike<A> to an ObservableLike<B>.
 | :------ |
 | `A` |
 | `B` |
-
-___
-
-### ObserverOperator
-
-Ƭ **ObserverOperator**<`A`, `B`\>: `Object`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `A` |
-| `B` |
-
-#### Call signature
-
-▸ (`observer`): [`ObserverLike`](../interfaces/observable.ObserverLike.md)<`A`\>
-
-A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observer` | [`ObserverLike`](../interfaces/observable.ObserverLike.md)<`B`\> |
-
-##### Returns
-
-[`ObserverLike`](../interfaces/observable.ObserverLike.md)<`A`\>
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `isSynchronous` | `boolean` |
 
 ___
 
@@ -1688,7 +1653,7 @@ observer when the source is subscribed to.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `operator` | [`ObserverOperator`](observable.md#observeroperator)<`TA`, `TB`\> | The operator function to apply. |
+| `operator` | [`ObserverOperator`](../interfaces/observable.ObserverOperator.md)<`TA`, `TB`\> | The operator function to apply. |
 
 #### Returns
 

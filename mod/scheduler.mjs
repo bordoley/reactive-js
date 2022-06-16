@@ -428,7 +428,7 @@ const scheduleImmediate = (scheduler, continuation) => {
     }
 };
 const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) => {
-    // clear the immediateOrTimer disposable 
+    // clear the immediateOrTimer disposable
     immmediateOrTimerDisposable.dispose();
     if (!continuation.isDisposed) {
         scheduler.inContinuation = true;

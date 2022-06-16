@@ -8,11 +8,11 @@
 
 - [WindowLocationStreamLike](../interfaces/web.WindowLocationStreamLike.md)
 - [WindowLocationStreamableLike](../interfaces/web.WindowLocationStreamableLike.md)
+- [WindowLocationURI](../interfaces/web.WindowLocationURI.md)
 
 ### Type Aliases
 
 - [FetchRequest](web.md#fetchrequest)
-- [WindowLocationURI](web.md#windowlocationuri)
 
 ### Variables
 
@@ -29,21 +29,6 @@
 ### FetchRequest
 
 Ƭ **FetchRequest**: `RequestInit` & { `uri`: `string`  }
-
-___
-
-### WindowLocationURI
-
-Ƭ **WindowLocationURI**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `fragment` | `string` |
-| `path` | `string` |
-| `query` | `string` |
-| `title` | `string` |
 
 ## Variables
 

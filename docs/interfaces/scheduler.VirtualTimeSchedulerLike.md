@@ -22,7 +22,13 @@ A scheduler that uses a virtual clock to simulate time. Useful for testing.
 
 ### run
 
-▸ **run**(): `void`
+▸ **run**(`this`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`VirtualTimeSchedulerLike`](scheduler.VirtualTimeSchedulerLike.md) |
 
 #### Returns
 

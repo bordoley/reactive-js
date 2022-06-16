@@ -13,12 +13,12 @@
 
 - [DisposableLike](../interfaces/disposable.DisposableLike.md)
 - [DisposableValueLike](../interfaces/disposable.DisposableValueLike.md)
+- [Error](../interfaces/disposable.Error.md)
 - [SerialDisposableLike](../interfaces/disposable.SerialDisposableLike.md)
 
 ### Type Aliases
 
 - [DisposableOrTeardown](disposable.md#disposableorteardown)
-- [Error](disposable.md#error)
 
 ### Variables
 
@@ -45,22 +45,7 @@
 
 ### DisposableOrTeardown
 
-Ƭ **DisposableOrTeardown**: [`DisposableLike`](../interfaces/disposable.DisposableLike.md) \| [`SideEffect1`](functions.md#sideeffect1)<[`Option`](option.md#option)<[`Error`](disposable.md#error)\>\>
-
-___
-
-### Error
-
-Ƭ **Error**: `Object`
-
-A wrapper around a caught error to handle corner cases such
-as a function which throws undefined or string.
-
-#### Type declaration
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `cause` | `unknown` | The underlying cause of the error. |
+Ƭ **DisposableOrTeardown**: [`DisposableLike`](../interfaces/disposable.DisposableLike.md) \| [`SideEffect1`](functions.md#sideeffect1)<[`Option`](option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>\>
 
 ## Variables
 
@@ -197,7 +182,7 @@ Add `teardown` to `parent`, invoking `teardown` when `parent` is disposed.
 | Name | Type |
 | :------ | :------ |
 | `parent` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Option`](option.md#option)<[`Error`](disposable.md#error)\>\> |
+| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Option`](option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>\> |
 
 #### Returns
 
@@ -235,7 +220,7 @@ Creates an empty `DisposableLike` instance.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `onDispose?` | (`error?`: [`Error`](disposable.md#error)) => `void` | Optional teardown logic to attach to the newly created disposable. |
+| `onDispose?` | (`error?`: [`Error`](../interfaces/disposable.Error.md)) => `void` | Optional teardown logic to attach to the newly created disposable. |
 
 #### Returns
 
@@ -291,7 +276,7 @@ Dispose `disposable` with an optional error.
 
 | Name | Type |
 | :------ | :------ |
-| `e?` | [`Error`](disposable.md#error) |
+| `e?` | [`Error`](../interfaces/disposable.Error.md) |
 
 #### Returns
 

@@ -28,7 +28,7 @@
 
 ### dispatch
 
-▸ **dispatch**(`req`): `void`
+▸ **dispatch**(`this`, `req`): `void`
 
 Dispatches the next request
 
@@ -36,6 +36,7 @@ Dispatches the next request
 
 | Name | Type |
 | :------ | :------ |
+| `this` | [`DispatcherLike`](observable.DispatcherLike.md)<`T`\> |
 | `req` | `T` |
 
 #### Returns

@@ -1,5 +1,10 @@
-import { Factory, Function2, pipe } from "../functions";
-import { ObservableLike, ObservableOperator, dispatchTo } from "../observable";
+import { Factory, pipe } from "../functions";
+import {
+  ObservableLike,
+  ObservableOperator,
+  dispatchTo,
+  AsyncReducer,
+} from "../observable";
 
 import { createSubject } from "./createSubject";
 import { onNotify } from "./onNotify";
@@ -8,8 +13,6 @@ import { switchAll } from "./switchAll";
 import { takeFirst } from "./takeFirst";
 import { using } from "./using";
 import { zipWithLatestFrom } from "./zipWithLatestFrom";
-
-export type AsyncReducer<TAcc, T> = Function2<TAcc, T, ObservableLike<TAcc>>;
 
 /**
  * Returns the `ObservableLike` that applies an asynchronous accumulator function

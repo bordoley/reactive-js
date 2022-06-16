@@ -47,9 +47,15 @@ ___
 
 ### requestYield
 
-▸ **requestYield**(): `void`
+▸ **requestYield**(`this`): `void`
 
 Request the scheduler to yield.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`PrioritySchedulerLike`](scheduler.PrioritySchedulerLike.md) |
 
 #### Returns
 
@@ -59,7 +65,7 @@ ___
 
 ### schedule
 
-▸ **schedule**(`continuation`, `options`): `void`
+▸ **schedule**(`this`, `continuation`, `options`): `void`
 
 Schedules a continuation to be executed on the scheduler.
 
@@ -67,6 +73,7 @@ Schedules a continuation to be executed on the scheduler.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
+| `this` | [`PrioritySchedulerLike`](scheduler.PrioritySchedulerLike.md) | - |
 | `continuation` | [`SchedulerContinuationLike`](scheduler.SchedulerContinuationLike.md) | The SchedulerContinuation to be executed. |
 | `options` | `Object` | - |
 | `options.delay?` | `number` | - |

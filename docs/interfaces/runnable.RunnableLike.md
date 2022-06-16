@@ -20,12 +20,13 @@
 
 ### run
 
-▸ **run**(`sink`): `void`
+▸ **run**(`this`, `sink`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
+| `this` | [`RunnableLike`](runnable.RunnableLike.md)<`T`\> |
 | `sink` | [`SinkLike`](runnable.SinkLike.md)<`T`\> |
 
 #### Returns

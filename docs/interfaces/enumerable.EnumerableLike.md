@@ -22,9 +22,15 @@ Interface for iterating a collection of items.
 
 ### enumerate
 
-▸ **enumerate**(): [`EnumeratorLike`](enumerable.EnumeratorLike.md)<`T`\>
+▸ **enumerate**(`this`): [`EnumeratorLike`](enumerable.EnumeratorLike.md)<`T`\>
 
 Returns an `EnumeratorLike` to iterate through the collection.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`EnumerableLike`](enumerable.EnumerableLike.md)<`T`\> |
 
 #### Returns
 

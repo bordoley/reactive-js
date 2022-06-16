@@ -33,7 +33,7 @@ to receive notifications.
 
 ### notify
 
-▸ **notify**(`next`): `void`
+▸ **notify**(`this`, `next`): `void`
 
 Notifies the the observer of the next notification produced by the observable source.
 
@@ -44,6 +44,7 @@ scheduled using the observer's `schedule` method.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
+| `this` | [`ObserverLike`](observable.ObserverLike.md)<`T`\> | - |
 | `next` | `T` | The next notification value. |
 
 #### Returns

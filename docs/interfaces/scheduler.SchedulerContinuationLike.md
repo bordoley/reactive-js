@@ -24,12 +24,13 @@ A unit of work to be executed by a scheduler.
 
 ### addListener
 
-▸ **addListener**(`ev`, `listener`): `void`
+▸ **addListener**(`this`, `ev`, `listener`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
+| `this` | [`SchedulerContinuationLike`](scheduler.SchedulerContinuationLike.md) |
 | `ev` | ``"onRunStatusChanged"`` |
 | `listener` | [`SchedulerContinuationRunStatusChangedListenerLike`](scheduler.SchedulerContinuationRunStatusChangedListenerLike.md) |
 
@@ -41,9 +42,15 @@ ___
 
 ### continue
 
-▸ **continue**(): `void`
+▸ **continue**(`this`): `void`
 
 Work function to be invoked by the scheduler after the specified delay.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`SchedulerContinuationLike`](scheduler.SchedulerContinuationLike.md) |
 
 #### Returns
 
@@ -53,12 +60,13 @@ ___
 
 ### removeListener
 
-▸ **removeListener**(`ev`, `listener`): `void`
+▸ **removeListener**(`this`, `ev`, `listener`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
+| `this` | [`SchedulerContinuationLike`](scheduler.SchedulerContinuationLike.md) |
 | `ev` | ``"onRunStatusChanged"`` |
 | `listener` | [`SchedulerContinuationRunStatusChangedListenerLike`](scheduler.SchedulerContinuationRunStatusChangedListenerLike.md) |
 

@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`StreamLike`](observable.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](../modules/web.md#windowlocationuri)\> \| [`WindowLocationURI`](../modules/web.md#windowlocationuri), [`WindowLocationURI`](../modules/web.md#windowlocationuri)\>
+- [`StreamLike`](observable.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](web.WindowLocationURI.md)\> \| [`WindowLocationURI`](web.WindowLocationURI.md), [`WindowLocationURI`](web.WindowLocationURI.md)\>
 
   ↳ **`WindowLocationStreamLike`**
 
@@ -21,13 +21,14 @@
 
 ### dispatch
 
-▸ **dispatch**(`stateOrUpdater`, `options?`): `void`
+▸ **dispatch**(`this`, `stateOrUpdater`, `options?`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `stateOrUpdater` | [`WindowLocationURI`](../modules/web.md#windowlocationuri) \| [`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](../modules/web.md#windowlocationuri)\> |
+| `this` | [`WindowLocationStreamLike`](web.WindowLocationStreamLike.md) |
+| `stateOrUpdater` | [`WindowLocationURI`](web.WindowLocationURI.md) \| [`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](web.WindowLocationURI.md)\> |
 | `options?` | `Object` |
 | `options.replace?` | `boolean` |
 
@@ -43,7 +44,13 @@ ___
 
 ### goBack
 
-▸ **goBack**(): `boolean`
+▸ **goBack**(`this`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`WindowLocationURI`](web.WindowLocationURI.md) |
 
 #### Returns
 

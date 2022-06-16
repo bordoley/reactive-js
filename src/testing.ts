@@ -11,23 +11,23 @@ import {
 import { Option, isNone, isSome, none } from "./option";
 import { TestGroupType } from "./testing/testGroup";
 
-export type Describe = {
+export interface Describe {
   readonly type: TestGroupType.Describe;
   readonly name: string;
   readonly tests: readonly TestGroup[];
-};
+}
 
-export type Test = {
+export interface Test {
   readonly type: TestGroupType.Test;
   readonly name: string;
   readonly f: Function1<string, SideEffect>;
-};
+}
 
-export type TestAsync = {
+export interface TestAsync {
   readonly type: TestGroupType.TestAsync;
   readonly name: string;
   readonly f: Function1<string, Factory<Promise<void>>>;
-};
+}
 
 export type TestGroup = Describe | Test | TestAsync;
 

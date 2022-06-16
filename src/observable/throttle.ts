@@ -11,6 +11,7 @@ import {
   ObservableLike,
   ObservableOperator,
   ObserverLike,
+  ThrottleMode,
 } from "../observable";
 import { Option, isNone, none } from "../option";
 import { fromValue } from "./fromValue";
@@ -22,14 +23,6 @@ import {
 } from "./observer";
 
 import { subscribe } from "./subscribe";
-
-/**
- * The throttle mode used by the `throttle` operator.
- * first - Takes a leading value.
- * last - Takes the trailing value.
- * interval -  Takes both the leading and trailing values.
- */
-export type ThrottleMode = "first" | "last" | "interval";
 
 const setupDurationSubscription = <T>(
   observer: ThrottleObserver<T>,

@@ -45,7 +45,7 @@ ___
 
 ### error
 
-• `Readonly` **error**: [`Option`](../modules/option.md#option)<[`Error`](../modules/disposable.md#error)\>
+• `Readonly` **error**: [`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
 
 The error the `DisposableLike` was disposed with if disposed.
 
@@ -77,7 +77,7 @@ ___
 
 ### add
 
-▸ **add**(`disposable`): `void`
+▸ **add**(`this`, `disposable`): `void`
 
 Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
 
@@ -85,6 +85,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 | Name | Type |
 | :------ | :------ |
+| `this` | [`DisposableLike`](disposable.DisposableLike.md) |
 | `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
 
 #### Returns
@@ -101,7 +102,7 @@ ___
 
 ### dispose
 
-▸ **dispose**(`error?`): `void`
+▸ **dispose**(`this`, `error?`): `void`
 
 Dispose the resource. Must be idempotent.
 
@@ -109,7 +110,8 @@ Dispose the resource. Must be idempotent.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `error?` | [`Error`](../modules/disposable.md#error) | An optional error that signals the resource is being disposed due to an error. |
+| `this` | [`DisposableLike`](disposable.DisposableLike.md) | - |
+| `error?` | [`Error`](disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns
 
@@ -123,9 +125,15 @@ ___
 
 ### move
 
-▸ **move**(): `boolean`
+▸ **move**(`this`): `boolean`
 
 Advances the enumerator to the next item.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`EnumeratorLike`](enumerable.EnumeratorLike.md)<`T`\> |
 
 #### Returns
 

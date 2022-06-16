@@ -5,10 +5,10 @@ import { Option, isNone, isSome, none } from "./option";
  * A wrapper around a caught error to handle corner cases such
  * as a function which throws undefined or string.
  */
-export type Error = {
+export interface Error {
   /** The underlying cause of the error. */
   readonly cause: unknown;
-};
+}
 
 export type DisposableOrTeardown = DisposableLike | SideEffect1<Option<Error>>;
 
@@ -32,14 +32,14 @@ export interface DisposableLike {
    * @param disposable
    * @returns `this`
    */
-  add(disposable: DisposableOrTeardown): void;
+  add(this: DisposableLike, disposable: DisposableOrTeardown): void;
 
   /**
    * Dispose the resource. Must be idempotent.
    *
    * @param error An optional error that signals the resource is being disposed due to an error.
    */
-  dispose(error?: Error): void;
+  dispose(this: DisposableLike, error?: Error): void;
 }
 
 /**
@@ -195,7 +195,7 @@ export abstract class AbstractDisposable implements DisposableLike {
   }
 
   /** @ignore */
-  add(disposable: DisposableOrTeardown) {
+  add(this: AbstractDisposable, disposable: DisposableOrTeardown) {
     const disposables = this.disposables;
 
     if (this.isDisposed) {
@@ -212,7 +212,7 @@ export abstract class AbstractDisposable implements DisposableLike {
   }
 
   /** @ignore */
-  dispose(error?: Error) {
+  dispose(this: AbstractDisposable, error?: Error) {
     if (!this.isDisposed) {
       this.isDisposed = true;
       this._error = error;

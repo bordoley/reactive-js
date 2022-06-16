@@ -1,7 +1,10 @@
 import { DisposableLike } from "./disposable";
 
 export interface SchedulerContinuationRunStatusChangedListenerLike {
-  onRunStatusChanged(state: boolean): void;
+  onRunStatusChanged(
+    this: SchedulerContinuationRunStatusChangedListenerLike,
+    state: boolean,
+  ): void;
 }
 
 /**
@@ -11,10 +14,12 @@ export interface SchedulerContinuationRunStatusChangedListenerLike {
  */
 export interface SchedulerContinuationLike extends DisposableLike {
   addListener(
+    this: SchedulerContinuationLike,
     ev: "onRunStatusChanged",
     listener: SchedulerContinuationRunStatusChangedListenerLike,
   ): void;
   removeListener(
+    this: SchedulerContinuationLike,
     ev: "onRunStatusChanged",
     listener: SchedulerContinuationRunStatusChangedListenerLike,
   ): void;
@@ -22,7 +27,7 @@ export interface SchedulerContinuationLike extends DisposableLike {
   /**
    * Work function to be invoked by the scheduler after the specified delay.
    */
-  continue(): void;
+  continue(this: SchedulerContinuationLike): void;
 }
 
 /**
@@ -36,7 +41,7 @@ export interface SchedulerLike extends DisposableLike {
   /**
    * Request the scheduler to yield.
    */
-  requestYield(): void;
+  requestYield(this: SchedulerLike): void;
 
   /**
    * Schedules a continuation to be executed on the scheduler.
@@ -44,6 +49,7 @@ export interface SchedulerLike extends DisposableLike {
    * @param continuation The SchedulerContinuation to be executed.
    */
   schedule(
+    this: SchedulerLike,
     continuation: SchedulerContinuationLike,
     options?: { readonly delay?: number },
   ): void;
@@ -55,12 +61,12 @@ export interface SchedulerLike extends DisposableLike {
  * @noInheritDoc
  */
 export interface VirtualTimeSchedulerLike extends SchedulerLike {
-  run(): void;
+  run(this: VirtualTimeSchedulerLike): void;
 }
 
 export interface PausableSchedulerLike extends SchedulerLike {
-  pause(): void;
-  resume(): void;
+  pause(this: PausableSchedulerLike): void;
+  resume(this: PausableSchedulerLike): void;
 }
 
 /**
@@ -76,7 +82,7 @@ export interface PrioritySchedulerLike extends DisposableLike {
   /**
    * Request the scheduler to yield.
    */
-  requestYield(): void;
+  requestYield(this: PrioritySchedulerLike): void;
 
   /**
    * Schedules a continuation to be executed on the scheduler.
@@ -87,6 +93,7 @@ export interface PrioritySchedulerLike extends DisposableLike {
    * value is implementation specific.
    */
   schedule(
+    this: PrioritySchedulerLike,
     continuation: SchedulerContinuationLike,
     options: { readonly priority: number; readonly delay?: number },
   ): void;

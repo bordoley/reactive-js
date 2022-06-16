@@ -11,25 +11,25 @@ declare const createEventSource: (url: string | URL, options?: EventSourceInit &
     readonly data: string;
 }>;
 declare const windowLocation: WindowLocationStreamableLike;
-declare type FetchRequest = RequestInit & {
-    uri: string;
-};
 declare const fetch: <T>(onResponse: Function1<Response, Promise<T> | ObservableLike<T>>) => Function1<string | FetchRequest, ObservableLike<T>>;
-declare type WindowLocationURI = {
+interface WindowLocationURI {
     title: string;
     path: string;
     query: string;
     fragment: string;
-};
+}
 interface WindowLocationStreamLike extends StreamLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI> {
-    dispatch(stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI, options?: {
+    dispatch(this: WindowLocationStreamLike, stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI, options?: {
         readonly replace?: boolean;
     }): void;
-    goBack(): boolean;
+    goBack(this: WindowLocationURI): boolean;
 }
 interface WindowLocationStreamableLike extends StreamableLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI> {
-    stream(scheduler: SchedulerLike, options?: {
+    stream(this: WindowLocationStreamableLike, scheduler: SchedulerLike, options?: {
         readonly replay?: number;
     }): WindowLocationStreamLike;
 }
+declare type FetchRequest = RequestInit & {
+    uri: string;
+};
 export { FetchRequest, WindowLocationStreamLike, WindowLocationStreamableLike, WindowLocationURI, createEventSource, fetch, fromEvent, windowLocation };

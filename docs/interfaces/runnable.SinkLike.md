@@ -35,7 +35,13 @@
 
 ### done
 
-▸ **done**(): `void`
+▸ **done**(`this`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`SinkLike`](runnable.SinkLike.md)<`T`\> |
 
 #### Returns
 
@@ -45,12 +51,13 @@ ___
 
 ### notify
 
-▸ **notify**(`next`): `void`
+▸ **notify**(`this`, `next`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
+| `this` | [`SinkLike`](runnable.SinkLike.md)<`T`\> |
 | `next` | `T` |
 
 #### Returns

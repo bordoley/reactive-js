@@ -4,22 +4,6 @@
 
 ## Table of contents
 
-### Type Aliases
+### Interfaces
 
-- [ReadonlyObjectMap](readonlyObjectMap.md#readonlyobjectmap)
-
-## Type Aliases
-
-### ReadonlyObjectMap
-
-Ƭ **ReadonlyObjectMap**<`T`\>: `Object`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Index signature
-
-▪ [key: `string`]: `T`
+- [ReadonlyObjectMap](../interfaces/readonlyObjectMap.ReadonlyObjectMap.md)

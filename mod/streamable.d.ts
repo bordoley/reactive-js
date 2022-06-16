@@ -38,7 +38,7 @@ declare const scan: <TReq, T, TAcc>(scanner: Reducer<T, TAcc>, initalValue: Fact
 declare const withLatestFrom: <TReq, TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => StreamableOperator<TReq, TA, TReq, T>;
 declare const sink: <TReq, T>(src: StreamableLike<TReq, T>, dest: StreamableLike<T, TReq>) => ObservableLike<void>;
 interface StreamableLike<TReq, T> {
-    stream(scheduler: SchedulerLike, options?: {
+    stream(this: StreamableLike<TReq, T>, scheduler: SchedulerLike, options?: {
         readonly replay?: number;
     }): StreamLike<TReq, T>;
 }
