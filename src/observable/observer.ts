@@ -24,10 +24,6 @@ export abstract class AbstractObserver<T>
 {
   abstract inContinuation: boolean;
 
-  constructor() {
-    super();
-  }
-
   /** @ignore */
   assertState(this: ObserverLike<T>): void {}
 

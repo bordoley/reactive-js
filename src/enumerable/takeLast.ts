@@ -1,3 +1,4 @@
+import { empty } from "../container";
 import {
   AbstractDisposable,
   addDisposableDisposeParentOnChildError,
@@ -13,7 +14,6 @@ import { Option, isNone, none } from "../option";
 import { enumerate } from "./enumerator";
 import { fromArray, fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import { empty } from "../container";
 
 class TakeLastEnumerator<T>
   extends AbstractDisposable

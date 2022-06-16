@@ -1,9 +1,12 @@
 import { Equality, strictEquality } from "../functions";
 import { Option, none } from "../option";
 import { RunnableOperator } from "../runnable";
+import {
+  AbstractAutoDisposingDelegatingSink,
+  SinkLike,
+  notifyDistinctUntilChanged,
+} from "../sink";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingSink } from "../sink";
-import { notifyDistinctUntilChanged, SinkLike } from "../sink";
 
 class DistinctUntilChangedSink<T> extends AbstractAutoDisposingDelegatingSink<
   T,

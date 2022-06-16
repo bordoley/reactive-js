@@ -1,12 +1,11 @@
-import { pipe } from "../functions";
-import { RunnableOperator } from "../runnable";
 import { empty } from "../container";
+import { Error, addTeardown, dispose } from "../disposable";
+import { pipe } from "../functions";
 import { Option, isSome } from "../option";
+import { RunnableOperator } from "../runnable";
+import { AbstractDelegatingSink, SinkLike, notifyTakeLast } from "../sink";
 import { fromArray, fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import { AbstractDelegatingSink, notifyTakeLast } from "../sink";
-import { addTeardown, dispose, Error } from "../disposable";
-import { SinkLike } from "../sink";
 
 function onDispose(this: TakeLastSink<unknown>, error: Option<Error>) {
   if (isSome(error)) {

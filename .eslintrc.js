@@ -3,12 +3,7 @@ module.exports = {
     es6: true,
     node: true,
   },
-  extends: [
-    "plugin:import/errors",
-    "plugin:import/typescript",
-    "prettier",
-    "prettier/@typescript-eslint",
-  ],
+  extends: ["plugin:import/errors", "plugin:import/typescript", "prettier"],
   ignorePatterns: [
     ".eslintrc.js",
     "build-types",

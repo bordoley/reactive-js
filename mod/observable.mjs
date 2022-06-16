@@ -1,9 +1,9 @@
 /// <reference types="./observable.d.ts" />
-import { addOnDisposedWithError, addDisposable, bindDisposables, dispose, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, AbstractDisposable, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
+import { AbstractContainer, empty, fromValue, concatMap, throws } from './container.mjs';
+import { addOnDisposedWithError, dispose, addDisposable, bindDisposables, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, AbstractDisposable, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
 import { pipe, ignore, raise, arrayEquality, defer as defer$1, compose, strictEquality, returns } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
-import { AbstractContainer, empty, fromValue, concatMap, throws } from './container.mjs';
 import { __DEV__ } from './env.mjs';
 import { AbstractSink, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifyTakeFirst, notifySkipFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
@@ -31,6 +31,40 @@ const defer = (factory, options = {}) => {
     return new ScheduledObservable(factory, false, delay);
 };
 
+/**
+ * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
+ * An optional `startIndex` in the array maybe specified,
+ *
+ * @param options Config object that specifies an optional `delay` between emitted items and
+ * an optional `startIndex` into the array.
+ */
+const fromArray = (options = {}) => values => {
+    var _a, _b, _c;
+    const delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0);
+    const valuesLength = values.length;
+    const startIndex = Math.min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, valuesLength);
+    const endIndex = Math.max(Math.min((_c = options.endIndex) !== null && _c !== void 0 ? _c : values.length, valuesLength), 0);
+    const factory = (observer) => {
+        let index = startIndex;
+        return () => {
+            while (index < endIndex) {
+                const value = values[index];
+                index++;
+                // Inline yielding logic for performance reasons
+                observer.notify(value);
+                if (index < endIndex && (delay > 0 || observer.shouldYield)) {
+                    throw new YieldError(delay);
+                }
+            }
+            pipe(observer, dispose());
+        };
+    };
+    return delay > 0 ? defer(factory, { delay }) : deferSynchronous(factory);
+};
+const fromArrayT = {
+    fromArray,
+};
+
 const assertStateProduction = ignore;
 function assertStateDev() {
     if (!this.inContinuation) {
@@ -42,9 +76,6 @@ function assertStateDev() {
 }
 const assertState = __DEV__ ? assertStateDev : assertStateProduction;
 class AbstractObserver extends AbstractSink {
-    constructor() {
-        super();
-    }
     /** @ignore */
     assertState() { }
     /** @ignore */
@@ -146,40 +177,6 @@ function subscribe(scheduler, onNotify = ignore, onNotifyThis = none) {
         return observer;
     };
 }
-
-/**
- * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
- * An optional `startIndex` in the array maybe specified,
- *
- * @param options Config object that specifies an optional `delay` between emitted items and
- * an optional `startIndex` into the array.
- */
-const fromArray = (options = {}) => values => {
-    var _a, _b, _c;
-    const delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0);
-    const valuesLength = values.length;
-    const startIndex = Math.min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, valuesLength);
-    const endIndex = Math.max(Math.min((_c = options.endIndex) !== null && _c !== void 0 ? _c : values.length, valuesLength), 0);
-    const factory = (observer) => {
-        let index = startIndex;
-        return () => {
-            while (index < endIndex) {
-                const value = values[index];
-                index++;
-                // Inline yielding logic for performance reasons
-                observer.notify(value);
-                if (index < endIndex && (delay > 0 || observer.shouldYield)) {
-                    throw new YieldError(delay);
-                }
-            }
-            pipe(observer, dispose());
-        };
-    };
-    return delay > 0 ? defer(factory, { delay }) : deferSynchronous(factory);
-};
-const fromArrayT = {
-    fromArray,
-};
 
 const arrayStrictEquality = arrayEquality();
 let currentCtx = none;

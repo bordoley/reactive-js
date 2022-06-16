@@ -1,8 +1,8 @@
 import { AsyncEnumerableLike } from "../asyncEnumerable";
+import { fromValue } from "../container";
 import { Factory, Updater, pipe } from "../functions";
 import { fromArrayT, scan, scanAsync } from "../observable";
 import { createStreamable } from "../streamable";
-import { fromValue } from "../container";
 
 const generateScanner =
   <T>(generator: Updater<T>) =>

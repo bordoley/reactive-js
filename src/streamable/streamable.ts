@@ -1,3 +1,4 @@
+import { empty as emptyContainer } from "../container";
 import { bindDisposables } from "../disposable";
 import { Function1, compose, pipe } from "../functions";
 import {
@@ -7,8 +8,8 @@ import {
   __memo,
   __observe,
   __using,
-  map,
   fromArrayT,
+  map,
   subscribe,
   using,
 } from "../observable";
@@ -17,8 +18,6 @@ import { isNone } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { StreamableLike, StreamableOperator } from "../streamable";
 import { createStream } from "./createStream";
-
-import { empty as emptyContainer } from "../container";
 
 class StreamableImpl<TReq, TData> implements StreamableLike<TReq, TData> {
   constructor(private readonly op: ObservableOperator<TReq, TData>) {}

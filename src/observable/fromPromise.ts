@@ -1,6 +1,6 @@
 import { dispose, toErrorHandler } from "../disposable";
 import { Factory, pipe } from "../functions";
-import { createObservable, ObservableLike } from "../observable";
+import { ObservableLike, createObservable } from "../observable";
 
 /**
  * Converts a `Promise` to an `ObservableLike`. The provided promise factory

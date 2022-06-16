@@ -1,4 +1,4 @@
-import { Error, DisposableOrTeardown } from "../disposable";
+import { DisposableOrTeardown, Error } from "../disposable";
 import { EnumerableLike, EnumeratorLike } from "../enumerable";
 import { Option } from "../option";
 

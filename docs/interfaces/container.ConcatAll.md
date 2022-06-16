@@ -9,7 +9,7 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`ContainerLike`](container.ContainerLike.md) |
-| `O` | {} |
+| `O` | `Record`<`string`, `never`\> |
 
 ## Hierarchy
 

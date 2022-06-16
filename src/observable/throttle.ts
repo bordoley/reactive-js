@@ -1,3 +1,4 @@
+import { fromValue } from "../container";
 import {
   Error,
   SerialDisposableLike,
@@ -12,12 +13,11 @@ import {
   ObservableOperator,
   ObserverLike,
   ThrottleMode,
+  fromArrayT,
 } from "../observable";
 import { Option, isNone, none } from "../option";
-import { fromValue } from "../container";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver, observe } from "./observer";
-import { fromArrayT } from "../observable";
 
 import { subscribe } from "./subscribe";
 

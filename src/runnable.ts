@@ -1,6 +1,6 @@
-import { ContainerLike, Container, ContainerOf } from "./container";
-import { SinkLike } from "./sink";
+import { Container, ContainerLike, ContainerOf } from "./container";
 import { Function1, identity } from "./functions";
+import { SinkLike } from "./sink";
 
 export interface RunnableLike<T> extends ContainerLike {
   readonly T: unknown;

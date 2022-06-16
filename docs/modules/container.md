@@ -119,7 +119,7 @@ ___
 | `C` | `C` |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `O` | {} |
+| `O` | `Record`<`string`, `never`\> |
 
 #### Parameters
 
@@ -270,8 +270,8 @@ ___
 | `C` | `C` |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `OConcatAll` | extends `Object` = {} |
-| `OFromIterator` | extends `Object` = {} |
+| `OConcatAll` | extends `Record`<`string`, `never`\> = `Record`<`string`, `never`\> |
+| `OFromIterator` | extends `Record`<`string`, `never`\> = `Record`<`string`, `never`\> |
 | `TReturn` | `any` |
 | `TNext` | `unknown` |
 

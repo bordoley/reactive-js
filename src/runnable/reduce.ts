@@ -1,7 +1,6 @@
 import { Factory, Function1, Reducer } from "../functions";
 import { RunnableLike } from "../runnable";
-import { notifyReduce } from "../sink";
-import { AbstractSink } from "../sink";
+import { AbstractSink, notifyReduce } from "../sink";
 import { run } from "./run";
 
 class ReducerSink<T, TAcc> extends AbstractSink<T> {

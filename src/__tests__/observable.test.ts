@@ -1,3 +1,13 @@
+import {
+  compute,
+  concatMap,
+  concatWith,
+  empty,
+  fromValue,
+  genMap,
+  throws,
+  zipWith,
+} from "../container";
 import { dispose } from "../disposable";
 import {
   arrayEquality,
@@ -12,6 +22,7 @@ import {
   sum,
 } from "../functions";
 import {
+  ObservableLike,
   __do,
   __memo,
   __observe,
@@ -19,8 +30,8 @@ import {
   catchError,
   combineLatestWith,
   concat,
-  concatT,
   concatAllT,
+  concatT,
   createObservable,
   createSubject,
   dispatchTo,
@@ -45,8 +56,8 @@ import {
   retry,
   scan,
   scanAsync,
-  skipFirst,
   share,
+  skipFirst,
   subscribe,
   switchAll,
   switchAllT,
@@ -60,10 +71,9 @@ import {
   toRunnable,
   withLatestFrom,
   zip,
-  zipT,
   zipLatestWith,
+  zipT,
   zipWithLatestFrom,
-  ObservableLike,
 } from "../observable";
 import { Option, isSome } from "../option";
 import {
@@ -87,19 +97,8 @@ import {
   test,
   testAsync,
 } from "../testing";
-import { createRunnableTests } from "./runnable.test";
-
 import { createZippableTests } from "./enumerable.test";
-import {
-  concatWith,
-  concatMap,
-  compute,
-  empty,
-  fromValue,
-  genMap,
-  throws,
-  zipWith,
-} from "../container";
+import { createRunnableTests } from "./runnable.test";
 
 export const tests = describe(
   "observable",

@@ -1,8 +1,8 @@
 import {
   AsyncConsumer,
   AsyncEnumerableLike,
-  Consumer,
   ConsumeRequest,
+  Consumer,
 } from "../asyncEnumerable";
 import { Factory, Function1, compose, flip, pipe } from "../functions";
 import {

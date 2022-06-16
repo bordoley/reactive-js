@@ -1,5 +1,5 @@
+import { Container, ContainerLike, ContainerOf } from "./container";
 import { DisposableLike } from "./disposable";
-import { ContainerLike, ContainerOf, Container } from "./container";
 import { Function1, identity } from "./functions";
 
 /**

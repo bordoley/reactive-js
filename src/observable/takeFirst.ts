@@ -1,10 +1,10 @@
+import { empty } from "../container";
 import { pipe } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
-import { empty } from "../container";
+import { notifyTakeFirst } from "../sink";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { AbstractAutoDisposingDelegatingObserver } from "./observer";
-import { notifyTakeFirst } from "../sink";
 
 class TakeFirstObserver<T> extends AbstractAutoDisposingDelegatingObserver<
   T,

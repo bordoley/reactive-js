@@ -1,12 +1,12 @@
+import { empty } from "../container";
 import { Error, addTeardown, dispose } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
 import { Option, isSome } from "../option";
-import { empty } from "../container";
+import { notifyTakeLast } from "../sink";
 import { fromArray, fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver, observe } from "./observer";
-import { notifyTakeLast } from "../sink";
 
 function onDispose(this: TakeLastObserver<unknown>, error: Option<Error>) {
   if (isSome(error)) {

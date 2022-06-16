@@ -156,6 +156,9 @@ const _exhaust = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
 export const exhaust = <T>(): ObservableOperator<ObservableLike<T>, T> =>
   _exhaust as ObservableOperator<ObservableLike<T>, T>;
 
-export const exhaustT: ConcatAll<ObservableLike<unknown>, {}> = {
+export const exhaustT: ConcatAll<
+  ObservableLike<unknown>,
+  Record<string, never>
+> = {
   concatAll: exhaust,
 };

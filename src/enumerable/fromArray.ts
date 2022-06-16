@@ -1,4 +1,4 @@
-import { FromArrayOptions, FromArray, AbstractContainer } from "../container";
+import { AbstractContainer, FromArray, FromArrayOptions } from "../container";
 import { AbstractDisposable } from "../disposable";
 import { EnumerableLike, EnumeratorLike } from "../enumerable";
 import { none } from "../option";

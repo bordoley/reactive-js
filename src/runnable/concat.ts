@@ -1,12 +1,12 @@
 import { addDisposableDisposeParentOnChildError } from "../disposable";
 import { RunnableLike, RunnableOperator } from "../runnable";
-import { createRunnable } from "./createRunnable";
-import { lift } from "./lift";
 import {
   AbstractDelegatingSink,
-  createDelegatingSink,
   SinkLike,
+  createDelegatingSink,
 } from "../sink";
+import { createRunnable } from "./createRunnable";
+import { lift } from "./lift";
 
 /**
  * Creates an `RunnableLike` which emits all values from each source sequentially.

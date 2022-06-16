@@ -1,10 +1,13 @@
+import { empty } from "../container";
 import { pipe } from "../functions";
 import { RunnableOperator } from "../runnable";
-import { empty } from "../container";
+import {
+  AbstractAutoDisposingDelegatingSink,
+  SinkLike,
+  notifyTakeFirst,
+} from "../sink";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingSink } from "../sink";
-import { notifyTakeFirst, SinkLike } from "../sink";
 
 class TakeFirstSink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
   count = 0;

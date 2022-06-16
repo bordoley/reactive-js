@@ -153,7 +153,7 @@ declare const fromIterator: <T, TReturn = any, TNext = unknown>(options?: {
     readonly delay?: number;
 }) => Function1<Factory<Iterator<T, TReturn, TNext>>, ObservableLike<T>>;
 declare const fromIteratorT: FromIterator<ObservableLike<unknown>, {
-    readonly delay: number;
+    readonly delay?: number;
 }>;
 /**
  * Creates an `ObservableLike` which iterates through the values
@@ -318,7 +318,7 @@ declare const concatAllT: ConcatAll<ObservableLike<unknown>, {
  * has not yet been disposed.
  */
 declare const exhaust: <T>() => ObservableOperator<ObservableLike<T>, T>;
-declare const exhaustT: ConcatAll<ObservableLike<unknown>, {}>;
+declare const exhaustT: ConcatAll<ObservableLike<unknown>, Record<string, never>>;
 /**
  * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
  *
@@ -420,7 +420,7 @@ declare const subscribeOn: <T>(scheduler: SchedulerLike) => ObservableOperator<T
  * values only from the most recent source.
  */
 declare const switchAll: <T>() => ObservableOperator<ObservableLike<T>, T>;
-declare const switchAllT: ConcatAll<ObservableLike<unknown>, {}>;
+declare const switchAllT: ConcatAll<ObservableLike<unknown>, Record<string, never>>;
 /**
  * Returns an `ObservableLike` that only emits the first `count` values emitted by the source.
  *

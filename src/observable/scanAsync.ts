@@ -1,9 +1,9 @@
 import { Factory, pipe } from "../functions";
 import {
+  AsyncReducer,
   ObservableLike,
   ObservableOperator,
   dispatchTo,
-  AsyncReducer,
 } from "../observable";
 
 import { createSubject } from "./createSubject";

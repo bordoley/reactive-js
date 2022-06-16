@@ -1,20 +1,20 @@
 import {
+  Equality,
+  Factory,
+  Function1,
+  Predicate,
+  Reducer,
+  TypePredicate,
+  Updater,
   alwaysFalse,
   callWith,
   compose,
   defer,
-  Equality,
-  Factory,
-  Function1,
   pipe,
-  Predicate,
-  Reducer,
   returns,
-  TypePredicate,
-  Updater,
 } from "./functions";
 
-import { isSome, Option } from "./option";
+import { Option, isSome } from "./option";
 
 export interface ContainerLike {
   readonly T?: unknown;
@@ -58,7 +58,7 @@ export interface Concat<C extends ContainerLike> extends Container<C> {
   ): ContainerOf<C, T>;
 }
 
-export interface ConcatAll<C extends ContainerLike, O = {}>
+export interface ConcatAll<C extends ContainerLike, O = Record<string, never>>
   extends Container<C> {
   concatAll: <T>(
     options?: Partial<O>,
@@ -93,15 +93,19 @@ export interface Generate<C extends ContainerLike> extends Container<C> {
   ): ContainerOf<C, T>;
 }
 
-export interface FromIterable<C extends ContainerLike, O extends {} = {}>
-  extends Container<C> {
+export interface FromIterable<
+  C extends ContainerLike,
+  O extends Record<string, never> = Record<string, never>,
+> extends Container<C> {
   fromIterable<T>(
     options?: Partial<O>,
   ): Function1<Iterable<T>, ContainerOf<C, T>>;
 }
 
-export interface FromIterator<C extends ContainerLike, O extends {} = {}>
-  extends Container<C> {
+export interface FromIterator<
+  C extends ContainerLike,
+  O extends Record<string, unknown> = Record<string, never>,
+> extends Container<C> {
   fromIterator<T, TReturn = any, TNext = unknown>(
     options?: Partial<O>,
   ): Function1<Factory<Iterator<T, TReturn, TNext>>, ContainerOf<C, T>>;
@@ -233,7 +237,7 @@ export const compute = <C, T, O extends FromArrayOptions = FromArrayOptions>(
 ): Function1<Factory<T>, ContainerOf<C, T>> =>
   compose(fromValue(m, options), m.map(callWith()));
 
-export const concatMap = <C, TA, TB, O = {}>(
+export const concatMap = <C, TA, TB, O = Record<string, never>>(
   { map, concatAll }: Map<C> & ConcatAll<C, O>,
   mapper: Function1<TA, ContainerOf<C, TB>>,
   options?: Partial<O>,
@@ -291,8 +295,8 @@ export const genMap = <
   C,
   TA,
   TB,
-  OConcatAll extends {} = {},
-  OFromIterator extends {} = {},
+  OConcatAll extends Record<string, never> = Record<string, never>,
+  OFromIterator extends Record<string, never> = Record<string, never>,
   TReturn = any,
   TNext = unknown,
 >(
