@@ -1,6 +1,6 @@
 /// <reference types="./streamable.d.ts" />
-import { pipe, compose, returns } from './functions.mjs';
-import { createSubject, publish, observe, using, map as map$1, subscribe, fromArrayT, __currentScheduler, __using, scan as scan$1, mergeWith, distinctUntilChanged, mapT, onNotify as onNotify$1, withLatestFrom as withLatestFrom$1, subscribeOn, fromDisposable, takeUntil, keepT, concatT } from './observable.mjs';
+import { pipe, compose, returns, updaterReducer, identity as identity$1 } from './functions.mjs';
+import { createSubject, publish, observe, using, map as map$1, subscribe, fromArrayT, __currentScheduler, __using, scan as scan$1, mergeWith, distinctUntilChanged, zipWithLatestFrom, mapT, onNotify as onNotify$1, withLatestFrom as withLatestFrom$1, subscribeOn, fromDisposable, takeUntil, keepT, concatT } from './observable.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables } from './disposable.mjs';
 import { isNone, none } from './option.mjs';
 import { empty as empty$1, fromValue, mapTo as mapTo$1, ignoreElements, endWith } from './container.mjs';
@@ -109,6 +109,29 @@ const createActionReducer = (reducer, initialState, options) => {
     };
     return createStreamable(operator);
 };
+/**
+ * Returns a new `StateStoreLike` instance that stores state which can
+ * be updated by notifying the instance with a `StateUpdater` that computes a
+ * new state based upon the previous state.
+ *
+ * @param initialState The initial accumulation value.
+ * @param equals Optional equality function that is used to compare
+ * if a state value is distinct from the previous one.
+ */
+const createStateStore = (initialState, options) => createActionReducer(updaterReducer, initialState, options);
+/**
+ * Converts an `StreamableLike<T, T>` to an `StateStoreLike<T>`.
+ *
+ * @param initialState Factory function to generate the initial state.
+ * @param equals Optional equality function that is used to compare
+ * if a state value is distinct from the previous one.
+ */
+const toStateStore = () => streamable => createStreamable(updates => using(scheduler => {
+    const stream$1 = pipe(streamable, stream(scheduler));
+    const updatesSubscription = pipe(updates, zipWithLatestFrom(stream$1, (updateState, prev) => updateState(prev)), subscribe(scheduler, stream$1.dispatch, stream$1));
+    bindDisposables(updatesSubscription, stream$1);
+    return stream$1;
+}, identity$1));
 
 const _identity = {
     stream(_, options) {
@@ -158,4 +181,4 @@ const sink = (src, dest) => using(scheduler => {
     return destStream;
 }, ignoreAndNotifyVoid);
 
-export { __stream, createActionReducer, createStreamable, empty, flow, identity, lift, map, mapReq, mapTo, onNotify, scan, sink, stream, withLatestFrom };
+export { __stream, createActionReducer, createStateStore, createStreamable, empty, flow, identity, lift, map, mapReq, mapTo, onNotify, scan, sink, stream, toStateStore, withLatestFrom };

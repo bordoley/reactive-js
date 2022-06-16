@@ -5,7 +5,6 @@ import { tests as ioTests } from "./__tests__/io.test";
 import { tests as observableTests } from "./__tests__/observable.test";
 import { tests as runnableTests } from "./__tests__/runnable.test";
 import { tests as sequenceTests } from "./__tests__/sequence.test";
-import { tests as stateStoreTests } from "./__tests__/stateStore.test";
 import { tests as streamableTests } from "./__tests__/streamable.test";
 
 export const tests = [
@@ -16,6 +15,5 @@ export const tests = [
   observableTests,
   runnableTests,
   sequenceTests,
-  stateStoreTests,
   streamableTests,
 ];

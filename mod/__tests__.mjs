@@ -6,15 +6,14 @@ import { toRunnable, fromArrayT, subscribe, concat as concat$2, fromArray as fro
 import { none, isSome } from './option.mjs';
 import { last, toArray, fromArray as fromArray$1, contains, generate as generate$1, everySatisfy, map, first, forEach, noneSatisfy, fromArrayT as fromArrayT$1, keepT, concat, concatAll, distinctUntilChanged, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, toRunnable as toRunnable$1 } from './runnable.mjs';
 import { createVirtualTimeScheduler, createHostScheduler, schedule } from './scheduler.mjs';
-import { stream, sink, identity as identity$1, lift, __stream, createActionReducer, empty as empty$2, map as map$5, mapReq, onNotify as onNotify$1, scan as scan$4, mapTo as mapTo$1, flow } from './streamable.mjs';
+import { stream, sink, identity as identity$1, __stream, createActionReducer, empty as empty$2, map as map$5, mapReq, onNotify as onNotify$1, scan as scan$4, lift, mapTo as mapTo$1, flow, toStateStore } from './streamable.mjs';
 import { describe, test, expectEquals, expectArrayEquals, expectNone, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
 import { fromValue, empty, endWith, concatMap, mapTo, startWith, ignoreElements, compute, zipWith, throws, concatWith, genMap } from './container.mjs';
 import { fromArray as fromArray$2, toIterable, fromIterable as fromIterable$1, toRunnable as toRunnable$2, fromArrayT as fromArrayT$2, keepT as keepT$1, concat as concat$1, concatAll as concatAll$1, distinctUntilChanged as distinctUntilChanged$1, generate as generate$2, map as map$1, repeat as repeat$1, scan as scan$1, skipFirst as skipFirst$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, zip } from './enumerable.mjs';
 import { fromArray as fromArray$3, decodeWithCharset, createIOSinkAccumulator, empty as empty$1, fromValue as fromValue$1, encodeUtf8, map as map$2 } from './io.mjs';
 import { type, fromArray as fromArray$5, concat as concat$3, concatAll as concatAll$2, distinctUntilChanged as distinctUntilChanged$3, generate as generate$4, keep, map as map$4, repeat as repeat$3, scan as scan$3, skipFirst as skipFirst$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$3, toRunnable as toRunnable$3 } from './sequence.mjs';
-import { toStateStore } from './stateStore.mjs';
 
-const tests$9 = describe("async-enumerable", test("consume", () => {
+const tests$8 = describe("async-enumerable", test("consume", () => {
     const enumerable = fromIterable()([1, 2, 3, 4, 5, 6]);
     pipe(enumerable, consume((acc, next) => notify(acc + next), returns(0)), toRunnable(), last(), expectEquals(21));
     pipe(enumerable, consume((acc, next) => (acc > 0 ? done(acc + next) : notify(acc + next)), returns(0)), toRunnable(), last(), expectEquals(3));
@@ -59,7 +58,7 @@ const tests$9 = describe("async-enumerable", test("consume", () => {
     pipe(result, expectArrayEquals([1, 2, 3]));
 }));
 
-const tests$8 = describe("Disposable", describe("AbstractDisposable", test("disposes child disposable when disposed", () => {
+const tests$7 = describe("Disposable", describe("AbstractDisposable", test("disposes child disposable when disposed", () => {
     const disposable = createDisposable();
     const child = createDisposable();
     addDisposable(disposable, child);
@@ -117,7 +116,7 @@ const createRunnableTests = (m) => describe("RunnableContainer", test("concat", 
     pipe([1, 2, 3], m.fromArray(), m.takeWhile(alwaysTrue), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3]));
     pipe(empty(m), m.takeWhile(alwaysTrue), m.toRunnable(), toArray(), expectArrayEquals([]));
 }), test("inclusive", defer(m.generate(increment, returns(0)), m.takeWhile((x) => x < 4, { inclusive: true }), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4])))), test("lift", defer(m.generate(increment, returns(0)), m.map((x) => x * 2), m.takeFirst({ count: 3 }), concatMap(m, (count) => pipe(m.generate(incrementBy(1), returns(0)), m.takeFirst({ count }))), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 1, 2, 3, 4, 1, 2, 3, 4, 5, 6]))), test("ignoreElements", defer([1, 2, 3], m.fromArray(), ignoreElements(m), endWith(m, 4), m.toRunnable(), toArray(), expectArrayEquals([4]))));
-const tests$7 = describe("runnable", describe("contains", test("source is empty", defer(empty({ fromArray: fromArray$1 }), contains(1), expectFalse)), test("source contains value", defer(generate$1(increment, returns(0)), contains(1), expectTrue)), test("source does not contain value", defer([2, 3, 4], fromArray$1(), contains(1), expectFalse))), describe("everySatisfy", test("source is empty", defer(empty({ fromArray: fromArray$1 }), everySatisfy(alwaysFalse), expectTrue)), test("source values pass predicate", defer([1, 2, 3], fromArray$1(), everySatisfy(alwaysTrue), expectTrue)), test("source values fail predicate", defer([1, 2, 3], fromArray$1(), everySatisfy(alwaysFalse), expectFalse))), describe("first", test("when enumerable is not empty", defer(returns(1), compute({ fromArray: fromArray$1, map }), first(), expectEquals(1))), test("when enumerable is empty", defer(empty({ fromArray: fromArray$1 }), first(), expectNone))), test("forEach", () => {
+const tests$6 = describe("runnable", describe("contains", test("source is empty", defer(empty({ fromArray: fromArray$1 }), contains(1), expectFalse)), test("source contains value", defer(generate$1(increment, returns(0)), contains(1), expectTrue)), test("source does not contain value", defer([2, 3, 4], fromArray$1(), contains(1), expectFalse))), describe("everySatisfy", test("source is empty", defer(empty({ fromArray: fromArray$1 }), everySatisfy(alwaysFalse), expectTrue)), test("source values pass predicate", defer([1, 2, 3], fromArray$1(), everySatisfy(alwaysTrue), expectTrue)), test("source values fail predicate", defer([1, 2, 3], fromArray$1(), everySatisfy(alwaysFalse), expectFalse))), describe("first", test("when enumerable is not empty", defer(returns(1), compute({ fromArray: fromArray$1, map }), first(), expectEquals(1))), test("when enumerable is empty", defer(empty({ fromArray: fromArray$1 }), first(), expectNone))), test("forEach", () => {
     const fn = mockFn();
     pipe([1, 2, 3], fromArray$1(), forEach(fn));
     pipe(fn, expectToHaveBeenCalledTimes(3));
@@ -142,7 +141,7 @@ const createZippableTests = (m) => describe("ZippableContainer", test("zip", def
     [1, 2, 3],
     [2, 3, 4],
 ], arrayEquality()))));
-const tests$6 = describe("enumerable", test("toIterable", defer([1, 2, 3], fromArray$2(), toIterable(), fromIterable$1(), toRunnable$2(), toArray(), expectArrayEquals([1, 2, 3]))), createRunnableTests({
+const tests$5 = describe("enumerable", test("toIterable", defer([1, 2, 3], fromArray$2(), toIterable(), fromIterable$1(), toRunnable$2(), toArray(), expectArrayEquals([1, 2, 3]))), createRunnableTests({
     ...fromArrayT$2,
     ...keepT$1,
     concat: concat$1,
@@ -159,7 +158,7 @@ const tests$6 = describe("enumerable", test("toIterable", defer([1, 2, 3], fromA
     toRunnable: toRunnable$2,
 }), createZippableTests({ ...fromArrayT$2, generate: generate$2, map: map$1, toRunnable: toRunnable$2, zip }));
 
-const tests$5 = describe("io", test("decodeWithCharset", () => {
+const tests$4 = describe("io", test("decodeWithCharset", () => {
     const src = pipe([Uint8Array.from([226]), Uint8Array.from([130]), Uint8Array.from([172])], fromArray$3(), decodeWithCharset());
     const dest = createIOSinkAccumulator((acc, next) => acc + next, returns(""), { replay: 1 });
     const scheduler = createVirtualTimeScheduler();
@@ -220,7 +219,7 @@ const tests$5 = describe("io", test("decodeWithCharset", () => {
     expectTrue(subscription.isDisposed);
 }));
 
-const tests$4 = describe("observable", describe("buffer", test("with duration and maxBufferSize", defer(concat$2(pipe([1, 2, 3, 4], fromArray$4()), pipe([1, 2, 3], fromArray$4({ delay: 1 })), pipe(4, fromValue(fromArrayT, { delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toRunnable(), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", defer(defer([1, 2, 3, 4], fromArray$4(), buffer({ duration: _ => throws({ ...fromArrayT, ...mapT })(raise) }), toRunnable({
+const tests$3 = describe("observable", describe("buffer", test("with duration and maxBufferSize", defer(concat$2(pipe([1, 2, 3, 4], fromArray$4()), pipe([1, 2, 3], fromArray$4({ delay: 1 })), pipe(4, fromValue(fromArrayT, { delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toRunnable(), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", defer(defer([1, 2, 3, 4], fromArray$4(), buffer({ duration: _ => throws({ ...fromArrayT, ...mapT })(raise) }), toRunnable({
     schedulerFactory: defer({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
 }), toArray()), expectToThrow))), describe("catchError", test("source completes successfully", defer(pipe(1, fromValue(fromArrayT)), catchError(_ => fromValue(fromArrayT)(2)), toRunnable(), toArray(), expectArrayEquals([1]))), test("source throws, error caught and ignored", () => {
     const error = new Error();
@@ -390,7 +389,7 @@ const tests$4 = describe("observable", describe("buffer", test("with duration an
     toRunnable,
 }), createZippableTests({ ...fromArrayT, generate: generate$3, map: map$3, toRunnable, zip: zip$1 }));
 
-const tests$3 = describe("sequence", createRunnableTests({
+const tests$2 = describe("sequence", createRunnableTests({
     type,
     fromArray: fromArray$5,
     concat: concat$3,
@@ -406,29 +405,6 @@ const tests$3 = describe("sequence", createRunnableTests({
     takeLast: takeLast$3,
     takeWhile: takeWhile$3,
     toRunnable: toRunnable$3,
-}));
-
-const tests$2 = describe("stateStore", test("toStateStore", () => {
-    const scheduler = createVirtualTimeScheduler({ maxMicroTaskTicks: 0 });
-    const stateStream = pipe(identity$1(), lift(startWith({ ...fromArrayT, ...concatT }, 0)), toStateStore(), stream(scheduler));
-    stateStream.dispatch(incrementBy(1));
-    stateStream.dispatch(incrementBy(2));
-    stateStream.dispatch(incrementBy(3));
-    stateStream.dispatch(incrementBy(4));
-    stateStream.dispatch(incrementBy(5));
-    stateStream.dispatch(incrementBy(6));
-    stateStream.dispatch(incrementBy(7));
-    stateStream.dispatch(incrementBy(8));
-    stateStream.dispatch(incrementBy(9));
-    stateStream.dispatch(incrementBy(10));
-    pipe(stateStream, dispose());
-    let result = [];
-    const subscription = pipe(stateStream, subscribe(scheduler, x => {
-        result.push(x);
-    }));
-    scheduler.run();
-    pipe(result, expectArrayEquals([0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55]));
-    expectTrue(subscription.isDisposed);
 }));
 
 const tests$1 = describe("streamable", test("__stream", () => {
@@ -607,16 +583,36 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(f.calls[0][0], expectEquals(1));
     expectTrue(subscription.isDisposed);
     expectTrue(fromValueStream.isDisposed);
+})), describe("stateStore", test("toStateStore", () => {
+    const scheduler = createVirtualTimeScheduler({ maxMicroTaskTicks: 0 });
+    const stateStream = pipe(identity$1(), lift(startWith({ ...fromArrayT, ...concatT }, 0)), toStateStore(), stream(scheduler));
+    stateStream.dispatch(incrementBy(1));
+    stateStream.dispatch(incrementBy(2));
+    stateStream.dispatch(incrementBy(3));
+    stateStream.dispatch(incrementBy(4));
+    stateStream.dispatch(incrementBy(5));
+    stateStream.dispatch(incrementBy(6));
+    stateStream.dispatch(incrementBy(7));
+    stateStream.dispatch(incrementBy(8));
+    stateStream.dispatch(incrementBy(9));
+    stateStream.dispatch(incrementBy(10));
+    pipe(stateStream, dispose());
+    let result = [];
+    const subscription = pipe(stateStream, subscribe(scheduler, x => {
+        result.push(x);
+    }));
+    scheduler.run();
+    pipe(result, expectArrayEquals([0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55]));
+    expectTrue(subscription.isDisposed);
 })));
 
 const tests = [
-    tests$9,
     tests$8,
-    tests$6,
+    tests$7,
     tests$5,
     tests$4,
-    tests$7,
     tests$3,
+    tests$6,
     tests$2,
     tests$1,
 ];

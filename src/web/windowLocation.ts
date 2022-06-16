@@ -14,8 +14,13 @@ import {
 } from "../observable";
 import { Option, none, isNone } from "../option";
 import { SchedulerLike } from "../scheduler";
-import { createStateStore } from "../stateStore";
-import { lift, map, onNotify as onNotifyStream, stream } from "../streamable";
+import {
+  createStateStore,
+  lift,
+  map,
+  onNotify as onNotifyStream,
+  stream,
+} from "../streamable";
 import {
   WindowLocationStreamableLike,
   WindowLocationStreamLike,

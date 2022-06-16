@@ -280,6 +280,15 @@ export const decrementBy =
   (x: number) =>
     x - decr;
 
+export const tranformUpdater =
+  <TA, TB>(parse: Function1<TA, TB>, serialize: Function1<TB, TA>) =>
+  (stateUpdater: Updater<TB>): Updater<TA> =>
+  oldStateTA => {
+    const oldStateTB = parse(oldStateTA);
+    const newStateTB = stateUpdater(oldStateTB);
+
+    return oldStateTB === newStateTB ? oldStateTA : serialize(newStateTB);
+  };
 /**
  * The javascript strict equality function.
  */
