@@ -1,4 +1,4 @@
-import { AbstractDisposable, DisposableLike, dispose } from "./disposable";
+import { DisposableLike, dispose } from "./disposable";
 import { __DEV__ } from "./env";
 import {
   Equality,
@@ -6,9 +6,7 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
-  ignore,
   pipe,
-  raise,
 } from "./functions";
 import { Option, none } from "./option";
 
@@ -31,25 +29,6 @@ export interface DelegatingSinkLike<TA, TB> extends SinkLike<TA> {
 }
 
 export type SinkOperator<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
-
-const assertStateProduction = ignore;
-const assertStateDev = function <T>(this: SinkLike<T>) {
-  if (this.isDisposed) {
-    raise("Sink is disposed");
-  }
-};
-
-const assertState = __DEV__ ? assertStateDev : assertStateProduction;
-
-export abstract class AbstractSink<T>
-  extends AbstractDisposable
-  implements SinkLike<T>
-{
-  assertState(this: SinkLike<T>): void {}
-
-  notify(_: T): void {}
-}
-AbstractSink.prototype.assertState = assertState;
 
 export function notifyDistinctUntilChanged<T>(
   this: DelegatingSinkLike<T, T> & {

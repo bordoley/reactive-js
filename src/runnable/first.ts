@@ -1,8 +1,8 @@
 import { Function1 } from "../functions";
 import { Option, none } from "../option";
 import { RunnableLike } from "../runnable";
-import { AbstractSink } from "../sink";
 import { run } from "./run";
+import { AbstractSink } from "./sinks";
 
 class FirstSink<T> extends AbstractSink<T> {
   result: Option<T> = none;

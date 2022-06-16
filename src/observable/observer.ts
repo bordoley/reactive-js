@@ -1,9 +1,12 @@
-import { addDisposable, bindDisposables } from "../disposable";
+import {
+  AbstractDisposable,
+  addDisposable,
+  bindDisposables,
+} from "../disposable";
 import { __DEV__ } from "../env";
 import { SideEffect1, ignore, raise } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
-import { AbstractSink } from "../sink";
 
 const assertStateProduction = ignore;
 function assertStateDev<T>(this: ObserverLike<T>) {
@@ -19,7 +22,7 @@ function assertStateDev<T>(this: ObserverLike<T>) {
 const assertState = __DEV__ ? assertStateDev : assertStateProduction;
 
 export abstract class AbstractObserver<T>
-  extends AbstractSink<T>
+  extends AbstractDisposable
   implements ObserverLike<T>
 {
   abstract inContinuation: boolean;
@@ -30,6 +33,8 @@ export abstract class AbstractObserver<T>
   abstract now: number;
 
   abstract shouldYield: boolean;
+
+  notify(_: T): void {}
 
   /** @ignore */
   onRunStatusChanged(status: boolean) {

@@ -1,21 +1,8 @@
 /// <reference types="./sink.d.ts" />
-import { AbstractDisposable, dispose } from './disposable.mjs';
-import { __DEV__ } from './env.mjs';
-import { ignore, raise, pipe } from './functions.mjs';
+import { dispose } from './disposable.mjs';
+import { pipe } from './functions.mjs';
 import { none } from './option.mjs';
 
-const assertStateProduction = ignore;
-const assertStateDev = function () {
-    if (this.isDisposed) {
-        raise("Sink is disposed");
-    }
-};
-const assertState = __DEV__ ? assertStateDev : assertStateProduction;
-class AbstractSink extends AbstractDisposable {
-    assertState() { }
-    notify(_) { }
-}
-AbstractSink.prototype.assertState = assertState;
 function notifyDistinctUntilChanged(next) {
     this.assertState();
     const shouldEmit = !this.hasValue || !this.equality(this.prev, next);
@@ -91,4 +78,4 @@ function notifyTakeWhile(next) {
     }
 }
 
-export { AbstractSink, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile };
+export { notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile };

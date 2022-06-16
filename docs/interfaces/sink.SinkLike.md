@@ -20,10 +20,6 @@
 
   ↳↳ [`DelegatingSinkLike`](sink.DelegatingSinkLike.md)
 
-## Implemented by
-
-- [`AbstractSink`](../classes/sink.AbstractSink.md)
-
 ## Table of contents
 
 ### Properties

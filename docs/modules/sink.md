@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Classes
-
-- [AbstractSink](../classes/sink.AbstractSink.md)
-
 ### Interfaces
 
 - [DelegatingSinkLike](../interfaces/sink.DelegatingSinkLike.md)

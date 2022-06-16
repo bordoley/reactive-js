@@ -1,7 +1,7 @@
 import { Predicate, compose, negate } from "../functions";
 import { RunnableLike } from "../runnable";
-import { AbstractSink } from "../sink";
 import { run } from "./run";
+import { AbstractSink } from "./sinks";
 
 class EverySatisfySink<T> extends AbstractSink<T> {
   result = true;
