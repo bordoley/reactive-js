@@ -59,8 +59,6 @@ const isNotify = (ev) => ev.type === "notify";
 class IOSinkAccumulatorImpl extends AbstractDisposable {
     constructor(reducer, initialValue, options) {
         super();
-        this.type = this;
-        this.T = undefined;
         this.isSynchronous = false;
         const subject = createSubject(options);
         addDisposableDisposeParentOnChildError(this, subject);
@@ -71,6 +69,12 @@ class IOSinkAccumulatorImpl extends AbstractDisposable {
         }));
         this.streamable = createStreamable(op);
         this.subject = subject;
+    }
+    get type() {
+        return this;
+    }
+    get T() {
+        return undefined;
     }
     get observerCount() {
         return this.subject.observerCount;

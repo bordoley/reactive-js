@@ -1,3 +1,4 @@
+import { AbstractContainer } from "../container";
 import {
   DisposableOrTeardown,
   addDisposableDisposeParentOnChildError,
@@ -13,15 +14,17 @@ import {
 import { isSome, none } from "../option";
 import { observe } from "./observer";
 
-class OnSubscribeObservable<T> implements ObservableLike<T> {
-  readonly type = this;
-  readonly T = undefined as any;
+class OnSubscribeObservable<T>
+  extends AbstractContainer
+  implements ObservableLike<T>
+{
   readonly isSynchronous: boolean;
 
   constructor(
     private readonly src: ObservableLike<T>,
     private readonly f: Factory<DisposableOrTeardown | void>,
   ) {
+    super();
     this.isSynchronous = src.isSynchronous;
   }
 

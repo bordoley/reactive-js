@@ -1,4 +1,4 @@
-import { FromArrayOptions, FromArray } from "../container";
+import { FromArrayOptions, FromArray, AbstractContainer } from "../container";
 import { AbstractDisposable } from "../disposable";
 import { EnumerableLike, EnumeratorLike } from "../enumerable";
 import { none } from "../option";
@@ -41,15 +41,17 @@ class ArrayEnumerator<T>
   }
 }
 
-class ArrayEnumerable<T> implements EnumerableLike<T> {
-  readonly type = this;
-  readonly T = this as any;
-
+class ArrayEnumerable<T>
+  extends AbstractContainer
+  implements EnumerableLike<T>
+{
   constructor(
     private readonly values: readonly T[],
     private readonly startIndex: number,
     private readonly endIndex: number,
-  ) {}
+  ) {
+    super();
+  }
 
   enumerate() {
     return new ArrayEnumerator(this.values, this.startIndex, this.endIndex);

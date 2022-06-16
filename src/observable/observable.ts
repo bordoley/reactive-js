@@ -1,17 +1,20 @@
+import { AbstractContainer } from "../container";
 import { addOnDisposedWithError } from "../disposable";
 import { Function1, SideEffect, pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { schedule } from "../scheduler";
 
-class ScheduledObservable<T> implements ObservableLike<T> {
-  readonly type = this;
-  readonly T = undefined as any;
-
+class ScheduledObservable<T>
+  extends AbstractContainer
+  implements ObservableLike<T>
+{
   constructor(
     private readonly f: Function1<ObserverLike<T>, SideEffect>,
     readonly isSynchronous: boolean,
     readonly delay: number,
-  ) {}
+  ) {
+    super();
+  }
 
   observe(observer: ObserverLike<T>) {
     const callback = this.f(observer);

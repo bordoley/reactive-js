@@ -1,3 +1,4 @@
+import { AbstractContainer } from "../container";
 import { addDisposable, dispose } from "../disposable";
 import { EnumerableLike, EnumeratorLike } from "../enumerable";
 import { Function1, pipe } from "../functions";
@@ -75,11 +76,13 @@ export const enumerate = <T>(obs: ObservableLike<T>): EnumeratorLike<T> => {
   return observer;
 };
 
-class ObservableEnumerable<T> implements EnumerableLike<T> {
-  readonly type = this;
-  readonly T = undefined as any;
-
-  constructor(private readonly obs: ObservableLike<T>) {}
+class ObservableEnumerable<T>
+  extends AbstractContainer
+  implements EnumerableLike<T>
+{
+  constructor(private readonly obs: ObservableLike<T>) {
+    super();
+  }
 
   enumerate() {
     return enumerate(this.obs);

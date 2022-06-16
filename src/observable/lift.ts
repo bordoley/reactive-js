@@ -1,3 +1,4 @@
+import { AbstractContainer } from "../container";
 import { pipe } from "../functions";
 import {
   ObservableLike,
@@ -7,15 +8,17 @@ import {
 } from "../observable";
 import { observe } from "./observer";
 
-class LiftedObservable<TIn, TOut> implements ObservableLike<TOut> {
-  readonly type = this;
-  readonly T = undefined as any;
-
+class LiftedObservable<TIn, TOut>
+  extends AbstractContainer
+  implements ObservableLike<TOut>
+{
   constructor(
     readonly source: ObservableLike<TIn>,
     readonly operators: readonly ObserverOperator<any, any>[],
     readonly isSynchronous: boolean,
-  ) {}
+  ) {
+    super();
+  }
 
   observe(observer: ObserverLike<TOut>) {
     const liftedSubscrber = pipe(

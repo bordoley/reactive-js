@@ -3,6 +3,7 @@ import { dispose, addTeardown, addDisposableDisposeParentOnChildError, toAbortSi
 import { pipe, raise, returns } from './functions.mjs';
 import { createObservable, keep as keep$1, throttle, onNotify as onNotify$1, subscribe, defer, fromPromise, observe } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
+import { AbstractContainer } from './container.mjs';
 import { none, isNone } from './option.mjs';
 import { createStateStore, onNotify, lift, map, stream } from './streamable.mjs';
 
@@ -73,12 +74,11 @@ const windowHistoryPushState = (self, uri) => {
     self.historyCounter++;
     window.history.pushState({ counter: self.historyCounter, title }, "", windowLocationURIToString(uri));
 };
-class WindowLocationStream {
+class WindowLocationStream extends AbstractContainer {
     constructor(scheduler, options) {
+        super();
         this.scheduler = scheduler;
         this.options = options;
-        this.type = this;
-        this.T = undefined;
         this.historyCounter = -1;
         this.stateStream = pipe(() => ({
             replace: true,

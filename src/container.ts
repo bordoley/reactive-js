@@ -21,6 +21,15 @@ export interface ContainerLike {
   readonly type?: unknown;
 }
 
+export abstract class AbstractContainer implements ContainerLike {
+  get type(): this {
+    return this;
+  }
+  get T(): unknown {
+    return undefined;
+  }
+}
+
 export type ContainerOf<C extends ContainerLike, T> = C extends {
   readonly type: unknown;
 }

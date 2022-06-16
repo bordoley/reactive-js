@@ -1,3 +1,4 @@
+import { AbstractContainer } from "../container";
 import { addTeardown, dispose } from "../disposable";
 import { Function1, pipe } from "../functions";
 import {
@@ -12,9 +13,10 @@ import { SchedulerLike } from "../scheduler";
 import { observe } from "./observer";
 import { publish } from "./publish";
 
-class SharedObservable<T> implements ObservableLike<T> {
-  readonly type = this;
-  readonly T = undefined as any;
+class SharedObservable<T>
+  extends AbstractContainer
+  implements ObservableLike<T>
+{
   private observerCount = 0;
   private multicast: Option<MulticastObservableLike<T>>;
   private readonly teardown = () => {
@@ -34,7 +36,9 @@ class SharedObservable<T> implements ObservableLike<T> {
       ObservableLike<T>,
       MulticastObservableLike<T>
     >,
-  ) {}
+  ) {
+    super();
+  }
 
   observe(observer: ObserverLike<T>) {
     if (this.observerCount === 0) {

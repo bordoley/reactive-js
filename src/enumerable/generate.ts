@@ -1,3 +1,4 @@
+import { AbstractContainer } from "../container";
 import { AbstractDisposable } from "../disposable";
 import { EnumerableLike, EnumeratorLike } from "../enumerable";
 import { Factory, Updater } from "../functions";
@@ -29,14 +30,16 @@ class GenerateEnumerator<T>
   }
 }
 
-class GenerateEnumerable<T> implements EnumerableLike<T> {
-  readonly type = this;
-  readonly T = undefined as any;
-
+class GenerateEnumerable<T>
+  extends AbstractContainer
+  implements EnumerableLike<T>
+{
   constructor(
     private readonly f: Updater<T>,
     private readonly acc: Factory<T>,
-  ) {}
+  ) {
+    super();
+  }
 
   enumerate() {
     return new GenerateEnumerator(this.f, this.acc());

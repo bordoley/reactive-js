@@ -62,7 +62,6 @@ function notifyMap(next) {
     this.delegate.notify(mapped);
 }
 function notifyOnNotify(next) {
-    debugger;
     this.assertState();
     this.onNotify(next);
     this.delegate.notify(next);

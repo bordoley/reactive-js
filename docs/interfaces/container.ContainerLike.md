@@ -16,6 +16,10 @@
 
   ↳ [`SequenceLike`](sequence.SequenceLike.md)
 
+## Implemented by
+
+- [`AbstractContainer`](../classes/container.AbstractContainer.md)
+
 ## Table of contents
 
 ### Properties

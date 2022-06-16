@@ -136,7 +136,6 @@ export function notifyOnNotify<T>(
   },
   next: T,
 ) {
-  debugger;
   this.assertState();
 
   this.onNotify(next);

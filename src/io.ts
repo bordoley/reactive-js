@@ -172,8 +172,13 @@ class IOSinkAccumulatorImpl<T, TAcc>
   extends AbstractDisposable
   implements IOSinkAccumulatorLike<T, TAcc>
 {
-  readonly type = this;
-  readonly T = undefined as any;
+  get type(): this {
+    return this;
+  }
+  get T(): unknown {
+    return undefined;
+  }
+
   readonly isSynchronous = false;
 
   private readonly subject: StreamLike<TAcc, TAcc>;

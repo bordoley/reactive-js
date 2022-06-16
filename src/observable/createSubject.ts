@@ -4,8 +4,12 @@ import { DispatcherLike, ObserverLike, SubjectLike } from "../observable";
 import { toDispatcher } from "./toDispatcher";
 
 class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
-  readonly type = this;
-  readonly T = undefined as any;
+  get type(): this {
+    return this;
+  }
+  get T(): unknown {
+    return undefined;
+  }
 
   private readonly observers: Set<DispatcherLike<T>> = new Set();
   private readonly replayed: T[] = [];
