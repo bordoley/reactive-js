@@ -19,9 +19,9 @@
 
   ↳ [`IOSinkLike`](io.IOSinkLike.md)
 
-  ↳ [`StateStoreLike`](stateStore.StateStoreLike.md)
+  ↳ [`IOSourceLike`](io.IOSourceLike.md)
 
-  ↳ [`FlowableLike`](streamable.FlowableLike.md)
+  ↳ [`StateStoreLike`](stateStore.StateStoreLike.md)
 
   ↳ [`WindowLocationStreamableLike`](web.WindowLocationStreamableLike.md)
 

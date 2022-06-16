@@ -38,7 +38,7 @@ declare const scan: <TReq, T, TAcc>(scanner: Reducer<T, TAcc>, initalValue: Fact
 declare const withLatestFrom: <TReq, TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => StreamableOperator<TReq, TA, TReq, T>;
 declare const flow: <T>({ scheduler, }?: {
     scheduler?: SchedulerLike | undefined;
-}) => Function1<ObservableLike<T>, FlowableLike<T>>;
+}) => Function1<ObservableLike<T>, StreamableLike<FlowMode, T>>;
 declare const sink: <TReq, T>(src: StreamableLike<TReq, T>, dest: StreamableLike<T, TReq>) => ObservableLike<void>;
 interface StreamableLike<TReq, T> {
     stream(this: StreamableLike<TReq, T>, scheduler: SchedulerLike, options?: {
@@ -47,7 +47,4 @@ interface StreamableLike<TReq, T> {
 }
 declare type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<StreamableLike<TSrcReq, TSrc>, StreamableLike<TReq, T>>;
 declare type FlowMode = "resume" | "pause";
-/** @noInheritDoc */
-interface FlowableLike<T> extends StreamableLike<FlowMode, T> {
-}
-export { FlowMode, FlowableLike, StreamableLike, StreamableOperator, __stream, createActionReducer, createStreamable, empty, flow, identity, lift, map, mapReq, mapTo, onNotify, scan, sink, stream, withLatestFrom };
+export { FlowMode, StreamableLike, StreamableOperator, __stream, createActionReducer, createStreamable, empty, flow, identity, lift, map, mapReq, mapTo, onNotify, scan, sink, stream, withLatestFrom };

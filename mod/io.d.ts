@@ -1,4 +1,4 @@
-import { FlowableLike, StreamableLike, FlowMode } from "./streamable.mjs";
+import { StreamableLike, FlowMode } from "./streamable.mjs";
 import { Function1, Reducer, Factory } from "./functions.mjs";
 import { ObservableLike, MulticastObservableLike } from "./observable.mjs";
 declare type IOEventType = "notify" | "done";
@@ -11,7 +11,7 @@ declare type IOEvent<T> = {
 declare const notify: <T>(data: T) => IOEvent<T>;
 declare const done: <T>() => IOEvent<T>;
 /** @noInheritDoc */
-interface IOSourceLike<T> extends FlowableLike<IOEvent<T>> {
+interface IOSourceLike<T> extends StreamableLike<FlowMode, IOEvent<T>> {
 }
 /** @noInheritDoc */
 interface IOSinkLike<T> extends StreamableLike<IOEvent<T>, FlowMode> {

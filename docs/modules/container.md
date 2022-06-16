@@ -40,6 +40,7 @@
 - [concatWith](container.md#concatwith)
 - [empty](container.md#empty)
 - [endWith](container.md#endwith)
+- [fromOption](container.md#fromoption)
 - [fromValue](container.md#fromvalue)
 - [genMap](container.md#genmap)
 - [ignoreElements](container.md#ignoreelements)
@@ -201,6 +202,31 @@ ___
 #### Returns
 
 [`ContainerOperator`](container.md#containeroperator)<`C`, `T`, `T`\>
+
+___
+
+### fromOption
+
+▸ **fromOption**<`C`, `T`, `O`\>(`m`, `options?`): [`Function1`](functions.md#function1)<[`Option`](option.md#option)<`T`\>, [`ContainerOf`](container.md#containerof)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | `C` |
+| `T` | `T` |
+| `O` | extends [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md) = [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, `O`\> |
+| `options?` | `Omit`<`Partial`<`O`\>, keyof [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Option`](option.md#option)<`T`\>, [`ContainerOf`](container.md#containerof)<`C`, `T`\>\>
 
 ___
 

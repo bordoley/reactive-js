@@ -1,5 +1,6 @@
 /// <reference types="./container.d.ts" />
 import { compose, callWith, pipe, defer, alwaysFalse, returns } from './functions.mjs';
+import { isSome } from './option.mjs';
 
 const compute = (m, options) => compose(fromValue(m, options), m.map(callWith()));
 const concatMap = ({ map, concatAll }, mapper, options) => compose(map(mapper), concatAll(options));
@@ -8,6 +9,9 @@ const empty = ({ fromArray }, options) => fromArray({ ...options })([]);
 function endWith(m, ...values) {
     return concatWith(m, m.fromArray()(values));
 }
+const fromOption = (m, options) => option => isSome(option)
+    ? fromValue(m, options)(option)
+    : empty(m, options);
 const fromValue = ({ fromArray }, options) => (value) => pipe([value], fromArray({
     ...options,
 }));
@@ -24,4 +28,4 @@ const throws = (m, options) => errorFactory => pipe(() => {
 }, compute(m, options));
 const zipWith = ({ zip }, snd) => fst => zip(fst, snd);
 
-export { compute, concatMap, concatWith, empty, endWith, fromValue, genMap, ignoreElements, keepType, mapTo, startWith, throws, zipWith };
+export { compute, concatMap, concatWith, empty, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, startWith, throws, zipWith };
