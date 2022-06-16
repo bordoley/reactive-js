@@ -385,7 +385,24 @@ const createSink = () => new ToArraySink();
  */
 const toArray = () => run(createSink);
 
+/**
+ * Creates an `RunnableLike` that uses one or more resources which
+ * will be disposed when the RunnableLike disposes it's only subscription.
+ */
+function using(resourceFactory, runnableFactory) {
+    const run = (sink) => {
+        const resources = resourceFactory();
+        const resourcesArray = Array.isArray(resources) ? resources : [resources];
+        const runnable = runnableFactory(...resourcesArray);
+        for (const r of resourcesArray) {
+            addDisposableDisposeParentOnChildError(sink, r);
+        }
+        runnable.run(sink);
+    };
+    return createRunnable(run);
+}
+
 const toRunnable = () => identity;
 const type = undefined;
 
-export { concat, concatAll, contains, createRunnable, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, lift, map, noneSatisfy, onNotify, pairwise, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type };
+export { concat, concatAll, contains, createRunnable, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, lift, map, noneSatisfy, onNotify, pairwise, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type, using };
