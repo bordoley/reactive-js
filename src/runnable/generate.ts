@@ -1,7 +1,7 @@
 import { Factory, Updater } from "../functions";
 import { RunnableLike } from "../runnable";
-import { createRunnable } from "./createRunnable";
 import { SinkLike } from "../sink";
+import { createRunnable } from "./createRunnable";
 
 export const generate = <T>(
   generator: Updater<T>,

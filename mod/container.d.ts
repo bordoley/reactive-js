@@ -23,7 +23,7 @@ interface Container<C extends ContainerLike> {
 interface Concat<C extends ContainerLike> extends Container<C> {
     concat<T>(fst: ContainerOf<C, T>, snd: ContainerOf<C, T>, ...tail: readonly ContainerOf<C, T>[]): ContainerOf<C, T>;
 }
-interface ConcatAll<C extends ContainerLike, O = {}> extends Container<C> {
+interface ConcatAll<C extends ContainerLike, O = Record<string, never>> extends Container<C> {
     concatAll: <T>(options?: Partial<O>) => ContainerOperator<C, ContainerOf<C, T>, T>;
 }
 interface DistinctUntilChanged<C extends ContainerLike> extends Container<C> {
@@ -41,10 +41,10 @@ interface FromArray<C extends ContainerLike, O extends FromArrayOptions = FromAr
 interface Generate<C extends ContainerLike> extends Container<C> {
     generate<T>(generator: Updater<T>, initialValue: Factory<T>): ContainerOf<C, T>;
 }
-interface FromIterable<C extends ContainerLike, O extends {} = {}> extends Container<C> {
+interface FromIterable<C extends ContainerLike, O extends Record<string, never> = Record<string, never>> extends Container<C> {
     fromIterable<T>(options?: Partial<O>): Function1<Iterable<T>, ContainerOf<C, T>>;
 }
-interface FromIterator<C extends ContainerLike, O extends {} = {}> extends Container<C> {
+interface FromIterator<C extends ContainerLike, O extends Record<string, unknown> = Record<string, never>> extends Container<C> {
     fromIterator<T, TReturn = any, TNext = unknown>(options?: Partial<O>): Function1<Factory<Iterator<T, TReturn, TNext>>, ContainerOf<C, T>>;
 }
 interface Keep<C extends ContainerLike> extends Container<C> {
@@ -153,13 +153,13 @@ interface Zip<C extends ContainerLike> extends Container<C> {
     ]>;
 }
 declare const compute: <C, T, O extends FromArrayOptions = FromArrayOptions>(m: Map<C> & FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Factory<T>, ContainerOf<C, T>>;
-declare const concatMap: <C, TA, TB, O = {}>({ map, concatAll }: Map<C> & ConcatAll<C, O>, mapper: Function1<TA, ContainerOf<C, TB>>, options?: Partial<O> | undefined) => ContainerOperator<C, TA, TB>;
+declare const concatMap: <C, TA, TB, O = Record<string, never>>({ map, concatAll }: Map<C> & ConcatAll<C, O>, mapper: Function1<TA, ContainerOf<C, TB>>, options?: Partial<O> | undefined) => ContainerOperator<C, TA, TB>;
 declare const concatWith: <C, T>({ concat }: Concat<C>, snd: ContainerOf<C, T>) => ContainerOperator<C, T, T>;
 declare const empty: <C, T, O extends FromArrayOptions = FromArrayOptions>({ fromArray }: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => ContainerOf<C, T>;
 declare function endWith<C, T>(m: Concat<C> & FromArray<C>, value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
 declare const fromOption: <C, T, O extends FromArrayOptions = FromArrayOptions>(m: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Option<T>, ContainerOf<C, T>>;
 declare const fromValue: <C, T, O extends FromArrayOptions = FromArrayOptions>({ fromArray }: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<T, ContainerOf<C, T>>;
-declare const genMap: <C, TA, TB, OConcatAll extends {} = {}, OFromIterator extends {} = {}, TReturn = any, TNext = unknown>(m: Map<C> & ConcatAll<C, OConcatAll> & FromIterator<C, OFromIterator>, mapper: Function1<TA, Generator<TB, TReturn, TNext>>, options?: Partial<OConcatAll & OFromIterator> | undefined) => ContainerOperator<C, TA, TB>;
+declare const genMap: <C, TA, TB, OConcatAll extends Record<string, never> = Record<string, never>, OFromIterator extends Record<string, never> = Record<string, never>, TReturn = any, TNext = unknown>(m: Map<C> & ConcatAll<C, OConcatAll> & FromIterator<C, OFromIterator>, mapper: Function1<TA, Generator<TB, TReturn, TNext>>, options?: Partial<OConcatAll & OFromIterator> | undefined) => ContainerOperator<C, TA, TB>;
 declare const keepType: <C, TA, TB extends TA>({ keep }: Keep<C>, predicate: TypePredicate<TA, TB>) => ContainerOperator<C, TA, TB>;
 declare const ignoreElements: <C, T>({ keep, }: Keep<C>) => ContainerOperator<C, unknown, T>;
 declare const mapTo: <C, TA, TB>({ map }: Map<C>, value: TB) => ContainerOperator<C, TA, TB>;

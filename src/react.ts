@@ -19,14 +19,14 @@ import {
   unstable_shouldYield,
 } from "scheduler";
 import {
+  AbstractDisposable,
   Error,
   addDisposable,
   addTeardown,
   createDisposable,
   dispose,
-  AbstractDisposable,
 } from "./disposable";
-import { compose, defer, Factory, pipe, returns } from "./functions";
+import { Factory, compose, defer, pipe, returns } from "./functions";
 import {
   ObservableLike,
   SubjectLike,
@@ -36,11 +36,11 @@ import {
 } from "./observable";
 import { Option, isSome, none } from "./option";
 import {
+  PrioritySchedulerLike,
   SchedulerContinuationLike,
   SchedulerLike,
   run,
   toSchedulerWithPriority,
-  PrioritySchedulerLike,
 } from "./scheduler";
 
 /**

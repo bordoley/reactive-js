@@ -23,7 +23,7 @@ export const fromIterator = <T, TReturn = any, TNext = unknown>(options?: {
 export const fromIteratorT: FromIterator<
   ObservableLike<unknown>,
   {
-    readonly delay: number;
+    readonly delay?: number;
   }
 > = {
   fromIterator,

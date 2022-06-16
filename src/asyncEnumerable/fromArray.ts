@@ -1,8 +1,8 @@
 import { AsyncEnumerableLike } from "../asyncEnumerable";
-import { Function1, compose, returns } from "../functions";
-import { mapT, concatAllT, fromArrayT, scan, takeFirst } from "../observable";
-import { createStreamable } from "../streamable";
 import { concatMap, fromValue as fromValueContainer } from "../container";
+import { Function1, compose, returns } from "../functions";
+import { concatAllT, fromArrayT, mapT, scan, takeFirst } from "../observable";
+import { createStreamable } from "../streamable";
 
 const fromArrayScanner = (acc: number, _: void): number => acc + 1;
 

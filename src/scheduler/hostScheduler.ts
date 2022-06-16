@@ -1,13 +1,13 @@
 import {
   AbstractDisposable,
+  DisposableLike,
   addDisposable,
   addTeardown,
   createDisposable,
-  DisposableLike,
   disposed,
 } from "../disposable";
 import { Factory, alwaysFalse } from "../functions";
-import { Option, none, isSome } from "../option";
+import { Option, isSome, none } from "../option";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
 import { run } from "./schedulerContinuation";
 

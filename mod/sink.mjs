@@ -1,8 +1,8 @@
 /// <reference types="./sink.d.ts" />
 import { AbstractDisposable, addDisposable, bindDisposables, dispose } from './disposable.mjs';
+import { __DEV__ } from './env.mjs';
 import { ignore, raise, pipe } from './functions.mjs';
 import { none } from './option.mjs';
-import { __DEV__ } from './env.mjs';
 
 const assertStateProduction = ignore;
 const assertStateDev = function () {

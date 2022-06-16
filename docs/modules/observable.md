@@ -164,7 +164,7 @@ ___
 
 ### exhaustT
 
-• `Const` **exhaustT**: [`ConcatAll`](../interfaces/container.ConcatAll.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, {}\>
+• `Const` **exhaustT**: [`ConcatAll`](../interfaces/container.ConcatAll.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `Record`<`string`, `never`\>\>
 
 ___
 
@@ -176,7 +176,7 @@ ___
 
 ### fromIteratorT
 
-• `Const` **fromIteratorT**: [`FromIterator`](../interfaces/container.FromIterator.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, { `delay`: `number`  }\>
+• `Const` **fromIteratorT**: [`FromIterator`](../interfaces/container.FromIterator.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, { `delay?`: `number`  }\>
 
 ___
 
@@ -200,7 +200,7 @@ ___
 
 ### switchAllT
 
-• `Const` **switchAllT**: [`ConcatAll`](../interfaces/container.ConcatAll.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, {}\>
+• `Const` **switchAllT**: [`ConcatAll`](../interfaces/container.ConcatAll.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `Record`<`string`, `never`\>\>
 
 ___
 

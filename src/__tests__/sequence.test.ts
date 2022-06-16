@@ -1,12 +1,8 @@
-import { describe } from "../testing";
-import { createRunnableTests } from "./runnable.test";
-
 import {
-  type,
-  fromArray,
   concat,
   concatAll,
   distinctUntilChanged,
+  fromArray,
   generate,
   keep,
   map,
@@ -17,7 +13,10 @@ import {
   takeLast,
   takeWhile,
   toRunnable,
+  type,
 } from "../sequence";
+import { describe } from "../testing";
+import { createRunnableTests } from "./runnable.test";
 
 export const tests = describe(
   "sequence",

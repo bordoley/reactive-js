@@ -1,4 +1,4 @@
-import { endWith } from "../container";
+import { endWith, ignoreElements } from "../container";
 import { addDisposable } from "../disposable";
 import { Function1, compose, pipe } from "../functions";
 import {
@@ -10,8 +10,6 @@ import {
   subscribe,
   using,
 } from "../observable";
-
-import { ignoreElements } from "../container";
 
 import { none } from "../option";
 import { StreamableLike } from "../streamable";

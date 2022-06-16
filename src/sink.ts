@@ -1,22 +1,22 @@
 import {
   AbstractDisposable,
+  DisposableLike,
   addDisposable,
   bindDisposables,
-  DisposableLike,
   dispose,
 } from "./disposable";
+import { __DEV__ } from "./env";
 import {
   Equality,
   Function1,
-  pipe,
   Predicate,
   Reducer,
   SideEffect1,
   ignore,
+  pipe,
   raise,
 } from "./functions";
-import { none, Option } from "./option";
-import { __DEV__ } from "./env";
+import { Option, none } from "./option";
 
 export interface SinkLike<T> extends DisposableLike {
   assertState(this: SinkLike<T>): void;

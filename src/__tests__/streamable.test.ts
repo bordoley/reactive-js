@@ -49,8 +49,8 @@ import {
   expectArrayEquals,
   expectEquals,
   expectFalse,
-  expectTrue,
   expectToHaveBeenCalledTimes,
+  expectTrue,
   mockFn,
   test,
 } from "../testing";

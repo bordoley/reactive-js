@@ -1,4 +1,4 @@
-import { addDisposable, DisposableLike } from "../disposable";
+import { DisposableLike, addDisposable } from "../disposable";
 import { Function1, SideEffect1, ignore, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { none } from "../option";

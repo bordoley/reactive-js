@@ -1,6 +1,6 @@
 import {
-  addDisposableDisposeParentOnChildError,
   DisposableLike,
+  addDisposableDisposeParentOnChildError,
 } from "../disposable";
 import {
   Factory,
@@ -11,8 +11,8 @@ import {
   Function5,
 } from "../functions";
 import { RunnableLike } from "../runnable";
-import { createRunnable } from "./createRunnable";
 import { SinkLike } from "../sink";
+import { createRunnable } from "./createRunnable";
 
 export function using<TResource extends DisposableLike, T>(
   resourceFactory: Factory<TResource>,

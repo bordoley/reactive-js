@@ -1,3 +1,4 @@
+import { empty } from "../container";
 import {
   DisposableLike,
   Error,
@@ -34,10 +35,9 @@ import {
 } from "../observable";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerLike, schedule } from "../scheduler";
-import { empty } from "../container";
+import { fromArrayT } from "./fromArray";
 import { defer } from "./observable";
 import { subscribe } from "./subscribe";
-import { fromArrayT } from "./fromArray";
 
 const arrayStrictEquality = arrayEquality();
 

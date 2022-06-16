@@ -1,10 +1,9 @@
-import { concatMap, compute, endWith, keepType } from "./container";
+import { compute, concatMap, endWith, keepType } from "./container";
 import {
   AbstractDisposable,
   addDisposable,
   addDisposableDisposeParentOnChildError,
 } from "./disposable";
-import { FlowMode, flow } from "./streamable";
 import {
   Factory,
   Function1,
@@ -20,9 +19,9 @@ import {
   ObserverLike,
   StreamLike,
   concatAllT,
+  concatT,
   createObservable,
   createSubject,
-  concatT,
   fromArray as fromArrayObs,
   fromArrayT,
   fromIterator,
@@ -38,8 +37,10 @@ import {
 
 import { SchedulerLike } from "./scheduler";
 import {
+  FlowMode,
   StreamableLike,
   createStreamable,
+  flow,
   lift,
   map as mapStream,
   stream,

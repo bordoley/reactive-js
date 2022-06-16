@@ -1,54 +1,7 @@
 import {
-  alwaysFalse,
-  alwaysTrue,
-  defer,
-  increment,
-  pipe,
-  returns,
-  incrementBy,
-  sum,
-} from "../functions";
-import {
-  concat,
-  concatAll,
-  contains,
-  everySatisfy,
-  first,
-  forEach,
-  fromArray,
-  fromArrayT,
-  generate,
-  noneSatisfy,
-  ToRunnable,
-  toArray,
-  RunnableLike,
-  keepT,
-  distinctUntilChanged,
-  map,
-  repeat,
-  scan,
-  skipFirst,
-  takeFirst,
-  takeLast,
-  takeWhile,
-  toRunnable,
-} from "../runnable";
-import {
-  describe,
-  expectArrayEquals,
-  expectEquals,
-  expectFalse,
-  expectNone,
-  expectToHaveBeenCalledTimes,
-  expectTrue,
-  mockFn,
-  test,
-} from "../testing";
-
-import {
-  ContainerLike,
   Concat,
   ConcatAll,
+  ContainerLike,
   DistinctUntilChanged,
   FromArray,
   Generate,
@@ -69,10 +22,56 @@ import {
   mapTo,
   startWith,
 } from "../container";
+import {
+  alwaysFalse,
+  alwaysTrue,
+  defer,
+  increment,
+  incrementBy,
+  pipe,
+  returns,
+  sum,
+} from "../functions";
+import {
+  RunnableLike,
+  ToRunnable,
+  concat,
+  concatAll,
+  contains,
+  distinctUntilChanged,
+  everySatisfy,
+  first,
+  forEach,
+  fromArray,
+  fromArrayT,
+  generate,
+  keepT,
+  map,
+  noneSatisfy,
+  repeat,
+  scan,
+  skipFirst,
+  takeFirst,
+  takeLast,
+  takeWhile,
+  toArray,
+  toRunnable,
+} from "../runnable";
+import {
+  describe,
+  expectArrayEquals,
+  expectEquals,
+  expectFalse,
+  expectNone,
+  expectToHaveBeenCalledTimes,
+  expectTrue,
+  mockFn,
+  test,
+} from "../testing";
 
 export const createRunnableTests = <C extends ContainerLike>(
   m: Concat<C> &
-    ConcatAll<C, {}> &
+    ConcatAll<C, Record<string, never>> &
     DistinctUntilChanged<C> &
     FromArray<C> &
     Generate<C> &

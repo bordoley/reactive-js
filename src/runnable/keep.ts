@@ -1,9 +1,12 @@
 import { Keep } from "../container";
 import { Predicate } from "../functions";
 import { RunnableLike, RunnableOperator } from "../runnable";
+import {
+  AbstractAutoDisposingDelegatingSink,
+  SinkLike,
+  notifyKeep,
+} from "../sink";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingSink } from "../sink";
-import { notifyKeep, SinkLike } from "../sink";
 
 class KeepSink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
   constructor(delegate: SinkLike<T>, readonly predicate: Predicate<T>) {

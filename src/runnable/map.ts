@@ -1,8 +1,11 @@
 import { Function1 } from "../functions";
 import { RunnableOperator } from "../runnable";
+import {
+  AbstractAutoDisposingDelegatingSink,
+  SinkLike,
+  notifyMap,
+} from "../sink";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingSink } from "../sink";
-import { SinkLike, notifyMap } from "../sink";
 
 class MapSink<TA, TB> extends AbstractAutoDisposingDelegatingSink<TA, TB> {
   constructor(delegate: SinkLike<TB>, readonly mapper: Function1<TA, TB>) {

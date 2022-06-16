@@ -7,6 +7,7 @@ import {
   generate,
   notify,
 } from "../asyncEnumerable";
+import { fromValue } from "../container";
 import { Error, addTeardown } from "../disposable";
 import { defer, increment, pipe, returns } from "../functions";
 import { fromArrayT, subscribe, toRunnable } from "../observable";
@@ -21,7 +22,6 @@ import {
   expectNone,
   test,
 } from "../testing";
-import { fromValue } from "../container";
 
 export const tests = describe(
   "async-enumerable",

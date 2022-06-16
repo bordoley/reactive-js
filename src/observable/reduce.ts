@@ -1,12 +1,12 @@
+import { fromValue } from "../container";
 import { Error, addTeardown } from "../disposable";
 import { Factory, Reducer, pipe } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
 import { Option, isSome } from "../option";
-import { fromValue } from "../container";
+import { notifyReduce } from "../sink";
+import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver, observe } from "./observer";
-import { fromArrayT } from "./fromArray";
-import { notifyReduce } from "../sink";
 
 function onDispose(
   this: ReduceObserver<unknown, unknown>,

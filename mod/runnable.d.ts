@@ -1,6 +1,6 @@
 import { FromArray, FromArrayOptions, Keep, ContainerLike, Container, ContainerOf } from "./container.mjs";
-import { SinkLike, SinkOperator } from "./sink.mjs";
 import { SideEffect1, Equality, Predicate, Function1, Updater, Factory, Reducer, Function2, Function3, Function4, Function5 } from "./functions.mjs";
+import { SinkLike, SinkOperator } from "./sink.mjs";
 import { Option } from "./option.mjs";
 import { DisposableLike } from "./disposable.mjs";
 /**

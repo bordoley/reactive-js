@@ -1,8 +1,8 @@
 import { AbstractContainer } from "../container";
 import {
-  addDisposableDisposeParentOnChildError,
   DisposableOrTeardown,
   Error,
+  addDisposableDisposeParentOnChildError,
 } from "../disposable";
 import { Updater, pipe, raise } from "../functions";
 import {
@@ -13,7 +13,7 @@ import {
   subscribe,
   throttle,
 } from "../observable";
-import { Option, none, isNone } from "../option";
+import { Option, isNone, none } from "../option";
 import { SchedulerLike } from "../scheduler";
 import {
   createStateStore,
@@ -23,8 +23,8 @@ import {
   stream,
 } from "../streamable";
 import {
-  WindowLocationStreamableLike,
   WindowLocationStreamLike,
+  WindowLocationStreamableLike,
   WindowLocationURI,
 } from "../web";
 import { fromEvent } from "./event";

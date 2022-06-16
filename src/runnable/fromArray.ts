@@ -1,8 +1,8 @@
-import { FromArrayOptions, FromArray } from "../container";
+import { FromArray, FromArrayOptions } from "../container";
 import { Function1 } from "../functions";
 import { RunnableLike } from "../runnable";
-import { createRunnable } from "./createRunnable";
 import { SinkLike } from "../sink";
+import { createRunnable } from "./createRunnable";
 
 export const fromArray =
   <T>(

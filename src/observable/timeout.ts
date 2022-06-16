@@ -1,3 +1,4 @@
+import { throws } from "../container";
 import {
   SerialDisposableLike,
   addDisposableDisposeParentOnChildError,
@@ -11,12 +12,11 @@ import {
   ObserverLike,
 } from "../observable";
 import { concat } from "./concat";
+import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
+import { mapT } from "./map";
 import { AbstractAutoDisposingDelegatingObserver } from "./observer";
 import { subscribe } from "./subscribe";
-import { throws } from "../container";
-import { mapT } from "./map";
-import { fromArrayT } from "./fromArray";
 
 const _timeoutError = Symbol("@reactive-js/core/lib/observable/timeoutError");
 

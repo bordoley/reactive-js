@@ -1,4 +1,12 @@
 import {
+  ContainerLike,
+  FromArray,
+  Generate,
+  Map,
+  Zip,
+  zipWith,
+} from "../container";
+import {
   concat,
   concatAll,
   distinctUntilChanged,
@@ -22,15 +30,6 @@ import { arrayEquality, defer, increment, pipe, returns } from "../functions";
 import { ToRunnable, toArray } from "../runnable";
 import { describe, expectArrayEquals, test } from "../testing";
 import { createRunnableTests } from "./runnable.test";
-
-import {
-  ContainerLike,
-  FromArray,
-  Generate,
-  Map,
-  Zip,
-  zipWith,
-} from "../container";
 
 export const createZippableTests = <C extends ContainerLike>(
   m: FromArray<C> & Generate<C> & Map<C> & ToRunnable<C> & Zip<C>,

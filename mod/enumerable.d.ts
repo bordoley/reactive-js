@@ -1,5 +1,5 @@
-import { DisposableLike } from "./disposable.mjs";
 import { FromArray, FromArrayOptions, Keep, ContainerLike, Container, ContainerOf } from "./container.mjs";
+import { DisposableLike } from "./disposable.mjs";
 import { Equality, Function1, Factory, Updater, Predicate, Reducer } from "./functions.mjs";
 import { RunnableLike } from "./runnable.mjs";
 /**

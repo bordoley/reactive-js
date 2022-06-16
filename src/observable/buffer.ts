@@ -1,3 +1,4 @@
+import { fromValue } from "../container";
 import {
   Error,
   addDisposableDisposeParentOnChildError,
@@ -18,7 +19,6 @@ import { lift } from "./lift";
 import { never } from "./never";
 import { AbstractDelegatingObserver, observe } from "./observer";
 import { subscribe } from "./subscribe";
-import { fromValue } from "../container";
 
 function onDispose(this: BufferObserver<void>, error: Option<Error>) {
   const buffer = this.buffer;

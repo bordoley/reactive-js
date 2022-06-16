@@ -1,11 +1,13 @@
+import { fromValue } from "../container";
+import { bindDisposables } from "../disposable";
 import {
   Equality,
   Factory,
   Reducer,
+  Updater,
   identity,
   pipe,
   returns,
-  Updater,
   updaterReducer,
 } from "../functions";
 import {
@@ -19,13 +21,11 @@ import {
   zipWithLatestFrom,
 } from "../observable";
 import {
-  createStreamable,
   StreamableLike,
   StreamableOperator,
+  createStreamable,
 } from "../streamable";
-import { fromValue } from "../container";
 import { stream as streamStreamable } from "./streamable";
-import { bindDisposables } from "../disposable";
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function

@@ -67,6 +67,9 @@ const switchAllInstance = lift(operator);
 export const switchAll = <T>(): ObservableOperator<ObservableLike<T>, T> =>
   switchAllInstance as ObservableOperator<ObservableLike<T>, T>;
 
-export const switchAllT: ConcatAll<ObservableLike<unknown>, {}> = {
+export const switchAllT: ConcatAll<
+  ObservableLike<unknown>,
+  Record<string, never>
+> = {
   concatAll: switchAll,
 };
