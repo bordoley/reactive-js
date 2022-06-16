@@ -1,9 +1,9 @@
 import { Factory, Function1, Equality, Predicate, Updater, Reducer } from "./functions.mjs";
 import { RunnableLike } from "./runnable.mjs";
-declare type SequenceResultNotify<T> = {
+interface SequenceResultNotify<T> {
     readonly data: T;
     readonly next: Sequence<T>;
-};
+}
 declare const sequenceResultDone: unique symbol;
 declare type SequenceResult<T> = SequenceResultNotify<T> | typeof sequenceResultDone;
 declare type Sequence<T> = Factory<SequenceResult<T>>;

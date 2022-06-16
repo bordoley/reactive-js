@@ -3,14 +3,14 @@ import { Function1, identity } from "./functions";
 export interface SinkLike<T> {
   readonly isDone: boolean;
 
-  notify(next: T): void;
-  done(): void;
+  notify(this: SinkLike<T>, next: T): void;
+  done(this: SinkLike<T>): void;
 }
 
 export type SinkOperator<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
 
 export interface RunnableLike<T> {
-  run(sink: SinkLike<T>): void;
+  run(this: RunnableLike<T>, sink: SinkLike<T>): void;
 }
 
 export type RunnableOperator<TA, TB> = Function1<

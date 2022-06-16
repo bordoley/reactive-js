@@ -80,12 +80,12 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
 declare const toArray: <T>() => Function1<RunnableLike<T>, readonly T[]>;
 interface SinkLike<T> {
     readonly isDone: boolean;
-    notify(next: T): void;
-    done(): void;
+    notify(this: SinkLike<T>, next: T): void;
+    done(this: SinkLike<T>): void;
 }
 declare type SinkOperator<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
 interface RunnableLike<T> {
-    run(sink: SinkLike<T>): void;
+    run(this: RunnableLike<T>, sink: SinkLike<T>): void;
 }
 declare type RunnableOperator<TA, TB> = Function1<RunnableLike<TA>, RunnableLike<TB>>;
 declare const toRunnable: <T>() => Function1<RunnableLike<T>, RunnableLike<T>>;

@@ -1,5 +1,5 @@
 import { DisposableLike } from "./disposable";
-import { Function1 } from "./functions";
+import { Function1, Function2 } from "./functions";
 import { SchedulerLike } from "./scheduler";
 
 /**
@@ -19,17 +19,17 @@ export interface ObserverLike<T> extends DisposableLike, SchedulerLike {
    *
    * @param next The next notification value.
    */
-  notify(next: T): void;
+  notify(this: ObserverLike<T>, next: T): void;
 }
 
 /**
  * A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.
  */
-export type ObserverOperator<A, B> = {
+export interface ObserverOperator<A, B> {
   readonly isSynchronous: boolean;
 
   (observer: ObserverLike<B>): ObserverLike<A>;
-};
+}
 
 /**
  * The source of notifications which notifies a `ObserverLike` instance.
@@ -43,7 +43,7 @@ export interface ObservableLike<T> {
    * Subscribes the `ObserverLike` instance to the observable.
    * @param observer The observer which should be notified by the observable source.
    */
-  observe(observer: ObserverLike<T>): void;
+  observe(this: ObservableLike<T>, observer: ObserverLike<T>): void;
 }
 
 /** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
@@ -72,7 +72,7 @@ export interface DispatcherLike<T> extends DisposableLike {
    * Dispatches the next request
    * @param req
    */
-  dispatch(req: T): void;
+  dispatch(this: DispatcherLike<T>, req: T): void;
 }
 
 /**
@@ -87,8 +87,18 @@ export interface StreamLike<TReq, T>
 /** @noInheritDoc */
 export interface SubjectLike<T> extends StreamLike<T, T> {}
 
+export type AsyncReducer<TAcc, T> = Function2<TAcc, T, ObservableLike<TAcc>>;
+export type ObservableEffectMode = "batched" | "combine-latest";
+
+/**
+ * The throttle mode used by the `throttle` operator.
+ * first - Takes a leading value.
+ * last - Takes the trailing value.
+ * interval -  Takes both the leading and trailing values.
+ */
+export type ThrottleMode = "first" | "last" | "interval";
+
 export { dispatchTo } from "./observable/dispatcher";
-export type { ObservableEffectMode } from "./observable/effects";
 export {
   observable,
   __currentScheduler,
@@ -143,7 +153,6 @@ export { publish } from "./observable/publish";
 export { reduce } from "./observable/reduce";
 export { repeat, retry } from "./observable/repeat";
 export { scan } from "./observable/scan";
-export type { AsyncReducer } from "./observable/scanAsync";
 export { scanAsync } from "./observable/scanAsync";
 export { share } from "./observable/share";
 export { skipFirst } from "./observable/skipFirst";
@@ -154,7 +163,6 @@ export { takeFirst } from "./observable/takeFirst";
 export { takeLast } from "./observable/takeLast";
 export { takeUntil } from "./observable/takeUntil";
 export { takeWhile } from "./observable/takeWhile";
-export type { ThrottleMode } from "./observable/throttle";
 export { throttle } from "./observable/throttle";
 export { throwIfEmpty } from "./observable/throwIfEmpty";
 export { timeout, timeoutError } from "./observable/timeout";

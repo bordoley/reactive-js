@@ -4,10 +4,10 @@ import { Option } from "./option.mjs";
  * A wrapper around a caught error to handle corner cases such
  * as a function which throws undefined or string.
  */
-declare type Error = {
+interface Error {
     /** The underlying cause of the error. */
     readonly cause: unknown;
-};
+}
 declare type DisposableOrTeardown = DisposableLike | SideEffect1<Option<Error>>;
 /**
  * Represents an unmanaged resource that can be disposed.
@@ -27,13 +27,13 @@ interface DisposableLike {
      * @param disposable
      * @returns `this`
      */
-    add(disposable: DisposableOrTeardown): void;
+    add(this: DisposableLike, disposable: DisposableOrTeardown): void;
     /**
      * Dispose the resource. Must be idempotent.
      *
      * @param error An optional error that signals the resource is being disposed due to an error.
      */
-    dispose(error?: Error): void;
+    dispose(this: DisposableLike, error?: Error): void;
 }
 /**
  * Dispose `disposable` with an optional error.
@@ -89,9 +89,9 @@ declare abstract class AbstractDisposable implements DisposableLike {
     /** @ignore */
     get error(): Option<Error>;
     /** @ignore */
-    add(disposable: DisposableOrTeardown): void;
+    add(this: AbstractDisposable, disposable: DisposableOrTeardown): void;
     /** @ignore */
-    dispose(error?: Error): void;
+    dispose(this: AbstractDisposable, error?: Error): void;
 }
 /**
  * Creates an empty `DisposableLike` instance.

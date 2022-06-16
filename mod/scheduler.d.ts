@@ -39,7 +39,7 @@ declare const createVirtualTimeScheduler: (options?: {
     readonly maxMicroTaskTicks?: number;
 }) => VirtualTimeSchedulerLike;
 interface SchedulerContinuationRunStatusChangedListenerLike {
-    onRunStatusChanged(state: boolean): void;
+    onRunStatusChanged(this: SchedulerContinuationRunStatusChangedListenerLike, state: boolean): void;
 }
 /**
  * A unit of work to be executed by a scheduler.
@@ -47,12 +47,12 @@ interface SchedulerContinuationRunStatusChangedListenerLike {
  * @noInheritDoc
  */
 interface SchedulerContinuationLike extends DisposableLike {
-    addListener(ev: "onRunStatusChanged", listener: SchedulerContinuationRunStatusChangedListenerLike): void;
-    removeListener(ev: "onRunStatusChanged", listener: SchedulerContinuationRunStatusChangedListenerLike): void;
+    addListener(this: SchedulerContinuationLike, ev: "onRunStatusChanged", listener: SchedulerContinuationRunStatusChangedListenerLike): void;
+    removeListener(this: SchedulerContinuationLike, ev: "onRunStatusChanged", listener: SchedulerContinuationRunStatusChangedListenerLike): void;
     /**
      * Work function to be invoked by the scheduler after the specified delay.
      */
-    continue(): void;
+    continue(this: SchedulerContinuationLike): void;
 }
 /**
  * An object that schedules units of work on a runloop.
@@ -64,13 +64,13 @@ interface SchedulerLike extends DisposableLike {
     /**
      * Request the scheduler to yield.
      */
-    requestYield(): void;
+    requestYield(this: SchedulerLike): void;
     /**
      * Schedules a continuation to be executed on the scheduler.
      *
      * @param continuation The SchedulerContinuation to be executed.
      */
-    schedule(continuation: SchedulerContinuationLike, options?: {
+    schedule(this: SchedulerLike, continuation: SchedulerContinuationLike, options?: {
         readonly delay?: number;
     }): void;
 }
@@ -80,11 +80,11 @@ interface SchedulerLike extends DisposableLike {
  * @noInheritDoc
  */
 interface VirtualTimeSchedulerLike extends SchedulerLike {
-    run(): void;
+    run(this: VirtualTimeSchedulerLike): void;
 }
 interface PausableSchedulerLike extends SchedulerLike {
-    pause(): void;
-    resume(): void;
+    pause(this: PausableSchedulerLike): void;
+    resume(this: PausableSchedulerLike): void;
 }
 /**
  * A scheduler which schedules work according to it's priority.
@@ -98,7 +98,7 @@ interface PrioritySchedulerLike extends DisposableLike {
     /**
      * Request the scheduler to yield.
      */
-    requestYield(): void;
+    requestYield(this: PrioritySchedulerLike): void;
     /**
      * Schedules a continuation to be executed on the scheduler.
      *
@@ -107,7 +107,7 @@ interface PrioritySchedulerLike extends DisposableLike {
      * to execute next. The definition of the priority value along with it's default
      * value is implementation specific.
      */
-    schedule(continuation: SchedulerContinuationLike, options: {
+    schedule(this: PrioritySchedulerLike, continuation: SchedulerContinuationLike, options: {
         readonly priority: number;
         readonly delay?: number;
     }): void;

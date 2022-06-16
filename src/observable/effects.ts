@@ -27,7 +27,11 @@ import {
   pipe,
   raise,
 } from "../functions";
-import { ObservableLike, ObserverLike } from "../observable";
+import {
+  ObservableEffectMode,
+  ObservableLike,
+  ObserverLike,
+} from "../observable";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerLike, schedule } from "../scheduler";
 import { empty } from "./empty";
@@ -224,8 +228,6 @@ class ObservableContext {
     }
   }
 }
-
-export type ObservableEffectMode = "batched" | "combine-latest";
 
 export const observable = <T>(
   computation: Factory<T>,

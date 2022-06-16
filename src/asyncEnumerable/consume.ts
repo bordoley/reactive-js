@@ -1,12 +1,10 @@
-import { AsyncEnumerableLike } from "../asyncEnumerable";
 import {
-  Factory,
-  Function1,
-  Function2,
-  compose,
-  flip,
-  pipe,
-} from "../functions";
+  AsyncConsumer,
+  AsyncEnumerableLike,
+  Consumer,
+  ConsumeRequest,
+} from "../asyncEnumerable";
+import { Factory, Function1, compose, flip, pipe } from "../functions";
 import {
   ObservableLike,
   ObservableOperator,
@@ -23,23 +21,6 @@ import {
 } from "../observable";
 import { none } from "../option";
 import { stream } from "../streamable";
-
-export type ConsumeRequest<TAcc> =
-  | {
-      readonly type: "notify";
-      readonly acc: TAcc;
-    }
-  | {
-      readonly type: "done";
-      readonly acc: TAcc;
-    };
-
-export type Consumer<T, TAcc> = Function2<TAcc, T, ConsumeRequest<TAcc>>;
-export type AsyncConsumer<T, TAcc> = Function2<
-  TAcc,
-  T,
-  ObservableLike<ConsumeRequest<TAcc>>
->;
 
 export const notify = <TAcc>(acc: TAcc): ConsumeRequest<TAcc> => ({
   type: "notify",

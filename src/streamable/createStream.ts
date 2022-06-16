@@ -14,9 +14,9 @@ import {
 import { SchedulerLike } from "../scheduler";
 import { StreamableLike } from "../streamable";
 
-export type StreamableOperator<TSrcReq, TSrc, TReq, T> = {
-  (streamable: StreamableLike<TSrcReq, TSrc>): StreamableLike<TReq, T>;
-};
+export type StreamableOperator<TSrcReq, TSrc, TReq, T> = (
+  streamable: StreamableLike<TSrcReq, TSrc>,
+) => StreamableLike<TReq, T>;
 
 class StreamImpl<TReq, T>
   extends AbstractDisposable

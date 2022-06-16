@@ -6,21 +6,21 @@ declare const enum TestGroupType {
     TestAsync = 3
 }
 declare const runTests: (testGroups: TestGroup[]) => void;
-declare type Describe = {
+interface Describe {
     readonly type: TestGroupType.Describe;
     readonly name: string;
     readonly tests: readonly TestGroup[];
-};
-declare type Test = {
+}
+interface Test {
     readonly type: TestGroupType.Test;
     readonly name: string;
     readonly f: Function1<string, SideEffect>;
-};
-declare type TestAsync = {
+}
+interface TestAsync {
     readonly type: TestGroupType.TestAsync;
     readonly name: string;
     readonly f: Function1<string, Factory<Promise<void>>>;
-};
+}
 declare type TestGroup = Describe | Test | TestAsync;
 declare const describe: (name: string, ...tests: TestGroup[]) => Describe;
 declare const test: (name: string, f: SideEffect) => Test;

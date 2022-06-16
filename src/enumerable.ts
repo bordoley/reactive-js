@@ -20,7 +20,7 @@ export interface EnumeratorLike<T> extends DisposableLike {
    *
    * @returns `true` if the enumerator was successfully advanced to the next item, otherwise `false`.
    */
-  move(): boolean;
+  move(this: EnumeratorLike<T>): boolean;
 }
 
 /**
@@ -30,7 +30,7 @@ export interface EnumerableLike<T> {
   /**
    * Returns an `EnumeratorLike` to iterate through the collection.
    */
-  enumerate(): EnumeratorLike<T>;
+  enumerate(this: EnumerableLike<T>): EnumeratorLike<T>;
 }
 
 /** A unary function that transforms an EnumeratorLike<TA> into a EnumeratorLike<TB> */

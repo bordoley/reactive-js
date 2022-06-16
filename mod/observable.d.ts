@@ -5,7 +5,6 @@ import { Option } from "./option.mjs";
 import { EnumerableLike } from "./enumerable.mjs";
 import { RunnableLike } from "./runnable.mjs";
 declare const dispatchTo: <T>(dispatcher: DispatcherLike<T>) => SideEffect1<T>;
-declare type ObservableEffectMode = "batched" | "combine-latest";
 declare const observable: <T>(computation: Factory<T>, { mode }?: {
     mode?: ObservableEffectMode | undefined;
 }) => ObservableLike<T>;
@@ -421,7 +420,6 @@ declare function retry<T>(predicate: Function2<number, unknown, boolean>): Obser
  * @param initialValue The initial accumulation value.
  */
 declare const scan: <T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
-declare type AsyncReducer<TAcc, T> = Function2<TAcc, T, ObservableLike<TAcc>>;
 /**
  * Returns the `ObservableLike` that applies an asynchronous accumulator function
  * over the source, and emits each intermediate result.
@@ -494,13 +492,6 @@ declare const takeUntil: <T>(notifier: ObservableLike<unknown>) => ObservableOpe
 declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
     readonly inclusive?: boolean;
 }) => ObservableOperator<T, T>;
-/**
- * The throttle mode used by the `throttle` operator.
- * first - Takes a leading value.
- * last - Takes the trailing value.
- * interval -  Takes both the leading and trailing values.
- */
-declare type ThrottleMode = "first" | "last" | "interval";
 /**
  * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
  *
@@ -713,15 +704,15 @@ interface ObserverLike<T> extends DisposableLike, SchedulerLike {
      *
      * @param next The next notification value.
      */
-    notify(next: T): void;
+    notify(this: ObserverLike<T>, next: T): void;
 }
 /**
  * A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.
  */
-declare type ObserverOperator<A, B> = {
+interface ObserverOperator<A, B> {
     readonly isSynchronous: boolean;
     (observer: ObserverLike<B>): ObserverLike<A>;
-};
+}
 /**
  * The source of notifications which notifies a `ObserverLike` instance.
  *
@@ -733,7 +724,7 @@ interface ObservableLike<T> {
      * Subscribes the `ObserverLike` instance to the observable.
      * @param observer The observer which should be notified by the observable source.
      */
-    observe(observer: ObserverLike<T>): void;
+    observe(this: ObservableLike<T>, observer: ObserverLike<T>): void;
 }
 /** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
 declare type ObservableOperator<A, B> = Function1<ObservableLike<A>, ObservableLike<B>>;
@@ -754,7 +745,7 @@ interface DispatcherLike<T> extends DisposableLike {
      * Dispatches the next request
      * @param req
      */
-    dispatch(req: T): void;
+    dispatch(this: DispatcherLike<T>, req: T): void;
 }
 /**
  * Represents a duplex stream
@@ -766,4 +757,13 @@ interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableL
 /** @noInheritDoc */
 interface SubjectLike<T> extends StreamLike<T, T> {
 }
+declare type AsyncReducer<TAcc, T> = Function2<TAcc, T, ObservableLike<TAcc>>;
+declare type ObservableEffectMode = "batched" | "combine-latest";
+/**
+ * The throttle mode used by the `throttle` operator.
+ * first - Takes a leading value.
+ * last - Takes the trailing value.
+ * interval -  Takes both the leading and trailing values.
+ */
+declare type ThrottleMode = "first" | "last" | "interval";
 export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, ObserverLike, ObserverOperator, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, compute, concat, concatAll, concatMap, concatWith, createObservable, createSubject, defer, dispatchTo, distinctUntilChanged, empty, endWith, exhaust, exhaustMap, fromArray, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromPromise, fromValue, genMap, generate, ignoreElements, keep, keepType, lift, map, mapAsync, mapTo, merge, mergeAll, mergeMap, mergeWith, never, observable, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, startWith, subscribe, subscribeOn, switchAll, switchMap, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, throws, timeout, timeoutError, toEnumerable, toPromise, toRunnable, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipWith, zipWithLatestFrom };

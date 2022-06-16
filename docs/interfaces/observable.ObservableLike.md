@@ -38,7 +38,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 ### observe
 
-▸ **observe**(`observer`): `void`
+▸ **observe**(`this`, `observer`): `void`
 
 Subscribes the `ObserverLike` instance to the observable.
 
@@ -46,6 +46,7 @@ Subscribes the `ObserverLike` instance to the observable.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
+| `this` | [`ObservableLike`](observable.ObservableLike.md)<`T`\> | - |
 | `observer` | [`ObserverLike`](observable.ObserverLike.md)<`T`\> | The observer which should be notified by the observable source. |
 
 #### Returns

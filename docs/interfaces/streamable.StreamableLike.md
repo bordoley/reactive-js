@@ -35,12 +35,13 @@
 
 ### stream
 
-▸ **stream**(`scheduler`, `options?`): [`StreamLike`](observable.StreamLike.md)<`TReq`, `T`\>
+▸ **stream**(`this`, `scheduler`, `options?`): [`StreamLike`](observable.StreamLike.md)<`TReq`, `T`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
+| `this` | [`StreamableLike`](streamable.StreamableLike.md)<`TReq`, `T`\> |
 | `scheduler` | [`SchedulerLike`](scheduler.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.replay?` | `number` |

@@ -54,10 +54,10 @@ const siftUp = <T>(queue: PriorityQueueImpl<T>, item: T) => {
 export interface PriorityQueueLike<T> {
   readonly count: number;
 
-  clear(): void;
-  peek(): Option<T>;
-  pop(): Option<T>;
-  push(item: T): void;
+  clear(this: PriorityQueueLike<T>): void;
+  peek(this: PriorityQueueLike<T>): Option<T>;
+  pop(this: PriorityQueueLike<T>): Option<T>;
+  push(this: PriorityQueueLike<T>, item: T): void;
 }
 
 class PriorityQueueImpl<T> implements PriorityQueueLike<T> {

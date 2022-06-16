@@ -13,10 +13,10 @@ import {
 import { isNone } from "./option";
 import { RunnableLike, createRunnable } from "./runnable";
 
-export type SequenceResultNotify<T> = {
+export interface SequenceResultNotify<T> {
   readonly data: T;
   readonly next: Sequence<T>;
-};
+}
 
 export const sequenceResultDone = Symbol("SequenceResultDone");
 

@@ -2,12 +2,9 @@ import { dispose, toAbortSignal } from "../disposable";
 import { Function1, pipe, returns } from "../functions";
 import { ObservableLike, defer, fromPromise, observe } from "../observable";
 import { Option, none } from "../option";
+import { FetchRequest } from "../web";
 
 const globalFetch = self.fetch;
-
-export type FetchRequest = RequestInit & {
-  uri: string;
-};
 
 export const fetch =
   <T>(
