@@ -1,4 +1,4 @@
-import { Reducer, Factory, Equality, Function1, SideEffect1, Function2 } from "./functions.mjs";
+import { Reducer, Factory, Equality, Updater, Function1, SideEffect1, Function2 } from "./functions.mjs";
 import { ObservableOperator, StreamLike, ObservableLike } from "./observable.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
 /**
@@ -13,6 +13,26 @@ import { SchedulerLike } from "./scheduler.mjs";
 declare const createActionReducer: <TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
     readonly equality?: Equality<T> | undefined;
 } | undefined) => StreamableLike<TAction, T>;
+/**
+ * Returns a new `StateStoreLike` instance that stores state which can
+ * be updated by notifying the instance with a `StateUpdater` that computes a
+ * new state based upon the previous state.
+ *
+ * @param initialState The initial accumulation value.
+ * @param equals Optional equality function that is used to compare
+ * if a state value is distinct from the previous one.
+ */
+declare const createStateStore: <T>(initialState: Factory<T>, options?: {
+    readonly equality?: Equality<T> | undefined;
+} | undefined) => StreamableLike<Updater<T>, T>;
+/**
+ * Converts an `StreamableLike<T, T>` to an `StateStoreLike<T>`.
+ *
+ * @param initialState Factory function to generate the initial state.
+ * @param equals Optional equality function that is used to compare
+ * if a state value is distinct from the previous one.
+ */
+declare const toStateStore: <T>() => StreamableOperator<T, T, Updater<T>, T>;
 declare const createStreamable: <TReq, TData>(op: ObservableOperator<TReq, TData>) => StreamableLike<TReq, TData>;
 declare const lift: <TReq, TA, TB>(op: ObservableOperator<TA, TB>) => StreamableOperator<TReq, TA, TReq, TB>;
 declare const mapReq: <TReqA, TReqB, T>(op: Function1<TReqB, TReqA>) => StreamableOperator<TReqA, T, TReqB, T>;
@@ -47,4 +67,4 @@ interface StreamableLike<TReq, T> {
 }
 declare type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<StreamableLike<TSrcReq, TSrc>, StreamableLike<TReq, T>>;
 declare type FlowMode = "resume" | "pause";
-export { FlowMode, StreamableLike, StreamableOperator, __stream, createActionReducer, createStreamable, empty, flow, identity, lift, map, mapReq, mapTo, onNotify, scan, sink, stream, withLatestFrom };
+export { FlowMode, StreamableLike, StreamableOperator, __stream, createActionReducer, createStateStore, createStreamable, empty, flow, identity, lift, map, mapReq, mapTo, onNotify, scan, sink, stream, toStateStore, withLatestFrom };

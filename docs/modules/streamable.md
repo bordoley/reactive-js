@@ -17,6 +17,7 @@
 
 - [\_\_stream](streamable.md#__stream)
 - [createActionReducer](streamable.md#createactionreducer)
+- [createStateStore](streamable.md#createstatestore)
 - [createStreamable](streamable.md#createstreamable)
 - [empty](streamable.md#empty)
 - [flow](streamable.md#flow)
@@ -29,6 +30,7 @@
 - [scan](streamable.md#scan)
 - [sink](streamable.md#sink)
 - [stream](streamable.md#stream)
+- [toStateStore](streamable.md#tostatestore)
 - [withLatestFrom](streamable.md#withlatestfrom)
 
 ## Type Aliases
@@ -106,6 +108,34 @@ over the notified actions, emitting each intermediate result.
 #### Returns
 
 [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TAction`, `T`\>
+
+___
+
+### createStateStore
+
+▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
+
+Returns a new `StateStoreLike` instance that stores state which can
+be updated by notifying the instance with a `StateUpdater` that computes a
+new state based upon the previous state.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `initialState` | [`Factory`](functions.md#factory)<`T`\> | The initial accumulation value. |
+| `options?` | `Object` | - |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> | - |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
 
 ___
 
@@ -388,6 +418,24 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`\>, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`\>\>
+
+___
+
+### toStateStore
+
+▸ **toStateStore**<`T`\>(): [`StreamableOperator`](streamable.md#streamableoperator)<`T`, `T`, [`Updater`](functions.md#updater)<`T`\>, `T`\>
+
+Converts an `StreamableLike<T, T>` to an `StateStoreLike<T>`.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`StreamableOperator`](streamable.md#streamableoperator)<`T`, `T`, [`Updater`](functions.md#updater)<`T`\>, `T`\>
 
 ___
 

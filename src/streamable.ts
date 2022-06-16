@@ -17,7 +17,11 @@ export type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<
 
 export type FlowMode = "resume" | "pause";
 
-export { createActionReducer } from "./streamable/createActionReducer";
+export {
+  createActionReducer,
+  createStateStore,
+  toStateStore,
+} from "./streamable/createActionReducer";
 export {
   createStreamable,
   empty,

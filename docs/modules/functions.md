@@ -56,6 +56,7 @@
 - [returns](functions.md#returns)
 - [strictEquality](functions.md#strictequality)
 - [sum](functions.md#sum)
+- [tranformUpdater](functions.md#tranformupdater)
 - [updaterReducer](functions.md#updaterreducer)
 
 ## Type Aliases
@@ -2509,6 +2510,42 @@ it's arguments.
 #### Returns
 
 `number`
+
+___
+
+### tranformUpdater
+
+▸ **tranformUpdater**<`TA`, `TB`\>(`parse`, `serialize`): (`stateUpdater`: [`Updater`](functions.md#updater)<`TB`\>) => [`Updater`](functions.md#updater)<`TA`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `parse` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
+| `serialize` | [`Function1`](functions.md#function1)<`TB`, `TA`\> |
+
+#### Returns
+
+`fn`
+
+▸ (`stateUpdater`): [`Updater`](functions.md#updater)<`TA`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `stateUpdater` | [`Updater`](functions.md#updater)<`TB`\> |
+
+##### Returns
+
+[`Updater`](functions.md#updater)<`TA`\>
 
 ___
 

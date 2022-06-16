@@ -21,8 +21,6 @@
 
   ↳ [`IOSourceLike`](io.IOSourceLike.md)
 
-  ↳ [`StateStoreLike`](stateStore.StateStoreLike.md)
-
   ↳ [`WindowLocationStreamableLike`](web.WindowLocationStreamableLike.md)
 
 ## Table of contents
