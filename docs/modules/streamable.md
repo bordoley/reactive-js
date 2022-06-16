@@ -6,7 +6,6 @@
 
 ### Interfaces
 
-- [FlowableLike](../interfaces/streamable.FlowableLike.md)
 - [StreamableLike](../interfaces/streamable.StreamableLike.md)
 
 ### Type Aliases
@@ -162,7 +161,7 @@ ___
 
 ### flow
 
-▸ **flow**<`T`\>(`__namedParameters?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`T`\>\>
+▸ **flow**<`T`\>(`__namedParameters?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), `T`\>\>
 
 #### Type parameters
 
@@ -179,7 +178,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), `T`\>\>
 
 ___
 

@@ -14,7 +14,7 @@ import {
   Updater,
 } from "./functions";
 
-import { Option } from "./option";
+import { isSome, Option } from "./option";
 
 export interface ContainerLike {
   readonly T?: unknown;
@@ -254,6 +254,16 @@ export function endWith<C, T>(
 ): ContainerOperator<C, T, T> {
   return concatWith(m, m.fromArray<T>()(values));
 }
+
+export const fromOption =
+  <C, T, O extends FromArrayOptions = FromArrayOptions>(
+    m: FromArray<C, O>,
+    options?: Omit<Partial<O>, keyof FromArrayOptions>,
+  ): Function1<Option<T>, ContainerOf<C, T>> =>
+  option =>
+    isSome(option)
+      ? fromValue<C, T, O>(m, options)(option)
+      : empty<C, T, O>(m, options);
 
 export const fromValue =
   <C, T, O extends FromArrayOptions = FromArrayOptions>(

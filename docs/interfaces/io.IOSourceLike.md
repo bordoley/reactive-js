@@ -12,6 +12,6 @@
 
 ## Hierarchy
 
-- [`FlowableLike`](streamable.FlowableLike.md)<[`IOEvent`](../modules/io.md#ioevent)<`T`\>\>
+- [`StreamableLike`](streamable.StreamableLike.md)<[`FlowMode`](../modules/streamable.md#flowmode), [`IOEvent`](../modules/io.md#ioevent)<`T`\>\>
 
   ↳ **`IOSourceLike`**

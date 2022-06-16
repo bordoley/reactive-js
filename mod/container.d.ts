@@ -153,6 +153,7 @@ declare const concatMap: <C, TA, TB, O = {}>({ map, concatAll }: Map<C> & Concat
 declare const concatWith: <C, T>({ concat }: Concat<C>, snd: ContainerOf<C, T>) => ContainerOperator<C, T, T>;
 declare const empty: <C, T, O extends FromArrayOptions = FromArrayOptions>({ fromArray }: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => ContainerOf<C, T>;
 declare function endWith<C, T>(m: Concat<C> & FromArray<C, FromArrayOptions>, value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
+declare const fromOption: <C, T, O extends FromArrayOptions = FromArrayOptions>(m: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Option<T>, ContainerOf<C, T>>;
 declare const fromValue: <C, T, O extends FromArrayOptions = FromArrayOptions>({ fromArray }: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<T, ContainerOf<C, T>>;
 declare const genMap: <C, TA, TB, OConcatAll extends {} = {}, OFromIterator extends {} = {}, TReturn = any, TNext = unknown>(m: Map<C> & ConcatAll<C, OConcatAll> & FromIterator<C, OFromIterator>, mapper: Function1<TA, Generator<TB, TReturn, TNext>>, options?: Partial<OConcatAll & OFromIterator> | undefined) => ContainerOperator<C, TA, TB>;
 declare const keepType: <C, TA, TB extends TA>({ keep }: Keep<C>, predicate: TypePredicate<TA, TB>) => ContainerOperator<C, TA, TB>;
@@ -164,4 +165,4 @@ declare const zipWith: <C, TA, TB>({ zip }: Zip<C>, snd: ContainerOf<C, TB>) => 
     TA,
     TB
 ]>;
-export { Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DistinctUntilChanged, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, Zip, compute, concatMap, concatWith, empty, endWith, fromValue, genMap, ignoreElements, keepType, mapTo, startWith, throws, zipWith };
+export { Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DistinctUntilChanged, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, Zip, compute, concatMap, concatWith, empty, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, startWith, throws, zipWith };
