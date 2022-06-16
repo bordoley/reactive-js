@@ -21,15 +21,6 @@ declare abstract class AbstractSink<T> extends AbstractDisposable implements Sin
     assertState(this: SinkLike<T>): void;
     notify(_: T): void;
 }
-declare abstract class AbstractDelegatingSink<TA, TB> extends AbstractSink<TA> {
-    readonly delegate: SinkLike<TB>;
-    constructor(delegate: SinkLike<TB>);
-}
-declare abstract class AbstractAutoDisposingDelegatingSink<TA, TB> extends AbstractSink<TA> {
-    readonly delegate: SinkLike<TB>;
-    constructor(delegate: SinkLike<TB>);
-}
-declare const createDelegatingSink: <T>(delegate: SinkLike<T>) => SinkLike<T>;
 declare function notifyDistinctUntilChanged<T>(this: DelegatingSinkLike<T, T> & {
     readonly equality: Equality<T>;
     prev: Option<T>;
@@ -75,4 +66,4 @@ declare function notifyTakeWhile<T>(this: DelegatingSinkLike<T, T> & {
     readonly predicate: Predicate<T>;
     readonly inclusive: boolean;
 }, next: T): void;
-export { AbstractAutoDisposingDelegatingSink, AbstractDelegatingSink, AbstractSink, DelegatingSinkLike, SinkLike, SinkOperator, createDelegatingSink, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile };
+export { AbstractSink, DelegatingSinkLike, SinkLike, SinkOperator, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile };

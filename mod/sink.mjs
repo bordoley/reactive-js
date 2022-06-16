@@ -1,5 +1,5 @@
 /// <reference types="./sink.d.ts" />
-import { AbstractDisposable, addDisposable, bindDisposables, dispose } from './disposable.mjs';
+import { AbstractDisposable, dispose } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 import { ignore, raise, pipe } from './functions.mjs';
 import { none } from './option.mjs';
@@ -16,31 +16,6 @@ class AbstractSink extends AbstractDisposable {
     notify(_) { }
 }
 AbstractSink.prototype.assertState = assertState;
-class AbstractDelegatingSink extends AbstractSink {
-    constructor(delegate) {
-        super();
-        this.delegate = delegate;
-        addDisposable(delegate, this);
-    }
-}
-class AbstractAutoDisposingDelegatingSink extends AbstractSink {
-    constructor(delegate) {
-        super();
-        this.delegate = delegate;
-        bindDisposables(this, delegate);
-    }
-}
-class DelegatingSink extends AbstractSink {
-    constructor(delegate) {
-        super();
-        this.delegate = delegate;
-        addDisposable(delegate, this);
-    }
-    notify(next) {
-        this.delegate.notify(next);
-    }
-}
-const createDelegatingSink = (delegate) => new DelegatingSink(delegate);
 function notifyDistinctUntilChanged(next) {
     this.assertState();
     const shouldEmit = !this.hasValue || !this.equality(this.prev, next);
@@ -116,4 +91,4 @@ function notifyTakeWhile(next) {
     }
 }
 
-export { AbstractAutoDisposingDelegatingSink, AbstractDelegatingSink, AbstractSink, createDelegatingSink, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile };
+export { AbstractSink, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile };

@@ -3,9 +3,10 @@ import { Error, addTeardown, dispose } from "../disposable";
 import { pipe } from "../functions";
 import { Option, isSome } from "../option";
 import { RunnableOperator } from "../runnable";
-import { AbstractDelegatingSink, SinkLike, notifyTakeLast } from "../sink";
+import { SinkLike, notifyTakeLast } from "../sink";
 import { fromArray, fromArrayT } from "./fromArray";
 import { lift } from "./lift";
+import { AbstractDelegatingSink } from "./sinks";
 
 function onDispose(this: TakeLastSink<unknown>, error: Option<Error>) {
   if (isSome(error)) {

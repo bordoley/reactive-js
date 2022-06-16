@@ -1,11 +1,8 @@
 import { Factory, Reducer } from "../functions";
 import { RunnableOperator } from "../runnable";
-import {
-  AbstractAutoDisposingDelegatingSink,
-  SinkLike,
-  notifyScan,
-} from "../sink";
+import { SinkLike, notifyScan } from "../sink";
 import { lift } from "./lift";
+import { AbstractAutoDisposingDelegatingSink } from "./sinks";
 
 class ScanSink<T, TAcc> extends AbstractAutoDisposingDelegatingSink<T, TAcc> {
   constructor(

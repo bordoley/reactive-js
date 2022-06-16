@@ -1,11 +1,8 @@
 import { Option } from "../option";
 import { RunnableOperator } from "../runnable";
-import {
-  AbstractAutoDisposingDelegatingSink,
-  SinkLike,
-  notifyPairwise,
-} from "../sink";
+import { SinkLike, notifyPairwise } from "../sink";
 import { lift } from "./lift";
+import { AbstractAutoDisposingDelegatingSink } from "./sinks";
 
 class PairwiseObserver<T> extends AbstractAutoDisposingDelegatingSink<
   T,

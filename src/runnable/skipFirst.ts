@@ -1,11 +1,8 @@
 import { pipe } from "../functions";
 import { RunnableOperator } from "../runnable";
-import {
-  AbstractAutoDisposingDelegatingSink,
-  SinkLike,
-  notifySkipFirst,
-} from "../sink";
+import { SinkLike, notifySkipFirst } from "../sink";
 import { lift } from "./lift";
+import { AbstractAutoDisposingDelegatingSink } from "./sinks";
 
 class SkipFirstSink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
   count = 0;

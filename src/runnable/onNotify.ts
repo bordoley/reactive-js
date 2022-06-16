@@ -1,11 +1,8 @@
 import { SideEffect1 } from "../functions";
 import { RunnableOperator } from "../runnable";
-import {
-  AbstractAutoDisposingDelegatingSink,
-  SinkLike,
-  notifyOnNotify,
-} from "../sink";
+import { SinkLike, notifyOnNotify } from "../sink";
 import { lift } from "./lift";
+import { AbstractAutoDisposingDelegatingSink } from "./sinks";
 
 class OnNotifySink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
   constructor(delegate: SinkLike<T>, readonly onNotify: SideEffect1<T>) {
