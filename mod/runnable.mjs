@@ -1,8 +1,8 @@
 /// <reference types="./runnable.d.ts" />
 import { pipe, strictEquality, compose, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
 import { addDisposableDisposeParentOnChildError, dispose, addTeardown } from './disposable.mjs';
-import { isSome, none, isNone } from './option.mjs';
 import { createDelegatingSink, AbstractDelegatingSink, AbstractAutoDisposingDelegatingSink, notifyDistinctUntilChanged, AbstractSink, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
+import { none, isSome, isNone } from './option.mjs';
 import { empty } from './container.mjs';
 
 class RunnableImpl {
@@ -18,10 +18,6 @@ class RunnableImpl {
         catch (cause) {
             sink.dispose({ cause });
         }
-        const { error } = sink;
-        if (isSome(error)) {
-            throw error.cause;
-        }
     }
 }
 const createRunnable = (run) => new RunnableImpl(run);
@@ -36,6 +32,7 @@ class LiftedRunnable {
     run(sink) {
         const liftedSink = pipe(sink, ...this.operators);
         this.src.run(liftedSink);
+        liftedSink.dispose();
     }
 }
 const lift = (operator) => runnable => {
@@ -53,15 +50,16 @@ function concat(...runnables) {
             const concatSink = createDelegatingSink(sink);
             addDisposableDisposeParentOnChildError(sink, concatSink);
             runnables[i].run(concatSink);
+            concatSink.dispose();
         }
-        sink.dispose();
     });
 }
 class FlattenSink extends AbstractDelegatingSink {
     notify(next) {
         const concatSink = createDelegatingSink(this.delegate);
-        addDisposableDisposeParentOnChildError(concatSink, concatSink);
-        next.run(createDelegatingSink(this.delegate));
+        addDisposableDisposeParentOnChildError(this.delegate, concatSink);
+        next.run(concatSink);
+        concatSink.dispose();
     }
 }
 const _concatAll = lift(s => new FlattenSink(s));
@@ -82,6 +80,17 @@ const distinctUntilChanged = (options = {}) => {
     return lift(operator);
 };
 
+const run = (f) => (runnable) => {
+    const sink = f();
+    runnable.run(sink);
+    sink.dispose();
+    const { error } = sink;
+    if (isSome(error)) {
+        throw error.cause;
+    }
+    return sink.result;
+};
+
 class EverySatisfySink extends AbstractSink {
     constructor(predicate) {
         super();
@@ -95,10 +104,9 @@ class EverySatisfySink extends AbstractSink {
         }
     }
 }
-const everySatisfy = (predicate) => runnable => {
-    const sink = new EverySatisfySink(predicate);
-    runnable.run(sink);
-    return sink.result;
+const everySatisfy = (predicate) => {
+    const createSink = () => new EverySatisfySink(predicate);
+    return run(createSink);
 };
 const noneSatisfy = (predicate) => everySatisfy(compose(predicate, negate));
 
@@ -112,19 +120,22 @@ class FirstSink extends AbstractSink {
         this.dispose();
     }
 }
-const first = (runnable) => {
-    const sink = new FirstSink();
-    runnable.run(sink);
-    return sink.result;
+const first = () => {
+    const createSink = () => new FirstSink();
+    return run(createSink);
 };
 
 class ForEachSink extends AbstractSink {
     constructor(notify) {
         super();
         this.notify = notify;
+        this.result = undefined;
     }
 }
-const forEach = (f) => runnable => runnable.run(new ForEachSink(f));
+const forEach = (f) => {
+    const createSink = () => new ForEachSink(f);
+    return run(createSink);
+};
 
 const fromArray = (options = {}) => values => {
     var _a, _b;
@@ -135,7 +146,6 @@ const fromArray = (options = {}) => values => {
         for (let index = startIndex; index < endIndex && !sink.isDisposed; index++) {
             sink.notify(values[index]);
         }
-        sink.dispose();
     };
     return createRunnable(run);
 };
@@ -178,10 +188,9 @@ class LastSink extends AbstractSink {
         this.result = next;
     }
 }
-const last = (runnable) => {
-    const sink = new LastSink();
-    runnable.run(sink);
-    return sink.result;
+const last = () => {
+    const createSink = () => new LastSink();
+    return run(createSink);
 };
 
 class MapSink extends AbstractAutoDisposingDelegatingSink {
@@ -231,12 +240,14 @@ class ReducerSink extends AbstractSink {
         this.acc = acc;
         this.reducer = reducer;
     }
+    get result() {
+        return this.acc;
+    }
 }
 ReducerSink.prototype.notify = notifyReduce;
-const reduce = (reducer, initialValue) => runnable => {
-    const sink = new ReducerSink(initialValue(), reducer);
-    runnable.run(sink);
-    return sink.acc;
+const reduce = (reducer, initialValue) => {
+    const createSink = () => new ReducerSink(initialValue(), reducer);
+    return run(createSink);
 };
 
 function repeat(predicate) {
@@ -248,7 +259,9 @@ function repeat(predicate) {
     return runnable => createRunnable(sink => {
         let count = 0;
         do {
-            runnable.run(createDelegatingSink(sink));
+            const delegateSink = createDelegatingSink(sink);
+            runnable.run(delegateSink);
+            delegateSink.dispose();
             count++;
         } while (!sink.isDisposed && shouldRepeat(count));
         sink.dispose();
@@ -295,10 +308,9 @@ class SomeSatisfySink extends AbstractSink {
         }
     }
 }
-const someSatisfy = (predicate) => runnable => {
-    const sink = new SomeSatisfySink(predicate);
-    runnable.run(sink);
-    return sink.result;
+const someSatisfy = (predicate) => {
+    const createSink = () => new SomeSatisfySink(predicate);
+    return run(createSink);
 };
 const contains = (value, options = {}) => {
     const { equality = strictEquality } = options;
@@ -360,22 +372,18 @@ const takeWhile = (predicate, options = {}) => {
 class ToArraySink extends AbstractSink {
     constructor() {
         super(...arguments);
-        this.acc = [];
+        this.result = [];
     }
     notify(next) {
-        this.acc.push(next);
+        this.result.push(next);
     }
 }
-const _toArray = (runnable) => {
-    const sink = new ToArraySink();
-    runnable.run(sink);
-    return sink.acc;
-};
+const createSink = () => new ToArraySink();
 /**
  * Accumulates all values emitted by `runnable` into an array.
  *
  */
-const toArray = () => _toArray;
+const toArray = () => run(createSink);
 
 const toRunnable = () => identity;
 const type = undefined;

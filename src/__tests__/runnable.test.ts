@@ -421,7 +421,7 @@ export const tests = describe(
       defer(
         returns(1),
         compute<RunnableLike<unknown>, number>({ fromArray, map }),
-        first,
+        first(),
         expectEquals(1),
       ),
     ),
@@ -429,7 +429,7 @@ export const tests = describe(
       "when enumerable is empty",
       defer(
         empty<RunnableLike<unknown>, number>({ fromArray }),
-        first,
+        first(),
         expectNone,
       ),
     ),

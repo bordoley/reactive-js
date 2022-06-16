@@ -217,7 +217,7 @@ ___
 
 ### first
 
-▸ **first**<`T`\>(`runnable`): [`Option`](option.md#option)<`T`\>
+▸ **first**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>, [`Option`](option.md#option)<`T`\>\>
 
 #### Type parameters
 
@@ -225,15 +225,9 @@ ___
 | :------ |
 | `T` |
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `runnable` | [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\> |
-
 #### Returns
 
-[`Option`](option.md#option)<`T`\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>, [`Option`](option.md#option)<`T`\>\>
 
 ___
 
@@ -330,7 +324,7 @@ ___
 
 ### last
 
-▸ **last**<`T`\>(`runnable`): [`Option`](option.md#option)<`T`\>
+▸ **last**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>, [`Option`](option.md#option)<`T`\>\>
 
 #### Type parameters
 
@@ -338,15 +332,9 @@ ___
 | :------ |
 | `T` |
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `runnable` | [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\> |
-
 #### Returns
 
-[`Option`](option.md#option)<`T`\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>, [`Option`](option.md#option)<`T`\>\>
 
 ___
 

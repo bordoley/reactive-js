@@ -27,4 +27,5 @@ export const toRunnable =
       addDisposableDisposeParentOnChildError(sink, subscription);
 
       scheduler.run();
+      scheduler.dispose();
     });

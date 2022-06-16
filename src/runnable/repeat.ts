@@ -36,7 +36,9 @@ export function repeat<T>(
     createRunnable(sink => {
       let count = 0;
       do {
-        runnable.run(createDelegatingSink(sink));
+        const delegateSink = createDelegatingSink(sink);
+        runnable.run(delegateSink);
+        delegateSink.dispose();
         count++;
       } while (!sink.isDisposed && shouldRepeat(count));
 

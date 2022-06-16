@@ -32,7 +32,7 @@ export const tests = describe(
       enumerable,
       consume((acc, next) => notify(acc + next), returns<number>(0)),
       toRunnable(),
-      last,
+      last(),
       expectEquals(21),
     );
 
@@ -43,7 +43,7 @@ export const tests = describe(
         returns<number>(0),
       ),
       toRunnable(),
-      last,
+      last(),
       expectEquals(3),
     );
   }),
@@ -63,7 +63,7 @@ export const tests = describe(
           returns<number>(0),
         ),
         toRunnable(),
-        last,
+        last(),
         expectEquals(3),
       ),
     ),
@@ -77,7 +77,7 @@ export const tests = describe(
           returns<number>(0),
         ),
         toRunnable(),
-        last,
+        last(),
         expectEquals(21),
       ),
     ),

@@ -27,7 +27,6 @@ export const fromArray =
       ) {
         sink.notify(values[index]);
       }
-      sink.dispose();
     };
     return createRunnable(run);
   };
