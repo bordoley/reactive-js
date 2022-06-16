@@ -1,7 +1,9 @@
 import { AbstractContainer } from "../container";
-import { pipe } from "../functions";
+import { Function1, pipe } from "../functions";
 import { RunnableLike, RunnableOperator } from "../runnable";
-import { SinkLike, SinkOperator } from "../sink";
+import { SinkLike } from "../sink";
+
+export type SinkOperator<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
 
 class LiftedRunnable<T> extends AbstractContainer implements RunnableLike<T> {
   constructor(

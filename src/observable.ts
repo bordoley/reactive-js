@@ -15,15 +15,6 @@ import { SinkLike } from "./sink";
 export interface ObserverLike<T> extends SinkLike<T>, SchedulerLike {}
 
 /**
- * A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.
- */
-export interface ObserverOperator<A, B> {
-  readonly isSynchronous: boolean;
-
-  (observer: ObserverLike<B>): ObserverLike<A>;
-}
-
-/**
  * The source of notifications which notifies a `ObserverLike` instance.
  *
  * @noInheritDoc
@@ -129,7 +120,6 @@ export { buffer } from "./observable/buffer";
 export { catchError } from "./observable/catchError";
 export { distinctUntilChanged } from "./observable/distinctUntilChanged";
 export { keep, keepT } from "./observable/keep";
-export { lift } from "./observable/lift";
 export { map, mapT } from "./observable/map";
 export { mapAsync } from "./observable/mapAsync";
 export {

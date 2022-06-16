@@ -10,7 +10,6 @@
 - [MulticastObservableLike](../interfaces/observable.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/observable.ObservableLike.md)
 - [ObserverLike](../interfaces/observable.ObserverLike.md)
-- [ObserverOperator](../interfaces/observable.ObserverOperator.md)
 - [StreamLike](../interfaces/observable.StreamLike.md)
 - [SubjectLike](../interfaces/observable.SubjectLike.md)
 
@@ -63,7 +62,6 @@
 - [fromPromise](observable.md#frompromise)
 - [generate](observable.md#generate)
 - [keep](observable.md#keep)
-- [lift](observable.md#lift)
 - [map](observable.md#map)
 - [mapAsync](observable.md#mapasync)
 - [merge](observable.md#merge)
@@ -1452,32 +1450,6 @@ source that satisfy the specified type predicate.
 #### Returns
 
 [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
-
-___
-
-### lift
-
-▸ **lift**<`TA`, `TB`\>(`operator`): [`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
-
-Creates a new `ObservableLike` which applies the provided the operator function to
-observer when the source is subscribed to.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `operator` | [`ObserverOperator`](../interfaces/observable.ObserverOperator.md)<`TA`, `TB`\> | The operator function to apply. |
-
-#### Returns
-
-[`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
 
 ___
 

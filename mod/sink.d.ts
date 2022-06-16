@@ -1,5 +1,5 @@
 import { DisposableLike } from "./disposable.mjs";
-import { Function1, Equality, Predicate, SideEffect1, Reducer } from "./functions.mjs";
+import { Equality, Predicate, Function1, SideEffect1, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
 interface SinkLike<T> extends DisposableLike {
     assertState(this: SinkLike<T>): void;
@@ -16,7 +16,6 @@ interface SinkLike<T> extends DisposableLike {
 interface DelegatingSinkLike<TA, TB> extends SinkLike<TA> {
     readonly delegate: SinkLike<TB>;
 }
-declare type SinkOperator<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
 declare function notifyDistinctUntilChanged<T>(this: DelegatingSinkLike<T, T> & {
     readonly equality: Equality<T>;
     prev: Option<T>;
@@ -62,4 +61,4 @@ declare function notifyTakeWhile<T>(this: DelegatingSinkLike<T, T> & {
     readonly predicate: Predicate<T>;
     readonly inclusive: boolean;
 }, next: T): void;
-export { DelegatingSinkLike, SinkLike, SinkOperator, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile };
+export { DelegatingSinkLike, SinkLike, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile };

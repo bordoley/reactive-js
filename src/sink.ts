@@ -28,8 +28,6 @@ export interface DelegatingSinkLike<TA, TB> extends SinkLike<TA> {
   readonly delegate: SinkLike<TB>;
 }
 
-export type SinkOperator<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
-
 export function notifyDistinctUntilChanged<T>(
   this: DelegatingSinkLike<T, T> & {
     readonly equality: Equality<T>;

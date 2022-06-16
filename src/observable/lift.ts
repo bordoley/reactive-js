@@ -4,9 +4,17 @@ import {
   ObservableLike,
   ObservableOperator,
   ObserverLike,
-  ObserverOperator,
 } from "../observable";
 import { observe } from "./observer";
+
+/**
+ * A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.
+ */
+export interface ObserverOperator<A, B> {
+  readonly isSynchronous: boolean;
+
+  (observer: ObserverLike<B>): ObserverLike<A>;
+}
 
 class LiftedObservable<TIn, TOut>
   extends AbstractContainer
