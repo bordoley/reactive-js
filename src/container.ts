@@ -253,7 +253,7 @@ export const empty = <C, T, O extends FromArrayOptions = FromArrayOptions>(
 ): ContainerOf<C, T> => fromArray<T>({ ...options })([]);
 
 export function endWith<C, T>(
-  m: Concat<C> & FromArray<C, FromArrayOptions>,
+  m: Concat<C> & FromArray<C>,
   value: T,
   ...values: readonly T[]
 ): ContainerOperator<C, T, T>;
@@ -322,12 +322,12 @@ export const mapTo = <C, TA, TB>(
 ): ContainerOperator<C, TA, TB> => pipe(value, returns, map);
 
 export function startWith<C, T>(
-  m: Concat<C> & FromArray<C, FromArrayOptions>,
+  m: Concat<C> & FromArray<C>,
   value: T,
   ...values: readonly T[]
 ): ContainerOperator<C, T, T>;
 export function startWith<C, T>(
-  m: Concat<C> & FromArray<C, FromArrayOptions>,
+  m: Concat<C> & FromArray<C>,
   ...values: readonly T[]
 ): ContainerOperator<C, T, T> {
   return container => pipe(values, m.fromArray(), concatWith(m, container));
