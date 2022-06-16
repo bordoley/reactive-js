@@ -51,10 +51,11 @@ export abstract class AbstractSink<T>
   extends AbstractDisposable
   implements SinkLike<T>
 {
-  assertState = assertState;
+  assertState(this: SinkLike<T>): void {}
 
   notify(_: T): void {}
 }
+AbstractSink.prototype.assertState = assertState;
 
 export abstract class AbstractDelegatingSink<TA, TB> extends AbstractSink<TA> {
   constructor(readonly delegate: SinkLike<TB>) {
@@ -135,6 +136,7 @@ export function notifyOnNotify<T>(
   },
   next: T,
 ) {
+  debugger;
   this.assertState();
 
   this.onNotify(next);
@@ -158,7 +160,7 @@ export function notifyPairwise<T>(
 }
 
 export function notifyReduce<T, TAcc>(
-  this: DelegatingSinkLike<T, TAcc> & {
+  this: SinkLike<T> & {
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
   },
@@ -213,7 +215,7 @@ export function notifyTakeFirst<T>(
 }
 
 export function notifyTakeLast<T>(
-  this: DelegatingSinkLike<T, T> & {
+  this: SinkLike<T> & {
     readonly last: T[];
     readonly maxCount: number;
   },

@@ -25,11 +25,11 @@
 
 ### Properties
 
-- [assertState](sink.AbstractDelegatingSink.md#assertstate)
 - [delegate](sink.AbstractDelegatingSink.md#delegate)
 
 ### Methods
 
+- [assertState](sink.AbstractDelegatingSink.md#assertstate)
 - [notify](sink.AbstractDelegatingSink.md#notify)
 
 ## Constructors
@@ -57,21 +57,23 @@
 
 ## Properties
 
+### delegate
+
+• `Readonly` **delegate**: [`SinkLike`](../interfaces/sink.SinkLike.md)<`TB`\>
+
+## Methods
+
 ### assertState
 
-• **assertState**: (...`_args`: `unknown`[]) => `void`
+▸ **assertState**(`this`): `void`
 
-#### Type declaration
-
-▸ (...`_args`): `void`
-
-##### Parameters
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `..._args` | `unknown`[] |
+| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`TA`\> |
 
-##### Returns
+#### Returns
 
 `void`
 
@@ -80,12 +82,6 @@
 [AbstractSink](sink.AbstractSink.md).[assertState](sink.AbstractSink.md#assertstate)
 
 ___
-
-### delegate
-
-• `Readonly` **delegate**: [`SinkLike`](../interfaces/sink.SinkLike.md)<`TB`\>
-
-## Methods
 
 ### notify
 

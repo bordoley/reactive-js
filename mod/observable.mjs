@@ -45,13 +45,15 @@ const assertState = __DEV__ ? assertStateDev : assertStateProduction;
 class AbstractObserver extends AbstractSink {
     constructor() {
         super();
-        this.assertState = assertState;
     }
+    /** @ignore */
+    assertState() { }
     /** @ignore */
     onRunStatusChanged(status) {
         this.inContinuation = status;
     }
 }
+AbstractObserver.prototype.assertState = assertState;
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
