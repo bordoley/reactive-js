@@ -4,11 +4,7 @@ import {
   addDisposable,
   addDisposableDisposeParentOnChildError,
 } from "./disposable";
-import {
-  FlowMode,
-  FlowableLike,
-  fromObservable as fromObservableFlowable,
-} from "./flowable";
+import { FlowMode, flow } from "./streamable";
 import {
   Factory,
   Function1,
@@ -64,7 +60,7 @@ const _done: IOEvent<any> = { type: "done" };
 export const done = <T>(): IOEvent<T> => _done;
 
 /** @noInheritDoc */
-export interface IOSourceLike<T> extends FlowableLike<IOEvent<T>> {}
+export interface IOSourceLike<T> extends StreamableLike<FlowMode, IOEvent<T>> {}
 
 /** @noInheritDoc */
 export interface IOSinkLike<T> extends StreamableLike<IOEvent<T>, FlowMode> {}
@@ -138,7 +134,7 @@ export const map = <TA, TB>(
 const _fromObservable = compose(
   mapObs(notify),
   endWith({ ...fromArrayT, ...concatT }, done()),
-  fromObservableFlowable(),
+  flow(),
 );
 export const fromObservable = <T>(): Function1<
   ObservableLike<T>,

@@ -11,7 +11,6 @@ Reactive-JS
 - [disposable](modules/disposable.md)
 - [enumerable](modules/enumerable.md)
 - [env](modules/env.md)
-- [flowable](modules/flowable.md)
 - [functions](modules/functions.md)
 - [io](modules/io.md)
 - [node](modules/node.md)

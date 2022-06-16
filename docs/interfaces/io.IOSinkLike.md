@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`StreamableLike`](streamable.StreamableLike.md)<[`IOEvent`](../modules/io.md#ioevent)<`T`\>, [`FlowMode`](../modules/flowable.md#flowmode)\>
+- [`StreamableLike`](streamable.StreamableLike.md)<[`IOEvent`](../modules/io.md#ioevent)<`T`\>, [`FlowMode`](../modules/streamable.md#flowmode)\>
 
   ↳ **`IOSinkLike`**
 

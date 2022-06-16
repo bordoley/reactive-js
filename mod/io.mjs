@@ -1,10 +1,9 @@
 /// <reference types="./io.d.ts" />
 import { compute, concatMap, endWith, keepType } from './container.mjs';
 import { AbstractDisposable, addDisposableDisposeParentOnChildError, addDisposable } from './disposable.mjs';
-import { fromObservable as fromObservable$1 } from './flowable.mjs';
+import { lift, withLatestFrom as withLatestFrom$1, map as map$2, flow, createStreamable, stream } from './streamable.mjs';
 import { pipe, composeWith, returns, compose } from './functions.mjs';
 import { withLatestFrom, fromArrayT, mapT, map as map$1, concatAllT, fromIterator, concatT, fromArray as fromArray$1, createSubject, using, takeWhile, keepT, reduce, subscribe, createObservable } from './observable.mjs';
-import { lift, withLatestFrom as withLatestFrom$1, map as map$2, createStreamable, stream } from './streamable.mjs';
 
 const notify = (data) => ({
     type: "notify",
@@ -50,7 +49,7 @@ const _encodeUtf8 = withLatestFrom$1(compute({
 });
 const encodeUtf8 = _encodeUtf8;
 const map = (mapper) => map$2((ev) => ev.type === "notify" ? pipe(ev.data, mapper, notify) : ev);
-const _fromObservable = compose(map$1(notify), endWith({ ...fromArrayT, ...concatT }, done()), fromObservable$1());
+const _fromObservable = compose(map$1(notify), endWith({ ...fromArrayT, ...concatT }, done()), flow());
 const fromObservable = () => _fromObservable;
 const fromArray = (options) => compose(fromArray$1(options), fromObservable());
 const fromValue = (options) => v => fromArray(options)([v]);
