@@ -16,10 +16,6 @@
 
   ↳ **`AbstractSink`**
 
-  ↳↳ [`AbstractAutoDisposingDelegatingSink`](sink.AbstractAutoDisposingDelegatingSink.md)
-
-  ↳↳ [`AbstractDelegatingSink`](sink.AbstractDelegatingSink.md)
-
 ## Implements
 
 - [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\>

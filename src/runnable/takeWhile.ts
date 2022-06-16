@@ -1,11 +1,8 @@
 import { Predicate } from "../functions";
 import { RunnableOperator } from "../runnable";
-import {
-  AbstractAutoDisposingDelegatingSink,
-  SinkLike,
-  notifyTakeWhile,
-} from "../sink";
+import { SinkLike, notifyTakeWhile } from "../sink";
 import { lift } from "./lift";
+import { AbstractAutoDisposingDelegatingSink } from "./sinks";
 
 class TakeWhileSink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
   constructor(

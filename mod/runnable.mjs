@@ -1,8 +1,8 @@
 /// <reference types="./runnable.d.ts" />
 import { pipe, strictEquality, compose, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
-import { addDisposableDisposeParentOnChildError, dispose, addTeardown } from './disposable.mjs';
-import { createDelegatingSink, AbstractDelegatingSink, AbstractAutoDisposingDelegatingSink, notifyDistinctUntilChanged, AbstractSink, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
+import { addDisposable, bindDisposables, addDisposableDisposeParentOnChildError, dispose, addTeardown } from './disposable.mjs';
 import { AbstractContainer, empty } from './container.mjs';
+import { AbstractSink, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 class RunnableImpl extends AbstractContainer {
@@ -40,6 +40,32 @@ const lift = (operator) => runnable => {
         : [operator];
     return new LiftedRunnable(src, allFunctions);
 };
+
+class AbstractDelegatingSink extends AbstractSink {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+        addDisposable(delegate, this);
+    }
+}
+class AbstractAutoDisposingDelegatingSink extends AbstractSink {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+        bindDisposables(this, delegate);
+    }
+}
+class DelegatingSink extends AbstractSink {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+        addDisposable(delegate, this);
+    }
+    notify(next) {
+        this.delegate.notify(next);
+    }
+}
+const createDelegatingSink = (delegate) => new DelegatingSink(delegate);
 
 function concat(...runnables) {
     return createRunnable((sink) => {

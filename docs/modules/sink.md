@@ -6,8 +6,6 @@
 
 ### Classes
 
-- [AbstractAutoDisposingDelegatingSink](../classes/sink.AbstractAutoDisposingDelegatingSink.md)
-- [AbstractDelegatingSink](../classes/sink.AbstractDelegatingSink.md)
 - [AbstractSink](../classes/sink.AbstractSink.md)
 
 ### Interfaces
@@ -21,7 +19,6 @@
 
 ### Functions
 
-- [createDelegatingSink](sink.md#createdelegatingsink)
 - [notifyDistinctUntilChanged](sink.md#notifydistinctuntilchanged)
 - [notifyKeep](sink.md#notifykeep)
 - [notifyMap](sink.md#notifymap)
@@ -48,28 +45,6 @@
 | `TB` |
 
 ## Functions
-
-### createDelegatingSink
-
-▸ **createDelegatingSink**<`T`\>(`delegate`): [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `delegate` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> |
-
-#### Returns
-
-[`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\>
-
-___
 
 ### notifyDistinctUntilChanged
 

@@ -1,8 +1,8 @@
 import { Predicate, alwaysTrue } from "../functions";
 import { isNone } from "../option";
 import { RunnableOperator } from "../runnable";
-import { createDelegatingSink } from "../sink";
 import { createRunnable } from "./createRunnable";
+import { createDelegatingSink } from "./sinks";
 
 /**
  * Returns an RunnableLike that applies the predicate function each time the source
