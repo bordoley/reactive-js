@@ -711,8 +711,7 @@ const fromIterable = (options) => {
  *
  * @param factory Factory function to create a new `Promise` instance.
  */
-const fromPromise = (factory) => defer(observer => () => {
-    const dispatcher = toDispatcher(observer);
+const fromPromise = (factory) => createObservable(dispatcher => {
     factory().then(next => {
         if (!dispatcher.isDisposed) {
             dispatcher.dispatch(next);

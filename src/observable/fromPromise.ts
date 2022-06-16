@@ -1,8 +1,6 @@
 import { dispose, toErrorHandler } from "../disposable";
 import { Factory, pipe } from "../functions";
-import { ObservableLike } from "../observable";
-import { defer } from "./observable";
-import { toDispatcher } from "./toDispatcher";
+import { createObservable, ObservableLike } from "../observable";
 
 /**
  * Converts a `Promise` to an `ObservableLike`. The provided promise factory
@@ -13,9 +11,7 @@ import { toDispatcher } from "./toDispatcher";
 export const fromPromise = <T>(
   factory: Factory<Promise<T>>,
 ): ObservableLike<T> =>
-  defer(observer => () => {
-    const dispatcher = toDispatcher(observer);
-
+  createObservable(dispatcher => {
     factory().then(next => {
       if (!dispatcher.isDisposed) {
         dispatcher.dispatch(next);
