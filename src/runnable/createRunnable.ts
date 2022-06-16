@@ -1,5 +1,4 @@
 import { SideEffect1 } from "../functions";
-import { isSome } from "../option";
 import { RunnableLike } from "../runnable";
 import { SinkLike } from "../sink";
 
@@ -13,10 +12,6 @@ class RunnableImpl<T> implements RunnableLike<T> {
       this._run(sink);
     } catch (cause) {
       sink.dispose({ cause });
-    }
-    const { error } = sink;
-    if (isSome(error)) {
-      throw error.cause;
     }
   }
 }

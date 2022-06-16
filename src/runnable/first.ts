@@ -1,6 +1,8 @@
+import { Function1 } from "../functions";
 import { Option, none } from "../option";
 import { RunnableLike } from "../runnable";
 import { AbstractSink } from "../sink";
+import { run } from "./run";
 
 class FirstSink<T> extends AbstractSink<T> {
   result: Option<T> = none;
@@ -11,8 +13,7 @@ class FirstSink<T> extends AbstractSink<T> {
   }
 }
 
-export const first = <T>(runnable: RunnableLike<T>): Option<T> => {
-  const sink = new FirstSink<T>();
-  runnable.run(sink);
-  return sink.result;
+export const first = <T>(): Function1<RunnableLike<T>, Option<T>> => {
+  const createSink = () => new FirstSink<T>();
+  return run<T, Option<T>>(createSink);
 };

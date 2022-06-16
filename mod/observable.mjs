@@ -1825,6 +1825,7 @@ const toRunnable = (options = {}) => source => createRunnable(sink => {
     const subscription = pipe(source, subscribe(scheduler, sink.notify, sink));
     addDisposableDisposeParentOnChildError(sink, subscription);
     scheduler.run();
+    scheduler.dispose();
 });
 
 /**

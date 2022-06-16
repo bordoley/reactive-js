@@ -234,7 +234,7 @@ export const tests = describe(
         throw cause;
       });
       pipe(
-        () => pipe(observable, toRunnable(), last),
+        () => pipe(observable, toRunnable(), last()),
         expectToThrowError(cause),
       );
     }),
@@ -356,7 +356,7 @@ export const tests = describe(
           fromArray({ delay: 2 }),
           mergeWith(throws({ ...fromArrayT, ...mapT }, { delay: 5 })(raise)),
           toRunnable(),
-          last,
+          last(),
         ),
         expectToThrow,
       ),
@@ -380,7 +380,7 @@ export const tests = describe(
             ObservableLike<number>
           >({ ...mergeAllT, ...mapT }, identity),
           toRunnable(),
-          last,
+          last(),
         ),
         expectToThrow,
       ),
@@ -398,14 +398,14 @@ export const tests = describe(
             return fromValue(fromArrayT)(x);
           }),
           toRunnable(),
-          last,
+          last(),
         ),
         expectToThrow,
       ),
     ),
   ),
 
-  test("never", defer(never(), toRunnable(), last, expectNone)),
+  test("never", defer(never(), toRunnable(), last(), expectNone)),
   test("observable", () => {
     const fromValueWithDelay = (
       delay: number,
@@ -424,7 +424,13 @@ export const tests = describe(
 
       return result1 + result2 + result3;
     });
-    pipe(computedObservable, takeLast(), toRunnable(), last, expectEquals(22));
+    pipe(
+      computedObservable,
+      takeLast(),
+      toRunnable(),
+      last(),
+      expectEquals(22),
+    );
 
     // switch map test
     const oneTwoThreeDelayed = fromArray({ delay: 1 })([1, 2, 3]);
@@ -631,7 +637,7 @@ export const tests = describe(
           throws({ ...fromArrayT, ...mapT }),
           takeLast(),
           toRunnable(),
-          last,
+          last(),
         ),
         expectToThrow,
       ),
@@ -683,7 +689,7 @@ export const tests = describe(
           fromArray({ delay: 1 }),
           throttle(_ => throws({ ...fromArrayT, ...mapT })(raise)),
           toRunnable(),
-          last,
+          last(),
         ),
         expectToThrow,
       ),
@@ -698,7 +704,7 @@ export const tests = describe(
           empty(fromArrayT),
           throwIfEmpty(() => undefined),
           toRunnable(),
-          last,
+          last(),
         ),
         expectToThrow,
       ),
@@ -712,7 +718,7 @@ export const tests = describe(
         compute({ ...fromArrayT, ...mapT }),
         throwIfEmpty(() => undefined),
         toRunnable(),
-        last,
+        last(),
         expectEquals(1),
       ),
     ),
@@ -735,7 +741,7 @@ export const tests = describe(
         fromValue(fromArrayT, { delay: 2 }),
         timeout(3),
         toRunnable(),
-        last,
+        last(),
         expectEquals(1),
       ),
     ),
@@ -887,7 +893,7 @@ export const tests = describe(
           throws({ ...fromArrayT, ...mapT })(raise),
           zipWithLatestFrom(fromValue(fromArrayT)(1), (_, b) => b),
           toRunnable(),
-          last,
+          last(),
         ),
         expectToThrow,
       ),
@@ -904,7 +910,7 @@ export const tests = describe(
             (_, b) => b,
           ),
           toRunnable(),
-          last,
+          last(),
         ),
         expectToThrow,
       ),
@@ -917,7 +923,7 @@ export const tests = describe(
         fromArray({ delay: 1 }),
         zipWithLatestFrom(fromArray()([2]), (_, b) => b),
         toRunnable(),
-        last,
+        last(),
         expectEquals(2),
       ),
     ),

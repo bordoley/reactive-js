@@ -364,5 +364,4 @@ export const toRunnable =
         sink.notify(result.data);
         result = result.next();
       }
-      sink.dispose();
     });

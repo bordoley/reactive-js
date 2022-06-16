@@ -1,6 +1,7 @@
 import { Predicate, compose, negate } from "../functions";
 import { RunnableLike } from "../runnable";
 import { AbstractSink } from "../sink";
+import { run } from "./run";
 
 class EverySatisfySink<T> extends AbstractSink<T> {
   result = true;
@@ -17,13 +18,12 @@ class EverySatisfySink<T> extends AbstractSink<T> {
   }
 }
 
-export const everySatisfy =
-  <T>(predicate: Predicate<T>): Predicate<RunnableLike<T>> =>
-  runnable => {
-    const sink = new EverySatisfySink(predicate);
-    runnable.run(sink);
-    return sink.result;
-  };
+export const everySatisfy = <T>(
+  predicate: Predicate<T>,
+): Predicate<RunnableLike<T>> => {
+  const createSink = () => new EverySatisfySink<T>(predicate);
+  return run<T, boolean>(createSink);
+};
 
 export const noneSatisfy = <T>(
   predicate: Predicate<T>,

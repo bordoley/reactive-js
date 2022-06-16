@@ -14,6 +14,7 @@ class LiftedRunnable<T> implements RunnableLike<T> {
   run(sink: SinkLike<T>) {
     const liftedSink = pipe(sink, ...this.operators) as SinkLike<T>;
     this.src.run(liftedSink);
+    liftedSink.dispose();
   }
 }
 

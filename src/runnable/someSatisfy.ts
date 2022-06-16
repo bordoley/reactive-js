@@ -1,6 +1,7 @@
 import { Equality, Predicate, isEqualTo, strictEquality } from "../functions";
 import { RunnableLike } from "../runnable";
 import { AbstractSink } from "../sink";
+import { run } from "./run";
 
 class SomeSatisfySink<T> extends AbstractSink<T> {
   result = false;
@@ -17,13 +18,12 @@ class SomeSatisfySink<T> extends AbstractSink<T> {
   }
 }
 
-export const someSatisfy =
-  <T>(predicate: Predicate<T>): Predicate<RunnableLike<T>> =>
-  runnable => {
-    const sink = new SomeSatisfySink(predicate);
-    runnable.run(sink);
-    return sink.result;
-  };
+export const someSatisfy = <T>(
+  predicate: Predicate<T>,
+): Predicate<RunnableLike<T>> => {
+  const createSink = () => new SomeSatisfySink<T>(predicate);
+  return run<T, boolean>(createSink);
+};
 
 export const contains = <T>(
   value: T,

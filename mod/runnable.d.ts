@@ -13,7 +13,7 @@ declare const distinctUntilChanged: <T>(options?: {
 }) => RunnableOperator<T, T>;
 declare const everySatisfy: <T>(predicate: Predicate<T>) => Predicate<RunnableLike<T>>;
 declare const noneSatisfy: <T>(predicate: Predicate<T>) => Predicate<RunnableLike<T>>;
-declare const first: <T>(runnable: RunnableLike<T>) => Option<T>;
+declare const first: <T>() => Function1<RunnableLike<T>, Option<T>>;
 declare const forEach: <T>(f: SideEffect1<T>) => Function1<RunnableLike<T>, void>;
 declare const fromArray: <T>(options?: {
     readonly startIndex?: number;
@@ -24,7 +24,7 @@ declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>) => 
 declare const lift: <TA, TB>(operator: SinkOperator<TA, TB>) => RunnableOperator<TA, TB>;
 declare const keep: <T>(predicate: Predicate<T>) => RunnableOperator<T, T>;
 declare const keepT: Keep<RunnableLike<unknown>>;
-declare const last: <T>(runnable: RunnableLike<T>) => Option<T>;
+declare const last: <T>() => Function1<RunnableLike<T>, Option<T>>;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => RunnableOperator<TA, TB>;
 /**
  * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
