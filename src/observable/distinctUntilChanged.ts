@@ -14,9 +14,8 @@ class DistinctUntilChangedObserver<
   constructor(delegate: ObserverLike<T>, readonly equality: Equality<T>) {
     super(delegate);
   }
-
-  notify = notifyDistinctUntilChanged;
 }
+DistinctUntilChangedObserver.prototype.notify = notifyDistinctUntilChanged;
 
 /**
  * Returns an `ObservableLike` that emits all items emitted by the source that

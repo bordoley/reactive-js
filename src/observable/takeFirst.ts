@@ -15,9 +15,8 @@ class TakeFirstObserver<T> extends AbstractAutoDisposingDelegatingObserver<
   constructor(delegate: ObserverLike<T>, readonly maxCount: number) {
     super(delegate);
   }
-
-  notify = notifyTakeFirst;
 }
+TakeFirstObserver.prototype.notify = notifyTakeFirst;
 
 /**
  * Returns an `ObservableLike` that only emits the first `count` values emitted by the source.

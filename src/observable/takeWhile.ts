@@ -15,9 +15,8 @@ class TakeWhileObserver<T> extends AbstractAutoDisposingDelegatingObserver<
   ) {
     super(delegate);
   }
-
-  notify = notifyTakeWhile;
 }
+TakeWhileObserver.prototype.notify = notifyTakeWhile;
 
 /**
  * Returns an `ObservableLike` which emits values emitted by the source as long

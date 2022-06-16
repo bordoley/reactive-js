@@ -10,9 +10,8 @@ class PairwiseObserver<T> extends AbstractAutoDisposingDelegatingObserver<
 > {
   prev: Option<T>;
   hasPrev = false;
-
-  notify = notifyPairwise;
 }
+PairwiseObserver.prototype.notify = notifyPairwise;
 
 export const pairwise = <T>(): ObservableOperator<T, [Option<T>, T]> => {
   const operator = (observer: ObserverLike<[Option<T>, T]>) =>

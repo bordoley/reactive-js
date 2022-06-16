@@ -1,6 +1,6 @@
 import { Function1 } from "../functions";
 import { RunnableLike } from "../runnable";
-import { AbstractSink } from "./sink";
+import { AbstractSink } from "../sink";
 
 class ToArraySink<T> extends AbstractSink<T> {
   public readonly acc: T[] = [];

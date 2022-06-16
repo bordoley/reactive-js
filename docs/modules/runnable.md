@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Classes
-
-- [AbstractDelegatingSink](../classes/runnable.AbstractDelegatingSink.md)
-
 ### Interfaces
 
 - [RunnableLike](../interfaces/runnable.RunnableLike.md)

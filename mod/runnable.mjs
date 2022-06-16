@@ -1,9 +1,8 @@
 /// <reference types="./runnable.d.ts" />
-import { pipe, ignore, raise, strictEquality, compose, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
-import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError, dispose, addTeardown } from './disposable.mjs';
+import { pipe, strictEquality, compose, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
+import { addDisposableDisposeParentOnChildError, dispose, addTeardown } from './disposable.mjs';
 import { isSome, none, isNone } from './option.mjs';
-import { __DEV__ } from './env.mjs';
-import { notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifyTakeFirst, notifyTakeWhile } from './sink.mjs';
+import { createDelegatingSink, AbstractDelegatingSink, AbstractAutoDisposingDelegatingSink, notifyDistinctUntilChanged, AbstractSink, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
 import { empty } from './container.mjs';
 
 class RunnableImpl {
@@ -47,45 +46,6 @@ const lift = (operator) => runnable => {
     return new LiftedRunnable(src, allFunctions);
 };
 
-const assertStateProduction = ignore;
-const assertStateDev = function () {
-    if (this.isDisposed) {
-        raise("Sink is disposed");
-    }
-};
-const assertState = __DEV__ ? assertStateDev : assertStateProduction;
-class AbstractSink extends AbstractDisposable {
-    constructor() {
-        super(...arguments);
-        this.assertState = assertState;
-    }
-}
-class AbstractDelegatingSink extends AbstractSink {
-    constructor(delegate) {
-        super();
-        this.delegate = delegate;
-        addDisposable(delegate, this);
-    }
-}
-class AbstractAutoDisposingDelegatingSink extends AbstractSink {
-    constructor(delegate) {
-        super();
-        this.delegate = delegate;
-        bindDisposables(this, delegate);
-    }
-}
-class DelegatingSink extends AbstractSink {
-    constructor(delegate) {
-        super();
-        this.delegate = delegate;
-        addDisposable(delegate, this);
-    }
-    notify(next) {
-        this.delegate.notify(next);
-    }
-}
-const createDelegatingSink = (delegate) => new DelegatingSink(delegate);
-
 function concat(...runnables) {
     return createRunnable((sink) => {
         const runnablesLength = runnables.length;
@@ -113,9 +73,9 @@ class DistinctUntilChangedSink extends AbstractAutoDisposingDelegatingSink {
         this.equality = equality;
         this.prev = none;
         this.hasValue = false;
-        this.notify = notifyDistinctUntilChanged;
     }
 }
+DistinctUntilChangedSink.prototype.notify = notifyDistinctUntilChanged;
 const distinctUntilChanged = (options = {}) => {
     const { equality = strictEquality } = options;
     const operator = (sink) => new DistinctUntilChangedSink(sink, equality);
@@ -198,9 +158,9 @@ class KeepSink extends AbstractAutoDisposingDelegatingSink {
     constructor(delegate, predicate) {
         super(delegate);
         this.predicate = predicate;
-        this.notify = notifyKeep;
     }
 }
+KeepSink.prototype.notify = notifyKeep;
 const keep = (predicate) => {
     const operator = (sink) => new KeepSink(sink, predicate);
     return lift(operator);
@@ -228,9 +188,9 @@ class MapSink extends AbstractAutoDisposingDelegatingSink {
     constructor(delegate, mapper) {
         super(delegate);
         this.mapper = mapper;
-        this.notify = notifyMap;
     }
 }
+MapSink.prototype.notify = notifyMap;
 const map = (mapper) => {
     const operator = (sink) => new MapSink(sink, mapper);
     return lift(operator);
@@ -240,9 +200,9 @@ class OnNotifySink extends AbstractAutoDisposingDelegatingSink {
     constructor(delegate, onNotify) {
         super(delegate);
         this.onNotify = onNotify;
-        this.notify = notifyOnNotify;
     }
 }
+OnNotifySink.prototype.notify = notifyOnNotify;
 /**
  * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
  *
@@ -257,9 +217,9 @@ class PairwiseObserver extends AbstractAutoDisposingDelegatingSink {
     constructor() {
         super(...arguments);
         this.hasPrev = false;
-        this.notify = notifyPairwise;
     }
 }
+PairwiseObserver.prototype.notify = notifyPairwise;
 const pairwise = () => {
     const operator = (observer) => new PairwiseObserver(observer);
     return lift(operator);
@@ -270,9 +230,9 @@ class ReducerSink extends AbstractSink {
         super();
         this.acc = acc;
         this.reducer = reducer;
-        this.notify = notifyReduce;
     }
 }
+ReducerSink.prototype.notify = notifyReduce;
 const reduce = (reducer, initialValue) => runnable => {
     const sink = new ReducerSink(initialValue(), reducer);
     runnable.run(sink);
@@ -300,9 +260,9 @@ class ScanSink extends AbstractAutoDisposingDelegatingSink {
         super(delegate);
         this.reducer = reducer;
         this.acc = acc;
-        this.notify = notifyScan;
     }
 }
+ScanSink.prototype.notify = notifyScan;
 const scan = (reducer, initialValue) => {
     const operator = (sink) => new ScanSink(sink, reducer, initialValue());
     return lift(operator);
@@ -314,13 +274,8 @@ class SkipFirstSink extends AbstractAutoDisposingDelegatingSink {
         this.skipCount = skipCount;
         this.count = 0;
     }
-    notify(next) {
-        this.count++;
-        if (this.count > this.skipCount) {
-            this.delegate.notify(next);
-        }
-    }
 }
+SkipFirstSink.prototype.notify = notifySkipFirst;
 const skipFirst = (options = {}) => {
     const { count = 1 } = options;
     const operator = (sink) => new SkipFirstSink(sink, count);
@@ -355,9 +310,9 @@ class TakeFirstSink extends AbstractAutoDisposingDelegatingSink {
         super(delegate);
         this.maxCount = maxCount;
         this.count = 0;
-        this.notify = notifyTakeFirst;
     }
 }
+TakeFirstSink.prototype.notify = notifyTakeFirst;
 const takeFirst = (options = {}) => {
     const { count = 1 } = options;
     const operator = (sink) => new TakeFirstSink(sink, count);
@@ -380,15 +335,8 @@ class TakeLastSink extends AbstractDelegatingSink {
         this.last = [];
         addTeardown(this, onDispose);
     }
-    notify(next) {
-        this.assertState(this);
-        const last = this.last;
-        last.push(next);
-        if (last.length > this.maxCount) {
-            last.shift();
-        }
-    }
 }
+TakeLastSink.prototype.notify = notifyTakeLast;
 const takeLast = (options = {}) => {
     const { count = 1 } = options;
     const operator = (sink) => new TakeLastSink(sink, count);
@@ -400,9 +348,9 @@ class TakeWhileSink extends AbstractAutoDisposingDelegatingSink {
         super(delegate);
         this.predicate = predicate;
         this.inclusive = inclusive;
-        this.notify = notifyTakeWhile;
     }
 }
+TakeWhileSink.prototype.notify = notifyTakeWhile;
 const takeWhile = (predicate, options = {}) => {
     const { inclusive = false } = options;
     const operator = (sink) => new TakeWhileSink(sink, predicate, inclusive);
@@ -432,4 +380,4 @@ const toArray = () => _toArray;
 const toRunnable = () => identity;
 const type = undefined;
 
-export { AbstractDelegatingSink, concat, concatAll, contains, createRunnable, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, lift, map, noneSatisfy, onNotify, pairwise, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type };
+export { concat, concatAll, contains, createRunnable, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, lift, map, noneSatisfy, onNotify, pairwise, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type };

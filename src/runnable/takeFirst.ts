@@ -3,7 +3,7 @@ import { RunnableOperator } from "../runnable";
 import { empty } from "../container";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingSink } from "./sink";
+import { AbstractAutoDisposingDelegatingSink } from "../sink";
 import { notifyTakeFirst, SinkLike } from "../sink";
 
 class TakeFirstSink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
@@ -12,9 +12,8 @@ class TakeFirstSink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
   constructor(delegate: SinkLike<T>, readonly maxCount: number) {
     super(delegate);
   }
-
-  notify = notifyTakeFirst;
 }
+TakeFirstSink.prototype.notify = notifyTakeFirst;
 
 export const takeFirst = <T>(
   options: { readonly count?: number } = {},

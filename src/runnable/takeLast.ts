@@ -4,7 +4,7 @@ import { empty } from "../container";
 import { Option, isSome } from "../option";
 import { fromArray, fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import { AbstractDelegatingSink } from "./sink";
+import { AbstractDelegatingSink, notifyTakeLast } from "../sink";
 import { addTeardown, dispose, Error } from "../disposable";
 import { SinkLike } from "../sink";
 
@@ -24,19 +24,8 @@ class TakeLastSink<T> extends AbstractDelegatingSink<T, T> {
     super(delegate);
     addTeardown(this, onDispose);
   }
-
-  notify(next: T) {
-    this.assertState(this);
-
-    const last = this.last;
-
-    last.push(next);
-
-    if (last.length > this.maxCount) {
-      last.shift();
-    }
-  }
 }
+TakeLastSink.prototype.notify = notifyTakeLast;
 
 export const takeLast = <T>(
   options: { readonly count?: number } = {},

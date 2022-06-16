@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [runnable](../modules/runnable.md) / AbstractDelegatingSink
+[Reactive-JS](../README.md) / [sink](../modules/sink.md) / AbstractDelegatingSink
 
 # Class: AbstractDelegatingSink<TA, TB\>
 
-[runnable](../modules/runnable.md).AbstractDelegatingSink
+[sink](../modules/sink.md).AbstractDelegatingSink
 
 ## Type parameters
 
@@ -13,7 +13,7 @@
 
 ## Hierarchy
 
-- `AbstractSink`<`TA`\>
+- [`AbstractSink`](sink.AbstractSink.md)<`TA`\>
 
   ↳ **`AbstractDelegatingSink`**
 
@@ -21,16 +21,16 @@
 
 ### Constructors
 
-- [constructor](runnable.AbstractDelegatingSink.md#constructor)
+- [constructor](sink.AbstractDelegatingSink.md#constructor)
 
 ### Properties
 
-- [assertState](runnable.AbstractDelegatingSink.md#assertstate)
-- [delegate](runnable.AbstractDelegatingSink.md#delegate)
+- [assertState](sink.AbstractDelegatingSink.md#assertstate)
+- [delegate](sink.AbstractDelegatingSink.md#delegate)
 
 ### Methods
 
-- [notify](runnable.AbstractDelegatingSink.md#notify)
+- [notify](sink.AbstractDelegatingSink.md#notify)
 
 ## Constructors
 
@@ -53,7 +53,7 @@
 
 #### Overrides
 
-AbstractSink&lt;TA\&gt;.constructor
+[AbstractSink](sink.AbstractSink.md).[constructor](sink.AbstractSink.md#constructor)
 
 ## Properties
 
@@ -77,7 +77,7 @@ AbstractSink&lt;TA\&gt;.constructor
 
 #### Inherited from
 
-AbstractSink.assertState
+[AbstractSink](sink.AbstractSink.md).[assertState](sink.AbstractSink.md#assertstate)
 
 ___
 
@@ -89,13 +89,18 @@ ___
 
 ### notify
 
-▸ `Abstract` **notify**(`next`): `void`
+▸ **notify**(`_`): `void`
+
+Notifies the the observer of the next notification produced by the observable source.
+
+Note: The `notify` method must be called from within a `SchedulerContinuationLike`
+scheduled using the observer's `schedule` method.
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `next` | `TA` |
+| `_` | `TA` |
 
 #### Returns
 
@@ -103,4 +108,4 @@ ___
 
 #### Inherited from
 
-AbstractSink.notify
+[AbstractSink](sink.AbstractSink.md).[notify](sink.AbstractSink.md#notify)

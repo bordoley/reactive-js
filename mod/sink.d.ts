@@ -1,4 +1,4 @@
-import { DisposableLike } from "./disposable.mjs";
+import { DisposableLike, AbstractDisposable } from "./disposable.mjs";
 import { Function1, Equality, Predicate, SideEffect1, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
 interface SinkLike<T> extends DisposableLike {
@@ -17,6 +17,19 @@ interface DelegatingSinkLike<TA, TB> extends SinkLike<TA> {
     readonly delegate: SinkLike<TB>;
 }
 declare type SinkOperator<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
+declare abstract class AbstractSink<T> extends AbstractDisposable implements SinkLike<T> {
+    assertState: (..._args: unknown[]) => void;
+    notify(_: T): void;
+}
+declare abstract class AbstractDelegatingSink<TA, TB> extends AbstractSink<TA> {
+    readonly delegate: SinkLike<TB>;
+    constructor(delegate: SinkLike<TB>);
+}
+declare abstract class AbstractAutoDisposingDelegatingSink<TA, TB> extends AbstractSink<TA> {
+    readonly delegate: SinkLike<TB>;
+    constructor(delegate: SinkLike<TB>);
+}
+declare const createDelegatingSink: <T>(delegate: SinkLike<T>) => SinkLike<T>;
 declare function notifyDistinctUntilChanged<T>(this: DelegatingSinkLike<T, T> & {
     readonly equality: Equality<T>;
     prev: Option<T>;
@@ -46,12 +59,20 @@ declare function notifyScan<T, TAcc>(this: DelegatingSinkLike<T, TAcc> & {
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
 }, next: T): void;
+declare function notifySkipFirst<T>(this: DelegatingSinkLike<T, T> & {
+    count: number;
+    readonly skipCount: number;
+}, next: T): void;
 declare function notifyTakeFirst<T>(this: DelegatingSinkLike<T, T> & {
     count: number;
+    readonly maxCount: number;
+}, next: T): void;
+declare function notifyTakeLast<T>(this: DelegatingSinkLike<T, T> & {
+    readonly last: T[];
     readonly maxCount: number;
 }, next: T): void;
 declare function notifyTakeWhile<T>(this: DelegatingSinkLike<T, T> & {
     readonly predicate: Predicate<T>;
     readonly inclusive: boolean;
 }, next: T): void;
-export { DelegatingSinkLike, SinkLike, SinkOperator, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifyTakeFirst, notifyTakeWhile };
+export { AbstractAutoDisposingDelegatingSink, AbstractDelegatingSink, AbstractSink, DelegatingSinkLike, SinkLike, SinkOperator, createDelegatingSink, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile };

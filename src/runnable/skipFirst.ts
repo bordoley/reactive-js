@@ -1,23 +1,17 @@
 import { pipe } from "../functions";
 import { RunnableOperator } from "../runnable";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingSink } from "./sink";
-import { SinkLike } from "../sink";
+import { AbstractAutoDisposingDelegatingSink } from "../sink";
+import { notifySkipFirst, SinkLike } from "../sink";
 
 class SkipFirstSink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
-  private count = 0;
+  count = 0;
 
   constructor(delegate: SinkLike<T>, readonly skipCount: number) {
     super(delegate);
   }
-
-  notify(next: T) {
-    this.count++;
-    if (this.count > this.skipCount) {
-      this.delegate.notify(next);
-    }
-  }
 }
+SkipFirstSink.prototype.notify = notifySkipFirst;
 
 export const skipFirst = <T>(
   options: { readonly count?: number } = {},

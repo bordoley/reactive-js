@@ -15,9 +15,8 @@ class ScanObserver<T, TAcc> extends AbstractAutoDisposingDelegatingObserver<
   ) {
     super(delegate);
   }
-
-  notify = notifyScan;
 }
+ScanObserver.prototype.notify = notifyScan;
 
 /**
  * Returns an `ObservableLike` that applies an accumulator function over the source,

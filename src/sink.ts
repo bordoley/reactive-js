@@ -1,4 +1,10 @@
-import { DisposableLike, dispose } from "./disposable";
+import {
+  AbstractDisposable,
+  addDisposable,
+  bindDisposables,
+  DisposableLike,
+  dispose,
+} from "./disposable";
 import {
   Equality,
   Function1,
@@ -6,8 +12,11 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
+  ignore,
+  raise,
 } from "./functions";
 import { none, Option } from "./option";
+import { __DEV__ } from "./env";
 
 export interface SinkLike<T> extends DisposableLike {
   assertState(this: SinkLike<T>): void;
@@ -28,6 +37,55 @@ export interface DelegatingSinkLike<TA, TB> extends SinkLike<TA> {
 }
 
 export type SinkOperator<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
+
+const assertStateProduction = ignore;
+const assertStateDev = function <T>(this: SinkLike<T>) {
+  if (this.isDisposed) {
+    raise("Sink is disposed");
+  }
+};
+
+const assertState = __DEV__ ? assertStateDev : assertStateProduction;
+
+export abstract class AbstractSink<T>
+  extends AbstractDisposable
+  implements SinkLike<T>
+{
+  assertState = assertState;
+
+  notify(_: T): void {}
+}
+
+export abstract class AbstractDelegatingSink<TA, TB> extends AbstractSink<TA> {
+  constructor(readonly delegate: SinkLike<TB>) {
+    super();
+    addDisposable(delegate, this);
+  }
+}
+
+export abstract class AbstractAutoDisposingDelegatingSink<
+  TA,
+  TB,
+> extends AbstractSink<TA> {
+  constructor(readonly delegate: SinkLike<TB>) {
+    super();
+    bindDisposables(this, delegate);
+  }
+}
+
+class DelegatingSink<T> extends AbstractSink<T> {
+  constructor(readonly delegate: SinkLike<T>) {
+    super();
+    addDisposable(delegate, this);
+  }
+
+  notify(next: T) {
+    this.delegate.notify(next);
+  }
+}
+
+export const createDelegatingSink = <T>(delegate: SinkLike<T>): SinkLike<T> =>
+  new DelegatingSink(delegate);
 
 export function notifyDistinctUntilChanged<T>(
   this: DelegatingSinkLike<T, T> & {
@@ -125,6 +183,19 @@ export function notifyScan<T, TAcc>(
   this.delegate.notify(nextAcc);
 }
 
+export function notifySkipFirst<T>(
+  this: DelegatingSinkLike<T, T> & {
+    count: number;
+    readonly skipCount: number;
+  },
+  next: T,
+) {
+  this.count++;
+  if (this.count > this.skipCount) {
+    this.delegate.notify(next);
+  }
+}
+
 export function notifyTakeFirst<T>(
   this: DelegatingSinkLike<T, T> & {
     count: number;
@@ -138,6 +209,24 @@ export function notifyTakeFirst<T>(
   this.delegate.notify(next);
   if (this.count >= this.maxCount) {
     pipe(this, dispose());
+  }
+}
+
+export function notifyTakeLast<T>(
+  this: DelegatingSinkLike<T, T> & {
+    readonly last: T[];
+    readonly maxCount: number;
+  },
+  next: T,
+) {
+  this.assertState();
+
+  const last = this.last;
+
+  last.push(next);
+
+  if (last.length > this.maxCount) {
+    last.shift();
   }
 }
 

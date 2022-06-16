@@ -1,5 +1,6 @@
 import { pipe } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
+import { notifySkipFirst } from "../sink";
 import { lift } from "./lift";
 import { AbstractAutoDisposingDelegatingObserver } from "./observer";
 
@@ -7,20 +8,13 @@ class SkipFirstObserver<T> extends AbstractAutoDisposingDelegatingObserver<
   T,
   T
 > {
-  private count = 0;
+  count = 0;
 
   constructor(delegate: ObserverLike<T>, readonly skipCount: number) {
     super(delegate);
   }
-
-  notify(next: T) {
-    this.assertState();
-    this.count++;
-    if (this.count > this.skipCount) {
-      this.delegate.notify(next);
-    }
-  }
 }
+SkipFirstObserver.prototype.notify = notifySkipFirst;
 
 /**
  * Returns an `ObservableLike` that skips the first count items emitted by the source.
@@ -33,7 +27,7 @@ export const skipFirst = <T>(
   const { count = 1 } = options;
   const operator = (observer: ObserverLike<T>) =>
     new SkipFirstObserver(observer, count);
-  operator.isSynchronous = false;
+  operator.isSynchronous = true;
   return observable =>
     count > 0 ? pipe(observable, lift(operator)) : observable;
 };

@@ -16,9 +16,8 @@ class MapObserver<TA, TB> extends AbstractAutoDisposingDelegatingObserver<
   constructor(delegate: ObserverLike<TB>, readonly mapper: Function1<TA, TB>) {
     super(delegate);
   }
-
-  notify = notifyMap;
 }
+MapObserver.prototype.notify = notifyMap;
 
 /**
  * Returns an `ObservableLike` that applies the `mapper` function to each

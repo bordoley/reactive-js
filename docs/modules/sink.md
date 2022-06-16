@@ -4,6 +4,12 @@
 
 ## Table of contents
 
+### Classes
+
+- [AbstractAutoDisposingDelegatingSink](../classes/sink.AbstractAutoDisposingDelegatingSink.md)
+- [AbstractDelegatingSink](../classes/sink.AbstractDelegatingSink.md)
+- [AbstractSink](../classes/sink.AbstractSink.md)
+
 ### Interfaces
 
 - [DelegatingSinkLike](../interfaces/sink.DelegatingSinkLike.md)
@@ -15,6 +21,7 @@
 
 ### Functions
 
+- [createDelegatingSink](sink.md#createdelegatingsink)
 - [notifyDistinctUntilChanged](sink.md#notifydistinctuntilchanged)
 - [notifyKeep](sink.md#notifykeep)
 - [notifyMap](sink.md#notifymap)
@@ -22,7 +29,9 @@
 - [notifyPairwise](sink.md#notifypairwise)
 - [notifyReduce](sink.md#notifyreduce)
 - [notifyScan](sink.md#notifyscan)
+- [notifySkipFirst](sink.md#notifyskipfirst)
 - [notifyTakeFirst](sink.md#notifytakefirst)
+- [notifyTakeLast](sink.md#notifytakelast)
 - [notifyTakeWhile](sink.md#notifytakewhile)
 
 ## Type Aliases
@@ -39,6 +48,28 @@
 | `TB` |
 
 ## Functions
+
+### createDelegatingSink
+
+▸ **createDelegatingSink**<`T`\>(`delegate`): [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `delegate` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> |
+
+#### Returns
+
+[`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\>
+
+___
 
 ### notifyDistinctUntilChanged
 
@@ -204,6 +235,29 @@ ___
 
 ___
 
+### notifySkipFirst
+
+▸ **notifySkipFirst**<`T`\>(`this`, `next`): `void`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`T`, `T`\> & { `count`: `number` ; `skipCount`: `number`  } |
+| `next` | `T` |
+
+#### Returns
+
+`void`
+
+___
+
 ### notifyTakeFirst
 
 ▸ **notifyTakeFirst**<`T`\>(`this`, `next`): `void`
@@ -219,6 +273,29 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`T`, `T`\> & { `count`: `number` ; `maxCount`: `number`  } |
+| `next` | `T` |
+
+#### Returns
+
+`void`
+
+___
+
+### notifyTakeLast
+
+▸ **notifyTakeLast**<`T`\>(`this`, `next`): `void`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`T`, `T`\> & { `last`: `T`[] ; `maxCount`: `number`  } |
 | `next` | `T` |
 
 #### Returns

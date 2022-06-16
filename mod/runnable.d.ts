@@ -2,7 +2,6 @@ import { FromArray, FromArrayOptions, Keep, ContainerLike, Container, ContainerO
 import { SinkLike, SinkOperator } from "./sink.mjs";
 import { SideEffect1, Equality, Predicate, Function1, Updater, Factory, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
-import { AbstractDisposable } from "./disposable.mjs";
 /**
  * Creates an `RunnableLike` which emits all values from each source sequentially.
  */
@@ -62,14 +61,6 @@ declare const someSatisfy: <T>(predicate: Predicate<T>) => Predicate<RunnableLik
 declare const contains: <T>(value: T, options?: {
     readonly equality?: Equality<T> | undefined;
 }) => Predicate<RunnableLike<T>>;
-declare abstract class AbstractSink<T> extends AbstractDisposable implements SinkLike<T> {
-    assertState: (..._args: unknown[]) => void;
-    abstract notify(next: T): void;
-}
-declare abstract class AbstractDelegatingSink<TA, TB> extends AbstractSink<TA> {
-    readonly delegate: SinkLike<TB>;
-    constructor(delegate: SinkLike<TB>);
-}
 declare const takeFirst: <T>(options?: {
     readonly count?: number;
 }) => RunnableOperator<T, T>;
@@ -95,4 +86,4 @@ interface ToRunnable<C extends ContainerLike> extends Container<C> {
 }
 declare const toRunnable: <T>() => Function1<RunnableLike<T>, RunnableLike<T>>;
 declare const type: RunnableLike<unknown>;
-export { AbstractDelegatingSink, RunnableLike, RunnableOperator, ToRunnable, concat, concatAll, contains, createRunnable, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, lift, map, noneSatisfy, onNotify, pairwise, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type };
+export { RunnableLike, RunnableOperator, ToRunnable, concat, concatAll, contains, createRunnable, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, lift, map, noneSatisfy, onNotify, pairwise, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type };
