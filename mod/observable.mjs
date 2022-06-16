@@ -1,13 +1,13 @@
 /// <reference types="./observable.d.ts" />
 import { AbstractContainer, empty, fromValue, concatMap, throws } from './container.mjs';
-import { addOnDisposedWithError, dispose, addDisposable, bindDisposables, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, AbstractDisposable, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
+import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, bindDisposables, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
 import { pipe, ignore, raise, arrayEquality, defer as defer$1, compose, strictEquality, returns } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
-import { AbstractSink, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifyTakeFirst, notifySkipFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
+import { notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifyTakeFirst, notifySkipFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
 import { createRunnable } from './runnable.mjs';
 
 const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
@@ -75,9 +75,10 @@ function assertStateDev() {
     }
 }
 const assertState = __DEV__ ? assertStateDev : assertStateProduction;
-class AbstractObserver extends AbstractSink {
+class AbstractObserver extends AbstractDisposable {
     /** @ignore */
     assertState() { }
+    notify(_) { }
     /** @ignore */
     onRunStatusChanged(status) {
         this.inContinuation = status;

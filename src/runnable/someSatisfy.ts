@@ -1,7 +1,7 @@
 import { Equality, Predicate, isEqualTo, strictEquality } from "../functions";
 import { RunnableLike } from "../runnable";
-import { AbstractSink } from "../sink";
 import { run } from "./run";
+import { AbstractSink } from "./sinks";
 
 class SomeSatisfySink<T> extends AbstractSink<T> {
   result = false;

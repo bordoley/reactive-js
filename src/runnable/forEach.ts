@@ -1,7 +1,7 @@
 import { Function1, SideEffect1 } from "../functions";
 import { RunnableLike } from "../runnable";
-import { AbstractSink } from "../sink";
 import { run } from "./run";
+import { AbstractSink } from "./sinks";
 
 class ForEachSink<T> extends AbstractSink<T> {
   result: void = undefined;
