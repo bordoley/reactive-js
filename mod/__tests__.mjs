@@ -2,20 +2,19 @@
 import { fromIterable, consume, notify, done, consumeAsync, fromArray, generate } from './asyncEnumerable.mjs';
 import { addTeardown, createDisposable, addDisposable, dispose, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
 import { pipe, returns, defer, increment, raise, sum, alwaysTrue, incrementBy, alwaysFalse, arrayEquality, ignore, identity } from './functions.mjs';
-import { toRunnable, fromArrayT, subscribe, generate as generate$3, dispatchTo, concat as concat$2, fromArray as fromArray$4, buffer, mapT, catchError, concatT, takeFirst as takeFirst$2, combineLatestWith, createObservable, createSubject, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeWith, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync, share, zip as zip$1, map as map$3, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$2, zipT, zipLatestWith, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$2, skipFirst as skipFirst$2, takeWhile as takeWhile$2, onNotify } from './observable.mjs';
+import { toRunnable, fromArrayT, subscribe, concat as concat$2, fromArray as fromArray$4, buffer, mapT, catchError, concatT, generate as generate$3, takeFirst as takeFirst$2, combineLatestWith, createObservable, createSubject, dispatchTo, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeWith, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync, share, zip as zip$1, map as map$3, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$2, zipT, zipLatestWith, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$2, skipFirst as skipFirst$2, takeWhile as takeWhile$2, onNotify } from './observable.mjs';
 import { none, isSome } from './option.mjs';
 import { last, toArray, fromArray as fromArray$1, contains, generate as generate$1, everySatisfy, map, first, forEach, noneSatisfy, fromArrayT as fromArrayT$1, keepT, concat, concatAll, distinctUntilChanged, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, toRunnable as toRunnable$1 } from './runnable.mjs';
-import { createVirtualTimeScheduler, schedule, createHostScheduler } from './scheduler.mjs';
-import { stream, sink, identity as identity$1, lift, __stream, createActionReducer, empty as empty$3, map as map$5, mapReq, onNotify as onNotify$1, scan as scan$4, mapTo as mapTo$1 } from './streamable.mjs';
+import { createVirtualTimeScheduler, createHostScheduler, schedule } from './scheduler.mjs';
+import { stream, sink, identity as identity$1, lift, __stream, createActionReducer, empty as empty$2, map as map$5, mapReq, onNotify as onNotify$1, scan as scan$4, mapTo as mapTo$1, flow } from './streamable.mjs';
 import { describe, test, expectEquals, expectArrayEquals, expectNone, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
 import { fromValue, empty, endWith, concatMap, mapTo, startWith, ignoreElements, compute, zipWith, throws, concatWith, genMap } from './container.mjs';
 import { fromArray as fromArray$2, toIterable, fromIterable as fromIterable$1, toRunnable as toRunnable$2, fromArrayT as fromArrayT$2, keepT as keepT$1, concat as concat$1, concatAll as concatAll$1, distinctUntilChanged as distinctUntilChanged$1, generate as generate$2, map as map$1, repeat as repeat$1, scan as scan$1, skipFirst as skipFirst$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, zip } from './enumerable.mjs';
-import { empty as empty$1, fromObservable, fromValue as fromValue$1 } from './flowable.mjs';
-import { fromArray as fromArray$3, decodeWithCharset, createIOSinkAccumulator, empty as empty$2, fromValue as fromValue$2, encodeUtf8, map as map$2 } from './io.mjs';
+import { fromArray as fromArray$3, decodeWithCharset, createIOSinkAccumulator, empty as empty$1, fromValue as fromValue$1, encodeUtf8, map as map$2 } from './io.mjs';
 import { type, fromArray as fromArray$5, concat as concat$3, concatAll as concatAll$2, distinctUntilChanged as distinctUntilChanged$3, generate as generate$4, keep, map as map$4, repeat as repeat$3, scan as scan$3, skipFirst as skipFirst$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$3, toRunnable as toRunnable$3 } from './sequence.mjs';
 import { toStateStore } from './stateStore.mjs';
 
-const tests$a = describe("async-enumerable", test("consume", () => {
+const tests$9 = describe("async-enumerable", test("consume", () => {
     const enumerable = fromIterable()([1, 2, 3, 4, 5, 6]);
     pipe(enumerable, consume((acc, next) => notify(acc + next), returns(0)), toRunnable(), last, expectEquals(21));
     pipe(enumerable, consume((acc, next) => (acc > 0 ? done(acc + next) : notify(acc + next)), returns(0)), toRunnable(), last, expectEquals(3));
@@ -60,7 +59,7 @@ const tests$a = describe("async-enumerable", test("consume", () => {
     pipe(result, expectArrayEquals([1, 2, 3]));
 }));
 
-const tests$9 = describe("Disposable", describe("AbstractDisposable", test("disposes child disposable when disposed", () => {
+const tests$8 = describe("Disposable", describe("AbstractDisposable", test("disposes child disposable when disposed", () => {
     const disposable = createDisposable();
     const child = createDisposable();
     addDisposable(disposable, child);
@@ -118,7 +117,7 @@ const createRunnableTests = (m) => describe("RunnableContainer", test("concat", 
     pipe([1, 2, 3], m.fromArray(), m.takeWhile(alwaysTrue), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3]));
     pipe(empty(m), m.takeWhile(alwaysTrue), m.toRunnable(), toArray(), expectArrayEquals([]));
 }), test("inclusive", defer(m.generate(increment, returns(0)), m.takeWhile((x) => x < 4, { inclusive: true }), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4])))), test("lift", defer(m.generate(increment, returns(0)), m.map((x) => x * 2), m.takeFirst({ count: 3 }), concatMap(m, (count) => pipe(m.generate(incrementBy(1), returns(0)), m.takeFirst({ count }))), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 1, 2, 3, 4, 1, 2, 3, 4, 5, 6]))), test("ignoreElements", defer([1, 2, 3], m.fromArray(), ignoreElements(m), endWith(m, 4), m.toRunnable(), toArray(), expectArrayEquals([4]))));
-const tests$8 = describe("runnable", describe("contains", test("source is empty", defer(empty({ fromArray: fromArray$1 }), contains(1), expectFalse)), test("source contains value", defer(generate$1(increment, returns(0)), contains(1), expectTrue)), test("source does not contain value", defer([2, 3, 4], fromArray$1(), contains(1), expectFalse))), describe("everySatisfy", test("source is empty", defer(empty({ fromArray: fromArray$1 }), everySatisfy(alwaysFalse), expectTrue)), test("source values pass predicate", defer([1, 2, 3], fromArray$1(), everySatisfy(alwaysTrue), expectTrue)), test("source values fail predicate", defer([1, 2, 3], fromArray$1(), everySatisfy(alwaysFalse), expectFalse))), describe("first", test("when enumerable is not empty", defer(returns(1), compute({ fromArray: fromArray$1, map }), first, expectEquals(1))), test("when enumerable is empty", defer(empty({ fromArray: fromArray$1 }), first, expectNone))), test("forEach", () => {
+const tests$7 = describe("runnable", describe("contains", test("source is empty", defer(empty({ fromArray: fromArray$1 }), contains(1), expectFalse)), test("source contains value", defer(generate$1(increment, returns(0)), contains(1), expectTrue)), test("source does not contain value", defer([2, 3, 4], fromArray$1(), contains(1), expectFalse))), describe("everySatisfy", test("source is empty", defer(empty({ fromArray: fromArray$1 }), everySatisfy(alwaysFalse), expectTrue)), test("source values pass predicate", defer([1, 2, 3], fromArray$1(), everySatisfy(alwaysTrue), expectTrue)), test("source values fail predicate", defer([1, 2, 3], fromArray$1(), everySatisfy(alwaysFalse), expectFalse))), describe("first", test("when enumerable is not empty", defer(returns(1), compute({ fromArray: fromArray$1, map }), first, expectEquals(1))), test("when enumerable is empty", defer(empty({ fromArray: fromArray$1 }), first, expectNone))), test("forEach", () => {
     const fn = mockFn();
     pipe([1, 2, 3], fromArray$1(), forEach(fn));
     pipe(fn, expectToHaveBeenCalledTimes(3));
@@ -143,7 +142,7 @@ const createZippableTests = (m) => describe("ZippableContainer", test("zip", def
     [1, 2, 3],
     [2, 3, 4],
 ], arrayEquality()))));
-const tests$7 = describe("enumerable", test("toIterable", defer([1, 2, 3], fromArray$2(), toIterable(), fromIterable$1(), toRunnable$2(), toArray(), expectArrayEquals([1, 2, 3]))), createRunnableTests({
+const tests$6 = describe("enumerable", test("toIterable", defer([1, 2, 3], fromArray$2(), toIterable(), fromIterable$1(), toRunnable$2(), toArray(), expectArrayEquals([1, 2, 3]))), createRunnableTests({
     ...fromArrayT$2,
     ...keepT$1,
     concat: concat$1,
@@ -160,52 +159,6 @@ const tests$7 = describe("enumerable", test("toIterable", defer([1, 2, 3], fromA
     toRunnable: toRunnable$2,
 }), createZippableTests({ ...fromArrayT$2, generate: generate$2, map: map$1, toRunnable: toRunnable$2, zip }));
 
-const tests$6 = describe("flowables", test("empty", () => {
-    const scheduler = createVirtualTimeScheduler();
-    const emptyStream = pipe(empty$1(), stream(scheduler));
-    emptyStream.dispatch("pause");
-    emptyStream.dispatch("resume");
-    const f = mockFn();
-    const subscription = pipe(emptyStream, subscribe(scheduler, f));
-    scheduler.run();
-    pipe(f, expectToHaveBeenCalledTimes(0));
-    expectTrue(subscription.isDisposed);
-    expectTrue(emptyStream.isDisposed);
-}), test("fromObservable", () => {
-    const scheduler = createVirtualTimeScheduler();
-    const generateStream = pipe(generate$3(increment, returns(-1), { delay: 1 }), fromObservable(), stream(scheduler));
-    generateStream.dispatch("resume");
-    pipe(scheduler, schedule(defer("pause", dispatchTo(generateStream)), {
-        delay: 2,
-    }));
-    pipe(scheduler, schedule(defer("resume", dispatchTo(generateStream)), {
-        delay: 4,
-    }));
-    pipe(scheduler, schedule(defer(generateStream, dispose()), { delay: 5 }));
-    const f = mockFn();
-    const subscription = pipe(generateStream, subscribe(scheduler, x => {
-        f(scheduler.now, x);
-    }));
-    scheduler.run();
-    pipe(f, expectToHaveBeenCalledTimes(3));
-    pipe(f.calls[0][1], expectEquals(0));
-    pipe(f.calls[1][1], expectEquals(1));
-    pipe(f.calls[2][1], expectEquals(2));
-    expectTrue(subscription.isDisposed);
-}), test("fromValue", () => {
-    const scheduler = createVirtualTimeScheduler();
-    const fromValueStream = pipe(1, fromValue$1(), stream(scheduler));
-    fromValueStream.dispatch("resume");
-    fromValueStream.dispatch("resume");
-    const f = mockFn();
-    const subscription = pipe(fromValueStream, subscribe(scheduler, f));
-    scheduler.run();
-    pipe(f, expectToHaveBeenCalledTimes(1));
-    pipe(f.calls[0][0], expectEquals(1));
-    expectTrue(subscription.isDisposed);
-    expectTrue(fromValueStream.isDisposed);
-}));
-
 const tests$5 = describe("io", test("decodeWithCharset", () => {
     const src = pipe([Uint8Array.from([226]), Uint8Array.from([130]), Uint8Array.from([172])], fromArray$3(), decodeWithCharset());
     const dest = createIOSinkAccumulator((acc, next) => acc + next, returns(""), { replay: 1 });
@@ -219,7 +172,7 @@ const tests$5 = describe("io", test("decodeWithCharset", () => {
     expectTrue(subscription.isDisposed);
 }), test("empty", () => {
     const scheduler = createVirtualTimeScheduler();
-    const emptyStream = pipe(none, empty$2, stream(scheduler));
+    const emptyStream = pipe(none, empty$1, stream(scheduler));
     emptyStream.dispatch("pause");
     emptyStream.dispatch("resume");
     const f = mockFn();
@@ -231,7 +184,7 @@ const tests$5 = describe("io", test("decodeWithCharset", () => {
     expectTrue(emptyStream.isDisposed);
 }), test("encodeUtf8", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
-    const src = pipe(str, fromValue$2(), encodeUtf8, decodeWithCharset());
+    const src = pipe(str, fromValue$1(), encodeUtf8, decodeWithCharset());
     const dest = createIOSinkAccumulator((acc, next) => acc + next, returns(""), { replay: 1 });
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(src, dest), subscribe(scheduler));
@@ -243,7 +196,7 @@ const tests$5 = describe("io", test("decodeWithCharset", () => {
     expectTrue(subscription.isDisposed);
 }), test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
-    const fromValueStream = pipe(1, fromValue$2(), stream(scheduler));
+    const fromValueStream = pipe(1, fromValue$1(), stream(scheduler));
     fromValueStream.dispatch("resume");
     const f = mockFn();
     const subscription = pipe(fromValueStream, subscribe(scheduler, f));
@@ -255,7 +208,7 @@ const tests$5 = describe("io", test("decodeWithCharset", () => {
     expectTrue(subscription.isDisposed);
     expectTrue(fromValueStream.isDisposed);
 }), test("map", () => {
-    const src = pipe(1, fromValue$2(), map$2(returns(2)));
+    const src = pipe(1, fromValue$1(), map$2(returns(2)));
     const dest = createIOSinkAccumulator(sum, returns(0), { replay: 1 });
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(src, dest), subscribe(scheduler));
@@ -505,7 +458,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(result, expectArrayEquals([0, 1, 3]));
 }), describe("empty", test("with no delay", () => {
     const scheduler = createVirtualTimeScheduler();
-    const emptyStream = pipe(empty$3(), stream(scheduler));
+    const emptyStream = pipe(empty$2(), stream(scheduler));
     emptyStream.dispatch(none);
     emptyStream.dispatch(none);
     let result = [];
@@ -518,7 +471,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     expectTrue(subscription.isDisposed);
 }), test("with delay", () => {
     const scheduler = createVirtualTimeScheduler();
-    const emptyStream = pipe(empty$3({ delay: 4 }), stream(scheduler));
+    const emptyStream = pipe(empty$2({ delay: 4 }), stream(scheduler));
     emptyStream.dispatch(none);
     emptyStream.dispatch(none);
     let result = [];
@@ -610,16 +563,59 @@ const tests$1 = describe("streamable", test("__stream", () => {
     scheduler.run();
     expectTrue(subscription.isDisposed);
     pipe(result, expectEquals(3));
-}));
+}), describe("flow", test("empty source", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const emptyStream = pipe([], fromArray$4(), flow(), stream(scheduler));
+    emptyStream.dispatch("pause");
+    emptyStream.dispatch("resume");
+    const f = mockFn();
+    const subscription = pipe(emptyStream, subscribe(scheduler, f));
+    scheduler.run();
+    pipe(f, expectToHaveBeenCalledTimes(0));
+    expectTrue(subscription.isDisposed);
+    expectTrue(emptyStream.isDisposed);
+}), test("generate source", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const generateStream = pipe(generate$3(increment, returns(-1), { delay: 1 }), flow({ scheduler }), stream(scheduler));
+    generateStream.dispatch("resume");
+    pipe(scheduler, schedule(defer("pause", dispatchTo(generateStream)), {
+        delay: 2,
+    }));
+    pipe(scheduler, schedule(defer("resume", dispatchTo(generateStream)), {
+        delay: 4,
+    }));
+    pipe(scheduler, schedule(defer(generateStream, dispose()), { delay: 5 }));
+    const f = mockFn();
+    const subscription = pipe(generateStream, subscribe(scheduler, x => {
+        f(scheduler.now, x);
+    }));
+    scheduler.run();
+    pipe(f, expectToHaveBeenCalledTimes(3));
+    pipe(f.calls[0][1], expectEquals(0));
+    pipe(f.calls[1][1], expectEquals(1));
+    pipe(f.calls[2][1], expectEquals(2));
+    expectTrue(subscription.isDisposed);
+}), test("fromValue", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const fromValueStream = pipe([1], fromArray$4(), flow(), stream(scheduler));
+    fromValueStream.dispatch("resume");
+    fromValueStream.dispatch("resume");
+    const f = mockFn();
+    const subscription = pipe(fromValueStream, subscribe(scheduler, f));
+    scheduler.run();
+    pipe(f, expectToHaveBeenCalledTimes(1));
+    pipe(f.calls[0][0], expectEquals(1));
+    expectTrue(subscription.isDisposed);
+    expectTrue(fromValueStream.isDisposed);
+})));
 
 const tests = [
-    tests$a,
     tests$9,
-    tests$7,
+    tests$8,
     tests$6,
     tests$5,
     tests$4,
-    tests$8,
+    tests$7,
     tests$3,
     tests$2,
     tests$1,

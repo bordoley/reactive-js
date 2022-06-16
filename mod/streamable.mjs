@@ -1,9 +1,10 @@
 /// <reference types="./streamable.d.ts" />
 import { pipe, compose, returns } from './functions.mjs';
-import { createSubject, publish, observe, using, map as map$1, subscribe, fromArrayT, __currentScheduler, __using, scan as scan$1, mergeWith, distinctUntilChanged, mapT, onNotify as onNotify$1, withLatestFrom as withLatestFrom$1, keepT, concatT } from './observable.mjs';
+import { createSubject, publish, observe, using, map as map$1, subscribe, fromArrayT, __currentScheduler, __using, scan as scan$1, mergeWith, distinctUntilChanged, mapT, onNotify as onNotify$1, withLatestFrom as withLatestFrom$1, subscribeOn, fromDisposable, takeUntil, keepT, concatT } from './observable.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables } from './disposable.mjs';
 import { isNone, none } from './option.mjs';
 import { empty as empty$1, fromValue, mapTo as mapTo$1, ignoreElements, endWith } from './container.mjs';
+import { toPausableScheduler } from './scheduler.mjs';
 
 class StreamImpl extends AbstractDisposable {
     constructor(op, scheduler, options) {
@@ -125,6 +126,27 @@ const onNotify = (onNotify) => lift(onNotify$1(onNotify));
 const scan = (scanner, initalValue) => lift(scan$1(scanner, initalValue));
 const withLatestFrom = (other, selector) => lift(withLatestFrom$1(other, selector));
 
+const flow = ({ scheduler, } = {}) => observable => {
+    const createScheduler = (modeObs) => (modeScheduler) => {
+        const pausableScheduler = toPausableScheduler(scheduler !== null && scheduler !== void 0 ? scheduler : modeScheduler);
+        const onModeChange = (mode) => {
+            switch (mode) {
+                case "pause":
+                    pausableScheduler.pause();
+                    break;
+                case "resume":
+                    pausableScheduler.resume();
+                    break;
+            }
+        };
+        const modeSubscription = pipe(modeObs, subscribe(modeScheduler, onModeChange));
+        bindDisposables(modeSubscription, pausableScheduler);
+        return pausableScheduler;
+    };
+    const op = (modeObs) => using(createScheduler(modeObs), pausableScheduler => pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil)));
+    return createStreamable(op);
+};
+
 const ignoreAndNotifyVoid = compose(ignoreElements(keepT), endWith({ ...fromArrayT, ...concatT }, none));
 const sink = (src, dest) => using(scheduler => {
     const srcStream = pipe(src, stream(scheduler));
@@ -136,4 +158,4 @@ const sink = (src, dest) => using(scheduler => {
     return destStream;
 }, ignoreAndNotifyVoid);
 
-export { __stream, createActionReducer, createStreamable, empty, identity, lift, map, mapReq, mapTo, onNotify, scan, sink, stream, withLatestFrom };
+export { __stream, createActionReducer, createStreamable, empty, flow, identity, lift, map, mapReq, mapTo, onNotify, scan, sink, stream, withLatestFrom };

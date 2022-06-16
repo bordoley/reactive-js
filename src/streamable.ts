@@ -15,6 +15,8 @@ export type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<
   StreamableLike<TReq, T>
 >;
 
+export type FlowMode = "resume" | "pause";
+
 export { createActionReducer } from "./streamable/createActionReducer";
 export {
   createStreamable,
@@ -32,4 +34,5 @@ export {
   scan,
   withLatestFrom,
 } from "./streamable/operators";
+export { flow } from "./streamable/flow";
 export { sink } from "./streamable/sink";

@@ -6,10 +6,12 @@
 
 ### Interfaces
 
+- [FlowableLike](../interfaces/streamable.FlowableLike.md)
 - [StreamableLike](../interfaces/streamable.StreamableLike.md)
 
 ### Type Aliases
 
+- [FlowMode](streamable.md#flowmode)
 - [StreamableOperator](streamable.md#streamableoperator)
 
 ### Functions
@@ -18,6 +20,7 @@
 - [createActionReducer](streamable.md#createactionreducer)
 - [createStreamable](streamable.md#createstreamable)
 - [empty](streamable.md#empty)
+- [flow](streamable.md#flow)
 - [identity](streamable.md#identity)
 - [lift](streamable.md#lift)
 - [map](streamable.md#map)
@@ -30,6 +33,12 @@
 - [withLatestFrom](streamable.md#withlatestfrom)
 
 ## Type Aliases
+
+### FlowMode
+
+Ƭ **FlowMode**: ``"resume"`` \| ``"pause"``
+
+___
 
 ### StreamableOperator
 
@@ -148,6 +157,29 @@ a disposed `StreamLike` instance.
 #### Returns
 
 [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`\>
+
+___
+
+### flow
+
+▸ **flow**<`T`\>(`__namedParameters?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters?` | `Object` |
+| `__namedParameters.scheduler?` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`T`\>\>
 
 ___
 

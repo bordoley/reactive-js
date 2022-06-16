@@ -17,11 +17,11 @@
 
   ↳ [`AsyncEnumerableLike`](asyncEnumerable.AsyncEnumerableLike.md)
 
-  ↳ [`FlowableLike`](flowable.FlowableLike.md)
-
   ↳ [`IOSinkLike`](io.IOSinkLike.md)
 
   ↳ [`StateStoreLike`](stateStore.StateStoreLike.md)
+
+  ↳ [`FlowableLike`](streamable.FlowableLike.md)
 
   ↳ [`WindowLocationStreamableLike`](web.WindowLocationStreamableLike.md)
 

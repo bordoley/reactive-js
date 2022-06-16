@@ -7,7 +7,6 @@ import {
   addTeardown,
   dispose,
 } from "../disposable";
-import { FlowMode } from "../flowable";
 import { Factory, compose, pipe } from "../functions";
 import { IOSourceLike, done, notify } from "../io";
 import {
@@ -19,7 +18,7 @@ import {
 } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
-import { createStreamable } from "../streamable";
+import { FlowMode, createStreamable } from "../streamable";
 import { createDisposableNodeStream } from "./nodeStream";
 
 const createReadableEventsObservable = (

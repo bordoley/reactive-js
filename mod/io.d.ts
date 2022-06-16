@@ -1,7 +1,6 @@
-import { FlowableLike, FlowMode } from "./flowable.mjs";
+import { FlowableLike, StreamableLike, FlowMode } from "./streamable.mjs";
 import { Function1, Reducer, Factory } from "./functions.mjs";
 import { ObservableLike, MulticastObservableLike } from "./observable.mjs";
-import { StreamableLike } from "./streamable.mjs";
 declare type IOEventType = "notify" | "done";
 declare type IOEvent<T> = {
     readonly type: "notify";

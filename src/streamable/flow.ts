@@ -1,34 +1,23 @@
-import { bindDisposables } from "./disposable";
-import { Function1, compose, pipe } from "./functions";
+import { bindDisposables } from "../disposable";
+import { Function1, pipe } from "../functions";
 import {
   ObservableLike,
-  fromArray as fromArrayObs,
   fromDisposable,
   subscribe,
   subscribeOn,
   takeUntil,
   using,
-} from "./observable";
-import { SchedulerLike, toPausableScheduler } from "./scheduler";
+} from "../observable";
+import { SchedulerLike, toPausableScheduler } from "../scheduler";
+import { FlowMode, StreamableLike } from "../streamable";
+import { createStreamable } from "./streamable";
 
-import { StreamableLike, createStreamable } from "./streamable";
-
-export type FlowMode = "resume" | "pause";
-
-/** @noInheritDoc */
-export interface FlowableLike<T> extends StreamableLike<FlowMode, T> {}
-
-export type FlowableOperator<TA, TB> = Function1<
-  FlowableLike<TA>,
-  FlowableLike<TB>
->;
-
-export const fromObservable =
+export const flow =
   <T>({
     scheduler,
   }: {
     scheduler?: SchedulerLike;
-  } = {}): Function1<ObservableLike<T>, FlowableLike<T>> =>
+  } = {}): Function1<ObservableLike<T>, StreamableLike<FlowMode, T>> =>
   observable => {
     const createScheduler =
       (modeObs: ObservableLike<FlowMode>) => (modeScheduler: SchedulerLike) => {
@@ -68,18 +57,3 @@ export const fromObservable =
 
     return createStreamable(op);
   };
-
-export const fromArray = <T>(options?: {
-  readonly delay?: number;
-  readonly startIndex?: number;
-  readonly endIndex?: number;
-}): Function1<readonly T[], FlowableLike<T>> =>
-  compose(fromArrayObs(options), fromObservable());
-
-export const fromValue =
-  <T>(options?: { readonly delay?: number }): Function1<T, FlowableLike<T>> =>
-  v =>
-    fromArray<T>(options)([v]);
-
-const _empty: FlowableLike<any> = fromArray()([]);
-export const empty = <T>(): FlowableLike<T> => _empty;

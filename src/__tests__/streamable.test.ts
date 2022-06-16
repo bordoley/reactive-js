@@ -1,14 +1,23 @@
 import { ignoreElements, startWith } from "../container";
 import { addTeardown, dispose } from "../disposable";
-import { incrementBy, pipe, returns, sum } from "../functions";
+import {
+  defer,
+  increment,
+  incrementBy,
+  pipe,
+  returns,
+  sum,
+} from "../functions";
 import {
   StreamLike,
   __memo,
   __observe,
   buffer,
   concatT,
+  dispatchTo,
   fromArray,
   fromArrayT,
+  generate,
   keepT,
   observable,
   onNotify as onNotifyObs,
@@ -18,11 +27,12 @@ import {
 } from "../observable";
 import { none } from "../option";
 import { toArray } from "../runnable";
-import { createVirtualTimeScheduler } from "../scheduler";
+import { createVirtualTimeScheduler, schedule } from "../scheduler";
 import {
   __stream,
   createActionReducer,
   empty,
+  flow,
   identity,
   lift,
   map,
@@ -39,6 +49,8 @@ import {
   expectEquals,
   expectFalse,
   expectTrue,
+  expectToHaveBeenCalledTimes,
+  mockFn,
   test,
 } from "../testing";
 
@@ -290,4 +302,83 @@ export const tests = describe(
     expectTrue(subscription.isDisposed);
     pipe(result, expectEquals(3));
   }),
+  describe(
+    "flow",
+    test("empty source", () => {
+      const scheduler = createVirtualTimeScheduler();
+      const emptyStream = pipe([], fromArray(), flow(), stream(scheduler));
+
+      emptyStream.dispatch("pause");
+      emptyStream.dispatch("resume");
+
+      const f = mockFn();
+      const subscription = pipe(emptyStream, subscribe(scheduler, f));
+      scheduler.run();
+
+      pipe(f, expectToHaveBeenCalledTimes(0));
+      expectTrue(subscription.isDisposed);
+      expectTrue(emptyStream.isDisposed);
+    }),
+
+    test("generate source", () => {
+      const scheduler = createVirtualTimeScheduler();
+      const generateStream = pipe(
+        generate(increment, returns(-1), { delay: 1 }),
+        flow({ scheduler }),
+        stream(scheduler),
+      );
+
+      generateStream.dispatch("resume");
+
+      pipe(
+        scheduler,
+        schedule(defer("pause", dispatchTo(generateStream)), {
+          delay: 2,
+        }),
+      );
+
+      pipe(
+        scheduler,
+        schedule(defer("resume", dispatchTo(generateStream)), {
+          delay: 4,
+        }),
+      );
+      pipe(scheduler, schedule(defer(generateStream, dispose()), { delay: 5 }));
+
+      const f = mockFn();
+      const subscription = pipe(
+        generateStream,
+        subscribe(scheduler, x => {
+          f(scheduler.now, x);
+        }),
+      );
+
+      scheduler.run();
+
+      pipe(f, expectToHaveBeenCalledTimes(3));
+      pipe(f.calls[0][1], expectEquals(0));
+      pipe(f.calls[1][1], expectEquals(1));
+      pipe(f.calls[2][1], expectEquals(2));
+
+      expectTrue(subscription.isDisposed);
+    }),
+
+    test("fromValue", () => {
+      const scheduler = createVirtualTimeScheduler();
+      const fromValueStream = pipe([1], fromArray(), flow(), stream(scheduler));
+
+      fromValueStream.dispatch("resume");
+      fromValueStream.dispatch("resume");
+
+      const f = mockFn();
+      const subscription = pipe(fromValueStream, subscribe(scheduler, f));
+
+      scheduler.run();
+
+      pipe(f, expectToHaveBeenCalledTimes(1));
+      pipe(f.calls[0][0], expectEquals(1));
+      expectTrue(subscription.isDisposed);
+      expectTrue(fromValueStream.isDisposed);
+    }),
+  ),
 );
