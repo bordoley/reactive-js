@@ -5,11 +5,9 @@ import {
   ObservableOperator,
   ObserverLike,
 } from "../observable";
+import { notifyMap } from "../sink";
 import { lift } from "./lift";
-import {
-  AbstractAutoDisposingDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractAutoDisposingDelegatingObserver } from "./observer";
 
 class MapObserver<TA, TB> extends AbstractAutoDisposingDelegatingObserver<
   TA,
@@ -19,11 +17,7 @@ class MapObserver<TA, TB> extends AbstractAutoDisposingDelegatingObserver<
     super(delegate);
   }
 
-  notify(next: TA) {
-    assertObserverState(this);
-    const mapped = this.mapper(next);
-    this.delegate.notify(mapped);
-  }
+  notify = notifyMap;
 }
 
 /**

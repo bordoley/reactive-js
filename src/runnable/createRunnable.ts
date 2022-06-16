@@ -1,6 +1,7 @@
 import { SideEffect1 } from "../functions";
 import { isSome } from "../option";
-import { RunnableLike, SinkLike } from "../runnable";
+import { RunnableLike } from "../runnable";
+import { SinkLike } from "../sink";
 
 class RunnableImpl<T> implements RunnableLike<T> {
   constructor(private readonly _run: SideEffect1<SinkLike<T>>) {}

@@ -1,27 +1,17 @@
 import { ObservableOperator, ObserverLike } from "../observable";
-import { Option, none } from "../option";
+import { Option } from "../option";
+import { notifyPairwise } from "../sink";
 import { lift } from "./lift";
-import {
-  AbstractAutoDisposingDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractAutoDisposingDelegatingObserver } from "./observer";
 
 class PairwiseObserver<T> extends AbstractAutoDisposingDelegatingObserver<
   T,
   [Option<T>, T]
 > {
-  private prev: Option<T>;
-  private hasPrev = false;
+  prev: Option<T>;
+  hasPrev = false;
 
-  notify(value: T): void {
-    assertObserverState(this);
-    const prev = this.hasPrev ? this.prev : none;
-
-    this.hasPrev = true;
-    this.prev = value;
-
-    this.delegate.notify([prev, value]);
-  }
+  notify = notifyPairwise;
 }
 
 export const pairwise = <T>(): ObservableOperator<T, [Option<T>, T]> => {

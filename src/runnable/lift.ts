@@ -1,10 +1,6 @@
 import { pipe } from "../functions";
-import {
-  RunnableLike,
-  RunnableOperator,
-  SinkLike,
-  SinkOperator,
-} from "../runnable";
+import { RunnableLike, RunnableOperator } from "../runnable";
+import { SinkLike, SinkOperator } from "../sink";
 
 class LiftedRunnable<T> implements RunnableLike<T> {
   readonly type = this;

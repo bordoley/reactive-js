@@ -2,6 +2,7 @@ import { Concat, FromArray, FromIterator, Keep, Map, ConcatAll, Zip, ContainerLi
 import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Equality, Predicate, Reducer } from "./functions.mjs";
 import { SchedulerLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
+import { SinkLike } from "./sink.mjs";
 import { Option } from "./option.mjs";
 import { EnumerableLike } from "./enumerable.mjs";
 import { RunnableLike } from "./runnable.mjs";
@@ -379,7 +380,7 @@ declare function retry<T>(predicate: Function2<number, unknown, boolean>): Obser
  * @param scanner The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.
  */
-declare const scan: <T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
+declare const scan: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
 /**
  * Returns the `ObservableLike` that applies an asynchronous accumulator function
  * over the source, and emits each intermediate result.
@@ -647,16 +648,7 @@ declare const toPromise: <T>(scheduler: SchedulerLike) => Function1<ObservableLi
  *
  * @noInheritDoc
  */
-interface ObserverLike<T> extends DisposableLike, SchedulerLike {
-    /**
-     * Notifies the the observer of the next notification produced by the observable source.
-     *
-     * Note: The `notify` method must be called from within a `SchedulerContinuationLike`
-     * scheduled using the observer's `schedule` method.
-     *
-     * @param next The next notification value.
-     */
-    notify(this: ObserverLike<T>, next: T): void;
+interface ObserverLike<T> extends SinkLike<T>, SchedulerLike {
 }
 /**
  * A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.

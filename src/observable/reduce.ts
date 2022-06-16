@@ -4,12 +4,9 @@ import { ObservableOperator, ObserverLike } from "../observable";
 import { Option, isSome } from "../option";
 import { fromValue } from "../container";
 import { lift } from "./lift";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-  observe,
-} from "./observer";
+import { AbstractDelegatingObserver, observe } from "./observer";
 import { fromArrayT } from "./fromArray";
+import { notifyReduce } from "../sink";
 
 function onDispose(
   this: ReduceObserver<unknown, unknown>,
@@ -32,11 +29,7 @@ class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
     addTeardown(this, onDispose);
   }
 
-  notify(next: T) {
-    assertObserverState(this);
-
-    this.acc = this.reducer(this.acc, next);
-  }
+  notify = notifyReduce;
 }
 
 export const reduce = <T, TAcc>(

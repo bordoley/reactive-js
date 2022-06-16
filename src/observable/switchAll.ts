@@ -15,7 +15,7 @@ import {
 } from "../observable";
 import { Option, isSome } from "../option";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
+import { AbstractDelegatingObserver } from "./observer";
 import { subscribe } from "./subscribe";
 
 function onDispose(this: SwitchObserver<unknown>, error: Option<Error>) {
@@ -40,7 +40,7 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
   }
 
   notify(next: ObservableLike<T>) {
-    assertObserverState(this);
+    this.assertState();
 
     pipe(this.inner, dispose());
 

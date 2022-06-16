@@ -11,10 +11,7 @@ import {
 } from "../observable";
 import { Option } from "../option";
 import { lift } from "./lift";
-import {
-  AbstractAutoDisposingDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractAutoDisposingDelegatingObserver } from "./observer";
 import { subscribe } from "./subscribe";
 
 function onNotify<TA, TB, T>(
@@ -53,7 +50,7 @@ class WithLatestFromObserver<
   }
 
   notify(next: TA) {
-    assertObserverState(this);
+    this.assertState(this);
 
     if (!this.isDisposed && this.hasLatest) {
       const result = this.selector(next, this.otherLatest as TB);

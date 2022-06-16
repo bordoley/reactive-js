@@ -12,10 +12,7 @@ import {
 } from "../observable";
 import { concat } from "./concat";
 import { lift } from "./lift";
-import {
-  AbstractAutoDisposingDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractAutoDisposingDelegatingObserver } from "./observer";
 import { subscribe } from "./subscribe";
 import { throws } from "../container";
 import { mapT } from "./map";
@@ -47,7 +44,7 @@ class TimeoutObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T> {
   }
 
   notify(next: T) {
-    assertObserverState(this);
+    this.assertState();
 
     pipe(this.durationSubscription, dispose());
     this.delegate.notify(next);

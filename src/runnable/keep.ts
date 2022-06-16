@@ -1,20 +1,16 @@
 import { Keep } from "../container";
 import { Predicate } from "../functions";
-import { RunnableLike, RunnableOperator, SinkLike } from "../runnable";
+import { RunnableLike, RunnableOperator } from "../runnable";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingSink, assertSinkState } from "./sink";
+import { AbstractAutoDisposingDelegatingSink } from "./sink";
+import { notifyKeep, SinkLike } from "../sink";
 
 class KeepSink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
   constructor(delegate: SinkLike<T>, readonly predicate: Predicate<T>) {
     super(delegate);
   }
 
-  notify(next: T) {
-    assertSinkState(this);
-    if (this.predicate(next)) {
-      this.delegate.notify(next);
-    }
-  }
+  notify = notifyKeep;
 }
 
 export const keep = <T>(predicate: Predicate<T>): RunnableOperator<T, T> => {

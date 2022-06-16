@@ -4,11 +4,7 @@ import { ObservableLike, ObserverLike } from "../observable";
 import { Option, isSome, none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
 import { defer, deferSynchronous } from "./observable";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-  observe,
-} from "./observer";
+import { AbstractDelegatingObserver, observe } from "./observer";
 
 type LatestCtx = {
   completedCount: number;
@@ -47,7 +43,7 @@ class LatestObserver extends AbstractDelegatingObserver<
   }
 
   notify(next: unknown) {
-    assertObserverState(this);
+    this.assertState();
 
     const ctx = this.ctx;
     this.latest = next;

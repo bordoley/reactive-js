@@ -16,11 +16,7 @@ import { Option, isSome, none } from "../option";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { never } from "./never";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-  observe,
-} from "./observer";
+import { AbstractDelegatingObserver, observe } from "./observer";
 import { subscribe } from "./subscribe";
 import { fromValue } from "../container";
 
@@ -60,7 +56,7 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
   }
 
   notify(next: T) {
-    assertObserverState(this);
+    this.assertState();
 
     const buffer = this.buffer;
 

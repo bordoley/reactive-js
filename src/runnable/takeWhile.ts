@@ -1,29 +1,19 @@
-import { dispose } from "../disposable";
-import { pipe, Predicate } from "../functions";
-import { RunnableOperator, SinkLike } from "../runnable";
+import { Predicate } from "../functions";
+import { RunnableOperator } from "../runnable";
 import { lift } from "./lift";
 import { AbstractAutoDisposingDelegatingSink } from "./sink";
+import { notifyTakeWhile, SinkLike } from "../sink";
 
 class TakeWhileSink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
   constructor(
     delegate: SinkLike<T>,
-    private readonly predicate: Predicate<T>,
-    private readonly inclusive: boolean,
+    readonly predicate: Predicate<T>,
+    readonly inclusive: boolean,
   ) {
     super(delegate);
   }
 
-  notify(next: T) {
-    const satisfiesPredicate = this.predicate(next);
-
-    if (satisfiesPredicate || this.inclusive) {
-      this.delegate.notify(next);
-    }
-
-    if (!satisfiesPredicate) {
-      pipe(this, dispose());
-    }
-  }
+  notify = notifyTakeWhile;
 }
 
 export const takeWhile = <T>(

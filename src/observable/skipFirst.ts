@@ -1,10 +1,7 @@
 import { pipe } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
 import { lift } from "./lift";
-import {
-  AbstractAutoDisposingDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractAutoDisposingDelegatingObserver } from "./observer";
 
 class SkipFirstObserver<T> extends AbstractAutoDisposingDelegatingObserver<
   T,
@@ -17,7 +14,7 @@ class SkipFirstObserver<T> extends AbstractAutoDisposingDelegatingObserver<
   }
 
   notify(next: T) {
-    assertObserverState(this);
+    this.assertState();
     this.count++;
     if (this.count > this.skipCount) {
       this.delegate.notify(next);

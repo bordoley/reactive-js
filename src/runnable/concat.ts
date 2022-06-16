@@ -1,5 +1,6 @@
 import { addDisposableDisposeParentOnChildError } from "../disposable";
-import { RunnableLike, RunnableOperator, SinkLike } from "../runnable";
+import { RunnableLike, RunnableOperator } from "../runnable";
+import { SinkLike } from "../sink";
 import { createRunnable } from "./createRunnable";
 import { lift } from "./lift";
 import { AbstractDelegatingSink, createDelegatingSink } from "./sink";

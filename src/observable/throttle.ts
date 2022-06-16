@@ -16,11 +16,7 @@ import {
 import { Option, isNone, none } from "../option";
 import { fromValue } from "../container";
 import { lift } from "./lift";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-  observe,
-} from "./observer";
+import { AbstractDelegatingObserver, observe } from "./observer";
 import { fromArrayT } from "../observable";
 
 import { subscribe } from "./subscribe";
@@ -71,7 +67,7 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
   }
 
   notify(next: T) {
-    assertObserverState(this);
+    this.assertState();
 
     this.value = next;
     this.hasValue = true;

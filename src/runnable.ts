@@ -1,12 +1,6 @@
 import { ContainerLike, Container, ContainerOf } from "./container";
-import { DisposableLike } from "./disposable";
+import { SinkLike } from "./sink";
 import { Function1, identity } from "./functions";
-
-export interface SinkLike<T> extends DisposableLike {
-  notify(this: SinkLike<T>, next: T): void;
-}
-
-export type SinkOperator<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
 
 export interface RunnableLike<T> extends ContainerLike {
   readonly T: unknown;
@@ -36,6 +30,8 @@ export { lift } from "./runnable/lift";
 export { keep, keepT } from "./runnable/keep";
 export { last } from "./runnable/last";
 export { map } from "./runnable/map";
+export { onNotify } from "./runnable/onNotify";
+export { pairwise } from "./runnable/pairwise";
 export { reduce } from "./runnable/reduce";
 export { repeat } from "./runnable/repeat";
 export { scan } from "./runnable/scan";

@@ -11,7 +11,7 @@ import {
 } from "../observable";
 import { Option } from "../option";
 import { lift } from "./lift";
-import { AbstractObserver, assertObserverState } from "./observer";
+import { AbstractSchedulerDelegatingObserver } from "./observer";
 import { subscribe } from "./subscribe";
 
 const notifyDelegate = <TA, TB, TC>(
@@ -38,10 +38,11 @@ function onNotify<TA, TB, T>(
   }
 }
 
-class ZipWithLatestFromObserver<TA, TB, T> extends AbstractObserver<
+class ZipWithLatestFromObserver<
   TA,
-  ObserverLike<T>
-> {
+  TB,
+  T,
+> extends AbstractSchedulerDelegatingObserver<TA, ObserverLike<T>> {
   otherLatest: Option<TB>;
   hasLatest = false;
 
@@ -71,7 +72,7 @@ class ZipWithLatestFromObserver<TA, TB, T> extends AbstractObserver<
   }
 
   notify(next: TA) {
-    assertObserverState(this);
+    this.assertState();
     this.queue.push(next);
 
     notifyDelegate(this);

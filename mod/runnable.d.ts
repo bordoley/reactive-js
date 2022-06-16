@@ -1,7 +1,8 @@
 import { FromArray, FromArrayOptions, Keep, ContainerLike, Container, ContainerOf } from "./container.mjs";
-import { AbstractDisposable, DisposableLike } from "./disposable.mjs";
+import { SinkLike, SinkOperator } from "./sink.mjs";
 import { SideEffect1, Equality, Predicate, Function1, Updater, Factory, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
+import { AbstractDisposable } from "./disposable.mjs";
 /**
  * Creates an `RunnableLike` which emits all values from each source sequentially.
  */
@@ -26,6 +27,16 @@ declare const keep: <T>(predicate: Predicate<T>) => RunnableOperator<T, T>;
 declare const keepT: Keep<RunnableLike<unknown>>;
 declare const last: <T>(runnable: RunnableLike<T>) => Option<T>;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => RunnableOperator<TA, TB>;
+/**
+ * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
+ *
+ * @param onNotify The function that is invoked when the observable source produces values.
+ */
+declare function onNotify<T>(onNotify: SideEffect1<T>): RunnableOperator<T, T>;
+declare const pairwise: <T>() => RunnableOperator<T, [
+    Option<T>,
+    T
+]>;
 declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => Function1<RunnableLike<T>, TAcc>;
 /**
  * Returns an RunnableLike that applies the predicate function each time the source
@@ -43,7 +54,7 @@ declare function repeat<T>(count: number): RunnableOperator<T, T>;
  * Returns an RunnableLike that continually repeats the source.
  */
 declare function repeat<T>(): RunnableOperator<T, T>;
-declare const scan: <T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => RunnableOperator<T, TAcc>;
+declare const scan: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => RunnableOperator<T, TAcc>;
 declare const skipFirst: <T>(options?: {
     readonly count?: number;
 }) => RunnableOperator<T, T>;
@@ -52,6 +63,7 @@ declare const contains: <T>(value: T, options?: {
     readonly equality?: Equality<T> | undefined;
 }) => Predicate<RunnableLike<T>>;
 declare abstract class AbstractSink<T> extends AbstractDisposable implements SinkLike<T> {
+    assertState: (..._args: unknown[]) => void;
     abstract notify(next: T): void;
 }
 declare abstract class AbstractDelegatingSink<TA, TB> extends AbstractSink<TA> {
@@ -72,10 +84,6 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
  *
  */
 declare const toArray: <T>() => Function1<RunnableLike<T>, readonly T[]>;
-interface SinkLike<T> extends DisposableLike {
-    notify(this: SinkLike<T>, next: T): void;
-}
-declare type SinkOperator<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
 interface RunnableLike<T> extends ContainerLike {
     readonly T: unknown;
     readonly type: RunnableLike<this["T"]>;
@@ -87,4 +95,4 @@ interface ToRunnable<C extends ContainerLike> extends Container<C> {
 }
 declare const toRunnable: <T>() => Function1<RunnableLike<T>, RunnableLike<T>>;
 declare const type: RunnableLike<unknown>;
-export { AbstractDelegatingSink, RunnableLike, RunnableOperator, SinkLike, SinkOperator, ToRunnable, concat, concatAll, contains, createRunnable, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, lift, map, noneSatisfy, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type };
+export { AbstractDelegatingSink, RunnableLike, RunnableOperator, ToRunnable, concat, concatAll, contains, createRunnable, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, lift, map, noneSatisfy, onNotify, pairwise, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type };

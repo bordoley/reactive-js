@@ -3,7 +3,7 @@ import { Factory } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
 import { Option, isNone, none } from "../option";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
+import { AbstractDelegatingObserver } from "./observer";
 
 function onDispose(this: ThrowIfEmptyObserver<unknown>, error: Option<Error>) {
   if (isNone(error) && this.isEmpty) {
@@ -29,7 +29,7 @@ class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
   }
 
   notify(next: T) {
-    assertObserverState(this);
+    this.assertState();
 
     this.isEmpty = false;
     this.delegate.notify(next);
