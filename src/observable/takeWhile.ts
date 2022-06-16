@@ -1,11 +1,8 @@
-import { dispose } from "../disposable";
-import { Predicate, pipe } from "../functions";
+import { Predicate } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
+import { notifyTakeWhile } from "../sink";
 import { lift } from "./lift";
-import {
-  AbstractAutoDisposingDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractAutoDisposingDelegatingObserver } from "./observer";
 
 class TakeWhileObserver<T> extends AbstractAutoDisposingDelegatingObserver<
   T,
@@ -13,25 +10,13 @@ class TakeWhileObserver<T> extends AbstractAutoDisposingDelegatingObserver<
 > {
   constructor(
     delegate: ObserverLike<T>,
-    private readonly predicate: Predicate<T>,
-    private readonly inclusive: boolean,
+    readonly predicate: Predicate<T>,
+    readonly inclusive: boolean,
   ) {
     super(delegate);
   }
 
-  notify(next: T) {
-    assertObserverState(this);
-
-    const satisfiesPredicate = this.predicate(next);
-
-    if (satisfiesPredicate || this.inclusive) {
-      this.delegate.notify(next);
-    }
-
-    if (!satisfiesPredicate) {
-      pipe(this, dispose());
-    }
-  }
+  notify = notifyTakeWhile;
 }
 
 /**

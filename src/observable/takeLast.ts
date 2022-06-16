@@ -5,11 +5,7 @@ import { Option, isSome } from "../option";
 import { empty } from "../container";
 import { fromArray, fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-  observe,
-} from "./observer";
+import { AbstractDelegatingObserver, observe } from "./observer";
 
 function onDispose(this: TakeLastObserver<unknown>, error: Option<Error>) {
   if (isSome(error)) {
@@ -29,7 +25,7 @@ class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
   }
 
   notify(next: T) {
-    assertObserverState(this);
+    this.assertState();
     const last = this.last;
 
     last.push(next);

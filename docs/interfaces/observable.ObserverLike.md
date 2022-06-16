@@ -17,36 +17,8 @@ to receive notifications.
 
 ## Hierarchy
 
-- [`DisposableLike`](disposable.DisposableLike.md)
+- [`SinkLike`](sink.SinkLike.md)<`T`\>
 
 - [`SchedulerLike`](scheduler.SchedulerLike.md)
 
   ↳ **`ObserverLike`**
-
-## Table of contents
-
-### Methods
-
-- [notify](observable.ObserverLike.md#notify)
-
-## Methods
-
-### notify
-
-▸ **notify**(`this`, `next`): `void`
-
-Notifies the the observer of the next notification produced by the observable source.
-
-Note: The `notify` method must be called from within a `SchedulerContinuationLike`
-scheduled using the observer's `schedule` method.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `this` | [`ObserverLike`](observable.ObserverLike.md)<`T`\> | - |
-| `next` | `T` | The next notification value. |
-
-#### Returns
-
-`void`

@@ -1,15 +1,14 @@
 import { Factory, Function1, Reducer } from "../functions";
 import { RunnableLike } from "../runnable";
+import { notifyReduce } from "../sink";
 import { AbstractSink } from "./sink";
 
 class ReducerSink<T, TAcc> extends AbstractSink<T> {
-  constructor(public acc: TAcc, private readonly reducer: Reducer<T, TAcc>) {
+  constructor(public acc: TAcc, readonly reducer: Reducer<T, TAcc>) {
     super();
   }
 
-  notify(next: T) {
-    this.acc = this.reducer(this.acc, next);
-  }
+  notify = notifyReduce;
 }
 
 export const reduce =

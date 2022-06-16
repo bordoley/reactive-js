@@ -14,7 +14,7 @@ import {
 } from "../observable";
 import { Option, isSome } from "../option";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, assertObserverState } from "./observer";
+import { AbstractDelegatingObserver } from "./observer";
 import { subscribe } from "./subscribe";
 
 const subscribeNext = <T>(observer: MergeObserver<T>) => {
@@ -78,7 +78,7 @@ class MergeObserver<T> extends AbstractDelegatingObserver<
   }
 
   notify(next: ObservableLike<T>) {
-    assertObserverState(this);
+    this.assertState();
 
     const queue = this.queue;
 

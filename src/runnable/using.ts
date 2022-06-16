@@ -10,8 +10,9 @@ import {
   Function4,
   Function5,
 } from "../functions";
-import { RunnableLike, SinkLike } from "../runnable";
+import { RunnableLike } from "../runnable";
 import { createRunnable } from "./createRunnable";
+import { SinkLike } from "../sink";
 
 export function using<TResource extends DisposableLike, T>(
   resourceFactory: Factory<TResource>,

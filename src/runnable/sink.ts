@@ -4,26 +4,24 @@ import {
   bindDisposables,
 } from "../disposable";
 import { __DEV__ } from "../env";
-import { ignore, raise, SideEffect1 } from "../functions";
-import { SinkLike } from "../runnable";
+import { ignore, raise } from "../functions";
+import { SinkLike } from "../sink";
 
-const assertSinkStateProduction = ignore;
-const assertSinkStateDev = <T>(observer: SinkLike<T>) => {
-  if (observer.isDisposed) {
+const assertStateProduction = ignore;
+const assertStateDev = function <T>(this: SinkLike<T>) {
+  if (this.isDisposed) {
     raise("Sink is disposed");
   }
 };
 
-const _assertSinkState = __DEV__
-  ? assertSinkStateDev
-  : assertSinkStateProduction;
-
-export const assertSinkState: SideEffect1<SinkLike<unknown>> = _assertSinkState;
+const assertState = __DEV__ ? assertStateDev : assertStateProduction;
 
 export abstract class AbstractSink<T>
   extends AbstractDisposable
   implements SinkLike<T>
 {
+  assertState = assertState;
+
   abstract notify(next: T): void;
 }
 

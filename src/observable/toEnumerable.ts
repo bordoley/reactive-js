@@ -1,20 +1,22 @@
-import { AbstractDisposable, addDisposable, dispose } from "../disposable";
+import { addDisposable, dispose } from "../disposable";
 import { EnumerableLike, EnumeratorLike } from "../enumerable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { isNone, isSome, none } from "../option";
 import { SchedulerContinuationLike, run } from "../scheduler";
-import { assertObserverState, observe } from "./observer";
+import { AbstractObserver, observe } from "./observer";
 
 class EnumeratorObserver<T>
-  extends AbstractDisposable
+  extends AbstractObserver<T>
   implements EnumeratorLike<T>, ObserverLike<T>
 {
   private continuations: SchedulerContinuationLike[] = [];
   current: any;
   hasCurrent = false;
   inContinuation = false;
-  readonly now = 0;
+  get now() {
+    return 0;
+  }
 
   get shouldYield() {
     return this.inContinuation;
@@ -46,7 +48,7 @@ class EnumeratorObserver<T>
   }
 
   notify(next: T) {
-    assertObserverState(this);
+    this.assertState();
 
     this.current = next;
     this.hasCurrent = true;

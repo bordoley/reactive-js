@@ -20,15 +20,13 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`MulticastObservableLike`](observable.MulticastObservableLike.md)
 
-  ↳ [`ObserverLike`](observable.ObserverLike.md)
-
-  ↳ [`SinkLike`](runnable.SinkLike.md)
-
   ↳ [`PrioritySchedulerLike`](scheduler.PrioritySchedulerLike.md)
 
   ↳ [`SchedulerContinuationLike`](scheduler.SchedulerContinuationLike.md)
 
   ↳ [`SchedulerLike`](scheduler.SchedulerLike.md)
+
+  ↳ [`SinkLike`](sink.SinkLike.md)
 
 ## Implemented by
 

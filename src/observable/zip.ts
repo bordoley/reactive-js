@@ -6,11 +6,7 @@ import { ObservableLike, ObserverLike } from "../observable";
 import { Option, isSome, none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
 import { fromEnumerator } from "./fromEnumerable";
-import {
-  AbstractDelegatingObserver,
-  assertObserverState,
-  observe,
-} from "./observer";
+import { AbstractDelegatingObserver, observe } from "./observer";
 import { enumerate } from "./toEnumerable";
 
 import { using } from "./using";
@@ -76,7 +72,7 @@ class ZipObserver
   }
 
   notify(next: unknown) {
-    assertObserverState(this);
+    this.assertState(this);
 
     const enumerators = this.enumerators;
 

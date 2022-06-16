@@ -5,23 +5,16 @@ import {
   ObservableOperator,
   ObserverLike,
 } from "../observable";
+import { notifyKeep } from "../sink";
 import { lift } from "./lift";
-import {
-  AbstractAutoDisposingDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractAutoDisposingDelegatingObserver } from "./observer";
 
 class KeepObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T> {
   constructor(delegate: ObserverLike<T>, readonly predicate: Predicate<T>) {
     super(delegate);
   }
 
-  notify(next: T) {
-    assertObserverState(this);
-    if (this.predicate(next)) {
-      this.delegate.notify(next);
-    }
-  }
+  notify = notifyKeep;
 }
 
 /**

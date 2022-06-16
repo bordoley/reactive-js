@@ -3,9 +3,12 @@ import { Function1, SideEffect1, ignore, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { none } from "../option";
 import { SchedulerLike } from "../scheduler";
-import { AbstractObserver, assertObserverState, observe } from "./observer";
+import { AbstractSchedulerDelegatingObserver, observe } from "./observer";
 
-class DefaultObserver<T> extends AbstractObserver<T, SchedulerLike> {
+class DefaultObserver<T> extends AbstractSchedulerDelegatingObserver<
+  T,
+  SchedulerLike
+> {
   constructor(
     scheduler: SchedulerLike,
     private readonly onNotify: SideEffect1<T>,
@@ -16,7 +19,7 @@ class DefaultObserver<T> extends AbstractObserver<T, SchedulerLike> {
   }
 
   notify(next: T) {
-    assertObserverState(this);
+    this.assertState();
 
     this.onNotify.call(this.onNotifyThis, next);
   }

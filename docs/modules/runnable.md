@@ -11,13 +11,11 @@
 ### Interfaces
 
 - [RunnableLike](../interfaces/runnable.RunnableLike.md)
-- [SinkLike](../interfaces/runnable.SinkLike.md)
 - [ToRunnable](../interfaces/runnable.ToRunnable.md)
 
 ### Type Aliases
 
 - [RunnableOperator](runnable.md#runnableoperator)
-- [SinkOperator](runnable.md#sinkoperator)
 
 ### Variables
 
@@ -42,6 +40,8 @@
 - [lift](runnable.md#lift)
 - [map](runnable.md#map)
 - [noneSatisfy](runnable.md#nonesatisfy)
+- [onNotify](runnable.md#onnotify)
+- [pairwise](runnable.md#pairwise)
 - [reduce](runnable.md#reduce)
 - [repeat](runnable.md#repeat)
 - [scan](runnable.md#scan)
@@ -58,19 +58,6 @@
 ### RunnableOperator
 
 Ƭ **RunnableOperator**<`TA`, `TB`\>: [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`TA`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`TB`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-___
-
-### SinkOperator
-
-Ƭ **SinkOperator**<`TA`, `TB`\>: [`Function1`](functions.md#function1)<[`SinkLike`](../interfaces/runnable.SinkLike.md)<`TB`\>, [`SinkLike`](../interfaces/runnable.SinkLike.md)<`TA`\>\>
 
 #### Type parameters
 
@@ -179,7 +166,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `run` | [`SideEffect1`](functions.md#sideeffect1)<[`SinkLike`](../interfaces/runnable.SinkLike.md)<`T`\>\> |
+| `run` | [`SideEffect1`](functions.md#sideeffect1)<[`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\>\> |
 
 #### Returns
 
@@ -382,7 +369,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `operator` | [`SinkOperator`](runnable.md#sinkoperator)<`TA`, `TB`\> |
+| `operator` | [`SinkOperator`](sink.md#sinkoperator)<`TA`, `TB`\> |
 
 #### Returns
 
@@ -432,6 +419,46 @@ ___
 #### Returns
 
 [`Predicate`](functions.md#predicate)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
+
+___
+
+### onNotify
+
+▸ **onNotify**<`T`\>(`onNotify`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+
+Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `onNotify` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> | The function that is invoked when the observable source produces values. |
+
+#### Returns
+
+[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+
+___
+
+### pairwise
+
+▸ **pairwise**<`T`\>(): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, [[`Option`](option.md#option)<`T`\>, `T`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`RunnableOperator`](runnable.md#runnableoperator)<`T`, [[`Option`](option.md#option)<`T`\>, `T`]\>
 
 ___
 
@@ -520,7 +547,7 @@ ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `TAcc`\>
 
 #### Type parameters
 
@@ -533,7 +560,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns

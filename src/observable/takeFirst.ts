@@ -1,33 +1,22 @@
-import { dispose } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
 import { empty } from "../container";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import {
-  AbstractAutoDisposingDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractAutoDisposingDelegatingObserver } from "./observer";
+import { notifyTakeFirst } from "../sink";
 
 class TakeFirstObserver<T> extends AbstractAutoDisposingDelegatingObserver<
   T,
   T
 > {
-  private count = 0;
+  count = 0;
 
-  constructor(delegate: ObserverLike<T>, private readonly maxCount: number) {
+  constructor(delegate: ObserverLike<T>, readonly maxCount: number) {
     super(delegate);
   }
 
-  notify(next: T) {
-    assertObserverState(this);
-
-    this.count++;
-    this.delegate.notify(next);
-    if (this.count >= this.maxCount) {
-      pipe(this, dispose());
-    }
-  }
+  notify = notifyTakeFirst;
 }
 
 /**

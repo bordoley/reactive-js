@@ -1,11 +1,12 @@
 import { pipe } from "../functions";
-import { RunnableOperator, SinkLike } from "../runnable";
+import { RunnableOperator } from "../runnable";
 import { empty } from "../container";
 import { Option, isSome } from "../option";
 import { fromArray, fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import { AbstractDelegatingSink, assertSinkState } from "./sink";
+import { AbstractDelegatingSink } from "./sink";
 import { addTeardown, dispose, Error } from "../disposable";
+import { SinkLike } from "../sink";
 
 function onDispose(this: TakeLastSink<unknown>, error: Option<Error>) {
   if (isSome(error)) {
@@ -25,7 +26,8 @@ class TakeLastSink<T> extends AbstractDelegatingSink<T, T> {
   }
 
   notify(next: T) {
-    assertSinkState(this);
+    this.assertState(this);
+
     const last = this.last;
 
     last.push(next);

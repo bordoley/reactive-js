@@ -25,6 +25,7 @@
 
 ### Properties
 
+- [assertState](runnable.AbstractDelegatingSink.md#assertstate)
 - [delegate](runnable.AbstractDelegatingSink.md#delegate)
 
 ### Methods
@@ -48,7 +49,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `delegate` | [`SinkLike`](../interfaces/runnable.SinkLike.md)<`TB`\> |
+| `delegate` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`TB`\> |
 
 #### Overrides
 
@@ -56,9 +57,33 @@ AbstractSink&lt;TA\&gt;.constructor
 
 ## Properties
 
+### assertState
+
+• **assertState**: (...`_args`: `unknown`[]) => `void`
+
+#### Type declaration
+
+▸ (...`_args`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `..._args` | `unknown`[] |
+
+##### Returns
+
+`void`
+
+#### Inherited from
+
+AbstractSink.assertState
+
+___
+
 ### delegate
 
-• `Readonly` **delegate**: [`SinkLike`](../interfaces/runnable.SinkLike.md)<`TB`\>
+• `Readonly` **delegate**: [`SinkLike`](../interfaces/sink.SinkLike.md)<`TB`\>
 
 ## Methods
 

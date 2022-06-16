@@ -1,11 +1,9 @@
 import { Equality, strictEquality } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
 import { Option } from "../option";
+import { notifyDistinctUntilChanged } from "../sink";
 import { lift } from "./lift";
-import {
-  AbstractAutoDisposingDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractAutoDisposingDelegatingObserver } from "./observer";
 
 class DistinctUntilChangedObserver<
   T,
@@ -17,17 +15,7 @@ class DistinctUntilChangedObserver<
     super(delegate);
   }
 
-  notify(next: T) {
-    assertObserverState(this);
-
-    const shouldEmit = !this.hasValue || !this.equality(this.prev as T, next);
-
-    if (shouldEmit) {
-      this.prev = next;
-      this.hasValue = true;
-      this.delegate.notify(next);
-    }
-  }
+  notify = notifyDistinctUntilChanged;
 }
 
 /**

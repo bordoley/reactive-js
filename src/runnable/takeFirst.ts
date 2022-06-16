@@ -1,27 +1,19 @@
 import { pipe } from "../functions";
-import { RunnableOperator, SinkLike } from "../runnable";
+import { RunnableOperator } from "../runnable";
 import { empty } from "../container";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingSink, assertSinkState } from "./sink";
-import { dispose } from "../disposable";
+import { AbstractAutoDisposingDelegatingSink } from "./sink";
+import { notifyTakeFirst, SinkLike } from "../sink";
 
 class TakeFirstSink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
-  private count = 0;
+  count = 0;
 
-  constructor(delegate: SinkLike<T>, private readonly maxCount: number) {
+  constructor(delegate: SinkLike<T>, readonly maxCount: number) {
     super(delegate);
   }
 
-  notify(next: T) {
-    assertSinkState(this);
-
-    this.count++;
-    this.delegate.notify(next);
-    if (this.count >= this.maxCount) {
-      pipe(this, dispose());
-    }
-  }
+  notify = notifyTakeFirst;
 }
 
 export const takeFirst = <T>(

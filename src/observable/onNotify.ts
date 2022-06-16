@@ -1,28 +1,18 @@
 import { SideEffect1 } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
+import { notifyOnNotify } from "../sink";
 import { lift } from "./lift";
-import {
-  AbstractAutoDisposingDelegatingObserver,
-  assertObserverState,
-} from "./observer";
+import { AbstractAutoDisposingDelegatingObserver } from "./observer";
 
 class OnNotifyObserver<T> extends AbstractAutoDisposingDelegatingObserver<
   T,
   T
 > {
-  constructor(
-    delegate: ObserverLike<T>,
-    private readonly onNotify: SideEffect1<T>,
-  ) {
+  constructor(delegate: ObserverLike<T>, readonly onNotify: SideEffect1<T>) {
     super(delegate);
   }
 
-  notify(next: T) {
-    assertObserverState(this);
-
-    this.onNotify(next);
-    this.delegate.notify(next);
-  }
+  notify = notifyOnNotify;
 }
 
 /**

@@ -2,6 +2,7 @@ import { ContainerLike } from "./container";
 import { DisposableLike } from "./disposable";
 import { Function1, Function2 } from "./functions";
 import { SchedulerLike } from "./scheduler";
+import { SinkLike } from "./sink";
 
 /**
  * The underlying mechanism for receiving and transforming notifications from an
@@ -11,17 +12,7 @@ import { SchedulerLike } from "./scheduler";
  *
  * @noInheritDoc
  */
-export interface ObserverLike<T> extends DisposableLike, SchedulerLike {
-  /**
-   * Notifies the the observer of the next notification produced by the observable source.
-   *
-   * Note: The `notify` method must be called from within a `SchedulerContinuationLike`
-   * scheduled using the observer's `schedule` method.
-   *
-   * @param next The next notification value.
-   */
-  notify(this: ObserverLike<T>, next: T): void;
-}
+export interface ObserverLike<T> extends SinkLike<T>, SchedulerLike {}
 
 /**
  * A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.

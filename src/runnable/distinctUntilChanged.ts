@@ -1,8 +1,9 @@
 import { Equality, strictEquality } from "../functions";
 import { Option, none } from "../option";
-import { RunnableOperator, SinkLike } from "../runnable";
+import { RunnableOperator } from "../runnable";
 import { lift } from "./lift";
 import { AbstractAutoDisposingDelegatingSink } from "./sink";
+import { notifyDistinctUntilChanged, SinkLike } from "../sink";
 
 class DistinctUntilChangedSink<T> extends AbstractAutoDisposingDelegatingSink<
   T,
@@ -15,15 +16,7 @@ class DistinctUntilChangedSink<T> extends AbstractAutoDisposingDelegatingSink<
     super(delegate);
   }
 
-  notify(next: T) {
-    const shouldEmit = !this.hasValue || !this.equality(this.prev as T, next);
-
-    if (shouldEmit) {
-      this.prev = next;
-      this.hasValue = true;
-      this.delegate.notify(next);
-    }
-  }
+  notify = notifyDistinctUntilChanged;
 }
 
 export const distinctUntilChanged = <T>(

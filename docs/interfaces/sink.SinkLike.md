@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [runnable](../modules/runnable.md) / SinkLike
+[Reactive-JS](../README.md) / [sink](../modules/sink.md) / SinkLike
 
 # Interface: SinkLike<T\>
 
-[runnable](../modules/runnable.md).SinkLike
+[sink](../modules/sink.md).SinkLike
 
 ## Type parameters
 
@@ -16,18 +16,23 @@
 
   ↳ **`SinkLike`**
 
+  ↳↳ [`ObserverLike`](observable.ObserverLike.md)
+
+  ↳↳ [`DelegatingSinkLike`](sink.DelegatingSinkLike.md)
+
 ## Table of contents
 
 ### Properties
 
-- [error](runnable.SinkLike.md#error)
-- [isDisposed](runnable.SinkLike.md#isdisposed)
+- [error](sink.SinkLike.md#error)
+- [isDisposed](sink.SinkLike.md#isdisposed)
 
 ### Methods
 
-- [add](runnable.SinkLike.md#add)
-- [dispose](runnable.SinkLike.md#dispose)
-- [notify](runnable.SinkLike.md#notify)
+- [add](sink.SinkLike.md#add)
+- [assertState](sink.SinkLike.md#assertstate)
+- [dispose](sink.SinkLike.md#dispose)
+- [notify](sink.SinkLike.md#notify)
 
 ## Properties
 
@@ -80,6 +85,22 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 ___
 
+### assertState
+
+▸ **assertState**(`this`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`SinkLike`](sink.SinkLike.md)<`T`\> |
+
+#### Returns
+
+`void`
+
+___
+
 ### dispose
 
 ▸ **dispose**(`this`, `error?`): `void`
@@ -107,12 +128,17 @@ ___
 
 ▸ **notify**(`this`, `next`): `void`
 
+Notifies the the observer of the next notification produced by the observable source.
+
+Note: The `notify` method must be called from within a `SchedulerContinuationLike`
+scheduled using the observer's `schedule` method.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `this` | [`SinkLike`](runnable.SinkLike.md)<`T`\> |
-| `next` | `T` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`SinkLike`](sink.SinkLike.md)<`T`\> | - |
+| `next` | `T` | The next notification value. |
 
 #### Returns
 
