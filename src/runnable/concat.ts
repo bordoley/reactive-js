@@ -1,35 +1,8 @@
+import { addDisposableDisposeParentOnChildError } from "../disposable";
 import { RunnableLike, RunnableOperator, SinkLike } from "../runnable";
 import { createRunnable } from "./createRunnable";
 import { lift } from "./lift";
-import { AbstractDelegatingSink } from "./sink";
-
-const concatSinkDone = Symbol("@reactive-js/core/lib/runnable/concatSinkDone");
-
-class ConcatSink<T> implements SinkLike<T> {
-  isDone = false;
-  constructor(private readonly delegate: SinkLike<T>) {}
-
-  done() {
-    if (!this.isDone) {
-      this.isDone = true;
-      throw concatSinkDone;
-    }
-  }
-
-  notify(next: T) {
-    this.delegate.notify(next);
-  }
-}
-
-const runConcatUnsafe = <T>(runnable: RunnableLike<T>, sink: SinkLike<T>) => {
-  try {
-    runnable.run(new ConcatSink(sink));
-  } catch (e) {
-    if (e !== concatSinkDone) {
-      throw e;
-    }
-  }
-};
+import { AbstractDelegatingSink, createDelegatingSink } from "./sink";
 
 /**
  * Creates an `RunnableLike` which emits all values from each source sequentially.
@@ -45,16 +18,22 @@ export function concat<T>(
 ): RunnableLike<T> {
   return createRunnable((sink: SinkLike<T>) => {
     const runnablesLength = runnables.length;
-    for (let i = 0; i < runnablesLength; i++) {
-      runConcatUnsafe(runnables[i], sink);
+    for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
+      const concatSink = createDelegatingSink(sink);
+      addDisposableDisposeParentOnChildError(sink, concatSink);
+
+      runnables[i].run(concatSink);
     }
-    sink.done();
+    sink.dispose();
   });
 }
 
 class FlattenSink<T> extends AbstractDelegatingSink<RunnableLike<T>, T> {
   notify(next: RunnableLike<T>) {
-    runConcatUnsafe(next, this.delegate);
+    const concatSink = createDelegatingSink(this.delegate);
+    addDisposableDisposeParentOnChildError(concatSink, concatSink);
+
+    next.run(createDelegatingSink(this.delegate));
   }
 }
 

@@ -1,19 +1,8 @@
 import { Predicate, alwaysTrue } from "../functions";
 import { isNone } from "../option";
-import { RunnableOperator, SinkLike } from "../runnable";
+import { RunnableOperator } from "../runnable";
 import { createRunnable } from "./createRunnable";
-
-class RepeatSink<T> implements SinkLike<T> {
-  isDone = false;
-
-  constructor(private readonly delegate: SinkLike<T>) {}
-
-  notify(next: T) {
-    this.delegate.notify(next);
-  }
-
-  done() {}
-}
+import { createDelegatingSink } from "./sink";
 
 /**
  * Returns an RunnableLike that applies the predicate function each time the source
@@ -47,8 +36,10 @@ export function repeat<T>(
     createRunnable(sink => {
       let count = 0;
       do {
-        runnable.run(new RepeatSink(sink));
+        runnable.run(createDelegatingSink(sink));
         count++;
-      } while (!sink.isDone && shouldRepeat(count));
+      } while (!sink.isDisposed && shouldRepeat(count));
+
+      sink.dispose();
     });
 }

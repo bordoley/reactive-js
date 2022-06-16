@@ -1,9 +1,9 @@
 import { pipe } from "../functions";
 import { RunnableOperator, SinkLike } from "../runnable";
 import { lift } from "./lift";
-import { AbstractDelegatingSink } from "./sink";
+import { AbstractAutoDisposingDelegatingSink } from "./sink";
 
-class SkipFirstSink<T> extends AbstractDelegatingSink<T, T> {
+class SkipFirstSink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
   private count = 0;
 
   constructor(delegate: SinkLike<T>, readonly skipCount: number) {

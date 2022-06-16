@@ -11,9 +11,11 @@
 | `TA` |
 | `TB` |
 
-## Implements
+## Hierarchy
 
-- [`SinkLike`](../interfaces/runnable.SinkLike.md)<`TA`\>
+- `AbstractSink`<`TA`\>
+
+  ↳ **`AbstractDelegatingSink`**
 
 ## Table of contents
 
@@ -25,13 +27,8 @@
 
 - [delegate](runnable.AbstractDelegatingSink.md#delegate)
 
-### Accessors
-
-- [isDone](runnable.AbstractDelegatingSink.md#isdone)
-
 ### Methods
 
-- [done](runnable.AbstractDelegatingSink.md#done)
 - [notify](runnable.AbstractDelegatingSink.md#notify)
 
 ## Constructors
@@ -53,41 +50,17 @@
 | :------ | :------ |
 | `delegate` | [`SinkLike`](../interfaces/runnable.SinkLike.md)<`TB`\> |
 
+#### Overrides
+
+AbstractSink&lt;TA\&gt;.constructor
+
 ## Properties
 
 ### delegate
 
 • `Readonly` **delegate**: [`SinkLike`](../interfaces/runnable.SinkLike.md)<`TB`\>
 
-## Accessors
-
-### isDone
-
-• `get` **isDone**(): `boolean`
-
-#### Returns
-
-`boolean`
-
-#### Implementation of
-
-[SinkLike](../interfaces/runnable.SinkLike.md).[isDone](../interfaces/runnable.SinkLike.md#isdone)
-
 ## Methods
-
-### done
-
-▸ **done**(): `void`
-
-#### Returns
-
-`void`
-
-#### Implementation of
-
-[SinkLike](../interfaces/runnable.SinkLike.md).[done](../interfaces/runnable.SinkLike.md#done)
-
-___
 
 ### notify
 
@@ -103,6 +76,6 @@ ___
 
 `void`
 
-#### Implementation of
+#### Inherited from
 
-[SinkLike](../interfaces/runnable.SinkLike.md).[notify](../interfaces/runnable.SinkLike.md#notify)
+AbstractSink.notify

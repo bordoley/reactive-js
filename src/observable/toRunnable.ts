@@ -1,6 +1,6 @@
+import { addDisposableDisposeParentOnChildError } from "../disposable";
 import { Factory, Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
-import { isSome } from "../option";
 import { RunnableLike, createRunnable } from "../runnable";
 import {
   VirtualTimeSchedulerLike,
@@ -18,18 +18,13 @@ export const toRunnable =
     createRunnable(sink => {
       const { schedulerFactory = createVirtualTimeScheduler } = options;
       const scheduler = schedulerFactory();
+      addDisposableDisposeParentOnChildError(sink, scheduler);
 
       const subscription = pipe(
         source,
         subscribe(scheduler, sink.notify, sink),
       );
+      addDisposableDisposeParentOnChildError(sink, subscription);
 
       scheduler.run();
-
-      const { error } = subscription;
-      if (isSome(error)) {
-        const { cause } = error;
-        throw cause;
-      }
-      sink.done();
     });

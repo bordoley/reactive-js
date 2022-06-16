@@ -10,42 +10,96 @@
 | :------ |
 | `T` |
 
-## Implemented by
+## Hierarchy
 
-- [`AbstractDelegatingSink`](../classes/runnable.AbstractDelegatingSink.md)
+- [`DisposableLike`](disposable.DisposableLike.md)
+
+  ↳ **`SinkLike`**
 
 ## Table of contents
 
 ### Properties
 
-- [isDone](runnable.SinkLike.md#isdone)
+- [error](runnable.SinkLike.md#error)
+- [isDisposed](runnable.SinkLike.md#isdisposed)
 
 ### Methods
 
-- [done](runnable.SinkLike.md#done)
+- [add](runnable.SinkLike.md#add)
+- [dispose](runnable.SinkLike.md#dispose)
 - [notify](runnable.SinkLike.md#notify)
 
 ## Properties
 
-### isDone
+### error
 
-• `Readonly` **isDone**: `boolean`
+• `Readonly` **error**: [`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
+
+The error the `DisposableLike` was disposed with if disposed.
+
+#### Inherited from
+
+[DisposableLike](disposable.DisposableLike.md).[error](disposable.DisposableLike.md#error)
+
+___
+
+### isDisposed
+
+• `Readonly` **isDisposed**: `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Inherited from
+
+[DisposableLike](disposable.DisposableLike.md).[isDisposed](disposable.DisposableLike.md#isdisposed)
 
 ## Methods
 
-### done
+### add
 
-▸ **done**(`this`): `void`
+▸ **add**(`this`, `disposable`): `void`
+
+Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`SinkLike`](runnable.SinkLike.md)<`T`\> |
+| `this` | [`DisposableLike`](disposable.DisposableLike.md) |
+| `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
 
 #### Returns
 
 `void`
+
+`this`
+
+#### Inherited from
+
+[DisposableLike](disposable.DisposableLike.md).[add](disposable.DisposableLike.md#add)
+
+___
+
+### dispose
+
+▸ **dispose**(`this`, `error?`): `void`
+
+Dispose the resource. Must be idempotent.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`DisposableLike`](disposable.DisposableLike.md) | - |
+| `error?` | [`Error`](disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[DisposableLike](disposable.DisposableLike.md).[dispose](disposable.DisposableLike.md#dispose)
 
 ___
 

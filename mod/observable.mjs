@@ -1870,14 +1870,10 @@ const zipLatestWith = (snd) => fst => zipLatest(fst, snd);
 const toRunnable = (options = {}) => source => createRunnable(sink => {
     const { schedulerFactory = createVirtualTimeScheduler } = options;
     const scheduler = schedulerFactory();
+    addDisposableDisposeParentOnChildError(sink, scheduler);
     const subscription = pipe(source, subscribe(scheduler, sink.notify, sink));
+    addDisposableDisposeParentOnChildError(sink, subscription);
     scheduler.run();
-    const { error } = subscription;
-    if (isSome(error)) {
-        const { cause } = error;
-        throw cause;
-    }
-    sink.done();
 });
 
 /**

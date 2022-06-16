@@ -8,7 +8,7 @@ export const generate = <T>(
 ): RunnableLike<T> => {
   const run = (sink: SinkLike<T>) => {
     let acc = initialValue();
-    while (true) {
+    while (!sink.isDisposed) {
       acc = generator(acc);
       sink.notify(acc);
     }

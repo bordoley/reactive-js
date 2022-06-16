@@ -2,9 +2,12 @@ import { Equality, strictEquality } from "../functions";
 import { Option, none } from "../option";
 import { RunnableOperator, SinkLike } from "../runnable";
 import { lift } from "./lift";
-import { AbstractDelegatingSink } from "./sink";
+import { AbstractAutoDisposingDelegatingSink } from "./sink";
 
-class DistinctUntilChangedSink<T> extends AbstractDelegatingSink<T, T> {
+class DistinctUntilChangedSink<T> extends AbstractAutoDisposingDelegatingSink<
+  T,
+  T
+> {
   prev: Option<T> = none;
   hasValue = false;
 

@@ -12,7 +12,7 @@ class EverySatisfySink<T> extends AbstractSink<T> {
   notify(next: T) {
     if (!this.predicate(next)) {
       this.result = false;
-      this.done();
+      this.dispose();
     }
   }
 }

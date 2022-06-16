@@ -7,7 +7,7 @@ class FirstSink<T> extends AbstractSink<T> {
 
   notify(next: T) {
     this.result = next;
-    this.done();
+    this.dispose();
   }
 }
 

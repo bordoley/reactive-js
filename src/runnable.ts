@@ -1,11 +1,9 @@
 import { ContainerLike, Container, ContainerOf } from "./container";
+import { DisposableLike } from "./disposable";
 import { Function1, identity } from "./functions";
 
-export interface SinkLike<T> {
-  readonly isDone: boolean;
-
+export interface SinkLike<T> extends DisposableLike {
   notify(this: SinkLike<T>, next: T): void;
-  done(this: SinkLike<T>): void;
 }
 
 export type SinkOperator<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
@@ -43,7 +41,7 @@ export { repeat } from "./runnable/repeat";
 export { scan } from "./runnable/scan";
 export { skipFirst } from "./runnable/skipFirst";
 export { someSatisfy, contains } from "./runnable/someSatisfy";
-export { AbstractDelegatingSink, sinkDone } from "./runnable/sink";
+export { AbstractDelegatingSink } from "./runnable/sink";
 export { takeFirst } from "./runnable/takeFirst";
 export { takeLast } from "./runnable/takeLast";
 export { takeWhile } from "./runnable/takeWhile";

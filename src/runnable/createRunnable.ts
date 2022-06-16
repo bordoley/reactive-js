@@ -1,6 +1,6 @@
 import { SideEffect1 } from "../functions";
+import { isSome } from "../option";
 import { RunnableLike, SinkLike } from "../runnable";
-import { sinkDone } from "./sink";
 
 class RunnableImpl<T> implements RunnableLike<T> {
   constructor(private readonly _run: SideEffect1<SinkLike<T>>) {}
@@ -10,10 +10,12 @@ class RunnableImpl<T> implements RunnableLike<T> {
   run(sink: SinkLike<T>) {
     try {
       this._run(sink);
-    } catch (e) {
-      if (e !== sinkDone) {
-        throw e;
-      }
+    } catch (cause) {
+      sink.dispose({ cause });
+    }
+    const { error } = sink;
+    if (isSome(error)) {
+      throw error.cause;
     }
   }
 }

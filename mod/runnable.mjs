@@ -1,31 +1,9 @@
 /// <reference types="./runnable.d.ts" />
-import { pipe, strictEquality, compose, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
-import { none, isNone } from './option.mjs';
+import { pipe, ignore, raise, strictEquality, compose, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
+import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError, dispose, addTeardown } from './disposable.mjs';
+import { isSome, none, isNone } from './option.mjs';
+import { __DEV__ } from './env.mjs';
 import { empty } from './container.mjs';
-
-const sinkDone = Symbol("@reactive-js/core/lib/runnable/sinkDone");
-class AbstractSink {
-    constructor() {
-        this.isDone = false;
-    }
-    done() {
-        if (!this.isDone) {
-            this.isDone = true;
-            throw sinkDone;
-        }
-    }
-}
-class AbstractDelegatingSink {
-    constructor(delegate) {
-        this.delegate = delegate;
-    }
-    get isDone() {
-        return this.delegate.isDone;
-    }
-    done() {
-        this.delegate.done();
-    }
-}
 
 class RunnableImpl {
     constructor(_run) {
@@ -37,10 +15,12 @@ class RunnableImpl {
         try {
             this._run(sink);
         }
-        catch (e) {
-            if (e !== sinkDone) {
-                throw e;
-            }
+        catch (cause) {
+            sink.dispose({ cause });
+        }
+        const { error } = sink;
+        if (isSome(error)) {
+            throw error.cause;
         }
     }
 }
@@ -66,50 +46,66 @@ const lift = (operator) => runnable => {
     return new LiftedRunnable(src, allFunctions);
 };
 
-const concatSinkDone = Symbol("@reactive-js/core/lib/runnable/concatSinkDone");
-class ConcatSink {
-    constructor(delegate) {
-        this.delegate = delegate;
-        this.isDone = false;
+const assertSinkStateProduction = ignore;
+const assertSinkStateDev = (observer) => {
+    if (observer.isDisposed) {
+        raise("Sink is disposed");
     }
-    done() {
-        if (!this.isDone) {
-            this.isDone = true;
-            throw concatSinkDone;
-        }
+};
+const _assertSinkState = __DEV__
+    ? assertSinkStateDev
+    : assertSinkStateProduction;
+const assertSinkState = _assertSinkState;
+class AbstractSink extends AbstractDisposable {
+}
+class AbstractDelegatingSink extends AbstractSink {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+        addDisposable(delegate, this);
+    }
+}
+class AbstractAutoDisposingDelegatingSink extends AbstractSink {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+        bindDisposables(this, delegate);
+    }
+}
+class DelegatingSink extends AbstractSink {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+        addDisposable(delegate, this);
     }
     notify(next) {
         this.delegate.notify(next);
     }
 }
-const runConcatUnsafe = (runnable, sink) => {
-    try {
-        runnable.run(new ConcatSink(sink));
-    }
-    catch (e) {
-        if (e !== concatSinkDone) {
-            throw e;
-        }
-    }
-};
+const createDelegatingSink = (delegate) => new DelegatingSink(delegate);
+
 function concat(...runnables) {
     return createRunnable((sink) => {
         const runnablesLength = runnables.length;
-        for (let i = 0; i < runnablesLength; i++) {
-            runConcatUnsafe(runnables[i], sink);
+        for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
+            const concatSink = createDelegatingSink(sink);
+            addDisposableDisposeParentOnChildError(sink, concatSink);
+            runnables[i].run(concatSink);
         }
-        sink.done();
+        sink.dispose();
     });
 }
 class FlattenSink extends AbstractDelegatingSink {
     notify(next) {
-        runConcatUnsafe(next, this.delegate);
+        const concatSink = createDelegatingSink(this.delegate);
+        addDisposableDisposeParentOnChildError(concatSink, concatSink);
+        next.run(createDelegatingSink(this.delegate));
     }
 }
 const _concatAll = lift(s => new FlattenSink(s));
 const concatAll = () => _concatAll;
 
-class DistinctUntilChangedSink extends AbstractDelegatingSink {
+class DistinctUntilChangedSink extends AbstractAutoDisposingDelegatingSink {
     constructor(delegate, equality) {
         super(delegate);
         this.equality = equality;
@@ -140,7 +136,7 @@ class EverySatisfySink extends AbstractSink {
     notify(next) {
         if (!this.predicate(next)) {
             this.result = false;
-            this.done();
+            this.dispose();
         }
     }
 }
@@ -158,7 +154,7 @@ class FirstSink extends AbstractSink {
     }
     notify(next) {
         this.result = next;
-        this.done();
+        this.dispose();
     }
 }
 const first = (runnable) => {
@@ -181,10 +177,10 @@ const fromArray = (options = {}) => values => {
     const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
     const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : values.length, valuesLength), 0);
     const run = (sink) => {
-        for (let index = startIndex; index < endIndex; index++) {
+        for (let index = startIndex; index < endIndex && !sink.isDisposed; index++) {
             sink.notify(values[index]);
         }
-        sink.done();
+        sink.dispose();
     };
     return createRunnable(run);
 };
@@ -195,7 +191,7 @@ const fromArrayT = {
 const generate = (generator, initialValue) => {
     const run = (sink) => {
         let acc = initialValue();
-        while (true) {
+        while (!sink.isDisposed) {
             acc = generator(acc);
             sink.notify(acc);
         }
@@ -203,12 +199,13 @@ const generate = (generator, initialValue) => {
     return createRunnable(run);
 };
 
-class KeepSink extends AbstractDelegatingSink {
+class KeepSink extends AbstractAutoDisposingDelegatingSink {
     constructor(delegate, predicate) {
         super(delegate);
         this.predicate = predicate;
     }
     notify(next) {
+        assertSinkState(this);
         if (this.predicate(next)) {
             this.delegate.notify(next);
         }
@@ -237,12 +234,13 @@ const last = (runnable) => {
     return sink.result;
 };
 
-class MapSink extends AbstractDelegatingSink {
+class MapSink extends AbstractAutoDisposingDelegatingSink {
     constructor(delegate, mapper) {
         super(delegate);
         this.mapper = mapper;
     }
     notify(next) {
+        assertSinkState(this);
         const mapped = this.mapper(next);
         this.delegate.notify(mapped);
     }
@@ -268,16 +266,6 @@ const reduce = (reducer, initialValue) => runnable => {
     return sink.acc;
 };
 
-class RepeatSink {
-    constructor(delegate) {
-        this.delegate = delegate;
-        this.isDone = false;
-    }
-    notify(next) {
-        this.delegate.notify(next);
-    }
-    done() { }
-}
 function repeat(predicate) {
     const shouldRepeat = isNone(predicate)
         ? alwaysTrue
@@ -287,13 +275,14 @@ function repeat(predicate) {
     return runnable => createRunnable(sink => {
         let count = 0;
         do {
-            runnable.run(new RepeatSink(sink));
+            runnable.run(createDelegatingSink(sink));
             count++;
-        } while (!sink.isDone && shouldRepeat(count));
+        } while (!sink.isDisposed && shouldRepeat(count));
+        sink.dispose();
     });
 }
 
-class ScanSink extends AbstractDelegatingSink {
+class ScanSink extends AbstractAutoDisposingDelegatingSink {
     constructor(delegate, scanner, acc) {
         super(delegate);
         this.scanner = scanner;
@@ -310,7 +299,7 @@ const scan = (scanner, initialValue) => {
     return lift(operator);
 };
 
-class SkipFirstSink extends AbstractDelegatingSink {
+class SkipFirstSink extends AbstractAutoDisposingDelegatingSink {
     constructor(delegate, skipCount) {
         super(delegate);
         this.skipCount = skipCount;
@@ -338,7 +327,7 @@ class SomeSatisfySink extends AbstractSink {
     notify(next) {
         if (this.predicate(next)) {
             this.result = true;
-            this.done();
+            this.dispose();
         }
     }
 }
@@ -352,17 +341,18 @@ const contains = (value, options = {}) => {
     return someSatisfy(isEqualTo(value, equality));
 };
 
-class TakeFirstSink extends AbstractDelegatingSink {
+class TakeFirstSink extends AbstractAutoDisposingDelegatingSink {
     constructor(delegate, maxCount) {
         super(delegate);
         this.maxCount = maxCount;
         this.count = 0;
     }
     notify(next) {
+        assertSinkState(this);
         this.count++;
         this.delegate.notify(next);
         if (this.count >= this.maxCount) {
-            this.done();
+            pipe(this, dispose());
         }
     }
 }
@@ -372,26 +362,28 @@ const takeFirst = (options = {}) => {
     return observable => count > 0 ? pipe(observable, lift(operator)) : empty(fromArrayT);
 };
 
-class TakeLastSink {
+function onDispose(error) {
+    if (isSome(error)) {
+        this.last.length = 0;
+        pipe(this.delegate, dispose(error));
+    }
+    else {
+        fromArray()(this.last).run(this.delegate);
+    }
+}
+class TakeLastSink extends AbstractDelegatingSink {
     constructor(delegate, maxCount) {
-        this.delegate = delegate;
+        super(delegate);
         this.maxCount = maxCount;
         this.last = [];
-    }
-    get isDone() {
-        return this.delegate.isDone;
+        addTeardown(this, onDispose);
     }
     notify(next) {
+        assertSinkState(this);
         const last = this.last;
         last.push(next);
         if (last.length > this.maxCount) {
             last.shift();
-        }
-    }
-    done() {
-        if (!this.isDone) {
-            fromArray()(this.last).run(this.delegate);
-            throw sinkDone;
         }
     }
 }
@@ -401,7 +393,7 @@ const takeLast = (options = {}) => {
     return runnable => count > 0 ? pipe(runnable, lift(operator)) : empty(fromArrayT);
 };
 
-class TakeWhileSink extends AbstractDelegatingSink {
+class TakeWhileSink extends AbstractAutoDisposingDelegatingSink {
     constructor(delegate, predicate, inclusive) {
         super(delegate);
         this.predicate = predicate;
@@ -413,7 +405,7 @@ class TakeWhileSink extends AbstractDelegatingSink {
             this.delegate.notify(next);
         }
         if (!satisfiesPredicate) {
-            this.done();
+            pipe(this, dispose());
         }
     }
 }
@@ -446,4 +438,4 @@ const toArray = () => _toArray;
 const toRunnable = () => identity;
 const type = undefined;
 
-export { AbstractDelegatingSink, concat, concatAll, contains, createRunnable, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, lift, map, noneSatisfy, reduce, repeat, scan, sinkDone, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type };
+export { AbstractDelegatingSink, concat, concatAll, contains, createRunnable, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, lift, map, noneSatisfy, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type };
