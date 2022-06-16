@@ -614,10 +614,11 @@ const takeWhile = (predicate, options = {}) => {
 const enumeratorToRunnable = (f) => {
     const run = (sink) => {
         const enumerator = f();
+        addDisposableDisposeParentOnChildError(enumerator, sink);
         while (enumerator.move()) {
             sink.notify(enumerator.current);
         }
-        sink.done();
+        enumerator.dispose();
     };
     return createRunnable(run);
 };

@@ -1,36 +1,37 @@
 import { pipe } from "../functions";
 import { RunnableOperator, SinkLike } from "../runnable";
 import { empty } from "../container";
+import { Option, isSome } from "../option";
 import { fromArray, fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import { sinkDone } from "./sink";
+import { AbstractDelegatingSink, assertSinkState } from "./sink";
+import { addTeardown, dispose, Error } from "../disposable";
 
-class TakeLastSink<T> implements SinkLike<T> {
-  private readonly last: T[] = [];
+function onDispose(this: TakeLastSink<unknown>, error: Option<Error>) {
+  if (isSome(error)) {
+    this.last.length = 0;
+    pipe(this.delegate, dispose(error));
+  } else {
+    fromArray()(this.last).run(this.delegate);
+  }
+}
 
-  constructor(
-    private delegate: SinkLike<T>,
-    private readonly maxCount: number,
-  ) {}
+class TakeLastSink<T> extends AbstractDelegatingSink<T, T> {
+  readonly last: T[] = [];
 
-  get isDone() {
-    return this.delegate.isDone;
+  constructor(delegate: SinkLike<T>, readonly maxCount: number) {
+    super(delegate);
+    addTeardown(this, onDispose);
   }
 
   notify(next: T) {
+    assertSinkState(this);
     const last = this.last;
 
     last.push(next);
 
     if (last.length > this.maxCount) {
       last.shift();
-    }
-  }
-
-  done() {
-    if (!this.isDone) {
-      fromArray()(this.last).run(this.delegate);
-      throw sinkDone;
     }
   }
 }

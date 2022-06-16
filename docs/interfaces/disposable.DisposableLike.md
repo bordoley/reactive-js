@@ -22,6 +22,8 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`ObserverLike`](observable.ObserverLike.md)
 
+  ↳ [`SinkLike`](runnable.SinkLike.md)
+
   ↳ [`PrioritySchedulerLike`](scheduler.PrioritySchedulerLike.md)
 
   ↳ [`SchedulerContinuationLike`](scheduler.SchedulerContinuationLike.md)

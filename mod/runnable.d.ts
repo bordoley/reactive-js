@@ -1,4 +1,5 @@
 import { FromArray, FromArrayOptions, Keep, ContainerLike, Container, ContainerOf } from "./container.mjs";
+import { AbstractDisposable, DisposableLike } from "./disposable.mjs";
 import { SideEffect1, Equality, Predicate, Function1, Updater, Factory, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
 /**
@@ -50,13 +51,12 @@ declare const someSatisfy: <T>(predicate: Predicate<T>) => Predicate<RunnableLik
 declare const contains: <T>(value: T, options?: {
     readonly equality?: Equality<T> | undefined;
 }) => Predicate<RunnableLike<T>>;
-declare const sinkDone: unique symbol;
-declare abstract class AbstractDelegatingSink<TA, TB> implements SinkLike<TA> {
+declare abstract class AbstractSink<T> extends AbstractDisposable implements SinkLike<T> {
+    abstract notify(next: T): void;
+}
+declare abstract class AbstractDelegatingSink<TA, TB> extends AbstractSink<TA> {
     readonly delegate: SinkLike<TB>;
     constructor(delegate: SinkLike<TB>);
-    get isDone(): boolean;
-    abstract notify(next: TA): void;
-    done(): void;
 }
 declare const takeFirst: <T>(options?: {
     readonly count?: number;
@@ -72,10 +72,8 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
  *
  */
 declare const toArray: <T>() => Function1<RunnableLike<T>, readonly T[]>;
-interface SinkLike<T> {
-    readonly isDone: boolean;
+interface SinkLike<T> extends DisposableLike {
     notify(this: SinkLike<T>, next: T): void;
-    done(this: SinkLike<T>): void;
 }
 declare type SinkOperator<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
 interface RunnableLike<T> extends ContainerLike {
@@ -89,4 +87,4 @@ interface ToRunnable<C extends ContainerLike> extends Container<C> {
 }
 declare const toRunnable: <T>() => Function1<RunnableLike<T>, RunnableLike<T>>;
 declare const type: RunnableLike<unknown>;
-export { AbstractDelegatingSink, RunnableLike, RunnableOperator, SinkLike, SinkOperator, ToRunnable, concat, concatAll, contains, createRunnable, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, lift, map, noneSatisfy, reduce, repeat, scan, sinkDone, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type };
+export { AbstractDelegatingSink, RunnableLike, RunnableOperator, SinkLike, SinkOperator, ToRunnable, concat, concatAll, contains, createRunnable, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, lift, map, noneSatisfy, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type };

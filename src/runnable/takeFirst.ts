@@ -3,9 +3,10 @@ import { RunnableOperator, SinkLike } from "../runnable";
 import { empty } from "../container";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import { AbstractDelegatingSink } from "./sink";
+import { AbstractAutoDisposingDelegatingSink, assertSinkState } from "./sink";
+import { dispose } from "../disposable";
 
-class TakeFirstSink<T> extends AbstractDelegatingSink<T, T> {
+class TakeFirstSink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
   private count = 0;
 
   constructor(delegate: SinkLike<T>, private readonly maxCount: number) {
@@ -13,10 +14,12 @@ class TakeFirstSink<T> extends AbstractDelegatingSink<T, T> {
   }
 
   notify(next: T) {
+    assertSinkState(this);
+
     this.count++;
     this.delegate.notify(next);
     if (this.count >= this.maxCount) {
-      this.done();
+      pipe(this, dispose());
     }
   }
 }

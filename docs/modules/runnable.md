@@ -23,7 +23,6 @@
 
 - [fromArrayT](runnable.md#fromarrayt)
 - [keepT](runnable.md#keept)
-- [sinkDone](runnable.md#sinkdone)
 - [type](runnable.md#type)
 
 ### Functions
@@ -91,12 +90,6 @@ ___
 ### keepT
 
 • `Const` **keepT**: [`Keep`](../interfaces/container.Keep.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
-
-___
-
-### sinkDone
-
-• `Const` **sinkDone**: unique `symbol`
 
 ___
 

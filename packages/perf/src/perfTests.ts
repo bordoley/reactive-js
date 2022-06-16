@@ -96,10 +96,10 @@ const createFilterMapFusionPerfTest = (name: string, module: string) =>
         src,
         m.fromArray(),
         m.map(increment),
-        m.keepType(isOdd),
+        m.keep(isOdd),
         m.map(increment),
         m.map(increment),
-        m.keepType(isEven),
+        m.keep(isEven),
         m.toRunnable(),
         reduce(sum, returns(0)),
       );
@@ -141,7 +141,7 @@ const createFilterMapReducePerfTest = (name: string, module: string) =>
       return defer(
         src,
         m.fromArray(),
-        m.keepType(isEven),
+        m.keep(isEven),
         m.map(increment),
         m.toRunnable(),
         reduce(sum, returns(0)),

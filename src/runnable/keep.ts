@@ -2,14 +2,15 @@ import { Keep } from "../container";
 import { Predicate } from "../functions";
 import { RunnableLike, RunnableOperator, SinkLike } from "../runnable";
 import { lift } from "./lift";
-import { AbstractDelegatingSink } from "./sink";
+import { AbstractAutoDisposingDelegatingSink, assertSinkState } from "./sink";
 
-class KeepSink<T> extends AbstractDelegatingSink<T, T> {
+class KeepSink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
   constructor(delegate: SinkLike<T>, readonly predicate: Predicate<T>) {
     super(delegate);
   }
 
   notify(next: T) {
+    assertSinkState(this);
     if (this.predicate(next)) {
       this.delegate.notify(next);
     }

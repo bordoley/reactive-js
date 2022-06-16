@@ -19,10 +19,14 @@ export const fromArray =
     );
 
     const run = (sink: SinkLike<T>) => {
-      for (let index = startIndex; index < endIndex; index++) {
+      for (
+        let index = startIndex;
+        index < endIndex && !sink.isDisposed;
+        index++
+      ) {
         sink.notify(values[index]);
       }
-      sink.done();
+      sink.dispose();
     };
     return createRunnable(run);
   };

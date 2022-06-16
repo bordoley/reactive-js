@@ -1,9 +1,10 @@
-import { Predicate } from "../functions";
+import { dispose } from "../disposable";
+import { pipe, Predicate } from "../functions";
 import { RunnableOperator, SinkLike } from "../runnable";
 import { lift } from "./lift";
-import { AbstractDelegatingSink } from "./sink";
+import { AbstractAutoDisposingDelegatingSink } from "./sink";
 
-class TakeWhileSink<T> extends AbstractDelegatingSink<T, T> {
+class TakeWhileSink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
   constructor(
     delegate: SinkLike<T>,
     private readonly predicate: Predicate<T>,
@@ -20,7 +21,7 @@ class TakeWhileSink<T> extends AbstractDelegatingSink<T, T> {
     }
 
     if (!satisfiesPredicate) {
-      this.done();
+      pipe(this, dispose());
     }
   }
 }

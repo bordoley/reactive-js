@@ -200,7 +200,7 @@ const toRunnable = () => seq => createRunnable(sink => {
         sink.notify(result.data);
         result = result.next();
     }
-    sink.done();
+    sink.dispose();
 });
 
 export { concat, concatAll, distinctUntilChanged, fromArray, generate, keep, map, repeat, scan, seek, sequenceResultDone, skipFirst, takeFirst, takeLast, takeWhile, toRunnable, type };
