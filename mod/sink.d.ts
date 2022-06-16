@@ -18,7 +18,7 @@ interface DelegatingSinkLike<TA, TB> extends SinkLike<TA> {
 }
 declare type SinkOperator<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
 declare abstract class AbstractSink<T> extends AbstractDisposable implements SinkLike<T> {
-    assertState: (..._args: unknown[]) => void;
+    assertState(this: SinkLike<T>): void;
     notify(_: T): void;
 }
 declare abstract class AbstractDelegatingSink<TA, TB> extends AbstractSink<TA> {
@@ -51,7 +51,7 @@ declare function notifyPairwise<T>(this: DelegatingSinkLike<T, [
     prev: Option<T>;
     hasPrev: boolean;
 }, value: T): void;
-declare function notifyReduce<T, TAcc>(this: DelegatingSinkLike<T, TAcc> & {
+declare function notifyReduce<T, TAcc>(this: SinkLike<T> & {
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
 }, next: T): void;
@@ -67,7 +67,7 @@ declare function notifyTakeFirst<T>(this: DelegatingSinkLike<T, T> & {
     count: number;
     readonly maxCount: number;
 }, next: T): void;
-declare function notifyTakeLast<T>(this: DelegatingSinkLike<T, T> & {
+declare function notifyTakeLast<T>(this: SinkLike<T> & {
     readonly last: T[];
     readonly maxCount: number;
 }, next: T): void;

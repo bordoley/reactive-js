@@ -24,11 +24,12 @@ export abstract class AbstractObserver<T>
 {
   abstract inContinuation: boolean;
 
-  readonly assertState = assertState;
-
   constructor() {
     super();
   }
+
+  /** @ignore */
+  assertState(this: ObserverLike<T>): void {}
 
   abstract now: number;
 
@@ -48,6 +49,7 @@ export abstract class AbstractObserver<T>
     options?: { readonly delay?: number },
   ): void;
 }
+AbstractObserver.prototype.assertState = assertState;
 
 /**
  * Abstract base class for implementing the `ObserverLike` interface.

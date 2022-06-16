@@ -202,7 +202,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`T`, `TAcc`\> & { `acc`: `TAcc` ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
+| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `acc`: `TAcc` ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
 | `next` | `T` |
 
 #### Returns
@@ -295,7 +295,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`T`, `T`\> & { `last`: `T`[] ; `maxCount`: `number`  } |
+| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `last`: `T`[] ; `maxCount`: `number`  } |
 | `next` | `T` |
 
 #### Returns

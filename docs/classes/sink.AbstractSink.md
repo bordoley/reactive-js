@@ -30,12 +30,9 @@
 
 - [constructor](sink.AbstractSink.md#constructor)
 
-### Properties
-
-- [assertState](sink.AbstractSink.md#assertstate)
-
 ### Methods
 
+- [assertState](sink.AbstractSink.md#assertstate)
 - [notify](sink.AbstractSink.md#notify)
 
 ## Constructors
@@ -54,23 +51,19 @@
 
 [AbstractDisposable](disposable.AbstractDisposable.md).[constructor](disposable.AbstractDisposable.md#constructor)
 
-## Properties
+## Methods
 
 ### assertState
 
-• **assertState**: (...`_args`: `unknown`[]) => `void`
+▸ **assertState**(`this`): `void`
 
-#### Type declaration
-
-▸ (...`_args`): `void`
-
-##### Parameters
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `..._args` | `unknown`[] |
+| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> |
 
-##### Returns
+#### Returns
 
 `void`
 
@@ -78,7 +71,7 @@
 
 [SinkLike](../interfaces/sink.SinkLike.md).[assertState](../interfaces/sink.SinkLike.md#assertstate)
 
-## Methods
+___
 
 ### notify
 

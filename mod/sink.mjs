@@ -12,12 +12,10 @@ const assertStateDev = function () {
 };
 const assertState = __DEV__ ? assertStateDev : assertStateProduction;
 class AbstractSink extends AbstractDisposable {
-    constructor() {
-        super(...arguments);
-        this.assertState = assertState;
-    }
+    assertState() { }
     notify(_) { }
 }
+AbstractSink.prototype.assertState = assertState;
 class AbstractDelegatingSink extends AbstractSink {
     constructor(delegate) {
         super();
@@ -64,6 +62,7 @@ function notifyMap(next) {
     this.delegate.notify(mapped);
 }
 function notifyOnNotify(next) {
+    debugger;
     this.assertState();
     this.onNotify(next);
     this.delegate.notify(next);
