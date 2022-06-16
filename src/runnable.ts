@@ -41,6 +41,7 @@ export { takeFirst } from "./runnable/takeFirst";
 export { takeLast } from "./runnable/takeLast";
 export { takeWhile } from "./runnable/takeWhile";
 export { toArray } from "./runnable/toArray";
+export { using } from "./runnable/using";
 
 export const toRunnable = <T>(): Function1<RunnableLike<T>, RunnableLike<T>> =>
   identity;
