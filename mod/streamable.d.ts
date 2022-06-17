@@ -1,6 +1,7 @@
 import { Reducer, Factory, Equality, Updater, Function1 } from "./functions.mjs";
 import { ObservableOperator, StreamLike, ObservableLike, MulticastObservableLike } from "./observable.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
+import { EnumerableLike } from "./enumerable.mjs";
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
  * over the notified actions, emitting each intermediate result.
@@ -65,6 +66,38 @@ declare const flowIOEvents: <T>() => Function1<ObservableLike<T>, StreamableLike
 declare const createIOSinkAccumulator: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: {
     readonly replay?: number;
 }) => IOSinkAccumulatorLike<T, TAcc>;
+/**
+ * Returns an `AsyncEnumerableLike` from the provided array.
+ *
+ * @param values The array.
+ */
+declare const fromArray: <T>(options?: {
+    readonly delay?: number;
+    readonly startIndex?: number;
+    readonly endIndex?: number;
+}) => Function1<readonly T[], StreamableLike<void, T>>;
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+declare const fromEnumerable: <T>() => Function1<EnumerableLike<T>, StreamableLike<void, T>>;
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+declare const fromIterable: <T>() => Function1<Iterable<T>, StreamableLike<void, T>>;
+/**
+ * Generates an `AsyncEnumerableLike` sequence from a generator function
+ * that is applied to an accumulator value.
+ *
+ * @param generator The generator function.
+ * @param initialValue Factory function to generate the initial accumulator.
+ */
+declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
+    readonly delay?: number;
+}) => StreamableLike<void, T>;
 interface StreamableLike<TReq, T> {
     stream(this: StreamableLike<TReq, T>, scheduler: SchedulerLike, options?: {
         readonly replay?: number;
@@ -84,4 +117,4 @@ declare type IOEvent<T> = {
 } | {
     readonly type: "done";
 };
-export { FlowMode, IOEvent, IOSinkAccumulatorLike, StreamableLike, StreamableOperator, __stream, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, decodeWithCharset, doneIOEvent, empty, encodeUtf8, flow, flowIOEvents, identity, lift, mapIOEventStream, mapReq, notifyIOEvent, sink, stream, toStateStore };
+export { FlowMode, IOEvent, IOSinkAccumulatorLike, StreamableLike, StreamableOperator, __stream, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, decodeWithCharset, doneIOEvent, empty, encodeUtf8, flow, flowIOEvents, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapIOEventStream, mapReq, notifyIOEvent, sink, stream, toStateStore };

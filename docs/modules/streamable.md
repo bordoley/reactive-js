@@ -28,6 +28,10 @@
 - [encodeUtf8](streamable.md#encodeutf8)
 - [flow](streamable.md#flow)
 - [flowIOEvents](streamable.md#flowioevents)
+- [fromArray](streamable.md#fromarray)
+- [fromEnumerable](streamable.md#fromenumerable)
+- [fromIterable](streamable.md#fromiterable)
+- [generate](streamable.md#generate)
 - [identity](streamable.md#identity)
 - [lift](streamable.md#lift)
 - [mapIOEventStream](streamable.md#mapioeventstream)
@@ -318,6 +322,97 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`T`\>\>\>
+
+___
+
+### fromArray
+
+▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>\>
+
+Returns an `AsyncEnumerableLike` from the provided array.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.endIndex?` | `number` |
+| `options.startIndex?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>\>
+
+___
+
+### fromEnumerable
+
+▸ **fromEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>\>
+
+Returns an `AsyncEnumerableLike` from the provided iterable.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>\>
+
+___
+
+### fromIterable
+
+▸ **fromIterable**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>\>
+
+Returns an `AsyncEnumerableLike` from the provided iterable.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>\>
+
+___
+
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>
+
+Generates an `AsyncEnumerableLike` sequence from a generator function
+that is applied to an accumulator value.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> | The generator function. |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function to generate the initial accumulator. |
+| `options?` | `Object` | - |
+| `options.delay?` | `number` | - |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>
 
 ___
 
