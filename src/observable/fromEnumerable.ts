@@ -1,4 +1,4 @@
-import { dispose } from "../disposable";
+import { addDisposableDisposeParentOnChildError, dispose } from "../disposable";
 import { EnumerableLike, EnumeratorLike, enumerate } from "../enumerable";
 import { Factory, Function1, defer, pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
@@ -18,6 +18,7 @@ export const fromEnumerator =
   f => {
     const factory = (observer: ObserverLike<T>) => {
       const enumerator = f();
+      addDisposableDisposeParentOnChildError(observer, enumerator);
 
       return () => {
         while (enumerator.move()) {

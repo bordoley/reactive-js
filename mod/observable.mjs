@@ -612,6 +612,7 @@ const fromDisposable = (disposable) => createObservable(dispatcher => {
 const fromEnumerator = (options = {}) => f => {
     const factory = (observer) => {
         const enumerator = f();
+        addDisposableDisposeParentOnChildError(observer, enumerator);
         return () => {
             while (enumerator.move()) {
                 observer.notify(enumerator.current);

@@ -1,4 +1,4 @@
-import { compute } from "../container";
+import { concatWith, fromValue } from "../container";
 import {
   EnumerableLike,
   EnumeratorLike,
@@ -7,13 +7,15 @@ import {
   hasCurrent,
   move,
 } from "../enumerable";
-import { Function1, compose, defer } from "../functions";
+import { Function1, compose } from "../functions";
 import {
+  concatT,
   fromArrayT,
   map,
-  mapT,
+  never,
   onNotify,
   takeWhile,
+  using,
   withLatestFrom,
 } from "../observable";
 import { StreamableLike } from "../streamable";
@@ -25,10 +27,10 @@ const _fromEnumerable = <T>(
   createStreamable(
     compose(
       withLatestFrom<void, EnumeratorLike<T>, EnumeratorLike<T>>(
-        compute({
-          ...fromArrayT,
-          ...mapT,
-        })(defer(enumerable, enumerate)),
+        using(
+          _ => enumerate(enumerable),
+          compose(fromValue(fromArrayT), concatWith(concatT, never())),
+        ),
         (_, enumerator) => enumerator,
       ),
       onNotify(move),

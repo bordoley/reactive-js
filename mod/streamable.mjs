@@ -1,8 +1,8 @@
 /// <reference types="./streamable.d.ts" />
-import { empty as empty$1, fromValue, ignoreElements, endWith, compute, concatMap, keepType } from './container.mjs';
+import { empty as empty$1, fromValue, ignoreElements, endWith, compute, concatMap, keepType, concatWith } from './container.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError } from './disposable.mjs';
-import { pipe, compose, returns, updaterReducer, identity as identity$1, composeWith, defer } from './functions.mjs';
-import { createSubject, publish, observe, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, withLatestFrom, mapT, concatAllT, fromIterator, takeWhile, reduce, createObservable, takeFirst, onNotify, scanAsync } from './observable.mjs';
+import { pipe, compose, returns, updaterReducer, identity as identity$1, composeWith } from './functions.mjs';
+import { createSubject, publish, observe, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, withLatestFrom, mapT, concatAllT, fromIterator, takeWhile, reduce, createObservable, takeFirst, never, onNotify, scanAsync } from './observable.mjs';
 import { isNone, none } from './option.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
 import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
@@ -277,10 +277,7 @@ const fromArray = (options = {}) => values => {
     return createStreamable(compose(scan(fromArrayScanner, returns(startIndex - 1)), concatMap({ ...mapT, ...concatAllT }, (i) => fromValueWithDelay(values[i])), takeFirst({ count: endIndex - startIndex })));
 };
 
-const _fromEnumerable = (enumerable) => createStreamable(compose(withLatestFrom(compute({
-    ...fromArrayT,
-    ...mapT,
-})(defer(enumerable, enumerate)), (_, enumerator) => enumerator), onNotify(move), takeWhile(hasCurrent), map(current)));
+const _fromEnumerable = (enumerable) => createStreamable(compose(withLatestFrom(using(_ => enumerate(enumerable), compose(fromValue(fromArrayT), concatWith(concatT, never()))), (_, enumerator) => enumerator), onNotify(move), takeWhile(hasCurrent), map(current)));
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
  *
