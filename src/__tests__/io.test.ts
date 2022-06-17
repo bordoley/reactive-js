@@ -1,17 +1,16 @@
+import { empty, fromValue } from "../container";
 import { pipe, returns, sum } from "../functions";
+import { fromArray, fromArrayT, subscribe } from "../observable";
+import { createVirtualTimeScheduler } from "../scheduler";
 import {
   createIOSinkAccumulator,
   decodeWithCharset,
-  empty,
   encodeUtf8,
-  fromArray,
-  fromValue,
-  map,
-} from "../io";
-import { subscribe } from "../observable";
-import { none } from "../option";
-import { createVirtualTimeScheduler } from "../scheduler";
-import { sink, stream } from "../streamable";
+  mapIOEventStream,
+  sink,
+  stream,
+  toIOEventStream,
+} from "../streamable";
 import {
   describe,
   expectEquals,
@@ -27,6 +26,7 @@ export const tests = describe(
     const src = pipe(
       [Uint8Array.from([226]), Uint8Array.from([130]), Uint8Array.from([172])],
       fromArray(),
+      toIOEventStream(),
       decodeWithCharset(),
     );
     const dest = createIOSinkAccumulator(
@@ -49,7 +49,11 @@ export const tests = describe(
   }),
   test("empty", () => {
     const scheduler = createVirtualTimeScheduler();
-    const emptyStream = pipe(none, empty, stream(scheduler));
+    const emptyStream = pipe(
+      empty(fromArrayT),
+      toIOEventStream(),
+      stream(scheduler),
+    );
 
     emptyStream.dispatch("pause");
     emptyStream.dispatch("resume");
@@ -66,7 +70,13 @@ export const tests = describe(
   test("encodeUtf8", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
 
-    const src = pipe(str, fromValue(), encodeUtf8, decodeWithCharset());
+    const src = pipe(
+      str,
+      fromValue(fromArrayT),
+      toIOEventStream(),
+      encodeUtf8,
+      decodeWithCharset(),
+    );
     const dest = createIOSinkAccumulator(
       (acc: string, next: string) => acc + next,
       returns(""),
@@ -86,7 +96,12 @@ export const tests = describe(
   }),
   test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
-    const fromValueStream = pipe(1, fromValue(), stream(scheduler));
+    const fromValueStream = pipe(
+      1,
+      fromValue(fromArrayT),
+      toIOEventStream(),
+      stream(scheduler),
+    );
 
     fromValueStream.dispatch("resume");
 
@@ -103,7 +118,12 @@ export const tests = describe(
     expectTrue(fromValueStream.isDisposed);
   }),
   test("map", () => {
-    const src = pipe(1, fromValue(), map(returns(2)));
+    const src = pipe(
+      1,
+      fromValue(fromArrayT),
+      toIOEventStream(),
+      mapIOEventStream(returns(2)),
+    );
     const dest = createIOSinkAccumulator(sum, returns(0), { replay: 1 });
 
     const scheduler = createVirtualTimeScheduler();

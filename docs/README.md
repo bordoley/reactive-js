@@ -12,7 +12,6 @@ Reactive-JS
 - [enumerable](modules/enumerable.md)
 - [env](modules/env.md)
 - [functions](modules/functions.md)
-- [io](modules/io.md)
 - [node](modules/node.md)
 - [observable](modules/observable.md)
 - [option](modules/option.md)

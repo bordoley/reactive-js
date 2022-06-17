@@ -16,10 +16,16 @@ import {
   createDisposableValue,
 } from "../disposable";
 import { Factory, defer, identity, ignore, pipe, returns } from "../functions";
-import { IOSourceOperator } from "../io";
 import { subscribe, using } from "../observable";
 
-import { createStreamable, sink, stream } from "../streamable";
+import {
+  FlowMode,
+  IOEvent,
+  StreamableOperator,
+  createStreamable,
+  sink,
+  stream,
+} from "../streamable";
 import { createReadableIOSource } from "./createReadableIOSource";
 import { createWritableIOSink } from "./createWritableIOSink";
 import { createDisposableNodeStream } from "./nodeStream";
@@ -27,7 +33,12 @@ import { createDisposableNodeStream } from "./nodeStream";
 export const transform =
   (
     factory: Factory<DisposableValueLike<Transform>>,
-  ): IOSourceOperator<Uint8Array, Uint8Array> =>
+  ): StreamableOperator<
+    FlowMode,
+    IOEvent<Uint8Array>,
+    FlowMode,
+    IOEvent<Uint8Array>
+  > =>
   src =>
     createStreamable(modeObs =>
       using(scheduler => {
@@ -79,30 +90,56 @@ export const transform =
 
 export const brotliDecompress = (
   options: BrotliOptions = {},
-): IOSourceOperator<Uint8Array, Uint8Array> =>
+): StreamableOperator<
+  FlowMode,
+  IOEvent<Uint8Array>,
+  FlowMode,
+  IOEvent<Uint8Array>
+> =>
   transform(defer(options, createBrotliDecompress, createDisposableNodeStream));
 
 export const gunzip = (
   options: ZlibOptions = {},
-): IOSourceOperator<Uint8Array, Uint8Array> =>
-  transform(defer(options, createGunzip, createDisposableNodeStream));
+): StreamableOperator<
+  FlowMode,
+  IOEvent<Uint8Array>,
+  FlowMode,
+  IOEvent<Uint8Array>
+> => transform(defer(options, createGunzip, createDisposableNodeStream));
 
 export const inflate = (
   options: ZlibOptions = {},
-): IOSourceOperator<Uint8Array, Uint8Array> =>
-  transform(defer(options, createInflate, createDisposableNodeStream));
+): StreamableOperator<
+  FlowMode,
+  IOEvent<Uint8Array>,
+  FlowMode,
+  IOEvent<Uint8Array>
+> => transform(defer(options, createInflate, createDisposableNodeStream));
 
 export const brotliCompress = (
   options: BrotliOptions = {},
-): IOSourceOperator<Uint8Array, Uint8Array> =>
+): StreamableOperator<
+  FlowMode,
+  IOEvent<Uint8Array>,
+  FlowMode,
+  IOEvent<Uint8Array>
+> =>
   transform(defer(options, createBrotliCompress, createDisposableNodeStream));
 
 export const gzip = (
   options: ZlibOptions = {},
-): IOSourceOperator<Uint8Array, Uint8Array> =>
-  transform(defer(options, createGzip, createDisposableNodeStream));
+): StreamableOperator<
+  FlowMode,
+  IOEvent<Uint8Array>,
+  FlowMode,
+  IOEvent<Uint8Array>
+> => transform(defer(options, createGzip, createDisposableNodeStream));
 
 export const deflate = (
   options: ZlibOptions = {},
-): IOSourceOperator<Uint8Array, Uint8Array> =>
-  transform(defer(options, createDeflate, createDisposableNodeStream));
+): StreamableOperator<
+  FlowMode,
+  IOEvent<Uint8Array>,
+  FlowMode,
+  IOEvent<Uint8Array>
+> => transform(defer(options, createDeflate, createDisposableNodeStream));

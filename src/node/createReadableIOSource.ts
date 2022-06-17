@@ -8,7 +8,6 @@ import {
   dispose,
 } from "../disposable";
 import { Factory, compose, pipe } from "../functions";
-import { IOSourceLike, done, notify } from "../io";
 import {
   ObservableLike,
   createObservable,
@@ -18,7 +17,14 @@ import {
 } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
-import { FlowMode, createStreamable } from "../streamable";
+import {
+  FlowMode,
+  IOEvent,
+  StreamableLike,
+  createStreamable,
+  doneIOEvent,
+  notifyIOEvent,
+} from "../streamable";
 import { createDisposableNodeStream } from "./nodeStream";
 
 const createReadableEventsObservable = (
@@ -27,11 +33,11 @@ const createReadableEventsObservable = (
   createObservable(dispatcher => {
     const readableValue = readable.value;
 
-    const onData = compose(notify, dispatchTo(dispatcher));
+    const onData = compose(notifyIOEvent, dispatchTo(dispatcher));
     readableValue.on("data", onData);
 
     const onEnd = () => {
-      dispatcher.dispatch(done());
+      dispatcher.dispatch(doneIOEvent());
       pipe(dispatcher, dispose());
     };
     readableValue.on("end", onEnd);
@@ -74,7 +80,7 @@ const createReadableAndSetupModeSubscription =
 
 export const createReadableIOSource = (
   factory: Factory<DisposableValueLike<Readable>>,
-): IOSourceLike<Uint8Array> =>
+): StreamableLike<FlowMode, IOEvent<Uint8Array>> =>
   createStreamable(mode =>
     using(
       createReadableAndSetupModeSubscription(factory, mode),

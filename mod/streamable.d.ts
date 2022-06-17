@@ -1,5 +1,5 @@
 import { Reducer, Factory, Equality, Updater, Function1, SideEffect1, Function2 } from "./functions.mjs";
-import { ObservableOperator, StreamLike, ObservableLike } from "./observable.mjs";
+import { ObservableOperator, StreamLike, ObservableLike, MulticastObservableLike } from "./observable.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
@@ -60,11 +60,33 @@ declare const flow: <T>({ scheduler, }?: {
     scheduler?: SchedulerLike | undefined;
 }) => Function1<ObservableLike<T>, StreamableLike<FlowMode, T>>;
 declare const sink: <TReq, T>(src: StreamableLike<TReq, T>, dest: StreamableLike<T, TReq>) => ObservableLike<void>;
+declare const notifyIOEvent: <T>(data: T) => IOEvent<T>;
+declare const doneIOEvent: <T>() => IOEvent<T>;
+declare const decodeWithCharset: (charset?: string, options?: TextDecoderOptions) => StreamableOperator<FlowMode, IOEvent<ArrayBuffer>, FlowMode, IOEvent<string>>;
+declare const encodeUtf8: StreamableOperator<FlowMode, IOEvent<string>, FlowMode, IOEvent<Uint8Array>>;
+declare const mapIOEventStream: <TA, TB>(mapper: Function1<TA, TB>) => Function1<StreamableLike<FlowMode, IOEvent<TA>>, StreamableLike<FlowMode, IOEvent<TB>>>;
+declare const toIOEventStream: <T>() => Function1<ObservableLike<T>, StreamableLike<FlowMode, IOEvent<T>>>;
+/** @experimental */
+declare const createIOSinkAccumulator: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: {
+    readonly replay?: number;
+}) => IOSinkAccumulatorLike<T, TAcc>;
 interface StreamableLike<TReq, T> {
     stream(this: StreamableLike<TReq, T>, scheduler: SchedulerLike, options?: {
         readonly replay?: number;
     }): StreamLike<TReq, T>;
 }
 declare type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<StreamableLike<TSrcReq, TSrc>, StreamableLike<TReq, T>>;
+/**
+ * @experimental
+ * @noInheritDoc
+ * */
+interface IOSinkAccumulatorLike<T, TAcc> extends StreamableLike<IOEvent<T>, FlowMode>, MulticastObservableLike<TAcc> {
+}
 declare type FlowMode = "resume" | "pause";
-export { FlowMode, StreamableLike, StreamableOperator, __stream, createActionReducer, createStateStore, createStreamable, empty, flow, identity, lift, map, mapReq, mapTo, onNotify, scan, sink, stream, toStateStore, withLatestFrom };
+declare type IOEvent<T> = {
+    readonly type: "notify";
+    readonly data: T;
+} | {
+    readonly type: "done";
+};
+export { FlowMode, IOEvent, IOSinkAccumulatorLike, StreamableLike, StreamableOperator, __stream, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, decodeWithCharset, doneIOEvent, empty, encodeUtf8, flow, identity, lift, map, mapIOEventStream, mapReq, mapTo, notifyIOEvent, onNotify, scan, sink, stream, toIOEventStream, toStateStore, withLatestFrom };

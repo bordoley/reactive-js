@@ -1,6 +1,5 @@
 import { Readable, Writable } from "stream";
 import { defer, pipe, returns } from "../functions";
-import { createIOSinkAccumulator, fromArray } from "../io";
 import {
   createDisposableNodeStream,
   createReadableIOSource,
@@ -8,9 +7,9 @@ import {
   gunzip,
   gzip,
 } from "../node";
-import { takeFirst, toPromise } from "../observable";
+import { fromArray, takeFirst, toPromise } from "../observable";
 import { createHostScheduler } from "../scheduler";
-import { sink } from "../streamable";
+import { createIOSinkAccumulator, sink, toIOEventStream } from "../streamable";
 import {
   describe,
   expectEquals,
@@ -44,6 +43,7 @@ export const tests = describe(
       const src = pipe(
         [encoder.encode("abc"), encoder.encode("defg")],
         fromArray(),
+        toIOEventStream(),
       );
 
       await pipe(sink(src, dest), toPromise(scheduler));
@@ -70,6 +70,7 @@ export const tests = describe(
       const src = pipe(
         [encoder.encode("abc"), encoder.encode("defg")],
         fromArray(),
+        toIOEventStream(),
       );
 
       const promise = pipe(sink(src, dest), toPromise(scheduler));
@@ -130,6 +131,7 @@ export const tests = describe(
     const src = pipe(
       [encoder.encode("abc"), encoder.encode("defg")],
       fromArray<Uint8Array>(),
+      toIOEventStream(),
       gzip(),
       gunzip(),
     );
