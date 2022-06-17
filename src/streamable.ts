@@ -43,13 +43,6 @@ export {
   __stream,
 } from "./streamable/streamable";
 export { identity } from "./streamable/identity";
-export {
-  map,
-  mapTo,
-  onNotify,
-  scan,
-  withLatestFrom,
-} from "./streamable/operators";
 export { flow } from "./streamable/flow";
 export { sink } from "./streamable/sink";
 export {
@@ -59,5 +52,5 @@ export {
   decodeWithCharset,
   encodeUtf8,
   mapIOEventStream,
-  toIOEventStream,
+  flowIOEvents,
 } from "./streamable/io";

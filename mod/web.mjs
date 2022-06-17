@@ -1,11 +1,11 @@
 /// <reference types="./web.d.ts" />
 import { dispose, addTeardown, addDisposableDisposeParentOnChildError, toAbortSignal } from './disposable.mjs';
 import { pipe, raise, returns } from './functions.mjs';
-import { createObservable, keep as keep$1, throttle, onNotify as onNotify$1, subscribe, defer, fromPromise, observe } from './observable.mjs';
+import { createObservable, onNotify, keep as keep$1, throttle, map, subscribe, defer, fromPromise, observe } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { AbstractContainer } from './container.mjs';
 import { none, isNone } from './option.mjs';
-import { createStateStore, onNotify, lift, map, stream } from './streamable.mjs';
+import { createStateStore, lift, stream } from './streamable.mjs';
 
 const fromEvent = (target, eventName, selector) => createObservable(dispatcher => {
     const listener = (event) => {
@@ -83,20 +83,20 @@ class WindowLocationStream extends AbstractContainer {
         this.stateStream = pipe(() => ({
             replace: true,
             uri: getCurrentWindowLocationURI(),
-        }), createStateStore, onNotify(({ uri }) => {
+        }), createStateStore, lift(onNotify(({ uri }) => {
             // Initialize the history state on page load
             const isInitialPageLoad = this.historyCounter === -1;
             if (isInitialPageLoad) {
                 this.historyCounter === 0;
                 windowHistoryReplaceState(this, uri);
             }
-        }), lift(keep$1(({ uri }) => {
+        })), lift(keep$1(({ uri }) => {
             const { title } = uri;
             const uriString = windowLocationURIToString(uri);
             const titleChanged = document.title !== title;
             const uriChanged = uriString !== window.location.href;
             return titleChanged || uriChanged;
-        })), lift(throttle(300)), onNotify(({ replace, uri }) => {
+        })), lift(throttle(300)), lift(onNotify(({ replace, uri }) => {
             const { title } = uri;
             const uriString = windowLocationURIToString(uri);
             const titleChanged = document.title !== title;
@@ -107,7 +107,7 @@ class WindowLocationStream extends AbstractContainer {
                 : windowHistoryPushState;
             document.title = title;
             updateHistoryState(this, uri);
-        }), map(({ uri }) => uri), stream(scheduler, options));
+        })), lift(map(({ uri }) => uri)), stream(scheduler, options));
         const historySubscription = pipe(fromEvent(window, "popstate", (e) => {
             const { counter, title } = e.state;
             const uri = {
@@ -115,7 +115,7 @@ class WindowLocationStream extends AbstractContainer {
                 title,
             };
             return { counter, uri };
-        }), onNotify$1(({ counter, uri }) => {
+        }), onNotify(({ counter, uri }) => {
             this.historyCounter = counter;
             this.dispatch(uri, { replace: true });
         }), subscribe(scheduler));

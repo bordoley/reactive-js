@@ -1,8 +1,8 @@
 /// <reference types="./streamable.d.ts" />
-import { empty as empty$1, fromValue, mapTo as mapTo$1, ignoreElements, endWith, compute, concatMap, keepType } from './container.mjs';
+import { empty as empty$1, fromValue, ignoreElements, endWith, compute, concatMap, keepType } from './container.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError } from './disposable.mjs';
 import { pipe, compose, returns, updaterReducer, identity as identity$1, composeWith } from './functions.mjs';
-import { createSubject, publish, observe, using, map as map$1, subscribe, fromArrayT, __currentScheduler, __using, scan as scan$1, mergeWith, distinctUntilChanged, zipWithLatestFrom, mapT, onNotify as onNotify$1, withLatestFrom as withLatestFrom$1, subscribeOn, fromDisposable, takeUntil, keepT, concatT, concatAllT, fromIterator, takeWhile, reduce, createObservable } from './observable.mjs';
+import { createSubject, publish, observe, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, withLatestFrom, mapT, concatAllT, fromIterator, takeWhile, reduce, createObservable } from './observable.mjs';
 import { isNone, none } from './option.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
 
@@ -56,7 +56,7 @@ const liftImpl = (streamable, obsOps, reqOps) => {
     const src = streamable instanceof LiftedStreamable ? streamable.src : streamable;
     const op = requests => using(scheduler => {
         const srcStream = pipe(src, stream(scheduler));
-        const requestSubscription = pipe(requests, map$1(compose(...reqOps)), subscribe(scheduler, srcStream.dispatch, srcStream));
+        const requestSubscription = pipe(requests, map(compose(...reqOps)), subscribe(scheduler, srcStream.dispatch, srcStream));
         bindDisposables(srcStream, requestSubscription);
         return srcStream;
     }, compose(...obsOps));
@@ -109,7 +109,7 @@ const createActionReducer = (reducer, initialState, options) => {
         // Hence we merge the two observables and take advantage
         // of the fact that merge notifies in the order of
         // the observables merged.
-        return pipe(src, scan$1(reducer, returns(acc)), mergeWith(fromValue(fromArrayT)(acc)), distinctUntilChanged(options));
+        return pipe(src, scan(reducer, returns(acc)), mergeWith(fromValue(fromArrayT)(acc)), distinctUntilChanged(options));
     };
     return createStreamable(operator);
 };
@@ -146,12 +146,6 @@ const _identity = {
  * Returns an `StreamableLike` that publishes it's notifications.
  */
 const identity = () => _identity;
-
-const map = (mapper) => lift(map$1(mapper));
-const mapTo = (v) => lift(mapTo$1(mapT, v));
-const onNotify = (onNotify) => lift(onNotify$1(onNotify));
-const scan = (scanner, initalValue) => lift(scan$1(scanner, initalValue));
-const withLatestFrom = (other, selector) => lift(withLatestFrom$1(other, selector));
 
 const flow = ({ scheduler, } = {}) => observable => {
     const createScheduler = (modeObs) => (modeScheduler) => {
@@ -191,7 +185,7 @@ const notifyIOEvent = (data) => ({
 });
 const _done = { type: "done" };
 const doneIOEvent = () => _done;
-const decodeWithCharset = (charset = "utf-8", options) => pipe(withLatestFrom$1(compute({
+const decodeWithCharset = (charset = "utf-8", options) => pipe(withLatestFrom(compute({
     ...fromArrayT,
     ...mapT,
 })(() => new TextDecoder(charset, options)), function* (ev, decoder) {
@@ -212,8 +206,8 @@ const decodeWithCharset = (charset = "utf-8", options) => pipe(withLatestFrom$1(
             break;
         }
     }
-}), composeWith(map$1(returns)), composeWith(concatMap({ ...concatAllT, ...mapT }, fromIterator())), lift);
-const _encodeUtf8 = withLatestFrom(compute({
+}), composeWith(map(returns)), composeWith(concatMap({ ...concatAllT, ...mapT }, fromIterator())), lift);
+const _encodeUtf8 = lift(withLatestFrom(compute({
     ...fromArrayT,
     ...mapT,
 })(() => new TextEncoder()), (ev, textEncoder) => {
@@ -226,11 +220,11 @@ const _encodeUtf8 = withLatestFrom(compute({
             return ev;
         }
     }
-});
+}));
 const encodeUtf8 = _encodeUtf8;
-const mapIOEventStream = (mapper) => map((ev) => ev.type === "notify" ? pipe(ev.data, mapper, notifyIOEvent) : ev);
-const _fromObservable = compose(map$1(notifyIOEvent), endWith({ ...fromArrayT, ...concatT }, doneIOEvent()), flow());
-const toIOEventStream = () => _fromObservable;
+const mapIOEventStream = (mapper) => lift(map((ev) => ev.type === "notify" ? pipe(ev.data, mapper, notifyIOEvent) : ev));
+const _flowIOEvents = compose(map(notifyIOEvent), endWith({ ...fromArrayT, ...concatT }, doneIOEvent()), flow());
+const flowIOEvents = () => _flowIOEvents;
 const isNotify = (ev) => ev.type === "notify";
 class IOSinkAccumulatorImpl extends AbstractDisposable {
     constructor(reducer, initialValue, options) {
@@ -238,7 +232,7 @@ class IOSinkAccumulatorImpl extends AbstractDisposable {
         this.isSynchronous = false;
         const subject = createSubject(options);
         addDisposableDisposeParentOnChildError(this, subject);
-        const op = (events) => using(scheduler => pipe(events, takeWhile(isNotify), keepType(keepT, isNotify), map$1(ev => ev.data), reduce(reducer, initialValue), subscribe(scheduler, subject.dispatch, subject)), eventsSubscription => createObservable(dispatcher => {
+        const op = (events) => using(scheduler => pipe(events, takeWhile(isNotify), keepType(keepT, isNotify), map(ev => ev.data), reduce(reducer, initialValue), subscribe(scheduler, subject.dispatch, subject)), eventsSubscription => createObservable(dispatcher => {
             dispatcher.dispatch("pause");
             dispatcher.dispatch("resume");
             addDisposable(eventsSubscription, dispatcher);
@@ -267,4 +261,4 @@ class IOSinkAccumulatorImpl extends AbstractDisposable {
 /** @experimental */
 const createIOSinkAccumulator = (reducer, initialValue, options) => new IOSinkAccumulatorImpl(reducer, initialValue, options);
 
-export { __stream, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, decodeWithCharset, doneIOEvent, empty, encodeUtf8, flow, identity, lift, map, mapIOEventStream, mapReq, mapTo, notifyIOEvent, onNotify, scan, sink, stream, toIOEventStream, toStateStore, withLatestFrom };
+export { __stream, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, decodeWithCharset, doneIOEvent, empty, encodeUtf8, flow, flowIOEvents, identity, lift, mapIOEventStream, mapReq, notifyIOEvent, sink, stream, toStateStore };
