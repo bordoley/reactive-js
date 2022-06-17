@@ -90,9 +90,9 @@ export const decodeWithCharset = (
 
 const _encodeUtf8: StreamableOperator<
   FlowMode,
-  IOEvent<string>,
+  NotifyEvent<string> | DoneEvent,
   FlowMode,
-  IOEvent<Uint8Array>
+  NotifyEvent<ArrayBuffer> | DoneEvent
 > = lift(
   withLatestFrom(
     compute({
@@ -115,16 +115,16 @@ const _encodeUtf8: StreamableOperator<
 
 export const encodeUtf8: StreamableOperator<
   FlowMode,
-  IOEvent<string>,
+  NotifyEvent<string> | DoneEvent,
   FlowMode,
-  IOEvent<Uint8Array>
+  NotifyEvent<Uint8Array> | DoneEvent
 > = _encodeUtf8;
 
 export const mapIOEventStream = <TA, TB>(
   mapper: Function1<TA, TB>,
 ): Function1<
-  StreamableLike<FlowMode, IOEvent<TA>>,
-  StreamableLike<FlowMode, IOEvent<TB>>
+  StreamableLike<FlowMode, NotifyEvent<TA> | DoneEvent>,
+  StreamableLike<FlowMode, NotifyEvent<TB> | DoneEvent>
 > =>
   lift(
     map((ev: IOEvent<TA>) =>
@@ -139,7 +139,7 @@ const _flowIOEvents = compose(
 );
 export const flowIOEvents = <T>(): Function1<
   ObservableLike<T>,
-  StreamableLike<FlowMode, IOEvent<T>>
+  StreamableLike<FlowMode, NotifyEvent<T> | DoneEvent>
 > => _flowIOEvents;
 
 const isNotify = <T>(
