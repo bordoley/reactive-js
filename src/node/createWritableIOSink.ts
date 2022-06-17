@@ -7,7 +7,6 @@ import {
   dispose,
 } from "../disposable";
 import { Factory, defer, pipe } from "../functions";
-import { IOEvent, IOSinkLike } from "../io";
 import {
   ObservableLike,
   createObservable,
@@ -17,7 +16,12 @@ import {
 } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
-import { createStreamable } from "../streamable";
+import {
+  FlowMode,
+  IOEvent,
+  StreamableLike,
+  createStreamable,
+} from "../streamable";
 
 const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
 
@@ -81,7 +85,7 @@ const createWritableAndSetupEventSubscription =
 
 export const createWritableIOSink = (
   factory: Factory<DisposableValueLike<Writable>>,
-): IOSinkLike<Uint8Array> =>
+): StreamableLike<IOEvent<Uint8Array>, FlowMode> =>
   createStreamable(events =>
     using(
       createWritableAndSetupEventSubscription(factory, events),

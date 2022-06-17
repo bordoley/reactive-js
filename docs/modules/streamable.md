@@ -6,30 +6,39 @@
 
 ### Interfaces
 
+- [IOSinkAccumulatorLike](../interfaces/streamable.IOSinkAccumulatorLike.md)
 - [StreamableLike](../interfaces/streamable.StreamableLike.md)
 
 ### Type Aliases
 
 - [FlowMode](streamable.md#flowmode)
+- [IOEvent](streamable.md#ioevent)
 - [StreamableOperator](streamable.md#streamableoperator)
 
 ### Functions
 
 - [\_\_stream](streamable.md#__stream)
 - [createActionReducer](streamable.md#createactionreducer)
+- [createIOSinkAccumulator](streamable.md#createiosinkaccumulator)
 - [createStateStore](streamable.md#createstatestore)
 - [createStreamable](streamable.md#createstreamable)
+- [decodeWithCharset](streamable.md#decodewithcharset)
+- [doneIOEvent](streamable.md#doneioevent)
 - [empty](streamable.md#empty)
+- [encodeUtf8](streamable.md#encodeutf8)
 - [flow](streamable.md#flow)
 - [identity](streamable.md#identity)
 - [lift](streamable.md#lift)
 - [map](streamable.md#map)
+- [mapIOEventStream](streamable.md#mapioeventstream)
 - [mapReq](streamable.md#mapreq)
 - [mapTo](streamable.md#mapto)
+- [notifyIOEvent](streamable.md#notifyioevent)
 - [onNotify](streamable.md#onnotify)
 - [scan](streamable.md#scan)
 - [sink](streamable.md#sink)
 - [stream](streamable.md#stream)
+- [toIOEventStream](streamable.md#toioeventstream)
 - [toStateStore](streamable.md#tostatestore)
 - [withLatestFrom](streamable.md#withlatestfrom)
 
@@ -38,6 +47,18 @@
 ### FlowMode
 
 Ƭ **FlowMode**: ``"resume"`` \| ``"pause"``
+
+___
+
+### IOEvent
+
+Ƭ **IOEvent**<`T`\>: { `data`: `T` ; `type`: ``"notify"``  } \| { `type`: ``"done"``  }
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
 
 ___
 
@@ -111,6 +132,34 @@ over the notified actions, emitting each intermediate result.
 
 ___
 
+### createIOSinkAccumulator
+
+▸ **createIOSinkAccumulator**<`T`, `TAcc`\>(`reducer`, `initialValue`, `options?`): [`IOSinkAccumulatorLike`](../interfaces/streamable.IOSinkAccumulatorLike.md)<`T`, `TAcc`\>
+
+**`experimental`**
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+| `options?` | `Object` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`IOSinkAccumulatorLike`](../interfaces/streamable.IOSinkAccumulatorLike.md)<`T`, `TAcc`\>
+
+___
+
 ### createStateStore
 
 ▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
@@ -162,6 +211,39 @@ ___
 
 ___
 
+### decodeWithCharset
+
+▸ **decodeWithCharset**(`charset?`, `options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`ArrayBuffer`\>, [`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`string`\>\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `charset?` | `string` |
+| `options?` | `TextDecoderOptions` |
+
+#### Returns
+
+[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`ArrayBuffer`\>, [`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`string`\>\>
+
+___
+
+### doneIOEvent
+
+▸ **doneIOEvent**<`T`\>(): [`IOEvent`](streamable.md#ioevent)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`IOEvent`](streamable.md#ioevent)<`T`\>
+
+___
+
 ### empty
 
 ▸ **empty**<`TReq`, `T`\>(`options?`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`\>
@@ -186,6 +268,22 @@ a disposed `StreamLike` instance.
 #### Returns
 
 [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`\>
+
+___
+
+### encodeUtf8
+
+▸ **encodeUtf8**(`a`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`string`\>\> |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 ___
 
@@ -276,6 +374,29 @@ ___
 
 ___
 
+### mapIOEventStream
+
+▸ **mapIOEventStream**<`TA`, `TB`\>(`mapper`): [`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`TA`\>\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`TB`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`TA`\>\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`TB`\>\>\>
+
+___
+
 ### mapReq
 
 ▸ **mapReq**<`TReqA`, `TReqB`, `T`\>(`op`): [`StreamableOperator`](streamable.md#streamableoperator)<`TReqA`, `T`, `TReqB`, `T`\>
@@ -321,6 +442,28 @@ ___
 #### Returns
 
 [`StreamableOperator`](streamable.md#streamableoperator)<`TReq`, `TA`, `TReq`, `TB`\>
+
+___
+
+### notifyIOEvent
+
+▸ **notifyIOEvent**<`T`\>(`data`): [`IOEvent`](streamable.md#ioevent)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | `T` |
+
+#### Returns
+
+[`IOEvent`](streamable.md#ioevent)<`T`\>
 
 ___
 
@@ -418,6 +561,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`\>, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`\>\>
+
+___
+
+### toIOEventStream
+
+▸ **toIOEventStream**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`T`\>\>\>
 
 ___
 

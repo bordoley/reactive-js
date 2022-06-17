@@ -1,9 +1,9 @@
-import { compute, concatMap, endWith, keepType } from "./container";
+import { compute, concatMap, endWith, keepType } from "../container";
 import {
   AbstractDisposable,
   addDisposable,
   addDisposableDisposeParentOnChildError,
-} from "./disposable";
+} from "../disposable";
 import {
   Factory,
   Function1,
@@ -12,9 +12,8 @@ import {
   composeWith,
   pipe,
   returns,
-} from "./functions";
+} from "../functions";
 import {
-  MulticastObservableLike,
   ObservableLike,
   ObserverLike,
   StreamLike,
@@ -22,7 +21,6 @@ import {
   concatT,
   createObservable,
   createSubject,
-  fromArray as fromArrayObs,
   fromArrayT,
   fromIterator,
   keepT,
@@ -33,48 +31,36 @@ import {
   takeWhile,
   using,
   withLatestFrom as withLatestFromObs,
-} from "./observable";
+} from "../observable";
 
-import { SchedulerLike } from "./scheduler";
+import { SchedulerLike } from "../scheduler";
 import {
   FlowMode,
+  IOEvent,
+  IOSinkAccumulatorLike,
   StreamableLike,
-  createStreamable,
-  flow,
-  lift,
-  map as mapStream,
-  stream,
-  withLatestFrom,
-} from "./streamable";
+  StreamableOperator,
+} from "../streamable";
+import { flow } from "./flow";
+import { map as mapStream, withLatestFrom } from "./operators";
+import { createStreamable, lift, stream } from "./streamable";
 
-export type IOEventType = "notify" | "done";
-
-export type IOEvent<T> =
-  | { readonly type: "notify"; readonly data: T }
-  | { readonly type: "done" };
-
-export const notify = <T>(data: T): IOEvent<T> => ({
+export const notifyIOEvent = <T>(data: T): IOEvent<T> => ({
   type: "notify",
   data,
 });
 const _done: IOEvent<any> = { type: "done" };
-export const done = <T>(): IOEvent<T> => _done;
-
-/** @noInheritDoc */
-export interface IOSourceLike<T> extends StreamableLike<FlowMode, IOEvent<T>> {}
-
-/** @noInheritDoc */
-export interface IOSinkLike<T> extends StreamableLike<IOEvent<T>, FlowMode> {}
-
-export type IOSourceOperator<TA, TB> = Function1<
-  IOSourceLike<TA>,
-  IOSourceLike<TB>
->;
+export const doneIOEvent = <T>(): IOEvent<T> => _done;
 
 export const decodeWithCharset = (
   charset = "utf-8",
   options?: TextDecoderOptions,
-): IOSourceOperator<ArrayBuffer, string> =>
+): StreamableOperator<
+  FlowMode,
+  IOEvent<ArrayBuffer>,
+  FlowMode,
+  IOEvent<string>
+> =>
   pipe(
     withLatestFromObs(
       compute({
@@ -86,16 +72,16 @@ export const decodeWithCharset = (
           case "notify": {
             const data = decoder.decode(ev.data, { stream: true });
             if (data.length > 0) {
-              yield notify(data);
+              yield notifyIOEvent(data);
             }
             break;
           }
           case "done": {
             const data = decoder.decode();
             if (data.length > 0) {
-              yield notify(data);
+              yield notifyIOEvent(data);
             }
-            yield done<string>();
+            yield doneIOEvent<string>();
             break;
           }
         }
@@ -106,7 +92,12 @@ export const decodeWithCharset = (
     lift,
   );
 
-const _encodeUtf8: IOSourceOperator<string, Uint8Array> = withLatestFrom(
+const _encodeUtf8: StreamableOperator<
+  FlowMode,
+  IOEvent<string>,
+  FlowMode,
+  IOEvent<Uint8Array>
+> = withLatestFrom(
   compute({
     ...fromArrayT,
     ...mapT,
@@ -115,7 +106,7 @@ const _encodeUtf8: IOSourceOperator<string, Uint8Array> = withLatestFrom(
     switch (ev.type) {
       case "notify": {
         const data = textEncoder.encode(ev.data);
-        return notify(data);
+        return notifyIOEvent(data);
       }
       case "done": {
         return ev;
@@ -123,51 +114,36 @@ const _encodeUtf8: IOSourceOperator<string, Uint8Array> = withLatestFrom(
     }
   },
 );
-export const encodeUtf8: IOSourceOperator<string, Uint8Array> = _encodeUtf8;
+export const encodeUtf8: StreamableOperator<
+  FlowMode,
+  IOEvent<string>,
+  FlowMode,
+  IOEvent<Uint8Array>
+> = _encodeUtf8;
 
-export const map = <TA, TB>(
+export const mapIOEventStream = <TA, TB>(
   mapper: Function1<TA, TB>,
-): Function1<IOSourceLike<TA>, IOSourceLike<TB>> =>
+): Function1<
+  StreamableLike<FlowMode, IOEvent<TA>>,
+  StreamableLike<FlowMode, IOEvent<TB>>
+> =>
   mapStream((ev: IOEvent<TA>) =>
-    ev.type === "notify" ? pipe(ev.data, mapper, notify) : ev,
+    ev.type === "notify" ? pipe(ev.data, mapper, notifyIOEvent) : ev,
   );
 
 const _fromObservable = compose(
-  mapObs(notify),
-  endWith({ ...fromArrayT, ...concatT }, done()),
+  mapObs(notifyIOEvent),
+  endWith({ ...fromArrayT, ...concatT }, doneIOEvent()),
   flow(),
 );
-export const fromObservable = <T>(): Function1<
+export const toIOEventStream = <T>(): Function1<
   ObservableLike<T>,
-  IOSourceLike<T>
+  StreamableLike<FlowMode, IOEvent<T>>
 > => _fromObservable;
-
-export const fromArray = <T>(options?: {
-  readonly delay?: number;
-  readonly startIndex?: number;
-  readonly endIndex?: number;
-}): Function1<readonly T[], IOSourceLike<T>> =>
-  compose(fromArrayObs(options), fromObservable());
-
-export const fromValue =
-  <T>(options?: { readonly delay?: number }): Function1<T, IOSourceLike<T>> =>
-  v =>
-    fromArray<T>(options)([v]);
-
-const _empty: IOSourceLike<any> = fromArray()([]);
-export const empty = <T>(): IOSourceLike<T> => _empty;
 
 const isNotify = <T>(
   ev: IOEvent<T>,
 ): ev is { readonly type: "notify"; readonly data: T } => ev.type === "notify";
-
-/**
- * @experimental
- * @noInheritDoc
- * */
-export interface IOSinkAccumulatorLike<T, TAcc>
-  extends IOSinkLike<T>,
-    MulticastObservableLike<TAcc> {}
 
 class IOSinkAccumulatorImpl<T, TAcc>
   extends AbstractDisposable

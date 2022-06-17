@@ -20,9 +20,9 @@ An `ObservableLike` that shares a common subscription to an underlying observabl
 
   ↳ **`MulticastObservableLike`**
 
-  ↳↳ [`IOSinkAccumulatorLike`](io.IOSinkAccumulatorLike.md)
-
   ↳↳ [`StreamLike`](observable.StreamLike.md)
+
+  ↳↳ [`IOSinkAccumulatorLike`](streamable.IOSinkAccumulatorLike.md)
 
 ## Table of contents
 

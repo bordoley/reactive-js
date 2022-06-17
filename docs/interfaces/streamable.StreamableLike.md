@@ -17,9 +17,7 @@
 
   ↳ [`AsyncEnumerableLike`](asyncEnumerable.AsyncEnumerableLike.md)
 
-  ↳ [`IOSinkLike`](io.IOSinkLike.md)
-
-  ↳ [`IOSourceLike`](io.IOSourceLike.md)
+  ↳ [`IOSinkAccumulatorLike`](streamable.IOSinkAccumulatorLike.md)
 
   ↳ [`WindowLocationStreamableLike`](web.WindowLocationStreamableLike.md)
 

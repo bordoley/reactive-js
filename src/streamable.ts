@@ -1,5 +1,5 @@
 import { Function1 } from "./functions";
-import { StreamLike } from "./observable";
+import { MulticastObservableLike, StreamLike } from "./observable";
 import { SchedulerLike } from "./scheduler";
 
 export interface StreamableLike<TReq, T> {
@@ -15,7 +15,19 @@ export type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<
   StreamableLike<TReq, T>
 >;
 
+/**
+ * @experimental
+ * @noInheritDoc
+ * */
+export interface IOSinkAccumulatorLike<T, TAcc>
+  extends StreamableLike<IOEvent<T>, FlowMode>,
+    MulticastObservableLike<TAcc> {}
+
 export type FlowMode = "resume" | "pause";
+
+export type IOEvent<T> =
+  | { readonly type: "notify"; readonly data: T }
+  | { readonly type: "done" };
 
 export {
   createActionReducer,
@@ -40,3 +52,12 @@ export {
 } from "./streamable/operators";
 export { flow } from "./streamable/flow";
 export { sink } from "./streamable/sink";
+export {
+  notifyIOEvent,
+  createIOSinkAccumulator,
+  doneIOEvent,
+  decodeWithCharset,
+  encodeUtf8,
+  mapIOEventStream,
+  toIOEventStream,
+} from "./streamable/io";
