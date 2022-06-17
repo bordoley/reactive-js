@@ -1,10 +1,11 @@
 import {
-  AsyncConsumer,
-  AsyncEnumerableLike,
-  ConsumeRequest,
-  Consumer,
-} from "../asyncEnumerable";
-import { Factory, Function1, compose, flip, pipe } from "../functions";
+  Factory,
+  Function1,
+  Function2,
+  compose,
+  flip,
+  pipe,
+} from "../functions";
 import {
   ObservableLike,
   ObservableOperator,
@@ -20,25 +21,20 @@ import {
   zipWithLatestFrom,
 } from "../observable";
 import { none } from "../option";
-import { stream } from "../streamable";
-
-export const notify = <TAcc>(acc: TAcc): ConsumeRequest<TAcc> => ({
-  type: "notify",
-  acc,
-});
-
-export const done = <TAcc>(acc: TAcc): ConsumeRequest<TAcc> => ({
-  type: "done",
-  acc,
-});
+import {
+  DoneEventWithData,
+  NotifyEvent,
+  StreamableLike,
+  stream,
+} from "../streamable";
 
 const consumeImpl =
   <TSrc, TAcc>(
     consumer: (
       acc: ObservableLike<TAcc>,
-    ) => ObservableOperator<TSrc, ConsumeRequest<TAcc>>,
+    ) => ObservableOperator<TSrc, NotifyEvent<TAcc> | DoneEventWithData<TAcc>>,
     initial: Factory<TAcc>,
-  ): Function1<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> =>
+  ): Function1<StreamableLike<void, TSrc>, ObservableLike<TAcc>> =>
   enumerable =>
     using(
       scheduler => {
@@ -54,12 +50,12 @@ const consumeImpl =
           onNotify(ev => {
             switch (ev.type) {
               case "notify":
-                accFeedback.dispatch(ev.acc);
+                accFeedback.dispatch(ev.data);
                 enumerator.dispatch(none);
                 break;
             }
           }),
-          map(ev => ev.acc),
+          map(ev => ev.data),
           onSubscribe(() => {
             accFeedback.dispatch(initial());
             enumerator.dispatch(none);
@@ -68,15 +64,19 @@ const consumeImpl =
     );
 
 export const consume = <T, TAcc>(
-  consumer: Consumer<T, TAcc>,
+  consumer: Function2<TAcc, T, NotifyEvent<TAcc> | DoneEventWithData<TAcc>>,
   initial: Factory<TAcc>,
-): Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
+): Function1<StreamableLike<void, T>, ObservableLike<TAcc>> =>
   consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
 
 export const consumeAsync = <T, TAcc>(
-  consumer: AsyncConsumer<T, TAcc>,
+  consumer: Function2<
+    TAcc,
+    T,
+    ObservableLike<NotifyEvent<TAcc> | DoneEventWithData<TAcc>>
+  >,
   initial: Factory<TAcc>,
-): Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
+): Function1<StreamableLike<void, T>, ObservableLike<TAcc>> =>
   consumeImpl(
     accObs =>
       compose(

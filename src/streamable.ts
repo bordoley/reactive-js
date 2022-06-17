@@ -20,14 +20,14 @@ export type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<
  * @noInheritDoc
  * */
 export interface IOSinkAccumulatorLike<T, TAcc>
-  extends StreamableLike<IOEvent<T>, FlowMode>,
+  extends StreamableLike<NotifyEvent<T> | DoneEvent, FlowMode>,
     MulticastObservableLike<TAcc> {}
 
 export type FlowMode = "resume" | "pause";
 
-export type IOEvent<T> =
-  | { readonly type: "notify"; readonly data: T }
-  | { readonly type: "done" };
+export type NotifyEvent<T> = { readonly type: "notify"; readonly data: T };
+export type DoneEvent = { readonly type: "done" };
+export type DoneEventWithData<T> = { readonly type: "done"; readonly data: T };
 
 export {
   createActionReducer,
@@ -46,9 +46,7 @@ export { identity } from "./streamable/identity";
 export { flow } from "./streamable/flow";
 export { sink } from "./streamable/sink";
 export {
-  notifyIOEvent,
   createIOSinkAccumulator,
-  doneIOEvent,
   decodeWithCharset,
   encodeUtf8,
   mapIOEventStream,
@@ -59,3 +57,7 @@ export { fromArray } from "./streamable/fromArray";
 export { fromEnumerable } from "./streamable/fromEnumerable";
 export { fromIterable } from "./streamable/fromIterable";
 export { generate } from "./streamable/generate";
+
+export { consume, consumeAsync } from "./streamable/consume";
+
+export { notifyEvent, doneEvent, doneEventWithData } from "./streamable/events";

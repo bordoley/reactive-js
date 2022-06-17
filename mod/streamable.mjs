@@ -1,8 +1,8 @@
 /// <reference types="./streamable.d.ts" />
 import { empty as empty$1, fromValue, ignoreElements, endWith, compute, concatMap, keepType, concatWith } from './container.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError } from './disposable.mjs';
-import { pipe, compose, returns, updaterReducer, identity as identity$1, composeWith } from './functions.mjs';
-import { createSubject, publish, observe, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, withLatestFrom, mapT, concatAllT, fromIterator, takeWhile, reduce, createObservable, takeFirst, never, onNotify, scanAsync } from './observable.mjs';
+import { pipe, compose, returns, updaterReducer, identity as identity$1, composeWith, flip } from './functions.mjs';
+import { createSubject, publish, observe, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, withLatestFrom, mapT, concatAllT, fromIterator, takeWhile, reduce, createObservable, takeFirst, never, onNotify, scanAsync, onSubscribe, switchAll } from './observable.mjs';
 import { isNone, none } from './option.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
 import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
@@ -180,12 +180,16 @@ const sink = (src, dest) => using(scheduler => {
     return destStream;
 }, ignoreAndNotifyVoid);
 
-const notifyIOEvent = (data) => ({
+const notifyEvent = (data) => ({
     type: "notify",
     data,
 });
-const _done = { type: "done" };
-const doneIOEvent = () => _done;
+const doneEventWithData = (data) => ({
+    type: "done",
+    data,
+});
+const doneEvent = { type: "done" };
+
 const decodeWithCharset = (charset = "utf-8", options) => pipe(withLatestFrom(compute({
     ...fromArrayT,
     ...mapT,
@@ -194,16 +198,16 @@ const decodeWithCharset = (charset = "utf-8", options) => pipe(withLatestFrom(co
         case "notify": {
             const data = decoder.decode(ev.data, { stream: true });
             if (data.length > 0) {
-                yield notifyIOEvent(data);
+                yield notifyEvent(data);
             }
             break;
         }
         case "done": {
             const data = decoder.decode();
             if (data.length > 0) {
-                yield notifyIOEvent(data);
+                yield notifyEvent(data);
             }
-            yield doneIOEvent();
+            yield doneEvent;
             break;
         }
     }
@@ -215,7 +219,7 @@ const _encodeUtf8 = lift(withLatestFrom(compute({
     switch (ev.type) {
         case "notify": {
             const data = textEncoder.encode(ev.data);
-            return notifyIOEvent(data);
+            return notifyEvent(data);
         }
         case "done": {
             return ev;
@@ -223,8 +227,8 @@ const _encodeUtf8 = lift(withLatestFrom(compute({
     }
 }));
 const encodeUtf8 = _encodeUtf8;
-const mapIOEventStream = (mapper) => lift(map((ev) => ev.type === "notify" ? pipe(ev.data, mapper, notifyIOEvent) : ev));
-const _flowIOEvents = compose(map(notifyIOEvent), endWith({ ...fromArrayT, ...concatT }, doneIOEvent()), flow());
+const mapIOEventStream = (mapper) => lift(map((ev) => ev.type === "notify" ? pipe(ev.data, mapper, notifyEvent) : ev));
+const _flowIOEvents = compose(map(notifyEvent), endWith({ ...fromArrayT, ...concatT }, doneEvent), flow());
 const flowIOEvents = () => _flowIOEvents;
 const isNotify = (ev) => ev.type === "notify";
 class IOSinkAccumulatorImpl extends AbstractDisposable {
@@ -318,4 +322,22 @@ const generate = (generator, initialValue, options = {}) => {
     return createStreamable(op);
 };
 
-export { __stream, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, decodeWithCharset, doneIOEvent, empty, encodeUtf8, flow, flowIOEvents, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapIOEventStream, mapReq, notifyIOEvent, sink, stream, toStateStore };
+const consumeImpl = (consumer, initial) => enumerable => using(scheduler => {
+    const enumerator = pipe(enumerable, stream(scheduler));
+    const accFeedback = createSubject();
+    return [accFeedback, enumerator];
+}, (accFeedback, enumerator) => pipe(enumerator, consumer(accFeedback), onNotify(ev => {
+    switch (ev.type) {
+        case "notify":
+            accFeedback.dispatch(ev.data);
+            enumerator.dispatch(none);
+            break;
+    }
+}), map(ev => ev.data), onSubscribe(() => {
+    accFeedback.dispatch(initial());
+    enumerator.dispatch(none);
+})));
+const consume = (consumer, initial) => consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
+const consumeAsync = (consumer, initial) => consumeImpl(accObs => compose(zipWithLatestFrom(accObs, (next, acc) => pipe(consumer(acc, next), takeFirst())), switchAll()), initial);
+
+export { __stream, consume, consumeAsync, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, decodeWithCharset, doneEvent, doneEventWithData, empty, encodeUtf8, flow, flowIOEvents, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapIOEventStream, mapReq, notifyEvent, sink, stream, toStateStore };
