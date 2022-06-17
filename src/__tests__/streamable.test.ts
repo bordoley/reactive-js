@@ -36,13 +36,16 @@ import {
   toRunnable,
 } from "../observable";
 import { Option, none } from "../option";
-import { toArray } from "../runnable";
+import { last, toArray } from "../runnable";
 import { createVirtualTimeScheduler, schedule } from "../scheduler";
 import {
   __stream,
+  consume,
+  consumeAsync,
   createActionReducer,
   createIOSinkAccumulator,
   decodeWithCharset,
+  doneEventWithData,
   empty,
   encodeUtf8,
   flow,
@@ -54,6 +57,7 @@ import {
   lift,
   mapIOEventStream,
   mapReq,
+  notifyEvent,
   sink,
   stream,
   toStateStore,
@@ -636,4 +640,67 @@ export const tests = describe(
 
     pipe(result, expectArrayEquals([1, 2, 3]));
   }),
+  describe(
+    "async-enumerable",
+    test("consume", () => {
+      const enumerable = fromIterable<number>()([1, 2, 3, 4, 5, 6]);
+
+      pipe(
+        enumerable,
+        consume((acc, next) => notifyEvent(acc + next), returns<number>(0)),
+        toRunnable(),
+        last(),
+        expectEquals(21),
+      );
+
+      pipe(
+        enumerable,
+        consume(
+          (acc, next) =>
+            acc > 0 ? doneEventWithData(acc + next) : notifyEvent(acc + next),
+          returns<number>(0),
+        ),
+        toRunnable(),
+        last(),
+        expectEquals(3),
+      );
+    }),
+
+    describe(
+      "consumeAsync",
+      test(
+        "when the consumer early terminates",
+        defer(
+          [1, 2, 3, 4, 5, 6],
+          fromIterable(),
+          consumeAsync(
+            (acc, next) =>
+              fromValue(fromArrayT)(
+                acc > 0
+                  ? doneEventWithData(acc + next)
+                  : notifyEvent(acc + next),
+              ),
+            returns<number>(0),
+          ),
+          toRunnable(),
+          last(),
+          expectEquals(3),
+        ),
+      ),
+      test(
+        "when the consumer never terminates",
+        defer(
+          [1, 2, 3, 4, 5, 6],
+          fromIterable(),
+          consumeAsync(
+            (acc, next) => pipe(acc + next, notifyEvent, fromValue(fromArrayT)),
+            returns<number>(0),
+          ),
+          toRunnable(),
+          last(),
+          expectEquals(21),
+        ),
+      ),
+    ),
+  ),
 );

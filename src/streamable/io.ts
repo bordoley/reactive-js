@@ -35,30 +35,27 @@ import {
 
 import { SchedulerLike } from "../scheduler";
 import {
+  DoneEvent,
   FlowMode,
-  IOEvent,
   IOSinkAccumulatorLike,
+  NotifyEvent,
   StreamableLike,
   StreamableOperator,
 } from "../streamable";
+import { doneEvent, notifyEvent } from "./events";
 import { flow } from "./flow";
 import { createStreamable, lift, stream } from "./streamable";
 
-export const notifyIOEvent = <T>(data: T): IOEvent<T> => ({
-  type: "notify",
-  data,
-});
-const _done: IOEvent<any> = { type: "done" };
-export const doneIOEvent = <T>(): IOEvent<T> => _done;
+type IOEvent<T> = NotifyEvent<T> | DoneEvent;
 
 export const decodeWithCharset = (
   charset = "utf-8",
   options?: TextDecoderOptions,
 ): StreamableOperator<
   FlowMode,
-  IOEvent<ArrayBuffer>,
+  NotifyEvent<ArrayBuffer> | DoneEvent,
   FlowMode,
-  IOEvent<string>
+  NotifyEvent<string> | DoneEvent
 > =>
   pipe(
     withLatestFrom(
@@ -71,16 +68,16 @@ export const decodeWithCharset = (
           case "notify": {
             const data = decoder.decode(ev.data, { stream: true });
             if (data.length > 0) {
-              yield notifyIOEvent(data);
+              yield notifyEvent(data);
             }
             break;
           }
           case "done": {
             const data = decoder.decode();
             if (data.length > 0) {
-              yield notifyIOEvent(data);
+              yield notifyEvent(data);
             }
-            yield doneIOEvent<string>();
+            yield doneEvent;
             break;
           }
         }
@@ -106,7 +103,7 @@ const _encodeUtf8: StreamableOperator<
       switch (ev.type) {
         case "notify": {
           const data = textEncoder.encode(ev.data);
-          return notifyIOEvent(data);
+          return notifyEvent(data);
         }
         case "done": {
           return ev;
@@ -131,13 +128,13 @@ export const mapIOEventStream = <TA, TB>(
 > =>
   lift(
     map((ev: IOEvent<TA>) =>
-      ev.type === "notify" ? pipe(ev.data, mapper, notifyIOEvent) : ev,
+      ev.type === "notify" ? pipe(ev.data, mapper, notifyEvent) : ev,
     ),
   );
 
 const _flowIOEvents = compose(
-  map(notifyIOEvent),
-  endWith({ ...fromArrayT, ...concatT }, doneIOEvent()),
+  map(notifyEvent),
+  endWith({ ...fromArrayT, ...concatT }, doneEvent as IOEvent<any>),
   flow(),
 );
 export const flowIOEvents = <T>(): Function1<
