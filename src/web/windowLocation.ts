@@ -9,19 +9,14 @@ import {
   ObserverLike,
   StreamLike,
   keep,
+  map,
   onNotify,
   subscribe,
   throttle,
 } from "../observable";
 import { Option, isNone, none } from "../option";
 import { SchedulerLike } from "../scheduler";
-import {
-  createStateStore,
-  lift,
-  map,
-  onNotify as onNotifyStream,
-  stream,
-} from "../streamable";
+import { createStateStore, lift, stream } from "../streamable";
 import {
   WindowLocationStreamLike,
   WindowLocationStreamableLike,
@@ -104,14 +99,16 @@ class WindowLocationStream
         uri: getCurrentWindowLocationURI(),
       }),
       createStateStore,
-      onNotifyStream(({ uri }) => {
-        // Initialize the history state on page load
-        const isInitialPageLoad = this.historyCounter === -1;
-        if (isInitialPageLoad) {
-          this.historyCounter === 0;
-          windowHistoryReplaceState(this, uri);
-        }
-      }),
+      lift(
+        onNotify(({ uri }) => {
+          // Initialize the history state on page load
+          const isInitialPageLoad = this.historyCounter === -1;
+          if (isInitialPageLoad) {
+            this.historyCounter === 0;
+            windowHistoryReplaceState(this, uri);
+          }
+        }),
+      ),
       lift(
         keep(({ uri }) => {
           const { title } = uri;
@@ -124,23 +121,25 @@ class WindowLocationStream
         }),
       ),
       lift(throttle(300)),
-      onNotifyStream(({ replace, uri }) => {
-        const { title } = uri;
+      lift(
+        onNotify(({ replace, uri }) => {
+          const { title } = uri;
 
-        const uriString = windowLocationURIToString(uri);
-        const titleChanged = document.title !== title;
-        const uriChanged = uriString !== window.location.href;
+          const uriString = windowLocationURIToString(uri);
+          const titleChanged = document.title !== title;
+          const uriChanged = uriString !== window.location.href;
 
-        const shouldReplace = replace || (titleChanged && !uriChanged);
+          const shouldReplace = replace || (titleChanged && !uriChanged);
 
-        const updateHistoryState = shouldReplace
-          ? windowHistoryReplaceState
-          : windowHistoryPushState;
+          const updateHistoryState = shouldReplace
+            ? windowHistoryReplaceState
+            : windowHistoryPushState;
 
-        document.title = title;
-        updateHistoryState(this, uri);
-      }),
-      map(({ uri }) => uri),
+          document.title = title;
+          updateHistoryState(this, uri);
+        }),
+      ),
+      lift(map(({ uri }) => uri)),
       stream(scheduler, options),
     );
 

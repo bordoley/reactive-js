@@ -9,7 +9,7 @@ import {
 } from "../node";
 import { fromArray, takeFirst, toPromise } from "../observable";
 import { createHostScheduler } from "../scheduler";
-import { createIOSinkAccumulator, sink, toIOEventStream } from "../streamable";
+import { createIOSinkAccumulator, sink, flowIOEvents } from "../streamable";
 import {
   describe,
   expectEquals,
@@ -43,7 +43,7 @@ export const tests = describe(
       const src = pipe(
         [encoder.encode("abc"), encoder.encode("defg")],
         fromArray(),
-        toIOEventStream(),
+        flowIOEvents(),
       );
 
       await pipe(sink(src, dest), toPromise(scheduler));
@@ -70,7 +70,7 @@ export const tests = describe(
       const src = pipe(
         [encoder.encode("abc"), encoder.encode("defg")],
         fromArray(),
-        toIOEventStream(),
+        flowIOEvents(),
       );
 
       const promise = pipe(sink(src, dest), toPromise(scheduler));
@@ -131,7 +131,7 @@ export const tests = describe(
     const src = pipe(
       [encoder.encode("abc"), encoder.encode("defg")],
       fromArray<Uint8Array>(),
-      toIOEventStream(),
+      flowIOEvents(),
       gzip(),
       gunzip(),
     );

@@ -24,13 +24,13 @@ import {
   fromArrayT,
   fromIterator,
   keepT,
-  map as mapObs,
+  map,
   mapT,
   reduce,
   subscribe,
   takeWhile,
   using,
-  withLatestFrom as withLatestFromObs,
+  withLatestFrom,
 } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
@@ -42,7 +42,6 @@ import {
   StreamableOperator,
 } from "../streamable";
 import { flow } from "./flow";
-import { map as mapStream, withLatestFrom } from "./operators";
 import { createStreamable, lift, stream } from "./streamable";
 
 export const notifyIOEvent = <T>(data: T): IOEvent<T> => ({
@@ -62,7 +61,7 @@ export const decodeWithCharset = (
   IOEvent<string>
 > =>
   pipe(
-    withLatestFromObs(
+    withLatestFrom(
       compute({
         ...fromArrayT,
         ...mapT,
@@ -87,7 +86,7 @@ export const decodeWithCharset = (
         }
       },
     ),
-    composeWith(mapObs(returns)),
+    composeWith(map(returns)),
     composeWith(concatMap({ ...concatAllT, ...mapT }, fromIterator())),
     lift,
   );
@@ -97,23 +96,26 @@ const _encodeUtf8: StreamableOperator<
   IOEvent<string>,
   FlowMode,
   IOEvent<Uint8Array>
-> = withLatestFrom(
-  compute({
-    ...fromArrayT,
-    ...mapT,
-  })(() => new TextEncoder()),
-  (ev, textEncoder: TextEncoder) => {
-    switch (ev.type) {
-      case "notify": {
-        const data = textEncoder.encode(ev.data);
-        return notifyIOEvent(data);
+> = lift(
+  withLatestFrom(
+    compute({
+      ...fromArrayT,
+      ...mapT,
+    })(() => new TextEncoder()),
+    (ev, textEncoder: TextEncoder) => {
+      switch (ev.type) {
+        case "notify": {
+          const data = textEncoder.encode(ev.data);
+          return notifyIOEvent(data);
+        }
+        case "done": {
+          return ev;
+        }
       }
-      case "done": {
-        return ev;
-      }
-    }
-  },
+    },
+  ),
 );
+
 export const encodeUtf8: StreamableOperator<
   FlowMode,
   IOEvent<string>,
@@ -127,19 +129,21 @@ export const mapIOEventStream = <TA, TB>(
   StreamableLike<FlowMode, IOEvent<TA>>,
   StreamableLike<FlowMode, IOEvent<TB>>
 > =>
-  mapStream((ev: IOEvent<TA>) =>
-    ev.type === "notify" ? pipe(ev.data, mapper, notifyIOEvent) : ev,
+  lift(
+    map((ev: IOEvent<TA>) =>
+      ev.type === "notify" ? pipe(ev.data, mapper, notifyIOEvent) : ev,
+    ),
   );
 
-const _fromObservable = compose(
-  mapObs(notifyIOEvent),
+const _flowIOEvents = compose(
+  map(notifyIOEvent),
   endWith({ ...fromArrayT, ...concatT }, doneIOEvent()),
   flow(),
 );
-export const toIOEventStream = <T>(): Function1<
+export const flowIOEvents = <T>(): Function1<
   ObservableLike<T>,
   StreamableLike<FlowMode, IOEvent<T>>
-> => _fromObservable;
+> => _flowIOEvents;
 
 const isNotify = <T>(
   ev: IOEvent<T>,
@@ -178,7 +182,7 @@ class IOSinkAccumulatorImpl<T, TAcc>
             events,
             takeWhile(isNotify),
             keepType(keepT, isNotify),
-            mapObs(ev => ev.data),
+            map(ev => ev.data),
             reduce(reducer, initialValue),
             subscribe(scheduler, subject.dispatch, subject),
           ),
