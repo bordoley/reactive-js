@@ -54,3 +54,8 @@ export {
   mapIOEventStream,
   flowIOEvents,
 } from "./streamable/io";
+
+export { fromArray } from "./streamable/fromArray";
+export { fromEnumerable } from "./streamable/fromEnumerable";
+export { fromIterable } from "./streamable/fromIterable";
+export { generate } from "./streamable/generate";

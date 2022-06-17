@@ -1,10 +1,11 @@
 /// <reference types="./streamable.d.ts" />
 import { empty as empty$1, fromValue, ignoreElements, endWith, compute, concatMap, keepType } from './container.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError } from './disposable.mjs';
-import { pipe, compose, returns, updaterReducer, identity as identity$1, composeWith } from './functions.mjs';
-import { createSubject, publish, observe, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, withLatestFrom, mapT, concatAllT, fromIterator, takeWhile, reduce, createObservable } from './observable.mjs';
+import { pipe, compose, returns, updaterReducer, identity as identity$1, composeWith, defer } from './functions.mjs';
+import { createSubject, publish, observe, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, withLatestFrom, mapT, concatAllT, fromIterator, takeWhile, reduce, createObservable, takeFirst, onNotify, scanAsync } from './observable.mjs';
 import { isNone, none } from './option.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
+import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
 
 class StreamImpl extends AbstractDisposable {
     constructor(op, scheduler, options) {
@@ -261,4 +262,63 @@ class IOSinkAccumulatorImpl extends AbstractDisposable {
 /** @experimental */
 const createIOSinkAccumulator = (reducer, initialValue, options) => new IOSinkAccumulatorImpl(reducer, initialValue, options);
 
-export { __stream, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, decodeWithCharset, doneIOEvent, empty, encodeUtf8, flow, flowIOEvents, identity, lift, mapIOEventStream, mapReq, notifyIOEvent, sink, stream, toStateStore };
+const fromArrayScanner = (acc, _) => acc + 1;
+/**
+ * Returns an `AsyncEnumerableLike` from the provided array.
+ *
+ * @param values The array.
+ */
+const fromArray = (options = {}) => values => {
+    var _a, _b;
+    const valuesLength = values.length;
+    const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
+    const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : valuesLength, valuesLength), 0);
+    const fromValueWithDelay = fromValue(fromArrayT, options);
+    return createStreamable(compose(scan(fromArrayScanner, returns(startIndex - 1)), concatMap({ ...mapT, ...concatAllT }, (i) => fromValueWithDelay(values[i])), takeFirst({ count: endIndex - startIndex })));
+};
+
+const _fromEnumerable = (enumerable) => createStreamable(compose(withLatestFrom(compute({
+    ...fromArrayT,
+    ...mapT,
+})(defer(enumerable, enumerate)), (_, enumerator) => enumerator), onNotify(move), takeWhile(hasCurrent), map(current)));
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+const fromEnumerable = () => _fromEnumerable;
+
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+const _fromIterable = (iterable) => pipe(iterable, fromIterable$1(), fromEnumerable());
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+const fromIterable = () => _fromIterable;
+
+const generateScanner = (generator) => (acc, _) => generator(acc);
+const asyncGeneratorScanner = (generator, options) => {
+    const fromValueWithDelay = fromValue(fromArrayT, options);
+    return (acc, _) => pipe(acc, generator, fromValueWithDelay);
+};
+/**
+ * Generates an `AsyncEnumerableLike` sequence from a generator function
+ * that is applied to an accumulator value.
+ *
+ * @param generator The generator function.
+ * @param initialValue Factory function to generate the initial accumulator.
+ */
+const generate = (generator, initialValue, options = {}) => {
+    const { delay = 0 } = options;
+    const op = delay > 0
+        ? scanAsync(asyncGeneratorScanner(generator, options), initialValue)
+        : scan(generateScanner(generator), initialValue);
+    return createStreamable(op);
+};
+
+export { __stream, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, decodeWithCharset, doneIOEvent, empty, encodeUtf8, flow, flowIOEvents, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapIOEventStream, mapReq, notifyIOEvent, sink, stream, toStateStore };

@@ -1,8 +1,8 @@
-import { AsyncEnumerableLike } from "../asyncEnumerable";
 import { concatMap, fromValue as fromValueContainer } from "../container";
 import { Function1, compose, returns } from "../functions";
 import { concatAllT, fromArrayT, mapT, scan, takeFirst } from "../observable";
-import { createStreamable } from "../streamable";
+import { StreamableLike } from "../streamable";
+import { createStreamable } from "./streamable";
 
 const fromArrayScanner = (acc: number, _: void): number => acc + 1;
 
@@ -18,7 +18,7 @@ export const fromArray =
       readonly startIndex?: number;
       readonly endIndex?: number;
     } = {},
-  ): Function1<readonly T[], AsyncEnumerableLike<T>> =>
+  ): Function1<readonly T[], StreamableLike<void, T>> =>
   values => {
     const valuesLength = values.length;
     const startIndex = Math.min(options.startIndex ?? 0, valuesLength);

@@ -1,4 +1,3 @@
-import { AsyncEnumerableLike } from "../asyncEnumerable";
 import { compute } from "../container";
 import {
   EnumerableLike,
@@ -17,11 +16,12 @@ import {
   takeWhile,
   withLatestFrom,
 } from "../observable";
-import { createStreamable } from "../streamable";
+import { StreamableLike } from "../streamable";
+import { createStreamable } from "./streamable";
 
 const _fromEnumerable = <T>(
   enumerable: EnumerableLike<T>,
-): AsyncEnumerableLike<T> =>
+): StreamableLike<void, T> =>
   createStreamable(
     compose(
       withLatestFrom<void, EnumeratorLike<T>, EnumeratorLike<T>>(
@@ -44,5 +44,5 @@ const _fromEnumerable = <T>(
  */
 export const fromEnumerable = <T>(): Function1<
   EnumerableLike<T>,
-  AsyncEnumerableLike<T>
+  StreamableLike<void, T>
 > => _fromEnumerable;

@@ -1,27 +1,10 @@
-import {
-  consume,
-  consumeAsync,
-  done,
-  fromArray,
-  fromIterable,
-  generate,
-  notify,
-} from "../asyncEnumerable";
+import { consume, consumeAsync, done, notify } from "../asyncEnumerable";
 import { fromValue } from "../container";
-import { Error, addTeardown } from "../disposable";
-import { defer, increment, pipe, returns } from "../functions";
-import { fromArrayT, subscribe, toRunnable } from "../observable";
-import { Option, none } from "../option";
+import { defer, pipe, returns } from "../functions";
+import { fromArrayT, toRunnable } from "../observable";
 import { last } from "../runnable";
-import { createVirtualTimeScheduler } from "../scheduler";
-import { stream } from "../streamable";
-import {
-  describe,
-  expectArrayEquals,
-  expectEquals,
-  expectNone,
-  test,
-} from "../testing";
+import { fromIterable } from "../streamable";
+import { describe, expectEquals, test } from "../testing";
 
 export const tests = describe(
   "async-enumerable",
@@ -82,77 +65,4 @@ export const tests = describe(
       ),
     ),
   ),
-
-  test("fromArray", () => {
-    const scheduler = createVirtualTimeScheduler();
-    const enumerable = pipe([1, 2, 3, 4, 5, 6], fromArray<number>());
-    const enumerator = pipe(enumerable, stream(scheduler));
-
-    const result: number[] = [];
-    pipe(
-      enumerator,
-      subscribe(scheduler, x => result.push(x)),
-    );
-
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-
-    scheduler.run();
-
-    pipe(result, expectArrayEquals([1, 2, 3]));
-  }),
-
-  test("fromIterable", () => {
-    const scheduler = createVirtualTimeScheduler();
-    const enumerator = pipe(
-      fromIterable<number>()([1, 2, 3, 4, 5, 6]),
-      stream(scheduler),
-    );
-
-    const result: number[] = [];
-    let error: Option<Error> = none;
-    const subscription = pipe(
-      enumerator,
-      subscribe(scheduler, x => result.push(x)),
-    );
-
-    addTeardown(subscription, e => {
-      error = e;
-    });
-
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-
-    scheduler.run();
-
-    pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
-    pipe(error, expectNone);
-  }),
-
-  test("generate", () => {
-    const scheduler = createVirtualTimeScheduler();
-    const enumerator = pipe(
-      generate(increment, returns<number>(0)),
-      stream(scheduler),
-    );
-
-    const result: number[] = [];
-    pipe(
-      enumerator,
-      subscribe(scheduler, x => result.push(x)),
-    );
-
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-
-    scheduler.run();
-
-    pipe(result, expectArrayEquals([1, 2, 3]));
-  }),
 );

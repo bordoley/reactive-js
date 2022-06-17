@@ -5,7 +5,7 @@ import {
   mapTo,
   startWith,
 } from "../container";
-import { addTeardown, dispose } from "../disposable";
+import { Error, addTeardown, dispose } from "../disposable";
 import {
   defer,
   increment,
@@ -35,7 +35,7 @@ import {
   takeFirst,
   toRunnable,
 } from "../observable";
-import { none } from "../option";
+import { Option, none } from "../option";
 import { toArray } from "../runnable";
 import { createVirtualTimeScheduler, schedule } from "../scheduler";
 import {
@@ -47,6 +47,9 @@ import {
   encodeUtf8,
   flow,
   flowIOEvents,
+  fromArray as fromArrayStream,
+  fromIterable,
+  generate as generateStream,
   identity,
   lift,
   mapIOEventStream,
@@ -60,6 +63,7 @@ import {
   expectArrayEquals,
   expectEquals,
   expectFalse,
+  expectNone,
   expectToHaveBeenCalledTimes,
   expectTrue,
   mockFn,
@@ -559,4 +563,77 @@ export const tests = describe(
       expectTrue(subscription.isDisposed);
     }),
   ),
+
+  test("fromArray", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const enumerable = pipe([1, 2, 3, 4, 5, 6], fromArrayStream<number>());
+    const enumerator = pipe(enumerable, stream(scheduler));
+
+    const result: number[] = [];
+    pipe(
+      enumerator,
+      subscribe(scheduler, x => result.push(x)),
+    );
+
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+
+    scheduler.run();
+
+    pipe(result, expectArrayEquals([1, 2, 3]));
+  }),
+
+  test("fromIterable", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const enumerator = pipe(
+      fromIterable<number>()([1, 2, 3, 4, 5, 6]),
+      stream(scheduler),
+    );
+
+    const result: number[] = [];
+    let error: Option<Error> = none;
+    const subscription = pipe(
+      enumerator,
+      subscribe(scheduler, x => result.push(x)),
+    );
+
+    addTeardown(subscription, e => {
+      error = e;
+    });
+
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+
+    scheduler.run();
+
+    pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
+    pipe(error, expectNone);
+  }),
+
+  test("generate", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const enumerator = pipe(
+      generateStream(increment, returns<number>(0)),
+      stream(scheduler),
+    );
+
+    const result: number[] = [];
+    pipe(
+      enumerator,
+      subscribe(scheduler, x => result.push(x)),
+    );
+
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+    enumerator.dispatch(none);
+
+    scheduler.run();
+
+    pipe(result, expectArrayEquals([1, 2, 3]));
+  }),
 );

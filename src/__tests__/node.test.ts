@@ -9,7 +9,7 @@ import {
 } from "../node";
 import { fromArray, takeFirst, toPromise } from "../observable";
 import { createHostScheduler } from "../scheduler";
-import { createIOSinkAccumulator, sink, flowIOEvents } from "../streamable";
+import { createIOSinkAccumulator, flowIOEvents, sink } from "../streamable";
 import {
   describe,
   expectEquals,
