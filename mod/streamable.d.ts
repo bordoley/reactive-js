@@ -98,9 +98,9 @@ declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>, opt
 }) => AsyncEnumerableLike<T>;
 declare const consume: <T, TAcc>(consumer: Function2<TAcc, T, NotifyEvent<TAcc> | DoneEventWithData<TAcc>>, initial: Factory<TAcc>) => Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>>;
 declare const consumeAsync: <T, TAcc>(consumer: Function2<TAcc, T, ObservableLike<NotifyEvent<TAcc> | DoneEventWithData<TAcc>>>, initial: Factory<TAcc>) => Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>>;
-declare const notifyEvent: <T>(data: T) => NotifyEvent<T>;
-declare const doneEventWithData: <T>(data: T) => DoneEventWithData<T>;
-declare const doneEvent: DoneEvent;
+declare const notify: <T>(data: T) => NotifyEvent<T>;
+declare function done<T>(data: T): DoneEventWithData<T>;
+declare function done(): DoneEvent;
 interface StreamableLike<TReq, T> {
     stream(this: StreamableLike<TReq, T>, scheduler: SchedulerLike, options?: {
         readonly replay?: number;
@@ -109,12 +109,6 @@ interface StreamableLike<TReq, T> {
 interface AsyncEnumerableLike<T> extends StreamableLike<void, T> {
 }
 declare type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<StreamableLike<TSrcReq, TSrc>, StreamableLike<TReq, T>>;
-/**
- * @experimental
- * @noInheritDoc
- * */
-interface IOSinkAccumulatorLike<T, TAcc> extends StreamableLike<NotifyEvent<T> | DoneEvent, FlowMode>, MulticastObservableLike<TAcc> {
-}
 declare type FlowMode = "resume" | "pause";
 declare type NotifyEvent<T> = {
     readonly type: "notify";
@@ -122,9 +116,17 @@ declare type NotifyEvent<T> = {
 };
 declare type DoneEvent = {
     readonly type: "done";
+    hasData: false;
 };
 declare type DoneEventWithData<T> = {
     readonly type: "done";
     readonly data: T;
+    hasData: true;
 };
-export { AsyncEnumerableLike, DoneEvent, DoneEventWithData, FlowMode, IOSinkAccumulatorLike, NotifyEvent, StreamableLike, StreamableOperator, __stream, consume, consumeAsync, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, decodeWithCharset, doneEvent, doneEventWithData, empty, encodeUtf8, flow, flowIOEvents, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapIOEventStream, mapReq, notifyEvent, sink, stream, toStateStore };
+/**
+ * @experimental
+ * @noInheritDoc
+ * */
+interface IOSinkAccumulatorLike<T, TAcc> extends StreamableLike<NotifyEvent<T> | DoneEvent, FlowMode>, MulticastObservableLike<TAcc> {
+}
+export { AsyncEnumerableLike, DoneEvent, DoneEventWithData, FlowMode, IOSinkAccumulatorLike, NotifyEvent, StreamableLike, StreamableOperator, __stream, consume, consumeAsync, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, decodeWithCharset, done, empty, encodeUtf8, flow, flowIOEvents, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapIOEventStream, mapReq, notify, sink, stream, toStateStore };

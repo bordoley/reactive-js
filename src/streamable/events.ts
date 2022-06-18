@@ -1,13 +1,18 @@
 import { DoneEvent, DoneEventWithData, NotifyEvent } from "../streamable";
 
-export const notifyEvent = <T>(data: T): NotifyEvent<T> => ({
+export const notify = <T>(data: T): NotifyEvent<T> => ({
   type: "notify",
   data,
 });
 
-export const doneEventWithData = <T>(data: T): DoneEventWithData<T> => ({
-  type: "done",
-  data,
-});
+const doneEvent: DoneEvent = { type: "done", hasData: false };
 
-export const doneEvent: DoneEvent = { type: "done" };
+export function done<T>(data: T): DoneEventWithData<T>;
+export function done(): DoneEvent;
+export function done<T>(
+  ...args: readonly T[]
+): DoneEvent | DoneEventWithData<T> {
+  return args.length > 0
+    ? { type: "done", hasData: true, data: args[0] }
+    : doneEvent;
+}

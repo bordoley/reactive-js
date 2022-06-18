@@ -42,7 +42,7 @@ import {
   StreamableLike,
   StreamableOperator,
 } from "../streamable";
-import { doneEvent, notifyEvent } from "./events";
+import { done, notify } from "./events";
 import { flow } from "./flow";
 import { createStreamable, lift, stream } from "./streamable";
 
@@ -68,16 +68,16 @@ export const decodeWithCharset = (
           case "notify": {
             const data = decoder.decode(ev.data, { stream: true });
             if (data.length > 0) {
-              yield notifyEvent(data);
+              yield notify(data);
             }
             break;
           }
           case "done": {
             const data = decoder.decode();
             if (data.length > 0) {
-              yield notifyEvent(data);
+              yield notify(data);
             }
-            yield doneEvent;
+            yield done();
             break;
           }
         }
@@ -103,7 +103,7 @@ const _encodeUtf8: StreamableOperator<
       switch (ev.type) {
         case "notify": {
           const data = textEncoder.encode(ev.data);
-          return notifyEvent(data);
+          return notify(data);
         }
         case "done": {
           return ev;
@@ -128,13 +128,13 @@ export const mapIOEventStream = <TReq, TA, TB>(
 > =>
   lift(
     map((ev: IOEvent<TA>) =>
-      ev.type === "notify" ? pipe(ev.data, mapper, notifyEvent) : ev,
+      ev.type === "notify" ? pipe(ev.data, mapper, notify) : ev,
     ),
   );
 
 const _flowIOEvents = compose(
-  map(notifyEvent),
-  endWith({ ...fromArrayT, ...concatT }, doneEvent as IOEvent<any>),
+  map(notify),
+  endWith({ ...fromArrayT, ...concatT }, done() as IOEvent<any>),
   flow(),
 );
 export const flowIOEvents = <T>(): Function1<

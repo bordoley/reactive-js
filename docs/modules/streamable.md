@@ -18,10 +18,6 @@
 - [NotifyEvent](streamable.md#notifyevent)
 - [StreamableOperator](streamable.md#streamableoperator)
 
-### Variables
-
-- [doneEvent](streamable.md#doneevent-1)
-
 ### Functions
 
 - [\_\_stream](streamable.md#__stream)
@@ -32,7 +28,7 @@
 - [createStateStore](streamable.md#createstatestore)
 - [createStreamable](streamable.md#createstreamable)
 - [decodeWithCharset](streamable.md#decodewithcharset)
-- [doneEventWithData](streamable.md#doneeventwithdata-1)
+- [done](streamable.md#done)
 - [empty](streamable.md#empty)
 - [encodeUtf8](streamable.md#encodeutf8)
 - [flow](streamable.md#flow)
@@ -45,7 +41,7 @@
 - [lift](streamable.md#lift)
 - [mapIOEventStream](streamable.md#mapioeventstream)
 - [mapReq](streamable.md#mapreq)
-- [notifyEvent](streamable.md#notifyevent-1)
+- [notify](streamable.md#notify)
 - [sink](streamable.md#sink)
 - [stream](streamable.md#stream)
 - [toStateStore](streamable.md#tostatestore)
@@ -60,6 +56,7 @@
 
 | Name | Type |
 | :------ | :------ |
+| `hasData` | ``false`` |
 | `type` | ``"done"`` |
 
 ___
@@ -79,6 +76,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `data` | `T` |
+| `hasData` | ``true`` |
 | `type` | ``"done"`` |
 
 ___
@@ -120,12 +118,6 @@ ___
 | `TSrc` |
 | `TReq` |
 | `T` |
-
-## Variables
-
-### doneEvent
-
-• `Const` **doneEvent**: [`DoneEvent`](streamable.md#doneevent)
 
 ## Functions
 
@@ -328,9 +320,9 @@ ___
 
 ___
 
-### doneEventWithData
+### done
 
-▸ **doneEventWithData**<`T`\>(`data`): [`DoneEventWithData`](streamable.md#doneeventwithdata)<`T`\>
+▸ **done**<`T`\>(`data`): [`DoneEventWithData`](streamable.md#doneeventwithdata)<`T`\>
 
 #### Type parameters
 
@@ -347,6 +339,12 @@ ___
 #### Returns
 
 [`DoneEventWithData`](streamable.md#doneeventwithdata)<`T`\>
+
+▸ **done**(): [`DoneEvent`](streamable.md#doneevent)
+
+#### Returns
+
+[`DoneEvent`](streamable.md#doneevent)
 
 ___
 
@@ -611,9 +609,9 @@ ___
 
 ___
 
-### notifyEvent
+### notify
 
-▸ **notifyEvent**<`T`\>(`data`): [`NotifyEvent`](streamable.md#notifyevent)<`T`\>
+▸ **notify**<`T`\>(`data`): [`NotifyEvent`](streamable.md#notifyevent)<`T`\>
 
 #### Type parameters
 
