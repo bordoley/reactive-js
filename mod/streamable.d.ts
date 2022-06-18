@@ -58,7 +58,7 @@ declare const flow: <T>({ scheduler, }?: {
 declare const sink: <TReq, T>(src: StreamableLike<TReq, T>, dest: StreamableLike<T, TReq>) => ObservableLike<void>;
 declare const decodeWithCharset: (charset?: string, options?: TextDecoderOptions) => StreamableOperator<FlowMode, NotifyEvent<ArrayBuffer> | DoneEvent, FlowMode, NotifyEvent<string> | DoneEvent>;
 declare const encodeUtf8: StreamableOperator<FlowMode, NotifyEvent<string> | DoneEvent, FlowMode, NotifyEvent<Uint8Array> | DoneEvent>;
-declare const mapIOEventStream: <TA, TB>(mapper: Function1<TA, TB>) => Function1<StreamableLike<FlowMode, DoneEvent | NotifyEvent<TA>>, StreamableLike<FlowMode, DoneEvent | NotifyEvent<TB>>>;
+declare const mapIOEventStream: <TReq, TA, TB>(mapper: Function1<TA, TB>) => Function1<StreamableLike<TReq, DoneEvent | NotifyEvent<TA>>, StreamableLike<TReq, DoneEvent | NotifyEvent<TB>>>;
 declare const flowIOEvents: <T>() => Function1<ObservableLike<T>, StreamableLike<FlowMode, DoneEvent | NotifyEvent<T>>>;
 /** @experimental */
 declare const createIOSinkAccumulator: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: {

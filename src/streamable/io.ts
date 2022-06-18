@@ -120,11 +120,11 @@ export const encodeUtf8: StreamableOperator<
   NotifyEvent<Uint8Array> | DoneEvent
 > = _encodeUtf8;
 
-export const mapIOEventStream = <TA, TB>(
+export const mapIOEventStream = <TReq, TA, TB>(
   mapper: Function1<TA, TB>,
 ): Function1<
-  StreamableLike<FlowMode, NotifyEvent<TA> | DoneEvent>,
-  StreamableLike<FlowMode, NotifyEvent<TB> | DoneEvent>
+  StreamableLike<TReq, NotifyEvent<TA> | DoneEvent>,
+  StreamableLike<TReq, NotifyEvent<TB> | DoneEvent>
 > =>
   lift(
     map((ev: IOEvent<TA>) =>
