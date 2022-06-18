@@ -1,6 +1,6 @@
 import { fromIterable as fromIterableEnumerable } from "../enumerable";
 import { Function1, pipe } from "../functions";
-import { StreamableLike } from "../streamable";
+import { AsyncEnumerableLike } from "../streamable";
 import { fromEnumerable } from "./fromEnumerable";
 
 /**
@@ -8,7 +8,7 @@ import { fromEnumerable } from "./fromEnumerable";
  *
  * @param iterable
  */
-const _fromIterable = <T>(iterable: Iterable<T>): StreamableLike<void, T> =>
+const _fromIterable = <T>(iterable: Iterable<T>): AsyncEnumerableLike<T> =>
   pipe(iterable, fromIterableEnumerable(), fromEnumerable());
 
 /**
@@ -18,5 +18,5 @@ const _fromIterable = <T>(iterable: Iterable<T>): StreamableLike<void, T> =>
  */
 export const fromIterable = <T>(): Function1<
   Iterable<T>,
-  StreamableLike<void, T>
+  AsyncEnumerableLike<T>
 > => _fromIterable;

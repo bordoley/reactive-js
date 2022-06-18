@@ -73,19 +73,19 @@ declare const fromArray: <T>(options?: {
     readonly delay?: number;
     readonly startIndex?: number;
     readonly endIndex?: number;
-}) => Function1<readonly T[], StreamableLike<void, T>>;
+}) => Function1<readonly T[], AsyncEnumerableLike<T>>;
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
  *
  * @param iterable
  */
-declare const fromEnumerable: <T>() => Function1<EnumerableLike<T>, StreamableLike<void, T>>;
+declare const fromEnumerable: <T>() => Function1<EnumerableLike<T>, AsyncEnumerableLike<T>>;
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
  *
  * @param iterable
  */
-declare const fromIterable: <T>() => Function1<Iterable<T>, StreamableLike<void, T>>;
+declare const fromIterable: <T>() => Function1<Iterable<T>, AsyncEnumerableLike<T>>;
 /**
  * Generates an `AsyncEnumerableLike` sequence from a generator function
  * that is applied to an accumulator value.
@@ -95,9 +95,9 @@ declare const fromIterable: <T>() => Function1<Iterable<T>, StreamableLike<void,
  */
 declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
     readonly delay?: number;
-}) => StreamableLike<void, T>;
-declare const consume: <T, TAcc>(consumer: Function2<TAcc, T, NotifyEvent<TAcc> | DoneEventWithData<TAcc>>, initial: Factory<TAcc>) => Function1<StreamableLike<void, T>, ObservableLike<TAcc>>;
-declare const consumeAsync: <T, TAcc>(consumer: Function2<TAcc, T, ObservableLike<NotifyEvent<TAcc> | DoneEventWithData<TAcc>>>, initial: Factory<TAcc>) => Function1<StreamableLike<void, T>, ObservableLike<TAcc>>;
+}) => AsyncEnumerableLike<T>;
+declare const consume: <T, TAcc>(consumer: Function2<TAcc, T, NotifyEvent<TAcc> | DoneEventWithData<TAcc>>, initial: Factory<TAcc>) => Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>>;
+declare const consumeAsync: <T, TAcc>(consumer: Function2<TAcc, T, ObservableLike<NotifyEvent<TAcc> | DoneEventWithData<TAcc>>>, initial: Factory<TAcc>) => Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>>;
 declare const notifyEvent: <T>(data: T) => NotifyEvent<T>;
 declare const doneEventWithData: <T>(data: T) => DoneEventWithData<T>;
 declare const doneEvent: DoneEvent;
@@ -105,6 +105,8 @@ interface StreamableLike<TReq, T> {
     stream(this: StreamableLike<TReq, T>, scheduler: SchedulerLike, options?: {
         readonly replay?: number;
     }): StreamLike<TReq, T>;
+}
+interface AsyncEnumerableLike<T> extends StreamableLike<void, T> {
 }
 declare type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<StreamableLike<TSrcReq, TSrc>, StreamableLike<TReq, T>>;
 /**
@@ -125,4 +127,4 @@ declare type DoneEventWithData<T> = {
     readonly type: "done";
     readonly data: T;
 };
-export { DoneEvent, DoneEventWithData, FlowMode, IOSinkAccumulatorLike, NotifyEvent, StreamableLike, StreamableOperator, __stream, consume, consumeAsync, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, decodeWithCharset, doneEvent, doneEventWithData, empty, encodeUtf8, flow, flowIOEvents, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapIOEventStream, mapReq, notifyEvent, sink, stream, toStateStore };
+export { AsyncEnumerableLike, DoneEvent, DoneEventWithData, FlowMode, IOSinkAccumulatorLike, NotifyEvent, StreamableLike, StreamableOperator, __stream, consume, consumeAsync, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, decodeWithCharset, doneEvent, doneEventWithData, empty, encodeUtf8, flow, flowIOEvents, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapIOEventStream, mapReq, notifyEvent, sink, stream, toStateStore };
