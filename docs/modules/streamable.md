@@ -565,12 +565,13 @@ ___
 
 ### mapIOEventStream
 
-▸ **mapIOEventStream**<`TA`, `TB`\>(`mapper`): [`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`TA`\>\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`TB`\>\>\>
+▸ **mapIOEventStream**<`TReq`, `TA`, `TB`\>(`mapper`): [`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`TA`\>\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`TB`\>\>\>
 
 #### Type parameters
 
 | Name |
 | :------ |
+| `TReq` |
 | `TA` |
 | `TB` |
 
@@ -582,7 +583,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`TA`\>\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`TB`\>\>\>
+[`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`TA`\>\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`TB`\>\>\>
 
 ___
 
