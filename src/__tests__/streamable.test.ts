@@ -45,7 +45,7 @@ import {
   createActionReducer,
   createIOSinkAccumulator,
   decodeWithCharset,
-  doneEventWithData,
+  done,
   empty,
   encodeUtf8,
   flow,
@@ -57,7 +57,7 @@ import {
   lift,
   mapIOEventStream,
   mapReq,
-  notifyEvent,
+  notify,
   sink,
   stream,
   toStateStore,
@@ -647,7 +647,7 @@ export const tests = describe(
 
       pipe(
         enumerable,
-        consume((acc, next) => notifyEvent(acc + next), returns<number>(0)),
+        consume((acc, next) => notify(acc + next), returns<number>(0)),
         toRunnable(),
         last(),
         expectEquals(21),
@@ -656,8 +656,7 @@ export const tests = describe(
       pipe(
         enumerable,
         consume(
-          (acc, next) =>
-            acc > 0 ? doneEventWithData(acc + next) : notifyEvent(acc + next),
+          (acc, next) => (acc > 0 ? done(acc + next) : notify(acc + next)),
           returns<number>(0),
         ),
         toRunnable(),
@@ -676,9 +675,7 @@ export const tests = describe(
           consumeAsync(
             (acc, next) =>
               fromValue(fromArrayT)(
-                acc > 0
-                  ? doneEventWithData(acc + next)
-                  : notifyEvent(acc + next),
+                acc > 0 ? done(acc + next) : notify(acc + next),
               ),
             returns<number>(0),
           ),
@@ -693,7 +690,7 @@ export const tests = describe(
           [1, 2, 3, 4, 5, 6],
           fromIterable(),
           consumeAsync(
-            (acc, next) => pipe(acc + next, notifyEvent, fromValue(fromArrayT)),
+            (acc, next) => pipe(acc + next, notify, fromValue(fromArrayT)),
             returns<number>(0),
           ),
           toRunnable(),

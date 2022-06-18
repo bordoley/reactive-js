@@ -180,15 +180,16 @@ const sink = (src, dest) => using(scheduler => {
     return destStream;
 }, ignoreAndNotifyVoid);
 
-const notifyEvent = (data) => ({
+const notify = (data) => ({
     type: "notify",
     data,
 });
-const doneEventWithData = (data) => ({
-    type: "done",
-    data,
-});
-const doneEvent = { type: "done" };
+const doneEvent = { type: "done", hasData: false };
+function done(...args) {
+    return args.length > 0
+        ? { type: "done", hasData: true, data: args[0] }
+        : doneEvent;
+}
 
 const decodeWithCharset = (charset = "utf-8", options) => pipe(withLatestFrom(compute({
     ...fromArrayT,
@@ -198,16 +199,16 @@ const decodeWithCharset = (charset = "utf-8", options) => pipe(withLatestFrom(co
         case "notify": {
             const data = decoder.decode(ev.data, { stream: true });
             if (data.length > 0) {
-                yield notifyEvent(data);
+                yield notify(data);
             }
             break;
         }
         case "done": {
             const data = decoder.decode();
             if (data.length > 0) {
-                yield notifyEvent(data);
+                yield notify(data);
             }
-            yield doneEvent;
+            yield done();
             break;
         }
     }
@@ -219,7 +220,7 @@ const _encodeUtf8 = lift(withLatestFrom(compute({
     switch (ev.type) {
         case "notify": {
             const data = textEncoder.encode(ev.data);
-            return notifyEvent(data);
+            return notify(data);
         }
         case "done": {
             return ev;
@@ -227,8 +228,8 @@ const _encodeUtf8 = lift(withLatestFrom(compute({
     }
 }));
 const encodeUtf8 = _encodeUtf8;
-const mapIOEventStream = (mapper) => lift(map((ev) => ev.type === "notify" ? pipe(ev.data, mapper, notifyEvent) : ev));
-const _flowIOEvents = compose(map(notifyEvent), endWith({ ...fromArrayT, ...concatT }, doneEvent), flow());
+const mapIOEventStream = (mapper) => lift(map((ev) => ev.type === "notify" ? pipe(ev.data, mapper, notify) : ev));
+const _flowIOEvents = compose(map(notify), endWith({ ...fromArrayT, ...concatT }, done()), flow());
 const flowIOEvents = () => _flowIOEvents;
 const isNotify = (ev) => ev.type === "notify";
 class IOSinkAccumulatorImpl extends AbstractDisposable {
@@ -340,4 +341,4 @@ const consumeImpl = (consumer, initial) => enumerable => using(scheduler => {
 const consume = (consumer, initial) => consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
 const consumeAsync = (consumer, initial) => consumeImpl(accObs => compose(zipWithLatestFrom(accObs, (next, acc) => pipe(consumer(acc, next), takeFirst())), switchAll()), initial);
 
-export { __stream, consume, consumeAsync, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, decodeWithCharset, doneEvent, doneEventWithData, empty, encodeUtf8, flow, flowIOEvents, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapIOEventStream, mapReq, notifyEvent, sink, stream, toStateStore };
+export { __stream, consume, consumeAsync, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, decodeWithCharset, done, empty, encodeUtf8, flow, flowIOEvents, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapIOEventStream, mapReq, notify, sink, stream, toStateStore };

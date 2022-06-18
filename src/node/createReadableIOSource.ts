@@ -23,8 +23,8 @@ import {
   NotifyEvent,
   StreamableLike,
   createStreamable,
-  doneEvent,
-  notifyEvent,
+  done,
+  notify,
 } from "../streamable";
 import { createDisposableNodeStream } from "./nodeStream";
 
@@ -34,11 +34,11 @@ const createReadableEventsObservable = (
   createObservable(dispatcher => {
     const readableValue = readable.value;
 
-    const onData = compose(notifyEvent, dispatchTo(dispatcher));
+    const onData = compose(notify, dispatchTo(dispatcher));
     readableValue.on("data", onData);
 
     const onEnd = () => {
-      dispatcher.dispatch(doneEvent);
+      dispatcher.dispatch(done());
       pipe(dispatcher, dispose());
     };
     readableValue.on("end", onEnd);
