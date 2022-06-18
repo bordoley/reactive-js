@@ -22,8 +22,7 @@ declare const fromArray: <T>(options?: {
 }) => Function1<readonly T[], RunnableLike<T>>;
 declare const fromArrayT: FromArray<RunnableLike<unknown>, FromArrayOptions>;
 declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>) => RunnableLike<T>;
-declare type SinkOperator<TA, TB> = Function1<SinkLike<TB>, SinkLike<TA>>;
-declare const lift: <TA, TB>(operator: SinkOperator<TA, TB>) => RunnableOperator<TA, TB>;
+declare const lift: <TA, TB>(operator: Function1<SinkLike<TB>, SinkLike<TA>>) => RunnableOperator<TA, TB>;
 declare const keep: <T>(predicate: Predicate<T>) => RunnableOperator<T, T>;
 declare const keepT: Keep<RunnableLike<unknown>>;
 declare const last: <T>() => Function1<RunnableLike<T>, Option<T>>;

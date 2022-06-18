@@ -354,7 +354,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `operator` | `SinkOperator`<`TA`, `TB`\> |
+| `operator` | [`Function1`](functions.md#function1)<[`SinkLike`](../interfaces/sink.SinkLike.md)<`TB`\>, [`SinkLike`](../interfaces/sink.SinkLike.md)<`TA`\>\> |
 
 #### Returns
 
