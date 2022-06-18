@@ -1,7 +1,7 @@
 import { fromValue } from "../container";
 import { Factory, Updater, pipe } from "../functions";
 import { fromArrayT, scan, scanAsync } from "../observable";
-import { StreamableLike } from "../streamable";
+import { AsyncEnumerableLike } from "../streamable";
 import { createStreamable } from "./streamable";
 
 const generateScanner =
@@ -28,7 +28,7 @@ export const generate = <T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
   options: { readonly delay?: number } = {},
-): StreamableLike<void, T> => {
+): AsyncEnumerableLike<T> => {
   const { delay = 0 } = options;
   const op =
     delay > 0

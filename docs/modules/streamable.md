@@ -6,6 +6,7 @@
 
 ### Interfaces
 
+- [AsyncEnumerableLike](../interfaces/streamable.AsyncEnumerableLike.md)
 - [IOSinkAccumulatorLike](../interfaces/streamable.IOSinkAccumulatorLike.md)
 - [StreamableLike](../interfaces/streamable.StreamableLike.md)
 
@@ -156,7 +157,7 @@ ___
 
 ### consume
 
-▸ **consume**<`T`, `TAcc`\>(`consumer`, `initial`): [`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
+▸ **consume**<`T`, `TAcc`\>(`consumer`, `initial`): [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
 
 #### Type parameters
 
@@ -174,13 +175,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
+[`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
 
 ___
 
 ### consumeAsync
 
-▸ **consumeAsync**<`T`, `TAcc`\>(`consumer`, `initial`): [`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
+▸ **consumeAsync**<`T`, `TAcc`\>(`consumer`, `initial`): [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
 
 #### Type parameters
 
@@ -198,7 +199,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
+[`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
 
 ___
 
@@ -433,7 +434,7 @@ ___
 
 ### fromArray
 
-▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>\>
+▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>\>
 
 Returns an `AsyncEnumerableLike` from the provided array.
 
@@ -454,13 +455,13 @@ Returns an `AsyncEnumerableLike` from the provided array.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<readonly `T`[], [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>\>
+[`Function1`](functions.md#function1)<readonly `T`[], [`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>\>
 
 ___
 
 ### fromEnumerable
 
-▸ **fromEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>\>
+▸ **fromEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>\>
 
 Returns an `AsyncEnumerableLike` from the provided iterable.
 
@@ -472,13 +473,13 @@ Returns an `AsyncEnumerableLike` from the provided iterable.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>\>
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>\>
 
 ___
 
 ### fromIterable
 
-▸ **fromIterable**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>\>
+▸ **fromIterable**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>\>
 
 Returns an `AsyncEnumerableLike` from the provided iterable.
 
@@ -490,13 +491,13 @@ Returns an `AsyncEnumerableLike` from the provided iterable.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>\>
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>\>
 
 ___
 
 ### generate
 
-▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>
+▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>
 
 Generates an `AsyncEnumerableLike` sequence from a generator function
 that is applied to an accumulator value.
@@ -518,7 +519,7 @@ that is applied to an accumulator value.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`void`, `T`\>
+[`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>
 
 ___
 

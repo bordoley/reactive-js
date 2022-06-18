@@ -15,6 +15,8 @@
 
 - **`StreamableLike`**
 
+  ↳ [`AsyncEnumerableLike`](streamable.AsyncEnumerableLike.md)
+
   ↳ [`IOSinkAccumulatorLike`](streamable.IOSinkAccumulatorLike.md)
 
   ↳ [`WindowLocationStreamableLike`](web.WindowLocationStreamableLike.md)

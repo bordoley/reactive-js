@@ -24,7 +24,7 @@ import { none } from "../option";
 import {
   DoneEventWithData,
   NotifyEvent,
-  StreamableLike,
+  AsyncEnumerableLike,
   stream,
 } from "../streamable";
 
@@ -34,7 +34,7 @@ const consumeImpl =
       acc: ObservableLike<TAcc>,
     ) => ObservableOperator<TSrc, NotifyEvent<TAcc> | DoneEventWithData<TAcc>>,
     initial: Factory<TAcc>,
-  ): Function1<StreamableLike<void, TSrc>, ObservableLike<TAcc>> =>
+  ): Function1<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> =>
   enumerable =>
     using(
       scheduler => {
@@ -66,7 +66,7 @@ const consumeImpl =
 export const consume = <T, TAcc>(
   consumer: Function2<TAcc, T, NotifyEvent<TAcc> | DoneEventWithData<TAcc>>,
   initial: Factory<TAcc>,
-): Function1<StreamableLike<void, T>, ObservableLike<TAcc>> =>
+): Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
   consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
 
 export const consumeAsync = <T, TAcc>(
@@ -76,7 +76,7 @@ export const consumeAsync = <T, TAcc>(
     ObservableLike<NotifyEvent<TAcc> | DoneEventWithData<TAcc>>
   >,
   initial: Factory<TAcc>,
-): Function1<StreamableLike<void, T>, ObservableLike<TAcc>> =>
+): Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
   consumeImpl(
     accObs =>
       compose(

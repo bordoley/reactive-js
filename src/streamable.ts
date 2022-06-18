@@ -10,6 +10,8 @@ export interface StreamableLike<TReq, T> {
   ): StreamLike<TReq, T>;
 }
 
+export interface AsyncEnumerableLike<T> extends StreamableLike<void, T> {}
+
 export type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<
   StreamableLike<TSrcReq, TSrc>,
   StreamableLike<TReq, T>
