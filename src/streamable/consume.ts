@@ -22,9 +22,9 @@ import {
 } from "../observable";
 import { none } from "../option";
 import {
+  AsyncEnumerableLike,
   DoneEventWithData,
   NotifyEvent,
-  AsyncEnumerableLike,
   stream,
 } from "../streamable";
 

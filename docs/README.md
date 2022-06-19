@@ -16,7 +16,6 @@ Reactive-JS
 - [option](modules/option.md)
 - [react](modules/react.md)
 - [readonlyArray](modules/readonlyArray.md)
-- [readonlyObjectMap](modules/readonlyObjectMap.md)
 - [runnable](modules/runnable.md)
 - [scheduler](modules/scheduler.md)
 - [sequence](modules/sequence.md)

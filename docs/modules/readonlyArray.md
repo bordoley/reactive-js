@@ -58,7 +58,7 @@ ___
 
 ### fromObject
 
-▸ **fromObject**<`T`\>(): [`Function1`](functions.md#function1)<[`ReadonlyObjectMap`](../interfaces/readonlyObjectMap.ReadonlyObjectMap.md)<`T`\>, readonly [`string`, `T`][]\>
+▸ **fromObject**<`T`\>(): [`Function1`](functions.md#function1)<`Readonly`<`Record`<`string`, `T`\>\>, readonly [`string`, `T`][]\>
 
 #### Type parameters
 
@@ -68,7 +68,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ReadonlyObjectMap`](../interfaces/readonlyObjectMap.ReadonlyObjectMap.md)<`T`\>, readonly [`string`, `T`][]\>
+[`Function1`](functions.md#function1)<`Readonly`<`Record`<`string`, `T`\>\>, readonly [`string`, `T`][]\>
 
 ___
 
