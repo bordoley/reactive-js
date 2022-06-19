@@ -1,8 +1,7 @@
 import { Function1, Predicate, Reducer, Factory } from "./functions.mjs";
-import { ReadonlyObjectMap } from "./readonlyObjectMap.mjs";
 declare type ReadonlyArrayOperator<TA, TB> = Function1<readonly TA[], readonly TB[]>;
 declare const everySatisfy: <T>(predicate: Predicate<T>) => Function1<readonly T[], boolean>;
-declare const fromObject: <T>() => Function1<ReadonlyObjectMap<T>, readonly [
+declare const fromObject: <T>() => Function1<Readonly<Record<string, T>>, readonly [
     string,
     T
 ][]>;
