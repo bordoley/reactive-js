@@ -1,7 +1,7 @@
 /// <reference types="./observable.d.ts" />
 import { AbstractContainer, empty, fromValue, concatMap, throws } from './container.mjs';
 import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, bindDisposables, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown } from './disposable.mjs';
-import { pipe, ignore, raise, arrayEquality, defer as defer$1, compose, strictEquality, returns } from './functions.mjs';
+import { pipe, raise, ignore, arrayEquality, defer as defer$1, compose, strictEquality, returns } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
@@ -65,16 +65,6 @@ const fromArrayT = {
     fromArray,
 };
 
-const assertStateProduction = ignore;
-function assertStateDev() {
-    if (!this.inContinuation) {
-        raise("Observer.notify() may only be invoked within a scheduled SchedulerContinuation");
-    }
-    else if (this.isDisposed) {
-        raise("Observer is disposed");
-    }
-}
-const assertState = __DEV__ ? assertStateDev : assertStateProduction;
 class AbstractObserver extends AbstractDisposable {
     /** @ignore */
     assertState() { }
@@ -84,7 +74,16 @@ class AbstractObserver extends AbstractDisposable {
         this.inContinuation = status;
     }
 }
-AbstractObserver.prototype.assertState = assertState;
+if (__DEV__) {
+    AbstractObserver.prototype.assertState = function assertStateDev() {
+        if (!this.inContinuation) {
+            raise("Observer.notify() may only be invoked within a scheduled SchedulerContinuation");
+        }
+        else if (this.isDisposed) {
+            raise("Observer is disposed");
+        }
+    };
+}
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
@@ -93,7 +92,6 @@ class AbstractSchedulerDelegatingObserver extends AbstractObserver {
         super();
         this.delegate = delegate;
         this.inContinuation = false;
-        this.assertState = assertState;
         this.scheduler =
             delegate instanceof AbstractSchedulerDelegatingObserver
                 ? delegate.scheduler
@@ -1599,7 +1597,7 @@ class WithLatestFromObserver extends AbstractAutoDisposingDelegatingObserver {
         addDisposableDisposeParentOnChildError(this, otherSubscription);
     }
     notify(next) {
-        this.assertState(this);
+        this.assertState();
         if (!this.isDisposed && this.hasLatest) {
             const result = this.selector(next, this.otherLatest);
             this.delegate.notify(result);
@@ -1736,7 +1734,7 @@ class ZipObserver extends AbstractDelegatingObserver {
         }
     }
     notify(next) {
-        this.assertState(this);
+        this.assertState();
         const enumerators = this.enumerators;
         if (!this.isDisposed) {
             if (this.hasCurrent) {

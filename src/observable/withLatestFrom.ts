@@ -50,7 +50,7 @@ class WithLatestFromObserver<
   }
 
   notify(next: TA) {
-    this.assertState(this);
+    this.assertState();
 
     if (!this.isDisposed && this.hasLatest) {
       const result = this.selector(next, this.otherLatest as TB);

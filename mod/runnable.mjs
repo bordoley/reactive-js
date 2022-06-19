@@ -1,5 +1,5 @@
 /// <reference types="./runnable.d.ts" />
-import { pipe, ignore, raise, strictEquality, compose, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
+import { pipe, raise, strictEquality, compose, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError, dispose, addTeardown } from './disposable.mjs';
 import { AbstractContainer, empty } from './container.mjs';
 import { __DEV__ } from './env.mjs';
@@ -42,18 +42,17 @@ const lift = (operator) => runnable => {
     return new LiftedRunnable(src, allFunctions);
 };
 
-const assertStateProduction = ignore;
-const assertStateDev = function () {
-    if (this.isDisposed) {
-        raise("Sink is disposed");
-    }
-};
-const assertState = __DEV__ ? assertStateDev : assertStateProduction;
 class AbstractSink extends AbstractDisposable {
     assertState() { }
     notify(_) { }
 }
-AbstractSink.prototype.assertState = assertState;
+if (__DEV__) {
+    AbstractSink.prototype.assertState = function () {
+        if (this.isDisposed) {
+            raise("Sink is disposed");
+        }
+    };
+}
 class AbstractDelegatingSink extends AbstractSink {
     constructor(delegate) {
         super();

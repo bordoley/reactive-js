@@ -72,7 +72,7 @@ class ZipObserver
   }
 
   notify(next: unknown) {
-    this.assertState(this);
+    this.assertState();
 
     const enumerators = this.enumerators;
 
