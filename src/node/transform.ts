@@ -19,9 +19,8 @@ import { Factory, defer, identity, ignore, pipe, returns } from "../functions";
 import { subscribe, using } from "../observable";
 
 import {
-  DoneEvent,
+  IOEvent,
   FlowMode,
-  NotifyEvent,
   StreamableOperator,
   createStreamable,
   sink,
@@ -36,9 +35,9 @@ export const transform =
     factory: Factory<DisposableValueLike<Transform>>,
   ): StreamableOperator<
     FlowMode,
-    NotifyEvent<Uint8Array> | DoneEvent,
+    IOEvent<Uint8Array>,
     FlowMode,
-    NotifyEvent<Uint8Array> | DoneEvent
+    IOEvent<Uint8Array>
   > =>
   src =>
     createStreamable(modeObs =>
@@ -93,9 +92,9 @@ export const brotliDecompress = (
   options: BrotliOptions = {},
 ): StreamableOperator<
   FlowMode,
-  NotifyEvent<Uint8Array> | DoneEvent,
+  IOEvent<Uint8Array>,
   FlowMode,
-  NotifyEvent<Uint8Array> | DoneEvent
+  IOEvent<Uint8Array>
 > =>
   transform(defer(options, createBrotliDecompress, createDisposableNodeStream));
 
@@ -103,27 +102,27 @@ export const gunzip = (
   options: ZlibOptions = {},
 ): StreamableOperator<
   FlowMode,
-  NotifyEvent<Uint8Array> | DoneEvent,
+  IOEvent<Uint8Array>,
   FlowMode,
-  NotifyEvent<Uint8Array> | DoneEvent
+  IOEvent<Uint8Array>
 > => transform(defer(options, createGunzip, createDisposableNodeStream));
 
 export const inflate = (
   options: ZlibOptions = {},
 ): StreamableOperator<
   FlowMode,
-  NotifyEvent<Uint8Array> | DoneEvent,
+  IOEvent<Uint8Array>,
   FlowMode,
-  NotifyEvent<Uint8Array> | DoneEvent
+  IOEvent<Uint8Array>
 > => transform(defer(options, createInflate, createDisposableNodeStream));
 
 export const brotliCompress = (
   options: BrotliOptions = {},
 ): StreamableOperator<
   FlowMode,
-  NotifyEvent<Uint8Array> | DoneEvent,
+  IOEvent<Uint8Array>,
   FlowMode,
-  NotifyEvent<Uint8Array> | DoneEvent
+  IOEvent<Uint8Array>
 > =>
   transform(defer(options, createBrotliCompress, createDisposableNodeStream));
 
@@ -131,16 +130,16 @@ export const gzip = (
   options: ZlibOptions = {},
 ): StreamableOperator<
   FlowMode,
-  NotifyEvent<Uint8Array> | DoneEvent,
+  IOEvent<Uint8Array>,
   FlowMode,
-  NotifyEvent<Uint8Array> | DoneEvent
+  IOEvent<Uint8Array>
 > => transform(defer(options, createGzip, createDisposableNodeStream));
 
 export const deflate = (
   options: ZlibOptions = {},
 ): StreamableOperator<
   FlowMode,
-  NotifyEvent<Uint8Array> | DoneEvent,
+  IOEvent<Uint8Array>,
   FlowMode,
-  NotifyEvent<Uint8Array> | DoneEvent
+  IOEvent<Uint8Array>
 > => transform(defer(options, createDeflate, createDisposableNodeStream));

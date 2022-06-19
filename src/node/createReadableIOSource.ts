@@ -18,9 +18,8 @@ import {
 
 import { SchedulerLike } from "../scheduler";
 import {
-  DoneEvent,
+  IOEvent,
   FlowMode,
-  NotifyEvent,
   StreamableLike,
   createStreamable,
   done,
@@ -81,7 +80,7 @@ const createReadableAndSetupModeSubscription =
 
 export const createReadableIOSource = (
   factory: Factory<DisposableValueLike<Readable>>,
-): StreamableLike<FlowMode, NotifyEvent<Uint8Array> | DoneEvent> =>
+): StreamableLike<FlowMode, IOEvent<Uint8Array>> =>
   createStreamable(mode =>
     using(
       createReadableAndSetupModeSubscription(factory, mode),

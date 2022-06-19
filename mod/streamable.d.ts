@@ -56,8 +56,6 @@ declare const flow: <T>({ scheduler, }?: {
     scheduler?: SchedulerLike | undefined;
 }) => Function1<ObservableLike<T>, StreamableLike<FlowMode, T>>;
 declare const sink: <TReq, T>(src: StreamableLike<TReq, T>, dest: StreamableLike<T, TReq>) => ObservableLike<void>;
-declare const decodeWithCharset: (charset?: string, options?: TextDecoderOptions) => StreamableOperator<FlowMode, NotifyEvent<ArrayBuffer> | DoneEvent, FlowMode, NotifyEvent<string> | DoneEvent>;
-declare const encodeUtf8: StreamableOperator<FlowMode, NotifyEvent<string> | DoneEvent, FlowMode, NotifyEvent<Uint8Array> | DoneEvent>;
 declare const mapIOEventStream: <TReq, TA, TB>(mapper: Function1<TA, TB>) => Function1<StreamableLike<TReq, DoneEvent | NotifyEvent<TA>>, StreamableLike<TReq, DoneEvent | NotifyEvent<TB>>>;
 declare const flowIOEvents: <T>() => Function1<ObservableLike<T>, StreamableLike<FlowMode, DoneEvent | NotifyEvent<T>>>;
 /** @experimental */
@@ -123,10 +121,13 @@ declare type DoneEventWithData<T> = {
     readonly data: T;
     hasData: true;
 };
+declare type IOEvent<T> = NotifyEvent<T> | DoneEvent | DoneEventWithData<T>;
+interface IOSourceLike<T> extends StreamableLike<FlowMode, IOEvent<T>> {
+}
 /**
  * @experimental
  * @noInheritDoc
  * */
 interface IOSinkAccumulatorLike<T, TAcc> extends StreamableLike<NotifyEvent<T> | DoneEvent, FlowMode>, MulticastObservableLike<TAcc> {
 }
-export { AsyncEnumerableLike, DoneEvent, DoneEventWithData, FlowMode, IOSinkAccumulatorLike, NotifyEvent, StreamableLike, StreamableOperator, __stream, consume, consumeAsync, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, decodeWithCharset, done, empty, encodeUtf8, flow, flowIOEvents, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapIOEventStream, mapReq, notify, sink, stream, toStateStore };
+export { AsyncEnumerableLike, DoneEvent, DoneEventWithData, FlowMode, IOEvent, IOSinkAccumulatorLike, IOSourceLike, NotifyEvent, StreamableLike, StreamableOperator, __stream, consume, consumeAsync, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, done, empty, flow, flowIOEvents, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapIOEventStream, mapReq, notify, sink, stream, toStateStore };

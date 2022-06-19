@@ -1,5 +1,6 @@
 import {
   empty as emptyContainer,
+  encodeUtf8,
   fromValue,
   ignoreElements,
   mapTo,
@@ -20,6 +21,7 @@ import {
   __observe,
   buffer,
   concatT,
+  decodeWithCharset,
   dispatchTo,
   fromArray,
   fromArrayT,
@@ -34,6 +36,7 @@ import {
   subscribe,
   takeFirst,
   toRunnable,
+  using,
 } from "../observable";
 import { Option, none } from "../option";
 import { last, toArray } from "../runnable";
@@ -44,10 +47,8 @@ import {
   consumeAsync,
   createActionReducer,
   createIOSinkAccumulator,
-  decodeWithCharset,
   done,
   empty,
-  encodeUtf8,
   flow,
   flowIOEvents,
   fromArray as fromArrayStream,
@@ -455,8 +456,8 @@ export const tests = describe(
           Uint8Array.from([172]),
         ],
         fromArray(),
-        flowIOEvents(),
         decodeWithCharset(),
+        flowIOEvents(),
       );
       const dest = createIOSinkAccumulator(
         (acc: string, next: string) => acc + next,
@@ -502,9 +503,9 @@ export const tests = describe(
       const src = pipe(
         str,
         fromValue(fromArrayT),
-        flowIOEvents(),
-        encodeUtf8,
+        encodeUtf8({ ...mapT, using }),
         decodeWithCharset(),
+        flowIOEvents(),
       );
       const dest = createIOSinkAccumulator(
         (acc: string, next: string) => acc + next,

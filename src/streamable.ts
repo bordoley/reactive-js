@@ -27,8 +27,8 @@ export type DoneEventWithData<T> = {
   hasData: true;
 };
 
-//export type IOEvent<T> = NotifyEvent<T> | DoneEvent | DoneEventWithData<T>;
-//export interface IOSourceLike<T> extends StreamableLike<FlowMode, IOEvent<T>> {}
+export type IOEvent<T> = NotifyEvent<T> | DoneEvent | DoneEventWithData<T>;
+export interface IOSourceLike<T> extends StreamableLike<FlowMode, IOEvent<T>> {}
 
 /**
  * @experimental
@@ -56,8 +56,6 @@ export { flow } from "./streamable/flow";
 export { sink } from "./streamable/sink";
 export {
   createIOSinkAccumulator,
-  decodeWithCharset,
-  encodeUtf8,
   mapIOEventStream,
   flowIOEvents,
 } from "./streamable/io";

@@ -17,9 +17,8 @@ import {
 
 import { SchedulerLike } from "../scheduler";
 import {
-  DoneEvent,
+  IOEvent,
   FlowMode,
-  NotifyEvent,
   StreamableLike,
   createStreamable,
 } from "../streamable";
@@ -54,7 +53,7 @@ const createWritableEventsObservable = (
 const createWritableAndSetupEventSubscription =
   (
     factory: Factory<DisposableValueLike<Writable>>,
-    events: ObservableLike<NotifyEvent<Uint8Array> | DoneEvent>,
+    events: ObservableLike<IOEvent<Uint8Array>>,
   ) =>
   (scheduler: SchedulerLike) => {
     const writable = factory();
@@ -73,6 +72,9 @@ const createWritableAndSetupEventSubscription =
             }
             break;
           case "done":
+            if (ev.hasData) {
+              writableValue.write(Buffer.from(ev.data));
+            }
             writableValue.end();
             break;
         }
@@ -86,7 +88,7 @@ const createWritableAndSetupEventSubscription =
 
 export const createWritableIOSink = (
   factory: Factory<DisposableValueLike<Writable>>,
-): StreamableLike<NotifyEvent<Uint8Array> | DoneEvent, FlowMode> =>
+): StreamableLike<IOEvent<Uint8Array>, FlowMode> =>
   createStreamable(events =>
     using(
       createWritableAndSetupEventSubscription(factory, events),
