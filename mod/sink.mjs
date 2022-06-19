@@ -3,6 +3,19 @@ import { dispose } from './disposable.mjs';
 import { pipe } from './functions.mjs';
 import { none } from './option.mjs';
 
+function notifyDecodeWithCharset(next) {
+    const data = this.textDecoder.decode(next, { stream: true });
+    if (data.length > 0) {
+        this.delegate.notify(data);
+    }
+}
+function onDisposeWithoutErrorDecodeWithCharset() {
+    const data = this.textDecoder.decode();
+    if (data.length > 0) {
+        this.delegate.notify(data);
+        this.delegate.dispose();
+    }
+}
 function notifyDistinctUntilChanged(next) {
     this.assertState();
     const shouldEmit = !this.hasValue || !this.equality(this.prev, next);
@@ -78,4 +91,4 @@ function notifyTakeWhile(next) {
     }
 }
 
-export { notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile };
+export { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile, onDisposeWithoutErrorDecodeWithCharset };

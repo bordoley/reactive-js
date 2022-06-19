@@ -9,6 +9,7 @@ import { DisposableLike } from "./disposable.mjs";
 declare function concat<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
 declare const concatAll: <T>() => RunnableOperator<RunnableLike<T>, T>;
 declare const createRunnable: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T>;
+declare const decodeWithCharset: (charset?: string, options?: TextDecoderOptions) => RunnableOperator<ArrayBuffer, string>;
 declare const distinctUntilChanged: <T>(options?: {
     readonly equality?: Equality<T> | undefined;
 }) => RunnableOperator<T, T>;
@@ -110,4 +111,4 @@ interface ToRunnable<C extends ContainerLike> extends Container<C> {
 }
 declare const toRunnable: <T>() => Function1<RunnableLike<T>, RunnableLike<T>>;
 declare const type: RunnableLike<unknown>;
-export { RunnableLike, RunnableOperator, ToRunnable, concat, concatAll, contains, createRunnable, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, noneSatisfy, onNotify, pairwise, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type, using };
+export { RunnableLike, RunnableOperator, ToRunnable, concat, concatAll, contains, createRunnable, decodeWithCharset, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, noneSatisfy, onNotify, pairwise, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type, using };

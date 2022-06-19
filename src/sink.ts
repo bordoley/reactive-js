@@ -28,6 +28,31 @@ export interface DelegatingSinkLike<TA, TB> extends SinkLike<TA> {
   readonly delegate: SinkLike<TB>;
 }
 
+export function notifyDecodeWithCharset(
+  this: DelegatingSinkLike<ArrayBuffer, string> & {
+    readonly textDecoder: TextDecoder;
+  },
+  next: ArrayBuffer,
+) {
+  const data = this.textDecoder.decode(next, { stream: true });
+  if (data.length > 0) {
+    this.delegate.notify(data);
+  }
+}
+
+export function onDisposeWithoutErrorDecodeWithCharset(
+  this: DelegatingSinkLike<ArrayBuffer, string> & {
+    readonly textDecoder: TextDecoder;
+  },
+) {
+  const data = this.textDecoder.decode();
+
+  if (data.length > 0) {
+    this.delegate.notify(data);
+    this.delegate.dispose();
+  }
+}
+
 export function notifyDistinctUntilChanged<T>(
   this: DelegatingSinkLike<T, T> & {
     readonly equality: Equality<T>;

@@ -11,6 +11,7 @@
 
 ### Functions
 
+- [notifyDecodeWithCharset](sink.md#notifydecodewithcharset)
 - [notifyDistinctUntilChanged](sink.md#notifydistinctuntilchanged)
 - [notifyKeep](sink.md#notifykeep)
 - [notifyMap](sink.md#notifymap)
@@ -22,8 +23,26 @@
 - [notifyTakeFirst](sink.md#notifytakefirst)
 - [notifyTakeLast](sink.md#notifytakelast)
 - [notifyTakeWhile](sink.md#notifytakewhile)
+- [onDisposeWithoutErrorDecodeWithCharset](sink.md#ondisposewithouterrordecodewithcharset)
 
 ## Functions
+
+### notifyDecodeWithCharset
+
+▸ **notifyDecodeWithCharset**(`this`, `next`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`ArrayBuffer`, `string`\> & { `textDecoder`: `TextDecoder`  } |
+| `next` | `ArrayBuffer` |
+
+#### Returns
+
+`void`
+
+___
 
 ### notifyDistinctUntilChanged
 
@@ -274,6 +293,22 @@ ___
 | :------ | :------ |
 | `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`T`, `T`\> & { `inclusive`: `boolean` ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
 | `next` | `T` |
+
+#### Returns
+
+`void`
+
+___
+
+### onDisposeWithoutErrorDecodeWithCharset
+
+▸ **onDisposeWithoutErrorDecodeWithCharset**(`this`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`ArrayBuffer`, `string`\> & { `textDecoder`: `TextDecoder`  } |
 
 #### Returns
 

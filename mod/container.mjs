@@ -1,5 +1,6 @@
 /// <reference types="./container.d.ts" />
-import { compose, callWith, pipe, defer, alwaysFalse, returns } from './functions.mjs';
+import { createDisposableValue } from './disposable.mjs';
+import { compose, callWith, ignore, pipe, defer, alwaysFalse, returns } from './functions.mjs';
 import { isSome } from './option.mjs';
 
 class AbstractContainer {
@@ -14,6 +15,13 @@ const compute = (m, options) => compose(fromValue(m, options), m.map(callWith())
 const concatMap = ({ map, concatAll }, mapper, options) => compose(map(mapper), concatAll(options));
 const concatWith = ({ concat }, snd) => first => concat(first, snd);
 const empty = ({ fromArray }, options) => fromArray({ ...options })([]);
+function using({ using }, resourceFactory, containerFactory) {
+    return container => using(resourceFactory, resources => {
+        const resourcesArray = Array.isArray(resources) ? resources : [resources];
+        return containerFactory(container, ...resourcesArray);
+    });
+}
+const encodeUtf8 = (m) => using(m, () => createDisposableValue(new TextEncoder(), ignore), (c, v) => pipe(c, m.map(s => v.value.encode(s))));
 function endWith(m, ...values) {
     return concatWith(m, m.fromArray()(values));
 }
@@ -36,4 +44,4 @@ const throws = (m, options) => errorFactory => pipe(() => {
 }, compute(m, options));
 const zipWith = ({ zip }, snd) => fst => zip(fst, snd);
 
-export { AbstractContainer, compute, concatMap, concatWith, empty, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, startWith, throws, zipWith };
+export { AbstractContainer, compute, concatMap, concatWith, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, startWith, throws, using, zipWith };

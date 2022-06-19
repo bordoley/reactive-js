@@ -1,10 +1,10 @@
 /// <reference types="./runnable.d.ts" />
 import { pipe, raise, strictEquality, compose, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
-import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError, dispose, addTeardown } from './disposable.mjs';
+import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, dispose, addTeardown } from './disposable.mjs';
 import { AbstractContainer, empty } from './container.mjs';
 import { __DEV__ } from './env.mjs';
+import { onDisposeWithoutErrorDecodeWithCharset, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
 import { none, isSome, isNone } from './option.mjs';
-import { notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
 
 class RunnableImpl extends AbstractContainer {
     constructor(_run) {
@@ -100,6 +100,20 @@ class FlattenSink extends AbstractDelegatingSink {
 }
 const _concatAll = lift(s => new FlattenSink(s));
 const concatAll = () => _concatAll;
+
+class DecodeWithCharsetSink extends AbstractDelegatingSink {
+    constructor(delegate, textDecoder) {
+        super(delegate);
+        this.textDecoder = textDecoder;
+        addOnDisposedWithError(this, delegate);
+        addOnDisposedWithoutErrorTeardown(this, onDisposeWithoutErrorDecodeWithCharset);
+    }
+}
+DecodeWithCharsetSink.prototype.notify = notifyDecodeWithCharset;
+const decodeWithCharset = (charset = "utf-8", options) => {
+    const operator = (sink) => new DecodeWithCharsetSink(sink, new TextDecoder(charset, options));
+    return lift(operator);
+};
 
 class DistinctUntilChangedSink extends AbstractAutoDisposingDelegatingSink {
     constructor(delegate, equality) {
@@ -440,4 +454,4 @@ function using(resourceFactory, runnableFactory) {
 const toRunnable = () => identity;
 const type = undefined;
 
-export { concat, concatAll, contains, createRunnable, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, noneSatisfy, onNotify, pairwise, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type, using };
+export { concat, concatAll, contains, createRunnable, decodeWithCharset, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, noneSatisfy, onNotify, pairwise, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type, using };
