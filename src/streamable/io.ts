@@ -1,124 +1,38 @@
-import { compute, concatMap, endWith, keepType } from "../container";
+import { endWith, keepType } from "../container";
 import {
   AbstractDisposable,
   addDisposable,
   addDisposableDisposeParentOnChildError,
 } from "../disposable";
-import {
-  Factory,
-  Function1,
-  Reducer,
-  compose,
-  composeWith,
-  pipe,
-  returns,
-} from "../functions";
+import { Factory, Function1, Reducer, compose, pipe } from "../functions";
 import {
   ObservableLike,
   ObserverLike,
   StreamLike,
-  concatAllT,
   concatT,
   createObservable,
   createSubject,
   fromArrayT,
-  fromIterator,
   keepT,
   map,
-  mapT,
   reduce,
   subscribe,
   takeWhile,
   using,
-  withLatestFrom,
 } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
 import {
   DoneEvent,
   FlowMode,
+  IOEvent,
   IOSinkAccumulatorLike,
   NotifyEvent,
   StreamableLike,
-  StreamableOperator,
 } from "../streamable";
 import { done, notify } from "./events";
 import { flow } from "./flow";
 import { createStreamable, lift, stream } from "./streamable";
-
-type IOEvent<T> = NotifyEvent<T> | DoneEvent;
-
-export const decodeWithCharset = (
-  charset = "utf-8",
-  options?: TextDecoderOptions,
-): StreamableOperator<
-  FlowMode,
-  NotifyEvent<ArrayBuffer> | DoneEvent,
-  FlowMode,
-  NotifyEvent<string> | DoneEvent
-> =>
-  pipe(
-    withLatestFrom(
-      compute({
-        ...fromArrayT,
-        ...mapT,
-      })(() => new TextDecoder(charset, options)),
-      function* (ev: IOEvent<ArrayBuffer>, decoder: TextDecoder) {
-        switch (ev.type) {
-          case "notify": {
-            const data = decoder.decode(ev.data, { stream: true });
-            if (data.length > 0) {
-              yield notify(data);
-            }
-            break;
-          }
-          case "done": {
-            const data = decoder.decode();
-            if (data.length > 0) {
-              yield notify(data);
-            }
-            yield done();
-            break;
-          }
-        }
-      },
-    ),
-    composeWith(map(returns)),
-    composeWith(concatMap({ ...concatAllT, ...mapT }, fromIterator())),
-    lift,
-  );
-
-const _encodeUtf8: StreamableOperator<
-  FlowMode,
-  NotifyEvent<string> | DoneEvent,
-  FlowMode,
-  NotifyEvent<ArrayBuffer> | DoneEvent
-> = lift(
-  withLatestFrom(
-    compute({
-      ...fromArrayT,
-      ...mapT,
-    })(() => new TextEncoder()),
-    (ev, textEncoder: TextEncoder) => {
-      switch (ev.type) {
-        case "notify": {
-          const data = textEncoder.encode(ev.data);
-          return notify(data);
-        }
-        case "done": {
-          return ev;
-        }
-      }
-    },
-  ),
-);
-
-export const encodeUtf8: StreamableOperator<
-  FlowMode,
-  NotifyEvent<string> | DoneEvent,
-  FlowMode,
-  NotifyEvent<Uint8Array> | DoneEvent
-> = _encodeUtf8;
 
 export const mapIOEventStream = <TReq, TA, TB>(
   mapper: Function1<TA, TB>,

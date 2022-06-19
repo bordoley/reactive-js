@@ -262,7 +262,7 @@ ___
 
 ### brotliCompress
 
-▸ **brotliCompress**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+▸ **brotliCompress**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -272,13 +272,13 @@ ___
 
 #### Returns
 
-[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 ___
 
 ### brotliDecompress
 
-▸ **brotliDecompress**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+▸ **brotliDecompress**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -288,7 +288,7 @@ ___
 
 #### Returns
 
-[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 ___
 
@@ -316,7 +316,7 @@ ___
 
 ### createReadableIOSource
 
-▸ **createReadableIOSource**(`factory`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+▸ **createReadableIOSource**(`factory`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -326,13 +326,13 @@ ___
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 ___
 
 ### createWritableIOSink
 
-▸ **createWritableIOSink**(`factory`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode)\>
+▸ **createWritableIOSink**(`factory`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode)\>
 
 #### Parameters
 
@@ -342,13 +342,13 @@ ___
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode)\>
+[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode)\>
 
 ___
 
 ### deflate
 
-▸ **deflate**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+▸ **deflate**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -358,13 +358,13 @@ ___
 
 #### Returns
 
-[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 ___
 
 ### gunzip
 
-▸ **gunzip**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+▸ **gunzip**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -374,13 +374,13 @@ ___
 
 #### Returns
 
-[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 ___
 
 ### gzip
 
-▸ **gzip**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+▸ **gzip**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -390,13 +390,13 @@ ___
 
 #### Returns
 
-[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 ___
 
 ### inflate
 
-▸ **inflate**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+▸ **inflate**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -406,13 +406,13 @@ ___
 
 #### Returns
 
-[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 ___
 
 ### readFileIOSource
 
-▸ **readFileIOSource**(`path`, `options?`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+▸ **readFileIOSource**(`path`, `options?`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -428,13 +428,13 @@ ___
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 ___
 
 ### transform
 
-▸ **transform**(`factory`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+▸ **transform**(`factory`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -444,4 +444,4 @@ ___
 
 #### Returns
 
-[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
+[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>, [`FlowMode`](streamable.md#flowmode), [`IOEvent`](streamable.md#ioevent)<`Uint8Array`\>\>

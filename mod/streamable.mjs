@@ -1,8 +1,8 @@
 /// <reference types="./streamable.d.ts" />
-import { empty as empty$1, fromValue, ignoreElements, endWith, compute, concatMap, keepType, concatWith } from './container.mjs';
+import { empty as empty$1, fromValue, ignoreElements, endWith, keepType, concatMap, concatWith } from './container.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError } from './disposable.mjs';
-import { pipe, compose, returns, updaterReducer, identity as identity$1, composeWith, flip } from './functions.mjs';
-import { createSubject, publish, observe, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, withLatestFrom, mapT, concatAllT, fromIterator, takeWhile, reduce, createObservable, takeFirst, never, onNotify, scanAsync, onSubscribe, switchAll } from './observable.mjs';
+import { pipe, compose, returns, updaterReducer, identity as identity$1, flip } from './functions.mjs';
+import { createSubject, publish, observe, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, takeWhile, reduce, createObservable, mapT, concatAllT, takeFirst, withLatestFrom, never, onNotify, scanAsync, onSubscribe, switchAll } from './observable.mjs';
 import { isNone, none } from './option.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
 import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
@@ -191,43 +191,6 @@ function done(...args) {
         : doneEvent;
 }
 
-const decodeWithCharset = (charset = "utf-8", options) => pipe(withLatestFrom(compute({
-    ...fromArrayT,
-    ...mapT,
-})(() => new TextDecoder(charset, options)), function* (ev, decoder) {
-    switch (ev.type) {
-        case "notify": {
-            const data = decoder.decode(ev.data, { stream: true });
-            if (data.length > 0) {
-                yield notify(data);
-            }
-            break;
-        }
-        case "done": {
-            const data = decoder.decode();
-            if (data.length > 0) {
-                yield notify(data);
-            }
-            yield done();
-            break;
-        }
-    }
-}), composeWith(map(returns)), composeWith(concatMap({ ...concatAllT, ...mapT }, fromIterator())), lift);
-const _encodeUtf8 = lift(withLatestFrom(compute({
-    ...fromArrayT,
-    ...mapT,
-})(() => new TextEncoder()), (ev, textEncoder) => {
-    switch (ev.type) {
-        case "notify": {
-            const data = textEncoder.encode(ev.data);
-            return notify(data);
-        }
-        case "done": {
-            return ev;
-        }
-    }
-}));
-const encodeUtf8 = _encodeUtf8;
 const mapIOEventStream = (mapper) => lift(map((ev) => ev.type === "notify" ? pipe(ev.data, mapper, notify) : ev));
 const _flowIOEvents = compose(map(notify), endWith({ ...fromArrayT, ...concatT }, done()), flow());
 const flowIOEvents = () => _flowIOEvents;
@@ -341,4 +304,4 @@ const consumeImpl = (consumer, initial) => enumerable => using(scheduler => {
 const consume = (consumer, initial) => consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
 const consumeAsync = (consumer, initial) => consumeImpl(accObs => compose(zipWithLatestFrom(accObs, (next, acc) => pipe(consumer(acc, next), takeFirst())), switchAll()), initial);
 
-export { __stream, consume, consumeAsync, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, decodeWithCharset, done, empty, encodeUtf8, flow, flowIOEvents, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapIOEventStream, mapReq, notify, sink, stream, toStateStore };
+export { __stream, consume, consumeAsync, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, done, empty, flow, flowIOEvents, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapIOEventStream, mapReq, notify, sink, stream, toStateStore };

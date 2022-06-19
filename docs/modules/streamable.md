@@ -8,6 +8,7 @@
 
 - [AsyncEnumerableLike](../interfaces/streamable.AsyncEnumerableLike.md)
 - [IOSinkAccumulatorLike](../interfaces/streamable.IOSinkAccumulatorLike.md)
+- [IOSourceLike](../interfaces/streamable.IOSourceLike.md)
 - [StreamableLike](../interfaces/streamable.StreamableLike.md)
 
 ### Type Aliases
@@ -15,6 +16,7 @@
 - [DoneEvent](streamable.md#doneevent)
 - [DoneEventWithData](streamable.md#doneeventwithdata)
 - [FlowMode](streamable.md#flowmode)
+- [IOEvent](streamable.md#ioevent)
 - [NotifyEvent](streamable.md#notifyevent)
 - [StreamableOperator](streamable.md#streamableoperator)
 
@@ -27,10 +29,8 @@
 - [createIOSinkAccumulator](streamable.md#createiosinkaccumulator)
 - [createStateStore](streamable.md#createstatestore)
 - [createStreamable](streamable.md#createstreamable)
-- [decodeWithCharset](streamable.md#decodewithcharset)
 - [done](streamable.md#done)
 - [empty](streamable.md#empty)
-- [encodeUtf8](streamable.md#encodeutf8)
 - [flow](streamable.md#flow)
 - [flowIOEvents](streamable.md#flowioevents)
 - [fromArray](streamable.md#fromarray)
@@ -84,6 +84,18 @@ ___
 ### FlowMode
 
 Ƭ **FlowMode**: ``"resume"`` \| ``"pause"``
+
+___
+
+### IOEvent
+
+Ƭ **IOEvent**<`T`\>: [`NotifyEvent`](streamable.md#notifyevent)<`T`\> \| [`DoneEvent`](streamable.md#doneevent) \| [`DoneEventWithData`](streamable.md#doneeventwithdata)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
 
 ___
 
@@ -303,23 +315,6 @@ ___
 
 ___
 
-### decodeWithCharset
-
-▸ **decodeWithCharset**(`charset?`, `options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`NotifyEvent`](streamable.md#notifyevent)<`ArrayBuffer`\> \| [`DoneEvent`](streamable.md#doneevent), [`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`string`\>\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `charset?` | `string` |
-| `options?` | `TextDecoderOptions` |
-
-#### Returns
-
-[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), [`NotifyEvent`](streamable.md#notifyevent)<`ArrayBuffer`\> \| [`DoneEvent`](streamable.md#doneevent), [`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`string`\>\>
-
-___
-
 ### done
 
 ▸ **done**<`T`\>(`data`): [`DoneEventWithData`](streamable.md#doneeventwithdata)<`T`\>
@@ -372,22 +367,6 @@ a disposed `StreamLike` instance.
 #### Returns
 
 [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`\>
-
-___
-
-### encodeUtf8
-
-▸ **encodeUtf8**(`a`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`string`\>\> |
-
-#### Returns
-
-[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`Uint8Array`\>\>
 
 ___
 

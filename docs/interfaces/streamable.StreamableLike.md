@@ -19,6 +19,8 @@
 
   ↳ [`IOSinkAccumulatorLike`](streamable.IOSinkAccumulatorLike.md)
 
+  ↳ [`IOSourceLike`](streamable.IOSourceLike.md)
+
   ↳ [`WindowLocationStreamableLike`](web.WindowLocationStreamableLike.md)
 
 ## Table of contents
