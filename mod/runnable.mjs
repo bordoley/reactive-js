@@ -301,7 +301,6 @@ function repeat(predicate) {
             delegateSink.dispose();
             count++;
         } while (!sink.isDisposed && shouldRepeat(count));
-        sink.dispose();
     });
 }
 
