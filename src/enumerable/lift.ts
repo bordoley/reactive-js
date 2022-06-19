@@ -3,9 +3,8 @@ import {
   EnumerableLike,
   EnumerableOperator,
   EnumeratorLike,
-  EnumeratorOperator,
 } from "../enumerable";
-import { pipe } from "../functions";
+import { Function1, pipe } from "../functions";
 import { enumerate } from "./enumerator";
 
 class LiftedEnumerableLike<T>
@@ -14,7 +13,10 @@ class LiftedEnumerableLike<T>
 {
   constructor(
     readonly src: EnumerableLike<any>,
-    readonly operators: readonly EnumeratorOperator<any, any>[],
+    readonly operators: readonly Function1<
+      EnumeratorLike<any>,
+      EnumeratorLike<any>
+    >[],
   ) {
     super();
   }
@@ -32,7 +34,9 @@ class LiftedEnumerableLike<T>
  * @param operator
  */
 export const lift =
-  <TA, TB>(operator: EnumeratorOperator<TA, TB>): EnumerableOperator<TA, TB> =>
+  <TA, TB>(
+    operator: Function1<EnumeratorLike<TA>, EnumeratorLike<TB>>,
+  ): EnumerableOperator<TA, TB> =>
   enumerable => {
     const src =
       enumerable instanceof LiftedEnumerableLike ? enumerable.src : enumerable;

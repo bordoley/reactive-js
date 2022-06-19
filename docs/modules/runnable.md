@@ -33,7 +33,6 @@
 - [generate](runnable.md#generate)
 - [keep](runnable.md#keep)
 - [last](runnable.md#last)
-- [lift](runnable.md#lift)
 - [map](runnable.md#map)
 - [noneSatisfy](runnable.md#nonesatisfy)
 - [onNotify](runnable.md#onnotify)
@@ -336,29 +335,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>, [`Option`](option.md#option)<`T`\>\>
-
-___
-
-### lift
-
-▸ **lift**<`TA`, `TB`\>(`operator`): [`RunnableOperator`](runnable.md#runnableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `operator` | [`Function1`](functions.md#function1)<[`SinkLike`](../interfaces/sink.SinkLike.md)<`TB`\>, [`SinkLike`](../interfaces/sink.SinkLike.md)<`TA`\>\> |
-
-#### Returns
-
-[`RunnableOperator`](runnable.md#runnableoperator)<`TA`, `TB`\>
 
 ___
 

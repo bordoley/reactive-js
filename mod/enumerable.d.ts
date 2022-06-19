@@ -56,13 +56,6 @@ declare const fromIterable: <T>() => Function1<Iterable<T>, EnumerableLike<T>>;
  */
 declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>) => EnumerableLike<T>;
 /**
- * Returns an EnumerableOperator that applies `operator` to
- * the EnumeratorLike returned by the source when enumerated.
- *
- * @param operator
- */
-declare const lift: <TA, TB>(operator: EnumeratorOperator<TA, TB>) => EnumerableOperator<TA, TB>;
-/**
  * Returns an `EnumerableLike` that only emits items from the
  * source that satisfy the specified type predicate.
  *
@@ -229,8 +222,6 @@ interface EnumerableLike<T> extends ContainerLike {
      */
     enumerate(this: EnumerableLike<T>): EnumeratorLike<T>;
 }
-/** A unary function that transforms an EnumeratorLike<TA> into a EnumeratorLike<TB> */
-declare type EnumeratorOperator<TA, TB> = Function1<EnumeratorLike<TA>, EnumeratorLike<TB>>;
 /** A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB> */
 declare type EnumerableOperator<TA, TB> = Function1<EnumerableLike<TA>, EnumerableLike<TB>>;
 interface ToEnumerable<C extends ContainerLike> extends Container<C> {
@@ -238,4 +229,4 @@ interface ToEnumerable<C extends ContainerLike> extends Container<C> {
 }
 declare const toEnumerable: <T>() => Function1<EnumerableLike<T>, EnumerableLike<T>>;
 declare const type: EnumerableLike<unknown>;
-export { EnumerableLike, EnumerableOperator, EnumeratorLike, EnumeratorOperator, ToEnumerable, concat, concatAll, current, distinctUntilChanged, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, lift, map, move, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toIterable, toRunnable, type, zip, zipEnumerators };
+export { EnumerableLike, EnumerableOperator, EnumeratorLike, ToEnumerable, concat, concatAll, current, distinctUntilChanged, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, move, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toIterable, toRunnable, type, zip, zipEnumerators };

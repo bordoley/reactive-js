@@ -13,7 +13,6 @@
 ### Type Aliases
 
 - [EnumerableOperator](enumerable.md#enumerableoperator)
-- [EnumeratorOperator](enumerable.md#enumeratoroperator)
 
 ### Variables
 
@@ -34,7 +33,6 @@
 - [generate](enumerable.md#generate)
 - [hasCurrent](enumerable.md#hascurrent)
 - [keep](enumerable.md#keep)
-- [lift](enumerable.md#lift)
 - [map](enumerable.md#map)
 - [move](enumerable.md#move)
 - [repeat](enumerable.md#repeat)
@@ -56,21 +54,6 @@
 Ƭ **EnumerableOperator**<`TA`, `TB`\>: [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`TB`\>\>
 
 A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-___
-
-### EnumeratorOperator
-
-Ƭ **EnumeratorOperator**<`TA`, `TB`\>: [`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/enumerable.EnumeratorLike.md)<`TA`\>, [`EnumeratorLike`](../interfaces/enumerable.EnumeratorLike.md)<`TB`\>\>
-
-A unary function that transforms an EnumeratorLike<TA> into a EnumeratorLike<TB>
 
 #### Type parameters
 
@@ -360,32 +343,6 @@ source that satisfy the specified type predicate.
 #### Returns
 
 [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
-
-___
-
-### lift
-
-▸ **lift**<`TA`, `TB`\>(`operator`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`TA`, `TB`\>
-
-Returns an EnumerableOperator that applies `operator` to
-the EnumeratorLike returned by the source when enumerated.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `operator` | [`EnumeratorOperator`](enumerable.md#enumeratoroperator)<`TA`, `TB`\> |
-
-#### Returns
-
-[`EnumerableOperator`](enumerable.md#enumerableoperator)<`TA`, `TB`\>
 
 ___
 
