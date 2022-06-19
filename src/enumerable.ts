@@ -37,12 +37,6 @@ export interface EnumerableLike<T> extends ContainerLike {
   enumerate(this: EnumerableLike<T>): EnumeratorLike<T>;
 }
 
-/** A unary function that transforms an EnumeratorLike<TA> into a EnumeratorLike<TB> */
-export type EnumeratorOperator<TA, TB> = Function1<
-  EnumeratorLike<TA>,
-  EnumeratorLike<TB>
->;
-
 /** A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB> */
 export type EnumerableOperator<TA, TB> = Function1<
   EnumerableLike<TA>,
@@ -60,7 +54,6 @@ export { concatAll } from "./enumerable/concatAll";
 export { fromArray, fromArrayT } from "./enumerable/fromArray";
 export { fromIterable, fromIterator } from "./enumerable/fromIterator";
 export { generate } from "./enumerable/generate";
-export { lift } from "./enumerable/lift";
 export { keep, keepT } from "./enumerable/keep";
 export { map } from "./enumerable/map";
 export { repeat } from "./enumerable/repeat";

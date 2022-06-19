@@ -26,7 +26,6 @@ export { first } from "./runnable/first";
 export { forEach } from "./runnable/forEach";
 export { fromArray, fromArrayT } from "./runnable/fromArray";
 export { generate } from "./runnable/generate";
-export { lift } from "./runnable/lift";
 export { keep, keepT } from "./runnable/keep";
 export { last } from "./runnable/last";
 export { map } from "./runnable/map";
