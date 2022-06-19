@@ -9,7 +9,7 @@ import {
   using,
 } from "../observable";
 import { SchedulerLike, toPausableScheduler } from "../scheduler";
-import { FlowMode, StreamableLike } from "../streamable";
+import { FlowMode, FlowableLike } from "../streamable";
 import { createStreamable } from "./streamable";
 
 export const flow =
@@ -17,7 +17,7 @@ export const flow =
     scheduler,
   }: {
     scheduler?: SchedulerLike;
-  } = {}): Function1<ObservableLike<T>, StreamableLike<FlowMode, T>> =>
+  } = {}): Function1<ObservableLike<T>, FlowableLike<T>> =>
   observable => {
     const createScheduler =
       (modeObs: ObservableLike<FlowMode>) => (modeScheduler: SchedulerLike) => {

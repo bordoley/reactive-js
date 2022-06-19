@@ -5,6 +5,7 @@ import {
 } from "../disposable";
 import { Factory, Reducer, pipe } from "../functions";
 import {
+  MulticastObservableLike,
   ObservableLike,
   ObserverLike,
   StreamLike,
@@ -16,12 +17,12 @@ import {
 } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
-import { FlowMode, IOSinkAccumulatorLike, StreamableLike } from "../streamable";
+import { FlowMode, FlowableSinkLike, StreamableLike } from "../streamable";
 import { createStreamable, stream } from "./streamable";
 
-class IOSinkAccumulatorImpl<T, TAcc>
+class FlowableSinkAccumulatorImpl<T, TAcc>
   extends AbstractDisposable
-  implements IOSinkAccumulatorLike<T, TAcc>
+  implements FlowableSinkLike<T>, MulticastObservableLike<TAcc>
 {
   get type(): this {
     return this;
@@ -85,9 +86,9 @@ class IOSinkAccumulatorImpl<T, TAcc>
 }
 
 /** @experimental */
-export const createIOSinkAccumulator = <T, TAcc>(
+export const createFlowableSinkAccumulator = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
   options?: { readonly replay?: number },
-): IOSinkAccumulatorLike<T, TAcc> =>
-  new IOSinkAccumulatorImpl(reducer, initialValue, options);
+): FlowableSinkLike<T> & MulticastObservableLike<TAcc> =>
+  new FlowableSinkAccumulatorImpl(reducer, initialValue, options);

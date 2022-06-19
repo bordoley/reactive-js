@@ -4,9 +4,9 @@ import {
 } from "../disposable";
 import { RunnableOperator } from "../runnable";
 import {
+  SinkLike,
   notifyDecodeWithCharset,
   onDisposeWithoutErrorDecodeWithCharset,
-  SinkLike,
 } from "../sink";
 import { lift } from "./lift";
 import { AbstractDelegatingSink } from "./sinks";

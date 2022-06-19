@@ -7,13 +7,14 @@
 ### Interfaces
 
 - [AsyncEnumerableLike](../interfaces/streamable.AsyncEnumerableLike.md)
-- [IOSinkAccumulatorLike](../interfaces/streamable.IOSinkAccumulatorLike.md)
+- [FlowableLike](../interfaces/streamable.FlowableLike.md)
+- [FlowableSinkLike](../interfaces/streamable.FlowableSinkLike.md)
 - [StreamableLike](../interfaces/streamable.StreamableLike.md)
 
 ### Type Aliases
 
-- [Continue](streamable.md#continue)
-- [Done](streamable.md#done)
+- [ConsumeContinue](streamable.md#consumecontinue)
+- [ConsumeDone](streamable.md#consumedone)
 - [FlowMode](streamable.md#flowmode)
 - [StreamableOperator](streamable.md#streamableoperator)
 
@@ -22,12 +23,12 @@
 - [\_\_stream](streamable.md#__stream)
 - [consume](streamable.md#consume)
 - [consumeAsync](streamable.md#consumeasync)
-- [continue\_](streamable.md#continue_)
+- [consumeContinue](streamable.md#consumecontinue-1)
+- [consumeDone](streamable.md#consumedone-1)
 - [createActionReducer](streamable.md#createactionreducer)
-- [createIOSinkAccumulator](streamable.md#createiosinkaccumulator)
+- [createFlowableSinkAccumulator](streamable.md#createflowablesinkaccumulator)
 - [createStateStore](streamable.md#createstatestore)
 - [createStreamable](streamable.md#createstreamable)
-- [done](streamable.md#done-1)
 - [empty](streamable.md#empty)
 - [flow](streamable.md#flow)
 - [fromArray](streamable.md#fromarray)
@@ -43,9 +44,9 @@
 
 ## Type Aliases
 
-### Continue
+### ConsumeContinue
 
-Ƭ **Continue**<`T`\>: `Object`
+Ƭ **ConsumeContinue**<`T`\>: `Object`
 
 #### Type parameters
 
@@ -62,9 +63,9 @@
 
 ___
 
-### Done
+### ConsumeDone
 
-Ƭ **Done**<`T`\>: `Object`
+Ƭ **ConsumeDone**<`T`\>: `Object`
 
 #### Type parameters
 
@@ -143,7 +144,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `consumer` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`Continue`](streamable.md#continue)<`TAcc`\> \| [`Done`](streamable.md#done)<`TAcc`\>\> |
+| `consumer` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ConsumeContinue`](streamable.md#consumecontinue)<`TAcc`\> \| [`ConsumeDone`](streamable.md#consumedone)<`TAcc`\>\> |
 | `initial` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns
@@ -167,7 +168,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `consumer` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`Continue`](streamable.md#continue)<`TAcc`\> \| [`Done`](streamable.md#done)<`TAcc`\>\>\> |
+| `consumer` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`ConsumeContinue`](streamable.md#consumecontinue)<`TAcc`\> \| [`ConsumeDone`](streamable.md#consumedone)<`TAcc`\>\>\> |
 | `initial` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns
@@ -176,9 +177,9 @@ ___
 
 ___
 
-### continue\_
+### consumeContinue
 
-▸ **continue_**<`T`\>(`data`): [`Continue`](streamable.md#continue)<`T`\>
+▸ **consumeContinue**<`T`\>(`data`): [`ConsumeContinue`](streamable.md#consumecontinue)<`T`\>
 
 #### Type parameters
 
@@ -194,7 +195,29 @@ ___
 
 #### Returns
 
-[`Continue`](streamable.md#continue)<`T`\>
+[`ConsumeContinue`](streamable.md#consumecontinue)<`T`\>
+
+___
+
+### consumeDone
+
+▸ **consumeDone**<`T`\>(`data`): [`ConsumeDone`](streamable.md#consumedone)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | `T` |
+
+#### Returns
+
+[`ConsumeDone`](streamable.md#consumedone)<`T`\>
 
 ___
 
@@ -227,9 +250,9 @@ over the notified actions, emitting each intermediate result.
 
 ___
 
-### createIOSinkAccumulator
+### createFlowableSinkAccumulator
 
-▸ **createIOSinkAccumulator**<`T`, `TAcc`\>(`reducer`, `initialValue`, `options?`): [`IOSinkAccumulatorLike`](../interfaces/streamable.IOSinkAccumulatorLike.md)<`T`, `TAcc`\>
+▸ **createFlowableSinkAccumulator**<`T`, `TAcc`\>(`reducer`, `initialValue`, `options?`): [`FlowableSinkLike`](../interfaces/streamable.FlowableSinkLike.md)<`T`\> & [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)<`TAcc`\>
 
 **`experimental`**
 
@@ -251,7 +274,7 @@ ___
 
 #### Returns
 
-[`IOSinkAccumulatorLike`](../interfaces/streamable.IOSinkAccumulatorLike.md)<`T`, `TAcc`\>
+[`FlowableSinkLike`](../interfaces/streamable.FlowableSinkLike.md)<`T`\> & [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)<`TAcc`\>
 
 ___
 
@@ -306,28 +329,6 @@ ___
 
 ___
 
-### done
-
-▸ **done**<`T`\>(`data`): [`Done`](streamable.md#done)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `data` | `T` |
-
-#### Returns
-
-[`Done`](streamable.md#done)<`T`\>
-
-___
-
 ### empty
 
 ▸ **empty**<`TReq`, `T`\>(`options?`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`\>
@@ -357,7 +358,7 @@ ___
 
 ### flow
 
-▸ **flow**<`T`\>(`__namedParameters?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), `T`\>\>
+▸ **flow**<`T`\>(`__namedParameters?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -374,7 +375,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), `T`\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`T`\>\>
 
 ___
 

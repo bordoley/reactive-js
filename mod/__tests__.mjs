@@ -9,7 +9,7 @@ import { toArray, fromArray, contains, generate, everySatisfy, map, first, forEa
 import { concat as concat$2, fromArray as fromArray$2, fromArrayT as fromArrayT$2, buffer, toRunnable as toRunnable$2, mapT, catchError, concatT, generate as generate$2, takeFirst as takeFirst$2, combineLatestWith, createObservable, createSubject, dispatchTo, subscribe, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeWith, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync, share, zip as zip$1, map as map$2, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$1, zipT, zipLatestWith, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$2, skipFirst as skipFirst$2, takeWhile as takeWhile$2, onNotify, decodeWithCharset, using } from './observable.mjs';
 import { createVirtualTimeScheduler, createHostScheduler, schedule } from './scheduler.mjs';
 import { type, fromArray as fromArray$3, concat as concat$3, concatAll as concatAll$2, distinctUntilChanged as distinctUntilChanged$3, generate as generate$3, keep, map as map$3, repeat as repeat$3, scan as scan$3, skipFirst as skipFirst$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$3, toRunnable as toRunnable$3 } from './sequence.mjs';
-import { identity as identity$1, __stream, createActionReducer, stream, empty as empty$1, lift, mapReq, sink, flow, toStateStore, createIOSinkAccumulator, fromArray as fromArray$4, fromIterable as fromIterable$2, generate as generate$4, consume, continue_, done, consumeAsync } from './streamable.mjs';
+import { identity as identity$1, __stream, createActionReducer, stream, empty as empty$1, lift, mapReq, sink, flow, toStateStore, createFlowableSinkAccumulator, fromArray as fromArray$4, fromIterable as fromIterable$2, generate as generate$4, consume, consumeContinue, consumeDone, consumeAsync } from './streamable.mjs';
 
 const tests$6 = describe("Disposable", describe("AbstractDisposable", test("disposes child disposable when disposed", () => {
     const disposable = createDisposable();
@@ -502,7 +502,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
         Uint8Array.from([130]),
         Uint8Array.from([172]),
     ], fromArray$2(), decodeWithCharset(), flow());
-    const dest = createIOSinkAccumulator((acc, next) => acc + next, returns(""), { replay: 1 });
+    const dest = createFlowableSinkAccumulator((acc, next) => acc + next, returns(""), { replay: 1 });
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(src, dest), subscribe(scheduler));
     const f = mockFn();
@@ -525,7 +525,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
 }), test("encodeUtf8", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
     const src = pipe(str, fromValue(fromArrayT$2), encodeUtf8({ ...mapT, using }), decodeWithCharset(), flow());
-    const dest = createIOSinkAccumulator((acc, next) => acc + next, returns(""), { replay: 1 });
+    const dest = createFlowableSinkAccumulator((acc, next) => acc + next, returns(""), { replay: 1 });
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(src, dest), subscribe(scheduler));
     const f = mockFn();
@@ -547,7 +547,9 @@ const tests$1 = describe("streamable", test("__stream", () => {
     expectTrue(fromValueStream.isDisposed);
 }), test("map", () => {
     const src = pipe(1, fromValue(fromArrayT$2), map$2(returns(2)), flow());
-    const dest = createIOSinkAccumulator(sum, returns(0), { replay: 1 });
+    const dest = createFlowableSinkAccumulator(sum, returns(0), {
+        replay: 1,
+    });
     const scheduler = createVirtualTimeScheduler();
     const subscription = pipe(sink(src, dest), subscribe(scheduler));
     const f = mockFn();
@@ -597,9 +599,9 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(result, expectArrayEquals([1, 2, 3]));
 }), describe("async-enumerable", test("consume", () => {
     const enumerable = fromIterable$2()([1, 2, 3, 4, 5, 6]);
-    pipe(enumerable, consume((acc, next) => continue_(acc + next), returns(0)), toRunnable$2(), last(), expectEquals(21));
-    pipe(enumerable, consume((acc, next) => (acc > 0 ? done(acc + next) : continue_(acc + next)), returns(0)), toRunnable$2(), last(), expectEquals(3));
-}), describe("consumeAsync", test("when the consumer early terminates", defer([1, 2, 3, 4, 5, 6], fromIterable$2(), consumeAsync((acc, next) => fromValue(fromArrayT$2)(acc > 0 ? done(acc + next) : continue_(acc + next)), returns(0)), toRunnable$2(), last(), expectEquals(3))), test("when the consumer never terminates", defer([1, 2, 3, 4, 5, 6], fromIterable$2(), consumeAsync((acc, next) => pipe(acc + next, continue_, fromValue(fromArrayT$2)), returns(0)), toRunnable$2(), last(), expectEquals(21))))));
+    pipe(enumerable, consume((acc, next) => consumeContinue(acc + next), returns(0)), toRunnable$2(), last(), expectEquals(21));
+    pipe(enumerable, consume((acc, next) => acc > 0 ? consumeDone(acc + next) : consumeContinue(acc + next), returns(0)), toRunnable$2(), last(), expectEquals(3));
+}), describe("consumeAsync", test("when the consumer early terminates", defer([1, 2, 3, 4, 5, 6], fromIterable$2(), consumeAsync((acc, next) => fromValue(fromArrayT$2)(acc > 0 ? consumeDone(acc + next) : consumeContinue(acc + next)), returns(0)), toRunnable$2(), last(), expectEquals(3))), test("when the consumer never terminates", defer([1, 2, 3, 4, 5, 6], fromIterable$2(), consumeAsync((acc, next) => pipe(acc + next, consumeContinue, fromValue(fromArrayT$2)), returns(0)), toRunnable$2(), last(), expectEquals(21))))));
 
 const tests = [
     tests$6,

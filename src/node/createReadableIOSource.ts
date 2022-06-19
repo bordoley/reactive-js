@@ -17,7 +17,7 @@ import {
 } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
-import { FlowMode, StreamableLike, createStreamable } from "../streamable";
+import { FlowMode, FlowableLike, createStreamable } from "../streamable";
 import { createDisposableNodeStream } from "./nodeStream";
 
 const createReadableEventsObservable = (
@@ -72,7 +72,7 @@ const createReadableAndSetupModeSubscription =
 
 export const createReadableIOSource = (
   factory: Factory<DisposableValueLike<Readable>>,
-): StreamableLike<FlowMode, Uint8Array> =>
+): FlowableLike<Uint8Array> =>
   createStreamable(mode =>
     using(
       createReadableAndSetupModeSubscription(factory, mode),

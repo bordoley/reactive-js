@@ -1,5 +1,5 @@
 import { Function1 } from "./functions";
-import { MulticastObservableLike, StreamLike } from "./observable";
+import { StreamLike } from "./observable";
 import { SchedulerLike } from "./scheduler";
 
 export interface StreamableLike<TReq, T> {
@@ -19,19 +19,17 @@ export type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<
 
 export type FlowMode = "resume" | "pause";
 
-export type Continue<T> = { readonly type: "continue"; readonly data: T };
-export type Done<T> = {
+export interface FlowableLike<T> extends StreamableLike<FlowMode, T> {}
+export interface FlowableSinkLike<T> extends StreamableLike<T, FlowMode> {}
+
+export type ConsumeContinue<T> = {
+  readonly type: "continue";
+  readonly data: T;
+};
+export type ConsumeDone<T> = {
   readonly type: "done";
   readonly data: T;
 };
-
-/**
- * @experimental
- * @noInheritDoc
- * */
-export interface IOSinkAccumulatorLike<T, TAcc>
-  extends StreamableLike<T, FlowMode>,
-    MulticastObservableLike<TAcc> {}
 
 export {
   createActionReducer,
@@ -49,11 +47,16 @@ export {
 export { identity } from "./streamable/identity";
 export { flow } from "./streamable/flow";
 export { sink } from "./streamable/sink";
-export { createIOSinkAccumulator } from "./streamable/io";
+export { createFlowableSinkAccumulator } from "./streamable/io";
 
 export { fromArray } from "./streamable/fromArray";
 export { fromEnumerable } from "./streamable/fromEnumerable";
 export { fromIterable } from "./streamable/fromIterable";
 export { generate } from "./streamable/generate";
 
-export { continue_, done, consume, consumeAsync } from "./streamable/consume";
+export {
+  consumeContinue,
+  consumeDone,
+  consume,
+  consumeAsync,
+} from "./streamable/consume";

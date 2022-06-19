@@ -1,8 +1,13 @@
-import { createDisposableValue, DisposableLike } from "./disposable";
+import { DisposableLike, createDisposableValue } from "./disposable";
 import {
   Equality,
   Factory,
   Function1,
+  Function2,
+  Function3,
+  Function4,
+  Function5,
+  Function6,
   Predicate,
   Reducer,
   TypePredicate,
@@ -14,11 +19,6 @@ import {
   ignore,
   pipe,
   returns,
-  Function2,
-  Function3,
-  Function4,
-  Function5,
-  Function6,
 } from "./functions";
 
 import { Option, isSome } from "./option";
