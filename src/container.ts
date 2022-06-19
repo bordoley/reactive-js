@@ -1,3 +1,4 @@
+import { createDisposableValue, DisposableLike } from "./disposable";
 import {
   Equality,
   Factory,
@@ -10,8 +11,14 @@ import {
   callWith,
   compose,
   defer,
+  ignore,
   pipe,
   returns,
+  Function2,
+  Function3,
+  Function4,
+  Function5,
+  Function6,
 } from "./functions";
 
 import { Option, isSome } from "./option";
@@ -168,6 +175,80 @@ export interface TakeWhile<C extends ContainerLike> extends Container<C> {
   ): ContainerOperator<C, T, T>;
 }
 
+export interface Using<C extends ContainerLike> extends Container<C> {
+  using<TResource extends DisposableLike, T>(
+    resourceFactory: Factory<TResource>,
+    containerFactory: Function1<TResource, ContainerOf<C, T>>,
+  ): ContainerOf<C, T>;
+
+  using<
+    TResource1 extends DisposableLike,
+    TResource2 extends DisposableLike,
+    T,
+  >(
+    resourceFactory: Factory<[TResource1, TResource2]>,
+    containerFactory: Function2<TResource1, TResource2, ContainerOf<C, T>>,
+  ): ContainerOf<C, T>;
+
+  using<
+    TResource1 extends DisposableLike,
+    TResource2 extends DisposableLike,
+    TResource3 extends DisposableLike,
+    T,
+  >(
+    resourceFactory: Factory<[TResource1, TResource2, TResource3]>,
+    containerFactory: Function3<
+      TResource1,
+      TResource2,
+      TResource3,
+      ContainerOf<C, T>
+    >,
+  ): ContainerOf<C, T>;
+
+  using<
+    TResource1 extends DisposableLike,
+    TResource2 extends DisposableLike,
+    TResource3 extends DisposableLike,
+    TResource4 extends DisposableLike,
+    T,
+  >(
+    resourceFactory: Factory<[TResource1, TResource2, TResource3, TResource4]>,
+    containerFactory: Function4<
+      TResource1,
+      TResource2,
+      TResource3,
+      TResource4,
+      ContainerOf<C, T>
+    >,
+  ): ContainerOf<C, T>;
+
+  using<
+    TResource1 extends DisposableLike,
+    TResource2 extends DisposableLike,
+    TResource3 extends DisposableLike,
+    TResource4 extends DisposableLike,
+    TResource5 extends DisposableLike,
+    T,
+  >(
+    resourceFactory: Factory<
+      [TResource1, TResource2, TResource3, TResource4, TResource5]
+    >,
+    containerFactory: Function5<
+      TResource1,
+      TResource2,
+      TResource3,
+      TResource4,
+      TResource5,
+      ContainerOf<C, T>
+    >,
+  ): ContainerOf<C, T>;
+
+  using<TResource extends DisposableLike, T>(
+    resourceFactory: Factory<TResource | readonly TResource[]>,
+    runnableFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>,
+  ): ContainerOf<C, T>;
+}
+
 export interface Zip<C extends ContainerLike> extends Container<C> {
   zip<TA, TB>(
     a: ContainerOf<C, TA>,
@@ -255,6 +336,125 @@ export const empty = <C, T, O extends FromArrayOptions = FromArrayOptions>(
   { fromArray }: FromArray<C, O>,
   options?: Omit<Partial<O>, keyof FromArrayOptions>,
 ): ContainerOf<C, T> => fromArray<T>({ ...options })([]);
+
+export function using<C, TResource extends DisposableLike, TA, TB>(
+  m: Using<C>,
+  resourceFactory: Factory<TResource>,
+  containerFactory: Function2<
+    ContainerOf<C, TA>,
+    TResource,
+    ContainerOf<C, TB>
+  >,
+): ContainerOperator<C, TA, TB>;
+
+export function using<
+  C,
+  TResource1 extends DisposableLike,
+  TResource2 extends DisposableLike,
+  TA,
+  TB,
+>(
+  m: Using<C>,
+  resourceFactory: Factory<[TResource1, TResource2]>,
+  containerFactory: Function3<
+    ContainerOf<C, TA>,
+    TResource1,
+    TResource2,
+    ContainerOf<C, TB>
+  >,
+): ContainerOperator<C, TA, TB>;
+
+export function using<
+  C,
+  TResource1 extends DisposableLike,
+  TResource2 extends DisposableLike,
+  TResource3 extends DisposableLike,
+  TA,
+  TB,
+>(
+  m: Using<C>,
+  resourceFactory: Factory<[TResource1, TResource2, TResource3]>,
+  containerFactory: Function4<
+    ContainerOf<C, TA>,
+    TResource1,
+    TResource2,
+    TResource3,
+    ContainerOf<C, TB>
+  >,
+): ContainerOperator<C, TA, TB>;
+
+export function using<
+  C,
+  TResource1 extends DisposableLike,
+  TResource2 extends DisposableLike,
+  TResource3 extends DisposableLike,
+  TResource4 extends DisposableLike,
+  TA,
+  TB,
+>(
+  m: Using<C>,
+  resourceFactory: Factory<[TResource1, TResource2, TResource3, TResource4]>,
+  containerFactory: Function5<
+    ContainerOf<C, TA>,
+    TResource1,
+    TResource2,
+    TResource3,
+    TResource4,
+    ContainerOf<C, TB>
+  >,
+): ContainerOperator<C, TA, TB>;
+
+export function using<
+  C,
+  TResource1 extends DisposableLike,
+  TResource2 extends DisposableLike,
+  TResource3 extends DisposableLike,
+  TResource4 extends DisposableLike,
+  TResource5 extends DisposableLike,
+  TA,
+  TB,
+>(
+  m: Using<C>,
+  resourceFactory: Factory<
+    [TResource1, TResource2, TResource3, TResource4, TResource5]
+  >,
+  containerFactory: Function6<
+    ContainerOf<C, TA>,
+    TResource1,
+    TResource2,
+    TResource3,
+    TResource4,
+    TResource5,
+    ContainerOf<C, TB>
+  >,
+): ContainerOperator<C, TA, TB>;
+export function using<C, TResource extends DisposableLike, TA, TB>(
+  { using }: Using<C>,
+  resourceFactory: Factory<TResource | readonly TResource[]>,
+  containerFactory: (
+    container: ContainerOf<C, TA>,
+    ...resources: readonly TResource[]
+  ) => ContainerOf<C, TB>,
+): ContainerOperator<C, TA, TB> {
+  return container =>
+    using(resourceFactory, resources => {
+      const resourcesArray = Array.isArray(resources) ? resources : [resources];
+      return containerFactory(container, ...resourcesArray);
+    });
+}
+
+export const encodeUtf8 = <C>(
+  m: Using<C> & Map<C>,
+): ContainerOperator<C, string, Uint8Array> =>
+  using(
+    m,
+    () => createDisposableValue(new TextEncoder(), ignore),
+    (c, v) =>
+      pipe(
+        c,
+        m.map(s => v.value.encode(s)),
+      ),
+  );
 
 export function endWith<C, T>(
   m: Concat<C> & FromArray<C>,

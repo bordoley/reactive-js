@@ -99,6 +99,7 @@ export { combineLatest, combineLatestWith } from "./observable/combineLatest";
 export { concat, concatT } from "./observable/concat";
 export { createObservable } from "./observable/createObservable";
 export { createSubject } from "./observable/createSubject";
+export { decodeWithCharset } from "./observable/decodeWithCharset";
 export { fromArray, fromArrayT } from "./observable/fromArray";
 export { fromDisposable } from "./observable/fromDisposable";
 export { fromEnumerable } from "./observable/fromEnumerable";

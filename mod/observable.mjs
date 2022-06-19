@@ -6,8 +6,8 @@ import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
+import { onDisposeWithoutErrorDecodeWithCharset, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifyTakeFirst, notifySkipFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
-import { notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifyTakeFirst, notifySkipFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
 import { createRunnable } from './runnable.mjs';
 
 const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
@@ -597,6 +597,48 @@ const createSubject = (options = {}) => {
     return new SubjectImpl(replay);
 };
 
+class LiftedObservable extends AbstractContainer {
+    constructor(source, operators, isSynchronous) {
+        super();
+        this.source = source;
+        this.operators = operators;
+        this.isSynchronous = isSynchronous;
+    }
+    observe(observer) {
+        const liftedSubscrber = pipe(observer, ...this.operators);
+        pipe(this.source, observe(liftedSubscrber));
+    }
+}
+/**
+ * Creates a new `ObservableLike` which applies the provided the operator function to
+ * observer when the source is subscribed to.
+ *
+ * @param operator The operator function to apply.
+ */
+const lift = (operator) => source => {
+    const sourceSource = source instanceof LiftedObservable ? source.source : source;
+    const allFunctions = source instanceof LiftedObservable
+        ? [operator, ...source.operators]
+        : [operator];
+    const isSynchronous = source.isSynchronous && operator.isSynchronous;
+    return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
+};
+
+class DecodeWithCharsetObserver extends AbstractDelegatingObserver {
+    constructor(delegate, textDecoder) {
+        super(delegate);
+        this.textDecoder = textDecoder;
+        addOnDisposedWithError(this, delegate);
+        addOnDisposedWithoutErrorTeardown(this, onDisposeWithoutErrorDecodeWithCharset);
+    }
+}
+DecodeWithCharsetObserver.prototype.notify = notifyDecodeWithCharset;
+const decodeWithCharset = (charset = "utf-8", options) => {
+    const operator = (observer) => new DecodeWithCharsetObserver(observer, new TextDecoder(charset, options));
+    operator.isSynchronous = true;
+    return lift(operator);
+};
+
 const fromDisposable = (disposable) => createObservable(dispatcher => {
     addDisposable(disposable, dispatcher);
 });
@@ -763,33 +805,6 @@ class UsingObservable extends AbstractContainer {
 function using(resourceFactory, observableFactory) {
     return new UsingObservable(resourceFactory, observableFactory);
 }
-
-class LiftedObservable extends AbstractContainer {
-    constructor(source, operators, isSynchronous) {
-        super();
-        this.source = source;
-        this.operators = operators;
-        this.isSynchronous = isSynchronous;
-    }
-    observe(observer) {
-        const liftedSubscrber = pipe(observer, ...this.operators);
-        pipe(this.source, observe(liftedSubscrber));
-    }
-}
-/**
- * Creates a new `ObservableLike` which applies the provided the operator function to
- * observer when the source is subscribed to.
- *
- * @param operator The operator function to apply.
- */
-const lift = (operator) => source => {
-    const sourceSource = source instanceof LiftedObservable ? source.source : source;
-    const allFunctions = source instanceof LiftedObservable
-        ? [operator, ...source.operators]
-        : [operator];
-    const isSynchronous = source.isSynchronous && operator.isSynchronous;
-    return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
-};
 
 function onDispose$6(error) {
     const buffer = this.buffer;
@@ -1848,4 +1863,4 @@ const toPromise = (scheduler) => observable => new Promise((resolve, reject) => 
 
 const type = undefined;
 
-export { __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, defer, dispatchTo, distinctUntilChanged, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, observe, onNotify$2 as onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, decodeWithCharset, defer, dispatchTo, distinctUntilChanged, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, observe, onNotify$2 as onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

@@ -115,6 +115,7 @@ declare const createObservable: <T>(onSubscribe: SideEffect1<DispatcherLike<T>>)
 declare const createSubject: <T>(options?: {
     readonly replay?: number;
 }) => SubjectLike<T>;
+declare const decodeWithCharset: (charset?: string, options?: TextDecoderOptions) => ObservableOperator<ArrayBuffer, string>;
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
  * An optional `startIndex` in the array maybe specified,
@@ -699,4 +700,4 @@ declare type ObservableEffectMode = "batched" | "combine-latest";
  * interval -  Takes both the leading and trailing values.
  */
 declare type ThrottleMode = "first" | "last" | "interval";
-export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, ObserverLike, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, defer, dispatchTo, distinctUntilChanged, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, ObserverLike, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, decodeWithCharset, defer, dispatchTo, distinctUntilChanged, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, observe, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, skipFirst, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

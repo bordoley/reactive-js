@@ -25,6 +25,7 @@
 - [concatAll](runnable.md#concatall)
 - [contains](runnable.md#contains)
 - [createRunnable](runnable.md#createrunnable)
+- [decodeWithCharset](runnable.md#decodewithcharset)
 - [distinctUntilChanged](runnable.md#distinctuntilchanged)
 - [everySatisfy](runnable.md#everysatisfy)
 - [first](runnable.md#first)
@@ -167,6 +168,23 @@ ___
 #### Returns
 
 [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
+
+___
+
+### decodeWithCharset
+
+▸ **decodeWithCharset**(`charset?`, `options?`): [`RunnableOperator`](runnable.md#runnableoperator)<`ArrayBuffer`, `string`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `charset?` | `string` |
+| `options?` | `TextDecoderOptions` |
+
+#### Returns
+
+[`RunnableOperator`](runnable.md#runnableoperator)<`ArrayBuffer`, `string`\>
 
 ___
 

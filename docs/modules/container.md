@@ -30,6 +30,7 @@
 - [TakeFirst](../interfaces/container.TakeFirst.md)
 - [TakeLast](../interfaces/container.TakeLast.md)
 - [TakeWhile](../interfaces/container.TakeWhile.md)
+- [Using](../interfaces/container.Using.md)
 - [Zip](../interfaces/container.Zip.md)
 
 ### Type Aliases
@@ -43,6 +44,7 @@
 - [concatMap](container.md#concatmap)
 - [concatWith](container.md#concatwith)
 - [empty](container.md#empty)
+- [encodeUtf8](container.md#encodeutf8)
 - [endWith](container.md#endwith)
 - [fromOption](container.md#fromoption)
 - [fromValue](container.md#fromvalue)
@@ -52,6 +54,7 @@
 - [mapTo](container.md#mapto)
 - [startWith](container.md#startwith)
 - [throws](container.md#throws)
+- [using](container.md#using)
 - [zipWith](container.md#zipwith)
 
 ## Type Aliases
@@ -181,6 +184,28 @@ ___
 #### Returns
 
 [`ContainerOf`](container.md#containerof)<`C`, `T`\>
+
+___
+
+### encodeUtf8
+
+▸ **encodeUtf8**<`C`\>(`m`): [`ContainerOperator`](container.md#containeroperator)<`C`, `string`, `Uint8Array`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `C` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Using`](../interfaces/container.Using.md)<`C`\> & [`Map`](../interfaces/container.Map.md)<`C`\> |
+
+#### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `string`, `Uint8Array`\>
 
 ___
 
@@ -409,6 +434,135 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`unknown`\>, [`ContainerOf`](container.md#containerof)<`C`, `T`\>\>
+
+___
+
+### using
+
+▸ **using**<`C`, `TResource`, `TA`, `TB`\>(`m`, `resourceFactory`, `containerFactory`): [`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | `C` |
+| `TResource` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Using`](../interfaces/container.Using.md)<`C`\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource`\> |
+| `containerFactory` | [`Function2`](functions.md#function2)<[`ContainerOf`](container.md#containerof)<`C`, `TA`\>, `TResource`, [`ContainerOf`](container.md#containerof)<`C`, `TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, `TB`\>
+
+▸ **using**<`C`, `TResource1`, `TResource2`, `TA`, `TB`\>(`m`, `resourceFactory`, `containerFactory`): [`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | `C` |
+| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Using`](../interfaces/container.Using.md)<`C`\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`]\> |
+| `containerFactory` | [`Function3`](functions.md#function3)<[`ContainerOf`](container.md#containerof)<`C`, `TA`\>, `TResource1`, `TResource2`, [`ContainerOf`](container.md#containerof)<`C`, `TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, `TB`\>
+
+▸ **using**<`C`, `TResource1`, `TResource2`, `TResource3`, `TA`, `TB`\>(`m`, `resourceFactory`, `containerFactory`): [`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | `C` |
+| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Using`](../interfaces/container.Using.md)<`C`\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`]\> |
+| `containerFactory` | [`Function4`](functions.md#function4)<[`ContainerOf`](container.md#containerof)<`C`, `TA`\>, `TResource1`, `TResource2`, `TResource3`, [`ContainerOf`](container.md#containerof)<`C`, `TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, `TB`\>
+
+▸ **using**<`C`, `TResource1`, `TResource2`, `TResource3`, `TResource4`, `TA`, `TB`\>(`m`, `resourceFactory`, `containerFactory`): [`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | `C` |
+| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource4` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Using`](../interfaces/container.Using.md)<`C`\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`]\> |
+| `containerFactory` | [`Function5`](functions.md#function5)<[`ContainerOf`](container.md#containerof)<`C`, `TA`\>, `TResource1`, `TResource2`, `TResource3`, `TResource4`, [`ContainerOf`](container.md#containerof)<`C`, `TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, `TB`\>
+
+▸ **using**<`C`, `TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, `TA`, `TB`\>(`m`, `resourceFactory`, `containerFactory`): [`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | `C` |
+| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource4` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource5` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Using`](../interfaces/container.Using.md)<`C`\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`]\> |
+| `containerFactory` | [`Function6`](functions.md#function6)<[`ContainerOf`](container.md#containerof)<`C`, `TA`\>, `TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, [`ContainerOf`](container.md#containerof)<`C`, `TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, `TB`\>
 
 ___
 

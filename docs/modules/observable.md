@@ -50,6 +50,7 @@
 - [concatAll](observable.md#concatall)
 - [createObservable](observable.md#createobservable)
 - [createSubject](observable.md#createsubject)
+- [decodeWithCharset](observable.md#decodewithcharset)
 - [defer](observable.md#defer)
 - [dispatchTo](observable.md#dispatchto)
 - [distinctUntilChanged](observable.md#distinctuntilchanged)
@@ -1155,6 +1156,23 @@ ___
 #### Returns
 
 [`SubjectLike`](../interfaces/observable.SubjectLike.md)<`T`\>
+
+___
+
+### decodeWithCharset
+
+▸ **decodeWithCharset**(`charset?`, `options?`): [`ObservableOperator`](observable.md#observableoperator)<`ArrayBuffer`, `string`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `charset?` | `string` |
+| `options?` | `TextDecoderOptions` |
+
+#### Returns
+
+[`ObservableOperator`](observable.md#observableoperator)<`ArrayBuffer`, `string`\>
 
 ___
 

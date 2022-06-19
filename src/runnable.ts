@@ -20,6 +20,7 @@ export interface ToRunnable<C extends ContainerLike> extends Container<C> {
 
 export { concat, concatAll } from "./runnable/concat";
 export { createRunnable } from "./runnable/createRunnable";
+export { decodeWithCharset } from "./runnable/decodeWithCharset";
 export { distinctUntilChanged } from "./runnable/distinctUntilChanged";
 export { everySatisfy, noneSatisfy } from "./runnable/everySatisfy";
 export { first } from "./runnable/first";

@@ -48,6 +48,8 @@
 
   ↳ [`TakeWhile`](container.TakeWhile.md)
 
+  ↳ [`Using`](container.Using.md)
+
   ↳ [`Zip`](container.Zip.md)
 
   ↳ [`ToEnumerable`](enumerable.ToEnumerable.md)
