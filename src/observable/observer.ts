@@ -4,22 +4,9 @@ import {
   bindDisposables,
 } from "../disposable";
 import { __DEV__ } from "../env";
-import { SideEffect1, ignore, raise } from "../functions";
+import { SideEffect1, raise } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
-
-const assertStateProduction = ignore;
-function assertStateDev<T>(this: ObserverLike<T>) {
-  if (!this.inContinuation) {
-    raise(
-      "Observer.notify() may only be invoked within a scheduled SchedulerContinuation",
-    );
-  } else if (this.isDisposed) {
-    raise("Observer is disposed");
-  }
-}
-
-const assertState = __DEV__ ? assertStateDev : assertStateProduction;
 
 export abstract class AbstractObserver<T>
   extends AbstractDisposable
@@ -50,7 +37,19 @@ export abstract class AbstractObserver<T>
     options?: { readonly delay?: number },
   ): void;
 }
-AbstractObserver.prototype.assertState = assertState;
+if (__DEV__) {
+  AbstractObserver.prototype.assertState = function assertStateDev<T>(
+    this: ObserverLike<T>,
+  ) {
+    if (!this.inContinuation) {
+      raise(
+        "Observer.notify() may only be invoked within a scheduled SchedulerContinuation",
+      );
+    } else if (this.isDisposed) {
+      raise("Observer is disposed");
+    }
+  };
+}
 
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
@@ -65,8 +64,6 @@ export abstract class AbstractSchedulerDelegatingObserver<
   inContinuation = false;
 
   private readonly scheduler: SchedulerLike;
-
-  readonly assertState = assertState;
 
   constructor(readonly delegate: TDelegate) {
     super();

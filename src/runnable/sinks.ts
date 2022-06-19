@@ -4,17 +4,8 @@ import {
   bindDisposables,
 } from "../disposable";
 import { __DEV__ } from "../env";
-import { ignore, raise } from "../functions";
+import { raise } from "../functions";
 import { SinkLike } from "../sink";
-
-const assertStateProduction = ignore;
-const assertStateDev = function <T>(this: SinkLike<T>) {
-  if (this.isDisposed) {
-    raise("Sink is disposed");
-  }
-};
-
-const assertState = __DEV__ ? assertStateDev : assertStateProduction;
 
 export abstract class AbstractSink<T>
   extends AbstractDisposable
@@ -24,7 +15,14 @@ export abstract class AbstractSink<T>
 
   notify(_: T): void {}
 }
-AbstractSink.prototype.assertState = assertState;
+
+if (__DEV__) {
+  AbstractSink.prototype.assertState = function <T>(this: SinkLike<T>) {
+    if (this.isDisposed) {
+      raise("Sink is disposed");
+    }
+  };
+}
 
 export abstract class AbstractDelegatingSink<TA, TB> extends AbstractSink<TA> {
   constructor(readonly delegate: SinkLike<TB>) {
