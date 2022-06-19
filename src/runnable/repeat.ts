@@ -41,7 +41,5 @@ export function repeat<T>(
         delegateSink.dispose();
         count++;
       } while (!sink.isDisposed && shouldRepeat(count));
-
-      sink.dispose();
     });
 }
