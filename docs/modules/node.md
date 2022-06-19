@@ -316,7 +316,7 @@ ___
 
 ### createReadableIOSource
 
-▸ **createReadableIOSource**(`factory`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+▸ **createReadableIOSource**(`factory`): [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>
 
 #### Parameters
 
@@ -326,13 +326,13 @@ ___
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>
 
 ___
 
 ### createWritableIOSink
 
-▸ **createWritableIOSink**(`factory`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`Uint8Array`, [`FlowMode`](streamable.md#flowmode)\>
+▸ **createWritableIOSink**(`factory`): [`FlowableSinkLike`](../interfaces/streamable.FlowableSinkLike.md)<`Uint8Array`\>
 
 #### Parameters
 
@@ -342,7 +342,7 @@ ___
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`Uint8Array`, [`FlowMode`](streamable.md#flowmode)\>
+[`FlowableSinkLike`](../interfaces/streamable.FlowableSinkLike.md)<`Uint8Array`\>
 
 ___
 
@@ -412,7 +412,7 @@ ___
 
 ### readFileIOSource
 
-▸ **readFileIOSource**(`path`, `options?`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+▸ **readFileIOSource**(`path`, `options?`): [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>
 
 #### Parameters
 
@@ -428,7 +428,7 @@ ___
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>
 
 ___
 

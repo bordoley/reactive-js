@@ -21,14 +21,19 @@ import {
   zipWithLatestFrom,
 } from "../observable";
 import { none } from "../option";
-import { AsyncEnumerableLike, Continue, Done, stream } from "../streamable";
+import {
+  AsyncEnumerableLike,
+  ConsumeContinue,
+  ConsumeDone,
+  stream,
+} from "../streamable";
 
-export const continue_ = <T>(data: T): Continue<T> => ({
+export const consumeContinue = <T>(data: T): ConsumeContinue<T> => ({
   type: "continue",
   data,
 });
 
-export const done = <T>(data: T): Done<T> => ({
+export const consumeDone = <T>(data: T): ConsumeDone<T> => ({
   type: "done",
   data,
 });
@@ -37,7 +42,7 @@ const consumeImpl =
   <TSrc, TAcc>(
     consumer: (
       acc: ObservableLike<TAcc>,
-    ) => ObservableOperator<TSrc, Continue<TAcc> | Done<TAcc>>,
+    ) => ObservableOperator<TSrc, ConsumeContinue<TAcc> | ConsumeDone<TAcc>>,
     initial: Factory<TAcc>,
   ): Function1<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> =>
   enumerable =>
@@ -69,13 +74,17 @@ const consumeImpl =
     );
 
 export const consume = <T, TAcc>(
-  consumer: Function2<TAcc, T, Continue<TAcc> | Done<TAcc>>,
+  consumer: Function2<TAcc, T, ConsumeContinue<TAcc> | ConsumeDone<TAcc>>,
   initial: Factory<TAcc>,
 ): Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
   consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
 
 export const consumeAsync = <T, TAcc>(
-  consumer: Function2<TAcc, T, ObservableLike<Continue<TAcc> | Done<TAcc>>>,
+  consumer: Function2<
+    TAcc,
+    T,
+    ObservableLike<ConsumeContinue<TAcc> | ConsumeDone<TAcc>>
+  >,
   initial: Factory<TAcc>,
 ): Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
   consumeImpl(

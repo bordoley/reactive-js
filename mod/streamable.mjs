@@ -180,7 +180,7 @@ const sink = (src, dest) => using(scheduler => {
     return destStream;
 }, ignoreAndNotifyVoid);
 
-class IOSinkAccumulatorImpl extends AbstractDisposable {
+class FlowableSinkAccumulatorImpl extends AbstractDisposable {
     constructor(reducer, initialValue, options) {
         super();
         this.isSynchronous = false;
@@ -213,7 +213,7 @@ class IOSinkAccumulatorImpl extends AbstractDisposable {
     }
 }
 /** @experimental */
-const createIOSinkAccumulator = (reducer, initialValue, options) => new IOSinkAccumulatorImpl(reducer, initialValue, options);
+const createFlowableSinkAccumulator = (reducer, initialValue, options) => new FlowableSinkAccumulatorImpl(reducer, initialValue, options);
 
 const fromArrayScanner = (acc, _) => acc + 1;
 /**
@@ -271,11 +271,11 @@ const generate = (generator, initialValue, options = {}) => {
     return createStreamable(op);
 };
 
-const continue_ = (data) => ({
+const consumeContinue = (data) => ({
     type: "continue",
     data,
 });
-const done = (data) => ({
+const consumeDone = (data) => ({
     type: "done",
     data,
 });
@@ -297,4 +297,4 @@ const consumeImpl = (consumer, initial) => enumerable => using(scheduler => {
 const consume = (consumer, initial) => consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
 const consumeAsync = (consumer, initial) => consumeImpl(accObs => compose(zipWithLatestFrom(accObs, (next, acc) => pipe(consumer(acc, next), takeFirst())), switchAll()), initial);
 
-export { __stream, consume, consumeAsync, continue_, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, done, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapReq, sink, stream, toStateStore };
+export { __stream, consume, consumeAsync, consumeContinue, consumeDone, createActionReducer, createFlowableSinkAccumulator, createStateStore, createStreamable, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapReq, sink, stream, toStateStore };

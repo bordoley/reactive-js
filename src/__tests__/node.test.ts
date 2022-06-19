@@ -9,7 +9,7 @@ import {
 } from "../node";
 import { fromArray, takeFirst, toPromise } from "../observable";
 import { createHostScheduler } from "../scheduler";
-import { createIOSinkAccumulator, flow, sink } from "../streamable";
+import { createFlowableSinkAccumulator, flow, sink } from "../streamable";
 import {
   describe,
   expectEquals,
@@ -90,7 +90,7 @@ export const tests = describe(
       );
 
       const textDecoder = new TextDecoder();
-      const dest = createIOSinkAccumulator(
+      const dest = createFlowableSinkAccumulator(
         (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
         returns(""),
         { replay: 1 },
@@ -117,7 +117,7 @@ export const tests = describe(
       );
 
       const textDecoder = new TextDecoder();
-      const dest = createIOSinkAccumulator(
+      const dest = createFlowableSinkAccumulator(
         (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
         returns(""),
         { replay: 1 },
@@ -137,7 +137,7 @@ export const tests = describe(
     );
 
     const textDecoder = new TextDecoder();
-    const dest = createIOSinkAccumulator(
+    const dest = createFlowableSinkAccumulator(
       (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
       returns(""),
       { replay: 1 },

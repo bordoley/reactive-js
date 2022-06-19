@@ -45,9 +45,10 @@ import {
   __stream,
   consume,
   consumeAsync,
+  consumeContinue,
+  consumeDone,
   createActionReducer,
-  createIOSinkAccumulator,
-  done,
+  createFlowableSinkAccumulator,
   empty,
   flow,
   fromArray as fromArrayStream,
@@ -56,7 +57,6 @@ import {
   identity,
   lift,
   mapReq,
-  continue_,
   sink,
   stream,
   toStateStore,
@@ -457,7 +457,7 @@ export const tests = describe(
         decodeWithCharset(),
         flow(),
       );
-      const dest = createIOSinkAccumulator(
+      const dest = createFlowableSinkAccumulator(
         (acc: string, next: string) => acc + next,
         returns(""),
         { replay: 1 },
@@ -504,7 +504,7 @@ export const tests = describe(
         decodeWithCharset(),
         flow(),
       );
-      const dest = createIOSinkAccumulator(
+      const dest = createFlowableSinkAccumulator(
         (acc: string, next: string) => acc + next,
         returns(""),
         { replay: 1 },
@@ -544,7 +544,9 @@ export const tests = describe(
     }),
     test("map", () => {
       const src = pipe(1, fromValue(fromArrayT), map(returns(2)), flow());
-      const dest = createIOSinkAccumulator(sum, returns(0), { replay: 1 });
+      const dest = createFlowableSinkAccumulator(sum, returns(0), {
+        replay: 1,
+      });
 
       const scheduler = createVirtualTimeScheduler();
       const subscription = pipe(sink(src, dest), subscribe(scheduler));
@@ -638,7 +640,7 @@ export const tests = describe(
 
       pipe(
         enumerable,
-        consume((acc, next) => continue_(acc + next), returns<number>(0)),
+        consume((acc, next) => consumeContinue(acc + next), returns<number>(0)),
         toRunnable(),
         last(),
         expectEquals(21),
@@ -647,7 +649,8 @@ export const tests = describe(
       pipe(
         enumerable,
         consume(
-          (acc, next) => (acc > 0 ? done(acc + next) : continue_(acc + next)),
+          (acc, next) =>
+            acc > 0 ? consumeDone(acc + next) : consumeContinue(acc + next),
           returns<number>(0),
         ),
         toRunnable(),
@@ -666,7 +669,7 @@ export const tests = describe(
           consumeAsync(
             (acc, next) =>
               fromValue(fromArrayT)(
-                acc > 0 ? done(acc + next) : continue_(acc + next),
+                acc > 0 ? consumeDone(acc + next) : consumeContinue(acc + next),
               ),
             returns<number>(0),
           ),
@@ -681,7 +684,8 @@ export const tests = describe(
           [1, 2, 3, 4, 5, 6],
           fromIterable(),
           consumeAsync(
-            (acc, next) => pipe(acc + next, continue_, fromValue(fromArrayT)),
+            (acc, next) =>
+              pipe(acc + next, consumeContinue, fromValue(fromArrayT)),
             returns<number>(0),
           ),
           toRunnable(),
