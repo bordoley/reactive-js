@@ -26,7 +26,7 @@ const addTeardown = (parent, teardown) => {
 const addOnDisposedWithErrorTeardown = (parent, teardown) => {
     addTeardown(parent, e => {
         if (isSome(e)) {
-            teardown(e.cause);
+            teardown.call(parent, e.cause);
         }
     });
 };
@@ -36,7 +36,7 @@ const addOnDisposedWithErrorTeardown = (parent, teardown) => {
 const addOnDisposedWithoutErrorTeardown = (parent, teardown) => {
     addTeardown(parent, e => {
         if (isNone(e)) {
-            teardown();
+            teardown.call(parent);
         }
     });
 };

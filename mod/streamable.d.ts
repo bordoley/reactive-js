@@ -56,8 +56,6 @@ declare const flow: <T>({ scheduler, }?: {
     scheduler?: SchedulerLike | undefined;
 }) => Function1<ObservableLike<T>, StreamableLike<FlowMode, T>>;
 declare const sink: <TReq, T>(src: StreamableLike<TReq, T>, dest: StreamableLike<T, TReq>) => ObservableLike<void>;
-declare const mapIOEventStream: <TReq, TA, TB>(mapper: Function1<TA, TB>) => Function1<StreamableLike<TReq, DoneEvent | NotifyEvent<TA>>, StreamableLike<TReq, DoneEvent | NotifyEvent<TB>>>;
-declare const flowIOEvents: <T>() => Function1<ObservableLike<T>, StreamableLike<FlowMode, DoneEvent | NotifyEvent<T>>>;
 /** @experimental */
 declare const createIOSinkAccumulator: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: {
     readonly replay?: number;
@@ -94,11 +92,10 @@ declare const fromIterable: <T>() => Function1<Iterable<T>, AsyncEnumerableLike<
 declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
     readonly delay?: number;
 }) => AsyncEnumerableLike<T>;
-declare const consume: <T, TAcc>(consumer: Function2<TAcc, T, NotifyEvent<TAcc> | DoneEventWithData<TAcc>>, initial: Factory<TAcc>) => Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>>;
-declare const consumeAsync: <T, TAcc>(consumer: Function2<TAcc, T, ObservableLike<NotifyEvent<TAcc> | DoneEventWithData<TAcc>>>, initial: Factory<TAcc>) => Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>>;
-declare const notify: <T>(data: T) => NotifyEvent<T>;
-declare function done<T>(data: T): DoneEventWithData<T>;
-declare function done(): DoneEvent;
+declare const continue_: <T>(data: T) => Continue<T>;
+declare const done: <T>(data: T) => Done<T>;
+declare const consume: <T, TAcc>(consumer: Function2<TAcc, T, Continue<TAcc> | Done<TAcc>>, initial: Factory<TAcc>) => Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>>;
+declare const consumeAsync: <T, TAcc>(consumer: Function2<TAcc, T, ObservableLike<Continue<TAcc> | Done<TAcc>>>, initial: Factory<TAcc>) => Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>>;
 interface StreamableLike<TReq, T> {
     stream(this: StreamableLike<TReq, T>, scheduler: SchedulerLike, options?: {
         readonly replay?: number;
@@ -108,26 +105,18 @@ interface AsyncEnumerableLike<T> extends StreamableLike<void, T> {
 }
 declare type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<StreamableLike<TSrcReq, TSrc>, StreamableLike<TReq, T>>;
 declare type FlowMode = "resume" | "pause";
-declare type NotifyEvent<T> = {
-    readonly type: "notify";
+declare type Continue<T> = {
+    readonly type: "continue";
     readonly data: T;
 };
-declare type DoneEvent = {
-    readonly type: "done";
-    hasData: false;
-};
-declare type DoneEventWithData<T> = {
+declare type Done<T> = {
     readonly type: "done";
     readonly data: T;
-    hasData: true;
 };
-declare type IOEvent<T> = NotifyEvent<T> | DoneEvent | DoneEventWithData<T>;
-interface IOSourceLike<T> extends StreamableLike<FlowMode, IOEvent<T>> {
-}
 /**
  * @experimental
  * @noInheritDoc
  * */
-interface IOSinkAccumulatorLike<T, TAcc> extends StreamableLike<NotifyEvent<T> | DoneEvent, FlowMode>, MulticastObservableLike<TAcc> {
+interface IOSinkAccumulatorLike<T, TAcc> extends StreamableLike<T, FlowMode>, MulticastObservableLike<TAcc> {
 }
-export { AsyncEnumerableLike, DoneEvent, DoneEventWithData, FlowMode, IOEvent, IOSinkAccumulatorLike, IOSourceLike, NotifyEvent, StreamableLike, StreamableOperator, __stream, consume, consumeAsync, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, done, empty, flow, flowIOEvents, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapIOEventStream, mapReq, notify, sink, stream, toStateStore };
+export { AsyncEnumerableLike, Continue, Done, FlowMode, IOSinkAccumulatorLike, StreamableLike, StreamableOperator, __stream, consume, consumeAsync, continue_, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, done, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapReq, sink, stream, toStateStore };

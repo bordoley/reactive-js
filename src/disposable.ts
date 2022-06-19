@@ -80,7 +80,7 @@ export const addOnDisposedWithErrorTeardown = (
 ) => {
   addTeardown(parent, e => {
     if (isSome(e)) {
-      teardown(e.cause);
+      teardown.call(parent, e.cause);
     }
   });
 };
@@ -94,7 +94,7 @@ export const addOnDisposedWithoutErrorTeardown = (
 ) => {
   addTeardown(parent, e => {
     if (isNone(e)) {
-      teardown();
+      teardown.call(parent);
     }
   });
 };

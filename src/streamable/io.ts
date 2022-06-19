@@ -1,64 +1,23 @@
-import { endWith, keepType } from "../container";
 import {
   AbstractDisposable,
   addDisposable,
   addDisposableDisposeParentOnChildError,
 } from "../disposable";
-import { Factory, Function1, Reducer, compose, pipe } from "../functions";
+import { Factory, Reducer, pipe } from "../functions";
 import {
   ObservableLike,
   ObserverLike,
   StreamLike,
-  concatT,
   createObservable,
   createSubject,
-  fromArrayT,
-  keepT,
-  map,
   reduce,
   subscribe,
-  takeWhile,
   using,
 } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
-import {
-  DoneEvent,
-  FlowMode,
-  IOEvent,
-  IOSinkAccumulatorLike,
-  NotifyEvent,
-  StreamableLike,
-} from "../streamable";
-import { done, notify } from "./events";
-import { flow } from "./flow";
-import { createStreamable, lift, stream } from "./streamable";
-
-export const mapIOEventStream = <TReq, TA, TB>(
-  mapper: Function1<TA, TB>,
-): Function1<
-  StreamableLike<TReq, NotifyEvent<TA> | DoneEvent>,
-  StreamableLike<TReq, NotifyEvent<TB> | DoneEvent>
-> =>
-  lift(
-    map((ev: IOEvent<TA>) =>
-      ev.type === "notify" ? pipe(ev.data, mapper, notify) : ev,
-    ),
-  );
-
-const _flowIOEvents = compose(
-  map(notify),
-  endWith({ ...fromArrayT, ...concatT }, done() as IOEvent<any>),
-  flow(),
-);
-export const flowIOEvents = <T>(): Function1<
-  ObservableLike<T>,
-  StreamableLike<FlowMode, NotifyEvent<T> | DoneEvent>
-> => _flowIOEvents;
-
-const isNotify = <T>(
-  ev: IOEvent<T>,
-): ev is { readonly type: "notify"; readonly data: T } => ev.type === "notify";
+import { FlowMode, IOSinkAccumulatorLike, StreamableLike } from "../streamable";
+import { createStreamable, stream } from "./streamable";
 
 class IOSinkAccumulatorImpl<T, TAcc>
   extends AbstractDisposable
@@ -74,7 +33,7 @@ class IOSinkAccumulatorImpl<T, TAcc>
   readonly isSynchronous = false;
 
   private readonly subject: StreamLike<TAcc, TAcc>;
-  private readonly streamable: StreamableLike<IOEvent<T>, FlowMode>;
+  private readonly streamable: StreamableLike<T, FlowMode>;
 
   constructor(
     reducer: Reducer<T, TAcc>,
@@ -86,14 +45,11 @@ class IOSinkAccumulatorImpl<T, TAcc>
     const subject = createSubject(options);
     addDisposableDisposeParentOnChildError(this, subject);
 
-    const op = (events: ObservableLike<IOEvent<T>>): ObservableLike<FlowMode> =>
+    const op = (events: ObservableLike<T>): ObservableLike<FlowMode> =>
       using(
         scheduler =>
           pipe(
             events,
-            takeWhile(isNotify),
-            keepType(keepT, isNotify),
-            map(ev => ev.data),
             reduce(reducer, initialValue),
             subscribe(scheduler, subject.dispatch, subject),
           ),
@@ -121,7 +77,7 @@ class IOSinkAccumulatorImpl<T, TAcc>
   stream(
     scheduler: SchedulerLike,
     options?: { readonly replay: number },
-  ): StreamLike<IOEvent<T>, FlowMode> {
+  ): StreamLike<T, FlowMode> {
     const result = pipe(this.streamable, stream(scheduler, options));
     addDisposableDisposeParentOnChildError(this, result);
     return result;

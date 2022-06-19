@@ -15,7 +15,7 @@
 
 ## Hierarchy
 
-- [`StreamableLike`](streamable.StreamableLike.md)<[`NotifyEvent`](../modules/streamable.md#notifyevent)<`T`\> \| [`DoneEvent`](../modules/streamable.md#doneevent), [`FlowMode`](../modules/streamable.md#flowmode)\>
+- [`StreamableLike`](streamable.StreamableLike.md)<`T`, [`FlowMode`](../modules/streamable.md#flowmode)\>
 
 - [`MulticastObservableLike`](observable.MulticastObservableLike.md)<`TAcc`\>
 

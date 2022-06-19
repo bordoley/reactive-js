@@ -50,15 +50,13 @@ import {
   done,
   empty,
   flow,
-  flowIOEvents,
   fromArray as fromArrayStream,
   fromIterable,
   generate as generateStream,
   identity,
   lift,
-  mapIOEventStream,
   mapReq,
-  notify,
+  continue_,
   sink,
   stream,
   toStateStore,
@@ -457,7 +455,7 @@ export const tests = describe(
         ],
         fromArray(),
         decodeWithCharset(),
-        flowIOEvents(),
+        flow(),
       );
       const dest = createIOSinkAccumulator(
         (acc: string, next: string) => acc + next,
@@ -481,7 +479,7 @@ export const tests = describe(
       const scheduler = createVirtualTimeScheduler();
       const emptyStream = pipe(
         emptyContainer(fromArrayT),
-        flowIOEvents(),
+        flow(),
         stream(scheduler),
       );
 
@@ -492,8 +490,7 @@ export const tests = describe(
       const subscription = pipe(emptyStream, subscribe(scheduler, f));
       scheduler.run();
 
-      pipe(f, expectToHaveBeenCalledTimes(1));
-      pipe(f.calls[0][0].type, expectEquals("done"));
+      pipe(f, expectToHaveBeenCalledTimes(0));
       expectTrue(subscription.isDisposed);
       expectTrue(emptyStream.isDisposed);
     }),
@@ -505,7 +502,7 @@ export const tests = describe(
         fromValue(fromArrayT),
         encodeUtf8({ ...mapT, using }),
         decodeWithCharset(),
-        flowIOEvents(),
+        flow(),
       );
       const dest = createIOSinkAccumulator(
         (acc: string, next: string) => acc + next,
@@ -529,7 +526,7 @@ export const tests = describe(
       const fromValueStream = pipe(
         1,
         fromValue(fromArrayT),
-        flowIOEvents(),
+        flow(),
         stream(scheduler),
       );
 
@@ -540,20 +537,13 @@ export const tests = describe(
 
       scheduler.run();
 
-      pipe(f, expectToHaveBeenCalledTimes(2));
-      pipe(f.calls[0][0].type, expectEquals("notify"));
-      pipe(f.calls[0][0].data, expectEquals(1));
-      pipe(f.calls[1][0].type, expectEquals("done"));
+      pipe(f, expectToHaveBeenCalledTimes(1));
+      pipe(f.calls[0][0], expectEquals(1));
       expectTrue(subscription.isDisposed);
       expectTrue(fromValueStream.isDisposed);
     }),
     test("map", () => {
-      const src = pipe(
-        1,
-        fromValue(fromArrayT),
-        flowIOEvents(),
-        mapIOEventStream(returns(2)),
-      );
+      const src = pipe(1, fromValue(fromArrayT), map(returns(2)), flow());
       const dest = createIOSinkAccumulator(sum, returns(0), { replay: 1 });
 
       const scheduler = createVirtualTimeScheduler();
@@ -648,7 +638,7 @@ export const tests = describe(
 
       pipe(
         enumerable,
-        consume((acc, next) => notify(acc + next), returns<number>(0)),
+        consume((acc, next) => continue_(acc + next), returns<number>(0)),
         toRunnable(),
         last(),
         expectEquals(21),
@@ -657,7 +647,7 @@ export const tests = describe(
       pipe(
         enumerable,
         consume(
-          (acc, next) => (acc > 0 ? done(acc + next) : notify(acc + next)),
+          (acc, next) => (acc > 0 ? done(acc + next) : continue_(acc + next)),
           returns<number>(0),
         ),
         toRunnable(),
@@ -676,7 +666,7 @@ export const tests = describe(
           consumeAsync(
             (acc, next) =>
               fromValue(fromArrayT)(
-                acc > 0 ? done(acc + next) : notify(acc + next),
+                acc > 0 ? done(acc + next) : continue_(acc + next),
               ),
             returns<number>(0),
           ),
@@ -691,7 +681,7 @@ export const tests = describe(
           [1, 2, 3, 4, 5, 6],
           fromIterable(),
           consumeAsync(
-            (acc, next) => pipe(acc + next, notify, fromValue(fromArrayT)),
+            (acc, next) => pipe(acc + next, continue_, fromValue(fromArrayT)),
             returns<number>(0),
           ),
           toRunnable(),
