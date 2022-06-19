@@ -8,16 +8,13 @@
 
 - [AsyncEnumerableLike](../interfaces/streamable.AsyncEnumerableLike.md)
 - [IOSinkAccumulatorLike](../interfaces/streamable.IOSinkAccumulatorLike.md)
-- [IOSourceLike](../interfaces/streamable.IOSourceLike.md)
 - [StreamableLike](../interfaces/streamable.StreamableLike.md)
 
 ### Type Aliases
 
-- [DoneEvent](streamable.md#doneevent)
-- [DoneEventWithData](streamable.md#doneeventwithdata)
+- [Continue](streamable.md#continue)
+- [Done](streamable.md#done)
 - [FlowMode](streamable.md#flowmode)
-- [IOEvent](streamable.md#ioevent)
-- [NotifyEvent](streamable.md#notifyevent)
 - [StreamableOperator](streamable.md#streamableoperator)
 
 ### Functions
@@ -25,45 +22,30 @@
 - [\_\_stream](streamable.md#__stream)
 - [consume](streamable.md#consume)
 - [consumeAsync](streamable.md#consumeasync)
+- [continue\_](streamable.md#continue_)
 - [createActionReducer](streamable.md#createactionreducer)
 - [createIOSinkAccumulator](streamable.md#createiosinkaccumulator)
 - [createStateStore](streamable.md#createstatestore)
 - [createStreamable](streamable.md#createstreamable)
-- [done](streamable.md#done)
+- [done](streamable.md#done-1)
 - [empty](streamable.md#empty)
 - [flow](streamable.md#flow)
-- [flowIOEvents](streamable.md#flowioevents)
 - [fromArray](streamable.md#fromarray)
 - [fromEnumerable](streamable.md#fromenumerable)
 - [fromIterable](streamable.md#fromiterable)
 - [generate](streamable.md#generate)
 - [identity](streamable.md#identity)
 - [lift](streamable.md#lift)
-- [mapIOEventStream](streamable.md#mapioeventstream)
 - [mapReq](streamable.md#mapreq)
-- [notify](streamable.md#notify)
 - [sink](streamable.md#sink)
 - [stream](streamable.md#stream)
 - [toStateStore](streamable.md#tostatestore)
 
 ## Type Aliases
 
-### DoneEvent
+### Continue
 
-Ƭ **DoneEvent**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `hasData` | ``false`` |
-| `type` | ``"done"`` |
-
-___
-
-### DoneEventWithData
-
-Ƭ **DoneEventWithData**<`T`\>: `Object`
+Ƭ **Continue**<`T`\>: `Object`
 
 #### Type parameters
 
@@ -76,7 +58,25 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `data` | `T` |
-| `hasData` | ``true`` |
+| `type` | ``"continue"`` |
+
+___
+
+### Done
+
+Ƭ **Done**<`T`\>: `Object`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `data` | `T` |
 | `type` | ``"done"`` |
 
 ___
@@ -84,37 +84,6 @@ ___
 ### FlowMode
 
 Ƭ **FlowMode**: ``"resume"`` \| ``"pause"``
-
-___
-
-### IOEvent
-
-Ƭ **IOEvent**<`T`\>: [`NotifyEvent`](streamable.md#notifyevent)<`T`\> \| [`DoneEvent`](streamable.md#doneevent) \| [`DoneEventWithData`](streamable.md#doneeventwithdata)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-___
-
-### NotifyEvent
-
-Ƭ **NotifyEvent**<`T`\>: `Object`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `data` | `T` |
-| `type` | ``"notify"`` |
 
 ___
 
@@ -174,7 +143,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `consumer` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`NotifyEvent`](streamable.md#notifyevent)<`TAcc`\> \| [`DoneEventWithData`](streamable.md#doneeventwithdata)<`TAcc`\>\> |
+| `consumer` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`Continue`](streamable.md#continue)<`TAcc`\> \| [`Done`](streamable.md#done)<`TAcc`\>\> |
 | `initial` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns
@@ -198,12 +167,34 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `consumer` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`NotifyEvent`](streamable.md#notifyevent)<`TAcc`\> \| [`DoneEventWithData`](streamable.md#doneeventwithdata)<`TAcc`\>\>\> |
+| `consumer` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`Continue`](streamable.md#continue)<`TAcc`\> \| [`Done`](streamable.md#done)<`TAcc`\>\>\> |
 | `initial` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns
 
 [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
+
+___
+
+### continue\_
+
+▸ **continue_**<`T`\>(`data`): [`Continue`](streamable.md#continue)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | `T` |
+
+#### Returns
+
+[`Continue`](streamable.md#continue)<`T`\>
 
 ___
 
@@ -317,7 +308,7 @@ ___
 
 ### done
 
-▸ **done**<`T`\>(`data`): [`DoneEventWithData`](streamable.md#doneeventwithdata)<`T`\>
+▸ **done**<`T`\>(`data`): [`Done`](streamable.md#done)<`T`\>
 
 #### Type parameters
 
@@ -333,13 +324,7 @@ ___
 
 #### Returns
 
-[`DoneEventWithData`](streamable.md#doneeventwithdata)<`T`\>
-
-▸ **done**(): [`DoneEvent`](streamable.md#doneevent)
-
-#### Returns
-
-[`DoneEvent`](streamable.md#doneevent)
+[`Done`](streamable.md#done)<`T`\>
 
 ___
 
@@ -390,22 +375,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), `T`\>\>
-
-___
-
-### flowIOEvents
-
-▸ **flowIOEvents**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`FlowMode`](streamable.md#flowmode), [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`T`\>\>\>
 
 ___
 
@@ -540,30 +509,6 @@ ___
 
 ___
 
-### mapIOEventStream
-
-▸ **mapIOEventStream**<`TReq`, `TA`, `TB`\>(`mapper`): [`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`TA`\>\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`TB`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TReq` |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`TA`\>\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, [`DoneEvent`](streamable.md#doneevent) \| [`NotifyEvent`](streamable.md#notifyevent)<`TB`\>\>\>
-
-___
-
 ### mapReq
 
 ▸ **mapReq**<`TReqA`, `TReqB`, `T`\>(`op`): [`StreamableOperator`](streamable.md#streamableoperator)<`TReqA`, `T`, `TReqB`, `T`\>
@@ -585,28 +530,6 @@ ___
 #### Returns
 
 [`StreamableOperator`](streamable.md#streamableoperator)<`TReqA`, `T`, `TReqB`, `T`\>
-
-___
-
-### notify
-
-▸ **notify**<`T`\>(`data`): [`NotifyEvent`](streamable.md#notifyevent)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `data` | `T` |
-
-#### Returns
-
-[`NotifyEvent`](streamable.md#notifyevent)<`T`\>
 
 ___
 

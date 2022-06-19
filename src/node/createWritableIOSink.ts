@@ -5,6 +5,7 @@ import {
   addDisposableDisposeParentOnChildError,
   addTeardown,
   dispose,
+  addOnDisposedWithoutErrorTeardown,
 } from "../disposable";
 import { Factory, defer, pipe } from "../functions";
 import {
@@ -16,12 +17,7 @@ import {
 } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
-import {
-  IOEvent,
-  FlowMode,
-  StreamableLike,
-  createStreamable,
-} from "../streamable";
+import { FlowMode, StreamableLike, createStreamable } from "../streamable";
 
 const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
 
@@ -53,33 +49,28 @@ const createWritableEventsObservable = (
 const createWritableAndSetupEventSubscription =
   (
     factory: Factory<DisposableValueLike<Writable>>,
-    events: ObservableLike<IOEvent<Uint8Array>>,
+    events: ObservableLike<Uint8Array>,
   ) =>
   (scheduler: SchedulerLike) => {
     const writable = factory();
     const writableValue = writable.value;
+
     const streamEventsSubscription = pipe(
       events,
       subscribe(scheduler, ev => {
-        switch (ev.type) {
-          case "notify":
-            // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
-            // node throws a type Error regarding expecting a Buffer, though the docs
-            // say a UInt8Array should be accepted. Need to file a bug.
-            if (!writableValue.write(Buffer.from(ev.data))) {
-              // Hack in a custom event here for pause request
-              writableValue.emit(NODE_JS_PAUSE_EVENT);
-            }
-            break;
-          case "done":
-            if (ev.hasData) {
-              writableValue.write(Buffer.from(ev.data));
-            }
-            writableValue.end();
-            break;
+        // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
+        // node throws a type Error regarding expecting a Buffer, though the docs
+        // say a UInt8Array should be accepted. Need to file a bug.
+        if (!writableValue.write(Buffer.from(ev))) {
+          // Hack in a custom event here for pause request
+          writableValue.emit(NODE_JS_PAUSE_EVENT);
         }
       }),
     );
+    addOnDisposedWithoutErrorTeardown(streamEventsSubscription, () => {
+      debugger;
+      writableValue.end();
+    });
 
     addDisposableDisposeParentOnChildError(writable, streamEventsSubscription);
 
@@ -88,7 +79,7 @@ const createWritableAndSetupEventSubscription =
 
 export const createWritableIOSink = (
   factory: Factory<DisposableValueLike<Writable>>,
-): StreamableLike<IOEvent<Uint8Array>, FlowMode> =>
+): StreamableLike<Uint8Array, FlowMode> =>
   createStreamable(events =>
     using(
       createWritableAndSetupEventSubscription(factory, events),

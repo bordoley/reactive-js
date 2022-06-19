@@ -19,23 +19,18 @@ export type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<
 
 export type FlowMode = "resume" | "pause";
 
-export type NotifyEvent<T> = { readonly type: "notify"; readonly data: T };
-export type DoneEvent = { readonly type: "done"; hasData: false };
-export type DoneEventWithData<T> = {
+export type Continue<T> = { readonly type: "continue"; readonly data: T };
+export type Done<T> = {
   readonly type: "done";
   readonly data: T;
-  hasData: true;
 };
-
-export type IOEvent<T> = NotifyEvent<T> | DoneEvent | DoneEventWithData<T>;
-export interface IOSourceLike<T> extends StreamableLike<FlowMode, IOEvent<T>> {}
 
 /**
  * @experimental
  * @noInheritDoc
  * */
 export interface IOSinkAccumulatorLike<T, TAcc>
-  extends StreamableLike<NotifyEvent<T> | DoneEvent, FlowMode>,
+  extends StreamableLike<T, FlowMode>,
     MulticastObservableLike<TAcc> {}
 
 export {
@@ -54,17 +49,11 @@ export {
 export { identity } from "./streamable/identity";
 export { flow } from "./streamable/flow";
 export { sink } from "./streamable/sink";
-export {
-  createIOSinkAccumulator,
-  mapIOEventStream,
-  flowIOEvents,
-} from "./streamable/io";
+export { createIOSinkAccumulator } from "./streamable/io";
 
 export { fromArray } from "./streamable/fromArray";
 export { fromEnumerable } from "./streamable/fromEnumerable";
 export { fromIterable } from "./streamable/fromIterable";
 export { generate } from "./streamable/generate";
 
-export { consume, consumeAsync } from "./streamable/consume";
-
-export { notify, done } from "./streamable/events";
+export { continue_, done, consume, consumeAsync } from "./streamable/consume";

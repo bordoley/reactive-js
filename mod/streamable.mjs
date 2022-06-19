@@ -1,8 +1,8 @@
 /// <reference types="./streamable.d.ts" />
-import { empty as empty$1, fromValue, ignoreElements, endWith, keepType, concatMap, concatWith } from './container.mjs';
+import { empty as empty$1, fromValue, ignoreElements, endWith, concatMap, concatWith } from './container.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError } from './disposable.mjs';
 import { pipe, compose, returns, updaterReducer, identity as identity$1, flip } from './functions.mjs';
-import { createSubject, publish, observe, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, takeWhile, reduce, createObservable, mapT, concatAllT, takeFirst, withLatestFrom, never, onNotify, scanAsync, onSubscribe, switchAll } from './observable.mjs';
+import { createSubject, publish, observe, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, reduce, createObservable, mapT, concatAllT, takeFirst, withLatestFrom, never, onNotify, takeWhile, scanAsync, onSubscribe, switchAll } from './observable.mjs';
 import { isNone, none } from './option.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
 import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
@@ -180,28 +180,13 @@ const sink = (src, dest) => using(scheduler => {
     return destStream;
 }, ignoreAndNotifyVoid);
 
-const notify = (data) => ({
-    type: "notify",
-    data,
-});
-const doneEvent = { type: "done", hasData: false };
-function done(...args) {
-    return args.length > 0
-        ? { type: "done", hasData: true, data: args[0] }
-        : doneEvent;
-}
-
-const mapIOEventStream = (mapper) => lift(map((ev) => ev.type === "notify" ? pipe(ev.data, mapper, notify) : ev));
-const _flowIOEvents = compose(map(notify), endWith({ ...fromArrayT, ...concatT }, done()), flow());
-const flowIOEvents = () => _flowIOEvents;
-const isNotify = (ev) => ev.type === "notify";
 class IOSinkAccumulatorImpl extends AbstractDisposable {
     constructor(reducer, initialValue, options) {
         super();
         this.isSynchronous = false;
         const subject = createSubject(options);
         addDisposableDisposeParentOnChildError(this, subject);
-        const op = (events) => using(scheduler => pipe(events, takeWhile(isNotify), keepType(keepT, isNotify), map(ev => ev.data), reduce(reducer, initialValue), subscribe(scheduler, subject.dispatch, subject)), eventsSubscription => createObservable(dispatcher => {
+        const op = (events) => using(scheduler => pipe(events, reduce(reducer, initialValue), subscribe(scheduler, subject.dispatch, subject)), eventsSubscription => createObservable(dispatcher => {
             dispatcher.dispatch("pause");
             dispatcher.dispatch("resume");
             addDisposable(eventsSubscription, dispatcher);
@@ -286,13 +271,21 @@ const generate = (generator, initialValue, options = {}) => {
     return createStreamable(op);
 };
 
+const continue_ = (data) => ({
+    type: "continue",
+    data,
+});
+const done = (data) => ({
+    type: "done",
+    data,
+});
 const consumeImpl = (consumer, initial) => enumerable => using(scheduler => {
     const enumerator = pipe(enumerable, stream(scheduler));
     const accFeedback = createSubject();
     return [accFeedback, enumerator];
 }, (accFeedback, enumerator) => pipe(enumerator, consumer(accFeedback), onNotify(ev => {
     switch (ev.type) {
-        case "notify":
+        case "continue":
             accFeedback.dispatch(ev.data);
             enumerator.dispatch(none);
             break;
@@ -304,4 +297,4 @@ const consumeImpl = (consumer, initial) => enumerable => using(scheduler => {
 const consume = (consumer, initial) => consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
 const consumeAsync = (consumer, initial) => consumeImpl(accObs => compose(zipWithLatestFrom(accObs, (next, acc) => pipe(consumer(acc, next), takeFirst())), switchAll()), initial);
 
-export { __stream, consume, consumeAsync, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, done, empty, flow, flowIOEvents, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapIOEventStream, mapReq, notify, sink, stream, toStateStore };
+export { __stream, consume, consumeAsync, continue_, createActionReducer, createIOSinkAccumulator, createStateStore, createStreamable, done, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapReq, sink, stream, toStateStore };

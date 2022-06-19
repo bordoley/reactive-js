@@ -13,8 +13,8 @@ function onDisposeWithoutErrorDecodeWithCharset() {
     const data = this.textDecoder.decode();
     if (data.length > 0) {
         this.delegate.notify(data);
-        this.delegate.dispose();
     }
+    this.delegate.dispose();
 }
 function notifyDistinctUntilChanged(next) {
     this.assertState();

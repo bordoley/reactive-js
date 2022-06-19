@@ -49,8 +49,8 @@ export function onDisposeWithoutErrorDecodeWithCharset(
 
   if (data.length > 0) {
     this.delegate.notify(data);
-    this.delegate.dispose();
   }
+  this.delegate.dispose();
 }
 
 export function notifyDistinctUntilChanged<T>(
