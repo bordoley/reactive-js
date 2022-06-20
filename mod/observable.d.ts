@@ -230,7 +230,7 @@ declare function using<TResource extends DisposableLike, T>(resourceFactory: Fun
 declare const defer: <T>(factory: Function1<ObserverLike<T>, SideEffect>, options?: {
     readonly delay?: number;
 }) => ObservableLike<T>;
-declare const sink: <TSink extends ObserverLike<T>, T>(observer: TSink) => SideEffect1<ObservableLike<T>>;
+declare const sink: <T>(observer: ObserverLike<T>) => SideEffect1<ObservableLike<T>>;
 /**
  * Returns an `ObservableLike` which buffers items produced by the source until either the
  * number of items reaches the specified maximum buffer size or the duration time expires.
