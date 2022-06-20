@@ -6,7 +6,7 @@ import { Option, isSome } from "../option";
 import { notifyReduce } from "../sink";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, observe } from "./observer";
+import { AbstractDelegatingObserver, sink } from "./observer";
 
 function onDispose(
   this: ReduceObserver<unknown, unknown>,
@@ -15,7 +15,7 @@ function onDispose(
   if (isSome(error)) {
     this.delegate.dispose();
   } else {
-    pipe(this.acc, fromValue(fromArrayT), observe(this.delegate));
+    pipe(this.acc, fromValue(fromArrayT), sink(this.delegate));
   }
 }
 

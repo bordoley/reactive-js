@@ -161,7 +161,9 @@ export const createAutoDisposingDelegatingObserver = <T>(
   return observer;
 };
 
-export const observe =
-  <T>(observer: ObserverLike<T>): SideEffect1<ObservableLike<T>> =>
+export const sink =
+  <TSink extends ObserverLike<T>, T>(
+    observer: TSink,
+  ): SideEffect1<ObservableLike<T>> =>
   observable =>
     observable.observe(observer);

@@ -70,7 +70,6 @@
 - [mergeWith](observable.md#mergewith)
 - [never](observable.md#never)
 - [observable](observable.md#observable)
-- [observe](observable.md#observe)
 - [onNotify](observable.md#onnotify)
 - [onSubscribe](observable.md#onsubscribe)
 - [pairwise](observable.md#pairwise)
@@ -81,6 +80,7 @@
 - [scan](observable.md#scan)
 - [scanAsync](observable.md#scanasync)
 - [share](observable.md#share)
+- [sink](observable.md#sink)
 - [skipFirst](observable.md#skipfirst)
 - [subscribe](observable.md#subscribe)
 - [subscribeOn](observable.md#subscribeon)
@@ -1637,28 +1637,6 @@ ___
 
 ___
 
-### observe
-
-▸ **observe**<`T`\>(`observer`): [`SideEffect1`](functions.md#sideeffect1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observer` | [`ObserverLike`](../interfaces/observable.ObserverLike.md)<`T`\> |
-
-#### Returns
-
-[`SideEffect1`](functions.md#sideeffect1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
-
-___
-
 ### onNotify
 
 ▸ **onNotify**<`T`\>(`onNotify`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
@@ -1951,6 +1929,29 @@ to the source is disposed.
 #### Returns
 
 [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+
+___
+
+### sink
+
+▸ **sink**<`TSink`, `T`\>(`observer`): [`SideEffect1`](functions.md#sideeffect1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TSink` | extends [`ObserverLike`](../interfaces/observable.ObserverLike.md)<`T`, `TSink`\> |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observer` | `TSink` |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
 ___
 

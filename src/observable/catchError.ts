@@ -11,7 +11,7 @@ import {
 } from "../observable";
 import { isSome, none } from "../option";
 import { lift } from "./lift";
-import { createDelegatingObserver, observe } from "./observer";
+import { createDelegatingObserver, sink } from "./observer";
 
 /**
  * Returns an `ObservableLike` which catches errors produced by the source and either continues with
@@ -31,7 +31,7 @@ export const catchError = <T>(
       try {
         const result = onError(cause) || none;
         if (isSome(result)) {
-          pipe(result, observe(delegate));
+          pipe(result, sink(delegate));
         } else {
           pipe(delegate, dispose());
         }

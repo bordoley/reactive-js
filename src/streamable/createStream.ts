@@ -7,7 +7,7 @@ import {
   ObserverLike,
   StreamLike,
   createSubject,
-  observe,
+  sink,
   publish,
 } from "../observable";
 
@@ -59,7 +59,7 @@ class StreamImpl<TReq, T>
   }
 
   observe(observer: ObserverLike<T>) {
-    pipe(this.observable, observe(observer));
+    pipe(this.observable, sink(observer));
   }
 }
 

@@ -17,7 +17,7 @@ import { Option, isSome, none } from "../option";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { never } from "./never";
-import { AbstractDelegatingObserver, observe } from "./observer";
+import { AbstractDelegatingObserver, sink } from "./observer";
 import { subscribe } from "./subscribe";
 
 function onDispose(this: BufferObserver<void>, error: Option<Error>) {
@@ -27,7 +27,7 @@ function onDispose(this: BufferObserver<void>, error: Option<Error>) {
   if (isSome(error) || buffer.length === 0) {
     pipe(this.delegate, dispose(error));
   } else {
-    pipe(buffer, fromValue(fromArrayT), observe(this.delegate));
+    pipe(buffer, fromValue(fromArrayT), sink(this.delegate));
   }
 }
 

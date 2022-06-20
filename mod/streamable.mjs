@@ -2,7 +2,7 @@
 import { empty as empty$1, fromValue, ignoreElements, endWith, concatMap, concatWith } from './container.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError } from './disposable.mjs';
 import { pipe, compose, returns, updaterReducer, identity as identity$1, flip } from './functions.mjs';
-import { createSubject, publish, observe, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, reduce, createObservable, mapT, concatAllT, takeFirst, withLatestFrom, never, onNotify, takeWhile, scanAsync, onSubscribe, switchAll } from './observable.mjs';
+import { createSubject, publish, sink as sink$1, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, reduce, createObservable, mapT, concatAllT, takeFirst, withLatestFrom, never, onNotify, takeWhile, scanAsync, onSubscribe, switchAll } from './observable.mjs';
 import { isNone, none } from './option.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
 import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
@@ -31,7 +31,7 @@ class StreamImpl extends AbstractDisposable {
         this.dispatcher.dispatch(req);
     }
     observe(observer) {
-        pipe(this.observable, observe(observer));
+        pipe(this.observable, sink$1(observer));
     }
 }
 const createStream = (op, scheduler, options) => new StreamImpl(op, scheduler, options);

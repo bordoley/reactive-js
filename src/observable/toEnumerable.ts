@@ -5,7 +5,7 @@ import { Function1, pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { isNone, isSome, none } from "../option";
 import { SchedulerContinuationLike, run } from "../scheduler";
-import { AbstractObserver, observe } from "./observer";
+import { AbstractObserver, sink } from "./observer";
 
 class EnumeratorObserver<T>
   extends AbstractObserver<T>
@@ -72,7 +72,7 @@ class EnumeratorObserver<T>
 
 export const enumerate = <T>(obs: ObservableLike<T>): EnumeratorLike<T> => {
   const observer = new EnumeratorObserver<T>();
-  pipe(obs, observe(observer));
+  pipe(obs, sink(observer));
   return observer;
 };
 

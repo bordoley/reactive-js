@@ -1,7 +1,7 @@
 /// <reference types="./web.d.ts" />
 import { dispose, addTeardown, addDisposableDisposeParentOnChildError, toAbortSignal } from './disposable.mjs';
 import { pipe, raise, returns } from './functions.mjs';
-import { createObservable, onNotify, keep as keep$1, throttle, map, subscribe, defer, fromPromise, observe } from './observable.mjs';
+import { createObservable, onNotify, keep as keep$1, throttle, map, subscribe, defer, fromPromise, sink } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { AbstractContainer } from './container.mjs';
 import { none, isNone } from './option.mjs';
@@ -205,7 +205,7 @@ const fetch = (onResponse) => fetchRequest => defer(observer => async () => {
         const resultObs = onResponseResult instanceof Promise
             ? fromPromise(returns(onResponseResult))
             : onResponseResult;
-        pipe(resultObs, observe(observer));
+        pipe(resultObs, sink(observer));
     }
     catch (cause) {
         pipe(observer, dispose({ cause }));
