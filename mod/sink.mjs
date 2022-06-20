@@ -9,13 +9,6 @@ function notifyDecodeWithCharset(next) {
         this.delegate.notify(data);
     }
 }
-function onDisposeWithoutErrorDecodeWithCharset() {
-    const data = this.textDecoder.decode();
-    if (data.length > 0) {
-        this.delegate.notify(data);
-    }
-    this.delegate.dispose();
-}
 function notifyDistinctUntilChanged(next) {
     this.assertState();
     const shouldEmit = !this.hasValue || !this.equality(this.prev, next);
@@ -91,4 +84,4 @@ function notifyTakeWhile(next) {
     }
 }
 
-export { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile, onDisposeWithoutErrorDecodeWithCharset };
+export { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile };

@@ -6,7 +6,7 @@ import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
-import { onDisposeWithoutErrorDecodeWithCharset, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifyTakeFirst, notifySkipFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifyTakeFirst, notifySkipFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 
@@ -628,13 +628,22 @@ class DecodeWithCharsetObserver extends AbstractDelegatingObserver {
     constructor(delegate, textDecoder) {
         super(delegate);
         this.textDecoder = textDecoder;
-        addOnDisposedWithError(this, delegate);
-        addOnDisposedWithoutErrorTeardown(this, onDisposeWithoutErrorDecodeWithCharset);
     }
 }
 DecodeWithCharsetObserver.prototype.notify = notifyDecodeWithCharset;
 const decodeWithCharset = (charset = "utf-8", options) => {
-    const operator = (observer) => new DecodeWithCharsetObserver(observer, new TextDecoder(charset, options));
+    const operator = (delegate) => {
+        const observer = new DecodeWithCharsetObserver(delegate, new TextDecoder(charset, options));
+        addOnDisposedWithError(observer, delegate);
+        addOnDisposedWithoutErrorTeardown(observer, function () {
+            const data = this.textDecoder.decode();
+            if (data.length > 0) {
+                pipe(data, fromValue(fromArrayT), observe(this.delegate));
+            }
+            this.delegate.dispose();
+        });
+        return observer;
+    };
     operator.isSynchronous = true;
     return lift(operator);
 };

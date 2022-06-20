@@ -40,19 +40,6 @@ export function notifyDecodeWithCharset(
   }
 }
 
-export function onDisposeWithoutErrorDecodeWithCharset(
-  this: DelegatingSinkLike<ArrayBuffer, string> & {
-    readonly textDecoder: TextDecoder;
-  },
-) {
-  const data = this.textDecoder.decode();
-
-  if (data.length > 0) {
-    this.delegate.notify(data);
-  }
-  this.delegate.dispose();
-}
-
 export function notifyDistinctUntilChanged<T>(
   this: DelegatingSinkLike<T, T> & {
     readonly equality: Equality<T>;

@@ -1,9 +1,9 @@
 /// <reference types="./runnable.d.ts" />
 import { pipe, raise, strictEquality, compose, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, dispose, addTeardown } from './disposable.mjs';
-import { AbstractContainer, empty } from './container.mjs';
+import { AbstractContainer, fromValue, empty } from './container.mjs';
 import { __DEV__ } from './env.mjs';
-import { onDisposeWithoutErrorDecodeWithCharset, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 class RunnableImpl extends AbstractContainer {
@@ -78,6 +78,7 @@ class DelegatingSink extends AbstractSink {
     }
 }
 const createDelegatingSink = (delegate) => new DelegatingSink(delegate);
+const sink = (observer) => observable => observable.run(observer);
 
 function concat(...runnables) {
     return createRunnable((sink) => {
@@ -101,17 +102,42 @@ class FlattenSink extends AbstractDelegatingSink {
 const _concatAll = lift(s => new FlattenSink(s));
 const concatAll = () => _concatAll;
 
+const fromArray = (options = {}) => values => {
+    var _a, _b;
+    const valuesLength = values.length;
+    const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
+    const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : values.length, valuesLength), 0);
+    const run = (sink) => {
+        for (let index = startIndex; index < endIndex && !sink.isDisposed; index++) {
+            sink.notify(values[index]);
+        }
+    };
+    return createRunnable(run);
+};
+const fromArrayT = {
+    fromArray,
+};
+
 class DecodeWithCharsetSink extends AbstractDelegatingSink {
     constructor(delegate, textDecoder) {
         super(delegate);
         this.textDecoder = textDecoder;
-        addOnDisposedWithError(this, delegate);
-        addOnDisposedWithoutErrorTeardown(this, onDisposeWithoutErrorDecodeWithCharset);
     }
 }
 DecodeWithCharsetSink.prototype.notify = notifyDecodeWithCharset;
 const decodeWithCharset = (charset = "utf-8", options) => {
-    const operator = (sink) => new DecodeWithCharsetSink(sink, new TextDecoder(charset, options));
+    const operator = (delegate) => {
+        const parent = new DecodeWithCharsetSink(delegate, new TextDecoder(charset, options));
+        addOnDisposedWithError(parent, delegate);
+        addOnDisposedWithoutErrorTeardown(parent, function () {
+            const data = this.textDecoder.decode();
+            if (data.length > 0) {
+                pipe(data, fromValue(fromArrayT), sink(this.delegate));
+            }
+            this.delegate.dispose();
+        });
+        return parent;
+    };
     return lift(operator);
 };
 
@@ -185,22 +211,6 @@ class ForEachSink extends AbstractSink {
 const forEach = (f) => {
     const createSink = () => new ForEachSink(f);
     return run(createSink);
-};
-
-const fromArray = (options = {}) => values => {
-    var _a, _b;
-    const valuesLength = values.length;
-    const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
-    const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : values.length, valuesLength), 0);
-    const run = (sink) => {
-        for (let index = startIndex; index < endIndex && !sink.isDisposed; index++) {
-            sink.notify(values[index]);
-        }
-    };
-    return createRunnable(run);
-};
-const fromArrayT = {
-    fromArray,
 };
 
 const generate = (generator, initialValue) => {
