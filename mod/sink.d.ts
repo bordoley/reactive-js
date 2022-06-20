@@ -19,9 +19,6 @@ interface DelegatingSinkLike<TA, TB> extends SinkLike<TA> {
 declare function notifyDecodeWithCharset(this: DelegatingSinkLike<ArrayBuffer, string> & {
     readonly textDecoder: TextDecoder;
 }, next: ArrayBuffer): void;
-declare function onDisposeWithoutErrorDecodeWithCharset(this: DelegatingSinkLike<ArrayBuffer, string> & {
-    readonly textDecoder: TextDecoder;
-}): void;
 declare function notifyDistinctUntilChanged<T>(this: DelegatingSinkLike<T, T> & {
     readonly equality: Equality<T>;
     prev: Option<T>;
@@ -67,4 +64,4 @@ declare function notifyTakeWhile<T>(this: DelegatingSinkLike<T, T> & {
     readonly predicate: Predicate<T>;
     readonly inclusive: boolean;
 }, next: T): void;
-export { DelegatingSinkLike, SinkLike, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile, onDisposeWithoutErrorDecodeWithCharset };
+export { DelegatingSinkLike, SinkLike, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile };

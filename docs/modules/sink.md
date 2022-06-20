@@ -23,7 +23,6 @@
 - [notifyTakeFirst](sink.md#notifytakefirst)
 - [notifyTakeLast](sink.md#notifytakelast)
 - [notifyTakeWhile](sink.md#notifytakewhile)
-- [onDisposeWithoutErrorDecodeWithCharset](sink.md#ondisposewithouterrordecodewithcharset)
 
 ## Functions
 
@@ -293,22 +292,6 @@ ___
 | :------ | :------ |
 | `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`T`, `T`\> & { `inclusive`: `boolean` ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
 | `next` | `T` |
-
-#### Returns
-
-`void`
-
-___
-
-### onDisposeWithoutErrorDecodeWithCharset
-
-▸ **onDisposeWithoutErrorDecodeWithCharset**(`this`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`ArrayBuffer`, `string`\> & { `textDecoder`: `TextDecoder`  } |
 
 #### Returns
 
