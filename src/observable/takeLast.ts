@@ -6,14 +6,14 @@ import { Option, isSome } from "../option";
 import { notifyTakeLast } from "../sink";
 import { fromArray, fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, observe } from "./observer";
+import { AbstractDelegatingObserver, sink } from "./observer";
 
 function onDispose(this: TakeLastObserver<unknown>, error: Option<Error>) {
   if (isSome(error)) {
     this.last.length = 0;
     pipe(this.delegate, dispose(error));
   } else {
-    pipe(this.last, fromArray(), observe(this.delegate));
+    pipe(this.last, fromArray(), sink(this.delegate));
   }
 }
 

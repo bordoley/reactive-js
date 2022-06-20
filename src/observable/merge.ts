@@ -10,7 +10,7 @@ import {
   ObservableOperator,
   ObserverLike,
 } from "../observable";
-import { createDelegatingObserver, observe } from "./observer";
+import { createDelegatingObserver, sink } from "./observer";
 
 const createMergeObserver = <T>(
   delegate: ObserverLike<T>,
@@ -49,7 +49,7 @@ class MergeObservable<T>
     for (const observable of observables) {
       const mergeObserver = createMergeObserver(observer, count, ctx);
 
-      pipe(observable, observe(mergeObserver));
+      pipe(observable, sink(mergeObserver));
     }
   }
 }

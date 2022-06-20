@@ -1,5 +1,4 @@
 import { DisposableLike, dispose } from "./disposable";
-import { __DEV__ } from "./env";
 import {
   Equality,
   Function1,

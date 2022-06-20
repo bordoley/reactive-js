@@ -7,7 +7,7 @@ import { pipe } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
 import { notifyDecodeWithCharset } from "../sink";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, observe } from "./observer";
+import { AbstractDelegatingObserver, sink } from "./observer";
 import { fromArrayT } from "./fromArray";
 
 class DecodeWithCharsetObserver extends AbstractDelegatingObserver<
@@ -39,7 +39,7 @@ export const decodeWithCharset = (
         const data = this.textDecoder.decode();
 
         if (data.length > 0) {
-          pipe(data, fromValue(fromArrayT), observe(this.delegate));
+          pipe(data, fromValue(fromArrayT), sink(this.delegate));
         }
         this.delegate.dispose();
       },

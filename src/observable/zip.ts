@@ -6,7 +6,7 @@ import { ObservableLike, ObserverLike } from "../observable";
 import { Option, isSome, none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
 import { fromEnumerator } from "./fromEnumerable";
-import { AbstractDelegatingObserver, observe } from "./observer";
+import { AbstractDelegatingObserver, sink } from "./observer";
 import { enumerate } from "./toEnumerable";
 
 import { using } from "./using";
@@ -126,7 +126,7 @@ class ZipObservable
           pipe(enumerators, zipEnumerators, returns, fromEnumerator()),
       );
 
-      pipe(observable, observe(observer));
+      pipe(observable, sink(observer));
     } else {
       const enumerators: EnumeratorLike<unknown>[] = [];
       for (let index = 0; index < count; index++) {
@@ -140,7 +140,7 @@ class ZipObservable
         } else {
           const innerObserver = new ZipObserver(observer, enumerators);
 
-          pipe(observable, observe(innerObserver));
+          pipe(observable, sink(innerObserver));
           enumerators.push(innerObserver);
         }
       }

@@ -4,7 +4,7 @@ import { ObservableLike, ObserverLike } from "../observable";
 import { Option, isSome, none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
 import { defer, deferSynchronous } from "./observable";
-import { AbstractDelegatingObserver, observe } from "./observer";
+import { AbstractDelegatingObserver, sink } from "./observer";
 
 type LatestCtx = {
   completedCount: number;
@@ -87,7 +87,7 @@ export const latest = (
     for (const observable of observables) {
       const innerObserver = new LatestObserver(observer, ctx, mode);
       observers.push(innerObserver);
-      pipe(observable, observe(innerObserver));
+      pipe(observable, sink(innerObserver));
     }
   };
 

@@ -5,7 +5,7 @@ import {
   ObservableOperator,
   ObserverLike,
 } from "../observable";
-import { observe } from "./observer";
+import { sink } from "./observer";
 
 /**
  * A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.
@@ -34,7 +34,7 @@ class LiftedObservable<TIn, TOut>
       ...this.operators,
     ) as ObserverLike<any>;
 
-    pipe(this.source, observe(liftedSubscrber));
+    pipe(this.source, sink(liftedSubscrber));
   }
 }
 

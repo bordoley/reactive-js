@@ -13,7 +13,7 @@ import {
 } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { SchedulerLike } from "../scheduler";
-import { observe } from "./observer";
+import { sink } from "./observer";
 
 class UsingObservable<TResource extends DisposableLike, T>
   extends AbstractContainer
@@ -43,7 +43,7 @@ class UsingObservable<TResource extends DisposableLike, T>
       addDisposableDisposeParentOnChildError(observer, r);
     }
 
-    pipe(observableFactory(...resourcesArray), observe(observer));
+    pipe(observableFactory(...resourcesArray), sink(observer));
   }
 }
 

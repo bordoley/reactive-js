@@ -12,7 +12,7 @@ import {
   ObserverLike,
 } from "../observable";
 import { isSome, none } from "../option";
-import { observe } from "./observer";
+import { sink } from "./observer";
 
 class OnSubscribeObservable<T>
   extends AbstractContainer
@@ -30,7 +30,7 @@ class OnSubscribeObservable<T>
 
   observe(observer: ObserverLike<T>) {
     try {
-      pipe(this.src, observe(observer));
+      pipe(this.src, sink(observer));
       const disposable = this.f() || none;
       if (disposable instanceof Function) {
         addTeardown(observer, disposable);

@@ -10,7 +10,7 @@ import {
 } from "../observable";
 import { Option, none } from "../option";
 import { SchedulerLike } from "../scheduler";
-import { observe } from "./observer";
+import { sink } from "./observer";
 import { publish } from "./publish";
 
 class SharedObservable<T>
@@ -48,7 +48,7 @@ class SharedObservable<T>
 
     const multicast = this.multicast as SubjectLike<T>;
 
-    pipe(multicast, observe(observer));
+    pipe(multicast, sink(observer));
     addTeardown(observer, this.teardown);
   }
 }

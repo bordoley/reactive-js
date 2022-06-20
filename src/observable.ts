@@ -115,7 +115,7 @@ export { never } from "./observable/never";
 export { subscribe } from "./observable/subscribe";
 export { using } from "./observable/using";
 export { defer } from "./observable/observable";
-export { observe } from "./observable/observer";
+export { sink } from "./observable/observer";
 
 export { buffer } from "./observable/buffer";
 export { catchError } from "./observable/catchError";

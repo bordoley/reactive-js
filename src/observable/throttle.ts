@@ -17,7 +17,7 @@ import {
 } from "../observable";
 import { Option, isNone, none } from "../option";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, observe } from "./observer";
+import { AbstractDelegatingObserver, sink } from "./observer";
 
 import { subscribe } from "./subscribe";
 
@@ -33,7 +33,7 @@ const setupDurationSubscription = <T>(
 
 function onDispose(this: ThrottleObserver<unknown>, e: Option<Error>) {
   if (isNone(e) && this.mode !== "first" && this.hasValue) {
-    pipe(this.value, fromValue(fromArrayT), observe(this.delegate));
+    pipe(this.value, fromValue(fromArrayT), sink(this.delegate));
   } else {
     pipe(this.delegate, dispose(e));
   }

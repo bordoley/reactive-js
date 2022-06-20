@@ -7,7 +7,7 @@ import {
 import { pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { everySatisfy } from "../readonlyArray";
-import { createDelegatingObserver, observe } from "./observer";
+import { createDelegatingObserver, sink } from "./observer";
 
 const createConcatObserver = <T>(
   delegate: ObserverLike<T>,
@@ -23,7 +23,7 @@ const createConcatObserver = <T>(
         observables,
         next + 1,
       );
-      pipe(observables[next], observe(concatObserver));
+      pipe(observables[next], sink(concatObserver));
     } else {
       pipe(delegate, dispose());
     }
@@ -50,7 +50,7 @@ class ConcatObservable<T>
 
     if (observables.length > 0) {
       const concatObserver = createConcatObserver(observer, observables, 1);
-      pipe(observables[0], observe(concatObserver));
+      pipe(observables[0], sink(concatObserver));
     } else {
       pipe(observer, dispose());
     }
