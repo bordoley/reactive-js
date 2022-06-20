@@ -1,8 +1,4 @@
-import {
-  AbstractDisposable,
-  addDisposable,
-  bindDisposables,
-} from "../disposable";
+import { AbstractDisposable, addDisposable } from "../disposable";
 import { __DEV__ } from "../env";
 import { SideEffect1, raise } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
@@ -119,22 +115,7 @@ export abstract class AbstractSchedulerDelegatingObserver<
 export abstract class AbstractDelegatingObserver<
   TA,
   TB,
-> extends AbstractSchedulerDelegatingObserver<TA, ObserverLike<TB>> {
-  constructor(delegate: ObserverLike<TB>) {
-    super(delegate);
-    addDisposable(delegate, this);
-  }
-}
-
-export abstract class AbstractAutoDisposingDelegatingObserver<
-  TA,
-  TB,
-> extends AbstractSchedulerDelegatingObserver<TA, ObserverLike<TB>> {
-  constructor(delegate: ObserverLike<TB>) {
-    super(delegate);
-    bindDisposables(this, delegate);
-  }
-}
+> extends AbstractSchedulerDelegatingObserver<TA, ObserverLike<TB>> {}
 
 class DelegatingObserver<T> extends AbstractSchedulerDelegatingObserver<
   T,
@@ -147,19 +128,7 @@ class DelegatingObserver<T> extends AbstractSchedulerDelegatingObserver<
 
 export const createDelegatingObserver = <T>(
   delegate: ObserverLike<T>,
-): ObserverLike<T> => {
-  const observer = new DelegatingObserver(delegate);
-  addDisposable(delegate, observer);
-  return observer;
-};
-
-export const createAutoDisposingDelegatingObserver = <T>(
-  delegate: ObserverLike<T>,
-): ObserverLike<T> => {
-  const observer = new DelegatingObserver(delegate);
-  bindDisposables(delegate, observer);
-  return observer;
-};
+): ObserverLike<T> => new DelegatingObserver(delegate);
 
 export const sink =
   <T>(observer: ObserverLike<T>): SideEffect1<ObservableLike<T>> =>

@@ -1,4 +1,4 @@
-import { Error, addTeardown } from "../disposable";
+import { Error, addTeardown, addDisposable } from "../disposable";
 import { Factory } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
 import { Option, isNone, none } from "../option";
@@ -25,7 +25,6 @@ class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
 
   constructor(delegate: ObserverLike<T>, readonly factory: Factory<unknown>) {
     super(delegate);
-    addTeardown(this, onDispose);
   }
 
   notify(next: T) {
@@ -44,8 +43,12 @@ class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
 export const throwIfEmpty = <T>(
   factory: Factory<unknown>,
 ): ObservableOperator<T, T> => {
-  const operator = (observer: ObserverLike<T>) =>
-    new ThrowIfEmptyObserver(observer, factory);
+  const operator = (delegate: ObserverLike<T>) => {
+    const observer = new ThrowIfEmptyObserver(delegate, factory);
+    addDisposable(delegate, observer);
+    addTeardown(observer, onDispose);
+    return observer;
+  };
   operator.isSynchronous = true;
   return lift(operator);
 };

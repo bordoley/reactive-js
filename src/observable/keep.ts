@@ -1,4 +1,5 @@
 import { Keep } from "../container";
+import { bindDisposables } from "../disposable";
 import { Predicate } from "../functions";
 import {
   ObservableLike,
@@ -7,9 +8,9 @@ import {
 } from "../observable";
 import { notifyKeep } from "../sink";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingObserver } from "./observer";
+import { AbstractDelegatingObserver } from "./observer";
 
-class KeepObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T> {
+class KeepObserver<T> extends AbstractDelegatingObserver<T, T> {
   constructor(delegate: ObserverLike<T>, readonly predicate: Predicate<T>) {
     super(delegate);
   }
@@ -23,8 +24,11 @@ KeepObserver.prototype.notify = notifyKeep;
  * @param predicate The predicate function.
  */
 export const keep = <T>(predicate: Predicate<T>): ObservableOperator<T, T> => {
-  const operator = (observer: ObserverLike<T>) =>
-    new KeepObserver(observer, predicate);
+  const operator = (delegate: ObserverLike<T>) => {
+    const observer = new KeepObserver(delegate, predicate);
+    bindDisposables(observer, delegate);
+    return observer;
+  };
   operator.isSynchronous = true;
   return lift(operator);
 };

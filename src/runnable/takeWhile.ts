@@ -1,16 +1,17 @@
+import { bindDisposables } from "../disposable";
 import { Predicate } from "../functions";
 import { RunnableOperator } from "../runnable";
 import { SinkLike, notifyTakeWhile } from "../sink";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingSink } from "./sinks";
+import { AbstractSink } from "./sinks";
 
-class TakeWhileSink<T> extends AbstractAutoDisposingDelegatingSink<T, T> {
+class TakeWhileSink<T> extends AbstractSink<T> {
   constructor(
-    delegate: SinkLike<T>,
+    readonly delegate: SinkLike<T>,
     readonly predicate: Predicate<T>,
     readonly inclusive: boolean,
   ) {
-    super(delegate);
+    super();
   }
 }
 TakeWhileSink.prototype.notify = notifyTakeWhile;
@@ -20,7 +21,10 @@ export const takeWhile = <T>(
   options: { readonly inclusive?: boolean } = {},
 ): RunnableOperator<T, T> => {
   const { inclusive = false } = options;
-  const operator = (sink: SinkLike<T>) =>
-    new TakeWhileSink(sink, predicate, inclusive);
+  const operator = (delegate: SinkLike<T>) => {
+    const sink = new TakeWhileSink(delegate, predicate, inclusive);
+    bindDisposables(sink, delegate);
+    return sink;
+  };
   return lift(operator);
 };

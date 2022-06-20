@@ -16,6 +16,7 @@ const createRepeatObserver = <T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
 ) => {
   const observer = createDelegatingObserver(delegate);
+  addDisposable(delegate, observer);
 
   let count = 1;
 

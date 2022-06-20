@@ -1,6 +1,7 @@
 import {
   addDisposableDisposeParentOnChildError,
   addOnDisposedWithoutErrorTeardown,
+  bindDisposables,
   dispose,
 } from "../disposable";
 import { Function2, pipe } from "../functions";
@@ -11,7 +12,7 @@ import {
 } from "../observable";
 import { Option } from "../option";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingObserver } from "./observer";
+import { AbstractDelegatingObserver } from "./observer";
 import { subscribe } from "./subscribe";
 
 function onNotify<TA, TB, T>(
@@ -22,31 +23,19 @@ function onNotify<TA, TB, T>(
   this.otherLatest = next;
 }
 
-class WithLatestFromObserver<
+class WithLatestFromObserver<TA, TB, T> extends AbstractDelegatingObserver<
   TA,
-  TB,
-  T,
-> extends AbstractAutoDisposingDelegatingObserver<TA, T> {
+  T
+> {
   otherLatest: Option<TB>;
   hasLatest = false;
 
   constructor(
     delegate: ObserverLike<T>,
-    other: ObservableLike<TB>,
     private readonly selector: Function2<TA, TB, T>,
   ) {
     super(delegate);
     this.selector = selector;
-
-    const otherSubscription = pipe(other, subscribe(this, onNotify, this));
-
-    addOnDisposedWithoutErrorTeardown(otherSubscription, () => {
-      if (!this.hasLatest) {
-        pipe(this, dispose());
-      }
-    });
-
-    addDisposableDisposeParentOnChildError(this, otherSubscription);
   }
 
   notify(next: TA) {
@@ -70,8 +59,25 @@ export const withLatestFrom = <TA, TB, T>(
   other: ObservableLike<TB>,
   selector: Function2<TA, TB, T>,
 ): ObservableOperator<TA, T> => {
-  const operator = (observer: ObserverLike<T>) =>
-    new WithLatestFromObserver(observer, other, selector);
+  const operator = (delegate: ObserverLike<T>) => {
+    const observer = new WithLatestFromObserver(delegate, selector);
+    bindDisposables(observer, delegate);
+
+    const otherSubscription = pipe(
+      other,
+      subscribe(observer, onNotify, observer),
+    );
+
+    addOnDisposedWithoutErrorTeardown(otherSubscription, () => {
+      if (!observer.hasLatest) {
+        pipe(observer, dispose());
+      }
+    });
+
+    addDisposableDisposeParentOnChildError(observer, otherSubscription);
+
+    return observer;
+  };
   operator.isSynchronous = false;
   return lift(operator);
 };

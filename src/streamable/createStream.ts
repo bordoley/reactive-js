@@ -7,8 +7,8 @@ import {
   ObserverLike,
   StreamLike,
   createSubject,
-  sink,
   publish,
+  sink,
 } from "../observable";
 
 import { SchedulerLike } from "../scheduler";

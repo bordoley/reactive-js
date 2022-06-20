@@ -6,6 +6,7 @@ import {
   addTeardown,
   dispose,
   disposed,
+  addDisposable,
 } from "../disposable";
 import { pipe } from "../functions";
 import {
@@ -36,7 +37,6 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
 
   constructor(delegate: ObserverLike<T>) {
     super(delegate);
-    addTeardown(this, onDispose);
   }
 
   notify(next: ObservableLike<T>) {
@@ -56,7 +56,12 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
   }
 }
 
-const operator = <T>(observer: ObserverLike<T>) => new SwitchObserver(observer);
+const operator = <T>(delegate: ObserverLike<T>) => {
+  const observer = new SwitchObserver(delegate);
+  addDisposable(delegate, observer);
+  addTeardown(observer, onDispose);
+  return observer;
+};
 operator.isSynchronous = false;
 
 const switchAllInstance = lift(operator);

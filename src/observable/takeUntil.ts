@@ -6,14 +6,15 @@ import {
   ObserverLike,
 } from "../observable";
 import { lift } from "./lift";
-import { createAutoDisposingDelegatingObserver } from "./observer";
+import { createDelegatingObserver } from "./observer";
 import { subscribe } from "./subscribe";
 
 export const takeUntil = <T>(
   notifier: ObservableLike<unknown>,
 ): ObservableOperator<T, T> => {
-  const operator = (observer: ObserverLike<T>) => {
-    const takeUntilObserver = createAutoDisposingDelegatingObserver(observer);
+  const operator = (delegate: ObserverLike<T>) => {
+    const takeUntilObserver = createDelegatingObserver(delegate);
+    bindDisposables(takeUntilObserver, delegate);
 
     const otherSubscription = pipe(
       notifier,

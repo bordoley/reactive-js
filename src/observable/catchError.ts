@@ -1,4 +1,5 @@
 import {
+  addDisposable,
   addOnDisposedWithErrorTeardown,
   addOnDisposedWithoutError,
   dispose,
@@ -26,6 +27,7 @@ export const catchError = <T>(
 ): ObservableOperator<T, T> => {
   const operator = (delegate: ObserverLike<T>) => {
     const observer = createDelegatingObserver(delegate);
+    addDisposable(delegate, observer);
     addOnDisposedWithoutError(observer, delegate);
     addOnDisposedWithErrorTeardown(observer, cause => {
       try {

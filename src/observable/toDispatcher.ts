@@ -60,8 +60,6 @@ class ObserverDelegatingDispatcher<T>
 
   constructor(readonly observer: ObserverLike<T>) {
     super();
-    addTeardown(this, onDispose);
-    addDisposable(observer, this);
   }
 
   dispatch(next: T) {
@@ -77,5 +75,11 @@ class ObserverDelegatingDispatcher<T>
  *
  * @param observer The `ObserverLike` instance to wrap in a `SafeObserverLike`.
  */
-export const toDispatcher = <T>(observer: ObserverLike<T>): DispatcherLike<T> =>
-  new ObserverDelegatingDispatcher(observer);
+export const toDispatcher = <T>(
+  delegate: ObserverLike<T>,
+): DispatcherLike<T> => {
+  const observer = new ObserverDelegatingDispatcher(delegate);
+  addTeardown(observer, onDispose);
+  addDisposable(delegate, observer);
+  return observer;
+};

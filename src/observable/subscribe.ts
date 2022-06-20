@@ -15,7 +15,6 @@ class DefaultObserver<T> extends AbstractSchedulerDelegatingObserver<
     private readonly onNotifyThis: unknown,
   ) {
     super(scheduler);
-    addDisposable(scheduler, this);
   }
 
   notify(next: T) {
@@ -51,6 +50,8 @@ export function subscribe<T>(
 ): Function1<ObservableLike<T>, DisposableLike> {
   return (observable: ObservableLike<T>): DisposableLike => {
     const observer = new DefaultObserver(scheduler, onNotify, onNotifyThis);
+    addDisposable(scheduler, observer);
+
     pipe(observable, sink(observer));
     return observer;
   };

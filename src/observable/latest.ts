@@ -1,4 +1,4 @@
-import { Error, addTeardown, dispose } from "../disposable";
+import { Error, addTeardown, dispose, addDisposable } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
 import { Option, isSome, none } from "../option";
@@ -39,7 +39,6 @@ class LatestObserver extends AbstractDelegatingObserver<
     private readonly mode: LatestMode,
   ) {
     super(delegate);
-    addTeardown(this, onDispose);
   }
 
   notify(next: unknown) {
@@ -76,7 +75,7 @@ export const latest = (
   observables: readonly ObservableLike<any>[],
   mode: LatestMode,
 ): ObservableLike<readonly unknown[]> => {
-  const factory = (observer: ObserverLike<readonly unknown[]>) => () => {
+  const factory = (delegate: ObserverLike<readonly unknown[]>) => () => {
     const observers: LatestObserver[] = [];
     const ctx = {
       completedCount: 0,
@@ -85,7 +84,10 @@ export const latest = (
     };
 
     for (const observable of observables) {
-      const innerObserver = new LatestObserver(observer, ctx, mode);
+      const innerObserver = new LatestObserver(delegate, ctx, mode);
+      addTeardown(innerObserver, onDispose);
+      addDisposable(delegate, innerObserver);
+
       observers.push(innerObserver);
       pipe(observable, sink(innerObserver));
     }

@@ -1,5 +1,6 @@
 import { AbstractContainer } from "../container";
 import {
+  addDisposable,
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
   dispose,
@@ -20,7 +21,7 @@ const createMergeObserver = <T>(
   },
 ) => {
   const observer = createDelegatingObserver(delegate);
-
+  addDisposable(delegate, observer);
   addOnDisposedWithError(observer, delegate);
   addOnDisposedWithoutErrorTeardown(observer, () => {
     ctx.completedCount++;
