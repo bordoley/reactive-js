@@ -15,7 +15,6 @@ class SchedulerWithPriorityImpl
     private readonly priority: number,
   ) {
     super();
-    addDisposable(priorityScheduler, this);
   }
 
   get inContinuation() {
@@ -56,5 +55,11 @@ class SchedulerWithPriorityImpl
  */
 export const toSchedulerWithPriority =
   (priority: number): Function1<PrioritySchedulerLike, SchedulerLike> =>
-  priorityScheduler =>
-    new SchedulerWithPriorityImpl(priorityScheduler, priority);
+  priorityScheduler => {
+    const scheduler = new SchedulerWithPriorityImpl(
+      priorityScheduler,
+      priority,
+    );
+    addDisposable(priorityScheduler, scheduler);
+    return scheduler;
+  };

@@ -26,10 +26,6 @@ class ZipEnumerator
 
   constructor(private readonly enumerators: readonly EnumeratorLike<any>[]) {
     super();
-
-    for (const enumerator of enumerators) {
-      addDisposableDisposeParentOnChildError(this, enumerator);
-    }
   }
 
   move(): boolean {
@@ -50,11 +46,15 @@ class ZipEnumerator
   }
 }
 
-export function zipEnumerators(
+export const zipEnumerators = (
   enumerators: readonly EnumeratorLike<unknown>[],
-): EnumeratorLike<readonly unknown[]> {
-  return new ZipEnumerator(enumerators);
-}
+): EnumeratorLike<readonly unknown[]> => {
+  const enumerator = new ZipEnumerator(enumerators);
+  for (const delegate of enumerators) {
+    addDisposableDisposeParentOnChildError(enumerator, delegate);
+  }
+  return enumerator;
+};
 
 class ZipEnumerable
   extends AbstractContainer

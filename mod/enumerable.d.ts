@@ -131,7 +131,7 @@ declare const toRunnable: <T>() => Function1<EnumerableLike<T>, RunnableLike<T>>
  * Converts an EnumerableLike into a javascript Iterable.
  */
 declare const toIterable: <T>() => Function1<EnumerableLike<T>, Iterable<T>>;
-declare function zipEnumerators(enumerators: readonly EnumeratorLike<unknown>[]): EnumeratorLike<readonly unknown[]>;
+declare const zipEnumerators: (enumerators: readonly EnumeratorLike<unknown>[]) => EnumeratorLike<readonly unknown[]>;
 declare function zip<TA, TB>(a: EnumerableLike<TA>, b: EnumerableLike<TB>): EnumerableLike<[
     TA,
     TB

@@ -2,21 +2,17 @@
 import { empty as empty$1, fromValue, ignoreElements, endWith, concatMap, concatWith } from './container.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError } from './disposable.mjs';
 import { pipe, compose, returns, updaterReducer, identity as identity$1, flip } from './functions.mjs';
-import { createSubject, publish, sink as sink$1, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, reduce, createObservable, mapT, concatAllT, takeFirst, withLatestFrom, never, onNotify, takeWhile, scanAsync, onSubscribe, switchAll } from './observable.mjs';
+import { sink as sink$1, createSubject, publish, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, reduce, createObservable, mapT, concatAllT, takeFirst, withLatestFrom, never, onNotify, takeWhile, scanAsync, onSubscribe, switchAll } from './observable.mjs';
 import { isNone, none } from './option.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
 import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
 
 class StreamImpl extends AbstractDisposable {
-    constructor(op, scheduler, options) {
+    constructor(dispatcher, observable) {
         super();
-        this.isSynchronous = false;
-        const subject = createSubject();
-        const observable = pipe(subject, op, publish(scheduler, options));
-        addDisposable(observable, this);
-        addDisposable(this, subject);
-        this.dispatcher = subject;
+        this.dispatcher = dispatcher;
         this.observable = observable;
+        this.isSynchronous = false;
     }
     get type() {
         return this;
@@ -34,7 +30,14 @@ class StreamImpl extends AbstractDisposable {
         pipe(this.observable, sink$1(observer));
     }
 }
-const createStream = (op, scheduler, options) => new StreamImpl(op, scheduler, options);
+const createStream = (op, scheduler, options) => {
+    const subject = createSubject();
+    const observable = pipe(subject, op, publish(scheduler, options));
+    const stream = new StreamImpl(subject, observable);
+    addDisposable(observable, stream);
+    addDisposable(stream, subject);
+    return stream;
+};
 
 class StreamableImpl {
     constructor(op) {
@@ -181,18 +184,11 @@ const sink = (src, dest) => using(scheduler => {
 }, ignoreAndNotifyVoid);
 
 class FlowableSinkAccumulatorImpl extends AbstractDisposable {
-    constructor(reducer, initialValue, options) {
+    constructor(subject, streamable) {
         super();
-        this.isSynchronous = false;
-        const subject = createSubject(options);
-        addDisposableDisposeParentOnChildError(this, subject);
-        const op = (events) => using(scheduler => pipe(events, reduce(reducer, initialValue), subscribe(scheduler, subject.dispatch, subject)), eventsSubscription => createObservable(dispatcher => {
-            dispatcher.dispatch("pause");
-            dispatcher.dispatch("resume");
-            addDisposable(eventsSubscription, dispatcher);
-        }));
-        this.streamable = createStreamable(op);
         this.subject = subject;
+        this.streamable = streamable;
+        this.isSynchronous = false;
     }
     get type() {
         return this;
@@ -213,7 +209,18 @@ class FlowableSinkAccumulatorImpl extends AbstractDisposable {
     }
 }
 /** @experimental */
-const createFlowableSinkAccumulator = (reducer, initialValue, options) => new FlowableSinkAccumulatorImpl(reducer, initialValue, options);
+const createFlowableSinkAccumulator = (reducer, initialValue, options) => {
+    const subject = createSubject(options);
+    const op = (events) => using(scheduler => pipe(events, reduce(reducer, initialValue), subscribe(scheduler, subject.dispatch, subject)), eventsSubscription => createObservable(dispatcher => {
+        dispatcher.dispatch("pause");
+        dispatcher.dispatch("resume");
+        addDisposable(eventsSubscription, dispatcher);
+    }));
+    const streamable = createStreamable(op);
+    const sinkAcc = new FlowableSinkAccumulatorImpl(subject, streamable);
+    addDisposableDisposeParentOnChildError(sinkAcc, subject);
+    return sinkAcc;
+};
 
 const fromArrayScanner = (acc, _) => acc + 1;
 /**

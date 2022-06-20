@@ -7,6 +7,7 @@ import {
   dispose,
   disposed,
   addDisposable,
+  SerialDisposableLike,
 } from "../disposable";
 import { Function1, pipe } from "../functions";
 import {
@@ -42,13 +43,13 @@ function onNotify(this: BufferObserver<any>) {
 }
 
 class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
-  readonly durationSubscription = createSerialDisposable();
   buffer: T[] = [];
 
   constructor(
     delegate: ObserverLike<readonly T[]>,
     private readonly durationFunction: Function1<T, ObservableLike<unknown>>,
     private readonly maxBufferSize: number,
+    readonly durationSubscription: SerialDisposableLike,
   ) {
     super(delegate);
   }
@@ -95,16 +96,15 @@ export function buffer<T>(
 
   const maxBufferSize = options.maxBufferSize ?? Number.MAX_SAFE_INTEGER;
   const operator = (delegate: ObserverLike<readonly T[]>) => {
+    const durationSubscription = createSerialDisposable();
     const observer = new BufferObserver(
       delegate,
       durationFunction,
       maxBufferSize,
+      durationSubscription,
     );
     addDisposable(delegate, observer);
-    addDisposableDisposeParentOnChildError(
-      observer,
-      observer.durationSubscription,
-    );
+    addDisposableDisposeParentOnChildError(observer, durationSubscription);
     addTeardown(observer, onDispose);
     return observer;
   };

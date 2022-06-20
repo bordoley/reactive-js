@@ -124,18 +124,6 @@ class HostScheduler extends AbstractDisposable implements SchedulerLike {
 
   constructor(private readonly yieldInterval: number) {
     super();
-
-    const supportsMessageChannel = typeof MessageChannel === "function";
-
-    if (supportsMessageChannel) {
-      const messageChannel = new MessageChannel();
-      this.messageChannel = messageChannel;
-
-      addTeardown(this, () => {
-        messageChannel.port1.close();
-        messageChannel.port2.close();
-      });
-    }
   }
 
   get now(): number {
@@ -183,5 +171,19 @@ export const createHostScheduler = (
   } = {},
 ): SchedulerLike => {
   const { yieldInterval = 5 } = options;
-  return new HostScheduler(yieldInterval);
+  const hostScheduler = new HostScheduler(yieldInterval);
+
+  const supportsMessageChannel = typeof MessageChannel === "function";
+
+  if (supportsMessageChannel) {
+    const messageChannel = new MessageChannel();
+    hostScheduler.messageChannel = messageChannel;
+
+    addTeardown(hostScheduler, () => {
+      messageChannel.port1.close();
+      messageChannel.port2.close();
+    });
+  }
+
+  return hostScheduler;
 };

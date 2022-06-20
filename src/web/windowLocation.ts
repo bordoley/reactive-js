@@ -86,85 +86,11 @@ class WindowLocationStream
   implements WindowLocationStreamLike
 {
   historyCounter = -1;
-  readonly stateStream: StreamLike<Updater<TState>, WindowLocationURI>;
 
   constructor(
-    readonly scheduler: SchedulerLike,
-    readonly options?: { readonly replay?: number },
+    readonly stateStream: StreamLike<Updater<TState>, WindowLocationURI>,
   ) {
     super();
-    this.stateStream = pipe(
-      () => ({
-        replace: true,
-        uri: getCurrentWindowLocationURI(),
-      }),
-      createStateStore,
-      lift(
-        onNotify(({ uri }) => {
-          // Initialize the history state on page load
-          const isInitialPageLoad = this.historyCounter === -1;
-          if (isInitialPageLoad) {
-            this.historyCounter === 0;
-            windowHistoryReplaceState(this, uri);
-          }
-        }),
-      ),
-      lift(
-        keep(({ uri }) => {
-          const { title } = uri;
-
-          const uriString = windowLocationURIToString(uri);
-          const titleChanged = document.title !== title;
-          const uriChanged = uriString !== window.location.href;
-
-          return titleChanged || uriChanged;
-        }),
-      ),
-      lift(throttle(300)),
-      lift(
-        onNotify(({ replace, uri }) => {
-          const { title } = uri;
-
-          const uriString = windowLocationURIToString(uri);
-          const titleChanged = document.title !== title;
-          const uriChanged = uriString !== window.location.href;
-
-          const shouldReplace = replace || (titleChanged && !uriChanged);
-
-          const updateHistoryState = shouldReplace
-            ? windowHistoryReplaceState
-            : windowHistoryPushState;
-
-          document.title = title;
-          updateHistoryState(this, uri);
-        }),
-      ),
-      lift(map(({ uri }) => uri)),
-      stream(scheduler, options),
-    );
-
-    const historySubscription = pipe(
-      fromEvent(window, "popstate", (e: Event) => {
-        const { counter, title } = (e as any).state as {
-          counter: number;
-          title: string;
-        };
-
-        const uri = {
-          ...getCurrentWindowLocationURI(),
-          title,
-        };
-
-        return { counter, uri };
-      }),
-      onNotify(({ counter, uri }) => {
-        this.historyCounter = counter;
-        this.dispatch(uri, { replace: true });
-      }),
-      subscribe(scheduler),
-    );
-
-    addDisposableDisposeParentOnChildError(this, historySubscription);
   }
 
   get error() {
@@ -235,14 +161,86 @@ class WindowLocationStreamable implements WindowLocationStreamableLike {
     let { currentStream } = this;
 
     if (isNone(currentStream)) {
-      currentStream = new WindowLocationStream(scheduler, options);
-      this.currentStream = currentStream;
-      return currentStream;
-    } else if (
-      currentStream.scheduler === scheduler &&
-      currentStream.options?.replay === options?.replay
-    ) {
-      return currentStream;
+      const stateStream = pipe(
+        () => ({
+          replace: true,
+          uri: getCurrentWindowLocationURI(),
+        }),
+        createStateStore,
+        lift(
+          onNotify(({ uri }) => {
+            // Initialize the history state on page load
+            const isInitialPageLoad =
+              windowLocationStream.historyCounter === -1;
+            if (isInitialPageLoad) {
+              windowLocationStream.historyCounter === 0;
+              windowHistoryReplaceState(windowLocationStream, uri);
+            }
+          }),
+        ),
+        lift(
+          keep(({ uri }) => {
+            const { title } = uri;
+
+            const uriString = windowLocationURIToString(uri);
+            const titleChanged = document.title !== title;
+            const uriChanged = uriString !== window.location.href;
+
+            return titleChanged || uriChanged;
+          }),
+        ),
+        lift(throttle(300)),
+        lift(
+          onNotify(({ replace, uri }) => {
+            const { title } = uri;
+
+            const uriString = windowLocationURIToString(uri);
+            const titleChanged = document.title !== title;
+            const uriChanged = uriString !== window.location.href;
+
+            const shouldReplace = replace || (titleChanged && !uriChanged);
+
+            const updateHistoryState = shouldReplace
+              ? windowHistoryReplaceState
+              : windowHistoryPushState;
+
+            document.title = title;
+            updateHistoryState(windowLocationStream, uri);
+          }),
+        ),
+        lift(map(({ uri }) => uri)),
+        stream(scheduler, options),
+      );
+
+      const windowLocationStream = new WindowLocationStream(stateStream);
+
+      const historySubscription = pipe(
+        fromEvent(window, "popstate", (e: Event) => {
+          const { counter, title } = (e as any).state as {
+            counter: number;
+            title: string;
+          };
+
+          const uri = {
+            ...getCurrentWindowLocationURI(),
+            title,
+          };
+
+          return { counter, uri };
+        }),
+        onNotify(({ counter, uri }) => {
+          windowLocationStream.historyCounter = counter;
+          windowLocationStream.dispatch(uri, { replace: true });
+        }),
+        subscribe(scheduler),
+      );
+
+      addDisposableDisposeParentOnChildError(
+        windowLocationStream,
+        historySubscription,
+      );
+
+      return windowLocationStream;
     } else {
       return raise("Cannot stream more than once");
     }

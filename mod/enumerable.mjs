@@ -60,10 +60,6 @@ class ConcatAllEnumerator extends AbstractDisposable {
         this.current = none;
         this.hasCurrent = false;
         this.enumerator = none;
-        addDisposableDisposeParentOnChildError(this, delegate);
-        addTeardown(this, () => {
-            this.enumerator = none;
-        });
     }
     move() {
         this.current = none;
@@ -94,7 +90,14 @@ class ConcatAllEnumerator extends AbstractDisposable {
         return this.hasCurrent;
     }
 }
-const operator = (enumerator) => new ConcatAllEnumerator(enumerator);
+const operator = (delegate) => {
+    const enumerator = new ConcatAllEnumerator(delegate);
+    addDisposableDisposeParentOnChildError(enumerator, delegate);
+    addTeardown(enumerator, () => {
+        enumerator.enumerator = none;
+    });
+    return enumerator;
+};
 const _concatAll = lift(operator);
 /**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
@@ -357,14 +360,17 @@ const map = (mapper) => {
     return lift(operator);
 };
 
+function enumerateSrc(self) {
+    self.enumerator = enumerate(self.src);
+    addDisposableDisposeParentOnChildError(self, self.enumerator);
+}
 class RepeatEnumerator extends AbstractDisposable {
     constructor(src, shouldRepeat) {
         super();
         this.src = src;
         this.shouldRepeat = shouldRepeat;
+        this.enumerator = undefined;
         this.count = 0;
-        this.enumerator = enumerate(src);
-        addDisposableDisposeParentOnChildError(this, this.enumerator);
     }
     get current() {
         return this.enumerator.current;
@@ -383,8 +389,7 @@ class RepeatEnumerator extends AbstractDisposable {
                 this.dispose({ cause });
             }
             if (doRepeat) {
-                this.enumerator = enumerate(this.src);
-                addDisposableDisposeParentOnChildError(this, this.enumerator);
+                enumerateSrc(this);
                 this.enumerator.move();
             }
         }
@@ -398,7 +403,9 @@ class RepeatEnumerable extends AbstractContainer {
         this.shouldRepeat = shouldRepeat;
     }
     enumerate() {
-        return new RepeatEnumerator(this.src, this.shouldRepeat);
+        const enumerator = new RepeatEnumerator(this.src, this.shouldRepeat);
+        enumerateSrc(enumerator);
+        return enumerator;
     }
 }
 function repeat(predicate) {
@@ -516,7 +523,6 @@ class TakeLastEnumerator extends AbstractDisposable {
         this.delegate = delegate;
         this.maxCount = maxCount;
         this.enumerator = none;
-        addDisposableDisposeParentOnChildError(this, delegate);
     }
     get current() {
         var _a;
@@ -550,7 +556,11 @@ class TakeLastEnumerator extends AbstractDisposable {
  */
 const takeLast = (options = {}) => {
     const { count = 1 } = options;
-    const operator = (enumerator) => new TakeLastEnumerator(enumerator, count);
+    const operator = (delegate) => {
+        const enumerator = new TakeLastEnumerator(delegate, count);
+        addDisposableDisposeParentOnChildError(enumerator, delegate);
+        return enumerator;
+    };
     return enumerable => count > 0
         ? pipe(enumerable, lift(operator))
         : // FIXME: why do we need the annotations?
@@ -649,9 +659,6 @@ class ZipEnumerator extends AbstractDisposable {
         this.enumerators = enumerators;
         this.current = [];
         this.hasCurrent = false;
-        for (const enumerator of enumerators) {
-            addDisposableDisposeParentOnChildError(this, enumerator);
-        }
     }
     move() {
         this.hasCurrent = false;
@@ -666,9 +673,13 @@ class ZipEnumerator extends AbstractDisposable {
         return hasCurrent;
     }
 }
-function zipEnumerators(enumerators) {
-    return new ZipEnumerator(enumerators);
-}
+const zipEnumerators = (enumerators) => {
+    const enumerator = new ZipEnumerator(enumerators);
+    for (const delegate of enumerators) {
+        addDisposableDisposeParentOnChildError(enumerator, delegate);
+    }
+    return enumerator;
+};
 class ZipEnumerable extends AbstractContainer {
     constructor(enumerables) {
         super();

@@ -41,8 +41,6 @@ function onDispose(this: ThrottleObserver<unknown>, e: Option<Error>) {
 }
 
 class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
-  readonly durationSubscription: SerialDisposableLike =
-    createSerialDisposable();
   value: Option<T> = none;
   hasValue = false;
 
@@ -61,6 +59,7 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
     delegate: ObserverLike<T>,
     readonly durationFunction: Function1<T, ObservableLike<unknown>>,
     readonly mode: ThrottleMode,
+    readonly durationSubscription: SerialDisposableLike,
   ) {
     super(delegate);
   }
@@ -116,12 +115,15 @@ export function throttle<T>(
       ? (_: T) => fromValue(fromArrayT, { delay: duration })(none)
       : duration;
   const operator = (delegate: ObserverLike<T>) => {
-    const observer = new ThrottleObserver(delegate, durationFunction, mode);
-    addDisposable(delegate, observer);
-    addDisposableDisposeParentOnChildError(
-      observer,
-      observer.durationSubscription,
+    const durationSubscription = createSerialDisposable();
+    const observer = new ThrottleObserver(
+      delegate,
+      durationFunction,
+      mode,
+      durationSubscription,
     );
+    addDisposable(delegate, observer);
+    addDisposableDisposeParentOnChildError(observer, durationSubscription);
     addTeardown(observer, onDispose);
     return observer;
   };

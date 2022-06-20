@@ -50,25 +50,10 @@ class ZipWithLatestFromObserver<
 
   constructor(
     delegate: ObserverLike<T>,
-    other: ObservableLike<TB>,
     readonly selector: Function2<TA, TB, T>,
   ) {
     super(delegate);
     this.selector = selector;
-
-    const otherSubscription = pipe(other, subscribe(delegate, onNotify, this));
-
-    const disposeDelegate = () => {
-      if (this.isDisposed && otherSubscription.isDisposed) {
-        pipe(delegate, dispose());
-      }
-    };
-
-    addDisposableDisposeParentOnChildError(delegate, this);
-    addDisposableDisposeParentOnChildError(delegate, otherSubscription);
-
-    addOnDisposedWithoutErrorTeardown(this, disposeDelegate);
-    addOnDisposedWithoutErrorTeardown(otherSubscription, disposeDelegate);
   }
 
   notify(next: TA) {
@@ -90,8 +75,28 @@ export const zipWithLatestFrom = <TA, TB, T>(
   other: ObservableLike<TB>,
   selector: Function2<TA, TB, T>,
 ): ObservableOperator<TA, T> => {
-  const operator = (observer: ObserverLike<T>) =>
-    new ZipWithLatestFromObserver(observer, other, selector);
+  const operator = (delegate: ObserverLike<T>) => {
+    const observer = new ZipWithLatestFromObserver(delegate, selector);
+
+    const otherSubscription = pipe(
+      other,
+      subscribe(delegate, onNotify, observer),
+    );
+
+    const disposeDelegate = () => {
+      if (observer.isDisposed && otherSubscription.isDisposed) {
+        pipe(delegate, dispose());
+      }
+    };
+
+    addDisposableDisposeParentOnChildError(delegate, observer);
+    addDisposableDisposeParentOnChildError(delegate, otherSubscription);
+
+    addOnDisposedWithoutErrorTeardown(observer, disposeDelegate);
+    addOnDisposedWithoutErrorTeardown(otherSubscription, disposeDelegate);
+
+    return observer;
+  };
   operator.isSynchronous = false;
   return lift(operator);
 };
