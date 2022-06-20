@@ -1,5 +1,5 @@
 /// <reference types="./scheduler.d.ts" />
-import { AbstractDisposable, addTeardown, dispose, AbstractSerialDisposable, addDisposable, disposed, createDisposable } from './disposable.mjs';
+import { AbstractDisposable, dispose, addTeardown, AbstractSerialDisposable, disposed, addDisposable, createDisposable } from './disposable.mjs';
 import { pipe, raise, alwaysFalse } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 
@@ -103,7 +103,6 @@ class SchedulerContinuationImpl extends AbstractDisposable {
         this.scheduler = scheduler;
         this.f = f;
         this.listeners = none;
-        addTeardown(this, clearListeners);
     }
     addListener(_ev, listener) {
         if (!this.isDisposed) {
@@ -167,6 +166,7 @@ const __yield = (delay = 0) => {
 };
 const schedule = (f, options) => scheduler => {
     const continuation = new SchedulerContinuationImpl(scheduler, f);
+    addTeardown(continuation, clearListeners);
     scheduler.schedule(continuation, options);
     return continuation;
 };
@@ -259,8 +259,6 @@ class PriorityScheduler extends AbstractSerialDisposable {
         this.queue = createPriorityQueue(comparator$1);
         this.taskIDCounter = 0;
         this.yieldRequested = false;
-        addTeardown(this, clearQueues);
-        addDisposable(host, this);
     }
     get now() {
         return this.host.now;
@@ -332,6 +330,12 @@ class PriorityScheduler extends AbstractSerialDisposable {
         }
     }
 }
+const createPriorityScheduler = (hostScheduler) => {
+    const scheduler = new PriorityScheduler(hostScheduler);
+    addTeardown(scheduler, clearQueues);
+    addDisposable(hostScheduler, scheduler);
+    return scheduler;
+};
 /**
  * Creates a new priority scheduler which schedules work using the provided
  * host scheduler.
@@ -339,9 +343,11 @@ class PriorityScheduler extends AbstractSerialDisposable {
  * @param hostScheduler The underlying platform scheduler used by the priority
  * scheduler to schedule work.
  */
-const toPriorityScheduler = (hostScheduler) => new PriorityScheduler(hostScheduler);
+const toPriorityScheduler = (hostScheduler) => {
+    return createPriorityScheduler(hostScheduler);
+};
 const toPausableScheduler = (hostScheduler) => {
-    const scheduler = new PriorityScheduler(hostScheduler);
+    const scheduler = createPriorityScheduler(hostScheduler);
     scheduler.pause();
     return scheduler;
 };
@@ -351,7 +357,6 @@ class SchedulerWithPriorityImpl extends AbstractDisposable {
         super();
         this.priorityScheduler = priorityScheduler;
         this.priority = priority;
-        addDisposable(priorityScheduler, this);
     }
     get inContinuation() {
         return this.priorityScheduler.inContinuation;
@@ -380,7 +385,11 @@ class SchedulerWithPriorityImpl extends AbstractDisposable {
  * @param priorityScheduler The underlying scheduler upon which to scheduler work.
  * @param priority The priority to schedule work at.
  */
-const toSchedulerWithPriority = (priority) => priorityScheduler => new SchedulerWithPriorityImpl(priorityScheduler, priority);
+const toSchedulerWithPriority = (priority) => priorityScheduler => {
+    const scheduler = new SchedulerWithPriorityImpl(priorityScheduler, priority);
+    addDisposable(priorityScheduler, scheduler);
+    return scheduler;
+};
 
 const supportsPerformanceNow = typeof performance === "object" && typeof performance.now === "function";
 const supportsProcessHRTime = typeof process === "object" && typeof process.hrtime === "function";
@@ -445,15 +454,6 @@ class HostScheduler extends AbstractDisposable {
         this.messageChannel = none;
         this.startTime = this.now;
         this.yieldRequested = false;
-        const supportsMessageChannel = typeof MessageChannel === "function";
-        if (supportsMessageChannel) {
-            const messageChannel = new MessageChannel();
-            this.messageChannel = messageChannel;
-            addTeardown(this, () => {
-                messageChannel.port1.close();
-                messageChannel.port2.close();
-            });
-        }
     }
     get now() {
         return now();
@@ -485,7 +485,17 @@ class HostScheduler extends AbstractDisposable {
 }
 const createHostScheduler = (options = {}) => {
     const { yieldInterval = 5 } = options;
-    return new HostScheduler(yieldInterval);
+    const hostScheduler = new HostScheduler(yieldInterval);
+    const supportsMessageChannel = typeof MessageChannel === "function";
+    if (supportsMessageChannel) {
+        const messageChannel = new MessageChannel();
+        hostScheduler.messageChannel = messageChannel;
+        addTeardown(hostScheduler, () => {
+            messageChannel.port1.close();
+            messageChannel.port2.close();
+        });
+    }
+    return hostScheduler;
 };
 
 const comparator = (a, b) => {

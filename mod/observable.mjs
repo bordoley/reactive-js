@@ -820,11 +820,11 @@ function onNotify$4() {
     this.delegate.notify(buffer);
 }
 class BufferObserver extends AbstractDelegatingObserver {
-    constructor(delegate, durationFunction, maxBufferSize) {
+    constructor(delegate, durationFunction, maxBufferSize, durationSubscription) {
         super(delegate);
         this.durationFunction = durationFunction;
         this.maxBufferSize = maxBufferSize;
-        this.durationSubscription = createSerialDisposable();
+        this.durationSubscription = durationSubscription;
         this.buffer = [];
     }
     notify(next) {
@@ -856,9 +856,10 @@ function buffer(options = {}) {
             : delay;
     const maxBufferSize = (_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : Number.MAX_SAFE_INTEGER;
     const operator = (delegate) => {
-        const observer = new BufferObserver(delegate, durationFunction, maxBufferSize);
+        const durationSubscription = createSerialDisposable();
+        const observer = new BufferObserver(delegate, durationFunction, maxBufferSize, durationSubscription);
         addDisposable(delegate, observer);
-        addDisposableDisposeParentOnChildError(observer, observer.durationSubscription);
+        addDisposableDisposeParentOnChildError(observer, durationSubscription);
         addTeardown(observer, onDispose$6);
         return observer;
     };
@@ -1339,22 +1340,12 @@ function onNotify$1(otherLatest) {
     }
 }
 class ZipWithLatestFromObserver extends AbstractSchedulerDelegatingObserver {
-    constructor(delegate, other, selector) {
+    constructor(delegate, selector) {
         super(delegate);
         this.selector = selector;
         this.hasLatest = false;
         this.queue = [];
         this.selector = selector;
-        const otherSubscription = pipe(other, subscribe(delegate, onNotify$1, this));
-        const disposeDelegate = () => {
-            if (this.isDisposed && otherSubscription.isDisposed) {
-                pipe(delegate, dispose());
-            }
-        };
-        addDisposableDisposeParentOnChildError(delegate, this);
-        addDisposableDisposeParentOnChildError(delegate, otherSubscription);
-        addOnDisposedWithoutErrorTeardown(this, disposeDelegate);
-        addOnDisposedWithoutErrorTeardown(otherSubscription, disposeDelegate);
     }
     notify(next) {
         this.assertState();
@@ -1370,7 +1361,20 @@ class ZipWithLatestFromObserver extends AbstractSchedulerDelegatingObserver {
  * @param selector
  */
 const zipWithLatestFrom = (other, selector) => {
-    const operator = (observer) => new ZipWithLatestFromObserver(observer, other, selector);
+    const operator = (delegate) => {
+        const observer = new ZipWithLatestFromObserver(delegate, selector);
+        const otherSubscription = pipe(other, subscribe(delegate, onNotify$1, observer));
+        const disposeDelegate = () => {
+            if (observer.isDisposed && otherSubscription.isDisposed) {
+                pipe(delegate, dispose());
+            }
+        };
+        addDisposableDisposeParentOnChildError(delegate, observer);
+        addDisposableDisposeParentOnChildError(delegate, otherSubscription);
+        addOnDisposedWithoutErrorTeardown(observer, disposeDelegate);
+        addOnDisposedWithoutErrorTeardown(otherSubscription, disposeDelegate);
+        return observer;
+    };
     operator.isSynchronous = false;
     return lift(operator);
 };
@@ -1541,11 +1545,11 @@ function onDispose$1(e) {
     }
 }
 class ThrottleObserver extends AbstractDelegatingObserver {
-    constructor(delegate, durationFunction, mode) {
+    constructor(delegate, durationFunction, mode, durationSubscription) {
         super(delegate);
         this.durationFunction = durationFunction;
         this.mode = mode;
-        this.durationSubscription = createSerialDisposable();
+        this.durationSubscription = durationSubscription;
         this.value = none;
         this.hasValue = false;
         this.onNotify = (_) => {
@@ -1577,9 +1581,10 @@ function throttle(duration, options = {}) {
         ? (_) => fromValue(fromArrayT, { delay: duration })(none)
         : duration;
     const operator = (delegate) => {
-        const observer = new ThrottleObserver(delegate, durationFunction, mode);
+        const durationSubscription = createSerialDisposable();
+        const observer = new ThrottleObserver(delegate, durationFunction, mode, durationSubscription);
         addDisposable(delegate, observer);
-        addDisposableDisposeParentOnChildError(observer, observer.durationSubscription);
+        addDisposableDisposeParentOnChildError(observer, durationSubscription);
         addTeardown(observer, onDispose$1);
         return observer;
     };
@@ -1635,10 +1640,10 @@ const setupDurationSubscription = (observer) => {
     observer.durationSubscription.inner = pipe(observer.duration, subscribe(observer));
 };
 class TimeoutObserver extends AbstractDelegatingObserver {
-    constructor(delegate, duration) {
+    constructor(delegate, duration, durationSubscription) {
         super(delegate);
         this.duration = duration;
-        this.durationSubscription = createSerialDisposable();
+        this.durationSubscription = durationSubscription;
     }
     notify(next) {
         this.assertState();
@@ -1652,9 +1657,10 @@ function timeout(duration) {
         ? throws({ ...fromArrayT, ...mapT }, { delay: duration })(returnTimeoutError)
         : concat(duration, throws({ ...fromArrayT, ...mapT })(returnTimeoutError));
     const operator = (delegate) => {
-        const observer = new TimeoutObserver(delegate, durationObs);
+        const durationSubscription = createSerialDisposable();
+        const observer = new TimeoutObserver(delegate, durationObs, durationSubscription);
         bindDisposables(observer, delegate);
-        addDisposableDisposeParentOnChildError(observer, observer.durationSubscription);
+        addDisposableDisposeParentOnChildError(observer, durationSubscription);
         setupDurationSubscription(observer);
         return observer;
     };

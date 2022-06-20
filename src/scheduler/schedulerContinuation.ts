@@ -46,7 +46,6 @@ class SchedulerContinuationImpl
     private readonly f: SideEffect,
   ) {
     super();
-    addTeardown(this, clearListeners);
   }
 
   addListener(
@@ -134,6 +133,8 @@ export const schedule =
   ): Function1<SchedulerLike, DisposableLike> =>
   scheduler => {
     const continuation = new SchedulerContinuationImpl(scheduler, f);
+    addTeardown(continuation, clearListeners);
+
     scheduler.schedule(continuation, options);
     return continuation;
   };

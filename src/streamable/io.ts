@@ -33,38 +33,11 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
 
   readonly isSynchronous = false;
 
-  private readonly subject: StreamLike<TAcc, TAcc>;
-  private readonly streamable: StreamableLike<T, FlowMode>;
-
   constructor(
-    reducer: Reducer<T, TAcc>,
-    initialValue: Factory<TAcc>,
-    options?: { readonly replay?: number },
+    private readonly subject: StreamLike<TAcc, TAcc>,
+    private readonly streamable: StreamableLike<T, FlowMode>,
   ) {
     super();
-
-    const subject = createSubject(options);
-    addDisposableDisposeParentOnChildError(this, subject);
-
-    const op = (events: ObservableLike<T>): ObservableLike<FlowMode> =>
-      using(
-        scheduler =>
-          pipe(
-            events,
-            reduce(reducer, initialValue),
-            subscribe(scheduler, subject.dispatch, subject),
-          ),
-
-        eventsSubscription =>
-          createObservable(dispatcher => {
-            dispatcher.dispatch("pause");
-            dispatcher.dispatch("resume");
-            addDisposable(eventsSubscription, dispatcher);
-          }),
-      );
-
-    this.streamable = createStreamable(op);
-    this.subject = subject;
   }
 
   get observerCount(): number {
@@ -90,5 +63,31 @@ export const createFlowableSinkAccumulator = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
   options?: { readonly replay?: number },
-): FlowableSinkLike<T> & MulticastObservableLike<TAcc> =>
-  new FlowableSinkAccumulatorImpl(reducer, initialValue, options);
+): FlowableSinkLike<T> & MulticastObservableLike<TAcc> => {
+  const subject = createSubject(options);
+
+  const op = (events: ObservableLike<T>): ObservableLike<FlowMode> =>
+    using(
+      scheduler =>
+        pipe(
+          events,
+          reduce(reducer, initialValue),
+          subscribe(scheduler, subject.dispatch, subject),
+        ),
+
+      eventsSubscription =>
+        createObservable(dispatcher => {
+          dispatcher.dispatch("pause");
+          dispatcher.dispatch("resume");
+          addDisposable(eventsSubscription, dispatcher);
+        }),
+    );
+
+  const streamable = createStreamable(op);
+
+  const sinkAcc = new FlowableSinkAccumulatorImpl(subject, streamable);
+
+  addDisposableDisposeParentOnChildError(sinkAcc, subject);
+
+  return sinkAcc;
+};

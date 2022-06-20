@@ -12,21 +12,23 @@ import { Predicate, alwaysTrue } from "../functions";
 import { isNone } from "../option";
 import { enumerate } from "./enumerator";
 
+function enumerateSrc<T>(self: RepeatEnumerator<T>) {
+  self.enumerator = enumerate(self.src);
+  addDisposableDisposeParentOnChildError(self, self.enumerator);
+}
+
 class RepeatEnumerator<T>
   extends AbstractDisposable
   implements EnumeratorLike<T>
 {
-  private enumerator: EnumeratorLike<T>;
+  enumerator: EnumeratorLike<T> = undefined as any;
   private count = 0;
 
   constructor(
-    private readonly src: EnumerableLike<T>,
+    readonly src: EnumerableLike<T>,
     private readonly shouldRepeat: Predicate<number>,
   ) {
     super();
-    this.enumerator = enumerate(src);
-
-    addDisposableDisposeParentOnChildError(this, this.enumerator);
   }
 
   get current() {
@@ -49,9 +51,7 @@ class RepeatEnumerator<T>
       }
 
       if (doRepeat) {
-        this.enumerator = enumerate(this.src);
-        addDisposableDisposeParentOnChildError(this, this.enumerator);
-
+        enumerateSrc(this);
         this.enumerator.move();
       }
     }
@@ -72,7 +72,9 @@ class RepeatEnumerable<T>
   }
 
   enumerate() {
-    return new RepeatEnumerator(this.src, this.shouldRepeat);
+    const enumerator = new RepeatEnumerator(this.src, this.shouldRepeat);
+    enumerateSrc(enumerator);
+    return enumerator;
   }
 }
 

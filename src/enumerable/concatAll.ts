@@ -19,14 +19,10 @@ class ConcatAllEnumerator<T>
   current = none as unknown as T;
   hasCurrent = false;
 
-  private enumerator: Option<EnumeratorLike<T>> = none;
+  enumerator: Option<EnumeratorLike<T>> = none;
 
   constructor(private readonly delegate: EnumeratorLike<EnumerableLike<T>>) {
     super();
-    addDisposableDisposeParentOnChildError(this, delegate);
-    addTeardown(this, () => {
-      this.enumerator = none;
-    });
   }
 
   move(): boolean {
@@ -62,8 +58,15 @@ class ConcatAllEnumerator<T>
   }
 }
 
-const operator = <T>(enumerator: EnumeratorLike<EnumerableLike<T>>) =>
-  new ConcatAllEnumerator(enumerator);
+const operator = <T>(delegate: EnumeratorLike<EnumerableLike<T>>) => {
+  const enumerator = new ConcatAllEnumerator(delegate);
+  addDisposableDisposeParentOnChildError(enumerator, delegate);
+  addTeardown(enumerator, () => {
+    enumerator.enumerator = none;
+  });
+
+  return enumerator;
+};
 
 const _concatAll = lift(operator);
 

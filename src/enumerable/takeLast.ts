@@ -26,7 +26,6 @@ class TakeLastEnumerator<T>
     private readonly maxCount: number,
   ) {
     super();
-    addDisposableDisposeParentOnChildError(this, delegate);
   }
 
   get current() {
@@ -68,8 +67,11 @@ export const takeLast = <T>(
   options: { readonly count?: number } = {},
 ): EnumerableOperator<T, T> => {
   const { count = 1 } = options;
-  const operator = (enumerator: EnumeratorLike<T>) =>
-    new TakeLastEnumerator(enumerator, count);
+  const operator = (delegate: EnumeratorLike<T>) => {
+    const enumerator = new TakeLastEnumerator(delegate, count);
+    addDisposableDisposeParentOnChildError(enumerator, delegate);
+    return enumerator;
+  };
   return enumerable =>
     count > 0
       ? pipe(enumerable, lift(operator))

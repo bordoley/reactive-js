@@ -32,12 +32,10 @@ const setupDurationSubscription = <T>(observer: TimeoutObserver<T>) => {
 };
 
 class TimeoutObserver<T> extends AbstractDelegatingObserver<T, T> {
-  readonly durationSubscription: SerialDisposableLike =
-    createSerialDisposable();
-
   constructor(
     delegate: ObserverLike<T>,
     readonly duration: ObservableLike<unknown>,
+    readonly durationSubscription: SerialDisposableLike,
   ) {
     super(delegate);
   }
@@ -82,13 +80,15 @@ export function timeout<T>(
           throws({ ...fromArrayT, ...mapT })(returnTimeoutError),
         );
   const operator = (delegate: ObserverLike<T>) => {
-    const observer = new TimeoutObserver(delegate, durationObs);
+    const durationSubscription = createSerialDisposable();
+    const observer = new TimeoutObserver(
+      delegate,
+      durationObs,
+      durationSubscription,
+    );
 
     bindDisposables(observer, delegate);
-    addDisposableDisposeParentOnChildError(
-      observer,
-      observer.durationSubscription,
-    );
+    addDisposableDisposeParentOnChildError(observer, durationSubscription);
     setupDurationSubscription(observer);
 
     return observer;

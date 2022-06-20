@@ -146,8 +146,6 @@ class PriorityScheduler
 
   constructor(readonly host: SchedulerLike) {
     super();
-    addTeardown(this, clearQueues);
-    addDisposable(host, this);
   }
 
   get now(): number {
@@ -262,6 +260,15 @@ class PriorityScheduler
   }
 }
 
+const createPriorityScheduler = (
+  hostScheduler: SchedulerLike,
+): PriorityScheduler => {
+  const scheduler = new PriorityScheduler(hostScheduler);
+  addTeardown(scheduler, clearQueues);
+  addDisposable(hostScheduler, scheduler);
+  return scheduler;
+};
+
 /**
  * Creates a new priority scheduler which schedules work using the provided
  * host scheduler.
@@ -271,12 +278,14 @@ class PriorityScheduler
  */
 export const toPriorityScheduler = (
   hostScheduler: SchedulerLike,
-): PrioritySchedulerLike => new PriorityScheduler(hostScheduler);
+): PrioritySchedulerLike => {
+  return createPriorityScheduler(hostScheduler);
+};
 
 export const toPausableScheduler = (
   hostScheduler: SchedulerLike,
 ): PausableSchedulerLike => {
-  const scheduler = new PriorityScheduler(hostScheduler);
+  const scheduler = createPriorityScheduler(hostScheduler);
   scheduler.pause();
   return scheduler;
 };
