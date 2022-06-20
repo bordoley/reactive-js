@@ -1,6 +1,6 @@
 /// <reference types="./runnable.d.ts" />
 import { pipe, raise, strictEquality, compose, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
-import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, dispose, addTeardown } from './disposable.mjs';
+import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables, addTeardown } from './disposable.mjs';
 import { AbstractContainer, fromValue, empty } from './container.mjs';
 import { __DEV__ } from './env.mjs';
 import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
@@ -53,31 +53,20 @@ if (__DEV__) {
         }
     };
 }
-class AbstractDelegatingSink extends AbstractSink {
-    constructor(delegate) {
-        super();
-        this.delegate = delegate;
-        addDisposable(delegate, this);
-    }
-}
-class AbstractAutoDisposingDelegatingSink extends AbstractSink {
-    constructor(delegate) {
-        super();
-        this.delegate = delegate;
-        bindDisposables(this, delegate);
-    }
-}
 class DelegatingSink extends AbstractSink {
     constructor(delegate) {
         super();
         this.delegate = delegate;
-        addDisposable(delegate, this);
     }
     notify(next) {
         this.delegate.notify(next);
     }
 }
-const createDelegatingSink = (delegate) => new DelegatingSink(delegate);
+const createDelegatingSink = (delegate) => {
+    const sink = new DelegatingSink(delegate);
+    addDisposable(delegate, sink);
+    return sink;
+};
 const sink = (observer) => observable => observable.run(observer);
 
 function concat(...runnables) {
@@ -91,7 +80,11 @@ function concat(...runnables) {
         }
     });
 }
-class FlattenSink extends AbstractDelegatingSink {
+class FlattenSink extends AbstractSink {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+    }
     notify(next) {
         const concatSink = createDelegatingSink(this.delegate);
         addDisposableDisposeParentOnChildError(this.delegate, concatSink);
@@ -99,7 +92,11 @@ class FlattenSink extends AbstractDelegatingSink {
         concatSink.dispose();
     }
 }
-const _concatAll = lift(s => new FlattenSink(s));
+const _concatAll = lift(delegate => {
+    const sink = new FlattenSink(delegate);
+    addDisposable(delegate, sink);
+    return sink;
+});
 const concatAll = () => _concatAll;
 
 const fromArray = (options = {}) => values => {
@@ -118,32 +115,36 @@ const fromArrayT = {
     fromArray,
 };
 
-class DecodeWithCharsetSink extends AbstractDelegatingSink {
+class DecodeWithCharsetSink extends AbstractSink {
     constructor(delegate, textDecoder) {
-        super(delegate);
+        super();
+        this.delegate = delegate;
         this.textDecoder = textDecoder;
     }
 }
 DecodeWithCharsetSink.prototype.notify = notifyDecodeWithCharset;
+function onDispose$1() {
+    const data = this.textDecoder.decode();
+    if (data.length > 0) {
+        pipe(data, fromValue(fromArrayT), sink(this.delegate));
+    }
+    this.delegate.dispose();
+}
 const decodeWithCharset = (charset = "utf-8", options) => {
     const operator = (delegate) => {
-        const parent = new DecodeWithCharsetSink(delegate, new TextDecoder(charset, options));
-        addOnDisposedWithError(parent, delegate);
-        addOnDisposedWithoutErrorTeardown(parent, function () {
-            const data = this.textDecoder.decode();
-            if (data.length > 0) {
-                pipe(data, fromValue(fromArrayT), sink(this.delegate));
-            }
-            this.delegate.dispose();
-        });
-        return parent;
+        const sink = new DecodeWithCharsetSink(delegate, new TextDecoder(charset, options));
+        addDisposable(delegate, sink);
+        addOnDisposedWithError(sink, delegate);
+        addOnDisposedWithoutErrorTeardown(sink, onDispose$1);
+        return sink;
     };
     return lift(operator);
 };
 
-class DistinctUntilChangedSink extends AbstractAutoDisposingDelegatingSink {
+class DistinctUntilChangedSink extends AbstractSink {
     constructor(delegate, equality) {
-        super(delegate);
+        super();
+        this.delegate = delegate;
         this.equality = equality;
         this.prev = none;
         this.hasValue = false;
@@ -152,7 +153,11 @@ class DistinctUntilChangedSink extends AbstractAutoDisposingDelegatingSink {
 DistinctUntilChangedSink.prototype.notify = notifyDistinctUntilChanged;
 const distinctUntilChanged = (options = {}) => {
     const { equality = strictEquality } = options;
-    const operator = (sink) => new DistinctUntilChangedSink(sink, equality);
+    const operator = (delegate) => {
+        const sink = new DistinctUntilChangedSink(delegate, equality);
+        bindDisposables(sink, delegate);
+        return sink;
+    };
     return lift(operator);
 };
 
@@ -224,15 +229,20 @@ const generate = (generator, initialValue) => {
     return createRunnable(run);
 };
 
-class KeepSink extends AbstractAutoDisposingDelegatingSink {
+class KeepSink extends AbstractSink {
     constructor(delegate, predicate) {
-        super(delegate);
+        super();
+        this.delegate = delegate;
         this.predicate = predicate;
     }
 }
 KeepSink.prototype.notify = notifyKeep;
 const keep = (predicate) => {
-    const operator = (sink) => new KeepSink(sink, predicate);
+    const operator = (delegate) => {
+        const sink = new KeepSink(delegate, predicate);
+        bindDisposables(sink, delegate);
+        return sink;
+    };
     return lift(operator);
 };
 const keepT = {
@@ -253,21 +263,27 @@ const last = () => {
     return run(createSink);
 };
 
-class MapSink extends AbstractAutoDisposingDelegatingSink {
+class MapSink extends AbstractSink {
     constructor(delegate, mapper) {
-        super(delegate);
+        super();
+        this.delegate = delegate;
         this.mapper = mapper;
     }
 }
 MapSink.prototype.notify = notifyMap;
 const map = (mapper) => {
-    const operator = (sink) => new MapSink(sink, mapper);
+    const operator = (delegate) => {
+        const sink = new MapSink(delegate, mapper);
+        bindDisposables(sink, delegate);
+        return sink;
+    };
     return lift(operator);
 };
 
-class OnNotifySink extends AbstractAutoDisposingDelegatingSink {
+class OnNotifySink extends AbstractSink {
     constructor(delegate, onNotify) {
-        super(delegate);
+        super();
+        this.delegate = delegate;
         this.onNotify = onNotify;
     }
 }
@@ -278,19 +294,28 @@ OnNotifySink.prototype.notify = notifyOnNotify;
  * @param onNotify The function that is invoked when the observable source produces values.
  */
 function onNotify(onNotify) {
-    const operator = (observer) => new OnNotifySink(observer, onNotify);
+    const operator = (delegate) => {
+        const sink = new OnNotifySink(delegate, onNotify);
+        bindDisposables(sink, delegate);
+        return sink;
+    };
     return lift(operator);
 }
 
-class PairwiseObserver extends AbstractAutoDisposingDelegatingSink {
-    constructor() {
-        super(...arguments);
+class PairwiseObserver extends AbstractSink {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
         this.hasPrev = false;
     }
 }
 PairwiseObserver.prototype.notify = notifyPairwise;
 const pairwise = () => {
-    const operator = (observer) => new PairwiseObserver(observer);
+    const operator = (delegate) => {
+        const sink = new PairwiseObserver(delegate);
+        bindDisposables(sink, delegate);
+        return sink;
+    };
     return lift(operator);
 };
 
@@ -327,22 +352,28 @@ function repeat(predicate) {
     });
 }
 
-class ScanSink extends AbstractAutoDisposingDelegatingSink {
+class ScanSink extends AbstractSink {
     constructor(delegate, reducer, acc) {
-        super(delegate);
+        super();
+        this.delegate = delegate;
         this.reducer = reducer;
         this.acc = acc;
     }
 }
 ScanSink.prototype.notify = notifyScan;
 const scan = (reducer, initialValue) => {
-    const operator = (sink) => new ScanSink(sink, reducer, initialValue());
+    const operator = (delegate) => {
+        const sink = new ScanSink(delegate, reducer, initialValue());
+        bindDisposables(sink, delegate);
+        return sink;
+    };
     return lift(operator);
 };
 
-class SkipFirstSink extends AbstractAutoDisposingDelegatingSink {
+class SkipFirstSink extends AbstractSink {
     constructor(delegate, skipCount) {
-        super(delegate);
+        super();
+        this.delegate = delegate;
         this.skipCount = skipCount;
         this.count = 0;
     }
@@ -350,7 +381,11 @@ class SkipFirstSink extends AbstractAutoDisposingDelegatingSink {
 SkipFirstSink.prototype.notify = notifySkipFirst;
 const skipFirst = (options = {}) => {
     const { count = 1 } = options;
-    const operator = (sink) => new SkipFirstSink(sink, count);
+    const operator = (delegate) => {
+        const sink = new SkipFirstSink(delegate, count);
+        bindDisposables(sink, delegate);
+        return sink;
+    };
     return runnable => (count > 0 ? pipe(runnable, lift(operator)) : runnable);
 };
 
@@ -376,9 +411,10 @@ const contains = (value, options = {}) => {
     return someSatisfy(isEqualTo(value, equality));
 };
 
-class TakeFirstSink extends AbstractAutoDisposingDelegatingSink {
+class TakeFirstSink extends AbstractSink {
     constructor(delegate, maxCount) {
-        super(delegate);
+        super();
+        this.delegate = delegate;
         this.maxCount = maxCount;
         this.count = 0;
     }
@@ -386,37 +422,43 @@ class TakeFirstSink extends AbstractAutoDisposingDelegatingSink {
 TakeFirstSink.prototype.notify = notifyTakeFirst;
 const takeFirst = (options = {}) => {
     const { count = 1 } = options;
-    const operator = (sink) => new TakeFirstSink(sink, count);
+    const operator = (delegate) => {
+        const sink = new TakeFirstSink(delegate, count);
+        bindDisposables(sink, delegate);
+        return sink;
+    };
     return observable => count > 0 ? pipe(observable, lift(operator)) : empty(fromArrayT);
 };
 
-function onDispose(error) {
-    if (isSome(error)) {
-        this.last.length = 0;
-        pipe(this.delegate, dispose(error));
-    }
-    else {
-        fromArray()(this.last).run(this.delegate);
-    }
-}
-class TakeLastSink extends AbstractDelegatingSink {
+class TakeLastSink extends AbstractSink {
     constructor(delegate, maxCount) {
-        super(delegate);
+        super();
+        this.delegate = delegate;
         this.maxCount = maxCount;
         this.last = [];
-        addTeardown(this, onDispose);
     }
 }
 TakeLastSink.prototype.notify = notifyTakeLast;
+function onDispose() {
+    pipe(this.last, fromArray(), sink(this.delegate));
+    this.delegate.dispose();
+}
 const takeLast = (options = {}) => {
     const { count = 1 } = options;
-    const operator = (sink) => new TakeLastSink(sink, count);
+    const operator = (delegate) => {
+        const sink = new TakeLastSink(delegate, count);
+        addDisposable(delegate, sink);
+        addOnDisposedWithError(sink, delegate);
+        addTeardown(sink, onDispose);
+        return sink;
+    };
     return runnable => count > 0 ? pipe(runnable, lift(operator)) : empty(fromArrayT);
 };
 
-class TakeWhileSink extends AbstractAutoDisposingDelegatingSink {
+class TakeWhileSink extends AbstractSink {
     constructor(delegate, predicate, inclusive) {
-        super(delegate);
+        super();
+        this.delegate = delegate;
         this.predicate = predicate;
         this.inclusive = inclusive;
     }
@@ -424,7 +466,11 @@ class TakeWhileSink extends AbstractAutoDisposingDelegatingSink {
 TakeWhileSink.prototype.notify = notifyTakeWhile;
 const takeWhile = (predicate, options = {}) => {
     const { inclusive = false } = options;
-    const operator = (sink) => new TakeWhileSink(sink, predicate, inclusive);
+    const operator = (delegate) => {
+        const sink = new TakeWhileSink(delegate, predicate, inclusive);
+        bindDisposables(sink, delegate);
+        return sink;
+    };
     return lift(operator);
 };
 

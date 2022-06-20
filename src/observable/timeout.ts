@@ -4,6 +4,7 @@ import {
   addDisposableDisposeParentOnChildError,
   createSerialDisposable,
   dispose,
+  bindDisposables,
 } from "../disposable";
 import { pipe, returns } from "../functions";
 import {
@@ -15,7 +16,7 @@ import { concat } from "./concat";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { mapT } from "./map";
-import { AbstractAutoDisposingDelegatingObserver } from "./observer";
+import { AbstractDelegatingObserver } from "./observer";
 import { subscribe } from "./subscribe";
 
 const _timeoutError = Symbol("@reactive-js/core/lib/observable/timeoutError");
@@ -30,7 +31,7 @@ const setupDurationSubscription = <T>(observer: TimeoutObserver<T>) => {
   );
 };
 
-class TimeoutObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T> {
+class TimeoutObserver<T> extends AbstractDelegatingObserver<T, T> {
   readonly durationSubscription: SerialDisposableLike =
     createSerialDisposable();
 
@@ -39,8 +40,6 @@ class TimeoutObserver<T> extends AbstractAutoDisposingDelegatingObserver<T, T> {
     readonly duration: ObservableLike<unknown>,
   ) {
     super(delegate);
-    addDisposableDisposeParentOnChildError(this, this.durationSubscription);
-    setupDurationSubscription(this);
   }
 
   notify(next: T) {
@@ -82,8 +81,18 @@ export function timeout<T>(
           duration,
           throws({ ...fromArrayT, ...mapT })(returnTimeoutError),
         );
-  const operator = (observer: ObserverLike<T>) =>
-    new TimeoutObserver(observer, durationObs);
+  const operator = (delegate: ObserverLike<T>) => {
+    const observer = new TimeoutObserver(delegate, durationObs);
+
+    bindDisposables(observer, delegate);
+    addDisposableDisposeParentOnChildError(
+      observer,
+      observer.durationSubscription,
+    );
+    setupDurationSubscription(observer);
+
+    return observer;
+  };
   operator.isSynchronous = false;
   return lift(operator);
 }

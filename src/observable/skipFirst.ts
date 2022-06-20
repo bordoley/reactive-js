@@ -1,13 +1,11 @@
+import { bindDisposables } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
 import { notifySkipFirst } from "../sink";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingObserver } from "./observer";
+import { AbstractDelegatingObserver } from "./observer";
 
-class SkipFirstObserver<T> extends AbstractAutoDisposingDelegatingObserver<
-  T,
-  T
-> {
+class SkipFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
   count = 0;
 
   constructor(delegate: ObserverLike<T>, readonly skipCount: number) {
@@ -25,8 +23,11 @@ export const skipFirst = <T>(
   options: { readonly count?: number } = {},
 ): ObservableOperator<T, T> => {
   const { count = 1 } = options;
-  const operator = (observer: ObserverLike<T>) =>
-    new SkipFirstObserver(observer, count);
+  const operator = (delegate: ObserverLike<T>) => {
+    const observer = new SkipFirstObserver(delegate, count);
+    bindDisposables(observer, delegate);
+    return observer;
+  };
   operator.isSynchronous = true;
   return observable =>
     count > 0 ? pipe(observable, lift(operator)) : observable;

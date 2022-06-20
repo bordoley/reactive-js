@@ -1,5 +1,6 @@
 import { AbstractContainer, Concat } from "../container";
 import {
+  addDisposable,
   addOnDisposedWithError,
   addOnDisposedWithoutErrorTeardown,
   dispose,
@@ -15,6 +16,7 @@ const createConcatObserver = <T>(
   next: number,
 ) => {
   const observer = createDelegatingObserver(delegate);
+  addDisposable(delegate, observer);
   addOnDisposedWithError(observer, delegate);
   addOnDisposedWithoutErrorTeardown(observer, () => {
     if (next < observables.length) {

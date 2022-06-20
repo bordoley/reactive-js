@@ -5,6 +5,7 @@ import {
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
   dispose,
+  addDisposable,
 } from "../disposable";
 import { pipe } from "../functions";
 import {
@@ -71,10 +72,6 @@ class MergeObserver<T> extends AbstractDelegatingObserver<
     readonly maxConcurrency: number,
   ) {
     super(delegate);
-    addTeardown(this, onDispose);
-    addTeardown(delegate, () => {
-      this.queue.length = 0;
-    });
   }
 
   notify(next: ObservableLike<T>) {
@@ -110,8 +107,15 @@ export const mergeAll = <T>(
     maxBufferSize = Number.MAX_SAFE_INTEGER,
     maxConcurrency = Number.MAX_SAFE_INTEGER,
   } = options;
-  const operator = (observer: ObserverLike<T>) =>
-    new MergeObserver(observer, maxBufferSize, maxConcurrency);
+  const operator = (delegate: ObserverLike<T>) => {
+    const observer = new MergeObserver(delegate, maxBufferSize, maxConcurrency);
+    addDisposable(delegate, observer);
+    addTeardown(observer, onDispose);
+    addTeardown(delegate, () => {
+      observer.queue.length = 0;
+    });
+    return observer;
+  };
   operator.isSynchronous = false;
   return lift(operator);
 };

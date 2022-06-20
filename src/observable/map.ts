@@ -1,4 +1,5 @@
 import { Map } from "../container";
+import { bindDisposables } from "../disposable";
 import { Function1 } from "../functions";
 import {
   ObservableLike,
@@ -7,12 +8,9 @@ import {
 } from "../observable";
 import { notifyMap } from "../sink";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingObserver } from "./observer";
+import { AbstractDelegatingObserver } from "./observer";
 
-class MapObserver<TA, TB> extends AbstractAutoDisposingDelegatingObserver<
-  TA,
-  TB
-> {
+class MapObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
   constructor(delegate: ObserverLike<TB>, readonly mapper: Function1<TA, TB>) {
     super(delegate);
   }
@@ -28,8 +26,11 @@ MapObserver.prototype.notify = notifyMap;
 export const map = <TA, TB>(
   mapper: Function1<TA, TB>,
 ): ObservableOperator<TA, TB> => {
-  const operator = (observer: ObserverLike<TB>) =>
-    new MapObserver(observer, mapper);
+  const operator = (delegate: ObserverLike<TB>) => {
+    const observer = new MapObserver(delegate, mapper);
+    bindDisposables(observer, delegate);
+    return observer;
+  };
   operator.isSynchronous = true;
   return lift(operator);
 };

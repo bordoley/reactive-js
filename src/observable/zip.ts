@@ -1,5 +1,5 @@
 import { AbstractContainer, Zip } from "../container";
-import { Error, addTeardown, dispose } from "../disposable";
+import { Error, addTeardown, dispose, addDisposable } from "../disposable";
 import { EnumeratorLike, current, zipEnumerators } from "../enumerable";
 import { defer, pipe, returns } from "../functions";
 import { ObservableLike, ObserverLike } from "../observable";
@@ -49,12 +49,6 @@ class ZipObserver
     private readonly enumerators: readonly EnumeratorLike<any>[],
   ) {
     super(delegate);
-    addTeardown(delegate, () => {
-      this.hasCurrent = false;
-      this.current = none;
-      this.buffer.length = 0;
-    });
-    addTeardown(this, onDisposed);
   }
 
   move(): boolean {
@@ -139,6 +133,13 @@ class ZipObservable
           enumerators.push(enumerator);
         } else {
           const innerObserver = new ZipObserver(observer, enumerators);
+          addDisposable(observer, innerObserver);
+          addTeardown(observer, () => {
+            innerObserver.hasCurrent = false;
+            innerObserver.current = none;
+            innerObserver.buffer.length = 0;
+          });
+          addTeardown(innerObserver, onDisposed);
 
           pipe(observable, sink(innerObserver));
           enumerators.push(innerObserver);

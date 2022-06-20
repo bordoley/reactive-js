@@ -6,6 +6,7 @@ import {
   addTeardown,
   createSerialDisposable,
   dispose,
+  addDisposable,
 } from "../disposable";
 import { Function1, pipe } from "../functions";
 import {
@@ -62,8 +63,6 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
     readonly mode: ThrottleMode,
   ) {
     super(delegate);
-    addDisposableDisposeParentOnChildError(this, this.durationSubscription);
-    addTeardown(this, onDispose);
   }
 
   notify(next: T) {
@@ -116,8 +115,16 @@ export function throttle<T>(
     typeof duration === "number"
       ? (_: T) => fromValue(fromArrayT, { delay: duration })(none)
       : duration;
-  const operator = (observer: ObserverLike<T>) =>
-    new ThrottleObserver(observer, durationFunction, mode);
+  const operator = (delegate: ObserverLike<T>) => {
+    const observer = new ThrottleObserver(delegate, durationFunction, mode);
+    addDisposable(delegate, observer);
+    addDisposableDisposeParentOnChildError(
+      observer,
+      observer.durationSubscription,
+    );
+    addTeardown(observer, onDispose);
+    return observer;
+  };
   operator.isSynchronous = false;
   return lift(operator);
 }

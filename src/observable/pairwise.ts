@@ -1,10 +1,11 @@
+import { bindDisposables } from "../disposable";
 import { ObservableOperator, ObserverLike } from "../observable";
 import { Option } from "../option";
 import { notifyPairwise } from "../sink";
 import { lift } from "./lift";
-import { AbstractAutoDisposingDelegatingObserver } from "./observer";
+import { AbstractDelegatingObserver } from "./observer";
 
-class PairwiseObserver<T> extends AbstractAutoDisposingDelegatingObserver<
+class PairwiseObserver<T> extends AbstractDelegatingObserver<
   T,
   [Option<T>, T]
 > {
@@ -14,8 +15,12 @@ class PairwiseObserver<T> extends AbstractAutoDisposingDelegatingObserver<
 PairwiseObserver.prototype.notify = notifyPairwise;
 
 export const pairwise = <T>(): ObservableOperator<T, [Option<T>, T]> => {
-  const operator = (observer: ObserverLike<[Option<T>, T]>) =>
-    new PairwiseObserver(observer);
+  const operator = (delegate: ObserverLike<[Option<T>, T]>) => {
+    const observer = new PairwiseObserver(delegate);
+    bindDisposables(observer, delegate);
+    return observer;
+  };
+
   operator.isSynchronous = true;
   return lift(operator);
 };

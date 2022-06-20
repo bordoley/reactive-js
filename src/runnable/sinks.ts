@@ -1,10 +1,6 @@
-import {
-  AbstractDisposable,
-  addDisposable,
-  bindDisposables,
-} from "../disposable";
+import { AbstractDisposable, addDisposable } from "../disposable";
 import { __DEV__ } from "../env";
-import { raise, SideEffect1 } from "../functions";
+import { SideEffect1, raise } from "../functions";
 import { RunnableLike } from "../runnable";
 import { SinkLike } from "../sink";
 
@@ -25,27 +21,9 @@ if (__DEV__) {
   };
 }
 
-export abstract class AbstractDelegatingSink<TA, TB> extends AbstractSink<TA> {
-  constructor(readonly delegate: SinkLike<TB>) {
-    super();
-    addDisposable(delegate, this);
-  }
-}
-
-export abstract class AbstractAutoDisposingDelegatingSink<
-  TA,
-  TB,
-> extends AbstractSink<TA> {
-  constructor(readonly delegate: SinkLike<TB>) {
-    super();
-    bindDisposables(this, delegate);
-  }
-}
-
 class DelegatingSink<T> extends AbstractSink<T> {
   constructor(readonly delegate: SinkLike<T>) {
     super();
-    addDisposable(delegate, this);
   }
 
   notify(next: T) {
@@ -53,8 +31,11 @@ class DelegatingSink<T> extends AbstractSink<T> {
   }
 }
 
-export const createDelegatingSink = <T>(delegate: SinkLike<T>): SinkLike<T> =>
-  new DelegatingSink(delegate);
+export const createDelegatingSink = <T>(delegate: SinkLike<T>): SinkLike<T> => {
+  const sink = new DelegatingSink(delegate);
+  addDisposable(delegate, sink);
+  return sink;
+};
 
 export const sink =
   <T>(observer: SinkLike<T>): SideEffect1<RunnableLike<T>> =>

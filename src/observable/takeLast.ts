@@ -1,5 +1,11 @@
 import { empty } from "../container";
-import { Error, addTeardown, dispose } from "../disposable";
+import {
+  Error,
+  addTeardown,
+  dispose,
+  addDisposable,
+  addOnDisposedWithError,
+} from "../disposable";
 import { pipe } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
 import { Option, isSome } from "../option";
@@ -22,7 +28,6 @@ class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
 
   constructor(delegate: ObserverLike<T>, readonly maxCount: number) {
     super(delegate);
-    addTeardown(this, onDispose);
   }
 }
 TakeLastObserver.prototype.notify = notifyTakeLast;
@@ -36,8 +41,16 @@ export const takeLast = <T>(
   options: { readonly count?: number } = {},
 ): ObservableOperator<T, T> => {
   const { count = 1 } = options;
-  const operator = (observer: ObserverLike<T>) =>
-    new TakeLastObserver(observer, count);
+  const operator = (delegate: ObserverLike<T>) => {
+    const observer = new TakeLastObserver(delegate, count);
+
+    addDisposable(delegate, observer);
+    addOnDisposedWithError(observer, delegate);
+    addTeardown(observer, onDispose);
+
+    return observer;
+  };
+
   operator.isSynchronous = false;
   return observable =>
     count > 0 ? pipe(observable, lift(operator)) : empty(fromArrayT);

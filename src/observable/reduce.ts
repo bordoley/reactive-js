@@ -1,5 +1,5 @@
 import { fromValue } from "../container";
-import { Error, addTeardown } from "../disposable";
+import { Error, addTeardown, addDisposable } from "../disposable";
 import { Factory, Reducer, pipe } from "../functions";
 import { ObservableOperator, ObserverLike } from "../observable";
 import { Option, isSome } from "../option";
@@ -26,7 +26,6 @@ class ReduceObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
     public acc: TAcc,
   ) {
     super(delegate);
-    addTeardown(this, onDispose);
   }
 }
 ReduceObserver.prototype.notify = notifyReduce;
@@ -35,8 +34,12 @@ export const reduce = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ): ObservableOperator<T, TAcc> => {
-  const operator = (observer: ObserverLike<TAcc>) =>
-    new ReduceObserver(observer, reducer, initialValue());
+  const operator = (delegate: ObserverLike<TAcc>) => {
+    const observer = new ReduceObserver(delegate, reducer, initialValue());
+    addDisposable(delegate, observer);
+    addTeardown(observer, onDispose);
+    return observer;
+  };
   operator.isSynchronous = true;
   return lift(operator);
 };

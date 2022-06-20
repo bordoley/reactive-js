@@ -6,6 +6,7 @@ import {
   createSerialDisposable,
   dispose,
   disposed,
+  addDisposable,
 } from "../disposable";
 import { Function1, pipe } from "../functions";
 import {
@@ -50,9 +51,6 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
     private readonly maxBufferSize: number,
   ) {
     super(delegate);
-
-    addDisposableDisposeParentOnChildError(this, this.durationSubscription);
-    addTeardown(this, onDispose);
   }
 
   notify(next: T) {
@@ -96,8 +94,20 @@ export function buffer<T>(
       : delay;
 
   const maxBufferSize = options.maxBufferSize ?? Number.MAX_SAFE_INTEGER;
-  const operator = (observer: ObserverLike<readonly T[]>) =>
-    new BufferObserver(observer, durationFunction, maxBufferSize);
+  const operator = (delegate: ObserverLike<readonly T[]>) => {
+    const observer = new BufferObserver(
+      delegate,
+      durationFunction,
+      maxBufferSize,
+    );
+    addDisposable(delegate, observer);
+    addDisposableDisposeParentOnChildError(
+      observer,
+      observer.durationSubscription,
+    );
+    addTeardown(observer, onDispose);
+    return observer;
+  };
   operator.isSynchronous = delay === Number.MAX_SAFE_INTEGER;
 
   return lift(operator);
