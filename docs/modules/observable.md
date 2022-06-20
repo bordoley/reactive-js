@@ -1934,20 +1934,19 @@ ___
 
 ### sink
 
-▸ **sink**<`TSink`, `T`\>(`observer`): [`SideEffect1`](functions.md#sideeffect1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
+▸ **sink**<`T`\>(`observer`): [`SideEffect1`](functions.md#sideeffect1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TSink` | extends [`ObserverLike`](../interfaces/observable.ObserverLike.md)<`T`, `TSink`\> |
-| `T` | `T` |
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `observer` | `TSink` |
+| `observer` | [`ObserverLike`](../interfaces/observable.ObserverLike.md)<`T`\> |
 
 #### Returns
 
