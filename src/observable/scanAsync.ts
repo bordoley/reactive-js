@@ -3,7 +3,6 @@ import {
   AsyncReducer,
   ObservableLike,
   ObservableOperator,
-  dispatchTo,
 } from "../observable";
 
 import { createSubject } from "./createSubject";
@@ -13,6 +12,7 @@ import { switchAll } from "./switchAll";
 import { takeFirst } from "./takeFirst";
 import { using } from "./using";
 import { zipWithLatestFrom } from "./zipWithLatestFrom";
+import { dispatchTo } from "./dispatcher";
 
 /**
  * Returns the `ObservableLike` that applies an asynchronous accumulator function

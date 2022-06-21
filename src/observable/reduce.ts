@@ -1,5 +1,5 @@
 import { fromValue } from "../container";
-import { Error, addTeardown, addDisposable } from "../disposable";
+import { Error, addDisposable, addTeardown } from "../disposable";
 import { Factory, Reducer, pipe } from "../functions";
 import { ObservableOperator } from "../observable";
 import { Option, isSome } from "../option";

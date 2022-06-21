@@ -8,6 +8,10 @@ class RunnableImpl<T> extends AbstractContainer implements RunnableLike<T> {
     super();
   }
 
+  get sinkType(): Sink<T> {
+    return undefined as any;
+  }
+
   run(sink: Sink<T>) {
     try {
       this._run(sink);

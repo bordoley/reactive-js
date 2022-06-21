@@ -1,12 +1,18 @@
 /// <reference types="./runnable.d.ts" />
 import { raise, pipe, strictEquality, compose, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
-import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables, addTeardown } from './disposable.mjs';
+import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 import { AbstractContainer, fromValue, empty } from './container.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, createTakeLastOperator, notifyTakeWhile } from './sink.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 class Sink extends AbstractDisposable {
+    get type() {
+        return this;
+    }
+    get T() {
+        return undefined;
+    }
     assertState() { }
     notify(_) { }
 }
@@ -38,6 +44,9 @@ class RunnableImpl extends AbstractContainer {
         super();
         this._run = _run;
     }
+    get sinkType() {
+        return undefined;
+    }
     run(sink) {
         try {
             this._run(sink);
@@ -54,6 +63,9 @@ class LiftedRunnable extends AbstractContainer {
         super();
         this.src = src;
         this.operators = operators;
+    }
+    get sinkType() {
+        return undefined;
     }
     run(sink) {
         const liftedSink = pipe(sink, ...this.operators);
@@ -123,7 +135,7 @@ class DecodeWithCharsetSink extends Sink {
     }
 }
 DecodeWithCharsetSink.prototype.notify = notifyDecodeWithCharset;
-function onDispose$1() {
+function onDispose() {
     const data = this.textDecoder.decode();
     if (data.length > 0) {
         pipe(data, fromValue(fromArrayT), sink(this.delegate));
@@ -135,7 +147,7 @@ const decodeWithCharset = (charset = "utf-8", options) => {
         const sink = new DecodeWithCharsetSink(delegate, new TextDecoder(charset, options));
         addDisposable(delegate, sink);
         addOnDisposedWithError(sink, delegate);
-        addOnDisposedWithoutErrorTeardown(sink, onDispose$1);
+        addOnDisposedWithoutErrorTeardown(sink, onDispose);
         return sink;
     };
     return lift(operator);
@@ -438,22 +450,7 @@ class TakeLastSink extends Sink {
         this.last = [];
     }
 }
-TakeLastSink.prototype.notify = notifyTakeLast;
-function onDispose() {
-    pipe(this.last, fromArray(), sink(this.delegate));
-    this.delegate.dispose();
-}
-const takeLast = (options = {}) => {
-    const { count = 1 } = options;
-    const operator = (delegate) => {
-        const sink = new TakeLastSink(delegate, count);
-        addDisposable(delegate, sink);
-        addOnDisposedWithError(sink, delegate);
-        addTeardown(sink, onDispose);
-        return sink;
-    };
-    return runnable => count > 0 ? pipe(runnable, lift(operator)) : empty(fromArrayT);
-};
+const takeLast = createTakeLastOperator({ ...fromArrayT, lift, sink }, TakeLastSink);
 
 class TakeWhileSink extends Sink {
     constructor(delegate, predicate, inclusive) {

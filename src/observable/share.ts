@@ -39,6 +39,10 @@ class SharedObservable<T>
     super();
   }
 
+  get sinkType(): Observer<T> {
+    return undefined as any;
+  }
+
   observe(observer: Observer<T>) {
     if (this.observerCount === 0) {
       this.multicast = pipe(this.source, this.publish);

@@ -1,11 +1,11 @@
 import { ConcatAll } from "../container";
 import {
   Error,
+  addDisposable,
   addDisposableDisposeParentOnChildError,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
   dispose,
-  addDisposable,
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";

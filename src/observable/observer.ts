@@ -21,6 +21,13 @@ export class Observer<T>
       scheduler instanceof Observer ? scheduler._scheduler : scheduler;
   }
 
+  get type(): this {
+    return this;
+  }
+  get T(): unknown {
+    return undefined;
+  }
+
   /** @ignore */
   get now() {
     return this._scheduler.now;

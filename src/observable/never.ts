@@ -8,6 +8,10 @@ class NeverObservable<T>
 {
   readonly isSynchronous = false;
 
+  get sinkType(): Observer<T> {
+    return undefined as any;
+  }
+
   observe(_: Observer<T>) {}
 }
 

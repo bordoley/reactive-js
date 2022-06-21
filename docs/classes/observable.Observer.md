@@ -34,6 +34,11 @@ Abstract base class for implementing the `ObserverLike` interface.
 - [inContinuation](observable.Observer.md#incontinuation)
 - [scheduler](observable.Observer.md#scheduler)
 
+### Accessors
+
+- [T](observable.Observer.md#t)
+- [type](observable.Observer.md#type)
+
 ### Methods
 
 - [assertState](observable.Observer.md#assertstate)
@@ -76,6 +81,34 @@ ___
 ### scheduler
 
 • `Readonly` **scheduler**: [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+
+## Accessors
+
+### T
+
+• `get` **T**(): `unknown`
+
+#### Returns
+
+`unknown`
+
+#### Implementation of
+
+[SinkLike](../interfaces/sink.SinkLike.md).[T](../interfaces/sink.SinkLike.md#t)
+
+___
+
+### type
+
+• `get` **type**(): `this`
+
+#### Returns
+
+`this`
+
+#### Implementation of
+
+[SinkLike](../interfaces/sink.SinkLike.md).[type](../interfaces/sink.SinkLike.md#type)
 
 ## Methods
 

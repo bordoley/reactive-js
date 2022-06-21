@@ -26,6 +26,11 @@
 
 - [constructor](runnable.Sink.md#constructor)
 
+### Accessors
+
+- [T](runnable.Sink.md#t)
+- [type](runnable.Sink.md#type)
+
 ### Methods
 
 - [assertState](runnable.Sink.md#assertstate)
@@ -46,6 +51,34 @@
 #### Inherited from
 
 [AbstractDisposable](disposable.AbstractDisposable.md).[constructor](disposable.AbstractDisposable.md#constructor)
+
+## Accessors
+
+### T
+
+• `get` **T**(): `unknown`
+
+#### Returns
+
+`unknown`
+
+#### Implementation of
+
+[SinkLike](../interfaces/sink.SinkLike.md).[T](../interfaces/sink.SinkLike.md#t)
+
+___
+
+### type
+
+• `get` **type**(): `this`
+
+#### Returns
+
+`this`
+
+#### Implementation of
+
+[SinkLike](../interfaces/sink.SinkLike.md).[type](../interfaces/sink.SinkLike.md#type)
 
 ## Methods
 

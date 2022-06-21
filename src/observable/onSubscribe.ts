@@ -24,6 +24,10 @@ class OnSubscribeObservable<T>
     this.isSynchronous = src.isSynchronous;
   }
 
+  get sinkType(): Observer<T> {
+    return undefined as any;
+  }
+
   observe(observer: Observer<T>) {
     try {
       pipe(this.src, sink(observer));

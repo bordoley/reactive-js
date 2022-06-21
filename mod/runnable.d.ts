@@ -1,9 +1,11 @@
 import { FromArray, FromArrayOptions, Keep, ContainerLike, Container, ContainerOf } from "./container.mjs";
 import { SideEffect1, Equality, Predicate, Function1, Updater, Factory, Reducer, Function2, Function3, Function4, Function5 } from "./functions.mjs";
 import { AbstractDisposable, DisposableLike } from "./disposable.mjs";
-import { SinkLike } from "./sink.mjs";
+import { SinkLike, SourceLike } from "./sink.mjs";
 import { Option } from "./option.mjs";
 declare class Sink<T> extends AbstractDisposable implements SinkLike<T> {
+    get type(): this;
+    get T(): unknown;
     assertState(this: Sink<T>): void;
     notify(_: T): void;
 }
@@ -104,9 +106,10 @@ declare function using<TResource1 extends DisposableLike, TResource2 extends Dis
     TResource5
 ]>, observableFactory: Function5<TResource1, TResource2, TResource3, TResource4, TResource5, RunnableLike<T>>): RunnableLike<T>;
 declare function using<TResource extends DisposableLike, T>(resourceFactory: Factory<TResource | readonly TResource[]>, observableFactory: (...resources: readonly TResource[]) => RunnableLike<T>): RunnableLike<T>;
-interface RunnableLike<T> extends ContainerLike {
+interface RunnableLike<T> extends SourceLike {
     readonly T: unknown;
     readonly type: RunnableLike<this["T"]>;
+    readonly sinkType: Sink<this["T"]>;
     run(this: RunnableLike<T>, sink: Sink<T>): void;
 }
 declare type RunnableOperator<TA, TB> = Function1<RunnableLike<TA>, RunnableLike<TB>>;

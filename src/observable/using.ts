@@ -33,6 +33,10 @@ class UsingObservable<TResource extends DisposableLike, T>
     super();
   }
 
+  get sinkType(): Observer<T> {
+    return undefined as any;
+  }
+
   observe(observer: Observer<T>) {
     const resources = this.resourceFactory(observer);
     const observableFactory = this.observableFactory;

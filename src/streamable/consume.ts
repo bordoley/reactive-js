@@ -25,8 +25,8 @@ import {
   AsyncEnumerableLike,
   ConsumeContinue,
   ConsumeDone,
-  stream,
 } from "../streamable";
+import { stream } from "./streamable";
 
 export const consumeContinue = <T>(data: T): ConsumeContinue<T> => ({
   type: "continue",

@@ -1,11 +1,13 @@
 import { Container, ContainerLike, ContainerOf } from "./container";
 import { Function1, identity } from "./functions";
 import { Sink } from "./runnable/sinks";
+import { SourceLike } from "./sink";
 export { Sink };
 
-export interface RunnableLike<T> extends ContainerLike {
+export interface RunnableLike<T> extends SourceLike {
   readonly T: unknown;
   readonly type: RunnableLike<this["T"]>;
+  readonly sinkType: Sink<this["T"]>;
 
   run(this: RunnableLike<T>, sink: Sink<T>): void;
 }

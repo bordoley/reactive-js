@@ -1,5 +1,5 @@
 import { AbstractContainer, Zip } from "../container";
-import { Error, addTeardown, dispose, addDisposable } from "../disposable";
+import { Error, addDisposable, addTeardown, dispose } from "../disposable";
 import { EnumeratorLike, current, zipEnumerators } from "../enumerable";
 import { defer, pipe, returns } from "../functions";
 import { ObservableLike } from "../observable";
@@ -104,6 +104,10 @@ class ZipObservable
       observables,
       everySatisfy(obs => obs.isSynchronous),
     );
+  }
+
+  get sinkType(): Observer<readonly unknown[]> {
+    return undefined as any;
   }
 
   observe(observer: Observer<readonly unknown[]>) {

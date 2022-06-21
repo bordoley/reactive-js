@@ -1,7 +1,8 @@
+import { ContainerLike, ContainerOf, FromArray, FromArrayOptions } from "./container.mjs";
 import { DisposableLike } from "./disposable.mjs";
-import { Equality, Predicate, Function1, SideEffect1, Reducer } from "./functions.mjs";
+import { SideEffect1, Function1, Equality, Predicate, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
-interface SinkLike<T> extends DisposableLike {
+interface SinkLike<T> extends DisposableLike, ContainerLike {
     assertState(this: SinkLike<T>): void;
     /**
      * Notifies the the observer of the next notification produced by the observable source.
@@ -12,6 +13,26 @@ interface SinkLike<T> extends DisposableLike {
      * @param next The next notification value.
      */
     notify(this: SinkLike<T>, next: T): void;
+}
+interface SourceLike extends ContainerLike {
+    readonly sinkType: DisposableLike & ContainerLike;
+}
+declare type SinkOf<C extends SourceLike, T> = C extends {
+    readonly sinkType: unknown;
+} ? (C & {
+    readonly T: T;
+})["sinkType"] : {
+    readonly _C: C;
+    readonly _T: () => T;
+};
+interface SourceContainer<C extends SourceLike> {
+    readonly type?: C;
+}
+interface Sink<C extends SourceLike> extends SourceContainer<C> {
+    sink<T>(sink: C["sinkType"]): SideEffect1<ContainerOf<C, T>>;
+}
+interface Lift<C extends SourceLike> extends SourceContainer<C> {
+    lift<TA, TB>(operator: Function1<SinkOf<C, TB>, SinkOf<C, TA>>): Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 }
 declare function notifyDecodeWithCharset(this: SinkLike<ArrayBuffer> & {
     readonly delegate: SinkLike<string>;
@@ -62,13 +83,14 @@ declare function notifyTakeFirst<T>(this: SinkLike<T> & {
     count: number;
     readonly maxCount: number;
 }, next: T): void;
-declare function notifyTakeLast<T>(this: SinkLike<T> & {
+declare const createTakeLastOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Sink<C> & Lift<C>, constructor: new <T>(delegate: SinkOf<C, T>, count: number) => SinkOf<C, T> & {
     readonly last: T[];
-    readonly maxCount: number;
-}, next: T): void;
+}) => <T_1>(options?: {
+    readonly count?: number;
+}) => Function1<ContainerOf<C, T_1>, ContainerOf<C, T_1>>;
 declare function notifyTakeWhile<T>(this: SinkLike<T> & {
     readonly delegate: SinkLike<T>;
     readonly predicate: Predicate<T>;
     readonly inclusive: boolean;
 }, next: T): void;
-export { SinkLike, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile };
+export { Lift, Sink, SinkLike, SinkOf, SourceContainer, SourceLike, createTakeLastOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeWhile };
