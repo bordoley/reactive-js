@@ -1,12 +1,12 @@
 /// <reference types="./observable.d.ts" />
 import { AbstractContainer, empty, fromValue, concatMap, throws } from './container.mjs';
 import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown, bindDisposables } from './disposable.mjs';
-import { pipe, raise, ignore, arrayEquality, defer as defer$1, compose, strictEquality, returns } from './functions.mjs';
+import { pipe, raise, ignore, arrayEquality, defer as defer$1, compose, returns } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { notifyDecodeWithCharset, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 
@@ -924,15 +924,6 @@ const catchError = (onError) => {
     return lift(operator);
 };
 
-class DistinctUntilChangedObserver extends Observer {
-    constructor(delegate, equality) {
-        super(delegate);
-        this.delegate = delegate;
-        this.equality = equality;
-        this.hasValue = false;
-    }
-}
-DistinctUntilChangedObserver.prototype.notify = notifyDistinctUntilChanged;
 /**
  * Returns an `ObservableLike` that emits all items emitted by the source that
  * are distinct by comparison from the previous item.
@@ -940,16 +931,15 @@ DistinctUntilChangedObserver.prototype.notify = notifyDistinctUntilChanged;
  * @param equals Optional equality function that is used to compare
  * if an item is distinct from the previous item.
  */
-const distinctUntilChanged = (options = {}) => {
-    const { equality = strictEquality } = options;
-    const operator = (delegate) => {
-        const observer = new DistinctUntilChangedObserver(delegate, equality);
-        bindDisposables(observer, delegate);
-        return observer;
-    };
-    operator.isSynchronous = true;
-    return lift(operator);
-};
+const distinctUntilChanged = createDistinctUntilChanged(liftT, class DistinctUntilChangedObserver extends Observer {
+    constructor(delegate, equality) {
+        super(delegate);
+        this.delegate = delegate;
+        this.equality = equality;
+        this.prev = none;
+        this.hasValue = false;
+    }
+});
 
 const keep = createKeepOperator(liftT, class KeepObserver extends Observer {
     constructor(delegate, predicate) {

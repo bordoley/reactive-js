@@ -35,12 +35,14 @@ declare function notifyDecodeWithCharset(this: SinkLike<ArrayBuffer> & {
     readonly delegate: SinkLike<string>;
     readonly textDecoder: TextDecoder;
 }, next: ArrayBuffer): void;
-declare function notifyDistinctUntilChanged<T>(this: SinkLike<T> & {
-    readonly delegate: SinkLike<T>;
+declare const createDistinctUntilChanged: <C extends SourceLike>(m: Lift<C>, DistinctUntilChangedSink: new <T>(delegate: SinkOf<C, T>, equality: Equality<T>) => SinkOf<C, T> & {
+    readonly delegate: SinkOf<C, T>;
     readonly equality: Equality<T>;
     prev: Option<T>;
     hasValue: boolean;
-}, next: T): void;
+}) => <T_1>(options?: {
+    readonly equality?: Equality<T_1> | undefined;
+} | undefined) => ContainerOperator<C, T_1, T_1>;
 declare const createKeepOperator: <C extends SourceLike>(m: Lift<C>, KeepSink: new <T>(delegate: SinkOf<C, T>, predicate: Predicate<T>) => SinkOf<C, T> & {
     readonly delegate: SinkOf<C, T>;
     readonly predicate: Predicate<T>;
@@ -103,4 +105,4 @@ declare const createTakeWhileOperator: <C extends SourceLike>(m: Lift<C>, TakeWh
 }) => <T_1>(predicate: Predicate<T_1>, options?: {
     readonly inclusive?: boolean;
 }) => ContainerOperator<C, T_1, T_1>;
-export { Lift, Sink, SinkLike, SinkOf, SourceLike, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged };
+export { Lift, Sink, SinkLike, SinkOf, SourceLike, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset };

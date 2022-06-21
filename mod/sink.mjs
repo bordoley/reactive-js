@@ -1,7 +1,7 @@
 /// <reference types="./sink.d.ts" />
 import { fromValue, empty } from './container.mjs';
 import { bindDisposables, addDisposable, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, dispose, addTeardown } from './disposable.mjs';
-import { pipe } from './functions.mjs';
+import { strictEquality, pipe } from './functions.mjs';
 import { none } from './option.mjs';
 
 function notifyDecodeWithCharset(next) {
@@ -10,15 +10,27 @@ function notifyDecodeWithCharset(next) {
         this.delegate.notify(data);
     }
 }
-function notifyDistinctUntilChanged(next) {
-    this.assertState();
-    const shouldEmit = !this.hasValue || !this.equality(this.prev, next);
-    if (shouldEmit) {
-        this.prev = next;
-        this.hasValue = true;
-        this.delegate.notify(next);
-    }
-}
+const createDistinctUntilChanged = (m, DistinctUntilChangedSink) => {
+    DistinctUntilChangedSink.prototype.notify =
+        function notifyDistinctUntilChanged(next) {
+            this.assertState();
+            const shouldEmit = !this.hasValue || !this.equality(this.prev, next);
+            if (shouldEmit) {
+                this.prev = next;
+                this.hasValue = true;
+                this.delegate.notify(next);
+            }
+        };
+    return (options = {}) => {
+        const { equality = strictEquality } = options;
+        const operator = (delegate) => {
+            const sink = new DistinctUntilChangedSink(delegate, equality);
+            bindDisposables(sink, delegate);
+            return sink;
+        };
+        return m.lift(operator);
+    };
+};
 const createKeepOperator = (m, KeepSink) => {
     KeepSink.prototype.notify = function notifyKeep(next) {
         this.assertState();
@@ -197,4 +209,4 @@ const createTakeWhileOperator = (m, TakeWhileSink) => {
     };
 };
 
-export { createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged };
+export { createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset };

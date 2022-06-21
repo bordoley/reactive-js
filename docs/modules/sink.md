@@ -17,6 +17,7 @@
 
 ### Functions
 
+- [createDistinctUntilChanged](sink.md#createdistinctuntilchanged)
 - [createKeepOperator](sink.md#createkeepoperator)
 - [createMapOperator](sink.md#createmapoperator)
 - [createOnNotifyOperator](sink.md#createonnotifyoperator)
@@ -28,7 +29,6 @@
 - [createTakeLastOperator](sink.md#createtakelastoperator)
 - [createTakeWhileOperator](sink.md#createtakewhileoperator)
 - [notifyDecodeWithCharset](sink.md#notifydecodewithcharset)
-- [notifyDistinctUntilChanged](sink.md#notifydistinctuntilchanged)
 
 ## Type Aliases
 
@@ -44,6 +44,48 @@
 | `T` | `T` |
 
 ## Functions
+
+### createDistinctUntilChanged
+
+▸ **createDistinctUntilChanged**<`C`\>(`m`, `DistinctUntilChangedSink`): <T_1\>(`options?`: { `equality?`: [`Equality`](functions.md#equality)<`T_1`\>  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
+| `DistinctUntilChangedSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `equality`: [`Equality`](functions.md#equality)<`T`\>) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\> ; `equality`: [`Equality`](functions.md#equality)<`T`\> ; `hasValue`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
+
+#### Returns
+
+`fn`
+
+▸ <`T_1`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T_1` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T_1`\> |
+
+##### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+___
 
 ### createKeepOperator
 
@@ -469,29 +511,6 @@ ___
 | :------ | :------ |
 | `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`ArrayBuffer`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`string`\> ; `textDecoder`: `TextDecoder`  } |
 | `next` | `ArrayBuffer` |
-
-#### Returns
-
-`void`
-
-___
-
-### notifyDistinctUntilChanged
-
-▸ **notifyDistinctUntilChanged**<`T`\>(`this`, `next`): `void`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `equality`: [`Equality`](functions.md#equality)<`T`\> ; `hasValue`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
-| `next` | `T` |
 
 #### Returns
 

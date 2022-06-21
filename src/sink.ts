@@ -24,6 +24,7 @@ import {
   SideEffect1,
   pipe,
   Factory,
+  strictEquality,
 } from "./functions";
 import { Option, none } from "./option";
 
@@ -79,25 +80,51 @@ export function notifyDecodeWithCharset(
   }
 }
 
-export function notifyDistinctUntilChanged<T>(
-  this: SinkLike<T> & {
-    readonly delegate: SinkLike<T>;
+export const createDistinctUntilChanged = <C extends SourceLike>(
+  m: Lift<C>,
+  DistinctUntilChangedSink: new <T>(
+    delegate: SinkOf<C, T>,
+    equality: Equality<T>,
+  ) => SinkOf<C, T> & {
+    readonly delegate: SinkOf<C, T>;
     readonly equality: Equality<T>;
     prev: Option<T>;
     hasValue: boolean;
   },
-  next: T,
-) {
-  this.assertState();
+): (<T>(options?: {
+  readonly equality?: Equality<T>;
+}) => ContainerOperator<C, T, T>) => {
+  DistinctUntilChangedSink.prototype.notify =
+    function notifyDistinctUntilChanged<T>(
+      this: SinkOf<C, T> & {
+        readonly delegate: SinkOf<C, T>;
+        readonly equality: Equality<T>;
+        prev: Option<T>;
+        hasValue: boolean;
+      },
+      next: T,
+    ) {
+      this.assertState();
 
-  const shouldEmit = !this.hasValue || !this.equality(this.prev as T, next);
+      const shouldEmit = !this.hasValue || !this.equality(this.prev as T, next);
 
-  if (shouldEmit) {
-    this.prev = next;
-    this.hasValue = true;
-    this.delegate.notify(next);
-  }
-}
+      if (shouldEmit) {
+        this.prev = next;
+        this.hasValue = true;
+        this.delegate.notify(next);
+      }
+    };
+
+  return <T>(options: { readonly equality?: Equality<T> } = {}) => {
+    const { equality = strictEquality } = options;
+    const operator = (delegate: SinkOf<C, T>): SinkOf<C, T> => {
+      const sink = new DistinctUntilChangedSink(delegate, equality);
+      bindDisposables(sink, delegate);
+      return sink;
+    };
+    return m.lift(operator);
+  };
+};
 
 export const createKeepOperator = <C extends SourceLike>(
   m: Lift<C>,

@@ -17,7 +17,7 @@ declare const concatAll: <T>() => RunnableOperator<RunnableLike<T>, T>;
 declare const createRunnable: <T>(run: SideEffect1<Sink<T>>) => RunnableLike<T>;
 declare const decodeWithCharset: (charset?: string, options?: TextDecoderOptions) => RunnableOperator<ArrayBuffer, string>;
 declare const distinctUntilChanged: <T>(options?: {
-    readonly equality?: Equality<T> | undefined;
+    readonly equality?: Equality<T>;
 }) => RunnableOperator<T, T>;
 declare const everySatisfy: <T>(predicate: Predicate<T>) => Predicate<RunnableLike<T>>;
 declare const noneSatisfy: <T>(predicate: Predicate<T>) => Predicate<RunnableLike<T>>;
