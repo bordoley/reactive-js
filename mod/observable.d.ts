@@ -440,11 +440,6 @@ declare const subscribeOn: <T>(scheduler: SchedulerLike) => ObservableOperator<T
  */
 declare const switchAll: <T>() => ObservableOperator<ObservableLike<T>, T>;
 declare const switchAllT: ConcatAll<ObservableLike<unknown>, Record<string, never>>;
-/**
- * Returns an `ObservableLike` that only emits the first `count` values emitted by the source.
- *
- * @param count The maximum number of values to emit.
- */
 declare const takeFirst: <T>(options?: {
     readonly count?: number;
 }) => ObservableOperator<T, T>;

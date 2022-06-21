@@ -56,6 +56,10 @@
 
   ↳ [`ToRunnable`](runnable.ToRunnable.md)
 
+  ↳ [`Lift`](sink.Lift.md)
+
+  ↳ [`Sink`](sink.Sink.md)
+
 ## Table of contents
 
 ### Properties

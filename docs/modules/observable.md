@@ -2095,8 +2095,6 @@ ___
 
 ▸ **takeFirst**<`T`\>(`options?`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
 
-Returns an `ObservableLike` that only emits the first `count` values emitted by the source.
-
 #### Type parameters
 
 | Name |

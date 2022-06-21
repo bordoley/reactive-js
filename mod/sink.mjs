@@ -1,6 +1,6 @@
 /// <reference types="./sink.d.ts" />
 import { empty } from './container.mjs';
-import { dispose, addDisposable, addOnDisposedWithError, addTeardown } from './disposable.mjs';
+import { bindDisposables, dispose, addDisposable, addOnDisposedWithError, addTeardown } from './disposable.mjs';
 import { pipe } from './functions.mjs';
 import { none } from './option.mjs';
 
@@ -52,20 +52,42 @@ function notifyScan(next) {
     this.acc = nextAcc;
     this.delegate.notify(nextAcc);
 }
-function notifySkipFirst(next) {
-    this.count++;
-    if (this.count > this.skipCount) {
+const createSkipFirstOperator = (m, SkipFirstSink) => {
+    SkipFirstSink.prototype.notify = function notifySkipFirst(next) {
+        this.count++;
+        if (this.count > this.skipCount) {
+            this.delegate.notify(next);
+        }
+    };
+    return (options = {}) => {
+        const { count = 1 } = options;
+        const operator = (delegate) => {
+            const sink = new SkipFirstSink(delegate, count);
+            bindDisposables(sink, delegate);
+            return sink;
+        };
+        return runnable => count > 0 ? pipe(runnable, m.lift(operator)) : runnable;
+    };
+};
+const createTakeFirstOperator = (m, TakeFirstSink) => {
+    TakeFirstSink.prototype.notify = function notifyTakeFirst(next) {
+        this.assertState();
+        this.count++;
         this.delegate.notify(next);
-    }
-}
-function notifyTakeFirst(next) {
-    this.assertState();
-    this.count++;
-    this.delegate.notify(next);
-    if (this.count >= this.maxCount) {
-        pipe(this, dispose());
-    }
-}
+        if (this.count >= this.maxCount) {
+            pipe(this, dispose());
+        }
+    };
+    return (options = {}) => {
+        const { count = 1 } = options;
+        const operator = (delegate) => {
+            const sink = new TakeFirstSink(delegate, count);
+            bindDisposables(sink, delegate);
+            return sink;
+        };
+        return source => (count > 0 ? pipe(source, m.lift(operator)) : empty(m));
+    };
+};
 const createTakeLastOperator = (m, TakeLastSink) => {
     TakeLastSink.prototype.notify = function notifyTakeLast(next) {
         this.assertState();
@@ -86,7 +108,7 @@ const createTakeLastOperator = (m, TakeLastSink) => {
             });
             return sink;
         };
-        return runnable => count > 0 ? pipe(runnable, m.lift(operator)) : empty(m);
+        return source => (count > 0 ? pipe(source, m.lift(operator)) : empty(m));
     };
 };
 const createTakeWhileOperator = (m, TakeWhileSink) => {
@@ -111,4 +133,4 @@ const createTakeWhileOperator = (m, TakeWhileSink) => {
     };
 };
 
-export { createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst };
+export { createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan };

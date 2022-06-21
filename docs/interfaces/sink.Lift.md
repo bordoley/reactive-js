@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`SourceContainer`](sink.SourceContainer.md)<`C`\>
+- [`Container`](container.Container.md)<`C`\>
 
   ↳ **`Lift`**
 
@@ -34,7 +34,7 @@
 
 #### Inherited from
 
-[SourceContainer](sink.SourceContainer.md).[type](sink.SourceContainer.md#type)
+[Container](container.Container.md).[type](container.Container.md#type)
 
 ## Methods
 
