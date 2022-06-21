@@ -1,4 +1,5 @@
-import { ObservableOperator } from "../observable";
+import { TakeFirst } from "../container";
+import { ObservableLike, ObservableOperator } from "../observable";
 import { createTakeFirstOperator } from "../source";
 import { fromArrayT } from "./fromArray";
 import { liftT } from "./lift";
@@ -16,3 +17,7 @@ export const takeFirst: <T>(options?: {
     }
   },
 );
+
+export const takeFirstT: TakeFirst<ObservableLike<unknown>> = {
+  takeFirst,
+};

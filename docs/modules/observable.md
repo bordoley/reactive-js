@@ -27,13 +27,22 @@
 
 - [concatAllT](observable.md#concatallt)
 - [concatT](observable.md#concatt)
+- [decodeWithCharsetT](observable.md#decodewithcharsett)
+- [distinctUntilChangedT](observable.md#distinctuntilchangedt)
 - [exhaustT](observable.md#exhaustt)
 - [fromArrayT](observable.md#fromarrayt)
 - [fromIteratorT](observable.md#fromiteratort)
 - [keepT](observable.md#keept)
 - [mapT](observable.md#mapt)
 - [mergeAllT](observable.md#mergeallt)
+- [pairwiseT](observable.md#pairwiset)
+- [reduceT](observable.md#reducet)
+- [scanT](observable.md#scant)
+- [skipFirstT](observable.md#skipfirstt)
 - [switchAllT](observable.md#switchallt)
+- [takeFirstT](observable.md#takefirstt)
+- [takeLastT](observable.md#takelastt)
+- [takeWhileT](observable.md#takewhilet)
 - [timeoutError](observable.md#timeouterror)
 - [type](observable.md#type)
 - [zipT](observable.md#zipt)
@@ -164,6 +173,18 @@ ___
 
 ___
 
+### decodeWithCharsetT
+
+• `Const` **decodeWithCharsetT**: [`DecodeWithCharset`](../interfaces/container.DecodeWithCharset.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### distinctUntilChangedT
+
+• `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](../interfaces/container.DistinctUntilChanged.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
 ### exhaustT
 
 • `Const` **exhaustT**: [`ConcatAll`](../interfaces/container.ConcatAll.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `Record`<`string`, `never`\>\>
@@ -200,9 +221,51 @@ ___
 
 ___
 
+### pairwiseT
+
+• `Const` **pairwiseT**: [`Pairwise`](../interfaces/container.Pairwise.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### reduceT
+
+• `Const` **reduceT**: [`Reduce`](../interfaces/container.Reduce.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### scanT
+
+• `Const` **scanT**: [`Scan`](../interfaces/container.Scan.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### skipFirstT
+
+• `Const` **skipFirstT**: [`SkipFirst`](../interfaces/container.SkipFirst.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
 ### switchAllT
 
 • `Const` **switchAllT**: [`ConcatAll`](../interfaces/container.ConcatAll.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `Record`<`string`, `never`\>\>
+
+___
+
+### takeFirstT
+
+• `Const` **takeFirstT**: [`TakeFirst`](../interfaces/container.TakeFirst.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### takeLastT
+
+• `Const` **takeLastT**: [`TakeLast`](../interfaces/container.TakeLast.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### takeWhileT
+
+• `Const` **takeWhileT**: [`TakeWhile`](../interfaces/container.TakeWhile.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
