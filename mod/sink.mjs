@@ -46,12 +46,22 @@ function notifyReduce(next) {
     this.assertState();
     this.acc = this.reducer(this.acc, next);
 }
-function notifyScan(next) {
-    this.assertState();
-    const nextAcc = this.reducer(this.acc, next);
-    this.acc = nextAcc;
-    this.delegate.notify(nextAcc);
-}
+const createScanOperator = (m, ScanSink) => {
+    ScanSink.prototype.notify = function notifyScan(next) {
+        this.assertState();
+        const nextAcc = this.reducer(this.acc, next);
+        this.acc = nextAcc;
+        this.delegate.notify(nextAcc);
+    };
+    return (reducer, initialValue) => {
+        const operator = (delegate) => {
+            const sink = new ScanSink(delegate, reducer, initialValue());
+            bindDisposables(sink, delegate);
+            return sink;
+        };
+        return m.lift(operator);
+    };
+};
 const createSkipFirstOperator = (m, SkipFirstSink) => {
     SkipFirstSink.prototype.notify = function notifySkipFirst(next) {
         this.count++;
@@ -133,4 +143,4 @@ const createTakeWhileOperator = (m, TakeWhileSink) => {
     };
 };
 
-export { createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan };
+export { createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce };

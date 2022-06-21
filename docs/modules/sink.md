@@ -17,6 +17,7 @@
 
 ### Functions
 
+- [createScanOperator](sink.md#createscanoperator)
 - [createSkipFirstOperator](sink.md#createskipfirstoperator)
 - [createTakeFirstOperator](sink.md#createtakefirstoperator)
 - [createTakeLastOperator](sink.md#createtakelastoperator)
@@ -28,7 +29,6 @@
 - [notifyOnNotify](sink.md#notifyonnotify)
 - [notifyPairwise](sink.md#notifypairwise)
 - [notifyReduce](sink.md#notifyreduce)
-- [notifyScan](sink.md#notifyscan)
 
 ## Type Aliases
 
@@ -44,6 +44,49 @@
 | `T` | `T` |
 
 ## Functions
+
+### createScanOperator
+
+▸ **createScanOperator**<`C`\>(`m`, `ScanSink`): <T_1, TAcc_1\>(`reducer`: [`Reducer`](functions.md#reducer)<`T_1`, `TAcc_1`\>, `initialValue`: [`Factory`](functions.md#factory)<`TAcc_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `TAcc_1`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
+| `ScanSink` | <T, TAcc\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `TAcc`\>, `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `acc`: `TAcc`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `acc`: `TAcc` ; `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`TAcc`\> ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
+
+#### Returns
+
+`fn`
+
+▸ <`T_1`, `TAcc_1`\>(`reducer`, `initialValue`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `TAcc_1`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T_1` |
+| `TAcc_1` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](functions.md#reducer)<`T_1`, `TAcc_1`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc_1`\> |
+
+##### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `TAcc_1`\>
+
+___
 
 ### createSkipFirstOperator
 
@@ -363,30 +406,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `acc`: `TAcc` ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
-| `next` | `T` |
-
-#### Returns
-
-`void`
-
-___
-
-### notifyScan
-
-▸ **notifyScan**<`T`, `TAcc`\>(`this`, `next`): `void`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `TAcc` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `acc`: `TAcc` ; `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`TAcc`\> ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
 | `next` | `T` |
 
 #### Returns

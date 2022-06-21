@@ -1857,9 +1857,6 @@ ___
 
 ▸ **scan**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `TAcc`\>
 
-Returns an `ObservableLike` that applies an accumulator function over the source,
-and emits each intermediate result.
-
 #### Type parameters
 
 | Name |
@@ -1869,10 +1866,10 @@ and emits each intermediate result.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> | - |
-| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> | The initial accumulation value. |
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns
 

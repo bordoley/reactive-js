@@ -3,7 +3,7 @@ import { raise, pipe, strictEquality, compose, negate, alwaysTrue, isEqualTo, id
 import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 import { AbstractContainer, fromValue } from './container.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 class Sink extends AbstractDisposable {
@@ -370,23 +370,14 @@ function repeat(predicate) {
     });
 }
 
-class ScanSink extends Sink {
+const scan = createScanOperator(liftT, class ScanSink extends Sink {
     constructor(delegate, reducer, acc) {
         super();
         this.delegate = delegate;
         this.reducer = reducer;
         this.acc = acc;
     }
-}
-ScanSink.prototype.notify = notifyScan;
-const scan = (reducer, initialValue) => {
-    const operator = (delegate) => {
-        const sink = new ScanSink(delegate, reducer, initialValue());
-        bindDisposables(sink, delegate);
-        return sink;
-    };
-    return lift(operator);
-};
+});
 
 const skipFirst = createSkipFirstOperator(liftT, class SkipFirstSink extends Sink {
     constructor(delegate, skipCount) {

@@ -392,13 +392,6 @@ declare function retry<T>(): ObservableOperator<T, T>;
  * @param predicate
  */
 declare function retry<T>(predicate: Function2<number, unknown, boolean>): ObservableOperator<T, T>;
-/**
- * Returns an `ObservableLike` that applies an accumulator function over the source,
- * and emits each intermediate result.
- *
- * @param scanner The accumulator function called on each source value.
- * @param initialValue The initial accumulation value.
- */
 declare const scan: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
 /**
  * Returns the `ObservableLike` that applies an asynchronous accumulator function
