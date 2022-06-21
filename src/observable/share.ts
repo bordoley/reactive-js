@@ -39,7 +39,7 @@ class SharedObservable<T>
     super();
   }
 
-  observe(observer: Observer<T>) {
+  sink(observer: Observer<T>) {
     if (this.observerCount === 0) {
       this.multicast = pipe(this.source, this.publish);
     }

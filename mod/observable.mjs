@@ -5,7 +5,7 @@ import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from '
 import { AbstractSource, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './source.mjs';
 import { __DEV__ } from './env.mjs';
 import { none, isNone, isSome } from './option.mjs';
-import { empty, fromValue, concatMap, throws } from './container.mjs';
+import { empty, fromValue, concatMap, throws, AbstractContainer } from './container.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
@@ -17,7 +17,7 @@ class ScheduledObservable extends AbstractSource {
         this.isSynchronous = isSynchronous;
         this.delay = delay;
     }
-    observe(observer) {
+    sink(observer) {
         const callback = this.f(observer);
         const schedulerSubscription = pipe(observer, schedule(callback, this));
         addOnDisposedWithError(schedulerSubscription, observer);
@@ -128,7 +128,7 @@ class DelegatingObserver extends Observer {
 }
 // FIXME: Need to bind the disposables.
 const createDelegatingObserver = (delegate) => new DelegatingObserver(delegate);
-const sink = (observer) => observable => observable.observe(observer);
+const sink = (observer) => observable => observable.sink(observer);
 const sinkT = {
     sink,
 };
@@ -140,7 +140,7 @@ class LiftedObservable extends AbstractSource {
         this.operators = operators;
         this.isSynchronous = isSynchronous;
     }
-    observe(observer) {
+    sink(observer) {
         const liftedSubscrber = pipe(observer, ...this.operators);
         pipe(this.source, sink(liftedSubscrber));
     }
@@ -473,7 +473,7 @@ class ConcatObservable extends AbstractSource {
         this.observables = observables;
         this.isSynchronous = pipe(observables, everySatisfy(obs => obs.isSynchronous));
     }
-    observe(observer) {
+    sink(observer) {
         const observables = this.observables;
         if (observables.length > 0) {
             const concatObserver = createConcatObserver(observer, observables, 1);
@@ -591,7 +591,7 @@ class SubjectImpl extends AbstractDisposable {
             }
         }
     }
-    observe(observer) {
+    sink(observer) {
         // The idea here is that an onSubscribe function may
         // call next from unscheduled sources such as event handlers.
         // So we marshall those events back to the scheduler.
@@ -729,7 +729,7 @@ class MergeObservable extends AbstractSource {
         this.observables = observables;
         this.isSynchronous = false;
     }
-    observe(observer) {
+    sink(observer) {
         const observables = this.observables;
         const count = observables.length;
         const ctx = { completedCount: 0 };
@@ -749,7 +749,7 @@ class NeverObservable extends AbstractSource {
         super(...arguments);
         this.isSynchronous = false;
     }
-    observe(_) { }
+    sink(_) { }
 }
 const neverInstance = new NeverObservable();
 /**
@@ -764,7 +764,7 @@ class UsingObservable extends AbstractSource {
         this.observableFactory = observableFactory;
         this.isSynchronous = false;
     }
-    observe(observer) {
+    sink(observer) {
         const resources = this.resourceFactory(observer);
         const observableFactory = this.observableFactory;
         const resourcesArray = Array.isArray(resources) ? resources : [resources];
@@ -1052,7 +1052,7 @@ class OnSubscribeObservable extends AbstractSource {
         this.f = f;
         this.isSynchronous = src.isSynchronous;
     }
-    observe(observer) {
+    sink(observer) {
         try {
             pipe(this.src, sink(observer));
             const disposable = this.f() || none;
@@ -1231,7 +1231,7 @@ class SharedObservable extends AbstractSource {
         };
         this.isSynchronous = false;
     }
-    observe(observer) {
+    sink(observer) {
         if (this.observerCount === 0) {
             this.multicast = pipe(this.source, this.publish);
         }
@@ -1522,7 +1522,7 @@ const enumerate = (obs) => {
     pipe(obs, sink(observer));
     return observer;
 };
-class ObservableEnumerable extends AbstractSource {
+class ObservableEnumerable extends AbstractContainer {
     constructor(obs) {
         super();
         this.obs = obs;
@@ -1608,7 +1608,7 @@ class ZipObservable extends AbstractSource {
         this.observables = observables;
         this.isSynchronous = pipe(observables, everySatisfy(obs => obs.isSynchronous));
     }
-    observe(observer) {
+    sink(observer) {
         const observables = this.observables;
         const count = observables.length;
         if (this.isSynchronous) {

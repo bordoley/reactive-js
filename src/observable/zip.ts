@@ -107,7 +107,7 @@ class ZipObservable
     );
   }
 
-  observe(observer: Observer<readonly unknown[]>) {
+  sink(observer: Observer<readonly unknown[]>) {
     const observables = this.observables;
     const count = observables.length;
 

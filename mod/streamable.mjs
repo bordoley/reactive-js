@@ -29,7 +29,7 @@ class StreamImpl extends AbstractDisposable {
     dispatch(req) {
         this.dispatcher.dispatch(req);
     }
-    observe(observer) {
+    sink(observer) {
         pipe(this.observable, sink$1(observer));
     }
 }
@@ -205,8 +205,8 @@ class FlowableSinkAccumulatorImpl extends AbstractDisposable {
     get observerCount() {
         return this.subject.observerCount;
     }
-    observe(observer) {
-        this.subject.observe(observer);
+    sink(observer) {
+        this.subject.sink(observer);
     }
     stream(scheduler, options) {
         const result = pipe(this.streamable, stream(scheduler, options));

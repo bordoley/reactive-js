@@ -47,11 +47,7 @@ export interface ObservableLike<T> extends SourceLike {
 
   readonly isSynchronous: boolean;
 
-  /**
-   * Subscribes the `ObserverLike` instance to the observable.
-   * @param observer The observer which should be notified by the observable source.
-   */
-  observe(this: ObservableLike<T>, observer: Observer<T>): void;
+  sink(this: ObservableLike<T>, sink: Observer<T>): void;
 }
 
 export const type: ObservableLike<unknown> = undefined as any;

@@ -8,7 +8,7 @@ class NeverObservable<T>
 {
   readonly isSynchronous = false;
 
-  observe(_: Observer<T>) {}
+  sink(_: Observer<T>) {}
 }
 
 const neverInstance: ObservableLike<any> = new NeverObservable();

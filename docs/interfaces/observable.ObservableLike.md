@@ -31,7 +31,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 ### Methods
 
-- [observe](observable.ObservableLike.md#observe)
+- [sink](observable.ObservableLike.md#sink)
 
 ## Properties
 
@@ -71,19 +71,21 @@ ___
 
 ## Methods
 
-### observe
+### sink
 
-▸ **observe**(`this`, `observer`): `void`
-
-Subscribes the `ObserverLike` instance to the observable.
+▸ **sink**(`this`, `sink`): `void`
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `this` | [`ObservableLike`](observable.ObservableLike.md)<`T`\> | - |
-| `observer` | [`Observer`](../classes/observable.Observer.md)<`T`\> | The observer which should be notified by the observable source. |
+| Name | Type |
+| :------ | :------ |
+| `this` | [`ObservableLike`](observable.ObservableLike.md)<`T`\> |
+| `sink` | [`Observer`](../classes/observable.Observer.md)<`T`\> |
 
 #### Returns
 
 `void`
+
+#### Overrides
+
+[SourceLike](source.SourceLike.md).[sink](source.SourceLike.md#sink)

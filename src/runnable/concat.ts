@@ -25,7 +25,7 @@ export function concat<T>(
       const concatSink = createDelegatingSink(sink);
       addDisposableDisposeParentOnChildError(sink, concatSink);
 
-      runnables[i].run(concatSink);
+      runnables[i].sink(concatSink);
       concatSink.dispose();
     }
   });
@@ -40,7 +40,7 @@ class FlattenSink<T> extends Sink<RunnableLike<T>> {
     const concatSink = createDelegatingSink(this.delegate);
     addDisposableDisposeParentOnChildError(this.delegate, concatSink);
 
-    next.run(concatSink);
+    next.sink(concatSink);
     concatSink.dispose();
   }
 }

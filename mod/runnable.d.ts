@@ -79,7 +79,7 @@ interface RunnableLike<T> extends SourceLike {
     readonly T: unknown;
     readonly type: RunnableLike<this["T"]>;
     readonly sinkType: Sink<this["T"]>;
-    run(this: RunnableLike<T>, sink: Sink<T>): void;
+    sink(this: RunnableLike<T>, sink: Sink<T>): void;
 }
 declare type RunnableOperator<TA, TB> = Function1<RunnableLike<TA>, RunnableLike<TB>>;
 interface ToRunnable<C extends ContainerLike> extends Container<C> {

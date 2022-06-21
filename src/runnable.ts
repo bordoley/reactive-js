@@ -48,7 +48,7 @@ export interface RunnableLike<T> extends SourceLike {
   readonly type: RunnableLike<this["T"]>;
   readonly sinkType: Sink<this["T"]>;
 
-  run(this: RunnableLike<T>, sink: Sink<T>): void;
+  sink(this: RunnableLike<T>, sink: Sink<T>): void;
 }
 
 export type RunnableOperator<TA, TB> = Function1<

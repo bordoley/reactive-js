@@ -24,7 +24,7 @@ class LiftedObservable<TIn, TOut>
     super();
   }
 
-  observe(observer: Observer<TOut>) {
+  sink(observer: Observer<TOut>) {
     const liftedSubscrber = pipe(observer, ...this.operators) as Observer<any>;
 
     pipe(this.source, sink(liftedSubscrber));

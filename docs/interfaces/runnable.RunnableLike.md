@@ -26,7 +26,7 @@
 
 ### Methods
 
-- [run](runnable.RunnableLike.md#run)
+- [sink](runnable.RunnableLike.md#sink)
 
 ## Properties
 
@@ -60,9 +60,9 @@ ___
 
 ## Methods
 
-### run
+### sink
 
-▸ **run**(`this`, `sink`): `void`
+▸ **sink**(`this`, `sink`): `void`
 
 #### Parameters
 
@@ -74,3 +74,7 @@ ___
 #### Returns
 
 `void`
+
+#### Overrides
+
+[SourceLike](source.SourceLike.md).[sink](source.SourceLike.md#sink)

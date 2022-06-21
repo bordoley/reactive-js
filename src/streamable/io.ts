@@ -48,8 +48,8 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
     return this.subject.observerCount;
   }
 
-  observe(observer: Observer<TAcc>): void {
-    this.subject.observe(observer);
+  sink(observer: Observer<TAcc>): void {
+    this.subject.sink(observer);
   }
 
   stream(

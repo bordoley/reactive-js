@@ -103,7 +103,7 @@ export function using<TResource extends DisposableLike, T>(
       addDisposableDisposeParentOnChildError(sink, r);
     }
 
-    runnable.run(sink);
+    runnable.sink(sink);
   };
   return createRunnable(run);
 }

@@ -10,7 +10,7 @@ export const run =
   ) =>
   (runnable: RunnableLike<T>): TResult => {
     const sink = f();
-    runnable.run(sink);
+    runnable.sink(sink);
 
     sink.dispose();
 

@@ -33,6 +33,10 @@
 - [sinkType](source.AbstractSource.md#sinktype)
 - [type](source.AbstractSource.md#type)
 
+### Methods
+
+- [sink](source.AbstractSource.md#sink)
+
 ## Constructors
 
 ### constructor
@@ -99,3 +103,24 @@ ___
 #### Inherited from
 
 AbstractContainer.type
+
+## Methods
+
+### sink
+
+▸ `Abstract` **sink**(`this`, `sink`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`AbstractSource`](source.AbstractSource.md)<`T`, `TSink`\> |
+| `sink` | `TSink` |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[SourceLike](../interfaces/source.SourceLike.md).[sink](../interfaces/source.SourceLike.md#sink)
