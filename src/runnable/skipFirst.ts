@@ -1,14 +1,14 @@
 import { bindDisposables } from "../disposable";
 import { pipe } from "../functions";
 import { RunnableOperator } from "../runnable";
-import { SinkLike, notifySkipFirst } from "../sink";
+import { notifySkipFirst } from "../sink";
 import { lift } from "./lift";
-import { AbstractSink } from "./sinks";
+import { Sink } from "./sinks";
 
-class SkipFirstSink<T> extends AbstractSink<T> {
+class SkipFirstSink<T> extends Sink<T> {
   count = 0;
 
-  constructor(readonly delegate: SinkLike<T>, readonly skipCount: number) {
+  constructor(readonly delegate: Sink<T>, readonly skipCount: number) {
     super();
   }
 }
@@ -18,7 +18,7 @@ export const skipFirst = <T>(
   options: { readonly count?: number } = {},
 ): RunnableOperator<T, T> => {
   const { count = 1 } = options;
-  const operator = (delegate: SinkLike<T>) => {
+  const operator = (delegate: Sink<T>) => {
     const sink = new SkipFirstSink(delegate, count);
     bindDisposables(sink, delegate);
     return sink;

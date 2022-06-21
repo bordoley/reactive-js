@@ -58,7 +58,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `this` | [`RunnableLike`](runnable.RunnableLike.md)<[`T`](runnable.RunnableLike.md#t)\> |
-| `sink` | [`SinkLike`](sink.SinkLike.md)<[`T`](runnable.RunnableLike.md#t)\> |
+| `sink` | [`Sink`](../classes/runnable.Sink.md)<[`T`](runnable.RunnableLike.md#t)\> |
 
 #### Returns
 

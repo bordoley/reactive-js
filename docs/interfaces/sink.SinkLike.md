@@ -19,6 +19,7 @@
 ## Implemented by
 
 - [`Observer`](../classes/observable.Observer.md)
+- [`Sink`](../classes/runnable.Sink.md)
 
 ## Table of contents
 

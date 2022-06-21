@@ -6,14 +6,14 @@ import {
 } from "../disposable";
 import { pipe } from "../functions";
 import { RunnableOperator } from "../runnable";
-import { SinkLike, notifyDecodeWithCharset } from "../sink";
+import { notifyDecodeWithCharset } from "../sink";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import { AbstractSink, sink } from "./sinks";
+import { Sink, sink } from "./sinks";
 
-class DecodeWithCharsetSink extends AbstractSink<ArrayBuffer> {
+class DecodeWithCharsetSink extends Sink<ArrayBuffer> {
   constructor(
-    readonly delegate: SinkLike<string>,
+    readonly delegate: Sink<string>,
     readonly textDecoder: TextDecoder,
   ) {
     super();
@@ -34,7 +34,7 @@ export const decodeWithCharset = (
   charset = "utf-8",
   options?: TextDecoderOptions,
 ): RunnableOperator<ArrayBuffer, string> => {
-  const operator = (delegate: SinkLike<string>) => {
+  const operator = (delegate: Sink<string>) => {
     const sink = new DecodeWithCharsetSink(
       delegate,
       new TextDecoder(charset, options),

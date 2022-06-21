@@ -1,9 +1,9 @@
 import { Predicate, compose, negate } from "../functions";
 import { RunnableLike } from "../runnable";
 import { run } from "./run";
-import { AbstractSink } from "./sinks";
+import { Sink } from "./sinks";
 
-class EverySatisfySink<T> extends AbstractSink<T> {
+class EverySatisfySink<T> extends Sink<T> {
   result = true;
 
   constructor(private readonly predicate: Predicate<T>) {

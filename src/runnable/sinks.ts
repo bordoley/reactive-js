@@ -4,25 +4,21 @@ import { SideEffect1, raise } from "../functions";
 import { RunnableLike } from "../runnable";
 import { SinkLike } from "../sink";
 
-export abstract class AbstractSink<T>
-  extends AbstractDisposable
-  implements SinkLike<T>
-{
-  assertState(this: SinkLike<T>): void {}
+export class Sink<T> extends AbstractDisposable implements SinkLike<T> {
+  assertState(this: Sink<T>): void {}
 
   notify(_: T): void {}
 }
-
 if (__DEV__) {
-  AbstractSink.prototype.assertState = function <T>(this: SinkLike<T>) {
+  Sink.prototype.assertState = function <T>(this: Sink<T>) {
     if (this.isDisposed) {
       raise("Sink is disposed");
     }
   };
 }
 
-class DelegatingSink<T> extends AbstractSink<T> {
-  constructor(readonly delegate: SinkLike<T>) {
+class DelegatingSink<T> extends Sink<T> {
+  constructor(readonly delegate: Sink<T>) {
     super();
   }
 
@@ -31,13 +27,13 @@ class DelegatingSink<T> extends AbstractSink<T> {
   }
 }
 
-export const createDelegatingSink = <T>(delegate: SinkLike<T>): SinkLike<T> => {
+export const createDelegatingSink = <T>(delegate: Sink<T>): Sink<T> => {
   const sink = new DelegatingSink(delegate);
   addDisposable(delegate, sink);
   return sink;
 };
 
 export const sink =
-  <T>(observer: SinkLike<T>): SideEffect1<RunnableLike<T>> =>
+  <T>(sink: Sink<T>): SideEffect1<RunnableLike<T>> =>
   observable =>
-    observable.run(observer);
+    observable.run(sink);

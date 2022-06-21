@@ -1,13 +1,13 @@
 import { isSome } from "../option";
 import { RunnableLike } from "../runnable";
-import { SinkLike } from "../sink";
-
-export interface RunnableSinkLike<T, TResult> extends SinkLike<T> {
-  readonly result: TResult;
-}
+import { Sink } from "./sinks";
 
 export const run =
-  <T, TResult>(f: () => RunnableSinkLike<T, TResult>) =>
+  <T, TResult>(
+    f: () => Sink<T> & {
+      readonly result: TResult;
+    },
+  ) =>
   (runnable: RunnableLike<T>): TResult => {
     const sink = f();
     runnable.run(sink);

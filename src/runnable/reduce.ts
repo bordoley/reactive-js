@@ -2,9 +2,9 @@ import { Factory, Function1, Reducer } from "../functions";
 import { RunnableLike } from "../runnable";
 import { notifyReduce } from "../sink";
 import { run } from "./run";
-import { AbstractSink } from "./sinks";
+import { Sink } from "./sinks";
 
-class ReducerSink<T, TAcc> extends AbstractSink<T> {
+class ReducerSink<T, TAcc> extends Sink<T> {
   public get result() {
     return this.acc;
   }

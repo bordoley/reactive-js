@@ -11,7 +11,7 @@ import {
   Function5,
 } from "../functions";
 import { RunnableLike } from "../runnable";
-import { SinkLike } from "../sink";
+import { Sink } from "./sinks";
 import { createRunnable } from "./createRunnable";
 
 export function using<TResource extends DisposableLike, T>(
@@ -94,7 +94,7 @@ export function using<TResource extends DisposableLike, T>(
   resourceFactory: Factory<TResource | readonly TResource[]>,
   runnableFactory: (...resources: readonly TResource[]) => RunnableLike<T>,
 ): RunnableLike<T> {
-  const run = (sink: SinkLike<T>) => {
+  const run = (sink: Sink<T>) => {
     const resources = resourceFactory();
     const resourcesArray = Array.isArray(resources) ? resources : [resources];
     const runnable = runnableFactory(...resourcesArray);

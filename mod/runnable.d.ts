@@ -1,14 +1,18 @@
 import { FromArray, FromArrayOptions, Keep, ContainerLike, Container, ContainerOf } from "./container.mjs";
 import { SideEffect1, Equality, Predicate, Function1, Updater, Factory, Reducer, Function2, Function3, Function4, Function5 } from "./functions.mjs";
+import { AbstractDisposable, DisposableLike } from "./disposable.mjs";
 import { SinkLike } from "./sink.mjs";
 import { Option } from "./option.mjs";
-import { DisposableLike } from "./disposable.mjs";
+declare class Sink<T> extends AbstractDisposable implements SinkLike<T> {
+    assertState(this: Sink<T>): void;
+    notify(_: T): void;
+}
 /**
  * Creates an `RunnableLike` which emits all values from each source sequentially.
  */
 declare function concat<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
 declare const concatAll: <T>() => RunnableOperator<RunnableLike<T>, T>;
-declare const createRunnable: <T>(run: SideEffect1<SinkLike<T>>) => RunnableLike<T>;
+declare const createRunnable: <T>(run: SideEffect1<Sink<T>>) => RunnableLike<T>;
 declare const decodeWithCharset: (charset?: string, options?: TextDecoderOptions) => RunnableOperator<ArrayBuffer, string>;
 declare const distinctUntilChanged: <T>(options?: {
     readonly equality?: Equality<T> | undefined;
@@ -103,7 +107,7 @@ declare function using<TResource extends DisposableLike, T>(resourceFactory: Fac
 interface RunnableLike<T> extends ContainerLike {
     readonly T: unknown;
     readonly type: RunnableLike<this["T"]>;
-    run(this: RunnableLike<T>, sink: SinkLike<T>): void;
+    run(this: RunnableLike<T>, sink: Sink<T>): void;
 }
 declare type RunnableOperator<TA, TB> = Function1<RunnableLike<TA>, RunnableLike<TB>>;
 interface ToRunnable<C extends ContainerLike> extends Container<C> {
@@ -111,4 +115,4 @@ interface ToRunnable<C extends ContainerLike> extends Container<C> {
 }
 declare const toRunnable: <T>() => Function1<RunnableLike<T>, RunnableLike<T>>;
 declare const type: RunnableLike<unknown>;
-export { RunnableLike, RunnableOperator, ToRunnable, concat, concatAll, contains, createRunnable, decodeWithCharset, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, noneSatisfy, onNotify, pairwise, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type, using };
+export { RunnableLike, RunnableOperator, Sink, ToRunnable, concat, concatAll, contains, createRunnable, decodeWithCharset, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, noneSatisfy, onNotify, pairwise, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type, using };

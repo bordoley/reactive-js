@@ -122,6 +122,7 @@ class DelegatingObserver extends Observer {
         this.delegate.notify(next);
     }
 }
+// FIXME: Need to bind the disposables.
 const createDelegatingObserver = (delegate) => new DelegatingObserver(delegate);
 const sink = (observer) => observable => observable.observe(observer);
 
@@ -1731,6 +1732,23 @@ class EnumeratorScheduler extends AbstractDisposable {
     get shouldYield() {
         return this.inContinuation;
     }
+    move() {
+        const { continuations } = this;
+        const continuation = continuations.shift();
+        if (isNone(continuation) || continuation.isDisposed) {
+            return false;
+        }
+        this.inContinuation = true;
+        run(continuation);
+        this.inContinuation = false;
+        // FIXME: Shouldn't this just dispose
+        const error = this.error;
+        if (isSome(error)) {
+            const { cause } = error;
+            throw cause;
+        }
+        return true;
+    }
     requestYield() {
         // No-Op: We yield whenever the continuation is running.
     }
@@ -1749,25 +1767,12 @@ class EnumeratorObserver extends Observer {
         super(scheduler);
         this.scheduler = scheduler;
         this.hasCurrent = false;
+        // FIXME: probably need to bind the scheduler and the enumerator
     }
     move() {
-        const continuations = this.scheduler.continuations;
         this.hasCurrent = false;
         this.current = none;
-        while (!this.hasCurrent) {
-            const continuation = continuations.shift();
-            if (isNone(continuation) || continuation.isDisposed) {
-                break;
-            }
-            this.inContinuation = true;
-            run(continuation);
-            this.inContinuation = false;
-            const error = this.error;
-            if (isSome(error)) {
-                const { cause } = error;
-                throw cause;
-            }
-        }
+        while (!this.hasCurrent && this.scheduler.move()) { }
         return this.hasCurrent;
     }
     notify(next) {

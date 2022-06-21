@@ -1,10 +1,37 @@
 /// <reference types="./runnable.d.ts" />
-import { pipe, raise, strictEquality, compose, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
+import { raise, pipe, strictEquality, compose, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
 import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables, addTeardown } from './disposable.mjs';
-import { AbstractContainer, fromValue, empty } from './container.mjs';
 import { __DEV__ } from './env.mjs';
+import { AbstractContainer, fromValue, empty } from './container.mjs';
 import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile } from './sink.mjs';
 import { none, isSome, isNone } from './option.mjs';
+
+class Sink extends AbstractDisposable {
+    assertState() { }
+    notify(_) { }
+}
+if (__DEV__) {
+    Sink.prototype.assertState = function () {
+        if (this.isDisposed) {
+            raise("Sink is disposed");
+        }
+    };
+}
+class DelegatingSink extends Sink {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+    }
+    notify(next) {
+        this.delegate.notify(next);
+    }
+}
+const createDelegatingSink = (delegate) => {
+    const sink = new DelegatingSink(delegate);
+    addDisposable(delegate, sink);
+    return sink;
+};
+const sink = (sink) => observable => observable.run(sink);
 
 class RunnableImpl extends AbstractContainer {
     constructor(_run) {
@@ -42,33 +69,6 @@ const lift = (operator) => runnable => {
     return new LiftedRunnable(src, allFunctions);
 };
 
-class AbstractSink extends AbstractDisposable {
-    assertState() { }
-    notify(_) { }
-}
-if (__DEV__) {
-    AbstractSink.prototype.assertState = function () {
-        if (this.isDisposed) {
-            raise("Sink is disposed");
-        }
-    };
-}
-class DelegatingSink extends AbstractSink {
-    constructor(delegate) {
-        super();
-        this.delegate = delegate;
-    }
-    notify(next) {
-        this.delegate.notify(next);
-    }
-}
-const createDelegatingSink = (delegate) => {
-    const sink = new DelegatingSink(delegate);
-    addDisposable(delegate, sink);
-    return sink;
-};
-const sink = (observer) => observable => observable.run(observer);
-
 function concat(...runnables) {
     return createRunnable((sink) => {
         const runnablesLength = runnables.length;
@@ -80,7 +80,7 @@ function concat(...runnables) {
         }
     });
 }
-class FlattenSink extends AbstractSink {
+class FlattenSink extends Sink {
     constructor(delegate) {
         super();
         this.delegate = delegate;
@@ -115,7 +115,7 @@ const fromArrayT = {
     fromArray,
 };
 
-class DecodeWithCharsetSink extends AbstractSink {
+class DecodeWithCharsetSink extends Sink {
     constructor(delegate, textDecoder) {
         super();
         this.delegate = delegate;
@@ -141,7 +141,7 @@ const decodeWithCharset = (charset = "utf-8", options) => {
     return lift(operator);
 };
 
-class DistinctUntilChangedSink extends AbstractSink {
+class DistinctUntilChangedSink extends Sink {
     constructor(delegate, equality) {
         super();
         this.delegate = delegate;
@@ -172,7 +172,7 @@ const run = (f) => (runnable) => {
     return sink.result;
 };
 
-class EverySatisfySink extends AbstractSink {
+class EverySatisfySink extends Sink {
     constructor(predicate) {
         super();
         this.predicate = predicate;
@@ -191,7 +191,7 @@ const everySatisfy = (predicate) => {
 };
 const noneSatisfy = (predicate) => everySatisfy(compose(predicate, negate));
 
-class FirstSink extends AbstractSink {
+class FirstSink extends Sink {
     constructor() {
         super(...arguments);
         this.result = none;
@@ -206,7 +206,7 @@ const first = () => {
     return run(createSink);
 };
 
-class ForEachSink extends AbstractSink {
+class ForEachSink extends Sink {
     constructor(notify) {
         super();
         this.notify = notify;
@@ -229,7 +229,7 @@ const generate = (generator, initialValue) => {
     return createRunnable(run);
 };
 
-class KeepSink extends AbstractSink {
+class KeepSink extends Sink {
     constructor(delegate, predicate) {
         super();
         this.delegate = delegate;
@@ -249,7 +249,7 @@ const keepT = {
     keep,
 };
 
-class LastSink extends AbstractSink {
+class LastSink extends Sink {
     constructor() {
         super(...arguments);
         this.result = none;
@@ -263,7 +263,7 @@ const last = () => {
     return run(createSink);
 };
 
-class MapSink extends AbstractSink {
+class MapSink extends Sink {
     constructor(delegate, mapper) {
         super();
         this.delegate = delegate;
@@ -280,7 +280,7 @@ const map = (mapper) => {
     return lift(operator);
 };
 
-class OnNotifySink extends AbstractSink {
+class OnNotifySink extends Sink {
     constructor(delegate, onNotify) {
         super();
         this.delegate = delegate;
@@ -302,7 +302,7 @@ function onNotify(onNotify) {
     return lift(operator);
 }
 
-class PairwiseObserver extends AbstractSink {
+class PairwiseObserver extends Sink {
     constructor(delegate) {
         super();
         this.delegate = delegate;
@@ -319,7 +319,7 @@ const pairwise = () => {
     return lift(operator);
 };
 
-class ReducerSink extends AbstractSink {
+class ReducerSink extends Sink {
     constructor(acc, reducer) {
         super();
         this.acc = acc;
@@ -352,7 +352,7 @@ function repeat(predicate) {
     });
 }
 
-class ScanSink extends AbstractSink {
+class ScanSink extends Sink {
     constructor(delegate, reducer, acc) {
         super();
         this.delegate = delegate;
@@ -370,7 +370,7 @@ const scan = (reducer, initialValue) => {
     return lift(operator);
 };
 
-class SkipFirstSink extends AbstractSink {
+class SkipFirstSink extends Sink {
     constructor(delegate, skipCount) {
         super();
         this.delegate = delegate;
@@ -389,7 +389,7 @@ const skipFirst = (options = {}) => {
     return runnable => (count > 0 ? pipe(runnable, lift(operator)) : runnable);
 };
 
-class SomeSatisfySink extends AbstractSink {
+class SomeSatisfySink extends Sink {
     constructor(predicate) {
         super();
         this.predicate = predicate;
@@ -411,7 +411,7 @@ const contains = (value, options = {}) => {
     return someSatisfy(isEqualTo(value, equality));
 };
 
-class TakeFirstSink extends AbstractSink {
+class TakeFirstSink extends Sink {
     constructor(delegate, maxCount) {
         super();
         this.delegate = delegate;
@@ -430,7 +430,7 @@ const takeFirst = (options = {}) => {
     return observable => count > 0 ? pipe(observable, lift(operator)) : empty(fromArrayT);
 };
 
-class TakeLastSink extends AbstractSink {
+class TakeLastSink extends Sink {
     constructor(delegate, maxCount) {
         super();
         this.delegate = delegate;
@@ -455,7 +455,7 @@ const takeLast = (options = {}) => {
     return runnable => count > 0 ? pipe(runnable, lift(operator)) : empty(fromArrayT);
 };
 
-class TakeWhileSink extends AbstractSink {
+class TakeWhileSink extends Sink {
     constructor(delegate, predicate, inclusive) {
         super();
         this.delegate = delegate;
@@ -474,7 +474,7 @@ const takeWhile = (predicate, options = {}) => {
     return lift(operator);
 };
 
-class ToArraySink extends AbstractSink {
+class ToArraySink extends Sink {
     constructor() {
         super(...arguments);
         this.result = [];
@@ -510,4 +510,4 @@ function using(resourceFactory, runnableFactory) {
 const toRunnable = () => identity;
 const type = undefined;
 
-export { concat, concatAll, contains, createRunnable, decodeWithCharset, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, noneSatisfy, onNotify, pairwise, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type, using };
+export { Sink, concat, concatAll, contains, createRunnable, decodeWithCharset, distinctUntilChanged, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, noneSatisfy, onNotify, pairwise, reduce, repeat, scan, skipFirst, someSatisfy, takeFirst, takeLast, takeWhile, toArray, toRunnable, type, using };

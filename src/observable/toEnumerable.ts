@@ -23,7 +23,7 @@ class EnumeratorScheduler extends AbstractDisposable implements SchedulerLike {
     const { continuations } = this;
     const continuation = continuations.shift();
     if (isNone(continuation) || continuation.isDisposed) {
-      return false;;
+      return false;
     }
 
     this.inContinuation = true;
@@ -70,9 +70,7 @@ class EnumeratorObserver<T> extends Observer<T> implements EnumeratorLike<T> {
     this.hasCurrent = false;
     this.current = none;
 
-    while (!this.hasCurrent && this.scheduler.move()) {
-
-    }
+    while (!this.hasCurrent && this.scheduler.move()) {}
 
     return this.hasCurrent;
   }
