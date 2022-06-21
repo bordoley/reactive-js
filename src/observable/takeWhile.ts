@@ -1,20 +1,8 @@
-import { bindDisposables } from "../disposable";
 import { Predicate } from "../functions";
 import { ObservableOperator } from "../observable";
-import { notifyTakeWhile } from "../sink";
-import { lift } from "./lift";
+import { createTakeWhileOperator } from "../sink";
+import { liftT } from "./lift";
 import { Observer } from "./observer";
-
-class TakeWhileObserver<T> extends Observer<T> {
-  constructor(
-    readonly delegate: Observer<T>,
-    readonly predicate: Predicate<T>,
-    readonly inclusive: boolean,
-  ) {
-    super(delegate);
-  }
-}
-TakeWhileObserver.prototype.notify = notifyTakeWhile;
 
 /**
  * Returns an `ObservableLike` which emits values emitted by the source as long
@@ -23,16 +11,18 @@ TakeWhileObserver.prototype.notify = notifyTakeWhile;
  *
  * @param predicate The predicate function.
  */
-export const takeWhile = <T>(
+export const takeWhile: <T>(
   predicate: Predicate<T>,
-  options: { readonly inclusive?: boolean } = {},
-): ObservableOperator<T, T> => {
-  const { inclusive = false } = options;
-  const operator = (delegate: Observer<T>) => {
-    const observer = new TakeWhileObserver(delegate, predicate, inclusive);
-    bindDisposables(observer, delegate);
-    return observer;
-  };
-  operator.isSynchronous = true;
-  return lift(operator);
-};
+  options?: { readonly inclusive?: boolean },
+) => ObservableOperator<T, T> = createTakeWhileOperator(
+  liftT,
+  class TakeWhileObserver<T> extends Observer<T> {
+    constructor(
+      readonly delegate: Observer<T>,
+      readonly predicate: Predicate<T>,
+      readonly inclusive: boolean,
+    ) {
+      super(delegate);
+    }
+  },
+);

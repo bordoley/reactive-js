@@ -1,6 +1,7 @@
 import { AbstractContainer } from "../container";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
+import { Lift } from "../sink";
 import { Observer, sink } from "./observer";
 
 /**
@@ -56,3 +57,7 @@ export const lift =
 
     return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
   };
+
+export const liftT: Lift<ObservableLike<unknown>> = {
+  lift,
+};

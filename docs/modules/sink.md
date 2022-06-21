@@ -19,6 +19,7 @@
 ### Functions
 
 - [createTakeLastOperator](sink.md#createtakelastoperator)
+- [createTakeWhileOperator](sink.md#createtakewhileoperator)
 - [notifyDecodeWithCharset](sink.md#notifydecodewithcharset)
 - [notifyDistinctUntilChanged](sink.md#notifydistinctuntilchanged)
 - [notifyKeep](sink.md#notifykeep)
@@ -29,7 +30,6 @@
 - [notifyScan](sink.md#notifyscan)
 - [notifySkipFirst](sink.md#notifyskipfirst)
 - [notifyTakeFirst](sink.md#notifytakefirst)
-- [notifyTakeWhile](sink.md#notifytakewhile)
 
 ## Type Aliases
 
@@ -48,7 +48,7 @@
 
 ### createTakeLastOperator
 
-▸ **createTakeLastOperator**<`C`\>(`m`, `constructor`): <T_1\>(`options?`: { `count?`: `number`  }) => [`Function1`](functions.md#function1)<[`ContainerOf`](container.md#containerof)<`C`, `T_1`\>, [`ContainerOf`](container.md#containerof)<`C`, `T_1`\>\>
+▸ **createTakeLastOperator**<`C`\>(`m`, `TakeLastSink`): <T_1\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
@@ -61,13 +61,13 @@
 | Name | Type |
 | :------ | :------ |
 | `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Sink`](../interfaces/sink.Sink.md)<`C`\> & [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
-| `constructor` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `count`: `number`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `last`: `T`[]  } |
+| `TakeLastSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `count`: `number`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `last`: `T`[]  } |
 
 #### Returns
 
 `fn`
 
-▸ <`T_1`\>(`options?`): [`Function1`](functions.md#function1)<[`ContainerOf`](container.md#containerof)<`C`, `T_1`\>, [`ContainerOf`](container.md#containerof)<`C`, `T_1`\>\>
+▸ <`T_1`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 ##### Type parameters
 
@@ -84,7 +84,50 @@
 
 ##### Returns
 
-[`Function1`](functions.md#function1)<[`ContainerOf`](container.md#containerof)<`C`, `T_1`\>, [`ContainerOf`](container.md#containerof)<`C`, `T_1`\>\>
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+___
+
+### createTakeWhileOperator
+
+▸ **createTakeWhileOperator**<`C`\>(`m`, `TakeWhileSink`): <T_1\>(`predicate`: [`Predicate`](functions.md#predicate)<`T_1`\>, `options?`: { `inclusive?`: `boolean`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
+| `TakeWhileSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>, `inclusive`: `boolean`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `inclusive`: `boolean` ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
+
+#### Returns
+
+`fn`
+
+▸ <`T_1`\>(`predicate`, `options?`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T_1` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T_1`\> |
+| `options?` | `Object` |
+| `options.inclusive?` | `boolean` |
+
+##### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 ___
 
@@ -307,29 +350,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `count`: `number` ; `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `maxCount`: `number`  } |
-| `next` | `T` |
-
-#### Returns
-
-`void`
-
-___
-
-### notifyTakeWhile
-
-▸ **notifyTakeWhile**<`T`\>(`this`, `next`): `void`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `inclusive`: `boolean` ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
 | `next` | `T` |
 
 #### Returns

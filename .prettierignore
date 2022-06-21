@@ -16,6 +16,7 @@ yarn-error.log
 .prettierignore
 
 build
+build-types
 coverage
 docs
 mod
