@@ -17,7 +17,7 @@ class ScheduledObservable<T>
     super();
   }
 
-  observe(observer: Observer<T>) {
+  sink(observer: Observer<T>) {
     const callback = this.f(observer);
     const schedulerSubscription = pipe(observer, schedule(callback, this));
     addOnDisposedWithError(schedulerSubscription, observer);

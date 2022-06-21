@@ -119,8 +119,8 @@ class WindowLocationStream extends AbstractSource {
         }
         return canGoBack;
     }
-    observe(observer) {
-        this.stateStream.observe(observer);
+    sink(observer) {
+        this.stateStream.sink(observer);
     }
 }
 class WindowLocationStreamable {

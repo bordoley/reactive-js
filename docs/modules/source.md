@@ -57,7 +57,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
 
 #### Parameters
 
@@ -92,7 +92,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
 
 #### Parameters
 
@@ -134,7 +134,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
 
 #### Parameters
 
@@ -175,7 +175,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
 
 #### Parameters
 
@@ -217,7 +217,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
 
 #### Parameters
 
@@ -258,7 +258,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
 
 #### Parameters
 
@@ -293,7 +293,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
 
 #### Parameters
 
@@ -336,7 +336,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
 
 #### Parameters
 
@@ -379,7 +379,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
 
 #### Parameters
 
@@ -421,7 +421,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
 
 #### Parameters
 
@@ -463,7 +463,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
 
 #### Parameters
 
@@ -505,7 +505,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
 
 #### Parameters
 

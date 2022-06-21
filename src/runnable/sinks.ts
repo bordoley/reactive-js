@@ -43,7 +43,7 @@ export const createDelegatingSink = <T>(delegate: Sink<T>): Sink<T> => {
 export const sink =
   <T>(sink: Sink<T>): SideEffect1<RunnableLike<T>> =>
   observable =>
-    observable.run(sink);
+    observable.sink(sink);
 
 export const sinkT: SinkM<RunnableLike<unknown>> = {
   sink,

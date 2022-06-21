@@ -14,9 +14,9 @@ class LiftedRunnable<T>
     super();
   }
 
-  run(sink: Sink<T>) {
+  sink(sink: Sink<T>) {
     const liftedSink = pipe(sink, ...this.operators) as Sink<T>;
-    this.src.run(liftedSink);
+    this.src.sink(liftedSink);
     liftedSink.dispose();
   }
 }

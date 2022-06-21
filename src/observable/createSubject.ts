@@ -47,7 +47,7 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
     }
   }
 
-  observe(observer: Observer<T>) {
+  sink(observer: Observer<T>) {
     // The idea here is that an onSubscribe function may
     // call next from unscheduled sources such as event handlers.
     // So we marshall those events back to the scheduler.

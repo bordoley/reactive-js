@@ -48,7 +48,7 @@ class ConcatObservable<T>
     );
   }
 
-  observe(observer: Observer<T>) {
+  sink(observer: Observer<T>) {
     const observables = this.observables;
 
     if (observables.length > 0) {

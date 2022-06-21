@@ -146,8 +146,8 @@ class WindowLocationStream
     return canGoBack;
   }
 
-  observe(observer: Observer<WindowLocationURI>): void {
-    this.stateStream.observe(observer);
+  sink(observer: Observer<WindowLocationURI>): void {
+    this.stateStream.sink(observer);
   }
 }
 

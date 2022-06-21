@@ -48,7 +48,7 @@ class StreamImpl<TReq, T>
     this.dispatcher.dispatch(req);
   }
 
-  observe(observer: Observer<T>) {
+  sink(observer: Observer<T>) {
     pipe(this.observable, sink(observer));
   }
 }

@@ -26,6 +26,10 @@
 - [sinkType](source.SourceLike.md#sinktype)
 - [type](source.SourceLike.md#type)
 
+### Methods
+
+- [sink](source.SourceLike.md#sink)
+
 ## Properties
 
 ### T
@@ -51,3 +55,20 @@ ___
 #### Inherited from
 
 [ContainerLike](container.ContainerLike.md).[type](container.ContainerLike.md#type)
+
+## Methods
+
+### sink
+
+▸ **sink**(`this`, `sink`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | `unknown` |
+| `sink` | [`SinkLike`](source.SinkLike.md)<`unknown`\> |
+
+#### Returns
+
+`void`

@@ -601,11 +601,7 @@ interface ObservableLike<T> extends SourceLike {
     readonly type: ObservableLike<this["T"]>;
     readonly sinkType: Observer<this["T"]>;
     readonly isSynchronous: boolean;
-    /**
-     * Subscribes the `ObserverLike` instance to the observable.
-     * @param observer The observer which should be notified by the observable source.
-     */
-    observe(this: ObservableLike<T>, observer: Observer<T>): void;
+    sink(this: ObservableLike<T>, sink: Observer<T>): void;
 }
 declare const type: ObservableLike<unknown>;
 /** A function which converts an ObservableLike<A> to an ObservableLike<B>. */

@@ -11,7 +11,7 @@ class RunnableImpl<T>
     super();
   }
 
-  run(sink: Sink<T>) {
+  sink(sink: Sink<T>) {
     try {
       this._run(sink);
     } catch (cause) {

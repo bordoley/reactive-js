@@ -45,6 +45,8 @@ export interface SinkLike<T> extends DisposableLike, ContainerLike {
 
 export interface SourceLike extends ContainerLike {
   readonly sinkType: SinkLike<unknown>;
+
+  sink(this: this["type"], sink: this["sinkType"]): void;
 }
 
 export abstract class AbstractSource<T, TSink extends SinkLike<T>>
@@ -54,6 +56,8 @@ export abstract class AbstractSource<T, TSink extends SinkLike<T>>
   get sinkType(): TSink {
     return undefined as any;
   }
+
+  abstract sink(this: this, sink: TSink): void;
 }
 
 export type SinkOf<C extends SourceLike, T> = C extends {

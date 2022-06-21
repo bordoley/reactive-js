@@ -24,7 +24,7 @@ class OnSubscribeObservable<T>
     this.isSynchronous = src.isSynchronous;
   }
 
-  observe(observer: Observer<T>) {
+  sink(observer: Observer<T>) {
     try {
       pipe(this.src, sink(observer));
       const disposable = this.f() || none;

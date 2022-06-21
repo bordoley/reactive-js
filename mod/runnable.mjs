@@ -10,7 +10,7 @@ class RunnableImpl extends AbstractSource {
         super();
         this._run = _run;
     }
-    run(sink) {
+    sink(sink) {
         try {
             this._run(sink);
         }
@@ -43,9 +43,9 @@ class LiftedRunnable extends AbstractSource {
         this.src = src;
         this.operators = operators;
     }
-    run(sink) {
+    sink(sink) {
         const liftedSink = pipe(sink, ...this.operators);
-        this.src.run(liftedSink);
+        this.src.sink(liftedSink);
         liftedSink.dispose();
     }
 }
@@ -91,7 +91,7 @@ const createDelegatingSink = (delegate) => {
     addDisposable(delegate, sink);
     return sink;
 };
-const sink = (sink) => observable => observable.run(sink);
+const sink = (sink) => observable => observable.sink(sink);
 const sinkT = {
     sink,
 };
@@ -102,7 +102,7 @@ function concat(...runnables) {
         for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
             const concatSink = createDelegatingSink(sink);
             addDisposableDisposeParentOnChildError(sink, concatSink);
-            runnables[i].run(concatSink);
+            runnables[i].sink(concatSink);
             concatSink.dispose();
         }
     });
@@ -115,7 +115,7 @@ class FlattenSink extends Sink {
     notify(next) {
         const concatSink = createDelegatingSink(this.delegate);
         addDisposableDisposeParentOnChildError(this.delegate, concatSink);
-        next.run(concatSink);
+        next.sink(concatSink);
         concatSink.dispose();
     }
 }
@@ -128,7 +128,7 @@ const concatAll = () => _concatAll;
 
 const run = (f) => (runnable) => {
     const sink = f();
-    runnable.run(sink);
+    runnable.sink(sink);
     sink.dispose();
     const { error } = sink;
     if (isSome(error)) {
@@ -218,7 +218,7 @@ function repeat(predicate) {
         let count = 0;
         do {
             const delegateSink = createDelegatingSink(sink);
-            runnable.run(delegateSink);
+            runnable.sink(delegateSink);
             delegateSink.dispose();
             count++;
         } while (!sink.isDisposed && shouldRepeat(count));
@@ -275,7 +275,7 @@ function using(resourceFactory, runnableFactory) {
         for (const r of resourcesArray) {
             addDisposableDisposeParentOnChildError(sink, r);
         }
-        runnable.run(sink);
+        runnable.sink(sink);
     };
     return createRunnable(run);
 }

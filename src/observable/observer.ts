@@ -99,7 +99,7 @@ export const createDelegatingObserver = <T>(
 export const sink =
   <T>(observer: Observer<T>): SideEffect1<ObservableLike<T>> =>
   observable =>
-    observable.observe(observer);
+    observable.sink(observer);
 
 export const sinkT: Sink<ObservableLike<unknown>> = {
   sink,
