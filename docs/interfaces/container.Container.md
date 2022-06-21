@@ -22,6 +22,8 @@
 
   ↳ [`DistinctUntilChanged`](container.DistinctUntilChanged.md)
 
+  ↳ [`EverySatisfy`](container.EverySatisfy.md)
+
   ↳ [`FromArray`](container.FromArray.md)
 
   ↳ [`FromIterable`](container.FromIterable.md)
@@ -43,6 +45,8 @@
   ↳ [`Scan`](container.Scan.md)
 
   ↳ [`SkipFirst`](container.SkipFirst.md)
+
+  ↳ [`SomeSatisfy`](container.SomeSatisfy.md)
 
   ↳ [`TakeFirst`](container.TakeFirst.md)
 

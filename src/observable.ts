@@ -1,11 +1,13 @@
 import {
   DecodeWithCharset,
   DistinctUntilChanged,
+  EverySatisfy,
   Keep,
   Pairwise,
   Reduce,
   Scan,
   SkipFirst,
+  SomeSatisfy,
   TakeLast,
   TakeWhile,
   ThrowIfEmpty,
@@ -31,6 +33,7 @@ import {
   createCatchErrorOperator,
   createDecodeWithCharsetOperator,
   createDistinctUntilChangedOperator,
+  createEverySatisfyOperator,
   createKeepOperator,
   createPairwiseOperator,
   createReduceOperator,
@@ -39,6 +42,7 @@ import {
   createTakeLastOperator,
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
+  createSomeSatisfyOperator,
 } from "./source";
 
 /**
@@ -226,6 +230,24 @@ export const distinctUntilChangedT: DistinctUntilChanged<
   distinctUntilChanged,
 };
 
+export const everySatisfy: <T>(
+  predicate: Predicate<T>,
+) => ObservableOperator<T, boolean> = createEverySatisfyOperator(
+  { ...fromArrayT, ...liftT },
+  class EverySatisfyObserver<T> extends Observer<T> {
+    constructor(
+      readonly delegate: Observer<boolean>,
+      readonly predicate: Predicate<T>,
+    ) {
+      super(delegate);
+    }
+  },
+);
+
+export const everySatisfyT: EverySatisfy<ObservableLike<unknown>> = {
+  everySatisfy,
+};
+
 export const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T> =
   createKeepOperator(
     liftT,
@@ -320,6 +342,24 @@ export const skipFirst: <T>(options?: {
 
 export const skipFirstT: SkipFirst<ObservableLike<unknown>> = {
   skipFirst,
+};
+
+export const someSatisfy: <T>(
+  predicate: Predicate<T>,
+) => ObservableOperator<T, boolean> = createSomeSatisfyOperator(
+  { ...fromArrayT, ...liftT },
+  class SomeSatisfyObserver<T> extends Observer<T> {
+    constructor(
+      readonly delegate: Observer<boolean>,
+      readonly predicate: Predicate<T>,
+    ) {
+      super(delegate);
+    }
+  },
+);
+
+export const someSatisfyT: SomeSatisfy<ObservableLike<unknown>> = {
+  someSatisfy,
 };
 
 /**

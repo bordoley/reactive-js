@@ -21,6 +21,7 @@
 
 - [decodeWithCharsetT](runnable.md#decodewithcharsett)
 - [distinctUntilChangedT](runnable.md#distinctuntilchangedt)
+- [everySatisfyT](runnable.md#everysatisfyt)
 - [fromArrayT](runnable.md#fromarrayt)
 - [keepT](runnable.md#keept)
 - [mapT](runnable.md#mapt)
@@ -28,6 +29,7 @@
 - [reduceT](runnable.md#reducet)
 - [scanT](runnable.md#scant)
 - [skipFirstT](runnable.md#skipfirstt)
+- [someSatisfyT](runnable.md#somesatisfyt)
 - [takeFirstT](runnable.md#takefirstt)
 - [takeLastT](runnable.md#takelastt)
 - [takeWhileT](runnable.md#takewhilet)
@@ -39,7 +41,6 @@
 - [catchError](runnable.md#catcherror)
 - [concat](runnable.md#concat)
 - [concatAll](runnable.md#concatall)
-- [contains](runnable.md#contains)
 - [createRunnable](runnable.md#createrunnable)
 - [decodeWithCharset](runnable.md#decodewithcharset)
 - [distinctUntilChanged](runnable.md#distinctuntilchanged)
@@ -51,7 +52,6 @@
 - [keep](runnable.md#keep)
 - [last](runnable.md#last)
 - [map](runnable.md#map)
-- [noneSatisfy](runnable.md#nonesatisfy)
 - [onNotify](runnable.md#onnotify)
 - [pairwise](runnable.md#pairwise)
 - [reduce](runnable.md#reduce)
@@ -94,6 +94,12 @@ ___
 
 ___
 
+### everySatisfyT
+
+• `Const` **everySatisfyT**: [`EverySatisfy`](../interfaces/container.EverySatisfy.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
 ### fromArrayT
 
 • `Const` **fromArrayT**: [`FromArray`](../interfaces/container.FromArray.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\>
@@ -133,6 +139,12 @@ ___
 ### skipFirstT
 
 • `Const` **skipFirstT**: [`SkipFirst`](../interfaces/container.SkipFirst.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
+### someSatisfyT
+
+• `Const` **someSatisfyT**: [`SomeSatisfy`](../interfaces/container.SomeSatisfy.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
 
 ___
 
@@ -230,30 +242,6 @@ ___
 
 ___
 
-### contains
-
-▸ **contains**<`T`\>(`value`, `options?`): [`Predicate`](functions.md#predicate)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `T` |
-| `options?` | `Object` |
-| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
-
-#### Returns
-
-[`Predicate`](functions.md#predicate)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
-
-___
-
 ### createRunnable
 
 ▸ **createRunnable**<`T`\>(`run`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
@@ -317,7 +305,7 @@ ___
 
 ### everySatisfy
 
-▸ **everySatisfy**<`T`\>(`predicate`): [`Predicate`](functions.md#predicate)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
+▸ **everySatisfy**<`T`\>(`predicate`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `boolean`\>
 
 #### Type parameters
 
@@ -333,7 +321,7 @@ ___
 
 #### Returns
 
-[`Predicate`](functions.md#predicate)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
+[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `boolean`\>
 
 ___
 
@@ -480,28 +468,6 @@ ___
 #### Returns
 
 [`RunnableOperator`](runnable.md#runnableoperator)<`TA`, `TB`\>
-
-___
-
-### noneSatisfy
-
-▸ **noneSatisfy**<`T`\>(`predicate`): [`Predicate`](functions.md#predicate)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-
-#### Returns
-
-[`Predicate`](functions.md#predicate)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
 
 ___
 
@@ -677,7 +643,7 @@ ___
 
 ### someSatisfy
 
-▸ **someSatisfy**<`T`\>(`predicate`): [`Predicate`](functions.md#predicate)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
+▸ **someSatisfy**<`T`\>(`predicate`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `boolean`\>
 
 #### Type parameters
 
@@ -693,7 +659,7 @@ ___
 
 #### Returns
 
-[`Predicate`](functions.md#predicate)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
+[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `boolean`\>
 
 ___
 

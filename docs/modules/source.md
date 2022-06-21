@@ -24,6 +24,7 @@
 - [createCatchErrorOperator](source.md#createcatcherroroperator)
 - [createDecodeWithCharsetOperator](source.md#createdecodewithcharsetoperator)
 - [createDistinctUntilChangedOperator](source.md#createdistinctuntilchangedoperator)
+- [createEverySatisfyOperator](source.md#createeverysatisfyoperator)
 - [createKeepOperator](source.md#createkeepoperator)
 - [createMapOperator](source.md#createmapoperator)
 - [createOnNotifyOperator](source.md#createonnotifyoperator)
@@ -31,6 +32,7 @@
 - [createReduceOperator](source.md#createreduceoperator)
 - [createScanOperator](source.md#createscanoperator)
 - [createSkipFirstOperator](source.md#createskipfirstoperator)
+- [createSomeSatisfyOperator](source.md#createsomesatisfyoperator)
 - [createTakeFirstOperator](source.md#createtakefirstoperator)
 - [createTakeLastOperator](source.md#createtakelastoperator)
 - [createTakeWhileOperator](source.md#createtakewhileoperator)
@@ -166,6 +168,47 @@ ___
 ##### Returns
 
 [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+___
+
+### createEverySatisfyOperator
+
+▸ **createEverySatisfyOperator**<`C`\>(`m`, `EverySatisfySink`): <T_1\>(`predicate`: [`Predicate`](functions.md#predicate)<`T_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `boolean`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
+| `EverySatisfySink` | <T\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `boolean`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`SinkOf`](source.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](source.md#sinkof)<`C`, `boolean`\> ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
+
+#### Returns
+
+`fn`
+
+▸ <`T_1`\>(`predicate`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `boolean`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T_1` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T_1`\> |
+
+##### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `boolean`\>
 
 ___
 
@@ -453,6 +496,47 @@ ___
 ##### Returns
 
 [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+___
+
+### createSomeSatisfyOperator
+
+▸ **createSomeSatisfyOperator**<`C`\>(`m`, `SomeSatisfySink`): <T_1\>(`predicate`: [`Predicate`](functions.md#predicate)<`T_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `boolean`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
+| `SomeSatisfySink` | <T\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `boolean`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`SinkOf`](source.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](source.md#sinkof)<`C`, `boolean`\> ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
+
+#### Returns
+
+`fn`
+
+▸ <`T_1`\>(`predicate`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `boolean`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T_1` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T_1`\> |
+
+##### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `boolean`\>
 
 ___
 

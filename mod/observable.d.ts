@@ -1,4 +1,4 @@
-import { Concat, FromArray, FromIterator, Map, ConcatAll, TakeFirst, Zip, DecodeWithCharset, DistinctUntilChanged, Keep, Pairwise, Reduce, Scan, SkipFirst, TakeLast, TakeWhile, ThrowIfEmpty } from "./container.mjs";
+import { Concat, FromArray, FromIterator, Map, ConcatAll, TakeFirst, Zip, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Keep, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeLast, TakeWhile, ThrowIfEmpty } from "./container.mjs";
 import { AbstractDisposable, DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Predicate, Equality, Reducer } from "./functions.mjs";
 import { SchedulerLike, SchedulerContinuationLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
@@ -642,6 +642,8 @@ declare const distinctUntilChanged: <T>(options?: {
     readonly equality?: Equality<T>;
 }) => ObservableOperator<T, T>;
 declare const distinctUntilChangedT: DistinctUntilChanged<ObservableLike<unknown>>;
+declare const everySatisfy: <T>(predicate: Predicate<T>) => ObservableOperator<T, boolean>;
+declare const everySatisfyT: EverySatisfy<ObservableLike<unknown>>;
 declare const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T>;
 declare const keepT: Keep<ObservableLike<unknown>>;
 declare const pairwise: <T>() => ObservableOperator<T, [
@@ -662,6 +664,8 @@ declare const skipFirst: <T>(options?: {
     readonly count?: number;
 }) => ObservableOperator<T, T>;
 declare const skipFirstT: SkipFirst<ObservableLike<unknown>>;
+declare const someSatisfy: <T>(predicate: Predicate<T>) => ObservableOperator<T, boolean>;
+declare const someSatisfyT: SomeSatisfy<ObservableLike<unknown>>;
 /**
  * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
  *
@@ -684,4 +688,4 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
 declare const takeWhileT: TakeWhile<ObservableLike<unknown>>;
 declare const throwIfEmpty: <T>(factory: Factory<unknown>) => ObservableOperator<T, T>;
 declare const throwIfEmptyT: ThrowIfEmpty<ObservableLike<unknown>>;
-export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Observer, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Observer, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

@@ -1,6 +1,6 @@
 /// <reference types="./container.d.ts" />
 import { createDisposableValue } from './disposable.mjs';
-import { compose, callWith, ignore, pipe, defer, alwaysFalse, returns } from './functions.mjs';
+import { compose, callWith, strictEquality, isEqualTo, ignore, pipe, defer, alwaysFalse, returns, negate } from './functions.mjs';
 import { isSome } from './option.mjs';
 
 class AbstractContainer {
@@ -21,6 +21,10 @@ function using({ using }, resourceFactory, containerFactory) {
         return containerFactory(container, ...resourcesArray);
     });
 }
+const contains = ({ someSatisfy }, value, options = {}) => {
+    const { equality = strictEquality } = options;
+    return someSatisfy(isEqualTo(value, equality));
+};
 const encodeUtf8 = (m) => using(m, () => createDisposableValue(new TextEncoder(), ignore), (c, v) => pipe(c, m.map(s => v.value.encode(s))));
 function endWith(m, ...values) {
     return concatWith(m, m.fromArray()(values));
@@ -35,6 +39,7 @@ const genMap = (m, mapper, options) => compose(m.map(x => pipe(defer(x, mapper),
 const keepType = ({ keep }, predicate) => keep(predicate);
 const ignoreElements = ({ keep, }) => keep(alwaysFalse);
 const mapTo = ({ map }, value) => pipe(value, returns, map);
+const noneSatisfy = ({ everySatisfy }, predicate) => everySatisfy(compose(predicate, negate));
 function startWith(m, ...values) {
     return container => pipe(values, m.fromArray(), concatWith(m, container));
 }
@@ -44,4 +49,4 @@ const throws = (m, options) => errorFactory => pipe(() => {
 }, compute(m, options));
 const zipWith = ({ zip }, snd) => fst => zip(fst, snd);
 
-export { AbstractContainer, compute, concatMap, concatWith, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, startWith, throws, using, zipWith };
+export { AbstractContainer, compute, concatMap, concatWith, contains, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, using, zipWith };
