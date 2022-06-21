@@ -20,7 +20,7 @@ import {
 } from "./functions";
 import { fromArrayT } from "./observable/fromArray";
 import { liftT } from "./observable/lift";
-import { Observer, sinkT } from "./observable/observer";
+import { Observer } from "./observable/observer";
 import { Option, none } from "./option";
 import {
   SourceLike,
@@ -132,7 +132,7 @@ export { never } from "./observable/never";
 export { subscribe } from "./observable/subscribe";
 export { using } from "./observable/using";
 export { defer } from "./observable/observable";
-export { Observer, sink } from "./observable/observer";
+export { Observer } from "./observable/observer";
 export { buffer } from "./observable/buffer";
 export { catchError } from "./observable/catchError";
 export { map, mapT } from "./observable/map";
@@ -170,7 +170,7 @@ export { toPromise } from "./observable/toPromise";
 export const decodeWithCharset: (
   charset?: string,
 ) => ObservableOperator<ArrayBuffer, string> = createDecodeWithCharsetOperator(
-  { ...liftT, ...fromArrayT, ...sinkT },
+  { ...liftT, ...fromArrayT },
   class DecodeWithCharsetObserver extends Observer<ArrayBuffer> {
     constructor(
       readonly delegate: Observer<string>,
@@ -253,7 +253,7 @@ export const reduce: <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ) => ObservableOperator<T, TAcc> = createReduceOperator(
-  { ...fromArrayT, ...liftT, ...sinkT },
+  { ...fromArrayT, ...liftT },
   class ReducerObserver<T, TAcc> extends Observer<T> {
     constructor(
       readonly delegate: Observer<TAcc>,
@@ -319,7 +319,7 @@ export const skipFirstT: SkipFirst<ObservableLike<unknown>> = {
 export const takeLast: <T>(options?: {
   readonly count?: number;
 }) => ObservableOperator<T, T> = createTakeLastOperator(
-  { ...fromArrayT, ...liftT, ...sinkT },
+  { ...fromArrayT, ...liftT },
   class TakeLastObserver<T> extends Observer<T> {
     readonly last: T[] = [];
 

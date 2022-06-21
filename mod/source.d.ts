@@ -1,6 +1,6 @@
 import { ContainerLike, AbstractContainer, Container, ContainerOf, FromArray, FromArrayOptions, ContainerOperator } from "./container.mjs";
 import { DisposableLike } from "./disposable.mjs";
-import { SideEffect1, Function1, Equality, Predicate, Reducer, Factory } from "./functions.mjs";
+import { Function1, SideEffect1, Equality, Predicate, Reducer, Factory } from "./functions.mjs";
 import { Option } from "./option.mjs";
 interface SinkLike<T> extends DisposableLike, ContainerLike {
     assertState(this: SinkLike<T>): void;
@@ -30,13 +30,11 @@ declare type SinkOf<C extends SourceLike, T> = C extends {
     readonly _C: C;
     readonly _T: () => T;
 };
-interface Sink<C extends SourceLike> extends Container<C> {
-    sink<T>(sink: SinkOf<C, T>): SideEffect1<ContainerOf<C, T>>;
-}
 interface Lift<C extends SourceLike> extends Container<C> {
     lift<TA, TB>(operator: Function1<SinkOf<C, TB>, SinkOf<C, TA>>): Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 }
-declare const createDecodeWithCharsetOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Sink<C> & Lift<C>, DecodeWithCharsetSink: new (delegate: SinkOf<C, string>, textDecoder: TextDecoder) => SinkOf<C, ArrayBuffer> & {
+declare const sinkInto: <C extends SourceLike, T>(sink: SinkOf<C, T>) => SideEffect1<C>;
+declare const createDecodeWithCharsetOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, DecodeWithCharsetSink: new (delegate: SinkOf<C, string>, textDecoder: TextDecoder) => SinkOf<C, ArrayBuffer> & {
     readonly delegate: SinkOf<C, string>;
     readonly textDecoder: TextDecoder;
 }) => (charset?: string) => ContainerOperator<C, ArrayBuffer, string>;
@@ -74,7 +72,7 @@ declare const createPairwiseOperator: <C extends SourceLike>(m: Lift<C>, Pairwis
     Option<T_1>,
     T_1
 ]>;
-declare const createReduceOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C> & Sink<C>, ReduceSink: new <T, TAcc>(delegate: SinkOf<C, TAcc>, reducer: Reducer<T, TAcc>, acc: TAcc) => SinkOf<C, T> & {
+declare const createReduceOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, ReduceSink: new <T, TAcc>(delegate: SinkOf<C, TAcc>, reducer: Reducer<T, TAcc>, acc: TAcc) => SinkOf<C, T> & {
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
 }) => <T_1, TAcc_1>(reducer: Reducer<T_1, TAcc_1>, initialValue: Factory<TAcc_1>) => ContainerOperator<C, T_1, TAcc_1>;
@@ -97,7 +95,7 @@ declare const createTakeFirstOperator: <C extends SourceLike>(m: FromArray<C, Fr
 }) => <T_1>(options?: {
     readonly count?: number;
 }) => ContainerOperator<C, T_1, T_1>;
-declare const createTakeLastOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Sink<C> & Lift<C>, TakeLastSink: new <T>(delegate: SinkOf<C, T>, maxCount: number) => SinkOf<C, T> & {
+declare const createTakeLastOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, TakeLastSink: new <T>(delegate: SinkOf<C, T>, maxCount: number) => SinkOf<C, T> & {
     readonly last: T[];
     readonly maxCount: number;
 }) => <T_1>(options?: {
@@ -110,4 +108,4 @@ declare const createTakeWhileOperator: <C extends SourceLike>(m: Lift<C>, TakeWh
 }) => <T_1>(predicate: Predicate<T_1>, options?: {
     readonly inclusive?: boolean;
 }) => ContainerOperator<C, T_1, T_1>;
-export { AbstractSource, Lift, Sink, SinkLike, SinkOf, SourceLike, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator };
+export { AbstractSource, Lift, SinkLike, SinkOf, SourceLike, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, sinkInto };

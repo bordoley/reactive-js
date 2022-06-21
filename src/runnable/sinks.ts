@@ -1,8 +1,7 @@
 import { AbstractDisposable, addDisposable } from "../disposable";
 import { __DEV__ } from "../env";
-import { SideEffect1, raise } from "../functions";
-import { RunnableLike } from "../runnable";
-import { SinkLike, Sink as SinkM } from "../source";
+import { raise } from "../functions";
+import { SinkLike } from "../source";
 
 export class Sink<T> extends AbstractDisposable implements SinkLike<T> {
   get type(): this {
@@ -38,13 +37,4 @@ export const createDelegatingSink = <T>(delegate: Sink<T>): Sink<T> => {
   const sink = new DelegatingSink(delegate);
   addDisposable(delegate, sink);
   return sink;
-};
-
-export const sink =
-  <T>(sink: Sink<T>): SideEffect1<RunnableLike<T>> =>
-  observable =>
-    observable.sink(sink);
-
-export const sinkT: SinkM<RunnableLike<unknown>> = {
-  sink,
 };

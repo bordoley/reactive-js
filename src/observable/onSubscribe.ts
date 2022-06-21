@@ -7,8 +7,8 @@ import {
 import { Factory, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { isSome, none } from "../option";
-import { AbstractSource } from "../source";
-import { Observer, sink } from "./observer";
+import { AbstractSource, sinkInto } from "../source";
+import { Observer } from "./observer";
 
 class OnSubscribeObservable<T>
   extends AbstractSource<T, Observer<T>>
@@ -26,7 +26,7 @@ class OnSubscribeObservable<T>
 
   sink(observer: Observer<T>) {
     try {
-      pipe(this.src, sink(observer));
+      pipe(this.src, sinkInto(observer));
       const disposable = this.f() || none;
       if (disposable instanceof Function) {
         addTeardown(observer, disposable);

@@ -1,7 +1,7 @@
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { AbstractSource, Lift } from "../source";
-import { Observer, sink } from "./observer";
+import { AbstractSource, Lift, sinkInto } from "../source";
+import { Observer } from "./observer";
 
 /**
  * A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.
@@ -27,7 +27,7 @@ class LiftedObservable<TIn, TOut>
   sink(observer: Observer<TOut>) {
     const liftedSubscrber = pipe(observer, ...this.operators) as Observer<any>;
 
-    pipe(this.source, sink(liftedSubscrber));
+    pipe(this.source, sinkInto(liftedSubscrber));
   }
 }
 

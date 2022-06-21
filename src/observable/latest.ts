@@ -3,8 +3,9 @@ import { pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Option, isSome, none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
+import { sinkInto } from "../source";
 import { defer, deferSynchronous } from "./observable";
-import { Observer, sink } from "./observer";
+import { Observer } from "./observer";
 
 type LatestCtx = {
   completedCount: number;
@@ -86,7 +87,7 @@ export const latest = (
       addDisposable(delegate, innerObserver);
 
       observers.push(innerObserver);
-      pipe(observable, sink(innerObserver));
+      pipe(observable, sinkInto(innerObserver));
     }
   };
 

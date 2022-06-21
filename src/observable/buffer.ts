@@ -12,10 +12,11 @@ import {
 import { Function1, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Option, isSome, none } from "../option";
+import { sinkInto } from "../source";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { never } from "./never";
-import { Observer, sink } from "./observer";
+import { Observer } from "./observer";
 import { subscribe } from "./subscribe";
 
 function onDispose(this: BufferObserver<void>, error: Option<Error>) {
@@ -25,7 +26,7 @@ function onDispose(this: BufferObserver<void>, error: Option<Error>) {
   if (isSome(error) || buffer.length === 0) {
     pipe(this.delegate, dispose(error));
   } else {
-    pipe(buffer, fromValue(fromArrayT), sink(this.delegate));
+    pipe(buffer, fromValue(fromArrayT), sinkInto(this.delegate));
   }
 }
 

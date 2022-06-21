@@ -60,8 +60,6 @@
 
   ↳ [`Lift`](source.Lift.md)
 
-  ↳ [`Sink`](source.Sink.md)
-
 ## Table of contents
 
 ### Properties

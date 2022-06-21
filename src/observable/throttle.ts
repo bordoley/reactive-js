@@ -15,9 +15,10 @@ import {
   ThrottleMode,
 } from "../observable";
 import { Option, isNone, none } from "../option";
+import { sinkInto } from "../source";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import { Observer, sink } from "./observer";
+import { Observer } from "./observer";
 
 import { subscribe } from "./subscribe";
 
@@ -33,7 +34,7 @@ const setupDurationSubscription = <T>(
 
 function onDispose(this: ThrottleObserver<unknown>, e: Option<Error>) {
   if (isNone(e) && this.mode !== "first" && this.hasValue) {
-    pipe(this.value, fromValue(fromArrayT), sink(this.delegate));
+    pipe(this.value, fromValue(fromArrayT), sinkInto(this.delegate));
   } else {
     pipe(this.delegate, dispose(e));
   }

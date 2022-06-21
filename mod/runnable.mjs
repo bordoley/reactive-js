@@ -91,10 +91,6 @@ const createDelegatingSink = (delegate) => {
     addDisposable(delegate, sink);
     return sink;
 };
-const sink = (sink) => observable => observable.sink(sink);
-const sinkT = {
-    sink,
-};
 
 function concat(...runnables) {
     return createRunnable((sink) => {
@@ -282,7 +278,7 @@ function using(resourceFactory, runnableFactory) {
 
 const toRunnable = () => identity;
 const type = undefined;
-const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftT, ...fromArrayT, ...sinkT }, class DecodeWithCharsetSink extends Sink {
+const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftT, ...fromArrayT }, class DecodeWithCharsetSink extends Sink {
     constructor(delegate, textDecoder) {
         super();
         this.delegate = delegate;
@@ -346,7 +342,7 @@ const pairwise = createPairwiseOperator(liftT, class PairwiseSink extends Sink {
 const pairwiseT = {
     pairwise,
 };
-const reduce = createReduceOperator({ ...fromArrayT, ...liftT, ...sinkT }, class ReducerSink extends Sink {
+const reduce = createReduceOperator({ ...fromArrayT, ...liftT }, class ReducerSink extends Sink {
     constructor(delegate, reducer, acc) {
         super();
         this.delegate = delegate;
@@ -390,7 +386,7 @@ const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftT }, class Tak
 const takeFirstT = {
     takeFirst,
 };
-const takeLast = createTakeLastOperator({ ...fromArrayT, ...liftT, ...sinkT }, class TakeLastSink extends Sink {
+const takeLast = createTakeLastOperator({ ...fromArrayT, ...liftT }, class TakeLastSink extends Sink {
     constructor(delegate, maxCount) {
         super();
         this.delegate = delegate;

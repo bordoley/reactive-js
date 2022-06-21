@@ -8,8 +8,8 @@ import {
 } from "../observable";
 import { Option, none } from "../option";
 import { SchedulerLike } from "../scheduler";
-import { AbstractSource } from "../source";
-import { Observer, sink } from "./observer";
+import { AbstractSource, sinkInto } from "../source";
+import { Observer } from "./observer";
 import { publish } from "./publish";
 
 class SharedObservable<T>
@@ -47,7 +47,7 @@ class SharedObservable<T>
 
     const multicast = this.multicast as SubjectLike<T>;
 
-    pipe(multicast, sink(observer));
+    pipe(multicast, sinkInto(observer));
     addTeardown(observer, this.teardown);
   }
 }
