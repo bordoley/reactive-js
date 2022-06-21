@@ -8,11 +8,11 @@ import {
 } from "./perfTests";
 
 const doRun = async () => {
-  await run(map(100000));
-  await run(filterMapFusion(100000));
-  await run(filterMapReduce(100000));
-  await run(scanReduce(100000));
-  await run(every(100000));
+  await run(map(10000));
+  await run(filterMapFusion(10000));
+  await run(filterMapReduce(10000));
+  await run(scanReduce(10000));
+  await run(every(10000));
 };
 
 doRun();
