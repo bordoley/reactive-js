@@ -90,7 +90,7 @@ const createFilterMapFusionPerfTest = (name: string, module: string) =>
     name,
     async (src: readonly number[]) => {
       const m: any = await import(module);
-      const { reduce } = await import("@reactive-js/core/runnable");
+      const { first, reduce } = await import("@reactive-js/core/runnable");
 
       return defer(
         src,
@@ -102,6 +102,7 @@ const createFilterMapFusionPerfTest = (name: string, module: string) =>
         m.keep(isEven),
         m.toRunnable(),
         reduce(sum, returns(0)),
+        first(),
       );
     },
     callWith(),
@@ -136,7 +137,7 @@ const createFilterMapReducePerfTest = (name: string, module: string) =>
     name,
     async (src: readonly number[]) => {
       const m: any = await import(module);
-      const { reduce } = await import("@reactive-js/core/runnable");
+      const { first, reduce } = await import("@reactive-js/core/runnable");
 
       return defer(
         src,
@@ -145,6 +146,7 @@ const createFilterMapReducePerfTest = (name: string, module: string) =>
         m.map(increment),
         m.toRunnable(),
         reduce(sum, returns(0)),
+        first(),
       );
     },
     callWith(),
@@ -188,7 +190,7 @@ const createScanReducePerfTest = (name: string, module: string) =>
     name,
     async (src: readonly number[]) => {
       const m: any = await import(module);
-      const { reduce } = await import("@reactive-js/core/runnable");
+      const { first, reduce } = await import("@reactive-js/core/runnable");
 
       return defer(
         src,
@@ -196,6 +198,7 @@ const createScanReducePerfTest = (name: string, module: string) =>
         m.scan(sum, returns(0)),
         m.toRunnable(),
         reduce<number, number>(passthrough, returns(0)),
+        first(),
       );
     },
     callWith(),
@@ -214,7 +217,7 @@ export const scanReduce = (n: number) =>
       async src => {
         const { fromArray, toRunnable, __memo, __observe, observable } =
           await import("@reactive-js/core/observable");
-        const { reduce } = await import("@reactive-js/core/runnable");
+        const { first, reduce } = await import("@reactive-js/core/runnable");
 
         const arrObs = fromArray<number>()(src);
         const createRef = (current: number) => ({ current });
@@ -237,6 +240,7 @@ export const scanReduce = (n: number) =>
           ),
           toRunnable(),
           reduce<number, number>(passthrough, returns(0)),
+          first(),
         );
       },
       callWith(),
