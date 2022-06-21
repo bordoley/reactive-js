@@ -1,9 +1,9 @@
+import { Concat, FromArray, FromIterator, Map, ConcatAll, TakeFirst, Zip, DecodeWithCharset, DistinctUntilChanged, Keep, Pairwise, Reduce, Scan, SkipFirst, TakeLast, TakeWhile } from "./container.mjs";
 import { AbstractDisposable, DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
-import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Equality, Predicate, Reducer } from "./functions.mjs";
-import { SinkLike, SourceLike } from "./source.mjs";
+import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Predicate, Equality, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
+import { SinkLike, SourceLike } from "./source.mjs";
 import { SchedulerLike, SchedulerContinuationLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
-import { Concat, FromArray, FromIterator, Keep, Map, ConcatAll, Zip } from "./container.mjs";
 import { EnumerableLike } from "./enumerable.mjs";
 import { RunnableLike } from "./runnable.mjs";
 /**
@@ -141,7 +141,6 @@ declare const createObservable: <T>(onSubscribe: SideEffect1<DispatcherLike<T>>)
 declare const createSubject: <T>(options?: {
     readonly replay?: number;
 }) => SubjectLike<T>;
-declare const decodeWithCharset: (charset?: string) => ObservableOperator<ArrayBuffer, string>;
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
  * An optional `startIndex` in the array maybe specified,
@@ -276,18 +275,6 @@ declare function buffer<T>(options?: {
  * to continue with or void if the error should be propagated.
  */
 declare const catchError: <T>(onError: Function1<unknown, void | ObservableLike<T>>) => ObservableOperator<T, T>;
-/**
- * Returns an `ObservableLike` that emits all items emitted by the source that
- * are distinct by comparison from the previous item.
- *
- * @param equals Optional equality function that is used to compare
- * if an item is distinct from the previous item.
- */
-declare const distinctUntilChanged: <T>(options?: {
-    readonly equality?: Equality<T>;
-}) => ObservableOperator<T, T>;
-declare const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T>;
-declare const keepT: Keep<ObservableLike<unknown>>;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => ObservableOperator<TA, TB>;
 declare const mapT: Map<ObservableLike<unknown>>;
 declare const mapAsync: <TA, TB>(f: Function1<TA, Promise<TB>>) => ObservableOperator<TA, TB>;
@@ -337,10 +324,6 @@ declare const onNotify: <T>(onNotify: SideEffect1<T>) => ObservableOperator<T, T
  * @param f
  */
 declare const onSubscribe: <T>(f: Factory<DisposableOrTeardown | void>) => ObservableOperator<T, T>;
-declare const pairwise: <T>() => ObservableOperator<T, [
-    Option<T>,
-    T
-]>;
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
  *
@@ -351,7 +334,6 @@ declare const pairwise: <T>() => ObservableOperator<T, [
 declare const publish: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
-declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
 /**
  * Returns an `ObservableLike` that applies the predicate function each time the source
  * completes to determine if the subscription should be renewed.
@@ -380,7 +362,6 @@ declare function retry<T>(): ObservableOperator<T, T>;
  * @param predicate
  */
 declare function retry<T>(predicate: Function2<number, unknown, boolean>): ObservableOperator<T, T>;
-declare const scan: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
 /**
  * Returns the `ObservableLike` that applies an asynchronous accumulator function
  * over the source, and emits each intermediate result.
@@ -402,14 +383,6 @@ declare const share: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => ObservableOperator<T, T>;
 /**
- * Returns an `ObservableLike` that skips the first count items emitted by the source.
- *
- * @param count The number of items emitted by source that should be skipped.
- */
-declare const skipFirst: <T>(options?: {
-    readonly count?: number;
-}) => ObservableOperator<T, T>;
-/**
  * Returns an `ObservableLike` instance that subscribes to the source on the specified `SchedulerLike`.
  *
  * @param scheduler `SchedulerLike` instance to use when subscribing to the source.
@@ -424,25 +397,8 @@ declare const switchAllT: ConcatAll<ObservableLike<unknown>, Record<string, neve
 declare const takeFirst: <T>(options?: {
     readonly count?: number;
 }) => ObservableOperator<T, T>;
-/**
- * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
- *
- * @param count The maximum number of values to emit.
- */
-declare const takeLast: <T>(options?: {
-    readonly count?: number;
-}) => ObservableOperator<T, T>;
+declare const takeFirstT: TakeFirst<ObservableLike<unknown>>;
 declare const takeUntil: <T>(notifier: ObservableLike<unknown>) => ObservableOperator<T, T>;
-/**
- * Returns an `ObservableLike` which emits values emitted by the source as long
- * as each value satisfies the given predicate, and then completes as soon as
- * this predicate is not satisfied.
- *
- * @param predicate The predicate function.
- */
-declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
-    readonly inclusive?: boolean;
-}) => ObservableOperator<T, T>;
 /**
  * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
  *
@@ -692,4 +648,57 @@ declare type ObservableEffectMode = "batched" | "combine-latest";
  * interval -  Takes both the leading and trailing values.
  */
 declare type ThrottleMode = "first" | "last" | "interval";
-export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Observer, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, decodeWithCharset, defer, dispatchTo, distinctUntilChanged, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, sink, skipFirst, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+declare const decodeWithCharset: (charset?: string) => ObservableOperator<ArrayBuffer, string>;
+declare const decodeWithCharsetT: DecodeWithCharset<ObservableLike<unknown>>;
+/**
+ * Returns an `ObservableLike` that emits all items emitted by the source that
+ * are distinct by comparison from the previous item.
+ *
+ * @param equals Optional equality function that is used to compare
+ * if an item is distinct from the previous item.
+ */
+declare const distinctUntilChanged: <T>(options?: {
+    readonly equality?: Equality<T>;
+}) => ObservableOperator<T, T>;
+declare const distinctUntilChangedT: DistinctUntilChanged<ObservableLike<unknown>>;
+declare const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T>;
+declare const keepT: Keep<ObservableLike<unknown>>;
+declare const pairwise: <T>() => ObservableOperator<T, [
+    Option<T>,
+    T
+]>;
+declare const pairwiseT: Pairwise<ObservableLike<unknown>>;
+declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
+declare const reduceT: Reduce<ObservableLike<unknown>>;
+declare const scan: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
+declare const scanT: Scan<ObservableLike<unknown>>;
+/**
+ * Returns an `ObservableLike` that skips the first count items emitted by the source.
+ *
+ * @param count The number of items emitted by source that should be skipped.
+ */
+declare const skipFirst: <T>(options?: {
+    readonly count?: number;
+}) => ObservableOperator<T, T>;
+declare const skipFirstT: SkipFirst<ObservableLike<unknown>>;
+/**
+ * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
+ *
+ * @param count The maximum number of values to emit.
+ */
+declare const takeLast: <T>(options?: {
+    readonly count?: number;
+}) => ObservableOperator<T, T>;
+declare const takeLastT: TakeLast<ObservableLike<unknown>>;
+/**
+ * Returns an `ObservableLike` which emits values emitted by the source as long
+ * as each value satisfies the given predicate, and then completes as soon as
+ * this predicate is not satisfied.
+ *
+ * @param predicate The predicate function.
+ */
+declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
+    readonly inclusive?: boolean;
+}) => ObservableOperator<T, T>;
+declare const takeWhileT: TakeWhile<ObservableLike<unknown>>;
+export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Observer, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, retry, scan, scanAsync, scanT, share, sink, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

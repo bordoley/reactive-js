@@ -1,7 +1,39 @@
+import {
+  DecodeWithCharset,
+  DistinctUntilChanged,
+  Keep,
+  Pairwise,
+  Reduce,
+  Scan,
+  SkipFirst,
+  TakeLast,
+  TakeWhile,
+} from "./container";
 import { DisposableLike } from "./disposable";
-import { Function1, Function2 } from "./functions";
-import { Observer } from "./observable/observer";
-import { SourceLike } from "./source";
+import {
+  Equality,
+  Factory,
+  Function1,
+  Function2,
+  Predicate,
+  Reducer,
+} from "./functions";
+import { fromArrayT } from "./observable/fromArray";
+import { liftT } from "./observable/lift";
+import { Observer, sinkT } from "./observable/observer";
+import { Option, none } from "./option";
+import {
+  SourceLike,
+  createDecodeWithCharsetOperator,
+  createDistinctUntilChangedOperator,
+  createKeepOperator,
+  createPairwiseOperator,
+  createReduceOperator,
+  createScanOperator,
+  createSkipFirstOperator,
+  createTakeLastOperator,
+  createTakeWhileOperator,
+} from "./source";
 
 /**
  * The source of notifications which notifies a `ObserverLike` instance.
@@ -89,7 +121,6 @@ export { combineLatest, combineLatestWith } from "./observable/combineLatest";
 export { concat, concatT } from "./observable/concat";
 export { createObservable } from "./observable/createObservable";
 export { createSubject } from "./observable/createSubject";
-export { decodeWithCharset } from "./observable/decodeWithCharset";
 export { fromArray, fromArrayT } from "./observable/fromArray";
 export { fromDisposable } from "./observable/fromDisposable";
 export { fromEnumerable } from "./observable/fromEnumerable";
@@ -106,11 +137,8 @@ export { subscribe } from "./observable/subscribe";
 export { using } from "./observable/using";
 export { defer } from "./observable/observable";
 export { Observer, sink } from "./observable/observer";
-
 export { buffer } from "./observable/buffer";
 export { catchError } from "./observable/catchError";
-export { distinctUntilChanged } from "./observable/distinctUntilChanged";
-export { keep, keepT } from "./observable/keep";
 export { map, mapT } from "./observable/map";
 export { mapAsync } from "./observable/mapAsync";
 export {
@@ -123,20 +151,14 @@ export {
 } from "./observable/mergeAll";
 export { onNotify } from "./observable/onNotify";
 export { onSubscribe } from "./observable/onSubscribe";
-export { pairwise } from "./observable/pairwise";
 export { publish } from "./observable/publish";
-export { reduce } from "./observable/reduce";
 export { repeat, retry } from "./observable/repeat";
-export { scan } from "./observable/scan";
 export { scanAsync } from "./observable/scanAsync";
 export { share } from "./observable/share";
-export { skipFirst } from "./observable/skipFirst";
 export { subscribeOn } from "./observable/subscribeOn";
 export { switchAll, switchAllT } from "./observable/switchAll";
-export { takeFirst } from "./observable/takeFirst";
-export { takeLast } from "./observable/takeLast";
+export { takeFirst, takeFirstT } from "./observable/takeFirst";
 export { takeUntil } from "./observable/takeUntil";
-export { takeWhile } from "./observable/takeWhile";
 export { throttle } from "./observable/throttle";
 export { throwIfEmpty } from "./observable/throwIfEmpty";
 export { timeout, timeoutError } from "./observable/timeout";
@@ -148,3 +170,196 @@ export { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
 export { toEnumerable } from "./observable/toEnumerable";
 export { toRunnable } from "./observable/toRunnable";
 export { toPromise } from "./observable/toPromise";
+
+export const decodeWithCharset: (
+  charset?: string,
+) => ObservableOperator<ArrayBuffer, string> = createDecodeWithCharsetOperator(
+  { ...liftT, ...fromArrayT, ...sinkT },
+  class DecodeWithCharsetObserver extends Observer<ArrayBuffer> {
+    constructor(
+      readonly delegate: Observer<string>,
+      readonly textDecoder: TextDecoder,
+    ) {
+      super(delegate);
+    }
+  },
+);
+
+export const decodeWithCharsetT: DecodeWithCharset<ObservableLike<unknown>> = {
+  decodeWithCharset,
+};
+
+/**
+ * Returns an `ObservableLike` that emits all items emitted by the source that
+ * are distinct by comparison from the previous item.
+ *
+ * @param equals Optional equality function that is used to compare
+ * if an item is distinct from the previous item.
+ */
+export const distinctUntilChanged: <T>(options?: {
+  readonly equality?: Equality<T>;
+}) => ObservableOperator<T, T> = createDistinctUntilChangedOperator(
+  liftT,
+  class DistinctUntilChangedObserver<T> extends Observer<T> {
+    prev: Option<T> = none;
+    hasValue = false;
+
+    constructor(
+      readonly delegate: Observer<T>,
+      readonly equality: Equality<T>,
+    ) {
+      super(delegate);
+    }
+  },
+);
+
+export const distinctUntilChangedT: DistinctUntilChanged<
+  ObservableLike<unknown>
+> = {
+  distinctUntilChanged,
+};
+
+export const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T> =
+  createKeepOperator(
+    liftT,
+    class KeepObserver<T> extends Observer<T> {
+      constructor(
+        readonly delegate: Observer<T>,
+        readonly predicate: Predicate<T>,
+      ) {
+        super(delegate);
+      }
+    },
+  );
+
+export const keepT: Keep<ObservableLike<unknown>> = {
+  keep,
+};
+
+export const pairwise: <T>() => ObservableOperator<T, [Option<T>, T]> =
+  createPairwiseOperator(
+    liftT,
+    class PairwiseObserver<T> extends Observer<T> {
+      prev: Option<T>;
+      hasPrev = false;
+
+      constructor(readonly delegate: Observer<[Option<T>, T]>) {
+        super(delegate);
+      }
+    },
+  );
+
+export const pairwiseT: Pairwise<ObservableLike<unknown>> = {
+  pairwise,
+};
+
+export const reduce: <T, TAcc>(
+  reducer: Reducer<T, TAcc>,
+  initialValue: Factory<TAcc>,
+) => ObservableOperator<T, TAcc> = createReduceOperator(
+  { ...fromArrayT, ...liftT, ...sinkT },
+  class ReducerObserver<T, TAcc> extends Observer<T> {
+    constructor(
+      readonly delegate: Observer<TAcc>,
+      readonly reducer: Reducer<T, TAcc>,
+      public acc: TAcc,
+    ) {
+      super(delegate);
+    }
+  },
+);
+
+export const reduceT: Reduce<ObservableLike<unknown>> = {
+  reduce,
+};
+
+export const scan: <T, TAcc>(
+  reducer: Reducer<T, TAcc>,
+  initialValue: Factory<TAcc>,
+) => ObservableOperator<T, TAcc> = createScanOperator(
+  liftT,
+  class ScanObserver<T, TAcc> extends Observer<T> {
+    constructor(
+      readonly delegate: Observer<TAcc>,
+      readonly reducer: Reducer<T, TAcc>,
+      public acc: TAcc,
+    ) {
+      super(delegate);
+    }
+  },
+);
+
+export const scanT: Scan<ObservableLike<unknown>> = {
+  scan,
+};
+
+/**
+ * Returns an `ObservableLike` that skips the first count items emitted by the source.
+ *
+ * @param count The number of items emitted by source that should be skipped.
+ */
+export const skipFirst: <T>(options?: {
+  readonly count?: number;
+}) => ObservableOperator<T, T> = createSkipFirstOperator(
+  liftT,
+  class SkipFirstObserver<T> extends Observer<T> {
+    count = 0;
+
+    constructor(readonly delegate: Observer<T>, readonly skipCount: number) {
+      super(delegate);
+    }
+  },
+);
+
+export const skipFirstT: SkipFirst<ObservableLike<unknown>> = {
+  skipFirst,
+};
+
+/**
+ * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
+ *
+ * @param count The maximum number of values to emit.
+ */
+export const takeLast: <T>(options?: {
+  readonly count?: number;
+}) => ObservableOperator<T, T> = createTakeLastOperator(
+  { ...fromArrayT, ...liftT, ...sinkT },
+  class TakeLastObserver<T> extends Observer<T> {
+    readonly last: T[] = [];
+
+    constructor(readonly delegate: Observer<T>, readonly maxCount: number) {
+      super(delegate);
+    }
+  },
+);
+
+export const takeLastT: TakeLast<ObservableLike<unknown>> = {
+  takeLast,
+};
+
+/**
+ * Returns an `ObservableLike` which emits values emitted by the source as long
+ * as each value satisfies the given predicate, and then completes as soon as
+ * this predicate is not satisfied.
+ *
+ * @param predicate The predicate function.
+ */
+export const takeWhile: <T>(
+  predicate: Predicate<T>,
+  options?: { readonly inclusive?: boolean },
+) => ObservableOperator<T, T> = createTakeWhileOperator(
+  liftT,
+  class TakeWhileObserver<T> extends Observer<T> {
+    constructor(
+      readonly delegate: Observer<T>,
+      readonly predicate: Predicate<T>,
+      readonly inclusive: boolean,
+    ) {
+      super(delegate);
+    }
+  },
+);
+
+export const takeWhileT: TakeWhile<ObservableLike<unknown>> = {
+  takeWhile,
+};

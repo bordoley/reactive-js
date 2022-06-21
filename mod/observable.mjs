@@ -1,16 +1,14 @@
 /// <reference types="./observable.d.ts" />
-import { empty, fromValue, concatMap, throws } from './container.mjs';
 import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown, bindDisposables } from './disposable.mjs';
 import { pipe, raise, ignore, arrayEquality, defer as defer$1, compose, returns } from './functions.mjs';
-import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
-import { AbstractSource, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './source.mjs';
+import { AbstractSource, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './source.mjs';
 import { __DEV__ } from './env.mjs';
+import { none, isNone, isSome } from './option.mjs';
+import { empty, fromValue, concatMap, throws } from './container.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
-
-const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
 
 class ScheduledObservable extends AbstractSource {
     constructor(f, isSynchronous, delay) {
@@ -134,6 +132,38 @@ const sink = (observer) => observable => observable.observe(observer);
 const sinkT = {
     sink,
 };
+
+class LiftedObservable extends AbstractSource {
+    constructor(source, operators, isSynchronous) {
+        super();
+        this.source = source;
+        this.operators = operators;
+        this.isSynchronous = isSynchronous;
+    }
+    observe(observer) {
+        const liftedSubscrber = pipe(observer, ...this.operators);
+        pipe(this.source, sink(liftedSubscrber));
+    }
+}
+/**
+ * Creates a new `ObservableLike` which applies the provided the operator function to
+ * observer when the source is subscribed to.
+ *
+ * @param operator The operator function to apply.
+ */
+const lift = (operator) => source => {
+    const sourceSource = source instanceof LiftedObservable ? source.source : source;
+    const allFunctions = source instanceof LiftedObservable
+        ? [operator, ...source.operators]
+        : [operator];
+    const isSynchronous = source.isSynchronous && operator.isSynchronous;
+    return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
+};
+const liftT = {
+    lift,
+};
+
+const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
 
 class DefaultObserver extends Observer {
     constructor(scheduler, onNotify, onNotifyThis) {
@@ -584,44 +614,6 @@ const createSubject = (options = {}) => {
     return new SubjectImpl(replay);
 };
 
-class LiftedObservable extends AbstractSource {
-    constructor(source, operators, isSynchronous) {
-        super();
-        this.source = source;
-        this.operators = operators;
-        this.isSynchronous = isSynchronous;
-    }
-    observe(observer) {
-        const liftedSubscrber = pipe(observer, ...this.operators);
-        pipe(this.source, sink(liftedSubscrber));
-    }
-}
-/**
- * Creates a new `ObservableLike` which applies the provided the operator function to
- * observer when the source is subscribed to.
- *
- * @param operator The operator function to apply.
- */
-const lift = (operator) => source => {
-    const sourceSource = source instanceof LiftedObservable ? source.source : source;
-    const allFunctions = source instanceof LiftedObservable
-        ? [operator, ...source.operators]
-        : [operator];
-    const isSynchronous = source.isSynchronous && operator.isSynchronous;
-    return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
-};
-const liftT = {
-    lift,
-};
-
-const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftT, ...fromArrayT, ...sinkT }, class DecodeWithCharsetObserver extends Observer {
-    constructor(delegate, textDecoder) {
-        super(delegate);
-        this.delegate = delegate;
-        this.textDecoder = textDecoder;
-    }
-});
-
 const fromDisposable = (disposable) => createObservable(dispatcher => {
     addDisposable(disposable, dispatcher);
 });
@@ -888,34 +880,6 @@ const catchError = (onError) => {
     return lift(operator);
 };
 
-/**
- * Returns an `ObservableLike` that emits all items emitted by the source that
- * are distinct by comparison from the previous item.
- *
- * @param equals Optional equality function that is used to compare
- * if an item is distinct from the previous item.
- */
-const distinctUntilChanged = createDistinctUntilChangedOperator(liftT, class DistinctUntilChangedObserver extends Observer {
-    constructor(delegate, equality) {
-        super(delegate);
-        this.delegate = delegate;
-        this.equality = equality;
-        this.prev = none;
-        this.hasValue = false;
-    }
-});
-
-const keep = createKeepOperator(liftT, class KeepObserver extends Observer {
-    constructor(delegate, predicate) {
-        super(delegate);
-        this.delegate = delegate;
-        this.predicate = predicate;
-    }
-});
-const keepT = {
-    keep,
-};
-
 const map = createMapOperator(liftT, class MapObserver extends Observer {
     constructor(delegate, mapper) {
         super(delegate);
@@ -1110,14 +1074,6 @@ class OnSubscribeObservable extends AbstractSource {
  */
 const onSubscribe = (f) => observable => new OnSubscribeObservable(observable, f);
 
-const pairwise = createPairwiseOperator(liftT, class PairwiseObserver extends Observer {
-    constructor(delegate) {
-        super(delegate);
-        this.delegate = delegate;
-        this.hasPrev = false;
-    }
-});
-
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
  *
@@ -1131,15 +1087,6 @@ const publish = (scheduler, options) => observable => {
     bindDisposables(srcSubscription, subject);
     return subject;
 };
-
-const reduce = createReduceOperator({ ...fromArrayT, ...liftT, ...sinkT }, class ReducerObserver extends Observer {
-    constructor(delegate, reducer, acc) {
-        super(delegate);
-        this.delegate = delegate;
-        this.reducer = reducer;
-        this.acc = acc;
-    }
-});
 
 const createRepeatObserver = (delegate, observable, shouldRepeat) => {
     const observer = createDelegatingObserver(delegate);
@@ -1189,15 +1136,6 @@ function retry(predicate) {
     return repeatObs(retryPredicate);
 }
 
-const scan = createScanOperator(liftT, class ScanObserver extends Observer {
-    constructor(delegate, reducer, acc) {
-        super(delegate);
-        this.delegate = delegate;
-        this.reducer = reducer;
-        this.acc = acc;
-    }
-});
-
 const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftT }, class TakeFirstObserver extends Observer {
     constructor(delegate, maxCount) {
         super(delegate);
@@ -1206,6 +1144,9 @@ const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftT }, class Tak
         this.count = 0;
     }
 });
+const takeFirstT = {
+    takeFirst,
+};
 
 const notifyDelegate = (observer) => {
     if (observer.queue.length > 0 && observer.hasLatest) {
@@ -1312,20 +1253,6 @@ class SharedObservable extends AbstractSource {
 const share = (scheduler, options) => observable => new SharedObservable(observable, publish(scheduler, options));
 
 /**
- * Returns an `ObservableLike` that skips the first count items emitted by the source.
- *
- * @param count The number of items emitted by source that should be skipped.
- */
-const skipFirst = createSkipFirstOperator(liftT, class SkipFirstObserver extends Observer {
-    constructor(delegate, skipCount) {
-        super(delegate);
-        this.delegate = delegate;
-        this.skipCount = skipCount;
-        this.count = 0;
-    }
-});
-
-/**
  * Returns an `ObservableLike` instance that subscribes to the source on the specified `SchedulerLike`.
  *
  * @param scheduler `SchedulerLike` instance to use when subscribing to the source.
@@ -1333,20 +1260,6 @@ const skipFirst = createSkipFirstOperator(liftT, class SkipFirstObserver extends
 const subscribeOn = (scheduler) => observable => createObservable(dispatcher => {
     const subscription = pipe(observable, subscribe(scheduler, dispatcher.dispatch, dispatcher));
     bindDisposables(subscription, dispatcher);
-});
-
-/**
- * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
- *
- * @param count The maximum number of values to emit.
- */
-const takeLast = createTakeLastOperator({ ...fromArrayT, ...liftT, ...sinkT }, class TakeLastObserver extends Observer {
-    constructor(delegate, maxCount) {
-        super(delegate);
-        this.delegate = delegate;
-        this.maxCount = maxCount;
-        this.last = [];
-    }
 });
 
 const takeUntil = (notifier) => {
@@ -1360,22 +1273,6 @@ const takeUntil = (notifier) => {
     operator.isSynchronous = false;
     return lift(operator);
 };
-
-/**
- * Returns an `ObservableLike` which emits values emitted by the source as long
- * as each value satisfies the given predicate, and then completes as soon as
- * this predicate is not satisfied.
- *
- * @param predicate The predicate function.
- */
-const takeWhile = createTakeWhileOperator(liftT, class TakeWhileObserver extends Observer {
-    constructor(delegate, predicate, inclusive) {
-        super(delegate);
-        this.delegate = delegate;
-        this.predicate = predicate;
-        this.inclusive = inclusive;
-    }
-});
 
 const setupDurationSubscription$1 = (observer, next) => {
     observer.durationSubscription.inner = pipe(observer.durationFunction(next), subscribe(observer, observer.onNotify));
@@ -1801,5 +1698,126 @@ const toPromise = (scheduler) => observable => new Promise((resolve, reject) => 
 });
 
 const type = undefined;
+const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftT, ...fromArrayT, ...sinkT }, class DecodeWithCharsetObserver extends Observer {
+    constructor(delegate, textDecoder) {
+        super(delegate);
+        this.delegate = delegate;
+        this.textDecoder = textDecoder;
+    }
+});
+const decodeWithCharsetT = {
+    decodeWithCharset,
+};
+/**
+ * Returns an `ObservableLike` that emits all items emitted by the source that
+ * are distinct by comparison from the previous item.
+ *
+ * @param equals Optional equality function that is used to compare
+ * if an item is distinct from the previous item.
+ */
+const distinctUntilChanged = createDistinctUntilChangedOperator(liftT, class DistinctUntilChangedObserver extends Observer {
+    constructor(delegate, equality) {
+        super(delegate);
+        this.delegate = delegate;
+        this.equality = equality;
+        this.prev = none;
+        this.hasValue = false;
+    }
+});
+const distinctUntilChangedT = {
+    distinctUntilChanged,
+};
+const keep = createKeepOperator(liftT, class KeepObserver extends Observer {
+    constructor(delegate, predicate) {
+        super(delegate);
+        this.delegate = delegate;
+        this.predicate = predicate;
+    }
+});
+const keepT = {
+    keep,
+};
+const pairwise = createPairwiseOperator(liftT, class PairwiseObserver extends Observer {
+    constructor(delegate) {
+        super(delegate);
+        this.delegate = delegate;
+        this.hasPrev = false;
+    }
+});
+const pairwiseT = {
+    pairwise,
+};
+const reduce = createReduceOperator({ ...fromArrayT, ...liftT, ...sinkT }, class ReducerObserver extends Observer {
+    constructor(delegate, reducer, acc) {
+        super(delegate);
+        this.delegate = delegate;
+        this.reducer = reducer;
+        this.acc = acc;
+    }
+});
+const reduceT = {
+    reduce,
+};
+const scan = createScanOperator(liftT, class ScanObserver extends Observer {
+    constructor(delegate, reducer, acc) {
+        super(delegate);
+        this.delegate = delegate;
+        this.reducer = reducer;
+        this.acc = acc;
+    }
+});
+const scanT = {
+    scan,
+};
+/**
+ * Returns an `ObservableLike` that skips the first count items emitted by the source.
+ *
+ * @param count The number of items emitted by source that should be skipped.
+ */
+const skipFirst = createSkipFirstOperator(liftT, class SkipFirstObserver extends Observer {
+    constructor(delegate, skipCount) {
+        super(delegate);
+        this.delegate = delegate;
+        this.skipCount = skipCount;
+        this.count = 0;
+    }
+});
+const skipFirstT = {
+    skipFirst,
+};
+/**
+ * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
+ *
+ * @param count The maximum number of values to emit.
+ */
+const takeLast = createTakeLastOperator({ ...fromArrayT, ...liftT, ...sinkT }, class TakeLastObserver extends Observer {
+    constructor(delegate, maxCount) {
+        super(delegate);
+        this.delegate = delegate;
+        this.maxCount = maxCount;
+        this.last = [];
+    }
+});
+const takeLastT = {
+    takeLast,
+};
+/**
+ * Returns an `ObservableLike` which emits values emitted by the source as long
+ * as each value satisfies the given predicate, and then completes as soon as
+ * this predicate is not satisfied.
+ *
+ * @param predicate The predicate function.
+ */
+const takeWhile = createTakeWhileOperator(liftT, class TakeWhileObserver extends Observer {
+    constructor(delegate, predicate, inclusive) {
+        super(delegate);
+        this.delegate = delegate;
+        this.predicate = predicate;
+        this.inclusive = inclusive;
+    }
+});
+const takeWhileT = {
+    takeWhile,
+};
 
-export { Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, decodeWithCharset, defer, dispatchTo, distinctUntilChanged, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify$2 as onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, sink, skipFirst, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify$2 as onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, retry, scan, scanAsync, scanT, share, sink, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
