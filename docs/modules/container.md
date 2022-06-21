@@ -14,6 +14,7 @@
 - [ConcatAll](../interfaces/container.ConcatAll.md)
 - [Container](../interfaces/container.Container.md)
 - [ContainerLike](../interfaces/container.ContainerLike.md)
+- [DecodeWithCharset](../interfaces/container.DecodeWithCharset.md)
 - [DistinctUntilChanged](../interfaces/container.DistinctUntilChanged.md)
 - [FromArray](../interfaces/container.FromArray.md)
 - [FromArrayOptions](../interfaces/container.FromArrayOptions.md)

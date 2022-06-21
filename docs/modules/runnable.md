@@ -19,8 +19,18 @@
 
 ### Variables
 
+- [decodeWithCharsetT](runnable.md#decodewithcharsett)
+- [distinctUntilChangedT](runnable.md#distinctuntilchangedt)
 - [fromArrayT](runnable.md#fromarrayt)
 - [keepT](runnable.md#keept)
+- [mapT](runnable.md#mapt)
+- [pairwiseT](runnable.md#pairwiset)
+- [reduceT](runnable.md#reducet)
+- [scanT](runnable.md#scant)
+- [skipFirstT](runnable.md#skipfirstt)
+- [takeFirstT](runnable.md#takefirstt)
+- [takeLastT](runnable.md#takelastt)
+- [takeWhileT](runnable.md#takewhilet)
 - [type](runnable.md#type)
 
 ### Functions
@@ -69,6 +79,18 @@
 
 ## Variables
 
+### decodeWithCharsetT
+
+• `Const` **decodeWithCharsetT**: [`DecodeWithCharset`](../interfaces/container.DecodeWithCharset.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
+### distinctUntilChangedT
+
+• `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](../interfaces/container.DistinctUntilChanged.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
 ### fromArrayT
 
 • `Const` **fromArrayT**: [`FromArray`](../interfaces/container.FromArray.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\>
@@ -78,6 +100,54 @@ ___
 ### keepT
 
 • `Const` **keepT**: [`Keep`](../interfaces/container.Keep.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
+### mapT
+
+• `Const` **mapT**: [`Map`](../interfaces/container.Map.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
+### pairwiseT
+
+• `Const` **pairwiseT**: [`Pairwise`](../interfaces/container.Pairwise.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
+### reduceT
+
+• `Const` **reduceT**: [`Reduce`](../interfaces/container.Reduce.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
+### scanT
+
+• `Const` **scanT**: [`Scan`](../interfaces/container.Scan.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
+### skipFirstT
+
+• `Const` **skipFirstT**: [`SkipFirst`](../interfaces/container.SkipFirst.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
+### takeFirstT
+
+• `Const` **takeFirstT**: [`TakeFirst`](../interfaces/container.TakeFirst.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
+### takeLastT
+
+• `Const` **takeLastT**: [`TakeLast`](../interfaces/container.TakeLast.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
+### takeWhileT
+
+• `Const` **takeWhileT**: [`TakeWhile`](../interfaces/container.TakeWhile.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
 
 ___
 
@@ -408,7 +478,7 @@ ___
 
 ▸ **onNotify**<`T`\>(`onNotify`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
 
-Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
+Returns an `RunnableLike` that forwards notifications to the provided `onNotify` function.
 
 #### Type parameters
 

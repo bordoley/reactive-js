@@ -72,6 +72,13 @@ export interface ConcatAll<C extends ContainerLike, O = Record<string, never>>
   ) => ContainerOperator<C, ContainerOf<C, T>, T>;
 }
 
+export interface DecodeWithCharset<C extends ContainerLike>
+  extends Container<C> {
+  decodeWithCharset(
+    charset?: string,
+  ): ContainerOperator<C, ArrayBuffer, string>;
+}
+
 export interface DistinctUntilChanged<C extends ContainerLike>
   extends Container<C> {
   distinctUntilChanged<T>(options?: {
