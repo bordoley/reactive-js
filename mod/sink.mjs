@@ -25,11 +25,21 @@ function notifyKeep(next) {
         this.delegate.notify(next);
     }
 }
-function notifyMap(next) {
-    this.assertState();
-    const mapped = this.mapper(next);
-    this.delegate.notify(mapped);
-}
+const createMapOperator = (m, MapSink) => {
+    MapSink.prototype.notify = function notifyMap(next) {
+        this.assertState();
+        const mapped = this.mapper(next);
+        this.delegate.notify(mapped);
+    };
+    return (mapper) => {
+        const operator = (delegate) => {
+            const sink = new MapSink(delegate, mapper);
+            bindDisposables(sink, delegate);
+            return sink;
+        };
+        return m.lift(operator);
+    };
+};
 const createOnNotifyOperator = (m, OnNotifySink) => {
     OnNotifySink.prototype.notify = function notifyOnNotify(next) {
         this.assertState();
@@ -177,4 +187,4 @@ const createTakeWhileOperator = (m, TakeWhileSink) => {
     };
 };
 
-export { createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap };
+export { createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep };

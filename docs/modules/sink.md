@@ -17,6 +17,7 @@
 
 ### Functions
 
+- [createMapOperator](sink.md#createmapoperator)
 - [createOnNotifyOperator](sink.md#createonnotifyoperator)
 - [createPairwiseOperator](sink.md#createpairwiseoperator)
 - [createReduceOperator](sink.md#createreduceoperator)
@@ -28,7 +29,6 @@
 - [notifyDecodeWithCharset](sink.md#notifydecodewithcharset)
 - [notifyDistinctUntilChanged](sink.md#notifydistinctuntilchanged)
 - [notifyKeep](sink.md#notifykeep)
-- [notifyMap](sink.md#notifymap)
 
 ## Type Aliases
 
@@ -44,6 +44,48 @@
 | `T` | `T` |
 
 ## Functions
+
+### createMapOperator
+
+▸ **createMapOperator**<`C`\>(`m`, `MapSink`): <TA_1, TB_1\>(`mapper`: [`Function1`](functions.md#function1)<`TA_1`, `TB_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `TA_1`, `TB_1`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
+| `MapSink` | <TA, TB\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `TB`\>, `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`SinkOf`](sink.md#sinkof)<`C`, `TA`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`TB`\> ; `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>  } |
+
+#### Returns
+
+`fn`
+
+▸ <`TA_1`, `TB_1`\>(`mapper`): [`ContainerOperator`](container.md#containeroperator)<`C`, `TA_1`, `TB_1`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `TA_1` |
+| `TB_1` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA_1`, `TB_1`\> |
+
+##### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `TA_1`, `TB_1`\>
+
+___
 
 ### createOnNotifyOperator
 
@@ -432,30 +474,6 @@ ___
 | :------ | :------ |
 | `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
 | `next` | `T` |
-
-#### Returns
-
-`void`
-
-___
-
-### notifyMap
-
-▸ **notifyMap**<`TA`, `TB`\>(`this`, `next`): `void`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`TA`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`TB`\> ; `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>  } |
-| `next` | `TA` |
 
 #### Returns
 

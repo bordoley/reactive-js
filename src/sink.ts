@@ -112,17 +112,37 @@ export function notifyKeep<T>(
   }
 }
 
-export function notifyMap<TA, TB>(
-  this: SinkLike<TA> & {
+export const createMapOperator = <C extends SourceLike>(
+  m: Lift<C>,
+  MapSink: new <TA, TB>(
+    delegate: SinkOf<C, TB>,
+    mapper: Function1<TA, TB>,
+  ) => SinkOf<C, TA> & {
     readonly delegate: SinkLike<TB>;
     readonly mapper: Function1<TA, TB>;
   },
-  next: TA,
-) {
-  this.assertState();
-  const mapped = this.mapper(next);
-  this.delegate.notify(mapped);
-}
+): (<TA, TB>(mapper: Function1<TA, TB>) => ContainerOperator<C, TA, TB>) => {
+  MapSink.prototype.notify = function notifyMap<TA, TB>(
+    this: SinkOf<C, TA> & {
+      readonly delegate: SinkLike<TB>;
+      readonly mapper: Function1<TA, TB>;
+    },
+    next: TA,
+  ) {
+    this.assertState();
+    const mapped = this.mapper(next);
+    this.delegate.notify(mapped);
+  };
+
+  return <TA, TB>(mapper: Function1<TA, TB>) => {
+    const operator = (delegate: SinkOf<C, TB>): SinkOf<C, TA> => {
+      const sink = new MapSink(delegate, mapper);
+      bindDisposables(sink, delegate);
+      return sink;
+    };
+    return m.lift(operator);
+  };
+};
 
 export const createOnNotifyOperator = <C extends SourceLike>(
   m: Lift<C>,
