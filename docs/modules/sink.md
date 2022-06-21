@@ -17,6 +17,7 @@
 
 ### Functions
 
+- [createOnNotifyOperator](sink.md#createonnotifyoperator)
 - [createPairwiseOperator](sink.md#createpairwiseoperator)
 - [createReduceOperator](sink.md#createreduceoperator)
 - [createScanOperator](sink.md#createscanoperator)
@@ -28,7 +29,6 @@
 - [notifyDistinctUntilChanged](sink.md#notifydistinctuntilchanged)
 - [notifyKeep](sink.md#notifykeep)
 - [notifyMap](sink.md#notifymap)
-- [notifyOnNotify](sink.md#notifyonnotify)
 
 ## Type Aliases
 
@@ -45,9 +45,9 @@
 
 ## Functions
 
-### createPairwiseOperator
+### createOnNotifyOperator
 
-▸ **createPairwiseOperator**<`C`\>(`m`, `PairwiseObserver`): <T_1\>() => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, [[`Option`](option.md#option)<`T_1`\>, `T_1`]\>
+▸ **createOnNotifyOperator**<`C`\>(`m`, `OnNotifySink`): <T_1\>(`onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
@@ -60,7 +60,48 @@
 | Name | Type |
 | :------ | :------ |
 | `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
-| `PairwiseObserver` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, [[`Option`](option.md#option)<`T`\>, `T`]\>) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](sink.md#sinkof)<`C`, [[`Option`](option.md#option)<`T`\>, `T`]\> ; `hasPrev`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
+| `OnNotifySink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>  } |
+
+#### Returns
+
+`fn`
+
+▸ <`T_1`\>(`onNotify`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T_1` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onNotify` | [`SideEffect1`](functions.md#sideeffect1)<`T_1`\> |
+
+##### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+___
+
+### createPairwiseOperator
+
+▸ **createPairwiseOperator**<`C`\>(`m`, `PairwiseSink`): <T_1\>() => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, [[`Option`](option.md#option)<`T_1`\>, `T_1`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
+| `PairwiseSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, [[`Option`](option.md#option)<`T`\>, `T`]\>) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](sink.md#sinkof)<`C`, [[`Option`](option.md#option)<`T`\>, `T`]\> ; `hasPrev`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
 
 #### Returns
 
@@ -415,29 +456,6 @@ ___
 | :------ | :------ |
 | `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`TA`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`TB`\> ; `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>  } |
 | `next` | `TA` |
-
-#### Returns
-
-`void`
-
-___
-
-### notifyOnNotify
-
-▸ **notifyOnNotify**<`T`\>(`this`, `next`): `void`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>  } |
-| `next` | `T` |
 
 #### Returns
 

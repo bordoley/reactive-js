@@ -30,13 +30,23 @@ function notifyMap(next) {
     const mapped = this.mapper(next);
     this.delegate.notify(mapped);
 }
-function notifyOnNotify(next) {
-    this.assertState();
-    this.onNotify(next);
-    this.delegate.notify(next);
-}
-const createPairwiseOperator = (m, PairwiseObserver) => {
-    PairwiseObserver.prototype.notify = function notifyPairwise(value) {
+const createOnNotifyOperator = (m, OnNotifySink) => {
+    OnNotifySink.prototype.notify = function notifyOnNotify(next) {
+        this.assertState();
+        this.onNotify(next);
+        this.delegate.notify(next);
+    };
+    return (onNotify) => {
+        const operator = (delegate) => {
+            const sink = new OnNotifySink(delegate, onNotify);
+            bindDisposables(sink, delegate);
+            return sink;
+        };
+        return m.lift(operator);
+    };
+};
+const createPairwiseOperator = (m, PairwiseSink) => {
+    PairwiseSink.prototype.notify = function notifyPairwise(value) {
         this.assertState();
         const prev = this.hasPrev ? this.prev : none;
         this.hasPrev = true;
@@ -45,9 +55,9 @@ const createPairwiseOperator = (m, PairwiseObserver) => {
     };
     return () => {
         const operator = (delegate) => {
-            const observer = new PairwiseObserver(delegate);
-            bindDisposables(observer, delegate);
-            return observer;
+            const sink = new PairwiseSink(delegate);
+            bindDisposables(sink, delegate);
+            return sink;
         };
         return m.lift(operator);
     };
@@ -167,4 +177,4 @@ const createTakeWhileOperator = (m, TakeWhileSink) => {
     };
 };
 
-export { createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify };
+export { createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap };

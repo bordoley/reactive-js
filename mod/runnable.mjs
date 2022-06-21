@@ -3,7 +3,7 @@ import { raise, pipe, strictEquality, compose, negate, alwaysTrue, isEqualTo, id
 import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 import { AbstractContainer, fromValue } from './container.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 class Sink extends AbstractDisposable {
@@ -298,27 +298,18 @@ const map = (mapper) => {
     return lift(operator);
 };
 
-class OnNotifySink extends Sink {
-    constructor(delegate, onNotify) {
-        super();
-        this.delegate = delegate;
-        this.onNotify = onNotify;
-    }
-}
-OnNotifySink.prototype.notify = notifyOnNotify;
 /**
  * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
  *
  * @param onNotify The function that is invoked when the observable source produces values.
  */
-function onNotify(onNotify) {
-    const operator = (delegate) => {
-        const sink = new OnNotifySink(delegate, onNotify);
-        bindDisposables(sink, delegate);
-        return sink;
-    };
-    return lift(operator);
-}
+const onNotify = createOnNotifyOperator(liftT, class OnNotifySink extends Sink {
+    constructor(delegate, onNotify) {
+        super();
+        this.delegate = delegate;
+        this.onNotify = onNotify;
+    }
+});
 
 const pairwise = createPairwiseOperator(liftT, class PairwiseSink extends Sink {
     constructor(delegate) {
