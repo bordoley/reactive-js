@@ -1,9 +1,9 @@
 import { Factory, Reducer } from "../functions";
+import { RunnableOperator } from "../runnable";
 import { createReduceOperator } from "../source";
-import { Sink, sinkT } from "./sinks";
 import { fromArrayT } from "./fromArray";
 import { liftT } from "./lift";
-import { RunnableOperator } from "../runnable";
+import { Sink, sinkT } from "./sinks";
 
 export const reduce: <T, TAcc>(
   reducer: Reducer<T, TAcc>,

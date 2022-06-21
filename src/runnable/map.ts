@@ -1,9 +1,9 @@
+import { Map } from "../container";
 import { Function1 } from "../functions";
 import { RunnableLike, RunnableOperator } from "../runnable";
 import { createMapOperator } from "../source";
 import { liftT } from "./lift";
 import { Sink } from "./sinks";
-import { Map } from "../container";
 
 export const map: <TA, TB>(
   mapper: Function1<TA, TB>,

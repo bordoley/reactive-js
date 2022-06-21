@@ -1,30 +1,30 @@
 import {
+  AbstractContainer,
+  Container,
   ContainerLike,
   ContainerOf,
+  ContainerOperator,
   FromArray,
   empty,
-  ContainerOperator,
-  Container,
   fromValue,
-  AbstractContainer,
 } from "./container";
 import {
   DisposableLike,
   addDisposable,
   addOnDisposedWithError,
-  addTeardown,
-  dispose,
-  bindDisposables,
   addOnDisposedWithoutErrorTeardown,
+  addTeardown,
+  bindDisposables,
+  dispose,
 } from "./disposable";
 import {
   Equality,
+  Factory,
   Function1,
   Predicate,
   Reducer,
   SideEffect1,
   pipe,
-  Factory,
   strictEquality,
 } from "./functions";
 import { Option, none } from "./option";
