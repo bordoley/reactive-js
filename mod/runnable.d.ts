@@ -38,7 +38,7 @@ declare const map: <TA, TB>(mapper: Function1<TA, TB>) => RunnableOperator<TA, T
  *
  * @param onNotify The function that is invoked when the observable source produces values.
  */
-declare function onNotify<T>(onNotify: SideEffect1<T>): RunnableOperator<T, T>;
+declare const onNotify: <T>(onNotify: SideEffect1<T>) => RunnableOperator<T, T>;
 declare const pairwise: <T>() => RunnableOperator<T, [
     Option<T>,
     T

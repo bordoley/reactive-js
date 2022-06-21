@@ -343,7 +343,7 @@ declare const exhaustT: ConcatAll<ObservableLike<unknown>, Record<string, never>
  *
  * @param onNotify The function that is invoked when the observable source produces values.
  */
-declare function onNotify<T>(onNotify: SideEffect1<T>): ObservableOperator<T, T>;
+declare const onNotify: <T>(onNotify: SideEffect1<T>) => ObservableOperator<T, T>;
 /**
  * Executes a side-effect when the observable is subscribed.
  * @param f

@@ -31,10 +31,10 @@ export interface SinkLike<T> extends DisposableLike, ContainerLike {
   assertState(this: SinkLike<T>): void;
 
   /**
-   * Notifies the the observer of the next notification produced by the observable source.
+   * Notifies the the sink of the next notification produced by the observable source.
    *
    * Note: The `notify` method must be called from within a `SchedulerContinuationLike`
-   * scheduled using the observer's `schedule` method.
+   * scheduled using the sink's `schedule` method.
    *
    * @param next The next notification value.
    */
@@ -124,31 +124,48 @@ export function notifyMap<TA, TB>(
   this.delegate.notify(mapped);
 }
 
-export function notifyOnNotify<T>(
-  this: SinkLike<T> & {
+export const createOnNotifyOperator = <C extends SourceLike>(
+  m: Lift<C>,
+  OnNotifySink: new <T>(
+    delegate: SinkOf<C, T>,
+    onNotify: SideEffect1<T>,
+  ) => SinkOf<C, T> & {
     readonly delegate: SinkLike<T>;
     readonly onNotify: SideEffect1<T>;
   },
-  next: T,
-) {
-  this.assertState();
+): (<T>(onNotify: SideEffect1<T>) => ContainerOperator<C, T, T>) => {
+  OnNotifySink.prototype.notify = function notifyOnNotify<T>(
+    this: SinkLike<T> & {
+      readonly delegate: SinkLike<T>;
+      readonly onNotify: SideEffect1<T>;
+    },
+    next: T,
+  ) {
+    this.assertState();
 
-  this.onNotify(next);
-  this.delegate.notify(next);
-}
+    this.onNotify(next);
+    this.delegate.notify(next);
+  };
+
+  return <T>(onNotify: SideEffect1<T>) => {
+    const operator = (delegate: SinkOf<C, T>): SinkOf<C, T> => {
+      const sink = new OnNotifySink(delegate, onNotify);
+      bindDisposables(sink, delegate);
+      return sink;
+    };
+    return m.lift(operator);
+  };
+};
 
 export const createPairwiseOperator = <C extends SourceLike>(
   m: Lift<C>,
-  PairwiseObserver: new <T>(delegate: SinkOf<C, [Option<T>, T]>) => SinkOf<
-    C,
-    T
-  > & {
+  PairwiseSink: new <T>(delegate: SinkOf<C, [Option<T>, T]>) => SinkOf<C, T> & {
     readonly delegate: SinkOf<C, [Option<T>, T]>;
     prev: Option<T>;
     hasPrev: boolean;
   },
 ): (<T>() => ContainerOperator<C, T, [Option<T>, T]>) => {
-  PairwiseObserver.prototype.notify = function notifyPairwise<T>(
+  PairwiseSink.prototype.notify = function notifyPairwise<T>(
     this: SinkLike<T> & {
       readonly delegate: SinkLike<[Option<T>, T]>;
       prev: Option<T>;
@@ -167,9 +184,9 @@ export const createPairwiseOperator = <C extends SourceLike>(
 
   return <T>() => {
     const operator = (delegate: SinkOf<C, [Option<T>, T]>): SinkOf<C, T> => {
-      const observer = new PairwiseObserver(delegate);
-      bindDisposables(observer, delegate);
-      return observer;
+      const sink = new PairwiseSink(delegate);
+      bindDisposables(sink, delegate);
+      return sink;
     };
     return m.lift(operator);
   };

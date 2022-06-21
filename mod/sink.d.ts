@@ -5,10 +5,10 @@ import { Option } from "./option.mjs";
 interface SinkLike<T> extends DisposableLike, ContainerLike {
     assertState(this: SinkLike<T>): void;
     /**
-     * Notifies the the observer of the next notification produced by the observable source.
+     * Notifies the the sink of the next notification produced by the observable source.
      *
      * Note: The `notify` method must be called from within a `SchedulerContinuationLike`
-     * scheduled using the observer's `schedule` method.
+     * scheduled using the sink's `schedule` method.
      *
      * @param next The next notification value.
      */
@@ -49,11 +49,11 @@ declare function notifyMap<TA, TB>(this: SinkLike<TA> & {
     readonly delegate: SinkLike<TB>;
     readonly mapper: Function1<TA, TB>;
 }, next: TA): void;
-declare function notifyOnNotify<T>(this: SinkLike<T> & {
+declare const createOnNotifyOperator: <C extends SourceLike>(m: Lift<C>, OnNotifySink: new <T>(delegate: SinkOf<C, T>, onNotify: SideEffect1<T>) => SinkOf<C, T> & {
     readonly delegate: SinkLike<T>;
     readonly onNotify: SideEffect1<T>;
-}, next: T): void;
-declare const createPairwiseOperator: <C extends SourceLike>(m: Lift<C>, PairwiseObserver: new <T>(delegate: SinkOf<C, [
+}) => <T_1>(onNotify: SideEffect1<T_1>) => ContainerOperator<C, T_1, T_1>;
+declare const createPairwiseOperator: <C extends SourceLike>(m: Lift<C>, PairwiseSink: new <T>(delegate: SinkOf<C, [
     Option<T>,
     T
 ]>) => SinkOf<C, T> & {
@@ -103,4 +103,4 @@ declare const createTakeWhileOperator: <C extends SourceLike>(m: Lift<C>, TakeWh
 }) => <T_1>(predicate: Predicate<T_1>, options?: {
     readonly inclusive?: boolean;
 }) => ContainerOperator<C, T_1, T_1>;
-export { Lift, Sink, SinkLike, SinkOf, SourceLike, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify };
+export { Lift, Sink, SinkLike, SinkOf, SourceLike, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap };
