@@ -1,8 +1,8 @@
 import { Option } from "../option";
-import { Sink } from "./sinks";
+import { RunnableOperator } from "../runnable";
 import { createPairwiseOperator } from "../source";
 import { liftT } from "./lift";
-import { RunnableOperator } from "../runnable";
+import { Sink } from "./sinks";
 
 export const pairwise: <T>() => RunnableOperator<T, [Option<T>, T]> =
   createPairwiseOperator(
