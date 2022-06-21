@@ -99,18 +99,38 @@ export function notifyDistinctUntilChanged<T>(
   }
 }
 
-export function notifyKeep<T>(
-  this: SinkLike<T> & {
-    readonly delegate: SinkLike<T>;
+export const createKeepOperator = <C extends SourceLike>(
+  m: Lift<C>,
+  KeepSink: new <T>(delegate: SinkOf<C, T>, predicate: Predicate<T>) => SinkOf<
+    C,
+    T
+  > & {
+    readonly delegate: SinkOf<C, T>;
     readonly predicate: Predicate<T>;
   },
-  next: T,
-) {
-  this.assertState();
-  if (this.predicate(next)) {
-    this.delegate.notify(next);
-  }
-}
+): (<T>(predicate: Predicate<T>) => ContainerOperator<C, T, T>) => {
+  KeepSink.prototype.notify = function notifyKeep<T>(
+    this: SinkOf<C, T> & {
+      readonly delegate: SinkLike<T>;
+      readonly predicate: Predicate<T>;
+    },
+    next: T,
+  ) {
+    this.assertState();
+    if (this.predicate(next)) {
+      this.delegate.notify(next);
+    }
+  };
+
+  return <T>(predicate: Predicate<T>) => {
+    const operator = (delegate: SinkOf<C, T>): SinkOf<C, T> => {
+      const sink = new KeepSink(delegate, predicate);
+      bindDisposables(sink, delegate);
+      return sink;
+    };
+    return m.lift(operator);
+  };
+};
 
 export const createMapOperator = <C extends SourceLike>(
   m: Lift<C>,

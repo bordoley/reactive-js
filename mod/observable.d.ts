@@ -286,12 +286,6 @@ declare const catchError: <T>(onError: Function1<unknown, void | ObservableLike<
 declare const distinctUntilChanged: <T>(options?: {
     readonly equality?: Equality<T> | undefined;
 }) => ObservableOperator<T, T>;
-/**
- * Returns an `ObservableLike` that only emits items from the
- * source that satisfy the specified type predicate.
- *
- * @param predicate The predicate function.
- */
 declare const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T>;
 declare const keepT: Keep<ObservableLike<unknown>>;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => ObservableOperator<TA, TB>;
