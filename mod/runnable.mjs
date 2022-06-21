@@ -3,7 +3,7 @@ import { raise, pipe, strictEquality, compose, negate, alwaysTrue, isEqualTo, id
 import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 import { AbstractContainer, fromValue, empty } from './container.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, createTakeLastOperator, notifyTakeWhile } from './sink.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 class Sink extends AbstractDisposable {
@@ -79,6 +79,9 @@ const lift = (operator) => runnable => {
         ? [operator, ...runnable.operators]
         : [operator];
     return new LiftedRunnable(src, allFunctions);
+};
+const liftT = {
+    lift,
 };
 
 function concat(...runnables) {
@@ -451,24 +454,14 @@ const takeLast = createTakeLastOperator({ ...fromArrayT, lift, sink }, class Tak
     }
 });
 
-class TakeWhileSink extends Sink {
+const takeWhile = createTakeWhileOperator(liftT, class TakeWhileSink extends Sink {
     constructor(delegate, predicate, inclusive) {
         super();
         this.delegate = delegate;
         this.predicate = predicate;
         this.inclusive = inclusive;
     }
-}
-TakeWhileSink.prototype.notify = notifyTakeWhile;
-const takeWhile = (predicate, options = {}) => {
-    const { inclusive = false } = options;
-    const operator = (delegate) => {
-        const sink = new TakeWhileSink(delegate, predicate, inclusive);
-        bindDisposables(sink, delegate);
-        return sink;
-    };
-    return lift(operator);
-};
+});
 
 class ToArraySink extends Sink {
     constructor() {

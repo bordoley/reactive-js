@@ -1,4 +1,4 @@
-import { ContainerLike, ContainerOf, FromArray, FromArrayOptions } from "./container.mjs";
+import { ContainerLike, ContainerOf, FromArray, FromArrayOptions, ContainerOperator } from "./container.mjs";
 import { DisposableLike } from "./disposable.mjs";
 import { SideEffect1, Function1, Equality, Predicate, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
@@ -15,7 +15,7 @@ interface SinkLike<T> extends DisposableLike, ContainerLike {
     notify(this: SinkLike<T>, next: T): void;
 }
 interface SourceLike extends ContainerLike {
-    readonly sinkType: DisposableLike & ContainerLike;
+    readonly sinkType: DisposableLike & ContainerLike & SinkLike<unknown>;
 }
 declare type SinkOf<C extends SourceLike, T> = C extends {
     readonly sinkType: unknown;
@@ -83,14 +83,16 @@ declare function notifyTakeFirst<T>(this: SinkLike<T> & {
     count: number;
     readonly maxCount: number;
 }, next: T): void;
-declare const createTakeLastOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Sink<C> & Lift<C>, constructor: new <T>(delegate: SinkOf<C, T>, count: number) => SinkOf<C, T> & {
+declare const createTakeLastOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Sink<C> & Lift<C>, TakeLastSink: new <T>(delegate: SinkOf<C, T>, count: number) => SinkOf<C, T> & {
     readonly last: T[];
 }) => <T_1>(options?: {
     readonly count?: number;
-}) => Function1<ContainerOf<C, T_1>, ContainerOf<C, T_1>>;
-declare function notifyTakeWhile<T>(this: SinkLike<T> & {
+}) => ContainerOperator<C, T_1, T_1>;
+declare const createTakeWhileOperator: <C extends SourceLike>(m: Lift<C>, TakeWhileSink: new <T>(delegate: SinkOf<C, T>, predicate: Predicate<T>, inclusive: boolean) => SinkOf<C, T> & {
     readonly delegate: SinkLike<T>;
     readonly predicate: Predicate<T>;
     readonly inclusive: boolean;
-}, next: T): void;
-export { Lift, Sink, SinkLike, SinkOf, SourceContainer, SourceLike, createTakeLastOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeWhile };
+}) => <T_1>(predicate: Predicate<T_1>, options?: {
+    readonly inclusive?: boolean;
+}) => ContainerOperator<C, T_1, T_1>;
+export { Lift, Sink, SinkLike, SinkOf, SourceContainer, SourceLike, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst };

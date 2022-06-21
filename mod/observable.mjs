@@ -6,7 +6,7 @@ import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifyTakeFirst, notifySkipFirst, createTakeLastOperator, notifyTakeWhile } from './sink.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifyTakeFirst, notifySkipFirst, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 
@@ -615,6 +615,9 @@ const lift = (operator) => source => {
         : [operator];
     const isSynchronous = source.isSynchronous && operator.isSynchronous;
     return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
+};
+const liftT = {
+    lift,
 };
 
 class DecodeWithCharsetObserver extends Observer {
@@ -1522,15 +1525,6 @@ const takeUntil = (notifier) => {
     return lift(operator);
 };
 
-class TakeWhileObserver extends Observer {
-    constructor(delegate, predicate, inclusive) {
-        super(delegate);
-        this.delegate = delegate;
-        this.predicate = predicate;
-        this.inclusive = inclusive;
-    }
-}
-TakeWhileObserver.prototype.notify = notifyTakeWhile;
 /**
  * Returns an `ObservableLike` which emits values emitted by the source as long
  * as each value satisfies the given predicate, and then completes as soon as
@@ -1538,16 +1532,14 @@ TakeWhileObserver.prototype.notify = notifyTakeWhile;
  *
  * @param predicate The predicate function.
  */
-const takeWhile = (predicate, options = {}) => {
-    const { inclusive = false } = options;
-    const operator = (delegate) => {
-        const observer = new TakeWhileObserver(delegate, predicate, inclusive);
-        bindDisposables(observer, delegate);
-        return observer;
-    };
-    operator.isSynchronous = true;
-    return lift(operator);
-};
+const takeWhile = createTakeWhileOperator(liftT, class TakeWhileObserver extends Observer {
+    constructor(delegate, predicate, inclusive) {
+        super(delegate);
+        this.delegate = delegate;
+        this.predicate = predicate;
+        this.inclusive = inclusive;
+    }
+});
 
 const setupDurationSubscription$1 = (observer, next) => {
     observer.durationSubscription.inner = pipe(observer.durationFunction(next), subscribe(observer, observer.onNotify));

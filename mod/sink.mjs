@@ -66,8 +66,8 @@ function notifyTakeFirst(next) {
         pipe(this, dispose());
     }
 }
-const createTakeLastOperator = (m, constructor) => {
-    constructor.prototype.notify = function notifyTakeLast(next) {
+const createTakeLastOperator = (m, TakeLastSink) => {
+    TakeLastSink.prototype.notify = function notifyTakeLast(next) {
         this.assertState();
         const last = this.last;
         last.push(next);
@@ -78,7 +78,7 @@ const createTakeLastOperator = (m, constructor) => {
     return (options = {}) => {
         const { count = 1 } = options;
         const operator = (delegate) => {
-            const sink = new constructor(delegate, count);
+            const sink = new TakeLastSink(delegate, count);
             addDisposable(delegate, sink);
             addOnDisposedWithError(sink, delegate);
             addTeardown(sink, () => {
@@ -89,15 +89,26 @@ const createTakeLastOperator = (m, constructor) => {
         return runnable => count > 0 ? pipe(runnable, m.lift(operator)) : empty(m);
     };
 };
-function notifyTakeWhile(next) {
-    this.assertState();
-    const satisfiesPredicate = this.predicate(next);
-    if (satisfiesPredicate || this.inclusive) {
-        this.delegate.notify(next);
-    }
-    if (!satisfiesPredicate) {
-        pipe(this, dispose());
-    }
-}
+const createTakeWhileOperator = (m, TakeWhileSink) => {
+    TakeWhileSink.prototype.notify = function notifyTakeWhile(next) {
+        this.assertState();
+        const satisfiesPredicate = this.predicate(next);
+        if (satisfiesPredicate || this.inclusive) {
+            this.delegate.notify(next);
+        }
+        if (!satisfiesPredicate) {
+            pipe(this, dispose());
+        }
+    };
+    return (predicate, options = {}) => {
+        const { inclusive = false } = options;
+        const operator = (delegate) => {
+            const sink = new TakeWhileSink(delegate, predicate, inclusive);
+            addDisposable(sink, delegate);
+            return sink;
+        };
+        return m.lift(operator);
+    };
+};
 
-export { createTakeLastOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeWhile };
+export { createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst };

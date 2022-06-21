@@ -1,6 +1,7 @@
 import { AbstractContainer } from "../container";
 import { Function1, pipe } from "../functions";
 import { RunnableLike, RunnableOperator } from "../runnable";
+import { Lift } from "../sink";
 import { Sink } from "./sinks";
 
 class LiftedRunnable<T> extends AbstractContainer implements RunnableLike<T> {
@@ -34,3 +35,7 @@ export const lift =
 
     return new LiftedRunnable(src, allFunctions);
   };
+
+export const liftT: Lift<RunnableLike<unknown>> = {
+  lift,
+};

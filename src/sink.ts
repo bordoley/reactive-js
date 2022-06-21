@@ -1,4 +1,10 @@
-import { ContainerLike, ContainerOf, FromArray, empty } from "./container";
+import {
+  ContainerLike,
+  ContainerOf,
+  FromArray,
+  empty,
+  ContainerOperator,
+} from "./container";
 import {
   DisposableLike,
   addDisposable,
@@ -31,7 +37,7 @@ export interface SinkLike<T> extends DisposableLike, ContainerLike {
 }
 
 export interface SourceLike extends ContainerLike {
-  readonly sinkType: DisposableLike & ContainerLike;
+  readonly sinkType: DisposableLike & ContainerLike & SinkLike<unknown>;
 }
 
 export type SinkOf<C extends SourceLike, T> = C extends {
@@ -207,15 +213,17 @@ export function notifyTakeFirst<T>(
 
 export const createTakeLastOperator = <C extends SourceLike>(
   m: FromArray<C> & Sink<C> & Lift<C>,
-  constructor: new <T>(delegate: SinkOf<C, T>, count: number) => SinkOf<
+  TakeLastSink: new <T>(delegate: SinkOf<C, T>, count: number) => SinkOf<
     C,
     T
   > & {
     readonly last: T[];
   },
-) => {
-  constructor.prototype.notify = function notifyTakeLast<T>(
-    this: SinkLike<T> & {
+): (<T>(options?: {
+  readonly count?: number;
+}) => ContainerOperator<C, T, T>) => {
+  TakeLastSink.prototype.notify = function notifyTakeLast<T>(
+    this: SinkOf<C, T> & {
       readonly last: T[];
       readonly maxCount: number;
     },
@@ -234,10 +242,11 @@ export const createTakeLastOperator = <C extends SourceLike>(
 
   return <T>(
     options: { readonly count?: number } = {},
-  ): Function1<ContainerOf<C, T>, ContainerOf<C, T>> => {
+  ): ContainerOperator<C, T, T> => {
     const { count = 1 } = options;
-    const operator = (delegate: SinkOf<C, T>) => {
-      const sink = new constructor(delegate, count);
+
+    const operator = (delegate: SinkOf<C, T>): SinkOf<C, T> => {
+      const sink = new TakeLastSink(delegate, count);
       addDisposable(delegate, sink);
       addOnDisposedWithError(sink, delegate);
       addTeardown(sink, () => {
@@ -252,23 +261,52 @@ export const createTakeLastOperator = <C extends SourceLike>(
   };
 };
 
-export function notifyTakeWhile<T>(
-  this: SinkLike<T> & {
+export const createTakeWhileOperator = <C extends SourceLike>(
+  m: Lift<C>,
+  TakeWhileSink: new <T>(
+    delegate: SinkOf<C, T>,
+    predicate: Predicate<T>,
+    inclusive: boolean,
+  ) => SinkOf<C, T> & {
     readonly delegate: SinkLike<T>;
     readonly predicate: Predicate<T>;
     readonly inclusive: boolean;
   },
-  next: T,
-) {
-  this.assertState();
+): (<T>(
+  predicate: Predicate<T>,
+  options?: { readonly inclusive?: boolean },
+) => ContainerOperator<C, T, T>) => {
+  TakeWhileSink.prototype.notify = function notifyTakeWhile<T>(
+    this: SinkOf<C, T> & {
+      readonly delegate: SinkLike<T>;
+      readonly predicate: Predicate<T>;
+      readonly inclusive: boolean;
+    },
+    next: T,
+  ) {
+    this.assertState();
 
-  const satisfiesPredicate = this.predicate(next);
+    const satisfiesPredicate = this.predicate(next);
 
-  if (satisfiesPredicate || this.inclusive) {
-    this.delegate.notify(next);
-  }
+    if (satisfiesPredicate || this.inclusive) {
+      this.delegate.notify(next);
+    }
 
-  if (!satisfiesPredicate) {
-    pipe(this, dispose());
-  }
-}
+    if (!satisfiesPredicate) {
+      pipe(this, dispose());
+    }
+  };
+
+  return <T>(
+    predicate: Predicate<T>,
+    options: { readonly inclusive?: boolean } = {},
+  ): ContainerOperator<C, T, T> => {
+    const { inclusive = false } = options;
+    const operator = (delegate: SinkOf<C, T>): SinkOf<C, T> => {
+      const sink = new TakeWhileSink(delegate, predicate, inclusive);
+      addDisposable(sink, delegate);
+      return sink;
+    };
+    return m.lift(operator);
+  };
+};

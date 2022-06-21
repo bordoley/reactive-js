@@ -36,7 +36,7 @@ ___
 
 ### sinkType
 
-• `Readonly` **sinkType**: [`DisposableLike`](disposable.DisposableLike.md) & [`ContainerLike`](container.ContainerLike.md)
+• `Readonly` **sinkType**: [`DisposableLike`](disposable.DisposableLike.md) & [`ContainerLike`](container.ContainerLike.md) & [`SinkLike`](sink.SinkLike.md)<`unknown`\>
 
 ___
 
