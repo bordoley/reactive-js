@@ -1,4 +1,3 @@
-import { AbstractContainer } from "../container";
 import {
   DisposableOrTeardown,
   Error,
@@ -16,6 +15,7 @@ import {
 } from "../observable";
 import { Option, isNone, none } from "../option";
 import { SchedulerLike } from "../scheduler";
+import { AbstractSource } from "../source";
 import { createStateStore, lift, stream } from "../streamable";
 import {
   WindowLocationStreamLike,
@@ -82,7 +82,7 @@ const windowHistoryPushState = (
 };
 
 class WindowLocationStream
-  extends AbstractContainer
+  extends AbstractSource<WindowLocationURI, Observer<WindowLocationURI>>
   implements WindowLocationStreamLike
 {
   historyCounter = -1;
@@ -91,10 +91,6 @@ class WindowLocationStream
     readonly stateStream: StreamLike<Updater<TState>, WindowLocationURI>,
   ) {
     super();
-  }
-
-  get sinkType(): Observer<WindowLocationURI> {
-    return undefined as any;
   }
 
   get error() {

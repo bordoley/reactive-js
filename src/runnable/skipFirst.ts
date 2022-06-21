@@ -1,5 +1,5 @@
 import { RunnableOperator } from "../runnable";
-import { createSkipFirstOperator } from "../sink";
+import { createSkipFirstOperator } from "../source";
 import { liftT } from "./lift";
 import { Sink } from "./sinks";
 

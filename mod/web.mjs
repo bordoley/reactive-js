@@ -3,8 +3,8 @@ import { dispose, addTeardown, addDisposableDisposeParentOnChildError, toAbortSi
 import { pipe, raise, returns } from './functions.mjs';
 import { createObservable, onNotify, keep as keep$1, throttle, map, subscribe, defer, fromPromise, sink } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
-import { AbstractContainer } from './container.mjs';
 import { none, isNone } from './option.mjs';
+import { AbstractSource } from './source.mjs';
 import { createStateStore, lift, stream } from './streamable.mjs';
 
 const fromEvent = (target, eventName, selector) => createObservable(dispatcher => {
@@ -74,14 +74,11 @@ const windowHistoryPushState = (self, uri) => {
     self.historyCounter++;
     window.history.pushState({ counter: self.historyCounter, title }, "", windowLocationURIToString(uri));
 };
-class WindowLocationStream extends AbstractContainer {
+class WindowLocationStream extends AbstractSource {
     constructor(stateStream) {
         super();
         this.stateStream = stateStream;
         this.historyCounter = -1;
-    }
-    get sinkType() {
-        return undefined;
     }
     get error() {
         return this.stateStream.error;

@@ -1,7 +1,7 @@
 import { Equality } from "../functions";
 import { Option, none } from "../option";
 import { RunnableOperator } from "../runnable";
-import { createDistinctUntilChanged } from "../sink";
+import { createDistinctUntilChanged } from "../source";
 import { liftT } from "./lift";
 import { Sink } from "./sinks";
 

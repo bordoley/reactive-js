@@ -1,5 +1,5 @@
 import { RunnableOperator } from "../runnable";
-import { createTakeLastOperator } from "../sink";
+import { createTakeLastOperator } from "../source";
 import { fromArrayT } from "./fromArray";
 import { liftT } from "./lift";
 import { Sink, sink } from "./sinks";

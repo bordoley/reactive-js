@@ -1,5 +1,5 @@
 import { ObservableOperator } from "../observable";
-import { createSkipFirstOperator } from "../sink";
+import { createSkipFirstOperator } from "../source";
 import { liftT } from "./lift";
 import { Observer } from "./observer";
 

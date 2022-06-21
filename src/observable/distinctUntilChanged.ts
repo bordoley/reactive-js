@@ -1,7 +1,7 @@
 import { Equality } from "../functions";
 import { ObservableOperator } from "../observable";
 import { none, Option } from "../option";
-import { createDistinctUntilChanged } from "../sink";
+import { createDistinctUntilChanged } from "../source";
 import { liftT } from "./lift";
 import { Observer } from "./observer";
 

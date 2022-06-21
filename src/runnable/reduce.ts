@@ -1,5 +1,5 @@
 import { Factory, Reducer } from "../functions";
-import { createReduceOperator } from "../sink";
+import { createReduceOperator } from "../source";
 import { Sink, sinkT } from "./sinks";
 import { fromArrayT } from "./fromArray";
 import { liftT } from "./lift";

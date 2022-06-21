@@ -1,4 +1,4 @@
-import { AbstractContainer, Concat } from "../container";
+import { Concat } from "../container";
 import {
   addDisposable,
   addOnDisposedWithError,
@@ -8,6 +8,7 @@ import {
 import { pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { everySatisfy } from "../readonlyArray";
+import { AbstractSource } from "../source";
 import { Observer, createDelegatingObserver, sink } from "./observer";
 
 const createConcatObserver = <T>(
@@ -34,7 +35,7 @@ const createConcatObserver = <T>(
 };
 
 class ConcatObservable<T>
-  extends AbstractContainer
+  extends AbstractSource<T, Observer<T>>
   implements ObservableLike<T>
 {
   readonly isSynchronous: boolean;
@@ -45,10 +46,6 @@ class ConcatObservable<T>
       observables,
       everySatisfy(obs => obs.isSynchronous),
     );
-  }
-
-  get sinkType(): Observer<T> {
-    return undefined as any;
   }
 
   observe(observer: Observer<T>) {

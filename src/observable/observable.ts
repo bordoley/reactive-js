@@ -1,12 +1,12 @@
-import { AbstractContainer } from "../container";
 import { addOnDisposedWithError } from "../disposable";
 import { Function1, SideEffect, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { schedule } from "../scheduler";
+import { AbstractSource } from "../source";
 import { Observer } from "./observer";
 
 class ScheduledObservable<T>
-  extends AbstractContainer
+  extends AbstractSource<T, Observer<T>>
   implements ObservableLike<T>
 {
   constructor(
@@ -15,10 +15,6 @@ class ScheduledObservable<T>
     readonly delay: number,
   ) {
     super();
-  }
-
-  get sinkType(): Observer<T> {
-    return undefined as any;
   }
 
   observe(observer: Observer<T>) {

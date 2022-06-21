@@ -1,6 +1,6 @@
 import { AbstractDisposable, DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Equality, Predicate, Reducer } from "./functions.mjs";
-import { SinkLike, SourceLike } from "./sink.mjs";
+import { SinkLike, SourceLike } from "./source.mjs";
 import { Option } from "./option.mjs";
 import { SchedulerLike, SchedulerContinuationLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
 import { Concat, FromArray, FromIterator, Keep, Map, ConcatAll, Zip } from "./container.mjs";

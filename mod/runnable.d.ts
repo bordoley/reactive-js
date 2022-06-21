@@ -1,7 +1,7 @@
 import { FromArray, FromArrayOptions, Keep, ContainerLike, Container, ContainerOf } from "./container.mjs";
 import { SideEffect1, Equality, Predicate, Function1, Updater, Factory, Reducer, Function2, Function3, Function4, Function5 } from "./functions.mjs";
 import { AbstractDisposable, DisposableLike } from "./disposable.mjs";
-import { SinkLike, SourceLike } from "./sink.mjs";
+import { SinkLike, SourceLike } from "./source.mjs";
 import { Option } from "./option.mjs";
 declare class Sink<T> extends AbstractDisposable implements SinkLike<T> {
     get type(): this;

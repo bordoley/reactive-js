@@ -1,5 +1,5 @@
 import { ObservableOperator } from "../observable";
-import { createTakeFirstOperator } from "../sink";
+import { createTakeFirstOperator } from "../source";
 import { fromArrayT } from "./fromArray";
 import { liftT } from "./lift";
 import { Observer } from "./observer";

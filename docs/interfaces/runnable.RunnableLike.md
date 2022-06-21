@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`SourceLike`](sink.SourceLike.md)
+- [`SourceLike`](source.SourceLike.md)
 
   ↳ **`RunnableLike`**
 
@@ -36,7 +36,7 @@
 
 #### Overrides
 
-[SourceLike](sink.SourceLike.md).[T](sink.SourceLike.md#t)
+[SourceLike](source.SourceLike.md).[T](source.SourceLike.md#t)
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 #### Overrides
 
-[SourceLike](sink.SourceLike.md).[sinkType](sink.SourceLike.md#sinktype)
+[SourceLike](source.SourceLike.md).[sinkType](source.SourceLike.md#sinktype)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 #### Overrides
 
-[SourceLike](sink.SourceLike.md).[type](sink.SourceLike.md#type)
+[SourceLike](source.SourceLike.md).[type](source.SourceLike.md#type)
 
 ## Methods
 

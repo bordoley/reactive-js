@@ -1,7 +1,7 @@
 import { DisposableLike } from "./disposable";
 import { Function1, Function2 } from "./functions";
 import { Observer } from "./observable/observer";
-import { SourceLike } from "./sink";
+import { SourceLike } from "./source";
 
 /**
  * The source of notifications which notifies a `ObserverLike` instance.

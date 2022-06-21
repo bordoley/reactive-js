@@ -1,4 +1,4 @@
-import { ContainerLike, Container, ContainerOf, FromArray, FromArrayOptions, ContainerOperator } from "./container.mjs";
+import { ContainerLike, AbstractContainer, Container, ContainerOf, FromArray, FromArrayOptions, ContainerOperator } from "./container.mjs";
 import { DisposableLike } from "./disposable.mjs";
 import { SideEffect1, Function1, Equality, Predicate, Reducer, Factory } from "./functions.mjs";
 import { Option } from "./option.mjs";
@@ -15,7 +15,10 @@ interface SinkLike<T> extends DisposableLike, ContainerLike {
     notify(this: SinkLike<T>, next: T): void;
 }
 interface SourceLike extends ContainerLike {
-    readonly sinkType: DisposableLike & ContainerLike & SinkLike<unknown>;
+    readonly sinkType: SinkLike<unknown>;
+}
+declare abstract class AbstractSource<T, TSink extends SinkLike<T>> extends AbstractContainer implements SourceLike {
+    get sinkType(): TSink;
 }
 declare type SinkOf<C extends SourceLike, T> = C extends {
     readonly sinkType: unknown;
@@ -105,4 +108,4 @@ declare const createTakeWhileOperator: <C extends SourceLike>(m: Lift<C>, TakeWh
 }) => <T_1>(predicate: Predicate<T_1>, options?: {
     readonly inclusive?: boolean;
 }) => ContainerOperator<C, T_1, T_1>;
-export { Lift, Sink, SinkLike, SinkOf, SourceLike, createDecodeWithCharset, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator };
+export { AbstractSource, Lift, Sink, SinkLike, SinkOf, SourceLike, createDecodeWithCharset, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator };

@@ -6,6 +6,7 @@ import {
   ContainerOperator,
   Container,
   fromValue,
+  AbstractContainer,
 } from "./container";
 import {
   DisposableLike,
@@ -43,7 +44,16 @@ export interface SinkLike<T> extends DisposableLike, ContainerLike {
 }
 
 export interface SourceLike extends ContainerLike {
-  readonly sinkType: DisposableLike & ContainerLike & SinkLike<unknown>;
+  readonly sinkType: SinkLike<unknown>;
+}
+
+export abstract class AbstractSource<T, TSink extends SinkLike<T>>
+  extends AbstractContainer
+  implements SourceLike
+{
+  get sinkType(): TSink {
+    return undefined as any;
+  }
 }
 
 export type SinkOf<C extends SourceLike, T> = C extends {

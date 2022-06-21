@@ -1,14 +1,14 @@
-[Reactive-JS](../README.md) / [sink](../modules/sink.md) / Sink
+[Reactive-JS](../README.md) / [source](../modules/source.md) / Sink
 
 # Interface: Sink<C\>
 
-[sink](../modules/sink.md).Sink
+[source](../modules/source.md).Sink
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](sink.SourceLike.md) |
+| `C` | extends [`SourceLike`](source.SourceLike.md) |
 
 ## Hierarchy
 
@@ -20,11 +20,11 @@
 
 ### Properties
 
-- [type](sink.Sink.md#type)
+- [type](source.Sink.md#type)
 
 ### Methods
 
-- [sink](sink.Sink.md#sink)
+- [sink](source.Sink.md#sink)
 
 ## Properties
 
@@ -52,7 +52,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `sink` | [`SinkOf`](../modules/sink.md#sinkof)<`C`, `T`\> |
+| `sink` | [`SinkOf`](../modules/source.md#sinkof)<`C`, `T`\> |
 
 #### Returns
 

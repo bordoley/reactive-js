@@ -1,34 +1,38 @@
-[Reactive-JS](../README.md) / sink
+[Reactive-JS](../README.md) / source
 
-# Module: sink
+# Module: source
 
 ## Table of contents
 
+### Classes
+
+- [AbstractSource](../classes/source.AbstractSource.md)
+
 ### Interfaces
 
-- [Lift](../interfaces/sink.Lift.md)
-- [Sink](../interfaces/sink.Sink.md)
-- [SinkLike](../interfaces/sink.SinkLike.md)
-- [SourceLike](../interfaces/sink.SourceLike.md)
+- [Lift](../interfaces/source.Lift.md)
+- [Sink](../interfaces/source.Sink.md)
+- [SinkLike](../interfaces/source.SinkLike.md)
+- [SourceLike](../interfaces/source.SourceLike.md)
 
 ### Type Aliases
 
-- [SinkOf](sink.md#sinkof)
+- [SinkOf](source.md#sinkof)
 
 ### Functions
 
-- [createDecodeWithCharset](sink.md#createdecodewithcharset)
-- [createDistinctUntilChanged](sink.md#createdistinctuntilchanged)
-- [createKeepOperator](sink.md#createkeepoperator)
-- [createMapOperator](sink.md#createmapoperator)
-- [createOnNotifyOperator](sink.md#createonnotifyoperator)
-- [createPairwiseOperator](sink.md#createpairwiseoperator)
-- [createReduceOperator](sink.md#createreduceoperator)
-- [createScanOperator](sink.md#createscanoperator)
-- [createSkipFirstOperator](sink.md#createskipfirstoperator)
-- [createTakeFirstOperator](sink.md#createtakefirstoperator)
-- [createTakeLastOperator](sink.md#createtakelastoperator)
-- [createTakeWhileOperator](sink.md#createtakewhileoperator)
+- [createDecodeWithCharset](source.md#createdecodewithcharset)
+- [createDistinctUntilChanged](source.md#createdistinctuntilchanged)
+- [createKeepOperator](source.md#createkeepoperator)
+- [createMapOperator](source.md#createmapoperator)
+- [createOnNotifyOperator](source.md#createonnotifyoperator)
+- [createPairwiseOperator](source.md#createpairwiseoperator)
+- [createReduceOperator](source.md#createreduceoperator)
+- [createScanOperator](source.md#createscanoperator)
+- [createSkipFirstOperator](source.md#createskipfirstoperator)
+- [createTakeFirstOperator](source.md#createtakefirstoperator)
+- [createTakeLastOperator](source.md#createtakelastoperator)
+- [createTakeWhileOperator](source.md#createtakewhileoperator)
 
 ## Type Aliases
 
@@ -40,7 +44,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
 | `T` | `T` |
 
 ## Functions
@@ -53,14 +57,14 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Sink`](../interfaces/sink.Sink.md)<`C`\> & [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
-| `DecodeWithCharsetSink` | (`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `string`\>, `textDecoder`: `TextDecoder`) => [`SinkOf`](sink.md#sinkof)<`C`, `ArrayBuffer`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`string`\> ; `textDecoder`: `TextDecoder`  } |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Sink`](../interfaces/source.Sink.md)<`C`\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
+| `DecodeWithCharsetSink` | (`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `string`\>, `textDecoder`: `TextDecoder`) => [`SinkOf`](source.md#sinkof)<`C`, `ArrayBuffer`\> & { `delegate`: [`SinkLike`](../interfaces/source.SinkLike.md)<`string`\> ; `textDecoder`: `TextDecoder`  } |
 
 #### Returns
 
@@ -88,14 +92,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
-| `DistinctUntilChangedSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `equality`: [`Equality`](functions.md#equality)<`T`\>) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\> ; `equality`: [`Equality`](functions.md#equality)<`T`\> ; `hasValue`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
+| `DistinctUntilChangedSink` | <T\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\>, `equality`: [`Equality`](functions.md#equality)<`T`\>) => [`SinkOf`](source.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\> ; `equality`: [`Equality`](functions.md#equality)<`T`\> ; `hasValue`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
 
 #### Returns
 
@@ -130,14 +134,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
-| `KeepSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\> ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
+| `KeepSink` | <T\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`SinkOf`](source.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\> ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
 
 #### Returns
 
@@ -171,14 +175,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
-| `MapSink` | <TA, TB\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `TB`\>, `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`SinkOf`](sink.md#sinkof)<`C`, `TA`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`TB`\> ; `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>  } |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
+| `MapSink` | <TA, TB\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `TB`\>, `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`SinkOf`](source.md#sinkof)<`C`, `TA`\> & { `delegate`: [`SinkLike`](../interfaces/source.SinkLike.md)<`TB`\> ; `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>  } |
 
 #### Returns
 
@@ -213,14 +217,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
-| `OnNotifySink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>  } |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
+| `OnNotifySink` | <T\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\>, `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>) => [`SinkOf`](source.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkLike`](../interfaces/source.SinkLike.md)<`T`\> ; `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>  } |
 
 #### Returns
 
@@ -254,14 +258,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
-| `PairwiseSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, [[`Option`](option.md#option)<`T`\>, `T`]\>) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](sink.md#sinkof)<`C`, [[`Option`](option.md#option)<`T`\>, `T`]\> ; `hasPrev`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
+| `PairwiseSink` | <T\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, [[`Option`](option.md#option)<`T`\>, `T`]\>) => [`SinkOf`](source.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](source.md#sinkof)<`C`, [[`Option`](option.md#option)<`T`\>, `T`]\> ; `hasPrev`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
 
 #### Returns
 
@@ -289,14 +293,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/sink.Lift.md)<`C`\> & [`Sink`](../interfaces/sink.Sink.md)<`C`\> |
-| `ReduceSink` | <T, TAcc\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `TAcc`\>, `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `acc`: `TAcc`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `acc`: `TAcc` ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> & [`Sink`](../interfaces/source.Sink.md)<`C`\> |
+| `ReduceSink` | <T, TAcc\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `TAcc`\>, `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `acc`: `TAcc`) => [`SinkOf`](source.md#sinkof)<`C`, `T`\> & { `acc`: `TAcc` ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
 
 #### Returns
 
@@ -332,14 +336,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
-| `ScanSink` | <T, TAcc\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `TAcc`\>, `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `acc`: `TAcc`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `acc`: `TAcc` ; `delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `TAcc`\> ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
+| `ScanSink` | <T, TAcc\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `TAcc`\>, `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `acc`: `TAcc`) => [`SinkOf`](source.md#sinkof)<`C`, `T`\> & { `acc`: `TAcc` ; `delegate`: [`SinkOf`](source.md#sinkof)<`C`, `TAcc`\> ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
 
 #### Returns
 
@@ -375,14 +379,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
-| `SkipFirstSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `skipCount`: `number`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `count`: `number` ; `delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\> ; `skipCount`: `number`  } |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
+| `SkipFirstSink` | <T\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\>, `skipCount`: `number`) => [`SinkOf`](source.md#sinkof)<`C`, `T`\> & { `count`: `number` ; `delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\> ; `skipCount`: `number`  } |
 
 #### Returns
 
@@ -417,14 +421,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
-| `TakeFirstSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `maxCount`: `number`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `count`: `number` ; `delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\> ; `maxCount`: `number`  } |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
+| `TakeFirstSink` | <T\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\>, `maxCount`: `number`) => [`SinkOf`](source.md#sinkof)<`C`, `T`\> & { `count`: `number` ; `delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\> ; `maxCount`: `number`  } |
 
 #### Returns
 
@@ -459,14 +463,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Sink`](../interfaces/sink.Sink.md)<`C`\> & [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
-| `TakeLastSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `maxCount`: `number`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `last`: `T`[] ; `maxCount`: `number`  } |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Sink`](../interfaces/source.Sink.md)<`C`\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
+| `TakeLastSink` | <T\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\>, `maxCount`: `number`) => [`SinkOf`](source.md#sinkof)<`C`, `T`\> & { `last`: `T`[] ; `maxCount`: `number`  } |
 
 #### Returns
 
@@ -501,14 +505,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
-| `TakeWhileSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>, `inclusive`: `boolean`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\> ; `inclusive`: `boolean` ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
+| `TakeWhileSink` | <T\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>, `inclusive`: `boolean`) => [`SinkOf`](source.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\> ; `inclusive`: `boolean` ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
 
 #### Returns
 

@@ -1,5 +1,5 @@
 import { RunnableOperator } from "../runnable";
-import { createDecodeWithCharset } from "../sink";
+import { createDecodeWithCharset } from "../source";
 import { fromArrayT } from "./fromArray";
 import { liftT } from "./lift";
 import { Sink, sinkT } from "./sinks";

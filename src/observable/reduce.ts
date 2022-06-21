@@ -1,7 +1,7 @@
 import { Factory, Reducer } from "../functions";
 import { ObservableOperator } from "../observable";
 import { Observer, sinkT } from "./observer";
-import { createReduceOperator } from "../sink";
+import { createReduceOperator } from "../source";
 import { fromArrayT } from "./fromArray";
 import { liftT } from "./lift";
 

@@ -26,7 +26,7 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`SchedulerLike`](scheduler.SchedulerLike.md)
 
-  ↳ [`SinkLike`](sink.SinkLike.md)
+  ↳ [`SinkLike`](source.SinkLike.md)
 
 ## Implemented by
 

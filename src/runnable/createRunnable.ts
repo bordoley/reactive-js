@@ -1,15 +1,14 @@
-import { AbstractContainer } from "../container";
 import { SideEffect1 } from "../functions";
 import { RunnableLike } from "../runnable";
+import { AbstractSource } from "../source";
 import { Sink } from "./sinks";
 
-class RunnableImpl<T> extends AbstractContainer implements RunnableLike<T> {
+class RunnableImpl<T>
+  extends AbstractSource<T, Sink<T>>
+  implements RunnableLike<T>
+{
   constructor(private readonly _run: SideEffect1<Sink<T>>) {
     super();
-  }
-
-  get sinkType(): Sink<T> {
-    return undefined as any;
   }
 
   run(sink: Sink<T>) {

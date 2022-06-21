@@ -1,16 +1,12 @@
-import { AbstractContainer } from "../container";
 import { ObservableLike } from "../observable";
+import { AbstractSource } from "../source";
 import { Observer } from "./observer";
 
 class NeverObservable<T>
-  extends AbstractContainer
+  extends AbstractSource<T, Observer<T>>
   implements ObservableLike<T>
 {
   readonly isSynchronous = false;
-
-  get sinkType(): Observer<T> {
-    return undefined as any;
-  }
 
   observe(_: Observer<T>) {}
 }

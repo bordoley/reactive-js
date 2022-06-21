@@ -1,5 +1,5 @@
 import { ObservableOperator } from "../observable";
-import { createDecodeWithCharset } from "../sink";
+import { createDecodeWithCharset } from "../source";
 import { fromArrayT } from "./fromArray";
 import { liftT } from "./lift";
 import { Observer, sinkT } from "./observer";

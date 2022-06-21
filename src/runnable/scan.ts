@@ -1,6 +1,6 @@
 import { Factory, Reducer } from "../functions";
 import { RunnableOperator } from "../runnable";
-import { createScanOperator } from "../sink";
+import { createScanOperator } from "../source";
 import { liftT } from "./lift";
 import { Sink } from "./sinks";
 

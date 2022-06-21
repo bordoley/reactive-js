@@ -1,6 +1,6 @@
 import { Option } from "../option";
 import { Sink } from "./sinks";
-import { createPairwiseOperator } from "../sink";
+import { createPairwiseOperator } from "../source";
 import { liftT } from "./lift";
 import { RunnableOperator } from "../runnable";
 

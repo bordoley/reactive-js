@@ -1,7 +1,6 @@
-import { AbstractContainer } from "../container";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Lift } from "../sink";
+import { AbstractSource, Lift } from "../source";
 import { Observer, sink } from "./observer";
 
 /**
@@ -14,7 +13,7 @@ export interface ObserverOperator<A, B> {
 }
 
 class LiftedObservable<TIn, TOut>
-  extends AbstractContainer
+  extends AbstractSource<TOut, Observer<TOut>>
   implements ObservableLike<TOut>
 {
   constructor(
@@ -23,10 +22,6 @@ class LiftedObservable<TIn, TOut>
     readonly isSynchronous: boolean,
   ) {
     super();
-  }
-
-  get sinkType(): Observer<TOut> {
-    return undefined as any;
   }
 
   observe(observer: Observer<TOut>) {

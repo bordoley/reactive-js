@@ -2,7 +2,7 @@ import { AbstractDisposable, addDisposable } from "../disposable";
 import { __DEV__ } from "../env";
 import { SideEffect1, raise } from "../functions";
 import { RunnableLike } from "../runnable";
-import { SinkLike, Sink as SinkM } from "../sink";
+import { SinkLike, Sink as SinkM } from "../source";
 
 export class Sink<T> extends AbstractDisposable implements SinkLike<T> {
   get type(): this {

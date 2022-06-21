@@ -1,4 +1,3 @@
-import { AbstractContainer } from "../container";
 import {
   DisposableOrTeardown,
   addDisposableDisposeParentOnChildError,
@@ -8,10 +7,11 @@ import {
 import { Factory, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { isSome, none } from "../option";
+import { AbstractSource } from "../source";
 import { Observer, sink } from "./observer";
 
 class OnSubscribeObservable<T>
-  extends AbstractContainer
+  extends AbstractSource<T, Observer<T>>
   implements ObservableLike<T>
 {
   readonly isSynchronous: boolean;
@@ -22,10 +22,6 @@ class OnSubscribeObservable<T>
   ) {
     super();
     this.isSynchronous = src.isSynchronous;
-  }
-
-  get sinkType(): Observer<T> {
-    return undefined as any;
   }
 
   observe(observer: Observer<T>) {

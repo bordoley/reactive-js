@@ -1,6 +1,6 @@
 import { SideEffect1 } from "../functions";
 import { RunnableOperator } from "../runnable";
-import { createOnNotifyOperator } from "../sink";
+import { createOnNotifyOperator } from "../source";
 import { liftT } from "./lift";
 import { Sink } from "./sinks";
 

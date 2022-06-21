@@ -56,9 +56,9 @@
 
   ↳ [`ToRunnable`](runnable.ToRunnable.md)
 
-  ↳ [`Lift`](sink.Lift.md)
+  ↳ [`Lift`](source.Lift.md)
 
-  ↳ [`Sink`](sink.Sink.md)
+  ↳ [`Sink`](source.Sink.md)
 
 ## Table of contents
 

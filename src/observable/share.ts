@@ -1,4 +1,3 @@
-import { AbstractContainer } from "../container";
 import { addTeardown, dispose } from "../disposable";
 import { Function1, pipe } from "../functions";
 import {
@@ -9,11 +8,12 @@ import {
 } from "../observable";
 import { Option, none } from "../option";
 import { SchedulerLike } from "../scheduler";
+import { AbstractSource } from "../source";
 import { Observer, sink } from "./observer";
 import { publish } from "./publish";
 
 class SharedObservable<T>
-  extends AbstractContainer
+  extends AbstractSource<T, Observer<T>>
   implements ObservableLike<T>
 {
   private observerCount = 0;
@@ -37,10 +37,6 @@ class SharedObservable<T>
     >,
   ) {
     super();
-  }
-
-  get sinkType(): Observer<T> {
-    return undefined as any;
   }
 
   observe(observer: Observer<T>) {

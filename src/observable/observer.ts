@@ -3,7 +3,7 @@ import { __DEV__ } from "../env";
 import { SideEffect1, raise } from "../functions";
 import { ObservableLike } from "../observable";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
-import { Sink, SinkLike } from "../sink";
+import { Sink, SinkLike } from "../source";
 
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
