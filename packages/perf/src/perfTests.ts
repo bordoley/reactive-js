@@ -266,13 +266,14 @@ export const every = (n: number) =>
     benchmarkTest(
       "runnable",
       async src => {
-        const { fromArray, everySatisfy } = await import(
+        const { first, fromArray, everySatisfy } = await import(
           "@reactive-js/core/runnable"
         );
         return defer(
           src,
           fromArray(),
           everySatisfy(i => i < 0),
+          first(),
         );
       },
       callWith(),
