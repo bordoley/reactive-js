@@ -92,7 +92,6 @@
 - [scan](observable.md#scan)
 - [scanAsync](observable.md#scanasync)
 - [share](observable.md#share)
-- [sink](observable.md#sink)
 - [skipFirst](observable.md#skipfirst)
 - [subscribe](observable.md#subscribe)
 - [subscribeOn](observable.md#subscribeon)
@@ -1985,28 +1984,6 @@ to the source is disposed.
 #### Returns
 
 [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
-
-___
-
-### sink
-
-▸ **sink**<`T`\>(`observer`): [`SideEffect1`](functions.md#sideeffect1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observer` | [`Observer`](../classes/observable.Observer.md)<`T`\> |
-
-#### Returns
-
-[`SideEffect1`](functions.md#sideeffect1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
 ___
 

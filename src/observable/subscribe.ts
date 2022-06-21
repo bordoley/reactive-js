@@ -3,7 +3,8 @@ import { Function1, SideEffect1, ignore, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { none } from "../option";
 import { SchedulerLike } from "../scheduler";
-import { Observer, sink } from "./observer";
+import { sinkInto } from "../source";
+import { Observer } from "./observer";
 
 class DefaultObserver<T> extends Observer<T> {
   constructor(
@@ -49,7 +50,7 @@ export function subscribe<T>(
     const observer = new DefaultObserver(scheduler, onNotify, onNotifyThis);
     addDisposable(scheduler, observer);
 
-    pipe(observable, sink(observer));
+    pipe(observable, sinkInto(observer));
     return observer;
   };
 }

@@ -26,7 +26,7 @@ import {
 import { Option, none } from "./option";
 import { fromArrayT } from "./runnable/fromArray";
 import { liftT } from "./runnable/lift";
-import { Sink, sinkT } from "./runnable/sinks";
+import { Sink } from "./runnable/sinks";
 import {
   SourceLike,
   createDecodeWithCharsetOperator,
@@ -82,7 +82,7 @@ export const type: RunnableLike<unknown> = undefined as any;
 export const decodeWithCharset: (
   charset?: string,
 ) => RunnableOperator<ArrayBuffer, string> = createDecodeWithCharsetOperator(
-  { ...liftT, ...fromArrayT, ...sinkT },
+  { ...liftT, ...fromArrayT },
 
   class DecodeWithCharsetSink extends Sink<ArrayBuffer> {
     constructor(
@@ -192,7 +192,7 @@ export const reduce: <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ) => RunnableOperator<T, TAcc> = createReduceOperator(
-  { ...fromArrayT, ...liftT, ...sinkT },
+  { ...fromArrayT, ...liftT },
   class ReducerSink<T, TAcc> extends Sink<T> {
     constructor(
       readonly delegate: Sink<TAcc>,
@@ -265,7 +265,7 @@ export const takeFirstT: TakeFirst<RunnableLike<unknown>> = {
 export const takeLast: <T>(options?: {
   readonly count?: number;
 }) => RunnableOperator<T, T> = createTakeLastOperator(
-  { ...fromArrayT, ...liftT, ...sinkT },
+  { ...fromArrayT, ...liftT },
   class TakeLastSink<T> extends Sink<T> {
     readonly last: T[] = [];
 

@@ -8,10 +8,9 @@ import {
   StreamLike,
   createSubject,
   publish,
-  sink,
 } from "../observable";
-
 import { SchedulerLike } from "../scheduler";
+import { sinkInto } from "../source";
 import { StreamableLike } from "../streamable";
 
 export type StreamableOperator<TSrcReq, TSrc, TReq, T> = (
@@ -49,7 +48,7 @@ class StreamImpl<TReq, T>
   }
 
   sink(observer: Observer<T>) {
-    pipe(this.observable, sink(observer));
+    pipe(this.observable, sinkInto(observer));
   }
 }
 

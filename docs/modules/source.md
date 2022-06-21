@@ -11,7 +11,6 @@
 ### Interfaces
 
 - [Lift](../interfaces/source.Lift.md)
-- [Sink](../interfaces/source.Sink.md)
 - [SinkLike](../interfaces/source.SinkLike.md)
 - [SourceLike](../interfaces/source.SourceLike.md)
 
@@ -33,6 +32,7 @@
 - [createTakeFirstOperator](source.md#createtakefirstoperator)
 - [createTakeLastOperator](source.md#createtakelastoperator)
 - [createTakeWhileOperator](source.md#createtakewhileoperator)
+- [sinkInto](source.md#sinkinto)
 
 ## Type Aliases
 
@@ -63,7 +63,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Sink`](../interfaces/source.Sink.md)<`C`\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `DecodeWithCharsetSink` | (`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `string`\>, `textDecoder`: `TextDecoder`) => [`SinkOf`](source.md#sinkof)<`C`, `ArrayBuffer`\> & { `delegate`: [`SinkOf`](source.md#sinkof)<`C`, `string`\> ; `textDecoder`: `TextDecoder`  } |
 
 #### Returns
@@ -299,7 +299,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> & [`Sink`](../interfaces/source.Sink.md)<`C`\> |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `ReduceSink` | <T, TAcc\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `TAcc`\>, `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `acc`: `TAcc`) => [`SinkOf`](source.md#sinkof)<`C`, `T`\> & { `acc`: `TAcc` ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
 
 #### Returns
@@ -469,7 +469,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Sink`](../interfaces/source.Sink.md)<`C`\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `TakeLastSink` | <T\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\>, `maxCount`: `number`) => [`SinkOf`](source.md#sinkof)<`C`, `T`\> & { `last`: `T`[] ; `maxCount`: `number`  } |
 
 #### Returns
@@ -537,3 +537,26 @@ ___
 ##### Returns
 
 [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+___
+
+### sinkInto
+
+▸ **sinkInto**<`C`, `T`\>(`sink`): [`SideEffect1`](functions.md#sideeffect1)<`C`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `sink` | [`SinkOf`](source.md#sinkof)<`C`, `T`\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`C`\>

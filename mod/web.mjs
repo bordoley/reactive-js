@@ -1,10 +1,10 @@
 /// <reference types="./web.d.ts" />
 import { dispose, addTeardown, addDisposableDisposeParentOnChildError, toAbortSignal } from './disposable.mjs';
 import { pipe, raise, returns } from './functions.mjs';
-import { createObservable, onNotify, keep as keep$1, throttle, map, subscribe, defer, fromPromise, sink } from './observable.mjs';
+import { createObservable, onNotify, keep as keep$1, throttle, map, subscribe, defer, fromPromise } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { none, isNone } from './option.mjs';
-import { AbstractSource } from './source.mjs';
+import { AbstractSource, sinkInto } from './source.mjs';
 import { createStateStore, lift, stream } from './streamable.mjs';
 
 const fromEvent = (target, eventName, selector) => createObservable(dispatcher => {
@@ -198,7 +198,7 @@ const fetch = (onResponse) => fetchRequest => defer(observer => async () => {
         const resultObs = onResponseResult instanceof Promise
             ? fromPromise(returns(onResponseResult))
             : onResponseResult;
-        pipe(resultObs, sink(observer));
+        pipe(resultObs, sinkInto(observer));
     }
     catch (cause) {
         pipe(observer, dispose({ cause }));

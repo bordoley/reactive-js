@@ -9,6 +9,7 @@ class AbstractSource extends AbstractContainer {
         return undefined;
     }
 }
+const sinkInto = (sink) => observable => observable.sink(sink);
 const createDecodeWithCharsetOperator = (m, DecodeWithCharsetSink) => {
     DecodeWithCharsetSink.prototype.notify = function notifyDecodeWithCharset(next) {
         const data = this.textDecoder.decode(next, { stream: true });
@@ -25,7 +26,7 @@ const createDecodeWithCharsetOperator = (m, DecodeWithCharsetSink) => {
             addOnDisposedWithoutErrorTeardown(sink, () => {
                 const data = textDecoder.decode();
                 if (data.length > 0) {
-                    pipe(data, fromValue(m), m.sink(delegate));
+                    pipe(data, fromValue(m), sinkInto(delegate));
                 }
                 else {
                     delegate.dispose();
@@ -131,7 +132,7 @@ const createReduceOperator = (m, ReduceSink) => {
             addDisposable(delegate, sink);
             addOnDisposedWithError(sink, delegate);
             addOnDisposedWithoutErrorTeardown(sink, () => {
-                pipe(sink.acc, fromValue(m), m.sink(delegate));
+                pipe(sink.acc, fromValue(m), sinkInto(delegate));
             });
             return sink;
         };
@@ -206,7 +207,7 @@ const createTakeLastOperator = (m, TakeLastSink) => {
             addDisposable(delegate, sink);
             addOnDisposedWithError(sink, delegate);
             addTeardown(sink, () => {
-                pipe(sink.last, m.fromArray(), m.sink(delegate));
+                pipe(sink.last, m.fromArray(), sinkInto(delegate));
             });
             return sink;
         };
@@ -235,4 +236,4 @@ const createTakeWhileOperator = (m, TakeWhileSink) => {
     };
 };
 
-export { AbstractSource, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator };
+export { AbstractSource, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, sinkInto };

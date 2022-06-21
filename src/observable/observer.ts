@@ -1,9 +1,8 @@
 import { AbstractDisposable, addDisposable } from "../disposable";
 import { __DEV__ } from "../env";
-import { SideEffect1, raise } from "../functions";
-import { ObservableLike } from "../observable";
+import { raise } from "../functions";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
-import { Sink, SinkLike } from "../source";
+import { SinkLike } from "../source";
 
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
@@ -95,12 +94,3 @@ class DelegatingObserver<T> extends Observer<T> {
 export const createDelegatingObserver = <T>(
   delegate: Observer<T>,
 ): Observer<T> => new DelegatingObserver(delegate);
-
-export const sink =
-  <T>(observer: Observer<T>): SideEffect1<ObservableLike<T>> =>
-  observable =>
-    observable.sink(observer);
-
-export const sinkT: Sink<ObservableLike<unknown>> = {
-  sink,
-};

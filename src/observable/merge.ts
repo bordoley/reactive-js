@@ -6,8 +6,8 @@ import {
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { AbstractSource } from "../source";
-import { Observer, createDelegatingObserver, sink } from "./observer";
+import { AbstractSource, sinkInto } from "../source";
+import { Observer, createDelegatingObserver } from "./observer";
 
 const createMergeObserver = <T>(
   delegate: Observer<T>,
@@ -46,7 +46,7 @@ class MergeObservable<T>
     for (const observable of observables) {
       const mergeObserver = createMergeObserver(observer, count, ctx);
 
-      pipe(observable, sink(mergeObserver));
+      pipe(observable, sinkInto(mergeObserver));
     }
   }
 }

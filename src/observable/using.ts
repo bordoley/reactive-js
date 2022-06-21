@@ -12,8 +12,8 @@ import {
 } from "../functions";
 import { ObservableLike } from "../observable";
 import { SchedulerLike } from "../scheduler";
-import { AbstractSource } from "../source";
-import { Observer, sink } from "./observer";
+import { AbstractSource, sinkInto } from "../source";
+import { Observer } from "./observer";
 
 class UsingObservable<TResource extends DisposableLike, T>
   extends AbstractSource<T, Observer<T>>
@@ -43,7 +43,7 @@ class UsingObservable<TResource extends DisposableLike, T>
       addDisposableDisposeParentOnChildError(observer, r);
     }
 
-    pipe(observableFactory(...resourcesArray), sink(observer));
+    pipe(observableFactory(...resourcesArray), sinkInto(observer));
   }
 }
 

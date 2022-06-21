@@ -7,8 +7,9 @@ import {
 import { Function1, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { isSome, none } from "../option";
+import { sinkInto } from "../source";
 import { lift } from "./lift";
-import { Observer, createDelegatingObserver, sink } from "./observer";
+import { Observer, createDelegatingObserver } from "./observer";
 
 /**
  * Returns an `ObservableLike` which catches errors produced by the source and either continues with
@@ -29,7 +30,7 @@ export const catchError = <T>(
       try {
         const result = onError(cause) || none;
         if (isSome(result)) {
-          pipe(result, sink(delegate));
+          pipe(result, sinkInto(delegate));
         } else {
           pipe(delegate, dispose());
         }

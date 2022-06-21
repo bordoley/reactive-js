@@ -71,18 +71,19 @@ export type SinkOf<C extends SourceLike, T> = C extends {
       readonly _T: () => T;
     };
 
-export interface Sink<C extends SourceLike> extends Container<C> {
-  sink<T>(sink: SinkOf<C, T>): SideEffect1<ContainerOf<C, T>>;
-}
-
 export interface Lift<C extends SourceLike> extends Container<C> {
   lift<TA, TB>(
     operator: Function1<SinkOf<C, TB>, SinkOf<C, TA>>,
   ): Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 }
 
+export const sinkInto =
+  <C extends SourceLike, T>(sink: SinkOf<C, T>): SideEffect1<C> =>
+  observable =>
+    observable.sink(sink);
+
 export const createDecodeWithCharsetOperator = <C extends SourceLike>(
-  m: FromArray<C> & Sink<C> & Lift<C>,
+  m: FromArray<C> & Lift<C>,
   DecodeWithCharsetSink: new (
     delegate: SinkOf<C, string>,
     textDecoder: TextDecoder,
@@ -115,7 +116,7 @@ export const createDecodeWithCharsetOperator = <C extends SourceLike>(
         const data = textDecoder.decode();
 
         if (data.length > 0) {
-          pipe(data, fromValue(m), m.sink(delegate));
+          pipe(data, fromValue(m), sinkInto(delegate));
         } else {
           delegate.dispose();
         }
@@ -307,7 +308,7 @@ export const createPairwiseOperator = <C extends SourceLike>(
 };
 
 export const createReduceOperator = <C extends SourceLike>(
-  m: FromArray<C> & Lift<C> & Sink<C>,
+  m: FromArray<C> & Lift<C>,
   ReduceSink: new <T, TAcc>(
     delegate: SinkOf<C, TAcc>,
     reducer: Reducer<T, TAcc>,
@@ -341,7 +342,7 @@ export const createReduceOperator = <C extends SourceLike>(
       addDisposable(delegate, sink);
       addOnDisposedWithError(sink, delegate);
       addOnDisposedWithoutErrorTeardown(sink, () => {
-        pipe(sink.acc, fromValue(m), m.sink(delegate));
+        pipe(sink.acc, fromValue(m), sinkInto(delegate));
       });
       return sink;
     };
@@ -477,7 +478,7 @@ export const createTakeFirstOperator = <C extends SourceLike>(
 };
 
 export const createTakeLastOperator = <C extends SourceLike>(
-  m: FromArray<C> & Sink<C> & Lift<C>,
+  m: FromArray<C> & Lift<C>,
   TakeLastSink: new <T>(delegate: SinkOf<C, T>, maxCount: number) => SinkOf<
     C,
     T
@@ -516,7 +517,7 @@ export const createTakeLastOperator = <C extends SourceLike>(
       addDisposable(delegate, sink);
       addOnDisposedWithError(sink, delegate);
       addTeardown(sink, () => {
-        pipe(sink.last, m.fromArray(), m.sink(delegate));
+        pipe(sink.last, m.fromArray(), sinkInto(delegate));
       });
 
       return sink;

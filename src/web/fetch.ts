@@ -1,7 +1,8 @@
 import { dispose, toAbortSignal } from "../disposable";
 import { Function1, pipe, returns } from "../functions";
-import { ObservableLike, defer, fromPromise, sink } from "../observable";
+import { ObservableLike, defer, fromPromise } from "../observable";
 import { Option, none } from "../option";
+import { sinkInto } from "../source";
 import { FetchRequest } from "../web";
 
 const globalFetch = self.fetch;
@@ -32,7 +33,7 @@ export const fetch =
             ? fromPromise(returns(onResponseResult))
             : onResponseResult;
 
-        pipe(resultObs, sink(observer));
+        pipe(resultObs, sinkInto(observer));
       } catch (cause) {
         pipe(observer, dispose({ cause }));
       }
