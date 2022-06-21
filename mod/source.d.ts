@@ -35,7 +35,7 @@ interface Lift<C extends SourceLike> extends Container<C> {
     lift<TA, TB>(operator: Function1<SinkOf<C, TB>, SinkOf<C, TA>>): Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 }
 declare const createDecodeWithCharsetOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Sink<C> & Lift<C>, DecodeWithCharsetSink: new (delegate: SinkOf<C, string>, textDecoder: TextDecoder) => SinkOf<C, ArrayBuffer> & {
-    readonly delegate: SinkLike<string>;
+    readonly delegate: SinkOf<C, string>;
     readonly textDecoder: TextDecoder;
 }) => (charset?: string) => ContainerOperator<C, ArrayBuffer, string>;
 declare const createDistinctUntilChangedOperator: <C extends SourceLike>(m: Lift<C>, DistinctUntilChangedSink: new <T>(delegate: SinkOf<C, T>, equality: Equality<T>) => SinkOf<C, T> & {
@@ -51,11 +51,11 @@ declare const createKeepOperator: <C extends SourceLike>(m: Lift<C>, KeepSink: n
     readonly predicate: Predicate<T>;
 }) => <T_1>(predicate: Predicate<T_1>) => ContainerOperator<C, T_1, T_1>;
 declare const createMapOperator: <C extends SourceLike>(m: Lift<C>, MapSink: new <TA, TB>(delegate: SinkOf<C, TB>, mapper: Function1<TA, TB>) => SinkOf<C, TA> & {
-    readonly delegate: SinkLike<TB>;
+    readonly delegate: SinkOf<C, TB>;
     readonly mapper: Function1<TA, TB>;
 }) => <TA_1, TB_1>(mapper: Function1<TA_1, TB_1>) => ContainerOperator<C, TA_1, TB_1>;
 declare const createOnNotifyOperator: <C extends SourceLike>(m: Lift<C>, OnNotifySink: new <T>(delegate: SinkOf<C, T>, onNotify: SideEffect1<T>) => SinkOf<C, T> & {
-    readonly delegate: SinkLike<T>;
+    readonly delegate: SinkOf<C, T>;
     readonly onNotify: SideEffect1<T>;
 }) => <T_1>(onNotify: SideEffect1<T_1>) => ContainerOperator<C, T_1, T_1>;
 declare const createPairwiseOperator: <C extends SourceLike>(m: Lift<C>, PairwiseSink: new <T>(delegate: SinkOf<C, [

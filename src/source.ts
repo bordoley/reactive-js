@@ -83,13 +83,13 @@ export const createDecodeWithCharsetOperator = <C extends SourceLike>(
     delegate: SinkOf<C, string>,
     textDecoder: TextDecoder,
   ) => SinkOf<C, ArrayBuffer> & {
-    readonly delegate: SinkLike<string>;
+    readonly delegate: SinkOf<C, string>;
     readonly textDecoder: TextDecoder;
   },
 ): ((charset?: string) => ContainerOperator<C, ArrayBuffer, string>) => {
   DecodeWithCharsetSink.prototype.notify = function notifyDecodeWithCharset(
-    this: SinkLike<ArrayBuffer> & {
-      readonly delegate: SinkLike<string>;
+    this: SinkOf<C, ArrayBuffer> & {
+      readonly delegate: SinkOf<C, string>;
       readonly textDecoder: TextDecoder;
     },
     next: ArrayBuffer,
@@ -181,7 +181,7 @@ export const createKeepOperator = <C extends SourceLike>(
 ): (<T>(predicate: Predicate<T>) => ContainerOperator<C, T, T>) => {
   KeepSink.prototype.notify = function notifyKeep<T>(
     this: SinkOf<C, T> & {
-      readonly delegate: SinkLike<T>;
+      readonly delegate: SinkOf<C, T>;
       readonly predicate: Predicate<T>;
     },
     next: T,
@@ -208,13 +208,13 @@ export const createMapOperator = <C extends SourceLike>(
     delegate: SinkOf<C, TB>,
     mapper: Function1<TA, TB>,
   ) => SinkOf<C, TA> & {
-    readonly delegate: SinkLike<TB>;
+    readonly delegate: SinkOf<C, TB>;
     readonly mapper: Function1<TA, TB>;
   },
 ): (<TA, TB>(mapper: Function1<TA, TB>) => ContainerOperator<C, TA, TB>) => {
   MapSink.prototype.notify = function notifyMap<TA, TB>(
     this: SinkOf<C, TA> & {
-      readonly delegate: SinkLike<TB>;
+      readonly delegate: SinkOf<C, TB>;
       readonly mapper: Function1<TA, TB>;
     },
     next: TA,
@@ -240,13 +240,13 @@ export const createOnNotifyOperator = <C extends SourceLike>(
     delegate: SinkOf<C, T>,
     onNotify: SideEffect1<T>,
   ) => SinkOf<C, T> & {
-    readonly delegate: SinkLike<T>;
+    readonly delegate: SinkOf<C, T>;
     readonly onNotify: SideEffect1<T>;
   },
 ): (<T>(onNotify: SideEffect1<T>) => ContainerOperator<C, T, T>) => {
   OnNotifySink.prototype.notify = function notifyOnNotify<T>(
-    this: SinkLike<T> & {
-      readonly delegate: SinkLike<T>;
+    this: SinkOf<C, T> & {
+      readonly delegate: SinkOf<C, T>;
       readonly onNotify: SideEffect1<T>;
     },
     next: T,
@@ -276,8 +276,8 @@ export const createPairwiseOperator = <C extends SourceLike>(
   },
 ): (<T>() => ContainerOperator<C, T, [Option<T>, T]>) => {
   PairwiseSink.prototype.notify = function notifyPairwise<T>(
-    this: SinkLike<T> & {
-      readonly delegate: SinkLike<[Option<T>, T]>;
+    this: SinkOf<C, T> & {
+      readonly delegate: SinkOf<C, [Option<T>, T]>;
       prev: Option<T>;
       hasPrev: boolean;
     },
