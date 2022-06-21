@@ -1,7 +1,7 @@
 /// <reference types="./runnable.d.ts" />
-import { pipe, raise, compose, negate, alwaysTrue, strictEquality, isEqualTo, identity } from './functions.mjs';
+import { pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
-import { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
+import { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 
@@ -133,25 +133,6 @@ const run = (f) => (runnable) => {
     return sink.result;
 };
 
-class EverySatisfySink extends Sink {
-    constructor(predicate) {
-        super();
-        this.predicate = predicate;
-        this.result = true;
-    }
-    notify(next) {
-        if (!this.predicate(next)) {
-            this.result = false;
-            this.dispose();
-        }
-    }
-}
-const everySatisfy = (predicate) => {
-    const createSink = () => new EverySatisfySink(predicate);
-    return run(createSink);
-};
-const noneSatisfy = (predicate) => everySatisfy(compose(predicate, negate));
-
 class FirstSink extends Sink {
     constructor() {
         super(...arguments);
@@ -221,28 +202,6 @@ function repeat(predicate) {
     });
 }
 
-class SomeSatisfySink extends Sink {
-    constructor(predicate) {
-        super();
-        this.predicate = predicate;
-        this.result = false;
-    }
-    notify(next) {
-        if (this.predicate(next)) {
-            this.result = true;
-            this.dispose();
-        }
-    }
-}
-const someSatisfy = (predicate) => {
-    const createSink = () => new SomeSatisfySink(predicate);
-    return run(createSink);
-};
-const contains = (value, options = {}) => {
-    const { equality = strictEquality } = options;
-    return someSatisfy(isEqualTo(value, equality));
-};
-
 class ToArraySink extends Sink {
     constructor() {
         super(...arguments);
@@ -303,6 +262,16 @@ const distinctUntilChanged = createDistinctUntilChangedOperator(liftT, class Dis
 });
 const distinctUntilChangedT = {
     distinctUntilChanged,
+};
+const everySatisfy = createEverySatisfyOperator({ ...fromArrayT, ...liftT }, class EverySatisfySink extends Sink {
+    constructor(delegate, predicate) {
+        super();
+        this.delegate = delegate;
+        this.predicate = predicate;
+    }
+});
+const everySatisfyT = {
+    everySatisfy,
 };
 const keep = createKeepOperator(liftT, class KeepSink extends Sink {
     constructor(delegate, predicate) {
@@ -379,6 +348,16 @@ const skipFirst = createSkipFirstOperator(liftT, class SkipFirstSink extends Sin
 const skipFirstT = {
     skipFirst,
 };
+const someSatisfy = createSomeSatisfyOperator({ ...fromArrayT, ...liftT }, class SomeSatisfySink extends Sink {
+    constructor(delegate, predicate) {
+        super();
+        this.delegate = delegate;
+        this.predicate = predicate;
+    }
+});
+const someSatisfyT = {
+    someSatisfy,
+};
 const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftT }, class TakeFirstSink extends Sink {
     constructor(delegate, maxCount) {
         super();
@@ -423,4 +402,4 @@ const throwIfEmptyT = {
     throwIfEmpty,
 };
 
-export { Sink, catchError, concat, concatAll, contains, createRunnable, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, noneSatisfy, onNotify, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using };
+export { Sink, catchError, concat, concatAll, createRunnable, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, onNotify, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using };

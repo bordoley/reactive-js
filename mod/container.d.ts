@@ -1,5 +1,5 @@
 import { DisposableLike } from "./disposable.mjs";
-import { Function1, Equality, Updater, Factory, Predicate, Reducer, Function2, Function3, Function4, Function5, Function6, TypePredicate } from "./functions.mjs";
+import { Function1, Equality, Predicate, Updater, Factory, Reducer, Function2, Function3, Function4, Function5, Function6, TypePredicate } from "./functions.mjs";
 import { Option } from "./option.mjs";
 interface ContainerLike {
     readonly T?: unknown;
@@ -34,6 +34,9 @@ interface DistinctUntilChanged<C extends ContainerLike> extends Container<C> {
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
     }): ContainerOperator<C, T, T>;
+}
+interface EverySatisfy<C extends ContainerLike> extends Container<C> {
+    everySatisfy<T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean>;
 }
 interface FromArrayOptions {
     readonly startIndex: Option<number>;
@@ -78,6 +81,9 @@ interface SkipFirst<C extends ContainerLike> extends Container<C> {
     skipFirst<T>(options?: {
         readonly count?: number;
     }): ContainerOperator<C, T, T>;
+}
+interface SomeSatisfy<C extends ContainerLike> extends Container<C> {
+    someSatisfy<T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean>;
 }
 interface TakeFirst<C extends ContainerLike> extends Container<C> {
     takeFirst<T>(options?: {
@@ -212,6 +218,9 @@ declare function using<C, TResource1 extends DisposableLike, TResource2 extends 
     TResource4,
     TResource5
 ]>, containerFactory: Function6<ContainerOf<C, TA>, TResource1, TResource2, TResource3, TResource4, TResource5, ContainerOf<C, TB>>): ContainerOperator<C, TA, TB>;
+declare const contains: <C, T>({ someSatisfy }: SomeSatisfy<C>, value: T, options?: {
+    readonly equality?: Equality<T> | undefined;
+}) => ContainerOperator<C, T, boolean>;
 declare const encodeUtf8: <C>(m: Using<C> & Map<C>) => ContainerOperator<C, string, Uint8Array>;
 declare function endWith<C, T>(m: Concat<C> & FromArray<C>, value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
 declare const fromOption: <C, T, O extends FromArrayOptions = FromArrayOptions>(m: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Option<T>, ContainerOf<C, T>>;
@@ -220,10 +229,11 @@ declare const genMap: <C, TA, TB, OConcatAll extends Record<string, never> = Rec
 declare const keepType: <C, TA, TB extends TA>({ keep }: Keep<C>, predicate: TypePredicate<TA, TB>) => ContainerOperator<C, TA, TB>;
 declare const ignoreElements: <C, T>({ keep, }: Keep<C>) => ContainerOperator<C, unknown, T>;
 declare const mapTo: <C, TA, TB>({ map }: Map<C>, value: TB) => ContainerOperator<C, TA, TB>;
+declare const noneSatisfy: <C, T>({ everySatisfy }: EverySatisfy<C>, predicate: Predicate<T>) => ContainerOperator<C, T, boolean>;
 declare function startWith<C, T>(m: Concat<C> & FromArray<C>, value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
 declare const throws: <C, T, O extends FromArrayOptions = FromArrayOptions>(m: Map<C> & FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Factory<unknown>, ContainerOf<C, T>>;
 declare const zipWith: <C, TA, TB>({ zip }: Zip<C>, snd: ContainerOf<C, TB>) => ContainerOperator<C, TA, [
     TA,
     TB
 ]>;
-export { AbstractContainer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, DistinctUntilChanged, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using, Zip, compute, concatMap, concatWith, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, startWith, throws, using, zipWith };
+export { AbstractContainer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using, Zip, compute, concatMap, concatWith, contains, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, using, zipWith };

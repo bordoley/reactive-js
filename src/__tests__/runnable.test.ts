@@ -20,7 +20,9 @@ import {
   fromValue,
   ignoreElements,
   mapTo,
+  noneSatisfy,
   startWith,
+  contains,
 } from "../container";
 import {
   alwaysFalse,
@@ -37,9 +39,9 @@ import {
   ToRunnable,
   concat,
   concatAll,
-  contains,
   distinctUntilChanged,
   everySatisfy,
+  everySatisfyT,
   first,
   forEach,
   fromArray,
@@ -47,7 +49,6 @@ import {
   generate,
   keepT,
   map,
-  noneSatisfy,
   repeat,
   scan,
   skipFirst,
@@ -56,6 +57,7 @@ import {
   takeWhile,
   toArray,
   toRunnable,
+  someSatisfyT,
 } from "../runnable";
 import {
   describe,
@@ -380,17 +382,29 @@ export const tests = describe(
       "source is empty",
       defer(
         empty<RunnableLike<unknown>, number>({ fromArray }),
-        contains(1),
+        contains(someSatisfyT, 1),
+        first(),
         expectFalse,
       ),
     ),
     test(
       "source contains value",
-      defer(generate(increment, returns<number>(0)), contains(1), expectTrue),
+      defer(
+        generate(increment, returns<number>(0)),
+        contains(someSatisfyT, 1),
+        first(),
+        expectTrue,
+      ),
     ),
     test(
       "source does not contain value",
-      defer([2, 3, 4], fromArray(), contains(1), expectFalse),
+      defer(
+        [2, 3, 4],
+        fromArray(),
+        contains(someSatisfyT, 1),
+        first(),
+        expectFalse,
+      ),
     ),
   ),
 
@@ -401,16 +415,29 @@ export const tests = describe(
       defer(
         empty<RunnableLike<unknown>, number>({ fromArray }),
         everySatisfy(alwaysFalse),
+        first(),
         expectTrue,
       ),
     ),
     test(
       "source values pass predicate",
-      defer([1, 2, 3], fromArray(), everySatisfy(alwaysTrue), expectTrue),
+      defer(
+        [1, 2, 3],
+        fromArray(),
+        everySatisfy(alwaysTrue),
+        first(),
+        expectTrue,
+      ),
     ),
     test(
       "source values fail predicate",
-      defer([1, 2, 3], fromArray(), everySatisfy(alwaysFalse), expectFalse),
+      defer(
+        [1, 2, 3],
+        fromArray(),
+        everySatisfy(alwaysFalse),
+        first(),
+        expectFalse,
+      ),
     ),
   ),
   describe(
@@ -445,17 +472,30 @@ export const tests = describe(
       "source is empty",
       defer(
         empty<RunnableLike<unknown>, number>({ fromArray }),
-        noneSatisfy(alwaysFalse),
+        noneSatisfy(everySatisfyT, alwaysFalse),
+        first(),
         expectTrue,
       ),
     ),
     test(
       "source values pass predicate",
-      defer([1, 2, 3], fromArray(), noneSatisfy(alwaysTrue), expectFalse),
+      defer(
+        [1, 2, 3],
+        fromArray(),
+        noneSatisfy(everySatisfyT, alwaysTrue),
+        first(),
+        expectFalse,
+      ),
     ),
     test(
       "source values fail predicate",
-      defer([1, 2, 3], fromArray(), noneSatisfy(alwaysFalse), expectTrue),
+      defer(
+        [1, 2, 3],
+        fromArray(),
+        noneSatisfy(everySatisfyT, alwaysFalse),
+        first(),
+        expectTrue,
+      ),
     ),
   ),
   createRunnableTests({

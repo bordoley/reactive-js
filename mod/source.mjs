@@ -1,7 +1,7 @@
 /// <reference types="./source.d.ts" />
 import { AbstractContainer, fromValue, empty } from './container.mjs';
-import { addDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown, dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables, addTeardown } from './disposable.mjs';
-import { pipe, strictEquality } from './functions.mjs';
+import { addDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown, dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables, addDisposableDisposeParentOnChildError, addTeardown } from './disposable.mjs';
+import { pipe, strictEquality, compose, negate } from './functions.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 class AbstractSource extends AbstractContainer {
@@ -81,6 +81,30 @@ const createDistinctUntilChangedOperator = (m, DistinctUntilChangedSink) => {
         return m.lift(operator);
     };
 };
+const createSatisfyOperator = (m, EverySatisfySink, defaultResult) => {
+    EverySatisfySink.prototype.notify = function notifyEverySatisfy(next) {
+        this.assertState();
+        if (this.predicate(next)) {
+            const { delegate } = this;
+            delegate.notify(!defaultResult);
+            delegate.dispose();
+        }
+    };
+    return (predicate) => {
+        const operator = (delegate) => {
+            const sink = new EverySatisfySink(delegate, predicate);
+            addDisposableDisposeParentOnChildError(delegate, sink);
+            addOnDisposedWithoutErrorTeardown(sink, () => {
+                if (!delegate.isDisposed) {
+                    pipe(defaultResult, fromValue(m), sinkInto(delegate));
+                }
+            });
+            return sink;
+        };
+        return m.lift(operator);
+    };
+};
+const createEverySatisfyOperator = (m, EverySatisfySink) => compose(predicate => compose(predicate, negate), createSatisfyOperator(m, EverySatisfySink, true));
 const createKeepOperator = (m, KeepSink) => {
     KeepSink.prototype.notify = function notifyKeep(next) {
         this.assertState();
@@ -195,6 +219,7 @@ const createSkipFirstOperator = (m, SkipFirstSink) => {
         return runnable => count > 0 ? pipe(runnable, m.lift(operator)) : runnable;
     };
 };
+const createSomeSatisfyOperator = (m, SomeSatisfySink) => createSatisfyOperator(m, SomeSatisfySink, false);
 const createTakeFirstOperator = (m, TakeFirstSink) => {
     TakeFirstSink.prototype.notify = function notifyTakeFirst(next) {
         this.assertState();
@@ -288,4 +313,4 @@ const createThrowIfEmptyOperator = (m, ThrowIfEmptySink) => {
     };
 };
 
-export { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, sinkInto };
+export { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, sinkInto };

@@ -68,7 +68,6 @@ const createWritableAndSetupEventSubscription =
       }),
     );
     addOnDisposedWithoutErrorTeardown(streamEventsSubscription, () => {
-      debugger;
       writableValue.end();
     });
 

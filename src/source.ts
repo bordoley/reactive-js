@@ -11,6 +11,7 @@ import {
 import {
   DisposableLike,
   addDisposable,
+  addDisposableDisposeParentOnChildError,
   addOnDisposedWithError,
   addOnDisposedWithErrorTeardown,
   addOnDisposedWithoutError,
@@ -28,6 +29,8 @@ import {
   SideEffect1,
   pipe,
   strictEquality,
+  compose,
+  negate,
 } from "./functions";
 import { Option, isNone, isSome, none } from "./option";
 
@@ -208,6 +211,62 @@ export const createDistinctUntilChangedOperator = <C extends SourceLike>(
     return m.lift(operator);
   };
 };
+
+const createSatisfyOperator = <C extends SourceLike>(
+  m: FromArray<C> & Lift<C>,
+  EverySatisfySink: new <T>(
+    delegate: SinkOf<C, boolean>,
+    predicate: Predicate<T>,
+  ) => SinkOf<C, T> & {
+    readonly delegate: SinkOf<C, boolean>;
+    readonly predicate: Predicate<T>;
+  },
+  defaultResult: boolean,
+): (<T>(predicate: Predicate<T>) => ContainerOperator<C, T, boolean>) => {
+  EverySatisfySink.prototype.notify = function notifyEverySatisfy<T>(
+    this: SinkOf<C, T> & {
+      readonly delegate: SinkOf<C, boolean>;
+      readonly predicate: Predicate<T>;
+    },
+    next: T,
+  ) {
+    this.assertState();
+
+    if (this.predicate(next)) {
+      const { delegate } = this;
+      delegate.notify(!defaultResult);
+      delegate.dispose();
+    }
+  };
+  return <T>(predicate: Predicate<T>) => {
+    const operator = (delegate: SinkOf<C, boolean>): SinkOf<C, T> => {
+      const sink = new EverySatisfySink(delegate, predicate);
+      addDisposableDisposeParentOnChildError(delegate, sink);
+      addOnDisposedWithoutErrorTeardown(sink, () => {
+        if (!delegate.isDisposed) {
+          pipe(defaultResult, fromValue(m), sinkInto(delegate));
+        }
+      });
+      return sink;
+    };
+    return m.lift(operator);
+  };
+};
+
+export const createEverySatisfyOperator = <C extends SourceLike>(
+  m: FromArray<C> & Lift<C>,
+  EverySatisfySink: new <T>(
+    delegate: SinkOf<C, boolean>,
+    predicate: Predicate<T>,
+  ) => SinkOf<C, T> & {
+    readonly delegate: SinkOf<C, boolean>;
+    readonly predicate: Predicate<T>;
+  },
+): (<T>(predicate: Predicate<T>) => ContainerOperator<C, T, boolean>) =>
+  compose(
+    predicate => compose(predicate, negate),
+    createSatisfyOperator(m, EverySatisfySink, true),
+  );
 
 export const createKeepOperator = <C extends SourceLike>(
   m: Lift<C>,
@@ -468,6 +527,18 @@ export const createSkipFirstOperator = <C extends SourceLike>(
       count > 0 ? pipe(runnable, m.lift(operator)) : runnable;
   };
 };
+
+export const createSomeSatisfyOperator = <C extends SourceLike>(
+  m: FromArray<C> & Lift<C>,
+  SomeSatisfySink: new <T>(
+    delegate: SinkOf<C, boolean>,
+    predicate: Predicate<T>,
+  ) => SinkOf<C, T> & {
+    readonly delegate: SinkOf<C, boolean>;
+    readonly predicate: Predicate<T>;
+  },
+): (<T>(predicate: Predicate<T>) => ContainerOperator<C, T, boolean>) =>
+  createSatisfyOperator(m, SomeSatisfySink, false);
 
 export const createTakeFirstOperator = <C extends SourceLike>(
   m: FromArray<C> & Lift<C>,

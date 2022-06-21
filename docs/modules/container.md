@@ -16,6 +16,7 @@
 - [ContainerLike](../interfaces/container.ContainerLike.md)
 - [DecodeWithCharset](../interfaces/container.DecodeWithCharset.md)
 - [DistinctUntilChanged](../interfaces/container.DistinctUntilChanged.md)
+- [EverySatisfy](../interfaces/container.EverySatisfy.md)
 - [FromArray](../interfaces/container.FromArray.md)
 - [FromArrayOptions](../interfaces/container.FromArrayOptions.md)
 - [FromIterable](../interfaces/container.FromIterable.md)
@@ -28,6 +29,7 @@
 - [Repeat](../interfaces/container.Repeat.md)
 - [Scan](../interfaces/container.Scan.md)
 - [SkipFirst](../interfaces/container.SkipFirst.md)
+- [SomeSatisfy](../interfaces/container.SomeSatisfy.md)
 - [TakeFirst](../interfaces/container.TakeFirst.md)
 - [TakeLast](../interfaces/container.TakeLast.md)
 - [TakeWhile](../interfaces/container.TakeWhile.md)
@@ -45,6 +47,7 @@
 - [compute](container.md#compute)
 - [concatMap](container.md#concatmap)
 - [concatWith](container.md#concatwith)
+- [contains](container.md#contains)
 - [empty](container.md#empty)
 - [encodeUtf8](container.md#encodeutf8)
 - [endWith](container.md#endwith)
@@ -54,6 +57,7 @@
 - [ignoreElements](container.md#ignoreelements)
 - [keepType](container.md#keeptype)
 - [mapTo](container.md#mapto)
+- [noneSatisfy](container.md#nonesatisfy)
 - [startWith](container.md#startwith)
 - [throws](container.md#throws)
 - [using](container.md#using)
@@ -161,6 +165,32 @@ ___
 #### Returns
 
 [`ContainerOperator`](container.md#containeroperator)<`C`, `T`, `T`\>
+
+___
+
+### contains
+
+▸ **contains**<`C`, `T`\>(`__namedParameters`, `value`, `options?`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T`, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `C` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`SomeSatisfy`](../interfaces/container.SomeSatisfy.md)<`C`\> |
+| `value` | `T` |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T`, `boolean`\>
 
 ___
 
@@ -386,6 +416,30 @@ ___
 #### Returns
 
 [`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, `TB`\>
+
+___
+
+### noneSatisfy
+
+▸ **noneSatisfy**<`C`, `T`\>(`__namedParameters`, `predicate`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T`, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `C` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`EverySatisfy`](../interfaces/container.EverySatisfy.md)<`C`\> |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T`, `boolean`\>
 
 ___
 

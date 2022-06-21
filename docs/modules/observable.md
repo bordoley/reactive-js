@@ -29,6 +29,7 @@
 - [concatT](observable.md#concatt)
 - [decodeWithCharsetT](observable.md#decodewithcharsett)
 - [distinctUntilChangedT](observable.md#distinctuntilchangedt)
+- [everySatisfyT](observable.md#everysatisfyt)
 - [exhaustT](observable.md#exhaustt)
 - [fromArrayT](observable.md#fromarrayt)
 - [fromIteratorT](observable.md#fromiteratort)
@@ -39,6 +40,7 @@
 - [reduceT](observable.md#reducet)
 - [scanT](observable.md#scant)
 - [skipFirstT](observable.md#skipfirstt)
+- [someSatisfyT](observable.md#somesatisfyt)
 - [switchAllT](observable.md#switchallt)
 - [takeFirstT](observable.md#takefirstt)
 - [takeLastT](observable.md#takelastt)
@@ -67,6 +69,7 @@
 - [defer](observable.md#defer)
 - [dispatchTo](observable.md#dispatchto)
 - [distinctUntilChanged](observable.md#distinctuntilchanged)
+- [everySatisfy](observable.md#everysatisfy)
 - [exhaust](observable.md#exhaust)
 - [fromArray](observable.md#fromarray)
 - [fromDisposable](observable.md#fromdisposable)
@@ -94,6 +97,7 @@
 - [scanAsync](observable.md#scanasync)
 - [share](observable.md#share)
 - [skipFirst](observable.md#skipfirst)
+- [someSatisfy](observable.md#somesatisfy)
 - [subscribe](observable.md#subscribe)
 - [subscribeOn](observable.md#subscribeon)
 - [switchAll](observable.md#switchall)
@@ -185,6 +189,12 @@ ___
 
 ___
 
+### everySatisfyT
+
+• `Const` **everySatisfyT**: [`EverySatisfy`](../interfaces/container.EverySatisfy.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
 ### exhaustT
 
 • `Const` **exhaustT**: [`ConcatAll`](../interfaces/container.ConcatAll.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `Record`<`string`, `never`\>\>
@@ -242,6 +252,12 @@ ___
 ### skipFirstT
 
 • `Const` **skipFirstT**: [`SkipFirst`](../interfaces/container.SkipFirst.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### someSatisfyT
+
+• `Const` **someSatisfyT**: [`SomeSatisfy`](../interfaces/container.SomeSatisfy.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
@@ -1315,6 +1331,28 @@ are distinct by comparison from the previous item.
 
 ___
 
+### everySatisfy
+
+▸ **everySatisfy**<`T`\>(`predicate`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`ObservableOperator`](observable.md#observableoperator)<`T`, `boolean`\>
+
+___
+
 ### exhaust
 
 ▸ **exhaust**<`T`\>(): [`ObservableOperator`](observable.md#observableoperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, `T`\>
@@ -2012,6 +2050,28 @@ Returns an `ObservableLike` that skips the first count items emitted by the sour
 #### Returns
 
 [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+
+___
+
+### someSatisfy
+
+▸ **someSatisfy**<`T`\>(`predicate`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`ObservableOperator`](observable.md#observableoperator)<`T`, `boolean`\>
 
 ___
 

@@ -17,8 +17,11 @@ import {
   compose,
   defer,
   ignore,
+  negate,
   pipe,
   returns,
+  strictEquality,
+  isEqualTo,
 } from "./functions";
 
 import { Option, isSome } from "./option";
@@ -84,6 +87,10 @@ export interface DistinctUntilChanged<C extends ContainerLike>
   distinctUntilChanged<T>(options?: {
     readonly equality?: Equality<T>;
   }): ContainerOperator<C, T, T>;
+}
+
+export interface EverySatisfy<C extends ContainerLike> extends Container<C> {
+  everySatisfy<T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean>;
 }
 
 export interface FromArrayOptions {
@@ -161,6 +168,10 @@ export interface SkipFirst<C extends ContainerLike> extends Container<C> {
   skipFirst<T>(options?: {
     readonly count?: number;
   }): ContainerOperator<C, T, T>;
+}
+
+export interface SomeSatisfy<C extends ContainerLike> extends Container<C> {
+  someSatisfy<T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean>;
 }
 
 export interface TakeFirst<C extends ContainerLike> extends Container<C> {
@@ -454,6 +465,15 @@ export function using<C, TResource extends DisposableLike, TA, TB>(
     });
 }
 
+export const contains = <C, T>(
+  { someSatisfy }: SomeSatisfy<C>,
+  value: T,
+  options: { readonly equality?: Equality<T> } = {},
+): ContainerOperator<C, T, boolean> => {
+  const { equality = strictEquality } = options;
+  return someSatisfy(isEqualTo(value, equality));
+};
+
 export const encodeUtf8 = <C>(
   m: Using<C> & Map<C>,
 ): ContainerOperator<C, string, Uint8Array> =>
@@ -535,6 +555,11 @@ export const mapTo = <C, TA, TB>(
   { map }: Map<C>,
   value: TB,
 ): ContainerOperator<C, TA, TB> => pipe(value, returns, map);
+
+export const noneSatisfy = <C, T>(
+  { everySatisfy }: EverySatisfy<C>,
+  predicate: Predicate<T>,
+): ContainerOperator<C, T, boolean> => everySatisfy(compose(predicate, negate));
 
 export function startWith<C, T>(
   m: Concat<C> & FromArray<C>,

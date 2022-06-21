@@ -50,6 +50,10 @@ declare const createDistinctUntilChangedOperator: <C extends SourceLike>(m: Lift
 }) => <T_1>(options?: {
     readonly equality?: Equality<T_1> | undefined;
 } | undefined) => ContainerOperator<C, T_1, T_1>;
+declare const createEverySatisfyOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, EverySatisfySink: new <T>(delegate: SinkOf<C, boolean>, predicate: Predicate<T>) => SinkOf<C, T> & {
+    readonly delegate: SinkOf<C, boolean>;
+    readonly predicate: Predicate<T>;
+}) => <T_1>(predicate: Predicate<T_1>) => ContainerOperator<C, T_1, boolean>;
 declare const createKeepOperator: <C extends SourceLike>(m: Lift<C>, KeepSink: new <T>(delegate: SinkOf<C, T>, predicate: Predicate<T>) => SinkOf<C, T> & {
     readonly delegate: SinkOf<C, T>;
     readonly predicate: Predicate<T>;
@@ -92,6 +96,10 @@ declare const createSkipFirstOperator: <C extends SourceLike>(m: Lift<C>, SkipFi
 }) => <T_1>(options?: {
     readonly count?: number;
 }) => ContainerOperator<C, T_1, T_1>;
+declare const createSomeSatisfyOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, SomeSatisfySink: new <T>(delegate: SinkOf<C, boolean>, predicate: Predicate<T>) => SinkOf<C, T> & {
+    readonly delegate: SinkOf<C, boolean>;
+    readonly predicate: Predicate<T>;
+}) => <T_1>(predicate: Predicate<T_1>) => ContainerOperator<C, T_1, boolean>;
 declare const createTakeFirstOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, TakeFirstSink: new <T>(delegate: SinkOf<C, T>, maxCount: number) => SinkOf<C, T> & {
     readonly delegate: SinkOf<C, T>;
     count: number;
@@ -116,4 +124,4 @@ declare const createThrowIfEmptyOperator: <C extends SourceLike>(m: Lift<C>, Thr
     readonly delegate: SinkOf<C, T>;
     isEmpty: boolean;
 }) => <T_1>(factory: Factory<unknown>) => ContainerOperator<C, T_1, T_1>;
-export { AbstractSource, CreateDelegatingSink, Lift, SinkLike, SinkOf, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, sinkInto };
+export { AbstractSource, CreateDelegatingSink, Lift, SinkLike, SinkOf, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, sinkInto };

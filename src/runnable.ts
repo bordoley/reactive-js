@@ -4,12 +4,14 @@ import {
   ContainerOf,
   DecodeWithCharset,
   DistinctUntilChanged,
+  EverySatisfy,
   Keep,
   Map,
   Pairwise,
   Reduce,
   Scan,
   SkipFirst,
+  SomeSatisfy,
   TakeFirst,
   TakeLast,
   TakeWhile,
@@ -33,6 +35,7 @@ import {
   createCatchErrorOperator,
   createDecodeWithCharsetOperator,
   createDistinctUntilChangedOperator,
+  createEverySatisfyOperator,
   createKeepOperator,
   createMapOperator,
   createOnNotifyOperator,
@@ -44,6 +47,7 @@ import {
   createTakeLastOperator,
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
+  createSomeSatisfyOperator,
 } from "./source";
 
 export interface RunnableLike<T> extends SourceLike {
@@ -65,7 +69,6 @@ export interface ToRunnable<C extends ContainerLike> extends Container<C> {
 
 export { concat, concatAll } from "./runnable/concat";
 export { createRunnable } from "./runnable/createRunnable";
-export { everySatisfy, noneSatisfy } from "./runnable/everySatisfy";
 export { first } from "./runnable/first";
 export { forEach } from "./runnable/forEach";
 export { fromArray, fromArrayT } from "./runnable/fromArray";
@@ -73,7 +76,6 @@ export { generate } from "./runnable/generate";
 export { last } from "./runnable/last";
 export { repeat } from "./runnable/repeat";
 export { Sink } from "./runnable/sinks";
-export { someSatisfy, contains } from "./runnable/someSatisfy";
 export { toArray } from "./runnable/toArray";
 export { using } from "./runnable/using";
 
@@ -126,6 +128,24 @@ export const distinctUntilChangedT: DistinctUntilChanged<
   RunnableLike<unknown>
 > = {
   distinctUntilChanged,
+};
+
+export const everySatisfy: <T>(
+  predicate: Predicate<T>,
+) => RunnableOperator<T, boolean> = createEverySatisfyOperator(
+  { ...fromArrayT, ...liftT },
+  class EverySatisfySink<T> extends Sink<T> {
+    constructor(
+      readonly delegate: Sink<boolean>,
+      readonly predicate: Predicate<T>,
+    ) {
+      super();
+    }
+  },
+);
+
+export const everySatisfyT: EverySatisfy<RunnableLike<unknown>> = {
+  everySatisfy,
 };
 
 export const keep: <T>(predicate: Predicate<T>) => RunnableOperator<T, T> =
@@ -253,6 +273,24 @@ export const skipFirst: <T>(options?: {
 
 export const skipFirstT: SkipFirst<RunnableLike<unknown>> = {
   skipFirst,
+};
+
+export const someSatisfy: <T>(
+  predicate: Predicate<T>,
+) => RunnableOperator<T, boolean> = createSomeSatisfyOperator(
+  { ...fromArrayT, ...liftT },
+  class SomeSatisfySink<T> extends Sink<T> {
+    constructor(
+      readonly delegate: Sink<boolean>,
+      readonly predicate: Predicate<T>,
+    ) {
+      super();
+    }
+  },
+);
+
+export const someSatisfyT: SomeSatisfy<RunnableLike<unknown>> = {
+  someSatisfy,
 };
 
 export const takeFirst: <T>(options?: {
