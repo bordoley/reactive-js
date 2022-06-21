@@ -1,5 +1,6 @@
 import { AbstractContainer } from "../container";
-import { ObservableLike, ObserverLike } from "../observable";
+import { ObservableLike } from "../observable";
+import { Observer } from "./observer";
 
 class NeverObservable<T>
   extends AbstractContainer
@@ -7,7 +8,7 @@ class NeverObservable<T>
 {
   readonly isSynchronous = false;
 
-  observe(_: ObserverLike<T>) {}
+  observe(_: Observer<T>) {}
 }
 
 const neverInstance: ObservableLike<any> = new NeverObservable();

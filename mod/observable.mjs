@@ -65,17 +65,46 @@ const fromArrayT = {
     fromArray,
 };
 
-class AbstractObserver extends AbstractDisposable {
+/**
+ * Abstract base class for implementing the `ObserverLike` interface.
+ */
+class Observer extends AbstractDisposable {
+    constructor(scheduler) {
+        super();
+        this.scheduler = scheduler;
+        this.inContinuation = false;
+        this._scheduler =
+            scheduler instanceof Observer ? scheduler._scheduler : scheduler;
+    }
     /** @ignore */
+    get now() {
+        return this._scheduler.now;
+    }
+    /** @ignore */
+    get shouldYield() {
+        return (this.inContinuation && (this.isDisposed || this._scheduler.shouldYield));
+    }
     assertState() { }
     notify(_) { }
     /** @ignore */
     onRunStatusChanged(status) {
         this.inContinuation = status;
     }
+    /** @ignore */
+    requestYield() {
+        this._scheduler.requestYield();
+    }
+    /** @ignore */
+    schedule(continuation, options) {
+        continuation.addListener("onRunStatusChanged", this);
+        addDisposable(this, continuation);
+        // Note that we schedule on the delegate so that it too may listen to
+        // the onRunStatusChanged event.
+        this.scheduler.schedule(continuation, options);
+    }
 }
 if (__DEV__) {
-    AbstractObserver.prototype.assertState = function assertStateDev() {
+    Observer.prototype.assertState = function assertStateDev() {
         if (!this.inContinuation) {
             raise("Observer.notify() may only be invoked within a scheduled SchedulerContinuation");
         }
@@ -84,53 +113,11 @@ if (__DEV__) {
         }
     };
 }
-/**
- * Abstract base class for implementing the `ObserverLike` interface.
- */
-class AbstractSchedulerDelegatingObserver extends AbstractObserver {
+class DelegatingObserver extends Observer {
     constructor(delegate) {
-        super();
+        super(delegate);
         this.delegate = delegate;
-        this.inContinuation = false;
-        this.scheduler =
-            delegate instanceof AbstractSchedulerDelegatingObserver
-                ? delegate.scheduler
-                : delegate;
     }
-    /** @ignore */
-    get now() {
-        return this.scheduler.now;
-    }
-    /** @ignore */
-    get shouldYield() {
-        return (this.inContinuation && (this.isDisposed || this.scheduler.shouldYield));
-    }
-    /** @ignore */
-    onRunStatusChanged(status) {
-        this.inContinuation = status;
-    }
-    /** @ignore */
-    requestYield() {
-        this.delegate.requestYield();
-    }
-    /** @ignore */
-    schedule(continuation, options) {
-        continuation.addListener("onRunStatusChanged", this);
-        addDisposable(this, continuation);
-        // Note that we schedule on the delegate so that it too may listen to
-        // the onRunStatusChanged event.
-        this.delegate.schedule(continuation, options);
-    }
-}
-/**
- * Abstract base class for implementing instances of the `ObserverLike` interface
- * which delegate notifications to a parent `ObserverLike` instance
- *
- * @noInheritDoc
- */
-class AbstractDelegatingObserver extends AbstractSchedulerDelegatingObserver {
-}
-class DelegatingObserver extends AbstractSchedulerDelegatingObserver {
     notify(next) {
         this.delegate.notify(next);
     }
@@ -138,7 +125,7 @@ class DelegatingObserver extends AbstractSchedulerDelegatingObserver {
 const createDelegatingObserver = (delegate) => new DelegatingObserver(delegate);
 const sink = (observer) => observable => observable.observe(observer);
 
-class DefaultObserver extends AbstractSchedulerDelegatingObserver {
+class DefaultObserver extends Observer {
     constructor(scheduler, onNotify, onNotifyThis) {
         super(scheduler);
         this.onNotify = onNotify;
@@ -365,9 +352,10 @@ function onDispose$8(error) {
         pipe(this.delegate, dispose(error));
     }
 }
-class LatestObserver extends AbstractDelegatingObserver {
+class LatestObserver extends Observer {
     constructor(delegate, ctx, mode) {
         super(delegate);
+        this.delegate = delegate;
         this.ctx = ctx;
         this.mode = mode;
         this.ready = false;
@@ -610,9 +598,10 @@ const lift = (operator) => source => {
     return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
 };
 
-class DecodeWithCharsetObserver extends AbstractDelegatingObserver {
+class DecodeWithCharsetObserver extends Observer {
     constructor(delegate, textDecoder) {
         super(delegate);
+        this.delegate = delegate;
         this.textDecoder = textDecoder;
     }
 }
@@ -819,9 +808,10 @@ function onNotify$4() {
     this.buffer = [];
     this.delegate.notify(buffer);
 }
-class BufferObserver extends AbstractDelegatingObserver {
+class BufferObserver extends Observer {
     constructor(delegate, durationFunction, maxBufferSize, durationSubscription) {
         super(delegate);
+        this.delegate = delegate;
         this.durationFunction = durationFunction;
         this.maxBufferSize = maxBufferSize;
         this.durationSubscription = durationSubscription;
@@ -900,9 +890,10 @@ const catchError = (onError) => {
     return lift(operator);
 };
 
-class DistinctUntilChangedObserver extends AbstractDelegatingObserver {
+class DistinctUntilChangedObserver extends Observer {
     constructor(delegate, equality) {
         super(delegate);
+        this.delegate = delegate;
         this.equality = equality;
         this.hasValue = false;
     }
@@ -926,9 +917,10 @@ const distinctUntilChanged = (options = {}) => {
     return lift(operator);
 };
 
-class KeepObserver extends AbstractDelegatingObserver {
+class KeepObserver extends Observer {
     constructor(delegate, predicate) {
         super(delegate);
+        this.delegate = delegate;
         this.predicate = predicate;
     }
 }
@@ -952,9 +944,10 @@ const keepT = {
     keep,
 };
 
-class MapObserver extends AbstractDelegatingObserver {
+class MapObserver extends Observer {
     constructor(delegate, mapper) {
         super(delegate);
+        this.delegate = delegate;
         this.mapper = mapper;
     }
 }
@@ -986,9 +979,10 @@ function onDispose$5(error) {
 function onNotify$3(next) {
     this.delegate.notify(next);
 }
-class SwitchObserver extends AbstractDelegatingObserver {
+class SwitchObserver extends Observer {
     constructor(delegate) {
         super(delegate);
+        this.delegate = delegate;
         this.inner = disposed;
     }
     notify(next) {
@@ -1042,9 +1036,10 @@ function onDispose$4(error) {
         pipe(this.delegate, dispose(error));
     }
 }
-class MergeObserver extends AbstractDelegatingObserver {
+class MergeObserver extends Observer {
     constructor(delegate, maxBufferSize, maxConcurrency) {
         super(delegate);
+        this.delegate = delegate;
         this.maxBufferSize = maxBufferSize;
         this.maxConcurrency = maxConcurrency;
         this.activeCount = 0;
@@ -1117,9 +1112,10 @@ const exhaustT = {
     concatAll: exhaust,
 };
 
-class OnNotifyObserver extends AbstractDelegatingObserver {
+class OnNotifyObserver extends Observer {
     constructor(delegate, onNotify) {
         super(delegate);
+        this.delegate = delegate;
         this.onNotify = onNotify;
     }
 }
@@ -1168,9 +1164,10 @@ class OnSubscribeObservable extends AbstractContainer {
  */
 const onSubscribe = (f) => observable => new OnSubscribeObservable(observable, f);
 
-class PairwiseObserver extends AbstractDelegatingObserver {
-    constructor() {
-        super(...arguments);
+class PairwiseObserver extends Observer {
+    constructor(delegate) {
+        super(delegate);
+        this.delegate = delegate;
         this.hasPrev = false;
     }
 }
@@ -1207,9 +1204,10 @@ function onDispose$3(error) {
         pipe(this.acc, fromValue(fromArrayT), sink(this.delegate));
     }
 }
-class ReduceObserver extends AbstractDelegatingObserver {
+class ReduceObserver extends Observer {
     constructor(delegate, reducer, acc) {
         super(delegate);
+        this.delegate = delegate;
         this.reducer = reducer;
         this.acc = acc;
     }
@@ -1274,9 +1272,10 @@ function retry(predicate) {
     return repeatObs(retryPredicate);
 }
 
-class ScanObserver extends AbstractDelegatingObserver {
+class ScanObserver extends Observer {
     constructor(delegate, reducer, acc) {
         super(delegate);
+        this.delegate = delegate;
         this.reducer = reducer;
         this.acc = acc;
     }
@@ -1299,9 +1298,10 @@ const scan = (reducer, initialValue) => {
     return lift(operator);
 };
 
-class TakeFirstObserver extends AbstractDelegatingObserver {
+class TakeFirstObserver extends Observer {
     constructor(delegate, maxCount) {
         super(delegate);
+        this.delegate = delegate;
         this.maxCount = maxCount;
         this.count = 0;
     }
@@ -1339,9 +1339,10 @@ function onNotify$1(otherLatest) {
         pipe(this.delegate, dispose());
     }
 }
-class ZipWithLatestFromObserver extends AbstractSchedulerDelegatingObserver {
+class ZipWithLatestFromObserver extends Observer {
     constructor(delegate, selector) {
         super(delegate);
+        this.delegate = delegate;
         this.selector = selector;
         this.hasLatest = false;
         this.queue = [];
@@ -1426,9 +1427,10 @@ class SharedObservable extends AbstractContainer {
  */
 const share = (scheduler, options) => observable => new SharedObservable(observable, publish(scheduler, options));
 
-class SkipFirstObserver extends AbstractDelegatingObserver {
+class SkipFirstObserver extends Observer {
     constructor(delegate, skipCount) {
         super(delegate);
+        this.delegate = delegate;
         this.skipCount = skipCount;
         this.count = 0;
     }
@@ -1469,9 +1471,10 @@ function onDispose$2(error) {
         pipe(this.last, fromArray(), sink(this.delegate));
     }
 }
-class TakeLastObserver extends AbstractDelegatingObserver {
+class TakeLastObserver extends Observer {
     constructor(delegate, maxCount) {
         super(delegate);
+        this.delegate = delegate;
         this.maxCount = maxCount;
         this.last = [];
     }
@@ -1507,9 +1510,10 @@ const takeUntil = (notifier) => {
     return lift(operator);
 };
 
-class TakeWhileObserver extends AbstractDelegatingObserver {
+class TakeWhileObserver extends Observer {
     constructor(delegate, predicate, inclusive) {
         super(delegate);
+        this.delegate = delegate;
         this.predicate = predicate;
         this.inclusive = inclusive;
     }
@@ -1544,9 +1548,10 @@ function onDispose$1(e) {
         pipe(this.delegate, dispose(e));
     }
 }
-class ThrottleObserver extends AbstractDelegatingObserver {
+class ThrottleObserver extends Observer {
     constructor(delegate, durationFunction, mode, durationSubscription) {
         super(delegate);
+        this.delegate = delegate;
         this.durationFunction = durationFunction;
         this.mode = mode;
         this.durationSubscription = durationSubscription;
@@ -1605,9 +1610,10 @@ function onDispose(error) {
     }
     this.delegate.dispose(error);
 }
-class ThrowIfEmptyObserver extends AbstractDelegatingObserver {
+class ThrowIfEmptyObserver extends Observer {
     constructor(delegate, factory) {
         super(delegate);
+        this.delegate = delegate;
         this.factory = factory;
         this.isEmpty = true;
     }
@@ -1639,9 +1645,10 @@ const timeoutError = _timeoutError;
 const setupDurationSubscription = (observer) => {
     observer.durationSubscription.inner = pipe(observer.duration, subscribe(observer));
 };
-class TimeoutObserver extends AbstractDelegatingObserver {
+class TimeoutObserver extends Observer {
     constructor(delegate, duration, durationSubscription) {
         super(delegate);
+        this.delegate = delegate;
         this.duration = duration;
         this.durationSubscription = durationSubscription;
     }
@@ -1672,9 +1679,10 @@ function onNotify(next) {
     this.hasLatest = true;
     this.otherLatest = next;
 }
-class WithLatestFromObserver extends AbstractDelegatingObserver {
+class WithLatestFromObserver extends Observer {
     constructor(delegate, selector) {
         super(delegate);
+        this.delegate = delegate;
         this.selector = selector;
         this.hasLatest = false;
         this.selector = selector;
@@ -1711,12 +1719,11 @@ const withLatestFrom = (other, selector) => {
     return lift(operator);
 };
 
-class EnumeratorObserver extends AbstractObserver {
+class EnumeratorScheduler extends AbstractDisposable {
     constructor() {
         super(...arguments);
-        this.continuations = [];
-        this.hasCurrent = false;
         this.inContinuation = false;
+        this.continuations = [];
     }
     get now() {
         return 0;
@@ -1724,8 +1731,27 @@ class EnumeratorObserver extends AbstractObserver {
     get shouldYield() {
         return this.inContinuation;
     }
+    requestYield() {
+        // No-Op: We yield whenever the continuation is running.
+    }
+    schedule(continuation, { delay } = { delay: 0 }) {
+        addDisposable(this, continuation);
+        if (!continuation.isDisposed && delay === 0) {
+            this.continuations.push(continuation);
+        }
+        else {
+            pipe(continuation, dispose());
+        }
+    }
+}
+class EnumeratorObserver extends Observer {
+    constructor(scheduler = new EnumeratorScheduler()) {
+        super(scheduler);
+        this.scheduler = scheduler;
+        this.hasCurrent = false;
+    }
     move() {
-        const continuations = this.continuations;
+        const continuations = this.scheduler.continuations;
         this.hasCurrent = false;
         this.current = none;
         while (!this.hasCurrent) {
@@ -1748,18 +1774,6 @@ class EnumeratorObserver extends AbstractObserver {
         this.assertState();
         this.current = next;
         this.hasCurrent = true;
-    }
-    requestYield() {
-        // No-Op: We yield whenever the continuation is running.
-    }
-    schedule(continuation, { delay } = { delay: 0 }) {
-        addDisposable(this, continuation);
-        if (!continuation.isDisposed && delay === 0) {
-            this.continuations.push(continuation);
-        }
-        else {
-            pipe(continuation, dispose());
-        }
     }
 }
 const enumerate = (obs) => {
@@ -1800,9 +1814,10 @@ function onDisposed(error) {
         pipe(this.delegate, dispose(error));
     }
 }
-class ZipObserver extends AbstractDelegatingObserver {
+class ZipObserver extends Observer {
     constructor(delegate, enumerators) {
         super(delegate);
+        this.delegate = delegate;
         this.enumerators = enumerators;
         this.buffer = [];
         this.hasCurrent = false;
@@ -1943,4 +1958,4 @@ const toPromise = (scheduler) => observable => new Promise((resolve, reject) => 
 
 const type = undefined;
 
-export { __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, decodeWithCharset, defer, dispatchTo, distinctUntilChanged, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify$2 as onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, sink, skipFirst, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, decodeWithCharset, defer, dispatchTo, distinctUntilChanged, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify$2 as onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, sink, skipFirst, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

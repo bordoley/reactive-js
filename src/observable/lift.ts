@@ -1,11 +1,7 @@
 import { AbstractContainer } from "../container";
 import { pipe } from "../functions";
-import {
-  ObservableLike,
-  ObservableOperator,
-  ObserverLike,
-} from "../observable";
-import { sink } from "./observer";
+import { ObservableLike, ObservableOperator } from "../observable";
+import { Observer, sink } from "./observer";
 
 /**
  * A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.
@@ -13,7 +9,7 @@ import { sink } from "./observer";
 export interface ObserverOperator<A, B> {
   readonly isSynchronous: boolean;
 
-  (observer: ObserverLike<B>): ObserverLike<A>;
+  (observer: Observer<B>): Observer<A>;
 }
 
 class LiftedObservable<TIn, TOut>
@@ -28,11 +24,8 @@ class LiftedObservable<TIn, TOut>
     super();
   }
 
-  observe(observer: ObserverLike<TOut>) {
-    const liftedSubscrber = pipe(
-      observer,
-      ...this.operators,
-    ) as ObserverLike<any>;
+  observe(observer: Observer<TOut>) {
+    const liftedSubscrber = pipe(observer, ...this.operators) as Observer<any>;
 
     pipe(this.source, sink(liftedSubscrber));
   }

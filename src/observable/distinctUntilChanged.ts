@@ -1,16 +1,16 @@
 import { bindDisposables } from "../disposable";
 import { Equality, strictEquality } from "../functions";
-import { ObservableOperator, ObserverLike } from "../observable";
+import { ObservableOperator } from "../observable";
 import { Option } from "../option";
 import { notifyDistinctUntilChanged } from "../sink";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver } from "./observer";
+import { Observer } from "./observer";
 
-class DistinctUntilChangedObserver<T> extends AbstractDelegatingObserver<T, T> {
+class DistinctUntilChangedObserver<T> extends Observer<T> {
   prev: Option<T>;
   hasValue = false;
 
-  constructor(delegate: ObserverLike<T>, readonly equality: Equality<T>) {
+  constructor(readonly delegate: Observer<T>, readonly equality: Equality<T>) {
     super(delegate);
   }
 }
@@ -27,7 +27,7 @@ export const distinctUntilChanged = <T>(
   options: { readonly equality?: Equality<T> } = {},
 ): ObservableOperator<T, T> => {
   const { equality = strictEquality } = options;
-  const operator = (delegate: ObserverLike<T>) => {
+  const operator = (delegate: Observer<T>) => {
     const observer = new DistinctUntilChangedObserver(delegate, equality);
     bindDisposables(observer, delegate);
     return observer;

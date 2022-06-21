@@ -5,12 +5,11 @@ import {
   MulticastObservableLike,
   ObservableLike,
   ObservableOperator,
-  ObserverLike,
   SubjectLike,
 } from "../observable";
 import { Option, none } from "../option";
 import { SchedulerLike } from "../scheduler";
-import { sink } from "./observer";
+import { Observer, sink } from "./observer";
 import { publish } from "./publish";
 
 class SharedObservable<T>
@@ -40,7 +39,7 @@ class SharedObservable<T>
     super();
   }
 
-  observe(observer: ObserverLike<T>) {
+  observe(observer: Observer<T>) {
     if (this.observerCount === 0) {
       this.multicast = pipe(this.source, this.publish);
     }

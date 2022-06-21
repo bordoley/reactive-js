@@ -12,11 +12,13 @@ An object that schedules units of work on a runloop.
 
   ↳ **`SchedulerLike`**
 
-  ↳↳ [`ObserverLike`](observable.ObserverLike.md)
-
   ↳↳ [`PausableSchedulerLike`](scheduler.PausableSchedulerLike.md)
 
   ↳↳ [`VirtualTimeSchedulerLike`](scheduler.VirtualTimeSchedulerLike.md)
+
+## Implemented by
+
+- [`Observer`](../classes/observable.Observer.md)
 
 ## Table of contents
 

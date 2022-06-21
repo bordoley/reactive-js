@@ -1,18 +1,7 @@
 import { ContainerLike } from "./container";
 import { DisposableLike } from "./disposable";
 import { Function1, Function2 } from "./functions";
-import { SchedulerLike } from "./scheduler";
-import { SinkLike } from "./sink";
-
-/**
- * The underlying mechanism for receiving and transforming notifications from an
- * observable source. The `ObserverLike` interface composes the `SchedulerLike` and
- * `DisposableLike` interfaces into a single unified type, while adding the capability
- * to receive notifications.
- *
- * @noInheritDoc
- */
-export interface ObserverLike<T> extends SinkLike<T>, SchedulerLike {}
+import { Observer } from "./observable/observer";
 
 /**
  * The source of notifications which notifies a `ObserverLike` instance.
@@ -29,7 +18,7 @@ export interface ObservableLike<T> extends ContainerLike {
    * Subscribes the `ObserverLike` instance to the observable.
    * @param observer The observer which should be notified by the observable source.
    */
-  observe(this: ObservableLike<T>, observer: ObserverLike<T>): void;
+  observe(this: ObservableLike<T>, observer: Observer<T>): void;
 }
 
 export const type: ObservableLike<unknown> = undefined as any;
@@ -115,7 +104,7 @@ export { never } from "./observable/never";
 export { subscribe } from "./observable/subscribe";
 export { using } from "./observable/using";
 export { defer } from "./observable/observable";
-export { sink } from "./observable/observer";
+export { Observer, sink } from "./observable/observer";
 
 export { buffer } from "./observable/buffer";
 export { catchError } from "./observable/catchError";

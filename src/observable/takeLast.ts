@@ -7,12 +7,12 @@ import {
   addOnDisposedWithError,
 } from "../disposable";
 import { pipe } from "../functions";
-import { ObservableOperator, ObserverLike } from "../observable";
+import { ObservableOperator } from "../observable";
 import { Option, isSome } from "../option";
 import { notifyTakeLast } from "../sink";
 import { fromArray, fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, sink } from "./observer";
+import { Observer, sink } from "./observer";
 
 function onDispose(this: TakeLastObserver<unknown>, error: Option<Error>) {
   if (isSome(error)) {
@@ -23,10 +23,10 @@ function onDispose(this: TakeLastObserver<unknown>, error: Option<Error>) {
   }
 }
 
-class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
+class TakeLastObserver<T> extends Observer<T> {
   readonly last: T[] = [];
 
-  constructor(delegate: ObserverLike<T>, readonly maxCount: number) {
+  constructor(readonly delegate: Observer<T>, readonly maxCount: number) {
     super(delegate);
   }
 }
@@ -41,7 +41,7 @@ export const takeLast = <T>(
   options: { readonly count?: number } = {},
 ): ObservableOperator<T, T> => {
   const { count = 1 } = options;
-  const operator = (delegate: ObserverLike<T>) => {
+  const operator = (delegate: Observer<T>) => {
     const observer = new TakeLastObserver(delegate, count);
 
     addDisposable(delegate, observer);

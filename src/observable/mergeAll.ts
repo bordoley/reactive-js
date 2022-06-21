@@ -8,14 +8,10 @@ import {
   addDisposable,
 } from "../disposable";
 import { pipe } from "../functions";
-import {
-  ObservableLike,
-  ObservableOperator,
-  ObserverLike,
-} from "../observable";
+import { ObservableLike, ObservableOperator } from "../observable";
 import { Option, isSome } from "../option";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver } from "./observer";
+import { Observer } from "./observer";
 import { subscribe } from "./subscribe";
 
 const subscribeNext = <T>(observer: MergeObserver<T>) => {
@@ -49,10 +45,7 @@ function onDispose(this: MergeObserver<unknown>, error: Option<Error>) {
   }
 }
 
-class MergeObserver<T> extends AbstractDelegatingObserver<
-  ObservableLike<T>,
-  T
-> {
+class MergeObserver<T> extends Observer<ObservableLike<T>> {
   activeCount = 0;
 
   readonly onDispose = () => {
@@ -67,7 +60,7 @@ class MergeObserver<T> extends AbstractDelegatingObserver<
   readonly queue: ObservableLike<T>[] = [];
 
   constructor(
-    delegate: ObserverLike<T>,
+    readonly delegate: Observer<T>,
     readonly maxBufferSize: number,
     readonly maxConcurrency: number,
   ) {
@@ -107,7 +100,7 @@ export const mergeAll = <T>(
     maxBufferSize = Number.MAX_SAFE_INTEGER,
     maxConcurrency = Number.MAX_SAFE_INTEGER,
   } = options;
-  const operator = (delegate: ObserverLike<T>) => {
+  const operator = (delegate: Observer<T>) => {
     const observer = new MergeObserver(delegate, maxBufferSize, maxConcurrency);
     addDisposable(delegate, observer);
     addTeardown(observer, onDispose);

@@ -1,13 +1,13 @@
 import { bindDisposables } from "../disposable";
 import { Predicate } from "../functions";
-import { ObservableOperator, ObserverLike } from "../observable";
+import { ObservableOperator } from "../observable";
 import { notifyTakeWhile } from "../sink";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver } from "./observer";
+import { Observer } from "./observer";
 
-class TakeWhileObserver<T> extends AbstractDelegatingObserver<T, T> {
+class TakeWhileObserver<T> extends Observer<T> {
   constructor(
-    delegate: ObserverLike<T>,
+    readonly delegate: Observer<T>,
     readonly predicate: Predicate<T>,
     readonly inclusive: boolean,
   ) {
@@ -28,7 +28,7 @@ export const takeWhile = <T>(
   options: { readonly inclusive?: boolean } = {},
 ): ObservableOperator<T, T> => {
   const { inclusive = false } = options;
-  const operator = (delegate: ObserverLike<T>) => {
+  const operator = (delegate: Observer<T>) => {
     const observer = new TakeWhileObserver(delegate, predicate, inclusive);
     bindDisposables(observer, delegate);
     return observer;

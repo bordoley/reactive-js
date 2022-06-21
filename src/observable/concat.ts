@@ -6,12 +6,12 @@ import {
   dispose,
 } from "../disposable";
 import { pipe } from "../functions";
-import { ObservableLike, ObserverLike } from "../observable";
+import { ObservableLike } from "../observable";
 import { everySatisfy } from "../readonlyArray";
-import { createDelegatingObserver, sink } from "./observer";
+import { Observer, createDelegatingObserver, sink } from "./observer";
 
 const createConcatObserver = <T>(
-  delegate: ObserverLike<T>,
+  delegate: Observer<T>,
   observables: readonly ObservableLike<T>[],
   next: number,
 ) => {
@@ -47,7 +47,7 @@ class ConcatObservable<T>
     );
   }
 
-  observe(observer: ObserverLike<T>) {
+  observe(observer: Observer<T>) {
     const observables = this.observables;
 
     if (observables.length > 0) {

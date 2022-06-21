@@ -1,13 +1,13 @@
 import { bindDisposables } from "../disposable";
 import { Factory, Reducer } from "../functions";
-import { ObservableOperator, ObserverLike } from "../observable";
+import { ObservableOperator } from "../observable";
 import { notifyScan } from "../sink";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver } from "./observer";
+import { Observer } from "./observer";
 
-class ScanObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
+class ScanObserver<T, TAcc> extends Observer<T> {
   constructor(
-    delegate: ObserverLike<TAcc>,
+    readonly delegate: Observer<TAcc>,
     readonly reducer: Reducer<T, TAcc>,
     public acc: TAcc,
   ) {
@@ -27,7 +27,7 @@ export const scan = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ): ObservableOperator<T, TAcc> => {
-  const operator = (delegate: ObserverLike<TAcc>) => {
+  const operator = (delegate: Observer<TAcc>) => {
     const observer = new ScanObserver(delegate, reducer, initialValue());
     bindDisposables(observer, delegate);
     return observer;

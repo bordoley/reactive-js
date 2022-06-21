@@ -5,18 +5,15 @@ import {
   addOnDisposedWithoutErrorTeardown,
 } from "../disposable";
 import { pipe } from "../functions";
-import { ObservableOperator, ObserverLike } from "../observable";
+import { ObservableOperator } from "../observable";
 import { notifyDecodeWithCharset } from "../sink";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, sink } from "./observer";
+import { Observer, sink } from "./observer";
 
-class DecodeWithCharsetObserver extends AbstractDelegatingObserver<
-  ArrayBuffer,
-  string
-> {
+class DecodeWithCharsetObserver extends Observer<ArrayBuffer> {
   constructor(
-    delegate: ObserverLike<string>,
+    readonly delegate: Observer<string>,
     readonly textDecoder: TextDecoder,
   ) {
     super(delegate);
@@ -28,7 +25,7 @@ export const decodeWithCharset = (
   charset = "utf-8",
   options?: TextDecoderOptions,
 ): ObservableOperator<ArrayBuffer, string> => {
-  const operator = (delegate: ObserverLike<string>) => {
+  const operator = (delegate: Observer<string>) => {
     const observer = new DecodeWithCharsetObserver(
       delegate,
       new TextDecoder(charset, options),

@@ -1,11 +1,35 @@
 import { Concat, FromArray, FromIterator, Keep, Map, ConcatAll, Zip, ContainerLike } from "./container.mjs";
-import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
+import { AbstractDisposable, DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Equality, Predicate, Reducer } from "./functions.mjs";
-import { SchedulerLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
-import { SinkLike } from "./sink.mjs";
 import { Option } from "./option.mjs";
+import { SchedulerLike, SchedulerContinuationLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
 import { EnumerableLike } from "./enumerable.mjs";
 import { RunnableLike } from "./runnable.mjs";
+import { SinkLike } from "./sink.mjs";
+/**
+ * Abstract base class for implementing the `ObserverLike` interface.
+ */
+declare class Observer<T> extends AbstractDisposable implements SinkLike<T>, SchedulerLike {
+    readonly scheduler: SchedulerLike;
+    inContinuation: boolean;
+    private readonly _scheduler;
+    constructor(scheduler: SchedulerLike);
+    /** @ignore */
+    get now(): number;
+    /** @ignore */
+    get shouldYield(): boolean;
+    assertState(this: Observer<T>): void;
+    notify(_: T): void;
+    /** @ignore */
+    onRunStatusChanged(status: boolean): void;
+    /** @ignore */
+    requestYield(): void;
+    /** @ignore */
+    schedule(continuation: SchedulerContinuationLike, options?: {
+        readonly delay?: number;
+    }): void;
+}
+declare const sink: <T>(observer: Observer<T>) => SideEffect1<ObservableLike<T>>;
 declare const dispatchTo: <T>(dispatcher: DispatcherLike<T>) => SideEffect1<T>;
 declare const observable: <T>(computation: Factory<T>, { mode }?: {
     mode?: ObservableEffectMode | undefined;
@@ -227,10 +251,9 @@ declare function using<TResource1 extends DisposableLike, TResource2 extends Dis
     TResource5
 ]>, observableFactory: Function5<TResource1, TResource2, TResource3, TResource4, TResource5, ObservableLike<T>>): ObservableLike<T>;
 declare function using<TResource extends DisposableLike, T>(resourceFactory: Function1<SchedulerLike, TResource | readonly TResource[]>, observableFactory: (...resources: readonly TResource[]) => ObservableLike<T>): ObservableLike<T>;
-declare const defer: <T>(factory: Function1<ObserverLike<T>, SideEffect>, options?: {
+declare const defer: <T>(factory: Function1<Observer<T>, SideEffect>, options?: {
     readonly delay?: number;
 }) => ObservableLike<T>;
-declare const sink: <T>(observer: ObserverLike<T>) => SideEffect1<ObservableLike<T>>;
 /**
  * Returns an `ObservableLike` which buffers items produced by the source until either the
  * number of items reaches the specified maximum buffer size or the duration time expires.
@@ -635,16 +658,6 @@ declare const toRunnable: <T>(options?: {
  */
 declare const toPromise: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, Promise<T>>;
 /**
- * The underlying mechanism for receiving and transforming notifications from an
- * observable source. The `ObserverLike` interface composes the `SchedulerLike` and
- * `DisposableLike` interfaces into a single unified type, while adding the capability
- * to receive notifications.
- *
- * @noInheritDoc
- */
-interface ObserverLike<T> extends SinkLike<T>, SchedulerLike {
-}
-/**
  * The source of notifications which notifies a `ObserverLike` instance.
  *
  * @noInheritDoc
@@ -657,7 +670,7 @@ interface ObservableLike<T> extends ContainerLike {
      * Subscribes the `ObserverLike` instance to the observable.
      * @param observer The observer which should be notified by the observable source.
      */
-    observe(this: ObservableLike<T>, observer: ObserverLike<T>): void;
+    observe(this: ObservableLike<T>, observer: Observer<T>): void;
 }
 declare const type: ObservableLike<unknown>;
 /** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
@@ -700,4 +713,4 @@ declare type ObservableEffectMode = "batched" | "combine-latest";
  * interval -  Takes both the leading and trailing values.
  */
 declare type ThrottleMode = "first" | "last" | "interval";
-export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, ObserverLike, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, decodeWithCharset, defer, dispatchTo, distinctUntilChanged, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, sink, skipFirst, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Observer, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, decodeWithCharset, defer, dispatchTo, distinctUntilChanged, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify, onSubscribe, pairwise, publish, reduce, repeat, retry, scan, scanAsync, share, sink, skipFirst, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeLast, takeUntil, takeWhile, throttle, throwIfEmpty, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

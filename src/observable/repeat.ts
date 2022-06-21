@@ -1,17 +1,13 @@
 import { Error, addDisposable, addTeardown, dispose } from "../disposable";
 import { Function2, Predicate, pipe } from "../functions";
-import {
-  ObservableLike,
-  ObservableOperator,
-  ObserverLike,
-} from "../observable";
+import { ObservableLike, ObservableOperator } from "../observable";
 import { isNone, isSome } from "../option";
 import { lift } from "./lift";
-import { createDelegatingObserver } from "./observer";
+import { Observer, createDelegatingObserver } from "./observer";
 import { subscribe } from "./subscribe";
 
 const createRepeatObserver = <T>(
-  delegate: ObserverLike<T>,
+  delegate: Observer<T>,
   observable: ObservableLike<T>,
   shouldRepeat: (count: number, error?: Error) => boolean,
 ) => {
@@ -52,7 +48,7 @@ const repeatObs =
     shouldRepeat: (count: number, error?: Error) => boolean,
   ): ObservableOperator<T, T> =>
   observable => {
-    const operator = (observer: ObserverLike<T>) =>
+    const operator = (observer: Observer<T>) =>
       createRepeatObserver(observer, observable, shouldRepeat);
     operator.isSynchronous = true;
     return lift(operator)(observable);

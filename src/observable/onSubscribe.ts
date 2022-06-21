@@ -6,13 +6,9 @@ import {
   dispose,
 } from "../disposable";
 import { Factory, pipe } from "../functions";
-import {
-  ObservableLike,
-  ObservableOperator,
-  ObserverLike,
-} from "../observable";
+import { ObservableLike, ObservableOperator } from "../observable";
 import { isSome, none } from "../option";
-import { sink } from "./observer";
+import { Observer, sink } from "./observer";
 
 class OnSubscribeObservable<T>
   extends AbstractContainer
@@ -28,7 +24,7 @@ class OnSubscribeObservable<T>
     this.isSynchronous = src.isSynchronous;
   }
 
-  observe(observer: ObserverLike<T>) {
+  observe(observer: Observer<T>) {
     try {
       pipe(this.src, sink(observer));
       const disposable = this.f() || none;

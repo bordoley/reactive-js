@@ -1,5 +1,6 @@
 import { AbstractDisposable, addDisposable, addTeardown } from "../disposable";
-import { DispatcherLike, ObserverLike, SubjectLike } from "../observable";
+import { DispatcherLike, SubjectLike } from "../observable";
+import { Observer } from "./observer";
 
 import { toDispatcher } from "./toDispatcher";
 
@@ -42,7 +43,7 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
     }
   }
 
-  observe(observer: ObserverLike<T>) {
+  observe(observer: Observer<T>) {
     // The idea here is that an onSubscribe function may
     // call next from unscheduled sources such as event handlers.
     // So we marshall those events back to the scheduler.

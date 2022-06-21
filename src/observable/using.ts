@@ -11,9 +11,9 @@ import {
   Function5,
   pipe,
 } from "../functions";
-import { ObservableLike, ObserverLike } from "../observable";
+import { ObservableLike } from "../observable";
 import { SchedulerLike } from "../scheduler";
-import { sink } from "./observer";
+import { Observer, sink } from "./observer";
 
 class UsingObservable<TResource extends DisposableLike, T>
   extends AbstractContainer
@@ -33,7 +33,7 @@ class UsingObservable<TResource extends DisposableLike, T>
     super();
   }
 
-  observe(observer: ObserverLike<T>) {
+  observe(observer: Observer<T>) {
     const resources = this.resourceFactory(observer);
     const observableFactory = this.observableFactory;
 
