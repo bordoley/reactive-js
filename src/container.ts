@@ -182,6 +182,10 @@ export interface TakeWhile<C extends ContainerLike> extends Container<C> {
   ): ContainerOperator<C, T, T>;
 }
 
+export interface ThrowIfEmpty<C extends ContainerLike> extends Container<C> {
+  throwIfEmpty<T>(factory: Factory<unknown>): ContainerOperator<C, T, T>;
+}
+
 export interface Using<C extends ContainerLike> extends Container<C> {
   using<TResource extends DisposableLike, T>(
     resourceFactory: Factory<TResource>,

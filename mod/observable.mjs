@@ -2,7 +2,7 @@
 import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, toErrorHandler, createSerialDisposable, bindDisposables } from './disposable.mjs';
 import { pipe, raise, ignore, arrayEquality, defer as defer$1, compose, returns } from './functions.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
-import { AbstractSource, sinkInto, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './source.mjs';
+import { AbstractSource, sinkInto, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { __DEV__ } from './env.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { empty, fromValue, concatMap, throws, AbstractContainer } from './container.mjs';
@@ -380,7 +380,7 @@ function __currentScheduler() {
         : raise("__currentScheduler may only be called within an observable computation");
 }
 
-function onDispose$6(error) {
+function onDispose$5(error) {
     const { ctx } = this;
     ctx.completedCount++;
     if (isSome(error) || ctx.completedCount === ctx.observers.length) {
@@ -428,7 +428,7 @@ const latest = (observables, mode) => {
         };
         for (const observable of observables) {
             const innerObserver = new LatestObserver(delegate, ctx, mode);
-            addTeardown(innerObserver, onDispose$6);
+            addTeardown(innerObserver, onDispose$5);
             addDisposable(delegate, innerObserver);
             observers.push(innerObserver);
             pipe(observable, sinkInto(innerObserver));
@@ -494,7 +494,7 @@ const scheduleDrainQueue = (dispatcher) => {
         addOnDisposedWithoutErrorTeardown(continuationSubcription, dispatcher.onContinuationDispose);
     }
 };
-function onDispose$5(e) {
+function onDispose$4(e) {
     if (this.nextQueue.length === 0) {
         pipe(this.observer, dispose(e));
     }
@@ -532,7 +532,7 @@ class ObserverDelegatingDispatcher extends AbstractDisposable {
  */
 const toDispatcher = (delegate) => {
     const observer = new ObserverDelegatingDispatcher(delegate);
-    addTeardown(observer, onDispose$5);
+    addTeardown(observer, onDispose$4);
     addDisposable(delegate, observer);
     return observer;
 };
@@ -777,7 +777,7 @@ function using(resourceFactory, observableFactory) {
     return new UsingObservable(resourceFactory, observableFactory);
 }
 
-function onDispose$4(error) {
+function onDispose$3(error) {
     const buffer = this.buffer;
     this.buffer = [];
     if (isSome(error) || buffer.length === 0) {
@@ -835,7 +835,7 @@ function buffer(options = {}) {
         const observer = new BufferObserver(delegate, durationFunction, maxBufferSize, durationSubscription);
         addDisposable(delegate, observer);
         addDisposableDisposeParentOnChildError(observer, durationSubscription);
-        addTeardown(observer, onDispose$4);
+        addTeardown(observer, onDispose$3);
         return observer;
     };
     operator.isSynchronous = delay === Number.MAX_SAFE_INTEGER;
@@ -853,7 +853,7 @@ const mapT = {
     map,
 };
 
-function onDispose$3(error) {
+function onDispose$2(error) {
     if (isSome(error) || this.inner.isDisposed) {
         pipe(this.delegate, dispose(error));
     }
@@ -883,7 +883,7 @@ class SwitchObserver extends Observer {
 const operator = (delegate) => {
     const observer = new SwitchObserver(delegate);
     addDisposable(delegate, observer);
-    addTeardown(observer, onDispose$3);
+    addTeardown(observer, onDispose$2);
     return observer;
 };
 operator.isSynchronous = false;
@@ -913,7 +913,7 @@ const subscribeNext = (observer) => {
         }
     }
 };
-function onDispose$2(error) {
+function onDispose$1(error) {
     if (isSome(error) || this.queue.length + this.activeCount === 0) {
         pipe(this.delegate, dispose(error));
     }
@@ -958,7 +958,7 @@ const mergeAll = (options = {}) => {
     const operator = (delegate) => {
         const observer = new MergeObserver(delegate, maxBufferSize, maxConcurrency);
         addDisposable(delegate, observer);
-        addTeardown(observer, onDispose$2);
+        addTeardown(observer, onDispose$1);
         addTeardown(delegate, () => {
             observer.queue.length = 0;
         });
@@ -1239,7 +1239,7 @@ const takeUntil = (notifier) => {
 const setupDurationSubscription$1 = (observer, next) => {
     observer.durationSubscription.inner = pipe(observer.durationFunction(next), subscribe(observer, observer.onNotify));
 };
-function onDispose$1(e) {
+function onDispose(e) {
     if (isNone(e) && this.mode !== "first" && this.hasValue) {
         pipe(this.value, fromValue(fromArrayT), sinkInto(this.delegate));
     }
@@ -1289,54 +1289,12 @@ function throttle(duration, options = {}) {
         const observer = new ThrottleObserver(delegate, durationFunction, mode, durationSubscription);
         addDisposable(delegate, observer);
         addDisposableDisposeParentOnChildError(observer, durationSubscription);
-        addTeardown(observer, onDispose$1);
+        addTeardown(observer, onDispose);
         return observer;
     };
     operator.isSynchronous = false;
     return lift(operator);
 }
-
-function onDispose(error) {
-    if (isNone(error) && this.isEmpty) {
-        let cause = none;
-        try {
-            cause = this.factory();
-        }
-        catch (e) {
-            cause = e;
-        }
-        error = { cause };
-    }
-    this.delegate.dispose(error);
-}
-class ThrowIfEmptyObserver extends Observer {
-    constructor(delegate, factory) {
-        super(delegate);
-        this.delegate = delegate;
-        this.factory = factory;
-        this.isEmpty = true;
-    }
-    notify(next) {
-        this.assertState();
-        this.isEmpty = false;
-        this.delegate.notify(next);
-    }
-}
-/**
- * Returns an `ObservableLike` that emits an error if the source completes without emitting a value.
- *
- * @param factory A factory function invoked to produce the error to be thrown.
- */
-const throwIfEmpty = (factory) => {
-    const operator = (delegate) => {
-        const observer = new ThrowIfEmptyObserver(delegate, factory);
-        addDisposable(delegate, observer);
-        addTeardown(observer, onDispose);
-        return observer;
-    };
-    operator.isSynchronous = true;
-    return lift(operator);
-};
 
 const _timeoutError = Symbol("@reactive-js/core/lib/observable/timeoutError");
 /** Symbol thrown when the timeout operator times out */
@@ -1785,5 +1743,15 @@ const takeWhile = createTakeWhileOperator(liftT, class TakeWhileObserver extends
 const takeWhileT = {
     takeWhile,
 };
+const throwIfEmpty = createThrowIfEmptyOperator(liftT, class ThrowIfEmptyObserver extends Observer {
+    constructor(delegate) {
+        super(delegate);
+        this.delegate = delegate;
+        this.isEmpty = true;
+    }
+});
+const throwIfEmptyT = {
+    throwIfEmpty,
+};
 
-export { Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify$2 as onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify$2 as onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

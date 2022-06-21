@@ -43,6 +43,7 @@
 - [takeFirstT](observable.md#takefirstt)
 - [takeLastT](observable.md#takelastt)
 - [takeWhileT](observable.md#takewhilet)
+- [throwIfEmptyT](observable.md#throwifemptyt)
 - [timeoutError](observable.md#timeouterror)
 - [type](observable.md#type)
 - [zipT](observable.md#zipt)
@@ -265,6 +266,12 @@ ___
 ### takeWhileT
 
 • `Const` **takeWhileT**: [`TakeWhile`](../interfaces/container.TakeWhile.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### throwIfEmptyT
+
+• `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](../interfaces/container.ThrowIfEmpty.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
@@ -2268,8 +2275,6 @@ ___
 
 ▸ **throwIfEmpty**<`T`\>(`factory`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
 
-Returns an `ObservableLike` that emits an error if the source completes without emitting a value.
-
 #### Type parameters
 
 | Name |
@@ -2278,9 +2283,9 @@ Returns an `ObservableLike` that emits an error if the source completes without 
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<`unknown`\> | A factory function invoked to produce the error to be thrown. |
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<`unknown`\> |
 
 #### Returns
 

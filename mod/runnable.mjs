@@ -1,7 +1,7 @@
 /// <reference types="./runnable.d.ts" />
 import { pipe, raise, compose, negate, alwaysTrue, strictEquality, isEqualTo, identity } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
-import { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './source.mjs';
+import { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 
@@ -412,5 +412,15 @@ const takeWhile = createTakeWhileOperator(liftT, class TakeWhileSink extends Sin
 const takeWhileT = {
     takeWhile,
 };
+const throwIfEmpty = createThrowIfEmptyOperator(liftT, class ThrowIfEmptySink extends Sink {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+        this.isEmpty = true;
+    }
+});
+const throwIfEmptyT = {
+    throwIfEmpty,
+};
 
-export { Sink, catchError, concat, concatAll, contains, createRunnable, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, noneSatisfy, onNotify, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toArray, toRunnable, type, using };
+export { Sink, catchError, concat, concatAll, contains, createRunnable, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, noneSatisfy, onNotify, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using };

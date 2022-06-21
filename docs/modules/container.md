@@ -31,6 +31,7 @@
 - [TakeFirst](../interfaces/container.TakeFirst.md)
 - [TakeLast](../interfaces/container.TakeLast.md)
 - [TakeWhile](../interfaces/container.TakeWhile.md)
+- [ThrowIfEmpty](../interfaces/container.ThrowIfEmpty.md)
 - [Using](../interfaces/container.Using.md)
 - [Zip](../interfaces/container.Zip.md)
 
