@@ -7,7 +7,7 @@ import { Factory, Reducer, pipe } from "../functions";
 import {
   MulticastObservableLike,
   ObservableLike,
-  ObserverLike,
+  Observer,
   StreamLike,
   createObservable,
   createSubject,
@@ -44,7 +44,7 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
     return this.subject.observerCount;
   }
 
-  observe(observer: ObserverLike<TAcc>): void {
+  observe(observer: Observer<TAcc>): void {
     this.subject.observe(observer);
   }
 

@@ -16,9 +16,9 @@
 
   ↳ **`SinkLike`**
 
-  ↳↳ [`ObserverLike`](observable.ObserverLike.md)
+## Implemented by
 
-  ↳↳ [`DelegatingSinkLike`](sink.DelegatingSinkLike.md)
+- [`Observer`](../classes/observable.Observer.md)
 
 ## Table of contents
 

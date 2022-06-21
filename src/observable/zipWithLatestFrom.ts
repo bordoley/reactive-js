@@ -4,14 +4,10 @@ import {
   dispose,
 } from "../disposable";
 import { Function2, pipe } from "../functions";
-import {
-  ObservableLike,
-  ObservableOperator,
-  ObserverLike,
-} from "../observable";
+import { ObservableLike, ObservableOperator } from "../observable";
 import { Option } from "../option";
 import { lift } from "./lift";
-import { AbstractSchedulerDelegatingObserver } from "./observer";
+import { Observer } from "./observer";
 import { subscribe } from "./subscribe";
 
 const notifyDelegate = <TA, TB, TC>(
@@ -38,18 +34,14 @@ function onNotify<TA, TB, T>(
   }
 }
 
-class ZipWithLatestFromObserver<
-  TA,
-  TB,
-  T,
-> extends AbstractSchedulerDelegatingObserver<TA, ObserverLike<T>> {
+class ZipWithLatestFromObserver<TA, TB, T> extends Observer<TA> {
   otherLatest: Option<TB>;
   hasLatest = false;
 
   readonly queue: TA[] = [];
 
   constructor(
-    delegate: ObserverLike<T>,
+    readonly delegate: Observer<T>,
     readonly selector: Function2<TA, TB, T>,
   ) {
     super(delegate);
@@ -75,7 +67,7 @@ export const zipWithLatestFrom = <TA, TB, T>(
   other: ObservableLike<TB>,
   selector: Function2<TA, TB, T>,
 ): ObservableOperator<TA, T> => {
-  const operator = (delegate: ObserverLike<T>) => {
+  const operator = (delegate: Observer<T>) => {
     const observer = new ZipWithLatestFromObserver(delegate, selector);
 
     const otherSubscription = pipe(

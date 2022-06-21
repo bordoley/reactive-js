@@ -3,12 +3,9 @@ import { Function1, SideEffect1, ignore, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { none } from "../option";
 import { SchedulerLike } from "../scheduler";
-import { AbstractSchedulerDelegatingObserver, sink } from "./observer";
+import { Observer, sink } from "./observer";
 
-class DefaultObserver<T> extends AbstractSchedulerDelegatingObserver<
-  T,
-  SchedulerLike
-> {
+class DefaultObserver<T> extends Observer<T> {
   constructor(
     scheduler: SchedulerLike,
     private readonly onNotify: SideEffect1<T>,

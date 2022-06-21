@@ -6,7 +6,6 @@
 
 ### Interfaces
 
-- [DelegatingSinkLike](../interfaces/sink.DelegatingSinkLike.md)
 - [SinkLike](../interfaces/sink.SinkLike.md)
 
 ### Functions
@@ -34,7 +33,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`ArrayBuffer`, `string`\> & { `textDecoder`: `TextDecoder`  } |
+| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`ArrayBuffer`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`string`\> ; `textDecoder`: `TextDecoder`  } |
 | `next` | `ArrayBuffer` |
 
 #### Returns
@@ -57,7 +56,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`T`, `T`\> & { `equality`: [`Equality`](functions.md#equality)<`T`\> ; `hasValue`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
+| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `equality`: [`Equality`](functions.md#equality)<`T`\> ; `hasValue`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
 | `next` | `T` |
 
 #### Returns
@@ -80,7 +79,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`T`, `T`\> & { `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
+| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
 | `next` | `T` |
 
 #### Returns
@@ -104,7 +103,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`TA`, `TB`\> & { `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>  } |
+| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`TA`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`TB`\> ; `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>  } |
 | `next` | `TA` |
 
 #### Returns
@@ -127,7 +126,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`T`, `T`\> & { `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>  } |
+| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>  } |
 | `next` | `T` |
 
 #### Returns
@@ -150,7 +149,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`T`, [[`Option`](option.md#option)<`T`\>, `T`]\> & { `hasPrev`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
+| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<[[`Option`](option.md#option)<`T`\>, `T`]\> ; `hasPrev`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
 | `value` | `T` |
 
 #### Returns
@@ -198,7 +197,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`T`, `TAcc`\> & { `acc`: `TAcc` ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
+| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `acc`: `TAcc` ; `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`TAcc`\> ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
 | `next` | `T` |
 
 #### Returns
@@ -221,7 +220,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`T`, `T`\> & { `count`: `number` ; `skipCount`: `number`  } |
+| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `count`: `number` ; `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `skipCount`: `number`  } |
 | `next` | `T` |
 
 #### Returns
@@ -244,7 +243,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`T`, `T`\> & { `count`: `number` ; `maxCount`: `number`  } |
+| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `count`: `number` ; `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `maxCount`: `number`  } |
 | `next` | `T` |
 
 #### Returns
@@ -290,7 +289,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DelegatingSinkLike`](../interfaces/sink.DelegatingSinkLike.md)<`T`, `T`\> & { `inclusive`: `boolean` ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
+| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `inclusive`: `boolean` ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
 | `next` | `T` |
 
 #### Returns

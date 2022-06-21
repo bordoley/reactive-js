@@ -8,9 +8,10 @@ import {
   dispose,
 } from "../disposable";
 import { pipe } from "../functions";
-import { DispatcherLike, ObserverLike } from "../observable";
+import { DispatcherLike } from "../observable";
 import { Option } from "../option";
 import { __yield, schedule } from "../scheduler";
+import { Observer } from "./observer";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (dispatcher.nextQueue.length === 1) {
@@ -52,13 +53,13 @@ class ObserverDelegatingDispatcher<T>
 
   readonly onContinuationDispose = () => {
     if (this.isDisposed) {
-      pipe(this.observer as ObserverLike<T>, dispose(this.error));
+      pipe(this.observer, dispose(this.error));
     }
   };
 
   readonly nextQueue: T[] = [];
 
-  constructor(readonly observer: ObserverLike<T>) {
+  constructor(readonly observer: Observer<T>) {
     super();
   }
 
@@ -75,9 +76,7 @@ class ObserverDelegatingDispatcher<T>
  *
  * @param observer The `ObserverLike` instance to wrap in a `SafeObserverLike`.
  */
-export const toDispatcher = <T>(
-  delegate: ObserverLike<T>,
-): DispatcherLike<T> => {
+export const toDispatcher = <T>(delegate: Observer<T>): DispatcherLike<T> => {
   const observer = new ObserverDelegatingDispatcher(delegate);
   addTeardown(observer, onDispose);
   addDisposable(delegate, observer);

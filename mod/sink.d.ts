@@ -13,30 +13,33 @@ interface SinkLike<T> extends DisposableLike {
      */
     notify(this: SinkLike<T>, next: T): void;
 }
-interface DelegatingSinkLike<TA, TB> extends SinkLike<TA> {
-    readonly delegate: SinkLike<TB>;
-}
-declare function notifyDecodeWithCharset(this: DelegatingSinkLike<ArrayBuffer, string> & {
+declare function notifyDecodeWithCharset(this: SinkLike<ArrayBuffer> & {
+    readonly delegate: SinkLike<string>;
     readonly textDecoder: TextDecoder;
 }, next: ArrayBuffer): void;
-declare function notifyDistinctUntilChanged<T>(this: DelegatingSinkLike<T, T> & {
+declare function notifyDistinctUntilChanged<T>(this: SinkLike<T> & {
+    readonly delegate: SinkLike<T>;
     readonly equality: Equality<T>;
     prev: Option<T>;
     hasValue: boolean;
 }, next: T): void;
-declare function notifyKeep<T>(this: DelegatingSinkLike<T, T> & {
+declare function notifyKeep<T>(this: SinkLike<T> & {
+    readonly delegate: SinkLike<T>;
     readonly predicate: Predicate<T>;
 }, next: T): void;
-declare function notifyMap<TA, TB>(this: DelegatingSinkLike<TA, TB> & {
+declare function notifyMap<TA, TB>(this: SinkLike<TA> & {
+    readonly delegate: SinkLike<TB>;
     readonly mapper: Function1<TA, TB>;
 }, next: TA): void;
-declare function notifyOnNotify<T>(this: DelegatingSinkLike<T, T> & {
+declare function notifyOnNotify<T>(this: SinkLike<T> & {
+    readonly delegate: SinkLike<T>;
     readonly onNotify: SideEffect1<T>;
 }, next: T): void;
-declare function notifyPairwise<T>(this: DelegatingSinkLike<T, [
-    Option<T>,
-    T
-]> & {
+declare function notifyPairwise<T>(this: SinkLike<T> & {
+    readonly delegate: SinkLike<[
+        Option<T>,
+        T
+    ]>;
     prev: Option<T>;
     hasPrev: boolean;
 }, value: T): void;
@@ -44,15 +47,18 @@ declare function notifyReduce<T, TAcc>(this: SinkLike<T> & {
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
 }, next: T): void;
-declare function notifyScan<T, TAcc>(this: DelegatingSinkLike<T, TAcc> & {
+declare function notifyScan<T, TAcc>(this: SinkLike<T> & {
+    readonly delegate: SinkLike<TAcc>;
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
 }, next: T): void;
-declare function notifySkipFirst<T>(this: DelegatingSinkLike<T, T> & {
+declare function notifySkipFirst<T>(this: SinkLike<T> & {
+    readonly delegate: SinkLike<T>;
     count: number;
     readonly skipCount: number;
 }, next: T): void;
-declare function notifyTakeFirst<T>(this: DelegatingSinkLike<T, T> & {
+declare function notifyTakeFirst<T>(this: SinkLike<T> & {
+    readonly delegate: SinkLike<T>;
     count: number;
     readonly maxCount: number;
 }, next: T): void;
@@ -60,8 +66,9 @@ declare function notifyTakeLast<T>(this: SinkLike<T> & {
     readonly last: T[];
     readonly maxCount: number;
 }, next: T): void;
-declare function notifyTakeWhile<T>(this: DelegatingSinkLike<T, T> & {
+declare function notifyTakeWhile<T>(this: SinkLike<T> & {
+    readonly delegate: SinkLike<T>;
     readonly predicate: Predicate<T>;
     readonly inclusive: boolean;
 }, next: T): void;
-export { DelegatingSinkLike, SinkLike, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile };
+export { SinkLike, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile };

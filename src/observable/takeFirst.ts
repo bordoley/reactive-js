@@ -1,16 +1,16 @@
 import { empty } from "../container";
 import { bindDisposables } from "../disposable";
 import { pipe } from "../functions";
-import { ObservableOperator, ObserverLike } from "../observable";
+import { ObservableOperator } from "../observable";
 import { notifyTakeFirst } from "../sink";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver } from "./observer";
+import { Observer } from "./observer";
 
-class TakeFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
+class TakeFirstObserver<T> extends Observer<T> {
   count = 0;
 
-  constructor(delegate: ObserverLike<T>, readonly maxCount: number) {
+  constructor(readonly delegate: Observer<T>, readonly maxCount: number) {
     super(delegate);
   }
 }
@@ -25,7 +25,7 @@ export const takeFirst = <T>(
   options: { readonly count?: number } = {},
 ): ObservableOperator<T, T> => {
   const { count = 1 } = options;
-  const operator = (delegate: ObserverLike<T>) => {
+  const operator = (delegate: Observer<T>) => {
     const observer = new TakeFirstObserver(delegate, count);
     bindDisposables(observer, delegate);
     return observer;

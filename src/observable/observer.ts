@@ -1,21 +1,39 @@
 import { AbstractDisposable, addDisposable } from "../disposable";
 import { __DEV__ } from "../env";
 import { SideEffect1, raise } from "../functions";
-import { ObservableLike, ObserverLike } from "../observable";
+import { ObservableLike } from "../observable";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
+import { SinkLike } from "../sink";
 
-export abstract class AbstractObserver<T>
+/**
+ * Abstract base class for implementing the `ObserverLike` interface.
+ */
+export class Observer<T>
   extends AbstractDisposable
-  implements ObserverLike<T>
+  implements SinkLike<T>, SchedulerLike
 {
-  abstract inContinuation: boolean;
+  inContinuation = false;
+  private readonly _scheduler: SchedulerLike;
+
+  constructor(readonly scheduler: SchedulerLike) {
+    super();
+    this._scheduler =
+      scheduler instanceof Observer ? scheduler._scheduler : scheduler;
+  }
 
   /** @ignore */
-  assertState(this: ObserverLike<T>): void {}
+  get now() {
+    return this._scheduler.now;
+  }
 
-  abstract now: number;
+  /** @ignore */
+  get shouldYield() {
+    return (
+      this.inContinuation && (this.isDisposed || this._scheduler.shouldYield)
+    );
+  }
 
-  abstract shouldYield: boolean;
+  assertState(this: Observer<T>): void {}
 
   notify(_: T): void {}
 
@@ -25,71 +43,8 @@ export abstract class AbstractObserver<T>
   }
 
   /** @ignore */
-  abstract requestYield(): void;
-
-  /** @ignore */
-  abstract schedule(
-    continuation: SchedulerContinuationLike,
-    options?: { readonly delay?: number },
-  ): void;
-}
-if (__DEV__) {
-  AbstractObserver.prototype.assertState = function assertStateDev<T>(
-    this: ObserverLike<T>,
-  ) {
-    if (!this.inContinuation) {
-      raise(
-        "Observer.notify() may only be invoked within a scheduled SchedulerContinuation",
-      );
-    } else if (this.isDisposed) {
-      raise("Observer is disposed");
-    }
-  };
-}
-
-/**
- * Abstract base class for implementing the `ObserverLike` interface.
- */
-export abstract class AbstractSchedulerDelegatingObserver<
-    T,
-    TDelegate extends SchedulerLike,
-  >
-  extends AbstractObserver<T>
-  implements ObserverLike<T>
-{
-  inContinuation = false;
-
-  private readonly scheduler: SchedulerLike;
-
-  constructor(readonly delegate: TDelegate) {
-    super();
-
-    this.scheduler =
-      delegate instanceof AbstractSchedulerDelegatingObserver
-        ? delegate.scheduler
-        : delegate;
-  }
-
-  /** @ignore */
-  get now() {
-    return this.scheduler.now;
-  }
-
-  /** @ignore */
-  get shouldYield() {
-    return (
-      this.inContinuation && (this.isDisposed || this.scheduler.shouldYield)
-    );
-  }
-
-  /** @ignore */
-  onRunStatusChanged(status: boolean) {
-    this.inContinuation = status;
-  }
-
-  /** @ignore */
   requestYield(): void {
-    this.delegate.requestYield();
+    this._scheduler.requestYield();
   }
 
   /** @ignore */
@@ -102,35 +57,39 @@ export abstract class AbstractSchedulerDelegatingObserver<
 
     // Note that we schedule on the delegate so that it too may listen to
     // the onRunStatusChanged event.
-    this.delegate.schedule(continuation, options);
+    this.scheduler.schedule(continuation, options);
   }
 }
+if (__DEV__) {
+  Observer.prototype.assertState = function assertStateDev<T>(
+    this: Observer<T>,
+  ) {
+    if (!this.inContinuation) {
+      raise(
+        "Observer.notify() may only be invoked within a scheduled SchedulerContinuation",
+      );
+    } else if (this.isDisposed) {
+      raise("Observer is disposed");
+    }
+  };
+}
 
-/**
- * Abstract base class for implementing instances of the `ObserverLike` interface
- * which delegate notifications to a parent `ObserverLike` instance
- *
- * @noInheritDoc
- */
-export abstract class AbstractDelegatingObserver<
-  TA,
-  TB,
-> extends AbstractSchedulerDelegatingObserver<TA, ObserverLike<TB>> {}
+class DelegatingObserver<T> extends Observer<T> {
+  constructor(public readonly delegate: Observer<T>) {
+    super(delegate);
+  }
 
-class DelegatingObserver<T> extends AbstractSchedulerDelegatingObserver<
-  T,
-  ObserverLike<T>
-> {
   notify(next: T) {
     this.delegate.notify(next);
   }
 }
 
+// FIXME: Need to bind the disposables.
 export const createDelegatingObserver = <T>(
-  delegate: ObserverLike<T>,
-): ObserverLike<T> => new DelegatingObserver(delegate);
+  delegate: Observer<T>,
+): Observer<T> => new DelegatingObserver(delegate);
 
 export const sink =
-  <T>(observer: ObserverLike<T>): SideEffect1<ObservableLike<T>> =>
+  <T>(observer: Observer<T>): SideEffect1<ObservableLike<T>> =>
   observable =>
     observable.observe(observer);

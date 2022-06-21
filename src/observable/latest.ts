@@ -1,10 +1,10 @@
 import { Error, addTeardown, dispose, addDisposable } from "../disposable";
 import { pipe } from "../functions";
-import { ObservableLike, ObserverLike } from "../observable";
+import { ObservableLike } from "../observable";
 import { Option, isSome, none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
 import { defer, deferSynchronous } from "./observable";
-import { AbstractDelegatingObserver, sink } from "./observer";
+import { Observer, sink } from "./observer";
 
 type LatestCtx = {
   completedCount: number;
@@ -26,15 +26,12 @@ function onDispose(this: LatestObserver, error: Option<Error>) {
   }
 }
 
-class LatestObserver extends AbstractDelegatingObserver<
-  unknown,
-  readonly unknown[]
-> {
+class LatestObserver extends Observer<unknown> {
   ready = false;
   latest: unknown = none;
 
   constructor(
-    delegate: ObserverLike<readonly unknown[]>,
+    readonly delegate: Observer<readonly unknown[]>,
     readonly ctx: LatestCtx,
     private readonly mode: LatestMode,
   ) {
@@ -75,7 +72,7 @@ export const latest = (
   observables: readonly ObservableLike<any>[],
   mode: LatestMode,
 ): ObservableLike<readonly unknown[]> => {
-  const factory = (delegate: ObserverLike<readonly unknown[]>) => () => {
+  const factory = (delegate: Observer<readonly unknown[]>) => () => {
     const observers: LatestObserver[] = [];
     const ctx = {
       completedCount: 0,

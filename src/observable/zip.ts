@@ -2,11 +2,11 @@ import { AbstractContainer, Zip } from "../container";
 import { Error, addTeardown, dispose, addDisposable } from "../disposable";
 import { EnumeratorLike, current, zipEnumerators } from "../enumerable";
 import { defer, pipe, returns } from "../functions";
-import { ObservableLike, ObserverLike } from "../observable";
+import { ObservableLike } from "../observable";
 import { Option, isSome, none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
 import { fromEnumerator } from "./fromEnumerable";
-import { AbstractDelegatingObserver, sink } from "./observer";
+import { Observer, sink } from "./observer";
 import { enumerate } from "./toEnumerable";
 
 import { using } from "./using";
@@ -36,16 +36,13 @@ function onDisposed(this: ZipObserver, error: Option<Error>) {
   }
 }
 
-class ZipObserver
-  extends AbstractDelegatingObserver<unknown, readonly unknown[]>
-  implements EnumeratorLike<unknown>
-{
+class ZipObserver extends Observer<unknown> implements EnumeratorLike<unknown> {
   current: unknown;
   readonly buffer: unknown[] = [];
   hasCurrent = false;
 
   constructor(
-    delegate: ObserverLike<readonly unknown[]>,
+    readonly delegate: Observer<readonly unknown[]>,
     private readonly enumerators: readonly EnumeratorLike<any>[],
   ) {
     super(delegate);
@@ -109,7 +106,7 @@ class ZipObservable
     );
   }
 
-  observe(observer: ObserverLike<readonly unknown[]>) {
+  observe(observer: Observer<readonly unknown[]>) {
     const observables = this.observables;
     const count = observables.length;
 

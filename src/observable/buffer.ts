@@ -10,16 +10,12 @@ import {
   SerialDisposableLike,
 } from "../disposable";
 import { Function1, pipe } from "../functions";
-import {
-  ObservableLike,
-  ObservableOperator,
-  ObserverLike,
-} from "../observable";
+import { ObservableLike, ObservableOperator } from "../observable";
 import { Option, isSome, none } from "../option";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { never } from "./never";
-import { AbstractDelegatingObserver, sink } from "./observer";
+import { Observer, sink } from "./observer";
 import { subscribe } from "./subscribe";
 
 function onDispose(this: BufferObserver<void>, error: Option<Error>) {
@@ -42,11 +38,11 @@ function onNotify(this: BufferObserver<any>) {
   this.delegate.notify(buffer);
 }
 
-class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
+class BufferObserver<T> extends Observer<T> {
   buffer: T[] = [];
 
   constructor(
-    delegate: ObserverLike<readonly T[]>,
+    readonly delegate: Observer<readonly T[]>,
     private readonly durationFunction: Function1<T, ObservableLike<unknown>>,
     private readonly maxBufferSize: number,
     readonly durationSubscription: SerialDisposableLike,
@@ -95,7 +91,7 @@ export function buffer<T>(
       : delay;
 
   const maxBufferSize = options.maxBufferSize ?? Number.MAX_SAFE_INTEGER;
-  const operator = (delegate: ObserverLike<readonly T[]>) => {
+  const operator = (delegate: Observer<readonly T[]>) => {
     const durationSubscription = createSerialDisposable();
     const observer = new BufferObserver(
       delegate,

@@ -1,20 +1,16 @@
 import { AbstractContainer } from "../container";
-import { addDisposable, dispose } from "../disposable";
+import { AbstractDisposable, addDisposable, dispose } from "../disposable";
 import { EnumerableLike, EnumeratorLike } from "../enumerable";
 import { Function1, pipe } from "../functions";
-import { ObservableLike, ObserverLike } from "../observable";
+import { ObservableLike } from "../observable";
 import { isNone, isSome, none } from "../option";
-import { SchedulerContinuationLike, run } from "../scheduler";
-import { AbstractObserver, sink } from "./observer";
+import { SchedulerLike, SchedulerContinuationLike, run } from "../scheduler";
+import { Observer, sink } from "./observer";
 
-class EnumeratorObserver<T>
-  extends AbstractObserver<T>
-  implements EnumeratorLike<T>, ObserverLike<T>
-{
-  private continuations: SchedulerContinuationLike[] = [];
-  current: any;
-  hasCurrent = false;
+class EnumeratorScheduler extends AbstractDisposable implements SchedulerLike {
   inContinuation = false;
+  private readonly continuations: SchedulerContinuationLike[] = [];
+
   get now() {
     return 0;
   }
@@ -24,25 +20,58 @@ class EnumeratorObserver<T>
   }
 
   move(): boolean {
-    const continuations = this.continuations;
+    const { continuations } = this;
+    const continuation = continuations.shift();
+    if (isNone(continuation) || continuation.isDisposed) {
+      return false;;
+    }
+
+    this.inContinuation = true;
+    run(continuation);
+    this.inContinuation = false;
+
+    // FIXME: Shouldn't this just dispose
+    const error = this.error;
+    if (isSome(error)) {
+      const { cause } = error;
+      throw cause;
+    }
+    return true;
+  }
+
+  requestYield(): void {
+    // No-Op: We yield whenever the continuation is running.
+  }
+
+  schedule(
+    continuation: SchedulerContinuationLike,
+    { delay } = { delay: 0 },
+  ): void {
+    addDisposable(this, continuation);
+
+    if (!continuation.isDisposed && delay === 0) {
+      this.continuations.push(continuation);
+    } else {
+      pipe(continuation, dispose());
+    }
+  }
+}
+
+class EnumeratorObserver<T> extends Observer<T> implements EnumeratorLike<T> {
+  current: any;
+  hasCurrent = false;
+
+  constructor(readonly scheduler = new EnumeratorScheduler()) {
+    super(scheduler);
+    // FIXME: probably need to bind the scheduler and the enumerator
+  }
+
+  move(): boolean {
     this.hasCurrent = false;
     this.current = none;
 
-    while (!this.hasCurrent) {
-      const continuation = continuations.shift();
-      if (isNone(continuation) || continuation.isDisposed) {
-        break;
-      }
+    while (!this.hasCurrent && this.scheduler.move()) {
 
-      this.inContinuation = true;
-      run(continuation);
-      this.inContinuation = false;
-
-      const error = this.error;
-      if (isSome(error)) {
-        const { cause } = error;
-        throw cause;
-      }
     }
 
     return this.hasCurrent;
@@ -53,20 +82,6 @@ class EnumeratorObserver<T>
 
     this.current = next;
     this.hasCurrent = true;
-  }
-
-  requestYield(): void {
-    // No-Op: We yield whenever the continuation is running.
-  }
-
-  schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
-    addDisposable(this, continuation);
-
-    if (!continuation.isDisposed && delay === 0) {
-      this.continuations.push(continuation);
-    } else {
-      pipe(continuation, dispose());
-    }
   }
 }
 

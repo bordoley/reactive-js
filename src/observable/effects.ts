@@ -28,16 +28,13 @@ import {
   pipe,
   raise,
 } from "../functions";
-import {
-  ObservableEffectMode,
-  ObservableLike,
-  ObserverLike,
-} from "../observable";
+import { ObservableEffectMode, ObservableLike } from "../observable";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerLike, schedule } from "../scheduler";
 import { fromArrayT } from "./fromArray";
 import { defer } from "./observable";
 import { subscribe } from "./subscribe";
+import { Observer } from "./observer";
 
 const arrayStrictEquality = arrayEquality();
 
@@ -234,7 +231,7 @@ export const observable = <T>(
   computation: Factory<T>,
   { mode = "batched" }: { mode?: ObservableEffectMode } = {},
 ): ObservableLike<T> =>
-  defer((observer: ObserverLike<T>) => {
+  defer((observer: Observer<T>) => {
     const runComputation = () => {
       let result: Option<T> = none;
       let error: Option<Error> = none;

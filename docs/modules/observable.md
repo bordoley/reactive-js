@@ -4,12 +4,15 @@
 
 ## Table of contents
 
+### Classes
+
+- [Observer](../classes/observable.Observer.md)
+
 ### Interfaces
 
 - [DispatcherLike](../interfaces/observable.DispatcherLike.md)
 - [MulticastObservableLike](../interfaces/observable.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/observable.ObservableLike.md)
-- [ObserverLike](../interfaces/observable.ObserverLike.md)
 - [StreamLike](../interfaces/observable.StreamLike.md)
 - [SubjectLike](../interfaces/observable.SubjectLike.md)
 
@@ -1190,7 +1193,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Function1`](functions.md#function1)<[`ObserverLike`](../interfaces/observable.ObserverLike.md)<`T`\>, [`SideEffect`](functions.md#sideeffect)\> |
+| `factory` | [`Function1`](functions.md#function1)<[`Observer`](../classes/observable.Observer.md)<`T`\>, [`SideEffect`](functions.md#sideeffect)\> |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
 
@@ -1946,7 +1949,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `observer` | [`ObserverLike`](../interfaces/observable.ObserverLike.md)<`T`\> |
+| `observer` | [`Observer`](../classes/observable.Observer.md)<`T`\> |
 
 #### Returns
 

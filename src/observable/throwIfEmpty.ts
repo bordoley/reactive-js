@@ -1,9 +1,9 @@
 import { Error, addTeardown, addDisposable } from "../disposable";
 import { Factory } from "../functions";
-import { ObservableOperator, ObserverLike } from "../observable";
+import { ObservableOperator } from "../observable";
 import { Option, isNone, none } from "../option";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver } from "./observer";
+import { Observer } from "./observer";
 
 function onDispose(this: ThrowIfEmptyObserver<unknown>, error: Option<Error>) {
   if (isNone(error) && this.isEmpty) {
@@ -20,10 +20,13 @@ function onDispose(this: ThrowIfEmptyObserver<unknown>, error: Option<Error>) {
   this.delegate.dispose(error);
 }
 
-class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
+class ThrowIfEmptyObserver<T> extends Observer<T> {
   isEmpty = true;
 
-  constructor(delegate: ObserverLike<T>, readonly factory: Factory<unknown>) {
+  constructor(
+    readonly delegate: Observer<T>,
+    readonly factory: Factory<unknown>,
+  ) {
     super(delegate);
   }
 
@@ -43,7 +46,7 @@ class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
 export const throwIfEmpty = <T>(
   factory: Factory<unknown>,
 ): ObservableOperator<T, T> => {
-  const operator = (delegate: ObserverLike<T>) => {
+  const operator = (delegate: Observer<T>) => {
     const observer = new ThrowIfEmptyObserver(delegate, factory);
     addDisposable(delegate, observer);
     addTeardown(observer, onDispose);

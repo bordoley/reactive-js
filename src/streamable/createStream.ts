@@ -4,7 +4,7 @@ import {
   DispatcherLike,
   MulticastObservableLike,
   ObservableOperator,
-  ObserverLike,
+  Observer,
   StreamLike,
   createSubject,
   publish,
@@ -45,7 +45,7 @@ class StreamImpl<TReq, T>
     this.dispatcher.dispatch(req);
   }
 
-  observe(observer: ObserverLike<T>) {
+  observe(observer: Observer<T>) {
     pipe(this.observable, sink(observer));
   }
 }

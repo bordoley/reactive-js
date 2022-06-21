@@ -6,15 +6,11 @@ import {
   dispose,
 } from "../disposable";
 import { pipe } from "../functions";
-import {
-  ObservableLike,
-  ObservableOperator,
-  ObserverLike,
-} from "../observable";
-import { createDelegatingObserver, sink } from "./observer";
+import { ObservableLike, ObservableOperator } from "../observable";
+import { Observer, createDelegatingObserver, sink } from "./observer";
 
 const createMergeObserver = <T>(
-  delegate: ObserverLike<T>,
+  delegate: Observer<T>,
   count: number,
   ctx: {
     completedCount: number;
@@ -42,7 +38,7 @@ class MergeObservable<T>
     super();
   }
 
-  observe(observer: ObserverLike<T>) {
+  observe(observer: Observer<T>) {
     const observables = this.observables;
     const count = observables.length;
     const ctx = { completedCount: 0 };

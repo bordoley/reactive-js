@@ -1,17 +1,16 @@
 import { Map } from "../container";
 import { bindDisposables } from "../disposable";
 import { Function1 } from "../functions";
-import {
-  ObservableLike,
-  ObservableOperator,
-  ObserverLike,
-} from "../observable";
+import { ObservableLike, ObservableOperator } from "../observable";
 import { notifyMap } from "../sink";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver } from "./observer";
+import { Observer } from "./observer";
 
-class MapObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
-  constructor(delegate: ObserverLike<TB>, readonly mapper: Function1<TA, TB>) {
+class MapObserver<TA, TB> extends Observer<TA> {
+  constructor(
+    readonly delegate: Observer<TB>,
+    readonly mapper: Function1<TA, TB>,
+  ) {
     super(delegate);
   }
 }
@@ -26,7 +25,7 @@ MapObserver.prototype.notify = notifyMap;
 export const map = <TA, TB>(
   mapper: Function1<TA, TB>,
 ): ObservableOperator<TA, TB> => {
-  const operator = (delegate: ObserverLike<TB>) => {
+  const operator = (delegate: Observer<TB>) => {
     const observer = new MapObserver(delegate, mapper);
     bindDisposables(observer, delegate);
     return observer;

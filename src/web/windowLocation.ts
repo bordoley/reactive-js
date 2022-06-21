@@ -6,7 +6,7 @@ import {
 } from "../disposable";
 import { Updater, pipe, raise } from "../functions";
 import {
-  ObserverLike,
+  Observer,
   StreamLike,
   keep,
   map,
@@ -146,7 +146,7 @@ class WindowLocationStream
     return canGoBack;
   }
 
-  observe(observer: ObserverLike<WindowLocationURI>): void {
+  observe(observer: Observer<WindowLocationURI>): void {
     this.stateStream.observe(observer);
   }
 }

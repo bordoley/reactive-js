@@ -5,14 +5,10 @@ import {
   dispose,
 } from "../disposable";
 import { Function1, pipe } from "../functions";
-import {
-  ObservableLike,
-  ObservableOperator,
-  ObserverLike,
-} from "../observable";
+import { ObservableLike, ObservableOperator } from "../observable";
 import { isSome, none } from "../option";
 import { lift } from "./lift";
-import { createDelegatingObserver, sink } from "./observer";
+import { Observer, createDelegatingObserver, sink } from "./observer";
 
 /**
  * Returns an `ObservableLike` which catches errors produced by the source and either continues with
@@ -25,7 +21,7 @@ import { createDelegatingObserver, sink } from "./observer";
 export const catchError = <T>(
   onError: Function1<unknown, ObservableLike<T> | void>,
 ): ObservableOperator<T, T> => {
-  const operator = (delegate: ObserverLike<T>) => {
+  const operator = (delegate: Observer<T>) => {
     const observer = createDelegatingObserver(delegate);
     addDisposable(delegate, observer);
     addOnDisposedWithoutError(observer, delegate);

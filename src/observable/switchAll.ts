@@ -9,14 +9,10 @@ import {
   addDisposable,
 } from "../disposable";
 import { pipe } from "../functions";
-import {
-  ObservableLike,
-  ObservableOperator,
-  ObserverLike,
-} from "../observable";
+import { ObservableLike, ObservableOperator } from "../observable";
 import { Option, isSome } from "../option";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver } from "./observer";
+import { Observer } from "./observer";
 import { subscribe } from "./subscribe";
 
 function onDispose(this: SwitchObserver<unknown>, error: Option<Error>) {
@@ -29,13 +25,10 @@ function onNotify<T>(this: SwitchObserver<T>, next: T) {
   this.delegate.notify(next);
 }
 
-class SwitchObserver<T> extends AbstractDelegatingObserver<
-  ObservableLike<T>,
-  T
-> {
+class SwitchObserver<T> extends Observer<ObservableLike<T>> {
   inner = disposed;
 
-  constructor(delegate: ObserverLike<T>) {
+  constructor(readonly delegate: Observer<T>) {
     super(delegate);
   }
 
@@ -56,7 +49,7 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
   }
 }
 
-const operator = <T>(delegate: ObserverLike<T>) => {
+const operator = <T>(delegate: Observer<T>) => {
   const observer = new SwitchObserver(delegate);
   addDisposable(delegate, observer);
   addTeardown(observer, onDispose);

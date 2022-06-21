@@ -1,9 +1,10 @@
 import { FromArray } from "../container";
 import { dispose } from "../disposable";
 import { Function1, pipe } from "../functions";
-import { ObservableLike, ObserverLike } from "../observable";
+import { ObservableLike } from "../observable";
 import { YieldError } from "../scheduler";
 import { defer, deferSynchronous } from "./observable";
+import { Observer } from "./observer";
 
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
@@ -29,7 +30,7 @@ export const fromArray =
       0,
     );
 
-    const factory = (observer: ObserverLike<T>) => {
+    const factory = (observer: Observer<T>) => {
       let index = startIndex;
 
       return () => {

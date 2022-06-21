@@ -12,13 +12,12 @@ import { Function1, pipe } from "../functions";
 import {
   ObservableLike,
   ObservableOperator,
-  ObserverLike,
   ThrottleMode,
   fromArrayT,
 } from "../observable";
 import { Option, isNone, none } from "../option";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver, sink } from "./observer";
+import { Observer, sink } from "./observer";
 
 import { subscribe } from "./subscribe";
 
@@ -40,7 +39,7 @@ function onDispose(this: ThrottleObserver<unknown>, e: Option<Error>) {
   }
 }
 
-class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
+class ThrottleObserver<T> extends Observer<T> {
   value: Option<T> = none;
   hasValue = false;
 
@@ -56,7 +55,7 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
   };
 
   constructor(
-    delegate: ObserverLike<T>,
+    readonly delegate: Observer<T>,
     readonly durationFunction: Function1<T, ObservableLike<unknown>>,
     readonly mode: ThrottleMode,
     readonly durationSubscription: SerialDisposableLike,
@@ -114,7 +113,7 @@ export function throttle<T>(
     typeof duration === "number"
       ? (_: T) => fromValue(fromArrayT, { delay: duration })(none)
       : duration;
-  const operator = (delegate: ObserverLike<T>) => {
+  const operator = (delegate: Observer<T>) => {
     const durationSubscription = createSerialDisposable();
     const observer = new ThrottleObserver(
       delegate,

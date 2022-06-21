@@ -23,12 +23,9 @@ export interface SinkLike<T> extends DisposableLike {
   notify(this: SinkLike<T>, next: T): void;
 }
 
-export interface DelegatingSinkLike<TA, TB> extends SinkLike<TA> {
-  readonly delegate: SinkLike<TB>;
-}
-
 export function notifyDecodeWithCharset(
-  this: DelegatingSinkLike<ArrayBuffer, string> & {
+  this: SinkLike<ArrayBuffer> & {
+    readonly delegate: SinkLike<string>;
     readonly textDecoder: TextDecoder;
   },
   next: ArrayBuffer,
@@ -40,7 +37,8 @@ export function notifyDecodeWithCharset(
 }
 
 export function notifyDistinctUntilChanged<T>(
-  this: DelegatingSinkLike<T, T> & {
+  this: SinkLike<T> & {
+    readonly delegate: SinkLike<T>;
     readonly equality: Equality<T>;
     prev: Option<T>;
     hasValue: boolean;
@@ -59,7 +57,8 @@ export function notifyDistinctUntilChanged<T>(
 }
 
 export function notifyKeep<T>(
-  this: DelegatingSinkLike<T, T> & {
+  this: SinkLike<T> & {
+    readonly delegate: SinkLike<T>;
     readonly predicate: Predicate<T>;
   },
   next: T,
@@ -71,7 +70,8 @@ export function notifyKeep<T>(
 }
 
 export function notifyMap<TA, TB>(
-  this: DelegatingSinkLike<TA, TB> & {
+  this: SinkLike<TA> & {
+    readonly delegate: SinkLike<TB>;
     readonly mapper: Function1<TA, TB>;
   },
   next: TA,
@@ -82,7 +82,8 @@ export function notifyMap<TA, TB>(
 }
 
 export function notifyOnNotify<T>(
-  this: DelegatingSinkLike<T, T> & {
+  this: SinkLike<T> & {
+    readonly delegate: SinkLike<T>;
     readonly onNotify: SideEffect1<T>;
   },
   next: T,
@@ -94,7 +95,8 @@ export function notifyOnNotify<T>(
 }
 
 export function notifyPairwise<T>(
-  this: DelegatingSinkLike<T, [Option<T>, T]> & {
+  this: SinkLike<T> & {
+    readonly delegate: SinkLike<[Option<T>, T]>;
     prev: Option<T>;
     hasPrev: boolean;
   },
@@ -122,7 +124,8 @@ export function notifyReduce<T, TAcc>(
 }
 
 export function notifyScan<T, TAcc>(
-  this: DelegatingSinkLike<T, TAcc> & {
+  this: SinkLike<T> & {
+    readonly delegate: SinkLike<TAcc>;
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
   },
@@ -136,7 +139,8 @@ export function notifyScan<T, TAcc>(
 }
 
 export function notifySkipFirst<T>(
-  this: DelegatingSinkLike<T, T> & {
+  this: SinkLike<T> & {
+    readonly delegate: SinkLike<T>;
     count: number;
     readonly skipCount: number;
   },
@@ -149,7 +153,8 @@ export function notifySkipFirst<T>(
 }
 
 export function notifyTakeFirst<T>(
-  this: DelegatingSinkLike<T, T> & {
+  this: SinkLike<T> & {
+    readonly delegate: SinkLike<T>;
     count: number;
     readonly maxCount: number;
   },
@@ -183,7 +188,8 @@ export function notifyTakeLast<T>(
 }
 
 export function notifyTakeWhile<T>(
-  this: DelegatingSinkLike<T, T> & {
+  this: SinkLike<T> & {
+    readonly delegate: SinkLike<T>;
     readonly predicate: Predicate<T>;
     readonly inclusive: boolean;
   },

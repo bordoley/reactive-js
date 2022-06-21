@@ -71,7 +71,7 @@ Subscribes the `ObserverLike` instance to the observable.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `this` | [`ObservableLike`](observable.ObservableLike.md)<`T`\> | - |
-| `observer` | [`ObserverLike`](observable.ObserverLike.md)<`T`\> | The observer which should be notified by the observable source. |
+| `observer` | [`Observer`](../classes/observable.Observer.md)<`T`\> | The observer which should be notified by the observable source. |
 
 #### Returns
 

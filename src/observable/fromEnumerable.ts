@@ -1,9 +1,10 @@
 import { addDisposableDisposeParentOnChildError, dispose } from "../disposable";
 import { EnumerableLike, EnumeratorLike, enumerate } from "../enumerable";
 import { Factory, Function1, defer, pipe } from "../functions";
-import { ObservableLike, ObserverLike } from "../observable";
+import { ObservableLike } from "../observable";
 import { __yield } from "../scheduler";
 import { defer as deferObs, deferSynchronous } from "./observable";
+import { Observer } from "./observer";
 
 /**
  * Creates an `ObservableLike` which enumerates through the values
@@ -16,7 +17,7 @@ export const fromEnumerator =
     options: { readonly delay?: number } = {},
   ): Function1<Factory<EnumeratorLike<T>>, ObservableLike<T>> =>
   f => {
-    const factory = (observer: ObserverLike<T>) => {
+    const factory = (observer: Observer<T>) => {
       const enumerator = f();
       addDisposableDisposeParentOnChildError(observer, enumerator);
 

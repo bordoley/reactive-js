@@ -5,14 +5,10 @@ import {
   dispose,
 } from "../disposable";
 import { Function2, pipe } from "../functions";
-import {
-  ObservableLike,
-  ObservableOperator,
-  ObserverLike,
-} from "../observable";
+import { ObservableLike, ObservableOperator } from "../observable";
 import { Option } from "../option";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver } from "./observer";
+import { Observer } from "./observer";
 import { subscribe } from "./subscribe";
 
 function onNotify<TA, TB, T>(
@@ -23,15 +19,12 @@ function onNotify<TA, TB, T>(
   this.otherLatest = next;
 }
 
-class WithLatestFromObserver<TA, TB, T> extends AbstractDelegatingObserver<
-  TA,
-  T
-> {
+class WithLatestFromObserver<TA, TB, T> extends Observer<TA> {
   otherLatest: Option<TB>;
   hasLatest = false;
 
   constructor(
-    delegate: ObserverLike<T>,
+    readonly delegate: Observer<T>,
     private readonly selector: Function2<TA, TB, T>,
   ) {
     super(delegate);
@@ -59,7 +52,7 @@ export const withLatestFrom = <TA, TB, T>(
   other: ObservableLike<TB>,
   selector: Function2<TA, TB, T>,
 ): ObservableOperator<TA, T> => {
-  const operator = (delegate: ObserverLike<T>) => {
+  const operator = (delegate: Observer<T>) => {
     const observer = new WithLatestFromObserver(delegate, selector);
     bindDisposables(observer, delegate);
 
