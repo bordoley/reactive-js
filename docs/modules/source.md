@@ -64,7 +64,7 @@
 | Name | Type |
 | :------ | :------ |
 | `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Sink`](../interfaces/source.Sink.md)<`C`\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
-| `DecodeWithCharsetSink` | (`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `string`\>, `textDecoder`: `TextDecoder`) => [`SinkOf`](source.md#sinkof)<`C`, `ArrayBuffer`\> & { `delegate`: [`SinkLike`](../interfaces/source.SinkLike.md)<`string`\> ; `textDecoder`: `TextDecoder`  } |
+| `DecodeWithCharsetSink` | (`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `string`\>, `textDecoder`: `TextDecoder`) => [`SinkOf`](source.md#sinkof)<`C`, `ArrayBuffer`\> & { `delegate`: [`SinkOf`](source.md#sinkof)<`C`, `string`\> ; `textDecoder`: `TextDecoder`  } |
 
 #### Returns
 
@@ -182,7 +182,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
-| `MapSink` | <TA, TB\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `TB`\>, `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`SinkOf`](source.md#sinkof)<`C`, `TA`\> & { `delegate`: [`SinkLike`](../interfaces/source.SinkLike.md)<`TB`\> ; `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>  } |
+| `MapSink` | <TA, TB\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `TB`\>, `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`SinkOf`](source.md#sinkof)<`C`, `TA`\> & { `delegate`: [`SinkOf`](source.md#sinkof)<`C`, `TB`\> ; `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>  } |
 
 #### Returns
 
@@ -224,7 +224,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
-| `OnNotifySink` | <T\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\>, `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>) => [`SinkOf`](source.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkLike`](../interfaces/source.SinkLike.md)<`T`\> ; `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>  } |
+| `OnNotifySink` | <T\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\>, `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>) => [`SinkOf`](source.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\> ; `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>  } |
 
 #### Returns
 
