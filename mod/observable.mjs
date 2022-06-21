@@ -1496,20 +1496,19 @@ const subscribeOn = (scheduler) => observable => createObservable(dispatcher => 
     bindDisposables(subscription, dispatcher);
 });
 
-class TakeLastObserver extends Observer {
+/**
+ * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
+ *
+ * @param count The maximum number of values to emit.
+ */
+const takeLast = createTakeLastOperator({ ...fromArrayT, lift, sink }, class TakeLastObserver extends Observer {
     constructor(delegate, maxCount) {
         super(delegate);
         this.delegate = delegate;
         this.maxCount = maxCount;
         this.last = [];
     }
-}
-/**
- * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
- *
- * @param count The maximum number of values to emit.
- */
-const takeLast = createTakeLastOperator({ ...fromArrayT, lift, sink }, TakeLastObserver);
+});
 
 const takeUntil = (notifier) => {
     const operator = (delegate) => {

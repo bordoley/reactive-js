@@ -52,7 +52,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `sink` | `C`[``"sinkType"``] |
+| `sink` | [`SinkOf`](../modules/sink.md#sinkof)<`C`, `T`\> |
 
 #### Returns
 

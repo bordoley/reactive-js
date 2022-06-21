@@ -1,9 +1,9 @@
-import { ContainerLike, ContainerOf, empty, FromArray } from "./container";
+import { ContainerLike, ContainerOf, FromArray, empty } from "./container";
 import {
+  DisposableLike,
   addDisposable,
   addOnDisposedWithError,
   addTeardown,
-  DisposableLike,
   dispose,
 } from "./disposable";
 import {
@@ -50,7 +50,7 @@ export interface SourceContainer<C extends SourceLike> {
 }
 
 export interface Sink<C extends SourceLike> extends SourceContainer<C> {
-  sink<T>(sink: C["sinkType"]): SideEffect1<ContainerOf<C, T>>;
+  sink<T>(sink: SinkOf<C, T>): SideEffect1<ContainerOf<C, T>>;
 }
 
 export interface Lift<C extends SourceLike> extends SourceContainer<C> {

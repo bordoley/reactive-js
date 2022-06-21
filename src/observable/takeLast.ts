@@ -4,14 +4,6 @@ import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { Observer, sink } from "./observer";
 
-class TakeLastObserver<T> extends Observer<T> {
-  readonly last: T[] = [];
-
-  constructor(readonly delegate: Observer<T>, readonly maxCount: number) {
-    super(delegate);
-  }
-}
-
 /**
  * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
  *
@@ -21,5 +13,11 @@ export const takeLast: <T>(options?: {
   readonly count?: number;
 }) => ObservableOperator<T, T> = createTakeLastOperator(
   { ...fromArrayT, lift, sink },
-  TakeLastObserver,
+  class TakeLastObserver<T> extends Observer<T> {
+    readonly last: T[] = [];
+
+    constructor(readonly delegate: Observer<T>, readonly maxCount: number) {
+      super(delegate);
+    }
+  },
 );
