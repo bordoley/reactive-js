@@ -1,4 +1,4 @@
-import { ContainerLike, Container, ContainerOf, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
+import { ContainerLike, Container, ContainerOf, FromArray, FromArrayOptions, ContainerOperator } from "./container.mjs";
 import { DisposableLike } from "./disposable.mjs";
 import { SideEffect1, Function1, Equality, Predicate, Reducer, Factory } from "./functions.mjs";
 import { Option } from "./option.mjs";
@@ -31,10 +31,10 @@ interface Sink<C extends SourceLike> extends Container<C> {
 interface Lift<C extends SourceLike> extends Container<C> {
     lift<TA, TB>(operator: Function1<SinkOf<C, TB>, SinkOf<C, TA>>): Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 }
-declare function notifyDecodeWithCharset(this: SinkLike<ArrayBuffer> & {
+declare const createDecodeWithCharset: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Sink<C> & Lift<C>, DecodeWithCharsetSink: new (delegate: SinkOf<C, string>, textDecoder: TextDecoder) => SinkOf<C, ArrayBuffer> & {
     readonly delegate: SinkLike<string>;
     readonly textDecoder: TextDecoder;
-}, next: ArrayBuffer): void;
+}) => (charset?: string) => ContainerOperator<C, ArrayBuffer, string>;
 declare const createDistinctUntilChanged: <C extends SourceLike>(m: Lift<C>, DistinctUntilChangedSink: new <T>(delegate: SinkOf<C, T>, equality: Equality<T>) => SinkOf<C, T> & {
     readonly delegate: SinkOf<C, T>;
     readonly equality: Equality<T>;
@@ -105,4 +105,4 @@ declare const createTakeWhileOperator: <C extends SourceLike>(m: Lift<C>, TakeWh
 }) => <T_1>(predicate: Predicate<T_1>, options?: {
     readonly inclusive?: boolean;
 }) => ContainerOperator<C, T_1, T_1>;
-export { Lift, Sink, SinkLike, SinkOf, SourceLike, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset };
+export { Lift, Sink, SinkLike, SinkOf, SourceLike, createDecodeWithCharset, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator };

@@ -15,7 +15,7 @@ declare class Sink<T> extends AbstractDisposable implements SinkLike<T> {
 declare function concat<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
 declare const concatAll: <T>() => RunnableOperator<RunnableLike<T>, T>;
 declare const createRunnable: <T>(run: SideEffect1<Sink<T>>) => RunnableLike<T>;
-declare const decodeWithCharset: (charset?: string, options?: TextDecoderOptions) => RunnableOperator<ArrayBuffer, string>;
+declare const decodeWithCharset: (charset?: string) => RunnableOperator<ArrayBuffer, string>;
 declare const distinctUntilChanged: <T>(options?: {
     readonly equality?: Equality<T>;
 }) => RunnableOperator<T, T>;

@@ -17,6 +17,7 @@
 
 ### Functions
 
+- [createDecodeWithCharset](sink.md#createdecodewithcharset)
 - [createDistinctUntilChanged](sink.md#createdistinctuntilchanged)
 - [createKeepOperator](sink.md#createkeepoperator)
 - [createMapOperator](sink.md#createmapoperator)
@@ -28,7 +29,6 @@
 - [createTakeFirstOperator](sink.md#createtakefirstoperator)
 - [createTakeLastOperator](sink.md#createtakelastoperator)
 - [createTakeWhileOperator](sink.md#createtakewhileoperator)
-- [notifyDecodeWithCharset](sink.md#notifydecodewithcharset)
 
 ## Type Aliases
 
@@ -44,6 +44,41 @@
 | `T` | `T` |
 
 ## Functions
+
+### createDecodeWithCharset
+
+▸ **createDecodeWithCharset**<`C`\>(`m`, `DecodeWithCharsetSink`): (`charset?`: `string`) => [`ContainerOperator`](container.md#containeroperator)<`C`, `ArrayBuffer`, `string`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Sink`](../interfaces/sink.Sink.md)<`C`\> & [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
+| `DecodeWithCharsetSink` | (`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `string`\>, `textDecoder`: `TextDecoder`) => [`SinkOf`](sink.md#sinkof)<`C`, `ArrayBuffer`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`string`\> ; `textDecoder`: `TextDecoder`  } |
+
+#### Returns
+
+`fn`
+
+▸ (`charset?`): [`ContainerOperator`](container.md#containeroperator)<`C`, `ArrayBuffer`, `string`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `charset?` | `string` |
+
+##### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `ArrayBuffer`, `string`\>
+
+___
 
 ### createDistinctUntilChanged
 
@@ -498,20 +533,3 @@ ___
 ##### Returns
 
 [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
-
-___
-
-### notifyDecodeWithCharset
-
-▸ **notifyDecodeWithCharset**(`this`, `next`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`ArrayBuffer`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`string`\> ; `textDecoder`: `TextDecoder`  } |
-| `next` | `ArrayBuffer` |
-
-#### Returns
-
-`void`

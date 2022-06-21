@@ -6,7 +6,7 @@ import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
-import { notifyDecodeWithCharset, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { createDecodeWithCharset, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 
@@ -623,31 +623,13 @@ const liftT = {
     lift,
 };
 
-class DecodeWithCharsetObserver extends Observer {
+const decodeWithCharset = createDecodeWithCharset({ ...liftT, ...fromArrayT, ...sinkT }, class DecodeWithCharsetObserver extends Observer {
     constructor(delegate, textDecoder) {
         super(delegate);
         this.delegate = delegate;
         this.textDecoder = textDecoder;
     }
-}
-DecodeWithCharsetObserver.prototype.notify = notifyDecodeWithCharset;
-const decodeWithCharset = (charset = "utf-8", options) => {
-    const operator = (delegate) => {
-        const observer = new DecodeWithCharsetObserver(delegate, new TextDecoder(charset, options));
-        addDisposable(delegate, observer);
-        addOnDisposedWithError(observer, delegate);
-        addOnDisposedWithoutErrorTeardown(observer, function () {
-            const data = this.textDecoder.decode();
-            if (data.length > 0) {
-                pipe(data, fromValue(fromArrayT), sink(this.delegate));
-            }
-            this.delegate.dispose();
-        });
-        return observer;
-    };
-    operator.isSynchronous = true;
-    return lift(operator);
-};
+});
 
 const fromDisposable = (disposable) => createObservable(dispatcher => {
     addDisposable(disposable, dispatcher);
