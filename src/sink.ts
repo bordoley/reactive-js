@@ -5,6 +5,7 @@ import {
   empty,
   ContainerOperator,
   Container,
+  fromValue,
 } from "./container";
 import {
   DisposableLike,
@@ -13,6 +14,7 @@ import {
   addTeardown,
   dispose,
   bindDisposables,
+  addOnDisposedWithoutErrorTeardown,
 } from "./disposable";
 import {
   Equality,
@@ -152,17 +154,48 @@ export function notifyPairwise<T>(
   this.delegate.notify([prev, value]);
 }
 
-export function notifyReduce<T, TAcc>(
-  this: SinkLike<T> & {
+export const createReduceOperator = <C extends SourceLike>(
+  m: FromArray<C> & Lift<C> & Sink<C>,
+  ReduceSink: new <T, TAcc>(
+    delegate: SinkOf<C, TAcc>,
+    reducer: Reducer<T, TAcc>,
+    acc: TAcc,
+  ) => SinkOf<C, T> & {
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
   },
-  next: T,
-) {
-  this.assertState();
+): (<T, TAcc>(
+  reducer: Reducer<T, TAcc>,
+  initialValue: Factory<TAcc>,
+) => ContainerOperator<C, T, TAcc>) => {
+  ReduceSink.prototype.notify = function notifyReduce<T, TAcc>(
+    this: SinkOf<C, T> & {
+      readonly reducer: Reducer<T, TAcc>;
+      acc: TAcc;
+    },
+    next: T,
+  ) {
+    this.assertState();
 
-  this.acc = this.reducer(this.acc, next);
-}
+    this.acc = this.reducer(this.acc, next);
+  };
+
+  return <T, TAcc>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): ContainerOperator<C, T, TAcc> => {
+    const operator = (delegate: SinkOf<C, TAcc>): SinkOf<C, T> => {
+      const sink = new ReduceSink(delegate, reducer, initialValue());
+      addDisposable(delegate, sink);
+      addOnDisposedWithError(sink, delegate);
+      addOnDisposedWithoutErrorTeardown(sink, () => {
+        pipe(sink.acc, fromValue(m), m.sink(delegate));
+      });
+      return sink;
+    };
+    return m.lift(operator);
+  };
+};
 
 export const createScanOperator = <C extends SourceLike>(
   m: Lift<C>,
@@ -171,7 +204,7 @@ export const createScanOperator = <C extends SourceLike>(
     reducer: Reducer<T, TAcc>,
     acc: TAcc,
   ) => SinkOf<C, T> & {
-    readonly delegate: SinkLike<TAcc>;
+    readonly delegate: SinkOf<C, TAcc>;
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
   },
@@ -180,8 +213,8 @@ export const createScanOperator = <C extends SourceLike>(
   initialValue: Factory<TAcc>,
 ) => ContainerOperator<C, T, TAcc>) => {
   ScanSink.prototype.notify = function notifyScan<T, TAcc>(
-    this: SinkLike<T> & {
-      readonly delegate: SinkLike<TAcc>;
+    this: SinkOf<C, T> & {
+      readonly delegate: SinkOf<C, TAcc>;
       readonly reducer: Reducer<T, TAcc>;
       acc: TAcc;
     },
@@ -222,7 +255,7 @@ export const createSkipFirstOperator = <C extends SourceLike>(
 }) => ContainerOperator<C, T, T>) => {
   SkipFirstSink.prototype.notify = function notifySkipFirst<T>(
     this: SinkOf<C, T> & {
-      readonly delegate: SinkLike<T>;
+      readonly delegate: SinkOf<C, T>;
       count: number;
       readonly skipCount: number;
     },
@@ -254,7 +287,7 @@ export const createTakeFirstOperator = <C extends SourceLike>(
     C,
     T
   > & {
-    readonly delegate: SinkLike<T>;
+    readonly delegate: SinkOf<C, T>;
     count: number;
     readonly maxCount: number;
   },
@@ -262,8 +295,8 @@ export const createTakeFirstOperator = <C extends SourceLike>(
   readonly count?: number;
 }) => ContainerOperator<C, T, T>) => {
   TakeFirstSink.prototype.notify = function notifyTakeFirst<T>(
-    this: SinkLike<T> & {
-      readonly delegate: SinkLike<T>;
+    this: SinkOf<C, T> & {
+      readonly delegate: SinkOf<C, T>;
       count: number;
       readonly maxCount: number;
     },
@@ -348,7 +381,7 @@ export const createTakeWhileOperator = <C extends SourceLike>(
     predicate: Predicate<T>,
     inclusive: boolean,
   ) => SinkOf<C, T> & {
-    readonly delegate: SinkLike<T>;
+    readonly delegate: SinkOf<C, T>;
     readonly predicate: Predicate<T>;
     readonly inclusive: boolean;
   },
@@ -358,7 +391,7 @@ export const createTakeWhileOperator = <C extends SourceLike>(
 ) => ContainerOperator<C, T, T>) => {
   TakeWhileSink.prototype.notify = function notifyTakeWhile<T>(
     this: SinkOf<C, T> & {
-      readonly delegate: SinkLike<T>;
+      readonly delegate: SinkOf<C, T>;
       readonly predicate: Predicate<T>;
       readonly inclusive: boolean;
     },

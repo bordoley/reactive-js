@@ -3,7 +3,7 @@ import { __DEV__ } from "../env";
 import { SideEffect1, raise } from "../functions";
 import { ObservableLike } from "../observable";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
-import { SinkLike } from "../sink";
+import { Sink, SinkLike } from "../sink";
 
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
@@ -100,3 +100,7 @@ export const sink =
   <T>(observer: Observer<T>): SideEffect1<ObservableLike<T>> =>
   observable =>
     observable.observe(observer);
+
+export const sinkT: Sink<ObservableLike<unknown>> = {
+  sink,
+};

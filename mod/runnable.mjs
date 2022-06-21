@@ -3,7 +3,7 @@ import { raise, pipe, strictEquality, compose, negate, alwaysTrue, isEqualTo, id
 import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 import { AbstractContainer, fromValue } from './container.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 class Sink extends AbstractDisposable {
@@ -337,21 +337,14 @@ const pairwise = () => {
     return lift(operator);
 };
 
-class ReducerSink extends Sink {
-    constructor(acc, reducer) {
+const reduce = createReduceOperator({ ...fromArrayT, ...liftT, ...sinkT }, class ReducerSink extends Sink {
+    constructor(delegate, reducer, acc) {
         super();
-        this.acc = acc;
+        this.delegate = delegate;
         this.reducer = reducer;
+        this.acc = acc;
     }
-    get result() {
-        return this.acc;
-    }
-}
-ReducerSink.prototype.notify = notifyReduce;
-const reduce = (reducer, initialValue) => {
-    const createSink = () => new ReducerSink(initialValue(), reducer);
-    return run(createSink);
-};
+});
 
 function repeat(predicate) {
     const shouldRepeat = isNone(predicate)

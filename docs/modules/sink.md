@@ -17,6 +17,7 @@
 
 ### Functions
 
+- [createReduceOperator](sink.md#createreduceoperator)
 - [createScanOperator](sink.md#createscanoperator)
 - [createSkipFirstOperator](sink.md#createskipfirstoperator)
 - [createTakeFirstOperator](sink.md#createtakefirstoperator)
@@ -28,7 +29,6 @@
 - [notifyMap](sink.md#notifymap)
 - [notifyOnNotify](sink.md#notifyonnotify)
 - [notifyPairwise](sink.md#notifypairwise)
-- [notifyReduce](sink.md#notifyreduce)
 
 ## Type Aliases
 
@@ -45,6 +45,49 @@
 
 ## Functions
 
+### createReduceOperator
+
+▸ **createReduceOperator**<`C`\>(`m`, `ReduceSink`): <T_1, TAcc_1\>(`reducer`: [`Reducer`](functions.md#reducer)<`T_1`, `TAcc_1`\>, `initialValue`: [`Factory`](functions.md#factory)<`TAcc_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `TAcc_1`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/sink.Lift.md)<`C`\> & [`Sink`](../interfaces/sink.Sink.md)<`C`\> |
+| `ReduceSink` | <T, TAcc\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `TAcc`\>, `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `acc`: `TAcc`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `acc`: `TAcc` ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
+
+#### Returns
+
+`fn`
+
+▸ <`T_1`, `TAcc_1`\>(`reducer`, `initialValue`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `TAcc_1`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T_1` |
+| `TAcc_1` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](functions.md#reducer)<`T_1`, `TAcc_1`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc_1`\> |
+
+##### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `TAcc_1`\>
+
+___
+
 ### createScanOperator
 
 ▸ **createScanOperator**<`C`\>(`m`, `ScanSink`): <T_1, TAcc_1\>(`reducer`: [`Reducer`](functions.md#reducer)<`T_1`, `TAcc_1`\>, `initialValue`: [`Factory`](functions.md#factory)<`TAcc_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `TAcc_1`\>
@@ -60,7 +103,7 @@
 | Name | Type |
 | :------ | :------ |
 | `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
-| `ScanSink` | <T, TAcc\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `TAcc`\>, `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `acc`: `TAcc`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `acc`: `TAcc` ; `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`TAcc`\> ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
+| `ScanSink` | <T, TAcc\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `TAcc`\>, `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `acc`: `TAcc`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `acc`: `TAcc` ; `delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `TAcc`\> ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
 
 #### Returns
 
@@ -145,7 +188,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
-| `TakeFirstSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `maxCount`: `number`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `count`: `number` ; `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `maxCount`: `number`  } |
+| `TakeFirstSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `maxCount`: `number`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `count`: `number` ; `delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\> ; `maxCount`: `number`  } |
 
 #### Returns
 
@@ -229,7 +272,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
-| `TakeWhileSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>, `inclusive`: `boolean`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `inclusive`: `boolean` ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
+| `TakeWhileSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>, `inclusive`: `boolean`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\> ; `inclusive`: `boolean` ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
 
 #### Returns
 
@@ -383,30 +426,6 @@ ___
 | :------ | :------ |
 | `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<[[`Option`](option.md#option)<`T`\>, `T`]\> ; `hasPrev`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
 | `value` | `T` |
-
-#### Returns
-
-`void`
-
-___
-
-### notifyReduce
-
-▸ **notifyReduce**<`T`, `TAcc`\>(`this`, `next`): `void`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `TAcc` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `acc`: `TAcc` ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
-| `next` | `T` |
 
 #### Returns
 

@@ -6,7 +6,7 @@ import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, createScanOperator, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, createReduceOperator, createScanOperator, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 
@@ -134,6 +134,9 @@ class DelegatingObserver extends Observer {
 // FIXME: Need to bind the disposables.
 const createDelegatingObserver = (delegate) => new DelegatingObserver(delegate);
 const sink = (observer) => observable => observable.observe(observer);
+const sinkT = {
+    sink,
+};
 
 class DefaultObserver extends Observer {
     constructor(scheduler, onNotify, onNotifyThis) {
@@ -355,7 +358,7 @@ function __currentScheduler() {
         : raise("__currentScheduler may only be called within an observable computation");
 }
 
-function onDispose$7(error) {
+function onDispose$6(error) {
     const { ctx } = this;
     ctx.completedCount++;
     if (isSome(error) || ctx.completedCount === ctx.observers.length) {
@@ -403,7 +406,7 @@ const latest = (observables, mode) => {
         };
         for (const observable of observables) {
             const innerObserver = new LatestObserver(delegate, ctx, mode);
-            addTeardown(innerObserver, onDispose$7);
+            addTeardown(innerObserver, onDispose$6);
             addDisposable(delegate, innerObserver);
             observers.push(innerObserver);
             pipe(observable, sink(innerObserver));
@@ -472,7 +475,7 @@ const scheduleDrainQueue = (dispatcher) => {
         addOnDisposedWithoutErrorTeardown(continuationSubcription, dispatcher.onContinuationDispose);
     }
 };
-function onDispose$6(e) {
+function onDispose$5(e) {
     if (this.nextQueue.length === 0) {
         pipe(this.observer, dispose(e));
     }
@@ -510,7 +513,7 @@ class ObserverDelegatingDispatcher extends AbstractDisposable {
  */
 const toDispatcher = (delegate) => {
     const observer = new ObserverDelegatingDispatcher(delegate);
-    addTeardown(observer, onDispose$6);
+    addTeardown(observer, onDispose$5);
     addDisposable(delegate, observer);
     return observer;
 };
@@ -823,7 +826,7 @@ function using(resourceFactory, observableFactory) {
     return new UsingObservable(resourceFactory, observableFactory);
 }
 
-function onDispose$5(error) {
+function onDispose$4(error) {
     const buffer = this.buffer;
     this.buffer = [];
     if (isSome(error) || buffer.length === 0) {
@@ -881,7 +884,7 @@ function buffer(options = {}) {
         const observer = new BufferObserver(delegate, durationFunction, maxBufferSize, durationSubscription);
         addDisposable(delegate, observer);
         addDisposableDisposeParentOnChildError(observer, durationSubscription);
-        addTeardown(observer, onDispose$5);
+        addTeardown(observer, onDispose$4);
         return observer;
     };
     operator.isSynchronous = delay === Number.MAX_SAFE_INTEGER;
@@ -1002,7 +1005,7 @@ const mapT = {
     map,
 };
 
-function onDispose$4(error) {
+function onDispose$3(error) {
     if (isSome(error) || this.inner.isDisposed) {
         pipe(this.delegate, dispose(error));
     }
@@ -1032,7 +1035,7 @@ class SwitchObserver extends Observer {
 const operator = (delegate) => {
     const observer = new SwitchObserver(delegate);
     addDisposable(delegate, observer);
-    addTeardown(observer, onDispose$4);
+    addTeardown(observer, onDispose$3);
     return observer;
 };
 operator.isSynchronous = false;
@@ -1062,7 +1065,7 @@ const subscribeNext = (observer) => {
         }
     }
 };
-function onDispose$3(error) {
+function onDispose$2(error) {
     if (isSome(error) || this.queue.length + this.activeCount === 0) {
         pipe(this.delegate, dispose(error));
     }
@@ -1107,7 +1110,7 @@ const mergeAll = (options = {}) => {
     const operator = (delegate) => {
         const observer = new MergeObserver(delegate, maxBufferSize, maxConcurrency);
         addDisposable(delegate, observer);
-        addTeardown(observer, onDispose$3);
+        addTeardown(observer, onDispose$2);
         addTeardown(delegate, () => {
             observer.queue.length = 0;
         });
@@ -1230,33 +1233,14 @@ const publish = (scheduler, options) => observable => {
     return subject;
 };
 
-function onDispose$2(error) {
-    if (isSome(error)) {
-        this.delegate.dispose();
-    }
-    else {
-        pipe(this.acc, fromValue(fromArrayT), sink(this.delegate));
-    }
-}
-class ReduceObserver extends Observer {
+const reduce = createReduceOperator({ ...fromArrayT, ...liftT, ...sinkT }, class ReducerObserver extends Observer {
     constructor(delegate, reducer, acc) {
         super(delegate);
         this.delegate = delegate;
         this.reducer = reducer;
         this.acc = acc;
     }
-}
-ReduceObserver.prototype.notify = notifyReduce;
-const reduce = (reducer, initialValue) => {
-    const operator = (delegate) => {
-        const observer = new ReduceObserver(delegate, reducer, initialValue());
-        addDisposable(delegate, observer);
-        addTeardown(observer, onDispose$2);
-        return observer;
-    };
-    operator.isSynchronous = true;
-    return lift(operator);
-};
+});
 
 const createRepeatObserver = (delegate, observable, shouldRepeat) => {
     const observer = createDelegatingObserver(delegate);
@@ -1460,7 +1444,7 @@ const subscribeOn = (scheduler) => observable => createObservable(dispatcher => 
  *
  * @param count The maximum number of values to emit.
  */
-const takeLast = createTakeLastOperator({ ...fromArrayT, lift, sink }, class TakeLastObserver extends Observer {
+const takeLast = createTakeLastOperator({ ...fromArrayT, ...liftT, ...sinkT }, class TakeLastObserver extends Observer {
     constructor(delegate, maxCount) {
         super(delegate);
         this.delegate = delegate;

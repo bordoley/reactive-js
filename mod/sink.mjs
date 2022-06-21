@@ -1,6 +1,6 @@
 /// <reference types="./sink.d.ts" />
-import { empty } from './container.mjs';
-import { bindDisposables, dispose, addDisposable, addOnDisposedWithError, addTeardown } from './disposable.mjs';
+import { fromValue, empty } from './container.mjs';
+import { addDisposable, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables, dispose, addTeardown } from './disposable.mjs';
 import { pipe } from './functions.mjs';
 import { none } from './option.mjs';
 
@@ -42,10 +42,24 @@ function notifyPairwise(value) {
     this.prev = value;
     this.delegate.notify([prev, value]);
 }
-function notifyReduce(next) {
-    this.assertState();
-    this.acc = this.reducer(this.acc, next);
-}
+const createReduceOperator = (m, ReduceSink) => {
+    ReduceSink.prototype.notify = function notifyReduce(next) {
+        this.assertState();
+        this.acc = this.reducer(this.acc, next);
+    };
+    return (reducer, initialValue) => {
+        const operator = (delegate) => {
+            const sink = new ReduceSink(delegate, reducer, initialValue());
+            addDisposable(delegate, sink);
+            addOnDisposedWithError(sink, delegate);
+            addOnDisposedWithoutErrorTeardown(sink, () => {
+                pipe(sink.acc, fromValue(m), m.sink(delegate));
+            });
+            return sink;
+        };
+        return m.lift(operator);
+    };
+};
 const createScanOperator = (m, ScanSink) => {
     ScanSink.prototype.notify = function notifyScan(next) {
         this.assertState();
@@ -143,4 +157,4 @@ const createTakeWhileOperator = (m, TakeWhileSink) => {
     };
 };
 
-export { createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce };
+export { createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise };
