@@ -9,7 +9,7 @@ class AbstractSource extends AbstractContainer {
         return undefined;
     }
 }
-const createDecodeWithCharset = (m, DecodeWithCharsetSink) => {
+const createDecodeWithCharsetOperator = (m, DecodeWithCharsetSink) => {
     DecodeWithCharsetSink.prototype.notify = function notifyDecodeWithCharset(next) {
         const data = this.textDecoder.decode(next, { stream: true });
         if (data.length > 0) {
@@ -36,7 +36,7 @@ const createDecodeWithCharset = (m, DecodeWithCharsetSink) => {
         return m.lift(operator);
     };
 };
-const createDistinctUntilChanged = (m, DistinctUntilChangedSink) => {
+const createDistinctUntilChangedOperator = (m, DistinctUntilChangedSink) => {
     DistinctUntilChangedSink.prototype.notify =
         function notifyDistinctUntilChanged(next) {
             this.assertState();
@@ -235,4 +235,4 @@ const createTakeWhileOperator = (m, TakeWhileSink) => {
     };
 };
 
-export { AbstractSource, createDecodeWithCharset, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator };
+export { AbstractSource, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator };

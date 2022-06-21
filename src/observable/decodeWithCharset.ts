@@ -1,12 +1,12 @@
 import { ObservableOperator } from "../observable";
-import { createDecodeWithCharset } from "../source";
+import { createDecodeWithCharsetOperator } from "../source";
 import { fromArrayT } from "./fromArray";
 import { liftT } from "./lift";
 import { Observer, sinkT } from "./observer";
 
 export const decodeWithCharset: (
   charset?: string,
-) => ObservableOperator<ArrayBuffer, string> = createDecodeWithCharset(
+) => ObservableOperator<ArrayBuffer, string> = createDecodeWithCharsetOperator(
   { ...liftT, ...fromArrayT, ...sinkT },
   class DecodeWithCharsetObserver extends Observer<ArrayBuffer> {
     constructor(

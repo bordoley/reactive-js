@@ -4,7 +4,7 @@ import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, dis
 import { pipe, raise, ignore, arrayEquality, defer as defer$1, compose, returns } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
-import { AbstractSource, createDecodeWithCharset, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './source.mjs';
+import { AbstractSource, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './source.mjs';
 import { __DEV__ } from './env.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
@@ -614,7 +614,7 @@ const liftT = {
     lift,
 };
 
-const decodeWithCharset = createDecodeWithCharset({ ...liftT, ...fromArrayT, ...sinkT }, class DecodeWithCharsetObserver extends Observer {
+const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftT, ...fromArrayT, ...sinkT }, class DecodeWithCharsetObserver extends Observer {
     constructor(delegate, textDecoder) {
         super(delegate);
         this.delegate = delegate;
@@ -895,7 +895,7 @@ const catchError = (onError) => {
  * @param equals Optional equality function that is used to compare
  * if an item is distinct from the previous item.
  */
-const distinctUntilChanged = createDistinctUntilChanged(liftT, class DistinctUntilChangedObserver extends Observer {
+const distinctUntilChanged = createDistinctUntilChangedOperator(liftT, class DistinctUntilChangedObserver extends Observer {
     constructor(delegate, equality) {
         super(delegate);
         this.delegate = delegate;

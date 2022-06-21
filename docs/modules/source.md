@@ -21,8 +21,8 @@
 
 ### Functions
 
-- [createDecodeWithCharset](source.md#createdecodewithcharset)
-- [createDistinctUntilChanged](source.md#createdistinctuntilchanged)
+- [createDecodeWithCharsetOperator](source.md#createdecodewithcharsetoperator)
+- [createDistinctUntilChangedOperator](source.md#createdistinctuntilchangedoperator)
 - [createKeepOperator](source.md#createkeepoperator)
 - [createMapOperator](source.md#createmapoperator)
 - [createOnNotifyOperator](source.md#createonnotifyoperator)
@@ -49,9 +49,9 @@
 
 ## Functions
 
-### createDecodeWithCharset
+### createDecodeWithCharsetOperator
 
-▸ **createDecodeWithCharset**<`C`\>(`m`, `DecodeWithCharsetSink`): (`charset?`: `string`) => [`ContainerOperator`](container.md#containeroperator)<`C`, `ArrayBuffer`, `string`\>
+▸ **createDecodeWithCharsetOperator**<`C`\>(`m`, `DecodeWithCharsetSink`): (`charset?`: `string`) => [`ContainerOperator`](container.md#containeroperator)<`C`, `ArrayBuffer`, `string`\>
 
 #### Type parameters
 
@@ -84,9 +84,9 @@
 
 ___
 
-### createDistinctUntilChanged
+### createDistinctUntilChangedOperator
 
-▸ **createDistinctUntilChanged**<`C`\>(`m`, `DistinctUntilChangedSink`): <T_1\>(`options?`: { `equality?`: [`Equality`](functions.md#equality)<`T_1`\>  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ **createDistinctUntilChangedOperator**<`C`\>(`m`, `DistinctUntilChangedSink`): <T_1\>(`options?`: { `equality?`: [`Equality`](functions.md#equality)<`T_1`\>  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 

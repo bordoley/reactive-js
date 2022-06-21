@@ -2,7 +2,7 @@
 import { raise, pipe, compose, negate, alwaysTrue, strictEquality, isEqualTo, identity } from './functions.mjs';
 import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
-import { AbstractSource, createDecodeWithCharset, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './source.mjs';
+import { AbstractSource, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './source.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 class Sink extends AbstractDisposable {
@@ -126,7 +126,7 @@ const fromArrayT = {
     fromArray,
 };
 
-const decodeWithCharset = createDecodeWithCharset({ ...liftT, ...fromArrayT, ...sinkT }, class DecodeWithCharsetSink extends Sink {
+const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftT, ...fromArrayT, ...sinkT }, class DecodeWithCharsetSink extends Sink {
     constructor(delegate, textDecoder) {
         super();
         this.delegate = delegate;
@@ -134,7 +134,7 @@ const decodeWithCharset = createDecodeWithCharset({ ...liftT, ...fromArrayT, ...
     }
 });
 
-const distinctUntilChanged = createDistinctUntilChanged(liftT, class DistinctUntilChangedSink extends Sink {
+const distinctUntilChanged = createDistinctUntilChangedOperator(liftT, class DistinctUntilChangedSink extends Sink {
     constructor(delegate, equality) {
         super();
         this.delegate = delegate;
