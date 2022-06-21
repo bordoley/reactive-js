@@ -1,9 +1,9 @@
 /// <reference types="./runnable.d.ts" />
 import { raise, pipe, compose, negate, alwaysTrue, strictEquality, isEqualTo, identity } from './functions.mjs';
-import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from './disposable.mjs';
+import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
-import { AbstractContainer, fromValue } from './container.mjs';
-import { notifyDecodeWithCharset, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { AbstractContainer } from './container.mjs';
+import { createDecodeWithCharset, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 class Sink extends AbstractDisposable {
@@ -133,31 +133,13 @@ const fromArrayT = {
     fromArray,
 };
 
-class DecodeWithCharsetSink extends Sink {
+const decodeWithCharset = createDecodeWithCharset({ ...liftT, ...fromArrayT, ...sinkT }, class DecodeWithCharsetSink extends Sink {
     constructor(delegate, textDecoder) {
         super();
         this.delegate = delegate;
         this.textDecoder = textDecoder;
     }
-}
-DecodeWithCharsetSink.prototype.notify = notifyDecodeWithCharset;
-function onDispose() {
-    const data = this.textDecoder.decode();
-    if (data.length > 0) {
-        pipe(data, fromValue(fromArrayT), sink(this.delegate));
-    }
-    this.delegate.dispose();
-}
-const decodeWithCharset = (charset = "utf-8", options) => {
-    const operator = (delegate) => {
-        const sink = new DecodeWithCharsetSink(delegate, new TextDecoder(charset, options));
-        addDisposable(delegate, sink);
-        addOnDisposedWithError(sink, delegate);
-        addOnDisposedWithoutErrorTeardown(sink, onDispose);
-        return sink;
-    };
-    return lift(operator);
-};
+});
 
 const distinctUntilChanged = createDistinctUntilChanged(liftT, class DistinctUntilChangedSink extends Sink {
     constructor(delegate, equality) {

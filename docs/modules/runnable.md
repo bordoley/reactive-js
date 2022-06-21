@@ -177,14 +177,13 @@ ___
 
 ### decodeWithCharset
 
-▸ **decodeWithCharset**(`charset?`, `options?`): [`RunnableOperator`](runnable.md#runnableoperator)<`ArrayBuffer`, `string`\>
+▸ **decodeWithCharset**(`charset?`): [`RunnableOperator`](runnable.md#runnableoperator)<`ArrayBuffer`, `string`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `charset?` | `string` |
-| `options?` | `TextDecoderOptions` |
 
 #### Returns
 

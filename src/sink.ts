@@ -67,18 +67,51 @@ export interface Lift<C extends SourceLike> extends Container<C> {
   ): Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 }
 
-export function notifyDecodeWithCharset(
-  this: SinkLike<ArrayBuffer> & {
+export const createDecodeWithCharset = <C extends SourceLike>(
+  m: FromArray<C> & Sink<C> & Lift<C>,
+  DecodeWithCharsetSink: new (
+    delegate: SinkOf<C, string>,
+    textDecoder: TextDecoder,
+  ) => SinkOf<C, ArrayBuffer> & {
     readonly delegate: SinkLike<string>;
     readonly textDecoder: TextDecoder;
   },
-  next: ArrayBuffer,
-) {
-  const data = this.textDecoder.decode(next, { stream: true });
-  if (data.length > 0) {
-    this.delegate.notify(data);
-  }
-}
+): ((charset?: string) => ContainerOperator<C, ArrayBuffer, string>) => {
+  DecodeWithCharsetSink.prototype.notify = function notifyDecodeWithCharset(
+    this: SinkLike<ArrayBuffer> & {
+      readonly delegate: SinkLike<string>;
+      readonly textDecoder: TextDecoder;
+    },
+    next: ArrayBuffer,
+  ) {
+    const data = this.textDecoder.decode(next, { stream: true });
+    if (data.length > 0) {
+      this.delegate.notify(data);
+    }
+  };
+
+  return (charset = "utf-8") => {
+    const operator = (delegate: SinkOf<C, string>): SinkOf<C, ArrayBuffer> => {
+      const textDecoder = new TextDecoder(charset, { fatal: true });
+      const sink = new DecodeWithCharsetSink(delegate, textDecoder);
+
+      addDisposable(delegate, sink);
+      addOnDisposedWithError(sink, delegate);
+      addOnDisposedWithoutErrorTeardown(sink, () => {
+        const data = textDecoder.decode();
+
+        if (data.length > 0) {
+          pipe(data, fromValue(m), m.sink(delegate));
+        } else {
+          delegate.dispose();
+        }
+      });
+
+      return sink;
+    };
+    return m.lift(operator);
+  };
+};
 
 export const createDistinctUntilChanged = <C extends SourceLike>(
   m: Lift<C>,

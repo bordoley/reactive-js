@@ -141,7 +141,7 @@ declare const createObservable: <T>(onSubscribe: SideEffect1<DispatcherLike<T>>)
 declare const createSubject: <T>(options?: {
     readonly replay?: number;
 }) => SubjectLike<T>;
-declare const decodeWithCharset: (charset?: string, options?: TextDecoderOptions) => ObservableOperator<ArrayBuffer, string>;
+declare const decodeWithCharset: (charset?: string) => ObservableOperator<ArrayBuffer, string>;
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
  * An optional `startIndex` in the array maybe specified,

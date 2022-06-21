@@ -1,15 +1,36 @@
 /// <reference types="./sink.d.ts" />
 import { fromValue, empty } from './container.mjs';
-import { bindDisposables, addDisposable, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, dispose, addTeardown } from './disposable.mjs';
-import { strictEquality, pipe } from './functions.mjs';
+import { addDisposable, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables, dispose, addTeardown } from './disposable.mjs';
+import { pipe, strictEquality } from './functions.mjs';
 import { none } from './option.mjs';
 
-function notifyDecodeWithCharset(next) {
-    const data = this.textDecoder.decode(next, { stream: true });
-    if (data.length > 0) {
-        this.delegate.notify(data);
-    }
-}
+const createDecodeWithCharset = (m, DecodeWithCharsetSink) => {
+    DecodeWithCharsetSink.prototype.notify = function notifyDecodeWithCharset(next) {
+        const data = this.textDecoder.decode(next, { stream: true });
+        if (data.length > 0) {
+            this.delegate.notify(data);
+        }
+    };
+    return (charset = "utf-8") => {
+        const operator = (delegate) => {
+            const textDecoder = new TextDecoder(charset, { fatal: true });
+            const sink = new DecodeWithCharsetSink(delegate, textDecoder);
+            addDisposable(delegate, sink);
+            addOnDisposedWithError(sink, delegate);
+            addOnDisposedWithoutErrorTeardown(sink, () => {
+                const data = textDecoder.decode();
+                if (data.length > 0) {
+                    pipe(data, fromValue(m), m.sink(delegate));
+                }
+                else {
+                    delegate.dispose();
+                }
+            });
+            return sink;
+        };
+        return m.lift(operator);
+    };
+};
 const createDistinctUntilChanged = (m, DistinctUntilChangedSink) => {
     DistinctUntilChangedSink.prototype.notify =
         function notifyDistinctUntilChanged(next) {
@@ -209,4 +230,4 @@ const createTakeWhileOperator = (m, TakeWhileSink) => {
     };
 };
 
-export { createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset };
+export { createDecodeWithCharset, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator };

@@ -1164,14 +1164,13 @@ ___
 
 ### decodeWithCharset
 
-▸ **decodeWithCharset**(`charset?`, `options?`): [`ObservableOperator`](observable.md#observableoperator)<`ArrayBuffer`, `string`\>
+▸ **decodeWithCharset**(`charset?`): [`ObservableOperator`](observable.md#observableoperator)<`ArrayBuffer`, `string`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `charset?` | `string` |
-| `options?` | `TextDecoderOptions` |
 
 #### Returns
 
