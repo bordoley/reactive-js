@@ -1,9 +1,9 @@
 /// <reference types="./runnable.d.ts" />
-import { raise, pipe, strictEquality, compose, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
-import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables } from './disposable.mjs';
+import { raise, pipe, compose, negate, alwaysTrue, strictEquality, isEqualTo, identity } from './functions.mjs';
+import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 import { AbstractContainer, fromValue } from './container.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { notifyDecodeWithCharset, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 class Sink extends AbstractDisposable {
@@ -159,7 +159,7 @@ const decodeWithCharset = (charset = "utf-8", options) => {
     return lift(operator);
 };
 
-class DistinctUntilChangedSink extends Sink {
+const distinctUntilChanged = createDistinctUntilChanged(liftT, class DistinctUntilChangedSink extends Sink {
     constructor(delegate, equality) {
         super();
         this.delegate = delegate;
@@ -167,17 +167,7 @@ class DistinctUntilChangedSink extends Sink {
         this.prev = none;
         this.hasValue = false;
     }
-}
-DistinctUntilChangedSink.prototype.notify = notifyDistinctUntilChanged;
-const distinctUntilChanged = (options = {}) => {
-    const { equality = strictEquality } = options;
-    const operator = (delegate) => {
-        const sink = new DistinctUntilChangedSink(delegate, equality);
-        bindDisposables(sink, delegate);
-        return sink;
-    };
-    return lift(operator);
-};
+});
 
 const run = (f) => (runnable) => {
     const sink = f();

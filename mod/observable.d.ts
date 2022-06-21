@@ -284,7 +284,7 @@ declare const catchError: <T>(onError: Function1<unknown, void | ObservableLike<
  * if an item is distinct from the previous item.
  */
 declare const distinctUntilChanged: <T>(options?: {
-    readonly equality?: Equality<T> | undefined;
+    readonly equality?: Equality<T>;
 }) => ObservableOperator<T, T>;
 declare const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T>;
 declare const keepT: Keep<ObservableLike<unknown>>;
