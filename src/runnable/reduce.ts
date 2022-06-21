@@ -1,24 +1,22 @@
-import { Factory, Function1, Reducer } from "../functions";
-import { RunnableLike } from "../runnable";
-import { notifyReduce } from "../sink";
-import { run } from "./run";
-import { Sink } from "./sinks";
+import { Factory, Reducer } from "../functions";
+import { createReduceOperator } from "../sink";
+import { Sink, sinkT } from "./sinks";
+import { fromArrayT } from "./fromArray";
+import { liftT } from "./lift";
+import { RunnableOperator } from "../runnable";
 
-class ReducerSink<T, TAcc> extends Sink<T> {
-  public get result() {
-    return this.acc;
-  }
-
-  constructor(public acc: TAcc, readonly reducer: Reducer<T, TAcc>) {
-    super();
-  }
-}
-ReducerSink.prototype.notify = notifyReduce;
-
-export const reduce = <T, TAcc>(
+export const reduce: <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-): Function1<RunnableLike<T>, TAcc> => {
-  const createSink = () => new ReducerSink<T, TAcc>(initialValue(), reducer);
-  return run<T, TAcc>(createSink);
-};
+) => RunnableOperator<T, TAcc> = createReduceOperator(
+  { ...fromArrayT, ...liftT, ...sinkT },
+  class ReducerSink<T, TAcc> extends Sink<T> {
+    constructor(
+      readonly delegate: Sink<TAcc>,
+      readonly reducer: Reducer<T, TAcc>,
+      public acc: TAcc,
+    ) {
+      super();
+    }
+  },
+);

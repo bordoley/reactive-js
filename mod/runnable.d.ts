@@ -43,7 +43,7 @@ declare const pairwise: <T>() => RunnableOperator<T, [
     Option<T>,
     T
 ]>;
-declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => Function1<RunnableLike<T>, TAcc>;
+declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => RunnableOperator<T, TAcc>;
 /**
  * Returns an RunnableLike that applies the predicate function each time the source
  * completes to determine if the enumerable should be repeated.
