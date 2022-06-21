@@ -6,7 +6,7 @@ import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 
@@ -951,29 +951,13 @@ const distinctUntilChanged = (options = {}) => {
     return lift(operator);
 };
 
-class KeepObserver extends Observer {
+const keep = createKeepOperator(liftT, class KeepObserver extends Observer {
     constructor(delegate, predicate) {
         super(delegate);
         this.delegate = delegate;
         this.predicate = predicate;
     }
-}
-KeepObserver.prototype.notify = notifyKeep;
-/**
- * Returns an `ObservableLike` that only emits items from the
- * source that satisfy the specified type predicate.
- *
- * @param predicate The predicate function.
- */
-const keep = (predicate) => {
-    const operator = (delegate) => {
-        const observer = new KeepObserver(delegate, predicate);
-        bindDisposables(observer, delegate);
-        return observer;
-    };
-    operator.isSynchronous = true;
-    return lift(operator);
-};
+});
 const keepT = {
     keep,
 };

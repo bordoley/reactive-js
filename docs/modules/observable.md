@@ -1453,9 +1453,6 @@ ___
 
 ▸ **keep**<`T`\>(`predicate`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
 
-Returns an `ObservableLike` that only emits items from the
-source that satisfy the specified type predicate.
-
 #### Type parameters
 
 | Name |
@@ -1464,9 +1461,9 @@ source that satisfy the specified type predicate.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> | The predicate function. |
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
 
 #### Returns
 

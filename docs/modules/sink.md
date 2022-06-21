@@ -17,6 +17,7 @@
 
 ### Functions
 
+- [createKeepOperator](sink.md#createkeepoperator)
 - [createMapOperator](sink.md#createmapoperator)
 - [createOnNotifyOperator](sink.md#createonnotifyoperator)
 - [createPairwiseOperator](sink.md#createpairwiseoperator)
@@ -28,7 +29,6 @@
 - [createTakeWhileOperator](sink.md#createtakewhileoperator)
 - [notifyDecodeWithCharset](sink.md#notifydecodewithcharset)
 - [notifyDistinctUntilChanged](sink.md#notifydistinctuntilchanged)
-- [notifyKeep](sink.md#notifykeep)
 
 ## Type Aliases
 
@@ -44,6 +44,47 @@
 | `T` | `T` |
 
 ## Functions
+
+### createKeepOperator
+
+▸ **createKeepOperator**<`C`\>(`m`, `KeepSink`): <T_1\>(`predicate`: [`Predicate`](functions.md#predicate)<`T_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
+| `KeepSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\> ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
+
+#### Returns
+
+`fn`
+
+▸ <`T_1`\>(`predicate`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T_1` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T_1`\> |
+
+##### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+___
 
 ### createMapOperator
 
@@ -450,29 +491,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `equality`: [`Equality`](functions.md#equality)<`T`\> ; `hasValue`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
-| `next` | `T` |
-
-#### Returns
-
-`void`
-
-___
-
-### notifyKeep
-
-▸ **notifyKeep**<`T`\>(`this`, `next`): `void`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
 | `next` | `T` |
 
 #### Returns

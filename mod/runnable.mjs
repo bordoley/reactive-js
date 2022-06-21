@@ -3,7 +3,7 @@ import { raise, pipe, strictEquality, compose, negate, alwaysTrue, isEqualTo, id
 import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 import { AbstractContainer, fromValue } from './container.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 class Sink extends AbstractDisposable {
@@ -247,22 +247,13 @@ const generate = (generator, initialValue) => {
     return createRunnable(run);
 };
 
-class KeepSink extends Sink {
+const keep = createKeepOperator(liftT, class KeepSink extends Sink {
     constructor(delegate, predicate) {
         super();
         this.delegate = delegate;
         this.predicate = predicate;
     }
-}
-KeepSink.prototype.notify = notifyKeep;
-const keep = (predicate) => {
-    const operator = (delegate) => {
-        const sink = new KeepSink(delegate, predicate);
-        bindDisposables(sink, delegate);
-        return sink;
-    };
-    return lift(operator);
-};
+});
 const keepT = {
     keep,
 };
