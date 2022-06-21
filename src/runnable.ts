@@ -26,9 +26,10 @@ import {
 import { Option, none } from "./option";
 import { fromArrayT } from "./runnable/fromArray";
 import { liftT } from "./runnable/lift";
-import { Sink } from "./runnable/sinks";
+import { Sink, createDelegatingSink } from "./runnable/sinks";
 import {
   SourceLike,
+  createCatchErrorOperator,
   createDecodeWithCharsetOperator,
   createDistinctUntilChangedOperator,
   createKeepOperator,
@@ -78,6 +79,13 @@ export const toRunnable = <T>(): Function1<RunnableLike<T>, RunnableLike<T>> =>
   identity;
 
 export const type: RunnableLike<unknown> = undefined as any;
+
+export const catchError: <T>(
+  onError: Function1<unknown, RunnableLike<T> | void>,
+) => RunnableOperator<T, T> = createCatchErrorOperator({
+  ...liftT,
+  createDelegatingSink,
+});
 
 export const decodeWithCharset: (
   charset?: string,

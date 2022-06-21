@@ -87,6 +87,7 @@ interface ToRunnable<C extends ContainerLike> extends Container<C> {
 }
 declare const toRunnable: <T>() => Function1<RunnableLike<T>, RunnableLike<T>>;
 declare const type: RunnableLike<unknown>;
+declare const catchError: <T>(onError: Function1<unknown, RunnableLike<T> | void>) => RunnableOperator<T, T>;
 declare const decodeWithCharset: (charset?: string) => RunnableOperator<ArrayBuffer, string>;
 declare const decodeWithCharsetT: DecodeWithCharset<RunnableLike<unknown>>;
 declare const distinctUntilChanged: <T>(options?: {
@@ -128,4 +129,4 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
     readonly inclusive?: boolean;
 }) => RunnableOperator<T, T>;
 declare const takeWhileT: TakeWhile<RunnableLike<unknown>>;
-export { RunnableLike, RunnableOperator, Sink, ToRunnable, concat, concatAll, contains, createRunnable, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, noneSatisfy, onNotify, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toArray, toRunnable, type, using };
+export { RunnableLike, RunnableOperator, Sink, ToRunnable, catchError, concat, concatAll, contains, createRunnable, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, noneSatisfy, onNotify, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toArray, toRunnable, type, using };

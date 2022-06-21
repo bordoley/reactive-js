@@ -12,6 +12,8 @@ import {
   DisposableLike,
   addDisposable,
   addOnDisposedWithError,
+  addOnDisposedWithErrorTeardown,
+  addOnDisposedWithoutError,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
   bindDisposables,
@@ -27,7 +29,7 @@ import {
   pipe,
   strictEquality,
 } from "./functions";
-import { Option, none } from "./option";
+import { Option, isSome, none } from "./option";
 
 export interface SinkLike<T> extends DisposableLike, ContainerLike {
   assertState(this: SinkLike<T>): void;
@@ -77,10 +79,43 @@ export interface Lift<C extends SourceLike> extends Container<C> {
   ): Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 }
 
+export interface CreateDelegatingSink<C extends SourceLike>
+  extends Container<C> {
+  createDelegatingSink<T>(delegate: SinkOf<C, T>): SinkOf<C, T>;
+}
+
 export const sinkInto =
   <C extends SourceLike, T>(sink: SinkOf<C, T>): SideEffect1<C> =>
   observable =>
     observable.sink(sink);
+
+export const createCatchErrorOperator =
+  <C extends SourceLike>(m: CreateDelegatingSink<C> & Lift<C>) =>
+  <T>(
+    onError: Function1<unknown, ContainerOf<C, T> | void>,
+  ): ContainerOperator<C, T, T> => {
+    const operator = (delegate: SinkOf<C, T>): SinkOf<C, T> => {
+      const sink = m.createDelegatingSink(delegate);
+      addDisposable(delegate, sink);
+      addOnDisposedWithoutError(sink, delegate);
+      addOnDisposedWithErrorTeardown(sink, cause => {
+        try {
+          const result = onError(cause) || none;
+          if (isSome(result)) {
+            pipe(result, sinkInto(delegate));
+          } else {
+            pipe(delegate, dispose());
+          }
+        } catch (cause) {
+          pipe(delegate, dispose({ cause: { parent: cause, cause } }));
+        }
+      });
+
+      return sink;
+    };
+
+    return m.lift(operator);
+  };
 
 export const createDecodeWithCharsetOperator = <C extends SourceLike>(
   m: FromArray<C> & Lift<C>,

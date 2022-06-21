@@ -855,10 +855,6 @@ ___
 
 ▸ **catchError**<`T`\>(`onError`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
 
-Returns an `ObservableLike` which catches errors produced by the source and either continues with
-the `ObservableLike` returned from the `onError` callback or swallows the error if
-void is returned.
-
 #### Type parameters
 
 | Name |
@@ -867,9 +863,9 @@ void is returned.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\> | a function that takes source error and either returns an `ObservableLike` to continue with or void if the error should be propagated. |
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\> |
 
 #### Returns
 

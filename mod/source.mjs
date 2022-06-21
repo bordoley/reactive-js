@@ -1,8 +1,8 @@
 /// <reference types="./source.d.ts" />
 import { AbstractContainer, fromValue, empty } from './container.mjs';
-import { addDisposable, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables, dispose, addTeardown } from './disposable.mjs';
+import { addDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown, dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables, addTeardown } from './disposable.mjs';
 import { pipe, strictEquality } from './functions.mjs';
-import { none } from './option.mjs';
+import { none, isSome } from './option.mjs';
 
 class AbstractSource extends AbstractContainer {
     get sinkType() {
@@ -10,6 +10,29 @@ class AbstractSource extends AbstractContainer {
     }
 }
 const sinkInto = (sink) => observable => observable.sink(sink);
+const createCatchErrorOperator = (m) => (onError) => {
+    const operator = (delegate) => {
+        const sink = m.createDelegatingSink(delegate);
+        addDisposable(delegate, sink);
+        addOnDisposedWithoutError(sink, delegate);
+        addOnDisposedWithErrorTeardown(sink, cause => {
+            try {
+                const result = onError(cause) || none;
+                if (isSome(result)) {
+                    pipe(result, sinkInto(delegate));
+                }
+                else {
+                    pipe(delegate, dispose());
+                }
+            }
+            catch (cause) {
+                pipe(delegate, dispose({ cause: { parent: cause, cause } }));
+            }
+        });
+        return sink;
+    };
+    return m.lift(operator);
+};
 const createDecodeWithCharsetOperator = (m, DecodeWithCharsetSink) => {
     DecodeWithCharsetSink.prototype.notify = function notifyDecodeWithCharset(next) {
         const data = this.textDecoder.decode(next, { stream: true });
@@ -236,4 +259,4 @@ const createTakeWhileOperator = (m, TakeWhileSink) => {
     };
 };
 
-export { AbstractSource, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, sinkInto };
+export { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, sinkInto };

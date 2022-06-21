@@ -1,4 +1,4 @@
-import { ContainerLike, AbstractContainer, Container, ContainerOf, FromArray, FromArrayOptions, ContainerOperator } from "./container.mjs";
+import { ContainerLike, AbstractContainer, Container, ContainerOf, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
 import { DisposableLike } from "./disposable.mjs";
 import { Function1, SideEffect1, Equality, Predicate, Reducer, Factory } from "./functions.mjs";
 import { Option } from "./option.mjs";
@@ -33,7 +33,11 @@ declare type SinkOf<C extends SourceLike, T> = C extends {
 interface Lift<C extends SourceLike> extends Container<C> {
     lift<TA, TB>(operator: Function1<SinkOf<C, TB>, SinkOf<C, TA>>): Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 }
+interface CreateDelegatingSink<C extends SourceLike> extends Container<C> {
+    createDelegatingSink<T>(delegate: SinkOf<C, T>): SinkOf<C, T>;
+}
 declare const sinkInto: <C extends SourceLike, T>(sink: SinkOf<C, T>) => SideEffect1<C>;
+declare const createCatchErrorOperator: <C extends SourceLike>(m: CreateDelegatingSink<C> & Lift<C>) => <T>(onError: Function1<unknown, void | ContainerOf<C, T>>) => ContainerOperator<C, T, T>;
 declare const createDecodeWithCharsetOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, DecodeWithCharsetSink: new (delegate: SinkOf<C, string>, textDecoder: TextDecoder) => SinkOf<C, ArrayBuffer> & {
     readonly delegate: SinkOf<C, string>;
     readonly textDecoder: TextDecoder;
@@ -108,4 +112,4 @@ declare const createTakeWhileOperator: <C extends SourceLike>(m: Lift<C>, TakeWh
 }) => <T_1>(predicate: Predicate<T_1>, options?: {
     readonly inclusive?: boolean;
 }) => ContainerOperator<C, T_1, T_1>;
-export { AbstractSource, Lift, SinkLike, SinkOf, SourceLike, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, sinkInto };
+export { AbstractSource, CreateDelegatingSink, Lift, SinkLike, SinkOf, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, sinkInto };

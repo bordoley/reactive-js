@@ -265,15 +265,6 @@ declare function buffer<T>(options?: {
     readonly duration?: Function1<T, ObservableLike<unknown>> | number;
     readonly maxBufferSize?: number;
 }): ObservableOperator<T, readonly T[]>;
-/**
- * Returns an `ObservableLike` which catches errors produced by the source and either continues with
- * the `ObservableLike` returned from the `onError` callback or swallows the error if
- * void is returned.
- *
- * @param onError a function that takes source error and either returns an `ObservableLike`
- * to continue with or void if the error should be propagated.
- */
-declare const catchError: <T>(onError: Function1<unknown, void | ObservableLike<T>>) => ObservableOperator<T, T>;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => ObservableOperator<TA, TB>;
 declare const mapT: Map<ObservableLike<unknown>>;
 declare const mapAsync: <TA, TB>(f: Function1<TA, Promise<TB>>) => ObservableOperator<TA, TB>;
@@ -643,6 +634,7 @@ declare type ObservableEffectMode = "batched" | "combine-latest";
  * interval -  Takes both the leading and trailing values.
  */
 declare type ThrottleMode = "first" | "last" | "interval";
+declare const catchError: <T>(onError: Function1<unknown, ObservableLike<T> | void>) => ObservableOperator<T, T>;
 declare const decodeWithCharset: (charset?: string) => ObservableOperator<ArrayBuffer, string>;
 declare const decodeWithCharsetT: DecodeWithCharset<ObservableLike<unknown>>;
 /**

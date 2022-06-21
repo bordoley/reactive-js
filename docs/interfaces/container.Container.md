@@ -58,6 +58,8 @@
 
   ↳ [`ToRunnable`](runnable.ToRunnable.md)
 
+  ↳ [`CreateDelegatingSink`](source.CreateDelegatingSink.md)
+
   ↳ [`Lift`](source.Lift.md)
 
 ## Table of contents
