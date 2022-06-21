@@ -21,8 +21,7 @@ import {
   zipWithLatestFrom,
 } from "../observable";
 import { StreamableLike, StreamableOperator } from "../streamable";
-import { stream as streamStreamable } from "./streamable";
-import { createStreamable } from "./streamable";
+import { createStreamable, stream as streamStreamable } from "./streamable";
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function

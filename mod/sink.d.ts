@@ -29,7 +29,7 @@ interface SourceContainer<C extends SourceLike> {
     readonly type?: C;
 }
 interface Sink<C extends SourceLike> extends SourceContainer<C> {
-    sink<T>(sink: C["sinkType"]): SideEffect1<ContainerOf<C, T>>;
+    sink<T>(sink: SinkOf<C, T>): SideEffect1<ContainerOf<C, T>>;
 }
 interface Lift<C extends SourceLike> extends SourceContainer<C> {
     lift<TA, TB>(operator: Function1<SinkOf<C, TB>, SinkOf<C, TA>>): Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;

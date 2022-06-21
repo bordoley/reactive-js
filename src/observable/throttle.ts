@@ -15,11 +15,11 @@ import {
   ThrottleMode,
 } from "../observable";
 import { Option, isNone, none } from "../option";
+import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { Observer, sink } from "./observer";
 
 import { subscribe } from "./subscribe";
-import { fromArrayT } from "./fromArray";
 
 const setupDurationSubscription = <T>(
   observer: ThrottleObserver<T>,

@@ -442,15 +442,14 @@ const takeFirst = (options = {}) => {
     return observable => count > 0 ? pipe(observable, lift(operator)) : empty(fromArrayT);
 };
 
-class TakeLastSink extends Sink {
+const takeLast = createTakeLastOperator({ ...fromArrayT, lift, sink }, class TakeLastSink extends Sink {
     constructor(delegate, maxCount) {
         super();
         this.delegate = delegate;
         this.maxCount = maxCount;
         this.last = [];
     }
-}
-const takeLast = createTakeLastOperator({ ...fromArrayT, lift, sink }, TakeLastSink);
+});
 
 class TakeWhileSink extends Sink {
     constructor(delegate, predicate, inclusive) {

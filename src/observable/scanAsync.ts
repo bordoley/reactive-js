@@ -6,13 +6,13 @@ import {
 } from "../observable";
 
 import { createSubject } from "./createSubject";
+import { dispatchTo } from "./dispatcher";
 import { onNotify } from "./onNotify";
 import { onSubscribe } from "./onSubscribe";
 import { switchAll } from "./switchAll";
 import { takeFirst } from "./takeFirst";
 import { using } from "./using";
 import { zipWithLatestFrom } from "./zipWithLatestFrom";
-import { dispatchTo } from "./dispatcher";
 
 /**
  * Returns the `ObservableLike` that applies an asynchronous accumulator function
