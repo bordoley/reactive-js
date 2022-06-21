@@ -29,7 +29,7 @@ import {
   pipe,
   strictEquality,
 } from "./functions";
-import { Option, isSome, none } from "./option";
+import { Option, isNone, isSome, none } from "./option";
 
 export interface SinkLike<T> extends DisposableLike, ContainerLike {
   assertState(this: SinkLike<T>): void;
@@ -608,6 +608,51 @@ export const createTakeWhileOperator = <C extends SourceLike>(
       addDisposable(sink, delegate);
       return sink;
     };
+    return m.lift(operator);
+  };
+};
+
+export const createThrowIfEmptyOperator = <C extends SourceLike>(
+  m: Lift<C>,
+  ThrowIfEmptySink: new <T>(delegate: SinkOf<C, T>) => SinkOf<C, T> & {
+    readonly delegate: SinkOf<C, T>;
+    isEmpty: boolean;
+  },
+): (<T>(factory: Factory<unknown>) => ContainerOperator<C, T, T>) => {
+  ThrowIfEmptySink.prototype.notify = function notify<T>(
+    this: SinkOf<C, T> & {
+      readonly delegate: SinkOf<C, T>;
+      isEmpty: boolean;
+    },
+    next: T,
+  ) {
+    this.assertState();
+
+    this.isEmpty = false;
+    this.delegate.notify(next);
+  };
+
+  return <T>(factory: Factory<unknown>) => {
+    const operator = (delegate: SinkOf<C, T>): SinkOf<C, T> => {
+      const observer = new ThrowIfEmptySink(delegate);
+      addDisposable(delegate, observer);
+      addTeardown(observer, error => {
+        if (isNone(error) && observer.isEmpty) {
+          let cause: unknown = none;
+          try {
+            cause = factory();
+          } catch (e) {
+            cause = e;
+          }
+
+          error = { cause };
+        }
+
+        delegate.dispose(error);
+      });
+      return observer;
+    };
+    operator.isSynchronous = true;
     return m.lift(operator);
   };
 };

@@ -13,6 +13,7 @@ import {
   TakeFirst,
   TakeLast,
   TakeWhile,
+  ThrowIfEmpty,
 } from "./container";
 import {
   Equality,
@@ -42,6 +43,7 @@ import {
   createTakeFirstOperator,
   createTakeLastOperator,
   createTakeWhileOperator,
+  createThrowIfEmptyOperator,
 } from "./source";
 
 export interface RunnableLike<T> extends SourceLike {
@@ -305,4 +307,21 @@ export const takeWhile: <T>(
 
 export const takeWhileT: TakeWhile<RunnableLike<unknown>> = {
   takeWhile,
+};
+
+export const throwIfEmpty: <T>(
+  factory: Factory<unknown>,
+) => RunnableOperator<T, T> = createThrowIfEmptyOperator(
+  liftT,
+  class ThrowIfEmptySink<T> extends Sink<T> {
+    isEmpty = true;
+
+    constructor(readonly delegate: Sink<T>) {
+      super();
+    }
+  },
+);
+
+export const throwIfEmptyT: ThrowIfEmpty<RunnableLike<unknown>> = {
+  throwIfEmpty,
 };

@@ -1,4 +1,4 @@
-import { FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, DecodeWithCharset, DistinctUntilChanged, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile } from "./container.mjs";
+import { FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, DecodeWithCharset, DistinctUntilChanged, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty } from "./container.mjs";
 import { SideEffect1, Predicate, Function1, Updater, Factory, Equality, Function2, Function3, Function4, Function5, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
 import { AbstractDisposable, DisposableLike } from "./disposable.mjs";
@@ -129,4 +129,6 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
     readonly inclusive?: boolean;
 }) => RunnableOperator<T, T>;
 declare const takeWhileT: TakeWhile<RunnableLike<unknown>>;
-export { RunnableLike, RunnableOperator, Sink, ToRunnable, catchError, concat, concatAll, contains, createRunnable, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, noneSatisfy, onNotify, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toArray, toRunnable, type, using };
+declare const throwIfEmpty: <T>(factory: Factory<unknown>) => RunnableOperator<T, T>;
+declare const throwIfEmptyT: ThrowIfEmpty<RunnableLike<unknown>>;
+export { RunnableLike, RunnableOperator, Sink, ToRunnable, catchError, concat, concatAll, contains, createRunnable, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, noneSatisfy, onNotify, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using };

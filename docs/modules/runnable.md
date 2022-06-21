@@ -31,6 +31,7 @@
 - [takeFirstT](runnable.md#takefirstt)
 - [takeLastT](runnable.md#takelastt)
 - [takeWhileT](runnable.md#takewhilet)
+- [throwIfEmptyT](runnable.md#throwifemptyt)
 - [type](runnable.md#type)
 
 ### Functions
@@ -61,6 +62,7 @@
 - [takeFirst](runnable.md#takefirst)
 - [takeLast](runnable.md#takelast)
 - [takeWhile](runnable.md#takewhile)
+- [throwIfEmpty](runnable.md#throwifempty)
 - [toArray](runnable.md#toarray)
 - [toRunnable](runnable.md#torunnable)
 - [using](runnable.md#using)
@@ -149,6 +151,12 @@ ___
 ### takeWhileT
 
 • `Const` **takeWhileT**: [`TakeWhile`](../interfaces/container.TakeWhile.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
+### throwIfEmptyT
+
+• `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](../interfaces/container.ThrowIfEmpty.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
 
 ___
 
@@ -752,6 +760,28 @@ ___
 | `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
 | `options?` | `Object` |
 | `options.inclusive?` | `boolean` |
+
+#### Returns
+
+[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+
+___
+
+### throwIfEmpty
+
+▸ **throwIfEmpty**<`T`\>(`factory`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<`unknown`\> |
 
 #### Returns
 

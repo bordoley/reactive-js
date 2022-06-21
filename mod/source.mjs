@@ -2,7 +2,7 @@
 import { AbstractContainer, fromValue, empty } from './container.mjs';
 import { addDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown, dispose, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables, addTeardown } from './disposable.mjs';
 import { pipe, strictEquality } from './functions.mjs';
-import { none, isSome } from './option.mjs';
+import { none, isSome, isNone } from './option.mjs';
 
 class AbstractSource extends AbstractContainer {
     get sinkType() {
@@ -258,5 +258,34 @@ const createTakeWhileOperator = (m, TakeWhileSink) => {
         return m.lift(operator);
     };
 };
+const createThrowIfEmptyOperator = (m, ThrowIfEmptySink) => {
+    ThrowIfEmptySink.prototype.notify = function notify(next) {
+        this.assertState();
+        this.isEmpty = false;
+        this.delegate.notify(next);
+    };
+    return (factory) => {
+        const operator = (delegate) => {
+            const observer = new ThrowIfEmptySink(delegate);
+            addDisposable(delegate, observer);
+            addTeardown(observer, error => {
+                if (isNone(error) && observer.isEmpty) {
+                    let cause = none;
+                    try {
+                        cause = factory();
+                    }
+                    catch (e) {
+                        cause = e;
+                    }
+                    error = { cause };
+                }
+                delegate.dispose(error);
+            });
+            return observer;
+        };
+        operator.isSynchronous = true;
+        return m.lift(operator);
+    };
+};
 
-export { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, sinkInto };
+export { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, sinkInto };

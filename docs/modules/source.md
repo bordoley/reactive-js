@@ -34,6 +34,7 @@
 - [createTakeFirstOperator](source.md#createtakefirstoperator)
 - [createTakeLastOperator](source.md#createtakelastoperator)
 - [createTakeWhileOperator](source.md#createtakewhileoperator)
+- [createThrowIfEmptyOperator](source.md#createthrowifemptyoperator)
 - [sinkInto](source.md#sinkinto)
 
 ## Type Aliases
@@ -575,6 +576,47 @@ ___
 | `predicate` | [`Predicate`](functions.md#predicate)<`T_1`\> |
 | `options?` | `Object` |
 | `options.inclusive?` | `boolean` |
+
+##### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+___
+
+### createThrowIfEmptyOperator
+
+▸ **createThrowIfEmptyOperator**<`C`\>(`m`, `ThrowIfEmptySink`): <T_1\>(`factory`: [`Factory`](functions.md#factory)<`unknown`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
+| `ThrowIfEmptySink` | <T\>(`delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\>) => [`SinkOf`](source.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](source.md#sinkof)<`C`, `T`\> ; `isEmpty`: `boolean`  } |
+
+#### Returns
+
+`fn`
+
+▸ <`T_1`\>(`factory`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T_1` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<`unknown`\> |
 
 ##### Returns
 

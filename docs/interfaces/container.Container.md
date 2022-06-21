@@ -50,6 +50,8 @@
 
   ↳ [`TakeWhile`](container.TakeWhile.md)
 
+  ↳ [`ThrowIfEmpty`](container.ThrowIfEmpty.md)
+
   ↳ [`Using`](container.Using.md)
 
   ↳ [`Zip`](container.Zip.md)

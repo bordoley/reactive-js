@@ -8,6 +8,7 @@ import {
   SkipFirst,
   TakeLast,
   TakeWhile,
+  ThrowIfEmpty,
 } from "./container";
 import { DisposableLike } from "./disposable";
 import {
@@ -37,6 +38,7 @@ import {
   createSkipFirstOperator,
   createTakeLastOperator,
   createTakeWhileOperator,
+  createThrowIfEmptyOperator,
 } from "./source";
 
 /**
@@ -159,7 +161,6 @@ export { switchAll, switchAllT } from "./observable/switchAll";
 export { takeFirst, takeFirstT } from "./observable/takeFirst";
 export { takeUntil } from "./observable/takeUntil";
 export { throttle } from "./observable/throttle";
-export { throwIfEmpty } from "./observable/throwIfEmpty";
 export { timeout, timeoutError } from "./observable/timeout";
 export { withLatestFrom } from "./observable/withLatestFrom";
 export { zip, zipT } from "./observable/zip";
@@ -368,4 +369,21 @@ export const takeWhile: <T>(
 
 export const takeWhileT: TakeWhile<ObservableLike<unknown>> = {
   takeWhile,
+};
+
+export const throwIfEmpty: <T>(
+  factory: Factory<unknown>,
+) => ObservableOperator<T, T> = createThrowIfEmptyOperator(
+  liftT,
+  class ThrowIfEmptyObserver<T> extends Observer<T> {
+    isEmpty = true;
+
+    constructor(readonly delegate: Observer<T>) {
+      super(delegate);
+    }
+  },
+);
+
+export const throwIfEmptyT: ThrowIfEmpty<ObservableLike<unknown>> = {
+  throwIfEmpty,
 };

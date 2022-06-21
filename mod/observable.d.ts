@@ -1,4 +1,4 @@
-import { Concat, FromArray, FromIterator, Map, ConcatAll, TakeFirst, Zip, DecodeWithCharset, DistinctUntilChanged, Keep, Pairwise, Reduce, Scan, SkipFirst, TakeLast, TakeWhile } from "./container.mjs";
+import { Concat, FromArray, FromIterator, Map, ConcatAll, TakeFirst, Zip, DecodeWithCharset, DistinctUntilChanged, Keep, Pairwise, Reduce, Scan, SkipFirst, TakeLast, TakeWhile, ThrowIfEmpty } from "./container.mjs";
 import { AbstractDisposable, DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Predicate, Equality, Reducer } from "./functions.mjs";
 import { SchedulerLike, SchedulerContinuationLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
@@ -409,12 +409,6 @@ declare function throttle<T>(duration: Function1<T, ObservableLike<unknown>>, op
 declare function throttle<T>(duration: number, options?: {
     readonly mode?: ThrottleMode;
 }): ObservableOperator<T, T>;
-/**
- * Returns an `ObservableLike` that emits an error if the source completes without emitting a value.
- *
- * @param factory A factory function invoked to produce the error to be thrown.
- */
-declare const throwIfEmpty: <T>(factory: Factory<unknown>) => ObservableOperator<T, T>;
 /** Symbol thrown when the timeout operator times out */
 declare const timeoutError: symbol;
 /**
@@ -688,4 +682,6 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
     readonly inclusive?: boolean;
 }) => ObservableOperator<T, T>;
 declare const takeWhileT: TakeWhile<ObservableLike<unknown>>;
-export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Observer, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+declare const throwIfEmpty: <T>(factory: Factory<unknown>) => ObservableOperator<T, T>;
+declare const throwIfEmptyT: ThrowIfEmpty<ObservableLike<unknown>>;
+export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Observer, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
