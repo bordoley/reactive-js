@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Classes
+
+- [Sink](../classes/runnable.Sink.md)
+
 ### Interfaces
 
 - [RunnableLike](../interfaces/runnable.RunnableLike.md)
@@ -163,7 +167,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `run` | [`SideEffect1`](functions.md#sideeffect1)<[`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\>\> |
+| `run` | [`SideEffect1`](functions.md#sideeffect1)<[`Sink`](../classes/runnable.Sink.md)<`T`\>\> |
 
 #### Returns
 

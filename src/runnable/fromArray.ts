@@ -1,7 +1,7 @@
 import { FromArray, FromArrayOptions } from "../container";
 import { Function1 } from "../functions";
 import { RunnableLike } from "../runnable";
-import { SinkLike } from "../sink";
+import { Sink } from "./sinks";
 import { createRunnable } from "./createRunnable";
 
 export const fromArray =
@@ -19,7 +19,7 @@ export const fromArray =
       0,
     );
 
-    const run = (sink: SinkLike<T>) => {
+    const run = (sink: Sink<T>) => {
       for (
         let index = startIndex;
         index < endIndex && !sink.isDisposed;

@@ -1,13 +1,13 @@
 import { bindDisposables } from "../disposable";
 import { Factory, Reducer } from "../functions";
 import { RunnableOperator } from "../runnable";
-import { SinkLike, notifyScan } from "../sink";
+import { notifyScan } from "../sink";
 import { lift } from "./lift";
-import { AbstractSink } from "./sinks";
+import { Sink } from "./sinks";
 
-class ScanSink<T, TAcc> extends AbstractSink<T> {
+class ScanSink<T, TAcc> extends Sink<T> {
   constructor(
-    readonly delegate: SinkLike<TAcc>,
+    readonly delegate: Sink<TAcc>,
     readonly reducer: Reducer<T, TAcc>,
     public acc: TAcc,
   ) {
@@ -20,7 +20,7 @@ export const scan = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ): RunnableOperator<T, TAcc> => {
-  const operator = (delegate: SinkLike<TAcc>) => {
+  const operator = (delegate: Sink<TAcc>) => {
     const sink = new ScanSink(delegate, reducer, initialValue());
     bindDisposables(sink, delegate);
     return sink;

@@ -1,9 +1,9 @@
 import { Function1 } from "../functions";
 import { RunnableLike } from "../runnable";
 import { run } from "./run";
-import { AbstractSink } from "./sinks";
+import { Sink } from "./sinks";
 
-class ToArraySink<T> extends AbstractSink<T> {
+class ToArraySink<T> extends Sink<T> {
   public readonly result: T[] = [];
 
   notify(next: T) {

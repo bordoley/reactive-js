@@ -3,10 +3,9 @@ import {
   addDisposableDisposeParentOnChildError,
 } from "../disposable";
 import { RunnableLike, RunnableOperator } from "../runnable";
-import { SinkLike } from "../sink";
 import { createRunnable } from "./createRunnable";
 import { lift } from "./lift";
-import { AbstractSink, createDelegatingSink } from "./sinks";
+import { Sink, createDelegatingSink } from "./sinks";
 
 /**
  * Creates an `RunnableLike` which emits all values from each source sequentially.
@@ -20,7 +19,7 @@ export function concat<T>(
 export function concat<T>(
   ...runnables: readonly RunnableLike<T>[]
 ): RunnableLike<T> {
-  return createRunnable((sink: SinkLike<T>) => {
+  return createRunnable((sink: Sink<T>) => {
     const runnablesLength = runnables.length;
     for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
       const concatSink = createDelegatingSink(sink);
@@ -32,8 +31,8 @@ export function concat<T>(
   });
 }
 
-class FlattenSink<T> extends AbstractSink<RunnableLike<T>> {
-  constructor(readonly delegate: SinkLike<T>) {
+class FlattenSink<T> extends Sink<RunnableLike<T>> {
+  constructor(readonly delegate: Sink<T>) {
     super();
   }
 

@@ -14,6 +14,8 @@ Abstract base class for implementing the `DisposableLike` interface.
 
   ↳ [`Observer`](observable.Observer.md)
 
+  ↳ [`Sink`](runnable.Sink.md)
+
 ## Implements
 
 - [`DisposableLike`](../interfaces/disposable.DisposableLike.md)

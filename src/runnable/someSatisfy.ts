@@ -1,9 +1,9 @@
 import { Equality, Predicate, isEqualTo, strictEquality } from "../functions";
 import { RunnableLike } from "../runnable";
 import { run } from "./run";
-import { AbstractSink } from "./sinks";
+import { Sink } from "./sinks";
 
-class SomeSatisfySink<T> extends AbstractSink<T> {
+class SomeSatisfySink<T> extends Sink<T> {
   result = false;
 
   constructor(private readonly predicate: Predicate<T>) {
