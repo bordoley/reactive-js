@@ -77,7 +77,7 @@ export interface Lift<C extends SourceLike> extends Container<C> {
   ): Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 }
 
-export const createDecodeWithCharset = <C extends SourceLike>(
+export const createDecodeWithCharsetOperator = <C extends SourceLike>(
   m: FromArray<C> & Sink<C> & Lift<C>,
   DecodeWithCharsetSink: new (
     delegate: SinkOf<C, string>,
@@ -123,7 +123,7 @@ export const createDecodeWithCharset = <C extends SourceLike>(
   };
 };
 
-export const createDistinctUntilChanged = <C extends SourceLike>(
+export const createDistinctUntilChangedOperator = <C extends SourceLike>(
   m: Lift<C>,
   DistinctUntilChangedSink: new <T>(
     delegate: SinkOf<C, T>,

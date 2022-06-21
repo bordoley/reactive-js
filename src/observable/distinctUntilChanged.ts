@@ -1,7 +1,7 @@
 import { Equality } from "../functions";
 import { ObservableOperator } from "../observable";
 import { none, Option } from "../option";
-import { createDistinctUntilChanged } from "../source";
+import { createDistinctUntilChangedOperator } from "../source";
 import { liftT } from "./lift";
 import { Observer } from "./observer";
 
@@ -14,7 +14,7 @@ import { Observer } from "./observer";
  */
 export const distinctUntilChanged: <T>(options?: {
   readonly equality?: Equality<T>;
-}) => ObservableOperator<T, T> = createDistinctUntilChanged(
+}) => ObservableOperator<T, T> = createDistinctUntilChangedOperator(
   liftT,
   class DistinctUntilChangedObserver<T> extends Observer<T> {
     prev: Option<T> = none;

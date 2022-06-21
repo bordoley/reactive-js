@@ -1,12 +1,12 @@
 import { RunnableOperator } from "../runnable";
-import { createDecodeWithCharset } from "../source";
+import { createDecodeWithCharsetOperator } from "../source";
 import { fromArrayT } from "./fromArray";
 import { liftT } from "./lift";
 import { Sink, sinkT } from "./sinks";
 
 export const decodeWithCharset: (
   charset?: string,
-) => RunnableOperator<ArrayBuffer, string> = createDecodeWithCharset(
+) => RunnableOperator<ArrayBuffer, string> = createDecodeWithCharsetOperator(
   { ...liftT, ...fromArrayT, ...sinkT },
 
   class DecodeWithCharsetSink extends Sink<ArrayBuffer> {
