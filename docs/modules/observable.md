@@ -1478,9 +1478,6 @@ ___
 
 ▸ **map**<`TA`, `TB`\>(`mapper`): [`ObservableOperator`](observable.md#observableoperator)<`TA`, `TB`\>
 
-Returns an `ObservableLike` that applies the `mapper` function to each
-value emitted by the source.
-
 #### Type parameters
 
 | Name |
@@ -1490,9 +1487,9 @@ value emitted by the source.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | The map function to apply each value. Must be a pure function. |
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
 
 #### Returns
 

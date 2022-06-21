@@ -294,12 +294,6 @@ declare const distinctUntilChanged: <T>(options?: {
  */
 declare const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T>;
 declare const keepT: Keep<ObservableLike<unknown>>;
-/**
- * Returns an `ObservableLike` that applies the `mapper` function to each
- * value emitted by the source.
- *
- * @param mapper The map function to apply each value. Must be a pure function.
- */
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => ObservableOperator<TA, TB>;
 declare const mapT: Map<ObservableLike<unknown>>;
 declare const mapAsync: <TA, TB>(f: Function1<TA, Promise<TB>>) => ObservableOperator<TA, TB>;

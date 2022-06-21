@@ -3,7 +3,7 @@ import { raise, pipe, strictEquality, compose, negate, alwaysTrue, isEqualTo, id
 import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 import { AbstractContainer, fromValue } from './container.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 class Sink extends AbstractDisposable {
@@ -281,21 +281,15 @@ const last = () => {
     return run(createSink);
 };
 
-class MapSink extends Sink {
+const map = createMapOperator(liftT, class MapSink extends Sink {
     constructor(delegate, mapper) {
         super();
         this.delegate = delegate;
         this.mapper = mapper;
     }
-}
-MapSink.prototype.notify = notifyMap;
-const map = (mapper) => {
-    const operator = (delegate) => {
-        const sink = new MapSink(delegate, mapper);
-        bindDisposables(sink, delegate);
-        return sink;
-    };
-    return lift(operator);
+});
+const mapT = {
+    map,
 };
 
 /**

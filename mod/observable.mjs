@@ -6,7 +6,7 @@ import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 
@@ -978,29 +978,13 @@ const keepT = {
     keep,
 };
 
-class MapObserver extends Observer {
+const map = createMapOperator(liftT, class MapObserver extends Observer {
     constructor(delegate, mapper) {
         super(delegate);
         this.delegate = delegate;
         this.mapper = mapper;
     }
-}
-MapObserver.prototype.notify = notifyMap;
-/**
- * Returns an `ObservableLike` that applies the `mapper` function to each
- * value emitted by the source.
- *
- * @param mapper The map function to apply each value. Must be a pure function.
- */
-const map = (mapper) => {
-    const operator = (delegate) => {
-        const observer = new MapObserver(delegate, mapper);
-        bindDisposables(observer, delegate);
-        return observer;
-    };
-    operator.isSynchronous = true;
-    return lift(operator);
-};
+});
 const mapT = {
     map,
 };
