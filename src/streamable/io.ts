@@ -31,6 +31,10 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
     return undefined;
   }
 
+  get sinkType(): Observer<TAcc> {
+    return undefined as any;
+  }
+
   readonly isSynchronous = false;
 
   constructor(

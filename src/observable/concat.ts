@@ -47,6 +47,10 @@ class ConcatObservable<T>
     );
   }
 
+  get sinkType(): Observer<T> {
+    return undefined as any;
+  }
+
   observe(observer: Observer<T>) {
     const observables = this.observables;
 

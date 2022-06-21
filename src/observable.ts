@@ -1,16 +1,17 @@
-import { ContainerLike } from "./container";
 import { DisposableLike } from "./disposable";
 import { Function1, Function2 } from "./functions";
 import { Observer } from "./observable/observer";
+import { SourceLike } from "./sink";
 
 /**
  * The source of notifications which notifies a `ObserverLike` instance.
  *
  * @noInheritDoc
  */
-export interface ObservableLike<T> extends ContainerLike {
+export interface ObservableLike<T> extends SourceLike {
   readonly T: unknown;
   readonly type: ObservableLike<this["T"]>;
+  readonly sinkType: Observer<this["T"]>;
 
   readonly isSynchronous: boolean;
 

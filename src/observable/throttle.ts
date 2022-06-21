@@ -2,24 +2,24 @@ import { fromValue } from "../container";
 import {
   Error,
   SerialDisposableLike,
+  addDisposable,
   addDisposableDisposeParentOnChildError,
   addTeardown,
   createSerialDisposable,
   dispose,
-  addDisposable,
 } from "../disposable";
 import { Function1, pipe } from "../functions";
 import {
   ObservableLike,
   ObservableOperator,
   ThrottleMode,
-  fromArrayT,
 } from "../observable";
 import { Option, isNone, none } from "../option";
 import { lift } from "./lift";
 import { Observer, sink } from "./observer";
 
 import { subscribe } from "./subscribe";
+import { fromArrayT } from "./fromArray";
 
 const setupDurationSubscription = <T>(
   observer: ThrottleObserver<T>,

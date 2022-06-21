@@ -1,5 +1,6 @@
 /// <reference types="./sink.d.ts" />
-import { dispose } from './disposable.mjs';
+import { empty } from './container.mjs';
+import { dispose, addDisposable, addOnDisposedWithError, addTeardown } from './disposable.mjs';
 import { pipe } from './functions.mjs';
 import { none } from './option.mjs';
 
@@ -65,14 +66,29 @@ function notifyTakeFirst(next) {
         pipe(this, dispose());
     }
 }
-function notifyTakeLast(next) {
-    this.assertState();
-    const last = this.last;
-    last.push(next);
-    if (last.length > this.maxCount) {
-        last.shift();
-    }
-}
+const createTakeLastOperator = (m, constructor) => {
+    constructor.prototype.notify = function notifyTakeLast(next) {
+        this.assertState();
+        const last = this.last;
+        last.push(next);
+        if (last.length > this.maxCount) {
+            last.shift();
+        }
+    };
+    return (options = {}) => {
+        const { count = 1 } = options;
+        const operator = (delegate) => {
+            const sink = new constructor(delegate, count);
+            addDisposable(delegate, sink);
+            addOnDisposedWithError(sink, delegate);
+            addTeardown(sink, () => {
+                pipe(sink.last, m.fromArray(), m.sink(delegate));
+            });
+            return sink;
+        };
+        return runnable => count > 0 ? pipe(runnable, m.lift(operator)) : empty(m);
+    };
+};
 function notifyTakeWhile(next) {
     this.assertState();
     const satisfiesPredicate = this.predicate(next);
@@ -84,4 +100,4 @@ function notifyTakeWhile(next) {
     }
 }
 
-export { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeLast, notifyTakeWhile };
+export { createTakeLastOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, notifyTakeWhile };

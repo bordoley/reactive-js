@@ -1,13 +1,13 @@
 import { fromValue } from "../container";
 import {
   Error,
+  SerialDisposableLike,
+  addDisposable,
   addDisposableDisposeParentOnChildError,
   addTeardown,
   createSerialDisposable,
   dispose,
   disposed,
-  addDisposable,
-  SerialDisposableLike,
 } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";

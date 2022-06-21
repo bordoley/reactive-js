@@ -1,4 +1,4 @@
-import { Error, addTeardown, addDisposable } from "../disposable";
+import { Error, addDisposable, addTeardown } from "../disposable";
 import { Factory } from "../functions";
 import { ObservableOperator } from "../observable";
 import { Option, isNone, none } from "../option";

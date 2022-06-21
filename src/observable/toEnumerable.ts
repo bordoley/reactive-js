@@ -4,7 +4,7 @@ import { EnumerableLike, EnumeratorLike } from "../enumerable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { isNone, isSome, none } from "../option";
-import { SchedulerLike, SchedulerContinuationLike, run } from "../scheduler";
+import { SchedulerContinuationLike, SchedulerLike, run } from "../scheduler";
 import { Observer, sink } from "./observer";
 
 class EnumeratorScheduler extends AbstractDisposable implements SchedulerLike {

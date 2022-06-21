@@ -11,8 +11,8 @@ import {
   Function5,
 } from "../functions";
 import { RunnableLike } from "../runnable";
-import { Sink } from "./sinks";
 import { createRunnable } from "./createRunnable";
+import { Sink } from "./sinks";
 
 export function using<TResource extends DisposableLike, T>(
   resourceFactory: Factory<TResource>,

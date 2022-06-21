@@ -80,6 +80,9 @@ class WindowLocationStream extends AbstractContainer {
         this.stateStream = stateStream;
         this.historyCounter = -1;
     }
+    get sinkType() {
+        return undefined;
+    }
     get error() {
         return this.stateStream.error;
     }

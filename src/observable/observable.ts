@@ -17,6 +17,10 @@ class ScheduledObservable<T>
     super();
   }
 
+  get sinkType(): Observer<T> {
+    return undefined as any;
+  }
+
   observe(observer: Observer<T>) {
     const callback = this.f(observer);
     const schedulerSubscription = pipe(observer, schedule(callback, this));

@@ -20,12 +20,9 @@ import {
   using,
   zipWithLatestFrom,
 } from "../observable";
-import {
-  StreamableLike,
-  StreamableOperator,
-  createStreamable,
-} from "../streamable";
+import { StreamableLike, StreamableOperator } from "../streamable";
 import { stream as streamStreamable } from "./streamable";
+import { createStreamable } from "./streamable";
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function

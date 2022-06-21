@@ -11,6 +11,10 @@ class LiftedRunnable<T> extends AbstractContainer implements RunnableLike<T> {
     super();
   }
 
+  get sinkType(): Sink<T> {
+    return undefined as any;
+  }
+
   run(sink: Sink<T>) {
     const liftedSink = pipe(sink, ...this.operators) as Sink<T>;
     this.src.run(liftedSink);

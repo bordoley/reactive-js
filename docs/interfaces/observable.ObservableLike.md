@@ -14,7 +14,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 ## Hierarchy
 
-- [`ContainerLike`](container.ContainerLike.md)
+- [`SourceLike`](sink.SourceLike.md)
 
   ↳ **`ObservableLike`**
 
@@ -26,6 +26,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 - [T](observable.ObservableLike.md#t)
 - [isSynchronous](observable.ObservableLike.md#issynchronous)
+- [sinkType](observable.ObservableLike.md#sinktype)
 - [type](observable.ObservableLike.md#type)
 
 ### Methods
@@ -40,7 +41,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 #### Overrides
 
-[ContainerLike](container.ContainerLike.md).[T](container.ContainerLike.md#t)
+[SourceLike](sink.SourceLike.md).[T](sink.SourceLike.md#t)
 
 ___
 
@@ -50,13 +51,23 @@ ___
 
 ___
 
+### sinkType
+
+• `Readonly` **sinkType**: [`Observer`](../classes/observable.Observer.md)<`unknown`\>
+
+#### Overrides
+
+[SourceLike](sink.SourceLike.md).[sinkType](sink.SourceLike.md#sinktype)
+
+___
+
 ### type
 
 • `Readonly` **type**: [`ObservableLike`](observable.ObservableLike.md)<`unknown`\>
 
 #### Overrides
 
-[ContainerLike](container.ContainerLike.md).[type](container.ContainerLike.md#type)
+[SourceLike](sink.SourceLike.md).[type](sink.SourceLike.md#type)
 
 ## Methods
 

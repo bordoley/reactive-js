@@ -1,11 +1,11 @@
-import { Concat, FromArray, FromIterator, Keep, Map, ConcatAll, Zip, ContainerLike } from "./container.mjs";
 import { AbstractDisposable, DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Equality, Predicate, Reducer } from "./functions.mjs";
+import { SinkLike, SourceLike } from "./sink.mjs";
 import { Option } from "./option.mjs";
 import { SchedulerLike, SchedulerContinuationLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
+import { Concat, FromArray, FromIterator, Keep, Map, ConcatAll, Zip } from "./container.mjs";
 import { EnumerableLike } from "./enumerable.mjs";
 import { RunnableLike } from "./runnable.mjs";
-import { SinkLike } from "./sink.mjs";
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
@@ -14,6 +14,8 @@ declare class Observer<T> extends AbstractDisposable implements SinkLike<T>, Sch
     inContinuation: boolean;
     private readonly _scheduler;
     constructor(scheduler: SchedulerLike);
+    get type(): this;
+    get T(): unknown;
     /** @ignore */
     get now(): number;
     /** @ignore */
@@ -662,9 +664,10 @@ declare const toPromise: <T>(scheduler: SchedulerLike) => Function1<ObservableLi
  *
  * @noInheritDoc
  */
-interface ObservableLike<T> extends ContainerLike {
+interface ObservableLike<T> extends SourceLike {
     readonly T: unknown;
     readonly type: ObservableLike<this["T"]>;
+    readonly sinkType: Observer<this["T"]>;
     readonly isSynchronous: boolean;
     /**
      * Subscribes the `ObserverLike` instance to the observable.

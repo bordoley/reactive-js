@@ -14,6 +14,8 @@
 
 - [`DisposableLike`](disposable.DisposableLike.md)
 
+- [`ContainerLike`](container.ContainerLike.md)
+
   ↳ **`SinkLike`**
 
 ## Implemented by
@@ -25,8 +27,10 @@
 
 ### Properties
 
+- [T](sink.SinkLike.md#t)
 - [error](sink.SinkLike.md#error)
 - [isDisposed](sink.SinkLike.md#isdisposed)
+- [type](sink.SinkLike.md#type)
 
 ### Methods
 
@@ -36,6 +40,16 @@
 - [notify](sink.SinkLike.md#notify)
 
 ## Properties
+
+### T
+
+• `Optional` `Readonly` **T**: `unknown`
+
+#### Inherited from
+
+[ContainerLike](container.ContainerLike.md).[T](container.ContainerLike.md#t)
+
+___
 
 ### error
 
@@ -58,6 +72,16 @@ ___
 #### Inherited from
 
 [DisposableLike](disposable.DisposableLike.md).[isDisposed](disposable.DisposableLike.md#isdisposed)
+
+___
+
+### type
+
+• `Optional` `Readonly` **type**: `unknown`
+
+#### Inherited from
+
+[ContainerLike](container.ContainerLike.md).[type](container.ContainerLike.md#type)
 
 ## Methods
 

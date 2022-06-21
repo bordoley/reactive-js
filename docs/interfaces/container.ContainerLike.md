@@ -10,11 +10,11 @@
 
   ↳ [`EnumerableLike`](enumerable.EnumerableLike.md)
 
-  ↳ [`ObservableLike`](observable.ObservableLike.md)
-
-  ↳ [`RunnableLike`](runnable.RunnableLike.md)
-
   ↳ [`SequenceLike`](sequence.SequenceLike.md)
+
+  ↳ [`SinkLike`](sink.SinkLike.md)
+
+  ↳ [`SourceLike`](sink.SourceLike.md)
 
 ## Implemented by
 

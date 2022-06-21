@@ -20,6 +20,9 @@ class StreamImpl extends AbstractDisposable {
     get T() {
         return undefined;
     }
+    get sinkType() {
+        return undefined;
+    }
     get observerCount() {
         return this.observable.observerCount;
     }
@@ -194,6 +197,9 @@ class FlowableSinkAccumulatorImpl extends AbstractDisposable {
         return this;
     }
     get T() {
+        return undefined;
+    }
+    get sinkType() {
         return undefined;
     }
     get observerCount() {

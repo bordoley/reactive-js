@@ -12,6 +12,10 @@ class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
     return undefined;
   }
 
+  get sinkType(): Observer<T> {
+    return undefined as any;
+  }
+
   private readonly observers: Set<DispatcherLike<T>> = new Set();
   private readonly replayed: T[] = [];
 

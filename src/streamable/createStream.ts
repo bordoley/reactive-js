@@ -28,6 +28,9 @@ class StreamImpl<TReq, T>
   get T(): unknown {
     return undefined;
   }
+  get sinkType(): Observer<T> {
+    return undefined as any;
+  }
   readonly isSynchronous = false;
 
   constructor(

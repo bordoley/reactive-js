@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`ContainerLike`](container.ContainerLike.md)
+- [`SourceLike`](sink.SourceLike.md)
 
   ↳ **`RunnableLike`**
 
@@ -21,6 +21,7 @@
 ### Properties
 
 - [T](runnable.RunnableLike.md#t)
+- [sinkType](runnable.RunnableLike.md#sinktype)
 - [type](runnable.RunnableLike.md#type)
 
 ### Methods
@@ -35,7 +36,17 @@
 
 #### Overrides
 
-[ContainerLike](container.ContainerLike.md).[T](container.ContainerLike.md#t)
+[SourceLike](sink.SourceLike.md).[T](sink.SourceLike.md#t)
+
+___
+
+### sinkType
+
+• `Readonly` **sinkType**: [`Sink`](../classes/runnable.Sink.md)<`unknown`\>
+
+#### Overrides
+
+[SourceLike](sink.SourceLike.md).[sinkType](sink.SourceLike.md#sinktype)
 
 ___
 
@@ -45,7 +56,7 @@ ___
 
 #### Overrides
 
-[ContainerLike](container.ContainerLike.md).[type](container.ContainerLike.md#type)
+[SourceLike](sink.SourceLike.md).[type](sink.SourceLike.md#type)
 
 ## Methods
 

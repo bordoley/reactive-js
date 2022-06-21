@@ -93,6 +93,10 @@ class WindowLocationStream
     super();
   }
 
+  get sinkType(): Observer<WindowLocationURI> {
+    return undefined as any;
+  }
+
   get error() {
     return this.stateStream.error;
   }

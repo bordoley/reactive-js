@@ -33,8 +33,8 @@ import { Option, isNone, isSome, none } from "../option";
 import { SchedulerLike, schedule } from "../scheduler";
 import { fromArrayT } from "./fromArray";
 import { defer } from "./observable";
-import { subscribe } from "./subscribe";
 import { Observer } from "./observer";
+import { subscribe } from "./subscribe";
 
 const arrayStrictEquality = arrayEquality();
 

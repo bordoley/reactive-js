@@ -24,6 +24,10 @@ class LiftedObservable<TIn, TOut>
     super();
   }
 
+  get sinkType(): Observer<TOut> {
+    return undefined as any;
+  }
+
   observe(observer: Observer<TOut>) {
     const liftedSubscrber = pipe(observer, ...this.operators) as Observer<any>;
 

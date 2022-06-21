@@ -5,6 +5,13 @@ import { RunnableLike } from "../runnable";
 import { SinkLike } from "../sink";
 
 export class Sink<T> extends AbstractDisposable implements SinkLike<T> {
+  get type(): this {
+    return this;
+  }
+  get T(): unknown {
+    return undefined;
+  }
+
   assertState(this: Sink<T>): void {}
 
   notify(_: T): void {}

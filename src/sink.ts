@@ -1,4 +1,11 @@
-import { DisposableLike, dispose } from "./disposable";
+import { ContainerLike, ContainerOf, empty, FromArray } from "./container";
+import {
+  addDisposable,
+  addOnDisposedWithError,
+  addTeardown,
+  DisposableLike,
+  dispose,
+} from "./disposable";
 import {
   Equality,
   Function1,
@@ -9,7 +16,7 @@ import {
 } from "./functions";
 import { Option, none } from "./option";
 
-export interface SinkLike<T> extends DisposableLike {
+export interface SinkLike<T> extends DisposableLike, ContainerLike {
   assertState(this: SinkLike<T>): void;
 
   /**
@@ -21,6 +28,35 @@ export interface SinkLike<T> extends DisposableLike {
    * @param next The next notification value.
    */
   notify(this: SinkLike<T>, next: T): void;
+}
+
+export interface SourceLike extends ContainerLike {
+  readonly sinkType: DisposableLike & ContainerLike;
+}
+
+export type SinkOf<C extends SourceLike, T> = C extends {
+  readonly sinkType: unknown;
+}
+  ? (C & {
+      readonly T: T;
+    })["sinkType"]
+  : {
+      readonly _C: C;
+      readonly _T: () => T;
+    };
+
+export interface SourceContainer<C extends SourceLike> {
+  readonly type?: C;
+}
+
+export interface Sink<C extends SourceLike> extends SourceContainer<C> {
+  sink<T>(sink: C["sinkType"]): SideEffect1<ContainerOf<C, T>>;
+}
+
+export interface Lift<C extends SourceLike> extends SourceContainer<C> {
+  lift<TA, TB>(
+    operator: Function1<SinkOf<C, TB>, SinkOf<C, TA>>,
+  ): Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 }
 
 export function notifyDecodeWithCharset(
@@ -169,23 +205,52 @@ export function notifyTakeFirst<T>(
   }
 }
 
-export function notifyTakeLast<T>(
-  this: SinkLike<T> & {
+export const createTakeLastOperator = <C extends SourceLike>(
+  m: FromArray<C> & Sink<C> & Lift<C>,
+  constructor: new <T>(delegate: SinkOf<C, T>, count: number) => SinkOf<
+    C,
+    T
+  > & {
     readonly last: T[];
-    readonly maxCount: number;
   },
-  next: T,
-) {
-  this.assertState();
+) => {
+  constructor.prototype.notify = function notifyTakeLast<T>(
+    this: SinkLike<T> & {
+      readonly last: T[];
+      readonly maxCount: number;
+    },
+    next: T,
+  ) {
+    this.assertState();
 
-  const last = this.last;
+    const last = this.last;
 
-  last.push(next);
+    last.push(next);
 
-  if (last.length > this.maxCount) {
-    last.shift();
-  }
-}
+    if (last.length > this.maxCount) {
+      last.shift();
+    }
+  };
+
+  return <T>(
+    options: { readonly count?: number } = {},
+  ): Function1<ContainerOf<C, T>, ContainerOf<C, T>> => {
+    const { count = 1 } = options;
+    const operator = (delegate: SinkOf<C, T>) => {
+      const sink = new constructor(delegate, count);
+      addDisposable(delegate, sink);
+      addOnDisposedWithError(sink, delegate);
+      addTeardown(sink, () => {
+        pipe(sink.last, m.fromArray(), m.sink(delegate));
+      });
+
+      return sink;
+    };
+
+    return runnable =>
+      count > 0 ? pipe(runnable, m.lift(operator)) : empty(m);
+  };
+};
 
 export function notifyTakeWhile<T>(
   this: SinkLike<T> & {
