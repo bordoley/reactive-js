@@ -4,6 +4,12 @@
 
 [container](../modules/container.md).AbstractContainer
 
+## Hierarchy
+
+- **`AbstractContainer`**
+
+  ↳ [`AbstractSource`](source.AbstractSource.md)
+
 ## Implements
 
 - [`ContainerLike`](../interfaces/container.ContainerLike.md)

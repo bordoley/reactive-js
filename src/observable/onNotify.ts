@@ -1,6 +1,6 @@
 import { SideEffect1 } from "../functions";
 import { ObservableOperator } from "../observable";
-import { createOnNotifyOperator } from "../sink";
+import { createOnNotifyOperator } from "../source";
 import { liftT } from "./lift";
 import { Observer } from "./observer";
 

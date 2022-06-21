@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [sink](../modules/sink.md) / SinkLike
+[Reactive-JS](../README.md) / [source](../modules/source.md) / SinkLike
 
 # Interface: SinkLike<T\>
 
-[sink](../modules/sink.md).SinkLike
+[source](../modules/source.md).SinkLike
 
 ## Type parameters
 
@@ -27,17 +27,17 @@
 
 ### Properties
 
-- [T](sink.SinkLike.md#t)
-- [error](sink.SinkLike.md#error)
-- [isDisposed](sink.SinkLike.md#isdisposed)
-- [type](sink.SinkLike.md#type)
+- [T](source.SinkLike.md#t)
+- [error](source.SinkLike.md#error)
+- [isDisposed](source.SinkLike.md#isdisposed)
+- [type](source.SinkLike.md#type)
 
 ### Methods
 
-- [add](sink.SinkLike.md#add)
-- [assertState](sink.SinkLike.md#assertstate)
-- [dispose](sink.SinkLike.md#dispose)
-- [notify](sink.SinkLike.md#notify)
+- [add](source.SinkLike.md#add)
+- [assertState](source.SinkLike.md#assertstate)
+- [dispose](source.SinkLike.md#dispose)
+- [notify](source.SinkLike.md#notify)
 
 ## Properties
 
@@ -118,7 +118,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`SinkLike`](sink.SinkLike.md)<`T`\> |
+| `this` | [`SinkLike`](source.SinkLike.md)<`T`\> |
 
 #### Returns
 
@@ -162,7 +162,7 @@ scheduled using the sink's `schedule` method.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `this` | [`SinkLike`](sink.SinkLike.md)<`T`\> | - |
+| `this` | [`SinkLike`](source.SinkLike.md)<`T`\> | - |
 | `next` | `T` | The next notification value. |
 
 #### Returns

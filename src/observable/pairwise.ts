@@ -1,6 +1,6 @@
 import { ObservableOperator } from "../observable";
 import { Option } from "../option";
-import { createPairwiseOperator } from "../sink";
+import { createPairwiseOperator } from "../source";
 import { liftT } from "./lift";
 import { Observer } from "./observer";
 

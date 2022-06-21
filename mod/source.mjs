@@ -1,9 +1,14 @@
-/// <reference types="./sink.d.ts" />
-import { fromValue, empty } from './container.mjs';
+/// <reference types="./source.d.ts" />
+import { AbstractContainer, fromValue, empty } from './container.mjs';
 import { addDisposable, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables, dispose, addTeardown } from './disposable.mjs';
 import { pipe, strictEquality } from './functions.mjs';
 import { none } from './option.mjs';
 
+class AbstractSource extends AbstractContainer {
+    get sinkType() {
+        return undefined;
+    }
+}
 const createDecodeWithCharset = (m, DecodeWithCharsetSink) => {
     DecodeWithCharsetSink.prototype.notify = function notifyDecodeWithCharset(next) {
         const data = this.textDecoder.decode(next, { stream: true });
@@ -230,4 +235,4 @@ const createTakeWhileOperator = (m, TakeWhileSink) => {
     };
 };
 
-export { createDecodeWithCharset, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator };
+export { AbstractSource, createDecodeWithCharset, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator };

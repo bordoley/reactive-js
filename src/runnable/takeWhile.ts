@@ -1,6 +1,6 @@
 import { Predicate } from "../functions";
 import { RunnableOperator } from "../runnable";
-import { createTakeWhileOperator } from "../sink";
+import { createTakeWhileOperator } from "../source";
 import { liftT } from "./lift";
 import { Sink } from "./sinks";
 

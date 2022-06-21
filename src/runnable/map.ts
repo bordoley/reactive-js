@@ -1,6 +1,6 @@
 import { Function1 } from "../functions";
 import { RunnableLike, RunnableOperator } from "../runnable";
-import { createMapOperator } from "../sink";
+import { createMapOperator } from "../source";
 import { liftT } from "./lift";
 import { Sink } from "./sinks";
 import { Map } from "../container";

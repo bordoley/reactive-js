@@ -2,8 +2,7 @@
 import { raise, pipe, compose, negate, alwaysTrue, strictEquality, isEqualTo, identity } from './functions.mjs';
 import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
-import { AbstractContainer } from './container.mjs';
-import { createDecodeWithCharset, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { AbstractSource, createDecodeWithCharset, createDistinctUntilChanged, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './source.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 class Sink extends AbstractDisposable {
@@ -42,13 +41,10 @@ const sinkT = {
     sink,
 };
 
-class RunnableImpl extends AbstractContainer {
+class RunnableImpl extends AbstractSource {
     constructor(_run) {
         super();
         this._run = _run;
-    }
-    get sinkType() {
-        return undefined;
     }
     run(sink) {
         try {
@@ -61,14 +57,11 @@ class RunnableImpl extends AbstractContainer {
 }
 const createRunnable = (run) => new RunnableImpl(run);
 
-class LiftedRunnable extends AbstractContainer {
+class LiftedRunnable extends AbstractSource {
     constructor(src, operators) {
         super();
         this.src = src;
         this.operators = operators;
-    }
-    get sinkType() {
-        return undefined;
     }
     run(sink) {
         const liftedSink = pipe(sink, ...this.operators);

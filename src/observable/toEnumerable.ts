@@ -1,10 +1,10 @@
-import { AbstractContainer } from "../container";
 import { AbstractDisposable, addDisposable, dispose } from "../disposable";
 import { EnumerableLike, EnumeratorLike } from "../enumerable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { isNone, isSome, none } from "../option";
 import { SchedulerContinuationLike, SchedulerLike, run } from "../scheduler";
+import { AbstractSource } from "../source";
 import { Observer, sink } from "./observer";
 
 class EnumeratorScheduler extends AbstractDisposable implements SchedulerLike {
@@ -90,7 +90,7 @@ export const enumerate = <T>(obs: ObservableLike<T>): EnumeratorLike<T> => {
 };
 
 class ObservableEnumerable<T>
-  extends AbstractContainer
+  extends AbstractSource<T, Observer<T>>
   implements EnumerableLike<T>
 {
   constructor(private readonly obs: ObservableLike<T>) {

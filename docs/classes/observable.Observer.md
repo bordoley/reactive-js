@@ -20,7 +20,7 @@ Abstract base class for implementing the `ObserverLike` interface.
 
 ## Implements
 
-- [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\>
+- [`SinkLike`](../interfaces/source.SinkLike.md)<`T`\>
 - [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
 
 ## Table of contents
@@ -94,7 +94,7 @@ ___
 
 #### Implementation of
 
-[SinkLike](../interfaces/sink.SinkLike.md).[T](../interfaces/sink.SinkLike.md#t)
+[SinkLike](../interfaces/source.SinkLike.md).[T](../interfaces/source.SinkLike.md#t)
 
 ___
 
@@ -108,7 +108,7 @@ ___
 
 #### Implementation of
 
-[SinkLike](../interfaces/sink.SinkLike.md).[type](../interfaces/sink.SinkLike.md#type)
+[SinkLike](../interfaces/source.SinkLike.md).[type](../interfaces/source.SinkLike.md#type)
 
 ## Methods
 
@@ -128,7 +128,7 @@ ___
 
 #### Implementation of
 
-[SinkLike](../interfaces/sink.SinkLike.md).[assertState](../interfaces/sink.SinkLike.md#assertstate)
+[SinkLike](../interfaces/source.SinkLike.md).[assertState](../interfaces/source.SinkLike.md#assertstate)
 
 ___
 
@@ -153,4 +153,4 @@ scheduled using the sink's `schedule` method.
 
 #### Implementation of
 
-[SinkLike](../interfaces/sink.SinkLike.md).[notify](../interfaces/sink.SinkLike.md#notify)
+[SinkLike](../interfaces/source.SinkLike.md).[notify](../interfaces/source.SinkLike.md#notify)

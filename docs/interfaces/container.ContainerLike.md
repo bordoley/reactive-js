@@ -12,9 +12,9 @@
 
   ↳ [`SequenceLike`](sequence.SequenceLike.md)
 
-  ↳ [`SinkLike`](sink.SinkLike.md)
+  ↳ [`SinkLike`](source.SinkLike.md)
 
-  ↳ [`SourceLike`](sink.SourceLike.md)
+  ↳ [`SourceLike`](source.SourceLike.md)
 
 ## Implemented by
 

@@ -1,6 +1,6 @@
 import { Predicate } from "../functions";
 import { ObservableOperator } from "../observable";
-import { createTakeWhileOperator } from "../sink";
+import { createTakeWhileOperator } from "../source";
 import { liftT } from "./lift";
 import { Observer } from "./observer";
 

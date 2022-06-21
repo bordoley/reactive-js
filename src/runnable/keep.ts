@@ -1,7 +1,7 @@
 import { Keep } from "../container";
 import { Predicate } from "../functions";
 import { RunnableLike, RunnableOperator } from "../runnable";
-import { createKeepOperator } from "../sink";
+import { createKeepOperator } from "../source";
 import { liftT } from "./lift";
 import { Sink } from "./sinks";
 

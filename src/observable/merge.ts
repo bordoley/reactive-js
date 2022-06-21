@@ -1,4 +1,3 @@
-import { AbstractContainer } from "../container";
 import {
   addDisposable,
   addOnDisposedWithError,
@@ -7,6 +6,7 @@ import {
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
+import { AbstractSource } from "../source";
 import { Observer, createDelegatingObserver, sink } from "./observer";
 
 const createMergeObserver = <T>(
@@ -29,17 +29,13 @@ const createMergeObserver = <T>(
 };
 
 class MergeObservable<T>
-  extends AbstractContainer
+  extends AbstractSource<T, Observer<T>>
   implements ObservableLike<T>
 {
   readonly isSynchronous = false;
 
   constructor(readonly observables: readonly ObservableLike<T>[]) {
     super();
-  }
-
-  get sinkType(): Observer<T> {
-    return undefined as any;
   }
 
   observe(observer: Observer<T>) {

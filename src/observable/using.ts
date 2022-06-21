@@ -1,4 +1,3 @@
-import { AbstractContainer } from "../container";
 import {
   DisposableLike,
   addDisposableDisposeParentOnChildError,
@@ -13,10 +12,11 @@ import {
 } from "../functions";
 import { ObservableLike } from "../observable";
 import { SchedulerLike } from "../scheduler";
+import { AbstractSource } from "../source";
 import { Observer, sink } from "./observer";
 
 class UsingObservable<TResource extends DisposableLike, T>
-  extends AbstractContainer
+  extends AbstractSource<T, Observer<T>>
   implements ObservableLike<T>
 {
   readonly isSynchronous = false;
@@ -31,10 +31,6 @@ class UsingObservable<TResource extends DisposableLike, T>
     ) => ObservableLike<T>,
   ) {
     super();
-  }
-
-  get sinkType(): Observer<T> {
-    return undefined as any;
   }
 
   observe(observer: Observer<T>) {

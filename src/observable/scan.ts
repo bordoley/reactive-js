@@ -1,7 +1,7 @@
 import { Factory, Reducer } from "../functions";
 import { ObservableOperator } from "../observable";
 import { Observer } from "./observer";
-import { createScanOperator } from "../sink";
+import { createScanOperator } from "../source";
 import { liftT } from "./lift";
 
 export const scan: <T, TAcc>(

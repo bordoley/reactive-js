@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [sink](../modules/sink.md) / SourceLike
+[Reactive-JS](../README.md) / [source](../modules/source.md) / SourceLike
 
 # Interface: SourceLike
 
-[sink](../modules/sink.md).SourceLike
+[source](../modules/source.md).SourceLike
 
 ## Hierarchy
 
@@ -14,13 +14,17 @@
 
   ↳↳ [`RunnableLike`](runnable.RunnableLike.md)
 
+## Implemented by
+
+- [`AbstractSource`](../classes/source.AbstractSource.md)
+
 ## Table of contents
 
 ### Properties
 
-- [T](sink.SourceLike.md#t)
-- [sinkType](sink.SourceLike.md#sinktype)
-- [type](sink.SourceLike.md#type)
+- [T](source.SourceLike.md#t)
+- [sinkType](source.SourceLike.md#sinktype)
+- [type](source.SourceLike.md#type)
 
 ## Properties
 
@@ -36,7 +40,7 @@ ___
 
 ### sinkType
 
-• `Readonly` **sinkType**: [`DisposableLike`](disposable.DisposableLike.md) & [`ContainerLike`](container.ContainerLike.md) & [`SinkLike`](sink.SinkLike.md)<`unknown`\>
+• `Readonly` **sinkType**: [`SinkLike`](source.SinkLike.md)<`unknown`\>
 
 ___
 

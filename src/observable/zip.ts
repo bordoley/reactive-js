@@ -1,10 +1,11 @@
-import { AbstractContainer, Zip } from "../container";
+import { Zip } from "../container";
 import { Error, addDisposable, addTeardown, dispose } from "../disposable";
 import { EnumeratorLike, current, zipEnumerators } from "../enumerable";
 import { defer, pipe, returns } from "../functions";
 import { ObservableLike } from "../observable";
 import { Option, isSome, none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
+import { AbstractSource } from "../source";
 import { fromEnumerator } from "./fromEnumerable";
 import { Observer, sink } from "./observer";
 import { enumerate } from "./toEnumerable";
@@ -93,7 +94,7 @@ class ZipObserver extends Observer<unknown> implements EnumeratorLike<unknown> {
 }
 
 class ZipObservable
-  extends AbstractContainer
+  extends AbstractSource<readonly unknown[], Observer<readonly unknown[]>>
   implements ObservableLike<readonly unknown[]>
 {
   readonly isSynchronous: boolean;
@@ -104,10 +105,6 @@ class ZipObservable
       observables,
       everySatisfy(obs => obs.isSynchronous),
     );
-  }
-
-  get sinkType(): Observer<readonly unknown[]> {
-    return undefined as any;
   }
 
   observe(observer: Observer<readonly unknown[]>) {
