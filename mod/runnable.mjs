@@ -3,7 +3,7 @@ import { raise, pipe, strictEquality, compose, negate, alwaysTrue, isEqualTo, id
 import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 import { AbstractContainer, fromValue } from './container.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 class Sink extends AbstractDisposable {
@@ -320,22 +320,13 @@ function onNotify(onNotify) {
     return lift(operator);
 }
 
-class PairwiseObserver extends Sink {
+const pairwise = createPairwiseOperator(liftT, class PairwiseSink extends Sink {
     constructor(delegate) {
         super();
         this.delegate = delegate;
         this.hasPrev = false;
     }
-}
-PairwiseObserver.prototype.notify = notifyPairwise;
-const pairwise = () => {
-    const operator = (delegate) => {
-        const sink = new PairwiseObserver(delegate);
-        bindDisposables(sink, delegate);
-        return sink;
-    };
-    return lift(operator);
-};
+});
 
 const reduce = createReduceOperator({ ...fromArrayT, ...liftT, ...sinkT }, class ReducerSink extends Sink {
     constructor(delegate, reducer, acc) {

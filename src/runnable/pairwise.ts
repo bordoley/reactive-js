@@ -1,26 +1,18 @@
-import { bindDisposables } from "../disposable";
 import { Option } from "../option";
-import { RunnableOperator } from "../runnable";
-import { notifyPairwise } from "../sink";
-import { lift } from "./lift";
 import { Sink } from "./sinks";
+import { createPairwiseOperator } from "../sink";
+import { liftT } from "./lift";
+import { RunnableOperator } from "../runnable";
 
-class PairwiseObserver<T> extends Sink<T> {
-  prev: Option<T>;
-  hasPrev = false;
+export const pairwise: <T>() => RunnableOperator<T, [Option<T>, T]> =
+  createPairwiseOperator(
+    liftT,
+    class PairwiseSink<T> extends Sink<T> {
+      prev: Option<T>;
+      hasPrev = false;
 
-  constructor(readonly delegate: Sink<[Option<T>, T]>) {
-    super();
-  }
-}
-PairwiseObserver.prototype.notify = notifyPairwise;
-
-export const pairwise = <T>(): RunnableOperator<T, [Option<T>, T]> => {
-  const operator = (delegate: Sink<[Option<T>, T]>) => {
-    const sink = new PairwiseObserver(delegate);
-    bindDisposables(sink, delegate);
-    return sink;
-  };
-
-  return lift(operator);
-};
+      constructor(readonly delegate: Sink<[Option<T>, T]>) {
+        super();
+      }
+    },
+  );

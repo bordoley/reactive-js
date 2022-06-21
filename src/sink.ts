@@ -137,22 +137,43 @@ export function notifyOnNotify<T>(
   this.delegate.notify(next);
 }
 
-export function notifyPairwise<T>(
-  this: SinkLike<T> & {
-    readonly delegate: SinkLike<[Option<T>, T]>;
+export const createPairwiseOperator = <C extends SourceLike>(
+  m: Lift<C>,
+  PairwiseObserver: new <T>(delegate: SinkOf<C, [Option<T>, T]>) => SinkOf<
+    C,
+    T
+  > & {
+    readonly delegate: SinkOf<C, [Option<T>, T]>;
     prev: Option<T>;
     hasPrev: boolean;
   },
-  value: T,
-): void {
-  this.assertState();
-  const prev = this.hasPrev ? this.prev : none;
+): (<T>() => ContainerOperator<C, T, [Option<T>, T]>) => {
+  PairwiseObserver.prototype.notify = function notifyPairwise<T>(
+    this: SinkLike<T> & {
+      readonly delegate: SinkLike<[Option<T>, T]>;
+      prev: Option<T>;
+      hasPrev: boolean;
+    },
+    value: T,
+  ): void {
+    this.assertState();
+    const prev = this.hasPrev ? this.prev : none;
 
-  this.hasPrev = true;
-  this.prev = value;
+    this.hasPrev = true;
+    this.prev = value;
 
-  this.delegate.notify([prev, value]);
-}
+    this.delegate.notify([prev, value]);
+  };
+
+  return <T>() => {
+    const operator = (delegate: SinkOf<C, [Option<T>, T]>): SinkOf<C, T> => {
+      const observer = new PairwiseObserver(delegate);
+      bindDisposables(observer, delegate);
+      return observer;
+    };
+    return m.lift(operator);
+  };
+};
 
 export const createReduceOperator = <C extends SourceLike>(
   m: FromArray<C> & Lift<C> & Sink<C>,
