@@ -17,6 +17,7 @@
 
 ### Functions
 
+- [createPairwiseOperator](sink.md#createpairwiseoperator)
 - [createReduceOperator](sink.md#createreduceoperator)
 - [createScanOperator](sink.md#createscanoperator)
 - [createSkipFirstOperator](sink.md#createskipfirstoperator)
@@ -28,7 +29,6 @@
 - [notifyKeep](sink.md#notifykeep)
 - [notifyMap](sink.md#notifymap)
 - [notifyOnNotify](sink.md#notifyonnotify)
-- [notifyPairwise](sink.md#notifypairwise)
 
 ## Type Aliases
 
@@ -44,6 +44,41 @@
 | `T` | `T` |
 
 ## Functions
+
+### createPairwiseOperator
+
+▸ **createPairwiseOperator**<`C`\>(`m`, `PairwiseObserver`): <T_1\>() => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, [[`Option`](option.md#option)<`T_1`\>, `T_1`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
+| `PairwiseObserver` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, [[`Option`](option.md#option)<`T`\>, `T`]\>) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `delegate`: [`SinkOf`](sink.md#sinkof)<`C`, [[`Option`](option.md#option)<`T`\>, `T`]\> ; `hasPrev`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
+
+#### Returns
+
+`fn`
+
+▸ <`T_1`\>(): [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, [[`Option`](option.md#option)<`T_1`\>, `T_1`]\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T_1` |
+
+##### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, [[`Option`](option.md#option)<`T_1`\>, `T_1`]\>
+
+___
 
 ### createReduceOperator
 
@@ -403,29 +438,6 @@ ___
 | :------ | :------ |
 | `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>  } |
 | `next` | `T` |
-
-#### Returns
-
-`void`
-
-___
-
-### notifyPairwise
-
-▸ **notifyPairwise**<`T`\>(`this`, `value`): `void`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<[[`Option`](option.md#option)<`T`\>, `T`]\> ; `hasPrev`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
-| `value` | `T` |
 
 #### Returns
 

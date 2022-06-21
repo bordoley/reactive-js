@@ -6,7 +6,7 @@ import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, createReduceOperator, createScanOperator, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, createPairwiseOperator, createReduceOperator, createScanOperator, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 
@@ -1201,23 +1201,13 @@ class OnSubscribeObservable extends AbstractContainer {
  */
 const onSubscribe = (f) => observable => new OnSubscribeObservable(observable, f);
 
-class PairwiseObserver extends Observer {
+const pairwise = createPairwiseOperator(liftT, class PairwiseObserver extends Observer {
     constructor(delegate) {
         super(delegate);
         this.delegate = delegate;
         this.hasPrev = false;
     }
-}
-PairwiseObserver.prototype.notify = notifyPairwise;
-const pairwise = () => {
-    const operator = (delegate) => {
-        const observer = new PairwiseObserver(delegate);
-        bindDisposables(observer, delegate);
-        return observer;
-    };
-    operator.isSynchronous = true;
-    return lift(operator);
-};
+});
 
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.

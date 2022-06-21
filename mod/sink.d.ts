@@ -1,4 +1,4 @@
-import { ContainerLike, Container, ContainerOf, FromArray, FromArrayOptions, ContainerOperator } from "./container.mjs";
+import { ContainerLike, Container, ContainerOf, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
 import { DisposableLike } from "./disposable.mjs";
 import { SideEffect1, Function1, Equality, Predicate, Reducer, Factory } from "./functions.mjs";
 import { Option } from "./option.mjs";
@@ -53,14 +53,20 @@ declare function notifyOnNotify<T>(this: SinkLike<T> & {
     readonly delegate: SinkLike<T>;
     readonly onNotify: SideEffect1<T>;
 }, next: T): void;
-declare function notifyPairwise<T>(this: SinkLike<T> & {
-    readonly delegate: SinkLike<[
+declare const createPairwiseOperator: <C extends SourceLike>(m: Lift<C>, PairwiseObserver: new <T>(delegate: SinkOf<C, [
+    Option<T>,
+    T
+]>) => SinkOf<C, T> & {
+    readonly delegate: SinkOf<C, [
         Option<T>,
         T
     ]>;
     prev: Option<T>;
     hasPrev: boolean;
-}, value: T): void;
+}) => <T_1>() => ContainerOperator<C, T_1, [
+    Option<T_1>,
+    T_1
+]>;
 declare const createReduceOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C> & Sink<C>, ReduceSink: new <T, TAcc>(delegate: SinkOf<C, TAcc>, reducer: Reducer<T, TAcc>, acc: TAcc) => SinkOf<C, T> & {
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
@@ -97,4 +103,4 @@ declare const createTakeWhileOperator: <C extends SourceLike>(m: Lift<C>, TakeWh
 }) => <T_1>(predicate: Predicate<T_1>, options?: {
     readonly inclusive?: boolean;
 }) => ContainerOperator<C, T_1, T_1>;
-export { Lift, Sink, SinkLike, SinkOf, SourceLike, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise };
+export { Lift, Sink, SinkLike, SinkOf, SourceLike, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify };
