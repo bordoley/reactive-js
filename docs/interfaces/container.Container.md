@@ -18,6 +18,8 @@
 
   ↳ [`ConcatAll`](container.ConcatAll.md)
 
+  ↳ [`DecodeWithCharset`](container.DecodeWithCharset.md)
+
   ↳ [`DistinctUntilChanged`](container.DistinctUntilChanged.md)
 
   ↳ [`FromArray`](container.FromArray.md)

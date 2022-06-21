@@ -27,6 +27,9 @@ interface Concat<C extends ContainerLike> extends Container<C> {
 interface ConcatAll<C extends ContainerLike, O = Record<string, never>> extends Container<C> {
     concatAll: <T>(options?: Partial<O>) => ContainerOperator<C, ContainerOf<C, T>, T>;
 }
+interface DecodeWithCharset<C extends ContainerLike> extends Container<C> {
+    decodeWithCharset(charset?: string): ContainerOperator<C, ArrayBuffer, string>;
+}
 interface DistinctUntilChanged<C extends ContainerLike> extends Container<C> {
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
@@ -220,4 +223,4 @@ declare const zipWith: <C, TA, TB>({ zip }: Zip<C>, snd: ContainerOf<C, TB>) => 
     TA,
     TB
 ]>;
-export { AbstractContainer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DistinctUntilChanged, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, Using, Zip, compute, concatMap, concatWith, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, startWith, throws, using, zipWith };
+export { AbstractContainer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, DistinctUntilChanged, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, TakeFirst, TakeLast, TakeWhile, Using, Zip, compute, concatMap, concatWith, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, startWith, throws, using, zipWith };
