@@ -21,6 +21,7 @@ import {
   Reducer,
   SideEffect1,
   pipe,
+  Factory,
 } from "./functions";
 import { Option, none } from "./option";
 
@@ -163,20 +164,48 @@ export function notifyReduce<T, TAcc>(
   this.acc = this.reducer(this.acc, next);
 }
 
-export function notifyScan<T, TAcc>(
-  this: SinkLike<T> & {
+export const createScanOperator = <C extends SourceLike>(
+  m: Lift<C>,
+  ScanSink: new <T, TAcc>(
+    delegate: SinkOf<C, TAcc>,
+    reducer: Reducer<T, TAcc>,
+    acc: TAcc,
+  ) => SinkOf<C, T> & {
     readonly delegate: SinkLike<TAcc>;
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
   },
-  next: T,
-) {
-  this.assertState();
-  const nextAcc = this.reducer(this.acc, next);
-  this.acc = nextAcc;
+): (<T, TAcc>(
+  reducer: Reducer<T, TAcc>,
+  initialValue: Factory<TAcc>,
+) => ContainerOperator<C, T, TAcc>) => {
+  ScanSink.prototype.notify = function notifyScan<T, TAcc>(
+    this: SinkLike<T> & {
+      readonly delegate: SinkLike<TAcc>;
+      readonly reducer: Reducer<T, TAcc>;
+      acc: TAcc;
+    },
+    next: T,
+  ) {
+    this.assertState();
+    const nextAcc = this.reducer(this.acc, next);
+    this.acc = nextAcc;
 
-  this.delegate.notify(nextAcc);
-}
+    this.delegate.notify(nextAcc);
+  };
+
+  return <T, TAcc>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): ContainerOperator<C, T, TAcc> => {
+    const operator = (delegate: SinkOf<C, TAcc>): SinkOf<C, T> => {
+      const sink = new ScanSink(delegate, reducer, initialValue());
+      bindDisposables(sink, delegate);
+      return sink;
+    };
+    return m.lift(operator);
+  };
+};
 
 export const createSkipFirstOperator = <C extends SourceLike>(
   m: Lift<C>,

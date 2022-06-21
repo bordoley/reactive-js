@@ -6,7 +6,7 @@ import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, createScanOperator, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 
@@ -1306,31 +1306,14 @@ function retry(predicate) {
     return repeatObs(retryPredicate);
 }
 
-class ScanObserver extends Observer {
+const scan = createScanOperator(liftT, class ScanObserver extends Observer {
     constructor(delegate, reducer, acc) {
         super(delegate);
         this.delegate = delegate;
         this.reducer = reducer;
         this.acc = acc;
     }
-}
-ScanObserver.prototype.notify = notifyScan;
-/**
- * Returns an `ObservableLike` that applies an accumulator function over the source,
- * and emits each intermediate result.
- *
- * @param scanner The accumulator function called on each source value.
- * @param initialValue The initial accumulation value.
- */
-const scan = (reducer, initialValue) => {
-    const operator = (delegate) => {
-        const observer = new ScanObserver(delegate, reducer, initialValue());
-        bindDisposables(observer, delegate);
-        return observer;
-    };
-    operator.isSynchronous = true;
-    return lift(operator);
-};
+});
 
 const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftT }, class TakeFirstObserver extends Observer {
     constructor(delegate, maxCount) {
