@@ -1,4 +1,4 @@
-import { ContainerLike, ContainerOf, FromArray, FromArrayOptions, ContainerOperator } from "./container.mjs";
+import { ContainerLike, Container, ContainerOf, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
 import { DisposableLike } from "./disposable.mjs";
 import { SideEffect1, Function1, Equality, Predicate, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
@@ -25,13 +25,10 @@ declare type SinkOf<C extends SourceLike, T> = C extends {
     readonly _C: C;
     readonly _T: () => T;
 };
-interface SourceContainer<C extends SourceLike> {
-    readonly type?: C;
-}
-interface Sink<C extends SourceLike> extends SourceContainer<C> {
+interface Sink<C extends SourceLike> extends Container<C> {
     sink<T>(sink: SinkOf<C, T>): SideEffect1<ContainerOf<C, T>>;
 }
-interface Lift<C extends SourceLike> extends SourceContainer<C> {
+interface Lift<C extends SourceLike> extends Container<C> {
     lift<TA, TB>(operator: Function1<SinkOf<C, TB>, SinkOf<C, TA>>): Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 }
 declare function notifyDecodeWithCharset(this: SinkLike<ArrayBuffer> & {
@@ -73,18 +70,23 @@ declare function notifyScan<T, TAcc>(this: SinkLike<T> & {
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
 }, next: T): void;
-declare function notifySkipFirst<T>(this: SinkLike<T> & {
-    readonly delegate: SinkLike<T>;
+declare const createSkipFirstOperator: <C extends SourceLike>(m: Lift<C>, SkipFirstSink: new <T>(delegate: SinkOf<C, T>, skipCount: number) => SinkOf<C, T> & {
+    readonly delegate: SinkOf<C, T>;
     count: number;
     readonly skipCount: number;
-}, next: T): void;
-declare function notifyTakeFirst<T>(this: SinkLike<T> & {
+}) => <T_1>(options?: {
+    readonly count?: number;
+}) => ContainerOperator<C, T_1, T_1>;
+declare const createTakeFirstOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, TakeFirstSink: new <T>(delegate: SinkOf<C, T>, maxCount: number) => SinkOf<C, T> & {
     readonly delegate: SinkLike<T>;
     count: number;
     readonly maxCount: number;
-}, next: T): void;
-declare const createTakeLastOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Sink<C> & Lift<C>, TakeLastSink: new <T>(delegate: SinkOf<C, T>, count: number) => SinkOf<C, T> & {
+}) => <T_1>(options?: {
+    readonly count?: number;
+}) => ContainerOperator<C, T_1, T_1>;
+declare const createTakeLastOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Sink<C> & Lift<C>, TakeLastSink: new <T>(delegate: SinkOf<C, T>, maxCount: number) => SinkOf<C, T> & {
     readonly last: T[];
+    readonly maxCount: number;
 }) => <T_1>(options?: {
     readonly count?: number;
 }) => ContainerOperator<C, T_1, T_1>;
@@ -95,4 +97,4 @@ declare const createTakeWhileOperator: <C extends SourceLike>(m: Lift<C>, TakeWh
 }) => <T_1>(predicate: Predicate<T_1>, options?: {
     readonly inclusive?: boolean;
 }) => ContainerOperator<C, T_1, T_1>;
-export { Lift, Sink, SinkLike, SinkOf, SourceContainer, SourceLike, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst };
+export { Lift, Sink, SinkLike, SinkOf, SourceLike, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan };

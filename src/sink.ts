@@ -4,6 +4,7 @@ import {
   FromArray,
   empty,
   ContainerOperator,
+  Container,
 } from "./container";
 import {
   DisposableLike,
@@ -11,6 +12,7 @@ import {
   addOnDisposedWithError,
   addTeardown,
   dispose,
+  bindDisposables,
 } from "./disposable";
 import {
   Equality,
@@ -51,15 +53,11 @@ export type SinkOf<C extends SourceLike, T> = C extends {
       readonly _T: () => T;
     };
 
-export interface SourceContainer<C extends SourceLike> {
-  readonly type?: C;
-}
-
-export interface Sink<C extends SourceLike> extends SourceContainer<C> {
+export interface Sink<C extends SourceLike> extends Container<C> {
   sink<T>(sink: SinkOf<C, T>): SideEffect1<ContainerOf<C, T>>;
 }
 
-export interface Lift<C extends SourceLike> extends SourceContainer<C> {
+export interface Lift<C extends SourceLike> extends Container<C> {
   lift<TA, TB>(
     operator: Function1<SinkOf<C, TB>, SinkOf<C, TA>>,
   ): Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
@@ -180,44 +178,98 @@ export function notifyScan<T, TAcc>(
   this.delegate.notify(nextAcc);
 }
 
-export function notifySkipFirst<T>(
-  this: SinkLike<T> & {
-    readonly delegate: SinkLike<T>;
+export const createSkipFirstOperator = <C extends SourceLike>(
+  m: Lift<C>,
+  SkipFirstSink: new <T>(delegate: SinkOf<C, T>, skipCount: number) => SinkOf<
+    C,
+    T
+  > & {
+    readonly delegate: SinkOf<C, T>;
     count: number;
     readonly skipCount: number;
   },
-  next: T,
-) {
-  this.count++;
-  if (this.count > this.skipCount) {
-    this.delegate.notify(next);
-  }
-}
+): (<T>(options?: {
+  readonly count?: number;
+}) => ContainerOperator<C, T, T>) => {
+  SkipFirstSink.prototype.notify = function notifySkipFirst<T>(
+    this: SinkOf<C, T> & {
+      readonly delegate: SinkLike<T>;
+      count: number;
+      readonly skipCount: number;
+    },
+    next: T,
+  ) {
+    this.count++;
+    if (this.count > this.skipCount) {
+      this.delegate.notify(next);
+    }
+  };
 
-export function notifyTakeFirst<T>(
-  this: SinkLike<T> & {
+  return <T>(
+    options: { readonly count?: number } = {},
+  ): ContainerOperator<C, T, T> => {
+    const { count = 1 } = options;
+    const operator = (delegate: SinkOf<C, T>): SinkOf<C, T> => {
+      const sink = new SkipFirstSink(delegate, count);
+      bindDisposables(sink, delegate);
+      return sink;
+    };
+    return runnable =>
+      count > 0 ? pipe(runnable, m.lift(operator)) : runnable;
+  };
+};
+
+export const createTakeFirstOperator = <C extends SourceLike>(
+  m: FromArray<C> & Lift<C>,
+  TakeFirstSink: new <T>(delegate: SinkOf<C, T>, maxCount: number) => SinkOf<
+    C,
+    T
+  > & {
     readonly delegate: SinkLike<T>;
     count: number;
     readonly maxCount: number;
   },
-  next: T,
-) {
-  this.assertState();
+): (<T>(options?: {
+  readonly count?: number;
+}) => ContainerOperator<C, T, T>) => {
+  TakeFirstSink.prototype.notify = function notifyTakeFirst<T>(
+    this: SinkLike<T> & {
+      readonly delegate: SinkLike<T>;
+      count: number;
+      readonly maxCount: number;
+    },
+    next: T,
+  ) {
+    this.assertState();
 
-  this.count++;
-  this.delegate.notify(next);
-  if (this.count >= this.maxCount) {
-    pipe(this, dispose());
-  }
-}
+    this.count++;
+    this.delegate.notify(next);
+    if (this.count >= this.maxCount) {
+      pipe(this, dispose());
+    }
+  };
+
+  return <T>(
+    options: { readonly count?: number } = {},
+  ): ContainerOperator<C, T, T> => {
+    const { count = 1 } = options;
+    const operator = (delegate: SinkOf<C, T>): SinkOf<C, T> => {
+      const sink = new TakeFirstSink(delegate, count);
+      bindDisposables(sink, delegate);
+      return sink;
+    };
+    return source => (count > 0 ? pipe(source, m.lift(operator)) : empty(m));
+  };
+};
 
 export const createTakeLastOperator = <C extends SourceLike>(
   m: FromArray<C> & Sink<C> & Lift<C>,
-  TakeLastSink: new <T>(delegate: SinkOf<C, T>, count: number) => SinkOf<
+  TakeLastSink: new <T>(delegate: SinkOf<C, T>, maxCount: number) => SinkOf<
     C,
     T
   > & {
     readonly last: T[];
+    readonly maxCount: number;
   },
 ): (<T>(options?: {
   readonly count?: number;
@@ -256,8 +308,7 @@ export const createTakeLastOperator = <C extends SourceLike>(
       return sink;
     };
 
-    return runnable =>
-      count > 0 ? pipe(runnable, m.lift(operator)) : empty(m);
+    return source => (count > 0 ? pipe(source, m.lift(operator)) : empty(m));
   };
 };
 

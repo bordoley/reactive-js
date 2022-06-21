@@ -9,7 +9,6 @@
 - [Lift](../interfaces/sink.Lift.md)
 - [Sink](../interfaces/sink.Sink.md)
 - [SinkLike](../interfaces/sink.SinkLike.md)
-- [SourceContainer](../interfaces/sink.SourceContainer.md)
 - [SourceLike](../interfaces/sink.SourceLike.md)
 
 ### Type Aliases
@@ -18,6 +17,8 @@
 
 ### Functions
 
+- [createSkipFirstOperator](sink.md#createskipfirstoperator)
+- [createTakeFirstOperator](sink.md#createtakefirstoperator)
 - [createTakeLastOperator](sink.md#createtakelastoperator)
 - [createTakeWhileOperator](sink.md#createtakewhileoperator)
 - [notifyDecodeWithCharset](sink.md#notifydecodewithcharset)
@@ -28,8 +29,6 @@
 - [notifyPairwise](sink.md#notifypairwise)
 - [notifyReduce](sink.md#notifyreduce)
 - [notifyScan](sink.md#notifyscan)
-- [notifySkipFirst](sink.md#notifyskipfirst)
-- [notifyTakeFirst](sink.md#notifytakefirst)
 
 ## Type Aliases
 
@@ -46,6 +45,90 @@
 
 ## Functions
 
+### createSkipFirstOperator
+
+▸ **createSkipFirstOperator**<`C`\>(`m`, `SkipFirstSink`): <T_1\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
+| `SkipFirstSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `skipCount`: `number`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `count`: `number` ; `delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\> ; `skipCount`: `number`  } |
+
+#### Returns
+
+`fn`
+
+▸ <`T_1`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T_1` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+##### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+___
+
+### createTakeFirstOperator
+
+▸ **createTakeFirstOperator**<`C`\>(`m`, `TakeFirstSink`): <T_1\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/sink.SourceLike.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
+| `TakeFirstSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `maxCount`: `number`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `count`: `number` ; `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `maxCount`: `number`  } |
+
+#### Returns
+
+`fn`
+
+▸ <`T_1`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T_1` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+##### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+___
+
 ### createTakeLastOperator
 
 ▸ **createTakeLastOperator**<`C`\>(`m`, `TakeLastSink`): <T_1\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
@@ -61,7 +144,7 @@
 | Name | Type |
 | :------ | :------ |
 | `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Sink`](../interfaces/sink.Sink.md)<`C`\> & [`Lift`](../interfaces/sink.Lift.md)<`C`\> |
-| `TakeLastSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `count`: `number`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `last`: `T`[]  } |
+| `TakeLastSink` | <T\>(`delegate`: [`SinkOf`](sink.md#sinkof)<`C`, `T`\>, `maxCount`: `number`) => [`SinkOf`](sink.md#sinkof)<`C`, `T`\> & { `last`: `T`[] ; `maxCount`: `number`  } |
 
 #### Returns
 
@@ -304,52 +387,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `acc`: `TAcc` ; `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`TAcc`\> ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
-| `next` | `T` |
-
-#### Returns
-
-`void`
-
-___
-
-### notifySkipFirst
-
-▸ **notifySkipFirst**<`T`\>(`this`, `next`): `void`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `count`: `number` ; `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `skipCount`: `number`  } |
-| `next` | `T` |
-
-#### Returns
-
-`void`
-
-___
-
-### notifyTakeFirst
-
-▸ **notifyTakeFirst**<`T`\>(`this`, `next`): `void`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `this` | [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> & { `count`: `number` ; `delegate`: [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> ; `maxCount`: `number`  } |
 | `next` | `T` |
 
 #### Returns

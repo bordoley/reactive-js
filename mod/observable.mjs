@@ -6,7 +6,7 @@ import { none, isNone, isSome } from './option.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { map as map$1, everySatisfy } from './readonlyArray.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifyTakeFirst, notifySkipFirst, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, createTakeFirstOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 
@@ -1332,30 +1332,14 @@ const scan = (reducer, initialValue) => {
     return lift(operator);
 };
 
-class TakeFirstObserver extends Observer {
+const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftT }, class TakeFirstObserver extends Observer {
     constructor(delegate, maxCount) {
         super(delegate);
         this.delegate = delegate;
         this.maxCount = maxCount;
         this.count = 0;
     }
-}
-TakeFirstObserver.prototype.notify = notifyTakeFirst;
-/**
- * Returns an `ObservableLike` that only emits the first `count` values emitted by the source.
- *
- * @param count The maximum number of values to emit.
- */
-const takeFirst = (options = {}) => {
-    const { count = 1 } = options;
-    const operator = (delegate) => {
-        const observer = new TakeFirstObserver(delegate, count);
-        bindDisposables(observer, delegate);
-        return observer;
-    };
-    operator.isSynchronous = true;
-    return observable => count > 0 ? pipe(observable, lift(operator)) : empty(fromArrayT);
-};
+});
 
 const notifyDelegate = (observer) => {
     if (observer.queue.length > 0 && observer.hasLatest) {
@@ -1464,30 +1448,19 @@ class SharedObservable extends AbstractContainer {
  */
 const share = (scheduler, options) => observable => new SharedObservable(observable, publish(scheduler, options));
 
-class SkipFirstObserver extends Observer {
+/**
+ * Returns an `ObservableLike` that skips the first count items emitted by the source.
+ *
+ * @param count The number of items emitted by source that should be skipped.
+ */
+const skipFirst = createSkipFirstOperator(liftT, class SkipFirstObserver extends Observer {
     constructor(delegate, skipCount) {
         super(delegate);
         this.delegate = delegate;
         this.skipCount = skipCount;
         this.count = 0;
     }
-}
-SkipFirstObserver.prototype.notify = notifySkipFirst;
-/**
- * Returns an `ObservableLike` that skips the first count items emitted by the source.
- *
- * @param count The number of items emitted by source that should be skipped.
- */
-const skipFirst = (options = {}) => {
-    const { count = 1 } = options;
-    const operator = (delegate) => {
-        const observer = new SkipFirstObserver(delegate, count);
-        bindDisposables(observer, delegate);
-        return observer;
-    };
-    operator.isSynchronous = true;
-    return observable => count > 0 ? pipe(observable, lift(operator)) : observable;
-};
+});
 
 /**
  * Returns an `ObservableLike` instance that subscribes to the source on the specified `SchedulerLike`.

@@ -2,8 +2,8 @@
 import { raise, pipe, strictEquality, compose, negate, alwaysTrue, isEqualTo, identity } from './functions.mjs';
 import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithoutErrorTeardown, bindDisposables } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
-import { AbstractContainer, fromValue, empty } from './container.mjs';
-import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, notifySkipFirst, notifyTakeFirst, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
+import { AbstractContainer, fromValue } from './container.mjs';
+import { notifyDecodeWithCharset, notifyDistinctUntilChanged, notifyKeep, notifyMap, notifyOnNotify, notifyPairwise, notifyReduce, notifyScan, createSkipFirstOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './sink.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 class Sink extends AbstractDisposable {
@@ -38,6 +38,9 @@ const createDelegatingSink = (delegate) => {
     return sink;
 };
 const sink = (sink) => observable => observable.run(sink);
+const sinkT = {
+    sink,
+};
 
 class RunnableImpl extends AbstractContainer {
     constructor(_run) {
@@ -385,24 +388,14 @@ const scan = (reducer, initialValue) => {
     return lift(operator);
 };
 
-class SkipFirstSink extends Sink {
+const skipFirst = createSkipFirstOperator(liftT, class SkipFirstSink extends Sink {
     constructor(delegate, skipCount) {
         super();
         this.delegate = delegate;
         this.skipCount = skipCount;
         this.count = 0;
     }
-}
-SkipFirstSink.prototype.notify = notifySkipFirst;
-const skipFirst = (options = {}) => {
-    const { count = 1 } = options;
-    const operator = (delegate) => {
-        const sink = new SkipFirstSink(delegate, count);
-        bindDisposables(sink, delegate);
-        return sink;
-    };
-    return runnable => (count > 0 ? pipe(runnable, lift(operator)) : runnable);
-};
+});
 
 class SomeSatisfySink extends Sink {
     constructor(predicate) {
@@ -426,26 +419,16 @@ const contains = (value, options = {}) => {
     return someSatisfy(isEqualTo(value, equality));
 };
 
-class TakeFirstSink extends Sink {
+const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftT }, class TakeFirstSink extends Sink {
     constructor(delegate, maxCount) {
         super();
         this.delegate = delegate;
         this.maxCount = maxCount;
         this.count = 0;
     }
-}
-TakeFirstSink.prototype.notify = notifyTakeFirst;
-const takeFirst = (options = {}) => {
-    const { count = 1 } = options;
-    const operator = (delegate) => {
-        const sink = new TakeFirstSink(delegate, count);
-        bindDisposables(sink, delegate);
-        return sink;
-    };
-    return observable => count > 0 ? pipe(observable, lift(operator)) : empty(fromArrayT);
-};
+});
 
-const takeLast = createTakeLastOperator({ ...fromArrayT, lift, sink }, class TakeLastSink extends Sink {
+const takeLast = createTakeLastOperator({ ...fromArrayT, ...liftT, sink }, class TakeLastSink extends Sink {
     constructor(delegate, maxCount) {
         super();
         this.delegate = delegate;

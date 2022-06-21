@@ -2,7 +2,7 @@ import { AbstractDisposable, addDisposable } from "../disposable";
 import { __DEV__ } from "../env";
 import { SideEffect1, raise } from "../functions";
 import { RunnableLike } from "../runnable";
-import { SinkLike } from "../sink";
+import { SinkLike, Sink as SinkM } from "../sink";
 
 export class Sink<T> extends AbstractDisposable implements SinkLike<T> {
   get type(): this {
@@ -44,3 +44,7 @@ export const sink =
   <T>(sink: Sink<T>): SideEffect1<RunnableLike<T>> =>
   observable =>
     observable.run(sink);
+
+export const sinkT: SinkM<RunnableLike<unknown>> = {
+  sink,
+};
