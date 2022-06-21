@@ -20,10 +20,14 @@ import {
 } from "./functions";
 import { fromArrayT } from "./observable/fromArray";
 import { liftT } from "./observable/lift";
-import { Observer } from "./observable/observer";
+import {
+  Observer,
+  createDelegatingObserver as createDelegatingSink,
+} from "./observable/observer";
 import { Option, none } from "./option";
 import {
   SourceLike,
+  createCatchErrorOperator,
   createDecodeWithCharsetOperator,
   createDistinctUntilChangedOperator,
   createKeepOperator,
@@ -134,7 +138,6 @@ export { using } from "./observable/using";
 export { defer } from "./observable/observable";
 export { Observer } from "./observable/observer";
 export { buffer } from "./observable/buffer";
-export { catchError } from "./observable/catchError";
 export { map, mapT } from "./observable/map";
 export { mapAsync } from "./observable/mapAsync";
 export {
@@ -166,6 +169,13 @@ export { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
 export { toEnumerable } from "./observable/toEnumerable";
 export { toRunnable } from "./observable/toRunnable";
 export { toPromise } from "./observable/toPromise";
+
+export const catchError: <T>(
+  onError: Function1<unknown, ObservableLike<T> | void>,
+) => ObservableOperator<T, T> = createCatchErrorOperator({
+  ...liftT,
+  createDelegatingSink,
+});
 
 export const decodeWithCharset: (
   charset?: string,

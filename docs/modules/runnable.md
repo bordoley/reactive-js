@@ -35,6 +35,7 @@
 
 ### Functions
 
+- [catchError](runnable.md#catcherror)
 - [concat](runnable.md#concat)
 - [concatAll](runnable.md#concatall)
 - [contains](runnable.md#contains)
@@ -156,6 +157,28 @@ ___
 • `Const` **type**: [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
 ## Functions
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+
+___
 
 ### concat
 

@@ -90,7 +90,6 @@ class DelegatingObserver<T> extends Observer<T> {
   }
 }
 
-// FIXME: Need to bind the disposables.
 export const createDelegatingObserver = <T>(
   delegate: Observer<T>,
 ): Observer<T> => new DelegatingObserver(delegate);

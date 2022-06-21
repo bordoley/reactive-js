@@ -1,8 +1,8 @@
 /// <reference types="./observable.d.ts" />
-import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, toErrorHandler, createSerialDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown, bindDisposables } from './disposable.mjs';
+import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, toErrorHandler, createSerialDisposable, bindDisposables } from './disposable.mjs';
 import { pipe, raise, ignore, arrayEquality, defer as defer$1, compose, returns } from './functions.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
-import { AbstractSource, sinkInto, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './source.mjs';
+import { AbstractSource, sinkInto, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createTakeLastOperator, createTakeWhileOperator } from './source.mjs';
 import { __DEV__ } from './env.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { empty, fromValue, concatMap, throws, AbstractContainer } from './container.mjs';
@@ -156,7 +156,6 @@ class DelegatingObserver extends Observer {
         this.delegate.notify(next);
     }
 }
-// FIXME: Need to bind the disposables.
 const createDelegatingObserver = (delegate) => new DelegatingObserver(delegate);
 
 const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
@@ -842,39 +841,6 @@ function buffer(options = {}) {
     operator.isSynchronous = delay === Number.MAX_SAFE_INTEGER;
     return lift(operator);
 }
-
-/**
- * Returns an `ObservableLike` which catches errors produced by the source and either continues with
- * the `ObservableLike` returned from the `onError` callback or swallows the error if
- * void is returned.
- *
- * @param onError a function that takes source error and either returns an `ObservableLike`
- * to continue with or void if the error should be propagated.
- */
-const catchError = (onError) => {
-    const operator = (delegate) => {
-        const observer = createDelegatingObserver(delegate);
-        addDisposable(delegate, observer);
-        addOnDisposedWithoutError(observer, delegate);
-        addOnDisposedWithErrorTeardown(observer, cause => {
-            try {
-                const result = onError(cause) || none;
-                if (isSome(result)) {
-                    pipe(result, sinkInto(delegate));
-                }
-                else {
-                    pipe(delegate, dispose());
-                }
-            }
-            catch (cause) {
-                pipe(delegate, dispose({ cause: { parent: cause, cause } }));
-            }
-        });
-        return observer;
-    };
-    operator.isSynchronous = false;
-    return lift(operator);
-};
 
 const map = createMapOperator(liftT, class MapObserver extends Observer {
     constructor(delegate, mapper) {
@@ -1694,6 +1660,10 @@ const toPromise = (scheduler) => observable => new Promise((resolve, reject) => 
 });
 
 const type = undefined;
+const catchError = createCatchErrorOperator({
+    ...liftT,
+    createDelegatingSink: createDelegatingObserver,
+});
 const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftT, ...fromArrayT }, class DecodeWithCharsetObserver extends Observer {
     constructor(delegate, textDecoder) {
         super(delegate);

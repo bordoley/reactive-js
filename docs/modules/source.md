@@ -10,6 +10,7 @@
 
 ### Interfaces
 
+- [CreateDelegatingSink](../interfaces/source.CreateDelegatingSink.md)
 - [Lift](../interfaces/source.Lift.md)
 - [SinkLike](../interfaces/source.SinkLike.md)
 - [SourceLike](../interfaces/source.SourceLike.md)
@@ -20,6 +21,7 @@
 
 ### Functions
 
+- [createCatchErrorOperator](source.md#createcatcherroroperator)
 - [createDecodeWithCharsetOperator](source.md#createdecodewithcharsetoperator)
 - [createDistinctUntilChangedOperator](source.md#createdistinctuntilchangedoperator)
 - [createKeepOperator](source.md#createkeepoperator)
@@ -48,6 +50,46 @@
 | `T` | `T` |
 
 ## Functions
+
+### createCatchErrorOperator
+
+▸ **createCatchErrorOperator**<`C`\>(`m`): <T\>(`onError`: [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ContainerOf`](container.md#containerof)<`C`, `T`\>\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T`, `T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`CreateDelegatingSink`](../interfaces/source.CreateDelegatingSink.md)<`C`\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
+
+#### Returns
+
+`fn`
+
+▸ <`T`\>(`onError`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T`, `T`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ContainerOf`](container.md#containerof)<`C`, `T`\>\> |
+
+##### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T`, `T`\>
+
+___
 
 ### createDecodeWithCharsetOperator
 
