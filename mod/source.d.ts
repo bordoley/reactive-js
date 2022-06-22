@@ -1,6 +1,6 @@
 import { ContainerLike, AbstractContainer, Container, ContainerOf, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
 import { DisposableLike } from "./disposable.mjs";
-import { Function1, SideEffect1, Equality, Predicate, Reducer, Factory } from "./functions.mjs";
+import { Function1, SideEffect1, Equality, Predicate, Reducer, Factory, Function2, Function3, Function4, Function5 } from "./functions.mjs";
 import { Option } from "./option.mjs";
 interface SinkLike<T> extends DisposableLike, ContainerLike {
     assertState(this: SinkLike<T>): void;
@@ -130,4 +130,33 @@ declare class AbstractUsingSource<C extends SourceLike, TResource extends Dispos
     constructor(resourceFactory: Function1<SinkOf<C, T>, TResource | readonly TResource[]>, sourceFactory: (...resources: readonly TResource[]) => C);
     sink(sink: SinkOf<C, T>): void;
 }
-export { AbstractSource, AbstractUsingSource, CreateDelegatingSink, Lift, SinkLike, SinkOf, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, sinkInto };
+declare const createUsing: <C extends SourceLike>(UsingSource: new <TResource extends DisposableLike, T>(resourceFactory: Function1<SinkOf<C, T>, TResource | readonly TResource[]>, sourceFactory: (...resources: readonly TResource[]) => C) => C & {
+    readonly resourceFactory: Function1<SinkOf<C, T>, TResource | readonly TResource[]>;
+    readonly sourceFactory: (...resources: readonly TResource[]) => C;
+}) => {
+    <TResource_1 extends DisposableLike, T_1>(resourceFactory: Function1<SinkOf<C, T_1>, TResource_1>, observableFactory: Function1<TResource_1, C>): C;
+    <TResource1 extends DisposableLike, TResource2 extends DisposableLike, T_2>(resourceFactory: Function1<SinkOf<C, T_2>, readonly [
+        TResource1,
+        TResource2
+    ]>, observableFactory: Function2<TResource1, TResource2, C>): C;
+    <TResource1_1 extends DisposableLike, TResource2_1 extends DisposableLike, TResource3 extends DisposableLike, T_3>(resourceFactory: Function1<SinkOf<C, T_3>, readonly [
+        TResource1_1,
+        TResource2_1,
+        TResource3
+    ]>, observableFactory: Function3<TResource1_1, TResource2_1, TResource3, C>): C;
+    <TResource1_2 extends DisposableLike, TResource2_2 extends DisposableLike, TResource3_1 extends DisposableLike, TResource4 extends DisposableLike, T_4>(resourceFactory: Function1<SinkOf<C, T_4>, readonly [
+        TResource1_2,
+        TResource2_2,
+        TResource3_1,
+        TResource4
+    ]>, observableFactory: Function4<TResource1_2, TResource2_2, TResource3_1, TResource4, C>): C;
+    <TResource1_3 extends DisposableLike, TResource2_3 extends DisposableLike, TResource3_2 extends DisposableLike, TResource4_1 extends DisposableLike, TResource5 extends DisposableLike, T_5>(resourceFactory: Function1<SinkOf<C, T_5>, readonly [
+        TResource1_3,
+        TResource2_3,
+        TResource3_2,
+        TResource4_1,
+        TResource5
+    ]>, observableFactory: Function5<TResource1_3, TResource2_3, TResource3_2, TResource4_1, TResource5, C>): C;
+    <TResource_2 extends DisposableLike, T_6>(resourceFactory: Function1<SinkOf<C, T_6>, TResource_2 | readonly TResource_2[]>, runnableFactory: (...resources: readonly TResource_2[]) => C): C;
+};
+export { AbstractSource, AbstractUsingSource, CreateDelegatingSink, Lift, SinkLike, SinkOf, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };

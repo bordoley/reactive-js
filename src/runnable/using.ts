@@ -1,98 +1,28 @@
 import { DisposableLike } from "../disposable";
-import {
-  Factory,
-  Function1,
-  Function2,
-  Function3,
-  Function4,
-  Function5,
-} from "../functions";
+import { Sink } from "./sinks";
 import { RunnableLike } from "../runnable";
-import { AbstractUsingSource } from "../source";
+import { AbstractSource, createUsing } from "../source";
+import { Function1 } from "../functions";
 
-class UsingObservable<TResource extends DisposableLike, T>
-  extends AbstractUsingSource<RunnableLike<unknown>, TResource, T>
-  implements RunnableLike<T> {}
+export const using = createUsing(
+  class UsingObservable<TResource extends DisposableLike, T>
+    extends AbstractSource<T, Sink<T>>
+    implements RunnableLike<T>
+  {
+    readonly isSynchronous = false;
 
-export function using<TResource extends DisposableLike, T>(
-  resourceFactory: Factory<TResource>,
-  observableFactory: Function1<TResource, RunnableLike<T>>,
-): RunnableLike<T>;
+    constructor(
+      readonly resourceFactory: Function1<
+        Sink<T>,
+        TResource | readonly TResource[]
+      >,
+      readonly sourceFactory: (
+        ...resources: readonly TResource[]
+      ) => RunnableLike<T>,
+    ) {
+      super();
+    }
 
-export function using<
-  TResource1 extends DisposableLike,
-  TResource2 extends DisposableLike,
-  T,
->(
-  resourceFactory: Factory<[TResource1, TResource2]>,
-  observableFactory: Function2<TResource1, TResource2, RunnableLike<T>>,
-): RunnableLike<T>;
-
-export function using<
-  TResource1 extends DisposableLike,
-  TResource2 extends DisposableLike,
-  TResource3 extends DisposableLike,
-  T,
->(
-  resourceFactory: Factory<[TResource1, TResource2, TResource3]>,
-  observableFactory: Function3<
-    TResource1,
-    TResource2,
-    TResource3,
-    RunnableLike<T>
-  >,
-): RunnableLike<T>;
-
-export function using<
-  TResource1 extends DisposableLike,
-  TResource2 extends DisposableLike,
-  TResource3 extends DisposableLike,
-  TResource4 extends DisposableLike,
-  T,
->(
-  resourceFactory: Factory<[TResource1, TResource2, TResource3, TResource4]>,
-  observableFactory: Function4<
-    TResource1,
-    TResource2,
-    TResource3,
-    TResource4,
-    RunnableLike<T>
-  >,
-): RunnableLike<T>;
-
-export function using<
-  TResource1 extends DisposableLike,
-  TResource2 extends DisposableLike,
-  TResource3 extends DisposableLike,
-  TResource4 extends DisposableLike,
-  TResource5 extends DisposableLike,
-  T,
->(
-  resourceFactory: Factory<
-    [TResource1, TResource2, TResource3, TResource4, TResource5]
-  >,
-  observableFactory: Function5<
-    TResource1,
-    TResource2,
-    TResource3,
-    TResource4,
-    TResource5,
-    RunnableLike<T>
-  >,
-): RunnableLike<T>;
-
-export function using<TResource extends DisposableLike, T>(
-  resourceFactory: Factory<TResource | readonly TResource[]>,
-  observableFactory: (...resources: readonly TResource[]) => RunnableLike<T>,
-): RunnableLike<T>;
-
-/**
- * Creates an `RunnableLike` that uses one or more resources which
- * will be disposed when the RunnableLike disposes it's only subscription.
- */
-export function using<TResource extends DisposableLike, T>(
-  resourceFactory: Factory<TResource | readonly TResource[]>,
-  runnableFactory: (...resources: readonly TResource[]) => RunnableLike<T>,
-): RunnableLike<T> {
-  return new UsingObservable(resourceFactory, runnableFactory);
-}
+    sink(_: Sink<T>) {}
+  },
+);

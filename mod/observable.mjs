@@ -2,7 +2,7 @@
 import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, toErrorHandler, createSerialDisposable, bindDisposables } from './disposable.mjs';
 import { pipe, raise, ignore, arrayEquality, defer as defer$1, compose, returns } from './functions.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
-import { AbstractSource, sinkInto, AbstractUsingSource, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
+import { AbstractSource, sinkInto, createUsing, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { __DEV__ } from './env.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { empty, fromValue, concatMap, throws, AbstractContainer } from './container.mjs';
@@ -759,19 +759,15 @@ const neverInstance = new NeverObservable();
  */
 const never = () => neverInstance;
 
-class UsingObservable extends AbstractUsingSource {
-    constructor() {
-        super(...arguments);
+const using = createUsing(class UsingObservable extends AbstractSource {
+    constructor(resourceFactory, sourceFactory) {
+        super();
+        this.resourceFactory = resourceFactory;
+        this.sourceFactory = sourceFactory;
         this.isSynchronous = false;
     }
-}
-/**
- * Creates an `ObservableLike` that uses one or more resources which
- * will be disposed when the ObservableLike disposes it's only subscription.
- */
-function using(resourceFactory, observableFactory) {
-    return new UsingObservable(resourceFactory, observableFactory);
-}
+    sink(_) { }
+});
 
 function onDispose$3(error) {
     const buffer = this.buffer;

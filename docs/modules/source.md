@@ -38,6 +38,7 @@
 - [createTakeLastOperator](source.md#createtakelastoperator)
 - [createTakeWhileOperator](source.md#createtakewhileoperator)
 - [createThrowIfEmptyOperator](source.md#createthrowifemptyoperator)
+- [createUsing](source.md#createusing)
 - [sinkInto](source.md#sinkinto)
 
 ## Type Aliases
@@ -706,6 +707,158 @@ ___
 ##### Returns
 
 [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+___
+
+### createUsing
+
+▸ **createUsing**<`C`\>(`UsingSource`): <TResource_1, T_1\>(`resourceFactory`: [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_1`\>, `TResource_1`\>, `observableFactory`: [`Function1`](functions.md#function1)<`TResource_1`, `C`\>) => `C`<TResource1, TResource2, T_2\>(`resourceFactory`: [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_2`\>, readonly [`TResource1`, `TResource2`]\>, `observableFactory`: [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, `C`\>) => `C`<TResource1_1, TResource2_1, TResource3, T_3\>(`resourceFactory`: [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_3`\>, readonly [`TResource1_1`, `TResource2_1`, `TResource3`]\>, `observableFactory`: [`Function3`](functions.md#function3)<`TResource1_1`, `TResource2_1`, `TResource3`, `C`\>) => `C`<TResource1_2, TResource2_2, TResource3_1, TResource4, T_4\>(`resourceFactory`: [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_4`\>, readonly [`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`]\>, `observableFactory`: [`Function4`](functions.md#function4)<`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`, `C`\>) => `C`<TResource1_3, TResource2_3, TResource3_2, TResource4_1, TResource5, T_5\>(`resourceFactory`: [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_5`\>, readonly [`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`]\>, `observableFactory`: [`Function5`](functions.md#function5)<`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`, `C`\>) => `C`<TResource_2, T_6\>(`resourceFactory`: [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_6`\>, `TResource_2` \| readonly `TResource_2`[]\>, `runnableFactory`: (...`resources`: readonly `TResource_2`[]) => `C`) => `C`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `UsingSource` | <TResource, T\>(`resourceFactory`: [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T`\>, `TResource` \| readonly `TResource`[]\>, `sourceFactory`: (...`resources`: readonly `TResource`[]) => `C`) => `C` & { `resourceFactory`: [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T`\>, `TResource` \| readonly `TResource`[]\> ; `sourceFactory`: (...`resources`: readonly `TResource`[]) => `C`  } |
+
+#### Returns
+
+`fn`
+
+▸ <`TResource_1`, `T_1`\>(`resourceFactory`, `observableFactory`): `C`
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource_1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T_1` | `T_1` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_1`\>, `TResource_1`\> |
+| `observableFactory` | [`Function1`](functions.md#function1)<`TResource_1`, `C`\> |
+
+##### Returns
+
+`C`
+
+▸ <`TResource1`, `TResource2`, `T_2`\>(`resourceFactory`, `observableFactory`): `C`
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T_2` | `T_2` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_2`\>, readonly [`TResource1`, `TResource2`]\> |
+| `observableFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, `C`\> |
+
+##### Returns
+
+`C`
+
+▸ <`TResource1_1`, `TResource2_1`, `TResource3`, `T_3`\>(`resourceFactory`, `observableFactory`): `C`
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource1_1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource2_1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T_3` | `T_3` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_3`\>, readonly [`TResource1_1`, `TResource2_1`, `TResource3`]\> |
+| `observableFactory` | [`Function3`](functions.md#function3)<`TResource1_1`, `TResource2_1`, `TResource3`, `C`\> |
+
+##### Returns
+
+`C`
+
+▸ <`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`, `T_4`\>(`resourceFactory`, `observableFactory`): `C`
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource1_2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource2_2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource3_1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource4` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T_4` | `T_4` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_4`\>, readonly [`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`]\> |
+| `observableFactory` | [`Function4`](functions.md#function4)<`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`, `C`\> |
+
+##### Returns
+
+`C`
+
+▸ <`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`, `T_5`\>(`resourceFactory`, `observableFactory`): `C`
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource1_3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource2_3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource3_2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource4_1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource5` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T_5` | `T_5` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_5`\>, readonly [`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`]\> |
+| `observableFactory` | [`Function5`](functions.md#function5)<`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`, `C`\> |
+
+##### Returns
+
+`C`
+
+▸ <`TResource_2`, `T_6`\>(`resourceFactory`, `runnableFactory`): `C`
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TResource_2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T_6` | `T_6` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `resourceFactory` | [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_6`\>, `TResource_2` \| readonly `TResource_2`[]\> |
+| `runnableFactory` | (...`resources`: readonly `TResource_2`[]) => `C` |
+
+##### Returns
+
+`C`
 
 ___
 

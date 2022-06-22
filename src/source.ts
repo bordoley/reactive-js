@@ -24,6 +24,10 @@ import {
   Equality,
   Factory,
   Function1,
+  Function2,
+  Function3,
+  Function4,
+  Function5,
   Predicate,
   Reducer,
   SideEffect1,
@@ -758,3 +762,122 @@ export class AbstractUsingSource<
     }
   }
 }
+
+export const createUsing = <C extends SourceLike>(
+  UsingSource: new <TResource extends DisposableLike, T>(
+    resourceFactory: Function1<SinkOf<C, T>, TResource | readonly TResource[]>,
+    sourceFactory: (...resources: readonly TResource[]) => C,
+  ) => C & {
+    readonly resourceFactory: Function1<
+      SinkOf<C, T>,
+      TResource | readonly TResource[]
+    >;
+    readonly sourceFactory: (...resources: readonly TResource[]) => C;
+  },
+) => {
+  UsingSource.prototype.sink = function sink<TResource, T>(
+    this: C & {
+      readonly resourceFactory: Function1<
+        SinkOf<C, T>,
+        TResource | readonly TResource[]
+      >;
+      readonly sourceFactory: (...resources: readonly TResource[]) => C;
+    },
+    sink: SinkOf<C, T>,
+  ) {
+    try {
+      const resources = this.resourceFactory(sink);
+
+      const resourcesArray = Array.isArray(resources) ? resources : [resources];
+      const source = this.sourceFactory(...resourcesArray);
+      for (const r of resourcesArray) {
+        addDisposableDisposeParentOnChildError(sink, r);
+      }
+      pipe(source, sinkInto(sink));
+    } catch (cause) {
+      sink.dispose({ cause });
+    }
+  };
+
+  function using<TResource extends DisposableLike, T>(
+    resourceFactory: Function1<SinkOf<C, T>, TResource>,
+    observableFactory: Function1<TResource, C>,
+  ): C;
+  function using<
+    TResource1 extends DisposableLike,
+    TResource2 extends DisposableLike,
+    T,
+  >(
+    resourceFactory: Function1<SinkOf<C, T>, readonly [TResource1, TResource2]>,
+    observableFactory: Function2<TResource1, TResource2, C>,
+  ): C;
+
+  function using<
+    TResource1 extends DisposableLike,
+    TResource2 extends DisposableLike,
+    TResource3 extends DisposableLike,
+    T,
+  >(
+    resourceFactory: Function1<
+      SinkOf<C, T>,
+      readonly [TResource1, TResource2, TResource3]
+    >,
+    observableFactory: Function3<TResource1, TResource2, TResource3, C>,
+  ): C;
+
+  function using<
+    TResource1 extends DisposableLike,
+    TResource2 extends DisposableLike,
+    TResource3 extends DisposableLike,
+    TResource4 extends DisposableLike,
+    T,
+  >(
+    resourceFactory: Function1<
+      SinkOf<C, T>,
+      readonly [TResource1, TResource2, TResource3, TResource4]
+    >,
+    observableFactory: Function4<
+      TResource1,
+      TResource2,
+      TResource3,
+      TResource4,
+      C
+    >,
+  ): C;
+
+  function using<
+    TResource1 extends DisposableLike,
+    TResource2 extends DisposableLike,
+    TResource3 extends DisposableLike,
+    TResource4 extends DisposableLike,
+    TResource5 extends DisposableLike,
+    T,
+  >(
+    resourceFactory: Function1<
+      SinkOf<C, T>,
+      readonly [TResource1, TResource2, TResource3, TResource4, TResource5]
+    >,
+    observableFactory: Function5<
+      TResource1,
+      TResource2,
+      TResource3,
+      TResource4,
+      TResource5,
+      C
+    >,
+  ): C;
+
+  function using<TResource extends DisposableLike, T>(
+    resourceFactory: Function1<SinkOf<C, T>, TResource | readonly TResource[]>,
+    runnableFactory: (...resources: readonly TResource[]) => C,
+  ): C;
+
+  function using<TResource extends DisposableLike, T>(
+    resourceFactory: Function1<SinkOf<C, T>, TResource | readonly TResource[]>,
+    runnableFactory: (...resources: readonly TResource[]) => C,
+  ): C {
+    return new UsingSource(resourceFactory, runnableFactory);
+  }
+
+  return using;
+};
