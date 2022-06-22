@@ -2,7 +2,7 @@
 import { empty as empty$1, fromValue, ignoreElements, endWith, concatMap, concatWith } from './container.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError } from './disposable.mjs';
 import { pipe, compose, returns, updaterReducer, identity as identity$1, flip } from './functions.mjs';
-import { createSubject, publish, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, reduce, createObservable, mapT, concatAllT, takeFirst, withLatestFrom, never, onNotify, takeWhile, scanAsync, onSubscribe, switchAll } from './observable.mjs';
+import { createSubject, publish, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, merge, onNotify, dispatchTo, onSubscribe, observable, __memo, __observe, reduce, createObservable, mapT, concatAllT, takeFirst, withLatestFrom, never, takeWhile, scanAsync, switchAll } from './observable.mjs';
 import { isNone, none } from './option.mjs';
 import { sinkInto } from './source.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
@@ -177,15 +177,13 @@ const flow = ({ scheduler, } = {}) => observable => {
 };
 
 const ignoreAndNotifyVoid = compose(ignoreElements(keepT), endWith({ ...fromArrayT, ...concatT }, none));
-const sink = (src, dest) => using(scheduler => {
-    const srcStream = pipe(src, stream(scheduler));
-    const destStream = pipe(dest, stream(scheduler));
-    const srcSubscription = pipe(srcStream, subscribe(scheduler, destStream.dispatch, destStream));
-    const destSubscription = pipe(destStream, subscribe(scheduler, srcStream.dispatch, srcStream));
-    addDisposable(srcSubscription, destStream);
-    addDisposable(destSubscription, srcStream);
-    return destStream;
-}, ignoreAndNotifyVoid);
+const createSinkObs = (srcStream, destStream) => merge(pipe(srcStream, onNotify(dispatchTo(destStream)), ignoreElements(keepT), onSubscribe(() => destStream)), pipe(destStream, onNotify(dispatchTo(srcStream)), ignoreElements(keepT), onSubscribe(() => srcStream)));
+const sink = (src, dest) => pipe(observable(() => {
+    const srcStream = __stream(src);
+    const destStream = __stream(dest);
+    const obs = __memo(createSinkObs, srcStream, destStream);
+    return __observe(obs);
+}), ignoreAndNotifyVoid);
 
 class FlowableSinkAccumulatorImpl extends AbstractDisposable {
     constructor(subject, streamable) {
@@ -244,7 +242,7 @@ const fromArray = (options = {}) => values => {
     return createStreamable(compose(scan(fromArrayScanner, returns(startIndex - 1)), concatMap({ ...mapT, ...concatAllT }, (i) => fromValueWithDelay(values[i])), takeFirst({ count: endIndex - startIndex })));
 };
 
-const _fromEnumerable = (enumerable) => createStreamable(compose(withLatestFrom(using(_ => enumerate(enumerable), compose(fromValue(fromArrayT), concatWith(concatT, never()))), (_, enumerator) => enumerator), onNotify(move), takeWhile(hasCurrent), map(current)));
+const _fromEnumerable = (enumerable) => createStreamable(compose(withLatestFrom(using(() => enumerate(enumerable), compose(fromValue(fromArrayT), concatWith(concatT, never()))), (_, enumerator) => enumerator), onNotify(move), takeWhile(hasCurrent), map(current)));
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
  *

@@ -1,48 +1,62 @@
 import { endWith, ignoreElements } from "../container";
-import { addDisposable } from "../disposable";
 import { Function1, compose, pipe } from "../functions";
 import {
   ObservableLike,
-  StreamLike,
+  __memo,
   concatT,
+  dispatchTo,
   fromArrayT,
   keepT,
-  subscribe,
-  using,
+  merge,
+  observable,
+  onNotify,
+  StreamLike,
+  __observe,
+  onSubscribe,
 } from "../observable";
 
 import { none } from "../option";
 import { StreamableLike } from "../streamable";
-import { stream } from "./streamable";
+import { __stream } from "./streamable";
 
 const ignoreAndNotifyVoid: Function1<
-  StreamLike<any, any>,
+  ObservableLike<any>,
   ObservableLike<void>
 > = compose(
   ignoreElements(keepT),
   endWith({ ...fromArrayT, ...concatT }, none as void),
 );
 
+const createSinkObs = <TReq, T>(
+  srcStream: StreamLike<TReq, T>,
+  destStream: StreamLike<T, TReq>,
+) =>
+  merge(
+    pipe(
+      srcStream,
+      onNotify(dispatchTo(destStream)),
+      ignoreElements(keepT),
+      onSubscribe(() => destStream),
+    ),
+    pipe(
+      destStream,
+      onNotify(dispatchTo(srcStream)),
+      ignoreElements(keepT),
+      onSubscribe(() => srcStream),
+    ),
+  );
+
 export const sink = <TReq, T>(
   src: StreamableLike<TReq, T>,
   dest: StreamableLike<T, TReq>,
 ): ObservableLike<void> =>
-  using(scheduler => {
-    const srcStream = pipe(src, stream(scheduler));
-    const destStream = pipe(dest, stream(scheduler));
+  pipe(
+    observable(() => {
+      const srcStream = __stream(src);
+      const destStream = __stream(dest);
+      const obs = __memo(createSinkObs, srcStream, destStream);
 
-    const srcSubscription = pipe(
-      srcStream,
-      subscribe(scheduler, destStream.dispatch, destStream),
-    );
-
-    const destSubscription = pipe(
-      destStream,
-      subscribe(scheduler, srcStream.dispatch, srcStream),
-    );
-
-    addDisposable(srcSubscription, destStream);
-    addDisposable(destSubscription, srcStream);
-
-    return destStream;
-  }, ignoreAndNotifyVoid);
+      return __observe(obs);
+    }),
+    ignoreAndNotifyVoid,
+  );
