@@ -727,3 +727,34 @@ export const createThrowIfEmptyOperator = <C extends SourceLike>(
     return m.lift(operator);
   };
 };
+
+export class AbstractUsingSource<
+  C extends SourceLike,
+  TResource extends DisposableLike,
+  T,
+> extends AbstractSource<T, SinkOf<C, T>> {
+  constructor(
+    private readonly resourceFactory: Function1<
+      SinkOf<C, T>,
+      TResource | readonly TResource[]
+    >,
+    private readonly sourceFactory: (...resources: readonly TResource[]) => C,
+  ) {
+    super();
+  }
+
+  sink(sink: SinkOf<C, T>) {
+    try {
+      const resources = this.resourceFactory(sink);
+
+      const resourcesArray = Array.isArray(resources) ? resources : [resources];
+      const source = this.sourceFactory(...resourcesArray);
+      for (const r of resourcesArray) {
+        addDisposableDisposeParentOnChildError(sink, r);
+      }
+      pipe(source, sinkInto(sink));
+    } catch (cause) {
+      sink.dispose({ cause });
+    }
+  }
+}

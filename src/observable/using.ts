@@ -1,50 +1,20 @@
-import {
-  DisposableLike,
-  addDisposableDisposeParentOnChildError,
-} from "../disposable";
+import { DisposableLike } from "../disposable";
 import {
   Function1,
   Function2,
   Function3,
   Function4,
   Function5,
-  pipe,
 } from "../functions";
 import { ObservableLike } from "../observable";
 import { SchedulerLike } from "../scheduler";
-import { AbstractSource, sinkInto } from "../source";
-import { Observer } from "./observer";
+import { AbstractUsingSource } from "../source";
 
 class UsingObservable<TResource extends DisposableLike, T>
-  extends AbstractSource<T, Observer<T>>
+  extends AbstractUsingSource<ObservableLike<unknown>, TResource, T>
   implements ObservableLike<T>
 {
   readonly isSynchronous = false;
-
-  constructor(
-    private readonly resourceFactory: Function1<
-      SchedulerLike,
-      TResource | readonly TResource[]
-    >,
-    private readonly observableFactory: (
-      ...resources: readonly TResource[]
-    ) => ObservableLike<T>,
-  ) {
-    super();
-  }
-
-  sink(observer: Observer<T>) {
-    const resources = this.resourceFactory(observer);
-    const observableFactory = this.observableFactory;
-
-    const resourcesArray = Array.isArray(resources) ? resources : [resources];
-
-    for (const r of resourcesArray) {
-      addDisposableDisposeParentOnChildError(observer, r);
-    }
-
-    pipe(observableFactory(...resourcesArray), sinkInto(observer));
-  }
 }
 
 export function using<TResource extends DisposableLike, T>(

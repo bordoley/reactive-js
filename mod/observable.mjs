@@ -2,7 +2,7 @@
 import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, toErrorHandler, createSerialDisposable, bindDisposables } from './disposable.mjs';
 import { pipe, raise, ignore, arrayEquality, defer as defer$1, compose, returns } from './functions.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
-import { AbstractSource, sinkInto, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
+import { AbstractSource, sinkInto, AbstractUsingSource, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { __DEV__ } from './env.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { empty, fromValue, concatMap, throws, AbstractContainer } from './container.mjs';
@@ -759,21 +759,10 @@ const neverInstance = new NeverObservable();
  */
 const never = () => neverInstance;
 
-class UsingObservable extends AbstractSource {
-    constructor(resourceFactory, observableFactory) {
-        super();
-        this.resourceFactory = resourceFactory;
-        this.observableFactory = observableFactory;
+class UsingObservable extends AbstractUsingSource {
+    constructor() {
+        super(...arguments);
         this.isSynchronous = false;
-    }
-    sink(observer) {
-        const resources = this.resourceFactory(observer);
-        const observableFactory = this.observableFactory;
-        const resourcesArray = Array.isArray(resources) ? resources : [resources];
-        for (const r of resourcesArray) {
-            addDisposableDisposeParentOnChildError(observer, r);
-        }
-        pipe(observableFactory(...resourcesArray), sinkInto(observer));
     }
 }
 /**
