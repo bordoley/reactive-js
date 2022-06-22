@@ -312,27 +312,6 @@ const createThrowIfEmptyOperator = (m, ThrowIfEmptySink) => {
         return m.lift(operator);
     };
 };
-class AbstractUsingSource extends AbstractSource {
-    constructor(resourceFactory, sourceFactory) {
-        super();
-        this.resourceFactory = resourceFactory;
-        this.sourceFactory = sourceFactory;
-    }
-    sink(sink) {
-        try {
-            const resources = this.resourceFactory(sink);
-            const resourcesArray = Array.isArray(resources) ? resources : [resources];
-            const source = this.sourceFactory(...resourcesArray);
-            for (const r of resourcesArray) {
-                addDisposableDisposeParentOnChildError(sink, r);
-            }
-            pipe(source, sinkInto(sink));
-        }
-        catch (cause) {
-            sink.dispose({ cause });
-        }
-    }
-}
 const createUsing = (UsingSource) => {
     UsingSource.prototype.sink = function sink(sink) {
         try {
@@ -354,4 +333,4 @@ const createUsing = (UsingSource) => {
     return using;
 };
 
-export { AbstractSource, AbstractUsingSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };
+export { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };

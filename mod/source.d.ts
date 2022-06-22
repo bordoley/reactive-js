@@ -124,12 +124,6 @@ declare const createThrowIfEmptyOperator: <C extends SourceLike>(m: Lift<C>, Thr
     readonly delegate: SinkOf<C, T>;
     isEmpty: boolean;
 }) => <T_1>(factory: Factory<unknown>) => ContainerOperator<C, T_1, T_1>;
-declare class AbstractUsingSource<C extends SourceLike, TResource extends DisposableLike, T> extends AbstractSource<T, SinkOf<C, T>> {
-    private readonly resourceFactory;
-    private readonly sourceFactory;
-    constructor(resourceFactory: Function1<SinkOf<C, T>, TResource | readonly TResource[]>, sourceFactory: (...resources: readonly TResource[]) => C);
-    sink(sink: SinkOf<C, T>): void;
-}
 declare const createUsing: <C extends SourceLike>(UsingSource: new <TResource extends DisposableLike, T>(resourceFactory: Function1<SinkOf<C, T>, TResource | readonly TResource[]>, sourceFactory: (...resources: readonly TResource[]) => C) => C & {
     readonly resourceFactory: Function1<SinkOf<C, T>, TResource | readonly TResource[]>;
     readonly sourceFactory: (...resources: readonly TResource[]) => C;
@@ -159,4 +153,4 @@ declare const createUsing: <C extends SourceLike>(UsingSource: new <TResource ex
     ]>, observableFactory: Function5<TResource1_3, TResource2_3, TResource3_2, TResource4_1, TResource5, C>): C;
     <TResource_2 extends DisposableLike, T_6>(resourceFactory: Function1<SinkOf<C, T_6>, TResource_2 | readonly TResource_2[]>, runnableFactory: (...resources: readonly TResource_2[]) => C): C;
 };
-export { AbstractSource, AbstractUsingSource, CreateDelegatingSink, Lift, SinkLike, SinkOf, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };
+export { AbstractSource, CreateDelegatingSink, Lift, SinkLike, SinkOf, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };
