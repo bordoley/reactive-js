@@ -1,77 +1,59 @@
 import {
-  AbstractDisposable,
+  SerialDisposableLike,
   addDisposableDisposeParentOnChildError,
-  addTeardown,
+  bindDisposables,
+  createSerialDisposable,
 } from "../disposable";
-import {
-  EnumerableLike,
-  EnumerableOperator,
-  EnumeratorLike,
-} from "../enumerable";
-import { Option, isNone, isSome, none } from "../option";
-import { enumerate } from "./enumerator";
+import { EnumerableLike, EnumerableOperator } from "../enumerable";
+import { Enumerator, EnumeratorBase, enumerate } from "./enumerator";
 import { lift } from "./lift";
 
-class ConcatAllEnumerator<T>
-  extends AbstractDisposable
-  implements EnumeratorLike<T>
-{
-  current = none as unknown as T;
-  hasCurrent = false;
-
-  enumerator: Option<EnumeratorLike<T>> = none;
-
-  constructor(private readonly delegate: EnumeratorLike<EnumerableLike<T>>) {
+class ConcatAllEnumerator<T> extends EnumeratorBase<T> {
+  constructor(
+    private readonly delegate: Enumerator<EnumerableLike<T>>,
+    readonly enumerator: SerialDisposableLike,
+  ) {
     super();
   }
 
   move(): boolean {
-    this.current = none as unknown as T;
-    this.hasCurrent = false;
+    this.reset();
 
-    const delegate = this.delegate;
-    if (isNone(this.enumerator) && delegate.move()) {
-      const enumerator = enumerate(delegate.current);
-      addDisposableDisposeParentOnChildError(this, enumerator);
-      this.enumerator = enumerator;
+    const { delegate, enumerator } = this;
+
+    if (enumerator.inner.isDisposed && delegate.move()) {
+      enumerator.inner = enumerate(delegate.current);
     }
 
-    while (isSome(this.enumerator)) {
-      const enumerator = this.enumerator;
-
-      if (enumerator.move()) {
-        this.current = enumerator.current;
-        this.hasCurrent = true;
+    while (
+      enumerator.inner instanceof Enumerator &&
+      !enumerator.inner.isDisposed
+    ) {
+      if (enumerator.inner.move()) {
+        this.current = enumerator.inner.current;
         break;
       } else if (delegate.move()) {
-        this.enumerator = enumerate(delegate.current);
+        enumerator.inner = enumerate(delegate.current);
       } else {
-        this.enumerator = none;
+        this.dispose();
       }
-    }
-
-    if (!this.hasCurrent) {
-      this.dispose();
     }
 
     return this.hasCurrent;
   }
 }
 
-const operator = <T>(delegate: EnumeratorLike<EnumerableLike<T>>) => {
-  const enumerator = new ConcatAllEnumerator(delegate);
+const operator = <T>(delegate: Enumerator<EnumerableLike<T>>) => {
+  const inner = createSerialDisposable();
+  const enumerator = new ConcatAllEnumerator(delegate, inner);
+  bindDisposables(enumerator, inner);
   addDisposableDisposeParentOnChildError(enumerator, delegate);
-  addTeardown(enumerator, () => {
-    enumerator.enumerator = none;
-  });
 
   return enumerator;
 };
-
-const _concatAll = lift(operator);
 
 /**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
  */
 export const concatAll = <T>(): EnumerableOperator<EnumerableLike<T>, T> =>
-  _concatAll;
+  lift(operator);

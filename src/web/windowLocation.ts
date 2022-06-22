@@ -2,6 +2,7 @@ import {
   DisposableOrTeardown,
   Error,
   addDisposableDisposeParentOnChildError,
+  dispose,
 } from "../disposable";
 import { Updater, pipe, raise } from "../functions";
 import {
@@ -133,7 +134,7 @@ class WindowLocationStream
   }
 
   dispose(error?: Error): void {
-    this.stateStream.dispose(error);
+    pipe(this.stateStream, dispose(error));
   }
 
   goBack(): boolean {

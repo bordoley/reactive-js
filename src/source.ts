@@ -32,6 +32,10 @@ import {
 import {
   AbstractDisposableLiftable,
   AbstractLiftable,
+  Lift as LiftableLift,
+  LiftableLike,
+  LiftedStateLike,
+  LiftedStateOf,
   createDistinctUntilChangedLiftedOperator,
   createKeepLiftedOperator,
   createMapLiftedOperator,
@@ -42,10 +46,6 @@ import {
   createTakeFirstLiftdOperator,
   createTakeWhileLiftedOperator,
   createThrowIfEmptyLiftedOperator,
-  Lift as LiftableLift,
-  LiftableLike,
-  LiftedStateLike,
-  LiftedStateOf,
 } from "./liftable";
 import { Option, isSome, none } from "./option";
 
@@ -69,11 +69,7 @@ export interface SourceLike extends LiftableLike {
   sink(this: this["type"], sink: this["liftedStateType"]): void;
 }
 
-export interface Lift<C extends SourceLike> extends LiftableLift<C> {
-  lift<TA, TB>(
-    operator: Function1<LiftedStateOf<C, TB>, LiftedStateOf<C, TA>>,
-  ): ContainerOperator<C, TA, TB>;
-}
+export interface Lift<C extends SourceLike> extends LiftableLift<C> {}
 
 export abstract class AbstractSource<T, TSink extends SinkLike<T>>
   extends AbstractLiftable<TSink>

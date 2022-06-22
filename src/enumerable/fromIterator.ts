@@ -1,13 +1,14 @@
-import { AbstractContainer } from "../container";
-import { AbstractDisposable } from "../disposable";
-import { EnumerableLike, EnumeratorLike } from "../enumerable";
+import { EnumerableLike } from "../enumerable";
 import { Factory, Function1 } from "../functions";
+import { AbstractLiftable } from "../liftable";
 import { none } from "../option";
+import { Enumerator } from "./enumerator";
 
-class IteratorEnumerator<T, TReturn = any, TNext = unknown>
-  extends AbstractDisposable
-  implements EnumeratorLike<T>
-{
+class IteratorEnumerator<
+  T,
+  TReturn = any,
+  TNext = unknown,
+> extends Enumerator<T> {
   current: any = none;
   hasCurrent = false;
 
@@ -38,7 +39,7 @@ class IteratorEnumerable<
   T,
   TReturn = any,
   TNext = unknown,
-> extends AbstractContainer {
+> extends AbstractLiftable<Enumerator<T>> {
   constructor(private readonly f: Factory<Iterator<T, TReturn, TNext>>) {
     super();
   }

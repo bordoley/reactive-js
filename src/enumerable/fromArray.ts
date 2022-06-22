@@ -1,15 +1,9 @@
-import { AbstractContainer, FromArray, FromArrayOptions } from "../container";
-import { AbstractDisposable } from "../disposable";
-import { EnumerableLike, EnumeratorLike } from "../enumerable";
-import { none } from "../option";
+import { FromArray, FromArrayOptions } from "../container";
+import { EnumerableLike } from "../enumerable";
+import { AbstractLiftable } from "../liftable";
+import { Enumerator, EnumeratorBase } from "./enumerator";
 
-class ArrayEnumerator<T>
-  extends AbstractDisposable
-  implements EnumeratorLike<T>
-{
-  current: any = none;
-  hasCurrent = false;
-
+class ArrayEnumerator<T> extends EnumeratorBase<T> {
   constructor(
     private readonly array: readonly T[],
     private index: number,
@@ -19,30 +13,27 @@ class ArrayEnumerator<T>
   }
 
   move(): boolean {
-    const array = this.array;
+    this.reset();
 
-    let hasCurrent = false;
+    const { array } = this;
 
     if (!this.isDisposed) {
       this.index++;
-      const index = this.index;
+      const { index, endIndex } = this;
 
-      if (index < this.endIndex) {
-        hasCurrent = true;
-        this.hasCurrent = true;
+      if (index < endIndex) {
         this.current = array[index];
       } else {
-        this.hasCurrent = false;
         this.dispose();
       }
     }
 
-    return hasCurrent;
+    return this.hasCurrent;
   }
 }
 
 class ArrayEnumerable<T>
-  extends AbstractContainer
+  extends AbstractLiftable<Enumerator<T>>
   implements EnumerableLike<T>
 {
   constructor(

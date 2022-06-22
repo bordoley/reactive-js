@@ -1,14 +1,21 @@
-import { AbstractContainer } from "../container";
-import { AbstractDisposable, addDisposable, dispose } from "../disposable";
-import { EnumerableLike, EnumeratorLike } from "../enumerable";
+import {
+  addDisposable,
+  addDisposableDisposeParentOnChildError,
+  dispose,
+} from "../disposable";
+import { EnumerableLike, Enumerator, EnumeratorBase } from "../enumerable";
 import { Function1, pipe } from "../functions";
+import { AbstractLiftable } from "../liftable";
 import { ObservableLike } from "../observable";
-import { isNone, isSome, none } from "../option";
+import { isNone } from "../option";
 import { SchedulerContinuationLike, SchedulerLike, run } from "../scheduler";
 import { sinkInto } from "../source";
 import { Observer } from "./observer";
 
-class EnumeratorScheduler extends AbstractDisposable implements SchedulerLike {
+class EnumeratorScheduler<T>
+  extends EnumeratorBase<T>
+  implements SchedulerLike
+{
   inContinuation = false;
   private readonly continuations: SchedulerContinuationLike[] = [];
 
@@ -20,7 +27,7 @@ class EnumeratorScheduler extends AbstractDisposable implements SchedulerLike {
     return this.inContinuation;
   }
 
-  move(): boolean {
+  step(): boolean {
     const { continuations } = this;
     const continuation = continuations.shift();
     if (isNone(continuation) || continuation.isDisposed) {
@@ -31,12 +38,6 @@ class EnumeratorScheduler extends AbstractDisposable implements SchedulerLike {
     run(continuation);
     this.inContinuation = false;
 
-    // FIXME: Shouldn't this just dispose
-    const error = this.error;
-    if (isSome(error)) {
-      const { cause } = error;
-      throw cause;
-    }
     return true;
   }
 
@@ -56,42 +57,41 @@ class EnumeratorScheduler extends AbstractDisposable implements SchedulerLike {
       pipe(continuation, dispose());
     }
   }
-}
-
-class EnumeratorObserver<T> extends Observer<T> implements EnumeratorLike<T> {
-  current: any;
-  hasCurrent = false;
-
-  constructor(readonly scheduler = new EnumeratorScheduler()) {
-    super(scheduler);
-    // FIXME: probably need to bind the scheduler and the enumerator
-  }
 
   move(): boolean {
-    this.hasCurrent = false;
-    this.current = none;
+    this.reset();
 
-    while (!this.hasCurrent && this.scheduler.move()) {}
+    while (!this.isDisposed && !this.hasCurrent && this.step()) {}
 
     return this.hasCurrent;
+  }
+}
+
+class EnumeratorObserver<T> extends Observer<T> {
+  constructor(private readonly enumerator: EnumeratorScheduler<T>) {
+    super(enumerator);
   }
 
   notify(next: T) {
     this.assertState();
 
-    this.current = next;
-    this.hasCurrent = true;
+    this.enumerator.current = next;
   }
 }
 
-export const enumerate = <T>(obs: ObservableLike<T>): EnumeratorLike<T> => {
-  const observer = new EnumeratorObserver<T>();
+export const enumerate = <T>(obs: ObservableLike<T>): Enumerator<T> => {
+  const scheduler = new EnumeratorScheduler<T>();
+  const observer = new EnumeratorObserver<T>(scheduler);
+
+  addDisposableDisposeParentOnChildError(scheduler, observer);
+
   pipe(obs, sinkInto(observer));
-  return observer;
+
+  return scheduler;
 };
 
 class ObservableEnumerable<T>
-  extends AbstractContainer
+  extends AbstractLiftable<Enumerator<T>>
   implements EnumerableLike<T>
 {
   constructor(private readonly obs: ObservableLike<T>) {

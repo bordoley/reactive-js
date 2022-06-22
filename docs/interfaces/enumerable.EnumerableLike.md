@@ -14,7 +14,7 @@ Interface for iterating a Container of items.
 
 ## Hierarchy
 
-- [`ContainerLike`](container.ContainerLike.md)
+- [`LiftableLike`](liftable.LiftableLike.md)
 
   ↳ **`EnumerableLike`**
 
@@ -23,6 +23,7 @@ Interface for iterating a Container of items.
 ### Properties
 
 - [T](enumerable.EnumerableLike.md#t)
+- [liftedStateType](enumerable.EnumerableLike.md#liftedstatetype)
 - [type](enumerable.EnumerableLike.md#type)
 
 ### Methods
@@ -37,7 +38,17 @@ Interface for iterating a Container of items.
 
 #### Overrides
 
-[ContainerLike](container.ContainerLike.md).[T](container.ContainerLike.md#t)
+[LiftableLike](liftable.LiftableLike.md).[T](liftable.LiftableLike.md#t)
+
+___
+
+### liftedStateType
+
+• `Readonly` **liftedStateType**: [`Enumerator`](../classes/enumerable.Enumerator.md)<`unknown`\>
+
+#### Overrides
+
+[LiftableLike](liftable.LiftableLike.md).[liftedStateType](liftable.LiftableLike.md#liftedstatetype)
 
 ___
 
@@ -47,13 +58,13 @@ ___
 
 #### Overrides
 
-[ContainerLike](container.ContainerLike.md).[type](container.ContainerLike.md#type)
+[LiftableLike](liftable.LiftableLike.md).[type](liftable.LiftableLike.md#type)
 
 ## Methods
 
 ### enumerate
 
-▸ **enumerate**(`this`): [`EnumeratorLike`](enumerable.EnumeratorLike.md)<[`T`](enumerable.EnumerableLike.md#t)\>
+▸ **enumerate**(`this`): [`Enumerator`](../classes/enumerable.Enumerator.md)<[`T`](enumerable.EnumerableLike.md#t)\>
 
 Returns an `EnumeratorLike` to iterate through the Container.
 
@@ -65,4 +76,4 @@ Returns an `EnumeratorLike` to iterate through the Container.
 
 #### Returns
 
-[`EnumeratorLike`](enumerable.EnumeratorLike.md)<[`T`](enumerable.EnumerableLike.md#t)\>
+[`Enumerator`](../classes/enumerable.Enumerator.md)<[`T`](enumerable.EnumerableLike.md#t)\>

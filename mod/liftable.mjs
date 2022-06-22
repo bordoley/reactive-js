@@ -1,6 +1,6 @@
 /// <reference types="./liftable.d.ts" />
 import { AbstractContainer, AbstractDisposableContainer, empty } from './container.mjs';
-import { bindDisposables, addDisposableDisposeParentOnChildError, addDisposable, addTeardown } from './disposable.mjs';
+import { bindDisposables, addDisposableDisposeParentOnChildError, addDisposable, addTeardown, dispose } from './disposable.mjs';
 import { raise, strictEquality, pipe } from './functions.mjs';
 import { isNone, none } from './option.mjs';
 
@@ -32,7 +32,7 @@ const createKeepLiftedOperator = (m, KeepLiftableState) => (predicate) => {
     return m.lift(operator);
 };
 const createMapLiftedOperator = (m, MapLiftableState) => (mapper) => {
-    const operator = (delegate) => {
+    const operator = delegate => {
         const sink = new MapLiftableState(delegate, mapper);
         bindDisposables(sink, delegate);
         return sink;
@@ -48,7 +48,7 @@ const createOnNotifyLiftedOperator = (m, OnNotifyLiftableState) => (onNotify) =>
     return m.lift(operator);
 };
 const createPairwiseLiftdOperator = (m, PairwiseLiftableState) => () => {
-    const operator = (delegate) => {
+    const operator = delegate => {
         const sink = new PairwiseLiftableState(delegate);
         bindDisposables(sink, delegate);
         return sink;
@@ -56,7 +56,7 @@ const createPairwiseLiftdOperator = (m, PairwiseLiftableState) => () => {
     return m.lift(operator);
 };
 const createScanLiftedOperator = (m, ScanLiftableState) => (reducer, initialValue) => {
-    const operator = (delegate) => {
+    const operator = delegate => {
         const sink = new ScanLiftableState(delegate, reducer, initialValue());
         bindDisposables(sink, delegate);
         return sink;
@@ -105,7 +105,7 @@ const createThrowIfEmptyLiftedOperator = (m, ThrowIfEmptyLiftableState) => (fact
                 }
                 error = { cause };
             }
-            delegate.dispose(error);
+            pipe(delegate, dispose(error));
         });
         return observer;
     };

@@ -1,54 +1,51 @@
-import { AbstractContainer } from "../container";
-import {
-  AbstractDisposable,
-  addDisposableDisposeParentOnChildError,
-} from "../disposable";
-import { EnumerableLike, EnumeratorLike } from "../enumerable";
+import { addDisposableDisposeParentOnChildError } from "../disposable";
+import { EnumerableLike } from "../enumerable";
 import { pipe } from "../functions";
+import { AbstractLiftable } from "../liftable";
 import { everySatisfy, map } from "../readonlyArray";
-import { current, enumerate, hasCurrent } from "./enumerator";
+import {
+  Enumerator,
+  EnumeratorBase,
+  current,
+  enumerate,
+  hasCurrent,
+} from "./enumerator";
 
-const moveAll = (enumerators: readonly EnumeratorLike<any>[]) => {
+const moveAll = (enumerators: readonly Enumerator<any>[]) => {
   for (const enumerator of enumerators) {
     enumerator.move();
   }
 };
 
-const allHaveCurrent = (enumerators: readonly EnumeratorLike<any>[]) =>
+const allHaveCurrent = (enumerators: readonly Enumerator<any>[]) =>
   pipe(enumerators, everySatisfy(hasCurrent));
 
-class ZipEnumerator
-  extends AbstractDisposable
-  implements EnumeratorLike<readonly unknown[]>
-{
-  current: readonly unknown[] = [];
-  hasCurrent = false;
-
-  constructor(private readonly enumerators: readonly EnumeratorLike<any>[]) {
+class ZipEnumerator extends EnumeratorBase<readonly unknown[]> {
+  constructor(private readonly enumerators: readonly Enumerator<any>[]) {
     super();
   }
 
   move(): boolean {
-    this.hasCurrent = false;
+    this.reset();
 
-    const enumerators = this.enumerators;
-    moveAll(enumerators);
-    const hasCurrent = allHaveCurrent(enumerators);
-    this.hasCurrent = hasCurrent;
+    if (!this.isDisposed) {
+      const { enumerators } = this;
+      moveAll(enumerators);
 
-    this.current = hasCurrent ? pipe(enumerators, map(current)) : [];
-
-    if (!hasCurrent) {
-      this.dispose();
+      if (allHaveCurrent(enumerators)) {
+        this.current = pipe(enumerators, map(current));
+      } else {
+        this.dispose();
+      }
     }
 
-    return hasCurrent;
+    return this.hasCurrent;
   }
 }
 
 export const zipEnumerators = (
-  enumerators: readonly EnumeratorLike<unknown>[],
-): EnumeratorLike<readonly unknown[]> => {
+  enumerators: readonly Enumerator<unknown>[],
+): Enumerator<readonly unknown[]> => {
   const enumerator = new ZipEnumerator(enumerators);
   for (const delegate of enumerators) {
     addDisposableDisposeParentOnChildError(enumerator, delegate);
@@ -57,7 +54,7 @@ export const zipEnumerators = (
 };
 
 class ZipEnumerable
-  extends AbstractContainer
+  extends AbstractLiftable<Enumerator<readonly unknown[]>>
   implements EnumerableLike<readonly unknown[]>
 {
   constructor(

@@ -1,34 +1,64 @@
 /// <reference types="./enumerable.d.ts" />
-import { pipe, strictEquality, alwaysTrue, identity } from './functions.mjs';
-import { AbstractDisposable, addDisposableDisposeParentOnChildError, addTeardown, bindDisposables } from './disposable.mjs';
+import { addTeardown, createSerialDisposable, bindDisposables, addDisposableDisposeParentOnChildError, dispose } from './disposable.mjs';
+import { AbstractDisposableContainer, empty } from './container.mjs';
+import { raise, pipe, alwaysTrue, identity } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
-import { AbstractContainer, empty } from './container.mjs';
+import { AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator } from './liftable.mjs';
 import { createRunnable } from './runnable.mjs';
 import { everySatisfy, map as map$1 } from './readonlyArray.mjs';
 
+class Enumerator extends AbstractDisposableContainer {
+}
+class EnumeratorBase extends Enumerator {
+    constructor() {
+        super();
+        this._current = none;
+        this._hasCurrent = false;
+        addTeardown(this, () => {
+            this.reset();
+        });
+    }
+    get current() {
+        return this.hasCurrent ? this._current : raise();
+    }
+    set current(v) {
+        if (!this.isDisposed) {
+            this._current = v;
+            this._hasCurrent = true;
+        }
+    }
+    get hasCurrent() {
+        return this._hasCurrent;
+    }
+    reset() {
+        this._current = none;
+        this._hasCurrent = false;
+    }
+    move() {
+        return false;
+    }
+}
+class DelegatingEnumeratorBase extends Enumerator {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+    }
+    get current() {
+        return this.delegate.current;
+    }
+    get hasCurrent() {
+        return this.delegate.hasCurrent;
+    }
+    move() {
+        return this.delegate.move();
+    }
+}
 const enumerate = (enumerable) => enumerable.enumerate();
 const current = (enumerator) => enumerator.current;
 const hasCurrent = (enumerator) => enumerator.hasCurrent;
 const move = (enumerator) => enumerator.move();
-class AbstractDelegatingEnumerator {
-    constructor(delegate) {
-        this.delegate = delegate;
-    }
-    get error() {
-        return this.delegate.error;
-    }
-    get isDisposed() {
-        return this.delegate.isDisposed;
-    }
-    add(disposable) {
-        this.delegate.add(disposable);
-    }
-    dispose(error) {
-        this.delegate.dispose(error);
-    }
-}
 
-class LiftedEnumerableLike extends AbstractContainer {
+class LiftedEnumerableLike extends AbstractLiftable {
     constructor(src, operators) {
         super();
         this.src = src;
@@ -52,87 +82,74 @@ const lift = (operator) => enumerable => {
         : [operator];
     return new LiftedEnumerableLike(src, allFunctions);
 };
+const liftT = {
+    lift,
+};
 
-class ConcatAllEnumerator extends AbstractDisposable {
-    constructor(delegate) {
+class ConcatAllEnumerator extends EnumeratorBase {
+    constructor(delegate, enumerator) {
         super();
         this.delegate = delegate;
-        this.current = none;
-        this.hasCurrent = false;
-        this.enumerator = none;
+        this.enumerator = enumerator;
     }
     move() {
-        this.current = none;
-        this.hasCurrent = false;
-        const delegate = this.delegate;
-        if (isNone(this.enumerator) && delegate.move()) {
-            const enumerator = enumerate(delegate.current);
-            addDisposableDisposeParentOnChildError(this, enumerator);
-            this.enumerator = enumerator;
+        this.reset();
+        const { delegate, enumerator } = this;
+        if (enumerator.inner.isDisposed && delegate.move()) {
+            enumerator.inner = enumerate(delegate.current);
         }
-        while (isSome(this.enumerator)) {
-            const enumerator = this.enumerator;
-            if (enumerator.move()) {
-                this.current = enumerator.current;
-                this.hasCurrent = true;
+        while (enumerator.inner instanceof Enumerator &&
+            !enumerator.inner.isDisposed) {
+            if (enumerator.inner.move()) {
+                this.current = enumerator.inner.current;
                 break;
             }
             else if (delegate.move()) {
-                this.enumerator = enumerate(delegate.current);
+                enumerator.inner = enumerate(delegate.current);
             }
             else {
-                this.enumerator = none;
+                this.dispose();
             }
-        }
-        if (!this.hasCurrent) {
-            this.dispose();
         }
         return this.hasCurrent;
     }
 }
 const operator = (delegate) => {
-    const enumerator = new ConcatAllEnumerator(delegate);
+    const inner = createSerialDisposable();
+    const enumerator = new ConcatAllEnumerator(delegate, inner);
+    bindDisposables(enumerator, inner);
     addDisposableDisposeParentOnChildError(enumerator, delegate);
-    addTeardown(enumerator, () => {
-        enumerator.enumerator = none;
-    });
     return enumerator;
 };
-const _concatAll = lift(operator);
 /**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
  */
-const concatAll = () => _concatAll;
+const concatAll = () => lift(operator);
 
-class ArrayEnumerator extends AbstractDisposable {
+class ArrayEnumerator extends EnumeratorBase {
     constructor(array, index, endIndex) {
         super();
         this.array = array;
         this.index = index;
         this.endIndex = endIndex;
-        this.current = none;
-        this.hasCurrent = false;
     }
     move() {
-        const array = this.array;
-        let hasCurrent = false;
+        this.reset();
+        const { array } = this;
         if (!this.isDisposed) {
             this.index++;
-            const index = this.index;
-            if (index < this.endIndex) {
-                hasCurrent = true;
-                this.hasCurrent = true;
+            const { index, endIndex } = this;
+            if (index < endIndex) {
                 this.current = array[index];
             }
             else {
-                this.hasCurrent = false;
                 this.dispose();
             }
         }
-        return hasCurrent;
+        return this.hasCurrent;
     }
 }
-class ArrayEnumerable extends AbstractContainer {
+class ArrayEnumerable extends AbstractLiftable {
     constructor(values, startIndex, endIndex) {
         super();
         this.values = values;
@@ -159,46 +176,7 @@ const fromArrayT = {
     fromArray,
 };
 
-function concat(...enumerables) {
-    return pipe(enumerables, fromArray(), concatAll());
-}
-
-class DistinctUntilChangedEnumerator extends AbstractDelegatingEnumerator {
-    constructor(delegate, equality) {
-        super(delegate);
-        this.equality = equality;
-    }
-    get current() {
-        return this.delegate.current;
-    }
-    get hasCurrent() {
-        return this.delegate.hasCurrent;
-    }
-    move() {
-        const prevCurrent = this.current;
-        const hadCurrent = this.hasCurrent;
-        while (this.delegate.move()) {
-            if (!hadCurrent || !this.equality(prevCurrent, this.delegate.current)) {
-                break;
-            }
-        }
-        return this.hasCurrent;
-    }
-}
-/**
- * Returns an `ObservableLike` that emits all items emitted by the source that
- * are distinct by comparison from the previous item.
- *
- * @param equals Optional equality function that is used to compare
- * if an item is distinct from the previous item.
- */
-const distinctUntilChanged = (options = {}) => {
-    const { equality = strictEquality } = options;
-    const operator = (enumerator) => new DistinctUntilChangedEnumerator(enumerator, equality);
-    return lift(operator);
-};
-
-class IteratorEnumerator extends AbstractDisposable {
+class IteratorEnumerator extends Enumerator {
     constructor(iterator) {
         super();
         this.iterator = iterator;
@@ -221,7 +199,7 @@ class IteratorEnumerator extends AbstractDisposable {
         return this.hasCurrent;
     }
 }
-class IteratorEnumerable extends AbstractContainer {
+class IteratorEnumerable extends AbstractLiftable {
     constructor(f) {
         super();
         this.f = f;
@@ -248,21 +226,16 @@ const _fromIterable = (iterable) => _fromIterator(() => iterable[Symbol.iterator
  */
 const fromIterable = () => _fromIterable;
 
-class GenerateEnumerator extends AbstractDisposable {
+class GenerateEnumerator extends EnumeratorBase {
     constructor(f, acc) {
         super();
         this.f = f;
-        this.hasCurrent = false;
         this.current = acc;
     }
     move() {
-        if (this.isDisposed) {
-            this.hasCurrent = false;
-        }
-        else {
+        if (!this.isDisposed) {
             try {
                 this.current = this.f(this.current);
-                this.hasCurrent = true;
             }
             catch (cause) {
                 this.dispose({ cause });
@@ -271,7 +244,7 @@ class GenerateEnumerator extends AbstractDisposable {
         return this.hasCurrent;
     }
 }
-class GenerateEnumerable extends AbstractContainer {
+class GenerateEnumerable extends AbstractLiftable {
     constructor(f, acc) {
         super();
         this.f = f;
@@ -290,122 +263,53 @@ class GenerateEnumerable extends AbstractContainer {
  */
 const generate = (generator, initialValue) => new GenerateEnumerable(generator, initialValue);
 
-class KeepEnumerator extends AbstractDelegatingEnumerator {
-    constructor(delegate, predicate) {
-        super(delegate);
-        this.predicate = predicate;
-    }
-    get current() {
-        return this.delegate.current;
-    }
-    get hasCurrent() {
-        return this.delegate.hasCurrent;
-    }
-    move() {
-        const delegate = this.delegate;
-        const predicate = this.predicate;
-        try {
-            while (delegate.move() && !predicate(delegate.current)) { }
-        }
-        catch (cause) {
-            this.dispose({ cause });
-        }
-        return this.hasCurrent;
-    }
-}
-/**
- * Returns an `EnumerableLike` that only emits items from the
- * source that satisfy the specified type predicate.
- *
- * @param predicate The predicate function.
- */
-const keep = (predicate) => {
-    const operator = (enumerator) => new KeepEnumerator(enumerator, predicate);
-    return lift(operator);
-};
-const keepT = {
-    keep,
-};
-
-class MapEnumerator extends AbstractDelegatingEnumerator {
-    constructor(delegate, mapper) {
-        super(delegate);
-        this.mapper = mapper;
-        this.current = none;
-        this.hasCurrent = false;
-    }
-    move() {
-        this.current = none;
-        this.hasCurrent = false;
-        try {
-            if (this.delegate.move()) {
-                this.current = this.mapper(this.delegate.current);
-                this.hasCurrent = true;
-            }
-        }
-        catch (cause) {
-            this.hasCurrent = false;
-        }
-        return this.hasCurrent;
-    }
-}
-/**
- * Returns an `EnumerableLike` that applies the `mapper` function to each
- * value emitted by the source.
- *
- * @param mapper The map function to apply each value. Must be a pure function.
- */
-const map = (mapper) => {
-    const operator = (enumerator) => new MapEnumerator(enumerator, mapper);
-    return lift(operator);
-};
-
-function enumerateSrc(self) {
-    self.enumerator = enumerate(self.src);
-    addDisposableDisposeParentOnChildError(self, self.enumerator);
-}
-class RepeatEnumerator extends AbstractDisposable {
+class RepeatEnumerator extends Enumerator {
     constructor(src, shouldRepeat) {
         super();
         this.src = src;
         this.shouldRepeat = shouldRepeat;
-        this.enumerator = undefined;
         this.count = 0;
     }
     get current() {
-        return this.enumerator.current;
+        var _a, _b;
+        return this.hasCurrent ? (_b = (_a = this.enumerator) === null || _a === void 0 ? void 0 : _a.current) !== null && _b !== void 0 ? _b : raise() : raise();
     }
     get hasCurrent() {
-        return this.enumerator.hasCurrent;
+        var _a, _b;
+        return (_b = (_a = this.enumerator) === null || _a === void 0 ? void 0 : _a.hasCurrent) !== null && _b !== void 0 ? _b : false;
     }
     move() {
-        if (!this.enumerator.move()) {
+        if (isNone(this.enumerator)) {
+            this.enumerator = enumerate(this.src);
+            addDisposableDisposeParentOnChildError(this, this.enumerator);
+        }
+        while (!this.enumerator.move()) {
             this.count++;
-            let doRepeat = false;
             try {
-                doRepeat = this.shouldRepeat(this.count);
+                if (this.shouldRepeat(this.count)) {
+                    this.enumerator = enumerate(this.src);
+                    addDisposableDisposeParentOnChildError(this, this.enumerator);
+                }
+                else {
+                    break;
+                }
             }
             catch (cause) {
                 this.dispose({ cause });
-            }
-            if (doRepeat) {
-                enumerateSrc(this);
-                this.enumerator.move();
+                break;
             }
         }
         return this.hasCurrent;
     }
 }
-class RepeatEnumerable extends AbstractContainer {
+class RepeatEnumerable extends AbstractLiftable {
     constructor(src, shouldRepeat) {
         super();
         this.src = src;
         this.shouldRepeat = shouldRepeat;
     }
     enumerate() {
-        const enumerator = new RepeatEnumerator(this.src, this.shouldRepeat);
-        enumerateSrc(enumerator);
-        return enumerator;
+        return new RepeatEnumerator(this.src, this.shouldRepeat);
     }
 }
 function repeat(predicate) {
@@ -417,107 +321,7 @@ function repeat(predicate) {
     return enumerable => new RepeatEnumerable(enumerable, repeatPredicate);
 }
 
-class ScanEnumerator extends AbstractDelegatingEnumerator {
-    constructor(delegate, reducer, current) {
-        super(delegate);
-        this.reducer = reducer;
-        this.current = current;
-    }
-    get hasCurrent() {
-        return this.delegate.hasCurrent;
-    }
-    move() {
-        const delegate = this.delegate;
-        if (delegate.move()) {
-            try {
-                this.current = this.reducer(this.current, this.delegate.current);
-            }
-            catch (cause) {
-                this.dispose({ cause });
-            }
-        }
-        return this.hasCurrent;
-    }
-}
-/**
- * Returns an EnumerableLike which yields values emitted by the source as long
- * as each value satisfies the given predicate.
- *
- * @param predicate The predicate function.
- */
-const scan = (reducer, initialValue) => {
-    const operator = (observer) => new ScanEnumerator(observer, reducer, initialValue());
-    return lift(operator);
-};
-
-class SkipFirstEnumerator extends AbstractDelegatingEnumerator {
-    constructor(delegate, skipCount) {
-        super(delegate);
-        this.skipCount = skipCount;
-        this.count = 0;
-    }
-    get current() {
-        return this.delegate.current;
-    }
-    get hasCurrent() {
-        return this.delegate.hasCurrent;
-    }
-    move() {
-        const skipCount = this.skipCount;
-        for (let count = this.count; count < skipCount; count++) {
-            if (!this.delegate.move()) {
-                break;
-            }
-        }
-        this.count = skipCount;
-        return this.delegate.move();
-    }
-}
-/**
- * Returns an EnumerableLike that skips the first `count` values emitted by the source.
- *
- * @param count The maximum number of values to emit.
- */
-const skipFirst = (options = {}) => {
-    const { count = 1 } = options;
-    const operator = (enumerator) => new SkipFirstEnumerator(enumerator, count);
-    return lift(operator);
-};
-
-class TakeFirstEnumerator extends AbstractDelegatingEnumerator {
-    constructor(delegate, maxCount) {
-        super(delegate);
-        this.maxCount = maxCount;
-        this.count = 0;
-        this.hasCurrent = false;
-    }
-    get current() {
-        return this.delegate.current;
-    }
-    move() {
-        this.hasCurrent = false;
-        if (this.count < this.maxCount && this.delegate.move()) {
-            this.count++;
-            this.hasCurrent = this.delegate.hasCurrent;
-        }
-        else {
-            this.dispose();
-        }
-        return this.hasCurrent;
-    }
-}
-/**
- * Returns an EnumerableLike that only yields the first `count` values emitted by the source.
- *
- * @param count The maximum number of values to emit.
- */
-const takeFirst = (options = {}) => {
-    const { count = 1 } = options;
-    const operator = (enumerator) => new TakeFirstEnumerator(enumerator, count);
-    return lift(operator);
-};
-
-class TakeLastEnumerator extends AbstractDisposable {
+class TakeLastEnumerator extends Enumerator {
     constructor(delegate, maxCount) {
         super();
         this.delegate = delegate;
@@ -526,15 +330,15 @@ class TakeLastEnumerator extends AbstractDisposable {
     }
     get current() {
         var _a;
-        return (_a = this.enumerator) === null || _a === void 0 ? void 0 : _a.current;
+        return this.hasCurrent ? (_a = this.enumerator) === null || _a === void 0 ? void 0 : _a.current : raise();
     }
     get hasCurrent() {
         var _a, _b;
         return (_b = (_a = this.enumerator) === null || _a === void 0 ? void 0 : _a.hasCurrent) !== null && _b !== void 0 ? _b : false;
     }
     move() {
-        const delegate = this.delegate;
-        if (isNone(this.enumerator)) {
+        const { delegate } = this;
+        if (!this.isDisposed && isNone(this.enumerator)) {
             const last = [];
             while (delegate.move()) {
                 last.push(delegate.current);
@@ -545,7 +349,9 @@ class TakeLastEnumerator extends AbstractDisposable {
             this.enumerator = pipe(last, fromArray(), enumerate);
             bindDisposables(this, this.enumerator);
         }
-        this.enumerator.move();
+        if (isSome(this.enumerator)) {
+            this.enumerator.move();
+        }
         return this.hasCurrent;
     }
 }
@@ -565,55 +371,6 @@ const takeLast = (options = {}) => {
         ? pipe(enumerable, lift(operator))
         : // FIXME: why do we need the annotations?
             empty(fromArrayT);
-};
-
-class TakeWhileEnumerator extends AbstractDelegatingEnumerator {
-    constructor(delegate, predicate, inclusive) {
-        super(delegate);
-        this.predicate = predicate;
-        this.inclusive = inclusive;
-        this.state = 0;
-    }
-    get current() {
-        return this.delegate.current;
-    }
-    get hasCurrent() {
-        return this.state < 2 && this.delegate.hasCurrent;
-    }
-    move() {
-        const delegate = this.delegate;
-        const state = this.state;
-        if (state === 0 && delegate.move()) {
-            try {
-                const satisfiesPredicate = this.predicate(delegate.current);
-                if (!satisfiesPredicate && this.inclusive) {
-                    this.state++;
-                }
-                else if (!satisfiesPredicate) {
-                    this.state = 2;
-                }
-            }
-            catch (cause) {
-                this.dispose({ cause });
-                this.state = 2;
-            }
-        }
-        else if (state < 2 && this.inclusive) {
-            this.state++;
-        }
-        return this.hasCurrent;
-    }
-}
-/**
- * Returns an EnumerableLike which yields values emitted by the source as long
- * as each value satisfies the given predicate.
- *
- * @param predicate The predicate function.
- */
-const takeWhile = (predicate, options = {}) => {
-    const { inclusive = false } = options;
-    const operator = (observer) => new TakeWhileEnumerator(observer, predicate, inclusive);
-    return lift(operator);
 };
 
 const enumeratorToRunnable = (f) => {
@@ -653,24 +410,24 @@ const moveAll = (enumerators) => {
     }
 };
 const allHaveCurrent = (enumerators) => pipe(enumerators, everySatisfy(hasCurrent));
-class ZipEnumerator extends AbstractDisposable {
+class ZipEnumerator extends EnumeratorBase {
     constructor(enumerators) {
         super();
         this.enumerators = enumerators;
-        this.current = [];
-        this.hasCurrent = false;
     }
     move() {
-        this.hasCurrent = false;
-        const enumerators = this.enumerators;
-        moveAll(enumerators);
-        const hasCurrent = allHaveCurrent(enumerators);
-        this.hasCurrent = hasCurrent;
-        this.current = hasCurrent ? pipe(enumerators, map$1(current)) : [];
-        if (!hasCurrent) {
-            this.dispose();
+        this.reset();
+        if (!this.isDisposed) {
+            const { enumerators } = this;
+            moveAll(enumerators);
+            if (allHaveCurrent(enumerators)) {
+                this.current = pipe(enumerators, map$1(current));
+            }
+            else {
+                this.dispose();
+            }
         }
-        return hasCurrent;
+        return this.hasCurrent;
     }
 }
 const zipEnumerators = (enumerators) => {
@@ -680,7 +437,7 @@ const zipEnumerators = (enumerators) => {
     }
     return enumerator;
 };
-class ZipEnumerable extends AbstractContainer {
+class ZipEnumerable extends AbstractLiftable {
     constructor(enumerables) {
         super();
         this.enumerables = enumerables;
@@ -699,5 +456,201 @@ function zip(...enumerables) {
 
 const toEnumerable = () => identity;
 const type = undefined;
+function concat(...enumerables) {
+    return pipe(enumerables, fromArray(), concatAll());
+}
+const concatT = {
+    concat,
+};
+const distinctUntilChanged = createDistinctUntilChangedLiftedOperator(liftT, class DistinctUntilChangedEnumerator extends DelegatingEnumeratorBase {
+    constructor(delegate, equality) {
+        super(delegate);
+        this.equality = equality;
+    }
+    move() {
+        const hadCurrent = this.hasCurrent;
+        const prevCurrent = hadCurrent ? this.current : none;
+        try {
+            while (this.delegate.move()) {
+                if (!hadCurrent ||
+                    !this.equality(prevCurrent, this.delegate.current)) {
+                    break;
+                }
+            }
+        }
+        catch (cause) {
+            pipe(this, dispose({ cause }));
+        }
+        return this.hasCurrent;
+    }
+});
+const distinctUntilChangedT = {
+    distinctUntilChanged,
+};
+const keep = createKeepLiftedOperator(liftT, class KeepEnumerator extends DelegatingEnumeratorBase {
+    constructor(delegate, predicate) {
+        super(delegate);
+        this.predicate = predicate;
+    }
+    move() {
+        const delegate = this.delegate;
+        const predicate = this.predicate;
+        try {
+            while (delegate.move() && !predicate(delegate.current)) { }
+        }
+        catch (cause) {
+            pipe(this, dispose({ cause }));
+        }
+        return this.hasCurrent;
+    }
+});
+const keepT = {
+    keep,
+};
+const map = createMapLiftedOperator(liftT, class MapEnumerator extends EnumeratorBase {
+    constructor(delegate, mapper) {
+        super();
+        this.delegate = delegate;
+        this.mapper = mapper;
+    }
+    move() {
+        this.reset();
+        if (this.delegate.move()) {
+            try {
+                this.current = this.mapper(this.delegate.current);
+            }
+            catch (cause) {
+                pipe(this, dispose({ cause }));
+            }
+        }
+        return this.hasCurrent;
+    }
+});
+const mapT = {
+    map,
+};
+const onNotify = createOnNotifyLiftedOperator(liftT, class OnNotifyEnumerator extends DelegatingEnumeratorBase {
+    constructor(delegate, onNotify) {
+        super(delegate);
+        this.onNotify = onNotify;
+    }
+    move() {
+        const delegate = this.delegate;
+        if (delegate.move()) {
+            try {
+                this.onNotify(this.current);
+            }
+            catch (cause) {
+                pipe(this, dispose({ cause }));
+            }
+        }
+        return this.hasCurrent;
+    }
+});
+const scan = createScanLiftedOperator(liftT, class ScanEnumerator extends Enumerator {
+    constructor(delegate, reducer, current) {
+        super();
+        this.delegate = delegate;
+        this.reducer = reducer;
+        this.current = current;
+        this.hasCurrent = false;
+        addTeardown(this, () => {
+            this.hasCurrent = false;
+        });
+    }
+    move() {
+        const delegate = this.delegate;
+        this.hasCurrent = false;
+        if (delegate.move()) {
+            try {
+                this.current = this.reducer(this.current, this.delegate.current);
+                this.hasCurrent = true;
+            }
+            catch (cause) {
+                pipe(this, dispose({ cause }));
+            }
+        }
+        return this.hasCurrent;
+    }
+});
+const scanT = {
+    scan,
+};
+const skipFirst = createSkipFirstLiftedOperator(liftT, class SkipFirstEnumerator extends DelegatingEnumeratorBase {
+    constructor(delegate, skipCount) {
+        super(delegate);
+        this.skipCount = skipCount;
+        this.count = 0;
+    }
+    move() {
+        const skipCount = this.skipCount;
+        for (let count = this.count; count < skipCount; count++) {
+            if (!this.delegate.move()) {
+                break;
+            }
+        }
+        this.count = skipCount;
+        return this.delegate.move();
+    }
+});
+const skipFirstT = {
+    skipFirst,
+};
+const takeFirst = createTakeFirstLiftdOperator({ ...fromArrayT, ...liftT }, class TakeFirstEnumerator extends DelegatingEnumeratorBase {
+    constructor(delegate, maxCount) {
+        super(delegate);
+        this.maxCount = maxCount;
+        this.count = 0;
+    }
+    get current() {
+        return this.delegate.current;
+    }
+    move() {
+        if (this.count < this.maxCount) {
+            this.count++;
+            this.delegate.move();
+        }
+        else {
+            this.dispose();
+        }
+        return this.hasCurrent;
+    }
+});
+const takeFirstT = {
+    takeFirst,
+};
+const takeWhile = createTakeWhileLiftedOperator(liftT, class TakeWhileEnumerator extends DelegatingEnumeratorBase {
+    constructor(delegate, predicate, inclusive) {
+        super(delegate);
+        this.predicate = predicate;
+        this.inclusive = inclusive;
+        this.done = false;
+    }
+    move() {
+        const delegate = this.delegate;
+        if (this.done && !this.isDisposed) {
+            pipe(this, dispose());
+        }
+        else if (delegate.move()) {
+            const { current } = delegate;
+            try {
+                const satisfiesPredicate = this.predicate(current);
+                if (!satisfiesPredicate && this.inclusive) {
+                    this.done = true;
+                }
+                else if (!satisfiesPredicate) {
+                    pipe(this, dispose());
+                }
+            }
+            catch (cause) {
+                pipe(this, dispose({ cause }));
+            }
+        }
+        return this.hasCurrent;
+    }
+});
+const takeWhileT = {
+    takeWhile,
+};
 
-export { concat, concatAll, current, distinctUntilChanged, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, move, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, toEnumerable, toIterable, toRunnable, type, zip, zipEnumerators };
+export { DelegatingEnumeratorBase, Enumerator, EnumeratorBase, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, toEnumerable, toIterable, toRunnable, type, zip, zipEnumerators };
