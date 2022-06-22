@@ -1,7 +1,4 @@
-import {
-  DisposableLike,
-  addDisposableDisposeParentOnChildError,
-} from "../disposable";
+import { DisposableLike } from "../disposable";
 import {
   Factory,
   Function1,
@@ -11,8 +8,11 @@ import {
   Function5,
 } from "../functions";
 import { RunnableLike } from "../runnable";
-import { createRunnable } from "./createRunnable";
-import { Sink } from "./sinks";
+import { AbstractUsingSource } from "../source";
+
+class UsingObservable<TResource extends DisposableLike, T>
+  extends AbstractUsingSource<RunnableLike<unknown>, TResource, T>
+  implements RunnableLike<T> {}
 
 export function using<TResource extends DisposableLike, T>(
   resourceFactory: Factory<TResource>,
@@ -94,16 +94,5 @@ export function using<TResource extends DisposableLike, T>(
   resourceFactory: Factory<TResource | readonly TResource[]>,
   runnableFactory: (...resources: readonly TResource[]) => RunnableLike<T>,
 ): RunnableLike<T> {
-  const run = (sink: Sink<T>) => {
-    const resources = resourceFactory();
-    const resourcesArray = Array.isArray(resources) ? resources : [resources];
-    const runnable = runnableFactory(...resourcesArray);
-
-    for (const r of resourcesArray) {
-      addDisposableDisposeParentOnChildError(sink, r);
-    }
-
-    runnable.sink(sink);
-  };
-  return createRunnable(run);
+  return new UsingObservable(resourceFactory, runnableFactory);
 }

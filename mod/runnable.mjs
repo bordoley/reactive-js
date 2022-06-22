@@ -1,7 +1,7 @@
 /// <reference types="./runnable.d.ts" />
 import { pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
-import { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
+import { AbstractSource, AbstractUsingSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 
@@ -218,21 +218,14 @@ const createSink = () => new ToArraySink();
  */
 const toArray = () => run(createSink);
 
+class UsingObservable extends AbstractUsingSource {
+}
 /**
  * Creates an `RunnableLike` that uses one or more resources which
  * will be disposed when the RunnableLike disposes it's only subscription.
  */
 function using(resourceFactory, runnableFactory) {
-    const run = (sink) => {
-        const resources = resourceFactory();
-        const resourcesArray = Array.isArray(resources) ? resources : [resources];
-        const runnable = runnableFactory(...resourcesArray);
-        for (const r of resourcesArray) {
-            addDisposableDisposeParentOnChildError(sink, r);
-        }
-        runnable.sink(sink);
-    };
-    return createRunnable(run);
+    return new UsingObservable(resourceFactory, runnableFactory);
 }
 
 const toRunnable = () => identity;

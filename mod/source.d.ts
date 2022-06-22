@@ -124,4 +124,10 @@ declare const createThrowIfEmptyOperator: <C extends SourceLike>(m: Lift<C>, Thr
     readonly delegate: SinkOf<C, T>;
     isEmpty: boolean;
 }) => <T_1>(factory: Factory<unknown>) => ContainerOperator<C, T_1, T_1>;
-export { AbstractSource, CreateDelegatingSink, Lift, SinkLike, SinkOf, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, sinkInto };
+declare class AbstractUsingSource<C extends SourceLike, TResource extends DisposableLike, T> extends AbstractSource<T, SinkOf<C, T>> {
+    private readonly resourceFactory;
+    private readonly sourceFactory;
+    constructor(resourceFactory: Function1<SinkOf<C, T>, TResource | readonly TResource[]>, sourceFactory: (...resources: readonly TResource[]) => C);
+    sink(sink: SinkOf<C, T>): void;
+}
+export { AbstractSource, AbstractUsingSource, CreateDelegatingSink, Lift, SinkLike, SinkOf, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, sinkInto };
