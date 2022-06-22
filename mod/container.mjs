@@ -1,14 +1,14 @@
 /// <reference types="./container.d.ts" />
 import { createDisposableValue } from './disposable.mjs';
-import { compose, callWith, strictEquality, isEqualTo, ignore, pipe, defer, alwaysFalse, returns, negate } from './functions.mjs';
+import { raise, compose, callWith, strictEquality, isEqualTo, ignore, pipe, defer, alwaysFalse, returns, negate } from './functions.mjs';
 import { isSome } from './option.mjs';
 
 class AbstractContainer {
     get type() {
-        return this;
+        return raise();
     }
     get T() {
-        return undefined;
+        return raise();
     }
 }
 const compute = (m, options) => compose(fromValue(m, options), m.map(callWith()));

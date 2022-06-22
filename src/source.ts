@@ -34,6 +34,7 @@ import {
   negate,
   pipe,
   strictEquality,
+  raise,
 } from "./functions";
 import { Option, isNone, isSome, none } from "./option";
 
@@ -62,7 +63,7 @@ export abstract class AbstractSource<T, TSink extends SinkLike<T>>
   implements SourceLike
 {
   get sinkType(): TSink {
-    return undefined as any;
+    return raise();
   }
 
   abstract sink(this: this, sink: TSink): void;

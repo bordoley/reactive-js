@@ -105,10 +105,10 @@ class Observer extends AbstractDisposable {
             scheduler instanceof Observer ? scheduler._scheduler : scheduler;
     }
     get type() {
-        return this;
+        return raise();
     }
     get T() {
-        return undefined;
+        return raise();
     }
     /** @ignore */
     get now() {
@@ -579,13 +579,13 @@ class SubjectImpl extends AbstractDisposable {
         this.isSynchronous = false;
     }
     get type() {
-        return this;
+        return raise();
     }
     get T() {
-        return undefined;
+        return raise();
     }
     get sinkType() {
-        return undefined;
+        return raise();
     }
     get observerCount() {
         return this.observers.size;

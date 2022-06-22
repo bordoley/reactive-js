@@ -1,5 +1,5 @@
 import { AbstractDisposable, addDisposable } from "../disposable";
-import { pipe } from "../functions";
+import { pipe, raise } from "../functions";
 import {
   DispatcherLike,
   MulticastObservableLike,
@@ -22,13 +22,13 @@ class StreamImpl<TReq, T>
   implements StreamLike<TReq, T>
 {
   get type(): this {
-    return this;
+    return raise();
   }
   get T(): unknown {
-    return undefined;
+    return raise();
   }
   get sinkType(): Observer<T> {
-    return undefined as any;
+    return raise();
   }
   readonly isSynchronous = false;
 

@@ -1,7 +1,7 @@
 /// <reference types="./streamable.d.ts" />
 import { empty as empty$1, fromValue, ignoreElements, endWith, startWith, concatMap, concatWith } from './container.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError } from './disposable.mjs';
-import { pipe, compose, returns, updaterReducer, flip } from './functions.mjs';
+import { raise, pipe, compose, returns, updaterReducer, flip } from './functions.mjs';
 import { createSubject, publish, createObservableWithScheduler, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, merge, onNotify, dispatchTo, onSubscribe, observable, __memo, __observe, reduce, mapT, concatAllT, takeFirst, withLatestFrom, using, never, takeWhile, scanAsync, switchAll } from './observable.mjs';
 import { isNone, none } from './option.mjs';
 import { sinkInto } from './source.mjs';
@@ -16,13 +16,13 @@ class StreamImpl extends AbstractDisposable {
         this.isSynchronous = false;
     }
     get type() {
-        return this;
+        return raise();
     }
     get T() {
-        return undefined;
+        return raise();
     }
     get sinkType() {
-        return undefined;
+        return raise();
     }
     get observerCount() {
         return this.observable.observerCount;
@@ -195,13 +195,13 @@ class FlowableSinkAccumulatorImpl extends AbstractDisposable {
         this.isSynchronous = false;
     }
     get type() {
-        return this;
+        return raise();
     }
     get T() {
-        return undefined;
+        return raise();
     }
     get sinkType() {
-        return undefined;
+        return raise();
     }
     get observerCount() {
         return this.subject.observerCount;
