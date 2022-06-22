@@ -11,7 +11,6 @@ import {
   Function3,
   Function4,
   Function5,
-  Function6,
   Predicate,
   Reducer,
   TypePredicate,
@@ -376,112 +375,6 @@ export const empty = <C, T, O extends FromArrayOptions = FromArrayOptions>(
   options?: Omit<Partial<O>, keyof FromArrayOptions>,
 ): ContainerOf<C, T> => fromArray<T>({ ...options })([]);
 
-export function using<C, TResource extends DisposableLike, TA, TB>(
-  m: Using<C>,
-  resourceFactory: Factory<TResource>,
-  containerFactory: Function2<
-    ContainerOf<C, TA>,
-    TResource,
-    ContainerOf<C, TB>
-  >,
-): ContainerOperator<C, TA, TB>;
-
-export function using<
-  C,
-  TResource1 extends DisposableLike,
-  TResource2 extends DisposableLike,
-  TA,
-  TB,
->(
-  m: Using<C>,
-  resourceFactory: Factory<[TResource1, TResource2]>,
-  containerFactory: Function3<
-    ContainerOf<C, TA>,
-    TResource1,
-    TResource2,
-    ContainerOf<C, TB>
-  >,
-): ContainerOperator<C, TA, TB>;
-
-export function using<
-  C,
-  TResource1 extends DisposableLike,
-  TResource2 extends DisposableLike,
-  TResource3 extends DisposableLike,
-  TA,
-  TB,
->(
-  m: Using<C>,
-  resourceFactory: Factory<[TResource1, TResource2, TResource3]>,
-  containerFactory: Function4<
-    ContainerOf<C, TA>,
-    TResource1,
-    TResource2,
-    TResource3,
-    ContainerOf<C, TB>
-  >,
-): ContainerOperator<C, TA, TB>;
-
-export function using<
-  C,
-  TResource1 extends DisposableLike,
-  TResource2 extends DisposableLike,
-  TResource3 extends DisposableLike,
-  TResource4 extends DisposableLike,
-  TA,
-  TB,
->(
-  m: Using<C>,
-  resourceFactory: Factory<[TResource1, TResource2, TResource3, TResource4]>,
-  containerFactory: Function5<
-    ContainerOf<C, TA>,
-    TResource1,
-    TResource2,
-    TResource3,
-    TResource4,
-    ContainerOf<C, TB>
-  >,
-): ContainerOperator<C, TA, TB>;
-
-export function using<
-  C,
-  TResource1 extends DisposableLike,
-  TResource2 extends DisposableLike,
-  TResource3 extends DisposableLike,
-  TResource4 extends DisposableLike,
-  TResource5 extends DisposableLike,
-  TA,
-  TB,
->(
-  m: Using<C>,
-  resourceFactory: Factory<
-    [TResource1, TResource2, TResource3, TResource4, TResource5]
-  >,
-  containerFactory: Function6<
-    ContainerOf<C, TA>,
-    TResource1,
-    TResource2,
-    TResource3,
-    TResource4,
-    TResource5,
-    ContainerOf<C, TB>
-  >,
-): ContainerOperator<C, TA, TB>;
-export function using<C, TResource extends DisposableLike, TA, TB>(
-  { using }: Using<C>,
-  resourceFactory: Factory<TResource | readonly TResource[]>,
-  containerFactory: (
-    container: ContainerOf<C, TA>,
-    ...resources: readonly TResource[]
-  ) => ContainerOf<C, TB>,
-): ContainerOperator<C, TA, TB> {
-  return container =>
-    using(resourceFactory, resources => {
-      const resourcesArray = Array.isArray(resources) ? resources : [resources];
-      return containerFactory(container, ...resourcesArray);
-    });
-}
-
 export const contains = <C, T>(
   { someSatisfy }: SomeSatisfy<C>,
   value: T,
@@ -491,18 +384,17 @@ export const contains = <C, T>(
   return someSatisfy(isEqualTo(value, equality));
 };
 
-export const encodeUtf8 = <C>(
-  m: Using<C> & Map<C>,
-): ContainerOperator<C, string, Uint8Array> =>
-  using(
-    m,
-    () => createDisposableValue(new TextEncoder(), ignore),
-    (c, v) =>
-      pipe(
-        c,
-        m.map(s => v.value.encode(s)),
-      ),
-  );
+export const encodeUtf8 =
+  <C>(m: Using<C> & Map<C>): ContainerOperator<C, string, Uint8Array> =>
+  obs =>
+    m.using(
+      () => createDisposableValue(new TextEncoder(), ignore),
+      v =>
+        pipe(
+          obs,
+          m.map(s => v.value.encode(s)),
+        ),
+    );
 
 export function endWith<C, T>(
   m: Concat<C> & FromArray<C>,
