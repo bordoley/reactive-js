@@ -1,35 +1,27 @@
 import { empty } from "../container";
 import {
-  AbstractDisposable,
   addDisposableDisposeParentOnChildError,
   bindDisposables,
 } from "../disposable";
-import {
-  EnumerableLike,
-  EnumerableOperator,
-  EnumeratorLike,
-} from "../enumerable";
-import { pipe } from "../functions";
-import { Option, isNone, none } from "../option";
-import { enumerate } from "./enumerator";
+import { EnumerableLike, EnumerableOperator } from "../enumerable";
+import { pipe, raise } from "../functions";
+import { Option, isNone, isSome, none } from "../option";
+import { Enumerator, enumerate } from "./enumerator";
 import { fromArray, fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 
-class TakeLastEnumerator<T>
-  extends AbstractDisposable
-  implements EnumeratorLike<T>
-{
-  private enumerator: Option<EnumeratorLike<T>> = none;
+class TakeLastEnumerator<T> extends Enumerator<T> {
+  private enumerator: Option<Enumerator<T>> = none;
 
   constructor(
-    private readonly delegate: EnumeratorLike<T>,
+    private readonly delegate: Enumerator<T>,
     private readonly maxCount: number,
   ) {
     super();
   }
 
-  get current() {
-    return this.enumerator?.current as any;
+  get current(): T {
+    return this.hasCurrent ? (this.enumerator?.current as T) : raise();
   }
 
   get hasCurrent() {
@@ -37,9 +29,9 @@ class TakeLastEnumerator<T>
   }
 
   move(): boolean {
-    const delegate = this.delegate;
+    const { delegate } = this;
 
-    if (isNone(this.enumerator)) {
+    if (!this.isDisposed && isNone(this.enumerator)) {
       const last: Array<T> = [];
 
       while (delegate.move()) {
@@ -53,7 +45,10 @@ class TakeLastEnumerator<T>
       bindDisposables(this, this.enumerator);
     }
 
-    this.enumerator.move();
+    if (isSome(this.enumerator)) {
+      this.enumerator.move();
+    }
+
     return this.hasCurrent;
   }
 }
@@ -67,7 +62,7 @@ export const takeLast = <T>(
   options: { readonly count?: number } = {},
 ): EnumerableOperator<T, T> => {
   const { count = 1 } = options;
-  const operator = (delegate: EnumeratorLike<T>) => {
+  const operator = (delegate: Enumerator<T>) => {
     const enumerator = new TakeLastEnumerator(delegate, count);
     addDisposableDisposeParentOnChildError(enumerator, delegate);
     return enumerator;

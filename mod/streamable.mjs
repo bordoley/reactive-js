@@ -57,7 +57,7 @@ const liftImpl = (streamable, obsOps, reqOps) => {
         const srcStream = pipe(src, stream(scheduler));
         const requestSubscription = pipe(requests, map(compose(...reqOps)), subscribe(scheduler, srcStream.dispatch, srcStream));
         bindDisposables(srcStream, requestSubscription);
-        scheduler.add(srcStream);
+        addDisposable(scheduler, srcStream);
         return pipe(srcStream, compose(...obsOps));
     });
     return new LiftedStreamable(op, src, obsOps, reqOps);
@@ -134,7 +134,7 @@ const toStateStore = () => streamable => createStreamable(updates => createObser
     const stream$1 = pipe(streamable, stream(scheduler));
     const updatesSubscription = pipe(updates, zipWithLatestFrom(stream$1, (updateState, prev) => updateState(prev)), subscribe(scheduler, stream$1.dispatch, stream$1));
     bindDisposables(updatesSubscription, stream$1);
-    scheduler.add(stream$1);
+    addDisposable(scheduler, stream$1);
     return stream$1;
 }));
 

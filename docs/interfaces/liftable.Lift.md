@@ -63,7 +63,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `operator` | [`Lift`](liftable.Lift.md)<`C`, `TVariance`\> extends { `variance?`: ``"contravariant"``  } ? [`Function1`](../modules/functions.md#function1)<[`LiftedStateOf`](../modules/liftable.md#liftedstateof)<`C`, `TB`\>, [`LiftedStateOf`](../modules/liftable.md#liftedstateof)<`C`, `TA`\>\> : [`Function1`](../modules/functions.md#function1)<[`LiftedStateOf`](../modules/liftable.md#liftedstateof)<`C`, `TA`\>, [`LiftedStateOf`](../modules/liftable.md#liftedstateof)<`C`, `TB`\>\> |
+| `operator` | [`LiftOperator`](../modules/liftable.md#liftoperator)<`TA`, `TB`, `C`, [`Lift`](liftable.Lift.md)<`C`, `TVariance`\>\> |
 
 #### Returns
 

@@ -1,29 +1,22 @@
-import { AbstractContainer } from "../container";
-import {
-  EnumerableLike,
-  EnumerableOperator,
-  EnumeratorLike,
-} from "../enumerable";
+import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { Function1, pipe } from "../functions";
-import { enumerate } from "./enumerator";
+import { AbstractLiftable, Lift } from "../liftable";
+import { Enumerator, enumerate } from "./enumerator";
 
 class LiftedEnumerableLike<T>
-  extends AbstractContainer
+  extends AbstractLiftable<Enumerator<T>>
   implements EnumerableLike<T>
 {
   constructor(
     readonly src: EnumerableLike<any>,
-    readonly operators: readonly Function1<
-      EnumeratorLike<any>,
-      EnumeratorLike<any>
-    >[],
+    readonly operators: readonly Function1<Enumerator<any>, Enumerator<any>>[],
   ) {
     super();
   }
 
-  enumerate(): EnumeratorLike<T> {
+  enumerate(): Enumerator<T> {
     const src = enumerate(this.src);
-    return pipe(src, ...this.operators) as EnumeratorLike<T>;
+    return pipe(src, ...this.operators) as Enumerator<T>;
   }
 }
 
@@ -35,7 +28,7 @@ class LiftedEnumerableLike<T>
  */
 export const lift =
   <TA, TB>(
-    operator: Function1<EnumeratorLike<TA>, EnumeratorLike<TB>>,
+    operator: Function1<Enumerator<TA>, Enumerator<TB>>,
   ): EnumerableOperator<TA, TB> =>
   enumerable => {
     const src =
@@ -46,5 +39,9 @@ export const lift =
         ? [...enumerable.operators, operator]
         : [operator];
 
-    return new LiftedEnumerableLike(src, allFunctions);
+    return new LiftedEnumerableLike<TB>(src, allFunctions);
   };
+
+export const liftT: Lift<EnumerableLike<unknown>, "covariant"> = {
+  lift,
+};

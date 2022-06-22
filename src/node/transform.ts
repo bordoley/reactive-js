@@ -11,6 +11,7 @@ import {
 } from "zlib";
 import {
   DisposableValueLike,
+  addDisposable,
   addDisposableDisposeParentOnChildError,
   addOnDisposedWithError,
   createDisposableValue,
@@ -78,7 +79,7 @@ export const transform =
           modeSubscription,
         );
 
-        scheduler.add(transformReadableStream);
+        addDisposable(scheduler, transformReadableStream);
 
         return transformReadableStream;
       }),

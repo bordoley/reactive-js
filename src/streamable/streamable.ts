@@ -1,5 +1,5 @@
 import { empty as emptyContainer } from "../container";
-import { bindDisposables } from "../disposable";
+import { addDisposable, bindDisposables } from "../disposable";
 import { Function1, compose, pipe } from "../functions";
 import {
   ObservableOperator,
@@ -63,7 +63,7 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
       );
 
       bindDisposables(srcStream, requestSubscription);
-      scheduler.add(srcStream);
+      addDisposable(scheduler, srcStream);
 
       return pipe(srcStream, (compose as any)(...obsOps));
     });

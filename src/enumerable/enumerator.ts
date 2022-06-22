@@ -1,42 +1,80 @@
-import { DisposableOrTeardown, Error } from "../disposable";
-import { EnumerableLike, EnumeratorLike } from "../enumerable";
-import { Option } from "../option";
+import { AbstractDisposableContainer } from "../container";
+import { addTeardown } from "../disposable";
+import { EnumerableLike } from "../enumerable";
+import { raise } from "../functions";
+import { LiftedStateLike } from "../liftable";
+import { Option, none } from "../option";
 
-export const enumerate = <T>(
-  enumerable: EnumerableLike<T>,
-): EnumeratorLike<T> => enumerable.enumerate();
-
-export const current = <T>(enumerator: EnumeratorLike<T>) => enumerator.current;
-
-export const hasCurrent = <T>(enumerator: EnumeratorLike<T>) =>
-  enumerator.hasCurrent;
-
-export const move = <T>(enumerator: EnumeratorLike<T>) => enumerator.move();
-
-export abstract class AbstractDelegatingEnumerator<TA, TB>
-  implements EnumeratorLike<TB>
+export abstract class Enumerator<T>
+  extends AbstractDisposableContainer
+  implements LiftedStateLike
 {
-  constructor(protected readonly delegate: EnumeratorLike<TA>) {}
-
-  abstract current: TB;
-
-  get error() {
-    return this.delegate.error;
-  }
-
-  abstract hasCurrent: boolean;
-
-  get isDisposed() {
-    return this.delegate.isDisposed;
-  }
-
-  add(disposable: DisposableOrTeardown): void {
-    this.delegate.add(disposable);
-  }
-
-  dispose(error?: Option<Error>): void {
-    this.delegate.dispose(error);
-  }
+  abstract get current(): T;
+  abstract get hasCurrent(): boolean;
 
   abstract move(): boolean;
 }
+
+export class EnumeratorBase<T> extends Enumerator<T> {
+  private _current: Option<T> = none;
+  private _hasCurrent = false;
+
+  constructor() {
+    super();
+    addTeardown(this, () => {
+      this.reset();
+    });
+  }
+
+  get current(): T {
+    return this.hasCurrent ? (this._current as T) : raise();
+  }
+
+  set current(v: T) {
+    if (!this.isDisposed) {
+      this._current = v;
+      this._hasCurrent = true;
+    }
+  }
+
+  get hasCurrent(): boolean {
+    return this._hasCurrent;
+  }
+
+  reset() {
+    this._current = none;
+    this._hasCurrent = false;
+  }
+
+  move(): boolean {
+    return false;
+  }
+}
+
+export class DelegatingEnumeratorBase<T> extends Enumerator<T> {
+  constructor(readonly delegate: Enumerator<T>) {
+    super();
+  }
+
+  get current(): T {
+    return this.delegate.current;
+  }
+
+  get hasCurrent(): boolean {
+    return this.delegate.hasCurrent;
+  }
+
+  move(): boolean {
+    return this.delegate.move();
+  }
+}
+
+export const enumerate = <T>(enumerable: EnumerableLike<T>): Enumerator<T> =>
+  enumerable.enumerate();
+
+export const current = <T>(enumerator: Enumerator<T>) => enumerator.current;
+
+export const hasCurrent = <T>(enumerator: Enumerator<T>) =>
+  enumerator.hasCurrent;
+
+export const move = <T>(enumerator: Enumerator<T>) => enumerator.move();

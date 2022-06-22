@@ -1,27 +1,18 @@
-import { AbstractContainer } from "../container";
-import { AbstractDisposable } from "../disposable";
-import { EnumerableLike, EnumeratorLike } from "../enumerable";
+import { EnumerableLike } from "../enumerable";
 import { Factory, Updater } from "../functions";
+import { AbstractLiftable } from "../liftable";
+import { Enumerator, EnumeratorBase } from "./enumerator";
 
-class GenerateEnumerator<T>
-  extends AbstractDisposable
-  implements EnumeratorLike<T>
-{
-  current: T;
-  hasCurrent = false;
-
+class GenerateEnumerator<T> extends EnumeratorBase<T> {
   constructor(private readonly f: Updater<T>, acc: T) {
     super();
     this.current = acc;
   }
 
   move(): boolean {
-    if (this.isDisposed) {
-      this.hasCurrent = false;
-    } else {
+    if (!this.isDisposed) {
       try {
         this.current = this.f(this.current);
-        this.hasCurrent = true;
       } catch (cause) {
         this.dispose({ cause });
       }
@@ -31,7 +22,7 @@ class GenerateEnumerator<T>
 }
 
 class GenerateEnumerable<T>
-  extends AbstractContainer
+  extends AbstractLiftable<Enumerator<T>>
   implements EnumerableLike<T>
 {
   constructor(

@@ -1,7 +1,7 @@
 import { concatWith, fromValue } from "../container";
 import {
   EnumerableLike,
-  EnumeratorLike,
+  Enumerator,
   current,
   enumerate,
   hasCurrent,
@@ -26,7 +26,7 @@ const _fromEnumerable = <T>(
 ): AsyncEnumerableLike<T> =>
   createStreamable(
     compose(
-      withLatestFrom<void, EnumeratorLike<T>, EnumeratorLike<T>>(
+      withLatestFrom<void, Enumerator<T>, Enumerator<T>>(
         using(
           () => enumerate(enumerable),
           compose(fromValue(fromArrayT), concatWith(concatT, never())),

@@ -1,7 +1,7 @@
-import { ContainerOperator, ContainerOf, FromArray, FromArrayOptions } from "./container.mjs";
+import { ContainerOf, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
 import { DisposableLike } from "./disposable.mjs";
-import { Function1, SideEffect1, Equality, Predicate, Reducer, Factory, Function2, Function3, Function4, Function5 } from "./functions.mjs";
-import { LiftedStateLike, LiftableLike, Lift as Lift$1, LiftedStateOf, AbstractLiftable, AbstractDisposableLiftable } from "./liftable.mjs";
+import { SideEffect1, Function1, Equality, Predicate, Reducer, Factory, Function2, Function3, Function4, Function5 } from "./functions.mjs";
+import { LiftedStateLike, LiftableLike, Lift as Lift$1, AbstractLiftable, AbstractDisposableLiftable, LiftedStateOf } from "./liftable.mjs";
 import { Option } from "./option.mjs";
 interface SinkLike<T> extends LiftedStateLike {
     assertState(this: SinkLike<T>): void;
@@ -20,7 +20,6 @@ interface SourceLike extends LiftableLike {
     sink(this: this["type"], sink: this["liftedStateType"]): void;
 }
 interface Lift<C extends SourceLike> extends Lift$1<C> {
-    lift<TA, TB>(operator: Function1<LiftedStateOf<C, TB>, LiftedStateOf<C, TA>>): ContainerOperator<C, TA, TB>;
 }
 declare abstract class AbstractSource<T, TSink extends SinkLike<T>> extends AbstractLiftable<TSink> implements SourceLike {
     abstract sink(this: this, sink: TSink): void;

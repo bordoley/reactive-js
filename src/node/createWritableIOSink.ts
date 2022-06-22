@@ -47,7 +47,7 @@ export const createWritableIOSink = (
         writable,
         streamEventsSubscription,
       );
-      scheduler.add(writable);
+      addDisposable(scheduler, writable);
 
       return createObservable(dispatcher => {
         const writableValue = writable.value;

@@ -291,7 +291,7 @@ export const observable = <T>(
       }
 
       if (shouldDispose) {
-        observer.dispose(error);
+        pipe(observer, dispose(error));
       }
     };
 

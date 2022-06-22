@@ -14,6 +14,10 @@
 
   ↳↳ [`SinkLike`](source.SinkLike.md)
 
+## Implemented by
+
+- [`Enumerator`](../classes/enumerable.Enumerator.md)
+
 ## Table of contents
 
 ### Properties

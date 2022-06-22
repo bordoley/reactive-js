@@ -4,10 +4,15 @@
 
 ## Table of contents
 
+### Classes
+
+- [DelegatingEnumeratorBase](../classes/enumerable.DelegatingEnumeratorBase.md)
+- [Enumerator](../classes/enumerable.Enumerator.md)
+- [EnumeratorBase](../classes/enumerable.EnumeratorBase.md)
+
 ### Interfaces
 
 - [EnumerableLike](../interfaces/enumerable.EnumerableLike.md)
-- [EnumeratorLike](../interfaces/enumerable.EnumeratorLike.md)
 - [ToEnumerable](../interfaces/enumerable.ToEnumerable.md)
 
 ### Type Aliases
@@ -16,8 +21,15 @@
 
 ### Variables
 
+- [concatT](enumerable.md#concatt)
+- [distinctUntilChangedT](enumerable.md#distinctuntilchangedt)
 - [fromArrayT](enumerable.md#fromarrayt)
 - [keepT](enumerable.md#keept)
+- [mapT](enumerable.md#mapt)
+- [scanT](enumerable.md#scant)
+- [skipFirstT](enumerable.md#skipfirstt)
+- [takeFirstT](enumerable.md#takefirstt)
+- [takeWhileT](enumerable.md#takewhilet)
 - [type](enumerable.md#type)
 
 ### Functions
@@ -35,6 +47,7 @@
 - [keep](enumerable.md#keep)
 - [map](enumerable.md#map)
 - [move](enumerable.md#move)
+- [onNotify](enumerable.md#onnotify)
 - [repeat](enumerable.md#repeat)
 - [scan](enumerable.md#scan)
 - [skipFirst](enumerable.md#skipfirst)
@@ -64,6 +77,18 @@ A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB>
 
 ## Variables
 
+### concatT
+
+• `Const` **concatT**: [`Concat`](../interfaces/container.Concat.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
+### distinctUntilChangedT
+
+• `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](../interfaces/container.DistinctUntilChanged.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
 ### fromArrayT
 
 • `Const` **fromArrayT**: [`FromArray`](../interfaces/container.FromArray.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\>
@@ -73,6 +98,36 @@ ___
 ### keepT
 
 • `Const` **keepT**: [`Keep`](../interfaces/container.Keep.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
+### mapT
+
+• `Const` **mapT**: [`Map`](../interfaces/container.Map.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
+### scanT
+
+• `Const` **scanT**: [`Scan`](../interfaces/container.Scan.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
+### skipFirstT
+
+• `Const` **skipFirstT**: [`SkipFirst`](../interfaces/container.SkipFirst.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
+### takeFirstT
+
+• `Const` **takeFirstT**: [`TakeFirst`](../interfaces/container.TakeFirst.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
+### takeWhileT
+
+• `Const` **takeWhileT**: [`TakeWhile`](../interfaces/container.TakeWhile.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
 
 ___
 
@@ -140,7 +195,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerator` | [`EnumeratorLike`](../interfaces/enumerable.EnumeratorLike.md)<`T`\> |
+| `enumerator` | [`Enumerator`](../classes/enumerable.Enumerator.md)<`T`\> |
 
 #### Returns
 
@@ -151,9 +206,6 @@ ___
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
-
-Returns an `ObservableLike` that emits all items emitted by the source that
-are distinct by comparison from the previous item.
 
 #### Type parameters
 
@@ -176,7 +228,7 @@ ___
 
 ### enumerate
 
-▸ **enumerate**<`T`\>(`enumerable`): [`EnumeratorLike`](../interfaces/enumerable.EnumeratorLike.md)<`T`\>
+▸ **enumerate**<`T`\>(`enumerable`): [`Enumerator`](../classes/enumerable.Enumerator.md)<`T`\>
 
 #### Type parameters
 
@@ -192,7 +244,7 @@ ___
 
 #### Returns
 
-[`EnumeratorLike`](../interfaces/enumerable.EnumeratorLike.md)<`T`\>
+[`Enumerator`](../classes/enumerable.Enumerator.md)<`T`\>
 
 ___
 
@@ -313,7 +365,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerator` | [`EnumeratorLike`](../interfaces/enumerable.EnumeratorLike.md)<`T`\> |
+| `enumerator` | [`Enumerator`](../classes/enumerable.Enumerator.md)<`T`\> |
 
 #### Returns
 
@@ -325,9 +377,6 @@ ___
 
 ▸ **keep**<`T`\>(`predicate`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
 
-Returns an `EnumerableLike` that only emits items from the
-source that satisfy the specified type predicate.
-
 #### Type parameters
 
 | Name |
@@ -336,9 +385,9 @@ source that satisfy the specified type predicate.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> | The predicate function. |
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
 
 #### Returns
 
@@ -350,9 +399,6 @@ ___
 
 ▸ **map**<`TA`, `TB`\>(`mapper`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`TA`, `TB`\>
 
-Returns an `EnumerableLike` that applies the `mapper` function to each
-value emitted by the source.
-
 #### Type parameters
 
 | Name |
@@ -362,9 +408,9 @@ value emitted by the source.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | The map function to apply each value. Must be a pure function. |
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
 
 #### Returns
 
@@ -386,11 +432,33 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerator` | [`EnumeratorLike`](../interfaces/enumerable.EnumeratorLike.md)<`T`\> |
+| `enumerator` | [`Enumerator`](../classes/enumerable.Enumerator.md)<`T`\> |
 
 #### Returns
 
 `boolean`
+
+___
+
+### onNotify
+
+▸ **onNotify**<`T`\>(`onNotify`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onNotify` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
 
 ___
 
@@ -457,9 +525,6 @@ ___
 
 ▸ **scan**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `TAcc`\>
 
-Returns an EnumerableLike which yields values emitted by the source as long
-as each value satisfies the given predicate.
-
 #### Type parameters
 
 | Name |
@@ -484,8 +549,6 @@ ___
 
 ▸ **skipFirst**<`T`\>(`options?`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
 
-Returns an EnumerableLike that skips the first `count` values emitted by the source.
-
 #### Type parameters
 
 | Name |
@@ -508,8 +571,6 @@ ___
 ### takeFirst
 
 ▸ **takeFirst**<`T`\>(`options?`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
-
-Returns an EnumerableLike that only yields the first `count` values emitted by the source.
 
 #### Type parameters
 
@@ -559,9 +620,6 @@ ___
 
 ▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
 
-Returns an EnumerableLike which yields values emitted by the source as long
-as each value satisfies the given predicate.
-
 #### Type parameters
 
 | Name |
@@ -570,11 +628,11 @@ as each value satisfies the given predicate.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> | The predicate function. |
-| `options?` | `Object` | - |
-| `options.inclusive?` | `boolean` | - |
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+| `options?` | `Object` |
+| `options.inclusive?` | `boolean` |
 
 #### Returns
 
@@ -854,14 +912,14 @@ ___
 
 ### zipEnumerators
 
-▸ **zipEnumerators**(`enumerators`): [`EnumeratorLike`](../interfaces/enumerable.EnumeratorLike.md)<readonly `unknown`[]\>
+▸ **zipEnumerators**(`enumerators`): [`Enumerator`](../classes/enumerable.Enumerator.md)<readonly `unknown`[]\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `enumerators` | readonly [`EnumeratorLike`](../interfaces/enumerable.EnumeratorLike.md)<`unknown`\>[] |
+| `enumerators` | readonly [`Enumerator`](../classes/enumerable.Enumerator.md)<`unknown`\>[] |
 
 #### Returns
 
-[`EnumeratorLike`](../interfaces/enumerable.EnumeratorLike.md)<readonly `unknown`[]\>
+[`Enumerator`](../classes/enumerable.Enumerator.md)<readonly `unknown`[]\>
