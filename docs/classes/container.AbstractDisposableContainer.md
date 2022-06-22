@@ -10,11 +10,11 @@
 
   ↳ **`AbstractDisposableContainer`**
 
+  ↳↳ [`AbstractDisposableLiftable`](liftable.AbstractDisposableLiftable.md)
+
   ↳↳ [`Observer`](observable.Observer.md)
 
   ↳↳ [`Sink`](runnable.Sink.md)
-
-  ↳↳ [`AbstractDisposableSource`](source.AbstractDisposableSource.md)
 
 ## Implements
 

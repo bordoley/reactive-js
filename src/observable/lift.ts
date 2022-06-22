@@ -1,7 +1,8 @@
 import { Function1, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { AbstractSource, Lift, sinkInto } from "../source";
+import { AbstractSource, sinkInto } from "../source";
 import { Observer } from "./observer";
+import { Lift } from "../liftable";
 
 /**
  * A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.

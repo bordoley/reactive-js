@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`ContainerLike`](container.ContainerLike.md)
+- [`LiftableLike`](liftable.LiftableLike.md)
 
   ↳ **`SourceLike`**
 
@@ -16,6 +16,7 @@
 
 ## Implemented by
 
+- [`AbstractDisposableSource`](../classes/source.AbstractDisposableSource.md)
 - [`AbstractSource`](../classes/source.AbstractSource.md)
 
 ## Table of contents
@@ -23,7 +24,7 @@
 ### Properties
 
 - [T](source.SourceLike.md#t)
-- [sinkType](source.SourceLike.md#sinktype)
+- [liftedStateType](source.SourceLike.md#liftedstatetype)
 - [type](source.SourceLike.md#type)
 
 ### Methods
@@ -38,13 +39,17 @@
 
 #### Inherited from
 
-[ContainerLike](container.ContainerLike.md).[T](container.ContainerLike.md#t)
+[LiftableLike](liftable.LiftableLike.md).[T](liftable.LiftableLike.md#t)
 
 ___
 
-### sinkType
+### liftedStateType
 
-• `Readonly` **sinkType**: [`SinkLike`](source.SinkLike.md)<`unknown`\>
+• `Readonly` **liftedStateType**: [`SinkLike`](source.SinkLike.md)<`unknown`\>
+
+#### Overrides
+
+[LiftableLike](liftable.LiftableLike.md).[liftedStateType](liftable.LiftableLike.md#liftedstatetype)
 
 ___
 
@@ -54,7 +59,7 @@ ___
 
 #### Inherited from
 
-[ContainerLike](container.ContainerLike.md).[type](container.ContainerLike.md#type)
+[LiftableLike](liftable.LiftableLike.md).[type](liftable.LiftableLike.md#type)
 
 ## Methods
 

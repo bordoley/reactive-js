@@ -1,18 +1,13 @@
 /// <reference types="./source.d.ts" />
-import { AbstractContainer, AbstractDisposableContainer, fromValue, empty } from './container.mjs';
+import { fromValue, empty } from './container.mjs';
 import { addDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown, dispose, addDisposableDisposeParentOnChildError, addOnDisposedWithoutErrorTeardown, bindDisposables, addTeardown } from './disposable.mjs';
-import { raise, pipe, strictEquality, compose, negate } from './functions.mjs';
+import { pipe, compose, negate } from './functions.mjs';
+import { AbstractLiftable, AbstractDisposableLiftable, createDistinctUntilChangedLiftedOperator } from './liftable.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
-class AbstractSource extends AbstractContainer {
-    get sinkType() {
-        return raise();
-    }
+class AbstractSource extends AbstractLiftable {
 }
-class AbstractDisposableSource extends AbstractDisposableContainer {
-    get sinkType() {
-        return raise();
-    }
+class AbstractDisposableSource extends AbstractDisposableLiftable {
 }
 const sinkInto = (sink) => observable => observable.sink(sink);
 const createCatchErrorOperator = (m) => (onError) => {
@@ -75,15 +70,7 @@ const createDistinctUntilChangedOperator = (m, DistinctUntilChangedSink) => {
                 this.delegate.notify(next);
             }
         };
-    return (options = {}) => {
-        const { equality = strictEquality } = options;
-        const operator = (delegate) => {
-            const sink = new DistinctUntilChangedSink(delegate, equality);
-            bindDisposables(sink, delegate);
-            return sink;
-        };
-        return m.lift(operator);
-    };
+    return createDistinctUntilChangedLiftedOperator(m, DistinctUntilChangedSink);
 };
 const createSatisfyOperator = (m, SatisfySink, defaultResult) => {
     SatisfySink.prototype.notify = function notifyEverySatisfy(next) {

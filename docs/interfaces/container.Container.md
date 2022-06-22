@@ -62,11 +62,11 @@
 
   ↳ [`ToEnumerable`](enumerable.ToEnumerable.md)
 
+  ↳ [`Lift`](liftable.Lift.md)
+
   ↳ [`ToRunnable`](runnable.ToRunnable.md)
 
   ↳ [`CreateDelegatingSink`](source.CreateDelegatingSink.md)
-
-  ↳ [`Lift`](source.Lift.md)
 
 ## Table of contents
 

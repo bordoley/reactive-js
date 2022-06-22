@@ -13,7 +13,7 @@
 
 ## Hierarchy
 
-- [`AbstractContainer`](container.AbstractContainer.md)
+- [`AbstractLiftable`](liftable.AbstractLiftable.md)<`TSink`\>
 
   ↳ **`AbstractSource`**
 
@@ -30,7 +30,7 @@
 ### Accessors
 
 - [T](source.AbstractSource.md#t)
-- [sinkType](source.AbstractSource.md#sinktype)
+- [liftedStateType](source.AbstractSource.md#liftedstatetype)
 - [type](source.AbstractSource.md#type)
 
 ### Methods
@@ -52,7 +52,7 @@
 
 #### Inherited from
 
-[AbstractContainer](container.AbstractContainer.md).[constructor](container.AbstractContainer.md#constructor)
+[AbstractLiftable](liftable.AbstractLiftable.md).[constructor](liftable.AbstractLiftable.md#constructor)
 
 ## Accessors
 
@@ -70,21 +70,25 @@
 
 #### Inherited from
 
-AbstractContainer.T
+AbstractLiftable.T
 
 ___
 
-### sinkType
+### liftedStateType
 
-• `get` **sinkType**(): `TSink`
+• `get` **liftedStateType**(): `TState`
 
 #### Returns
 
-`TSink`
+`TState`
 
 #### Implementation of
 
-[SourceLike](../interfaces/source.SourceLike.md).[sinkType](../interfaces/source.SourceLike.md#sinktype)
+[SourceLike](../interfaces/source.SourceLike.md).[liftedStateType](../interfaces/source.SourceLike.md#liftedstatetype)
+
+#### Inherited from
+
+AbstractLiftable.liftedStateType
 
 ___
 
@@ -102,7 +106,7 @@ ___
 
 #### Inherited from
 
-AbstractContainer.type
+AbstractLiftable.type
 
 ## Methods
 

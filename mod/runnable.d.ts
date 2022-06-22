@@ -46,7 +46,7 @@ declare const toArray: <T>() => Function1<RunnableLike<T>, readonly T[]>;
 interface RunnableLike<T> extends SourceLike {
     readonly T: unknown;
     readonly type: RunnableLike<this["T"]>;
-    readonly sinkType: Sink<this["T"]>;
+    readonly liftedStateType: Sink<this["T"]>;
     sink(this: RunnableLike<T>, sink: Sink<T>): void;
 }
 declare type RunnableOperator<TA, TB> = Function1<RunnableLike<TA>, RunnableLike<TB>>;

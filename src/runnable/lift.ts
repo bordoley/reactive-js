@@ -1,6 +1,7 @@
 import { Function1, pipe } from "../functions";
+import { Lift } from "../liftable";
 import { RunnableLike, RunnableOperator } from "../runnable";
-import { AbstractSource, Lift } from "../source";
+import { AbstractSource } from "../source";
 import { Sink } from "./sinks";
 
 class LiftedRunnable<T>
