@@ -40,7 +40,7 @@
 
 ### lift
 
-▸ **lift**<`TA`, `TB`\>(`operator`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/container.md#containerof)<`C`, `TA`\>, [`ContainerOf`](../modules/container.md#containerof)<`C`, `TB`\>\>
+▸ **lift**<`TA`, `TB`\>(`operator`): [`ContainerOperator`](../modules/container.md#containeroperator)<`C`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -57,4 +57,4 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/container.md#containerof)<`C`, `TA`\>, [`ContainerOf`](../modules/container.md#containerof)<`C`, `TB`\>\>
+[`ContainerOperator`](../modules/container.md#containeroperator)<`C`, `TA`, `TB`\>

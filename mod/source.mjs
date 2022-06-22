@@ -1,18 +1,21 @@
 /// <reference types="./source.d.ts" />
 import { fromValue, empty } from './container.mjs';
-import { addDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown, dispose, addDisposableDisposeParentOnChildError, addOnDisposedWithoutErrorTeardown, bindDisposables, addTeardown } from './disposable.mjs';
+import { addDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown, dispose, addDisposableDisposeParentOnChildError, addOnDisposedWithoutErrorTeardown } from './disposable.mjs';
 import { pipe, compose, negate } from './functions.mjs';
-import { AbstractLiftable, AbstractDisposableLiftable, createDistinctUntilChangedLiftedOperator } from './liftable.mjs';
-import { none, isSome, isNone } from './option.mjs';
+import { AbstractLiftable, AbstractDisposableLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftdOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
+import { none, isSome } from './option.mjs';
 
 class AbstractSource extends AbstractLiftable {
 }
 class AbstractDisposableSource extends AbstractDisposableLiftable {
 }
 const sinkInto = (sink) => observable => observable.sink(sink);
-const createCatchErrorOperator = (m) => (onError) => {
+const createCatchErrorOperator = (m, CatchErrorSink) => (onError) => {
+    CatchErrorSink.prototype.notify = function notifyDelegate(next) {
+        this.delegate.notify(next);
+    };
     const operator = (delegate) => {
-        const sink = m.createDelegatingSink(delegate);
+        const sink = new CatchErrorSink(delegate);
         addDisposable(delegate, sink);
         addOnDisposedWithoutError(sink, delegate);
         addOnDisposedWithErrorTeardown(sink, cause => {
@@ -103,14 +106,7 @@ const createKeepOperator = (m, KeepSink) => {
             this.delegate.notify(next);
         }
     };
-    return (predicate) => {
-        const operator = (delegate) => {
-            const sink = new KeepSink(delegate, predicate);
-            bindDisposables(sink, delegate);
-            return sink;
-        };
-        return m.lift(operator);
-    };
+    return createKeepLiftedOperator(m, KeepSink);
 };
 const createMapOperator = (m, MapSink) => {
     MapSink.prototype.notify = function notifyMap(next) {
@@ -118,14 +114,7 @@ const createMapOperator = (m, MapSink) => {
         const mapped = this.mapper(next);
         this.delegate.notify(mapped);
     };
-    return (mapper) => {
-        const operator = (delegate) => {
-            const sink = new MapSink(delegate, mapper);
-            bindDisposables(sink, delegate);
-            return sink;
-        };
-        return m.lift(operator);
-    };
+    return createMapLiftedOperator(m, MapSink);
 };
 const createOnNotifyOperator = (m, OnNotifySink) => {
     OnNotifySink.prototype.notify = function notifyOnNotify(next) {
@@ -133,14 +122,7 @@ const createOnNotifyOperator = (m, OnNotifySink) => {
         this.onNotify(next);
         this.delegate.notify(next);
     };
-    return (onNotify) => {
-        const operator = (delegate) => {
-            const sink = new OnNotifySink(delegate, onNotify);
-            bindDisposables(sink, delegate);
-            return sink;
-        };
-        return m.lift(operator);
-    };
+    return createOnNotifyLiftedOperator(m, OnNotifySink);
 };
 const createPairwiseOperator = (m, PairwiseSink) => {
     PairwiseSink.prototype.notify = function notifyPairwise(value) {
@@ -150,14 +132,7 @@ const createPairwiseOperator = (m, PairwiseSink) => {
         this.prev = value;
         this.delegate.notify([prev, value]);
     };
-    return () => {
-        const operator = (delegate) => {
-            const sink = new PairwiseSink(delegate);
-            bindDisposables(sink, delegate);
-            return sink;
-        };
-        return m.lift(operator);
-    };
+    return createPairwiseLiftdOperator(m, PairwiseSink);
 };
 const createReduceOperator = (m, ReduceSink) => {
     ReduceSink.prototype.notify = function notifyReduce(next) {
@@ -183,14 +158,7 @@ const createScanOperator = (m, ScanSink) => {
         this.acc = nextAcc;
         this.delegate.notify(nextAcc);
     };
-    return (reducer, initialValue) => {
-        const operator = (delegate) => {
-            const sink = new ScanSink(delegate, reducer, initialValue());
-            bindDisposables(sink, delegate);
-            return sink;
-        };
-        return m.lift(operator);
-    };
+    return createScanLiftedOperator(m, ScanSink);
 };
 const createSkipFirstOperator = (m, SkipFirstSink) => {
     SkipFirstSink.prototype.notify = function notifySkipFirst(next) {
@@ -199,15 +167,7 @@ const createSkipFirstOperator = (m, SkipFirstSink) => {
             this.delegate.notify(next);
         }
     };
-    return (options = {}) => {
-        const { count = 1 } = options;
-        const operator = (delegate) => {
-            const sink = new SkipFirstSink(delegate, count);
-            bindDisposables(sink, delegate);
-            return sink;
-        };
-        return runnable => count > 0 ? pipe(runnable, m.lift(operator)) : runnable;
-    };
+    return createSkipFirstLiftedOperator(m, SkipFirstSink);
 };
 const createSomeSatisfyOperator = (m, SomeSatisfySink) => createSatisfyOperator(m, SomeSatisfySink, false);
 const createTakeFirstOperator = (m, TakeFirstSink) => {
@@ -219,15 +179,7 @@ const createTakeFirstOperator = (m, TakeFirstSink) => {
             pipe(this, dispose());
         }
     };
-    return (options = {}) => {
-        const { count = 1 } = options;
-        const operator = (delegate) => {
-            const sink = new TakeFirstSink(delegate, count);
-            bindDisposables(sink, delegate);
-            return sink;
-        };
-        return source => (count > 0 ? pipe(source, m.lift(operator)) : empty(m));
-    };
+    return createTakeFirstLiftdOperator(m, TakeFirstSink);
 };
 const createTakeLastOperator = (m, TakeLastSink) => {
     TakeLastSink.prototype.notify = function notifyTakeLast(next) {
@@ -262,15 +214,7 @@ const createTakeWhileOperator = (m, TakeWhileSink) => {
             pipe(this, dispose());
         }
     };
-    return (predicate, options = {}) => {
-        const { inclusive = false } = options;
-        const operator = (delegate) => {
-            const sink = new TakeWhileSink(delegate, predicate, inclusive);
-            addDisposableDisposeParentOnChildError(sink, delegate);
-            return sink;
-        };
-        return m.lift(operator);
-    };
+    return createTakeWhileLiftedOperator(m, TakeWhileSink);
 };
 const createThrowIfEmptyOperator = (m, ThrowIfEmptySink) => {
     ThrowIfEmptySink.prototype.notify = function notify(next) {
@@ -278,27 +222,7 @@ const createThrowIfEmptyOperator = (m, ThrowIfEmptySink) => {
         this.isEmpty = false;
         this.delegate.notify(next);
     };
-    return (factory) => {
-        const operator = (delegate) => {
-            const observer = new ThrowIfEmptySink(delegate);
-            addDisposable(delegate, observer);
-            addTeardown(observer, error => {
-                if (isNone(error) && observer.isEmpty) {
-                    let cause = none;
-                    try {
-                        cause = factory();
-                    }
-                    catch (e) {
-                        cause = e;
-                    }
-                    error = { cause };
-                }
-                delegate.dispose(error);
-            });
-            return observer;
-        };
-        return m.lift(operator);
-    };
+    return createThrowIfEmptyLiftedOperator(m, ThrowIfEmptySink);
 };
 const createUsing = (UsingSource) => {
     UsingSource.prototype.sink = function sink(sink) {

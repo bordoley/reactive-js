@@ -1585,9 +1585,11 @@ const toPromise = (scheduler) => observable => new Promise((resolve, reject) => 
 });
 
 const type = undefined;
-const catchError = createCatchErrorOperator({
-    ...liftSynchronousT,
-    createDelegatingSink: createDelegatingObserver,
+const catchError = createCatchErrorOperator(liftSynchronousT, class CatchErrorObserver extends Observer {
+    constructor(delegate) {
+        super(delegate);
+        this.delegate = delegate;
+    }
 });
 const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftSynchronousT, ...fromArrayT }, class DecodeWithCharsetObserver extends Observer {
     constructor(delegate, textDecoder) {

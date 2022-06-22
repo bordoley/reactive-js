@@ -31,7 +31,7 @@ import {
 import { Option, none } from "./option";
 import { fromArrayT } from "./runnable/fromArray";
 import { liftT } from "./runnable/lift";
-import { Sink, createDelegatingSink } from "./runnable/sinks";
+import { Sink } from "./runnable/sinks";
 import {
   AbstractSource,
   SourceLike,
@@ -89,10 +89,14 @@ export const type: RunnableLike<unknown> = undefined as any;
 
 export const catchError: <T>(
   onError: Function1<unknown, RunnableLike<T> | void>,
-) => RunnableOperator<T, T> = createCatchErrorOperator({
-  ...liftT,
-  createDelegatingSink,
-});
+) => RunnableOperator<T, T> = createCatchErrorOperator(
+  liftT,
+  class CatchErrorSink<T> extends Sink<T> {
+    constructor(public readonly delegate: Sink<T>) {
+      super();
+    }
+  },
+);
 
 export const decodeWithCharset: (
   charset?: string,

@@ -23,10 +23,7 @@ import {
 } from "./functions";
 import { fromArrayT } from "./observable/fromArray";
 import { liftSynchronousT } from "./observable/lift";
-import {
-  Observer,
-  createDelegatingObserver as createDelegatingSink,
-} from "./observable/observer";
+import { Observer } from "./observable/observer";
 import { Option, none } from "./option";
 import {
   SourceLike,
@@ -184,10 +181,14 @@ export { toPromise } from "./observable/toPromise";
 
 export const catchError: <T>(
   onError: Function1<unknown, ObservableLike<T> | void>,
-) => ObservableOperator<T, T> = createCatchErrorOperator({
-  ...liftSynchronousT,
-  createDelegatingSink,
-});
+) => ObservableOperator<T, T> = createCatchErrorOperator(
+  liftSynchronousT,
+  class CatchErrorObserver<T> extends Observer<T> {
+    constructor(public readonly delegate: Observer<T>) {
+      super(delegate);
+    }
+  },
+);
 
 export const decodeWithCharset: (
   charset?: string,

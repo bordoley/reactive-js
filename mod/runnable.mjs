@@ -215,9 +215,11 @@ const toArray = () => run(createSink);
 
 const toRunnable = () => identity;
 const type = undefined;
-const catchError = createCatchErrorOperator({
-    ...liftT,
-    createDelegatingSink,
+const catchError = createCatchErrorOperator(liftT, class CatchErrorSink extends Sink {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+    }
 });
 const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftT, ...fromArrayT }, class DecodeWithCharsetSink extends Sink {
     constructor(delegate, textDecoder) {

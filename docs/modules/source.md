@@ -11,7 +11,6 @@
 
 ### Interfaces
 
-- [CreateDelegatingSink](../interfaces/source.CreateDelegatingSink.md)
 - [SinkLike](../interfaces/source.SinkLike.md)
 - [SourceLike](../interfaces/source.SourceLike.md)
 
@@ -40,7 +39,7 @@
 
 ### createCatchErrorOperator
 
-▸ **createCatchErrorOperator**<`C`\>(`m`): <T\>(`onError`: [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ContainerOf`](container.md#containerof)<`C`, `T`\>\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T`, `T`\>
+▸ **createCatchErrorOperator**<`C`\>(`m`, `CatchErrorSink`): <T_1\>(`onError`: [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ContainerOf`](container.md#containerof)<`C`, `T_1`\>\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
@@ -52,29 +51,30 @@
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`CreateDelegatingSink`](../interfaces/source.CreateDelegatingSink.md)<`C`\> & [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `CatchErrorSink` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>  } |
 
 #### Returns
 
 `fn`
 
-▸ <`T`\>(`onError`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T`, `T`\>
+▸ <`T_1`\>(`onError`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 ##### Type parameters
 
 | Name |
 | :------ |
-| `T` |
+| `T_1` |
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ContainerOf`](container.md#containerof)<`C`, `T`\>\> |
+| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ContainerOf`](container.md#containerof)<`C`, `T_1`\>\> |
 
 ##### Returns
 
-[`ContainerOperator`](container.md#containeroperator)<`C`, `T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 ___
 
