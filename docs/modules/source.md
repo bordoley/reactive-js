@@ -7,7 +7,6 @@
 ### Classes
 
 - [AbstractSource](../classes/source.AbstractSource.md)
-- [AbstractUsingSource](../classes/source.AbstractUsingSource.md)
 
 ### Interfaces
 
