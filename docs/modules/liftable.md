@@ -61,7 +61,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
 | `DistinctUntilChangedLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `equality`: [`Equality`](functions.md#equality)<`T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
 
 #### Returns
@@ -103,7 +103,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
 | `KeepLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
 
 #### Returns
@@ -144,7 +144,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
 | `MapLiftableState` | <TA, TB\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TB`\>, `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TA`\> |
 
 #### Returns
@@ -186,7 +186,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
 | `OnNotifyLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
 
 #### Returns
@@ -227,7 +227,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
 | `PairwiseLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, [[`Option`](option.md#option)<`T`\>, `T`]\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
 
 #### Returns
@@ -262,7 +262,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
 | `ScanLiftableState` | <T, TAcc\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TAcc`\>, `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `acc`: `TAcc`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
 
 #### Returns
@@ -305,7 +305,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
 | `SkipLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `skipCount`: `number`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
 
 #### Returns
@@ -347,7 +347,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
 | `TakeFirstLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `maxCount`: `number`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
 
 #### Returns
@@ -389,7 +389,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
 | `TakeWhileLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>, `inclusive`: `boolean`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
 
 #### Returns
@@ -432,7 +432,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
 | `ThrowIfEmptyLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `isEmpty`: `boolean`  } |
 
 #### Returns

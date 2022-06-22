@@ -42,7 +42,7 @@ import {
   createTakeFirstLiftdOperator,
   createTakeWhileLiftedOperator,
   createThrowIfEmptyLiftedOperator,
-  Lift,
+  Lift as LiftableLift,
   LiftableLike,
   LiftedStateLike,
   LiftedStateOf,
@@ -67,6 +67,12 @@ export interface SourceLike extends LiftableLike {
   readonly liftedStateType: SinkLike<unknown>;
 
   sink(this: this["type"], sink: this["liftedStateType"]): void;
+}
+
+export interface Lift<C extends SourceLike> extends LiftableLift<C> {
+  lift<TA, TB>(
+    operator: Function1<LiftedStateOf<C, TB>, LiftedStateOf<C, TA>>,
+  ): ContainerOperator<C, TA, TB>;
 }
 
 export abstract class AbstractSource<T, TSink extends SinkLike<T>>

@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [liftable](../modules/liftable.md) / Lift
 
-# Interface: Lift<C\>
+# Interface: Lift<C, TVariance\>
 
 [liftable](../modules/liftable.md).Lift
 
@@ -9,6 +9,7 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](liftable.LiftableLike.md) |
+| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` = ``"contravariant"`` |
 
 ## Hierarchy
 
@@ -16,11 +17,14 @@
 
   ↳ **`Lift`**
 
+  ↳↳ [`Lift`](source.Lift.md)
+
 ## Table of contents
 
 ### Properties
 
 - [type](liftable.Lift.md#type)
+- [variance](liftable.Lift.md#variance)
 
 ### Methods
 
@@ -35,6 +39,12 @@
 #### Inherited from
 
 [Container](container.Container.md).[type](container.Container.md#type)
+
+___
+
+### variance
+
+• `Optional` **variance**: `TVariance`
 
 ## Methods
 
@@ -53,7 +63,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `operator` | [`Function1`](../modules/functions.md#function1)<[`LiftedStateOf`](../modules/liftable.md#liftedstateof)<`C`, `TB`\>, [`LiftedStateOf`](../modules/liftable.md#liftedstateof)<`C`, `TA`\>\> |
+| `operator` | [`Lift`](liftable.Lift.md)<`C`, `TVariance`\> extends { `variance?`: ``"contravariant"``  } ? [`Function1`](../modules/functions.md#function1)<[`LiftedStateOf`](../modules/liftable.md#liftedstateof)<`C`, `TB`\>, [`LiftedStateOf`](../modules/liftable.md#liftedstateof)<`C`, `TA`\>\> : [`Function1`](../modules/functions.md#function1)<[`LiftedStateOf`](../modules/liftable.md#liftedstateof)<`C`, `TA`\>, [`LiftedStateOf`](../modules/liftable.md#liftedstateof)<`C`, `TB`\>\> |
 
 #### Returns
 

@@ -11,6 +11,7 @@
 
 ### Interfaces
 
+- [Lift](../interfaces/source.Lift.md)
 - [SinkLike](../interfaces/source.SinkLike.md)
 - [SourceLike](../interfaces/source.SourceLike.md)
 
@@ -51,7 +52,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `CatchErrorSink` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>  } |
 
 #### Returns
@@ -92,7 +93,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `DecodeWithCharsetSink` | (`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `string`\>, `textDecoder`: `TextDecoder`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `ArrayBuffer`\> & { `delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `string`\> ; `textDecoder`: `TextDecoder`  } |
 
 #### Returns
@@ -127,7 +128,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `DistinctUntilChangedSink` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `equality`: [`Equality`](functions.md#equality)<`T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> ; `equality`: [`Equality`](functions.md#equality)<`T`\> ; `hasValue`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
 
 #### Returns
@@ -169,7 +170,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `EverySatisfySink` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `boolean`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `boolean`\> ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
 
 #### Returns
@@ -210,7 +211,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `KeepSink` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
 
 #### Returns
@@ -251,7 +252,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `MapSink` | <TA, TB\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TB`\>, `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TA`\> & { `delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TB`\> ; `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>  } |
 
 #### Returns
@@ -293,7 +294,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `OnNotifySink` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> ; `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>  } |
 
 #### Returns
@@ -334,7 +335,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `PairwiseSink` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, [[`Option`](option.md#option)<`T`\>, `T`]\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, [[`Option`](option.md#option)<`T`\>, `T`]\> ; `hasPrev`: `boolean` ; `prev`: [`Option`](option.md#option)<`T`\>  } |
 
 #### Returns
@@ -369,7 +370,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `ReduceSink` | <T, TAcc\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TAcc`\>, `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `acc`: `TAcc`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `acc`: `TAcc` ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
 
 #### Returns
@@ -412,7 +413,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `ScanSink` | <T, TAcc\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TAcc`\>, `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `acc`: `TAcc`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `acc`: `TAcc` ; `delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TAcc`\> ; `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>  } |
 
 #### Returns
@@ -455,7 +456,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `SkipFirstSink` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `skipCount`: `number`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `count`: `number` ; `delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> ; `skipCount`: `number`  } |
 
 #### Returns
@@ -497,7 +498,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `SomeSatisfySink` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `boolean`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `boolean`\> ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
 
 #### Returns
@@ -538,7 +539,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `TakeFirstSink` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `maxCount`: `number`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `count`: `number` ; `delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> ; `maxCount`: `number`  } |
 
 #### Returns
@@ -580,7 +581,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `TakeLastSink` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `maxCount`: `number`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `last`: `T`[] ; `maxCount`: `number`  } |
 
 #### Returns
@@ -622,7 +623,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `TakeWhileSink` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>, `inclusive`: `boolean`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> ; `inclusive`: `boolean` ; `predicate`: [`Predicate`](functions.md#predicate)<`T`\>  } |
 
 #### Returns
@@ -665,7 +666,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`\> |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
 | `ThrowIfEmptySink` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> ; `isEmpty`: `boolean`  } |
 
 #### Returns
