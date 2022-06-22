@@ -64,12 +64,12 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `operator` | [`Function1`](../modules/functions.md#function1)<[`LiftedStateOf`](../modules/liftable.md#liftedstateof)<`C`, `TB`\>, [`LiftedStateOf`](../modules/liftable.md#liftedstateof)<`C`, `TA`\>\> |
+| `operator` | [`LiftOperator`](../modules/liftable.md#liftoperator)<`TA`, `TB`, `C`, [`Lift`](source.Lift.md)<`C`\>\> |
 
 #### Returns
 
 [`ContainerOperator`](../modules/container.md#containeroperator)<`C`, `TA`, `TB`\>
 
-#### Overrides
+#### Inherited from
 
 [Lift](liftable.Lift.md).[lift](liftable.Lift.md#lift)

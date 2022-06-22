@@ -1,27 +1,12 @@
-import { AbstractContainer } from "../container";
-import {
-  AbstractDisposable,
-  addDisposableDisposeParentOnChildError,
-} from "../disposable";
-import {
-  EnumerableLike,
-  EnumerableOperator,
-  EnumeratorLike,
-} from "../enumerable";
-import { Predicate, alwaysTrue } from "../functions";
-import { isNone } from "../option";
-import { enumerate } from "./enumerator";
+import { addDisposableDisposeParentOnChildError } from "../disposable";
+import { EnumerableLike, EnumerableOperator } from "../enumerable";
+import { Predicate, alwaysTrue, raise } from "../functions";
+import { AbstractLiftable } from "../liftable";
+import { Option, isNone } from "../option";
+import { Enumerator, enumerate } from "./enumerator";
 
-function enumerateSrc<T>(self: RepeatEnumerator<T>) {
-  self.enumerator = enumerate(self.src);
-  addDisposableDisposeParentOnChildError(self, self.enumerator);
-}
-
-class RepeatEnumerator<T>
-  extends AbstractDisposable
-  implements EnumeratorLike<T>
-{
-  enumerator: EnumeratorLike<T> = undefined as any;
+class RepeatEnumerator<T> extends Enumerator<T> {
+  private enumerator: Option<Enumerator<T>>;
   private count = 0;
 
   constructor(
@@ -31,28 +16,33 @@ class RepeatEnumerator<T>
     super();
   }
 
-  get current() {
-    return this.enumerator.current;
+  get current(): T {
+    return this.hasCurrent ? this.enumerator?.current ?? raise() : raise();
   }
 
   get hasCurrent() {
-    return this.enumerator.hasCurrent;
+    return this.enumerator?.hasCurrent ?? false;
   }
 
   move(): boolean {
-    if (!this.enumerator.move()) {
+    if (isNone(this.enumerator)) {
+      this.enumerator = enumerate(this.src);
+      addDisposableDisposeParentOnChildError(this, this.enumerator);
+    }
+
+    while (!this.enumerator.move()) {
       this.count++;
 
-      let doRepeat = false;
       try {
-        doRepeat = this.shouldRepeat(this.count);
+        if (this.shouldRepeat(this.count)) {
+          this.enumerator = enumerate(this.src);
+          addDisposableDisposeParentOnChildError(this, this.enumerator);
+        } else {
+          break;
+        }
       } catch (cause) {
         this.dispose({ cause });
-      }
-
-      if (doRepeat) {
-        enumerateSrc(this);
-        this.enumerator.move();
+        break;
       }
     }
 
@@ -61,7 +51,7 @@ class RepeatEnumerator<T>
 }
 
 class RepeatEnumerable<T>
-  extends AbstractContainer
+  extends AbstractLiftable<Enumerator<T>>
   implements EnumerableLike<T>
 {
   constructor(
@@ -72,9 +62,7 @@ class RepeatEnumerable<T>
   }
 
   enumerate() {
-    const enumerator = new RepeatEnumerator(this.src, this.shouldRepeat);
-    enumerateSrc(enumerator);
-    return enumerator;
+    return new RepeatEnumerator(this.src, this.shouldRepeat);
   }
 }
 

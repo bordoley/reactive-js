@@ -1,5 +1,5 @@
 import { fromValue } from "../container";
-import { bindDisposables } from "../disposable";
+import { addDisposable, bindDisposables } from "../disposable";
 import {
   Equality,
   Factory,
@@ -91,7 +91,7 @@ export const toStateStore =
         );
 
         bindDisposables(updatesSubscription, stream);
-        scheduler.add(stream);
+        addDisposable(scheduler, stream);
 
         return stream;
       }),

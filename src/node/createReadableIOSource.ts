@@ -39,7 +39,7 @@ export const createReadableIOSource = (
           }
         }),
       );
-      scheduler.add(readable);
+      addDisposable(scheduler, readable);
 
       addDisposableDisposeParentOnChildError(readable, modeSubscription);
 

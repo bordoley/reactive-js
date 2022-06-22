@@ -1,7 +1,7 @@
 import {
+  AbstractDisposable,
   DisposableLike,
   createDisposableValue,
-  AbstractDisposable,
 } from "./disposable";
 import {
   Equality,
@@ -23,9 +23,9 @@ import {
   isEqualTo,
   negate,
   pipe,
+  raise,
   returns,
   strictEquality,
-  raise,
 } from "./functions";
 
 import { Option, isSome } from "./option";

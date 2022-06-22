@@ -1,5 +1,5 @@
 import { dispose } from "../disposable";
-import { EnumerableLike, EnumeratorLike, enumerate } from "../enumerable";
+import { EnumerableLike, Enumerator, enumerate } from "../enumerable";
 import { Factory, Function1, defer, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { __yield } from "../scheduler";
@@ -16,7 +16,7 @@ import { using } from "./using";
 export const fromEnumerator =
   <T>(
     options: { readonly delay?: number } = {},
-  ): Function1<Factory<EnumeratorLike<T>>, ObservableLike<T>> =>
+  ): Function1<Factory<Enumerator<T>>, ObservableLike<T>> =>
   f => {
     // FIXME: No way to tell using to run synchronously when delay is 0
     const { delay = 0 } = options;

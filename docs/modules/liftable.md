@@ -17,6 +17,9 @@
 
 ### Type Aliases
 
+- [LiftOperator](liftable.md#liftoperator)
+- [LiftOperatorIn](liftable.md#liftoperatorin)
+- [LiftOperatorOut](liftable.md#liftoperatorout)
 - [LiftedStateOf](liftable.md#liftedstateof)
 
 ### Functions
@@ -34,6 +37,51 @@
 
 ## Type Aliases
 
+### LiftOperator
+
+Ƭ **LiftOperator**<`TA`, `TB`, `C`, `M`\>: [`Function1`](functions.md#function1)<[`LiftOperatorIn`](liftable.md#liftoperatorin)<`TA`, `TB`, `C`, `M`\>, [`LiftOperatorOut`](liftable.md#liftoperatorout)<`TA`, `TB`, `C`, `M`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `M` | extends [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"covariant"`` \| ``"contravariant"``\> |
+
+___
+
+### LiftOperatorIn
+
+Ƭ **LiftOperatorIn**<`TA`, `TB`, `C`, `M`\>: `M` extends { `variance?`: ``"contravariant"``  } ? [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TB`\> : [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TA`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `M` | extends [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"covariant"`` \| ``"contravariant"``\> |
+
+___
+
+### LiftOperatorOut
+
+Ƭ **LiftOperatorOut**<`TA`, `TB`, `C`, `M`\>: `M` extends { `variance?`: ``"contravariant"``  } ? [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TA`\> : [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TB`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `M` | extends [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"covariant"`` \| ``"contravariant"``\> |
+
+___
+
 ### LiftedStateOf
 
 Ƭ **LiftedStateOf**<`C`, `T`\>: `C` extends { `liftedStateType`: `unknown`  } ? `C` & { `T`: `T`  }[``"liftedStateType"``] : { `_C`: `C` ; `_T`: () => `T`  }
@@ -49,19 +97,20 @@
 
 ### createDistinctUntilChangedLiftedOperator
 
-▸ **createDistinctUntilChangedLiftedOperator**<`C`\>(`m`, `DistinctUntilChangedLiftableState`): <T_1\>(`options?`: { `equality?`: [`Equality`](functions.md#equality)<`T_1`\>  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ **createDistinctUntilChangedLiftedOperator**<`C`, `TVariance`\>(`m`, `DistinctUntilChangedLiftableState`): <T_1\>(`options?`: { `equality?`: [`Equality`](functions.md#equality)<`T_1`\>  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
 | `DistinctUntilChangedLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `equality`: [`Equality`](functions.md#equality)<`T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
 
 #### Returns
@@ -91,19 +140,20 @@ ___
 
 ### createKeepLiftedOperator
 
-▸ **createKeepLiftedOperator**<`C`\>(`m`, `KeepLiftableState`): <T_1\>(`predicate`: [`Predicate`](functions.md#predicate)<`T_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ **createKeepLiftedOperator**<`C`, `TVariance`\>(`m`, `KeepLiftableState`): <T_1\>(`predicate`: [`Predicate`](functions.md#predicate)<`T_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
 | `KeepLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
 
 #### Returns
@@ -132,20 +182,21 @@ ___
 
 ### createMapLiftedOperator
 
-▸ **createMapLiftedOperator**<`C`\>(`m`, `MapLiftableState`): <TA_1, TB_1\>(`mapper`: [`Function1`](functions.md#function1)<`TA_1`, `TB_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `TA_1`, `TB_1`\>
+▸ **createMapLiftedOperator**<`C`, `TVariance`\>(`m`, `MapLiftableState`): <TA_1, TB_1\>(`mapper`: [`Function1`](functions.md#function1)<`TA_1`, `TB_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `TA_1`, `TB_1`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
-| `MapLiftableState` | <TA, TB\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TB`\>, `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TA`\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
+| `MapLiftableState` | <TA, TB\>(`delegate`: [`LiftOperatorIn`](liftable.md#liftoperatorin)<`TA`, `TB`, `C`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\>, `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`LiftOperatorOut`](liftable.md#liftoperatorout)<`TA`, `TB`, `C`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\> |
 
 #### Returns
 
@@ -174,19 +225,20 @@ ___
 
 ### createOnNotifyLiftedOperator
 
-▸ **createOnNotifyLiftedOperator**<`C`\>(`m`, `OnNotifyLiftableState`): <T_1\>(`onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ **createOnNotifyLiftedOperator**<`C`, `TVariance`\>(`m`, `OnNotifyLiftableState`): <T_1\>(`onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
 | `OnNotifyLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
 
 #### Returns
@@ -215,20 +267,21 @@ ___
 
 ### createPairwiseLiftdOperator
 
-▸ **createPairwiseLiftdOperator**<`C`\>(`m`, `PairwiseLiftableState`): <T_1\>() => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, [[`Option`](option.md#option)<`T_1`\>, `T_1`]\>
+▸ **createPairwiseLiftdOperator**<`C`, `TVariance`\>(`m`, `PairwiseLiftableState`): <T_1\>() => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, [[`Option`](option.md#option)<`T_1`\>, `T_1`]\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
-| `PairwiseLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, [[`Option`](option.md#option)<`T`\>, `T`]\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
+| `PairwiseLiftableState` | <T\>(`delegate`: [`LiftOperatorIn`](liftable.md#liftoperatorin)<`T`, [[`Option`](option.md#option)<`T`\>, `T`], `C`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\>) => [`LiftOperatorOut`](liftable.md#liftoperatorout)<`T`, [[`Option`](option.md#option)<`T`\>, `T`], `C`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\> |
 
 #### Returns
 
@@ -250,20 +303,21 @@ ___
 
 ### createScanLiftedOperator
 
-▸ **createScanLiftedOperator**<`C`\>(`m`, `ScanLiftableState`): <T_1, TAcc_1\>(`reducer`: [`Reducer`](functions.md#reducer)<`T_1`, `TAcc_1`\>, `initialValue`: [`Factory`](functions.md#factory)<`TAcc_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `TAcc_1`\>
+▸ **createScanLiftedOperator**<`C`, `TVariance`\>(`m`, `ScanLiftableState`): <T_1, TAcc_1\>(`reducer`: [`Reducer`](functions.md#reducer)<`T_1`, `TAcc_1`\>, `initialValue`: [`Factory`](functions.md#factory)<`TAcc_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `TAcc_1`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
-| `ScanLiftableState` | <T, TAcc\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TAcc`\>, `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `acc`: `TAcc`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
+| `ScanLiftableState` | <T, TAcc\>(`delegate`: [`LiftOperatorIn`](liftable.md#liftoperatorin)<`T`, `TAcc`, `C`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\>, `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `acc`: `TAcc`) => [`LiftOperatorOut`](liftable.md#liftoperatorout)<`T`, `TAcc`, `C`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\> |
 
 #### Returns
 
@@ -293,19 +347,20 @@ ___
 
 ### createSkipFirstLiftedOperator
 
-▸ **createSkipFirstLiftedOperator**<`C`\>(`m`, `SkipLiftableState`): <T_1\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ **createSkipFirstLiftedOperator**<`C`, `TVariance`\>(`m`, `SkipLiftableState`): <T_1\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
 | `SkipLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `skipCount`: `number`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
 
 #### Returns
@@ -335,19 +390,20 @@ ___
 
 ### createTakeFirstLiftdOperator
 
-▸ **createTakeFirstLiftdOperator**<`C`\>(`m`, `TakeFirstLiftableState`): <T_1\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ **createTakeFirstLiftdOperator**<`C`, `TVariance`\>(`m`, `TakeFirstLiftableState`): <T_1\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
+| `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
 | `TakeFirstLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `maxCount`: `number`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
 
 #### Returns
@@ -377,19 +433,20 @@ ___
 
 ### createTakeWhileLiftedOperator
 
-▸ **createTakeWhileLiftedOperator**<`C`\>(`m`, `TakeWhileLiftableState`): <T_1\>(`predicate`: [`Predicate`](functions.md#predicate)<`T_1`\>, `options?`: { `inclusive?`: `boolean`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ **createTakeWhileLiftedOperator**<`C`, `TVariance`\>(`m`, `TakeWhileLiftableState`): <T_1\>(`predicate`: [`Predicate`](functions.md#predicate)<`T_1`\>, `options?`: { `inclusive?`: `boolean`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
 | `TakeWhileLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>, `inclusive`: `boolean`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
 
 #### Returns
@@ -420,19 +477,20 @@ ___
 
 ### createThrowIfEmptyLiftedOperator
 
-▸ **createThrowIfEmptyLiftedOperator**<`C`\>(`m`, `ThrowIfEmptyLiftableState`): <T_1\>(`factory`: [`Factory`](functions.md#factory)<`unknown`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ **createThrowIfEmptyLiftedOperator**<`C`, `TVariance`\>(`m`, `ThrowIfEmptyLiftableState`): <T_1\>(`factory`: [`Factory`](functions.md#factory)<`unknown`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"contravariant"``\> |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
 | `ThrowIfEmptyLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `isEmpty`: `boolean`  } |
 
 #### Returns

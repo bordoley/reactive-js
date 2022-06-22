@@ -110,7 +110,7 @@ class WindowLocationStream extends AbstractSource {
         });
     }
     dispose(error) {
-        this.stateStream.dispose(error);
+        pipe(this.stateStream, dispose(error));
     }
     goBack() {
         const canGoBack = this.historyCounter > 0;

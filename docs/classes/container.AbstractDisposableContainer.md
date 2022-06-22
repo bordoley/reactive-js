@@ -10,6 +10,8 @@
 
   ↳ **`AbstractDisposableContainer`**
 
+  ↳↳ [`Enumerator`](enumerable.Enumerator.md)
+
   ↳↳ [`AbstractDisposableLiftable`](liftable.AbstractDisposableLiftable.md)
 
   ↳↳ [`Observer`](observable.Observer.md)
