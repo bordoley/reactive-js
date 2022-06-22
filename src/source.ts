@@ -12,7 +12,6 @@ import {
   DisposableLike,
   addDisposable,
   addDisposableDisposeParentOnChildError,
-  addOnDisposedWithError,
   addOnDisposedWithErrorTeardown,
   addOnDisposedWithoutError,
   addOnDisposedWithoutErrorTeardown,
@@ -152,8 +151,7 @@ export const createDecodeWithCharsetOperator = <C extends SourceLike>(
       const textDecoder = new TextDecoder(charset, { fatal: true });
       const sink = new DecodeWithCharsetSink(delegate, textDecoder);
 
-      addDisposable(delegate, sink);
-      addOnDisposedWithError(sink, delegate);
+      addDisposableDisposeParentOnChildError(delegate, sink);
       addOnDisposedWithoutErrorTeardown(sink, () => {
         const data = textDecoder.decode();
 
@@ -437,8 +435,7 @@ export const createReduceOperator = <C extends SourceLike>(
   ): ContainerOperator<C, T, TAcc> => {
     const operator = (delegate: SinkOf<C, TAcc>): SinkOf<C, T> => {
       const sink = new ReduceSink(delegate, reducer, initialValue());
-      addDisposable(delegate, sink);
-      addOnDisposedWithError(sink, delegate);
+      addDisposableDisposeParentOnChildError(delegate, sink);
       addOnDisposedWithoutErrorTeardown(sink, () => {
         pipe(sink.acc, fromValue(m), sinkInto(delegate));
       });
@@ -624,9 +621,8 @@ export const createTakeLastOperator = <C extends SourceLike>(
 
     const operator = (delegate: SinkOf<C, T>): SinkOf<C, T> => {
       const sink = new TakeLastSink(delegate, count);
-      addDisposable(delegate, sink);
-      addOnDisposedWithError(sink, delegate);
-      addTeardown(sink, () => {
+      addDisposableDisposeParentOnChildError(delegate, sink);
+      addOnDisposedWithoutErrorTeardown(sink, () => {
         pipe(sink.last, m.fromArray(), sinkInto(delegate));
       });
 
@@ -680,7 +676,7 @@ export const createTakeWhileOperator = <C extends SourceLike>(
     const { inclusive = false } = options;
     const operator = (delegate: SinkOf<C, T>): SinkOf<C, T> => {
       const sink = new TakeWhileSink(delegate, predicate, inclusive);
-      addDisposable(sink, delegate);
+      addDisposableDisposeParentOnChildError(sink, delegate);
       return sink;
     };
     return m.lift(operator);
