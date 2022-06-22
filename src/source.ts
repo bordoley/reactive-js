@@ -229,7 +229,7 @@ export const createDistinctUntilChangedOperator = <C extends SourceLike>(
 
 const createSatisfyOperator = <C extends SourceLike>(
   m: FromArray<C> & Lift<C>,
-  EverySatisfySink: new <T>(
+  SatisfySink: new <T>(
     delegate: SinkOf<C, boolean>,
     predicate: Predicate<T>,
   ) => SinkOf<C, T> & {
@@ -238,7 +238,7 @@ const createSatisfyOperator = <C extends SourceLike>(
   },
   defaultResult: boolean,
 ): (<T>(predicate: Predicate<T>) => ContainerOperator<C, T, boolean>) => {
-  EverySatisfySink.prototype.notify = function notifyEverySatisfy<T>(
+  SatisfySink.prototype.notify = function notifyEverySatisfy<T>(
     this: SinkOf<C, T> & {
       readonly delegate: SinkOf<C, boolean>;
       readonly predicate: Predicate<T>;
@@ -255,7 +255,7 @@ const createSatisfyOperator = <C extends SourceLike>(
   };
   return <T>(predicate: Predicate<T>) => {
     const operator = (delegate: SinkOf<C, boolean>): SinkOf<C, T> => {
-      const sink = new EverySatisfySink(delegate, predicate);
+      const sink = new SatisfySink(delegate, predicate);
       addDisposableDisposeParentOnChildError(delegate, sink);
       addOnDisposedWithoutErrorTeardown(sink, () => {
         if (!delegate.isDisposed) {
