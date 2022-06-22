@@ -18,7 +18,8 @@ class DeferObservable extends AbstractSource {
         this.delay = delay;
     }
     sink(observer) {
-        const callback = this.f(observer);
+        const sideEffect = this.f();
+        const callback = () => sideEffect(observer);
         const schedulerSubscription = pipe(observer, schedule(callback, this));
         addOnDisposedWithError(schedulerSubscription, observer);
     }
@@ -42,9 +43,9 @@ const fromArray = (options = {}) => values => {
     const valuesLength = values.length;
     const startIndex = Math.min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, valuesLength);
     const endIndex = Math.max(Math.min((_c = options.endIndex) !== null && _c !== void 0 ? _c : values.length, valuesLength), 0);
-    const factory = (observer) => {
+    const factory = () => {
         let index = startIndex;
-        return () => {
+        return (observer) => {
             while (index < endIndex) {
                 const value = values[index];
                 index++;
@@ -293,7 +294,7 @@ class ObservableContext {
         }
     }
 }
-const observable = (computation, { mode = "batched" } = {}) => defer((observer) => {
+const observable = (computation, { mode = "batched" } = {}) => defer(() => (observer) => {
     const runComputation = () => {
         let result = none;
         let error = none;
@@ -340,7 +341,7 @@ const observable = (computation, { mode = "batched" } = {}) => defer((observer) 
         }
     };
     const ctx = new ObservableContext(observer, runComputation, mode);
-    return runComputation;
+    return runComputation();
 });
 const assertCurrentContext = () => isNone(currentCtx)
     ? raise("effect must be called within a computational expression")
@@ -355,7 +356,7 @@ const __observe = (observable) => {
         ? ctx.observe(observable)
         : raise("__observe may only be called within an observable or concurrent computation");
 };
-const deferSideEffect = (f, ...args) => defer(observer => () => {
+const deferSideEffect = (f, ...args) => defer(() => observer => {
     f(...args);
     observer.notify(none);
     observer.dispose();
@@ -417,7 +418,7 @@ class LatestObserver extends Observer {
     }
 }
 const latest = (observables, mode) => {
-    const factory = (delegate) => () => {
+    const factory = () => (delegate) => {
         const observers = [];
         const ctx = {
             completedCount: 0,
@@ -551,7 +552,7 @@ const toDispatcher = (delegate) => {
  *
  * @param onSubscribe
  */
-const createObservable = (onSubscribe) => defer(observer => () => {
+const createObservable = (onSubscribe) => defer(() => observer => {
     const dispatcher = toDispatcher(observer);
     onSubscribe(dispatcher);
 });
@@ -619,6 +620,18 @@ const fromDisposable = (disposable) => createObservable(dispatcher => {
     addDisposable(disposable, dispatcher);
 });
 
+const using = createUsing(class UsingObservable extends AbstractSource {
+    constructor(resourceFactory, sourceFactory) {
+        super();
+        this.resourceFactory = resourceFactory;
+        this.sourceFactory = sourceFactory;
+    }
+    sink(_) { }
+});
+const usingT = {
+    using,
+};
+
 /**
  * Creates an `ObservableLike` which enumerates through the values
  * produced by the provided `EnumeratorLike` with a specified `delay` between emitted items.
@@ -626,19 +639,15 @@ const fromDisposable = (disposable) => createObservable(dispatcher => {
  * @param delay The requested delay between emitted items by the observable.
  */
 const fromEnumerator = (options = {}) => f => {
-    const factory = (observer) => {
-        const enumerator = f();
-        addDisposableDisposeParentOnChildError(observer, enumerator);
-        return () => {
-            while (enumerator.move()) {
-                observer.notify(enumerator.current);
-                __yield(delay);
-            }
-            pipe(observer, dispose());
-        };
-    };
+    // FIXME: No way to tell using to run synchronously when delay is 0
     const { delay = 0 } = options;
-    return delay > 0 ? defer(factory, { delay }) : deferSynchronous(factory);
+    return using(f, enumerator => defer(() => (observer) => {
+        while (enumerator.move()) {
+            observer.notify(enumerator.current);
+            __yield(delay);
+        }
+        pipe(observer, dispose());
+    }, { delay }));
 };
 /**
  * Creates an `ObservableLike` which enumerates through the values
@@ -699,9 +708,9 @@ const fromPromise = (factory) => createObservable(dispatcher => {
  */
 const generate = (generator, initialValue, options = {}) => {
     const { delay = 0 } = options;
-    const factory = (observer) => {
+    const factory = () => {
         let acc = initialValue();
-        return () => {
+        return (observer) => {
             while (true) {
                 acc = generator(acc);
                 observer.notify(acc);
@@ -752,18 +761,6 @@ const neverInstance = new NeverObservable();
  * Returna an `ObservableLike` instance that emits no items and never disposes its observer.
  */
 const never = () => neverInstance;
-
-const using = createUsing(class UsingObservable extends AbstractSource {
-    constructor(resourceFactory, sourceFactory) {
-        super();
-        this.resourceFactory = resourceFactory;
-        this.sourceFactory = sourceFactory;
-    }
-    sink(_) { }
-});
-const usingT = {
-    using,
-};
 
 function onDispose$3(error) {
     const buffer = this.buffer;

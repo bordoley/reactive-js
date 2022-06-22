@@ -1,5 +1,5 @@
 import { addOnDisposedWithError } from "../disposable";
-import { Function1, SideEffect, pipe } from "../functions";
+import { pipe, SideEffect1, Factory } from "../functions";
 import { ObservableLike } from "../observable";
 import { schedule } from "../scheduler";
 import { AbstractSource } from "../source";
@@ -10,7 +10,7 @@ class DeferObservable<T>
   implements ObservableLike<T>
 {
   constructor(
-    private readonly f: Function1<Observer<T>, SideEffect>,
+    private readonly f: Factory<SideEffect1<Observer<T>>>,
     readonly isSynchronous: boolean,
     readonly delay: number,
   ) {
@@ -18,18 +18,19 @@ class DeferObservable<T>
   }
 
   sink(observer: Observer<T>) {
-    const callback = this.f(observer);
+    const sideEffect = this.f();
+    const callback = () => sideEffect(observer);
     const schedulerSubscription = pipe(observer, schedule(callback, this));
     addOnDisposedWithError(schedulerSubscription, observer);
   }
 }
 
 export const deferSynchronous = <T>(
-  factory: Function1<Observer<T>, SideEffect>,
+  factory: Factory<SideEffect1<Observer<T>>>,
 ): ObservableLike<T> => new DeferObservable(factory, true, 0);
 
 export const defer = <T>(
-  factory: Function1<Observer<T>, SideEffect>,
+  factory: Factory<SideEffect1<Observer<T>>>,
   options: { readonly delay?: number } = {},
 ): ObservableLike<T> => {
   const { delay = 0 } = options;

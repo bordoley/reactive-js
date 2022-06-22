@@ -1303,7 +1303,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Function1`](functions.md#function1)<[`Observer`](../classes/observable.Observer.md)<`T`\>, [`SideEffect`](functions.md#sideeffect)\> |
+| `factory` | [`Factory`](functions.md#factory)<[`SideEffect1`](functions.md#sideeffect1)<[`Observer`](../classes/observable.Observer.md)<`T`\>\>\> |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
 

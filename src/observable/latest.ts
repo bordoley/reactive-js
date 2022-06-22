@@ -73,7 +73,7 @@ export const latest = (
   observables: readonly ObservableLike<any>[],
   mode: LatestMode,
 ): ObservableLike<readonly unknown[]> => {
-  const factory = (delegate: Observer<readonly unknown[]>) => () => {
+  const factory = () => (delegate: Observer<readonly unknown[]>) => {
     const observers: LatestObserver[] = [];
     const ctx = {
       completedCount: 0,

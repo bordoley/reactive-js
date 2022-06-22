@@ -20,10 +20,10 @@ export const generate = <T>(
 ): ObservableLike<T> => {
   const { delay = 0 } = options;
 
-  const factory = (observer: Observer<T>) => {
+  const factory = () => {
     let acc = initialValue();
 
-    return () => {
+    return (observer: Observer<T>) => {
       while (true) {
         acc = generator(acc);
         observer.notify(acc);

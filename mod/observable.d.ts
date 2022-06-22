@@ -317,7 +317,7 @@ declare const using: {
     <TResource_1 extends DisposableLike, T_5>(resourceFactory: Factory<TResource_1 | readonly TResource_1[]>, runnableFactory: (...resources: readonly TResource_1[]) => ObservableLike<unknown>): ObservableLike<unknown>;
 };
 declare const usingT: Using<ObservableLike<unknown>>;
-declare const defer: <T>(factory: Function1<Observer<T>, SideEffect>, options?: {
+declare const defer: <T>(factory: Factory<SideEffect1<Observer<T>>>, options?: {
     readonly delay?: number;
 }) => ObservableLike<T>;
 /**

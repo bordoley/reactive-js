@@ -231,7 +231,7 @@ export const observable = <T>(
   computation: Factory<T>,
   { mode = "batched" }: { mode?: ObservableEffectMode } = {},
 ): ObservableLike<T> =>
-  defer((observer: Observer<T>) => {
+  defer(() => (observer: Observer<T>) => {
     const runComputation = () => {
       let result: Option<T> = none;
       let error: Option<Error> = none;
@@ -297,7 +297,7 @@ export const observable = <T>(
 
     const ctx = new ObservableContext(observer, runComputation, mode);
 
-    return runComputation;
+    return runComputation();
   });
 
 const assertCurrentContext = (): ObservableContext =>
@@ -353,7 +353,7 @@ export const __observe = <T>(observable: ObservableLike<T>): Option<T> => {
 };
 
 const deferSideEffect = (f: (...args: any[]) => void, ...args: any[]) =>
-  defer(observer => () => {
+  defer(() => observer => {
     f(...args);
     observer.notify(none);
     observer.dispose();
