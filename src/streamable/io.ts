@@ -1,6 +1,6 @@
+import { ignoreElements, startWith } from "../container";
 import {
   AbstractDisposable,
-  addDisposable,
   addDisposableDisposeParentOnChildError,
 } from "../disposable";
 import { Factory, Reducer, pipe } from "../functions";
@@ -9,11 +9,13 @@ import {
   ObservableLike,
   Observer,
   StreamLike,
-  createObservable,
+  concatT,
   createSubject,
+  dispatchTo,
+  fromArrayT,
+  keepT,
+  onNotify,
   reduce,
-  subscribe,
-  using,
 } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
@@ -71,20 +73,12 @@ export const createFlowableSinkAccumulator = <T, TAcc>(
   const subject = createSubject(options);
 
   const op = (events: ObservableLike<T>): ObservableLike<FlowMode> =>
-    using(
-      scheduler =>
-        pipe(
-          events,
-          reduce(reducer, initialValue),
-          subscribe(scheduler, subject.dispatch, subject),
-        ),
-
-      eventsSubscription =>
-        createObservable(dispatcher => {
-          dispatcher.dispatch("pause");
-          dispatcher.dispatch("resume");
-          addDisposable(eventsSubscription, dispatcher);
-        }),
+    pipe(
+      events,
+      reduce(reducer, initialValue),
+      onNotify(dispatchTo(subject)),
+      ignoreElements(keepT),
+      startWith({ ...concatT, ...fromArrayT }, "pause", "resume"),
     );
 
   const streamable = createStreamable(op);
