@@ -804,7 +804,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`Sink`](../classes/runnable.Sink.md)<`T`\>, `TResource`\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource`\> |
 | `observableFactory` | [`Function1`](functions.md#function1)<`TResource`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
 
 #### Returns
@@ -825,7 +825,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`Sink`](../classes/runnable.Sink.md)<`T_1`\>, readonly [`TResource1`, `TResource2`]\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1`, `TResource2`]\> |
 | `observableFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
 
 #### Returns
@@ -847,7 +847,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`Sink`](../classes/runnable.Sink.md)<`T_2`\>, readonly [`TResource1_1`, `TResource2_1`, `TResource3`]\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1_1`, `TResource2_1`, `TResource3`]\> |
 | `observableFactory` | [`Function3`](functions.md#function3)<`TResource1_1`, `TResource2_1`, `TResource3`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
 
 #### Returns
@@ -870,7 +870,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`Sink`](../classes/runnable.Sink.md)<`T_3`\>, readonly [`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`]\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`]\> |
 | `observableFactory` | [`Function4`](functions.md#function4)<`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
 
 #### Returns
@@ -894,7 +894,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`Sink`](../classes/runnable.Sink.md)<`T_4`\>, readonly [`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`]\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`]\> |
 | `observableFactory` | [`Function5`](functions.md#function5)<`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
 
 #### Returns
@@ -914,7 +914,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`Sink`](../classes/runnable.Sink.md)<`T_5`\>, `TResource_1` \| readonly `TResource_1`[]\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource_1` \| readonly `TResource_1`[]\> |
 | `runnableFactory` | (...`resources`: readonly `TResource_1`[]) => [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\> |
 
 #### Returns

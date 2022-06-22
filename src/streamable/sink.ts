@@ -2,7 +2,9 @@ import { endWith, ignoreElements } from "../container";
 import { Function1, compose, pipe } from "../functions";
 import {
   ObservableLike,
+  StreamLike,
   __memo,
+  __observe,
   concatT,
   dispatchTo,
   fromArrayT,
@@ -10,8 +12,6 @@ import {
   merge,
   observable,
   onNotify,
-  StreamLike,
-  __observe,
   onSubscribe,
 } from "../observable";
 

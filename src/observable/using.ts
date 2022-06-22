@@ -1,8 +1,8 @@
-import { ObservableLike } from "../observable";
-import { Observer } from "./observer";
-import { AbstractSource, createUsing } from "../source";
 import { DisposableLike } from "../disposable";
 import { Function1 } from "../functions";
+import { ObservableLike } from "../observable";
+import { AbstractSource, createUsing } from "../source";
+import { Observer } from "./observer";
 
 export const using = createUsing(
   class UsingObservable<TResource extends DisposableLike, T>

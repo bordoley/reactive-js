@@ -1,8 +1,8 @@
 import { DisposableLike } from "../disposable";
-import { Sink } from "./sinks";
+import { Function1 } from "../functions";
 import { RunnableLike } from "../runnable";
 import { AbstractSource, createUsing } from "../source";
-import { Function1 } from "../functions";
+import { Sink } from "./sinks";
 
 export const using = createUsing(
   class UsingObservable<TResource extends DisposableLike, T>

@@ -9,75 +9,58 @@ import {
 } from "../disposable";
 import { Factory, pipe } from "../functions";
 import {
-  ObservableLike,
   createObservable,
+  createObservableWithScheduler,
   dispatchTo,
   subscribe,
-  using,
 } from "../observable";
-
-import { SchedulerLike } from "../scheduler";
-import { FlowMode, FlowableLike, createStreamable } from "../streamable";
+import { FlowableLike, createStreamable } from "../streamable";
 import { createDisposableNodeStream } from "./nodeStream";
-
-const createReadableEventsObservable = (
-  readable: DisposableValueLike<Readable>,
-) =>
-  createObservable(dispatcher => {
-    const readableValue = readable.value;
-
-    const onData = dispatchTo(dispatcher);
-    readableValue.on("data", onData);
-
-    const onEnd = () => {
-      pipe(dispatcher, dispose());
-    };
-    readableValue.on("end", onEnd);
-
-    addDisposable(readable, dispatcher);
-    addTeardown(dispatcher, _ => {
-      readableValue.removeListener("data", onData);
-      readableValue.removeListener("end", onEnd);
-    });
-  });
-
-const createReadableAndSetupModeSubscription =
-  (
-    factory: Factory<DisposableValueLike<Readable>>,
-    mode: ObservableLike<FlowMode>,
-  ) =>
-  (scheduler: SchedulerLike) => {
-    const readable = factory();
-    const readableValue = readable.value;
-    readableValue.pause();
-
-    const modeSubscription = pipe(
-      mode,
-      subscribe(scheduler, ev => {
-        switch (ev) {
-          case "pause":
-            readableValue.pause();
-            break;
-          case "resume":
-            readableValue.resume();
-            break;
-        }
-      }),
-    );
-
-    addDisposableDisposeParentOnChildError(readable, modeSubscription);
-
-    return readable;
-  };
 
 export const createReadableIOSource = (
   factory: Factory<DisposableValueLike<Readable>>,
 ): FlowableLike<Uint8Array> =>
   createStreamable(mode =>
-    using(
-      createReadableAndSetupModeSubscription(factory, mode),
-      createReadableEventsObservable,
-    ),
+    createObservableWithScheduler(scheduler => {
+      const readable = factory();
+      const readableValue = readable.value;
+      readableValue.pause();
+
+      const modeSubscription = pipe(
+        mode,
+        subscribe(scheduler, ev => {
+          switch (ev) {
+            case "pause":
+              readableValue.pause();
+              break;
+            case "resume":
+              readableValue.resume();
+              break;
+          }
+        }),
+      );
+      scheduler.add(readable);
+
+      addDisposableDisposeParentOnChildError(readable, modeSubscription);
+
+      return createObservable(dispatcher => {
+        const readableValue = readable.value;
+
+        const onData = dispatchTo(dispatcher);
+        readableValue.on("data", onData);
+
+        const onEnd = () => {
+          pipe(dispatcher, dispose());
+        };
+        readableValue.on("end", onEnd);
+
+        addDisposable(readable, dispatcher);
+        addTeardown(dispatcher, _ => {
+          readableValue.removeListener("data", onData);
+          readableValue.removeListener("end", onEnd);
+        });
+      });
+    }),
   );
 
 export const readFileIOSource = (

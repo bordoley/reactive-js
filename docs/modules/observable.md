@@ -64,6 +64,7 @@
 - [concat](observable.md#concat)
 - [concatAll](observable.md#concatall)
 - [createObservable](observable.md#createobservable)
+- [createObservableWithScheduler](observable.md#createobservablewithscheduler)
 - [createSubject](observable.md#createsubject)
 - [decodeWithCharset](observable.md#decodewithcharset)
 - [defer](observable.md#defer)
@@ -1213,6 +1214,28 @@ the onSubscribe function.
 | Name | Type |
 | :------ | :------ |
 | `onSubscribe` | [`SideEffect1`](functions.md#sideeffect1)<[`DispatcherLike`](../interfaces/observable.DispatcherLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
+
+___
+
+### createObservableWithScheduler
+
+▸ **createObservableWithScheduler**<`T`\>(`f`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Function1`](functions.md#function1)<[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md), [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\> |
 
 #### Returns
 
@@ -2475,7 +2498,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`Observer`](../classes/observable.Observer.md)<`T`\>, `TResource`\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource`\> |
 | `observableFactory` | [`Function1`](functions.md#function1)<`TResource`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\> |
 
 #### Returns
@@ -2496,7 +2519,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`Observer`](../classes/observable.Observer.md)<`T_1`\>, readonly [`TResource1`, `TResource2`]\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1`, `TResource2`]\> |
 | `observableFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\> |
 
 #### Returns
@@ -2518,7 +2541,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`Observer`](../classes/observable.Observer.md)<`T_2`\>, readonly [`TResource1_1`, `TResource2_1`, `TResource3`]\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1_1`, `TResource2_1`, `TResource3`]\> |
 | `observableFactory` | [`Function3`](functions.md#function3)<`TResource1_1`, `TResource2_1`, `TResource3`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\> |
 
 #### Returns
@@ -2541,7 +2564,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`Observer`](../classes/observable.Observer.md)<`T_3`\>, readonly [`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`]\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`]\> |
 | `observableFactory` | [`Function4`](functions.md#function4)<`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\> |
 
 #### Returns
@@ -2565,7 +2588,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`Observer`](../classes/observable.Observer.md)<`T_4`\>, readonly [`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`]\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`]\> |
 | `observableFactory` | [`Function5`](functions.md#function5)<`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\> |
 
 #### Returns
@@ -2585,7 +2608,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`Observer`](../classes/observable.Observer.md)<`T_5`\>, `TResource_1` \| readonly `TResource_1`[]\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource_1` \| readonly `TResource_1`[]\> |
 | `runnableFactory` | (...`resources`: readonly `TResource_1`[]) => [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\> |
 
 #### Returns
