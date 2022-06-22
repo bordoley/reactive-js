@@ -791,7 +791,7 @@ ___
 
 ### using
 
-▸ **using**<`TResource`, `T`\>(`resourceFactory`, `observableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
+▸ **using**<`TResource`, `T`\>(`resourceFactory`, `observableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
 #### Type parameters
 
@@ -804,14 +804,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource`\> |
-| `observableFactory` | [`Function1`](functions.md#function1)<`TResource`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\> |
+| `resourceFactory` | [`Function1`](functions.md#function1)<[`Sink`](../classes/runnable.Sink.md)<`T`\>, `TResource`\> |
+| `observableFactory` | [`Function1`](functions.md#function1)<`TResource`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
 
 #### Returns
 
-[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
+[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
-▸ **using**<`TResource1`, `TResource2`, `T`\>(`resourceFactory`, `observableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
+▸ **using**<`TResource1`, `TResource2`, `T_1`\>(`resourceFactory`, `observableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
 #### Type parameters
 
@@ -819,104 +819,104 @@ ___
 | :------ | :------ |
 | `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 | `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `T` | `T` |
+| `T_1` | `T_1` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`]\> |
-| `observableFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\> |
+| `resourceFactory` | [`Function1`](functions.md#function1)<[`Sink`](../classes/runnable.Sink.md)<`T_1`\>, readonly [`TResource1`, `TResource2`]\> |
+| `observableFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
 
 #### Returns
 
-[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
+[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
-▸ **using**<`TResource1`, `TResource2`, `TResource3`, `T`\>(`resourceFactory`, `observableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
+▸ **using**<`TResource1_1`, `TResource2_1`, `TResource3`, `T_2`\>(`resourceFactory`, `observableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource1_1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource2_1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 | `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `T` | `T` |
+| `T_2` | `T_2` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`]\> |
-| `observableFactory` | [`Function3`](functions.md#function3)<`TResource1`, `TResource2`, `TResource3`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\> |
+| `resourceFactory` | [`Function1`](functions.md#function1)<[`Sink`](../classes/runnable.Sink.md)<`T_2`\>, readonly [`TResource1_1`, `TResource2_1`, `TResource3`]\> |
+| `observableFactory` | [`Function3`](functions.md#function3)<`TResource1_1`, `TResource2_1`, `TResource3`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
 
 #### Returns
 
-[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
+[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
-▸ **using**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `T`\>(`resourceFactory`, `observableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
+▸ **using**<`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`, `T_3`\>(`resourceFactory`, `observableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource1_2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource2_2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource3_1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 | `TResource4` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `T` | `T` |
+| `T_3` | `T_3` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`]\> |
-| `observableFactory` | [`Function4`](functions.md#function4)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\> |
+| `resourceFactory` | [`Function1`](functions.md#function1)<[`Sink`](../classes/runnable.Sink.md)<`T_3`\>, readonly [`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`]\> |
+| `observableFactory` | [`Function4`](functions.md#function4)<`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
 
 #### Returns
 
-[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
+[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
-▸ **using**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, `T`\>(`resourceFactory`, `observableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
+▸ **using**<`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`, `T_4`\>(`resourceFactory`, `observableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource4` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource1_3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource2_3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource3_2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource4_1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 | `TResource5` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `T` | `T` |
+| `T_4` | `T_4` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`]\> |
-| `observableFactory` | [`Function5`](functions.md#function5)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\> |
+| `resourceFactory` | [`Function1`](functions.md#function1)<[`Sink`](../classes/runnable.Sink.md)<`T_4`\>, readonly [`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`]\> |
+| `observableFactory` | [`Function5`](functions.md#function5)<`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
 
 #### Returns
 
-[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
+[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
-▸ **using**<`TResource`, `T`\>(`resourceFactory`, `observableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
+▸ **using**<`TResource_1`, `T_5`\>(`resourceFactory`, `runnableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TResource` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `T` | `T` |
+| `TResource_1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T_5` | `T_5` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource` \| readonly `TResource`[]\> |
-| `observableFactory` | (...`resources`: readonly `TResource`[]) => [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\> |
+| `resourceFactory` | [`Function1`](functions.md#function1)<[`Sink`](../classes/runnable.Sink.md)<`T_5`\>, `TResource_1` \| readonly `TResource_1`[]\> |
+| `runnableFactory` | (...`resources`: readonly `TResource_1`[]) => [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\> |
 
 #### Returns
 
-[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
+[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>

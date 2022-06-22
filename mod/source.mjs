@@ -333,5 +333,25 @@ class AbstractUsingSource extends AbstractSource {
         }
     }
 }
+const createUsing = (UsingSource) => {
+    UsingSource.prototype.sink = function sink(sink) {
+        try {
+            const resources = this.resourceFactory(sink);
+            const resourcesArray = Array.isArray(resources) ? resources : [resources];
+            const source = this.sourceFactory(...resourcesArray);
+            for (const r of resourcesArray) {
+                addDisposableDisposeParentOnChildError(sink, r);
+            }
+            pipe(source, sinkInto(sink));
+        }
+        catch (cause) {
+            sink.dispose({ cause });
+        }
+    };
+    function using(resourceFactory, runnableFactory) {
+        return new UsingSource(resourceFactory, runnableFactory);
+    }
+    return using;
+};
 
-export { AbstractSource, AbstractUsingSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, sinkInto };
+export { AbstractSource, AbstractUsingSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };

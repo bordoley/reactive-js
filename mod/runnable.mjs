@@ -1,7 +1,7 @@
 /// <reference types="./runnable.d.ts" />
 import { pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
-import { AbstractSource, AbstractUsingSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
+import { AbstractSource, createUsing, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 
@@ -218,15 +218,15 @@ const createSink = () => new ToArraySink();
  */
 const toArray = () => run(createSink);
 
-class UsingObservable extends AbstractUsingSource {
-}
-/**
- * Creates an `RunnableLike` that uses one or more resources which
- * will be disposed when the RunnableLike disposes it's only subscription.
- */
-function using(resourceFactory, runnableFactory) {
-    return new UsingObservable(resourceFactory, runnableFactory);
-}
+const using = createUsing(class UsingObservable extends AbstractSource {
+    constructor(resourceFactory, sourceFactory) {
+        super();
+        this.resourceFactory = resourceFactory;
+        this.sourceFactory = sourceFactory;
+        this.isSynchronous = false;
+    }
+    sink(_) { }
+});
 
 const toRunnable = () => identity;
 const type = undefined;
