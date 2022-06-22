@@ -291,21 +291,25 @@ const consumeDone = (data) => ({
     type: "done",
     data,
 });
-const consumeImpl = (consumer, initial) => enumerable => using(scheduler => {
-    const enumerator = pipe(enumerable, stream(scheduler));
-    const accFeedback = createSubject();
-    return [accFeedback, enumerator];
-}, (accFeedback, enumerator) => pipe(enumerator, consumer(accFeedback), onNotify(ev => {
-    switch (ev.type) {
-        case "continue":
-            accFeedback.dispatch(ev.data);
-            enumerator.dispatch(none);
-            break;
-    }
-}), map(ev => ev.data), onSubscribe(() => {
-    accFeedback.dispatch(initial());
-    enumerator.dispatch(none);
-})));
+const consumeImpl = (consumer, initial) => {
+    const createObservable = (accFeedback, enumerator) => pipe(enumerator, consumer(accFeedback), onNotify(ev => {
+        switch (ev.type) {
+            case "continue":
+                accFeedback.dispatch(ev.data);
+                enumerator.dispatch(none);
+                break;
+        }
+    }), map(ev => ev.data), onSubscribe(() => {
+        accFeedback.dispatch(initial());
+        enumerator.dispatch(none);
+    }));
+    return enumerable => observable(() => {
+        const enumerator = __stream(enumerable);
+        const accFeedback = __using(createSubject);
+        const observable = __memo(createObservable, accFeedback, enumerator);
+        return __observe(observable);
+    });
+};
 const consume = (consumer, initial) => consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
 const consumeAsync = (consumer, initial) => consumeImpl(accObs => compose(zipWithLatestFrom(accObs, (next, acc) => pipe(consumer(acc, next), takeFirst())), switchAll()), initial);
 
