@@ -8,7 +8,7 @@
 
 - **`AbstractContainer`**
 
-  ↳ [`AbstractSource`](source.AbstractSource.md)
+  ↳ [`AbstractLiftable`](liftable.AbstractLiftable.md)
 
 ## Implements
 

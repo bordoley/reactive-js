@@ -26,7 +26,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 - [T](observable.ObservableLike.md#t)
 - [isSynchronous](observable.ObservableLike.md#issynchronous)
-- [sinkType](observable.ObservableLike.md#sinktype)
+- [liftedStateType](observable.ObservableLike.md#liftedstatetype)
 - [type](observable.ObservableLike.md#type)
 
 ### Methods
@@ -51,13 +51,13 @@ ___
 
 ___
 
-### sinkType
+### liftedStateType
 
-• `Readonly` **sinkType**: [`Observer`](../classes/observable.Observer.md)<`unknown`\>
+• `Readonly` **liftedStateType**: [`Observer`](../classes/observable.Observer.md)<`unknown`\>
 
 #### Overrides
 
-[SourceLike](source.SourceLike.md).[sinkType](source.SourceLike.md#sinktype)
+[SourceLike](source.SourceLike.md).[liftedStateType](source.SourceLike.md#liftedstatetype)
 
 ___
 

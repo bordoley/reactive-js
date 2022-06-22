@@ -10,17 +10,16 @@
 
   ↳ [`EnumerableLike`](enumerable.EnumerableLike.md)
 
+  ↳ [`LiftableLike`](liftable.LiftableLike.md)
+
+  ↳ [`LiftedStateLike`](liftable.LiftedStateLike.md)
+
   ↳ [`SequenceLike`](sequence.SequenceLike.md)
-
-  ↳ [`SinkLike`](source.SinkLike.md)
-
-  ↳ [`SourceLike`](source.SourceLike.md)
 
 ## Implemented by
 
 - [`AbstractContainer`](../classes/container.AbstractContainer.md)
 - [`AbstractDisposableContainer`](../classes/container.AbstractDisposableContainer.md)
-- [`AbstractDisposableSource`](../classes/source.AbstractDisposableSource.md)
 
 ## Table of contents
 

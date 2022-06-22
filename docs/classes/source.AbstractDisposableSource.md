@@ -13,13 +13,13 @@
 
 ## Hierarchy
 
-- [`AbstractDisposableContainer`](container.AbstractDisposableContainer.md)
+- [`AbstractDisposableLiftable`](liftable.AbstractDisposableLiftable.md)<`TSink`\>
 
   ↳ **`AbstractDisposableSource`**
 
 ## Implements
 
-- [`ContainerLike`](../interfaces/container.ContainerLike.md)
+- [`SourceLike`](../interfaces/source.SourceLike.md)
 
 ## Table of contents
 
@@ -30,7 +30,7 @@
 ### Accessors
 
 - [T](source.AbstractDisposableSource.md#t)
-- [sinkType](source.AbstractDisposableSource.md#sinktype)
+- [liftedStateType](source.AbstractDisposableSource.md#liftedstatetype)
 - [type](source.AbstractDisposableSource.md#type)
 
 ### Methods
@@ -52,7 +52,7 @@
 
 #### Inherited from
 
-[AbstractDisposableContainer](container.AbstractDisposableContainer.md).[constructor](container.AbstractDisposableContainer.md#constructor)
+[AbstractDisposableLiftable](liftable.AbstractDisposableLiftable.md).[constructor](liftable.AbstractDisposableLiftable.md#constructor)
 
 ## Accessors
 
@@ -66,21 +66,29 @@
 
 #### Implementation of
 
-[ContainerLike](../interfaces/container.ContainerLike.md).[T](../interfaces/container.ContainerLike.md#t)
+[SourceLike](../interfaces/source.SourceLike.md).[T](../interfaces/source.SourceLike.md#t)
 
 #### Inherited from
 
-AbstractDisposableContainer.T
+AbstractDisposableLiftable.T
 
 ___
 
-### sinkType
+### liftedStateType
 
-• `get` **sinkType**(): `TSink`
+• `get` **liftedStateType**(): `TState`
 
 #### Returns
 
-`TSink`
+`TState`
+
+#### Implementation of
+
+[SourceLike](../interfaces/source.SourceLike.md).[liftedStateType](../interfaces/source.SourceLike.md#liftedstatetype)
+
+#### Inherited from
+
+AbstractDisposableLiftable.liftedStateType
 
 ___
 
@@ -94,11 +102,11 @@ ___
 
 #### Implementation of
 
-[ContainerLike](../interfaces/container.ContainerLike.md).[type](../interfaces/container.ContainerLike.md#type)
+[SourceLike](../interfaces/source.SourceLike.md).[type](../interfaces/source.SourceLike.md#type)
 
 #### Inherited from
 
-AbstractDisposableContainer.type
+AbstractDisposableLiftable.type
 
 ## Methods
 
@@ -116,3 +124,7 @@ AbstractDisposableContainer.type
 #### Returns
 
 `void`
+
+#### Implementation of
+
+[SourceLike](../interfaces/source.SourceLike.md).[sink](../interfaces/source.SourceLike.md#sink)

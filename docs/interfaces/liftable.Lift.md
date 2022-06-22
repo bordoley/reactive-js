@@ -1,14 +1,14 @@
-[Reactive-JS](../README.md) / [source](../modules/source.md) / Lift
+[Reactive-JS](../README.md) / [liftable](../modules/liftable.md) / Lift
 
 # Interface: Lift<C\>
 
-[source](../modules/source.md).Lift
+[liftable](../modules/liftable.md).Lift
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](source.SourceLike.md) |
+| `C` | extends [`LiftableLike`](liftable.LiftableLike.md) |
 
 ## Hierarchy
 
@@ -20,11 +20,11 @@
 
 ### Properties
 
-- [type](source.Lift.md#type)
+- [type](liftable.Lift.md#type)
 
 ### Methods
 
-- [lift](source.Lift.md#lift)
+- [lift](liftable.Lift.md#lift)
 
 ## Properties
 
@@ -53,7 +53,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `operator` | [`Function1`](../modules/functions.md#function1)<[`SinkOf`](../modules/source.md#sinkof)<`C`, `TB`\>, [`SinkOf`](../modules/source.md#sinkof)<`C`, `TA`\>\> |
+| `operator` | [`Function1`](../modules/functions.md#function1)<[`LiftedStateOf`](../modules/liftable.md#liftedstateof)<`C`, `TB`\>, [`LiftedStateOf`](../modules/liftable.md#liftedstateof)<`C`, `TA`\>\> |
 
 #### Returns
 

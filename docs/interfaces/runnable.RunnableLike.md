@@ -21,7 +21,7 @@
 ### Properties
 
 - [T](runnable.RunnableLike.md#t)
-- [sinkType](runnable.RunnableLike.md#sinktype)
+- [liftedStateType](runnable.RunnableLike.md#liftedstatetype)
 - [type](runnable.RunnableLike.md#type)
 
 ### Methods
@@ -40,13 +40,13 @@
 
 ___
 
-### sinkType
+### liftedStateType
 
-• `Readonly` **sinkType**: [`Sink`](../classes/runnable.Sink.md)<`unknown`\>
+• `Readonly` **liftedStateType**: [`Sink`](../classes/runnable.Sink.md)<`unknown`\>
 
 #### Overrides
 
-[SourceLike](source.SourceLike.md).[sinkType](source.SourceLike.md#sinktype)
+[SourceLike](source.SourceLike.md).[liftedStateType](source.SourceLike.md#liftedstatetype)
 
 ___
 

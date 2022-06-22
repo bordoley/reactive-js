@@ -40,7 +40,7 @@
 
 ### createDelegatingSink
 
-▸ **createDelegatingSink**<`T`\>(`delegate`): [`SinkOf`](../modules/source.md#sinkof)<`C`, `T`\>
+▸ **createDelegatingSink**<`T`\>(`delegate`): [`LiftedStateOf`](../modules/liftable.md#liftedstateof)<`C`, `T`\>
 
 #### Type parameters
 
@@ -52,8 +52,8 @@
 
 | Name | Type |
 | :------ | :------ |
-| `delegate` | [`SinkOf`](../modules/source.md#sinkof)<`C`, `T`\> |
+| `delegate` | [`LiftedStateOf`](../modules/liftable.md#liftedstateof)<`C`, `T`\> |
 
 #### Returns
 
-[`SinkOf`](../modules/source.md#sinkof)<`C`, `T`\>
+[`LiftedStateOf`](../modules/liftable.md#liftedstateof)<`C`, `T`\>
