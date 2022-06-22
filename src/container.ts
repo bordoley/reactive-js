@@ -17,11 +17,11 @@ import {
   compose,
   defer,
   ignore,
+  isEqualTo,
   negate,
   pipe,
   returns,
   strictEquality,
-  isEqualTo,
 } from "./functions";
 
 import { Option, isSome } from "./option";

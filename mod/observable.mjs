@@ -10,7 +10,7 @@ import { map as map$1, everySatisfy as everySatisfy$1 } from './readonlyArray.mj
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 
-class ScheduledObservable extends AbstractSource {
+class DeferObservable extends AbstractSource {
     constructor(f, isSynchronous, delay) {
         super();
         this.f = f;
@@ -23,10 +23,10 @@ class ScheduledObservable extends AbstractSource {
         addOnDisposedWithError(schedulerSubscription, observer);
     }
 }
-const deferSynchronous = (factory) => new ScheduledObservable(factory, true, 0);
+const deferSynchronous = (factory) => new DeferObservable(factory, true, 0);
 const defer = (factory, options = {}) => {
     const { delay = 0 } = options;
-    return new ScheduledObservable(factory, false, delay);
+    return new DeferObservable(factory, false, delay);
 };
 
 /**
@@ -437,7 +437,6 @@ const latest = (observables, mode) => {
     const isSynchronous = pipe(observables, everySatisfy$1(obs => obs.isSynchronous));
     return isSynchronous ? deferSynchronous(factory) : defer(factory);
 };
-
 /**
  * Returns an `ObservableLike` that combines the latest values from
  * multiple sources.
@@ -446,6 +445,14 @@ function combineLatest(...observables) {
     return latest(observables, 1 /* LatestMode.Combine */);
 }
 const combineLatestWith = (snd) => fst => combineLatest(fst, snd);
+/**
+ * Returns an `ObservableLike` that zips the latest values from
+ * multiple sources.
+ */
+function zipLatest(...observables) {
+    return latest(observables, 2 /* LatestMode.Zip */);
+}
+const zipLatestWith = (snd) => fst => zipLatest(fst, snd);
 
 const createConcatObserver = (delegate, observables, next) => {
     const observer = createDelegatingObserver(delegate);
@@ -1570,15 +1577,6 @@ function zip(...observables) {
 const zipT = {
     zip,
 };
-
-/**
- * Returns an `ObservableLike` that zips the latest values from
- * multiple sources.
- */
-function zipLatest(...observables) {
-    return latest(observables, 2 /* LatestMode.Zip */);
-}
-const zipLatestWith = (snd) => fst => zipLatest(fst, snd);
 
 const toRunnable = (options = {}) => source => createRunnable(sink => {
     const { schedulerFactory = createVirtualTimeScheduler } = options;

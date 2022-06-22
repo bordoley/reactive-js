@@ -43,11 +43,11 @@ import {
   createReduceOperator,
   createScanOperator,
   createSkipFirstOperator,
+  createSomeSatisfyOperator,
   createTakeFirstOperator,
   createTakeLastOperator,
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
-  createSomeSatisfyOperator,
 } from "./source";
 
 export interface RunnableLike<T> extends SourceLike {

@@ -32,7 +32,7 @@ import { ObservableEffectMode, ObservableLike } from "../observable";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerLike, schedule } from "../scheduler";
 import { fromArrayT } from "./fromArray";
-import { defer } from "./observable";
+import { defer } from "./defer";
 import { Observer } from "./observer";
 import { subscribe } from "./subscribe";
 

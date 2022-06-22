@@ -15,6 +15,7 @@ import {
   TakeWhile,
   compute,
   concatMap,
+  contains,
   empty,
   endWith,
   fromValue,
@@ -22,7 +23,6 @@ import {
   mapTo,
   noneSatisfy,
   startWith,
-  contains,
 } from "../container";
 import {
   alwaysFalse,
@@ -52,12 +52,12 @@ import {
   repeat,
   scan,
   skipFirst,
+  someSatisfyT,
   takeFirst,
   takeLast,
   takeWhile,
   toArray,
   toRunnable,
-  someSatisfyT,
 } from "../runnable";
 import {
   describe,

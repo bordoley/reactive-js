@@ -39,10 +39,10 @@ import {
   createReduceOperator,
   createScanOperator,
   createSkipFirstOperator,
+  createSomeSatisfyOperator,
   createTakeLastOperator,
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
-  createSomeSatisfyOperator,
 } from "./source";
 
 /**
@@ -114,7 +114,7 @@ export type ObservableEffectMode = "batched" | "combine-latest";
  */
 export type ThrottleMode = "first" | "last" | "interval";
 
-export { dispatchTo } from "./observable/dispatcher";
+export { dispatchTo } from "./observable/dispatchTo";
 export {
   observable,
   __currentScheduler,
@@ -123,7 +123,12 @@ export {
   __observe,
   __using,
 } from "./observable/effects";
-export { combineLatest, combineLatestWith } from "./observable/combineLatest";
+export {
+  combineLatest,
+  combineLatestWith,
+  zipLatest,
+  zipLatestWith,
+} from "./observable/latest";
 export { concat, concatT } from "./observable/concat";
 export { createObservable } from "./observable/createObservable";
 export { createSubject } from "./observable/createSubject";
@@ -141,7 +146,7 @@ export { merge, mergeWith } from "./observable/merge";
 export { never } from "./observable/never";
 export { subscribe } from "./observable/subscribe";
 export { using } from "./observable/using";
-export { defer } from "./observable/observable";
+export { defer } from "./observable/defer";
 export { Observer } from "./observable/observer";
 export { buffer } from "./observable/buffer";
 export { map, mapT } from "./observable/map";
@@ -168,7 +173,6 @@ export { throttle } from "./observable/throttle";
 export { timeout, timeoutError } from "./observable/timeout";
 export { withLatestFrom } from "./observable/withLatestFrom";
 export { zip, zipT } from "./observable/zip";
-export { zipLatest, zipLatestWith } from "./observable/zipLatest";
 export { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
 
 export { toEnumerable } from "./observable/toEnumerable";

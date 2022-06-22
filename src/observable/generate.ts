@@ -1,7 +1,7 @@
 import { Factory, Updater } from "../functions";
 import { ObservableLike } from "../observable";
 import { __yield } from "../scheduler";
-import { defer, deferSynchronous } from "./observable";
+import { defer, deferSynchronous } from "./defer";
 import { Observer } from "./observer";
 
 /**
