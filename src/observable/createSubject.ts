@@ -12,8 +12,6 @@ class SubjectImpl<T>
   private readonly observers: Set<DispatcherLike<T>> = new Set();
   private readonly replayed: T[] = [];
 
-  readonly isSynchronous = false;
-
   constructor(private readonly replay: number) {
     super();
   }

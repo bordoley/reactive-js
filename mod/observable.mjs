@@ -82,11 +82,12 @@ class LiftedObservable extends AbstractSource {
  * @param operator The operator function to apply.
  */
 const lift = (operator, isSynchronous = false) => source => {
+    var _a;
     const sourceSource = source instanceof LiftedObservable ? source.source : source;
     const allFunctions = source instanceof LiftedObservable
         ? [operator, ...source.operators]
         : [operator];
-    isSynchronous = source.isSynchronous && isSynchronous;
+    isSynchronous = ((_a = source.isSynchronous) !== null && _a !== void 0 ? _a : false) && isSynchronous;
     return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
 };
 const liftT = {
@@ -431,7 +432,7 @@ const latest = (observables, mode) => {
             pipe(observable, sinkInto(innerObserver));
         }
     };
-    const isSynchronous = pipe(observables, everySatisfy$1(obs => obs.isSynchronous));
+    const isSynchronous = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isSynchronous) !== null && _a !== void 0 ? _a : false; }));
     return isSynchronous ? deferSynchronous(factory) : defer(factory);
 };
 /**
@@ -470,7 +471,7 @@ class ConcatObservable extends AbstractSource {
     constructor(observables) {
         super();
         this.observables = observables;
-        this.isSynchronous = pipe(observables, everySatisfy$1(obs => obs.isSynchronous));
+        this.isSynchronous = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isSynchronous) !== null && _a !== void 0 ? _a : false; }));
     }
     sink(observer) {
         const observables = this.observables;
@@ -558,7 +559,6 @@ class Observable extends AbstractSource {
     constructor(f) {
         super();
         this.f = f;
-        this.isSynchronous = false;
     }
     sink(observer) {
         const observable = this.f(observer);
@@ -573,7 +573,6 @@ class SubjectImpl extends AbstractDisposableSource {
         this.replay = replay;
         this.observers = new Set();
         this.replayed = [];
-        this.isSynchronous = false;
     }
     get observerCount() {
         return this.observers.size;
@@ -729,7 +728,6 @@ class MergeObservable extends AbstractSource {
     constructor(observables) {
         super();
         this.observables = observables;
-        this.isSynchronous = false;
     }
     sink(observer) {
         const observables = this.observables;
@@ -747,10 +745,6 @@ function merge(...observables) {
 const mergeWith = (snd) => fst => merge(fst, snd);
 
 class NeverObservable extends AbstractSource {
-    constructor() {
-        super(...arguments);
-        this.isSynchronous = false;
-    }
     sink(_) { }
 }
 const neverInstance = new NeverObservable();
@@ -764,7 +758,6 @@ const using = createUsing(class UsingObservable extends AbstractSource {
         super();
         this.resourceFactory = resourceFactory;
         this.sourceFactory = sourceFactory;
-        this.isSynchronous = false;
     }
     sink(_) { }
 });
@@ -1181,7 +1174,6 @@ class SharedObservable extends AbstractSource {
                 this.multicast = none;
             }
         };
-        this.isSynchronous = false;
     }
     sink(observer) {
         if (this.observerCount === 0) {
@@ -1281,7 +1273,6 @@ function throttle(duration, options = {}) {
         addTeardown(observer, onDispose);
         return observer;
     };
-    operator.isSynchronous = false;
     return lift(operator);
 }
 
@@ -1513,9 +1504,10 @@ class ZipObservable extends AbstractSource {
     constructor(observables) {
         super();
         this.observables = observables;
-        this.isSynchronous = pipe(observables, everySatisfy$1(obs => obs.isSynchronous));
+        this.isSynchronous = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isSynchronous) !== null && _a !== void 0 ? _a : false; }));
     }
     sink(observer) {
+        var _a;
         const observables = this.observables;
         const count = observables.length;
         if (this.isSynchronous) {
@@ -1526,7 +1518,7 @@ class ZipObservable extends AbstractSource {
             const enumerators = [];
             for (let index = 0; index < count; index++) {
                 const observable = observables[index];
-                if (observable.isSynchronous) {
+                if ((_a = observable.isSynchronous) !== null && _a !== void 0 ? _a : false) {
                     const enumerator = enumerate(observable);
                     enumerator.move();
                     enumerators.push(enumerator);

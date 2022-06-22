@@ -55,7 +55,7 @@ export interface ObservableLike<T> extends SourceLike {
   readonly type: ObservableLike<this["T"]>;
   readonly sinkType: Observer<this["T"]>;
 
-  readonly isSynchronous: boolean;
+  readonly isSynchronous?: boolean;
 
   sink(this: ObservableLike<T>, sink: Observer<T>): void;
 }

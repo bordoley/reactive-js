@@ -14,7 +14,7 @@ class OnSubscribeObservable<T>
   extends AbstractSource<T, Observer<T>>
   implements ObservableLike<T>
 {
-  readonly isSynchronous: boolean;
+  readonly isSynchronous?: boolean;
 
   constructor(
     private readonly src: ObservableLike<T>,

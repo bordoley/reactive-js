@@ -28,8 +28,6 @@ class Observable<T>
   extends AbstractSource<T, Observer<T>>
   implements ObservableLike<T>
 {
-  readonly isSynchronous = false;
-
   constructor(private readonly f: Function1<SchedulerLike, ObservableLike<T>>) {
     super();
   }

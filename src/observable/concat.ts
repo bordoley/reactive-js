@@ -44,7 +44,7 @@ class ConcatObservable<T>
     super();
     this.isSynchronous = pipe(
       observables,
-      everySatisfy(obs => obs.isSynchronous),
+      everySatisfy(obs => obs.isSynchronous ?? false),
     );
   }
 

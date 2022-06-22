@@ -10,8 +10,6 @@ export const using = createUsing(
     extends AbstractSource<T, Observer<T>>
     implements ObservableLike<T>
   {
-    readonly isSynchronous = false;
-
     constructor(
       readonly resourceFactory: Function1<
         Observer<T>,

@@ -32,8 +32,6 @@ class MergeObservable<T>
   extends AbstractSource<T, Observer<T>>
   implements ObservableLike<T>
 {
-  readonly isSynchronous = false;
-
   constructor(readonly observables: readonly ObservableLike<T>[]) {
     super();
   }

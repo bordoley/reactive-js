@@ -47,7 +47,7 @@ export const lift =
         ? [operator, ...source.operators]
         : [operator];
 
-    isSynchronous = source.isSynchronous && isSynchronous;
+    isSynchronous = (source.isSynchronous ?? false) && isSynchronous;
 
     return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
   };

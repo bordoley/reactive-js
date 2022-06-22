@@ -27,8 +27,6 @@ class SharedObservable<T>
     }
   };
 
-  readonly isSynchronous = false;
-
   constructor(
     private readonly source: ObservableLike<T>,
     private readonly publish: Function1<
