@@ -1,4 +1,8 @@
-import { DisposableLike, createDisposableValue } from "./disposable";
+import {
+  DisposableLike,
+  createDisposableValue,
+  AbstractDisposable,
+} from "./disposable";
 import {
   Equality,
   Factory,
@@ -33,6 +37,18 @@ export interface ContainerLike {
 }
 
 export abstract class AbstractContainer implements ContainerLike {
+  get type(): this {
+    return raise();
+  }
+  get T(): unknown {
+    return raise();
+  }
+}
+
+export abstract class AbstractDisposableContainer
+  extends AbstractDisposable
+  implements ContainerLike
+{
   get type(): this {
     return raise();
   }

@@ -7,6 +7,7 @@ import {
   FromArray,
   empty,
   fromValue,
+  AbstractDisposableContainer,
 } from "./container";
 import {
   DisposableLike,
@@ -61,6 +62,17 @@ export interface SourceLike extends ContainerLike {
 export abstract class AbstractSource<T, TSink extends SinkLike<T>>
   extends AbstractContainer
   implements SourceLike
+{
+  get sinkType(): TSink {
+    return raise();
+  }
+
+  abstract sink(this: this, sink: TSink): void;
+}
+
+export abstract class AbstractDisposableSource<T, TSink extends SinkLike<T>>
+  extends AbstractDisposableContainer
+  implements ContainerLike
 {
   get sinkType(): TSink {
     return raise();

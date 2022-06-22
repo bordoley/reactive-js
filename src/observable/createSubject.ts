@@ -1,22 +1,14 @@
-import { AbstractDisposable, addDisposable, addTeardown } from "../disposable";
-import { raise } from "../functions";
+import { addDisposable, addTeardown } from "../disposable";
 import { DispatcherLike, SubjectLike } from "../observable";
+import { AbstractDisposableSource } from "../source";
 import { Observer } from "./observer";
 
 import { toDispatcher } from "./toDispatcher";
 
-class SubjectImpl<T> extends AbstractDisposable implements SubjectLike<T> {
-  get type(): this {
-    return raise();
-  }
-  get T(): unknown {
-    return raise();
-  }
-
-  get sinkType(): Observer<T> {
-    return raise();
-  }
-
+class SubjectImpl<T>
+  extends AbstractDisposableSource<T, Observer<T>>
+  implements SubjectLike<T>
+{
   private readonly observers: Set<DispatcherLike<T>> = new Set();
   private readonly replayed: T[] = [];
 

@@ -7,6 +7,7 @@
 ### Classes
 
 - [AbstractContainer](../classes/container.AbstractContainer.md)
+- [AbstractDisposableContainer](../classes/container.AbstractDisposableContainer.md)
 
 ### Interfaces
 

@@ -1,16 +1,13 @@
-import { AbstractDisposable, addDisposable } from "../disposable";
+import { AbstractDisposableContainer } from "../container";
+import { addDisposable } from "../disposable";
 import { __DEV__ } from "../env";
 import { raise } from "../functions";
 import { SinkLike } from "../source";
 
-export class Sink<T> extends AbstractDisposable implements SinkLike<T> {
-  get type(): this {
-    return raise();
-  }
-  get T(): unknown {
-    return raise();
-  }
-
+export class Sink<T>
+  extends AbstractDisposableContainer
+  implements SinkLike<T>
+{
   assertState(this: Sink<T>): void {}
 
   notify(_: T): void {}

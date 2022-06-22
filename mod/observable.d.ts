@@ -1,5 +1,5 @@
-import { Concat, FromArray, FromIterator, Using, Map, ConcatAll, TakeFirst, Zip, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Keep, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeLast, TakeWhile, ThrowIfEmpty } from "./container.mjs";
-import { AbstractDisposable, DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
+import { AbstractDisposableContainer, Concat, FromArray, FromIterator, Using, Map, ConcatAll, TakeFirst, Zip, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Keep, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeLast, TakeWhile, ThrowIfEmpty } from "./container.mjs";
+import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Predicate, Equality, Reducer } from "./functions.mjs";
 import { SchedulerLike, SchedulerContinuationLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
 import { SinkLike, SourceLike } from "./source.mjs";
@@ -9,13 +9,11 @@ import { RunnableLike } from "./runnable.mjs";
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
-declare class Observer<T> extends AbstractDisposable implements SinkLike<T>, SchedulerLike {
+declare class Observer<T> extends AbstractDisposableContainer implements SinkLike<T>, SchedulerLike {
     readonly scheduler: SchedulerLike;
     inContinuation: boolean;
     private readonly _scheduler;
     constructor(scheduler: SchedulerLike);
-    get type(): this;
-    get T(): unknown;
     /** @ignore */
     get now(): number;
     /** @ignore */

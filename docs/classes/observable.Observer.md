@@ -14,7 +14,7 @@ Abstract base class for implementing the `ObserverLike` interface.
 
 ## Hierarchy
 
-- [`AbstractDisposable`](disposable.AbstractDisposable.md)
+- [`AbstractDisposableContainer`](container.AbstractDisposableContainer.md)
 
   ↳ **`Observer`**
 
@@ -64,7 +64,7 @@ Abstract base class for implementing the `ObserverLike` interface.
 
 #### Overrides
 
-[AbstractDisposable](disposable.AbstractDisposable.md).[constructor](disposable.AbstractDisposable.md#constructor)
+[AbstractDisposableContainer](container.AbstractDisposableContainer.md).[constructor](container.AbstractDisposableContainer.md#constructor)
 
 ## Properties
 
@@ -96,6 +96,10 @@ ___
 
 [SinkLike](../interfaces/source.SinkLike.md).[T](../interfaces/source.SinkLike.md#t)
 
+#### Inherited from
+
+AbstractDisposableContainer.T
+
 ___
 
 ### type
@@ -109,6 +113,10 @@ ___
 #### Implementation of
 
 [SinkLike](../interfaces/source.SinkLike.md).[type](../interfaces/source.SinkLike.md#type)
+
+#### Inherited from
+
+AbstractDisposableContainer.type
 
 ## Methods
 

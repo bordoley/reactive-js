@@ -1,4 +1,4 @@
-import { ContainerLike, AbstractContainer, Container, ContainerOf, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
+import { ContainerLike, AbstractContainer, AbstractDisposableContainer, Container, ContainerOf, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
 import { DisposableLike } from "./disposable.mjs";
 import { Function1, SideEffect1, Equality, Predicate, Reducer, Factory, Function2, Function3, Function4, Function5 } from "./functions.mjs";
 import { Option } from "./option.mjs";
@@ -19,6 +19,10 @@ interface SourceLike extends ContainerLike {
     sink(this: this["type"], sink: this["sinkType"]): void;
 }
 declare abstract class AbstractSource<T, TSink extends SinkLike<T>> extends AbstractContainer implements SourceLike {
+    get sinkType(): TSink;
+    abstract sink(this: this, sink: TSink): void;
+}
+declare abstract class AbstractDisposableSource<T, TSink extends SinkLike<T>> extends AbstractDisposableContainer implements ContainerLike {
     get sinkType(): TSink;
     abstract sink(this: this, sink: TSink): void;
 }
@@ -153,4 +157,4 @@ declare const createUsing: <C extends SourceLike>(UsingSource: new <TResource ex
     ]>, observableFactory: Function5<TResource1_3, TResource2_3, TResource3_2, TResource4_1, TResource5, C>): C;
     <TResource_2 extends DisposableLike, T_6>(resourceFactory: Factory<TResource_2 | readonly TResource_2[]>, runnableFactory: (...resources: readonly TResource_2[]) => C): C;
 };
-export { AbstractSource, CreateDelegatingSink, Lift, SinkLike, SinkOf, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };
+export { AbstractDisposableSource, AbstractSource, CreateDelegatingSink, Lift, SinkLike, SinkOf, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };

@@ -1,4 +1,4 @@
-import { DisposableLike } from "./disposable.mjs";
+import { AbstractDisposable, DisposableLike } from "./disposable.mjs";
 import { Function1, Equality, Predicate, Updater, Factory, Reducer, Function2, Function3, Function4, Function5, Function6, TypePredicate } from "./functions.mjs";
 import { Option } from "./option.mjs";
 interface ContainerLike {
@@ -6,6 +6,10 @@ interface ContainerLike {
     readonly type?: unknown;
 }
 declare abstract class AbstractContainer implements ContainerLike {
+    get type(): this;
+    get T(): unknown;
+}
+declare abstract class AbstractDisposableContainer extends AbstractDisposable implements ContainerLike {
     get type(): this;
     get T(): unknown;
 }
@@ -236,4 +240,4 @@ declare const zipWith: <C, TA, TB>({ zip }: Zip<C>, snd: ContainerOf<C, TB>) => 
     TA,
     TB
 ]>;
-export { AbstractContainer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using, Zip, compute, concatMap, concatWith, contains, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, using, zipWith };
+export { AbstractContainer, AbstractDisposableContainer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using, Zip, compute, concatMap, concatWith, contains, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, using, zipWith };

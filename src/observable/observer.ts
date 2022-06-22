@@ -1,4 +1,5 @@
-import { AbstractDisposable, addDisposable } from "../disposable";
+import { AbstractDisposableContainer } from "../container";
+import { addDisposable } from "../disposable";
 import { __DEV__ } from "../env";
 import { raise } from "../functions";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
@@ -8,7 +9,7 @@ import { SinkLike } from "../source";
  * Abstract base class for implementing the `ObserverLike` interface.
  */
 export class Observer<T>
-  extends AbstractDisposable
+  extends AbstractDisposableContainer
   implements SinkLike<T>, SchedulerLike
 {
   inContinuation = false;
@@ -18,13 +19,6 @@ export class Observer<T>
     super();
     this._scheduler =
       scheduler instanceof Observer ? scheduler._scheduler : scheduler;
-  }
-
-  get type(): this {
-    return raise();
-  }
-  get T(): unknown {
-    return raise();
   }
 
   /** @ignore */

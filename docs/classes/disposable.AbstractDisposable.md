@@ -10,11 +10,9 @@ Abstract base class for implementing the `DisposableLike` interface.
 
 - **`AbstractDisposable`**
 
+  ↳ [`AbstractDisposableContainer`](container.AbstractDisposableContainer.md)
+
   ↳ [`AbstractSerialDisposable`](disposable.AbstractSerialDisposable.md)
-
-  ↳ [`Observer`](observable.Observer.md)
-
-  ↳ [`Sink`](runnable.Sink.md)
 
 ## Implements
 
