@@ -1,4 +1,4 @@
-import { pipe } from "../functions";
+import { Function1, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractSource, Lift, sinkInto } from "../source";
 import { Observer } from "./observer";
@@ -6,11 +6,7 @@ import { Observer } from "./observer";
 /**
  * A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.
  */
-export interface ObserverOperator<A, B> {
-  readonly isSynchronous: boolean;
-
-  (observer: Observer<B>): Observer<A>;
-}
+export type ObserverOperator<A, B> = Function1<Observer<B>, Observer<A>>;
 
 class LiftedObservable<TIn, TOut>
   extends AbstractSource<TOut, Observer<TOut>>
@@ -38,7 +34,10 @@ class LiftedObservable<TIn, TOut>
  * @param operator The operator function to apply.
  */
 export const lift =
-  <TA, TB>(operator: ObserverOperator<TA, TB>): ObservableOperator<TA, TB> =>
+  <TA, TB>(
+    operator: ObserverOperator<TA, TB>,
+    isSynchronous = false,
+  ): ObservableOperator<TA, TB> =>
   source => {
     const sourceSource =
       source instanceof LiftedObservable ? source.source : source;
@@ -48,11 +47,15 @@ export const lift =
         ? [operator, ...source.operators]
         : [operator];
 
-    const isSynchronous = source.isSynchronous && operator.isSynchronous;
+    isSynchronous = source.isSynchronous && isSynchronous;
 
     return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
   };
 
 export const liftT: Lift<ObservableLike<unknown>> = {
   lift,
+};
+
+export const liftSynchronousT: Lift<ObservableLike<unknown>> = {
+  lift: op => lift(op, true),
 };

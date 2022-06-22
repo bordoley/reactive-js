@@ -105,7 +105,6 @@ export function buffer<T>(
     addTeardown(observer, onDispose);
     return observer;
   };
-  operator.isSynchronous = delay === Number.MAX_SAFE_INTEGER;
 
-  return lift(operator);
+  return lift(operator, delay === Number.MAX_SAFE_INTEGER);
 }

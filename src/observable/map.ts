@@ -2,13 +2,13 @@ import { Map } from "../container";
 import { Function1 } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { createMapOperator } from "../source";
-import { liftT } from "./lift";
+import { liftSynchronousT } from "./lift";
 import { Observer } from "./observer";
 
 export const map: <TA, TB>(
   mapper: Function1<TA, TB>,
 ) => ObservableOperator<TA, TB> = createMapOperator(
-  liftT,
+  liftSynchronousT,
   class MapObserver<TA, TB> extends Observer<TA> {
     constructor(
       readonly delegate: Observer<TB>,

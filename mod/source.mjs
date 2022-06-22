@@ -310,7 +310,6 @@ const createThrowIfEmptyOperator = (m, ThrowIfEmptySink) => {
             });
             return observer;
         };
-        operator.isSynchronous = true;
         return m.lift(operator);
     };
 };

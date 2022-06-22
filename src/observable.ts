@@ -22,7 +22,7 @@ import {
   Reducer,
 } from "./functions";
 import { fromArrayT } from "./observable/fromArray";
-import { liftT } from "./observable/lift";
+import { liftSynchronousT } from "./observable/lift";
 import {
   Observer,
   createDelegatingObserver as createDelegatingSink,
@@ -185,14 +185,14 @@ export { toPromise } from "./observable/toPromise";
 export const catchError: <T>(
   onError: Function1<unknown, ObservableLike<T> | void>,
 ) => ObservableOperator<T, T> = createCatchErrorOperator({
-  ...liftT,
+  ...liftSynchronousT,
   createDelegatingSink,
 });
 
 export const decodeWithCharset: (
   charset?: string,
 ) => ObservableOperator<ArrayBuffer, string> = createDecodeWithCharsetOperator(
-  { ...liftT, ...fromArrayT },
+  { ...liftSynchronousT, ...fromArrayT },
   class DecodeWithCharsetObserver extends Observer<ArrayBuffer> {
     constructor(
       readonly delegate: Observer<string>,
@@ -217,7 +217,7 @@ export const decodeWithCharsetT: DecodeWithCharset<ObservableLike<unknown>> = {
 export const distinctUntilChanged: <T>(options?: {
   readonly equality?: Equality<T>;
 }) => ObservableOperator<T, T> = createDistinctUntilChangedOperator(
-  liftT,
+  liftSynchronousT,
   class DistinctUntilChangedObserver<T> extends Observer<T> {
     prev: Option<T> = none;
     hasValue = false;
@@ -240,7 +240,7 @@ export const distinctUntilChangedT: DistinctUntilChanged<
 export const everySatisfy: <T>(
   predicate: Predicate<T>,
 ) => ObservableOperator<T, boolean> = createEverySatisfyOperator(
-  { ...fromArrayT, ...liftT },
+  { ...fromArrayT, ...liftSynchronousT },
   class EverySatisfyObserver<T> extends Observer<T> {
     constructor(
       readonly delegate: Observer<boolean>,
@@ -257,7 +257,7 @@ export const everySatisfyT: EverySatisfy<ObservableLike<unknown>> = {
 
 export const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T> =
   createKeepOperator(
-    liftT,
+    liftSynchronousT,
     class KeepObserver<T> extends Observer<T> {
       constructor(
         readonly delegate: Observer<T>,
@@ -274,7 +274,7 @@ export const keepT: Keep<ObservableLike<unknown>> = {
 
 export const pairwise: <T>() => ObservableOperator<T, [Option<T>, T]> =
   createPairwiseOperator(
-    liftT,
+    liftSynchronousT,
     class PairwiseObserver<T> extends Observer<T> {
       prev: Option<T>;
       hasPrev = false;
@@ -293,7 +293,7 @@ export const reduce: <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ) => ObservableOperator<T, TAcc> = createReduceOperator(
-  { ...fromArrayT, ...liftT },
+  { ...fromArrayT, ...liftSynchronousT },
   class ReducerObserver<T, TAcc> extends Observer<T> {
     constructor(
       readonly delegate: Observer<TAcc>,
@@ -313,7 +313,7 @@ export const scan: <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ) => ObservableOperator<T, TAcc> = createScanOperator(
-  liftT,
+  liftSynchronousT,
   class ScanObserver<T, TAcc> extends Observer<T> {
     constructor(
       readonly delegate: Observer<TAcc>,
@@ -337,7 +337,7 @@ export const scanT: Scan<ObservableLike<unknown>> = {
 export const skipFirst: <T>(options?: {
   readonly count?: number;
 }) => ObservableOperator<T, T> = createSkipFirstOperator(
-  liftT,
+  liftSynchronousT,
   class SkipFirstObserver<T> extends Observer<T> {
     count = 0;
 
@@ -354,7 +354,7 @@ export const skipFirstT: SkipFirst<ObservableLike<unknown>> = {
 export const someSatisfy: <T>(
   predicate: Predicate<T>,
 ) => ObservableOperator<T, boolean> = createSomeSatisfyOperator(
-  { ...fromArrayT, ...liftT },
+  { ...fromArrayT, ...liftSynchronousT },
   class SomeSatisfyObserver<T> extends Observer<T> {
     constructor(
       readonly delegate: Observer<boolean>,
@@ -377,7 +377,7 @@ export const someSatisfyT: SomeSatisfy<ObservableLike<unknown>> = {
 export const takeLast: <T>(options?: {
   readonly count?: number;
 }) => ObservableOperator<T, T> = createTakeLastOperator(
-  { ...fromArrayT, ...liftT },
+  { ...fromArrayT, ...liftSynchronousT },
   class TakeLastObserver<T> extends Observer<T> {
     readonly last: T[] = [];
 
@@ -402,7 +402,7 @@ export const takeWhile: <T>(
   predicate: Predicate<T>,
   options?: { readonly inclusive?: boolean },
 ) => ObservableOperator<T, T> = createTakeWhileOperator(
-  liftT,
+  liftSynchronousT,
   class TakeWhileObserver<T> extends Observer<T> {
     constructor(
       readonly delegate: Observer<T>,
@@ -421,7 +421,7 @@ export const takeWhileT: TakeWhile<ObservableLike<unknown>> = {
 export const throwIfEmpty: <T>(
   factory: Factory<unknown>,
 ) => ObservableOperator<T, T> = createThrowIfEmptyOperator(
-  liftT,
+  liftSynchronousT,
   class ThrowIfEmptyObserver<T> extends Observer<T> {
     isEmpty = true;
 

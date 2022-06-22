@@ -2,13 +2,13 @@ import { TakeFirst } from "../container";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { createTakeFirstOperator } from "../source";
 import { fromArrayT } from "./fromArray";
-import { liftT } from "./lift";
+import { liftSynchronousT } from "./lift";
 import { Observer } from "./observer";
 
 export const takeFirst: <T>(options?: {
   readonly count?: number;
 }) => ObservableOperator<T, T> = createTakeFirstOperator(
-  { ...fromArrayT, ...liftT },
+  { ...fromArrayT, ...liftSynchronousT },
   class TakeFirstObserver<T> extends Observer<T> {
     count = 0;
 

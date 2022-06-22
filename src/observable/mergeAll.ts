@@ -109,7 +109,6 @@ export const mergeAll = <T>(
     });
     return observer;
   };
-  operator.isSynchronous = false;
   return lift(operator);
 };
 

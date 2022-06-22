@@ -736,7 +736,6 @@ export const createThrowIfEmptyOperator = <C extends SourceLike>(
       });
       return observer;
     };
-    operator.isSynchronous = true;
     return m.lift(operator);
   };
 };

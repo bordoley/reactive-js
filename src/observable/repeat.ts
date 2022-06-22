@@ -50,8 +50,8 @@ const repeatObs =
   observable => {
     const operator = (observer: Observer<T>) =>
       createRepeatObserver(observer, observable, shouldRepeat);
-    operator.isSynchronous = true;
-    return lift(operator)(observable);
+
+    return lift(operator, true)(observable);
   };
 
 const defaultRepeatPredicate = (_: number, error?: Error): boolean =>

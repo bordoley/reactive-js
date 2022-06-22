@@ -20,6 +20,5 @@ export const takeUntil = <T>(
     bindDisposables(takeUntilObserver, otherSubscription);
     return takeUntilObserver;
   };
-  operator.isSynchronous = false;
   return lift(operator);
 };
