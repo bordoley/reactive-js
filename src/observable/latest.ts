@@ -93,7 +93,7 @@ export const latest = (
 
   const isSynchronous = pipe(
     observables,
-    everySatisfy(obs => obs.isSynchronous),
+    everySatisfy(obs => obs.isSynchronous ?? false),
   );
 
   return isSynchronous ? deferSynchronous(factory) : defer(factory);

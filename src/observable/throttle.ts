@@ -127,6 +127,5 @@ export function throttle<T>(
     addTeardown(observer, onDispose);
     return observer;
   };
-  operator.isSynchronous = false;
   return lift(operator);
 }

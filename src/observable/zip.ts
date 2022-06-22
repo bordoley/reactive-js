@@ -103,7 +103,7 @@ class ZipObservable
     super();
     this.isSynchronous = pipe(
       observables,
-      everySatisfy(obs => obs.isSynchronous),
+      everySatisfy(obs => obs.isSynchronous ?? false),
     );
   }
 
@@ -124,7 +124,7 @@ class ZipObservable
       for (let index = 0; index < count; index++) {
         const observable = observables[index];
 
-        if (observable.isSynchronous) {
+        if (observable.isSynchronous ?? false) {
           const enumerator = enumerate(observable);
 
           enumerator.move();

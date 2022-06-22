@@ -6,8 +6,6 @@ class NeverObservable<T>
   extends AbstractSource<T, Observer<T>>
   implements ObservableLike<T>
 {
-  readonly isSynchronous = false;
-
   sink(_: Observer<T>) {}
 }
 

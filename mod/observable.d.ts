@@ -586,7 +586,7 @@ interface ObservableLike<T> extends SourceLike {
     readonly T: unknown;
     readonly type: ObservableLike<this["T"]>;
     readonly sinkType: Observer<this["T"]>;
-    readonly isSynchronous: boolean;
+    readonly isSynchronous?: boolean;
     sink(this: ObservableLike<T>, sink: Observer<T>): void;
 }
 declare const type: ObservableLike<unknown>;

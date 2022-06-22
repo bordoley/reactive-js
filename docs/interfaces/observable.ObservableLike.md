@@ -47,7 +47,7 @@ ___
 
 ### isSynchronous
 
-• `Readonly` **isSynchronous**: `boolean`
+• `Optional` `Readonly` **isSynchronous**: `boolean`
 
 ___
 
