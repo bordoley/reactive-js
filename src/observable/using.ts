@@ -1,3 +1,4 @@
+import { Using } from "../container";
 import { DisposableLike } from "../disposable";
 import { Function1 } from "../functions";
 import { ObservableLike } from "../observable";
@@ -26,3 +27,7 @@ export const using = createUsing(
     sink(_: Observer<T>) {}
   },
 );
+
+export const usingT: Using<ObservableLike<unknown>> = {
+  using,
+};

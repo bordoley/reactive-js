@@ -48,6 +48,7 @@
 - [throwIfEmptyT](observable.md#throwifemptyt)
 - [timeoutError](observable.md#timeouterror)
 - [type](observable.md#type)
+- [usingT](observable.md#usingt)
 - [zipT](observable.md#zipt)
 
 ### Functions
@@ -303,6 +304,12 @@ ___
 ### type
 
 • `Const` **type**: [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
+
+___
+
+### usingT
+
+• `Const` **usingT**: [`Using`](../interfaces/container.Using.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 

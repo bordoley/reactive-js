@@ -1,7 +1,7 @@
 /// <reference types="./runnable.d.ts" />
 import { pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
-import { AbstractSource, createUsing, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
+import { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
 import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 
@@ -218,16 +218,6 @@ const createSink = () => new ToArraySink();
  */
 const toArray = () => run(createSink);
 
-const using = createUsing(class UsingObservable extends AbstractSource {
-    constructor(resourceFactory, sourceFactory) {
-        super();
-        this.resourceFactory = resourceFactory;
-        this.sourceFactory = sourceFactory;
-        this.isSynchronous = false;
-    }
-    sink(_) { }
-});
-
 const toRunnable = () => identity;
 const type = undefined;
 const catchError = createCatchErrorOperator({
@@ -394,5 +384,17 @@ const throwIfEmpty = createThrowIfEmptyOperator(liftT, class ThrowIfEmptySink ex
 const throwIfEmptyT = {
     throwIfEmpty,
 };
+const using = createUsing(class UsingObservable extends AbstractSource {
+    constructor(resourceFactory, sourceFactory) {
+        super();
+        this.resourceFactory = resourceFactory;
+        this.sourceFactory = sourceFactory;
+        this.isSynchronous = false;
+    }
+    sink(_) { }
+});
+const usingT = {
+    using,
+};
 
-export { Sink, catchError, concat, concatAll, createRunnable, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, onNotify, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using };
+export { Sink, catchError, concat, concatAll, createRunnable, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, onNotify, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };

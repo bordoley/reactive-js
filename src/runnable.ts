@@ -16,7 +16,9 @@ import {
   TakeLast,
   TakeWhile,
   ThrowIfEmpty,
+  Using,
 } from "./container";
+import { DisposableLike } from "./disposable";
 import {
   Equality,
   Factory,
@@ -31,6 +33,7 @@ import { fromArrayT } from "./runnable/fromArray";
 import { liftT } from "./runnable/lift";
 import { Sink, createDelegatingSink } from "./runnable/sinks";
 import {
+  AbstractSource,
   SourceLike,
   createCatchErrorOperator,
   createDecodeWithCharsetOperator,
@@ -48,6 +51,7 @@ import {
   createTakeLastOperator,
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
+  createUsing,
 } from "./source";
 
 export interface RunnableLike<T> extends SourceLike {
@@ -77,7 +81,6 @@ export { last } from "./runnable/last";
 export { repeat } from "./runnable/repeat";
 export { Sink } from "./runnable/sinks";
 export { toArray } from "./runnable/toArray";
-export { using } from "./runnable/using";
 
 export const toRunnable = <T>(): Function1<RunnableLike<T>, RunnableLike<T>> =>
   identity;
@@ -362,4 +365,31 @@ export const throwIfEmpty: <T>(
 
 export const throwIfEmptyT: ThrowIfEmpty<RunnableLike<unknown>> = {
   throwIfEmpty,
+};
+
+export const using = createUsing(
+  class UsingObservable<TResource extends DisposableLike, T>
+    extends AbstractSource<T, Sink<T>>
+    implements RunnableLike<T>
+  {
+    readonly isSynchronous = false;
+
+    constructor(
+      readonly resourceFactory: Function1<
+        Sink<T>,
+        TResource | readonly TResource[]
+      >,
+      readonly sourceFactory: (
+        ...resources: readonly TResource[]
+      ) => RunnableLike<T>,
+    ) {
+      super();
+    }
+
+    sink(_: Sink<T>) {}
+  },
+);
+
+export const usingT: Using<RunnableLike<unknown>> = {
+  using,
 };

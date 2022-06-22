@@ -36,7 +36,7 @@ import {
   subscribe,
   takeFirst,
   toRunnable,
-  using,
+  usingT,
 } from "../observable";
 import { Option, none } from "../option";
 import { last, toArray } from "../runnable";
@@ -500,7 +500,7 @@ export const tests = describe(
       const src = pipe(
         str,
         fromValue(fromArrayT),
-        encodeUtf8({ ...mapT, using }),
+        encodeUtf8({ ...mapT, ...usingT }),
         decodeWithCharset(),
         flow(),
       );

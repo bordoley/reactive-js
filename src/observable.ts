@@ -148,7 +148,7 @@ export { generate } from "./observable/generate";
 export { merge, mergeWith } from "./observable/merge";
 export { never } from "./observable/never";
 export { subscribe } from "./observable/subscribe";
-export { using } from "./observable/using";
+export { using, usingT } from "./observable/using";
 export { defer } from "./observable/defer";
 export { Observer } from "./observable/observer";
 export { buffer } from "./observable/buffer";

@@ -8,10 +8,10 @@ import {
   __memo,
   __observe,
   __using,
+  createObservableWithScheduler,
   fromArrayT,
   map,
   subscribe,
-  createObservableWithScheduler,
 } from "../observable";
 
 import { isNone } from "../option";

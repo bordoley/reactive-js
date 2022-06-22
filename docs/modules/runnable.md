@@ -35,6 +35,7 @@
 - [takeWhileT](runnable.md#takewhilet)
 - [throwIfEmptyT](runnable.md#throwifemptyt)
 - [type](runnable.md#type)
+- [usingT](runnable.md#usingt)
 
 ### Functions
 
@@ -175,6 +176,12 @@ ___
 ### type
 
 • `Const` **type**: [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
+
+___
+
+### usingT
+
+• `Const` **usingT**: [`Using`](../interfaces/container.Using.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
 
 ## Functions
 
