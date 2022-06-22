@@ -71,6 +71,5 @@ export const withLatestFrom = <TA, TB, T>(
 
     return observer;
   };
-  operator.isSynchronous = false;
   return lift(operator);
 };

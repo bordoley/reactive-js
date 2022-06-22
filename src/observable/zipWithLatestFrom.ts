@@ -89,6 +89,5 @@ export const zipWithLatestFrom = <TA, TB, T>(
 
     return observer;
   };
-  operator.isSynchronous = false;
   return lift(operator);
 };

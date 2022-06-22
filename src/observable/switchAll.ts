@@ -55,7 +55,6 @@ const operator = <T>(delegate: Observer<T>) => {
   addTeardown(observer, onDispose);
   return observer;
 };
-operator.isSynchronous = false;
 
 const switchAllInstance = lift(operator);
 /**

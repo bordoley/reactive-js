@@ -1,7 +1,7 @@
 import { SideEffect1 } from "../functions";
 import { ObservableOperator } from "../observable";
 import { createOnNotifyOperator } from "../source";
-import { liftT } from "./lift";
+import { liftSynchronousT } from "./lift";
 import { Observer } from "./observer";
 
 /**
@@ -12,7 +12,7 @@ import { Observer } from "./observer";
 export const onNotify: <T>(
   onNotify: SideEffect1<T>,
 ) => ObservableOperator<T, T> = createOnNotifyOperator(
-  liftT,
+  liftSynchronousT,
   class OnNotifyObserver<T> extends Observer<T> {
     constructor(
       readonly delegate: Observer<T>,

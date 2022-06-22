@@ -89,6 +89,5 @@ export function timeout<T>(
 
     return observer;
   };
-  operator.isSynchronous = false;
   return lift(operator);
 }

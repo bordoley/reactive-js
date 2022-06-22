@@ -81,16 +81,19 @@ class LiftedObservable extends AbstractSource {
  *
  * @param operator The operator function to apply.
  */
-const lift = (operator) => source => {
+const lift = (operator, isSynchronous = false) => source => {
     const sourceSource = source instanceof LiftedObservable ? source.source : source;
     const allFunctions = source instanceof LiftedObservable
         ? [operator, ...source.operators]
         : [operator];
-    const isSynchronous = source.isSynchronous && operator.isSynchronous;
+    isSynchronous = source.isSynchronous && isSynchronous;
     return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
 };
 const liftT = {
     lift,
+};
+const liftSynchronousT = {
+    lift: op => lift(op, true),
 };
 
 /**
@@ -830,11 +833,10 @@ function buffer(options = {}) {
         addTeardown(observer, onDispose$3);
         return observer;
     };
-    operator.isSynchronous = delay === Number.MAX_SAFE_INTEGER;
-    return lift(operator);
+    return lift(operator, delay === Number.MAX_SAFE_INTEGER);
 }
 
-const map = createMapOperator(liftT, class MapObserver extends Observer {
+const map = createMapOperator(liftSynchronousT, class MapObserver extends Observer {
     constructor(delegate, mapper) {
         super(delegate);
         this.delegate = delegate;
@@ -878,7 +880,6 @@ const operator = (delegate) => {
     addTeardown(observer, onDispose$2);
     return observer;
 };
-operator.isSynchronous = false;
 const switchAllInstance = lift(operator);
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
@@ -956,7 +957,6 @@ const mergeAll = (options = {}) => {
         });
         return observer;
     };
-    operator.isSynchronous = false;
     return lift(operator);
 };
 const mergeAllT = {
@@ -991,7 +991,7 @@ const exhaustT = {
  *
  * @param onNotify The function that is invoked when the observable source produces values.
  */
-const onNotify$2 = createOnNotifyOperator(liftT, class OnNotifyObserver extends Observer {
+const onNotify$2 = createOnNotifyOperator(liftSynchronousT, class OnNotifyObserver extends Observer {
     constructor(delegate, onNotify) {
         super(delegate);
         this.delegate = delegate;
@@ -1070,8 +1070,7 @@ const createRepeatObserver = (delegate, observable, shouldRepeat) => {
 };
 const repeatObs = (shouldRepeat) => observable => {
     const operator = (observer) => createRepeatObserver(observer, observable, shouldRepeat);
-    operator.isSynchronous = true;
-    return lift(operator)(observable);
+    return lift(operator, true)(observable);
 };
 const defaultRepeatPredicate = (_, error) => isNone(error);
 function repeat(predicate) {
@@ -1090,7 +1089,7 @@ function retry(predicate) {
     return repeatObs(retryPredicate);
 }
 
-const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftT }, class TakeFirstObserver extends Observer {
+const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftSynchronousT }, class TakeFirstObserver extends Observer {
     constructor(delegate, maxCount) {
         super(delegate);
         this.delegate = delegate;
@@ -1155,7 +1154,6 @@ const zipWithLatestFrom = (other, selector) => {
         addOnDisposedWithoutErrorTeardown(otherSubscription, disposeDelegate);
         return observer;
     };
-    operator.isSynchronous = false;
     return lift(operator);
 };
 
@@ -1224,7 +1222,6 @@ const takeUntil = (notifier) => {
         bindDisposables(takeUntilObserver, otherSubscription);
         return takeUntilObserver;
     };
-    operator.isSynchronous = false;
     return lift(operator);
 };
 
@@ -1320,7 +1317,6 @@ function timeout(duration) {
         setupDurationSubscription(observer);
         return observer;
     };
-    operator.isSynchronous = false;
     return lift(operator);
 }
 
@@ -1364,7 +1360,6 @@ const withLatestFrom = (other, selector) => {
         addDisposableDisposeParentOnChildError(observer, otherSubscription);
         return observer;
     };
-    operator.isSynchronous = false;
     return lift(operator);
 };
 
@@ -1602,10 +1597,10 @@ const toPromise = (scheduler) => observable => new Promise((resolve, reject) => 
 
 const type = undefined;
 const catchError = createCatchErrorOperator({
-    ...liftT,
+    ...liftSynchronousT,
     createDelegatingSink: createDelegatingObserver,
 });
-const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftT, ...fromArrayT }, class DecodeWithCharsetObserver extends Observer {
+const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftSynchronousT, ...fromArrayT }, class DecodeWithCharsetObserver extends Observer {
     constructor(delegate, textDecoder) {
         super(delegate);
         this.delegate = delegate;
@@ -1622,7 +1617,7 @@ const decodeWithCharsetT = {
  * @param equals Optional equality function that is used to compare
  * if an item is distinct from the previous item.
  */
-const distinctUntilChanged = createDistinctUntilChangedOperator(liftT, class DistinctUntilChangedObserver extends Observer {
+const distinctUntilChanged = createDistinctUntilChangedOperator(liftSynchronousT, class DistinctUntilChangedObserver extends Observer {
     constructor(delegate, equality) {
         super(delegate);
         this.delegate = delegate;
@@ -1634,7 +1629,7 @@ const distinctUntilChanged = createDistinctUntilChangedOperator(liftT, class Dis
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
-const everySatisfy = createEverySatisfyOperator({ ...fromArrayT, ...liftT }, class EverySatisfyObserver extends Observer {
+const everySatisfy = createEverySatisfyOperator({ ...fromArrayT, ...liftSynchronousT }, class EverySatisfyObserver extends Observer {
     constructor(delegate, predicate) {
         super(delegate);
         this.delegate = delegate;
@@ -1644,7 +1639,7 @@ const everySatisfy = createEverySatisfyOperator({ ...fromArrayT, ...liftT }, cla
 const everySatisfyT = {
     everySatisfy,
 };
-const keep = createKeepOperator(liftT, class KeepObserver extends Observer {
+const keep = createKeepOperator(liftSynchronousT, class KeepObserver extends Observer {
     constructor(delegate, predicate) {
         super(delegate);
         this.delegate = delegate;
@@ -1654,7 +1649,7 @@ const keep = createKeepOperator(liftT, class KeepObserver extends Observer {
 const keepT = {
     keep,
 };
-const pairwise = createPairwiseOperator(liftT, class PairwiseObserver extends Observer {
+const pairwise = createPairwiseOperator(liftSynchronousT, class PairwiseObserver extends Observer {
     constructor(delegate) {
         super(delegate);
         this.delegate = delegate;
@@ -1664,7 +1659,7 @@ const pairwise = createPairwiseOperator(liftT, class PairwiseObserver extends Ob
 const pairwiseT = {
     pairwise,
 };
-const reduce = createReduceOperator({ ...fromArrayT, ...liftT }, class ReducerObserver extends Observer {
+const reduce = createReduceOperator({ ...fromArrayT, ...liftSynchronousT }, class ReducerObserver extends Observer {
     constructor(delegate, reducer, acc) {
         super(delegate);
         this.delegate = delegate;
@@ -1675,7 +1670,7 @@ const reduce = createReduceOperator({ ...fromArrayT, ...liftT }, class ReducerOb
 const reduceT = {
     reduce,
 };
-const scan = createScanOperator(liftT, class ScanObserver extends Observer {
+const scan = createScanOperator(liftSynchronousT, class ScanObserver extends Observer {
     constructor(delegate, reducer, acc) {
         super(delegate);
         this.delegate = delegate;
@@ -1691,7 +1686,7 @@ const scanT = {
  *
  * @param count The number of items emitted by source that should be skipped.
  */
-const skipFirst = createSkipFirstOperator(liftT, class SkipFirstObserver extends Observer {
+const skipFirst = createSkipFirstOperator(liftSynchronousT, class SkipFirstObserver extends Observer {
     constructor(delegate, skipCount) {
         super(delegate);
         this.delegate = delegate;
@@ -1702,7 +1697,7 @@ const skipFirst = createSkipFirstOperator(liftT, class SkipFirstObserver extends
 const skipFirstT = {
     skipFirst,
 };
-const someSatisfy = createSomeSatisfyOperator({ ...fromArrayT, ...liftT }, class SomeSatisfyObserver extends Observer {
+const someSatisfy = createSomeSatisfyOperator({ ...fromArrayT, ...liftSynchronousT }, class SomeSatisfyObserver extends Observer {
     constructor(delegate, predicate) {
         super(delegate);
         this.delegate = delegate;
@@ -1717,7 +1712,7 @@ const someSatisfyT = {
  *
  * @param count The maximum number of values to emit.
  */
-const takeLast = createTakeLastOperator({ ...fromArrayT, ...liftT }, class TakeLastObserver extends Observer {
+const takeLast = createTakeLastOperator({ ...fromArrayT, ...liftSynchronousT }, class TakeLastObserver extends Observer {
     constructor(delegate, maxCount) {
         super(delegate);
         this.delegate = delegate;
@@ -1735,7 +1730,7 @@ const takeLastT = {
  *
  * @param predicate The predicate function.
  */
-const takeWhile = createTakeWhileOperator(liftT, class TakeWhileObserver extends Observer {
+const takeWhile = createTakeWhileOperator(liftSynchronousT, class TakeWhileObserver extends Observer {
     constructor(delegate, predicate, inclusive) {
         super(delegate);
         this.delegate = delegate;
@@ -1746,7 +1741,7 @@ const takeWhile = createTakeWhileOperator(liftT, class TakeWhileObserver extends
 const takeWhileT = {
     takeWhile,
 };
-const throwIfEmpty = createThrowIfEmptyOperator(liftT, class ThrowIfEmptyObserver extends Observer {
+const throwIfEmpty = createThrowIfEmptyOperator(liftSynchronousT, class ThrowIfEmptyObserver extends Observer {
     constructor(delegate) {
         super(delegate);
         this.delegate = delegate;
