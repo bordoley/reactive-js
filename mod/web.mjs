@@ -181,7 +181,7 @@ class WindowLocationStreamable {
 const windowLocation = new WindowLocationStreamable();
 
 const globalFetch = self.fetch;
-const fetch = (onResponse) => fetchRequest => defer(observer => async () => {
+const fetch = (onResponse) => fetchRequest => defer(() => async (observer) => {
     const signal = toAbortSignal(observer);
     let request = none;
     if (typeof fetchRequest === "string") {

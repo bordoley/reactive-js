@@ -30,10 +30,9 @@ export const fromArray =
       0,
     );
 
-    const factory = (observer: Observer<T>) => {
+    const factory = () => {
       let index = startIndex;
-
-      return () => {
+      return (observer: Observer<T>) => {
         while (index < endIndex) {
           const value = values[index];
           index++;

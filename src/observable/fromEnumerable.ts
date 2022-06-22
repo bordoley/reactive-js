@@ -1,10 +1,11 @@
-import { addDisposableDisposeParentOnChildError, dispose } from "../disposable";
+import { dispose } from "../disposable";
 import { EnumerableLike, EnumeratorLike, enumerate } from "../enumerable";
 import { Factory, Function1, defer, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { __yield } from "../scheduler";
-import { defer as deferObs, deferSynchronous } from "./defer";
+import { defer as deferObs } from "./defer";
 import { Observer } from "./observer";
+import { using } from "./using";
 
 /**
  * Creates an `ObservableLike` which enumerates through the values
@@ -17,21 +18,20 @@ export const fromEnumerator =
     options: { readonly delay?: number } = {},
   ): Function1<Factory<EnumeratorLike<T>>, ObservableLike<T>> =>
   f => {
-    const factory = (observer: Observer<T>) => {
-      const enumerator = f();
-      addDisposableDisposeParentOnChildError(observer, enumerator);
-
-      return () => {
-        while (enumerator.move()) {
-          observer.notify(enumerator.current);
-          __yield(delay);
-        }
-        pipe(observer, dispose());
-      };
-    };
-
+    // FIXME: No way to tell using to run synchronously when delay is 0
     const { delay = 0 } = options;
-    return delay > 0 ? deferObs(factory, { delay }) : deferSynchronous(factory);
+    return using(f, enumerator =>
+      deferObs(
+        () => (observer: Observer<T>) => {
+          while (enumerator.move()) {
+            observer.notify(enumerator.current);
+            __yield(delay);
+          }
+          pipe(observer, dispose());
+        },
+        { delay },
+      ),
+    );
   };
 
 /**

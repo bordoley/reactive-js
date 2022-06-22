@@ -12,7 +12,7 @@ export const fetch =
     onResponse: Function1<Response, Promise<T> | ObservableLike<T>>,
   ): Function1<FetchRequest | string, ObservableLike<T>> =>
   fetchRequest =>
-    defer(observer => async () => {
+    defer(() => async observer => {
       const signal = toAbortSignal(observer);
 
       let request: Option<string | Request> = none;
