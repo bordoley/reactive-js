@@ -85,8 +85,8 @@ const createDistinctUntilChangedOperator = (m, DistinctUntilChangedSink) => {
         return m.lift(operator);
     };
 };
-const createSatisfyOperator = (m, EverySatisfySink, defaultResult) => {
-    EverySatisfySink.prototype.notify = function notifyEverySatisfy(next) {
+const createSatisfyOperator = (m, SatisfySink, defaultResult) => {
+    SatisfySink.prototype.notify = function notifyEverySatisfy(next) {
         this.assertState();
         if (this.predicate(next)) {
             const { delegate } = this;
@@ -96,7 +96,7 @@ const createSatisfyOperator = (m, EverySatisfySink, defaultResult) => {
     };
     return (predicate) => {
         const operator = (delegate) => {
-            const sink = new EverySatisfySink(delegate, predicate);
+            const sink = new SatisfySink(delegate, predicate);
             addDisposableDisposeParentOnChildError(delegate, sink);
             addOnDisposedWithoutErrorTeardown(sink, () => {
                 if (!delegate.isDisposed) {
