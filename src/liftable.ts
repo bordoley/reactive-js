@@ -62,9 +62,16 @@ export type LiftedStateOf<C extends LiftableLike, T> = C extends {
       readonly _T: () => T;
     };
 
-export interface Lift<C extends LiftableLike> extends Container<C> {
+export interface Lift<
+  C extends LiftableLike,
+  TVariance extends "covariant" | "contravariant" = "contravariant",
+> extends Container<C> {
+  variance?: TVariance;
+
   lift<TA, TB>(
-    operator: Function1<LiftedStateOf<C, TB>, LiftedStateOf<C, TA>>,
+    operator: this extends { variance?: "contravariant" }
+      ? Function1<LiftedStateOf<C, TB>, LiftedStateOf<C, TA>>
+      : Function1<LiftedStateOf<C, TA>, LiftedStateOf<C, TB>>,
   ): ContainerOperator<C, TA, TB>;
 }
 
