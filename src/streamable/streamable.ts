@@ -11,7 +11,7 @@ import {
   fromArrayT,
   map,
   subscribe,
-  using,
+  createObservableWithScheduler,
 } from "../observable";
 
 import { isNone } from "../option";
@@ -54,7 +54,7 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
     streamable instanceof LiftedStreamable ? streamable.src : streamable;
 
   const op: ObservableOperator<TReqB, TB> = requests =>
-    using(scheduler => {
+    createObservableWithScheduler(scheduler => {
       const srcStream = pipe(src, stream(scheduler));
       const requestSubscription = pipe(
         requests,
@@ -63,9 +63,10 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
       );
 
       bindDisposables(srcStream, requestSubscription);
+      scheduler.add(srcStream);
 
-      return srcStream;
-    }, (compose as any)(...obsOps));
+      return pipe(srcStream, (compose as any)(...obsOps));
+    });
   return new LiftedStreamable(op, src, obsOps, reqOps);
 };
 

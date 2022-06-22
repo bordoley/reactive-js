@@ -1,8 +1,8 @@
 /// <reference types="./streamable.d.ts" />
 import { empty as empty$1, fromValue, ignoreElements, endWith, startWith, concatMap, concatWith } from './container.mjs';
 import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError } from './disposable.mjs';
-import { pipe, compose, returns, updaterReducer, identity as identity$1, flip } from './functions.mjs';
-import { createSubject, publish, using, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, merge, onNotify, dispatchTo, onSubscribe, observable, __memo, __observe, reduce, mapT, concatAllT, takeFirst, withLatestFrom, never, takeWhile, scanAsync, switchAll } from './observable.mjs';
+import { pipe, compose, returns, updaterReducer, flip } from './functions.mjs';
+import { createSubject, publish, createObservableWithScheduler, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, merge, onNotify, dispatchTo, onSubscribe, observable, __memo, __observe, reduce, mapT, concatAllT, takeFirst, withLatestFrom, using, never, takeWhile, scanAsync, switchAll } from './observable.mjs';
 import { isNone, none } from './option.mjs';
 import { sinkInto } from './source.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
@@ -62,12 +62,13 @@ class LiftedStreamable extends StreamableImpl {
 }
 const liftImpl = (streamable, obsOps, reqOps) => {
     const src = streamable instanceof LiftedStreamable ? streamable.src : streamable;
-    const op = requests => using(scheduler => {
+    const op = requests => createObservableWithScheduler(scheduler => {
         const srcStream = pipe(src, stream(scheduler));
         const requestSubscription = pipe(requests, map(compose(...reqOps)), subscribe(scheduler, srcStream.dispatch, srcStream));
         bindDisposables(srcStream, requestSubscription);
-        return srcStream;
-    }, compose(...obsOps));
+        scheduler.add(srcStream);
+        return pipe(srcStream, compose(...obsOps));
+    });
     return new LiftedStreamable(op, src, obsOps, reqOps);
 };
 const lift = (op) => streamable => {
@@ -138,12 +139,13 @@ const createStateStore = (initialState, options) => createActionReducer(updaterR
  * @param equals Optional equality function that is used to compare
  * if a state value is distinct from the previous one.
  */
-const toStateStore = () => streamable => createStreamable(updates => using(scheduler => {
+const toStateStore = () => streamable => createStreamable(updates => createObservableWithScheduler(scheduler => {
     const stream$1 = pipe(streamable, stream(scheduler));
     const updatesSubscription = pipe(updates, zipWithLatestFrom(stream$1, (updateState, prev) => updateState(prev)), subscribe(scheduler, stream$1.dispatch, stream$1));
     bindDisposables(updatesSubscription, stream$1);
+    scheduler.add(stream$1);
     return stream$1;
-}, identity$1));
+}));
 
 const _identity = {
     stream(_, options) {
@@ -156,7 +158,7 @@ const _identity = {
 const identity = () => _identity;
 
 const flow = ({ scheduler, } = {}) => observable => {
-    const createScheduler = (modeObs) => (modeScheduler) => {
+    const op = (modeObs) => createObservableWithScheduler(modeScheduler => {
         const pausableScheduler = toPausableScheduler(scheduler !== null && scheduler !== void 0 ? scheduler : modeScheduler);
         const onModeChange = (mode) => {
             switch (mode) {
@@ -170,9 +172,9 @@ const flow = ({ scheduler, } = {}) => observable => {
         };
         const modeSubscription = pipe(modeObs, subscribe(modeScheduler, onModeChange));
         bindDisposables(modeSubscription, pausableScheduler);
-        return pausableScheduler;
-    };
-    const op = (modeObs) => using(createScheduler(modeObs), pausableScheduler => pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil)));
+        modeScheduler.add(pausableScheduler);
+        return pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil));
+    });
     return createStreamable(op);
 };
 

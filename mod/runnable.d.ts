@@ -46,30 +46,30 @@ declare function repeat<T>(): RunnableOperator<T, T>;
  */
 declare const toArray: <T>() => Function1<RunnableLike<T>, readonly T[]>;
 declare const using: {
-    <TResource extends DisposableLike, T>(resourceFactory: Function1<Sink<T>, TResource>, observableFactory: Function1<TResource, RunnableLike<unknown>>): RunnableLike<unknown>;
-    <TResource1 extends DisposableLike, TResource2 extends DisposableLike, T_1>(resourceFactory: Function1<Sink<T_1>, readonly [
+    <TResource extends DisposableLike, T>(resourceFactory: Factory<TResource>, observableFactory: Function1<TResource, RunnableLike<unknown>>): RunnableLike<unknown>;
+    <TResource1 extends DisposableLike, TResource2 extends DisposableLike, T_1>(resourceFactory: Factory<readonly [
         TResource1,
         TResource2
     ]>, observableFactory: Function2<TResource1, TResource2, RunnableLike<unknown>>): RunnableLike<unknown>;
-    <TResource1_1 extends DisposableLike, TResource2_1 extends DisposableLike, TResource3 extends DisposableLike, T_2>(resourceFactory: Function1<Sink<T_2>, readonly [
+    <TResource1_1 extends DisposableLike, TResource2_1 extends DisposableLike, TResource3 extends DisposableLike, T_2>(resourceFactory: Factory<readonly [
         TResource1_1,
         TResource2_1,
         TResource3
     ]>, observableFactory: Function3<TResource1_1, TResource2_1, TResource3, RunnableLike<unknown>>): RunnableLike<unknown>;
-    <TResource1_2 extends DisposableLike, TResource2_2 extends DisposableLike, TResource3_1 extends DisposableLike, TResource4 extends DisposableLike, T_3>(resourceFactory: Function1<Sink<T_3>, readonly [
+    <TResource1_2 extends DisposableLike, TResource2_2 extends DisposableLike, TResource3_1 extends DisposableLike, TResource4 extends DisposableLike, T_3>(resourceFactory: Factory<readonly [
         TResource1_2,
         TResource2_2,
         TResource3_1,
         TResource4
     ]>, observableFactory: Function4<TResource1_2, TResource2_2, TResource3_1, TResource4, RunnableLike<unknown>>): RunnableLike<unknown>;
-    <TResource1_3 extends DisposableLike, TResource2_3 extends DisposableLike, TResource3_2 extends DisposableLike, TResource4_1 extends DisposableLike, TResource5 extends DisposableLike, T_4>(resourceFactory: Function1<Sink<T_4>, readonly [
+    <TResource1_3 extends DisposableLike, TResource2_3 extends DisposableLike, TResource3_2 extends DisposableLike, TResource4_1 extends DisposableLike, TResource5 extends DisposableLike, T_4>(resourceFactory: Factory<readonly [
         TResource1_3,
         TResource2_3,
         TResource3_2,
         TResource4_1,
         TResource5
     ]>, observableFactory: Function5<TResource1_3, TResource2_3, TResource3_2, TResource4_1, TResource5, RunnableLike<unknown>>): RunnableLike<unknown>;
-    <TResource_1 extends DisposableLike, T_5>(resourceFactory: Function1<Sink<T_5>, TResource_1 | readonly TResource_1[]>, runnableFactory: (...resources: readonly TResource_1[]) => RunnableLike<unknown>): RunnableLike<unknown>;
+    <TResource_1 extends DisposableLike, T_5>(resourceFactory: Factory<TResource_1 | readonly TResource_1[]>, runnableFactory: (...resources: readonly TResource_1[]) => RunnableLike<unknown>): RunnableLike<unknown>;
 };
 interface RunnableLike<T> extends SourceLike {
     readonly T: unknown;

@@ -711,7 +711,7 @@ ___
 
 ### createUsing
 
-▸ **createUsing**<`C`\>(`UsingSource`): <TResource_1, T_1\>(`resourceFactory`: [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_1`\>, `TResource_1`\>, `observableFactory`: [`Function1`](functions.md#function1)<`TResource_1`, `C`\>) => `C`<TResource1, TResource2, T_2\>(`resourceFactory`: [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_2`\>, readonly [`TResource1`, `TResource2`]\>, `observableFactory`: [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, `C`\>) => `C`<TResource1_1, TResource2_1, TResource3, T_3\>(`resourceFactory`: [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_3`\>, readonly [`TResource1_1`, `TResource2_1`, `TResource3`]\>, `observableFactory`: [`Function3`](functions.md#function3)<`TResource1_1`, `TResource2_1`, `TResource3`, `C`\>) => `C`<TResource1_2, TResource2_2, TResource3_1, TResource4, T_4\>(`resourceFactory`: [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_4`\>, readonly [`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`]\>, `observableFactory`: [`Function4`](functions.md#function4)<`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`, `C`\>) => `C`<TResource1_3, TResource2_3, TResource3_2, TResource4_1, TResource5, T_5\>(`resourceFactory`: [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_5`\>, readonly [`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`]\>, `observableFactory`: [`Function5`](functions.md#function5)<`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`, `C`\>) => `C`<TResource_2, T_6\>(`resourceFactory`: [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_6`\>, `TResource_2` \| readonly `TResource_2`[]\>, `runnableFactory`: (...`resources`: readonly `TResource_2`[]) => `C`) => `C`
+▸ **createUsing**<`C`\>(`UsingSource`): <TResource_1, T_1\>(`resourceFactory`: [`Factory`](functions.md#factory)<`TResource_1`\>, `observableFactory`: [`Function1`](functions.md#function1)<`TResource_1`, `C`\>) => `C`<TResource1, TResource2, T_2\>(`resourceFactory`: [`Factory`](functions.md#factory)<readonly [`TResource1`, `TResource2`]\>, `observableFactory`: [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, `C`\>) => `C`<TResource1_1, TResource2_1, TResource3, T_3\>(`resourceFactory`: [`Factory`](functions.md#factory)<readonly [`TResource1_1`, `TResource2_1`, `TResource3`]\>, `observableFactory`: [`Function3`](functions.md#function3)<`TResource1_1`, `TResource2_1`, `TResource3`, `C`\>) => `C`<TResource1_2, TResource2_2, TResource3_1, TResource4, T_4\>(`resourceFactory`: [`Factory`](functions.md#factory)<readonly [`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`]\>, `observableFactory`: [`Function4`](functions.md#function4)<`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`, `C`\>) => `C`<TResource1_3, TResource2_3, TResource3_2, TResource4_1, TResource5, T_5\>(`resourceFactory`: [`Factory`](functions.md#factory)<readonly [`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`]\>, `observableFactory`: [`Function5`](functions.md#function5)<`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`, `C`\>) => `C`<TResource_2, T_6\>(`resourceFactory`: [`Factory`](functions.md#factory)<`TResource_2` \| readonly `TResource_2`[]\>, `runnableFactory`: (...`resources`: readonly `TResource_2`[]) => `C`) => `C`
 
 #### Type parameters
 
@@ -723,7 +723,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `UsingSource` | <TResource, T\>(`resourceFactory`: [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T`\>, `TResource` \| readonly `TResource`[]\>, `sourceFactory`: (...`resources`: readonly `TResource`[]) => `C`) => `C` & { `resourceFactory`: [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T`\>, `TResource` \| readonly `TResource`[]\> ; `sourceFactory`: (...`resources`: readonly `TResource`[]) => `C`  } |
+| `UsingSource` | <TResource, T\>(`resourceFactory`: [`Factory`](functions.md#factory)<`TResource` \| readonly `TResource`[]\>, `sourceFactory`: (...`resources`: readonly `TResource`[]) => `C`) => `C` & { `resourceFactory`: [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T`\>, `TResource` \| readonly `TResource`[]\> ; `sourceFactory`: (...`resources`: readonly `TResource`[]) => `C`  } |
 
 #### Returns
 
@@ -742,7 +742,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_1`\>, `TResource_1`\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource_1`\> |
 | `observableFactory` | [`Function1`](functions.md#function1)<`TResource_1`, `C`\> |
 
 ##### Returns
@@ -763,7 +763,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_2`\>, readonly [`TResource1`, `TResource2`]\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1`, `TResource2`]\> |
 | `observableFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, `C`\> |
 
 ##### Returns
@@ -785,7 +785,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_3`\>, readonly [`TResource1_1`, `TResource2_1`, `TResource3`]\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1_1`, `TResource2_1`, `TResource3`]\> |
 | `observableFactory` | [`Function3`](functions.md#function3)<`TResource1_1`, `TResource2_1`, `TResource3`, `C`\> |
 
 ##### Returns
@@ -808,7 +808,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_4`\>, readonly [`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`]\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`]\> |
 | `observableFactory` | [`Function4`](functions.md#function4)<`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`, `C`\> |
 
 ##### Returns
@@ -832,7 +832,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_5`\>, readonly [`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`]\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`]\> |
 | `observableFactory` | [`Function5`](functions.md#function5)<`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`, `C`\> |
 
 ##### Returns
@@ -852,7 +852,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Function1`](functions.md#function1)<[`SinkOf`](source.md#sinkof)<`C`, `T_6`\>, `TResource_2` \| readonly `TResource_2`[]\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource_2` \| readonly `TResource_2`[]\> |
 | `runnableFactory` | (...`resources`: readonly `TResource_2`[]) => `C` |
 
 ##### Returns

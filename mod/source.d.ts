@@ -124,33 +124,33 @@ declare const createThrowIfEmptyOperator: <C extends SourceLike>(m: Lift<C>, Thr
     readonly delegate: SinkOf<C, T>;
     isEmpty: boolean;
 }) => <T_1>(factory: Factory<unknown>) => ContainerOperator<C, T_1, T_1>;
-declare const createUsing: <C extends SourceLike>(UsingSource: new <TResource extends DisposableLike, T>(resourceFactory: Function1<SinkOf<C, T>, TResource | readonly TResource[]>, sourceFactory: (...resources: readonly TResource[]) => C) => C & {
+declare const createUsing: <C extends SourceLike>(UsingSource: new <TResource extends DisposableLike, T>(resourceFactory: Factory<TResource | readonly TResource[]>, sourceFactory: (...resources: readonly TResource[]) => C) => C & {
     readonly resourceFactory: Function1<SinkOf<C, T>, TResource | readonly TResource[]>;
     readonly sourceFactory: (...resources: readonly TResource[]) => C;
 }) => {
-    <TResource_1 extends DisposableLike, T_1>(resourceFactory: Function1<SinkOf<C, T_1>, TResource_1>, observableFactory: Function1<TResource_1, C>): C;
-    <TResource1 extends DisposableLike, TResource2 extends DisposableLike, T_2>(resourceFactory: Function1<SinkOf<C, T_2>, readonly [
+    <TResource_1 extends DisposableLike, T_1>(resourceFactory: Factory<TResource_1>, observableFactory: Function1<TResource_1, C>): C;
+    <TResource1 extends DisposableLike, TResource2 extends DisposableLike, T_2>(resourceFactory: Factory<readonly [
         TResource1,
         TResource2
     ]>, observableFactory: Function2<TResource1, TResource2, C>): C;
-    <TResource1_1 extends DisposableLike, TResource2_1 extends DisposableLike, TResource3 extends DisposableLike, T_3>(resourceFactory: Function1<SinkOf<C, T_3>, readonly [
+    <TResource1_1 extends DisposableLike, TResource2_1 extends DisposableLike, TResource3 extends DisposableLike, T_3>(resourceFactory: Factory<readonly [
         TResource1_1,
         TResource2_1,
         TResource3
     ]>, observableFactory: Function3<TResource1_1, TResource2_1, TResource3, C>): C;
-    <TResource1_2 extends DisposableLike, TResource2_2 extends DisposableLike, TResource3_1 extends DisposableLike, TResource4 extends DisposableLike, T_4>(resourceFactory: Function1<SinkOf<C, T_4>, readonly [
+    <TResource1_2 extends DisposableLike, TResource2_2 extends DisposableLike, TResource3_1 extends DisposableLike, TResource4 extends DisposableLike, T_4>(resourceFactory: Factory<readonly [
         TResource1_2,
         TResource2_2,
         TResource3_1,
         TResource4
     ]>, observableFactory: Function4<TResource1_2, TResource2_2, TResource3_1, TResource4, C>): C;
-    <TResource1_3 extends DisposableLike, TResource2_3 extends DisposableLike, TResource3_2 extends DisposableLike, TResource4_1 extends DisposableLike, TResource5 extends DisposableLike, T_5>(resourceFactory: Function1<SinkOf<C, T_5>, readonly [
+    <TResource1_3 extends DisposableLike, TResource2_3 extends DisposableLike, TResource3_2 extends DisposableLike, TResource4_1 extends DisposableLike, TResource5 extends DisposableLike, T_5>(resourceFactory: Factory<readonly [
         TResource1_3,
         TResource2_3,
         TResource3_2,
         TResource4_1,
         TResource5
     ]>, observableFactory: Function5<TResource1_3, TResource2_3, TResource3_2, TResource4_1, TResource5, C>): C;
-    <TResource_2 extends DisposableLike, T_6>(resourceFactory: Function1<SinkOf<C, T_6>, TResource_2 | readonly TResource_2[]>, runnableFactory: (...resources: readonly TResource_2[]) => C): C;
+    <TResource_2 extends DisposableLike, T_6>(resourceFactory: Factory<TResource_2 | readonly TResource_2[]>, runnableFactory: (...resources: readonly TResource_2[]) => C): C;
 };
 export { AbstractSource, CreateDelegatingSink, Lift, SinkLike, SinkOf, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };

@@ -315,7 +315,7 @@ const createThrowIfEmptyOperator = (m, ThrowIfEmptySink) => {
 const createUsing = (UsingSource) => {
     UsingSource.prototype.sink = function sink(sink) {
         try {
-            const resources = this.resourceFactory(sink);
+            const resources = this.resourceFactory();
             const resourcesArray = Array.isArray(resources) ? resources : [resources];
             const source = this.sourceFactory(...resourcesArray);
             for (const r of resourcesArray) {

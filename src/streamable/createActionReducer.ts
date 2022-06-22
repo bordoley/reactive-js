@@ -5,19 +5,18 @@ import {
   Factory,
   Reducer,
   Updater,
-  identity,
   pipe,
   returns,
   updaterReducer,
 } from "../functions";
 import {
   ObservableLike,
+  createObservableWithScheduler,
   distinctUntilChanged,
   fromArrayT,
   mergeWith,
   scan,
   subscribe,
-  using,
   zipWithLatestFrom,
 } from "../observable";
 import { StreamableLike, StreamableOperator } from "../streamable";
@@ -83,7 +82,7 @@ export const toStateStore =
   <T>(): StreamableOperator<T, T, Updater<T>, T> =>
   streamable =>
     createStreamable(updates =>
-      using(scheduler => {
+      createObservableWithScheduler(scheduler => {
         const stream = pipe(streamable, streamStreamable(scheduler));
         const updatesSubscription = pipe(
           updates,
@@ -92,7 +91,8 @@ export const toStateStore =
         );
 
         bindDisposables(updatesSubscription, stream);
+        scheduler.add(stream);
 
         return stream;
-      }, identity),
+      }),
     );

@@ -15,8 +15,8 @@ import {
   addOnDisposedWithError,
   createDisposableValue,
 } from "../disposable";
-import { Factory, defer, identity, ignore, pipe, returns } from "../functions";
-import { subscribe, using } from "../observable";
+import { Factory, defer, ignore, pipe, returns } from "../functions";
+import { createObservableWithScheduler, subscribe } from "../observable";
 
 import {
   FlowMode,
@@ -35,7 +35,7 @@ export const transform =
   ): StreamableOperator<FlowMode, Uint8Array, FlowMode, Uint8Array> =>
   src =>
     createStreamable(modeObs =>
-      using(scheduler => {
+      createObservableWithScheduler(scheduler => {
         const transform = factory();
 
         const transformSink = createWritableIOSink(
@@ -78,8 +78,10 @@ export const transform =
           modeSubscription,
         );
 
+        scheduler.add(transformReadableStream);
+
         return transformReadableStream;
-      }, identity),
+      }),
     );
 
 export const brotliDecompress = (
