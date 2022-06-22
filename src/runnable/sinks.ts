@@ -5,10 +5,10 @@ import { SinkLike } from "../source";
 
 export class Sink<T> extends AbstractDisposable implements SinkLike<T> {
   get type(): this {
-    return this;
+    return raise();
   }
   get T(): unknown {
-    return undefined;
+    return raise();
   }
 
   assertState(this: Sink<T>): void {}

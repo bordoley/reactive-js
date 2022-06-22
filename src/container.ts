@@ -22,6 +22,7 @@ import {
   pipe,
   returns,
   strictEquality,
+  raise,
 } from "./functions";
 
 import { Option, isSome } from "./option";
@@ -33,10 +34,10 @@ export interface ContainerLike {
 
 export abstract class AbstractContainer implements ContainerLike {
   get type(): this {
-    return this;
+    return raise();
   }
   get T(): unknown {
-    return undefined;
+    return raise();
   }
 }
 

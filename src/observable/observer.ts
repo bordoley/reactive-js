@@ -21,10 +21,10 @@ export class Observer<T>
   }
 
   get type(): this {
-    return this;
+    return raise();
   }
   get T(): unknown {
-    return undefined;
+    return raise();
   }
 
   /** @ignore */

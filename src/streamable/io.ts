@@ -3,7 +3,7 @@ import {
   AbstractDisposable,
   addDisposableDisposeParentOnChildError,
 } from "../disposable";
-import { Factory, Reducer, pipe } from "../functions";
+import { Factory, Reducer, pipe, raise } from "../functions";
 import {
   MulticastObservableLike,
   ObservableLike,
@@ -27,14 +27,14 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
   implements FlowableSinkLike<T>, MulticastObservableLike<TAcc>
 {
   get type(): this {
-    return this;
+    return raise();
   }
   get T(): unknown {
-    return undefined;
+    return raise();
   }
 
   get sinkType(): Observer<TAcc> {
-    return undefined as any;
+    return raise();
   }
 
   readonly isSynchronous = false;

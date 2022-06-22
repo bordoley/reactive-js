@@ -62,10 +62,10 @@ const liftT = {
 
 class Sink extends AbstractDisposable {
     get type() {
-        return this;
+        return raise();
     }
     get T() {
-        return undefined;
+        return raise();
     }
     assertState() { }
     notify(_) { }
