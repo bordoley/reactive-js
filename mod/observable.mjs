@@ -1,11 +1,11 @@
 /// <reference types="./observable.d.ts" />
-import { addOnDisposedWithError, dispose, AbstractDisposable, addDisposable, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, toErrorHandler, createSerialDisposable, bindDisposables } from './disposable.mjs';
+import { addOnDisposedWithError, dispose, addDisposable, disposed, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError, addTeardown, AbstractDisposable, toErrorHandler, createSerialDisposable, bindDisposables } from './disposable.mjs';
 import { pipe, raise, ignore, arrayEquality, defer as defer$1, compose, returns } from './functions.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
-import { AbstractSource, sinkInto, createUsing, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
+import { AbstractSource, sinkInto, AbstractDisposableSource, createUsing, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
+import { AbstractDisposableContainer, empty, fromValue, concatMap, throws, AbstractContainer } from './container.mjs';
 import { __DEV__ } from './env.mjs';
 import { none, isNone, isSome } from './option.mjs';
-import { empty, fromValue, concatMap, throws, AbstractContainer } from './container.mjs';
 import { map as map$1, everySatisfy as everySatisfy$1 } from './readonlyArray.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
@@ -96,19 +96,13 @@ const liftT = {
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
-class Observer extends AbstractDisposable {
+class Observer extends AbstractDisposableContainer {
     constructor(scheduler) {
         super();
         this.scheduler = scheduler;
         this.inContinuation = false;
         this._scheduler =
             scheduler instanceof Observer ? scheduler._scheduler : scheduler;
-    }
-    get type() {
-        return raise();
-    }
-    get T() {
-        return raise();
     }
     /** @ignore */
     get now() {
@@ -570,22 +564,13 @@ class Observable extends AbstractSource {
 }
 const createObservableWithScheduler = (f) => new Observable(f);
 
-class SubjectImpl extends AbstractDisposable {
+class SubjectImpl extends AbstractDisposableSource {
     constructor(replay) {
         super();
         this.replay = replay;
         this.observers = new Set();
         this.replayed = [];
         this.isSynchronous = false;
-    }
-    get type() {
-        return raise();
-    }
-    get T() {
-        return raise();
-    }
-    get sinkType() {
-        return raise();
     }
     get observerCount() {
         return this.observers.size;

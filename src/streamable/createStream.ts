@@ -1,5 +1,5 @@
-import { AbstractDisposable, addDisposable } from "../disposable";
-import { pipe, raise } from "../functions";
+import { addDisposable } from "../disposable";
+import { pipe } from "../functions";
 import {
   DispatcherLike,
   MulticastObservableLike,
@@ -10,7 +10,7 @@ import {
   publish,
 } from "../observable";
 import { SchedulerLike } from "../scheduler";
-import { sinkInto } from "../source";
+import { AbstractDisposableSource, sinkInto } from "../source";
 import { StreamableLike } from "../streamable";
 
 export type StreamableOperator<TSrcReq, TSrc, TReq, T> = (
@@ -18,18 +18,9 @@ export type StreamableOperator<TSrcReq, TSrc, TReq, T> = (
 ) => StreamableLike<TReq, T>;
 
 class StreamImpl<TReq, T>
-  extends AbstractDisposable
+  extends AbstractDisposableSource<T, Observer<T>>
   implements StreamLike<TReq, T>
 {
-  get type(): this {
-    return raise();
-  }
-  get T(): unknown {
-    return raise();
-  }
-  get sinkType(): Observer<T> {
-    return raise();
-  }
   readonly isSynchronous = false;
 
   constructor(

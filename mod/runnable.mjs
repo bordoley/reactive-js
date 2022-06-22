@@ -2,7 +2,8 @@
 import { pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
-import { AbstractDisposable, addDisposable, addDisposableDisposeParentOnChildError } from './disposable.mjs';
+import { AbstractDisposableContainer } from './container.mjs';
+import { addDisposable, addDisposableDisposeParentOnChildError } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 
 class RunnableImpl extends AbstractSource {
@@ -60,13 +61,7 @@ const liftT = {
     lift,
 };
 
-class Sink extends AbstractDisposable {
-    get type() {
-        return raise();
-    }
-    get T() {
-        return raise();
-    }
+class Sink extends AbstractDisposableContainer {
     assertState() { }
     notify(_) { }
 }

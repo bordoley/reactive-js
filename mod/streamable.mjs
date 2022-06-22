@@ -1,28 +1,19 @@
 /// <reference types="./streamable.d.ts" />
 import { empty as empty$1, fromValue, ignoreElements, endWith, startWith, concatMap, concatWith } from './container.mjs';
-import { AbstractDisposable, addDisposable, bindDisposables, addDisposableDisposeParentOnChildError } from './disposable.mjs';
-import { raise, pipe, compose, returns, updaterReducer, flip } from './functions.mjs';
+import { addDisposable, bindDisposables, addDisposableDisposeParentOnChildError } from './disposable.mjs';
+import { pipe, compose, returns, updaterReducer, flip } from './functions.mjs';
 import { createSubject, publish, createObservableWithScheduler, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, merge, onNotify, dispatchTo, onSubscribe, observable, __memo, __observe, reduce, mapT, concatAllT, takeFirst, withLatestFrom, using, never, takeWhile, scanAsync, switchAll } from './observable.mjs';
 import { isNone, none } from './option.mjs';
-import { sinkInto } from './source.mjs';
+import { AbstractDisposableSource, sinkInto } from './source.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
 import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
 
-class StreamImpl extends AbstractDisposable {
+class StreamImpl extends AbstractDisposableSource {
     constructor(dispatcher, observable) {
         super();
         this.dispatcher = dispatcher;
         this.observable = observable;
         this.isSynchronous = false;
-    }
-    get type() {
-        return raise();
-    }
-    get T() {
-        return raise();
-    }
-    get sinkType() {
-        return raise();
     }
     get observerCount() {
         return this.observable.observerCount;
@@ -187,21 +178,12 @@ const sink = (src, dest) => pipe(observable(() => {
     return __observe(obs);
 }), ignoreAndNotifyVoid);
 
-class FlowableSinkAccumulatorImpl extends AbstractDisposable {
+class FlowableSinkAccumulatorImpl extends AbstractDisposableSource {
     constructor(subject, streamable) {
         super();
         this.subject = subject;
         this.streamable = streamable;
         this.isSynchronous = false;
-    }
-    get type() {
-        return raise();
-    }
-    get T() {
-        return raise();
-    }
-    get sinkType() {
-        return raise();
     }
     get observerCount() {
         return this.subject.observerCount;

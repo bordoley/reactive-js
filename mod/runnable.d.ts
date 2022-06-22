@@ -1,11 +1,9 @@
 import { SideEffect1, Function1, Updater, Factory, Predicate, Equality, Reducer, Function2, Function3, Function4, Function5 } from "./functions.mjs";
-import { FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
-import { AbstractDisposable, DisposableLike } from "./disposable.mjs";
+import { AbstractDisposableContainer, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
+import { DisposableLike } from "./disposable.mjs";
 import { Option } from "./option.mjs";
 import { SinkLike, SourceLike } from "./source.mjs";
-declare class Sink<T> extends AbstractDisposable implements SinkLike<T> {
-    get type(): this;
-    get T(): unknown;
+declare class Sink<T> extends AbstractDisposableContainer implements SinkLike<T> {
     assertState(this: Sink<T>): void;
     notify(_: T): void;
 }

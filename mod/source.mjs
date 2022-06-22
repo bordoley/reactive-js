@@ -1,10 +1,15 @@
 /// <reference types="./source.d.ts" />
-import { AbstractContainer, fromValue, empty } from './container.mjs';
+import { AbstractContainer, AbstractDisposableContainer, fromValue, empty } from './container.mjs';
 import { addDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown, dispose, addDisposableDisposeParentOnChildError, addOnDisposedWithoutErrorTeardown, bindDisposables, addTeardown } from './disposable.mjs';
 import { raise, pipe, strictEquality, compose, negate } from './functions.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 class AbstractSource extends AbstractContainer {
+    get sinkType() {
+        return raise();
+    }
+}
+class AbstractDisposableSource extends AbstractDisposableContainer {
     get sinkType() {
         return raise();
     }
@@ -330,4 +335,4 @@ const createUsing = (UsingSource) => {
     return using;
 };
 
-export { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };
+export { AbstractDisposableSource, AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };
