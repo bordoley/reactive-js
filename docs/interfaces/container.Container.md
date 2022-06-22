@@ -66,8 +66,6 @@
 
   ↳ [`ToRunnable`](runnable.ToRunnable.md)
 
-  ↳ [`CreateDelegatingSink`](source.CreateDelegatingSink.md)
-
 ## Table of contents
 
 ### Properties

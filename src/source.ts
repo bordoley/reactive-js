@@ -1,5 +1,4 @@
 import {
-  Container,
   ContainerOf,
   ContainerOperator,
   FromArray,
@@ -13,8 +12,6 @@ import {
   addOnDisposedWithErrorTeardown,
   addOnDisposedWithoutError,
   addOnDisposedWithoutErrorTeardown,
-  addTeardown,
-  bindDisposables,
   dispose,
 } from "./disposable";
 import {
@@ -36,12 +33,21 @@ import {
   AbstractDisposableLiftable,
   AbstractLiftable,
   createDistinctUntilChangedLiftedOperator,
+  createKeepLiftedOperator,
+  createMapLiftedOperator,
+  createOnNotifyLiftedOperator,
+  createPairwiseLiftdOperator,
+  createScanLiftedOperator,
+  createSkipFirstLiftedOperator,
+  createTakeFirstLiftdOperator,
+  createTakeWhileLiftedOperator,
+  createThrowIfEmptyLiftedOperator,
   Lift,
   LiftableLike,
   LiftedStateLike,
   LiftedStateOf,
 } from "./liftable";
-import { Option, isNone, isSome, none } from "./option";
+import { Option, isSome, none } from "./option";
 
 export interface SinkLike<T> extends LiftedStateLike {
   assertState(this: SinkLike<T>): void;
@@ -77,23 +83,35 @@ export abstract class AbstractDisposableSource<T, TSink extends SinkLike<T>>
   abstract sink(this: this, sink: TSink): void;
 }
 
-export interface CreateDelegatingSink<C extends SourceLike>
-  extends Container<C> {
-  createDelegatingSink<T>(delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T>;
-}
-
 export const sinkInto =
   <C extends SourceLike, T>(sink: LiftedStateOf<C, T>): SideEffect1<C> =>
   observable =>
     observable.sink(sink);
 
 export const createCatchErrorOperator =
-  <C extends SourceLike>(m: CreateDelegatingSink<C> & Lift<C>) =>
+  <C extends SourceLike>(
+    m: Lift<C>,
+    CatchErrorSink: new <T>(delegate: LiftedStateOf<C, T>) => LiftedStateOf<
+      C,
+      T
+    > & {
+      readonly delegate: LiftedStateOf<C, T>;
+    },
+  ) =>
   <T>(
     onError: Function1<unknown, ContainerOf<C, T> | void>,
   ): ContainerOperator<C, T, T> => {
+    CatchErrorSink.prototype.notify = function notifyDelegate(
+      this: {
+        readonly delegate: LiftedStateOf<C, T>;
+      },
+      next: T,
+    ) {
+      this.delegate.notify(next);
+    };
+
     const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const sink = m.createDelegatingSink(delegate);
+      const sink = new CatchErrorSink(delegate);
       addDisposable(delegate, sink);
       addOnDisposedWithoutError(sink, delegate);
       addOnDisposedWithErrorTeardown(sink, cause => {
@@ -281,14 +299,7 @@ export const createKeepOperator = <C extends SourceLike>(
     }
   };
 
-  return <T>(predicate: Predicate<T>) => {
-    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const sink = new KeepSink(delegate, predicate);
-      bindDisposables(sink, delegate);
-      return sink;
-    };
-    return m.lift(operator);
-  };
+  return createKeepLiftedOperator(m, KeepSink);
 };
 
 export const createMapOperator = <C extends SourceLike>(
@@ -313,14 +324,7 @@ export const createMapOperator = <C extends SourceLike>(
     this.delegate.notify(mapped);
   };
 
-  return <TA, TB>(mapper: Function1<TA, TB>) => {
-    const operator = (delegate: LiftedStateOf<C, TB>): LiftedStateOf<C, TA> => {
-      const sink = new MapSink(delegate, mapper);
-      bindDisposables(sink, delegate);
-      return sink;
-    };
-    return m.lift(operator);
-  };
+  return createMapLiftedOperator(m, MapSink);
 };
 
 export const createOnNotifyOperator = <C extends SourceLike>(
@@ -346,14 +350,7 @@ export const createOnNotifyOperator = <C extends SourceLike>(
     this.delegate.notify(next);
   };
 
-  return <T>(onNotify: SideEffect1<T>) => {
-    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const sink = new OnNotifySink(delegate, onNotify);
-      bindDisposables(sink, delegate);
-      return sink;
-    };
-    return m.lift(operator);
-  };
+  return createOnNotifyLiftedOperator(m, OnNotifySink);
 };
 
 export const createPairwiseOperator = <C extends SourceLike>(
@@ -383,16 +380,7 @@ export const createPairwiseOperator = <C extends SourceLike>(
     this.delegate.notify([prev, value]);
   };
 
-  return <T>() => {
-    const operator = (
-      delegate: LiftedStateOf<C, [Option<T>, T]>,
-    ): LiftedStateOf<C, T> => {
-      const sink = new PairwiseSink(delegate);
-      bindDisposables(sink, delegate);
-      return sink;
-    };
-    return m.lift(operator);
-  };
+  return createPairwiseLiftdOperator(m, PairwiseSink);
 };
 
 export const createReduceOperator = <C extends SourceLike>(
@@ -469,19 +457,7 @@ export const createScanOperator = <C extends SourceLike>(
     this.delegate.notify(nextAcc);
   };
 
-  return <T, TAcc>(
-    reducer: Reducer<T, TAcc>,
-    initialValue: Factory<TAcc>,
-  ): ContainerOperator<C, T, TAcc> => {
-    const operator = (
-      delegate: LiftedStateOf<C, TAcc>,
-    ): LiftedStateOf<C, T> => {
-      const sink = new ScanSink(delegate, reducer, initialValue());
-      bindDisposables(sink, delegate);
-      return sink;
-    };
-    return m.lift(operator);
-  };
+  return createScanLiftedOperator(m, ScanSink);
 };
 
 export const createSkipFirstOperator = <C extends SourceLike>(
@@ -511,18 +487,7 @@ export const createSkipFirstOperator = <C extends SourceLike>(
     }
   };
 
-  return <T>(
-    options: { readonly count?: number } = {},
-  ): ContainerOperator<C, T, T> => {
-    const { count = 1 } = options;
-    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const sink = new SkipFirstSink(delegate, count);
-      bindDisposables(sink, delegate);
-      return sink;
-    };
-    return runnable =>
-      count > 0 ? pipe(runnable, m.lift(operator)) : runnable;
-  };
+  return createSkipFirstLiftedOperator(m, SkipFirstSink);
 };
 
 export const createSomeSatisfyOperator = <C extends SourceLike>(
@@ -567,17 +532,7 @@ export const createTakeFirstOperator = <C extends SourceLike>(
     }
   };
 
-  return <T>(
-    options: { readonly count?: number } = {},
-  ): ContainerOperator<C, T, T> => {
-    const { count = 1 } = options;
-    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const sink = new TakeFirstSink(delegate, count);
-      bindDisposables(sink, delegate);
-      return sink;
-    };
-    return source => (count > 0 ? pipe(source, m.lift(operator)) : empty(m));
-  };
+  return createTakeFirstLiftdOperator(m, TakeFirstSink);
 };
 
 export const createTakeLastOperator = <C extends SourceLike>(
@@ -665,18 +620,7 @@ export const createTakeWhileOperator = <C extends SourceLike>(
     }
   };
 
-  return <T>(
-    predicate: Predicate<T>,
-    options: { readonly inclusive?: boolean } = {},
-  ): ContainerOperator<C, T, T> => {
-    const { inclusive = false } = options;
-    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const sink = new TakeWhileSink(delegate, predicate, inclusive);
-      addDisposableDisposeParentOnChildError(sink, delegate);
-      return sink;
-    };
-    return m.lift(operator);
-  };
+  return createTakeWhileLiftedOperator(m, TakeWhileSink);
 };
 
 export const createThrowIfEmptyOperator = <C extends SourceLike>(
@@ -702,28 +646,7 @@ export const createThrowIfEmptyOperator = <C extends SourceLike>(
     this.delegate.notify(next);
   };
 
-  return <T>(factory: Factory<unknown>) => {
-    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const observer = new ThrowIfEmptySink(delegate);
-      addDisposable(delegate, observer);
-      addTeardown(observer, error => {
-        if (isNone(error) && observer.isEmpty) {
-          let cause: unknown = none;
-          try {
-            cause = factory();
-          } catch (e) {
-            cause = e;
-          }
-
-          error = { cause };
-        }
-
-        delegate.dispose(error);
-      });
-      return observer;
-    };
-    return m.lift(operator);
-  };
+  return createThrowIfEmptyLiftedOperator(m, ThrowIfEmptySink);
 };
 
 export const createUsing = <C extends SourceLike>(

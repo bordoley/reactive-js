@@ -1,4 +1,4 @@
-import { Container, ContainerOf, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
+import { ContainerOf, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
 import { DisposableLike } from "./disposable.mjs";
 import { SideEffect1, Function1, Equality, Predicate, Reducer, Factory, Function2, Function3, Function4, Function5 } from "./functions.mjs";
 import { LiftedStateLike, LiftableLike, AbstractLiftable, AbstractDisposableLiftable, LiftedStateOf, Lift } from "./liftable.mjs";
@@ -25,11 +25,10 @@ declare abstract class AbstractSource<T, TSink extends SinkLike<T>> extends Abst
 declare abstract class AbstractDisposableSource<T, TSink extends SinkLike<T>> extends AbstractDisposableLiftable<TSink> implements SourceLike {
     abstract sink(this: this, sink: TSink): void;
 }
-interface CreateDelegatingSink<C extends SourceLike> extends Container<C> {
-    createDelegatingSink<T>(delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T>;
-}
 declare const sinkInto: <C extends SourceLike, T>(sink: LiftedStateOf<C, T>) => SideEffect1<C>;
-declare const createCatchErrorOperator: <C extends SourceLike>(m: CreateDelegatingSink<C> & Lift<C>) => <T>(onError: Function1<unknown, void | ContainerOf<C, T>>) => ContainerOperator<C, T, T>;
+declare const createCatchErrorOperator: <C extends SourceLike>(m: Lift<C>, CatchErrorSink: new <T>(delegate: LiftedStateOf<C, T>) => LiftedStateOf<C, T> & {
+    readonly delegate: LiftedStateOf<C, T>;
+}) => <T_1>(onError: Function1<unknown, void | ContainerOf<C, T_1>>) => ContainerOperator<C, T_1, T_1>;
 declare const createDecodeWithCharsetOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, DecodeWithCharsetSink: new (delegate: LiftedStateOf<C, string>, textDecoder: TextDecoder) => LiftedStateOf<C, ArrayBuffer> & {
     readonly delegate: LiftedStateOf<C, string>;
     readonly textDecoder: TextDecoder;
@@ -145,4 +144,4 @@ declare const createUsing: <C extends SourceLike>(UsingSource: new <TResource ex
     ]>, observableFactory: Function5<TResource1_3, TResource2_3, TResource3_2, TResource4_1, TResource5, C>): C;
     <TResource_2 extends DisposableLike, T_6>(resourceFactory: Factory<TResource_2 | readonly TResource_2[]>, runnableFactory: (...resources: readonly TResource_2[]) => C): C;
 };
-export { AbstractDisposableSource, AbstractSource, CreateDelegatingSink, SinkLike, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };
+export { AbstractDisposableSource, AbstractSource, SinkLike, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };
