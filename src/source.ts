@@ -27,10 +27,10 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
-  pipe,
-  strictEquality,
   compose,
   negate,
+  pipe,
+  strictEquality,
 } from "./functions";
 import { Option, isNone, isSome, none } from "./option";
 

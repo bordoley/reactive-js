@@ -122,6 +122,70 @@ declare const combineLatestWith: <TA, TB>(snd: ObservableLike<TB>) => Observable
     TA,
     TB
 ]>;
+declare function zipLatest<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<[
+    TA,
+    TB
+]>;
+declare function zipLatest<TA, TB, TC, T>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): ObservableLike<[
+    TA,
+    TB,
+    TC
+]>;
+declare function zipLatest<TA, TB, TC, TD>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD
+]>;
+declare function zipLatest<TA, TB, TC, TD, TE>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE
+]>;
+declare function zipLatest<TA, TB, TC, TD, TE, TF>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF
+]>;
+declare function zipLatest<TA, TB, TC, TD, TE, TF, TG>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG
+]>;
+declare function zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG,
+    TH
+]>;
+declare function zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): ObservableLike<[
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG,
+    TH,
+    TI
+]>;
+declare const zipLatestWith: <TA, TB>(snd: ObservableLike<TB>) => ObservableOperator<TA, [
+    TA,
+    TB
+]>;
 /**
  * Creates an `ObservableLike` which emits all values from each source sequentially.
  */
@@ -492,70 +556,6 @@ declare function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, 
     TI
 ]>;
 declare const zipT: Zip<ObservableLike<unknown>>;
-declare function zipLatest<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<[
-    TA,
-    TB
-]>;
-declare function zipLatest<TA, TB, TC, T>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): ObservableLike<[
-    TA,
-    TB,
-    TC
-]>;
-declare function zipLatest<TA, TB, TC, TD>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>): ObservableLike<[
-    TA,
-    TB,
-    TC,
-    TD
-]>;
-declare function zipLatest<TA, TB, TC, TD, TE>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>): ObservableLike<[
-    TA,
-    TB,
-    TC,
-    TD,
-    TE
-]>;
-declare function zipLatest<TA, TB, TC, TD, TE, TF>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>): ObservableLike<[
-    TA,
-    TB,
-    TC,
-    TD,
-    TE,
-    TF
-]>;
-declare function zipLatest<TA, TB, TC, TD, TE, TF, TG>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>): ObservableLike<[
-    TA,
-    TB,
-    TC,
-    TD,
-    TE,
-    TF,
-    TG
-]>;
-declare function zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>): ObservableLike<[
-    TA,
-    TB,
-    TC,
-    TD,
-    TE,
-    TF,
-    TG,
-    TH
-]>;
-declare function zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): ObservableLike<[
-    TA,
-    TB,
-    TC,
-    TD,
-    TE,
-    TF,
-    TG,
-    TH,
-    TI
-]>;
-declare const zipLatestWith: <TA, TB>(snd: ObservableLike<TB>) => ObservableOperator<TA, [
-    TA,
-    TB
-]>;
 /**
  * Returns an `ObservableLike` which combines the source with
  * the latest value from another `ObservableLike`.

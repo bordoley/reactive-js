@@ -5,7 +5,7 @@ import { schedule } from "../scheduler";
 import { AbstractSource } from "../source";
 import { Observer } from "./observer";
 
-class ScheduledObservable<T>
+class DeferObservable<T>
   extends AbstractSource<T, Observer<T>>
   implements ObservableLike<T>
 {
@@ -26,12 +26,12 @@ class ScheduledObservable<T>
 
 export const deferSynchronous = <T>(
   factory: Function1<Observer<T>, SideEffect>,
-): ObservableLike<T> => new ScheduledObservable(factory, true, 0);
+): ObservableLike<T> => new DeferObservable(factory, true, 0);
 
 export const defer = <T>(
   factory: Function1<Observer<T>, SideEffect>,
   options: { readonly delay?: number } = {},
 ): ObservableLike<T> => {
   const { delay = 0 } = options;
-  return new ScheduledObservable(factory, false, delay);
+  return new DeferObservable(factory, false, delay);
 };

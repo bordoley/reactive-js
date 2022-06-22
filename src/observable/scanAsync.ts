@@ -6,7 +6,7 @@ import {
 } from "../observable";
 
 import { createSubject } from "./createSubject";
-import { dispatchTo } from "./dispatcher";
+import { dispatchTo } from "./dispatchTo";
 import { onNotify } from "./onNotify";
 import { onSubscribe } from "./onSubscribe";
 import { switchAll } from "./switchAll";

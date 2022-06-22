@@ -1,7 +1,7 @@
 import { SideEffect1 } from "../functions";
 import { DispatcherLike, ObservableLike } from "../observable";
 
-import { defer } from "./observable";
+import { defer } from "./defer";
 import { toDispatcher } from "./toDispatcher";
 
 /**
