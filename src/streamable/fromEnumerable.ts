@@ -28,7 +28,7 @@ const _fromEnumerable = <T>(
     compose(
       withLatestFrom<void, EnumeratorLike<T>, EnumeratorLike<T>>(
         using(
-          _ => enumerate(enumerable),
+          () => enumerate(enumerable),
           compose(fromValue(fromArrayT), concatWith(concatT, never())),
         ),
         (_, enumerator) => enumerator,

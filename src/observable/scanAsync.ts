@@ -28,7 +28,7 @@ export const scanAsync =
   ): ObservableOperator<T, TAcc> =>
   observable =>
     using(
-      _ => createSubject<TAcc>(),
+      () => createSubject<TAcc>(),
       accFeedbackStream =>
         pipe(
           observable,

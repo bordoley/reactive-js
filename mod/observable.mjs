@@ -1166,7 +1166,7 @@ const zipWithLatestFrom = (other, selector) => {
  * @param scanner The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.
  */
-const scanAsync = (scanner, initialValue) => observable => using(_ => createSubject(), accFeedbackStream => pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), switchAll(), onNotify$2(dispatchTo(accFeedbackStream)), onSubscribe(() => {
+const scanAsync = (scanner, initialValue) => observable => using(() => createSubject(), accFeedbackStream => pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), switchAll(), onNotify$2(dispatchTo(accFeedbackStream)), onSubscribe(() => {
     accFeedbackStream.dispatch(initialValue());
 })));
 
