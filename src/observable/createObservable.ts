@@ -1,12 +1,22 @@
-import { Function1, SideEffect1, pipe } from "../functions";
+import { SideEffect1 } from "../functions";
 import { DispatcherLike, ObservableLike } from "../observable";
-import { SchedulerLike } from "../scheduler";
-import { sinkInto } from "../source";
-
-import { defer } from "./defer";
 import { AbstractObservable } from "./observable";
 import { Observer } from "./observer";
 import { toDispatcher } from "./toDispatcher";
+
+class CreateObservable<T> extends AbstractObservable<T> {
+  constructor(private readonly f: SideEffect1<Observer<T>>) {
+    super();
+  }
+
+  sink(observer: Observer<T>) {
+    this.f(observer);
+  }
+}
+
+export const createObservableUnsafe = <T>(
+  f: SideEffect1<Observer<T>>,
+): ObservableLike<T> => new CreateObservable(f);
 
 /**
  * Factory for safely creating new `ObservableLike` instances. The onSubscribe function
@@ -20,22 +30,7 @@ import { toDispatcher } from "./toDispatcher";
 export const createObservable = <T>(
   onSubscribe: SideEffect1<DispatcherLike<T>>,
 ): ObservableLike<T> =>
-  defer(() => observer => {
+  createObservableUnsafe(observer => {
     const dispatcher = toDispatcher(observer);
     onSubscribe(dispatcher);
   });
-
-class Observable<T> extends AbstractObservable<T> {
-  constructor(private readonly f: Function1<SchedulerLike, ObservableLike<T>>) {
-    super();
-  }
-
-  sink(observer: Observer<T>) {
-    const observable = this.f(observer);
-    pipe(observable, sinkInto(observer));
-  }
-}
-
-export const createObservableWithScheduler = <T>(
-  f: Function1<SchedulerLike, ObservableLike<T>>,
-): ObservableLike<T> => new Observable(f);

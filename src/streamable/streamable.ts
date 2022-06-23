@@ -8,7 +8,7 @@ import {
   __memo,
   __observe,
   __using,
-  createObservableWithScheduler,
+  createObservableUnsafe,
   fromArrayT,
   map,
   subscribe,
@@ -16,6 +16,7 @@ import {
 
 import { isNone } from "../option";
 import { SchedulerLike } from "../scheduler";
+import { sinkInto } from "../source";
 import { StreamableLike, StreamableOperator } from "../streamable";
 import { createStream } from "./createStream";
 
@@ -54,18 +55,18 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
     streamable instanceof LiftedStreamable ? streamable.src : streamable;
 
   const op: ObservableOperator<TReqB, TB> = requests =>
-    createObservableWithScheduler(scheduler => {
-      const srcStream = pipe(src, stream(scheduler));
+    createObservableUnsafe(observer => {
+      const srcStream = pipe(src, stream(observer));
       const requestSubscription = pipe(
         requests,
         map((compose as any)(...reqOps)),
-        subscribe(scheduler, srcStream.dispatch, srcStream),
+        subscribe(observer, srcStream.dispatch, srcStream),
       );
 
       bindDisposables(srcStream, requestSubscription);
-      addDisposable(scheduler, srcStream);
+      addDisposable(observer, srcStream);
 
-      return pipe(srcStream, (compose as any)(...obsOps));
+      pipe(srcStream, (compose as any)(...obsOps), sinkInto(observer));
     });
   return new LiftedStreamable(op, src, obsOps, reqOps);
 };

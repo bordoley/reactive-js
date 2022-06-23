@@ -129,7 +129,7 @@ export {
 export { concat, concatT } from "./observable/concat";
 export {
   createObservable,
-  createObservableWithScheduler,
+  createObservableUnsafe,
 } from "./observable/createObservable";
 export { createSubject } from "./observable/createSubject";
 export { fromArray, fromArrayT } from "./observable/fromArray";
