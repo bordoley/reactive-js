@@ -146,7 +146,7 @@ export const createRunnableTests = <C extends ContainerLike>(
       defer(
         0,
         fromValue(m),
-        concatMap(m, (_: any) => m.fromArray()([1, 2, 3])),
+        concatMap(m, defer([1, 2, 3], m.fromArray())),
         m.toRunnable(),
         toArray(),
         expectArrayEquals([1, 2, 3]),
@@ -157,7 +157,7 @@ export const createRunnableTests = <C extends ContainerLike>(
       defer(
         [4, 8, 10, 7],
         m.fromArray(),
-        m.keep((x: any) => x > 5),
+        m.keep(x => x > 5),
         m.toRunnable(),
         toArray(),
         expectArrayEquals([8, 10, 7]),
@@ -216,7 +216,7 @@ export const createRunnableTests = <C extends ContainerLike>(
         defer(
           [1, 2, 3],
           m.fromArray(),
-          m.repeat((x: any) => x < 1),
+          m.repeat(x => x < 1),
           m.toRunnable(),
           toArray(),
           expectArrayEquals([1, 2, 3]),
@@ -313,7 +313,7 @@ export const createRunnableTests = <C extends ContainerLike>(
       test("exclusive", () => {
         pipe(
           m.generate(increment, returns(0)),
-          m.takeWhile((x: any) => x < 4),
+          m.takeWhile(x => x < 4),
           m.toRunnable(),
           toArray(),
           expectArrayEquals([1, 2, 3]),
@@ -339,7 +339,7 @@ export const createRunnableTests = <C extends ContainerLike>(
         "inclusive",
         defer(
           m.generate(increment, returns(0)),
-          m.takeWhile((x: any) => x < 4, { inclusive: true }),
+          m.takeWhile(x => x < 4, { inclusive: true }),
           m.toRunnable(),
           toArray(),
           expectArrayEquals([1, 2, 3, 4]),
@@ -350,9 +350,9 @@ export const createRunnableTests = <C extends ContainerLike>(
       "lift",
       defer(
         m.generate(increment, returns(0)),
-        m.map((x: any) => x * 2),
+        m.map(x => x * 2),
         m.takeFirst({ count: 3 }),
-        concatMap(m, (count: any) =>
+        concatMap(m, count =>
           pipe(m.generate(incrementBy(1), returns(0)), m.takeFirst({ count })),
         ),
         m.toRunnable(),
