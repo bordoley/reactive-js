@@ -13,6 +13,7 @@ import {
   TakeFirst,
   TakeLast,
   TakeWhile,
+  Zip,
 } from "./container";
 import {
   Equality,
@@ -22,10 +23,12 @@ import {
   Reducer,
   Updater,
   alwaysTrue,
+  callWith,
   pipe,
   strictEquality,
 } from "./functions";
 import { isNone } from "./option";
+import { keepType as keepTypeArray, map as mapArray } from "./readonlyArray";
 import { RunnableLike, ToRunnable, createRunnable } from "./runnable";
 
 export interface SequenceResultNotify<T> {
@@ -435,4 +438,36 @@ export const toRunnable =
 
 export const toRunnableT: ToRunnable<Sequence<unknown>> = {
   toRunnable,
+};
+
+const _zip = <T>(
+  ...sequences: readonly Sequence<T>[]
+): Sequence<readonly any[]> =>
+  castToSequence(() => {
+    const notifyResults = pipe(
+      sequences,
+      mapArray(callWith()),
+      keepTypeArray(isNotify),
+    );
+
+    return notifyResults.length === sequences.length
+      ? notify(
+          pipe(
+            notifyResults,
+            mapArray(x => x.data),
+          ),
+          _zip(
+            ...pipe(
+              notifyResults,
+              mapArray(x => x.next),
+            ),
+          ),
+        )
+      : sequenceResultDone;
+  });
+
+export const zip: Zip<Sequence<unknown>>["zip"] = _zip as any;
+
+export const zipT: Zip<Sequence<unknown>> = {
+  zip,
 };

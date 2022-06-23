@@ -1,4 +1,10 @@
-import { Factory, Function1, Predicate, Reducer } from "./functions";
+import {
+  Factory,
+  Function1,
+  Predicate,
+  Reducer,
+  TypePredicate,
+} from "./functions";
 
 export const empty: ReadonlyArray<any> = [];
 
@@ -27,6 +33,13 @@ export const join =
 
 export const keep =
   <T>(predicate: Predicate<T>): ReadonlyArrayOperator<T, T> =>
+  arr =>
+    arr.filter(predicate);
+
+export const keepType =
+  <TA, TB extends TA>(
+    predicate: TypePredicate<TA, TB>,
+  ): ReadonlyArrayOperator<TA, TB> =>
   arr =>
     arr.filter(predicate);
 

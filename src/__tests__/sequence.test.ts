@@ -3,6 +3,7 @@ import {
   concatAll,
   distinctUntilChanged,
   fromArray,
+  fromArrayT,
   generate,
   keep,
   map,
@@ -14,8 +15,10 @@ import {
   takeWhile,
   toRunnable,
   type,
+  zipT,
 } from "../sequence";
 import { describe } from "../testing";
+import { createZippableTests } from "./enumerable.test";
 import { createRunnableTests } from "./runnable.test";
 
 export const tests = describe(
@@ -37,4 +40,5 @@ export const tests = describe(
     takeWhile,
     toRunnable,
   }),
+  createZippableTests({ ...fromArrayT, generate, map, toRunnable, ...zipT }),
 );

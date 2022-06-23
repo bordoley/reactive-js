@@ -33,6 +33,7 @@
 - [takeWhileT](sequence.md#takewhilet)
 - [toRunnableT](sequence.md#torunnablet)
 - [type](sequence.md#type)
+- [zipT](sequence.md#zipt)
 
 ### Functions
 
@@ -51,6 +52,7 @@
 - [takeLast](sequence.md#takelast)
 - [takeWhile](sequence.md#takewhile)
 - [toRunnable](sequence.md#torunnable)
+- [zip](sequence.md#zip)
 
 ## Type Aliases
 
@@ -184,6 +186,12 @@ ___
 ### type
 
 • `Const` **type**: [`Sequence`](sequence.md#sequence)<`unknown`\>
+
+___
+
+### zipT
+
+• `Const` **zipT**: [`Zip`](../interfaces/container.Zip.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
 
 ## Functions
 
@@ -546,3 +554,241 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Sequence`](sequence.md#sequence)<`T`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>\>
+
+___
+
+### zip
+
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`Sequence`](sequence.md#sequence)<readonly [`TA`, `TB`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`Sequence`](sequence.md#sequence)<`TA`\> |
+| `b` | [`Sequence`](sequence.md#sequence)<`TB`\> |
+
+#### Returns
+
+[`Sequence`](sequence.md#sequence)<readonly [`TA`, `TB`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Sequence`](sequence.md#sequence)<readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`Sequence`](sequence.md#sequence)<`TA`\> |
+| `b` | [`Sequence`](sequence.md#sequence)<`TB`\> |
+| `c` | [`Sequence`](sequence.md#sequence)<`TC`\> |
+
+#### Returns
+
+[`Sequence`](sequence.md#sequence)<readonly [`TA`, `TB`, `TC`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`Sequence`](sequence.md#sequence)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`Sequence`](sequence.md#sequence)<`TA`\> |
+| `b` | [`Sequence`](sequence.md#sequence)<`TB`\> |
+| `c` | [`Sequence`](sequence.md#sequence)<`TC`\> |
+| `d` | [`Sequence`](sequence.md#sequence)<`TD`\> |
+
+#### Returns
+
+[`Sequence`](sequence.md#sequence)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`Sequence`](sequence.md#sequence)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`Sequence`](sequence.md#sequence)<`TA`\> |
+| `b` | [`Sequence`](sequence.md#sequence)<`TB`\> |
+| `c` | [`Sequence`](sequence.md#sequence)<`TC`\> |
+| `d` | [`Sequence`](sequence.md#sequence)<`TD`\> |
+| `e` | [`Sequence`](sequence.md#sequence)<`TE`\> |
+
+#### Returns
+
+[`Sequence`](sequence.md#sequence)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`Sequence`](sequence.md#sequence)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`Sequence`](sequence.md#sequence)<`TA`\> |
+| `b` | [`Sequence`](sequence.md#sequence)<`TB`\> |
+| `c` | [`Sequence`](sequence.md#sequence)<`TC`\> |
+| `d` | [`Sequence`](sequence.md#sequence)<`TD`\> |
+| `e` | [`Sequence`](sequence.md#sequence)<`TE`\> |
+| `f` | [`Sequence`](sequence.md#sequence)<`TF`\> |
+
+#### Returns
+
+[`Sequence`](sequence.md#sequence)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`Sequence`](sequence.md#sequence)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`Sequence`](sequence.md#sequence)<`TA`\> |
+| `b` | [`Sequence`](sequence.md#sequence)<`TB`\> |
+| `c` | [`Sequence`](sequence.md#sequence)<`TC`\> |
+| `d` | [`Sequence`](sequence.md#sequence)<`TD`\> |
+| `e` | [`Sequence`](sequence.md#sequence)<`TE`\> |
+| `f` | [`Sequence`](sequence.md#sequence)<`TF`\> |
+| `g` | [`Sequence`](sequence.md#sequence)<`TG`\> |
+
+#### Returns
+
+[`Sequence`](sequence.md#sequence)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Sequence`](sequence.md#sequence)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`Sequence`](sequence.md#sequence)<`TA`\> |
+| `b` | [`Sequence`](sequence.md#sequence)<`TB`\> |
+| `c` | [`Sequence`](sequence.md#sequence)<`TC`\> |
+| `d` | [`Sequence`](sequence.md#sequence)<`TD`\> |
+| `e` | [`Sequence`](sequence.md#sequence)<`TE`\> |
+| `f` | [`Sequence`](sequence.md#sequence)<`TF`\> |
+| `g` | [`Sequence`](sequence.md#sequence)<`TG`\> |
+| `h` | [`Sequence`](sequence.md#sequence)<`TH`\> |
+
+#### Returns
+
+[`Sequence`](sequence.md#sequence)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Sequence`](sequence.md#sequence)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`Sequence`](sequence.md#sequence)<`TA`\> |
+| `b` | [`Sequence`](sequence.md#sequence)<`TB`\> |
+| `c` | [`Sequence`](sequence.md#sequence)<`TC`\> |
+| `d` | [`Sequence`](sequence.md#sequence)<`TD`\> |
+| `e` | [`Sequence`](sequence.md#sequence)<`TE`\> |
+| `f` | [`Sequence`](sequence.md#sequence)<`TF`\> |
+| `g` | [`Sequence`](sequence.md#sequence)<`TG`\> |
+| `h` | [`Sequence`](sequence.md#sequence)<`TH`\> |
+| `i` | [`Sequence`](sequence.md#sequence)<`TI`\> |
+
+#### Returns
+
+[`Sequence`](sequence.md#sequence)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+▸ **zip**<`T`\>(...`enumerables`): [`Sequence`](sequence.md#sequence)<readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...enumerables` | readonly [`Sequence`](sequence.md#sequence)<`T`\>[] |
+
+#### Returns
+
+[`Sequence`](sequence.md#sequence)<readonly `T`[]\>

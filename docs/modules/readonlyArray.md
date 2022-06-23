@@ -18,6 +18,7 @@
 - [fromObject](readonlyArray.md#fromobject)
 - [join](readonlyArray.md#join)
 - [keep](readonlyArray.md#keep)
+- [keepType](readonlyArray.md#keeptype)
 - [length](readonlyArray.md#length)
 - [map](readonlyArray.md#map)
 - [reduce](readonlyArray.md#reduce)
@@ -117,6 +118,29 @@ ___
 #### Returns
 
 [`ReadonlyArrayOperator`](readonlyArray.md#readonlyarrayoperator)<`T`, `T`\>
+
+___
+
+### keepType
+
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ReadonlyArrayOperator`](readonlyArray.md#readonlyarrayoperator)<`TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
+
+#### Returns
+
+[`ReadonlyArrayOperator`](readonlyArray.md#readonlyarrayoperator)<`TA`, `TB`\>
 
 ___
 
