@@ -1,11 +1,8 @@
 import { addDisposableDisposeParentOnChildError } from "../disposable";
-import {
-  AbstractEnumerable,
-  EnumerableLike,
-  EnumerableOperator,
-} from "../enumerable";
+import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { Predicate, alwaysTrue, raise } from "../functions";
 import { Option, isNone } from "../option";
+import { AbstractEnumerable } from "./enumerable";
 import { Enumerator, enumerate } from "./enumerator";
 
 class RepeatEnumerator<T> extends Enumerator<T> {

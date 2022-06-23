@@ -1,5 +1,6 @@
 import { FromArray, FromArrayOptions } from "../container";
-import { AbstractEnumerable, EnumerableLike } from "../enumerable";
+import { EnumerableLike } from "../enumerable";
+import { AbstractEnumerable } from "./enumerable";
 import { EnumeratorBase } from "./enumerator";
 
 class ArrayEnumerator<T> extends EnumeratorBase<T> {

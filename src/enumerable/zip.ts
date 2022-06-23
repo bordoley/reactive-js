@@ -1,7 +1,8 @@
 import { addDisposableDisposeParentOnChildError } from "../disposable";
-import { AbstractEnumerable, EnumerableLike } from "../enumerable";
+import { EnumerableLike } from "../enumerable";
 import { pipe } from "../functions";
 import { everySatisfy, map } from "../readonlyArray";
+import { AbstractEnumerable } from "./enumerable";
 import {
   Enumerator,
   EnumeratorBase,
