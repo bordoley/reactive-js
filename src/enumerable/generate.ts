@@ -1,7 +1,7 @@
 import { Generate } from "../container";
 import { EnumerableLike } from "../enumerable";
 import { Factory, Updater } from "../functions";
-import { AbstractEnumerable } from "./enumerable";
+import { createEnumerable } from "./enumerable";
 import { AbstractEnumerator } from "./enumerator";
 
 class GenerateEnumerator<T> extends AbstractEnumerator<T> {
@@ -22,19 +22,6 @@ class GenerateEnumerator<T> extends AbstractEnumerator<T> {
   }
 }
 
-class GenerateEnumerable<T> extends AbstractEnumerable<T> {
-  constructor(
-    private readonly f: Updater<T>,
-    private readonly acc: Factory<T>,
-  ) {
-    super();
-  }
-
-  enumerate() {
-    return new GenerateEnumerator(this.f, this.acc());
-  }
-}
-
 /**
  * Generates an EnumerableLike from a generator function
  * that is applied to an accumulator value.
@@ -45,7 +32,8 @@ class GenerateEnumerable<T> extends AbstractEnumerable<T> {
 export const generate = <T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
-): EnumerableLike<T> => new GenerateEnumerable(generator, initialValue);
+): EnumerableLike<T> =>
+  createEnumerable(() => new GenerateEnumerator(generator, initialValue()));
 
 export const generateT: Generate<EnumerableLike<unknown>> = {
   generate,

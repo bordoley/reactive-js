@@ -80,7 +80,7 @@ export interface ToEnumerable<C extends ContainerLike> extends Container<C> {
   toEnumerable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 }
 
-export { AbstractEnumerable } from "./enumerable/enumerable";
+export { AbstractEnumerable, createEnumerable } from "./enumerable/enumerable";
 export {
   Enumerator,
   AbstractEnumerator,
