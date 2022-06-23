@@ -11,14 +11,11 @@ export abstract class AbstractEnumerable<T>
 }
 
 class CreateEnumerable<T> extends AbstractEnumerable<T> {
-  constructor(readonly f: Factory<Enumerator<T>>) {
+  constructor(readonly enumerate: Factory<Enumerator<T>>) {
     super();
-  }
-  enumerate(): Enumerator<T> {
-    return this.f();
   }
 }
 
 export const createEnumerable = <T>(
-  f: Factory<Enumerator<T>>,
-): EnumerableLike<T> => new CreateEnumerable(f);
+  enumerate: Factory<Enumerator<T>>,
+): EnumerableLike<T> => new CreateEnumerable(enumerate);

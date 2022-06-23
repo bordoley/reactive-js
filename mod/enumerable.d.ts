@@ -25,7 +25,7 @@ declare const move: <T>(enumerator: Enumerator<T>) => boolean;
 declare abstract class AbstractEnumerable<T> extends AbstractLiftable<Enumerator<T>> implements EnumerableLike<T> {
     abstract enumerate(this: EnumerableLike<T>): Enumerator<T>;
 }
-declare const createEnumerable: <T>(f: Factory<Enumerator<T>>) => EnumerableLike<T>;
+declare const createEnumerable: <T>(enumerate: Factory<Enumerator<T>>) => EnumerableLike<T>;
 /**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
  */

@@ -55,15 +55,12 @@ const move = (enumerator) => enumerator.move();
 class AbstractEnumerable extends AbstractLiftable {
 }
 class CreateEnumerable extends AbstractEnumerable {
-    constructor(f) {
+    constructor(enumerate) {
         super();
-        this.f = f;
-    }
-    enumerate() {
-        return this.f();
+        this.enumerate = enumerate;
     }
 }
-const createEnumerable = (f) => new CreateEnumerable(f);
+const createEnumerable = (enumerate) => new CreateEnumerable(enumerate);
 
 class LiftedEnumerable extends AbstractEnumerable {
     constructor(src, operators) {
