@@ -1,4 +1,5 @@
 import { Function1, Predicate, Reducer, Factory } from "./functions.mjs";
+declare const empty: ReadonlyArray<any>;
 declare type ReadonlyArrayOperator<TA, TB> = Function1<readonly TA[], readonly TB[]>;
 declare const everySatisfy: <T>(predicate: Predicate<T>) => Function1<readonly T[], boolean>;
 declare const fromObject: <T>() => Function1<Readonly<Record<string, T>>, readonly [
@@ -11,4 +12,4 @@ declare const length: (arr: readonly unknown[]) => number;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => ReadonlyArrayOperator<TA, TB>;
 declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => Function1<readonly T[], TAcc>;
 declare const reduceRight: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => Function1<readonly T[], TAcc>;
-export { ReadonlyArrayOperator, everySatisfy, fromObject, join, keep, length, map, reduce, reduceRight };
+export { ReadonlyArrayOperator, empty, everySatisfy, fromObject, join, keep, length, map, reduce, reduceRight };

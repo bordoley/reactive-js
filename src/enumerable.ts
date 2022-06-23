@@ -54,6 +54,7 @@ import {
   createThrowIfEmptyLiftedOperator,
 } from "./liftable";
 import { Option, isSome, none } from "./option";
+import { empty as emptyArray } from "./readonlyArray";
 
 /**
  * Interface for iterating a Container of items.
@@ -269,7 +270,7 @@ export const pairwise: <T>() => EnumerableOperator<T, [Option<T>, T]> =
       }
 
       move(): boolean {
-        const prev = (this.hasCurrent ? this.current : [])[1];
+        const prev = (this.hasCurrent ? this.current : emptyArray)[1];
 
         this.reset();
 
