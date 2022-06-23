@@ -495,7 +495,7 @@ ___
 
 ### zipWith
 
-▸ **zipWith**<`C`, `TA`, `TB`\>(`__namedParameters`, `snd`): [`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, [`TA`, `TB`]\>
+▸ **zipWith**<`C`, `TA`, `TB`\>(`__namedParameters`, `snd`): [`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -514,4 +514,4 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, [`TA`, `TB`]\>
+[`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`]\>

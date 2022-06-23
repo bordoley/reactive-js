@@ -967,7 +967,7 @@ ___
 
 ### zip
 
-▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<[`TA`, `TB`]\>
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -985,9 +985,9 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<[`TA`, `TB`]\>
+[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly [`TA`, `TB`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<[`TA`, `TB`, `TC`]\>
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -1007,9 +1007,9 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<[`TA`, `TB`, `TC`]\>
+[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<[`TA`, `TB`, `TC`, `TD`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -1031,9 +1031,9 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<[`TA`, `TB`, `TC`, `TD`]\>
+[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -1057,9 +1057,9 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -1085,9 +1085,9 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -1115,9 +1115,9 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -1147,9 +1147,9 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -1181,20 +1181,44 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
-___
+▸ **zip**<`T`\>(...`enumerables`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly `T`[]\>
 
-### zipEnumerators
+#### Type parameters
 
-▸ **zipEnumerators**(`enumerators`): [`Enumerator`](../classes/enumerable.Enumerator.md)<readonly `unknown`[]\>
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `enumerators` | readonly [`Enumerator`](../classes/enumerable.Enumerator.md)<`unknown`\>[] |
+| `...enumerables` | readonly [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>[] |
 
 #### Returns
 
-[`Enumerator`](../classes/enumerable.Enumerator.md)<readonly `unknown`[]\>
+[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly `T`[]\>
+
+___
+
+### zipEnumerators
+
+▸ **zipEnumerators**<`T`\>(`enumerators`): [`Enumerator`](../classes/enumerable.Enumerator.md)<readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `enumerators` | readonly [`Enumerator`](../classes/enumerable.Enumerator.md)<`T`\>[] |
+
+#### Returns
+
+[`Enumerator`](../classes/enumerable.Enumerator.md)<readonly `T`[]\>

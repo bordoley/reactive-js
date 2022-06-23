@@ -291,25 +291,25 @@ export interface Zip<C extends ContainerLike> extends Container<C> {
   zip<TA, TB>(
     a: ContainerOf<C, TA>,
     b: ContainerOf<C, TB>,
-  ): ContainerOf<C, [TA, TB]>;
+  ): ContainerOf<C, readonly [TA, TB]>;
   zip<TA, TB, TC>(
     a: ContainerOf<C, TA>,
     b: ContainerOf<C, TB>,
     c: ContainerOf<C, TC>,
-  ): ContainerOf<C, [TA, TB, TC]>;
+  ): ContainerOf<C, readonly [TA, TB, TC]>;
   zip<TA, TB, TC, TD>(
     a: ContainerOf<C, TA>,
     b: ContainerOf<C, TB>,
     c: ContainerOf<C, TC>,
     d: ContainerOf<C, TD>,
-  ): ContainerOf<C, [TA, TB, TC, TD]>;
+  ): ContainerOf<C, readonly [TA, TB, TC, TD]>;
   zip<TA, TB, TC, TD, TE>(
     a: ContainerOf<C, TA>,
     b: ContainerOf<C, TB>,
     c: ContainerOf<C, TC>,
     d: ContainerOf<C, TD>,
     e: ContainerOf<C, TE>,
-  ): ContainerOf<C, [TA, TB, TC, TD, TE]>;
+  ): ContainerOf<C, readonly [TA, TB, TC, TD, TE]>;
   zip<TA, TB, TC, TD, TE, TF>(
     a: ContainerOf<C, TA>,
     b: ContainerOf<C, TB>,
@@ -317,7 +317,7 @@ export interface Zip<C extends ContainerLike> extends Container<C> {
     d: ContainerOf<C, TD>,
     e: ContainerOf<C, TE>,
     f: ContainerOf<C, TF>,
-  ): ContainerOf<C, [TA, TB, TC, TD, TE, TF]>;
+  ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF]>;
   zip<TA, TB, TC, TD, TE, TF, TG>(
     a: ContainerOf<C, TA>,
     b: ContainerOf<C, TB>,
@@ -326,7 +326,7 @@ export interface Zip<C extends ContainerLike> extends Container<C> {
     e: ContainerOf<C, TE>,
     f: ContainerOf<C, TF>,
     g: ContainerOf<C, TG>,
-  ): ContainerOf<C, [TA, TB, TC, TD, TE, TF, TG]>;
+  ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG]>;
   zip<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: ContainerOf<C, TA>,
     b: ContainerOf<C, TB>,
@@ -336,7 +336,7 @@ export interface Zip<C extends ContainerLike> extends Container<C> {
     f: ContainerOf<C, TF>,
     g: ContainerOf<C, TG>,
     h: ContainerOf<C, TH>,
-  ): ContainerOf<C, [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
   zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: ContainerOf<C, TA>,
     b: ContainerOf<C, TB>,
@@ -347,7 +347,10 @@ export interface Zip<C extends ContainerLike> extends Container<C> {
     g: ContainerOf<C, TG>,
     h: ContainerOf<C, TH>,
     i: ContainerOf<C, TI>,
-  ): ContainerOf<C, [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): ContainerOf<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  zip<T>(
+    ...enumerables: readonly ContainerOf<C, T>[]
+  ): ContainerOf<C, readonly T[]>;
 }
 
 export const compute = <C, T, O extends FromArrayOptions = FromArrayOptions>(
@@ -497,6 +500,6 @@ export const zipWith =
   <C, TA, TB>(
     { zip }: Zip<C>,
     snd: ContainerOf<C, TB>,
-  ): ContainerOperator<C, TA, [TA, TB]> =>
+  ): ContainerOperator<C, TA, readonly [TA, TB]> =>
   fst =>
     zip(fst, snd);

@@ -97,67 +97,8 @@ declare const toRunnableT: ToRunnable<EnumerableLike<unknown>>;
  * Converts an EnumerableLike into a javascript Iterable.
  */
 declare const toIterable: <T>() => Function1<EnumerableLike<T>, Iterable<T>>;
-declare const zipEnumerators: (enumerators: readonly Enumerator<unknown>[]) => Enumerator<readonly unknown[]>;
-declare function zip<TA, TB>(a: EnumerableLike<TA>, b: EnumerableLike<TB>): EnumerableLike<[
-    TA,
-    TB
-]>;
-declare function zip<TA, TB, TC>(a: EnumerableLike<TA>, b: EnumerableLike<TB>, c: EnumerableLike<TC>): EnumerableLike<[
-    TA,
-    TB,
-    TC
-]>;
-declare function zip<TA, TB, TC, TD>(a: EnumerableLike<TA>, b: EnumerableLike<TB>, c: EnumerableLike<TC>, d: EnumerableLike<TD>): EnumerableLike<[
-    TA,
-    TB,
-    TC,
-    TD
-]>;
-declare function zip<TA, TB, TC, TD, TE>(a: EnumerableLike<TA>, b: EnumerableLike<TB>, c: EnumerableLike<TC>, d: EnumerableLike<TD>, e: EnumerableLike<TE>): EnumerableLike<[
-    TA,
-    TB,
-    TC,
-    TD,
-    TE
-]>;
-declare function zip<TA, TB, TC, TD, TE, TF>(a: EnumerableLike<TA>, b: EnumerableLike<TB>, c: EnumerableLike<TC>, d: EnumerableLike<TD>, e: EnumerableLike<TE>, f: EnumerableLike<TF>): EnumerableLike<[
-    TA,
-    TB,
-    TC,
-    TD,
-    TE,
-    TF
-]>;
-declare function zip<TA, TB, TC, TD, TE, TF, TG>(a: EnumerableLike<TA>, b: EnumerableLike<TB>, c: EnumerableLike<TC>, d: EnumerableLike<TD>, e: EnumerableLike<TE>, f: EnumerableLike<TF>, g: EnumerableLike<TG>): EnumerableLike<[
-    TA,
-    TB,
-    TC,
-    TD,
-    TE,
-    TF,
-    TG
-]>;
-declare function zip<TA, TB, TC, TD, TE, TF, TG, TH>(a: EnumerableLike<TA>, b: EnumerableLike<TB>, c: EnumerableLike<TC>, d: EnumerableLike<TD>, e: EnumerableLike<TE>, f: EnumerableLike<TF>, g: EnumerableLike<TG>, h: EnumerableLike<TH>): EnumerableLike<[
-    TA,
-    TB,
-    TC,
-    TD,
-    TE,
-    TF,
-    TG,
-    TH
-]>;
-declare function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: EnumerableLike<TA>, b: EnumerableLike<TB>, c: EnumerableLike<TC>, d: EnumerableLike<TD>, e: EnumerableLike<TE>, f: EnumerableLike<TF>, g: EnumerableLike<TG>, h: EnumerableLike<TH>, i: EnumerableLike<TI>): EnumerableLike<[
-    TA,
-    TB,
-    TC,
-    TD,
-    TE,
-    TF,
-    TG,
-    TH,
-    TI
-]>;
+declare const zipEnumerators: <T>(enumerators: readonly Enumerator<T>[]) => Enumerator<readonly T[]>;
+declare const zip: Zip<EnumerableLike<unknown>>["zip"];
 declare const zipT: Zip<EnumerableLike<unknown>>;
 /**
  * Interface for iterating a Container of items.
