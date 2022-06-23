@@ -27,8 +27,8 @@ import {
   returns,
   strictEquality,
 } from "./functions";
-
 import { Option, isSome } from "./option";
+import { empty as emptyArray } from "./readonlyArray";
 
 export interface ContainerLike {
   readonly T?: unknown;
@@ -373,7 +373,7 @@ export const concatWith =
 export const empty = <C, T, O extends FromArrayOptions = FromArrayOptions>(
   { fromArray }: FromArray<C, O>,
   options?: Omit<Partial<O>, keyof FromArrayOptions>,
-): ContainerOf<C, T> => fromArray<T>({ ...options })([]);
+): ContainerOf<C, T> => fromArray<T>({ ...options })(emptyArray);
 
 export const contains = <C, T>(
   { someSatisfy }: SomeSatisfy<C>,

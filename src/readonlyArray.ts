@@ -1,5 +1,7 @@
 import { Factory, Function1, Predicate, Reducer } from "./functions";
 
+export const empty: ReadonlyArray<any> = [];
+
 export type ReadonlyArrayOperator<TA, TB> = Function1<
   readonly TA[],
   readonly TB[]

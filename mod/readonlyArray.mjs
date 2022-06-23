@@ -1,4 +1,5 @@
 /// <reference types="./readonlyArray.d.ts" />
+const empty = [];
 const everySatisfy = (predicate) => arr => arr.every(predicate);
 const _fromObject = (object) => Object.entries(object);
 const fromObject = () => _fromObject;
@@ -9,4 +10,4 @@ const map = (mapper) => arr => arr.map(mapper);
 const reduce = (reducer, initialValue) => arr => arr.reduce(reducer, initialValue());
 const reduceRight = (reducer, initialValue) => arr => arr.reduceRight(reducer, initialValue());
 
-export { everySatisfy, fromObject, join, keep, length, map, reduce, reduceRight };
+export { empty, everySatisfy, fromObject, join, keep, length, map, reduce, reduceRight };

@@ -4,8 +4,8 @@ import { addTeardown, createSerialDisposable, bindDisposables, addDisposableDisp
 import { raise, pipe, alwaysTrue, identity } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
+import { everySatisfy, map as map$1, empty as empty$1 } from './readonlyArray.mjs';
 import { createRunnable } from './runnable.mjs';
-import { everySatisfy, map as map$1 } from './readonlyArray.mjs';
 
 class Enumerator extends AbstractDisposableContainer {
 }
@@ -574,7 +574,7 @@ const pairwise = createPairwiseLiftedOperator(liftT, class PairwiseEnumerator ex
         this.delegate = delegate;
     }
     move() {
-        const prev = (this.hasCurrent ? this.current : [])[1];
+        const prev = (this.hasCurrent ? this.current : empty$1)[1];
         this.reset();
         const { delegate } = this;
         if (delegate.move()) {

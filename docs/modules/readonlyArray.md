@@ -8,6 +8,10 @@
 
 - [ReadonlyArrayOperator](readonlyArray.md#readonlyarrayoperator)
 
+### Variables
+
+- [empty](readonlyArray.md#empty)
+
 ### Functions
 
 - [everySatisfy](readonlyArray.md#everysatisfy)
@@ -31,6 +35,12 @@
 | :------ |
 | `TA` |
 | `TB` |
+
+## Variables
+
+### empty
+
+• `Const` **empty**: `ReadonlyArray`<`any`\>
 
 ## Functions
 
