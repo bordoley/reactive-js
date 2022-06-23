@@ -1,4 +1,4 @@
-import { FromIterator } from "../container";
+import { FromIterable, FromIterator } from "../container";
 import {
   fromIterable as enumerableFromIterable,
   fromIterator as enumerableFromIterator,
@@ -40,4 +40,8 @@ export const fromIterable = <T>(options?: {
 }): Function1<Iterable<T>, ObservableLike<T>> => {
   const call = fromEnumerable(options);
   return compose(enumerableFromIterable(), call);
+};
+
+export const fromIterableT: FromIterable<ObservableLike<unknown>> = {
+  fromIterable,
 };

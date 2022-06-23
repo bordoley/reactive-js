@@ -1,3 +1,4 @@
+import { ConcatAll } from "../container";
 import {
   SerialDisposableLike,
   addDisposableDisposeParentOnChildError,
@@ -57,3 +58,7 @@ const operator = <T>(delegate: Enumerator<EnumerableLike<T>>) => {
  */
 export const concatAll = <T>(): EnumerableOperator<EnumerableLike<T>, T> =>
   lift(operator);
+
+export const concatAllT: ConcatAll<EnumerableLike<unknown>> = {
+  concatAll,
+};

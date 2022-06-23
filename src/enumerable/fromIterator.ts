@@ -1,3 +1,4 @@
+import { FromIterable, FromIterator } from "../container";
 import { EnumerableLike } from "../enumerable";
 import { Factory, Function1 } from "../functions";
 import { none } from "../option";
@@ -66,6 +67,10 @@ export const fromIterator = <T, TReturn = any, TNext = unknown>(): Function1<
   EnumerableLike<T>
 > => _fromIterator;
 
+export const fromIteratorT: FromIterator<EnumerableLike<unknown>> = {
+  fromIterator,
+};
+
 const _fromIterable = <T>(iterable: Iterable<T>): EnumerableLike<T> =>
   _fromIterator(() => iterable[Symbol.iterator]());
 
@@ -76,3 +81,7 @@ const _fromIterable = <T>(iterable: Iterable<T>): EnumerableLike<T> =>
  */
 export const fromIterable = <T>(): Function1<Iterable<T>, EnumerableLike<T>> =>
   _fromIterable;
+
+export const fromIterableT: FromIterable<EnumerableLike<unknown>> = {
+  fromIterable,
+};

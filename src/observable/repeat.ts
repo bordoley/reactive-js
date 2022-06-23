@@ -1,3 +1,4 @@
+import { Repeat } from "../container";
 import { Error, addDisposable, addTeardown, dispose } from "../disposable";
 import { Function2, Predicate, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
@@ -89,6 +90,10 @@ export function repeat<T>(
 
   return repeatObs(repeatPredicate);
 }
+
+export const repeatT: Repeat<ObservableLike<unknown>> = {
+  repeat,
+};
 
 const defaultRetryPredicate = (_: number, error?: Error): boolean =>
   isSome(error);

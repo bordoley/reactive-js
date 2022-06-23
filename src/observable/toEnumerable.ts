@@ -8,6 +8,7 @@ import {
   EnumerableLike,
   Enumerator,
   EnumeratorBase,
+  ToEnumerable,
 } from "../enumerable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
@@ -108,3 +109,7 @@ export const toEnumerable =
   <T>(): Function1<ObservableLike<T>, EnumerableLike<T>> =>
   obs =>
     new ObservableEnumerable(obs);
+
+export const toEnumerableT: ToEnumerable<ObservableLike<unknown>> = {
+  toEnumerable,
+};

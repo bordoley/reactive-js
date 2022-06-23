@@ -1,3 +1,4 @@
+import { Generate } from "../container";
 import { EnumerableLike } from "../enumerable";
 import { Factory, Updater } from "../functions";
 import { AbstractEnumerable } from "./enumerable";
@@ -45,3 +46,7 @@ export const generate = <T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
 ): EnumerableLike<T> => new GenerateEnumerable(generator, initialValue);
+
+export const generateT: Generate<EnumerableLike<unknown>> = {
+  generate,
+};

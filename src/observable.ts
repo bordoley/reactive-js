@@ -137,6 +137,7 @@ export { fromDisposable } from "./observable/fromDisposable";
 export { fromEnumerable } from "./observable/fromEnumerable";
 export {
   fromIterable,
+  fromIterableT,
   fromIterator,
   fromIteratorT,
 } from "./observable/fromIterable";
@@ -163,7 +164,7 @@ export {
 export { onNotify } from "./observable/onNotify";
 export { onSubscribe } from "./observable/onSubscribe";
 export { publish } from "./observable/publish";
-export { repeat, retry } from "./observable/repeat";
+export { repeat, repeatT, retry } from "./observable/repeat";
 export { scanAsync } from "./observable/scanAsync";
 export { share } from "./observable/share";
 export { subscribeOn } from "./observable/subscribeOn";
@@ -176,8 +177,8 @@ export { withLatestFrom } from "./observable/withLatestFrom";
 export { zip, zipT } from "./observable/zip";
 export { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
 
-export { toEnumerable } from "./observable/toEnumerable";
-export { toRunnable } from "./observable/toRunnable";
+export { toEnumerable, toEnumerableT } from "./observable/toEnumerable";
+export { toRunnable, toRunnableT } from "./observable/toRunnable";
 export { toPromise } from "./observable/toPromise";
 
 export const catchError: <T>(

@@ -17,7 +17,21 @@
 
 ### Variables
 
+- [concatAllT](sequence.md#concatallt)
+- [concatT](sequence.md#concatt)
+- [distinctUntilChangedT](sequence.md#distinctuntilchangedt)
+- [fromArrayT](sequence.md#fromarrayt)
+- [generateT](sequence.md#generatet)
+- [keepT](sequence.md#keept)
+- [mapT](sequence.md#mapt)
+- [repeatT](sequence.md#repeatt)
+- [scanT](sequence.md#scant)
 - [sequenceResultDone](sequence.md#sequenceresultdone)
+- [skipFirstT](sequence.md#skipfirstt)
+- [takeFirstT](sequence.md#takefirstt)
+- [takeLastT](sequence.md#takelastt)
+- [takeWhileT](sequence.md#takewhilet)
+- [toRunnableT](sequence.md#torunnablet)
 - [type](sequence.md#type)
 
 ### Functions
@@ -77,9 +91,93 @@ ___
 
 ## Variables
 
+### concatAllT
+
+• `Const` **concatAllT**: [`ConcatAll`](../interfaces/container.ConcatAll.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
+
+___
+
+### concatT
+
+• `Const` **concatT**: [`Concat`](../interfaces/container.Concat.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
+
+___
+
+### distinctUntilChangedT
+
+• `Const` **distinctUntilChangedT**: [`DistinctUntilChanged`](../interfaces/container.DistinctUntilChanged.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
+
+___
+
+### fromArrayT
+
+• `Const` **fromArrayT**: [`FromArray`](../interfaces/container.FromArray.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
+
+___
+
+### generateT
+
+• `Const` **generateT**: [`Generate`](../interfaces/container.Generate.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
+
+___
+
+### keepT
+
+• `Const` **keepT**: [`Keep`](../interfaces/container.Keep.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
+
+___
+
+### mapT
+
+• `Const` **mapT**: [`Map`](../interfaces/container.Map.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
+
+___
+
+### repeatT
+
+• `Const` **repeatT**: [`Repeat`](../interfaces/container.Repeat.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
+
+___
+
+### scanT
+
+• `Const` **scanT**: [`Scan`](../interfaces/container.Scan.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
+
+___
+
 ### sequenceResultDone
 
 • `Const` **sequenceResultDone**: unique `symbol`
+
+___
+
+### skipFirstT
+
+• `Const` **skipFirstT**: [`SkipFirst`](../interfaces/container.SkipFirst.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
+
+___
+
+### takeFirstT
+
+• `Const` **takeFirstT**: [`TakeFirst`](../interfaces/container.TakeFirst.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
+
+___
+
+### takeLastT
+
+• `Const` **takeLastT**: [`TakeLast`](../interfaces/container.TakeLast.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
+
+___
+
+### takeWhileT
+
+• `Const` **takeWhileT**: [`TakeWhile`](../interfaces/container.TakeWhile.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
+
+___
+
+### toRunnableT
+
+• `Const` **toRunnableT**: [`ToRunnable`](../interfaces/runnable.ToRunnable.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
 
 ___
 

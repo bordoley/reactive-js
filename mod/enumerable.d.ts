@@ -1,8 +1,8 @@
-import { AbstractDisposableContainer, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
+import { AbstractDisposableContainer, ConcatAll, FromArray, FromArrayOptions, FromIterator, FromIterable, Generate, Repeat, TakeLast, Zip, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
 import { Function1, Factory, Updater, Predicate, Equality, SideEffect1, Reducer } from "./functions.mjs";
 import { LiftedStateLike, AbstractLiftable, LiftableLike } from "./liftable.mjs";
 import { Option } from "./option.mjs";
-import { RunnableLike } from "./runnable.mjs";
+import { RunnableLike, ToRunnable } from "./runnable.mjs";
 declare abstract class Enumerator<T> extends AbstractDisposableContainer implements LiftedStateLike {
     abstract get current(): T;
     abstract get hasCurrent(): boolean;
@@ -36,6 +36,7 @@ declare abstract class AbstractEnumerable<T> extends AbstractLiftable<Enumerator
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
  */
 declare const concatAll: <T>() => EnumerableOperator<EnumerableLike<T>, T>;
+declare const concatAllT: ConcatAll<EnumerableLike<unknown>>;
 /**
  * Returns an EnumerableLike view over the `values` array.
  *
@@ -53,12 +54,14 @@ declare const fromArrayT: FromArray<EnumerableLike<unknown>, FromArrayOptions>;
  * @param f
  */
 declare const fromIterator: <T, TReturn = any, TNext = unknown>() => Function1<Factory<Iterator<T, TReturn, TNext>>, EnumerableLike<T>>;
+declare const fromIteratorT: FromIterator<EnumerableLike<unknown>>;
 /**
  * Converts a javascript Iterable to an EnumerableLike.
  *
  * @param iterable
  */
 declare const fromIterable: <T>() => Function1<Iterable<T>, EnumerableLike<T>>;
+declare const fromIterableT: FromIterable<EnumerableLike<unknown>>;
 /**
  * Generates an EnumerableLike from a generator function
  * that is applied to an accumulator value.
@@ -67,6 +70,7 @@ declare const fromIterable: <T>() => Function1<Iterable<T>, EnumerableLike<T>>;
  * @param initialValue Factory function used to generate the initial accumulator.
  */
 declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>) => EnumerableLike<T>;
+declare const generateT: Generate<EnumerableLike<unknown>>;
 /**
  * Returns an EnumerableLike that applies the predicate function each time the source
  * completes to determine if the enumerable should be repeated.
@@ -83,6 +87,7 @@ declare function repeat<T>(count: number): EnumerableOperator<T, T>;
  * Returns an EnumerableLike` that continually repeats the source.
  */
 declare function repeat<T>(): EnumerableOperator<T, T>;
+declare const repeatT: Repeat<EnumerableLike<unknown>>;
 /**
  * Returns an EnumerableLike that only yields the last `count` items yielded by the source.
  *
@@ -91,7 +96,9 @@ declare function repeat<T>(): EnumerableOperator<T, T>;
 declare const takeLast: <T>(options?: {
     readonly count?: number;
 }) => EnumerableOperator<T, T>;
+declare const takeLastT: TakeLast<EnumerableLike<unknown>>;
 declare const toRunnable: <T>() => Function1<EnumerableLike<T>, RunnableLike<T>>;
+declare const toRunnableT: ToRunnable<EnumerableLike<unknown>>;
 /**
  * Converts an EnumerableLike into a javascript Iterable.
  */
@@ -157,6 +164,7 @@ declare function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: EnumerableLike<TA>, 
     TH,
     TI
 ]>;
+declare const zipT: Zip<EnumerableLike<unknown>>;
 /**
  * Interface for iterating a Container of items.
  */
@@ -213,4 +221,4 @@ declare const throwIfEmpty: <T>(factory: Factory<unknown>) => EnumerableOperator
 declare const throwIfEmptyT: ThrowIfEmpty<EnumerableLike<unknown>>;
 declare const using: Using<EnumerableLike<unknown>>["using"];
 declare const usingT: Using<EnumerableLike<unknown>>;
-export { AbstractEnumerable, DelegatingEnumeratorBase, EnumerableLike, EnumerableOperator, Enumerator, EnumeratorBase, ToEnumerable, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, type, using, usingT, zip, zipEnumerators };
+export { AbstractEnumerable, DelegatingEnumeratorBase, EnumerableLike, EnumerableOperator, Enumerator, EnumeratorBase, ToEnumerable, concat, concatAll, concatAllT, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, toRunnableT, type, using, usingT, zip, zipEnumerators, zipT };

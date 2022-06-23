@@ -1,4 +1,4 @@
-import { empty } from "../container";
+import { TakeLast, empty } from "../container";
 import {
   addDisposableDisposeParentOnChildError,
   bindDisposables,
@@ -72,4 +72,8 @@ export const takeLast = <T>(
       ? pipe(enumerable, lift(operator))
       : // FIXME: why do we need the annotations?
         empty<EnumerableLike<unknown>, T>(fromArrayT);
+};
+
+export const takeLastT: TakeLast<EnumerableLike<unknown>> = {
+  takeLast,
 };

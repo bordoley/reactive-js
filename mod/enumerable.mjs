@@ -129,6 +129,9 @@ const operator = (delegate) => {
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
  */
 const concatAll = () => lift(operator);
+const concatAllT = {
+    concatAll,
+};
 
 class ArrayEnumerator extends EnumeratorBase {
     constructor(array, index, endIndex) {
@@ -222,6 +225,9 @@ const _fromIterator = (f) => new IteratorEnumerable(f);
  * @param f
  */
 const fromIterator = () => _fromIterator;
+const fromIteratorT = {
+    fromIterator,
+};
 const _fromIterable = (iterable) => _fromIterator(() => iterable[Symbol.iterator]());
 /**
  * Converts a javascript Iterable to an EnumerableLike.
@@ -229,6 +235,9 @@ const _fromIterable = (iterable) => _fromIterator(() => iterable[Symbol.iterator
  * @param iterable
  */
 const fromIterable = () => _fromIterable;
+const fromIterableT = {
+    fromIterable,
+};
 
 class GenerateEnumerator extends EnumeratorBase {
     constructor(f, acc) {
@@ -266,6 +275,9 @@ class GenerateEnumerable extends AbstractEnumerable {
  * @param initialValue Factory function used to generate the initial accumulator.
  */
 const generate = (generator, initialValue) => new GenerateEnumerable(generator, initialValue);
+const generateT = {
+    generate,
+};
 
 class RepeatEnumerator extends Enumerator {
     constructor(src, shouldRepeat) {
@@ -324,6 +336,9 @@ function repeat(predicate) {
             : (count) => predicate(count);
     return enumerable => new RepeatEnumerable(enumerable, repeatPredicate);
 }
+const repeatT = {
+    repeat,
+};
 
 class TakeLastEnumerator extends Enumerator {
     constructor(delegate, maxCount) {
@@ -376,6 +391,9 @@ const takeLast = (options = {}) => {
         : // FIXME: why do we need the annotations?
             empty(fromArrayT);
 };
+const takeLastT = {
+    takeLast,
+};
 
 const enumeratorToRunnable = (f) => {
     const run = (sink) => {
@@ -390,6 +408,9 @@ const enumeratorToRunnable = (f) => {
 };
 const _toRunnable = (enumerable) => enumeratorToRunnable(() => enumerable.enumerate());
 const toRunnable = () => _toRunnable;
+const toRunnableT = {
+    toRunnable,
+};
 
 class EnumerableIterable {
     constructor(enumerable) {
@@ -457,6 +478,9 @@ class ZipEnumerable extends AbstractEnumerable {
 function zip(...enumerables) {
     return new ZipEnumerable(enumerables);
 }
+const zipT = {
+    zip,
+};
 
 const toEnumerable = () => identity;
 const type = undefined;
@@ -715,4 +739,4 @@ const usingT = {
     using,
 };
 
-export { AbstractEnumerable, DelegatingEnumeratorBase, Enumerator, EnumeratorBase, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, type, using, usingT, zip, zipEnumerators };
+export { AbstractEnumerable, DelegatingEnumeratorBase, Enumerator, EnumeratorBase, concat, concatAll, concatAllT, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, toRunnableT, type, using, usingT, zip, zipEnumerators, zipT };
