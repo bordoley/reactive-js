@@ -1,5 +1,6 @@
-import { AbstractEnumerable, EnumerableLike } from "../enumerable";
+import { EnumerableLike } from "../enumerable";
 import { Factory, Updater } from "../functions";
+import { AbstractEnumerable } from "./enumerable";
 import { EnumeratorBase } from "./enumerator";
 
 class GenerateEnumerator<T> extends EnumeratorBase<T> {

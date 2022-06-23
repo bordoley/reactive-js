@@ -58,7 +58,10 @@ const current = (enumerator) => enumerator.current;
 const hasCurrent = (enumerator) => enumerator.hasCurrent;
 const move = (enumerator) => enumerator.move();
 
-class LiftedEnumerableLike extends AbstractEnumerable {
+class AbstractEnumerable extends AbstractLiftable {
+}
+
+class LiftedEnumerable extends AbstractEnumerable {
     constructor(src, operators) {
         super();
         this.src = src;
@@ -76,11 +79,11 @@ class LiftedEnumerableLike extends AbstractEnumerable {
  * @param operator
  */
 const lift = (operator) => enumerable => {
-    const src = enumerable instanceof LiftedEnumerableLike ? enumerable.src : enumerable;
-    const allFunctions = enumerable instanceof LiftedEnumerableLike
+    const src = enumerable instanceof LiftedEnumerable ? enumerable.src : enumerable;
+    const allFunctions = enumerable instanceof LiftedEnumerable
         ? [...enumerable.operators, operator]
         : [operator];
-    return new LiftedEnumerableLike(src, allFunctions);
+    return new LiftedEnumerable(src, allFunctions);
 };
 const liftT = {
     variance: "covariant",
@@ -126,9 +129,6 @@ const operator = (delegate) => {
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
  */
 const concatAll = () => lift(operator);
-
-class AbstractEnumerable extends AbstractLiftable {
-}
 
 class ArrayEnumerator extends EnumeratorBase {
     constructor(array, index, endIndex) {

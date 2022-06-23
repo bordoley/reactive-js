@@ -1,6 +1,7 @@
-import { AbstractEnumerable, EnumerableLike } from "../enumerable";
+import { EnumerableLike } from "../enumerable";
 import { Factory, Function1 } from "../functions";
 import { none } from "../option";
+import { AbstractEnumerable } from "./enumerable";
 import { Enumerator } from "./enumerator";
 
 class IteratorEnumerator<
