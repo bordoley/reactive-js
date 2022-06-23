@@ -33,6 +33,9 @@ const defer = (factory, options = {}) => {
     return new DeferObservable(factory, false, delay);
 };
 
+const deferEmpty = () => (observer) => {
+    pipe(observer, dispose());
+};
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
  * An optional `startIndex` in the array maybe specified,
@@ -46,21 +49,23 @@ const fromArray = (options = {}) => values => {
     const valuesLength = values.length;
     const startIndex = Math.min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, valuesLength);
     const endIndex = Math.max(Math.min((_c = options.endIndex) !== null && _c !== void 0 ? _c : values.length, valuesLength), 0);
-    const factory = () => {
-        let index = startIndex;
-        return (observer) => {
-            while (index < endIndex) {
-                const value = values[index];
-                index++;
-                // Inline yielding logic for performance reasons
-                observer.notify(value);
-                if (index < endIndex && (delay > 0 || observer.shouldYield)) {
-                    throw new YieldError(delay);
+    const factory = values.length === 0 || endIndex - startIndex === 0
+        ? deferEmpty
+        : () => {
+            let index = startIndex;
+            return (observer) => {
+                while (index < endIndex) {
+                    const value = values[index];
+                    index++;
+                    // Inline yielding logic for performance reasons
+                    observer.notify(value);
+                    if (index < endIndex && (delay > 0 || observer.shouldYield)) {
+                        throw new YieldError(delay);
+                    }
                 }
-            }
-            pipe(observer, dispose());
+                pipe(observer, dispose());
+            };
         };
-    };
     return delay > 0 ? defer(factory, { delay }) : deferSynchronous(factory);
 };
 const fromArrayT = {

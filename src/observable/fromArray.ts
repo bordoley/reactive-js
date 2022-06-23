@@ -6,6 +6,12 @@ import { YieldError } from "../scheduler";
 import { defer, deferSynchronous } from "./defer";
 import { Observer } from "./observer";
 
+const deferEmpty =
+  <T>() =>
+  (observer: Observer<T>) => {
+    pipe(observer, dispose());
+  };
+
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
  * An optional `startIndex` in the array maybe specified,
@@ -29,24 +35,28 @@ export const fromArray =
       Math.min(options.endIndex ?? values.length, valuesLength),
       0,
     );
+    const count = endIndex - startIndex;
 
-    const factory = () => {
-      let index = startIndex;
-      return (observer: Observer<T>) => {
-        while (index < endIndex) {
-          const value = values[index];
-          index++;
+    const factory =
+      count === 0
+        ? deferEmpty
+        : () => {
+            let index = startIndex;
+            return (observer: Observer<T>) => {
+              while (index < endIndex) {
+                const value = values[index];
+                index++;
 
-          // Inline yielding logic for performance reasons
-          observer.notify(value);
+                // Inline yielding logic for performance reasons
+                observer.notify(value);
 
-          if (index < endIndex && (delay > 0 || observer.shouldYield)) {
-            throw new YieldError(delay);
-          }
-        }
-        pipe(observer, dispose());
-      };
-    };
+                if (index < endIndex && (delay > 0 || observer.shouldYield)) {
+                  throw new YieldError(delay);
+                }
+              }
+              pipe(observer, dispose());
+            };
+          };
 
     return delay > 0 ? defer(factory, { delay }) : deferSynchronous(factory);
   };

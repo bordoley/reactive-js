@@ -1,5 +1,5 @@
 import { FromArray, FromArrayOptions } from "../container";
-import { Function1 } from "../functions";
+import { Function1, ignore } from "../functions";
 import { RunnableLike } from "../runnable";
 import { createRunnable } from "./createRunnable";
 import { Sink } from "./sinks";
@@ -18,16 +18,20 @@ export const fromArray =
       Math.min(options.endIndex ?? values.length, valuesLength),
       0,
     );
+    const count = endIndex - startIndex;
 
-    const run = (sink: Sink<T>) => {
-      for (
-        let index = startIndex;
-        index < endIndex && !sink.isDisposed;
-        index++
-      ) {
-        sink.notify(values[index]);
-      }
-    };
+    const run =
+      count === 0
+        ? ignore
+        : (sink: Sink<T>) => {
+            for (
+              let index = startIndex;
+              index < endIndex && !sink.isDisposed;
+              index++
+            ) {
+              sink.notify(values[index]);
+            }
+          };
     return createRunnable(run);
   };
 
