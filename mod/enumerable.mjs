@@ -429,9 +429,8 @@ const zipEnumerators = (enumerators) => {
  * Combines multiple EnumerableLikes to create an EnumerableLike whose values are calculated from the values,
  * in order, of each of its inputs.
  */
-function zip(...enumerables) {
-    return createEnumerable(() => pipe(enumerables, map$1(enumerate), zipEnumerators));
-}
+const _zip = (...enumerables) => createEnumerable(() => pipe(enumerables, map$1(enumerate), zipEnumerators));
+const zip = _zip;
 const zipT = {
     zip,
 };

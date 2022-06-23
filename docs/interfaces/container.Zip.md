@@ -40,7 +40,7 @@
 
 ### zip
 
-▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`ContainerOf`](../modules/container.md#containerof)<`C`, [`TA`, `TB`]\>
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`ContainerOf`](../modules/container.md#containerof)<`C`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -58,9 +58,9 @@
 
 #### Returns
 
-[`ContainerOf`](../modules/container.md#containerof)<`C`, [`TA`, `TB`]\>
+[`ContainerOf`](../modules/container.md#containerof)<`C`, readonly [`TA`, `TB`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ContainerOf`](../modules/container.md#containerof)<`C`, [`TA`, `TB`, `TC`]\>
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ContainerOf`](../modules/container.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -80,9 +80,9 @@
 
 #### Returns
 
-[`ContainerOf`](../modules/container.md#containerof)<`C`, [`TA`, `TB`, `TC`]\>
+[`ContainerOf`](../modules/container.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ContainerOf`](../modules/container.md#containerof)<`C`, [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ContainerOf`](../modules/container.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -104,9 +104,9 @@
 
 #### Returns
 
-[`ContainerOf`](../modules/container.md#containerof)<`C`, [`TA`, `TB`, `TC`, `TD`]\>
+[`ContainerOf`](../modules/container.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ContainerOf`](../modules/container.md#containerof)<`C`, [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ContainerOf`](../modules/container.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -130,9 +130,9 @@
 
 #### Returns
 
-[`ContainerOf`](../modules/container.md#containerof)<`C`, [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`ContainerOf`](../modules/container.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ContainerOf`](../modules/container.md#containerof)<`C`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ContainerOf`](../modules/container.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -158,9 +158,9 @@
 
 #### Returns
 
-[`ContainerOf`](../modules/container.md#containerof)<`C`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`ContainerOf`](../modules/container.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOf`](../modules/container.md#containerof)<`C`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOf`](../modules/container.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -188,9 +188,9 @@
 
 #### Returns
 
-[`ContainerOf`](../modules/container.md#containerof)<`C`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`ContainerOf`](../modules/container.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOf`](../modules/container.md#containerof)<`C`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOf`](../modules/container.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -220,9 +220,9 @@
 
 #### Returns
 
-[`ContainerOf`](../modules/container.md#containerof)<`C`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`ContainerOf`](../modules/container.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOf`](../modules/container.md#containerof)<`C`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOf`](../modules/container.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -254,4 +254,22 @@
 
 #### Returns
 
-[`ContainerOf`](../modules/container.md#containerof)<`C`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`ContainerOf`](../modules/container.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+▸ **zip**<`T`\>(...`enumerables`): [`ContainerOf`](../modules/container.md#containerof)<`C`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...enumerables` | readonly [`ContainerOf`](../modules/container.md#containerof)<`C`, `T`\>[] |
+
+#### Returns
+
+[`ContainerOf`](../modules/container.md#containerof)<`C`, readonly `T`[]\>
