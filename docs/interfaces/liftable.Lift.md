@@ -9,7 +9,7 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](liftable.LiftableLike.md) |
-| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` = ``"contravariant"`` |
+| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
 
 ## Hierarchy
 
@@ -44,7 +44,7 @@ ___
 
 ### variance
 
-• `Optional` **variance**: `TVariance`
+• **variance**: `TVariance`
 
 ## Methods
 

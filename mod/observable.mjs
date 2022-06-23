@@ -93,9 +93,11 @@ const lift = (operator, isSynchronous = false) => source => {
     return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
 };
 const liftT = {
+    variance: "contravariant",
     lift,
 };
 const liftSynchronousT = {
+    variance: "contravariant",
     lift: op => lift(op, true),
 };
 

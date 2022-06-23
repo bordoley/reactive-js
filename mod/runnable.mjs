@@ -58,6 +58,7 @@ const lift = (operator) => runnable => {
     return new LiftedRunnable(src, allFunctions);
 };
 const liftT = {
+    variance: "contravariant",
     lift,
 };
 

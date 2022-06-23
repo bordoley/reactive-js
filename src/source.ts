@@ -69,7 +69,8 @@ export interface SourceLike extends LiftableLike {
   sink(this: this["type"], sink: this["liftedStateType"]): void;
 }
 
-export interface Lift<C extends SourceLike> extends LiftableLift<C> {}
+export interface Lift<C extends SourceLike>
+  extends LiftableLift<C, "contravariant"> {}
 
 export abstract class AbstractSource<T, TSink extends SinkLike<T>>
   extends AbstractLiftable<TSink>

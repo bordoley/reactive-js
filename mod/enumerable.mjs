@@ -83,6 +83,7 @@ const lift = (operator) => enumerable => {
     return new LiftedEnumerableLike(src, allFunctions);
 };
 const liftT = {
+    variance: "covariant",
     lift,
 };
 

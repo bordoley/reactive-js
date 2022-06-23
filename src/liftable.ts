@@ -65,9 +65,9 @@ export type LiftedStateOf<C extends LiftableLike, T> = C extends {
 
 export interface Lift<
   C extends LiftableLike,
-  TVariance extends "covariant" | "contravariant" = "contravariant",
+  TVariance extends "covariant" | "contravariant",
 > extends Container<C> {
-  variance?: TVariance;
+  variance: TVariance;
 
   lift<TA, TB>(
     operator: LiftOperator<TA, TB, C, this>,
@@ -112,9 +112,9 @@ export const createDistinctUntilChangedLiftedOperator =
   ): ContainerOperator<C, T, T> => {
     const { equality = strictEquality } = options;
     const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const sink = new DistinctUntilChangedLiftableState(delegate, equality);
-      bindDisposables(sink, delegate);
-      return sink;
+      const lifted = new DistinctUntilChangedLiftableState(delegate, equality);
+      bindDisposables(lifted, delegate);
+      return lifted;
     };
     return m.lift(operator);
   };
@@ -129,9 +129,9 @@ export const createKeepLiftedOperator =
   ) =>
   <T>(predicate: Predicate<T>): ContainerOperator<C, T, T> => {
     const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const sink = new KeepLiftableState(delegate, predicate);
-      bindDisposables(sink, delegate);
-      return sink;
+      const lifted = new KeepLiftableState(delegate, predicate);
+      bindDisposables(lifted, delegate);
+      return lifted;
     };
     return m.lift(operator);
   };
@@ -146,9 +146,9 @@ export const createMapLiftedOperator =
   ) =>
   <TA, TB>(mapper: Function1<TA, TB>) => {
     const operator: LiftOperator<TA, TB, C, typeof m> = delegate => {
-      const sink = new MapLiftableState(delegate, mapper);
-      bindDisposables(sink, delegate);
-      return sink;
+      const lifted = new MapLiftableState(delegate, mapper);
+      bindDisposables(lifted, delegate);
+      return lifted;
     };
     return m.lift(operator);
   };
@@ -163,9 +163,9 @@ export const createOnNotifyLiftedOperator =
   ) =>
   <T>(onNotify: SideEffect1<T>) => {
     const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const sink = new OnNotifyLiftableState(delegate, onNotify);
-      bindDisposables(sink, delegate);
-      return sink;
+      const lifted = new OnNotifyLiftableState(delegate, onNotify);
+      bindDisposables(lifted, delegate);
+      return lifted;
     };
     return m.lift(operator);
   };
@@ -179,9 +179,9 @@ export const createPairwiseLiftedOperator =
   ) =>
   <T>() => {
     const operator: LiftOperator<T, [Option<T>, T], C, typeof m> = delegate => {
-      const sink = new PairwiseLiftableState(delegate);
-      bindDisposables(sink, delegate);
-      return sink;
+      const lifted = new PairwiseLiftableState(delegate);
+      bindDisposables(lifted, delegate);
+      return lifted;
     };
     return m.lift(operator);
   };
@@ -200,9 +200,9 @@ export const createScanLiftedOperator =
     initialValue: Factory<TAcc>,
   ): ContainerOperator<C, T, TAcc> => {
     const operator: LiftOperator<T, TAcc, C, typeof m> = delegate => {
-      const sink = new ScanLiftableState(delegate, reducer, initialValue());
-      bindDisposables(sink, delegate);
-      return sink;
+      const lifted = new ScanLiftableState(delegate, reducer, initialValue());
+      bindDisposables(lifted, delegate);
+      return lifted;
     };
     return m.lift(operator);
   };
@@ -220,9 +220,9 @@ export const createSkipFirstLiftedOperator =
   ): ContainerOperator<C, T, T> => {
     const { count = 1 } = options;
     const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const sink = new SkipLiftableState(delegate, count);
-      bindDisposables(sink, delegate);
-      return sink;
+      const lifted = new SkipLiftableState(delegate, count);
+      bindDisposables(lifted, delegate);
+      return lifted;
     };
     return runnable =>
       count > 0 ? pipe(runnable, m.lift(operator)) : runnable;
@@ -241,9 +241,9 @@ export const createTakeFirstLiftdOperator =
   ): ContainerOperator<C, T, T> => {
     const { count = 1 } = options;
     const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const sink = new TakeFirstLiftableState(delegate, count);
-      bindDisposables(sink, delegate);
-      return sink;
+      const lifted = new TakeFirstLiftableState(delegate, count);
+      bindDisposables(lifted, delegate);
+      return lifted;
     };
     return source => (count > 0 ? pipe(source, m.lift(operator)) : empty(m));
   };
@@ -263,9 +263,15 @@ export const createTakeWhileLiftedOperator =
   ): ContainerOperator<C, T, T> => {
     const { inclusive = false } = options;
     const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const sink = new TakeWhileLiftableState(delegate, predicate, inclusive);
-      addDisposableDisposeParentOnChildError(sink, delegate);
-      return sink;
+      const lifted = new TakeWhileLiftableState(delegate, predicate, inclusive);
+      const { parent, child } =
+        m.variance === "covariant"
+          ? { parent: lifted, child: delegate }
+          : { parent: delegate, child: lifted };
+
+      addDisposableDisposeParentOnChildError(parent, child);
+
+      return lifted;
     };
     return m.lift(operator);
   };
@@ -281,10 +287,15 @@ export const createThrowIfEmptyLiftedOperator =
   ) =>
   <T>(factory: Factory<unknown>) => {
     const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const observer = new ThrowIfEmptyLiftableState(delegate);
-      addDisposable(delegate, observer);
-      addTeardown(observer, error => {
-        if (isNone(error) && observer.isEmpty) {
+      const lifted = new ThrowIfEmptyLiftableState(delegate);
+      const { parent, child } =
+        m.variance === "covariant"
+          ? { parent: lifted, child: delegate }
+          : { parent: delegate, child: lifted };
+
+      addDisposable(parent, child);
+      addTeardown(child, error => {
+        if (isNone(error) && lifted.isEmpty) {
           let cause: unknown = none;
           try {
             cause = factory();
@@ -295,9 +306,10 @@ export const createThrowIfEmptyLiftedOperator =
           error = { cause };
         }
 
-        pipe(delegate, dispose(error));
+        pipe(parent, dispose(error));
       });
-      return observer;
+
+      return lifted;
     };
     return m.lift(operator);
   };

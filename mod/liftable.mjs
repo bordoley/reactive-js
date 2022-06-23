@@ -17,85 +17,91 @@ class AbstractDisposableLiftable extends AbstractDisposableContainer {
 const createDistinctUntilChangedLiftedOperator = (m, DistinctUntilChangedLiftableState) => (options = {}) => {
     const { equality = strictEquality } = options;
     const operator = (delegate) => {
-        const sink = new DistinctUntilChangedLiftableState(delegate, equality);
-        bindDisposables(sink, delegate);
-        return sink;
+        const lifted = new DistinctUntilChangedLiftableState(delegate, equality);
+        bindDisposables(lifted, delegate);
+        return lifted;
     };
     return m.lift(operator);
 };
 const createKeepLiftedOperator = (m, KeepLiftableState) => (predicate) => {
     const operator = (delegate) => {
-        const sink = new KeepLiftableState(delegate, predicate);
-        bindDisposables(sink, delegate);
-        return sink;
+        const lifted = new KeepLiftableState(delegate, predicate);
+        bindDisposables(lifted, delegate);
+        return lifted;
     };
     return m.lift(operator);
 };
 const createMapLiftedOperator = (m, MapLiftableState) => (mapper) => {
     const operator = delegate => {
-        const sink = new MapLiftableState(delegate, mapper);
-        bindDisposables(sink, delegate);
-        return sink;
+        const lifted = new MapLiftableState(delegate, mapper);
+        bindDisposables(lifted, delegate);
+        return lifted;
     };
     return m.lift(operator);
 };
 const createOnNotifyLiftedOperator = (m, OnNotifyLiftableState) => (onNotify) => {
     const operator = (delegate) => {
-        const sink = new OnNotifyLiftableState(delegate, onNotify);
-        bindDisposables(sink, delegate);
-        return sink;
+        const lifted = new OnNotifyLiftableState(delegate, onNotify);
+        bindDisposables(lifted, delegate);
+        return lifted;
     };
     return m.lift(operator);
 };
 const createPairwiseLiftedOperator = (m, PairwiseLiftableState) => () => {
     const operator = delegate => {
-        const sink = new PairwiseLiftableState(delegate);
-        bindDisposables(sink, delegate);
-        return sink;
+        const lifted = new PairwiseLiftableState(delegate);
+        bindDisposables(lifted, delegate);
+        return lifted;
     };
     return m.lift(operator);
 };
 const createScanLiftedOperator = (m, ScanLiftableState) => (reducer, initialValue) => {
     const operator = delegate => {
-        const sink = new ScanLiftableState(delegate, reducer, initialValue());
-        bindDisposables(sink, delegate);
-        return sink;
+        const lifted = new ScanLiftableState(delegate, reducer, initialValue());
+        bindDisposables(lifted, delegate);
+        return lifted;
     };
     return m.lift(operator);
 };
 const createSkipFirstLiftedOperator = (m, SkipLiftableState) => (options = {}) => {
     const { count = 1 } = options;
     const operator = (delegate) => {
-        const sink = new SkipLiftableState(delegate, count);
-        bindDisposables(sink, delegate);
-        return sink;
+        const lifted = new SkipLiftableState(delegate, count);
+        bindDisposables(lifted, delegate);
+        return lifted;
     };
     return runnable => count > 0 ? pipe(runnable, m.lift(operator)) : runnable;
 };
 const createTakeFirstLiftdOperator = (m, TakeFirstLiftableState) => (options = {}) => {
     const { count = 1 } = options;
     const operator = (delegate) => {
-        const sink = new TakeFirstLiftableState(delegate, count);
-        bindDisposables(sink, delegate);
-        return sink;
+        const lifted = new TakeFirstLiftableState(delegate, count);
+        bindDisposables(lifted, delegate);
+        return lifted;
     };
     return source => (count > 0 ? pipe(source, m.lift(operator)) : empty(m));
 };
 const createTakeWhileLiftedOperator = (m, TakeWhileLiftableState) => (predicate, options = {}) => {
     const { inclusive = false } = options;
     const operator = (delegate) => {
-        const sink = new TakeWhileLiftableState(delegate, predicate, inclusive);
-        addDisposableDisposeParentOnChildError(sink, delegate);
-        return sink;
+        const lifted = new TakeWhileLiftableState(delegate, predicate, inclusive);
+        const { parent, child } = m.variance === "covariant"
+            ? { parent: lifted, child: delegate }
+            : { parent: delegate, child: lifted };
+        addDisposableDisposeParentOnChildError(parent, child);
+        return lifted;
     };
     return m.lift(operator);
 };
 const createThrowIfEmptyLiftedOperator = (m, ThrowIfEmptyLiftableState) => (factory) => {
     const operator = (delegate) => {
-        const observer = new ThrowIfEmptyLiftableState(delegate);
-        addDisposable(delegate, observer);
-        addTeardown(observer, error => {
-            if (isNone(error) && observer.isEmpty) {
+        const lifted = new ThrowIfEmptyLiftableState(delegate);
+        const { parent, child } = m.variance === "covariant"
+            ? { parent: lifted, child: delegate }
+            : { parent: delegate, child: lifted };
+        addDisposable(parent, child);
+        addTeardown(child, error => {
+            if (isNone(error) && lifted.isEmpty) {
                 let cause = none;
                 try {
                     cause = factory();
@@ -105,9 +111,9 @@ const createThrowIfEmptyLiftedOperator = (m, ThrowIfEmptyLiftableState) => (fact
                 }
                 error = { cause };
             }
-            pipe(delegate, dispose(error));
+            pipe(parent, dispose(error));
         });
-        return observer;
+        return lifted;
     };
     return m.lift(operator);
 };

@@ -53,9 +53,11 @@ export const lift =
   };
 
 export const liftT: Lift<ObservableLike<unknown>> = {
+  variance: "contravariant",
   lift,
 };
 
 export const liftSynchronousT: Lift<ObservableLike<unknown>> = {
+  variance: "contravariant",
   lift: op => lift(op, true),
 };
