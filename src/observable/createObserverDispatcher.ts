@@ -72,11 +72,13 @@ class ObserverDelegatingDispatcher<T>
 }
 
 /**
- * Returns a `SafeObserverLike` that delegates to the provided observer.
+ * Returns a `DispatcherLike` that delegates to the provided observer.
  *
  * @param observer The `ObserverLike` instance to wrap in a `SafeObserverLike`.
  */
-export const toDispatcher = <T>(delegate: Observer<T>): DispatcherLike<T> => {
+export const createObserverDispatcher = <T>(
+  delegate: Observer<T>,
+): DispatcherLike<T> => {
   const observer = new ObserverDelegatingDispatcher(delegate);
   addTeardown(observer, onDispose);
   addDisposable(delegate, observer);

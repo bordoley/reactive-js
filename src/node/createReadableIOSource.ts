@@ -8,8 +8,12 @@ import {
   dispose,
 } from "../disposable";
 import { Factory, pipe } from "../functions";
-import { createObservableUnsafe, dispatchTo, subscribe } from "../observable";
-import { toDispatcher } from "../observable/toDispatcher";
+import {
+  createObservableUnsafe,
+  createObserverDispatcher,
+  dispatchTo,
+  subscribe,
+} from "../observable";
 import { FlowableLike, createStreamable } from "../streamable";
 import { createDisposableNodeStream } from "./nodeStream";
 
@@ -18,7 +22,7 @@ export const createReadableIOSource = (
 ): FlowableLike<Uint8Array> =>
   createStreamable(mode =>
     createObservableUnsafe(observer => {
-      const dispatcher = toDispatcher(observer);
+      const dispatcher = createObserverDispatcher(observer);
 
       const readable = factory();
       const readableValue = readable.value;

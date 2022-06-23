@@ -161,76 +161,15 @@ class ZipObservable extends AbstractObservable<readonly unknown[]> {
   }
 }
 
-export function zip<TA, TB>(
-  a: ObservableLike<TA>,
-  b: ObservableLike<TB>,
-): ObservableLike<[TA, TB]>;
-export function zip<TA, TB, TC>(
-  a: ObservableLike<TA>,
-  b: ObservableLike<TB>,
-  c: ObservableLike<TC>,
-): ObservableLike<[TA, TB, TC]>;
-export function zip<TA, TB, TC, TD>(
-  a: ObservableLike<TA>,
-  b: ObservableLike<TB>,
-  c: ObservableLike<TC>,
-  d: ObservableLike<TD>,
-): ObservableLike<[TA, TB, TC, TD]>;
-export function zip<TA, TB, TC, TD, TE>(
-  a: ObservableLike<TA>,
-  b: ObservableLike<TB>,
-  c: ObservableLike<TC>,
-  d: ObservableLike<TD>,
-  e: ObservableLike<TE>,
-): ObservableLike<[TA, TB, TC, TD, TE]>;
-export function zip<TA, TB, TC, TD, TE, TF>(
-  a: ObservableLike<TA>,
-  b: ObservableLike<TB>,
-  c: ObservableLike<TC>,
-  d: ObservableLike<TD>,
-  e: ObservableLike<TE>,
-  f: ObservableLike<TF>,
-): ObservableLike<[TA, TB, TC, TD, TE, TF]>;
-export function zip<TA, TB, TC, TD, TE, TF, TG>(
-  a: ObservableLike<TA>,
-  b: ObservableLike<TB>,
-  c: ObservableLike<TC>,
-  d: ObservableLike<TD>,
-  e: ObservableLike<TE>,
-  f: ObservableLike<TF>,
-  g: ObservableLike<TG>,
-): ObservableLike<[TA, TB, TC, TD, TE, TF, TG]>;
-export function zip<TA, TB, TC, TD, TE, TF, TG, TH>(
-  a: ObservableLike<TA>,
-  b: ObservableLike<TB>,
-  c: ObservableLike<TC>,
-  d: ObservableLike<TD>,
-  e: ObservableLike<TE>,
-  f: ObservableLike<TF>,
-  g: ObservableLike<TG>,
-  h: ObservableLike<TH>,
-): ObservableLike<[TA, TB, TC, TD, TE, TF, TG, TH]>;
-export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
-  a: ObservableLike<TA>,
-  b: ObservableLike<TB>,
-  c: ObservableLike<TC>,
-  d: ObservableLike<TD>,
-  e: ObservableLike<TE>,
-  f: ObservableLike<TF>,
-  g: ObservableLike<TG>,
-  h: ObservableLike<TH>,
-  i: ObservableLike<TI>,
-): ObservableLike<[TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+const _zip = (
+  ...observables: readonly ObservableLike<unknown>[]
+): ObservableLike<readonly unknown[]> => new ZipObservable(observables);
 
 /**
  * Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
  * in order, of each of its input sources.
  */
-export function zip(
-  ...observables: readonly ObservableLike<unknown>[]
-): ObservableLike<readonly unknown[]> {
-  return new ZipObservable(observables);
-}
+export const zip: Zip<ObservableLike<unknown>>["zip"] = _zip;
 
 export const zipT: Zip<ObservableLike<unknown>> = {
   zip,
