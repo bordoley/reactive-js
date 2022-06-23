@@ -6,6 +6,7 @@
 
 ### Classes
 
+- [AbstractDisposableObservable](../classes/observable.AbstractDisposableObservable.md)
 - [AbstractObservable](../classes/observable.AbstractObservable.md)
 - [Observer](../classes/observable.Observer.md)
 

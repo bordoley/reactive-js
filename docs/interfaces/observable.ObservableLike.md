@@ -22,6 +22,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 ## Implemented by
 
+- [`AbstractDisposableObservable`](../classes/observable.AbstractDisposableObservable.md)
 - [`AbstractObservable`](../classes/observable.AbstractObservable.md)
 
 ## Table of contents

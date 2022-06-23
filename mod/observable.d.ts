@@ -2,7 +2,7 @@ import { AbstractDisposableContainer, Concat, FromArray, FromIterator, FromItera
 import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Predicate, Equality, Reducer } from "./functions.mjs";
 import { SchedulerLike, SchedulerContinuationLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
-import { SinkLike, AbstractSource, SourceLike } from "./source.mjs";
+import { SinkLike, AbstractSource, AbstractDisposableSource, SourceLike } from "./source.mjs";
 import { Option } from "./option.mjs";
 import { EnumerableLike, ToEnumerable } from "./enumerable.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
@@ -297,6 +297,8 @@ declare const defer: <T>(factory: Factory<SideEffect1<Observer<T>>>, options?: {
     readonly delay?: number;
 }) => ObservableLike<T>;
 declare abstract class AbstractObservable<T> extends AbstractSource<T, Observer<T>> implements ObservableLike<T> {
+}
+declare abstract class AbstractDisposableObservable<T> extends AbstractDisposableSource<T, Observer<T>> implements ObservableLike<T> {
 }
 /**
  * Returns an `ObservableLike` which buffers items produced by the source until either the
@@ -671,4 +673,4 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
 declare const takeWhileT: TakeWhile<ObservableLike<unknown>>;
 declare const throwIfEmpty: <T>(factory: Factory<unknown>) => ObservableOperator<T, T>;
 declare const throwIfEmptyT: ThrowIfEmpty<ObservableLike<unknown>>;
-export { AbstractObservable, AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Observer, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createObservableWithScheduler, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AbstractDisposableObservable, AbstractObservable, AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Observer, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createObservableWithScheduler, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

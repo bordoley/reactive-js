@@ -1,5 +1,5 @@
 /// <reference types="./runnable.d.ts" />
-import { pipe, raise, alwaysTrue, identity } from './functions.mjs';
+import { ignore, pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
 import { AbstractDisposableContainer } from './container.mjs';
@@ -30,11 +30,14 @@ const fromArray = (options = {}) => values => {
     const valuesLength = values.length;
     const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
     const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : values.length, valuesLength), 0);
-    const run = (sink) => {
-        for (let index = startIndex; index < endIndex && !sink.isDisposed; index++) {
-            sink.notify(values[index]);
-        }
-    };
+    const count = endIndex - startIndex;
+    const run = count === 0
+        ? ignore
+        : (sink) => {
+            for (let index = startIndex; index < endIndex && !sink.isDisposed; index++) {
+                sink.notify(values[index]);
+            }
+        };
     return createRunnable(run);
 };
 const fromArrayT = {
