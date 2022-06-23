@@ -115,7 +115,7 @@ const Root = createComponent(() =>
     const uri = __observe(historyStream);
     return (
       <div>
-        <div>{String(uri ?? "oops")} </div>
+        <div>{String(uri?.path ?? "oops")} </div>
         <StreamPauseResume />
       </div>
     );
