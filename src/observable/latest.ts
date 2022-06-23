@@ -91,12 +91,12 @@ export const latest = (
     }
   };
 
-  const isSynchronous = pipe(
+  const isEnumerable = pipe(
     observables,
-    everySatisfy(obs => obs.isSynchronous ?? false),
+    everySatisfy(obs => obs.isEnumerable ?? false),
   );
 
-  return isSynchronous ? deferSynchronous(factory) : defer(factory);
+  return isEnumerable ? deferSynchronous(factory) : defer(factory);
 };
 
 export function combineLatest<TA, TB>(

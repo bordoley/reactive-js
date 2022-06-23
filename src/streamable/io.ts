@@ -24,8 +24,6 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
   extends AbstractDisposableObservable<TAcc>
   implements FlowableSinkLike<T>, MulticastObservableLike<TAcc>
 {
-  readonly isSynchronous = false;
-
   constructor(
     private readonly subject: StreamLike<TAcc, TAcc>,
     private readonly streamable: StreamableLike<T, FlowMode>,

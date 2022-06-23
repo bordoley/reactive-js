@@ -393,7 +393,6 @@ const using = createUsing(class UsingRunnable extends AbstractRunnable {
         super();
         this.resourceFactory = resourceFactory;
         this.sourceFactory = sourceFactory;
-        this.isSynchronous = false;
     }
     sink(_) { }
 });

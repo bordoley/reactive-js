@@ -36,13 +36,13 @@ const createConcatObserver = <T>(
 };
 
 class ConcatObservable<T> extends AbstractObservable<T> {
-  readonly isSynchronous: boolean;
+  readonly isEnumerable: boolean;
 
   constructor(private readonly observables: readonly ObservableLike<T>[]) {
     super();
-    this.isSynchronous = pipe(
+    this.isEnumerable = pipe(
       observables,
-      everySatisfy(obs => obs.isSynchronous ?? false),
+      everySatisfy(obs => obs.isEnumerable ?? false),
     );
   }
 

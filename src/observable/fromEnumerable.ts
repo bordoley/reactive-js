@@ -33,7 +33,7 @@ export const fromEnumerator =
     );
     if (delay === 0) {
       // FIXME: No way to tell using to run synchronously when delay is 0
-      (result as any).isSynchronous = true;
+      (result as any).isEnumerable = true;
     }
 
     return result;

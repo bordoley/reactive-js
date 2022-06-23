@@ -13,7 +13,7 @@ class LiftedObservable<TIn, TOut> extends AbstractObservable<TOut> {
   constructor(
     readonly source: ObservableLike<TIn>,
     readonly operators: readonly ObserverOperator<any, any>[],
-    readonly isSynchronous: boolean,
+    readonly isEnumerable: boolean,
   ) {
     super();
   }
@@ -34,7 +34,7 @@ class LiftedObservable<TIn, TOut> extends AbstractObservable<TOut> {
 export const lift =
   <TA, TB>(
     operator: ObserverOperator<TA, TB>,
-    isSynchronous = false,
+    isEnumerable = false,
   ): ObservableOperator<TA, TB> =>
   source => {
     const sourceSource =
@@ -45,9 +45,9 @@ export const lift =
         ? [operator, ...source.operators]
         : [operator];
 
-    isSynchronous = (source.isSynchronous ?? false) && isSynchronous;
+    isEnumerable = (source.isEnumerable ?? false) && isEnumerable;
 
-    return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
+    return new LiftedObservable(sourceSource, allFunctions, isEnumerable);
   };
 
 export const liftT: Lift<ObservableLike<unknown>> = {
