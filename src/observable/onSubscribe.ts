@@ -12,14 +12,14 @@ import { AbstractObservable } from "./observable";
 import { Observer } from "./observer";
 
 class OnSubscribeObservable<T> extends AbstractObservable<T> {
-  readonly isSynchronous?: boolean;
+  readonly isEnumerable?: boolean;
 
   constructor(
     private readonly src: ObservableLike<T>,
     private readonly f: Factory<DisposableOrTeardown | void>,
   ) {
     super();
-    this.isSynchronous = src.isSynchronous;
+    this.isEnumerable = src.isEnumerable;
   }
 
   sink(observer: Observer<T>) {

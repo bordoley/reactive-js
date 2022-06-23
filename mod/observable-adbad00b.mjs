@@ -15,10 +15,10 @@ class AbstractDisposableObservable extends AbstractDisposableSource {
 }
 
 class DeferObservable extends AbstractObservable {
-    constructor(f, isSynchronous, delay) {
+    constructor(f, isEnumerable, delay) {
         super();
         this.f = f;
-        this.isSynchronous = isSynchronous;
+        this.isEnumerable = isEnumerable;
         this.delay = delay;
     }
     sink(observer) {
@@ -75,11 +75,11 @@ const fromArrayT = {
 };
 
 class LiftedObservable extends AbstractObservable {
-    constructor(source, operators, isSynchronous) {
+    constructor(source, operators, isEnumerable) {
         super();
         this.source = source;
         this.operators = operators;
-        this.isSynchronous = isSynchronous;
+        this.isEnumerable = isEnumerable;
     }
     sink(observer) {
         const liftedSubscrber = pipe(observer, ...this.operators);
@@ -92,14 +92,14 @@ class LiftedObservable extends AbstractObservable {
  *
  * @param operator The operator function to apply.
  */
-const lift = (operator, isSynchronous = false) => source => {
+const lift = (operator, isEnumerable = false) => source => {
     var _a;
     const sourceSource = source instanceof LiftedObservable ? source.source : source;
     const allFunctions = source instanceof LiftedObservable
         ? [operator, ...source.operators]
         : [operator];
-    isSynchronous = ((_a = source.isSynchronous) !== null && _a !== void 0 ? _a : false) && isSynchronous;
-    return new LiftedObservable(sourceSource, allFunctions, isSynchronous);
+    isEnumerable = ((_a = source.isEnumerable) !== null && _a !== void 0 ? _a : false) && isEnumerable;
+    return new LiftedObservable(sourceSource, allFunctions, isEnumerable);
 };
 const liftT = {
     variance: "contravariant",
@@ -445,8 +445,8 @@ const latest = (observables, mode) => {
             pipe(observable, sinkInto(innerObserver));
         }
     };
-    const isSynchronous = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isSynchronous) !== null && _a !== void 0 ? _a : false; }));
-    return isSynchronous ? deferSynchronous(factory) : defer(factory);
+    const isEnumerable = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; }));
+    return isEnumerable ? deferSynchronous(factory) : defer(factory);
 };
 /**
  * Returns an `ObservableLike` that combines the latest values from
@@ -484,7 +484,7 @@ class ConcatObservable extends AbstractObservable {
     constructor(observables) {
         super();
         this.observables = observables;
-        this.isSynchronous = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isSynchronous) !== null && _a !== void 0 ? _a : false; }));
+        this.isEnumerable = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; }));
     }
     sink(observer) {
         const { observables } = this;
@@ -659,7 +659,7 @@ const fromEnumerator = (options = {}) => f => {
     }, { delay }));
     if (delay === 0) {
         // FIXME: No way to tell using to run synchronously when delay is 0
-        result.isSynchronous = true;
+        result.isEnumerable = true;
     }
     return result;
 };
@@ -1011,7 +1011,7 @@ class OnSubscribeObservable extends AbstractObservable {
         super();
         this.src = src;
         this.f = f;
-        this.isSynchronous = src.isSynchronous;
+        this.isEnumerable = src.isEnumerable;
     }
     sink(observer) {
         try {
@@ -1520,14 +1520,14 @@ class ZipObservable extends AbstractObservable {
     constructor(observables) {
         super();
         this.observables = observables;
-        this.isSynchronous = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isSynchronous) !== null && _a !== void 0 ? _a : false; }));
+        this.isEnumerable = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; }));
     }
     sink(observer) {
         var _a;
         const observables = this.observables;
         const count = observables.length;
         debugger;
-        if (this.isSynchronous) {
+        if (this.isEnumerable) {
             const observable = using(defer$1(this.observables, map$1(enumerate)), (...enumerators) => pipe(enumerators, zipEnumerators, returns, fromEnumerator()));
             pipe(observable, sinkInto(observer));
         }
@@ -1535,7 +1535,7 @@ class ZipObservable extends AbstractObservable {
             const enumerators = [];
             for (let index = 0; index < count; index++) {
                 const observable = observables[index];
-                if ((_a = observable.isSynchronous) !== null && _a !== void 0 ? _a : false) {
+                if ((_a = observable.isEnumerable) !== null && _a !== void 0 ? _a : false) {
                     const enumerator = enumerate(observable);
                     enumerator.move();
                     enumerators.push(enumerator);

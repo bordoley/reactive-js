@@ -102,10 +102,6 @@ class WindowLocationStream
     return this.stateStream.isDisposed;
   }
 
-  get isSynchronous() {
-    return this.stateStream.isSynchronous;
-  }
-
   get observerCount() {
     return this.stateStream.observerCount;
   }

@@ -376,8 +376,6 @@ export const using: Using<RunnableLike<unknown>>["using"] = createUsing(
     TResource extends DisposableLike,
     T,
   > extends AbstractRunnable<T> {
-    readonly isSynchronous = false;
-
     constructor(
       readonly resourceFactory: Function1<
         Sink<T>,

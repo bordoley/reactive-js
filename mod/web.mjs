@@ -1,7 +1,7 @@
 /// <reference types="./web.d.ts" />
 import { dispose, addTeardown, addDisposableDisposeParentOnChildError, toAbortSignal } from './disposable.mjs';
 import { pipe, raise, returns } from './functions.mjs';
-import { j as createObservable, aa as AbstractObservable, X as onNotify, ab as keep$1, J as throttle, G as map, s as subscribe, ac as defer, o as fromPromise } from './observable-19a13256.mjs';
+import { j as createObservable, aa as AbstractObservable, X as onNotify, ab as keep$1, J as throttle, G as map, s as subscribe, ac as defer, o as fromPromise } from './observable-adbad00b.mjs';
 import { keep } from './readonlyArray.mjs';
 import { none, isNone } from './option.mjs';
 import { createStateStore, lift, stream } from './streamable.mjs';
@@ -85,9 +85,6 @@ class WindowLocationStream extends AbstractObservable {
     }
     get isDisposed() {
         return this.stateStream.isDisposed;
-    }
-    get isSynchronous() {
-        return this.stateStream.isSynchronous;
     }
     get observerCount() {
         return this.stateStream.observerCount;

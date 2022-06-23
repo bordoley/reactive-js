@@ -8,7 +8,7 @@ import { Observer } from "./observer";
 class DeferObservable<T> extends AbstractObservable<T> {
   constructor(
     private readonly f: Factory<SideEffect1<Observer<T>>>,
-    readonly isSynchronous: boolean,
+    readonly isEnumerable: boolean,
     readonly delay: number,
   ) {
     super();

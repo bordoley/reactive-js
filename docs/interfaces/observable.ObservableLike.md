@@ -30,7 +30,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 ### Properties
 
 - [T](observable.ObservableLike.md#t)
-- [isSynchronous](observable.ObservableLike.md#issynchronous)
+- [isEnumerable](observable.ObservableLike.md#isenumerable)
 - [liftedStateType](observable.ObservableLike.md#liftedstatetype)
 - [type](observable.ObservableLike.md#type)
 
@@ -50,9 +50,9 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 ___
 
-### isSynchronous
+### isEnumerable
 
-• `Optional` `Readonly` **isSynchronous**: `boolean`
+• `Optional` `Readonly` **isEnumerable**: `boolean`
 
 ___
 

@@ -114,13 +114,13 @@ class ZipObserver extends Observer<unknown> {
 }
 
 class ZipObservable extends AbstractObservable<readonly unknown[]> {
-  readonly isSynchronous: boolean;
+  readonly isEnumerable: boolean;
 
   constructor(private readonly observables: readonly ObservableLike<any>[]) {
     super();
-    this.isSynchronous = pipe(
+    this.isEnumerable = pipe(
       observables,
-      everySatisfy(obs => obs.isSynchronous ?? false),
+      everySatisfy(obs => obs.isEnumerable ?? false),
     );
   }
 
@@ -130,7 +130,7 @@ class ZipObservable extends AbstractObservable<readonly unknown[]> {
 
     debugger;
 
-    if (this.isSynchronous) {
+    if (this.isEnumerable) {
       const observable = using(
         defer(this.observables, map(enumerate)),
         (...enumerators: readonly Enumerator<any>[]) =>
@@ -143,7 +143,7 @@ class ZipObservable extends AbstractObservable<readonly unknown[]> {
       for (let index = 0; index < count; index++) {
         const observable = observables[index];
 
-        if (observable.isSynchronous ?? false) {
+        if (observable.isEnumerable ?? false) {
           const enumerator = enumerate(observable);
 
           enumerator.move();
