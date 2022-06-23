@@ -7,9 +7,8 @@
 ### Classes
 
 - [AbstractEnumerable](../classes/enumerable.AbstractEnumerable.md)
-- [DelegatingEnumeratorBase](../classes/enumerable.DelegatingEnumeratorBase.md)
+- [AbstractEnumerator](../classes/enumerable.AbstractEnumerator.md)
 - [Enumerator](../classes/enumerable.Enumerator.md)
-- [EnumeratorBase](../classes/enumerable.EnumeratorBase.md)
 
 ### Interfaces
 

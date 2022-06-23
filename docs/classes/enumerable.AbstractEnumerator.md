@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [enumerable](../modules/enumerable.md) / EnumeratorBase
+[Reactive-JS](../README.md) / [enumerable](../modules/enumerable.md) / AbstractEnumerator
 
-# Class: EnumeratorBase<T\>
+# Class: AbstractEnumerator<T\>
 
-[enumerable](../modules/enumerable.md).EnumeratorBase
+[enumerable](../modules/enumerable.md).AbstractEnumerator
 
 ## Type parameters
 
@@ -14,31 +14,31 @@
 
 - [`Enumerator`](enumerable.Enumerator.md)<`T`\>
 
-  ↳ **`EnumeratorBase`**
+  ↳ **`AbstractEnumerator`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](enumerable.EnumeratorBase.md#constructor)
+- [constructor](enumerable.AbstractEnumerator.md#constructor)
 
 ### Accessors
 
-- [T](enumerable.EnumeratorBase.md#t)
-- [current](enumerable.EnumeratorBase.md#current)
-- [hasCurrent](enumerable.EnumeratorBase.md#hascurrent)
-- [type](enumerable.EnumeratorBase.md#type)
+- [T](enumerable.AbstractEnumerator.md#t)
+- [current](enumerable.AbstractEnumerator.md#current)
+- [hasCurrent](enumerable.AbstractEnumerator.md#hascurrent)
+- [type](enumerable.AbstractEnumerator.md#type)
 
 ### Methods
 
-- [move](enumerable.EnumeratorBase.md#move)
-- [reset](enumerable.EnumeratorBase.md#reset)
+- [move](enumerable.AbstractEnumerator.md#move)
+- [reset](enumerable.AbstractEnumerator.md#reset)
 
 ## Constructors
 
 ### constructor
 
-• **new EnumeratorBase**<`T`\>()
+• **new AbstractEnumerator**<`T`\>()
 
 #### Type parameters
 
@@ -126,7 +126,7 @@ Enumerator.type
 
 ### move
 
-▸ **move**(): `boolean`
+▸ `Abstract` **move**(): `boolean`
 
 #### Returns
 

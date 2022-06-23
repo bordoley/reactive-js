@@ -7,7 +7,7 @@ import { AbstractDisposableContainer, empty, fromValue, concatMap, throws } from
 import { __DEV__ } from './env.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { map as map$1, everySatisfy as everySatisfy$1 } from './readonlyArray.mjs';
-import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, EnumeratorBase, AbstractEnumerable, current, zipEnumerators } from './enumerable.mjs';
+import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, AbstractEnumerator, AbstractEnumerable, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 
 class AbstractObservable extends AbstractSource {
@@ -1361,7 +1361,7 @@ const withLatestFrom = (other, selector) => {
     return lift(operator);
 };
 
-class EnumeratorScheduler extends EnumeratorBase {
+class EnumeratorScheduler extends AbstractEnumerator {
     constructor() {
         super(...arguments);
         this.inContinuation = false;
@@ -1450,7 +1450,7 @@ const shouldComplete = (enumerators) => {
     }
     return false;
 };
-class ZipObserverEnumerator extends EnumeratorBase {
+class ZipObserverEnumerator extends AbstractEnumerator {
     constructor() {
         super();
         this.buffer = [];

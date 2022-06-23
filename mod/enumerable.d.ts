@@ -8,7 +8,7 @@ declare abstract class Enumerator<T> extends AbstractDisposableContainer impleme
     abstract get hasCurrent(): boolean;
     abstract move(): boolean;
 }
-declare abstract class EnumeratorBase<T> extends Enumerator<T> {
+declare abstract class AbstractEnumerator<T> extends Enumerator<T> {
     private _current;
     private _hasCurrent;
     constructor();
@@ -16,14 +16,7 @@ declare abstract class EnumeratorBase<T> extends Enumerator<T> {
     set current(v: T);
     get hasCurrent(): boolean;
     reset(): void;
-    move(): boolean;
-}
-declare class DelegatingEnumeratorBase<T> extends Enumerator<T> {
-    readonly delegate: Enumerator<T>;
-    constructor(delegate: Enumerator<T>);
-    get current(): T;
-    get hasCurrent(): boolean;
-    move(): boolean;
+    abstract move(): boolean;
 }
 declare const enumerate: <T>(enumerable: EnumerableLike<T>) => Enumerator<T>;
 declare const current: <T>(enumerator: Enumerator<T>) => T;
@@ -221,4 +214,4 @@ declare const throwIfEmpty: <T>(factory: Factory<unknown>) => EnumerableOperator
 declare const throwIfEmptyT: ThrowIfEmpty<EnumerableLike<unknown>>;
 declare const using: Using<EnumerableLike<unknown>>["using"];
 declare const usingT: Using<EnumerableLike<unknown>>;
-export { AbstractEnumerable, DelegatingEnumeratorBase, EnumerableLike, EnumerableOperator, Enumerator, EnumeratorBase, ToEnumerable, concat, concatAll, concatAllT, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, toRunnableT, type, using, usingT, zip, zipEnumerators, zipT };
+export { AbstractEnumerable, AbstractEnumerator, EnumerableLike, EnumerableOperator, Enumerator, ToEnumerable, concat, concatAll, concatAllT, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, toRunnableT, type, using, usingT, zip, zipEnumerators, zipT };

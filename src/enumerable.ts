@@ -23,9 +23,9 @@ import {
 import { concatAll } from "./enumerable/concatAll";
 import { AbstractEnumerable } from "./enumerable/enumerable";
 import {
-  DelegatingEnumeratorBase,
+  AbstractDelegatingEnumerator,
+  AbstractEnumerator,
   Enumerator,
-  EnumeratorBase,
   enumerate,
 } from "./enumerable/enumerator";
 import { fromArray, fromArrayT } from "./enumerable/fromArray";
@@ -82,8 +82,7 @@ export interface ToEnumerable<C extends ContainerLike> extends Container<C> {
 export { AbstractEnumerable } from "./enumerable/enumerable";
 export {
   Enumerator,
-  EnumeratorBase,
-  DelegatingEnumeratorBase,
+  AbstractEnumerator,
   enumerate,
   hasCurrent,
   current,
@@ -134,7 +133,9 @@ export const distinctUntilChanged: <T>(options?: {
   readonly equality?: Equality<T>;
 }) => EnumerableOperator<T, T> = createDistinctUntilChangedLiftedOperator(
   liftT,
-  class DistinctUntilChangedEnumerator<T> extends DelegatingEnumeratorBase<T> {
+  class DistinctUntilChangedEnumerator<
+    T,
+  > extends AbstractDelegatingEnumerator<T> {
     constructor(
       delegate: Enumerator<T>,
       private readonly equality: Equality<T>,
@@ -173,7 +174,7 @@ export const distinctUntilChangedT: DistinctUntilChanged<
 export const keep: <T>(predicate: Predicate<T>) => EnumerableOperator<T, T> =
   createKeepLiftedOperator(
     liftT,
-    class KeepEnumerator<T> extends DelegatingEnumeratorBase<T> {
+    class KeepEnumerator<T> extends AbstractDelegatingEnumerator<T> {
       constructor(
         delegate: Enumerator<T>,
         private readonly predicate: Predicate<T>,
@@ -203,7 +204,7 @@ export const map: <TA, TB>(
   mapper: Function1<TA, TB>,
 ) => EnumerableOperator<TA, TB> = createMapLiftedOperator(
   liftT,
-  class MapEnumerator<TA, TB> extends EnumeratorBase<TB> {
+  class MapEnumerator<TA, TB> extends AbstractEnumerator<TB> {
     constructor(
       readonly delegate: Enumerator<TA>,
       readonly mapper: Function1<TA, TB>,
@@ -235,7 +236,7 @@ export const onNotify: <T>(
   onNotify: SideEffect1<T>,
 ) => EnumerableOperator<T, T> = createOnNotifyLiftedOperator(
   liftT,
-  class OnNotifyEnumerator<T> extends DelegatingEnumeratorBase<T> {
+  class OnNotifyEnumerator<T> extends AbstractDelegatingEnumerator<T> {
     constructor(
       delegate: Enumerator<T>,
       private readonly onNotify: SideEffect1<T>,
@@ -262,7 +263,7 @@ export const onNotify: <T>(
 export const pairwise: <T>() => EnumerableOperator<T, [Option<T>, T]> =
   createPairwiseLiftedOperator(
     liftT,
-    class PairwiseEnumerator<T> extends EnumeratorBase<[Option<T>, T]> {
+    class PairwiseEnumerator<T> extends AbstractEnumerator<[Option<T>, T]> {
       constructor(readonly delegate: Enumerator<T>) {
         super();
       }
@@ -292,7 +293,7 @@ export const scan: <T, TAcc>(
   initialValue: Factory<TAcc>,
 ) => EnumerableOperator<T, TAcc> = createScanLiftedOperator(
   liftT,
-  class ScanEnumerator<T, TAcc> extends EnumeratorBase<TAcc> {
+  class ScanEnumerator<T, TAcc> extends AbstractEnumerator<TAcc> {
     constructor(
       readonly delegate: Enumerator<T>,
       private readonly reducer: Reducer<T, TAcc>,
@@ -329,7 +330,7 @@ export const skipFirst: <T>(options?: {
   readonly count?: number;
 }) => EnumerableOperator<T, T> = createSkipFirstLiftedOperator(
   liftT,
-  class SkipFirstEnumerator<T> extends DelegatingEnumeratorBase<T> {
+  class SkipFirstEnumerator<T> extends AbstractDelegatingEnumerator<T> {
     private count = 0;
 
     constructor(delegate: Enumerator<T>, private readonly skipCount: number) {
@@ -359,7 +360,7 @@ export const takeFirst: <T>(options?: {
   readonly count?: number;
 }) => EnumerableOperator<T, T> = createTakeFirstLiftdOperator(
   { ...fromArrayT, ...liftT },
-  class TakeFirstEnumerator<T> extends DelegatingEnumeratorBase<T> {
+  class TakeFirstEnumerator<T> extends AbstractDelegatingEnumerator<T> {
     private count = 0;
 
     constructor(delegate: Enumerator<T>, private readonly maxCount: number) {
@@ -392,7 +393,7 @@ export const takeWhile: <T>(
   options?: { readonly inclusive?: boolean },
 ) => EnumerableOperator<T, T> = createTakeWhileLiftedOperator(
   liftT,
-  class TakeWhileEnumerator<T> extends DelegatingEnumeratorBase<T> {
+  class TakeWhileEnumerator<T> extends AbstractDelegatingEnumerator<T> {
     private done = false;
 
     constructor(
@@ -437,7 +438,7 @@ export const throwIfEmpty: <T>(
   factory: Factory<unknown>,
 ) => EnumerableOperator<T, T> = createThrowIfEmptyLiftedOperator(
   liftT,
-  class ThrowIfEmptyEnumerator<T> extends DelegatingEnumeratorBase<T> {
+  class ThrowIfEmptyEnumerator<T> extends AbstractDelegatingEnumerator<T> {
     isEmpty = true;
 
     move() {

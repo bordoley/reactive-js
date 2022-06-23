@@ -6,10 +6,10 @@ import {
   createSerialDisposable,
 } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
-import { Enumerator, EnumeratorBase, enumerate } from "./enumerator";
+import { AbstractEnumerator, Enumerator, enumerate } from "./enumerator";
 import { lift } from "./lift";
 
-class ConcatAllEnumerator<T> extends EnumeratorBase<T> {
+class ConcatAllEnumerator<T> extends AbstractEnumerator<T> {
   constructor(
     private readonly delegate: Enumerator<EnumerableLike<T>>,
     readonly enumerator: SerialDisposableLike,

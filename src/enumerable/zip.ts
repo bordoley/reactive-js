@@ -5,8 +5,8 @@ import { pipe } from "../functions";
 import { everySatisfy, map } from "../readonlyArray";
 import { AbstractEnumerable } from "./enumerable";
 import {
+  AbstractEnumerator,
   Enumerator,
-  EnumeratorBase,
   current,
   enumerate,
   hasCurrent,
@@ -21,7 +21,7 @@ const moveAll = (enumerators: readonly Enumerator<any>[]) => {
 const allHaveCurrent = (enumerators: readonly Enumerator<any>[]) =>
   pipe(enumerators, everySatisfy(hasCurrent));
 
-class ZipEnumerator extends EnumeratorBase<readonly unknown[]> {
+class ZipEnumerator extends AbstractEnumerator<readonly unknown[]> {
   constructor(private readonly enumerators: readonly Enumerator<any>[]) {
     super();
   }

@@ -16,9 +16,7 @@
 
   ↳ **`Enumerator`**
 
-  ↳↳ [`DelegatingEnumeratorBase`](enumerable.DelegatingEnumeratorBase.md)
-
-  ↳↳ [`EnumeratorBase`](enumerable.EnumeratorBase.md)
+  ↳↳ [`AbstractEnumerator`](enumerable.AbstractEnumerator.md)
 
 ## Implements
 
