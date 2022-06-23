@@ -31,6 +31,7 @@
 - [skipFirstT](enumerable.md#skipfirstt)
 - [takeFirstT](enumerable.md#takefirstt)
 - [takeWhileT](enumerable.md#takewhilet)
+- [throwIfEmptyT](enumerable.md#throwifemptyt)
 - [type](enumerable.md#type)
 
 ### Functions
@@ -56,6 +57,7 @@
 - [takeFirst](enumerable.md#takefirst)
 - [takeLast](enumerable.md#takelast)
 - [takeWhile](enumerable.md#takewhile)
+- [throwIfEmpty](enumerable.md#throwifempty)
 - [toEnumerable](enumerable.md#toenumerable)
 - [toIterable](enumerable.md#toiterable)
 - [toRunnable](enumerable.md#torunnable)
@@ -136,6 +138,12 @@ ___
 ### takeWhileT
 
 • `Const` **takeWhileT**: [`TakeWhile`](../interfaces/container.TakeWhile.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
+### throwIfEmptyT
+
+• `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](../interfaces/container.ThrowIfEmpty.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
 
 ___
 
@@ -657,6 +665,28 @@ ___
 | `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
 | `options?` | `Object` |
 | `options.inclusive?` | `boolean` |
+
+#### Returns
+
+[`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
+
+___
+
+### throwIfEmpty
+
+▸ **throwIfEmpty**<`T`\>(`factory`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<`unknown`\> |
 
 #### Returns
 

@@ -3,7 +3,7 @@ import { addTeardown, createSerialDisposable, bindDisposables, addDisposableDisp
 import { AbstractDisposableContainer, empty } from './container.mjs';
 import { raise, pipe, alwaysTrue, identity } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
-import { AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator } from './liftable.mjs';
+import { AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
 import { createRunnable } from './runnable.mjs';
 import { everySatisfy, map as map$1 } from './readonlyArray.mjs';
 
@@ -667,5 +667,20 @@ const takeWhile = createTakeWhileLiftedOperator(liftT, class TakeWhileEnumerator
 const takeWhileT = {
     takeWhile,
 };
+const throwIfEmpty = createThrowIfEmptyLiftedOperator(liftT, class ThrowIfEmptyObserver extends DelegatingEnumeratorBase {
+    constructor() {
+        super(...arguments);
+        this.isEmpty = true;
+    }
+    move() {
+        if (this.move()) {
+            this.isEmpty = false;
+        }
+        return this.hasCurrent;
+    }
+});
+const throwIfEmptyT = {
+    throwIfEmpty,
+};
 
-export { DelegatingEnumeratorBase, Enumerator, EnumeratorBase, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, toEnumerable, toIterable, toRunnable, type, zip, zipEnumerators };
+export { DelegatingEnumeratorBase, Enumerator, EnumeratorBase, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, type, zip, zipEnumerators };

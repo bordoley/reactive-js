@@ -1,4 +1,4 @@
-import { AbstractDisposableContainer, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile } from "./container.mjs";
+import { AbstractDisposableContainer, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile, ThrowIfEmpty } from "./container.mjs";
 import { Function1, Factory, Updater, Predicate, Equality, SideEffect1, Reducer } from "./functions.mjs";
 import { LiftedStateLike, LiftableLike } from "./liftable.mjs";
 import { Option } from "./option.mjs";
@@ -206,4 +206,6 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
     readonly inclusive?: boolean;
 }) => EnumerableOperator<T, T>;
 declare const takeWhileT: TakeWhile<EnumerableLike<unknown>>;
-export { DelegatingEnumeratorBase, EnumerableLike, EnumerableOperator, Enumerator, EnumeratorBase, ToEnumerable, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, toEnumerable, toIterable, toRunnable, type, zip, zipEnumerators };
+declare const throwIfEmpty: <T>(factory: Factory<unknown>) => EnumerableOperator<T, T>;
+declare const throwIfEmptyT: ThrowIfEmpty<EnumerableLike<unknown>>;
+export { DelegatingEnumeratorBase, EnumerableLike, EnumerableOperator, Enumerator, EnumeratorBase, ToEnumerable, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, type, zip, zipEnumerators };
