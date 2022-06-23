@@ -18,6 +18,10 @@ Interface for iterating a Container of items.
 
   ↳ **`EnumerableLike`**
 
+## Implemented by
+
+- [`AbstractEnumerable`](../classes/enumerable.AbstractEnumerable.md)
+
 ## Table of contents
 
 ### Properties

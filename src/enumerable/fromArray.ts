@@ -1,7 +1,6 @@
 import { FromArray, FromArrayOptions } from "../container";
-import { EnumerableLike } from "../enumerable";
-import { AbstractLiftable } from "../liftable";
-import { Enumerator, EnumeratorBase } from "./enumerator";
+import { AbstractEnumerable, EnumerableLike } from "../enumerable";
+import { EnumeratorBase } from "./enumerator";
 
 class ArrayEnumerator<T> extends EnumeratorBase<T> {
   constructor(
@@ -32,10 +31,7 @@ class ArrayEnumerator<T> extends EnumeratorBase<T> {
   }
 }
 
-class ArrayEnumerable<T>
-  extends AbstractLiftable<Enumerator<T>>
-  implements EnumerableLike<T>
-{
+class ArrayEnumerable<T> extends AbstractEnumerable<T> {
   constructor(
     private readonly values: readonly T[],
     private readonly startIndex: number,

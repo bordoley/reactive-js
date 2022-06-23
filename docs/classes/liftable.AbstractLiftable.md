@@ -16,6 +16,8 @@
 
   ↳ **`AbstractLiftable`**
 
+  ↳↳ [`AbstractEnumerable`](enumerable.AbstractEnumerable.md)
+
   ↳↳ [`AbstractSource`](source.AbstractSource.md)
 
 ## Implements

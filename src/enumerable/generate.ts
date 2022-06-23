@@ -1,7 +1,6 @@
-import { EnumerableLike } from "../enumerable";
+import { AbstractEnumerable, EnumerableLike } from "../enumerable";
 import { Factory, Updater } from "../functions";
-import { AbstractLiftable } from "../liftable";
-import { Enumerator, EnumeratorBase } from "./enumerator";
+import { EnumeratorBase } from "./enumerator";
 
 class GenerateEnumerator<T> extends EnumeratorBase<T> {
   constructor(private readonly f: Updater<T>, acc: T) {
@@ -21,10 +20,7 @@ class GenerateEnumerator<T> extends EnumeratorBase<T> {
   }
 }
 
-class GenerateEnumerable<T>
-  extends AbstractLiftable<Enumerator<T>>
-  implements EnumerableLike<T>
-{
+class GenerateEnumerable<T> extends AbstractEnumerable<T> {
   constructor(
     private readonly f: Updater<T>,
     private readonly acc: Factory<T>,

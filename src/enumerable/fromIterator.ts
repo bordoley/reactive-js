@@ -1,6 +1,5 @@
-import { EnumerableLike } from "../enumerable";
+import { AbstractEnumerable, EnumerableLike } from "../enumerable";
 import { Factory, Function1 } from "../functions";
-import { AbstractLiftable } from "../liftable";
 import { none } from "../option";
 import { Enumerator } from "./enumerator";
 
@@ -39,7 +38,7 @@ class IteratorEnumerable<
   T,
   TReturn = any,
   TNext = unknown,
-> extends AbstractLiftable<Enumerator<T>> {
+> extends AbstractEnumerable<T> {
   constructor(private readonly f: Factory<Iterator<T, TReturn, TNext>>) {
     super();
   }

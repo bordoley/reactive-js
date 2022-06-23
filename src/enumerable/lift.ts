@@ -1,12 +1,13 @@
-import { EnumerableLike, EnumerableOperator } from "../enumerable";
+import {
+  AbstractEnumerable,
+  EnumerableLike,
+  EnumerableOperator,
+} from "../enumerable";
 import { Function1, pipe } from "../functions";
-import { AbstractLiftable, Lift } from "../liftable";
+import { Lift } from "../liftable";
 import { Enumerator, enumerate } from "./enumerator";
 
-class LiftedEnumerableLike<T>
-  extends AbstractLiftable<Enumerator<T>>
-  implements EnumerableLike<T>
-{
+class LiftedEnumerableLike<T> extends AbstractEnumerable<T> {
   constructor(
     readonly src: EnumerableLike<any>,
     readonly operators: readonly Function1<Enumerator<any>, Enumerator<any>>[],

@@ -3,9 +3,13 @@ import {
   addDisposableDisposeParentOnChildError,
   dispose,
 } from "../disposable";
-import { EnumerableLike, Enumerator, EnumeratorBase } from "../enumerable";
+import {
+  AbstractEnumerable,
+  EnumerableLike,
+  Enumerator,
+  EnumeratorBase,
+} from "../enumerable";
 import { Function1, pipe } from "../functions";
-import { AbstractLiftable } from "../liftable";
 import { ObservableLike } from "../observable";
 import { isNone } from "../option";
 import { SchedulerContinuationLike, SchedulerLike, run } from "../scheduler";
@@ -90,10 +94,7 @@ export const enumerate = <T>(obs: ObservableLike<T>): Enumerator<T> => {
   return scheduler;
 };
 
-class ObservableEnumerable<T>
-  extends AbstractLiftable<Enumerator<T>>
-  implements EnumerableLike<T>
-{
+class ObservableEnumerable<T> extends AbstractEnumerable<T> {
   constructor(private readonly obs: ObservableLike<T>) {
     super();
   }

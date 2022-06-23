@@ -58,7 +58,7 @@ const current = (enumerator) => enumerator.current;
 const hasCurrent = (enumerator) => enumerator.hasCurrent;
 const move = (enumerator) => enumerator.move();
 
-class LiftedEnumerableLike extends AbstractLiftable {
+class LiftedEnumerableLike extends AbstractEnumerable {
     constructor(src, operators) {
         super();
         this.src = src;
@@ -127,6 +127,9 @@ const operator = (delegate) => {
  */
 const concatAll = () => lift(operator);
 
+class AbstractEnumerable extends AbstractLiftable {
+}
+
 class ArrayEnumerator extends EnumeratorBase {
     constructor(array, index, endIndex) {
         super();
@@ -150,7 +153,7 @@ class ArrayEnumerator extends EnumeratorBase {
         return this.hasCurrent;
     }
 }
-class ArrayEnumerable extends AbstractLiftable {
+class ArrayEnumerable extends AbstractEnumerable {
     constructor(values, startIndex, endIndex) {
         super();
         this.values = values;
@@ -200,7 +203,7 @@ class IteratorEnumerator extends Enumerator {
         return this.hasCurrent;
     }
 }
-class IteratorEnumerable extends AbstractLiftable {
+class IteratorEnumerable extends AbstractEnumerable {
     constructor(f) {
         super();
         this.f = f;
@@ -245,7 +248,7 @@ class GenerateEnumerator extends EnumeratorBase {
         return this.hasCurrent;
     }
 }
-class GenerateEnumerable extends AbstractLiftable {
+class GenerateEnumerable extends AbstractEnumerable {
     constructor(f, acc) {
         super();
         this.f = f;
@@ -303,7 +306,7 @@ class RepeatEnumerator extends Enumerator {
         return this.hasCurrent;
     }
 }
-class RepeatEnumerable extends AbstractLiftable {
+class RepeatEnumerable extends AbstractEnumerable {
     constructor(src, shouldRepeat) {
         super();
         this.src = src;
@@ -438,7 +441,7 @@ const zipEnumerators = (enumerators) => {
     }
     return enumerator;
 };
-class ZipEnumerable extends AbstractLiftable {
+class ZipEnumerable extends AbstractEnumerable {
     constructor(enumerables) {
         super();
         this.enumerables = enumerables;
@@ -682,7 +685,7 @@ const throwIfEmpty = createThrowIfEmptyLiftedOperator(liftT, class ThrowIfEmptyE
 const throwIfEmptyT = {
     throwIfEmpty,
 };
-class UsingEnumerable extends AbstractLiftable {
+class UsingEnumerable extends AbstractEnumerable {
     constructor(resourceFactory, sourceFactory) {
         super();
         this.resourceFactory = resourceFactory;
@@ -713,4 +716,4 @@ const usingT = {
     using,
 };
 
-export { DelegatingEnumeratorBase, Enumerator, EnumeratorBase, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, type, using, usingT, zip, zipEnumerators };
+export { AbstractEnumerable, DelegatingEnumeratorBase, Enumerator, EnumeratorBase, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, type, using, usingT, zip, zipEnumerators };
