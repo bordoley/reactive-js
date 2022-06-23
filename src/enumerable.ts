@@ -4,7 +4,6 @@ import {
   ContainerLike,
   ContainerOf,
   DistinctUntilChanged,
-  empty,
   Keep,
   Map,
   Pairwise,
@@ -14,19 +13,20 @@ import {
   TakeWhile,
   ThrowIfEmpty,
   Using,
+  empty,
 } from "./container";
 import {
-  addDisposableDisposeParentOnChildError,
   DisposableLike,
+  addDisposableDisposeParentOnChildError,
   dispose,
 } from "./disposable";
 import { concatAll } from "./enumerable/concatAll";
 import { AbstractEnumerable } from "./enumerable/enumerable";
 import {
   DelegatingEnumeratorBase,
-  enumerate,
   Enumerator,
   EnumeratorBase,
+  enumerate,
 } from "./enumerable/enumerator";
 import { fromArray, fromArrayT } from "./enumerable/fromArray";
 import { liftT } from "./enumerable/lift";
@@ -39,10 +39,6 @@ import {
   SideEffect1,
   identity,
   pipe,
-  Function2,
-  Function3,
-  Function4,
-  Function5,
 } from "./functions";
 import {
   LiftableLike,
@@ -490,85 +486,13 @@ class UsingEnumerable<
   }
 }
 
-export function using<TResource extends DisposableLike, T>(
-  resourceFactory: Factory<TResource>,
-  enumerableFactory: Function1<TResource, EnumerableLike<T>>,
-): EnumerableLike<T>;
-export function using<
-  TResource1 extends DisposableLike,
-  TResource2 extends DisposableLike,
-  T,
->(
-  resourceFactory: Factory<readonly [TResource1, TResource2]>,
-  enumerableFactory: Function2<TResource1, TResource2, EnumerableLike<T>>,
-): EnumerableLike<T>;
-
-export function using<
-  TResource1 extends DisposableLike,
-  TResource2 extends DisposableLike,
-  TResource3 extends DisposableLike,
-  T,
->(
-  resourceFactory: Factory<readonly [TResource1, TResource2, TResource3]>,
-  enumerableFactory: Function3<
-    TResource1,
-    TResource2,
-    TResource3,
-    EnumerableLike<T>
-  >,
-): EnumerableLike<T>;
-
-export function using<
-  TResource1 extends DisposableLike,
-  TResource2 extends DisposableLike,
-  TResource3 extends DisposableLike,
-  TResource4 extends DisposableLike,
-  T,
->(
-  resourceFactory: Factory<
-    readonly [TResource1, TResource2, TResource3, TResource4]
-  >,
-  enumerableFactory: Function4<
-    TResource1,
-    TResource2,
-    TResource3,
-    TResource4,
-    EnumerableLike<T>
-  >,
-): EnumerableLike<T>;
-
-export function using<
-  TResource1 extends DisposableLike,
-  TResource2 extends DisposableLike,
-  TResource3 extends DisposableLike,
-  TResource4 extends DisposableLike,
-  TResource5 extends DisposableLike,
-  T,
->(
-  resourceFactory: Factory<
-    readonly [TResource1, TResource2, TResource3, TResource4, TResource5]
-  >,
-  enumerableFactory: Function5<
-    TResource1,
-    TResource2,
-    TResource3,
-    TResource4,
-    TResource5,
-    EnumerableLike<T>
-  >,
-): EnumerableLike<T>;
-
-export function using<TResource extends DisposableLike, T>(
+const _using = <TResource extends DisposableLike, T>(
   resourceFactory: Factory<TResource | readonly TResource[]>,
   enumerableFactory: (...resources: readonly TResource[]) => EnumerableLike<T>,
-): EnumerableLike<T>;
+): EnumerableLike<T> =>
+  new UsingEnumerable<TResource, T>(resourceFactory, enumerableFactory);
 
-export function using<TResource extends DisposableLike, T>(
-  resourceFactory: Factory<TResource | readonly TResource[]>,
-  enumerableFactory: (...resources: readonly TResource[]) => EnumerableLike<T>,
-): EnumerableLike<T> {
-  return new UsingEnumerable<TResource, T>(resourceFactory, enumerableFactory);
-}
+export const using: Using<EnumerableLike<unknown>>["using"] = _using;
 
 export const usingT: Using<EnumerableLike<unknown>> = {
   using,

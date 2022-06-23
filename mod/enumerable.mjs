@@ -709,9 +709,8 @@ class UsingEnumerable extends AbstractEnumerable {
         }
     }
 }
-function using(resourceFactory, enumerableFactory) {
-    return new UsingEnumerable(resourceFactory, enumerableFactory);
-}
+const _using = (resourceFactory, enumerableFactory) => new UsingEnumerable(resourceFactory, enumerableFactory);
+const using = _using;
 const usingT = {
     using,
 };

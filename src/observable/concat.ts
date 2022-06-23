@@ -8,7 +8,8 @@ import {
 import { pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { everySatisfy } from "../readonlyArray";
-import { AbstractSource, sinkInto } from "../source";
+import { sinkInto } from "../source";
+import { AbstractObservable } from "./observable";
 import { Observer, createDelegatingObserver } from "./observer";
 
 const createConcatObserver = <T>(
@@ -34,10 +35,7 @@ const createConcatObserver = <T>(
   return observer;
 };
 
-class ConcatObservable<T>
-  extends AbstractSource<T, Observer<T>>
-  implements ObservableLike<T>
-{
+class ConcatObservable<T> extends AbstractObservable<T> {
   readonly isSynchronous: boolean;
 
   constructor(private readonly observables: readonly ObservableLike<T>[]) {

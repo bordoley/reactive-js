@@ -17,6 +17,8 @@
 
   ↳ **`AbstractSource`**
 
+  ↳↳ [`AbstractObservable`](observable.AbstractObservable.md)
+
 ## Implements
 
 - [`SourceLike`](../interfaces/source.SourceLike.md)

@@ -2,13 +2,10 @@ import { addOnDisposedWithError } from "../disposable";
 import { Factory, SideEffect1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { schedule } from "../scheduler";
-import { AbstractSource } from "../source";
+import { AbstractObservable } from "./observable";
 import { Observer } from "./observer";
 
-class DeferObservable<T>
-  extends AbstractSource<T, Observer<T>>
-  implements ObservableLike<T>
-{
+class DeferObservable<T> extends AbstractObservable<T> {
   constructor(
     private readonly f: Factory<SideEffect1<Observer<T>>>,
     readonly isSynchronous: boolean,

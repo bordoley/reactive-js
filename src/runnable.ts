@@ -31,9 +31,9 @@ import {
 import { Option, none } from "./option";
 import { fromArrayT } from "./runnable/fromArray";
 import { liftT } from "./runnable/lift";
+import { AbstractRunnable } from "./runnable/runnable";
 import { Sink } from "./runnable/sinks";
 import {
-  AbstractSource,
   SourceLike,
   createCatchErrorOperator,
   createDecodeWithCharsetOperator,
@@ -371,11 +371,11 @@ export const throwIfEmptyT: ThrowIfEmpty<RunnableLike<unknown>> = {
   throwIfEmpty,
 };
 
-export const using = createUsing(
-  class UsingObservable<TResource extends DisposableLike, T>
-    extends AbstractSource<T, Sink<T>>
-    implements RunnableLike<T>
-  {
+export const using: Using<RunnableLike<unknown>>["using"] = createUsing(
+  class UsingRunnable<
+    TResource extends DisposableLike,
+    T,
+  > extends AbstractRunnable<T> {
     readonly isSynchronous = false;
 
     constructor(

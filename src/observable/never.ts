@@ -1,11 +1,8 @@
 import { ObservableLike } from "../observable";
-import { AbstractSource } from "../source";
+import { AbstractObservable } from "./observable";
 import { Observer } from "./observer";
 
-class NeverObservable<T>
-  extends AbstractSource<T, Observer<T>>
-  implements ObservableLike<T>
-{
+class NeverObservable<T> extends AbstractObservable<T> {
   sink(_: Observer<T>) {}
 }
 

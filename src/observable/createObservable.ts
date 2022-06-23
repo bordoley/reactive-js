@@ -1,9 +1,10 @@
 import { Function1, SideEffect1, pipe } from "../functions";
 import { DispatcherLike, ObservableLike } from "../observable";
 import { SchedulerLike } from "../scheduler";
-import { AbstractSource, sinkInto } from "../source";
+import { sinkInto } from "../source";
 
 import { defer } from "./defer";
+import { AbstractObservable } from "./observable";
 import { Observer } from "./observer";
 import { toDispatcher } from "./toDispatcher";
 
@@ -24,10 +25,7 @@ export const createObservable = <T>(
     onSubscribe(dispatcher);
   });
 
-class Observable<T>
-  extends AbstractSource<T, Observer<T>>
-  implements ObservableLike<T>
-{
+class Observable<T> extends AbstractObservable<T> {
   constructor(private readonly f: Function1<SchedulerLike, ObservableLike<T>>) {
     super();
   }

@@ -7,13 +7,11 @@ import {
 import { Factory, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { isSome, none } from "../option";
-import { AbstractSource, sinkInto } from "../source";
+import { sinkInto } from "../source";
+import { AbstractObservable } from "./observable";
 import { Observer } from "./observer";
 
-class OnSubscribeObservable<T>
-  extends AbstractSource<T, Observer<T>>
-  implements ObservableLike<T>
-{
+class OnSubscribeObservable<T> extends AbstractObservable<T> {
   readonly isSynchronous?: boolean;
 
   constructor(

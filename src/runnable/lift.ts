@@ -1,12 +1,10 @@
 import { Function1, pipe } from "../functions";
 import { RunnableLike, RunnableOperator } from "../runnable";
-import { AbstractSource, Lift } from "../source";
+import { Lift } from "../source";
+import { AbstractRunnable } from "./runnable";
 import { Sink } from "./sinks";
 
-class LiftedRunnable<T>
-  extends AbstractSource<T, Sink<T>>
-  implements RunnableLike<T>
-{
+class LiftedRunnable<T> extends AbstractRunnable<T> {
   constructor(
     readonly src: RunnableLike<any>,
     readonly operators: readonly Function1<Sink<any>, Sink<any>>[],

@@ -14,8 +14,9 @@ import {
 import { defer, pipe, returns } from "../functions";
 import { ObservableLike } from "../observable";
 import { everySatisfy, map } from "../readonlyArray";
-import { AbstractSource, sinkInto } from "../source";
+import { sinkInto } from "../source";
 import { fromEnumerator } from "./fromEnumerable";
+import { AbstractObservable } from "./observable";
 import { Observer } from "./observer";
 import { enumerate } from "./toEnumerable";
 
@@ -112,10 +113,7 @@ class ZipObserver extends Observer<unknown> {
   }
 }
 
-class ZipObservable
-  extends AbstractSource<readonly unknown[], Observer<readonly unknown[]>>
-  implements ObservableLike<readonly unknown[]>
-{
+class ZipObservable extends AbstractObservable<readonly unknown[]> {
   readonly isSynchronous: boolean;
 
   constructor(private readonly observables: readonly ObservableLike<any>[]) {

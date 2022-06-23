@@ -6,6 +6,7 @@
 
 ### Classes
 
+- [AbstractObservable](../classes/observable.AbstractObservable.md)
 - [Observer](../classes/observable.Observer.md)
 
 ### Interfaces
@@ -2492,7 +2493,7 @@ ___
 
 ### using
 
-▸ **using**<`TResource`, `T`\>(`resourceFactory`, `sourceFactory`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
+▸ **using**<`TResource`, `T`\>(`resourceFactory`, `containerFactory`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -2506,13 +2507,13 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `resourceFactory` | [`Factory`](functions.md#factory)<`TResource`\> |
-| `sourceFactory` | [`Function1`](functions.md#function1)<`TResource`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\> |
+| `containerFactory` | [`Function1`](functions.md#function1)<`TResource`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
-▸ **using**<`TResource1`, `TResource2`, `T_1`\>(`resourceFactory`, `sourceFactory`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
+▸ **using**<`TResource1`, `TResource2`, `T`\>(`resourceFactory`, `containerFactory`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -2520,107 +2521,107 @@ ___
 | :------ | :------ |
 | `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 | `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `T_1` | `T_1` |
+| `T` | `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1`, `TResource2`]\> |
-| `sourceFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`]\> |
+| `containerFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
-▸ **using**<`TResource1_1`, `TResource2_1`, `TResource3`, `T_2`\>(`resourceFactory`, `sourceFactory`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
+▸ **using**<`TResource1`, `TResource2`, `TResource3`, `T`\>(`resourceFactory`, `containerFactory`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TResource1_1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource2_1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 | `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `T_2` | `T_2` |
+| `T` | `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1_1`, `TResource2_1`, `TResource3`]\> |
-| `sourceFactory` | [`Function3`](functions.md#function3)<`TResource1_1`, `TResource2_1`, `TResource3`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`]\> |
+| `containerFactory` | [`Function3`](functions.md#function3)<`TResource1`, `TResource2`, `TResource3`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
-▸ **using**<`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`, `T_3`\>(`resourceFactory`, `sourceFactory`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
+▸ **using**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `T`\>(`resourceFactory`, `containerFactory`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TResource1_2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource2_2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource3_1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 | `TResource4` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `T_3` | `T_3` |
+| `T` | `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`]\> |
-| `sourceFactory` | [`Function4`](functions.md#function4)<`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`]\> |
+| `containerFactory` | [`Function4`](functions.md#function4)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
-▸ **using**<`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`, `T_4`\>(`resourceFactory`, `sourceFactory`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
+▸ **using**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, `T`\>(`resourceFactory`, `containerFactory`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TResource1_3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource2_3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource3_2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource4_1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource4` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 | `TResource5` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `T_4` | `T_4` |
+| `T` | `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`]\> |
-| `sourceFactory` | [`Function5`](functions.md#function5)<`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`]\> |
+| `containerFactory` | [`Function5`](functions.md#function5)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
-▸ **using**<`TResource_1`, `T_5`\>(`resourceFactory`, `sourceFactoryFactory`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
+▸ **using**<`TResource`, `T`\>(`resourceFactory`, `runnableFactory`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TResource_1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `T_5` | `T_5` |
+| `TResource` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T` | `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource_1` \| readonly `TResource_1`[]\> |
-| `sourceFactoryFactory` | (...`resources`: readonly `TResource_1`[]) => [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource` \| readonly `TResource`[]\> |
+| `runnableFactory` | (...`resources`: readonly `TResource`[]) => [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
 ___
 

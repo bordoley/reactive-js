@@ -2,7 +2,7 @@ import { AbstractDisposableContainer, Concat, FromArray, FromIterator, Using, Ma
 import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Predicate, Equality, Reducer } from "./functions.mjs";
 import { SchedulerLike, SchedulerContinuationLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
-import { SinkLike, SourceLike } from "./source.mjs";
+import { SinkLike, AbstractSource, SourceLike } from "./source.mjs";
 import { Option } from "./option.mjs";
 import { EnumerableLike } from "./enumerable.mjs";
 import { RunnableLike } from "./runnable.mjs";
@@ -290,36 +290,13 @@ declare const never: <T>() => ObservableLike<T>;
 declare function subscribe<T>(scheduler: SchedulerLike): Function1<ObservableLike<T>, DisposableLike>;
 declare function subscribe<T>(scheduler: SchedulerLike, onNotify: SideEffect1<T>): Function1<ObservableLike<T>, DisposableLike>;
 declare function subscribe<This, T>(scheduler: SchedulerLike, onNotify: (this: This, value: T) => void, onNotifyThis: This): Function1<ObservableLike<T>, DisposableLike>;
-declare const using: {
-    <TResource extends DisposableLike, T>(resourceFactory: Factory<TResource>, sourceFactory: Function1<TResource, ObservableLike<unknown>>): ObservableLike<unknown>;
-    <TResource1 extends DisposableLike, TResource2 extends DisposableLike, T_1>(resourceFactory: Factory<readonly [
-        TResource1,
-        TResource2
-    ]>, sourceFactory: Function2<TResource1, TResource2, ObservableLike<unknown>>): ObservableLike<unknown>;
-    <TResource1_1 extends DisposableLike, TResource2_1 extends DisposableLike, TResource3 extends DisposableLike, T_2>(resourceFactory: Factory<readonly [
-        TResource1_1,
-        TResource2_1,
-        TResource3
-    ]>, sourceFactory: Function3<TResource1_1, TResource2_1, TResource3, ObservableLike<unknown>>): ObservableLike<unknown>;
-    <TResource1_2 extends DisposableLike, TResource2_2 extends DisposableLike, TResource3_1 extends DisposableLike, TResource4 extends DisposableLike, T_3>(resourceFactory: Factory<readonly [
-        TResource1_2,
-        TResource2_2,
-        TResource3_1,
-        TResource4
-    ]>, sourceFactory: Function4<TResource1_2, TResource2_2, TResource3_1, TResource4, ObservableLike<unknown>>): ObservableLike<unknown>;
-    <TResource1_3 extends DisposableLike, TResource2_3 extends DisposableLike, TResource3_2 extends DisposableLike, TResource4_1 extends DisposableLike, TResource5 extends DisposableLike, T_4>(resourceFactory: Factory<readonly [
-        TResource1_3,
-        TResource2_3,
-        TResource3_2,
-        TResource4_1,
-        TResource5
-    ]>, sourceFactory: Function5<TResource1_3, TResource2_3, TResource3_2, TResource4_1, TResource5, ObservableLike<unknown>>): ObservableLike<unknown>;
-    <TResource_1 extends DisposableLike, T_5>(resourceFactory: Factory<TResource_1 | readonly TResource_1[]>, sourceFactoryFactory: (...resources: readonly TResource_1[]) => ObservableLike<unknown>): ObservableLike<unknown>;
-};
+declare const using: Using<ObservableLike<unknown>>["using"];
 declare const usingT: Using<ObservableLike<unknown>>;
 declare const defer: <T>(factory: Factory<SideEffect1<Observer<T>>>, options?: {
     readonly delay?: number;
 }) => ObservableLike<T>;
+declare abstract class AbstractObservable<T> extends AbstractSource<T, Observer<T>> implements ObservableLike<T> {
+}
 /**
  * Returns an `ObservableLike` which buffers items produced by the source until either the
  * number of items reaches the specified maximum buffer size or the duration time expires.
@@ -690,4 +667,4 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
 declare const takeWhileT: TakeWhile<ObservableLike<unknown>>;
 declare const throwIfEmpty: <T>(factory: Factory<unknown>) => ObservableOperator<T, T>;
 declare const throwIfEmptyT: ThrowIfEmpty<ObservableLike<unknown>>;
-export { AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Observer, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createObservableWithScheduler, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AbstractObservable, AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Observer, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createObservableWithScheduler, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

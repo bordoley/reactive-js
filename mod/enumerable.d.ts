@@ -1,6 +1,5 @@
 import { AbstractDisposableContainer, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
-import { DisposableLike } from "./disposable.mjs";
-import { Function1, Factory, Updater, Predicate, Equality, SideEffect1, Reducer, Function2, Function3, Function4, Function5 } from "./functions.mjs";
+import { Function1, Factory, Updater, Predicate, Equality, SideEffect1, Reducer } from "./functions.mjs";
 import { LiftedStateLike, AbstractLiftable, LiftableLike } from "./liftable.mjs";
 import { Option } from "./option.mjs";
 import { RunnableLike } from "./runnable.mjs";
@@ -212,29 +211,6 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
 declare const takeWhileT: TakeWhile<EnumerableLike<unknown>>;
 declare const throwIfEmpty: <T>(factory: Factory<unknown>) => EnumerableOperator<T, T>;
 declare const throwIfEmptyT: ThrowIfEmpty<EnumerableLike<unknown>>;
-declare function using<TResource extends DisposableLike, T>(resourceFactory: Factory<TResource>, enumerableFactory: Function1<TResource, EnumerableLike<T>>): EnumerableLike<T>;
-declare function using<TResource1 extends DisposableLike, TResource2 extends DisposableLike, T>(resourceFactory: Factory<readonly [
-    TResource1,
-    TResource2
-]>, enumerableFactory: Function2<TResource1, TResource2, EnumerableLike<T>>): EnumerableLike<T>;
-declare function using<TResource1 extends DisposableLike, TResource2 extends DisposableLike, TResource3 extends DisposableLike, T>(resourceFactory: Factory<readonly [
-    TResource1,
-    TResource2,
-    TResource3
-]>, enumerableFactory: Function3<TResource1, TResource2, TResource3, EnumerableLike<T>>): EnumerableLike<T>;
-declare function using<TResource1 extends DisposableLike, TResource2 extends DisposableLike, TResource3 extends DisposableLike, TResource4 extends DisposableLike, T>(resourceFactory: Factory<readonly [
-    TResource1,
-    TResource2,
-    TResource3,
-    TResource4
-]>, enumerableFactory: Function4<TResource1, TResource2, TResource3, TResource4, EnumerableLike<T>>): EnumerableLike<T>;
-declare function using<TResource1 extends DisposableLike, TResource2 extends DisposableLike, TResource3 extends DisposableLike, TResource4 extends DisposableLike, TResource5 extends DisposableLike, T>(resourceFactory: Factory<readonly [
-    TResource1,
-    TResource2,
-    TResource3,
-    TResource4,
-    TResource5
-]>, enumerableFactory: Function5<TResource1, TResource2, TResource3, TResource4, TResource5, EnumerableLike<T>>): EnumerableLike<T>;
-declare function using<TResource extends DisposableLike, T>(resourceFactory: Factory<TResource | readonly TResource[]>, enumerableFactory: (...resources: readonly TResource[]) => EnumerableLike<T>): EnumerableLike<T>;
+declare const using: Using<EnumerableLike<unknown>>["using"];
 declare const usingT: Using<EnumerableLike<unknown>>;
 export { AbstractEnumerable, DelegatingEnumeratorBase, EnumerableLike, EnumerableOperator, Enumerator, EnumeratorBase, ToEnumerable, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, type, using, usingT, zip, zipEnumerators };

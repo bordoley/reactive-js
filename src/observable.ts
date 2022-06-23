@@ -147,6 +147,7 @@ export { never } from "./observable/never";
 export { subscribe } from "./observable/subscribe";
 export { using, usingT } from "./observable/using";
 export { defer } from "./observable/defer";
+export { AbstractObservable } from "./observable/observable";
 export { Observer } from "./observable/observer";
 export { buffer } from "./observable/buffer";
 export { map, mapT } from "./observable/map";
