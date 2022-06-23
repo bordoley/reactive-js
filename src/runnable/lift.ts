@@ -1,7 +1,6 @@
 import { Function1, pipe } from "../functions";
-import { Lift } from "../liftable";
 import { RunnableLike, RunnableOperator } from "../runnable";
-import { AbstractSource } from "../source";
+import { AbstractSource, Lift } from "../source";
 import { Sink } from "./sinks";
 
 class LiftedRunnable<T>
@@ -36,5 +35,6 @@ export const lift =
   };
 
 export const liftT: Lift<RunnableLike<unknown>> = {
+  variance: "contravariant",
   lift,
 };

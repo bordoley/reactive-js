@@ -43,5 +43,6 @@ export const lift =
   };
 
 export const liftT: Lift<EnumerableLike<unknown>, "covariant"> = {
+  variance: "covariant",
   lift,
 };

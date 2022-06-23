@@ -19,7 +19,7 @@ interface SourceLike extends LiftableLike {
     readonly liftedStateType: SinkLike<unknown>;
     sink(this: this["type"], sink: this["liftedStateType"]): void;
 }
-interface Lift<C extends SourceLike> extends Lift$1<C> {
+interface Lift<C extends SourceLike> extends Lift$1<C, "contravariant"> {
 }
 declare abstract class AbstractSource<T, TSink extends SinkLike<T>> extends AbstractLiftable<TSink> implements SourceLike {
     abstract sink(this: this, sink: TSink): void;

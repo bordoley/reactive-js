@@ -21,8 +21,8 @@ declare type LiftedStateOf<C extends LiftableLike, T> = C extends {
     readonly _C: C;
     readonly _T: () => T;
 };
-interface Lift<C extends LiftableLike, TVariance extends "covariant" | "contravariant" = "contravariant"> extends Container<C> {
-    variance?: TVariance;
+interface Lift<C extends LiftableLike, TVariance extends "covariant" | "contravariant"> extends Container<C> {
+    variance: TVariance;
     lift<TA, TB>(operator: LiftOperator<TA, TB, C, this>): ContainerOperator<C, TA, TB>;
 }
 declare type LiftOperator<TA, TB, C extends LiftableLike, M extends Lift<C, "covariant" | "contravariant">> = Function1<LiftOperatorIn<TA, TB, C, M>, LiftOperatorOut<TA, TB, C, M>>;

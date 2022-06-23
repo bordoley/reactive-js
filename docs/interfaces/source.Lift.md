@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`Lift`](liftable.Lift.md)<`C`\>
+- [`Lift`](liftable.Lift.md)<`C`, ``"contravariant"``\>
 
   ↳ **`Lift`**
 
@@ -41,7 +41,7 @@ ___
 
 ### variance
 
-• `Optional` **variance**: ``"contravariant"``
+• **variance**: ``"contravariant"``
 
 #### Inherited from
 
