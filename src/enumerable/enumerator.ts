@@ -15,7 +15,7 @@ export abstract class Enumerator<T>
   abstract move(): boolean;
 }
 
-export class EnumeratorBase<T> extends Enumerator<T> {
+export abstract class EnumeratorBase<T> extends Enumerator<T> {
   private _current: Option<T> = none;
   private _hasCurrent = false;
 

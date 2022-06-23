@@ -493,8 +493,7 @@ const keep = createKeepLiftedOperator(liftT, class KeepEnumerator extends Delega
         this.predicate = predicate;
     }
     move() {
-        const delegate = this.delegate;
-        const predicate = this.predicate;
+        const { delegate, predicate } = this;
         try {
             while (delegate.move() && !predicate(delegate.current)) { }
         }
@@ -535,7 +534,7 @@ const onNotify = createOnNotifyLiftedOperator(liftT, class OnNotifyEnumerator ex
         this.onNotify = onNotify;
     }
     move() {
-        const delegate = this.delegate;
+        const { delegate } = this;
         if (delegate.move()) {
             try {
                 this.onNotify(this.current);
@@ -547,24 +546,20 @@ const onNotify = createOnNotifyLiftedOperator(liftT, class OnNotifyEnumerator ex
         return this.hasCurrent;
     }
 });
-const scan = createScanLiftedOperator(liftT, class ScanEnumerator extends Enumerator {
+const scan = createScanLiftedOperator(liftT, class ScanEnumerator extends EnumeratorBase {
     constructor(delegate, reducer, current) {
         super();
         this.delegate = delegate;
         this.reducer = reducer;
         this.current = current;
-        this.hasCurrent = false;
-        addTeardown(this, () => {
-            this.hasCurrent = false;
-        });
     }
     move() {
-        const delegate = this.delegate;
-        this.hasCurrent = false;
-        if (delegate.move()) {
+        const acc = this.hasCurrent ? this.current : none;
+        this.reset();
+        const { delegate, reducer } = this;
+        if (isSome(acc) && delegate.move()) {
             try {
-                this.current = this.reducer(this.current, this.delegate.current);
-                this.hasCurrent = true;
+                this.current = reducer(acc, delegate.current);
             }
             catch (cause) {
                 pipe(this, dispose({ cause }));
@@ -583,14 +578,14 @@ const skipFirst = createSkipFirstLiftedOperator(liftT, class SkipFirstEnumerator
         this.count = 0;
     }
     move() {
-        const skipCount = this.skipCount;
-        for (let count = this.count; count < skipCount; count++) {
-            if (!this.delegate.move()) {
+        const { delegate, skipCount } = this;
+        for (let { count } = this; count < skipCount; count++) {
+            if (!delegate.move()) {
                 break;
             }
         }
         this.count = skipCount;
-        return this.delegate.move();
+        return delegate.move();
     }
 });
 const skipFirstT = {
@@ -627,15 +622,15 @@ const takeWhile = createTakeWhileLiftedOperator(liftT, class TakeWhileEnumerator
         this.done = false;
     }
     move() {
-        const delegate = this.delegate;
+        const { delegate, inclusive, predicate } = this;
         if (this.done && !this.isDisposed) {
             pipe(this, dispose());
         }
         else if (delegate.move()) {
             const { current } = delegate;
             try {
-                const satisfiesPredicate = this.predicate(current);
-                if (!satisfiesPredicate && this.inclusive) {
+                const satisfiesPredicate = predicate(current);
+                if (!satisfiesPredicate && inclusive) {
                     this.done = true;
                 }
                 else if (!satisfiesPredicate) {

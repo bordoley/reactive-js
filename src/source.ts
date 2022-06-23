@@ -558,7 +558,7 @@ export const createTakeLastOperator = <C extends SourceLike>(
   ) {
     this.assertState();
 
-    const last = this.last;
+    const { last } = this;
 
     last.push(next);
 

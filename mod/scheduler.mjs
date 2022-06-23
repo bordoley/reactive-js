@@ -121,7 +121,7 @@ class SchedulerContinuationImpl extends AbstractDisposable {
     }
     continue() {
         if (!this.isDisposed) {
-            const listeners = this.listeners;
+            const { listeners } = this;
             let error = none;
             let yieldError = none;
             if (isSome(listeners)) {
@@ -264,7 +264,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
         return this.host.now;
     }
     get shouldYield() {
-        const current = this.current;
+        const { current } = this;
         const next = peek(this);
         const nextTaskIsHigherPriority = isSome(current) &&
             isSome(next) &&
@@ -306,7 +306,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
                 : Number.MAX_SAFE_INTEGER;
         addDisposable(this, continuation);
         if (!continuation.isDisposed) {
-            const now = this.now;
+            const { now } = this;
             const dueTime = Math.max(now + delay, now);
             const task = this.inContinuation &&
                 isSome(this.current) &&

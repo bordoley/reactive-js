@@ -20,7 +20,7 @@ import { Observer } from "./observer";
 import { subscribe } from "./subscribe";
 
 function onDispose(this: BufferObserver<void>, error: Option<Error>) {
-  const buffer = this.buffer;
+  const { buffer } = this;
   this.buffer = [];
 
   if (isSome(error) || buffer.length === 0) {
@@ -54,11 +54,11 @@ class BufferObserver<T> extends Observer<T> {
   notify(next: T) {
     this.assertState();
 
-    const buffer = this.buffer;
+    const { buffer, maxBufferSize } = this;
 
     buffer.push(next);
 
-    if (buffer.length === this.maxBufferSize) {
+    if (buffer.length === maxBufferSize) {
       onNotify.call(this);
     } else if (this.durationSubscription.inner.isDisposed) {
       this.durationSubscription.inner = pipe(

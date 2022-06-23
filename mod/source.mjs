@@ -184,7 +184,7 @@ const createTakeFirstOperator = (m, TakeFirstSink) => {
 const createTakeLastOperator = (m, TakeLastSink) => {
     TakeLastSink.prototype.notify = function notifyTakeLast(next) {
         this.assertState();
-        const last = this.last;
+        const { last } = this;
         last.push(next);
         if (last.length > this.maxCount) {
             last.shift();

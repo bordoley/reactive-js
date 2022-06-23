@@ -113,7 +113,7 @@ class AbstractDisposable {
     }
     /** @ignore */
     add(disposable) {
-        const disposables = this.disposables;
+        const { disposables } = this;
         if (this.isDisposed) {
             doDispose(this, disposable, this.error);
         }

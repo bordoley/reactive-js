@@ -196,7 +196,7 @@ export abstract class AbstractDisposable implements DisposableLike {
 
   /** @ignore */
   add(this: AbstractDisposable, disposable: DisposableOrTeardown) {
-    const disposables = this.disposables;
+    const { disposables } = this;
 
     if (this.isDisposed) {
       doDispose(this, disposable, this.error);

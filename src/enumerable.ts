@@ -11,7 +11,7 @@ import {
   TakeFirst,
   TakeWhile,
 } from "./container";
-import { addTeardown, dispose } from "./disposable";
+import { dispose } from "./disposable";
 import { concatAll } from "./enumerable/concatAll";
 import {
   DelegatingEnumeratorBase,
@@ -41,7 +41,7 @@ import {
   createTakeFirstLiftdOperator,
   createTakeWhileLiftedOperator,
 } from "./liftable";
-import { none } from "./option";
+import { isSome, none } from "./option";
 
 /**
  * Interface for iterating a Container of items.
@@ -164,8 +164,7 @@ export const keep: <T>(predicate: Predicate<T>) => EnumerableOperator<T, T> =
       }
 
       move(): boolean {
-        const delegate = this.delegate;
-        const predicate = this.predicate;
+        const { delegate, predicate } = this;
 
         try {
           while (delegate.move() && !predicate(delegate.current)) {}
@@ -227,7 +226,7 @@ export const onNotify: <T>(
     }
 
     move(): boolean {
-      const delegate = this.delegate;
+      const { delegate } = this;
 
       if (delegate.move()) {
         try {
@@ -247,29 +246,25 @@ export const scan: <T, TAcc>(
   initialValue: Factory<TAcc>,
 ) => EnumerableOperator<T, TAcc> = createScanLiftedOperator(
   liftT,
-  class ScanEnumerator<T, TAcc> extends Enumerator<TAcc> {
-    hasCurrent = false;
-
+  class ScanEnumerator<T, TAcc> extends EnumeratorBase<TAcc> {
     constructor(
       readonly delegate: Enumerator<T>,
       private readonly reducer: Reducer<T, TAcc>,
-      public current: TAcc,
+      current: TAcc,
     ) {
       super();
-
-      addTeardown(this, () => {
-        this.hasCurrent = false;
-      });
+      this.current = current;
     }
 
     move(): boolean {
-      const delegate = this.delegate;
-      this.hasCurrent = false;
+      const acc = this.hasCurrent ? this.current : none;
 
-      if (delegate.move()) {
+      this.reset();
+
+      const { delegate, reducer } = this;
+      if (isSome(acc) && delegate.move()) {
         try {
-          this.current = this.reducer(this.current, this.delegate.current);
-          this.hasCurrent = true;
+          this.current = reducer(acc, delegate.current);
         } catch (cause) {
           pipe(this, dispose({ cause }));
         }
@@ -296,16 +291,16 @@ export const skipFirst: <T>(options?: {
     }
 
     move(): boolean {
-      const skipCount = this.skipCount;
+      const { delegate, skipCount } = this;
 
-      for (let count = this.count; count < skipCount; count++) {
-        if (!this.delegate.move()) {
+      for (let { count } = this; count < skipCount; count++) {
+        if (!delegate.move()) {
           break;
         }
       }
 
       this.count = skipCount;
-      return this.delegate.move();
+      return delegate.move();
     }
   },
 );
@@ -363,7 +358,7 @@ export const takeWhile: <T>(
     }
 
     move(): boolean {
-      const delegate = this.delegate;
+      const { delegate, inclusive, predicate } = this;
 
       if (this.done && !this.isDisposed) {
         pipe(this, dispose());
@@ -371,9 +366,9 @@ export const takeWhile: <T>(
         const { current } = delegate;
 
         try {
-          const satisfiesPredicate = this.predicate(current);
+          const satisfiesPredicate = predicate(current);
 
-          if (!satisfiesPredicate && this.inclusive) {
+          if (!satisfiesPredicate && inclusive) {
             this.done = true;
           } else if (!satisfiesPredicate) {
             pipe(this, dispose());

@@ -70,7 +70,7 @@ class MergeObserver<T> extends Observer<ObservableLike<T>> {
   notify(next: ObservableLike<T>) {
     this.assertState();
 
-    const queue = this.queue;
+    const { queue } = this;
 
     queue.push(next);
 

@@ -89,7 +89,7 @@ class ZipObserver extends Observer<unknown> {
   notify(next: unknown) {
     this.assertState();
 
-    const enumerators = this.enumerators;
+    const { enumerators } = this;
 
     if (!this.isDisposed) {
       if (this.enumerator.hasCurrent) {

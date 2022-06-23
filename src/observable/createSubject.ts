@@ -22,8 +22,7 @@ class SubjectImpl<T>
 
   dispatch(next: T) {
     if (!this.isDisposed) {
-      const replayed = this.replayed;
-      const replay = this.replay;
+      const { replay, replayed } = this;
 
       if (replay > 0) {
         replayed.push(next);
@@ -45,7 +44,7 @@ class SubjectImpl<T>
     const dispatcher = toDispatcher(observer);
 
     if (!this.isDisposed) {
-      const observers = this.observers;
+      const { observers } = this;
       observers.add(dispatcher);
 
       addTeardown(observer, _e => {

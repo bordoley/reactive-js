@@ -153,7 +153,7 @@ class PriorityScheduler
   }
 
   get shouldYield() {
-    const current = this.current;
+    const { current } = this;
     const next = peek(this);
 
     const nextTaskIsHigherPriority =
@@ -228,7 +228,7 @@ class PriorityScheduler
     addDisposable(this, continuation);
 
     if (!continuation.isDisposed) {
-      const now = this.now;
+      const { now } = this;
       const dueTime = Math.max(now + delay, now);
 
       const task =
