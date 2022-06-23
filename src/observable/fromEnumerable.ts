@@ -18,9 +18,8 @@ export const fromEnumerator =
     options: { readonly delay?: number } = {},
   ): Function1<Factory<Enumerator<T>>, ObservableLike<T>> =>
   f => {
-    // FIXME: No way to tell using to run synchronously when delay is 0
     const { delay = 0 } = options;
-    return using(f, enumerator =>
+    const result = using(f, enumerator =>
       deferObs(
         () => (observer: Observer<T>) => {
           while (enumerator.move()) {
@@ -32,6 +31,12 @@ export const fromEnumerator =
         { delay },
       ),
     );
+    if (delay === 0) {
+      // FIXME: No way to tell using to run synchronously when delay is 0
+      (result as any).isSynchronous = true;
+    }
+
+    return result;
   };
 
 /**

@@ -643,15 +643,19 @@ const usingT = {
  * @param delay The requested delay between emitted items by the observable.
  */
 const fromEnumerator = (options = {}) => f => {
-    // FIXME: No way to tell using to run synchronously when delay is 0
     const { delay = 0 } = options;
-    return using(f, enumerator => defer(() => (observer) => {
+    const result = using(f, enumerator => defer(() => (observer) => {
         while (enumerator.move()) {
             observer.notify(enumerator.current);
             __yield(delay);
         }
         pipe(observer, dispose());
     }, { delay }));
+    if (delay === 0) {
+        // FIXME: No way to tell using to run synchronously when delay is 0
+        result.isSynchronous = true;
+    }
+    return result;
 };
 /**
  * Creates an `ObservableLike` which enumerates through the values
