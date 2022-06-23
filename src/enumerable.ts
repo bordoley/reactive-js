@@ -11,6 +11,7 @@ import {
   SkipFirst,
   TakeFirst,
   TakeWhile,
+  ThrowIfEmpty,
 } from "./container";
 import { dispose } from "./disposable";
 import { concatAll } from "./enumerable/concatAll";
@@ -42,6 +43,7 @@ import {
   createSkipFirstLiftedOperator,
   createTakeFirstLiftdOperator,
   createTakeWhileLiftedOperator,
+  createThrowIfEmptyLiftedOperator,
 } from "./liftable";
 import { Option, isSome, none } from "./option";
 
@@ -415,4 +417,25 @@ export const takeWhile: <T>(
 
 export const takeWhileT: TakeWhile<EnumerableLike<unknown>> = {
   takeWhile,
+};
+
+export const throwIfEmpty: <T>(
+  factory: Factory<unknown>,
+) => EnumerableOperator<T, T> = createThrowIfEmptyLiftedOperator(
+  liftT,
+  class ThrowIfEmptyObserver<T> extends DelegatingEnumeratorBase<T> {
+    isEmpty = true;
+
+    move() {
+      if (this.move()) {
+        this.isEmpty = false;
+      }
+
+      return this.hasCurrent;
+    }
+  },
+);
+
+export const throwIfEmptyT: ThrowIfEmpty<EnumerableLike<unknown>> = {
+  throwIfEmpty,
 };
