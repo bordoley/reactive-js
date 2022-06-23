@@ -1,8 +1,8 @@
 import { SideEffect1 } from "../functions";
 import { DispatcherLike, ObservableLike } from "../observable";
+import { createObserverDispatcher } from "./createObserverDispatcher";
 import { AbstractObservable } from "./observable";
 import { Observer } from "./observer";
-import { toDispatcher } from "./toDispatcher";
 
 class CreateObservable<T> extends AbstractObservable<T> {
   constructor(private readonly f: SideEffect1<Observer<T>>) {
@@ -31,6 +31,6 @@ export const createObservable = <T>(
   onSubscribe: SideEffect1<DispatcherLike<T>>,
 ): ObservableLike<T> =>
   createObservableUnsafe(observer => {
-    const dispatcher = toDispatcher(observer);
+    const dispatcher = createObserverDispatcher(observer);
     onSubscribe(dispatcher);
   });

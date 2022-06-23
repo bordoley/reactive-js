@@ -478,66 +478,11 @@ declare function timeout<T>(duration: ObservableLike<unknown>): ObservableOperat
  * @param selector
  */
 declare const withLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ObservableOperator<TA, T>;
-declare function zip<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<[
-    TA,
-    TB
-]>;
-declare function zip<TA, TB, TC>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): ObservableLike<[
-    TA,
-    TB,
-    TC
-]>;
-declare function zip<TA, TB, TC, TD>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>): ObservableLike<[
-    TA,
-    TB,
-    TC,
-    TD
-]>;
-declare function zip<TA, TB, TC, TD, TE>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>): ObservableLike<[
-    TA,
-    TB,
-    TC,
-    TD,
-    TE
-]>;
-declare function zip<TA, TB, TC, TD, TE, TF>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>): ObservableLike<[
-    TA,
-    TB,
-    TC,
-    TD,
-    TE,
-    TF
-]>;
-declare function zip<TA, TB, TC, TD, TE, TF, TG>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>): ObservableLike<[
-    TA,
-    TB,
-    TC,
-    TD,
-    TE,
-    TF,
-    TG
-]>;
-declare function zip<TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>): ObservableLike<[
-    TA,
-    TB,
-    TC,
-    TD,
-    TE,
-    TF,
-    TG,
-    TH
-]>;
-declare function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): ObservableLike<[
-    TA,
-    TB,
-    TC,
-    TD,
-    TE,
-    TF,
-    TG,
-    TH,
-    TI
-]>;
+/**
+ * Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
+ * in order, of each of its input sources.
+ */
+declare const zip: Zip<ObservableLike<unknown>>["zip"];
 declare const zipT: Zip<ObservableLike<unknown>>;
 /**
  * Returns an `ObservableLike` which combines the source with
@@ -560,6 +505,12 @@ declare const toRunnableT: ToRunnable<ObservableLike<unknown>>;
  * @param scheduler The scheduler upon which to subscribe to the source.
  */
 declare const toPromise: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, Promise<T>>;
+/**
+ * Returns a `DispatcherLike` that delegates to the provided observer.
+ *
+ * @param observer The `ObserverLike` instance to wrap in a `SafeObserverLike`.
+ */
+declare const createObserverDispatcher: <T>(delegate: Observer<T>) => DispatcherLike<T>;
 /**
  * The source of notifications which notifies a `ObserverLike` instance.
  *
@@ -673,4 +624,4 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
 declare const takeWhileT: TakeWhile<ObservableLike<unknown>>;
 declare const throwIfEmpty: <T>(factory: Factory<unknown>) => ObservableOperator<T, T>;
 declare const throwIfEmptyT: ThrowIfEmpty<ObservableLike<unknown>>;
-export { AbstractDisposableObservable, AbstractObservable, AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Observer, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createObservableUnsafe, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AbstractDisposableObservable, AbstractObservable, AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Observer, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createObservableUnsafe, createObserverDispatcher, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

@@ -72,6 +72,7 @@
 - [concatAll](observable.md#concatall)
 - [createObservable](observable.md#createobservable)
 - [createObservableUnsafe](observable.md#createobservableunsafe)
+- [createObserverDispatcher](observable.md#createobserverdispatcher)
 - [createSubject](observable.md#createsubject)
 - [decodeWithCharset](observable.md#decodewithcharset)
 - [defer](observable.md#defer)
@@ -1277,6 +1278,30 @@ ___
 #### Returns
 
 [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
+
+___
+
+### createObserverDispatcher
+
+▸ **createObserverDispatcher**<`T`\>(`delegate`): [`DispatcherLike`](../interfaces/observable.DispatcherLike.md)<`T`\>
+
+Returns a `DispatcherLike` that delegates to the provided observer.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `delegate` | [`Observer`](../classes/observable.Observer.md)<`T`\> |
+
+#### Returns
+
+[`DispatcherLike`](../interfaces/observable.DispatcherLike.md)<`T`\>
 
 ___
 
@@ -2684,7 +2709,10 @@ ___
 
 ### zip
 
-▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`]\>
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly [`TA`, `TB`]\>
+
+Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
+in order, of each of its input sources.
 
 #### Type parameters
 
@@ -2702,9 +2730,12 @@ ___
 
 #### Returns
 
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`]\>
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly [`TA`, `TB`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`, `TC`]\>
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
+in order, of each of its input sources.
 
 #### Type parameters
 
@@ -2724,9 +2755,12 @@ ___
 
 #### Returns
 
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`, `TC`]\>
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`, `TC`, `TD`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
+in order, of each of its input sources.
 
 #### Type parameters
 
@@ -2748,9 +2782,12 @@ ___
 
 #### Returns
 
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`, `TC`, `TD`]\>
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
+in order, of each of its input sources.
 
 #### Type parameters
 
@@ -2774,9 +2811,12 @@ ___
 
 #### Returns
 
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
+in order, of each of its input sources.
 
 #### Type parameters
 
@@ -2802,9 +2842,12 @@ ___
 
 #### Returns
 
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
+in order, of each of its input sources.
 
 #### Type parameters
 
@@ -2832,9 +2875,12 @@ ___
 
 #### Returns
 
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
+in order, of each of its input sources.
 
 #### Type parameters
 
@@ -2864,9 +2910,12 @@ ___
 
 #### Returns
 
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
+in order, of each of its input sources.
 
 #### Type parameters
 
@@ -2898,7 +2947,28 @@ ___
 
 #### Returns
 
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+▸ **zip**<`T`\>(...`enumerables`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly `T`[]\>
+
+Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
+in order, of each of its input sources.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...enumerables` | readonly [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<readonly `T`[]\>
 
 ___
 
