@@ -425,21 +425,12 @@ const zipEnumerators = (enumerators) => {
     }
     return enumerator;
 };
-class ZipEnumerable extends AbstractEnumerable {
-    constructor(enumerables) {
-        super();
-        this.enumerables = enumerables;
-    }
-    enumerate() {
-        return pipe(this.enumerables, map$1(enumerate), zipEnumerators);
-    }
-}
 /**
  * Combines multiple EnumerableLikes to create an EnumerableLike whose values are calculated from the values,
  * in order, of each of its inputs.
  */
 function zip(...enumerables) {
-    return new ZipEnumerable(enumerables);
+    return createEnumerable(() => pipe(enumerables, map$1(enumerate), zipEnumerators));
 }
 const zipT = {
     zip,
