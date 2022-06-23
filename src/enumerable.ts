@@ -4,6 +4,7 @@ import {
   ContainerLike,
   ContainerOf,
   DistinctUntilChanged,
+  empty,
   Keep,
   Map,
   Pairwise,
@@ -12,11 +13,17 @@ import {
   TakeFirst,
   TakeWhile,
   ThrowIfEmpty,
+  Using,
 } from "./container";
-import { dispose } from "./disposable";
+import {
+  addDisposableDisposeParentOnChildError,
+  DisposableLike,
+  dispose,
+} from "./disposable";
 import { concatAll } from "./enumerable/concatAll";
 import {
   DelegatingEnumeratorBase,
+  enumerate,
   Enumerator,
   EnumeratorBase,
 } from "./enumerable/enumerator";
@@ -31,6 +38,10 @@ import {
   SideEffect1,
   identity,
   pipe,
+  Function2,
+  Function3,
+  Function4,
+  Function5,
 } from "./functions";
 import {
   LiftableLike,
@@ -44,6 +55,7 @@ import {
   createTakeFirstLiftdOperator,
   createTakeWhileLiftedOperator,
   createThrowIfEmptyLiftedOperator,
+  AbstractLiftable,
 } from "./liftable";
 import { Option, isSome, none } from "./option";
 
@@ -423,7 +435,7 @@ export const throwIfEmpty: <T>(
   factory: Factory<unknown>,
 ) => EnumerableOperator<T, T> = createThrowIfEmptyLiftedOperator(
   liftT,
-  class ThrowIfEmptyObserver<T> extends DelegatingEnumeratorBase<T> {
+  class ThrowIfEmptyEnumerator<T> extends DelegatingEnumeratorBase<T> {
     isEmpty = true;
 
     move() {
@@ -438,4 +450,125 @@ export const throwIfEmpty: <T>(
 
 export const throwIfEmptyT: ThrowIfEmpty<EnumerableLike<unknown>> = {
   throwIfEmpty,
+};
+
+class UsingEnumerable<TResource extends DisposableLike, T>
+  extends AbstractLiftable<Enumerator<T>>
+  implements EnumerableLike<T>
+{
+  constructor(
+    readonly resourceFactory: Factory<TResource | readonly TResource[]>,
+    readonly sourceFactory: (
+      ...resources: readonly TResource[]
+    ) => EnumerableLike<T>,
+  ) {
+    super();
+  }
+
+  enumerate(): Enumerator<T> {
+    try {
+      const resources = this.resourceFactory();
+
+      const resourcesArray = Array.isArray(resources) ? resources : [resources];
+      const source = this.sourceFactory(...resourcesArray);
+      const enumerator = enumerate(source);
+
+      for (const r of resourcesArray) {
+        addDisposableDisposeParentOnChildError(enumerator, r);
+      }
+
+      return enumerator;
+    } catch (cause) {
+      const enumerator = pipe(
+        empty<EnumerableLike<unknown>, T>(fromArrayT),
+        enumerate,
+      );
+      enumerator.dispose({ cause });
+      return enumerator;
+    }
+  }
+}
+
+export function using<TResource extends DisposableLike, T>(
+  resourceFactory: Factory<TResource>,
+  enumerableFactory: Function1<TResource, EnumerableLike<T>>,
+): EnumerableLike<T>;
+export function using<
+  TResource1 extends DisposableLike,
+  TResource2 extends DisposableLike,
+  T,
+>(
+  resourceFactory: Factory<readonly [TResource1, TResource2]>,
+  enumerableFactory: Function2<TResource1, TResource2, EnumerableLike<T>>,
+): EnumerableLike<T>;
+
+export function using<
+  TResource1 extends DisposableLike,
+  TResource2 extends DisposableLike,
+  TResource3 extends DisposableLike,
+  T,
+>(
+  resourceFactory: Factory<readonly [TResource1, TResource2, TResource3]>,
+  enumerableFactory: Function3<
+    TResource1,
+    TResource2,
+    TResource3,
+    EnumerableLike<T>
+  >,
+): EnumerableLike<T>;
+
+export function using<
+  TResource1 extends DisposableLike,
+  TResource2 extends DisposableLike,
+  TResource3 extends DisposableLike,
+  TResource4 extends DisposableLike,
+  T,
+>(
+  resourceFactory: Factory<
+    readonly [TResource1, TResource2, TResource3, TResource4]
+  >,
+  enumerableFactory: Function4<
+    TResource1,
+    TResource2,
+    TResource3,
+    TResource4,
+    EnumerableLike<T>
+  >,
+): EnumerableLike<T>;
+
+export function using<
+  TResource1 extends DisposableLike,
+  TResource2 extends DisposableLike,
+  TResource3 extends DisposableLike,
+  TResource4 extends DisposableLike,
+  TResource5 extends DisposableLike,
+  T,
+>(
+  resourceFactory: Factory<
+    readonly [TResource1, TResource2, TResource3, TResource4, TResource5]
+  >,
+  enumerableFactory: Function5<
+    TResource1,
+    TResource2,
+    TResource3,
+    TResource4,
+    TResource5,
+    EnumerableLike<T>
+  >,
+): EnumerableLike<T>;
+
+export function using<TResource extends DisposableLike, T>(
+  resourceFactory: Factory<TResource | readonly TResource[]>,
+  enumerableFactory: (...resources: readonly TResource[]) => EnumerableLike<T>,
+): EnumerableLike<T>;
+
+export function using<TResource extends DisposableLike, T>(
+  resourceFactory: Factory<TResource | readonly TResource[]>,
+  enumerableFactory: (...resources: readonly TResource[]) => EnumerableLike<T>,
+): EnumerableLike<T> {
+  return new UsingEnumerable<TResource, T>(resourceFactory, enumerableFactory);
+}
+
+export const usingT: Using<EnumerableLike<unknown>> = {
+  using,
 };

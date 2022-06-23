@@ -1,6 +1,6 @@
 /// <reference types="./enumerable.d.ts" />
-import { addTeardown, createSerialDisposable, bindDisposables, addDisposableDisposeParentOnChildError, dispose } from './disposable.mjs';
 import { AbstractDisposableContainer, empty } from './container.mjs';
+import { addTeardown, createSerialDisposable, bindDisposables, addDisposableDisposeParentOnChildError, dispose } from './disposable.mjs';
 import { raise, pipe, alwaysTrue, identity } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
@@ -667,7 +667,7 @@ const takeWhile = createTakeWhileLiftedOperator(liftT, class TakeWhileEnumerator
 const takeWhileT = {
     takeWhile,
 };
-const throwIfEmpty = createThrowIfEmptyLiftedOperator(liftT, class ThrowIfEmptyObserver extends DelegatingEnumeratorBase {
+const throwIfEmpty = createThrowIfEmptyLiftedOperator(liftT, class ThrowIfEmptyEnumerator extends DelegatingEnumeratorBase {
     constructor() {
         super(...arguments);
         this.isEmpty = true;
@@ -682,5 +682,35 @@ const throwIfEmpty = createThrowIfEmptyLiftedOperator(liftT, class ThrowIfEmptyO
 const throwIfEmptyT = {
     throwIfEmpty,
 };
+class UsingEnumerable extends AbstractLiftable {
+    constructor(resourceFactory, sourceFactory) {
+        super();
+        this.resourceFactory = resourceFactory;
+        this.sourceFactory = sourceFactory;
+    }
+    enumerate() {
+        try {
+            const resources = this.resourceFactory();
+            const resourcesArray = Array.isArray(resources) ? resources : [resources];
+            const source = this.sourceFactory(...resourcesArray);
+            const enumerator = enumerate(source);
+            for (const r of resourcesArray) {
+                addDisposableDisposeParentOnChildError(enumerator, r);
+            }
+            return enumerator;
+        }
+        catch (cause) {
+            const enumerator = pipe(empty(fromArrayT), enumerate);
+            enumerator.dispose({ cause });
+            return enumerator;
+        }
+    }
+}
+function using(resourceFactory, enumerableFactory) {
+    return new UsingEnumerable(resourceFactory, enumerableFactory);
+}
+const usingT = {
+    using,
+};
 
-export { DelegatingEnumeratorBase, Enumerator, EnumeratorBase, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, type, zip, zipEnumerators };
+export { DelegatingEnumeratorBase, Enumerator, EnumeratorBase, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, type, using, usingT, zip, zipEnumerators };
