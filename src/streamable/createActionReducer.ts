@@ -11,7 +11,7 @@ import {
 } from "../functions";
 import {
   ObservableLike,
-  createObservableWithScheduler,
+  createObservableUnsafe,
   distinctUntilChanged,
   fromArrayT,
   mergeWith,
@@ -19,6 +19,7 @@ import {
   subscribe,
   zipWithLatestFrom,
 } from "../observable";
+import { sinkInto } from "../source";
 import { StreamableLike, StreamableOperator } from "../streamable";
 import { createStreamable, stream as streamStreamable } from "./streamable";
 
@@ -82,17 +83,17 @@ export const toStateStore =
   <T>(): StreamableOperator<T, T, Updater<T>, T> =>
   streamable =>
     createStreamable(updates =>
-      createObservableWithScheduler(scheduler => {
-        const stream = pipe(streamable, streamStreamable(scheduler));
+      createObservableUnsafe(observer => {
+        const stream = pipe(streamable, streamStreamable(observer));
         const updatesSubscription = pipe(
           updates,
           zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),
-          subscribe(scheduler, stream.dispatch, stream),
+          subscribe(observer, stream.dispatch, stream),
         );
 
         bindDisposables(updatesSubscription, stream);
-        addDisposable(scheduler, stream);
+        addDisposable(observer, stream);
 
-        return stream;
+        pipe(stream, sinkInto(observer));
       }),
     );

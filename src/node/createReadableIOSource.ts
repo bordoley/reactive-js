@@ -8,12 +8,8 @@ import {
   dispose,
 } from "../disposable";
 import { Factory, pipe } from "../functions";
-import {
-  createObservable,
-  createObservableWithScheduler,
-  dispatchTo,
-  subscribe,
-} from "../observable";
+import { createObservableUnsafe, dispatchTo, subscribe } from "../observable";
+import { toDispatcher } from "../observable/toDispatcher";
 import { FlowableLike, createStreamable } from "../streamable";
 import { createDisposableNodeStream } from "./nodeStream";
 
@@ -21,14 +17,16 @@ export const createReadableIOSource = (
   factory: Factory<DisposableValueLike<Readable>>,
 ): FlowableLike<Uint8Array> =>
   createStreamable(mode =>
-    createObservableWithScheduler(scheduler => {
+    createObservableUnsafe(observer => {
+      const dispatcher = toDispatcher(observer);
+
       const readable = factory();
       const readableValue = readable.value;
       readableValue.pause();
 
       const modeSubscription = pipe(
         mode,
-        subscribe(scheduler, ev => {
+        subscribe(observer, ev => {
           switch (ev) {
             case "pause":
               readableValue.pause();
@@ -39,26 +37,22 @@ export const createReadableIOSource = (
           }
         }),
       );
-      addDisposable(scheduler, readable);
+      addDisposable(observer, readable);
 
       addDisposableDisposeParentOnChildError(readable, modeSubscription);
 
-      return createObservable(dispatcher => {
-        const readableValue = readable.value;
+      const onData = dispatchTo(dispatcher);
+      const onEnd = () => {
+        pipe(dispatcher, dispose());
+      };
 
-        const onData = dispatchTo(dispatcher);
-        readableValue.on("data", onData);
+      readableValue.on("data", onData);
+      readableValue.on("end", onEnd);
 
-        const onEnd = () => {
-          pipe(dispatcher, dispose());
-        };
-        readableValue.on("end", onEnd);
-
-        addDisposable(readable, dispatcher);
-        addTeardown(dispatcher, _ => {
-          readableValue.removeListener("data", onData);
-          readableValue.removeListener("end", onEnd);
-        });
+      addDisposable(readable, dispatcher);
+      addTeardown(dispatcher, _ => {
+        readableValue.removeListener("data", onData);
+        readableValue.removeListener("end", onEnd);
       });
     }),
   );

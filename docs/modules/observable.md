@@ -71,7 +71,7 @@
 - [concat](observable.md#concat)
 - [concatAll](observable.md#concatall)
 - [createObservable](observable.md#createobservable)
-- [createObservableWithScheduler](observable.md#createobservablewithscheduler)
+- [createObservableUnsafe](observable.md#createobservableunsafe)
 - [createSubject](observable.md#createsubject)
 - [decodeWithCharset](observable.md#decodewithcharset)
 - [defer](observable.md#defer)
@@ -1258,9 +1258,9 @@ the onSubscribe function.
 
 ___
 
-### createObservableWithScheduler
+### createObservableUnsafe
 
-▸ **createObservableWithScheduler**<`T`\>(`f`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
+▸ **createObservableUnsafe**<`T`\>(`f`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -1272,7 +1272,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `f` | [`Function1`](functions.md#function1)<[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md), [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\> |
+| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`Observer`](../classes/observable.Observer.md)<`T`\>\> |
 
 #### Returns
 

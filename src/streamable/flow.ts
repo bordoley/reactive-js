@@ -1,14 +1,15 @@
-import { bindDisposables } from "../disposable";
+import { addDisposable, bindDisposables } from "../disposable";
 import { Function1, pipe } from "../functions";
 import {
   ObservableLike,
-  createObservableWithScheduler,
+  createObservableUnsafe,
   fromDisposable,
   subscribe,
   subscribeOn,
   takeUntil,
 } from "../observable";
 import { SchedulerLike, toPausableScheduler } from "../scheduler";
+import { sinkInto } from "../source";
 import { FlowMode, FlowableLike } from "../streamable";
 import { createStreamable } from "./streamable";
 
@@ -20,10 +21,8 @@ export const flow =
   } = {}): Function1<ObservableLike<T>, FlowableLike<T>> =>
   observable => {
     const op = (modeObs: ObservableLike<FlowMode>) =>
-      createObservableWithScheduler(modeScheduler => {
-        const pausableScheduler = toPausableScheduler(
-          scheduler ?? modeScheduler,
-        );
+      createObservableUnsafe(observer => {
+        const pausableScheduler = toPausableScheduler(scheduler ?? observer);
 
         const onModeChange = (mode: FlowMode) => {
           switch (mode) {
@@ -38,16 +37,17 @@ export const flow =
 
         const modeSubscription = pipe(
           modeObs,
-          subscribe(modeScheduler, onModeChange),
+          subscribe(observer, onModeChange),
         );
 
         bindDisposables(modeSubscription, pausableScheduler);
-        modeScheduler.add(pausableScheduler);
+        addDisposable(observer, pausableScheduler);
 
-        return pipe(
+        pipe(
           observable,
           subscribeOn(pausableScheduler),
           pipe(pausableScheduler, fromDisposable, takeUntil),
+          sinkInto(observer),
         );
       });
 
