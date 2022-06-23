@@ -1,11 +1,11 @@
 /// <reference types="./web.d.ts" />
 import { dispose, addTeardown, addDisposableDisposeParentOnChildError, toAbortSignal } from './disposable.mjs';
 import { pipe, raise, returns } from './functions.mjs';
-import { createObservable, onNotify, keep as keep$1, throttle, map, subscribe, defer, fromPromise } from './observable.mjs';
+import { createObservable, AbstractObservable, onNotify, keep as keep$1, throttle, map, subscribe, defer, fromPromise } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { none, isNone } from './option.mjs';
-import { AbstractSource, sinkInto } from './source.mjs';
 import { createStateStore, lift, stream } from './streamable.mjs';
+import { sinkInto } from './source.mjs';
 
 const fromEvent = (target, eventName, selector) => createObservable(dispatcher => {
     const listener = (event) => {
@@ -74,7 +74,7 @@ const windowHistoryPushState = (self, uri) => {
     self.historyCounter++;
     window.history.pushState({ counter: self.historyCounter, title }, "", windowLocationURIToString(uri));
 };
-class WindowLocationStream extends AbstractSource {
+class WindowLocationStream extends AbstractObservable {
     constructor(stateStream) {
         super();
         this.stateStream = stateStream;

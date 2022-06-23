@@ -6,7 +6,8 @@ import {
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { AbstractSource, sinkInto } from "../source";
+import { sinkInto } from "../source";
+import { AbstractObservable } from "./observable";
 import { Observer, createDelegatingObserver } from "./observer";
 
 const createMergeObserver = <T>(
@@ -28,10 +29,7 @@ const createMergeObserver = <T>(
   return observer;
 };
 
-class MergeObservable<T>
-  extends AbstractSource<T, Observer<T>>
-  implements ObservableLike<T>
-{
+class MergeObservable<T> extends AbstractObservable<T> {
   constructor(readonly observables: readonly ObservableLike<T>[]) {
     super();
   }

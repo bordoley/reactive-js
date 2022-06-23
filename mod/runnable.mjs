@@ -6,7 +6,10 @@ import { AbstractDisposableContainer } from './container.mjs';
 import { addDisposable, addDisposableDisposeParentOnChildError } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 
-class RunnableImpl extends AbstractSource {
+class AbstractRunnable extends AbstractSource {
+}
+
+class RunnableImpl extends AbstractRunnable {
     constructor(_run) {
         super();
         this._run = _run;
@@ -38,7 +41,7 @@ const fromArrayT = {
     fromArray,
 };
 
-class LiftedRunnable extends AbstractSource {
+class LiftedRunnable extends AbstractRunnable {
     constructor(src, operators) {
         super();
         this.src = src;
@@ -382,7 +385,7 @@ const throwIfEmpty = createThrowIfEmptyOperator(liftT, class ThrowIfEmptySink ex
 const throwIfEmptyT = {
     throwIfEmpty,
 };
-const using = createUsing(class UsingObservable extends AbstractSource {
+const using = createUsing(class UsingRunnable extends AbstractRunnable {
     constructor(resourceFactory, sourceFactory) {
         super();
         this.resourceFactory = resourceFactory;

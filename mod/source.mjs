@@ -239,9 +239,7 @@ const createUsing = (UsingSource) => {
             sink.dispose({ cause });
         }
     };
-    function using(resourceFactory, sourceFactoryFactory) {
-        return new UsingSource(resourceFactory, sourceFactoryFactory);
-    }
+    const using = (resourceFactory, sourceFactoryFactory) => new UsingSource(resourceFactory, sourceFactoryFactory);
     return using;
 };
 

@@ -8,14 +8,12 @@ import {
 } from "../observable";
 import { Option, none } from "../option";
 import { SchedulerLike } from "../scheduler";
-import { AbstractSource, sinkInto } from "../source";
+import { sinkInto } from "../source";
+import { AbstractObservable } from "./observable";
 import { Observer } from "./observer";
 import { publish } from "./publish";
 
-class SharedObservable<T>
-  extends AbstractSource<T, Observer<T>>
-  implements ObservableLike<T>
-{
+class SharedObservable<T> extends AbstractObservable<T> {
   private observerCount = 0;
   private multicast: Option<MulticastObservableLike<T>>;
   private readonly teardown = () => {

@@ -18,10 +18,6 @@ import {
   Equality,
   Factory,
   Function1,
-  Function2,
-  Function3,
-  Function4,
-  Function5,
   Predicate,
   Reducer,
   SideEffect1,
@@ -685,74 +681,10 @@ export const createUsing = <C extends SourceLike>(
     }
   };
 
-  function using<TResource extends DisposableLike, T>(
-    resourceFactory: Factory<TResource>,
-    sourceFactory: Function1<TResource, C>,
-  ): C;
-  function using<
-    TResource1 extends DisposableLike,
-    TResource2 extends DisposableLike,
-    T,
-  >(
-    resourceFactory: Factory<readonly [TResource1, TResource2]>,
-    sourceFactory: Function2<TResource1, TResource2, C>,
-  ): C;
-
-  function using<
-    TResource1 extends DisposableLike,
-    TResource2 extends DisposableLike,
-    TResource3 extends DisposableLike,
-    T,
-  >(
-    resourceFactory: Factory<readonly [TResource1, TResource2, TResource3]>,
-    sourceFactory: Function3<TResource1, TResource2, TResource3, C>,
-  ): C;
-
-  function using<
-    TResource1 extends DisposableLike,
-    TResource2 extends DisposableLike,
-    TResource3 extends DisposableLike,
-    TResource4 extends DisposableLike,
-    T,
-  >(
-    resourceFactory: Factory<
-      readonly [TResource1, TResource2, TResource3, TResource4]
-    >,
-    sourceFactory: Function4<TResource1, TResource2, TResource3, TResource4, C>,
-  ): C;
-
-  function using<
-    TResource1 extends DisposableLike,
-    TResource2 extends DisposableLike,
-    TResource3 extends DisposableLike,
-    TResource4 extends DisposableLike,
-    TResource5 extends DisposableLike,
-    T,
-  >(
-    resourceFactory: Factory<
-      readonly [TResource1, TResource2, TResource3, TResource4, TResource5]
-    >,
-    sourceFactory: Function5<
-      TResource1,
-      TResource2,
-      TResource3,
-      TResource4,
-      TResource5,
-      C
-    >,
-  ): C;
-
-  function using<TResource extends DisposableLike, T>(
+  const using = <TResource extends DisposableLike, T>(
     resourceFactory: Factory<TResource | readonly TResource[]>,
     sourceFactoryFactory: (...resources: readonly TResource[]) => C,
-  ): C;
-
-  function using<TResource extends DisposableLike, T>(
-    resourceFactory: Factory<TResource | readonly TResource[]>,
-    sourceFactoryFactory: (...resources: readonly TResource[]) => C,
-  ): C {
-    return new UsingSource<TResource, T>(resourceFactory, sourceFactoryFactory);
-  }
+  ): C => new UsingSource<TResource, T>(resourceFactory, sourceFactoryFactory);
 
   return using;
 };

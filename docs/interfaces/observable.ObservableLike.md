@@ -20,6 +20,10 @@ The source of notifications which notifies a `ObserverLike` instance.
 
   ↳↳ [`MulticastObservableLike`](observable.MulticastObservableLike.md)
 
+## Implemented by
+
+- [`AbstractObservable`](../classes/observable.AbstractObservable.md)
+
 ## Table of contents
 
 ### Properties

@@ -755,7 +755,7 @@ ___
 
 ### using
 
-▸ **using**<`TResource`, `T`\>(`resourceFactory`, `enumerableFactory`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
+▸ **using**<`TResource`, `T`\>(`resourceFactory`, `containerFactory`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -769,13 +769,13 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `resourceFactory` | [`Factory`](functions.md#factory)<`TResource`\> |
-| `enumerableFactory` | [`Function1`](functions.md#function1)<`TResource`, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\> |
+| `containerFactory` | [`Function1`](functions.md#function1)<`TResource`, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\> |
 
 #### Returns
 
 [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
 
-▸ **using**<`TResource1`, `TResource2`, `T`\>(`resourceFactory`, `enumerableFactory`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
+▸ **using**<`TResource1`, `TResource2`, `T`\>(`resourceFactory`, `containerFactory`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -789,14 +789,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1`, `TResource2`]\> |
-| `enumerableFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`]\> |
+| `containerFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\> |
 
 #### Returns
 
 [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
 
-▸ **using**<`TResource1`, `TResource2`, `TResource3`, `T`\>(`resourceFactory`, `enumerableFactory`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
+▸ **using**<`TResource1`, `TResource2`, `TResource3`, `T`\>(`resourceFactory`, `containerFactory`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -811,14 +811,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1`, `TResource2`, `TResource3`]\> |
-| `enumerableFactory` | [`Function3`](functions.md#function3)<`TResource1`, `TResource2`, `TResource3`, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`]\> |
+| `containerFactory` | [`Function3`](functions.md#function3)<`TResource1`, `TResource2`, `TResource3`, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\> |
 
 #### Returns
 
 [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
 
-▸ **using**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `T`\>(`resourceFactory`, `enumerableFactory`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
+▸ **using**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `T`\>(`resourceFactory`, `containerFactory`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -834,14 +834,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1`, `TResource2`, `TResource3`, `TResource4`]\> |
-| `enumerableFactory` | [`Function4`](functions.md#function4)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`]\> |
+| `containerFactory` | [`Function4`](functions.md#function4)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\> |
 
 #### Returns
 
 [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
 
-▸ **using**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, `T`\>(`resourceFactory`, `enumerableFactory`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
+▸ **using**<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, `T`\>(`resourceFactory`, `containerFactory`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -858,14 +858,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`]\> |
-| `enumerableFactory` | [`Function5`](functions.md#function5)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\> |
+| `resourceFactory` | [`Factory`](functions.md#factory)<[`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`]\> |
+| `containerFactory` | [`Function5`](functions.md#function5)<`TResource1`, `TResource2`, `TResource3`, `TResource4`, `TResource5`, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\> |
 
 #### Returns
 
 [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
 
-▸ **using**<`TResource`, `T`\>(`resourceFactory`, `enumerableFactory`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
+▸ **using**<`TResource`, `T`\>(`resourceFactory`, `runnableFactory`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -879,7 +879,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `resourceFactory` | [`Factory`](functions.md#factory)<`TResource` \| readonly `TResource`[]\> |
-| `enumerableFactory` | (...`resources`: readonly `TResource`[]) => [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\> |
+| `runnableFactory` | (...`resources`: readonly `TResource`[]) => [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\> |
 
 #### Returns
 

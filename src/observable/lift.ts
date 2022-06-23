@@ -1,6 +1,7 @@
 import { Function1, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { AbstractSource, Lift, sinkInto } from "../source";
+import { Lift, sinkInto } from "../source";
+import { AbstractObservable } from "./observable";
 import { Observer } from "./observer";
 
 /**
@@ -8,10 +9,7 @@ import { Observer } from "./observer";
  */
 export type ObserverOperator<A, B> = Function1<Observer<B>, Observer<A>>;
 
-class LiftedObservable<TIn, TOut>
-  extends AbstractSource<TOut, Observer<TOut>>
-  implements ObservableLike<TOut>
-{
+class LiftedObservable<TIn, TOut> extends AbstractObservable<TOut> {
   constructor(
     readonly source: ObservableLike<TIn>,
     readonly operators: readonly ObserverOperator<any, any>[],

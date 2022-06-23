@@ -10,7 +10,10 @@ import { map as map$1, everySatisfy as everySatisfy$1 } from './readonlyArray.mj
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, EnumeratorBase, AbstractEnumerable, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 
-class DeferObservable extends AbstractSource {
+class AbstractObservable extends AbstractSource {
+}
+
+class DeferObservable extends AbstractObservable {
     constructor(f, isSynchronous, delay) {
         super();
         this.f = f;
@@ -64,7 +67,7 @@ const fromArrayT = {
     fromArray,
 };
 
-class LiftedObservable extends AbstractSource {
+class LiftedObservable extends AbstractObservable {
     constructor(source, operators, isSynchronous) {
         super();
         this.source = source;
@@ -470,7 +473,7 @@ const createConcatObserver = (delegate, observables, next) => {
     });
     return observer;
 };
-class ConcatObservable extends AbstractSource {
+class ConcatObservable extends AbstractObservable {
     constructor(observables) {
         super();
         this.observables = observables;
@@ -558,7 +561,7 @@ const createObservable = (onSubscribe) => defer(() => observer => {
     const dispatcher = toDispatcher(observer);
     onSubscribe(dispatcher);
 });
-class Observable extends AbstractSource {
+class Observable extends AbstractObservable {
     constructor(f) {
         super();
         this.f = f;
@@ -621,7 +624,7 @@ const fromDisposable = (disposable) => createObservable(dispatcher => {
     addDisposable(disposable, dispatcher);
 });
 
-const using = createUsing(class UsingObservable extends AbstractSource {
+const using = createUsing(class UsingObservable extends AbstractObservable {
     constructor(resourceFactory, sourceFactory) {
         super();
         this.resourceFactory = resourceFactory;
@@ -734,7 +737,7 @@ const createMergeObserver = (delegate, count, ctx) => {
     });
     return observer;
 };
-class MergeObservable extends AbstractSource {
+class MergeObservable extends AbstractObservable {
     constructor(observables) {
         super();
         this.observables = observables;
@@ -754,7 +757,7 @@ function merge(...observables) {
 }
 const mergeWith = (snd) => fst => merge(fst, snd);
 
-class NeverObservable extends AbstractSource {
+class NeverObservable extends AbstractObservable {
     sink(_) { }
 }
 const neverInstance = new NeverObservable();
@@ -990,7 +993,7 @@ const onNotify$2 = createOnNotifyOperator(liftSynchronousT, class OnNotifyObserv
     }
 });
 
-class OnSubscribeObservable extends AbstractSource {
+class OnSubscribeObservable extends AbstractObservable {
     constructor(src, f) {
         super();
         this.src = src;
@@ -1159,7 +1162,7 @@ const scanAsync = (scanner, initialValue) => observable => using(() => createSub
     accFeedbackStream.dispatch(initialValue());
 })));
 
-class SharedObservable extends AbstractSource {
+class SharedObservable extends AbstractObservable {
     constructor(source, publish) {
         super();
         this.source = source;
@@ -1494,7 +1497,7 @@ class ZipObserver extends Observer {
         }
     }
 }
-class ZipObservable extends AbstractSource {
+class ZipObservable extends AbstractObservable {
     constructor(observables) {
         super();
         this.observables = observables;
@@ -1736,4 +1739,4 @@ const throwIfEmptyT = {
     throwIfEmpty,
 };
 
-export { Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createObservableWithScheduler, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify$2 as onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AbstractObservable, Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createObservableWithScheduler, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify$2 as onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

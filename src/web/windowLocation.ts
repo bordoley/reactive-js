@@ -6,6 +6,7 @@ import {
 } from "../disposable";
 import { Updater, pipe, raise } from "../functions";
 import {
+  AbstractObservable,
   Observer,
   StreamLike,
   keep,
@@ -16,7 +17,6 @@ import {
 } from "../observable";
 import { Option, isNone, none } from "../option";
 import { SchedulerLike } from "../scheduler";
-import { AbstractSource } from "../source";
 import { createStateStore, lift, stream } from "../streamable";
 import {
   WindowLocationStreamLike,
@@ -83,7 +83,7 @@ const windowHistoryPushState = (
 };
 
 class WindowLocationStream
-  extends AbstractSource<WindowLocationURI, Observer<WindowLocationURI>>
+  extends AbstractObservable<WindowLocationURI>
   implements WindowLocationStreamLike
 {
   historyCounter = -1;
