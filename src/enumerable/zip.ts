@@ -1,3 +1,4 @@
+import { Zip } from "../container";
 import { addDisposableDisposeParentOnChildError } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { pipe } from "../functions";
@@ -135,3 +136,7 @@ export function zip(
 ): EnumerableLike<readonly unknown[]> {
   return new ZipEnumerable(enumerables);
 }
+
+export const zipT: Zip<EnumerableLike<unknown>> = {
+  zip,
+};

@@ -1,7 +1,7 @@
 import { addDisposableDisposeParentOnChildError } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { Factory, Function1 } from "../functions";
-import { RunnableLike, Sink, createRunnable } from "../runnable";
+import { RunnableLike, Sink, ToRunnable, createRunnable } from "../runnable";
 import { Enumerator } from "./enumerator";
 
 const enumeratorToRunnable = <T>(
@@ -25,3 +25,7 @@ export const toRunnable = <T>(): Function1<
   EnumerableLike<T>,
   RunnableLike<T>
 > => _toRunnable;
+
+export const toRunnableT: ToRunnable<EnumerableLike<unknown>> = {
+  toRunnable,
+};

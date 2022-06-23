@@ -1,7 +1,7 @@
 import { addDisposableDisposeParentOnChildError } from "../disposable";
 import { Factory, Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
-import { RunnableLike, createRunnable } from "../runnable";
+import { RunnableLike, ToRunnable, createRunnable } from "../runnable";
 import {
   VirtualTimeSchedulerLike,
   createVirtualTimeScheduler,
@@ -29,3 +29,7 @@ export const toRunnable =
       scheduler.run();
       scheduler.dispose();
     });
+
+export const toRunnableT: ToRunnable<ObservableLike<unknown>> = {
+  toRunnable,
+};

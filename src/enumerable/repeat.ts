@@ -1,3 +1,4 @@
+import { Repeat } from "../container";
 import { addDisposableDisposeParentOnChildError } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { Predicate, alwaysTrue, raise } from "../functions";
@@ -95,3 +96,7 @@ export function repeat<T>(
 
   return enumerable => new RepeatEnumerable(enumerable, repeatPredicate);
 }
+
+export const repeatT: Repeat<EnumerableLike<unknown>> = {
+  repeat,
+};

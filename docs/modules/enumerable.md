@@ -22,19 +22,27 @@
 
 ### Variables
 
+- [concatAllT](enumerable.md#concatallt)
 - [concatT](enumerable.md#concatt)
 - [distinctUntilChangedT](enumerable.md#distinctuntilchangedt)
 - [fromArrayT](enumerable.md#fromarrayt)
+- [fromIterableT](enumerable.md#fromiterablet)
+- [fromIteratorT](enumerable.md#fromiteratort)
+- [generateT](enumerable.md#generatet)
 - [keepT](enumerable.md#keept)
 - [mapT](enumerable.md#mapt)
 - [pairwiseT](enumerable.md#pairwiset)
+- [repeatT](enumerable.md#repeatt)
 - [scanT](enumerable.md#scant)
 - [skipFirstT](enumerable.md#skipfirstt)
 - [takeFirstT](enumerable.md#takefirstt)
+- [takeLastT](enumerable.md#takelastt)
 - [takeWhileT](enumerable.md#takewhilet)
 - [throwIfEmptyT](enumerable.md#throwifemptyt)
+- [toRunnableT](enumerable.md#torunnablet)
 - [type](enumerable.md#type)
 - [usingT](enumerable.md#usingt)
+- [zipT](enumerable.md#zipt)
 
 ### Functions
 
@@ -84,6 +92,12 @@ A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB>
 
 ## Variables
 
+### concatAllT
+
+• `Const` **concatAllT**: [`ConcatAll`](../interfaces/container.ConcatAll.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
 ### concatT
 
 • `Const` **concatT**: [`Concat`](../interfaces/container.Concat.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
@@ -99,6 +113,24 @@ ___
 ### fromArrayT
 
 • `Const` **fromArrayT**: [`FromArray`](../interfaces/container.FromArray.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\>
+
+___
+
+### fromIterableT
+
+• `Const` **fromIterableT**: [`FromIterable`](../interfaces/container.FromIterable.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
+### fromIteratorT
+
+• `Const` **fromIteratorT**: [`FromIterator`](../interfaces/container.FromIterator.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
+### generateT
+
+• `Const` **generateT**: [`Generate`](../interfaces/container.Generate.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
 
 ___
 
@@ -120,6 +152,12 @@ ___
 
 ___
 
+### repeatT
+
+• `Const` **repeatT**: [`Repeat`](../interfaces/container.Repeat.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
 ### scanT
 
 • `Const` **scanT**: [`Scan`](../interfaces/container.Scan.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
@@ -138,6 +176,12 @@ ___
 
 ___
 
+### takeLastT
+
+• `Const` **takeLastT**: [`TakeLast`](../interfaces/container.TakeLast.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
 ### takeWhileT
 
 • `Const` **takeWhileT**: [`TakeWhile`](../interfaces/container.TakeWhile.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
@@ -150,6 +194,12 @@ ___
 
 ___
 
+### toRunnableT
+
+• `Const` **toRunnableT**: [`ToRunnable`](../interfaces/runnable.ToRunnable.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
 ### type
 
 • `Const` **type**: [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>
@@ -159,6 +209,12 @@ ___
 ### usingT
 
 • `Const` **usingT**: [`Using`](../interfaces/container.Using.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
+### zipT
+
+• `Const` **zipT**: [`Zip`](../interfaces/container.Zip.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
 
 ## Functions
 

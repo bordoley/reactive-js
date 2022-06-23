@@ -89,15 +89,20 @@ export {
   current,
   move,
 } from "./enumerable/enumerator";
-export { concatAll } from "./enumerable/concatAll";
+export { concatAll, concatAllT } from "./enumerable/concatAll";
 export { fromArray, fromArrayT } from "./enumerable/fromArray";
-export { fromIterable, fromIterator } from "./enumerable/fromIterator";
-export { generate } from "./enumerable/generate";
-export { repeat } from "./enumerable/repeat";
-export { takeLast } from "./enumerable/takeLast";
-export { toRunnable } from "./enumerable/toRunnable";
+export {
+  fromIterable,
+  fromIterableT,
+  fromIterator,
+  fromIteratorT,
+} from "./enumerable/fromIterator";
+export { generate, generateT } from "./enumerable/generate";
+export { repeat, repeatT } from "./enumerable/repeat";
+export { takeLast, takeLastT } from "./enumerable/takeLast";
+export { toRunnable, toRunnableT } from "./enumerable/toRunnable";
 export { toIterable } from "./enumerable/toIterable";
-export { zip, zipEnumerators } from "./enumerable/zip";
+export { zip, zipT, zipEnumerators } from "./enumerable/zip";
 
 export const toEnumerable = <T>(): Function1<
   EnumerableLike<T>,

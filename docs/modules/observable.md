@@ -33,12 +33,14 @@
 - [everySatisfyT](observable.md#everysatisfyt)
 - [exhaustT](observable.md#exhaustt)
 - [fromArrayT](observable.md#fromarrayt)
+- [fromIterableT](observable.md#fromiterablet)
 - [fromIteratorT](observable.md#fromiteratort)
 - [keepT](observable.md#keept)
 - [mapT](observable.md#mapt)
 - [mergeAllT](observable.md#mergeallt)
 - [pairwiseT](observable.md#pairwiset)
 - [reduceT](observable.md#reducet)
+- [repeatT](observable.md#repeatt)
 - [scanT](observable.md#scant)
 - [skipFirstT](observable.md#skipfirstt)
 - [someSatisfyT](observable.md#somesatisfyt)
@@ -48,6 +50,8 @@
 - [takeWhileT](observable.md#takewhilet)
 - [throwIfEmptyT](observable.md#throwifemptyt)
 - [timeoutError](observable.md#timeouterror)
+- [toEnumerableT](observable.md#toenumerablet)
+- [toRunnableT](observable.md#torunnablet)
 - [type](observable.md#type)
 - [usingT](observable.md#usingt)
 - [zipT](observable.md#zipt)
@@ -210,6 +214,12 @@ ___
 
 ___
 
+### fromIterableT
+
+• `Const` **fromIterableT**: [`FromIterable`](../interfaces/container.FromIterable.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
 ### fromIteratorT
 
 • `Const` **fromIteratorT**: [`FromIterator`](../interfaces/container.FromIterator.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, { `delay?`: `number`  }\>
@@ -243,6 +253,12 @@ ___
 ### reduceT
 
 • `Const` **reduceT**: [`Reduce`](../interfaces/container.Reduce.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### repeatT
+
+• `Const` **repeatT**: [`Repeat`](../interfaces/container.Repeat.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
@@ -299,6 +315,18 @@ ___
 • `Const` **timeoutError**: `symbol`
 
 Symbol thrown when the timeout operator times out
+
+___
+
+### toEnumerableT
+
+• `Const` **toEnumerableT**: [`ToEnumerable`](../interfaces/enumerable.ToEnumerable.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### toRunnableT
+
+• `Const` **toRunnableT**: [`ToRunnable`](../interfaces/runnable.ToRunnable.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 

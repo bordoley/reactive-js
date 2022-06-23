@@ -685,6 +685,9 @@ const fromIterable = (options) => {
     const call = fromEnumerable(options);
     return compose(fromIterable$1(), call);
 };
+const fromIterableT = {
+    fromIterable,
+};
 
 /**
  * Converts a `Promise` to an `ObservableLike`. The provided promise factory
@@ -1075,6 +1078,9 @@ function repeat(predicate) {
             : (count, error) => isNone(error) && predicate(count);
     return repeatObs(repeatPredicate);
 }
+const repeatT = {
+    repeat,
+};
 const defaultRetryPredicate = (_, error) => isSome(error);
 function retry(predicate) {
     const retryPredicate = isNone(predicate)
@@ -1423,6 +1429,9 @@ class ObservableEnumerable extends AbstractEnumerable {
     }
 }
 const toEnumerable = () => obs => new ObservableEnumerable(obs);
+const toEnumerableT = {
+    toEnumerable,
+};
 
 const shouldEmit = (enumerators) => {
     for (const enumerator of enumerators) {
@@ -1552,6 +1561,9 @@ const toRunnable = (options = {}) => source => createRunnable(sink => {
     scheduler.run();
     scheduler.dispose();
 });
+const toRunnableT = {
+    toRunnable,
+};
 
 /**
  * Returns a Promise that completes with the last value produced by
@@ -1739,4 +1751,4 @@ const throwIfEmptyT = {
     throwIfEmpty,
 };
 
-export { AbstractObservable, Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createObservableWithScheduler, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify$2 as onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toPromise, toRunnable, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AbstractObservable, Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createObservableWithScheduler, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify$2 as onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

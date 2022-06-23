@@ -1,4 +1,19 @@
-import { ContainerLike } from "./container";
+import {
+  Concat,
+  ConcatAll,
+  ContainerLike,
+  DistinctUntilChanged,
+  FromArray,
+  Generate,
+  Keep,
+  Map,
+  Repeat,
+  Scan,
+  SkipFirst,
+  TakeFirst,
+  TakeLast,
+  TakeWhile,
+} from "./container";
 import {
   Equality,
   Factory,
@@ -11,7 +26,7 @@ import {
   strictEquality,
 } from "./functions";
 import { isNone } from "./option";
-import { RunnableLike, createRunnable } from "./runnable";
+import { RunnableLike, ToRunnable, createRunnable } from "./runnable";
 
 export interface SequenceResultNotify<T> {
   readonly data: T;
@@ -80,6 +95,10 @@ export const concatAll =
     return castToSequence(() => flattenIter(seq()));
   };
 
+export const concatAllT: ConcatAll<Sequence<unknown>> = {
+  concatAll,
+};
+
 const _fromArray = <T>(
   arr: readonly T[],
   index: number,
@@ -107,6 +126,10 @@ export const fromArray =
     return castToSequence(() => _fromArray(values, startIndex, endIndex));
   };
 
+export const fromArrayT: FromArray<Sequence<unknown>> = {
+  fromArray,
+};
+
 export function concat<T>(
   fst: Sequence<T>,
   snd: Sequence<T>,
@@ -116,6 +139,10 @@ export function concat<T>(
 export function concat<T>(...sequences: readonly Sequence<T>[]): Sequence<T> {
   return pipe(sequences, fromArray(), concatAll());
 }
+
+export const concatT: Concat<Sequence<unknown>> = {
+  concat,
+};
 
 const _distinctUntilChanged = <T>(
   equality: Equality<T>,
@@ -156,6 +183,10 @@ export const distinctUntilChanged =
         : done();
     });
 
+export const distinctUntilChangedT: DistinctUntilChanged<Sequence<unknown>> = {
+  distinctUntilChanged,
+};
+
 const _keep = <T>(predicate: Predicate<T>, seq: Sequence<T>): Sequence<T> =>
   castToSequence(() => {
     let result = seq();
@@ -177,6 +208,10 @@ export const keep =
   seq =>
     _keep(predicate, seq);
 
+export const keepT: Keep<Sequence<unknown>> = {
+  keep,
+};
+
 const _map = <TA, TB>(
   mapper: Function1<TA, TB>,
   seq: Sequence<TA>,
@@ -193,6 +228,10 @@ export const map =
   seq =>
     _map(mapper, seq);
 
+export const mapT: Map<Sequence<unknown>> = {
+  map,
+};
+
 const _generate = <T>(generator: Updater<T>, acc: T): Sequence<T> =>
   castToSequence(() => notify(acc, _generate(generator, generator(acc))));
 
@@ -204,6 +243,10 @@ export const generate = <T>(
     const acc = generator(initialValue());
     return _generate(generator, acc)();
   });
+
+export const generateT: Generate<Sequence<unknown>> = {
+  generate,
+};
 
 export const seek =
   <T>(count: number): SequenceOperator<T, T> =>
@@ -243,6 +286,10 @@ export const takeFirst =
     return _takeFirst(count, seq);
   };
 
+export const takeFirstT: TakeFirst<Sequence<unknown>> = {
+  takeFirst,
+};
+
 const _repeat = <T>(
   predicate: Predicate<number>,
   count: number,
@@ -275,6 +322,10 @@ export function repeat<T>(
   return seq => _repeat(repeatPredicate, 1, seq, seq);
 }
 
+export const repeatT: Repeat<Sequence<unknown>> = {
+  repeat,
+};
+
 const _scan = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   acc: TAcc,
@@ -298,6 +349,10 @@ export const scan =
   seq =>
     castToSequence(() => _scan(reducer, initialValue(), seq)());
 
+export const scanT: Scan<Sequence<unknown>> = {
+  scan,
+};
+
 export const skipFirst =
   <T>(options: { readonly count?: number } = {}): SequenceOperator<T, T> =>
   seq =>
@@ -305,6 +360,10 @@ export const skipFirst =
       const { count = 1 } = options;
       return seek<T>(count)(seq)();
     });
+
+export const skipFirstT: SkipFirst<Sequence<unknown>> = {
+  skipFirst,
+};
 
 const _takeLast = <T>(maxCount: number, seq: Sequence<T>): Sequence<T> =>
   castToSequence(() => {
@@ -329,6 +388,10 @@ export const takeLast =
     const { count = 1 } = options;
     return _takeLast(count, seq);
   };
+
+export const takeLastT: TakeLast<Sequence<unknown>> = {
+  takeLast,
+};
 
 const _takeWhile = <T>(
   predicate: Predicate<T>,
@@ -355,6 +418,10 @@ export const takeWhile =
     return _takeWhile(predicate, inclusive, seq);
   };
 
+export const takeWhileT: TakeWhile<Sequence<unknown>> = {
+  takeWhile,
+};
+
 export const toRunnable =
   <T>(): Function1<Sequence<T>, RunnableLike<T>> =>
   seq =>
@@ -365,3 +432,7 @@ export const toRunnable =
         result = result.next();
       }
     });
+
+export const toRunnableT: ToRunnable<Sequence<unknown>> = {
+  toRunnable,
+};

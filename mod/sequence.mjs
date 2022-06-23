@@ -31,6 +31,9 @@ const concatAll = () => seq => {
     };
     return castToSequence(() => flattenIter(seq()));
 };
+const concatAllT = {
+    concatAll,
+};
 const _fromArray = (arr, index, endIndex) => index < endIndex && index >= 0
     ? notify(arr[index], () => _fromArray(arr, index + 1, endIndex))
     : done();
@@ -41,9 +44,15 @@ const fromArray = (options = {}) => values => {
     const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : valuesLength, valuesLength), 0);
     return castToSequence(() => _fromArray(values, startIndex, endIndex));
 };
+const fromArrayT = {
+    fromArray,
+};
 function concat(...sequences) {
     return pipe(sequences, fromArray(), concatAll());
 }
+const concatT = {
+    concat,
+};
 const _distinctUntilChanged = (equality, prevValue, next) => castToSequence(() => {
     let retval = next();
     while (true) {
@@ -67,6 +76,9 @@ const distinctUntilChanged = (options = {}) => seq => castToSequence(() => {
         ? notify(result.data, _distinctUntilChanged(equality, result.data, result.next))
         : done();
 });
+const distinctUntilChangedT = {
+    distinctUntilChanged,
+};
 const _keep = (predicate, seq) => castToSequence(() => {
     let result = seq();
     while (true) {
@@ -84,6 +96,9 @@ const _keep = (predicate, seq) => castToSequence(() => {
     }
 });
 const keep = (predicate) => seq => _keep(predicate, seq);
+const keepT = {
+    keep,
+};
 const _map = (mapper, seq) => castToSequence(() => {
     const result = seq();
     return isNotify(result)
@@ -91,11 +106,17 @@ const _map = (mapper, seq) => castToSequence(() => {
         : done();
 });
 const map = (mapper) => seq => _map(mapper, seq);
+const mapT = {
+    map,
+};
 const _generate = (generator, acc) => castToSequence(() => notify(acc, _generate(generator, generator(acc))));
 const generate = (generator, initialValue) => castToSequence(() => {
     const acc = generator(initialValue());
     return _generate(generator, acc)();
 });
+const generateT = {
+    generate,
+};
 const seek = (count) => seq => {
     if (count <= 0) {
         return seq;
@@ -126,6 +147,9 @@ const takeFirst = (options = {}) => seq => {
     const { count = 1 } = options;
     return _takeFirst(count, seq);
 };
+const takeFirstT = {
+    takeFirst,
+};
 const _repeat = (predicate, count, src, seq) => castToSequence(() => {
     const result = seq();
     if (isNotify(result)) {
@@ -146,6 +170,9 @@ function repeat(predicate) {
             : (count) => predicate(count);
     return seq => _repeat(repeatPredicate, 1, seq, seq);
 }
+const repeatT = {
+    repeat,
+};
 const _scan = (reducer, acc, seq) => castToSequence(() => {
     const result = seq();
     if (isNotify(result)) {
@@ -157,10 +184,16 @@ const _scan = (reducer, acc, seq) => castToSequence(() => {
     }
 });
 const scan = (reducer, initialValue) => seq => castToSequence(() => _scan(reducer, initialValue(), seq)());
+const scanT = {
+    scan,
+};
 const skipFirst = (options = {}) => seq => castToSequence(() => {
     const { count = 1 } = options;
     return seek(count)(seq)();
 });
+const skipFirstT = {
+    skipFirst,
+};
 const _takeLast = (maxCount, seq) => castToSequence(() => {
     const last = [];
     let result = seq();
@@ -182,6 +215,9 @@ const takeLast = (options = {}) => seq => {
     const { count = 1 } = options;
     return _takeLast(count, seq);
 };
+const takeLastT = {
+    takeLast,
+};
 const _takeWhile = (predicate, inclusive, seq) => castToSequence(() => {
     const result = seq();
     return isNotify(result) && predicate(result.data)
@@ -194,6 +230,9 @@ const takeWhile = (predicate, options = {}) => seq => {
     const { inclusive = false } = options;
     return _takeWhile(predicate, inclusive, seq);
 };
+const takeWhileT = {
+    takeWhile,
+};
 const toRunnable = () => seq => createRunnable(sink => {
     let result = seq();
     while (isNotify(result)) {
@@ -201,5 +240,8 @@ const toRunnable = () => seq => createRunnable(sink => {
         result = result.next();
     }
 });
+const toRunnableT = {
+    toRunnable,
+};
 
-export { concat, concatAll, distinctUntilChanged, fromArray, generate, keep, map, repeat, scan, seek, sequenceResultDone, skipFirst, takeFirst, takeLast, takeWhile, toRunnable, type };
+export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, fromArray, fromArrayT, generate, generateT, keep, keepT, map, mapT, repeat, repeatT, scan, scanT, seek, sequenceResultDone, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toRunnable, toRunnableT, type };
