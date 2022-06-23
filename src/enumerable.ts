@@ -21,6 +21,7 @@ import {
   dispose,
 } from "./disposable";
 import { concatAll } from "./enumerable/concatAll";
+import { AbstractEnumerable } from "./enumerable/enumerable";
 import {
   DelegatingEnumeratorBase,
   enumerate,
@@ -55,7 +56,6 @@ import {
   createTakeFirstLiftdOperator,
   createTakeWhileLiftedOperator,
   createThrowIfEmptyLiftedOperator,
-  AbstractLiftable,
 } from "./liftable";
 import { Option, isSome, none } from "./option";
 
@@ -83,6 +83,7 @@ export interface ToEnumerable<C extends ContainerLike> extends Container<C> {
   toEnumerable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 }
 
+export { AbstractEnumerable } from "./enumerable/enumerable";
 export {
   Enumerator,
   EnumeratorBase,
@@ -452,10 +453,10 @@ export const throwIfEmptyT: ThrowIfEmpty<EnumerableLike<unknown>> = {
   throwIfEmpty,
 };
 
-class UsingEnumerable<TResource extends DisposableLike, T>
-  extends AbstractLiftable<Enumerator<T>>
-  implements EnumerableLike<T>
-{
+class UsingEnumerable<
+  TResource extends DisposableLike,
+  T,
+> extends AbstractEnumerable<T> {
   constructor(
     readonly resourceFactory: Factory<TResource | readonly TResource[]>,
     readonly sourceFactory: (

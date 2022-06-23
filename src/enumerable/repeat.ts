@@ -1,7 +1,10 @@
 import { addDisposableDisposeParentOnChildError } from "../disposable";
-import { EnumerableLike, EnumerableOperator } from "../enumerable";
+import {
+  AbstractEnumerable,
+  EnumerableLike,
+  EnumerableOperator,
+} from "../enumerable";
 import { Predicate, alwaysTrue, raise } from "../functions";
-import { AbstractLiftable } from "../liftable";
 import { Option, isNone } from "../option";
 import { Enumerator, enumerate } from "./enumerator";
 
@@ -50,10 +53,7 @@ class RepeatEnumerator<T> extends Enumerator<T> {
   }
 }
 
-class RepeatEnumerable<T>
-  extends AbstractLiftable<Enumerator<T>>
-  implements EnumerableLike<T>
-{
+class RepeatEnumerable<T> extends AbstractEnumerable<T> {
   constructor(
     private readonly src: EnumerableLike<T>,
     private readonly shouldRepeat: Predicate<number>,

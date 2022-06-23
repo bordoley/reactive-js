@@ -1,7 +1,7 @@
 import { AbstractDisposableContainer, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
 import { DisposableLike } from "./disposable.mjs";
 import { Function1, Factory, Updater, Predicate, Equality, SideEffect1, Reducer, Function2, Function3, Function4, Function5 } from "./functions.mjs";
-import { LiftedStateLike, LiftableLike } from "./liftable.mjs";
+import { LiftedStateLike, AbstractLiftable, LiftableLike } from "./liftable.mjs";
 import { Option } from "./option.mjs";
 import { RunnableLike } from "./runnable.mjs";
 declare abstract class Enumerator<T> extends AbstractDisposableContainer implements LiftedStateLike {
@@ -30,6 +30,9 @@ declare const enumerate: <T>(enumerable: EnumerableLike<T>) => Enumerator<T>;
 declare const current: <T>(enumerator: Enumerator<T>) => T;
 declare const hasCurrent: <T>(enumerator: Enumerator<T>) => boolean;
 declare const move: <T>(enumerator: Enumerator<T>) => boolean;
+declare abstract class AbstractEnumerable<T> extends AbstractLiftable<Enumerator<T>> implements EnumerableLike<T> {
+    abstract enumerate(this: EnumerableLike<T>): Enumerator<T>;
+}
 /**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
  */
@@ -234,4 +237,4 @@ declare function using<TResource1 extends DisposableLike, TResource2 extends Dis
 ]>, enumerableFactory: Function5<TResource1, TResource2, TResource3, TResource4, TResource5, EnumerableLike<T>>): EnumerableLike<T>;
 declare function using<TResource extends DisposableLike, T>(resourceFactory: Factory<TResource | readonly TResource[]>, enumerableFactory: (...resources: readonly TResource[]) => EnumerableLike<T>): EnumerableLike<T>;
 declare const usingT: Using<EnumerableLike<unknown>>;
-export { DelegatingEnumeratorBase, EnumerableLike, EnumerableOperator, Enumerator, EnumeratorBase, ToEnumerable, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, type, using, usingT, zip, zipEnumerators };
+export { AbstractEnumerable, DelegatingEnumeratorBase, EnumerableLike, EnumerableOperator, Enumerator, EnumeratorBase, ToEnumerable, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, type, using, usingT, zip, zipEnumerators };

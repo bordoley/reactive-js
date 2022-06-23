@@ -6,6 +6,7 @@
 
 ### Classes
 
+- [AbstractEnumerable](../classes/enumerable.AbstractEnumerable.md)
 - [DelegatingEnumeratorBase](../classes/enumerable.DelegatingEnumeratorBase.md)
 - [Enumerator](../classes/enumerable.Enumerator.md)
 - [EnumeratorBase](../classes/enumerable.EnumeratorBase.md)

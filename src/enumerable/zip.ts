@@ -1,7 +1,6 @@
 import { addDisposableDisposeParentOnChildError } from "../disposable";
-import { EnumerableLike } from "../enumerable";
+import { AbstractEnumerable, EnumerableLike } from "../enumerable";
 import { pipe } from "../functions";
-import { AbstractLiftable } from "../liftable";
 import { everySatisfy, map } from "../readonlyArray";
 import {
   Enumerator,
@@ -53,10 +52,7 @@ export const zipEnumerators = (
   return enumerator;
 };
 
-class ZipEnumerable
-  extends AbstractLiftable<Enumerator<readonly unknown[]>>
-  implements EnumerableLike<readonly unknown[]>
-{
+class ZipEnumerable extends AbstractEnumerable<readonly unknown[]> {
   constructor(
     private readonly enumerables: readonly EnumerableLike<unknown>[],
   ) {
