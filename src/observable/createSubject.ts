@@ -1,12 +1,12 @@
 import { addDisposable, addTeardown } from "../disposable";
 import { DispatcherLike, SubjectLike } from "../observable";
-import { AbstractDisposableSource } from "../source";
+import { AbstractDisposableObservable } from "./observable";
 import { Observer } from "./observer";
 
 import { toDispatcher } from "./toDispatcher";
 
 class SubjectImpl<T>
-  extends AbstractDisposableSource<T, Observer<T>>
+  extends AbstractDisposableObservable<T>
   implements SubjectLike<T>
 {
   private readonly observers: Set<DispatcherLike<T>> = new Set();

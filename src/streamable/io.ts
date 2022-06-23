@@ -2,6 +2,7 @@ import { ignoreElements, startWith } from "../container";
 import { addDisposableDisposeParentOnChildError } from "../disposable";
 import { Factory, Reducer, pipe } from "../functions";
 import {
+  AbstractDisposableObservable,
   MulticastObservableLike,
   ObservableLike,
   Observer,
@@ -16,12 +17,11 @@ import {
 } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
-import { AbstractDisposableSource } from "../source";
 import { FlowMode, FlowableSinkLike, StreamableLike } from "../streamable";
 import { createStreamable, stream } from "./streamable";
 
 class FlowableSinkAccumulatorImpl<T, TAcc>
-  extends AbstractDisposableSource<TAcc, Observer<TAcc>>
+  extends AbstractDisposableObservable<TAcc>
   implements FlowableSinkLike<T>, MulticastObservableLike<TAcc>
 {
   readonly isSynchronous = false;

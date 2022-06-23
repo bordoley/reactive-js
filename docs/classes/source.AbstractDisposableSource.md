@@ -17,6 +17,8 @@
 
   ↳ **`AbstractDisposableSource`**
 
+  ↳↳ [`AbstractDisposableObservable`](observable.AbstractDisposableObservable.md)
+
 ## Implements
 
 - [`SourceLike`](../interfaces/source.SourceLike.md)
