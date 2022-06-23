@@ -7,6 +7,7 @@ import {
   Generate,
   Keep,
   Map,
+  Pairwise,
   Repeat,
   Scan,
   SkipFirst,
@@ -27,7 +28,7 @@ import {
   pipe,
   strictEquality,
 } from "./functions";
-import { isNone } from "./option";
+import { Option, isNone, none } from "./option";
 import { keepType as keepTypeArray, map as mapArray } from "./readonlyArray";
 import { RunnableLike, ToRunnable, createRunnable } from "./runnable";
 
@@ -251,6 +252,30 @@ export const generateT: Generate<Sequence<unknown>> = {
   generate,
 };
 
+const _pairwise = <T>(
+  prev: Option<T>,
+  seq: Sequence<T>,
+): Sequence<readonly [Option<T>, T]> =>
+  castToSequence(() => {
+    const result = seq();
+    if (isNotify(result)) {
+      const { data, next } = result;
+      const v: [Option<T>, T] = [prev, data];
+      return notify(v, _pairwise(data, next));
+    } else {
+      return done();
+    }
+  });
+
+export const pairwise =
+  <T>(): SequenceOperator<T, readonly [Option<T>, T]> =>
+  seq =>
+    castToSequence(() => _pairwise(none, seq)());
+
+export const pairwiseT: Pairwise<Sequence<unknown>> = {
+  pairwise,
+};
+
 export const seek =
   <T>(count: number): SequenceOperator<T, T> =>
   seq => {
@@ -463,7 +488,7 @@ const _zip = <T>(
             ),
           ),
         )
-      : sequenceResultDone;
+      : done();
   });
 
 export const zip: Zip<Sequence<unknown>>["zip"] = _zip as any;

@@ -65,7 +65,7 @@ interface Map<C extends ContainerLike> extends Container<C> {
     map<TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
 }
 interface Pairwise<C extends ContainerLike> extends Container<C> {
-    pairwise<T>(): ContainerOperator<C, T, [
+    pairwise<T>(): ContainerOperator<C, T, readonly [
         Option<T>,
         T
     ]>;

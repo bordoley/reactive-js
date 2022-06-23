@@ -40,7 +40,7 @@
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`ContainerOperator`](../modules/container.md#containeroperator)<`C`, `T`, [[`Option`](../modules/option.md#option)<`T`\>, `T`]\>
+▸ **pairwise**<`T`\>(): [`ContainerOperator`](../modules/container.md#containeroperator)<`C`, `T`, readonly [[`Option`](../modules/option.md#option)<`T`\>, `T`]\>
 
 #### Type parameters
 
@@ -50,4 +50,4 @@
 
 #### Returns
 
-[`ContainerOperator`](../modules/container.md#containeroperator)<`C`, `T`, [[`Option`](../modules/option.md#option)<`T`\>, `T`]\>
+[`ContainerOperator`](../modules/container.md#containeroperator)<`C`, `T`, readonly [[`Option`](../modules/option.md#option)<`T`\>, `T`]\>
