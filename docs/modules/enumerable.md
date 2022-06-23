@@ -264,7 +264,7 @@ ___
 
 ### createEnumerable
 
-▸ **createEnumerable**<`T`\>(`f`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
+▸ **createEnumerable**<`T`\>(`enumerate`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -276,7 +276,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `f` | [`Factory`](functions.md#factory)<[`Enumerator`](../classes/enumerable.Enumerator.md)<`T`\>\> |
+| `enumerate` | [`Factory`](functions.md#factory)<[`Enumerator`](../classes/enumerable.Enumerator.md)<`T`\>\> |
 
 #### Returns
 
