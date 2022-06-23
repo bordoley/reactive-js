@@ -2,7 +2,7 @@ import { FromIterable, FromIterator } from "../container";
 import { EnumerableLike } from "../enumerable";
 import { Factory, Function1 } from "../functions";
 import { none } from "../option";
-import { AbstractEnumerable } from "./enumerable";
+import { createEnumerable } from "./enumerable";
 import { Enumerator } from "./enumerator";
 
 class IteratorEnumerator<
@@ -36,25 +36,14 @@ class IteratorEnumerator<
   }
 }
 
-class IteratorEnumerable<
-  T,
-  TReturn = any,
-  TNext = unknown,
-> extends AbstractEnumerable<T> {
-  constructor(private readonly f: Factory<Iterator<T, TReturn, TNext>>) {
-    super();
-  }
-
-  enumerate() {
-    const iterator = this.f();
-    const enumerator = new IteratorEnumerator(iterator);
-    return enumerator;
-  }
-}
-
 const _fromIterator = <T, TReturn = any, TNext = unknown>(
   f: Factory<Iterator<T, TReturn, TNext>>,
-): EnumerableLike<T> => new IteratorEnumerable(f);
+): EnumerableLike<T> =>
+  createEnumerable(() => {
+    const iterator = f();
+    const enumerator = new IteratorEnumerator(iterator);
+    return enumerator;
+  });
 
 /**
  * Returns a single use EnumerableLike over the javascript Iterator

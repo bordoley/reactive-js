@@ -6,7 +6,7 @@ import { AbstractDisposableContainer, empty, fromValue, concatMap, throws } from
 import { __DEV__ } from './env.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { map as map$1, everySatisfy as everySatisfy$1 } from './readonlyArray.mjs';
-import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, AbstractEnumerator, AbstractEnumerable, current, zipEnumerators } from './enumerable.mjs';
+import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, AbstractEnumerator, createEnumerable, current, zipEnumerators } from './enumerable.mjs';
 import { createRunnable } from './runnable.mjs';
 
 class AbstractObservable extends AbstractSource {
@@ -1429,16 +1429,7 @@ const enumerate = (obs) => {
     pipe(obs, sinkInto(observer));
     return scheduler;
 };
-class ObservableEnumerable extends AbstractEnumerable {
-    constructor(obs) {
-        super();
-        this.obs = obs;
-    }
-    enumerate() {
-        return enumerate(this.obs);
-    }
-}
-const toEnumerable = () => obs => new ObservableEnumerable(obs);
+const toEnumerable = () => obs => createEnumerable(() => enumerate(obs));
 const toEnumerableT = {
     toEnumerable,
 };

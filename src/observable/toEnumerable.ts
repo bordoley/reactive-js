@@ -4,11 +4,11 @@ import {
   dispose,
 } from "../disposable";
 import {
-  AbstractEnumerable,
   AbstractEnumerator,
   EnumerableLike,
   Enumerator,
   ToEnumerable,
+  createEnumerable,
 } from "../enumerable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
@@ -95,20 +95,10 @@ export const enumerate = <T>(obs: ObservableLike<T>): Enumerator<T> => {
   return scheduler;
 };
 
-class ObservableEnumerable<T> extends AbstractEnumerable<T> {
-  constructor(private readonly obs: ObservableLike<T>) {
-    super();
-  }
-
-  enumerate() {
-    return enumerate(this.obs);
-  }
-}
-
 export const toEnumerable =
   <T>(): Function1<ObservableLike<T>, EnumerableLike<T>> =>
   obs =>
-    new ObservableEnumerable(obs);
+    createEnumerable(() => enumerate(obs));
 
 export const toEnumerableT: ToEnumerable<ObservableLike<unknown>> = {
   toEnumerable,

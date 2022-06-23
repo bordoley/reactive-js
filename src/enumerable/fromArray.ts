@@ -1,6 +1,6 @@
 import { FromArray, FromArrayOptions } from "../container";
 import { EnumerableLike } from "../enumerable";
-import { AbstractEnumerable } from "./enumerable";
+import { createEnumerable } from "./enumerable";
 import { AbstractEnumerator } from "./enumerator";
 
 class ArrayEnumerator<T> extends AbstractEnumerator<T> {
@@ -32,20 +32,6 @@ class ArrayEnumerator<T> extends AbstractEnumerator<T> {
   }
 }
 
-class ArrayEnumerable<T> extends AbstractEnumerable<T> {
-  constructor(
-    private readonly values: readonly T[],
-    private readonly startIndex: number,
-    private readonly endIndex: number,
-  ) {
-    super();
-  }
-
-  enumerate() {
-    return new ArrayEnumerator(this.values, this.startIndex, this.endIndex);
-  }
-}
-
 /**
  * Returns an EnumerableLike view over the `values` array.
  *
@@ -66,7 +52,9 @@ export const fromArray =
       0,
     );
 
-    return new ArrayEnumerable(values, startIndex - 1, endIndex);
+    return createEnumerable(
+      () => new ArrayEnumerator(values, startIndex - 1, endIndex),
+    );
   };
 
 export const fromArrayT: FromArray<

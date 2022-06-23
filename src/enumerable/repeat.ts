@@ -3,7 +3,7 @@ import { addDisposableDisposeParentOnChildError } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { Predicate, alwaysTrue, raise } from "../functions";
 import { Option, isNone } from "../option";
-import { AbstractEnumerable } from "./enumerable";
+import { createEnumerable } from "./enumerable";
 import { Enumerator, enumerate } from "./enumerator";
 
 class RepeatEnumerator<T> extends Enumerator<T> {
@@ -51,19 +51,6 @@ class RepeatEnumerator<T> extends Enumerator<T> {
   }
 }
 
-class RepeatEnumerable<T> extends AbstractEnumerable<T> {
-  constructor(
-    private readonly src: EnumerableLike<T>,
-    private readonly shouldRepeat: Predicate<number>,
-  ) {
-    super();
-  }
-
-  enumerate() {
-    return new RepeatEnumerator(this.src, this.shouldRepeat);
-  }
-}
-
 /**
  * Returns an EnumerableLike that applies the predicate function each time the source
  * completes to determine if the enumerable should be repeated.
@@ -94,7 +81,8 @@ export function repeat<T>(
     ? (count: number) => count < predicate
     : (count: number) => predicate(count);
 
-  return enumerable => new RepeatEnumerable(enumerable, repeatPredicate);
+  return enumerable =>
+    createEnumerable(() => new RepeatEnumerator(enumerable, repeatPredicate));
 }
 
 export const repeatT: Repeat<EnumerableLike<unknown>> = {

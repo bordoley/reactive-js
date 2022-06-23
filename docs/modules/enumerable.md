@@ -47,6 +47,7 @@
 
 - [concat](enumerable.md#concat)
 - [concatAll](enumerable.md#concatall)
+- [createEnumerable](enumerable.md#createenumerable)
 - [current](enumerable.md#current)
 - [distinctUntilChanged](enumerable.md#distinctuntilchanged)
 - [enumerate](enumerable.md#enumerate)
@@ -258,6 +259,28 @@ Converts a higher-order EnumerableLike into a first-order EnumerableLike.
 #### Returns
 
 [`EnumerableOperator`](enumerable.md#enumerableoperator)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>, `T`\>
+
+___
+
+### createEnumerable
+
+▸ **createEnumerable**<`T`\>(`f`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Factory`](functions.md#factory)<[`Enumerator`](../classes/enumerable.Enumerator.md)<`T`\>\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
 
 ___
 

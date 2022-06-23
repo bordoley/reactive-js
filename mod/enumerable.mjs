@@ -54,6 +54,16 @@ const move = (enumerator) => enumerator.move();
 
 class AbstractEnumerable extends AbstractLiftable {
 }
+class CreateEnumerable extends AbstractEnumerable {
+    constructor(f) {
+        super();
+        this.f = f;
+    }
+    enumerate() {
+        return this.f();
+    }
+}
+const createEnumerable = (f) => new CreateEnumerable(f);
 
 class LiftedEnumerable extends AbstractEnumerable {
     constructor(src, operators) {
@@ -150,17 +160,6 @@ class ArrayEnumerator extends AbstractEnumerator {
         return this.hasCurrent;
     }
 }
-class ArrayEnumerable extends AbstractEnumerable {
-    constructor(values, startIndex, endIndex) {
-        super();
-        this.values = values;
-        this.startIndex = startIndex;
-        this.endIndex = endIndex;
-    }
-    enumerate() {
-        return new ArrayEnumerator(this.values, this.startIndex, this.endIndex);
-    }
-}
 /**
  * Returns an EnumerableLike view over the `values` array.
  *
@@ -171,7 +170,7 @@ const fromArray = (options = {}) => (values) => {
     const valuesLength = values.length;
     const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
     const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : values.length, valuesLength), 0);
-    return new ArrayEnumerable(values, startIndex - 1, endIndex);
+    return createEnumerable(() => new ArrayEnumerator(values, startIndex - 1, endIndex));
 };
 const fromArrayT = {
     fromArray,
@@ -200,18 +199,11 @@ class IteratorEnumerator extends Enumerator {
         return this.hasCurrent;
     }
 }
-class IteratorEnumerable extends AbstractEnumerable {
-    constructor(f) {
-        super();
-        this.f = f;
-    }
-    enumerate() {
-        const iterator = this.f();
-        const enumerator = new IteratorEnumerator(iterator);
-        return enumerator;
-    }
-}
-const _fromIterator = (f) => new IteratorEnumerable(f);
+const _fromIterator = (f) => createEnumerable(() => {
+    const iterator = f();
+    const enumerator = new IteratorEnumerator(iterator);
+    return enumerator;
+});
 /**
  * Returns a single use EnumerableLike over the javascript Iterator
  * returned by the function `f`.
@@ -251,16 +243,6 @@ class GenerateEnumerator extends AbstractEnumerator {
         return this.hasCurrent;
     }
 }
-class GenerateEnumerable extends AbstractEnumerable {
-    constructor(f, acc) {
-        super();
-        this.f = f;
-        this.acc = acc;
-    }
-    enumerate() {
-        return new GenerateEnumerator(this.f, this.acc());
-    }
-}
 /**
  * Generates an EnumerableLike from a generator function
  * that is applied to an accumulator value.
@@ -268,7 +250,7 @@ class GenerateEnumerable extends AbstractEnumerable {
  * @param generator the generator function.
  * @param initialValue Factory function used to generate the initial accumulator.
  */
-const generate = (generator, initialValue) => new GenerateEnumerable(generator, initialValue);
+const generate = (generator, initialValue) => createEnumerable(() => new GenerateEnumerator(generator, initialValue()));
 const generateT = {
     generate,
 };
@@ -312,23 +294,13 @@ class RepeatEnumerator extends Enumerator {
         return this.hasCurrent;
     }
 }
-class RepeatEnumerable extends AbstractEnumerable {
-    constructor(src, shouldRepeat) {
-        super();
-        this.src = src;
-        this.shouldRepeat = shouldRepeat;
-    }
-    enumerate() {
-        return new RepeatEnumerator(this.src, this.shouldRepeat);
-    }
-}
 function repeat(predicate) {
     const repeatPredicate = isNone(predicate)
         ? alwaysTrue
         : typeof predicate === "number"
             ? (count) => count < predicate
             : (count) => predicate(count);
-    return enumerable => new RepeatEnumerable(enumerable, repeatPredicate);
+    return enumerable => createEnumerable(() => new RepeatEnumerator(enumerable, repeatPredicate));
 }
 const repeatT = {
     repeat,
@@ -733,4 +705,4 @@ const usingT = {
     using,
 };
 
-export { AbstractEnumerable, AbstractEnumerator, Enumerator, concat, concatAll, concatAllT, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, toRunnableT, type, using, usingT, zip, zipEnumerators, zipT };
+export { AbstractEnumerable, AbstractEnumerator, Enumerator, concat, concatAll, concatAllT, concatT, createEnumerable, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, toRunnableT, type, using, usingT, zip, zipEnumerators, zipT };
