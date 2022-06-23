@@ -6,6 +6,7 @@ import {
   DistinctUntilChanged,
   Keep,
   Map,
+  Pairwise,
   Scan,
   SkipFirst,
   TakeFirst,
@@ -36,12 +37,13 @@ import {
   createKeepLiftedOperator,
   createMapLiftedOperator,
   createOnNotifyLiftedOperator,
+  createPairwiseLiftedOperator,
   createScanLiftedOperator,
   createSkipFirstLiftedOperator,
   createTakeFirstLiftdOperator,
   createTakeWhileLiftedOperator,
 } from "./liftable";
-import { isSome, none } from "./option";
+import { Option, isSome, none } from "./option";
 
 /**
  * Interface for iterating a Container of items.
@@ -240,6 +242,34 @@ export const onNotify: <T>(
     }
   },
 );
+
+export const pairwise: <T>() => EnumerableOperator<T, [Option<T>, T]> =
+  createPairwiseLiftedOperator(
+    liftT,
+    class PairwiseEnumerator<T> extends EnumeratorBase<[Option<T>, T]> {
+      constructor(readonly delegate: Enumerator<T>) {
+        super();
+      }
+
+      move(): boolean {
+        const prev = (this.hasCurrent ? this.current : [])[1];
+
+        this.reset();
+
+        const { delegate } = this;
+        if (delegate.move()) {
+          const { current } = delegate;
+          this.current = [prev, current];
+        }
+
+        return this.hasCurrent;
+      }
+    },
+  );
+
+export const pairwiseT: Pairwise<EnumerableLike<unknown>> = {
+  pairwise,
+};
 
 export const scan: <T, TAcc>(
   reducer: Reducer<T, TAcc>,

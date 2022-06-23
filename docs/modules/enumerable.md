@@ -26,6 +26,7 @@
 - [fromArrayT](enumerable.md#fromarrayt)
 - [keepT](enumerable.md#keept)
 - [mapT](enumerable.md#mapt)
+- [pairwiseT](enumerable.md#pairwiset)
 - [scanT](enumerable.md#scant)
 - [skipFirstT](enumerable.md#skipfirstt)
 - [takeFirstT](enumerable.md#takefirstt)
@@ -48,6 +49,7 @@
 - [map](enumerable.md#map)
 - [move](enumerable.md#move)
 - [onNotify](enumerable.md#onnotify)
+- [pairwise](enumerable.md#pairwise)
 - [repeat](enumerable.md#repeat)
 - [scan](enumerable.md#scan)
 - [skipFirst](enumerable.md#skipfirst)
@@ -104,6 +106,12 @@ ___
 ### mapT
 
 • `Const` **mapT**: [`Map`](../interfaces/container.Map.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
+### pairwiseT
+
+• `Const` **pairwiseT**: [`Pairwise`](../interfaces/container.Pairwise.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
 
 ___
 
@@ -459,6 +467,22 @@ ___
 #### Returns
 
 [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
+
+___
+
+### pairwise
+
+▸ **pairwise**<`T`\>(): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, [[`Option`](option.md#option)<`T`\>, `T`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, [[`Option`](option.md#option)<`T`\>, `T`]\>
 
 ___
 

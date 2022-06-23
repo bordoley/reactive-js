@@ -28,7 +28,7 @@
 - [createKeepLiftedOperator](liftable.md#createkeepliftedoperator)
 - [createMapLiftedOperator](liftable.md#createmapliftedoperator)
 - [createOnNotifyLiftedOperator](liftable.md#createonnotifyliftedoperator)
-- [createPairwiseLiftdOperator](liftable.md#createpairwiseliftdoperator)
+- [createPairwiseLiftedOperator](liftable.md#createpairwiseliftedoperator)
 - [createScanLiftedOperator](liftable.md#createscanliftedoperator)
 - [createSkipFirstLiftedOperator](liftable.md#createskipfirstliftedoperator)
 - [createTakeFirstLiftdOperator](liftable.md#createtakefirstliftdoperator)
@@ -265,9 +265,9 @@ ___
 
 ___
 
-### createPairwiseLiftdOperator
+### createPairwiseLiftedOperator
 
-▸ **createPairwiseLiftdOperator**<`C`, `TVariance`\>(`m`, `PairwiseLiftableState`): <T_1\>() => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, [[`Option`](option.md#option)<`T_1`\>, `T_1`]\>
+▸ **createPairwiseLiftedOperator**<`C`, `TVariance`\>(`m`, `PairwiseLiftableState`): <T_1\>() => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, [[`Option`](option.md#option)<`T_1`\>, `T_1`]\>
 
 #### Type parameters
 

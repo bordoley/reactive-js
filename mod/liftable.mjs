@@ -47,7 +47,7 @@ const createOnNotifyLiftedOperator = (m, OnNotifyLiftableState) => (onNotify) =>
     };
     return m.lift(operator);
 };
-const createPairwiseLiftdOperator = (m, PairwiseLiftableState) => () => {
+const createPairwiseLiftedOperator = (m, PairwiseLiftableState) => () => {
     const operator = delegate => {
         const sink = new PairwiseLiftableState(delegate);
         bindDisposables(sink, delegate);
@@ -112,4 +112,4 @@ const createThrowIfEmptyLiftedOperator = (m, ThrowIfEmptyLiftableState) => (fact
     return m.lift(operator);
 };
 
-export { AbstractDisposableLiftable, AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftdOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator };
+export { AbstractDisposableLiftable, AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator };

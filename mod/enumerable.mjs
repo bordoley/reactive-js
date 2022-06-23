@@ -3,7 +3,7 @@ import { addTeardown, createSerialDisposable, bindDisposables, addDisposableDisp
 import { AbstractDisposableContainer, empty } from './container.mjs';
 import { raise, pipe, alwaysTrue, identity } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
-import { AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator } from './liftable.mjs';
+import { AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator } from './liftable.mjs';
 import { createRunnable } from './runnable.mjs';
 import { everySatisfy, map as map$1 } from './readonlyArray.mjs';
 
@@ -546,6 +546,25 @@ const onNotify = createOnNotifyLiftedOperator(liftT, class OnNotifyEnumerator ex
         return this.hasCurrent;
     }
 });
+const pairwise = createPairwiseLiftedOperator(liftT, class PairwiseEnumerator extends EnumeratorBase {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+    }
+    move() {
+        const prev = (this.hasCurrent ? this.current : [])[1];
+        this.reset();
+        const { delegate } = this;
+        if (delegate.move()) {
+            const { current } = delegate;
+            this.current = [prev, current];
+        }
+        return this.hasCurrent;
+    }
+});
+const pairwiseT = {
+    pairwise,
+};
 const scan = createScanLiftedOperator(liftT, class ScanEnumerator extends EnumeratorBase {
     constructor(delegate, reducer, current) {
         super();
@@ -648,4 +667,4 @@ const takeWhileT = {
     takeWhile,
 };
 
-export { DelegatingEnumeratorBase, Enumerator, EnumeratorBase, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, toEnumerable, toIterable, toRunnable, type, zip, zipEnumerators };
+export { DelegatingEnumeratorBase, Enumerator, EnumeratorBase, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, toEnumerable, toIterable, toRunnable, type, zip, zipEnumerators };

@@ -38,7 +38,7 @@ declare const createDistinctUntilChangedLiftedOperator: <C extends LiftableLike,
 declare const createKeepLiftedOperator: <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(m: Lift<C, TVariance>, KeepLiftableState: new <T>(delegate: LiftedStateOf<C, T>, predicate: Predicate<T>) => LiftedStateOf<C, T>) => <T_1>(predicate: Predicate<T_1>) => ContainerOperator<C, T_1, T_1>;
 declare const createMapLiftedOperator: <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(m: Lift<C, TVariance>, MapLiftableState: new <TA, TB>(delegate: LiftOperatorIn<TA, TB, C, Lift<C, TVariance>>, mapper: Function1<TA, TB>) => LiftOperatorOut<TA, TB, C, Lift<C, TVariance>>) => <TA_1, TB_1>(mapper: Function1<TA_1, TB_1>) => ContainerOperator<C, TA_1, TB_1>;
 declare const createOnNotifyLiftedOperator: <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(m: Lift<C, TVariance>, OnNotifyLiftableState: new <T>(delegate: LiftedStateOf<C, T>, onNotify: SideEffect1<T>) => LiftedStateOf<C, T>) => <T_1>(onNotify: SideEffect1<T_1>) => ContainerOperator<C, T_1, T_1>;
-declare const createPairwiseLiftdOperator: <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(m: Lift<C, TVariance>, PairwiseLiftableState: new <T>(delegate: LiftOperatorIn<T, [
+declare const createPairwiseLiftedOperator: <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(m: Lift<C, TVariance>, PairwiseLiftableState: new <T>(delegate: LiftOperatorIn<T, [
     Option<T>,
     T
 ], C, Lift<C, TVariance>>) => LiftOperatorOut<T, [
@@ -61,4 +61,4 @@ declare const createTakeWhileLiftedOperator: <C extends LiftableLike, TVariance 
 declare const createThrowIfEmptyLiftedOperator: <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(m: Lift<C, TVariance>, ThrowIfEmptyLiftableState: new <T>(delegate: LiftedStateOf<C, T>) => LiftedStateOf<C, T> & {
     readonly isEmpty: boolean;
 }) => <T_1>(factory: Factory<unknown>) => ContainerOperator<C, T_1, T_1>;
-export { AbstractDisposableLiftable, AbstractLiftable, Lift, LiftOperator, LiftOperatorIn, LiftOperatorOut, LiftableLike, LiftedStateLike, LiftedStateOf, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftdOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator };
+export { AbstractDisposableLiftable, AbstractLiftable, Lift, LiftOperator, LiftOperatorIn, LiftOperatorOut, LiftableLike, LiftedStateLike, LiftedStateOf, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator };

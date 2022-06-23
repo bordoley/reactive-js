@@ -40,7 +40,7 @@ import {
   createKeepLiftedOperator,
   createMapLiftedOperator,
   createOnNotifyLiftedOperator,
-  createPairwiseLiftdOperator,
+  createPairwiseLiftedOperator,
   createScanLiftedOperator,
   createSkipFirstLiftedOperator,
   createTakeFirstLiftdOperator,
@@ -382,7 +382,7 @@ export const createPairwiseOperator = <C extends SourceLike>(
     this.delegate.notify([prev, value]);
   };
 
-  return createPairwiseLiftdOperator(m, PairwiseSink);
+  return createPairwiseLiftedOperator(m, PairwiseSink);
 };
 
 export const createReduceOperator = <C extends SourceLike>(

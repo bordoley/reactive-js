@@ -1,6 +1,7 @@
-import { AbstractDisposableContainer, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Scan, SkipFirst, TakeFirst, TakeWhile } from "./container.mjs";
+import { AbstractDisposableContainer, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile } from "./container.mjs";
 import { Function1, Factory, Updater, Predicate, Equality, SideEffect1, Reducer } from "./functions.mjs";
 import { LiftedStateLike, LiftableLike } from "./liftable.mjs";
+import { Option } from "./option.mjs";
 import { RunnableLike } from "./runnable.mjs";
 declare abstract class Enumerator<T> extends AbstractDisposableContainer implements LiftedStateLike {
     abstract get current(): T;
@@ -186,6 +187,11 @@ declare const keepT: Keep<EnumerableLike<unknown>>;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => EnumerableOperator<TA, TB>;
 declare const mapT: Map<EnumerableLike<unknown>>;
 declare const onNotify: <T>(onNotify: SideEffect1<T>) => EnumerableOperator<T, T>;
+declare const pairwise: <T>() => EnumerableOperator<T, [
+    Option<T>,
+    T
+]>;
+declare const pairwiseT: Pairwise<EnumerableLike<unknown>>;
 declare const scan: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => EnumerableOperator<T, TAcc>;
 declare const scanT: Scan<EnumerableLike<unknown>>;
 declare const skipFirst: <T>(options?: {
@@ -200,4 +206,4 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
     readonly inclusive?: boolean;
 }) => EnumerableOperator<T, T>;
 declare const takeWhileT: TakeWhile<EnumerableLike<unknown>>;
-export { DelegatingEnumeratorBase, EnumerableLike, EnumerableOperator, Enumerator, EnumeratorBase, ToEnumerable, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, toEnumerable, toIterable, toRunnable, type, zip, zipEnumerators };
+export { DelegatingEnumeratorBase, EnumerableLike, EnumerableOperator, Enumerator, EnumeratorBase, ToEnumerable, concat, concatAll, concatT, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterator, generate, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeWhile, takeWhileT, toEnumerable, toIterable, toRunnable, type, zip, zipEnumerators };
