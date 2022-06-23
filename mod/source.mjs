@@ -2,7 +2,7 @@
 import { fromValue, empty } from './container.mjs';
 import { addDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown, dispose, addDisposableDisposeParentOnChildError, addOnDisposedWithoutErrorTeardown } from './disposable.mjs';
 import { pipe, compose, negate } from './functions.mjs';
-import { AbstractLiftable, AbstractDisposableLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftdOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
+import { AbstractLiftable, AbstractDisposableLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
 import { none, isSome } from './option.mjs';
 
 class AbstractSource extends AbstractLiftable {
@@ -132,7 +132,7 @@ const createPairwiseOperator = (m, PairwiseSink) => {
         this.prev = value;
         this.delegate.notify([prev, value]);
     };
-    return createPairwiseLiftdOperator(m, PairwiseSink);
+    return createPairwiseLiftedOperator(m, PairwiseSink);
 };
 const createReduceOperator = (m, ReduceSink) => {
     ReduceSink.prototype.notify = function notifyReduce(next) {

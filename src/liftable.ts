@@ -170,7 +170,7 @@ export const createOnNotifyLiftedOperator =
     return m.lift(operator);
   };
 
-export const createPairwiseLiftdOperator =
+export const createPairwiseLiftedOperator =
   <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
     m: Lift<C, TVariance>,
     PairwiseLiftableState: new <T>(
