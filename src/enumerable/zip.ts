@@ -3,7 +3,7 @@ import { addDisposableDisposeParentOnChildError } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { pipe } from "../functions";
 import { everySatisfy, map } from "../readonlyArray";
-import { AbstractEnumerable } from "./enumerable";
+import { createEnumerable } from "./enumerable";
 import {
   AbstractEnumerator,
   Enumerator,
@@ -53,18 +53,6 @@ export const zipEnumerators = (
   }
   return enumerator;
 };
-
-class ZipEnumerable extends AbstractEnumerable<readonly unknown[]> {
-  constructor(
-    private readonly enumerables: readonly EnumerableLike<unknown>[],
-  ) {
-    super();
-  }
-
-  enumerate() {
-    return pipe(this.enumerables, map(enumerate), zipEnumerators);
-  }
-}
 
 export function zip<TA, TB>(
   a: EnumerableLike<TA>,
@@ -134,7 +122,9 @@ export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
 export function zip(
   ...enumerables: readonly EnumerableLike<unknown>[]
 ): EnumerableLike<readonly unknown[]> {
-  return new ZipEnumerable(enumerables);
+  return createEnumerable(() =>
+    pipe(enumerables, map(enumerate), zipEnumerators),
+  );
 }
 
 export const zipT: Zip<EnumerableLike<unknown>> = {
