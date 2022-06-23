@@ -49,7 +49,7 @@ class ConcatObservable<T>
   }
 
   sink(observer: Observer<T>) {
-    const observables = this.observables;
+    const { observables } = this;
 
     if (observables.length > 0) {
       const concatObserver = createConcatObserver(observer, observables, 1);

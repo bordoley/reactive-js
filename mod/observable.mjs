@@ -398,7 +398,7 @@ class LatestObserver extends Observer {
     }
     notify(next) {
         this.assertState();
-        const ctx = this.ctx;
+        const { ctx } = this;
         this.latest = next;
         if (!this.ready) {
             ctx.readyCount++;
@@ -476,7 +476,7 @@ class ConcatObservable extends AbstractSource {
         this.isSynchronous = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isSynchronous) !== null && _a !== void 0 ? _a : false; }));
     }
     sink(observer) {
-        const observables = this.observables;
+        const { observables } = this;
         if (observables.length > 0) {
             const concatObserver = createConcatObserver(observer, observables, 1);
             pipe(observables[0], sinkInto(concatObserver));
@@ -511,7 +511,7 @@ class ObserverDelegatingDispatcher extends AbstractDisposable {
         super();
         this.observer = observer;
         this.continuation = () => {
-            const nextQueue = this.nextQueue;
+            const { nextQueue } = this;
             while (nextQueue.length > 0) {
                 const next = nextQueue.shift();
                 this.observer.notify(next);
@@ -581,8 +581,7 @@ class SubjectImpl extends AbstractDisposableSource {
     }
     dispatch(next) {
         if (!this.isDisposed) {
-            const replayed = this.replayed;
-            const replay = this.replay;
+            const { replay, replayed } = this;
             if (replay > 0) {
                 replayed.push(next);
                 if (replayed.length > replay) {
@@ -600,7 +599,7 @@ class SubjectImpl extends AbstractDisposableSource {
         // So we marshall those events back to the scheduler.
         const dispatcher = toDispatcher(observer);
         if (!this.isDisposed) {
-            const observers = this.observers;
+            const { observers } = this;
             observers.add(dispatcher);
             addTeardown(observer, _e => {
                 observers.delete(dispatcher);
@@ -740,7 +739,7 @@ class MergeObservable extends AbstractSource {
         this.observables = observables;
     }
     sink(observer) {
-        const observables = this.observables;
+        const { observables } = this;
         const count = observables.length;
         const ctx = { completedCount: 0 };
         for (const observable of observables) {
@@ -764,7 +763,7 @@ const neverInstance = new NeverObservable();
 const never = () => neverInstance;
 
 function onDispose$3(error) {
-    const buffer = this.buffer;
+    const { buffer } = this;
     this.buffer = [];
     if (isSome(error) || buffer.length === 0) {
         pipe(this.delegate, dispose(error));
@@ -790,9 +789,9 @@ class BufferObserver extends Observer {
     }
     notify(next) {
         this.assertState();
-        const buffer = this.buffer;
+        const { buffer, maxBufferSize } = this;
         buffer.push(next);
-        if (buffer.length === this.maxBufferSize) {
+        if (buffer.length === maxBufferSize) {
             onNotify$4.call(this);
         }
         else if (this.durationSubscription.inner.isDisposed) {
@@ -920,7 +919,7 @@ class MergeObserver extends Observer {
     }
     notify(next) {
         this.assertState();
-        const queue = this.queue;
+        const { queue } = this;
         queue.push(next);
         // Drop old events if the maxBufferSize has been exceeded
         if (queue.length + this.activeCount > this.maxBufferSize) {
@@ -1475,7 +1474,7 @@ class ZipObserver extends Observer {
     }
     notify(next) {
         this.assertState();
-        const enumerators = this.enumerators;
+        const { enumerators } = this;
         if (!this.isDisposed) {
             if (this.enumerator.hasCurrent) {
                 this.enumerator.buffer.push(next);

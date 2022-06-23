@@ -37,7 +37,7 @@ class MergeObservable<T>
   }
 
   sink(observer: Observer<T>) {
-    const observables = this.observables;
+    const { observables } = this;
     const count = observables.length;
     const ctx = { completedCount: 0 };
 

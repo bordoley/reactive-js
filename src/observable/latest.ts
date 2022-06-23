@@ -42,7 +42,7 @@ class LatestObserver extends Observer<unknown> {
   notify(next: unknown) {
     this.assertState();
 
-    const ctx = this.ctx;
+    const { ctx } = this;
     this.latest = next;
 
     if (!this.ready) {

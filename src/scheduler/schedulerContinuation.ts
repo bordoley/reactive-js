@@ -76,7 +76,7 @@ class SchedulerContinuationImpl
 
   continue() {
     if (!this.isDisposed) {
-      const listeners = this.listeners;
+      const { listeners } = this;
       let error: Option<Error> = none;
       let yieldError: Option<YieldError> = none;
 

@@ -7,7 +7,7 @@ declare abstract class Enumerator<T> extends AbstractDisposableContainer impleme
     abstract get hasCurrent(): boolean;
     abstract move(): boolean;
 }
-declare class EnumeratorBase<T> extends Enumerator<T> {
+declare abstract class EnumeratorBase<T> extends Enumerator<T> {
     private _current;
     private _hasCurrent;
     constructor();

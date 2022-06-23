@@ -42,7 +42,7 @@ class ObserverDelegatingDispatcher<T>
   implements DispatcherLike<T>
 {
   readonly continuation = () => {
-    const nextQueue = this.nextQueue;
+    const { nextQueue } = this;
 
     while (nextQueue.length > 0) {
       const next = nextQueue.shift() as T;
