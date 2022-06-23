@@ -17,6 +17,12 @@ import {
   Zip,
 } from "./container";
 import {
+  AbstractEnumerator,
+  EnumerableLike,
+  ToEnumerable,
+  createEnumerable,
+} from "./enumerable";
+import {
   Equality,
   Factory,
   Function1,
@@ -495,4 +501,32 @@ export const zip: Zip<Sequence<unknown>>["zip"] = _zip as any;
 
 export const zipT: Zip<Sequence<unknown>> = {
   zip,
+};
+
+class SequenceEnumerator<T> extends AbstractEnumerator<T> {
+  constructor(private seq: Sequence<T>) {
+    super();
+  }
+
+  move(): boolean {
+    if (!this.isDisposed) {
+      const next = this.seq();
+      if (isNotify(next)) {
+        this.current = next.data;
+        this.seq = next.next;
+      } else {
+        this.dispose();
+      }
+    }
+    return this.hasCurrent;
+  }
+}
+
+export const toEnumerable =
+  <T>() =>
+  (seq: Sequence<T>): EnumerableLike<T> =>
+    createEnumerable(() => new SequenceEnumerator(seq));
+
+export const toEnumerableT: ToEnumerable<Sequence<unknown>> = {
+  toEnumerable,
 };
