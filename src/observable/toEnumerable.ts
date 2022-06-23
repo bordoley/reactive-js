@@ -5,9 +5,9 @@ import {
 } from "../disposable";
 import {
   AbstractEnumerable,
+  AbstractEnumerator,
   EnumerableLike,
   Enumerator,
-  EnumeratorBase,
   ToEnumerable,
 } from "../enumerable";
 import { Function1, pipe } from "../functions";
@@ -18,7 +18,7 @@ import { sinkInto } from "../source";
 import { Observer } from "./observer";
 
 class EnumeratorScheduler<T>
-  extends EnumeratorBase<T>
+  extends AbstractEnumerator<T>
   implements SchedulerLike
 {
   inContinuation = false;

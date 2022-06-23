@@ -2,9 +2,9 @@ import { Generate } from "../container";
 import { EnumerableLike } from "../enumerable";
 import { Factory, Updater } from "../functions";
 import { AbstractEnumerable } from "./enumerable";
-import { EnumeratorBase } from "./enumerator";
+import { AbstractEnumerator } from "./enumerator";
 
-class GenerateEnumerator<T> extends EnumeratorBase<T> {
+class GenerateEnumerator<T> extends AbstractEnumerator<T> {
   constructor(private readonly f: Updater<T>, acc: T) {
     super();
     this.current = acc;

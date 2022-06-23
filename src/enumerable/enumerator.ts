@@ -15,7 +15,7 @@ export abstract class Enumerator<T>
   abstract move(): boolean;
 }
 
-export abstract class EnumeratorBase<T> extends Enumerator<T> {
+export abstract class AbstractEnumerator<T> extends Enumerator<T> {
   private _current: Option<T> = none;
   private _hasCurrent = false;
 
@@ -46,12 +46,10 @@ export abstract class EnumeratorBase<T> extends Enumerator<T> {
     this._hasCurrent = false;
   }
 
-  move(): boolean {
-    return false;
-  }
+  abstract move(): boolean;
 }
 
-export class DelegatingEnumeratorBase<T> extends Enumerator<T> {
+export abstract class AbstractDelegatingEnumerator<T> extends Enumerator<T> {
   constructor(readonly delegate: Enumerator<T>) {
     super();
   }
@@ -64,9 +62,7 @@ export class DelegatingEnumeratorBase<T> extends Enumerator<T> {
     return this.delegate.hasCurrent;
   }
 
-  move(): boolean {
-    return this.delegate.move();
-  }
+  abstract move(): boolean;
 }
 
 export const enumerate = <T>(enumerable: EnumerableLike<T>): Enumerator<T> =>

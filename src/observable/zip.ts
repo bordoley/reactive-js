@@ -6,8 +6,8 @@ import {
   dispose,
 } from "../disposable";
 import {
+  AbstractEnumerator,
   Enumerator,
-  EnumeratorBase,
   current,
   zipEnumerators,
 } from "../enumerable";
@@ -41,7 +41,7 @@ const shouldComplete = (enumerators: readonly Enumerator<unknown>[]) => {
   return false;
 };
 
-class ZipObserverEnumerator extends EnumeratorBase<unknown> {
+class ZipObserverEnumerator extends AbstractEnumerator<unknown> {
   readonly buffer: unknown[] = [];
 
   constructor() {
