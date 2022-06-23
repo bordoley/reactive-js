@@ -9,7 +9,7 @@ class AbstractSource extends AbstractLiftable {
 }
 class AbstractDisposableSource extends AbstractDisposableLiftable {
 }
-const sinkInto = (sink) => observable => observable.sink(sink);
+const sinkInto = (sink) => source => source.sink(sink);
 const createCatchErrorOperator = (m, CatchErrorSink) => (onError) => {
     CatchErrorSink.prototype.notify = function notifyDelegate(next) {
         this.delegate.notify(next);
@@ -239,8 +239,8 @@ const createUsing = (UsingSource) => {
             sink.dispose({ cause });
         }
     };
-    function using(resourceFactory, runnableFactory) {
-        return new UsingSource(resourceFactory, runnableFactory);
+    function using(resourceFactory, sourceFactoryFactory) {
+        return new UsingSource(resourceFactory, sourceFactoryFactory);
     }
     return using;
 };

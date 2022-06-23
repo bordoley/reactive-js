@@ -88,8 +88,8 @@ export abstract class AbstractDisposableSource<T, TSink extends SinkLike<T>>
 
 export const sinkInto =
   <C extends SourceLike, T>(sink: LiftedStateOf<C, T>): SideEffect1<C> =>
-  observable =>
-    observable.sink(sink);
+  source =>
+    source.sink(sink);
 
 export const createCatchErrorOperator =
   <C extends SourceLike>(
@@ -687,7 +687,7 @@ export const createUsing = <C extends SourceLike>(
 
   function using<TResource extends DisposableLike, T>(
     resourceFactory: Factory<TResource>,
-    observableFactory: Function1<TResource, C>,
+    sourceFactory: Function1<TResource, C>,
   ): C;
   function using<
     TResource1 extends DisposableLike,
@@ -695,7 +695,7 @@ export const createUsing = <C extends SourceLike>(
     T,
   >(
     resourceFactory: Factory<readonly [TResource1, TResource2]>,
-    observableFactory: Function2<TResource1, TResource2, C>,
+    sourceFactory: Function2<TResource1, TResource2, C>,
   ): C;
 
   function using<
@@ -705,7 +705,7 @@ export const createUsing = <C extends SourceLike>(
     T,
   >(
     resourceFactory: Factory<readonly [TResource1, TResource2, TResource3]>,
-    observableFactory: Function3<TResource1, TResource2, TResource3, C>,
+    sourceFactory: Function3<TResource1, TResource2, TResource3, C>,
   ): C;
 
   function using<
@@ -718,13 +718,7 @@ export const createUsing = <C extends SourceLike>(
     resourceFactory: Factory<
       readonly [TResource1, TResource2, TResource3, TResource4]
     >,
-    observableFactory: Function4<
-      TResource1,
-      TResource2,
-      TResource3,
-      TResource4,
-      C
-    >,
+    sourceFactory: Function4<TResource1, TResource2, TResource3, TResource4, C>,
   ): C;
 
   function using<
@@ -738,7 +732,7 @@ export const createUsing = <C extends SourceLike>(
     resourceFactory: Factory<
       readonly [TResource1, TResource2, TResource3, TResource4, TResource5]
     >,
-    observableFactory: Function5<
+    sourceFactory: Function5<
       TResource1,
       TResource2,
       TResource3,
@@ -750,14 +744,14 @@ export const createUsing = <C extends SourceLike>(
 
   function using<TResource extends DisposableLike, T>(
     resourceFactory: Factory<TResource | readonly TResource[]>,
-    runnableFactory: (...resources: readonly TResource[]) => C,
+    sourceFactoryFactory: (...resources: readonly TResource[]) => C,
   ): C;
 
   function using<TResource extends DisposableLike, T>(
     resourceFactory: Factory<TResource | readonly TResource[]>,
-    runnableFactory: (...resources: readonly TResource[]) => C,
+    sourceFactoryFactory: (...resources: readonly TResource[]) => C,
   ): C {
-    return new UsingSource<TResource, T>(resourceFactory, runnableFactory);
+    return new UsingSource<TResource, T>(resourceFactory, sourceFactoryFactory);
   }
 
   return using;

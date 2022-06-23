@@ -798,7 +798,7 @@ ___
 
 ### using
 
-▸ **using**<`TResource`, `T`\>(`resourceFactory`, `observableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
+▸ **using**<`TResource`, `T`\>(`resourceFactory`, `sourceFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
 #### Type parameters
 
@@ -812,13 +812,13 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `resourceFactory` | [`Factory`](functions.md#factory)<`TResource`\> |
-| `observableFactory` | [`Function1`](functions.md#function1)<`TResource`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
+| `sourceFactory` | [`Function1`](functions.md#function1)<`TResource`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
 
 #### Returns
 
 [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
-▸ **using**<`TResource1`, `TResource2`, `T_1`\>(`resourceFactory`, `observableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
+▸ **using**<`TResource1`, `TResource2`, `T_1`\>(`resourceFactory`, `sourceFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
 #### Type parameters
 
@@ -833,13 +833,13 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1`, `TResource2`]\> |
-| `observableFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
+| `sourceFactory` | [`Function2`](functions.md#function2)<`TResource1`, `TResource2`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
 
 #### Returns
 
 [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
-▸ **using**<`TResource1_1`, `TResource2_1`, `TResource3`, `T_2`\>(`resourceFactory`, `observableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
+▸ **using**<`TResource1_1`, `TResource2_1`, `TResource3`, `T_2`\>(`resourceFactory`, `sourceFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
 #### Type parameters
 
@@ -855,13 +855,13 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1_1`, `TResource2_1`, `TResource3`]\> |
-| `observableFactory` | [`Function3`](functions.md#function3)<`TResource1_1`, `TResource2_1`, `TResource3`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
+| `sourceFactory` | [`Function3`](functions.md#function3)<`TResource1_1`, `TResource2_1`, `TResource3`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
 
 #### Returns
 
 [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
-▸ **using**<`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`, `T_3`\>(`resourceFactory`, `observableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
+▸ **using**<`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`, `T_3`\>(`resourceFactory`, `sourceFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
 #### Type parameters
 
@@ -878,13 +878,13 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`]\> |
-| `observableFactory` | [`Function4`](functions.md#function4)<`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
+| `sourceFactory` | [`Function4`](functions.md#function4)<`TResource1_2`, `TResource2_2`, `TResource3_1`, `TResource4`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
 
 #### Returns
 
 [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
-▸ **using**<`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`, `T_4`\>(`resourceFactory`, `observableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
+▸ **using**<`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`, `T_4`\>(`resourceFactory`, `sourceFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
 #### Type parameters
 
@@ -902,13 +902,13 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `resourceFactory` | [`Factory`](functions.md#factory)<readonly [`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`]\> |
-| `observableFactory` | [`Function5`](functions.md#function5)<`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
+| `sourceFactory` | [`Function5`](functions.md#function5)<`TResource1_3`, `TResource2_3`, `TResource3_2`, `TResource4_1`, `TResource5`, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\> |
 
 #### Returns
 
 [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
-▸ **using**<`TResource_1`, `T_5`\>(`resourceFactory`, `runnableFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
+▸ **using**<`TResource_1`, `T_5`\>(`resourceFactory`, `sourceFactoryFactory`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
 #### Type parameters
 
@@ -922,7 +922,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `resourceFactory` | [`Factory`](functions.md#factory)<`TResource_1` \| readonly `TResource_1`[]\> |
-| `runnableFactory` | (...`resources`: readonly `TResource_1`[]) => [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\> |
+| `sourceFactoryFactory` | (...`resources`: readonly `TResource_1`[]) => [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\> |
 
 #### Returns
 

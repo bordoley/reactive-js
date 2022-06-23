@@ -121,29 +121,29 @@ declare const createUsing: <C extends SourceLike>(UsingSource: new <TResource ex
     readonly resourceFactory: Function1<LiftedStateOf<C, T>, TResource | readonly TResource[]>;
     readonly sourceFactory: (...resources: readonly TResource[]) => C;
 }) => {
-    <TResource_1 extends DisposableLike, T_1>(resourceFactory: Factory<TResource_1>, observableFactory: Function1<TResource_1, C>): C;
+    <TResource_1 extends DisposableLike, T_1>(resourceFactory: Factory<TResource_1>, sourceFactory: Function1<TResource_1, C>): C;
     <TResource1 extends DisposableLike, TResource2 extends DisposableLike, T_2>(resourceFactory: Factory<readonly [
         TResource1,
         TResource2
-    ]>, observableFactory: Function2<TResource1, TResource2, C>): C;
+    ]>, sourceFactory: Function2<TResource1, TResource2, C>): C;
     <TResource1_1 extends DisposableLike, TResource2_1 extends DisposableLike, TResource3 extends DisposableLike, T_3>(resourceFactory: Factory<readonly [
         TResource1_1,
         TResource2_1,
         TResource3
-    ]>, observableFactory: Function3<TResource1_1, TResource2_1, TResource3, C>): C;
+    ]>, sourceFactory: Function3<TResource1_1, TResource2_1, TResource3, C>): C;
     <TResource1_2 extends DisposableLike, TResource2_2 extends DisposableLike, TResource3_1 extends DisposableLike, TResource4 extends DisposableLike, T_4>(resourceFactory: Factory<readonly [
         TResource1_2,
         TResource2_2,
         TResource3_1,
         TResource4
-    ]>, observableFactory: Function4<TResource1_2, TResource2_2, TResource3_1, TResource4, C>): C;
+    ]>, sourceFactory: Function4<TResource1_2, TResource2_2, TResource3_1, TResource4, C>): C;
     <TResource1_3 extends DisposableLike, TResource2_3 extends DisposableLike, TResource3_2 extends DisposableLike, TResource4_1 extends DisposableLike, TResource5 extends DisposableLike, T_5>(resourceFactory: Factory<readonly [
         TResource1_3,
         TResource2_3,
         TResource3_2,
         TResource4_1,
         TResource5
-    ]>, observableFactory: Function5<TResource1_3, TResource2_3, TResource3_2, TResource4_1, TResource5, C>): C;
-    <TResource_2 extends DisposableLike, T_6>(resourceFactory: Factory<TResource_2 | readonly TResource_2[]>, runnableFactory: (...resources: readonly TResource_2[]) => C): C;
+    ]>, sourceFactory: Function5<TResource1_3, TResource2_3, TResource3_2, TResource4_1, TResource5, C>): C;
+    <TResource_2 extends DisposableLike, T_6>(resourceFactory: Factory<TResource_2 | readonly TResource_2[]>, sourceFactoryFactory: (...resources: readonly TResource_2[]) => C): C;
 };
 export { AbstractDisposableSource, AbstractSource, Lift, SinkLike, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };
