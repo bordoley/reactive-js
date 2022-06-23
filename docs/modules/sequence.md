@@ -24,6 +24,7 @@
 - [generateT](sequence.md#generatet)
 - [keepT](sequence.md#keept)
 - [mapT](sequence.md#mapt)
+- [pairwiseT](sequence.md#pairwiset)
 - [repeatT](sequence.md#repeatt)
 - [scanT](sequence.md#scant)
 - [sequenceResultDone](sequence.md#sequenceresultdone)
@@ -44,6 +45,7 @@
 - [generate](sequence.md#generate)
 - [keep](sequence.md#keep)
 - [map](sequence.md#map)
+- [pairwise](sequence.md#pairwise)
 - [repeat](sequence.md#repeat)
 - [scan](sequence.md#scan)
 - [seek](sequence.md#seek)
@@ -132,6 +134,12 @@ ___
 ### mapT
 
 • `Const` **mapT**: [`Map`](../interfaces/container.Map.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
+
+___
+
+### pairwiseT
+
+• `Const` **pairwiseT**: [`Pairwise`](../interfaces/container.Pairwise.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
 
 ___
 
@@ -347,6 +355,22 @@ ___
 #### Returns
 
 [`SequenceOperator`](sequence.md#sequenceoperator)<`TA`, `TB`\>
+
+___
+
+### pairwise
+
+▸ **pairwise**<`T`\>(): [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, readonly [[`Option`](option.md#option)<`T`\>, `T`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`SequenceOperator`](sequence.md#sequenceoperator)<`T`, readonly [[`Option`](option.md#option)<`T`\>, `T`]\>
 
 ___
 

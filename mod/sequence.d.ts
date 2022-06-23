@@ -1,5 +1,6 @@
-import { ContainerLike, ConcatAll, FromArray, Concat, DistinctUntilChanged, Keep, Map, Generate, TakeFirst, Repeat, Scan, SkipFirst, TakeLast, TakeWhile, Zip } from "./container.mjs";
+import { ContainerLike, ConcatAll, FromArray, Concat, DistinctUntilChanged, Keep, Map, Generate, Pairwise, TakeFirst, Repeat, Scan, SkipFirst, TakeLast, TakeWhile, Zip } from "./container.mjs";
 import { Factory, Function1, Equality, Predicate, Updater, Reducer } from "./functions.mjs";
+import { Option } from "./option.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
 interface SequenceResultNotify<T> {
     readonly data: T;
@@ -33,6 +34,11 @@ declare const map: <TA, TB>(mapper: Function1<TA, TB>) => SequenceOperator<TA, T
 declare const mapT: Map<Sequence<unknown>>;
 declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>) => Sequence<T>;
 declare const generateT: Generate<Sequence<unknown>>;
+declare const pairwise: <T>() => SequenceOperator<T, readonly [
+    Option<T>,
+    T
+]>;
+declare const pairwiseT: Pairwise<Sequence<unknown>>;
 declare const seek: <T>(count: number) => SequenceOperator<T, T>;
 declare const takeFirst: <T>(options?: {
     readonly count?: number;
@@ -60,4 +66,4 @@ declare const toRunnable: <T>() => Function1<Sequence<T>, RunnableLike<T>>;
 declare const toRunnableT: ToRunnable<Sequence<unknown>>;
 declare const zip: Zip<Sequence<unknown>>["zip"];
 declare const zipT: Zip<Sequence<unknown>>;
-export { Sequence, SequenceLike, SequenceOperator, SequenceResult, SequenceResultNotify, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, fromArray, fromArrayT, generate, generateT, keep, keepT, map, mapT, repeat, repeatT, scan, scanT, seek, sequenceResultDone, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toRunnable, toRunnableT, type, zip, zipT };
+export { Sequence, SequenceLike, SequenceOperator, SequenceResult, SequenceResultNotify, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, fromArray, fromArrayT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, sequenceResultDone, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toRunnable, toRunnableT, type, zip, zipT };

@@ -1,6 +1,6 @@
 /// <reference types="./sequence.d.ts" />
 import { pipe, strictEquality, alwaysTrue, callWith } from './functions.mjs';
-import { isNone } from './option.mjs';
+import { none, isNone } from './option.mjs';
 import { map as map$1, keepType } from './readonlyArray.mjs';
 import { createRunnable } from './runnable.mjs';
 
@@ -117,6 +117,21 @@ const generate = (generator, initialValue) => castToSequence(() => {
 });
 const generateT = {
     generate,
+};
+const _pairwise = (prev, seq) => castToSequence(() => {
+    const result = seq();
+    if (isNotify(result)) {
+        const { data, next } = result;
+        const v = [prev, data];
+        return notify(v, _pairwise(data, next));
+    }
+    else {
+        return done();
+    }
+});
+const pairwise = () => seq => castToSequence(() => _pairwise(none, seq)());
+const pairwiseT = {
+    pairwise,
 };
 const seek = (count) => seq => {
     if (count <= 0) {
@@ -248,11 +263,11 @@ const _zip = (...sequences) => castToSequence(() => {
     const notifyResults = pipe(sequences, map$1(callWith()), keepType(isNotify));
     return notifyResults.length === sequences.length
         ? notify(pipe(notifyResults, map$1(x => x.data)), _zip(...pipe(notifyResults, map$1(x => x.next))))
-        : sequenceResultDone;
+        : done();
 });
 const zip = _zip;
 const zipT = {
     zip,
 };
 
-export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, fromArray, fromArrayT, generate, generateT, keep, keepT, map, mapT, repeat, repeatT, scan, scanT, seek, sequenceResultDone, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toRunnable, toRunnableT, type, zip, zipT };
+export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, fromArray, fromArrayT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, sequenceResultDone, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toRunnable, toRunnableT, type, zip, zipT };

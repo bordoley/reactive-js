@@ -157,7 +157,7 @@ export interface Map<C extends ContainerLike> extends Container<C> {
 }
 
 export interface Pairwise<C extends ContainerLike> extends Container<C> {
-  pairwise<T>(): ContainerOperator<C, T, [Option<T>, T]>;
+  pairwise<T>(): ContainerOperator<C, T, readonly [Option<T>, T]>;
 }
 
 export interface Reduce<C extends ContainerLike> extends Container<C> {
