@@ -2,7 +2,7 @@
   "name": "reactive-js",
   "private": true,
   "scripts": {
-    "build": "yarn format && yarn clean && yarn build-types && rollup -c rollup.config.js && yarn pkg && yarn docs",
+    "build": "yarn lint && yarn format && yarn test && yarn clean && yarn build-types && rollup -c rollup.config.js && yarn pkg && yarn docs",
     "build-types": "tsc -p tsconfig.build-types.json",
     "clean": "rm -rf ./build-types ./mod ./docs ./packages/core/README.md ./packages/core/*.js ./packages/core/*.ts ./packages/core/*.mjs",
     "docs": "typedoc",
