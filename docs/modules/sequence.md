@@ -32,6 +32,7 @@
 - [takeFirstT](sequence.md#takefirstt)
 - [takeLastT](sequence.md#takelastt)
 - [takeWhileT](sequence.md#takewhilet)
+- [toEnumerableT](sequence.md#toenumerablet)
 - [toRunnableT](sequence.md#torunnablet)
 - [type](sequence.md#type)
 - [zipT](sequence.md#zipt)
@@ -53,6 +54,7 @@
 - [takeFirst](sequence.md#takefirst)
 - [takeLast](sequence.md#takelast)
 - [takeWhile](sequence.md#takewhile)
+- [toEnumerable](sequence.md#toenumerable)
 - [toRunnable](sequence.md#torunnable)
 - [zip](sequence.md#zip)
 
@@ -182,6 +184,12 @@ ___
 ### takeWhileT
 
 • `Const` **takeWhileT**: [`TakeWhile`](../interfaces/container.TakeWhile.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
+
+___
+
+### toEnumerableT
+
+• `Const` **toEnumerableT**: [`ToEnumerable`](../interfaces/enumerable.ToEnumerable.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
 
 ___
 
@@ -562,6 +570,34 @@ ___
 #### Returns
 
 [`SequenceOperator`](sequence.md#sequenceoperator)<`T`, `T`\>
+
+___
+
+### toEnumerable
+
+▸ **toEnumerable**<`T`\>(): (`seq`: [`Sequence`](sequence.md#sequence)<`T`\>) => [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+`fn`
+
+▸ (`seq`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `seq` | [`Sequence`](sequence.md#sequence)<`T`\> |
+
+##### Returns
+
+[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
 
 ___
 
