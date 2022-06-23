@@ -79,7 +79,7 @@ export const useObservable = <T>(
       scheduler === schedulerOption ? subscription : scheduler,
       dispose(),
     );
-  }, [observable, updateState, updateError, options]);
+  }, [observable, updateState, updateError, options.scheduler]);
 
   if (isSome(error)) {
     const { cause } = error;

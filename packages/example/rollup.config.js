@@ -26,7 +26,7 @@ export default [
       typescript(typescriptConfig),
       resolve(),
       replace({
-        "preventAssignment": true,
+        preventAssignment: true,
         "process.env.NODE_ENV": JSON.stringify("production"),
       }),
       //terser(),
