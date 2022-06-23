@@ -1,0 +1,23 @@
+{
+  "name": "@reactive-js/example",
+  "version": "0.3.0",
+  "private": true,
+  "dependencies": {
+    "@reactive-js/core": "^0.3.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "scheduler": "^0.23.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.3.0 ",
+    "@rollup/plugin-replace": "^4.0.0",
+    "@types/react": "^18.0.12",
+    "@types/react-dom": "^18.0.5",
+    "rollup": "^2.75.6",
+    "rollup-plugin-terser": "^7.0.2"
+  },
+  "scripts": {
+    "build": "rollup -c rollup.config.js",
+    "clean": "rm -rf build"
+  }
+}
