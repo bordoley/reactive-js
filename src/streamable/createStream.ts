@@ -1,4 +1,4 @@
-import { addDisposable } from "../disposable";
+import { addDisposableDisposeParentOnChildError } from "../disposable";
 import { pipe } from "../functions";
 import {
   AbstractDisposableObservable,
@@ -49,8 +49,8 @@ export const createStream = <TReq, T>(
 
   const stream = new StreamImpl(subject, observable);
 
-  addDisposable(observable, stream);
-  addDisposable(stream, subject);
+  addDisposableDisposeParentOnChildError(observable, stream);
+  addDisposableDisposeParentOnChildError(stream, subject);
 
   return stream;
 };
