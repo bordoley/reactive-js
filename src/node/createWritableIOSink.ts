@@ -4,7 +4,6 @@ import {
   addDisposable,
   addDisposableDisposeParentOnChildError,
   addOnDisposedWithoutErrorTeardown,
-  addTeardown,
   dispose,
 } from "../disposable";
 import { Factory, defer, pipe } from "../functions";
@@ -29,9 +28,12 @@ export const createWritableIOSink = (
       const writable = factory();
       const writableValue = writable.value;
 
+      addDisposableDisposeParentOnChildError(observer, writable);
+      addDisposable(writable, dispatcher);
+
       const streamEventsSubscription = pipe(
         events,
-        subscribe(observer, ev => {
+        subscribe(observer.scheduler, ev => {
           // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
           // node throws a type Error regarding expecting a Buffer, though the docs
           // say a UInt8Array should be accepted. Need to file a bug.
@@ -41,15 +43,13 @@ export const createWritableIOSink = (
           }
         }),
       );
+      addDisposableDisposeParentOnChildError(
+        observer,
+        streamEventsSubscription,
+      );
       addOnDisposedWithoutErrorTeardown(streamEventsSubscription, () => {
         writableValue.end();
       });
-
-      addDisposableDisposeParentOnChildError(
-        writable,
-        streamEventsSubscription,
-      );
-      addDisposable(observer, writable);
 
       const onDrain = defer("resume", dispatchTo(dispatcher));
       const onFinish = defer(dispatcher, dispose());
@@ -58,13 +58,6 @@ export const createWritableIOSink = (
       writableValue.on("drain", onDrain);
       writableValue.on("finish", onFinish);
       writableValue.on(NODE_JS_PAUSE_EVENT, onPause);
-
-      addDisposable(writable, dispatcher);
-      addTeardown(dispatcher, _ => {
-        writableValue.removeListener("drain", onDrain);
-        writableValue.removeListener("finish", onFinish);
-        writableValue.removeListener(NODE_JS_PAUSE_EVENT, onPause);
-      });
 
       dispatcher.dispatch("resume");
     }),

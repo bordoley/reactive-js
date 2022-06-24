@@ -14,7 +14,7 @@ export const map: <TA, TB>(
       readonly delegate: Observer<TB>,
       readonly mapper: Function1<TA, TB>,
     ) {
-      super(delegate);
+      super(delegate.scheduler);
     }
   },
 );

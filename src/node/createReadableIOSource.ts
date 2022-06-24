@@ -4,7 +4,6 @@ import {
   DisposableValueLike,
   addDisposable,
   addDisposableDisposeParentOnChildError,
-  addTeardown,
   dispose,
 } from "../disposable";
 import { Factory, pipe } from "../functions";
@@ -28,9 +27,12 @@ export const createReadableIOSource = (
       const readableValue = readable.value;
       readableValue.pause();
 
+      addDisposableDisposeParentOnChildError(observer, readable);
+      addDisposable(readable, dispatcher);
+
       const modeSubscription = pipe(
         mode,
-        subscribe(observer, ev => {
+        subscribe(observer.scheduler, ev => {
           switch (ev) {
             case "pause":
               readableValue.pause();
@@ -41,9 +43,7 @@ export const createReadableIOSource = (
           }
         }),
       );
-      addDisposable(observer, readable);
-
-      addDisposableDisposeParentOnChildError(readable, modeSubscription);
+      addDisposableDisposeParentOnChildError(observer, modeSubscription);
 
       const onData = dispatchTo(dispatcher);
       const onEnd = () => {
@@ -52,12 +52,6 @@ export const createReadableIOSource = (
 
       readableValue.on("data", onData);
       readableValue.on("end", onEnd);
-
-      addDisposable(readable, dispatcher);
-      addTeardown(dispatcher, _ => {
-        readableValue.removeListener("data", onData);
-        readableValue.removeListener("end", onEnd);
-      });
     }),
   );
 

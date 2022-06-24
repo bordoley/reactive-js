@@ -44,7 +44,7 @@ class ZipWithLatestFromObserver<TA, TB, T> extends Observer<TA> {
     readonly delegate: Observer<T>,
     readonly selector: Function2<TA, TB, T>,
   ) {
-    super(delegate);
+    super(delegate.scheduler);
     this.selector = selector;
   }
 
@@ -72,7 +72,7 @@ export const zipWithLatestFrom = <TA, TB, T>(
 
     const otherSubscription = pipe(
       other,
-      subscribe(delegate, onNotify, observer),
+      subscribe(delegate.scheduler, onNotify, observer),
     );
 
     const disposeDelegate = () => {

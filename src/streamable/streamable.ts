@@ -1,5 +1,8 @@
 import { empty as emptyContainer } from "../container";
-import { addDisposable, bindDisposables } from "../disposable";
+import {
+  addDisposableDisposeParentOnChildError,
+  bindDisposables,
+} from "../disposable";
 import { Function1, compose, pipe } from "../functions";
 import {
   ObservableOperator,
@@ -59,15 +62,17 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
 
   const op: ObservableOperator<TReqB, TB> = requests =>
     createObservableUnsafe(observer => {
-      const srcStream = pipe(src, stream(observer));
+      const srcStream = pipe(src, stream(observer.scheduler));
+      addDisposableDisposeParentOnChildError(observer, srcStream);
+
       const requestSubscription = pipe(
         requests,
         map((compose as any)(...reqOps)),
-        subscribe(observer, srcStream.dispatch, srcStream),
+        subscribe(observer.scheduler, srcStream.dispatch, srcStream),
       );
+      addDisposableDisposeParentOnChildError(observer, requestSubscription);
 
       bindDisposables(srcStream, requestSubscription);
-      addDisposable(observer, srcStream);
 
       pipe(srcStream, (compose as any)(...obsOps), sinkInto(observer));
     });

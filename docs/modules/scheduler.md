@@ -13,7 +13,6 @@
 - [PausableSchedulerLike](../interfaces/scheduler.PausableSchedulerLike.md)
 - [PrioritySchedulerLike](../interfaces/scheduler.PrioritySchedulerLike.md)
 - [SchedulerContinuationLike](../interfaces/scheduler.SchedulerContinuationLike.md)
-- [SchedulerContinuationRunStatusChangedListenerLike](../interfaces/scheduler.SchedulerContinuationRunStatusChangedListenerLike.md)
 - [SchedulerLike](../interfaces/scheduler.SchedulerLike.md)
 - [VirtualTimeSchedulerLike](../interfaces/scheduler.VirtualTimeSchedulerLike.md)
 

@@ -1,4 +1,4 @@
-import { addOnDisposedWithError } from "../disposable";
+import { addDisposableDisposeParentOnChildError } from "../disposable";
 import { Factory, SideEffect1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { schedule } from "../scheduler";
@@ -17,8 +17,11 @@ class DeferObservable<T> extends AbstractObservable<T> {
   sink(observer: Observer<T>) {
     const sideEffect = this.f();
     const callback = () => sideEffect(observer);
-    const schedulerSubscription = pipe(observer, schedule(callback, this));
-    addOnDisposedWithError(schedulerSubscription, observer);
+    const schedulerSubscription = pipe(
+      observer.scheduler,
+      schedule(callback, this),
+    );
+    addDisposableDisposeParentOnChildError(observer, schedulerSubscription);
   }
 }
 

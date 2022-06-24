@@ -23,7 +23,7 @@ export const timeoutError = _timeoutError;
 const setupDurationSubscription = <T>(observer: TimeoutObserver<T>) => {
   observer.durationSubscription.inner = pipe(
     observer.duration,
-    subscribe(observer),
+    subscribe(observer.scheduler),
   );
 };
 
@@ -33,7 +33,7 @@ class TimeoutObserver<T> extends Observer<T> {
     readonly duration: ObservableLike<unknown>,
     readonly durationSubscription: SerialDisposableLike,
   ) {
-    super(delegate);
+    super(delegate.scheduler);
   }
 
   notify(next: T) {

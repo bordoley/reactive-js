@@ -1,5 +1,8 @@
 import { fromValue } from "../container";
-import { addDisposable, bindDisposables } from "../disposable";
+import {
+  addDisposableDisposeParentOnChildError,
+  bindDisposables,
+} from "../disposable";
 import {
   Equality,
   Factory,
@@ -89,15 +92,15 @@ export const toStateStore =
   streamable =>
     createStreamable(updates =>
       createObservableUnsafe(observer => {
-        const stream = pipe(streamable, streamStreamable(observer));
+        const stream = pipe(streamable, streamStreamable(observer.scheduler));
+        addDisposableDisposeParentOnChildError(observer, stream);
+
         const updatesSubscription = pipe(
           updates,
           zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),
-          subscribe(observer, stream.dispatch, stream),
+          subscribe(observer.scheduler, stream.dispatch, stream),
         );
-
         bindDisposables(updatesSubscription, stream);
-        addDisposable(observer, stream);
 
         pipe(stream, sinkInto(observer));
       }),

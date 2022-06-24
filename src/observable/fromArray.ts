@@ -50,7 +50,10 @@ export const fromArray =
                 // Inline yielding logic for performance reasons
                 observer.notify(value);
 
-                if (index < endIndex && (delay > 0 || observer.shouldYield)) {
+                if (
+                  index < endIndex &&
+                  (delay > 0 || observer.scheduler.shouldYield)
+                ) {
                   throw new YieldError(delay);
                 }
               }
