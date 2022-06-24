@@ -21,7 +21,7 @@ export interface WindowLocationStreamLike
     options?: { readonly replace?: boolean },
   ): void;
 
-  goBack(this: WindowLocationURI): boolean;
+  goBack(this: WindowLocationStreamLike): boolean;
 }
 
 export interface WindowLocationStreamableLike
