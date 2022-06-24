@@ -140,6 +140,12 @@ class ReactPriorityScheduler
       delay?: number;
     },
   ) {
+    addDisposable(this, continuation);
+
+    if (continuation.isDisposed) {
+      return;
+    }
+
     const callback = () => {
       pipe(callbackNodeDisposable, dispose());
 
