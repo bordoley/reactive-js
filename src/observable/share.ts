@@ -1,7 +1,7 @@
 import { addTeardown, dispose } from "../disposable";
 import { pipe } from "../functions";
 import { MulticastObservableLike, ObservableOperator } from "../observable";
-import { Option, isNone, none } from "../option";
+import { Option, isNone, isSome, none } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { sinkInto } from "../source";
 import { createObservable } from "./createObservable";
@@ -22,13 +22,10 @@ export const share =
     options?: { readonly replay?: number },
   ): ObservableOperator<T, T> =>
   source => {
-    let observerCount = 0;
     let multicast: Option<MulticastObservableLike<T>> = none;
 
     const teardown = () => {
-      observerCount--;
-
-      if (observerCount === 0) {
+      if (isSome(multicast) && multicast.observerCount === 0) {
         pipe(multicast as MulticastObservableLike<T>, dispose());
         multicast = none;
       }
@@ -38,7 +35,6 @@ export const share =
       if (isNone(multicast)) {
         multicast = pipe(source, publish(scheduler, options));
       }
-      observerCount++;
 
       pipe(multicast, sinkInto(observer));
       addTeardown(observer, teardown);
