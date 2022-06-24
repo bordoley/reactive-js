@@ -1,5 +1,5 @@
-import { addTeardown, dispose } from "../disposable";
-import { Function1, pipe } from "../functions";
+import { addTeardown } from "../disposable";
+import { Function1 } from "../functions";
 import { ObservableLike, createObservable } from "../observable";
 
 export const fromEvent = <T>(
@@ -9,12 +9,8 @@ export const fromEvent = <T>(
 ): ObservableLike<T> =>
   createObservable(({ dispatcher }) => {
     const listener = (event: Event) => {
-      try {
-        const result = selector(event);
-        dispatcher.dispatch(result);
-      } catch (cause) {
-        pipe(dispatcher, dispose({ cause }));
-      }
+      const result = selector(event);
+      dispatcher.dispatch(result);
     };
 
     target.addEventListener(eventName, listener, { passive: true });
