@@ -127,7 +127,7 @@ export {
   zipLatestWith,
 } from "./observable/latest";
 export { concat, concatT } from "./observable/concat";
-export { createObservable } from "./observable/createObservable";
+export { createObservable, createT } from "./observable/createObservable";
 export { createSubject } from "./observable/createSubject";
 export { fromArray, fromArrayT } from "./observable/fromArray";
 export { fromDisposable } from "./observable/fromDisposable";

@@ -1,5 +1,6 @@
 import { SideEffect1 } from "../functions";
 import { ObservableLike } from "../observable";
+import { CreateSource } from "../source";
 import { AbstractObservable } from "./observable";
 import { Observer } from "./observer";
 
@@ -20,3 +21,7 @@ class CreateObservable<T> extends AbstractObservable<T> {
 export const createObservable = <T>(
   f: SideEffect1<Observer<T>>,
 ): ObservableLike<T> => new CreateObservable(f);
+
+export const createT: CreateSource<ObservableLike<unknown>> = {
+  create: createObservable,
+};

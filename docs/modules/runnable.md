@@ -19,6 +19,7 @@
 
 ### Variables
 
+- [createT](runnable.md#createt)
 - [decodeWithCharsetT](runnable.md#decodewithcharsett)
 - [distinctUntilChangedT](runnable.md#distinctuntilchangedt)
 - [everySatisfyT](runnable.md#everysatisfyt)
@@ -82,6 +83,12 @@
 | `TB` |
 
 ## Variables
+
+### createT
+
+• `Const` **createT**: [`CreateSource`](../interfaces/source.CreateSource.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
 
 ### decodeWithCharsetT
 

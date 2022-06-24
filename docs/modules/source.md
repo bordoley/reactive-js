@@ -11,6 +11,7 @@
 
 ### Interfaces
 
+- [CreateSource](../interfaces/source.CreateSource.md)
 - [Lift](../interfaces/source.Lift.md)
 - [SinkLike](../interfaces/source.SinkLike.md)
 - [SourceLike](../interfaces/source.SourceLike.md)
@@ -695,7 +696,7 @@ ___
 
 ### createUsing
 
-▸ **createUsing**<`C`\>(`UsingSource`): <TResource_1, T_1\>(`resourceFactory`: [`Factory`](functions.md#factory)<`TResource_1` \| readonly `TResource_1`[]\>, `sourceFactoryFactory`: (...`resources`: readonly `TResource_1`[]) => `C`) => `C`
+▸ **createUsing**<`C`\>(`m`): <TResource, T\>(`resourceFactory`: [`Factory`](functions.md#factory)<`TResource` \| readonly `TResource`[]\>, `sourceFactory`: (...`resources`: readonly `TResource`[]) => [`ContainerOf`](container.md#containerof)<`C`, `T`\>) => [`ContainerOf`](container.md#containerof)<`C`, `T`\>
 
 #### Type parameters
 
@@ -707,31 +708,31 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `UsingSource` | <TResource, T\>(`resourceFactory`: [`Factory`](functions.md#factory)<`TResource` \| readonly `TResource`[]\>, `sourceFactory`: (...`resources`: readonly `TResource`[]) => `C`) => `C` & { `resourceFactory`: [`Function1`](functions.md#function1)<[`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `TResource` \| readonly `TResource`[]\> ; `sourceFactory`: (...`resources`: readonly `TResource`[]) => `C`  } |
+| `m` | [`CreateSource`](../interfaces/source.CreateSource.md)<`C`\> |
 
 #### Returns
 
 `fn`
 
-▸ <`TResource_1`, `T_1`\>(`resourceFactory`, `sourceFactoryFactory`): `C`
+▸ <`TResource`, `T`\>(`resourceFactory`, `sourceFactory`): [`ContainerOf`](container.md#containerof)<`C`, `T`\>
 
 ##### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TResource_1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `T_1` | `T_1` |
+| `TResource` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T` | `T` |
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource_1` \| readonly `TResource_1`[]\> |
-| `sourceFactoryFactory` | (...`resources`: readonly `TResource_1`[]) => `C` |
+| `resourceFactory` | [`Factory`](functions.md#factory)<`TResource` \| readonly `TResource`[]\> |
+| `sourceFactory` | (...`resources`: readonly `TResource`[]) => [`ContainerOf`](container.md#containerof)<`C`, `T`\> |
 
 ##### Returns
 
-`C`
+[`ContainerOf`](container.md#containerof)<`C`, `T`\>
 
 ___
 

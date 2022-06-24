@@ -24,6 +24,9 @@ class RunnableImpl extends AbstractRunnable {
     }
 }
 const createRunnable = (run) => new RunnableImpl(run);
+const createT = {
+    create: createRunnable,
+};
 
 const fromArray = (options = {}) => values => {
     var _a, _b;
@@ -389,16 +392,9 @@ const throwIfEmpty = createThrowIfEmptyOperator(liftT, class ThrowIfEmptySink ex
 const throwIfEmptyT = {
     throwIfEmpty,
 };
-const using = createUsing(class UsingRunnable extends AbstractRunnable {
-    constructor(resourceFactory, sourceFactory) {
-        super();
-        this.resourceFactory = resourceFactory;
-        this.sourceFactory = sourceFactory;
-    }
-    sink(_) { }
-});
+const using = createUsing(createT);
 const usingT = {
     using,
 };
 
-export { Sink, catchError, concat, concatAll, createRunnable, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, onNotify, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };
+export { Sink, catchError, concat, concatAll, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, onNotify, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };
