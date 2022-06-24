@@ -72,7 +72,6 @@
 - [concatAll](observable.md#concatall)
 - [createObservable](observable.md#createobservable)
 - [createObservableUnsafe](observable.md#createobservableunsafe)
-- [createObserverDispatcher](observable.md#createobserverdispatcher)
 - [createSubject](observable.md#createsubject)
 - [decodeWithCharset](observable.md#decodewithcharset)
 - [defer](observable.md#defer)
@@ -1278,30 +1277,6 @@ ___
 #### Returns
 
 [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
-
-___
-
-### createObserverDispatcher
-
-▸ **createObserverDispatcher**<`T`\>(`delegate`): [`DispatcherLike`](../interfaces/observable.DispatcherLike.md)<`T`\>
-
-Returns a `DispatcherLike` that delegates to the provided observer.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `delegate` | [`Observer`](../classes/observable.Observer.md)<`T`\> |
-
-#### Returns
-
-[`DispatcherLike`](../interfaces/observable.DispatcherLike.md)<`T`\>
 
 ___
 

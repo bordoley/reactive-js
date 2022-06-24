@@ -35,6 +35,7 @@ Abstract base class for implementing the `ObserverLike` interface.
 ### Accessors
 
 - [T](observable.Observer.md#t)
+- [dispatcher](observable.Observer.md#dispatcher)
 - [type](observable.Observer.md#type)
 
 ### Methods
@@ -87,6 +88,16 @@ Abstract base class for implementing the `ObserverLike` interface.
 #### Inherited from
 
 AbstractDisposableContainer.T
+
+___
+
+### dispatcher
+
+• `get` **dispatcher**(): [`DispatcherLike`](../interfaces/observable.DispatcherLike.md)<`T`\>
+
+#### Returns
+
+[`DispatcherLike`](../interfaces/observable.DispatcherLike.md)<`T`\>
 
 ___
 
