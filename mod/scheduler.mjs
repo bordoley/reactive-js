@@ -1,5 +1,5 @@
 /// <reference types="./scheduler.d.ts" />
-import { AbstractDisposable, dispose, addTeardown, AbstractSerialDisposable, disposed, addDisposable, createDisposable } from './disposable.mjs';
+import { AbstractDisposable, dispose, AbstractSerialDisposable, disposed, addDisposable, addTeardown, createDisposable } from './disposable.mjs';
 import { pipe, raise, alwaysFalse } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 
@@ -82,11 +82,6 @@ class PriorityQueueImpl {
 }
 const createPriorityQueue = (comparator) => new PriorityQueueImpl(comparator);
 
-const notifyListeners = (listeners, state) => {
-    for (const listener of listeners) {
-        listener.onRunStatusChanged(state);
-    }
-};
 const isYieldError = (e) => e instanceof YieldError;
 class YieldError {
     constructor(delay) {
@@ -94,39 +89,16 @@ class YieldError {
     }
 }
 let currentScheduler = none;
-function clearListeners() {
-    this.listeners = none;
-}
 class SchedulerContinuationImpl extends AbstractDisposable {
     constructor(scheduler, f) {
         super();
         this.scheduler = scheduler;
         this.f = f;
-        this.listeners = none;
-    }
-    addListener(_ev, listener) {
-        if (!this.isDisposed) {
-            let { listeners } = this;
-            if (isNone(listeners)) {
-                this.listeners = new Set();
-            }
-            this.listeners.add(listener);
-        }
-    }
-    removeListener(_ev, listener) {
-        let { listeners } = this;
-        if (isSome(listeners)) {
-            listeners.delete(listener);
-        }
     }
     continue() {
         if (!this.isDisposed) {
-            const { listeners } = this;
             let error = none;
             let yieldError = none;
-            if (isSome(listeners)) {
-                notifyListeners(listeners, true);
-            }
             const oldCurrentScheduler = currentScheduler;
             currentScheduler = this.scheduler;
             try {
@@ -141,9 +113,6 @@ class SchedulerContinuationImpl extends AbstractDisposable {
                 }
             }
             currentScheduler = oldCurrentScheduler;
-            if (isSome(listeners)) {
-                notifyListeners(listeners, false);
-            }
             if (isSome(yieldError)) {
                 this.scheduler.schedule(this, yieldError);
             }
@@ -166,7 +135,6 @@ const __yield = (delay = 0) => {
 };
 const schedule = (f, options) => scheduler => {
     const continuation = new SchedulerContinuationImpl(scheduler, f);
-    addTeardown(continuation, clearListeners);
     scheduler.schedule(continuation, options);
     return continuation;
 };

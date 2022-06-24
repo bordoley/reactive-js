@@ -48,7 +48,7 @@ class BufferObserver<T> extends Observer<T> {
     private readonly maxBufferSize: number,
     readonly durationSubscription: SerialDisposableLike,
   ) {
-    super(delegate);
+    super(delegate.scheduler);
   }
 
   notify(next: T) {
@@ -64,7 +64,7 @@ class BufferObserver<T> extends Observer<T> {
       this.durationSubscription.inner = pipe(
         next,
         this.durationFunction,
-        subscribe(this.delegate, onNotify, this),
+        subscribe(this.scheduler, onNotify, this),
       );
     }
   }

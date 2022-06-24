@@ -32,10 +32,10 @@ const createRepeatObserver = <T>(
       count++;
       const subscription = pipe(
         observable,
-        subscribe(delegate, delegate.notify, delegate),
+        subscribe(delegate.scheduler, delegate.notify, delegate),
       );
-      addTeardown(subscription, onDispose);
       addDisposable(delegate, subscription);
+      addTeardown(subscription, onDispose);
     }
   };
 

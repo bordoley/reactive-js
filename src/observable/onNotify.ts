@@ -18,7 +18,7 @@ export const onNotify: <T>(
       readonly delegate: Observer<T>,
       readonly onNotify: SideEffect1<T>,
     ) {
-      super(delegate);
+      super(delegate.scheduler);
     }
   },
 );

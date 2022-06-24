@@ -16,10 +16,6 @@ An object that schedules units of work on a runloop.
 
   ↳↳ [`VirtualTimeSchedulerLike`](scheduler.VirtualTimeSchedulerLike.md)
 
-## Implemented by
-
-- [`Observer`](../classes/observable.Observer.md)
-
 ## Table of contents
 
 ### Properties

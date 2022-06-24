@@ -21,7 +21,6 @@ Abstract base class for implementing the `ObserverLike` interface.
 ## Implements
 
 - [`SinkLike`](../interfaces/source.SinkLike.md)<`T`\>
-- [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
 
 ## Table of contents
 
@@ -31,7 +30,6 @@ Abstract base class for implementing the `ObserverLike` interface.
 
 ### Properties
 
-- [inContinuation](observable.Observer.md#incontinuation)
 - [scheduler](observable.Observer.md#scheduler)
 
 ### Accessors
@@ -67,16 +65,6 @@ Abstract base class for implementing the `ObserverLike` interface.
 [AbstractDisposableContainer](container.AbstractDisposableContainer.md).[constructor](container.AbstractDisposableContainer.md#constructor)
 
 ## Properties
-
-### inContinuation
-
-• **inContinuation**: `boolean`
-
-#### Implementation of
-
-[SchedulerLike](../interfaces/scheduler.SchedulerLike.md).[inContinuation](../interfaces/scheduler.SchedulerLike.md#incontinuation)
-
-___
 
 ### scheduler
 

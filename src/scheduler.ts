@@ -1,29 +1,11 @@
 import { DisposableLike } from "./disposable";
 
-export interface SchedulerContinuationRunStatusChangedListenerLike {
-  onRunStatusChanged(
-    this: SchedulerContinuationRunStatusChangedListenerLike,
-    state: boolean,
-  ): void;
-}
-
 /**
  * A unit of work to be executed by a scheduler.
  *
  * @noInheritDoc
  */
 export interface SchedulerContinuationLike extends DisposableLike {
-  addListener(
-    this: SchedulerContinuationLike,
-    ev: "onRunStatusChanged",
-    listener: SchedulerContinuationRunStatusChangedListenerLike,
-  ): void;
-  removeListener(
-    this: SchedulerContinuationLike,
-    ev: "onRunStatusChanged",
-    listener: SchedulerContinuationRunStatusChangedListenerLike,
-  ): void;
-
   /**
    * Work function to be invoked by the scheduler after the specified delay.
    */

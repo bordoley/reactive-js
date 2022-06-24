@@ -1,7 +1,7 @@
 import { AbstractDisposableContainer, Concat, FromArray, FromIterator, FromIterable, Using, Map, ConcatAll, Repeat, TakeFirst, Zip, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Keep, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeLast, TakeWhile, ThrowIfEmpty } from "./container.mjs";
 import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Predicate, Equality, Reducer } from "./functions.mjs";
-import { SchedulerLike, SchedulerContinuationLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
+import { SchedulerLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
 import { SinkLike, AbstractSource, AbstractDisposableSource, SourceLike } from "./source.mjs";
 import { Option } from "./option.mjs";
 import { EnumerableLike, ToEnumerable } from "./enumerable.mjs";
@@ -9,25 +9,11 @@ import { RunnableLike, ToRunnable } from "./runnable.mjs";
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
-declare class Observer<T> extends AbstractDisposableContainer implements SinkLike<T>, SchedulerLike {
+declare class Observer<T> extends AbstractDisposableContainer implements SinkLike<T> {
     readonly scheduler: SchedulerLike;
-    inContinuation: boolean;
-    private readonly _scheduler;
     constructor(scheduler: SchedulerLike);
-    /** @ignore */
-    get now(): number;
-    /** @ignore */
-    get shouldYield(): boolean;
     assertState(this: Observer<T>): void;
     notify(_: T): void;
-    /** @ignore */
-    onRunStatusChanged(status: boolean): void;
-    /** @ignore */
-    requestYield(): void;
-    /** @ignore */
-    schedule(continuation: SchedulerContinuationLike, options?: {
-        readonly delay?: number;
-    }): void;
 }
 declare const dispatchTo: <T>(dispatcher: DispatcherLike<T>) => SideEffect1<T>;
 declare const observable: <T>(computation: Factory<T>, { mode }?: {

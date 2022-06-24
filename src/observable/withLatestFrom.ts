@@ -27,7 +27,7 @@ class WithLatestFromObserver<TA, TB, T> extends Observer<TA> {
     readonly delegate: Observer<T>,
     private readonly selector: Function2<TA, TB, T>,
   ) {
-    super(delegate);
+    super(delegate.scheduler);
     this.selector = selector;
   }
 
@@ -58,16 +58,14 @@ export const withLatestFrom = <TA, TB, T>(
 
     const otherSubscription = pipe(
       other,
-      subscribe(observer, onNotify, observer),
+      subscribe(observer.scheduler, onNotify, observer),
     );
-
+    addDisposableDisposeParentOnChildError(observer, otherSubscription);
     addOnDisposedWithoutErrorTeardown(otherSubscription, () => {
       if (!observer.hasLatest) {
         pipe(observer, dispose());
       }
     });
-
-    addDisposableDisposeParentOnChildError(observer, otherSubscription);
 
     return observer;
   };
