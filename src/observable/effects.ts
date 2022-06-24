@@ -176,29 +176,34 @@ class ObservableContext {
     } else {
       pipe(effect.subscription, dispose());
 
+      const { observer, runComputation } = this;
+      const { scheduler } = observer;
+
       const subscription = pipe(
         observable,
-        subscribe(this.observer.scheduler, next => {
+        subscribe(observer.scheduler, next => {
           effect.value = next;
           effect.hasValue = true;
 
           if (this.mode === "combine-latest") {
-            this.runComputation();
+            runComputation();
           } else {
-            const { scheduledComputationSubscription } = this;
+            let { scheduledComputationSubscription } = this;
 
-            this.scheduledComputationSubscription =
+            scheduledComputationSubscription =
               scheduledComputationSubscription.isDisposed
-                ? pipe(this.observer.scheduler, schedule(this.runComputation))
+                ? pipe(scheduler, schedule(runComputation))
                 : scheduledComputationSubscription;
+            this.scheduledComputationSubscription =
+              scheduledComputationSubscription;
             addDisposableDisposeParentOnChildError(
-              this.observer,
-              this.scheduledComputationSubscription,
+              observer,
+              scheduledComputationSubscription,
             );
           }
         }),
       );
-      addDisposableDisposeParentOnChildError(this.observer, subscription);
+      addDisposableDisposeParentOnChildError(observer, subscription);
       addOnDisposedWithoutErrorTeardown(subscription, this.cleanup);
 
       effect.observable = observable;

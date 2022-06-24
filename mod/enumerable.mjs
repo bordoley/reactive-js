@@ -452,9 +452,10 @@ const distinctUntilChanged = createDistinctUntilChangedLiftedOperator(liftT, cla
         const hadCurrent = this.hasCurrent;
         const prevCurrent = hadCurrent ? this.current : none;
         try {
-            while (this.delegate.move()) {
+            const { delegate } = this;
+            while (delegate.move()) {
                 if (!hadCurrent ||
-                    !this.equality(prevCurrent, this.delegate.current)) {
+                    !this.equality(prevCurrent, delegate.current)) {
                     break;
                 }
             }
@@ -495,9 +496,10 @@ const map = createMapLiftedOperator(liftT, class MapEnumerator extends AbstractE
     }
     move() {
         this.reset();
-        if (this.delegate.move()) {
+        const { delegate } = this;
+        if (delegate.move()) {
             try {
-                this.current = this.mapper(this.delegate.current);
+                this.current = this.mapper(delegate.current);
             }
             catch (cause) {
                 pipe(this, dispose({ cause }));

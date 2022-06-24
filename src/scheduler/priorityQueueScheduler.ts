@@ -163,13 +163,13 @@ class PriorityScheduler
       next.dueTime <= this.now &&
       next.priority < current.priority;
 
-    const { yieldRequested } = this;
-    if (this.inContinuation) {
+    const { inContinuation, yieldRequested } = this;
+    if (inContinuation) {
       this.yieldRequested = false;
     }
 
     return (
-      this.inContinuation &&
+      inContinuation &&
       (yieldRequested ||
         this.isDisposed ||
         this.isPaused ||
@@ -228,15 +228,15 @@ class PriorityScheduler
     addDisposable(this, continuation);
 
     if (!continuation.isDisposed) {
-      const { now } = this;
+      const { current, now } = this;
       const dueTime = Math.max(now + delay, now);
 
       const task =
         this.inContinuation &&
-        isSome(this.current) &&
-        this.current.continuation === continuation &&
+        isSome(current) &&
+        current.continuation === continuation &&
         delay <= 0
-          ? this.current
+          ? current
           : {
               taskID: this.taskIDCounter++,
               continuation,

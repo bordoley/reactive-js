@@ -65,15 +65,15 @@ class VirtualTimeSchedulerImpl
   }
 
   get shouldYield() {
-    const { yieldRequested } = this;
+    const { inContinuation, yieldRequested } = this;
 
-    if (this.inContinuation) {
+    if (inContinuation) {
       this.microTaskTicks++;
       this.yieldRequested = false;
     }
 
     return (
-      this.inContinuation &&
+      inContinuation &&
       (yieldRequested || this.microTaskTicks >= this.maxMicroTaskTicks)
     );
   }

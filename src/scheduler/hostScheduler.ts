@@ -131,14 +131,14 @@ class HostScheduler extends AbstractDisposable implements SchedulerLike {
   }
 
   get shouldYield() {
-    const { yieldRequested } = this;
+    const { inContinuation, yieldRequested } = this;
 
-    if (this.inContinuation) {
+    if (inContinuation) {
       this.yieldRequested = false;
     }
 
     return (
-      this.inContinuation &&
+      inContinuation &&
       (yieldRequested ||
         this.now > this.startTime + this.yieldInterval ||
         inputIsPending())

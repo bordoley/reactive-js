@@ -47,7 +47,7 @@ class ZipObserverEnumerator extends AbstractEnumerator<unknown> {
   constructor() {
     super();
     addTeardown(this, () => {
-      //this.buffer.length = 0;
+      this.buffer.length = 0;
     });
   }
 
@@ -83,20 +83,21 @@ class ZipObserver extends Observer<unknown> {
   ) {
     super(delegate.scheduler);
 
-    this.enumerator = new ZipObserverEnumerator();
-    addDisposableDisposeParentOnChildError(delegate, this.enumerator);
+    const enumerator = new ZipObserverEnumerator();
+    this.enumerator = enumerator;
+    addDisposableDisposeParentOnChildError(delegate, enumerator);
   }
 
   notify(next: unknown) {
     this.assertState();
 
-    const { enumerators } = this;
+    const { enumerator, enumerators } = this;
 
     if (!this.isDisposed) {
-      if (this.enumerator.hasCurrent) {
-        this.enumerator.buffer.push(next);
+      if (enumerator.hasCurrent) {
+        enumerator.buffer.push(next);
       } else {
-        this.enumerator.current = next;
+        enumerator.current = next;
       }
 
       if (shouldEmit(enumerators)) {
@@ -125,12 +126,12 @@ class ZipObservable extends AbstractObservable<readonly unknown[]> {
   }
 
   sink(observer: Observer<readonly unknown[]>) {
-    const observables = this.observables;
+    const { observables } = this;
     const count = observables.length;
 
     if (this.isEnumerable) {
       const observable = using(
-        defer(this.observables, map(enumerate)),
+        defer(observables, map(enumerate)),
         (...enumerators: readonly Enumerator<any>[]) =>
           pipe(enumerators, zipEnumerators, returns, fromEnumerator()),
       );
