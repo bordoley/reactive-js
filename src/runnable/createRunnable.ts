@@ -1,5 +1,6 @@
 import { SideEffect1 } from "../functions";
 import { RunnableLike } from "../runnable";
+import { CreateSource } from "../source";
 import { AbstractRunnable } from "./runnable";
 import { Sink } from "./sinks";
 
@@ -19,3 +20,7 @@ class RunnableImpl<T> extends AbstractRunnable<T> {
 
 export const createRunnable = <T>(run: SideEffect1<Sink<T>>): RunnableLike<T> =>
   new RunnableImpl(run);
+
+export const createT: CreateSource<RunnableLike<unknown>> = {
+  create: createRunnable,
+};

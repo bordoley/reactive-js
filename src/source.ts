@@ -1,4 +1,5 @@
 import {
+  Container,
   ContainerOf,
   ContainerOperator,
   FromArray,
@@ -67,6 +68,10 @@ export interface SourceLike extends LiftableLike {
 
 export interface Lift<C extends SourceLike>
   extends LiftableLift<C, "contravariant"> {}
+
+export interface CreateSource<C extends SourceLike> extends Container<C> {
+  create<T>(onSink: (sink: LiftedStateOf<C, T>) => void): ContainerOf<C, T>;
+}
 
 export abstract class AbstractSource<T, TSink extends SinkLike<T>>
   extends AbstractLiftable<TSink>
@@ -648,43 +653,19 @@ export const createThrowIfEmptyOperator = <C extends SourceLike>(
   return createThrowIfEmptyLiftedOperator(m, ThrowIfEmptySink);
 };
 
-export const createUsing = <C extends SourceLike>(
-  UsingSource: new <TResource extends DisposableLike, T>(
+export const createUsing =
+  <C extends SourceLike>(m: CreateSource<C>) =>
+  <TResource extends DisposableLike, T>(
     resourceFactory: Factory<TResource | readonly TResource[]>,
-    sourceFactory: (...resources: readonly TResource[]) => C,
-  ) => C & {
-    readonly resourceFactory: Function1<
-      LiftedStateOf<C, T>,
-      TResource | readonly TResource[]
-    >;
-    readonly sourceFactory: (...resources: readonly TResource[]) => C;
-  },
-) => {
-  UsingSource.prototype.sink = function sink<TResource, T>(
-    this: C & {
-      readonly resourceFactory: Factory<TResource | readonly TResource[]>;
-      readonly sourceFactory: (...resources: readonly TResource[]) => C;
-    },
-    sink: LiftedStateOf<C, T>,
-  ) {
-    try {
-      const resources = this.resourceFactory();
-
+    sourceFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>,
+  ): ContainerOf<C, T> =>
+    m.create<T>(sink => {
+      const resources = resourceFactory();
       const resourcesArray = Array.isArray(resources) ? resources : [resources];
-      const source = this.sourceFactory(...resourcesArray);
+      const source = sourceFactory(...resourcesArray);
+
       for (const r of resourcesArray) {
         addDisposableDisposeParentOnChildError(sink, r);
       }
       pipe(source, sinkInto(sink));
-    } catch (cause) {
-      sink.dispose({ cause });
-    }
-  };
-
-  const using = <TResource extends DisposableLike, T>(
-    resourceFactory: Factory<TResource | readonly TResource[]>,
-    sourceFactoryFactory: (...resources: readonly TResource[]) => C,
-  ): C => new UsingSource<TResource, T>(resourceFactory, sourceFactoryFactory);
-
-  return using;
-};
+    });

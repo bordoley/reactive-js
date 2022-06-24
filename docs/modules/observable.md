@@ -29,6 +29,7 @@
 
 - [concatAllT](observable.md#concatallt)
 - [concatT](observable.md#concatt)
+- [createT](observable.md#createt)
 - [decodeWithCharsetT](observable.md#decodewithcharsett)
 - [distinctUntilChangedT](observable.md#distinctuntilchangedt)
 - [everySatisfyT](observable.md#everysatisfyt)
@@ -181,6 +182,12 @@ ___
 ### concatT
 
 • `Const` **concatT**: [`Concat`](../interfaces/container.Concat.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### createT
+
+• `Const` **createT**: [`CreateSource`](../interfaces/source.CreateSource.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 

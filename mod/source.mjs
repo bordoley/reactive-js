@@ -224,23 +224,14 @@ const createThrowIfEmptyOperator = (m, ThrowIfEmptySink) => {
     };
     return createThrowIfEmptyLiftedOperator(m, ThrowIfEmptySink);
 };
-const createUsing = (UsingSource) => {
-    UsingSource.prototype.sink = function sink(sink) {
-        try {
-            const resources = this.resourceFactory();
-            const resourcesArray = Array.isArray(resources) ? resources : [resources];
-            const source = this.sourceFactory(...resourcesArray);
-            for (const r of resourcesArray) {
-                addDisposableDisposeParentOnChildError(sink, r);
-            }
-            pipe(source, sinkInto(sink));
-        }
-        catch (cause) {
-            sink.dispose({ cause });
-        }
-    };
-    const using = (resourceFactory, sourceFactoryFactory) => new UsingSource(resourceFactory, sourceFactoryFactory);
-    return using;
-};
+const createUsing = (m) => (resourceFactory, sourceFactory) => m.create(sink => {
+    const resources = resourceFactory();
+    const resourcesArray = Array.isArray(resources) ? resources : [resources];
+    const source = sourceFactory(...resourcesArray);
+    for (const r of resourcesArray) {
+        addDisposableDisposeParentOnChildError(sink, r);
+    }
+    pipe(source, sinkInto(sink));
+});
 
 export { AbstractDisposableSource, AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };

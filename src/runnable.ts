@@ -18,7 +18,6 @@ import {
   ThrowIfEmpty,
   Using,
 } from "./container";
-import { DisposableLike } from "./disposable";
 import {
   Equality,
   Factory,
@@ -29,9 +28,9 @@ import {
   identity,
 } from "./functions";
 import { Option, none } from "./option";
+import { createT } from "./runnable/createRunnable";
 import { fromArrayT } from "./runnable/fromArray";
 import { liftT } from "./runnable/lift";
-import { AbstractRunnable } from "./runnable/runnable";
 import { Sink } from "./runnable/sinks";
 import {
   SourceLike,
@@ -72,7 +71,7 @@ export interface ToRunnable<C extends ContainerLike> extends Container<C> {
 }
 
 export { concat, concatAll } from "./runnable/concat";
-export { createRunnable } from "./runnable/createRunnable";
+export { createRunnable, createT } from "./runnable/createRunnable";
 export { first } from "./runnable/first";
 export { forEach } from "./runnable/forEach";
 export { fromArray, fromArrayT } from "./runnable/fromArray";
@@ -371,26 +370,8 @@ export const throwIfEmptyT: ThrowIfEmpty<RunnableLike<unknown>> = {
   throwIfEmpty,
 };
 
-export const using: Using<RunnableLike<unknown>>["using"] = createUsing(
-  class UsingRunnable<
-    TResource extends DisposableLike,
-    T,
-  > extends AbstractRunnable<T> {
-    constructor(
-      readonly resourceFactory: Function1<
-        Sink<T>,
-        TResource | readonly TResource[]
-      >,
-      readonly sourceFactory: (
-        ...resources: readonly TResource[]
-      ) => RunnableLike<T>,
-    ) {
-      super();
-    }
-
-    sink(_: Sink<T>) {}
-  },
-);
+export const using: Using<RunnableLike<unknown>>["using"] =
+  createUsing(createT);
 
 export const usingT: Using<RunnableLike<unknown>> = {
   using,
