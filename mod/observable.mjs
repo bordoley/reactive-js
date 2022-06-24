@@ -1,8 +1,8 @@
 /// <reference types="./observable.d.ts" />
+import { AbstractSource, AbstractDisposableSource, sinkInto, createUsing, createNever, createOnSink, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { addDisposableDisposeParentOnChildError, dispose, addOnDisposedWithoutErrorTeardown, AbstractDisposable, addTeardown, addDisposable, disposed, toErrorHandler, createSerialDisposable, bindDisposables } from './disposable.mjs';
 import { pipe, raise, ignore, arrayEquality, defer as defer$1, compose, returns } from './functions.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
-import { AbstractSource, AbstractDisposableSource, sinkInto, createUsing, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { AbstractDisposableContainer, empty, fromValue, concatMap, throws } from './container.mjs';
 import { __DEV__ } from './env.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -14,6 +14,25 @@ class AbstractObservable extends AbstractSource {
 }
 class AbstractDisposableObservable extends AbstractDisposableSource {
 }
+
+class CreateObservable extends AbstractObservable {
+    constructor(f) {
+        super();
+        this.f = f;
+    }
+    sink(observer) {
+        try {
+            this.f(observer);
+        }
+        catch (cause) {
+            observer.dispose({ cause });
+        }
+    }
+}
+const createObservable = (f) => new CreateObservable(f);
+const createT = {
+    create: createObservable,
+};
 
 class DeferObservable extends AbstractObservable {
     constructor(f, isEnumerable, delay) {
@@ -533,25 +552,6 @@ const concatT = {
     concat,
 };
 
-class CreateObservable extends AbstractObservable {
-    constructor(f) {
-        super();
-        this.f = f;
-    }
-    sink(observer) {
-        try {
-            this.f(observer);
-        }
-        catch (cause) {
-            observer.dispose({ cause });
-        }
-    }
-}
-const createObservable = (f) => new CreateObservable(f);
-const createT = {
-    create: createObservable,
-};
-
 class SubjectImpl extends AbstractDisposableObservable {
     constructor(replay) {
         super();
@@ -598,10 +598,6 @@ const createSubject = (options = {}) => {
     const { replay = 0 } = options;
     return new SubjectImpl(replay);
 };
-
-const fromDisposable = (disposable) => createObservable(observer => {
-    addDisposableDisposeParentOnChildError(disposable, observer);
-});
 
 const using = createUsing(createT);
 const usingT = {
@@ -729,11 +725,9 @@ const mergeT = {
     concat: merge,
 };
 
-const neverInstance = createObservable(ignore);
-/**
- * Returna an `ObservableLike` instance that emits no items and never disposes its observer.
- */
-const never = () => neverInstance;
+const never = createNever(createT);
+
+const onSubscribe = createOnSink(createT);
 
 function onDispose$3(error) {
     const { buffer } = this;
@@ -960,21 +954,6 @@ const onNotify$2 = createOnNotifyOperator(liftSynchronousT, class OnNotifyObserv
         super(delegate.scheduler);
         this.delegate = delegate;
         this.onNotify = onNotify;
-    }
-});
-
-/**
- * Executes a side-effect when the observable is subscribed.
- * @param f
- */
-const onSubscribe = (f) => src => createObservable(observer => {
-    pipe(src, sinkInto(observer));
-    const disposable = f() || none;
-    if (disposable instanceof Function) {
-        addTeardown(observer, disposable);
-    }
-    else if (isSome(disposable)) {
-        addDisposableDisposeParentOnChildError(observer, disposable);
     }
 });
 
@@ -1533,6 +1512,7 @@ const catchError = createCatchErrorOperator(liftSynchronousT, class CatchErrorOb
         this.delegate = delegate;
     }
 });
+const fromDisposable = createFromDisposable(createT);
 const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftSynchronousT, ...fromArrayT }, class DecodeWithCharsetObserver extends Observer {
     constructor(delegate, textDecoder) {
         super(delegate.scheduler);
