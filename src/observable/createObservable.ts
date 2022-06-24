@@ -1,6 +1,5 @@
 import { SideEffect1 } from "../functions";
 import { DispatcherLike, ObservableLike } from "../observable";
-import { createObserverDispatcher } from "./createObserverDispatcher";
 import { AbstractObservable } from "./observable";
 import { Observer } from "./observer";
 
@@ -31,6 +30,5 @@ export const createObservable = <T>(
   onSubscribe: SideEffect1<DispatcherLike<T>>,
 ): ObservableLike<T> =>
   createObservableUnsafe(observer => {
-    const dispatcher = createObserverDispatcher(observer);
-    onSubscribe(dispatcher);
+    onSubscribe(observer.dispatcher);
   });

@@ -7,12 +7,7 @@ import {
   dispose,
 } from "../disposable";
 import { Factory, defer, pipe } from "../functions";
-import {
-  createObservableUnsafe,
-  createObserverDispatcher,
-  dispatchTo,
-  subscribe,
-} from "../observable";
+import { createObservableUnsafe, dispatchTo, subscribe } from "../observable";
 
 import { FlowableSinkLike, createStreamable } from "../streamable";
 
@@ -23,7 +18,7 @@ export const createWritableIOSink = (
 ): FlowableSinkLike<Uint8Array> =>
   createStreamable(events =>
     createObservableUnsafe(observer => {
-      const dispatcher = createObserverDispatcher(observer);
+      const { dispatcher } = observer;
 
       const writable = factory();
       const writableValue = writable.value;

@@ -1,5 +1,5 @@
 /// <reference types="./observable.d.ts" />
-import { addDisposableDisposeParentOnChildError, dispose, addDisposable, disposed, addOnDisposedWithoutErrorTeardown, addTeardown, AbstractDisposable, toErrorHandler, createSerialDisposable, bindDisposables } from './disposable.mjs';
+import { addDisposableDisposeParentOnChildError, dispose, addOnDisposedWithoutErrorTeardown, AbstractDisposable, addTeardown, addDisposable, disposed, toErrorHandler, createSerialDisposable, bindDisposables } from './disposable.mjs';
 import { pipe, raise, ignore, arrayEquality, defer as defer$1, compose, returns } from './functions.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { AbstractSource, AbstractDisposableSource, sinkInto, createUsing, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
@@ -112,6 +112,46 @@ const liftSynchronousT = {
     lift: op => lift(op, true),
 };
 
+const scheduleDrainQueue = (dispatcher) => {
+    if (dispatcher.nextQueue.length === 1) {
+        const { observer } = dispatcher;
+        const continuationSubcription = pipe(observer.scheduler, schedule(dispatcher.continuation));
+        addDisposableDisposeParentOnChildError(observer, continuationSubcription);
+        addOnDisposedWithoutErrorTeardown(continuationSubcription, dispatcher.onContinuationDispose);
+    }
+};
+function onDispose$5(e) {
+    if (this.nextQueue.length === 0) {
+        pipe(this.observer, dispose(e));
+    }
+}
+class ObserverDelegatingDispatcher extends AbstractDisposable {
+    constructor(observer) {
+        super();
+        this.observer = observer;
+        this.continuation = () => {
+            const { nextQueue } = this;
+            const { observer } = this;
+            while (nextQueue.length > 0) {
+                const next = nextQueue.shift();
+                observer.notify(next);
+                __yield();
+            }
+        };
+        this.onContinuationDispose = () => {
+            if (this.isDisposed) {
+                pipe(this.observer, dispose(this.error));
+            }
+        };
+        this.nextQueue = [];
+    }
+    dispatch(next) {
+        if (!this.isDisposed) {
+            this.nextQueue.push(next);
+            scheduleDrainQueue(this);
+        }
+    }
+}
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
@@ -119,6 +159,16 @@ class Observer extends AbstractDisposableContainer {
     constructor(scheduler) {
         super();
         this.scheduler = scheduler;
+        this._dispatcher = none;
+    }
+    get dispatcher() {
+        if (isNone(this._dispatcher)) {
+            const dispatcher = new ObserverDelegatingDispatcher(this);
+            addTeardown(dispatcher, onDispose$5);
+            addDisposable(this, dispatcher);
+            this._dispatcher = dispatcher;
+        }
+        return this._dispatcher;
     }
     assertState() { }
     notify(_) { }
@@ -371,7 +421,7 @@ function __currentScheduler() {
         : raise("__currentScheduler may only be called within an observable computation");
 }
 
-function onDispose$5(error) {
+function onDispose$4(error) {
     const { ctx } = this;
     ctx.completedCount++;
     if (isSome(error) || ctx.completedCount === ctx.observers.length) {
@@ -419,7 +469,7 @@ const latest = (observables, mode) => {
         };
         for (const observable of observables) {
             const innerObserver = new LatestObserver(delegate, ctx, mode);
-            addTeardown(innerObserver, onDispose$5);
+            addTeardown(innerObserver, onDispose$4);
             addDisposable(delegate, innerObserver);
             observers.push(innerObserver);
             pipe(observable, sinkInto(innerObserver));
@@ -483,58 +533,6 @@ const concatT = {
     concat,
 };
 
-const scheduleDrainQueue = (dispatcher) => {
-    if (dispatcher.nextQueue.length === 1) {
-        const { observer } = dispatcher;
-        const continuationSubcription = pipe(observer.scheduler, schedule(dispatcher.continuation));
-        addDisposableDisposeParentOnChildError(observer, continuationSubcription);
-        addOnDisposedWithoutErrorTeardown(continuationSubcription, dispatcher.onContinuationDispose);
-    }
-};
-function onDispose$4(e) {
-    if (this.nextQueue.length === 0) {
-        pipe(this.observer, dispose(e));
-    }
-}
-class ObserverDelegatingDispatcher extends AbstractDisposable {
-    constructor(observer) {
-        super();
-        this.observer = observer;
-        this.continuation = () => {
-            const { nextQueue } = this;
-            const { observer } = this;
-            while (nextQueue.length > 0) {
-                const next = nextQueue.shift();
-                observer.notify(next);
-                __yield();
-            }
-        };
-        this.onContinuationDispose = () => {
-            if (this.isDisposed) {
-                pipe(this.observer, dispose(this.error));
-            }
-        };
-        this.nextQueue = [];
-    }
-    dispatch(next) {
-        if (!this.isDisposed) {
-            this.nextQueue.push(next);
-            scheduleDrainQueue(this);
-        }
-    }
-}
-/**
- * Returns a `DispatcherLike` that delegates to the provided observer.
- *
- * @param observer The `ObserverLike` instance to wrap in a `SafeObserverLike`.
- */
-const createObserverDispatcher = (delegate) => {
-    const dispatcher = new ObserverDelegatingDispatcher(delegate);
-    addTeardown(dispatcher, onDispose$4);
-    addDisposable(delegate, dispatcher);
-    return dispatcher;
-};
-
 class CreateObservable extends AbstractObservable {
     constructor(f) {
         super();
@@ -555,19 +553,18 @@ const createObservableUnsafe = (f) => new CreateObservable(f);
  * @param onSubscribe
  */
 const createObservable = (onSubscribe) => createObservableUnsafe(observer => {
-    const dispatcher = createObserverDispatcher(observer);
-    onSubscribe(dispatcher);
+    onSubscribe(observer.dispatcher);
 });
 
 class SubjectImpl extends AbstractDisposableObservable {
     constructor(replay) {
         super();
         this.replay = replay;
-        this.observers = new Set();
+        this.dispatchers = new Set();
         this.replayed = [];
     }
     get observerCount() {
-        return this.observers.size;
+        return this.dispatchers.size;
     }
     dispatch(next) {
         if (!this.isDisposed) {
@@ -578,7 +575,7 @@ class SubjectImpl extends AbstractDisposableObservable {
                     replayed.shift();
                 }
             }
-            for (const observer of this.observers) {
+            for (const observer of this.dispatchers) {
                 observer.dispatch(next);
             }
         }
@@ -587,12 +584,12 @@ class SubjectImpl extends AbstractDisposableObservable {
         // The idea here is that an onSubscribe function may
         // call next from unscheduled sources such as event handlers.
         // So we marshall those events back to the scheduler.
-        const dispatcher = createObserverDispatcher(observer);
+        const dispatcher = observer.dispatcher;
         if (!this.isDisposed) {
-            const { observers } = this;
-            observers.add(dispatcher);
+            const { dispatchers } = this;
+            dispatchers.add(dispatcher);
             addTeardown(observer, _e => {
-                observers.delete(dispatcher);
+                dispatchers.delete(dispatcher);
             });
         }
         for (const next of this.replayed) {
@@ -1731,4 +1728,4 @@ const throwIfEmptyT = {
     throwIfEmpty,
 };
 
-export { AbstractDisposableObservable, AbstractObservable, Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createObservableUnsafe, createObserverDispatcher, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify$2 as onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AbstractDisposableObservable, AbstractObservable, Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createObservableUnsafe, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify$2 as onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

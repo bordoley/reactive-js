@@ -1,6 +1,5 @@
 import { addDisposable, addTeardown } from "../disposable";
 import { DispatcherLike, SubjectLike } from "../observable";
-import { createObserverDispatcher } from "./createObserverDispatcher";
 import { AbstractDisposableObservable } from "./observable";
 import { Observer } from "./observer";
 
@@ -8,7 +7,7 @@ class SubjectImpl<T>
   extends AbstractDisposableObservable<T>
   implements SubjectLike<T>
 {
-  private readonly observers: Set<DispatcherLike<T>> = new Set();
+  private readonly dispatchers: Set<DispatcherLike<T>> = new Set();
   private readonly replayed: T[] = [];
 
   constructor(private readonly replay: number) {
@@ -16,7 +15,7 @@ class SubjectImpl<T>
   }
 
   get observerCount() {
-    return this.observers.size;
+    return this.dispatchers.size;
   }
 
   dispatch(next: T) {
@@ -30,7 +29,7 @@ class SubjectImpl<T>
         }
       }
 
-      for (const observer of this.observers) {
+      for (const observer of this.dispatchers) {
         observer.dispatch(next);
       }
     }
@@ -40,14 +39,14 @@ class SubjectImpl<T>
     // The idea here is that an onSubscribe function may
     // call next from unscheduled sources such as event handlers.
     // So we marshall those events back to the scheduler.
-    const dispatcher = createObserverDispatcher(observer);
+    const dispatcher = observer.dispatcher;
 
     if (!this.isDisposed) {
-      const { observers } = this;
-      observers.add(dispatcher);
+      const { dispatchers } = this;
+      dispatchers.add(dispatcher);
 
       addTeardown(observer, _e => {
-        observers.delete(dispatcher);
+        dispatchers.delete(dispatcher);
       });
     }
 

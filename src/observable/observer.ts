@@ -1,8 +1,78 @@
 import { AbstractDisposableContainer } from "../container";
+import {
+  AbstractDisposable,
+  Error,
+  addDisposable,
+  addDisposableDisposeParentOnChildError,
+  addOnDisposedWithoutErrorTeardown,
+  addTeardown,
+  dispose,
+} from "../disposable";
 import { __DEV__ } from "../env";
-import { raise } from "../functions";
-import { SchedulerLike } from "../scheduler";
+import { pipe, raise } from "../functions";
+import { DispatcherLike } from "../observable";
+import { Option, isNone, none } from "../option";
+import { SchedulerLike, __yield, schedule } from "../scheduler";
 import { SinkLike } from "../source";
+
+const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
+  if (dispatcher.nextQueue.length === 1) {
+    const { observer } = dispatcher;
+    const continuationSubcription = pipe(
+      observer.scheduler,
+      schedule(dispatcher.continuation),
+    );
+    addDisposableDisposeParentOnChildError(observer, continuationSubcription);
+    addOnDisposedWithoutErrorTeardown(
+      continuationSubcription,
+      dispatcher.onContinuationDispose,
+    );
+  }
+};
+
+function onDispose(
+  this: ObserverDelegatingDispatcher<unknown>,
+  e: Option<Error>,
+) {
+  if (this.nextQueue.length === 0) {
+    pipe(this.observer, dispose(e));
+  }
+}
+
+class ObserverDelegatingDispatcher<T>
+  extends AbstractDisposable
+  implements DispatcherLike<T>
+{
+  readonly continuation = () => {
+    const { nextQueue } = this;
+
+    const { observer } = this;
+    while (nextQueue.length > 0) {
+      const next = nextQueue.shift() as T;
+      observer.notify(next);
+      __yield();
+    }
+  };
+
+  readonly onContinuationDispose = () => {
+    if (this.isDisposed) {
+      pipe(this.observer, dispose(this.error));
+    }
+  };
+
+  readonly nextQueue: T[] = [];
+
+  constructor(readonly observer: Observer<T>) {
+    super();
+  }
+
+  dispatch(next: T) {
+    if (!this.isDisposed) {
+      this.nextQueue.push(next);
+      scheduleDrainQueue(this);
+    }
+  }
+}
 
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
@@ -11,8 +81,21 @@ export class Observer<T>
   extends AbstractDisposableContainer
   implements SinkLike<T>
 {
+  private _dispatcher: Option<DispatcherLike<T>> = none;
+
   constructor(readonly scheduler: SchedulerLike) {
     super();
+  }
+
+  get dispatcher(): DispatcherLike<T> {
+    if (isNone(this._dispatcher)) {
+      const dispatcher = new ObserverDelegatingDispatcher(this);
+      addTeardown(dispatcher, onDispose);
+      addDisposable(this, dispatcher);
+      this._dispatcher = dispatcher;
+    }
+
+    return this._dispatcher;
   }
 
   assertState(this: Observer<T>): void {}
