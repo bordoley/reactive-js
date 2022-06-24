@@ -24,7 +24,7 @@ interface WindowLocationStreamLike extends StreamLike<Updater<WindowLocationURI>
     }): void;
     goBack(this: WindowLocationURI): boolean;
 }
-interface WindowLocationStreamableLike extends StreamableLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI> {
+interface WindowLocationStreamableLike extends StreamableLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI, WindowLocationStreamLike> {
     stream(this: WindowLocationStreamableLike, scheduler: SchedulerLike, options?: {
         readonly replay?: number;
     }): WindowLocationStreamLike;

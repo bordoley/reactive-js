@@ -1,15 +1,16 @@
 [Reactive-JS](../README.md) / [streamable](../modules/streamable.md) / StreamableLike
 
-# Interface: StreamableLike<TReq, T\>
+# Interface: StreamableLike<TReq, T, TStream\>
 
 [streamable](../modules/streamable.md).StreamableLike
 
 ## Type parameters
 
-| Name |
-| :------ |
-| `TReq` |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `TReq` | `TReq` |
+| `T` | `T` |
+| `TStream` | extends [`StreamLike`](observable.StreamLike.md)<`TReq`, `T`\> |
 
 ## Hierarchy
 
@@ -20,6 +21,8 @@
   ↳ [`FlowableLike`](streamable.FlowableLike.md)
 
   ↳ [`FlowableSinkLike`](streamable.FlowableSinkLike.md)
+
+  ↳ [`StreamableStateLike`](streamable.StreamableStateLike.md)
 
   ↳ [`WindowLocationStreamableLike`](web.WindowLocationStreamableLike.md)
 
@@ -33,17 +36,17 @@
 
 ### stream
 
-▸ **stream**(`this`, `scheduler`, `options?`): [`StreamLike`](observable.StreamLike.md)<`TReq`, `T`\>
+▸ **stream**(`this`, `scheduler`, `options?`): `TStream`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StreamableLike`](streamable.StreamableLike.md)<`TReq`, `T`\> |
+| `this` | [`StreamableLike`](streamable.StreamableLike.md)<`TReq`, `T`, `TStream`\> |
 | `scheduler` | [`SchedulerLike`](scheduler.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.replay?` | `number` |
 
 #### Returns
 
-[`StreamLike`](observable.StreamLike.md)<`TReq`, `T`\>
+`TStream`

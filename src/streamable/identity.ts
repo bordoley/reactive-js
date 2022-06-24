@@ -1,4 +1,4 @@
-import { createSubject } from "../observable";
+import { StreamLike, createSubject } from "../observable";
 import { SchedulerLike } from "../scheduler";
 import { StreamableLike } from "../streamable";
 
@@ -11,5 +11,5 @@ const _identity = {
 /*
  * Returns an `StreamableLike` that publishes it's notifications.
  */
-export const identity = <T>(): StreamableLike<T, T> =>
-  _identity as StreamableLike<T, T>;
+export const identity = <T>(): StreamableLike<T, T, StreamLike<T, T>> =>
+  _identity as StreamableLike<T, T, StreamLike<T, T>>;

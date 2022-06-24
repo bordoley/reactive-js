@@ -47,8 +47,8 @@ const createSinkObs = <TReq, T>(
   );
 
 export const sink = <TReq, T>(
-  src: StreamableLike<TReq, T>,
-  dest: StreamableLike<T, TReq>,
+  src: StreamableLike<TReq, T, StreamLike<TReq, T>>,
+  dest: StreamableLike<T, TReq, StreamLike<T, TReq>>,
 ): ObservableLike<void> =>
   pipe(
     observable(() => {

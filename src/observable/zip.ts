@@ -128,8 +128,6 @@ class ZipObservable extends AbstractObservable<readonly unknown[]> {
     const observables = this.observables;
     const count = observables.length;
 
-    debugger;
-
     if (this.isEnumerable) {
       const observable = using(
         defer(this.observables, map(enumerate)),

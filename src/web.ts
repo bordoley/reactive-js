@@ -27,7 +27,8 @@ export interface WindowLocationStreamLike
 export interface WindowLocationStreamableLike
   extends StreamableLike<
     Updater<WindowLocationURI> | WindowLocationURI,
-    WindowLocationURI
+    WindowLocationURI,
+    WindowLocationStreamLike
   > {
   stream(
     this: WindowLocationStreamableLike,
