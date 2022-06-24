@@ -20,7 +20,7 @@ import {
   createReactIdlePriorityScheduler,
   useObservable,
 } from "@reactive-js/core/react";
-import { windowLocation } from "@reactive-js/core/web";
+import { windowLocation, WindowLocationStreamLike, WindowLocationURI } from "@reactive-js/core/web";
 import { SchedulerLike } from "@reactive-js/core/scheduler";
 import { increment, pipe, returns, Updater } from "@reactive-js/core/functions";
 import { isNone } from "@reactive-js/core/option";
@@ -41,7 +41,6 @@ const createOnClick =
     >,
   ) =>
   () => {
-    debugger;
     state.dispatch(({ mode }) => ({
       mode: mode === "pause" ? "resume" : "pause",
     }));
@@ -112,10 +111,36 @@ const Root = createComponent(() =>
   observable(() => {
     const historyStream = __stream(windowLocation);
 
+    const onChange = __memo(
+      (historyStream: WindowLocationStreamLike) => (ev: React.ChangeEvent<HTMLInputElement>) => {
+        const { value: path } = ev.target;
+
+        historyStream.dispatch((uri: WindowLocationURI) =>
+          ({ ...uri, path })
+        );
+      },
+      historyStream,
+    );
+
+    const onClick = __memo(
+      (historyStream: WindowLocationStreamLike) => () => {
+        historyStream.goBack();
+      },
+      historyStream,
+    );
+
     const uri = __observe(historyStream);
+
     return (
       <div>
-        <div>{String(uri?.path ?? "oops")} </div>
+        <div>
+          <input
+            type="text"
+            onChange={onChange}
+            value={String(uri?.path ?? "")}
+          ></input>
+          <button onClick={onClick}>Back</button>
+        </div>
         <StreamPauseResume />
       </div>
     );

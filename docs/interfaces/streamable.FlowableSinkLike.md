@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`StreamableLike`](streamable.StreamableLike.md)<`T`, [`FlowMode`](../modules/streamable.md#flowmode)\>
+- [`StreamableLike`](streamable.StreamableLike.md)<`T`, [`FlowMode`](../modules/streamable.md#flowmode), [`FlowableSinkStreamLike`](streamable.FlowableSinkStreamLike.md)<`T`\>\>
 
   ↳ **`FlowableSinkLike`**
 
@@ -26,20 +26,20 @@
 
 ### stream
 
-▸ **stream**(`this`, `scheduler`, `options?`): [`StreamLike`](observable.StreamLike.md)<`T`, [`FlowMode`](../modules/streamable.md#flowmode)\>
+▸ **stream**(`this`, `scheduler`, `options?`): [`FlowableSinkStreamLike`](streamable.FlowableSinkStreamLike.md)<`T`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StreamableLike`](streamable.StreamableLike.md)<`T`, [`FlowMode`](../modules/streamable.md#flowmode)\> |
+| `this` | [`StreamableLike`](streamable.StreamableLike.md)<`T`, [`FlowMode`](../modules/streamable.md#flowmode), [`FlowableSinkStreamLike`](streamable.FlowableSinkStreamLike.md)<`T`\>\> |
 | `scheduler` | [`SchedulerLike`](scheduler.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.replay?` | `number` |
 
 #### Returns
 
-[`StreamLike`](observable.StreamLike.md)<`T`, [`FlowMode`](../modules/streamable.md#flowmode)\>
+[`FlowableSinkStreamLike`](streamable.FlowableSinkStreamLike.md)<`T`\>
 
 #### Inherited from
 

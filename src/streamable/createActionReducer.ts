@@ -11,6 +11,7 @@ import {
 } from "../functions";
 import {
   ObservableLike,
+  StreamLike,
   createObservableUnsafe,
   distinctUntilChanged,
   fromArrayT,
@@ -20,7 +21,11 @@ import {
   zipWithLatestFrom,
 } from "../observable";
 import { sinkInto } from "../source";
-import { StreamableLike, StreamableOperator } from "../streamable";
+import {
+  StreamableLike,
+  StreamableOperator,
+  StreamableStateLike,
+} from "../streamable";
 import { createStreamable, stream as streamStreamable } from "./streamable";
 
 /**
@@ -36,7 +41,7 @@ export const createActionReducer = <TAction, T>(
   reducer: Reducer<TAction, T>,
   initialState: Factory<T>,
   options?: { readonly equality?: Equality<T> },
-): StreamableLike<TAction, T> => {
+): StreamableLike<TAction, T, StreamLike<TAction, T>> => {
   const operator = (src: ObservableLike<TAction>) => {
     const acc = initialState();
 
@@ -69,7 +74,7 @@ export const createActionReducer = <TAction, T>(
 export const createStateStore = <T>(
   initialState: Factory<T>,
   options?: { readonly equality?: Equality<T> },
-): StreamableLike<Updater<T>, T> =>
+): StreamableStateLike<T> =>
   createActionReducer(updaterReducer, initialState, options);
 
 /**

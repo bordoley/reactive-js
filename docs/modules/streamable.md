@@ -7,9 +7,14 @@
 ### Interfaces
 
 - [AsyncEnumerableLike](../interfaces/streamable.AsyncEnumerableLike.md)
+- [AsyncEnumeratorLike](../interfaces/streamable.AsyncEnumeratorLike.md)
 - [FlowableLike](../interfaces/streamable.FlowableLike.md)
 - [FlowableSinkLike](../interfaces/streamable.FlowableSinkLike.md)
+- [FlowableSinkStreamLike](../interfaces/streamable.FlowableSinkStreamLike.md)
+- [FlowableStreamLike](../interfaces/streamable.FlowableStreamLike.md)
+- [StateStreamLike](../interfaces/streamable.StateStreamLike.md)
 - [StreamableLike](../interfaces/streamable.StreamableLike.md)
+- [StreamableStateLike](../interfaces/streamable.StreamableStateLike.md)
 
 ### Type Aliases
 
@@ -90,7 +95,7 @@ ___
 
 ### StreamableOperator
 
-Ƭ **StreamableOperator**<`TSrcReq`, `TSrc`, `TReq`, `T`\>: [`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TSrcReq`, `TSrc`\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`\>\>
+Ƭ **StreamableOperator**<`TSrcReq`, `TSrc`, `TReq`, `T`\>: [`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TSrcReq`, `TSrc`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TSrcReq`, `TSrc`\>\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`\>\>\>
 
 #### Type parameters
 
@@ -105,27 +110,28 @@ ___
 
 ### \_\_stream
 
-▸ **__stream**<`TReq`, `T`\>(`streamable`, `__namedParameters?`): [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`\>
+▸ **__stream**<`TReq`, `T`, `TStream`\>(`streamable`, `__namedParameters?`): `TStream`
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TReq` |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `TReq` | `TReq` |
+| `T` | `T` |
+| `TStream` | extends [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`, `TStream`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `streamable` | [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`\> |
+| `streamable` | [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, `TStream`\> |
 | `__namedParameters?` | `Object` |
 | `__namedParameters.replay?` | `number` |
 | `__namedParameters.scheduler?` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) |
 
 #### Returns
 
-[`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`\>
+`TStream`
 
 ___
 
@@ -223,7 +229,7 @@ ___
 
 ### createActionReducer
 
-▸ **createActionReducer**<`TAction`, `T`\>(`reducer`, `initialState`, `options?`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TAction`, `T`\>
+▸ **createActionReducer**<`TAction`, `T`\>(`reducer`, `initialState`, `options?`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TAction`, `T`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TAction`, `T`\>\>
 
 Returns a new `StreamableLike` instance that applies an accumulator function
 over the notified actions, emitting each intermediate result.
@@ -246,7 +252,7 @@ over the notified actions, emitting each intermediate result.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TAction`, `T`\>
+[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TAction`, `T`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TAction`, `T`\>\>
 
 ___
 
@@ -280,7 +286,7 @@ ___
 
 ### createStateStore
 
-▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
+▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableStateLike`](../interfaces/streamable.StreamableStateLike.md)<`T`\>
 
 Returns a new `StateStoreLike` instance that stores state which can
 be updated by notifying the instance with a `StateUpdater` that computes a
@@ -302,13 +308,13 @@ new state based upon the previous state.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
+[`StreamableStateLike`](../interfaces/streamable.StreamableStateLike.md)<`T`\>
 
 ___
 
 ### createStreamable
 
-▸ **createStreamable**<`TReq`, `TData`\>(`op`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `TData`\>
+▸ **createStreamable**<`TReq`, `TData`\>(`op`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `TData`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `TData`\>\>
 
 #### Type parameters
 
@@ -325,13 +331,13 @@ ___
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `TData`\>
+[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `TData`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `TData`\>\>
 
 ___
 
 ### empty
 
-▸ **empty**<`TReq`, `T`\>(`options?`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`\>
+▸ **empty**<`TReq`, `T`\>(`options?`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`\>\>
 
 Returns an empty `StreamableLike` that always returns
 a disposed `StreamLike` instance.
@@ -352,7 +358,7 @@ a disposed `StreamLike` instance.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`\>
+[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`\>\>
 
 ___
 
@@ -472,7 +478,7 @@ ___
 
 ### identity
 
-▸ **identity**<`T`\>(): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`T`, `T`\>
+▸ **identity**<`T`\>(): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`T`, `T`\>\>
 
 #### Type parameters
 
@@ -482,7 +488,7 @@ ___
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`T`, `T`\>
+[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`T`, `T`\>\>
 
 ___
 
@@ -549,8 +555,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`\> |
-| `dest` | [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`T`, `TReq`\> |
+| `src` | [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`\>\> |
+| `dest` | [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`T`, `TReq`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`T`, `TReq`\>\> |
 
 #### Returns
 
@@ -560,14 +566,15 @@ ___
 
 ### stream
 
-▸ **stream**<`TReq`, `T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`\>, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`\>\>
+▸ **stream**<`TReq`, `T`, `TStream`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, `TStream`\>, `TStream`\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TReq` |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `TReq` | `TReq` |
+| `T` | `T` |
+| `TStream` | extends [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`, `TStream`\> |
 
 #### Parameters
 
@@ -579,7 +586,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`\>, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`\>\>
+[`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, `TStream`\>, `TStream`\>
 
 ___
 

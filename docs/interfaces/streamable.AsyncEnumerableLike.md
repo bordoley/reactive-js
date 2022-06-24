@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`StreamableLike`](streamable.StreamableLike.md)<`void`, `T`\>
+- [`StreamableLike`](streamable.StreamableLike.md)<`void`, `T`, [`AsyncEnumeratorLike`](streamable.AsyncEnumeratorLike.md)<`T`\>\>
 
   ↳ **`AsyncEnumerableLike`**
 
@@ -26,20 +26,20 @@
 
 ### stream
 
-▸ **stream**(`this`, `scheduler`, `options?`): [`StreamLike`](observable.StreamLike.md)<`void`, `T`\>
+▸ **stream**(`this`, `scheduler`, `options?`): [`AsyncEnumeratorLike`](streamable.AsyncEnumeratorLike.md)<`T`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StreamableLike`](streamable.StreamableLike.md)<`void`, `T`\> |
+| `this` | [`StreamableLike`](streamable.StreamableLike.md)<`void`, `T`, [`AsyncEnumeratorLike`](streamable.AsyncEnumeratorLike.md)<`T`\>\> |
 | `scheduler` | [`SchedulerLike`](scheduler.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.replay?` | `number` |
 
 #### Returns
 
-[`StreamLike`](observable.StreamLike.md)<`void`, `T`\>
+[`AsyncEnumeratorLike`](streamable.AsyncEnumeratorLike.md)<`T`\>
 
 #### Inherited from
 

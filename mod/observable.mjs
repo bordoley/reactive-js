@@ -1518,7 +1518,6 @@ class ZipObservable extends AbstractObservable {
         var _a;
         const observables = this.observables;
         const count = observables.length;
-        debugger;
         if (this.isEnumerable) {
             const observable = using(defer$1(this.observables, map$1(enumerate)), (...enumerators) => pipe(enumerators, zipEnumerators, returns, fromEnumerator()));
             pipe(observable, sinkInto(observer));

@@ -17,7 +17,7 @@ import {
 } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
-import { FlowMode, FlowableSinkLike, StreamableLike } from "../streamable";
+import { FlowMode, FlowableSinkLike } from "../streamable";
 import { createStreamable, stream } from "./streamable";
 
 class FlowableSinkAccumulatorImpl<T, TAcc>
@@ -26,7 +26,7 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
 {
   constructor(
     private readonly subject: StreamLike<TAcc, TAcc>,
-    private readonly streamable: StreamableLike<T, FlowMode>,
+    private readonly streamable: FlowableSinkLike<T>,
   ) {
     super();
   }

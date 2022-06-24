@@ -1,26 +1,37 @@
-import { Function1 } from "./functions";
+import { Function1, Updater } from "./functions";
 import { StreamLike } from "./observable";
 import { SchedulerLike } from "./scheduler";
 
-export interface StreamableLike<TReq, T> {
+export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T>> {
   stream(
-    this: StreamableLike<TReq, T>,
+    this: StreamableLike<TReq, T, TStream>,
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
-  ): StreamLike<TReq, T>;
+  ): TStream;
 }
 
-export interface AsyncEnumerableLike<T> extends StreamableLike<void, T> {}
+export interface AsyncEnumerableLike<T>
+  extends StreamableLike<void, T, AsyncEnumeratorLike<T>> {}
+export interface AsyncEnumeratorLike<T> extends StreamLike<void, T> {}
+
+export interface StreamableStateLike<T>
+  extends StreamableLike<Updater<T>, T, StateStreamLike<T>> {}
+export interface StateStreamLike<T> extends StreamLike<Updater<T>, T> {}
 
 export type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<
-  StreamableLike<TSrcReq, TSrc>,
-  StreamableLike<TReq, T>
+  StreamableLike<TSrcReq, TSrc, StreamLike<TSrcReq, TSrc>>,
+  StreamableLike<TReq, T, StreamLike<TReq, T>>
 >;
 
 export type FlowMode = "resume" | "pause";
 
-export interface FlowableLike<T> extends StreamableLike<FlowMode, T> {}
-export interface FlowableSinkLike<T> extends StreamableLike<T, FlowMode> {}
+export interface FlowableLike<T>
+  extends StreamableLike<FlowMode, T, FlowableStreamLike<T>> {}
+export interface FlowableStreamLike<T> extends StreamLike<FlowMode, T> {}
+
+export interface FlowableSinkLike<T>
+  extends StreamableLike<T, FlowMode, FlowableSinkStreamLike<T>> {}
+export interface FlowableSinkStreamLike<T> extends StreamLike<T, FlowMode> {}
 
 export type ConsumeContinue<T> = {
   readonly type: "continue";

@@ -1,5 +1,5 @@
 import { Reducer, Factory, Equality, Updater, Function1, Function2 } from "./functions.mjs";
-import { ObservableOperator, StreamLike, ObservableLike, MulticastObservableLike } from "./observable.mjs";
+import { StreamLike, ObservableOperator, ObservableLike, MulticastObservableLike } from "./observable.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
 import { EnumerableLike } from "./enumerable.mjs";
 /**
@@ -13,7 +13,7 @@ import { EnumerableLike } from "./enumerable.mjs";
  */
 declare const createActionReducer: <TAction, T>(reducer: Reducer<TAction, T>, initialState: Factory<T>, options?: {
     readonly equality?: Equality<T> | undefined;
-} | undefined) => StreamableLike<TAction, T>;
+} | undefined) => StreamableLike<TAction, T, StreamLike<TAction, T>>;
 /**
  * Returns a new `StateStoreLike` instance that stores state which can
  * be updated by notifying the instance with a `StateUpdater` that computes a
@@ -25,7 +25,7 @@ declare const createActionReducer: <TAction, T>(reducer: Reducer<TAction, T>, in
  */
 declare const createStateStore: <T>(initialState: Factory<T>, options?: {
     readonly equality?: Equality<T> | undefined;
-} | undefined) => StreamableLike<Updater<T>, T>;
+} | undefined) => StreamableStateLike<T>;
 /**
  * Converts an `StreamableLike<T, T>` to an `StateStoreLike<T>`.
  *
@@ -34,7 +34,7 @@ declare const createStateStore: <T>(initialState: Factory<T>, options?: {
  * if a state value is distinct from the previous one.
  */
 declare const toStateStore: <T>() => StreamableOperator<T, T, Updater<T>, T>;
-declare const createStreamable: <TReq, TData>(op: ObservableOperator<TReq, TData>) => StreamableLike<TReq, TData>;
+declare const createStreamable: <TReq, TData>(op: ObservableOperator<TReq, TData>) => StreamableLike<TReq, TData, StreamLike<TReq, TData>>;
 declare const lift: <TReq, TA, TB>(op: ObservableOperator<TA, TB>) => StreamableOperator<TReq, TA, TReq, TB>;
 declare const mapReq: <TReqA, TReqB, T>(op: Function1<TReqB, TReqA>) => StreamableOperator<TReqA, T, TReqB, T>;
 /**
@@ -43,19 +43,19 @@ declare const mapReq: <TReqA, TReqB, T>(op: Function1<TReqB, TReqA>) => Streamab
  */
 declare const empty: <TReq, T>(options?: {
     readonly delay?: number;
-}) => StreamableLike<TReq, T>;
-declare const stream: <TReq, T>(scheduler: SchedulerLike, options?: {
+}) => StreamableLike<TReq, T, StreamLike<TReq, T>>;
+declare const stream: <TReq, T, TStream extends StreamLike<TReq, T>>(scheduler: SchedulerLike, options?: {
     readonly replay?: number;
-}) => Function1<StreamableLike<TReq, T>, StreamLike<TReq, T>>;
-declare const __stream: <TReq, T>(streamable: StreamableLike<TReq, T>, { replay, scheduler, }?: {
+}) => Function1<StreamableLike<TReq, T, TStream>, TStream>;
+declare const __stream: <TReq, T, TStream extends StreamLike<TReq, T>>(streamable: StreamableLike<TReq, T, TStream>, { replay, scheduler, }?: {
     readonly replay?: number | undefined;
     readonly scheduler?: SchedulerLike | undefined;
-}) => StreamLike<TReq, T>;
-declare const identity: <T>() => StreamableLike<T, T>;
+}) => TStream;
+declare const identity: <T>() => StreamableLike<T, T, StreamLike<T, T>>;
 declare const flow: <T>({ scheduler, }?: {
     scheduler?: SchedulerLike | undefined;
 }) => Function1<ObservableLike<T>, FlowableLike<T>>;
-declare const sink: <TReq, T>(src: StreamableLike<TReq, T>, dest: StreamableLike<T, TReq>) => ObservableLike<void>;
+declare const sink: <TReq, T>(src: StreamableLike<TReq, T, StreamLike<TReq, T>>, dest: StreamableLike<T, TReq, StreamLike<T, TReq>>) => ObservableLike<void>;
 /** @experimental */
 declare const createFlowableSinkAccumulator: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: {
     readonly replay?: number;
@@ -96,18 +96,28 @@ declare const consumeContinue: <T>(data: T) => ConsumeContinue<T>;
 declare const consumeDone: <T>(data: T) => ConsumeDone<T>;
 declare const consume: <T, TAcc>(consumer: Function2<TAcc, T, ConsumeContinue<TAcc> | ConsumeDone<TAcc>>, initial: Factory<TAcc>) => Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>>;
 declare const consumeAsync: <T, TAcc>(consumer: Function2<TAcc, T, ObservableLike<ConsumeContinue<TAcc> | ConsumeDone<TAcc>>>, initial: Factory<TAcc>) => Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>>;
-interface StreamableLike<TReq, T> {
-    stream(this: StreamableLike<TReq, T>, scheduler: SchedulerLike, options?: {
+interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T>> {
+    stream(this: StreamableLike<TReq, T, TStream>, scheduler: SchedulerLike, options?: {
         readonly replay?: number;
-    }): StreamLike<TReq, T>;
+    }): TStream;
 }
-interface AsyncEnumerableLike<T> extends StreamableLike<void, T> {
+interface AsyncEnumerableLike<T> extends StreamableLike<void, T, AsyncEnumeratorLike<T>> {
 }
-declare type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<StreamableLike<TSrcReq, TSrc>, StreamableLike<TReq, T>>;
+interface AsyncEnumeratorLike<T> extends StreamLike<void, T> {
+}
+interface StreamableStateLike<T> extends StreamableLike<Updater<T>, T, StateStreamLike<T>> {
+}
+interface StateStreamLike<T> extends StreamLike<Updater<T>, T> {
+}
+declare type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<StreamableLike<TSrcReq, TSrc, StreamLike<TSrcReq, TSrc>>, StreamableLike<TReq, T, StreamLike<TReq, T>>>;
 declare type FlowMode = "resume" | "pause";
-interface FlowableLike<T> extends StreamableLike<FlowMode, T> {
+interface FlowableLike<T> extends StreamableLike<FlowMode, T, FlowableStreamLike<T>> {
 }
-interface FlowableSinkLike<T> extends StreamableLike<T, FlowMode> {
+interface FlowableStreamLike<T> extends StreamLike<FlowMode, T> {
+}
+interface FlowableSinkLike<T> extends StreamableLike<T, FlowMode, FlowableSinkStreamLike<T>> {
+}
+interface FlowableSinkStreamLike<T> extends StreamLike<T, FlowMode> {
 }
 declare type ConsumeContinue<T> = {
     readonly type: "continue";
@@ -117,4 +127,4 @@ declare type ConsumeDone<T> = {
     readonly type: "done";
     readonly data: T;
 };
-export { AsyncEnumerableLike, ConsumeContinue, ConsumeDone, FlowMode, FlowableLike, FlowableSinkLike, StreamableLike, StreamableOperator, __stream, consume, consumeAsync, consumeContinue, consumeDone, createActionReducer, createFlowableSinkAccumulator, createStateStore, createStreamable, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapReq, sink, stream, toStateStore };
+export { AsyncEnumerableLike, AsyncEnumeratorLike, ConsumeContinue, ConsumeDone, FlowMode, FlowableLike, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, StateStreamLike, StreamableLike, StreamableOperator, StreamableStateLike, __stream, consume, consumeAsync, consumeContinue, consumeDone, createActionReducer, createFlowableSinkAccumulator, createStateStore, createStreamable, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapReq, sink, stream, toStateStore };
