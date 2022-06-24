@@ -1,4 +1,4 @@
-import { fromValue } from "../container";
+import { concatWith, fromValue } from "../container";
 import {
   addDisposableDisposeParentOnChildError,
   bindDisposables,
@@ -15,10 +15,10 @@ import {
 import {
   ObservableLike,
   StreamLike,
-  createObservableUnsafe,
+  createObservable,
   distinctUntilChanged,
   fromArrayT,
-  mergeWith,
+  mergeT,
   scan,
   subscribe,
   zipWithLatestFrom,
@@ -57,7 +57,7 @@ export const createActionReducer = <TAction, T>(
     return pipe(
       src,
       scan(reducer, returns(acc)),
-      mergeWith(fromValue(fromArrayT)(acc)),
+      concatWith(mergeT, fromValue(fromArrayT)(acc)),
       distinctUntilChanged(options),
     );
   };
@@ -91,14 +91,16 @@ export const toStateStore =
   <T>(): StreamableOperator<T, T, Updater<T>, T> =>
   streamable =>
     createStreamable(updates =>
-      createObservableUnsafe(observer => {
-        const stream = pipe(streamable, streamStreamable(observer.scheduler));
+      createObservable(observer => {
+        const { scheduler } = observer;
+
+        const stream = pipe(streamable, streamStreamable(scheduler));
         addDisposableDisposeParentOnChildError(observer, stream);
 
         const updatesSubscription = pipe(
           updates,
           zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),
-          subscribe(observer.scheduler, stream.dispatch, stream),
+          subscribe(scheduler, stream.dispatch, stream),
         );
         bindDisposables(updatesSubscription, stream);
 

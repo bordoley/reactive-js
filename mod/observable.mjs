@@ -539,22 +539,15 @@ class CreateObservable extends AbstractObservable {
         this.f = f;
     }
     sink(observer) {
-        this.f(observer);
+        try {
+            this.f(observer);
+        }
+        catch (cause) {
+            observer.dispose({ cause });
+        }
     }
 }
-const createObservableUnsafe = (f) => new CreateObservable(f);
-/**
- * Factory for safely creating new `ObservableLike` instances. The onSubscribe function
- * is called with a `SafeObserverLike` that may be notified from any context.
- *
- * Note, implementations should not do significant blocking work in
- * the onSubscribe function.
- *
- * @param onSubscribe
- */
-const createObservable = (onSubscribe) => createObservableUnsafe(observer => {
-    onSubscribe(observer.dispatcher);
-});
+const createObservable = (f) => new CreateObservable(f);
 
 class SubjectImpl extends AbstractDisposableObservable {
     constructor(replay) {
@@ -603,8 +596,8 @@ const createSubject = (options = {}) => {
     return new SubjectImpl(replay);
 };
 
-const fromDisposable = (disposable) => createObservable(dispatcher => {
-    addDisposable(disposable, dispatcher);
+const fromDisposable = (disposable) => createObservable(observer => {
+    addDisposableDisposeParentOnChildError(disposable, observer);
 });
 
 const using = createUsing(class UsingObservable extends AbstractObservable {
@@ -682,7 +675,7 @@ const fromIterableT = {
  *
  * @param factory Factory function to create a new `Promise` instance.
  */
-const fromPromise = (factory) => createObservable(dispatcher => {
+const fromPromise = (factory) => createObservable(({ dispatcher }) => {
     factory().then(next => {
         if (!dispatcher.isDisposed) {
             dispatcher.dispatch(next);
@@ -726,30 +719,21 @@ const createMergeObserver = (delegate, count, ctx) => {
     });
     return observer;
 };
-class MergeObservable extends AbstractObservable {
-    constructor(observables) {
-        super();
-        this.observables = observables;
-    }
-    sink(observer) {
-        const { observables } = this;
+function merge(...observables) {
+    return createObservable(observer => {
         const count = observables.length;
         const ctx = { completedCount: 0 };
         for (const observable of observables) {
             const mergeObserver = createMergeObserver(observer, count, ctx);
             pipe(observable, sinkInto(mergeObserver));
         }
-    }
+    });
 }
-function merge(...observables) {
-    return new MergeObservable(observables);
-}
-const mergeWith = (snd) => fst => merge(fst, snd);
+const mergeT = {
+    concat: merge,
+};
 
-class NeverObservable extends AbstractObservable {
-    sink(_) { }
-}
-const neverInstance = new NeverObservable();
+const neverInstance = createObservable(ignore);
 /**
  * Returna an `ObservableLike` instance that emits no items and never disposes its observer.
  */
@@ -983,34 +967,20 @@ const onNotify$2 = createOnNotifyOperator(liftSynchronousT, class OnNotifyObserv
     }
 });
 
-class OnSubscribeObservable extends AbstractObservable {
-    constructor(src, f) {
-        super();
-        this.src = src;
-        this.f = f;
-        this.isEnumerable = src.isEnumerable;
-    }
-    sink(observer) {
-        try {
-            pipe(this.src, sinkInto(observer));
-            const disposable = this.f() || none;
-            if (disposable instanceof Function) {
-                addTeardown(observer, disposable);
-            }
-            else if (isSome(disposable)) {
-                addDisposableDisposeParentOnChildError(observer, disposable);
-            }
-        }
-        catch (cause) {
-            pipe(observer, dispose({ cause }));
-        }
-    }
-}
 /**
  * Executes a side-effect when the observable is subscribed.
  * @param f
  */
-const onSubscribe = (f) => observable => new OnSubscribeObservable(observable, f);
+const onSubscribe = (f) => src => createObservable(observer => {
+    pipe(src, sinkInto(observer));
+    const disposable = f() || none;
+    if (disposable instanceof Function) {
+        addTeardown(observer, disposable);
+    }
+    else if (isSome(disposable)) {
+        addDisposableDisposeParentOnChildError(observer, disposable);
+    }
+});
 
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
@@ -1155,30 +1125,6 @@ const scanAsync = (scanner, initialValue) => observable => using(() => createSub
     accFeedbackStream.dispatch(initialValue());
 })));
 
-class SharedObservable extends AbstractObservable {
-    constructor(source, publish) {
-        super();
-        this.source = source;
-        this.publish = publish;
-        this.observerCount = 0;
-        this.teardown = () => {
-            this.observerCount--;
-            if (this.observerCount === 0) {
-                pipe(this.multicast, dispose());
-                this.multicast = none;
-            }
-        };
-    }
-    sink(observer) {
-        if (this.observerCount === 0) {
-            this.multicast = pipe(this.source, this.publish);
-        }
-        this.observerCount++;
-        const multicast = this.multicast;
-        pipe(multicast, sinkInto(observer));
-        addTeardown(observer, this.teardown);
-    }
-}
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
  * source. When the refcount goes to 0, the underlying subscription
@@ -1188,14 +1134,32 @@ class SharedObservable extends AbstractObservable {
  * @param replay The number of events that should be replayed when the `ObservableLike`
  * is subscribed to.
  */
-const share = (scheduler, options) => observable => new SharedObservable(observable, publish(scheduler, options));
+const share = (scheduler, options) => source => {
+    let observerCount = 0;
+    let multicast = none;
+    const teardown = () => {
+        observerCount--;
+        if (observerCount === 0) {
+            pipe(multicast, dispose());
+            multicast = none;
+        }
+    };
+    return createObservable(observer => {
+        if (isNone(multicast)) {
+            multicast = pipe(source, publish(scheduler, options));
+        }
+        observerCount++;
+        pipe(multicast, sinkInto(observer));
+        addTeardown(observer, teardown);
+    });
+};
 
 /**
  * Returns an `ObservableLike` instance that subscribes to the source on the specified `SchedulerLike`.
  *
  * @param scheduler `SchedulerLike` instance to use when subscribing to the source.
  */
-const subscribeOn = (scheduler) => observable => createObservable(dispatcher => {
+const subscribeOn = (scheduler) => observable => createObservable(({ dispatcher }) => {
     const subscription = pipe(observable, subscribe(scheduler, dispatcher.dispatch, dispatcher));
     bindDisposables(subscription, dispatcher);
 });
@@ -1728,4 +1692,4 @@ const throwIfEmptyT = {
     throwIfEmpty,
 };
 
-export { AbstractDisposableObservable, AbstractObservable, Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createObservableUnsafe, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeWith, never, observable, onNotify$2 as onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AbstractDisposableObservable, AbstractObservable, Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify$2 as onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

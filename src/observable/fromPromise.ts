@@ -12,7 +12,7 @@ import { createObservable } from "./createObservable";
 export const fromPromise = <T>(
   factory: Factory<Promise<T>>,
 ): ObservableLike<T> =>
-  createObservable(dispatcher => {
+  createObservable(({ dispatcher }) => {
     factory().then(next => {
       if (!dispatcher.isDisposed) {
         dispatcher.dispatch(next);

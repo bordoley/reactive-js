@@ -17,8 +17,6 @@ class StreamImpl<TReq, T>
   extends AbstractDisposableObservable<T>
   implements StreamLike<TReq, T>
 {
-  readonly isSynchronous = false;
-
   constructor(
     private readonly dispatcher: DispatcherLike<TReq>,
     private readonly observable: MulticastObservableLike<T>,

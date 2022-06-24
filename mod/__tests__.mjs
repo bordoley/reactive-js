@@ -6,7 +6,7 @@ import { describe, test, expectTrue, mockFn, expectToHaveBeenCalledTimes, expect
 import { empty, endWith, fromValue, concatMap, mapTo, startWith, ignoreElements, contains, compute, noneSatisfy, zipWith, throws, concatWith, genMap, encodeUtf8 } from './container.mjs';
 import { fromArray as fromArray$1, toIterable, fromIterable, toRunnable as toRunnable$1, fromArrayT as fromArrayT$1, keepT as keepT$1, concat as concat$1, concatAll as concatAll$1, distinctUntilChanged as distinctUntilChanged$1, generate as generate$1, map as map$1, repeat as repeat$1, scan as scan$1, skipFirst as skipFirst$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, zip } from './enumerable.mjs';
 import { toArray, fromArray, someSatisfyT, first, generate, everySatisfy, map, forEach, everySatisfyT, fromArrayT, keepT, concat, concatAll, distinctUntilChanged, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, toRunnable, last } from './runnable.mjs';
-import { concat as concat$2, fromArray as fromArray$2, fromArrayT as fromArrayT$2, buffer, toRunnable as toRunnable$2, mapT, catchError, concatT, generate as generate$2, takeFirst as takeFirst$2, combineLatestWith, createObservable, createSubject, dispatchTo, subscribe, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeWith, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync, share, zip as zip$1, map as map$2, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$1, zipT, zipLatestWith, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$2, skipFirst as skipFirst$2, takeWhile as takeWhile$2, onNotify, decodeWithCharset, usingT } from './observable.mjs';
+import { concat as concat$2, fromArray as fromArray$2, fromArrayT as fromArrayT$2, buffer, toRunnable as toRunnable$2, mapT, catchError, concatT, generate as generate$2, takeFirst as takeFirst$2, combineLatestWith, createObservable, createSubject, dispatchTo, subscribe, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeT, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync, share, zip as zip$1, map as map$2, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$1, zipT, zipLatestWith, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$2, skipFirst as skipFirst$2, takeWhile as takeWhile$2, onNotify, decodeWithCharset, usingT } from './observable.mjs';
 import { createVirtualTimeScheduler, createHostScheduler, schedule } from './scheduler.mjs';
 import { type, fromArray as fromArray$3, concat as concat$3, concatAll as concatAll$2, distinctUntilChanged as distinctUntilChanged$3, generate as generate$3, keep, map as map$3, repeat as repeat$3, scan as scan$3, skipFirst as skipFirst$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$3, toRunnable as toRunnable$3, fromArrayT as fromArrayT$3, zipT as zipT$1 } from './sequence.mjs';
 import { identity as identity$1, __stream, createActionReducer, stream, empty as empty$1, lift, mapReq, sink, flow, toStateStore, createFlowableSinkAccumulator, fromArray as fromArray$4, fromIterable as fromIterable$2, generate as generate$4, consume, consumeContinue, consumeDone, consumeAsync } from './streamable.mjs';
@@ -135,7 +135,7 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
         throw cause;
     });
     pipe(() => pipe(observable, toRunnable$2(), last()), expectToThrowError(cause));
-}), test("when queuing multiple events", defer(createObservable(dispatcher => {
+}), test("when queuing multiple events", defer(createObservable(({ dispatcher }) => {
     dispatcher.dispatch(1);
     dispatcher.dispatch(2);
     dispatcher.dispatch(3);
@@ -175,7 +175,7 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
     yield 1;
     yield 2;
     yield 3;
-}), toRunnable$2(), toArray(), expectArrayEquals([1, 2, 3]))), describe("merge", test("two arrays", defer(merge(pipe([0, 2, 3, 5, 6], fromArray$2({ delay: 1 })), pipe([1, 4, 7], fromArray$2({ delay: 2 }))), toRunnable$2(), toArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), test("when one source throws", defer(defer([1, 4, 7], fromArray$2({ delay: 2 }), mergeWith(throws({ ...fromArrayT$2, ...mapT }, { delay: 5 })(raise)), toRunnable$2(), last()), expectToThrow))), describe("mergeMap", test("when a mapped observable throws", defer(defer([
+}), toRunnable$2(), toArray(), expectArrayEquals([1, 2, 3]))), describe("merge", test("two arrays", defer(merge(pipe([0, 2, 3, 5, 6], fromArray$2({ delay: 1 })), pipe([1, 4, 7], fromArray$2({ delay: 2 }))), toRunnable$2(), toArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), test("when one source throws", defer(defer([1, 4, 7], fromArray$2({ delay: 2 }), concatWith(mergeT, throws({ ...fromArrayT$2, ...mapT }, { delay: 5 })(raise)), toRunnable$2(), last()), expectToThrow))), describe("mergeMap", test("when a mapped observable throws", defer(defer([
     fromArray$2({ delay: 1 })([1, 2, 3]),
     throws({ ...fromArrayT$2, ...mapT }, { delay: 2 })(raise),
 ], fromArray$2(), concatMap({ ...mergeAllT, ...mapT }, identity), toRunnable$2(), last()), expectToThrow)), test("when the map function throws", defer(defer([1, 2, 3, 4], fromArray$2(), concatMap({ ...mergeAllT, ...mapT }, (x) => {
@@ -222,15 +222,15 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
     pipe(subscription.error, expectSome);
 })), describe("retry", test("repeats the observable n times", () => {
     let retried = false;
-    const src = createObservable(d => {
-        d.dispatch(1);
+    const src = createObservable(({ dispatcher }) => {
+        dispatcher.dispatch(1);
         if (retried) {
-            d.dispatch(2);
-            d.dispose();
+            dispatcher.dispatch(2);
+            dispatcher.dispose();
         }
         else {
             retried = true;
-            pipe(d, dispose({ cause: new Error() }));
+            pipe(dispatcher, dispose({ cause: new Error() }));
         }
     });
     pipe(src, retry(), toRunnable$2(), toArray(), expectArrayEquals([1, 1, 2]));

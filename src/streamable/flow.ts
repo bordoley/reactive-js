@@ -5,7 +5,7 @@ import {
 import { Function1, pipe } from "../functions";
 import {
   ObservableLike,
-  createObservableUnsafe,
+  createObservable,
   fromDisposable,
   subscribe,
   subscribeOn,
@@ -24,7 +24,7 @@ export const flow =
   } = {}): Function1<ObservableLike<T>, FlowableLike<T>> =>
   observable => {
     const op = (modeObs: ObservableLike<FlowMode>) =>
-      createObservableUnsafe(observer => {
+      createObservable(observer => {
         const pausableScheduler = toPausableScheduler(
           scheduler ?? observer.scheduler,
         );

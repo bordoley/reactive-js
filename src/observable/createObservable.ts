@@ -1,5 +1,5 @@
 import { SideEffect1 } from "../functions";
-import { DispatcherLike, ObservableLike } from "../observable";
+import { ObservableLike } from "../observable";
 import { AbstractObservable } from "./observable";
 import { Observer } from "./observer";
 
@@ -9,26 +9,14 @@ class CreateObservable<T> extends AbstractObservable<T> {
   }
 
   sink(observer: Observer<T>) {
-    this.f(observer);
+    try {
+      this.f(observer);
+    } catch (cause) {
+      observer.dispose({ cause });
+    }
   }
 }
 
-export const createObservableUnsafe = <T>(
+export const createObservable = <T>(
   f: SideEffect1<Observer<T>>,
 ): ObservableLike<T> => new CreateObservable(f);
-
-/**
- * Factory for safely creating new `ObservableLike` instances. The onSubscribe function
- * is called with a `SafeObserverLike` that may be notified from any context.
- *
- * Note, implementations should not do significant blocking work in
- * the onSubscribe function.
- *
- * @param onSubscribe
- */
-export const createObservable = <T>(
-  onSubscribe: SideEffect1<DispatcherLike<T>>,
-): ObservableLike<T> =>
-  createObservableUnsafe(observer => {
-    onSubscribe(observer.dispatcher);
-  });

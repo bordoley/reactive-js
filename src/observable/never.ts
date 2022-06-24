@@ -1,12 +1,8 @@
+import { ignore } from "../functions";
 import { ObservableLike } from "../observable";
-import { AbstractObservable } from "./observable";
-import { Observer } from "./observer";
+import { createObservable } from "./createObservable";
 
-class NeverObservable<T> extends AbstractObservable<T> {
-  sink(_: Observer<T>) {}
-}
-
-const neverInstance: ObservableLike<any> = new NeverObservable();
+const neverInstance: ObservableLike<any> = createObservable(ignore);
 
 /**
  * Returna an `ObservableLike` instance that emits no items and never disposes its observer.
