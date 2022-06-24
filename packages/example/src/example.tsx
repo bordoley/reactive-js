@@ -13,6 +13,7 @@ import {
   createStateStore,
   flow,
   FlowMode,
+  StateStreamLike,
   __stream,
 } from "@reactive-js/core/streamable";
 import {
@@ -26,29 +27,14 @@ import {
   WindowLocationURI,
 } from "@reactive-js/core/web";
 import { SchedulerLike } from "@reactive-js/core/scheduler";
-import { increment, pipe, returns, Updater } from "@reactive-js/core/functions";
+import { increment, pipe, returns } from "@reactive-js/core/functions";
 import { isNone } from "@reactive-js/core/option";
 
-const stateStore = createStateStore(() => ({
-  mode: "pause" as FlowMode,
-}));
+const stateStore = createStateStore(() => "pause" as FlowMode);
 
-const createOnClick =
-  (
-    state: StreamLike<
-      Updater<{
-        mode: FlowMode;
-      }>,
-      {
-        mode: FlowMode;
-      }
-    >,
-  ) =>
-  () => {
-    state.dispatch(({ mode }) => ({
-      mode: mode === "pause" ? "resume" : "pause",
-    }));
-  };
+const createOnClick = (state: StateStreamLike<FlowMode>) => () => {
+  state.dispatch(mode => (mode === "pause" ? "resume" : "pause"));
+};
 
 const appState = (
   scheduler: SchedulerLike,
@@ -76,9 +62,7 @@ const appState = (
     const onClick = __memo(createOnClick, state);
 
     const value = __observe(counter) ?? 0;
-    const { mode } = __observe(state) ?? {
-      mode: "pause",
-    };
+    const mode = __observe(state) ?? "pause";
 
     __do(setCounterMode, counter, mode);
 
