@@ -1131,11 +1131,9 @@ const scanAsync = (scanner, initialValue) => observable => using(() => createSub
  * is subscribed to.
  */
 const share = (scheduler, options) => source => {
-    let observerCount = 0;
     let multicast = none;
     const teardown = () => {
-        observerCount--;
-        if (observerCount === 0) {
+        if (isSome(multicast) && multicast.observerCount === 0) {
             pipe(multicast, dispose());
             multicast = none;
         }
@@ -1144,7 +1142,6 @@ const share = (scheduler, options) => source => {
         if (isNone(multicast)) {
             multicast = pipe(source, publish(scheduler, options));
         }
-        observerCount++;
         pipe(multicast, sinkInto(observer));
         addTeardown(observer, teardown);
     });
