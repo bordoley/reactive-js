@@ -1,6 +1,6 @@
 /// <reference types="./streamable.d.ts" />
 import { empty as empty$1, fromValue, ignoreElements, endWith, startWith, concatMap, concatWith } from './container.mjs';
-import { addDisposable, addDisposableDisposeParentOnChildError, bindDisposables } from './disposable.mjs';
+import { addDisposableDisposeParentOnChildError, bindDisposables } from './disposable.mjs';
 import { pipe, compose, returns, updaterReducer, flip } from './functions.mjs';
 import { AbstractDisposableObservable, createSubject, publish, createObservableUnsafe, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeWith, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, merge, onNotify, dispatchTo, onSubscribe, observable, __memo, __observe, reduce, mapT, concatAllT, takeFirst, withLatestFrom, using, never, takeWhile, scanAsync, switchAll } from './observable.mjs';
 import { sinkInto } from './source.mjs';
@@ -29,8 +29,8 @@ const createStream = (op, scheduler, options) => {
     const subject = createSubject();
     const observable = pipe(subject, op, publish(scheduler, options));
     const stream = new StreamImpl(subject, observable);
-    addDisposable(observable, stream);
-    addDisposable(stream, subject);
+    addDisposableDisposeParentOnChildError(observable, stream);
+    addDisposableDisposeParentOnChildError(stream, subject);
     return stream;
 };
 
