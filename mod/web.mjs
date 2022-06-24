@@ -1,7 +1,7 @@
 /// <reference types="./web.d.ts" />
-import { dispose, addTeardown, addDisposableDisposeParentOnChildError, toAbortSignal } from './disposable.mjs';
-import { pipe, raise, returns } from './functions.mjs';
+import { addTeardown, dispose, addDisposableDisposeParentOnChildError, toAbortSignal } from './disposable.mjs';
 import { createObservable, AbstractObservable, map, onNotify, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
+import { pipe, raise, returns } from './functions.mjs';
 import { keep } from './readonlyArray.mjs';
 import { none, isSome } from './option.mjs';
 import { sinkInto } from './source.mjs';
@@ -9,13 +9,8 @@ import { createStateStore, stream } from './streamable.mjs';
 
 const fromEvent = (target, eventName, selector) => createObservable(({ dispatcher }) => {
     const listener = (event) => {
-        try {
-            const result = selector(event);
-            dispatcher.dispatch(result);
-        }
-        catch (cause) {
-            pipe(dispatcher, dispose({ cause }));
-        }
+        const result = selector(event);
+        dispatcher.dispatch(result);
     };
     target.addEventListener(eventName, listener, { passive: true });
     addTeardown(dispatcher, () => {
