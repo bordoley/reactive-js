@@ -36,7 +36,7 @@ class LatestObserver extends Observer<unknown> {
     readonly ctx: LatestCtx,
     private readonly mode: LatestMode,
   ) {
-    super(delegate);
+    super(delegate.scheduler);
   }
 
   notify(next: unknown) {

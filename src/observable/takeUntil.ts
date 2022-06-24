@@ -14,9 +14,8 @@ export const takeUntil = <T>(
 
     const otherSubscription = pipe(
       notifier,
-      subscribe(takeUntilObserver, defer(takeUntilObserver, dispose)),
+      subscribe(takeUntilObserver.scheduler, defer(takeUntilObserver, dispose)),
     );
-
     bindDisposables(takeUntilObserver, otherSubscription);
     return takeUntilObserver;
   };

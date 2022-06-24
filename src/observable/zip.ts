@@ -81,7 +81,7 @@ class ZipObserver extends Observer<unknown> {
     readonly delegate: Observer<readonly unknown[]>,
     private readonly enumerators: readonly Enumerator<any>[],
   ) {
-    super(delegate);
+    super(delegate.scheduler);
 
     this.enumerator = new ZipObserverEnumerator();
     addDisposableDisposeParentOnChildError(delegate, this.enumerator);

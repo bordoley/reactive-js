@@ -29,7 +29,7 @@ class SwitchObserver<T> extends Observer<ObservableLike<T>> {
   inner = disposed;
 
   constructor(readonly delegate: Observer<T>) {
-    super(delegate);
+    super(delegate.scheduler);
   }
 
   notify(next: ObservableLike<T>) {
@@ -37,7 +37,7 @@ class SwitchObserver<T> extends Observer<ObservableLike<T>> {
 
     pipe(this.inner, dispose());
 
-    const inner = pipe(next, subscribe(this.delegate, onNotify, this));
+    const inner = pipe(next, subscribe(this.scheduler, onNotify, this));
     addDisposableDisposeParentOnChildError(this.delegate, inner);
     addOnDisposedWithoutErrorTeardown(inner, () => {
       if (this.isDisposed) {

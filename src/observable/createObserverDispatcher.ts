@@ -2,7 +2,7 @@ import {
   AbstractDisposable,
   Error,
   addDisposable,
-  addOnDisposedWithError,
+  addDisposableDisposeParentOnChildError,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
   dispose,
@@ -17,10 +17,10 @@ const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (dispatcher.nextQueue.length === 1) {
     const { observer } = dispatcher;
     const continuationSubcription = pipe(
-      observer,
+      observer.scheduler,
       schedule(dispatcher.continuation),
     );
-    addOnDisposedWithError(continuationSubcription, observer);
+    addDisposableDisposeParentOnChildError(observer, continuationSubcription);
     addOnDisposedWithoutErrorTeardown(
       continuationSubcription,
       dispatcher.onContinuationDispose,
@@ -79,8 +79,8 @@ class ObserverDelegatingDispatcher<T>
 export const createObserverDispatcher = <T>(
   delegate: Observer<T>,
 ): DispatcherLike<T> => {
-  const observer = new ObserverDelegatingDispatcher(delegate);
-  addTeardown(observer, onDispose);
-  addDisposable(delegate, observer);
-  return observer;
+  const dispatcher = new ObserverDelegatingDispatcher(delegate);
+  addTeardown(dispatcher, onDispose);
+  addDisposable(delegate, dispatcher);
+  return dispatcher;
 };

@@ -2,25 +2,11 @@ import {
   AbstractDisposable,
   DisposableLike,
   Error,
-  addTeardown,
   dispose,
 } from "../disposable";
 import { Function1, SideEffect, pipe, raise } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
-import {
-  SchedulerContinuationLike,
-  SchedulerContinuationRunStatusChangedListenerLike,
-  SchedulerLike,
-} from "../scheduler";
-
-const notifyListeners = (
-  listeners: Set<SchedulerContinuationRunStatusChangedListenerLike>,
-  state: boolean,
-) => {
-  for (const listener of listeners) {
-    listener.onRunStatusChanged(state);
-  }
-};
+import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
 
 const isYieldError = (e: unknown): e is YieldError => e instanceof YieldError;
 
@@ -30,17 +16,10 @@ export class YieldError {
 
 let currentScheduler: Option<SchedulerLike> = none;
 
-function clearListeners(this: SchedulerContinuationImpl) {
-  this.listeners = none;
-}
-
 class SchedulerContinuationImpl
   extends AbstractDisposable
   implements SchedulerContinuationLike
 {
-  listeners: Option<Set<SchedulerContinuationRunStatusChangedListenerLike>> =
-    none;
-
   constructor(
     private readonly scheduler: SchedulerLike,
     private readonly f: SideEffect,
@@ -48,41 +27,10 @@ class SchedulerContinuationImpl
     super();
   }
 
-  addListener(
-    _ev: "onRunStatusChanged",
-    listener: SchedulerContinuationRunStatusChangedListenerLike,
-  ) {
-    if (!this.isDisposed) {
-      let { listeners } = this;
-      if (isNone(listeners)) {
-        this.listeners = new Set();
-      }
-
-      (
-        this.listeners as Set<SchedulerContinuationRunStatusChangedListenerLike>
-      ).add(listener);
-    }
-  }
-
-  removeListener(
-    _ev: "onRunStatusChanged",
-    listener: SchedulerContinuationRunStatusChangedListenerLike,
-  ) {
-    let { listeners } = this;
-    if (isSome(listeners)) {
-      listeners.delete(listener);
-    }
-  }
-
   continue() {
     if (!this.isDisposed) {
-      const { listeners } = this;
       let error: Option<Error> = none;
       let yieldError: Option<YieldError> = none;
-
-      if (isSome(listeners)) {
-        notifyListeners(listeners, true);
-      }
 
       const oldCurrentScheduler = currentScheduler;
       currentScheduler = this.scheduler;
@@ -96,10 +44,6 @@ class SchedulerContinuationImpl
         }
       }
       currentScheduler = oldCurrentScheduler;
-
-      if (isSome(listeners)) {
-        notifyListeners(listeners, false);
-      }
 
       if (isSome(yieldError)) {
         this.scheduler.schedule(this, yieldError);
@@ -133,8 +77,6 @@ export const schedule =
   ): Function1<SchedulerLike, DisposableLike> =>
   scheduler => {
     const continuation = new SchedulerContinuationImpl(scheduler, f);
-    addTeardown(continuation, clearListeners);
-
     scheduler.schedule(continuation, options);
     return continuation;
   };

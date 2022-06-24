@@ -13,7 +13,7 @@ export const takeFirst: <T>(options?: {
     count = 0;
 
     constructor(readonly delegate: Observer<T>, readonly maxCount: number) {
-      super(delegate);
+      super(delegate.scheduler);
     }
   },
 );

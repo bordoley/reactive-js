@@ -20,7 +20,11 @@ import {
   createReactIdlePriorityScheduler,
   useObservable,
 } from "@reactive-js/core/react";
-import { windowLocation, WindowLocationStreamLike, WindowLocationURI } from "@reactive-js/core/web";
+import {
+  windowLocation,
+  WindowLocationStreamLike,
+  WindowLocationURI,
+} from "@reactive-js/core/web";
 import { SchedulerLike } from "@reactive-js/core/scheduler";
 import { increment, pipe, returns, Updater } from "@reactive-js/core/functions";
 import { isNone } from "@reactive-js/core/option";
@@ -112,13 +116,15 @@ const Root = createComponent(() =>
     const historyStream = __stream(windowLocation);
 
     const onChange = __memo(
-      (historyStream: WindowLocationStreamLike) => (ev: React.ChangeEvent<HTMLInputElement>) => {
-        const { value: path } = ev.target;
+      (historyStream: WindowLocationStreamLike) =>
+        (ev: React.ChangeEvent<HTMLInputElement>) => {
+          const { value: path } = ev.target;
 
-        historyStream.dispatch((uri: WindowLocationURI) =>
-          ({ ...uri, path })
-        );
-      },
+          historyStream.dispatch((uri: WindowLocationURI) => ({
+            ...uri,
+            path,
+          }));
+        },
       historyStream,
     );
 

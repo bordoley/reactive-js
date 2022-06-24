@@ -23,8 +23,10 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
 
       const nextObsSubscription = pipe(
         nextObs,
-        subscribe(observer.delegate, observer.onNotify),
+        subscribe(observer.scheduler, observer.onNotify),
       );
+      addDisposable(observer.delegate, nextObsSubscription);
+
       addOnDisposedWithoutErrorTeardown(
         nextObsSubscription,
         observer.onDispose,
@@ -64,7 +66,7 @@ class MergeObserver<T> extends Observer<ObservableLike<T>> {
     readonly maxBufferSize: number,
     readonly maxConcurrency: number,
   ) {
-    super(delegate);
+    super(delegate.scheduler);
   }
 
   notify(next: ObservableLike<T>) {

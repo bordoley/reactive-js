@@ -38,17 +38,12 @@ declare const createHostScheduler: (options?: {
 declare const createVirtualTimeScheduler: (options?: {
     readonly maxMicroTaskTicks?: number;
 }) => VirtualTimeSchedulerLike;
-interface SchedulerContinuationRunStatusChangedListenerLike {
-    onRunStatusChanged(this: SchedulerContinuationRunStatusChangedListenerLike, state: boolean): void;
-}
 /**
  * A unit of work to be executed by a scheduler.
  *
  * @noInheritDoc
  */
 interface SchedulerContinuationLike extends DisposableLike {
-    addListener(this: SchedulerContinuationLike, ev: "onRunStatusChanged", listener: SchedulerContinuationRunStatusChangedListenerLike): void;
-    removeListener(this: SchedulerContinuationLike, ev: "onRunStatusChanged", listener: SchedulerContinuationRunStatusChangedListenerLike): void;
     /**
      * Work function to be invoked by the scheduler after the specified delay.
      */
@@ -112,4 +107,4 @@ interface PrioritySchedulerLike extends DisposableLike {
         readonly delay?: number;
     }): void;
 }
-export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerContinuationRunStatusChangedListenerLike, SchedulerLike, VirtualTimeSchedulerLike, YieldError, __yield, createHostScheduler, createVirtualTimeScheduler, run, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };
+export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerLike, VirtualTimeSchedulerLike, YieldError, __yield, createHostScheduler, createVirtualTimeScheduler, run, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };

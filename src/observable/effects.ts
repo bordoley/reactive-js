@@ -132,7 +132,7 @@ class ObservableContext {
   private scheduledComputationSubscription = disposed;
 
   constructor(
-    readonly scheduler: SchedulerLike,
+    readonly observer: Observer<unknown>,
     private readonly runComputation: () => void,
     private readonly mode: ObservableEffectMode,
   ) {}
@@ -150,7 +150,7 @@ class ObservableContext {
       !hasOutstandingEffects &&
       this.scheduledComputationSubscription.isDisposed
     ) {
-      this.scheduler.dispose();
+      this.observer.dispose();
     }
   };
 
@@ -178,7 +178,7 @@ class ObservableContext {
 
       const subscription = pipe(
         observable,
-        subscribe(this.scheduler, next => {
+        subscribe(this.observer.scheduler, next => {
           effect.value = next;
           effect.hasValue = true;
 
@@ -189,15 +189,17 @@ class ObservableContext {
 
             this.scheduledComputationSubscription =
               scheduledComputationSubscription.isDisposed
-                ? pipe(this.scheduler, schedule(this.runComputation))
+                ? pipe(this.observer.scheduler, schedule(this.runComputation))
                 : scheduledComputationSubscription;
+            addDisposableDisposeParentOnChildError(
+              this.observer,
+              this.scheduledComputationSubscription,
+            );
           }
         }),
       );
-
+      addDisposableDisposeParentOnChildError(this.observer, subscription);
       addOnDisposedWithoutErrorTeardown(subscription, this.cleanup);
-
-      addDisposableDisposeParentOnChildError(this.scheduler, subscription);
 
       effect.observable = observable;
       effect.subscription = subscription;
@@ -216,7 +218,7 @@ class ObservableContext {
       pipe(effect.value, dispose());
 
       const value = f(...args);
-      addDisposableDisposeParentOnChildError(this.scheduler, value);
+      addDisposableDisposeParentOnChildError(this.observer, value);
 
       effect.f = f;
       effect.args = args;
@@ -452,7 +454,7 @@ export function __using<T extends DisposableLike>(
 export function __currentScheduler(): SchedulerLike {
   const ctx = assertCurrentContext();
   return ctx instanceof ObservableContext
-    ? ctx.scheduler
+    ? ctx.observer.scheduler
     : raise(
         "__currentScheduler may only be called within an observable computation",
       );

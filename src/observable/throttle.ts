@@ -28,7 +28,7 @@ const setupDurationSubscription = <T>(
 ) => {
   observer.durationSubscription.inner = pipe(
     observer.durationFunction(next),
-    subscribe(observer, observer.onNotify),
+    subscribe(observer.scheduler, observer.onNotify),
   );
 };
 
@@ -61,7 +61,7 @@ class ThrottleObserver<T> extends Observer<T> {
     readonly mode: ThrottleMode,
     readonly durationSubscription: SerialDisposableLike,
   ) {
-    super(delegate);
+    super(delegate.scheduler);
   }
 
   notify(next: T) {

@@ -1,6 +1,5 @@
 import {
-  addDisposable,
-  addOnDisposedWithError,
+  addDisposableDisposeParentOnChildError,
   addOnDisposedWithoutErrorTeardown,
   dispose,
 } from "../disposable";
@@ -18,8 +17,7 @@ const createMergeObserver = <T>(
   },
 ) => {
   const observer = createDelegatingObserver(delegate);
-  addDisposable(delegate, observer);
-  addOnDisposedWithError(observer, delegate);
+  addDisposableDisposeParentOnChildError(delegate, observer);
   addOnDisposedWithoutErrorTeardown(observer, () => {
     ctx.completedCount++;
     if (ctx.completedCount >= count) {

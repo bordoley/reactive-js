@@ -191,7 +191,7 @@ export const catchError: <T>(
   liftSynchronousT,
   class CatchErrorObserver<T> extends Observer<T> {
     constructor(public readonly delegate: Observer<T>) {
-      super(delegate);
+      super(delegate.scheduler);
     }
   },
 );
@@ -205,7 +205,7 @@ export const decodeWithCharset: (
       readonly delegate: Observer<string>,
       readonly textDecoder: TextDecoder,
     ) {
-      super(delegate);
+      super(delegate.scheduler);
     }
   },
 );
@@ -233,7 +233,7 @@ export const distinctUntilChanged: <T>(options?: {
       readonly delegate: Observer<T>,
       readonly equality: Equality<T>,
     ) {
-      super(delegate);
+      super(delegate.scheduler);
     }
   },
 );
@@ -253,7 +253,7 @@ export const everySatisfy: <T>(
       readonly delegate: Observer<boolean>,
       readonly predicate: Predicate<T>,
     ) {
-      super(delegate);
+      super(delegate.scheduler);
     }
   },
 );
@@ -270,7 +270,7 @@ export const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T> =
         readonly delegate: Observer<T>,
         readonly predicate: Predicate<T>,
       ) {
-        super(delegate);
+        super(delegate.scheduler);
       }
     },
   );
@@ -287,7 +287,7 @@ export const pairwise: <T>() => ObservableOperator<T, [Option<T>, T]> =
       hasPrev = false;
 
       constructor(readonly delegate: Observer<[Option<T>, T]>) {
-        super(delegate);
+        super(delegate.scheduler);
       }
     },
   );
@@ -307,7 +307,7 @@ export const reduce: <T, TAcc>(
       readonly reducer: Reducer<T, TAcc>,
       public acc: TAcc,
     ) {
-      super(delegate);
+      super(delegate.scheduler);
     }
   },
 );
@@ -327,7 +327,7 @@ export const scan: <T, TAcc>(
       readonly reducer: Reducer<T, TAcc>,
       public acc: TAcc,
     ) {
-      super(delegate);
+      super(delegate.scheduler);
     }
   },
 );
@@ -349,7 +349,7 @@ export const skipFirst: <T>(options?: {
     count = 0;
 
     constructor(readonly delegate: Observer<T>, readonly skipCount: number) {
-      super(delegate);
+      super(delegate.scheduler);
     }
   },
 );
@@ -367,7 +367,7 @@ export const someSatisfy: <T>(
       readonly delegate: Observer<boolean>,
       readonly predicate: Predicate<T>,
     ) {
-      super(delegate);
+      super(delegate.scheduler);
     }
   },
 );
@@ -389,7 +389,7 @@ export const takeLast: <T>(options?: {
     readonly last: T[] = [];
 
     constructor(readonly delegate: Observer<T>, readonly maxCount: number) {
-      super(delegate);
+      super(delegate.scheduler);
     }
   },
 );
@@ -416,7 +416,7 @@ export const takeWhile: <T>(
       readonly predicate: Predicate<T>,
       readonly inclusive: boolean,
     ) {
-      super(delegate);
+      super(delegate.scheduler);
     }
   },
 );
@@ -433,7 +433,7 @@ export const throwIfEmpty: <T>(
     isEmpty = true;
 
     constructor(readonly delegate: Observer<T>) {
-      super(delegate);
+      super(delegate.scheduler);
     }
   },
 );
