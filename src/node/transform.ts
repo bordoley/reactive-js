@@ -16,7 +16,7 @@ import {
   createDisposableValue,
 } from "../disposable";
 import { Factory, defer, ignore, pipe, returns } from "../functions";
-import { createObservableUnsafe, subscribe } from "../observable";
+import { createObservable, subscribe } from "../observable";
 import { sinkInto } from "../source";
 
 import {
@@ -36,7 +36,7 @@ export const transform =
   ): StreamableOperator<FlowMode, Uint8Array, FlowMode, Uint8Array> =>
   src =>
     createStreamable(modeObs =>
-      createObservableUnsafe(observer => {
+      createObservable(observer => {
         const transform = factory();
 
         const transformSink = createWritableIOSink(

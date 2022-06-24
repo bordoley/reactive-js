@@ -1,12 +1,12 @@
+import { Concat } from "../container";
 import {
   addDisposableDisposeParentOnChildError,
   addOnDisposedWithoutErrorTeardown,
   dispose,
 } from "../disposable";
 import { pipe } from "../functions";
-import { ObservableLike, ObservableOperator } from "../observable";
+import { ObservableLike, createObservable } from "../observable";
 import { sinkInto } from "../source";
-import { AbstractObservable } from "./observable";
 import { Observer, createDelegatingObserver } from "./observer";
 
 const createMergeObserver = <T>(
@@ -27,24 +27,6 @@ const createMergeObserver = <T>(
   return observer;
 };
 
-class MergeObservable<T> extends AbstractObservable<T> {
-  constructor(readonly observables: readonly ObservableLike<T>[]) {
-    super();
-  }
-
-  sink(observer: Observer<T>) {
-    const { observables } = this;
-    const count = observables.length;
-    const ctx = { completedCount: 0 };
-
-    for (const observable of observables) {
-      const mergeObserver = createMergeObserver(observer, count, ctx);
-
-      pipe(observable, sinkInto(mergeObserver));
-    }
-  }
-}
-
 /**
  *  Creates an `ObservableLike` which concurrently emits values from the sources.
  */
@@ -56,10 +38,18 @@ export function merge<T>(
 export function merge<T>(
   ...observables: readonly ObservableLike<T>[]
 ): ObservableLike<T> {
-  return new MergeObservable(observables);
+  return createObservable(observer => {
+    const count = observables.length;
+    const ctx = { completedCount: 0 };
+
+    for (const observable of observables) {
+      const mergeObserver = createMergeObserver(observer, count, ctx);
+
+      pipe(observable, sinkInto(mergeObserver));
+    }
+  });
 }
 
-export const mergeWith =
-  <T>(snd: ObservableLike<T>): ObservableOperator<T, T> =>
-  fst =>
-    merge(fst, snd);
+export const mergeT: Concat<ObservableLike<unknown>> = {
+  concat: merge,
+};

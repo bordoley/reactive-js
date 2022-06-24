@@ -7,7 +7,7 @@ export const fromEvent = <T>(
   eventName: string,
   selector: Function1<Event, T>,
 ): ObservableLike<T> =>
-  createObservable(dispatcher => {
+  createObservable(({ dispatcher }) => {
     const listener = (event: Event) => {
       try {
         const result = selector(event);

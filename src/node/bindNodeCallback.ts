@@ -62,7 +62,7 @@ export function bindNodeCallback<T>(
   callback: (...args: readonly any[]) => any,
 ): (...args: readonly unknown[]) => ObservableLike<T | void> {
   return function (this: unknown, ...args: readonly unknown[]) {
-    return createObservable(dispatcher => {
+    return createObservable(({ dispatcher }) => {
       const handler = (cause: unknown, arg: any) => {
         if (cause) {
           pipe(dispatcher, dispose({ cause }));

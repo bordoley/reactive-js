@@ -127,10 +127,7 @@ export {
   zipLatestWith,
 } from "./observable/latest";
 export { concat, concatT } from "./observable/concat";
-export {
-  createObservable,
-  createObservableUnsafe,
-} from "./observable/createObservable";
+export { createObservable } from "./observable/createObservable";
 export { createSubject } from "./observable/createSubject";
 export { fromArray, fromArrayT } from "./observable/fromArray";
 export { fromDisposable } from "./observable/fromDisposable";
@@ -143,7 +140,7 @@ export {
 } from "./observable/fromIterable";
 export { fromPromise } from "./observable/fromPromise";
 export { generate } from "./observable/generate";
-export { merge, mergeWith } from "./observable/merge";
+export { merge, mergeT } from "./observable/merge";
 export { never } from "./observable/never";
 export { subscribe } from "./observable/subscribe";
 export { using, usingT } from "./observable/using";

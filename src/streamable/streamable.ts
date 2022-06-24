@@ -11,7 +11,7 @@ import {
   __memo,
   __observe,
   __using,
-  createObservableUnsafe,
+  createObservable,
   fromArrayT,
   map,
   subscribe,
@@ -61,14 +61,15 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
     streamable instanceof LiftedStreamable ? streamable.src : streamable;
 
   const op: ObservableOperator<TReqB, TB> = requests =>
-    createObservableUnsafe(observer => {
-      const srcStream = pipe(src, stream(observer.scheduler));
+    createObservable(observer => {
+      const { scheduler } = observer;
+      const srcStream = pipe(src, stream(scheduler));
       addDisposableDisposeParentOnChildError(observer, srcStream);
 
       const requestSubscription = pipe(
         requests,
         map((compose as any)(...reqOps)),
-        subscribe(observer.scheduler, srcStream.dispatch, srcStream),
+        subscribe(scheduler, srcStream.dispatch, srcStream),
       );
       addDisposableDisposeParentOnChildError(observer, requestSubscription);
 

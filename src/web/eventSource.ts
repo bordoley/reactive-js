@@ -22,7 +22,7 @@ export const createEventSource = (
   );
   const requestURL = url instanceof URL ? url.toString() : url;
 
-  return createObservable(dispatcher => {
+  return createObservable(({ dispatcher }) => {
     const eventSource = new EventSource(requestURL, options);
     const listener = (ev: MessageEvent) => {
       dispatcher.dispatch({

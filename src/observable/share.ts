@@ -1,52 +1,11 @@
 import { addTeardown, dispose } from "../disposable";
-import { Function1, pipe } from "../functions";
-import {
-  MulticastObservableLike,
-  ObservableLike,
-  ObservableOperator,
-  SubjectLike,
-} from "../observable";
-import { Option, none } from "../option";
+import { pipe } from "../functions";
+import { MulticastObservableLike, ObservableOperator } from "../observable";
+import { Option, isNone, none } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { sinkInto } from "../source";
-import { AbstractObservable } from "./observable";
-import { Observer } from "./observer";
+import { createObservable } from "./createObservable";
 import { publish } from "./publish";
-
-class SharedObservable<T> extends AbstractObservable<T> {
-  private observerCount = 0;
-  private multicast: Option<MulticastObservableLike<T>>;
-  private readonly teardown = () => {
-    this.observerCount--;
-
-    if (this.observerCount === 0) {
-      pipe(this.multicast as MulticastObservableLike<T>, dispose());
-      this.multicast = none;
-    }
-  };
-
-  constructor(
-    private readonly source: ObservableLike<T>,
-    private readonly publish: Function1<
-      ObservableLike<T>,
-      MulticastObservableLike<T>
-    >,
-  ) {
-    super();
-  }
-
-  sink(observer: Observer<T>) {
-    if (this.observerCount === 0) {
-      this.multicast = pipe(this.source, this.publish);
-    }
-    this.observerCount++;
-
-    const multicast = this.multicast as SubjectLike<T>;
-
-    pipe(multicast, sinkInto(observer));
-    addTeardown(observer, this.teardown);
-  }
-}
 
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
@@ -62,5 +21,26 @@ export const share =
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
   ): ObservableOperator<T, T> =>
-  observable =>
-    new SharedObservable(observable, publish(scheduler, options));
+  source => {
+    let observerCount = 0;
+    let multicast: Option<MulticastObservableLike<T>> = none;
+
+    const teardown = () => {
+      observerCount--;
+
+      if (observerCount === 0) {
+        pipe(multicast as MulticastObservableLike<T>, dispose());
+        multicast = none;
+      }
+    };
+
+    return createObservable(observer => {
+      if (isNone(multicast)) {
+        multicast = pipe(source, publish(scheduler, options));
+      }
+      observerCount++;
+
+      pipe(multicast, sinkInto(observer));
+      addTeardown(observer, teardown);
+    });
+  };

@@ -48,7 +48,7 @@ import {
   mapT,
   merge,
   mergeAllT,
-  mergeWith,
+  mergeT,
   never,
   observable,
   onSubscribe,
@@ -240,7 +240,7 @@ export const tests = describe(
     test(
       "when queuing multiple events",
       defer(
-        createObservable(dispatcher => {
+        createObservable(({ dispatcher }) => {
           dispatcher.dispatch(1);
           dispatcher.dispatch(2);
           dispatcher.dispatch(3);
@@ -353,7 +353,10 @@ export const tests = describe(
         defer(
           [1, 4, 7],
           fromArray({ delay: 2 }),
-          mergeWith(throws({ ...fromArrayT, ...mapT }, { delay: 5 })(raise)),
+          concatWith(
+            mergeT,
+            throws({ ...fromArrayT, ...mapT }, { delay: 5 })(raise),
+          ),
           toRunnable(),
           last(),
         ),
@@ -486,14 +489,14 @@ export const tests = describe(
     "retry",
     test("repeats the observable n times", () => {
       let retried = false;
-      const src = createObservable(d => {
-        d.dispatch(1);
+      const src = createObservable(({ dispatcher }) => {
+        dispatcher.dispatch(1);
         if (retried) {
-          d.dispatch(2);
-          d.dispose();
+          dispatcher.dispatch(2);
+          dispatcher.dispose();
         } else {
           retried = true;
-          pipe(d, dispose({ cause: new Error() }));
+          pipe(dispatcher, dispose({ cause: new Error() }));
         }
       });
       pipe(src, retry(), toRunnable(), toArray(), expectArrayEquals([1, 1, 2]));

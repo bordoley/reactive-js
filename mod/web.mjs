@@ -7,7 +7,7 @@ import { none, isSome } from './option.mjs';
 import { sinkInto } from './source.mjs';
 import { createStateStore, stream } from './streamable.mjs';
 
-const fromEvent = (target, eventName, selector) => createObservable(dispatcher => {
+const fromEvent = (target, eventName, selector) => createObservable(({ dispatcher }) => {
     const listener = (event) => {
         try {
             const result = selector(event);
@@ -28,7 +28,7 @@ const createEventSource = (url, options = {}) => {
     const { events: eventsOption = ["message"] } = options;
     const events = pipe(eventsOption, keep(x => !reservedEvents.includes(x)));
     const requestURL = url instanceof URL ? url.toString() : url;
-    return createObservable(dispatcher => {
+    return createObservable(({ dispatcher }) => {
         const eventSource = new EventSource(requestURL, options);
         const listener = (ev) => {
             var _a, _b, _c;

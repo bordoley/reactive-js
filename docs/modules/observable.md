@@ -39,6 +39,7 @@
 - [keepT](observable.md#keept)
 - [mapT](observable.md#mapt)
 - [mergeAllT](observable.md#mergeallt)
+- [mergeT](observable.md#merget)
 - [pairwiseT](observable.md#pairwiset)
 - [reduceT](observable.md#reducet)
 - [repeatT](observable.md#repeatt)
@@ -71,7 +72,6 @@
 - [concat](observable.md#concat)
 - [concatAll](observable.md#concatall)
 - [createObservable](observable.md#createobservable)
-- [createObservableUnsafe](observable.md#createobservableunsafe)
 - [createSubject](observable.md#createsubject)
 - [decodeWithCharset](observable.md#decodewithcharset)
 - [defer](observable.md#defer)
@@ -91,7 +91,6 @@
 - [mapAsync](observable.md#mapasync)
 - [merge](observable.md#merge)
 - [mergeAll](observable.md#mergeall)
-- [mergeWith](observable.md#mergewith)
 - [never](observable.md#never)
 - [observable](observable.md#observable)
 - [onNotify](observable.md#onnotify)
@@ -242,6 +241,12 @@ ___
 ### mergeAllT
 
 • `Const` **mergeAllT**: [`ConcatAll`](../interfaces/container.ConcatAll.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, { `maxBufferSize`: `number` ; `maxConcurrency`: `number`  }\>
+
+___
+
+### mergeT
+
+• `Const` **mergeT**: [`Concat`](../interfaces/container.Concat.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
@@ -1232,35 +1237,7 @@ ___
 
 ### createObservable
 
-▸ **createObservable**<`T`\>(`onSubscribe`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
-
-Factory for safely creating new `ObservableLike` instances. The onSubscribe function
-is called with a `SafeObserverLike` that may be notified from any context.
-
-Note, implementations should not do significant blocking work in
-the onSubscribe function.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `onSubscribe` | [`SideEffect1`](functions.md#sideeffect1)<[`DispatcherLike`](../interfaces/observable.DispatcherLike.md)<`T`\>\> |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
-
-___
-
-### createObservableUnsafe
-
-▸ **createObservableUnsafe**<`T`\>(`f`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
+▸ **createObservable**<`T`\>(`f`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -1729,28 +1706,6 @@ which concurrently delivers values emitted by the inner sources.
 #### Returns
 
 [`ObservableOperator`](observable.md#observableoperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, `T`\>
-
-___
-
-### mergeWith
-
-▸ **mergeWith**<`T`\>(`snd`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `snd` | [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\> |
-
-#### Returns
-
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
 
 ___
 
