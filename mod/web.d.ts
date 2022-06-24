@@ -22,7 +22,7 @@ interface WindowLocationStreamLike extends StreamLike<Updater<WindowLocationURI>
     dispatch(this: WindowLocationStreamLike, stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI, options?: {
         readonly replace?: boolean;
     }): void;
-    goBack(this: WindowLocationURI): boolean;
+    goBack(this: WindowLocationStreamLike): boolean;
 }
 interface WindowLocationStreamableLike extends StreamableLike<Updater<WindowLocationURI> | WindowLocationURI, WindowLocationURI, WindowLocationStreamLike> {
     stream(this: WindowLocationStreamableLike, scheduler: SchedulerLike, options?: {

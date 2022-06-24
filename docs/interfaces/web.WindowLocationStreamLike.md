@@ -64,7 +64,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`WindowLocationURI`](web.WindowLocationURI.md) |
+| `this` | [`WindowLocationStreamLike`](web.WindowLocationStreamLike.md) |
 
 #### Returns
 
