@@ -44,9 +44,10 @@ class ObserverDelegatingDispatcher<T>
   readonly continuation = () => {
     const { nextQueue } = this;
 
+    const { observer } = this;
     while (nextQueue.length > 0) {
       const next = nextQueue.shift() as T;
-      this.observer.notify(next);
+      observer.notify(next);
       __yield();
     }
   };

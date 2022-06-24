@@ -149,10 +149,11 @@ export const distinctUntilChanged: <T>(options?: {
       const prevCurrent = hadCurrent ? this.current : none;
 
       try {
-        while (this.delegate.move()) {
+        const { delegate } = this;
+        while (delegate.move()) {
           if (
             !hadCurrent ||
-            !this.equality(prevCurrent as any, this.delegate.current)
+            !this.equality(prevCurrent as any, delegate.current)
           ) {
             break;
           }
@@ -216,9 +217,11 @@ export const map: <TA, TB>(
     move(): boolean {
       this.reset();
 
-      if (this.delegate.move()) {
+      const { delegate } = this;
+
+      if (delegate.move()) {
         try {
-          this.current = this.mapper(this.delegate.current);
+          this.current = this.mapper(delegate.current);
         } catch (cause) {
           pipe(this, dispose({ cause }));
         }

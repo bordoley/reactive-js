@@ -37,8 +37,9 @@ class FlattenSink<T> extends Sink<RunnableLike<T>> {
   }
 
   notify(next: RunnableLike<T>) {
-    const concatSink = createDelegatingSink(this.delegate);
-    addDisposableDisposeParentOnChildError(this.delegate, concatSink);
+    const { delegate } = this;
+    const concatSink = createDelegatingSink(delegate);
+    addDisposableDisposeParentOnChildError(delegate, concatSink);
 
     next.sink(concatSink);
     concatSink.dispose();

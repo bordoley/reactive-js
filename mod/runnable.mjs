@@ -111,8 +111,9 @@ class FlattenSink extends Sink {
         this.delegate = delegate;
     }
     notify(next) {
-        const concatSink = createDelegatingSink(this.delegate);
-        addDisposableDisposeParentOnChildError(this.delegate, concatSink);
+        const { delegate } = this;
+        const concatSink = createDelegatingSink(delegate);
+        addDisposableDisposeParentOnChildError(delegate, concatSink);
         next.sink(concatSink);
         concatSink.dispose();
     }

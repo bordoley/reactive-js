@@ -32,8 +32,9 @@ class SchedulerContinuationImpl
       let error: Option<Error> = none;
       let yieldError: Option<YieldError> = none;
 
+      const { scheduler } = this;
       const oldCurrentScheduler = currentScheduler;
-      currentScheduler = this.scheduler;
+      currentScheduler = scheduler;
       try {
         this.f();
       } catch (cause) {
@@ -46,7 +47,7 @@ class SchedulerContinuationImpl
       currentScheduler = oldCurrentScheduler;
 
       if (isSome(yieldError)) {
-        this.scheduler.schedule(this, yieldError);
+        scheduler.schedule(this, yieldError);
       } else {
         pipe(this, dispose(error));
       }

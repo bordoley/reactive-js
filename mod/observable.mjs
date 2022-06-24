@@ -242,22 +242,26 @@ class ObservableContext {
         }
         else {
             pipe(effect.subscription, dispose());
-            const subscription = pipe(observable, subscribe(this.observer.scheduler, next => {
+            const { observer, runComputation } = this;
+            const { scheduler } = observer;
+            const subscription = pipe(observable, subscribe(observer.scheduler, next => {
                 effect.value = next;
                 effect.hasValue = true;
                 if (this.mode === "combine-latest") {
-                    this.runComputation();
+                    runComputation();
                 }
                 else {
-                    const { scheduledComputationSubscription } = this;
-                    this.scheduledComputationSubscription =
+                    let { scheduledComputationSubscription } = this;
+                    scheduledComputationSubscription =
                         scheduledComputationSubscription.isDisposed
-                            ? pipe(this.observer.scheduler, schedule(this.runComputation))
+                            ? pipe(scheduler, schedule(runComputation))
                             : scheduledComputationSubscription;
-                    addDisposableDisposeParentOnChildError(this.observer, this.scheduledComputationSubscription);
+                    this.scheduledComputationSubscription =
+                        scheduledComputationSubscription;
+                    addDisposableDisposeParentOnChildError(observer, scheduledComputationSubscription);
                 }
             }));
-            addDisposableDisposeParentOnChildError(this.observer, subscription);
+            addDisposableDisposeParentOnChildError(observer, subscription);
             addOnDisposedWithoutErrorTeardown(subscription, this.cleanup);
             effect.observable = observable;
             effect.subscription = subscription;
@@ -498,9 +502,10 @@ class ObserverDelegatingDispatcher extends AbstractDisposable {
         this.observer = observer;
         this.continuation = () => {
             const { nextQueue } = this;
+            const { observer } = this;
             while (nextQueue.length > 0) {
                 const next = nextQueue.shift();
-                this.observer.notify(next);
+                observer.notify(next);
                 __yield();
             }
         };
@@ -1431,7 +1436,7 @@ class ZipObserverEnumerator extends AbstractEnumerator {
         super();
         this.buffer = [];
         addTeardown(this, () => {
-            //this.buffer.length = 0;
+            this.buffer.length = 0;
         });
     }
     move() {
@@ -1458,18 +1463,19 @@ class ZipObserver extends Observer {
         super(delegate.scheduler);
         this.delegate = delegate;
         this.enumerators = enumerators;
-        this.enumerator = new ZipObserverEnumerator();
-        addDisposableDisposeParentOnChildError(delegate, this.enumerator);
+        const enumerator = new ZipObserverEnumerator();
+        this.enumerator = enumerator;
+        addDisposableDisposeParentOnChildError(delegate, enumerator);
     }
     notify(next) {
         this.assertState();
-        const { enumerators } = this;
+        const { enumerator, enumerators } = this;
         if (!this.isDisposed) {
-            if (this.enumerator.hasCurrent) {
-                this.enumerator.buffer.push(next);
+            if (enumerator.hasCurrent) {
+                enumerator.buffer.push(next);
             }
             else {
-                this.enumerator.current = next;
+                enumerator.current = next;
             }
             if (shouldEmit(enumerators)) {
                 const next = pipe(enumerators, map$1(current));
@@ -1490,10 +1496,10 @@ class ZipObservable extends AbstractObservable {
     }
     sink(observer) {
         var _a;
-        const observables = this.observables;
+        const { observables } = this;
         const count = observables.length;
         if (this.isEnumerable) {
-            const observable = using(defer$1(this.observables, map$1(enumerate)), (...enumerators) => pipe(enumerators, zipEnumerators, returns, fromEnumerator()));
+            const observable = using(defer$1(observables, map$1(enumerate)), (...enumerators) => pipe(enumerators, zipEnumerators, returns, fromEnumerator()));
             pipe(observable, sinkInto(observer));
         }
         else {

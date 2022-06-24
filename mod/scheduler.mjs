@@ -99,8 +99,9 @@ class SchedulerContinuationImpl extends AbstractDisposable {
         if (!this.isDisposed) {
             let error = none;
             let yieldError = none;
+            const { scheduler } = this;
             const oldCurrentScheduler = currentScheduler;
-            currentScheduler = this.scheduler;
+            currentScheduler = scheduler;
             try {
                 this.f();
             }
@@ -114,7 +115,7 @@ class SchedulerContinuationImpl extends AbstractDisposable {
             }
             currentScheduler = oldCurrentScheduler;
             if (isSome(yieldError)) {
-                this.scheduler.schedule(this, yieldError);
+                scheduler.schedule(this, yieldError);
             }
             else {
                 pipe(this, dispose(error));
@@ -239,11 +240,11 @@ class PriorityScheduler extends AbstractSerialDisposable {
             current !== next &&
             next.dueTime <= this.now &&
             next.priority < current.priority;
-        const { yieldRequested } = this;
-        if (this.inContinuation) {
+        const { inContinuation, yieldRequested } = this;
+        if (inContinuation) {
             this.yieldRequested = false;
         }
-        return (this.inContinuation &&
+        return (inContinuation &&
             (yieldRequested ||
                 this.isDisposed ||
                 this.isPaused ||
@@ -274,13 +275,13 @@ class PriorityScheduler extends AbstractSerialDisposable {
                 : Number.MAX_SAFE_INTEGER;
         addDisposable(this, continuation);
         if (!continuation.isDisposed) {
-            const { now } = this;
+            const { current, now } = this;
             const dueTime = Math.max(now + delay, now);
             const task = this.inContinuation &&
-                isSome(this.current) &&
-                this.current.continuation === continuation &&
+                isSome(current) &&
+                current.continuation === continuation &&
                 delay <= 0
-                ? this.current
+                ? current
                 : {
                     taskID: this.taskIDCounter++,
                     continuation,
@@ -427,11 +428,11 @@ class HostScheduler extends AbstractDisposable {
         return now();
     }
     get shouldYield() {
-        const { yieldRequested } = this;
-        if (this.inContinuation) {
+        const { inContinuation, yieldRequested } = this;
+        if (inContinuation) {
             this.yieldRequested = false;
         }
-        return (this.inContinuation &&
+        return (inContinuation &&
             (yieldRequested ||
                 this.now > this.startTime + this.yieldInterval ||
                 inputIsPending()));
@@ -504,12 +505,12 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable {
         this.taskQueue = createPriorityQueue(comparator);
     }
     get shouldYield() {
-        const { yieldRequested } = this;
-        if (this.inContinuation) {
+        const { inContinuation, yieldRequested } = this;
+        if (inContinuation) {
             this.microTaskTicks++;
             this.yieldRequested = false;
         }
-        return (this.inContinuation &&
+        return (inContinuation &&
             (yieldRequested || this.microTaskTicks >= this.maxMicroTaskTicks));
     }
     requestYield() {
