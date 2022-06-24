@@ -22,9 +22,12 @@
 - [createDecodeWithCharsetOperator](source.md#createdecodewithcharsetoperator)
 - [createDistinctUntilChangedOperator](source.md#createdistinctuntilchangedoperator)
 - [createEverySatisfyOperator](source.md#createeverysatisfyoperator)
+- [createFromDisposable](source.md#createfromdisposable)
 - [createKeepOperator](source.md#createkeepoperator)
 - [createMapOperator](source.md#createmapoperator)
+- [createNever](source.md#createnever)
 - [createOnNotifyOperator](source.md#createonnotifyoperator)
+- [createOnSink](source.md#createonsink)
 - [createPairwiseOperator](source.md#createpairwiseoperator)
 - [createReduceOperator](source.md#createreduceoperator)
 - [createScanOperator](source.md#createscanoperator)
@@ -198,6 +201,46 @@ ___
 
 ___
 
+### createFromDisposable
+
+▸ **createFromDisposable**<`C`\>(`m`): <T\>(`disposable`: [`DisposableLike`](../interfaces/disposable.DisposableLike.md)) => [`ContainerOf`](container.md#containerof)<`C`, `T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`CreateSource`](../interfaces/source.CreateSource.md)<`C`\> |
+
+#### Returns
+
+`fn`
+
+▸ <`T`\>(`disposable`): [`ContainerOf`](container.md#containerof)<`C`, `T`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `disposable` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+
+##### Returns
+
+[`ContainerOf`](container.md#containerof)<`C`, `T`\>
+
+___
+
 ### createKeepOperator
 
 ▸ **createKeepOperator**<`C`\>(`m`, `KeepSink`): <T_1\>(`predicate`: [`Predicate`](functions.md#predicate)<`T_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
@@ -281,6 +324,40 @@ ___
 
 ___
 
+### createNever
+
+▸ **createNever**<`C`\>(`m`): <T\>() => [`ContainerOf`](container.md#containerof)<`C`, `T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`CreateSource`](../interfaces/source.CreateSource.md)<`C`\> |
+
+#### Returns
+
+`fn`
+
+▸ <`T`\>(): [`ContainerOf`](container.md#containerof)<`C`, `T`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+##### Returns
+
+[`ContainerOf`](container.md#containerof)<`C`, `T`\>
+
+___
+
 ### createOnNotifyOperator
 
 ▸ **createOnNotifyOperator**<`C`\>(`m`, `OnNotifySink`): <T_1\>(`onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
@@ -319,6 +396,46 @@ ___
 ##### Returns
 
 [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+___
+
+### createOnSink
+
+▸ **createOnSink**<`C`\>(`m`): <T\>(`f`: [`Factory`](functions.md#factory)<`void` \| [`DisposableOrTeardown`](disposable.md#disposableorteardown)\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T`, `T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`CreateSource`](../interfaces/source.CreateSource.md)<`C`\> |
+
+#### Returns
+
+`fn`
+
+▸ <`T`\>(`f`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T`, `T`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Factory`](functions.md#factory)<`void` \| [`DisposableOrTeardown`](disposable.md#disposableorteardown)\> |
+
+##### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T`, `T`\>
 
 ___
 

@@ -1,5 +1,5 @@
 import { Container, ContainerOf, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
-import { DisposableLike } from "./disposable.mjs";
+import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Function1, Equality, Predicate, Reducer, Factory } from "./functions.mjs";
 import { LiftedStateLike, LiftableLike, Lift as Lift$1, LiftedStateOf, AbstractLiftable, AbstractDisposableLiftable } from "./liftable.mjs";
 import { Option } from "./option.mjs";
@@ -120,5 +120,8 @@ declare const createThrowIfEmptyOperator: <C extends SourceLike>(m: Lift<C>, Thr
     readonly delegate: LiftedStateOf<C, T>;
     isEmpty: boolean;
 }) => <T_1>(factory: Factory<unknown>) => ContainerOperator<C, T_1, T_1>;
+declare const createFromDisposable: <C extends SourceLike>(m: CreateSource<C>) => <T>(disposable: DisposableLike) => ContainerOf<C, T>;
+declare const createNever: <C extends SourceLike>(m: CreateSource<C>) => <T>() => ContainerOf<C, T>;
+declare const createOnSink: <C extends SourceLike>(m: CreateSource<C>) => <T>(f: Factory<DisposableOrTeardown | void>) => ContainerOperator<C, T, T>;
 declare const createUsing: <C extends SourceLike>(m: CreateSource<C>) => <TResource extends DisposableLike, T>(resourceFactory: Factory<TResource | readonly TResource[]>, sourceFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>) => ContainerOf<C, T>;
-export { AbstractDisposableSource, AbstractSource, CreateSource, Lift, SinkLike, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };
+export { AbstractDisposableSource, AbstractSource, CreateSource, Lift, SinkLike, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };

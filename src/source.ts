@@ -8,11 +8,13 @@ import {
 } from "./container";
 import {
   DisposableLike,
+  DisposableOrTeardown,
   addDisposable,
   addDisposableDisposeParentOnChildError,
   addOnDisposedWithErrorTeardown,
   addOnDisposedWithoutError,
   addOnDisposedWithoutErrorTeardown,
+  addTeardown,
   dispose,
 } from "./disposable";
 import {
@@ -23,6 +25,7 @@ import {
   Reducer,
   SideEffect1,
   compose,
+  ignore,
   negate,
   pipe,
 } from "./functions";
@@ -652,6 +655,32 @@ export const createThrowIfEmptyOperator = <C extends SourceLike>(
 
   return createThrowIfEmptyLiftedOperator(m, ThrowIfEmptySink);
 };
+
+export const createFromDisposable =
+  <C extends SourceLike>(m: CreateSource<C>) =>
+  <T>(disposable: DisposableLike): ContainerOf<C, T> =>
+    m.create(sink => {
+      addDisposableDisposeParentOnChildError(disposable, sink);
+    });
+
+export const createNever = <C extends SourceLike>(m: CreateSource<C>) => {
+  const neverInstance: ContainerOf<C, any> = m.create(ignore);
+  return <T>(): ContainerOf<C, T> => neverInstance;
+};
+
+export const createOnSink =
+  <C extends SourceLike>(m: CreateSource<C>) =>
+  <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<C, T, T> =>
+  src =>
+    m.create(sink => {
+      pipe(src, sinkInto(sink));
+      const disposable = f() || none;
+      if (disposable instanceof Function) {
+        addTeardown(sink, disposable);
+      } else if (isSome(disposable)) {
+        addDisposableDisposeParentOnChildError(sink, disposable);
+      }
+    });
 
 export const createUsing =
   <C extends SourceLike>(m: CreateSource<C>) =>

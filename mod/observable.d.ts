@@ -1,4 +1,4 @@
-import { AbstractDisposableContainer, Concat, FromArray, FromIterator, FromIterable, Using, Map, ConcatAll, Repeat, TakeFirst, Zip, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Keep, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeLast, TakeWhile, ThrowIfEmpty } from "./container.mjs";
+import { AbstractDisposableContainer, Concat, FromArray, FromIterator, FromIterable, ContainerOperator, Using, Map, ConcatAll, Repeat, TakeFirst, Zip, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Keep, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeLast, TakeWhile, ThrowIfEmpty } from "./container.mjs";
 import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Predicate, Equality, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
@@ -199,7 +199,6 @@ declare const fromArrayT: FromArray<ObservableLike<unknown>, {
     readonly startIndex: number;
     readonly endIndex: number;
 }>;
-declare const fromDisposable: (disposable: DisposableLike) => ObservableLike<unknown>;
 /**
  * Creates an `ObservableLike` which enumerates through the values
  * produced by the provided `Enumerable` with a specified `delay` between emitted items.
@@ -256,10 +255,8 @@ declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>, opt
  */
 declare function merge<T>(fst: ObservableLike<T>, snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): ObservableLike<T>;
 declare const mergeT: Concat<ObservableLike<unknown>>;
-/**
- * Returna an `ObservableLike` instance that emits no items and never disposes its observer.
- */
 declare const never: <T>() => ObservableLike<T>;
+declare const onSubscribe: <T>(f: Factory<void | DisposableOrTeardown>) => ContainerOperator<ObservableLike<unknown>, T, T>;
 /**
  * Safely subscribes to an `ObservableLike` with a `ObserverLike` instance
  * using the provided scheduler. The returned `DisposableLike`
@@ -334,11 +331,6 @@ declare const exhaustT: ConcatAll<ObservableLike<unknown>, Record<string, never>
  * @param onNotify The function that is invoked when the observable source produces values.
  */
 declare const onNotify: <T>(onNotify: SideEffect1<T>) => ObservableOperator<T, T>;
-/**
- * Executes a side-effect when the observable is subscribed.
- * @param f
- */
-declare const onSubscribe: <T>(f: Factory<DisposableOrTeardown | void>) => ObservableOperator<T, T>;
 /**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
  *
@@ -538,6 +530,7 @@ declare type ObservableEffectMode = "batched" | "combine-latest";
  */
 declare type ThrottleMode = "first" | "last" | "interval";
 declare const catchError: <T>(onError: Function1<unknown, ObservableLike<T> | void>) => ObservableOperator<T, T>;
+declare const fromDisposable: <T>(disposable: DisposableLike) => ObservableLike<T>;
 declare const decodeWithCharset: (charset?: string) => ObservableOperator<ArrayBuffer, string>;
 declare const decodeWithCharsetT: DecodeWithCharset<ObservableLike<unknown>>;
 /**

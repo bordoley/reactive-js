@@ -21,6 +21,7 @@ import {
   Predicate,
   Reducer,
 } from "./functions";
+import { createT } from "./observable/createObservable";
 import { fromArrayT } from "./observable/fromArray";
 import { liftSynchronousT } from "./observable/lift";
 import { Observer } from "./observable/observer";
@@ -31,6 +32,7 @@ import {
   createDecodeWithCharsetOperator,
   createDistinctUntilChangedOperator,
   createEverySatisfyOperator,
+  createFromDisposable,
   createKeepOperator,
   createPairwiseOperator,
   createReduceOperator,
@@ -130,7 +132,6 @@ export { concat, concatT } from "./observable/concat";
 export { createObservable, createT } from "./observable/createObservable";
 export { createSubject } from "./observable/createSubject";
 export { fromArray, fromArrayT } from "./observable/fromArray";
-export { fromDisposable } from "./observable/fromDisposable";
 export { fromEnumerable } from "./observable/fromEnumerable";
 export {
   fromIterable,
@@ -142,6 +143,7 @@ export { fromPromise } from "./observable/fromPromise";
 export { generate } from "./observable/generate";
 export { merge, mergeT } from "./observable/merge";
 export { never } from "./observable/never";
+export { onSubscribe } from "./observable/onSubscribe";
 export { subscribe } from "./observable/subscribe";
 export { using, usingT } from "./observable/using";
 export { defer } from "./observable/defer";
@@ -162,7 +164,6 @@ export {
   mergeAllT,
 } from "./observable/mergeAll";
 export { onNotify } from "./observable/onNotify";
-export { onSubscribe } from "./observable/onSubscribe";
 export { publish } from "./observable/publish";
 export { repeat, repeatT, retry } from "./observable/repeat";
 export { scanAsync } from "./observable/scanAsync";
@@ -191,6 +192,8 @@ export const catchError: <T>(
     }
   },
 );
+
+export const fromDisposable = createFromDisposable(createT);
 
 export const decodeWithCharset: (
   charset?: string,

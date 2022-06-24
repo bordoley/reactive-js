@@ -1,7 +1,7 @@
 /// <reference types="./source.d.ts" />
 import { fromValue, empty } from './container.mjs';
-import { addDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown, dispose, addDisposableDisposeParentOnChildError, addOnDisposedWithoutErrorTeardown } from './disposable.mjs';
-import { pipe, compose, negate } from './functions.mjs';
+import { addDisposable, addOnDisposedWithoutError, addOnDisposedWithErrorTeardown, dispose, addDisposableDisposeParentOnChildError, addOnDisposedWithoutErrorTeardown, addTeardown } from './disposable.mjs';
+import { pipe, compose, negate, ignore } from './functions.mjs';
 import { AbstractLiftable, AbstractDisposableLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
 import { none, isSome } from './option.mjs';
 
@@ -224,6 +224,23 @@ const createThrowIfEmptyOperator = (m, ThrowIfEmptySink) => {
     };
     return createThrowIfEmptyLiftedOperator(m, ThrowIfEmptySink);
 };
+const createFromDisposable = (m) => (disposable) => m.create(sink => {
+    addDisposableDisposeParentOnChildError(disposable, sink);
+});
+const createNever = (m) => {
+    const neverInstance = m.create(ignore);
+    return () => neverInstance;
+};
+const createOnSink = (m) => (f) => src => m.create(sink => {
+    pipe(src, sinkInto(sink));
+    const disposable = f() || none;
+    if (disposable instanceof Function) {
+        addTeardown(sink, disposable);
+    }
+    else if (isSome(disposable)) {
+        addDisposableDisposeParentOnChildError(sink, disposable);
+    }
+});
 const createUsing = (m) => (resourceFactory, sourceFactory) => m.create(sink => {
     const resources = resourceFactory();
     const resourcesArray = Array.isArray(resources) ? resources : [resources];
@@ -234,4 +251,4 @@ const createUsing = (m) => (resourceFactory, sourceFactory) => m.create(sink => 
     pipe(source, sinkInto(sink));
 });
 
-export { AbstractDisposableSource, AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };
+export { AbstractDisposableSource, AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };

@@ -1447,7 +1447,13 @@ ___
 
 ### fromDisposable
 
-▸ **fromDisposable**(`disposable`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
+▸ **fromDisposable**<`T`\>(`disposable`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters
 
@@ -1457,7 +1463,7 @@ ___
 
 #### Returns
 
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
 ___
 
@@ -1720,8 +1726,6 @@ ___
 
 ▸ **never**<`T`\>(): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
-Returna an `ObservableLike` instance that emits no items and never disposes its observer.
-
 #### Type parameters
 
 | Name |
@@ -1784,9 +1788,7 @@ ___
 
 ### onSubscribe
 
-▸ **onSubscribe**<`T`\>(`f`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
-
-Executes a side-effect when the observable is subscribed.
+▸ **onSubscribe**<`T`\>(`f`): [`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -1802,7 +1804,7 @@ Executes a side-effect when the observable is subscribed.
 
 #### Returns
 
-[`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 
