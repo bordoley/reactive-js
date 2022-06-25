@@ -1,4 +1,4 @@
-import { addDisposableDisposeParentOnChildError, bindTo } from "../disposable";
+import { addChildAndDisposeOnError, bindTo } from "../disposable";
 import { Function1, pipe } from "../functions";
 import {
   ObservableLike,
@@ -25,7 +25,6 @@ export const flow =
         const pausableScheduler = toPausableScheduler(
           scheduler ?? observer.scheduler,
         );
-        addDisposableDisposeParentOnChildError(observer, pausableScheduler);
 
         const onModeChange = (mode: FlowMode) => {
           switch (mode) {
@@ -38,12 +37,17 @@ export const flow =
           }
         };
 
-        const modeSubscription = pipe(
-          modeObs,
-          subscribe(observer.scheduler, onModeChange),
-          bindTo(pausableScheduler),
+        pipe(
+          observer,
+          addChildAndDisposeOnError(
+            pipe(
+              modeObs,
+              subscribe(observer.scheduler, onModeChange),
+              bindTo(pausableScheduler),
+            ),
+          ),
+          addChildAndDisposeOnError(pausableScheduler),
         );
-        addDisposableDisposeParentOnChildError(observer, modeSubscription);
 
         pipe(
           observable,

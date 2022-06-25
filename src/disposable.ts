@@ -143,6 +143,13 @@ export const addChildAndDisposeOnError =
     return parent;
   };
 
+export const addToParentAndDisposeOnError =
+  <T extends DisposableLike>(parent: DisposableLike): Function1<T, T> =>
+  (child: T): T => {
+    addDisposableDisposeParentOnChildError(parent, child);
+    return child;
+  };
+
 /**
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
  */

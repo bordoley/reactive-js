@@ -2,9 +2,9 @@ import { ConcatAll } from "../container";
 import {
   Error,
   addDisposable,
-  addDisposableDisposeParentOnChildError,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
+  addToParentAndDisposeOnError,
   dispose,
   disposed,
 } from "../disposable";
@@ -37,8 +37,11 @@ class SwitchObserver<T> extends Observer<ObservableLike<T>> {
 
     pipe(this.inner, dispose());
 
-    const inner = pipe(next, subscribe(this.scheduler, onNotify, this));
-    addDisposableDisposeParentOnChildError(this.delegate, inner);
+    const inner = pipe(
+      next,
+      subscribe(this.scheduler, onNotify, this),
+      addToParentAndDisposeOnError(this.delegate),
+    );
     addOnDisposedWithoutErrorTeardown(inner, () => {
       if (this.isDisposed) {
         pipe(this.delegate, dispose());

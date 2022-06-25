@@ -1,5 +1,5 @@
 import {
-  addDisposableDisposeParentOnChildError,
+  addChildAndDisposeOnError,
   addOnDisposedWithoutErrorTeardown,
   dispose,
 } from "../disposable";
@@ -80,9 +80,11 @@ export const zipWithLatestFrom = <TA, TB, T>(
         pipe(delegate, dispose());
       }
     };
-
-    addDisposableDisposeParentOnChildError(delegate, observer);
-    addDisposableDisposeParentOnChildError(delegate, otherSubscription);
+    pipe(
+      delegate,
+      addChildAndDisposeOnError(observer),
+      addChildAndDisposeOnError(otherSubscription),
+    );
 
     addOnDisposedWithoutErrorTeardown(observer, disposeDelegate);
     addOnDisposedWithoutErrorTeardown(otherSubscription, disposeDelegate);

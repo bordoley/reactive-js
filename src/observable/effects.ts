@@ -2,8 +2,8 @@ import { empty } from "../container";
 import {
   DisposableLike,
   Error,
-  addDisposableDisposeParentOnChildError,
   addOnDisposedWithoutErrorTeardown,
+  addToParentAndDisposeOnError,
   dispose,
   disposed,
 } from "../disposable";
@@ -190,20 +190,18 @@ class ObservableContext {
           } else {
             let { scheduledComputationSubscription } = this;
 
-            scheduledComputationSubscription =
-              scheduledComputationSubscription.isDisposed
-                ? pipe(scheduler, schedule(runComputation))
-                : scheduledComputationSubscription;
             this.scheduledComputationSubscription =
-              scheduledComputationSubscription;
-            addDisposableDisposeParentOnChildError(
-              observer,
-              scheduledComputationSubscription,
-            );
+              scheduledComputationSubscription.isDisposed
+                ? pipe(
+                    scheduler,
+                    schedule(runComputation),
+                    addToParentAndDisposeOnError(observer),
+                  )
+                : scheduledComputationSubscription;
           }
         }),
+        addToParentAndDisposeOnError(observer),
       );
-      addDisposableDisposeParentOnChildError(observer, subscription);
       addOnDisposedWithoutErrorTeardown(subscription, this.cleanup);
 
       effect.observable = observable;
@@ -222,8 +220,10 @@ class ObservableContext {
     } else {
       pipe(effect.value, dispose());
 
-      const value = f(...args);
-      addDisposableDisposeParentOnChildError(this.observer, value);
+      const value = pipe(
+        f(...args),
+        addToParentAndDisposeOnError(this.observer),
+      );
 
       effect.f = f;
       effect.args = args;

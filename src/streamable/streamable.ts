@@ -1,5 +1,5 @@
 import { empty as emptyContainer } from "../container";
-import { addDisposableDisposeParentOnChildError, bindTo } from "../disposable";
+import { addChildAndDisposeOnError, bindTo } from "../disposable";
 import { Function1, compose, pipe } from "../functions";
 import {
   ObservableOperator,
@@ -60,15 +60,19 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
     createObservable(observer => {
       const { scheduler } = observer;
       const srcStream = pipe(src, stream(scheduler));
-      addDisposableDisposeParentOnChildError(observer, srcStream);
 
-      const requestSubscription = pipe(
-        requests,
-        map((compose as any)(...reqOps)),
-        subscribe(scheduler, srcStream.dispatch, srcStream),
-        bindTo(srcStream),
+      pipe(
+        observer,
+        addChildAndDisposeOnError(srcStream),
+        addChildAndDisposeOnError(
+          pipe(
+            requests,
+            map((compose as any)(...reqOps)),
+            subscribe(scheduler, srcStream.dispatch, srcStream),
+            bindTo(srcStream),
+          ),
+        ),
       );
-      addDisposableDisposeParentOnChildError(observer, requestSubscription);
 
       pipe(srcStream, (compose as any)(...obsOps), sinkInto(observer));
     });

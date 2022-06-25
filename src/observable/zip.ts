@@ -1,6 +1,6 @@
 import { Zip } from "../container";
 import {
-  addDisposableDisposeParentOnChildError,
+  addChildAndDisposeOnError,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
   dispose,
@@ -76,16 +76,12 @@ function onDisposed(this: ZipObserver) {
 }
 
 class ZipObserver extends Observer<unknown> {
-  readonly enumerator: ZipObserverEnumerator;
   constructor(
     readonly delegate: Observer<readonly unknown[]>,
     private readonly enumerators: readonly Enumerator<any>[],
+    readonly enumerator: ZipObserverEnumerator,
   ) {
     super(delegate.scheduler);
-
-    const enumerator = new ZipObserverEnumerator();
-    this.enumerator = enumerator;
-    addDisposableDisposeParentOnChildError(delegate, enumerator);
   }
 
   notify(next: unknown) {
@@ -146,9 +142,19 @@ const _zip = (
           enumerator.move();
           enumerators.push(enumerator);
         } else {
-          const innerObserver = new ZipObserver(observer, enumerators);
-          addDisposableDisposeParentOnChildError(observer, innerObserver);
+          const enumerator = new ZipObserverEnumerator();
+          const innerObserver = new ZipObserver(
+            observer,
+            enumerators,
+            enumerator,
+          );
           addOnDisposedWithoutErrorTeardown(innerObserver, onDisposed);
+
+          pipe(
+            observer,
+            addChildAndDisposeOnError(enumerator),
+            addChildAndDisposeOnError(innerObserver),
+          );
 
           pipe(next, sinkInto(innerObserver));
           enumerators.push(innerObserver.enumerator);

@@ -14,6 +14,7 @@ import {
   addOnDisposedWithErrorTeardown,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
+  addToParentAndDisposeOnError,
   dispose,
 } from "./disposable";
 import {
@@ -173,9 +174,11 @@ export const createDecodeWithCharsetOperator = <C extends SourceLike>(
       delegate: LiftedStateOf<C, string>,
     ): LiftedStateOf<C, ArrayBuffer> => {
       const textDecoder = new TextDecoder(charset, { fatal: true });
-      const sink = new DecodeWithCharsetSink(delegate, textDecoder);
+      const sink = pipe(
+        new DecodeWithCharsetSink(delegate, textDecoder),
+        addToParentAndDisposeOnError(delegate),
+      );
 
-      addDisposableDisposeParentOnChildError(delegate, sink);
       addOnDisposedWithoutErrorTeardown(sink, () => {
         const data = textDecoder.decode();
 
@@ -260,8 +263,10 @@ const createSatisfyOperator = <C extends SourceLike>(
     const operator = (
       delegate: LiftedStateOf<C, boolean>,
     ): LiftedStateOf<C, T> => {
-      const sink = new SatisfySink(delegate, predicate);
-      addDisposableDisposeParentOnChildError(delegate, sink);
+      const sink = pipe(
+        new SatisfySink(delegate, predicate),
+        addToParentAndDisposeOnError(delegate),
+      );
       addOnDisposedWithoutErrorTeardown(sink, () => {
         if (!delegate.isDisposed) {
           pipe(defaultResult, fromValue(m), sinkInto(delegate));
@@ -428,8 +433,10 @@ export const createReduceOperator = <C extends SourceLike>(
     const operator = (
       delegate: LiftedStateOf<C, TAcc>,
     ): LiftedStateOf<C, T> => {
-      const sink = new ReduceSink(delegate, reducer, initialValue());
-      addDisposableDisposeParentOnChildError(delegate, sink);
+      const sink = pipe(
+        new ReduceSink(delegate, reducer, initialValue()),
+        addToParentAndDisposeOnError(delegate),
+      );
       addOnDisposedWithoutErrorTeardown(sink, () => {
         pipe(sink.acc, fromValue(m), sinkInto(delegate));
       });
@@ -583,8 +590,10 @@ export const createTakeLastOperator = <C extends SourceLike>(
     const { count = 1 } = options;
 
     const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const sink = new TakeLastSink(delegate, count);
-      addDisposableDisposeParentOnChildError(delegate, sink);
+      const sink = pipe(
+        new TakeLastSink(delegate, count),
+        addToParentAndDisposeOnError(delegate),
+      );
       addOnDisposedWithoutErrorTeardown(sink, () => {
         pipe(sink.last, m.fromArray(), sinkInto(delegate));
       });
@@ -664,9 +673,7 @@ export const createThrowIfEmptyOperator = <C extends SourceLike>(
 export const createFromDisposable =
   <C extends SourceLike>(m: CreateSource<C>) =>
   <T>(disposable: DisposableLike): ContainerOf<C, T> =>
-    m.create(sink => {
-      addDisposableDisposeParentOnChildError(disposable, sink);
-    });
+    m.create(addToParentAndDisposeOnError(disposable));
 
 export const createNever = <C extends SourceLike>(m: CreateSource<C>) => {
   const neverInstance: ContainerOf<C, any> = m.create(ignore);

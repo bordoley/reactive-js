@@ -1,6 +1,6 @@
 import {
   addDisposable,
-  addDisposableDisposeParentOnChildError,
+  addToParentAndDisposeOnError,
   dispose,
 } from "../disposable";
 import {
@@ -88,9 +88,11 @@ class EnumeratorObserver<T> extends Observer<T> {
 
 export const enumerate = <T>(obs: ObservableLike<T>): Enumerator<T> => {
   const scheduler = new EnumeratorScheduler<T>();
-  const observer = new EnumeratorObserver<T>(scheduler);
 
-  addDisposableDisposeParentOnChildError(scheduler, observer);
+  const observer = pipe(
+    new EnumeratorObserver<T>(scheduler),
+    addToParentAndDisposeOnError(scheduler),
+  );
 
   pipe(obs, sinkInto(observer));
 
