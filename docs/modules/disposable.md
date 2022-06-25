@@ -34,7 +34,6 @@
 - [addOnDisposedWithoutError](disposable.md#addondisposedwithouterror)
 - [addOnDisposedWithoutErrorTeardown](disposable.md#addondisposedwithouterrorteardown)
 - [addTeardown](disposable.md#addteardown)
-- [bindDisposables](disposable.md#binddisposables)
 - [bindTo](disposable.md#bindto)
 - [createDisposable](disposable.md#createdisposable)
 - [createDisposableValue](disposable.md#createdisposablevalue)
@@ -207,26 +206,6 @@ Add `teardown` to `parent`, invoking `teardown` when `parent` is disposed.
 | :------ | :------ |
 | `parent` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 | `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Option`](option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>\> |
-
-#### Returns
-
-`void`
-
-___
-
-### bindDisposables
-
-▸ **bindDisposables**(`a`, `b`): `void`
-
-Bind the provided disposables such that if either disposable is disposed,
-it disposes the other.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `b` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 
 #### Returns
 

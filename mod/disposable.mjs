@@ -40,14 +40,6 @@ const addOnDisposedWithoutErrorTeardown = (parent, teardown) => {
         }
     });
 };
-/**
- * Bind the provided disposables such that if either disposable is disposed,
- * it disposes the other.
- */
-const bindDisposables = (a, b) => {
-    addDisposable(a, b);
-    addDisposable(b, a);
-};
 const toDisposeOnErrorTeardown = (disposable) => (error) => {
     if (isSome(error)) {
         pipe(disposable, dispose(error));
@@ -77,7 +69,8 @@ const addOnDisposedWithoutError = (parent, child) => {
     });
 };
 const bindTo = (child) => (parent) => {
-    bindDisposables(parent, child);
+    addDisposable(parent, child);
+    addDisposable(child, parent);
     return parent;
 };
 const addChildAndDisposeOnError = (child) => (parent) => {
@@ -224,4 +217,4 @@ const toAbortSignal = (disposable) => {
     return abortController.signal;
 };
 
-export { AbstractDisposable, AbstractSerialDisposable, addChildAndDisposeOnError, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addOnDisposedWithoutError, addOnDisposedWithoutErrorTeardown, addTeardown, bindDisposables, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, toAbortSignal, toErrorHandler };
+export { AbstractDisposable, AbstractSerialDisposable, addChildAndDisposeOnError, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addOnDisposedWithoutError, addOnDisposedWithoutErrorTeardown, addTeardown, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, toAbortSignal, toErrorHandler };

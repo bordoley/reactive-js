@@ -99,15 +99,6 @@ export const addOnDisposedWithoutErrorTeardown = (
   });
 };
 
-/**
- * Bind the provided disposables such that if either disposable is disposed,
- * it disposes the other.
- */
-export const bindDisposables = (a: DisposableLike, b: DisposableLike) => {
-  addDisposable(a, b);
-  addDisposable(b, a);
-};
-
 const toDisposeOnErrorTeardown =
   (disposable: DisposableLike): SideEffect1<Option<Error>> =>
   (error?: Error) => {
@@ -154,7 +145,8 @@ export const addOnDisposedWithoutError = (
 export const bindTo =
   <T extends DisposableLike>(child: DisposableLike): Function1<T, T> =>
   (parent: T): T => {
-    bindDisposables(parent, child);
+    addDisposable(parent, child);
+    addDisposable(child, parent);
     return parent;
   };
 

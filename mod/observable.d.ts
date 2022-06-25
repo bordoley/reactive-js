@@ -392,7 +392,6 @@ declare const takeFirst: <T>(options?: {
     readonly count?: number;
 }) => ObservableOperator<T, T>;
 declare const takeFirstT: TakeFirst<ObservableLike<unknown>>;
-declare const takeUntil: <T>(notifier: ObservableLike<unknown>) => ObservableOperator<T, T>;
 /**
  * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
  *
@@ -566,6 +565,7 @@ declare const takeLast: <T>(options?: {
     readonly count?: number;
 }) => ObservableOperator<T, T>;
 declare const takeLastT: TakeLast<ObservableLike<unknown>>;
+declare const takeUntil: <T>(notifier: ObservableLike<unknown>) => ObservableOperator<T, T>;
 /**
  * Returns an `ObservableLike` which emits values emitted by the source as long
  * as each value satisfies the given predicate, and then completes as soon as

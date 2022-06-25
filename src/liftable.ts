@@ -225,7 +225,7 @@ export const createTakeFirstLiftdOperator =
   <T>(
     options: { readonly count?: number } = {},
   ): ContainerOperator<C, T, T> => {
-    const { count = 1 } = options;
+    const { count = Math.max(options.count ?? 1, 0) } = options;
     const operator: LiftOperator<C, T, T, typeof m> = delegate =>
       pipe(new TakeFirstLiftableState(delegate, count), bindTo(delegate));
     return source => (count > 0 ? pipe(source, m.lift(operator)) : empty(m));
