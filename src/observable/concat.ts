@@ -1,7 +1,7 @@
 import { Concat } from "../container";
 import {
-  addDisposableDisposeParentOnChildError,
   addOnDisposedWithoutErrorTeardown,
+  addToParentAndDisposeOnError,
   dispose,
 } from "../disposable";
 import { pipe } from "../functions";
@@ -16,8 +16,10 @@ const createConcatObserver = <T>(
   observables: readonly ObservableLike<T>[],
   next: number,
 ) => {
-  const observer = createDelegatingObserver(delegate);
-  addDisposableDisposeParentOnChildError(delegate, observer);
+  const observer = pipe(
+    createDelegatingObserver(delegate),
+    addToParentAndDisposeOnError(delegate),
+  );
   addOnDisposedWithoutErrorTeardown(observer, () => {
     if (next < observables.length) {
       const concatObserver = createConcatObserver(

@@ -2,8 +2,8 @@ import { fromValue } from "../container";
 import {
   Error,
   SerialDisposableLike,
+  addChildAndDisposeOnError,
   addDisposable,
-  addDisposableDisposeParentOnChildError,
   addTeardown,
   createSerialDisposable,
   dispose,
@@ -94,14 +94,16 @@ export function buffer<T>(
   const maxBufferSize = options.maxBufferSize ?? Number.MAX_SAFE_INTEGER;
   const operator = (delegate: Observer<readonly T[]>) => {
     const durationSubscription = createSerialDisposable();
-    const observer = new BufferObserver(
-      delegate,
-      durationFunction,
-      maxBufferSize,
-      durationSubscription,
+    const observer = pipe(
+      new BufferObserver(
+        delegate,
+        durationFunction,
+        maxBufferSize,
+        durationSubscription,
+      ),
+      addChildAndDisposeOnError(durationSubscription),
     );
     addDisposable(delegate, observer);
-    addDisposableDisposeParentOnChildError(observer, durationSubscription);
     addTeardown(observer, onDispose);
     return observer;
   };

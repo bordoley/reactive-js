@@ -1,10 +1,12 @@
 import { ignoreElements, startWith } from "../container";
-import { addDisposableDisposeParentOnChildError } from "../disposable";
-import { Factory, Reducer, pipe } from "../functions";
+import {
+  addChildAndDisposeOnError,
+  addToParentAndDisposeOnError,
+} from "../disposable";
+import { Factory, Reducer, compose, pipe } from "../functions";
 import {
   AbstractDisposableObservable,
   MulticastObservableLike,
-  ObservableLike,
   Observer,
   StreamLike,
   concatT,
@@ -43,9 +45,11 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
     scheduler: SchedulerLike,
     options?: { readonly replay: number },
   ): StreamLike<T, FlowMode> {
-    const result = pipe(this.streamable, stream(scheduler, options));
-    addDisposableDisposeParentOnChildError(this, result);
-    return result;
+    return pipe(
+      this.streamable,
+      stream(scheduler, options),
+      addToParentAndDisposeOnError(this),
+    );
   }
 }
 
@@ -57,20 +61,17 @@ export const createFlowableSinkAccumulator = <T, TAcc>(
 ): FlowableSinkLike<T> & MulticastObservableLike<TAcc> => {
   const subject = createSubject(options);
 
-  const op = (events: ObservableLike<T>): ObservableLike<FlowMode> =>
-    pipe(
-      events,
+  const sinkAcc = pipe(
+    compose(
       reduce(reducer, initialValue),
       onNotify(dispatchTo(subject)),
       ignoreElements(keepT),
       startWith({ ...concatT, ...fromArrayT }, "pause", "resume"),
-    );
-
-  const streamable = createStreamable(op);
-
-  const sinkAcc = new FlowableSinkAccumulatorImpl(subject, streamable);
-
-  addDisposableDisposeParentOnChildError(sinkAcc, subject);
+    ),
+    createStreamable,
+    streamable => new FlowableSinkAccumulatorImpl(subject, streamable),
+    addChildAndDisposeOnError(subject),
+  );
 
   return sinkAcc;
 };

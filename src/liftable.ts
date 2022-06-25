@@ -9,9 +9,10 @@ import {
 } from "./container";
 import {
   DisposableLike,
+  addChildAndDisposeOnError,
   addDisposable,
-  addDisposableDisposeParentOnChildError,
   addTeardown,
+  addToParentAndDisposeOnError,
   bindTo,
   dispose,
 } from "./disposable";
@@ -246,13 +247,12 @@ export const createTakeWhileLiftedOperator =
   ): ContainerOperator<C, T, T> => {
     const { inclusive = false } = options;
     const operator: LiftOperator<C, T, T, typeof m> = delegate => {
-      const lifted = new TakeWhileLiftableState(delegate, predicate, inclusive);
-      const { parent, child } =
+      const lifted = pipe(
+        new TakeWhileLiftableState(delegate, predicate, inclusive),
         m.variance === "covariant"
-          ? { parent: lifted, child: delegate }
-          : { parent: delegate, child: lifted };
-
-      addDisposableDisposeParentOnChildError(parent, child);
+          ? addChildAndDisposeOnError(delegate)
+          : addToParentAndDisposeOnError(delegate),
+      );
 
       return lifted;
     };

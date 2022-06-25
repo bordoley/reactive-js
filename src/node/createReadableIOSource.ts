@@ -3,7 +3,7 @@ import { Readable } from "stream";
 import {
   DisposableValueLike,
   addDisposable,
-  addDisposableDisposeParentOnChildError,
+  addToParentAndDisposeOnError,
   dispose,
 } from "../disposable";
 import { Factory, pipe } from "../functions";
@@ -18,14 +18,13 @@ export const createReadableIOSource = (
     createObservable(observer => {
       const { dispatcher } = observer;
 
-      const readable = factory();
+      const readable = pipe(factory(), addToParentAndDisposeOnError(observer));
       const readableValue = readable.value;
       readableValue.pause();
 
-      addDisposableDisposeParentOnChildError(observer, readable);
       addDisposable(readable, dispatcher);
 
-      const modeSubscription = pipe(
+      pipe(
         mode,
         subscribe(observer.scheduler, ev => {
           switch (ev) {
@@ -37,8 +36,8 @@ export const createReadableIOSource = (
               break;
           }
         }),
+        addToParentAndDisposeOnError(observer),
       );
-      addDisposableDisposeParentOnChildError(observer, modeSubscription);
 
       const onData = dispatchTo(dispatcher);
       const onEnd = () => {

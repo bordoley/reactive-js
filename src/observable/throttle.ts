@@ -2,8 +2,8 @@ import { fromValue } from "../container";
 import {
   Error,
   SerialDisposableLike,
+  addChildAndDisposeOnError,
   addDisposable,
-  addDisposableDisposeParentOnChildError,
   addTeardown,
   createSerialDisposable,
   dispose,
@@ -123,9 +123,8 @@ export function throttle<T>(
       durationSubscription,
     );
     addDisposable(delegate, observer);
-    addDisposableDisposeParentOnChildError(observer, durationSubscription);
     addTeardown(observer, onDispose);
-    return observer;
+    return pipe(observer, addChildAndDisposeOnError(durationSubscription));
   };
   return lift(operator);
 }

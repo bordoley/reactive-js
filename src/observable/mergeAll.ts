@@ -2,9 +2,9 @@ import { ConcatAll } from "../container";
 import {
   Error,
   addDisposable,
-  addDisposableDisposeParentOnChildError,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
+  addToParentAndDisposeOnError,
   dispose,
 } from "../disposable";
 import { pipe } from "../functions";
@@ -24,16 +24,13 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
       const nextObsSubscription = pipe(
         nextObs,
         subscribe(observer.scheduler, observer.onNotify),
+        addToParentAndDisposeOnError(observer.delegate),
       );
       addDisposable(observer.delegate, nextObsSubscription);
 
       addOnDisposedWithoutErrorTeardown(
         nextObsSubscription,
         observer.onDispose,
-      );
-      addDisposableDisposeParentOnChildError(
-        observer.delegate,
-        nextObsSubscription,
       );
     } else if (observer.isDisposed) {
       pipe(observer.delegate, dispose());

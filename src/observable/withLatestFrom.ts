@@ -1,6 +1,6 @@
 import {
-  addDisposableDisposeParentOnChildError,
   addOnDisposedWithoutErrorTeardown,
+  addToParentAndDisposeOnError,
   bindTo,
   dispose,
 } from "../disposable";
@@ -61,8 +61,8 @@ export const withLatestFrom = <TA, TB, T>(
     const otherSubscription = pipe(
       other,
       subscribe(observer.scheduler, onNotify, observer),
+      addToParentAndDisposeOnError(observer),
     );
-    addDisposableDisposeParentOnChildError(observer, otherSubscription);
     addOnDisposedWithoutErrorTeardown(otherSubscription, () => {
       if (!observer.hasLatest) {
         pipe(observer, dispose());

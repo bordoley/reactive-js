@@ -1,6 +1,6 @@
 /// <reference types="./enumerable.d.ts" />
 import { AbstractDisposableContainer, empty } from './container.mjs';
-import { addTeardown, createSerialDisposable, bindTo, addChildAndDisposeOnError, addDisposableDisposeParentOnChildError, dispose } from './disposable.mjs';
+import { addTeardown, createSerialDisposable, bindTo, addChildAndDisposeOnError, addToParentAndDisposeOnError, addDisposableDisposeParentOnChildError, dispose } from './disposable.mjs';
 import { raise, pipe, alwaysTrue, identity } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
@@ -266,15 +266,13 @@ class RepeatEnumerator extends Enumerator {
     }
     move() {
         if (isNone(this.enumerator)) {
-            this.enumerator = enumerate(this.src);
-            addDisposableDisposeParentOnChildError(this, this.enumerator);
+            this.enumerator = pipe(enumerate(this.src), addToParentAndDisposeOnError(this));
         }
         while (!this.enumerator.move()) {
             this.count++;
             try {
                 if (this.shouldRepeat(this.count)) {
-                    this.enumerator = enumerate(this.src);
-                    addDisposableDisposeParentOnChildError(this, this.enumerator);
+                    this.enumerator = pipe(enumerate(this.src), addToParentAndDisposeOnError(this));
                 }
                 else {
                     break;
@@ -352,8 +350,7 @@ const takeLastT = {
 
 const enumeratorToRunnable = (f) => {
     const run = (sink) => {
-        const enumerator = f();
-        addDisposableDisposeParentOnChildError(enumerator, sink);
+        const enumerator = pipe(f(), addChildAndDisposeOnError(sink));
         while (enumerator.move()) {
             sink.notify(enumerator.current);
         }

@@ -1,5 +1,5 @@
 import { concatWith, fromValue } from "../container";
-import { addDisposableDisposeParentOnChildError, bindTo } from "../disposable";
+import { addToParentAndDisposeOnError, bindTo } from "../disposable";
 import {
   Equality,
   Factory,
@@ -91,8 +91,11 @@ export const toStateStore =
       createObservable(observer => {
         const { scheduler } = observer;
 
-        const stream = pipe(streamable, streamStreamable(scheduler));
-        addDisposableDisposeParentOnChildError(observer, stream);
+        const stream = pipe(
+          streamable,
+          streamStreamable(scheduler),
+          addToParentAndDisposeOnError(observer),
+        );
 
         pipe(
           updates,

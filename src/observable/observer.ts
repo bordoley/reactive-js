@@ -3,9 +3,9 @@ import {
   AbstractDisposable,
   Error,
   addDisposable,
-  addDisposableDisposeParentOnChildError,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
+  addToParentAndDisposeOnError,
   dispose,
 } from "../disposable";
 import { __DEV__ } from "../env";
@@ -21,8 +21,8 @@ const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
     const continuationSubcription = pipe(
       observer.scheduler,
       schedule(dispatcher.continuation),
+      addToParentAndDisposeOnError(observer),
     );
-    addDisposableDisposeParentOnChildError(observer, continuationSubcription);
     addOnDisposedWithoutErrorTeardown(
       continuationSubcription,
       dispatcher.onContinuationDispose,
