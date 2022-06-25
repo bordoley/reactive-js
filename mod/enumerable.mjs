@@ -1,10 +1,10 @@
 /// <reference types="./enumerable.d.ts" />
 import { AbstractDisposableContainer, empty } from './container.mjs';
-import { addTeardown, createSerialDisposable, bindTo, addChildAndDisposeOnError, addToParentAndDisposeOnError, addDisposableDisposeParentOnChildError, dispose } from './disposable.mjs';
+import { addTeardown, createSerialDisposable, bindTo, addChildAndDisposeOnError, addToParentAndDisposeOnError, dispose, addDisposableDisposeParentOnChildError } from './disposable.mjs';
 import { raise, pipe, alwaysTrue, identity } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
-import { everySatisfy, map as map$1, empty as empty$1 } from './readonlyArray.mjs';
+import { everySatisfy, map as map$1, forEach, empty as empty$1 } from './readonlyArray.mjs';
 import { createRunnable } from './runnable.mjs';
 
 class Enumerator extends AbstractDisposableContainer {
@@ -409,9 +409,7 @@ class ZipEnumerator extends AbstractEnumerator {
 }
 const zipEnumerators = (enumerators) => {
     const enumerator = new ZipEnumerator(enumerators);
-    for (const delegate of enumerators) {
-        addDisposableDisposeParentOnChildError(enumerator, delegate);
-    }
+    pipe(enumerators, forEach(addToParentAndDisposeOnError(enumerator)));
     return enumerator;
 };
 /**

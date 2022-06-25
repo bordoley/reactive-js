@@ -1,7 +1,5 @@
-import {
-  addDisposable,
-  addDisposableDisposeParentOnChildError,
-} from "../disposable";
+import { addDisposable, addToParentAndDisposeOnError } from "../disposable";
+import { pipe } from "../functions";
 import { RunnableLike, RunnableOperator } from "../runnable";
 import { createRunnable } from "./createRunnable";
 import { lift } from "./lift";
@@ -22,8 +20,10 @@ export function concat<T>(
   return createRunnable((sink: Sink<T>) => {
     const runnablesLength = runnables.length;
     for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
-      const concatSink = createDelegatingSink(sink);
-      addDisposableDisposeParentOnChildError(sink, concatSink);
+      const concatSink = pipe(
+        createDelegatingSink(sink),
+        addToParentAndDisposeOnError(sink),
+      );
 
       runnables[i].sink(concatSink);
       concatSink.dispose();
@@ -38,8 +38,10 @@ class FlattenSink<T> extends Sink<RunnableLike<T>> {
 
   notify(next: RunnableLike<T>) {
     const { delegate } = this;
-    const concatSink = createDelegatingSink(delegate);
-    addDisposableDisposeParentOnChildError(delegate, concatSink);
+    const concatSink = pipe(
+      createDelegatingSink(delegate),
+      addToParentAndDisposeOnError(delegate),
+    );
 
     next.sink(concatSink);
     concatSink.dispose();

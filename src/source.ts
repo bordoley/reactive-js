@@ -10,12 +10,12 @@ import {
   DisposableLike,
   DisposableOrTeardown,
   addDisposable,
-  addDisposableDisposeParentOnChildError,
   addOnDisposedWithErrorTeardown,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
   addToParentAndDisposeOnError,
   dispose,
+  addChildAndDisposeOnError,
 } from "./disposable";
 import {
   Equality,
@@ -48,6 +48,7 @@ import {
   createThrowIfEmptyLiftedOperator,
 } from "./liftable";
 import { Option, isNone, isSome, none } from "./option";
+import { forEach } from "./readonlyArray";
 
 export interface SinkLike<T> extends LiftedStateLike {
   assertState(this: SinkLike<T>): void;
@@ -690,7 +691,7 @@ export const createOnSink =
       if (disposable instanceof Function) {
         addTeardown(sink, disposable);
       } else if (isSome(disposable)) {
-        addDisposableDisposeParentOnChildError(sink, disposable);
+        pipe(sink, addChildAndDisposeOnError(disposable));
       }
     });
 
@@ -701,12 +702,11 @@ export const createUsing =
     sourceFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>,
   ): ContainerOf<C, T> =>
     m.create<T>(sink => {
-      const resources = resourceFactory();
-      const resourcesArray = Array.isArray(resources) ? resources : [resources];
-      const source = sourceFactory(...resourcesArray);
-
-      for (const r of resourcesArray) {
-        addDisposableDisposeParentOnChildError(sink, r);
-      }
-      pipe(source, sinkInto(sink));
+      pipe(
+        resourceFactory(),
+        resources => (Array.isArray(resources) ? resources : [resources]),
+        forEach(addToParentAndDisposeOnError(sink)),
+        (resources: readonly TResource[]) => sourceFactory(...resources),
+        sinkInto(sink),
+      );
     });

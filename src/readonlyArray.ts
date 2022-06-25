@@ -3,6 +3,7 @@ import {
   Function1,
   Predicate,
   Reducer,
+  SideEffect1,
   TypePredicate,
 } from "./functions";
 
@@ -65,3 +66,10 @@ export const reduceRight =
   ): Function1<readonly T[], TAcc> =>
   arr =>
     arr.reduceRight(reducer, initialValue());
+
+export const forEach =
+  <T>(f: SideEffect1<T>): Function1<readonly T[], readonly T[]> =>
+  arr => {
+    arr.forEach(f);
+    return arr;
+  };

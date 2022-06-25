@@ -15,6 +15,7 @@
 ### Functions
 
 - [everySatisfy](readonlyArray.md#everysatisfy)
+- [forEach](readonlyArray.md#foreach)
 - [fromObject](readonlyArray.md#fromobject)
 - [join](readonlyArray.md#join)
 - [keep](readonlyArray.md#keep)
@@ -64,6 +65,28 @@
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], `boolean`\>
+
+___
+
+### forEach
+
+▸ **forEach**<`T`\>(`f`): [`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
 
 ___
 

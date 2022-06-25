@@ -4,6 +4,7 @@ import { addDisposable, addTeardown, dispose, addOnDisposedWithErrorTeardown, ad
 import { pipe, compose, negate, ignore } from './functions.mjs';
 import { AbstractLiftable, AbstractDisposableLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
 import { isNone, none, isSome } from './option.mjs';
+import { forEach } from './readonlyArray.mjs';
 
 class AbstractSource extends AbstractLiftable {
 }
@@ -240,13 +241,7 @@ const createOnSink = (m) => (f) => src => m.create(sink => {
     }
 });
 const createUsing = (m) => (resourceFactory, sourceFactory) => m.create(sink => {
-    const resources = resourceFactory();
-    const resourcesArray = Array.isArray(resources) ? resources : [resources];
-    const source = sourceFactory(...resourcesArray);
-    for (const r of resourcesArray) {
-        addDisposableDisposeParentOnChildError(sink, r);
-    }
-    pipe(source, sinkInto(sink));
+    pipe(resourceFactory(), resources => (Array.isArray(resources) ? resources : [resources]), forEach(addToParentAndDisposeOnError(sink)), (resources) => sourceFactory(...resources), sinkInto(sink));
 });
 
 export { AbstractDisposableSource, AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };
