@@ -56,6 +56,14 @@ const bindTo = (child) => (parent) => {
     addDisposable(child, parent);
     return parent;
 };
+const addChild = (child) => parent => {
+    addDisposable(parent, child);
+    return parent;
+};
+const addToParent = (parent) => child => {
+    addDisposable(parent, child);
+    return child;
+};
 const addDisposableDisposeParentOnChildError = (parent, child) => {
     addDisposable(parent, child);
     addOnDisposedWithError(child, parent);
@@ -208,4 +216,4 @@ const toAbortSignal = (disposable) => {
     return abortController.signal;
 };
 
-export { AbstractDisposable, AbstractSerialDisposable, addChildAndDisposeOnError, addDisposable, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addOnDisposedWithoutErrorTeardown, addTeardown, addToParentAndDisposeOnError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, toAbortSignal, toErrorHandler };
+export { AbstractDisposable, AbstractSerialDisposable, addChild, addChildAndDisposeOnError, addDisposable, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addOnDisposedWithoutErrorTeardown, addTeardown, addToParent, addToParentAndDisposeOnError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, toAbortSignal, toErrorHandler };

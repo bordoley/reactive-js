@@ -1,6 +1,6 @@
 /// <reference types="./observable.d.ts" />
 import { AbstractDisposableContainer, empty, fromValue, throws, concatMap } from './container.mjs';
-import { addToParentAndDisposeOnError, dispose, addOnDisposedWithoutErrorTeardown, AbstractDisposable, addTeardown, addDisposable, disposed, createSerialDisposable, addChildAndDisposeOnError, bindTo, toErrorHandler } from './disposable.mjs';
+import { addToParentAndDisposeOnError, dispose, addOnDisposedWithoutErrorTeardown, AbstractDisposable, addToParent, addTeardown, disposed, addDisposable, createSerialDisposable, addChildAndDisposeOnError, bindTo, toErrorHandler } from './disposable.mjs';
 import { pipe, raise, ignore, arrayEquality, defer as defer$1, compose, returns } from './functions.mjs';
 import { AbstractSource, AbstractDisposableSource, sinkInto, createMapOperator, createTakeFirstOperator, createUsing, createNever, createOnSink, createOnNotifyOperator, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
@@ -172,9 +172,8 @@ class Observer extends AbstractDisposableContainer {
     }
     get dispatcher() {
         if (isNone(this._dispatcher)) {
-            const dispatcher = new ObserverDelegatingDispatcher(this);
+            const dispatcher = pipe(new ObserverDelegatingDispatcher(this), addToParent(this));
             addTeardown(dispatcher, onDispose$5);
-            addDisposable(this, dispatcher);
             this._dispatcher = dispatcher;
         }
         return this._dispatcher;
@@ -227,16 +226,15 @@ class DefaultObserver extends Observer {
 }
 function subscribe(scheduler, onNotify = ignore, onNotifyThis = none) {
     return (observable) => {
-        const observer = new DefaultObserver(scheduler, onNotify, onNotifyThis);
-        addDisposable(scheduler, observer);
+        const observer = pipe(new DefaultObserver(scheduler, onNotify, onNotifyThis), addToParent(scheduler));
         pipe(observable, sinkInto(observer));
         return observer;
     };
 }
 
-function onDispose$4(error) {
-    if (isSome(error) || this.inner.isDisposed) {
-        pipe(this.delegate, dispose(error));
+function onDispose$4() {
+    if (this.inner.isDisposed) {
+        pipe(this.delegate, dispose());
     }
 }
 function onNotify$4(next) {
@@ -261,9 +259,8 @@ class SwitchObserver extends Observer {
     }
 }
 const operator = (delegate) => {
-    const observer = new SwitchObserver(delegate);
-    addDisposable(delegate, observer);
-    addTeardown(observer, onDispose$4);
+    const observer = pipe(new SwitchObserver(delegate), addToParentAndDisposeOnError(delegate));
+    addOnDisposedWithoutErrorTeardown(observer, onDispose$4);
     return observer;
 };
 const switchAllInstance = lift(operator);
@@ -537,9 +534,8 @@ const latest = (observables, mode) => {
             readyCount: 0,
         };
         for (const observable of observables) {
-            const innerObserver = new LatestObserver(delegate, ctx, mode);
+            const innerObserver = pipe(new LatestObserver(delegate, ctx, mode), addToParent(delegate));
             addTeardown(innerObserver, onDispose$3);
-            addDisposable(delegate, innerObserver);
             observers.push(innerObserver);
             pipe(observable, sinkInto(innerObserver));
         }
@@ -812,8 +808,7 @@ function buffer(options = {}) {
     const maxBufferSize = (_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : Number.MAX_SAFE_INTEGER;
     const operator = (delegate) => {
         const durationSubscription = createSerialDisposable();
-        const observer = pipe(new BufferObserver(delegate, durationFunction, maxBufferSize, durationSubscription), addChildAndDisposeOnError(durationSubscription));
-        addDisposable(delegate, observer);
+        const observer = pipe(new BufferObserver(delegate, durationFunction, maxBufferSize, durationSubscription), addChildAndDisposeOnError(durationSubscription), addToParent(delegate));
         addTeardown(observer, onDispose$2);
         return observer;
     };
@@ -825,8 +820,7 @@ const subscribeNext = (observer) => {
         const nextObs = observer.queue.shift();
         if (isSome(nextObs)) {
             observer.activeCount++;
-            const nextObsSubscription = pipe(nextObs, subscribe(observer.scheduler, observer.onNotify), addToParentAndDisposeOnError(observer.delegate));
-            addDisposable(observer.delegate, nextObsSubscription);
+            const nextObsSubscription = pipe(nextObs, subscribe(observer.scheduler, observer.onNotify), addToParentAndDisposeOnError(observer.delegate), addToParent(observer.delegate));
             addOnDisposedWithoutErrorTeardown(nextObsSubscription, observer.onDispose);
         }
         else if (observer.isDisposed) {
@@ -877,8 +871,7 @@ class MergeObserver extends Observer {
 const mergeAll = (options = {}) => {
     const { maxBufferSize = Number.MAX_SAFE_INTEGER, maxConcurrency = Number.MAX_SAFE_INTEGER, } = options;
     const operator = (delegate) => {
-        const observer = new MergeObserver(delegate, maxBufferSize, maxConcurrency);
-        addDisposable(delegate, observer);
+        const observer = pipe(new MergeObserver(delegate, maxBufferSize, maxConcurrency), addToParent(delegate));
         addTeardown(observer, onDispose$1);
         addTeardown(delegate, () => {
             observer.queue.length = 0;
@@ -941,8 +934,7 @@ const publish = (scheduler, options) => observable => {
 };
 
 const createRepeatObserver = (delegate, observable, shouldRepeat) => {
-    const observer = createDelegatingObserver(delegate);
-    addDisposable(delegate, observer);
+    const observer = pipe(createDelegatingObserver(delegate), addToParent(delegate));
     let count = 1;
     const onDispose = (error) => {
         let shouldComplete = false;
@@ -958,8 +950,7 @@ const createRepeatObserver = (delegate, observable, shouldRepeat) => {
         }
         else {
             count++;
-            const subscription = pipe(observable, subscribe(delegate.scheduler, delegate.notify, delegate));
-            addDisposable(delegate, subscription);
+            const subscription = pipe(observable, subscribe(delegate.scheduler, delegate.notify, delegate), addToParent(delegate));
             addTeardown(subscription, onDispose);
         }
     };
@@ -1085,12 +1076,9 @@ const share = (scheduler, options) => source => {
 const setupDurationSubscription$1 = (observer, next) => {
     observer.durationSubscription.inner = pipe(observer.durationFunction(next), subscribe(observer.scheduler, observer.onNotify));
 };
-function onDispose(e) {
-    if (isNone(e) && this.mode !== "first" && this.hasValue) {
+function onDispose() {
+    if (this.mode !== "first" && this.hasValue) {
         pipe(this.value, fromValue(fromArrayT), sinkInto(this.delegate));
-    }
-    else {
-        pipe(this.delegate, dispose(e));
     }
 }
 class ThrottleObserver extends Observer {
@@ -1132,9 +1120,8 @@ function throttle(duration, options = {}) {
         : duration;
     const operator = (delegate) => {
         const durationSubscription = createSerialDisposable();
-        const observer = new ThrottleObserver(delegate, durationFunction, mode, durationSubscription);
-        addDisposable(delegate, observer);
-        addTeardown(observer, onDispose);
+        const observer = pipe(new ThrottleObserver(delegate, durationFunction, mode, durationSubscription), addToParentAndDisposeOnError(delegate));
+        addOnDisposedWithoutErrorTeardown(observer, onDispose);
         return pipe(observer, addChildAndDisposeOnError(durationSubscription));
     };
     return lift(operator);

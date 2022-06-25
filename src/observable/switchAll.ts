@@ -1,23 +1,19 @@
 import { ConcatAll } from "../container";
 import {
-  Error,
-  addDisposable,
   addOnDisposedWithoutErrorTeardown,
-  addTeardown,
   addToParentAndDisposeOnError,
   dispose,
   disposed,
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Option, isSome } from "../option";
 import { lift } from "./lift";
 import { Observer } from "./observer";
 import { subscribe } from "./subscribe";
 
-function onDispose(this: SwitchObserver<unknown>, error: Option<Error>) {
-  if (isSome(error) || this.inner.isDisposed) {
-    pipe(this.delegate, dispose(error));
+function onDispose(this: SwitchObserver<unknown>) {
+  if (this.inner.isDisposed) {
+    pipe(this.delegate, dispose());
   }
 }
 
@@ -53,9 +49,11 @@ class SwitchObserver<T> extends Observer<ObservableLike<T>> {
 }
 
 const operator = <T>(delegate: Observer<T>) => {
-  const observer = new SwitchObserver(delegate);
-  addDisposable(delegate, observer);
-  addTeardown(observer, onDispose);
+  const observer = pipe(
+    new SwitchObserver(delegate),
+    addToParentAndDisposeOnError(delegate),
+  );
+  addOnDisposedWithoutErrorTeardown(observer, onDispose);
   return observer;
 };
 

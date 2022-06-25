@@ -9,9 +9,10 @@ import {
 } from "./container";
 import {
   DisposableLike,
+  addChild,
   addChildAndDisposeOnError,
-  addDisposable,
   addTeardown,
+  addToParent,
   addToParentAndDisposeOnError,
   bindTo,
   dispose,
@@ -270,13 +271,15 @@ export const createThrowIfEmptyLiftedOperator =
   ) =>
   <T>(factory: Factory<unknown>) => {
     const operator: LiftOperator<C, T, T, typeof m> = delegate => {
-      const lifted = new ThrowIfEmptyLiftableState(delegate);
+      const lifted = pipe(
+        new ThrowIfEmptyLiftableState(delegate),
+        m.variance === "covariant" ? addChild(delegate) : addToParent(delegate),
+      );
       const { parent, child } =
         m.variance === "covariant"
           ? { parent: lifted, child: delegate }
           : { parent: delegate, child: lifted };
 
-      addDisposable(parent, child);
       addTeardown(child, error => {
         if (isNone(error) && lifted.isEmpty) {
           let cause: unknown = none;

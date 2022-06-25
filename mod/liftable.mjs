@@ -1,6 +1,6 @@
 /// <reference types="./liftable.d.ts" />
 import { AbstractContainer, AbstractDisposableContainer, empty } from './container.mjs';
-import { bindTo, addChildAndDisposeOnError, addToParentAndDisposeOnError, addDisposable, addTeardown, dispose } from './disposable.mjs';
+import { bindTo, addChildAndDisposeOnError, addToParentAndDisposeOnError, addChild, addToParent, addTeardown, dispose } from './disposable.mjs';
 import { raise, strictEquality, pipe } from './functions.mjs';
 import { isNone, none } from './option.mjs';
 
@@ -62,11 +62,10 @@ const createTakeWhileLiftedOperator = (m, TakeWhileLiftableState) => (predicate,
 };
 const createThrowIfEmptyLiftedOperator = (m, ThrowIfEmptyLiftableState) => (factory) => {
     const operator = delegate => {
-        const lifted = new ThrowIfEmptyLiftableState(delegate);
+        const lifted = pipe(new ThrowIfEmptyLiftableState(delegate), m.variance === "covariant" ? addChild(delegate) : addToParent(delegate));
         const { parent, child } = m.variance === "covariant"
             ? { parent: lifted, child: delegate }
             : { parent: delegate, child: lifted };
-        addDisposable(parent, child);
         addTeardown(child, error => {
             if (isNone(error) && lifted.isEmpty) {
                 let cause = none;

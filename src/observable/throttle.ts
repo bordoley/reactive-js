@@ -1,12 +1,10 @@
 import { fromValue } from "../container";
 import {
-  Error,
   SerialDisposableLike,
   addChildAndDisposeOnError,
-  addDisposable,
-  addTeardown,
+  addOnDisposedWithoutErrorTeardown,
+  addToParentAndDisposeOnError,
   createSerialDisposable,
-  dispose,
 } from "../disposable";
 import { Function1, pipe } from "../functions";
 import {
@@ -14,7 +12,7 @@ import {
   ObservableOperator,
   ThrottleMode,
 } from "../observable";
-import { Option, isNone, none } from "../option";
+import { Option, none } from "../option";
 import { sinkInto } from "../source";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
@@ -32,11 +30,9 @@ const setupDurationSubscription = <T>(
   );
 };
 
-function onDispose(this: ThrottleObserver<unknown>, e: Option<Error>) {
-  if (isNone(e) && this.mode !== "first" && this.hasValue) {
+function onDispose(this: ThrottleObserver<unknown>) {
+  if (this.mode !== "first" && this.hasValue) {
     pipe(this.value, fromValue(fromArrayT), sinkInto(this.delegate));
-  } else {
-    pipe(this.delegate, dispose(e));
   }
 }
 
@@ -116,14 +112,16 @@ export function throttle<T>(
       : duration;
   const operator = (delegate: Observer<T>) => {
     const durationSubscription = createSerialDisposable();
-    const observer = new ThrottleObserver(
-      delegate,
-      durationFunction,
-      mode,
-      durationSubscription,
+    const observer = pipe(
+      new ThrottleObserver(
+        delegate,
+        durationFunction,
+        mode,
+        durationSubscription,
+      ),
+      addToParentAndDisposeOnError(delegate),
     );
-    addDisposable(delegate, observer);
-    addTeardown(observer, onDispose);
+    addOnDisposedWithoutErrorTeardown(observer, onDispose);
     return pipe(observer, addChildAndDisposeOnError(durationSubscription));
   };
   return lift(operator);

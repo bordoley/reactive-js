@@ -1,5 +1,4 @@
 import { AbstractDisposableContainer } from "../container";
-import { addDisposable } from "../disposable";
 import { __DEV__ } from "../env";
 import { raise } from "../functions";
 import { SinkLike } from "../source";
@@ -30,8 +29,5 @@ class DelegatingSink<T> extends Sink<T> {
   }
 }
 
-export const createDelegatingSink = <T>(delegate: Sink<T>): Sink<T> => {
-  const sink = new DelegatingSink(delegate);
-  addDisposable(delegate, sink);
-  return sink;
-};
+export const createDelegatingSink = <T>(delegate: Sink<T>): Sink<T> =>
+  new DelegatingSink(delegate);

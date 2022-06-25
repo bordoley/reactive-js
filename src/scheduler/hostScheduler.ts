@@ -3,10 +3,11 @@ import {
   DisposableLike,
   addDisposable,
   addTeardown,
+  addToParentAndDisposeOnError,
   createDisposable,
   disposed,
 } from "../disposable";
-import { Factory, alwaysFalse } from "../functions";
+import { Factory, alwaysFalse, pipe } from "../functions";
 import { Option, isSome, none } from "../option";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
 import { run } from "./schedulerContinuation";
@@ -41,7 +42,10 @@ const scheduleImmediateWithSetImmediate = (
   scheduler: HostScheduler,
   continuation: SchedulerContinuationLike,
 ) => {
-  const disposable = createDisposable();
+  const disposable = pipe(
+    createDisposable(),
+    addToParentAndDisposeOnError(continuation),
+  );
   const immmediate = setImmediate(
     runContinuation,
     scheduler,
@@ -50,7 +54,6 @@ const scheduleImmediateWithSetImmediate = (
   );
 
   addTeardown(disposable, () => clearImmediate(immmediate));
-  addDisposable(continuation, disposable);
 };
 
 const scheduleImmediateWithMessageChannel = (
@@ -68,7 +71,10 @@ const scheduleDelayed = (
   continuation: SchedulerContinuationLike,
   delay: number,
 ) => {
-  const disposable = createDisposable();
+  const disposable = pipe(
+    createDisposable(),
+    addToParentAndDisposeOnError(continuation),
+  );
   const timeout = setTimeout(
     runContinuation,
     delay,
@@ -78,7 +84,6 @@ const scheduleDelayed = (
   );
 
   addTeardown(disposable, () => clearTimeout(timeout));
-  addDisposable(continuation, disposable);
 };
 
 const scheduleImmediate = (

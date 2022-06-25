@@ -3,8 +3,8 @@ import { ignore, pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
 import { AbstractDisposableContainer } from './container.mjs';
-import { addDisposable, addToParentAndDisposeOnError } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
+import { addToParentAndDisposeOnError, addToParent } from './disposable.mjs';
 
 class AbstractRunnable extends AbstractSource {
 }
@@ -91,11 +91,7 @@ class DelegatingSink extends Sink {
         this.delegate.notify(next);
     }
 }
-const createDelegatingSink = (delegate) => {
-    const sink = new DelegatingSink(delegate);
-    addDisposable(delegate, sink);
-    return sink;
-};
+const createDelegatingSink = (delegate) => new DelegatingSink(delegate);
 
 function concat(...runnables) {
     return createRunnable((sink) => {
@@ -119,11 +115,7 @@ class FlattenSink extends Sink {
         concatSink.dispose();
     }
 }
-const _concatAll = lift(delegate => {
-    const sink = new FlattenSink(delegate);
-    addDisposable(delegate, sink);
-    return sink;
-});
+const _concatAll = lift(delegate => pipe(new FlattenSink(delegate), addToParent(delegate)));
 const concatAll = () => _concatAll;
 
 const run = (f) => (runnable) => {
@@ -198,7 +190,7 @@ function repeat(predicate) {
     return runnable => createRunnable(sink => {
         let count = 0;
         do {
-            const delegateSink = createDelegatingSink(sink);
+            const delegateSink = pipe(createDelegatingSink(sink), addToParentAndDisposeOnError(sink));
             runnable.sink(delegateSink);
             delegateSink.dispose();
             count++;

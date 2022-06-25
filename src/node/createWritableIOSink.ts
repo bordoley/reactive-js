@@ -1,7 +1,7 @@
 import { Writable } from "stream";
 import {
   DisposableValueLike,
-  addDisposable,
+  addChild,
   addOnDisposedWithoutErrorTeardown,
   addToParentAndDisposeOnError,
   dispose,
@@ -20,10 +20,12 @@ export const createWritableIOSink = (
     createObservable(observer => {
       const { dispatcher } = observer;
 
-      const writable = pipe(factory(), addToParentAndDisposeOnError(observer));
+      const writable = pipe(
+        factory(),
+        addToParentAndDisposeOnError(observer),
+        addChild(dispatcher),
+      );
       const writableValue = writable.value;
-
-      addDisposable(writable, dispatcher);
 
       const streamEventsSubscription = pipe(
         events,

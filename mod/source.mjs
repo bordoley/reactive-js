@@ -1,6 +1,6 @@
 /// <reference types="./source.d.ts" />
 import { fromValue, empty } from './container.mjs';
-import { addDisposable, addTeardown, dispose, addOnDisposedWithErrorTeardown, addToParentAndDisposeOnError, addOnDisposedWithoutErrorTeardown, addChildAndDisposeOnError } from './disposable.mjs';
+import { addToParent, addTeardown, dispose, addOnDisposedWithErrorTeardown, addToParentAndDisposeOnError, addOnDisposedWithoutErrorTeardown, addChildAndDisposeOnError } from './disposable.mjs';
 import { pipe, compose, negate, ignore } from './functions.mjs';
 import { AbstractLiftable, AbstractDisposableLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
 import { isNone, none, isSome } from './option.mjs';
@@ -16,8 +16,7 @@ const createCatchErrorOperator = (m, CatchErrorSink) => (onError) => {
         this.delegate.notify(next);
     };
     const operator = (delegate) => {
-        const sink = new CatchErrorSink(delegate);
-        addDisposable(delegate, sink);
+        const sink = pipe(new CatchErrorSink(delegate), addToParent(delegate));
         addTeardown(sink, e => {
             if (isNone(e)) {
                 pipe(delegate, dispose());

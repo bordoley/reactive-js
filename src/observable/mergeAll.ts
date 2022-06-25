@@ -1,9 +1,9 @@
 import { ConcatAll } from "../container";
 import {
   Error,
-  addDisposable,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
+  addToParent,
   addToParentAndDisposeOnError,
   dispose,
 } from "../disposable";
@@ -25,8 +25,8 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
         nextObs,
         subscribe(observer.scheduler, observer.onNotify),
         addToParentAndDisposeOnError(observer.delegate),
+        addToParent(observer.delegate),
       );
-      addDisposable(observer.delegate, nextObsSubscription);
 
       addOnDisposedWithoutErrorTeardown(
         nextObsSubscription,
@@ -100,8 +100,10 @@ export const mergeAll = <T>(
     maxConcurrency = Number.MAX_SAFE_INTEGER,
   } = options;
   const operator = (delegate: Observer<T>) => {
-    const observer = new MergeObserver(delegate, maxBufferSize, maxConcurrency);
-    addDisposable(delegate, observer);
+    const observer = pipe(
+      new MergeObserver(delegate, maxBufferSize, maxConcurrency),
+      addToParent(delegate),
+    );
     addTeardown(observer, onDispose);
     addTeardown(delegate, () => {
       observer.queue.length = 0;
