@@ -12,7 +12,6 @@ import {
   addDisposable,
   addDisposableDisposeParentOnChildError,
   addOnDisposedWithErrorTeardown,
-  addOnDisposedWithoutError,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
   dispose,
@@ -47,7 +46,7 @@ import {
   createTakeWhileLiftedOperator,
   createThrowIfEmptyLiftedOperator,
 } from "./liftable";
-import { Option, isSome, none } from "./option";
+import { Option, isNone, isSome, none } from "./option";
 
 export interface SinkLike<T> extends LiftedStateLike {
   assertState(this: SinkLike<T>): void;
@@ -120,7 +119,13 @@ export const createCatchErrorOperator =
     const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
       const sink = new CatchErrorSink(delegate);
       addDisposable(delegate, sink);
-      addOnDisposedWithoutError(sink, delegate);
+
+      addTeardown(sink, e => {
+        if (isNone(e)) {
+          pipe(delegate, dispose());
+        }
+      });
+
       addOnDisposedWithErrorTeardown(sink, cause => {
         try {
           const result = onError(cause) || none;
