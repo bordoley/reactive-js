@@ -31,7 +31,6 @@
 - [addDisposableDisposeParentOnChildError](disposable.md#adddisposabledisposeparentonchilderror)
 - [addOnDisposedWithError](disposable.md#addondisposedwitherror)
 - [addOnDisposedWithErrorTeardown](disposable.md#addondisposedwitherrorteardown)
-- [addOnDisposedWithoutError](disposable.md#addondisposedwithouterror)
 - [addOnDisposedWithoutErrorTeardown](disposable.md#addondisposedwithouterrorteardown)
 - [addTeardown](disposable.md#addteardown)
 - [bindTo](disposable.md#bindto)
@@ -149,25 +148,6 @@ Add `teardown` to `parent` that is only invoked if `parent` is disposed with an 
 | :------ | :------ |
 | `parent` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 | `teardown` | [`SideEffect1`](functions.md#sideeffect1)<`unknown`\> |
-
-#### Returns
-
-`void`
-
-___
-
-### addOnDisposedWithoutError
-
-▸ **addOnDisposedWithoutError**(`parent`, `child`): `void`
-
-Add `child` to `parent`, only disposing child when `parent` is disposed without an error.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `parent` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `child` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 
 #### Returns
 

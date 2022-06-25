@@ -128,20 +128,6 @@ export const addDisposableDisposeParentOnChildError = (
   addOnDisposedWithError(child, parent);
 };
 
-/**
- * Add `child` to `parent`, only disposing child when `parent` is disposed without an error.
- */
-export const addOnDisposedWithoutError = (
-  parent: DisposableLike,
-  child: DisposableLike,
-) => {
-  addTeardown(parent, e => {
-    if (isNone(e)) {
-      pipe(child, dispose());
-    }
-  });
-};
-
 export const bindTo =
   <T extends DisposableLike>(child: DisposableLike): Function1<T, T> =>
   (parent: T): T => {
@@ -156,6 +142,7 @@ export const addChildAndDisposeOnError =
     addDisposableDisposeParentOnChildError(parent, child);
     return parent;
   };
+
 /**
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
  */
