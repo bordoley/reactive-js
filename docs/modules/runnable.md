@@ -54,7 +54,9 @@
 - [keep](runnable.md#keep)
 - [last](runnable.md#last)
 - [map](runnable.md#map)
+- [never](runnable.md#never)
 - [onNotify](runnable.md#onnotify)
+- [onSink](runnable.md#onsink)
 - [pairwise](runnable.md#pairwise)
 - [reduce](runnable.md#reduce)
 - [repeat](runnable.md#repeat)
@@ -485,6 +487,22 @@ ___
 
 ___
 
+### never
+
+▸ **never**<`T`\>(): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
+
+___
+
 ### onNotify
 
 ▸ **onNotify**<`T`\>(`onNotify`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
@@ -506,6 +524,28 @@ Returns an `RunnableLike` that forwards notifications to the provided `onNotify`
 #### Returns
 
 [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+
+___
+
+### onSink
+
+▸ **onSink**<`T`\>(`f`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Factory`](functions.md#factory)<`void` \| [`DisposableOrTeardown`](disposable.md#disposableorteardown)\> |
+
+#### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 

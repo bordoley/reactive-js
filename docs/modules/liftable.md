@@ -39,45 +39,45 @@
 
 ### LiftOperator
 
-Ƭ **LiftOperator**<`TA`, `TB`, `C`, `M`\>: [`Function1`](functions.md#function1)<[`LiftOperatorIn`](liftable.md#liftoperatorin)<`TA`, `TB`, `C`, `M`\>, [`LiftOperatorOut`](liftable.md#liftoperatorout)<`TA`, `TB`, `C`, `M`\>\>
+Ƭ **LiftOperator**<`C`, `TA`, `TB`, `M`\>: [`Function1`](functions.md#function1)<[`LiftOperatorIn`](liftable.md#liftoperatorin)<`C`, `TA`, `TB`, `M`\>, [`LiftOperatorOut`](liftable.md#liftoperatorout)<`C`, `TA`, `TB`, `M`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
+| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
 | `M` | extends [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"covariant"`` \| ``"contravariant"``\> |
 
 ___
 
 ### LiftOperatorIn
 
-Ƭ **LiftOperatorIn**<`TA`, `TB`, `C`, `M`\>: `M` extends { `variance?`: ``"contravariant"``  } ? [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TB`\> : [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TA`\>
+Ƭ **LiftOperatorIn**<`C`, `TA`, `TB`, `M`\>: `M` extends { `variance?`: ``"contravariant"``  } ? [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TB`\> : [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TA`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
+| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
 | `M` | extends [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"covariant"`` \| ``"contravariant"``\> |
 
 ___
 
 ### LiftOperatorOut
 
-Ƭ **LiftOperatorOut**<`TA`, `TB`, `C`, `M`\>: `M` extends { `variance?`: ``"contravariant"``  } ? [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TA`\> : [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TB`\>
+Ƭ **LiftOperatorOut**<`C`, `TA`, `TB`, `M`\>: `M` extends { `variance?`: ``"contravariant"``  } ? [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TA`\> : [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TB`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
+| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
 | `M` | extends [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"covariant"`` \| ``"contravariant"``\> |
 
 ___
@@ -196,7 +196,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
-| `MapLiftableState` | <TA, TB\>(`delegate`: [`LiftOperatorIn`](liftable.md#liftoperatorin)<`TA`, `TB`, `C`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\>, `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`LiftOperatorOut`](liftable.md#liftoperatorout)<`TA`, `TB`, `C`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\> |
+| `MapLiftableState` | <TA, TB\>(`delegate`: [`LiftOperatorIn`](liftable.md#liftoperatorin)<`C`, `TA`, `TB`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\>, `mapper`: [`Function1`](functions.md#function1)<`TA`, `TB`\>) => [`LiftOperatorOut`](liftable.md#liftoperatorout)<`C`, `TA`, `TB`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\> |
 
 #### Returns
 
@@ -281,7 +281,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
-| `PairwiseLiftableState` | <T\>(`delegate`: [`LiftOperatorIn`](liftable.md#liftoperatorin)<`T`, [[`Option`](option.md#option)<`T`\>, `T`], `C`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\>) => [`LiftOperatorOut`](liftable.md#liftoperatorout)<`T`, [[`Option`](option.md#option)<`T`\>, `T`], `C`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\> |
+| `PairwiseLiftableState` | <T\>(`delegate`: [`LiftOperatorIn`](liftable.md#liftoperatorin)<`C`, `T`, [[`Option`](option.md#option)<`T`\>, `T`], [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\>) => [`LiftOperatorOut`](liftable.md#liftoperatorout)<`C`, `T`, [[`Option`](option.md#option)<`T`\>, `T`], [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\> |
 
 #### Returns
 
@@ -317,7 +317,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
-| `ScanLiftableState` | <T, TAcc\>(`delegate`: [`LiftOperatorIn`](liftable.md#liftoperatorin)<`T`, `TAcc`, `C`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\>, `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `acc`: `TAcc`) => [`LiftOperatorOut`](liftable.md#liftoperatorout)<`T`, `TAcc`, `C`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\> |
+| `ScanLiftableState` | <T, TAcc\>(`delegate`: [`LiftOperatorIn`](liftable.md#liftoperatorin)<`C`, `T`, `TAcc`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\>, `reducer`: [`Reducer`](functions.md#reducer)<`T`, `TAcc`\>, `acc`: `TAcc`) => [`LiftOperatorOut`](liftable.md#liftoperatorout)<`C`, `T`, `TAcc`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\> |
 
 #### Returns
 
@@ -361,7 +361,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
-| `SkipLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `skipCount`: `number`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
+| `SkipLiftableState` | <T\>(`delegate`: [`LiftOperatorIn`](liftable.md#liftoperatorin)<`C`, `T`, `T`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\>, `skipCount`: `number`) => [`LiftOperatorOut`](liftable.md#liftoperatorout)<`C`, `T`, `T`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\> |
 
 #### Returns
 
@@ -404,7 +404,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `m` | [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
-| `TakeFirstLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `maxCount`: `number`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
+| `TakeFirstLiftableState` | <T\>(`delegate`: [`LiftOperatorIn`](liftable.md#liftoperatorin)<`C`, `T`, `T`, [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\>, `maxCount`: `number`) => [`LiftOperatorOut`](liftable.md#liftoperatorout)<`C`, `T`, `T`, [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> & [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\> |
 
 #### Returns
 
@@ -447,7 +447,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
-| `TakeWhileLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>, `inclusive`: `boolean`) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
+| `TakeWhileLiftableState` | <T\>(`delegate`: [`LiftOperatorIn`](liftable.md#liftoperatorin)<`C`, `T`, `T`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>, `inclusive`: `boolean`) => [`LiftOperatorOut`](liftable.md#liftoperatorout)<`C`, `T`, `T`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\> |
 
 #### Returns
 
@@ -491,7 +491,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
-| `ThrowIfEmptyLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> & { `isEmpty`: `boolean`  } |
+| `ThrowIfEmptyLiftableState` | <T\>(`delegate`: [`LiftOperatorIn`](liftable.md#liftoperatorin)<`C`, `T`, `T`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\>) => [`LiftOperatorOut`](liftable.md#liftoperatorout)<`C`, `T`, `T`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\> & { `isEmpty`: `boolean`  } |
 
 #### Returns
 

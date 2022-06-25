@@ -1,7 +1,7 @@
 import {
   addDisposableDisposeParentOnChildError,
   addOnDisposedWithoutErrorTeardown,
-  bindDisposables,
+  bindTo,
   dispose,
 } from "../disposable";
 import { Function2, pipe } from "../functions";
@@ -53,8 +53,10 @@ export const withLatestFrom = <TA, TB, T>(
   selector: Function2<TA, TB, T>,
 ): ObservableOperator<TA, T> => {
   const operator = (delegate: Observer<T>) => {
-    const observer = new WithLatestFromObserver(delegate, selector);
-    bindDisposables(observer, delegate);
+    const observer = pipe(
+      new WithLatestFromObserver(delegate, selector),
+      bindTo(delegate),
+    );
 
     const otherSubscription = pipe(
       other,

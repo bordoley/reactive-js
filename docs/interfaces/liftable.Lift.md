@@ -63,7 +63,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `operator` | [`LiftOperator`](../modules/liftable.md#liftoperator)<`TA`, `TB`, `C`, [`Lift`](liftable.Lift.md)<`C`, `TVariance`\>\> |
+| `operator` | [`LiftOperator`](../modules/liftable.md#liftoperator)<`C`, `TA`, `TB`, [`Lift`](liftable.Lift.md)<`C`, `TVariance`\>\> |
 
 #### Returns
 

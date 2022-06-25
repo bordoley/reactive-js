@@ -1,11 +1,12 @@
 import { ConcatAll } from "../container";
 import {
   SerialDisposableLike,
-  addDisposableDisposeParentOnChildError,
-  bindDisposables,
+  addChildAndDisposeOnError,
+  bindTo,
   createSerialDisposable,
 } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
+import { pipe } from "../functions";
 import { AbstractEnumerator, Enumerator, enumerate } from "./enumerator";
 import { lift } from "./lift";
 
@@ -46,11 +47,11 @@ class ConcatAllEnumerator<T> extends AbstractEnumerator<T> {
 
 const operator = <T>(delegate: Enumerator<EnumerableLike<T>>) => {
   const inner = createSerialDisposable();
-  const enumerator = new ConcatAllEnumerator(delegate, inner);
-  bindDisposables(enumerator, inner);
-  addDisposableDisposeParentOnChildError(enumerator, delegate);
-
-  return enumerator;
+  return pipe(
+    new ConcatAllEnumerator(delegate, inner),
+    bindTo(inner),
+    addChildAndDisposeOnError(delegate),
+  );
 };
 
 /**

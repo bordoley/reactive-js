@@ -1,6 +1,6 @@
 /// <reference types="./enumerable.d.ts" />
 import { AbstractDisposableContainer, empty } from './container.mjs';
-import { addTeardown, createSerialDisposable, bindDisposables, addDisposableDisposeParentOnChildError, dispose } from './disposable.mjs';
+import { addTeardown, createSerialDisposable, bindTo, addChildAndDisposeOnError, addDisposableDisposeParentOnChildError, dispose } from './disposable.mjs';
 import { raise, pipe, alwaysTrue, identity } from './functions.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
@@ -121,10 +121,7 @@ class ConcatAllEnumerator extends AbstractEnumerator {
 }
 const operator = (delegate) => {
     const inner = createSerialDisposable();
-    const enumerator = new ConcatAllEnumerator(delegate, inner);
-    bindDisposables(enumerator, inner);
-    addDisposableDisposeParentOnChildError(enumerator, delegate);
-    return enumerator;
+    return pipe(new ConcatAllEnumerator(delegate, inner), bindTo(inner), addChildAndDisposeOnError(delegate));
 };
 /**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
@@ -328,8 +325,7 @@ class TakeLastEnumerator extends Enumerator {
                     last.shift();
                 }
             }
-            this.enumerator = pipe(last, fromArray(), enumerate);
-            bindDisposables(this, this.enumerator);
+            this.enumerator = pipe(last, fromArray(), enumerate, bindTo(this));
         }
         if (isSome(this.enumerator)) {
             this.enumerator.move();
@@ -344,11 +340,7 @@ class TakeLastEnumerator extends Enumerator {
  */
 const takeLast = (options = {}) => {
     const { count = 1 } = options;
-    const operator = (delegate) => {
-        const enumerator = new TakeLastEnumerator(delegate, count);
-        addDisposableDisposeParentOnChildError(enumerator, delegate);
-        return enumerator;
-    };
+    const operator = (delegate) => pipe(new TakeLastEnumerator(delegate, count), addChildAndDisposeOnError(delegate));
     return enumerable => count > 0
         ? pipe(enumerable, lift(operator))
         : // FIXME: why do we need the annotations?

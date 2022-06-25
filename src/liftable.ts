@@ -12,7 +12,7 @@ import {
   addDisposable,
   addDisposableDisposeParentOnChildError,
   addTeardown,
-  bindDisposables,
+  bindTo,
   dispose,
 } from "./disposable";
 import {
@@ -70,30 +70,30 @@ export interface Lift<
   variance: TVariance;
 
   lift<TA, TB>(
-    operator: LiftOperator<TA, TB, C, this>,
+    operator: LiftOperator<C, TA, TB, this>,
   ): ContainerOperator<C, TA, TB>;
 }
 
 export type LiftOperator<
+  C extends LiftableLike,
   TA,
   TB,
-  C extends LiftableLike,
   M extends Lift<C, "covariant" | "contravariant">,
-> = Function1<LiftOperatorIn<TA, TB, C, M>, LiftOperatorOut<TA, TB, C, M>>;
+> = Function1<LiftOperatorIn<C, TA, TB, M>, LiftOperatorOut<C, TA, TB, M>>;
 
 export type LiftOperatorIn<
+  C extends LiftableLike,
   TA,
   TB,
-  C extends LiftableLike,
   M extends Lift<C, "covariant" | "contravariant">,
 > = M extends { variance?: "contravariant" }
   ? LiftedStateOf<C, TB>
   : LiftedStateOf<C, TA>;
 
 export type LiftOperatorOut<
+  C extends LiftableLike,
   TA,
   TB,
-  C extends LiftableLike,
   M extends Lift<C, "covariant" | "contravariant">,
 > = M extends { variance?: "contravariant" }
   ? LiftedStateOf<C, TA>
@@ -111,11 +111,11 @@ export const createDistinctUntilChangedLiftedOperator =
     options: { readonly equality?: Equality<T> } = {},
   ): ContainerOperator<C, T, T> => {
     const { equality = strictEquality } = options;
-    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const lifted = new DistinctUntilChangedLiftableState(delegate, equality);
-      bindDisposables(lifted, delegate);
-      return lifted;
-    };
+    const operator: LiftOperator<C, T, T, typeof m> = delegate =>
+      pipe(
+        new DistinctUntilChangedLiftableState(delegate, equality),
+        bindTo(delegate),
+      );
     return m.lift(operator);
   };
 
@@ -128,11 +128,8 @@ export const createKeepLiftedOperator =
     ) => LiftedStateOf<C, T>,
   ) =>
   <T>(predicate: Predicate<T>): ContainerOperator<C, T, T> => {
-    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const lifted = new KeepLiftableState(delegate, predicate);
-      bindDisposables(lifted, delegate);
-      return lifted;
-    };
+    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> =>
+      pipe(new KeepLiftableState(delegate, predicate), bindTo(delegate));
     return m.lift(operator);
   };
 
@@ -140,16 +137,13 @@ export const createMapLiftedOperator =
   <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
     m: Lift<C, TVariance>,
     MapLiftableState: new <TA, TB>(
-      delegate: LiftOperatorIn<TA, TB, C, typeof m>,
+      delegate: LiftOperatorIn<C, TA, TB, typeof m>,
       mapper: Function1<TA, TB>,
-    ) => LiftOperatorOut<TA, TB, C, typeof m>,
+    ) => LiftOperatorOut<C, TA, TB, typeof m>,
   ) =>
   <TA, TB>(mapper: Function1<TA, TB>) => {
-    const operator: LiftOperator<TA, TB, C, typeof m> = delegate => {
-      const lifted = new MapLiftableState(delegate, mapper);
-      bindDisposables(lifted, delegate);
-      return lifted;
-    };
+    const operator: LiftOperator<C, TA, TB, typeof m> = delegate =>
+      pipe(new MapLiftableState(delegate, mapper), bindTo(delegate));
     return m.lift(operator);
   };
 
@@ -162,11 +156,8 @@ export const createOnNotifyLiftedOperator =
     ) => LiftedStateOf<C, T>,
   ) =>
   <T>(onNotify: SideEffect1<T>) => {
-    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const lifted = new OnNotifyLiftableState(delegate, onNotify);
-      bindDisposables(lifted, delegate);
-      return lifted;
-    };
+    const operator: LiftOperator<C, T, T, typeof m> = delegate =>
+      pipe(new OnNotifyLiftableState(delegate, onNotify), bindTo(delegate));
     return m.lift(operator);
   };
 
@@ -174,15 +165,12 @@ export const createPairwiseLiftedOperator =
   <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
     m: Lift<C, TVariance>,
     PairwiseLiftableState: new <T>(
-      delegate: LiftOperatorIn<T, [Option<T>, T], C, typeof m>,
-    ) => LiftOperatorOut<T, [Option<T>, T], C, typeof m>,
+      delegate: LiftOperatorIn<C, T, [Option<T>, T], typeof m>,
+    ) => LiftOperatorOut<C, T, [Option<T>, T], typeof m>,
   ) =>
   <T>() => {
-    const operator: LiftOperator<T, [Option<T>, T], C, typeof m> = delegate => {
-      const lifted = new PairwiseLiftableState(delegate);
-      bindDisposables(lifted, delegate);
-      return lifted;
-    };
+    const operator: LiftOperator<C, T, [Option<T>, T], typeof m> = delegate =>
+      pipe(new PairwiseLiftableState(delegate), bindTo(delegate));
     return m.lift(operator);
   };
 
@@ -190,20 +178,20 @@ export const createScanLiftedOperator =
   <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
     m: Lift<C, TVariance>,
     ScanLiftableState: new <T, TAcc>(
-      delegate: LiftOperatorIn<T, TAcc, C, typeof m>,
+      delegate: LiftOperatorIn<C, T, TAcc, typeof m>,
       reducer: Reducer<T, TAcc>,
       acc: TAcc,
-    ) => LiftOperatorOut<T, TAcc, C, typeof m>,
+    ) => LiftOperatorOut<C, T, TAcc, typeof m>,
   ) =>
   <T, TAcc>(
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ): ContainerOperator<C, T, TAcc> => {
-    const operator: LiftOperator<T, TAcc, C, typeof m> = delegate => {
-      const lifted = new ScanLiftableState(delegate, reducer, initialValue());
-      bindDisposables(lifted, delegate);
-      return lifted;
-    };
+    const operator: LiftOperator<C, T, TAcc, typeof m> = delegate =>
+      pipe(
+        new ScanLiftableState(delegate, reducer, initialValue()),
+        bindTo(delegate),
+      );
     return m.lift(operator);
   };
 
@@ -211,19 +199,17 @@ export const createSkipFirstLiftedOperator =
   <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
     m: Lift<C, TVariance>,
     SkipLiftableState: new <T>(
-      delegate: LiftedStateOf<C, T>,
+      delegate: LiftOperatorIn<C, T, T, typeof m>,
       skipCount: number,
-    ) => LiftedStateOf<C, T>,
+    ) => LiftOperatorOut<C, T, T, typeof m>,
   ) =>
   <T>(
     options: { readonly count?: number } = {},
   ): ContainerOperator<C, T, T> => {
     const { count = 1 } = options;
-    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const lifted = new SkipLiftableState(delegate, count);
-      bindDisposables(lifted, delegate);
-      return lifted;
-    };
+    const operator: LiftOperator<C, T, T, typeof m> = delegate =>
+      pipe(new SkipLiftableState(delegate, count), bindTo(delegate));
+
     return runnable =>
       count > 0 ? pipe(runnable, m.lift(operator)) : runnable;
   };
@@ -232,19 +218,16 @@ export const createTakeFirstLiftdOperator =
   <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
     m: FromArray<C> & Lift<C, TVariance>,
     TakeFirstLiftableState: new <T>(
-      delegate: LiftedStateOf<C, T>,
+      delegate: LiftOperatorIn<C, T, T, typeof m>,
       maxCount: number,
-    ) => LiftedStateOf<C, T>,
+    ) => LiftOperatorOut<C, T, T, typeof m>,
   ) =>
   <T>(
     options: { readonly count?: number } = {},
   ): ContainerOperator<C, T, T> => {
     const { count = 1 } = options;
-    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const lifted = new TakeFirstLiftableState(delegate, count);
-      bindDisposables(lifted, delegate);
-      return lifted;
-    };
+    const operator: LiftOperator<C, T, T, typeof m> = delegate =>
+      pipe(new TakeFirstLiftableState(delegate, count), bindTo(delegate));
     return source => (count > 0 ? pipe(source, m.lift(operator)) : empty(m));
   };
 
@@ -252,17 +235,17 @@ export const createTakeWhileLiftedOperator =
   <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
     m: Lift<C, TVariance>,
     TakeWhileLiftableState: new <T>(
-      delegate: LiftedStateOf<C, T>,
+      delegate: LiftOperatorIn<C, T, T, typeof m>,
       predicate: Predicate<T>,
       inclusive: boolean,
-    ) => LiftedStateOf<C, T>,
+    ) => LiftOperatorOut<C, T, T, typeof m>,
   ) =>
   <T>(
     predicate: Predicate<T>,
     options: { readonly inclusive?: boolean } = {},
   ): ContainerOperator<C, T, T> => {
     const { inclusive = false } = options;
-    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
+    const operator: LiftOperator<C, T, T, typeof m> = delegate => {
       const lifted = new TakeWhileLiftableState(delegate, predicate, inclusive);
       const { parent, child } =
         m.variance === "covariant"
@@ -280,13 +263,13 @@ export const createThrowIfEmptyLiftedOperator =
   <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
     m: Lift<C, TVariance>,
     ThrowIfEmptyLiftableState: new <T>(
-      delegate: LiftedStateOf<C, T>,
-    ) => LiftedStateOf<C, T> & {
+      delegate: LiftOperatorIn<C, T, T, typeof m>,
+    ) => LiftOperatorOut<C, T, T, typeof m> & {
       readonly isEmpty: boolean;
     },
   ) =>
   <T>(factory: Factory<unknown>) => {
-    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
+    const operator: LiftOperator<C, T, T, typeof m> = delegate => {
       const lifted = new ThrowIfEmptyLiftableState(delegate);
       const { parent, child } =
         m.variance === "covariant"

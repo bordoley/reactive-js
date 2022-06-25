@@ -2,8 +2,8 @@ import { AbstractDisposableContainer, Concat, FromArray, FromIterator, FromItera
 import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Updater, Predicate, Equality, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
-import { SinkLike, CreateSource, AbstractSource, AbstractDisposableSource, SourceLike } from "./source.mjs";
 import { SchedulerLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
+import { SinkLike, CreateSource, AbstractSource, AbstractDisposableSource, SourceLike } from "./source.mjs";
 import { EnumerableLike, ToEnumerable } from "./enumerable.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
 /**
@@ -232,13 +232,6 @@ declare const fromIterable: <T>(options?: {
 }) => Function1<Iterable<T>, ObservableLike<T>>;
 declare const fromIterableT: FromIterable<ObservableLike<unknown>>;
 /**
- * Converts a `Promise` to an `ObservableLike`. The provided promise factory
- * is invoked for each observer to the observable.
- *
- * @param factory Factory function to create a new `Promise` instance.
- */
-declare const fromPromise: <T>(factory: Factory<Promise<T>>) => ObservableLike<T>;
-/**
  * Generates an `ObservableLike` sequence from a generator function
  * that is applied to an accumulator value with a specified `delay`
  * between emitted items.
@@ -289,7 +282,6 @@ declare function buffer<T>(options?: {
 }): ObservableOperator<T, readonly T[]>;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => ObservableOperator<TA, TB>;
 declare const mapT: Map<ObservableLike<unknown>>;
-declare const mapAsync: <TA, TB>(f: Function1<TA, Promise<TB>>) => ObservableOperator<TA, TB>;
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
  * which concurrently delivers values emitted by the inner sources.
@@ -390,12 +382,6 @@ declare const scanAsync: <T, TAcc>(scanner: AsyncReducer<TAcc, T>, initialValue:
 declare const share: <T>(scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => ObservableOperator<T, T>;
-/**
- * Returns an `ObservableLike` instance that subscribes to the source on the specified `SchedulerLike`.
- *
- * @param scheduler `SchedulerLike` instance to use when subscribing to the source.
- */
-declare const subscribeOn: <T>(scheduler: SchedulerLike) => ObservableOperator<T, T>;
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
  * values only from the most recent source.
@@ -546,8 +532,10 @@ declare const distinctUntilChanged: <T>(options?: {
 declare const distinctUntilChangedT: DistinctUntilChanged<ObservableLike<unknown>>;
 declare const everySatisfy: <T>(predicate: Predicate<T>) => ObservableOperator<T, boolean>;
 declare const everySatisfyT: EverySatisfy<ObservableLike<unknown>>;
+declare const fromPromise: <T>(factory: Factory<Promise<T>>) => ObservableLike<T>;
 declare const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T>;
 declare const keepT: Keep<ObservableLike<unknown>>;
+declare const mapAsync: <TA, TB>(f: Function1<TA, Promise<TB>>) => ObservableOperator<TA, TB>;
 declare const pairwise: <T>() => ObservableOperator<T, [
     Option<T>,
     T
@@ -568,6 +556,7 @@ declare const skipFirst: <T>(options?: {
 declare const skipFirstT: SkipFirst<ObservableLike<unknown>>;
 declare const someSatisfy: <T>(predicate: Predicate<T>) => ObservableOperator<T, boolean>;
 declare const someSatisfyT: SomeSatisfy<ObservableLike<unknown>>;
+declare const subscribeOn: <T>(scheduler: SchedulerLike) => ObservableOperator<T, T>;
 /**
  * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
  *

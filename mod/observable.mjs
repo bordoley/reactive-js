@@ -1,9 +1,9 @@
 /// <reference types="./observable.d.ts" />
-import { AbstractSource, AbstractDisposableSource, sinkInto, createUsing, createNever, createOnSink, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
-import { addDisposableDisposeParentOnChildError, dispose, addOnDisposedWithoutErrorTeardown, AbstractDisposable, addTeardown, addDisposable, disposed, toErrorHandler, createSerialDisposable, bindDisposables } from './disposable.mjs';
+import { AbstractDisposableContainer, empty, fromValue, throws, concatMap } from './container.mjs';
+import { addDisposableDisposeParentOnChildError, dispose, addOnDisposedWithoutErrorTeardown, AbstractDisposable, addTeardown, addDisposable, disposed, createSerialDisposable, bindTo, addChildAndDisposeOnError, toErrorHandler } from './disposable.mjs';
 import { pipe, raise, ignore, arrayEquality, defer as defer$1, compose, returns } from './functions.mjs';
+import { AbstractSource, AbstractDisposableSource, sinkInto, createMapOperator, createUsing, createNever, createOnSink, createOnNotifyOperator, createTakeFirstOperator, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
-import { AbstractDisposableContainer, empty, fromValue, concatMap, throws } from './container.mjs';
 import { __DEV__ } from './env.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { map as map$1, everySatisfy as everySatisfy$1 } from './readonlyArray.mjs';
@@ -205,7 +205,16 @@ class DelegatingObserver extends Observer {
 }
 const createDelegatingObserver = (delegate) => new DelegatingObserver(delegate);
 
-const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
+const map = createMapOperator(liftSynchronousT, class MapObserver extends Observer {
+    constructor(delegate, mapper) {
+        super(delegate.scheduler);
+        this.delegate = delegate;
+        this.mapper = mapper;
+    }
+});
+const mapT = {
+    map,
+};
 
 class DefaultObserver extends Observer {
     constructor(scheduler, onNotify, onNotifyThis) {
@@ -226,6 +235,51 @@ function subscribe(scheduler, onNotify = ignore, onNotifyThis = none) {
         return observer;
     };
 }
+
+function onDispose$4(error) {
+    if (isSome(error) || this.inner.isDisposed) {
+        pipe(this.delegate, dispose(error));
+    }
+}
+function onNotify$4(next) {
+    this.delegate.notify(next);
+}
+class SwitchObserver extends Observer {
+    constructor(delegate) {
+        super(delegate.scheduler);
+        this.delegate = delegate;
+        this.inner = disposed;
+    }
+    notify(next) {
+        this.assertState();
+        pipe(this.inner, dispose());
+        const inner = pipe(next, subscribe(this.scheduler, onNotify$4, this));
+        addDisposableDisposeParentOnChildError(this.delegate, inner);
+        addOnDisposedWithoutErrorTeardown(inner, () => {
+            if (this.isDisposed) {
+                pipe(this.delegate, dispose());
+            }
+        });
+        this.inner = inner;
+    }
+}
+const operator = (delegate) => {
+    const observer = new SwitchObserver(delegate);
+    addDisposable(delegate, observer);
+    addTeardown(observer, onDispose$4);
+    return observer;
+};
+const switchAllInstance = lift(operator);
+/**
+ * Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
+ * values only from the most recent source.
+ */
+const switchAll = () => switchAllInstance;
+const switchAllT = {
+    concatAll: switchAll,
+};
+
+const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
 
 const arrayStrictEquality = arrayEquality();
 let currentCtx = none;
@@ -432,7 +486,7 @@ function __currentScheduler() {
         : raise("__currentScheduler may only be called within an observable computation");
 }
 
-function onDispose$4(error) {
+function onDispose$3(error) {
     const { ctx } = this;
     ctx.completedCount++;
     if (isSome(error) || ctx.completedCount === ctx.observers.length) {
@@ -480,7 +534,7 @@ const latest = (observables, mode) => {
         };
         for (const observable of observables) {
             const innerObserver = new LatestObserver(delegate, ctx, mode);
-            addTeardown(innerObserver, onDispose$4);
+            addTeardown(innerObserver, onDispose$3);
             addDisposable(delegate, innerObserver);
             observers.push(innerObserver);
             pipe(observable, sinkInto(innerObserver));
@@ -606,10 +660,7 @@ const fromEnumerator = (options = {}) => f => {
         }
         pipe(observer, dispose());
     }, { delay }));
-    if (delay === 0) {
-        // FIXME: No way to tell using to run synchronously when delay is 0
-        result.isEnumerable = true;
-    }
+    result.isEnumerable = delay === 0;
     return result;
 };
 /**
@@ -647,21 +698,6 @@ const fromIterable = (options) => {
 const fromIterableT = {
     fromIterable,
 };
-
-/**
- * Converts a `Promise` to an `ObservableLike`. The provided promise factory
- * is invoked for each observer to the observable.
- *
- * @param factory Factory function to create a new `Promise` instance.
- */
-const fromPromise = (factory) => createObservable(({ dispatcher }) => {
-    factory().then(next => {
-        if (!dispatcher.isDisposed) {
-            dispatcher.dispatch(next);
-            pipe(dispatcher, dispose());
-        }
-    }, toErrorHandler(dispatcher));
-});
 
 /**
  * Generates an `ObservableLike` sequence from a generator function
@@ -719,7 +755,7 @@ const never = createNever(createT);
 
 const onSubscribe = createOnSink(createT);
 
-function onDispose$3(error) {
+function onDispose$2(error) {
     const { buffer } = this;
     this.buffer = [];
     if (isSome(error) || buffer.length === 0) {
@@ -729,7 +765,7 @@ function onDispose$3(error) {
         pipe(buffer, fromValue(fromArrayT), sinkInto(this.delegate));
     }
 }
-function onNotify$4() {
+function onNotify$3() {
     this.durationSubscription.inner = disposed;
     const buffer = this.buffer;
     this.buffer = [];
@@ -749,10 +785,10 @@ class BufferObserver extends Observer {
         const { buffer, maxBufferSize } = this;
         buffer.push(next);
         if (buffer.length === maxBufferSize) {
-            onNotify$4.call(this);
+            onNotify$3.call(this);
         }
         else if (this.durationSubscription.inner.isDisposed) {
-            this.durationSubscription.inner = pipe(next, this.durationFunction, subscribe(this.scheduler, onNotify$4, this));
+            this.durationSubscription.inner = pipe(next, this.durationFunction, subscribe(this.scheduler, onNotify$3, this));
         }
     }
 }
@@ -777,67 +813,11 @@ function buffer(options = {}) {
         const observer = new BufferObserver(delegate, durationFunction, maxBufferSize, durationSubscription);
         addDisposable(delegate, observer);
         addDisposableDisposeParentOnChildError(observer, durationSubscription);
-        addTeardown(observer, onDispose$3);
+        addTeardown(observer, onDispose$2);
         return observer;
     };
     return lift(operator, delay === Number.MAX_SAFE_INTEGER);
 }
-
-const map = createMapOperator(liftSynchronousT, class MapObserver extends Observer {
-    constructor(delegate, mapper) {
-        super(delegate.scheduler);
-        this.delegate = delegate;
-        this.mapper = mapper;
-    }
-});
-const mapT = {
-    map,
-};
-
-function onDispose$2(error) {
-    if (isSome(error) || this.inner.isDisposed) {
-        pipe(this.delegate, dispose(error));
-    }
-}
-function onNotify$3(next) {
-    this.delegate.notify(next);
-}
-class SwitchObserver extends Observer {
-    constructor(delegate) {
-        super(delegate.scheduler);
-        this.delegate = delegate;
-        this.inner = disposed;
-    }
-    notify(next) {
-        this.assertState();
-        pipe(this.inner, dispose());
-        const inner = pipe(next, subscribe(this.scheduler, onNotify$3, this));
-        addDisposableDisposeParentOnChildError(this.delegate, inner);
-        addOnDisposedWithoutErrorTeardown(inner, () => {
-            if (this.isDisposed) {
-                pipe(this.delegate, dispose());
-            }
-        });
-        this.inner = inner;
-    }
-}
-const operator = (delegate) => {
-    const observer = new SwitchObserver(delegate);
-    addDisposable(delegate, observer);
-    addTeardown(observer, onDispose$2);
-    return observer;
-};
-const switchAllInstance = lift(operator);
-/**
- * Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
- * values only from the most recent source.
- */
-const switchAll = () => switchAllInstance;
-const switchAllT = {
-    concatAll: switchAll,
-};
-
-const mapAsync = (f) => concatMap({ ...switchAllT, ...mapT }, (a) => fromPromise(() => f(a)));
 
 const subscribeNext = (observer) => {
     if (observer.activeCount < observer.maxConcurrency) {
@@ -956,8 +936,7 @@ const onNotify$2 = createOnNotifyOperator(liftSynchronousT, class OnNotifyObserv
  */
 const publish = (scheduler, options) => observable => {
     const subject = createSubject(options);
-    const srcSubscription = pipe(observable, subscribe(scheduler, subject.dispatch, subject));
-    bindDisposables(srcSubscription, subject);
+    pipe(observable, subscribe(scheduler, subject.dispatch, subject), bindTo(subject));
     return subject;
 };
 
@@ -1116,22 +1095,9 @@ const share = (scheduler, options) => source => {
     });
 };
 
-/**
- * Returns an `ObservableLike` instance that subscribes to the source on the specified `SchedulerLike`.
- *
- * @param scheduler `SchedulerLike` instance to use when subscribing to the source.
- */
-const subscribeOn = (scheduler) => observable => createObservable(({ dispatcher }) => {
-    const subscription = pipe(observable, subscribe(scheduler, dispatcher.dispatch, dispatcher));
-    bindDisposables(subscription, dispatcher);
-});
-
 const takeUntil = (notifier) => {
     const operator = (delegate) => {
-        const takeUntilObserver = createDelegatingObserver(delegate);
-        bindDisposables(takeUntilObserver, delegate);
-        const otherSubscription = pipe(notifier, subscribe(takeUntilObserver.scheduler, defer$1(takeUntilObserver, dispose)));
-        bindDisposables(takeUntilObserver, otherSubscription);
+        const takeUntilObserver = pipe(createDelegatingObserver(delegate), bindTo(delegate), bindTo(pipe(notifier, subscribe(delegate.scheduler, () => dispose()(takeUntilObserver)))));
         return takeUntilObserver;
     };
     return lift(operator);
@@ -1222,9 +1188,7 @@ function timeout(duration) {
         : concat(duration, throws({ ...fromArrayT, ...mapT })(returnTimeoutError));
     const operator = (delegate) => {
         const durationSubscription = createSerialDisposable();
-        const observer = new TimeoutObserver(delegate, durationObs, durationSubscription);
-        bindDisposables(observer, delegate);
-        addDisposableDisposeParentOnChildError(observer, durationSubscription);
+        const observer = pipe(new TimeoutObserver(delegate, durationObs, durationSubscription), bindTo(delegate), addChildAndDisposeOnError(durationSubscription));
         setupDurationSubscription(observer);
         return observer;
     };
@@ -1260,8 +1224,7 @@ class WithLatestFromObserver extends Observer {
  */
 const withLatestFrom = (other, selector) => {
     const operator = (delegate) => {
-        const observer = new WithLatestFromObserver(delegate, selector);
-        bindDisposables(observer, delegate);
+        const observer = pipe(new WithLatestFromObserver(delegate, selector), bindTo(delegate));
         const otherSubscription = pipe(other, subscribe(observer.scheduler, onNotify, observer));
         addDisposableDisposeParentOnChildError(observer, otherSubscription);
         addOnDisposedWithoutErrorTeardown(otherSubscription, () => {
@@ -1542,6 +1505,14 @@ const everySatisfy = createEverySatisfyOperator({ ...fromArrayT, ...liftSynchron
 const everySatisfyT = {
     everySatisfy,
 };
+const fromPromise = (factory) => createObservable(({ dispatcher }) => {
+    factory().then(next => {
+        if (!dispatcher.isDisposed) {
+            dispatcher.dispatch(next);
+            pipe(dispatcher, dispose());
+        }
+    }, toErrorHandler(dispatcher));
+});
 const keep = createKeepOperator(liftSynchronousT, class KeepObserver extends Observer {
     constructor(delegate, predicate) {
         super(delegate.scheduler);
@@ -1552,6 +1523,7 @@ const keep = createKeepOperator(liftSynchronousT, class KeepObserver extends Obs
 const keepT = {
     keep,
 };
+const mapAsync = (f) => concatMap({ ...switchAllT, ...mapT }, (a) => fromPromise(() => f(a)));
 const pairwise = createPairwiseOperator(liftSynchronousT, class PairwiseObserver extends Observer {
     constructor(delegate) {
         super(delegate.scheduler);
@@ -1610,6 +1582,7 @@ const someSatisfy = createSomeSatisfyOperator({ ...fromArrayT, ...liftSynchronou
 const someSatisfyT = {
     someSatisfy,
 };
+const subscribeOn = (scheduler) => observable => createObservable(({ dispatcher }) => pipe(observable, subscribe(scheduler, dispatcher.dispatch, dispatcher), bindTo(dispatcher)));
 /**
  * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
  *

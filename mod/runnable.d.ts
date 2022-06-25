@@ -1,4 +1,5 @@
-import { AbstractDisposableContainer, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Keep, Map, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
+import { AbstractDisposableContainer, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Keep, Map, ContainerOperator, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
+import { DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Function1, Updater, Factory, Predicate, Equality, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
 import { SinkLike, CreateSource, SourceLike } from "./source.mjs";
@@ -68,12 +69,14 @@ declare const keep: <T>(predicate: Predicate<T>) => RunnableOperator<T, T>;
 declare const keepT: Keep<RunnableLike<unknown>>;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => RunnableOperator<TA, TB>;
 declare const mapT: Map<RunnableLike<unknown>>;
+declare const never: <T>() => RunnableLike<T>;
 /**
  * Returns an `RunnableLike` that forwards notifications to the provided `onNotify` function.
  *
  * @param onNotify The function that is invoked when the observable source produces values.
  */
 declare const onNotify: <T>(onNotify: SideEffect1<T>) => RunnableOperator<T, T>;
+declare const onSink: <T>(f: Factory<void | DisposableOrTeardown>) => ContainerOperator<RunnableLike<unknown>, T, T>;
 declare const pairwise: <T>() => RunnableOperator<T, [
     Option<T>,
     T
@@ -105,4 +108,4 @@ declare const throwIfEmpty: <T>(factory: Factory<unknown>) => RunnableOperator<T
 declare const throwIfEmptyT: ThrowIfEmpty<RunnableLike<unknown>>;
 declare const using: Using<RunnableLike<unknown>>["using"];
 declare const usingT: Using<RunnableLike<unknown>>;
-export { RunnableLike, RunnableOperator, Sink, ToRunnable, catchError, concat, concatAll, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, onNotify, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };
+export { RunnableLike, RunnableOperator, Sink, ToRunnable, catchError, concat, concatAll, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };

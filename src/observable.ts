@@ -11,8 +11,9 @@ import {
   TakeLast,
   TakeWhile,
   ThrowIfEmpty,
+  concatMap,
 } from "./container";
-import { DisposableLike } from "./disposable";
+import { DisposableLike, bindTo, dispose, toErrorHandler } from "./disposable";
 import {
   Equality,
   Factory,
@@ -20,12 +21,17 @@ import {
   Function2,
   Predicate,
   Reducer,
+  pipe,
 } from "./functions";
-import { createT } from "./observable/createObservable";
+import { createObservable, createT } from "./observable/createObservable";
 import { fromArrayT } from "./observable/fromArray";
 import { liftSynchronousT } from "./observable/lift";
+import { mapT } from "./observable/map";
 import { Observer } from "./observable/observer";
+import { subscribe } from "./observable/subscribe";
+import { switchAllT } from "./observable/switchAll";
 import { Option, none } from "./option";
+import { SchedulerLike } from "./scheduler";
 import {
   SourceLike,
   createCatchErrorOperator,
@@ -139,7 +145,6 @@ export {
   fromIterator,
   fromIteratorT,
 } from "./observable/fromIterable";
-export { fromPromise } from "./observable/fromPromise";
 export { generate } from "./observable/generate";
 export { merge, mergeT } from "./observable/merge";
 export { never } from "./observable/never";
@@ -154,7 +159,6 @@ export {
 export { Observer } from "./observable/observer";
 export { buffer } from "./observable/buffer";
 export { map, mapT } from "./observable/map";
-export { mapAsync } from "./observable/mapAsync";
 export {
   concatAll,
   concatAllT,
@@ -168,7 +172,6 @@ export { publish } from "./observable/publish";
 export { repeat, repeatT, retry } from "./observable/repeat";
 export { scanAsync } from "./observable/scanAsync";
 export { share } from "./observable/share";
-export { subscribeOn } from "./observable/subscribeOn";
 export { switchAll, switchAllT } from "./observable/switchAll";
 export { takeFirst, takeFirstT } from "./observable/takeFirst";
 export { takeUntil } from "./observable/takeUntil";
@@ -261,6 +264,18 @@ export const everySatisfyT: EverySatisfy<ObservableLike<unknown>> = {
   everySatisfy,
 };
 
+export const fromPromise = <T>(
+  factory: Factory<Promise<T>>,
+): ObservableLike<T> =>
+  createObservable(({ dispatcher }) => {
+    factory().then(next => {
+      if (!dispatcher.isDisposed) {
+        dispatcher.dispatch(next);
+        pipe(dispatcher, dispose());
+      }
+    }, toErrorHandler(dispatcher));
+  });
+
 export const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T> =
   createKeepOperator(
     liftSynchronousT,
@@ -277,6 +292,11 @@ export const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T> =
 export const keepT: Keep<ObservableLike<unknown>> = {
   keep,
 };
+
+export const mapAsync = <TA, TB>(
+  f: Function1<TA, Promise<TB>>,
+): ObservableOperator<TA, TB> =>
+  concatMap({ ...switchAllT, ...mapT }, (a: TA) => fromPromise(() => f(a)));
 
 export const pairwise: <T>() => ObservableOperator<T, [Option<T>, T]> =
   createPairwiseOperator(
@@ -374,6 +394,17 @@ export const someSatisfy: <T>(
 export const someSatisfyT: SomeSatisfy<ObservableLike<unknown>> = {
   someSatisfy,
 };
+
+export const subscribeOn =
+  <T>(scheduler: SchedulerLike): ObservableOperator<T, T> =>
+  observable =>
+    createObservable(({ dispatcher }) =>
+      pipe(
+        observable,
+        subscribe(scheduler, dispatcher.dispatch, dispatcher),
+        bindTo(dispatcher),
+      ),
+    );
 
 /**
  * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.

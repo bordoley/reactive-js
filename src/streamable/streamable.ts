@@ -1,8 +1,5 @@
 import { empty as emptyContainer } from "../container";
-import {
-  addDisposableDisposeParentOnChildError,
-  bindDisposables,
-} from "../disposable";
+import { addDisposableDisposeParentOnChildError, bindTo } from "../disposable";
 import { Function1, compose, pipe } from "../functions";
 import {
   ObservableOperator,
@@ -69,10 +66,9 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
         requests,
         map((compose as any)(...reqOps)),
         subscribe(scheduler, srcStream.dispatch, srcStream),
+        bindTo(srcStream),
       );
       addDisposableDisposeParentOnChildError(observer, requestSubscription);
-
-      bindDisposables(srcStream, requestSubscription);
 
       pipe(srcStream, (compose as any)(...obsOps), sinkInto(observer));
     });
