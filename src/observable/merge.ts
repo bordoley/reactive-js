@@ -5,8 +5,9 @@ import {
   dispose,
 } from "../disposable";
 import { pipe } from "../functions";
-import { ObservableLike, createObservable } from "../observable";
+import { ObservableLike } from "../observable";
 import { sinkInto } from "../source";
+import { createObservable } from "./createObservable";
 import { Observer, createDelegatingObserver } from "./observer";
 
 const createMergeObserver = <T>(

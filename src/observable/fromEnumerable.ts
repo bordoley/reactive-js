@@ -18,7 +18,8 @@ export const fromEnumerator =
     options: { readonly delay?: number } = {},
   ): Function1<Factory<Enumerator<T>>, ObservableLike<T>> =>
   f => {
-    const { delay = 0 } = options;
+    const { delay = Math.max(options.delay ?? 0, 0) } = options;
+
     const result = using(f, enumerator =>
       deferObs(
         () => (observer: Observer<T>) => {

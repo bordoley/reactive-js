@@ -132,14 +132,13 @@ class ReactPriorityScheduler
 
   schedule(
     continuation: SchedulerContinuationLike,
-    {
-      priority,
-      delay = 0,
-    }: {
+    options: {
       priority: number;
       delay?: number;
     },
   ) {
+    const { delay = Math.max(options.delay ?? 0, 0), priority } = options;
+
     addDisposable(this, continuation);
 
     if (continuation.isDisposed) {

@@ -17,7 +17,6 @@ import {
   subscribe,
 } from "../observable";
 
-import { isNone } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { sinkInto } from "../source";
 import { StreamableLike, StreamableOperator } from "../streamable";
@@ -116,12 +115,17 @@ const _empty = createStreamable<any, any>(_ => emptyContainer(fromArrayT));
  * Returns an empty `StreamableLike` that always returns
  * a disposed `StreamLike` instance.
  */
-export const empty = <TReq, T>(options?: {
-  readonly delay?: number;
-}): StreamableLike<TReq, T, StreamLike<TReq, T>> =>
-  isNone(options)
+export const empty = <TReq, T>(
+  options: {
+    readonly delay?: number;
+  } = {},
+): StreamableLike<TReq, T, StreamLike<TReq, T>> => {
+  const { delay = Math.max(options.delay ?? 0, 0) } = options;
+
+  return delay === 0
     ? _empty
     : createStreamable<TReq, T>(_ => emptyContainer(fromArrayT, options));
+};
 
 export const stream =
   <TReq, T, TStream extends StreamLike<TReq, T>>(

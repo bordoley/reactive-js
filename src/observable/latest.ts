@@ -4,7 +4,7 @@ import { ObservableLike, ObservableOperator } from "../observable";
 import { Option, isSome, none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
 import { sinkInto } from "../source";
-import { defer, deferSynchronous } from "./defer";
+import { defer } from "./defer";
 import { Observer } from "./observer";
 
 type LatestCtx = {
@@ -91,12 +91,13 @@ export const latest = (
     }
   };
 
-  const isEnumerable = pipe(
+  const observable = defer(factory);
+  (observable as any).isEnumerable = pipe(
     observables,
     everySatisfy(obs => obs.isEnumerable ?? false),
   );
 
-  return isEnumerable ? deferSynchronous(factory) : defer(factory);
+  return observable;
 };
 
 export function combineLatest<TA, TB>(

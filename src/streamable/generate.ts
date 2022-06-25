@@ -29,7 +29,8 @@ export const generate = <T>(
   initialValue: Factory<T>,
   options: { readonly delay?: number } = {},
 ): AsyncEnumerableLike<T> => {
-  const { delay = 0 } = options;
+  const { delay = Math.max(options.delay ?? 0, 0) } = options;
+
   const op =
     delay > 0
       ? scanAsync<void, T>(

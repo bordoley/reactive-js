@@ -52,8 +52,10 @@ class EnumeratorScheduler<T>
 
   schedule(
     continuation: SchedulerContinuationLike,
-    { delay } = { delay: 0 },
+    options: { readonly delay?: number } = {},
   ): void {
+    const { delay = Math.max(options.delay ?? 0, 0) } = options;
+
     addDisposable(this, continuation);
 
     if (!continuation.isDisposed && delay === 0) {

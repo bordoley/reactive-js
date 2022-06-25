@@ -39,7 +39,8 @@ class SchedulerWithPriorityImpl
   ) {
     addDisposable(this, continuation);
 
-    const { delay } = options;
+    const { delay = Math.max(options.delay ?? 0, 0) } = options;
+
     this.priorityScheduler.schedule(continuation, {
       priority: this.priority,
       delay,

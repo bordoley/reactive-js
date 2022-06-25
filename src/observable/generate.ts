@@ -1,7 +1,7 @@
 import { Factory, Updater } from "../functions";
 import { ObservableLike } from "../observable";
 import { __yield } from "../scheduler";
-import { defer, deferSynchronous } from "./defer";
+import { defer } from "./defer";
 import { Observer } from "./observer";
 
 /**
@@ -18,7 +18,7 @@ export const generate = <T>(
   initialValue: Factory<T>,
   options: { readonly delay?: number } = {},
 ): ObservableLike<T> => {
-  const { delay = 0 } = options;
+  const { delay = Math.max(options.delay ?? 0, 0) } = options;
 
   const factory = () => {
     let acc = initialValue();
@@ -32,5 +32,7 @@ export const generate = <T>(
     };
   };
 
-  return delay > 0 ? defer(factory, options) : deferSynchronous(factory);
+  const observable = defer(factory, options);
+  (observable as any).isEnumerable = delay === 0;
+  return observable;
 };

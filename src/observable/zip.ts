@@ -15,8 +15,8 @@ import { defer, pipe, returns } from "../functions";
 import { ObservableLike } from "../observable";
 import { everySatisfy, map } from "../readonlyArray";
 import { sinkInto } from "../source";
+import { createObservable } from "./createObservable";
 import { fromEnumerator } from "./fromEnumerable";
-import { AbstractObservable } from "./observable";
 import { Observer } from "./observer";
 import { enumerate } from "./toEnumerable";
 
@@ -114,36 +114,34 @@ class ZipObserver extends Observer<unknown> {
   }
 }
 
-class ZipObservable extends AbstractObservable<readonly unknown[]> {
-  readonly isEnumerable: boolean;
+const _zip = (
+  ...observables: readonly ObservableLike<unknown>[]
+): ObservableLike<readonly unknown[]> => {
+  const isEnumerable = pipe(
+    observables,
+    everySatisfy(obs => obs.isEnumerable ?? false),
+  );
 
-  constructor(private readonly observables: readonly ObservableLike<any>[]) {
-    super();
-    this.isEnumerable = pipe(
-      observables,
-      everySatisfy(obs => obs.isEnumerable ?? false),
-    );
-  }
-
-  sink(observer: Observer<readonly unknown[]>) {
-    const { observables } = this;
+  const zipObservable = createObservable(observer => {
     const count = observables.length;
 
-    if (this.isEnumerable) {
-      const observable = using(
+    if (isEnumerable) {
+      debugger;
+      const zipped = using(
         defer(observables, map(enumerate)),
         (...enumerators: readonly Enumerator<any>[]) =>
           pipe(enumerators, zipEnumerators, returns, fromEnumerator()),
       );
+      (zipped as any).isEnumerable = true;
 
-      pipe(observable, sinkInto(observer));
+      pipe(zipped, sinkInto(observer));
     } else {
       const enumerators: Enumerator<unknown>[] = [];
       for (let index = 0; index < count; index++) {
-        const observable = observables[index];
+        const next = observables[index];
 
-        if (observable.isEnumerable ?? false) {
-          const enumerator = enumerate(observable);
+        if (next.isEnumerable ?? false) {
+          const enumerator = enumerate(next);
 
           enumerator.move();
           enumerators.push(enumerator);
@@ -152,17 +150,17 @@ class ZipObservable extends AbstractObservable<readonly unknown[]> {
           addDisposableDisposeParentOnChildError(observer, innerObserver);
           addOnDisposedWithoutErrorTeardown(innerObserver, onDisposed);
 
-          pipe(observable, sinkInto(innerObserver));
+          pipe(next, sinkInto(innerObserver));
           enumerators.push(innerObserver.enumerator);
         }
       }
     }
-  }
-}
+  });
 
-const _zip = (
-  ...observables: readonly ObservableLike<unknown>[]
-): ObservableLike<readonly unknown[]> => new ZipObservable(observables);
+  (zipObservable as any).isEnumerable = isEnumerable;
+
+  return zipObservable;
+};
 
 /**
  * Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,

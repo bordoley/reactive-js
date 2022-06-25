@@ -92,8 +92,11 @@ class VirtualTimeSchedulerImpl
     pipe(this, dispose());
   }
 
-  schedule(continuation: SchedulerContinuationLike, { delay } = { delay: 0 }) {
-    delay = Math.max(0, delay);
+  schedule(
+    continuation: SchedulerContinuationLike,
+    options: { readonly delay?: number } = {},
+  ) {
+    const { delay = Math.max(options.delay ?? 0, 0) } = options;
 
     addDisposable(this, continuation);
 

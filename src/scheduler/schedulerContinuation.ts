@@ -60,6 +60,8 @@ export const run = (continuation: SchedulerContinuationLike): void => {
 };
 
 export const __yield = (delay = 0) => {
+  delay = Math.max(delay ?? 0, 0);
+
   const scheduler = isNone(currentScheduler)
     ? raise<SchedulerLike>(
         "__yield effect may only be invoked from within a SchedulerContinuation",

@@ -217,8 +217,8 @@ class PriorityScheduler
       readonly delay?: number;
     } = {},
   ) {
-    let { delay = 0, priority } = options;
-    delay = Math.max(0, delay);
+    const { delay = Math.max(options.delay ?? 0, 0) } = options;
+    let { priority } = options;
     priority = isSome(priority)
       ? priority
       : this.inContinuation
