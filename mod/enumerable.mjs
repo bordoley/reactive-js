@@ -1,7 +1,7 @@
 /// <reference types="./enumerable.d.ts" />
-import { AbstractDisposableContainer, empty } from './container.mjs';
-import { addTeardown, createSerialDisposable, bindTo, addChildAndDisposeOnError, addToParentAndDisposeOnError, dispose, addDisposableDisposeParentOnChildError } from './disposable.mjs';
+import { addTeardown, createSerialDisposable, bindTo, addChildAndDisposeOnError, addToParentAndDisposeOnError, dispose } from './disposable.mjs';
 import { raise, pipe, alwaysTrue, identity } from './functions.mjs';
+import { AbstractDisposableContainer, empty } from './container.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
 import { everySatisfy, map as map$1, forEach, empty as empty$1 } from './readonlyArray.mjs';
@@ -52,12 +52,61 @@ const current = (enumerator) => enumerator.current;
 const hasCurrent = (enumerator) => enumerator.hasCurrent;
 const move = (enumerator) => enumerator.move();
 
+class ArrayEnumerator extends AbstractEnumerator {
+    constructor(array, index, endIndex) {
+        super();
+        this.array = array;
+        this.index = index;
+        this.endIndex = endIndex;
+    }
+    move() {
+        this.reset();
+        const { array } = this;
+        if (!this.isDisposed) {
+            this.index++;
+            const { index, endIndex } = this;
+            if (index < endIndex) {
+                this.current = array[index];
+            }
+            else {
+                this.dispose();
+            }
+        }
+        return this.hasCurrent;
+    }
+}
+/**
+ * Returns an EnumerableLike view over the `values` array.
+ *
+ * @param values
+ */
+const fromArray = (options = {}) => (values) => {
+    var _a, _b;
+    const valuesLength = values.length;
+    const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
+    const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : values.length, valuesLength), 0);
+    return createEnumerable(() => new ArrayEnumerator(values, startIndex - 1, endIndex));
+};
+const fromArrayT = {
+    fromArray,
+};
+
 class AbstractEnumerable extends AbstractLiftable {
 }
 class CreateEnumerable extends AbstractEnumerable {
-    constructor(enumerate) {
+    constructor(_enumerate) {
         super();
-        this.enumerate = enumerate;
+        this._enumerate = _enumerate;
+    }
+    enumerate() {
+        try {
+            return this._enumerate();
+        }
+        catch (cause) {
+            const enumerator = pipe(empty(fromArrayT), enumerate);
+            enumerator.dispose({ cause });
+            return enumerator;
+        }
     }
 }
 const createEnumerable = (enumerate) => new CreateEnumerable(enumerate);
@@ -129,45 +178,6 @@ const operator = (delegate) => {
 const concatAll = () => lift(operator);
 const concatAllT = {
     concatAll,
-};
-
-class ArrayEnumerator extends AbstractEnumerator {
-    constructor(array, index, endIndex) {
-        super();
-        this.array = array;
-        this.index = index;
-        this.endIndex = endIndex;
-    }
-    move() {
-        this.reset();
-        const { array } = this;
-        if (!this.isDisposed) {
-            this.index++;
-            const { index, endIndex } = this;
-            if (index < endIndex) {
-                this.current = array[index];
-            }
-            else {
-                this.dispose();
-            }
-        }
-        return this.hasCurrent;
-    }
-}
-/**
- * Returns an EnumerableLike view over the `values` array.
- *
- * @param values
- */
-const fromArray = (options = {}) => (values) => {
-    var _a, _b;
-    const valuesLength = values.length;
-    const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
-    const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : values.length, valuesLength), 0);
-    return createEnumerable(() => new ArrayEnumerator(values, startIndex - 1, endIndex));
-};
-const fromArrayT = {
-    fromArray,
 };
 
 class IteratorEnumerator extends Enumerator {
@@ -651,31 +661,14 @@ const throwIfEmpty = createThrowIfEmptyLiftedOperator(liftT, class ThrowIfEmptyE
 const throwIfEmptyT = {
     throwIfEmpty,
 };
-class UsingEnumerable extends AbstractEnumerable {
-    constructor(resourceFactory, sourceFactory) {
-        super();
-        this.resourceFactory = resourceFactory;
-        this.sourceFactory = sourceFactory;
-    }
-    enumerate() {
-        try {
-            const resources = this.resourceFactory();
-            const resourcesArray = Array.isArray(resources) ? resources : [resources];
-            const source = this.sourceFactory(...resourcesArray);
-            const enumerator = enumerate(source);
-            for (const r of resourcesArray) {
-                addDisposableDisposeParentOnChildError(enumerator, r);
-            }
-            return enumerator;
-        }
-        catch (cause) {
-            const enumerator = pipe(empty(fromArrayT), enumerate);
-            enumerator.dispose({ cause });
-            return enumerator;
-        }
-    }
-}
-const _using = (resourceFactory, enumerableFactory) => new UsingEnumerable(resourceFactory, enumerableFactory);
+const _using = (resourceFactory, enumerableFactory) => createEnumerable(() => {
+    const resources = resourceFactory();
+    const resourcesArray = Array.isArray(resources) ? resources : [resources];
+    const source = enumerableFactory(...resourcesArray);
+    const enumerator = enumerate(source);
+    pipe(resources, forEach(addToParentAndDisposeOnError(enumerator)));
+    return enumerator;
+});
 const using = _using;
 const usingT = {
     using,

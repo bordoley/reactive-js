@@ -9,13 +9,13 @@ import {
 import {
   DisposableLike,
   DisposableOrTeardown,
+  addChildAndDisposeOnError,
   addDisposable,
   addOnDisposedWithErrorTeardown,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
   addToParentAndDisposeOnError,
   dispose,
-  addChildAndDisposeOnError,
 } from "./disposable";
 import {
   Equality,

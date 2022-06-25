@@ -28,7 +28,6 @@
 
 - [addChildAndDisposeOnError](disposable.md#addchildanddisposeonerror)
 - [addDisposable](disposable.md#adddisposable)
-- [addDisposableDisposeParentOnChildError](disposable.md#adddisposabledisposeparentonchilderror)
 - [addOnDisposedWithError](disposable.md#addondisposedwitherror)
 - [addOnDisposedWithErrorTeardown](disposable.md#addondisposedwitherrorteardown)
 - [addOnDisposedWithoutErrorTeardown](disposable.md#addondisposedwithouterrorteardown)
@@ -85,25 +84,6 @@ ___
 ▸ **addDisposable**(`parent`, `child`): `void`
 
 Add `child` to `parent`, disposing the child when the parent is disposed.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `parent` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `child` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-
-#### Returns
-
-`void`
-
-___
-
-### addDisposableDisposeParentOnChildError
-
-▸ **addDisposableDisposeParentOnChildError**(`parent`, `child`): `void`
-
-Add `child` to `parent`. If `child` is disposed with an error it disposed `parent`.
 
 #### Parameters
 

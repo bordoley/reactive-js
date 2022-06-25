@@ -3,7 +3,7 @@ import { ignore, pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
 import { AbstractDisposableContainer } from './container.mjs';
-import { addDisposable, addDisposableDisposeParentOnChildError } from './disposable.mjs';
+import { addDisposable, addToParentAndDisposeOnError } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 
 class AbstractRunnable extends AbstractSource {
@@ -101,8 +101,7 @@ function concat(...runnables) {
     return createRunnable((sink) => {
         const runnablesLength = runnables.length;
         for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
-            const concatSink = createDelegatingSink(sink);
-            addDisposableDisposeParentOnChildError(sink, concatSink);
+            const concatSink = pipe(createDelegatingSink(sink), addToParentAndDisposeOnError(sink));
             runnables[i].sink(concatSink);
             concatSink.dispose();
         }
@@ -115,8 +114,7 @@ class FlattenSink extends Sink {
     }
     notify(next) {
         const { delegate } = this;
-        const concatSink = createDelegatingSink(delegate);
-        addDisposableDisposeParentOnChildError(delegate, concatSink);
+        const concatSink = pipe(createDelegatingSink(delegate), addToParentAndDisposeOnError(delegate));
         next.sink(concatSink);
         concatSink.dispose();
     }
