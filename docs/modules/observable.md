@@ -1551,9 +1551,6 @@ ___
 
 ▸ **fromPromise**<`T`\>(`factory`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
 
-Converts a `Promise` to an `ObservableLike`. The provided promise factory
-is invoked for each observer to the observable.
-
 #### Type parameters
 
 | Name |
@@ -1562,9 +1559,9 @@ is invoked for each observer to the observable.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<`Promise`<`T`\>\> | Factory function to create a new `Promise` instance. |
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<`Promise`<`T`\>\> |
 
 #### Returns
 
@@ -2169,8 +2166,6 @@ ___
 
 ▸ **subscribeOn**<`T`\>(`scheduler`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
 
-Returns an `ObservableLike` instance that subscribes to the source on the specified `SchedulerLike`.
-
 #### Type parameters
 
 | Name |
@@ -2179,9 +2174,9 @@ Returns an `ObservableLike` instance that subscribes to the source on the specif
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) | `SchedulerLike` instance to use when subscribing to the source. |
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) |
 
 #### Returns
 

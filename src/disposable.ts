@@ -1,4 +1,4 @@
-import { SideEffect, SideEffect1, defer, pipe } from "./functions";
+import { Function1, SideEffect, SideEffect1, defer, pipe } from "./functions";
 import { Option, isNone, isSome, none } from "./option";
 
 /**
@@ -151,6 +151,19 @@ export const addOnDisposedWithoutError = (
   });
 };
 
+export const bindTo =
+  <T extends DisposableLike>(child: DisposableLike): Function1<T, T> =>
+  (parent: T): T => {
+    bindDisposables(parent, child);
+    return parent;
+  };
+
+export const addChildAndDisposeOnError =
+  <T extends DisposableLike>(child: DisposableLike): Function1<T, T> =>
+  (parent: T): T => {
+    addDisposableDisposeParentOnChildError(parent, child);
+    return parent;
+  };
 /**
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
  */

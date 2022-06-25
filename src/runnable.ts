@@ -40,7 +40,9 @@ import {
   createEverySatisfyOperator,
   createKeepOperator,
   createMapOperator,
+  createNever,
   createOnNotifyOperator,
+  createOnSink,
   createPairwiseOperator,
   createReduceOperator,
   createScanOperator,
@@ -189,6 +191,8 @@ export const mapT: Map<RunnableLike<unknown>> = {
   map,
 };
 
+export const never = createNever(createT);
+
 /**
  * Returns an `RunnableLike` that forwards notifications to the provided `onNotify` function.
  *
@@ -206,6 +210,8 @@ export const onNotify: <T>(onNotify: SideEffect1<T>) => RunnableOperator<T, T> =
       }
     },
   );
+
+export const onSink = createOnSink(createT);
 
 export const pairwise: <T>() => RunnableOperator<T, [Option<T>, T]> =
   createPairwiseOperator(

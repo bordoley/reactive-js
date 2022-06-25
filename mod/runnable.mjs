@@ -1,7 +1,7 @@
 /// <reference types="./runnable.d.ts" />
 import { ignore, pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
-import { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
+import { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
 import { AbstractDisposableContainer } from './container.mjs';
 import { addDisposable, addDisposableDisposeParentOnChildError } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
@@ -284,6 +284,7 @@ const map = createMapOperator(liftT, class MapSink extends Sink {
 const mapT = {
     map,
 };
+const never = createNever(createT);
 /**
  * Returns an `RunnableLike` that forwards notifications to the provided `onNotify` function.
  *
@@ -296,6 +297,7 @@ const onNotify = createOnNotifyOperator(liftT, class OnNotifySink extends Sink {
         this.onNotify = onNotify;
     }
 });
+const onSink = createOnSink(createT);
 const pairwise = createPairwiseOperator(liftT, class PairwiseSink extends Sink {
     constructor(delegate) {
         super();
@@ -397,4 +399,4 @@ const usingT = {
     using,
 };
 
-export { Sink, catchError, concat, concatAll, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, onNotify, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };
+export { Sink, catchError, concat, concatAll, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };

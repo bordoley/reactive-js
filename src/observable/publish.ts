@@ -1,4 +1,4 @@
-import { bindDisposables } from "../disposable";
+import { bindTo } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { MulticastObservableLike, ObservableLike } from "../observable";
 
@@ -20,12 +20,11 @@ export const publish =
   ): Function1<ObservableLike<T>, MulticastObservableLike<T>> =>
   observable => {
     const subject = createSubject<T>(options);
-    const srcSubscription = pipe(
+    pipe(
       observable,
       subscribe(scheduler, subject.dispatch, subject),
+      bindTo(subject),
     );
-
-    bindDisposables(srcSubscription, subject);
 
     return subject;
   };

@@ -1,8 +1,8 @@
 import { throws } from "../container";
 import {
   SerialDisposableLike,
-  addDisposableDisposeParentOnChildError,
-  bindDisposables,
+  addChildAndDisposeOnError,
+  bindTo,
   createSerialDisposable,
   dispose,
 } from "../disposable";
@@ -77,14 +77,12 @@ export function timeout<T>(
         );
   const operator = (delegate: Observer<T>) => {
     const durationSubscription = createSerialDisposable();
-    const observer = new TimeoutObserver(
-      delegate,
-      durationObs,
-      durationSubscription,
+    const observer = pipe(
+      new TimeoutObserver(delegate, durationObs, durationSubscription),
+      bindTo(delegate),
+      addChildAndDisposeOnError(durationSubscription),
     );
 
-    bindDisposables(observer, delegate);
-    addDisposableDisposeParentOnChildError(observer, durationSubscription);
     setupDurationSubscription(observer);
 
     return observer;

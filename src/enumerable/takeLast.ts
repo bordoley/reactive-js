@@ -1,8 +1,5 @@
 import { TakeLast, empty } from "../container";
-import {
-  addDisposableDisposeParentOnChildError,
-  bindDisposables,
-} from "../disposable";
+import { addChildAndDisposeOnError, bindTo } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { pipe, raise } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
@@ -41,8 +38,7 @@ class TakeLastEnumerator<T> extends Enumerator<T> {
           last.shift();
         }
       }
-      this.enumerator = pipe(last, fromArray(), enumerate);
-      bindDisposables(this, this.enumerator);
+      this.enumerator = pipe(last, fromArray(), enumerate, bindTo(this));
     }
 
     if (isSome(this.enumerator)) {
@@ -62,11 +58,11 @@ export const takeLast = <T>(
   options: { readonly count?: number } = {},
 ): EnumerableOperator<T, T> => {
   const { count = 1 } = options;
-  const operator = (delegate: Enumerator<T>) => {
-    const enumerator = new TakeLastEnumerator(delegate, count);
-    addDisposableDisposeParentOnChildError(enumerator, delegate);
-    return enumerator;
-  };
+  const operator = (delegate: Enumerator<T>) =>
+    pipe(
+      new TakeLastEnumerator(delegate, count),
+      addChildAndDisposeOnError(delegate),
+    );
   return enumerable =>
     count > 0
       ? pipe(enumerable, lift(operator))

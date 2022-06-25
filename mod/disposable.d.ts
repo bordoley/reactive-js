@@ -1,4 +1,4 @@
-import { SideEffect1, SideEffect } from "./functions.mjs";
+import { SideEffect1, SideEffect, Function1 } from "./functions.mjs";
 import { Option } from "./option.mjs";
 /**
  * A wrapper around a caught error to handle corner cases such
@@ -72,6 +72,8 @@ declare const addDisposableDisposeParentOnChildError: (parent: DisposableLike, c
  * Add `child` to `parent`, only disposing child when `parent` is disposed without an error.
  */
 declare const addOnDisposedWithoutError: (parent: DisposableLike, child: DisposableLike) => void;
+declare const bindTo: <T extends DisposableLike>(child: DisposableLike) => Function1<T, T>;
+declare const addChildAndDisposeOnError: <T extends DisposableLike>(child: DisposableLike) => Function1<T, T>;
 /**
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
  */
@@ -150,4 +152,4 @@ interface DisposableValueLike<T> extends DisposableLike {
  */
 declare const createDisposableValue: <T>(value: T, cleanup: SideEffect1<T>) => DisposableValueLike<T>;
 declare const toAbortSignal: (disposable: DisposableLike) => AbortSignal;
-export { AbstractDisposable, AbstractSerialDisposable, DisposableLike, DisposableOrTeardown, DisposableValueLike, Error, SerialDisposableLike, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addOnDisposedWithoutError, addOnDisposedWithoutErrorTeardown, addTeardown, bindDisposables, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, toAbortSignal, toErrorHandler };
+export { AbstractDisposable, AbstractSerialDisposable, DisposableLike, DisposableOrTeardown, DisposableValueLike, Error, SerialDisposableLike, addChildAndDisposeOnError, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addOnDisposedWithoutError, addOnDisposedWithoutErrorTeardown, addTeardown, bindDisposables, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, toAbortSignal, toErrorHandler };

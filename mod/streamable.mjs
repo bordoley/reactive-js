@@ -1,6 +1,6 @@
 /// <reference types="./streamable.d.ts" />
 import { empty as empty$1, concatWith, fromValue, ignoreElements, endWith, startWith, concatMap } from './container.mjs';
-import { addDisposableDisposeParentOnChildError, bindDisposables } from './disposable.mjs';
+import { addDisposableDisposeParentOnChildError, bindTo } from './disposable.mjs';
 import { pipe, compose, returns, updaterReducer, flip } from './functions.mjs';
 import { AbstractDisposableObservable, createSubject, publish, createObservable, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeT, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, merge, onNotify, dispatchTo, onSubscribe, observable, __memo, __observe, reduce, mapT, concatAllT, takeFirst, withLatestFrom, using, never, takeWhile, scanAsync, switchAll } from './observable.mjs';
 import { sinkInto } from './source.mjs';
@@ -56,9 +56,8 @@ const liftImpl = (streamable, obsOps, reqOps) => {
         const { scheduler } = observer;
         const srcStream = pipe(src, stream(scheduler));
         addDisposableDisposeParentOnChildError(observer, srcStream);
-        const requestSubscription = pipe(requests, map(compose(...reqOps)), subscribe(scheduler, srcStream.dispatch, srcStream));
+        const requestSubscription = pipe(requests, map(compose(...reqOps)), subscribe(scheduler, srcStream.dispatch, srcStream), bindTo(srcStream));
         addDisposableDisposeParentOnChildError(observer, requestSubscription);
-        bindDisposables(srcStream, requestSubscription);
         pipe(srcStream, compose(...obsOps), sinkInto(observer));
     });
     return new LiftedStreamable(op, src, obsOps, reqOps);
@@ -139,8 +138,7 @@ const toStateStore = () => streamable => createStreamable(updates => createObser
     const { scheduler } = observer;
     const stream$1 = pipe(streamable, stream(scheduler));
     addDisposableDisposeParentOnChildError(observer, stream$1);
-    const updatesSubscription = pipe(updates, zipWithLatestFrom(stream$1, (updateState, prev) => updateState(prev)), subscribe(scheduler, stream$1.dispatch, stream$1));
-    bindDisposables(updatesSubscription, stream$1);
+    pipe(updates, zipWithLatestFrom(stream$1, (updateState, prev) => updateState(prev)), subscribe(scheduler, stream$1.dispatch, stream$1), bindTo(stream$1));
     pipe(stream$1, sinkInto(observer));
 }));
 
@@ -168,9 +166,8 @@ const flow = ({ scheduler, } = {}) => observable => {
                     break;
             }
         };
-        const modeSubscription = pipe(modeObs, subscribe(observer.scheduler, onModeChange));
+        const modeSubscription = pipe(modeObs, subscribe(observer.scheduler, onModeChange), bindTo(pausableScheduler));
         addDisposableDisposeParentOnChildError(observer, modeSubscription);
-        bindDisposables(modeSubscription, pausableScheduler);
         pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil), sinkInto(observer));
     });
     return createStreamable(op);
