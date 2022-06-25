@@ -45,7 +45,8 @@ const createSkipFirstLiftedOperator = (m, SkipLiftableState) => (options = {}) =
     return runnable => count > 0 ? pipe(runnable, m.lift(operator)) : runnable;
 };
 const createTakeFirstLiftdOperator = (m, TakeFirstLiftableState) => (options = {}) => {
-    const { count = 1 } = options;
+    var _a;
+    const { count = Math.max((_a = options.count) !== null && _a !== void 0 ? _a : 1, 0) } = options;
     const operator = delegate => pipe(new TakeFirstLiftableState(delegate, count), bindTo(delegate));
     return source => (count > 0 ? pipe(source, m.lift(operator)) : empty(m));
 };

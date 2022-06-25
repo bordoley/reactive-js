@@ -25,11 +25,12 @@ import {
 } from "./functions";
 import { createObservable, createT } from "./observable/createObservable";
 import { fromArrayT } from "./observable/fromArray";
-import { liftSynchronousT } from "./observable/lift";
+import { lift, liftSynchronousT } from "./observable/lift";
 import { mapT } from "./observable/map";
-import { Observer } from "./observable/observer";
+import { Observer, createDelegatingObserver } from "./observable/observer";
 import { subscribe } from "./observable/subscribe";
 import { switchAllT } from "./observable/switchAll";
+import { takeFirst } from "./observable/takeFirst";
 import { Option, none } from "./option";
 import { SchedulerLike } from "./scheduler";
 import {
@@ -174,7 +175,6 @@ export { scanAsync } from "./observable/scanAsync";
 export { share } from "./observable/share";
 export { switchAll, switchAllT } from "./observable/switchAll";
 export { takeFirst, takeFirstT } from "./observable/takeFirst";
-export { takeUntil } from "./observable/takeUntil";
 export { throttle } from "./observable/throttle";
 export { timeout, timeoutError } from "./observable/timeout";
 export { withLatestFrom } from "./observable/withLatestFrom";
@@ -426,6 +426,21 @@ export const takeLast: <T>(options?: {
 
 export const takeLastT: TakeLast<ObservableLike<unknown>> = {
   takeLast,
+};
+
+export const takeUntil = <T>(
+  notifier: ObservableLike<unknown>,
+): ObservableOperator<T, T> => {
+  const operator = (delegate: Observer<T>) => {
+    const takeUntilObserver: Observer<T> = pipe(
+      createDelegatingObserver(delegate),
+      bindTo(delegate),
+      bindTo(pipe(notifier, takeFirst(), subscribe(delegate.scheduler))),
+    );
+
+    return takeUntilObserver;
+  };
+  return lift(operator);
 };
 
 /**

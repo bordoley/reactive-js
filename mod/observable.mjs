@@ -2,7 +2,7 @@
 import { AbstractDisposableContainer, empty, fromValue, throws, concatMap } from './container.mjs';
 import { addDisposableDisposeParentOnChildError, dispose, addOnDisposedWithoutErrorTeardown, AbstractDisposable, addTeardown, addDisposable, disposed, createSerialDisposable, bindTo, addChildAndDisposeOnError, toErrorHandler } from './disposable.mjs';
 import { pipe, raise, ignore, arrayEquality, defer as defer$1, compose, returns } from './functions.mjs';
-import { AbstractSource, AbstractDisposableSource, sinkInto, createMapOperator, createUsing, createNever, createOnSink, createOnNotifyOperator, createTakeFirstOperator, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
+import { AbstractSource, AbstractDisposableSource, sinkInto, createMapOperator, createTakeFirstOperator, createUsing, createNever, createOnSink, createOnNotifyOperator, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -277,6 +277,18 @@ const switchAllInstance = lift(operator);
 const switchAll = () => switchAllInstance;
 const switchAllT = {
     concatAll: switchAll,
+};
+
+const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftSynchronousT }, class TakeFirstObserver extends Observer {
+    constructor(delegate, maxCount) {
+        super(delegate.scheduler);
+        this.delegate = delegate;
+        this.maxCount = maxCount;
+        this.count = 0;
+    }
+});
+const takeFirstT = {
+    takeFirst,
 };
 
 const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
@@ -990,18 +1002,6 @@ function retry(predicate) {
     return repeatObs(retryPredicate);
 }
 
-const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftSynchronousT }, class TakeFirstObserver extends Observer {
-    constructor(delegate, maxCount) {
-        super(delegate.scheduler);
-        this.delegate = delegate;
-        this.maxCount = maxCount;
-        this.count = 0;
-    }
-});
-const takeFirstT = {
-    takeFirst,
-};
-
 const notifyDelegate = (observer) => {
     if (observer.queue.length > 0 && observer.hasLatest) {
         observer.hasLatest = false;
@@ -1093,14 +1093,6 @@ const share = (scheduler, options) => source => {
         pipe(multicast, sinkInto(observer));
         addTeardown(observer, teardown);
     });
-};
-
-const takeUntil = (notifier) => {
-    const operator = (delegate) => {
-        const takeUntilObserver = pipe(createDelegatingObserver(delegate), bindTo(delegate), bindTo(pipe(notifier, subscribe(delegate.scheduler, () => dispose()(takeUntilObserver)))));
-        return takeUntilObserver;
-    };
-    return lift(operator);
 };
 
 const setupDurationSubscription$1 = (observer, next) => {
@@ -1598,6 +1590,13 @@ const takeLast = createTakeLastOperator({ ...fromArrayT, ...liftSynchronousT }, 
 });
 const takeLastT = {
     takeLast,
+};
+const takeUntil = (notifier) => {
+    const operator = (delegate) => {
+        const takeUntilObserver = pipe(createDelegatingObserver(delegate), bindTo(delegate), bindTo(pipe(notifier, takeFirst(), subscribe(delegate.scheduler))));
+        return takeUntilObserver;
+    };
+    return lift(operator);
 };
 /**
  * Returns an `ObservableLike` which emits values emitted by the source as long
