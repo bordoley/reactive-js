@@ -17,8 +17,8 @@ import {
 } from "./container";
 import {
   DisposableLike,
-  addDisposableDisposeParentOnChildError,
   dispose,
+  addToParentAndDisposeOnError,
 } from "./disposable";
 import { concatAll } from "./enumerable/concatAll";
 import { AbstractEnumerable } from "./enumerable/enumerable";
@@ -54,7 +54,7 @@ import {
   createThrowIfEmptyLiftedOperator,
 } from "./liftable";
 import { Option, isSome, none } from "./option";
-import { empty as emptyArray } from "./readonlyArray";
+import { empty as emptyArray, forEach } from "./readonlyArray";
 
 /**
  * Interface for iterating a Container of items.
@@ -475,14 +475,11 @@ class UsingEnumerable<
   enumerate(): Enumerator<T> {
     try {
       const resources = this.resourceFactory();
-
       const resourcesArray = Array.isArray(resources) ? resources : [resources];
       const source = this.sourceFactory(...resourcesArray);
       const enumerator = enumerate(source);
 
-      for (const r of resourcesArray) {
-        addDisposableDisposeParentOnChildError(enumerator, r);
-      }
+      pipe(resources, forEach(addToParentAndDisposeOnError(enumerator)));
 
       return enumerator;
     } catch (cause) {

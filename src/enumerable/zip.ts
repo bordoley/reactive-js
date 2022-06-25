@@ -1,8 +1,8 @@
 import { Zip } from "../container";
-import { addDisposableDisposeParentOnChildError } from "../disposable";
+import { addToParentAndDisposeOnError } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { pipe } from "../functions";
-import { everySatisfy, map } from "../readonlyArray";
+import { everySatisfy, forEach, map } from "../readonlyArray";
 import { createEnumerable } from "./enumerable";
 import {
   AbstractEnumerator,
@@ -48,9 +48,7 @@ export const zipEnumerators = <T>(
   enumerators: readonly Enumerator<T>[],
 ): Enumerator<readonly T[]> => {
   const enumerator = new ZipEnumerator(enumerators);
-  for (const delegate of enumerators) {
-    addDisposableDisposeParentOnChildError(enumerator, delegate);
-  }
+  pipe(enumerators, forEach(addToParentAndDisposeOnError(enumerator)));
   return enumerator;
 };
 

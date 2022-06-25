@@ -10,5 +10,9 @@ const length = (arr) => arr.length;
 const map = (mapper) => arr => arr.map(mapper);
 const reduce = (reducer, initialValue) => arr => arr.reduce(reducer, initialValue());
 const reduceRight = (reducer, initialValue) => arr => arr.reduceRight(reducer, initialValue());
+const forEach = (f) => arr => {
+    arr.forEach(f);
+    return arr;
+};
 
-export { empty, everySatisfy, fromObject, join, keep, keepType, length, map, reduce, reduceRight };
+export { empty, everySatisfy, forEach, fromObject, join, keep, keepType, length, map, reduce, reduceRight };

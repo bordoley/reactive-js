@@ -1,4 +1,4 @@
-import { Function1, Predicate, TypePredicate, Reducer, Factory } from "./functions.mjs";
+import { Function1, Predicate, TypePredicate, Reducer, Factory, SideEffect1 } from "./functions.mjs";
 declare const empty: ReadonlyArray<any>;
 declare type ReadonlyArrayOperator<TA, TB> = Function1<readonly TA[], readonly TB[]>;
 declare const everySatisfy: <T>(predicate: Predicate<T>) => Function1<readonly T[], boolean>;
@@ -13,4 +13,5 @@ declare const length: (arr: readonly unknown[]) => number;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => ReadonlyArrayOperator<TA, TB>;
 declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => Function1<readonly T[], TAcc>;
 declare const reduceRight: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => Function1<readonly T[], TAcc>;
-export { ReadonlyArrayOperator, empty, everySatisfy, fromObject, join, keep, keepType, length, map, reduce, reduceRight };
+declare const forEach: <T>(f: SideEffect1<T>) => Function1<readonly T[], readonly T[]>;
+export { ReadonlyArrayOperator, empty, everySatisfy, forEach, fromObject, join, keep, keepType, length, map, reduce, reduceRight };
