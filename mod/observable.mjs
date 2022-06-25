@@ -34,29 +34,17 @@ const createT = {
     create: createObservable,
 };
 
-class DeferObservable extends AbstractObservable {
-    constructor(f, isEnumerable, delay) {
-        super();
-        this.f = f;
-        this.isEnumerable = isEnumerable;
-        this.delay = delay;
-    }
-    sink(observer) {
-        const sideEffect = this.f();
-        const callback = () => sideEffect(observer);
-        const schedulerSubscription = pipe(observer.scheduler, schedule(callback, this));
-        addDisposableDisposeParentOnChildError(observer, schedulerSubscription);
-    }
-}
-const deferSynchronous = (factory) => new DeferObservable(factory, true, 0);
-const defer = (factory, options = {}) => {
-    const { delay = 0 } = options;
-    return new DeferObservable(factory, false, delay);
-};
+const defer = (factory, options) => createObservable(observer => {
+    const sideEffect = factory();
+    const callback = () => sideEffect(observer);
+    const schedulerSubscription = pipe(observer.scheduler, schedule(callback, options));
+    addDisposableDisposeParentOnChildError(observer, schedulerSubscription);
+});
 
-const deferEmpty = () => (observer) => {
-    pipe(observer, dispose());
-};
+const deferEmpty = createObservable(observer => {
+    observer.dispose();
+});
+deferEmpty.isEnumerable = true;
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
  * An optional `startIndex` in the array maybe specified,
@@ -71,9 +59,11 @@ const fromArray = (options = {}) => values => {
     const startIndex = Math.min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, valuesLength);
     const endIndex = Math.max(Math.min((_c = options.endIndex) !== null && _c !== void 0 ? _c : values.length, valuesLength), 0);
     const count = endIndex - startIndex;
-    const factory = count === 0
-        ? deferEmpty
-        : () => {
+    if (count === 0 && delay === 0) {
+        return deferEmpty;
+    }
+    else {
+        const observable = defer(() => {
             let index = startIndex;
             return (observer) => {
                 while (index < endIndex) {
@@ -88,8 +78,10 @@ const fromArray = (options = {}) => values => {
                 }
                 pipe(observer, dispose());
             };
-        };
-    return delay > 0 ? defer(factory, { delay }) : deferSynchronous(factory);
+        }, options);
+        observable.isEnumerable = delay === 0;
+        return observable;
+    }
 };
 const fromArrayT = {
     fromArray,
@@ -494,8 +486,9 @@ const latest = (observables, mode) => {
             pipe(observable, sinkInto(innerObserver));
         }
     };
-    const isEnumerable = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; }));
-    return isEnumerable ? deferSynchronous(factory) : defer(factory);
+    const observable = defer(factory);
+    observable.isEnumerable = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; }));
+    return observable;
 };
 /**
  * Returns an `ObservableLike` that combines the latest values from
@@ -528,14 +521,8 @@ const createConcatObserver = (delegate, observables, next) => {
     });
     return observer;
 };
-class ConcatObservable extends AbstractObservable {
-    constructor(observables) {
-        super();
-        this.observables = observables;
-        this.isEnumerable = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; }));
-    }
-    sink(observer) {
-        const { observables } = this;
+function concat(...observables) {
+    const observable = createObservable(observer => {
         if (observables.length > 0) {
             const concatObserver = createConcatObserver(observer, observables, 1);
             pipe(observables[0], sinkInto(concatObserver));
@@ -543,10 +530,9 @@ class ConcatObservable extends AbstractObservable {
         else {
             pipe(observer, dispose());
         }
-    }
-}
-function concat(...observables) {
-    return new ConcatObservable(observables);
+    });
+    observable.isEnumerable = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; }));
+    return observable;
 }
 const concatT = {
     concat,
@@ -611,7 +597,8 @@ const usingT = {
  * @param delay The requested delay between emitted items by the observable.
  */
 const fromEnumerator = (options = {}) => f => {
-    const { delay = 0 } = options;
+    var _a;
+    const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
     const result = using(f, enumerator => defer(() => (observer) => {
         while (enumerator.move()) {
             observer.notify(enumerator.current);
@@ -686,7 +673,8 @@ const fromPromise = (factory) => createObservable(({ dispatcher }) => {
  * @param delay The requested delay between emitted items by the observable.
  */
 const generate = (generator, initialValue, options = {}) => {
-    const { delay = 0 } = options;
+    var _a;
+    const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
     const factory = () => {
         let acc = initialValue();
         return (observer) => {
@@ -697,7 +685,9 @@ const generate = (generator, initialValue, options = {}) => {
             }
         };
     };
-    return delay > 0 ? defer(factory, options) : deferSynchronous(factory);
+    const observable = defer(factory, options);
+    observable.isEnumerable = delay === 0;
+    return observable;
 };
 
 const createMergeObserver = (delegate, count, ctx) => {
@@ -1310,7 +1300,9 @@ class EnumeratorScheduler extends AbstractEnumerator {
     requestYield() {
         // No-Op: We yield whenever the continuation is running.
     }
-    schedule(continuation, { delay } = { delay: 0 }) {
+    schedule(continuation, options = {}) {
+        var _a;
+        const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
         addDisposable(this, continuation);
         if (!continuation.isDisposed && delay === 0) {
             this.continuations.push(continuation);
@@ -1421,26 +1413,23 @@ class ZipObserver extends Observer {
         }
     }
 }
-class ZipObservable extends AbstractObservable {
-    constructor(observables) {
-        super();
-        this.observables = observables;
-        this.isEnumerable = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; }));
-    }
-    sink(observer) {
+const _zip = (...observables) => {
+    const isEnumerable = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; }));
+    const zipObservable = createObservable(observer => {
         var _a;
-        const { observables } = this;
         const count = observables.length;
-        if (this.isEnumerable) {
-            const observable = using(defer$1(observables, map$1(enumerate)), (...enumerators) => pipe(enumerators, zipEnumerators, returns, fromEnumerator()));
-            pipe(observable, sinkInto(observer));
+        if (isEnumerable) {
+            debugger;
+            const zipped = using(defer$1(observables, map$1(enumerate)), (...enumerators) => pipe(enumerators, zipEnumerators, returns, fromEnumerator()));
+            zipped.isEnumerable = true;
+            pipe(zipped, sinkInto(observer));
         }
         else {
             const enumerators = [];
             for (let index = 0; index < count; index++) {
-                const observable = observables[index];
-                if ((_a = observable.isEnumerable) !== null && _a !== void 0 ? _a : false) {
-                    const enumerator = enumerate(observable);
+                const next = observables[index];
+                if ((_a = next.isEnumerable) !== null && _a !== void 0 ? _a : false) {
+                    const enumerator = enumerate(next);
                     enumerator.move();
                     enumerators.push(enumerator);
                 }
@@ -1448,14 +1437,15 @@ class ZipObservable extends AbstractObservable {
                     const innerObserver = new ZipObserver(observer, enumerators);
                     addDisposableDisposeParentOnChildError(observer, innerObserver);
                     addOnDisposedWithoutErrorTeardown(innerObserver, onDisposed);
-                    pipe(observable, sinkInto(innerObserver));
+                    pipe(next, sinkInto(innerObserver));
                     enumerators.push(innerObserver.enumerator);
                 }
             }
         }
-    }
-}
-const _zip = (...observables) => new ZipObservable(observables);
+    });
+    zipObservable.isEnumerable = isEnumerable;
+    return zipObservable;
+};
 /**
  * Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
  * in order, of each of its input sources.

@@ -4,8 +4,8 @@ import { addDisposableDisposeParentOnChildError, bindDisposables } from './dispo
 import { pipe, compose, returns, updaterReducer, flip } from './functions.mjs';
 import { AbstractDisposableObservable, createSubject, publish, createObservable, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeT, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, merge, onNotify, dispatchTo, onSubscribe, observable, __memo, __observe, reduce, mapT, concatAllT, takeFirst, withLatestFrom, using, never, takeWhile, scanAsync, switchAll } from './observable.mjs';
 import { sinkInto } from './source.mjs';
-import { isNone, none } from './option.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
+import { none } from './option.mjs';
 import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
 
 class StreamImpl extends AbstractDisposableObservable {
@@ -82,9 +82,13 @@ const _empty = createStreamable(_ => empty$1(fromArrayT));
  * Returns an empty `StreamableLike` that always returns
  * a disposed `StreamLike` instance.
  */
-const empty = (options) => isNone(options)
-    ? _empty
-    : createStreamable(_ => empty$1(fromArrayT, options));
+const empty = (options = {}) => {
+    var _a;
+    const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
+    return delay === 0
+        ? _empty
+        : createStreamable(_ => empty$1(fromArrayT, options));
+};
 const stream = (scheduler, options) => streamable => streamable.stream(scheduler, options);
 const streamOnSchedulerFactory = (streamable, scheduler, replay) => pipe(streamable, stream(scheduler, { replay }));
 const __stream = (streamable, { replay = 0, scheduler, } = {}) => {
@@ -258,7 +262,8 @@ const asyncGeneratorScanner = (generator, options) => {
  * @param initialValue Factory function to generate the initial accumulator.
  */
 const generate = (generator, initialValue, options = {}) => {
-    const { delay = 0 } = options;
+    var _a;
+    const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
     const op = delay > 0
         ? scanAsync(asyncGeneratorScanner(generator, options), initialValue)
         : scan(generateScanner(generator), initialValue);

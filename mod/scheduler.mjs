@@ -127,6 +127,7 @@ const run = (continuation) => {
     continuation.continue();
 };
 const __yield = (delay = 0) => {
+    delay = Math.max(delay !== null && delay !== void 0 ? delay : 0, 0);
     const scheduler = isNone(currentScheduler)
         ? raise("__yield effect may only be invoked from within a SchedulerContinuation")
         : currentScheduler;
@@ -266,8 +267,9 @@ class PriorityScheduler extends AbstractSerialDisposable {
         this.yieldRequested = true;
     }
     schedule(continuation, options = {}) {
-        let { delay = 0, priority } = options;
-        delay = Math.max(0, delay);
+        var _a;
+        const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
+        let { priority } = options;
         priority = isSome(priority)
             ? priority
             : this.inContinuation
@@ -340,8 +342,9 @@ class SchedulerWithPriorityImpl extends AbstractDisposable {
         this.priorityScheduler.requestYield();
     }
     schedule(continuation, options = {}) {
+        var _a;
         addDisposable(this, continuation);
-        const { delay } = options;
+        const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
         this.priorityScheduler.schedule(continuation, {
             priority: this.priority,
             delay,
@@ -441,8 +444,9 @@ class HostScheduler extends AbstractDisposable {
         this.yieldRequested = true;
     }
     schedule(continuation, options = {}) {
+        var _a;
         addDisposable(this, continuation);
-        const { delay = 0 } = options;
+        const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
         const continuationIsDisposed = continuation.isDisposed;
         if (!continuationIsDisposed && delay > 0) {
             scheduleDelayed(this, continuation, delay);
@@ -524,8 +528,9 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable {
         }
         pipe(this, dispose());
     }
-    schedule(continuation, { delay } = { delay: 0 }) {
-        delay = Math.max(0, delay);
+    schedule(continuation, options = {}) {
+        var _a;
+        const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
         addDisposable(this, continuation);
         if (!continuation.isDisposed) {
             const work = {

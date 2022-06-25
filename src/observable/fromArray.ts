@@ -3,14 +3,14 @@ import { dispose } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { YieldError } from "../scheduler";
-import { defer, deferSynchronous } from "./defer";
+import { createObservable } from "./createObservable";
+import { defer } from "./defer";
 import { Observer } from "./observer";
 
-const deferEmpty =
-  <T>() =>
-  (observer: Observer<T>) => {
-    pipe(observer, dispose());
-  };
+const deferEmpty = createObservable(observer => {
+  observer.dispose();
+});
+(deferEmpty as any).isEnumerable = true;
 
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
@@ -37,31 +37,33 @@ export const fromArray =
     );
     const count = endIndex - startIndex;
 
-    const factory =
-      count === 0
-        ? deferEmpty
-        : () => {
-            let index = startIndex;
-            return (observer: Observer<T>) => {
-              while (index < endIndex) {
-                const value = values[index];
-                index++;
+    if (count === 0 && delay === 0) {
+      return deferEmpty;
+    } else {
+      const observable = defer(() => {
+        let index = startIndex;
+        return (observer: Observer<T>) => {
+          while (index < endIndex) {
+            const value = values[index];
+            index++;
 
-                // Inline yielding logic for performance reasons
-                observer.notify(value);
+            // Inline yielding logic for performance reasons
+            observer.notify(value);
 
-                if (
-                  index < endIndex &&
-                  (delay > 0 || observer.scheduler.shouldYield)
-                ) {
-                  throw new YieldError(delay);
-                }
-              }
-              pipe(observer, dispose());
-            };
-          };
+            if (
+              index < endIndex &&
+              (delay > 0 || observer.scheduler.shouldYield)
+            ) {
+              throw new YieldError(delay);
+            }
+          }
+          pipe(observer, dispose());
+        };
+      }, options);
 
-    return delay > 0 ? defer(factory, { delay }) : deferSynchronous(factory);
+      (observable as any).isEnumerable = delay === 0;
+      return observable;
+    }
   };
 
 export const fromArrayT: FromArray<

@@ -155,7 +155,8 @@ class HostScheduler extends AbstractDisposable implements SchedulerLike {
   ) {
     addDisposable(this, continuation);
 
-    const { delay = 0 } = options;
+    const { delay = Math.max(options.delay ?? 0, 0) } = options;
+
     const continuationIsDisposed = continuation.isDisposed;
     if (!continuationIsDisposed && delay > 0) {
       scheduleDelayed(this, continuation, delay);
