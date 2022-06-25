@@ -1,4 +1,4 @@
-import { Error, addDisposable, addTeardown, dispose } from "../disposable";
+import { Error, addTeardown, addToParent, dispose } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Option, isSome, none } from "../option";
@@ -82,9 +82,11 @@ export const latest = (
     };
 
     for (const observable of observables) {
-      const innerObserver = new LatestObserver(delegate, ctx, mode);
+      const innerObserver = pipe(
+        new LatestObserver(delegate, ctx, mode),
+        addToParent(delegate),
+      );
       addTeardown(innerObserver, onDispose);
-      addDisposable(delegate, innerObserver);
 
       observers.push(innerObserver);
       pipe(observable, sinkInto(innerObserver));

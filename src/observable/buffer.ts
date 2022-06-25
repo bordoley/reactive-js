@@ -3,8 +3,8 @@ import {
   Error,
   SerialDisposableLike,
   addChildAndDisposeOnError,
-  addDisposable,
   addTeardown,
+  addToParent,
   createSerialDisposable,
   dispose,
   disposed,
@@ -102,8 +102,8 @@ export function buffer<T>(
         durationSubscription,
       ),
       addChildAndDisposeOnError(durationSubscription),
+      addToParent(delegate),
     );
-    addDisposable(delegate, observer);
     addTeardown(observer, onDispose);
     return observer;
   };

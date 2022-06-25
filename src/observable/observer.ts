@@ -2,9 +2,9 @@ import { AbstractDisposableContainer } from "../container";
 import {
   AbstractDisposable,
   Error,
-  addDisposable,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
+  addToParent,
   addToParentAndDisposeOnError,
   dispose,
 } from "../disposable";
@@ -89,9 +89,11 @@ export class Observer<T>
 
   get dispatcher(): DispatcherLike<T> {
     if (isNone(this._dispatcher)) {
-      const dispatcher = new ObserverDelegatingDispatcher(this);
+      const dispatcher = pipe(
+        new ObserverDelegatingDispatcher(this),
+        addToParent(this),
+      );
       addTeardown(dispatcher, onDispose);
-      addDisposable(this, dispatcher);
       this._dispatcher = dispatcher;
     }
 

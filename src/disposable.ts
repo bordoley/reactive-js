@@ -125,6 +125,20 @@ export const bindTo =
     return parent;
   };
 
+export const addChild =
+  <T extends DisposableLike>(child: DisposableLike): Function1<T, T> =>
+  parent => {
+    addDisposable(parent, child);
+    return parent;
+  };
+
+export const addToParent =
+  <T extends DisposableLike>(parent: DisposableLike): Function1<T, T> =>
+  child => {
+    addDisposable(parent, child);
+    return child;
+  };
+
 const addDisposableDisposeParentOnChildError = (
   parent: DisposableLike,
   child: DisposableLike,

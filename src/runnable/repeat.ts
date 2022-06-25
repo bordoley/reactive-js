@@ -1,4 +1,5 @@
-import { Predicate, alwaysTrue } from "../functions";
+import { addToParentAndDisposeOnError } from "../disposable";
+import { Predicate, alwaysTrue, pipe } from "../functions";
 import { isNone } from "../option";
 import { RunnableOperator } from "../runnable";
 import { createRunnable } from "./createRunnable";
@@ -36,7 +37,10 @@ export function repeat<T>(
     createRunnable(sink => {
       let count = 0;
       do {
-        const delegateSink = createDelegatingSink(sink);
+        const delegateSink = pipe(
+          createDelegatingSink(sink),
+          addToParentAndDisposeOnError(sink),
+        );
         runnable.sink(delegateSink);
         delegateSink.dispose();
         count++;

@@ -1,5 +1,5 @@
-import { AbstractDisposable, addDisposable } from "../disposable";
-import { Function1 } from "../functions";
+import { AbstractDisposable, addDisposable, addToParent } from "../disposable";
+import { Function1, pipe } from "../functions";
 import {
   PrioritySchedulerLike,
   SchedulerContinuationLike,
@@ -56,11 +56,8 @@ class SchedulerWithPriorityImpl
  */
 export const toSchedulerWithPriority =
   (priority: number): Function1<PrioritySchedulerLike, SchedulerLike> =>
-  priorityScheduler => {
-    const scheduler = new SchedulerWithPriorityImpl(
-      priorityScheduler,
-      priority,
+  priorityScheduler =>
+    pipe(
+      new SchedulerWithPriorityImpl(priorityScheduler, priority),
+      addToParent(priorityScheduler),
     );
-    addDisposable(priorityScheduler, scheduler);
-    return scheduler;
-  };

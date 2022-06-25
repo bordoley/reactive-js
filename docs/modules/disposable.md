@@ -26,12 +26,14 @@
 
 ### Functions
 
+- [addChild](disposable.md#addchild)
 - [addChildAndDisposeOnError](disposable.md#addchildanddisposeonerror)
 - [addDisposable](disposable.md#adddisposable)
 - [addOnDisposedWithError](disposable.md#addondisposedwitherror)
 - [addOnDisposedWithErrorTeardown](disposable.md#addondisposedwitherrorteardown)
 - [addOnDisposedWithoutErrorTeardown](disposable.md#addondisposedwithouterrorteardown)
 - [addTeardown](disposable.md#addteardown)
+- [addToParent](disposable.md#addtoparent)
 - [addToParentAndDisposeOnError](disposable.md#addtoparentanddisposeonerror)
 - [bindTo](disposable.md#bindto)
 - [createDisposable](disposable.md#createdisposable)
@@ -56,6 +58,28 @@
 A disposed `DisposableLike` instance.
 
 ## Functions
+
+### addChild
+
+▸ **addChild**<`T`\>(`child`): [`Function1`](functions.md#function1)<`T`, `T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `child` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, `T`\>
+
+___
 
 ### addChildAndDisposeOnError
 
@@ -171,6 +195,28 @@ Add `teardown` to `parent`, invoking `teardown` when `parent` is disposed.
 #### Returns
 
 `void`
+
+___
+
+### addToParent
+
+▸ **addToParent**<`T`\>(`parent`): [`Function1`](functions.md#function1)<`T`, `T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `parent` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, `T`\>
 
 ___
 

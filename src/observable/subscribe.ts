@@ -1,4 +1,4 @@
-import { DisposableLike, addDisposable } from "../disposable";
+import { DisposableLike, addToParent } from "../disposable";
 import { Function1, SideEffect1, ignore, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { none } from "../option";
@@ -47,8 +47,10 @@ export function subscribe<T>(
   onNotifyThis: unknown = none,
 ): Function1<ObservableLike<T>, DisposableLike> {
   return (observable: ObservableLike<T>): DisposableLike => {
-    const observer = new DefaultObserver(scheduler, onNotify, onNotifyThis);
-    addDisposable(scheduler, observer);
+    const observer = pipe(
+      new DefaultObserver(scheduler, onNotify, onNotifyThis),
+      addToParent(scheduler),
+    );
 
     pipe(observable, sinkInto(observer));
     return observer;

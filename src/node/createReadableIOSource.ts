@@ -2,7 +2,7 @@ import fs from "fs";
 import { Readable } from "stream";
 import {
   DisposableValueLike,
-  addDisposable,
+  addChild,
   addToParentAndDisposeOnError,
   dispose,
 } from "../disposable";
@@ -18,11 +18,13 @@ export const createReadableIOSource = (
     createObservable(observer => {
       const { dispatcher } = observer;
 
-      const readable = pipe(factory(), addToParentAndDisposeOnError(observer));
+      const readable = pipe(
+        factory(),
+        addToParentAndDisposeOnError(observer),
+        addChild(dispatcher),
+      );
       const readableValue = readable.value;
       readableValue.pause();
-
-      addDisposable(readable, dispatcher);
 
       pipe(
         mode,

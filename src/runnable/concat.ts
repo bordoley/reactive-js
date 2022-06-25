@@ -1,4 +1,4 @@
-import { addDisposable, addToParentAndDisposeOnError } from "../disposable";
+import { addToParent, addToParentAndDisposeOnError } from "../disposable";
 import { pipe } from "../functions";
 import { RunnableLike, RunnableOperator } from "../runnable";
 import { createRunnable } from "./createRunnable";
@@ -48,10 +48,9 @@ class FlattenSink<T> extends Sink<RunnableLike<T>> {
   }
 }
 
-const _concatAll = lift(delegate => {
-  const sink = new FlattenSink(delegate);
-  addDisposable(delegate, sink);
-  return sink;
-});
+const _concatAll = lift(delegate =>
+  pipe(new FlattenSink(delegate), addToParent(delegate)),
+);
+
 export const concatAll = <T>(): RunnableOperator<RunnableLike<T>, T> =>
   _concatAll;

@@ -10,10 +10,10 @@ import {
   DisposableLike,
   DisposableOrTeardown,
   addChildAndDisposeOnError,
-  addDisposable,
   addOnDisposedWithErrorTeardown,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
+  addToParent,
   addToParentAndDisposeOnError,
   dispose,
 } from "./disposable";
@@ -119,8 +119,7 @@ export const createCatchErrorOperator =
     };
 
     const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const sink = new CatchErrorSink(delegate);
-      addDisposable(delegate, sink);
+      const sink = pipe(new CatchErrorSink(delegate), addToParent(delegate));
 
       addTeardown(sink, e => {
         if (isNone(e)) {
