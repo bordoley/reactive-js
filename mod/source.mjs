@@ -1,6 +1,6 @@
 /// <reference types="./source.d.ts" />
 import { fromValue, empty } from './container.mjs';
-import { addDisposable, addTeardown, dispose, addOnDisposedWithErrorTeardown, addToParentAndDisposeOnError, addOnDisposedWithoutErrorTeardown, addDisposableDisposeParentOnChildError } from './disposable.mjs';
+import { addDisposable, addTeardown, dispose, addOnDisposedWithErrorTeardown, addToParentAndDisposeOnError, addOnDisposedWithoutErrorTeardown, addChildAndDisposeOnError } from './disposable.mjs';
 import { pipe, compose, negate, ignore } from './functions.mjs';
 import { AbstractLiftable, AbstractDisposableLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
 import { isNone, none, isSome } from './option.mjs';
@@ -237,7 +237,7 @@ const createOnSink = (m) => (f) => src => m.create(sink => {
         addTeardown(sink, disposable);
     }
     else if (isSome(disposable)) {
-        addDisposableDisposeParentOnChildError(sink, disposable);
+        pipe(sink, addChildAndDisposeOnError(disposable));
     }
 });
 const createUsing = (m) => (resourceFactory, sourceFactory) => m.create(sink => {

@@ -13,15 +13,14 @@ import {
   TakeWhile,
   ThrowIfEmpty,
   Using,
-  empty,
 } from "./container";
 import {
   DisposableLike,
-  dispose,
   addToParentAndDisposeOnError,
+  dispose,
 } from "./disposable";
 import { concatAll } from "./enumerable/concatAll";
-import { AbstractEnumerable } from "./enumerable/enumerable";
+import { createEnumerable } from "./enumerable/enumerable";
 import {
   AbstractDelegatingEnumerator,
   AbstractEnumerator,
@@ -459,45 +458,20 @@ export const throwIfEmptyT: ThrowIfEmpty<EnumerableLike<unknown>> = {
   throwIfEmpty,
 };
 
-class UsingEnumerable<
-  TResource extends DisposableLike,
-  T,
-> extends AbstractEnumerable<T> {
-  constructor(
-    readonly resourceFactory: Factory<TResource | readonly TResource[]>,
-    readonly sourceFactory: (
-      ...resources: readonly TResource[]
-    ) => EnumerableLike<T>,
-  ) {
-    super();
-  }
-
-  enumerate(): Enumerator<T> {
-    try {
-      const resources = this.resourceFactory();
-      const resourcesArray = Array.isArray(resources) ? resources : [resources];
-      const source = this.sourceFactory(...resourcesArray);
-      const enumerator = enumerate(source);
-
-      pipe(resources, forEach(addToParentAndDisposeOnError(enumerator)));
-
-      return enumerator;
-    } catch (cause) {
-      const enumerator = pipe(
-        empty<EnumerableLike<unknown>, T>(fromArrayT),
-        enumerate,
-      );
-      enumerator.dispose({ cause });
-      return enumerator;
-    }
-  }
-}
-
 const _using = <TResource extends DisposableLike, T>(
   resourceFactory: Factory<TResource | readonly TResource[]>,
   enumerableFactory: (...resources: readonly TResource[]) => EnumerableLike<T>,
 ): EnumerableLike<T> =>
-  new UsingEnumerable<TResource, T>(resourceFactory, enumerableFactory);
+  createEnumerable<T>(() => {
+    const resources = resourceFactory();
+    const resourcesArray = Array.isArray(resources) ? resources : [resources];
+    const source = enumerableFactory(...resourcesArray);
+    const enumerator = enumerate(source);
+
+    pipe(resources, forEach(addToParentAndDisposeOnError(enumerator)));
+
+    return enumerator;
+  });
 
 export const using: Using<EnumerableLike<unknown>>["using"] = _using;
 

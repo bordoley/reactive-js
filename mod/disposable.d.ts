@@ -59,10 +59,6 @@ declare const addOnDisposedWithoutErrorTeardown: (parent: DisposableLike, teardo
  * Add `child` to `parent`, only disposing child when `parent` is disposed with an error.
  */
 declare const addOnDisposedWithError: (parent: DisposableLike, child: DisposableLike) => void;
-/**
- * Add `child` to `parent`. If `child` is disposed with an error it disposed `parent`.
- */
-declare const addDisposableDisposeParentOnChildError: (parent: DisposableLike, child: DisposableLike) => void;
 declare const bindTo: <T extends DisposableLike>(child: DisposableLike) => Function1<T, T>;
 declare const addChildAndDisposeOnError: <T extends DisposableLike>(child: DisposableLike) => Function1<T, T>;
 declare const addToParentAndDisposeOnError: <T extends DisposableLike>(parent: DisposableLike) => Function1<T, T>;
@@ -144,4 +140,4 @@ interface DisposableValueLike<T> extends DisposableLike {
  */
 declare const createDisposableValue: <T>(value: T, cleanup: SideEffect1<T>) => DisposableValueLike<T>;
 declare const toAbortSignal: (disposable: DisposableLike) => AbortSignal;
-export { AbstractDisposable, AbstractSerialDisposable, DisposableLike, DisposableOrTeardown, DisposableValueLike, Error, SerialDisposableLike, addChildAndDisposeOnError, addDisposable, addDisposableDisposeParentOnChildError, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addOnDisposedWithoutErrorTeardown, addTeardown, addToParentAndDisposeOnError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, toAbortSignal, toErrorHandler };
+export { AbstractDisposable, AbstractSerialDisposable, DisposableLike, DisposableOrTeardown, DisposableValueLike, Error, SerialDisposableLike, addChildAndDisposeOnError, addDisposable, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addOnDisposedWithoutErrorTeardown, addTeardown, addToParentAndDisposeOnError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, toAbortSignal, toErrorHandler };

@@ -1,7 +1,9 @@
+import { empty } from "../container";
 import { EnumerableLike } from "../enumerable";
-import { Factory } from "../functions";
+import { Factory, pipe } from "../functions";
 import { AbstractLiftable } from "../liftable";
-import { Enumerator } from "./enumerator";
+import { Enumerator, enumerate } from "./enumerator";
+import { fromArrayT } from "./fromArray";
 
 export abstract class AbstractEnumerable<T>
   extends AbstractLiftable<Enumerator<T>>
@@ -11,8 +13,21 @@ export abstract class AbstractEnumerable<T>
 }
 
 class CreateEnumerable<T> extends AbstractEnumerable<T> {
-  constructor(readonly enumerate: Factory<Enumerator<T>>) {
+  constructor(readonly _enumerate: Factory<Enumerator<T>>) {
     super();
+  }
+
+  enumerate(): Enumerator<T> {
+    try {
+      return this._enumerate();
+    } catch (cause) {
+      const enumerator = pipe(
+        empty<EnumerableLike<unknown>, T>(fromArrayT),
+        enumerate,
+      );
+      enumerator.dispose({ cause });
+      return enumerator;
+    }
   }
 }
 
