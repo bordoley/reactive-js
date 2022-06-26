@@ -59,27 +59,19 @@ type TState = {
 
 const windowHistoryReplaceState = (
   self: WindowLocationStream,
-  uri: WindowLocationURI,
+  title: string,
+  uri: string,
 ) => {
-  const { title } = uri;
-  window.history.replaceState(
-    { counter: self.historyCounter, title },
-    "",
-    windowLocationURIToString(uri),
-  );
+  window.history.replaceState({ counter: self.historyCounter, title }, "", uri);
 };
 
 const windowHistoryPushState = (
   self: WindowLocationStream,
-  uri: WindowLocationURI,
+  title: string,
+  uri: string,
 ) => {
-  const { title } = uri;
   self.historyCounter++;
-  window.history.pushState(
-    { counter: self.historyCounter, title },
-    "",
-    windowLocationURIToString(uri),
-  );
+  window.history.pushState({ counter: self.historyCounter, title }, "", uri);
 };
 
 class WindowLocationStream
@@ -172,33 +164,33 @@ class WindowLocationStreamable implements WindowLocationStreamableLike {
     );
 
     const windowLocationStream = new WindowLocationStream(stateStream);
+    this.currentStream = windowLocationStream;
 
     const updateBrowserSubscription = pipe(
       stateStream,
-      onNotify(({ uri }) => {
+      map(({ uri, replace }) => ({
+        uri: windowLocationURIToString(uri),
+        title: uri.title,
+        replace,
+      })),
+      onNotify(({ uri, title }) => {
         // Initialize the history state on page load
         const isInitialPageLoad = windowLocationStream.historyCounter === -1;
         if (isInitialPageLoad) {
           windowLocationStream.historyCounter++;
-          windowHistoryReplaceState(windowLocationStream, uri);
+          windowHistoryReplaceState(windowLocationStream, title, uri);
         }
       }),
-      keep(({ uri }) => {
-        const { title } = uri;
-
-        const uriString = windowLocationURIToString(uri);
+      keep(({ title, uri }) => {
         const titleChanged = document.title !== title;
-        const uriChanged = uriString !== window.location.href;
+        const uriChanged = uri !== window.location.href;
 
         return titleChanged || uriChanged;
       }),
       throttle(100),
-      onNotify(({ replace, uri }) => {
-        const { title } = uri;
-
-        const uriString = windowLocationURIToString(uri);
+      onNotify(({ replace, title, uri }) => {
         const titleChanged = document.title !== title;
-        const uriChanged = uriString !== window.location.href;
+        const uriChanged = uri !== window.location.href;
 
         const shouldReplace = replace || (titleChanged && !uriChanged);
 
@@ -207,7 +199,7 @@ class WindowLocationStreamable implements WindowLocationStreamableLike {
           : windowHistoryPushState;
 
         document.title = title;
-        updateHistoryState(windowLocationStream, uri);
+        updateHistoryState(windowLocationStream, title, uri);
       }),
       subscribe(scheduler),
     );
