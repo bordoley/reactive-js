@@ -1,4 +1,4 @@
-import { add, addToDisposeOnChildError, dispose } from "../disposable";
+import { add, addToAndDisposeParentOnChildError, dispose } from "../disposable";
 import {
   AbstractEnumerator,
   EnumerableLike,
@@ -87,7 +87,7 @@ export const enumerate = <T>(obs: ObservableLike<T>): Enumerator<T> => {
 
   pipe(
     new EnumeratorObserver<T>(scheduler),
-    addToDisposeOnChildError(scheduler),
+    addToAndDisposeParentOnChildError(scheduler),
     sourceFrom(obs),
   );
 

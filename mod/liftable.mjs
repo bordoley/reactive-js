@@ -1,6 +1,6 @@
 /// <reference types="./liftable.d.ts" />
 import { AbstractContainer, AbstractDisposableContainer, empty } from './container.mjs';
-import { bindTo, addDisposeOnChildError, addToDisposeOnChildError, add, onComplete, dispose } from './disposable.mjs';
+import { bindTo, addAndDisposeParentOnChildError, addToAndDisposeParentOnChildError, add, onComplete, dispose } from './disposable.mjs';
 import { raise, strictEquality, pipe } from './functions.mjs';
 import { none } from './option.mjs';
 
@@ -44,7 +44,7 @@ const createSkipFirstLiftedOperator = (m, SkipLiftableState) => (options = {}) =
     const operator = delegate => pipe(new SkipLiftableState(delegate, count), bindTo(delegate));
     return runnable => count > 0 ? pipe(runnable, m.lift(operator)) : runnable;
 };
-const createTakeFirstLiftdOperator = (m, TakeFirstLiftableState) => (options = {}) => {
+const createTakeFirstLiftedOperator = (m, TakeFirstLiftableState) => (options = {}) => {
     var _a;
     const { count = Math.max((_a = options.count) !== null && _a !== void 0 ? _a : 1, 0) } = options;
     const operator = delegate => pipe(new TakeFirstLiftableState(delegate, count), bindTo(delegate));
@@ -54,8 +54,8 @@ const createTakeWhileLiftedOperator = (m, TakeWhileLiftableState) => (predicate,
     const { inclusive = false } = options;
     const operator = delegate => {
         const lifted = pipe(new TakeWhileLiftableState(delegate, predicate, inclusive), m.variance === "covariant"
-            ? addDisposeOnChildError(delegate)
-            : addToDisposeOnChildError(delegate));
+            ? addAndDisposeParentOnChildError(delegate)
+            : addToAndDisposeParentOnChildError(delegate));
         return lifted;
     };
     return m.lift(operator);
@@ -64,7 +64,7 @@ const createThrowIfEmptyLiftedOperator = (m, ThrowIfEmptyLiftableState) => (fact
     const operator = delegate => {
         const lifted = pipe(new ThrowIfEmptyLiftableState(delegate), m.variance === "covariant"
             ? add(delegate)
-            : addToDisposeOnChildError(delegate));
+            : addToAndDisposeParentOnChildError(delegate));
         const { parent, child } = m.variance === "covariant"
             ? { parent: lifted, child: delegate }
             : { parent: delegate, child: lifted };
@@ -87,4 +87,4 @@ const createThrowIfEmptyLiftedOperator = (m, ThrowIfEmptyLiftableState) => (fact
     return m.lift(operator);
 };
 
-export { AbstractDisposableLiftable, AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator };
+export { AbstractDisposableLiftable, AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftedOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator };

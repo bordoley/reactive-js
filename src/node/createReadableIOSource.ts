@@ -3,7 +3,7 @@ import { Readable } from "stream";
 import {
   DisposableValueLike,
   add,
-  addToDisposeOnChildError,
+  addToAndDisposeParentOnChildError,
   dispose,
 } from "../disposable";
 import { Factory, pipe } from "../functions";
@@ -20,7 +20,7 @@ export const createReadableIOSource = (
 
       const readable = pipe(
         factory(),
-        addToDisposeOnChildError(observer),
+        addToAndDisposeParentOnChildError(observer),
         add(dispatcher),
       );
       const readableValue = readable.value;
@@ -38,7 +38,7 @@ export const createReadableIOSource = (
               break;
           }
         }),
-        addToDisposeOnChildError(observer),
+        addToAndDisposeParentOnChildError(observer),
       );
 
       const onData = dispatchTo(dispatcher);

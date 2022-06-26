@@ -1,6 +1,6 @@
 import { Zip } from "../container";
 import {
-  addToDisposeOnChildError,
+  addToAndDisposeParentOnChildError,
   dispose,
   onComplete,
   onDisposed,
@@ -129,7 +129,7 @@ const _zip = (
             onDisposed(() => {
               enumerator.buffer.length = 0;
             }),
-            addToDisposeOnChildError(observer),
+            addToAndDisposeParentOnChildError(observer),
           );
 
           const innerObserver = pipe(
@@ -142,7 +142,7 @@ const _zip = (
                 pipe(observer, dispose());
               }
             }),
-            addToDisposeOnChildError(observer),
+            addToAndDisposeParentOnChildError(observer),
             sourceFrom(next),
           );
 

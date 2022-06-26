@@ -2,7 +2,7 @@ import {
   AbstractDisposable,
   DisposableLike,
   add,
-  addToDisposeOnChildError,
+  addToAndDisposeParentOnChildError,
   createDisposable,
   dispose,
   disposed,
@@ -45,7 +45,7 @@ const scheduleImmediateWithSetImmediate = (
 ) => {
   const disposable = pipe(
     createDisposable(),
-    addToDisposeOnChildError(continuation),
+    addToAndDisposeParentOnChildError(continuation),
     onDisposed(() => clearImmediate(immmediate)),
   );
   const immmediate: ReturnType<typeof setImmediate> = setImmediate(
@@ -73,7 +73,7 @@ const scheduleDelayed = (
 ) => {
   const disposable = pipe(
     createDisposable(),
-    addToDisposeOnChildError(continuation),
+    addToAndDisposeParentOnChildError(continuation),
     onDisposed(_ => clearTimeout(timeout)),
   );
   const timeout: ReturnType<typeof setTimeout> = setTimeout(

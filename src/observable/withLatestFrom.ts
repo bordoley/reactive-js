@@ -1,5 +1,5 @@
 import {
-  addToDisposeOnChildError,
+  addToAndDisposeParentOnChildError,
   bindTo,
   dispose,
   onComplete,
@@ -61,7 +61,7 @@ export const withLatestFrom = <TA, TB, T>(
     pipe(
       other,
       subscribe(observer.scheduler, onNotify, observer),
-      addToDisposeOnChildError(observer),
+      addToAndDisposeParentOnChildError(observer),
       onComplete(() => {
         if (!observer.hasLatest) {
           pipe(observer, dispose());

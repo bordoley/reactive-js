@@ -22,7 +22,7 @@ import {
   AbstractDisposable,
   Error,
   add,
-  addToDisposeOnChildError,
+  addToAndDisposeParentOnChildError,
   createDisposable,
   dispose,
   onError,
@@ -162,7 +162,7 @@ class ReactPriorityScheduler
 
     const callbackNodeDisposable = pipe(
       createDisposable(defer(callbackNode, unstable_cancelCallback)),
-      addToDisposeOnChildError(continuation),
+      addToAndDisposeParentOnChildError(continuation),
     );
   }
 }

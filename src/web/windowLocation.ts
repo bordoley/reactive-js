@@ -1,7 +1,7 @@
 import {
   DisposableOrTeardown,
   Error,
-  addDisposeOnChildError,
+  addAndDisposeParentOnChildError,
   dispose,
 } from "../disposable";
 import { Updater, pipe, raise } from "../functions";
@@ -235,8 +235,8 @@ class WindowLocationStreamable implements WindowLocationStreamableLike {
 
     return pipe(
       windowLocationStream,
-      addDisposeOnChildError(historySubscription),
-      addDisposeOnChildError(updateBrowserSubscription),
+      addAndDisposeParentOnChildError(historySubscription),
+      addAndDisposeParentOnChildError(updateBrowserSubscription),
     );
   }
 }

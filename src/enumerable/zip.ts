@@ -1,5 +1,5 @@
 import { Zip } from "../container";
-import { addToDisposeOnChildError } from "../disposable";
+import { addToAndDisposeParentOnChildError } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { pipe } from "../functions";
 import { everySatisfy, forEach, map } from "../readonlyArray";
@@ -48,7 +48,7 @@ export const zipEnumerators = <T>(
   enumerators: readonly Enumerator<T>[],
 ): Enumerator<readonly T[]> => {
   const enumerator = new ZipEnumerator(enumerators);
-  pipe(enumerators, forEach(addToDisposeOnChildError(enumerator)));
+  pipe(enumerators, forEach(addToAndDisposeParentOnChildError(enumerator)));
   return enumerator;
 };
 

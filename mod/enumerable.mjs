@@ -1,9 +1,9 @@
 /// <reference types="./enumerable.d.ts" />
-import { onDisposed, createSerialDisposable, bindTo, addDisposeOnChildError, addToDisposeOnChildError, dispose } from './disposable.mjs';
+import { onDisposed, createSerialDisposable, bindTo, addAndDisposeParentOnChildError, addToAndDisposeParentOnChildError, dispose } from './disposable.mjs';
 import { pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { AbstractDisposableContainer, empty } from './container.mjs';
 import { none, isNone, isSome } from './option.mjs';
-import { AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
+import { AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftedOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
 import { everySatisfy, map as map$1, forEach, empty as empty$1 } from './readonlyArray.mjs';
 import { createRunnable } from './runnable.mjs';
 
@@ -168,7 +168,7 @@ class ConcatAllEnumerator extends AbstractEnumerator {
 }
 const operator = (delegate) => {
     const inner = createSerialDisposable();
-    return pipe(new ConcatAllEnumerator(delegate, inner), bindTo(inner), addDisposeOnChildError(delegate));
+    return pipe(new ConcatAllEnumerator(delegate, inner), bindTo(inner), addAndDisposeParentOnChildError(delegate));
 };
 /**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
@@ -274,13 +274,13 @@ class RepeatEnumerator extends Enumerator {
     }
     move() {
         if (isNone(this.enumerator)) {
-            this.enumerator = pipe(enumerate(this.src), addToDisposeOnChildError(this));
+            this.enumerator = pipe(enumerate(this.src), addToAndDisposeParentOnChildError(this));
         }
         while (!this.enumerator.move()) {
             this.count++;
             try {
                 if (this.shouldRepeat(this.count)) {
-                    this.enumerator = pipe(enumerate(this.src), addToDisposeOnChildError(this));
+                    this.enumerator = pipe(enumerate(this.src), addToAndDisposeParentOnChildError(this));
                 }
                 else {
                     break;
@@ -346,7 +346,7 @@ class TakeLastEnumerator extends Enumerator {
  */
 const takeLast = (options = {}) => {
     const { count = 1 } = options;
-    const operator = (delegate) => pipe(new TakeLastEnumerator(delegate, count), addDisposeOnChildError(delegate));
+    const operator = (delegate) => pipe(new TakeLastEnumerator(delegate, count), addAndDisposeParentOnChildError(delegate));
     return enumerable => count > 0
         ? pipe(enumerable, lift(operator))
         : // FIXME: why do we need the annotations?
@@ -358,7 +358,7 @@ const takeLastT = {
 
 const enumeratorToRunnable = (f) => {
     const run = (sink) => {
-        const enumerator = pipe(f(), addDisposeOnChildError(sink));
+        const enumerator = pipe(f(), addAndDisposeParentOnChildError(sink));
         while (enumerator.move()) {
             sink.notify(enumerator.current);
         }
@@ -417,7 +417,7 @@ class ZipEnumerator extends AbstractEnumerator {
 }
 const zipEnumerators = (enumerators) => {
     const enumerator = new ZipEnumerator(enumerators);
-    pipe(enumerators, forEach(addToDisposeOnChildError(enumerator)));
+    pipe(enumerators, forEach(addToAndDisposeParentOnChildError(enumerator)));
     return enumerator;
 };
 /**
@@ -588,7 +588,7 @@ const skipFirst = createSkipFirstLiftedOperator(liftT, class SkipFirstEnumerator
 const skipFirstT = {
     skipFirst,
 };
-const takeFirst = createTakeFirstLiftdOperator({ ...fromArrayT, ...liftT }, class TakeFirstEnumerator extends AbstractDelegatingEnumerator {
+const takeFirst = createTakeFirstLiftedOperator({ ...fromArrayT, ...liftT }, class TakeFirstEnumerator extends AbstractDelegatingEnumerator {
     constructor(delegate, maxCount) {
         super(delegate);
         this.maxCount = maxCount;
@@ -664,7 +664,7 @@ const _using = (resourceFactory, enumerableFactory) => createEnumerable(() => {
     const resourcesArray = Array.isArray(resources) ? resources : [resources];
     const source = enumerableFactory(...resourcesArray);
     const enumerator = enumerate(source);
-    pipe(resources, forEach(addToDisposeOnChildError(enumerator)));
+    pipe(resources, forEach(addToAndDisposeParentOnChildError(enumerator)));
     return enumerator;
 });
 const using = _using;

@@ -11,8 +11,8 @@ import {
   DisposableLike,
   Error,
   add,
-  addDisposeOnChildError,
-  addToDisposeOnChildError,
+  addAndDisposeParentOnChildError,
+  addToAndDisposeParentOnChildError,
   bindTo,
   dispose,
   onComplete,
@@ -216,7 +216,7 @@ export const createSkipFirstLiftedOperator =
       count > 0 ? pipe(runnable, m.lift(operator)) : runnable;
   };
 
-export const createTakeFirstLiftdOperator =
+export const createTakeFirstLiftedOperator =
   <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
     m: FromArray<C> & Lift<C, TVariance>,
     TakeFirstLiftableState: new <T>(
@@ -251,8 +251,8 @@ export const createTakeWhileLiftedOperator =
       const lifted = pipe(
         new TakeWhileLiftableState(delegate, predicate, inclusive),
         m.variance === "covariant"
-          ? addDisposeOnChildError(delegate)
-          : addToDisposeOnChildError(delegate),
+          ? addAndDisposeParentOnChildError(delegate)
+          : addToAndDisposeParentOnChildError(delegate),
       );
 
       return lifted;
@@ -275,7 +275,7 @@ export const createThrowIfEmptyLiftedOperator =
         new ThrowIfEmptyLiftableState(delegate),
         m.variance === "covariant"
           ? add(delegate)
-          : addToDisposeOnChildError(delegate),
+          : addToAndDisposeParentOnChildError(delegate),
       );
       const { parent, child } =
         m.variance === "covariant"

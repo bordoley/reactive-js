@@ -25,7 +25,7 @@ const addTo = (parent) => child => {
     addDisposableOrTeardown(parent, child);
     return child;
 };
-const addDisposeOnChildErrorImpl = (parent, child) => {
+const addAndDisposeOnChildErrorImpl = (parent, child) => {
     addDisposableOrTeardown(parent, child);
     addDisposableOrTeardown(child, (error) => {
         if (isSome(error)) {
@@ -33,12 +33,12 @@ const addDisposeOnChildErrorImpl = (parent, child) => {
         }
     });
 };
-const addDisposeOnChildError = (child) => (parent) => {
-    addDisposeOnChildErrorImpl(parent, child);
+const addAndDisposeParentOnChildError = (child) => (parent) => {
+    addAndDisposeOnChildErrorImpl(parent, child);
     return parent;
 };
-const addToDisposeOnChildError = (parent) => (child) => {
-    addDisposeOnChildErrorImpl(parent, child);
+const addToAndDisposeParentOnChildError = (parent) => (child) => {
+    addAndDisposeOnChildErrorImpl(parent, child);
     return child;
 };
 const onDisposed = (teardown) => disposable => {
@@ -169,7 +169,7 @@ class AbstractSerialDisposable extends AbstractDisposable {
         const oldInner = this._inner;
         this._inner = newInner;
         if (oldInner !== newInner) {
-            addDisposeOnChildErrorImpl(this, newInner);
+            addAndDisposeOnChildErrorImpl(this, newInner);
             pipe(oldInner, dispose());
         }
     }
@@ -197,4 +197,4 @@ const toAbortSignal = (disposable) => {
     return abortController.signal;
 };
 
-export { AbstractDisposable, AbstractSerialDisposable, add, addDisposeOnChildError, addTo, addToDisposeOnChildError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
+export { AbstractDisposable, AbstractSerialDisposable, add, addAndDisposeParentOnChildError, addTo, addToAndDisposeParentOnChildError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

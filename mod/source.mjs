@@ -1,8 +1,8 @@
 /// <reference types="./source.d.ts" />
 import { fromValue, empty } from './container.mjs';
-import { addTo, onComplete, dispose, onError, addToDisposeOnChildError, onDisposed, addDisposeOnChildError } from './disposable.mjs';
+import { addTo, onComplete, dispose, onError, addToAndDisposeParentOnChildError, onDisposed, addAndDisposeParentOnChildError } from './disposable.mjs';
 import { pipe, compose, negate, ignore, identity } from './functions.mjs';
-import { AbstractLiftable, AbstractDisposableLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
+import { AbstractLiftable, AbstractDisposableLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftedOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
 import { none, isSome } from './option.mjs';
 import { forEach } from './readonlyArray.mjs';
 
@@ -48,7 +48,7 @@ const createDecodeWithCharsetOperator = (m, DecodeWithCharsetSink) => {
     return (charset = "utf-8") => {
         const operator = (delegate) => {
             const textDecoder = new TextDecoder(charset, { fatal: true });
-            return pipe(new DecodeWithCharsetSink(delegate, textDecoder), addToDisposeOnChildError(delegate), onComplete(() => {
+            return pipe(new DecodeWithCharsetSink(delegate, textDecoder), addToAndDisposeParentOnChildError(delegate), onComplete(() => {
                 const data = textDecoder.decode();
                 if (data.length > 0) {
                     pipe(data, fromValue(m), sinkInto(delegate));
@@ -84,14 +84,11 @@ const createSatisfyOperator = (m, SatisfySink, defaultResult) => {
         }
     };
     return (predicate) => {
-        const operator = (delegate) => {
-            const sink = pipe(new SatisfySink(delegate, predicate), addToDisposeOnChildError(delegate), onComplete(() => {
-                if (!delegate.isDisposed) {
-                    pipe(defaultResult, fromValue(m), sinkInto(delegate));
-                }
-            }));
-            return sink;
-        };
+        const operator = (delegate) => pipe(new SatisfySink(delegate, predicate), addToAndDisposeParentOnChildError(delegate), onComplete(() => {
+            if (!delegate.isDisposed) {
+                pipe(defaultResult, fromValue(m), sinkInto(delegate));
+            }
+        }));
         return m.lift(operator);
     };
 };
@@ -138,7 +135,7 @@ const createReduceOperator = (m, ReduceSink) => {
     };
     return (reducer, initialValue) => {
         const operator = (delegate) => {
-            const sink = pipe(new ReduceSink(delegate, reducer, initialValue()), addToDisposeOnChildError(delegate), onComplete(() => {
+            const sink = pipe(new ReduceSink(delegate, reducer, initialValue()), addToAndDisposeParentOnChildError(delegate), onComplete(() => {
                 pipe(sink.acc, fromValue(m), sinkInto(delegate));
             }));
             return sink;
@@ -174,7 +171,7 @@ const createTakeFirstOperator = (m, TakeFirstSink) => {
             pipe(this, dispose());
         }
     };
-    return createTakeFirstLiftdOperator(m, TakeFirstSink);
+    return createTakeFirstLiftedOperator(m, TakeFirstSink);
 };
 const createTakeLastOperator = (m, TakeLastSink) => {
     TakeLastSink.prototype.notify = function notifyTakeLast(next) {
@@ -188,7 +185,7 @@ const createTakeLastOperator = (m, TakeLastSink) => {
     return (options = {}) => {
         const { count = 1 } = options;
         const operator = (delegate) => {
-            const sink = pipe(new TakeLastSink(delegate, count), addToDisposeOnChildError(delegate), onComplete(() => {
+            const sink = pipe(new TakeLastSink(delegate, count), addToAndDisposeParentOnChildError(delegate), onComplete(() => {
                 pipe(sink.last, m.fromArray(), sinkInto(delegate));
             }));
             return sink;
@@ -217,7 +214,7 @@ const createThrowIfEmptyOperator = (m, ThrowIfEmptySink) => {
     };
     return createThrowIfEmptyLiftedOperator(m, ThrowIfEmptySink);
 };
-const createFromDisposable = (m) => (disposable) => m.create(addToDisposeOnChildError(disposable));
+const createFromDisposable = (m) => (disposable) => m.create(addToAndDisposeParentOnChildError(disposable));
 const createNever = (m) => {
     const neverInstance = m.create(ignore);
     return () => neverInstance;
@@ -228,11 +225,9 @@ const createOnSink = (m) => (f) => src => m.create(sink => {
     pipe(sink, disposable instanceof Function
         ? onDisposed(disposable)
         : isSome(disposable)
-            ? addDisposeOnChildError(disposable)
+            ? addAndDisposeParentOnChildError(disposable)
             : identity);
 });
-const createUsing = (m) => (resourceFactory, sourceFactory) => m.create(sink => {
-    pipe(resourceFactory(), resources => (Array.isArray(resources) ? resources : [resources]), forEach(addToDisposeOnChildError(sink)), (resources) => sourceFactory(...resources), sinkInto(sink));
-});
+const createUsing = (m) => (resourceFactory, sourceFactory) => m.create(sink => pipe(resourceFactory(), resources => (Array.isArray(resources) ? resources : [resources]), forEach(addToAndDisposeParentOnChildError(sink)), (resources) => sourceFactory(...resources), sinkInto(sink)));
 
 export { AbstractDisposableSource, AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto, sourceFrom };
