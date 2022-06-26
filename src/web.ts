@@ -5,6 +5,9 @@ import { StreamableLike } from "./streamable";
 
 export interface WindowLocationURI {
   title: string;
+  // FIXME: Can we enforce non-empty string in the type system
+  // should we enforce valid typing to make sure the various strings are
+  // rfc compliant?
   path: string;
   query: string;
   fragment: string;
