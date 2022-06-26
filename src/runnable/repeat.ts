@@ -1,4 +1,4 @@
-import { addToParentAndDisposeOnError } from "../disposable";
+import { addToDisposeOnChildError } from "../disposable";
 import { Predicate, alwaysTrue, pipe } from "../functions";
 import { isNone } from "../option";
 import { RunnableOperator } from "../runnable";
@@ -39,7 +39,7 @@ export function repeat<T>(
       do {
         const delegateSink = pipe(
           createDelegatingSink(sink),
-          addToParentAndDisposeOnError(sink),
+          addToDisposeOnChildError(sink),
         );
         runnable.sink(delegateSink);
         delegateSink.dispose();

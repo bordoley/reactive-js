@@ -1,5 +1,5 @@
 /// <reference types="./web.d.ts" />
-import { onDisposed, dispose, addChildAndDisposeOnError, toAbortSignal } from './disposable.mjs';
+import { onDisposed, dispose, addDisposeOnChildError, toAbortSignal } from './disposable.mjs';
 import { pipe, raise, returns } from './functions.mjs';
 import { createObservable, AbstractObservable, map, onNotify, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
@@ -165,7 +165,7 @@ class WindowLocationStreamable {
             windowLocationStream.historyCounter = counter;
             windowLocationStream.dispatch(uri, { replace: true });
         }), subscribe(scheduler));
-        return pipe(windowLocationStream, addChildAndDisposeOnError(historySubscription), addChildAndDisposeOnError(updateBrowserSubscription));
+        return pipe(windowLocationStream, addDisposeOnChildError(historySubscription), addDisposeOnChildError(updateBrowserSubscription));
     }
 }
 const windowLocation = new WindowLocationStreamable();

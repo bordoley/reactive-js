@@ -40,10 +40,10 @@ interface DisposableLike {
  */
 declare const dispose: (e?: Error) => Function1<DisposableLike, DisposableLike>;
 declare const bindTo: <T extends DisposableLike>(child: DisposableLike) => Function1<T, T>;
-declare const addChild: <T extends DisposableLike>(child: DisposableLike) => Function1<T, T>;
-declare const addToParent: <T extends DisposableLike>(parent: DisposableLike) => Function1<T, T>;
-declare const addChildAndDisposeOnError: <T extends DisposableLike>(child: DisposableLike) => Function1<T, T>;
-declare const addToParentAndDisposeOnError: <T extends DisposableLike>(parent: DisposableLike) => Function1<T, T>;
+declare const add: <T extends DisposableLike>(child: DisposableLike) => Function1<T, T>;
+declare const addTo: <T extends DisposableLike>(parent: DisposableLike) => Function1<T, T>;
+declare const addDisposeOnChildError: <T extends DisposableLike>(child: DisposableLike) => Function1<T, T>;
+declare const addToDisposeOnChildError: <T extends DisposableLike>(parent: DisposableLike) => Function1<T, T>;
 declare const onDisposed: <T extends DisposableLike>(teardown: SideEffect1<Option<Error>>) => Function1<T, T>;
 declare const onError: <T extends DisposableLike>(teardown: SideEffect1<Error>) => Function1<T, T>;
 declare const onComplete: <T extends DisposableLike>(teardown: SideEffect) => Function1<T, T>;
@@ -125,4 +125,4 @@ interface DisposableValueLike<T> extends DisposableLike {
  */
 declare const createDisposableValue: <T>(value: T, cleanup: SideEffect1<T>) => DisposableValueLike<T>;
 declare const toAbortSignal: (disposable: DisposableLike) => AbortSignal;
-export { AbstractDisposable, AbstractSerialDisposable, DisposableLike, DisposableOrTeardown, DisposableValueLike, Error, SerialDisposableLike, addChild, addChildAndDisposeOnError, addToParent, addToParentAndDisposeOnError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
+export { AbstractDisposable, AbstractSerialDisposable, DisposableLike, DisposableOrTeardown, DisposableValueLike, Error, SerialDisposableLike, add, addDisposeOnChildError, addTo, addToDisposeOnChildError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

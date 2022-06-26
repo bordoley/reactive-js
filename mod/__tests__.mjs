@@ -1,5 +1,5 @@
 /// <reference types="./__tests__.d.ts" />
-import { createDisposable, addChild, dispose, onDisposed, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
+import { createDisposable, add, dispose, onDisposed, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
 import { pipe, defer, raise, increment, sum, returns, alwaysTrue, incrementBy, alwaysFalse, arrayEquality, ignore, identity } from './functions.mjs';
 import { none, isSome } from './option.mjs';
 import { describe, test, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectNone, expectEquals, expectArrayEquals, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
@@ -13,11 +13,11 @@ import { identity as identity$1, __stream, createActionReducer, stream, empty as
 
 const tests$6 = describe("Disposable", describe("AbstractDisposable", test("disposes child disposable when disposed", () => {
     const child = createDisposable();
-    pipe(createDisposable(), addChild(child), dispose());
+    pipe(createDisposable(), add(child), dispose());
     expectTrue(child.isDisposed);
 }), test("adding to disposed disposable disposes the child", () => {
     const child = createDisposable();
-    pipe(createDisposable(), dispose(), addChild(child));
+    pipe(createDisposable(), dispose(), add(child));
     expectTrue(child.isDisposed);
 }), test("disposes teardown function exactly once when disposed", () => {
     const teardown = mockFn();

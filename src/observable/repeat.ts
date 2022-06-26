@@ -1,5 +1,5 @@
 import { Repeat } from "../container";
-import { Error, addToParent, dispose, onDisposed } from "../disposable";
+import { Error, addTo, dispose, onDisposed } from "../disposable";
 import { Function2, Predicate, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { isNone, isSome } from "../option";
@@ -31,7 +31,7 @@ const createRepeatObserver = <T>(
       pipe(
         observable,
         subscribe(delegate.scheduler, delegate.notify, delegate),
-        addToParent(delegate),
+        addTo(delegate),
         onDisposed(doOnDispose),
       );
     }
@@ -39,7 +39,7 @@ const createRepeatObserver = <T>(
 
   return pipe(
     createDelegatingObserver(delegate),
-    addToParent(delegate),
+    addTo(delegate),
     onDisposed(doOnDispose),
   );
 };

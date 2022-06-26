@@ -1,4 +1,4 @@
-import { addChildAndDisposeOnError, dispose, onComplete } from "../disposable";
+import { addDisposeOnChildError, dispose, onComplete } from "../disposable";
 import { Function2, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Option } from "../option";
@@ -83,8 +83,8 @@ export const zipWithLatestFrom = <TA, TB, T>(
 
     pipe(
       delegate,
-      addChildAndDisposeOnError(observer),
-      addChildAndDisposeOnError(otherSubscription),
+      addDisposeOnChildError(observer),
+      addDisposeOnChildError(otherSubscription),
     );
 
     return observer;

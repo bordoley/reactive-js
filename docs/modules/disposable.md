@@ -26,10 +26,10 @@
 
 ### Functions
 
-- [addChild](disposable.md#addchild)
-- [addChildAndDisposeOnError](disposable.md#addchildanddisposeonerror)
-- [addToParent](disposable.md#addtoparent)
-- [addToParentAndDisposeOnError](disposable.md#addtoparentanddisposeonerror)
+- [add](disposable.md#add)
+- [addDisposeOnChildError](disposable.md#adddisposeonchilderror)
+- [addTo](disposable.md#addto)
+- [addToDisposeOnChildError](disposable.md#addtodisposeonchilderror)
 - [bindTo](disposable.md#bindto)
 - [createDisposable](disposable.md#createdisposable)
 - [createDisposableValue](disposable.md#createdisposablevalue)
@@ -57,31 +57,9 @@ A disposed `DisposableLike` instance.
 
 ## Functions
 
-### addChild
+### add
 
-▸ **addChild**<`T`\>(`child`): [`Function1`](functions.md#function1)<`T`, `T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `child` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`T`, `T`\>
-
-___
-
-### addChildAndDisposeOnError
-
-▸ **addChildAndDisposeOnError**<`T`\>(`child`): [`Function1`](functions.md#function1)<`T`, `T`\>
+▸ **add**<`T`\>(`child`): [`Function1`](functions.md#function1)<`T`, `T`\>
 
 #### Type parameters
 
@@ -101,9 +79,31 @@ ___
 
 ___
 
-### addToParent
+### addDisposeOnChildError
 
-▸ **addToParent**<`T`\>(`parent`): [`Function1`](functions.md#function1)<`T`, `T`\>
+▸ **addDisposeOnChildError**<`T`\>(`child`): [`Function1`](functions.md#function1)<`T`, `T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `child` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, `T`\>
+
+___
+
+### addTo
+
+▸ **addTo**<`T`\>(`parent`): [`Function1`](functions.md#function1)<`T`, `T`\>
 
 #### Type parameters
 
@@ -123,9 +123,9 @@ ___
 
 ___
 
-### addToParentAndDisposeOnError
+### addToDisposeOnChildError
 
-▸ **addToParentAndDisposeOnError**<`T`\>(`parent`): [`Function1`](functions.md#function1)<`T`, `T`\>
+▸ **addToDisposeOnChildError**<`T`\>(`parent`): [`Function1`](functions.md#function1)<`T`, `T`\>
 
 #### Type parameters
 

@@ -1,8 +1,8 @@
 import { Writable } from "stream";
 import {
   DisposableValueLike,
-  addChild,
-  addToParentAndDisposeOnError,
+  add,
+  addToDisposeOnChildError,
   dispose,
   onComplete,
 } from "../disposable";
@@ -22,8 +22,8 @@ export const createWritableIOSink = (
 
       const writable = pipe(
         factory(),
-        addToParentAndDisposeOnError(observer),
-        addChild(dispatcher),
+        addToDisposeOnChildError(observer),
+        add(dispatcher),
       );
       const writableValue = writable.value;
 
@@ -38,7 +38,7 @@ export const createWritableIOSink = (
             writableValue.emit(NODE_JS_PAUSE_EVENT);
           }
         }),
-        addToParentAndDisposeOnError(observer),
+        addToDisposeOnChildError(observer),
         onComplete(() => {
           writableValue.end();
         }),

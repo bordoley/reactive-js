@@ -1,4 +1,4 @@
-import { addChildAndDisposeOnError } from "../disposable";
+import { addDisposeOnChildError } from "../disposable";
 import { Factory, Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { RunnableLike, ToRunnable, createRunnable } from "../runnable";
@@ -25,8 +25,8 @@ export const toRunnable =
 
       pipe(
         sink,
-        addChildAndDisposeOnError(scheduler),
-        addChildAndDisposeOnError(subscription),
+        addDisposeOnChildError(scheduler),
+        addDisposeOnChildError(subscription),
       );
 
       scheduler.run();
