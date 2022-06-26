@@ -2,9 +2,9 @@ import { Writable } from "stream";
 import {
   DisposableValueLike,
   addChild,
-  addOnDisposedWithoutErrorTeardown,
   addToParentAndDisposeOnError,
   dispose,
+  onComplete,
 } from "../disposable";
 import { Factory, defer, pipe } from "../functions";
 import { createObservable, dispatchTo, subscribe } from "../observable";
@@ -27,7 +27,7 @@ export const createWritableIOSink = (
       );
       const writableValue = writable.value;
 
-      const streamEventsSubscription = pipe(
+      pipe(
         events,
         subscribe(observer.scheduler, ev => {
           // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
@@ -39,11 +39,10 @@ export const createWritableIOSink = (
           }
         }),
         addToParentAndDisposeOnError(observer),
+        onComplete(() => {
+          writableValue.end();
+        }),
       );
-
-      addOnDisposedWithoutErrorTeardown(streamEventsSubscription, () => {
-        writableValue.end();
-      });
 
       const onDrain = defer("resume", dispatchTo(dispatcher));
       const onFinish = defer(dispatcher, dispose());

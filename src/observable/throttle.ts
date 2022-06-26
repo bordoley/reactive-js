@@ -2,9 +2,9 @@ import { fromValue } from "../container";
 import {
   SerialDisposableLike,
   addChildAndDisposeOnError,
-  addOnDisposedWithoutErrorTeardown,
   addToParentAndDisposeOnError,
   createSerialDisposable,
+  onComplete,
 } from "../disposable";
 import { Function1, pipe } from "../functions";
 import {
@@ -120,8 +120,8 @@ export function throttle<T>(
         durationSubscription,
       ),
       addToParentAndDisposeOnError(delegate),
+      onComplete(onDispose),
     );
-    addOnDisposedWithoutErrorTeardown(observer, onDispose);
     return pipe(observer, addChildAndDisposeOnError(durationSubscription));
   };
   return lift(operator);

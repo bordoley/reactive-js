@@ -1,7 +1,7 @@
 import {
-  addOnDisposedWithoutErrorTeardown,
   addToParentAndDisposeOnError,
   dispose,
+  onComplete,
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
@@ -89,8 +89,8 @@ export const latest = (
       const innerObserver = pipe(
         new LatestObserver(delegate, ctx, mode),
         addToParentAndDisposeOnError(delegate),
+        onComplete(onDispose),
       );
-      addOnDisposedWithoutErrorTeardown(innerObserver, onDispose);
 
       observers.push(innerObserver);
       pipe(observable, sinkInto(innerObserver));

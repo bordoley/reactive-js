@@ -1,4 +1,4 @@
-import { SideEffect1, SideEffect, Function1 } from "./functions.mjs";
+import { SideEffect1, Function1, SideEffect } from "./functions.mjs";
 import { Option } from "./option.mjs";
 /**
  * A wrapper around a caught error to handle corner cases such
@@ -52,10 +52,6 @@ declare const addTeardown: (parent: DisposableLike, teardown: SideEffect1<Option
  */
 declare const addOnDisposedWithErrorTeardown: (parent: DisposableLike, teardown: SideEffect1<Error>) => void;
 /**
- * Add `teardown` to `parent` that is only invoked if `parent` is disposed without an error.
- */
-declare const addOnDisposedWithoutErrorTeardown: (parent: DisposableLike, teardown: SideEffect) => void;
-/**
  * Add `child` to `parent`, only disposing child when `parent` is disposed with an error.
  */
 declare const addOnDisposedWithError: (parent: DisposableLike, child: DisposableLike) => void;
@@ -64,6 +60,8 @@ declare const addChild: <T extends DisposableLike>(child: DisposableLike) => Fun
 declare const addToParent: <T extends DisposableLike>(parent: DisposableLike) => Function1<T, T>;
 declare const addChildAndDisposeOnError: <T extends DisposableLike>(child: DisposableLike) => Function1<T, T>;
 declare const addToParentAndDisposeOnError: <T extends DisposableLike>(parent: DisposableLike) => Function1<T, T>;
+declare const onError: <T extends DisposableLike>(teardown: SideEffect1<Error>) => Function1<T, T>;
+declare const onComplete: <T extends DisposableLike>(teardown: SideEffect) => Function1<T, T>;
 /**
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
  */
@@ -142,4 +140,4 @@ interface DisposableValueLike<T> extends DisposableLike {
  */
 declare const createDisposableValue: <T>(value: T, cleanup: SideEffect1<T>) => DisposableValueLike<T>;
 declare const toAbortSignal: (disposable: DisposableLike) => AbortSignal;
-export { AbstractDisposable, AbstractSerialDisposable, DisposableLike, DisposableOrTeardown, DisposableValueLike, Error, SerialDisposableLike, addChild, addChildAndDisposeOnError, addDisposable, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addOnDisposedWithoutErrorTeardown, addTeardown, addToParent, addToParentAndDisposeOnError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, toAbortSignal, toErrorHandler };
+export { AbstractDisposable, AbstractSerialDisposable, DisposableLike, DisposableOrTeardown, DisposableValueLike, Error, SerialDisposableLike, addChild, addChildAndDisposeOnError, addDisposable, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addTeardown, addToParent, addToParentAndDisposeOnError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, onComplete, onError, toAbortSignal, toErrorHandler };

@@ -85,20 +85,6 @@ export const addOnDisposedWithErrorTeardown = (
   });
 };
 
-/**
- * Add `teardown` to `parent` that is only invoked if `parent` is disposed without an error.
- */
-export const addOnDisposedWithoutErrorTeardown = (
-  parent: DisposableLike,
-  teardown: SideEffect,
-) => {
-  addTeardown(parent, e => {
-    if (isNone(e)) {
-      teardown.call(parent);
-    }
-  });
-};
-
 const toDisposeOnErrorTeardown =
   (disposable: DisposableLike): SideEffect1<Option<Error>> =>
   (error?: Error) => {
@@ -159,6 +145,28 @@ export const addToParentAndDisposeOnError =
   (child: T): T => {
     addDisposableDisposeParentOnChildError(parent, child);
     return child;
+  };
+
+export const onError =
+  <T extends DisposableLike>(teardown: SideEffect1<Error>): Function1<T, T> =>
+  disposable => {
+    addTeardown(disposable, e => {
+      if (isSome(e)) {
+        teardown.call(parent, e);
+      }
+    });
+    return disposable;
+  };
+
+export const onComplete =
+  <T extends DisposableLike>(teardown: SideEffect): Function1<T, T> =>
+  disposable => {
+    addTeardown(disposable, e => {
+      if (isNone(e)) {
+        teardown.call(disposable);
+      }
+    });
+    return disposable;
   };
 
 /**

@@ -12,10 +12,10 @@ import {
   Error,
   addChild,
   addChildAndDisposeOnError,
-  addOnDisposedWithoutErrorTeardown,
   addToParentAndDisposeOnError,
   bindTo,
   dispose,
+  onComplete,
 } from "./disposable";
 import {
   Equality,
@@ -282,22 +282,25 @@ export const createThrowIfEmptyLiftedOperator =
           ? { parent: lifted, child: delegate }
           : { parent: delegate, child: lifted };
 
-      addOnDisposedWithoutErrorTeardown(child, () => {
-        let error: Option<Error> = none;
+      pipe(
+        child,
+        onComplete(() => {
+          let error: Option<Error> = none;
 
-        if (lifted.isEmpty) {
-          let cause: unknown = none;
-          try {
-            cause = factory();
-          } catch (e) {
-            cause = e;
+          if (lifted.isEmpty) {
+            let cause: unknown = none;
+            try {
+              cause = factory();
+            } catch (e) {
+              cause = e;
+            }
+
+            error = { cause };
           }
 
-          error = { cause };
-        }
-
-        pipe(parent, dispose(error));
-      });
+          pipe(parent, dispose(error));
+        }),
+      );
 
       return lifted;
     };

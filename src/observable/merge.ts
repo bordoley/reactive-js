@@ -1,8 +1,8 @@
 import { Concat } from "../container";
 import {
-  addOnDisposedWithoutErrorTeardown,
   addToParentAndDisposeOnError,
   dispose,
+  onComplete,
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike } from "../observable";
@@ -16,19 +16,17 @@ const createMergeObserver = <T>(
   ctx: {
     completedCount: number;
   },
-) => {
-  const observer = pipe(
+) =>
+  pipe(
     createDelegatingObserver(delegate),
     addToParentAndDisposeOnError(delegate),
+    onComplete(() => {
+      ctx.completedCount++;
+      if (ctx.completedCount >= count) {
+        pipe(delegate, dispose());
+      }
+    }),
   );
-  addOnDisposedWithoutErrorTeardown(observer, () => {
-    ctx.completedCount++;
-    if (ctx.completedCount >= count) {
-      pipe(delegate, dispose());
-    }
-  });
-  return observer;
-};
 
 /**
  *  Creates an `ObservableLike` which concurrently emits values from the sources.

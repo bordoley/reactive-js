@@ -1,9 +1,9 @@
 import { ConcatAll } from "../container";
 import {
-  addOnDisposedWithoutErrorTeardown,
   addTeardown,
   addToParentAndDisposeOnError,
   dispose,
+  onComplete,
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
@@ -19,15 +19,11 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
     if (isSome(nextObs)) {
       observer.activeCount++;
 
-      const nextObsSubscription = pipe(
+      pipe(
         nextObs,
         subscribe(observer.scheduler, observer.onNotify),
         addToParentAndDisposeOnError(observer.delegate),
-      );
-
-      addOnDisposedWithoutErrorTeardown(
-        nextObsSubscription,
-        observer.onDispose,
+        onComplete(observer.onDispose),
       );
     } else if (observer.isDisposed) {
       pipe(observer.delegate, dispose());
@@ -100,8 +96,8 @@ export const mergeAll = <T>(
     const observer = pipe(
       new MergeObserver(delegate, maxBufferSize, maxConcurrency),
       addToParentAndDisposeOnError(delegate),
+      onComplete(onDispose),
     );
-    addOnDisposedWithoutErrorTeardown(observer, onDispose);
     addTeardown(delegate, () => {
       observer.queue.length = 0;
     });
