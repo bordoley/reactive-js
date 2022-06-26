@@ -26,6 +26,7 @@
 - [distinctUntilChangedT](runnable.md#distinctuntilchangedt)
 - [everySatisfyT](runnable.md#everysatisfyt)
 - [fromArrayT](runnable.md#fromarrayt)
+- [generateT](runnable.md#generatet)
 - [keepT](runnable.md#keept)
 - [mapT](runnable.md#mapt)
 - [pairwiseT](runnable.md#pairwiset)
@@ -127,6 +128,12 @@ ___
 ### fromArrayT
 
 • `Const` **fromArrayT**: [`FromArray`](../interfaces/container.FromArray.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\>
+
+___
+
+### generateT
+
+• `Const` **generateT**: [`Generate`](../interfaces/container.Generate.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
 
 ___
 

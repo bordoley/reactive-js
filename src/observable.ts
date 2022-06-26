@@ -2,6 +2,7 @@ import {
   DecodeWithCharset,
   DistinctUntilChanged,
   EverySatisfy,
+  Generate,
   Keep,
   Pairwise,
   Reduce,
@@ -21,9 +22,11 @@ import {
   Function2,
   Predicate,
   Reducer,
+  Updater,
   pipe,
 } from "./functions";
 import { createObservable, createT } from "./observable/createObservable";
+import { defer } from "./observable/defer";
 import { dispatchTo } from "./observable/dispatchTo";
 import { fromArrayT } from "./observable/fromArray";
 import { lift, liftSynchronousT } from "./observable/lift";
@@ -34,7 +37,7 @@ import { subscribe } from "./observable/subscribe";
 import { switchAllT } from "./observable/switchAll";
 import { takeFirst } from "./observable/takeFirst";
 import { Option, none } from "./option";
-import { SchedulerLike } from "./scheduler";
+import { SchedulerLike, __yield } from "./scheduler";
 import {
   SourceLike,
   createCatchErrorOperator,
@@ -148,7 +151,6 @@ export {
   fromIterator,
   fromIteratorT,
 } from "./observable/fromIterable";
-export { generate } from "./observable/generate";
 export { merge, mergeT } from "./observable/merge";
 export { never } from "./observable/never";
 export { onSubscribe } from "./observable/onSubscribe";
@@ -277,6 +279,43 @@ export const fromPromise = <T>(
       }
     }, toErrorHandler(dispatcher));
   });
+
+/**
+ * Generates an `ObservableLike` sequence from a generator function
+ * that is applied to an accumulator value with a specified `delay`
+ * between emitted items.
+ *
+ * @param generator the generator function.
+ * @param initialValue Factory function used to generate the initial accumulator.
+ * @param delay The requested delay between emitted items by the observable.
+ */
+export const generate = <T>(
+  generator: Updater<T>,
+  initialValue: Factory<T>,
+  options: { readonly delay?: number } = {},
+): ObservableLike<T> => {
+  const { delay = Math.max(options.delay ?? 0, 0) } = options;
+
+  const factory = () => {
+    let acc = initialValue();
+
+    return (observer: Observer<T>) => {
+      while (true) {
+        acc = generator(acc);
+        observer.notify(acc);
+        __yield(delay);
+      }
+    };
+  };
+
+  const observable = defer(factory, options);
+  (observable as any).isEnumerable = delay === 0;
+  return observable;
+};
+
+export const generateT: Generate<ObservableLike<unknown>> = {
+  generate,
+};
 
 export const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T> =
   createKeepOperator(

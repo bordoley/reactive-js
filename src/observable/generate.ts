@@ -1,3 +1,4 @@
+import { Generate } from "../container";
 import { Factory, Updater } from "../functions";
 import { ObservableLike } from "../observable";
 import { __yield } from "../scheduler";
@@ -35,4 +36,8 @@ export const generate = <T>(
   const observable = defer(factory, options);
   (observable as any).isEnumerable = delay === 0;
   return observable;
+};
+
+export const generateT: Generate<ObservableLike<unknown>> = {
+  generate,
 };

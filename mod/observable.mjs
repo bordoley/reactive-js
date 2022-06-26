@@ -34,13 +34,13 @@ const createT = {
     create: createObservable,
 };
 
-const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
-
 const defer = (factory, options) => createObservable(observer => {
     const sideEffect = factory();
     const callback = () => sideEffect(observer);
     pipe(observer.scheduler, schedule(callback, options), addToAndDisposeParentOnChildError(observer));
 });
+
+const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
 
 const deferEmpty = createObservable(observer => {
     observer.dispose();
@@ -682,33 +682,6 @@ const fromIterable = (options) => {
 };
 const fromIterableT = {
     fromIterable,
-};
-
-/**
- * Generates an `ObservableLike` sequence from a generator function
- * that is applied to an accumulator value with a specified `delay`
- * between emitted items.
- *
- * @param generator the generator function.
- * @param initialValue Factory function used to generate the initial accumulator.
- * @param delay The requested delay between emitted items by the observable.
- */
-const generate = (generator, initialValue, options = {}) => {
-    var _a;
-    const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
-    const factory = () => {
-        let acc = initialValue();
-        return (observer) => {
-            while (true) {
-                acc = generator(acc);
-                observer.notify(acc);
-                __yield(delay);
-            }
-        };
-    };
-    const observable = defer(factory, options);
-    observable.isEnumerable = delay === 0;
-    return observable;
 };
 
 const createMergeObserver = (delegate, count, ctx) => pipe(createDelegatingObserver(delegate), addToAndDisposeParentOnChildError(delegate), onComplete(() => {
@@ -1415,6 +1388,35 @@ const fromPromise = (factory) => createObservable(({ dispatcher }) => {
         }
     }, toErrorHandler(dispatcher));
 });
+/**
+ * Generates an `ObservableLike` sequence from a generator function
+ * that is applied to an accumulator value with a specified `delay`
+ * between emitted items.
+ *
+ * @param generator the generator function.
+ * @param initialValue Factory function used to generate the initial accumulator.
+ * @param delay The requested delay between emitted items by the observable.
+ */
+const generate = (generator, initialValue, options = {}) => {
+    var _a;
+    const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
+    const factory = () => {
+        let acc = initialValue();
+        return (observer) => {
+            while (true) {
+                acc = generator(acc);
+                observer.notify(acc);
+                __yield(delay);
+            }
+        };
+    };
+    const observable = defer(factory, options);
+    observable.isEnumerable = delay === 0;
+    return observable;
+};
+const generateT = {
+    generate,
+};
 const keep = createKeepOperator(liftSynchronousT, class KeepObserver extends Observer {
     constructor(delegate, predicate) {
         super(delegate.scheduler);
@@ -1537,4 +1539,4 @@ const throwIfEmptyT = {
     throwIfEmpty,
 };
 
-export { AbstractDisposableObservable, AbstractObservable, Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, createT, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AbstractDisposableObservable, AbstractObservable, Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, createT, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, generateT, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

@@ -5,6 +5,7 @@ import {
   DecodeWithCharset,
   DistinctUntilChanged,
   EverySatisfy,
+  Generate,
   Keep,
   Map,
   Pairwise,
@@ -25,10 +26,11 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
+  Updater,
   identity,
 } from "./functions";
 import { Option, none } from "./option";
-import { createT } from "./runnable/createRunnable";
+import { createRunnable, createT } from "./runnable/createRunnable";
 import { fromArrayT } from "./runnable/fromArray";
 import { liftT } from "./runnable/lift";
 import { Sink } from "./runnable/sinks";
@@ -77,7 +79,6 @@ export { createRunnable, createT } from "./runnable/createRunnable";
 export { first } from "./runnable/first";
 export { forEach } from "./runnable/forEach";
 export { fromArray, fromArrayT } from "./runnable/fromArray";
-export { generate } from "./runnable/generate";
 export { last } from "./runnable/last";
 export { repeat } from "./runnable/repeat";
 export { Sink } from "./runnable/sinks";
@@ -154,6 +155,24 @@ export const everySatisfy: <T>(
 
 export const everySatisfyT: EverySatisfy<RunnableLike<unknown>> = {
   everySatisfy,
+};
+
+export const generate = <T>(
+  generator: Updater<T>,
+  initialValue: Factory<T>,
+): RunnableLike<T> => {
+  const run = (sink: Sink<T>) => {
+    let acc = initialValue();
+    while (!sink.isDisposed) {
+      acc = generator(acc);
+      sink.notify(acc);
+    }
+  };
+  return createRunnable(run);
+};
+
+export const generateT: Generate<RunnableLike<unknown>> = {
+  generate,
 };
 
 export const keep: <T>(predicate: Predicate<T>) => RunnableOperator<T, T> =
