@@ -1,4 +1,5 @@
-import { addDisposable, addTeardown } from "../disposable";
+import { addDisposable, onDisposed } from "../disposable";
+import { pipe } from "../functions";
 import { DispatcherLike, SubjectLike } from "../observable";
 import { AbstractDisposableObservable } from "./observable";
 import { Observer } from "./observer";
@@ -39,15 +40,18 @@ class SubjectImpl<T>
     // The idea here is that an onSubscribe function may
     // call next from unscheduled sources such as event handlers.
     // So we marshall those events back to the scheduler.
-    const dispatcher = observer.dispatcher;
+    const { dispatcher } = observer;
 
     if (!this.isDisposed) {
       const { dispatchers } = this;
       dispatchers.add(dispatcher);
 
-      addTeardown(observer, _e => {
-        dispatchers.delete(dispatcher);
-      });
+      pipe(
+        observer,
+        onDisposed(_ => {
+          dispatchers.delete(dispatcher);
+        }),
+      );
     }
 
     for (const next of this.replayed) {

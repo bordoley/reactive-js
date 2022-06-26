@@ -22,9 +22,9 @@ import {
   AbstractDisposable,
   Error,
   addDisposable,
-  addOnDisposedWithErrorTeardown,
   createDisposable,
   dispose,
+  onError,
 } from "./disposable";
 import { Factory, compose, defer, pipe, returns } from "./functions";
 import {
@@ -68,9 +68,8 @@ export const useObservable = <T>(
     const subscription = pipe(
       observable,
       subscribe(scheduler, compose(returns, updateState)),
+      onError(updateError),
     );
-
-    addOnDisposedWithErrorTeardown(subscription, updateError);
 
     return defer(
       // If a scheduler is allocated, then dispose the new scheduler

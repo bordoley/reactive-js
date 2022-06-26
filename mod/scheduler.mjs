@@ -1,5 +1,5 @@
 /// <reference types="./scheduler.d.ts" />
-import { AbstractDisposable, dispose, AbstractSerialDisposable, disposed, addDisposable, addToParent, addTeardown, createDisposable, addToParentAndDisposeOnError } from './disposable.mjs';
+import { AbstractDisposable, dispose, AbstractSerialDisposable, disposed, addDisposable, addToParent, onDisposed, createDisposable, addToParentAndDisposeOnError } from './disposable.mjs';
 import { pipe, raise, alwaysFalse } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 
@@ -301,11 +301,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
         }
     }
 }
-const createPriorityScheduler = (hostScheduler) => {
-    const scheduler = pipe(new PriorityScheduler(hostScheduler), addToParent(hostScheduler));
-    addTeardown(scheduler, clearQueues);
-    return scheduler;
-};
+const createPriorityScheduler = (hostScheduler) => pipe(new PriorityScheduler(hostScheduler), addToParent(hostScheduler), onDisposed(clearQueues));
 /**
  * Creates a new priority scheduler which schedules work using the provided
  * host scheduler.
@@ -376,18 +372,16 @@ const now = supportsPerformanceNow
         }
         : () => Date.now();
 const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
-    const disposable = pipe(createDisposable(), addToParentAndDisposeOnError(continuation));
+    const disposable = pipe(createDisposable(), addToParentAndDisposeOnError(continuation), onDisposed(() => clearImmediate(immmediate)));
     const immmediate = setImmediate(runContinuation, scheduler, continuation, disposable);
-    addTeardown(disposable, () => clearImmediate(immmediate));
 };
 const scheduleImmediateWithMessageChannel = (scheduler, channel, continuation) => {
     channel.port1.onmessage = () => runContinuation(scheduler, continuation, disposed);
     channel.port2.postMessage(null);
 };
 const scheduleDelayed = (scheduler, continuation, delay) => {
-    const disposable = pipe(createDisposable(), addToParentAndDisposeOnError(continuation));
+    const disposable = pipe(createDisposable(), addToParentAndDisposeOnError(continuation), onDisposed(_ => clearTimeout(timeout)));
     const timeout = setTimeout(runContinuation, delay, scheduler, continuation, disposable);
-    addTeardown(disposable, () => clearTimeout(timeout));
 };
 const scheduleImmediate = (scheduler, continuation) => {
     const { messageChannel } = scheduler;
@@ -456,10 +450,10 @@ const createHostScheduler = (options = {}) => {
     if (supportsMessageChannel) {
         const messageChannel = new MessageChannel();
         hostScheduler.messageChannel = messageChannel;
-        addTeardown(hostScheduler, () => {
+        pipe(hostScheduler, onDisposed(_ => {
             messageChannel.port1.close();
             messageChannel.port2.close();
-        });
+        }));
     }
     return hostScheduler;
 };

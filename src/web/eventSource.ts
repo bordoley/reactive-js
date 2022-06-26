@@ -1,4 +1,4 @@
-import { addTeardown } from "../disposable";
+import { onDisposed } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, createObservable } from "../observable";
 import { keep } from "../readonlyArray";
@@ -22,7 +22,17 @@ export const createEventSource = (
   );
   const requestURL = url instanceof URL ? url.toString() : url;
 
-  return createObservable(({ dispatcher }) => {
+  return createObservable(observer => {
+    const dispatcher = pipe(
+      observer.dispatcher,
+      onDisposed(_ => {
+        for (const ev of events) {
+          eventSource.removeEventListener(ev, listener as EventListener);
+        }
+        eventSource.close();
+      }),
+    );
+
     const eventSource = new EventSource(requestURL, options);
     const listener = (ev: MessageEvent) => {
       dispatcher.dispatch({
@@ -31,13 +41,6 @@ export const createEventSource = (
         data: ev.data ?? "",
       });
     };
-
-    addTeardown(dispatcher, _ => {
-      for (const ev of events) {
-        eventSource.removeEventListener(ev, listener as EventListener);
-      }
-      eventSource.close();
-    });
 
     for (const ev of events) {
       eventSource.addEventListener(ev, listener as EventListener);

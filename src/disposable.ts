@@ -71,38 +71,6 @@ export const addTeardown = (
   parent.add(teardown);
 };
 
-/**
- * Add `teardown` to `parent` that is only invoked if `parent` is disposed with an error.
- */
-export const addOnDisposedWithErrorTeardown = (
-  parent: DisposableLike,
-  teardown: SideEffect1<Error>,
-) => {
-  addTeardown(parent, e => {
-    if (isSome(e)) {
-      teardown.call(parent, e);
-    }
-  });
-};
-
-const toDisposeOnErrorTeardown =
-  (disposable: DisposableLike): SideEffect1<Option<Error>> =>
-  (error?: Error) => {
-    if (isSome(error)) {
-      pipe(disposable, dispose(error));
-    }
-  };
-
-/**
- * Add `child` to `parent`, only disposing child when `parent` is disposed with an error.
- */
-export const addOnDisposedWithError = (
-  parent: DisposableLike,
-  child: DisposableLike,
-) => {
-  addTeardown(parent, toDisposeOnErrorTeardown(child));
-};
-
 export const bindTo =
   <T extends DisposableLike>(child: DisposableLike): Function1<T, T> =>
   (parent: T): T => {
@@ -130,7 +98,11 @@ const addDisposableDisposeParentOnChildError = (
   child: DisposableLike,
 ) => {
   addDisposable(parent, child);
-  addOnDisposedWithError(child, parent);
+  addTeardown(child, (error?: Error) => {
+    if (isSome(error)) {
+      pipe(parent, dispose(error));
+    }
+  });
 };
 
 export const addChildAndDisposeOnError =
@@ -147,12 +119,21 @@ export const addToParentAndDisposeOnError =
     return child;
   };
 
+export const onDisposed =
+  <T extends DisposableLike>(
+    teardown: SideEffect1<Option<Error>>,
+  ): Function1<T, T> =>
+  disposable => {
+    addTeardown(disposable, teardown);
+    return disposable;
+  };
+
 export const onError =
   <T extends DisposableLike>(teardown: SideEffect1<Error>): Function1<T, T> =>
   disposable => {
     addTeardown(disposable, e => {
       if (isSome(e)) {
-        teardown.call(parent, e);
+        teardown.call(disposable, e);
       }
     });
     return disposable;
@@ -354,11 +335,8 @@ class DisposableValueImpl<T>
 export const createDisposableValue = <T>(
   value: T,
   cleanup: SideEffect1<T>,
-): DisposableValueLike<T> => {
-  const retval = new DisposableValueImpl(value);
-  addTeardown(retval, defer(value, cleanup));
-  return retval;
-};
+): DisposableValueLike<T> =>
+  pipe(new DisposableValueImpl(value), onDisposed(defer(value, cleanup)));
 
 export const toAbortSignal = (disposable: DisposableLike): AbortSignal => {
   const abortController = new AbortController();

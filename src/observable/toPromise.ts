@@ -1,4 +1,4 @@
-import { addTeardown } from "../disposable";
+import { onDisposed } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Option, isSome, none } from "../option";
@@ -18,22 +18,21 @@ export const toPromise =
       let result: Option<T> = none;
       let hasResult = false;
 
-      const subscription = pipe(
+      pipe(
         observable,
         subscribe(scheduler, next => {
           hasResult = true;
           result = next;
         }),
+        onDisposed(err => {
+          if (isSome(err)) {
+            const { cause } = err;
+            reject(cause);
+          } else if (!hasResult) {
+            reject(new Error("Observable completed without producing a value"));
+          } else {
+            resolve(result as T);
+          }
+        }),
       );
-
-      addTeardown(subscription, err => {
-        if (isSome(err)) {
-          const { cause } = err;
-          reject(cause);
-        } else if (!hasResult) {
-          reject(new Error("Observable completed without producing a value"));
-        } else {
-          resolve(result as T);
-        }
-      });
     });

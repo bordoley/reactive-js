@@ -10,12 +10,12 @@ import {
   DisposableLike,
   DisposableOrTeardown,
   addChildAndDisposeOnError,
-  addOnDisposedWithErrorTeardown,
-  addTeardown,
   addToParent,
   addToParentAndDisposeOnError,
   dispose,
   onComplete,
+  onDisposed,
+  onError,
 } from "./disposable";
 import {
   Equality,
@@ -25,6 +25,7 @@ import {
   Reducer,
   SideEffect1,
   compose,
+  identity,
   ignore,
   negate,
   pipe,
@@ -47,7 +48,7 @@ import {
   createTakeWhileLiftedOperator,
   createThrowIfEmptyLiftedOperator,
 } from "./liftable";
-import { Option, isNone, isSome, none } from "./option";
+import { Option, isSome, none } from "./option";
 import { forEach } from "./readonlyArray";
 
 export interface SinkLike<T> extends LiftedStateLike {
@@ -107,7 +108,7 @@ export const createCatchErrorOperator =
     },
   ) =>
   <T>(
-    onError: Function1<unknown, ContainerOf<C, T> | void>,
+    f: Function1<unknown, ContainerOf<C, T> | void>,
   ): ContainerOperator<C, T, T> => {
     CatchErrorSink.prototype.notify = function notifyDelegate(
       this: {
@@ -118,30 +119,24 @@ export const createCatchErrorOperator =
       this.delegate.notify(next);
     };
 
-    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
-      const sink = pipe(new CatchErrorSink(delegate), addToParent(delegate));
-
-      addTeardown(sink, e => {
-        if (isNone(e)) {
-          pipe(delegate, dispose());
-        }
-      });
-
-      addOnDisposedWithErrorTeardown(sink, e => {
-        try {
-          const result = onError(e.cause) || none;
-          if (isSome(result)) {
-            pipe(result, sinkInto(delegate));
-          } else {
-            pipe(delegate, dispose());
+    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> =>
+      pipe(
+        new CatchErrorSink(delegate),
+        addToParent(delegate),
+        onComplete(() => pipe(delegate, dispose())),
+        onError(e => {
+          try {
+            const result = f(e.cause) || none;
+            if (isSome(result)) {
+              pipe(result, sinkInto(delegate));
+            } else {
+              pipe(delegate, dispose());
+            }
+          } catch (cause) {
+            pipe(delegate, dispose({ cause: { parent: e.cause, cause } }));
           }
-        } catch (cause) {
-          pipe(delegate, dispose({ cause: { parent: e.cause, cause } }));
-        }
-      });
-
-      return sink;
-    };
+        }),
+      );
 
     return m.lift(operator);
   };
@@ -683,11 +678,14 @@ export const createOnSink =
     m.create(sink => {
       pipe(src, sinkInto(sink));
       const disposable = f() || none;
-      if (disposable instanceof Function) {
-        addTeardown(sink, disposable);
-      } else if (isSome(disposable)) {
-        pipe(sink, addChildAndDisposeOnError(disposable));
-      }
+      pipe(
+        sink,
+        disposable instanceof Function
+          ? onDisposed(disposable)
+          : isSome(disposable)
+          ? addChildAndDisposeOnError(disposable)
+          : identity,
+      );
     });
 
 export const createUsing =

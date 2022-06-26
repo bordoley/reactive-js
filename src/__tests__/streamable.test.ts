@@ -6,7 +6,7 @@ import {
   mapTo,
   startWith,
 } from "../container";
-import { Error, addTeardown, dispose } from "../disposable";
+import { Error, dispose, onDisposed } from "../disposable";
 import {
   defer,
   increment,
@@ -155,15 +155,17 @@ export const tests = describe(
 
       let result: number[] = [];
       let disposedTime = 0;
+
       const subscription = pipe(
         emptyStream,
         subscribe(scheduler, x => {
           result.push(x);
         }),
+        onDisposed(_ => {
+          disposedTime = scheduler.now;
+        }),
       );
-      addTeardown(subscription, _ => {
-        disposedTime = scheduler.now;
-      });
+
       scheduler.run();
 
       pipe(result, expectArrayEquals([]));
@@ -583,21 +585,22 @@ export const tests = describe(
 
   test("fromIterable", () => {
     const scheduler = createVirtualTimeScheduler();
+
+    const result: number[] = [];
+    let error: Option<Error> = none;
+
     const enumerator = pipe(
       fromIterable<number>()([1, 2, 3, 4, 5, 6]),
       stream(scheduler),
     );
 
-    const result: number[] = [];
-    let error: Option<Error> = none;
-    const subscription = pipe(
+    pipe(
       enumerator,
       subscribe(scheduler, x => result.push(x)),
+      onDisposed(e => {
+        error = e;
+      }),
     );
-
-    addTeardown(subscription, e => {
-      error = e;
-    });
 
     enumerator.dispatch(none);
     enumerator.dispatch(none);

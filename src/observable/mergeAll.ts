@@ -1,9 +1,9 @@
 import { ConcatAll } from "../container";
 import {
-  addTeardown,
   addToParentAndDisposeOnError,
   dispose,
   onComplete,
+  onDisposed,
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
@@ -30,12 +30,6 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
     }
   }
 };
-
-function onDispose(this: MergeObserver<unknown>) {
-  if (this.queue.length + this.activeCount === 0) {
-    pipe(this.delegate, dispose());
-  }
-}
 
 class MergeObserver<T> extends Observer<ObservableLike<T>> {
   activeCount = 0;
@@ -94,13 +88,19 @@ export const mergeAll = <T>(
   } = options;
   const operator = (delegate: Observer<T>) => {
     const observer = pipe(
-      new MergeObserver(delegate, maxBufferSize, maxConcurrency),
+      delegate,
+      onDisposed(_ => {
+        observer.queue.length = 0;
+      }),
+      delegate => new MergeObserver(delegate, maxBufferSize, maxConcurrency),
       addToParentAndDisposeOnError(delegate),
-      onComplete(onDispose),
+      onComplete(() => {
+        if (observer.queue.length + observer.activeCount === 0) {
+          pipe(observer.delegate, dispose());
+        }
+      }),
     );
-    addTeardown(delegate, () => {
-      observer.queue.length = 0;
-    });
+
     return observer;
   };
   return lift(operator);

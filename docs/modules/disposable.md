@@ -29,8 +29,6 @@
 - [addChild](disposable.md#addchild)
 - [addChildAndDisposeOnError](disposable.md#addchildanddisposeonerror)
 - [addDisposable](disposable.md#adddisposable)
-- [addOnDisposedWithError](disposable.md#addondisposedwitherror)
-- [addOnDisposedWithErrorTeardown](disposable.md#addondisposedwitherrorteardown)
 - [addTeardown](disposable.md#addteardown)
 - [addToParent](disposable.md#addtoparent)
 - [addToParentAndDisposeOnError](disposable.md#addtoparentanddisposeonerror)
@@ -40,6 +38,7 @@
 - [createSerialDisposable](disposable.md#createserialdisposable)
 - [dispose](disposable.md#dispose)
 - [onComplete](disposable.md#oncomplete)
+- [onDisposed](disposable.md#ondisposed)
 - [onError](disposable.md#onerror)
 - [toAbortSignal](disposable.md#toabortsignal)
 - [toErrorHandler](disposable.md#toerrorhandler)
@@ -116,44 +115,6 @@ Add `child` to `parent`, disposing the child when the parent is disposed.
 | :------ | :------ |
 | `parent` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 | `child` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-
-#### Returns
-
-`void`
-
-___
-
-### addOnDisposedWithError
-
-▸ **addOnDisposedWithError**(`parent`, `child`): `void`
-
-Add `child` to `parent`, only disposing child when `parent` is disposed with an error.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `parent` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `child` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-
-#### Returns
-
-`void`
-
-___
-
-### addOnDisposedWithErrorTeardown
-
-▸ **addOnDisposedWithErrorTeardown**(`parent`, `teardown`): `void`
-
-Add `teardown` to `parent` that is only invoked if `parent` is disposed with an error.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `parent` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Error`](../interfaces/disposable.Error.md)\> |
 
 #### Returns
 
@@ -335,6 +296,28 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `teardown` | [`SideEffect`](functions.md#sideeffect) |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, `T`\>
+
+___
+
+### onDisposed
+
+▸ **onDisposed**<`T`\>(`teardown`): [`Function1`](functions.md#function1)<`T`, `T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Option`](option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>\> |
 
 #### Returns
 

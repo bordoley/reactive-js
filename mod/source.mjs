@@ -1,9 +1,9 @@
 /// <reference types="./source.d.ts" />
 import { fromValue, empty } from './container.mjs';
-import { addToParent, addTeardown, dispose, addOnDisposedWithErrorTeardown, addToParentAndDisposeOnError, onComplete, addChildAndDisposeOnError } from './disposable.mjs';
-import { pipe, compose, negate, ignore } from './functions.mjs';
+import { addToParent, onComplete, dispose, onError, addToParentAndDisposeOnError, onDisposed, addChildAndDisposeOnError } from './disposable.mjs';
+import { pipe, compose, negate, ignore, identity } from './functions.mjs';
 import { AbstractLiftable, AbstractDisposableLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
-import { isNone, none, isSome } from './option.mjs';
+import { none, isSome } from './option.mjs';
 import { forEach } from './readonlyArray.mjs';
 
 class AbstractSource extends AbstractLiftable {
@@ -11,33 +11,24 @@ class AbstractSource extends AbstractLiftable {
 class AbstractDisposableSource extends AbstractDisposableLiftable {
 }
 const sinkInto = (sink) => source => source.sink(sink);
-const createCatchErrorOperator = (m, CatchErrorSink) => (onError) => {
+const createCatchErrorOperator = (m, CatchErrorSink) => (f) => {
     CatchErrorSink.prototype.notify = function notifyDelegate(next) {
         this.delegate.notify(next);
     };
-    const operator = (delegate) => {
-        const sink = pipe(new CatchErrorSink(delegate), addToParent(delegate));
-        addTeardown(sink, e => {
-            if (isNone(e)) {
+    const operator = (delegate) => pipe(new CatchErrorSink(delegate), addToParent(delegate), onComplete(() => pipe(delegate, dispose())), onError(e => {
+        try {
+            const result = f(e.cause) || none;
+            if (isSome(result)) {
+                pipe(result, sinkInto(delegate));
+            }
+            else {
                 pipe(delegate, dispose());
             }
-        });
-        addOnDisposedWithErrorTeardown(sink, e => {
-            try {
-                const result = onError(e.cause) || none;
-                if (isSome(result)) {
-                    pipe(result, sinkInto(delegate));
-                }
-                else {
-                    pipe(delegate, dispose());
-                }
-            }
-            catch (cause) {
-                pipe(delegate, dispose({ cause: { parent: e.cause, cause } }));
-            }
-        });
-        return sink;
-    };
+        }
+        catch (cause) {
+            pipe(delegate, dispose({ cause: { parent: e.cause, cause } }));
+        }
+    }));
     return m.lift(operator);
 };
 const createDecodeWithCharsetOperator = (m, DecodeWithCharsetSink) => {
@@ -227,12 +218,11 @@ const createNever = (m) => {
 const createOnSink = (m) => (f) => src => m.create(sink => {
     pipe(src, sinkInto(sink));
     const disposable = f() || none;
-    if (disposable instanceof Function) {
-        addTeardown(sink, disposable);
-    }
-    else if (isSome(disposable)) {
-        pipe(sink, addChildAndDisposeOnError(disposable));
-    }
+    pipe(sink, disposable instanceof Function
+        ? onDisposed(disposable)
+        : isSome(disposable)
+            ? addChildAndDisposeOnError(disposable)
+            : identity);
 });
 const createUsing = (m) => (resourceFactory, sourceFactory) => m.create(sink => {
     pipe(resourceFactory(), resources => (Array.isArray(resources) ? resources : [resources]), forEach(addToParentAndDisposeOnError(sink)), (resources) => sourceFactory(...resources), sinkInto(sink));

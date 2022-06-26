@@ -1,21 +1,21 @@
 /// <reference types="./web.d.ts" />
-import { addTeardown, dispose, addChildAndDisposeOnError, toAbortSignal } from './disposable.mjs';
-import { createObservable, AbstractObservable, map, onNotify, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
+import { onDisposed, dispose, addChildAndDisposeOnError, toAbortSignal } from './disposable.mjs';
 import { pipe, raise, returns } from './functions.mjs';
+import { createObservable, AbstractObservable, map, onNotify, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { none, isSome } from './option.mjs';
 import { sinkInto } from './source.mjs';
 import { createStateStore, stream } from './streamable.mjs';
 
-const fromEvent = (target, eventName, selector) => createObservable(({ dispatcher }) => {
+const fromEvent = (target, eventName, selector) => createObservable(observer => {
+    const dispatcher = pipe(observer.dispatcher, onDisposed(_ => {
+        target.removeEventListener(eventName, listener);
+    }));
     const listener = (event) => {
         const result = selector(event);
         dispatcher.dispatch(result);
     };
     target.addEventListener(eventName, listener, { passive: true });
-    addTeardown(dispatcher, () => {
-        target.removeEventListener(eventName, listener);
-    });
 });
 
 const reservedEvents = ["error", "open"];
@@ -23,7 +23,13 @@ const createEventSource = (url, options = {}) => {
     const { events: eventsOption = ["message"] } = options;
     const events = pipe(eventsOption, keep(x => !reservedEvents.includes(x)));
     const requestURL = url instanceof URL ? url.toString() : url;
-    return createObservable(({ dispatcher }) => {
+    return createObservable(observer => {
+        const dispatcher = pipe(observer.dispatcher, onDisposed(_ => {
+            for (const ev of events) {
+                eventSource.removeEventListener(ev, listener);
+            }
+            eventSource.close();
+        }));
         const eventSource = new EventSource(requestURL, options);
         const listener = (ev) => {
             var _a, _b, _c;
@@ -33,12 +39,6 @@ const createEventSource = (url, options = {}) => {
                 data: (_c = ev.data) !== null && _c !== void 0 ? _c : "",
             });
         };
-        addTeardown(dispatcher, _ => {
-            for (const ev of events) {
-                eventSource.removeEventListener(ev, listener);
-            }
-            eventSource.close();
-        });
         for (const ev of events) {
             eventSource.addEventListener(ev, listener);
         }
