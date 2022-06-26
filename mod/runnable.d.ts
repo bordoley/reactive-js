@@ -1,4 +1,4 @@
-import { AbstractDisposableContainer, Concat, ConcatAll, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Generate, Keep, Map, ContainerOperator, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
+import { AbstractDisposableContainer, ConcatAll, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, Concat, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Generate, Keep, Map, ContainerOperator, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
 import { DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Function1, Equality, Predicate, Updater, Factory, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
@@ -7,8 +7,6 @@ declare class Sink<T> extends AbstractDisposableContainer implements SinkLike<T>
     assertState(this: Sink<T>): void;
     notify(_: T): void;
 }
-declare const concat: Concat<RunnableLike<unknown>>["concat"];
-declare const concatT: Concat<RunnableLike<unknown>>;
 declare const concatAll: ConcatAll<RunnableLike<unknown>>["concatAll"];
 declare const concatAllT: ConcatAll<RunnableLike<unknown>>;
 declare const createRunnable: <T>(run: SideEffect1<Sink<T>>) => RunnableLike<T>;
@@ -39,6 +37,8 @@ interface ToRunnable<C extends ContainerLike> extends Container<C> {
 declare const toRunnable: <T>() => Function1<RunnableLike<T>, RunnableLike<T>>;
 declare const type: RunnableLike<unknown>;
 declare const catchError: <T>(onError: Function1<unknown, RunnableLike<T> | void>) => RunnableOperator<T, T>;
+declare const concat: Concat<RunnableLike<unknown>>["concat"];
+declare const concatT: Concat<RunnableLike<unknown>>;
 declare const decodeWithCharset: (charset?: string) => RunnableOperator<ArrayBuffer, string>;
 declare const decodeWithCharsetT: DecodeWithCharset<RunnableLike<unknown>>;
 declare const distinctUntilChanged: <T>(options?: {

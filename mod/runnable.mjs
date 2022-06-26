@@ -93,17 +93,6 @@ class DelegatingSink extends Sink {
 }
 const createDelegatingSink = (delegate) => new DelegatingSink(delegate);
 
-const concat = (...runnables) => createRunnable((sink) => {
-    const runnablesLength = runnables.length;
-    for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
-        const concatSink = pipe(createDelegatingSink(sink), addToAndDisposeParentOnChildError(sink));
-        runnables[i].sink(concatSink);
-        concatSink.dispose();
-    }
-});
-const concatT = {
-    concat,
-};
 class FlattenSink extends Sink {
     constructor(delegate) {
         super();
@@ -189,6 +178,17 @@ const catchError = createCatchErrorOperator(liftT, class CatchErrorSink extends 
         this.delegate = delegate;
     }
 });
+const concat = (...runnables) => createRunnable((sink) => {
+    const runnablesLength = runnables.length;
+    for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
+        const concatSink = pipe(createDelegatingSink(sink), addToAndDisposeParentOnChildError(sink));
+        runnables[i].sink(concatSink);
+        concatSink.dispose();
+    }
+});
+const concatT = {
+    concat,
+};
 const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftT, ...fromArrayT }, class DecodeWithCharsetSink extends Sink {
     constructor(delegate, textDecoder) {
         super();

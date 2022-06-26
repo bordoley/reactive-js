@@ -1,4 +1,5 @@
 import {
+  Concat,
   Container,
   ContainerLike,
   ContainerOf,
@@ -78,7 +79,7 @@ export interface ToRunnable<C extends ContainerLike> extends Container<C> {
   toRunnable<T>(): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
 
-export { concat, concatT, concatAll, concatAllT } from "./runnable/concat";
+export { concatAll, concatAllT } from "./runnable/concat";
 export { createRunnable, createT } from "./runnable/createRunnable";
 export { first } from "./runnable/first";
 export { forEach } from "./runnable/forEach";
@@ -102,6 +103,26 @@ export const catchError: <T>(
     }
   },
 );
+
+export const concat: Concat<RunnableLike<unknown>>["concat"] = <T>(
+  ...runnables: readonly RunnableLike<T>[]
+) =>
+  createRunnable((sink: Sink<T>) => {
+    const runnablesLength = runnables.length;
+    for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
+      const concatSink = pipe(
+        createDelegatingSink(sink),
+        addToAndDisposeParentOnChildError(sink),
+      );
+
+      runnables[i].sink(concatSink);
+      concatSink.dispose();
+    }
+  });
+
+export const concatT: Concat<RunnableLike<unknown>> = {
+  concat,
+};
 
 export const decodeWithCharset: (
   charset?: string,
