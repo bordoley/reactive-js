@@ -22,9 +22,9 @@ const createCatchErrorOperator = (m, CatchErrorSink) => (onError) => {
                 pipe(delegate, dispose());
             }
         });
-        addOnDisposedWithErrorTeardown(sink, cause => {
+        addOnDisposedWithErrorTeardown(sink, e => {
             try {
-                const result = onError(cause) || none;
+                const result = onError(e.cause) || none;
                 if (isSome(result)) {
                     pipe(result, sinkInto(delegate));
                 }
@@ -33,7 +33,7 @@ const createCatchErrorOperator = (m, CatchErrorSink) => (onError) => {
                 }
             }
             catch (cause) {
-                pipe(delegate, dispose({ cause: { parent: cause, cause } }));
+                pipe(delegate, dispose({ cause: { parent: e.cause, cause } }));
             }
         });
         return sink;

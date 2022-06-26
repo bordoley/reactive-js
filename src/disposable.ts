@@ -76,11 +76,11 @@ export const addTeardown = (
  */
 export const addOnDisposedWithErrorTeardown = (
   parent: DisposableLike,
-  teardown: SideEffect1<unknown>,
+  teardown: SideEffect1<Error>,
 ) => {
   addTeardown(parent, e => {
     if (isSome(e)) {
-      teardown.call(parent, e.cause);
+      teardown.call(parent, e);
     }
   });
 };

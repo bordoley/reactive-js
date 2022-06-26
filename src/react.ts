@@ -22,7 +22,7 @@ import {
   AbstractDisposable,
   Error,
   addDisposable,
-  addTeardown,
+  addOnDisposedWithErrorTeardown,
   createDisposable,
   dispose,
 } from "./disposable";
@@ -70,7 +70,7 @@ export const useObservable = <T>(
       subscribe(scheduler, compose(returns, updateState)),
     );
 
-    addTeardown(subscription, compose(returns, updateError));
+    addOnDisposedWithErrorTeardown(subscription, updateError);
 
     return defer(
       // If a scheduler is allocated, then dispose the new scheduler
