@@ -72,7 +72,7 @@ export interface ToRunnable<C extends ContainerLike> extends Container<C> {
   toRunnable<T>(): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
 
-export { concat, concatAll } from "./runnable/concat";
+export { concat, concatT, concatAll, concatAllT } from "./runnable/concat";
 export { createRunnable, createT } from "./runnable/createRunnable";
 export { first } from "./runnable/first";
 export { forEach } from "./runnable/forEach";

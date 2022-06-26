@@ -9,10 +9,10 @@ import {
 } from "./container";
 import {
   DisposableLike,
+  Error,
   addChild,
   addChildAndDisposeOnError,
-  addTeardown,
-  addToParent,
+  addOnDisposedWithoutErrorTeardown,
   addToParentAndDisposeOnError,
   bindTo,
   dispose,
@@ -28,7 +28,7 @@ import {
   raise,
   strictEquality,
 } from "./functions";
-import { Option, isNone, none } from "./option";
+import { Option, none } from "./option";
 
 export interface LiftedStateLike extends DisposableLike, ContainerLike {}
 
@@ -273,15 +273,19 @@ export const createThrowIfEmptyLiftedOperator =
     const operator: LiftOperator<C, T, T, typeof m> = delegate => {
       const lifted = pipe(
         new ThrowIfEmptyLiftableState(delegate),
-        m.variance === "covariant" ? addChild(delegate) : addToParent(delegate),
+        m.variance === "covariant"
+          ? addChild(delegate)
+          : addToParentAndDisposeOnError(delegate),
       );
       const { parent, child } =
         m.variance === "covariant"
           ? { parent: lifted, child: delegate }
           : { parent: delegate, child: lifted };
 
-      addTeardown(child, error => {
-        if (isNone(error) && lifted.isEmpty) {
+      addOnDisposedWithoutErrorTeardown(child, () => {
+        let error: Option<Error> = none;
+
+        if (lifted.isEmpty) {
           let cause: unknown = none;
           try {
             cause = factory();

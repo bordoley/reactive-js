@@ -19,6 +19,8 @@
 
 ### Variables
 
+- [concatAllT](runnable.md#concatallt)
+- [concatT](runnable.md#concatt)
 - [createT](runnable.md#createt)
 - [decodeWithCharsetT](runnable.md#decodewithcharsett)
 - [distinctUntilChangedT](runnable.md#distinctuntilchangedt)
@@ -85,6 +87,18 @@
 | `TB` |
 
 ## Variables
+
+### concatAllT
+
+• `Const` **concatAllT**: [`ConcatAll`](../interfaces/container.ConcatAll.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
+### concatT
+
+• `Const` **concatT**: [`Concat`](../interfaces/container.Concat.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
 
 ### createT
 
@@ -220,8 +234,6 @@ ___
 
 ▸ **concat**<`T`\>(`fst`, `snd`, ...`tail`): [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>
 
-Creates an `RunnableLike` which emits all values from each source sequentially.
-
 #### Type parameters
 
 | Name |
@@ -244,7 +256,7 @@ ___
 
 ### concatAll
 
-▸ **concatAll**<`T`\>(): [`RunnableOperator`](runnable.md#runnableoperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>, `T`\>
+▸ **concatAll**<`T`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -252,9 +264,15 @@ ___
 | :------ |
 | `T` |
 
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Partial`<`Record`<`string`, `never`\>\> |
+
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`T`\>, `T`\>
 
 ___
 
