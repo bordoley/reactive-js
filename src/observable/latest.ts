@@ -1,7 +1,11 @@
-import { Error, addTeardown, addToParent, dispose } from "../disposable";
+import {
+  addOnDisposedWithoutErrorTeardown,
+  addToParentAndDisposeOnError,
+  dispose,
+} from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Option, isSome, none } from "../option";
+import { none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
 import { sinkInto } from "../source";
 import { defer } from "./defer";
@@ -18,12 +22,12 @@ const enum LatestMode {
   Zip = 2,
 }
 
-function onDispose(this: LatestObserver, error: Option<Error>) {
+function onDispose(this: LatestObserver) {
   const { ctx } = this;
   ctx.completedCount++;
 
-  if (isSome(error) || ctx.completedCount === ctx.observers.length) {
-    pipe(this.delegate, dispose(error));
+  if (ctx.completedCount === ctx.observers.length) {
+    pipe(this.delegate, dispose());
   }
 }
 
@@ -84,9 +88,9 @@ export const latest = (
     for (const observable of observables) {
       const innerObserver = pipe(
         new LatestObserver(delegate, ctx, mode),
-        addToParent(delegate),
+        addToParentAndDisposeOnError(delegate),
       );
-      addTeardown(innerObserver, onDispose);
+      addOnDisposedWithoutErrorTeardown(innerObserver, onDispose);
 
       observers.push(innerObserver);
       pipe(observable, sinkInto(innerObserver));

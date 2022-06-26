@@ -1,17 +1,16 @@
 import { fromValue } from "../container";
 import {
-  Error,
   SerialDisposableLike,
   addChildAndDisposeOnError,
-  addTeardown,
-  addToParent,
+  addOnDisposedWithoutErrorTeardown,
+  addToParentAndDisposeOnError,
   createSerialDisposable,
   dispose,
   disposed,
 } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Option, isSome, none } from "../option";
+import { none } from "../option";
 import { sinkInto } from "../source";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
@@ -19,12 +18,12 @@ import { never } from "./never";
 import { Observer } from "./observer";
 import { subscribe } from "./subscribe";
 
-function onDispose(this: BufferObserver<void>, error: Option<Error>) {
+function onDispose(this: BufferObserver<void>) {
   const { buffer } = this;
   this.buffer = [];
 
-  if (isSome(error) || buffer.length === 0) {
-    pipe(this.delegate, dispose(error));
+  if (buffer.length === 0) {
+    pipe(this.delegate, dispose());
   } else {
     pipe(buffer, fromValue(fromArrayT), sinkInto(this.delegate));
   }
@@ -102,9 +101,9 @@ export function buffer<T>(
         durationSubscription,
       ),
       addChildAndDisposeOnError(durationSubscription),
-      addToParent(delegate),
+      addToParentAndDisposeOnError(delegate),
     );
-    addTeardown(observer, onDispose);
+    addOnDisposedWithoutErrorTeardown(observer, onDispose);
     return observer;
   };
 

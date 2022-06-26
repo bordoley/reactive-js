@@ -487,11 +487,11 @@ function __currentScheduler() {
         : raise("__currentScheduler may only be called within an observable computation");
 }
 
-function onDispose$3(error) {
+function onDispose$3() {
     const { ctx } = this;
     ctx.completedCount++;
-    if (isSome(error) || ctx.completedCount === ctx.observers.length) {
-        pipe(this.delegate, dispose(error));
+    if (ctx.completedCount === ctx.observers.length) {
+        pipe(this.delegate, dispose());
     }
 }
 class LatestObserver extends Observer {
@@ -534,8 +534,8 @@ const latest = (observables, mode) => {
             readyCount: 0,
         };
         for (const observable of observables) {
-            const innerObserver = pipe(new LatestObserver(delegate, ctx, mode), addToParent(delegate));
-            addTeardown(innerObserver, onDispose$3);
+            const innerObserver = pipe(new LatestObserver(delegate, ctx, mode), addToParentAndDisposeOnError(delegate));
+            addOnDisposedWithoutErrorTeardown(innerObserver, onDispose$3);
             observers.push(innerObserver);
             pipe(observable, sinkInto(innerObserver));
         }
@@ -753,11 +753,11 @@ const never = createNever(createT);
 
 const onSubscribe = createOnSink(createT);
 
-function onDispose$2(error) {
+function onDispose$2() {
     const { buffer } = this;
     this.buffer = [];
-    if (isSome(error) || buffer.length === 0) {
-        pipe(this.delegate, dispose(error));
+    if (buffer.length === 0) {
+        pipe(this.delegate, dispose());
     }
     else {
         pipe(buffer, fromValue(fromArrayT), sinkInto(this.delegate));
@@ -808,8 +808,8 @@ function buffer(options = {}) {
     const maxBufferSize = (_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : Number.MAX_SAFE_INTEGER;
     const operator = (delegate) => {
         const durationSubscription = createSerialDisposable();
-        const observer = pipe(new BufferObserver(delegate, durationFunction, maxBufferSize, durationSubscription), addChildAndDisposeOnError(durationSubscription), addToParent(delegate));
-        addTeardown(observer, onDispose$2);
+        const observer = pipe(new BufferObserver(delegate, durationFunction, maxBufferSize, durationSubscription), addChildAndDisposeOnError(durationSubscription), addToParentAndDisposeOnError(delegate));
+        addOnDisposedWithoutErrorTeardown(observer, onDispose$2);
         return observer;
     };
     return lift(operator, delay === Number.MAX_SAFE_INTEGER);
@@ -820,7 +820,7 @@ const subscribeNext = (observer) => {
         const nextObs = observer.queue.shift();
         if (isSome(nextObs)) {
             observer.activeCount++;
-            const nextObsSubscription = pipe(nextObs, subscribe(observer.scheduler, observer.onNotify), addToParentAndDisposeOnError(observer.delegate), addToParent(observer.delegate));
+            const nextObsSubscription = pipe(nextObs, subscribe(observer.scheduler, observer.onNotify), addToParentAndDisposeOnError(observer.delegate));
             addOnDisposedWithoutErrorTeardown(nextObsSubscription, observer.onDispose);
         }
         else if (observer.isDisposed) {
@@ -828,9 +828,9 @@ const subscribeNext = (observer) => {
         }
     }
 };
-function onDispose$1(error) {
-    if (isSome(error) || this.queue.length + this.activeCount === 0) {
-        pipe(this.delegate, dispose(error));
+function onDispose$1() {
+    if (this.queue.length + this.activeCount === 0) {
+        pipe(this.delegate, dispose());
     }
 }
 class MergeObserver extends Observer {
@@ -871,8 +871,8 @@ class MergeObserver extends Observer {
 const mergeAll = (options = {}) => {
     const { maxBufferSize = Number.MAX_SAFE_INTEGER, maxConcurrency = Number.MAX_SAFE_INTEGER, } = options;
     const operator = (delegate) => {
-        const observer = pipe(new MergeObserver(delegate, maxBufferSize, maxConcurrency), addToParent(delegate));
-        addTeardown(observer, onDispose$1);
+        const observer = pipe(new MergeObserver(delegate, maxBufferSize, maxConcurrency), addToParentAndDisposeOnError(delegate));
+        addOnDisposedWithoutErrorTeardown(observer, onDispose$1);
         addTeardown(delegate, () => {
             observer.queue.length = 0;
         });

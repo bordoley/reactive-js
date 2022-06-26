@@ -1,4 +1,4 @@
-import { AbstractDisposableContainer, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Keep, Map, ContainerOperator, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
+import { AbstractDisposableContainer, Concat, ConcatAll, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Keep, Map, ContainerOperator, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
 import { DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Function1, Updater, Factory, Predicate, Equality, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
@@ -7,11 +7,10 @@ declare class Sink<T> extends AbstractDisposableContainer implements SinkLike<T>
     assertState(this: Sink<T>): void;
     notify(_: T): void;
 }
-/**
- * Creates an `RunnableLike` which emits all values from each source sequentially.
- */
-declare function concat<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
-declare const concatAll: <T>() => RunnableOperator<RunnableLike<T>, T>;
+declare const concat: Concat<RunnableLike<unknown>>["concat"];
+declare const concatT: Concat<RunnableLike<unknown>>;
+declare const concatAll: ConcatAll<RunnableLike<unknown>>["concatAll"];
+declare const concatAllT: ConcatAll<RunnableLike<unknown>>;
 declare const createRunnable: <T>(run: SideEffect1<Sink<T>>) => RunnableLike<T>;
 declare const createT: CreateSource<RunnableLike<unknown>>;
 declare const first: <T>() => Function1<RunnableLike<T>, Option<T>>;
@@ -108,4 +107,4 @@ declare const throwIfEmpty: <T>(factory: Factory<unknown>) => RunnableOperator<T
 declare const throwIfEmptyT: ThrowIfEmpty<RunnableLike<unknown>>;
 declare const using: Using<RunnableLike<unknown>>["using"];
 declare const usingT: Using<RunnableLike<unknown>>;
-export { RunnableLike, RunnableOperator, Sink, ToRunnable, catchError, concat, concatAll, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };
+export { RunnableLike, RunnableOperator, Sink, ToRunnable, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };

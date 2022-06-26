@@ -4,7 +4,7 @@ import { isSome, none, isNone } from './option.mjs';
 import { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
 import { AbstractDisposableContainer } from './container.mjs';
 import { __DEV__ } from './env.mjs';
-import { addToParentAndDisposeOnError, addToParent } from './disposable.mjs';
+import { addToParentAndDisposeOnError } from './disposable.mjs';
 
 class AbstractRunnable extends AbstractSource {
 }
@@ -93,16 +93,17 @@ class DelegatingSink extends Sink {
 }
 const createDelegatingSink = (delegate) => new DelegatingSink(delegate);
 
-function concat(...runnables) {
-    return createRunnable((sink) => {
-        const runnablesLength = runnables.length;
-        for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
-            const concatSink = pipe(createDelegatingSink(sink), addToParentAndDisposeOnError(sink));
-            runnables[i].sink(concatSink);
-            concatSink.dispose();
-        }
-    });
-}
+const concat = (...runnables) => createRunnable((sink) => {
+    const runnablesLength = runnables.length;
+    for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
+        const concatSink = pipe(createDelegatingSink(sink), addToParentAndDisposeOnError(sink));
+        runnables[i].sink(concatSink);
+        concatSink.dispose();
+    }
+});
+const concatT = {
+    concat,
+};
 class FlattenSink extends Sink {
     constructor(delegate) {
         super();
@@ -110,13 +111,16 @@ class FlattenSink extends Sink {
     }
     notify(next) {
         const { delegate } = this;
-        const concatSink = pipe(createDelegatingSink(delegate), addToParentAndDisposeOnError(delegate));
+        const concatSink = pipe(createDelegatingSink(delegate), addToParentAndDisposeOnError(this));
         next.sink(concatSink);
         concatSink.dispose();
     }
 }
-const _concatAll = lift(delegate => pipe(new FlattenSink(delegate), addToParent(delegate)));
+const _concatAll = lift(delegate => pipe(new FlattenSink(delegate), addToParentAndDisposeOnError(delegate)));
 const concatAll = () => _concatAll;
+const concatAllT = {
+    concatAll,
+};
 
 const run = (f) => (runnable) => {
     const sink = f();
@@ -389,4 +393,4 @@ const usingT = {
     using,
 };
 
-export { Sink, catchError, concat, concatAll, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };
+export { Sink, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };

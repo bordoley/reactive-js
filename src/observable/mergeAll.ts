@@ -1,15 +1,13 @@
 import { ConcatAll } from "../container";
 import {
-  Error,
   addOnDisposedWithoutErrorTeardown,
   addTeardown,
-  addToParent,
   addToParentAndDisposeOnError,
   dispose,
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Option, isSome } from "../option";
+import { isSome } from "../option";
 import { lift } from "./lift";
 import { Observer } from "./observer";
 import { subscribe } from "./subscribe";
@@ -25,7 +23,6 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
         nextObs,
         subscribe(observer.scheduler, observer.onNotify),
         addToParentAndDisposeOnError(observer.delegate),
-        addToParent(observer.delegate),
       );
 
       addOnDisposedWithoutErrorTeardown(
@@ -38,9 +35,9 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
   }
 };
 
-function onDispose(this: MergeObserver<unknown>, error: Option<Error>) {
-  if (isSome(error) || this.queue.length + this.activeCount === 0) {
-    pipe(this.delegate, dispose(error));
+function onDispose(this: MergeObserver<unknown>) {
+  if (this.queue.length + this.activeCount === 0) {
+    pipe(this.delegate, dispose());
   }
 }
 
@@ -102,9 +99,9 @@ export const mergeAll = <T>(
   const operator = (delegate: Observer<T>) => {
     const observer = pipe(
       new MergeObserver(delegate, maxBufferSize, maxConcurrency),
-      addToParent(delegate),
+      addToParentAndDisposeOnError(delegate),
     );
-    addTeardown(observer, onDispose);
+    addOnDisposedWithoutErrorTeardown(observer, onDispose);
     addTeardown(delegate, () => {
       observer.queue.length = 0;
     });
