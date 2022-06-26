@@ -16,7 +16,7 @@ import {
 } from "./container";
 import {
   DisposableLike,
-  addToParentAndDisposeOnError,
+  addToDisposeOnChildError,
   dispose,
 } from "./disposable";
 import { concatAll } from "./enumerable/concatAll";
@@ -468,7 +468,7 @@ const _using = <TResource extends DisposableLike, T>(
     const source = enumerableFactory(...resourcesArray);
     const enumerator = enumerate(source);
 
-    pipe(resources, forEach(addToParentAndDisposeOnError(enumerator)));
+    pipe(resources, forEach(addToDisposeOnChildError(enumerator)));
 
     return enumerator;
   });

@@ -1,5 +1,5 @@
 import { empty as emptyContainer } from "../container";
-import { addChildAndDisposeOnError, bindTo } from "../disposable";
+import { addDisposeOnChildError, bindTo } from "../disposable";
 import { Function1, compose, pipe } from "../functions";
 import {
   ObservableOperator,
@@ -63,8 +63,8 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
 
       pipe(
         observer,
-        addChildAndDisposeOnError(srcStream),
-        addChildAndDisposeOnError(
+        addDisposeOnChildError(srcStream),
+        addDisposeOnChildError(
           pipe(
             requests,
             map((compose as any)(...reqOps)),

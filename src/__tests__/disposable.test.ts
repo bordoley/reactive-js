@@ -1,5 +1,5 @@
 import {
-  addChild,
+  add,
   createDisposable,
   createDisposableValue,
   createSerialDisposable,
@@ -29,14 +29,14 @@ export const tests = describe(
     test("disposes child disposable when disposed", () => {
       const child = createDisposable();
 
-      pipe(createDisposable(), addChild(child), dispose());
+      pipe(createDisposable(), add(child), dispose());
 
       expectTrue(child.isDisposed);
     }),
 
     test("adding to disposed disposable disposes the child", () => {
       const child = createDisposable();
-      pipe(createDisposable(), dispose(), addChild(child));
+      pipe(createDisposable(), dispose(), add(child));
 
       expectTrue(child.isDisposed);
     }),

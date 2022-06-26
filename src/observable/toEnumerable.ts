@@ -1,4 +1,4 @@
-import { addChild, addToParentAndDisposeOnError, dispose } from "../disposable";
+import { add, addToDisposeOnChildError, dispose } from "../disposable";
 import {
   AbstractEnumerator,
   EnumerableLike,
@@ -52,7 +52,7 @@ class EnumeratorScheduler<T>
   ): void {
     const { delay = Math.max(options.delay ?? 0, 0) } = options;
 
-    pipe(this, addChild(continuation));
+    pipe(this, add(continuation));
 
     if (!continuation.isDisposed && delay === 0) {
       this.continuations.push(continuation);
@@ -87,7 +87,7 @@ export const enumerate = <T>(obs: ObservableLike<T>): Enumerator<T> => {
 
   const observer = pipe(
     new EnumeratorObserver<T>(scheduler),
-    addToParentAndDisposeOnError(scheduler),
+    addToDisposeOnChildError(scheduler),
   );
 
   pipe(obs, sinkInto(observer));

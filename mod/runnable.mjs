@@ -4,7 +4,7 @@ import { isSome, none, isNone } from './option.mjs';
 import { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
 import { AbstractDisposableContainer } from './container.mjs';
 import { __DEV__ } from './env.mjs';
-import { addToParentAndDisposeOnError } from './disposable.mjs';
+import { addToDisposeOnChildError } from './disposable.mjs';
 
 class AbstractRunnable extends AbstractSource {
 }
@@ -96,7 +96,7 @@ const createDelegatingSink = (delegate) => new DelegatingSink(delegate);
 const concat = (...runnables) => createRunnable((sink) => {
     const runnablesLength = runnables.length;
     for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
-        const concatSink = pipe(createDelegatingSink(sink), addToParentAndDisposeOnError(sink));
+        const concatSink = pipe(createDelegatingSink(sink), addToDisposeOnChildError(sink));
         runnables[i].sink(concatSink);
         concatSink.dispose();
     }
@@ -111,12 +111,12 @@ class FlattenSink extends Sink {
     }
     notify(next) {
         const { delegate } = this;
-        const concatSink = pipe(createDelegatingSink(delegate), addToParentAndDisposeOnError(this));
+        const concatSink = pipe(createDelegatingSink(delegate), addToDisposeOnChildError(this));
         next.sink(concatSink);
         concatSink.dispose();
     }
 }
-const _concatAll = lift(delegate => pipe(new FlattenSink(delegate), addToParentAndDisposeOnError(delegate)));
+const _concatAll = lift(delegate => pipe(new FlattenSink(delegate), addToDisposeOnChildError(delegate)));
 const concatAll = () => _concatAll;
 const concatAllT = {
     concatAll,
@@ -194,7 +194,7 @@ function repeat(predicate) {
     return runnable => createRunnable(sink => {
         let count = 0;
         do {
-            const delegateSink = pipe(createDelegatingSink(sink), addToParentAndDisposeOnError(sink));
+            const delegateSink = pipe(createDelegatingSink(sink), addToDisposeOnChildError(sink));
             runnable.sink(delegateSink);
             delegateSink.dispose();
             count++;

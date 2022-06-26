@@ -67,21 +67,21 @@ export const bindTo =
     return parent;
   };
 
-export const addChild =
+export const add =
   <T extends DisposableLike>(child: DisposableLike): Function1<T, T> =>
   parent => {
     addDisposableOrTeardown(parent, child);
     return parent;
   };
 
-export const addToParent =
+export const addTo =
   <T extends DisposableLike>(parent: DisposableLike): Function1<T, T> =>
   child => {
     addDisposableOrTeardown(parent, child);
     return child;
   };
 
-const addDisposableOrTeardownDisposeParentOnChildError = (
+const addDisposeOnChildErrorImpl = (
   parent: DisposableLike,
   child: DisposableLike,
 ) => {
@@ -93,17 +93,17 @@ const addDisposableOrTeardownDisposeParentOnChildError = (
   });
 };
 
-export const addChildAndDisposeOnError =
+export const addDisposeOnChildError =
   <T extends DisposableLike>(child: DisposableLike): Function1<T, T> =>
   (parent: T): T => {
-    addDisposableOrTeardownDisposeParentOnChildError(parent, child);
+    addDisposeOnChildErrorImpl(parent, child);
     return parent;
   };
 
-export const addToParentAndDisposeOnError =
+export const addToDisposeOnChildError =
   <T extends DisposableLike>(parent: DisposableLike): Function1<T, T> =>
   (child: T): T => {
-    addDisposableOrTeardownDisposeParentOnChildError(parent, child);
+    addDisposeOnChildErrorImpl(parent, child);
     return child;
   };
 
@@ -283,7 +283,7 @@ export abstract class AbstractSerialDisposable
     this._inner = newInner;
 
     if (oldInner !== newInner) {
-      addDisposableOrTeardownDisposeParentOnChildError(this, newInner);
+      addDisposeOnChildErrorImpl(this, newInner);
       pipe(oldInner, dispose());
     }
   }

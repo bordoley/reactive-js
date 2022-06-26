@@ -1,9 +1,5 @@
 import { Concat } from "../container";
-import {
-  addToParentAndDisposeOnError,
-  dispose,
-  onComplete,
-} from "../disposable";
+import { addToDisposeOnChildError, dispose, onComplete } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { sinkInto } from "../source";
@@ -19,7 +15,7 @@ const createMergeObserver = <T>(
 ) =>
   pipe(
     createDelegatingObserver(delegate),
-    addToParentAndDisposeOnError(delegate),
+    addToDisposeOnChildError(delegate),
     onComplete(() => {
       ctx.completedCount++;
       if (ctx.completedCount >= count) {

@@ -1,7 +1,7 @@
 import { ConcatAll } from "../container";
 import {
   SerialDisposableLike,
-  addChildAndDisposeOnError,
+  addDisposeOnChildError,
   bindTo,
   createSerialDisposable,
 } from "../disposable";
@@ -50,7 +50,7 @@ const operator = <T>(delegate: Enumerator<EnumerableLike<T>>) => {
   return pipe(
     new ConcatAllEnumerator(delegate, inner),
     bindTo(inner),
-    addChildAndDisposeOnError(delegate),
+    addDisposeOnChildError(delegate),
   );
 };
 

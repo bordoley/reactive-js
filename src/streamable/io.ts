@@ -1,7 +1,7 @@
 import { ignoreElements, startWith } from "../container";
 import {
-  addChildAndDisposeOnError,
-  addToParentAndDisposeOnError,
+  addDisposeOnChildError,
+  addToDisposeOnChildError,
 } from "../disposable";
 import { Factory, Reducer, compose, pipe } from "../functions";
 import {
@@ -48,7 +48,7 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
     return pipe(
       this.streamable,
       stream(scheduler, options),
-      addToParentAndDisposeOnError(this),
+      addToDisposeOnChildError(this),
     );
   }
 }
@@ -70,7 +70,7 @@ export const createFlowableSinkAccumulator = <T, TAcc>(
     ),
     createStreamable,
     streamable => new FlowableSinkAccumulatorImpl(subject, streamable),
-    addChildAndDisposeOnError(subject),
+    addDisposeOnChildError(subject),
   );
 
   return sinkAcc;

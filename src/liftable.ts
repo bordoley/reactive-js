@@ -10,9 +10,9 @@ import {
 import {
   DisposableLike,
   Error,
-  addChild,
-  addChildAndDisposeOnError,
-  addToParentAndDisposeOnError,
+  add,
+  addDisposeOnChildError,
+  addToDisposeOnChildError,
   bindTo,
   dispose,
   onComplete,
@@ -251,8 +251,8 @@ export const createTakeWhileLiftedOperator =
       const lifted = pipe(
         new TakeWhileLiftableState(delegate, predicate, inclusive),
         m.variance === "covariant"
-          ? addChildAndDisposeOnError(delegate)
-          : addToParentAndDisposeOnError(delegate),
+          ? addDisposeOnChildError(delegate)
+          : addToDisposeOnChildError(delegate),
       );
 
       return lifted;
@@ -274,8 +274,8 @@ export const createThrowIfEmptyLiftedOperator =
       const lifted = pipe(
         new ThrowIfEmptyLiftableState(delegate),
         m.variance === "covariant"
-          ? addChild(delegate)
-          : addToParentAndDisposeOnError(delegate),
+          ? add(delegate)
+          : addToDisposeOnChildError(delegate),
       );
       const { parent, child } =
         m.variance === "covariant"

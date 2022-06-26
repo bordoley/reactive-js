@@ -1,5 +1,5 @@
 /// <reference types="./scheduler.d.ts" />
-import { AbstractDisposable, dispose, AbstractSerialDisposable, disposed, addChild, addToParent, onDisposed, createDisposable, addToParentAndDisposeOnError } from './disposable.mjs';
+import { AbstractDisposable, dispose, AbstractSerialDisposable, disposed, add, addTo, onDisposed, createDisposable, addToDisposeOnChildError } from './disposable.mjs';
 import { pipe, raise, alwaysFalse } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 
@@ -275,7 +275,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
             : this.inContinuation
                 ? this.current.priority
                 : Number.MAX_SAFE_INTEGER;
-        pipe(this, addChild(continuation));
+        pipe(this, add(continuation));
         if (!continuation.isDisposed) {
             const { current, now } = this;
             const dueTime = Math.max(now + delay, now);
@@ -301,7 +301,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
         }
     }
 }
-const createPriorityScheduler = (hostScheduler) => pipe(new PriorityScheduler(hostScheduler), addToParent(hostScheduler), onDisposed(clearQueues));
+const createPriorityScheduler = (hostScheduler) => pipe(new PriorityScheduler(hostScheduler), addTo(hostScheduler), onDisposed(clearQueues));
 /**
  * Creates a new priority scheduler which schedules work using the provided
  * host scheduler.
@@ -339,7 +339,7 @@ class SchedulerWithPriorityImpl extends AbstractDisposable {
     schedule(continuation, options = {}) {
         var _a;
         const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
-        pipe(this, addChild(continuation));
+        pipe(this, add(continuation));
         if (!continuation.isDisposed) {
             this.priorityScheduler.schedule(continuation, {
                 priority: this.priority,
@@ -354,7 +354,7 @@ class SchedulerWithPriorityImpl extends AbstractDisposable {
  * @param priorityScheduler The underlying scheduler upon which to scheduler work.
  * @param priority The priority to schedule work at.
  */
-const toSchedulerWithPriority = (priority) => priorityScheduler => pipe(new SchedulerWithPriorityImpl(priorityScheduler, priority), addToParent(priorityScheduler));
+const toSchedulerWithPriority = (priority) => priorityScheduler => pipe(new SchedulerWithPriorityImpl(priorityScheduler, priority), addTo(priorityScheduler));
 
 const supportsPerformanceNow = typeof performance === "object" && typeof performance.now === "function";
 const supportsProcessHRTime = typeof process === "object" && typeof process.hrtime === "function";
@@ -374,7 +374,7 @@ const now = supportsPerformanceNow
         }
         : () => Date.now();
 const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
-    const disposable = pipe(createDisposable(), addToParentAndDisposeOnError(continuation), onDisposed(() => clearImmediate(immmediate)));
+    const disposable = pipe(createDisposable(), addToDisposeOnChildError(continuation), onDisposed(() => clearImmediate(immmediate)));
     const immmediate = setImmediate(runContinuation, scheduler, continuation, disposable);
 };
 const scheduleImmediateWithMessageChannel = (scheduler, channel, continuation) => {
@@ -382,7 +382,7 @@ const scheduleImmediateWithMessageChannel = (scheduler, channel, continuation) =
     channel.port2.postMessage(null);
 };
 const scheduleDelayed = (scheduler, continuation, delay) => {
-    const disposable = pipe(createDisposable(), addToParentAndDisposeOnError(continuation), onDisposed(_ => clearTimeout(timeout)));
+    const disposable = pipe(createDisposable(), addToDisposeOnChildError(continuation), onDisposed(_ => clearTimeout(timeout)));
     const timeout = setTimeout(runContinuation, delay, scheduler, continuation, disposable);
 };
 const scheduleImmediate = (scheduler, continuation) => {
@@ -435,7 +435,7 @@ class HostScheduler extends AbstractDisposable {
     schedule(continuation, options = {}) {
         var _a;
         const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
-        pipe(this, addChild(continuation));
+        pipe(this, add(continuation));
         const continuationIsDisposed = continuation.isDisposed;
         if (!continuationIsDisposed && delay > 0) {
             scheduleDelayed(this, continuation, delay);
@@ -520,7 +520,7 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable {
     schedule(continuation, options = {}) {
         var _a;
         const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
-        pipe(this, addChild(continuation));
+        pipe(this, add(continuation));
         if (!continuation.isDisposed) {
             const work = {
                 id: this.taskIDCount++,
