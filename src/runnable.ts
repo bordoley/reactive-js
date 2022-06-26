@@ -10,6 +10,7 @@ import {
   Map,
   Pairwise,
   Reduce,
+  Repeat,
   Scan,
   SkipFirst,
   SomeSatisfy,
@@ -19,6 +20,7 @@ import {
   ThrowIfEmpty,
   Using,
 } from "./container";
+import { addToAndDisposeParentOnChildError } from "./disposable";
 import {
   Equality,
   Factory,
@@ -27,13 +29,15 @@ import {
   Reducer,
   SideEffect1,
   Updater,
+  alwaysTrue,
   identity,
+  pipe,
 } from "./functions";
-import { Option, none } from "./option";
+import { Option, isNone, none } from "./option";
 import { createRunnable, createT } from "./runnable/createRunnable";
 import { fromArrayT } from "./runnable/fromArray";
 import { liftT } from "./runnable/lift";
-import { Sink } from "./runnable/sinks";
+import { Sink, createDelegatingSink } from "./runnable/sinks";
 import {
   SourceLike,
   createCatchErrorOperator,
@@ -80,7 +84,6 @@ export { first } from "./runnable/first";
 export { forEach } from "./runnable/forEach";
 export { fromArray, fromArrayT } from "./runnable/fromArray";
 export { last } from "./runnable/last";
-export { repeat } from "./runnable/repeat";
 export { Sink } from "./runnable/sinks";
 export { toArray } from "./runnable/toArray";
 
@@ -267,6 +270,34 @@ export const reduce: <T, TAcc>(
 
 export const reduceT: Reduce<RunnableLike<unknown>> = {
   reduce,
+};
+
+export const repeat: Repeat<RunnableLike<unknown>>["repeat"] = <T>(
+  predicate?: Predicate<number> | number,
+): RunnableOperator<T, T> => {
+  const shouldRepeat = isNone(predicate)
+    ? alwaysTrue
+    : typeof predicate === "number"
+    ? (count: number) => count < predicate
+    : (count: number) => predicate(count);
+
+  return runnable =>
+    createRunnable(sink => {
+      let count = 0;
+      do {
+        const delegateSink = pipe(
+          createDelegatingSink(sink),
+          addToAndDisposeParentOnChildError(sink),
+        );
+        runnable.sink(delegateSink);
+        delegateSink.dispose();
+        count++;
+      } while (!sink.isDisposed && shouldRepeat(count));
+    });
+};
+
+export const repeatT: Repeat<RunnableLike<unknown>> = {
+  repeat,
 };
 
 export const scan: <T, TAcc>(

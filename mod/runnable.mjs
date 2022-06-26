@@ -1,10 +1,10 @@
 /// <reference types="./runnable.d.ts" />
-import { ignore, pipe, raise, alwaysTrue, identity } from './functions.mjs';
+import { addToAndDisposeParentOnChildError, dispose } from './disposable.mjs';
+import { ignore, pipe, raise, identity, alwaysTrue } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractSource, sourceFrom, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
 import { AbstractDisposableContainer } from './container.mjs';
 import { __DEV__ } from './env.mjs';
-import { addToAndDisposeParentOnChildError, dispose } from './disposable.mjs';
 
 class AbstractRunnable extends AbstractSource {
 }
@@ -165,23 +165,6 @@ const last = () => {
     return run(createSink);
 };
 
-function repeat(predicate) {
-    const shouldRepeat = isNone(predicate)
-        ? alwaysTrue
-        : typeof predicate === "number"
-            ? (count) => count < predicate
-            : (count) => predicate(count);
-    return runnable => createRunnable(sink => {
-        let count = 0;
-        do {
-            const delegateSink = pipe(createDelegatingSink(sink), addToAndDisposeParentOnChildError(sink));
-            runnable.sink(delegateSink);
-            delegateSink.dispose();
-            count++;
-        } while (!sink.isDisposed && shouldRepeat(count));
-    });
-}
-
 class ToArraySink extends Sink {
     constructor() {
         super(...arguments);
@@ -306,6 +289,25 @@ const reduce = createReduceOperator({ ...fromArrayT, ...liftT }, class ReducerSi
 const reduceT = {
     reduce,
 };
+const repeat = (predicate) => {
+    const shouldRepeat = isNone(predicate)
+        ? alwaysTrue
+        : typeof predicate === "number"
+            ? (count) => count < predicate
+            : (count) => predicate(count);
+    return runnable => createRunnable(sink => {
+        let count = 0;
+        do {
+            const delegateSink = pipe(createDelegatingSink(sink), addToAndDisposeParentOnChildError(sink));
+            runnable.sink(delegateSink);
+            delegateSink.dispose();
+            count++;
+        } while (!sink.isDisposed && shouldRepeat(count));
+    });
+};
+const repeatT = {
+    repeat,
+};
 const scan = createScanOperator(liftT, class ScanSink extends Sink {
     constructor(delegate, reducer, acc) {
         super();
@@ -386,4 +388,4 @@ const usingT = {
     using,
 };
 
-export { Sink, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };
+export { Sink, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };
