@@ -151,17 +151,6 @@ const forEach = (f) => {
     return run(createSink);
 };
 
-const generate = (generator, initialValue) => {
-    const run = (sink) => {
-        let acc = initialValue();
-        while (!sink.isDisposed) {
-            acc = generator(acc);
-            sink.notify(acc);
-        }
-    };
-    return createRunnable(run);
-};
-
 class LastSink extends Sink {
     constructor() {
         super(...arguments);
@@ -248,6 +237,19 @@ const everySatisfy = createEverySatisfyOperator({ ...fromArrayT, ...liftT }, cla
 });
 const everySatisfyT = {
     everySatisfy,
+};
+const generate = (generator, initialValue) => {
+    const run = (sink) => {
+        let acc = initialValue();
+        while (!sink.isDisposed) {
+            acc = generator(acc);
+            sink.notify(acc);
+        }
+    };
+    return createRunnable(run);
+};
+const generateT = {
+    generate,
 };
 const keep = createKeepOperator(liftT, class KeepSink extends Sink {
     constructor(delegate, predicate) {
@@ -384,4 +386,4 @@ const usingT = {
     using,
 };
 
-export { Sink, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };
+export { Sink, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };

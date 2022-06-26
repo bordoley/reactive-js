@@ -37,6 +37,7 @@
 - [fromArrayT](observable.md#fromarrayt)
 - [fromIterableT](observable.md#fromiterablet)
 - [fromIteratorT](observable.md#fromiteratort)
+- [generateT](observable.md#generatet)
 - [keepT](observable.md#keept)
 - [mapT](observable.md#mapt)
 - [mergeAllT](observable.md#mergeallt)
@@ -230,6 +231,12 @@ ___
 ### fromIteratorT
 
 • `Const` **fromIteratorT**: [`FromIterator`](../interfaces/container.FromIterator.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, { `delay?`: `number`  }\>
+
+___
+
+### generateT
+
+• `Const` **generateT**: [`Generate`](../interfaces/container.Generate.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
