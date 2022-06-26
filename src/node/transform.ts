@@ -12,9 +12,10 @@ import {
 import {
   DisposableValueLike,
   addChildAndDisposeOnError,
-  addOnDisposedWithError,
   addToParentAndDisposeOnError,
   createDisposableValue,
+  dispose,
+  onError,
 } from "../disposable";
 import { Factory, defer, ignore, pipe, returns } from "../functions";
 import { createObservable, subscribe } from "../observable";
@@ -40,16 +41,12 @@ export const transform =
       createObservable(observer => {
         const transform = factory();
 
-        const transformSink = createWritableIOSink(
-          // don't dispose the transform when the writable is disposed.
-          () => {
-            const disposable = createDisposableValue<Transform>(
-              transform.value,
-              ignore,
-            );
-            addOnDisposedWithError(disposable, transform);
-            return disposable;
-          },
+        const transformSink = createWritableIOSink(() =>
+          pipe(
+            createDisposableValue<Transform>(transform.value, ignore),
+            // only dispose the transform when the writable is disposed.
+            onError(e => pipe(transform, dispose(e))),
+          ),
         );
 
         const transformReadableStream = pipe(

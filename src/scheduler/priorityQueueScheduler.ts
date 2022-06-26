@@ -1,9 +1,9 @@
 import {
   AbstractSerialDisposable,
   addDisposable,
-  addTeardown,
   addToParent,
   disposed,
+  onDisposed,
 } from "../disposable";
 import { pipe } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
@@ -263,14 +263,12 @@ class PriorityScheduler
 
 const createPriorityScheduler = (
   hostScheduler: SchedulerLike,
-): PriorityScheduler => {
-  const scheduler = pipe(
+): PriorityScheduler =>
+  pipe(
     new PriorityScheduler(hostScheduler),
     addToParent(hostScheduler),
+    onDisposed(clearQueues),
   );
-  addTeardown(scheduler, clearQueues);
-  return scheduler;
-};
 
 /**
  * Creates a new priority scheduler which schedules work using the provided

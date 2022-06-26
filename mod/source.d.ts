@@ -33,7 +33,7 @@ declare abstract class AbstractDisposableSource<T, TSink extends SinkLike<T>> ex
 declare const sinkInto: <C extends SourceLike, T>(sink: LiftedStateOf<C, T>) => SideEffect1<C>;
 declare const createCatchErrorOperator: <C extends SourceLike>(m: Lift<C>, CatchErrorSink: new <T>(delegate: LiftedStateOf<C, T>) => LiftedStateOf<C, T> & {
     readonly delegate: LiftedStateOf<C, T>;
-}) => <T_1>(onError: Function1<unknown, void | ContainerOf<C, T_1>>) => ContainerOperator<C, T_1, T_1>;
+}) => <T_1>(f: Function1<unknown, void | ContainerOf<C, T_1>>) => ContainerOperator<C, T_1, T_1>;
 declare const createDecodeWithCharsetOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, DecodeWithCharsetSink: new (delegate: LiftedStateOf<C, string>, textDecoder: TextDecoder) => LiftedStateOf<C, ArrayBuffer> & {
     readonly delegate: LiftedStateOf<C, string>;
     readonly textDecoder: TextDecoder;

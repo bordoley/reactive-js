@@ -1,4 +1,4 @@
-import { addTeardown, dispose } from "../disposable";
+import { dispose, onDisposed } from "../disposable";
 import { pipe } from "../functions";
 import { MulticastObservableLike, ObservableOperator } from "../observable";
 import { Option, isNone, isSome, none } from "../option";
@@ -24,19 +24,20 @@ export const share =
   source => {
     let multicast: Option<MulticastObservableLike<T>> = none;
 
-    const teardown = () => {
-      if (isSome(multicast) && multicast.observerCount === 0) {
-        pipe(multicast as MulticastObservableLike<T>, dispose());
-        multicast = none;
-      }
-    };
-
     return createObservable(observer => {
       if (isNone(multicast)) {
         multicast = pipe(source, publish(scheduler, options));
       }
 
       pipe(multicast, sinkInto(observer));
-      addTeardown(observer, teardown);
+      pipe(
+        observer,
+        onDisposed(() => {
+          if (isSome(multicast) && multicast.observerCount === 0) {
+            pipe(multicast, dispose());
+            multicast = none;
+          }
+        }),
+      );
     });
   };

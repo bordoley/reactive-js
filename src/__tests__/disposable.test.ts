@@ -1,11 +1,11 @@
 import {
   addDisposable,
-  addTeardown,
   createDisposable,
   createDisposableValue,
   createSerialDisposable,
   dispose,
   disposed,
+  onDisposed,
 } from "../disposable";
 import { defer, pipe, raise } from "../functions";
 import { none } from "../option";
@@ -48,9 +48,7 @@ export const tests = describe(
 
     test("disposes teardown function exactly once when disposed", () => {
       const teardown = mockFn();
-      const disposable = createDisposable(teardown);
-      addTeardown(disposable, teardown);
-      pipe(disposable, dispose());
+      pipe(createDisposable(teardown), onDisposed(teardown), dispose());
 
       pipe(teardown, expectToHaveBeenCalledTimes(1));
     }),

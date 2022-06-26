@@ -1,12 +1,11 @@
 import { AbstractDisposableContainer } from "../container";
 import {
   AbstractDisposable,
-  Error,
-  addTeardown,
   addToParent,
   addToParentAndDisposeOnError,
   dispose,
   onComplete,
+  onDisposed,
 } from "../disposable";
 import { __DEV__ } from "../env";
 import { pipe, raise } from "../functions";
@@ -26,15 +25,6 @@ const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
     );
   }
 };
-
-function onDispose(
-  this: ObserverDelegatingDispatcher<unknown>,
-  e: Option<Error>,
-) {
-  if (this.nextQueue.length === 0) {
-    pipe(this.observer, dispose(e));
-  }
-}
 
 class ObserverDelegatingDispatcher<T>
   extends AbstractDisposable
@@ -89,8 +79,13 @@ export class Observer<T>
       const dispatcher = pipe(
         new ObserverDelegatingDispatcher(this),
         addToParent(this),
+        onDisposed(e => {
+          if (dispatcher.nextQueue.length === 0) {
+            pipe(this, dispose(e));
+          }
+        }),
       );
-      addTeardown(dispatcher, onDispose);
+
       this._dispatcher = dispatcher;
     }
 

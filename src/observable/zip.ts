@@ -1,9 +1,9 @@
 import { Zip } from "../container";
 import {
   addChildAndDisposeOnError,
-  addTeardown,
   dispose,
   onComplete,
+  onDisposed,
 } from "../disposable";
 import {
   AbstractEnumerator,
@@ -44,13 +44,6 @@ const shouldComplete = (enumerators: readonly Enumerator<unknown>[]) => {
 class ZipObserverEnumerator extends AbstractEnumerator<unknown> {
   readonly buffer: unknown[] = [];
 
-  constructor() {
-    super();
-    addTeardown(this, () => {
-      this.buffer.length = 0;
-    });
-  }
-
   move(): boolean {
     const { buffer } = this;
 
@@ -62,16 +55,6 @@ class ZipObserverEnumerator extends AbstractEnumerator<unknown> {
     }
 
     return this.hasCurrent;
-  }
-}
-
-function onDisposed(this: ZipObserver) {
-  const { enumerator } = this;
-  if (
-    enumerator.isDisposed ||
-    (enumerator.buffer.length === 0 && !enumerator.hasCurrent)
-  ) {
-    pipe(this.delegate, dispose());
   }
 }
 
@@ -142,10 +125,23 @@ const _zip = (
           enumerator.move();
           enumerators.push(enumerator);
         } else {
-          const enumerator = new ZipObserverEnumerator();
+          const enumerator = pipe(
+            new ZipObserverEnumerator(),
+            onDisposed(() => {
+              enumerator.buffer.length = 0;
+            }),
+          );
+
           const innerObserver = pipe(
             new ZipObserver(observer, enumerators, enumerator),
-            onComplete(onDisposed),
+            onComplete(() => {
+              if (
+                enumerator.isDisposed ||
+                (enumerator.buffer.length === 0 && !enumerator.hasCurrent)
+              ) {
+                pipe(observer, dispose());
+              }
+            }),
           );
 
           pipe(

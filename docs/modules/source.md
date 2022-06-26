@@ -44,7 +44,7 @@
 
 ### createCatchErrorOperator
 
-▸ **createCatchErrorOperator**<`C`\>(`m`, `CatchErrorSink`): <T_1\>(`onError`: [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ContainerOf`](container.md#containerof)<`C`, `T_1`\>\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ **createCatchErrorOperator**<`C`\>(`m`, `CatchErrorSink`): <T_1\>(`f`: [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ContainerOf`](container.md#containerof)<`C`, `T_1`\>\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
@@ -63,7 +63,7 @@
 
 `fn`
 
-▸ <`T_1`\>(`onError`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ <`T_1`\>(`f`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 ##### Type parameters
 
@@ -75,7 +75,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `onError` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ContainerOf`](container.md#containerof)<`C`, `T_1`\>\> |
+| `f` | [`Function1`](functions.md#function1)<`unknown`, `void` \| [`ContainerOf`](container.md#containerof)<`C`, `T_1`\>\> |
 
 ##### Returns
 

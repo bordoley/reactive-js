@@ -1,5 +1,5 @@
 /// <reference types="./__tests__.d.ts" />
-import { createDisposable, addDisposable, dispose, addTeardown, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
+import { createDisposable, addDisposable, dispose, onDisposed, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
 import { pipe, defer, raise, increment, sum, returns, alwaysTrue, incrementBy, alwaysFalse, arrayEquality, ignore, identity } from './functions.mjs';
 import { none, isSome } from './option.mjs';
 import { describe, test, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectNone, expectEquals, expectArrayEquals, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
@@ -25,9 +25,7 @@ const tests$6 = describe("Disposable", describe("AbstractDisposable", test("disp
     expectTrue(child.isDisposed);
 }), test("disposes teardown function exactly once when disposed", () => {
     const teardown = mockFn();
-    const disposable = createDisposable(teardown);
-    addTeardown(disposable, teardown);
-    pipe(disposable, dispose());
+    pipe(createDisposable(teardown), onDisposed(teardown), dispose());
     pipe(teardown, expectToHaveBeenCalledTimes(1));
 }), test("catches and swallows Errors thrown by teardown function", () => {
     const teardown = defer(none, raise);
@@ -346,10 +344,9 @@ const tests$1 = describe("streamable", test("__stream", () => {
     let disposedTime = 0;
     const subscription = pipe(emptyStream, subscribe(scheduler, x => {
         result.push(x);
-    }));
-    addTeardown(subscription, _ => {
+    }), onDisposed(_ => {
         disposedTime = scheduler.now;
-    });
+    }));
     scheduler.run();
     pipe(result, expectArrayEquals([]));
     expectTrue(emptyStream.isDisposed);
@@ -571,13 +568,12 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(result, expectArrayEquals([1, 2, 3]));
 }), test("fromIterable", () => {
     const scheduler = createVirtualTimeScheduler();
-    const enumerator = pipe(fromIterable$2()([1, 2, 3, 4, 5, 6]), stream(scheduler));
     const result = [];
     let error = none;
-    const subscription = pipe(enumerator, subscribe(scheduler, x => result.push(x)));
-    addTeardown(subscription, e => {
+    const enumerator = pipe(fromIterable$2()([1, 2, 3, 4, 5, 6]), stream(scheduler));
+    pipe(enumerator, subscribe(scheduler, x => result.push(x)), onDisposed(e => {
         error = e;
-    });
+    }));
     enumerator.dispatch(none);
     enumerator.dispatch(none);
     enumerator.dispatch(none);

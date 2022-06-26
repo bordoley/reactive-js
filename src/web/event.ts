@@ -1,5 +1,5 @@
-import { addTeardown } from "../disposable";
-import { Function1 } from "../functions";
+import { onDisposed } from "../disposable";
+import { Function1, pipe } from "../functions";
 import { ObservableLike, createObservable } from "../observable";
 
 export const fromEvent = <T>(
@@ -7,14 +7,18 @@ export const fromEvent = <T>(
   eventName: string,
   selector: Function1<Event, T>,
 ): ObservableLike<T> =>
-  createObservable(({ dispatcher }) => {
+  createObservable(observer => {
+    const dispatcher = pipe(
+      observer.dispatcher,
+      onDisposed(_ => {
+        target.removeEventListener(eventName, listener);
+      }),
+    );
+
     const listener = (event: Event) => {
       const result = selector(event);
       dispatcher.dispatch(result);
     };
 
     target.addEventListener(eventName, listener, { passive: true });
-    addTeardown(dispatcher, () => {
-      target.removeEventListener(eventName, listener);
-    });
   });

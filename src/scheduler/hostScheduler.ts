@@ -2,10 +2,10 @@ import {
   AbstractDisposable,
   DisposableLike,
   addDisposable,
-  addTeardown,
   addToParentAndDisposeOnError,
   createDisposable,
   disposed,
+  onDisposed,
 } from "../disposable";
 import { Factory, alwaysFalse, pipe } from "../functions";
 import { Option, isSome, none } from "../option";
@@ -45,15 +45,14 @@ const scheduleImmediateWithSetImmediate = (
   const disposable = pipe(
     createDisposable(),
     addToParentAndDisposeOnError(continuation),
+    onDisposed(() => clearImmediate(immmediate)),
   );
-  const immmediate = setImmediate(
+  const immmediate: ReturnType<typeof setImmediate> = setImmediate(
     runContinuation,
     scheduler,
     continuation,
     disposable,
   );
-
-  addTeardown(disposable, () => clearImmediate(immmediate));
 };
 
 const scheduleImmediateWithMessageChannel = (
@@ -74,16 +73,15 @@ const scheduleDelayed = (
   const disposable = pipe(
     createDisposable(),
     addToParentAndDisposeOnError(continuation),
+    onDisposed(_ => clearTimeout(timeout)),
   );
-  const timeout = setTimeout(
+  const timeout: ReturnType<typeof setTimeout> = setTimeout(
     runContinuation,
     delay,
     scheduler,
     continuation,
     disposable,
   );
-
-  addTeardown(disposable, () => clearTimeout(timeout));
 };
 
 const scheduleImmediate = (
@@ -185,10 +183,13 @@ export const createHostScheduler = (
     const messageChannel = new MessageChannel();
     hostScheduler.messageChannel = messageChannel;
 
-    addTeardown(hostScheduler, () => {
-      messageChannel.port1.close();
-      messageChannel.port2.close();
-    });
+    pipe(
+      hostScheduler,
+      onDisposed(_ => {
+        messageChannel.port1.close();
+        messageChannel.port2.close();
+      }),
+    );
   }
 
   return hostScheduler;

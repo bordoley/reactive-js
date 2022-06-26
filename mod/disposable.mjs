@@ -20,27 +20,6 @@ const addDisposable = (parent, child) => {
 const addTeardown = (parent, teardown) => {
     parent.add(teardown);
 };
-/**
- * Add `teardown` to `parent` that is only invoked if `parent` is disposed with an error.
- */
-const addOnDisposedWithErrorTeardown = (parent, teardown) => {
-    addTeardown(parent, e => {
-        if (isSome(e)) {
-            teardown.call(parent, e);
-        }
-    });
-};
-const toDisposeOnErrorTeardown = (disposable) => (error) => {
-    if (isSome(error)) {
-        pipe(disposable, dispose(error));
-    }
-};
-/**
- * Add `child` to `parent`, only disposing child when `parent` is disposed with an error.
- */
-const addOnDisposedWithError = (parent, child) => {
-    addTeardown(parent, toDisposeOnErrorTeardown(child));
-};
 const bindTo = (child) => (parent) => {
     addDisposable(parent, child);
     addDisposable(child, parent);
@@ -56,7 +35,11 @@ const addToParent = (parent) => child => {
 };
 const addDisposableDisposeParentOnChildError = (parent, child) => {
     addDisposable(parent, child);
-    addOnDisposedWithError(child, parent);
+    addTeardown(child, (error) => {
+        if (isSome(error)) {
+            pipe(parent, dispose(error));
+        }
+    });
 };
 const addChildAndDisposeOnError = (child) => (parent) => {
     addDisposableDisposeParentOnChildError(parent, child);
@@ -66,10 +49,14 @@ const addToParentAndDisposeOnError = (parent) => (child) => {
     addDisposableDisposeParentOnChildError(parent, child);
     return child;
 };
+const onDisposed = (teardown) => disposable => {
+    addTeardown(disposable, teardown);
+    return disposable;
+};
 const onError = (teardown) => disposable => {
     addTeardown(disposable, e => {
         if (isSome(e)) {
-            teardown.call(parent, e);
+            teardown.call(disposable, e);
         }
     });
     return disposable;
@@ -211,15 +198,11 @@ class DisposableValueImpl extends AbstractDisposable {
  * Creates a new DisposableValueLike instance, which applies
  * the supplied `cleanup` side effect to `value` when disposed.
  */
-const createDisposableValue = (value, cleanup) => {
-    const retval = new DisposableValueImpl(value);
-    addTeardown(retval, defer(value, cleanup));
-    return retval;
-};
+const createDisposableValue = (value, cleanup) => pipe(new DisposableValueImpl(value), onDisposed(defer(value, cleanup)));
 const toAbortSignal = (disposable) => {
     const abortController = new AbortController();
     addTeardown(disposable, () => abortController.abort());
     return abortController.signal;
 };
 
-export { AbstractDisposable, AbstractSerialDisposable, addChild, addChildAndDisposeOnError, addDisposable, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addTeardown, addToParent, addToParentAndDisposeOnError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, onComplete, onError, toAbortSignal, toErrorHandler };
+export { AbstractDisposable, AbstractSerialDisposable, addChild, addChildAndDisposeOnError, addDisposable, addTeardown, addToParent, addToParentAndDisposeOnError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
