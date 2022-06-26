@@ -24,10 +24,12 @@ import {
   pipe,
 } from "./functions";
 import { createObservable, createT } from "./observable/createObservable";
+import { dispatchTo } from "./observable/dispatchTo";
 import { fromArrayT } from "./observable/fromArray";
 import { lift, liftSynchronousT } from "./observable/lift";
 import { mapT } from "./observable/map";
 import { Observer, createDelegatingObserver } from "./observable/observer";
+import { onNotify } from "./observable/onNotify";
 import { subscribe } from "./observable/subscribe";
 import { switchAllT } from "./observable/switchAll";
 import { takeFirst } from "./observable/takeFirst";
@@ -401,7 +403,8 @@ export const subscribeOn =
     createObservable(({ dispatcher }) =>
       pipe(
         observable,
-        subscribe(scheduler, dispatcher.dispatch, dispatcher),
+        onNotify(dispatchTo(dispatcher)),
+        subscribe(scheduler),
         bindTo(dispatcher),
       ),
     );

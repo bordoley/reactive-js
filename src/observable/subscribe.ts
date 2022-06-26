@@ -1,26 +1,9 @@
 import { DisposableLike, addTo } from "../disposable";
-import { Function1, SideEffect1, ignore, pipe } from "../functions";
+import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
-import { none } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { sourceFrom } from "../source";
 import { Observer } from "./observer";
-
-class DefaultObserver<T> extends Observer<T> {
-  constructor(
-    scheduler: SchedulerLike,
-    private readonly onNotify: SideEffect1<T>,
-    private readonly onNotifyThis: unknown,
-  ) {
-    super(scheduler);
-  }
-
-  notify(next: T) {
-    this.assertState();
-
-    this.onNotify.call(this.onNotifyThis, next);
-  }
-}
 
 /**
  * Safely subscribes to an `ObservableLike` with a `ObserverLike` instance
@@ -29,27 +12,7 @@ class DefaultObserver<T> extends Observer<T> {
  *
  * @param scheduler The SchedulerLike instance that should be used by the source to notify it's observer.
  */
-export function subscribe<T>(
-  scheduler: SchedulerLike,
-): Function1<ObservableLike<T>, DisposableLike>;
-export function subscribe<T>(
-  scheduler: SchedulerLike,
-  onNotify: SideEffect1<T>,
-): Function1<ObservableLike<T>, DisposableLike>;
-export function subscribe<This, T>(
-  scheduler: SchedulerLike,
-  onNotify: (this: This, value: T) => void,
-  onNotifyThis: This,
-): Function1<ObservableLike<T>, DisposableLike>;
-export function subscribe<T>(
-  scheduler: SchedulerLike,
-  onNotify: SideEffect1<T> = ignore,
-  onNotifyThis: unknown = none,
-): Function1<ObservableLike<T>, DisposableLike> {
-  return (observable: ObservableLike<T>): DisposableLike =>
-    pipe(
-      new DefaultObserver(scheduler, onNotify, onNotifyThis),
-      addTo(scheduler),
-      sourceFrom(observable),
-    );
-}
+export const subscribe =
+  <T>(scheduler: SchedulerLike): Function1<ObservableLike<T>, DisposableLike> =>
+  observable =>
+    pipe(new Observer(scheduler), addTo(scheduler), sourceFrom(observable));

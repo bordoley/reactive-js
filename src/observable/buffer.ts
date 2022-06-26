@@ -16,6 +16,7 @@ import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { never } from "./never";
 import { Observer } from "./observer";
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 function onDispose(this: BufferObserver<void>) {
@@ -27,15 +28,6 @@ function onDispose(this: BufferObserver<void>) {
   } else {
     pipe(buffer, fromValue(fromArrayT), sinkInto(this.delegate));
   }
-}
-
-function onNotify(this: BufferObserver<any>) {
-  this.durationSubscription.inner = disposed;
-
-  const buffer = this.buffer;
-  this.buffer = [];
-
-  this.delegate.notify(buffer);
 }
 
 class BufferObserver<T> extends Observer<T> {
@@ -57,13 +49,23 @@ class BufferObserver<T> extends Observer<T> {
 
     buffer.push(next);
 
+    const doOnNotify = () => {
+      this.durationSubscription.inner = disposed;
+
+      const buffer = this.buffer;
+      this.buffer = [];
+
+      this.delegate.notify(buffer);
+    };
+
     if (buffer.length === maxBufferSize) {
-      onNotify.call(this);
+      doOnNotify();
     } else if (this.durationSubscription.inner.isDisposed) {
       this.durationSubscription.inner = pipe(
         next,
         this.durationFunction,
-        subscribe(this.scheduler, onNotify, this),
+        onNotify(doOnNotify),
+        subscribe(this.scheduler),
       );
     }
   }

@@ -4,6 +4,7 @@ import {
   ObservableLike,
   createObservable,
   fromDisposable,
+  onNotify,
   subscribe,
   subscribeOn,
   takeUntil,
@@ -26,17 +27,6 @@ export const flow =
           scheduler ?? observer.scheduler,
         );
 
-        const onModeChange = (mode: FlowMode) => {
-          switch (mode) {
-            case "pause":
-              pausableScheduler.pause();
-              break;
-            case "resume":
-              pausableScheduler.resume();
-              break;
-          }
-        };
-
         pipe(
           observer,
           sourceFrom(
@@ -49,7 +39,17 @@ export const flow =
           addAndDisposeParentOnChildError(
             pipe(
               modeObs,
-              subscribe(observer.scheduler, onModeChange),
+              onNotify((mode: FlowMode) => {
+                switch (mode) {
+                  case "pause":
+                    pausableScheduler.pause();
+                    break;
+                  case "resume":
+                    pausableScheduler.resume();
+                    break;
+                }
+              }),
+              subscribe(observer.scheduler),
               bindTo(pausableScheduler),
             ),
           ),

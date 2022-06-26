@@ -1,8 +1,8 @@
 /// <reference types="./observable.d.ts" />
 import { AbstractDisposableContainer, empty, fromValue, throws, concatMap } from './container.mjs';
 import { addToAndDisposeParentOnChildError, dispose, onComplete, AbstractDisposable, addTo, onDisposed, disposed, add, createSerialDisposable, addAndDisposeParentOnChildError, bindTo, toErrorHandler } from './disposable.mjs';
-import { pipe, raise, ignore, arrayEquality, defer as defer$1, compose, returns } from './functions.mjs';
-import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createTakeFirstOperator, createUsing, createNever, createOnSink, sinkInto, createOnNotifyOperator, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
+import { pipe, raise, arrayEquality, ignore, defer as defer$1, compose, returns } from './functions.mjs';
+import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createUsing, createNever, createOnSink, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -33,6 +33,8 @@ const createObservable = (f) => new CreateObservable(f);
 const createT = {
     create: createObservable,
 };
+
+const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
 
 const defer = (factory, options) => createObservable(observer => {
     const sideEffect = factory();
@@ -175,7 +177,9 @@ class Observer extends AbstractDisposableContainer {
         return this._dispatcher;
     }
     assertState() { }
-    notify(_) { }
+    notify(_) {
+        this.assertState();
+    }
 }
 if (__DEV__) {
     Observer.prototype.assertState = function assertStateDev() {
@@ -209,28 +213,32 @@ const mapT = {
     map,
 };
 
-class DefaultObserver extends Observer {
-    constructor(scheduler, onNotify, onNotifyThis) {
-        super(scheduler);
+/**
+ * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
+ *
+ * @param onNotify The function that is invoked when the observable source produces values.
+ */
+const onNotify = createOnNotifyOperator(liftSynchronousT, class OnNotifyObserver extends Observer {
+    constructor(delegate, onNotify) {
+        super(delegate.scheduler);
+        this.delegate = delegate;
         this.onNotify = onNotify;
-        this.onNotifyThis = onNotifyThis;
     }
-    notify(next) {
-        this.assertState();
-        this.onNotify.call(this.onNotifyThis, next);
-    }
-}
-function subscribe(scheduler, onNotify = ignore, onNotifyThis = none) {
-    return (observable) => pipe(new DefaultObserver(scheduler, onNotify, onNotifyThis), addTo(scheduler), sourceFrom(observable));
-}
+});
+
+/**
+ * Safely subscribes to an `ObservableLike` with a `ObserverLike` instance
+ * using the provided scheduler. The returned `DisposableLike`
+ * may used to cancel the subscription.
+ *
+ * @param scheduler The SchedulerLike instance that should be used by the source to notify it's observer.
+ */
+const subscribe = (scheduler) => observable => pipe(new Observer(scheduler), addTo(scheduler), sourceFrom(observable));
 
 function onDispose$2() {
     if (this.inner.isDisposed) {
         pipe(this.delegate, dispose());
     }
-}
-function onNotify$4(next) {
-    this.delegate.notify(next);
 }
 class SwitchObserver extends Observer {
     constructor(delegate) {
@@ -241,7 +249,9 @@ class SwitchObserver extends Observer {
     notify(next) {
         this.assertState();
         pipe(this.inner, dispose());
-        const inner = pipe(next, subscribe(this.scheduler, onNotify$4, this), addToAndDisposeParentOnChildError(this.delegate), onComplete(() => {
+        const inner = pipe(next, onNotify(next => {
+            this.delegate.notify(next);
+        }), subscribe(this.scheduler), addToAndDisposeParentOnChildError(this.delegate), onComplete(() => {
             if (this.isDisposed) {
                 pipe(this.delegate, dispose());
             }
@@ -271,8 +281,6 @@ const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftSynchronousT }
 const takeFirstT = {
     takeFirst,
 };
-
-const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
 
 const arrayStrictEquality = arrayEquality();
 let currentCtx = none;
@@ -352,7 +360,7 @@ class ObservableContext {
             pipe(effect.subscription, dispose());
             const { observer, runComputation } = this;
             const { scheduler } = observer;
-            const subscription = pipe(observable, subscribe(observer.scheduler, next => {
+            const subscription = pipe(observable, onNotify(next => {
                 effect.value = next;
                 effect.hasValue = true;
                 if (this.mode === "combine-latest") {
@@ -365,7 +373,7 @@ class ObservableContext {
                             ? pipe(scheduler, schedule(runComputation), addToAndDisposeParentOnChildError(observer))
                             : scheduledComputationSubscription;
                 }
-            }), addToAndDisposeParentOnChildError(observer), onComplete(this.cleanup));
+            }), subscribe(observer.scheduler), addToAndDisposeParentOnChildError(observer), onComplete(this.cleanup));
             effect.observable = observable;
             effect.subscription = subscription;
             effect.value = none;
@@ -736,12 +744,6 @@ function onDispose() {
         pipe(buffer, fromValue(fromArrayT), sinkInto(this.delegate));
     }
 }
-function onNotify$3() {
-    this.durationSubscription.inner = disposed;
-    const buffer = this.buffer;
-    this.buffer = [];
-    this.delegate.notify(buffer);
-}
 class BufferObserver extends Observer {
     constructor(delegate, durationFunction, maxBufferSize, durationSubscription) {
         super(delegate.scheduler);
@@ -755,11 +757,17 @@ class BufferObserver extends Observer {
         this.assertState();
         const { buffer, maxBufferSize } = this;
         buffer.push(next);
+        const doOnNotify = () => {
+            this.durationSubscription.inner = disposed;
+            const buffer = this.buffer;
+            this.buffer = [];
+            this.delegate.notify(buffer);
+        };
         if (buffer.length === maxBufferSize) {
-            onNotify$3.call(this);
+            doOnNotify();
         }
         else if (this.durationSubscription.inner.isDisposed) {
-            this.durationSubscription.inner = pipe(next, this.durationFunction, subscribe(this.scheduler, onNotify$3, this));
+            this.durationSubscription.inner = pipe(next, this.durationFunction, onNotify(doOnNotify), subscribe(this.scheduler));
         }
     }
 }
@@ -791,7 +799,7 @@ const subscribeNext = (observer) => {
         const nextObs = observer.queue.shift();
         if (isSome(nextObs)) {
             observer.activeCount++;
-            pipe(nextObs, subscribe(observer.scheduler, observer.onNotify), addToAndDisposeParentOnChildError(observer.delegate), onComplete(observer.onDispose));
+            pipe(nextObs, onNotify(observer.onNotify), subscribe(observer.scheduler), addToAndDisposeParentOnChildError(observer.delegate), onComplete(observer.onDispose));
         }
         else if (observer.isDisposed) {
             pipe(observer.delegate, dispose());
@@ -875,19 +883,6 @@ const exhaustT = {
 };
 
 /**
- * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.
- *
- * @param onNotify The function that is invoked when the observable source produces values.
- */
-const onNotify$2 = createOnNotifyOperator(liftSynchronousT, class OnNotifyObserver extends Observer {
-    constructor(delegate, onNotify) {
-        super(delegate.scheduler);
-        this.delegate = delegate;
-        this.onNotify = onNotify;
-    }
-});
-
-/**
  * Returns a `MulticastObservableLike` backed by a single subscription to the source.
  *
  * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
@@ -896,7 +891,7 @@ const onNotify$2 = createOnNotifyOperator(liftSynchronousT, class OnNotifyObserv
  */
 const publish = (scheduler, options) => observable => {
     const subject = createSubject(options);
-    pipe(observable, subscribe(scheduler, subject.dispatch, subject), bindTo(subject));
+    pipe(observable, onNotify(dispatchTo(subject)), subscribe(scheduler), bindTo(subject));
     return subject;
 };
 
@@ -916,7 +911,7 @@ const createRepeatObserver = (delegate, observable, shouldRepeat) => {
         }
         else {
             count++;
-            pipe(observable, subscribe(delegate.scheduler, delegate.notify, delegate), addTo(delegate), onDisposed(doOnDispose));
+            pipe(observable, onNotify(next => delegate.notify(next)), subscribe(delegate.scheduler), addTo(delegate), onDisposed(doOnDispose));
         }
     };
     return pipe(createDelegatingObserver(delegate), addTo(delegate), onDisposed(doOnDispose));
@@ -953,14 +948,6 @@ const notifyDelegate = (observer) => {
         observer.delegate.notify(result);
     }
 };
-function onNotify$1(otherLatest) {
-    this.hasLatest = true;
-    this.otherLatest = otherLatest;
-    notifyDelegate(this);
-    if (this.isDisposed && this.queue.length === 0) {
-        pipe(this.delegate, dispose());
-    }
-}
 class ZipWithLatestFromObserver extends Observer {
     constructor(delegate, selector) {
         super(delegate.scheduler);
@@ -991,7 +978,14 @@ const zipWithLatestFrom = (other, selector) => {
             }
         };
         const observer = pipe(new ZipWithLatestFromObserver(delegate, selector), onComplete(disposeDelegate));
-        const otherSubscription = pipe(other, subscribe(delegate.scheduler, onNotify$1, observer), onComplete(disposeDelegate));
+        const otherSubscription = pipe(other, onNotify(otherLatest => {
+            observer.hasLatest = true;
+            observer.otherLatest = otherLatest;
+            notifyDelegate(observer);
+            if (observer.isDisposed && observer.queue.length === 0) {
+                pipe(observer.delegate, dispose());
+            }
+        }), subscribe(delegate.scheduler), onComplete(disposeDelegate));
         pipe(delegate, addAndDisposeParentOnChildError(observer), addAndDisposeParentOnChildError(otherSubscription));
         return observer;
     };
@@ -1005,7 +999,7 @@ const zipWithLatestFrom = (other, selector) => {
  * @param scanner The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.
  */
-const scanAsync = (scanner, initialValue) => observable => using(() => createSubject(), accFeedbackStream => pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), switchAll(), onNotify$2(dispatchTo(accFeedbackStream)), onSubscribe(() => {
+const scanAsync = (scanner, initialValue) => observable => using(() => createSubject(), accFeedbackStream => pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), switchAll(), onNotify(dispatchTo(accFeedbackStream)), onSubscribe(() => {
     accFeedbackStream.dispatch(initialValue());
 })));
 
@@ -1034,7 +1028,7 @@ const share = (scheduler, options) => source => {
 };
 
 const setupDurationSubscription$1 = (observer, next) => {
-    observer.durationSubscription.inner = pipe(observer.durationFunction(next), subscribe(observer.scheduler, observer.onNotify));
+    observer.durationSubscription.inner = pipe(observer.durationFunction(next), onNotify(observer.onNotify), subscribe(observer.scheduler));
 };
 class ThrottleObserver extends Observer {
     constructor(delegate, durationFunction, mode, durationSubscription) {
@@ -1118,10 +1112,6 @@ function timeout(duration) {
     return lift(operator);
 }
 
-function onNotify(next) {
-    this.hasLatest = true;
-    this.otherLatest = next;
-}
 class WithLatestFromObserver extends Observer {
     constructor(delegate, selector) {
         super(delegate.scheduler);
@@ -1148,7 +1138,10 @@ class WithLatestFromObserver extends Observer {
 const withLatestFrom = (other, selector) => {
     const operator = (delegate) => {
         const observer = pipe(new WithLatestFromObserver(delegate, selector), bindTo(delegate));
-        pipe(other, subscribe(observer.scheduler, onNotify, observer), addToAndDisposeParentOnChildError(observer), onComplete(() => {
+        pipe(other, onNotify(next => {
+            observer.hasLatest = true;
+            observer.otherLatest = next;
+        }), subscribe(observer.scheduler), addToAndDisposeParentOnChildError(observer), onComplete(() => {
             if (!observer.hasLatest) {
                 pipe(observer, dispose());
             }
@@ -1332,7 +1325,7 @@ const zipT = {
 const toRunnable = (options = {}) => source => createRunnable(sink => {
     const { schedulerFactory = createVirtualTimeScheduler } = options;
     const scheduler = schedulerFactory();
-    const subscription = pipe(source, subscribe(scheduler, sink.notify, sink));
+    const subscription = pipe(source, onNotify(v => sink.notify(v)), subscribe(scheduler));
     pipe(sink, addAndDisposeParentOnChildError(scheduler), addAndDisposeParentOnChildError(subscription));
     scheduler.run();
     scheduler.dispose();
@@ -1350,10 +1343,10 @@ const toRunnableT = {
 const toPromise = (scheduler) => observable => new Promise((resolve, reject) => {
     let result = none;
     let hasResult = false;
-    pipe(observable, subscribe(scheduler, next => {
+    pipe(observable, onNotify(next => {
         hasResult = true;
         result = next;
-    }), onDisposed(err => {
+    }), subscribe(scheduler), onDisposed(err => {
         if (isSome(err)) {
             const { cause } = err;
             reject(cause);
@@ -1491,7 +1484,7 @@ const someSatisfy = createSomeSatisfyOperator({ ...fromArrayT, ...liftSynchronou
 const someSatisfyT = {
     someSatisfy,
 };
-const subscribeOn = (scheduler) => observable => createObservable(({ dispatcher }) => pipe(observable, subscribe(scheduler, dispatcher.dispatch, dispatcher), bindTo(dispatcher)));
+const subscribeOn = (scheduler) => observable => createObservable(({ dispatcher }) => pipe(observable, onNotify(dispatchTo(dispatcher)), subscribe(scheduler), bindTo(dispatcher)));
 /**
  * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
  *
@@ -1544,4 +1537,4 @@ const throwIfEmptyT = {
     throwIfEmpty,
 };
 
-export { AbstractDisposableObservable, AbstractObservable, Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, createT, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify$2 as onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AbstractDisposableObservable, AbstractObservable, Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, createT, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

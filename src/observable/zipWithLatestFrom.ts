@@ -8,6 +8,7 @@ import { ObservableLike, ObservableOperator } from "../observable";
 import { Option } from "../option";
 import { lift } from "./lift";
 import { Observer } from "./observer";
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 const notifyDelegate = <TA, TB, TC>(
@@ -20,19 +21,6 @@ const notifyDelegate = <TA, TB, TC>(
     observer.delegate.notify(result);
   }
 };
-
-function onNotify<TA, TB, T>(
-  this: ZipWithLatestFromObserver<TA, TB, T>,
-  otherLatest: TB,
-) {
-  this.hasLatest = true;
-  this.otherLatest = otherLatest;
-  notifyDelegate(this);
-
-  if (this.isDisposed && this.queue.length === 0) {
-    pipe(this.delegate, dispose());
-  }
-}
 
 class ZipWithLatestFromObserver<TA, TB, T> extends Observer<TA> {
   otherLatest: Option<TB>;
@@ -81,7 +69,16 @@ export const zipWithLatestFrom = <TA, TB, T>(
 
     const otherSubscription = pipe(
       other,
-      subscribe(delegate.scheduler, onNotify, observer),
+      onNotify(otherLatest => {
+        observer.hasLatest = true;
+        observer.otherLatest = otherLatest;
+        notifyDelegate(observer);
+
+        if (observer.isDisposed && observer.queue.length === 0) {
+          pipe(observer.delegate, dispose());
+        }
+      }),
+      subscribe(delegate.scheduler),
       onComplete(disposeDelegate),
     );
 

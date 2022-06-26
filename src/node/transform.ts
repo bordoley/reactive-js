@@ -18,7 +18,12 @@ import {
   onError,
 } from "../disposable";
 import { Factory, defer, ignore, pipe, returns } from "../functions";
-import { createObservable, subscribe } from "../observable";
+import {
+  createObservable,
+  dispatchTo,
+  onNotify,
+  subscribe,
+} from "../observable";
 import { sinkInto } from "../source";
 
 import {
@@ -63,11 +68,8 @@ export const transform =
 
         const modeSubscription = pipe(
           modeObs,
-          subscribe(
-            observer.scheduler,
-            transformReadableStream.dispatch,
-            transformReadableStream,
-          ),
+          onNotify(dispatchTo(transformReadableStream)),
+          subscribe(observer.scheduler),
           addToAndDisposeParentOnChildError(observer),
         );
 

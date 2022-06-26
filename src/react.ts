@@ -33,6 +33,7 @@ import {
   SubjectLike,
   createSubject,
   distinctUntilChanged,
+  onNotify,
   subscribe,
 } from "./observable";
 import { Option, isSome, none } from "./option";
@@ -68,7 +69,8 @@ export const useObservable = <T>(
 
     const subscription = pipe(
       observable,
-      subscribe(scheduler, compose(returns, updateState)),
+      onNotify(compose(returns, updateState)),
+      subscribe(scheduler),
       onError(updateError),
     );
 

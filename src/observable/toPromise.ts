@@ -3,6 +3,7 @@ import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Option, isSome, none } from "../option";
 import { SchedulerLike } from "../scheduler";
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 /**
@@ -20,10 +21,11 @@ export const toPromise =
 
       pipe(
         observable,
-        subscribe(scheduler, next => {
+        onNotify(next => {
           hasResult = true;
           result = next;
         }),
+        subscribe(scheduler),
         onDisposed(err => {
           if (isSome(err)) {
             const { cause } = err;

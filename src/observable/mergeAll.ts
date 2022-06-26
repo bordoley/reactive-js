@@ -10,6 +10,7 @@ import { ObservableLike, ObservableOperator } from "../observable";
 import { isSome } from "../option";
 import { lift } from "./lift";
 import { Observer } from "./observer";
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 const subscribeNext = <T>(observer: MergeObserver<T>) => {
@@ -21,7 +22,8 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
 
       pipe(
         nextObs,
-        subscribe(observer.scheduler, observer.onNotify),
+        onNotify(observer.onNotify),
+        subscribe(observer.scheduler),
         addToAndDisposeParentOnChildError(observer.delegate),
         onComplete(observer.onDispose),
       );
