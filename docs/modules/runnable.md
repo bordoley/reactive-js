@@ -31,6 +31,7 @@
 - [mapT](runnable.md#mapt)
 - [pairwiseT](runnable.md#pairwiset)
 - [reduceT](runnable.md#reducet)
+- [repeatT](runnable.md#repeatt)
 - [scanT](runnable.md#scant)
 - [skipFirstT](runnable.md#skipfirstt)
 - [someSatisfyT](runnable.md#somesatisfyt)
@@ -158,6 +159,12 @@ ___
 ### reduceT
 
 • `Const` **reduceT**: [`Reduce`](../interfaces/container.Reduce.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
+### repeatT
+
+• `Const` **repeatT**: [`Repeat`](../interfaces/container.Repeat.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
 
 ___
 
@@ -616,10 +623,7 @@ ___
 
 ### repeat
 
-▸ **repeat**<`T`\>(`predicate`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
-
-Returns an RunnableLike that applies the predicate function each time the source
-completes to determine if the enumerable should be repeated.
+▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -629,17 +633,15 @@ completes to determine if the enumerable should be repeated.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`number`\> | The predicate function to apply. |
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`number`\> |
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
-▸ **repeat**<`T`\>(`count`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
-
-Returns an RunnableLike that repeats the source count times.
+▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -655,11 +657,9 @@ Returns an RunnableLike that repeats the source count times.
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
-▸ **repeat**<`T`\>(): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
-
-Returns an RunnableLike that continually repeats the source.
+▸ **repeat**<`T`\>(): [`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 #### Type parameters
 
@@ -669,7 +669,7 @@ Returns an RunnableLike that continually repeats the source.
 
 #### Returns
 
-[`RunnableOperator`](runnable.md#runnableoperator)<`T`, `T`\>
+[`ContainerOperator`](container.md#containeroperator)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>, `T`, `T`\>
 
 ___
 

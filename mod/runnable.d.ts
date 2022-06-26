@@ -1,6 +1,6 @@
-import { AbstractDisposableContainer, Concat, ConcatAll, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Generate, Keep, Map, ContainerOperator, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
+import { AbstractDisposableContainer, Concat, ConcatAll, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Generate, Keep, Map, ContainerOperator, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
 import { DisposableOrTeardown } from "./disposable.mjs";
-import { SideEffect1, Function1, Predicate, Equality, Updater, Factory, Reducer } from "./functions.mjs";
+import { SideEffect1, Function1, Equality, Predicate, Updater, Factory, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
 import { SinkLike, CreateSource, SourceLike } from "./source.mjs";
 declare class Sink<T> extends AbstractDisposableContainer implements SinkLike<T> {
@@ -21,22 +21,6 @@ declare const fromArray: <T>(options?: {
 }) => Function1<readonly T[], RunnableLike<T>>;
 declare const fromArrayT: FromArray<RunnableLike<unknown>, FromArrayOptions>;
 declare const last: <T>() => Function1<RunnableLike<T>, Option<T>>;
-/**
- * Returns an RunnableLike that applies the predicate function each time the source
- * completes to determine if the enumerable should be repeated.
- *
- * @param predicate The predicate function to apply.
- */
-declare function repeat<T>(predicate: Predicate<number>): RunnableOperator<T, T>;
-/**
- * Returns an RunnableLike that repeats the source count times.
- * @param count
- */
-declare function repeat<T>(count: number): RunnableOperator<T, T>;
-/**
- * Returns an RunnableLike that continually repeats the source.
- */
-declare function repeat<T>(): RunnableOperator<T, T>;
 /**
  * Accumulates all values emitted by `runnable` into an array.
  *
@@ -84,6 +68,8 @@ declare const pairwise: <T>() => RunnableOperator<T, [
 declare const pairwiseT: Pairwise<RunnableLike<unknown>>;
 declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => RunnableOperator<T, TAcc>;
 declare const reduceT: Reduce<RunnableLike<unknown>>;
+declare const repeat: Repeat<RunnableLike<unknown>>["repeat"];
+declare const repeatT: Repeat<RunnableLike<unknown>>;
 declare const scan: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => RunnableOperator<T, TAcc>;
 declare const scanT: Scan<RunnableLike<unknown>>;
 declare const skipFirst: <T>(options?: {
@@ -108,4 +94,4 @@ declare const throwIfEmpty: <T>(factory: Factory<unknown>) => RunnableOperator<T
 declare const throwIfEmptyT: ThrowIfEmpty<RunnableLike<unknown>>;
 declare const using: Using<RunnableLike<unknown>>["using"];
 declare const usingT: Using<RunnableLike<unknown>>;
-export { RunnableLike, RunnableOperator, Sink, ToRunnable, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };
+export { RunnableLike, RunnableOperator, Sink, ToRunnable, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };
