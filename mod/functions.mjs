@@ -50,11 +50,6 @@ const decrement = (x) => x - 1;
  * Returns a function that decrements a number `x` by the value `decr`.
  */
 const decrementBy = (decr) => (x) => x - decr;
-const tranformUpdater = (parse, serialize) => (stateUpdater) => oldStateTA => {
-    const oldStateTB = parse(oldStateTA);
-    const newStateTB = stateUpdater(oldStateTB);
-    return oldStateTB === newStateTB ? oldStateTA : serialize(newStateTB);
-};
 /**
  * The javascript strict equality function.
  */
@@ -122,10 +117,6 @@ function compose(...operators) {
     return source => pipe(source, ...operators);
 }
 /**
- * Returns a function that composes its operator with `op2`.
- */
-const composeWith = (op2) => op1 => compose(op1, op2);
-/**
  * Returns a `Factory` function that defers the evaluation of piping
  * `source` through the provided operators.
  */
@@ -142,4 +133,4 @@ function flip(f) {
     };
 }
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeWith, decrement, decrementBy, defer, flip, identity, ignore, increment, incrementBy, isEqualTo, isEven, isOdd, negate, pipe, raise, returns, strictEquality, sum, tranformUpdater, updaterReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, defer, flip, identity, ignore, increment, incrementBy, isEqualTo, isEven, isOdd, negate, pipe, raise, returns, strictEquality, sum, updaterReducer };

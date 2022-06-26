@@ -38,7 +38,6 @@
 - [arrayEquality](functions.md#arrayequality)
 - [callWith](functions.md#callwith)
 - [compose](functions.md#compose)
-- [composeWith](functions.md#composewith)
 - [decrement](functions.md#decrement)
 - [decrementBy](functions.md#decrementby)
 - [defer](functions.md#defer)
@@ -56,7 +55,6 @@
 - [returns](functions.md#returns)
 - [strictEquality](functions.md#strictequality)
 - [sum](functions.md#sum)
-- [tranformUpdater](functions.md#tranformupdater)
 - [updaterReducer](functions.md#updaterreducer)
 
 ## Type Aliases
@@ -1364,32 +1362,6 @@ ___
 
 ___
 
-### composeWith
-
-▸ **composeWith**<`T`, `A`, `B`\>(`op2`): [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`T`, `A`\>, [`Function1`](functions.md#function1)<`T`, `B`\>\>
-
-Returns a function that composes its operator with `op2`.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `A` |
-| `B` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`T`, `A`\>, [`Function1`](functions.md#function1)<`T`, `B`\>\>
-
-___
-
 ### decrement
 
 ▸ **decrement**(`x`): `number`
@@ -2510,42 +2482,6 @@ it's arguments.
 #### Returns
 
 `number`
-
-___
-
-### tranformUpdater
-
-▸ **tranformUpdater**<`TA`, `TB`\>(`parse`, `serialize`): (`stateUpdater`: [`Updater`](functions.md#updater)<`TB`\>) => [`Updater`](functions.md#updater)<`TA`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `parse` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
-| `serialize` | [`Function1`](functions.md#function1)<`TB`, `TA`\> |
-
-#### Returns
-
-`fn`
-
-▸ (`stateUpdater`): [`Updater`](functions.md#updater)<`TA`\>
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `stateUpdater` | [`Updater`](functions.md#updater)<`TB`\> |
-
-##### Returns
-
-[`Updater`](functions.md#updater)<`TA`\>
 
 ___
 

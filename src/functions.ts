@@ -280,15 +280,6 @@ export const decrementBy =
   (x: number) =>
     x - decr;
 
-export const tranformUpdater =
-  <TA, TB>(parse: Function1<TA, TB>, serialize: Function1<TB, TA>) =>
-  (stateUpdater: Updater<TB>): Updater<TA> =>
-  oldStateTA => {
-    const oldStateTB = parse(oldStateTA);
-    const newStateTB = stateUpdater(oldStateTB);
-
-    return oldStateTB === newStateTB ? oldStateTA : serialize(newStateTB);
-  };
 /**
  * The javascript strict equality function.
  */
@@ -598,16 +589,6 @@ export function compose(
 ): Function1<unknown, unknown> {
   return source => pipe(source, ...operators);
 }
-
-/**
- * Returns a function that composes its operator with `op2`.
- */
-export const composeWith =
-  <T, A, B>(
-    op2: Function1<A, B>,
-  ): Function1<Function1<T, A>, Function1<T, B>> =>
-  op1 =>
-    compose(op1, op2);
 
 export function defer<T, A>(src: T, op1: Function1<T, A>): Factory<A>;
 export function defer<T, A, B>(

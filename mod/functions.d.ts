@@ -148,7 +148,6 @@ declare const decrement: (x: number) => number;
  * Returns a function that decrements a number `x` by the value `decr`.
  */
 declare const decrementBy: (decr: number) => Updater<number>;
-declare const tranformUpdater: <TA, TB>(parse: Function1<TA, TB>, serialize: Function1<TB, TA>) => (stateUpdater: Updater<TB>) => Updater<TA>;
 /**
  * The javascript strict equality function.
  */
@@ -213,10 +212,6 @@ declare function compose<T, A, B, C, D, E, F, G, H, I>(op1: Function1<T, A>, op2
 declare function compose<T, A, B, C, D, E, F, G, H, I, J>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>): Function1<T, J>;
 declare function compose<T, A, B, C, D, E, F, G, H, I, J, K>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>, op11: Function1<J, K>): Function1<T, K>;
 declare function compose<T, A, B, C, D, E, F, G, H, I, J, K, L>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>, op11: Function1<J, K>, op12: Function1<K, L>): Function1<T, L>;
-/**
- * Returns a function that composes its operator with `op2`.
- */
-declare const composeWith: <T, A, B>(op2: Function1<A, B>) => Function1<Function1<T, A>, Function1<T, B>>;
 declare function defer<T, A>(src: T, op1: Function1<T, A>): Factory<A>;
 declare function defer<T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): Factory<B>;
 declare function defer<T, A, B, C>(src: T, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>): Factory<C>;
@@ -232,4 +227,4 @@ declare function defer<T, A, B, C, D, E, F, G, H, I, J, K, L>(src: T, op1: Funct
 declare function defer(source: unknown, ...operators: Function1<any, unknown>[]): Factory<unknown>;
 declare function flip<TA, TB, T>(f: Function2<TA, TB, T>): Function2<TB, TA, T>;
 declare function flip<TA, TB, TC, T>(f: Function3<TA, TB, TC, T>): Function3<TC, TB, TA, T>;
-export { Comparator, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, composeWith, decrement, decrementBy, defer, flip, identity, ignore, increment, incrementBy, isEqualTo, isEven, isOdd, negate, pipe, raise, returns, strictEquality, sum, tranformUpdater, updaterReducer };
+export { Comparator, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, defer, flip, identity, ignore, increment, incrementBy, isEqualTo, isEven, isOdd, negate, pipe, raise, returns, strictEquality, sum, updaterReducer };
