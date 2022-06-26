@@ -1,12 +1,7 @@
-import {
-  DisposableOrTeardown,
-  Error,
-  addAndDisposeParentOnChildError,
-  dispose,
-} from "../disposable";
+import { addAndDisposeParentOnChildError, bindTo } from "../disposable";
 import { Updater, pipe, raise } from "../functions";
 import {
-  AbstractObservable,
+  AbstractDisposableObservable,
   Observer,
   keep,
   map,
@@ -29,8 +24,13 @@ const windowLocationURIToString = ({
   path,
   query,
   fragment,
-}: WindowLocationURI): string =>
-  new URL(`${path}?${query}#${fragment}`, window.location.href).toString();
+}: WindowLocationURI): string => {
+  // FIXME: should we put validation in here?
+  let uri = path;
+  uri = query.length > 0 ? `${uri}?${query}` : uri;
+  uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
+  return new URL(uri, window.location.href).toString();
+};
 
 const getCurrentWindowLocationURI = (): WindowLocationURI => {
   const uri = new URL(window.location.href);
@@ -42,20 +42,18 @@ const getCurrentWindowLocationURI = (): WindowLocationURI => {
   };
 };
 
-const areWindowLocationURIsEqual = (
-  a: WindowLocationURI,
-  b: WindowLocationURI,
-) =>
+type TState = {
+  replace: boolean;
+  uri: WindowLocationURI;
+};
+
+const areWindowLocationStatesEqual = ({ uri: a }: TState, { uri: b }: TState) =>
+  // Intentionally ignore the replace flag.
   a === b ||
   (a.title === b.title &&
     a.path === b.path &&
     a.query === b.query &&
     a.fragment === b.fragment);
-
-type TState = {
-  replace: boolean;
-  uri: WindowLocationURI;
-};
 
 const windowHistoryReplaceState = (
   self: WindowLocationStream,
@@ -75,7 +73,7 @@ const windowHistoryPushState = (
 };
 
 class WindowLocationStream
-  extends AbstractObservable<WindowLocationURI>
+  extends AbstractDisposableObservable<WindowLocationURI>
   implements WindowLocationStreamLike
 {
   historyCounter = -1;
@@ -84,43 +82,21 @@ class WindowLocationStream
     super();
   }
 
-  get error() {
-    return this.stateStream.error;
-  }
-
-  get isDisposed() {
-    return this.stateStream.isDisposed;
-  }
-
   get observerCount() {
     return this.stateStream.observerCount;
-  }
-
-  add(disposable: DisposableOrTeardown): void {
-    this.stateStream.add(disposable);
   }
 
   dispatch(
     stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
     { replace }: { replace: boolean } = { replace: false },
   ): void {
-    this.stateStream.dispatch(state => {
-      const { uri: stateURI } = state;
-      const newURI =
+    this.stateStream.dispatch(({ uri: stateURI }) => {
+      const uri =
         typeof stateOrUpdater === "function"
           ? stateOrUpdater(stateURI)
           : stateOrUpdater;
-      return areWindowLocationURIsEqual(stateURI, newURI)
-        ? state
-        : {
-            uri: newURI,
-            replace,
-          };
+      return { uri, replace };
     });
-  }
-
-  dispose(error?: Error): void {
-    pipe(this.stateStream, dispose(error));
   }
 
   goBack(): boolean {
@@ -156,14 +132,20 @@ class WindowLocationStreamable implements WindowLocationStreamableLike {
     }
 
     const stateStream = pipe(
-      createStateStore(() => ({
-        replace: true,
-        uri: getCurrentWindowLocationURI(),
-      })),
+      createStateStore(
+        () => ({
+          replace: true,
+          uri: getCurrentWindowLocationURI(),
+        }),
+        { equality: areWindowLocationStatesEqual },
+      ),
       stream(scheduler, options),
     );
 
-    const windowLocationStream = new WindowLocationStream(stateStream);
+    const windowLocationStream = pipe(
+      new WindowLocationStream(stateStream),
+      bindTo(stateStream),
+    );
     this.currentStream = windowLocationStream;
 
     const updateBrowserSubscription = pipe(

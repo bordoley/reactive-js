@@ -1,7 +1,7 @@
 /// <reference types="./web.d.ts" />
-import { onDisposed, dispose, addAndDisposeParentOnChildError, toAbortSignal } from './disposable.mjs';
+import { onDisposed, bindTo, addAndDisposeParentOnChildError, toAbortSignal, dispose } from './disposable.mjs';
 import { pipe, raise, returns } from './functions.mjs';
-import { createObservable, AbstractObservable, map, onNotify, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
+import { createObservable, AbstractDisposableObservable, map, onNotify, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { none, isSome } from './option.mjs';
 import { sinkInto } from './source.mjs';
@@ -45,7 +45,13 @@ const createEventSource = (url, options = {}) => {
     });
 };
 
-const windowLocationURIToString = ({ path, query, fragment, }) => new URL(`${path}?${query}#${fragment}`, window.location.href).toString();
+const windowLocationURIToString = ({ path, query, fragment, }) => {
+    // FIXME: should we put validation in here?
+    let uri = path;
+    uri = query.length > 0 ? `${uri}?${query}` : uri;
+    uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
+    return new URL(uri, window.location.href).toString();
+};
 const getCurrentWindowLocationURI = () => {
     const uri = new URL(window.location.href);
     return {
@@ -55,7 +61,9 @@ const getCurrentWindowLocationURI = () => {
         fragment: uri.hash,
     };
 };
-const areWindowLocationURIsEqual = (a, b) => a === b ||
+const areWindowLocationStatesEqual = ({ uri: a }, { uri: b }) => 
+// Intentionally ignore the replace flag.
+a === b ||
     (a.title === b.title &&
         a.path === b.path &&
         a.query === b.query &&
@@ -67,40 +75,22 @@ const windowHistoryPushState = (self, title, uri) => {
     self.historyCounter++;
     window.history.pushState({ counter: self.historyCounter, title }, "", uri);
 };
-class WindowLocationStream extends AbstractObservable {
+class WindowLocationStream extends AbstractDisposableObservable {
     constructor(stateStream) {
         super();
         this.stateStream = stateStream;
         this.historyCounter = -1;
     }
-    get error() {
-        return this.stateStream.error;
-    }
-    get isDisposed() {
-        return this.stateStream.isDisposed;
-    }
     get observerCount() {
         return this.stateStream.observerCount;
     }
-    add(disposable) {
-        this.stateStream.add(disposable);
-    }
     dispatch(stateOrUpdater, { replace } = { replace: false }) {
-        this.stateStream.dispatch(state => {
-            const { uri: stateURI } = state;
-            const newURI = typeof stateOrUpdater === "function"
+        this.stateStream.dispatch(({ uri: stateURI }) => {
+            const uri = typeof stateOrUpdater === "function"
                 ? stateOrUpdater(stateURI)
                 : stateOrUpdater;
-            return areWindowLocationURIsEqual(stateURI, newURI)
-                ? state
-                : {
-                    uri: newURI,
-                    replace,
-                };
+            return { uri, replace };
         });
-    }
-    dispose(error) {
-        pipe(this.stateStream, dispose(error));
     }
     goBack() {
         const canGoBack = this.historyCounter > 0;
@@ -125,8 +115,8 @@ class WindowLocationStreamable {
         const stateStream = pipe(createStateStore(() => ({
             replace: true,
             uri: getCurrentWindowLocationURI(),
-        })), stream(scheduler, options));
-        const windowLocationStream = new WindowLocationStream(stateStream);
+        }), { equality: areWindowLocationStatesEqual }), stream(scheduler, options));
+        const windowLocationStream = pipe(new WindowLocationStream(stateStream), bindTo(stateStream));
         this.currentStream = windowLocationStream;
         const updateBrowserSubscription = pipe(stateStream, map(({ uri, replace }) => ({
             uri: windowLocationURIToString(uri),
