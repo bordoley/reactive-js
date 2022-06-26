@@ -60,14 +60,12 @@ const areWindowLocationURIsEqual = (a, b) => a === b ||
         a.path === b.path &&
         a.query === b.query &&
         a.fragment === b.fragment);
-const windowHistoryReplaceState = (self, uri) => {
-    const { title } = uri;
-    window.history.replaceState({ counter: self.historyCounter, title }, "", windowLocationURIToString(uri));
+const windowHistoryReplaceState = (self, title, uri) => {
+    window.history.replaceState({ counter: self.historyCounter, title }, "", uri);
 };
-const windowHistoryPushState = (self, uri) => {
-    const { title } = uri;
+const windowHistoryPushState = (self, title, uri) => {
     self.historyCounter++;
-    window.history.pushState({ counter: self.historyCounter, title }, "", windowLocationURIToString(uri));
+    window.history.pushState({ counter: self.historyCounter, title }, "", uri);
 };
 class WindowLocationStream extends AbstractObservable {
     constructor(stateStream) {
@@ -129,30 +127,31 @@ class WindowLocationStreamable {
             uri: getCurrentWindowLocationURI(),
         })), stream(scheduler, options));
         const windowLocationStream = new WindowLocationStream(stateStream);
-        const updateBrowserSubscription = pipe(stateStream, onNotify(({ uri }) => {
+        this.currentStream = windowLocationStream;
+        const updateBrowserSubscription = pipe(stateStream, map(({ uri, replace }) => ({
+            uri: windowLocationURIToString(uri),
+            title: uri.title,
+            replace,
+        })), onNotify(({ uri, title }) => {
             // Initialize the history state on page load
             const isInitialPageLoad = windowLocationStream.historyCounter === -1;
             if (isInitialPageLoad) {
                 windowLocationStream.historyCounter++;
-                windowHistoryReplaceState(windowLocationStream, uri);
+                windowHistoryReplaceState(windowLocationStream, title, uri);
             }
-        }), keep$1(({ uri }) => {
-            const { title } = uri;
-            const uriString = windowLocationURIToString(uri);
+        }), keep$1(({ title, uri }) => {
             const titleChanged = document.title !== title;
-            const uriChanged = uriString !== window.location.href;
+            const uriChanged = uri !== window.location.href;
             return titleChanged || uriChanged;
-        }), throttle(100), onNotify(({ replace, uri }) => {
-            const { title } = uri;
-            const uriString = windowLocationURIToString(uri);
+        }), throttle(100), onNotify(({ replace, title, uri }) => {
             const titleChanged = document.title !== title;
-            const uriChanged = uriString !== window.location.href;
+            const uriChanged = uri !== window.location.href;
             const shouldReplace = replace || (titleChanged && !uriChanged);
             const updateHistoryState = shouldReplace
                 ? windowHistoryReplaceState
                 : windowHistoryPushState;
             document.title = title;
-            updateHistoryState(windowLocationStream, uri);
+            updateHistoryState(windowLocationStream, title, uri);
         }), subscribe(scheduler));
         const historySubscription = pipe(fromEvent(window, "popstate", (e) => {
             const { counter, title } = e.state;
