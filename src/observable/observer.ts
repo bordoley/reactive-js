@@ -2,7 +2,7 @@ import { AbstractDisposableContainer } from "../container";
 import {
   AbstractDisposable,
   addTo,
-  addToDisposeOnChildError,
+  addToAndDisposeParentOnChildError,
   dispose,
   onComplete,
   onDisposed,
@@ -20,7 +20,7 @@ const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
     pipe(
       observer.scheduler,
       schedule(dispatcher.continuation),
-      addToDisposeOnChildError(observer),
+      addToAndDisposeParentOnChildError(observer),
       onComplete(dispatcher.onContinuationDispose),
     );
   }

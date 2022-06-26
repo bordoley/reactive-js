@@ -16,7 +16,7 @@ import {
 } from "./container";
 import {
   DisposableLike,
-  addToDisposeOnChildError,
+  addToAndDisposeParentOnChildError,
   dispose,
 } from "./disposable";
 import { concatAll } from "./enumerable/concatAll";
@@ -48,7 +48,7 @@ import {
   createPairwiseLiftedOperator,
   createScanLiftedOperator,
   createSkipFirstLiftedOperator,
-  createTakeFirstLiftdOperator,
+  createTakeFirstLiftedOperator,
   createTakeWhileLiftedOperator,
   createThrowIfEmptyLiftedOperator,
 } from "./liftable";
@@ -361,7 +361,7 @@ export const skipFirstT: SkipFirst<EnumerableLike<unknown>> = {
 
 export const takeFirst: <T>(options?: {
   readonly count?: number;
-}) => EnumerableOperator<T, T> = createTakeFirstLiftdOperator(
+}) => EnumerableOperator<T, T> = createTakeFirstLiftedOperator(
   { ...fromArrayT, ...liftT },
   class TakeFirstEnumerator<T> extends AbstractDelegatingEnumerator<T> {
     private count = 0;
@@ -468,7 +468,7 @@ const _using = <TResource extends DisposableLike, T>(
     const source = enumerableFactory(...resourcesArray);
     const enumerator = enumerate(source);
 
-    pipe(resources, forEach(addToDisposeOnChildError(enumerator)));
+    pipe(resources, forEach(addToAndDisposeParentOnChildError(enumerator)));
 
     return enumerator;
   });

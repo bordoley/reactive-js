@@ -1,6 +1,6 @@
 import { ConcatAll } from "../container";
 import {
-  addToDisposeOnChildError,
+  addToAndDisposeParentOnChildError,
   dispose,
   disposed,
   onComplete,
@@ -36,7 +36,7 @@ class SwitchObserver<T> extends Observer<ObservableLike<T>> {
     const inner = pipe(
       next,
       subscribe(this.scheduler, onNotify, this),
-      addToDisposeOnChildError(this.delegate),
+      addToAndDisposeParentOnChildError(this.delegate),
       onComplete(() => {
         if (this.isDisposed) {
           pipe(this.delegate, dispose());
@@ -50,7 +50,7 @@ class SwitchObserver<T> extends Observer<ObservableLike<T>> {
 const operator = <T>(delegate: Observer<T>) =>
   pipe(
     new SwitchObserver(delegate),
-    addToDisposeOnChildError(delegate),
+    addToAndDisposeParentOnChildError(delegate),
     onComplete(onDispose),
   );
 

@@ -27,9 +27,9 @@
 ### Functions
 
 - [add](disposable.md#add)
-- [addDisposeOnChildError](disposable.md#adddisposeonchilderror)
+- [addAndDisposeParentOnChildError](disposable.md#addanddisposeparentonchilderror)
 - [addTo](disposable.md#addto)
-- [addToDisposeOnChildError](disposable.md#addtodisposeonchilderror)
+- [addToAndDisposeParentOnChildError](disposable.md#addtoanddisposeparentonchilderror)
 - [bindTo](disposable.md#bindto)
 - [createDisposable](disposable.md#createdisposable)
 - [createDisposableValue](disposable.md#createdisposablevalue)
@@ -79,9 +79,9 @@ A disposed `DisposableLike` instance.
 
 ___
 
-### addDisposeOnChildError
+### addAndDisposeParentOnChildError
 
-▸ **addDisposeOnChildError**<`T`\>(`child`): [`Function1`](functions.md#function1)<`T`, `T`\>
+▸ **addAndDisposeParentOnChildError**<`T`\>(`child`): [`Function1`](functions.md#function1)<`T`, `T`\>
 
 #### Type parameters
 
@@ -123,9 +123,9 @@ ___
 
 ___
 
-### addToDisposeOnChildError
+### addToAndDisposeParentOnChildError
 
-▸ **addToDisposeOnChildError**<`T`\>(`parent`): [`Function1`](functions.md#function1)<`T`, `T`\>
+▸ **addToAndDisposeParentOnChildError**<`T`\>(`parent`): [`Function1`](functions.md#function1)<`T`, `T`\>
 
 #### Type parameters
 

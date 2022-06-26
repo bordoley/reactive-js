@@ -1,4 +1,8 @@
-import { addToDisposeOnChildError, dispose, onComplete } from "../disposable";
+import {
+  addToAndDisposeParentOnChildError,
+  dispose,
+  onComplete,
+} from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { none } from "../option";
@@ -84,7 +88,7 @@ export const latest = (
     for (const observable of observables) {
       const innerObserver = pipe(
         new LatestObserver(delegate, ctx, mode),
-        addToDisposeOnChildError(delegate),
+        addToAndDisposeParentOnChildError(delegate),
         onComplete(onDispose),
         sourceFrom(observable),
       );

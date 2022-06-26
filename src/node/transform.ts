@@ -11,8 +11,8 @@ import {
 } from "zlib";
 import {
   DisposableValueLike,
-  addDisposeOnChildError,
-  addToDisposeOnChildError,
+  addAndDisposeParentOnChildError,
+  addToAndDisposeParentOnChildError,
   createDisposableValue,
   dispose,
   onError,
@@ -52,13 +52,13 @@ export const transform =
         const transformReadableStream = pipe(
           createReadableIOSource(returns(transform)),
           stream(observer.scheduler),
-          addToDisposeOnChildError(observer),
+          addToAndDisposeParentOnChildError(observer),
         );
 
         const sinkSubscription = pipe(
           sink(src, transformSink),
           subscribe(observer.scheduler),
-          addToDisposeOnChildError(observer),
+          addToAndDisposeParentOnChildError(observer),
         );
 
         const modeSubscription = pipe(
@@ -68,13 +68,13 @@ export const transform =
             transformReadableStream.dispatch,
             transformReadableStream,
           ),
-          addToDisposeOnChildError(observer),
+          addToAndDisposeParentOnChildError(observer),
         );
 
         pipe(
           transformReadableStream,
-          addDisposeOnChildError(sinkSubscription),
-          addDisposeOnChildError(modeSubscription),
+          addAndDisposeParentOnChildError(sinkSubscription),
+          addAndDisposeParentOnChildError(modeSubscription),
           sinkInto(observer),
         );
       }),

@@ -1,5 +1,5 @@
 import { TakeLast, empty } from "../container";
-import { addDisposeOnChildError, bindTo } from "../disposable";
+import { addAndDisposeParentOnChildError, bindTo } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { pipe, raise } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
@@ -61,7 +61,7 @@ export const takeLast = <T>(
   const operator = (delegate: Enumerator<T>) =>
     pipe(
       new TakeLastEnumerator(delegate, count),
-      addDisposeOnChildError(delegate),
+      addAndDisposeParentOnChildError(delegate),
     );
   return enumerable =>
     count > 0

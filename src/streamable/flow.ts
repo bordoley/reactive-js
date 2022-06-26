@@ -1,4 +1,4 @@
-import { addDisposeOnChildError, bindTo } from "../disposable";
+import { addAndDisposeParentOnChildError, bindTo } from "../disposable";
 import { Function1, pipe } from "../functions";
 import {
   ObservableLike,
@@ -46,14 +46,14 @@ export const flow =
               pipe(pausableScheduler, fromDisposable, takeUntil),
             ),
           ),
-          addDisposeOnChildError(
+          addAndDisposeParentOnChildError(
             pipe(
               modeObs,
               subscribe(observer.scheduler, onModeChange),
               bindTo(pausableScheduler),
             ),
           ),
-          addDisposeOnChildError(pausableScheduler),
+          addAndDisposeParentOnChildError(pausableScheduler),
         );
       });
 

@@ -1,6 +1,6 @@
 import {
-  addDisposeOnChildError,
-  addToDisposeOnChildError,
+  addAndDisposeParentOnChildError,
+  addToAndDisposeParentOnChildError,
 } from "../disposable";
 import { pipe } from "../functions";
 import {
@@ -50,10 +50,10 @@ export const createStream = <TReq, T>(
 
   const stream = pipe(
     new StreamImpl(subject, observable),
-    addDisposeOnChildError(subject),
+    addAndDisposeParentOnChildError(subject),
 
     // FIXME: This seems wrong.
-    addToDisposeOnChildError(observable),
+    addToAndDisposeParentOnChildError(observable),
   );
 
   return stream;

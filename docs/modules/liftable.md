@@ -31,7 +31,7 @@
 - [createPairwiseLiftedOperator](liftable.md#createpairwiseliftedoperator)
 - [createScanLiftedOperator](liftable.md#createscanliftedoperator)
 - [createSkipFirstLiftedOperator](liftable.md#createskipfirstliftedoperator)
-- [createTakeFirstLiftdOperator](liftable.md#createtakefirstliftdoperator)
+- [createTakeFirstLiftedOperator](liftable.md#createtakefirstliftedoperator)
 - [createTakeWhileLiftedOperator](liftable.md#createtakewhileliftedoperator)
 - [createThrowIfEmptyLiftedOperator](liftable.md#createthrowifemptyliftedoperator)
 
@@ -388,9 +388,9 @@ ___
 
 ___
 
-### createTakeFirstLiftdOperator
+### createTakeFirstLiftedOperator
 
-▸ **createTakeFirstLiftdOperator**<`C`, `TVariance`\>(`m`, `TakeFirstLiftableState`): <T_1\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ **createTakeFirstLiftedOperator**<`C`, `TVariance`\>(`m`, `TakeFirstLiftableState`): <T_1\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 

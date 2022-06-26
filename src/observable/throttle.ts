@@ -1,8 +1,8 @@
 import { fromValue } from "../container";
 import {
   SerialDisposableLike,
-  addDisposeOnChildError,
-  addToDisposeOnChildError,
+  addAndDisposeParentOnChildError,
+  addToAndDisposeParentOnChildError,
   createSerialDisposable,
   onComplete,
 } from "../disposable";
@@ -113,14 +113,17 @@ export function throttle<T>(
         mode,
         durationSubscription,
       ),
-      addToDisposeOnChildError(delegate),
+      addToAndDisposeParentOnChildError(delegate),
       onComplete(() => {
         if (observer.mode !== "first" && observer.hasValue) {
           pipe(observer.value, fromValue(fromArrayT), sinkInto(delegate));
         }
       }),
     );
-    return pipe(observer, addDisposeOnChildError(durationSubscription));
+    return pipe(
+      observer,
+      addAndDisposeParentOnChildError(durationSubscription),
+    );
   };
   return lift(operator);
 }

@@ -1,6 +1,6 @@
 import { ConcatAll } from "../container";
 import {
-  addToDisposeOnChildError,
+  addToAndDisposeParentOnChildError,
   dispose,
   onComplete,
   onDisposed,
@@ -22,7 +22,7 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
       pipe(
         nextObs,
         subscribe(observer.scheduler, observer.onNotify),
-        addToDisposeOnChildError(observer.delegate),
+        addToAndDisposeParentOnChildError(observer.delegate),
         onComplete(observer.onDispose),
       );
     } else if (observer.isDisposed) {
@@ -93,7 +93,7 @@ export const mergeAll = <T>(
         observer.queue.length = 0;
       }),
       delegate => new MergeObserver(delegate, maxBufferSize, maxConcurrency),
-      addToDisposeOnChildError(delegate),
+      addToAndDisposeParentOnChildError(delegate),
       onComplete(() => {
         if (observer.queue.length + observer.activeCount === 0) {
           pipe(observer.delegate, dispose());

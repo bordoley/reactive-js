@@ -1,5 +1,5 @@
 /// <reference types="./scheduler.d.ts" />
-import { AbstractDisposable, dispose, AbstractSerialDisposable, disposed, add, addTo, onDisposed, createDisposable, addToDisposeOnChildError } from './disposable.mjs';
+import { AbstractDisposable, dispose, AbstractSerialDisposable, disposed, add, addTo, onDisposed, createDisposable, addToAndDisposeParentOnChildError } from './disposable.mjs';
 import { pipe, raise, alwaysFalse } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 
@@ -374,7 +374,7 @@ const now = supportsPerformanceNow
         }
         : () => Date.now();
 const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
-    const disposable = pipe(createDisposable(), addToDisposeOnChildError(continuation), onDisposed(() => clearImmediate(immmediate)));
+    const disposable = pipe(createDisposable(), addToAndDisposeParentOnChildError(continuation), onDisposed(() => clearImmediate(immmediate)));
     const immmediate = setImmediate(runContinuation, scheduler, continuation, disposable);
 };
 const scheduleImmediateWithMessageChannel = (scheduler, channel, continuation) => {
@@ -382,7 +382,7 @@ const scheduleImmediateWithMessageChannel = (scheduler, channel, continuation) =
     channel.port2.postMessage(null);
 };
 const scheduleDelayed = (scheduler, continuation, delay) => {
-    const disposable = pipe(createDisposable(), addToDisposeOnChildError(continuation), onDisposed(_ => clearTimeout(timeout)));
+    const disposable = pipe(createDisposable(), addToAndDisposeParentOnChildError(continuation), onDisposed(_ => clearTimeout(timeout)));
     const timeout = setTimeout(runContinuation, delay, scheduler, continuation, disposable);
 };
 const scheduleImmediate = (scheduler, continuation) => {

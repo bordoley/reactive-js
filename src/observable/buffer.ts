@@ -1,8 +1,8 @@
 import { fromValue } from "../container";
 import {
   SerialDisposableLike,
-  addDisposeOnChildError,
-  addToDisposeOnChildError,
+  addAndDisposeParentOnChildError,
+  addToAndDisposeParentOnChildError,
   createSerialDisposable,
   dispose,
   disposed,
@@ -100,8 +100,8 @@ export function buffer<T>(
         maxBufferSize,
         durationSubscription,
       ),
-      addDisposeOnChildError(durationSubscription),
-      addToDisposeOnChildError(delegate),
+      addAndDisposeParentOnChildError(durationSubscription),
+      addToAndDisposeParentOnChildError(delegate),
       onComplete(onDispose),
     );
   };

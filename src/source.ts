@@ -9,9 +9,9 @@ import {
 import {
   DisposableLike,
   DisposableOrTeardown,
-  addDisposeOnChildError,
+  addAndDisposeParentOnChildError,
   addTo,
-  addToDisposeOnChildError,
+  addToAndDisposeParentOnChildError,
   dispose,
   onComplete,
   onDisposed,
@@ -44,7 +44,7 @@ import {
   createPairwiseLiftedOperator,
   createScanLiftedOperator,
   createSkipFirstLiftedOperator,
-  createTakeFirstLiftdOperator,
+  createTakeFirstLiftedOperator,
   createTakeWhileLiftedOperator,
   createThrowIfEmptyLiftedOperator,
 } from "./liftable";
@@ -184,7 +184,7 @@ export const createDecodeWithCharsetOperator = <C extends SourceLike>(
       const textDecoder = new TextDecoder(charset, { fatal: true });
       return pipe(
         new DecodeWithCharsetSink(delegate, textDecoder),
-        addToDisposeOnChildError(delegate),
+        addToAndDisposeParentOnChildError(delegate),
         onComplete(() => {
           const data = textDecoder.decode();
 
@@ -267,18 +267,16 @@ const createSatisfyOperator = <C extends SourceLike>(
   return <T>(predicate: Predicate<T>) => {
     const operator = (
       delegate: LiftedStateOf<C, boolean>,
-    ): LiftedStateOf<C, T> => {
-      const sink = pipe(
+    ): LiftedStateOf<C, T> =>
+      pipe(
         new SatisfySink(delegate, predicate),
-        addToDisposeOnChildError(delegate),
+        addToAndDisposeParentOnChildError(delegate),
         onComplete(() => {
           if (!delegate.isDisposed) {
             pipe(defaultResult, fromValue(m), sinkInto(delegate));
           }
         }),
       );
-      return sink;
-    };
     return m.lift(operator);
   };
 };
@@ -440,7 +438,7 @@ export const createReduceOperator = <C extends SourceLike>(
     ): LiftedStateOf<C, T> => {
       const sink = pipe(
         new ReduceSink(delegate, reducer, initialValue()),
-        addToDisposeOnChildError(delegate),
+        addToAndDisposeParentOnChildError(delegate),
         onComplete(() => {
           pipe(sink.acc, fromValue(m), sinkInto(delegate));
         }),
@@ -556,7 +554,7 @@ export const createTakeFirstOperator = <C extends SourceLike>(
     }
   };
 
-  return createTakeFirstLiftdOperator(m, TakeFirstSink);
+  return createTakeFirstLiftedOperator(m, TakeFirstSink);
 };
 
 export const createTakeLastOperator = <C extends SourceLike>(
@@ -597,7 +595,7 @@ export const createTakeLastOperator = <C extends SourceLike>(
     const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
       const sink = pipe(
         new TakeLastSink(delegate, count),
-        addToDisposeOnChildError(delegate),
+        addToAndDisposeParentOnChildError(delegate),
         onComplete(() => {
           pipe(sink.last, m.fromArray(), sinkInto(delegate));
         }),
@@ -677,7 +675,7 @@ export const createThrowIfEmptyOperator = <C extends SourceLike>(
 export const createFromDisposable =
   <C extends SourceLike>(m: CreateSource<C>) =>
   <T>(disposable: DisposableLike): ContainerOf<C, T> =>
-    m.create(addToDisposeOnChildError(disposable));
+    m.create(addToAndDisposeParentOnChildError(disposable));
 
 export const createNever = <C extends SourceLike>(m: CreateSource<C>) => {
   const neverInstance: ContainerOf<C, any> = m.create(ignore);
@@ -696,7 +694,7 @@ export const createOnSink =
         disposable instanceof Function
           ? onDisposed(disposable)
           : isSome(disposable)
-          ? addDisposeOnChildError(disposable)
+          ? addAndDisposeParentOnChildError(disposable)
           : identity,
       );
     });
@@ -707,12 +705,12 @@ export const createUsing =
     resourceFactory: Factory<TResource | readonly TResource[]>,
     sourceFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>,
   ): ContainerOf<C, T> =>
-    m.create<T>(sink => {
+    m.create<T>(sink =>
       pipe(
         resourceFactory(),
         resources => (Array.isArray(resources) ? resources : [resources]),
-        forEach(addToDisposeOnChildError(sink)),
+        forEach(addToAndDisposeParentOnChildError(sink)),
         (resources: readonly TResource[]) => sourceFactory(...resources),
         sinkInto(sink),
-      );
-    });
+      ),
+    );
