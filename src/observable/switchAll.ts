@@ -9,16 +9,13 @@ import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { lift } from "./lift";
 import { Observer } from "./observer";
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 function onDispose(this: SwitchObserver<unknown>) {
   if (this.inner.isDisposed) {
     pipe(this.delegate, dispose());
   }
-}
-
-function onNotify<T>(this: SwitchObserver<T>, next: T) {
-  this.delegate.notify(next);
 }
 
 class SwitchObserver<T> extends Observer<ObservableLike<T>> {
@@ -35,7 +32,10 @@ class SwitchObserver<T> extends Observer<ObservableLike<T>> {
 
     const inner = pipe(
       next,
-      subscribe(this.scheduler, onNotify, this),
+      onNotify(next => {
+        this.delegate.notify(next);
+      }),
+      subscribe(this.scheduler),
       addToAndDisposeParentOnChildError(this.delegate),
       onComplete(() => {
         if (this.isDisposed) {

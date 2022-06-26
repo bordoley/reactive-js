@@ -7,7 +7,12 @@ import {
   dispose,
 } from "../disposable";
 import { Factory, pipe } from "../functions";
-import { createObservable, dispatchTo, subscribe } from "../observable";
+import {
+  createObservable,
+  dispatchTo,
+  onNotify,
+  subscribe,
+} from "../observable";
 import { FlowableLike, createStreamable } from "../streamable";
 import { createDisposableNodeStream } from "./nodeStream";
 
@@ -28,7 +33,7 @@ export const createReadableIOSource = (
 
       pipe(
         mode,
-        subscribe(observer.scheduler, ev => {
+        onNotify(ev => {
           switch (ev) {
             case "pause":
               readableValue.pause();
@@ -38,6 +43,7 @@ export const createReadableIOSource = (
               break;
           }
         }),
+        subscribe(observer.scheduler),
         addToAndDisposeParentOnChildError(observer),
       );
 

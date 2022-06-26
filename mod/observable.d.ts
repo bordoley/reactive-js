@@ -257,9 +257,7 @@ declare const onSubscribe: <T>(f: Factory<void | DisposableOrTeardown>) => Conta
  *
  * @param scheduler The SchedulerLike instance that should be used by the source to notify it's observer.
  */
-declare function subscribe<T>(scheduler: SchedulerLike): Function1<ObservableLike<T>, DisposableLike>;
-declare function subscribe<T>(scheduler: SchedulerLike, onNotify: SideEffect1<T>): Function1<ObservableLike<T>, DisposableLike>;
-declare function subscribe<This, T>(scheduler: SchedulerLike, onNotify: (this: This, value: T) => void, onNotifyThis: This): Function1<ObservableLike<T>, DisposableLike>;
+declare const subscribe: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, DisposableLike>;
 declare const using: Using<ObservableLike<unknown>>["using"];
 declare const usingT: Using<ObservableLike<unknown>>;
 declare const defer: <T>(factory: Factory<SideEffect1<Observer<T>>>, options?: {

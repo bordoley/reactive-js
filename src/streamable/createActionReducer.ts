@@ -13,9 +13,11 @@ import {
   ObservableLike,
   StreamLike,
   createObservable,
+  dispatchTo,
   distinctUntilChanged,
   fromArrayT,
   mergeT,
+  onNotify,
   scan,
   subscribe,
   zipWithLatestFrom,
@@ -101,7 +103,8 @@ export const toStateStore =
         pipe(
           updates,
           zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),
-          subscribe(scheduler, stream.dispatch, stream),
+          onNotify(dispatchTo(stream)),
+          subscribe(scheduler),
           bindTo(stream),
         );
       }),

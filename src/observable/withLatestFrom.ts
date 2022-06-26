@@ -9,15 +9,8 @@ import { ObservableLike, ObservableOperator } from "../observable";
 import { Option } from "../option";
 import { lift } from "./lift";
 import { Observer } from "./observer";
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
-
-function onNotify<TA, TB, T>(
-  this: WithLatestFromObserver<TA, TB, T>,
-  next: TB,
-) {
-  this.hasLatest = true;
-  this.otherLatest = next;
-}
 
 class WithLatestFromObserver<TA, TB, T> extends Observer<TA> {
   otherLatest: Option<TB>;
@@ -60,7 +53,11 @@ export const withLatestFrom = <TA, TB, T>(
 
     pipe(
       other,
-      subscribe(observer.scheduler, onNotify, observer),
+      onNotify(next => {
+        observer.hasLatest = true;
+        observer.otherLatest = next;
+      }),
+      subscribe(observer.scheduler),
       addToAndDisposeParentOnChildError(observer),
       onComplete(() => {
         if (!observer.hasLatest) {

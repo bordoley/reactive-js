@@ -17,7 +17,7 @@ import { sinkInto } from "../source";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { Observer } from "./observer";
-
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 const setupDurationSubscription = <T>(
@@ -26,7 +26,8 @@ const setupDurationSubscription = <T>(
 ) => {
   observer.durationSubscription.inner = pipe(
     observer.durationFunction(next),
-    subscribe(observer.scheduler, observer.onNotify),
+    onNotify(observer.onNotify),
+    subscribe(observer.scheduler),
   );
 };
 

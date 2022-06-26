@@ -94,7 +94,9 @@ export class Observer<T>
 
   assertState(this: Observer<T>): void {}
 
-  notify(_: T): void {}
+  notify(_: T): void {
+    this.assertState();
+  }
 }
 if (__DEV__) {
   Observer.prototype.assertState = function assertStateDev<T>(

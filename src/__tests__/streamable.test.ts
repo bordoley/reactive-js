@@ -111,9 +111,10 @@ export const tests = describe(
     let result: number[] = [];
     pipe(
       actionReducerStream,
-      subscribe(scheduler, x => {
+      onNotify(x => {
         result.push(x);
       }),
+      subscribe(scheduler),
     );
 
     scheduler.run();
@@ -132,9 +133,10 @@ export const tests = describe(
       let result: number[] = [];
       const subscription = pipe(
         emptyStream,
-        subscribe(scheduler, x => {
+        onNotify(x => {
           result.push(x);
         }),
+        subscribe(scheduler),
       );
       scheduler.run();
 
@@ -158,9 +160,10 @@ export const tests = describe(
 
       const subscription = pipe(
         emptyStream,
-        subscribe(scheduler, x => {
+        onNotify(x => {
           result.push(x);
         }),
+        subscribe(scheduler),
         onDisposed(_ => {
           disposedTime = scheduler.now;
         }),
@@ -211,9 +214,10 @@ export const tests = describe(
     const subscription = pipe(
       incrStream,
       buffer(),
-      subscribe(scheduler, x => {
+      onNotify(x => {
         result = x;
       }),
+      subscribe(scheduler),
     );
 
     scheduler.run();
@@ -241,9 +245,10 @@ export const tests = describe(
     const subscription = pipe(
       incrStream,
       buffer(),
-      subscribe(scheduler, x => {
+      onNotify(x => {
         result = x;
       }),
+      subscribe(scheduler),
     );
 
     scheduler.run();
@@ -339,7 +344,7 @@ export const tests = describe(
       emptyStream.dispatch("resume");
 
       const f = mockFn();
-      const subscription = pipe(emptyStream, subscribe(scheduler, f));
+      const subscription = pipe(emptyStream, onNotify(f), subscribe(scheduler));
       scheduler.run();
 
       pipe(f, expectToHaveBeenCalledTimes(0));
@@ -375,9 +380,10 @@ export const tests = describe(
       const f = mockFn();
       const subscription = pipe(
         generateStream,
-        subscribe(scheduler, x => {
+        onNotify(x => {
           f(scheduler.now, x);
         }),
+        subscribe(scheduler),
       );
 
       scheduler.run();
@@ -398,7 +404,11 @@ export const tests = describe(
       fromValueStream.dispatch("resume");
 
       const f = mockFn();
-      const subscription = pipe(fromValueStream, subscribe(scheduler, f));
+      const subscription = pipe(
+        fromValueStream,
+        onNotify(f),
+        subscribe(scheduler),
+      );
 
       scheduler.run();
 
@@ -435,9 +445,10 @@ export const tests = describe(
 
       const subscription = pipe(
         stateStream,
-        subscribe(scheduler, x => {
+        onNotify(x => {
           result.push(x);
         }),
+        subscribe(scheduler),
       );
 
       scheduler.run();
@@ -469,7 +480,7 @@ export const tests = describe(
       const subscription = pipe(sink(src, dest), subscribe(scheduler));
 
       const f = mockFn();
-      pipe(dest, subscribe(scheduler, f));
+      pipe(dest, onNotify(f), subscribe(scheduler));
 
       scheduler.run();
 
@@ -489,7 +500,7 @@ export const tests = describe(
       emptyStream.dispatch("resume");
 
       const f = mockFn();
-      const subscription = pipe(emptyStream, subscribe(scheduler, f));
+      const subscription = pipe(emptyStream, onNotify(f), subscribe(scheduler));
       scheduler.run();
 
       pipe(f, expectToHaveBeenCalledTimes(0));
@@ -516,7 +527,7 @@ export const tests = describe(
       const subscription = pipe(sink(src, dest), subscribe(scheduler));
 
       const f = mockFn();
-      pipe(dest, subscribe(scheduler, f));
+      pipe(dest, onNotify(f), subscribe(scheduler));
       scheduler.run();
 
       pipe(f, expectToHaveBeenCalledTimes(1));
@@ -535,7 +546,11 @@ export const tests = describe(
       fromValueStream.dispatch("resume");
 
       const f = mockFn();
-      const subscription = pipe(fromValueStream, subscribe(scheduler, f));
+      const subscription = pipe(
+        fromValueStream,
+        onNotify(f),
+        subscribe(scheduler),
+      );
 
       scheduler.run();
 
@@ -554,7 +569,7 @@ export const tests = describe(
       const subscription = pipe(sink(src, dest), subscribe(scheduler));
 
       const f = mockFn();
-      pipe(dest, subscribe(scheduler, f));
+      pipe(dest, onNotify(f), subscribe(scheduler));
       scheduler.run();
 
       pipe(f, expectToHaveBeenCalledTimes(1));
@@ -571,7 +586,8 @@ export const tests = describe(
     const result: number[] = [];
     pipe(
       enumerator,
-      subscribe(scheduler, x => result.push(x)),
+      onNotify((x: number) => result.push(x)),
+      subscribe(scheduler),
     );
 
     enumerator.dispatch(none);
@@ -596,7 +612,8 @@ export const tests = describe(
 
     pipe(
       enumerator,
-      subscribe(scheduler, x => result.push(x)),
+      onNotify(x => result.push(x)),
+      subscribe(scheduler),
       onDisposed(e => {
         error = e;
       }),
@@ -625,7 +642,8 @@ export const tests = describe(
     const result: number[] = [];
     pipe(
       enumerator,
-      subscribe(scheduler, x => result.push(x)),
+      onNotify(x => result.push(x)),
+      subscribe(scheduler),
     );
 
     enumerator.dispatch(none);

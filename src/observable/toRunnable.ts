@@ -6,6 +6,7 @@ import {
   VirtualTimeSchedulerLike,
   createVirtualTimeScheduler,
 } from "../scheduler";
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 export const toRunnable =
@@ -20,7 +21,8 @@ export const toRunnable =
       const scheduler = schedulerFactory();
       const subscription = pipe(
         source,
-        subscribe(scheduler, sink.notify, sink),
+        onNotify(v => sink.notify(v)),
+        subscribe(scheduler),
       );
 
       pipe(

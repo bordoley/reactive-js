@@ -4,6 +4,8 @@ import { MulticastObservableLike, ObservableLike } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
 import { createSubject } from "./createSubject";
+import { dispatchTo } from "./dispatchTo";
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 /**
@@ -22,7 +24,8 @@ export const publish =
     const subject = createSubject<T>(options);
     pipe(
       observable,
-      subscribe(scheduler, subject.dispatch, subject),
+      onNotify(dispatchTo(subject)),
+      subscribe(scheduler),
       bindTo(subject),
     );
 

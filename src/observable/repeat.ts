@@ -5,6 +5,7 @@ import { ObservableLike, ObservableOperator } from "../observable";
 import { isNone, isSome } from "../option";
 import { lift } from "./lift";
 import { Observer, createDelegatingObserver } from "./observer";
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 const createRepeatObserver = <T>(
@@ -30,7 +31,8 @@ const createRepeatObserver = <T>(
 
       pipe(
         observable,
-        subscribe(delegate.scheduler, delegate.notify, delegate),
+        onNotify(next => delegate.notify(next)),
+        subscribe(delegate.scheduler),
         addTo(delegate),
         onDisposed(doOnDispose),
       );

@@ -34,6 +34,7 @@ import { SchedulerLike, schedule } from "../scheduler";
 import { defer } from "./defer";
 import { fromArrayT } from "./fromArray";
 import { Observer } from "./observer";
+import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 const arrayStrictEquality = arrayEquality();
@@ -181,7 +182,7 @@ class ObservableContext {
 
       const subscription = pipe(
         observable,
-        subscribe(observer.scheduler, next => {
+        onNotify(next => {
           effect.value = next;
           effect.hasValue = true;
 
@@ -200,6 +201,7 @@ class ObservableContext {
                 : scheduledComputationSubscription;
           }
         }),
+        subscribe(observer.scheduler),
         addToAndDisposeParentOnChildError(observer),
         onComplete(this.cleanup),
       );

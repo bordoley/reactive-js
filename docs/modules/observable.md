@@ -2120,46 +2120,6 @@ may used to cancel the subscription.
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
 
-▸ **subscribe**<`T`\>(`scheduler`, `onNotify`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) |
-| `onNotify` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
-
-▸ **subscribe**<`This`, `T`\>(`scheduler`, `onNotify`, `onNotifyThis`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `This` |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) |
-| `onNotify` | (`this`: `This`, `value`: `T`) => `void` |
-| `onNotifyThis` | `This` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
-
 ___
 
 ### subscribeOn

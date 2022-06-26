@@ -7,7 +7,12 @@ import {
   onComplete,
 } from "../disposable";
 import { Factory, defer, pipe } from "../functions";
-import { createObservable, dispatchTo, subscribe } from "../observable";
+import {
+  createObservable,
+  dispatchTo,
+  onNotify,
+  subscribe,
+} from "../observable";
 
 import { FlowableSinkLike, createStreamable } from "../streamable";
 
@@ -29,7 +34,7 @@ export const createWritableIOSink = (
 
       pipe(
         events,
-        subscribe(observer.scheduler, ev => {
+        onNotify(ev => {
           // FIXME: when writing to an outgoing node ServerResponse with a UInt8Array
           // node throws a type Error regarding expecting a Buffer, though the docs
           // say a UInt8Array should be accepted. Need to file a bug.
@@ -38,6 +43,7 @@ export const createWritableIOSink = (
             writableValue.emit(NODE_JS_PAUSE_EVENT);
           }
         }),
+        subscribe(observer.scheduler),
         addToAndDisposeParentOnChildError(observer),
         onComplete(() => {
           writableValue.end();

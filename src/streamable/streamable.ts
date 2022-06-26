@@ -9,8 +9,10 @@ import {
   __observe,
   __using,
   createObservable,
+  dispatchTo,
   fromArrayT,
   map,
+  onNotify,
   subscribe,
 } from "../observable";
 
@@ -71,7 +73,8 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
           pipe(
             requests,
             map((compose as any)(...reqOps)),
-            subscribe(scheduler, srcStream.dispatch, srcStream),
+            onNotify(dispatchTo(srcStream)),
+            subscribe(scheduler),
             bindTo(srcStream),
           ),
         ),
