@@ -2,11 +2,11 @@ import { fromValue } from "../container";
 import {
   SerialDisposableLike,
   addChildAndDisposeOnError,
-  addOnDisposedWithoutErrorTeardown,
   addToParentAndDisposeOnError,
   createSerialDisposable,
   dispose,
   disposed,
+  onComplete,
 } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
@@ -93,7 +93,7 @@ export function buffer<T>(
   const maxBufferSize = options.maxBufferSize ?? Number.MAX_SAFE_INTEGER;
   const operator = (delegate: Observer<readonly T[]>) => {
     const durationSubscription = createSerialDisposable();
-    const observer = pipe(
+    return pipe(
       new BufferObserver(
         delegate,
         durationFunction,
@@ -102,9 +102,8 @@ export function buffer<T>(
       ),
       addChildAndDisposeOnError(durationSubscription),
       addToParentAndDisposeOnError(delegate),
+      onComplete(onDispose),
     );
-    addOnDisposedWithoutErrorTeardown(observer, onDispose);
-    return observer;
   };
 
   return lift(operator, delay === Number.MAX_SAFE_INTEGER);

@@ -1,8 +1,8 @@
 import { Concat } from "../container";
 import {
-  addOnDisposedWithoutErrorTeardown,
   addToParentAndDisposeOnError,
   dispose,
+  onComplete,
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike } from "../observable";
@@ -15,25 +15,23 @@ const createConcatObserver = <T>(
   delegate: Observer<T>,
   observables: readonly ObservableLike<T>[],
   next: number,
-) => {
-  const observer = pipe(
+) =>
+  pipe(
     createDelegatingObserver(delegate),
     addToParentAndDisposeOnError(delegate),
+    onComplete(() => {
+      if (next < observables.length) {
+        const concatObserver = createConcatObserver(
+          delegate,
+          observables,
+          next + 1,
+        );
+        pipe(observables[next], sinkInto(concatObserver));
+      } else {
+        pipe(delegate, dispose());
+      }
+    }),
   );
-  addOnDisposedWithoutErrorTeardown(observer, () => {
-    if (next < observables.length) {
-      const concatObserver = createConcatObserver(
-        delegate,
-        observables,
-        next + 1,
-      );
-      pipe(observables[next], sinkInto(concatObserver));
-    } else {
-      pipe(delegate, dispose());
-    }
-  });
-  return observer;
-};
 
 /**
  * Creates an `ObservableLike` which emits all values from each source sequentially.

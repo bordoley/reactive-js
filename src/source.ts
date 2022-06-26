@@ -11,11 +11,11 @@ import {
   DisposableOrTeardown,
   addChildAndDisposeOnError,
   addOnDisposedWithErrorTeardown,
-  addOnDisposedWithoutErrorTeardown,
   addTeardown,
   addToParent,
   addToParentAndDisposeOnError,
   dispose,
+  onComplete,
 } from "./disposable";
 import {
   Equality,
@@ -174,22 +174,19 @@ export const createDecodeWithCharsetOperator = <C extends SourceLike>(
       delegate: LiftedStateOf<C, string>,
     ): LiftedStateOf<C, ArrayBuffer> => {
       const textDecoder = new TextDecoder(charset, { fatal: true });
-      const sink = pipe(
+      return pipe(
         new DecodeWithCharsetSink(delegate, textDecoder),
         addToParentAndDisposeOnError(delegate),
+        onComplete(() => {
+          const data = textDecoder.decode();
+
+          if (data.length > 0) {
+            pipe(data, fromValue(m), sinkInto(delegate));
+          } else {
+            delegate.dispose();
+          }
+        }),
       );
-
-      addOnDisposedWithoutErrorTeardown(sink, () => {
-        const data = textDecoder.decode();
-
-        if (data.length > 0) {
-          pipe(data, fromValue(m), sinkInto(delegate));
-        } else {
-          delegate.dispose();
-        }
-      });
-
-      return sink;
     };
     return m.lift(operator);
   };
@@ -266,12 +263,12 @@ const createSatisfyOperator = <C extends SourceLike>(
       const sink = pipe(
         new SatisfySink(delegate, predicate),
         addToParentAndDisposeOnError(delegate),
+        onComplete(() => {
+          if (!delegate.isDisposed) {
+            pipe(defaultResult, fromValue(m), sinkInto(delegate));
+          }
+        }),
       );
-      addOnDisposedWithoutErrorTeardown(sink, () => {
-        if (!delegate.isDisposed) {
-          pipe(defaultResult, fromValue(m), sinkInto(delegate));
-        }
-      });
       return sink;
     };
     return m.lift(operator);
@@ -436,10 +433,10 @@ export const createReduceOperator = <C extends SourceLike>(
       const sink = pipe(
         new ReduceSink(delegate, reducer, initialValue()),
         addToParentAndDisposeOnError(delegate),
+        onComplete(() => {
+          pipe(sink.acc, fromValue(m), sinkInto(delegate));
+        }),
       );
-      addOnDisposedWithoutErrorTeardown(sink, () => {
-        pipe(sink.acc, fromValue(m), sinkInto(delegate));
-      });
       return sink;
     };
     return m.lift(operator);
@@ -593,11 +590,10 @@ export const createTakeLastOperator = <C extends SourceLike>(
       const sink = pipe(
         new TakeLastSink(delegate, count),
         addToParentAndDisposeOnError(delegate),
+        onComplete(() => {
+          pipe(sink.last, m.fromArray(), sinkInto(delegate));
+        }),
       );
-      addOnDisposedWithoutErrorTeardown(sink, () => {
-        pipe(sink.last, m.fromArray(), sinkInto(delegate));
-      });
-
       return sink;
     };
 

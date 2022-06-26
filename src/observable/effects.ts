@@ -2,10 +2,10 @@ import { empty } from "../container";
 import {
   DisposableLike,
   Error,
-  addOnDisposedWithoutErrorTeardown,
   addToParentAndDisposeOnError,
   dispose,
   disposed,
+  onComplete,
 } from "../disposable";
 import { __DEV__ } from "../env";
 import {
@@ -201,8 +201,8 @@ class ObservableContext {
           }
         }),
         addToParentAndDisposeOnError(observer),
+        onComplete(this.cleanup),
       );
-      addOnDisposedWithoutErrorTeardown(subscription, this.cleanup);
 
       effect.observable = observable;
       effect.subscription = subscription;

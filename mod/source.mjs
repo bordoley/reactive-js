@@ -1,6 +1,6 @@
 /// <reference types="./source.d.ts" />
 import { fromValue, empty } from './container.mjs';
-import { addToParent, addTeardown, dispose, addOnDisposedWithErrorTeardown, addToParentAndDisposeOnError, addOnDisposedWithoutErrorTeardown, addChildAndDisposeOnError } from './disposable.mjs';
+import { addToParent, addTeardown, dispose, addOnDisposedWithErrorTeardown, addToParentAndDisposeOnError, onComplete, addChildAndDisposeOnError } from './disposable.mjs';
 import { pipe, compose, negate, ignore } from './functions.mjs';
 import { AbstractLiftable, AbstractDisposableLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
 import { isNone, none, isSome } from './option.mjs';
@@ -50,8 +50,7 @@ const createDecodeWithCharsetOperator = (m, DecodeWithCharsetSink) => {
     return (charset = "utf-8") => {
         const operator = (delegate) => {
             const textDecoder = new TextDecoder(charset, { fatal: true });
-            const sink = pipe(new DecodeWithCharsetSink(delegate, textDecoder), addToParentAndDisposeOnError(delegate));
-            addOnDisposedWithoutErrorTeardown(sink, () => {
+            return pipe(new DecodeWithCharsetSink(delegate, textDecoder), addToParentAndDisposeOnError(delegate), onComplete(() => {
                 const data = textDecoder.decode();
                 if (data.length > 0) {
                     pipe(data, fromValue(m), sinkInto(delegate));
@@ -59,8 +58,7 @@ const createDecodeWithCharsetOperator = (m, DecodeWithCharsetSink) => {
                 else {
                     delegate.dispose();
                 }
-            });
-            return sink;
+            }));
         };
         return m.lift(operator);
     };
@@ -89,12 +87,11 @@ const createSatisfyOperator = (m, SatisfySink, defaultResult) => {
     };
     return (predicate) => {
         const operator = (delegate) => {
-            const sink = pipe(new SatisfySink(delegate, predicate), addToParentAndDisposeOnError(delegate));
-            addOnDisposedWithoutErrorTeardown(sink, () => {
+            const sink = pipe(new SatisfySink(delegate, predicate), addToParentAndDisposeOnError(delegate), onComplete(() => {
                 if (!delegate.isDisposed) {
                     pipe(defaultResult, fromValue(m), sinkInto(delegate));
                 }
-            });
+            }));
             return sink;
         };
         return m.lift(operator);
@@ -143,10 +140,9 @@ const createReduceOperator = (m, ReduceSink) => {
     };
     return (reducer, initialValue) => {
         const operator = (delegate) => {
-            const sink = pipe(new ReduceSink(delegate, reducer, initialValue()), addToParentAndDisposeOnError(delegate));
-            addOnDisposedWithoutErrorTeardown(sink, () => {
+            const sink = pipe(new ReduceSink(delegate, reducer, initialValue()), addToParentAndDisposeOnError(delegate), onComplete(() => {
                 pipe(sink.acc, fromValue(m), sinkInto(delegate));
-            });
+            }));
             return sink;
         };
         return m.lift(operator);
@@ -194,10 +190,9 @@ const createTakeLastOperator = (m, TakeLastSink) => {
     return (options = {}) => {
         const { count = 1 } = options;
         const operator = (delegate) => {
-            const sink = pipe(new TakeLastSink(delegate, count), addToParentAndDisposeOnError(delegate));
-            addOnDisposedWithoutErrorTeardown(sink, () => {
+            const sink = pipe(new TakeLastSink(delegate, count), addToParentAndDisposeOnError(delegate), onComplete(() => {
                 pipe(sink.last, m.fromArray(), sinkInto(delegate));
-            });
+            }));
             return sink;
         };
         return source => (count > 0 ? pipe(source, m.lift(operator)) : empty(m));

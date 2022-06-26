@@ -1,8 +1,4 @@
-import {
-  addChildAndDisposeOnError,
-  addOnDisposedWithoutErrorTeardown,
-  dispose,
-} from "../disposable";
+import { addChildAndDisposeOnError, dispose, onComplete } from "../disposable";
 import { Function2, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Option } from "../option";
@@ -68,26 +64,28 @@ export const zipWithLatestFrom = <TA, TB, T>(
   selector: Function2<TA, TB, T>,
 ): ObservableOperator<TA, T> => {
   const operator = (delegate: Observer<T>) => {
-    const observer = new ZipWithLatestFromObserver(delegate, selector);
-
-    const otherSubscription = pipe(
-      other,
-      subscribe(delegate.scheduler, onNotify, observer),
-    );
-
     const disposeDelegate = () => {
       if (observer.isDisposed && otherSubscription.isDisposed) {
         pipe(delegate, dispose());
       }
     };
+
+    const observer = pipe(
+      new ZipWithLatestFromObserver(delegate, selector),
+      onComplete(disposeDelegate),
+    );
+
+    const otherSubscription = pipe(
+      other,
+      subscribe(delegate.scheduler, onNotify, observer),
+      onComplete(disposeDelegate),
+    );
+
     pipe(
       delegate,
       addChildAndDisposeOnError(observer),
       addChildAndDisposeOnError(otherSubscription),
     );
-
-    addOnDisposedWithoutErrorTeardown(observer, disposeDelegate);
-    addOnDisposedWithoutErrorTeardown(otherSubscription, disposeDelegate);
 
     return observer;
   };

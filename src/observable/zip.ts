@@ -1,9 +1,9 @@
 import { Zip } from "../container";
 import {
   addChildAndDisposeOnError,
-  addOnDisposedWithoutErrorTeardown,
   addTeardown,
   dispose,
+  onComplete,
 } from "../disposable";
 import {
   AbstractEnumerator,
@@ -143,12 +143,10 @@ const _zip = (
           enumerators.push(enumerator);
         } else {
           const enumerator = new ZipObserverEnumerator();
-          const innerObserver = new ZipObserver(
-            observer,
-            enumerators,
-            enumerator,
+          const innerObserver = pipe(
+            new ZipObserver(observer, enumerators, enumerator),
+            onComplete(onDisposed),
           );
-          addOnDisposedWithoutErrorTeardown(innerObserver, onDisposed);
 
           pipe(
             observer,

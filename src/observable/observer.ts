@@ -2,11 +2,11 @@ import { AbstractDisposableContainer } from "../container";
 import {
   AbstractDisposable,
   Error,
-  addOnDisposedWithoutErrorTeardown,
   addTeardown,
   addToParent,
   addToParentAndDisposeOnError,
   dispose,
+  onComplete,
 } from "../disposable";
 import { __DEV__ } from "../env";
 import { pipe, raise } from "../functions";
@@ -18,14 +18,11 @@ import { SinkLike } from "../source";
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (dispatcher.nextQueue.length === 1) {
     const { observer } = dispatcher;
-    const continuationSubcription = pipe(
+    pipe(
       observer.scheduler,
       schedule(dispatcher.continuation),
       addToParentAndDisposeOnError(observer),
-    );
-    addOnDisposedWithoutErrorTeardown(
-      continuationSubcription,
-      dispatcher.onContinuationDispose,
+      onComplete(dispatcher.onContinuationDispose),
     );
   }
 };

@@ -1,8 +1,8 @@
 import {
-  addOnDisposedWithoutErrorTeardown,
   addToParentAndDisposeOnError,
   bindTo,
   dispose,
+  onComplete,
 } from "../disposable";
 import { Function2, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
@@ -58,16 +58,16 @@ export const withLatestFrom = <TA, TB, T>(
       bindTo(delegate),
     );
 
-    const otherSubscription = pipe(
+    pipe(
       other,
       subscribe(observer.scheduler, onNotify, observer),
       addToParentAndDisposeOnError(observer),
+      onComplete(() => {
+        if (!observer.hasLatest) {
+          pipe(observer, dispose());
+        }
+      }),
     );
-    addOnDisposedWithoutErrorTeardown(otherSubscription, () => {
-      if (!observer.hasLatest) {
-        pipe(observer, dispose());
-      }
-    });
 
     return observer;
   };

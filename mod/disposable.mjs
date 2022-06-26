@@ -30,16 +30,6 @@ const addOnDisposedWithErrorTeardown = (parent, teardown) => {
         }
     });
 };
-/**
- * Add `teardown` to `parent` that is only invoked if `parent` is disposed without an error.
- */
-const addOnDisposedWithoutErrorTeardown = (parent, teardown) => {
-    addTeardown(parent, e => {
-        if (isNone(e)) {
-            teardown.call(parent);
-        }
-    });
-};
 const toDisposeOnErrorTeardown = (disposable) => (error) => {
     if (isSome(error)) {
         pipe(disposable, dispose(error));
@@ -75,6 +65,22 @@ const addChildAndDisposeOnError = (child) => (parent) => {
 const addToParentAndDisposeOnError = (parent) => (child) => {
     addDisposableDisposeParentOnChildError(parent, child);
     return child;
+};
+const onError = (teardown) => disposable => {
+    addTeardown(disposable, e => {
+        if (isSome(e)) {
+            teardown.call(parent, e);
+        }
+    });
+    return disposable;
+};
+const onComplete = (teardown) => disposable => {
+    addTeardown(disposable, e => {
+        if (isNone(e)) {
+            teardown.call(disposable);
+        }
+    });
+    return disposable;
 };
 /**
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
@@ -216,4 +222,4 @@ const toAbortSignal = (disposable) => {
     return abortController.signal;
 };
 
-export { AbstractDisposable, AbstractSerialDisposable, addChild, addChildAndDisposeOnError, addDisposable, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addOnDisposedWithoutErrorTeardown, addTeardown, addToParent, addToParentAndDisposeOnError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, toAbortSignal, toErrorHandler };
+export { AbstractDisposable, AbstractSerialDisposable, addChild, addChildAndDisposeOnError, addDisposable, addOnDisposedWithError, addOnDisposedWithErrorTeardown, addTeardown, addToParent, addToParentAndDisposeOnError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, onComplete, onError, toAbortSignal, toErrorHandler };
