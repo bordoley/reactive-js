@@ -1,4 +1,4 @@
-import { AbstractDisposable, addDisposable, dispose } from "../disposable";
+import { AbstractDisposable, addChild, dispose } from "../disposable";
 import { pipe } from "../functions";
 import { isSome, none } from "../option";
 import {
@@ -98,7 +98,7 @@ class VirtualTimeSchedulerImpl
   ) {
     const { delay = Math.max(options.delay ?? 0, 0) } = options;
 
-    addDisposable(this, continuation);
+    pipe(this, addChild(continuation));
 
     if (!continuation.isDisposed) {
       const work: VirtualTask = {

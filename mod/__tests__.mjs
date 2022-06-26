@@ -1,5 +1,5 @@
 /// <reference types="./__tests__.d.ts" />
-import { createDisposable, addDisposable, dispose, onDisposed, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
+import { createDisposable, addChild, dispose, onDisposed, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
 import { pipe, defer, raise, increment, sum, returns, alwaysTrue, incrementBy, alwaysFalse, arrayEquality, ignore, identity } from './functions.mjs';
 import { none, isSome } from './option.mjs';
 import { describe, test, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectNone, expectEquals, expectArrayEquals, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
@@ -12,16 +12,12 @@ import { type, fromArray as fromArray$3, concat as concat$3, concatAll as concat
 import { identity as identity$1, __stream, createActionReducer, stream, empty as empty$1, lift, mapReq, sink, flow, toStateStore, createFlowableSinkAccumulator, fromArray as fromArray$4, fromIterable as fromIterable$2, generate as generate$4, consume, consumeContinue, consumeDone, consumeAsync } from './streamable.mjs';
 
 const tests$6 = describe("Disposable", describe("AbstractDisposable", test("disposes child disposable when disposed", () => {
-    const disposable = createDisposable();
     const child = createDisposable();
-    addDisposable(disposable, child);
-    pipe(disposable, dispose());
+    pipe(createDisposable(), addChild(child), dispose());
     expectTrue(child.isDisposed);
 }), test("adding to disposed disposable disposes the child", () => {
-    const disposable = createDisposable();
     const child = createDisposable();
-    pipe(disposable, dispose());
-    addDisposable(disposable, child);
+    pipe(createDisposable(), dispose(), addChild(child));
     expectTrue(child.isDisposed);
 }), test("disposes teardown function exactly once when disposed", () => {
     const teardown = mockFn();
@@ -29,8 +25,7 @@ const tests$6 = describe("Disposable", describe("AbstractDisposable", test("disp
     pipe(teardown, expectToHaveBeenCalledTimes(1));
 }), test("catches and swallows Errors thrown by teardown function", () => {
     const teardown = defer(none, raise);
-    const disposable = createDisposable(teardown);
-    pipe(disposable, dispose());
+    const disposable = pipe(createDisposable(teardown), dispose());
     pipe(disposable.error, expectNone);
 }), test("propogates errors when disposed with an Error", () => {
     const error = { cause: null };

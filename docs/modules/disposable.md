@@ -28,8 +28,6 @@
 
 - [addChild](disposable.md#addchild)
 - [addChildAndDisposeOnError](disposable.md#addchildanddisposeonerror)
-- [addDisposable](disposable.md#adddisposable)
-- [addTeardown](disposable.md#addteardown)
 - [addToParent](disposable.md#addtoparent)
 - [addToParentAndDisposeOnError](disposable.md#addtoparentanddisposeonerror)
 - [bindTo](disposable.md#bindto)
@@ -100,44 +98,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`T`, `T`\>
-
-___
-
-### addDisposable
-
-▸ **addDisposable**(`parent`, `child`): `void`
-
-Add `child` to `parent`, disposing the child when the parent is disposed.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `parent` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `child` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-
-#### Returns
-
-`void`
-
-___
-
-### addTeardown
-
-▸ **addTeardown**(`parent`, `teardown`): `void`
-
-Add `teardown` to `parent`, invoking `teardown` when `parent` is disposed.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `parent` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Option`](option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>\> |
-
-#### Returns
-
-`void`
 
 ___
 
@@ -265,7 +225,7 @@ ___
 
 ### dispose
 
-▸ **dispose**(`e?`): [`SideEffect1`](functions.md#sideeffect1)<[`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
+▸ **dispose**(`e?`): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/disposable.DisposableLike.md), [`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
 
 Dispose `disposable` with an optional error.
 
@@ -277,7 +237,7 @@ Dispose `disposable` with an optional error.
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<[`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/disposable.DisposableLike.md), [`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
 
 ___
 

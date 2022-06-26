@@ -1,7 +1,7 @@
 import { AbstractDisposableContainer } from "../container";
-import { addTeardown } from "../disposable";
+import { onDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
-import { raise } from "../functions";
+import { pipe, raise } from "../functions";
 import { LiftedStateLike } from "../liftable";
 import { Option, none } from "../option";
 
@@ -21,9 +21,10 @@ export abstract class AbstractEnumerator<T> extends Enumerator<T> {
 
   constructor() {
     super();
-    addTeardown(this, () => {
-      this.reset();
-    });
+    pipe(
+      this,
+      onDisposed(_ => this.reset()),
+    );
   }
 
   get current(): T {

@@ -1,4 +1,4 @@
-import { AbstractDisposable, addDisposable, addToParent } from "../disposable";
+import { AbstractDisposable, addChild, addToParent } from "../disposable";
 import { Function1, pipe } from "../functions";
 import {
   PrioritySchedulerLike,
@@ -37,14 +37,16 @@ class SchedulerWithPriorityImpl
     continuation: SchedulerContinuationLike,
     options: { readonly delay?: number } = {},
   ) {
-    addDisposable(this, continuation);
-
     const { delay = Math.max(options.delay ?? 0, 0) } = options;
 
-    this.priorityScheduler.schedule(continuation, {
-      priority: this.priority,
-      delay,
-    });
+    pipe(this, addChild(continuation));
+
+    if (!continuation.isDisposed) {
+      this.priorityScheduler.schedule(continuation, {
+        priority: this.priority,
+        delay,
+      });
+    }
   }
 }
 

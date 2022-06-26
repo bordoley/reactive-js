@@ -1,6 +1,6 @@
 /// <reference types="./enumerable.d.ts" />
-import { addTeardown, createSerialDisposable, bindTo, addChildAndDisposeOnError, addToParentAndDisposeOnError, dispose } from './disposable.mjs';
-import { raise, pipe, alwaysTrue, identity } from './functions.mjs';
+import { onDisposed, createSerialDisposable, bindTo, addChildAndDisposeOnError, addToParentAndDisposeOnError, dispose } from './disposable.mjs';
+import { pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { AbstractDisposableContainer, empty } from './container.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftdOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
@@ -14,9 +14,7 @@ class AbstractEnumerator extends Enumerator {
         super();
         this._current = none;
         this._hasCurrent = false;
-        addTeardown(this, () => {
-            this.reset();
-        });
+        pipe(this, onDisposed(_ => this.reset()));
     }
     get current() {
         return this.hasCurrent ? this._current : raise();

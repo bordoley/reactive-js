@@ -1,9 +1,10 @@
 import {
   AbstractDisposable,
   DisposableLike,
-  addDisposable,
+  addChild,
   addToParentAndDisposeOnError,
   createDisposable,
+  dispose,
   disposed,
   onDisposed,
 } from "../disposable";
@@ -109,7 +110,7 @@ const runContinuation = (
   immmediateOrTimerDisposable: DisposableLike,
 ) => {
   // clear the immediateOrTimer disposable
-  immmediateOrTimerDisposable.dispose();
+  pipe(immmediateOrTimerDisposable, dispose());
 
   if (!continuation.isDisposed) {
     scheduler.inContinuation = true;
@@ -156,9 +157,9 @@ class HostScheduler extends AbstractDisposable implements SchedulerLike {
     continuation: SchedulerContinuationLike,
     options: { readonly delay?: number } = {},
   ) {
-    addDisposable(this, continuation);
-
     const { delay = Math.max(options.delay ?? 0, 0) } = options;
+
+    pipe(this, addChild(continuation));
 
     const continuationIsDisposed = continuation.isDisposed;
     if (!continuationIsDisposed && delay > 0) {

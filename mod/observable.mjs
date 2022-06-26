@@ -1,6 +1,6 @@
 /// <reference types="./observable.d.ts" />
 import { AbstractDisposableContainer, empty, fromValue, throws, concatMap } from './container.mjs';
-import { addToParentAndDisposeOnError, dispose, onComplete, AbstractDisposable, addToParent, onDisposed, disposed, addDisposable, createSerialDisposable, addChildAndDisposeOnError, bindTo, toErrorHandler } from './disposable.mjs';
+import { addToParentAndDisposeOnError, dispose, onComplete, AbstractDisposable, addToParent, onDisposed, disposed, addChild, createSerialDisposable, addChildAndDisposeOnError, bindTo, toErrorHandler } from './disposable.mjs';
 import { pipe, raise, ignore, arrayEquality, defer as defer$1, compose, returns } from './functions.mjs';
 import { AbstractSource, AbstractDisposableSource, sinkInto, createMapOperator, createTakeFirstOperator, createUsing, createNever, createOnSink, createOnNotifyOperator, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
@@ -616,7 +616,7 @@ class SubjectImpl extends AbstractDisposableObservable {
         for (const next of this.replayed) {
             dispatcher.dispatch(next);
         }
-        addDisposable(this, dispatcher);
+        pipe(this, addChild(dispatcher));
     }
 }
 const createSubject = (options = {}) => {
@@ -1198,7 +1198,7 @@ class EnumeratorScheduler extends AbstractEnumerator {
     schedule(continuation, options = {}) {
         var _a;
         const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
-        addDisposable(this, continuation);
+        pipe(this, addChild(continuation));
         if (!continuation.isDisposed && delay === 0) {
             this.continuations.push(continuation);
         }

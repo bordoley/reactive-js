@@ -1,5 +1,5 @@
 import {
-  addDisposable,
+  addChild,
   createDisposable,
   createDisposableValue,
   createSerialDisposable,
@@ -27,21 +27,16 @@ export const tests = describe(
   describe(
     "AbstractDisposable",
     test("disposes child disposable when disposed", () => {
-      const disposable = createDisposable();
       const child = createDisposable();
 
-      addDisposable(disposable, child);
-      pipe(disposable, dispose());
+      pipe(createDisposable(), addChild(child), dispose());
 
       expectTrue(child.isDisposed);
     }),
 
     test("adding to disposed disposable disposes the child", () => {
-      const disposable = createDisposable();
       const child = createDisposable();
-
-      pipe(disposable, dispose());
-      addDisposable(disposable, child);
+      pipe(createDisposable(), dispose(), addChild(child));
 
       expectTrue(child.isDisposed);
     }),
@@ -56,9 +51,7 @@ export const tests = describe(
     test("catches and swallows Errors thrown by teardown function", () => {
       const teardown = defer(none, raise);
 
-      const disposable = createDisposable(teardown);
-
-      pipe(disposable, dispose());
+      const disposable = pipe(createDisposable(teardown), dispose());
       pipe(disposable.error, expectNone);
     }),
 

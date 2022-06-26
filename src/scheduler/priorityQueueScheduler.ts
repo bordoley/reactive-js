@@ -1,6 +1,6 @@
 import {
   AbstractSerialDisposable,
-  addDisposable,
+  addChild,
   addToParent,
   disposed,
   onDisposed,
@@ -226,7 +226,7 @@ class PriorityScheduler
       ? this.current.priority
       : Number.MAX_SAFE_INTEGER;
 
-    addDisposable(this, continuation);
+    pipe(this, addChild(continuation));
 
     if (!continuation.isDisposed) {
       const { current, now } = this;
