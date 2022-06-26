@@ -1,11 +1,11 @@
-import { AbstractDisposableContainer, Concat, FromArray, FromIterator, FromIterable, ContainerOperator, Using, Map, ConcatAll, Repeat, TakeFirst, Zip, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Generate, Keep, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeLast, TakeWhile, ThrowIfEmpty } from "./container.mjs";
+import { AbstractDisposableContainer, Concat, FromArray, FromIterator, FromIterable, Using, Map, ConcatAll, Repeat, Zip, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Generate, Keep, ContainerOperator, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty } from "./container.mjs";
 import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
-import { SideEffect1, Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Predicate, Equality, Updater, Reducer } from "./functions.mjs";
+import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Predicate, Equality, Updater, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
+import { RunnableLike, ToRunnable } from "./runnable.mjs";
 import { SchedulerLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
 import { SinkLike, CreateSource, AbstractSource, AbstractDisposableSource, SourceLike } from "./source.mjs";
 import { EnumerableLike, ToEnumerable } from "./enumerable.mjs";
-import { RunnableLike, ToRunnable } from "./runnable.mjs";
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
@@ -17,7 +17,6 @@ declare class Observer<T> extends AbstractDisposableContainer implements SinkLik
     assertState(this: Observer<T>): void;
     notify(_: T): void;
 }
-declare const dispatchTo: <T>(dispatcher: DispatcherLike<T>) => SideEffect1<T>;
 declare const observable: <T>(computation: Factory<T>, { mode }?: {
     mode?: ObservableEffectMode | undefined;
 }) => ObservableLike<T>;
@@ -237,7 +236,6 @@ declare const fromIterableT: FromIterable<ObservableLike<unknown>>;
 declare function merge<T>(fst: ObservableLike<T>, snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): ObservableLike<T>;
 declare const mergeT: Concat<ObservableLike<unknown>>;
 declare const never: <T>() => ObservableLike<T>;
-declare const onSubscribe: <T>(f: Factory<void | DisposableOrTeardown>) => ContainerOperator<ObservableLike<unknown>, T, T>;
 /**
  * Safely subscribes to an `ObservableLike` with a `ObserverLike` instance
  * using the provided scheduler. The returned `DisposableLike`
@@ -310,16 +308,6 @@ declare const exhaustT: ConcatAll<ObservableLike<unknown>, Record<string, never>
  */
 declare const onNotify: <T>(onNotify: SideEffect1<T>) => ObservableOperator<T, T>;
 /**
- * Returns a `MulticastObservableLike` backed by a single subscription to the source.
- *
- * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
- * @param replay The number of events that should be replayed when the `MulticastObservableLike`
- * is subscribed to.
- */
-declare const publish: <T>(scheduler: SchedulerLike, options?: {
-    readonly replay?: number;
-}) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
-/**
  * Returns an `ObservableLike` that applies the predicate function each time the source
  * completes to determine if the subscription should be renewed.
  *
@@ -349,35 +337,11 @@ declare function retry<T>(): ObservableOperator<T, T>;
  */
 declare function retry<T>(predicate: Function2<number, unknown, boolean>): ObservableOperator<T, T>;
 /**
- * Returns the `ObservableLike` that applies an asynchronous accumulator function
- * over the source, and emits each intermediate result.
- *
- * @param scanner The accumulator function called on each source value.
- * @param initialValue The initial accumulation value.
- */
-declare const scanAsync: <T, TAcc>(scanner: AsyncReducer<TAcc, T>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
-/**
- * Returns an `ObservableLike` backed by a shared refcounted subscription to the
- * source. When the refcount goes to 0, the underlying subscription
- * to the source is disposed.
- *
- * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
- * @param replay The number of events that should be replayed when the `ObservableLike`
- * is subscribed to.
- */
-declare const share: <T>(scheduler: SchedulerLike, options?: {
-    readonly replay?: number;
-}) => ObservableOperator<T, T>;
-/**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
  * values only from the most recent source.
  */
 declare const switchAll: <T>() => ObservableOperator<ObservableLike<T>, T>;
 declare const switchAllT: ConcatAll<ObservableLike<unknown>, Record<string, never>>;
-declare const takeFirst: <T>(options?: {
-    readonly count?: number;
-}) => ObservableOperator<T, T>;
-declare const takeFirstT: TakeFirst<ObservableLike<unknown>>;
 /**
  * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
  *
@@ -436,10 +400,6 @@ declare const zipT: Zip<ObservableLike<unknown>>;
 declare const zipWithLatestFrom: <TA, TB, T>(other: ObservableLike<TB>, selector: Function2<TA, TB, T>) => ObservableOperator<TA, T>;
 declare const toEnumerable: <T>() => Function1<ObservableLike<T>, EnumerableLike<T>>;
 declare const toEnumerableT: ToEnumerable<ObservableLike<unknown>>;
-declare const toRunnable: <T>(options?: {
-    readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
-}) => Function1<ObservableLike<T>, RunnableLike<T>>;
-declare const toRunnableT: ToRunnable<ObservableLike<unknown>>;
 /**
  * Returns a Promise that completes with the last value produced by
  * the source.
@@ -504,6 +464,7 @@ declare const catchError: <T>(onError: Function1<unknown, ObservableLike<T> | vo
 declare const fromDisposable: <T>(disposable: DisposableLike) => ObservableLike<T>;
 declare const decodeWithCharset: (charset?: string) => ObservableOperator<ArrayBuffer, string>;
 declare const decodeWithCharsetT: DecodeWithCharset<ObservableLike<unknown>>;
+declare const dispatchTo: <T>(dispatcher: DispatcherLike<T>) => SideEffect1<T>;
 /**
  * Returns an `ObservableLike` that emits all items emitted by the source that
  * are distinct by comparison from the previous item.
@@ -534,15 +495,46 @@ declare const generateT: Generate<ObservableLike<unknown>>;
 declare const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T>;
 declare const keepT: Keep<ObservableLike<unknown>>;
 declare const mapAsync: <TA, TB>(f: Function1<TA, Promise<TB>>) => ObservableOperator<TA, TB>;
+declare const onSubscribe: <T>(f: Factory<void | DisposableOrTeardown>) => ContainerOperator<ObservableLike<unknown>, T, T>;
 declare const pairwise: <T>() => ObservableOperator<T, [
     Option<T>,
     T
 ]>;
 declare const pairwiseT: Pairwise<ObservableLike<unknown>>;
+/**
+ * Returns a `MulticastObservableLike` backed by a single subscription to the source.
+ *
+ * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
+ * @param replay The number of events that should be replayed when the `MulticastObservableLike`
+ * is subscribed to.
+ */
+declare const publish: <T>(scheduler: SchedulerLike, options?: {
+    readonly replay?: number;
+}) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
 declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
 declare const reduceT: Reduce<ObservableLike<unknown>>;
 declare const scan: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
 declare const scanT: Scan<ObservableLike<unknown>>;
+/**
+ * Returns the `ObservableLike` that applies an asynchronous accumulator function
+ * over the source, and emits each intermediate result.
+ *
+ * @param scanner The accumulator function called on each source value.
+ * @param initialValue The initial accumulation value.
+ */
+declare const scanAsync: <T, TAcc>(scanner: AsyncReducer<TAcc, T>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
+/**
+ * Returns an `ObservableLike` backed by a shared refcounted subscription to the
+ * source. When the refcount goes to 0, the underlying subscription
+ * to the source is disposed.
+ *
+ * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
+ * @param replay The number of events that should be replayed when the `ObservableLike`
+ * is subscribed to.
+ */
+declare const share: <T>(scheduler: SchedulerLike, options?: {
+    readonly replay?: number;
+}) => ObservableOperator<T, T>;
 /**
  * Returns an `ObservableLike` that skips the first count items emitted by the source.
  *
@@ -555,6 +547,10 @@ declare const skipFirstT: SkipFirst<ObservableLike<unknown>>;
 declare const someSatisfy: <T>(predicate: Predicate<T>) => ObservableOperator<T, boolean>;
 declare const someSatisfyT: SomeSatisfy<ObservableLike<unknown>>;
 declare const subscribeOn: <T>(scheduler: SchedulerLike) => ObservableOperator<T, T>;
+declare const takeFirst: <T>(options?: {
+    readonly count?: number;
+}) => ObservableOperator<T, T>;
+declare const takeFirstT: TakeFirst<ObservableLike<unknown>>;
 /**
  * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
  *
@@ -578,4 +574,8 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
 declare const takeWhileT: TakeWhile<ObservableLike<unknown>>;
 declare const throwIfEmpty: <T>(factory: Factory<unknown>) => ObservableOperator<T, T>;
 declare const throwIfEmptyT: ThrowIfEmpty<ObservableLike<unknown>>;
+declare const toRunnable: <T>(options?: {
+    readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
+}) => Function1<ObservableLike<T>, RunnableLike<T>>;
+declare const toRunnableT: ToRunnable<ObservableLike<unknown>>;
 export { AbstractDisposableObservable, AbstractObservable, AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Observer, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, createT, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, generateT, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

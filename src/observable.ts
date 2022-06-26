@@ -9,12 +9,20 @@ import {
   Scan,
   SkipFirst,
   SomeSatisfy,
+  TakeFirst,
   TakeLast,
   TakeWhile,
   ThrowIfEmpty,
   concatMap,
 } from "./container";
-import { DisposableLike, bindTo, dispose, toErrorHandler } from "./disposable";
+import {
+  DisposableLike,
+  addAndDisposeParentOnChildError,
+  bindTo,
+  dispose,
+  onDisposed,
+  toErrorHandler,
+} from "./disposable";
 import {
   Equality,
   Factory,
@@ -22,22 +30,30 @@ import {
   Function2,
   Predicate,
   Reducer,
+  SideEffect1,
   Updater,
   pipe,
 } from "./functions";
 import { createObservable, createT } from "./observable/createObservable";
+import { createSubject } from "./observable/createSubject";
 import { defer } from "./observable/defer";
-import { dispatchTo } from "./observable/dispatchTo";
 import { fromArrayT } from "./observable/fromArray";
 import { lift, liftSynchronousT } from "./observable/lift";
 import { mapT } from "./observable/map";
 import { Observer, createDelegatingObserver } from "./observable/observer";
 import { onNotify } from "./observable/onNotify";
 import { subscribe } from "./observable/subscribe";
-import { switchAllT } from "./observable/switchAll";
-import { takeFirst } from "./observable/takeFirst";
-import { Option, none } from "./option";
-import { SchedulerLike, __yield } from "./scheduler";
+import { switchAll, switchAllT } from "./observable/switchAll";
+import { using } from "./observable/using";
+import { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
+import { Option, isNone, isSome, none } from "./option";
+import { RunnableLike, ToRunnable, createRunnable } from "./runnable";
+import {
+  SchedulerLike,
+  VirtualTimeSchedulerLike,
+  __yield,
+  createVirtualTimeScheduler,
+} from "./scheduler";
 import {
   SourceLike,
   createCatchErrorOperator,
@@ -46,14 +62,17 @@ import {
   createEverySatisfyOperator,
   createFromDisposable,
   createKeepOperator,
+  createOnSink,
   createPairwiseOperator,
   createReduceOperator,
   createScanOperator,
   createSkipFirstOperator,
   createSomeSatisfyOperator,
+  createTakeFirstOperator,
   createTakeLastOperator,
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
+  sourceFrom,
 } from "./source";
 
 /**
@@ -125,7 +144,6 @@ export type ObservableEffectMode = "batched" | "combine-latest";
  */
 export type ThrottleMode = "first" | "last" | "interval";
 
-export { dispatchTo } from "./observable/dispatchTo";
 export {
   observable,
   __currentScheduler,
@@ -153,7 +171,6 @@ export {
 } from "./observable/fromIterable";
 export { merge, mergeT } from "./observable/merge";
 export { never } from "./observable/never";
-export { onSubscribe } from "./observable/onSubscribe";
 export { subscribe } from "./observable/subscribe";
 export { using, usingT } from "./observable/using";
 export { defer } from "./observable/defer";
@@ -173,20 +190,14 @@ export {
   mergeAllT,
 } from "./observable/mergeAll";
 export { onNotify } from "./observable/onNotify";
-export { publish } from "./observable/publish";
 export { repeat, repeatT, retry } from "./observable/repeat";
-export { scanAsync } from "./observable/scanAsync";
-export { share } from "./observable/share";
 export { switchAll, switchAllT } from "./observable/switchAll";
-export { takeFirst, takeFirstT } from "./observable/takeFirst";
 export { throttle } from "./observable/throttle";
 export { timeout, timeoutError } from "./observable/timeout";
 export { withLatestFrom } from "./observable/withLatestFrom";
 export { zip, zipT } from "./observable/zip";
 export { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
-
 export { toEnumerable, toEnumerableT } from "./observable/toEnumerable";
-export { toRunnable, toRunnableT } from "./observable/toRunnable";
 export { toPromise } from "./observable/toPromise";
 
 export const catchError: <T>(
@@ -219,6 +230,11 @@ export const decodeWithCharset: (
 export const decodeWithCharsetT: DecodeWithCharset<ObservableLike<unknown>> = {
   decodeWithCharset,
 };
+
+export const dispatchTo =
+  <T>(dispatcher: DispatcherLike<T>): SideEffect1<T> =>
+  v =>
+    dispatcher.dispatch(v);
 
 /**
  * Returns an `ObservableLike` that emits all items emitted by the source that
@@ -339,6 +355,8 @@ export const mapAsync = <TA, TB>(
 ): ObservableOperator<TA, TB> =>
   concatMap({ ...switchAllT, ...mapT }, (a: TA) => fromPromise(() => f(a)));
 
+export const onSubscribe = createOnSink(createT);
+
 export const pairwise: <T>() => ObservableOperator<T, [Option<T>, T]> =
   createPairwiseOperator(
     liftSynchronousT,
@@ -355,6 +373,30 @@ export const pairwise: <T>() => ObservableOperator<T, [Option<T>, T]> =
 export const pairwiseT: Pairwise<ObservableLike<unknown>> = {
   pairwise,
 };
+
+/**
+ * Returns a `MulticastObservableLike` backed by a single subscription to the source.
+ *
+ * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
+ * @param replay The number of events that should be replayed when the `MulticastObservableLike`
+ * is subscribed to.
+ */
+export const publish =
+  <T>(
+    scheduler: SchedulerLike,
+    options?: { readonly replay?: number },
+  ): Function1<ObservableLike<T>, MulticastObservableLike<T>> =>
+  observable => {
+    const subject = createSubject<T>(options);
+    pipe(
+      observable,
+      onNotify(dispatchTo(subject)),
+      subscribe(scheduler),
+      bindTo(subject),
+    );
+
+    return subject;
+  };
 
 export const reduce: <T, TAcc>(
   reducer: Reducer<T, TAcc>,
@@ -395,6 +437,71 @@ export const scan: <T, TAcc>(
 export const scanT: Scan<ObservableLike<unknown>> = {
   scan,
 };
+
+/**
+ * Returns the `ObservableLike` that applies an asynchronous accumulator function
+ * over the source, and emits each intermediate result.
+ *
+ * @param scanner The accumulator function called on each source value.
+ * @param initialValue The initial accumulation value.
+ */
+export const scanAsync =
+  <T, TAcc>(
+    scanner: AsyncReducer<TAcc, T>,
+    initialValue: Factory<TAcc>,
+  ): ObservableOperator<T, TAcc> =>
+  observable =>
+    using(
+      () => createSubject<TAcc>(),
+      accFeedbackStream =>
+        pipe(
+          observable,
+          zipWithLatestFrom<T, TAcc, ObservableLike<TAcc>>(
+            accFeedbackStream,
+            (next, acc) => pipe(scanner(acc, next), takeFirst()),
+          ),
+          switchAll<TAcc>(),
+          onNotify(dispatchTo(accFeedbackStream)),
+          onSubscribe(() => {
+            accFeedbackStream.dispatch(initialValue());
+          }),
+        ),
+    );
+
+/**
+ * Returns an `ObservableLike` backed by a shared refcounted subscription to the
+ * source. When the refcount goes to 0, the underlying subscription
+ * to the source is disposed.
+ *
+ * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
+ * @param replay The number of events that should be replayed when the `ObservableLike`
+ * is subscribed to.
+ */
+export const share =
+  <T>(
+    scheduler: SchedulerLike,
+    options?: { readonly replay?: number },
+  ): ObservableOperator<T, T> =>
+  source => {
+    let multicast: Option<MulticastObservableLike<T>> = none;
+
+    return createObservable(observer => {
+      if (isNone(multicast)) {
+        multicast = pipe(source, publish(scheduler, options));
+      }
+
+      pipe(
+        observer,
+        sourceFrom(multicast),
+        onDisposed(() => {
+          if (isSome(multicast) && multicast.observerCount === 0) {
+            pipe(multicast, dispose());
+            multicast = none;
+          }
+        }),
+      );
+    });
+  };
 
 /**
  * Returns an `ObservableLike` that skips the first count items emitted by the source.
@@ -447,6 +554,23 @@ export const subscribeOn =
         bindTo(dispatcher),
       ),
     );
+
+export const takeFirst: <T>(options?: {
+  readonly count?: number;
+}) => ObservableOperator<T, T> = createTakeFirstOperator(
+  { ...fromArrayT, ...liftSynchronousT },
+  class TakeFirstObserver<T> extends Observer<T> {
+    count = 0;
+
+    constructor(readonly delegate: Observer<T>, readonly maxCount: number) {
+      super(delegate.scheduler);
+    }
+  },
+);
+
+export const takeFirstT: TakeFirst<ObservableLike<unknown>> = {
+  takeFirst,
+};
 
 /**
  * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
@@ -527,4 +651,34 @@ export const throwIfEmpty: <T>(
 
 export const throwIfEmptyT: ThrowIfEmpty<ObservableLike<unknown>> = {
   throwIfEmpty,
+};
+
+export const toRunnable =
+  <T>(
+    options: {
+      readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
+    } = {},
+  ): Function1<ObservableLike<T>, RunnableLike<T>> =>
+  source =>
+    createRunnable(sink => {
+      const { schedulerFactory = createVirtualTimeScheduler } = options;
+      const scheduler = schedulerFactory();
+      const subscription = pipe(
+        source,
+        onNotify(v => sink.notify(v)),
+        subscribe(scheduler),
+      );
+
+      pipe(
+        sink,
+        addAndDisposeParentOnChildError(scheduler),
+        addAndDisposeParentOnChildError(subscription),
+      );
+
+      scheduler.run();
+      scheduler.dispose();
+    });
+
+export const toRunnableT: ToRunnable<ObservableLike<unknown>> = {
+  toRunnable,
 };
