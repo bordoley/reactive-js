@@ -1,4 +1,4 @@
-import { addDisposable, onDisposed } from "../disposable";
+import { addChild, onDisposed } from "../disposable";
 import { pipe } from "../functions";
 import { DispatcherLike, SubjectLike } from "../observable";
 import { AbstractDisposableObservable } from "./observable";
@@ -58,7 +58,7 @@ class SubjectImpl<T>
       dispatcher.dispatch(next);
     }
 
-    addDisposable(this, dispatcher);
+    pipe(this, addChild(dispatcher));
   }
 }
 

@@ -7,54 +7,46 @@ import { isSome, isNone, none } from './option.mjs';
  */
 const dispose = (e) => disposable => {
     disposable.dispose(e);
+    return disposable;
 };
-/**
- * Add `child` to `parent`, disposing the child when the parent is disposed.
- */
-const addDisposable = (parent, child) => {
+const addDisposableOrTeardown = (parent, child) => {
     parent.add(child);
 };
-/**
- * Add `teardown` to `parent`, invoking `teardown` when `parent` is disposed.
- */
-const addTeardown = (parent, teardown) => {
-    parent.add(teardown);
-};
 const bindTo = (child) => (parent) => {
-    addDisposable(parent, child);
-    addDisposable(child, parent);
+    addDisposableOrTeardown(parent, child);
+    addDisposableOrTeardown(child, parent);
     return parent;
 };
 const addChild = (child) => parent => {
-    addDisposable(parent, child);
+    addDisposableOrTeardown(parent, child);
     return parent;
 };
 const addToParent = (parent) => child => {
-    addDisposable(parent, child);
+    addDisposableOrTeardown(parent, child);
     return child;
 };
-const addDisposableDisposeParentOnChildError = (parent, child) => {
-    addDisposable(parent, child);
-    addTeardown(child, (error) => {
+const addDisposableOrTeardownDisposeParentOnChildError = (parent, child) => {
+    addDisposableOrTeardown(parent, child);
+    addDisposableOrTeardown(child, (error) => {
         if (isSome(error)) {
             pipe(parent, dispose(error));
         }
     });
 };
 const addChildAndDisposeOnError = (child) => (parent) => {
-    addDisposableDisposeParentOnChildError(parent, child);
+    addDisposableOrTeardownDisposeParentOnChildError(parent, child);
     return parent;
 };
 const addToParentAndDisposeOnError = (parent) => (child) => {
-    addDisposableDisposeParentOnChildError(parent, child);
+    addDisposableOrTeardownDisposeParentOnChildError(parent, child);
     return child;
 };
 const onDisposed = (teardown) => disposable => {
-    addTeardown(disposable, teardown);
+    addDisposableOrTeardown(disposable, teardown);
     return disposable;
 };
 const onError = (teardown) => disposable => {
-    addTeardown(disposable, e => {
+    addDisposableOrTeardown(disposable, e => {
         if (isSome(e)) {
             teardown.call(disposable, e);
         }
@@ -62,7 +54,7 @@ const onError = (teardown) => disposable => {
     return disposable;
 };
 const onComplete = (teardown) => disposable => {
-    addTeardown(disposable, e => {
+    addDisposableOrTeardown(disposable, e => {
         if (isNone(e)) {
             teardown.call(disposable);
         }
@@ -113,7 +105,7 @@ class AbstractDisposable {
         else if (!disposables.has(disposable)) {
             disposables.add(disposable);
             if (!(disposable instanceof Function)) {
-                addTeardown(disposable, () => {
+                addDisposableOrTeardown(disposable, () => {
                     disposables.delete(disposable);
                 });
             }
@@ -142,7 +134,7 @@ class DisposableImpl extends AbstractDisposable {
 const createDisposable = (onDispose) => {
     const disposable = new DisposableImpl();
     if (isSome(onDispose)) {
-        addTeardown(disposable, onDispose);
+        addDisposableOrTeardown(disposable, onDispose);
     }
     return disposable;
 };
@@ -177,7 +169,7 @@ class AbstractSerialDisposable extends AbstractDisposable {
         const oldInner = this._inner;
         this._inner = newInner;
         if (oldInner !== newInner) {
-            addDisposableDisposeParentOnChildError(this, newInner);
+            addDisposableOrTeardownDisposeParentOnChildError(this, newInner);
             pipe(oldInner, dispose());
         }
     }
@@ -201,8 +193,8 @@ class DisposableValueImpl extends AbstractDisposable {
 const createDisposableValue = (value, cleanup) => pipe(new DisposableValueImpl(value), onDisposed(defer(value, cleanup)));
 const toAbortSignal = (disposable) => {
     const abortController = new AbortController();
-    addTeardown(disposable, () => abortController.abort());
+    addDisposableOrTeardown(disposable, () => abortController.abort());
     return abortController.signal;
 };
 
-export { AbstractDisposable, AbstractSerialDisposable, addChild, addChildAndDisposeOnError, addDisposable, addTeardown, addToParent, addToParentAndDisposeOnError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
+export { AbstractDisposable, AbstractSerialDisposable, addChild, addChildAndDisposeOnError, addToParent, addToParentAndDisposeOnError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

@@ -21,12 +21,13 @@ import {
 import {
   AbstractDisposable,
   Error,
-  addDisposable,
+  addChild,
+  addToParentAndDisposeOnError,
   createDisposable,
   dispose,
   onError,
 } from "./disposable";
-import { Factory, compose, defer, pipe, returns } from "./functions";
+import { Factory, compose, defer, ignore, pipe, returns } from "./functions";
 import {
   ObservableLike,
   SubjectLike,
@@ -77,6 +78,7 @@ export const useObservable = <T>(
       // only dispose the subscription.
       scheduler === schedulerOption ? subscription : scheduler,
       dispose(),
+      ignore,
     );
   }, [observable, updateState, updateError, options.scheduler]);
 
@@ -138,7 +140,7 @@ class ReactPriorityScheduler
   ) {
     const { delay = Math.max(options.delay ?? 0, 0), priority } = options;
 
-    addDisposable(this, continuation);
+    pipe(this, addChild(continuation));
 
     if (continuation.isDisposed) {
       return;
@@ -158,11 +160,10 @@ class ReactPriorityScheduler
       delay > 0 ? { delay } : none,
     );
 
-    const callbackNodeDisposable = createDisposable(
-      defer(callbackNode, unstable_cancelCallback),
+    const callbackNodeDisposable = pipe(
+      createDisposable(defer(callbackNode, unstable_cancelCallback)),
+      addToParentAndDisposeOnError(continuation),
     );
-
-    addDisposable(continuation, callbackNodeDisposable);
   }
 }
 

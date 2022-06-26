@@ -1,8 +1,4 @@
-import {
-  addDisposable,
-  addToParentAndDisposeOnError,
-  dispose,
-} from "../disposable";
+import { addChild, addToParentAndDisposeOnError, dispose } from "../disposable";
 import {
   AbstractEnumerator,
   EnumerableLike,
@@ -56,7 +52,7 @@ class EnumeratorScheduler<T>
   ): void {
     const { delay = Math.max(options.delay ?? 0, 0) } = options;
 
-    addDisposable(this, continuation);
+    pipe(this, addChild(continuation));
 
     if (!continuation.isDisposed && delay === 0) {
       this.continuations.push(continuation);
