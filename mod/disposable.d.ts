@@ -50,7 +50,7 @@ declare const addTeardown: (parent: DisposableLike, teardown: SideEffect1<Option
 /**
  * Add `teardown` to `parent` that is only invoked if `parent` is disposed with an error.
  */
-declare const addOnDisposedWithErrorTeardown: (parent: DisposableLike, teardown: SideEffect1<unknown>) => void;
+declare const addOnDisposedWithErrorTeardown: (parent: DisposableLike, teardown: SideEffect1<Error>) => void;
 /**
  * Add `teardown` to `parent` that is only invoked if `parent` is disposed without an error.
  */

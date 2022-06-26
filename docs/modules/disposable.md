@@ -152,7 +152,7 @@ Add `teardown` to `parent` that is only invoked if `parent` is disposed with an 
 | Name | Type |
 | :------ | :------ |
 | `parent` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<`unknown`\> |
+| `teardown` | [`SideEffect1`](functions.md#sideeffect1)<[`Error`](../interfaces/disposable.Error.md)\> |
 
 #### Returns
 
