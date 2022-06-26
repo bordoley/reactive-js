@@ -1,14 +1,14 @@
 /// <reference types="./observable.d.ts" />
 import { AbstractDisposableContainer, empty, fromValue, throws, concatMap } from './container.mjs';
-import { addToAndDisposeParentOnChildError, dispose, onComplete, AbstractDisposable, addTo, onDisposed, disposed, add, createSerialDisposable, addAndDisposeParentOnChildError, bindTo, toErrorHandler } from './disposable.mjs';
+import { onDisposed, add, addToAndDisposeParentOnChildError, dispose, onComplete, AbstractDisposable, addTo, disposed, addAndDisposeParentOnChildError, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
 import { pipe, raise, arrayEquality, ignore, defer as defer$1, compose, returns } from './functions.mjs';
-import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, createTakeFirstOperator, createUsing, createNever, createOnSink, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
+import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, createUsing, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { none, isNone, isSome } from './option.mjs';
+import { createRunnable } from './runnable.mjs';
 import { map as map$1, everySatisfy as everySatisfy$1 } from './readonlyArray.mjs';
 import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, AbstractEnumerator, createEnumerable, current, zipEnumerators } from './enumerable.mjs';
-import { createRunnable } from './runnable.mjs';
 
 class AbstractObservable extends AbstractSource {
 }
@@ -34,13 +34,58 @@ const createT = {
     create: createObservable,
 };
 
+class SubjectImpl extends AbstractDisposableObservable {
+    constructor(replay) {
+        super();
+        this.replay = replay;
+        this.dispatchers = new Set();
+        this.replayed = [];
+    }
+    get observerCount() {
+        return this.dispatchers.size;
+    }
+    dispatch(next) {
+        if (!this.isDisposed) {
+            const { replay, replayed } = this;
+            if (replay > 0) {
+                replayed.push(next);
+                if (replayed.length > replay) {
+                    replayed.shift();
+                }
+            }
+            for (const observer of this.dispatchers) {
+                observer.dispatch(next);
+            }
+        }
+    }
+    sink(observer) {
+        // The idea here is that an onSubscribe function may
+        // call next from unscheduled sources such as event handlers.
+        // So we marshall those events back to the scheduler.
+        const { dispatcher } = observer;
+        if (!this.isDisposed) {
+            const { dispatchers } = this;
+            dispatchers.add(dispatcher);
+            pipe(observer, onDisposed(_ => {
+                dispatchers.delete(dispatcher);
+            }));
+        }
+        for (const next of this.replayed) {
+            dispatcher.dispatch(next);
+        }
+        pipe(this, add(dispatcher));
+    }
+}
+const createSubject = (options = {}) => {
+    const { replay = 0 } = options;
+    return new SubjectImpl(replay);
+};
+
 const defer = (factory, options) => createObservable(observer => {
     const sideEffect = factory();
     const callback = () => sideEffect(observer);
     pipe(observer.scheduler, schedule(callback, options), addToAndDisposeParentOnChildError(observer));
 });
-
-const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
 
 const deferEmpty = createObservable(observer => {
     observer.dispose();
@@ -270,16 +315,61 @@ const switchAllT = {
     concatAll: switchAll,
 };
 
-const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftSynchronousT }, class TakeFirstObserver extends Observer {
-    constructor(delegate, maxCount) {
+const using = createUsing(createT);
+const usingT = {
+    using,
+};
+
+const notifyDelegate = (observer) => {
+    if (observer.queue.length > 0 && observer.hasLatest) {
+        observer.hasLatest = false;
+        const next = observer.queue.shift();
+        const result = observer.selector(next, observer.otherLatest);
+        observer.delegate.notify(result);
+    }
+};
+class ZipWithLatestFromObserver extends Observer {
+    constructor(delegate, selector) {
         super(delegate.scheduler);
         this.delegate = delegate;
-        this.maxCount = maxCount;
-        this.count = 0;
+        this.selector = selector;
+        this.hasLatest = false;
+        this.queue = [];
+        this.selector = selector;
     }
-});
-const takeFirstT = {
-    takeFirst,
+    notify(next) {
+        this.assertState();
+        this.queue.push(next);
+        notifyDelegate(this);
+    }
+}
+/**
+ * Returns an `ObservableLike` which combines the source with
+ * the latest value from another `ObservableLike`.
+ *
+ * @param other
+ * @param selector
+ */
+const zipWithLatestFrom = (other, selector) => {
+    const operator = (delegate) => {
+        const disposeDelegate = () => {
+            if (observer.isDisposed && otherSubscription.isDisposed) {
+                pipe(delegate, dispose());
+            }
+        };
+        const observer = pipe(new ZipWithLatestFromObserver(delegate, selector), onComplete(disposeDelegate));
+        const otherSubscription = pipe(other, onNotify(otherLatest => {
+            observer.hasLatest = true;
+            observer.otherLatest = otherLatest;
+            notifyDelegate(observer);
+            if (observer.isDisposed && observer.queue.length === 0) {
+                pipe(observer.delegate, dispose());
+            }
+        }), subscribe(delegate.scheduler), onComplete(disposeDelegate));
+        pipe(delegate, addAndDisposeParentOnChildError(observer), addAndDisposeParentOnChildError(otherSubscription));
+        return observer;
+    };
+    return lift(operator);
 };
 
 const arrayStrictEquality = arrayEquality();
@@ -577,58 +667,6 @@ const concatT = {
     concat,
 };
 
-class SubjectImpl extends AbstractDisposableObservable {
-    constructor(replay) {
-        super();
-        this.replay = replay;
-        this.dispatchers = new Set();
-        this.replayed = [];
-    }
-    get observerCount() {
-        return this.dispatchers.size;
-    }
-    dispatch(next) {
-        if (!this.isDisposed) {
-            const { replay, replayed } = this;
-            if (replay > 0) {
-                replayed.push(next);
-                if (replayed.length > replay) {
-                    replayed.shift();
-                }
-            }
-            for (const observer of this.dispatchers) {
-                observer.dispatch(next);
-            }
-        }
-    }
-    sink(observer) {
-        // The idea here is that an onSubscribe function may
-        // call next from unscheduled sources such as event handlers.
-        // So we marshall those events back to the scheduler.
-        const { dispatcher } = observer;
-        if (!this.isDisposed) {
-            const { dispatchers } = this;
-            dispatchers.add(dispatcher);
-            pipe(observer, onDisposed(_ => {
-                dispatchers.delete(dispatcher);
-            }));
-        }
-        for (const next of this.replayed) {
-            dispatcher.dispatch(next);
-        }
-        pipe(this, add(dispatcher));
-    }
-}
-const createSubject = (options = {}) => {
-    const { replay = 0 } = options;
-    return new SubjectImpl(replay);
-};
-
-const using = createUsing(createT);
-const usingT = {
-    using,
-};
-
 /**
  * Creates an `ObservableLike` which enumerates through the values
  * produced by the provided `EnumeratorLike` with a specified `delay` between emitted items.
@@ -704,8 +742,6 @@ const mergeT = {
 };
 
 const never = createNever(createT);
-
-const onSubscribe = createOnSink(createT);
 
 function onDispose() {
     const { buffer } = this;
@@ -855,19 +891,6 @@ const exhaustT = {
     concatAll: exhaust,
 };
 
-/**
- * Returns a `MulticastObservableLike` backed by a single subscription to the source.
- *
- * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
- * @param replay The number of events that should be replayed when the `MulticastObservableLike`
- * is subscribed to.
- */
-const publish = (scheduler, options) => observable => {
-    const subject = createSubject(options);
-    pipe(observable, onNotify(dispatchTo(subject)), subscribe(scheduler), bindTo(subject));
-    return subject;
-};
-
 const createRepeatObserver = (delegate, observable, shouldRepeat) => {
     let count = 1;
     const doOnDispose = (error) => {
@@ -912,93 +935,6 @@ function retry(predicate) {
         : (count, error) => isSome(error) && predicate(count, error.cause);
     return repeatObs(retryPredicate);
 }
-
-const notifyDelegate = (observer) => {
-    if (observer.queue.length > 0 && observer.hasLatest) {
-        observer.hasLatest = false;
-        const next = observer.queue.shift();
-        const result = observer.selector(next, observer.otherLatest);
-        observer.delegate.notify(result);
-    }
-};
-class ZipWithLatestFromObserver extends Observer {
-    constructor(delegate, selector) {
-        super(delegate.scheduler);
-        this.delegate = delegate;
-        this.selector = selector;
-        this.hasLatest = false;
-        this.queue = [];
-        this.selector = selector;
-    }
-    notify(next) {
-        this.assertState();
-        this.queue.push(next);
-        notifyDelegate(this);
-    }
-}
-/**
- * Returns an `ObservableLike` which combines the source with
- * the latest value from another `ObservableLike`.
- *
- * @param other
- * @param selector
- */
-const zipWithLatestFrom = (other, selector) => {
-    const operator = (delegate) => {
-        const disposeDelegate = () => {
-            if (observer.isDisposed && otherSubscription.isDisposed) {
-                pipe(delegate, dispose());
-            }
-        };
-        const observer = pipe(new ZipWithLatestFromObserver(delegate, selector), onComplete(disposeDelegate));
-        const otherSubscription = pipe(other, onNotify(otherLatest => {
-            observer.hasLatest = true;
-            observer.otherLatest = otherLatest;
-            notifyDelegate(observer);
-            if (observer.isDisposed && observer.queue.length === 0) {
-                pipe(observer.delegate, dispose());
-            }
-        }), subscribe(delegate.scheduler), onComplete(disposeDelegate));
-        pipe(delegate, addAndDisposeParentOnChildError(observer), addAndDisposeParentOnChildError(otherSubscription));
-        return observer;
-    };
-    return lift(operator);
-};
-
-/**
- * Returns the `ObservableLike` that applies an asynchronous accumulator function
- * over the source, and emits each intermediate result.
- *
- * @param scanner The accumulator function called on each source value.
- * @param initialValue The initial accumulation value.
- */
-const scanAsync = (scanner, initialValue) => observable => using(() => createSubject(), accFeedbackStream => pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), switchAll(), onNotify(dispatchTo(accFeedbackStream)), onSubscribe(() => {
-    accFeedbackStream.dispatch(initialValue());
-})));
-
-/**
- * Returns an `ObservableLike` backed by a shared refcounted subscription to the
- * source. When the refcount goes to 0, the underlying subscription
- * to the source is disposed.
- *
- * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
- * @param replay The number of events that should be replayed when the `ObservableLike`
- * is subscribed to.
- */
-const share = (scheduler, options) => source => {
-    let multicast = none;
-    return createObservable(observer => {
-        if (isNone(multicast)) {
-            multicast = pipe(source, publish(scheduler, options));
-        }
-        pipe(observer, sourceFrom(multicast), onDisposed(() => {
-            if (isSome(multicast) && multicast.observerCount === 0) {
-                pipe(multicast, dispose());
-                multicast = none;
-            }
-        }));
-    });
-};
 
 const setupDurationSubscription$1 = (observer, next) => {
     observer.durationSubscription.inner = pipe(observer.durationFunction(next), onNotify(observer.onNotify), subscribe(observer.scheduler));
@@ -1295,18 +1231,6 @@ const zipT = {
     zip,
 };
 
-const toRunnable = (options = {}) => source => createRunnable(sink => {
-    const { schedulerFactory = createVirtualTimeScheduler } = options;
-    const scheduler = schedulerFactory();
-    const subscription = pipe(source, onNotify(v => sink.notify(v)), subscribe(scheduler));
-    pipe(sink, addAndDisposeParentOnChildError(scheduler), addAndDisposeParentOnChildError(subscription));
-    scheduler.run();
-    scheduler.dispose();
-});
-const toRunnableT = {
-    toRunnable,
-};
-
 /**
  * Returns a Promise that completes with the last value produced by
  * the source.
@@ -1351,6 +1275,7 @@ const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftSynchronousT,
 const decodeWithCharsetT = {
     decodeWithCharset,
 };
+const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
 /**
  * Returns an `ObservableLike` that emits all items emitted by the source that
  * are distinct by comparison from the previous item.
@@ -1428,6 +1353,7 @@ const keepT = {
     keep,
 };
 const mapAsync = (f) => concatMap({ ...switchAllT, ...mapT }, (a) => fromPromise(() => f(a)));
+const onSubscribe = createOnSink(createT);
 const pairwise = createPairwiseOperator(liftSynchronousT, class PairwiseObserver extends Observer {
     constructor(delegate) {
         super(delegate.scheduler);
@@ -1437,6 +1363,18 @@ const pairwise = createPairwiseOperator(liftSynchronousT, class PairwiseObserver
 });
 const pairwiseT = {
     pairwise,
+};
+/**
+ * Returns a `MulticastObservableLike` backed by a single subscription to the source.
+ *
+ * @param scheduler A `SchedulerLike` that is used to subscribe to the source observable.
+ * @param replay The number of events that should be replayed when the `MulticastObservableLike`
+ * is subscribed to.
+ */
+const publish = (scheduler, options) => observable => {
+    const subject = createSubject(options);
+    pipe(observable, onNotify(dispatchTo(subject)), subscribe(scheduler), bindTo(subject));
+    return subject;
 };
 const reduce = createReduceOperator({ ...fromArrayT, ...liftSynchronousT }, class ReducerObserver extends Observer {
     constructor(delegate, reducer, acc) {
@@ -1459,6 +1397,39 @@ const scan = createScanOperator(liftSynchronousT, class ScanObserver extends Obs
 });
 const scanT = {
     scan,
+};
+/**
+ * Returns the `ObservableLike` that applies an asynchronous accumulator function
+ * over the source, and emits each intermediate result.
+ *
+ * @param scanner The accumulator function called on each source value.
+ * @param initialValue The initial accumulation value.
+ */
+const scanAsync = (scanner, initialValue) => observable => using(() => createSubject(), accFeedbackStream => pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), switchAll(), onNotify(dispatchTo(accFeedbackStream)), onSubscribe(() => {
+    accFeedbackStream.dispatch(initialValue());
+})));
+/**
+ * Returns an `ObservableLike` backed by a shared refcounted subscription to the
+ * source. When the refcount goes to 0, the underlying subscription
+ * to the source is disposed.
+ *
+ * @param scheduler A `SchedulerLike` that is used to subscribe to the source.
+ * @param replay The number of events that should be replayed when the `ObservableLike`
+ * is subscribed to.
+ */
+const share = (scheduler, options) => source => {
+    let multicast = none;
+    return createObservable(observer => {
+        if (isNone(multicast)) {
+            multicast = pipe(source, publish(scheduler, options));
+        }
+        pipe(observer, sourceFrom(multicast), onDisposed(() => {
+            if (isSome(multicast) && multicast.observerCount === 0) {
+                pipe(multicast, dispose());
+                multicast = none;
+            }
+        }));
+    });
 };
 /**
  * Returns an `ObservableLike` that skips the first count items emitted by the source.
@@ -1487,6 +1458,17 @@ const someSatisfyT = {
     someSatisfy,
 };
 const subscribeOn = (scheduler) => observable => createObservable(({ dispatcher }) => pipe(observable, onNotify(dispatchTo(dispatcher)), subscribe(scheduler), bindTo(dispatcher)));
+const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftSynchronousT }, class TakeFirstObserver extends Observer {
+    constructor(delegate, maxCount) {
+        super(delegate.scheduler);
+        this.delegate = delegate;
+        this.maxCount = maxCount;
+        this.count = 0;
+    }
+});
+const takeFirstT = {
+    takeFirst,
+};
 /**
  * Returns an `ObservableLike` that only emits the last `count` items emitted by the source.
  *
@@ -1537,6 +1519,17 @@ const throwIfEmpty = createThrowIfEmptyOperator(liftSynchronousT, class ThrowIfE
 });
 const throwIfEmptyT = {
     throwIfEmpty,
+};
+const toRunnable = (options = {}) => source => createRunnable(sink => {
+    const { schedulerFactory = createVirtualTimeScheduler } = options;
+    const scheduler = schedulerFactory();
+    const subscription = pipe(source, onNotify(v => sink.notify(v)), subscribe(scheduler));
+    pipe(sink, addAndDisposeParentOnChildError(scheduler), addAndDisposeParentOnChildError(subscription));
+    scheduler.run();
+    scheduler.dispose();
+});
+const toRunnableT = {
+    toRunnable,
 };
 
 export { AbstractDisposableObservable, AbstractObservable, Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, createT, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, generateT, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
