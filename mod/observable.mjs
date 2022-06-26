@@ -2,7 +2,7 @@
 import { AbstractDisposableContainer, empty, fromValue, throws, concatMap } from './container.mjs';
 import { onDisposed, add, addToAndDisposeParentOnChildError, dispose, onComplete, AbstractDisposable, addTo, disposed, addAndDisposeParentOnChildError, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
 import { pipe, raise, arrayEquality, ignore, defer as defer$1, compose, returns } from './functions.mjs';
-import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, createUsing, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
+import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, notifySink, createUsing, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -294,9 +294,7 @@ class SwitchObserver extends Observer {
     notify(next) {
         this.assertState();
         pipe(this.inner, dispose());
-        const inner = pipe(next, onNotify(next => {
-            this.delegate.notify(next);
-        }), subscribe(this.scheduler), addToAndDisposeParentOnChildError(this.delegate), onComplete(() => {
+        const inner = pipe(next, onNotify(notifySink(this.delegate)), subscribe(this.scheduler), addToAndDisposeParentOnChildError(this.delegate), onComplete(() => {
             if (this.isDisposed) {
                 pipe(this.delegate, dispose());
             }
@@ -808,7 +806,7 @@ const subscribeNext = (observer) => {
         const nextObs = observer.queue.shift();
         if (isSome(nextObs)) {
             observer.activeCount++;
-            pipe(nextObs, onNotify(observer.onNotify), subscribe(observer.scheduler), addToAndDisposeParentOnChildError(observer.delegate), onComplete(observer.onDispose));
+            pipe(nextObs, onNotify(notifySink(observer.delegate)), subscribe(observer.scheduler), addToAndDisposeParentOnChildError(observer.delegate), onComplete(observer.onDispose));
         }
         else if (observer.isDisposed) {
             pipe(observer.delegate, dispose());
@@ -825,9 +823,6 @@ class MergeObserver extends Observer {
         this.onDispose = () => {
             this.activeCount--;
             subscribeNext(this);
-        };
-        this.onNotify = (next) => {
-            this.delegate.notify(next);
         };
         this.queue = [];
     }
@@ -907,7 +902,7 @@ const createRepeatObserver = (delegate, observable, shouldRepeat) => {
         }
         else {
             count++;
-            pipe(observable, onNotify(next => delegate.notify(next)), subscribe(delegate.scheduler), addTo(delegate), onDisposed(doOnDispose));
+            pipe(observable, onNotify(notifySink(delegate)), subscribe(delegate.scheduler), addTo(delegate), onDisposed(doOnDispose));
         }
     };
     return pipe(createDelegatingObserver(delegate), addTo(delegate), onDisposed(doOnDispose));
@@ -1523,7 +1518,7 @@ const throwIfEmptyT = {
 const toRunnable = (options = {}) => source => createRunnable(sink => {
     const { schedulerFactory = createVirtualTimeScheduler } = options;
     const scheduler = schedulerFactory();
-    const subscription = pipe(source, onNotify(v => sink.notify(v)), subscribe(scheduler));
+    const subscription = pipe(source, onNotify(notifySink(sink)), subscribe(scheduler));
     pipe(sink, addAndDisposeParentOnChildError(scheduler), addAndDisposeParentOnChildError(subscription));
     scheduler.run();
     scheduler.dispose();

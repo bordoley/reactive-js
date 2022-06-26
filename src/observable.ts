@@ -72,6 +72,7 @@ import {
   createTakeLastOperator,
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
+  notifySink,
   sourceFrom,
 } from "./source";
 
@@ -665,7 +666,7 @@ export const toRunnable =
       const scheduler = schedulerFactory();
       const subscription = pipe(
         source,
-        onNotify(v => sink.notify(v)),
+        onNotify(notifySink(sink)),
         subscribe(scheduler),
       );
 

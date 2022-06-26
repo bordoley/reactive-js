@@ -29,7 +29,7 @@ export default [
         preventAssignment: true,
         "process.env.NODE_ENV": JSON.stringify("production"),
       }),
-      //terser(),
+      terser(),
     ],
   },
 ];

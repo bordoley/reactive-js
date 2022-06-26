@@ -3,6 +3,7 @@ import { Error, addTo, dispose, onDisposed } from "../disposable";
 import { Function2, Predicate, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { isNone, isSome } from "../option";
+import { notifySink } from "../source";
 import { lift } from "./lift";
 import { Observer, createDelegatingObserver } from "./observer";
 import { onNotify } from "./onNotify";
@@ -31,7 +32,7 @@ const createRepeatObserver = <T>(
 
       pipe(
         observable,
-        onNotify(next => delegate.notify(next)),
+        onNotify(notifySink(delegate)),
         subscribe(delegate.scheduler),
         addTo(delegate),
         onDisposed(doOnDispose),
