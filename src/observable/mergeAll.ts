@@ -8,6 +8,7 @@ import {
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { isSome } from "../option";
+import { notifySink } from "../source";
 import { lift } from "./lift";
 import { Observer } from "./observer";
 import { onNotify } from "./onNotify";
@@ -22,7 +23,7 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
 
       pipe(
         nextObs,
-        onNotify(observer.onNotify),
+        onNotify(notifySink(observer.delegate)),
         subscribe(observer.scheduler),
         addToAndDisposeParentOnChildError(observer.delegate),
         onComplete(observer.onDispose),
@@ -39,10 +40,6 @@ class MergeObserver<T> extends Observer<ObservableLike<T>> {
   readonly onDispose = () => {
     this.activeCount--;
     subscribeNext(this);
-  };
-
-  readonly onNotify = (next: T) => {
-    this.delegate.notify(next);
   };
 
   readonly queue: ObservableLike<T>[] = [];

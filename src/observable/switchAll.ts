@@ -7,6 +7,7 @@ import {
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
+import { notifySink } from "../source";
 import { lift } from "./lift";
 import { Observer } from "./observer";
 import { onNotify } from "./onNotify";
@@ -32,9 +33,7 @@ class SwitchObserver<T> extends Observer<ObservableLike<T>> {
 
     const inner = pipe(
       next,
-      onNotify(next => {
-        this.delegate.notify(next);
-      }),
+      onNotify(notifySink(this.delegate)),
       subscribe(this.scheduler),
       addToAndDisposeParentOnChildError(this.delegate),
       onComplete(() => {

@@ -1,6 +1,6 @@
 import { Container, ContainerOf, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
 import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
-import { Function1, Equality, Predicate, SideEffect1, Reducer, Factory } from "./functions.mjs";
+import { SideEffect1, Function1, Equality, Predicate, Reducer, Factory } from "./functions.mjs";
 import { LiftedStateLike, LiftableLike, Lift as Lift$1, LiftedStateOf, AbstractLiftable, AbstractDisposableLiftable } from "./liftable.mjs";
 import { Option } from "./option.mjs";
 interface SinkLike<T> extends LiftedStateLike {
@@ -30,6 +30,7 @@ declare abstract class AbstractSource<T, TSink extends SinkLike<T>> extends Abst
 declare abstract class AbstractDisposableSource<T, TSink extends SinkLike<T>> extends AbstractDisposableLiftable<TSink> implements SourceLike {
     abstract sink(this: this, sink: TSink): void;
 }
+declare const notifySink: <C extends SourceLike, T, TSink extends LiftedStateOf<C, T>>(sink: TSink) => SideEffect1<T>;
 declare const sinkInto: <C extends SourceLike, T, TSink extends LiftedStateOf<C, T>>(sink: TSink) => Function1<C, C>;
 declare const sourceFrom: <C extends SourceLike, T, TSink extends LiftedStateOf<C, T>>(source: C) => Function1<TSink, TSink>;
 declare const createCatchErrorOperator: <C extends SourceLike>(m: Lift<C>, CatchErrorSink: new <T>(delegate: LiftedStateOf<C, T>) => LiftedStateOf<C, T> & {
@@ -125,4 +126,4 @@ declare const createFromDisposable: <C extends SourceLike>(m: CreateSource<C>) =
 declare const createNever: <C extends SourceLike>(m: CreateSource<C>) => <T>() => ContainerOf<C, T>;
 declare const createOnSink: <C extends SourceLike>(m: CreateSource<C>) => <T>(f: Factory<DisposableOrTeardown | void>) => ContainerOperator<C, T, T>;
 declare const createUsing: <C extends SourceLike>(m: CreateSource<C>) => <TResource extends DisposableLike, T>(resourceFactory: Factory<TResource | readonly TResource[]>, sourceFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>) => ContainerOf<C, T>;
-export { AbstractDisposableSource, AbstractSource, CreateSource, Lift, SinkLike, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto, sourceFrom };
+export { AbstractDisposableSource, AbstractSource, CreateSource, Lift, SinkLike, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, notifySink, sinkInto, sourceFrom };

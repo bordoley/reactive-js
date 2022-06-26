@@ -38,6 +38,7 @@
 - [createTakeWhileOperator](source.md#createtakewhileoperator)
 - [createThrowIfEmptyOperator](source.md#createthrowifemptyoperator)
 - [createUsing](source.md#createusing)
+- [notifySink](source.md#notifysink)
 - [sinkInto](source.md#sinkinto)
 - [sourceFrom](source.md#sourcefrom)
 
@@ -851,6 +852,30 @@ ___
 ##### Returns
 
 [`ContainerOf`](container.md#containerof)<`C`, `T`\>
+
+___
+
+### notifySink
+
+▸ **notifySink**<`C`, `T`, `TSink`\>(`sink`): [`SideEffect1`](functions.md#sideeffect1)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
+| `T` | `T` |
+| `TSink` | extends [`SinkLike`](../interfaces/source.SinkLike.md)<`unknown`, `TSink`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `sink` | `TSink` |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`T`\>
 
 ___
 

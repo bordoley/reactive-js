@@ -92,6 +92,13 @@ export abstract class AbstractDisposableSource<T, TSink extends SinkLike<T>>
   abstract sink(this: this, sink: TSink): void;
 }
 
+export const notifySink =
+  <C extends SourceLike, T, TSink extends LiftedStateOf<C, T>>(
+    sink: TSink,
+  ): SideEffect1<T> =>
+  (next: T) =>
+    sink.notify(next);
+
 export const sinkInto =
   <C extends SourceLike, T, TSink extends LiftedStateOf<C, T>>(
     sink: TSink,
