@@ -3,7 +3,7 @@ import { empty as empty$1, concatWith, fromValue, ignoreElements, endWith, start
 import { addDisposeOnChildError, addToDisposeOnChildError, bindTo } from './disposable.mjs';
 import { pipe, compose, returns, updaterReducer, flip } from './functions.mjs';
 import { AbstractDisposableObservable, createSubject, publish, createObservable, map, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeT, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, merge, onNotify, dispatchTo, onSubscribe, observable, __memo, __observe, reduce, mapT, concatAllT, takeFirst, withLatestFrom, using, never, takeWhile, scanAsync, switchAll } from './observable.mjs';
-import { sinkInto } from './source.mjs';
+import { sinkInto, sourceFrom } from './source.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
 import { none } from './option.mjs';
 import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
@@ -55,8 +55,7 @@ const liftImpl = (streamable, obsOps, reqOps) => {
     const op = requests => createObservable(observer => {
         const { scheduler } = observer;
         const srcStream = pipe(src, stream(scheduler));
-        pipe(observer, addDisposeOnChildError(srcStream), addDisposeOnChildError(pipe(requests, map(compose(...reqOps)), subscribe(scheduler, srcStream.dispatch, srcStream), bindTo(srcStream))));
-        pipe(srcStream, compose(...obsOps), sinkInto(observer));
+        pipe(observer, sourceFrom(pipe(srcStream, compose(...obsOps))), addDisposeOnChildError(srcStream), addDisposeOnChildError(pipe(requests, map(compose(...reqOps)), subscribe(scheduler, srcStream.dispatch, srcStream), bindTo(srcStream))));
     });
     return new LiftedStreamable(op, src, obsOps, reqOps);
 };
@@ -134,9 +133,8 @@ const createStateStore = (initialState, options) => createActionReducer(updaterR
  */
 const toStateStore = () => streamable => createStreamable(updates => createObservable(observer => {
     const { scheduler } = observer;
-    const stream$1 = pipe(streamable, stream(scheduler), addToDisposeOnChildError(observer));
+    const stream$1 = pipe(streamable, stream(scheduler), addToDisposeOnChildError(observer), sinkInto(observer));
     pipe(updates, zipWithLatestFrom(stream$1, (updateState, prev) => updateState(prev)), subscribe(scheduler, stream$1.dispatch, stream$1), bindTo(stream$1));
-    pipe(stream$1, sinkInto(observer));
 }));
 
 const _identity = {
@@ -162,8 +160,7 @@ const flow = ({ scheduler, } = {}) => observable => {
                     break;
             }
         };
-        pipe(observer, addDisposeOnChildError(pipe(modeObs, subscribe(observer.scheduler, onModeChange), bindTo(pausableScheduler))), addDisposeOnChildError(pausableScheduler));
-        pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil), sinkInto(observer));
+        pipe(observer, sourceFrom(pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil))), addDisposeOnChildError(pipe(modeObs, subscribe(observer.scheduler, onModeChange), bindTo(pausableScheduler))), addDisposeOnChildError(pausableScheduler));
     });
     return createStreamable(op);
 };

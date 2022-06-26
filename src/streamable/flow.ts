@@ -9,7 +9,7 @@ import {
   takeUntil,
 } from "../observable";
 import { SchedulerLike, toPausableScheduler } from "../scheduler";
-import { sinkInto } from "../source";
+import { sourceFrom } from "../source";
 import { FlowMode, FlowableLike } from "../streamable";
 import { createStreamable } from "./streamable";
 
@@ -39,6 +39,13 @@ export const flow =
 
         pipe(
           observer,
+          sourceFrom(
+            pipe(
+              observable,
+              subscribeOn(pausableScheduler),
+              pipe(pausableScheduler, fromDisposable, takeUntil),
+            ),
+          ),
           addDisposeOnChildError(
             pipe(
               modeObs,
@@ -47,13 +54,6 @@ export const flow =
             ),
           ),
           addDisposeOnChildError(pausableScheduler),
-        );
-
-        pipe(
-          observable,
-          subscribeOn(pausableScheduler),
-          pipe(pausableScheduler, fromDisposable, takeUntil),
-          sinkInto(observer),
         );
       });
 

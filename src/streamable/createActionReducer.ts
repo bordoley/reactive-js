@@ -95,6 +95,7 @@ export const toStateStore =
           streamable,
           streamStreamable(scheduler),
           addToDisposeOnChildError(observer),
+          sinkInto(observer),
         );
 
         pipe(
@@ -103,7 +104,5 @@ export const toStateStore =
           subscribe(scheduler, stream.dispatch, stream),
           bindTo(stream),
         );
-
-        pipe(stream, sinkInto(observer));
       }),
     );

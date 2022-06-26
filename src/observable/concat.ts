@@ -3,7 +3,7 @@ import { addToDisposeOnChildError, dispose, onComplete } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { everySatisfy } from "../readonlyArray";
-import { sinkInto } from "../source";
+import { sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
 import { Observer, createDelegatingObserver } from "./observer";
 
@@ -17,12 +17,10 @@ const createConcatObserver = <T>(
     addToDisposeOnChildError(delegate),
     onComplete(() => {
       if (next < observables.length) {
-        const concatObserver = createConcatObserver(
-          delegate,
-          observables,
-          next + 1,
+        pipe(
+          createConcatObserver(delegate, observables, next + 1),
+          sourceFrom(observables[next]),
         );
-        pipe(observables[next], sinkInto(concatObserver));
       } else {
         pipe(delegate, dispose());
       }
@@ -43,8 +41,10 @@ export function concat<T>(
 ): ObservableLike<T> {
   const observable = createObservable(observer => {
     if (observables.length > 0) {
-      const concatObserver = createConcatObserver(observer, observables, 1);
-      pipe(observables[0], sinkInto(concatObserver));
+      pipe(
+        createConcatObserver(observer, observables, 1),
+        sourceFrom(observables[0]),
+      );
     } else {
       pipe(observer, dispose());
     }

@@ -39,6 +39,7 @@
 - [createThrowIfEmptyOperator](source.md#createthrowifemptyoperator)
 - [createUsing](source.md#createusing)
 - [sinkInto](source.md#sinkinto)
+- [sourceFrom](source.md#sourcefrom)
 
 ## Functions
 
@@ -855,7 +856,7 @@ ___
 
 ### sinkInto
 
-▸ **sinkInto**<`C`, `T`\>(`sink`): [`SideEffect1`](functions.md#sideeffect1)<`C`\>
+▸ **sinkInto**<`C`, `T`, `TSink`\>(`sink`): [`Function1`](functions.md#function1)<`C`, `C`\>
 
 #### Type parameters
 
@@ -863,13 +864,38 @@ ___
 | :------ | :------ |
 | `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
 | `T` | `T` |
+| `TSink` | extends [`SinkLike`](../interfaces/source.SinkLike.md)<`unknown`, `TSink`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `sink` | [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
+| `sink` | `TSink` |
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<`C`\>
+[`Function1`](functions.md#function1)<`C`, `C`\>
+
+___
+
+### sourceFrom
+
+▸ **sourceFrom**<`C`, `T`, `TSink`\>(`source`): [`Function1`](functions.md#function1)<`TSink`, `TSink`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
+| `T` | `T` |
+| `TSink` | extends [`SinkLike`](../interfaces/source.SinkLike.md)<`unknown`, `TSink`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `source` | `C` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`TSink`, `TSink`\>

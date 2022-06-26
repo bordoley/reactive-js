@@ -3,7 +3,7 @@ import { Function1, SideEffect1, ignore, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { none } from "../option";
 import { SchedulerLike } from "../scheduler";
-import { sinkInto } from "../source";
+import { sourceFrom } from "../source";
 import { Observer } from "./observer";
 
 class DefaultObserver<T> extends Observer<T> {
@@ -46,13 +46,10 @@ export function subscribe<T>(
   onNotify: SideEffect1<T> = ignore,
   onNotifyThis: unknown = none,
 ): Function1<ObservableLike<T>, DisposableLike> {
-  return (observable: ObservableLike<T>): DisposableLike => {
-    const observer = pipe(
+  return (observable: ObservableLike<T>): DisposableLike =>
+    pipe(
       new DefaultObserver(scheduler, onNotify, onNotifyThis),
       addTo(scheduler),
+      sourceFrom(observable),
     );
-
-    pipe(observable, sinkInto(observer));
-    return observer;
-  };
 }

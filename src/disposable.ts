@@ -46,7 +46,7 @@ export interface DisposableLike {
  * Dispose `disposable` with an optional error.
  */
 export const dispose =
-  (e?: Error): Function1<DisposableLike, DisposableLike> =>
+  <T extends DisposableLike>(e?: Error): Function1<T, T> =>
   disposable => {
     disposable.dispose(e);
     return disposable;

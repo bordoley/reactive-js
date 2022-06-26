@@ -1,6 +1,6 @@
 import { Zip } from "../container";
 import {
-  addDisposeOnChildError,
+  addToDisposeOnChildError,
   dispose,
   onComplete,
   onDisposed,
@@ -14,7 +14,7 @@ import {
 import { defer, pipe, returns } from "../functions";
 import { ObservableLike } from "../observable";
 import { everySatisfy, map } from "../readonlyArray";
-import { sinkInto } from "../source";
+import { sinkInto, sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
 import { fromEnumerator } from "./fromEnumerable";
 import { Observer } from "./observer";
@@ -105,7 +105,6 @@ const _zip = (
     const count = observables.length;
 
     if (isEnumerable) {
-      debugger;
       const zipped = using(
         defer(observables, map(enumerate)),
         (...enumerators: readonly Enumerator<any>[]) =>
@@ -130,6 +129,7 @@ const _zip = (
             onDisposed(() => {
               enumerator.buffer.length = 0;
             }),
+            addToDisposeOnChildError(observer),
           );
 
           const innerObserver = pipe(
@@ -142,15 +142,10 @@ const _zip = (
                 pipe(observer, dispose());
               }
             }),
+            addToDisposeOnChildError(observer),
+            sourceFrom(next),
           );
 
-          pipe(
-            observer,
-            addDisposeOnChildError(enumerator),
-            addDisposeOnChildError(innerObserver),
-          );
-
-          pipe(next, sinkInto(innerObserver));
           enumerators.push(innerObserver.enumerator);
         }
       }

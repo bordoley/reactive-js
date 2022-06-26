@@ -3,7 +3,7 @@ import { pipe } from "../functions";
 import { MulticastObservableLike, ObservableOperator } from "../observable";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerLike } from "../scheduler";
-import { sinkInto } from "../source";
+import { sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
 import { publish } from "./publish";
 
@@ -29,9 +29,9 @@ export const share =
         multicast = pipe(source, publish(scheduler, options));
       }
 
-      pipe(multicast, sinkInto(observer));
       pipe(
         observer,
+        sourceFrom(multicast),
         onDisposed(() => {
           if (isSome(multicast) && multicast.observerCount === 0) {
             pipe(multicast, dispose());

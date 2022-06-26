@@ -38,7 +38,7 @@ interface DisposableLike {
 /**
  * Dispose `disposable` with an optional error.
  */
-declare const dispose: (e?: Error) => Function1<DisposableLike, DisposableLike>;
+declare const dispose: <T extends DisposableLike>(e?: Error) => Function1<T, T>;
 declare const bindTo: <T extends DisposableLike>(child: DisposableLike) => Function1<T, T>;
 declare const add: <T extends DisposableLike>(child: DisposableLike) => Function1<T, T>;
 declare const addTo: <T extends DisposableLike>(parent: DisposableLike) => Function1<T, T>;

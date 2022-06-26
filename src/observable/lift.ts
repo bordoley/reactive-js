@@ -1,6 +1,6 @@
 import { Function1, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Lift, sinkInto } from "../source";
+import { Lift, sourceFrom } from "../source";
 import { AbstractObservable } from "./observable";
 import { Observer } from "./observer";
 
@@ -19,9 +19,7 @@ class LiftedObservable<TIn, TOut> extends AbstractObservable<TOut> {
   }
 
   sink(observer: Observer<TOut>) {
-    const liftedSubscrber = pipe(observer, ...this.operators) as Observer<any>;
-
-    pipe(this.source, sinkInto(liftedSubscrber));
+    pipe(observer, ...this.operators, sourceFrom(this.source)) as Observer<any>;
   }
 }
 

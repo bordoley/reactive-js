@@ -3,7 +3,7 @@ import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
-import { sinkInto } from "../source";
+import { sourceFrom } from "../source";
 import { defer } from "./defer";
 import { Observer } from "./observer";
 
@@ -86,10 +86,10 @@ export const latest = (
         new LatestObserver(delegate, ctx, mode),
         addToDisposeOnChildError(delegate),
         onComplete(onDispose),
+        sourceFrom(observable),
       );
 
       observers.push(innerObserver);
-      pipe(observable, sinkInto(innerObserver));
     }
   };
 

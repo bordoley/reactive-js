@@ -1,10 +1,10 @@
 /// <reference types="./runnable.d.ts" />
 import { ignore, pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
-import { AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
+import { AbstractSource, sourceFrom, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
 import { AbstractDisposableContainer } from './container.mjs';
 import { __DEV__ } from './env.mjs';
-import { addToDisposeOnChildError } from './disposable.mjs';
+import { addToDisposeOnChildError, dispose } from './disposable.mjs';
 
 class AbstractRunnable extends AbstractSource {
 }
@@ -122,16 +122,7 @@ const concatAllT = {
     concatAll,
 };
 
-const run = (f) => (runnable) => {
-    const sink = f();
-    runnable.sink(sink);
-    sink.dispose();
-    const { error } = sink;
-    if (isSome(error)) {
-        throw error.cause;
-    }
-    return sink.result;
-};
+const run = (f) => (runnable) => pipe(f(), sourceFrom(runnable), dispose(), ({ error, result }) => isSome(error) ? raise(error.cause) : result);
 
 class FirstSink extends Sink {
     constructor() {
