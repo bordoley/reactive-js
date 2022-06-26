@@ -2,7 +2,7 @@ import { Concat } from "../container";
 import { addToDisposeOnChildError, dispose, onComplete } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike } from "../observable";
-import { sinkInto } from "../source";
+import { sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
 import { Observer, createDelegatingObserver } from "./observer";
 
@@ -40,9 +40,7 @@ export function merge<T>(
     const ctx = { completedCount: 0 };
 
     for (const observable of observables) {
-      const mergeObserver = createMergeObserver(observer, count, ctx);
-
-      pipe(observable, sinkInto(mergeObserver));
+      pipe(createMergeObserver(observer, count, ctx), sourceFrom(observable));
     }
   });
 }

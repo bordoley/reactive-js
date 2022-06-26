@@ -10,7 +10,7 @@ import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { isNone } from "../option";
 import { SchedulerContinuationLike, SchedulerLike, run } from "../scheduler";
-import { sinkInto } from "../source";
+import { sourceFrom } from "../source";
 import { Observer } from "./observer";
 
 class EnumeratorScheduler<T>
@@ -85,12 +85,11 @@ class EnumeratorObserver<T> extends Observer<T> {
 export const enumerate = <T>(obs: ObservableLike<T>): Enumerator<T> => {
   const scheduler = new EnumeratorScheduler<T>();
 
-  const observer = pipe(
+  pipe(
     new EnumeratorObserver<T>(scheduler),
     addToDisposeOnChildError(scheduler),
+    sourceFrom(obs),
   );
-
-  pipe(obs, sinkInto(observer));
 
   return scheduler;
 };

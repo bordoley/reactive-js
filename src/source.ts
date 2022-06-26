@@ -93,9 +93,22 @@ export abstract class AbstractDisposableSource<T, TSink extends SinkLike<T>>
 }
 
 export const sinkInto =
-  <C extends SourceLike, T>(sink: LiftedStateOf<C, T>): SideEffect1<C> =>
-  source =>
+  <C extends SourceLike, T, TSink extends LiftedStateOf<C, T>>(
+    sink: TSink,
+  ): Function1<C, C> =>
+  source => {
     source.sink(sink);
+    return source;
+  };
+
+export const sourceFrom =
+  <C extends SourceLike, T, TSink extends LiftedStateOf<C, T>>(
+    source: C,
+  ): Function1<TSink, TSink> =>
+  sink => {
+    source.sink(sink);
+    return sink;
+  };
 
 export const createCatchErrorOperator =
   <C extends SourceLike>(

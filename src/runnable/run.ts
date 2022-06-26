@@ -1,5 +1,8 @@
+import { dispose } from "../disposable";
+import { pipe, raise } from "../functions";
 import { isSome } from "../option";
 import { RunnableLike } from "../runnable";
+import { sourceFrom } from "../source";
 import { Sink } from "./sinks";
 
 export const run =
@@ -8,16 +11,7 @@ export const run =
       readonly result: TResult;
     },
   ) =>
-  (runnable: RunnableLike<T>): TResult => {
-    const sink = f();
-    runnable.sink(sink);
-
-    sink.dispose();
-
-    const { error } = sink;
-    if (isSome(error)) {
-      throw error.cause;
-    }
-
-    return sink.result;
-  };
+  (runnable: RunnableLike<T>): TResult =>
+    pipe(f(), sourceFrom(runnable), dispose(), ({ error, result }) =>
+      isSome(error) ? raise(error.cause) : result,
+    );

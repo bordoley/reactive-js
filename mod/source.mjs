@@ -10,7 +10,14 @@ class AbstractSource extends AbstractLiftable {
 }
 class AbstractDisposableSource extends AbstractDisposableLiftable {
 }
-const sinkInto = (sink) => source => source.sink(sink);
+const sinkInto = (sink) => source => {
+    source.sink(sink);
+    return source;
+};
+const sourceFrom = (source) => sink => {
+    source.sink(sink);
+    return sink;
+};
 const createCatchErrorOperator = (m, CatchErrorSink) => (f) => {
     CatchErrorSink.prototype.notify = function notifyDelegate(next) {
         this.delegate.notify(next);
@@ -228,4 +235,4 @@ const createUsing = (m) => (resourceFactory, sourceFactory) => m.create(sink => 
     pipe(resourceFactory(), resources => (Array.isArray(resources) ? resources : [resources]), forEach(addToDisposeOnChildError(sink)), (resources) => sourceFactory(...resources), sinkInto(sink));
 });
 
-export { AbstractDisposableSource, AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto };
+export { AbstractDisposableSource, AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, sinkInto, sourceFrom };

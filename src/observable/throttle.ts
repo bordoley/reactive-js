@@ -30,12 +30,6 @@ const setupDurationSubscription = <T>(
   );
 };
 
-function onDispose(this: ThrottleObserver<unknown>) {
-  if (this.mode !== "first" && this.hasValue) {
-    pipe(this.value, fromValue(fromArrayT), sinkInto(this.delegate));
-  }
-}
-
 class ThrottleObserver<T> extends Observer<T> {
   value: Option<T> = none;
   hasValue = false;
@@ -120,7 +114,11 @@ export function throttle<T>(
         durationSubscription,
       ),
       addToDisposeOnChildError(delegate),
-      onComplete(onDispose),
+      onComplete(() => {
+        if (observer.mode !== "first" && observer.hasValue) {
+          pipe(observer.value, fromValue(fromArrayT), sinkInto(delegate));
+        }
+      }),
     );
     return pipe(observer, addDisposeOnChildError(durationSubscription));
   };

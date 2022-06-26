@@ -225,9 +225,15 @@ ___
 
 ### dispose
 
-▸ **dispose**(`e?`): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/disposable.DisposableLike.md), [`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
+▸ **dispose**<`T`\>(`e?`): [`Function1`](functions.md#function1)<`T`, `T`\>
 
 Dispose `disposable` with an optional error.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 
 #### Parameters
 
@@ -237,7 +243,7 @@ Dispose `disposable` with an optional error.
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/disposable.DisposableLike.md), [`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<`T`, `T`\>
 
 ___
 

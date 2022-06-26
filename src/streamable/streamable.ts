@@ -15,7 +15,7 @@ import {
 } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
-import { sinkInto } from "../source";
+import { sourceFrom } from "../source";
 import { StreamableLike, StreamableOperator } from "../streamable";
 import { createStream } from "./createStream";
 
@@ -63,6 +63,9 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
 
       pipe(
         observer,
+        sourceFrom(
+          pipe(srcStream, (compose as any)(...obsOps)) as StreamLike<TReqB, TB>,
+        ),
         addDisposeOnChildError(srcStream),
         addDisposeOnChildError(
           pipe(
@@ -73,8 +76,6 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
           ),
         ),
       );
-
-      pipe(srcStream, (compose as any)(...obsOps), sinkInto(observer));
     });
   return new LiftedStreamable(op, src, obsOps, reqOps);
 };
