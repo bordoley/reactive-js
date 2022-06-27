@@ -1,4 +1,5 @@
 import { Readable, Writable } from "stream";
+import { endWith } from "../container";
 import { defer, pipe, returns } from "../functions";
 import {
   createDisposableNodeStream,
@@ -7,7 +8,7 @@ import {
   gunzip,
   gzip,
 } from "../node";
-import { fromArray, takeFirst, toPromise } from "../observable";
+import { concatT, fromArray, fromArrayT, takeFirst, toPromise } from "../observable";
 import { createHostScheduler } from "../scheduler";
 import { createFlowableSinkAccumulator, flow, sinkInto } from "../streamable";
 import {
@@ -45,6 +46,7 @@ export const tests = describe(
         fromArray(),
         flow(),
         sinkInto(dest),
+         endWith({ ...fromArrayT, ...concatT }, 0),
         toPromise(scheduler),
       );
 
@@ -73,6 +75,7 @@ export const tests = describe(
         fromArray(),
         flow(),
         sinkInto(dest),
+        endWith({ ...fromArrayT, ...concatT }, 0),
         toPromise(scheduler),
       );
 
@@ -100,6 +103,7 @@ export const tests = describe(
           pipe(generate(), Readable.from, createDisposableNodeStream),
         ),
         sinkInto(dest),
+        endWith({ ...fromArrayT, ...concatT }, 0),
         toPromise(scheduler),
       );
 
@@ -130,6 +134,7 @@ export const tests = describe(
           pipe(generate(), Readable.from, createDisposableNodeStream),
         ),
         sinkInto(dest),
+        endWith({ ...fromArrayT, ...concatT }, 0),
         toPromise(scheduler),
         expectPromiseToThrow,
       );
@@ -152,6 +157,7 @@ export const tests = describe(
       gzip(),
       gunzip(),
       sinkInto(dest),
+      endWith({ ...fromArrayT, ...concatT }, 0),
       toPromise(scheduler),
     );
 

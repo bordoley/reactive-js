@@ -1,7 +1,6 @@
 import {
   concatMap,
   concatWith,
-  endWith,
   fromValue,
   fromValue as fromValueContainer,
   ignoreElements,
@@ -56,7 +55,6 @@ import {
   using,
   withLatestFrom,
 } from "./observable";
-import { none } from "./option";
 import { SchedulerLike, toPausableScheduler } from "./scheduler";
 import { notifySink, sinkInto as sinkIntoSink, sourceFrom } from "./source";
 import { createLiftedStreamable } from "./streamable/streamable";
@@ -305,8 +303,8 @@ export const identity = <T>(): StreamableLike<T, T, StreamLike<T, T>> =>
   _identity as StreamableLike<T, T, StreamLike<T, T>>;
 
 export const sinkInto =
-  <TReq, T>(dest: StreamableLike<T, TReq, StreamLike<T, TReq>>) =>
-  (src: StreamableLike<TReq, T, StreamLike<TReq, T>>): ObservableLike<void> =>
+  <TReq, T, TOut>(dest: StreamableLike<T, TReq, StreamLike<T, TReq>>) =>
+  (src: StreamableLike<TReq, T, StreamLike<TReq, T>>): ObservableLike<TOut> =>
     createObservable(observer => {
       const { scheduler } = observer;
       const srcStream = src.stream(scheduler);
@@ -328,7 +326,6 @@ export const sinkInto =
           ),
         ),
         ignoreElements(keepT),
-        endWith({ ...fromArrayT, ...concatT }, none as void),
         sinkIntoSink(observer),
       );
     });
