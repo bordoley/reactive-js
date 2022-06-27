@@ -22,6 +22,7 @@ import {
   Reducer,
   Updater,
   compose,
+  identity as identityF,
   increment,
   pipe,
   returns,
@@ -33,7 +34,6 @@ import {
   concatAllT,
   concatT,
   createObservable,
-  createSubject,
   dispatchTo,
   distinctUntilChanged,
   fromArrayT,
@@ -57,7 +57,7 @@ import {
 } from "./observable";
 import { SchedulerLike, toPausableScheduler } from "./scheduler";
 import { notifySink, sinkInto as sinkIntoSink, sourceFrom } from "./source";
-import { createLiftedStreamable } from "./streamable/streamable";
+import { createLiftedStreamable, createStream } from "./streamable/streamable";
 
 export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T>> {
   stream(
@@ -291,8 +291,8 @@ export const fromIterable = <T>(): Function1<
 > => _fromIterable;
 
 const _identity = {
-  stream(_: SchedulerLike, options?: { readonly replay: number }) {
-    return createSubject(options);
+  stream(scheduler: SchedulerLike, options?: { readonly replay: number }) {
+    return createStream(identityF, scheduler, options);
   },
 };
 
