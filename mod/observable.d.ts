@@ -171,29 +171,29 @@ declare const zipLatestWith: <TA, TB>(snd: ObservableLike<TB>) => ObservableOper
     TA,
     TB
 ]>;
-declare function fork<T, TA, TB>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>): ObservableOperator<T, [
+declare function forkCombineLatest<T, TA, TB>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>): ObservableOperator<T, [
     TA,
     TB
 ]>;
-declare function fork<T, TA, TB, TC>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>): ObservableOperator<T, [
+declare function forkCombineLatest<T, TA, TB, TC>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>): ObservableOperator<T, [
     TA,
     TB,
     TC
 ]>;
-declare function fork<T, TA, TB, TC, TD>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>): ObservableOperator<T, [
+declare function forkCombineLatest<T, TA, TB, TC, TD>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>): ObservableOperator<T, [
     TA,
     TB,
     TC,
     TD
 ]>;
-declare function fork<T, TA, TB, TC, TD, TE>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>, e: ObservableOperator<T, TE>): ObservableOperator<T, [
+declare function forkCombineLatest<T, TA, TB, TC, TD, TE>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>, e: ObservableOperator<T, TE>): ObservableOperator<T, [
     TA,
     TB,
     TC,
     TD,
     TE
 ]>;
-declare function fork<T, TA, TB, TC, TD, TE, TF>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>, e: ObservableOperator<T, TE>, f: ObservableOperator<T, TF>): ObservableOperator<T, [
+declare function forkCombineLatest<T, TA, TB, TC, TD, TE, TF>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>, e: ObservableOperator<T, TE>, f: ObservableOperator<T, TF>): ObservableOperator<T, [
     TA,
     TB,
     TC,
@@ -201,7 +201,7 @@ declare function fork<T, TA, TB, TC, TD, TE, TF>(a: ObservableOperator<T, TA>, b
     TE,
     TF
 ]>;
-declare function fork<T, TA, TB, TC, TD, TE, TF, TG>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>, e: ObservableOperator<T, TE>, f: ObservableOperator<T, TF>, g: ObservableOperator<T, TG>): ObservableOperator<T, [
+declare function forkCombineLatest<T, TA, TB, TC, TD, TE, TF, TG>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>, e: ObservableOperator<T, TE>, f: ObservableOperator<T, TF>, g: ObservableOperator<T, TG>): ObservableOperator<T, [
     TA,
     TB,
     TC,
@@ -210,7 +210,7 @@ declare function fork<T, TA, TB, TC, TD, TE, TF, TG>(a: ObservableOperator<T, TA
     TF,
     TG
 ]>;
-declare function fork<T, TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>, e: ObservableOperator<T, TE>, f: ObservableOperator<T, TF>, g: ObservableOperator<T, TG>, h: ObservableOperator<T, TH>): ObservableOperator<T, [
+declare function forkCombineLatest<T, TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>, e: ObservableOperator<T, TE>, f: ObservableOperator<T, TF>, g: ObservableOperator<T, TG>, h: ObservableOperator<T, TH>): ObservableOperator<T, [
     TA,
     TB,
     TC,
@@ -220,7 +220,67 @@ declare function fork<T, TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableOperator<T
     TG,
     TH
 ]>;
-declare function fork<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>, e: ObservableOperator<T, TE>, f: ObservableOperator<T, TF>, g: ObservableOperator<T, TG>, h: ObservableOperator<T, TH>, i: ObservableOperator<T, TI>): ObservableOperator<T, [
+declare function forkCombineLatest<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>, e: ObservableOperator<T, TE>, f: ObservableOperator<T, TF>, g: ObservableOperator<T, TG>, h: ObservableOperator<T, TH>, i: ObservableOperator<T, TI>): ObservableOperator<T, [
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG,
+    TH,
+    TI
+]>;
+declare function forkZipLatest<T, TA, TB>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>): ObservableOperator<T, [
+    TA,
+    TB
+]>;
+declare function forkZipLatest<T, TA, TB, TC>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>): ObservableOperator<T, [
+    TA,
+    TB,
+    TC
+]>;
+declare function forkZipLatest<T, TA, TB, TC, TD>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>): ObservableOperator<T, [
+    TA,
+    TB,
+    TC,
+    TD
+]>;
+declare function forkZipLatest<T, TA, TB, TC, TD, TE>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>, e: ObservableOperator<T, TE>): ObservableOperator<T, [
+    TA,
+    TB,
+    TC,
+    TD,
+    TE
+]>;
+declare function forkZipLatest<T, TA, TB, TC, TD, TE, TF>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>, e: ObservableOperator<T, TE>, f: ObservableOperator<T, TF>): ObservableOperator<T, [
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF
+]>;
+declare function forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>, e: ObservableOperator<T, TE>, f: ObservableOperator<T, TF>, g: ObservableOperator<T, TG>): ObservableOperator<T, [
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG
+]>;
+declare function forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>, e: ObservableOperator<T, TE>, f: ObservableOperator<T, TF>, g: ObservableOperator<T, TG>, h: ObservableOperator<T, TH>): ObservableOperator<T, [
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG,
+    TH
+]>;
+declare function forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableOperator<T, TA>, b: ObservableOperator<T, TB>, c: ObservableOperator<T, TC>, d: ObservableOperator<T, TD>, e: ObservableOperator<T, TE>, f: ObservableOperator<T, TF>, g: ObservableOperator<T, TG>, h: ObservableOperator<T, TH>, i: ObservableOperator<T, TI>): ObservableOperator<T, [
     TA,
     TB,
     TC,
@@ -638,4 +698,4 @@ declare const toRunnable: <T>(options?: {
     readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
 }) => Function1<ObservableLike<T>, RunnableLike<T>>;
 declare const toRunnableT: ToRunnable<ObservableLike<unknown>>;
-export { AbstractDisposableObservable, AbstractObservable, AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Observer, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, createT, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, fork, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, generateT, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AbstractDisposableObservable, AbstractObservable, AsyncReducer, DispatcherLike, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Observer, StreamLike, SubjectLike, ThrottleMode, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, createT, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, generateT, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
