@@ -1,7 +1,8 @@
 import { Concat } from "../container";
 import { addTo, dispose, onComplete } from "../disposable";
 import { pipe } from "../functions";
-import { ObservableLike } from "../observable";
+import { ObservableLike, ObservableOperator } from "../observable";
+import { map } from "../readonlyArray";
 import { sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
 import { Observer, createDelegatingObserver } from "./observer";
@@ -24,16 +25,8 @@ const createMergeObserver = <T>(
     }),
   );
 
-/**
- *  Creates an `ObservableLike` which concurrently emits values from the sources.
- */
-export function merge<T>(
-  fst: ObservableLike<T>,
-  snd: ObservableLike<T>,
-  ...tail: readonly ObservableLike<T>[]
-): ObservableLike<T>;
-export function merge<T>(
-  ...observables: readonly ObservableLike<T>[]
+function _merge<T>(
+  observables: readonly ObservableLike<T>[],
 ): ObservableLike<T> {
   return createObservable(observer => {
     const count = observables.length;
@@ -45,6 +38,37 @@ export function merge<T>(
   });
 }
 
+/**
+ *  Creates an `ObservableLike` which concurrently emits values from the sources.
+ */
+export function merge<T>(
+  fst: ObservableLike<T>,
+  snd: ObservableLike<T>,
+  ...tail: readonly ObservableLike<T>[]
+): ObservableLike<T>;
+export function merge<T>(
+  ...observables: readonly ObservableLike<T>[]
+): ObservableLike<T> {
+  return _merge(observables);
+}
+
 export const mergeT: Concat<ObservableLike<unknown>> = {
   concat: merge,
 };
+
+export function forkMerge<TIn, TOut>(
+  fst: ObservableOperator<TIn, TOut>,
+  snd: ObservableOperator<TIn, TOut>,
+  ...tail: readonly ObservableOperator<TIn, TOut>[]
+): ObservableOperator<TIn, TOut>;
+export function forkMerge<TIn, TOut>(
+  ...ops: readonly ObservableOperator<TIn, TOut>[]
+): ObservableOperator<TIn, TOut> {
+  return (obs: ObservableLike<TIn>) =>
+    _merge(
+      pipe(
+        ops,
+        map(op => pipe(obs, op)),
+      ),
+    );
+}

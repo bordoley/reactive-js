@@ -82,6 +82,7 @@
 - [everySatisfy](observable.md#everysatisfy)
 - [exhaust](observable.md#exhaust)
 - [forkCombineLatest](observable.md#forkcombinelatest)
+- [forkMerge](observable.md#forkmerge)
 - [forkZipLatest](observable.md#forkziplatest)
 - [fromArray](observable.md#fromarray)
 - [fromDisposable](observable.md#fromdisposable)
@@ -1651,6 +1652,31 @@ ___
 #### Returns
 
 [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+___
+
+### forkMerge
+
+▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, ...`tail`): [`ObservableOperator`](observable.md#observableoperator)<`TIn`, `TOut`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TIn` |
+| `TOut` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`ObservableOperator`](observable.md#observableoperator)<`TIn`, `TOut`\> |
+| `snd` | [`ObservableOperator`](observable.md#observableoperator)<`TIn`, `TOut`\> |
+| `...tail` | readonly [`ObservableOperator`](observable.md#observableoperator)<`TIn`, `TOut`\>[] |
+
+#### Returns
+
+[`ObservableOperator`](observable.md#observableoperator)<`TIn`, `TOut`\>
 
 ___
 
