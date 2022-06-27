@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Classes
-
-- [YieldError](../classes/scheduler.YieldError.md)
-
 ### Interfaces
 
 - [PausableSchedulerLike](../interfaces/scheduler.PausableSchedulerLike.md)

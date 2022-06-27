@@ -85,12 +85,7 @@ export {
   toPriorityScheduler,
   toPausableScheduler,
 } from "./scheduler/priorityQueueScheduler";
-export {
-  run,
-  schedule,
-  __yield,
-  YieldError,
-} from "./scheduler/schedulerContinuation";
+export { run, schedule, __yield } from "./scheduler/schedulerContinuation";
 export { toSchedulerWithPriority } from "./scheduler/schedulerWithPriority";
 export { createHostScheduler } from "./scheduler/hostScheduler";
 export { createVirtualTimeScheduler } from "./scheduler/virtualTimeScheduler";
