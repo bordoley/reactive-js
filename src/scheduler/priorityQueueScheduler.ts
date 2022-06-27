@@ -131,7 +131,7 @@ class PriorityScheduler
       } else {
         this.dueTime = this.now + delay;
       }
-      __yield(delay);
+      __yield({ delay });
     }
   };
   current: ScheduledTask = none as any;

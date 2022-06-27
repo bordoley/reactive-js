@@ -10,7 +10,9 @@ import { SideEffect, Function1 } from "./functions.mjs";
 declare const toPriorityScheduler: (hostScheduler: SchedulerLike) => PrioritySchedulerLike;
 declare const toPausableScheduler: (hostScheduler: SchedulerLike) => PausableSchedulerLike;
 declare const run: (continuation: SchedulerContinuationLike) => void;
-declare const __yield: (delay?: number) => void;
+declare const __yield: (options?: {
+    delay?: number;
+}) => void;
 declare const schedule: (f: SideEffect, options?: {
     readonly delay?: number;
 }) => Function1<SchedulerLike, DisposableLike>;

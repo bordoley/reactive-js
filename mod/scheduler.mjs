@@ -126,8 +126,9 @@ class SchedulerContinuationImpl extends AbstractDisposable {
 const run = (continuation) => {
     continuation.continue();
 };
-const __yield = (delay = 0) => {
-    delay = Math.max(delay !== null && delay !== void 0 ? delay : 0, 0);
+const __yield = (options = {}) => {
+    var _a;
+    const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
     const scheduler = isNone(currentScheduler)
         ? raise("__yield effect may only be invoked from within a SchedulerContinuation")
         : currentScheduler;
@@ -218,7 +219,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
                 else {
                     this.dueTime = this.now + delay;
                 }
-                __yield(delay);
+                __yield({ delay });
             }
         };
         this.current = none;
