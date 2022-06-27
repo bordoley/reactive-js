@@ -1,6 +1,6 @@
 import { ignoreElements, startWith } from "../container";
 import { add, addTo } from "../disposable";
-import { Factory, Reducer, compose, pipe } from "../functions";
+import { Factory, Reducer, pipe } from "../functions";
 import {
   AbstractDisposableObservable,
   MulticastObservableLike,
@@ -17,7 +17,7 @@ import {
 
 import { SchedulerLike } from "../scheduler";
 import { FlowMode, FlowableSinkLike } from "../streamable";
-import { createFromObservableOperator, stream } from "./streamable";
+import { createLiftedStreamable, stream } from "./streamable";
 
 class FlowableSinkAccumulatorImpl<T, TAcc>
   extends AbstractDisposableObservable<TAcc>
@@ -54,17 +54,14 @@ export const createFlowableSinkAccumulator = <T, TAcc>(
 ): FlowableSinkLike<T> & MulticastObservableLike<TAcc> => {
   const subject = createSubject(options);
 
-  const sinkAcc = pipe(
-    compose(
+  return pipe(
+    createLiftedStreamable(
       reduce(reducer, initialValue),
       onNotify(dispatchTo(subject)),
       ignoreElements(keepT),
       startWith({ ...concatT, ...fromArrayT }, "pause", "resume"),
     ),
-    createFromObservableOperator,
     streamable => new FlowableSinkAccumulatorImpl(subject, streamable),
     add(subject),
   );
-
-  return sinkAcc;
 };

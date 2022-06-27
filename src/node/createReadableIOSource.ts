@@ -8,13 +8,13 @@ import {
   onNotify,
   subscribe,
 } from "../observable";
-import { FlowableLike, createFromObservableOperator } from "../streamable";
+import { FlowableLike, createLiftedStreamable } from "../streamable";
 import { createDisposableNodeStream } from "./nodeStream";
 
 export const createReadableIOSource = (
   factory: Factory<DisposableValueLike<Readable>>,
 ): FlowableLike<Uint8Array> =>
-  createFromObservableOperator(mode =>
+  createLiftedStreamable(mode =>
     createObservable(observer => {
       const { dispatcher } = observer;
 
