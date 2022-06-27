@@ -1,8 +1,8 @@
 /// <reference types="./streamable.d.ts" />
 import { empty as empty$1, concatWith, fromValue, ignoreElements, endWith, startWith, concatMap } from './container.mjs';
-import { add, addTo, bindTo } from './disposable.mjs';
 import { pipe, compose, returns, updaterReducer, flip } from './functions.mjs';
-import { AbstractDisposableObservable, createSubject, publish, createObservable, map, onNotify, dispatchTo, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeT, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, merge, onSubscribe, observable, __memo, __observe, reduce, mapT, concatAllT, takeFirst, withLatestFrom, using, never, takeWhile, scanAsync, switchAll } from './observable.mjs';
+import { AbstractDisposableObservable, createSubject, publish, createObservable, map, onNotify, dispatchTo, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeT, distinctUntilChanged, subscribeOn, fromDisposable, takeUntil, keepT, concatT, merge, onSubscribe, observable, __memo, __observe, reduce, mapT, concatAllT, takeFirst, withLatestFrom, using, never, takeWhile, scanAsync, zipWithLatestFrom, switchAll } from './observable.mjs';
+import { add, addTo, bindTo } from './disposable.mjs';
 import { sinkInto, sourceFrom } from './source.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
 import { none } from './option.mjs';
@@ -33,32 +33,29 @@ const createStream = (op, scheduler, options) => {
     return stream;
 };
 
-class StreamableImpl {
-    constructor(op) {
-        this.op = op;
+class CreateStreamable {
+    constructor(stream) {
+        this.stream = stream;
+    }
+}
+const createStreamble = (stream) => new CreateStreamable(stream);
+const fromObservableOperator = (op) => createStreamble((scheduler, options) => createStream(op, scheduler, options));
+class LiftedStreamable {
+    constructor(src, obsOps, reqOps) {
+        this.obsOps = obsOps;
+        this.reqOps = reqOps;
+        this.src = src instanceof LiftedStreamable ? src.src : src;
+        this.op = requests => createObservable(observer => {
+            const { scheduler } = observer;
+            const srcStream = pipe(this.src, stream(scheduler));
+            pipe(observer, sourceFrom(pipe(srcStream, compose(...obsOps))), add(srcStream), add(pipe(requests, map(compose(...reqOps)), onNotify(dispatchTo(srcStream)), subscribe(scheduler), bindTo(srcStream))));
+        });
     }
     stream(scheduler, options) {
         return createStream(this.op, scheduler, options);
     }
 }
-const createStreamable = (op) => new StreamableImpl(op);
-class LiftedStreamable extends StreamableImpl {
-    constructor(op, src, obsOps, reqOps) {
-        super(op);
-        this.src = src;
-        this.obsOps = obsOps;
-        this.reqOps = reqOps;
-    }
-}
-const liftImpl = (streamable, obsOps, reqOps) => {
-    const src = streamable instanceof LiftedStreamable ? streamable.src : streamable;
-    const op = requests => createObservable(observer => {
-        const { scheduler } = observer;
-        const srcStream = pipe(src, stream(scheduler));
-        pipe(observer, sourceFrom(pipe(srcStream, compose(...obsOps))), add(srcStream), add(pipe(requests, map(compose(...reqOps)), onNotify(dispatchTo(srcStream)), subscribe(scheduler), bindTo(srcStream))));
-    });
-    return new LiftedStreamable(op, src, obsOps, reqOps);
-};
+const liftImpl = (streamable, obsOps, reqOps) => new LiftedStreamable(streamable, obsOps, reqOps);
 const lift = (op) => streamable => {
     const obsOps = streamable instanceof LiftedStreamable
         ? [...streamable.obsOps, op]
@@ -73,7 +70,7 @@ const mapReq = (op) => streamable => {
         : [op];
     return liftImpl(streamable, obsOps, reqOps);
 };
-const _empty = createStreamable(_ => empty$1(fromArrayT));
+const _empty = fromObservableOperator(_ => empty$1(fromArrayT));
 /**
  * Returns an empty `StreamableLike` that always returns
  * a disposed `StreamLike` instance.
@@ -83,7 +80,7 @@ const empty = (options = {}) => {
     const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
     return delay === 0
         ? _empty
-        : createStreamable(_ => empty$1(fromArrayT, options));
+        : fromObservableOperator(_ => empty$1(fromArrayT, options));
 };
 const stream = (scheduler, options) => streamable => streamable.stream(scheduler, options);
 const streamOnSchedulerFactory = (streamable, scheduler, replay) => pipe(streamable, stream(scheduler, { replay }));
@@ -112,7 +109,7 @@ const createActionReducer = (reducer, initialState, options) => {
         // the observables merged.
         return pipe(src, scan(reducer, returns(acc)), concatWith(mergeT, fromValue(fromArrayT)(acc)), distinctUntilChanged(options));
     };
-    return createStreamable(operator);
+    return fromObservableOperator(operator);
 };
 /**
  * Returns a new `StateStoreLike` instance that stores state which can
@@ -124,18 +121,6 @@ const createActionReducer = (reducer, initialState, options) => {
  * if a state value is distinct from the previous one.
  */
 const createStateStore = (initialState, options) => createActionReducer(updaterReducer, initialState, options);
-/**
- * Converts an `StreamableLike<T, T>` to an `StateStoreLike<T>`.
- *
- * @param initialState Factory function to generate the initial state.
- * @param equals Optional equality function that is used to compare
- * if a state value is distinct from the previous one.
- */
-const toStateStore = () => streamable => createStreamable(updates => createObservable(observer => {
-    const { scheduler } = observer;
-    const stream$1 = pipe(streamable, stream(scheduler), addTo(observer), sinkInto(observer));
-    pipe(updates, zipWithLatestFrom(stream$1, (updateState, prev) => updateState(prev)), onNotify(dispatchTo(stream$1)), subscribe(scheduler), bindTo(stream$1));
-}));
 
 const _identity = {
     stream(_, options) {
@@ -161,7 +146,7 @@ const flow = ({ scheduler, } = {}) => observable => {
             }
         }), subscribe(observer.scheduler), bindTo(pausableScheduler))), add(pausableScheduler));
     });
-    return createStreamable(op);
+    return fromObservableOperator(op);
 };
 
 const ignoreAndNotifyVoid = compose(ignoreElements(keepT), endWith({ ...fromArrayT, ...concatT }, none));
@@ -192,7 +177,7 @@ class FlowableSinkAccumulatorImpl extends AbstractDisposableObservable {
 /** @experimental */
 const createFlowableSinkAccumulator = (reducer, initialValue, options) => {
     const subject = createSubject(options);
-    const sinkAcc = pipe(compose(reduce(reducer, initialValue), onNotify(dispatchTo(subject)), ignoreElements(keepT), startWith({ ...concatT, ...fromArrayT }, "pause", "resume")), createStreamable, streamable => new FlowableSinkAccumulatorImpl(subject, streamable), add(subject));
+    const sinkAcc = pipe(compose(reduce(reducer, initialValue), onNotify(dispatchTo(subject)), ignoreElements(keepT), startWith({ ...concatT, ...fromArrayT }, "pause", "resume")), fromObservableOperator, streamable => new FlowableSinkAccumulatorImpl(subject, streamable), add(subject));
     return sinkAcc;
 };
 
@@ -208,10 +193,10 @@ const fromArray = (options = {}) => values => {
     const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
     const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : valuesLength, valuesLength), 0);
     const fromValueWithDelay = fromValue(fromArrayT, options);
-    return createStreamable(compose(scan(fromArrayScanner, returns(startIndex - 1)), concatMap({ ...mapT, ...concatAllT }, (i) => fromValueWithDelay(values[i])), takeFirst({ count: endIndex - startIndex })));
+    return fromObservableOperator(compose(scan(fromArrayScanner, returns(startIndex - 1)), concatMap({ ...mapT, ...concatAllT }, (i) => fromValueWithDelay(values[i])), takeFirst({ count: endIndex - startIndex })));
 };
 
-const _fromEnumerable = (enumerable) => createStreamable(compose(withLatestFrom(using(() => enumerate(enumerable), compose(fromValue(fromArrayT), concatWith(concatT, never()))), (_, enumerator) => enumerator), onNotify(move), takeWhile(hasCurrent), map(current)));
+const _fromEnumerable = (enumerable) => fromObservableOperator(compose(withLatestFrom(using(() => enumerate(enumerable), compose(fromValue(fromArrayT), concatWith(concatT, never()))), (_, enumerator) => enumerator), onNotify(move), takeWhile(hasCurrent), map(current)));
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
  *
@@ -250,7 +235,7 @@ const generate = (generator, initialValue, options = {}) => {
     const op = delay > 0
         ? scanAsync(asyncGeneratorScanner(generator, options), initialValue)
         : scan(generateScanner(generator), initialValue);
-    return createStreamable(op);
+    return fromObservableOperator(op);
 };
 
 const consumeContinue = (data) => ({
@@ -283,4 +268,4 @@ const consumeImpl = (consumer, initial) => {
 const consume = (consumer, initial) => consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
 const consumeAsync = (consumer, initial) => consumeImpl(accObs => compose(zipWithLatestFrom(accObs, (next, acc) => pipe(consumer(acc, next), takeFirst())), switchAll()), initial);
 
-export { __stream, consume, consumeAsync, consumeContinue, consumeDone, createActionReducer, createFlowableSinkAccumulator, createStateStore, createStreamable, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapReq, sink, stream, toStateStore };
+export { __stream, consume, consumeAsync, consumeContinue, consumeDone, createActionReducer, createFlowableSinkAccumulator, createStateStore, createStreamble, empty, flow, fromArray, fromEnumerable, fromIterable, fromObservableOperator, generate, identity, lift, mapReq, sink, stream };

@@ -5,7 +5,7 @@ import { createObservable, AbstractDisposableObservable, map, onNotify, keep as 
 import { keep } from './readonlyArray.mjs';
 import { none, isSome } from './option.mjs';
 import { sinkInto } from './source.mjs';
-import { createStateStore, stream } from './streamable.mjs';
+import { createStreamble, createStateStore, stream } from './streamable.mjs';
 
 const fromEvent = (target, eventName, selector) => createObservable(observer => {
     const dispatcher = pipe(observer.dispatcher, onDisposed(_ => {
@@ -103,61 +103,54 @@ class WindowLocationStream extends AbstractDisposableObservable {
         pipe(this.stateStream, map(({ uri }) => uri), sinkInto(observer));
     }
 }
-class WindowLocationStreamable {
-    constructor() {
-        this.currentStream = none;
+let currentWindowLocationStream = none;
+const windowLocation = createStreamble((scheduler, options) => {
+    if (isSome(currentWindowLocationStream)) {
+        raise("Cannot stream more than once");
     }
-    stream(scheduler, options) {
-        let { currentStream } = this;
-        if (isSome(currentStream)) {
-            raise("Cannot stream more than once");
+    const stateStream = pipe(createStateStore(() => ({
+        replace: true,
+        uri: getCurrentWindowLocationURI(),
+    }), { equality: areWindowLocationStatesEqual }), stream(scheduler, options));
+    const windowLocationStream = pipe(new WindowLocationStream(stateStream), bindTo(stateStream));
+    const updateBrowserSubscription = pipe(stateStream, map(({ uri, replace }) => ({
+        uri: windowLocationURIToString(uri),
+        title: uri.title,
+        replace,
+    })), onNotify(({ uri, title }) => {
+        // Initialize the history state on page load
+        const isInitialPageLoad = windowLocationStream.historyCounter === -1;
+        if (isInitialPageLoad) {
+            windowLocationStream.historyCounter++;
+            windowHistoryReplaceState(windowLocationStream, title, uri);
         }
-        const stateStream = pipe(createStateStore(() => ({
-            replace: true,
-            uri: getCurrentWindowLocationURI(),
-        }), { equality: areWindowLocationStatesEqual }), stream(scheduler, options));
-        const windowLocationStream = pipe(new WindowLocationStream(stateStream), bindTo(stateStream));
-        this.currentStream = windowLocationStream;
-        const updateBrowserSubscription = pipe(stateStream, map(({ uri, replace }) => ({
-            uri: windowLocationURIToString(uri),
-            title: uri.title,
-            replace,
-        })), onNotify(({ uri, title }) => {
-            // Initialize the history state on page load
-            const isInitialPageLoad = windowLocationStream.historyCounter === -1;
-            if (isInitialPageLoad) {
-                windowLocationStream.historyCounter++;
-                windowHistoryReplaceState(windowLocationStream, title, uri);
-            }
-        }), keep$1(({ title, uri }) => {
-            const titleChanged = document.title !== title;
-            const uriChanged = uri !== window.location.href;
-            return titleChanged || uriChanged;
-        }), throttle(100), onNotify(({ replace, title, uri }) => {
-            const titleChanged = document.title !== title;
-            const uriChanged = uri !== window.location.href;
-            const shouldReplace = replace || (titleChanged && !uriChanged);
-            const updateHistoryState = shouldReplace
-                ? windowHistoryReplaceState
-                : windowHistoryPushState;
-            document.title = title;
-            updateHistoryState(windowLocationStream, title, uri);
-        }), subscribe(scheduler));
-        const historySubscription = pipe(fromEvent(window, "popstate", (e) => {
-            const { counter, title } = e.state;
-            const uri = {
-                ...getCurrentWindowLocationURI(),
-                title,
-            };
-            return { counter, uri };
-        }), onNotify(({ counter, uri }) => {
-            windowLocationStream.historyCounter = counter;
-            windowLocationStream.dispatch(uri, { replace: true });
-        }), subscribe(scheduler));
-        return pipe(windowLocationStream, add(historySubscription), add(updateBrowserSubscription));
-    }
-}
-const windowLocation = new WindowLocationStreamable();
+    }), keep$1(({ title, uri }) => {
+        const titleChanged = document.title !== title;
+        const uriChanged = uri !== window.location.href;
+        return titleChanged || uriChanged;
+    }), throttle(100), onNotify(({ replace, title, uri }) => {
+        const titleChanged = document.title !== title;
+        const uriChanged = uri !== window.location.href;
+        const shouldReplace = replace || (titleChanged && !uriChanged);
+        const updateHistoryState = shouldReplace
+            ? windowHistoryReplaceState
+            : windowHistoryPushState;
+        document.title = title;
+        updateHistoryState(windowLocationStream, title, uri);
+    }), subscribe(scheduler));
+    const historySubscription = pipe(fromEvent(window, "popstate", (e) => {
+        const { counter, title } = e.state;
+        const uri = {
+            ...getCurrentWindowLocationURI(),
+            title,
+        };
+        return { counter, uri };
+    }), onNotify(({ counter, uri }) => {
+        windowLocationStream.historyCounter = counter;
+        windowLocationStream.dispatch(uri, { replace: true });
+    }), subscribe(scheduler));
+    return pipe(windowLocationStream, add(historySubscription), add(updateBrowserSubscription));
+});
 
 const globalFetch = self.fetch;
 const fetch = (onResponse) => fetchRequest => defer(() => async (observer) => {

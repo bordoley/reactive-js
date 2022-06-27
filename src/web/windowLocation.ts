@@ -10,9 +10,13 @@ import {
   throttle,
 } from "../observable";
 import { Option, isSome, none } from "../option";
-import { SchedulerLike } from "../scheduler";
 import { sinkInto } from "../source";
-import { StateStreamLike, createStateStore, stream } from "../streamable";
+import {
+  StateStreamLike,
+  createStateStore,
+  createStreamble,
+  stream,
+} from "../streamable";
 import {
   WindowLocationStreamLike,
   WindowLocationStreamableLike,
@@ -118,16 +122,11 @@ class WindowLocationStream
   }
 }
 
-class WindowLocationStreamable implements WindowLocationStreamableLike {
-  currentStream: Option<WindowLocationStream> = none;
+let currentWindowLocationStream: Option<WindowLocationStream> = none;
 
-  stream(
-    scheduler: SchedulerLike,
-    options?: { readonly replay?: number },
-  ): WindowLocationStreamLike {
-    let { currentStream } = this;
-
-    if (isSome(currentStream)) {
+export const windowLocation: WindowLocationStreamableLike = createStreamble(
+  (scheduler, options): WindowLocationStreamLike => {
+    if (isSome(currentWindowLocationStream)) {
       raise("Cannot stream more than once");
     }
 
@@ -146,7 +145,6 @@ class WindowLocationStreamable implements WindowLocationStreamableLike {
       new WindowLocationStream(stateStream),
       bindTo(stateStream),
     );
-    this.currentStream = windowLocationStream;
 
     const updateBrowserSubscription = pipe(
       stateStream,
@@ -212,8 +210,5 @@ class WindowLocationStreamable implements WindowLocationStreamableLike {
       add(historySubscription),
       add(updateBrowserSubscription),
     );
-  }
-}
-
-export const windowLocation: WindowLocationStreamableLike =
-  new WindowLocationStreamable();
+  },
+);

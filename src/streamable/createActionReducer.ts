@@ -1,10 +1,8 @@
 import { concatWith, fromValue } from "../container";
-import { addTo, bindTo } from "../disposable";
 import {
   Equality,
   Factory,
   Reducer,
-  Updater,
   pipe,
   returns,
   updaterReducer,
@@ -12,23 +10,13 @@ import {
 import {
   ObservableLike,
   StreamLike,
-  createObservable,
-  dispatchTo,
   distinctUntilChanged,
   fromArrayT,
   mergeT,
-  onNotify,
   scan,
-  subscribe,
-  zipWithLatestFrom,
 } from "../observable";
-import { sinkInto } from "../source";
-import {
-  StreamableLike,
-  StreamableOperator,
-  StreamableStateLike,
-} from "../streamable";
-import { createStreamable, stream as streamStreamable } from "./streamable";
+import { StreamableLike, StreamableStateLike } from "../streamable";
+import { fromObservableOperator } from "./streamable";
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
@@ -61,7 +49,7 @@ export const createActionReducer = <TAction, T>(
     );
   };
 
-  return createStreamable(operator);
+  return fromObservableOperator(operator);
 };
 
 /**
@@ -78,34 +66,3 @@ export const createStateStore = <T>(
   options?: { readonly equality?: Equality<T> },
 ): StreamableStateLike<T> =>
   createActionReducer(updaterReducer, initialState, options);
-
-/**
- * Converts an `StreamableLike<T, T>` to an `StateStoreLike<T>`.
- *
- * @param initialState Factory function to generate the initial state.
- * @param equals Optional equality function that is used to compare
- * if a state value is distinct from the previous one.
- */
-export const toStateStore =
-  <T>(): StreamableOperator<T, T, Updater<T>, T> =>
-  streamable =>
-    createStreamable(updates =>
-      createObservable(observer => {
-        const { scheduler } = observer;
-
-        const stream = pipe(
-          streamable,
-          streamStreamable(scheduler),
-          addTo(observer),
-          sinkInto(observer),
-        );
-
-        pipe(
-          updates,
-          zipWithLatestFrom(stream, (updateState, prev) => updateState(prev)),
-          onNotify(dispatchTo(stream)),
-          subscribe(scheduler),
-          bindTo(stream),
-        );
-      }),
-    );

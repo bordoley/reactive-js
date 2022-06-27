@@ -45,10 +45,10 @@ export type ConsumeDone<T> = {
 export {
   createActionReducer,
   createStateStore,
-  toStateStore,
 } from "./streamable/createActionReducer";
 export {
-  createStreamable,
+  createStreamble,
+  fromObservableOperator,
   empty,
   lift,
   mapReq,

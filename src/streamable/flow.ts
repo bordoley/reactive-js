@@ -12,7 +12,7 @@ import {
 import { SchedulerLike, toPausableScheduler } from "../scheduler";
 import { sourceFrom } from "../source";
 import { FlowMode, FlowableLike } from "../streamable";
-import { createStreamable } from "./streamable";
+import { fromObservableOperator } from "./streamable";
 
 export const flow =
   <T>({
@@ -57,5 +57,5 @@ export const flow =
         );
       });
 
-    return createStreamable(op);
+    return fromObservableOperator(op);
   };
