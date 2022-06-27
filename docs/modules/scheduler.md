@@ -27,13 +27,14 @@
 
 ### \_\_yield
 
-▸ **__yield**(`delay?`): `void`
+▸ **__yield**(`options?`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `delay?` | `number` |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
 
 #### Returns
 

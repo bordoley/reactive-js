@@ -311,8 +311,6 @@ export const generate = <T>(
   initialValue: Factory<T>,
   options: { readonly delay?: number } = {},
 ): ObservableLike<T> => {
-  const { delay = Math.max(options.delay ?? 0, 0) } = options;
-
   const factory = () => {
     let acc = initialValue();
 
@@ -320,13 +318,13 @@ export const generate = <T>(
       while (true) {
         acc = generator(acc);
         observer.notify(acc);
-        __yield(delay);
+        __yield(options);
       }
     };
   };
 
   const observable = defer(factory, options);
-  (observable as any).isEnumerable = delay === 0;
+  (observable as any).isEnumerable = Math.max(options.delay ?? 0, 0) === 0;
   return observable;
 };
 

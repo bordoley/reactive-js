@@ -49,8 +49,8 @@ export const fromArray =
 
             observer.notify(value);
 
-            if (index < endIndex || delay > 0) {
-              __yield(delay);
+            if (index < endIndex) {
+              __yield(options);
             }
           }
           pipe(observer, dispose());

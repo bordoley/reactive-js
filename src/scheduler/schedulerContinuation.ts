@@ -59,8 +59,8 @@ export const run = (continuation: SchedulerContinuationLike): void => {
   continuation.continue();
 };
 
-export const __yield = (delay = 0) => {
-  delay = Math.max(delay ?? 0, 0);
+export const __yield = (options: { delay?: number } = {}) => {
+  const { delay = Math.max(options.delay ?? 0, 0) } = options;
 
   const scheduler = isNone(currentScheduler)
     ? raise<SchedulerLike>(

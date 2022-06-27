@@ -116,8 +116,8 @@ const fromArray = (options = {}) => values => {
                     const value = values[index];
                     index++;
                     observer.notify(value);
-                    if (index < endIndex || delay > 0) {
-                        __yield(delay);
+                    if (index < endIndex) {
+                        __yield(options);
                     }
                 }
                 pipe(observer, dispose());
@@ -671,15 +671,14 @@ const concatT = {
  */
 const fromEnumerator = (options = {}) => f => {
     var _a;
-    const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
     const result = using(f, enumerator => defer(() => (observer) => {
         while (enumerator.move()) {
             observer.notify(enumerator.current);
-            __yield(delay);
+            __yield(options);
         }
         pipe(observer, dispose());
-    }, { delay }));
-    result.isEnumerable = delay === 0;
+    }, options));
+    result.isEnumerable = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) === 0;
     return result;
 };
 /**
@@ -1317,19 +1316,18 @@ const fromPromise = (factory) => createObservable(({ dispatcher }) => {
  */
 const generate = (generator, initialValue, options = {}) => {
     var _a;
-    const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
     const factory = () => {
         let acc = initialValue();
         return (observer) => {
             while (true) {
                 acc = generator(acc);
                 observer.notify(acc);
-                __yield(delay);
+                __yield(options);
             }
         };
     };
     const observable = defer(factory, options);
-    observable.isEnumerable = delay === 0;
+    observable.isEnumerable = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) === 0;
     return observable;
 };
 const generateT = {
