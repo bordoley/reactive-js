@@ -44,7 +44,7 @@
 - [identity](streamable.md#identity)
 - [lift](streamable.md#lift)
 - [mapReq](streamable.md#mapreq)
-- [sink](streamable.md#sink)
+- [sinkInto](streamable.md#sinkinto)
 - [stream](streamable.md#stream)
 
 ## Type Aliases
@@ -564,9 +564,9 @@ ___
 
 ___
 
-### sink
+### sinkInto
 
-▸ **sink**<`TReq`, `T`\>(`src`, `dest`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>
+▸ **sinkInto**<`TReq`, `T`\>(`dest`): (`src`: [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`\>\>) => [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>
 
 #### Type parameters
 
@@ -579,10 +579,21 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `src` | [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`\>\> |
 | `dest` | [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`T`, `TReq`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`T`, `TReq`\>\> |
 
 #### Returns
+
+`fn`
+
+▸ (`src`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`\>\> |
+
+##### Returns
 
 [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>
 

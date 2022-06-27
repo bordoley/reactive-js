@@ -57,7 +57,7 @@ export {
 } from "./streamable/streamable";
 export { identity } from "./streamable/identity";
 export { flow } from "./streamable/flow";
-export { sink } from "./streamable/sink";
+export { sinkInto } from "./streamable/sink";
 export { createFlowableSinkAccumulator } from "./streamable/io";
 
 export { fromArray } from "./streamable/fromArray";

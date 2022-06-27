@@ -30,7 +30,7 @@ import {
   FlowMode,
   StreamableOperator,
   createFromObservableOperator,
-  sink,
+  sinkInto as sinkIntoTransformSink,
   stream,
 } from "../streamable";
 import { createReadableIOSource } from "./createReadableIOSource";
@@ -61,7 +61,8 @@ export const transform =
         );
 
         const sinkSubscription = pipe(
-          sink(src, transformSink),
+          src,
+          sinkIntoTransformSink(transformSink),
           subscribe(observer.scheduler),
           addTo(observer),
         );
