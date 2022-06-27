@@ -2,7 +2,7 @@ import { fromValue } from "../container";
 import { Factory, Updater, pipe } from "../functions";
 import { fromArrayT, scan, scanAsync } from "../observable";
 import { AsyncEnumerableLike } from "../streamable";
-import { createFromObservableOperator } from "./streamable";
+import { createLiftedStreamable } from "./streamable";
 
 const generateScanner =
   <T>(generator: Updater<T>) =>
@@ -31,12 +31,12 @@ export const generate = <T>(
 ): AsyncEnumerableLike<T> => {
   const { delay = Math.max(options.delay ?? 0, 0) } = options;
 
-  const op =
+  return createLiftedStreamable(
     delay > 0
       ? scanAsync<void, T>(
           asyncGeneratorScanner(generator, options),
           initialValue,
         )
-      : scan(generateScanner(generator), initialValue);
-  return createFromObservableOperator(op);
+      : scan(generateScanner(generator), initialValue),
+  );
 };

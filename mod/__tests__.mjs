@@ -9,7 +9,7 @@ import { toArray, fromArray, someSatisfyT, first, generate, everySatisfy, map, f
 import { concat as concat$2, fromArray as fromArray$2, fromArrayT as fromArrayT$2, buffer, toRunnable as toRunnable$2, mapT, catchError, concatT, generate as generate$2, takeFirst as takeFirst$2, combineLatestWith, createObservable, createSubject, dispatchTo, subscribe, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeT, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync, share, zip as zip$1, map as map$2, onNotify, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$1, zipT, zipLatestWith, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$2, skipFirst as skipFirst$2, takeWhile as takeWhile$2, decodeWithCharset, usingT } from './observable.mjs';
 import { createVirtualTimeScheduler, createHostScheduler, schedule } from './scheduler.mjs';
 import { type, fromArray as fromArray$3, concat as concat$3, concatAll as concatAll$2, distinctUntilChanged as distinctUntilChanged$3, generate as generate$3, keep, map as map$3, repeat as repeat$3, scan as scan$3, skipFirst as skipFirst$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$3, toRunnable as toRunnable$3, fromArrayT as fromArrayT$3, zipT as zipT$1 } from './sequence.mjs';
-import { identity as identity$1, __stream, createActionReducer, stream, empty as empty$1, lift, mapReq, sinkInto, flow, createFlowableSinkAccumulator, fromArray as fromArray$4, fromIterable as fromIterable$2, generate as generate$4, consume, consumeContinue, consumeDone, consumeAsync } from './streamable.mjs';
+import { identity as identity$1, __stream, createActionReducer, stream, empty as empty$1, createLiftedStreamable, sinkInto, flow, createFlowableSinkAccumulator, fromArray as fromArray$4, fromIterable as fromIterable$2, generate as generate$4, consume, consumeContinue, consumeDone, consumeAsync } from './streamable.mjs';
 
 const tests$6 = describe("Disposable", describe("AbstractDisposable", test("disposes child disposable when disposed", () => {
     const child = createDisposable();
@@ -330,26 +330,9 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(result, expectArrayEquals([]));
     expectTrue(emptyStream.isDisposed);
     expectTrue(subscription.isDisposed);
-}), test("with delay", () => {
-    const scheduler = createVirtualTimeScheduler();
-    const emptyStream = pipe(empty$1({ delay: 4 }), stream(scheduler));
-    emptyStream.dispatch(none);
-    emptyStream.dispatch(none);
-    let result = [];
-    let disposedTime = 0;
-    const subscription = pipe(emptyStream, onNotify(x => {
-        result.push(x);
-    }), subscribe(scheduler), onDisposed(_ => {
-        disposedTime = scheduler.now;
-    }));
-    scheduler.run();
-    pipe(result, expectArrayEquals([]));
-    expectTrue(emptyStream.isDisposed);
-    expectTrue(subscription.isDisposed);
-    pipe(disposedTime, expectEquals(4));
 })), test("with multiple observers", () => {
     const scheduler = createVirtualTimeScheduler();
-    const incrStream = pipe(identity$1(), lift(map$2(incrementBy(100))), stream(scheduler));
+    const incrStream = pipe(createLiftedStreamable(map$2(incrementBy(100))), stream(scheduler));
     pipe(incrStream.observerCount, expectEquals(0));
     const sub1 = pipe(incrStream, subscribe(scheduler));
     pipe(incrStream.observerCount, expectEquals(1));
@@ -361,7 +344,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(incrStream.observerCount, expectEquals(0));
 }), test("map", () => {
     const scheduler = createVirtualTimeScheduler();
-    const incrStream = pipe(identity$1(), lift(map$2(incrementBy(100))), stream(scheduler));
+    const incrStream = pipe(createLiftedStreamable(map$2(incrementBy(100))), stream(scheduler));
     incrStream.dispatch(10);
     incrStream.dispatch(20);
     incrStream.dispatch(30);
@@ -373,24 +356,10 @@ const tests$1 = describe("streamable", test("__stream", () => {
     scheduler.run();
     pipe(result, expectArrayEquals([110, 120, 130]));
     expectTrue(subscription.isDisposed);
-}), test("mapReq", () => {
-    const scheduler = createVirtualTimeScheduler();
-    const incrStream = pipe(identity$1(), mapReq(incrementBy(100)), mapReq(x => Number.parseInt(x)), stream(scheduler));
-    incrStream.dispatch("10");
-    incrStream.dispatch("20");
-    incrStream.dispatch("30");
-    pipe(incrStream, dispose());
-    let result = [];
-    const subscription = pipe(incrStream, buffer(), onNotify(x => {
-        result = x;
-    }), subscribe(scheduler));
-    scheduler.run();
-    pipe(result, expectArrayEquals([110, 120, 130]));
-    expectTrue(subscription.isDisposed);
 }), test("onNotify", () => {
     const scheduler = createVirtualTimeScheduler();
     let result = [];
-    const notifyStream = pipe(identity$1(), lift(onNotify(x => {
+    const notifyStream = pipe(createLiftedStreamable(onNotify((x) => {
         result.push(x);
     })), stream(scheduler));
     notifyStream.dispatch(1);
@@ -403,7 +372,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
 }), test("scan", () => {
     const scheduler = createVirtualTimeScheduler();
     let result = [];
-    const scanStream = pipe(identity$1(), lift(scan$2(sum, returns(0))), lift(onNotify(x => {
+    const scanStream = pipe(createLiftedStreamable(scan$2(sum, returns(0)), onNotify(x => {
         result.push(x);
     })), stream(scheduler));
     scanStream.dispatch(1);
@@ -413,11 +382,11 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(result, expectArrayEquals([1, 3, 6]));
 }), test("sink", () => {
     const scheduler = createVirtualTimeScheduler();
-    const src = pipe(identity$1(), lift(scan$2((acc, _) => acc + 1, returns(0))), lift(takeFirst$2({ count: 3 })));
+    const src = createLiftedStreamable(scan$2((acc, _) => acc + 1, returns(0)), takeFirst$2({ count: 3 }));
     let result = 0;
-    const dest = pipe(identity$1(), lift(scan$2((acc, _) => acc + 1, returns(0))), lift(onNotify(v => {
+    const dest = createLiftedStreamable(scan$2((acc, _) => acc + 1, returns(0)), onNotify(v => {
         result = v;
-    })), lift(mapTo(mapT, none)), lift(startWith({ ...concatT, ...fromArrayT$2 }, none)));
+    }), mapTo(mapT, none), startWith({ ...concatT, ...fromArrayT$2 }, none));
     const subscription = pipe(src, sinkInto(dest), subscribe(scheduler));
     expectFalse(subscription.isDisposed);
     scheduler.run();

@@ -49,14 +49,13 @@ import {
   consumeDone,
   createActionReducer,
   createFlowableSinkAccumulator,
+  createLiftedStreamable,
   empty,
   flow,
   fromArray as fromArrayStream,
   fromIterable,
   generate as generateStream,
   identity,
-  lift,
-  mapReq,
   sinkInto,
   stream,
 } from "../streamable";
@@ -143,45 +142,12 @@ export const tests = describe(
       expectTrue(emptyStream.isDisposed);
       expectTrue(subscription.isDisposed);
     }),
-
-    test("with delay", () => {
-      const scheduler = createVirtualTimeScheduler();
-      const emptyStream = pipe(
-        empty<void, number>({ delay: 4 }),
-        stream(scheduler),
-      );
-
-      emptyStream.dispatch(none);
-      emptyStream.dispatch(none);
-
-      let result: number[] = [];
-      let disposedTime = 0;
-
-      const subscription = pipe(
-        emptyStream,
-        onNotify(x => {
-          result.push(x);
-        }),
-        subscribe(scheduler),
-        onDisposed(_ => {
-          disposedTime = scheduler.now;
-        }),
-      );
-
-      scheduler.run();
-
-      pipe(result, expectArrayEquals([]));
-      expectTrue(emptyStream.isDisposed);
-      expectTrue(subscription.isDisposed);
-      pipe(disposedTime, expectEquals(4));
-    }),
   ),
   test("with multiple observers", () => {
     const scheduler = createVirtualTimeScheduler();
 
     const incrStream = pipe(
-      identity<number>(),
-      lift(map(incrementBy(100))),
+      createLiftedStreamable(map(incrementBy(100))),
       stream(scheduler),
     );
 
@@ -199,8 +165,7 @@ export const tests = describe(
     const scheduler = createVirtualTimeScheduler();
 
     const incrStream = pipe(
-      identity<number>(),
-      lift(map(incrementBy(100))),
+      createLiftedStreamable(map(incrementBy(100))),
       stream(scheduler),
     );
 
@@ -225,44 +190,13 @@ export const tests = describe(
     expectTrue(subscription.isDisposed);
   }),
 
-  test("mapReq", () => {
-    const scheduler = createVirtualTimeScheduler();
-
-    const incrStream = pipe(
-      identity<number>(),
-      mapReq<number, number, number>(incrementBy(100)),
-      mapReq<number, string, number>(x => Number.parseInt(x)),
-      stream(scheduler),
-    );
-
-    incrStream.dispatch("10");
-    incrStream.dispatch("20");
-    incrStream.dispatch("30");
-    pipe(incrStream, dispose());
-
-    let result: readonly number[] = [];
-    const subscription = pipe(
-      incrStream,
-      buffer(),
-      onNotify(x => {
-        result = x;
-      }),
-      subscribe(scheduler),
-    );
-
-    scheduler.run();
-
-    pipe(result, expectArrayEquals([110, 120, 130]));
-    expectTrue(subscription.isDisposed);
-  }),
   test("onNotify", () => {
     const scheduler = createVirtualTimeScheduler();
 
     let result: number[] = [];
     const notifyStream = pipe(
-      identity<number>(),
-      lift(
-        onNotify(x => {
+      createLiftedStreamable(
+        onNotify((x: number) => {
           result.push(x);
         }),
       ),
@@ -285,9 +219,8 @@ export const tests = describe(
 
     let result: number[] = [];
     const scanStream = pipe(
-      identity<number>(),
-      lift(scan(sum, returns<number>(0))),
-      lift(
+      createLiftedStreamable(
+        scan(sum, returns<number>(0)),
         onNotify(x => {
           result.push(x);
         }),
@@ -306,23 +239,19 @@ export const tests = describe(
   test("sink", () => {
     const scheduler = createVirtualTimeScheduler();
 
-    const src = pipe(
-      identity<void>(),
-      lift(scan((acc, _) => acc + 1, returns<number>(0))),
-      lift(takeFirst({ count: 3 })),
+    const src = createLiftedStreamable(
+      scan((acc, _) => acc + 1, returns<number>(0)),
+      takeFirst({ count: 3 }),
     );
 
     let result = 0;
-    const dest = pipe(
-      identity<number>(),
-      lift(scan((acc, _) => acc + 1, returns<number>(0))),
-      lift(
-        onNotify(v => {
-          result = v;
-        }),
-      ),
-      lift(mapTo(mapT, none)),
-      lift(startWith({ ...concatT, ...fromArrayT }, none)),
+    const dest = createLiftedStreamable(
+      scan((acc, _) => acc + 1, returns<number>(0)),
+      onNotify(v => {
+        result = v;
+      }),
+      mapTo(mapT, none),
+      startWith({ ...concatT, ...fromArrayT }, none),
     );
 
     const subscription = pipe(src, sinkInto(dest), subscribe(scheduler));

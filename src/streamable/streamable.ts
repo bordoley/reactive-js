@@ -1,4 +1,4 @@
-import { add, addTo, bindTo } from "../disposable";
+import { add, addTo } from "../disposable";
 import { Function1, compose, pipe } from "../functions";
 import {
   AbstractDisposableObservable,
@@ -11,17 +11,12 @@ import {
   __memo,
   __observe,
   __using,
-  createObservable,
   createSubject,
-  dispatchTo,
-  map,
-  onNotify,
   publish,
-  subscribe,
 } from "../observable";
 import { SchedulerLike } from "../scheduler";
-import { sinkInto, sourceFrom } from "../source";
-import { StreamableLike, StreamableOperator } from "../streamable";
+import { sinkInto } from "../source";
+import { StreamableLike } from "../streamable";
 
 class StreamImpl<TReq, T>
   extends AbstractDisposableObservable<T>
@@ -85,94 +80,116 @@ export const createStreamble = <
   ) => TStream,
 ): StreamableLike<TReq, TData, TStream> => new CreateStreamable(stream);
 
-export const createFromObservableOperator = <TReq, TData>(
-  op: ObservableOperator<TReq, TData>,
-): StreamableLike<TReq, TData, StreamLike<TReq, TData>> =>
-  createStreamble((scheduler, options) => createStream(op, scheduler, options));
-
-class LiftedStreamable<TReqA, TReqB, TA, TB>
-  implements StreamableLike<TReqB, TB, StreamLike<TReqB, TB>>
-{
-  readonly op: ObservableOperator<TReqB, TB>;
-  readonly src: StreamableLike<TReqA, TA, StreamLike<TReqA, TA>>;
-
-  constructor(
-    src: StreamableLike<TReqA, TA, StreamLike<TReqA, TA>>,
-    readonly obsOps: readonly ObservableOperator<any, any>[],
-    readonly reqOps: readonly Function1<any, any>[],
-  ) {
-    this.src = src instanceof LiftedStreamable ? src.src : src;
-
-    this.op = requests =>
-      createObservable(observer => {
-        const { scheduler } = observer;
-        const srcStream = pipe(this.src, stream(scheduler));
-
-        pipe(
-          observer,
-          sourceFrom(
-            pipe(srcStream, (compose as any)(...obsOps)) as StreamLike<
-              TReqB,
-              TB
-            >,
-          ),
-          add(srcStream),
-          add(
-            pipe(
-              requests,
-              map((compose as any)(...reqOps)),
-              onNotify(dispatchTo(srcStream)),
-              subscribe(scheduler),
-              bindTo(srcStream),
-            ),
-          ),
-        );
-      });
-  }
-
-  stream(
-    scheduler: SchedulerLike,
-    options?: { readonly replay?: number },
-  ): StreamLike<TReqB, TB> {
-    return createStream(this.op, scheduler, options);
-  }
+export function createLiftedStreamable<T, A>(
+  op1: ObservableOperator<T, A>,
+): StreamableLike<T, A, StreamLike<T, A>>;
+export function createLiftedStreamable<T, A, B>(
+  op1: ObservableOperator<T, A>,
+  op2: ObservableOperator<A, B>,
+): StreamableLike<T, B, StreamLike<T, B>>;
+export function createLiftedStreamable<T, A, B, C>(
+  op1: ObservableOperator<T, A>,
+  op2: ObservableOperator<A, B>,
+  op3: ObservableOperator<B, C>,
+): StreamableLike<T, C, StreamLike<T, C>>;
+export function createLiftedStreamable<T, A, B, C, D>(
+  op1: ObservableOperator<T, A>,
+  op2: ObservableOperator<A, B>,
+  op3: ObservableOperator<B, C>,
+  op4: ObservableOperator<C, D>,
+): StreamableLike<T, D, StreamLike<T, D>>;
+export function createLiftedStreamable<T, A, B, C, D, E>(
+  op1: ObservableOperator<T, A>,
+  op2: ObservableOperator<A, B>,
+  op3: ObservableOperator<B, C>,
+  op4: ObservableOperator<C, D>,
+  op5: ObservableOperator<D, E>,
+): StreamableLike<T, E, StreamLike<T, E>>;
+export function createLiftedStreamable<T, A, B, C, D, E, F>(
+  op1: ObservableOperator<T, A>,
+  op2: ObservableOperator<A, B>,
+  op3: ObservableOperator<B, C>,
+  op4: ObservableOperator<C, D>,
+  op5: ObservableOperator<D, E>,
+  op6: ObservableOperator<E, F>,
+): StreamableLike<T, F, StreamLike<T, F>>;
+export function createLiftedStreamable<T, A, B, C, D, E, F, G>(
+  op1: ObservableOperator<T, A>,
+  op2: ObservableOperator<A, B>,
+  op3: ObservableOperator<B, C>,
+  op4: ObservableOperator<C, D>,
+  op5: ObservableOperator<D, E>,
+  op6: ObservableOperator<E, F>,
+  op7: ObservableOperator<F, G>,
+): StreamableLike<T, G, StreamLike<T, G>>;
+export function createLiftedStreamable<T, A, B, C, D, E, F, G, H>(
+  op1: ObservableOperator<T, A>,
+  op2: ObservableOperator<A, B>,
+  op3: ObservableOperator<B, C>,
+  op4: ObservableOperator<C, D>,
+  op5: ObservableOperator<D, E>,
+  op6: ObservableOperator<E, F>,
+  op7: ObservableOperator<F, G>,
+  op8: ObservableOperator<G, H>,
+): StreamableLike<T, H, StreamLike<T, H>>;
+export function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I>(
+  op1: ObservableOperator<T, A>,
+  op2: ObservableOperator<A, B>,
+  op3: ObservableOperator<B, C>,
+  op4: ObservableOperator<C, D>,
+  op5: ObservableOperator<D, E>,
+  op6: ObservableOperator<E, F>,
+  op7: ObservableOperator<F, G>,
+  op8: ObservableOperator<G, H>,
+  op9: ObservableOperator<H, I>,
+): StreamableLike<T, I, StreamLike<T, I>>;
+export function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I, J>(
+  op1: ObservableOperator<T, A>,
+  op2: ObservableOperator<A, B>,
+  op3: ObservableOperator<B, C>,
+  op4: ObservableOperator<C, D>,
+  op5: ObservableOperator<D, E>,
+  op6: ObservableOperator<E, F>,
+  op7: ObservableOperator<F, G>,
+  op8: ObservableOperator<G, H>,
+  op9: ObservableOperator<H, I>,
+  op10: ObservableOperator<I, J>,
+): StreamableLike<T, J, StreamLike<T, J>>;
+export function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I, J, K>(
+  op1: ObservableOperator<T, A>,
+  op2: ObservableOperator<A, B>,
+  op3: ObservableOperator<B, C>,
+  op4: ObservableOperator<C, D>,
+  op5: ObservableOperator<D, E>,
+  op6: ObservableOperator<E, F>,
+  op7: ObservableOperator<F, G>,
+  op8: ObservableOperator<G, H>,
+  op9: ObservableOperator<H, I>,
+  op10: ObservableOperator<I, J>,
+  op11: ObservableOperator<J, K>,
+): StreamableLike<T, K, StreamLike<T, K>>;
+export function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I, J, K, L>(
+  op1: ObservableOperator<T, A>,
+  op2: ObservableOperator<A, B>,
+  op3: ObservableOperator<B, C>,
+  op4: ObservableOperator<C, D>,
+  op5: ObservableOperator<D, E>,
+  op6: ObservableOperator<E, F>,
+  op7: ObservableOperator<F, G>,
+  op8: ObservableOperator<G, H>,
+  op9: ObservableOperator<H, I>,
+  op10: ObservableOperator<I, J>,
+  op11: ObservableOperator<J, K>,
+  op12: ObservableOperator<K, L>,
+): StreamableLike<T, L, StreamLike<T, L>>;
+export function createLiftedStreamable<TReq, TData>(
+  ...ops: readonly ObservableOperator<unknown, unknown>[]
+): StreamableLike<TReq, TData, StreamLike<TReq, TData>> {
+  const op = ops.length > 1 ? (compose as any)(...ops) : ops[0];
+  return createStreamble((scheduler, options) =>
+    createStream(op, scheduler, options),
+  );
 }
-
-const liftImpl = <TReqA, TReqB, TA, TB>(
-  streamable: StreamableLike<TReqA, TA, StreamLike<TReqA, TA>>,
-  obsOps: readonly ObservableOperator<any, any>[],
-  reqOps: readonly Function1<any, any>[],
-) => new LiftedStreamable<TReqA, TReqB, TA, TB>(streamable, obsOps, reqOps);
-
-export const lift =
-  <TReq, TA, TB>(
-    op: ObservableOperator<TA, TB>,
-  ): StreamableOperator<TReq, TA, TReq, TB> =>
-  streamable => {
-    const obsOps =
-      streamable instanceof LiftedStreamable
-        ? [...streamable.obsOps, op]
-        : [op];
-    const reqOps =
-      streamable instanceof LiftedStreamable ? streamable.reqOps : [];
-
-    return liftImpl(streamable, obsOps, reqOps);
-  };
-
-export const mapReq =
-  <TReqA, TReqB, T>(
-    op: Function1<TReqB, TReqA>,
-  ): StreamableOperator<TReqA, T, TReqB, T> =>
-  streamable => {
-    const obsOps =
-      streamable instanceof LiftedStreamable ? streamable.obsOps : [];
-    const reqOps =
-      streamable instanceof LiftedStreamable
-        ? [op, ...streamable.reqOps]
-        : [op];
-
-    return liftImpl(streamable, obsOps, reqOps);
-  };
 
 export const stream =
   <TReq, T, TStream extends StreamLike<TReq, T>>(

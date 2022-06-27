@@ -29,7 +29,7 @@ import { sinkInto } from "../source";
 import {
   FlowMode,
   StreamableOperator,
-  createFromObservableOperator,
+  createLiftedStreamable,
   sinkInto as sinkIntoTransformSink,
   stream,
 } from "../streamable";
@@ -42,7 +42,7 @@ export const transform =
     factory: Factory<DisposableValueLike<Transform>>,
   ): StreamableOperator<FlowMode, Uint8Array, FlowMode, Uint8Array> =>
   src =>
-    createFromObservableOperator(modeObs =>
+    createLiftedStreamable(modeObs =>
       createObservable(observer => {
         const transform = factory();
 

@@ -1,13 +1,22 @@
+import { EnumerableLike } from "./enumerable.mjs";
 import { Function1, Reducer, Factory, Updater, Function2, Equality } from "./functions.mjs";
 import { StreamLike, ObservableOperator, MulticastObservableLike, ObservableLike } from "./observable.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
-import { EnumerableLike } from "./enumerable.mjs";
 declare const createStreamble: <TReq, TData, TStream extends StreamLike<TReq, TData>>(stream: (scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => TStream) => StreamableLike<TReq, TData, TStream>;
-declare const createFromObservableOperator: <TReq, TData>(op: ObservableOperator<TReq, TData>) => StreamableLike<TReq, TData, StreamLike<TReq, TData>>;
-declare const lift: <TReq, TA, TB>(op: ObservableOperator<TA, TB>) => StreamableOperator<TReq, TA, TReq, TB>;
-declare const mapReq: <TReqA, TReqB, T>(op: Function1<TReqB, TReqA>) => StreamableOperator<TReqA, T, TReqB, T>;
+declare function createLiftedStreamable<T, A>(op1: ObservableOperator<T, A>): StreamableLike<T, A, StreamLike<T, A>>;
+declare function createLiftedStreamable<T, A, B>(op1: ObservableOperator<T, A>, op2: ObservableOperator<A, B>): StreamableLike<T, B, StreamLike<T, B>>;
+declare function createLiftedStreamable<T, A, B, C>(op1: ObservableOperator<T, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>): StreamableLike<T, C, StreamLike<T, C>>;
+declare function createLiftedStreamable<T, A, B, C, D>(op1: ObservableOperator<T, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>): StreamableLike<T, D, StreamLike<T, D>>;
+declare function createLiftedStreamable<T, A, B, C, D, E>(op1: ObservableOperator<T, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>): StreamableLike<T, E, StreamLike<T, E>>;
+declare function createLiftedStreamable<T, A, B, C, D, E, F>(op1: ObservableOperator<T, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>, op6: ObservableOperator<E, F>): StreamableLike<T, F, StreamLike<T, F>>;
+declare function createLiftedStreamable<T, A, B, C, D, E, F, G>(op1: ObservableOperator<T, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>, op6: ObservableOperator<E, F>, op7: ObservableOperator<F, G>): StreamableLike<T, G, StreamLike<T, G>>;
+declare function createLiftedStreamable<T, A, B, C, D, E, F, G, H>(op1: ObservableOperator<T, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>, op6: ObservableOperator<E, F>, op7: ObservableOperator<F, G>, op8: ObservableOperator<G, H>): StreamableLike<T, H, StreamLike<T, H>>;
+declare function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I>(op1: ObservableOperator<T, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>, op6: ObservableOperator<E, F>, op7: ObservableOperator<F, G>, op8: ObservableOperator<G, H>, op9: ObservableOperator<H, I>): StreamableLike<T, I, StreamLike<T, I>>;
+declare function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I, J>(op1: ObservableOperator<T, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>, op6: ObservableOperator<E, F>, op7: ObservableOperator<F, G>, op8: ObservableOperator<G, H>, op9: ObservableOperator<H, I>, op10: ObservableOperator<I, J>): StreamableLike<T, J, StreamLike<T, J>>;
+declare function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I, J, K>(op1: ObservableOperator<T, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>, op6: ObservableOperator<E, F>, op7: ObservableOperator<F, G>, op8: ObservableOperator<G, H>, op9: ObservableOperator<H, I>, op10: ObservableOperator<I, J>, op11: ObservableOperator<J, K>): StreamableLike<T, K, StreamLike<T, K>>;
+declare function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I, J, K, L>(op1: ObservableOperator<T, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>, op6: ObservableOperator<E, F>, op7: ObservableOperator<F, G>, op8: ObservableOperator<G, H>, op9: ObservableOperator<H, I>, op10: ObservableOperator<I, J>, op11: ObservableOperator<J, K>, op12: ObservableOperator<K, L>): StreamableLike<T, L, StreamLike<T, L>>;
 declare const stream: <TReq, T, TStream extends StreamLike<TReq, T>>(scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => Function1<StreamableLike<TReq, T, TStream>, TStream>;
@@ -19,22 +28,6 @@ declare const __stream: <TReq, T, TStream extends StreamLike<TReq, T>>(streamabl
 declare const createFlowableSinkAccumulator: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: {
     readonly replay?: number;
 }) => FlowableSinkLike<T> & MulticastObservableLike<TAcc>;
-/**
- * Returns an `AsyncEnumerableLike` from the provided array.
- *
- * @param values The array.
- */
-declare const fromArray: <T>(options?: {
-    readonly delay?: number;
-    readonly startIndex?: number;
-    readonly endIndex?: number;
-}) => Function1<readonly T[], AsyncEnumerableLike<T>>;
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
-declare const fromEnumerable: <T>() => Function1<EnumerableLike<T>, AsyncEnumerableLike<T>>;
 /**
  * Generates an `AsyncEnumerableLike` sequence from a generator function
  * that is applied to an accumulator value.
@@ -108,12 +101,26 @@ declare const createStateStore: <T>(initialState: Factory<T>, options?: {
  * Returns an empty `StreamableLike` that always returns
  * a disposed `StreamLike` instance.
  */
-declare const empty: <TReq, T>(options?: {
-    readonly delay?: number;
-}) => StreamableLike<TReq, T, StreamLike<TReq, T>>;
+declare const empty: <TReq, T>() => StreamableLike<TReq, T, StreamLike<TReq, T>>;
 declare const flow: <T>({ scheduler, }?: {
     scheduler?: SchedulerLike | undefined;
 }) => Function1<ObservableLike<T>, FlowableLike<T>>;
+/**
+ * Returns an `AsyncEnumerableLike` from the provided array.
+ *
+ * @param values The array.
+ */
+declare const fromArray: <T>(options?: {
+    readonly delay?: number;
+    readonly startIndex?: number;
+    readonly endIndex?: number;
+}) => Function1<readonly T[], AsyncEnumerableLike<T>>;
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+declare const fromEnumerable: <T>() => Function1<EnumerableLike<T>, AsyncEnumerableLike<T>>;
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
  *
@@ -122,4 +129,4 @@ declare const flow: <T>({ scheduler, }?: {
 declare const fromIterable: <T>() => Function1<Iterable<T>, AsyncEnumerableLike<T>>;
 declare const identity: <T>() => StreamableLike<T, T, StreamLike<T, T>>;
 declare const sinkInto: <TReq, T>(dest: StreamableLike<T, TReq, StreamLike<T, TReq>>) => (src: StreamableLike<TReq, T, StreamLike<TReq, T>>) => ObservableLike<void>;
-export { AsyncEnumerableLike, AsyncEnumeratorLike, ConsumeContinue, ConsumeDone, FlowMode, FlowableLike, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, StateStreamLike, StreamableLike, StreamableOperator, StreamableStateLike, __stream, consume, consumeAsync, consumeContinue, consumeDone, createActionReducer, createFlowableSinkAccumulator, createFromObservableOperator, createStateStore, createStreamble, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapReq, sinkInto, stream };
+export { AsyncEnumerableLike, AsyncEnumeratorLike, ConsumeContinue, ConsumeDone, FlowMode, FlowableLike, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, StateStreamLike, StreamableLike, StreamableOperator, StreamableStateLike, __stream, consume, consumeAsync, consumeContinue, consumeDone, createActionReducer, createFlowableSinkAccumulator, createLiftedStreamable, createStateStore, createStreamble, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, sinkInto, stream };
