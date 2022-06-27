@@ -156,6 +156,7 @@ export {
 export {
   combineLatest,
   combineLatestWith,
+  fork,
   zipLatest,
   zipLatestWith,
 } from "./observable/latest";

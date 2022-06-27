@@ -13,7 +13,7 @@ type LatestCtx = {
   readyCount: number;
 };
 
-const enum LatestMode {
+export const enum LatestMode {
   Combine = 1,
   Zip = 2,
 }
@@ -253,3 +253,73 @@ export const zipLatestWith =
   <TA, TB>(snd: ObservableLike<TB>): ObservableOperator<TA, [TA, TB]> =>
   fst =>
     zipLatest(fst, snd);
+
+export function fork<T, TA, TB>(
+  a: ObservableOperator<T, TA>,
+  b: ObservableOperator<T, TB>,
+): ObservableOperator<T, [TA, TB]>;
+export function fork<T, TA, TB, TC>(
+  a: ObservableOperator<T, TA>,
+  b: ObservableOperator<T, TB>,
+  c: ObservableOperator<T, TC>,
+): ObservableOperator<T, [TA, TB, TC]>;
+export function fork<T, TA, TB, TC, TD>(
+  a: ObservableOperator<T, TA>,
+  b: ObservableOperator<T, TB>,
+  c: ObservableOperator<T, TC>,
+  d: ObservableOperator<T, TD>,
+): ObservableOperator<T, [TA, TB, TC, TD]>;
+export function fork<T, TA, TB, TC, TD, TE>(
+  a: ObservableOperator<T, TA>,
+  b: ObservableOperator<T, TB>,
+  c: ObservableOperator<T, TC>,
+  d: ObservableOperator<T, TD>,
+  e: ObservableOperator<T, TE>,
+): ObservableOperator<T, [TA, TB, TC, TD, TE]>;
+export function fork<T, TA, TB, TC, TD, TE, TF>(
+  a: ObservableOperator<T, TA>,
+  b: ObservableOperator<T, TB>,
+  c: ObservableOperator<T, TC>,
+  d: ObservableOperator<T, TD>,
+  e: ObservableOperator<T, TE>,
+  f: ObservableOperator<T, TF>,
+): ObservableOperator<T, [TA, TB, TC, TD, TE, TF]>;
+export function fork<T, TA, TB, TC, TD, TE, TF, TG>(
+  a: ObservableOperator<T, TA>,
+  b: ObservableOperator<T, TB>,
+  c: ObservableOperator<T, TC>,
+  d: ObservableOperator<T, TD>,
+  e: ObservableOperator<T, TE>,
+  f: ObservableOperator<T, TF>,
+  g: ObservableOperator<T, TG>,
+): ObservableOperator<T, [TA, TB, TC, TD, TE, TF, TG]>;
+export function fork<T, TA, TB, TC, TD, TE, TF, TG, TH>(
+  a: ObservableOperator<T, TA>,
+  b: ObservableOperator<T, TB>,
+  c: ObservableOperator<T, TC>,
+  d: ObservableOperator<T, TD>,
+  e: ObservableOperator<T, TE>,
+  f: ObservableOperator<T, TF>,
+  g: ObservableOperator<T, TG>,
+  h: ObservableOperator<T, TH>,
+): ObservableOperator<T, [TA, TB, TC, TD, TE, TF, TG, TH]>;
+export function fork<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+  a: ObservableOperator<T, TA>,
+  b: ObservableOperator<T, TB>,
+  c: ObservableOperator<T, TC>,
+  d: ObservableOperator<T, TD>,
+  e: ObservableOperator<T, TE>,
+  f: ObservableOperator<T, TF>,
+  g: ObservableOperator<T, TG>,
+  h: ObservableOperator<T, TH>,
+  i: ObservableOperator<T, TI>,
+): ObservableOperator<T, [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+export function fork<T>(
+  ...ops: readonly ObservableOperator<T, unknown>[]
+): ObservableOperator<T, readonly unknown[]> {
+  return (obs: ObservableLike<T>) =>
+    latest(
+      ops.map(op => pipe(obs, op)),
+      LatestMode.Combine,
+    );
+}
