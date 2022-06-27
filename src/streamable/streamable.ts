@@ -1,4 +1,3 @@
-import { empty as emptyContainer } from "../container";
 import { add, addTo, bindTo } from "../disposable";
 import { Function1, compose, pipe } from "../functions";
 import {
@@ -15,7 +14,6 @@ import {
   createObservable,
   createSubject,
   dispatchTo,
-  fromArrayT,
   map,
   onNotify,
   publish,
@@ -175,28 +173,6 @@ export const mapReq =
 
     return liftImpl(streamable, obsOps, reqOps);
   };
-
-const _empty = createFromObservableOperator<any, any>(_ =>
-  emptyContainer(fromArrayT),
-);
-
-/**
- * Returns an empty `StreamableLike` that always returns
- * a disposed `StreamLike` instance.
- */
-export const empty = <TReq, T>(
-  options: {
-    readonly delay?: number;
-  } = {},
-): StreamableLike<TReq, T, StreamLike<TReq, T>> => {
-  const { delay = Math.max(options.delay ?? 0, 0) } = options;
-
-  return delay === 0
-    ? _empty
-    : createFromObservableOperator<TReq, T>(_ =>
-        emptyContainer(fromArrayT, options),
-      );
-};
 
 export const stream =
   <TReq, T, TStream extends StreamLike<TReq, T>>(
