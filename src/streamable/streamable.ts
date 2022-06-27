@@ -21,32 +21,78 @@ import { sourceFrom } from "../source";
 import { StreamableLike, StreamableOperator } from "../streamable";
 import { createStream } from "./createStream";
 
-class StreamableImpl<TReq, TData>
-  implements StreamableLike<TReq, TData, StreamLike<TReq, TData>>
+class CreateStreamable<TReq, TData, TStream extends StreamLike<TReq, TData>>
+  implements StreamableLike<TReq, TData, TStream>
 {
-  constructor(private readonly op: ObservableOperator<TReq, TData>) {}
+  constructor(
+    readonly stream: (
+      scheduler: SchedulerLike,
+      options?: { readonly replay?: number },
+    ) => TStream,
+  ) {}
+}
+
+export const createStreamble = <
+  TReq,
+  TData,
+  TStream extends StreamLike<TReq, TData>,
+>(
+  stream: (
+    scheduler: SchedulerLike,
+    options?: { readonly replay?: number },
+  ) => TStream,
+): StreamableLike<TReq, TData, TStream> => new CreateStreamable(stream);
+
+export const fromObservableOperator = <TReq, TData>(
+  op: ObservableOperator<TReq, TData>,
+): StreamableLike<TReq, TData, StreamLike<TReq, TData>> =>
+  createStreamble((scheduler, options) => createStream(op, scheduler, options));
+
+class LiftedStreamable<TReqA, TReqB, TA, TB>
+  implements StreamableLike<TReqB, TB, StreamLike<TReqB, TB>>
+{
+  readonly op: ObservableOperator<TReqB, TB>;
+  readonly src: StreamableLike<TReqA, TA, StreamLike<TReqA, TA>>;
+
+  constructor(
+    src: StreamableLike<TReqA, TA, StreamLike<TReqA, TA>>,
+    readonly obsOps: readonly ObservableOperator<any, any>[],
+    readonly reqOps: readonly Function1<any, any>[],
+  ) {
+    this.src = src instanceof LiftedStreamable ? src.src : src;
+
+    this.op = requests =>
+      createObservable(observer => {
+        const { scheduler } = observer;
+        const srcStream = pipe(this.src, stream(scheduler));
+
+        pipe(
+          observer,
+          sourceFrom(
+            pipe(srcStream, (compose as any)(...obsOps)) as StreamLike<
+              TReqB,
+              TB
+            >,
+          ),
+          add(srcStream),
+          add(
+            pipe(
+              requests,
+              map((compose as any)(...reqOps)),
+              onNotify(dispatchTo(srcStream)),
+              subscribe(scheduler),
+              bindTo(srcStream),
+            ),
+          ),
+        );
+      });
+  }
 
   stream(
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
-  ): StreamLike<TReq, TData> {
+  ): StreamLike<TReqB, TB> {
     return createStream(this.op, scheduler, options);
-  }
-}
-
-export const createStreamable = <TReq, TData>(
-  op: ObservableOperator<TReq, TData>,
-): StreamableLike<TReq, TData, StreamLike<TReq, TData>> =>
-  new StreamableImpl(op);
-
-class LiftedStreamable<TReqA, TReqB, TA, TB> extends StreamableImpl<TReqB, TB> {
-  constructor(
-    op: ObservableOperator<TReqB, TB>,
-    readonly src: StreamableLike<TReqA, TA, StreamLike<TReqA, TA>>,
-    readonly obsOps: readonly ObservableOperator<any, any>[],
-    readonly reqOps: readonly Function1<any, any>[],
-  ) {
-    super(op);
   }
 }
 
@@ -54,34 +100,7 @@ const liftImpl = <TReqA, TReqB, TA, TB>(
   streamable: StreamableLike<TReqA, TA, StreamLike<TReqA, TA>>,
   obsOps: readonly ObservableOperator<any, any>[],
   reqOps: readonly Function1<any, any>[],
-) => {
-  const src =
-    streamable instanceof LiftedStreamable ? streamable.src : streamable;
-
-  const op: ObservableOperator<TReqB, TB> = requests =>
-    createObservable(observer => {
-      const { scheduler } = observer;
-      const srcStream = pipe(src, stream(scheduler));
-
-      pipe(
-        observer,
-        sourceFrom(
-          pipe(srcStream, (compose as any)(...obsOps)) as StreamLike<TReqB, TB>,
-        ),
-        add(srcStream),
-        add(
-          pipe(
-            requests,
-            map((compose as any)(...reqOps)),
-            onNotify(dispatchTo(srcStream)),
-            subscribe(scheduler),
-            bindTo(srcStream),
-          ),
-        ),
-      );
-    });
-  return new LiftedStreamable(op, src, obsOps, reqOps);
-};
+) => new LiftedStreamable<TReqA, TReqB, TA, TB>(streamable, obsOps, reqOps);
 
 export const lift =
   <TReq, TA, TB>(
@@ -113,7 +132,9 @@ export const mapReq =
     return liftImpl(streamable, obsOps, reqOps);
   };
 
-const _empty = createStreamable<any, any>(_ => emptyContainer(fromArrayT));
+const _empty = fromObservableOperator<any, any>(_ =>
+  emptyContainer(fromArrayT),
+);
 
 /**
  * Returns an empty `StreamableLike` that always returns
@@ -128,7 +149,7 @@ export const empty = <TReq, T>(
 
   return delay === 0
     ? _empty
-    : createStreamable<TReq, T>(_ => emptyContainer(fromArrayT, options));
+    : fromObservableOperator<TReq, T>(_ => emptyContainer(fromArrayT, options));
 };
 
 export const stream =

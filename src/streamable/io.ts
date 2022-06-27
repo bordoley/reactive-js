@@ -17,7 +17,7 @@ import {
 
 import { SchedulerLike } from "../scheduler";
 import { FlowMode, FlowableSinkLike } from "../streamable";
-import { createStreamable, stream } from "./streamable";
+import { fromObservableOperator, stream } from "./streamable";
 
 class FlowableSinkAccumulatorImpl<T, TAcc>
   extends AbstractDisposableObservable<TAcc>
@@ -61,7 +61,7 @@ export const createFlowableSinkAccumulator = <T, TAcc>(
       ignoreElements(keepT),
       startWith({ ...concatT, ...fromArrayT }, "pause", "resume"),
     ),
-    createStreamable,
+    fromObservableOperator,
     streamable => new FlowableSinkAccumulatorImpl(subject, streamable),
     add(subject),
   );

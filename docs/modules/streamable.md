@@ -33,19 +33,19 @@
 - [createActionReducer](streamable.md#createactionreducer)
 - [createFlowableSinkAccumulator](streamable.md#createflowablesinkaccumulator)
 - [createStateStore](streamable.md#createstatestore)
-- [createStreamable](streamable.md#createstreamable)
+- [createStreamble](streamable.md#createstreamble)
 - [empty](streamable.md#empty)
 - [flow](streamable.md#flow)
 - [fromArray](streamable.md#fromarray)
 - [fromEnumerable](streamable.md#fromenumerable)
 - [fromIterable](streamable.md#fromiterable)
+- [fromObservableOperator](streamable.md#fromobservableoperator)
 - [generate](streamable.md#generate)
 - [identity](streamable.md#identity)
 - [lift](streamable.md#lift)
 - [mapReq](streamable.md#mapreq)
 - [sink](streamable.md#sink)
 - [stream](streamable.md#stream)
-- [toStateStore](streamable.md#tostatestore)
 
 ## Type Aliases
 
@@ -312,26 +312,27 @@ new state based upon the previous state.
 
 ___
 
-### createStreamable
+### createStreamble
 
-▸ **createStreamable**<`TReq`, `TData`\>(`op`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `TData`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `TData`\>\>
+▸ **createStreamble**<`TReq`, `TData`, `TStream`\>(`stream`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `TData`, `TStream`\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TReq` |
-| `TData` |
+| Name | Type |
+| :------ | :------ |
+| `TReq` | `TReq` |
+| `TData` | `TData` |
+| `TStream` | extends [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `TData`, `TStream`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`ObservableOperator`](observable.md#observableoperator)<`TReq`, `TData`\> |
+| `stream` | (`scheduler`: [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md), `options?`: { `replay?`: `number`  }) => `TStream` |
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `TData`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `TData`\>\>
+[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `TData`, `TStream`\>
 
 ___
 
@@ -445,6 +446,29 @@ Returns an `AsyncEnumerableLike` from the provided iterable.
 #### Returns
 
 [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>\>
+
+___
+
+### fromObservableOperator
+
+▸ **fromObservableOperator**<`TReq`, `TData`\>(`op`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `TData`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `TData`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TReq` |
+| `TData` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op` | [`ObservableOperator`](observable.md#observableoperator)<`TReq`, `TData`\> |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `TData`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `TData`\>\>
 
 ___
 
@@ -587,21 +611,3 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, `TStream`\>, `TStream`\>
-
-___
-
-### toStateStore
-
-▸ **toStateStore**<`T`\>(): [`StreamableOperator`](streamable.md#streamableoperator)<`T`, `T`, [`Updater`](functions.md#updater)<`T`\>, `T`\>
-
-Converts an `StreamableLike<T, T>` to an `StateStoreLike<T>`.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`StreamableOperator`](streamable.md#streamableoperator)<`T`, `T`, [`Updater`](functions.md#updater)<`T`\>, `T`\>

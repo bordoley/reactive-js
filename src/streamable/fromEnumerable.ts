@@ -19,12 +19,12 @@ import {
   withLatestFrom,
 } from "../observable";
 import { AsyncEnumerableLike } from "../streamable";
-import { createStreamable } from "./streamable";
+import { fromObservableOperator } from "./streamable";
 
 const _fromEnumerable = <T>(
   enumerable: EnumerableLike<T>,
 ): AsyncEnumerableLike<T> =>
-  createStreamable(
+  fromObservableOperator(
     compose(
       withLatestFrom<void, Enumerator<T>, Enumerator<T>>(
         using(
