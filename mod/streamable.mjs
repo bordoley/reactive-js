@@ -2,7 +2,7 @@
 import { ignoreElements, startWith, fromValue, concatWith, concatMap } from './container.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
 import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
-import { pipe, compose, flip, returns, updaterReducer, increment } from './functions.mjs';
+import { pipe, compose, flip, returns, updaterReducer, increment, identity as identity$1 } from './functions.mjs';
 import { AbstractDisposableObservable, createSubject, publish, __currentScheduler, __using, reduce, onNotify, dispatchTo, keepT, concatT, fromArrayT, scanAsync, scan, map, onSubscribe, observable, __memo, __observe, zipWithLatestFrom, takeFirst, switchAll, createObservable, mergeT, distinctUntilChanged, subscribe, subscribeOn, fromDisposable, takeUntil, mapT, concatAllT, withLatestFrom, using, never, takeWhile, merge } from './observable.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
 import { sinkInto as sinkInto$1, notifySink, sourceFrom } from './source.mjs';
@@ -195,8 +195,8 @@ const _fromIterable = (iterable) => pipe(iterable, fromIterable$1(), fromEnumera
  */
 const fromIterable = () => _fromIterable;
 const _identity = {
-    stream(_, options) {
-        return createSubject(options);
+    stream(scheduler, options) {
+        return createStream(identity$1, scheduler, options);
     },
 };
 /*
