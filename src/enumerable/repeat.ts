@@ -1,5 +1,5 @@
 import { Repeat } from "../container";
-import { addToAndDisposeParentOnChildError } from "../disposable";
+import { addTo } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { Predicate, alwaysTrue, pipe, raise } from "../functions";
 import { Option, isNone } from "../option";
@@ -27,10 +27,7 @@ class RepeatEnumerator<T> extends Enumerator<T> {
 
   move(): boolean {
     if (isNone(this.enumerator)) {
-      this.enumerator = pipe(
-        enumerate(this.src),
-        addToAndDisposeParentOnChildError(this),
-      );
+      this.enumerator = pipe(enumerate(this.src), addTo(this));
     }
 
     while (!this.enumerator.move()) {
@@ -38,10 +35,7 @@ class RepeatEnumerator<T> extends Enumerator<T> {
 
       try {
         if (this.shouldRepeat(this.count)) {
-          this.enumerator = pipe(
-            enumerate(this.src),
-            addToAndDisposeParentOnChildError(this),
-          );
+          this.enumerator = pipe(enumerate(this.src), addTo(this));
         } else {
           break;
         }

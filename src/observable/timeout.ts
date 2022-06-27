@@ -1,7 +1,7 @@
 import { throws } from "../container";
 import {
   SerialDisposableLike,
-  addAndDisposeParentOnChildError,
+  add,
   bindTo,
   createSerialDisposable,
   dispose,
@@ -80,7 +80,7 @@ export function timeout<T>(
     const observer = pipe(
       new TimeoutObserver(delegate, durationObs, durationSubscription),
       bindTo(delegate),
-      addAndDisposeParentOnChildError(durationSubscription),
+      add(durationSubscription),
     );
 
     setupDurationSubscription(observer);

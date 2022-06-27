@@ -27,9 +27,7 @@
 ### Functions
 
 - [add](disposable.md#add)
-- [addAndDisposeParentOnChildError](disposable.md#addanddisposeparentonchilderror)
 - [addTo](disposable.md#addto)
-- [addToAndDisposeParentOnChildError](disposable.md#addtoanddisposeparentonchilderror)
 - [bindTo](disposable.md#bindto)
 - [createDisposable](disposable.md#createdisposable)
 - [createDisposableValue](disposable.md#createdisposablevalue)
@@ -59,7 +57,7 @@ A disposed `DisposableLike` instance.
 
 ### add
 
-▸ **add**<`T`\>(`child`): [`Function1`](functions.md#function1)<`T`, `T`\>
+▸ **add**<`T`\>(`child`, `ignoreChildErrors`): [`Function1`](functions.md#function1)<`T`, `T`\>
 
 #### Type parameters
 
@@ -72,16 +70,13 @@ A disposed `DisposableLike` instance.
 | Name | Type |
 | :------ | :------ |
 | `child` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `ignoreChildErrors` | ``true`` |
 
 #### Returns
 
 [`Function1`](functions.md#function1)<`T`, `T`\>
 
-___
-
-### addAndDisposeParentOnChildError
-
-▸ **addAndDisposeParentOnChildError**<`T`\>(`child`): [`Function1`](functions.md#function1)<`T`, `T`\>
+▸ **add**<`T`\>(`child`): [`Function1`](functions.md#function1)<`T`, `T`\>
 
 #### Type parameters
 
@@ -103,7 +98,7 @@ ___
 
 ### addTo
 
-▸ **addTo**<`T`\>(`parent`): [`Function1`](functions.md#function1)<`T`, `T`\>
+▸ **addTo**<`T`\>(`child`, `ignoreChildErrors`): [`Function1`](functions.md#function1)<`T`, `T`\>
 
 #### Type parameters
 
@@ -115,17 +110,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `parent` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `child` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `ignoreChildErrors` | ``true`` |
 
 #### Returns
 
 [`Function1`](functions.md#function1)<`T`, `T`\>
 
-___
-
-### addToAndDisposeParentOnChildError
-
-▸ **addToAndDisposeParentOnChildError**<`T`\>(`parent`): [`Function1`](functions.md#function1)<`T`, `T`\>
+▸ **addTo**<`T`\>(`child`): [`Function1`](functions.md#function1)<`T`, `T`\>
 
 #### Type parameters
 
@@ -137,7 +129,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `parent` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `child` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 
 #### Returns
 

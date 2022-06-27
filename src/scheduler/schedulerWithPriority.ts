@@ -39,7 +39,7 @@ class SchedulerWithPriorityImpl
   ) {
     const { delay = Math.max(options.delay ?? 0, 0) } = options;
 
-    pipe(this, add(continuation));
+    pipe(this, add(continuation, true));
 
     if (!continuation.isDisposed) {
       this.priorityScheduler.schedule(continuation, {
@@ -61,5 +61,5 @@ export const toSchedulerWithPriority =
   priorityScheduler =>
     pipe(
       new SchedulerWithPriorityImpl(priorityScheduler, priority),
-      addTo(priorityScheduler),
+      addTo(priorityScheduler, true),
     );

@@ -1,4 +1,4 @@
-import { addAndDisposeParentOnChildError } from "../disposable";
+import { add } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { Factory, Function1, pipe } from "../functions";
 import { RunnableLike, Sink, ToRunnable, createRunnable } from "../runnable";
@@ -8,7 +8,7 @@ const enumeratorToRunnable = <T>(
   f: Factory<Enumerator<T>>,
 ): RunnableLike<T> => {
   const run = (sink: Sink<T>) => {
-    const enumerator = pipe(f(), addAndDisposeParentOnChildError(sink));
+    const enumerator = pipe(f(), add(sink));
     while (enumerator.move()) {
       sink.notify(enumerator.current);
     }

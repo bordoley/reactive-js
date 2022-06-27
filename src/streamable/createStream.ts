@@ -1,7 +1,4 @@
-import {
-  addAndDisposeParentOnChildError,
-  addToAndDisposeParentOnChildError,
-} from "../disposable";
+import { add, addTo } from "../disposable";
 import { pipe } from "../functions";
 import {
   AbstractDisposableObservable,
@@ -50,10 +47,10 @@ export const createStream = <TReq, T>(
 
   const stream = pipe(
     new StreamImpl(subject, observable),
-    addAndDisposeParentOnChildError(subject),
+    add(subject),
 
     // FIXME: This seems wrong.
-    addToAndDisposeParentOnChildError(observable),
+    addTo(observable),
   );
 
   return stream;

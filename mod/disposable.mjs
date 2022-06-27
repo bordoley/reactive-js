@@ -9,38 +9,26 @@ const dispose = (e) => disposable => {
     disposable.dispose(e);
     return disposable;
 };
-const addDisposableOrTeardown = (parent, child) => {
-    parent.add(child);
-};
+function addDisposableOrTeardown(parent, child, ignoreChildErrors = false) {
+    parent.add(child, ignoreChildErrors);
+}
 const bindTo = (child) => (parent) => {
-    addDisposableOrTeardown(parent, child);
-    addDisposableOrTeardown(child, parent);
+    addDisposableOrTeardown(parent, child, true);
+    addDisposableOrTeardown(child, parent, true);
     return parent;
 };
-const add = (child) => parent => {
-    addDisposableOrTeardown(parent, child);
-    return parent;
-};
-const addTo = (parent) => child => {
-    addDisposableOrTeardown(parent, child);
-    return child;
-};
-const addAndDisposeOnChildErrorImpl = (parent, child) => {
-    addDisposableOrTeardown(parent, child);
-    addDisposableOrTeardown(child, (error) => {
-        if (isSome(error)) {
-            pipe(parent, dispose(error));
-        }
-    });
-};
-const addAndDisposeParentOnChildError = (child) => (parent) => {
-    addAndDisposeOnChildErrorImpl(parent, child);
-    return parent;
-};
-const addToAndDisposeParentOnChildError = (parent) => (child) => {
-    addAndDisposeOnChildErrorImpl(parent, child);
-    return child;
-};
+function add(child, ignoreChildErrors = false) {
+    return (parent) => {
+        addDisposableOrTeardown(parent, child, ignoreChildErrors);
+        return parent;
+    };
+}
+function addTo(parent, ignoreChildErrors = false) {
+    return (child) => {
+        addDisposableOrTeardown(parent, child, ignoreChildErrors);
+        return child;
+    };
+}
 const onDisposed = (teardown) => disposable => {
     addDisposableOrTeardown(disposable, teardown);
     return disposable;
@@ -65,7 +53,8 @@ const onComplete = (teardown) => disposable => {
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
  */
 const toErrorHandler = (disposable) => cause => pipe(disposable, dispose({ cause }));
-const doDispose = (self, disposable, error) => {
+const doDispose = (self, disposable) => {
+    const { error } = self;
     if (disposable instanceof Function) {
         try {
             disposable.call(self, error);
@@ -97,17 +86,20 @@ class AbstractDisposable {
         return this._error;
     }
     /** @ignore */
-    add(disposable) {
+    add(disposable, ignoreChildErrors) {
         const { disposables } = this;
         if (this.isDisposed) {
-            doDispose(this, disposable, this.error);
+            doDispose(this, disposable);
         }
         else if (!disposables.has(disposable)) {
             disposables.add(disposable);
             if (!(disposable instanceof Function)) {
-                addDisposableOrTeardown(disposable, () => {
+                addDisposableOrTeardown(disposable, e => {
                     disposables.delete(disposable);
-                });
+                    if (isSome(e) && !ignoreChildErrors) {
+                        pipe(this, dispose(e));
+                    }
+                }, true);
             }
         }
     }
@@ -119,7 +111,7 @@ class AbstractDisposable {
             const disposables = this.disposables;
             for (const disposable of disposables) {
                 disposables.delete(disposable);
-                doDispose(this, disposable, error);
+                doDispose(this, disposable);
             }
         }
     }
@@ -169,7 +161,7 @@ class AbstractSerialDisposable extends AbstractDisposable {
         const oldInner = this._inner;
         this._inner = newInner;
         if (oldInner !== newInner) {
-            addAndDisposeOnChildErrorImpl(this, newInner);
+            addDisposableOrTeardown(this, newInner);
             pipe(oldInner, dispose());
         }
     }
@@ -197,4 +189,4 @@ const toAbortSignal = (disposable) => {
     return abortController.signal;
 };
 
-export { AbstractDisposable, AbstractSerialDisposable, add, addAndDisposeParentOnChildError, addTo, addToAndDisposeParentOnChildError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
+export { AbstractDisposable, AbstractSerialDisposable, add, addTo, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

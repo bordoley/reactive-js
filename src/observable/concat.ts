@@ -1,9 +1,5 @@
 import { Concat } from "../container";
-import {
-  addToAndDisposeParentOnChildError,
-  dispose,
-  onComplete,
-} from "../disposable";
+import { addTo, dispose, onComplete } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { everySatisfy } from "../readonlyArray";
@@ -18,7 +14,7 @@ const createConcatObserver = <T>(
 ) =>
   pipe(
     createDelegatingObserver(delegate),
-    addToAndDisposeParentOnChildError(delegate),
+    addTo(delegate),
     onComplete(() => {
       if (next < observables.length) {
         pipe(

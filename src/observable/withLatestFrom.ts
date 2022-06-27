@@ -1,9 +1,4 @@
-import {
-  addToAndDisposeParentOnChildError,
-  bindTo,
-  dispose,
-  onComplete,
-} from "../disposable";
+import { addTo, bindTo, dispose, onComplete } from "../disposable";
 import { Function2, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Option } from "../option";
@@ -58,7 +53,7 @@ export const withLatestFrom = <TA, TB, T>(
         observer.otherLatest = next;
       }),
       subscribe(observer.scheduler),
-      addToAndDisposeParentOnChildError(observer),
+      addTo(observer),
       onComplete(() => {
         if (!observer.hasLatest) {
           pipe(observer, dispose());

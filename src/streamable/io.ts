@@ -1,8 +1,5 @@
 import { ignoreElements, startWith } from "../container";
-import {
-  addAndDisposeParentOnChildError,
-  addToAndDisposeParentOnChildError,
-} from "../disposable";
+import { add, addTo } from "../disposable";
 import { Factory, Reducer, compose, pipe } from "../functions";
 import {
   AbstractDisposableObservable,
@@ -45,11 +42,7 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
     scheduler: SchedulerLike,
     options?: { readonly replay: number },
   ): StreamLike<T, FlowMode> {
-    return pipe(
-      this.streamable,
-      stream(scheduler, options),
-      addToAndDisposeParentOnChildError(this),
-    );
+    return pipe(this.streamable, stream(scheduler, options), addTo(this));
   }
 }
 
@@ -70,7 +63,7 @@ export const createFlowableSinkAccumulator = <T, TAcc>(
     ),
     createStreamable,
     streamable => new FlowableSinkAccumulatorImpl(subject, streamable),
-    addAndDisposeParentOnChildError(subject),
+    add(subject),
   );
 
   return sinkAcc;

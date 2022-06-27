@@ -2,7 +2,7 @@ import { empty } from "../container";
 import {
   DisposableLike,
   Error,
-  addToAndDisposeParentOnChildError,
+  addTo,
   dispose,
   disposed,
   onComplete,
@@ -193,16 +193,12 @@ class ObservableContext {
 
             this.scheduledComputationSubscription =
               scheduledComputationSubscription.isDisposed
-                ? pipe(
-                    scheduler,
-                    schedule(runComputation),
-                    addToAndDisposeParentOnChildError(observer),
-                  )
+                ? pipe(scheduler, schedule(runComputation), addTo(observer))
                 : scheduledComputationSubscription;
           }
         }),
         subscribe(observer.scheduler),
-        addToAndDisposeParentOnChildError(observer),
+        addTo(observer),
         onComplete(this.cleanup),
       );
 
@@ -222,10 +218,7 @@ class ObservableContext {
     } else {
       pipe(effect.value, dispose());
 
-      const value = pipe(
-        f(...args),
-        addToAndDisposeParentOnChildError(this.observer),
-      );
+      const value = pipe(f(...args), addTo(this.observer));
 
       effect.f = f;
       effect.args = args;
