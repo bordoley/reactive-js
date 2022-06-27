@@ -1,4 +1,4 @@
-import { add, bindTo } from "../disposable";
+import { addTo, bindTo } from "../disposable";
 import { Updater, pipe, raise } from "../functions";
 import {
   AbstractDisposableObservable,
@@ -7,6 +7,7 @@ import {
   map,
   onNotify,
   subscribe,
+  takeWhile,
   throttle,
 } from "../observable";
 import { Option, isSome, none } from "../option";
@@ -146,7 +147,7 @@ export const windowLocation: WindowLocationStreamableLike = createStreamble(
       bindTo(stateStream),
     );
 
-    const updateBrowserSubscription = pipe(
+    const uriObs = pipe(
       stateStream,
       map(({ uri, replace }) => ({
         uri: windowLocationURIToString(uri),
@@ -161,30 +162,56 @@ export const windowLocation: WindowLocationStreamableLike = createStreamble(
           windowHistoryReplaceState(windowLocationStream, title, uri);
         }
       }),
-      keep(({ title, uri }) => {
-        const titleChanged = document.title !== title;
-        const uriChanged = uri !== window.location.href;
-
-        return titleChanged || uriChanged;
-      }),
-      throttle(100),
-      onNotify(({ replace, title, uri }) => {
-        const titleChanged = document.title !== title;
-        const uriChanged = uri !== window.location.href;
-
-        const shouldReplace = replace || (titleChanged && !uriChanged);
-
-        const updateHistoryState = shouldReplace
-          ? windowHistoryReplaceState
-          : windowHistoryPushState;
-
-        document.title = title;
-        updateHistoryState(windowLocationStream, title, uri);
-      }),
-      subscribe(scheduler),
     );
 
-    const historySubscription = pipe(
+    pipe(
+      uriObs,
+      takeWhile(_ => windowLocationStream.historyCounter === -1),
+      onNotify(({ uri, title }) => {
+        // Initialize the history state on page load
+        const isInitialPageLoad = windowLocationStream.historyCounter === -1;
+        if (isInitialPageLoad) {
+          windowLocationStream.historyCounter++;
+          windowHistoryReplaceState(windowLocationStream, title, uri);
+        }
+      }),
+      subscribe(scheduler),
+      addTo(windowLocationStream),
+    );
+
+    pipe(
+      uriObs,
+      keep(({ replace, title, uri }) => {
+        const titleChanged = document.title !== title;
+        const uriChanged = uri !== window.location.href;
+
+        return replace || (titleChanged && !uriChanged);
+      }),
+      throttle(100),
+      onNotify(({ title, uri }) => {
+        document.title = title;
+        windowHistoryReplaceState(windowLocationStream, title, uri);
+      }),
+      subscribe(scheduler),
+      addTo(windowLocationStream),
+    );
+
+    pipe(
+      uriObs,
+      keep(({ replace, uri }) => {
+        const uriChanged = uri !== window.location.href;
+        return !replace && uriChanged;
+      }),
+      throttle(100),
+      onNotify(({ title, uri }) => {
+        document.title = title;
+        windowHistoryPushState(windowLocationStream, title, uri);
+      }),
+      subscribe(scheduler),
+      addTo(windowLocationStream),
+    );
+
+    pipe(
       fromEvent(window, "popstate", (e: Event) => {
         const { counter, title } = (e as any).state as {
           counter: number;
@@ -203,12 +230,9 @@ export const windowLocation: WindowLocationStreamableLike = createStreamble(
         windowLocationStream.dispatch(uri, { replace: true });
       }),
       subscribe(scheduler),
+      addTo(windowLocationStream),
     );
 
-    return pipe(
-      windowLocationStream,
-      add(historySubscription),
-      add(updateBrowserSubscription),
-    );
+    return windowLocationStream;
   },
 );

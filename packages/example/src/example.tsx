@@ -19,13 +19,10 @@ import {
 import {
   createComponent,
   createReactIdlePriorityScheduler,
+  createReactNormalPriorityScheduler,
   useObservable,
 } from "@reactive-js/core/react";
-import {
-  windowLocation,
-  WindowLocationStreamLike,
-  WindowLocationURI,
-} from "@reactive-js/core/web";
+import { windowLocation, WindowLocationURI } from "@reactive-js/core/web";
 import { SchedulerLike } from "@reactive-js/core/scheduler";
 import { increment, pipe, returns } from "@reactive-js/core/functions";
 import { isNone } from "@reactive-js/core/option";
@@ -34,6 +31,20 @@ const stateStore = createStateStore(() => "pause" as FlowMode);
 
 const createOnClick = (state: StateStreamLike<FlowMode>) => () => {
   state.dispatch(mode => (mode === "pause" ? "resume" : "pause"));
+};
+
+const idlePriorityScheduler = createReactIdlePriorityScheduler();
+const normalPriorityScheduler = createReactNormalPriorityScheduler();
+const historyStream = windowLocation.stream(normalPriorityScheduler);
+
+const onValue = (value: number) => {
+  historyStream.dispatch(
+    (uri: WindowLocationURI) => ({
+      ...uri,
+      query: `v=${value}`,
+    }),
+    { replace: true },
+  );
 };
 
 const appState = (
@@ -65,6 +76,7 @@ const appState = (
     const mode = __observe(state) ?? "pause";
 
     __do(setCounterMode, counter, mode);
+    __do(onValue, value);
 
     return {
       mode,
@@ -74,7 +86,6 @@ const appState = (
   });
 };
 
-const idlePriorityScheduler = createReactIdlePriorityScheduler();
 const appStateOnScheduler = appState(idlePriorityScheduler);
 
 const StreamPauseResume = () => {
@@ -97,27 +108,18 @@ const StreamPauseResume = () => {
 
 const Root = createComponent(() =>
   observable(() => {
-    const historyStream = __stream(windowLocation);
+    const onChange = __memo(() => (ev: React.ChangeEvent<HTMLInputElement>) => {
+      const { value: path } = ev.target;
 
-    const onChange = __memo(
-      (historyStream: WindowLocationStreamLike) =>
-        (ev: React.ChangeEvent<HTMLInputElement>) => {
-          const { value: path } = ev.target;
+      historyStream.dispatch((uri: WindowLocationURI) => ({
+        ...uri,
+        path,
+      }));
+    });
 
-          historyStream.dispatch((uri: WindowLocationURI) => ({
-            ...uri,
-            path,
-          }));
-        },
-      historyStream,
-    );
-
-    const onClick = __memo(
-      (historyStream: WindowLocationStreamLike) => () => {
-        historyStream.goBack();
-      },
-      historyStream,
-    );
+    const onClick = __memo(() => () => {
+      historyStream.goBack();
+    });
 
     const uri = __observe(historyStream);
 
