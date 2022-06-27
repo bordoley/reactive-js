@@ -1,12 +1,12 @@
 /// <reference types="./streamable.d.ts" />
-import { empty as empty$1, concatWith, fromValue, ignoreElements, endWith, startWith, concatMap } from './container.mjs';
-import { pipe, compose, returns, updaterReducer, flip } from './functions.mjs';
-import { AbstractDisposableObservable, createSubject, publish, createObservable, map, onNotify, dispatchTo, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeT, distinctUntilChanged, subscribeOn, fromDisposable, takeUntil, merge, keepT, onSubscribe, concatT, reduce, mapT, concatAllT, takeFirst, withLatestFrom, using, never, takeWhile, scanAsync, observable, __memo, __observe, zipWithLatestFrom, switchAll } from './observable.mjs';
+import { fromValue, concatWith, ignoreElements, startWith, concatMap, empty as empty$1, endWith } from './container.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
-import { sinkInto as sinkInto$1, sourceFrom } from './source.mjs';
-import { toPausableScheduler } from './scheduler.mjs';
-import { none } from './option.mjs';
 import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
+import { pipe, compose, returns, flip, updaterReducer } from './functions.mjs';
+import { AbstractDisposableObservable, createSubject, publish, createObservable, map, onNotify, dispatchTo, subscribe, __currentScheduler, __using, withLatestFrom, using, fromArrayT, concatT, never, takeWhile, reduce, keepT, scan, mapT, concatAllT, takeFirst, scanAsync, onSubscribe, observable, __memo, __observe, zipWithLatestFrom, switchAll, mergeT, distinctUntilChanged, subscribeOn, fromDisposable, takeUntil, merge } from './observable.mjs';
+import { none } from './option.mjs';
+import { toPausableScheduler } from './scheduler.mjs';
+import { sinkInto as sinkInto$1, sourceFrom } from './source.mjs';
 
 class StreamImpl extends AbstractDisposableObservable {
     constructor(dispatcher, observable) {
@@ -68,18 +68,6 @@ const mapReq = (op) => streamable => {
         : [op];
     return liftImpl(streamable, obsOps, reqOps);
 };
-const _empty = createFromObservableOperator(_ => empty$1(fromArrayT));
-/**
- * Returns an empty `StreamableLike` that always returns
- * a disposed `StreamLike` instance.
- */
-const empty = (options = {}) => {
-    var _a;
-    const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
-    return delay === 0
-        ? _empty
-        : createFromObservableOperator(_ => empty$1(fromArrayT, options));
-};
 const stream = (scheduler, options) => streamable => streamable.stream(scheduler, options);
 const streamOnSchedulerFactory = (streamable, scheduler, replay) => pipe(streamable, stream(scheduler, { replay }));
 const __stream = (streamable, { replay = 0, scheduler, } = {}) => {
@@ -87,72 +75,13 @@ const __stream = (streamable, { replay = 0, scheduler, } = {}) => {
     return __using(streamOnSchedulerFactory, streamable, scheduler !== null && scheduler !== void 0 ? scheduler : currentScheduler, replay);
 };
 
+const _fromEnumerable = (enumerable) => createFromObservableOperator(compose(withLatestFrom(using(() => enumerate(enumerable), compose(fromValue(fromArrayT), concatWith(concatT, never()))), (_, enumerator) => enumerator), onNotify(move), takeWhile(hasCurrent), map(current)));
 /**
- * Returns a new `StreamableLike` instance that applies an accumulator function
- * over the notified actions, emitting each intermediate result.
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
  *
- * @param reducer The accumulator function called on each notified action.
- * @param initialState The initial accumulation value.
- * @param equals Optional equality function that is used to compare
- * if a state value is distinct from the previous one.
+ * @param iterable
  */
-const createActionReducer = (reducer, initialState, options) => {
-    const operator = (src) => {
-        const acc = initialState();
-        // Note: We want to product the initial value first,
-        // but need to subscribe to src when the operator is initially
-        // invoked to avoid missing any dispatch requests.
-        // Hence we merge the two observables and take advantage
-        // of the fact that merge notifies in the order of
-        // the observables merged.
-        return pipe(src, scan(reducer, returns(acc)), concatWith(mergeT, fromValue(fromArrayT)(acc)), distinctUntilChanged(options));
-    };
-    return createFromObservableOperator(operator);
-};
-/**
- * Returns a new `StateStoreLike` instance that stores state which can
- * be updated by notifying the instance with a `StateUpdater` that computes a
- * new state based upon the previous state.
- *
- * @param initialState The initial accumulation value.
- * @param equals Optional equality function that is used to compare
- * if a state value is distinct from the previous one.
- */
-const createStateStore = (initialState, options) => createActionReducer(updaterReducer, initialState, options);
-
-const _identity = {
-    stream(_, options) {
-        return createSubject(options);
-    },
-};
-/*
- * Returns an `StreamableLike` that publishes it's notifications.
- */
-const identity = () => _identity;
-
-const flow = ({ scheduler, } = {}) => observable => {
-    const op = (modeObs) => createObservable(observer => {
-        const pausableScheduler = toPausableScheduler(scheduler !== null && scheduler !== void 0 ? scheduler : observer.scheduler);
-        pipe(observer, sourceFrom(pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil))), add(pipe(modeObs, onNotify((mode) => {
-            switch (mode) {
-                case "pause":
-                    pausableScheduler.pause();
-                    break;
-                case "resume":
-                    pausableScheduler.resume();
-                    break;
-            }
-        }), subscribe(observer.scheduler), bindTo(pausableScheduler))), add(pausableScheduler));
-    });
-    return createFromObservableOperator(op);
-};
-
-const sinkInto = (dest) => (src) => createObservable(observer => {
-    const { scheduler } = observer;
-    const srcStream = src.stream(scheduler);
-    const destStream = dest.stream(scheduler);
-    pipe(merge(pipe(srcStream, onNotify(dispatchTo(destStream)), ignoreElements(keepT), onSubscribe(() => destStream)), pipe(destStream, onNotify(dispatchTo(srcStream)), ignoreElements(keepT), onSubscribe(() => srcStream))), ignoreElements(keepT), endWith({ ...fromArrayT, ...concatT }, none), sinkInto$1(observer));
-});
+const fromEnumerable = () => _fromEnumerable;
 
 class FlowableSinkAccumulatorImpl extends AbstractDisposableObservable {
     constructor(subject, streamable) {
@@ -191,27 +120,6 @@ const fromArray = (options = {}) => values => {
     const fromValueWithDelay = fromValue(fromArrayT, options);
     return createFromObservableOperator(compose(scan(fromArrayScanner, returns(startIndex - 1)), concatMap({ ...mapT, ...concatAllT }, (i) => fromValueWithDelay(values[i])), takeFirst({ count: endIndex - startIndex })));
 };
-
-const _fromEnumerable = (enumerable) => createFromObservableOperator(compose(withLatestFrom(using(() => enumerate(enumerable), compose(fromValue(fromArrayT), concatWith(concatT, never()))), (_, enumerator) => enumerator), onNotify(move), takeWhile(hasCurrent), map(current)));
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
-const fromEnumerable = () => _fromEnumerable;
-
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
-const _fromIterable = (iterable) => pipe(iterable, fromIterable$1(), fromEnumerable());
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
-const fromIterable = () => _fromIterable;
 
 const generateScanner = (generator) => (acc, _) => generator(acc);
 const asyncGeneratorScanner = (generator, options) => {
@@ -263,5 +171,90 @@ const consumeImpl = (consumer, initial) => {
 };
 const consume = (consumer, initial) => consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
 const consumeAsync = (consumer, initial) => consumeImpl(accObs => compose(zipWithLatestFrom(accObs, (next, acc) => pipe(consumer(acc, next), takeFirst())), switchAll()), initial);
+
+/**
+ * Returns a new `StreamableLike` instance that applies an accumulator function
+ * over the notified actions, emitting each intermediate result.
+ *
+ * @param reducer The accumulator function called on each notified action.
+ * @param initialState The initial accumulation value.
+ * @param equals Optional equality function that is used to compare
+ * if a state value is distinct from the previous one.
+ */
+const createActionReducer = (reducer, initialState, options) => {
+    const operator = (src) => {
+        const acc = initialState();
+        // Note: We want to product the initial value first,
+        // but need to subscribe to src when the operator is initially
+        // invoked to avoid missing any dispatch requests.
+        // Hence we merge the two observables and take advantage
+        // of the fact that merge notifies in the order of
+        // the observables merged.
+        return pipe(src, scan(reducer, returns(acc)), concatWith(mergeT, fromValue(fromArrayT)(acc)), distinctUntilChanged(options));
+    };
+    return createFromObservableOperator(operator);
+};
+/**
+ * Returns a new `StateStoreLike` instance that stores state which can
+ * be updated by notifying the instance with a `StateUpdater` that computes a
+ * new state based upon the previous state.
+ *
+ * @param initialState The initial accumulation value.
+ * @param equals Optional equality function that is used to compare
+ * if a state value is distinct from the previous one.
+ */
+const createStateStore = (initialState, options) => createActionReducer(updaterReducer, initialState, options);
+const _empty = createFromObservableOperator(_ => empty$1(fromArrayT));
+/**
+ * Returns an empty `StreamableLike` that always returns
+ * a disposed `StreamLike` instance.
+ */
+const empty = (options = {}) => {
+    var _a;
+    const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
+    return delay === 0
+        ? _empty
+        : createFromObservableOperator(_ => empty$1(fromArrayT, options));
+};
+const flow = ({ scheduler, } = {}) => observable => createFromObservableOperator((modeObs) => createObservable(observer => {
+    const pausableScheduler = toPausableScheduler(scheduler !== null && scheduler !== void 0 ? scheduler : observer.scheduler);
+    pipe(observer, sourceFrom(pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil))), add(pipe(modeObs, onNotify((mode) => {
+        switch (mode) {
+            case "pause":
+                pausableScheduler.pause();
+                break;
+            case "resume":
+                pausableScheduler.resume();
+                break;
+        }
+    }), subscribe(observer.scheduler), bindTo(pausableScheduler))), add(pausableScheduler));
+}));
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+const _fromIterable = (iterable) => pipe(iterable, fromIterable$1(), fromEnumerable());
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+const fromIterable = () => _fromIterable;
+const _identity = {
+    stream(_, options) {
+        return createSubject(options);
+    },
+};
+/*
+ * Returns an `StreamableLike` that publishes it's notifications.
+ */
+const identity = () => _identity;
+const sinkInto = (dest) => (src) => createObservable(observer => {
+    const { scheduler } = observer;
+    const srcStream = src.stream(scheduler);
+    const destStream = dest.stream(scheduler);
+    pipe(merge(pipe(srcStream, onNotify(dispatchTo(destStream)), ignoreElements(keepT), onSubscribe(() => destStream)), pipe(destStream, onNotify(dispatchTo(srcStream)), ignoreElements(keepT), onSubscribe(() => srcStream))), ignoreElements(keepT), endWith({ ...fromArrayT, ...concatT }, none), sinkInto$1(observer));
+});
 
 export { __stream, consume, consumeAsync, consumeContinue, consumeDone, createActionReducer, createFlowableSinkAccumulator, createFromObservableOperator, createStateStore, createStreamble, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapReq, sinkInto, stream };
