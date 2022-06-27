@@ -1,7 +1,7 @@
 /// <reference types="./web.d.ts" />
-import { onDisposed, bindTo, add, toAbortSignal, dispose } from './disposable.mjs';
+import { onDisposed, bindTo, addTo, toAbortSignal, dispose } from './disposable.mjs';
 import { pipe, raise, returns } from './functions.mjs';
-import { createObservable, AbstractDisposableObservable, map, onNotify, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
+import { createObservable, AbstractDisposableObservable, map, onNotify, takeWhile, subscribe, keep as keep$1, throttle, defer, fromPromise } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { none, isSome } from './option.mjs';
 import { sinkInto } from './source.mjs';
@@ -113,7 +113,7 @@ const windowLocation = createStreamble((scheduler, options) => {
         uri: getCurrentWindowLocationURI(),
     }), { equality: areWindowLocationStatesEqual }), stream(scheduler, options));
     const windowLocationStream = pipe(new WindowLocationStream(stateStream), bindTo(stateStream));
-    const updateBrowserSubscription = pipe(stateStream, map(({ uri, replace }) => ({
+    const uriObs = pipe(stateStream, map(({ uri, replace }) => ({
         uri: windowLocationURIToString(uri),
         title: uri.title,
         replace,
@@ -124,21 +124,31 @@ const windowLocation = createStreamble((scheduler, options) => {
             windowLocationStream.historyCounter++;
             windowHistoryReplaceState(windowLocationStream, title, uri);
         }
-    }), keep$1(({ title, uri }) => {
+    }));
+    pipe(uriObs, takeWhile(_ => windowLocationStream.historyCounter === -1), onNotify(({ uri, title }) => {
+        // Initialize the history state on page load
+        const isInitialPageLoad = windowLocationStream.historyCounter === -1;
+        if (isInitialPageLoad) {
+            windowLocationStream.historyCounter++;
+            windowHistoryReplaceState(windowLocationStream, title, uri);
+        }
+    }), subscribe(scheduler), addTo(windowLocationStream));
+    pipe(uriObs, keep$1(({ replace, title, uri }) => {
         const titleChanged = document.title !== title;
         const uriChanged = uri !== window.location.href;
-        return titleChanged || uriChanged;
-    }), throttle(100), onNotify(({ replace, title, uri }) => {
-        const titleChanged = document.title !== title;
-        const uriChanged = uri !== window.location.href;
-        const shouldReplace = replace || (titleChanged && !uriChanged);
-        const updateHistoryState = shouldReplace
-            ? windowHistoryReplaceState
-            : windowHistoryPushState;
+        return replace || (titleChanged && !uriChanged);
+    }), throttle(100), onNotify(({ title, uri }) => {
         document.title = title;
-        updateHistoryState(windowLocationStream, title, uri);
-    }), subscribe(scheduler));
-    const historySubscription = pipe(fromEvent(window, "popstate", (e) => {
+        windowHistoryReplaceState(windowLocationStream, title, uri);
+    }), subscribe(scheduler), addTo(windowLocationStream));
+    pipe(uriObs, keep$1(({ replace, uri }) => {
+        const uriChanged = uri !== window.location.href;
+        return !replace && uriChanged;
+    }), throttle(100), onNotify(({ title, uri }) => {
+        document.title = title;
+        windowHistoryPushState(windowLocationStream, title, uri);
+    }), subscribe(scheduler), addTo(windowLocationStream));
+    pipe(fromEvent(window, "popstate", (e) => {
         const { counter, title } = e.state;
         const uri = {
             ...getCurrentWindowLocationURI(),
@@ -148,8 +158,8 @@ const windowLocation = createStreamble((scheduler, options) => {
     }), onNotify(({ counter, uri }) => {
         windowLocationStream.historyCounter = counter;
         windowLocationStream.dispatch(uri, { replace: true });
-    }), subscribe(scheduler));
-    return pipe(windowLocationStream, add(historySubscription), add(updateBrowserSubscription));
+    }), subscribe(scheduler), addTo(windowLocationStream));
+    return windowLocationStream;
 });
 
 const globalFetch = self.fetch;
