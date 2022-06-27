@@ -157,14 +157,6 @@ export const windowLocation: WindowLocationStreamableLike = createStreamble(
         title: uri.title,
         replace,
       })),
-      onNotify(({ uri, title }) => {
-        // Initialize the history state on page load
-        const isInitialPageLoad = windowLocationStream.historyCounter === -1;
-        if (isInitialPageLoad) {
-          windowLocationStream.historyCounter++;
-          windowHistoryReplaceState(windowLocationStream, title, uri);
-        }
-      }),
     );
 
     pipe(
