@@ -172,7 +172,7 @@ export {
   fromIterator,
   fromIteratorT,
 } from "./observable/fromIterable";
-export { merge, mergeT } from "./observable/merge";
+export { forkMerge, merge, mergeT } from "./observable/merge";
 export { never } from "./observable/never";
 export { subscribe } from "./observable/subscribe";
 export { using, usingT } from "./observable/using";
