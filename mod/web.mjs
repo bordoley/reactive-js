@@ -46,19 +46,18 @@ const createEventSource = (url, options = {}) => {
 };
 
 const windowLocationURIToString = ({ path, query, fragment, }) => {
-    // FIXME: should we put validation in here?
-    let uri = path;
+    let uri = path.length === 0 ? "/" : path;
     uri = query.length > 0 ? `${uri}?${query}` : uri;
     uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
     return new URL(uri, window.location.href).toString();
 };
 const getCurrentWindowLocationURI = () => {
-    const uri = new URL(window.location.href);
+    const { pathname: path, search: query, hash: fragment, } = new URL(window.location.href);
     return {
         title: document.title,
-        path: uri.pathname,
-        query: uri.search,
-        fragment: uri.hash,
+        path,
+        query: query.slice(1),
+        fragment: fragment.slice(1),
     };
 };
 const areWindowLocationStatesEqual = ({ uri: a }, { uri: b }) => 
