@@ -3,7 +3,7 @@ import { AbstractDisposableContainer, empty, fromValue, throws, concatMap } from
 import { onDisposed, add, addTo, dispose, onComplete, AbstractDisposable, disposed, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
 import { pipe, raise, arrayEquality, ignore, defer as defer$1, compose, returns } from './functions.mjs';
 import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, notifySink, createUsing, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
-import { schedule, YieldError, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
+import { schedule, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { createRunnable } from './runnable.mjs';
@@ -115,11 +115,9 @@ const fromArray = (options = {}) => values => {
                 while (index < endIndex) {
                     const value = values[index];
                     index++;
-                    // Inline yielding logic for performance reasons
                     observer.notify(value);
-                    if (index < endIndex &&
-                        (delay > 0 || observer.scheduler.shouldYield)) {
-                        throw new YieldError(delay);
+                    if (index < endIndex || delay > 0) {
+                        __yield(delay);
                     }
                 }
                 pipe(observer, dispose());

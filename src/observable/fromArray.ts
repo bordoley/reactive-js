@@ -2,7 +2,7 @@ import { FromArray } from "../container";
 import { dispose } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
-import { YieldError } from "../scheduler";
+import { __yield } from "../scheduler";
 import { createObservable } from "./createObservable";
 import { defer } from "./defer";
 import { Observer } from "./observer";
@@ -47,14 +47,10 @@ export const fromArray =
             const value = values[index];
             index++;
 
-            // Inline yielding logic for performance reasons
             observer.notify(value);
 
-            if (
-              index < endIndex &&
-              (delay > 0 || observer.scheduler.shouldYield)
-            ) {
-              throw new YieldError(delay);
+            if (index < endIndex || delay > 0) {
+              __yield(delay);
             }
           }
           pipe(observer, dispose());

@@ -9,10 +9,6 @@ import { SideEffect, Function1 } from "./functions.mjs";
  */
 declare const toPriorityScheduler: (hostScheduler: SchedulerLike) => PrioritySchedulerLike;
 declare const toPausableScheduler: (hostScheduler: SchedulerLike) => PausableSchedulerLike;
-declare class YieldError {
-    readonly delay: number;
-    constructor(delay: number);
-}
 declare const run: (continuation: SchedulerContinuationLike) => void;
 declare const __yield: (delay?: number) => void;
 declare const schedule: (f: SideEffect, options?: {
@@ -107,4 +103,4 @@ interface PrioritySchedulerLike extends DisposableLike {
         readonly delay?: number;
     }): void;
 }
-export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerLike, VirtualTimeSchedulerLike, YieldError, __yield, createHostScheduler, createVirtualTimeScheduler, run, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };
+export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerLike, VirtualTimeSchedulerLike, __yield, createHostScheduler, createVirtualTimeScheduler, run, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };
