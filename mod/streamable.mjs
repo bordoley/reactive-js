@@ -1,7 +1,7 @@
 /// <reference types="./streamable.d.ts" />
 import { empty as empty$1, concatWith, fromValue, ignoreElements, endWith, startWith, concatMap } from './container.mjs';
 import { pipe, compose, returns, updaterReducer, flip } from './functions.mjs';
-import { AbstractDisposableObservable, createSubject, publish, createObservable, map, onNotify, dispatchTo, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeT, distinctUntilChanged, subscribeOn, fromDisposable, takeUntil, keepT, concatT, merge, onSubscribe, observable, __memo, __observe, reduce, mapT, concatAllT, takeFirst, withLatestFrom, using, never, takeWhile, scanAsync, zipWithLatestFrom, switchAll } from './observable.mjs';
+import { AbstractDisposableObservable, createSubject, publish, createObservable, map, onNotify, dispatchTo, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeT, distinctUntilChanged, subscribeOn, fromDisposable, takeUntil, merge, keepT, onSubscribe, concatT, reduce, mapT, concatAllT, takeFirst, withLatestFrom, using, never, takeWhile, scanAsync, observable, __memo, __observe, zipWithLatestFrom, switchAll } from './observable.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
 import { sinkInto as sinkInto$1, sourceFrom } from './source.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
@@ -147,14 +147,12 @@ const flow = ({ scheduler, } = {}) => observable => {
     return createFromObservableOperator(op);
 };
 
-const ignoreAndNotifyVoid = compose(ignoreElements(keepT), endWith({ ...fromArrayT, ...concatT }, none));
-const createSinkObs = (srcStream, destStream) => merge(pipe(srcStream, onNotify(dispatchTo(destStream)), ignoreElements(keepT), onSubscribe(() => destStream)), pipe(destStream, onNotify(dispatchTo(srcStream)), ignoreElements(keepT), onSubscribe(() => srcStream)));
-const sinkInto = (dest) => (src) => pipe(observable(() => {
-    const srcStream = __stream(src);
-    const destStream = __stream(dest);
-    const obs = __memo(createSinkObs, srcStream, destStream);
-    return __observe(obs);
-}), ignoreAndNotifyVoid);
+const sinkInto = (dest) => (src) => createObservable(observer => {
+    const { scheduler } = observer;
+    const srcStream = src.stream(scheduler);
+    const destStream = dest.stream(scheduler);
+    pipe(merge(pipe(srcStream, onNotify(dispatchTo(destStream)), ignoreElements(keepT), onSubscribe(() => destStream)), pipe(destStream, onNotify(dispatchTo(srcStream)), ignoreElements(keepT), onSubscribe(() => srcStream))), ignoreElements(keepT), endWith({ ...fromArrayT, ...concatT }, none), sinkInto$1(observer));
+});
 
 class FlowableSinkAccumulatorImpl extends AbstractDisposableObservable {
     constructor(subject, streamable) {
