@@ -2,7 +2,7 @@ import {
   AbstractDisposable,
   DisposableLike,
   add,
-  addToAndDisposeParentOnChildError,
+  addTo,
   createDisposable,
   dispose,
   disposed,
@@ -45,7 +45,7 @@ const scheduleImmediateWithSetImmediate = (
 ) => {
   const disposable = pipe(
     createDisposable(),
-    addToAndDisposeParentOnChildError(continuation),
+    addTo(continuation),
     onDisposed(() => clearImmediate(immmediate)),
   );
   const immmediate: ReturnType<typeof setImmediate> = setImmediate(
@@ -73,7 +73,7 @@ const scheduleDelayed = (
 ) => {
   const disposable = pipe(
     createDisposable(),
-    addToAndDisposeParentOnChildError(continuation),
+    addTo(continuation),
     onDisposed(_ => clearTimeout(timeout)),
   );
   const timeout: ReturnType<typeof setTimeout> = setTimeout(
@@ -159,7 +159,7 @@ class HostScheduler extends AbstractDisposable implements SchedulerLike {
   ) {
     const { delay = Math.max(options.delay ?? 0, 0) } = options;
 
-    pipe(this, add(continuation));
+    pipe(this, add(continuation, true));
 
     const continuationIsDisposed = continuation.isDisposed;
     if (!continuationIsDisposed && delay > 0) {

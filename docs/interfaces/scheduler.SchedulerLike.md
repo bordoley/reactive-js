@@ -79,7 +79,7 @@ ___
 
 ### add
 
-▸ **add**(`this`, `disposable`): `void`
+▸ **add**(`this`, `disposable`, `ignoreChildErrors`): `void`
 
 Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
 
@@ -89,6 +89,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 | :------ | :------ |
 | `this` | [`DisposableLike`](disposable.DisposableLike.md) |
 | `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
+| `ignoreChildErrors` | `boolean` |
 
 #### Returns
 

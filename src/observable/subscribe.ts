@@ -15,4 +15,8 @@ import { Observer } from "./observer";
 export const subscribe =
   <T>(scheduler: SchedulerLike): Function1<ObservableLike<T>, DisposableLike> =>
   observable =>
-    pipe(new Observer(scheduler), addTo(scheduler), sourceFrom(observable));
+    pipe(
+      new Observer(scheduler),
+      addTo(scheduler, true),
+      sourceFrom(observable),
+    );

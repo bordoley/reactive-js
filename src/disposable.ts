@@ -32,7 +32,11 @@ export interface DisposableLike {
    * @param disposable
    * @returns `this`
    */
-  add(this: DisposableLike, disposable: DisposableOrTeardown): void;
+  add(
+    this: DisposableLike,
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void;
 
   /**
    * Dispose the resource. Must be idempotent.
@@ -52,60 +56,55 @@ export const dispose =
     return disposable;
   };
 
-const addDisposableOrTeardown = (
+function addDisposableOrTeardown(
   parent: DisposableLike,
   child: DisposableLike | SideEffect1<Option<Error>>,
-) => {
-  parent.add(child);
-};
+  ignoreChildErrors = false,
+) {
+  parent.add(child, ignoreChildErrors);
+}
 
 export const bindTo =
   <T extends DisposableLike>(child: DisposableLike): Function1<T, T> =>
   (parent: T): T => {
-    addDisposableOrTeardown(parent, child);
-    addDisposableOrTeardown(child, parent);
+    addDisposableOrTeardown(parent, child, true);
+    addDisposableOrTeardown(child, parent, true);
     return parent;
   };
 
-export const add =
-  <T extends DisposableLike>(child: DisposableLike): Function1<T, T> =>
-  parent => {
-    addDisposableOrTeardown(parent, child);
-    return parent;
-  };
-
-export const addTo =
-  <T extends DisposableLike>(parent: DisposableLike): Function1<T, T> =>
-  child => {
-    addDisposableOrTeardown(parent, child);
-    return child;
-  };
-
-const addAndDisposeOnChildErrorImpl = (
-  parent: DisposableLike,
+export function add<T extends DisposableLike>(
   child: DisposableLike,
-) => {
-  addDisposableOrTeardown(parent, child);
-  addDisposableOrTeardown(child, (error?: Error) => {
-    if (isSome(error)) {
-      pipe(parent, dispose(error));
-    }
-  });
-};
-
-export const addAndDisposeParentOnChildError =
-  <T extends DisposableLike>(child: DisposableLike): Function1<T, T> =>
-  (parent: T): T => {
-    addAndDisposeOnChildErrorImpl(parent, child);
+  ignoreChildErrors: true,
+): Function1<T, T>;
+export function add<T extends DisposableLike>(
+  child: DisposableLike,
+): Function1<T, T>;
+export function add<T extends DisposableLike>(
+  child: DisposableLike,
+  ignoreChildErrors = false,
+): Function1<T, T> {
+  return (parent: T): T => {
+    addDisposableOrTeardown(parent, child, ignoreChildErrors);
     return parent;
   };
+}
 
-export const addToAndDisposeParentOnChildError =
-  <T extends DisposableLike>(parent: DisposableLike): Function1<T, T> =>
-  (child: T): T => {
-    addAndDisposeOnChildErrorImpl(parent, child);
+export function addTo<T extends DisposableLike>(
+  child: DisposableLike,
+  ignoreChildErrors: true,
+): Function1<T, T>;
+export function addTo<T extends DisposableLike>(
+  child: DisposableLike,
+): Function1<T, T>;
+export function addTo<T extends DisposableLike>(
+  parent: DisposableLike,
+  ignoreChildErrors = false,
+): Function1<T, T> {
+  return (child: T): T => {
+    addDisposableOrTeardown(parent, child, ignoreChildErrors);
     return child;
   };
+}
 
 export const onDisposed =
   <T extends DisposableLike>(
@@ -146,11 +145,8 @@ export const toErrorHandler =
   cause =>
     pipe(disposable, dispose({ cause }));
 
-const doDispose = (
-  self: DisposableLike,
-  disposable: DisposableOrTeardown,
-  error?: Error,
-) => {
+const doDispose = (self: DisposableLike, disposable: DisposableOrTeardown) => {
+  const { error } = self;
   if (disposable instanceof Function) {
     try {
       disposable.call(self, error);
@@ -182,18 +178,30 @@ export abstract class AbstractDisposable implements DisposableLike {
   }
 
   /** @ignore */
-  add(this: AbstractDisposable, disposable: DisposableOrTeardown) {
+  add(
+    this: AbstractDisposable,
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ) {
     const { disposables } = this;
 
     if (this.isDisposed) {
-      doDispose(this, disposable, this.error);
+      doDispose(this, disposable);
     } else if (!disposables.has(disposable)) {
       disposables.add(disposable);
 
       if (!(disposable instanceof Function)) {
-        addDisposableOrTeardown(disposable, () => {
-          disposables.delete(disposable);
-        });
+        addDisposableOrTeardown(
+          disposable,
+          e => {
+            disposables.delete(disposable);
+
+            if (isSome(e) && !ignoreChildErrors) {
+              pipe(this, dispose(e));
+            }
+          },
+          true,
+        );
       }
     }
   }
@@ -207,7 +215,7 @@ export abstract class AbstractDisposable implements DisposableLike {
       const disposables = this.disposables;
       for (const disposable of disposables) {
         disposables.delete(disposable);
-        doDispose(this, disposable, error);
+        doDispose(this, disposable);
       }
     }
   }
@@ -283,7 +291,7 @@ export abstract class AbstractSerialDisposable
     this._inner = newInner;
 
     if (oldInner !== newInner) {
-      addAndDisposeOnChildErrorImpl(this, newInner);
+      addDisposableOrTeardown(this, newInner);
       pipe(oldInner, dispose());
     }
   }

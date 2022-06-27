@@ -17,7 +17,7 @@ import {
 } from "./container";
 import {
   DisposableLike,
-  addAndDisposeParentOnChildError,
+  add,
   bindTo,
   dispose,
   onDisposed,
@@ -670,11 +670,7 @@ export const toRunnable =
         subscribe(scheduler),
       );
 
-      pipe(
-        sink,
-        addAndDisposeParentOnChildError(scheduler),
-        addAndDisposeParentOnChildError(subscription),
-      );
+      pipe(sink, add(scheduler), add(subscription));
 
       scheduler.run();
       scheduler.dispose();

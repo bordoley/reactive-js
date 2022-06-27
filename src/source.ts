@@ -9,9 +9,8 @@ import {
 import {
   DisposableLike,
   DisposableOrTeardown,
-  addAndDisposeParentOnChildError,
+  add,
   addTo,
-  addToAndDisposeParentOnChildError,
   dispose,
   onComplete,
   onDisposed,
@@ -142,7 +141,7 @@ export const createCatchErrorOperator =
     const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> =>
       pipe(
         new CatchErrorSink(delegate),
-        addTo(delegate),
+        addTo(delegate, true),
         onComplete(() => pipe(delegate, dispose())),
         onError(e => {
           try {
@@ -191,7 +190,7 @@ export const createDecodeWithCharsetOperator = <C extends SourceLike>(
       const textDecoder = new TextDecoder(charset, { fatal: true });
       return pipe(
         new DecodeWithCharsetSink(delegate, textDecoder),
-        addToAndDisposeParentOnChildError(delegate),
+        addTo(delegate),
         onComplete(() => {
           const data = textDecoder.decode();
 
@@ -277,7 +276,7 @@ const createSatisfyOperator = <C extends SourceLike>(
     ): LiftedStateOf<C, T> =>
       pipe(
         new SatisfySink(delegate, predicate),
-        addToAndDisposeParentOnChildError(delegate),
+        addTo(delegate),
         onComplete(() => {
           if (!delegate.isDisposed) {
             pipe(defaultResult, fromValue(m), sinkInto(delegate));
@@ -445,7 +444,7 @@ export const createReduceOperator = <C extends SourceLike>(
     ): LiftedStateOf<C, T> => {
       const sink = pipe(
         new ReduceSink(delegate, reducer, initialValue()),
-        addToAndDisposeParentOnChildError(delegate),
+        addTo(delegate),
         onComplete(() => {
           pipe(sink.acc, fromValue(m), sinkInto(delegate));
         }),
@@ -602,7 +601,7 @@ export const createTakeLastOperator = <C extends SourceLike>(
     const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> => {
       const sink = pipe(
         new TakeLastSink(delegate, count),
-        addToAndDisposeParentOnChildError(delegate),
+        addTo(delegate),
         onComplete(() => {
           pipe(sink.last, m.fromArray(), sinkInto(delegate));
         }),
@@ -682,7 +681,7 @@ export const createThrowIfEmptyOperator = <C extends SourceLike>(
 export const createFromDisposable =
   <C extends SourceLike>(m: CreateSource<C>) =>
   <T>(disposable: DisposableLike): ContainerOf<C, T> =>
-    m.create(addToAndDisposeParentOnChildError(disposable));
+    m.create(addTo(disposable));
 
 export const createNever = <C extends SourceLike>(m: CreateSource<C>) => {
   const neverInstance: ContainerOf<C, any> = m.create(ignore);
@@ -701,7 +700,7 @@ export const createOnSink =
         disposable instanceof Function
           ? onDisposed(disposable)
           : isSome(disposable)
-          ? addAndDisposeParentOnChildError(disposable)
+          ? add(disposable)
           : identity,
       );
     });
@@ -716,7 +715,7 @@ export const createUsing =
       pipe(
         resourceFactory(),
         resources => (Array.isArray(resources) ? resources : [resources]),
-        forEach(addToAndDisposeParentOnChildError(sink)),
+        forEach(addTo(sink)),
         (resources: readonly TResource[]) => sourceFactory(...resources),
         sinkInto(sink),
       ),

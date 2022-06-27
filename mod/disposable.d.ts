@@ -27,7 +27,7 @@ interface DisposableLike {
      * @param disposable
      * @returns `this`
      */
-    add(this: DisposableLike, disposable: DisposableOrTeardown): void;
+    add(this: DisposableLike, disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     /**
      * Dispose the resource. Must be idempotent.
      *
@@ -40,10 +40,10 @@ interface DisposableLike {
  */
 declare const dispose: <T extends DisposableLike>(e?: Error) => Function1<T, T>;
 declare const bindTo: <T extends DisposableLike>(child: DisposableLike) => Function1<T, T>;
-declare const add: <T extends DisposableLike>(child: DisposableLike) => Function1<T, T>;
-declare const addTo: <T extends DisposableLike>(parent: DisposableLike) => Function1<T, T>;
-declare const addAndDisposeParentOnChildError: <T extends DisposableLike>(child: DisposableLike) => Function1<T, T>;
-declare const addToAndDisposeParentOnChildError: <T extends DisposableLike>(parent: DisposableLike) => Function1<T, T>;
+declare function add<T extends DisposableLike>(child: DisposableLike, ignoreChildErrors: true): Function1<T, T>;
+declare function add<T extends DisposableLike>(child: DisposableLike): Function1<T, T>;
+declare function addTo<T extends DisposableLike>(child: DisposableLike, ignoreChildErrors: true): Function1<T, T>;
+declare function addTo<T extends DisposableLike>(child: DisposableLike): Function1<T, T>;
 declare const onDisposed: <T extends DisposableLike>(teardown: SideEffect1<Option<Error>>) => Function1<T, T>;
 declare const onError: <T extends DisposableLike>(teardown: SideEffect1<Error>) => Function1<T, T>;
 declare const onComplete: <T extends DisposableLike>(teardown: SideEffect) => Function1<T, T>;
@@ -64,7 +64,7 @@ declare abstract class AbstractDisposable implements DisposableLike {
     /** @ignore */
     get error(): Option<Error>;
     /** @ignore */
-    add(this: AbstractDisposable, disposable: DisposableOrTeardown): void;
+    add(this: AbstractDisposable, disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     /** @ignore */
     dispose(this: AbstractDisposable, error?: Error): void;
 }
@@ -125,4 +125,4 @@ interface DisposableValueLike<T> extends DisposableLike {
  */
 declare const createDisposableValue: <T>(value: T, cleanup: SideEffect1<T>) => DisposableValueLike<T>;
 declare const toAbortSignal: (disposable: DisposableLike) => AbortSignal;
-export { AbstractDisposable, AbstractSerialDisposable, DisposableLike, DisposableOrTeardown, DisposableValueLike, Error, SerialDisposableLike, add, addAndDisposeParentOnChildError, addTo, addToAndDisposeParentOnChildError, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
+export { AbstractDisposable, AbstractSerialDisposable, DisposableLike, DisposableOrTeardown, DisposableValueLike, Error, SerialDisposableLike, add, addTo, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

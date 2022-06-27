@@ -22,7 +22,7 @@ import {
   AbstractDisposable,
   Error,
   add,
-  addToAndDisposeParentOnChildError,
+  addTo,
   createDisposable,
   dispose,
   onError,
@@ -142,7 +142,7 @@ class ReactPriorityScheduler
   ) {
     const { delay = Math.max(options.delay ?? 0, 0), priority } = options;
 
-    pipe(this, add(continuation));
+    pipe(this, add(continuation, true));
 
     if (continuation.isDisposed) {
       return;
@@ -164,7 +164,7 @@ class ReactPriorityScheduler
 
     const callbackNodeDisposable = pipe(
       createDisposable(defer(callbackNode, unstable_cancelCallback)),
-      addToAndDisposeParentOnChildError(continuation),
+      addTo(continuation),
     );
   }
 }

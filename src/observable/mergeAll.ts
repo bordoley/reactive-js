@@ -1,10 +1,5 @@
 import { ConcatAll } from "../container";
-import {
-  addToAndDisposeParentOnChildError,
-  dispose,
-  onComplete,
-  onDisposed,
-} from "../disposable";
+import { addTo, dispose, onComplete, onDisposed } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { isSome } from "../option";
@@ -25,7 +20,7 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
         nextObs,
         onNotify(notifySink(observer.delegate)),
         subscribe(observer.scheduler),
-        addToAndDisposeParentOnChildError(observer.delegate),
+        addTo(observer.delegate),
         onComplete(observer.onDispose),
       );
     } else if (observer.isDisposed) {
@@ -92,7 +87,7 @@ export const mergeAll = <T>(
         observer.queue.length = 0;
       }),
       delegate => new MergeObserver(delegate, maxBufferSize, maxConcurrency),
-      addToAndDisposeParentOnChildError(delegate),
+      addTo(delegate),
       onComplete(() => {
         if (observer.queue.length + observer.activeCount === 0) {
           pipe(observer.delegate, dispose());

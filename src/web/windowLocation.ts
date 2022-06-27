@@ -1,4 +1,4 @@
-import { addAndDisposeParentOnChildError, bindTo } from "../disposable";
+import { add, bindTo } from "../disposable";
 import { Updater, pipe, raise } from "../functions";
 import {
   AbstractDisposableObservable,
@@ -209,8 +209,8 @@ class WindowLocationStreamable implements WindowLocationStreamableLike {
 
     return pipe(
       windowLocationStream,
-      addAndDisposeParentOnChildError(historySubscription),
-      addAndDisposeParentOnChildError(updateBrowserSubscription),
+      add(historySubscription),
+      add(updateBrowserSubscription),
     );
   }
 }

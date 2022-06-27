@@ -1,4 +1,4 @@
-import { addToAndDisposeParentOnChildError } from "../disposable";
+import { addTo } from "../disposable";
 import { Factory, SideEffect1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { schedule } from "../scheduler";
@@ -12,9 +12,5 @@ export const defer = <T>(
   createObservable(observer => {
     const sideEffect = factory();
     const callback = () => sideEffect(observer);
-    pipe(
-      observer.scheduler,
-      schedule(callback, options),
-      addToAndDisposeParentOnChildError(observer),
-    );
+    pipe(observer.scheduler, schedule(callback, options), addTo(observer));
   });

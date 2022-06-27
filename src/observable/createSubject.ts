@@ -58,7 +58,7 @@ class SubjectImpl<T>
       dispatcher.dispatch(next);
     }
 
-    pipe(this, add(dispatcher));
+    pipe(this, add(dispatcher, true));
   }
 }
 
