@@ -2,7 +2,7 @@ import { concatMap, fromValue as fromValueContainer } from "../container";
 import { Function1, compose, returns } from "../functions";
 import { concatAllT, fromArrayT, mapT, scan, takeFirst } from "../observable";
 import { AsyncEnumerableLike } from "../streamable";
-import { fromObservableOperator } from "./streamable";
+import { createFromObservableOperator } from "./streamable";
 
 const fromArrayScanner = (acc: number, _: void): number => acc + 1;
 
@@ -29,7 +29,7 @@ export const fromArray =
 
     const fromValueWithDelay = fromValueContainer(fromArrayT, options);
 
-    return fromObservableOperator(
+    return createFromObservableOperator(
       compose(
         scan(fromArrayScanner, returns(startIndex - 1)),
         concatMap({ ...mapT, ...concatAllT }, (i: number) =>
