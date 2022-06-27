@@ -48,7 +48,7 @@ export {
 } from "./streamable/createActionReducer";
 export {
   createStreamble,
-  fromObservableOperator,
+  createFromObservableOperator,
   empty,
   lift,
   mapReq,

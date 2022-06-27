@@ -2,7 +2,7 @@ import { fromValue } from "../container";
 import { Factory, Updater, pipe } from "../functions";
 import { fromArrayT, scan, scanAsync } from "../observable";
 import { AsyncEnumerableLike } from "../streamable";
-import { fromObservableOperator } from "./streamable";
+import { createFromObservableOperator } from "./streamable";
 
 const generateScanner =
   <T>(generator: Updater<T>) =>
@@ -38,5 +38,5 @@ export const generate = <T>(
           initialValue,
         )
       : scan(generateScanner(generator), initialValue);
-  return fromObservableOperator(op);
+  return createFromObservableOperator(op);
 };

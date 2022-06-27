@@ -1,25 +1,69 @@
 import { empty as emptyContainer } from "../container";
-import { add, bindTo } from "../disposable";
+import { add, addTo, bindTo } from "../disposable";
 import { Function1, compose, pipe } from "../functions";
 import {
+  AbstractDisposableObservable,
+  DispatcherLike,
+  MulticastObservableLike,
   ObservableOperator,
+  Observer,
   StreamLike,
   __currentScheduler,
   __memo,
   __observe,
   __using,
   createObservable,
+  createSubject,
   dispatchTo,
   fromArrayT,
   map,
   onNotify,
+  publish,
   subscribe,
 } from "../observable";
-
 import { SchedulerLike } from "../scheduler";
-import { sourceFrom } from "../source";
+import { sinkInto, sourceFrom } from "../source";
 import { StreamableLike, StreamableOperator } from "../streamable";
-import { createStream } from "./createStream";
+
+class StreamImpl<TReq, T>
+  extends AbstractDisposableObservable<T>
+  implements StreamLike<TReq, T>
+{
+  constructor(
+    private readonly dispatcher: DispatcherLike<TReq>,
+    private readonly observable: MulticastObservableLike<T>,
+  ) {
+    super();
+  }
+
+  get observerCount(): number {
+    return this.observable.observerCount;
+  }
+
+  dispatch(req: TReq) {
+    this.dispatcher.dispatch(req);
+  }
+
+  sink(observer: Observer<T>) {
+    pipe(this.observable, sinkInto(observer));
+  }
+}
+
+export const createStream = <TReq, T>(
+  op: ObservableOperator<TReq, T>,
+  scheduler: SchedulerLike,
+  options?: { readonly replay?: number },
+): StreamLike<TReq, T> => {
+  const subject = createSubject<TReq>();
+  const observable = pipe(subject, op, publish(scheduler, options));
+
+  return pipe(
+    new StreamImpl(subject, observable),
+    add(subject),
+    // FIXME: This seems wrong.
+    addTo(observable),
+  );
+};
 
 class CreateStreamable<TReq, TData, TStream extends StreamLike<TReq, TData>>
   implements StreamableLike<TReq, TData, TStream>
@@ -43,7 +87,7 @@ export const createStreamble = <
   ) => TStream,
 ): StreamableLike<TReq, TData, TStream> => new CreateStreamable(stream);
 
-export const fromObservableOperator = <TReq, TData>(
+export const createFromObservableOperator = <TReq, TData>(
   op: ObservableOperator<TReq, TData>,
 ): StreamableLike<TReq, TData, StreamLike<TReq, TData>> =>
   createStreamble((scheduler, options) => createStream(op, scheduler, options));
@@ -132,7 +176,7 @@ export const mapReq =
     return liftImpl(streamable, obsOps, reqOps);
   };
 
-const _empty = fromObservableOperator<any, any>(_ =>
+const _empty = createFromObservableOperator<any, any>(_ =>
   emptyContainer(fromArrayT),
 );
 
@@ -149,7 +193,9 @@ export const empty = <TReq, T>(
 
   return delay === 0
     ? _empty
-    : fromObservableOperator<TReq, T>(_ => emptyContainer(fromArrayT, options));
+    : createFromObservableOperator<TReq, T>(_ =>
+        emptyContainer(fromArrayT, options),
+      );
 };
 
 export const stream =

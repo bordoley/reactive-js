@@ -16,7 +16,7 @@ import {
   scan,
 } from "../observable";
 import { StreamableLike, StreamableStateLike } from "../streamable";
-import { fromObservableOperator } from "./streamable";
+import { createFromObservableOperator } from "./streamable";
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
@@ -49,7 +49,7 @@ export const createActionReducer = <TAction, T>(
     );
   };
 
-  return fromObservableOperator(operator);
+  return createFromObservableOperator(operator);
 };
 
 /**

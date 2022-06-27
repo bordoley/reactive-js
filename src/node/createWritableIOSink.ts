@@ -14,14 +14,14 @@ import {
   subscribe,
 } from "../observable";
 
-import { FlowableSinkLike, fromObservableOperator } from "../streamable";
+import { FlowableSinkLike, createFromObservableOperator } from "../streamable";
 
 const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
 
 export const createWritableIOSink = (
   factory: Factory<DisposableValueLike<Writable>>,
 ): FlowableSinkLike<Uint8Array> =>
-  fromObservableOperator(events =>
+  createFromObservableOperator(events =>
     createObservable(observer => {
       const { dispatcher } = observer;
 
