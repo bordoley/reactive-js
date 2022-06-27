@@ -57,7 +57,7 @@ import {
   identity,
   lift,
   mapReq,
-  sink,
+  sinkInto,
   stream,
 } from "../streamable";
 import {
@@ -325,7 +325,7 @@ export const tests = describe(
       lift(startWith({ ...concatT, ...fromArrayT }, none)),
     );
 
-    const subscription = pipe(sink(src, dest), subscribe(scheduler));
+    const subscription = pipe(src, sinkInto(dest), subscribe(scheduler));
     expectFalse(subscription.isDisposed);
 
     scheduler.run();
@@ -437,7 +437,7 @@ export const tests = describe(
       );
 
       const scheduler = createVirtualTimeScheduler();
-      const subscription = pipe(sink(src, dest), subscribe(scheduler));
+      const subscription = pipe(src, sinkInto(dest), subscribe(scheduler));
 
       const f = mockFn();
       pipe(dest, onNotify(f), subscribe(scheduler));
@@ -484,7 +484,7 @@ export const tests = describe(
       );
 
       const scheduler = createVirtualTimeScheduler();
-      const subscription = pipe(sink(src, dest), subscribe(scheduler));
+      const subscription = pipe(src, sinkInto(dest), subscribe(scheduler));
 
       const f = mockFn();
       pipe(dest, onNotify(f), subscribe(scheduler));
@@ -526,7 +526,7 @@ export const tests = describe(
       });
 
       const scheduler = createVirtualTimeScheduler();
-      const subscription = pipe(sink(src, dest), subscribe(scheduler));
+      const subscription = pipe(src, sinkInto(dest), subscribe(scheduler));
 
       const f = mockFn();
       pipe(dest, onNotify(f), subscribe(scheduler));

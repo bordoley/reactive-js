@@ -3,7 +3,7 @@ import { empty as empty$1, concatWith, fromValue, ignoreElements, endWith, start
 import { pipe, compose, returns, updaterReducer, flip } from './functions.mjs';
 import { AbstractDisposableObservable, createSubject, publish, createObservable, map, onNotify, dispatchTo, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeT, distinctUntilChanged, subscribeOn, fromDisposable, takeUntil, keepT, concatT, merge, onSubscribe, observable, __memo, __observe, reduce, mapT, concatAllT, takeFirst, withLatestFrom, using, never, takeWhile, scanAsync, zipWithLatestFrom, switchAll } from './observable.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
-import { sinkInto, sourceFrom } from './source.mjs';
+import { sinkInto as sinkInto$1, sourceFrom } from './source.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
 import { none } from './option.mjs';
 import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
@@ -21,7 +21,7 @@ class StreamImpl extends AbstractDisposableObservable {
         this.dispatcher.dispatch(req);
     }
     sink(observer) {
-        pipe(this.observable, sinkInto(observer));
+        pipe(this.observable, sinkInto$1(observer));
     }
 }
 const createStream = (op, scheduler, options) => {
@@ -149,7 +149,7 @@ const flow = ({ scheduler, } = {}) => observable => {
 
 const ignoreAndNotifyVoid = compose(ignoreElements(keepT), endWith({ ...fromArrayT, ...concatT }, none));
 const createSinkObs = (srcStream, destStream) => merge(pipe(srcStream, onNotify(dispatchTo(destStream)), ignoreElements(keepT), onSubscribe(() => destStream)), pipe(destStream, onNotify(dispatchTo(srcStream)), ignoreElements(keepT), onSubscribe(() => srcStream)));
-const sink = (src, dest) => pipe(observable(() => {
+const sinkInto = (dest) => (src) => pipe(observable(() => {
     const srcStream = __stream(src);
     const destStream = __stream(dest);
     const obs = __memo(createSinkObs, srcStream, destStream);
@@ -266,4 +266,4 @@ const consumeImpl = (consumer, initial) => {
 const consume = (consumer, initial) => consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
 const consumeAsync = (consumer, initial) => consumeImpl(accObs => compose(zipWithLatestFrom(accObs, (next, acc) => pipe(consumer(acc, next), takeFirst())), switchAll()), initial);
 
-export { __stream, consume, consumeAsync, consumeContinue, consumeDone, createActionReducer, createFlowableSinkAccumulator, createFromObservableOperator, createStateStore, createStreamble, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapReq, sink, stream };
+export { __stream, consume, consumeAsync, consumeContinue, consumeDone, createActionReducer, createFlowableSinkAccumulator, createFromObservableOperator, createStateStore, createStreamble, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, lift, mapReq, sinkInto, stream };
