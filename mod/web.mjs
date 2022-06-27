@@ -1,7 +1,7 @@
 /// <reference types="./web.d.ts" />
 import { onDisposed, bindTo, addTo, toAbortSignal, dispose } from './disposable.mjs';
 import { pipe, raise, returns } from './functions.mjs';
-import { createObservable, AbstractDisposableObservable, map, onNotify, takeWhile, subscribe, keep as keep$1, throttle, defer, fromPromise } from './observable.mjs';
+import { createObservable, AbstractDisposableObservable, map, takeWhile, onNotify, subscribe, keep as keep$1, throttle, defer, fromPromise } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { none, isSome } from './option.mjs';
 import { sinkInto } from './source.mjs';
@@ -116,14 +116,7 @@ const windowLocation = createStreamble((scheduler, options) => {
         uri: windowLocationURIToString(uri),
         title: uri.title,
         replace,
-    })), onNotify(({ uri, title }) => {
-        // Initialize the history state on page load
-        const isInitialPageLoad = windowLocationStream.historyCounter === -1;
-        if (isInitialPageLoad) {
-            windowLocationStream.historyCounter++;
-            windowHistoryReplaceState(windowLocationStream, title, uri);
-        }
-    }));
+    })));
     pipe(uriObs, takeWhile(_ => windowLocationStream.historyCounter === -1), onNotify(({ uri, title }) => {
         // Initialize the history state on page load
         const isInitialPageLoad = windowLocationStream.historyCounter === -1;
