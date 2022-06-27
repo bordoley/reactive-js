@@ -34,7 +34,7 @@ const createRepeatObserver = <T>(
         observable,
         onNotify(notifySink(delegate)),
         subscribe(delegate.scheduler),
-        addTo(delegate),
+        addTo(delegate, true),
         onDisposed(doOnDispose),
       );
     }
@@ -42,7 +42,7 @@ const createRepeatObserver = <T>(
 
   return pipe(
     createDelegatingObserver(delegate),
-    addTo(delegate),
+    addTo(delegate, true),
     onDisposed(doOnDispose),
   );
 };

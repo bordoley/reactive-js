@@ -226,7 +226,7 @@ class PriorityScheduler
       ? this.current.priority
       : Number.MAX_SAFE_INTEGER;
 
-    pipe(this, add(continuation));
+    pipe(this, add(continuation, true));
 
     if (!continuation.isDisposed) {
       const { current, now } = this;
@@ -266,7 +266,7 @@ const createPriorityScheduler = (
 ): PriorityScheduler =>
   pipe(
     new PriorityScheduler(hostScheduler),
-    addTo(hostScheduler),
+    addTo(hostScheduler, true),
     onDisposed(clearQueues),
   );
 

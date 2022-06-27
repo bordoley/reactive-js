@@ -21,7 +21,7 @@ import {
   ThrowIfEmpty,
   Using,
 } from "./container";
-import { addToAndDisposeParentOnChildError } from "./disposable";
+import { addTo } from "./disposable";
 import {
   Equality,
   Factory,
@@ -110,10 +110,7 @@ export const concat: Concat<RunnableLike<unknown>>["concat"] = <T>(
   createRunnable((sink: Sink<T>) => {
     const runnablesLength = runnables.length;
     for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
-      const concatSink = pipe(
-        createDelegatingSink(sink),
-        addToAndDisposeParentOnChildError(sink),
-      );
+      const concatSink = pipe(createDelegatingSink(sink), addTo(sink));
 
       runnables[i].sink(concatSink);
       concatSink.dispose();
@@ -306,10 +303,7 @@ export const repeat: Repeat<RunnableLike<unknown>>["repeat"] = <T>(
     createRunnable(sink => {
       let count = 0;
       do {
-        const delegateSink = pipe(
-          createDelegatingSink(sink),
-          addToAndDisposeParentOnChildError(sink),
-        );
+        const delegateSink = pipe(createDelegatingSink(sink), addTo(sink));
         runnable.sink(delegateSink);
         delegateSink.dispose();
         count++;

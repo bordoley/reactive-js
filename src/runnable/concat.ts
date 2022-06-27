@@ -1,5 +1,5 @@
 import { ConcatAll } from "../container";
-import { addToAndDisposeParentOnChildError } from "../disposable";
+import { addTo } from "../disposable";
 import { pipe } from "../functions";
 import { RunnableLike, RunnableOperator } from "../runnable";
 import { lift } from "./lift";
@@ -12,10 +12,7 @@ class FlattenSink<T> extends Sink<RunnableLike<T>> {
 
   notify(next: RunnableLike<T>) {
     const { delegate } = this;
-    const concatSink = pipe(
-      createDelegatingSink(delegate),
-      addToAndDisposeParentOnChildError(this),
-    );
+    const concatSink = pipe(createDelegatingSink(delegate), addTo(this));
 
     next.sink(concatSink);
     concatSink.dispose();
@@ -23,7 +20,7 @@ class FlattenSink<T> extends Sink<RunnableLike<T>> {
 }
 
 const _concatAll = lift(delegate =>
-  pipe(new FlattenSink(delegate), addToAndDisposeParentOnChildError(delegate)),
+  pipe(new FlattenSink(delegate), addTo(delegate)),
 );
 
 export const concatAll: ConcatAll<RunnableLike<unknown>>["concatAll"] = <

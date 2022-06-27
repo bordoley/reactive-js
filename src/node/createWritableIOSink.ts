@@ -2,7 +2,7 @@ import { Writable } from "stream";
 import {
   DisposableValueLike,
   add,
-  addToAndDisposeParentOnChildError,
+  addTo,
   dispose,
   onComplete,
 } from "../disposable";
@@ -25,11 +25,7 @@ export const createWritableIOSink = (
     createObservable(observer => {
       const { dispatcher } = observer;
 
-      const writable = pipe(
-        factory(),
-        addToAndDisposeParentOnChildError(observer),
-        add(dispatcher),
-      );
+      const writable = pipe(factory(), addTo(observer), add(dispatcher, true));
       const writableValue = writable.value;
 
       pipe(
@@ -44,7 +40,7 @@ export const createWritableIOSink = (
           }
         }),
         subscribe(observer.scheduler),
-        addToAndDisposeParentOnChildError(observer),
+        addTo(observer),
         onComplete(() => {
           writableValue.end();
         }),

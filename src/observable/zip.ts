@@ -1,10 +1,5 @@
 import { Zip } from "../container";
-import {
-  addToAndDisposeParentOnChildError,
-  dispose,
-  onComplete,
-  onDisposed,
-} from "../disposable";
+import { addTo, dispose, onComplete, onDisposed } from "../disposable";
 import {
   AbstractEnumerator,
   Enumerator,
@@ -129,7 +124,7 @@ const _zip = (
             onDisposed(() => {
               enumerator.buffer.length = 0;
             }),
-            addToAndDisposeParentOnChildError(observer),
+            addTo(observer),
           );
 
           const innerObserver = pipe(
@@ -142,7 +137,7 @@ const _zip = (
                 pipe(observer, dispose());
               }
             }),
-            addToAndDisposeParentOnChildError(observer),
+            addTo(observer),
             sourceFrom(next),
           );
 

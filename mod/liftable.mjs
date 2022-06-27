@@ -1,6 +1,6 @@
 /// <reference types="./liftable.d.ts" />
 import { AbstractContainer, AbstractDisposableContainer, empty } from './container.mjs';
-import { bindTo, addAndDisposeParentOnChildError, addToAndDisposeParentOnChildError, add, onComplete, dispose } from './disposable.mjs';
+import { bindTo, add, addTo, onComplete, dispose } from './disposable.mjs';
 import { raise, strictEquality, pipe } from './functions.mjs';
 import { none } from './option.mjs';
 
@@ -53,18 +53,14 @@ const createTakeFirstLiftedOperator = (m, TakeFirstLiftableState) => (options = 
 const createTakeWhileLiftedOperator = (m, TakeWhileLiftableState) => (predicate, options = {}) => {
     const { inclusive = false } = options;
     const operator = delegate => {
-        const lifted = pipe(new TakeWhileLiftableState(delegate, predicate, inclusive), m.variance === "covariant"
-            ? addAndDisposeParentOnChildError(delegate)
-            : addToAndDisposeParentOnChildError(delegate));
+        const lifted = pipe(new TakeWhileLiftableState(delegate, predicate, inclusive), m.variance === "covariant" ? add(delegate) : addTo(delegate));
         return lifted;
     };
     return m.lift(operator);
 };
 const createThrowIfEmptyLiftedOperator = (m, ThrowIfEmptyLiftableState) => (factory) => {
     const operator = delegate => {
-        const lifted = pipe(new ThrowIfEmptyLiftableState(delegate), m.variance === "covariant"
-            ? add(delegate)
-            : addToAndDisposeParentOnChildError(delegate));
+        const lifted = pipe(new ThrowIfEmptyLiftableState(delegate), m.variance === "covariant" ? add(delegate, true) : addTo(delegate));
         const { parent, child } = m.variance === "covariant"
             ? { parent: lifted, child: delegate }
             : { parent: delegate, child: lifted };

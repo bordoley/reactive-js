@@ -13,11 +13,11 @@ import { identity as identity$1, __stream, createActionReducer, stream, empty as
 
 const tests$6 = describe("Disposable", describe("AbstractDisposable", test("disposes child disposable when disposed", () => {
     const child = createDisposable();
-    pipe(createDisposable(), add(child), dispose());
+    pipe(createDisposable(), add(child, true), dispose());
     expectTrue(child.isDisposed);
 }), test("adding to disposed disposable disposes the child", () => {
     const child = createDisposable();
-    pipe(createDisposable(), dispose(), add(child));
+    pipe(createDisposable(), dispose(), add(child, true));
     expectTrue(child.isDisposed);
 }), test("disposes teardown function exactly once when disposed", () => {
     const teardown = mockFn();

@@ -1,5 +1,5 @@
 /// <reference types="./runnable.d.ts" />
-import { addToAndDisposeParentOnChildError, dispose } from './disposable.mjs';
+import { addTo, dispose } from './disposable.mjs';
 import { ignore, pipe, raise, identity, alwaysTrue } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractSource, sourceFrom, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
@@ -100,12 +100,12 @@ class FlattenSink extends Sink {
     }
     notify(next) {
         const { delegate } = this;
-        const concatSink = pipe(createDelegatingSink(delegate), addToAndDisposeParentOnChildError(this));
+        const concatSink = pipe(createDelegatingSink(delegate), addTo(this));
         next.sink(concatSink);
         concatSink.dispose();
     }
 }
-const _concatAll = lift(delegate => pipe(new FlattenSink(delegate), addToAndDisposeParentOnChildError(delegate)));
+const _concatAll = lift(delegate => pipe(new FlattenSink(delegate), addTo(delegate)));
 const concatAll = () => _concatAll;
 const concatAllT = {
     concatAll,
@@ -181,7 +181,7 @@ const catchError = createCatchErrorOperator(liftT, class CatchErrorSink extends 
 const concat = (...runnables) => createRunnable((sink) => {
     const runnablesLength = runnables.length;
     for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
-        const concatSink = pipe(createDelegatingSink(sink), addToAndDisposeParentOnChildError(sink));
+        const concatSink = pipe(createDelegatingSink(sink), addTo(sink));
         runnables[i].sink(concatSink);
         concatSink.dispose();
     }
@@ -298,7 +298,7 @@ const repeat = (predicate) => {
     return runnable => createRunnable(sink => {
         let count = 0;
         do {
-            const delegateSink = pipe(createDelegatingSink(sink), addToAndDisposeParentOnChildError(sink));
+            const delegateSink = pipe(createDelegatingSink(sink), addTo(sink));
             runnable.sink(delegateSink);
             delegateSink.dispose();
             count++;

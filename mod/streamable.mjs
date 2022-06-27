@@ -1,6 +1,6 @@
 /// <reference types="./streamable.d.ts" />
 import { empty as empty$1, concatWith, fromValue, ignoreElements, endWith, startWith, concatMap } from './container.mjs';
-import { addAndDisposeParentOnChildError, addToAndDisposeParentOnChildError, bindTo } from './disposable.mjs';
+import { add, addTo, bindTo } from './disposable.mjs';
 import { pipe, compose, returns, updaterReducer, flip } from './functions.mjs';
 import { AbstractDisposableObservable, createSubject, publish, createObservable, map, onNotify, dispatchTo, subscribe, fromArrayT, __currentScheduler, __using, scan, mergeT, distinctUntilChanged, zipWithLatestFrom, subscribeOn, fromDisposable, takeUntil, keepT, concatT, merge, onSubscribe, observable, __memo, __observe, reduce, mapT, concatAllT, takeFirst, withLatestFrom, using, never, takeWhile, scanAsync, switchAll } from './observable.mjs';
 import { sinkInto, sourceFrom } from './source.mjs';
@@ -27,9 +27,9 @@ class StreamImpl extends AbstractDisposableObservable {
 const createStream = (op, scheduler, options) => {
     const subject = createSubject();
     const observable = pipe(subject, op, publish(scheduler, options));
-    const stream = pipe(new StreamImpl(subject, observable), addAndDisposeParentOnChildError(subject), 
+    const stream = pipe(new StreamImpl(subject, observable), add(subject), 
     // FIXME: This seems wrong.
-    addToAndDisposeParentOnChildError(observable));
+    addTo(observable));
     return stream;
 };
 
@@ -55,7 +55,7 @@ const liftImpl = (streamable, obsOps, reqOps) => {
     const op = requests => createObservable(observer => {
         const { scheduler } = observer;
         const srcStream = pipe(src, stream(scheduler));
-        pipe(observer, sourceFrom(pipe(srcStream, compose(...obsOps))), addAndDisposeParentOnChildError(srcStream), addAndDisposeParentOnChildError(pipe(requests, map(compose(...reqOps)), onNotify(dispatchTo(srcStream)), subscribe(scheduler), bindTo(srcStream))));
+        pipe(observer, sourceFrom(pipe(srcStream, compose(...obsOps))), add(srcStream), add(pipe(requests, map(compose(...reqOps)), onNotify(dispatchTo(srcStream)), subscribe(scheduler), bindTo(srcStream))));
     });
     return new LiftedStreamable(op, src, obsOps, reqOps);
 };
@@ -133,7 +133,7 @@ const createStateStore = (initialState, options) => createActionReducer(updaterR
  */
 const toStateStore = () => streamable => createStreamable(updates => createObservable(observer => {
     const { scheduler } = observer;
-    const stream$1 = pipe(streamable, stream(scheduler), addToAndDisposeParentOnChildError(observer), sinkInto(observer));
+    const stream$1 = pipe(streamable, stream(scheduler), addTo(observer), sinkInto(observer));
     pipe(updates, zipWithLatestFrom(stream$1, (updateState, prev) => updateState(prev)), onNotify(dispatchTo(stream$1)), subscribe(scheduler), bindTo(stream$1));
 }));
 
@@ -150,7 +150,7 @@ const identity = () => _identity;
 const flow = ({ scheduler, } = {}) => observable => {
     const op = (modeObs) => createObservable(observer => {
         const pausableScheduler = toPausableScheduler(scheduler !== null && scheduler !== void 0 ? scheduler : observer.scheduler);
-        pipe(observer, sourceFrom(pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil))), addAndDisposeParentOnChildError(pipe(modeObs, onNotify((mode) => {
+        pipe(observer, sourceFrom(pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil))), add(pipe(modeObs, onNotify((mode) => {
             switch (mode) {
                 case "pause":
                     pausableScheduler.pause();
@@ -159,7 +159,7 @@ const flow = ({ scheduler, } = {}) => observable => {
                     pausableScheduler.resume();
                     break;
             }
-        }), subscribe(observer.scheduler), bindTo(pausableScheduler))), addAndDisposeParentOnChildError(pausableScheduler));
+        }), subscribe(observer.scheduler), bindTo(pausableScheduler))), add(pausableScheduler));
     });
     return createStreamable(op);
 };
@@ -186,13 +186,13 @@ class FlowableSinkAccumulatorImpl extends AbstractDisposableObservable {
         this.subject.sink(observer);
     }
     stream(scheduler, options) {
-        return pipe(this.streamable, stream(scheduler, options), addToAndDisposeParentOnChildError(this));
+        return pipe(this.streamable, stream(scheduler, options), addTo(this));
     }
 }
 /** @experimental */
 const createFlowableSinkAccumulator = (reducer, initialValue, options) => {
     const subject = createSubject(options);
-    const sinkAcc = pipe(compose(reduce(reducer, initialValue), onNotify(dispatchTo(subject)), ignoreElements(keepT), startWith({ ...concatT, ...fromArrayT }, "pause", "resume")), createStreamable, streamable => new FlowableSinkAccumulatorImpl(subject, streamable), addAndDisposeParentOnChildError(subject));
+    const sinkAcc = pipe(compose(reduce(reducer, initialValue), onNotify(dispatchTo(subject)), ignoreElements(keepT), startWith({ ...concatT, ...fromArrayT }, "pause", "resume")), createStreamable, streamable => new FlowableSinkAccumulatorImpl(subject, streamable), add(subject));
     return sinkAcc;
 };
 

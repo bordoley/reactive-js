@@ -2,7 +2,6 @@ import { AbstractDisposableContainer } from "../container";
 import {
   AbstractDisposable,
   addTo,
-  addToAndDisposeParentOnChildError,
   dispose,
   onComplete,
   onDisposed,
@@ -20,7 +19,7 @@ const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
     pipe(
       observer.scheduler,
       schedule(dispatcher.continuation),
-      addToAndDisposeParentOnChildError(observer),
+      addTo(observer),
       onComplete(dispatcher.onContinuationDispose),
     );
   }
@@ -78,7 +77,7 @@ export class Observer<T>
     if (isNone(this._dispatcher)) {
       const dispatcher = pipe(
         new ObserverDelegatingDispatcher(this),
-        addTo(this),
+        addTo(this, true),
         onDisposed(e => {
           if (dispatcher.nextQueue.length === 0) {
             pipe(this, dispose(e));

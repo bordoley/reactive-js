@@ -29,14 +29,14 @@ export const tests = describe(
     test("disposes child disposable when disposed", () => {
       const child = createDisposable();
 
-      pipe(createDisposable(), add(child), dispose());
+      pipe(createDisposable(), add(child, true), dispose());
 
       expectTrue(child.isDisposed);
     }),
 
     test("adding to disposed disposable disposes the child", () => {
       const child = createDisposable();
-      pipe(createDisposable(), dispose(), add(child));
+      pipe(createDisposable(), dispose(), add(child, true));
 
       expectTrue(child.isDisposed);
     }),
