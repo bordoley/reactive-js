@@ -81,7 +81,8 @@
 - [distinctUntilChanged](observable.md#distinctuntilchanged)
 - [everySatisfy](observable.md#everysatisfy)
 - [exhaust](observable.md#exhaust)
-- [fork](observable.md#fork)
+- [forkCombineLatest](observable.md#forkcombinelatest)
+- [forkZipLatest](observable.md#forkziplatest)
 - [fromArray](observable.md#fromarray)
 - [fromDisposable](observable.md#fromdisposable)
 - [fromEnumerable](observable.md#fromenumerable)
@@ -1425,9 +1426,9 @@ has not yet been disposed.
 
 ___
 
-### fork
+### forkCombineLatest
 
-▸ **fork**<`T`, `TA`, `TB`\>(`a`, `b`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`\>(`a`, `b`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -1448,7 +1449,7 @@ ___
 
 [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`]\>
 
-▸ **fork**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -1471,7 +1472,7 @@ ___
 
 [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`]\>
 
-▸ **fork**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -1496,7 +1497,7 @@ ___
 
 [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **fork**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -1523,7 +1524,7 @@ ___
 
 [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **fork**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -1552,7 +1553,7 @@ ___
 
 [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **fork**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -1583,7 +1584,7 @@ ___
 
 [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **fork**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -1616,7 +1617,235 @@ ___
 
 [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **fork**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TA`\> |
+| `b` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TB`\> |
+| `c` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TC`\> |
+| `d` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TD`\> |
+| `e` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TE`\> |
+| `f` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TF`\> |
+| `g` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TG`\> |
+| `h` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TH`\> |
+| `i` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TI`\> |
+
+#### Returns
+
+[`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+___
+
+### forkZipLatest
+
+▸ **forkZipLatest**<`T`, `TA`, `TB`\>(`a`, `b`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TA`\> |
+| `b` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TB`\> |
+
+#### Returns
+
+[`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`]\>
+
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TA`\> |
+| `b` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TB`\> |
+| `c` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TC`\> |
+
+#### Returns
+
+[`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`]\>
+
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TA`\> |
+| `b` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TB`\> |
+| `c` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TC`\> |
+| `d` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TD`\> |
+
+#### Returns
+
+[`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TA`\> |
+| `b` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TB`\> |
+| `c` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TC`\> |
+| `d` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TD`\> |
+| `e` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TE`\> |
+
+#### Returns
+
+[`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TA`\> |
+| `b` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TB`\> |
+| `c` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TC`\> |
+| `d` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TD`\> |
+| `e` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TE`\> |
+| `f` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TF`\> |
+
+#### Returns
+
+[`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TA`\> |
+| `b` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TB`\> |
+| `c` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TC`\> |
+| `d` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TD`\> |
+| `e` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TE`\> |
+| `f` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TF`\> |
+| `g` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TG`\> |
+
+#### Returns
+
+[`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TA`\> |
+| `b` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TB`\> |
+| `c` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TC`\> |
+| `d` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TD`\> |
+| `e` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TE`\> |
+| `f` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TF`\> |
+| `g` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TG`\> |
+| `h` | [`ObservableOperator`](observable.md#observableoperator)<`T`, `TH`\> |
+
+#### Returns
+
+[`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableOperator`](observable.md#observableoperator)<`T`, [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 

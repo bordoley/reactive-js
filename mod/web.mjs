@@ -1,7 +1,7 @@
 /// <reference types="./web.d.ts" />
 import { onDisposed, bindTo, addTo, toAbortSignal, dispose } from './disposable.mjs';
 import { pipe, raise, compose, returns } from './functions.mjs';
-import { createObservable, AbstractDisposableObservable, map, fork, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
+import { createObservable, AbstractDisposableObservable, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { ignoreElements } from './container.mjs';
 import { none, isSome } from './option.mjs';
@@ -117,13 +117,10 @@ const windowLocation = createStreamble((scheduler, options) => {
         uri: windowLocationURIToString(uri),
         title: uri.title,
         replace,
-    })), fork(compose(takeWhile(_ => windowLocationStream.historyCounter === -1), onNotify(({ uri, title }) => {
+    })), forkCombineLatest(compose(takeWhile(_ => windowLocationStream.historyCounter === -1), onNotify(({ uri, title }) => {
         // Initialize the history state on page load
-        const isInitialPageLoad = windowLocationStream.historyCounter === -1;
-        if (isInitialPageLoad) {
-            windowLocationStream.historyCounter++;
-            windowHistoryReplaceState(windowLocationStream, title, uri);
-        }
+        windowLocationStream.historyCounter++;
+        windowHistoryReplaceState(windowLocationStream, title, uri);
     }), ignoreElements(keepT)), compose(keep$1(({ replace, title, uri }) => {
         const titleChanged = document.title !== title;
         const uriChanged = uri !== window.location.href;

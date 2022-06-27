@@ -4,7 +4,7 @@ import { Updater, compose, pipe, raise } from "../functions";
 import {
   AbstractDisposableObservable,
   Observer,
-  fork,
+  forkCombineLatest,
   keep,
   keepT,
   map,
@@ -166,19 +166,15 @@ export const windowLocation: WindowLocationStreamableLike = createStreamble(
         title: uri.title,
         replace,
       })),
-      fork(
+      forkCombineLatest(
         compose(
           takeWhile<TSerializedState>(
             _ => windowLocationStream.historyCounter === -1,
           ),
           onNotify(({ uri, title }) => {
             // Initialize the history state on page load
-            const isInitialPageLoad =
-              windowLocationStream.historyCounter === -1;
-            if (isInitialPageLoad) {
-              windowLocationStream.historyCounter++;
-              windowHistoryReplaceState(windowLocationStream, title, uri);
-            }
+            windowLocationStream.historyCounter++;
+            windowHistoryReplaceState(windowLocationStream, title, uri);
           }),
           ignoreElements(keepT),
         ),

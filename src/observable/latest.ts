@@ -254,29 +254,29 @@ export const zipLatestWith =
   fst =>
     zipLatest(fst, snd);
 
-export function fork<T, TA, TB>(
+export function forkCombineLatest<T, TA, TB>(
   a: ObservableOperator<T, TA>,
   b: ObservableOperator<T, TB>,
 ): ObservableOperator<T, [TA, TB]>;
-export function fork<T, TA, TB, TC>(
+export function forkCombineLatest<T, TA, TB, TC>(
   a: ObservableOperator<T, TA>,
   b: ObservableOperator<T, TB>,
   c: ObservableOperator<T, TC>,
 ): ObservableOperator<T, [TA, TB, TC]>;
-export function fork<T, TA, TB, TC, TD>(
+export function forkCombineLatest<T, TA, TB, TC, TD>(
   a: ObservableOperator<T, TA>,
   b: ObservableOperator<T, TB>,
   c: ObservableOperator<T, TC>,
   d: ObservableOperator<T, TD>,
 ): ObservableOperator<T, [TA, TB, TC, TD]>;
-export function fork<T, TA, TB, TC, TD, TE>(
+export function forkCombineLatest<T, TA, TB, TC, TD, TE>(
   a: ObservableOperator<T, TA>,
   b: ObservableOperator<T, TB>,
   c: ObservableOperator<T, TC>,
   d: ObservableOperator<T, TD>,
   e: ObservableOperator<T, TE>,
 ): ObservableOperator<T, [TA, TB, TC, TD, TE]>;
-export function fork<T, TA, TB, TC, TD, TE, TF>(
+export function forkCombineLatest<T, TA, TB, TC, TD, TE, TF>(
   a: ObservableOperator<T, TA>,
   b: ObservableOperator<T, TB>,
   c: ObservableOperator<T, TC>,
@@ -284,7 +284,7 @@ export function fork<T, TA, TB, TC, TD, TE, TF>(
   e: ObservableOperator<T, TE>,
   f: ObservableOperator<T, TF>,
 ): ObservableOperator<T, [TA, TB, TC, TD, TE, TF]>;
-export function fork<T, TA, TB, TC, TD, TE, TF, TG>(
+export function forkCombineLatest<T, TA, TB, TC, TD, TE, TF, TG>(
   a: ObservableOperator<T, TA>,
   b: ObservableOperator<T, TB>,
   c: ObservableOperator<T, TC>,
@@ -293,7 +293,7 @@ export function fork<T, TA, TB, TC, TD, TE, TF, TG>(
   f: ObservableOperator<T, TF>,
   g: ObservableOperator<T, TG>,
 ): ObservableOperator<T, [TA, TB, TC, TD, TE, TF, TG]>;
-export function fork<T, TA, TB, TC, TD, TE, TF, TG, TH>(
+export function forkCombineLatest<T, TA, TB, TC, TD, TE, TF, TG, TH>(
   a: ObservableOperator<T, TA>,
   b: ObservableOperator<T, TB>,
   c: ObservableOperator<T, TC>,
@@ -303,7 +303,7 @@ export function fork<T, TA, TB, TC, TD, TE, TF, TG, TH>(
   g: ObservableOperator<T, TG>,
   h: ObservableOperator<T, TH>,
 ): ObservableOperator<T, [TA, TB, TC, TD, TE, TF, TG, TH]>;
-export function fork<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+export function forkCombineLatest<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(
   a: ObservableOperator<T, TA>,
   b: ObservableOperator<T, TB>,
   c: ObservableOperator<T, TC>,
@@ -314,12 +314,88 @@ export function fork<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(
   h: ObservableOperator<T, TH>,
   i: ObservableOperator<T, TI>,
 ): ObservableOperator<T, [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-export function fork<T>(
+export function forkCombineLatest<T>(
   ...ops: readonly ObservableOperator<T, unknown>[]
 ): ObservableOperator<T, readonly unknown[]> {
   return (obs: ObservableLike<T>) =>
     latest(
-      ops.map(op => pipe(obs, op)),
+      pipe(
+        ops,
+        map(op => pipe(obs, op)),
+      ),
       LatestMode.Combine,
+    );
+}
+
+export function forkZipLatest<T, TA, TB>(
+  a: ObservableOperator<T, TA>,
+  b: ObservableOperator<T, TB>,
+): ObservableOperator<T, [TA, TB]>;
+export function forkZipLatest<T, TA, TB, TC>(
+  a: ObservableOperator<T, TA>,
+  b: ObservableOperator<T, TB>,
+  c: ObservableOperator<T, TC>,
+): ObservableOperator<T, [TA, TB, TC]>;
+export function forkZipLatest<T, TA, TB, TC, TD>(
+  a: ObservableOperator<T, TA>,
+  b: ObservableOperator<T, TB>,
+  c: ObservableOperator<T, TC>,
+  d: ObservableOperator<T, TD>,
+): ObservableOperator<T, [TA, TB, TC, TD]>;
+export function forkZipLatest<T, TA, TB, TC, TD, TE>(
+  a: ObservableOperator<T, TA>,
+  b: ObservableOperator<T, TB>,
+  c: ObservableOperator<T, TC>,
+  d: ObservableOperator<T, TD>,
+  e: ObservableOperator<T, TE>,
+): ObservableOperator<T, [TA, TB, TC, TD, TE]>;
+export function forkZipLatest<T, TA, TB, TC, TD, TE, TF>(
+  a: ObservableOperator<T, TA>,
+  b: ObservableOperator<T, TB>,
+  c: ObservableOperator<T, TC>,
+  d: ObservableOperator<T, TD>,
+  e: ObservableOperator<T, TE>,
+  f: ObservableOperator<T, TF>,
+): ObservableOperator<T, [TA, TB, TC, TD, TE, TF]>;
+export function forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG>(
+  a: ObservableOperator<T, TA>,
+  b: ObservableOperator<T, TB>,
+  c: ObservableOperator<T, TC>,
+  d: ObservableOperator<T, TD>,
+  e: ObservableOperator<T, TE>,
+  f: ObservableOperator<T, TF>,
+  g: ObservableOperator<T, TG>,
+): ObservableOperator<T, [TA, TB, TC, TD, TE, TF, TG]>;
+export function forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG, TH>(
+  a: ObservableOperator<T, TA>,
+  b: ObservableOperator<T, TB>,
+  c: ObservableOperator<T, TC>,
+  d: ObservableOperator<T, TD>,
+  e: ObservableOperator<T, TE>,
+  f: ObservableOperator<T, TF>,
+  g: ObservableOperator<T, TG>,
+  h: ObservableOperator<T, TH>,
+): ObservableOperator<T, [TA, TB, TC, TD, TE, TF, TG, TH]>;
+export function forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+  a: ObservableOperator<T, TA>,
+  b: ObservableOperator<T, TB>,
+  c: ObservableOperator<T, TC>,
+  d: ObservableOperator<T, TD>,
+  e: ObservableOperator<T, TE>,
+  f: ObservableOperator<T, TF>,
+  g: ObservableOperator<T, TG>,
+  h: ObservableOperator<T, TH>,
+  i: ObservableOperator<T, TI>,
+): ObservableOperator<T, [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+export function forkZipLatest<T>(
+  ...ops: readonly ObservableOperator<T, unknown>[]
+): ObservableOperator<T, readonly unknown[]> {
+  return (obs: ObservableLike<T>) =>
+    latest(
+      pipe(
+        ops,
+        map(op => pipe(obs, op)),
+      ),
+      LatestMode.Zip,
     );
 }
