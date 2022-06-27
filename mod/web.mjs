@@ -1,8 +1,9 @@
 /// <reference types="./web.d.ts" />
 import { onDisposed, bindTo, addTo, toAbortSignal, dispose } from './disposable.mjs';
-import { pipe, raise, returns } from './functions.mjs';
-import { createObservable, AbstractDisposableObservable, map, takeWhile, onNotify, subscribe, keep as keep$1, throttle, defer, fromPromise } from './observable.mjs';
+import { pipe, raise, compose, returns } from './functions.mjs';
+import { createObservable, AbstractDisposableObservable, map, fork, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
+import { ignoreElements } from './container.mjs';
 import { none, isSome } from './option.mjs';
 import { sinkInto } from './source.mjs';
 import { createStreamble, createStateStore, stream } from './streamable.mjs';
@@ -112,34 +113,31 @@ const windowLocation = createStreamble((scheduler, options) => {
         uri: getCurrentWindowLocationURI(),
     }), { equality: areWindowLocationStatesEqual }), stream(scheduler, options));
     const windowLocationStream = pipe(new WindowLocationStream(stateStream), bindTo(stateStream));
-    const uriObs = pipe(stateStream, map(({ uri, replace }) => ({
+    pipe(stateStream, map(({ uri, replace }) => ({
         uri: windowLocationURIToString(uri),
         title: uri.title,
         replace,
-    })));
-    pipe(uriObs, takeWhile(_ => windowLocationStream.historyCounter === -1), onNotify(({ uri, title }) => {
+    })), fork(compose(takeWhile(_ => windowLocationStream.historyCounter === -1), onNotify(({ uri, title }) => {
         // Initialize the history state on page load
         const isInitialPageLoad = windowLocationStream.historyCounter === -1;
         if (isInitialPageLoad) {
             windowLocationStream.historyCounter++;
             windowHistoryReplaceState(windowLocationStream, title, uri);
         }
-    }), subscribe(scheduler), addTo(windowLocationStream));
-    pipe(uriObs, keep$1(({ replace, title, uri }) => {
+    }), ignoreElements(keepT)), compose(keep$1(({ replace, title, uri }) => {
         const titleChanged = document.title !== title;
         const uriChanged = uri !== window.location.href;
         return replace || (titleChanged && !uriChanged);
     }), throttle(100), onNotify(({ title, uri }) => {
         document.title = title;
         windowHistoryReplaceState(windowLocationStream, title, uri);
-    }), subscribe(scheduler), addTo(windowLocationStream));
-    pipe(uriObs, keep$1(({ replace, uri }) => {
+    }), ignoreElements(keepT)), compose(keep$1(({ replace, uri }) => {
         const uriChanged = uri !== window.location.href;
         return !replace && uriChanged;
     }), throttle(100), onNotify(({ title, uri }) => {
         document.title = title;
         windowHistoryPushState(windowLocationStream, title, uri);
-    }), subscribe(scheduler), addTo(windowLocationStream));
+    }), ignoreElements(keepT))), subscribe(scheduler), addTo(windowLocationStream));
     pipe(fromEvent(window, "popstate", (e) => {
         const { counter, title } = e.state;
         const uri = {

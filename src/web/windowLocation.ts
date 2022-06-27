@@ -1,9 +1,12 @@
+import { ignoreElements } from "../container";
 import { addTo, bindTo } from "../disposable";
-import { Updater, pipe, raise } from "../functions";
+import { Updater, compose, pipe, raise } from "../functions";
 import {
   AbstractDisposableObservable,
   Observer,
+  fork,
   keep,
+  keepT,
   map,
   onNotify,
   subscribe,
@@ -128,6 +131,12 @@ class WindowLocationStream
 
 let currentWindowLocationStream: Option<WindowLocationStream> = none;
 
+type TSerializedState = {
+  uri: string;
+  title: string;
+  replace: boolean;
+};
+
 export const windowLocation: WindowLocationStreamableLike = createStreamble(
   (scheduler, options): WindowLocationStreamLike => {
     if (isSome(currentWindowLocationStream)) {
@@ -150,58 +159,56 @@ export const windowLocation: WindowLocationStreamableLike = createStreamble(
       bindTo(stateStream),
     );
 
-    const uriObs = pipe(
+    pipe(
       stateStream,
       map(({ uri, replace }) => ({
         uri: windowLocationURIToString(uri),
         title: uri.title,
         replace,
       })),
-    );
+      fork(
+        compose(
+          takeWhile<TSerializedState>(
+            _ => windowLocationStream.historyCounter === -1,
+          ),
+          onNotify(({ uri, title }) => {
+            // Initialize the history state on page load
+            const isInitialPageLoad =
+              windowLocationStream.historyCounter === -1;
+            if (isInitialPageLoad) {
+              windowLocationStream.historyCounter++;
+              windowHistoryReplaceState(windowLocationStream, title, uri);
+            }
+          }),
+          ignoreElements(keepT),
+        ),
+        compose(
+          keep<TSerializedState>(({ replace, title, uri }) => {
+            const titleChanged = document.title !== title;
+            const uriChanged = uri !== window.location.href;
 
-    pipe(
-      uriObs,
-      takeWhile(_ => windowLocationStream.historyCounter === -1),
-      onNotify(({ uri, title }) => {
-        // Initialize the history state on page load
-        const isInitialPageLoad = windowLocationStream.historyCounter === -1;
-        if (isInitialPageLoad) {
-          windowLocationStream.historyCounter++;
-          windowHistoryReplaceState(windowLocationStream, title, uri);
-        }
-      }),
-      subscribe(scheduler),
-      addTo(windowLocationStream),
-    );
-
-    pipe(
-      uriObs,
-      keep(({ replace, title, uri }) => {
-        const titleChanged = document.title !== title;
-        const uriChanged = uri !== window.location.href;
-
-        return replace || (titleChanged && !uriChanged);
-      }),
-      throttle(100),
-      onNotify(({ title, uri }) => {
-        document.title = title;
-        windowHistoryReplaceState(windowLocationStream, title, uri);
-      }),
-      subscribe(scheduler),
-      addTo(windowLocationStream),
-    );
-
-    pipe(
-      uriObs,
-      keep(({ replace, uri }) => {
-        const uriChanged = uri !== window.location.href;
-        return !replace && uriChanged;
-      }),
-      throttle(100),
-      onNotify(({ title, uri }) => {
-        document.title = title;
-        windowHistoryPushState(windowLocationStream, title, uri);
-      }),
+            return replace || (titleChanged && !uriChanged);
+          }),
+          throttle(100),
+          onNotify(({ title, uri }) => {
+            document.title = title;
+            windowHistoryReplaceState(windowLocationStream, title, uri);
+          }),
+          ignoreElements(keepT),
+        ),
+        compose(
+          keep<TSerializedState>(({ replace, uri }) => {
+            const uriChanged = uri !== window.location.href;
+            return !replace && uriChanged;
+          }),
+          throttle(100),
+          onNotify(({ title, uri }) => {
+            document.title = title;
+            windowHistoryPushState(windowLocationStream, title, uri);
+          }),
+          ignoreElements(keepT),
+        ),
+      ),
       subscribe(scheduler),
       addTo(windowLocationStream),
     );
