@@ -1,12 +1,12 @@
 /// <reference types="./streamable.d.ts" />
-import { ignoreElements, startWith, fromValue, concatWith, concatMap, endWith } from './container.mjs';
+import { ignoreElements, startWith, fromValue, concatWith, concatMap } from './container.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
 import { enumerate, move, hasCurrent, current, fromIterable as fromIterable$1 } from './enumerable.mjs';
 import { pipe, compose, flip, returns, updaterReducer, increment } from './functions.mjs';
 import { AbstractDisposableObservable, createSubject, publish, __currentScheduler, __using, reduce, onNotify, dispatchTo, keepT, concatT, fromArrayT, scanAsync, scan, map, onSubscribe, observable, __memo, __observe, zipWithLatestFrom, takeFirst, switchAll, createObservable, mergeT, distinctUntilChanged, subscribe, subscribeOn, fromDisposable, takeUntil, mapT, concatAllT, withLatestFrom, using, never, takeWhile, merge } from './observable.mjs';
-import { none } from './option.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
 import { sinkInto as sinkInto$1, notifySink, sourceFrom } from './source.mjs';
+import { none } from './option.mjs';
 
 class StreamImpl extends AbstractDisposableObservable {
     constructor(dispatcher, observable) {
@@ -207,7 +207,7 @@ const sinkInto = (dest) => (src) => createObservable(observer => {
     const { scheduler } = observer;
     const srcStream = src.stream(scheduler);
     const destStream = dest.stream(scheduler);
-    pipe(merge(pipe(srcStream, onNotify(dispatchTo(destStream)), ignoreElements(keepT), onSubscribe(() => destStream)), pipe(destStream, onNotify(dispatchTo(srcStream)), ignoreElements(keepT), onSubscribe(() => srcStream))), ignoreElements(keepT), endWith({ ...fromArrayT, ...concatT }, none), sinkInto$1(observer));
+    pipe(merge(pipe(srcStream, onNotify(dispatchTo(destStream)), ignoreElements(keepT), onSubscribe(() => destStream)), pipe(destStream, onNotify(dispatchTo(srcStream)), ignoreElements(keepT), onSubscribe(() => srcStream))), ignoreElements(keepT), sinkInto$1(observer));
 });
 
 export { __stream, consume, consumeAsync, consumeContinue, consumeDone, createActionReducer, createFlowableSinkAccumulator, createLiftedStreamable, createStateStore, createStreamble, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, sinkInto, stream };

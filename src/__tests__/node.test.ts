@@ -8,7 +8,13 @@ import {
   gunzip,
   gzip,
 } from "../node";
-import { concatT, fromArray, fromArrayT, takeFirst, toPromise } from "../observable";
+import {
+  concatT,
+  fromArray,
+  fromArrayT,
+  takeFirst,
+  toPromise,
+} from "../observable";
 import { createHostScheduler } from "../scheduler";
 import { createFlowableSinkAccumulator, flow, sinkInto } from "../streamable";
 import {
@@ -46,7 +52,7 @@ export const tests = describe(
         fromArray(),
         flow(),
         sinkInto(dest),
-         endWith({ ...fromArrayT, ...concatT }, 0),
+        endWith({ ...fromArrayT, ...concatT }, 0),
         toPromise(scheduler),
       );
 

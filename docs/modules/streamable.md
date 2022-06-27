@@ -850,7 +850,7 @@ ___
 
 ### sinkInto
 
-▸ **sinkInto**<`TReq`, `T`\>(`dest`): (`src`: [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`\>\>) => [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>
+▸ **sinkInto**<`TReq`, `T`, `TOut`\>(`dest`): (`src`: [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`\>\>) => [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TOut`\>
 
 #### Type parameters
 
@@ -858,6 +858,7 @@ ___
 | :------ |
 | `TReq` |
 | `T` |
+| `TOut` |
 
 #### Parameters
 
@@ -869,7 +870,7 @@ ___
 
 `fn`
 
-▸ (`src`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>
+▸ (`src`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TOut`\>
 
 ##### Parameters
 
@@ -879,7 +880,7 @@ ___
 
 ##### Returns
 
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`void`\>
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TOut`\>
 
 ___
 
