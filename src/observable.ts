@@ -88,7 +88,7 @@ import {
 export interface ObservableLike<T> extends SourceLike {
   readonly T: unknown;
   readonly type: ObservableLike<this["T"]>;
-  readonly liftedStateType: Observer<this["T"]>;
+  readonly liftableStateType: Observer<this["T"]>;
 
   readonly isEnumerable?: boolean;
 

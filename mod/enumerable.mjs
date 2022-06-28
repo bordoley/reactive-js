@@ -3,7 +3,7 @@ import { isDisposed, dispose, createSerialDisposable, bindTo, add, addTo } from 
 import { AbstractEnumerator, reset, hasCurrent, move, Enumerator, current, forEach, zip as zip$1, AbstractDelegatingEnumerator } from './enumerator.mjs';
 import { pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { empty } from './container.mjs';
-import { AbstractLiftable, covariant, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftedOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
+import { AbstractLiftable, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { map as map$1, empty as empty$1, forEach as forEach$1 } from './readonlyArray.mjs';
 import { createRunnable } from './runnable.mjs';
@@ -361,7 +361,7 @@ function concat(...enumerables) {
 const concatT = {
     concat,
 };
-const distinctUntilChanged = createDistinctUntilChangedLiftedOperator(liftT, class DistinctUntilChangedEnumerator extends AbstractDelegatingEnumerator {
+const distinctUntilChanged = createDistinctUntilChangedLiftOperator(liftT, class DistinctUntilChangedEnumerator extends AbstractDelegatingEnumerator {
     constructor(delegate, equality) {
         super(delegate);
         this.equality = equality;
@@ -387,7 +387,7 @@ const distinctUntilChanged = createDistinctUntilChangedLiftedOperator(liftT, cla
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
-const keep = createKeepLiftedOperator(liftT, class KeepEnumerator extends AbstractDelegatingEnumerator {
+const keep = createKeepLiftOperator(liftT, class KeepEnumerator extends AbstractDelegatingEnumerator {
     constructor(delegate, predicate) {
         super(delegate);
         this.predicate = predicate;
@@ -406,7 +406,7 @@ const keep = createKeepLiftedOperator(liftT, class KeepEnumerator extends Abstra
 const keepT = {
     keep,
 };
-const map = createMapLiftedOperator(liftT, class MapEnumerator extends AbstractEnumerator {
+const map = createMapLiftOperator(liftT, class MapEnumerator extends AbstractEnumerator {
     constructor(delegate, mapper) {
         super();
         this.delegate = delegate;
@@ -429,7 +429,7 @@ const map = createMapLiftedOperator(liftT, class MapEnumerator extends AbstractE
 const mapT = {
     map,
 };
-const onNotify = createOnNotifyLiftedOperator(liftT, class OnNotifyEnumerator extends AbstractDelegatingEnumerator {
+const onNotify = createOnNotifyLiftOperator(liftT, class OnNotifyEnumerator extends AbstractDelegatingEnumerator {
     constructor(delegate, onNotify) {
         super(delegate);
         this.onNotify = onNotify;
@@ -447,7 +447,7 @@ const onNotify = createOnNotifyLiftedOperator(liftT, class OnNotifyEnumerator ex
         return hasCurrent(this);
     }
 });
-const pairwise = createPairwiseLiftedOperator(liftT, class PairwiseEnumerator extends AbstractEnumerator {
+const pairwise = createPairwiseLiftOperator(liftT, class PairwiseEnumerator extends AbstractEnumerator {
     constructor(delegate) {
         super();
         this.delegate = delegate;
@@ -466,7 +466,7 @@ const pairwise = createPairwiseLiftedOperator(liftT, class PairwiseEnumerator ex
 const pairwiseT = {
     pairwise,
 };
-const scan = createScanLiftedOperator(liftT, class ScanEnumerator extends AbstractEnumerator {
+const scan = createScanLiftOperator(liftT, class ScanEnumerator extends AbstractEnumerator {
     constructor(delegate, reducer, current) {
         super();
         this.delegate = delegate;
@@ -491,7 +491,7 @@ const scan = createScanLiftedOperator(liftT, class ScanEnumerator extends Abstra
 const scanT = {
     scan,
 };
-const skipFirst = createSkipFirstLiftedOperator(liftT, class SkipFirstEnumerator extends AbstractDelegatingEnumerator {
+const skipFirst = createSkipFirstLiftOperator(liftT, class SkipFirstEnumerator extends AbstractDelegatingEnumerator {
     constructor(delegate, skipCount) {
         super(delegate);
         this.skipCount = skipCount;
@@ -511,7 +511,7 @@ const skipFirst = createSkipFirstLiftedOperator(liftT, class SkipFirstEnumerator
 const skipFirstT = {
     skipFirst,
 };
-const takeFirst = createTakeFirstLiftedOperator({ ...fromArrayT, ...liftT }, class TakeFirstEnumerator extends AbstractDelegatingEnumerator {
+const takeFirst = createTakeFirstLiftOperator({ ...fromArrayT, ...liftT }, class TakeFirstEnumerator extends AbstractDelegatingEnumerator {
     constructor(delegate, maxCount) {
         super(delegate);
         this.maxCount = maxCount;
@@ -534,7 +534,7 @@ const takeFirst = createTakeFirstLiftedOperator({ ...fromArrayT, ...liftT }, cla
 const takeFirstT = {
     takeFirst,
 };
-const takeWhile = createTakeWhileLiftedOperator(liftT, class TakeWhileEnumerator extends AbstractDelegatingEnumerator {
+const takeWhile = createTakeWhileLiftOperator(liftT, class TakeWhileEnumerator extends AbstractDelegatingEnumerator {
     constructor(delegate, predicate, inclusive) {
         super(delegate);
         this.predicate = predicate;
@@ -567,7 +567,7 @@ const takeWhile = createTakeWhileLiftedOperator(liftT, class TakeWhileEnumerator
 const takeWhileT = {
     takeWhile,
 };
-const throwIfEmpty = createThrowIfEmptyLiftedOperator(liftT, class ThrowIfEmptyEnumerator extends AbstractDelegatingEnumerator {
+const throwIfEmpty = createThrowIfEmptyLiftOperator(liftT, class ThrowIfEmptyEnumerator extends AbstractDelegatingEnumerator {
     constructor() {
         super(...arguments);
         this.isEmpty = true;

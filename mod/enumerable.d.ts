@@ -88,7 +88,7 @@ declare const zipT: Zip<EnumerableLike<unknown>>;
 interface EnumerableLike<T> extends LiftableLike {
     readonly T: unknown;
     readonly type: EnumerableLike<this["T"]>;
-    readonly liftedStateType: Enumerator<this["T"]>;
+    readonly liftableStateType: Enumerator<this["T"]>;
     /**
      * Returns an `EnumeratorLike` to iterate through the Container.
      */

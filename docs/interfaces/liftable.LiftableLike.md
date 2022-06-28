@@ -24,7 +24,7 @@
 ### Properties
 
 - [T](liftable.LiftableLike.md#t)
-- [liftedStateType](liftable.LiftableLike.md#liftedstatetype)
+- [liftableStateType](liftable.LiftableLike.md#liftablestatetype)
 - [type](liftable.LiftableLike.md#type)
 
 ## Properties
@@ -39,9 +39,9 @@
 
 ___
 
-### liftedStateType
+### liftableStateType
 
-• `Readonly` **liftedStateType**: [`LiftedStateLike`](liftable.LiftedStateLike.md)
+• `Readonly` **liftableStateType**: [`LiftableStateLike`](liftable.LiftableStateLike.md)
 
 ___
 

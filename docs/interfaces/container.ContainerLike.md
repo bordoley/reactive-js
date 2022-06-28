@@ -10,7 +10,7 @@
 
   ↳ [`LiftableLike`](liftable.LiftableLike.md)
 
-  ↳ [`LiftedStateLike`](liftable.LiftedStateLike.md)
+  ↳ [`LiftableStateLike`](liftable.LiftableStateLike.md)
 
   ↳ [`SequenceLike`](sequence.SequenceLike.md)
 

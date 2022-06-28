@@ -29,7 +29,7 @@
 ### Accessors
 
 - [T](observable.AbstractDisposableObservable.md#t)
-- [liftedStateType](observable.AbstractDisposableObservable.md#liftedstatetype)
+- [liftableStateType](observable.AbstractDisposableObservable.md#liftablestatetype)
 - [type](observable.AbstractDisposableObservable.md#type)
 
 ### Methods
@@ -72,9 +72,9 @@ AbstractDisposableSource.T
 
 ___
 
-### liftedStateType
+### liftableStateType
 
-• `get` **liftedStateType**(): `TState`
+• `get` **liftableStateType**(): `TState`
 
 #### Returns
 
@@ -82,11 +82,11 @@ ___
 
 #### Implementation of
 
-[ObservableLike](../interfaces/observable.ObservableLike.md).[liftedStateType](../interfaces/observable.ObservableLike.md#liftedstatetype)
+[ObservableLike](../interfaces/observable.ObservableLike.md).[liftableStateType](../interfaces/observable.ObservableLike.md#liftablestatetype)
 
 #### Inherited from
 
-AbstractDisposableSource.liftedStateType
+AbstractDisposableSource.liftableStateType
 
 ___
 

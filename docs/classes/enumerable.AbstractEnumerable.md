@@ -29,7 +29,7 @@
 ### Accessors
 
 - [T](enumerable.AbstractEnumerable.md#t)
-- [liftedStateType](enumerable.AbstractEnumerable.md#liftedstatetype)
+- [liftableStateType](enumerable.AbstractEnumerable.md#liftablestatetype)
 - [type](enumerable.AbstractEnumerable.md#type)
 
 ### Methods
@@ -72,9 +72,9 @@ AbstractLiftable.T
 
 ___
 
-### liftedStateType
+### liftableStateType
 
-• `get` **liftedStateType**(): `TState`
+• `get` **liftableStateType**(): `TState`
 
 #### Returns
 
@@ -82,11 +82,11 @@ ___
 
 #### Implementation of
 
-[EnumerableLike](../interfaces/enumerable.EnumerableLike.md).[liftedStateType](../interfaces/enumerable.EnumerableLike.md#liftedstatetype)
+[EnumerableLike](../interfaces/enumerable.EnumerableLike.md).[liftableStateType](../interfaces/enumerable.EnumerableLike.md#liftablestatetype)
 
 #### Inherited from
 
-AbstractLiftable.liftedStateType
+AbstractLiftable.liftableStateType
 
 ___
 

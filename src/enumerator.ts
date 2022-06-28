@@ -1,7 +1,7 @@
 import { AbstractDisposableContainer } from "./container";
 import { addTo, dispose, isDisposed, onDisposed } from "./disposable";
 import { Function1, SideEffect1, pipe, pipeLazy, raise } from "./functions";
-import { LiftedStateLike } from "./liftable";
+import { LiftableStateLike } from "./liftable";
 import { Option, none } from "./option";
 import {
   everySatisfy,
@@ -11,7 +11,7 @@ import {
 
 export abstract class Enumerator<T>
   extends AbstractDisposableContainer
-  implements LiftedStateLike
+  implements LiftableStateLike
 {
   abstract get current(): T;
   abstract get hasCurrent(): boolean;

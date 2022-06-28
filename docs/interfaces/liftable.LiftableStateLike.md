@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [liftable](../modules/liftable.md) / LiftedStateLike
+[Reactive-JS](../README.md) / [liftable](../modules/liftable.md) / LiftableStateLike
 
-# Interface: LiftedStateLike
+# Interface: LiftableStateLike
 
-[liftable](../modules/liftable.md).LiftedStateLike
+[liftable](../modules/liftable.md).LiftableStateLike
 
 ## Hierarchy
 
@@ -10,7 +10,7 @@
 
 - [`ContainerLike`](container.ContainerLike.md)
 
-  ↳ **`LiftedStateLike`**
+  ↳ **`LiftableStateLike`**
 
   ↳↳ [`SinkLike`](source.SinkLike.md)
 
@@ -22,15 +22,15 @@
 
 ### Properties
 
-- [T](liftable.LiftedStateLike.md#t)
-- [error](liftable.LiftedStateLike.md#error)
-- [isDisposed](liftable.LiftedStateLike.md#isdisposed)
-- [type](liftable.LiftedStateLike.md#type)
+- [T](liftable.LiftableStateLike.md#t)
+- [error](liftable.LiftableStateLike.md#error)
+- [isDisposed](liftable.LiftableStateLike.md#isdisposed)
+- [type](liftable.LiftableStateLike.md#type)
 
 ### Methods
 
-- [add](liftable.LiftedStateLike.md#add)
-- [dispose](liftable.LiftedStateLike.md#dispose)
+- [add](liftable.LiftableStateLike.md#add)
+- [dispose](liftable.LiftableStateLike.md#dispose)
 
 ## Properties
 
@@ -88,7 +88,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`LiftedStateLike`](liftable.LiftedStateLike.md) |
+| `this` | [`LiftableStateLike`](liftable.LiftableStateLike.md) |
 | `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
 | `ignoreChildErrors` | `boolean` |
 

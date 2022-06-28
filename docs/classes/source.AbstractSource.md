@@ -32,7 +32,7 @@
 ### Accessors
 
 - [T](source.AbstractSource.md#t)
-- [liftedStateType](source.AbstractSource.md#liftedstatetype)
+- [liftableStateType](source.AbstractSource.md#liftablestatetype)
 - [type](source.AbstractSource.md#type)
 
 ### Methods
@@ -76,9 +76,9 @@ AbstractLiftable.T
 
 ___
 
-### liftedStateType
+### liftableStateType
 
-• `get` **liftedStateType**(): `TState`
+• `get` **liftableStateType**(): `TState`
 
 #### Returns
 
@@ -86,11 +86,11 @@ ___
 
 #### Implementation of
 
-[SourceLike](../interfaces/source.SourceLike.md).[liftedStateType](../interfaces/source.SourceLike.md#liftedstatetype)
+[SourceLike](../interfaces/source.SourceLike.md).[liftableStateType](../interfaces/source.SourceLike.md#liftablestatetype)
 
 #### Inherited from
 
-AbstractLiftable.liftedStateType
+AbstractLiftable.liftableStateType
 
 ___
 

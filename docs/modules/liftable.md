@@ -13,7 +13,7 @@
 
 - [Lift](../interfaces/liftable.Lift.md)
 - [LiftableLike](../interfaces/liftable.LiftableLike.md)
-- [LiftedStateLike](../interfaces/liftable.LiftedStateLike.md)
+- [LiftableStateLike](../interfaces/liftable.LiftableStateLike.md)
 
 ### Type Aliases
 
@@ -22,7 +22,7 @@
 - [LiftOperator](liftable.md#liftoperator)
 - [LiftOperatorIn](liftable.md#liftoperatorin)
 - [LiftOperatorOut](liftable.md#liftoperatorout)
-- [LiftedStateOf](liftable.md#liftedstateof)
+- [LiftableStateOf](liftable.md#liftablestateof)
 - [Variance](liftable.md#variance)
 
 ### Variables
@@ -32,16 +32,16 @@
 
 ### Functions
 
-- [createDistinctUntilChangedLiftedOperator](liftable.md#createdistinctuntilchangedliftedoperator)
-- [createKeepLiftedOperator](liftable.md#createkeepliftedoperator)
-- [createMapLiftedOperator](liftable.md#createmapliftedoperator)
-- [createOnNotifyLiftedOperator](liftable.md#createonnotifyliftedoperator)
-- [createPairwiseLiftedOperator](liftable.md#createpairwiseliftedoperator)
-- [createScanLiftedOperator](liftable.md#createscanliftedoperator)
-- [createSkipFirstLiftedOperator](liftable.md#createskipfirstliftedoperator)
-- [createTakeFirstLiftedOperator](liftable.md#createtakefirstliftedoperator)
-- [createTakeWhileLiftedOperator](liftable.md#createtakewhileliftedoperator)
-- [createThrowIfEmptyLiftedOperator](liftable.md#createthrowifemptyliftedoperator)
+- [createDistinctUntilChangedLiftOperator](liftable.md#createdistinctuntilchangedliftoperator)
+- [createKeepLiftOperator](liftable.md#createkeepliftoperator)
+- [createMapLiftOperator](liftable.md#createmapliftoperator)
+- [createOnNotifyLiftOperator](liftable.md#createonnotifyliftoperator)
+- [createPairwiseLiftOperator](liftable.md#createpairwiseliftoperator)
+- [createScanLiftOperator](liftable.md#createscanliftoperator)
+- [createSkipFirstLiftOperator](liftable.md#createskipfirstliftoperator)
+- [createTakeFirstLiftOperator](liftable.md#createtakefirstliftoperator)
+- [createTakeWhileLiftOperator](liftable.md#createtakewhileliftoperator)
+- [createThrowIfEmptyLiftOperator](liftable.md#createthrowifemptyliftoperator)
 - [lift](liftable.md#lift)
 
 ## Type Aliases
@@ -75,7 +75,7 @@ ___
 
 ### LiftOperatorIn
 
-Ƭ **LiftOperatorIn**<`C`, `TA`, `TB`, `M`\>: `M` extends { `variance?`: [`ContraVariant`](liftable.md#contravariant)  } ? [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TB`\> : [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TA`\>
+Ƭ **LiftOperatorIn**<`C`, `TA`, `TB`, `M`\>: `M` extends { `variance?`: [`ContraVariant`](liftable.md#contravariant)  } ? [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `TB`\> : [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `TA`\>
 
 #### Type parameters
 
@@ -90,7 +90,7 @@ ___
 
 ### LiftOperatorOut
 
-Ƭ **LiftOperatorOut**<`C`, `TA`, `TB`, `M`\>: `M` extends { `variance?`: [`ContraVariant`](liftable.md#contravariant)  } ? [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TA`\> : [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TB`\>
+Ƭ **LiftOperatorOut**<`C`, `TA`, `TB`, `M`\>: `M` extends { `variance?`: [`ContraVariant`](liftable.md#contravariant)  } ? [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `TA`\> : [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `TB`\>
 
 #### Type parameters
 
@@ -103,9 +103,9 @@ ___
 
 ___
 
-### LiftedStateOf
+### LiftableStateOf
 
-Ƭ **LiftedStateOf**<`C`, `T`\>: `C` extends { `liftedStateType`: `unknown`  } ? `C` & { `T`: `T`  }[``"liftedStateType"``] : { `_C`: `C` ; `_T`: () => `T`  }
+Ƭ **LiftableStateOf**<`C`, `T`\>: `C` extends { `liftableStateType`: `unknown`  } ? `C` & { `T`: `T`  }[``"liftableStateType"``] : { `_C`: `C` ; `_T`: () => `T`  }
 
 #### Type parameters
 
@@ -134,9 +134,9 @@ ___
 
 ## Functions
 
-### createDistinctUntilChangedLiftedOperator
+### createDistinctUntilChangedLiftOperator
 
-▸ **createDistinctUntilChangedLiftedOperator**<`C`, `TVariance`\>(`m`, `DistinctUntilChangedLiftableState`): <T_1\>(`options?`: { `equality?`: [`Equality`](functions.md#equality)<`T_1`\>  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ **createDistinctUntilChangedLiftOperator**<`C`, `TVariance`\>(`m`, `DistinctUntilChangedLiftableState`): <T_1\>(`options?`: { `equality?`: [`Equality`](functions.md#equality)<`T_1`\>  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
@@ -150,7 +150,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
-| `DistinctUntilChangedLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `equality`: [`Equality`](functions.md#equality)<`T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
+| `DistinctUntilChangedLiftableState` | <T\>(`delegate`: [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `T`\>, `equality`: [`Equality`](functions.md#equality)<`T`\>) => [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `T`\> |
 
 #### Returns
 
@@ -177,9 +177,9 @@ ___
 
 ___
 
-### createKeepLiftedOperator
+### createKeepLiftOperator
 
-▸ **createKeepLiftedOperator**<`C`, `TVariance`\>(`m`, `KeepLiftableState`): <T_1\>(`predicate`: [`Predicate`](functions.md#predicate)<`T_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ **createKeepLiftOperator**<`C`, `TVariance`\>(`m`, `KeepLiftableState`): <T_1\>(`predicate`: [`Predicate`](functions.md#predicate)<`T_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
@@ -193,7 +193,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
-| `KeepLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
+| `KeepLiftableState` | <T\>(`delegate`: [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `T`\>, `predicate`: [`Predicate`](functions.md#predicate)<`T`\>) => [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `T`\> |
 
 #### Returns
 
@@ -219,9 +219,9 @@ ___
 
 ___
 
-### createMapLiftedOperator
+### createMapLiftOperator
 
-▸ **createMapLiftedOperator**<`C`, `TVariance`\>(`m`, `MapLiftableState`): <TA_1, TB_1\>(`mapper`: [`Function1`](functions.md#function1)<`TA_1`, `TB_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `TA_1`, `TB_1`\>
+▸ **createMapLiftOperator**<`C`, `TVariance`\>(`m`, `MapLiftableState`): <TA_1, TB_1\>(`mapper`: [`Function1`](functions.md#function1)<`TA_1`, `TB_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `TA_1`, `TB_1`\>
 
 #### Type parameters
 
@@ -262,9 +262,9 @@ ___
 
 ___
 
-### createOnNotifyLiftedOperator
+### createOnNotifyLiftOperator
 
-▸ **createOnNotifyLiftedOperator**<`C`, `TVariance`\>(`m`, `OnNotifyLiftableState`): <T_1\>(`onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ **createOnNotifyLiftOperator**<`C`, `TVariance`\>(`m`, `OnNotifyLiftableState`): <T_1\>(`onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
@@ -278,7 +278,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
-| `OnNotifyLiftableState` | <T\>(`delegate`: [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\>, `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>) => [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `T`\> |
+| `OnNotifyLiftableState` | <T\>(`delegate`: [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `T`\>, `onNotify`: [`SideEffect1`](functions.md#sideeffect1)<`T`\>) => [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `T`\> |
 
 #### Returns
 
@@ -304,9 +304,9 @@ ___
 
 ___
 
-### createPairwiseLiftedOperator
+### createPairwiseLiftOperator
 
-▸ **createPairwiseLiftedOperator**<`C`, `TVariance`\>(`m`, `PairwiseLiftableState`): <T_1\>() => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, [[`Option`](option.md#option)<`T_1`\>, `T_1`]\>
+▸ **createPairwiseLiftOperator**<`C`, `TVariance`\>(`m`, `PairwiseLiftableState`): <T_1\>() => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, [[`Option`](option.md#option)<`T_1`\>, `T_1`]\>
 
 #### Type parameters
 
@@ -340,9 +340,9 @@ ___
 
 ___
 
-### createScanLiftedOperator
+### createScanLiftOperator
 
-▸ **createScanLiftedOperator**<`C`, `TVariance`\>(`m`, `ScanLiftableState`): <T_1, TAcc_1\>(`reducer`: [`Reducer`](functions.md#reducer)<`T_1`, `TAcc_1`\>, `initialValue`: [`Factory`](functions.md#factory)<`TAcc_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `TAcc_1`\>
+▸ **createScanLiftOperator**<`C`, `TVariance`\>(`m`, `ScanLiftableState`): <T_1, TAcc_1\>(`reducer`: [`Reducer`](functions.md#reducer)<`T_1`, `TAcc_1`\>, `initialValue`: [`Factory`](functions.md#factory)<`TAcc_1`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `TAcc_1`\>
 
 #### Type parameters
 
@@ -384,9 +384,9 @@ ___
 
 ___
 
-### createSkipFirstLiftedOperator
+### createSkipFirstLiftOperator
 
-▸ **createSkipFirstLiftedOperator**<`C`, `TVariance`\>(`m`, `SkipLiftableState`): <T_1\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ **createSkipFirstLiftOperator**<`C`, `TVariance`\>(`m`, `SkipLiftableState`): <T_1\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
@@ -427,9 +427,9 @@ ___
 
 ___
 
-### createTakeFirstLiftedOperator
+### createTakeFirstLiftOperator
 
-▸ **createTakeFirstLiftedOperator**<`C`, `TVariance`\>(`m`, `TakeFirstLiftableState`): <T_1\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ **createTakeFirstLiftOperator**<`C`, `TVariance`\>(`m`, `TakeFirstLiftableState`): <T_1\>(`options?`: { `count?`: `number`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
@@ -470,9 +470,9 @@ ___
 
 ___
 
-### createTakeWhileLiftedOperator
+### createTakeWhileLiftOperator
 
-▸ **createTakeWhileLiftedOperator**<`C`, `TVariance`\>(`m`, `TakeWhileLiftableState`): <T_1\>(`predicate`: [`Predicate`](functions.md#predicate)<`T_1`\>, `options?`: { `inclusive?`: `boolean`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ **createTakeWhileLiftOperator**<`C`, `TVariance`\>(`m`, `TakeWhileLiftableState`): <T_1\>(`predicate`: [`Predicate`](functions.md#predicate)<`T_1`\>, `options?`: { `inclusive?`: `boolean`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
@@ -514,9 +514,9 @@ ___
 
 ___
 
-### createThrowIfEmptyLiftedOperator
+### createThrowIfEmptyLiftOperator
 
-▸ **createThrowIfEmptyLiftedOperator**<`C`, `TVariance`\>(`m`, `ThrowIfEmptyLiftableState`): <T_1\>(`factory`: [`Factory`](functions.md#factory)<`unknown`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+▸ **createThrowIfEmptyLiftOperator**<`C`, `TVariance`\>(`m`, `ThrowIfEmptyLiftableState`): <T_1\>(`factory`: [`Factory`](functions.md#factory)<`unknown`\>) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
 
 #### Type parameters
 
