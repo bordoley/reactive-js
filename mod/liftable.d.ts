@@ -25,6 +25,7 @@ interface Lift<C extends LiftableLike, TVariance extends "covariant" | "contrava
     variance: TVariance;
     lift<TA, TB>(operator: LiftOperator<C, TA, TB, this>): ContainerOperator<C, TA, TB>;
 }
+declare const lift: <C extends LiftableLike, TA, TB, TVariance extends "covariant" | "contravariant">(m: Lift<C, TVariance>) => Function1<LiftOperator<C, TA, TB, Lift<C, TVariance>>, ContainerOperator<C, TA, TB>>;
 declare type LiftOperator<C extends LiftableLike, TA, TB, M extends Lift<C, "covariant" | "contravariant">> = Function1<LiftOperatorIn<C, TA, TB, M>, LiftOperatorOut<C, TA, TB, M>>;
 declare type LiftOperatorIn<C extends LiftableLike, TA, TB, M extends Lift<C, "covariant" | "contravariant">> = M extends {
     variance?: "contravariant";
@@ -61,4 +62,4 @@ declare const createTakeWhileLiftedOperator: <C extends LiftableLike, TVariance 
 declare const createThrowIfEmptyLiftedOperator: <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(m: Lift<C, TVariance>, ThrowIfEmptyLiftableState: new <T>(delegate: LiftOperatorIn<C, T, T, Lift<C, TVariance>>) => LiftOperatorOut<C, T, T, Lift<C, TVariance>> & {
     readonly isEmpty: boolean;
 }) => <T_1>(factory: Factory<unknown>) => ContainerOperator<C, T_1, T_1>;
-export { AbstractDisposableLiftable, AbstractLiftable, Lift, LiftOperator, LiftOperatorIn, LiftOperatorOut, LiftableLike, LiftedStateLike, LiftedStateOf, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftedOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator };
+export { AbstractDisposableLiftable, AbstractLiftable, Lift, LiftOperator, LiftOperatorIn, LiftOperatorOut, LiftableLike, LiftedStateLike, LiftedStateOf, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftedOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator, lift };
