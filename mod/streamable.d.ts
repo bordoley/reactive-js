@@ -55,7 +55,6 @@ interface StreamableStateLike<T> extends StreamableLike<Updater<T>, T, StateStre
 }
 interface StateStreamLike<T> extends StreamLike<Updater<T>, T> {
 }
-declare type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<StreamableLike<TSrcReq, TSrc, StreamLike<TSrcReq, TSrc>>, StreamableLike<TReq, T, StreamLike<TReq, T>>>;
 declare type FlowMode = "resume" | "pause";
 interface FlowableLike<T> extends StreamableLike<FlowMode, T, FlowableStreamLike<T>> {
 }
@@ -129,4 +128,4 @@ declare const fromEnumerable: <T>() => Function1<EnumerableLike<T>, AsyncEnumera
 declare const fromIterable: <T>() => Function1<Iterable<T>, AsyncEnumerableLike<T>>;
 declare const identity: <T>() => StreamableLike<T, T, StreamLike<T, T>>;
 declare const sinkInto: <TReq, T, TOut>(dest: StreamableLike<T, TReq, StreamLike<T, TReq>>) => (src: StreamableLike<TReq, T, StreamLike<TReq, T>>) => ObservableLike<TOut>;
-export { AsyncEnumerableLike, AsyncEnumeratorLike, ConsumeContinue, ConsumeDone, FlowMode, FlowableLike, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, StateStreamLike, StreamableLike, StreamableOperator, StreamableStateLike, __stream, consume, consumeAsync, consumeContinue, consumeDone, createActionReducer, createFlowableSinkAccumulator, createLiftedStreamable, createStateStore, createStreamble, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, sinkInto, stream };
+export { AsyncEnumerableLike, AsyncEnumeratorLike, ConsumeContinue, ConsumeDone, FlowMode, FlowableLike, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, StateStreamLike, StreamableLike, StreamableStateLike, __stream, consume, consumeAsync, consumeContinue, consumeDone, createActionReducer, createFlowableSinkAccumulator, createLiftedStreamable, createStateStore, createStreamble, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, sinkInto, stream };

@@ -262,7 +262,7 @@ ___
 
 ### brotliCompress
 
-▸ **brotliCompress**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`, [`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+▸ **brotliCompress**(`options?`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -272,13 +272,13 @@ ___
 
 #### Returns
 
-[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`, [`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>\>
 
 ___
 
 ### brotliDecompress
 
-▸ **brotliDecompress**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`, [`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+▸ **brotliDecompress**(`options?`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -288,7 +288,7 @@ ___
 
 #### Returns
 
-[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`, [`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>\>
 
 ___
 
@@ -348,7 +348,7 @@ ___
 
 ### deflate
 
-▸ **deflate**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`, [`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+▸ **deflate**(`options?`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -358,13 +358,13 @@ ___
 
 #### Returns
 
-[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`, [`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>\>
 
 ___
 
 ### gunzip
 
-▸ **gunzip**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`, [`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+▸ **gunzip**(`options?`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -374,13 +374,13 @@ ___
 
 #### Returns
 
-[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`, [`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>\>
 
 ___
 
 ### gzip
 
-▸ **gzip**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`, [`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+▸ **gzip**(`options?`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -390,13 +390,13 @@ ___
 
 #### Returns
 
-[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`, [`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>\>
 
 ___
 
 ### inflate
 
-▸ **inflate**(`options?`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`, [`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+▸ **inflate**(`options?`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -406,7 +406,7 @@ ___
 
 #### Returns
 
-[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`, [`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>\>
 
 ___
 
@@ -434,7 +434,7 @@ ___
 
 ### transform
 
-▸ **transform**(`factory`): [`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`, [`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+▸ **transform**(`factory`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -444,4 +444,4 @@ ___
 
 #### Returns
 
-[`StreamableOperator`](streamable.md#streamableoperator)<[`FlowMode`](streamable.md#flowmode), `Uint8Array`, [`FlowMode`](streamable.md#flowmode), `Uint8Array`\>
+[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`Uint8Array`\>\>
