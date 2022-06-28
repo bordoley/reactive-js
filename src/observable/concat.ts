@@ -6,6 +6,7 @@ import { Observer, createDelegatingObserver } from "../observer";
 import { everySatisfy } from "../readonlyArray";
 import { sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
+import { isEnumerable } from "./observable";
 
 const createConcatObserver = <T>(
   delegate: Observer<T>,
@@ -52,7 +53,7 @@ export function concat<T>(
 
   (observable as any).isEnumerable = pipe(
     observables,
-    everySatisfy(obs => obs.isEnumerable ?? false),
+    everySatisfy(isEnumerable),
   );
 
   return observable;

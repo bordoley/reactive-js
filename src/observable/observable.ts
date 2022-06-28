@@ -9,3 +9,6 @@ export abstract class AbstractObservable<T>
 export abstract class AbstractDisposableObservable<T>
   extends AbstractDisposableSource<T, Observer<T>>
   implements ObservableLike<T> {}
+
+export const isEnumerable = <T>(obs: ObservableLike<T>) =>
+  obs.isEnumerable ?? false;
