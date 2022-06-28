@@ -11,7 +11,7 @@ import {
 import { __DEV__ } from "./env";
 import { pipe, raise } from "./functions";
 import { Option, isNone, none } from "./option";
-import { SchedulerLike, __yield, schedule } from "./scheduler";
+import { SchedulerLike, __yield, inContinuation, schedule } from "./scheduler";
 import { SinkLike } from "./source";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
@@ -102,7 +102,7 @@ if (__DEV__) {
   Observer.prototype.assertState = function assertStateDev<T>(
     this: Observer<T>,
   ) {
-    if (!this.scheduler.inContinuation) {
+    if (!inContinuation(this.scheduler)) {
       raise(
         "Observer.notify() may only be invoked within a scheduled SchedulerContinuation",
       );

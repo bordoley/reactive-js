@@ -1,3 +1,4 @@
+import { dispatch } from "../dispatcher";
 import { onDisposed } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike, createObservable } from "../observable";
@@ -17,7 +18,7 @@ export const fromEvent = <T>(
 
     const listener = (event: Event) => {
       const result = selector(event);
-      dispatcher.dispatch(result);
+      pipe(dispatcher, dispatch(result));
     };
 
     target.addEventListener(eventName, listener, { passive: true });

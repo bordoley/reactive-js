@@ -27,7 +27,7 @@ class RepeatEnumerator<T> extends Enumerator<T> {
 
   move(): boolean {
     if (isNone(this.enumerator)) {
-      this.enumerator = pipe(enumerate(this.src), addTo(this));
+      this.enumerator = pipe(this.src, enumerate, addTo(this));
     }
 
     while (!move(this.enumerator)) {
@@ -35,7 +35,7 @@ class RepeatEnumerator<T> extends Enumerator<T> {
 
       try {
         if (this.shouldRepeat(this.count)) {
-          this.enumerator = pipe(enumerate(this.src), addTo(this));
+          this.enumerator = pipe(this.src, enumerate, addTo(this));
         } else {
           break;
         }

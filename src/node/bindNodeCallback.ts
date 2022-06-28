@@ -1,3 +1,4 @@
+import { dispatch } from "../dispatcher";
 import { dispose } from "../disposable";
 import {
   Factory,
@@ -67,8 +68,7 @@ export function bindNodeCallback<T>(
         if (cause) {
           pipe(dispatcher, dispose({ cause }));
         } else {
-          dispatcher.dispatch(arg);
-          pipe(dispatcher, dispose());
+          pipe(dispatcher, dispatch(arg), dispose());
         }
       };
 

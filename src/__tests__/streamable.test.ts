@@ -32,6 +32,7 @@ import {
   map,
   mapT,
   observable,
+  observerCount,
   onNotify,
   onNotify as onNotifyObs,
   scan,
@@ -81,9 +82,7 @@ export const tests = describe(
       pipe(
         [0, 1, 2, 3],
         fromArray({ delay: 10 }),
-        onNotifyObs(x => {
-          stream.dispatch(x);
-        }),
+        onNotifyObs(dispatchTo(stream)),
         ignoreElements(keepT),
       );
 
@@ -154,15 +153,15 @@ export const tests = describe(
       stream(scheduler),
     );
 
-    pipe(incrStream.observerCount, expectEquals(0));
+    pipe(incrStream, observerCount, expectEquals(0));
     const sub1 = pipe(incrStream, subscribe(scheduler));
-    pipe(incrStream.observerCount, expectEquals(1));
+    pipe(incrStream, observerCount, expectEquals(1));
     const sub2 = pipe(incrStream, subscribe(scheduler));
-    pipe(incrStream.observerCount, expectEquals(2));
+    pipe(incrStream, observerCount, expectEquals(2));
     pipe(sub1, dispose());
-    pipe(incrStream.observerCount, expectEquals(1));
+    pipe(incrStream, observerCount, expectEquals(1));
     pipe(sub2, dispose());
-    pipe(incrStream.observerCount, expectEquals(0));
+    pipe(incrStream, observerCount, expectEquals(0));
   }),
   test("map", () => {
     const scheduler = createVirtualTimeScheduler();

@@ -10,9 +10,33 @@
 
 ### Functions
 
+- [dispatch](dispatcher.md#dispatch)
 - [dispatchTo](dispatcher.md#dispatchto)
 
 ## Functions
+
+### dispatch
+
+▸ **dispatch**<`T`, `TDispatcher`\>(`v`): [`Function1`](functions.md#function1)<`TDispatcher`, `TDispatcher`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TDispatcher` | extends [`DispatcherLike`](../interfaces/dispatcher.DispatcherLike.md)<`T`, `TDispatcher`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`TDispatcher`, `TDispatcher`\>
+
+___
 
 ### dispatchTo
 

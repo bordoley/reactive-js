@@ -91,4 +91,5 @@ export { createVirtualTimeScheduler } from "./scheduler/virtualTimeScheduler";
 export {
   SchedulerImplementation,
   runContinuation,
+  inContinuation,
 } from "./scheduler/scheduler";

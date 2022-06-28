@@ -9,6 +9,7 @@ import {
   SchedulerContinuationLike,
   SchedulerImplementation,
   SchedulerLike,
+  inContinuation,
   runContinuation,
 } from "../scheduler";
 import { sourceFrom } from "../source";
@@ -24,8 +25,8 @@ class EnumeratorScheduler<T>
     return 0;
   }
 
-  get shouldYield() {
-    return this.inContinuation;
+  get shouldYield(): boolean {
+    return inContinuation(this);
   }
 
   step(): boolean {
