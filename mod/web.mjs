@@ -47,7 +47,7 @@ const createEventSource = (url, options = {}) => {
 };
 
 const windowLocationURIToString = ({ path, query, fragment, }) => {
-    let uri = path.length === 0 ? "/" : path;
+    let uri = path.length === 0 ? "/" : !path.startsWith("/") ? `/${path}` : path;
     uri = query.length > 0 ? `${uri}?${query}` : uri;
     uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
     return new URL(uri, window.location.href).toString();
