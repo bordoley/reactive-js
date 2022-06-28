@@ -12,8 +12,6 @@ Abstract base class for implementing the `DisposableLike` interface.
 
   ↳ [`AbstractDisposableContainer`](container.AbstractDisposableContainer.md)
 
-  ↳ [`AbstractSerialDisposable`](disposable.AbstractSerialDisposable.md)
-
 ## Implements
 
 - [`DisposableLike`](../interfaces/disposable.DisposableLike.md)

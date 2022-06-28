@@ -7,7 +7,6 @@
 ### Classes
 
 - [AbstractDisposable](../classes/disposable.AbstractDisposable.md)
-- [AbstractSerialDisposable](../classes/disposable.AbstractSerialDisposable.md)
 
 ### Interfaces
 

@@ -272,12 +272,7 @@ export interface SerialDisposableLike extends DisposableLike {
   inner: DisposableLike;
 }
 
-/**
- * Abstract base class for implementing the `SerialDisposableLike` interface.
- *
- * @noInheritDoc
- * */
-export abstract class AbstractSerialDisposable
+class SerialDisposableImpl
   extends AbstractDisposable
   implements SerialDisposableLike
 {
@@ -299,8 +294,6 @@ export abstract class AbstractSerialDisposable
     }
   }
 }
-
-class SerialDisposableImpl extends AbstractSerialDisposable {}
 
 /**
  * Creates a new `SerialDisposableLike` instance containing a disposed instance.
