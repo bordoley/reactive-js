@@ -15,7 +15,8 @@ import {
   SchedulerLike,
 } from "../scheduler";
 import { PriorityQueueLike, createPriorityQueue } from "./priorityQueue";
-import { __yield, run, schedule } from "./schedulerContinuation";
+import { SchedulerImplementation, runContinuation } from "./scheduler";
+import { __yield, schedule } from "./schedulerContinuation";
 
 type ScheduledTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -112,7 +113,10 @@ function clearQueues(this: PriorityScheduler) {
 
 class PriorityScheduler
   extends AbstractSerialDisposable
-  implements PrioritySchedulerLike, PausableSchedulerLike
+  implements
+    PrioritySchedulerLike,
+    PausableSchedulerLike,
+    SchedulerImplementation
 {
   readonly continuation = () => {
     for (
@@ -125,10 +129,7 @@ class PriorityScheduler
 
       if (delay === 0) {
         move(this);
-
-        this.inContinuation = true;
-        run(continuation);
-        this.inContinuation = false;
+        pipe(this, runContinuation(continuation));
       } else {
         this.dueTime = this.now + delay;
       }

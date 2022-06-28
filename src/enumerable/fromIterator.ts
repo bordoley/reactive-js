@@ -1,10 +1,10 @@
 import { FromIterable, FromIterator } from "../container";
 import { dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
+import { Enumerator, hasCurrent } from "../enumerator";
 import { Factory, Function1, pipe } from "../functions";
 import { none } from "../option";
 import { createEnumerable } from "./enumerable";
-import { Enumerator } from "./enumerator";
 
 class IteratorEnumerator<
   T,
@@ -33,7 +33,7 @@ class IteratorEnumerator<
       }
     }
 
-    return this.hasCurrent;
+    return hasCurrent(this);
   }
 }
 

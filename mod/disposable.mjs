@@ -109,7 +109,7 @@ class AbstractDisposable {
         if (!isDisposed(this)) {
             this.isDisposed = true;
             this._error = error;
-            const disposables = this.disposables;
+            const { disposables } = this;
             for (const disposable of disposables) {
                 disposables.delete(disposable);
                 doDispose(this, disposable);

@@ -64,7 +64,7 @@ A disposed `DisposableLike` instance.
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 
@@ -83,7 +83,7 @@ A disposed `DisposableLike` instance.
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 
@@ -105,7 +105,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 
@@ -124,7 +124,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 
@@ -146,7 +146,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 
@@ -226,7 +226,7 @@ Dispose `disposable` with an optional error.
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 
@@ -264,7 +264,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 
@@ -286,7 +286,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 
@@ -308,7 +308,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 

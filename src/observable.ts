@@ -17,13 +17,14 @@ import {
 } from "./container";
 import {
   DisposableLike,
-  add,
+  addTo,
   bindTo,
   dispose,
   isDisposed,
   onDisposed,
   toErrorHandler,
 } from "./disposable";
+import { forEach } from "./enumerator";
 import {
   Equality,
   Factory,
@@ -33,6 +34,7 @@ import {
   Reducer,
   SideEffect1,
   Updater,
+  ignore,
   pipe,
 } from "./functions";
 import { createObservable, createT } from "./observable/createObservable";
@@ -665,16 +667,14 @@ export const toRunnable =
     createRunnable(sink => {
       const { schedulerFactory = createVirtualTimeScheduler } = options;
       const scheduler = schedulerFactory();
-      const subscription = pipe(
+      pipe(
         source,
         onNotify(notifySink(sink)),
         subscribe(scheduler),
+        addTo(sink),
       );
 
-      pipe(sink, add(scheduler), add(subscription));
-
-      scheduler.run();
-      pipe(scheduler, dispose());
+      pipe(scheduler, addTo(sink), forEach(ignore), dispose());
     });
 
 export const toRunnableT: ToRunnable<ObservableLike<unknown>> = {

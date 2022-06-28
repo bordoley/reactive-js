@@ -27,7 +27,7 @@ interface DisposableLike {
      * @param disposable
      * @returns `this`
      */
-    add(this: DisposableLike, disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
+    add(this: this, disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     /**
      * Dispose the resource. Must be idempotent.
      *
@@ -65,9 +65,9 @@ declare abstract class AbstractDisposable implements DisposableLike {
     /** @ignore */
     get error(): Option<Error>;
     /** @ignore */
-    add(this: AbstractDisposable, disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
+    add(this: this, disposable: DisposableOrTeardown, ignoreChildErrors: boolean): void;
     /** @ignore */
-    dispose(this: AbstractDisposable, error?: Error): void;
+    dispose(this: this, error?: Error): void;
 }
 /**
  * Creates an empty `DisposableLike` instance.

@@ -840,7 +840,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TResource` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource`\> |
 | `T` | `T` |
 
 ##### Parameters

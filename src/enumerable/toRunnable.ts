@@ -1,18 +1,15 @@
 import { add, dispose } from "../disposable";
 import { EnumerableLike } from "../enumerable";
+import { Enumerator, forEach } from "../enumerator";
 import { Factory, Function1, pipe } from "../functions";
 import { RunnableLike, Sink, ToRunnable, createRunnable } from "../runnable";
-import { Enumerator } from "./enumerator";
+import { notifySink } from "../source";
 
 const enumeratorToRunnable = <T>(
   f: Factory<Enumerator<T>>,
 ): RunnableLike<T> => {
   const run = (sink: Sink<T>) => {
-    const enumerator = pipe(f(), add(sink));
-    while (enumerator.move()) {
-      sink.notify(enumerator.current);
-    }
-    pipe(enumerator, dispose());
+    pipe(f(), add(sink), forEach(notifySink(sink)), dispose());
   };
   return createRunnable(run);
 };

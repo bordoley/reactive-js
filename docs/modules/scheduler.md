@@ -9,6 +9,7 @@
 - [PausableSchedulerLike](../interfaces/scheduler.PausableSchedulerLike.md)
 - [PrioritySchedulerLike](../interfaces/scheduler.PrioritySchedulerLike.md)
 - [SchedulerContinuationLike](../interfaces/scheduler.SchedulerContinuationLike.md)
+- [SchedulerImplementation](../interfaces/scheduler.SchedulerImplementation.md)
 - [SchedulerLike](../interfaces/scheduler.SchedulerLike.md)
 - [VirtualTimeSchedulerLike](../interfaces/scheduler.VirtualTimeSchedulerLike.md)
 
@@ -17,7 +18,7 @@
 - [\_\_yield](scheduler.md#__yield)
 - [createHostScheduler](scheduler.md#createhostscheduler)
 - [createVirtualTimeScheduler](scheduler.md#createvirtualtimescheduler)
-- [run](scheduler.md#run)
+- [runContinuation](scheduler.md#runcontinuation)
 - [schedule](scheduler.md#schedule)
 - [toPausableScheduler](scheduler.md#topausablescheduler)
 - [toPriorityScheduler](scheduler.md#topriorityscheduler)
@@ -78,9 +79,15 @@ Creates a new virtual time scheduler instance.
 
 ___
 
-### run
+### runContinuation
 
-▸ **run**(`continuation`): `void`
+▸ **runContinuation**<`TScheduler`\>(`continuation`): [`Function1`](functions.md#function1)<`TScheduler`, `TScheduler`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TScheduler` | extends [`SchedulerImplementation`](../interfaces/scheduler.SchedulerImplementation.md) |
 
 #### Parameters
 
@@ -90,7 +97,7 @@ ___
 
 #### Returns
 
-`void`
+[`Function1`](functions.md#function1)<`TScheduler`, `TScheduler`\>
 
 ___
 

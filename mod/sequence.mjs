@@ -1,6 +1,7 @@
 /// <reference types="./sequence.d.ts" />
 import { isDisposed, dispose } from './disposable.mjs';
-import { AbstractEnumerator, createEnumerable } from './enumerable.mjs';
+import { createEnumerable } from './enumerable.mjs';
+import { AbstractEnumerator, hasCurrent } from './enumerator.mjs';
 import { pipe, strictEquality, alwaysTrue, callWith } from './functions.mjs';
 import { none, isNone } from './option.mjs';
 import { map as map$1, keepType } from './readonlyArray.mjs';
@@ -287,7 +288,7 @@ class SequenceEnumerator extends AbstractEnumerator {
                 pipe(this, dispose());
             }
         }
-        return this.hasCurrent;
+        return hasCurrent(this);
     }
 }
 const toEnumerable = () => (seq) => createEnumerable(() => new SequenceEnumerator(seq));

@@ -7,8 +7,6 @@
 ### Classes
 
 - [AbstractEnumerable](../classes/enumerable.AbstractEnumerable.md)
-- [AbstractEnumerator](../classes/enumerable.AbstractEnumerator.md)
-- [Enumerator](../classes/enumerable.Enumerator.md)
 
 ### Interfaces
 
@@ -48,17 +46,14 @@
 - [concat](enumerable.md#concat)
 - [concatAll](enumerable.md#concatall)
 - [createEnumerable](enumerable.md#createenumerable)
-- [current](enumerable.md#current)
 - [distinctUntilChanged](enumerable.md#distinctuntilchanged)
 - [enumerate](enumerable.md#enumerate)
 - [fromArray](enumerable.md#fromarray)
 - [fromIterable](enumerable.md#fromiterable)
 - [fromIterator](enumerable.md#fromiterator)
 - [generate](enumerable.md#generate)
-- [hasCurrent](enumerable.md#hascurrent)
 - [keep](enumerable.md#keep)
 - [map](enumerable.md#map)
-- [move](enumerable.md#move)
 - [onNotify](enumerable.md#onnotify)
 - [pairwise](enumerable.md#pairwise)
 - [repeat](enumerable.md#repeat)
@@ -73,7 +68,6 @@
 - [toRunnable](enumerable.md#torunnable)
 - [using](enumerable.md#using)
 - [zip](enumerable.md#zip)
-- [zipEnumerators](enumerable.md#zipenumerators)
 
 ## Type Aliases
 
@@ -276,33 +270,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerate` | [`Factory`](functions.md#factory)<[`Enumerator`](../classes/enumerable.Enumerator.md)<`T`\>\> |
+| `enumerate` | [`Factory`](functions.md#factory)<[`Enumerator`](../classes/enumerator.Enumerator.md)<`T`\>\> |
 
 #### Returns
 
 [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
-
-___
-
-### current
-
-▸ **current**<`T`\>(`enumerator`): `T`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `enumerator` | [`Enumerator`](../classes/enumerable.Enumerator.md)<`T`\> |
-
-#### Returns
-
-`T`
 
 ___
 
@@ -331,7 +303,7 @@ ___
 
 ### enumerate
 
-▸ **enumerate**<`T`\>(`enumerable`): [`Enumerator`](../classes/enumerable.Enumerator.md)<`T`\>
+▸ **enumerate**<`T`\>(`enumerable`): [`Enumerator`](../classes/enumerator.Enumerator.md)<`T`\>
 
 #### Type parameters
 
@@ -347,7 +319,7 @@ ___
 
 #### Returns
 
-[`Enumerator`](../classes/enumerable.Enumerator.md)<`T`\>
+[`Enumerator`](../classes/enumerator.Enumerator.md)<`T`\>
 
 ___
 
@@ -454,28 +426,6 @@ that is applied to an accumulator value.
 
 ___
 
-### hasCurrent
-
-▸ **hasCurrent**<`T`\>(`enumerator`): `boolean`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `enumerator` | [`Enumerator`](../classes/enumerable.Enumerator.md)<`T`\> |
-
-#### Returns
-
-`boolean`
-
-___
-
 ### keep
 
 ▸ **keep**<`T`\>(`predicate`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, `T`\>
@@ -518,28 +468,6 @@ ___
 #### Returns
 
 [`EnumerableOperator`](enumerable.md#enumerableoperator)<`TA`, `TB`\>
-
-___
-
-### move
-
-▸ **move**<`T`\>(`enumerator`): `boolean`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `enumerator` | [`Enumerator`](../classes/enumerable.Enumerator.md)<`T`\> |
-
-#### Returns
-
-`boolean`
 
 ___
 
@@ -839,7 +767,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TResource` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource`\> |
 | `T` | `T` |
 
 #### Parameters
@@ -859,8 +787,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource1`\> |
+| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource2`\> |
 | `T` | `T` |
 
 #### Parameters
@@ -880,9 +808,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource1`\> |
+| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource2`\> |
+| `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource3`\> |
 | `T` | `T` |
 
 #### Parameters
@@ -902,10 +830,10 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource4` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource1`\> |
+| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource2`\> |
+| `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource3`\> |
+| `TResource4` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource4`\> |
 | `T` | `T` |
 
 #### Parameters
@@ -925,11 +853,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource4` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
-| `TResource5` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource1`\> |
+| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource2`\> |
+| `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource3`\> |
+| `TResource4` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource4`\> |
+| `TResource5` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource5`\> |
 | `T` | `T` |
 
 #### Parameters
@@ -949,7 +877,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TResource` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `TResource` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource`\> |
 | `T` | `T` |
 
 #### Parameters
@@ -1200,25 +1128,3 @@ ___
 #### Returns
 
 [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<readonly `T`[]\>
-
-___
-
-### zipEnumerators
-
-▸ **zipEnumerators**<`T`\>(`enumerators`): [`Enumerator`](../classes/enumerable.Enumerator.md)<readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `enumerators` | readonly [`Enumerator`](../classes/enumerable.Enumerator.md)<`T`\>[] |
-
-#### Returns
-
-[`Enumerator`](../classes/enumerable.Enumerator.md)<readonly `T`[]\>

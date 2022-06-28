@@ -10,7 +10,7 @@
 
   ↳ **`AbstractDisposableContainer`**
 
-  ↳↳ [`Enumerator`](enumerable.Enumerator.md)
+  ↳↳ [`Enumerator`](enumerator.Enumerator.md)
 
   ↳↳ [`AbstractDisposableLiftable`](liftable.AbstractDisposableLiftable.md)
 

@@ -17,12 +17,8 @@ import {
   Zip,
 } from "./container";
 import { dispose, isDisposed } from "./disposable";
-import {
-  AbstractEnumerator,
-  EnumerableLike,
-  ToEnumerable,
-  createEnumerable,
-} from "./enumerable";
+import { EnumerableLike, ToEnumerable, createEnumerable } from "./enumerable";
+import { AbstractEnumerator, hasCurrent } from "./enumerator";
 import {
   Equality,
   Factory,
@@ -519,7 +515,7 @@ class SequenceEnumerator<T> extends AbstractEnumerator<T> {
         pipe(this, dispose());
       }
     }
-    return this.hasCurrent;
+    return hasCurrent(this);
   }
 }
 

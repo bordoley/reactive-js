@@ -8,13 +8,10 @@ import {
 import { add, bindTo } from "./disposable";
 import {
   EnumerableLike,
-  Enumerator,
-  current,
   enumerate,
   fromIterable as fromIterableEnumerable,
-  hasCurrent,
-  move,
 } from "./enumerable";
+import { Enumerator, current, hasCurrent, move } from "./enumerator";
 import {
   Equality,
   Factory,

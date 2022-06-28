@@ -1,4 +1,5 @@
 import { DisposableLike } from "./disposable.mjs";
+import { Enumerator } from "./enumerator.mjs";
 import { SideEffect, Function1 } from "./functions.mjs";
 /**
  * Creates a new priority scheduler which schedules work using the provided
@@ -9,7 +10,6 @@ import { SideEffect, Function1 } from "./functions.mjs";
  */
 declare const toPriorityScheduler: (hostScheduler: SchedulerLike) => PrioritySchedulerLike;
 declare const toPausableScheduler: (hostScheduler: SchedulerLike) => PausableSchedulerLike;
-declare const run: (continuation: SchedulerContinuationLike) => void;
 declare const __yield: (options?: {
     delay?: number;
 }) => void;
@@ -36,6 +36,10 @@ declare const createHostScheduler: (options?: {
 declare const createVirtualTimeScheduler: (options?: {
     readonly maxMicroTaskTicks?: number;
 }) => VirtualTimeSchedulerLike;
+interface SchedulerImplementation {
+    inContinuation: boolean;
+}
+declare const runContinuation: <TScheduler extends SchedulerImplementation>(continuation: SchedulerContinuationLike) => Function1<TScheduler, TScheduler>;
 /**
  * A unit of work to be executed by a scheduler.
  *
@@ -57,23 +61,19 @@ interface SchedulerLike extends DisposableLike {
     /**
      * Request the scheduler to yield.
      */
-    requestYield(this: SchedulerLike): void;
+    requestYield(this: this): void;
     /**
      * Schedules a continuation to be executed on the scheduler.
      *
      * @param continuation The SchedulerContinuation to be executed.
      */
-    schedule(this: SchedulerLike, continuation: SchedulerContinuationLike, options?: {
+    schedule(this: this, continuation: SchedulerContinuationLike, options?: {
         readonly delay?: number;
     }): void;
 }
-/**
- * A scheduler that uses a virtual clock to simulate time. Useful for testing.
- *
- * @noInheritDoc
- */
-interface VirtualTimeSchedulerLike extends SchedulerLike {
-    run(this: VirtualTimeSchedulerLike): void;
+interface VirtualTimeSchedulerLike extends Enumerator<void>, SchedulerLike {
+    readonly isDisposed: boolean;
+    dispose(this: this): void;
 }
 interface PausableSchedulerLike extends SchedulerLike {
     pause(this: PausableSchedulerLike): void;
@@ -105,4 +105,4 @@ interface PrioritySchedulerLike extends DisposableLike {
         readonly delay?: number;
     }): void;
 }
-export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerLike, VirtualTimeSchedulerLike, __yield, createHostScheduler, createVirtualTimeScheduler, run, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };
+export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerImplementation, SchedulerLike, VirtualTimeSchedulerLike, __yield, createHostScheduler, createVirtualTimeScheduler, runContinuation, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };
