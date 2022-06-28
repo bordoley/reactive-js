@@ -55,7 +55,7 @@
 - [returns](functions.md#returns)
 - [strictEquality](functions.md#strictequality)
 - [sum](functions.md#sum)
-- [updaterReducer](functions.md#updaterreducer)
+- [updateReducer](functions.md#updatereducer)
 
 ## Type Aliases
 
@@ -2485,9 +2485,9 @@ it's arguments.
 
 ___
 
-### updaterReducer
+### updateReducer
 
-▸ **updaterReducer**<`T`\>(`acc`, `updater`): `T`
+▸ **updateReducer**<`T`\>(`acc`, `updater`): `T`
 
 A `Reducer` functions that applies `updater` to `acc` to compute the next
 accumulator value.

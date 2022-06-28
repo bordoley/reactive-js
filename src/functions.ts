@@ -352,7 +352,7 @@ export const arrayEquality =
  * A `Reducer` functions that applies `updater` to `acc` to compute the next
  * accumulator value.
  */
-export const updaterReducer = <T>(acc: T, updater: Updater<T>) => updater(acc);
+export const updateReducer = <T>(acc: T, updater: Updater<T>) => updater(acc);
 
 export function pipe<T, A>(src: T, op1: Function1<T, A>): A;
 export function pipe<T, A, B>(
@@ -478,7 +478,7 @@ export function pipe(
   source: unknown,
   ...operators: Function1<unknown, unknown>[]
 ): unknown {
-  return operators.reduce(updaterReducer, source);
+  return operators.reduce(updateReducer, source);
 }
 
 export function compose<T, A, B>(
