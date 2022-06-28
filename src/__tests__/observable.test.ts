@@ -13,12 +13,12 @@ import { dispose } from "../disposable";
 import { forEach as enumeratorForEach } from "../enumerator";
 import {
   arrayEquality,
-  defer,
   identity,
   ignore,
   increment,
   incrementBy,
   pipe,
+  pipeLazy,
   raise,
   returns,
   sum,
@@ -110,7 +110,7 @@ export const tests = describe(
     "buffer",
     test(
       "with duration and maxBufferSize",
-      defer(
+      pipeLazy(
         concat(
           pipe([1, 2, 3, 4], fromArray()),
           pipe([1, 2, 3], fromArray({ delay: 1 })),
@@ -124,13 +124,13 @@ export const tests = describe(
     ),
     test(
       "when duration observable throws",
-      defer(
-        defer(
+      pipeLazy(
+        pipeLazy(
           [1, 2, 3, 4],
           fromArray(),
           buffer({ duration: _ => throws({ ...fromArrayT, ...mapT })(raise) }),
           toRunnable({
-            schedulerFactory: defer(
+            schedulerFactory: pipeLazy(
               { maxMicroTaskTicks: 1 },
               createVirtualTimeScheduler,
             ),
@@ -146,7 +146,7 @@ export const tests = describe(
     "catchError",
     test(
       "source completes successfully",
-      defer(
+      pipeLazy(
         pipe(1, fromValue(fromArrayT)),
         catchError(_ => fromValue(fromArrayT)(2)),
         toRunnable(),
@@ -206,7 +206,7 @@ export const tests = describe(
 
   test(
     "combineLatest",
-    defer(
+    pipeLazy(
       generate(incrementBy(2), returns(1), { delay: 2 }),
       takeFirst({ count: 3 }),
       combineLatestWith(
@@ -242,7 +242,7 @@ export const tests = describe(
     }),
     test(
       "when queuing multiple events",
-      defer(
+      pipeLazy(
         createObservable(({ dispatcher }) => {
           dispatcher.dispatch(1);
           dispatcher.dispatch(2);
@@ -250,7 +250,7 @@ export const tests = describe(
           pipe(dispatcher, dispose());
         }),
         toRunnable({
-          schedulerFactory: defer(
+          schedulerFactory: pipeLazy(
             { maxMicroTaskTicks: 1 },
             createVirtualTimeScheduler,
           ),
@@ -287,7 +287,7 @@ export const tests = describe(
   ),
   test(
     "exhaustMap",
-    defer(
+    pipeLazy(
       [fromArray()([1, 2, 3]), fromArray()([4, 5, 6]), fromArray()([7, 8, 9])],
       fromArray(),
       concatMap({ ...exhaustT, ...mapT }, (x: ObservableLike<number>) => x),
@@ -322,7 +322,7 @@ export const tests = describe(
 
   test(
     "genMap",
-    defer(
+    pipeLazy(
       undefined,
       fromValue(fromArrayT),
       genMap({ ...concatAllT, ...fromIteratorT, ...mapT }, function* (_) {
@@ -340,7 +340,7 @@ export const tests = describe(
     "merge",
     test(
       "two arrays",
-      defer(
+      pipeLazy(
         merge(
           pipe([0, 2, 3, 5, 6], fromArray({ delay: 1 })),
           pipe([1, 4, 7], fromArray({ delay: 2 })),
@@ -352,8 +352,8 @@ export const tests = describe(
     ),
     test(
       "when one source throws",
-      defer(
-        defer(
+      pipeLazy(
+        pipeLazy(
           [1, 4, 7],
           fromArray({ delay: 2 }),
           concatWith(
@@ -372,8 +372,8 @@ export const tests = describe(
     "mergeMap",
     test(
       "when a mapped observable throws",
-      defer(
-        defer(
+      pipeLazy(
+        pipeLazy(
           [
             fromArray({ delay: 1 })([1, 2, 3]),
             throws({ ...fromArrayT, ...mapT }, { delay: 2 })(raise),
@@ -392,8 +392,8 @@ export const tests = describe(
     ),
     test(
       "when the map function throws",
-      defer(
-        defer(
+      pipeLazy(
+        pipeLazy(
           [1, 2, 3, 4],
           fromArray(),
           concatMap({ ...mergeAllT, ...mapT }, (x: number) => {
@@ -410,7 +410,7 @@ export const tests = describe(
     ),
   ),
 
-  test("never", defer(never(), toRunnable(), last(), expectNone)),
+  test("never", pipeLazy(never(), toRunnable(), last(), expectNone)),
   test("observable", () => {
     const fromValueWithDelay = (
       delay: number,
@@ -510,7 +510,7 @@ export const tests = describe(
     "scanAsync",
     test(
       "fast lib, slow acc",
-      defer(
+      pipeLazy(
         [1, 2, 3],
         fromArray(),
         scanAsync<number, number>(
@@ -525,7 +525,7 @@ export const tests = describe(
 
     test(
       "slow lib, fast acc",
-      defer(
+      pipeLazy(
         [1, 2, 3],
         fromArray({ delay: 4 }),
         scanAsync<number, number>(
@@ -540,7 +540,7 @@ export const tests = describe(
 
     test(
       "slow lib, slow acc",
-      defer(
+      pipeLazy(
         [1, 2, 3],
         fromArray({ delay: 4 }),
         scanAsync<number, number>(
@@ -555,7 +555,7 @@ export const tests = describe(
 
     test(
       "fast lib, fast acc",
-      defer(
+      pipeLazy(
         [1, 2, 3],
         fromArray(),
         scanAsync<number, number>(
@@ -596,7 +596,7 @@ export const tests = describe(
     "switchAll",
     test(
       "with empty source",
-      defer(
+      pipeLazy(
         empty(fromArrayT),
         switchAll(),
         toRunnable(),
@@ -607,8 +607,8 @@ export const tests = describe(
 
     test(
       "when source throw",
-      defer(
-        defer(
+      pipeLazy(
+        pipeLazy(
           raise,
           throws({ ...fromArrayT, ...mapT }),
           switchAll(),
@@ -623,7 +623,7 @@ export const tests = describe(
 
   test(
     "switchMap",
-    defer(
+    pipeLazy(
       [1, 2, 3],
       fromArray({ delay: 1 }),
       concatMap({ ...switchAllT, ...mapT }, _ => pipe([1, 2, 3], fromArray())),
@@ -637,8 +637,8 @@ export const tests = describe(
     "takeLast",
     test(
       "when pipeline throws",
-      defer(
-        defer(
+      pipeLazy(
+        pipeLazy(
           raise,
           throws({ ...fromArrayT, ...mapT }),
           takeLast(),
@@ -653,7 +653,7 @@ export const tests = describe(
     "throttle",
     test(
       "first",
-      defer(
+      pipeLazy(
         generate(increment, returns<number>(-1), { delay: 1 }),
         takeFirst({ count: 100 }),
         throttle(50, { mode: "first" }),
@@ -665,7 +665,7 @@ export const tests = describe(
 
     test(
       "last",
-      defer(
+      pipeLazy(
         generate(increment, returns<number>(-1), { delay: 1 }),
         takeFirst({ count: 200 }),
         throttle(50, { mode: "last" }),
@@ -677,7 +677,7 @@ export const tests = describe(
 
     test(
       "interval",
-      defer(
+      pipeLazy(
         generate(increment, returns<number>(-1), { delay: 1 }),
         takeFirst({ count: 200 }),
         throttle(75, { mode: "interval" }),
@@ -689,8 +689,8 @@ export const tests = describe(
 
     test(
       "when duration observable throws",
-      defer(
-        defer(
+      pipeLazy(
+        pipeLazy(
           [1, 2, 3, 4, 5],
           fromArray({ delay: 1 }),
           throttle(_ => throws({ ...fromArrayT, ...mapT })(raise)),
@@ -705,8 +705,8 @@ export const tests = describe(
     "throwIfEmpty",
     test(
       "when source is empty",
-      defer(
-        defer(
+      pipeLazy(
+        pipeLazy(
           empty(fromArrayT),
           throwIfEmpty(() => undefined),
           toRunnable(),
@@ -718,7 +718,7 @@ export const tests = describe(
 
     test(
       "when source is not empty",
-      defer(
+      pipeLazy(
         1,
         returns,
         compute({ ...fromArrayT, ...mapT }),
@@ -734,15 +734,15 @@ export const tests = describe(
     "timeout",
     test(
       "throws when a timeout occurs",
-      defer(
-        defer(1, fromValue(fromArrayT, { delay: 2 }), timeout(1), toArray()),
+      pipeLazy(
+        pipeLazy(1, fromValue(fromArrayT, { delay: 2 }), timeout(1), toArray()),
         expectToThrow,
       ),
     ),
 
     test(
       "when timeout is greater than observed time",
-      defer(
+      pipeLazy(
         1,
         fromValue(fromArrayT, { delay: 2 }),
         timeout(3),
@@ -772,7 +772,7 @@ export const tests = describe(
     "withLatestFrom",
     test(
       "when source and latest are interlaced",
-      defer(
+      pipeLazy(
         [0, 1, 2, 3],
         fromArray({ delay: 1 }),
         withLatestFrom(pipe([0, 1, 2, 3], fromArray({ delay: 2 })), (a, b) => [
@@ -793,7 +793,7 @@ export const tests = describe(
     ),
     test(
       "when latest produces no values",
-      defer(
+      pipeLazy(
         [0],
         fromArray({ delay: 1 }),
         withLatestFrom(empty(fromArrayT), sum),
@@ -806,7 +806,7 @@ export const tests = describe(
       const error = new Error();
 
       pipe(
-        defer(
+        pipeLazy(
           [0],
           fromArray({ delay: 1 }),
           withLatestFrom(
@@ -826,7 +826,7 @@ export const tests = describe(
     "zip",
     test(
       "with synchronous and non-synchronous sources",
-      defer(
+      pipeLazy(
         zip(
           pipe([1, 2], fromArray({ delay: 1 })),
           pipe([2, 3], fromIterable()),
@@ -845,7 +845,7 @@ export const tests = describe(
     ),
     test(
       "fast with slow",
-      defer(
+      pipeLazy(
         [1, 2, 3],
         fromArray({ delay: 1 }),
         zipWith(zipT, pipe([1, 2, 3], fromArray({ delay: 5 }))),
@@ -863,8 +863,8 @@ export const tests = describe(
     ),
     test(
       "when source throws",
-      defer(
-        defer(
+      pipeLazy(
+        pipeLazy(
           raise,
           throws({ ...fromArrayT, ...mapT }),
           zipWith(zipT, fromArray()([1, 2, 3])),
@@ -879,7 +879,7 @@ export const tests = describe(
 
   test(
     "zipLatestWith",
-    defer(
+    pipeLazy(
       [1, 2, 3, 4, 5, 6, 7, 8],
       fromArray({ delay: 1 }),
       zipLatestWith(pipe([1, 2, 3, 4], fromArray({ delay: 2 }))),
@@ -894,8 +894,8 @@ export const tests = describe(
     "zipWithLatestFrom",
     test(
       "when source throws",
-      defer(
-        defer(
+      pipeLazy(
+        pipeLazy(
           throws({ ...fromArrayT, ...mapT })(raise),
           zipWithLatestFrom(fromValue(fromArrayT)(1), (_, b) => b),
           toRunnable(),
@@ -907,8 +907,8 @@ export const tests = describe(
 
     test(
       "when other throws",
-      defer(
-        defer(
+      pipeLazy(
+        pipeLazy(
           [1, 2, 3],
           fromArray({ delay: 1 }),
           zipWithLatestFrom(
@@ -924,7 +924,7 @@ export const tests = describe(
 
     test(
       "when other completes first",
-      defer(
+      pipeLazy(
         [1],
         fromArray({ delay: 1 }),
         zipWithLatestFrom(fromArray()([2]), (_, b) => b),

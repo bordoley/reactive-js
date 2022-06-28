@@ -29,7 +29,7 @@ import {
   isDisposed,
   onError,
 } from "./disposable";
-import { Factory, compose, defer, ignore, pipe, returns } from "./functions";
+import { Factory, compose, ignore, pipe, pipeLazy, returns } from "./functions";
 import {
   ObservableLike,
   SubjectLike,
@@ -77,7 +77,7 @@ export const useObservable = <T>(
       onError(updateError),
     );
 
-    return defer(
+    return pipeLazy(
       // If a scheduler is allocated, then dispose the new scheduler
       // which will also dispose any subscriptions. Otherwise
       // only dispose the subscription.
@@ -163,7 +163,7 @@ class ReactPriorityScheduler
     );
 
     const callbackNodeDisposable = pipe(
-      createDisposable(defer(callbackNode, unstable_cancelCallback)),
+      createDisposable(pipeLazy(callbackNode, unstable_cancelCallback)),
       addTo(continuation),
     );
   }

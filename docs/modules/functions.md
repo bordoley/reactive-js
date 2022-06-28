@@ -40,7 +40,6 @@
 - [compose](functions.md#compose)
 - [decrement](functions.md#decrement)
 - [decrementBy](functions.md#decrementby)
-- [defer](functions.md#defer)
 - [flip](functions.md#flip)
 - [identity](functions.md#identity)
 - [ignore](functions.md#ignore)
@@ -51,6 +50,7 @@
 - [isOdd](functions.md#isodd)
 - [negate](functions.md#negate)
 - [pipe](functions.md#pipe)
+- [pipeLazy](functions.md#pipelazy)
 - [raise](functions.md#raise)
 - [returns](functions.md#returns)
 - [strictEquality](functions.md#strictequality)
@@ -1398,395 +1398,6 @@ Returns a function that decrements a number `x` by the value `decr`.
 
 ___
 
-### defer
-
-▸ **defer**<`T`, `A`\>(`src`, `op1`): [`Factory`](functions.md#factory)<`A`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `A` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-
-#### Returns
-
-[`Factory`](functions.md#factory)<`A`\>
-
-▸ **defer**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): [`Factory`](functions.md#factory)<`B`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `A` |
-| `B` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-
-#### Returns
-
-[`Factory`](functions.md#factory)<`B`\>
-
-▸ **defer**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): [`Factory`](functions.md#factory)<`C`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `A` |
-| `B` |
-| `C` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-
-#### Returns
-
-[`Factory`](functions.md#factory)<`C`\>
-
-▸ **defer**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): [`Factory`](functions.md#factory)<`D`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `A` |
-| `B` |
-| `C` |
-| `D` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-
-#### Returns
-
-[`Factory`](functions.md#factory)<`D`\>
-
-▸ **defer**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): [`Factory`](functions.md#factory)<`E`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `A` |
-| `B` |
-| `C` |
-| `D` |
-| `E` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-
-#### Returns
-
-[`Factory`](functions.md#factory)<`E`\>
-
-▸ **defer**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Factory`](functions.md#factory)<`F`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `A` |
-| `B` |
-| `C` |
-| `D` |
-| `E` |
-| `F` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-
-#### Returns
-
-[`Factory`](functions.md#factory)<`F`\>
-
-▸ **defer**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Factory`](functions.md#factory)<`G`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `A` |
-| `B` |
-| `C` |
-| `D` |
-| `E` |
-| `F` |
-| `G` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-
-#### Returns
-
-[`Factory`](functions.md#factory)<`G`\>
-
-▸ **defer**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Factory`](functions.md#factory)<`H`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `A` |
-| `B` |
-| `C` |
-| `D` |
-| `E` |
-| `F` |
-| `G` |
-| `H` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-
-#### Returns
-
-[`Factory`](functions.md#factory)<`H`\>
-
-▸ **defer**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Factory`](functions.md#factory)<`I`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `A` |
-| `B` |
-| `C` |
-| `D` |
-| `E` |
-| `F` |
-| `G` |
-| `H` |
-| `I` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-
-#### Returns
-
-[`Factory`](functions.md#factory)<`I`\>
-
-▸ **defer**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Factory`](functions.md#factory)<`J`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `A` |
-| `B` |
-| `C` |
-| `D` |
-| `E` |
-| `F` |
-| `G` |
-| `H` |
-| `I` |
-| `J` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
-
-#### Returns
-
-[`Factory`](functions.md#factory)<`J`\>
-
-▸ **defer**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Factory`](functions.md#factory)<`K`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `A` |
-| `B` |
-| `C` |
-| `D` |
-| `E` |
-| `F` |
-| `G` |
-| `H` |
-| `I` |
-| `J` |
-| `K` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
-| `op11` | [`Function1`](functions.md#function1)<`J`, `K`\> |
-
-#### Returns
-
-[`Factory`](functions.md#factory)<`K`\>
-
-▸ **defer**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Factory`](functions.md#factory)<`L`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `A` |
-| `B` |
-| `C` |
-| `D` |
-| `E` |
-| `F` |
-| `G` |
-| `H` |
-| `I` |
-| `J` |
-| `K` |
-| `L` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `src` | `T` |
-| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
-| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
-| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
-| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
-| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
-| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
-| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
-| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
-| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
-| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
-| `op11` | [`Function1`](functions.md#function1)<`J`, `K`\> |
-| `op12` | [`Function1`](functions.md#function1)<`K`, `L`\> |
-
-#### Returns
-
-[`Factory`](functions.md#factory)<`L`\>
-
-▸ **defer**(`source`, ...`operators`): [`Factory`](functions.md#factory)<`unknown`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `source` | `unknown` |
-| `...operators` | [`Function1`](functions.md#function1)<`any`, `unknown`\>[] |
-
-#### Returns
-
-[`Factory`](functions.md#factory)<`unknown`\>
-
-___
-
 ### flip
 
 ▸ **flip**<`TA`, `TB`, `T`\>(`f`): [`Function2`](functions.md#function2)<`TB`, `TA`, `T`\>
@@ -2378,6 +1989,395 @@ ___
 #### Returns
 
 `unknown`
+
+___
+
+### pipeLazy
+
+▸ **pipeLazy**<`T`, `A`\>(`src`, `op1`): [`Factory`](functions.md#factory)<`A`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`A`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): [`Factory`](functions.md#factory)<`B`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`B`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): [`Factory`](functions.md#factory)<`C`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`C`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): [`Factory`](functions.md#factory)<`D`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`D`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): [`Factory`](functions.md#factory)<`E`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`E`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Factory`](functions.md#factory)<`F`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`F`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Factory`](functions.md#factory)<`G`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`G`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Factory`](functions.md#factory)<`H`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`H`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Factory`](functions.md#factory)<`I`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`I`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Factory`](functions.md#factory)<`J`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`J`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Factory`](functions.md#factory)<`K`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
+| `op11` | [`Function1`](functions.md#function1)<`J`, `K`\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`K`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Factory`](functions.md#factory)<`L`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+| `L` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
+| `op11` | [`Function1`](functions.md#function1)<`J`, `K`\> |
+| `op12` | [`Function1`](functions.md#function1)<`K`, `L`\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`L`\>
+
+▸ **pipeLazy**(`source`, ...`operators`): [`Factory`](functions.md#factory)<`unknown`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `source` | `unknown` |
+| `...operators` | [`Function1`](functions.md#function1)<`any`, `unknown`\>[] |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`unknown`\>
 
 ___
 

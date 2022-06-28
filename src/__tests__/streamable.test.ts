@@ -10,11 +10,11 @@ import { dispatchTo } from "../dispatcher";
 import { Error, dispose, isDisposed, onDisposed } from "../disposable";
 import { forEach } from "../enumerator";
 import {
-  defer,
   ignore,
   increment,
   incrementBy,
   pipe,
+  pipeLazy,
   returns,
   sum,
 } from "../functions";
@@ -295,18 +295,21 @@ export const tests = describe(
 
       pipe(
         scheduler,
-        schedule(defer("pause", dispatchTo(generateStream)), {
+        schedule(pipeLazy("pause", dispatchTo(generateStream)), {
           delay: 2,
         }),
       );
 
       pipe(
         scheduler,
-        schedule(defer("resume", dispatchTo(generateStream)), {
+        schedule(pipeLazy("resume", dispatchTo(generateStream)), {
           delay: 4,
         }),
       );
-      pipe(scheduler, schedule(defer(generateStream, dispose()), { delay: 5 }));
+      pipe(
+        scheduler,
+        schedule(pipeLazy(generateStream, dispose()), { delay: 5 }),
+      );
 
       const f = mockFn();
       const subscription = pipe(
@@ -578,7 +581,7 @@ export const tests = describe(
       "consumeAsync",
       test(
         "when the consumer early terminates",
-        defer(
+        pipeLazy(
           [1, 2, 3, 4, 5, 6],
           fromIterable(),
           consumeAsync(
@@ -595,7 +598,7 @@ export const tests = describe(
       ),
       test(
         "when the consumer never terminates",
-        defer(
+        pipeLazy(
           [1, 2, 3, 4, 5, 6],
           fromIterable(),
           consumeAsync(

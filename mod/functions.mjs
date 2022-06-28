@@ -117,10 +117,10 @@ function compose(...operators) {
     return source => pipe(source, ...operators);
 }
 /**
- * Returns a `Factory` function that defers the evaluation of piping
+ * Returns a `Factory` function that pipeLazys the evaluation of piping
  * `source` through the provided operators.
  */
-function defer(source, ...operators) {
+function pipeLazy(source, ...operators) {
     return () => pipe(source, ...operators);
 }
 /**
@@ -133,4 +133,4 @@ function flip(f) {
     };
 }
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, defer, flip, identity, ignore, increment, incrementBy, isEqualTo, isEven, isOdd, negate, pipe, raise, returns, strictEquality, sum, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, identity, ignore, increment, incrementBy, isEqualTo, isEven, isOdd, negate, pipe, pipeLazy, raise, returns, strictEquality, sum, updateReducer };

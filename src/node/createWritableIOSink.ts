@@ -7,7 +7,7 @@ import {
   dispose,
   onComplete,
 } from "../disposable";
-import { Factory, defer, pipe } from "../functions";
+import { Factory, pipe, pipeLazy } from "../functions";
 import { createObservable, onNotify, subscribe } from "../observable";
 
 import { FlowableSinkLike, createLiftedStreamable } from "../streamable";
@@ -42,9 +42,9 @@ export const createWritableIOSink = (
         }),
       );
 
-      const onDrain = defer("resume", dispatchTo(dispatcher));
-      const onFinish = defer(dispatcher, dispose());
-      const onPause = defer("pause", dispatchTo(dispatcher));
+      const onDrain = pipeLazy("resume", dispatchTo(dispatcher));
+      const onFinish = pipeLazy(dispatcher, dispose());
+      const onPause = pipeLazy("pause", dispatchTo(dispatcher));
 
       writableValue.on("drain", onDrain);
       writableValue.on("finish", onFinish);

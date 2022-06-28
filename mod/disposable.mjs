@@ -1,5 +1,5 @@
 /// <reference types="./disposable.d.ts" />
-import { pipe, defer } from './functions.mjs';
+import { pipe, pipeLazy } from './functions.mjs';
 import { isSome, isNone, none } from './option.mjs';
 
 /**
@@ -176,7 +176,7 @@ class DisposableValueImpl extends AbstractDisposable {
  * Creates a new DisposableValueLike instance, which applies
  * the supplied `cleanup` side effect to `value` when disposed.
  */
-const createDisposableValue = (value, cleanup) => pipe(new DisposableValueImpl(value), onDisposed(defer(value, cleanup)));
+const createDisposableValue = (value, cleanup) => pipe(new DisposableValueImpl(value), onDisposed(pipeLazy(value, cleanup)));
 const toAbortSignal = (disposable) => {
     const abortController = new AbortController();
     addDisposableOrTeardown(disposable, () => abortController.abort());
