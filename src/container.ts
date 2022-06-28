@@ -75,6 +75,12 @@ export interface Container<C extends ContainerLike> {
   readonly type?: C;
 }
 
+export interface Buffer<C extends ContainerLike> extends Container<C> {
+  buffer: <T>(options?: {
+    readonly maxBufferSize?: number;
+  }) => ContainerOperator<C, T, readonly T[]>;
+}
+
 export interface Concat<C extends ContainerLike> extends Container<C> {
   concat<T>(
     fst: ContainerOf<C, T>,

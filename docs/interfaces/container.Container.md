@@ -14,6 +14,8 @@
 
 - **`Container`**
 
+  ↳ [`Buffer`](container.Buffer.md)
+
   ↳ [`Concat`](container.Concat.md)
 
   ↳ [`ConcatAll`](container.ConcatAll.md)

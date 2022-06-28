@@ -1,10 +1,11 @@
 /// <reference types="./runnable.d.ts" />
-import { dispose, isDisposed, addTo } from './disposable.mjs';
-import { pipe, ignore, raise, identity, alwaysTrue } from './functions.mjs';
-import { isSome, none, isNone } from './option.mjs';
-import { AbstractSource, sourceFrom, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
-import { contraVariant } from './liftable.mjs';
+import { dispose, isDisposed, addTo, bindTo } from './disposable.mjs';
+import { pipe, raise, ignore, identity, alwaysTrue, compose } from './functions.mjs';
+import { isSome, none, isNone, getOrDefault } from './option.mjs';
+import { empty } from './readonlyArray.mjs';
+import { AbstractSource, sourceFrom, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
 import { RunnableSink, createDelegatingRunnableSink } from './runnableSink.mjs';
+import { contraVariant } from './liftable.mjs';
 
 class AbstractRunnable extends AbstractSource {
 }
@@ -17,6 +18,7 @@ class RunnableImpl extends AbstractRunnable {
     sink(sink) {
         try {
             this._run(sink);
+            pipe(sink, dispose());
         }
         catch (cause) {
             pipe(sink, dispose({ cause }));
@@ -26,6 +28,23 @@ class RunnableImpl extends AbstractRunnable {
 const createRunnable = (run) => new RunnableImpl(run);
 const createT = {
     create: createRunnable,
+};
+
+const run = (f) => (runnable) => pipe(f(), sourceFrom(runnable), dispose(), ({ error, result }) => isSome(error) ? raise(error.cause) : result);
+
+class FirstSink extends RunnableSink {
+    constructor() {
+        super(...arguments);
+        this.result = none;
+    }
+    notify(next) {
+        this.result = next;
+        pipe(this, dispose());
+    }
+}
+const first = () => {
+    const createSink = () => new FirstSink();
+    return run(createSink);
 };
 
 const fromArray = (options = {}) => values => {
@@ -79,27 +98,10 @@ class FlattenSink extends RunnableSink {
         pipe(createDelegatingRunnableSink(delegate), addTo(this), sourceFrom(next), dispose());
     }
 }
-const _concatAll = lift(delegate => pipe(new FlattenSink(delegate), addTo(delegate)));
+const _concatAll = lift(delegate => pipe(new FlattenSink(delegate), bindTo(delegate)));
 const concatAll = () => _concatAll;
 const concatAllT = {
     concatAll,
-};
-
-const run = (f) => (runnable) => pipe(f(), sourceFrom(runnable), dispose(), ({ error, result }) => isSome(error) ? raise(error.cause) : result);
-
-class FirstSink extends RunnableSink {
-    constructor() {
-        super(...arguments);
-        this.result = none;
-    }
-    notify(next) {
-        this.result = next;
-        pipe(this, dispose());
-    }
-}
-const first = () => {
-    const createSink = () => new FirstSink();
-    return run(createSink);
 };
 
 class ForEachSink extends RunnableSink {
@@ -128,24 +130,19 @@ const last = () => {
     return run(createSink);
 };
 
-class ToArraySink extends RunnableSink {
-    constructor() {
-        super(...arguments);
-        this.result = [];
-    }
-    notify(next) {
-        this.result.push(next);
-    }
-}
-const createSink = () => new ToArraySink();
-/**
- * Accumulates all values emitted by `runnable` into an array.
- *
- */
-const toArray = () => run(createSink);
-
 const toRunnable = () => identity;
 const type = undefined;
+const buffer = createBufferOperator({ ...liftT, ...fromArrayT }, class BufferSink extends RunnableSink {
+    constructor(delegate, maxBufferSize) {
+        super();
+        this.delegate = delegate;
+        this.maxBufferSize = maxBufferSize;
+        this.buffer = [];
+    }
+});
+const bufferT = {
+    buffer,
+};
 const catchError = createCatchErrorOperator(liftT, class CatchErrorSink extends RunnableSink {
     constructor(delegate) {
         super();
@@ -353,9 +350,13 @@ const throwIfEmpty = createThrowIfEmptyOperator(liftT, class ThrowIfEmptySink ex
 const throwIfEmptyT = {
     throwIfEmpty,
 };
+/**
+ * Accumulates all values emitted by `runnable` into an array.
+ */
+const toArray = () => compose(buffer(), first(), getOrDefault(empty));
 const using = createUsing(createT);
 const usingT = {
     using,
 };
 
-export { catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };
+export { buffer, bufferT, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };

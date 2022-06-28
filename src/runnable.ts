@@ -1,4 +1,5 @@
 import {
+  Buffer,
   Concat,
   Container,
   ContainerLike,
@@ -31,16 +32,20 @@ import {
   SideEffect1,
   Updater,
   alwaysTrue,
+  compose,
   identity,
   pipe,
 } from "./functions";
-import { Option, isNone, none } from "./option";
+import { Option, getOrDefault, isNone, none } from "./option";
+import { empty as emptyArray } from "./readonlyArray";
 import { createRunnable, createT } from "./runnable/createRunnable";
+import { first } from "./runnable/first";
 import { fromArrayT } from "./runnable/fromArray";
 import { liftT } from "./runnable/lift";
 import { RunnableSink, createDelegatingRunnableSink } from "./runnableSink";
 import {
   SourceLike,
+  createBufferOperator,
   createCatchErrorOperator,
   createDecodeWithCharsetOperator,
   createDistinctUntilChangedOperator,
@@ -86,12 +91,30 @@ export { first } from "./runnable/first";
 export { forEach } from "./runnable/forEach";
 export { fromArray, fromArrayT } from "./runnable/fromArray";
 export { last } from "./runnable/last";
-export { toArray } from "./runnable/toArray";
 
 export const toRunnable = <T>(): Function1<RunnableLike<T>, RunnableLike<T>> =>
   identity;
 
 export const type: RunnableLike<unknown> = undefined as any;
+
+export const buffer: <T>(options?: {
+  readonly maxBufferSize?: number;
+}) => RunnableOperator<T, readonly T[]> = createBufferOperator(
+  { ...liftT, ...fromArrayT },
+  class BufferSink<T> extends RunnableSink<T> {
+    buffer: T[] = [];
+    constructor(
+      readonly delegate: RunnableSink<readonly T[]>,
+      readonly maxBufferSize: number,
+    ) {
+      super();
+    }
+  },
+);
+
+export const bufferT: Buffer<RunnableLike<unknown>> = {
+  buffer,
+};
 
 export const catchError: <T>(
   onError: Function1<unknown, RunnableLike<T> | void>,
@@ -451,6 +474,12 @@ export const throwIfEmpty: <T>(
 export const throwIfEmptyT: ThrowIfEmpty<RunnableLike<unknown>> = {
   throwIfEmpty,
 };
+
+/**
+ * Accumulates all values emitted by `runnable` into an array.
+ */
+export const toArray = <T>(): Function1<RunnableLike<T>, readonly T[]> =>
+  compose(buffer(), first(), getOrDefault(emptyArray));
 
 export const using: Using<RunnableLike<unknown>>["using"] =
   createUsing(createT);

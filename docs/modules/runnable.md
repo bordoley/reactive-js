@@ -15,6 +15,7 @@
 
 ### Variables
 
+- [bufferT](runnable.md#buffert)
 - [concatAllT](runnable.md#concatallt)
 - [concatT](runnable.md#concatt)
 - [createT](runnable.md#createt)
@@ -40,6 +41,7 @@
 
 ### Functions
 
+- [buffer](runnable.md#buffer)
 - [catchError](runnable.md#catcherror)
 - [concat](runnable.md#concat)
 - [concatAll](runnable.md#concatall)
@@ -85,6 +87,12 @@
 | `TB` |
 
 ## Variables
+
+### bufferT
+
+• `Const` **bufferT**: [`Buffer`](../interfaces/container.Buffer.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
 
 ### concatAllT
 
@@ -217,6 +225,29 @@ ___
 • `Const` **usingT**: [`Using`](../interfaces/container.Using.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
 
 ## Functions
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`RunnableOperator`](runnable.md#runnableoperator)<`T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
+
+#### Returns
+
+[`RunnableOperator`](runnable.md#runnableoperator)<`T`, readonly `T`[]\>
+
+___
 
 ### catchError
 

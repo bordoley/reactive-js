@@ -135,6 +135,66 @@ export const sourceFrom =
     return sink;
   };
 
+export const createBufferOperator = <C extends SourceLike>(
+  m: Lift<C> & FromArray<C>,
+  BufferSink: new <T>(
+    delegate: LiftableStateOf<C, readonly T[]>,
+    maxBufferSize: number,
+  ) => DelegatingLiftableStateOf<C, T, readonly T[]> & {
+    buffer: T[];
+    readonly maxBufferSize: number;
+  },
+) => {
+  BufferSink.prototype.notify = function notifyBuffer<T>(next: T) {
+    this.assertState();
+
+    const { buffer, maxBufferSize } = this;
+
+    buffer.push(next);
+
+    if (buffer.length === maxBufferSize) {
+      const buffer = this.buffer;
+      this.buffer = [];
+
+      this.delegate.notify(buffer);
+    }
+  };
+
+  return <T>(
+    options: {
+      readonly maxBufferSize?: number;
+    } = {},
+  ): ContainerOperator<C, T, readonly T[]> => {
+    const maxBufferSize = Math.max(
+      options.maxBufferSize ?? Number.MAX_SAFE_INTEGER,
+      1,
+    );
+
+    return pipe(
+      (delegate: LiftableStateOf<C, readonly T[]>) =>
+        pipe(
+          new BufferSink(delegate, maxBufferSize),
+          addTo(delegate),
+          onComplete(function onDispose(
+            this: DelegatingLiftableStateOf<C, T, readonly T[]> & {
+              buffer: T[];
+            },
+          ) {
+            const { buffer } = this;
+            this.buffer = [];
+
+            if (buffer.length === 0) {
+              pipe(this.delegate, dispose());
+            } else {
+              pipe(buffer, fromValue(m), sinkInto(this.delegate));
+            }
+          }),
+        ),
+      lift(m),
+    );
+  };
+};
+
 export const createCatchErrorOperator =
   <C extends SourceLike>(
     m: Lift<C>,

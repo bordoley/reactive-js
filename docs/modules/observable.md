@@ -25,6 +25,7 @@
 
 ### Variables
 
+- [bufferT](observable.md#buffert)
 - [concatAllT](observable.md#concatallt)
 - [concatT](observable.md#concatt)
 - [createT](observable.md#createt)
@@ -174,6 +175,12 @@ last - Takes the trailing value.
 interval -  Takes both the leading and trailing values.
 
 ## Variables
+
+### bufferT
+
+• `Const` **bufferT**: [`Buffer`](../interfaces/container.Buffer.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
 
 ### concatAllT
 

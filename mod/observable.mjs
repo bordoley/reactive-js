@@ -200,7 +200,7 @@ const onNotify = createOnNotifyOperator(liftSynchronousT, class OnNotifyObserver
  */
 const subscribe = (scheduler) => observable => pipe(new Observer(scheduler), addTo(scheduler, true), sourceFrom(observable));
 
-function onDispose$2() {
+function onDispose$1() {
     if (isDisposed(this.inner)) {
         pipe(this.delegate, dispose());
     }
@@ -222,7 +222,7 @@ class SwitchObserver extends Observer {
         this.inner = inner;
     }
 }
-const operator = (delegate) => pipe(new SwitchObserver(delegate), addTo(delegate), onComplete(onDispose$2));
+const operator = (delegate) => pipe(new SwitchObserver(delegate), addTo(delegate), onComplete(onDispose$1));
 const switchAllInstance = lift(operator);
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
@@ -488,7 +488,7 @@ function __currentScheduler() {
         : raise("__currentScheduler may only be called within an observable computation");
 }
 
-function onDispose$1() {
+function onDispose() {
     const { ctx } = this;
     ctx.completedCount++;
     if (ctx.completedCount === ctx.observers.length) {
@@ -535,7 +535,7 @@ const latest = (observables, mode) => {
             readyCount: 0,
         };
         for (const observable of observables) {
-            const innerObserver = pipe(new LatestObserver(delegate, ctx, mode), addTo(delegate), onComplete(onDispose$1), sourceFrom(observable));
+            const innerObserver = pipe(new LatestObserver(delegate, ctx, mode), addTo(delegate), onComplete(onDispose), sourceFrom(observable));
             observers.push(innerObserver);
         }
     };
@@ -671,16 +671,6 @@ function forkMerge(...ops) {
 
 const never = createNever(createT);
 
-function onDispose() {
-    const { buffer } = this;
-    this.buffer = [];
-    if (buffer.length === 0) {
-        pipe(this.delegate, dispose());
-    }
-    else {
-        pipe(buffer, fromValue(fromArrayT), sinkInto(this.delegate));
-    }
-}
 class BufferObserver extends Observer {
     constructor(delegate, durationFunction, maxBufferSize, durationSubscription) {
         super(delegate.scheduler);
@@ -723,13 +713,25 @@ function buffer(options = {}) {
         : typeof delay === "number"
             ? (_) => fromValue(fromArrayT, { delay })(none)
             : delay;
-    const maxBufferSize = (_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : Number.MAX_SAFE_INTEGER;
+    const maxBufferSize = Math.max((_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : Number.MAX_SAFE_INTEGER, 1);
     const operator = (delegate) => {
         const durationSubscription = createSerialDisposable();
-        return pipe(new BufferObserver(delegate, durationFunction, maxBufferSize, durationSubscription), add(durationSubscription), addTo(delegate), onComplete(onDispose));
+        return pipe(new BufferObserver(delegate, durationFunction, maxBufferSize, durationSubscription), add(durationSubscription), addTo(delegate), onComplete(function onDispose() {
+            const { buffer } = this;
+            this.buffer = [];
+            if (buffer.length === 0) {
+                pipe(this.delegate, dispose());
+            }
+            else {
+                pipe(buffer, fromValue(fromArrayT), sinkInto(this.delegate));
+            }
+        }));
     };
     return lift(operator, delay === Number.MAX_SAFE_INTEGER);
 }
+const bufferT = {
+    buffer,
+};
 
 const subscribeNext = (observer) => {
     if (observer.activeCount < observer.maxConcurrency) {
@@ -1448,4 +1450,4 @@ const toRunnableT = {
     toRunnable,
 };
 
-export { AbstractDisposableObservable, AbstractObservable, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, createT, decodeWithCharset, decodeWithCharsetT, defer, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, generateT, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, observerCount, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AbstractDisposableObservable, AbstractObservable, __currentScheduler, __do, __memo, __observe, __using, buffer, bufferT, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, createT, decodeWithCharset, decodeWithCharsetT, defer, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, generateT, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, observerCount, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

@@ -1,4 +1,4 @@
-import { Container, ContainerOf, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
+import { Container, ContainerOf, FromArray, FromArrayOptions, ContainerOperator } from "./container.mjs";
 import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
 import { Function1, SideEffect1, Equality, Predicate, Reducer, Factory } from "./functions.mjs";
 import { LiftableStateLike, LiftableLike, Lift as Lift$1, ContraVariant, LiftableStateOf, AbstractLiftable, AbstractDisposableLiftable, DelegatingLiftableStateOf } from "./liftable.mjs";
@@ -34,6 +34,14 @@ declare const notify: <C extends SourceLike, T, TSink extends LiftableStateOf<C,
 declare const notifySink: <C extends SourceLike, T, TSink extends LiftableStateOf<C, T>>(sink: TSink) => SideEffect1<T>;
 declare const sinkInto: <C extends SourceLike, T, TSink extends LiftableStateOf<C, T>>(sink: TSink) => Function1<C, C>;
 declare const sourceFrom: <C extends SourceLike, T, TSink extends LiftableStateOf<C, T>>(source: C) => Function1<TSink, TSink>;
+declare const createBufferOperator: <C extends SourceLike>(m: Lift<C> & FromArray<C, FromArrayOptions>, BufferSink: new <T>(delegate: LiftableStateOf<C, readonly T[]>, maxBufferSize: number) => LiftableStateOf<C, T> & {
+    readonly delegate: LiftableStateOf<C, readonly T[]>;
+} & {
+    buffer: T[];
+    readonly maxBufferSize: number;
+}) => <T_1>(options?: {
+    readonly maxBufferSize?: number;
+}) => ContainerOperator<C, T_1, readonly T_1[]>;
 declare const createCatchErrorOperator: <C extends SourceLike>(m: Lift<C>, CatchErrorSink: new <T>(delegate: LiftableStateOf<C, T>) => DelegatingLiftableStateOf<C, T, T, LiftableStateOf<C, T>>) => <T_1>(f: Function1<unknown, void | ContainerOf<C, T_1>>) => ContainerOperator<C, T_1, T_1>;
 declare const createDecodeWithCharsetOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, DecodeWithCharsetSink: new (delegate: LiftableStateOf<C, string>, textDecoder: TextDecoder) => LiftableStateOf<C, ArrayBuffer> & {
     readonly delegate: LiftableStateOf<C, string>;
@@ -138,4 +146,4 @@ declare const createFromDisposable: <C extends SourceLike>(m: CreateSource<C>) =
 declare const createNever: <C extends SourceLike>(m: CreateSource<C>) => <T>() => ContainerOf<C, T>;
 declare const createOnSink: <C extends SourceLike>(m: CreateSource<C>) => <T>(f: Factory<DisposableOrTeardown | void>) => ContainerOperator<C, T, T>;
 declare const createUsing: <C extends SourceLike>(m: CreateSource<C>) => <TResource extends DisposableLike, T>(resourceFactory: Factory<TResource | readonly TResource[]>, sourceFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>) => ContainerOf<C, T>;
-export { AbstractDisposableSource, AbstractSource, CreateSource, Lift, SinkLike, SourceLike, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, notify, notifySink, sinkInto, sourceFrom };
+export { AbstractDisposableSource, AbstractSource, CreateSource, Lift, SinkLike, SourceLike, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, notify, notifySink, sinkInto, sourceFrom };

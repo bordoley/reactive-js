@@ -14,4 +14,5 @@ declare const isSome: <T>(option: Option<T>) => option is T;
  * Returns true if `option` is `none`.
  */
 declare const isNone: <T>(option: Option<T>) => option is undefined;
-export { Option, isNone, isSome, none };
+declare const getOrDefault: <T>(v: T) => (option: Option<T>) => T;
+export { Option, getOrDefault, isNone, isSome, none };
