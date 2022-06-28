@@ -72,11 +72,6 @@ export interface StreamableStateLike<T>
   extends StreamableLike<Updater<T>, T, StateStreamLike<T>> {}
 export interface StateStreamLike<T> extends StreamLike<Updater<T>, T> {}
 
-export type StreamableOperator<TSrcReq, TSrc, TReq, T> = Function1<
-  StreamableLike<TSrcReq, TSrc, StreamLike<TSrcReq, TSrc>>,
-  StreamableLike<TReq, T, StreamLike<TReq, T>>
->;
-
 export type FlowMode = "resume" | "pause";
 
 export interface FlowableLike<T>

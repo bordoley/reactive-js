@@ -21,7 +21,6 @@
 - [ConsumeContinue](streamable.md#consumecontinue)
 - [ConsumeDone](streamable.md#consumedone)
 - [FlowMode](streamable.md#flowmode)
-- [StreamableOperator](streamable.md#streamableoperator)
 
 ### Functions
 
@@ -88,21 +87,6 @@ ___
 ### FlowMode
 
 Ƭ **FlowMode**: ``"resume"`` \| ``"pause"``
-
-___
-
-### StreamableOperator
-
-Ƭ **StreamableOperator**<`TSrcReq`, `TSrc`, `TReq`, `T`\>: [`Function1`](functions.md#function1)<[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TSrcReq`, `TSrc`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TSrcReq`, `TSrc`\>\>, [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TSrcReq` |
-| `TSrc` |
-| `TReq` |
-| `T` |
 
 ## Functions
 
