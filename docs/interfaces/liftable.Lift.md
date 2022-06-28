@@ -9,7 +9,7 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](liftable.LiftableLike.md) |
-| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
+| `TVariance` | extends [`Variance`](../modules/liftable.md#variance) |
 
 ## Hierarchy
 

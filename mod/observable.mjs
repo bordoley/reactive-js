@@ -6,6 +6,7 @@ import { move, current, AbstractEnumerator, reset, hasCurrent, zip as zip$1, for
 import { pipe, arrayEquality, ignore, raise, pipeLazy, compose, returns } from './functions.mjs';
 import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, notifySink, createUsing, notify, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { schedule, __yield, inContinuation, runContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
+import { contraVariant } from './liftable.mjs';
 import { Observer, createDelegatingObserver } from './observer.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { createRunnable } from './runnable.mjs';
@@ -158,11 +159,11 @@ const lift = (operator, isEnumerableOperator = false) => source => {
     return new LiftedObservable(sourceSource, allFunctions, isEnumerableOperator);
 };
 const liftT = {
-    variance: "contravariant",
+    variance: contraVariant,
     lift,
 };
 const liftSynchronousT = {
-    variance: "contravariant",
+    variance: contraVariant,
     lift: op => lift(op, true),
 };
 

@@ -1,7 +1,7 @@
 import { Container, ContainerOf, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
 import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
 import { Function1, SideEffect1, Equality, Predicate, Reducer, Factory } from "./functions.mjs";
-import { LiftedStateLike, LiftableLike, Lift as Lift$1, LiftedStateOf, AbstractLiftable, AbstractDisposableLiftable } from "./liftable.mjs";
+import { LiftedStateLike, LiftableLike, Lift as Lift$1, ContraVariant, LiftedStateOf, AbstractLiftable, AbstractDisposableLiftable } from "./liftable.mjs";
 import { Option } from "./option.mjs";
 interface SinkLike<T> extends LiftedStateLike {
     assertState(this: SinkLike<T>): void;
@@ -19,7 +19,7 @@ interface SourceLike extends LiftableLike {
     readonly liftedStateType: SinkLike<unknown>;
     sink(this: this["type"], sink: this["liftedStateType"]): void;
 }
-interface Lift<C extends SourceLike> extends Lift$1<C, "contravariant"> {
+interface Lift<C extends SourceLike> extends Lift$1<C, ContraVariant> {
 }
 interface CreateSource<C extends SourceLike> extends Container<C> {
     create<T>(onSink: (sink: LiftedStateOf<C, T>) => void): ContainerOf<C, T>;

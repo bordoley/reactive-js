@@ -33,6 +33,7 @@ import {
 import {
   AbstractDisposableLiftable,
   AbstractLiftable,
+  ContraVariant,
   Lift as LiftableLift,
   LiftableLike,
   LiftedStateLike,
@@ -73,7 +74,7 @@ export interface SourceLike extends LiftableLike {
 }
 
 export interface Lift<C extends SourceLike>
-  extends LiftableLift<C, "contravariant"> {}
+  extends LiftableLift<C, ContraVariant> {}
 
 export interface CreateSource<C extends SourceLike> extends Container<C> {
   create<T>(onSink: (sink: LiftedStateOf<C, T>) => void): ContainerOf<C, T>;

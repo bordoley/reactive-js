@@ -14,6 +14,8 @@ class AbstractDisposableLiftable extends AbstractDisposableContainer {
         return raise();
     }
 }
+const covariant = 0;
+const contraVariant = 1;
 const lift = (m) => op => m.lift(op);
 const createDistinctUntilChangedLiftedOperator = (m, DistinctUntilChangedLiftableState) => (options = {}) => {
     const { equality = strictEquality } = options;
@@ -44,13 +46,13 @@ const createTakeFirstLiftedOperator = (m, TakeFirstLiftableState) => (options = 
 const createTakeWhileLiftedOperator = (m, TakeWhileLiftableState) => (predicate, options = {}) => {
     const { inclusive = false } = options;
     return pipe((delegate) => {
-        const lifted = pipe(new TakeWhileLiftableState(delegate, predicate, inclusive), m.variance === "covariant" ? add(delegate) : addTo(delegate));
+        const lifted = pipe(new TakeWhileLiftableState(delegate, predicate, inclusive), m.variance === covariant ? add(delegate) : addTo(delegate));
         return lifted;
     }, lift(m));
 };
 const createThrowIfEmptyLiftedOperator = (m, ThrowIfEmptyLiftableState) => (factory) => pipe((delegate) => {
-    const lifted = pipe(new ThrowIfEmptyLiftableState(delegate), m.variance === "covariant" ? add(delegate, true) : addTo(delegate));
-    const { parent, child } = m.variance === "covariant"
+    const lifted = pipe(new ThrowIfEmptyLiftableState(delegate), m.variance === covariant ? add(delegate, true) : addTo(delegate));
+    const { parent, child } = m.variance === covariant
         ? { parent: lifted, child: delegate }
         : { parent: delegate, child: lifted };
     pipe(child, onComplete(() => {
@@ -70,4 +72,4 @@ const createThrowIfEmptyLiftedOperator = (m, ThrowIfEmptyLiftableState) => (fact
     return lifted;
 }, lift(m));
 
-export { AbstractDisposableLiftable, AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftedOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator, lift };
+export { AbstractDisposableLiftable, AbstractLiftable, contraVariant, covariant, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftedOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator, lift };

@@ -64,10 +64,14 @@ export type LiftedStateOf<C extends LiftableLike, T> = C extends {
       readonly _T: () => T;
     };
 
-export interface Lift<
-  C extends LiftableLike,
-  TVariance extends "covariant" | "contravariant",
-> extends Container<C> {
+export type Covariant = 0;
+export const covariant: Covariant = 0;
+export type ContraVariant = 1;
+export const contraVariant: ContraVariant = 1;
+export type Variance = Covariant | ContraVariant;
+
+export interface Lift<C extends LiftableLike, TVariance extends Variance>
+  extends Container<C> {
   variance: TVariance;
 
   lift<TA, TB>(
@@ -76,12 +80,7 @@ export interface Lift<
 }
 
 export const lift =
-  <
-    C extends LiftableLike,
-    TA,
-    TB,
-    TVariance extends "covariant" | "contravariant",
-  >(
+  <C extends LiftableLike, TA, TB, TVariance extends Variance>(
     m: Lift<C, TVariance>,
   ): Function1<
     LiftOperator<C, TA, TB, typeof m>,
@@ -94,15 +93,15 @@ export type LiftOperator<
   C extends LiftableLike,
   TA,
   TB,
-  M extends Lift<C, "covariant" | "contravariant">,
+  M extends Lift<C, Variance>,
 > = Function1<LiftOperatorIn<C, TA, TB, M>, LiftOperatorOut<C, TA, TB, M>>;
 
 export type LiftOperatorIn<
   C extends LiftableLike,
   TA,
   TB,
-  M extends Lift<C, "covariant" | "contravariant">,
-> = M extends { variance?: "contravariant" }
+  M extends Lift<C, Variance>,
+> = M extends { variance?: ContraVariant }
   ? LiftedStateOf<C, TB>
   : LiftedStateOf<C, TA>;
 
@@ -110,13 +109,13 @@ export type LiftOperatorOut<
   C extends LiftableLike,
   TA,
   TB,
-  M extends Lift<C, "covariant" | "contravariant">,
-> = M extends { variance?: "contravariant" }
+  M extends Lift<C, Variance>,
+> = M extends { variance?: ContraVariant }
   ? LiftedStateOf<C, TA>
   : LiftedStateOf<C, TB>;
 
 export const createDistinctUntilChangedLiftedOperator =
-  <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
+  <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     DistinctUntilChangedLiftableState: new <T>(
       delegate: LiftedStateOf<C, T>,
@@ -136,7 +135,7 @@ export const createDistinctUntilChangedLiftedOperator =
   };
 
 export const createKeepLiftedOperator =
-  <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
+  <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     KeepLiftableState: new <T>(
       delegate: LiftedStateOf<C, T>,
@@ -150,7 +149,7 @@ export const createKeepLiftedOperator =
   };
 
 export const createMapLiftedOperator =
-  <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
+  <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     MapLiftableState: new <TA, TB>(
       delegate: LiftOperatorIn<C, TA, TB, typeof m>,
@@ -165,7 +164,7 @@ export const createMapLiftedOperator =
     );
 
 export const createOnNotifyLiftedOperator =
-  <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
+  <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     OnNotifyLiftableState: new <T>(
       delegate: LiftedStateOf<C, T>,
@@ -180,7 +179,7 @@ export const createOnNotifyLiftedOperator =
     );
 
 export const createPairwiseLiftedOperator =
-  <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
+  <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     PairwiseLiftableState: new <T>(
       delegate: LiftOperatorIn<C, T, [Option<T>, T], typeof m>,
@@ -194,7 +193,7 @@ export const createPairwiseLiftedOperator =
     );
 
 export const createScanLiftedOperator =
-  <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
+  <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     ScanLiftableState: new <T, TAcc>(
       delegate: LiftOperatorIn<C, T, TAcc, typeof m>,
@@ -216,7 +215,7 @@ export const createScanLiftedOperator =
     );
 
 export const createSkipFirstLiftedOperator =
-  <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
+  <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     SkipLiftableState: new <T>(
       delegate: LiftOperatorIn<C, T, T, typeof m>,
@@ -235,7 +234,7 @@ export const createSkipFirstLiftedOperator =
   };
 
 export const createTakeFirstLiftedOperator =
-  <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
+  <C extends LiftableLike, TVariance extends Variance>(
     m: FromArray<C> & Lift<C, TVariance>,
     TakeFirstLiftableState: new <T>(
       delegate: LiftOperatorIn<C, T, T, typeof m>,
@@ -253,7 +252,7 @@ export const createTakeFirstLiftedOperator =
   };
 
 export const createTakeWhileLiftedOperator =
-  <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
+  <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     TakeWhileLiftableState: new <T>(
       delegate: LiftOperatorIn<C, T, T, typeof m>,
@@ -269,7 +268,7 @@ export const createTakeWhileLiftedOperator =
     return pipe((delegate: LiftOperatorIn<C, T, T, typeof m>) => {
       const lifted = pipe(
         new TakeWhileLiftableState(delegate, predicate, inclusive),
-        m.variance === "covariant" ? add(delegate) : addTo(delegate),
+        m.variance === covariant ? add(delegate) : addTo(delegate),
       );
 
       return lifted;
@@ -277,7 +276,7 @@ export const createTakeWhileLiftedOperator =
   };
 
 export const createThrowIfEmptyLiftedOperator =
-  <C extends LiftableLike, TVariance extends "covariant" | "contravariant">(
+  <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     ThrowIfEmptyLiftableState: new <T>(
       delegate: LiftOperatorIn<C, T, T, typeof m>,
@@ -289,10 +288,10 @@ export const createThrowIfEmptyLiftedOperator =
     pipe((delegate: LiftOperatorIn<C, T, T, typeof m>) => {
       const lifted = pipe(
         new ThrowIfEmptyLiftableState(delegate),
-        m.variance === "covariant" ? add(delegate, true) : addTo(delegate),
+        m.variance === covariant ? add(delegate, true) : addTo(delegate),
       );
       const { parent, child } =
-        m.variance === "covariant"
+        m.variance === covariant
           ? { parent: lifted, child: delegate }
           : { parent: delegate, child: lifted };
 

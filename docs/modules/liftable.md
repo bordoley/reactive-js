@@ -17,10 +17,18 @@
 
 ### Type Aliases
 
+- [ContraVariant](liftable.md#contravariant)
+- [Covariant](liftable.md#covariant)
 - [LiftOperator](liftable.md#liftoperator)
 - [LiftOperatorIn](liftable.md#liftoperatorin)
 - [LiftOperatorOut](liftable.md#liftoperatorout)
 - [LiftedStateOf](liftable.md#liftedstateof)
+- [Variance](liftable.md#variance)
+
+### Variables
+
+- [contraVariant](liftable.md#contravariant-1)
+- [covariant](liftable.md#covariant-1)
 
 ### Functions
 
@@ -38,6 +46,18 @@
 
 ## Type Aliases
 
+### ContraVariant
+
+Ƭ **ContraVariant**: ``1``
+
+___
+
+### Covariant
+
+Ƭ **Covariant**: ``0``
+
+___
+
 ### LiftOperator
 
 Ƭ **LiftOperator**<`C`, `TA`, `TB`, `M`\>: [`Function1`](functions.md#function1)<[`LiftOperatorIn`](liftable.md#liftoperatorin)<`C`, `TA`, `TB`, `M`\>, [`LiftOperatorOut`](liftable.md#liftoperatorout)<`C`, `TA`, `TB`, `M`\>\>
@@ -49,13 +69,13 @@
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `M` | extends [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"covariant"`` \| ``"contravariant"``\> |
+| `M` | extends [`Lift`](../interfaces/liftable.Lift.md)<`C`, [`Variance`](liftable.md#variance)\> |
 
 ___
 
 ### LiftOperatorIn
 
-Ƭ **LiftOperatorIn**<`C`, `TA`, `TB`, `M`\>: `M` extends { `variance?`: ``"contravariant"``  } ? [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TB`\> : [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TA`\>
+Ƭ **LiftOperatorIn**<`C`, `TA`, `TB`, `M`\>: `M` extends { `variance?`: [`ContraVariant`](liftable.md#contravariant)  } ? [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TB`\> : [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TA`\>
 
 #### Type parameters
 
@@ -64,13 +84,13 @@ ___
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `M` | extends [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"covariant"`` \| ``"contravariant"``\> |
+| `M` | extends [`Lift`](../interfaces/liftable.Lift.md)<`C`, [`Variance`](liftable.md#variance)\> |
 
 ___
 
 ### LiftOperatorOut
 
-Ƭ **LiftOperatorOut**<`C`, `TA`, `TB`, `M`\>: `M` extends { `variance?`: ``"contravariant"``  } ? [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TA`\> : [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TB`\>
+Ƭ **LiftOperatorOut**<`C`, `TA`, `TB`, `M`\>: `M` extends { `variance?`: [`ContraVariant`](liftable.md#contravariant)  } ? [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TA`\> : [`LiftedStateOf`](liftable.md#liftedstateof)<`C`, `TB`\>
 
 #### Type parameters
 
@@ -79,7 +99,7 @@ ___
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `M` | extends [`Lift`](../interfaces/liftable.Lift.md)<`C`, ``"covariant"`` \| ``"contravariant"``\> |
+| `M` | extends [`Lift`](../interfaces/liftable.Lift.md)<`C`, [`Variance`](liftable.md#variance)\> |
 
 ___
 
@@ -94,6 +114,24 @@ ___
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
 | `T` | `T` |
 
+___
+
+### Variance
+
+Ƭ **Variance**: [`Covariant`](liftable.md#covariant) \| [`ContraVariant`](liftable.md#contravariant)
+
+## Variables
+
+### contraVariant
+
+• `Const` **contraVariant**: [`ContraVariant`](liftable.md#contravariant)
+
+___
+
+### covariant
+
+• `Const` **covariant**: [`Covariant`](liftable.md#covariant)
+
 ## Functions
 
 ### createDistinctUntilChangedLiftedOperator
@@ -105,7 +143,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
-| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
+| `TVariance` | extends [`Variance`](liftable.md#variance) |
 
 #### Parameters
 
@@ -148,7 +186,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
-| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
+| `TVariance` | extends [`Variance`](liftable.md#variance) |
 
 #### Parameters
 
@@ -190,7 +228,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
-| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
+| `TVariance` | extends [`Variance`](liftable.md#variance) |
 
 #### Parameters
 
@@ -233,7 +271,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
-| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
+| `TVariance` | extends [`Variance`](liftable.md#variance) |
 
 #### Parameters
 
@@ -275,7 +313,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
-| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
+| `TVariance` | extends [`Variance`](liftable.md#variance) |
 
 #### Parameters
 
@@ -311,7 +349,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
-| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
+| `TVariance` | extends [`Variance`](liftable.md#variance) |
 
 #### Parameters
 
@@ -355,7 +393,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
-| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
+| `TVariance` | extends [`Variance`](liftable.md#variance) |
 
 #### Parameters
 
@@ -398,7 +436,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
-| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
+| `TVariance` | extends [`Variance`](liftable.md#variance) |
 
 #### Parameters
 
@@ -441,7 +479,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
-| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
+| `TVariance` | extends [`Variance`](liftable.md#variance) |
 
 #### Parameters
 
@@ -485,7 +523,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
-| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
+| `TVariance` | extends [`Variance`](liftable.md#variance) |
 
 #### Parameters
 
@@ -529,7 +567,7 @@ ___
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
+| `TVariance` | extends [`Variance`](liftable.md#variance) |
 
 #### Parameters
 
