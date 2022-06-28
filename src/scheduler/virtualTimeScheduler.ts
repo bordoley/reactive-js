@@ -6,7 +6,7 @@ import {
   SchedulerContinuationLike,
   VirtualTimeSchedulerLike,
 } from "../scheduler";
-import { PriorityQueueLike, createPriorityQueue } from "./priorityQueue";
+import { QueueLike, createPriorityQueue } from "./queue";
 import { SchedulerImplementation, now, runContinuation } from "./scheduler";
 
 type VirtualTask = {
@@ -32,7 +32,7 @@ class VirtualTimeSchedulerImpl
   private taskIDCount = 0;
   private yieldRequested = false;
 
-  private readonly taskQueue: PriorityQueueLike<VirtualTask> =
+  private readonly taskQueue: QueueLike<VirtualTask> =
     createPriorityQueue(comparator);
 
   constructor(

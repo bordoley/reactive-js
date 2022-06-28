@@ -8,8 +8,8 @@ import { SideEffect, Function1 } from "./functions.mjs";
  * @param hostScheduler The underlying platform scheduler used by the priority
  * scheduler to schedule work.
  */
-declare const toPriorityScheduler: (hostScheduler: SchedulerLike) => PrioritySchedulerLike;
-declare const toPausableScheduler: (hostScheduler: SchedulerLike) => PausableSchedulerLike;
+declare const createPriorityScheduler: (hostScheduler: SchedulerLike) => PrioritySchedulerLike;
+declare const createPausableScheduler: (hostScheduler: SchedulerLike) => PausableSchedulerLike;
 declare const __yield: (options?: {
     delay?: number;
 }) => void;
@@ -107,4 +107,4 @@ interface PrioritySchedulerLike extends DisposableLike {
         readonly delay?: number;
     }): void;
 }
-export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerImplementation, SchedulerLike, VirtualTimeSchedulerLike, __yield, createHostScheduler, createVirtualTimeScheduler, inContinuation, now, runContinuation, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };
+export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerImplementation, SchedulerLike, VirtualTimeSchedulerLike, __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, inContinuation, now, runContinuation, schedule, toSchedulerWithPriority };
