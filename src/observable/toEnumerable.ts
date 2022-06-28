@@ -12,7 +12,7 @@ import { Observer } from "../observer";
 import { isNone } from "../option";
 import {
   SchedulerContinuationLike,
-  SchedulerImplementation,
+  SchedulerImplementationLike,
   SchedulerLike,
   inContinuation,
   runContinuation,
@@ -21,7 +21,7 @@ import { sourceFrom } from "../source";
 
 class EnumeratorScheduler<T>
   extends AbstractEnumerator<T>
-  implements SchedulerLike, SchedulerImplementation
+  implements SchedulerLike, SchedulerImplementationLike
 {
   inContinuation = false;
   private readonly continuations: SchedulerContinuationLike[] = [];

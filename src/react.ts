@@ -42,7 +42,7 @@ import { Option, isSome, none } from "./option";
 import {
   PrioritySchedulerLike,
   SchedulerContinuationLike,
-  SchedulerImplementation,
+  SchedulerImplementationLike,
   SchedulerLike,
   inContinuation,
   runContinuation,
@@ -120,7 +120,7 @@ export const createComponent = <TProps>(
 
 class ReactPriorityScheduler
   extends AbstractDisposable
-  implements PrioritySchedulerLike, SchedulerImplementation
+  implements PrioritySchedulerLike, SchedulerImplementationLike
 {
   inContinuation = false;
 

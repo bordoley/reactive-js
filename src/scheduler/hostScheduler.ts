@@ -11,8 +11,12 @@ import {
 } from "../disposable";
 import { pipe } from "../functions";
 import { Option, isSome, none } from "../option";
-import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
-import { SchedulerImplementation, now, runContinuation } from "./scheduler";
+import {
+  SchedulerContinuationLike,
+  SchedulerImplementationLike,
+  SchedulerLike,
+} from "../scheduler";
+import { now, runContinuation } from "./scheduler";
 
 const scheduleImmediateWithSetImmediate = (
   scheduler: HostScheduler,
@@ -91,7 +95,7 @@ const run = (
 
 class HostScheduler
   extends AbstractDisposable
-  implements SchedulerLike, SchedulerImplementation
+  implements SchedulerLike, SchedulerImplementationLike
 {
   inContinuation = false;
   messageChannel: Option<MessageChannel> = none;

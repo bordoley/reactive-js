@@ -1,17 +1,14 @@
-import { DisposableLike, isDisposed } from "../disposable";
+import { isDisposed } from "../disposable";
 import { Function1 } from "../functions";
 import {
   PrioritySchedulerLike,
   SchedulerContinuationLike,
+  SchedulerImplementationLike,
   SchedulerLike,
 } from "../scheduler";
 
-export interface SchedulerImplementation extends DisposableLike {
-  inContinuation: boolean;
-}
-
 export const runContinuation =
-  <TScheduler extends SchedulerImplementation>(
+  <TScheduler extends SchedulerImplementationLike>(
     continuation: SchedulerContinuationLike,
   ): Function1<TScheduler, TScheduler> =>
   scheduler => {

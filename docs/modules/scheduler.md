@@ -9,7 +9,7 @@
 - [PausableSchedulerLike](../interfaces/scheduler.PausableSchedulerLike.md)
 - [PrioritySchedulerLike](../interfaces/scheduler.PrioritySchedulerLike.md)
 - [SchedulerContinuationLike](../interfaces/scheduler.SchedulerContinuationLike.md)
-- [SchedulerImplementation](../interfaces/scheduler.SchedulerImplementation.md)
+- [SchedulerImplementationLike](../interfaces/scheduler.SchedulerImplementationLike.md)
 - [SchedulerLike](../interfaces/scheduler.SchedulerLike.md)
 - [VirtualTimeSchedulerLike](../interfaces/scheduler.VirtualTimeSchedulerLike.md)
 
@@ -156,7 +156,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TScheduler` | extends [`SchedulerImplementation`](../interfaces/scheduler.SchedulerImplementation.md)<`TScheduler`\> |
+| `TScheduler` | extends [`SchedulerImplementationLike`](../interfaces/scheduler.SchedulerImplementationLike.md)<`TScheduler`\> |
 
 #### Parameters
 

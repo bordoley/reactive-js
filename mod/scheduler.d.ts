@@ -36,10 +36,7 @@ declare const createHostScheduler: (options?: {
 declare const createVirtualTimeScheduler: (options?: {
     readonly maxMicroTaskTicks?: number;
 }) => VirtualTimeSchedulerLike;
-interface SchedulerImplementation extends DisposableLike {
-    inContinuation: boolean;
-}
-declare const runContinuation: <TScheduler extends SchedulerImplementation>(continuation: SchedulerContinuationLike) => Function1<TScheduler, TScheduler>;
+declare const runContinuation: <TScheduler extends SchedulerImplementationLike>(continuation: SchedulerContinuationLike) => Function1<TScheduler, TScheduler>;
 declare const inContinuation: (scheduler: SchedulerLike | PrioritySchedulerLike) => boolean;
 declare const now: (scheduler: SchedulerLike) => number;
 /**
@@ -107,4 +104,7 @@ interface PrioritySchedulerLike extends DisposableLike {
         readonly delay?: number;
     }): void;
 }
-export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerImplementation, SchedulerLike, VirtualTimeSchedulerLike, __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, inContinuation, now, runContinuation, schedule, toSchedulerWithPriority };
+interface SchedulerImplementationLike extends DisposableLike {
+    inContinuation: boolean;
+}
+export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerImplementationLike, SchedulerLike, VirtualTimeSchedulerLike, __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, inContinuation, now, runContinuation, schedule, toSchedulerWithPriority };
