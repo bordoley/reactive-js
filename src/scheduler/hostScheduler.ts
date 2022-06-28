@@ -8,36 +8,10 @@ import {
   disposed,
   onDisposed,
 } from "../disposable";
-import { Factory, alwaysFalse, pipe } from "../functions";
+import { pipe } from "../functions";
 import { Option, isSome, none } from "../option";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
 import { run } from "./schedulerContinuation";
-
-const supportsPerformanceNow =
-  typeof performance === "object" && typeof performance.now === "function";
-
-const supportsProcessHRTime =
-  typeof process === "object" && typeof process.hrtime === "function";
-
-const supportsSetImmediate = typeof setImmediate === "function";
-
-const supportsIsInputPending =
-  typeof navigator === "object" &&
-  (navigator as any).scheduling !== undefined &&
-  (navigator as any).scheduling.isInputPending !== undefined;
-
-const inputIsPending = supportsIsInputPending
-  ? () => (navigator as any).scheduling.isInputPending()
-  : alwaysFalse;
-
-const now: Factory<number> = supportsPerformanceNow
-  ? () => performance.now()
-  : supportsProcessHRTime
-  ? () => {
-      const hr = process.hrtime();
-      return hr[0] * 1000 + hr[1] / 1e6;
-    }
-  : () => Date.now();
 
 const scheduleImmediateWithSetImmediate = (
   scheduler: HostScheduler,
@@ -89,7 +63,7 @@ const scheduleImmediate = (
   scheduler: HostScheduler,
   continuation: SchedulerContinuationLike,
 ) => {
-  const { messageChannel } = scheduler;
+  const { messageChannel, supportsSetImmediate } = scheduler;
 
   if (supportsSetImmediate) {
     scheduleImmediateWithSetImmediate(scheduler, continuation);
@@ -123,6 +97,10 @@ const runContinuation = (
 class HostScheduler extends AbstractDisposable implements SchedulerLike {
   inContinuation = false;
   messageChannel: Option<MessageChannel> = none;
+  supportsPerformanceNow = false;
+  supportsIsInputPending = false;
+  supportsSetImmediate = false;
+  supportsProcessHRTime = false;
   startTime = this.now;
   private yieldRequested = false;
 
@@ -131,7 +109,15 @@ class HostScheduler extends AbstractDisposable implements SchedulerLike {
   }
 
   get now(): number {
-    return now();
+    const { supportsPerformanceNow, supportsProcessHRTime } = this;
+    if (supportsPerformanceNow) {
+      return performance.now();
+    } else if (supportsProcessHRTime) {
+      const hr = process.hrtime();
+      return hr[0] * 1000 + hr[1] / 1e6;
+    } else {
+      return Date.now();
+    }
   }
 
   get shouldYield() {
@@ -145,7 +131,14 @@ class HostScheduler extends AbstractDisposable implements SchedulerLike {
       inContinuation &&
       (yieldRequested ||
         this.now > this.startTime + this.yieldInterval ||
-        inputIsPending())
+        this.isInputPending)
+    );
+  }
+
+  get isInputPending(): boolean {
+    return (
+      this.supportsIsInputPending &&
+      (navigator as any).scheduling.isInputPending()
     );
   }
 
@@ -178,9 +171,17 @@ export const createHostScheduler = (
   const { yieldInterval = 5 } = options;
   const hostScheduler = new HostScheduler(yieldInterval);
 
-  const supportsMessageChannel = typeof MessageChannel === "function";
+  hostScheduler.supportsPerformanceNow =
+    typeof performance === "object" && typeof performance.now === "function";
+  hostScheduler.supportsSetImmediate = typeof setImmediate === "function";
+  hostScheduler.supportsProcessHRTime =
+    typeof process === "object" && typeof process.hrtime === "function";
+  hostScheduler.supportsIsInputPending =
+    typeof navigator === "object" &&
+    (navigator as any).scheduling !== undefined &&
+    (navigator as any).scheduling.isInputPending !== undefined;
 
-  if (supportsMessageChannel) {
+  if (typeof MessageChannel === "function") {
     const messageChannel = new MessageChannel();
     hostScheduler.messageChannel = messageChannel;
 
