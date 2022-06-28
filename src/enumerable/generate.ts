@@ -1,9 +1,9 @@
 import { Generate } from "../container";
 import { dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
+import { AbstractEnumerator, current, hasCurrent } from "../enumerator";
 import { Factory, Updater, pipe } from "../functions";
 import { createEnumerable } from "./enumerable";
-import { AbstractEnumerator } from "./enumerator";
 
 class GenerateEnumerator<T> extends AbstractEnumerator<T> {
   constructor(private readonly f: Updater<T>, acc: T) {
@@ -14,12 +14,12 @@ class GenerateEnumerator<T> extends AbstractEnumerator<T> {
   move(): boolean {
     if (!isDisposed(this)) {
       try {
-        this.current = this.f(this.current);
+        this.current = this.f(current(this));
       } catch (cause) {
         pipe(this, dispose({ cause }));
       }
     }
-    return this.hasCurrent;
+    return hasCurrent(this);
   }
 }
 

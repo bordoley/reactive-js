@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`AbstractLiftable`](liftable.AbstractLiftable.md)<[`Enumerator`](enumerable.Enumerator.md)<`T`\>\>
+- [`AbstractLiftable`](liftable.AbstractLiftable.md)<[`Enumerator`](enumerator.Enumerator.md)<`T`\>\>
 
   ↳ **`AbstractEnumerable`**
 
@@ -110,7 +110,7 @@ AbstractLiftable.type
 
 ### enumerate
 
-▸ `Abstract` **enumerate**(`this`): [`Enumerator`](enumerable.Enumerator.md)<`T`\>
+▸ `Abstract` **enumerate**(`this`): [`Enumerator`](enumerator.Enumerator.md)<`T`\>
 
 Returns an `EnumeratorLike` to iterate through the Container.
 
@@ -122,7 +122,7 @@ Returns an `EnumeratorLike` to iterate through the Container.
 
 #### Returns
 
-[`Enumerator`](enumerable.Enumerator.md)<`T`\>
+[`Enumerator`](enumerator.Enumerator.md)<`T`\>
 
 #### Implementation of
 

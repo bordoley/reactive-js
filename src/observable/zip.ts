@@ -10,8 +10,10 @@ import {
   AbstractEnumerator,
   Enumerator,
   current,
-  zipEnumerators,
-} from "../enumerable";
+  hasCurrent,
+  move,
+  zip as zipEnumerators,
+} from "../enumerator";
 import { defer, pipe, returns } from "../functions";
 import { ObservableLike } from "../observable";
 import { everySatisfy, map } from "../readonlyArray";
@@ -19,13 +21,13 @@ import { sinkInto, sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
 import { fromEnumerator } from "./fromEnumerable";
 import { Observer } from "./observer";
-import { enumerate } from "./toEnumerable";
+import { enumerateObs } from "./toEnumerable";
 
 import { using } from "./using";
 
 const shouldEmit = (enumerators: readonly Enumerator<unknown>[]) => {
   for (const enumerator of enumerators) {
-    if (!enumerator.hasCurrent) {
+    if (!hasCurrent(enumerator)) {
       return false;
     }
   }
@@ -34,8 +36,8 @@ const shouldEmit = (enumerators: readonly Enumerator<unknown>[]) => {
 
 const shouldComplete = (enumerators: readonly Enumerator<unknown>[]) => {
   for (const enumerator of enumerators) {
-    enumerator.move();
-    if (isDisposed(enumerator) && !enumerator.hasCurrent) {
+    move(enumerator);
+    if (isDisposed(enumerator) && !hasCurrent(enumerator)) {
       return true;
     }
   }
@@ -55,7 +57,7 @@ class ZipObserverEnumerator extends AbstractEnumerator<unknown> {
       this.reset();
     }
 
-    return this.hasCurrent;
+    return hasCurrent(this);
   }
 }
 
@@ -74,7 +76,7 @@ class ZipObserver extends Observer<unknown> {
     const { enumerator, enumerators } = this;
 
     if (!isDisposed(this)) {
-      if (enumerator.hasCurrent) {
+      if (hasCurrent(enumerator)) {
         enumerator.buffer.push(next);
       } else {
         enumerator.current = next;
@@ -107,7 +109,7 @@ const _zip = (
 
     if (isEnumerable) {
       const zipped = using(
-        defer(observables, map(enumerate)),
+        defer(observables, map(enumerateObs)),
         (...enumerators: readonly Enumerator<any>[]) =>
           pipe(enumerators, zipEnumerators, returns, fromEnumerator()),
       );
@@ -120,9 +122,9 @@ const _zip = (
         const next = observables[index];
 
         if (next.isEnumerable ?? false) {
-          const enumerator = enumerate(next);
+          const enumerator = enumerateObs(next);
 
-          enumerator.move();
+          move(enumerator);
           enumerators.push(enumerator);
         } else {
           const enumerator = pipe(
@@ -138,7 +140,7 @@ const _zip = (
             onComplete(() => {
               if (
                 isDisposed(enumerator) ||
-                (enumerator.buffer.length === 0 && !enumerator.hasCurrent)
+                (enumerator.buffer.length === 0 && !hasCurrent(enumerator))
               ) {
                 pipe(observer, dispose());
               }

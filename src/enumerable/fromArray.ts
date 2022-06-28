@@ -1,9 +1,9 @@
 import { FromArray, FromArrayOptions } from "../container";
 import { dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
+import { AbstractEnumerator, hasCurrent } from "../enumerator";
 import { pipe } from "../functions";
 import { createEnumerable } from "./enumerable";
-import { AbstractEnumerator } from "./enumerator";
 
 class ArrayEnumerator<T> extends AbstractEnumerator<T> {
   constructor(
@@ -30,7 +30,7 @@ class ArrayEnumerator<T> extends AbstractEnumerator<T> {
       }
     }
 
-    return this.hasCurrent;
+    return hasCurrent(this);
   }
 }
 

@@ -1,7 +1,8 @@
 /// <reference types="./scheduler.d.ts" />
-import { AbstractDisposable, isDisposed, dispose, AbstractSerialDisposable, disposed, add, addTo, onDisposed, createDisposable } from './disposable.mjs';
+import { isDisposed, AbstractDisposable, dispose, AbstractSerialDisposable, disposed, add, addTo, onDisposed, createDisposable } from './disposable.mjs';
 import { pipe, raise } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
+import { AbstractEnumerator, hasCurrent } from './enumerator.mjs';
 
 const computeParentIndex = (index) => Math.floor((index - 1) / 2);
 const siftDown = (queue, item) => {
@@ -82,6 +83,15 @@ class PriorityQueueImpl {
 }
 const createPriorityQueue = (comparator) => new PriorityQueueImpl(comparator);
 
+const runContinuation = (continuation) => scheduler => {
+    if (!isDisposed(continuation)) {
+        scheduler.inContinuation = true;
+        continuation.continue();
+        scheduler.inContinuation = false;
+    }
+    return scheduler;
+};
+
 const isYieldError = (e) => e instanceof YieldError;
 class YieldError {
     constructor(delay) {
@@ -123,9 +133,6 @@ class SchedulerContinuationImpl extends AbstractDisposable {
         }
     }
 }
-const run = (continuation) => {
-    continuation.continue();
-};
 const __yield = (options = {}) => {
     var _a;
     const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
@@ -142,7 +149,7 @@ const schedule = (f, options) => scheduler => {
     return continuation;
 };
 
-const move$1 = (scheduler) => {
+const move = (scheduler) => {
     // First fast forward through any disposed tasks.
     peek(scheduler);
     const task = scheduler.queue.pop();
@@ -211,10 +218,8 @@ class PriorityScheduler extends AbstractSerialDisposable {
                 const { continuation, dueTime } = task;
                 const delay = Math.max(dueTime - this.now, 0);
                 if (delay === 0) {
-                    move$1(this);
-                    this.inContinuation = true;
-                    run(continuation);
-                    this.inContinuation = false;
+                    move(this);
+                    pipe(this, runContinuation(continuation));
                 }
                 else {
                     this.dueTime = this.now + delay;
@@ -359,15 +364,15 @@ const toSchedulerWithPriority = (priority) => priorityScheduler => pipe(new Sche
 
 const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
     const disposable = pipe(createDisposable(), addTo(continuation), onDisposed(() => clearImmediate(immmediate)));
-    const immmediate = setImmediate(runContinuation, scheduler, continuation, disposable);
+    const immmediate = setImmediate(run, scheduler, continuation, disposable);
 };
 const scheduleImmediateWithMessageChannel = (scheduler, channel, continuation) => {
-    channel.port1.onmessage = () => runContinuation(scheduler, continuation, disposed);
+    channel.port1.onmessage = () => run(scheduler, continuation, disposed);
     channel.port2.postMessage(null);
 };
 const scheduleDelayed = (scheduler, continuation, delay) => {
     const disposable = pipe(createDisposable(), addTo(continuation), onDisposed(_ => clearTimeout(timeout)));
-    const timeout = setTimeout(runContinuation, delay, scheduler, continuation, disposable);
+    const timeout = setTimeout(run, delay, scheduler, continuation, disposable);
 };
 const scheduleImmediate = (scheduler, continuation) => {
     const { messageChannel, supportsSetImmediate } = scheduler;
@@ -381,15 +386,11 @@ const scheduleImmediate = (scheduler, continuation) => {
         scheduleDelayed(scheduler, continuation, 0);
     }
 };
-const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) => {
+const run = (scheduler, continuation, immmediateOrTimerDisposable) => {
     // clear the immediateOrTimer disposable
     pipe(immmediateOrTimerDisposable, dispose());
-    if (!isDisposed(continuation)) {
-        scheduler.inContinuation = true;
-        scheduler.startTime = scheduler.now;
-        run(continuation);
-        scheduler.inContinuation = false;
-    }
+    scheduler.startTime = scheduler.now;
+    pipe(scheduler, runContinuation(continuation));
 };
 class HostScheduler extends AbstractDisposable {
     constructor(yieldInterval) {
@@ -476,30 +477,10 @@ const comparator = (a, b) => {
     diff = diff !== 0 ? diff : a.id - b.id;
     return diff;
 };
-const move = (scheduler) => {
-    const taskQueue = scheduler.taskQueue;
-    scheduler.hasCurrent = false;
-    if (!isDisposed(scheduler)) {
-        const task = taskQueue.pop();
-        if (isSome(task)) {
-            const { dueTime, continuation } = task;
-            scheduler.current = continuation;
-            scheduler.hasCurrent = true;
-            scheduler.microTaskTicks = 0;
-            scheduler.now = dueTime;
-        }
-        else {
-            pipe(scheduler, dispose());
-        }
-    }
-    return scheduler.hasCurrent;
-};
-class VirtualTimeSchedulerImpl extends AbstractDisposable {
-    constructor(maxMicroTaskTicks) {
+class VirtualTimeSchedulerImpl extends AbstractEnumerator {
+    constructor(maxMicroTaskTicks = Number.MAX_SAFE_INTEGER) {
         super();
         this.maxMicroTaskTicks = maxMicroTaskTicks;
-        this.current = none;
-        this.hasCurrent = false;
         this.inContinuation = false;
         this.microTaskTicks = 0;
         this.now = 0;
@@ -516,28 +497,37 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable {
         return (inContinuation &&
             (yieldRequested || this.microTaskTicks >= this.maxMicroTaskTicks));
     }
+    move() {
+        const taskQueue = this.taskQueue;
+        this.reset();
+        if (!isDisposed(this)) {
+            const task = taskQueue.pop();
+            if (isSome(task)) {
+                const { dueTime, continuation } = task;
+                this.microTaskTicks = 0;
+                this.now = dueTime;
+                this.current = none;
+                pipe(this, runContinuation(continuation));
+            }
+            else {
+                pipe(this, dispose());
+            }
+        }
+        return hasCurrent(this);
+    }
     requestYield() {
         this.yieldRequested = true;
-    }
-    run() {
-        while (!isDisposed(this) && move(this)) {
-            this.inContinuation = true;
-            run(this.current);
-            this.inContinuation = false;
-        }
-        pipe(this, dispose());
     }
     schedule(continuation, options = {}) {
         var _a;
         const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
         pipe(this, add(continuation, true));
         if (!isDisposed(continuation)) {
-            const work = {
+            this.taskQueue.push({
                 id: this.taskIDCount++,
                 dueTime: this.now + delay,
                 continuation,
-            };
-            this.taskQueue.push(work);
+            });
         }
     }
 }
@@ -553,4 +543,4 @@ const createVirtualTimeScheduler = (options = {}) => {
     return new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
 };
 
-export { __yield, createHostScheduler, createVirtualTimeScheduler, run, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };
+export { __yield, createHostScheduler, createVirtualTimeScheduler, runContinuation, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };

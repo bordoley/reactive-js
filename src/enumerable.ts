@@ -16,15 +16,17 @@ import {
 } from "./container";
 import { DisposableLike, addTo, dispose, isDisposed } from "./disposable";
 import { concatAll } from "./enumerable/concatAll";
-import { createEnumerable } from "./enumerable/enumerable";
+import { createEnumerable, enumerate } from "./enumerable/enumerable";
+import { fromArray, fromArrayT } from "./enumerable/fromArray";
+import { liftT } from "./enumerable/lift";
 import {
   AbstractDelegatingEnumerator,
   AbstractEnumerator,
   Enumerator,
-  enumerate,
-} from "./enumerable/enumerator";
-import { fromArray, fromArrayT } from "./enumerable/fromArray";
-import { liftT } from "./enumerable/lift";
+  current,
+  hasCurrent,
+  move,
+} from "./enumerator";
 import {
   Equality,
   Factory,
@@ -75,15 +77,11 @@ export interface ToEnumerable<C extends ContainerLike> extends Container<C> {
   toEnumerable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 }
 
-export { AbstractEnumerable, createEnumerable } from "./enumerable/enumerable";
 export {
-  Enumerator,
-  AbstractEnumerator,
+  AbstractEnumerable,
+  createEnumerable,
   enumerate,
-  hasCurrent,
-  current,
-  move,
-} from "./enumerable/enumerator";
+} from "./enumerable/enumerable";
 export { concatAll, concatAllT } from "./enumerable/concatAll";
 export { fromArray, fromArrayT } from "./enumerable/fromArray";
 export {
@@ -97,7 +95,7 @@ export { repeat, repeatT } from "./enumerable/repeat";
 export { takeLast, takeLastT } from "./enumerable/takeLast";
 export { toRunnable, toRunnableT } from "./enumerable/toRunnable";
 export { toIterable } from "./enumerable/toIterable";
-export { zip, zipT, zipEnumerators } from "./enumerable/zip";
+export { zip, zipT } from "./enumerable/zip";
 
 export const toEnumerable = <T>(): Function1<
   EnumerableLike<T>,
@@ -140,15 +138,15 @@ export const distinctUntilChanged: <T>(options?: {
     }
 
     move(): boolean {
-      const hadCurrent = this.hasCurrent;
-      const prevCurrent = hadCurrent ? this.current : none;
+      const hadCurrent = hasCurrent(this);
+      const prevCurrent = hadCurrent ? current(this) : none;
 
       try {
         const { delegate } = this;
-        while (delegate.move()) {
+        while (move(delegate)) {
           if (
             !hadCurrent ||
-            !this.equality(prevCurrent as any, delegate.current)
+            !this.equality(prevCurrent as any, current(delegate))
           ) {
             break;
           }
@@ -157,7 +155,7 @@ export const distinctUntilChanged: <T>(options?: {
         pipe(this, dispose({ cause }));
       }
 
-      return this.hasCurrent;
+      return hasCurrent(this);
     }
   },
 );
@@ -183,12 +181,12 @@ export const keep: <T>(predicate: Predicate<T>) => EnumerableOperator<T, T> =
         const { delegate, predicate } = this;
 
         try {
-          while (delegate.move() && !predicate(delegate.current)) {}
+          while (move(delegate) && !predicate(current(delegate))) {}
         } catch (cause) {
           pipe(this, dispose({ cause }));
         }
 
-        return this.hasCurrent;
+        return hasCurrent(this);
       }
     },
   );
@@ -214,15 +212,15 @@ export const map: <TA, TB>(
 
       const { delegate } = this;
 
-      if (delegate.move()) {
+      if (move(delegate)) {
         try {
-          this.current = this.mapper(delegate.current);
+          this.current = this.mapper(current(delegate));
         } catch (cause) {
           pipe(this, dispose({ cause }));
         }
       }
 
-      return this.hasCurrent;
+      return hasCurrent(this);
     }
   },
 );
@@ -246,15 +244,15 @@ export const onNotify: <T>(
     move(): boolean {
       const { delegate } = this;
 
-      if (delegate.move()) {
+      if (move(delegate)) {
         try {
-          this.onNotify(this.current);
+          this.onNotify(current(this));
         } catch (cause) {
           pipe(this, dispose({ cause }));
         }
       }
 
-      return this.hasCurrent;
+      return hasCurrent(this);
     }
   },
 );
@@ -268,17 +266,17 @@ export const pairwise: <T>() => EnumerableOperator<T, [Option<T>, T]> =
       }
 
       move(): boolean {
-        const prev = (this.hasCurrent ? this.current : emptyArray)[1];
+        const prev = (hasCurrent(this) ? current(this) : emptyArray)[1];
 
         this.reset();
 
         const { delegate } = this;
-        if (delegate.move()) {
+        if (move(delegate)) {
           const { current } = delegate;
           this.current = [prev, current];
         }
 
-        return this.hasCurrent;
+        return hasCurrent(this);
       }
     },
   );
@@ -303,20 +301,20 @@ export const scan: <T, TAcc>(
     }
 
     move(): boolean {
-      const acc = this.hasCurrent ? this.current : none;
+      const acc = hasCurrent(this) ? current(this) : none;
 
       this.reset();
 
       const { delegate, reducer } = this;
-      if (isSome(acc) && delegate.move()) {
+      if (isSome(acc) && move(delegate)) {
         try {
-          this.current = reducer(acc, delegate.current);
+          this.current = reducer(acc, current(delegate));
         } catch (cause) {
           pipe(this, dispose({ cause }));
         }
       }
 
-      return this.hasCurrent;
+      return hasCurrent(this);
     }
   },
 );
@@ -340,13 +338,13 @@ export const skipFirst: <T>(options?: {
       const { delegate, skipCount } = this;
 
       for (let { count } = this; count < skipCount; count++) {
-        if (!delegate.move()) {
+        if (!move(delegate)) {
           break;
         }
       }
 
       this.count = skipCount;
-      return delegate.move();
+      return move(delegate);
     }
   },
 );
@@ -367,18 +365,18 @@ export const takeFirst: <T>(options?: {
     }
 
     get current() {
-      return this.delegate.current;
+      return current(this.delegate);
     }
 
     move(): boolean {
       if (this.count < this.maxCount) {
         this.count++;
-        this.delegate.move();
+        move(this.delegate);
       } else {
         pipe(this, dispose());
       }
 
-      return this.hasCurrent;
+      return hasCurrent(this);
     }
   },
 );
@@ -408,7 +406,7 @@ export const takeWhile: <T>(
 
       if (this.done && !isDisposed(this)) {
         pipe(this, dispose());
-      } else if (delegate.move()) {
+      } else if (move(delegate)) {
         const { current } = delegate;
 
         try {
@@ -424,7 +422,7 @@ export const takeWhile: <T>(
         }
       }
 
-      return this.hasCurrent;
+      return hasCurrent(this);
     }
   },
 );
@@ -440,12 +438,12 @@ export const throwIfEmpty: <T>(
   class ThrowIfEmptyEnumerator<T> extends AbstractDelegatingEnumerator<T> {
     isEmpty = true;
 
-    move() {
-      if (this.move()) {
+    move(): boolean {
+      if (move(this.delegate)) {
         this.isEmpty = false;
       }
 
-      return this.hasCurrent;
+      return hasCurrent(this);
     }
   },
 );

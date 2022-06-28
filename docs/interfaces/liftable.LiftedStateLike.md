@@ -16,7 +16,7 @@
 
 ## Implemented by
 
-- [`Enumerator`](../classes/enumerable.Enumerator.md)
+- [`Enumerator`](../classes/enumerator.Enumerator.md)
 
 ## Table of contents
 
@@ -88,7 +88,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DisposableLike`](disposable.DisposableLike.md) |
+| `this` | [`LiftedStateLike`](liftable.LiftedStateLike.md) |
 | `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
 | `ignoreChildErrors` | `boolean` |
 

@@ -12,7 +12,7 @@ import {
 import { pipe } from "../functions";
 import { Option, isSome, none } from "../option";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
-import { run } from "./schedulerContinuation";
+import { SchedulerImplementation, runContinuation } from "./scheduler";
 
 const scheduleImmediateWithSetImmediate = (
   scheduler: HostScheduler,
@@ -24,7 +24,7 @@ const scheduleImmediateWithSetImmediate = (
     onDisposed(() => clearImmediate(immmediate)),
   );
   const immmediate: ReturnType<typeof setImmediate> = setImmediate(
-    runContinuation,
+    run,
     scheduler,
     continuation,
     disposable,
@@ -36,8 +36,7 @@ const scheduleImmediateWithMessageChannel = (
   channel: MessageChannel,
   continuation: SchedulerContinuationLike,
 ) => {
-  channel.port1.onmessage = () =>
-    runContinuation(scheduler, continuation, disposed);
+  channel.port1.onmessage = () => run(scheduler, continuation, disposed);
   channel.port2.postMessage(null);
 };
 
@@ -52,7 +51,7 @@ const scheduleDelayed = (
     onDisposed(_ => clearTimeout(timeout)),
   );
   const timeout: ReturnType<typeof setTimeout> = setTimeout(
-    runContinuation,
+    run,
     delay,
     scheduler,
     continuation,
@@ -79,23 +78,21 @@ const scheduleImmediate = (
   }
 };
 
-const runContinuation = (
+const run = (
   scheduler: HostScheduler,
   continuation: SchedulerContinuationLike,
   immmediateOrTimerDisposable: DisposableLike,
 ) => {
   // clear the immediateOrTimer disposable
   pipe(immmediateOrTimerDisposable, dispose());
-
-  if (!isDisposed(continuation)) {
-    scheduler.inContinuation = true;
-    scheduler.startTime = scheduler.now;
-    run(continuation);
-    scheduler.inContinuation = false;
-  }
+  scheduler.startTime = scheduler.now;
+  pipe(scheduler, runContinuation(continuation));
 };
 
-class HostScheduler extends AbstractDisposable implements SchedulerLike {
+class HostScheduler
+  extends AbstractDisposable
+  implements SchedulerLike, SchedulerImplementation
+{
   inContinuation = false;
   messageChannel: Option<MessageChannel> = none;
   supportsPerformanceNow = false;

@@ -1,4 +1,5 @@
 import { DisposableLike } from "./disposable";
+import { Enumerator } from "./enumerator";
 
 /**
  * A unit of work to be executed by a scheduler.
@@ -23,7 +24,7 @@ export interface SchedulerLike extends DisposableLike {
   /**
    * Request the scheduler to yield.
    */
-  requestYield(this: SchedulerLike): void;
+  requestYield(this: this): void;
 
   /**
    * Schedules a continuation to be executed on the scheduler.
@@ -31,19 +32,17 @@ export interface SchedulerLike extends DisposableLike {
    * @param continuation The SchedulerContinuation to be executed.
    */
   schedule(
-    this: SchedulerLike,
+    this: this,
     continuation: SchedulerContinuationLike,
     options?: { readonly delay?: number },
   ): void;
 }
 
-/**
- * A scheduler that uses a virtual clock to simulate time. Useful for testing.
- *
- * @noInheritDoc
- */
-export interface VirtualTimeSchedulerLike extends SchedulerLike {
-  run(this: VirtualTimeSchedulerLike): void;
+export interface VirtualTimeSchedulerLike
+  extends Enumerator<void>,
+    SchedulerLike {
+  readonly isDisposed: boolean;
+  dispose(this: this): void;
 }
 
 export interface PausableSchedulerLike extends SchedulerLike {
@@ -85,7 +84,11 @@ export {
   toPriorityScheduler,
   toPausableScheduler,
 } from "./scheduler/priorityQueueScheduler";
-export { run, schedule, __yield } from "./scheduler/schedulerContinuation";
+export { schedule, __yield } from "./scheduler/schedulerContinuation";
 export { toSchedulerWithPriority } from "./scheduler/schedulerWithPriority";
 export { createHostScheduler } from "./scheduler/hostScheduler";
 export { createVirtualTimeScheduler } from "./scheduler/virtualTimeScheduler";
+export {
+  SchedulerImplementation,
+  runContinuation,
+} from "./scheduler/scheduler";

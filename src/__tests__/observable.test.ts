@@ -9,6 +9,7 @@ import {
   zipWith,
 } from "../container";
 import { dispose } from "../disposable";
+import { forEach as enumeratorForEach } from "../enumerator";
 import {
   arrayEquality,
   defer,
@@ -467,7 +468,7 @@ export const tests = describe(
       pipe(disp, expectToHaveBeenCalledTimes(0));
       pipe(f, expectToHaveBeenCalledTimes(1));
 
-      scheduler.run();
+      pipe(scheduler, enumeratorForEach(ignore));
 
       pipe(disp, expectToHaveBeenCalledTimes(1));
       pipe(f, expectToHaveBeenCalledTimes(1));
@@ -586,7 +587,7 @@ export const tests = describe(
       subscribe(scheduler),
     );
 
-    scheduler.run();
+    pipe(scheduler, enumeratorForEach(ignore));
     pipe(result, expectArrayEquals([2, 4, 6]));
   }),
 
