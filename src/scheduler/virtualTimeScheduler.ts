@@ -7,7 +7,7 @@ import {
   VirtualTimeSchedulerLike,
 } from "../scheduler";
 import { PriorityQueueLike, createPriorityQueue } from "./priorityQueue";
-import { SchedulerImplementation, runContinuation } from "./scheduler";
+import { SchedulerImplementation, now, runContinuation } from "./scheduler";
 
 type VirtualTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -94,7 +94,7 @@ class VirtualTimeSchedulerImpl
     if (!isDisposed(continuation)) {
       this.taskQueue.push({
         id: this.taskIDCount++,
-        dueTime: this.now + delay,
+        dueTime: now(this) + delay,
         continuation,
       });
     }

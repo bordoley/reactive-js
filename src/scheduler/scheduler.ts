@@ -26,3 +26,5 @@ export const runContinuation =
 export const inContinuation = (
   scheduler: SchedulerLike | PrioritySchedulerLike,
 ): boolean => scheduler.inContinuation;
+
+export const now = (scheduler: SchedulerLike): number => scheduler.now;

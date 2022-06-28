@@ -92,6 +92,7 @@ const runContinuation = (continuation) => scheduler => {
     return scheduler;
 };
 const inContinuation = (scheduler) => scheduler.inContinuation;
+const now = (scheduler) => scheduler.now;
 
 const isYieldError = (e) => e instanceof YieldError;
 class YieldError {
@@ -160,14 +161,14 @@ const move = (scheduler) => {
 };
 const peek = (scheduler) => {
     const { delayed, queue } = scheduler;
-    const now = scheduler.now;
+    const now$1 = now(scheduler);
     while (true) {
         const task = delayed.peek();
         if (isNone(task)) {
             break;
         }
         const taskIsDispose = isDisposed(task.continuation);
-        if (task.dueTime > now && !taskIsDispose) {
+        if (task.dueTime > now$1 && !taskIsDispose) {
             break;
         }
         delayed.pop();
@@ -202,7 +203,7 @@ const delayedComparator = (a, b) => {
 };
 const scheduleContinuation = (scheduler, task) => {
     const dueTime = task.dueTime;
-    const delay = Math.max(dueTime - scheduler.now, 0);
+    const delay = Math.max(dueTime - now(scheduler), 0);
     scheduler.dueTime = dueTime;
     scheduler.inner = pipe(scheduler.host, schedule(scheduler.continuation, { delay }));
 };
@@ -217,13 +218,13 @@ class PriorityScheduler extends AbstractSerialDisposable {
         this.continuation = () => {
             for (let task = peek(this); isSome(task) && !isDisposed(this); task = peek(this)) {
                 const { continuation, dueTime } = task;
-                const delay = Math.max(dueTime - this.now, 0);
+                const delay = Math.max(dueTime - now(this), 0);
                 if (delay === 0) {
                     move(this);
                     pipe(this, runContinuation(continuation));
                 }
                 else {
-                    this.dueTime = this.now + delay;
+                    this.dueTime = now(this) + delay;
                 }
                 __yield({ delay });
             }
@@ -238,7 +239,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
         this.yieldRequested = false;
     }
     get now() {
-        return this.host.now;
+        return now(this.host);
     }
     get shouldYield() {
         const { current } = this;
@@ -246,7 +247,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
         const nextTaskIsHigherPriority = isSome(current) &&
             isSome(next) &&
             current !== next &&
-            next.dueTime <= this.now &&
+            next.dueTime <= now(this) &&
             next.priority < current.priority;
         const { inContinuation, yieldRequested } = this;
         if (inContinuation) {
@@ -335,7 +336,7 @@ class SchedulerWithPriorityImpl extends AbstractDisposable {
         return inContinuation(this.priorityScheduler);
     }
     get now() {
-        return this.priorityScheduler.now;
+        return now(this.priorityScheduler);
     }
     get shouldYield() {
         return this.priorityScheduler.shouldYield;
@@ -390,7 +391,7 @@ const scheduleImmediate = (scheduler, continuation) => {
 const run = (scheduler, continuation, immmediateOrTimerDisposable) => {
     // clear the immediateOrTimer disposable
     pipe(immmediateOrTimerDisposable, dispose());
-    scheduler.startTime = scheduler.now;
+    scheduler.startTime = now(scheduler);
     pipe(scheduler, runContinuation(continuation));
 };
 class HostScheduler extends AbstractDisposable {
@@ -403,7 +404,7 @@ class HostScheduler extends AbstractDisposable {
         this.supportsIsInputPending = false;
         this.supportsSetImmediate = false;
         this.supportsProcessHRTime = false;
-        this.startTime = this.now;
+        this.startTime = now(this);
         this.yieldRequested = false;
     }
     get now() {
@@ -426,7 +427,7 @@ class HostScheduler extends AbstractDisposable {
         }
         return (inContinuation &&
             (yieldRequested ||
-                this.now > this.startTime + this.yieldInterval ||
+                now(this) > this.startTime + this.yieldInterval ||
                 this.isInputPending));
     }
     get isInputPending() {
@@ -526,7 +527,7 @@ class VirtualTimeSchedulerImpl extends AbstractEnumerator {
         if (!isDisposed(continuation)) {
             this.taskQueue.push({
                 id: this.taskIDCount++,
-                dueTime: this.now + delay,
+                dueTime: now(this) + delay,
                 continuation,
             });
         }
@@ -544,4 +545,4 @@ const createVirtualTimeScheduler = (options = {}) => {
     return new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
 };
 
-export { __yield, createHostScheduler, createVirtualTimeScheduler, inContinuation, runContinuation, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };
+export { __yield, createHostScheduler, createVirtualTimeScheduler, inContinuation, now, runContinuation, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };

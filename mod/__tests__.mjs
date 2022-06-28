@@ -9,7 +9,7 @@ import { toArray, fromArray, someSatisfyT, first, generate, everySatisfy, map, f
 import { dispatchTo } from './dispatcher.mjs';
 import { forEach as forEach$1 } from './enumerator.mjs';
 import { concat as concat$2, fromArray as fromArray$2, fromArrayT as fromArrayT$2, buffer, toRunnable as toRunnable$2, mapT, catchError, concatT, generate as generate$2, takeFirst as takeFirst$2, combineLatestWith, createObservable, createSubject, observerCount, subscribe, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeT, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync, share, zip as zip$1, map as map$2, onNotify, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$1, zipT, zipLatestWith, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$2, skipFirst as skipFirst$2, takeWhile as takeWhile$2, decodeWithCharset, usingT } from './observable.mjs';
-import { createVirtualTimeScheduler, createHostScheduler, schedule } from './scheduler.mjs';
+import { createVirtualTimeScheduler, createHostScheduler, schedule, now } from './scheduler.mjs';
 import { type, fromArray as fromArray$3, concat as concat$3, concatAll as concatAll$2, distinctUntilChanged as distinctUntilChanged$3, generate as generate$3, keep, map as map$3, repeat as repeat$3, scan as scan$3, skipFirst as skipFirst$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$3, toRunnable as toRunnable$3, fromArrayT as fromArrayT$3, zipT as zipT$1 } from './sequence.mjs';
 import { identity as identity$1, __stream, createActionReducer, stream, empty as empty$1, createLiftedStreamable, sinkInto, flow, createFlowableSinkAccumulator, fromArray as fromArray$4, fromIterable as fromIterable$2, generate as generate$4, consume, consumeContinue, consumeDone, consumeAsync } from './streamable.mjs';
 
@@ -416,7 +416,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(scheduler, schedule(defer(generateStream, dispose()), { delay: 5 }));
     const f = mockFn();
     const subscription = pipe(generateStream, onNotify(x => {
-        f(scheduler.now, x);
+        f(now(scheduler), x);
     }), subscribe(scheduler));
     pipe(scheduler, forEach$1(ignore));
     pipe(f, expectToHaveBeenCalledTimes(3));
