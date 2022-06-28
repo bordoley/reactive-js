@@ -1113,7 +1113,7 @@ const _zip = (...observables) => {
     const zipObservable = createObservable(observer => {
         const count = observables.length;
         if (isEnumerableOperator) {
-            const zipped = using(pipeLazy(observables, map$1(enumerateObs)), (...enumerators) => pipe(enumerators, zip$1, returns, fromEnumerator()));
+            const zipped = using(pipeLazy(observables, map$1(enumerateObs)), (...enumerators) => pipe(zip$1(...enumerators), returns, fromEnumerator()));
             zipped.isEnumerable = true;
             pipe(zipped, sinkInto(observer));
         }

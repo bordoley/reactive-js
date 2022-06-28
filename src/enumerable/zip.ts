@@ -12,7 +12,9 @@ import { createEnumerable, enumerate } from "./enumerable";
 const _zip = <T>(
   ...enumerables: readonly EnumerableLike<T>[]
 ): EnumerableLike<any> =>
-  createEnumerable(() => pipe(enumerables, map(enumerate), zipEnumerators));
+  createEnumerable(() =>
+    pipe(enumerables, map(enumerate), a => zipEnumerators(...a)),
+  );
 
 export const zip: Zip<EnumerableLike<unknown>>["zip"] = _zip;
 

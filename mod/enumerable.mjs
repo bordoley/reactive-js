@@ -347,7 +347,7 @@ const toIterable = () => _toIterable;
  * Combines multiple EnumerableLikes to create an EnumerableLike whose values are calculated from the values,
  * in order, of each of its inputs.
  */
-const _zip = (...enumerables) => createEnumerable(() => pipe(enumerables, map$1(enumerate), zip$1));
+const _zip = (...enumerables) => createEnumerable(() => pipe(enumerables, map$1(enumerate), a => zip$1(...a)));
 const zip = _zip;
 const zipT = {
     zip,
