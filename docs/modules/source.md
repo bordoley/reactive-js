@@ -60,7 +60,7 @@
 | Name | Type |
 | :------ | :------ |
 | `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> |
-| `CatchErrorSink` | <T\>(`delegate`: [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `T`\>) => [`DelegatingLiftableStateOf`](liftable.md#delegatingliftablestateof)<`C`, `T`, `T`\> |
+| `CatchErrorSink` | <T\>(`delegate`: [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `T`\>) => [`DelegatingLiftableStateOf`](liftable.md#delegatingliftablestateof)<`C`, `T`, `T`, [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `T`\>\> |
 
 #### Returns
 

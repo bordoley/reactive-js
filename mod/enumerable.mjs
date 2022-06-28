@@ -3,7 +3,7 @@ import { isDisposed, dispose, createSerialDisposable, bindTo, add, addTo } from 
 import { AbstractEnumerator, reset, hasCurrent, move, Enumerator, current, forEach, zip as zip$1, AbstractDelegatingEnumerator } from './enumerator.mjs';
 import { pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { empty } from './container.mjs';
-import { AbstractLiftable, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
+import { AbstractLiftable, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, delegate, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { map as map$1, empty as empty$1, forEach as forEach$1 } from './readonlyArray.mjs';
 import { createRunnable } from './runnable.mjs';
@@ -518,12 +518,12 @@ const takeFirst = createTakeFirstLiftOperator({ ...fromArrayT, ...liftT }, class
         this.count = 0;
     }
     get current() {
-        return current(this.delegate);
+        return current(delegate(this));
     }
     move() {
         if (this.count < this.maxCount) {
             this.count++;
-            move(this.delegate);
+            move(delegate(this));
         }
         else {
             pipe(this, dispose());
@@ -573,7 +573,7 @@ const throwIfEmpty = createThrowIfEmptyLiftOperator(liftT, class ThrowIfEmptyEnu
         this.isEmpty = true;
     }
     move() {
-        if (move(this.delegate)) {
+        if (move(delegate(this))) {
             this.isEmpty = false;
         }
         return hasCurrent(this);

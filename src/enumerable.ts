@@ -50,6 +50,7 @@ import {
   createTakeFirstLiftOperator,
   createTakeWhileLiftOperator,
   createThrowIfEmptyLiftOperator,
+  delegate,
 } from "./liftable";
 import { Option, isSome, none } from "./option";
 import { empty as emptyArray, forEach } from "./readonlyArray";
@@ -366,13 +367,13 @@ export const takeFirst: <T>(options?: {
     }
 
     get current() {
-      return current(this.delegate);
+      return current(delegate(this));
     }
 
     move(): boolean {
       if (this.count < this.maxCount) {
         this.count++;
-        move(this.delegate);
+        move(delegate(this));
       } else {
         pipe(this, dispose());
       }
@@ -440,7 +441,7 @@ export const throwIfEmpty: <T>(
     isEmpty = true;
 
     move(): boolean {
-      if (move(this.delegate)) {
+      if (move(delegate(this))) {
         this.isEmpty = false;
       }
 
