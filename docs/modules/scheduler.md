@@ -17,13 +17,13 @@
 
 - [\_\_yield](scheduler.md#__yield)
 - [createHostScheduler](scheduler.md#createhostscheduler)
+- [createPausableScheduler](scheduler.md#createpausablescheduler)
+- [createPriorityScheduler](scheduler.md#createpriorityscheduler)
 - [createVirtualTimeScheduler](scheduler.md#createvirtualtimescheduler)
 - [inContinuation](scheduler.md#incontinuation)
 - [now](scheduler.md#now)
 - [runContinuation](scheduler.md#runcontinuation)
 - [schedule](scheduler.md#schedule)
-- [toPausableScheduler](scheduler.md#topausablescheduler)
-- [toPriorityScheduler](scheduler.md#topriorityscheduler)
 - [toSchedulerWithPriority](scheduler.md#toschedulerwithpriority)
 
 ## Functions
@@ -59,6 +59,41 @@ ___
 #### Returns
 
 [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+
+___
+
+### createPausableScheduler
+
+▸ **createPausableScheduler**(`hostScheduler`): [`PausableSchedulerLike`](../interfaces/scheduler.PausableSchedulerLike.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `hostScheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) |
+
+#### Returns
+
+[`PausableSchedulerLike`](../interfaces/scheduler.PausableSchedulerLike.md)
+
+___
+
+### createPriorityScheduler
+
+▸ **createPriorityScheduler**(`hostScheduler`): [`PrioritySchedulerLike`](../interfaces/scheduler.PrioritySchedulerLike.md)
+
+Creates a new priority scheduler which schedules work using the provided
+host scheduler.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `hostScheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) | The underlying platform scheduler used by the priority scheduler to schedule work. |
+
+#### Returns
+
+[`PrioritySchedulerLike`](../interfaces/scheduler.PrioritySchedulerLike.md)
 
 ___
 
@@ -150,41 +185,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md), [`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
-
-___
-
-### toPausableScheduler
-
-▸ **toPausableScheduler**(`hostScheduler`): [`PausableSchedulerLike`](../interfaces/scheduler.PausableSchedulerLike.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `hostScheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) |
-
-#### Returns
-
-[`PausableSchedulerLike`](../interfaces/scheduler.PausableSchedulerLike.md)
-
-___
-
-### toPriorityScheduler
-
-▸ **toPriorityScheduler**(`hostScheduler`): [`PrioritySchedulerLike`](../interfaces/scheduler.PrioritySchedulerLike.md)
-
-Creates a new priority scheduler which schedules work using the provided
-host scheduler.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `hostScheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) | The underlying platform scheduler used by the priority scheduler to schedule work. |
-
-#### Returns
-
-[`PrioritySchedulerLike`](../interfaces/scheduler.PrioritySchedulerLike.md)
 
 ___
 

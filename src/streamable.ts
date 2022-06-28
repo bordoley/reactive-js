@@ -52,7 +52,7 @@ import {
   using,
   withLatestFrom,
 } from "./observable";
-import { SchedulerLike, toPausableScheduler } from "./scheduler";
+import { SchedulerLike, createPausableScheduler } from "./scheduler";
 import { notifySink, sinkInto as sinkIntoSink, sourceFrom } from "./source";
 import { createLiftedStreamable, createStream } from "./streamable/streamable";
 
@@ -176,7 +176,7 @@ export const flow =
   observable =>
     createLiftedStreamable((modeObs: ObservableLike<FlowMode>) =>
       createObservable(observer => {
-        const pausableScheduler = toPausableScheduler(
+        const pausableScheduler = createPausableScheduler(
           scheduler ?? observer.scheduler,
         );
 
