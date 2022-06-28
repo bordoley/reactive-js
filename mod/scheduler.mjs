@@ -1,6 +1,6 @@
 /// <reference types="./scheduler.d.ts" />
 import { AbstractDisposable, dispose, AbstractSerialDisposable, disposed, add, addTo, onDisposed, createDisposable } from './disposable.mjs';
-import { pipe, raise, alwaysFalse } from './functions.mjs';
+import { pipe, raise } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 
 const computeParentIndex = (index) => Math.floor((index - 1) / 2);
@@ -357,23 +357,6 @@ class SchedulerWithPriorityImpl extends AbstractDisposable {
  */
 const toSchedulerWithPriority = (priority) => priorityScheduler => pipe(new SchedulerWithPriorityImpl(priorityScheduler, priority), addTo(priorityScheduler, true));
 
-const supportsPerformanceNow = typeof performance === "object" && typeof performance.now === "function";
-const supportsProcessHRTime = typeof process === "object" && typeof process.hrtime === "function";
-const supportsSetImmediate = typeof setImmediate === "function";
-const supportsIsInputPending = typeof navigator === "object" &&
-    navigator.scheduling !== undefined &&
-    navigator.scheduling.isInputPending !== undefined;
-const inputIsPending = supportsIsInputPending
-    ? () => navigator.scheduling.isInputPending()
-    : alwaysFalse;
-const now = supportsPerformanceNow
-    ? () => performance.now()
-    : supportsProcessHRTime
-        ? () => {
-            const hr = process.hrtime();
-            return hr[0] * 1000 + hr[1] / 1e6;
-        }
-        : () => Date.now();
 const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
     const disposable = pipe(createDisposable(), addTo(continuation), onDisposed(() => clearImmediate(immmediate)));
     const immmediate = setImmediate(runContinuation, scheduler, continuation, disposable);
@@ -387,7 +370,7 @@ const scheduleDelayed = (scheduler, continuation, delay) => {
     const timeout = setTimeout(runContinuation, delay, scheduler, continuation, disposable);
 };
 const scheduleImmediate = (scheduler, continuation) => {
-    const { messageChannel } = scheduler;
+    const { messageChannel, supportsSetImmediate } = scheduler;
     if (supportsSetImmediate) {
         scheduleImmediateWithSetImmediate(scheduler, continuation);
     }
@@ -414,11 +397,25 @@ class HostScheduler extends AbstractDisposable {
         this.yieldInterval = yieldInterval;
         this.inContinuation = false;
         this.messageChannel = none;
+        this.supportsPerformanceNow = false;
+        this.supportsIsInputPending = false;
+        this.supportsSetImmediate = false;
+        this.supportsProcessHRTime = false;
         this.startTime = this.now;
         this.yieldRequested = false;
     }
     get now() {
-        return now();
+        const { supportsPerformanceNow, supportsProcessHRTime } = this;
+        if (supportsPerformanceNow) {
+            return performance.now();
+        }
+        else if (supportsProcessHRTime) {
+            const hr = process.hrtime();
+            return hr[0] * 1000 + hr[1] / 1e6;
+        }
+        else {
+            return Date.now();
+        }
     }
     get shouldYield() {
         const { inContinuation, yieldRequested } = this;
@@ -428,7 +425,11 @@ class HostScheduler extends AbstractDisposable {
         return (inContinuation &&
             (yieldRequested ||
                 this.now > this.startTime + this.yieldInterval ||
-                inputIsPending()));
+                this.isInputPending));
+    }
+    get isInputPending() {
+        return (this.supportsIsInputPending &&
+            navigator.scheduling.isInputPending());
     }
     requestYield() {
         this.yieldRequested = true;
@@ -449,8 +450,16 @@ class HostScheduler extends AbstractDisposable {
 const createHostScheduler = (options = {}) => {
     const { yieldInterval = 5 } = options;
     const hostScheduler = new HostScheduler(yieldInterval);
-    const supportsMessageChannel = typeof MessageChannel === "function";
-    if (supportsMessageChannel) {
+    hostScheduler.supportsPerformanceNow =
+        typeof performance === "object" && typeof performance.now === "function";
+    hostScheduler.supportsSetImmediate = typeof setImmediate === "function";
+    hostScheduler.supportsProcessHRTime =
+        typeof process === "object" && typeof process.hrtime === "function";
+    hostScheduler.supportsIsInputPending =
+        typeof navigator === "object" &&
+            navigator.scheduling !== undefined &&
+            navigator.scheduling.isInputPending !== undefined;
+    if (typeof MessageChannel === "function") {
         const messageChannel = new MessageChannel();
         hostScheduler.messageChannel = messageChannel;
         pipe(hostScheduler, onDisposed(_ => {
