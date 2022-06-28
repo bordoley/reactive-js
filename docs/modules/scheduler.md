@@ -121,7 +121,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TScheduler` | extends [`SchedulerImplementation`](../interfaces/scheduler.SchedulerImplementation.md) |
+| `TScheduler` | extends [`SchedulerImplementation`](../interfaces/scheduler.SchedulerImplementation.md)<`TScheduler`\> |
 
 #### Parameters
 

@@ -36,7 +36,7 @@ declare const createHostScheduler: (options?: {
 declare const createVirtualTimeScheduler: (options?: {
     readonly maxMicroTaskTicks?: number;
 }) => VirtualTimeSchedulerLike;
-interface SchedulerImplementation {
+interface SchedulerImplementation extends DisposableLike {
     inContinuation: boolean;
 }
 declare const runContinuation: <TScheduler extends SchedulerImplementation>(continuation: SchedulerContinuationLike) => Function1<TScheduler, TScheduler>;
