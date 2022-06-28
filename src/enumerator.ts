@@ -120,10 +120,73 @@ class ZipEnumerator<T> extends AbstractEnumerator<readonly T[]> {
   }
 }
 
-export const zip = <T>(
-  enumerators: readonly Enumerator<T>[],
-): Enumerator<readonly T[]> => {
+export function zip<TA, TB>(
+  a: Enumerator<TA>,
+  b: Enumerator<TB>,
+): Enumerator<readonly [TA, TB]>;
+export function zip<TA, TB, TC>(
+  a: Enumerator<TA>,
+  b: Enumerator<TB>,
+  c: Enumerator<TC>,
+): Enumerator<readonly [TA, TB, TC]>;
+export function zip<TA, TB, TC, TD>(
+  a: Enumerator<TA>,
+  b: Enumerator<TB>,
+  c: Enumerator<TC>,
+  d: Enumerator<TD>,
+): Enumerator<readonly [TA, TB, TC, TD]>;
+export function zip<TA, TB, TC, TD, TE>(
+  a: Enumerator<TA>,
+  b: Enumerator<TB>,
+  c: Enumerator<TC>,
+  d: Enumerator<TD>,
+  e: Enumerator<TE>,
+): Enumerator<readonly [TA, TB, TC, TD, TE]>;
+export function zip<TA, TB, TC, TD, TE, TF>(
+  a: Enumerator<TA>,
+  b: Enumerator<TB>,
+  c: Enumerator<TC>,
+  d: Enumerator<TD>,
+  e: Enumerator<TE>,
+  f: Enumerator<TF>,
+): Enumerator<readonly [TA, TB, TC, TD, TE, TF]>;
+export function zip<TA, TB, TC, TD, TE, TF, TG>(
+  a: Enumerator<TA>,
+  b: Enumerator<TB>,
+  c: Enumerator<TC>,
+  d: Enumerator<TD>,
+  e: Enumerator<TE>,
+  f: Enumerator<TF>,
+  g: Enumerator<TG>,
+): Enumerator<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+export function zip<TA, TB, TC, TD, TE, TF, TG, TH>(
+  a: Enumerator<TA>,
+  b: Enumerator<TB>,
+  c: Enumerator<TC>,
+  d: Enumerator<TD>,
+  e: Enumerator<TE>,
+  f: Enumerator<TF>,
+  g: Enumerator<TG>,
+  h: Enumerator<TH>,
+): Enumerator<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+export function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+  a: Enumerator<TA>,
+  b: Enumerator<TB>,
+  c: Enumerator<TC>,
+  d: Enumerator<TD>,
+  e: Enumerator<TE>,
+  f: Enumerator<TF>,
+  g: Enumerator<TG>,
+  h: Enumerator<TH>,
+  i: Enumerator<TI>,
+): Enumerator<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+export function zip<T>(
+  ...enumerators: readonly Enumerator<T>[]
+): Enumerator<readonly T[]>;
+export function zip(
+  ...enumerators: readonly Enumerator<unknown>[]
+): Enumerator<readonly any[]> {
   const enumerator = new ZipEnumerator(enumerators);
   pipe(enumerators, forEachReadonlyArray(addTo(enumerator)));
   return enumerator;
-};
+}

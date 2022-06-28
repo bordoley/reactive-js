@@ -28,5 +28,65 @@ declare const hasCurrent: <T>(enumerator: Enumerator<T>) => boolean;
 declare const move: <T>(enumerator: Enumerator<T>) => boolean;
 declare const forEach: <T, TEnumerator extends Enumerator<T> = Enumerator<T>>(f: SideEffect1<T>) => Function1<TEnumerator, TEnumerator>;
 declare const reset: <T>(enumerator: AbstractEnumerator<T>) => void;
-declare const zip: <T>(enumerators: readonly Enumerator<T>[]) => Enumerator<readonly T[]>;
+declare function zip<TA, TB>(a: Enumerator<TA>, b: Enumerator<TB>): Enumerator<readonly [
+    TA,
+    TB
+]>;
+declare function zip<TA, TB, TC>(a: Enumerator<TA>, b: Enumerator<TB>, c: Enumerator<TC>): Enumerator<readonly [
+    TA,
+    TB,
+    TC
+]>;
+declare function zip<TA, TB, TC, TD>(a: Enumerator<TA>, b: Enumerator<TB>, c: Enumerator<TC>, d: Enumerator<TD>): Enumerator<readonly [
+    TA,
+    TB,
+    TC,
+    TD
+]>;
+declare function zip<TA, TB, TC, TD, TE>(a: Enumerator<TA>, b: Enumerator<TB>, c: Enumerator<TC>, d: Enumerator<TD>, e: Enumerator<TE>): Enumerator<readonly [
+    TA,
+    TB,
+    TC,
+    TD,
+    TE
+]>;
+declare function zip<TA, TB, TC, TD, TE, TF>(a: Enumerator<TA>, b: Enumerator<TB>, c: Enumerator<TC>, d: Enumerator<TD>, e: Enumerator<TE>, f: Enumerator<TF>): Enumerator<readonly [
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF
+]>;
+declare function zip<TA, TB, TC, TD, TE, TF, TG>(a: Enumerator<TA>, b: Enumerator<TB>, c: Enumerator<TC>, d: Enumerator<TD>, e: Enumerator<TE>, f: Enumerator<TF>, g: Enumerator<TG>): Enumerator<readonly [
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG
+]>;
+declare function zip<TA, TB, TC, TD, TE, TF, TG, TH>(a: Enumerator<TA>, b: Enumerator<TB>, c: Enumerator<TC>, d: Enumerator<TD>, e: Enumerator<TE>, f: Enumerator<TF>, g: Enumerator<TG>, h: Enumerator<TH>): Enumerator<readonly [
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG,
+    TH
+]>;
+declare function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: Enumerator<TA>, b: Enumerator<TB>, c: Enumerator<TC>, d: Enumerator<TD>, e: Enumerator<TE>, f: Enumerator<TF>, g: Enumerator<TG>, h: Enumerator<TH>, i: Enumerator<TI>): Enumerator<readonly [
+    TA,
+    TB,
+    TC,
+    TD,
+    TE,
+    TF,
+    TG,
+    TH,
+    TI
+]>;
+declare function zip<T>(...enumerators: readonly Enumerator<T>[]): Enumerator<readonly T[]>;
 export { AbstractDelegatingEnumerator, AbstractEnumerator, Enumerator, current, forEach, hasCurrent, move, reset, zip };

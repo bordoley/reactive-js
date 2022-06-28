@@ -79,10 +79,10 @@ class ZipEnumerator extends AbstractEnumerator {
         return hasCurrent(this);
     }
 }
-const zip = (enumerators) => {
+function zip(...enumerators) {
     const enumerator = new ZipEnumerator(enumerators);
     pipe(enumerators, forEach$1(addTo(enumerator)));
     return enumerator;
-};
+}
 
 export { AbstractDelegatingEnumerator, AbstractEnumerator, Enumerator, current, forEach, hasCurrent, move, reset, zip };

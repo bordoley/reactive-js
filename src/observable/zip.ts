@@ -109,7 +109,7 @@ const _zip = (
       const zipped = using(
         pipeLazy(observables, map(enumerateObs)),
         (...enumerators: readonly Enumerator<any>[]) =>
-          pipe(enumerators, zipEnumerators, returns, fromEnumerator()),
+          pipe(zipEnumerators(...enumerators), returns, fromEnumerator()),
       );
       (zipped as any).isEnumerable = true;
 
