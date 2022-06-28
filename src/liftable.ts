@@ -66,6 +66,14 @@ export type LiftableStateOf<C extends LiftableLike, T> = C extends {
       readonly _T: () => T;
     };
 
+export type DelegatingLiftableStateOf<
+  C extends LiftableLike,
+  T,
+  TDelegate,
+> = LiftableStateOf<C, T> & {
+  readonly delegate: LiftableStateOf<C, TDelegate>;
+};
+
 export type Covariant = 0;
 export const covariant: Covariant = 0;
 export type ContraVariant = 1;

@@ -21,6 +21,9 @@ declare type LiftableStateOf<C extends LiftableLike, T> = C extends {
     readonly _C: C;
     readonly _T: () => T;
 };
+declare type DelegatingLiftableStateOf<C extends LiftableLike, T, TDelegate> = LiftableStateOf<C, T> & {
+    readonly delegate: LiftableStateOf<C, TDelegate>;
+};
 declare type Covariant = 0;
 declare const covariant: Covariant;
 declare type ContraVariant = 1;
@@ -67,4 +70,4 @@ declare const createTakeWhileLiftOperator: <C extends LiftableLike, TVariance ex
 declare const createThrowIfEmptyLiftOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, ThrowIfEmptyLiftableState: new <T>(delegate: LiftOperatorIn<C, T, T, Lift<C, TVariance>>) => LiftOperatorOut<C, T, T, Lift<C, TVariance>> & {
     readonly isEmpty: boolean;
 }) => <T_1>(factory: Factory<unknown>) => ContainerOperator<C, T_1, T_1>;
-export { AbstractDisposableLiftable, AbstractLiftable, ContraVariant, Covariant, Lift, LiftOperator, LiftOperatorIn, LiftOperatorOut, LiftableLike, LiftableStateLike, LiftableStateOf, Variance, contraVariant, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, lift };
+export { AbstractDisposableLiftable, AbstractLiftable, ContraVariant, Covariant, DelegatingLiftableStateOf, Lift, LiftOperator, LiftOperatorIn, LiftOperatorOut, LiftableLike, LiftableStateLike, LiftableStateOf, Variance, contraVariant, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, lift };
