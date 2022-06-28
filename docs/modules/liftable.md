@@ -43,6 +43,7 @@
 - [createTakeFirstLiftOperator](liftable.md#createtakefirstliftoperator)
 - [createTakeWhileLiftOperator](liftable.md#createtakewhileliftoperator)
 - [createThrowIfEmptyLiftOperator](liftable.md#createthrowifemptyliftoperator)
+- [delegate](liftable.md#delegate)
 - [lift](liftable.md#lift)
 
 ## Type Aliases
@@ -61,7 +62,7 @@ ___
 
 ### DelegatingLiftableStateOf
 
-Ƭ **DelegatingLiftableStateOf**<`C`, `T`, `TDelegate`\>: [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `T`\> & { `delegate`: [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `TDelegate`\>  }
+Ƭ **DelegatingLiftableStateOf**<`C`, `T`, `TDelegate`, `TDelegateLiftableState`\>: [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `T`\> & { `delegate`: `TDelegateLiftableState`  }
 
 #### Type parameters
 
@@ -70,6 +71,7 @@ ___
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
 | `T` | `T` |
 | `TDelegate` | `TDelegate` |
+| `TDelegateLiftableState` | extends [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `TDelegate`\> = [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `TDelegate`\> |
 
 ___
 
@@ -568,6 +570,31 @@ ___
 ##### Returns
 
 [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+___
+
+### delegate
+
+▸ **delegate**<`C`, `T`, `TDelegate`, `TDelegateLiftableState`\>(`s`): `TDelegateLiftableState`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `T` | `T` |
+| `TDelegate` | `TDelegate` |
+| `TDelegateLiftableState` | extends [`LiftableStateLike`](../interfaces/liftable.LiftableStateLike.md)<`TDelegateLiftableState`\> = [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `TDelegate`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `s` | [`DelegatingLiftableStateOf`](liftable.md#delegatingliftablestateof)<`C`, `T`, `TDelegate`, `TDelegateLiftableState`\> |
+
+#### Returns
+
+`TDelegateLiftableState`
 
 ___
 

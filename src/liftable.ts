@@ -70,9 +70,25 @@ export type DelegatingLiftableStateOf<
   C extends LiftableLike,
   T,
   TDelegate,
+  TDelegateLiftableState extends LiftableStateOf<
+    C,
+    TDelegate
+  > = LiftableStateOf<C, TDelegate>,
 > = LiftableStateOf<C, T> & {
-  readonly delegate: LiftableStateOf<C, TDelegate>;
+  readonly delegate: TDelegateLiftableState;
 };
+
+export const delegate = <
+  C extends LiftableLike,
+  T,
+  TDelegate,
+  TDelegateLiftableState extends LiftableStateOf<
+    C,
+    TDelegate
+  > = LiftableStateOf<C, TDelegate>,
+>(
+  s: DelegatingLiftableStateOf<C, T, TDelegate, TDelegateLiftableState>,
+): TDelegateLiftableState => s.delegate;
 
 export type Covariant = 0;
 export const covariant: Covariant = 0;

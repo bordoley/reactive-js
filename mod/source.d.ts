@@ -34,7 +34,7 @@ declare const notify: <C extends SourceLike, T, TSink extends LiftableStateOf<C,
 declare const notifySink: <C extends SourceLike, T, TSink extends LiftableStateOf<C, T>>(sink: TSink) => SideEffect1<T>;
 declare const sinkInto: <C extends SourceLike, T, TSink extends LiftableStateOf<C, T>>(sink: TSink) => Function1<C, C>;
 declare const sourceFrom: <C extends SourceLike, T, TSink extends LiftableStateOf<C, T>>(source: C) => Function1<TSink, TSink>;
-declare const createCatchErrorOperator: <C extends SourceLike>(m: Lift<C>, CatchErrorSink: new <T>(delegate: LiftableStateOf<C, T>) => DelegatingLiftableStateOf<C, T, T>) => <T_1>(f: Function1<unknown, void | ContainerOf<C, T_1>>) => ContainerOperator<C, T_1, T_1>;
+declare const createCatchErrorOperator: <C extends SourceLike>(m: Lift<C>, CatchErrorSink: new <T>(delegate: LiftableStateOf<C, T>) => DelegatingLiftableStateOf<C, T, T, LiftableStateOf<C, T>>) => <T_1>(f: Function1<unknown, void | ContainerOf<C, T_1>>) => ContainerOperator<C, T_1, T_1>;
 declare const createDecodeWithCharsetOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, DecodeWithCharsetSink: new (delegate: LiftableStateOf<C, string>, textDecoder: TextDecoder) => LiftableStateOf<C, ArrayBuffer> & {
     readonly delegate: LiftableStateOf<C, string>;
 } & {
