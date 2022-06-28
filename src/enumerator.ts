@@ -1,6 +1,6 @@
 import { AbstractDisposableContainer } from "./container";
 import { addTo, dispose, isDisposed, onDisposed } from "./disposable";
-import { Function1, SideEffect1, defer, pipe, raise } from "./functions";
+import { Function1, SideEffect1, pipe, pipeLazy, raise } from "./functions";
 import { LiftedStateLike } from "./liftable";
 import { Option, none } from "./option";
 import {
@@ -25,7 +25,7 @@ export abstract class AbstractEnumerator<T> extends Enumerator<T> {
 
   constructor() {
     super();
-    pipe(this, onDisposed(defer(this, reset)));
+    pipe(this, onDisposed(pipeLazy(this, reset)));
   }
 
   get current(): T {

@@ -27,10 +27,10 @@ import {
 import {
   alwaysFalse,
   alwaysTrue,
-  defer,
   increment,
   incrementBy,
   pipe,
+  pipeLazy,
   returns,
   sum,
 } from "../functions";
@@ -91,7 +91,7 @@ export const createRunnableTests = <C extends ContainerLike>(
     "RunnableContainer",
     test(
       "concat",
-      defer(
+      pipeLazy(
         m.concat(
           empty(m),
           m.fromArray()([1, 2, 3]),
@@ -108,7 +108,7 @@ export const createRunnableTests = <C extends ContainerLike>(
       "distinctUntilChanged",
       test(
         "when source has duplicates in order",
-        defer(
+        pipeLazy(
           [1, 2, 2, 2, 2, 3, 3, 3, 4],
           m.fromArray(),
           m.distinctUntilChanged(),
@@ -119,7 +119,7 @@ export const createRunnableTests = <C extends ContainerLike>(
       ),
       test(
         "when source is empty",
-        defer(
+        pipeLazy(
           [],
           m.fromArray(),
           m.distinctUntilChanged(),
@@ -132,7 +132,7 @@ export const createRunnableTests = <C extends ContainerLike>(
 
     test(
       "endWith",
-      defer(
+      pipeLazy(
         [1, 2, 3],
         m.fromArray(),
         endWith(m, 4),
@@ -143,10 +143,10 @@ export const createRunnableTests = <C extends ContainerLike>(
     ),
     test(
       "concatMap",
-      defer(
+      pipeLazy(
         0,
         fromValue(m),
-        concatMap(m, defer([1, 2, 3], m.fromArray())),
+        concatMap(m, pipeLazy([1, 2, 3], m.fromArray())),
         m.toRunnable(),
         toArray(),
         expectArrayEquals([1, 2, 3]),
@@ -154,7 +154,7 @@ export const createRunnableTests = <C extends ContainerLike>(
     ),
     test(
       "keep",
-      defer(
+      pipeLazy(
         [4, 8, 10, 7],
         m.fromArray(),
         m.keep(x => x > 5),
@@ -165,7 +165,7 @@ export const createRunnableTests = <C extends ContainerLike>(
     ),
     test(
       "map",
-      defer(
+      pipeLazy(
         [1, 2, 3],
         m.fromArray(),
         m.map(increment),
@@ -176,7 +176,7 @@ export const createRunnableTests = <C extends ContainerLike>(
     ),
     test(
       "mapTo",
-      defer(
+      pipeLazy(
         [1, 2, 3],
         m.fromArray(),
         mapTo(m, 2),
@@ -189,7 +189,7 @@ export const createRunnableTests = <C extends ContainerLike>(
       "repeat",
       test(
         "when always repeating",
-        defer(
+        pipeLazy(
           [1, 2, 3],
           m.fromArray(),
           m.repeat(),
@@ -202,7 +202,7 @@ export const createRunnableTests = <C extends ContainerLike>(
 
       test(
         "when repeating a finite amount of times.",
-        defer(
+        pipeLazy(
           [1, 2, 3],
           m.fromArray(),
           m.repeat(3),
@@ -213,7 +213,7 @@ export const createRunnableTests = <C extends ContainerLike>(
       ),
       test(
         "when repeating with a predicate",
-        defer(
+        pipeLazy(
           [1, 2, 3],
           m.fromArray(),
           m.repeat(x => x < 1),
@@ -226,7 +226,7 @@ export const createRunnableTests = <C extends ContainerLike>(
 
     test(
       "scan",
-      defer(
+      pipeLazy(
         [1, 1, 1],
         m.fromArray(),
         m.scan(sum, returns(0)),
@@ -239,7 +239,7 @@ export const createRunnableTests = <C extends ContainerLike>(
       "skipFirst",
       test(
         "when skipped source has additional elements",
-        defer(
+        pipeLazy(
           [1, 2, 3],
           m.fromArray(),
           m.skipFirst({ count: 2 }),
@@ -250,7 +250,7 @@ export const createRunnableTests = <C extends ContainerLike>(
       ),
       test(
         "when all elements are skipped",
-        defer(
+        pipeLazy(
           [1, 2, 3],
           m.fromArray(),
           m.skipFirst({ count: 4 }),
@@ -263,7 +263,7 @@ export const createRunnableTests = <C extends ContainerLike>(
 
     test(
       "startWith",
-      defer(
+      pipeLazy(
         [1, 2, 3],
         m.fromArray(),
         startWith(m, 0),
@@ -277,7 +277,7 @@ export const createRunnableTests = <C extends ContainerLike>(
       "takeFirst",
       test(
         "when taking fewer than the total number of elements in the source",
-        defer(
+        pipeLazy(
           m.generate(increment, returns(0)),
           m.takeFirst({ count: 3 }),
           m.toRunnable(),
@@ -287,7 +287,7 @@ export const createRunnableTests = <C extends ContainerLike>(
       ),
       test(
         "when taking more than all the items produced by the source",
-        defer(
+        pipeLazy(
           1,
           fromValue(m),
           m.takeFirst({ count: 3 }),
@@ -299,7 +299,7 @@ export const createRunnableTests = <C extends ContainerLike>(
     ),
     test(
       "takeLast",
-      defer(
+      pipeLazy(
         [1, 2, 3, 4, 5],
         m.fromArray(),
         m.takeLast({ count: 3 }),
@@ -337,7 +337,7 @@ export const createRunnableTests = <C extends ContainerLike>(
 
       test(
         "inclusive",
-        defer(
+        pipeLazy(
           m.generate(increment, returns(0)),
           m.takeWhile(x => x < 4, { inclusive: true }),
           m.toRunnable(),
@@ -348,7 +348,7 @@ export const createRunnableTests = <C extends ContainerLike>(
     ),
     test(
       "lift",
-      defer(
+      pipeLazy(
         m.generate(increment, returns(0)),
         m.map(x => x * 2),
         m.takeFirst({ count: 3 }),
@@ -362,7 +362,7 @@ export const createRunnableTests = <C extends ContainerLike>(
     ),
     test(
       "ignoreElements",
-      defer(
+      pipeLazy(
         [1, 2, 3],
         m.fromArray(),
         ignoreElements(m),
@@ -380,7 +380,7 @@ export const tests = describe(
     "contains",
     test(
       "source is empty",
-      defer(
+      pipeLazy(
         empty<RunnableLike<unknown>, number>({ fromArray }),
         contains(someSatisfyT, 1),
         first(),
@@ -389,7 +389,7 @@ export const tests = describe(
     ),
     test(
       "source contains value",
-      defer(
+      pipeLazy(
         generate(increment, returns<number>(0)),
         contains(someSatisfyT, 1),
         first(),
@@ -398,7 +398,7 @@ export const tests = describe(
     ),
     test(
       "source does not contain value",
-      defer(
+      pipeLazy(
         [2, 3, 4],
         fromArray(),
         contains(someSatisfyT, 1),
@@ -412,7 +412,7 @@ export const tests = describe(
     "everySatisfy",
     test(
       "source is empty",
-      defer(
+      pipeLazy(
         empty<RunnableLike<unknown>, number>({ fromArray }),
         everySatisfy(alwaysFalse),
         first(),
@@ -421,7 +421,7 @@ export const tests = describe(
     ),
     test(
       "source values pass predicate",
-      defer(
+      pipeLazy(
         [1, 2, 3],
         fromArray(),
         everySatisfy(alwaysTrue),
@@ -431,7 +431,7 @@ export const tests = describe(
     ),
     test(
       "source values fail predicate",
-      defer(
+      pipeLazy(
         [1, 2, 3],
         fromArray(),
         everySatisfy(alwaysFalse),
@@ -444,7 +444,7 @@ export const tests = describe(
     "first",
     test(
       "when enumerable is not empty",
-      defer(
+      pipeLazy(
         returns(1),
         compute<RunnableLike<unknown>, number>({ fromArray, map }),
         first(),
@@ -453,7 +453,7 @@ export const tests = describe(
     ),
     test(
       "when enumerable is empty",
-      defer(
+      pipeLazy(
         empty<RunnableLike<unknown>, number>({ fromArray }),
         first(),
         expectNone,
@@ -470,7 +470,7 @@ export const tests = describe(
     "noneSatisfy",
     test(
       "source is empty",
-      defer(
+      pipeLazy(
         empty<RunnableLike<unknown>, number>({ fromArray }),
         noneSatisfy(everySatisfyT, alwaysFalse),
         first(),
@@ -479,7 +479,7 @@ export const tests = describe(
     ),
     test(
       "source values pass predicate",
-      defer(
+      pipeLazy(
         [1, 2, 3],
         fromArray(),
         noneSatisfy(everySatisfyT, alwaysTrue),
@@ -489,7 +489,7 @@ export const tests = describe(
     ),
     test(
       "source values fail predicate",
-      defer(
+      pipeLazy(
         [1, 2, 3],
         fromArray(),
         noneSatisfy(everySatisfyT, alwaysFalse),

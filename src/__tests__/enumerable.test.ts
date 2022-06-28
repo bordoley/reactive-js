@@ -26,7 +26,13 @@ import {
   toRunnable,
   zip,
 } from "../enumerable";
-import { arrayEquality, defer, increment, pipe, returns } from "../functions";
+import {
+  arrayEquality,
+  increment,
+  pipe,
+  pipeLazy,
+  returns,
+} from "../functions";
 import { ToRunnable, toArray } from "../runnable";
 import { describe, expectArrayEquals, test } from "../testing";
 import { createRunnableTests } from "./runnable.test";
@@ -38,7 +44,7 @@ export const createZippableTests = <C extends ContainerLike>(
     "ZippableContainer",
     test(
       "zip",
-      defer(
+      pipeLazy(
         [1, 2, 3],
         m.fromArray(),
         zipWith(m, m.fromArray<number>()([1, 2, 3, 4, 5])),
@@ -50,7 +56,7 @@ export const createZippableTests = <C extends ContainerLike>(
     ),
     test(
       "with non-delayed sources",
-      defer(
+      pipeLazy(
         m.zip(
           pipe([1, 2], m.fromArray()),
           pipe([1, 2], m.fromArray(), m.map(increment)),
@@ -73,7 +79,7 @@ export const tests = describe(
   "enumerable",
   test(
     "toIterable",
-    defer(
+    pipeLazy(
       [1, 2, 3],
       fromArray(),
       toIterable(),

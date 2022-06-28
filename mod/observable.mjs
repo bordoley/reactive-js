@@ -3,7 +3,7 @@ import { empty, fromValue, throws, concatMap } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { dispose, isDisposed, onDisposed, add, addTo, disposed, onComplete, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
 import { move, current, AbstractEnumerator, reset, hasCurrent, zip as zip$1, forEach } from './enumerator.mjs';
-import { pipe, arrayEquality, ignore, raise, defer as defer$1, compose, returns } from './functions.mjs';
+import { pipe, arrayEquality, ignore, raise, pipeLazy, compose, returns } from './functions.mjs';
 import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, notifySink, createUsing, notify, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { schedule, __yield, inContinuation, runContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { Observer, createDelegatingObserver } from './observer.mjs';
@@ -614,7 +614,7 @@ const fromEnumerator = (options = {}) => f => {
  * @param values The `Enumerable`.
  * @param delay The requested delay between emitted items by the observable.
  */
-const fromEnumerable = (options) => enumerable => pipe(defer$1(enumerable, enumerate), fromEnumerator(options));
+const fromEnumerable = (options) => enumerable => pipe(pipeLazy(enumerable, enumerate), fromEnumerator(options));
 
 /**
  * Creates an `ObservableLike` which iterates through the values
@@ -1112,7 +1112,7 @@ const _zip = (...observables) => {
     const zipObservable = createObservable(observer => {
         const count = observables.length;
         if (isEnumerableOperator) {
-            const zipped = using(defer$1(observables, map$1(enumerateObs)), (...enumerators) => pipe(enumerators, zip$1, returns, fromEnumerator()));
+            const zipped = using(pipeLazy(observables, map$1(enumerateObs)), (...enumerators) => pipe(enumerators, zip$1, returns, fromEnumerator()));
             zipped.isEnumerable = true;
             pipe(zipped, sinkInto(observer));
         }
@@ -1324,7 +1324,7 @@ const scanT = {
  * @param scanner The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.
  */
-const scanAsync = (scanner, initialValue) => observable => using(() => createSubject(), accFeedbackStream => pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), switchAll(), onNotify(dispatchTo(accFeedbackStream)), onSubscribe(defer$1(accFeedbackStream, dispatch(initialValue())))));
+const scanAsync = (scanner, initialValue) => observable => using(() => createSubject(), accFeedbackStream => pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), switchAll(), onNotify(dispatchTo(accFeedbackStream)), onSubscribe(pipeLazy(accFeedbackStream, dispatch(initialValue())))));
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
  * source. When the refcount goes to 0, the underlying subscription

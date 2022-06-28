@@ -590,26 +590,26 @@ export function compose(
   return source => pipe(source, ...operators);
 }
 
-export function defer<T, A>(src: T, op1: Function1<T, A>): Factory<A>;
-export function defer<T, A, B>(
+export function pipeLazy<T, A>(src: T, op1: Function1<T, A>): Factory<A>;
+export function pipeLazy<T, A, B>(
   src: T,
   op1: Function1<T, A>,
   op2: Function1<A, B>,
 ): Factory<B>;
-export function defer<T, A, B, C>(
+export function pipeLazy<T, A, B, C>(
   src: T,
   op1: Function1<T, A>,
   op2: Function1<A, B>,
   op3: Function1<B, C>,
 ): Factory<C>;
-export function defer<T, A, B, C, D>(
+export function pipeLazy<T, A, B, C, D>(
   src: T,
   op1: Function1<T, A>,
   op2: Function1<A, B>,
   op3: Function1<B, C>,
   op4: Function1<C, D>,
 ): Factory<D>;
-export function defer<T, A, B, C, D, E>(
+export function pipeLazy<T, A, B, C, D, E>(
   src: T,
   op1: Function1<T, A>,
   op2: Function1<A, B>,
@@ -617,7 +617,7 @@ export function defer<T, A, B, C, D, E>(
   op4: Function1<C, D>,
   op5: Function1<D, E>,
 ): Factory<E>;
-export function defer<T, A, B, C, D, E, F>(
+export function pipeLazy<T, A, B, C, D, E, F>(
   src: T,
   op1: Function1<T, A>,
   op2: Function1<A, B>,
@@ -626,7 +626,7 @@ export function defer<T, A, B, C, D, E, F>(
   op5: Function1<D, E>,
   op6: Function1<E, F>,
 ): Factory<F>;
-export function defer<T, A, B, C, D, E, F, G>(
+export function pipeLazy<T, A, B, C, D, E, F, G>(
   src: T,
   op1: Function1<T, A>,
   op2: Function1<A, B>,
@@ -636,7 +636,7 @@ export function defer<T, A, B, C, D, E, F, G>(
   op6: Function1<E, F>,
   op7: Function1<F, G>,
 ): Factory<G>;
-export function defer<T, A, B, C, D, E, F, G, H>(
+export function pipeLazy<T, A, B, C, D, E, F, G, H>(
   src: T,
   op1: Function1<T, A>,
   op2: Function1<A, B>,
@@ -647,7 +647,7 @@ export function defer<T, A, B, C, D, E, F, G, H>(
   op7: Function1<F, G>,
   op8: Function1<G, H>,
 ): Factory<H>;
-export function defer<T, A, B, C, D, E, F, G, H, I>(
+export function pipeLazy<T, A, B, C, D, E, F, G, H, I>(
   src: T,
   op1: Function1<T, A>,
   op2: Function1<A, B>,
@@ -659,7 +659,7 @@ export function defer<T, A, B, C, D, E, F, G, H, I>(
   op8: Function1<G, H>,
   op9: Function1<H, I>,
 ): Factory<I>;
-export function defer<T, A, B, C, D, E, F, G, H, I, J>(
+export function pipeLazy<T, A, B, C, D, E, F, G, H, I, J>(
   src: T,
   op1: Function1<T, A>,
   op2: Function1<A, B>,
@@ -672,7 +672,7 @@ export function defer<T, A, B, C, D, E, F, G, H, I, J>(
   op9: Function1<H, I>,
   op10: Function1<I, J>,
 ): Factory<J>;
-export function defer<T, A, B, C, D, E, F, G, H, I, J, K>(
+export function pipeLazy<T, A, B, C, D, E, F, G, H, I, J, K>(
   src: T,
   op1: Function1<T, A>,
   op2: Function1<A, B>,
@@ -686,7 +686,7 @@ export function defer<T, A, B, C, D, E, F, G, H, I, J, K>(
   op10: Function1<I, J>,
   op11: Function1<J, K>,
 ): Factory<K>;
-export function defer<T, A, B, C, D, E, F, G, H, I, J, K, L>(
+export function pipeLazy<T, A, B, C, D, E, F, G, H, I, J, K, L>(
   src: T,
   op1: Function1<T, A>,
   op2: Function1<A, B>,
@@ -701,16 +701,16 @@ export function defer<T, A, B, C, D, E, F, G, H, I, J, K, L>(
   op11: Function1<J, K>,
   op12: Function1<K, L>,
 ): Factory<L>;
-export function defer(
+export function pipeLazy(
   source: unknown,
   ...operators: Function1<any, unknown>[]
 ): Factory<unknown>;
 
 /**
- * Returns a `Factory` function that defers the evaluation of piping
+ * Returns a `Factory` function that pipeLazys the evaluation of piping
  * `source` through the provided operators.
  */
-export function defer(
+export function pipeLazy(
   source: unknown,
   ...operators: Function1<unknown, unknown>[]
 ): Factory<unknown> {

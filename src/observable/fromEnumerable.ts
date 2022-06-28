@@ -1,11 +1,11 @@
 import { dispose } from "../disposable";
 import { EnumerableLike, enumerate } from "../enumerable";
 import { Enumerator, current, move } from "../enumerator";
-import { Factory, Function1, defer, pipe } from "../functions";
+import { Factory, Function1, pipe, pipeLazy } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
 import { __yield } from "../scheduler";
-import { defer as deferObs } from "./defer";
+import { defer } from "./defer";
 import { using } from "./using";
 
 /**
@@ -20,7 +20,7 @@ export const fromEnumerator =
   ): Function1<Factory<Enumerator<T>>, ObservableLike<T>> =>
   f => {
     const result = using(f, enumerator =>
-      deferObs(
+      defer(
         () => (observer: Observer<T>) => {
           while (move(enumerator)) {
             observer.notify(current(enumerator));
@@ -49,4 +49,4 @@ export const fromEnumerable =
     readonly delay?: number;
   }): Function1<EnumerableLike<T>, ObservableLike<T>> =>
   enumerable =>
-    pipe(defer(enumerable, enumerate), fromEnumerator(options));
+    pipe(pipeLazy(enumerable, enumerate), fromEnumerator(options));

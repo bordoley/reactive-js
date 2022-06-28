@@ -1,6 +1,6 @@
 /// <reference types="./container.d.ts" />
 import { AbstractDisposable, createDisposableValue } from './disposable.mjs';
-import { raise, compose, callWith, strictEquality, isEqualTo, ignore, pipe, defer, alwaysFalse, returns, negate } from './functions.mjs';
+import { raise, compose, callWith, strictEquality, isEqualTo, ignore, pipe, pipeLazy, alwaysFalse, returns, negate } from './functions.mjs';
 import { isSome } from './option.mjs';
 import { empty as empty$1 } from './readonlyArray.mjs';
 
@@ -38,7 +38,7 @@ const fromOption = (m, options) => option => isSome(option)
 const fromValue = ({ fromArray }, options) => (value) => pipe([value], fromArray({
     ...options,
 }));
-const genMap = (m, mapper, options) => compose(m.map(x => pipe(defer(x, mapper), m.fromIterator(options))), m.concatAll(options));
+const genMap = (m, mapper, options) => compose(m.map(x => pipe(pipeLazy(x, mapper), m.fromIterator(options))), m.concatAll(options));
 const keepType = ({ keep }, predicate) => keep(predicate);
 const ignoreElements = ({ keep, }) => keep(alwaysFalse);
 const mapTo = ({ map }, value) => pipe(value, returns, map);

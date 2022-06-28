@@ -18,11 +18,11 @@ import {
   alwaysFalse,
   callWith,
   compose,
-  defer,
   ignore,
   isEqualTo,
   negate,
   pipe,
+  pipeLazy,
   raise,
   returns,
   strictEquality,
@@ -448,7 +448,7 @@ export const genMap = <
   options?: Partial<OConcatAll & OFromIterator>,
 ): ContainerOperator<C, TA, TB> =>
   compose(
-    m.map(x => pipe(defer(x, mapper), m.fromIterator<TB>(options))),
+    m.map(x => pipe(pipeLazy(x, mapper), m.fromIterator<TB>(options))),
     m.concatAll(options),
   );
 

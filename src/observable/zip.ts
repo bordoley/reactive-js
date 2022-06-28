@@ -15,7 +15,7 @@ import {
   reset,
   zip as zipEnumerators,
 } from "../enumerator";
-import { defer, pipe, returns } from "../functions";
+import { pipe, pipeLazy, returns } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
 import { everySatisfy, map } from "../readonlyArray";
@@ -107,7 +107,7 @@ const _zip = (
 
     if (isEnumerableOperator) {
       const zipped = using(
-        defer(observables, map(enumerateObs)),
+        pipeLazy(observables, map(enumerateObs)),
         (...enumerators: readonly Enumerator<any>[]) =>
           pipe(enumerators, zipEnumerators, returns, fromEnumerator()),
       );

@@ -1,6 +1,6 @@
 import { Readable, Writable } from "stream";
 import { endWith } from "../container";
-import { defer, pipe, returns } from "../functions";
+import { pipe, pipeLazy, returns } from "../functions";
 import {
   createDisposableNodeStream,
   createReadableIOSource,
@@ -44,7 +44,7 @@ export const tests = describe(
       });
 
       const dest = createWritableIOSink(
-        defer(writable, createDisposableNodeStream),
+        pipeLazy(writable, createDisposableNodeStream),
       );
 
       await pipe(
@@ -73,7 +73,7 @@ export const tests = describe(
       });
 
       const dest = createWritableIOSink(
-        defer(writable, createDisposableNodeStream),
+        pipeLazy(writable, createDisposableNodeStream),
       );
 
       const promise = pipe(

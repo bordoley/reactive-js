@@ -18,7 +18,14 @@ import {
   dispose,
   onError,
 } from "../disposable";
-import { Factory, Function1, defer, ignore, pipe, returns } from "../functions";
+import {
+  Factory,
+  Function1,
+  ignore,
+  pipe,
+  pipeLazy,
+  returns,
+} from "../functions";
 import { createObservable, onNotify, subscribe } from "../observable";
 import { sinkInto } from "../source";
 
@@ -81,29 +88,33 @@ export const transform =
 export const brotliDecompress = (
   options: BrotliOptions = {},
 ): Function1<FlowableLike<Uint8Array>, FlowableLike<Uint8Array>> =>
-  transform(defer(options, createBrotliDecompress, createDisposableNodeStream));
+  transform(
+    pipeLazy(options, createBrotliDecompress, createDisposableNodeStream),
+  );
 
 export const gunzip = (
   options: ZlibOptions = {},
 ): Function1<FlowableLike<Uint8Array>, FlowableLike<Uint8Array>> =>
-  transform(defer(options, createGunzip, createDisposableNodeStream));
+  transform(pipeLazy(options, createGunzip, createDisposableNodeStream));
 
 export const inflate = (
   options: ZlibOptions = {},
 ): Function1<FlowableLike<Uint8Array>, FlowableLike<Uint8Array>> =>
-  transform(defer(options, createInflate, createDisposableNodeStream));
+  transform(pipeLazy(options, createInflate, createDisposableNodeStream));
 
 export const brotliCompress = (
   options: BrotliOptions = {},
 ): Function1<FlowableLike<Uint8Array>, FlowableLike<Uint8Array>> =>
-  transform(defer(options, createBrotliCompress, createDisposableNodeStream));
+  transform(
+    pipeLazy(options, createBrotliCompress, createDisposableNodeStream),
+  );
 
 export const gzip = (
   options: ZlibOptions = {},
 ): Function1<FlowableLike<Uint8Array>, FlowableLike<Uint8Array>> =>
-  transform(defer(options, createGzip, createDisposableNodeStream));
+  transform(pipeLazy(options, createGzip, createDisposableNodeStream));
 
 export const deflate = (
   options: ZlibOptions = {},
 ): Function1<FlowableLike<Uint8Array>, FlowableLike<Uint8Array>> =>
-  transform(defer(options, createDeflate, createDisposableNodeStream));
+  transform(pipeLazy(options, createDeflate, createDisposableNodeStream));

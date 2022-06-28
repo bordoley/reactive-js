@@ -1,6 +1,6 @@
 /// <reference types="./__tests__.d.ts" />
 import { createDisposable, add, dispose, isDisposed, onDisposed, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
-import { pipe, defer, raise, increment, sum, returns, alwaysTrue, incrementBy, alwaysFalse, arrayEquality, ignore, identity } from './functions.mjs';
+import { pipe, pipeLazy, raise, increment, sum, returns, alwaysTrue, incrementBy, alwaysFalse, arrayEquality, ignore, identity } from './functions.mjs';
 import { none, isSome } from './option.mjs';
 import { describe, test, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectNone, expectEquals, expectArrayEquals, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
 import { empty, endWith, fromValue, concatMap, mapTo, startWith, ignoreElements, contains, compute, noneSatisfy, zipWith, throws, concatWith, genMap, encodeUtf8 } from './container.mjs';
@@ -26,7 +26,7 @@ const tests$6 = describe("Disposable", describe("AbstractDisposable", test("disp
     pipe(createDisposable(teardown), onDisposed(teardown), dispose());
     pipe(teardown, expectToHaveBeenCalledTimes(1));
 }), test("catches and swallows Errors thrown by teardown function", () => {
-    const teardown = defer(none, raise);
+    const teardown = pipeLazy(none, raise);
     const disposable = pipe(createDisposable(teardown), dispose());
     pipe(disposable.error, expectNone);
 }), test("propogates errors when disposed with an Error", () => {
@@ -59,16 +59,16 @@ const tests$6 = describe("Disposable", describe("AbstractDisposable", test("disp
     pipe(value, isDisposed, expectTrue);
 })));
 
-const createRunnableTests = (m) => describe("RunnableContainer", test("concat", defer(m.concat(empty(m), m.fromArray()([1, 2, 3]), empty(m), m.fromArray()([4, 5, 6])), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), describe("distinctUntilChanged", test("when source has duplicates in order", defer([1, 2, 2, 2, 2, 3, 3, 3, 4], m.fromArray(), m.distinctUntilChanged(), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4]))), test("when source is empty", defer([], m.fromArray(), m.distinctUntilChanged(), m.toRunnable(), toArray(), expectArrayEquals([])))), test("endWith", defer([1, 2, 3], m.fromArray(), endWith(m, 4), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4]))), test("concatMap", defer(0, fromValue(m), concatMap(m, defer([1, 2, 3], m.fromArray())), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), test("keep", defer([4, 8, 10, 7], m.fromArray(), m.keep(x => x > 5), m.toRunnable(), toArray(), expectArrayEquals([8, 10, 7]))), test("map", defer([1, 2, 3], m.fromArray(), m.map(increment), m.toRunnable(), toArray(), expectArrayEquals([2, 3, 4]))), test("mapTo", defer([1, 2, 3], m.fromArray(), mapTo(m, 2), m.toRunnable(), toArray(), expectArrayEquals([2, 2, 2]))), describe("repeat", test("when always repeating", defer([1, 2, 3], m.fromArray(), m.repeat(), m.takeFirst({ count: 6 }), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("when repeating a finite amount of times.", defer([1, 2, 3], m.fromArray(), m.repeat(3), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("when repeating with a predicate", defer([1, 2, 3], m.fromArray(), m.repeat(x => x < 1), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3])))), test("scan", defer([1, 1, 1], m.fromArray(), m.scan(sum, returns(0)), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), describe("skipFirst", test("when skipped source has additional elements", defer([1, 2, 3], m.fromArray(), m.skipFirst({ count: 2 }), m.toRunnable(), toArray(), expectArrayEquals([3]))), test("when all elements are skipped", defer([1, 2, 3], m.fromArray(), m.skipFirst({ count: 4 }), m.toRunnable(), toArray(), expectArrayEquals([])))), test("startWith", defer([1, 2, 3], m.fromArray(), startWith(m, 0), m.toRunnable(), toArray(), expectArrayEquals([0, 1, 2, 3]))), describe("takeFirst", test("when taking fewer than the total number of elements in the source", defer(m.generate(increment, returns(0)), m.takeFirst({ count: 3 }), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), test("when taking more than all the items produced by the source", defer(1, fromValue(m), m.takeFirst({ count: 3 }), m.toRunnable(), toArray(), expectArrayEquals([1])))), test("takeLast", defer([1, 2, 3, 4, 5], m.fromArray(), m.takeLast({ count: 3 }), m.toRunnable(), toArray(), expectArrayEquals([3, 4, 5]))), describe("takeWhile", test("exclusive", () => {
+const createRunnableTests = (m) => describe("RunnableContainer", test("concat", pipeLazy(m.concat(empty(m), m.fromArray()([1, 2, 3]), empty(m), m.fromArray()([4, 5, 6])), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), describe("distinctUntilChanged", test("when source has duplicates in order", pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], m.fromArray(), m.distinctUntilChanged(), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4]))), test("when source is empty", pipeLazy([], m.fromArray(), m.distinctUntilChanged(), m.toRunnable(), toArray(), expectArrayEquals([])))), test("endWith", pipeLazy([1, 2, 3], m.fromArray(), endWith(m, 4), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4]))), test("concatMap", pipeLazy(0, fromValue(m), concatMap(m, pipeLazy([1, 2, 3], m.fromArray())), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), test("keep", pipeLazy([4, 8, 10, 7], m.fromArray(), m.keep(x => x > 5), m.toRunnable(), toArray(), expectArrayEquals([8, 10, 7]))), test("map", pipeLazy([1, 2, 3], m.fromArray(), m.map(increment), m.toRunnable(), toArray(), expectArrayEquals([2, 3, 4]))), test("mapTo", pipeLazy([1, 2, 3], m.fromArray(), mapTo(m, 2), m.toRunnable(), toArray(), expectArrayEquals([2, 2, 2]))), describe("repeat", test("when always repeating", pipeLazy([1, 2, 3], m.fromArray(), m.repeat(), m.takeFirst({ count: 6 }), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("when repeating a finite amount of times.", pipeLazy([1, 2, 3], m.fromArray(), m.repeat(3), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("when repeating with a predicate", pipeLazy([1, 2, 3], m.fromArray(), m.repeat(x => x < 1), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3])))), test("scan", pipeLazy([1, 1, 1], m.fromArray(), m.scan(sum, returns(0)), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), describe("skipFirst", test("when skipped source has additional elements", pipeLazy([1, 2, 3], m.fromArray(), m.skipFirst({ count: 2 }), m.toRunnable(), toArray(), expectArrayEquals([3]))), test("when all elements are skipped", pipeLazy([1, 2, 3], m.fromArray(), m.skipFirst({ count: 4 }), m.toRunnable(), toArray(), expectArrayEquals([])))), test("startWith", pipeLazy([1, 2, 3], m.fromArray(), startWith(m, 0), m.toRunnable(), toArray(), expectArrayEquals([0, 1, 2, 3]))), describe("takeFirst", test("when taking fewer than the total number of elements in the source", pipeLazy(m.generate(increment, returns(0)), m.takeFirst({ count: 3 }), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), test("when taking more than all the items produced by the source", pipeLazy(1, fromValue(m), m.takeFirst({ count: 3 }), m.toRunnable(), toArray(), expectArrayEquals([1])))), test("takeLast", pipeLazy([1, 2, 3, 4, 5], m.fromArray(), m.takeLast({ count: 3 }), m.toRunnable(), toArray(), expectArrayEquals([3, 4, 5]))), describe("takeWhile", test("exclusive", () => {
     pipe(m.generate(increment, returns(0)), m.takeWhile(x => x < 4), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3]));
     pipe([1, 2, 3], m.fromArray(), m.takeWhile(alwaysTrue), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3]));
     pipe(empty(m), m.takeWhile(alwaysTrue), m.toRunnable(), toArray(), expectArrayEquals([]));
-}), test("inclusive", defer(m.generate(increment, returns(0)), m.takeWhile(x => x < 4, { inclusive: true }), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4])))), test("lift", defer(m.generate(increment, returns(0)), m.map(x => x * 2), m.takeFirst({ count: 3 }), concatMap(m, count => pipe(m.generate(incrementBy(1), returns(0)), m.takeFirst({ count }))), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 1, 2, 3, 4, 1, 2, 3, 4, 5, 6]))), test("ignoreElements", defer([1, 2, 3], m.fromArray(), ignoreElements(m), endWith(m, 4), m.toRunnable(), toArray(), expectArrayEquals([4]))));
-const tests$5 = describe("runnable", describe("contains", test("source is empty", defer(empty({ fromArray }), contains(someSatisfyT, 1), first(), expectFalse)), test("source contains value", defer(generate(increment, returns(0)), contains(someSatisfyT, 1), first(), expectTrue)), test("source does not contain value", defer([2, 3, 4], fromArray(), contains(someSatisfyT, 1), first(), expectFalse))), describe("everySatisfy", test("source is empty", defer(empty({ fromArray }), everySatisfy(alwaysFalse), first(), expectTrue)), test("source values pass predicate", defer([1, 2, 3], fromArray(), everySatisfy(alwaysTrue), first(), expectTrue)), test("source values fail predicate", defer([1, 2, 3], fromArray(), everySatisfy(alwaysFalse), first(), expectFalse))), describe("first", test("when enumerable is not empty", defer(returns(1), compute({ fromArray, map }), first(), expectEquals(1))), test("when enumerable is empty", defer(empty({ fromArray }), first(), expectNone))), test("forEach", () => {
+}), test("inclusive", pipeLazy(m.generate(increment, returns(0)), m.takeWhile(x => x < 4, { inclusive: true }), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4])))), test("lift", pipeLazy(m.generate(increment, returns(0)), m.map(x => x * 2), m.takeFirst({ count: 3 }), concatMap(m, count => pipe(m.generate(incrementBy(1), returns(0)), m.takeFirst({ count }))), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 1, 2, 3, 4, 1, 2, 3, 4, 5, 6]))), test("ignoreElements", pipeLazy([1, 2, 3], m.fromArray(), ignoreElements(m), endWith(m, 4), m.toRunnable(), toArray(), expectArrayEquals([4]))));
+const tests$5 = describe("runnable", describe("contains", test("source is empty", pipeLazy(empty({ fromArray }), contains(someSatisfyT, 1), first(), expectFalse)), test("source contains value", pipeLazy(generate(increment, returns(0)), contains(someSatisfyT, 1), first(), expectTrue)), test("source does not contain value", pipeLazy([2, 3, 4], fromArray(), contains(someSatisfyT, 1), first(), expectFalse))), describe("everySatisfy", test("source is empty", pipeLazy(empty({ fromArray }), everySatisfy(alwaysFalse), first(), expectTrue)), test("source values pass predicate", pipeLazy([1, 2, 3], fromArray(), everySatisfy(alwaysTrue), first(), expectTrue)), test("source values fail predicate", pipeLazy([1, 2, 3], fromArray(), everySatisfy(alwaysFalse), first(), expectFalse))), describe("first", test("when enumerable is not empty", pipeLazy(returns(1), compute({ fromArray, map }), first(), expectEquals(1))), test("when enumerable is empty", pipeLazy(empty({ fromArray }), first(), expectNone))), test("forEach", () => {
     const fn = mockFn();
     pipe([1, 2, 3], fromArray(), forEach(fn));
     pipe(fn, expectToHaveBeenCalledTimes(3));
-}), describe("noneSatisfy", test("source is empty", defer(empty({ fromArray }), noneSatisfy(everySatisfyT, alwaysFalse), first(), expectTrue)), test("source values pass predicate", defer([1, 2, 3], fromArray(), noneSatisfy(everySatisfyT, alwaysTrue), first(), expectFalse)), test("source values fail predicate", defer([1, 2, 3], fromArray(), noneSatisfy(everySatisfyT, alwaysFalse), first(), expectTrue))), createRunnableTests({
+}), describe("noneSatisfy", test("source is empty", pipeLazy(empty({ fromArray }), noneSatisfy(everySatisfyT, alwaysFalse), first(), expectTrue)), test("source values pass predicate", pipeLazy([1, 2, 3], fromArray(), noneSatisfy(everySatisfyT, alwaysTrue), first(), expectFalse)), test("source values fail predicate", pipeLazy([1, 2, 3], fromArray(), noneSatisfy(everySatisfyT, alwaysFalse), first(), expectTrue))), createRunnableTests({
     ...fromArrayT,
     ...keepT,
     concat,
@@ -85,11 +85,11 @@ const tests$5 = describe("runnable", describe("contains", test("source is empty"
     toRunnable,
 }));
 
-const createZippableTests = (m) => describe("ZippableContainer", test("zip", defer([1, 2, 3], m.fromArray(), zipWith(m, m.fromArray()([1, 2, 3, 4, 5])), m.map(([a, b]) => a + b), m.toRunnable(), toArray(), expectArrayEquals([2, 4, 6]))), test("with non-delayed sources", defer(m.zip(pipe([1, 2], m.fromArray()), pipe([1, 2], m.fromArray(), m.map(increment)), m.generate(increment, returns(2))), m.toRunnable(), toArray(), expectArrayEquals([
+const createZippableTests = (m) => describe("ZippableContainer", test("zip", pipeLazy([1, 2, 3], m.fromArray(), zipWith(m, m.fromArray()([1, 2, 3, 4, 5])), m.map(([a, b]) => a + b), m.toRunnable(), toArray(), expectArrayEquals([2, 4, 6]))), test("with non-delayed sources", pipeLazy(m.zip(pipe([1, 2], m.fromArray()), pipe([1, 2], m.fromArray(), m.map(increment)), m.generate(increment, returns(2))), m.toRunnable(), toArray(), expectArrayEquals([
     [1, 2, 3],
     [2, 3, 4],
 ], arrayEquality()))));
-const tests$4 = describe("enumerable", test("toIterable", defer([1, 2, 3], fromArray$1(), toIterable(), fromIterable(), toRunnable$1(), toArray(), expectArrayEquals([1, 2, 3]))), createRunnableTests({
+const tests$4 = describe("enumerable", test("toIterable", pipeLazy([1, 2, 3], fromArray$1(), toIterable(), fromIterable(), toRunnable$1(), toArray(), expectArrayEquals([1, 2, 3]))), createRunnableTests({
     ...fromArrayT$1,
     ...keepT$1,
     concat: concat$1,
@@ -106,9 +106,9 @@ const tests$4 = describe("enumerable", test("toIterable", defer([1, 2, 3], fromA
     toRunnable: toRunnable$1,
 }), createZippableTests({ ...fromArrayT$1, generate: generate$1, map: map$1, toRunnable: toRunnable$1, zip }));
 
-const tests$3 = describe("observable", describe("buffer", test("with duration and maxBufferSize", defer(concat$2(pipe([1, 2, 3, 4], fromArray$2()), pipe([1, 2, 3], fromArray$2({ delay: 1 })), pipe(4, fromValue(fromArrayT$2, { delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toRunnable$2(), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", defer(defer([1, 2, 3, 4], fromArray$2(), buffer({ duration: _ => throws({ ...fromArrayT$2, ...mapT })(raise) }), toRunnable$2({
-    schedulerFactory: defer({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
-}), toArray()), expectToThrow))), describe("catchError", test("source completes successfully", defer(pipe(1, fromValue(fromArrayT$2)), catchError(_ => fromValue(fromArrayT$2)(2)), toRunnable$2(), toArray(), expectArrayEquals([1]))), test("source throws, error caught and ignored", () => {
+const tests$3 = describe("observable", describe("buffer", test("with duration and maxBufferSize", pipeLazy(concat$2(pipe([1, 2, 3, 4], fromArray$2()), pipe([1, 2, 3], fromArray$2({ delay: 1 })), pipe(4, fromValue(fromArrayT$2, { delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toRunnable$2(), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", pipeLazy(pipeLazy([1, 2, 3, 4], fromArray$2(), buffer({ duration: _ => throws({ ...fromArrayT$2, ...mapT })(raise) }), toRunnable$2({
+    schedulerFactory: pipeLazy({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
+}), toArray()), expectToThrow))), describe("catchError", test("source completes successfully", pipeLazy(pipe(1, fromValue(fromArrayT$2)), catchError(_ => fromValue(fromArrayT$2)(2)), toRunnable$2(), toArray(), expectArrayEquals([1]))), test("source throws, error caught and ignored", () => {
     const error = new Error();
     pipe(1, fromValue(fromArrayT$2), concatWith(concatT, pipe(error, returns, throws({ ...fromArrayT$2, ...mapT }))), catchError(ignore), toRunnable$2(), toArray(), expectArrayEquals([1]));
 }), test("source throws, continues with second observable", () => {
@@ -119,7 +119,7 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
     expectToThrow(() => pipe(1, fromValue(fromArrayT$2), concatWith(concatT, pipe(error, returns, throws({ ...fromArrayT$2, ...mapT }))), catchError(_ => {
         throw error;
     }), toRunnable$2(), toArray()));
-})), test("combineLatest", defer(generate$2(incrementBy(2), returns(1), { delay: 2 }), takeFirst$2({ count: 3 }), combineLatestWith(pipe(generate$2(incrementBy(2), returns(0), { delay: 3 }), takeFirst$2({ count: 2 }))), toRunnable$2(), toArray(), expectArrayEquals([
+})), test("combineLatest", pipeLazy(generate$2(incrementBy(2), returns(1), { delay: 2 }), takeFirst$2({ count: 3 }), combineLatestWith(pipe(generate$2(incrementBy(2), returns(0), { delay: 3 }), takeFirst$2({ count: 2 }))), toRunnable$2(), toArray(), expectArrayEquals([
     [3, 2],
     [5, 2],
     [5, 4],
@@ -130,13 +130,13 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
         throw cause;
     });
     pipe(() => pipe(observable, toRunnable$2(), last()), expectToThrowError(cause));
-}), test("when queuing multiple events", defer(createObservable(({ dispatcher }) => {
+}), test("when queuing multiple events", pipeLazy(createObservable(({ dispatcher }) => {
     dispatcher.dispatch(1);
     dispatcher.dispatch(2);
     dispatcher.dispatch(3);
     pipe(dispatcher, dispose());
 }), toRunnable$2({
-    schedulerFactory: defer({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
+    schedulerFactory: pipeLazy({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
 }), toArray(), expectArrayEquals([1, 2, 3])))), describe("createSubject", test("with replay", () => {
     const subject = createSubject({ replay: 2 });
     pipe([1, 2, 3, 4], fromArray(), forEach(dispatchTo(subject)));
@@ -154,7 +154,7 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
     pipe(subject, observerCount, expectEquals(1));
     pipe(sub2, dispose());
     pipe(subject, observerCount, expectEquals(0));
-})), test("exhaustMap", defer([fromArray$2()([1, 2, 3]), fromArray$2()([4, 5, 6]), fromArray$2()([7, 8, 9])], fromArray$2(), concatMap({ ...exhaustT, ...mapT }, (x) => x), toRunnable$2(), toArray(), expectArrayEquals([1, 2, 3]))), describe("fromPromise", testAsync("when the promise resolves", async () => {
+})), test("exhaustMap", pipeLazy([fromArray$2()([1, 2, 3]), fromArray$2()([4, 5, 6]), fromArray$2()([7, 8, 9])], fromArray$2(), concatMap({ ...exhaustT, ...mapT }, (x) => x), toRunnable$2(), toArray(), expectArrayEquals([1, 2, 3]))), describe("fromPromise", testAsync("when the promise resolves", async () => {
     const scheduler = createHostScheduler();
     const factory = () => Promise.resolve(1);
     const result = await pipe(factory, fromPromise, toPromise(scheduler));
@@ -166,19 +166,19 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
     const scheduler = createHostScheduler();
     await pipe(pipe(factory, fromPromise, toPromise(scheduler)), expectPromiseToThrow);
     scheduler.dispose();
-})), test("genMap", defer(undefined, fromValue(fromArrayT$2), genMap({ ...concatAllT, ...fromIteratorT, ...mapT }, function* (_) {
+})), test("genMap", pipeLazy(undefined, fromValue(fromArrayT$2), genMap({ ...concatAllT, ...fromIteratorT, ...mapT }, function* (_) {
     yield 1;
     yield 2;
     yield 3;
-}), toRunnable$2(), toArray(), expectArrayEquals([1, 2, 3]))), describe("merge", test("two arrays", defer(merge(pipe([0, 2, 3, 5, 6], fromArray$2({ delay: 1 })), pipe([1, 4, 7], fromArray$2({ delay: 2 }))), toRunnable$2(), toArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), test("when one source throws", defer(defer([1, 4, 7], fromArray$2({ delay: 2 }), concatWith(mergeT, throws({ ...fromArrayT$2, ...mapT }, { delay: 5 })(raise)), toRunnable$2(), last()), expectToThrow))), describe("mergeMap", test("when a mapped observable throws", defer(defer([
+}), toRunnable$2(), toArray(), expectArrayEquals([1, 2, 3]))), describe("merge", test("two arrays", pipeLazy(merge(pipe([0, 2, 3, 5, 6], fromArray$2({ delay: 1 })), pipe([1, 4, 7], fromArray$2({ delay: 2 }))), toRunnable$2(), toArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), test("when one source throws", pipeLazy(pipeLazy([1, 4, 7], fromArray$2({ delay: 2 }), concatWith(mergeT, throws({ ...fromArrayT$2, ...mapT }, { delay: 5 })(raise)), toRunnable$2(), last()), expectToThrow))), describe("mergeMap", test("when a mapped observable throws", pipeLazy(pipeLazy([
     fromArray$2({ delay: 1 })([1, 2, 3]),
     throws({ ...fromArrayT$2, ...mapT }, { delay: 2 })(raise),
-], fromArray$2(), concatMap({ ...mergeAllT, ...mapT }, identity), toRunnable$2(), last()), expectToThrow)), test("when the map function throws", defer(defer([1, 2, 3, 4], fromArray$2(), concatMap({ ...mergeAllT, ...mapT }, (x) => {
+], fromArray$2(), concatMap({ ...mergeAllT, ...mapT }, identity), toRunnable$2(), last()), expectToThrow)), test("when the map function throws", pipeLazy(pipeLazy([1, 2, 3, 4], fromArray$2(), concatMap({ ...mergeAllT, ...mapT }, (x) => {
     if (x > 2) {
         raise();
     }
     return fromValue(fromArrayT$2)(x);
-}), toRunnable$2(), last()), expectToThrow))), test("never", defer(never(), toRunnable$2(), last(), expectNone)), test("observable", () => {
+}), toRunnable$2(), last()), expectToThrow))), test("never", pipeLazy(never(), toRunnable$2(), last(), expectNone)), test("observable", () => {
     const fromValueWithDelay = (delay, value) => fromValue(fromArrayT$2, { delay })(value);
     const emptyDelayed = empty(fromArrayT$2, { delay: 100 });
     const computedObservable = observable(() => {
@@ -229,7 +229,7 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
         }
     });
     pipe(src, retry(), toRunnable$2(), toArray(), expectArrayEquals([1, 1, 2]));
-})), describe("scanAsync", test("fast lib, slow acc", defer([1, 2, 3], fromArray$2(), scanAsync((acc, x) => fromValue(fromArrayT$2, { delay: 4 })(x + acc), returns(0)), toRunnable$2(), toArray(), expectArrayEquals([1, 3, 6]))), test("slow lib, fast acc", defer([1, 2, 3], fromArray$2({ delay: 4 }), scanAsync((acc, x) => fromValue(fromArrayT$2)(x + acc), returns(0)), toRunnable$2(), toArray(), expectArrayEquals([1, 3, 6]))), test("slow lib, slow acc", defer([1, 2, 3], fromArray$2({ delay: 4 }), scanAsync((acc, x) => fromValue(fromArrayT$2, { delay: 4 })(x + acc), returns(0)), toRunnable$2(), toArray(), expectArrayEquals([1, 3, 6]))), test("fast lib, fast acc", defer([1, 2, 3], fromArray$2(), scanAsync((acc, x) => fromValue(fromArrayT$2)(x + acc), returns(0)), toRunnable$2(), toArray(), expectArrayEquals([1, 3, 6])))), test("share", () => {
+})), describe("scanAsync", test("fast lib, slow acc", pipeLazy([1, 2, 3], fromArray$2(), scanAsync((acc, x) => fromValue(fromArrayT$2, { delay: 4 })(x + acc), returns(0)), toRunnable$2(), toArray(), expectArrayEquals([1, 3, 6]))), test("slow lib, fast acc", pipeLazy([1, 2, 3], fromArray$2({ delay: 4 }), scanAsync((acc, x) => fromValue(fromArrayT$2)(x + acc), returns(0)), toRunnable$2(), toArray(), expectArrayEquals([1, 3, 6]))), test("slow lib, slow acc", pipeLazy([1, 2, 3], fromArray$2({ delay: 4 }), scanAsync((acc, x) => fromValue(fromArrayT$2, { delay: 4 })(x + acc), returns(0)), toRunnable$2(), toArray(), expectArrayEquals([1, 3, 6]))), test("fast lib, fast acc", pipeLazy([1, 2, 3], fromArray$2(), scanAsync((acc, x) => fromValue(fromArrayT$2)(x + acc), returns(0)), toRunnable$2(), toArray(), expectArrayEquals([1, 3, 6])))), test("share", () => {
     const scheduler = createVirtualTimeScheduler();
     const shared = pipe([1, 2, 3], fromArray$2({ delay: 1 }), share(scheduler, { replay: 1 }));
     let result = [];
@@ -238,28 +238,28 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
     }), subscribe(scheduler));
     pipe(scheduler, forEach$1(ignore));
     pipe(result, expectArrayEquals([2, 4, 6]));
-}), describe("switchAll", test("with empty source", defer(empty(fromArrayT$2), switchAll(), toRunnable$2(), toArray(), expectArrayEquals([]))), test("when source throw", defer(defer(raise, throws({ ...fromArrayT$2, ...mapT }), switchAll(), toRunnable$2(), toArray(), expectArrayEquals([])), expectToThrow))), test("switchMap", defer([1, 2, 3], fromArray$2({ delay: 1 }), concatMap({ ...switchAllT, ...mapT }, _ => pipe([1, 2, 3], fromArray$2())), toRunnable$2(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), describe("takeLast", test("when pipeline throws", defer(defer(raise, throws({ ...fromArrayT$2, ...mapT }), takeLast$2(), toRunnable$2(), last()), expectToThrow))), describe("throttle", test("first", defer(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$2({ count: 100 }), throttle(50, { mode: "first" }), toRunnable$2(), toArray(), expectArrayEquals([0, 49]))), test("last", defer(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$2({ count: 200 }), throttle(50, { mode: "last" }), toRunnable$2(), toArray(), expectArrayEquals([49, 99, 149, 199]))), test("interval", defer(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$2({ count: 200 }), throttle(75, { mode: "interval" }), toRunnable$2(), toArray(), expectArrayEquals([0, 74, 149, 199]))), test("when duration observable throws", defer(defer([1, 2, 3, 4, 5], fromArray$2({ delay: 1 }), throttle(_ => throws({ ...fromArrayT$2, ...mapT })(raise)), toRunnable$2(), last()), expectToThrow))), describe("throwIfEmpty", test("when source is empty", defer(defer(empty(fromArrayT$2), throwIfEmpty(() => undefined), toRunnable$2(), last()), expectToThrow)), test("when source is not empty", defer(1, returns, compute({ ...fromArrayT$2, ...mapT }), throwIfEmpty(() => undefined), toRunnable$2(), last(), expectEquals(1)))), describe("timeout", test("throws when a timeout occurs", defer(defer(1, fromValue(fromArrayT$2, { delay: 2 }), timeout(1), toArray()), expectToThrow)), test("when timeout is greater than observed time", defer(1, fromValue(fromArrayT$2, { delay: 2 }), timeout(3), toRunnable$2(), last(), expectEquals(1)))), describe("toPromise", testAsync("when observable completes without producing a value", async () => {
+}), describe("switchAll", test("with empty source", pipeLazy(empty(fromArrayT$2), switchAll(), toRunnable$2(), toArray(), expectArrayEquals([]))), test("when source throw", pipeLazy(pipeLazy(raise, throws({ ...fromArrayT$2, ...mapT }), switchAll(), toRunnable$2(), toArray(), expectArrayEquals([])), expectToThrow))), test("switchMap", pipeLazy([1, 2, 3], fromArray$2({ delay: 1 }), concatMap({ ...switchAllT, ...mapT }, _ => pipe([1, 2, 3], fromArray$2())), toRunnable$2(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), describe("takeLast", test("when pipeline throws", pipeLazy(pipeLazy(raise, throws({ ...fromArrayT$2, ...mapT }), takeLast$2(), toRunnable$2(), last()), expectToThrow))), describe("throttle", test("first", pipeLazy(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$2({ count: 100 }), throttle(50, { mode: "first" }), toRunnable$2(), toArray(), expectArrayEquals([0, 49]))), test("last", pipeLazy(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$2({ count: 200 }), throttle(50, { mode: "last" }), toRunnable$2(), toArray(), expectArrayEquals([49, 99, 149, 199]))), test("interval", pipeLazy(generate$2(increment, returns(-1), { delay: 1 }), takeFirst$2({ count: 200 }), throttle(75, { mode: "interval" }), toRunnable$2(), toArray(), expectArrayEquals([0, 74, 149, 199]))), test("when duration observable throws", pipeLazy(pipeLazy([1, 2, 3, 4, 5], fromArray$2({ delay: 1 }), throttle(_ => throws({ ...fromArrayT$2, ...mapT })(raise)), toRunnable$2(), last()), expectToThrow))), describe("throwIfEmpty", test("when source is empty", pipeLazy(pipeLazy(empty(fromArrayT$2), throwIfEmpty(() => undefined), toRunnable$2(), last()), expectToThrow)), test("when source is not empty", pipeLazy(1, returns, compute({ ...fromArrayT$2, ...mapT }), throwIfEmpty(() => undefined), toRunnable$2(), last(), expectEquals(1)))), describe("timeout", test("throws when a timeout occurs", pipeLazy(pipeLazy(1, fromValue(fromArrayT$2, { delay: 2 }), timeout(1), toArray()), expectToThrow)), test("when timeout is greater than observed time", pipeLazy(1, fromValue(fromArrayT$2, { delay: 2 }), timeout(3), toRunnable$2(), last(), expectEquals(1)))), describe("toPromise", testAsync("when observable completes without producing a value", async () => {
     const scheduler = createHostScheduler();
     await pipe(pipe(empty(fromArrayT$2), toPromise(scheduler)), expectPromiseToThrow);
     scheduler.dispose();
-})), describe("withLatestFrom", test("when source and latest are interlaced", defer([0, 1, 2, 3], fromArray$2({ delay: 1 }), withLatestFrom(pipe([0, 1, 2, 3], fromArray$2({ delay: 2 })), (a, b) => [
+})), describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], fromArray$2({ delay: 1 }), withLatestFrom(pipe([0, 1, 2, 3], fromArray$2({ delay: 2 })), (a, b) => [
     a,
     b,
 ]), toRunnable$2(), toArray(), expectArrayEquals([
     [1, 0],
     [2, 0],
     [3, 1],
-], arrayEquality()))), test("when latest produces no values", defer([0], fromArray$2({ delay: 1 }), withLatestFrom(empty(fromArrayT$2), sum), toRunnable$2(), toArray(), expectArrayEquals([]))), test("when latest throws", () => {
+], arrayEquality()))), test("when latest produces no values", pipeLazy([0], fromArray$2({ delay: 1 }), withLatestFrom(empty(fromArrayT$2), sum), toRunnable$2(), toArray(), expectArrayEquals([]))), test("when latest throws", () => {
     const error = new Error();
-    pipe(defer([0], fromArray$2({ delay: 1 }), withLatestFrom(throws({ ...fromArrayT$2, ...mapT })(returns(error)), sum), toRunnable$2(), toArray(), expectArrayEquals([])), expectToThrowError(error));
-})), describe("zip", test("with synchronous and non-synchronous sources", defer(zip$1(pipe([1, 2], fromArray$2({ delay: 1 })), pipe([2, 3], fromIterable$1()), pipe([3, 4, 5], fromArray$2({ delay: 1 }))), toRunnable$2(), toArray(), expectArrayEquals([
+    pipe(pipeLazy([0], fromArray$2({ delay: 1 }), withLatestFrom(throws({ ...fromArrayT$2, ...mapT })(returns(error)), sum), toRunnable$2(), toArray(), expectArrayEquals([])), expectToThrowError(error));
+})), describe("zip", test("with synchronous and non-synchronous sources", pipeLazy(zip$1(pipe([1, 2], fromArray$2({ delay: 1 })), pipe([2, 3], fromIterable$1()), pipe([3, 4, 5], fromArray$2({ delay: 1 }))), toRunnable$2(), toArray(), expectArrayEquals([
     [1, 2, 3],
     [2, 3, 4],
-], arrayEquality()))), test("fast with slow", defer([1, 2, 3], fromArray$2({ delay: 1 }), zipWith(zipT, pipe([1, 2, 3], fromArray$2({ delay: 5 }))), toRunnable$2(), toArray(), expectArrayEquals([
+], arrayEquality()))), test("fast with slow", pipeLazy([1, 2, 3], fromArray$2({ delay: 1 }), zipWith(zipT, pipe([1, 2, 3], fromArray$2({ delay: 5 }))), toRunnable$2(), toArray(), expectArrayEquals([
     [1, 1],
     [2, 2],
     [3, 3],
-], arrayEquality()))), test("when source throws", defer(defer(raise, throws({ ...fromArrayT$2, ...mapT }), zipWith(zipT, fromArray$2()([1, 2, 3])), map$2(([, b]) => b), toRunnable$2(), toArray()), expectToThrow))), test("zipLatestWith", defer([1, 2, 3, 4, 5, 6, 7, 8], fromArray$2({ delay: 1 }), zipLatestWith(pipe([1, 2, 3, 4], fromArray$2({ delay: 2 }))), map$2(([a, b]) => a + b), toRunnable$2(), toArray(), expectArrayEquals([2, 5, 8, 11]))), describe("zipWithLatestFrom", test("when source throws", defer(defer(throws({ ...fromArrayT$2, ...mapT })(raise), zipWithLatestFrom(fromValue(fromArrayT$2)(1), (_, b) => b), toRunnable$2(), last()), expectToThrow)), test("when other throws", defer(defer([1, 2, 3], fromArray$2({ delay: 1 }), zipWithLatestFrom(throws({ ...fromArrayT$2, ...mapT })(raise), (_, b) => b), toRunnable$2(), last()), expectToThrow)), test("when other completes first", defer([1], fromArray$2({ delay: 1 }), zipWithLatestFrom(fromArray$2()([2]), (_, b) => b), toRunnable$2(), last(), expectEquals(2)))), createRunnableTests({
+], arrayEquality()))), test("when source throws", pipeLazy(pipeLazy(raise, throws({ ...fromArrayT$2, ...mapT }), zipWith(zipT, fromArray$2()([1, 2, 3])), map$2(([, b]) => b), toRunnable$2(), toArray()), expectToThrow))), test("zipLatestWith", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8], fromArray$2({ delay: 1 }), zipLatestWith(pipe([1, 2, 3, 4], fromArray$2({ delay: 2 }))), map$2(([a, b]) => a + b), toRunnable$2(), toArray(), expectArrayEquals([2, 5, 8, 11]))), describe("zipWithLatestFrom", test("when source throws", pipeLazy(pipeLazy(throws({ ...fromArrayT$2, ...mapT })(raise), zipWithLatestFrom(fromValue(fromArrayT$2)(1), (_, b) => b), toRunnable$2(), last()), expectToThrow)), test("when other throws", pipeLazy(pipeLazy([1, 2, 3], fromArray$2({ delay: 1 }), zipWithLatestFrom(throws({ ...fromArrayT$2, ...mapT })(raise), (_, b) => b), toRunnable$2(), last()), expectToThrow)), test("when other completes first", pipeLazy([1], fromArray$2({ delay: 1 }), zipWithLatestFrom(fromArray$2()([2]), (_, b) => b), toRunnable$2(), last(), expectEquals(2)))), createRunnableTests({
     ...concatT,
     ...concatAllT,
     ...fromArrayT$2,
@@ -407,13 +407,13 @@ const tests$1 = describe("streamable", test("__stream", () => {
     const scheduler = createVirtualTimeScheduler();
     const generateStream = pipe(generate$2(increment, returns(-1), { delay: 1 }), flow({ scheduler }), stream(scheduler));
     generateStream.dispatch("resume");
-    pipe(scheduler, schedule(defer("pause", dispatchTo(generateStream)), {
+    pipe(scheduler, schedule(pipeLazy("pause", dispatchTo(generateStream)), {
         delay: 2,
     }));
-    pipe(scheduler, schedule(defer("resume", dispatchTo(generateStream)), {
+    pipe(scheduler, schedule(pipeLazy("resume", dispatchTo(generateStream)), {
         delay: 4,
     }));
-    pipe(scheduler, schedule(defer(generateStream, dispose()), { delay: 5 }));
+    pipe(scheduler, schedule(pipeLazy(generateStream, dispose()), { delay: 5 }));
     const f = mockFn();
     const subscription = pipe(generateStream, onNotify(x => {
         f(now(scheduler), x);
@@ -540,7 +540,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     const enumerable = fromIterable$2()([1, 2, 3, 4, 5, 6]);
     pipe(enumerable, consume((acc, next) => consumeContinue(acc + next), returns(0)), toRunnable$2(), last(), expectEquals(21));
     pipe(enumerable, consume((acc, next) => acc > 0 ? consumeDone(acc + next) : consumeContinue(acc + next), returns(0)), toRunnable$2(), last(), expectEquals(3));
-}), describe("consumeAsync", test("when the consumer early terminates", defer([1, 2, 3, 4, 5, 6], fromIterable$2(), consumeAsync((acc, next) => fromValue(fromArrayT$2)(acc > 0 ? consumeDone(acc + next) : consumeContinue(acc + next)), returns(0)), toRunnable$2(), last(), expectEquals(3))), test("when the consumer never terminates", defer([1, 2, 3, 4, 5, 6], fromIterable$2(), consumeAsync((acc, next) => pipe(acc + next, consumeContinue, fromValue(fromArrayT$2)), returns(0)), toRunnable$2(), last(), expectEquals(21))))));
+}), describe("consumeAsync", test("when the consumer early terminates", pipeLazy([1, 2, 3, 4, 5, 6], fromIterable$2(), consumeAsync((acc, next) => fromValue(fromArrayT$2)(acc > 0 ? consumeDone(acc + next) : consumeContinue(acc + next)), returns(0)), toRunnable$2(), last(), expectEquals(3))), test("when the consumer never terminates", pipeLazy([1, 2, 3, 4, 5, 6], fromIterable$2(), consumeAsync((acc, next) => pipe(acc + next, consumeContinue, fromValue(fromArrayT$2)), returns(0)), toRunnable$2(), last(), expectEquals(21))))));
 
 const tests = [
     tests$6,

@@ -1,7 +1,7 @@
 /// <reference types="./enumerator.d.ts" />
 import { AbstractDisposableContainer } from './container.mjs';
 import { onDisposed, isDisposed, dispose, addTo } from './disposable.mjs';
-import { pipe, defer, raise } from './functions.mjs';
+import { pipe, pipeLazy, raise } from './functions.mjs';
 import { none } from './option.mjs';
 import { everySatisfy, map, forEach as forEach$1 } from './readonlyArray.mjs';
 
@@ -12,7 +12,7 @@ class AbstractEnumerator extends Enumerator {
         super();
         this._current = none;
         this._hasCurrent = false;
-        pipe(this, onDisposed(defer(this, reset)));
+        pipe(this, onDisposed(pipeLazy(this, reset)));
     }
     get current() {
         return hasCurrent(this) ? this._current : raise();

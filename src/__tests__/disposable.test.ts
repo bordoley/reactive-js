@@ -8,7 +8,7 @@ import {
   isDisposed,
   onDisposed,
 } from "../disposable";
-import { defer, pipe, raise } from "../functions";
+import { pipe, pipeLazy, raise } from "../functions";
 import { none } from "../option";
 import {
   describe,
@@ -46,7 +46,7 @@ export const tests = describe(
     }),
 
     test("catches and swallows Errors thrown by teardown function", () => {
-      const teardown = defer(none, raise);
+      const teardown = pipeLazy(none, raise);
 
       const disposable = pipe(createDisposable(teardown), dispose());
       pipe(disposable.error, expectNone);

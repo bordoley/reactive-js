@@ -34,9 +34,9 @@ import {
   Predicate,
   Reducer,
   Updater,
-  defer as deferF,
   ignore,
   pipe,
+  pipeLazy,
 } from "./functions";
 import { createObservable, createT } from "./observable/createObservable";
 import { createSubject } from "./observable/createSubject";
@@ -454,7 +454,7 @@ export const scanAsync =
           ),
           switchAll<TAcc>(),
           onNotify(dispatchTo(accFeedbackStream)),
-          onSubscribe(deferF(accFeedbackStream, dispatch(initialValue()))),
+          onSubscribe(pipeLazy(accFeedbackStream, dispatch(initialValue()))),
         ),
     );
 
