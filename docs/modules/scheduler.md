@@ -19,6 +19,7 @@
 - [createHostScheduler](scheduler.md#createhostscheduler)
 - [createVirtualTimeScheduler](scheduler.md#createvirtualtimescheduler)
 - [inContinuation](scheduler.md#incontinuation)
+- [now](scheduler.md#now)
 - [runContinuation](scheduler.md#runcontinuation)
 - [schedule](scheduler.md#schedule)
 - [toPausableScheduler](scheduler.md#topausablescheduler)
@@ -93,6 +94,22 @@ ___
 #### Returns
 
 `boolean`
+
+___
+
+### now
+
+▸ **now**(`scheduler`): `number`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) |
+
+#### Returns
+
+`number`
 
 ___
 

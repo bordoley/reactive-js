@@ -12,7 +12,7 @@ import {
 import { pipe } from "../functions";
 import { Option, isSome, none } from "../option";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
-import { SchedulerImplementation, runContinuation } from "./scheduler";
+import { SchedulerImplementation, now, runContinuation } from "./scheduler";
 
 const scheduleImmediateWithSetImmediate = (
   scheduler: HostScheduler,
@@ -85,7 +85,7 @@ const run = (
 ) => {
   // clear the immediateOrTimer disposable
   pipe(immmediateOrTimerDisposable, dispose());
-  scheduler.startTime = scheduler.now;
+  scheduler.startTime = now(scheduler);
   pipe(scheduler, runContinuation(continuation));
 };
 
@@ -99,7 +99,7 @@ class HostScheduler
   supportsIsInputPending = false;
   supportsSetImmediate = false;
   supportsProcessHRTime = false;
-  startTime = this.now;
+  startTime = now(this);
   private yieldRequested = false;
 
   constructor(private readonly yieldInterval: number) {
@@ -118,7 +118,7 @@ class HostScheduler
     }
   }
 
-  get shouldYield() {
+  get shouldYield(): boolean {
     const { inContinuation, yieldRequested } = this;
 
     if (inContinuation) {
@@ -128,7 +128,7 @@ class HostScheduler
     return (
       inContinuation &&
       (yieldRequested ||
-        this.now > this.startTime + this.yieldInterval ||
+        now(this) > this.startTime + this.yieldInterval ||
         this.isInputPending)
     );
   }

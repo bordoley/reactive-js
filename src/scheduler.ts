@@ -92,4 +92,5 @@ export {
   SchedulerImplementation,
   runContinuation,
   inContinuation,
+  now,
 } from "./scheduler/scheduler";

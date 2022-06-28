@@ -43,7 +43,7 @@ import {
 } from "../observable";
 import { Option, none } from "../option";
 import { last, toArray } from "../runnable";
-import { createVirtualTimeScheduler, schedule } from "../scheduler";
+import { createVirtualTimeScheduler, now, schedule } from "../scheduler";
 import {
   __stream,
   consume,
@@ -312,7 +312,7 @@ export const tests = describe(
       const subscription = pipe(
         generateStream,
         onNotify(x => {
-          f(scheduler.now, x);
+          f(now(scheduler), x);
         }),
         subscribe(scheduler),
       );

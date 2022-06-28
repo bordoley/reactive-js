@@ -19,6 +19,7 @@ import {
   SchedulerImplementation,
   inContinuation,
   runContinuation,
+  now as schedulerNow,
 } from "./scheduler";
 import { __yield, schedule } from "./schedulerContinuation";
 
@@ -43,7 +44,7 @@ const move = (scheduler: PriorityScheduler): boolean => {
 
 const peek = (scheduler: PriorityScheduler): Option<ScheduledTask> => {
   const { delayed, queue } = scheduler;
-  const now = scheduler.now;
+  const now = schedulerNow(scheduler);
 
   while (true) {
     const task = delayed.peek();
@@ -101,7 +102,7 @@ const scheduleContinuation = (
   task: ScheduledTask,
 ) => {
   const dueTime = task.dueTime;
-  const delay = Math.max(dueTime - scheduler.now, 0);
+  const delay = Math.max(dueTime - schedulerNow(scheduler), 0);
 
   scheduler.dueTime = dueTime;
   scheduler.inner = pipe(
@@ -129,13 +130,13 @@ class PriorityScheduler
       task = peek(this)
     ) {
       const { continuation, dueTime } = task;
-      const delay = Math.max(dueTime - this.now, 0);
+      const delay = Math.max(dueTime - schedulerNow(this), 0);
 
       if (delay === 0) {
         move(this);
         pipe(this, runContinuation(continuation));
       } else {
-        this.dueTime = this.now + delay;
+        this.dueTime = schedulerNow(this) + delay;
       }
       __yield({ delay });
     }
@@ -156,18 +157,18 @@ class PriorityScheduler
   }
 
   get now(): number {
-    return this.host.now;
+    return schedulerNow(this.host);
   }
 
-  get shouldYield() {
+  get shouldYield(): boolean {
     const { current } = this;
     const next = peek(this);
 
-    const nextTaskIsHigherPriority =
+    const nextTaskIsHigherPriority: boolean =
       isSome(current) &&
       isSome(next) &&
       current !== next &&
-      next.dueTime <= this.now &&
+      next.dueTime <= schedulerNow(this) &&
       next.priority < current.priority;
 
     const { inContinuation, yieldRequested } = this;
