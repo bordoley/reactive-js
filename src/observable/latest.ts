@@ -6,6 +6,7 @@ import { none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
 import { sourceFrom } from "../source";
 import { defer } from "./defer";
+import { isEnumerable } from "./observable";
 
 type LatestCtx = {
   completedCount: number;
@@ -96,7 +97,7 @@ export const latest = (
   const observable = defer(factory);
   (observable as any).isEnumerable = pipe(
     observables,
-    everySatisfy(obs => obs.isEnumerable ?? false),
+    everySatisfy(isEnumerable),
   );
 
   return observable;

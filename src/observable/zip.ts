@@ -22,8 +22,8 @@ import { everySatisfy, map } from "../readonlyArray";
 import { sinkInto, sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
 import { fromEnumerator } from "./fromEnumerable";
+import { isEnumerable } from "./observable";
 import { enumerateObs } from "./toEnumerable";
-
 import { using } from "./using";
 
 const shouldEmit = (enumerators: readonly Enumerator<unknown>[]) => {
@@ -100,15 +100,12 @@ class ZipObserver extends Observer<unknown> {
 const _zip = (
   ...observables: readonly ObservableLike<unknown>[]
 ): ObservableLike<readonly unknown[]> => {
-  const isEnumerable = pipe(
-    observables,
-    everySatisfy(obs => obs.isEnumerable ?? false),
-  );
+  const isEnumerableOperator = pipe(observables, everySatisfy(isEnumerable));
 
   const zipObservable = createObservable(observer => {
     const count = observables.length;
 
-    if (isEnumerable) {
+    if (isEnumerableOperator) {
       const zipped = using(
         defer(observables, map(enumerateObs)),
         (...enumerators: readonly Enumerator<any>[]) =>
@@ -122,7 +119,7 @@ const _zip = (
       for (let index = 0; index < count; index++) {
         const next = observables[index];
 
-        if (next.isEnumerable ?? false) {
+        if (isEnumerable(next)) {
           const enumerator = enumerateObs(next);
 
           move(enumerator);
@@ -156,7 +153,7 @@ const _zip = (
     }
   });
 
-  (zipObservable as any).isEnumerable = isEnumerable;
+  (zipObservable as any).isEnumerable = isEnumerableOperator;
 
   return zipObservable;
 };

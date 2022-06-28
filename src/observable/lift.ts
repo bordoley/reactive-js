@@ -2,7 +2,7 @@ import { Function1, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer } from "../observer";
 import { Lift, sourceFrom } from "../source";
-import { AbstractObservable } from "./observable";
+import { AbstractObservable, isEnumerable } from "./observable";
 
 /**
  * A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.
@@ -32,7 +32,7 @@ class LiftedObservable<TIn, TOut> extends AbstractObservable<TOut> {
 export const lift =
   <TA, TB>(
     operator: ObserverOperator<TA, TB>,
-    isEnumerable = false,
+    isEnumerableOperator = false,
   ): ObservableOperator<TA, TB> =>
   source => {
     const sourceSource =
@@ -43,9 +43,13 @@ export const lift =
         ? [operator, ...source.operators]
         : [operator];
 
-    isEnumerable = (source.isEnumerable ?? false) && isEnumerable;
+    isEnumerableOperator = isEnumerable(source) && isEnumerableOperator;
 
-    return new LiftedObservable(sourceSource, allFunctions, isEnumerable);
+    return new LiftedObservable(
+      sourceSource,
+      allFunctions,
+      isEnumerableOperator,
+    );
   };
 
 export const liftT: Lift<ObservableLike<unknown>> = {

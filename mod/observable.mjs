@@ -16,6 +16,7 @@ class AbstractObservable extends AbstractSource {
 }
 class AbstractDisposableObservable extends AbstractDisposableSource {
 }
+const isEnumerable = (obs) => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; };
 
 class CreateObservable extends AbstractObservable {
     constructor(f) {
@@ -148,14 +149,13 @@ class LiftedObservable extends AbstractObservable {
  *
  * @param operator The operator function to apply.
  */
-const lift = (operator, isEnumerable = false) => source => {
-    var _a;
+const lift = (operator, isEnumerableOperator = false) => source => {
     const sourceSource = source instanceof LiftedObservable ? source.source : source;
     const allFunctions = source instanceof LiftedObservable
         ? [operator, ...source.operators]
         : [operator];
-    isEnumerable = ((_a = source.isEnumerable) !== null && _a !== void 0 ? _a : false) && isEnumerable;
-    return new LiftedObservable(sourceSource, allFunctions, isEnumerable);
+    isEnumerableOperator = isEnumerable(source) && isEnumerableOperator;
+    return new LiftedObservable(sourceSource, allFunctions, isEnumerableOperator);
 };
 const liftT = {
     variance: "contravariant",
@@ -539,7 +539,7 @@ const latest = (observables, mode) => {
         }
     };
     const observable = defer(factory);
-    observable.isEnumerable = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; }));
+    observable.isEnumerable = pipe(observables, everySatisfy$1(isEnumerable));
     return observable;
 };
 /**
@@ -582,7 +582,7 @@ function concat(...observables) {
             pipe(observer, dispose());
         }
     });
-    observable.isEnumerable = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; }));
+    observable.isEnumerable = pipe(observables, everySatisfy$1(isEnumerable));
     return observable;
 }
 const concatT = {
@@ -1108,11 +1108,10 @@ class ZipObserver extends Observer {
     }
 }
 const _zip = (...observables) => {
-    const isEnumerable = pipe(observables, everySatisfy$1(obs => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; }));
+    const isEnumerableOperator = pipe(observables, everySatisfy$1(isEnumerable));
     const zipObservable = createObservable(observer => {
-        var _a;
         const count = observables.length;
-        if (isEnumerable) {
+        if (isEnumerableOperator) {
             const zipped = using(defer$1(observables, map$1(enumerateObs)), (...enumerators) => pipe(enumerators, zip$1, returns, fromEnumerator()));
             zipped.isEnumerable = true;
             pipe(zipped, sinkInto(observer));
@@ -1121,7 +1120,7 @@ const _zip = (...observables) => {
             const enumerators = [];
             for (let index = 0; index < count; index++) {
                 const next = observables[index];
-                if ((_a = next.isEnumerable) !== null && _a !== void 0 ? _a : false) {
+                if (isEnumerable(next)) {
                     const enumerator = enumerateObs(next);
                     move(enumerator);
                     enumerators.push(enumerator);
@@ -1141,7 +1140,7 @@ const _zip = (...observables) => {
             }
         }
     });
-    zipObservable.isEnumerable = isEnumerable;
+    zipObservable.isEnumerable = isEnumerableOperator;
     return zipObservable;
 };
 /**
