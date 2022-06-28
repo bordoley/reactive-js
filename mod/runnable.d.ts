@@ -1,15 +1,12 @@
-import { AbstractDisposableContainer, ConcatAll, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, Concat, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Generate, Keep, Map, ContainerOperator, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
+import { ConcatAll, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, Concat, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Generate, Keep, Map, ContainerOperator, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
 import { DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Function1, Equality, Predicate, Updater, Factory, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
-import { SinkLike, CreateSource, SourceLike } from "./source.mjs";
-declare class Sink<T> extends AbstractDisposableContainer implements SinkLike<T> {
-    assertState(this: Sink<T>): void;
-    notify(_: T): void;
-}
+import { RunnableSink } from "./runnableSink.mjs";
+import { CreateSource, SourceLike } from "./source.mjs";
 declare const concatAll: ConcatAll<RunnableLike<unknown>>["concatAll"];
 declare const concatAllT: ConcatAll<RunnableLike<unknown>>;
-declare const createRunnable: <T>(run: SideEffect1<Sink<T>>) => RunnableLike<T>;
+declare const createRunnable: <T>(run: SideEffect1<RunnableSink<T>>) => RunnableLike<T>;
 declare const createT: CreateSource<RunnableLike<unknown>>;
 declare const first: <T>() => Function1<RunnableLike<T>, Option<T>>;
 declare const forEach: <T>(f: SideEffect1<T>) => Function1<RunnableLike<T>, void>;
@@ -27,8 +24,8 @@ declare const toArray: <T>() => Function1<RunnableLike<T>, readonly T[]>;
 interface RunnableLike<T> extends SourceLike {
     readonly T: unknown;
     readonly type: RunnableLike<this["T"]>;
-    readonly liftedStateType: Sink<this["T"]>;
-    sink(this: RunnableLike<T>, sink: Sink<T>): void;
+    readonly liftedStateType: RunnableSink<this["T"]>;
+    sink(this: RunnableLike<T>, sink: RunnableSink<T>): void;
 }
 declare type RunnableOperator<TA, TB> = Function1<RunnableLike<TA>, RunnableLike<TB>>;
 interface ToRunnable<C extends ContainerLike> extends Container<C> {
@@ -94,4 +91,4 @@ declare const throwIfEmpty: <T>(factory: Factory<unknown>) => RunnableOperator<T
 declare const throwIfEmptyT: ThrowIfEmpty<RunnableLike<unknown>>;
 declare const using: Using<RunnableLike<unknown>>["using"];
 declare const usingT: Using<RunnableLike<unknown>>;
-export { RunnableLike, RunnableOperator, Sink, ToRunnable, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };
+export { RunnableLike, RunnableOperator, ToRunnable, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };

@@ -2,19 +2,19 @@ import { ConcatAll } from "../container";
 import { addTo, dispose } from "../disposable";
 import { pipe } from "../functions";
 import { RunnableLike, RunnableOperator } from "../runnable";
+import { RunnableSink, createDelegatingRunnableSink } from "../runnableSink";
 import { sourceFrom } from "../source";
 import { lift } from "./lift";
-import { Sink, createDelegatingSink } from "./sinks";
 
-class FlattenSink<T> extends Sink<RunnableLike<T>> {
-  constructor(readonly delegate: Sink<T>) {
+class FlattenSink<T> extends RunnableSink<RunnableLike<T>> {
+  constructor(readonly delegate: RunnableSink<T>) {
     super();
   }
 
   notify(next: RunnableLike<T>) {
     const { delegate } = this;
     pipe(
-      createDelegatingSink(delegate),
+      createDelegatingRunnableSink(delegate),
       addTo(this),
       sourceFrom(next),
       dispose(),

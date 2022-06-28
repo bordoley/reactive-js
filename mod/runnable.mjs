@@ -3,8 +3,7 @@ import { dispose, isDisposed, addTo } from './disposable.mjs';
 import { pipe, ignore, raise, identity, alwaysTrue } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractSource, sourceFrom, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
-import { AbstractDisposableContainer } from './container.mjs';
-import { __DEV__ } from './env.mjs';
+import { RunnableSink, createDelegatingRunnableSink } from './runnableSink.mjs';
 
 class AbstractRunnable extends AbstractSource {
 }
@@ -69,36 +68,14 @@ const liftT = {
     lift,
 };
 
-class Sink extends AbstractDisposableContainer {
-    assertState() { }
-    notify(_) { }
-}
-if (__DEV__) {
-    Sink.prototype.assertState = function () {
-        if (isDisposed(this)) {
-            raise("Sink is disposed");
-        }
-    };
-}
-class DelegatingSink extends Sink {
-    constructor(delegate) {
-        super();
-        this.delegate = delegate;
-    }
-    notify(next) {
-        this.delegate.notify(next);
-    }
-}
-const createDelegatingSink = (delegate) => new DelegatingSink(delegate);
-
-class FlattenSink extends Sink {
+class FlattenSink extends RunnableSink {
     constructor(delegate) {
         super();
         this.delegate = delegate;
     }
     notify(next) {
         const { delegate } = this;
-        pipe(createDelegatingSink(delegate), addTo(this), sourceFrom(next), dispose());
+        pipe(createDelegatingRunnableSink(delegate), addTo(this), sourceFrom(next), dispose());
     }
 }
 const _concatAll = lift(delegate => pipe(new FlattenSink(delegate), addTo(delegate)));
@@ -109,7 +86,7 @@ const concatAllT = {
 
 const run = (f) => (runnable) => pipe(f(), sourceFrom(runnable), dispose(), ({ error, result }) => isSome(error) ? raise(error.cause) : result);
 
-class FirstSink extends Sink {
+class FirstSink extends RunnableSink {
     constructor() {
         super(...arguments);
         this.result = none;
@@ -124,7 +101,7 @@ const first = () => {
     return run(createSink);
 };
 
-class ForEachSink extends Sink {
+class ForEachSink extends RunnableSink {
     constructor(notify) {
         super();
         this.notify = notify;
@@ -136,7 +113,7 @@ const forEach = (f) => {
     return run(createSink);
 };
 
-class LastSink extends Sink {
+class LastSink extends RunnableSink {
     constructor() {
         super(...arguments);
         this.result = none;
@@ -150,7 +127,7 @@ const last = () => {
     return run(createSink);
 };
 
-class ToArraySink extends Sink {
+class ToArraySink extends RunnableSink {
     constructor() {
         super(...arguments);
         this.result = [];
@@ -168,7 +145,7 @@ const toArray = () => run(createSink);
 
 const toRunnable = () => identity;
 const type = undefined;
-const catchError = createCatchErrorOperator(liftT, class CatchErrorSink extends Sink {
+const catchError = createCatchErrorOperator(liftT, class CatchErrorSink extends RunnableSink {
     constructor(delegate) {
         super();
         this.delegate = delegate;
@@ -177,13 +154,13 @@ const catchError = createCatchErrorOperator(liftT, class CatchErrorSink extends 
 const concat = (...runnables) => createRunnable((sink) => {
     const runnablesLength = runnables.length;
     for (let i = 0; i < runnablesLength && !isDisposed(sink); i++) {
-        pipe(createDelegatingSink(sink), addTo(sink), sourceFrom(runnables[i]), dispose());
+        pipe(createDelegatingRunnableSink(sink), addTo(sink), sourceFrom(runnables[i]), dispose());
     }
 });
 const concatT = {
     concat,
 };
-const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftT, ...fromArrayT }, class DecodeWithCharsetSink extends Sink {
+const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftT, ...fromArrayT }, class DecodeWithCharsetSink extends RunnableSink {
     constructor(delegate, textDecoder) {
         super();
         this.delegate = delegate;
@@ -193,7 +170,7 @@ const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftT, ...fromArr
 const decodeWithCharsetT = {
     decodeWithCharset,
 };
-const distinctUntilChanged = createDistinctUntilChangedOperator(liftT, class DistinctUntilChangedSink extends Sink {
+const distinctUntilChanged = createDistinctUntilChangedOperator(liftT, class DistinctUntilChangedSink extends RunnableSink {
     constructor(delegate, equality) {
         super();
         this.delegate = delegate;
@@ -205,7 +182,7 @@ const distinctUntilChanged = createDistinctUntilChangedOperator(liftT, class Dis
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
-const everySatisfy = createEverySatisfyOperator({ ...fromArrayT, ...liftT }, class EverySatisfySink extends Sink {
+const everySatisfy = createEverySatisfyOperator({ ...fromArrayT, ...liftT }, class EverySatisfySink extends RunnableSink {
     constructor(delegate, predicate) {
         super();
         this.delegate = delegate;
@@ -228,7 +205,7 @@ const generate = (generator, initialValue) => {
 const generateT = {
     generate,
 };
-const keep = createKeepOperator(liftT, class KeepSink extends Sink {
+const keep = createKeepOperator(liftT, class KeepSink extends RunnableSink {
     constructor(delegate, predicate) {
         super();
         this.delegate = delegate;
@@ -238,7 +215,7 @@ const keep = createKeepOperator(liftT, class KeepSink extends Sink {
 const keepT = {
     keep,
 };
-const map = createMapOperator(liftT, class MapSink extends Sink {
+const map = createMapOperator(liftT, class MapSink extends RunnableSink {
     constructor(delegate, mapper) {
         super();
         this.delegate = delegate;
@@ -254,7 +231,7 @@ const never = createNever(createT);
  *
  * @param onNotify The function that is invoked when the observable source produces values.
  */
-const onNotify = createOnNotifyOperator(liftT, class OnNotifySink extends Sink {
+const onNotify = createOnNotifyOperator(liftT, class OnNotifySink extends RunnableSink {
     constructor(delegate, onNotify) {
         super();
         this.delegate = delegate;
@@ -262,7 +239,7 @@ const onNotify = createOnNotifyOperator(liftT, class OnNotifySink extends Sink {
     }
 });
 const onSink = createOnSink(createT);
-const pairwise = createPairwiseOperator(liftT, class PairwiseSink extends Sink {
+const pairwise = createPairwiseOperator(liftT, class PairwiseSink extends RunnableSink {
     constructor(delegate) {
         super();
         this.delegate = delegate;
@@ -272,7 +249,7 @@ const pairwise = createPairwiseOperator(liftT, class PairwiseSink extends Sink {
 const pairwiseT = {
     pairwise,
 };
-const reduce = createReduceOperator({ ...fromArrayT, ...liftT }, class ReducerSink extends Sink {
+const reduce = createReduceOperator({ ...fromArrayT, ...liftT }, class ReducerSink extends RunnableSink {
     constructor(delegate, reducer, acc) {
         super();
         this.delegate = delegate;
@@ -292,7 +269,7 @@ const repeat = (predicate) => {
     return runnable => createRunnable(sink => {
         let count = 0;
         do {
-            pipe(createDelegatingSink(sink), addTo(sink), sourceFrom(runnable), dispose());
+            pipe(createDelegatingRunnableSink(sink), addTo(sink), sourceFrom(runnable), dispose());
             count++;
         } while (!isDisposed(sink) && shouldRepeat(count));
     });
@@ -300,7 +277,7 @@ const repeat = (predicate) => {
 const repeatT = {
     repeat,
 };
-const scan = createScanOperator(liftT, class ScanSink extends Sink {
+const scan = createScanOperator(liftT, class ScanSink extends RunnableSink {
     constructor(delegate, reducer, acc) {
         super();
         this.delegate = delegate;
@@ -311,7 +288,7 @@ const scan = createScanOperator(liftT, class ScanSink extends Sink {
 const scanT = {
     scan,
 };
-const skipFirst = createSkipFirstOperator(liftT, class SkipFirstSink extends Sink {
+const skipFirst = createSkipFirstOperator(liftT, class SkipFirstSink extends RunnableSink {
     constructor(delegate, skipCount) {
         super();
         this.delegate = delegate;
@@ -322,7 +299,7 @@ const skipFirst = createSkipFirstOperator(liftT, class SkipFirstSink extends Sin
 const skipFirstT = {
     skipFirst,
 };
-const someSatisfy = createSomeSatisfyOperator({ ...fromArrayT, ...liftT }, class SomeSatisfySink extends Sink {
+const someSatisfy = createSomeSatisfyOperator({ ...fromArrayT, ...liftT }, class SomeSatisfySink extends RunnableSink {
     constructor(delegate, predicate) {
         super();
         this.delegate = delegate;
@@ -332,7 +309,7 @@ const someSatisfy = createSomeSatisfyOperator({ ...fromArrayT, ...liftT }, class
 const someSatisfyT = {
     someSatisfy,
 };
-const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftT }, class TakeFirstSink extends Sink {
+const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftT }, class TakeFirstSink extends RunnableSink {
     constructor(delegate, maxCount) {
         super();
         this.delegate = delegate;
@@ -343,7 +320,7 @@ const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftT }, class Tak
 const takeFirstT = {
     takeFirst,
 };
-const takeLast = createTakeLastOperator({ ...fromArrayT, ...liftT }, class TakeLastSink extends Sink {
+const takeLast = createTakeLastOperator({ ...fromArrayT, ...liftT }, class TakeLastSink extends RunnableSink {
     constructor(delegate, maxCount) {
         super();
         this.delegate = delegate;
@@ -354,7 +331,7 @@ const takeLast = createTakeLastOperator({ ...fromArrayT, ...liftT }, class TakeL
 const takeLastT = {
     takeLast,
 };
-const takeWhile = createTakeWhileOperator(liftT, class TakeWhileSink extends Sink {
+const takeWhile = createTakeWhileOperator(liftT, class TakeWhileSink extends RunnableSink {
     constructor(delegate, predicate, inclusive) {
         super();
         this.delegate = delegate;
@@ -365,7 +342,7 @@ const takeWhile = createTakeWhileOperator(liftT, class TakeWhileSink extends Sin
 const takeWhileT = {
     takeWhile,
 };
-const throwIfEmpty = createThrowIfEmptyOperator(liftT, class ThrowIfEmptySink extends Sink {
+const throwIfEmpty = createThrowIfEmptyOperator(liftT, class ThrowIfEmptySink extends RunnableSink {
     constructor(delegate) {
         super();
         this.delegate = delegate;
@@ -380,4 +357,4 @@ const usingT = {
     using,
 };
 
-export { Sink, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };
+export { catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };

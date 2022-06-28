@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [runnable](../modules/runnable.md) / Sink
+[Reactive-JS](../README.md) / [runnableSink](../modules/runnableSink.md) / RunnableSink
 
-# Class: Sink<T\>
+# Class: RunnableSink<T\>
 
-[runnable](../modules/runnable.md).Sink
+[runnableSink](../modules/runnableSink.md).RunnableSink
 
 ## Type parameters
 
@@ -14,7 +14,7 @@
 
 - [`AbstractDisposableContainer`](container.AbstractDisposableContainer.md)
 
-  ↳ **`Sink`**
+  ↳ **`RunnableSink`**
 
 ## Implements
 
@@ -24,23 +24,23 @@
 
 ### Constructors
 
-- [constructor](runnable.Sink.md#constructor)
+- [constructor](runnableSink.RunnableSink.md#constructor)
 
 ### Accessors
 
-- [T](runnable.Sink.md#t)
-- [type](runnable.Sink.md#type)
+- [T](runnableSink.RunnableSink.md#t)
+- [type](runnableSink.RunnableSink.md#type)
 
 ### Methods
 
-- [assertState](runnable.Sink.md#assertstate)
-- [notify](runnable.Sink.md#notify)
+- [assertState](runnableSink.RunnableSink.md#assertstate)
+- [notify](runnableSink.RunnableSink.md#notify)
 
 ## Constructors
 
 ### constructor
 
-• **new Sink**<`T`\>()
+• **new RunnableSink**<`T`\>()
 
 #### Type parameters
 
@@ -98,7 +98,7 @@ AbstractDisposableContainer.type
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`Sink`](runnable.Sink.md)<`T`\> |
+| `this` | [`RunnableSink`](runnableSink.RunnableSink.md)<`T`\> |
 
 #### Returns
 

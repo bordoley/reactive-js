@@ -2,8 +2,8 @@ import { FromArray, FromArrayOptions } from "../container";
 import { isDisposed } from "../disposable";
 import { Function1, ignore } from "../functions";
 import { RunnableLike } from "../runnable";
+import { RunnableSink } from "../runnableSink";
 import { createRunnable } from "./createRunnable";
-import { Sink } from "./sinks";
 
 export const fromArray =
   <T>(
@@ -24,7 +24,7 @@ export const fromArray =
     const run =
       count === 0
         ? ignore
-        : (sink: Sink<T>) => {
+        : (sink: RunnableSink<T>) => {
             for (
               let index = startIndex;
               index < endIndex && !isDisposed(sink);
