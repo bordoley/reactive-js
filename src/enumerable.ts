@@ -78,7 +78,7 @@ export type EnumerableOperator<TA, TB> = Function1<
 export interface ToEnumerable<C extends ContainerLike> extends Container<C> {
   toEnumerable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 }
-
+export { buffer, bufferT } from "./enumerable/buffer";
 export {
   AbstractEnumerable,
   createEnumerable,

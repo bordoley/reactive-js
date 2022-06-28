@@ -136,6 +136,39 @@ const concatAllT = {
     concatAll,
 };
 
+class BufferEnumerator extends AbstractEnumerator {
+    constructor(delegate, maxBufferSize) {
+        super();
+        this.delegate = delegate;
+        this.maxBufferSize = maxBufferSize;
+    }
+    move() {
+        reset(this);
+        const buffer = [];
+        const { delegate, maxBufferSize } = this;
+        while (buffer.length < maxBufferSize && delegate.move()) {
+            buffer.push(delegate.current);
+        }
+        const bufferLength = buffer.length;
+        if (bufferLength > 0) {
+            this.current = buffer;
+        }
+        if (bufferLength < maxBufferSize) {
+            pipe(this, dispose());
+        }
+        return hasCurrent(this);
+    }
+}
+const buffer = (options = {}) => {
+    var _a;
+    const maxBufferSize = Math.max((_a = options.maxBufferSize) !== null && _a !== void 0 ? _a : Number.MAX_SAFE_INTEGER, 1);
+    const operator = (delegate) => pipe(new BufferEnumerator(delegate, maxBufferSize), add(delegate));
+    return lift(operator);
+};
+const bufferT = {
+    buffer,
+};
+
 class IteratorEnumerator extends Enumerator {
     constructor(iterator) {
         super();
@@ -595,4 +628,4 @@ const usingT = {
     using,
 };
 
-export { AbstractEnumerable, concat, concatAll, concatAllT, concatT, createEnumerable, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, toRunnableT, type, using, usingT, zip, zipT };
+export { AbstractEnumerable, buffer, bufferT, concat, concatAll, concatAllT, concatT, createEnumerable, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, toRunnableT, type, using, usingT, zip, zipT };

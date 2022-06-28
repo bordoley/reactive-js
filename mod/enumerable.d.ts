@@ -1,9 +1,13 @@
-import { ConcatAll, FromArray, FromArrayOptions, FromIterator, FromIterable, Generate, Repeat, TakeLast, Zip, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
+import { Buffer, ConcatAll, FromArray, FromArrayOptions, FromIterator, FromIterable, Generate, Repeat, TakeLast, Zip, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
 import { Enumerator } from "./enumerator.mjs";
 import { Factory, Function1, Updater, Predicate, Equality, SideEffect1, Reducer } from "./functions.mjs";
 import { AbstractLiftable, LiftableLike } from "./liftable.mjs";
 import { Option } from "./option.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
+declare const buffer: <T>(options?: {
+    readonly maxBufferSize?: number;
+}) => EnumerableOperator<T, readonly T[]>;
+declare const bufferT: Buffer<EnumerableLike<unknown>>;
 declare abstract class AbstractEnumerable<T> extends AbstractLiftable<Enumerator<T>> implements EnumerableLike<T> {
     abstract enumerate(this: EnumerableLike<T>): Enumerator<T>;
 }
@@ -138,4 +142,4 @@ declare const throwIfEmpty: <T>(factory: Factory<unknown>) => EnumerableOperator
 declare const throwIfEmptyT: ThrowIfEmpty<EnumerableLike<unknown>>;
 declare const using: Using<EnumerableLike<unknown>>["using"];
 declare const usingT: Using<EnumerableLike<unknown>>;
-export { AbstractEnumerable, EnumerableLike, EnumerableOperator, ToEnumerable, concat, concatAll, concatAllT, concatT, createEnumerable, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, toRunnableT, type, using, usingT, zip, zipT };
+export { AbstractEnumerable, EnumerableLike, EnumerableOperator, ToEnumerable, buffer, bufferT, concat, concatAll, concatAllT, concatT, createEnumerable, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, toRunnableT, type, using, usingT, zip, zipT };

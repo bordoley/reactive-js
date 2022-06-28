@@ -19,6 +19,7 @@
 
 ### Variables
 
+- [bufferT](enumerable.md#buffert)
 - [concatAllT](enumerable.md#concatallt)
 - [concatT](enumerable.md#concatt)
 - [distinctUntilChangedT](enumerable.md#distinctuntilchangedt)
@@ -43,6 +44,7 @@
 
 ### Functions
 
+- [buffer](enumerable.md#buffer)
 - [concat](enumerable.md#concat)
 - [concatAll](enumerable.md#concatall)
 - [createEnumerable](enumerable.md#createenumerable)
@@ -85,6 +87,12 @@ A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB>
 | `TB` |
 
 ## Variables
+
+### bufferT
+
+• `Const` **bufferT**: [`Buffer`](../interfaces/container.Buffer.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
 
 ### concatAllT
 
@@ -211,6 +219,29 @@ ___
 • `Const` **zipT**: [`Zip`](../interfaces/container.Zip.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
 
 ## Functions
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
+
+#### Returns
+
+[`EnumerableOperator`](enumerable.md#enumerableoperator)<`T`, readonly `T`[]\>
+
+___
 
 ### concat
 
