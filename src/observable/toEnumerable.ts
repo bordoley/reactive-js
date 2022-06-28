@@ -1,6 +1,11 @@
 import { add, addTo, dispose, isDisposed } from "../disposable";
 import { EnumerableLike, ToEnumerable, createEnumerable } from "../enumerable";
-import { AbstractEnumerator, Enumerator, hasCurrent } from "../enumerator";
+import {
+  AbstractEnumerator,
+  Enumerator,
+  hasCurrent,
+  reset,
+} from "../enumerator";
 import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
@@ -60,7 +65,7 @@ class EnumeratorScheduler<T>
   }
 
   move(): boolean {
-    this.reset();
+    reset(this);
 
     while (!isDisposed(this) && !hasCurrent(this) && this.step()) {}
 

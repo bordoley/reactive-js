@@ -1,7 +1,7 @@
 import { FromArray, FromArrayOptions } from "../container";
 import { dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
-import { AbstractEnumerator, hasCurrent } from "../enumerator";
+import { AbstractEnumerator, hasCurrent, reset } from "../enumerator";
 import { pipe } from "../functions";
 import { createEnumerable } from "./enumerable";
 
@@ -15,7 +15,7 @@ class ArrayEnumerator<T> extends AbstractEnumerator<T> {
   }
 
   move(): boolean {
-    this.reset();
+    reset(this);
 
     const { array } = this;
 

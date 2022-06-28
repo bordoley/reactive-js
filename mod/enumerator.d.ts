@@ -27,5 +27,6 @@ declare const current: <T>(enumerator: Enumerator<T>) => T;
 declare const hasCurrent: <T>(enumerator: Enumerator<T>) => boolean;
 declare const move: <T>(enumerator: Enumerator<T>) => boolean;
 declare const forEach: <T, TEnumerator extends Enumerator<T> = Enumerator<T>>(f: SideEffect1<T>) => Function1<TEnumerator, TEnumerator>;
+declare const reset: <T>(enumerator: AbstractEnumerator<T>) => void;
 declare const zip: <T>(enumerators: readonly Enumerator<T>[]) => Enumerator<readonly T[]>;
-export { AbstractDelegatingEnumerator, AbstractEnumerator, Enumerator, current, forEach, hasCurrent, move, zip };
+export { AbstractDelegatingEnumerator, AbstractEnumerator, Enumerator, current, forEach, hasCurrent, move, reset, zip };

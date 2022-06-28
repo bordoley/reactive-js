@@ -1,5 +1,5 @@
 import { add, dispose, isDisposed } from "../disposable";
-import { AbstractEnumerator, hasCurrent } from "../enumerator";
+import { AbstractEnumerator, hasCurrent, reset } from "../enumerator";
 import { pipe } from "../functions";
 import { isSome, none } from "../option";
 import {
@@ -58,7 +58,7 @@ class VirtualTimeSchedulerImpl
   move(): boolean {
     const taskQueue = this.taskQueue;
 
-    this.reset();
+    reset(this);
 
     if (!isDisposed(this)) {
       const task = taskQueue.pop();

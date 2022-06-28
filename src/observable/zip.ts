@@ -12,6 +12,7 @@ import {
   current,
   hasCurrent,
   move,
+  reset,
   zip as zipEnumerators,
 } from "../enumerator";
 import { defer, pipe, returns } from "../functions";
@@ -54,7 +55,7 @@ class ZipObserverEnumerator extends AbstractEnumerator<unknown> {
       const next = buffer.shift();
       this.current = next;
     } else {
-      this.reset();
+      reset(this);
     }
 
     return hasCurrent(this);

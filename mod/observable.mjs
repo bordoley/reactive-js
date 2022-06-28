@@ -2,7 +2,7 @@
 import { empty, fromValue, throws, concatMap } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { dispose, isDisposed, onDisposed, add, addTo, disposed, onComplete, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
-import { move, current, AbstractEnumerator, hasCurrent, zip as zip$1, forEach } from './enumerator.mjs';
+import { move, current, AbstractEnumerator, reset, hasCurrent, zip as zip$1, forEach } from './enumerator.mjs';
 import { pipe, arrayEquality, ignore, raise, defer as defer$1, compose, returns } from './functions.mjs';
 import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, notifySink, createUsing, notify, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { schedule, __yield, inContinuation, runContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
@@ -1020,7 +1020,7 @@ class EnumeratorScheduler extends AbstractEnumerator {
         }
     }
     move() {
-        this.reset();
+        reset(this);
         while (!isDisposed(this) && !hasCurrent(this) && this.step()) { }
         return hasCurrent(this);
     }
@@ -1074,7 +1074,7 @@ class ZipObserverEnumerator extends AbstractEnumerator {
             this.current = next;
         }
         else {
-            this.reset();
+            reset(this);
         }
         return hasCurrent(this);
     }

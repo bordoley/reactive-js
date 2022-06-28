@@ -1,7 +1,7 @@
 /// <reference types="./enumerator.d.ts" />
 import { AbstractDisposableContainer } from './container.mjs';
 import { onDisposed, isDisposed, dispose, addTo } from './disposable.mjs';
-import { pipe, raise } from './functions.mjs';
+import { pipe, defer, raise } from './functions.mjs';
 import { none } from './option.mjs';
 import { everySatisfy, map, forEach as forEach$1 } from './readonlyArray.mjs';
 
@@ -12,7 +12,7 @@ class AbstractEnumerator extends Enumerator {
         super();
         this._current = none;
         this._hasCurrent = false;
-        pipe(this, onDisposed(_ => this.reset()));
+        pipe(this, onDisposed(defer(this, reset)));
     }
     get current() {
         return hasCurrent(this) ? this._current : raise();
@@ -52,6 +52,7 @@ const forEach = (f) => enumerator => {
     }
     return enumerator;
 };
+const reset = (enumerator) => enumerator.reset();
 const moveAll = (enumerators) => {
     for (const enumerator of enumerators) {
         move(enumerator);
@@ -64,7 +65,7 @@ class ZipEnumerator extends AbstractEnumerator {
         this.enumerators = enumerators;
     }
     move() {
-        this.reset();
+        reset(this);
         if (!isDisposed(this)) {
             const { enumerators } = this;
             moveAll(enumerators);
@@ -84,4 +85,4 @@ const zip = (enumerators) => {
     return enumerator;
 };
 
-export { AbstractDelegatingEnumerator, AbstractEnumerator, Enumerator, current, forEach, hasCurrent, move, zip };
+export { AbstractDelegatingEnumerator, AbstractEnumerator, Enumerator, current, forEach, hasCurrent, move, reset, zip };

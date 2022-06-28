@@ -16,6 +16,7 @@
 - [forEach](enumerator.md#foreach)
 - [hasCurrent](enumerator.md#hascurrent)
 - [move](enumerator.md#move)
+- [reset](enumerator.md#reset)
 - [zip](enumerator.md#zip)
 
 ## Functions
@@ -106,6 +107,28 @@ ___
 #### Returns
 
 `boolean`
+
+___
+
+### reset
+
+▸ **reset**<`T`\>(`enumerator`): `void`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `enumerator` | [`AbstractEnumerator`](../classes/enumerator.AbstractEnumerator.md)<`T`\> |
+
+#### Returns
+
+`void`
 
 ___
 

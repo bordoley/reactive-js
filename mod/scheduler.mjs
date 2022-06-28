@@ -2,7 +2,7 @@
 import { isDisposed, AbstractDisposable, dispose, AbstractSerialDisposable, disposed, add, addTo, onDisposed, createDisposable } from './disposable.mjs';
 import { pipe, raise } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
-import { AbstractEnumerator, hasCurrent } from './enumerator.mjs';
+import { AbstractEnumerator, reset, hasCurrent } from './enumerator.mjs';
 
 const computeParentIndex = (index) => Math.floor((index - 1) / 2);
 const siftDown = (queue, item) => {
@@ -501,7 +501,7 @@ class VirtualTimeSchedulerImpl extends AbstractEnumerator {
     }
     move() {
         const taskQueue = this.taskQueue;
-        this.reset();
+        reset(this);
         if (!isDisposed(this)) {
             const task = taskQueue.pop();
             if (isSome(task)) {

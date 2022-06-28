@@ -1,6 +1,6 @@
 /// <reference types="./enumerable.d.ts" />
 import { isDisposed, dispose, createSerialDisposable, bindTo, add, addTo } from './disposable.mjs';
-import { AbstractEnumerator, hasCurrent, move, Enumerator, current, forEach, zip as zip$1, AbstractDelegatingEnumerator } from './enumerator.mjs';
+import { AbstractEnumerator, reset, hasCurrent, move, Enumerator, current, forEach, zip as zip$1, AbstractDelegatingEnumerator } from './enumerator.mjs';
 import { pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { empty } from './container.mjs';
 import { AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftedOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
@@ -17,7 +17,7 @@ class ArrayEnumerator extends AbstractEnumerator {
         this.endIndex = endIndex;
     }
     move() {
-        this.reset();
+        reset(this);
         const { array } = this;
         if (!isDisposed(this)) {
             this.index++;
@@ -103,7 +103,7 @@ class ConcatAllEnumerator extends AbstractEnumerator {
         this.enumerator = enumerator;
     }
     move() {
-        this.reset();
+        reset(this);
         const { delegate, enumerator } = this;
         if (isDisposed(enumerator.inner) && move(delegate)) {
             enumerator.inner = enumerate(delegate.current);
@@ -413,7 +413,7 @@ const map = createMapLiftedOperator(liftT, class MapEnumerator extends AbstractE
         this.mapper = mapper;
     }
     move() {
-        this.reset();
+        reset(this);
         const { delegate } = this;
         if (move(delegate)) {
             try {
@@ -454,7 +454,7 @@ const pairwise = createPairwiseLiftedOperator(liftT, class PairwiseEnumerator ex
     }
     move() {
         const prev = (hasCurrent(this) ? current(this) : empty$1)[1];
-        this.reset();
+        reset(this);
         const { delegate } = this;
         if (move(delegate)) {
             const { current } = delegate;
@@ -475,7 +475,7 @@ const scan = createScanLiftedOperator(liftT, class ScanEnumerator extends Abstra
     }
     move() {
         const acc = hasCurrent(this) ? current(this) : none;
-        this.reset();
+        reset(this);
         const { delegate, reducer } = this;
         if (isSome(acc) && move(delegate)) {
             try {
