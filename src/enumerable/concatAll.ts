@@ -4,6 +4,7 @@ import {
   add,
   bindTo,
   createSerialDisposable,
+  dispose,
 } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { pipe } from "../functions";
@@ -37,7 +38,7 @@ class ConcatAllEnumerator<T> extends AbstractEnumerator<T> {
       } else if (delegate.move()) {
         enumerator.inner = enumerate(delegate.current);
       } else {
-        this.dispose();
+        pipe(this, dispose());
       }
     }
 

@@ -1,6 +1,6 @@
 /// <reference types="./runnable.d.ts" />
-import { addTo, dispose } from './disposable.mjs';
-import { ignore, pipe, raise, identity, alwaysTrue } from './functions.mjs';
+import { dispose, addTo } from './disposable.mjs';
+import { pipe, ignore, raise, identity, alwaysTrue } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractSource, sourceFrom, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
 import { AbstractDisposableContainer } from './container.mjs';
@@ -19,7 +19,7 @@ class RunnableImpl extends AbstractRunnable {
             this._run(sink);
         }
         catch (cause) {
-            sink.dispose({ cause });
+            pipe(sink, dispose({ cause }));
         }
     }
 }
@@ -54,9 +54,7 @@ class LiftedRunnable extends AbstractRunnable {
         this.operators = operators;
     }
     sink(sink) {
-        const liftedSink = pipe(sink, ...this.operators);
-        this.src.sink(liftedSink);
-        liftedSink.dispose();
+        pipe(pipe(sink, ...this.operators), sourceFrom(this.src), dispose());
     }
 }
 const lift = (operator) => runnable => {
@@ -100,9 +98,7 @@ class FlattenSink extends Sink {
     }
     notify(next) {
         const { delegate } = this;
-        const concatSink = pipe(createDelegatingSink(delegate), addTo(this));
-        next.sink(concatSink);
-        concatSink.dispose();
+        pipe(createDelegatingSink(delegate), addTo(this), sourceFrom(next), dispose());
     }
 }
 const _concatAll = lift(delegate => pipe(new FlattenSink(delegate), addTo(delegate)));
@@ -120,7 +116,7 @@ class FirstSink extends Sink {
     }
     notify(next) {
         this.result = next;
-        this.dispose();
+        pipe(this, dispose());
     }
 }
 const first = () => {
@@ -181,9 +177,7 @@ const catchError = createCatchErrorOperator(liftT, class CatchErrorSink extends 
 const concat = (...runnables) => createRunnable((sink) => {
     const runnablesLength = runnables.length;
     for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
-        const concatSink = pipe(createDelegatingSink(sink), addTo(sink));
-        runnables[i].sink(concatSink);
-        concatSink.dispose();
+        pipe(createDelegatingSink(sink), addTo(sink), sourceFrom(runnables[i]), dispose());
     }
 });
 const concatT = {
@@ -298,9 +292,7 @@ const repeat = (predicate) => {
     return runnable => createRunnable(sink => {
         let count = 0;
         do {
-            const delegateSink = pipe(createDelegatingSink(sink), addTo(sink));
-            runnable.sink(delegateSink);
-            delegateSink.dispose();
+            pipe(createDelegatingSink(sink), addTo(sink), sourceFrom(runnable), dispose());
             count++;
         } while (!sink.isDisposed && shouldRepeat(count));
     });

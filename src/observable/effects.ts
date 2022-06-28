@@ -31,6 +31,7 @@ import {
 import { ObservableEffectMode, ObservableLike } from "../observable";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerLike, schedule } from "../scheduler";
+import { notify } from "../source";
 import { defer } from "./defer";
 import { fromArrayT } from "./fromArray";
 import { Observer } from "./observer";
@@ -151,7 +152,7 @@ class ObservableContext {
       !hasOutstandingEffects &&
       this.scheduledComputationSubscription.isDisposed
     ) {
-      this.observer.dispose();
+      pipe(this.observer, dispose());
     }
   };
 
@@ -357,8 +358,7 @@ export const __observe = <T>(observable: ObservableLike<T>): Option<T> => {
 const deferSideEffect = (f: (...args: any[]) => void, ...args: any[]) =>
   defer(() => observer => {
     f(...args);
-    observer.notify(none);
-    observer.dispose();
+    pipe(observer, notify(none), dispose());
   });
 
 export function __do(fn: SideEffect): void;

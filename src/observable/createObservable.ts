@@ -1,4 +1,5 @@
-import { SideEffect1 } from "../functions";
+import { dispose } from "../disposable";
+import { SideEffect1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { CreateSource } from "../source";
 import { AbstractObservable } from "./observable";
@@ -13,7 +14,7 @@ class CreateObservable<T> extends AbstractObservable<T> {
     try {
       this.f(observer);
     } catch (cause) {
-      observer.dispose({ cause });
+      pipe(observer, dispose({ cause }));
     }
   }
 }

@@ -21,7 +21,7 @@ import {
   ThrowIfEmpty,
   Using,
 } from "./container";
-import { addTo } from "./disposable";
+import { addTo, dispose } from "./disposable";
 import {
   Equality,
   Factory,
@@ -60,6 +60,7 @@ import {
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
   createUsing,
+  sourceFrom,
 } from "./source";
 
 export interface RunnableLike<T> extends SourceLike {
@@ -110,10 +111,12 @@ export const concat: Concat<RunnableLike<unknown>>["concat"] = <T>(
   createRunnable((sink: Sink<T>) => {
     const runnablesLength = runnables.length;
     for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
-      const concatSink = pipe(createDelegatingSink(sink), addTo(sink));
-
-      runnables[i].sink(concatSink);
-      concatSink.dispose();
+      pipe(
+        createDelegatingSink(sink),
+        addTo(sink),
+        sourceFrom(runnables[i]),
+        dispose(),
+      );
     }
   });
 
@@ -303,9 +306,12 @@ export const repeat: Repeat<RunnableLike<unknown>>["repeat"] = <T>(
     createRunnable(sink => {
       let count = 0;
       do {
-        const delegateSink = pipe(createDelegatingSink(sink), addTo(sink));
-        runnable.sink(delegateSink);
-        delegateSink.dispose();
+        pipe(
+          createDelegatingSink(sink),
+          addTo(sink),
+          sourceFrom(runnable),
+          dispose(),
+        );
         count++;
       } while (!sink.isDisposed && shouldRepeat(count));
     });

@@ -1,5 +1,7 @@
 import { FromArray, FromArrayOptions } from "../container";
+import { dispose } from "../disposable";
 import { EnumerableLike } from "../enumerable";
+import { pipe } from "../functions";
 import { createEnumerable } from "./enumerable";
 import { AbstractEnumerator } from "./enumerator";
 
@@ -24,7 +26,7 @@ class ArrayEnumerator<T> extends AbstractEnumerator<T> {
       if (index < endIndex) {
         this.current = array[index];
       } else {
-        this.dispose();
+        pipe(this, dispose());
       }
     }
 

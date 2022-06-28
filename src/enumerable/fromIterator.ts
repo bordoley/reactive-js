@@ -1,6 +1,7 @@
 import { FromIterable, FromIterator } from "../container";
+import { dispose } from "../disposable";
 import { EnumerableLike } from "../enumerable";
-import { Factory, Function1 } from "../functions";
+import { Factory, Function1, pipe } from "../functions";
 import { none } from "../option";
 import { createEnumerable } from "./enumerable";
 import { Enumerator } from "./enumerator";
@@ -28,7 +29,7 @@ class IteratorEnumerator<
         this.hasCurrent = true;
         this.current = next.value;
       } else {
-        this.dispose();
+        pipe(this, dispose());
       }
     }
 

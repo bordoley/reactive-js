@@ -1,4 +1,5 @@
 import { empty } from "../container";
+import { dispose } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { Factory, pipe } from "../functions";
 import { AbstractLiftable } from "../liftable";
@@ -21,12 +22,11 @@ class CreateEnumerable<T> extends AbstractEnumerable<T> {
     try {
       return this._enumerate();
     } catch (cause) {
-      const enumerator = pipe(
+      return pipe(
         empty<EnumerableLike<unknown>, T>(fromArrayT),
         enumerate,
+        dispose({ cause }),
       );
-      enumerator.dispose({ cause });
-      return enumerator;
     }
   }
 }

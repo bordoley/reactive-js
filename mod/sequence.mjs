@@ -1,4 +1,5 @@
 /// <reference types="./sequence.d.ts" />
+import { dispose } from './disposable.mjs';
 import { AbstractEnumerator, createEnumerable } from './enumerable.mjs';
 import { pipe, strictEquality, alwaysTrue, callWith } from './functions.mjs';
 import { none, isNone } from './option.mjs';
@@ -283,7 +284,7 @@ class SequenceEnumerator extends AbstractEnumerator {
                 this.seq = next.next;
             }
             else {
-                this.dispose();
+                pipe(this, dispose());
             }
         }
         return this.hasCurrent;

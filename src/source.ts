@@ -91,6 +91,15 @@ export abstract class AbstractDisposableSource<T, TSink extends SinkLike<T>>
   abstract sink(this: this, sink: TSink): void;
 }
 
+export const notify =
+  <C extends SourceLike, T, TSink extends LiftedStateOf<C, T>>(
+    v: T,
+  ): Function1<TSink, TSink> =>
+  (sink: TSink) => {
+    sink.notify(v);
+    return sink;
+  };
+
 export const notifySink =
   <C extends SourceLike, T, TSink extends LiftedStateOf<C, T>>(
     sink: TSink,
@@ -197,7 +206,7 @@ export const createDecodeWithCharsetOperator = <C extends SourceLike>(
           if (data.length > 0) {
             pipe(data, fromValue(m), sinkInto(delegate));
           } else {
-            delegate.dispose();
+            pipe(delegate, dispose());
           }
         }),
       );
@@ -266,8 +275,7 @@ const createSatisfyOperator = <C extends SourceLike>(
 
     if (this.predicate(next)) {
       const { delegate } = this;
-      delegate.notify(!defaultResult);
-      delegate.dispose();
+      pipe(delegate, notify(!defaultResult), dispose());
     }
   };
   return <T>(predicate: Predicate<T>) => {
