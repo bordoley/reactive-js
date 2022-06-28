@@ -29,36 +29,38 @@ import {
 } from "./functions";
 import { Option, none } from "./option";
 
-export interface LiftedStateLike extends DisposableLike, ContainerLike {}
+export interface LiftableStateLike extends DisposableLike, ContainerLike {}
 
 export interface LiftableLike extends ContainerLike {
-  readonly liftedStateType: LiftedStateLike;
+  readonly liftableStateType: LiftableStateLike;
 }
 
-export abstract class AbstractLiftable<TState extends LiftedStateLike>
+export abstract class AbstractLiftable<TState extends LiftableStateLike>
   extends AbstractContainer
   implements LiftableLike
 {
-  get liftedStateType(): TState {
+  get liftableStateType(): TState {
     return raise();
   }
 }
 
-export abstract class AbstractDisposableLiftable<TState extends LiftedStateLike>
+export abstract class AbstractDisposableLiftable<
+    TState extends LiftableStateLike,
+  >
   extends AbstractDisposableContainer
   implements LiftableLike
 {
-  get liftedStateType(): TState {
+  get liftableStateType(): TState {
     return raise();
   }
 }
 
-export type LiftedStateOf<C extends LiftableLike, T> = C extends {
-  readonly liftedStateType: unknown;
+export type LiftableStateOf<C extends LiftableLike, T> = C extends {
+  readonly liftableStateType: unknown;
 }
   ? (C & {
       readonly T: T;
-    })["liftedStateType"]
+    })["liftableStateType"]
   : {
       readonly _C: C;
       readonly _T: () => T;
@@ -102,8 +104,8 @@ export type LiftOperatorIn<
   TB,
   M extends Lift<C, Variance>,
 > = M extends { variance?: ContraVariant }
-  ? LiftedStateOf<C, TB>
-  : LiftedStateOf<C, TA>;
+  ? LiftableStateOf<C, TB>
+  : LiftableStateOf<C, TA>;
 
 export type LiftOperatorOut<
   C extends LiftableLike,
@@ -111,16 +113,16 @@ export type LiftOperatorOut<
   TB,
   M extends Lift<C, Variance>,
 > = M extends { variance?: ContraVariant }
-  ? LiftedStateOf<C, TA>
-  : LiftedStateOf<C, TB>;
+  ? LiftableStateOf<C, TA>
+  : LiftableStateOf<C, TB>;
 
-export const createDistinctUntilChangedLiftedOperator =
+export const createDistinctUntilChangedLiftOperator =
   <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     DistinctUntilChangedLiftableState: new <T>(
-      delegate: LiftedStateOf<C, T>,
+      delegate: LiftableStateOf<C, T>,
       equality: Equality<T>,
-    ) => LiftedStateOf<C, T>,
+    ) => LiftableStateOf<C, T>,
   ) =>
   <T>(
     options: { readonly equality?: Equality<T> } = {},
@@ -134,21 +136,21 @@ export const createDistinctUntilChangedLiftedOperator =
     return pipe(operator, lift(m));
   };
 
-export const createKeepLiftedOperator =
+export const createKeepLiftOperator =
   <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     KeepLiftableState: new <T>(
-      delegate: LiftedStateOf<C, T>,
+      delegate: LiftableStateOf<C, T>,
       predicate: Predicate<T>,
-    ) => LiftedStateOf<C, T>,
+    ) => LiftableStateOf<C, T>,
   ) =>
   <T>(predicate: Predicate<T>): ContainerOperator<C, T, T> => {
-    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> =>
+    const operator = (delegate: LiftableStateOf<C, T>): LiftableStateOf<C, T> =>
       pipe(new KeepLiftableState(delegate, predicate), bindTo(delegate));
     return pipe(operator, lift(m));
   };
 
-export const createMapLiftedOperator =
+export const createMapLiftOperator =
   <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     MapLiftableState: new <TA, TB>(
@@ -163,13 +165,13 @@ export const createMapLiftedOperator =
       lift(m),
     );
 
-export const createOnNotifyLiftedOperator =
+export const createOnNotifyLiftOperator =
   <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     OnNotifyLiftableState: new <T>(
-      delegate: LiftedStateOf<C, T>,
+      delegate: LiftableStateOf<C, T>,
       onNotify: SideEffect1<T>,
-    ) => LiftedStateOf<C, T>,
+    ) => LiftableStateOf<C, T>,
   ) =>
   <T>(onNotify: SideEffect1<T>) =>
     pipe(
@@ -178,7 +180,7 @@ export const createOnNotifyLiftedOperator =
       lift(m),
     );
 
-export const createPairwiseLiftedOperator =
+export const createPairwiseLiftOperator =
   <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     PairwiseLiftableState: new <T>(
@@ -192,7 +194,7 @@ export const createPairwiseLiftedOperator =
       lift(m),
     );
 
-export const createScanLiftedOperator =
+export const createScanLiftOperator =
   <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     ScanLiftableState: new <T, TAcc>(
@@ -214,7 +216,7 @@ export const createScanLiftedOperator =
       lift(m),
     );
 
-export const createSkipFirstLiftedOperator =
+export const createSkipFirstLiftOperator =
   <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     SkipLiftableState: new <T>(
@@ -233,7 +235,7 @@ export const createSkipFirstLiftedOperator =
     return runnable => (count > 0 ? pipe(runnable, lifted) : runnable);
   };
 
-export const createTakeFirstLiftedOperator =
+export const createTakeFirstLiftOperator =
   <C extends LiftableLike, TVariance extends Variance>(
     m: FromArray<C> & Lift<C, TVariance>,
     TakeFirstLiftableState: new <T>(
@@ -251,7 +253,7 @@ export const createTakeFirstLiftedOperator =
     return source => (count > 0 ? pipe(source, lifted) : empty(m));
   };
 
-export const createTakeWhileLiftedOperator =
+export const createTakeWhileLiftOperator =
   <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     TakeWhileLiftableState: new <T>(
@@ -275,7 +277,7 @@ export const createTakeWhileLiftedOperator =
     }, lift(m));
   };
 
-export const createThrowIfEmptyLiftedOperator =
+export const createThrowIfEmptyLiftOperator =
   <C extends LiftableLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     ThrowIfEmptyLiftableState: new <T>(

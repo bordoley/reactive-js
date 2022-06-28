@@ -24,7 +24,7 @@
 ### Properties
 
 - [T](source.SourceLike.md#t)
-- [liftedStateType](source.SourceLike.md#liftedstatetype)
+- [liftableStateType](source.SourceLike.md#liftablestatetype)
 - [type](source.SourceLike.md#type)
 
 ### Methods
@@ -43,13 +43,13 @@
 
 ___
 
-### liftedStateType
+### liftableStateType
 
-• `Readonly` **liftedStateType**: [`SinkLike`](source.SinkLike.md)<`unknown`\>
+• `Readonly` **liftableStateType**: [`SinkLike`](source.SinkLike.md)<`unknown`\>
 
 #### Overrides
 
-[LiftableLike](liftable.LiftableLike.md).[liftedStateType](liftable.LiftableLike.md#liftedstatetype)
+[LiftableLike](liftable.LiftableLike.md).[liftableStateType](liftable.LiftableLike.md#liftablestatetype)
 
 ___
 

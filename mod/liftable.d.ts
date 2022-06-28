@@ -2,22 +2,22 @@ import { ContainerLike, AbstractContainer, AbstractDisposableContainer, Containe
 import { DisposableLike } from "./disposable.mjs";
 import { Function1, Equality, Predicate, SideEffect1, Reducer, Factory } from "./functions.mjs";
 import { Option } from "./option.mjs";
-interface LiftedStateLike extends DisposableLike, ContainerLike {
+interface LiftableStateLike extends DisposableLike, ContainerLike {
 }
 interface LiftableLike extends ContainerLike {
-    readonly liftedStateType: LiftedStateLike;
+    readonly liftableStateType: LiftableStateLike;
 }
-declare abstract class AbstractLiftable<TState extends LiftedStateLike> extends AbstractContainer implements LiftableLike {
-    get liftedStateType(): TState;
+declare abstract class AbstractLiftable<TState extends LiftableStateLike> extends AbstractContainer implements LiftableLike {
+    get liftableStateType(): TState;
 }
-declare abstract class AbstractDisposableLiftable<TState extends LiftedStateLike> extends AbstractDisposableContainer implements LiftableLike {
-    get liftedStateType(): TState;
+declare abstract class AbstractDisposableLiftable<TState extends LiftableStateLike> extends AbstractDisposableContainer implements LiftableLike {
+    get liftableStateType(): TState;
 }
-declare type LiftedStateOf<C extends LiftableLike, T> = C extends {
-    readonly liftedStateType: unknown;
+declare type LiftableStateOf<C extends LiftableLike, T> = C extends {
+    readonly liftableStateType: unknown;
 } ? (C & {
     readonly T: T;
-})["liftedStateType"] : {
+})["liftableStateType"] : {
     readonly _C: C;
     readonly _T: () => T;
 };
@@ -34,17 +34,17 @@ declare const lift: <C extends LiftableLike, TA, TB, TVariance extends Variance>
 declare type LiftOperator<C extends LiftableLike, TA, TB, M extends Lift<C, Variance>> = Function1<LiftOperatorIn<C, TA, TB, M>, LiftOperatorOut<C, TA, TB, M>>;
 declare type LiftOperatorIn<C extends LiftableLike, TA, TB, M extends Lift<C, Variance>> = M extends {
     variance?: ContraVariant;
-} ? LiftedStateOf<C, TB> : LiftedStateOf<C, TA>;
+} ? LiftableStateOf<C, TB> : LiftableStateOf<C, TA>;
 declare type LiftOperatorOut<C extends LiftableLike, TA, TB, M extends Lift<C, Variance>> = M extends {
     variance?: ContraVariant;
-} ? LiftedStateOf<C, TA> : LiftedStateOf<C, TB>;
-declare const createDistinctUntilChangedLiftedOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, DistinctUntilChangedLiftableState: new <T>(delegate: LiftedStateOf<C, T>, equality: Equality<T>) => LiftedStateOf<C, T>) => <T_1>(options?: {
+} ? LiftableStateOf<C, TA> : LiftableStateOf<C, TB>;
+declare const createDistinctUntilChangedLiftOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, DistinctUntilChangedLiftableState: new <T>(delegate: LiftableStateOf<C, T>, equality: Equality<T>) => LiftableStateOf<C, T>) => <T_1>(options?: {
     readonly equality?: Equality<T_1> | undefined;
 }) => ContainerOperator<C, T_1, T_1>;
-declare const createKeepLiftedOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, KeepLiftableState: new <T>(delegate: LiftedStateOf<C, T>, predicate: Predicate<T>) => LiftedStateOf<C, T>) => <T_1>(predicate: Predicate<T_1>) => ContainerOperator<C, T_1, T_1>;
-declare const createMapLiftedOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, MapLiftableState: new <TA, TB>(delegate: LiftOperatorIn<C, TA, TB, Lift<C, TVariance>>, mapper: Function1<TA, TB>) => LiftOperatorOut<C, TA, TB, Lift<C, TVariance>>) => <TA_1, TB_1>(mapper: Function1<TA_1, TB_1>) => ContainerOperator<C, TA_1, TB_1>;
-declare const createOnNotifyLiftedOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, OnNotifyLiftableState: new <T>(delegate: LiftedStateOf<C, T>, onNotify: SideEffect1<T>) => LiftedStateOf<C, T>) => <T_1>(onNotify: SideEffect1<T_1>) => ContainerOperator<C, T_1, T_1>;
-declare const createPairwiseLiftedOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, PairwiseLiftableState: new <T>(delegate: LiftOperatorIn<C, T, [
+declare const createKeepLiftOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, KeepLiftableState: new <T>(delegate: LiftableStateOf<C, T>, predicate: Predicate<T>) => LiftableStateOf<C, T>) => <T_1>(predicate: Predicate<T_1>) => ContainerOperator<C, T_1, T_1>;
+declare const createMapLiftOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, MapLiftableState: new <TA, TB>(delegate: LiftOperatorIn<C, TA, TB, Lift<C, TVariance>>, mapper: Function1<TA, TB>) => LiftOperatorOut<C, TA, TB, Lift<C, TVariance>>) => <TA_1, TB_1>(mapper: Function1<TA_1, TB_1>) => ContainerOperator<C, TA_1, TB_1>;
+declare const createOnNotifyLiftOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, OnNotifyLiftableState: new <T>(delegate: LiftableStateOf<C, T>, onNotify: SideEffect1<T>) => LiftableStateOf<C, T>) => <T_1>(onNotify: SideEffect1<T_1>) => ContainerOperator<C, T_1, T_1>;
+declare const createPairwiseLiftOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, PairwiseLiftableState: new <T>(delegate: LiftOperatorIn<C, T, [
     Option<T>,
     T
 ], Lift<C, TVariance>>) => LiftOperatorOut<C, T, [
@@ -54,17 +54,17 @@ declare const createPairwiseLiftedOperator: <C extends LiftableLike, TVariance e
     Option<T_1>,
     T_1
 ]>;
-declare const createScanLiftedOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, ScanLiftableState: new <T, TAcc>(delegate: LiftOperatorIn<C, T, TAcc, Lift<C, TVariance>>, reducer: Reducer<T, TAcc>, acc: TAcc) => LiftOperatorOut<C, T, TAcc, Lift<C, TVariance>>) => <T_1, TAcc_1>(reducer: Reducer<T_1, TAcc_1>, initialValue: Factory<TAcc_1>) => ContainerOperator<C, T_1, TAcc_1>;
-declare const createSkipFirstLiftedOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, SkipLiftableState: new <T>(delegate: LiftOperatorIn<C, T, T, Lift<C, TVariance>>, skipCount: number) => LiftOperatorOut<C, T, T, Lift<C, TVariance>>) => <T_1>(options?: {
+declare const createScanLiftOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, ScanLiftableState: new <T, TAcc>(delegate: LiftOperatorIn<C, T, TAcc, Lift<C, TVariance>>, reducer: Reducer<T, TAcc>, acc: TAcc) => LiftOperatorOut<C, T, TAcc, Lift<C, TVariance>>) => <T_1, TAcc_1>(reducer: Reducer<T_1, TAcc_1>, initialValue: Factory<TAcc_1>) => ContainerOperator<C, T_1, TAcc_1>;
+declare const createSkipFirstLiftOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, SkipLiftableState: new <T>(delegate: LiftOperatorIn<C, T, T, Lift<C, TVariance>>, skipCount: number) => LiftOperatorOut<C, T, T, Lift<C, TVariance>>) => <T_1>(options?: {
     readonly count?: number;
 }) => ContainerOperator<C, T_1, T_1>;
-declare const createTakeFirstLiftedOperator: <C extends LiftableLike, TVariance extends Variance>(m: FromArray<C, FromArrayOptions> & Lift<C, TVariance>, TakeFirstLiftableState: new <T>(delegate: LiftOperatorIn<C, T, T, FromArray<C, FromArrayOptions> & Lift<C, TVariance>>, maxCount: number) => LiftOperatorOut<C, T, T, FromArray<C, FromArrayOptions> & Lift<C, TVariance>>) => <T_1>(options?: {
+declare const createTakeFirstLiftOperator: <C extends LiftableLike, TVariance extends Variance>(m: FromArray<C, FromArrayOptions> & Lift<C, TVariance>, TakeFirstLiftableState: new <T>(delegate: LiftOperatorIn<C, T, T, FromArray<C, FromArrayOptions> & Lift<C, TVariance>>, maxCount: number) => LiftOperatorOut<C, T, T, FromArray<C, FromArrayOptions> & Lift<C, TVariance>>) => <T_1>(options?: {
     readonly count?: number;
 }) => ContainerOperator<C, T_1, T_1>;
-declare const createTakeWhileLiftedOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, TakeWhileLiftableState: new <T>(delegate: LiftOperatorIn<C, T, T, Lift<C, TVariance>>, predicate: Predicate<T>, inclusive: boolean) => LiftOperatorOut<C, T, T, Lift<C, TVariance>>) => <T_1>(predicate: Predicate<T_1>, options?: {
+declare const createTakeWhileLiftOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, TakeWhileLiftableState: new <T>(delegate: LiftOperatorIn<C, T, T, Lift<C, TVariance>>, predicate: Predicate<T>, inclusive: boolean) => LiftOperatorOut<C, T, T, Lift<C, TVariance>>) => <T_1>(predicate: Predicate<T_1>, options?: {
     readonly inclusive?: boolean;
 }) => ContainerOperator<C, T_1, T_1>;
-declare const createThrowIfEmptyLiftedOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, ThrowIfEmptyLiftableState: new <T>(delegate: LiftOperatorIn<C, T, T, Lift<C, TVariance>>) => LiftOperatorOut<C, T, T, Lift<C, TVariance>> & {
+declare const createThrowIfEmptyLiftOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, ThrowIfEmptyLiftableState: new <T>(delegate: LiftOperatorIn<C, T, T, Lift<C, TVariance>>) => LiftOperatorOut<C, T, T, Lift<C, TVariance>> & {
     readonly isEmpty: boolean;
 }) => <T_1>(factory: Factory<unknown>) => ContainerOperator<C, T_1, T_1>;
-export { AbstractDisposableLiftable, AbstractLiftable, ContraVariant, Covariant, Lift, LiftOperator, LiftOperatorIn, LiftOperatorOut, LiftableLike, LiftedStateLike, LiftedStateOf, Variance, contraVariant, covariant, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftedOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator, lift };
+export { AbstractDisposableLiftable, AbstractLiftable, ContraVariant, Covariant, Lift, LiftOperator, LiftOperatorIn, LiftOperatorOut, LiftableLike, LiftableStateLike, LiftableStateOf, Variance, contraVariant, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, lift };

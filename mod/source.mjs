@@ -2,7 +2,7 @@
 import { fromValue, empty } from './container.mjs';
 import { addTo, onComplete, dispose, onError, isDisposed, onDisposed, add } from './disposable.mjs';
 import { pipe, compose, negate, ignore, identity } from './functions.mjs';
-import { AbstractLiftable, AbstractDisposableLiftable, lift, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftedOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
+import { AbstractLiftable, AbstractDisposableLiftable, lift, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
 import { none, isSome } from './option.mjs';
 import { forEach } from './readonlyArray.mjs';
 
@@ -74,7 +74,7 @@ const createDistinctUntilChangedOperator = (m, DistinctUntilChangedSink) => {
                 this.delegate.notify(next);
             }
         };
-    return createDistinctUntilChangedLiftedOperator(m, DistinctUntilChangedSink);
+    return createDistinctUntilChangedLiftOperator(m, DistinctUntilChangedSink);
 };
 const createSatisfyOperator = (m, SatisfySink, defaultResult) => {
     SatisfySink.prototype.notify = function notifyEverySatisfy(next) {
@@ -98,7 +98,7 @@ const createKeepOperator = (m, KeepSink) => {
             this.delegate.notify(next);
         }
     };
-    return createKeepLiftedOperator(m, KeepSink);
+    return createKeepLiftOperator(m, KeepSink);
 };
 const createMapOperator = (m, MapSink) => {
     MapSink.prototype.notify = function notifyMap(next) {
@@ -106,7 +106,7 @@ const createMapOperator = (m, MapSink) => {
         const mapped = this.mapper(next);
         this.delegate.notify(mapped);
     };
-    return createMapLiftedOperator(m, MapSink);
+    return createMapLiftOperator(m, MapSink);
 };
 const createOnNotifyOperator = (m, OnNotifySink) => {
     OnNotifySink.prototype.notify = function notifyOnNotify(next) {
@@ -114,7 +114,7 @@ const createOnNotifyOperator = (m, OnNotifySink) => {
         this.onNotify(next);
         this.delegate.notify(next);
     };
-    return createOnNotifyLiftedOperator(m, OnNotifySink);
+    return createOnNotifyLiftOperator(m, OnNotifySink);
 };
 const createPairwiseOperator = (m, PairwiseSink) => {
     PairwiseSink.prototype.notify = function notifyPairwise(value) {
@@ -124,7 +124,7 @@ const createPairwiseOperator = (m, PairwiseSink) => {
         this.prev = value;
         this.delegate.notify([prev, value]);
     };
-    return createPairwiseLiftedOperator(m, PairwiseSink);
+    return createPairwiseLiftOperator(m, PairwiseSink);
 };
 const createReduceOperator = (m, ReduceSink) => {
     ReduceSink.prototype.notify = function notifyReduce(next) {
@@ -145,7 +145,7 @@ const createScanOperator = (m, ScanSink) => {
         this.acc = nextAcc;
         this.delegate.notify(nextAcc);
     };
-    return createScanLiftedOperator(m, ScanSink);
+    return createScanLiftOperator(m, ScanSink);
 };
 const createSkipFirstOperator = (m, SkipFirstSink) => {
     SkipFirstSink.prototype.notify = function notifySkipFirst(next) {
@@ -154,7 +154,7 @@ const createSkipFirstOperator = (m, SkipFirstSink) => {
             this.delegate.notify(next);
         }
     };
-    return createSkipFirstLiftedOperator(m, SkipFirstSink);
+    return createSkipFirstLiftOperator(m, SkipFirstSink);
 };
 const createSomeSatisfyOperator = (m, SomeSatisfySink) => createSatisfyOperator(m, SomeSatisfySink, false);
 const createTakeFirstOperator = (m, TakeFirstSink) => {
@@ -166,7 +166,7 @@ const createTakeFirstOperator = (m, TakeFirstSink) => {
             pipe(this, dispose());
         }
     };
-    return createTakeFirstLiftedOperator(m, TakeFirstSink);
+    return createTakeFirstLiftOperator(m, TakeFirstSink);
 };
 const createTakeLastOperator = (m, TakeLastSink) => {
     TakeLastSink.prototype.notify = function notifyTakeLast(next) {
@@ -201,7 +201,7 @@ const createTakeWhileOperator = (m, TakeWhileSink) => {
             pipe(this, dispose());
         }
     };
-    return createTakeWhileLiftedOperator(m, TakeWhileSink);
+    return createTakeWhileLiftOperator(m, TakeWhileSink);
 };
 const createThrowIfEmptyOperator = (m, ThrowIfEmptySink) => {
     ThrowIfEmptySink.prototype.notify = function notify(next) {
@@ -209,7 +209,7 @@ const createThrowIfEmptyOperator = (m, ThrowIfEmptySink) => {
         this.isEmpty = false;
         this.delegate.notify(next);
     };
-    return createThrowIfEmptyLiftedOperator(m, ThrowIfEmptySink);
+    return createThrowIfEmptyLiftOperator(m, ThrowIfEmptySink);
 };
 const createFromDisposable = (m) => (disposable) => pipe(disposable, addTo, create(m));
 const createNever = (m) => {

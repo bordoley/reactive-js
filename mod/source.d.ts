@@ -1,9 +1,9 @@
 import { Container, ContainerOf, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
 import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
 import { Function1, SideEffect1, Equality, Predicate, Reducer, Factory } from "./functions.mjs";
-import { LiftedStateLike, LiftableLike, Lift as Lift$1, ContraVariant, LiftedStateOf, AbstractLiftable, AbstractDisposableLiftable } from "./liftable.mjs";
+import { LiftableStateLike, LiftableLike, Lift as Lift$1, ContraVariant, LiftableStateOf, AbstractLiftable, AbstractDisposableLiftable } from "./liftable.mjs";
 import { Option } from "./option.mjs";
-interface SinkLike<T> extends LiftedStateLike {
+interface SinkLike<T> extends LiftableStateLike {
     assertState(this: SinkLike<T>): void;
     /**
      * Notifies the the sink of the next notification produced by the observable source.
@@ -16,13 +16,13 @@ interface SinkLike<T> extends LiftedStateLike {
     notify(this: SinkLike<T>, next: T): void;
 }
 interface SourceLike extends LiftableLike {
-    readonly liftedStateType: SinkLike<unknown>;
-    sink(this: this["type"], sink: this["liftedStateType"]): void;
+    readonly liftableStateType: SinkLike<unknown>;
+    sink(this: this["type"], sink: this["liftableStateType"]): void;
 }
 interface Lift<C extends SourceLike> extends Lift$1<C, ContraVariant> {
 }
 interface CreateSource<C extends SourceLike> extends Container<C> {
-    create<T>(onSink: (sink: LiftedStateOf<C, T>) => void): ContainerOf<C, T>;
+    create<T>(onSink: (sink: LiftableStateOf<C, T>) => void): ContainerOf<C, T>;
 }
 declare abstract class AbstractSource<T, TSink extends SinkLike<T>> extends AbstractLiftable<TSink> implements SourceLike {
     abstract sink(this: this, sink: TSink): void;
@@ -30,46 +30,46 @@ declare abstract class AbstractSource<T, TSink extends SinkLike<T>> extends Abst
 declare abstract class AbstractDisposableSource<T, TSink extends SinkLike<T>> extends AbstractDisposableLiftable<TSink> implements SourceLike {
     abstract sink(this: this, sink: TSink): void;
 }
-declare const notify: <C extends SourceLike, T, TSink extends LiftedStateOf<C, T>>(v: T) => Function1<TSink, TSink>;
-declare const notifySink: <C extends SourceLike, T, TSink extends LiftedStateOf<C, T>>(sink: TSink) => SideEffect1<T>;
-declare const sinkInto: <C extends SourceLike, T, TSink extends LiftedStateOf<C, T>>(sink: TSink) => Function1<C, C>;
-declare const sourceFrom: <C extends SourceLike, T, TSink extends LiftedStateOf<C, T>>(source: C) => Function1<TSink, TSink>;
-declare const createCatchErrorOperator: <C extends SourceLike>(m: Lift<C>, CatchErrorSink: new <T>(delegate: LiftedStateOf<C, T>) => LiftedStateOf<C, T> & {
-    readonly delegate: LiftedStateOf<C, T>;
+declare const notify: <C extends SourceLike, T, TSink extends LiftableStateOf<C, T>>(v: T) => Function1<TSink, TSink>;
+declare const notifySink: <C extends SourceLike, T, TSink extends LiftableStateOf<C, T>>(sink: TSink) => SideEffect1<T>;
+declare const sinkInto: <C extends SourceLike, T, TSink extends LiftableStateOf<C, T>>(sink: TSink) => Function1<C, C>;
+declare const sourceFrom: <C extends SourceLike, T, TSink extends LiftableStateOf<C, T>>(source: C) => Function1<TSink, TSink>;
+declare const createCatchErrorOperator: <C extends SourceLike>(m: Lift<C>, CatchErrorSink: new <T>(delegate: LiftableStateOf<C, T>) => LiftableStateOf<C, T> & {
+    readonly delegate: LiftableStateOf<C, T>;
 }) => <T_1>(f: Function1<unknown, void | ContainerOf<C, T_1>>) => ContainerOperator<C, T_1, T_1>;
-declare const createDecodeWithCharsetOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, DecodeWithCharsetSink: new (delegate: LiftedStateOf<C, string>, textDecoder: TextDecoder) => LiftedStateOf<C, ArrayBuffer> & {
-    readonly delegate: LiftedStateOf<C, string>;
+declare const createDecodeWithCharsetOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, DecodeWithCharsetSink: new (delegate: LiftableStateOf<C, string>, textDecoder: TextDecoder) => LiftableStateOf<C, ArrayBuffer> & {
+    readonly delegate: LiftableStateOf<C, string>;
     readonly textDecoder: TextDecoder;
 }) => (charset?: string) => ContainerOperator<C, ArrayBuffer, string>;
-declare const createDistinctUntilChangedOperator: <C extends SourceLike>(m: Lift<C>, DistinctUntilChangedSink: new <T>(delegate: LiftedStateOf<C, T>, equality: Equality<T>) => LiftedStateOf<C, T> & {
-    readonly delegate: LiftedStateOf<C, T>;
+declare const createDistinctUntilChangedOperator: <C extends SourceLike>(m: Lift<C>, DistinctUntilChangedSink: new <T>(delegate: LiftableStateOf<C, T>, equality: Equality<T>) => LiftableStateOf<C, T> & {
+    readonly delegate: LiftableStateOf<C, T>;
     readonly equality: Equality<T>;
     prev: Option<T>;
     hasValue: boolean;
 }) => <T_1>(options?: {
     readonly equality?: Equality<T_1> | undefined;
 } | undefined) => ContainerOperator<C, T_1, T_1>;
-declare const createEverySatisfyOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, EverySatisfySink: new <T>(delegate: LiftedStateOf<C, boolean>, predicate: Predicate<T>) => LiftedStateOf<C, T> & {
-    readonly delegate: LiftedStateOf<C, boolean>;
+declare const createEverySatisfyOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, EverySatisfySink: new <T>(delegate: LiftableStateOf<C, boolean>, predicate: Predicate<T>) => LiftableStateOf<C, T> & {
+    readonly delegate: LiftableStateOf<C, boolean>;
     readonly predicate: Predicate<T>;
 }) => <T_1>(predicate: Predicate<T_1>) => ContainerOperator<C, T_1, boolean>;
-declare const createKeepOperator: <C extends SourceLike>(m: Lift<C>, KeepSink: new <T>(delegate: LiftedStateOf<C, T>, predicate: Predicate<T>) => LiftedStateOf<C, T> & {
-    readonly delegate: LiftedStateOf<C, T>;
+declare const createKeepOperator: <C extends SourceLike>(m: Lift<C>, KeepSink: new <T>(delegate: LiftableStateOf<C, T>, predicate: Predicate<T>) => LiftableStateOf<C, T> & {
+    readonly delegate: LiftableStateOf<C, T>;
     readonly predicate: Predicate<T>;
 }) => <T_1>(predicate: Predicate<T_1>) => ContainerOperator<C, T_1, T_1>;
-declare const createMapOperator: <C extends SourceLike>(m: Lift<C>, MapSink: new <TA, TB>(delegate: LiftedStateOf<C, TB>, mapper: Function1<TA, TB>) => LiftedStateOf<C, TA> & {
-    readonly delegate: LiftedStateOf<C, TB>;
+declare const createMapOperator: <C extends SourceLike>(m: Lift<C>, MapSink: new <TA, TB>(delegate: LiftableStateOf<C, TB>, mapper: Function1<TA, TB>) => LiftableStateOf<C, TA> & {
+    readonly delegate: LiftableStateOf<C, TB>;
     readonly mapper: Function1<TA, TB>;
 }) => <TA_1, TB_1>(mapper: Function1<TA_1, TB_1>) => ContainerOperator<C, TA_1, TB_1>;
-declare const createOnNotifyOperator: <C extends SourceLike>(m: Lift<C>, OnNotifySink: new <T>(delegate: LiftedStateOf<C, T>, onNotify: SideEffect1<T>) => LiftedStateOf<C, T> & {
-    readonly delegate: LiftedStateOf<C, T>;
+declare const createOnNotifyOperator: <C extends SourceLike>(m: Lift<C>, OnNotifySink: new <T>(delegate: LiftableStateOf<C, T>, onNotify: SideEffect1<T>) => LiftableStateOf<C, T> & {
+    readonly delegate: LiftableStateOf<C, T>;
     readonly onNotify: SideEffect1<T>;
 }) => <T_1>(onNotify: SideEffect1<T_1>) => ContainerOperator<C, T_1, T_1>;
-declare const createPairwiseOperator: <C extends SourceLike>(m: Lift<C>, PairwiseSink: new <T>(delegate: LiftedStateOf<C, [
+declare const createPairwiseOperator: <C extends SourceLike>(m: Lift<C>, PairwiseSink: new <T>(delegate: LiftableStateOf<C, [
     Option<T>,
     T
-]>) => LiftedStateOf<C, T> & {
-    readonly delegate: LiftedStateOf<C, [
+]>) => LiftableStateOf<C, T> & {
+    readonly delegate: LiftableStateOf<C, [
         Option<T>,
         T
     ]>;
@@ -79,48 +79,48 @@ declare const createPairwiseOperator: <C extends SourceLike>(m: Lift<C>, Pairwis
     Option<T_1>,
     T_1
 ]>;
-declare const createReduceOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, ReduceSink: new <T, TAcc>(delegate: LiftedStateOf<C, TAcc>, reducer: Reducer<T, TAcc>, acc: TAcc) => LiftedStateOf<C, T> & {
+declare const createReduceOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, ReduceSink: new <T, TAcc>(delegate: LiftableStateOf<C, TAcc>, reducer: Reducer<T, TAcc>, acc: TAcc) => LiftableStateOf<C, T> & {
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
 }) => <T_1, TAcc_1>(reducer: Reducer<T_1, TAcc_1>, initialValue: Factory<TAcc_1>) => ContainerOperator<C, T_1, TAcc_1>;
-declare const createScanOperator: <C extends SourceLike>(m: Lift<C>, ScanSink: new <T, TAcc>(delegate: LiftedStateOf<C, TAcc>, reducer: Reducer<T, TAcc>, acc: TAcc) => LiftedStateOf<C, T> & {
-    readonly delegate: LiftedStateOf<C, TAcc>;
+declare const createScanOperator: <C extends SourceLike>(m: Lift<C>, ScanSink: new <T, TAcc>(delegate: LiftableStateOf<C, TAcc>, reducer: Reducer<T, TAcc>, acc: TAcc) => LiftableStateOf<C, T> & {
+    readonly delegate: LiftableStateOf<C, TAcc>;
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
 }) => <T_1, TAcc_1>(reducer: Reducer<T_1, TAcc_1>, initialValue: Factory<TAcc_1>) => ContainerOperator<C, T_1, TAcc_1>;
-declare const createSkipFirstOperator: <C extends SourceLike>(m: Lift<C>, SkipFirstSink: new <T>(delegate: LiftedStateOf<C, T>, skipCount: number) => LiftedStateOf<C, T> & {
-    readonly delegate: LiftedStateOf<C, T>;
+declare const createSkipFirstOperator: <C extends SourceLike>(m: Lift<C>, SkipFirstSink: new <T>(delegate: LiftableStateOf<C, T>, skipCount: number) => LiftableStateOf<C, T> & {
+    readonly delegate: LiftableStateOf<C, T>;
     count: number;
     readonly skipCount: number;
 }) => <T_1>(options?: {
     readonly count?: number;
 }) => ContainerOperator<C, T_1, T_1>;
-declare const createSomeSatisfyOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, SomeSatisfySink: new <T>(delegate: LiftedStateOf<C, boolean>, predicate: Predicate<T>) => LiftedStateOf<C, T> & {
-    readonly delegate: LiftedStateOf<C, boolean>;
+declare const createSomeSatisfyOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, SomeSatisfySink: new <T>(delegate: LiftableStateOf<C, boolean>, predicate: Predicate<T>) => LiftableStateOf<C, T> & {
+    readonly delegate: LiftableStateOf<C, boolean>;
     readonly predicate: Predicate<T>;
 }) => <T_1>(predicate: Predicate<T_1>) => ContainerOperator<C, T_1, boolean>;
-declare const createTakeFirstOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, TakeFirstSink: new <T>(delegate: LiftedStateOf<C, T>, maxCount: number) => LiftedStateOf<C, T> & {
-    readonly delegate: LiftedStateOf<C, T>;
+declare const createTakeFirstOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, TakeFirstSink: new <T>(delegate: LiftableStateOf<C, T>, maxCount: number) => LiftableStateOf<C, T> & {
+    readonly delegate: LiftableStateOf<C, T>;
     count: number;
     readonly maxCount: number;
 }) => <T_1>(options?: {
     readonly count?: number;
 }) => ContainerOperator<C, T_1, T_1>;
-declare const createTakeLastOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, TakeLastSink: new <T>(delegate: LiftedStateOf<C, T>, maxCount: number) => LiftedStateOf<C, T> & {
+declare const createTakeLastOperator: <C extends SourceLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, TakeLastSink: new <T>(delegate: LiftableStateOf<C, T>, maxCount: number) => LiftableStateOf<C, T> & {
     readonly last: T[];
     readonly maxCount: number;
 }) => <T_1>(options?: {
     readonly count?: number;
 }) => ContainerOperator<C, T_1, T_1>;
-declare const createTakeWhileOperator: <C extends SourceLike>(m: Lift<C>, TakeWhileSink: new <T>(delegate: LiftedStateOf<C, T>, predicate: Predicate<T>, inclusive: boolean) => LiftedStateOf<C, T> & {
-    readonly delegate: LiftedStateOf<C, T>;
+declare const createTakeWhileOperator: <C extends SourceLike>(m: Lift<C>, TakeWhileSink: new <T>(delegate: LiftableStateOf<C, T>, predicate: Predicate<T>, inclusive: boolean) => LiftableStateOf<C, T> & {
+    readonly delegate: LiftableStateOf<C, T>;
     readonly predicate: Predicate<T>;
     readonly inclusive: boolean;
 }) => <T_1>(predicate: Predicate<T_1>, options?: {
     readonly inclusive?: boolean;
 }) => ContainerOperator<C, T_1, T_1>;
-declare const createThrowIfEmptyOperator: <C extends SourceLike>(m: Lift<C>, ThrowIfEmptySink: new <T>(delegate: LiftedStateOf<C, T>) => LiftedStateOf<C, T> & {
-    readonly delegate: LiftedStateOf<C, T>;
+declare const createThrowIfEmptyOperator: <C extends SourceLike>(m: Lift<C>, ThrowIfEmptySink: new <T>(delegate: LiftableStateOf<C, T>) => LiftableStateOf<C, T> & {
+    readonly delegate: LiftableStateOf<C, T>;
     isEmpty: boolean;
 }) => <T_1>(factory: Factory<unknown>) => ContainerOperator<C, T_1, T_1>;
 declare const createFromDisposable: <C extends SourceLike>(m: CreateSource<C>) => <T>(disposable: DisposableLike) => ContainerOf<C, T>;

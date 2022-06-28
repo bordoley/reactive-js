@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TState` | extends [`LiftedStateLike`](../interfaces/liftable.LiftedStateLike.md) |
+| `TState` | extends [`LiftableStateLike`](../interfaces/liftable.LiftableStateLike.md) |
 
 ## Hierarchy
 
@@ -31,7 +31,7 @@
 ### Accessors
 
 - [T](liftable.AbstractDisposableLiftable.md#t)
-- [liftedStateType](liftable.AbstractDisposableLiftable.md#liftedstatetype)
+- [liftableStateType](liftable.AbstractDisposableLiftable.md#liftablestatetype)
 - [type](liftable.AbstractDisposableLiftable.md#type)
 
 ## Constructors
@@ -44,7 +44,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TState` | extends [`LiftedStateLike`](../interfaces/liftable.LiftedStateLike.md)<`TState`\> |
+| `TState` | extends [`LiftableStateLike`](../interfaces/liftable.LiftableStateLike.md)<`TState`\> |
 
 #### Inherited from
 
@@ -70,9 +70,9 @@ AbstractDisposableContainer.T
 
 ___
 
-### liftedStateType
+### liftableStateType
 
-• `get` **liftedStateType**(): `TState`
+• `get` **liftableStateType**(): `TState`
 
 #### Returns
 
@@ -80,7 +80,7 @@ ___
 
 #### Implementation of
 
-[LiftableLike](../interfaces/liftable.LiftableLike.md).[liftedStateType](../interfaces/liftable.LiftableLike.md#liftedstatetype)
+[LiftableLike](../interfaces/liftable.LiftableLike.md).[liftableStateType](../interfaces/liftable.LiftableLike.md#liftablestatetype)
 
 ___
 

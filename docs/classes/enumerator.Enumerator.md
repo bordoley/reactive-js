@@ -24,7 +24,7 @@
 
 ## Implements
 
-- [`LiftedStateLike`](../interfaces/liftable.LiftedStateLike.md)
+- [`LiftableStateLike`](../interfaces/liftable.LiftableStateLike.md)
 
 ## Table of contents
 
@@ -71,7 +71,7 @@
 
 #### Implementation of
 
-[LiftedStateLike](../interfaces/liftable.LiftedStateLike.md).[T](../interfaces/liftable.LiftedStateLike.md#t)
+[LiftableStateLike](../interfaces/liftable.LiftableStateLike.md).[T](../interfaces/liftable.LiftableStateLike.md#t)
 
 #### Inherited from
 
@@ -109,7 +109,7 @@ ___
 
 #### Implementation of
 
-[LiftedStateLike](../interfaces/liftable.LiftedStateLike.md).[type](../interfaces/liftable.LiftedStateLike.md#type)
+[LiftableStateLike](../interfaces/liftable.LiftableStateLike.md).[type](../interfaces/liftable.LiftableStateLike.md#type)
 
 #### Inherited from
 
