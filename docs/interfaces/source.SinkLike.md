@@ -19,7 +19,7 @@
 ## Implemented by
 
 - [`Observer`](../classes/observer.Observer.md)
-- [`Sink`](../classes/runnable.Sink.md)
+- [`RunnableSink`](../classes/runnableSink.RunnableSink.md)
 
 ## Table of contents
 

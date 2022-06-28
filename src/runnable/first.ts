@@ -2,10 +2,10 @@ import { dispose } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { Option, none } from "../option";
 import { RunnableLike } from "../runnable";
+import { RunnableSink } from "../runnableSink";
 import { run } from "./run";
-import { Sink } from "./sinks";
 
-class FirstSink<T> extends Sink<T> {
+class FirstSink<T> extends RunnableSink<T> {
   result: Option<T> = none;
 
   notify(next: T) {

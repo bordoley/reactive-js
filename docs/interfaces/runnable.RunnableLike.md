@@ -42,7 +42,7 @@ ___
 
 ### liftedStateType
 
-• `Readonly` **liftedStateType**: [`Sink`](../classes/runnable.Sink.md)<`unknown`\>
+• `Readonly` **liftedStateType**: [`RunnableSink`](../classes/runnableSink.RunnableSink.md)<`unknown`\>
 
 #### Overrides
 
@@ -69,7 +69,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `this` | [`RunnableLike`](runnable.RunnableLike.md)<[`T`](runnable.RunnableLike.md#t)\> |
-| `sink` | [`Sink`](../classes/runnable.Sink.md)<[`T`](runnable.RunnableLike.md#t)\> |
+| `sink` | [`RunnableSink`](../classes/runnableSink.RunnableSink.md)<[`T`](runnable.RunnableLike.md#t)\> |
 
 #### Returns
 

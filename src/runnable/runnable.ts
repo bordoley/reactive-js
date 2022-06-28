@@ -1,7 +1,7 @@
 import { RunnableLike } from "../runnable";
+import { RunnableSink } from "../runnableSink";
 import { AbstractSource } from "../source";
-import { Sink } from "./sinks";
 
 export abstract class AbstractRunnable<T>
-  extends AbstractSource<T, Sink<T>>
+  extends AbstractSource<T, RunnableSink<T>>
   implements RunnableLike<T> {}

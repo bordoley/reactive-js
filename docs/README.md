@@ -21,6 +21,7 @@ Reactive-JS
 - [react](modules/react.md)
 - [readonlyArray](modules/readonlyArray.md)
 - [runnable](modules/runnable.md)
+- [runnableSink](modules/runnableSink.md)
 - [scheduler](modules/scheduler.md)
 - [sequence](modules/sequence.md)
 - [source](modules/source.md)

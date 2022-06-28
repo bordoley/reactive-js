@@ -2,12 +2,12 @@ import { dispose } from "../disposable";
 import { pipe, raise } from "../functions";
 import { isSome } from "../option";
 import { RunnableLike } from "../runnable";
+import { RunnableSink } from "../runnableSink";
 import { sourceFrom } from "../source";
-import { Sink } from "./sinks";
 
 export const run =
   <T, TResult>(
-    f: () => Sink<T> & {
+    f: () => RunnableSink<T> & {
       readonly result: TResult;
     },
   ) =>

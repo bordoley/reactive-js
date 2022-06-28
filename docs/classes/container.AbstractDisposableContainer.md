@@ -16,7 +16,7 @@
 
   ↳↳ [`Observer`](observer.Observer.md)
 
-  ↳↳ [`Sink`](runnable.Sink.md)
+  ↳↳ [`RunnableSink`](runnableSink.RunnableSink.md)
 
 ## Implements
 

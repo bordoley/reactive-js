@@ -1,9 +1,9 @@
 import { Function1, SideEffect1 } from "../functions";
 import { RunnableLike } from "../runnable";
+import { RunnableSink } from "../runnableSink";
 import { run } from "./run";
-import { Sink } from "./sinks";
 
-class ForEachSink<T> extends Sink<T> {
+class ForEachSink<T> extends RunnableSink<T> {
   result: void = undefined;
 
   constructor(readonly notify: SideEffect1<T>) {
