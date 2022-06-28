@@ -1,13 +1,13 @@
-import { AbstractDisposable, add, dispose, isDisposed } from "../disposable";
+import { add, dispose, isDisposed } from "../disposable";
+import { AbstractEnumerator, hasCurrent } from "../enumerator";
 import { pipe } from "../functions";
 import { isSome, none } from "../option";
 import {
   SchedulerContinuationLike,
-  SchedulerLike,
   VirtualTimeSchedulerLike,
 } from "../scheduler";
 import { PriorityQueueLike, createPriorityQueue } from "./priorityQueue";
-import { run } from "./schedulerContinuation";
+import { SchedulerImplementation, runContinuation } from "./scheduler";
 
 type VirtualTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -22,45 +22,22 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
   return diff;
 };
 
-const move = (scheduler: VirtualTimeSchedulerImpl) => {
-  const taskQueue = scheduler.taskQueue;
-
-  scheduler.hasCurrent = false;
-
-  if (!isDisposed(scheduler)) {
-    const task = taskQueue.pop();
-
-    if (isSome(task)) {
-      const { dueTime, continuation } = task;
-
-      scheduler.current = continuation;
-      scheduler.hasCurrent = true;
-      scheduler.microTaskTicks = 0;
-      scheduler.now = dueTime;
-    } else {
-      pipe(scheduler, dispose());
-    }
-  }
-
-  return scheduler.hasCurrent;
-};
-
 class VirtualTimeSchedulerImpl
-  extends AbstractDisposable
-  implements SchedulerLike
+  extends AbstractEnumerator<void>
+  implements SchedulerImplementation, VirtualTimeSchedulerLike
 {
-  current: SchedulerContinuationLike = none as any;
-  hasCurrent = false;
   inContinuation = false;
-  microTaskTicks = 0;
+  private microTaskTicks = 0;
   now = 0;
   private taskIDCount = 0;
   private yieldRequested = false;
 
-  readonly taskQueue: PriorityQueueLike<VirtualTask> =
+  private readonly taskQueue: PriorityQueueLike<VirtualTask> =
     createPriorityQueue(comparator);
 
-  constructor(private readonly maxMicroTaskTicks: number) {
+  constructor(
+    private readonly maxMicroTaskTicks: number = Number.MAX_SAFE_INTEGER,
+  ) {
     super();
   }
 
@@ -78,18 +55,32 @@ class VirtualTimeSchedulerImpl
     );
   }
 
-  requestYield(): void {
-    this.yieldRequested = true;
-  }
+  move(): boolean {
+    const taskQueue = this.taskQueue;
 
-  run() {
-    while (!isDisposed(this) && move(this)) {
-      this.inContinuation = true;
-      run(this.current);
-      this.inContinuation = false;
+    this.reset();
+
+    if (!isDisposed(this)) {
+      const task = taskQueue.pop();
+
+      if (isSome(task)) {
+        const { dueTime, continuation } = task;
+
+        this.microTaskTicks = 0;
+        this.now = dueTime;
+        this.current = none;
+
+        pipe(this, runContinuation(continuation));
+      } else {
+        pipe(this, dispose());
+      }
     }
 
-    pipe(this, dispose());
+    return hasCurrent(this);
+  }
+
+  requestYield(): void {
+    this.yieldRequested = true;
   }
 
   schedule(
@@ -101,12 +92,11 @@ class VirtualTimeSchedulerImpl
     pipe(this, add(continuation, true));
 
     if (!isDisposed(continuation)) {
-      const work: VirtualTask = {
+      this.taskQueue.push({
         id: this.taskIDCount++,
         dueTime: this.now + delay,
         continuation,
-      };
-      this.taskQueue.push(work);
+      });
     }
   }
 }

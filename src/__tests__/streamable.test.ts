@@ -7,8 +7,10 @@ import {
   startWith,
 } from "../container";
 import { Error, dispose, isDisposed, onDisposed } from "../disposable";
+import { forEach } from "../enumerator";
 import {
   defer,
+  ignore,
   increment,
   incrementBy,
   pipe,
@@ -115,7 +117,7 @@ export const tests = describe(
       subscribe(scheduler),
     );
 
-    scheduler.run();
+    pipe(scheduler, forEach(ignore));
 
     pipe(result, expectArrayEquals([0, 1, 3]));
   }),
@@ -136,7 +138,8 @@ export const tests = describe(
         }),
         subscribe(scheduler),
       );
-      scheduler.run();
+
+      pipe(scheduler, forEach(ignore));
 
       pipe(result, expectArrayEquals([]));
       pipe(emptyStream, isDisposed, expectTrue);
@@ -184,7 +187,7 @@ export const tests = describe(
       subscribe(scheduler),
     );
 
-    scheduler.run();
+    pipe(scheduler, forEach(ignore));
 
     pipe(result, expectArrayEquals([110, 120, 130]));
     pipe(subscription, isDisposed, expectTrue);
@@ -210,7 +213,7 @@ export const tests = describe(
 
     pipe(notifyStream, isDisposed, expectTrue);
 
-    scheduler.run();
+    pipe(scheduler, forEach(ignore));
 
     pipe(result, expectArrayEquals([1, 2, 3]));
   }),
@@ -232,7 +235,7 @@ export const tests = describe(
     scanStream.dispatch(2);
     scanStream.dispatch(3);
 
-    scheduler.run();
+    pipe(scheduler, forEach(ignore));
 
     pipe(result, expectArrayEquals([1, 3, 6]));
   }),
@@ -257,7 +260,7 @@ export const tests = describe(
     const subscription = pipe(src, sinkInto(dest), subscribe(scheduler));
     pipe(subscription, isDisposed, expectFalse);
 
-    scheduler.run();
+    pipe(scheduler, forEach(ignore));
 
     pipe(subscription, isDisposed, expectTrue);
     pipe(result, expectEquals(3));
@@ -273,7 +276,8 @@ export const tests = describe(
 
       const f = mockFn();
       const subscription = pipe(emptyStream, onNotify(f), subscribe(scheduler));
-      scheduler.run();
+
+      pipe(scheduler, forEach(ignore));
 
       pipe(f, expectToHaveBeenCalledTimes(0));
       pipe(subscription, isDisposed, expectTrue);
@@ -314,7 +318,7 @@ export const tests = describe(
         subscribe(scheduler),
       );
 
-      scheduler.run();
+      pipe(scheduler, forEach(ignore));
 
       pipe(f, expectToHaveBeenCalledTimes(3));
       pipe(f.calls[0][1], expectEquals(0));
@@ -338,7 +342,7 @@ export const tests = describe(
         subscribe(scheduler),
       );
 
-      scheduler.run();
+      pipe(scheduler, forEach(ignore));
 
       pipe(f, expectToHaveBeenCalledTimes(1));
       pipe(f.calls[0][0], expectEquals(1));
@@ -371,7 +375,7 @@ export const tests = describe(
       const f = mockFn();
       pipe(dest, onNotify(f), subscribe(scheduler));
 
-      scheduler.run();
+      pipe(scheduler, forEach(ignore));
 
       pipe(f, expectToHaveBeenCalledTimes(1));
       pipe(f.calls[0][0], expectEquals(String.fromCodePoint(8364)));
@@ -390,7 +394,8 @@ export const tests = describe(
 
       const f = mockFn();
       const subscription = pipe(emptyStream, onNotify(f), subscribe(scheduler));
-      scheduler.run();
+
+      pipe(scheduler, forEach(ignore));
 
       pipe(f, expectToHaveBeenCalledTimes(0));
       pipe(subscription, isDisposed, expectTrue);
@@ -417,7 +422,7 @@ export const tests = describe(
 
       const f = mockFn();
       pipe(dest, onNotify(f), subscribe(scheduler));
-      scheduler.run();
+      pipe(scheduler, forEach(ignore));
 
       pipe(f, expectToHaveBeenCalledTimes(1));
       pipe(f.calls[0][0], expectEquals(str));
@@ -441,7 +446,7 @@ export const tests = describe(
         subscribe(scheduler),
       );
 
-      scheduler.run();
+      pipe(scheduler, forEach(ignore));
 
       pipe(f, expectToHaveBeenCalledTimes(1));
       pipe(f.calls[0][0], expectEquals(1));
@@ -459,7 +464,8 @@ export const tests = describe(
 
       const f = mockFn();
       pipe(dest, onNotify(f), subscribe(scheduler));
-      scheduler.run();
+
+      pipe(scheduler, forEach(ignore));
 
       pipe(f, expectToHaveBeenCalledTimes(1));
       pipe(f.calls[0][0], expectEquals(2));
@@ -483,7 +489,7 @@ export const tests = describe(
     enumerator.dispatch(none);
     enumerator.dispatch(none);
 
-    scheduler.run();
+    pipe(scheduler, forEach(ignore));
 
     pipe(result, expectArrayEquals([1, 2, 3]));
   }),
@@ -515,7 +521,7 @@ export const tests = describe(
     enumerator.dispatch(none);
     enumerator.dispatch(none);
 
-    scheduler.run();
+    pipe(scheduler, forEach(ignore));
 
     pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
     pipe(error, expectNone);
@@ -539,7 +545,7 @@ export const tests = describe(
     enumerator.dispatch(none);
     enumerator.dispatch(none);
 
-    scheduler.run();
+    pipe(scheduler, forEach(ignore));
 
     pipe(result, expectArrayEquals([1, 2, 3]));
   }),

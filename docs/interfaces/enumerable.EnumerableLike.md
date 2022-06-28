@@ -48,7 +48,7 @@ ___
 
 ### liftedStateType
 
-• `Readonly` **liftedStateType**: [`Enumerator`](../classes/enumerable.Enumerator.md)<`unknown`\>
+• `Readonly` **liftedStateType**: [`Enumerator`](../classes/enumerator.Enumerator.md)<`unknown`\>
 
 #### Overrides
 
@@ -68,7 +68,7 @@ ___
 
 ### enumerate
 
-▸ **enumerate**(`this`): [`Enumerator`](../classes/enumerable.Enumerator.md)<[`T`](enumerable.EnumerableLike.md#t)\>
+▸ **enumerate**(`this`): [`Enumerator`](../classes/enumerator.Enumerator.md)<[`T`](enumerable.EnumerableLike.md#t)\>
 
 Returns an `EnumeratorLike` to iterate through the Container.
 
@@ -80,4 +80,4 @@ Returns an `EnumeratorLike` to iterate through the Container.
 
 #### Returns
 
-[`Enumerator`](../classes/enumerable.Enumerator.md)<[`T`](enumerable.EnumerableLike.md#t)\>
+[`Enumerator`](../classes/enumerator.Enumerator.md)<[`T`](enumerable.EnumerableLike.md#t)\>

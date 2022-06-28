@@ -1,5 +1,6 @@
 import { dispose } from "../disposable";
-import { EnumerableLike, Enumerator, enumerate } from "../enumerable";
+import { EnumerableLike, enumerate } from "../enumerable";
+import { Enumerator, current, move } from "../enumerator";
 import { Factory, Function1, defer, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { __yield } from "../scheduler";
@@ -21,8 +22,8 @@ export const fromEnumerator =
     const result = using(f, enumerator =>
       deferObs(
         () => (observer: Observer<T>) => {
-          while (enumerator.move()) {
-            observer.notify(enumerator.current);
+          while (move(enumerator)) {
+            observer.notify(current(enumerator));
             __yield(options);
           }
           pipe(observer, dispose());

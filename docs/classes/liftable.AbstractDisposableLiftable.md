@@ -44,7 +44,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TState` | extends [`LiftedStateLike`](../interfaces/liftable.LiftedStateLike.md) |
+| `TState` | extends [`LiftedStateLike`](../interfaces/liftable.LiftedStateLike.md)<`TState`\> |
 
 #### Inherited from
 

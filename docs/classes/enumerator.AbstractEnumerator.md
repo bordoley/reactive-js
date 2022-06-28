@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [enumerable](../modules/enumerable.md) / AbstractEnumerator
+[Reactive-JS](../README.md) / [enumerator](../modules/enumerator.md) / AbstractEnumerator
 
 # Class: AbstractEnumerator<T\>
 
-[enumerable](../modules/enumerable.md).AbstractEnumerator
+[enumerator](../modules/enumerator.md).AbstractEnumerator
 
 ## Type parameters
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`Enumerator`](enumerable.Enumerator.md)<`T`\>
+- [`Enumerator`](enumerator.Enumerator.md)<`T`\>
 
   ↳ **`AbstractEnumerator`**
 
@@ -20,19 +20,19 @@
 
 ### Constructors
 
-- [constructor](enumerable.AbstractEnumerator.md#constructor)
+- [constructor](enumerator.AbstractEnumerator.md#constructor)
 
 ### Accessors
 
-- [T](enumerable.AbstractEnumerator.md#t)
-- [current](enumerable.AbstractEnumerator.md#current)
-- [hasCurrent](enumerable.AbstractEnumerator.md#hascurrent)
-- [type](enumerable.AbstractEnumerator.md#type)
+- [T](enumerator.AbstractEnumerator.md#t)
+- [current](enumerator.AbstractEnumerator.md#current)
+- [hasCurrent](enumerator.AbstractEnumerator.md#hascurrent)
+- [type](enumerator.AbstractEnumerator.md#type)
 
 ### Methods
 
-- [move](enumerable.AbstractEnumerator.md#move)
-- [reset](enumerable.AbstractEnumerator.md#reset)
+- [move](enumerator.AbstractEnumerator.md#move)
+- [reset](enumerator.AbstractEnumerator.md#reset)
 
 ## Constructors
 
@@ -48,7 +48,7 @@
 
 #### Overrides
 
-[Enumerator](enumerable.Enumerator.md).[constructor](enumerable.Enumerator.md#constructor)
+[Enumerator](enumerator.Enumerator.md).[constructor](enumerator.Enumerator.md#constructor)
 
 ## Accessors
 
@@ -134,7 +134,7 @@ Enumerator.type
 
 #### Overrides
 
-[Enumerator](enumerable.Enumerator.md).[move](enumerable.Enumerator.md#move)
+[Enumerator](enumerator.Enumerator.md).[move](enumerator.Enumerator.md#move)
 
 ___
 

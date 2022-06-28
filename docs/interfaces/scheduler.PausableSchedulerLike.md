@@ -95,7 +95,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DisposableLike`](disposable.DisposableLike.md) |
+| `this` | [`PausableSchedulerLike`](scheduler.PausableSchedulerLike.md) |
 | `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
 | `ignoreChildErrors` | `boolean` |
 
@@ -160,7 +160,7 @@ Request the scheduler to yield.
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`SchedulerLike`](scheduler.SchedulerLike.md) |
+| `this` | [`PausableSchedulerLike`](scheduler.PausableSchedulerLike.md) |
 
 #### Returns
 
@@ -198,7 +198,7 @@ Schedules a continuation to be executed on the scheduler.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `this` | [`SchedulerLike`](scheduler.SchedulerLike.md) | - |
+| `this` | [`PausableSchedulerLike`](scheduler.PausableSchedulerLike.md) | - |
 | `continuation` | [`SchedulerContinuationLike`](scheduler.SchedulerContinuationLike.md) | The SchedulerContinuation to be executed. |
 | `options?` | `Object` | - |
 | `options.delay?` | `number` | - |

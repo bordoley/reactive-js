@@ -1,31 +1,14 @@
-import { AbstractDisposableContainer, ConcatAll, FromArray, FromArrayOptions, FromIterator, FromIterable, Generate, Repeat, TakeLast, Zip, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
+import { ConcatAll, FromArray, FromArrayOptions, FromIterator, FromIterable, Generate, Repeat, TakeLast, Zip, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
+import { Enumerator } from "./enumerator.mjs";
 import { Factory, Function1, Updater, Predicate, Equality, SideEffect1, Reducer } from "./functions.mjs";
-import { LiftedStateLike, AbstractLiftable, LiftableLike } from "./liftable.mjs";
+import { AbstractLiftable, LiftableLike } from "./liftable.mjs";
 import { Option } from "./option.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
-declare abstract class Enumerator<T> extends AbstractDisposableContainer implements LiftedStateLike {
-    abstract get current(): T;
-    abstract get hasCurrent(): boolean;
-    abstract move(): boolean;
-}
-declare abstract class AbstractEnumerator<T> extends Enumerator<T> {
-    private _current;
-    private _hasCurrent;
-    constructor();
-    get current(): T;
-    set current(v: T);
-    get hasCurrent(): boolean;
-    reset(): void;
-    abstract move(): boolean;
-}
-declare const enumerate: <T>(enumerable: EnumerableLike<T>) => Enumerator<T>;
-declare const current: <T>(enumerator: Enumerator<T>) => T;
-declare const hasCurrent: <T>(enumerator: Enumerator<T>) => boolean;
-declare const move: <T>(enumerator: Enumerator<T>) => boolean;
 declare abstract class AbstractEnumerable<T> extends AbstractLiftable<Enumerator<T>> implements EnumerableLike<T> {
     abstract enumerate(this: EnumerableLike<T>): Enumerator<T>;
 }
 declare const createEnumerable: <T>(enumerate: Factory<Enumerator<T>>) => EnumerableLike<T>;
+declare const enumerate: <T>(enumerable: EnumerableLike<T>) => Enumerator<T>;
 /**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
  */
@@ -97,7 +80,6 @@ declare const toRunnableT: ToRunnable<EnumerableLike<unknown>>;
  * Converts an EnumerableLike into a javascript Iterable.
  */
 declare const toIterable: <T>() => Function1<EnumerableLike<T>, Iterable<T>>;
-declare const zipEnumerators: <T>(enumerators: readonly Enumerator<T>[]) => Enumerator<readonly T[]>;
 declare const zip: Zip<EnumerableLike<unknown>>["zip"];
 declare const zipT: Zip<EnumerableLike<unknown>>;
 /**
@@ -156,4 +138,4 @@ declare const throwIfEmpty: <T>(factory: Factory<unknown>) => EnumerableOperator
 declare const throwIfEmptyT: ThrowIfEmpty<EnumerableLike<unknown>>;
 declare const using: Using<EnumerableLike<unknown>>["using"];
 declare const usingT: Using<EnumerableLike<unknown>>;
-export { AbstractEnumerable, AbstractEnumerator, EnumerableLike, EnumerableOperator, Enumerator, ToEnumerable, concat, concatAll, concatAllT, concatT, createEnumerable, current, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, hasCurrent, keep, keepT, map, mapT, move, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, toRunnableT, type, using, usingT, zip, zipEnumerators, zipT };
+export { AbstractEnumerable, EnumerableLike, EnumerableOperator, ToEnumerable, concat, concatAll, concatAllT, concatT, createEnumerable, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, toRunnableT, type, using, usingT, zip, zipT };

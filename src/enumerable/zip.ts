@@ -1,56 +1,9 @@
 import { Zip } from "../container";
-import { addTo, dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
+import { zip as zipEnumerators } from "../enumerator";
 import { pipe } from "../functions";
-import { everySatisfy, forEach, map } from "../readonlyArray";
-import { createEnumerable } from "./enumerable";
-import {
-  AbstractEnumerator,
-  Enumerator,
-  current,
-  enumerate,
-  hasCurrent,
-} from "./enumerator";
-
-const moveAll = (enumerators: readonly Enumerator<any>[]) => {
-  for (const enumerator of enumerators) {
-    enumerator.move();
-  }
-};
-
-const allHaveCurrent = (enumerators: readonly Enumerator<any>[]) =>
-  pipe(enumerators, everySatisfy(hasCurrent));
-
-class ZipEnumerator<T> extends AbstractEnumerator<readonly T[]> {
-  constructor(private readonly enumerators: readonly Enumerator<T>[]) {
-    super();
-  }
-
-  move(): boolean {
-    this.reset();
-
-    if (!isDisposed(this)) {
-      const { enumerators } = this;
-      moveAll(enumerators);
-
-      if (allHaveCurrent(enumerators)) {
-        this.current = pipe(enumerators, map(current));
-      } else {
-        pipe(this, dispose());
-      }
-    }
-
-    return this.hasCurrent;
-  }
-}
-
-export const zipEnumerators = <T>(
-  enumerators: readonly Enumerator<T>[],
-): Enumerator<readonly T[]> => {
-  const enumerator = new ZipEnumerator(enumerators);
-  pipe(enumerators, forEach(addTo(enumerator)));
-  return enumerator;
-};
+import { map } from "../readonlyArray";
+import { createEnumerable, enumerate } from "./enumerable";
 
 /**
  * Combines multiple EnumerableLikes to create an EnumerableLike whose values are calculated from the values,

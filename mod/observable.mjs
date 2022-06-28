@@ -1,14 +1,15 @@
 /// <reference types="./observable.d.ts" />
 import { AbstractDisposableContainer, empty, fromValue, throws, concatMap } from './container.mjs';
 import { dispose, isDisposed, onDisposed, add, addTo, onComplete, AbstractDisposable, disposed, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
+import { move, current, AbstractEnumerator, hasCurrent, zip as zip$1, forEach } from './enumerator.mjs';
 import { pipe, raise, arrayEquality, ignore, defer as defer$1, compose, returns } from './functions.mjs';
 import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, notifySink, createUsing, notify, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
-import { schedule, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
+import { schedule, __yield, runContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { createRunnable } from './runnable.mjs';
 import { map as map$1, everySatisfy as everySatisfy$1 } from './readonlyArray.mjs';
-import { enumerate as enumerate$1, fromIterator as fromIterator$1, fromIterable as fromIterable$1, AbstractEnumerator, createEnumerable, current, zipEnumerators } from './enumerable.mjs';
+import { enumerate, fromIterator as fromIterator$1, fromIterable as fromIterable$1, createEnumerable } from './enumerable.mjs';
 
 class AbstractObservable extends AbstractSource {
 }
@@ -675,8 +676,8 @@ const concatT = {
 const fromEnumerator = (options = {}) => f => {
     var _a;
     const result = using(f, enumerator => defer(() => (observer) => {
-        while (enumerator.move()) {
-            observer.notify(enumerator.current);
+        while (move(enumerator)) {
+            observer.notify(current(enumerator));
             __yield(options);
         }
         pipe(observer, dispose());
@@ -691,7 +692,7 @@ const fromEnumerator = (options = {}) => f => {
  * @param values The `Enumerable`.
  * @param delay The requested delay between emitted items by the observable.
  */
-const fromEnumerable = (options) => enumerable => pipe(defer$1(enumerable, enumerate$1), fromEnumerator(options));
+const fromEnumerable = (options) => enumerable => pipe(defer$1(enumerable, enumerate), fromEnumerator(options));
 
 /**
  * Creates an `ObservableLike` which iterates through the values
@@ -1079,9 +1080,7 @@ class EnumeratorScheduler extends AbstractEnumerator {
         if (isNone(continuation) || isDisposed(continuation)) {
             return false;
         }
-        this.inContinuation = true;
-        run(continuation);
-        this.inContinuation = false;
+        pipe(this, runContinuation(continuation));
         return true;
     }
     requestYield() {
@@ -1100,8 +1099,8 @@ class EnumeratorScheduler extends AbstractEnumerator {
     }
     move() {
         this.reset();
-        while (!isDisposed(this) && !this.hasCurrent && this.step()) { }
-        return this.hasCurrent;
+        while (!isDisposed(this) && !hasCurrent(this) && this.step()) { }
+        return hasCurrent(this);
     }
 }
 class EnumeratorObserver extends Observer {
@@ -1114,19 +1113,19 @@ class EnumeratorObserver extends Observer {
         this.enumerator.current = next;
     }
 }
-const enumerate = (obs) => {
+const enumerateObs = (obs) => {
     const scheduler = new EnumeratorScheduler();
     pipe(new EnumeratorObserver(scheduler), addTo(scheduler), sourceFrom(obs));
     return scheduler;
 };
-const toEnumerable = () => obs => createEnumerable(() => enumerate(obs));
+const toEnumerable = () => obs => createEnumerable(() => enumerateObs(obs));
 const toEnumerableT = {
     toEnumerable,
 };
 
 const shouldEmit = (enumerators) => {
     for (const enumerator of enumerators) {
-        if (!enumerator.hasCurrent) {
+        if (!hasCurrent(enumerator)) {
             return false;
         }
     }
@@ -1134,8 +1133,8 @@ const shouldEmit = (enumerators) => {
 };
 const shouldComplete = (enumerators) => {
     for (const enumerator of enumerators) {
-        enumerator.move();
-        if (isDisposed(enumerator) && !enumerator.hasCurrent) {
+        move(enumerator);
+        if (isDisposed(enumerator) && !hasCurrent(enumerator)) {
             return true;
         }
     }
@@ -1155,7 +1154,7 @@ class ZipObserverEnumerator extends AbstractEnumerator {
         else {
             this.reset();
         }
-        return this.hasCurrent;
+        return hasCurrent(this);
     }
 }
 class ZipObserver extends Observer {
@@ -1169,7 +1168,7 @@ class ZipObserver extends Observer {
         this.assertState();
         const { enumerator, enumerators } = this;
         if (!isDisposed(this)) {
-            if (enumerator.hasCurrent) {
+            if (hasCurrent(enumerator)) {
                 enumerator.buffer.push(next);
             }
             else {
@@ -1192,7 +1191,7 @@ const _zip = (...observables) => {
         var _a;
         const count = observables.length;
         if (isEnumerable) {
-            const zipped = using(defer$1(observables, map$1(enumerate)), (...enumerators) => pipe(enumerators, zipEnumerators, returns, fromEnumerator()));
+            const zipped = using(defer$1(observables, map$1(enumerateObs)), (...enumerators) => pipe(enumerators, zip$1, returns, fromEnumerator()));
             zipped.isEnumerable = true;
             pipe(zipped, sinkInto(observer));
         }
@@ -1201,8 +1200,8 @@ const _zip = (...observables) => {
             for (let index = 0; index < count; index++) {
                 const next = observables[index];
                 if ((_a = next.isEnumerable) !== null && _a !== void 0 ? _a : false) {
-                    const enumerator = enumerate(next);
-                    enumerator.move();
+                    const enumerator = enumerateObs(next);
+                    move(enumerator);
                     enumerators.push(enumerator);
                 }
                 else {
@@ -1211,7 +1210,7 @@ const _zip = (...observables) => {
                     }), addTo(observer));
                     const innerObserver = pipe(new ZipObserver(observer, enumerators, enumerator), onComplete(() => {
                         if (isDisposed(enumerator) ||
-                            (enumerator.buffer.length === 0 && !enumerator.hasCurrent)) {
+                            (enumerator.buffer.length === 0 && !hasCurrent(enumerator))) {
                             pipe(observer, dispose());
                         }
                     }), addTo(observer), sourceFrom(next));
@@ -1523,10 +1522,8 @@ const throwIfEmptyT = {
 const toRunnable = (options = {}) => source => createRunnable(sink => {
     const { schedulerFactory = createVirtualTimeScheduler } = options;
     const scheduler = schedulerFactory();
-    const subscription = pipe(source, onNotify(notifySink(sink)), subscribe(scheduler));
-    pipe(sink, add(scheduler), add(subscription));
-    scheduler.run();
-    pipe(scheduler, dispose());
+    pipe(source, onNotify(notifySink(sink)), subscribe(scheduler), addTo(sink));
+    pipe(scheduler, addTo(sink), forEach(ignore), dispose());
 });
 const toRunnableT = {
     toRunnable,

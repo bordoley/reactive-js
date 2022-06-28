@@ -33,7 +33,7 @@ export interface DisposableLike {
    * @returns `this`
    */
   add(
-    this: DisposableLike,
+    this: this,
     disposable: DisposableOrTeardown,
     ignoreChildErrors: boolean,
   ): void;
@@ -182,7 +182,7 @@ export abstract class AbstractDisposable implements DisposableLike {
 
   /** @ignore */
   add(
-    this: AbstractDisposable,
+    this: this,
     disposable: DisposableOrTeardown,
     ignoreChildErrors: boolean,
   ) {
@@ -210,12 +210,12 @@ export abstract class AbstractDisposable implements DisposableLike {
   }
 
   /** @ignore */
-  dispose(this: AbstractDisposable, error?: Error) {
+  dispose(this: this, error?: Error) {
     if (!isDisposed(this)) {
       this.isDisposed = true;
       this._error = error;
 
-      const disposables = this.disposables;
+      const { disposables } = this;
       for (const disposable of disposables) {
         disposables.delete(disposable);
         doDispose(this, disposable);

@@ -1,9 +1,10 @@
 import { TakeLast, empty } from "../container";
 import { add, bindTo, isDisposed } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
+import { Enumerator, current, hasCurrent, move } from "../enumerator";
 import { pipe, raise } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
-import { Enumerator, enumerate } from "./enumerator";
+import { enumerate } from "./enumerable";
 import { fromArray, fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 
@@ -18,7 +19,7 @@ class TakeLastEnumerator<T> extends Enumerator<T> {
   }
 
   get current(): T {
-    return this.hasCurrent ? (this.enumerator?.current as T) : raise();
+    return hasCurrent(this) ? (this.enumerator?.current as T) : raise();
   }
 
   get hasCurrent() {
@@ -31,8 +32,8 @@ class TakeLastEnumerator<T> extends Enumerator<T> {
     if (!isDisposed(this) && isNone(this.enumerator)) {
       const last: Array<T> = [];
 
-      while (delegate.move()) {
-        last.push(delegate.current);
+      while (move(delegate)) {
+        last.push(current(delegate));
 
         if (last.length > this.maxCount) {
           last.shift();
@@ -42,10 +43,10 @@ class TakeLastEnumerator<T> extends Enumerator<T> {
     }
 
     if (isSome(this.enumerator)) {
-      this.enumerator.move();
+      move(this.enumerator);
     }
 
-    return this.hasCurrent;
+    return hasCurrent(this);
   }
 }
 

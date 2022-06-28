@@ -41,8 +41,9 @@ import { Option, isSome, none } from "./option";
 import {
   PrioritySchedulerLike,
   SchedulerContinuationLike,
+  SchedulerImplementation,
   SchedulerLike,
-  run,
+  runContinuation,
   toSchedulerWithPriority,
 } from "./scheduler";
 
@@ -118,7 +119,7 @@ export const createComponent = <TProps>(
 
 class ReactPriorityScheduler
   extends AbstractDisposable
-  implements PrioritySchedulerLike
+  implements PrioritySchedulerLike, SchedulerImplementation
 {
   inContinuation = false;
 
@@ -151,10 +152,7 @@ class ReactPriorityScheduler
 
     const callback = () => {
       pipe(callbackNodeDisposable, dispose());
-
-      this.inContinuation = true;
-      run(continuation);
-      this.inContinuation = false;
+      pipe(this, runContinuation(continuation));
     };
 
     const callbackNode = unstable_scheduleCallback(

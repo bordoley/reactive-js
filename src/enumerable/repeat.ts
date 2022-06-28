@@ -1,10 +1,10 @@
 import { Repeat } from "../container";
 import { addTo, dispose } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
+import { Enumerator, hasCurrent, move } from "../enumerator";
 import { Predicate, alwaysTrue, pipe, raise } from "../functions";
 import { Option, isNone } from "../option";
-import { createEnumerable } from "./enumerable";
-import { Enumerator, enumerate } from "./enumerator";
+import { createEnumerable, enumerate } from "./enumerable";
 
 class RepeatEnumerator<T> extends Enumerator<T> {
   private enumerator: Option<Enumerator<T>>;
@@ -18,7 +18,7 @@ class RepeatEnumerator<T> extends Enumerator<T> {
   }
 
   get current(): T {
-    return this.hasCurrent ? this.enumerator?.current ?? raise() : raise();
+    return hasCurrent(this) ? this.enumerator?.current ?? raise() : raise();
   }
 
   get hasCurrent() {
@@ -30,7 +30,7 @@ class RepeatEnumerator<T> extends Enumerator<T> {
       this.enumerator = pipe(enumerate(this.src), addTo(this));
     }
 
-    while (!this.enumerator.move()) {
+    while (!move(this.enumerator)) {
       this.count++;
 
       try {
@@ -45,7 +45,7 @@ class RepeatEnumerator<T> extends Enumerator<T> {
       }
     }
 
-    return this.hasCurrent;
+    return hasCurrent(this);
   }
 }
 

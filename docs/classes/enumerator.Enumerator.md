@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [enumerable](../modules/enumerable.md) / Enumerator
+[Reactive-JS](../README.md) / [enumerator](../modules/enumerator.md) / Enumerator
 
 # Class: Enumerator<T\>
 
-[enumerable](../modules/enumerable.md).Enumerator
+[enumerator](../modules/enumerator.md).Enumerator
 
 ## Type parameters
 
@@ -16,7 +16,11 @@
 
   ↳ **`Enumerator`**
 
-  ↳↳ [`AbstractEnumerator`](enumerable.AbstractEnumerator.md)
+  ↳↳ [`AbstractDelegatingEnumerator`](enumerator.AbstractDelegatingEnumerator.md)
+
+  ↳↳ [`AbstractEnumerator`](enumerator.AbstractEnumerator.md)
+
+  ↳↳ [`VirtualTimeSchedulerLike`](../interfaces/scheduler.VirtualTimeSchedulerLike.md)
 
 ## Implements
 
@@ -26,18 +30,18 @@
 
 ### Constructors
 
-- [constructor](enumerable.Enumerator.md#constructor)
+- [constructor](enumerator.Enumerator.md#constructor)
 
 ### Accessors
 
-- [T](enumerable.Enumerator.md#t)
-- [current](enumerable.Enumerator.md#current)
-- [hasCurrent](enumerable.Enumerator.md#hascurrent)
-- [type](enumerable.Enumerator.md#type)
+- [T](enumerator.Enumerator.md#t)
+- [current](enumerator.Enumerator.md#current)
+- [hasCurrent](enumerator.Enumerator.md#hascurrent)
+- [type](enumerator.Enumerator.md#type)
 
 ### Methods
 
-- [move](enumerable.Enumerator.md#move)
+- [move](enumerator.Enumerator.md#move)
 
 ## Constructors
 

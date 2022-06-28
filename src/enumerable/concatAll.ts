@@ -8,8 +8,15 @@ import {
   isDisposed,
 } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
+import {
+  AbstractEnumerator,
+  Enumerator,
+  current,
+  hasCurrent,
+  move,
+} from "../enumerator";
 import { pipe } from "../functions";
-import { AbstractEnumerator, Enumerator, enumerate } from "./enumerator";
+import { enumerate } from "./enumerable";
 import { lift } from "./lift";
 
 class ConcatAllEnumerator<T> extends AbstractEnumerator<T> {
@@ -25,7 +32,7 @@ class ConcatAllEnumerator<T> extends AbstractEnumerator<T> {
 
     const { delegate, enumerator } = this;
 
-    if (isDisposed(enumerator.inner) && delegate.move()) {
+    if (isDisposed(enumerator.inner) && move(delegate)) {
       enumerator.inner = enumerate(delegate.current);
     }
 
@@ -33,17 +40,17 @@ class ConcatAllEnumerator<T> extends AbstractEnumerator<T> {
       enumerator.inner instanceof Enumerator &&
       !isDisposed(enumerator.inner)
     ) {
-      if (enumerator.inner.move()) {
-        this.current = enumerator.inner.current;
+      if (move(enumerator.inner)) {
+        this.current = current(enumerator.inner);
         break;
-      } else if (delegate.move()) {
-        enumerator.inner = enumerate(delegate.current);
+      } else if (move(delegate)) {
+        enumerator.inner = enumerate(current(delegate));
       } else {
         pipe(this, dispose());
       }
     }
 
-    return this.hasCurrent;
+    return hasCurrent(this);
   }
 }
 

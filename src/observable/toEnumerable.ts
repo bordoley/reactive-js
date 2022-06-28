@@ -1,21 +1,21 @@
 import { add, addTo, dispose, isDisposed } from "../disposable";
-import {
-  AbstractEnumerator,
-  EnumerableLike,
-  Enumerator,
-  ToEnumerable,
-  createEnumerable,
-} from "../enumerable";
+import { EnumerableLike, ToEnumerable, createEnumerable } from "../enumerable";
+import { AbstractEnumerator, Enumerator, hasCurrent } from "../enumerator";
 import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { isNone } from "../option";
-import { SchedulerContinuationLike, SchedulerLike, run } from "../scheduler";
+import {
+  SchedulerContinuationLike,
+  SchedulerImplementation,
+  SchedulerLike,
+  runContinuation,
+} from "../scheduler";
 import { sourceFrom } from "../source";
 import { Observer } from "./observer";
 
 class EnumeratorScheduler<T>
   extends AbstractEnumerator<T>
-  implements SchedulerLike
+  implements SchedulerLike, SchedulerImplementation
 {
   inContinuation = false;
   private readonly continuations: SchedulerContinuationLike[] = [];
@@ -35,10 +35,7 @@ class EnumeratorScheduler<T>
       return false;
     }
 
-    this.inContinuation = true;
-    run(continuation);
-    this.inContinuation = false;
-
+    pipe(this, runContinuation(continuation));
     return true;
   }
 
@@ -64,9 +61,9 @@ class EnumeratorScheduler<T>
   move(): boolean {
     this.reset();
 
-    while (!isDisposed(this) && !this.hasCurrent && this.step()) {}
+    while (!isDisposed(this) && !hasCurrent(this) && this.step()) {}
 
-    return this.hasCurrent;
+    return hasCurrent(this);
   }
 }
 
@@ -82,7 +79,7 @@ class EnumeratorObserver<T> extends Observer<T> {
   }
 }
 
-export const enumerate = <T>(obs: ObservableLike<T>): Enumerator<T> => {
+export const enumerateObs = <T>(obs: ObservableLike<T>): Enumerator<T> => {
   const scheduler = new EnumeratorScheduler<T>();
 
   pipe(new EnumeratorObserver<T>(scheduler), addTo(scheduler), sourceFrom(obs));
@@ -93,7 +90,7 @@ export const enumerate = <T>(obs: ObservableLike<T>): Enumerator<T> => {
 export const toEnumerable =
   <T>(): Function1<ObservableLike<T>, EnumerableLike<T>> =>
   obs =>
-    createEnumerable(() => enumerate(obs));
+    createEnumerable(() => enumerateObs(obs));
 
 export const toEnumerableT: ToEnumerable<ObservableLike<unknown>> = {
   toEnumerable,

@@ -1,8 +1,8 @@
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
+import { Enumerator } from "../enumerator";
 import { Function1, pipe } from "../functions";
 import { Lift } from "../liftable";
-import { AbstractEnumerable } from "./enumerable";
-import { Enumerator, enumerate } from "./enumerator";
+import { AbstractEnumerable, enumerate } from "./enumerable";
 
 class LiftedEnumerable<T> extends AbstractEnumerable<T> {
   constructor(
