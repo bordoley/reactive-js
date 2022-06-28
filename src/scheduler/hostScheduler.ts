@@ -6,6 +6,7 @@ import {
   createDisposable,
   dispose,
   disposed,
+  isDisposed,
   onDisposed,
 } from "../disposable";
 import { pipe } from "../functions";
@@ -86,7 +87,7 @@ const runContinuation = (
   // clear the immediateOrTimer disposable
   pipe(immmediateOrTimerDisposable, dispose());
 
-  if (!continuation.isDisposed) {
+  if (!isDisposed(continuation)) {
     scheduler.inContinuation = true;
     scheduler.startTime = scheduler.now;
     run(continuation);
@@ -154,7 +155,7 @@ class HostScheduler extends AbstractDisposable implements SchedulerLike {
 
     pipe(this, add(continuation, true));
 
-    const continuationIsDisposed = continuation.isDisposed;
+    const continuationIsDisposed = isDisposed(continuation);
     if (!continuationIsDisposed && delay > 0) {
       scheduleDelayed(this, continuation, delay);
     } else if (!continuationIsDisposed) {

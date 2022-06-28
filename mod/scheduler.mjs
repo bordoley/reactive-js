@@ -158,7 +158,7 @@ const peek = (scheduler) => {
         if (isNone(task)) {
             break;
         }
-        const taskIsDispose = task.continuation.isDisposed;
+        const taskIsDispose = isDisposed(task.continuation);
         if (task.dueTime > now && !taskIsDispose) {
             break;
         }
@@ -173,7 +173,7 @@ const peek = (scheduler) => {
         if (isNone(task)) {
             break;
         }
-        if (!task.continuation.isDisposed) {
+        if (!isDisposed(task.continuation)) {
             break;
         }
         queue.pop();
@@ -260,7 +260,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
     resume() {
         const head = peek(this);
         this.isPaused = false;
-        if (this.inner.isDisposed && isSome(head)) {
+        if (isDisposed(this.inner) && isSome(head)) {
             scheduleContinuation(this, head);
         }
     }
@@ -277,7 +277,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
                 ? this.current.priority
                 : Number.MAX_SAFE_INTEGER;
         pipe(this, add(continuation, true));
-        if (!continuation.isDisposed) {
+        if (!isDisposed(continuation)) {
             const { current, now } = this;
             const dueTime = Math.max(now + delay, now);
             const task = this.inContinuation &&
@@ -295,7 +295,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
             const targetQueue = dueTime > now ? delayed : queue;
             targetQueue.push(task);
             const head = peek(this);
-            const continuationActive = !this.inner.isDisposed && this.dueTime <= dueTime;
+            const continuationActive = !isDisposed(this.inner) && this.dueTime <= dueTime;
             if (head === task && !continuationActive && !this.isPaused) {
                 scheduleContinuation(this, head);
             }
@@ -341,7 +341,7 @@ class SchedulerWithPriorityImpl extends AbstractDisposable {
         var _a;
         const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
         pipe(this, add(continuation, true));
-        if (!continuation.isDisposed) {
+        if (!isDisposed(continuation)) {
             this.priorityScheduler.schedule(continuation, {
                 priority: this.priority,
                 delay,
@@ -384,7 +384,7 @@ const scheduleImmediate = (scheduler, continuation) => {
 const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) => {
     // clear the immediateOrTimer disposable
     pipe(immmediateOrTimerDisposable, dispose());
-    if (!continuation.isDisposed) {
+    if (!isDisposed(continuation)) {
         scheduler.inContinuation = true;
         scheduler.startTime = scheduler.now;
         run(continuation);
@@ -438,7 +438,7 @@ class HostScheduler extends AbstractDisposable {
         var _a;
         const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
         pipe(this, add(continuation, true));
-        const continuationIsDisposed = continuation.isDisposed;
+        const continuationIsDisposed = isDisposed(continuation);
         if (!continuationIsDisposed && delay > 0) {
             scheduleDelayed(this, continuation, delay);
         }
@@ -479,7 +479,7 @@ const comparator = (a, b) => {
 const move = (scheduler) => {
     const taskQueue = scheduler.taskQueue;
     scheduler.hasCurrent = false;
-    if (!scheduler.isDisposed) {
+    if (!isDisposed(scheduler)) {
         const task = taskQueue.pop();
         if (isSome(task)) {
             const { dueTime, continuation } = task;
@@ -531,7 +531,7 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable {
         var _a;
         const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
         pipe(this, add(continuation, true));
-        if (!continuation.isDisposed) {
+        if (!isDisposed(continuation)) {
             const work = {
                 id: this.taskIDCount++,
                 dueTime: this.now + delay,

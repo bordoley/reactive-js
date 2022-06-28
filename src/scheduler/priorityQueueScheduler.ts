@@ -47,7 +47,7 @@ const peek = (scheduler: PriorityScheduler): Option<ScheduledTask> => {
       break;
     }
 
-    const taskIsDispose = task.continuation.isDisposed;
+    const taskIsDispose = isDisposed(task.continuation);
     if (task.dueTime > now && !taskIsDispose) {
       break;
     }
@@ -67,7 +67,7 @@ const peek = (scheduler: PriorityScheduler): Option<ScheduledTask> => {
       break;
     }
 
-    if (!task.continuation.isDisposed) {
+    if (!isDisposed(task.continuation)) {
       break;
     }
 
@@ -190,7 +190,7 @@ class PriorityScheduler
 
     this.isPaused = false;
 
-    if (this.inner.isDisposed && isSome(head)) {
+    if (isDisposed(this.inner) && isSome(head)) {
       scheduleContinuation(this, head);
     }
   }
@@ -229,7 +229,7 @@ class PriorityScheduler
 
     pipe(this, add(continuation, true));
 
-    if (!continuation.isDisposed) {
+    if (!isDisposed(continuation)) {
       const { current, now } = this;
       const dueTime = Math.max(now + delay, now);
 
@@ -253,7 +253,7 @@ class PriorityScheduler
       const head = peek(this);
 
       const continuationActive =
-        !this.inner.isDisposed && this.dueTime <= dueTime;
+        !isDisposed(this.inner) && this.dueTime <= dueTime;
 
       if (head === task && !continuationActive && !this.isPaused) {
         scheduleContinuation(this, head);

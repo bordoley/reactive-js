@@ -1,4 +1,5 @@
 import { FromArray, FromArrayOptions } from "../container";
+import { isDisposed } from "../disposable";
 import { Function1, ignore } from "../functions";
 import { RunnableLike } from "../runnable";
 import { createRunnable } from "./createRunnable";
@@ -26,7 +27,7 @@ export const fromArray =
         : (sink: Sink<T>) => {
             for (
               let index = startIndex;
-              index < endIndex && !sink.isDisposed;
+              index < endIndex && !isDisposed(sink);
               index++
             ) {
               sink.notify(values[index]);

@@ -16,6 +16,7 @@ import {
 } from "../observable";
 
 import { SchedulerLike } from "../scheduler";
+import { sinkInto } from "../source";
 import { FlowMode, FlowableSinkLike } from "../streamable";
 import { createLiftedStreamable, stream } from "./streamable";
 
@@ -35,7 +36,7 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
   }
 
   sink(observer: Observer<TAcc>): void {
-    this.subject.sink(observer);
+    pipe(this.subject, sinkInto(observer));
   }
 
   stream(

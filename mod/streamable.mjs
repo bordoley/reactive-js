@@ -58,7 +58,7 @@ class FlowableSinkAccumulatorImpl extends AbstractDisposableObservable {
         return this.subject.observerCount;
     }
     sink(observer) {
-        this.subject.sink(observer);
+        pipe(this.subject, sinkInto$1(observer));
     }
     stream(scheduler, options) {
         return pipe(this.streamable, stream(scheduler, options), addTo(this));

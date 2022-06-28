@@ -347,7 +347,7 @@ class ZipWithLatestFromObserver extends Observer {
 const zipWithLatestFrom = (other, selector) => {
     const operator = (delegate) => {
         const disposeDelegate = () => {
-            if (observer.isDisposed && otherSubscription.isDisposed) {
+            if (isDisposed(observer) && isDisposed(otherSubscription)) {
                 pipe(delegate, dispose());
             }
         };
@@ -356,7 +356,7 @@ const zipWithLatestFrom = (other, selector) => {
             observer.hasLatest = true;
             observer.otherLatest = otherLatest;
             notifyDelegate(observer);
-            if (observer.isDisposed && observer.queue.length === 0) {
+            if (isDisposed(observer) && observer.queue.length === 0) {
                 pipe(observer.delegate, dispose());
             }
         }), subscribe(delegate.scheduler), onComplete(disposeDelegate));
@@ -1076,7 +1076,7 @@ class EnumeratorScheduler extends AbstractEnumerator {
     step() {
         const { continuations } = this;
         const continuation = continuations.shift();
-        if (isNone(continuation) || continuation.isDisposed) {
+        if (isNone(continuation) || isDisposed(continuation)) {
             return false;
         }
         this.inContinuation = true;
@@ -1091,7 +1091,7 @@ class EnumeratorScheduler extends AbstractEnumerator {
         var _a;
         const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
         pipe(this, add(continuation, true));
-        if (!continuation.isDisposed && delay === 0) {
+        if (!isDisposed(continuation) && delay === 0) {
             this.continuations.push(continuation);
         }
         else {
@@ -1135,7 +1135,7 @@ const shouldEmit = (enumerators) => {
 const shouldComplete = (enumerators) => {
     for (const enumerator of enumerators) {
         enumerator.move();
-        if (enumerator.isDisposed && !enumerator.hasCurrent) {
+        if (isDisposed(enumerator) && !enumerator.hasCurrent) {
             return true;
         }
     }
@@ -1210,7 +1210,7 @@ const _zip = (...observables) => {
                         enumerator.buffer.length = 0;
                     }), addTo(observer));
                     const innerObserver = pipe(new ZipObserver(observer, enumerators, enumerator), onComplete(() => {
-                        if (enumerator.isDisposed ||
+                        if (isDisposed(enumerator) ||
                             (enumerator.buffer.length === 0 && !enumerator.hasCurrent)) {
                             pipe(observer, dispose());
                         }

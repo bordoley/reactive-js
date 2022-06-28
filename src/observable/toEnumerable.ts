@@ -31,7 +31,7 @@ class EnumeratorScheduler<T>
   step(): boolean {
     const { continuations } = this;
     const continuation = continuations.shift();
-    if (isNone(continuation) || continuation.isDisposed) {
+    if (isNone(continuation) || isDisposed(continuation)) {
       return false;
     }
 
@@ -54,7 +54,7 @@ class EnumeratorScheduler<T>
 
     pipe(this, add(continuation, true));
 
-    if (!continuation.isDisposed && delay === 0) {
+    if (!isDisposed(continuation) && delay === 0) {
       this.continuations.push(continuation);
     } else {
       pipe(continuation, dispose());

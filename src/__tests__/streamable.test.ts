@@ -6,7 +6,7 @@ import {
   mapTo,
   startWith,
 } from "../container";
-import { Error, dispose, onDisposed } from "../disposable";
+import { Error, dispose, isDisposed, onDisposed } from "../disposable";
 import {
   defer,
   increment,
@@ -139,8 +139,8 @@ export const tests = describe(
       scheduler.run();
 
       pipe(result, expectArrayEquals([]));
-      expectTrue(emptyStream.isDisposed);
-      expectTrue(subscription.isDisposed);
+      pipe(emptyStream, isDisposed, expectTrue);
+      pipe(subscription, isDisposed, expectTrue);
     }),
   ),
   test("with multiple observers", () => {
@@ -187,7 +187,7 @@ export const tests = describe(
     scheduler.run();
 
     pipe(result, expectArrayEquals([110, 120, 130]));
-    expectTrue(subscription.isDisposed);
+    pipe(subscription, isDisposed, expectTrue);
   }),
 
   test("onNotify", () => {
@@ -208,7 +208,7 @@ export const tests = describe(
     notifyStream.dispatch(3);
     pipe(notifyStream, dispose());
 
-    expectTrue(notifyStream.isDisposed);
+    pipe(notifyStream, isDisposed, expectTrue);
 
     scheduler.run();
 
@@ -255,11 +255,11 @@ export const tests = describe(
     );
 
     const subscription = pipe(src, sinkInto(dest), subscribe(scheduler));
-    expectFalse(subscription.isDisposed);
+    pipe(subscription, isDisposed, expectFalse);
 
     scheduler.run();
 
-    expectTrue(subscription.isDisposed);
+    pipe(subscription, isDisposed, expectTrue);
     pipe(result, expectEquals(3));
   }),
   describe(
@@ -276,8 +276,8 @@ export const tests = describe(
       scheduler.run();
 
       pipe(f, expectToHaveBeenCalledTimes(0));
-      expectTrue(subscription.isDisposed);
-      expectTrue(emptyStream.isDisposed);
+      pipe(subscription, isDisposed, expectTrue);
+      pipe(emptyStream, isDisposed, expectTrue);
     }),
 
     test("generate source", () => {
@@ -321,7 +321,7 @@ export const tests = describe(
       pipe(f.calls[1][1], expectEquals(1));
       pipe(f.calls[2][1], expectEquals(2));
 
-      expectTrue(subscription.isDisposed);
+      pipe(subscription, isDisposed, expectTrue);
     }),
 
     test("fromValue", () => {
@@ -342,8 +342,8 @@ export const tests = describe(
 
       pipe(f, expectToHaveBeenCalledTimes(1));
       pipe(f.calls[0][0], expectEquals(1));
-      expectTrue(subscription.isDisposed);
-      expectTrue(fromValueStream.isDisposed);
+      pipe(subscription, isDisposed, expectTrue);
+      pipe(fromValueStream, isDisposed, expectTrue);
     }),
   ),
   describe(
@@ -375,7 +375,7 @@ export const tests = describe(
 
       pipe(f, expectToHaveBeenCalledTimes(1));
       pipe(f.calls[0][0], expectEquals(String.fromCodePoint(8364)));
-      expectTrue(subscription.isDisposed);
+      pipe(subscription, isDisposed, expectTrue);
     }),
     test("empty", () => {
       const scheduler = createVirtualTimeScheduler();
@@ -393,8 +393,8 @@ export const tests = describe(
       scheduler.run();
 
       pipe(f, expectToHaveBeenCalledTimes(0));
-      expectTrue(subscription.isDisposed);
-      expectTrue(emptyStream.isDisposed);
+      pipe(subscription, isDisposed, expectTrue);
+      pipe(emptyStream, isDisposed, expectTrue);
     }),
     test("encodeUtf8", () => {
       const str = "abcdefghijklmnsopqrstuvwxyz";
@@ -421,7 +421,7 @@ export const tests = describe(
 
       pipe(f, expectToHaveBeenCalledTimes(1));
       pipe(f.calls[0][0], expectEquals(str));
-      expectTrue(subscription.isDisposed);
+      pipe(subscription, isDisposed, expectTrue);
     }),
     test("fromValue", () => {
       const scheduler = createVirtualTimeScheduler();
@@ -445,8 +445,8 @@ export const tests = describe(
 
       pipe(f, expectToHaveBeenCalledTimes(1));
       pipe(f.calls[0][0], expectEquals(1));
-      expectTrue(subscription.isDisposed);
-      expectTrue(fromValueStream.isDisposed);
+      pipe(subscription, isDisposed, expectTrue);
+      pipe(fromValueStream, isDisposed, expectTrue);
     }),
     test("map", () => {
       const src = pipe(1, fromValue(fromArrayT), map(returns(2)), flow());
@@ -463,7 +463,7 @@ export const tests = describe(
 
       pipe(f, expectToHaveBeenCalledTimes(1));
       pipe(f.calls[0][0], expectEquals(2));
-      expectTrue(subscription.isDisposed);
+      pipe(subscription, isDisposed, expectTrue);
     }),
   ),
 

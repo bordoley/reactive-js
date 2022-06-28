@@ -37,7 +37,7 @@ const fromArray = (options = {}) => values => {
     const run = count === 0
         ? ignore
         : (sink) => {
-            for (let index = startIndex; index < endIndex && !sink.isDisposed; index++) {
+            for (let index = startIndex; index < endIndex && !isDisposed(sink); index++) {
                 sink.notify(values[index]);
             }
         };
