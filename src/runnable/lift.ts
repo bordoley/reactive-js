@@ -1,5 +1,6 @@
 import { dispose } from "../disposable";
 import { Function1, pipe } from "../functions";
+import { contraVariant } from "../liftable";
 import { RunnableLike, RunnableOperator } from "../runnable";
 import { RunnableSink } from "../runnableSink";
 import { Lift, sourceFrom } from "../source";
@@ -41,6 +42,6 @@ export const lift =
   };
 
 export const liftT: Lift<RunnableLike<unknown>> = {
-  variance: "contravariant",
+  variance: contraVariant,
   lift,
 };

@@ -3,7 +3,7 @@ import { isDisposed, dispose, createSerialDisposable, bindTo, add, addTo } from 
 import { AbstractEnumerator, reset, hasCurrent, move, Enumerator, current, forEach, zip as zip$1, AbstractDelegatingEnumerator } from './enumerator.mjs';
 import { pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { empty } from './container.mjs';
-import { AbstractLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftedOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
+import { AbstractLiftable, covariant, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftedOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { map as map$1, empty as empty$1, forEach as forEach$1 } from './readonlyArray.mjs';
 import { createRunnable } from './runnable.mjs';
@@ -92,7 +92,7 @@ const lift = (operator) => enumerable => {
     return new LiftedEnumerable(src, allFunctions);
 };
 const liftT = {
-    variance: "covariant",
+    variance: covariant,
     lift,
 };
 

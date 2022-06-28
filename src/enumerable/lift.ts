@@ -1,7 +1,7 @@
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { Enumerator } from "../enumerator";
 import { Function1, pipe } from "../functions";
-import { Lift } from "../liftable";
+import { Covariant, Lift, covariant } from "../liftable";
 import { AbstractEnumerable, enumerate } from "./enumerable";
 
 class LiftedEnumerable<T> extends AbstractEnumerable<T> {
@@ -40,7 +40,7 @@ export const lift =
     return new LiftedEnumerable<TB>(src, allFunctions);
   };
 
-export const liftT: Lift<EnumerableLike<unknown>, "covariant"> = {
-  variance: "covariant",
+export const liftT: Lift<EnumerableLike<unknown>, Covariant> = {
+  variance: covariant,
   lift,
 };

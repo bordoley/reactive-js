@@ -3,6 +3,7 @@ import { dispose, isDisposed, addTo } from './disposable.mjs';
 import { pipe, ignore, raise, identity, alwaysTrue } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractSource, sourceFrom, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
+import { contraVariant } from './liftable.mjs';
 import { RunnableSink, createDelegatingRunnableSink } from './runnableSink.mjs';
 
 class AbstractRunnable extends AbstractSource {
@@ -64,7 +65,7 @@ const lift = (operator) => runnable => {
     return new LiftedRunnable(src, allFunctions);
 };
 const liftT = {
-    variance: "contravariant",
+    variance: contraVariant,
     lift,
 };
 

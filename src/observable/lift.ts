@@ -1,4 +1,5 @@
 import { Function1, pipe } from "../functions";
+import { contraVariant } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer } from "../observer";
 import { Lift, sourceFrom } from "../source";
@@ -53,11 +54,11 @@ export const lift =
   };
 
 export const liftT: Lift<ObservableLike<unknown>> = {
-  variance: "contravariant",
+  variance: contraVariant,
   lift,
 };
 
 export const liftSynchronousT: Lift<ObservableLike<unknown>> = {
-  variance: "contravariant",
+  variance: contraVariant,
   lift: op => lift(op, true),
 };
