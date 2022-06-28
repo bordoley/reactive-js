@@ -11,6 +11,7 @@
 
 ### Interfaces
 
+- [Buffer](../interfaces/container.Buffer.md)
 - [Concat](../interfaces/container.Concat.md)
 - [ConcatAll](../interfaces/container.ConcatAll.md)
 - [Container](../interfaces/container.Container.md)

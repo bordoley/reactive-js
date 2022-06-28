@@ -18,6 +18,7 @@
 
 ### Functions
 
+- [createBufferOperator](source.md#createbufferoperator)
 - [createCatchErrorOperator](source.md#createcatcherroroperator)
 - [createDecodeWithCharsetOperator](source.md#createdecodewithcharsetoperator)
 - [createDistinctUntilChangedOperator](source.md#createdistinctuntilchangedoperator)
@@ -44,6 +45,48 @@
 - [sourceFrom](source.md#sourcefrom)
 
 ## Functions
+
+### createBufferOperator
+
+▸ **createBufferOperator**<`C`\>(`m`, `BufferSink`): <T_1\>(`options?`: { `maxBufferSize?`: `number`  }) => [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, readonly `T_1`[]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Lift`](../interfaces/source.Lift.md)<`C`\> & [`FromArray`](../interfaces/container.FromArray.md)<`C`, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> |
+| `BufferSink` | <T\>(`delegate`: [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, readonly `T`[]\>, `maxBufferSize`: `number`) => [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `T`\> & { `delegate`: [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, readonly `T`[]\>  } & { `buffer`: `T`[] ; `maxBufferSize`: `number`  } |
+
+#### Returns
+
+`fn`
+
+▸ <`T_1`\>(`options?`): [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, readonly `T_1`[]\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T_1` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.maxBufferSize?` | `number` |
+
+##### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, readonly `T_1`[]\>
+
+___
 
 ### createCatchErrorOperator
 

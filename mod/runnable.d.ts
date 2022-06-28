@@ -1,4 +1,4 @@
-import { ConcatAll, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, Concat, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Generate, Keep, Map, ContainerOperator, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
+import { ConcatAll, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, Buffer, Concat, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Generate, Keep, Map, ContainerOperator, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
 import { DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Function1, Equality, Predicate, Updater, Factory, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
@@ -16,11 +16,6 @@ declare const fromArray: <T>(options?: {
 }) => Function1<readonly T[], RunnableLike<T>>;
 declare const fromArrayT: FromArray<RunnableLike<unknown>, FromArrayOptions>;
 declare const last: <T>() => Function1<RunnableLike<T>, Option<T>>;
-/**
- * Accumulates all values emitted by `runnable` into an array.
- *
- */
-declare const toArray: <T>() => Function1<RunnableLike<T>, readonly T[]>;
 interface RunnableLike<T> extends SourceLike {
     readonly T: unknown;
     readonly type: RunnableLike<this["T"]>;
@@ -33,6 +28,10 @@ interface ToRunnable<C extends ContainerLike> extends Container<C> {
 }
 declare const toRunnable: <T>() => Function1<RunnableLike<T>, RunnableLike<T>>;
 declare const type: RunnableLike<unknown>;
+declare const buffer: <T>(options?: {
+    readonly maxBufferSize?: number;
+}) => RunnableOperator<T, readonly T[]>;
+declare const bufferT: Buffer<RunnableLike<unknown>>;
 declare const catchError: <T>(onError: Function1<unknown, RunnableLike<T> | void>) => RunnableOperator<T, T>;
 declare const concat: Concat<RunnableLike<unknown>>["concat"];
 declare const concatT: Concat<RunnableLike<unknown>>;
@@ -89,6 +88,10 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
 declare const takeWhileT: TakeWhile<RunnableLike<unknown>>;
 declare const throwIfEmpty: <T>(factory: Factory<unknown>) => RunnableOperator<T, T>;
 declare const throwIfEmptyT: ThrowIfEmpty<RunnableLike<unknown>>;
+/**
+ * Accumulates all values emitted by `runnable` into an array.
+ */
+declare const toArray: <T>() => Function1<RunnableLike<T>, readonly T[]>;
 declare const using: Using<RunnableLike<unknown>>["using"];
 declare const usingT: Using<RunnableLike<unknown>>;
-export { RunnableLike, RunnableOperator, ToRunnable, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };
+export { RunnableLike, RunnableOperator, ToRunnable, buffer, bufferT, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };

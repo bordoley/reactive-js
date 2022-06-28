@@ -11,5 +11,6 @@ const isSome = (option) => option !== none;
  * Returns true if `option` is `none`.
  */
 const isNone = (option) => option === none;
+const getOrDefault = (v) => (option) => isSome(option) ? option : v;
 
-export { isNone, isSome, none };
+export { getOrDefault, isNone, isSome, none };

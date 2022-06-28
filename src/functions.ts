@@ -1,5 +1,3 @@
-import { isNone } from "./option";
-
 /**
  * Compare two values to determine their relative ordering.
  *
@@ -324,7 +322,7 @@ export const negate = (v: boolean): boolean => !v;
  * Throws a javascript error using the provided message.
  */
 export const raise = <T>(message?: unknown): T => {
-  if (isNone(message) || typeof message === "string") {
+  if (message === undefined || typeof message === "string") {
     throw new Error(message);
   } else {
     throw message;

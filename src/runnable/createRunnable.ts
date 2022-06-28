@@ -13,6 +13,7 @@ class RunnableImpl<T> extends AbstractRunnable<T> {
   sink(sink: RunnableSink<T>) {
     try {
       this._run(sink);
+      pipe(sink, dispose());
     } catch (cause) {
       pipe(sink, dispose({ cause }));
     }

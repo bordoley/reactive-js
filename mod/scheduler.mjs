@@ -203,7 +203,6 @@ class AbstractQueueScheduler extends AbstractEnumerator {
                 const delay = Math.max(dueTime - now(this), 0);
                 if (delay === 0) {
                     move(this);
-                    console.log("moved");
                     pipe(this, runContinuation(continuation));
                 }
                 else {

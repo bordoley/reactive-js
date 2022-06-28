@@ -1,4 +1,4 @@
-import { fromValue } from "../container";
+import { Buffer, fromValue } from "../container";
 import {
   SerialDisposableLike,
   add,
@@ -19,17 +19,6 @@ import { lift } from "./lift";
 import { never } from "./never";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
-
-function onDispose(this: BufferObserver<void>) {
-  const { buffer } = this;
-  this.buffer = [];
-
-  if (buffer.length === 0) {
-    pipe(this.delegate, dispose());
-  } else {
-    pipe(buffer, fromValue(fromArrayT), sinkInto(this.delegate));
-  }
-}
 
 class BufferObserver<T> extends Observer<T> {
   buffer: T[] = [];
@@ -93,7 +82,11 @@ export function buffer<T>(
       ? (_: T) => fromValue(fromArrayT, { delay })(none)
       : delay;
 
-  const maxBufferSize = options.maxBufferSize ?? Number.MAX_SAFE_INTEGER;
+  const maxBufferSize = Math.max(
+    options.maxBufferSize ?? Number.MAX_SAFE_INTEGER,
+    1,
+  );
+
   const operator = (delegate: Observer<readonly T[]>) => {
     const durationSubscription = createSerialDisposable();
     return pipe(
@@ -105,9 +98,22 @@ export function buffer<T>(
       ),
       add(durationSubscription),
       addTo(delegate),
-      onComplete(onDispose),
+      onComplete(function onDispose(this: BufferObserver<void>) {
+        const { buffer } = this;
+        this.buffer = [];
+
+        if (buffer.length === 0) {
+          pipe(this.delegate, dispose());
+        } else {
+          pipe(buffer, fromValue(fromArrayT), sinkInto(this.delegate));
+        }
+      }),
     );
   };
 
   return lift(operator, delay === Number.MAX_SAFE_INTEGER);
 }
+
+export const bufferT: Buffer<ObservableLike<unknown>> = {
+  buffer,
+};

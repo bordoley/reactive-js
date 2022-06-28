@@ -47,7 +47,7 @@ const createTakeFirstLiftOperator = (m, TakeFirstLiftableState) => (options = {}
 const createTakeWhileLiftOperator = (m, TakeWhileLiftableState) => (predicate, options = {}) => {
     const { inclusive = false } = options;
     return pipe((delegate) => {
-        const lifted = pipe(new TakeWhileLiftableState(delegate, predicate, inclusive), m.variance === covariant ? add(delegate) : addTo(delegate));
+        const lifted = pipe(new TakeWhileLiftableState(delegate, predicate, inclusive), bindTo(delegate));
         return lifted;
     }, lift(m));
 };

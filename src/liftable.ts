@@ -294,7 +294,7 @@ export const createTakeWhileLiftOperator =
     return pipe((delegate: LiftOperatorIn<C, T, T, typeof m>) => {
       const lifted = pipe(
         new TakeWhileLiftableState(delegate, predicate, inclusive),
-        m.variance === covariant ? add(delegate) : addTo(delegate),
+        bindTo(delegate),
       );
 
       return lifted;

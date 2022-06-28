@@ -164,7 +164,6 @@ export abstract class AbstractQueueScheduler<
 
       if (delay === 0) {
         move(this);
-        console.log("moved");
         pipe(this, runContinuation(continuation));
       } else {
         this.dueTime = schedulerNow(this) + delay;

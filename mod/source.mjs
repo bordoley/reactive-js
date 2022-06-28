@@ -2,7 +2,7 @@
 import { fromValue, empty } from './container.mjs';
 import { addTo, onComplete, dispose, onError, isDisposed, onDisposed, add } from './disposable.mjs';
 import { pipe, compose, negate, ignore, identity } from './functions.mjs';
-import { AbstractLiftable, AbstractDisposableLiftable, delegate, lift, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
+import { AbstractLiftable, AbstractDisposableLiftable, lift, delegate, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
 import { none, isSome } from './option.mjs';
 import { forEach } from './readonlyArray.mjs';
 
@@ -23,6 +23,32 @@ const sinkInto = (sink) => source => {
 const sourceFrom = (source) => sink => {
     source.sink(sink);
     return sink;
+};
+const createBufferOperator = (m, BufferSink) => {
+    BufferSink.prototype.notify = function notifyBuffer(next) {
+        this.assertState();
+        const { buffer, maxBufferSize } = this;
+        buffer.push(next);
+        if (buffer.length === maxBufferSize) {
+            const buffer = this.buffer;
+            this.buffer = [];
+            this.delegate.notify(buffer);
+        }
+    };
+    return (options = {}) => {
+        var _a;
+        const maxBufferSize = Math.max((_a = options.maxBufferSize) !== null && _a !== void 0 ? _a : Number.MAX_SAFE_INTEGER, 1);
+        return pipe((delegate) => pipe(new BufferSink(delegate, maxBufferSize), addTo(delegate), onComplete(function onDispose() {
+            const { buffer } = this;
+            this.buffer = [];
+            if (buffer.length === 0) {
+                pipe(this.delegate, dispose());
+            }
+            else {
+                pipe(buffer, fromValue(m), sinkInto(this.delegate));
+            }
+        })), lift(m));
+    };
 };
 const createCatchErrorOperator = (m, CatchErrorSink) => (f) => {
     CatchErrorSink.prototype.notify = function notifyDelegate(next) {
@@ -227,4 +253,4 @@ const createOnSink = (m) => (f) => src => pipe((sink) => {
 }, create(m));
 const createUsing = (m) => (resourceFactory, sourceFactory) => pipe((sink) => pipe(resourceFactory(), resources => (Array.isArray(resources) ? resources : [resources]), forEach(addTo(sink)), (resources) => sourceFactory(...resources), sinkInto(sink)), create(m));
 
-export { AbstractDisposableSource, AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, notify, notifySink, sinkInto, sourceFrom };
+export { AbstractDisposableSource, AbstractSource, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, notify, notifySink, sinkInto, sourceFrom };

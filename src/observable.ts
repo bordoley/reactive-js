@@ -176,7 +176,7 @@ export {
   AbstractObservable,
   AbstractDisposableObservable,
 } from "./observable/observable";
-export { buffer } from "./observable/buffer";
+export { buffer, bufferT } from "./observable/buffer";
 export { map, mapT } from "./observable/map";
 export {
   concatAll,
