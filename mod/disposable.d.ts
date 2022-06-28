@@ -96,18 +96,6 @@ interface SerialDisposableLike extends DisposableLike {
     inner: DisposableLike;
 }
 /**
- * Abstract base class for implementing the `SerialDisposableLike` interface.
- *
- * @noInheritDoc
- * */
-declare abstract class AbstractSerialDisposable extends AbstractDisposable implements SerialDisposableLike {
-    private _inner;
-    /** @ignore */
-    get inner(): DisposableLike;
-    /** @ignore */
-    set inner(newInner: DisposableLike);
-}
-/**
  * Creates a new `SerialDisposableLike` instance containing a disposed instance.
  */
 declare const createSerialDisposable: () => SerialDisposableLike;
@@ -126,4 +114,4 @@ interface DisposableValueLike<T> extends DisposableLike {
  */
 declare const createDisposableValue: <T>(value: T, cleanup: SideEffect1<T>) => DisposableValueLike<T>;
 declare const toAbortSignal: (disposable: DisposableLike) => AbortSignal;
-export { AbstractDisposable, AbstractSerialDisposable, DisposableLike, DisposableOrTeardown, DisposableValueLike, Error, SerialDisposableLike, add, addTo, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
+export { AbstractDisposable, DisposableLike, DisposableOrTeardown, DisposableValueLike, Error, SerialDisposableLike, add, addTo, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

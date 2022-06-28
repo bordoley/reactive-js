@@ -143,12 +143,7 @@ const _disposed = {
  * A disposed `DisposableLike` instance.
  */
 const disposed = _disposed;
-/**
- * Abstract base class for implementing the `SerialDisposableLike` interface.
- *
- * @noInheritDoc
- * */
-class AbstractSerialDisposable extends AbstractDisposable {
+class SerialDisposableImpl extends AbstractDisposable {
     constructor() {
         super(...arguments);
         this._inner = disposed;
@@ -166,8 +161,6 @@ class AbstractSerialDisposable extends AbstractDisposable {
             pipe(oldInner, dispose());
         }
     }
-}
-class SerialDisposableImpl extends AbstractSerialDisposable {
 }
 /**
  * Creates a new `SerialDisposableLike` instance containing a disposed instance.
@@ -190,4 +183,4 @@ const toAbortSignal = (disposable) => {
     return abortController.signal;
 };
 
-export { AbstractDisposable, AbstractSerialDisposable, add, addTo, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
+export { AbstractDisposable, add, addTo, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

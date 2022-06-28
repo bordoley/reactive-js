@@ -15,10 +15,6 @@ with an error, disposes the container with the error.
 
   ↳ **`SerialDisposableLike`**
 
-## Implemented by
-
-- [`AbstractSerialDisposable`](../classes/disposable.AbstractSerialDisposable.md)
-
 ## Table of contents
 
 ### Properties
