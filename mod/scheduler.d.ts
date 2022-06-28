@@ -40,6 +40,7 @@ interface SchedulerImplementation {
     inContinuation: boolean;
 }
 declare const runContinuation: <TScheduler extends SchedulerImplementation>(continuation: SchedulerContinuationLike) => Function1<TScheduler, TScheduler>;
+declare const inContinuation: (scheduler: SchedulerLike | PrioritySchedulerLike) => boolean;
 /**
  * A unit of work to be executed by a scheduler.
  *
@@ -105,4 +106,4 @@ interface PrioritySchedulerLike extends DisposableLike {
         readonly delay?: number;
     }): void;
 }
-export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerImplementation, SchedulerLike, VirtualTimeSchedulerLike, __yield, createHostScheduler, createVirtualTimeScheduler, runContinuation, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };
+export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerImplementation, SchedulerLike, VirtualTimeSchedulerLike, __yield, createHostScheduler, createVirtualTimeScheduler, inContinuation, runContinuation, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };

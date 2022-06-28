@@ -1,5 +1,5 @@
 import { Writable } from "stream";
-import { dispatchTo } from "../dispatcher";
+import { dispatch, dispatchTo } from "../dispatcher";
 import {
   DisposableValueLike,
   add,
@@ -50,6 +50,6 @@ export const createWritableIOSink = (
       writableValue.on("finish", onFinish);
       writableValue.on(NODE_JS_PAUSE_EVENT, onPause);
 
-      dispatcher.dispatch("resume");
+      pipe(dispatcher, dispatch("resume"));
     }),
   );

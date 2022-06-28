@@ -1,6 +1,10 @@
 import { isDisposed } from "../disposable";
 import { Function1 } from "../functions";
-import { SchedulerContinuationLike } from "../scheduler";
+import {
+  PrioritySchedulerLike,
+  SchedulerContinuationLike,
+  SchedulerLike,
+} from "../scheduler";
 
 export interface SchedulerImplementation {
   inContinuation: boolean;
@@ -18,3 +22,7 @@ export const runContinuation =
     }
     return scheduler;
   };
+
+export const inContinuation = (
+  scheduler: SchedulerLike | PrioritySchedulerLike,
+): boolean => scheduler.inContinuation;

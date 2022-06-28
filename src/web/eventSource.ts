@@ -1,3 +1,4 @@
+import { dispatch } from "../dispatcher";
 import { onDisposed } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, createObservable } from "../observable";
@@ -35,11 +36,14 @@ export const createEventSource = (
 
     const eventSource = new EventSource(requestURL, options);
     const listener = (ev: MessageEvent) => {
-      dispatcher.dispatch({
-        id: ev.lastEventId ?? "",
-        type: ev.type ?? "",
-        data: ev.data ?? "",
-      });
+      pipe(
+        dispatcher,
+        dispatch({
+          id: ev.lastEventId ?? "",
+          type: ev.type ?? "",
+          data: ev.data ?? "",
+        }),
+      );
     };
 
     for (const ev of events) {

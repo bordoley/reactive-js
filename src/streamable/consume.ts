@@ -1,3 +1,4 @@
+import { dispatch } from "../dispatcher";
 import {
   Factory,
   Function1,
@@ -57,15 +58,15 @@ const consumeImpl = <TSrc, TAcc>(
       onNotify(ev => {
         switch (ev.type) {
           case "continue":
-            accFeedback.dispatch(ev.data);
-            enumerator.dispatch(none);
+            pipe(accFeedback, dispatch(ev.data));
+            pipe(enumerator, dispatch(none));
             break;
         }
       }),
       map(ev => ev.data),
       onSubscribe(() => {
-        accFeedback.dispatch(initial());
-        enumerator.dispatch(none);
+        pipe(accFeedback, dispatch(initial()));
+        pipe(enumerator, dispatch(none));
       }),
     );
 

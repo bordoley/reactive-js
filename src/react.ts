@@ -18,6 +18,7 @@ import {
   unstable_scheduleCallback,
   unstable_shouldYield,
 } from "scheduler";
+import { dispatch } from "./dispatcher";
 import {
   AbstractDisposable,
   Error,
@@ -43,10 +44,10 @@ import {
   SchedulerContinuationLike,
   SchedulerImplementation,
   SchedulerLike,
+  inContinuation,
   runContinuation,
   toSchedulerWithPriority,
 } from "./scheduler";
-
 /**
  * Returns the current value, if defined, of `observable`.
  *
@@ -105,7 +106,7 @@ export const createComponent = <TProps>(
       createReplaySubject,
     ]);
 
-    propsSubject.dispatch(props);
+    pipe(propsSubject, dispatch(props));
 
     const elementObservable = useMemo(
       () => pipe(propsSubject, distinctUntilChanged(), fn),
@@ -128,7 +129,7 @@ class ReactPriorityScheduler
   }
 
   get shouldYield(): boolean {
-    return this.inContinuation && unstable_shouldYield();
+    return inContinuation(this) && unstable_shouldYield();
   }
 
   requestYield() {

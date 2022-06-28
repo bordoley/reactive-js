@@ -1,7 +1,8 @@
 /// <reference types="./web.d.ts" />
+import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { onDisposed, bindTo, addTo, toAbortSignal, dispose } from './disposable.mjs';
 import { pipe, raise, compose, returns } from './functions.mjs';
-import { createObservable, AbstractDisposableObservable, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
+import { createObservable, AbstractDisposableObservable, observerCount, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { ignoreElements } from './container.mjs';
 import { none, isSome } from './option.mjs';
@@ -14,7 +15,7 @@ const fromEvent = (target, eventName, selector) => createObservable(observer => 
     }));
     const listener = (event) => {
         const result = selector(event);
-        dispatcher.dispatch(result);
+        pipe(dispatcher, dispatch(result));
     };
     target.addEventListener(eventName, listener, { passive: true });
 });
@@ -34,11 +35,11 @@ const createEventSource = (url, options = {}) => {
         const eventSource = new EventSource(requestURL, options);
         const listener = (ev) => {
             var _a, _b, _c;
-            dispatcher.dispatch({
+            pipe(dispatcher, dispatch({
                 id: (_a = ev.lastEventId) !== null && _a !== void 0 ? _a : "",
                 type: (_b = ev.type) !== null && _b !== void 0 ? _b : "",
                 data: (_c = ev.data) !== null && _c !== void 0 ? _c : "",
-            });
+            }));
         };
         for (const ev of events) {
             eventSource.addEventListener(ev, listener);
@@ -82,15 +83,15 @@ class WindowLocationStream extends AbstractDisposableObservable {
         this.historyCounter = -1;
     }
     get observerCount() {
-        return this.stateStream.observerCount;
+        return observerCount(this.stateStream);
     }
     dispatch(stateOrUpdater, { replace } = { replace: false }) {
-        this.stateStream.dispatch(({ uri: stateURI }) => {
+        pipe(({ uri: stateURI }) => {
             const uri = typeof stateOrUpdater === "function"
                 ? stateOrUpdater(stateURI)
                 : stateOrUpdater;
             return { uri, replace };
-        });
+        }, dispatchTo(this.stateStream));
     }
     goBack() {
         const canGoBack = this.historyCounter > 0;

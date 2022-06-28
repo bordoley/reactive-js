@@ -5,6 +5,7 @@ import {
   SchedulerContinuationLike,
   SchedulerLike,
 } from "../scheduler";
+import { inContinuation } from "./scheduler";
 
 class SchedulerWithPriorityImpl
   extends AbstractDisposable
@@ -18,7 +19,7 @@ class SchedulerWithPriorityImpl
   }
 
   get inContinuation() {
-    return this.priorityScheduler.inContinuation;
+    return inContinuation(this.priorityScheduler);
   }
 
   get now() {

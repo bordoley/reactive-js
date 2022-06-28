@@ -18,6 +18,7 @@
 - [\_\_yield](scheduler.md#__yield)
 - [createHostScheduler](scheduler.md#createhostscheduler)
 - [createVirtualTimeScheduler](scheduler.md#createvirtualtimescheduler)
+- [inContinuation](scheduler.md#incontinuation)
 - [runContinuation](scheduler.md#runcontinuation)
 - [schedule](scheduler.md#schedule)
 - [toPausableScheduler](scheduler.md#topausablescheduler)
@@ -76,6 +77,22 @@ Creates a new virtual time scheduler instance.
 #### Returns
 
 [`VirtualTimeSchedulerLike`](../interfaces/scheduler.VirtualTimeSchedulerLike.md)
+
+___
+
+### inContinuation
+
+▸ **inContinuation**(`scheduler`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) \| [`PrioritySchedulerLike`](../interfaces/scheduler.PrioritySchedulerLike.md) |
+
+#### Returns
+
+`boolean`
 
 ___
 

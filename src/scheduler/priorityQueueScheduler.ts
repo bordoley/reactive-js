@@ -15,7 +15,11 @@ import {
   SchedulerLike,
 } from "../scheduler";
 import { PriorityQueueLike, createPriorityQueue } from "./priorityQueue";
-import { SchedulerImplementation, runContinuation } from "./scheduler";
+import {
+  SchedulerImplementation,
+  inContinuation,
+  runContinuation,
+} from "./scheduler";
 import { __yield, schedule } from "./schedulerContinuation";
 
 type ScheduledTask = {
@@ -224,7 +228,7 @@ class PriorityScheduler
     let { priority } = options;
     priority = isSome(priority)
       ? priority
-      : this.inContinuation
+      : inContinuation(this)
       ? this.current.priority
       : Number.MAX_SAFE_INTEGER;
 
@@ -235,7 +239,7 @@ class PriorityScheduler
       const dueTime = Math.max(now + delay, now);
 
       const task =
-        this.inContinuation &&
+        inContinuation(this) &&
         isSome(current) &&
         current.continuation === continuation &&
         delay <= 0

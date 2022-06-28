@@ -15,7 +15,7 @@ import {
   ThrowIfEmpty,
   concatMap,
 } from "./container";
-import { DispatcherLike, dispatchTo } from "./dispatcher";
+import { DispatcherLike, dispatch, dispatchTo } from "./dispatcher";
 import {
   DisposableLike,
   addTo,
@@ -34,6 +34,7 @@ import {
   Predicate,
   Reducer,
   Updater,
+  defer as deferF,
   ignore,
   pipe,
 } from "./functions";
@@ -281,8 +282,7 @@ export const fromPromise = <T>(
   createObservable(({ dispatcher }) => {
     factory().then(next => {
       if (!isDisposed(dispatcher)) {
-        dispatcher.dispatch(next);
-        pipe(dispatcher, dispose());
+        pipe(dispatcher, dispatch(next), dispose());
       }
     }, toErrorHandler(dispatcher));
   });
@@ -345,6 +345,9 @@ export const mapAsync = <TA, TB>(
   concatMap({ ...switchAllT, ...mapT }, (a: TA) => fromPromise(() => f(a)));
 
 export const onSubscribe = createOnSink(createT);
+
+export const observerCount = <T>(observable: MulticastObservableLike<T>) =>
+  observable.observerCount;
 
 export const pairwise: <T>() => ObservableOperator<T, [Option<T>, T]> =
   createPairwiseOperator(
@@ -451,9 +454,7 @@ export const scanAsync =
           ),
           switchAll<TAcc>(),
           onNotify(dispatchTo(accFeedbackStream)),
-          onSubscribe(() => {
-            accFeedbackStream.dispatch(initialValue());
-          }),
+          onSubscribe(deferF(accFeedbackStream, dispatch(initialValue()))),
         ),
     );
 
@@ -483,7 +484,7 @@ export const share =
         observer,
         sourceFrom(multicast),
         onDisposed(() => {
-          if (isSome(multicast) && multicast.observerCount === 0) {
+          if (isSome(multicast) && observerCount(multicast) === 0) {
             pipe(multicast, dispose());
             multicast = none;
           }

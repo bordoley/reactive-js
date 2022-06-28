@@ -1,4 +1,4 @@
-import { DispatcherLike } from "../dispatcher";
+import { DispatcherLike, dispatch } from "../dispatcher";
 import { add, addTo } from "../disposable";
 import { Function1, compose, pipe } from "../functions";
 import {
@@ -11,6 +11,7 @@ import {
   __observe,
   __using,
   createSubject,
+  observerCount,
   publish,
 } from "../observable";
 import { Observer } from "../observer";
@@ -30,11 +31,11 @@ class StreamImpl<TReq, T>
   }
 
   get observerCount(): number {
-    return this.observable.observerCount;
+    return observerCount(this.observable);
   }
 
   dispatch(req: TReq) {
-    this.dispatcher.dispatch(req);
+    pipe(this.dispatcher, dispatch(req));
   }
 
   sink(observer: Observer<T>) {

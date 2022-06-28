@@ -95,6 +95,7 @@
 - [mergeAll](observable.md#mergeall)
 - [never](observable.md#never)
 - [observable](observable.md#observable)
+- [observerCount](observable.md#observercount)
 - [onNotify](observable.md#onnotify)
 - [onSubscribe](observable.md#onsubscribe)
 - [pairwise](observable.md#pairwise)
@@ -2222,6 +2223,28 @@ ___
 #### Returns
 
 [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
+
+___
+
+### observerCount
+
+▸ **observerCount**<`T`\>(`observable`): `number`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)<`T`\> |
+
+#### Returns
+
+`number`
 
 ___
 

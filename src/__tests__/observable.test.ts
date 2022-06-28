@@ -52,6 +52,7 @@ import {
   mergeT,
   never,
   observable,
+  observerCount,
   onNotify,
   onSubscribe,
   repeat,
@@ -273,15 +274,15 @@ export const tests = describe(
       const scheduler = createVirtualTimeScheduler();
 
       const subject = createSubject();
-      pipe(subject.observerCount, expectEquals(0));
+      pipe(subject, observerCount, expectEquals(0));
       const sub1 = pipe(subject, subscribe(scheduler));
-      pipe(subject.observerCount, expectEquals(1));
+      pipe(subject, observerCount, expectEquals(1));
       const sub2 = pipe(subject, subscribe(scheduler));
-      pipe(subject.observerCount, expectEquals(2));
+      pipe(subject, observerCount, expectEquals(2));
       pipe(sub1, dispose());
-      pipe(subject.observerCount, expectEquals(1));
+      pipe(subject, observerCount, expectEquals(1));
       pipe(sub2, dispose());
-      pipe(subject.observerCount, expectEquals(0));
+      pipe(subject, observerCount, expectEquals(0));
     }),
   ),
   test(

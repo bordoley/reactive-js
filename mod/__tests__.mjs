@@ -8,7 +8,7 @@ import { fromArray as fromArray$1, toIterable, fromIterable, toRunnable as toRun
 import { toArray, fromArray, someSatisfyT, first, generate, everySatisfy, map, forEach, everySatisfyT, fromArrayT, keepT, concat, concatAll, distinctUntilChanged, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, toRunnable, last } from './runnable.mjs';
 import { dispatchTo } from './dispatcher.mjs';
 import { forEach as forEach$1 } from './enumerator.mjs';
-import { concat as concat$2, fromArray as fromArray$2, fromArrayT as fromArrayT$2, buffer, toRunnable as toRunnable$2, mapT, catchError, concatT, generate as generate$2, takeFirst as takeFirst$2, combineLatestWith, createObservable, createSubject, subscribe, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeT, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync, share, zip as zip$1, map as map$2, onNotify, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$1, zipT, zipLatestWith, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$2, skipFirst as skipFirst$2, takeWhile as takeWhile$2, decodeWithCharset, usingT } from './observable.mjs';
+import { concat as concat$2, fromArray as fromArray$2, fromArrayT as fromArrayT$2, buffer, toRunnable as toRunnable$2, mapT, catchError, concatT, generate as generate$2, takeFirst as takeFirst$2, combineLatestWith, createObservable, createSubject, observerCount, subscribe, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeT, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync, share, zip as zip$1, map as map$2, onNotify, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$1, zipT, zipLatestWith, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$2, skipFirst as skipFirst$2, takeWhile as takeWhile$2, decodeWithCharset, usingT } from './observable.mjs';
 import { createVirtualTimeScheduler, createHostScheduler, schedule } from './scheduler.mjs';
 import { type, fromArray as fromArray$3, concat as concat$3, concatAll as concatAll$2, distinctUntilChanged as distinctUntilChanged$3, generate as generate$3, keep, map as map$3, repeat as repeat$3, scan as scan$3, skipFirst as skipFirst$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$3, toRunnable as toRunnable$3, fromArrayT as fromArrayT$3, zipT as zipT$1 } from './sequence.mjs';
 import { identity as identity$1, __stream, createActionReducer, stream, empty as empty$1, createLiftedStreamable, sinkInto, flow, createFlowableSinkAccumulator, fromArray as fromArray$4, fromIterable as fromIterable$2, generate as generate$4, consume, consumeContinue, consumeDone, consumeAsync } from './streamable.mjs';
@@ -145,15 +145,15 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
 }), test("with multiple observers", () => {
     const scheduler = createVirtualTimeScheduler();
     const subject = createSubject();
-    pipe(subject.observerCount, expectEquals(0));
+    pipe(subject, observerCount, expectEquals(0));
     const sub1 = pipe(subject, subscribe(scheduler));
-    pipe(subject.observerCount, expectEquals(1));
+    pipe(subject, observerCount, expectEquals(1));
     const sub2 = pipe(subject, subscribe(scheduler));
-    pipe(subject.observerCount, expectEquals(2));
+    pipe(subject, observerCount, expectEquals(2));
     pipe(sub1, dispose());
-    pipe(subject.observerCount, expectEquals(1));
+    pipe(subject, observerCount, expectEquals(1));
     pipe(sub2, dispose());
-    pipe(subject.observerCount, expectEquals(0));
+    pipe(subject, observerCount, expectEquals(0));
 })), test("exhaustMap", defer([fromArray$2()([1, 2, 3]), fromArray$2()([4, 5, 6]), fromArray$2()([7, 8, 9])], fromArray$2(), concatMap({ ...exhaustT, ...mapT }, (x) => x), toRunnable$2(), toArray(), expectArrayEquals([1, 2, 3]))), describe("fromPromise", testAsync("when the promise resolves", async () => {
     const scheduler = createHostScheduler();
     const factory = () => Promise.resolve(1);
@@ -296,9 +296,7 @@ const tests$2 = describe("sequence", createRunnableTests({
 
 const tests$1 = describe("streamable", test("__stream", () => {
     const streamable = identity$1();
-    const createLooper = (stream) => pipe([0, 1, 2, 3], fromArray$2({ delay: 10 }), onNotify(x => {
-        stream.dispatch(x);
-    }), ignoreElements(keepT$2));
+    const createLooper = (stream) => pipe([0, 1, 2, 3], fromArray$2({ delay: 10 }), onNotify(dispatchTo(stream)), ignoreElements(keepT$2));
     const obs = observable(() => {
         var _a;
         const stream = __stream(streamable);
@@ -335,15 +333,15 @@ const tests$1 = describe("streamable", test("__stream", () => {
 })), test("with multiple observers", () => {
     const scheduler = createVirtualTimeScheduler();
     const incrStream = pipe(createLiftedStreamable(map$2(incrementBy(100))), stream(scheduler));
-    pipe(incrStream.observerCount, expectEquals(0));
+    pipe(incrStream, observerCount, expectEquals(0));
     const sub1 = pipe(incrStream, subscribe(scheduler));
-    pipe(incrStream.observerCount, expectEquals(1));
+    pipe(incrStream, observerCount, expectEquals(1));
     const sub2 = pipe(incrStream, subscribe(scheduler));
-    pipe(incrStream.observerCount, expectEquals(2));
+    pipe(incrStream, observerCount, expectEquals(2));
     pipe(sub1, dispose());
-    pipe(incrStream.observerCount, expectEquals(1));
+    pipe(incrStream, observerCount, expectEquals(1));
     pipe(sub2, dispose());
-    pipe(incrStream.observerCount, expectEquals(0));
+    pipe(incrStream, observerCount, expectEquals(0));
 }), test("map", () => {
     const scheduler = createVirtualTimeScheduler();
     const incrStream = pipe(createLiftedStreamable(map$2(incrementBy(100))), stream(scheduler));

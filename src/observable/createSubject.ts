@@ -1,4 +1,4 @@
-import { DispatcherLike } from "../dispatcher";
+import { DispatcherLike, dispatch } from "../dispatcher";
 import { add, isDisposed, onDisposed } from "../disposable";
 import { pipe } from "../functions";
 import { SubjectLike } from "../observable";
@@ -32,7 +32,7 @@ class SubjectImpl<T>
       }
 
       for (const observer of this.dispatchers) {
-        observer.dispatch(next);
+        pipe(observer, dispatch(next));
       }
     }
   }
@@ -56,7 +56,7 @@ class SubjectImpl<T>
     }
 
     for (const next of this.replayed) {
-      dispatcher.dispatch(next);
+      pipe(dispatcher, dispatch(next));
     }
 
     pipe(this, add(dispatcher, true));

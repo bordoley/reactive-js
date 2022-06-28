@@ -1,4 +1,5 @@
 import { ignoreElements } from "../container";
+import { dispatchTo } from "../dispatcher";
 import { addTo, bindTo } from "../disposable";
 import { Updater, compose, pipe, raise } from "../functions";
 import {
@@ -7,6 +8,7 @@ import {
   keep,
   keepT,
   map,
+  observerCount,
   onNotify,
   subscribe,
   takeWhile,
@@ -94,20 +96,20 @@ class WindowLocationStream
   }
 
   get observerCount() {
-    return this.stateStream.observerCount;
+    return observerCount(this.stateStream);
   }
 
   dispatch(
     stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
     { replace }: { replace: boolean } = { replace: false },
   ): void {
-    this.stateStream.dispatch(({ uri: stateURI }) => {
+    pipe(({ uri: stateURI }: TState) => {
       const uri =
         typeof stateOrUpdater === "function"
           ? stateOrUpdater(stateURI)
           : stateOrUpdater;
       return { uri, replace };
-    });
+    }, dispatchTo(this.stateStream));
   }
 
   goBack(): boolean {

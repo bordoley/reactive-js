@@ -1,11 +1,11 @@
 /// <reference types="./streamable.d.ts" />
 import { ignoreElements, startWith, fromValue, concatWith, concatMap } from './container.mjs';
-import { dispatchTo } from './dispatcher.mjs';
+import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
 import { enumerate, fromIterable as fromIterable$1 } from './enumerable.mjs';
 import { move, hasCurrent, current } from './enumerator.mjs';
 import { pipe, compose, flip, returns, updaterReducer, increment, identity as identity$1 } from './functions.mjs';
-import { AbstractDisposableObservable, createSubject, publish, __currentScheduler, __using, reduce, onNotify, keepT, concatT, fromArrayT, scanAsync, scan, map, onSubscribe, observable, __memo, __observe, zipWithLatestFrom, takeFirst, switchAll, createObservable, mergeT, distinctUntilChanged, subscribe, subscribeOn, fromDisposable, takeUntil, mapT, concatAllT, withLatestFrom, using, never, takeWhile, merge } from './observable.mjs';
+import { AbstractDisposableObservable, observerCount, createSubject, publish, __currentScheduler, __using, reduce, onNotify, keepT, concatT, fromArrayT, scanAsync, scan, map, onSubscribe, observable, __memo, __observe, zipWithLatestFrom, takeFirst, switchAll, createObservable, mergeT, distinctUntilChanged, subscribe, subscribeOn, fromDisposable, takeUntil, mapT, concatAllT, withLatestFrom, using, never, takeWhile, merge } from './observable.mjs';
 import { toPausableScheduler } from './scheduler.mjs';
 import { sinkInto as sinkInto$1, notifySink, sourceFrom } from './source.mjs';
 import { none } from './option.mjs';
@@ -17,10 +17,10 @@ class StreamImpl extends AbstractDisposableObservable {
         this.observable = observable;
     }
     get observerCount() {
-        return this.observable.observerCount;
+        return observerCount(this.observable);
     }
     dispatch(req) {
-        this.dispatcher.dispatch(req);
+        pipe(this.dispatcher, dispatch(req));
     }
     sink(observer) {
         pipe(this.observable, sinkInto$1(observer));
@@ -57,7 +57,7 @@ class FlowableSinkAccumulatorImpl extends AbstractDisposableObservable {
         this.streamable = streamable;
     }
     get observerCount() {
-        return this.subject.observerCount;
+        return observerCount(this.subject);
     }
     sink(observer) {
         pipe(this.subject, sinkInto$1(observer));
@@ -104,13 +104,13 @@ const consumeImpl = (consumer, initial) => {
     const createObservable = (accFeedback, enumerator) => pipe(enumerator, consumer(accFeedback), onNotify(ev => {
         switch (ev.type) {
             case "continue":
-                accFeedback.dispatch(ev.data);
-                enumerator.dispatch(none);
+                pipe(accFeedback, dispatch(ev.data));
+                pipe(enumerator, dispatch(none));
                 break;
         }
     }), map(ev => ev.data), onSubscribe(() => {
-        accFeedback.dispatch(initial());
-        enumerator.dispatch(none);
+        pipe(accFeedback, dispatch(initial()));
+        pipe(enumerator, dispatch(none));
     }));
     return enumerable => observable(() => {
         const enumerator = __stream(enumerable);

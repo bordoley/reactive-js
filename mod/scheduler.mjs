@@ -91,6 +91,7 @@ const runContinuation = (continuation) => scheduler => {
     }
     return scheduler;
 };
+const inContinuation = (scheduler) => scheduler.inContinuation;
 
 const isYieldError = (e) => e instanceof YieldError;
 class YieldError {
@@ -278,14 +279,14 @@ class PriorityScheduler extends AbstractSerialDisposable {
         let { priority } = options;
         priority = isSome(priority)
             ? priority
-            : this.inContinuation
+            : inContinuation(this)
                 ? this.current.priority
                 : Number.MAX_SAFE_INTEGER;
         pipe(this, add(continuation, true));
         if (!isDisposed(continuation)) {
             const { current, now } = this;
             const dueTime = Math.max(now + delay, now);
-            const task = this.inContinuation &&
+            const task = inContinuation(this) &&
                 isSome(current) &&
                 current.continuation === continuation &&
                 delay <= 0
@@ -331,7 +332,7 @@ class SchedulerWithPriorityImpl extends AbstractDisposable {
         this.priority = priority;
     }
     get inContinuation() {
-        return this.priorityScheduler.inContinuation;
+        return inContinuation(this.priorityScheduler);
     }
     get now() {
         return this.priorityScheduler.now;
@@ -543,4 +544,4 @@ const createVirtualTimeScheduler = (options = {}) => {
     return new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
 };
 
-export { __yield, createHostScheduler, createVirtualTimeScheduler, runContinuation, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };
+export { __yield, createHostScheduler, createVirtualTimeScheduler, inContinuation, runContinuation, schedule, toPausableScheduler, toPriorityScheduler, toSchedulerWithPriority };
