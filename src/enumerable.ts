@@ -26,6 +26,7 @@ import {
   current,
   hasCurrent,
   move,
+  reset,
 } from "./enumerator";
 import {
   Equality,
@@ -208,7 +209,7 @@ export const map: <TA, TB>(
     }
 
     move(): boolean {
-      this.reset();
+      reset(this);
 
       const { delegate } = this;
 
@@ -268,7 +269,7 @@ export const pairwise: <T>() => EnumerableOperator<T, [Option<T>, T]> =
       move(): boolean {
         const prev = (hasCurrent(this) ? current(this) : emptyArray)[1];
 
-        this.reset();
+        reset(this);
 
         const { delegate } = this;
         if (move(delegate)) {
@@ -303,7 +304,7 @@ export const scan: <T, TAcc>(
     move(): boolean {
       const acc = hasCurrent(this) ? current(this) : none;
 
-      this.reset();
+      reset(this);
 
       const { delegate, reducer } = this;
       if (isSome(acc) && move(delegate)) {

@@ -1,6 +1,6 @@
 import { AbstractDisposableContainer } from "./container";
 import { addTo, dispose, isDisposed, onDisposed } from "./disposable";
-import { Function1, SideEffect1, pipe, raise } from "./functions";
+import { Function1, SideEffect1, defer, pipe, raise } from "./functions";
 import { LiftedStateLike } from "./liftable";
 import { Option, none } from "./option";
 import {
@@ -25,10 +25,7 @@ export abstract class AbstractEnumerator<T> extends Enumerator<T> {
 
   constructor() {
     super();
-    pipe(
-      this,
-      onDisposed(_ => this.reset()),
-    );
+    pipe(this, onDisposed(defer(this, reset)));
   }
 
   get current(): T {
@@ -88,6 +85,9 @@ export const forEach =
     return enumerator;
   };
 
+export const reset = <T>(enumerator: AbstractEnumerator<T>) =>
+  enumerator.reset();
+
 const moveAll = (enumerators: readonly Enumerator<any>[]) => {
   for (const enumerator of enumerators) {
     move(enumerator);
@@ -103,7 +103,7 @@ class ZipEnumerator<T> extends AbstractEnumerator<readonly T[]> {
   }
 
   move(): boolean {
-    this.reset();
+    reset(this);
 
     if (!isDisposed(this)) {
       const { enumerators } = this;

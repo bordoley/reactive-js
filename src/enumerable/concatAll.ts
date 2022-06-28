@@ -14,6 +14,7 @@ import {
   current,
   hasCurrent,
   move,
+  reset,
 } from "../enumerator";
 import { pipe } from "../functions";
 import { enumerate } from "./enumerable";
@@ -28,7 +29,7 @@ class ConcatAllEnumerator<T> extends AbstractEnumerator<T> {
   }
 
   move(): boolean {
-    this.reset();
+    reset(this);
 
     const { delegate, enumerator } = this;
 
