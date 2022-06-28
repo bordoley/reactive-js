@@ -1,5 +1,5 @@
 import { FromArray, FromArrayOptions } from "../container";
-import { dispose } from "../disposable";
+import { dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { pipe } from "../functions";
 import { createEnumerable } from "./enumerable";
@@ -19,7 +19,7 @@ class ArrayEnumerator<T> extends AbstractEnumerator<T> {
 
     const { array } = this;
 
-    if (!this.isDisposed) {
+    if (!isDisposed(this)) {
       this.index++;
       const { index, endIndex } = this;
 

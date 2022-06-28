@@ -1,5 +1,5 @@
 import { FromIterable, FromIterator } from "../container";
-import { dispose } from "../disposable";
+import { dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { Factory, Function1, pipe } from "../functions";
 import { none } from "../option";
@@ -22,7 +22,7 @@ class IteratorEnumerator<
     this.hasCurrent = false;
     this.current = none;
 
-    if (!this.isDisposed) {
+    if (!isDisposed(this)) {
       const next = this.iterator.next();
 
       if (!next.done) {

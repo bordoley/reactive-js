@@ -1,5 +1,5 @@
 import { TakeLast, empty } from "../container";
-import { add, bindTo } from "../disposable";
+import { add, bindTo, isDisposed } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { pipe, raise } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
@@ -28,7 +28,7 @@ class TakeLastEnumerator<T> extends Enumerator<T> {
   move(): boolean {
     const { delegate } = this;
 
-    if (!this.isDisposed && isNone(this.enumerator)) {
+    if (!isDisposed(this) && isNone(this.enumerator)) {
       const last: Array<T> = [];
 
       while (delegate.move()) {

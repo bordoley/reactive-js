@@ -1,4 +1,4 @@
-import { add, onDisposed } from "../disposable";
+import { add, isDisposed, onDisposed } from "../disposable";
 import { pipe } from "../functions";
 import { DispatcherLike, SubjectLike } from "../observable";
 import { AbstractDisposableObservable } from "./observable";
@@ -20,7 +20,7 @@ class SubjectImpl<T>
   }
 
   dispatch(next: T) {
-    if (!this.isDisposed) {
+    if (!isDisposed(this)) {
       const { replay, replayed } = this;
 
       if (replay > 0) {
@@ -42,7 +42,7 @@ class SubjectImpl<T>
     // So we marshall those events back to the scheduler.
     const { dispatcher } = observer;
 
-    if (!this.isDisposed) {
+    if (!isDisposed(this)) {
       const { dispatchers } = this;
       dispatchers.add(dispatcher);
 

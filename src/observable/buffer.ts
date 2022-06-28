@@ -6,6 +6,7 @@ import {
   createSerialDisposable,
   dispose,
   disposed,
+  isDisposed,
   onComplete,
 } from "../disposable";
 import { Function1, pipe } from "../functions";
@@ -60,7 +61,7 @@ class BufferObserver<T> extends Observer<T> {
 
     if (buffer.length === maxBufferSize) {
       doOnNotify();
-    } else if (this.durationSubscription.inner.isDisposed) {
+    } else if (isDisposed(this.durationSubscription.inner)) {
       this.durationSubscription.inner = pipe(
         next,
         this.durationFunction,

@@ -25,6 +25,7 @@ import {
   addTo,
   createDisposable,
   dispose,
+  isDisposed,
   onError,
 } from "./disposable";
 import { Factory, compose, defer, ignore, pipe, returns } from "./functions";
@@ -144,7 +145,7 @@ class ReactPriorityScheduler
 
     pipe(this, add(continuation, true));
 
-    if (continuation.isDisposed) {
+    if (isDisposed(continuation)) {
       return;
     }
 

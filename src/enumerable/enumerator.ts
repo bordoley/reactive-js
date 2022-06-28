@@ -1,5 +1,5 @@
 import { AbstractDisposableContainer } from "../container";
-import { onDisposed } from "../disposable";
+import { isDisposed, onDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { pipe, raise } from "../functions";
 import { LiftedStateLike } from "../liftable";
@@ -32,7 +32,7 @@ export abstract class AbstractEnumerator<T> extends Enumerator<T> {
   }
 
   set current(v: T) {
-    if (!this.isDisposed) {
+    if (!isDisposed(this)) {
       this._current = v;
       this._hasCurrent = true;
     }

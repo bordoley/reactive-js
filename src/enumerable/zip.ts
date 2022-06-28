@@ -1,5 +1,5 @@
 import { Zip } from "../container";
-import { addTo, dispose } from "../disposable";
+import { addTo, dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { pipe } from "../functions";
 import { everySatisfy, forEach, map } from "../readonlyArray";
@@ -29,7 +29,7 @@ class ZipEnumerator<T> extends AbstractEnumerator<readonly T[]> {
   move(): boolean {
     this.reset();
 
-    if (!this.isDisposed) {
+    if (!isDisposed(this)) {
       const { enumerators } = this;
       moveAll(enumerators);
 

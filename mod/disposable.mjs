@@ -9,6 +9,7 @@ const dispose = (e) => disposable => {
     disposable.dispose(e);
     return disposable;
 };
+const isDisposed = (disposable) => disposable.isDisposed;
 function addDisposableOrTeardown(parent, child, ignoreChildErrors = false) {
     parent.add(child, ignoreChildErrors);
 }
@@ -88,7 +89,7 @@ class AbstractDisposable {
     /** @ignore */
     add(disposable, ignoreChildErrors) {
         const { disposables } = this;
-        if (this.isDisposed) {
+        if (isDisposed(this)) {
             doDispose(this, disposable);
         }
         else if (!disposables.has(disposable)) {
@@ -105,7 +106,7 @@ class AbstractDisposable {
     }
     /** @ignore */
     dispose(error) {
-        if (!this.isDisposed) {
+        if (!isDisposed(this)) {
             this.isDisposed = true;
             this._error = error;
             const disposables = this.disposables;
@@ -189,4 +190,4 @@ const toAbortSignal = (disposable) => {
     return abortController.signal;
 };
 
-export { AbstractDisposable, AbstractSerialDisposable, add, addTo, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
+export { AbstractDisposable, AbstractSerialDisposable, add, addTo, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

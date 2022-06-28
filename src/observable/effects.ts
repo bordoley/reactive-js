@@ -5,6 +5,7 @@ import {
   addTo,
   dispose,
   disposed,
+  isDisposed,
   onComplete,
 } from "../disposable";
 import { __DEV__ } from "../env";
@@ -145,12 +146,13 @@ class ObservableContext {
     const hasOutstandingEffects =
       effects.findIndex(
         effect =>
-          effect.type === EffectType.Observe && !effect.subscription.isDisposed,
+          effect.type === EffectType.Observe &&
+          !isDisposed(effect.subscription),
       ) >= 0;
 
     if (
       !hasOutstandingEffects &&
-      this.scheduledComputationSubscription.isDisposed
+      isDisposed(this.scheduledComputationSubscription)
     ) {
       pipe(this.observer, dispose());
     }
@@ -192,10 +194,11 @@ class ObservableContext {
           } else {
             let { scheduledComputationSubscription } = this;
 
-            this.scheduledComputationSubscription =
-              scheduledComputationSubscription.isDisposed
-                ? pipe(scheduler, schedule(runComputation), addTo(observer))
-                : scheduledComputationSubscription;
+            this.scheduledComputationSubscription = isDisposed(
+              scheduledComputationSubscription,
+            )
+              ? pipe(scheduler, schedule(runComputation), addTo(observer))
+              : scheduledComputationSubscription;
           }
         }),
         subscribe(observer.scheduler),
@@ -267,7 +270,7 @@ export const observable = <T>(
 
         if (
           type === EffectType.Observe &&
-          !(effect as ObserveEffect).subscription.isDisposed
+          !isDisposed((effect as ObserveEffect).subscription)
         ) {
           hasOutstandingEffects = true;
         }

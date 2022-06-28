@@ -1,5 +1,11 @@
 import { ConcatAll } from "../container";
-import { addTo, dispose, disposed, onComplete } from "../disposable";
+import {
+  addTo,
+  dispose,
+  disposed,
+  isDisposed,
+  onComplete,
+} from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { notifySink } from "../source";
@@ -9,7 +15,7 @@ import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 function onDispose(this: SwitchObserver<unknown>) {
-  if (this.inner.isDisposed) {
+  if (isDisposed(this.inner)) {
     pipe(this.delegate, dispose());
   }
 }
@@ -32,7 +38,7 @@ class SwitchObserver<T> extends Observer<ObservableLike<T>> {
       subscribe(this.scheduler),
       addTo(this.delegate),
       onComplete(() => {
-        if (this.isDisposed) {
+        if (isDisposed(this)) {
           pipe(this.delegate, dispose());
         }
       }),

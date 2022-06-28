@@ -1,4 +1,5 @@
 import { AbstractDisposableContainer } from "../container";
+import { isDisposed } from "../disposable";
 import { __DEV__ } from "../env";
 import { raise } from "../functions";
 import { SinkLike } from "../source";
@@ -13,7 +14,7 @@ export class Sink<T>
 }
 if (__DEV__) {
   Sink.prototype.assertState = function <T>(this: Sink<T>) {
-    if (this.isDisposed) {
+    if (isDisposed(this)) {
       raise("Sink is disposed");
     }
   };

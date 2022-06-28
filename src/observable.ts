@@ -20,6 +20,7 @@ import {
   add,
   bindTo,
   dispose,
+  isDisposed,
   onDisposed,
   toErrorHandler,
 } from "./disposable";
@@ -292,7 +293,7 @@ export const fromPromise = <T>(
 ): ObservableLike<T> =>
   createObservable(({ dispatcher }) => {
     factory().then(next => {
-      if (!dispatcher.isDisposed) {
+      if (!isDisposed(dispatcher)) {
         dispatcher.dispatch(next);
         pipe(dispatcher, dispose());
       }

@@ -1,5 +1,5 @@
 import { Generate } from "../container";
-import { dispose } from "../disposable";
+import { dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { Factory, Updater, pipe } from "../functions";
 import { createEnumerable } from "./enumerable";
@@ -12,7 +12,7 @@ class GenerateEnumerator<T> extends AbstractEnumerator<T> {
   }
 
   move(): boolean {
-    if (!this.isDisposed) {
+    if (!isDisposed(this)) {
       try {
         this.current = this.f(this.current);
       } catch (cause) {
