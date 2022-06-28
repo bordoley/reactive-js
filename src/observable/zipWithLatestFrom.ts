@@ -1,4 +1,4 @@
-import { add, dispose, onComplete } from "../disposable";
+import { add, dispose, isDisposed, onComplete } from "../disposable";
 import { Function2, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Option } from "../option";
@@ -53,7 +53,7 @@ export const zipWithLatestFrom = <TA, TB, T>(
 ): ObservableOperator<TA, T> => {
   const operator = (delegate: Observer<T>) => {
     const disposeDelegate = () => {
-      if (observer.isDisposed && otherSubscription.isDisposed) {
+      if (isDisposed(observer) && isDisposed(otherSubscription)) {
         pipe(delegate, dispose());
       }
     };
@@ -70,7 +70,7 @@ export const zipWithLatestFrom = <TA, TB, T>(
         observer.otherLatest = otherLatest;
         notifyDelegate(observer);
 
-        if (observer.isDisposed && observer.queue.length === 0) {
+        if (isDisposed(observer) && observer.queue.length === 0) {
           pipe(observer.delegate, dispose());
         }
       }),

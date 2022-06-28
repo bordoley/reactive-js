@@ -5,6 +5,7 @@ import {
   createSerialDisposable,
   dispose,
   disposed,
+  isDisposed,
   onDisposed,
 } from "../disposable";
 import { defer, pipe, raise } from "../functions";
@@ -28,23 +29,19 @@ export const tests = describe(
     "AbstractDisposable",
     test("disposes child disposable when disposed", () => {
       const child = createDisposable();
-
       pipe(createDisposable(), add(child, true), dispose());
-
-      expectTrue(child.isDisposed);
+      pipe(child, isDisposed, expectTrue);
     }),
 
     test("adding to disposed disposable disposes the child", () => {
       const child = createDisposable();
       pipe(createDisposable(), dispose(), add(child, true));
-
-      expectTrue(child.isDisposed);
+      pipe(child, isDisposed, expectTrue);
     }),
 
     test("disposes teardown function exactly once when disposed", () => {
       const teardown = mockFn();
       pipe(createDisposable(teardown), onDisposed(teardown), dispose());
-
       pipe(teardown, expectToHaveBeenCalledTimes(1));
     }),
 
@@ -80,7 +77,7 @@ export const tests = describe(
       pipe(serialDisposable.inner, expectEquals(child));
 
       serialDisposable.inner = disposed;
-      pipe(child.isDisposed, expectTrue);
+      pipe(child, isDisposed, expectTrue);
     }),
 
     test("setting inner disposable with the same inner disposable has no effect", () => {
@@ -91,7 +88,7 @@ export const tests = describe(
       pipe(serialDisposable.inner, expectEquals(child));
       serialDisposable.inner = child;
 
-      pipe(child.isDisposed, expectFalse);
+      pipe(child, isDisposed, expectFalse);
     }),
   ),
 
@@ -105,7 +102,7 @@ export const tests = describe(
       pipe(disposable, dispose());
 
       pipe(disposable.value, expectEquals(value));
-      pipe(value.isDisposed, expectTrue);
+      pipe(value, isDisposed, expectTrue);
     }),
   ),
 );

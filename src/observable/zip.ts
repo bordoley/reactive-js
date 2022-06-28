@@ -35,7 +35,7 @@ const shouldEmit = (enumerators: readonly Enumerator<unknown>[]) => {
 const shouldComplete = (enumerators: readonly Enumerator<unknown>[]) => {
   for (const enumerator of enumerators) {
     enumerator.move();
-    if (enumerator.isDisposed && !enumerator.hasCurrent) {
+    if (isDisposed(enumerator) && !enumerator.hasCurrent) {
       return true;
     }
   }
@@ -137,7 +137,7 @@ const _zip = (
             new ZipObserver(observer, enumerators, enumerator),
             onComplete(() => {
               if (
-                enumerator.isDisposed ||
+                isDisposed(enumerator) ||
                 (enumerator.buffer.length === 0 && !enumerator.hasCurrent)
               ) {
                 pipe(observer, dispose());

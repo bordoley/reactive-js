@@ -1,4 +1,4 @@
-import { AbstractDisposable, add, addTo } from "../disposable";
+import { AbstractDisposable, add, addTo, isDisposed } from "../disposable";
 import { Function1, pipe } from "../functions";
 import {
   PrioritySchedulerLike,
@@ -41,7 +41,7 @@ class SchedulerWithPriorityImpl
 
     pipe(this, add(continuation, true));
 
-    if (!continuation.isDisposed) {
+    if (!isDisposed(continuation)) {
       this.priorityScheduler.schedule(continuation, {
         priority: this.priority,
         delay,

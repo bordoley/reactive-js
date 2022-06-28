@@ -1,5 +1,5 @@
 /// <reference types="./__tests__.d.ts" />
-import { createDisposable, add, dispose, onDisposed, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
+import { createDisposable, add, dispose, isDisposed, onDisposed, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
 import { pipe, defer, raise, increment, sum, returns, alwaysTrue, incrementBy, alwaysFalse, arrayEquality, ignore, identity } from './functions.mjs';
 import { none, isSome } from './option.mjs';
 import { describe, test, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectNone, expectEquals, expectArrayEquals, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
@@ -14,11 +14,11 @@ import { identity as identity$1, __stream, createActionReducer, stream, empty as
 const tests$6 = describe("Disposable", describe("AbstractDisposable", test("disposes child disposable when disposed", () => {
     const child = createDisposable();
     pipe(createDisposable(), add(child, true), dispose());
-    expectTrue(child.isDisposed);
+    pipe(child, isDisposed, expectTrue);
 }), test("adding to disposed disposable disposes the child", () => {
     const child = createDisposable();
     pipe(createDisposable(), dispose(), add(child, true));
-    expectTrue(child.isDisposed);
+    pipe(child, isDisposed, expectTrue);
 }), test("disposes teardown function exactly once when disposed", () => {
     const teardown = mockFn();
     pipe(createDisposable(teardown), onDisposed(teardown), dispose());
@@ -41,20 +41,20 @@ const tests$6 = describe("Disposable", describe("AbstractDisposable", test("disp
     serialDisposable.inner = child;
     pipe(serialDisposable.inner, expectEquals(child));
     serialDisposable.inner = disposed;
-    pipe(child.isDisposed, expectTrue);
+    pipe(child, isDisposed, expectTrue);
 }), test("setting inner disposable with the same inner disposable has no effect", () => {
     const serialDisposable = createSerialDisposable();
     const child = createDisposable();
     serialDisposable.inner = child;
     pipe(serialDisposable.inner, expectEquals(child));
     serialDisposable.inner = child;
-    pipe(child.isDisposed, expectFalse);
+    pipe(child, isDisposed, expectFalse);
 })), describe("DisposableValue", test("disposes the value when disposed", () => {
     const value = createDisposable();
     const disposable = createDisposableValue(value, dispose());
     pipe(disposable, dispose());
     pipe(disposable.value, expectEquals(value));
-    pipe(value.isDisposed, expectTrue);
+    pipe(value, isDisposed, expectTrue);
 })));
 
 const createRunnableTests = (m) => describe("RunnableContainer", test("concat", defer(m.concat(empty(m), m.fromArray()([1, 2, 3]), empty(m), m.fromArray()([4, 5, 6])), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), describe("distinctUntilChanged", test("when source has duplicates in order", defer([1, 2, 2, 2, 2, 3, 3, 3, 4], m.fromArray(), m.distinctUntilChanged(), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4]))), test("when source is empty", defer([], m.fromArray(), m.distinctUntilChanged(), m.toRunnable(), toArray(), expectArrayEquals([])))), test("endWith", defer([1, 2, 3], m.fromArray(), endWith(m, 4), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4]))), test("concatMap", defer(0, fromValue(m), concatMap(m, defer([1, 2, 3], m.fromArray())), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), test("keep", defer([4, 8, 10, 7], m.fromArray(), m.keep(x => x > 5), m.toRunnable(), toArray(), expectArrayEquals([8, 10, 7]))), test("map", defer([1, 2, 3], m.fromArray(), m.map(increment), m.toRunnable(), toArray(), expectArrayEquals([2, 3, 4]))), test("mapTo", defer([1, 2, 3], m.fromArray(), mapTo(m, 2), m.toRunnable(), toArray(), expectArrayEquals([2, 2, 2]))), describe("repeat", test("when always repeating", defer([1, 2, 3], m.fromArray(), m.repeat(), m.takeFirst({ count: 6 }), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("when repeating a finite amount of times.", defer([1, 2, 3], m.fromArray(), m.repeat(3), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("when repeating with a predicate", defer([1, 2, 3], m.fromArray(), m.repeat(x => x < 1), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3])))), test("scan", defer([1, 1, 1], m.fromArray(), m.scan(sum, returns(0)), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), describe("skipFirst", test("when skipped source has additional elements", defer([1, 2, 3], m.fromArray(), m.skipFirst({ count: 2 }), m.toRunnable(), toArray(), expectArrayEquals([3]))), test("when all elements are skipped", defer([1, 2, 3], m.fromArray(), m.skipFirst({ count: 4 }), m.toRunnable(), toArray(), expectArrayEquals([])))), test("startWith", defer([1, 2, 3], m.fromArray(), startWith(m, 0), m.toRunnable(), toArray(), expectArrayEquals([0, 1, 2, 3]))), describe("takeFirst", test("when taking fewer than the total number of elements in the source", defer(m.generate(increment, returns(0)), m.takeFirst({ count: 3 }), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), test("when taking more than all the items produced by the source", defer(1, fromValue(m), m.takeFirst({ count: 3 }), m.toRunnable(), toArray(), expectArrayEquals([1])))), test("takeLast", defer([1, 2, 3, 4, 5], m.fromArray(), m.takeLast({ count: 3 }), m.toRunnable(), toArray(), expectArrayEquals([3, 4, 5]))), describe("takeWhile", test("exclusive", () => {
@@ -328,8 +328,8 @@ const tests$1 = describe("streamable", test("__stream", () => {
     }), subscribe(scheduler));
     scheduler.run();
     pipe(result, expectArrayEquals([]));
-    expectTrue(emptyStream.isDisposed);
-    expectTrue(subscription.isDisposed);
+    pipe(emptyStream, isDisposed, expectTrue);
+    pipe(subscription, isDisposed, expectTrue);
 })), test("with multiple observers", () => {
     const scheduler = createVirtualTimeScheduler();
     const incrStream = pipe(createLiftedStreamable(map$2(incrementBy(100))), stream(scheduler));
@@ -355,7 +355,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     }), subscribe(scheduler));
     scheduler.run();
     pipe(result, expectArrayEquals([110, 120, 130]));
-    expectTrue(subscription.isDisposed);
+    pipe(subscription, isDisposed, expectTrue);
 }), test("onNotify", () => {
     const scheduler = createVirtualTimeScheduler();
     let result = [];
@@ -366,7 +366,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     notifyStream.dispatch(2);
     notifyStream.dispatch(3);
     pipe(notifyStream, dispose());
-    expectTrue(notifyStream.isDisposed);
+    pipe(notifyStream, isDisposed, expectTrue);
     scheduler.run();
     pipe(result, expectArrayEquals([1, 2, 3]));
 }), test("scan", () => {
@@ -388,9 +388,9 @@ const tests$1 = describe("streamable", test("__stream", () => {
         result = v;
     }), mapTo(mapT, none), startWith({ ...concatT, ...fromArrayT$2 }, none));
     const subscription = pipe(src, sinkInto(dest), subscribe(scheduler));
-    expectFalse(subscription.isDisposed);
+    pipe(subscription, isDisposed, expectFalse);
     scheduler.run();
-    expectTrue(subscription.isDisposed);
+    pipe(subscription, isDisposed, expectTrue);
     pipe(result, expectEquals(3));
 }), describe("flow", test("empty source", () => {
     const scheduler = createVirtualTimeScheduler();
@@ -401,8 +401,8 @@ const tests$1 = describe("streamable", test("__stream", () => {
     const subscription = pipe(emptyStream, onNotify(f), subscribe(scheduler));
     scheduler.run();
     pipe(f, expectToHaveBeenCalledTimes(0));
-    expectTrue(subscription.isDisposed);
-    expectTrue(emptyStream.isDisposed);
+    pipe(subscription, isDisposed, expectTrue);
+    pipe(emptyStream, isDisposed, expectTrue);
 }), test("generate source", () => {
     const scheduler = createVirtualTimeScheduler();
     const generateStream = pipe(generate$2(increment, returns(-1), { delay: 1 }), flow({ scheduler }), stream(scheduler));
@@ -423,7 +423,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(f.calls[0][1], expectEquals(0));
     pipe(f.calls[1][1], expectEquals(1));
     pipe(f.calls[2][1], expectEquals(2));
-    expectTrue(subscription.isDisposed);
+    pipe(subscription, isDisposed, expectTrue);
 }), test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
     const fromValueStream = pipe([1], fromArray$2(), flow(), stream(scheduler));
@@ -434,8 +434,8 @@ const tests$1 = describe("streamable", test("__stream", () => {
     scheduler.run();
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(1));
-    expectTrue(subscription.isDisposed);
-    expectTrue(fromValueStream.isDisposed);
+    pipe(subscription, isDisposed, expectTrue);
+    pipe(fromValueStream, isDisposed, expectTrue);
 })), describe("io", test("decodeWithCharset", () => {
     const src = pipe([
         Uint8Array.from([226]),
@@ -450,7 +450,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     scheduler.run();
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(String.fromCodePoint(8364)));
-    expectTrue(subscription.isDisposed);
+    pipe(subscription, isDisposed, expectTrue);
 }), test("empty", () => {
     const scheduler = createVirtualTimeScheduler();
     const emptyStream = pipe(empty(fromArrayT$2), flow(), stream(scheduler));
@@ -460,8 +460,8 @@ const tests$1 = describe("streamable", test("__stream", () => {
     const subscription = pipe(emptyStream, onNotify(f), subscribe(scheduler));
     scheduler.run();
     pipe(f, expectToHaveBeenCalledTimes(0));
-    expectTrue(subscription.isDisposed);
-    expectTrue(emptyStream.isDisposed);
+    pipe(subscription, isDisposed, expectTrue);
+    pipe(emptyStream, isDisposed, expectTrue);
 }), test("encodeUtf8", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
     const src = pipe(str, fromValue(fromArrayT$2), encodeUtf8({ ...mapT, ...usingT }), decodeWithCharset(), flow());
@@ -473,7 +473,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     scheduler.run();
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(str));
-    expectTrue(subscription.isDisposed);
+    pipe(subscription, isDisposed, expectTrue);
 }), test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
     const fromValueStream = pipe(1, fromValue(fromArrayT$2), flow(), stream(scheduler));
@@ -483,8 +483,8 @@ const tests$1 = describe("streamable", test("__stream", () => {
     scheduler.run();
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(1));
-    expectTrue(subscription.isDisposed);
-    expectTrue(fromValueStream.isDisposed);
+    pipe(subscription, isDisposed, expectTrue);
+    pipe(fromValueStream, isDisposed, expectTrue);
 }), test("map", () => {
     const src = pipe(1, fromValue(fromArrayT$2), map$2(returns(2)), flow());
     const dest = createFlowableSinkAccumulator(sum, returns(0), {
@@ -497,7 +497,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     scheduler.run();
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(2));
-    expectTrue(subscription.isDisposed);
+    pipe(subscription, isDisposed, expectTrue);
 })), test("fromArray", () => {
     const scheduler = createVirtualTimeScheduler();
     const enumerable = pipe([1, 2, 3, 4, 5, 6], fromArray$4());

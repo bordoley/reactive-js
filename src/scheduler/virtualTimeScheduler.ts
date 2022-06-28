@@ -27,7 +27,7 @@ const move = (scheduler: VirtualTimeSchedulerImpl) => {
 
   scheduler.hasCurrent = false;
 
-  if (!scheduler.isDisposed) {
+  if (!isDisposed(scheduler)) {
     const task = taskQueue.pop();
 
     if (isSome(task)) {
@@ -100,7 +100,7 @@ class VirtualTimeSchedulerImpl
 
     pipe(this, add(continuation, true));
 
-    if (!continuation.isDisposed) {
+    if (!isDisposed(continuation)) {
       const work: VirtualTask = {
         id: this.taskIDCount++,
         dueTime: this.now + delay,
