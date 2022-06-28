@@ -156,7 +156,9 @@ declare const strictEquality: <T>(a: T, b: T) => boolean;
  * Returns a predicate function comparing its argument to `b` using the
  * provided `equality` function.
  */
-declare const isEqualTo: <T>(b: T, equality?: Equality<T>) => Predicate<T>;
+declare const isEqualTo: <T>(b: T, options?: {
+    equality?: Equality<T> | undefined;
+}) => Predicate<T>;
 /**
  * Returns `true` if `x` is an even number, otherwise `false`.
  */

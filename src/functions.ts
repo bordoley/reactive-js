@@ -296,9 +296,13 @@ const isStrictlyEqualTo =
  */
 export const isEqualTo = <T>(
   b: T,
-  equality: Equality<T> = strictEquality,
-): Predicate<T> =>
-  equality === strictEquality ? isStrictlyEqualTo(b) : (a: T) => equality(a, b);
+  options: { equality?: Equality<T> } = { equality: strictEquality },
+): Predicate<T> => {
+  const equality = options.equality ?? strictEquality;
+  return equality === strictEquality
+    ? isStrictlyEqualTo(b)
+    : (a: T) => equality(a, b);
+};
 
 /**
  * Returns `true` if `x` is an even number, otherwise `false`.

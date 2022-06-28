@@ -1,6 +1,6 @@
 /// <reference types="./container.d.ts" />
 import { AbstractDisposable, createDisposableValue } from './disposable.mjs';
-import { raise, compose, callWith, strictEquality, isEqualTo, ignore, pipe, pipeLazy, alwaysFalse, returns, negate } from './functions.mjs';
+import { raise, compose, callWith, isEqualTo, ignore, pipe, pipeLazy, alwaysFalse, returns, negate } from './functions.mjs';
 import { isSome } from './option.mjs';
 import { empty as empty$1 } from './readonlyArray.mjs';
 
@@ -24,10 +24,7 @@ const compute = (m, options) => compose(fromValue(m, options), m.map(callWith())
 const concatMap = ({ map, concatAll }, mapper, options) => compose(map(mapper), concatAll(options));
 const concatWith = ({ concat }, snd) => first => concat(first, snd);
 const empty = ({ fromArray }, options) => fromArray({ ...options })(empty$1);
-const contains = ({ someSatisfy }, value, options = {}) => {
-    const { equality = strictEquality } = options;
-    return someSatisfy(isEqualTo(value, equality));
-};
+const contains = ({ someSatisfy }, value, options = {}) => someSatisfy(isEqualTo(value, options));
 const encodeUtf8 = (m) => obs => m.using(() => createDisposableValue(new TextEncoder(), ignore), v => pipe(obs, m.map(s => v.value.encode(s))));
 function endWith(m, ...values) {
     return concatWith(m, m.fromArray()(values));

@@ -1525,7 +1525,7 @@ ___
 
 ### isEqualTo
 
-▸ **isEqualTo**<`T`\>(`b`, `equality?`): [`Predicate`](functions.md#predicate)<`T`\>
+▸ **isEqualTo**<`T`\>(`b`, `options?`): [`Predicate`](functions.md#predicate)<`T`\>
 
 Returns a predicate function comparing its argument to `b` using the
 provided `equality` function.
@@ -1541,7 +1541,8 @@ provided `equality` function.
 | Name | Type |
 | :------ | :------ |
 | `b` | `T` |
-| `equality?` | [`Equality`](functions.md#equality)<`T`\> |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
 
 #### Returns
 

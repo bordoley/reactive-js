@@ -59,7 +59,13 @@ const isStrictlyEqualTo = (b) => a => a === b;
  * Returns a predicate function comparing its argument to `b` using the
  * provided `equality` function.
  */
-const isEqualTo = (b, equality = strictEquality) => equality === strictEquality ? isStrictlyEqualTo(b) : (a) => equality(a, b);
+const isEqualTo = (b, options = { equality: strictEquality }) => {
+    var _a;
+    const equality = (_a = options.equality) !== null && _a !== void 0 ? _a : strictEquality;
+    return equality === strictEquality
+        ? isStrictlyEqualTo(b)
+        : (a) => equality(a, b);
+};
 /**
  * Returns `true` if `x` is an even number, otherwise `false`.
  */
