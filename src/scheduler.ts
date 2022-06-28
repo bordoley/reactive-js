@@ -80,10 +80,8 @@ export interface PrioritySchedulerLike extends DisposableLike {
   ): void;
 }
 
-export {
-  toPriorityScheduler,
-  toPausableScheduler,
-} from "./scheduler/priorityQueueScheduler";
+export { createPriorityScheduler } from "./scheduler/priorityScheduler";
+export { createPausableScheduler } from "./scheduler/pausableScheduler";
 export { schedule, __yield } from "./scheduler/schedulerContinuation";
 export { toSchedulerWithPriority } from "./scheduler/schedulerWithPriority";
 export { createHostScheduler } from "./scheduler/hostScheduler";
