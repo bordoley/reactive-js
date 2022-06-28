@@ -103,12 +103,12 @@ const arrayEquality = (valuesEquality = strictEquality) => (a, b) => a.length ==
  * A `Reducer` functions that applies `updater` to `acc` to compute the next
  * accumulator value.
  */
-const updaterReducer = (acc, updater) => updater(acc);
+const updateReducer = (acc, updater) => updater(acc);
 /**
  * Pipes `source` through a series of unary functions.
  */
 function pipe(source, ...operators) {
-    return operators.reduce(updaterReducer, source);
+    return operators.reduce(updateReducer, source);
 }
 /**
  * Composes a series of unary functions.
@@ -133,4 +133,4 @@ function flip(f) {
     };
 }
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, defer, flip, identity, ignore, increment, incrementBy, isEqualTo, isEven, isOdd, negate, pipe, raise, returns, strictEquality, sum, updaterReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, defer, flip, identity, ignore, increment, incrementBy, isEqualTo, isEven, isOdd, negate, pipe, raise, returns, strictEquality, sum, updateReducer };

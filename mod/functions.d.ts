@@ -187,7 +187,7 @@ declare const arrayEquality: <T>(valuesEquality?: Equality<T>) => Equality<reado
  * A `Reducer` functions that applies `updater` to `acc` to compute the next
  * accumulator value.
  */
-declare const updaterReducer: <T>(acc: T, updater: Updater<T>) => T;
+declare const updateReducer: <T>(acc: T, updater: Updater<T>) => T;
 declare function pipe<T, A>(src: T, op1: Function1<T, A>): A;
 declare function pipe<T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): B;
 declare function pipe<T, A, B, C>(src: T, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>): C;
@@ -227,4 +227,4 @@ declare function defer<T, A, B, C, D, E, F, G, H, I, J, K, L>(src: T, op1: Funct
 declare function defer(source: unknown, ...operators: Function1<any, unknown>[]): Factory<unknown>;
 declare function flip<TA, TB, T>(f: Function2<TA, TB, T>): Function2<TB, TA, T>;
 declare function flip<TA, TB, TC, T>(f: Function3<TA, TB, TC, T>): Function3<TC, TB, TA, T>;
-export { Comparator, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, defer, flip, identity, ignore, increment, incrementBy, isEqualTo, isEven, isOdd, negate, pipe, raise, returns, strictEquality, sum, updaterReducer };
+export { Comparator, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, defer, flip, identity, ignore, increment, incrementBy, isEqualTo, isEven, isOdd, negate, pipe, raise, returns, strictEquality, sum, updateReducer };

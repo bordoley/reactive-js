@@ -24,7 +24,7 @@ import {
   increment,
   pipe,
   returns,
-  updaterReducer,
+  updateReducer,
 } from "./functions";
 import {
   ObservableLike,
@@ -148,7 +148,7 @@ export const createStateStore = <T>(
   initialState: Factory<T>,
   options?: { readonly equality?: Equality<T> },
 ): StreamableStateLike<T> =>
-  createActionReducer(updaterReducer, initialState, options);
+  createActionReducer(updateReducer, initialState, options);
 
 const _empty = createLiftedStreamable<any, any>(takeFirst({ count: 0 }));
 
