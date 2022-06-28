@@ -19,6 +19,7 @@
 
 - [ContraVariant](liftable.md#contravariant)
 - [Covariant](liftable.md#covariant)
+- [DelegatingLiftableStateOf](liftable.md#delegatingliftablestateof)
 - [LiftOperator](liftable.md#liftoperator)
 - [LiftOperatorIn](liftable.md#liftoperatorin)
 - [LiftOperatorOut](liftable.md#liftoperatorout)
@@ -55,6 +56,20 @@ ___
 ### Covariant
 
 Ƭ **Covariant**: ``0``
+
+___
+
+### DelegatingLiftableStateOf
+
+Ƭ **DelegatingLiftableStateOf**<`C`, `T`, `TDelegate`\>: [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `T`\> & { `delegate`: [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `TDelegate`\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `T` | `T` |
+| `TDelegate` | `TDelegate` |
 
 ___
 
