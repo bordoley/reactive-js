@@ -16,6 +16,7 @@ import {
   TakeWhile,
   Zip,
 } from "./container";
+import { dispose } from "./disposable";
 import {
   AbstractEnumerator,
   EnumerableLike,
@@ -515,7 +516,7 @@ class SequenceEnumerator<T> extends AbstractEnumerator<T> {
         this.current = next.data;
         this.seq = next.next;
       } else {
-        this.dispose();
+        pipe(this, dispose());
       }
     }
     return this.hasCurrent;

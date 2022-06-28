@@ -1,6 +1,7 @@
+import { dispose } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { RunnableLike, RunnableOperator } from "../runnable";
-import { Lift } from "../source";
+import { Lift, sourceFrom } from "../source";
 import { AbstractRunnable } from "./runnable";
 import { Sink } from "./sinks";
 
@@ -13,9 +14,11 @@ class LiftedRunnable<T> extends AbstractRunnable<T> {
   }
 
   sink(sink: Sink<T>) {
-    const liftedSink = pipe(sink, ...this.operators) as Sink<T>;
-    this.src.sink(liftedSink);
-    liftedSink.dispose();
+    pipe(
+      pipe(sink, ...this.operators) as Sink<T>,
+      sourceFrom(this.src),
+      dispose(),
+    );
   }
 }
 

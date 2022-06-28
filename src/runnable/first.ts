@@ -1,4 +1,5 @@
-import { Function1 } from "../functions";
+import { dispose } from "../disposable";
+import { Function1, pipe } from "../functions";
 import { Option, none } from "../option";
 import { RunnableLike } from "../runnable";
 import { run } from "./run";
@@ -9,7 +10,7 @@ class FirstSink<T> extends Sink<T> {
 
   notify(next: T) {
     this.result = next;
-    this.dispose();
+    pipe(this, dispose());
   }
 }
 

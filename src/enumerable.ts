@@ -375,7 +375,7 @@ export const takeFirst: <T>(options?: {
         this.count++;
         this.delegate.move();
       } else {
-        this.dispose();
+        pipe(this, dispose());
       }
 
       return this.hasCurrent;

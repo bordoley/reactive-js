@@ -1,5 +1,5 @@
 /// <reference types="./enumerable.d.ts" />
-import { onDisposed, createSerialDisposable, bindTo, add, addTo, dispose } from './disposable.mjs';
+import { onDisposed, dispose, createSerialDisposable, bindTo, add, addTo } from './disposable.mjs';
 import { pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { AbstractDisposableContainer, empty } from './container.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -67,7 +67,7 @@ class ArrayEnumerator extends AbstractEnumerator {
                 this.current = array[index];
             }
             else {
-                this.dispose();
+                pipe(this, dispose());
             }
         }
         return this.hasCurrent;
@@ -101,9 +101,7 @@ class CreateEnumerable extends AbstractEnumerable {
             return this._enumerate();
         }
         catch (cause) {
-            const enumerator = pipe(empty(fromArrayT), enumerate);
-            enumerator.dispose({ cause });
-            return enumerator;
+            return pipe(empty(fromArrayT), enumerate, dispose({ cause }));
         }
     }
 }
@@ -160,7 +158,7 @@ class ConcatAllEnumerator extends AbstractEnumerator {
                 enumerator.inner = enumerate(delegate.current);
             }
             else {
-                this.dispose();
+                pipe(this, dispose());
             }
         }
         return this.hasCurrent;
@@ -195,7 +193,7 @@ class IteratorEnumerator extends Enumerator {
                 this.current = next.value;
             }
             else {
-                this.dispose();
+                pipe(this, dispose());
             }
         }
         return this.hasCurrent;
@@ -239,7 +237,7 @@ class GenerateEnumerator extends AbstractEnumerator {
                 this.current = this.f(this.current);
             }
             catch (cause) {
-                this.dispose({ cause });
+                pipe(this, dispose({ cause }));
             }
         }
         return this.hasCurrent;
@@ -287,7 +285,7 @@ class RepeatEnumerator extends Enumerator {
                 }
             }
             catch (cause) {
-                this.dispose({ cause });
+                pipe(this, dispose({ cause }));
                 break;
             }
         }
@@ -362,7 +360,7 @@ const enumeratorToRunnable = (f) => {
         while (enumerator.move()) {
             sink.notify(enumerator.current);
         }
-        enumerator.dispose();
+        pipe(enumerator, dispose());
     };
     return createRunnable(run);
 };
@@ -409,7 +407,7 @@ class ZipEnumerator extends AbstractEnumerator {
                 this.current = pipe(enumerators, map$1(current));
             }
             else {
-                this.dispose();
+                pipe(this, dispose());
             }
         }
         return this.hasCurrent;
@@ -603,7 +601,7 @@ const takeFirst = createTakeFirstLiftedOperator({ ...fromArrayT, ...liftT }, cla
             this.delegate.move();
         }
         else {
-            this.dispose();
+            pipe(this, dispose());
         }
         return this.hasCurrent;
     }

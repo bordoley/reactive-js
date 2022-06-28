@@ -1,6 +1,7 @@
 import { Generate } from "../container";
+import { dispose } from "../disposable";
 import { EnumerableLike } from "../enumerable";
-import { Factory, Updater } from "../functions";
+import { Factory, Updater, pipe } from "../functions";
 import { createEnumerable } from "./enumerable";
 import { AbstractEnumerator } from "./enumerator";
 
@@ -15,7 +16,7 @@ class GenerateEnumerator<T> extends AbstractEnumerator<T> {
       try {
         this.current = this.f(this.current);
       } catch (cause) {
-        this.dispose({ cause });
+        pipe(this, dispose({ cause }));
       }
     }
     return this.hasCurrent;

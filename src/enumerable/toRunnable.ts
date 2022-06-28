@@ -1,4 +1,4 @@
-import { add } from "../disposable";
+import { add, dispose } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { Factory, Function1, pipe } from "../functions";
 import { RunnableLike, Sink, ToRunnable, createRunnable } from "../runnable";
@@ -12,7 +12,7 @@ const enumeratorToRunnable = <T>(
     while (enumerator.move()) {
       sink.notify(enumerator.current);
     }
-    enumerator.dispose();
+    pipe(enumerator, dispose());
   };
   return createRunnable(run);
 };

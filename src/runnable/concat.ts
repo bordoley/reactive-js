@@ -1,7 +1,8 @@
 import { ConcatAll } from "../container";
-import { addTo } from "../disposable";
+import { addTo, dispose } from "../disposable";
 import { pipe } from "../functions";
 import { RunnableLike, RunnableOperator } from "../runnable";
+import { sourceFrom } from "../source";
 import { lift } from "./lift";
 import { Sink, createDelegatingSink } from "./sinks";
 
@@ -12,10 +13,12 @@ class FlattenSink<T> extends Sink<RunnableLike<T>> {
 
   notify(next: RunnableLike<T>) {
     const { delegate } = this;
-    const concatSink = pipe(createDelegatingSink(delegate), addTo(this));
-
-    next.sink(concatSink);
-    concatSink.dispose();
+    pipe(
+      createDelegatingSink(delegate),
+      addTo(this),
+      sourceFrom(next),
+      dispose(),
+    );
   }
 }
 

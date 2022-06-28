@@ -1,8 +1,8 @@
 /// <reference types="./observable.d.ts" />
 import { AbstractDisposableContainer, empty, fromValue, throws, concatMap } from './container.mjs';
-import { onDisposed, add, addTo, dispose, onComplete, AbstractDisposable, disposed, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
+import { dispose, onDisposed, add, addTo, onComplete, AbstractDisposable, disposed, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
 import { pipe, raise, arrayEquality, ignore, defer as defer$1, compose, returns } from './functions.mjs';
-import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, notifySink, createUsing, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
+import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, notifySink, createUsing, notify, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { schedule, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
 import { __DEV__ } from './env.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -25,7 +25,7 @@ class CreateObservable extends AbstractObservable {
             this.f(observer);
         }
         catch (cause) {
-            observer.dispose({ cause });
+            pipe(observer, dispose({ cause }));
         }
     }
 }
@@ -87,9 +87,7 @@ const defer = (factory, options) => createObservable(observer => {
     pipe(observer.scheduler, schedule(callback, options), addTo(observer));
 });
 
-const deferEmpty = createObservable(observer => {
-    observer.dispose();
-});
+const deferEmpty = createObservable(dispose());
 deferEmpty.isEnumerable = true;
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
@@ -420,7 +418,7 @@ class ObservableContext {
             const hasOutstandingEffects = effects.findIndex(effect => effect.type === 2 /* EffectType.Observe */ && !effect.subscription.isDisposed) >= 0;
             if (!hasOutstandingEffects &&
                 this.scheduledComputationSubscription.isDisposed) {
-                this.observer.dispose();
+                pipe(this.observer, dispose());
             }
         };
     }
@@ -546,8 +544,7 @@ const __observe = (observable) => {
 };
 const deferSideEffect = (f, ...args) => defer(() => observer => {
     f(...args);
-    observer.notify(none);
-    observer.dispose();
+    pipe(observer, notify(none), dispose());
 });
 function __do(f, ...args) {
     const ctx = assertCurrentContext();
@@ -1529,7 +1526,7 @@ const toRunnable = (options = {}) => source => createRunnable(sink => {
     const subscription = pipe(source, onNotify(notifySink(sink)), subscribe(scheduler));
     pipe(sink, add(scheduler), add(subscription));
     scheduler.run();
-    scheduler.dispose();
+    pipe(scheduler, dispose());
 });
 const toRunnableT = {
     toRunnable,

@@ -7,9 +7,7 @@ import { createObservable } from "./createObservable";
 import { defer } from "./defer";
 import { Observer } from "./observer";
 
-const deferEmpty = createObservable(observer => {
-  observer.dispose();
-});
+const deferEmpty = createObservable(dispose());
 (deferEmpty as any).isEnumerable = true;
 
 /**

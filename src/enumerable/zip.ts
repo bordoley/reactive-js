@@ -1,5 +1,5 @@
 import { Zip } from "../container";
-import { addTo } from "../disposable";
+import { addTo, dispose } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { pipe } from "../functions";
 import { everySatisfy, forEach, map } from "../readonlyArray";
@@ -36,7 +36,7 @@ class ZipEnumerator<T> extends AbstractEnumerator<readonly T[]> {
       if (allHaveCurrent(enumerators)) {
         this.current = pipe(enumerators, map(current));
       } else {
-        this.dispose();
+        pipe(this, dispose());
       }
     }
 

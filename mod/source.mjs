@@ -10,6 +10,10 @@ class AbstractSource extends AbstractLiftable {
 }
 class AbstractDisposableSource extends AbstractDisposableLiftable {
 }
+const notify = (v) => (sink) => {
+    sink.notify(v);
+    return sink;
+};
 const notifySink = (sink) => (next) => sink.notify(next);
 const sinkInto = (sink) => source => {
     source.sink(sink);
@@ -55,7 +59,7 @@ const createDecodeWithCharsetOperator = (m, DecodeWithCharsetSink) => {
                     pipe(data, fromValue(m), sinkInto(delegate));
                 }
                 else {
-                    delegate.dispose();
+                    pipe(delegate, dispose());
                 }
             }));
         };
@@ -80,8 +84,7 @@ const createSatisfyOperator = (m, SatisfySink, defaultResult) => {
         this.assertState();
         if (this.predicate(next)) {
             const { delegate } = this;
-            delegate.notify(!defaultResult);
-            delegate.dispose();
+            pipe(delegate, notify(!defaultResult), dispose());
         }
     };
     return (predicate) => {
@@ -231,4 +234,4 @@ const createOnSink = (m) => (f) => src => m.create(sink => {
 });
 const createUsing = (m) => (resourceFactory, sourceFactory) => m.create(sink => pipe(resourceFactory(), resources => (Array.isArray(resources) ? resources : [resources]), forEach(addTo(sink)), (resources) => sourceFactory(...resources), sinkInto(sink)));
 
-export { AbstractDisposableSource, AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, notifySink, sinkInto, sourceFrom };
+export { AbstractDisposableSource, AbstractSource, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, notify, notifySink, sinkInto, sourceFrom };

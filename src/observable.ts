@@ -673,7 +673,7 @@ export const toRunnable =
       pipe(sink, add(scheduler), add(subscription));
 
       scheduler.run();
-      scheduler.dispose();
+      pipe(scheduler, dispose());
     });
 
 export const toRunnableT: ToRunnable<ObservableLike<unknown>> = {

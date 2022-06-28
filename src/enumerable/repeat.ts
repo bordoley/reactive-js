@@ -1,5 +1,5 @@
 import { Repeat } from "../container";
-import { addTo } from "../disposable";
+import { addTo, dispose } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { Predicate, alwaysTrue, pipe, raise } from "../functions";
 import { Option, isNone } from "../option";
@@ -40,7 +40,7 @@ class RepeatEnumerator<T> extends Enumerator<T> {
           break;
         }
       } catch (cause) {
-        this.dispose({ cause });
+        pipe(this, dispose({ cause }));
         break;
       }
     }
