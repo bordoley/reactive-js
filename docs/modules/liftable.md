@@ -34,6 +34,7 @@
 - [createTakeFirstLiftedOperator](liftable.md#createtakefirstliftedoperator)
 - [createTakeWhileLiftedOperator](liftable.md#createtakewhileliftedoperator)
 - [createThrowIfEmptyLiftedOperator](liftable.md#createthrowifemptyliftedoperator)
+- [lift](liftable.md#lift)
 
 ## Type Aliases
 
@@ -514,3 +515,28 @@ ___
 ##### Returns
 
 [`ContainerOperator`](container.md#containeroperator)<`C`, `T_1`, `T_1`\>
+
+___
+
+### lift
+
+▸ **lift**<`C`, `TA`, `TB`, `TVariance`\>(`m`): [`Function1`](functions.md#function1)<[`LiftOperator`](liftable.md#liftoperator)<`C`, `TA`, `TB`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\>, [`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, `TB`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TVariance` | extends ``"covariant"`` \| ``"contravariant"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`LiftOperator`](liftable.md#liftoperator)<`C`, `TA`, `TB`, [`Lift`](../interfaces/liftable.Lift.md)<`C`, `TVariance`\>\>, [`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, `TB`\>\>

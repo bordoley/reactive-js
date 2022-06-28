@@ -47,6 +47,7 @@ import {
   createTakeFirstLiftedOperator,
   createTakeWhileLiftedOperator,
   createThrowIfEmptyLiftedOperator,
+  lift,
 } from "./liftable";
 import { Option, isSome, none } from "./option";
 import { forEach } from "./readonlyArray";
@@ -77,6 +78,11 @@ export interface Lift<C extends SourceLike>
 export interface CreateSource<C extends SourceLike> extends Container<C> {
   create<T>(onSink: (sink: LiftedStateOf<C, T>) => void): ContainerOf<C, T>;
 }
+
+const create =
+  <C extends SourceLike, T>(m: CreateSource<C>) =>
+  (onSink: (sink: LiftedStateOf<C, T>) => void): ContainerOf<C, T> =>
+    m.create(onSink);
 
 export abstract class AbstractSource<T, TSink extends SinkLike<T>>
   extends AbstractLiftable<TSink>
@@ -148,26 +154,27 @@ export const createCatchErrorOperator =
       this.delegate.notify(next);
     };
 
-    const operator = (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> =>
-      pipe(
-        new CatchErrorSink(delegate),
-        addTo(delegate, true),
-        onComplete(() => pipe(delegate, dispose())),
-        onError(e => {
-          try {
-            const result = f(e.cause) || none;
-            if (isSome(result)) {
-              pipe(result, sinkInto(delegate));
-            } else {
-              pipe(delegate, dispose());
+    return pipe(
+      (delegate: LiftedStateOf<C, T>): LiftedStateOf<C, T> =>
+        pipe(
+          new CatchErrorSink(delegate),
+          addTo(delegate, true),
+          onComplete(() => pipe(delegate, dispose())),
+          onError(e => {
+            try {
+              const result = f(e.cause) || none;
+              if (isSome(result)) {
+                pipe(result, sinkInto(delegate));
+              } else {
+                pipe(delegate, dispose());
+              }
+            } catch (cause) {
+              pipe(delegate, dispose({ cause: { parent: e.cause, cause } }));
             }
-          } catch (cause) {
-            pipe(delegate, dispose({ cause: { parent: e.cause, cause } }));
-          }
-        }),
-      );
-
-    return m.lift(operator);
+          }),
+        ),
+      lift(m),
+    );
   };
 
 export const createDecodeWithCharsetOperator = <C extends SourceLike>(
@@ -193,27 +200,26 @@ export const createDecodeWithCharsetOperator = <C extends SourceLike>(
     }
   };
 
-  return (charset = "utf-8") => {
-    const operator = (
-      delegate: LiftedStateOf<C, string>,
-    ): LiftedStateOf<C, ArrayBuffer> => {
-      const textDecoder = new TextDecoder(charset, { fatal: true });
-      return pipe(
-        new DecodeWithCharsetSink(delegate, textDecoder),
-        addTo(delegate),
-        onComplete(() => {
-          const data = textDecoder.decode();
+  return (charset = "utf-8") =>
+    pipe(
+      (delegate: LiftedStateOf<C, string>): LiftedStateOf<C, ArrayBuffer> => {
+        const textDecoder = new TextDecoder(charset, { fatal: true });
+        return pipe(
+          new DecodeWithCharsetSink(delegate, textDecoder),
+          addTo(delegate),
+          onComplete(() => {
+            const data = textDecoder.decode();
 
-          if (data.length > 0) {
-            pipe(data, fromValue(m), sinkInto(delegate));
-          } else {
-            pipe(delegate, dispose());
-          }
-        }),
-      );
-    };
-    return m.lift(operator);
-  };
+            if (data.length > 0) {
+              pipe(data, fromValue(m), sinkInto(delegate));
+            } else {
+              pipe(delegate, dispose());
+            }
+          }),
+        );
+      },
+      lift(m),
+    );
 };
 
 export const createDistinctUntilChangedOperator = <C extends SourceLike>(
@@ -279,21 +285,20 @@ const createSatisfyOperator = <C extends SourceLike>(
       pipe(delegate, notify(!defaultResult), dispose());
     }
   };
-  return <T>(predicate: Predicate<T>) => {
-    const operator = (
-      delegate: LiftedStateOf<C, boolean>,
-    ): LiftedStateOf<C, T> =>
-      pipe(
-        new SatisfySink(delegate, predicate),
-        addTo(delegate),
-        onComplete(() => {
-          if (!isDisposed(delegate)) {
-            pipe(defaultResult, fromValue(m), sinkInto(delegate));
-          }
-        }),
-      );
-    return m.lift(operator);
-  };
+  return <T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean> =>
+    pipe(
+      (delegate: LiftedStateOf<C, boolean>): LiftedStateOf<C, T> =>
+        pipe(
+          new SatisfySink(delegate, predicate),
+          addTo(delegate),
+          onComplete(() => {
+            if (!isDisposed(delegate)) {
+              pipe(defaultResult, fromValue(m), sinkInto(delegate));
+            }
+          }),
+        ),
+      lift(m),
+    );
 };
 
 export const createEverySatisfyOperator = <C extends SourceLike>(
@@ -447,10 +452,8 @@ export const createReduceOperator = <C extends SourceLike>(
   return <T, TAcc>(
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
-  ): ContainerOperator<C, T, TAcc> => {
-    const operator = (
-      delegate: LiftedStateOf<C, TAcc>,
-    ): LiftedStateOf<C, T> => {
+  ): ContainerOperator<C, T, TAcc> =>
+    pipe((delegate: LiftedStateOf<C, TAcc>): LiftedStateOf<C, T> => {
       const sink = pipe(
         new ReduceSink(delegate, reducer, initialValue()),
         addTo(delegate),
@@ -459,9 +462,7 @@ export const createReduceOperator = <C extends SourceLike>(
         }),
       );
       return sink;
-    };
-    return m.lift(operator);
-  };
+    }, lift(m));
 };
 
 export const createScanOperator = <C extends SourceLike>(
@@ -618,7 +619,10 @@ export const createTakeLastOperator = <C extends SourceLike>(
       return sink;
     };
 
-    return source => (count > 0 ? pipe(source, m.lift(operator)) : empty(m));
+    return source =>
+      count > 0
+        ? pipe(source, lift<C, T, T, typeof m.variance>(m)(operator))
+        : empty(m);
   };
 };
 
@@ -690,10 +694,10 @@ export const createThrowIfEmptyOperator = <C extends SourceLike>(
 export const createFromDisposable =
   <C extends SourceLike>(m: CreateSource<C>) =>
   <T>(disposable: DisposableLike): ContainerOf<C, T> =>
-    m.create(addTo(disposable));
+    pipe(disposable, addTo, create(m));
 
 export const createNever = <C extends SourceLike>(m: CreateSource<C>) => {
-  const neverInstance: ContainerOf<C, any> = m.create(ignore);
+  const neverInstance: ContainerOf<C, any> = pipe(ignore, create(m));
   return <T>(): ContainerOf<C, T> => neverInstance;
 };
 
@@ -701,7 +705,7 @@ export const createOnSink =
   <C extends SourceLike>(m: CreateSource<C>) =>
   <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<C, T, T> =>
   src =>
-    m.create(sink => {
+    pipe((sink: LiftedStateOf<C, T>) => {
       pipe(src, sinkInto(sink));
       const disposable = f() || none;
       pipe(
@@ -712,7 +716,7 @@ export const createOnSink =
           ? add(disposable)
           : identity,
       );
-    });
+    }, create(m));
 
 export const createUsing =
   <C extends SourceLike>(m: CreateSource<C>) =>
@@ -720,12 +724,14 @@ export const createUsing =
     resourceFactory: Factory<TResource | readonly TResource[]>,
     sourceFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>,
   ): ContainerOf<C, T> =>
-    m.create<T>(sink =>
-      pipe(
-        resourceFactory(),
-        resources => (Array.isArray(resources) ? resources : [resources]),
-        forEach(addTo(sink)),
-        (resources: readonly TResource[]) => sourceFactory(...resources),
-        sinkInto(sink),
-      ),
+    pipe(
+      (sink: LiftedStateOf<C, T>) =>
+        pipe(
+          resourceFactory(),
+          resources => (Array.isArray(resources) ? resources : [resources]),
+          forEach(addTo(sink)),
+          (resources: readonly TResource[]) => sourceFactory(...resources),
+          sinkInto(sink),
+        ),
+      create(m),
     );
