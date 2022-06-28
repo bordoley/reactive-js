@@ -25,7 +25,6 @@ import {
   pipeLazy,
   raise,
   returns,
-  strictEquality,
 } from "./functions";
 import { Option, isSome } from "./option";
 import { empty as emptyArray } from "./readonlyArray";
@@ -382,10 +381,7 @@ export const contains = <C, T>(
   { someSatisfy }: SomeSatisfy<C>,
   value: T,
   options: { readonly equality?: Equality<T> } = {},
-): ContainerOperator<C, T, boolean> => {
-  const { equality = strictEquality } = options;
-  return someSatisfy(isEqualTo(value, equality));
-};
+): ContainerOperator<C, T, boolean> => someSatisfy(isEqualTo(value, options));
 
 export const encodeUtf8 =
   <C>(m: Using<C> & Map<C>): ContainerOperator<C, string, Uint8Array> =>
