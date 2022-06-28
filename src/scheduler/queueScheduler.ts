@@ -8,10 +8,13 @@ import {
 } from "../enumerator";
 import { pipe } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
-import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
+import {
+  SchedulerContinuationLike,
+  SchedulerImplementationLike,
+  SchedulerLike,
+} from "../scheduler";
 import { QueueLike, createPriorityQueue } from "./queue";
 import {
-  SchedulerImplementation,
   inContinuation,
   runContinuation,
   now as schedulerNow,
@@ -78,7 +81,7 @@ export abstract class AbstractQueueScheduler<
     TTask extends QueueTask = QueueTask,
   >
   extends AbstractEnumerator<TTask>
-  implements SchedulerImplementation
+  implements SchedulerImplementationLike
 {
   readonly delayed: QueueLike<TTask> = createPriorityQueue(delayedComparator);
   abstract readonly queue: QueueLike<TTask>;

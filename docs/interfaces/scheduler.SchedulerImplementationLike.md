@@ -1,27 +1,27 @@
-[Reactive-JS](../README.md) / [scheduler](../modules/scheduler.md) / SchedulerImplementation
+[Reactive-JS](../README.md) / [scheduler](../modules/scheduler.md) / SchedulerImplementationLike
 
-# Interface: SchedulerImplementation
+# Interface: SchedulerImplementationLike
 
-[scheduler](../modules/scheduler.md).SchedulerImplementation
+[scheduler](../modules/scheduler.md).SchedulerImplementationLike
 
 ## Hierarchy
 
 - [`DisposableLike`](disposable.DisposableLike.md)
 
-  ↳ **`SchedulerImplementation`**
+  ↳ **`SchedulerImplementationLike`**
 
 ## Table of contents
 
 ### Properties
 
-- [error](scheduler.SchedulerImplementation.md#error)
-- [inContinuation](scheduler.SchedulerImplementation.md#incontinuation)
-- [isDisposed](scheduler.SchedulerImplementation.md#isdisposed)
+- [error](scheduler.SchedulerImplementationLike.md#error)
+- [inContinuation](scheduler.SchedulerImplementationLike.md#incontinuation)
+- [isDisposed](scheduler.SchedulerImplementationLike.md#isdisposed)
 
 ### Methods
 
-- [add](scheduler.SchedulerImplementation.md#add)
-- [dispose](scheduler.SchedulerImplementation.md#dispose)
+- [add](scheduler.SchedulerImplementationLike.md#add)
+- [dispose](scheduler.SchedulerImplementationLike.md#dispose)
 
 ## Properties
 
@@ -65,7 +65,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`SchedulerImplementation`](scheduler.SchedulerImplementation.md) |
+| `this` | [`SchedulerImplementationLike`](scheduler.SchedulerImplementationLike.md) |
 | `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
 | `ignoreChildErrors` | `boolean` |
 

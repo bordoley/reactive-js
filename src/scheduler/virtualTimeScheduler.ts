@@ -4,10 +4,11 @@ import { pipe } from "../functions";
 import { isSome, none } from "../option";
 import {
   SchedulerContinuationLike,
+  SchedulerImplementationLike,
   VirtualTimeSchedulerLike,
 } from "../scheduler";
 import { QueueLike, createPriorityQueue } from "./queue";
-import { SchedulerImplementation, now, runContinuation } from "./scheduler";
+import { now, runContinuation } from "./scheduler";
 
 type VirtualTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -24,7 +25,7 @@ const comparator = (a: VirtualTask, b: VirtualTask) => {
 
 class VirtualTimeSchedulerImpl
   extends AbstractEnumerator<void>
-  implements SchedulerImplementation, VirtualTimeSchedulerLike
+  implements SchedulerImplementationLike, VirtualTimeSchedulerLike
 {
   inContinuation = false;
   private microTaskTicks = 0;
