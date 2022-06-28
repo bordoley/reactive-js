@@ -1,5 +1,5 @@
 /// <reference types="./runnable.d.ts" />
-import { dispose, addTo } from './disposable.mjs';
+import { dispose, isDisposed, addTo } from './disposable.mjs';
 import { pipe, ignore, raise, identity, alwaysTrue } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractSource, sourceFrom, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
@@ -75,7 +75,7 @@ class Sink extends AbstractDisposableContainer {
 }
 if (__DEV__) {
     Sink.prototype.assertState = function () {
-        if (this.isDisposed) {
+        if (isDisposed(this)) {
             raise("Sink is disposed");
         }
     };
@@ -176,7 +176,7 @@ const catchError = createCatchErrorOperator(liftT, class CatchErrorSink extends 
 });
 const concat = (...runnables) => createRunnable((sink) => {
     const runnablesLength = runnables.length;
-    for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
+    for (let i = 0; i < runnablesLength && !isDisposed(sink); i++) {
         pipe(createDelegatingSink(sink), addTo(sink), sourceFrom(runnables[i]), dispose());
     }
 });
@@ -218,7 +218,7 @@ const everySatisfyT = {
 const generate = (generator, initialValue) => {
     const run = (sink) => {
         let acc = initialValue();
-        while (!sink.isDisposed) {
+        while (!isDisposed(sink)) {
             acc = generator(acc);
             sink.notify(acc);
         }
@@ -294,7 +294,7 @@ const repeat = (predicate) => {
         do {
             pipe(createDelegatingSink(sink), addTo(sink), sourceFrom(runnable), dispose());
             count++;
-        } while (!sink.isDisposed && shouldRepeat(count));
+        } while (!isDisposed(sink) && shouldRepeat(count));
     });
 };
 const repeatT = {

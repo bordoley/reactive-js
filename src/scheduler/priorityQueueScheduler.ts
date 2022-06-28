@@ -3,6 +3,7 @@ import {
   add,
   addTo,
   disposed,
+  isDisposed,
   onDisposed,
 } from "../disposable";
 import { pipe } from "../functions";
@@ -116,7 +117,7 @@ class PriorityScheduler
   readonly continuation = () => {
     for (
       let task = peek(this);
-      isSome(task) && !this.isDisposed;
+      isSome(task) && !isDisposed(this);
       task = peek(this)
     ) {
       const { continuation, dueTime } = task;
@@ -172,7 +173,7 @@ class PriorityScheduler
     return (
       inContinuation &&
       (yieldRequested ||
-        this.isDisposed ||
+        isDisposed(this) ||
         this.isPaused ||
         nextTaskIsHigherPriority ||
         this.host.shouldYield)

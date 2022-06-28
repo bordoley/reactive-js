@@ -5,6 +5,7 @@ import {
   bindTo,
   createSerialDisposable,
   dispose,
+  isDisposed,
 } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { pipe } from "../functions";
@@ -24,13 +25,13 @@ class ConcatAllEnumerator<T> extends AbstractEnumerator<T> {
 
     const { delegate, enumerator } = this;
 
-    if (enumerator.inner.isDisposed && delegate.move()) {
+    if (isDisposed(enumerator.inner) && delegate.move()) {
       enumerator.inner = enumerate(delegate.current);
     }
 
     while (
       enumerator.inner instanceof Enumerator &&
-      !enumerator.inner.isDisposed
+      !isDisposed(enumerator.inner)
     ) {
       if (enumerator.inner.move()) {
         this.current = enumerator.inner.current;

@@ -12,6 +12,7 @@ import {
   add,
   addTo,
   dispose,
+  isDisposed,
   onComplete,
   onDisposed,
   onError,
@@ -286,7 +287,7 @@ const createSatisfyOperator = <C extends SourceLike>(
         new SatisfySink(delegate, predicate),
         addTo(delegate),
         onComplete(() => {
-          if (!delegate.isDisposed) {
+          if (!isDisposed(delegate)) {
             pipe(defaultResult, fromValue(m), sinkInto(delegate));
           }
         }),

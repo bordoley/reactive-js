@@ -3,6 +3,7 @@ import {
   AbstractDisposable,
   addTo,
   dispose,
+  isDisposed,
   onComplete,
   onDisposed,
 } from "../disposable";
@@ -41,7 +42,7 @@ class ObserverDelegatingDispatcher<T>
   };
 
   readonly onContinuationDispose = () => {
-    if (this.isDisposed) {
+    if (isDisposed(this)) {
       pipe(this.observer, dispose(this.error));
     }
   };
@@ -53,7 +54,7 @@ class ObserverDelegatingDispatcher<T>
   }
 
   dispatch(next: T) {
-    if (!this.isDisposed) {
+    if (!isDisposed(this)) {
       this.nextQueue.push(next);
       scheduleDrainQueue(this);
     }
@@ -105,7 +106,7 @@ if (__DEV__) {
       raise(
         "Observer.notify() may only be invoked within a scheduled SchedulerContinuation",
       );
-    } else if (this.isDisposed) {
+    } else if (isDisposed(this)) {
       raise("Observer is disposed");
     }
   };

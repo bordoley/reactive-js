@@ -1,5 +1,5 @@
 /// <reference types="./enumerable.d.ts" />
-import { onDisposed, dispose, createSerialDisposable, bindTo, add, addTo } from './disposable.mjs';
+import { onDisposed, isDisposed, dispose, createSerialDisposable, bindTo, add, addTo } from './disposable.mjs';
 import { pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { AbstractDisposableContainer, empty } from './container.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -20,7 +20,7 @@ class AbstractEnumerator extends Enumerator {
         return this.hasCurrent ? this._current : raise();
     }
     set current(v) {
-        if (!this.isDisposed) {
+        if (!isDisposed(this)) {
             this._current = v;
             this._hasCurrent = true;
         }
@@ -60,7 +60,7 @@ class ArrayEnumerator extends AbstractEnumerator {
     move() {
         this.reset();
         const { array } = this;
-        if (!this.isDisposed) {
+        if (!isDisposed(this)) {
             this.index++;
             const { index, endIndex } = this;
             if (index < endIndex) {
@@ -145,11 +145,11 @@ class ConcatAllEnumerator extends AbstractEnumerator {
     move() {
         this.reset();
         const { delegate, enumerator } = this;
-        if (enumerator.inner.isDisposed && delegate.move()) {
+        if (isDisposed(enumerator.inner) && delegate.move()) {
             enumerator.inner = enumerate(delegate.current);
         }
         while (enumerator.inner instanceof Enumerator &&
-            !enumerator.inner.isDisposed) {
+            !isDisposed(enumerator.inner)) {
             if (enumerator.inner.move()) {
                 this.current = enumerator.inner.current;
                 break;
@@ -186,7 +186,7 @@ class IteratorEnumerator extends Enumerator {
     move() {
         this.hasCurrent = false;
         this.current = none;
-        if (!this.isDisposed) {
+        if (!isDisposed(this)) {
             const next = this.iterator.next();
             if (!next.done) {
                 this.hasCurrent = true;
@@ -232,7 +232,7 @@ class GenerateEnumerator extends AbstractEnumerator {
         this.current = acc;
     }
     move() {
-        if (!this.isDisposed) {
+        if (!isDisposed(this)) {
             try {
                 this.current = this.f(this.current);
             }
@@ -321,7 +321,7 @@ class TakeLastEnumerator extends Enumerator {
     }
     move() {
         const { delegate } = this;
-        if (!this.isDisposed && isNone(this.enumerator)) {
+        if (!isDisposed(this) && isNone(this.enumerator)) {
             const last = [];
             while (delegate.move()) {
                 last.push(delegate.current);
@@ -400,7 +400,7 @@ class ZipEnumerator extends AbstractEnumerator {
     }
     move() {
         this.reset();
-        if (!this.isDisposed) {
+        if (!isDisposed(this)) {
             const { enumerators } = this;
             moveAll(enumerators);
             if (allHaveCurrent(enumerators)) {
@@ -618,7 +618,7 @@ const takeWhile = createTakeWhileLiftedOperator(liftT, class TakeWhileEnumerator
     }
     move() {
         const { delegate, inclusive, predicate } = this;
-        if (this.done && !this.isDisposed) {
+        if (this.done && !isDisposed(this)) {
             pipe(this, dispose());
         }
         else if (delegate.move()) {

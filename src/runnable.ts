@@ -21,7 +21,7 @@ import {
   ThrowIfEmpty,
   Using,
 } from "./container";
-import { addTo, dispose } from "./disposable";
+import { addTo, dispose, isDisposed } from "./disposable";
 import {
   Equality,
   Factory,
@@ -110,7 +110,7 @@ export const concat: Concat<RunnableLike<unknown>>["concat"] = <T>(
 ) =>
   createRunnable((sink: Sink<T>) => {
     const runnablesLength = runnables.length;
-    for (let i = 0; i < runnablesLength && !sink.isDisposed; i++) {
+    for (let i = 0; i < runnablesLength && !isDisposed(sink); i++) {
       pipe(
         createDelegatingSink(sink),
         addTo(sink),
@@ -187,7 +187,7 @@ export const generate = <T>(
 ): RunnableLike<T> => {
   const run = (sink: Sink<T>) => {
     let acc = initialValue();
-    while (!sink.isDisposed) {
+    while (!isDisposed(sink)) {
       acc = generator(acc);
       sink.notify(acc);
     }
@@ -313,7 +313,7 @@ export const repeat: Repeat<RunnableLike<unknown>>["repeat"] = <T>(
           dispose(),
         );
         count++;
-      } while (!sink.isDisposed && shouldRepeat(count));
+      } while (!isDisposed(sink) && shouldRepeat(count));
     });
 };
 

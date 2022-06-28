@@ -3,6 +3,7 @@ import {
   DisposableLike,
   Error,
   dispose,
+  isDisposed,
 } from "../disposable";
 import { Function1, SideEffect, pipe, raise } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
@@ -28,7 +29,7 @@ class SchedulerContinuationImpl
   }
 
   continue() {
-    if (!this.isDisposed) {
+    if (!isDisposed(this)) {
       let error: Option<Error> = none;
       let yieldError: Option<YieldError> = none;
 

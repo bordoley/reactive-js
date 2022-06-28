@@ -56,6 +56,9 @@ export const dispose =
     return disposable;
   };
 
+export const isDisposed = (disposable: DisposableLike): boolean =>
+  disposable.isDisposed;
+
 function addDisposableOrTeardown(
   parent: DisposableLike,
   child: DisposableLike | SideEffect1<Option<Error>>,
@@ -185,7 +188,7 @@ export abstract class AbstractDisposable implements DisposableLike {
   ) {
     const { disposables } = this;
 
-    if (this.isDisposed) {
+    if (isDisposed(this)) {
       doDispose(this, disposable);
     } else if (!disposables.has(disposable)) {
       disposables.add(disposable);
@@ -208,7 +211,7 @@ export abstract class AbstractDisposable implements DisposableLike {
 
   /** @ignore */
   dispose(this: AbstractDisposable, error?: Error) {
-    if (!this.isDisposed) {
+    if (!isDisposed(this)) {
       this.isDisposed = true;
       this._error = error;
 

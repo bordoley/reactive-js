@@ -1,5 +1,5 @@
 /// <reference types="./scheduler.d.ts" />
-import { AbstractDisposable, dispose, AbstractSerialDisposable, disposed, add, addTo, onDisposed, createDisposable } from './disposable.mjs';
+import { AbstractDisposable, isDisposed, dispose, AbstractSerialDisposable, disposed, add, addTo, onDisposed, createDisposable } from './disposable.mjs';
 import { pipe, raise } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 
@@ -96,7 +96,7 @@ class SchedulerContinuationImpl extends AbstractDisposable {
         this.f = f;
     }
     continue() {
-        if (!this.isDisposed) {
+        if (!isDisposed(this)) {
             let error = none;
             let yieldError = none;
             const { scheduler } = this;
@@ -207,7 +207,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
         super();
         this.host = host;
         this.continuation = () => {
-            for (let task = peek(this); isSome(task) && !this.isDisposed; task = peek(this)) {
+            for (let task = peek(this); isSome(task) && !isDisposed(this); task = peek(this)) {
                 const { continuation, dueTime } = task;
                 const delay = Math.max(dueTime - this.now, 0);
                 if (delay === 0) {
@@ -248,7 +248,7 @@ class PriorityScheduler extends AbstractSerialDisposable {
         }
         return (inContinuation &&
             (yieldRequested ||
-                this.isDisposed ||
+                isDisposed(this) ||
                 this.isPaused ||
                 nextTaskIsHigherPriority ||
                 this.host.shouldYield));
@@ -520,7 +520,7 @@ class VirtualTimeSchedulerImpl extends AbstractDisposable {
         this.yieldRequested = true;
     }
     run() {
-        while (!this.isDisposed && move(this)) {
+        while (!isDisposed(this) && move(this)) {
             this.inContinuation = true;
             run(this.current);
             this.inContinuation = false;

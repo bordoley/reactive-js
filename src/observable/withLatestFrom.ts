@@ -1,4 +1,4 @@
-import { addTo, bindTo, dispose, onComplete } from "../disposable";
+import { addTo, bindTo, dispose, isDisposed, onComplete } from "../disposable";
 import { Function2, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Option } from "../option";
@@ -22,7 +22,7 @@ class WithLatestFromObserver<TA, TB, T> extends Observer<TA> {
   notify(next: TA) {
     this.assertState();
 
-    if (!this.isDisposed && this.hasLatest) {
+    if (!isDisposed(this) && this.hasLatest) {
       const result = this.selector(next, this.otherLatest as TB);
       this.delegate.notify(result);
     }

@@ -16,7 +16,7 @@ import {
   TakeWhile,
   Zip,
 } from "./container";
-import { dispose } from "./disposable";
+import { dispose, isDisposed } from "./disposable";
 import {
   AbstractEnumerator,
   EnumerableLike,
@@ -510,7 +510,7 @@ class SequenceEnumerator<T> extends AbstractEnumerator<T> {
   }
 
   move(): boolean {
-    if (!this.isDisposed) {
+    if (!isDisposed(this)) {
       const next = this.seq();
       if (isNotify(next)) {
         this.current = next.data;

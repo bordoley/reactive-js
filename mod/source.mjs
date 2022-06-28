@@ -1,6 +1,6 @@
 /// <reference types="./source.d.ts" />
 import { fromValue, empty } from './container.mjs';
-import { addTo, onComplete, dispose, onError, onDisposed, add } from './disposable.mjs';
+import { addTo, onComplete, dispose, onError, isDisposed, onDisposed, add } from './disposable.mjs';
 import { pipe, compose, negate, ignore, identity } from './functions.mjs';
 import { AbstractLiftable, AbstractDisposableLiftable, createDistinctUntilChangedLiftedOperator, createKeepLiftedOperator, createMapLiftedOperator, createOnNotifyLiftedOperator, createPairwiseLiftedOperator, createScanLiftedOperator, createSkipFirstLiftedOperator, createTakeFirstLiftedOperator, createTakeWhileLiftedOperator, createThrowIfEmptyLiftedOperator } from './liftable.mjs';
 import { none, isSome } from './option.mjs';
@@ -89,7 +89,7 @@ const createSatisfyOperator = (m, SatisfySink, defaultResult) => {
     };
     return (predicate) => {
         const operator = (delegate) => pipe(new SatisfySink(delegate, predicate), addTo(delegate), onComplete(() => {
-            if (!delegate.isDisposed) {
+            if (!isDisposed(delegate)) {
                 pipe(defaultResult, fromValue(m), sinkInto(delegate));
             }
         }));

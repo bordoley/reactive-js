@@ -39,6 +39,7 @@ interface DisposableLike {
  * Dispose `disposable` with an optional error.
  */
 declare const dispose: <T extends DisposableLike>(e?: Error) => Function1<T, T>;
+declare const isDisposed: (disposable: DisposableLike) => boolean;
 declare const bindTo: <T extends DisposableLike>(child: DisposableLike) => Function1<T, T>;
 declare function add<T extends DisposableLike>(child: DisposableLike, ignoreChildErrors: true): Function1<T, T>;
 declare function add<T extends DisposableLike>(child: DisposableLike): Function1<T, T>;
@@ -125,4 +126,4 @@ interface DisposableValueLike<T> extends DisposableLike {
  */
 declare const createDisposableValue: <T>(value: T, cleanup: SideEffect1<T>) => DisposableValueLike<T>;
 declare const toAbortSignal: (disposable: DisposableLike) => AbortSignal;
-export { AbstractDisposable, AbstractSerialDisposable, DisposableLike, DisposableOrTeardown, DisposableValueLike, Error, SerialDisposableLike, add, addTo, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
+export { AbstractDisposable, AbstractSerialDisposable, DisposableLike, DisposableOrTeardown, DisposableValueLike, Error, SerialDisposableLike, add, addTo, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

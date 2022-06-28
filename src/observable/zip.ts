@@ -1,5 +1,11 @@
 import { Zip } from "../container";
-import { addTo, dispose, onComplete, onDisposed } from "../disposable";
+import {
+  addTo,
+  dispose,
+  isDisposed,
+  onComplete,
+  onDisposed,
+} from "../disposable";
 import {
   AbstractEnumerator,
   Enumerator,
@@ -42,7 +48,7 @@ class ZipObserverEnumerator extends AbstractEnumerator<unknown> {
   move(): boolean {
     const { buffer } = this;
 
-    if (!this.isDisposed && buffer.length > 0) {
+    if (!isDisposed(this) && buffer.length > 0) {
       const next = buffer.shift();
       this.current = next;
     } else {
@@ -67,7 +73,7 @@ class ZipObserver extends Observer<unknown> {
 
     const { enumerator, enumerators } = this;
 
-    if (!this.isDisposed) {
+    if (!isDisposed(this)) {
       if (enumerator.hasCurrent) {
         enumerator.buffer.push(next);
       } else {

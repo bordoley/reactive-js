@@ -1,5 +1,11 @@
 import { ConcatAll } from "../container";
-import { addTo, dispose, onComplete, onDisposed } from "../disposable";
+import {
+  addTo,
+  dispose,
+  isDisposed,
+  onComplete,
+  onDisposed,
+} from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { isSome } from "../option";
@@ -23,7 +29,7 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
         addTo(observer.delegate),
         onComplete(observer.onDispose),
       );
-    } else if (observer.isDisposed) {
+    } else if (isDisposed(observer)) {
       pipe(observer.delegate, dispose());
     }
   }

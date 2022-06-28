@@ -1,6 +1,6 @@
 /// <reference types="./observable.d.ts" />
 import { AbstractDisposableContainer, empty, fromValue, throws, concatMap } from './container.mjs';
-import { dispose, onDisposed, add, addTo, onComplete, AbstractDisposable, disposed, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
+import { dispose, isDisposed, onDisposed, add, addTo, onComplete, AbstractDisposable, disposed, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
 import { pipe, raise, arrayEquality, ignore, defer as defer$1, compose, returns } from './functions.mjs';
 import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, notifySink, createUsing, notify, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { schedule, __yield, run, createVirtualTimeScheduler } from './scheduler.mjs';
@@ -45,7 +45,7 @@ class SubjectImpl extends AbstractDisposableObservable {
         return this.dispatchers.size;
     }
     dispatch(next) {
-        if (!this.isDisposed) {
+        if (!isDisposed(this)) {
             const { replay, replayed } = this;
             if (replay > 0) {
                 replayed.push(next);
@@ -63,7 +63,7 @@ class SubjectImpl extends AbstractDisposableObservable {
         // call next from unscheduled sources such as event handlers.
         // So we marshall those events back to the scheduler.
         const { dispatcher } = observer;
-        if (!this.isDisposed) {
+        if (!isDisposed(this)) {
             const { dispatchers } = this;
             dispatchers.add(dispatcher);
             pipe(observer, onDisposed(_ => {
@@ -184,14 +184,14 @@ class ObserverDelegatingDispatcher extends AbstractDisposable {
             }
         };
         this.onContinuationDispose = () => {
-            if (this.isDisposed) {
+            if (isDisposed(this)) {
                 pipe(this.observer, dispose(this.error));
             }
         };
         this.nextQueue = [];
     }
     dispatch(next) {
-        if (!this.isDisposed) {
+        if (!isDisposed(this)) {
             this.nextQueue.push(next);
             scheduleDrainQueue(this);
         }
@@ -227,7 +227,7 @@ if (__DEV__) {
         if (!this.scheduler.inContinuation) {
             raise("Observer.notify() may only be invoked within a scheduled SchedulerContinuation");
         }
-        else if (this.isDisposed) {
+        else if (isDisposed(this)) {
             raise("Observer is disposed");
         }
     };
@@ -277,7 +277,7 @@ const onNotify = createOnNotifyOperator(liftSynchronousT, class OnNotifyObserver
 const subscribe = (scheduler) => observable => pipe(new Observer(scheduler), addTo(scheduler, true), sourceFrom(observable));
 
 function onDispose$2() {
-    if (this.inner.isDisposed) {
+    if (isDisposed(this.inner)) {
         pipe(this.delegate, dispose());
     }
 }
@@ -291,7 +291,7 @@ class SwitchObserver extends Observer {
         this.assertState();
         pipe(this.inner, dispose());
         const inner = pipe(next, onNotify(notifySink(this.delegate)), subscribe(this.scheduler), addTo(this.delegate), onComplete(() => {
-            if (this.isDisposed) {
+            if (isDisposed(this)) {
                 pipe(this.delegate, dispose());
             }
         }));
@@ -415,9 +415,10 @@ class ObservableContext {
         this.scheduledComputationSubscription = disposed;
         this.cleanup = () => {
             const { effects } = this;
-            const hasOutstandingEffects = effects.findIndex(effect => effect.type === 2 /* EffectType.Observe */ && !effect.subscription.isDisposed) >= 0;
+            const hasOutstandingEffects = effects.findIndex(effect => effect.type === 2 /* EffectType.Observe */ &&
+                !isDisposed(effect.subscription)) >= 0;
             if (!hasOutstandingEffects &&
-                this.scheduledComputationSubscription.isDisposed) {
+                isDisposed(this.scheduledComputationSubscription)) {
                 pipe(this.observer, dispose());
             }
         };
@@ -452,10 +453,9 @@ class ObservableContext {
                 }
                 else {
                     let { scheduledComputationSubscription } = this;
-                    this.scheduledComputationSubscription =
-                        scheduledComputationSubscription.isDisposed
-                            ? pipe(scheduler, schedule(runComputation), addTo(observer))
-                            : scheduledComputationSubscription;
+                    this.scheduledComputationSubscription = isDisposed(scheduledComputationSubscription)
+                        ? pipe(scheduler, schedule(runComputation), addTo(observer))
+                        : scheduledComputationSubscription;
                 }
             }), subscribe(observer.scheduler), addTo(observer), onComplete(this.cleanup));
             effect.observable = observable;
@@ -506,7 +506,7 @@ const observable = (computation, { mode = "batched" } = {}) => defer(() => (obse
                 allObserveEffectsHaveValues = false;
             }
             if (type === 2 /* EffectType.Observe */ &&
-                !effect.subscription.isDisposed) {
+                !isDisposed(effect.subscription)) {
                 hasOutstandingEffects = true;
             }
             if (!allObserveEffectsHaveValues && hasOutstandingEffects) {
@@ -779,7 +779,7 @@ class BufferObserver extends Observer {
         if (buffer.length === maxBufferSize) {
             doOnNotify();
         }
-        else if (this.durationSubscription.inner.isDisposed) {
+        else if (isDisposed(this.durationSubscription.inner)) {
             this.durationSubscription.inner = pipe(next, this.durationFunction, onNotify(doOnNotify), subscribe(this.scheduler));
         }
     }
@@ -814,7 +814,7 @@ const subscribeNext = (observer) => {
             observer.activeCount++;
             pipe(nextObs, onNotify(notifySink(observer.delegate)), subscribe(observer.scheduler), addTo(observer.delegate), onComplete(observer.onDispose));
         }
-        else if (observer.isDisposed) {
+        else if (isDisposed(observer)) {
             pipe(observer.delegate, dispose());
         }
     }
@@ -963,7 +963,7 @@ class ThrottleObserver extends Observer {
         this.assertState();
         this.value = next;
         this.hasValue = true;
-        const durationSubscriptionDisposableIsDisposed = this.durationSubscription.inner.isDisposed;
+        const durationSubscriptionDisposableIsDisposed = isDisposed(this.durationSubscription.inner);
         if (durationSubscriptionDisposableIsDisposed && this.mode !== "last") {
             this.onNotify();
         }
@@ -1032,7 +1032,7 @@ class WithLatestFromObserver extends Observer {
     }
     notify(next) {
         this.assertState();
-        if (!this.isDisposed && this.hasLatest) {
+        if (!isDisposed(this) && this.hasLatest) {
             const result = this.selector(next, this.otherLatest);
             this.delegate.notify(result);
         }
@@ -1100,7 +1100,7 @@ class EnumeratorScheduler extends AbstractEnumerator {
     }
     move() {
         this.reset();
-        while (!this.isDisposed && !this.hasCurrent && this.step()) { }
+        while (!isDisposed(this) && !this.hasCurrent && this.step()) { }
         return this.hasCurrent;
     }
 }
@@ -1148,7 +1148,7 @@ class ZipObserverEnumerator extends AbstractEnumerator {
     }
     move() {
         const { buffer } = this;
-        if (!this.isDisposed && buffer.length > 0) {
+        if (!isDisposed(this) && buffer.length > 0) {
             const next = buffer.shift();
             this.current = next;
         }
@@ -1168,7 +1168,7 @@ class ZipObserver extends Observer {
     notify(next) {
         this.assertState();
         const { enumerator, enumerators } = this;
-        if (!this.isDisposed) {
+        if (!isDisposed(this)) {
             if (enumerator.hasCurrent) {
                 enumerator.buffer.push(next);
             }
@@ -1308,7 +1308,7 @@ const everySatisfyT = {
 };
 const fromPromise = (factory) => createObservable(({ dispatcher }) => {
     factory().then(next => {
-        if (!dispatcher.isDisposed) {
+        if (!isDisposed(dispatcher)) {
             dispatcher.dispatch(next);
             pipe(dispatcher, dispose());
         }

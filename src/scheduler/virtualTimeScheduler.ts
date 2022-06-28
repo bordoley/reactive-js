@@ -1,4 +1,4 @@
-import { AbstractDisposable, add, dispose } from "../disposable";
+import { AbstractDisposable, add, dispose, isDisposed } from "../disposable";
 import { pipe } from "../functions";
 import { isSome, none } from "../option";
 import {
@@ -83,7 +83,7 @@ class VirtualTimeSchedulerImpl
   }
 
   run() {
-    while (!this.isDisposed && move(this)) {
+    while (!isDisposed(this) && move(this)) {
       this.inContinuation = true;
       run(this.current);
       this.inContinuation = false;

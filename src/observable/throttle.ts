@@ -4,6 +4,7 @@ import {
   add,
   addTo,
   createSerialDisposable,
+  isDisposed,
   onComplete,
 } from "../disposable";
 import { Function1, pipe } from "../functions";
@@ -61,8 +62,9 @@ class ThrottleObserver<T> extends Observer<T> {
     this.value = next;
     this.hasValue = true;
 
-    const durationSubscriptionDisposableIsDisposed =
-      this.durationSubscription.inner.isDisposed;
+    const durationSubscriptionDisposableIsDisposed = isDisposed(
+      this.durationSubscription.inner,
+    );
 
     if (durationSubscriptionDisposableIsDisposed && this.mode !== "last") {
       this.onNotify();

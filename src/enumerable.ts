@@ -14,7 +14,7 @@ import {
   ThrowIfEmpty,
   Using,
 } from "./container";
-import { DisposableLike, addTo, dispose } from "./disposable";
+import { DisposableLike, addTo, dispose, isDisposed } from "./disposable";
 import { concatAll } from "./enumerable/concatAll";
 import { createEnumerable } from "./enumerable/enumerable";
 import {
@@ -406,7 +406,7 @@ export const takeWhile: <T>(
     move(): boolean {
       const { delegate, inclusive, predicate } = this;
 
-      if (this.done && !this.isDisposed) {
+      if (this.done && !isDisposed(this)) {
         pipe(this, dispose());
       } else if (delegate.move()) {
         const { current } = delegate;

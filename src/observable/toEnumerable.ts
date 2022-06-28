@@ -1,4 +1,4 @@
-import { add, addTo, dispose } from "../disposable";
+import { add, addTo, dispose, isDisposed } from "../disposable";
 import {
   AbstractEnumerator,
   EnumerableLike,
@@ -64,7 +64,7 @@ class EnumeratorScheduler<T>
   move(): boolean {
     this.reset();
 
-    while (!this.isDisposed && !this.hasCurrent && this.step()) {}
+    while (!isDisposed(this) && !this.hasCurrent && this.step()) {}
 
     return this.hasCurrent;
   }

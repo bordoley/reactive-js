@@ -33,6 +33,7 @@
 - [createDisposableValue](disposable.md#createdisposablevalue)
 - [createSerialDisposable](disposable.md#createserialdisposable)
 - [dispose](disposable.md#dispose)
+- [isDisposed](disposable.md#isdisposed)
 - [onComplete](disposable.md#oncomplete)
 - [onDisposed](disposable.md#ondisposed)
 - [onError](disposable.md#onerror)
@@ -236,6 +237,22 @@ Dispose `disposable` with an optional error.
 #### Returns
 
 [`Function1`](functions.md#function1)<`T`, `T`\>
+
+___
+
+### isDisposed
+
+▸ **isDisposed**(`disposable`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `disposable` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+
+#### Returns
+
+`boolean`
 
 ___
 
