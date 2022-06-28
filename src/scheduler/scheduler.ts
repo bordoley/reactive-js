@@ -1,4 +1,4 @@
-import { isDisposed } from "../disposable";
+import { DisposableLike, isDisposed } from "../disposable";
 import { Function1 } from "../functions";
 import {
   PrioritySchedulerLike,
@@ -6,7 +6,7 @@ import {
   SchedulerLike,
 } from "../scheduler";
 
-export interface SchedulerImplementation {
+export interface SchedulerImplementation extends DisposableLike {
   inContinuation: boolean;
 }
 

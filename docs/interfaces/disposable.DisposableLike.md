@@ -24,6 +24,8 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`SchedulerContinuationLike`](scheduler.SchedulerContinuationLike.md)
 
+  ↳ [`SchedulerImplementation`](scheduler.SchedulerImplementation.md)
+
   ↳ [`SchedulerLike`](scheduler.SchedulerLike.md)
 
 ## Implemented by
