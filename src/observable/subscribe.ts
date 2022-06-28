@@ -1,9 +1,9 @@
 import { DisposableLike, addTo } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
+import { Observer } from "../observer";
 import { SchedulerLike } from "../scheduler";
 import { sourceFrom } from "../source";
-import { Observer } from "./observer";
 
 /**
  * Safely subscribes to an `ObservableLike` with a `ObserverLike` instance

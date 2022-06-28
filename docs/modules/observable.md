@@ -8,11 +8,9 @@
 
 - [AbstractDisposableObservable](../classes/observable.AbstractDisposableObservable.md)
 - [AbstractObservable](../classes/observable.AbstractObservable.md)
-- [Observer](../classes/observable.Observer.md)
 
 ### Interfaces
 
-- [DispatcherLike](../interfaces/observable.DispatcherLike.md)
 - [MulticastObservableLike](../interfaces/observable.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/observable.ObservableLike.md)
 - [StreamLike](../interfaces/observable.StreamLike.md)
@@ -77,7 +75,6 @@
 - [createSubject](observable.md#createsubject)
 - [decodeWithCharset](observable.md#decodewithcharset)
 - [defer](observable.md#defer)
-- [dispatchTo](observable.md#dispatchto)
 - [distinctUntilChanged](observable.md#distinctuntilchanged)
 - [everySatisfy](observable.md#everysatisfy)
 - [exhaust](observable.md#exhaust)
@@ -1266,7 +1263,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`Observer`](../classes/observable.Observer.md)<`T`\>\> |
+| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`Observer`](../classes/observer.Observer.md)<`T`\>\> |
 
 #### Returns
 
@@ -1327,35 +1324,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`SideEffect1`](functions.md#sideeffect1)<[`Observer`](../classes/observable.Observer.md)<`T`\>\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`SideEffect1`](functions.md#sideeffect1)<[`Observer`](../classes/observer.Observer.md)<`T`\>\>\> |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
 
 #### Returns
 
 [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
-
-___
-
-### dispatchTo
-
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`SideEffect1`](functions.md#sideeffect1)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](../interfaces/observable.DispatcherLike.md)<`T`\> |
-
-#### Returns
-
-[`SideEffect1`](functions.md#sideeffect1)<`T`\>
 
 ___
 

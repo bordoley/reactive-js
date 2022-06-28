@@ -14,7 +14,7 @@
 
   ↳↳ [`AbstractDisposableLiftable`](liftable.AbstractDisposableLiftable.md)
 
-  ↳↳ [`Observer`](observable.Observer.md)
+  ↳↳ [`Observer`](observer.Observer.md)
 
   ↳↳ [`Sink`](runnable.Sink.md)
 

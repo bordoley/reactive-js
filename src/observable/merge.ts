@@ -2,10 +2,10 @@ import { Concat } from "../container";
 import { addTo, dispose, onComplete } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
+import { Observer, createDelegatingObserver } from "../observer";
 import { map } from "../readonlyArray";
 import { sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
-import { Observer, createDelegatingObserver } from "./observer";
 
 const createMergeObserver = <T>(
   delegate: Observer<T>,

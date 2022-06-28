@@ -1,9 +1,9 @@
 import { Map } from "../container";
 import { Function1 } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
+import { Observer } from "../observer";
 import { createMapOperator } from "../source";
 import { liftSynchronousT } from "./lift";
-import { Observer } from "./observer";
 
 export const map: <TA, TB>(
   mapper: Function1<TA, TB>,

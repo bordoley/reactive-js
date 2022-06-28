@@ -7,6 +7,7 @@ Reactive-JS
 ### Modules
 
 - [container](modules/container.md)
+- [dispatcher](modules/dispatcher.md)
 - [disposable](modules/disposable.md)
 - [enumerable](modules/enumerable.md)
 - [enumerator](modules/enumerator.md)
@@ -15,6 +16,7 @@ Reactive-JS
 - [liftable](modules/liftable.md)
 - [node](modules/node.md)
 - [observable](modules/observable.md)
+- [observer](modules/observer.md)
 - [option](modules/option.md)
 - [react](modules/react.md)
 - [readonlyArray](modules/readonlyArray.md)

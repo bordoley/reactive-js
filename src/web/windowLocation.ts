@@ -3,7 +3,6 @@ import { addTo, bindTo } from "../disposable";
 import { Updater, compose, pipe, raise } from "../functions";
 import {
   AbstractDisposableObservable,
-  Observer,
   forkCombineLatest,
   keep,
   keepT,
@@ -13,6 +12,7 @@ import {
   takeWhile,
   throttle,
 } from "../observable";
+import { Observer } from "../observer";
 import { Option, isSome, none } from "../option";
 import { sinkInto } from "../source";
 import {

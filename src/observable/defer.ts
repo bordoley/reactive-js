@@ -1,9 +1,9 @@
 import { addTo } from "../disposable";
 import { Factory, SideEffect1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
+import { Observer } from "../observer";
 import { schedule } from "../scheduler";
 import { createObservable } from "./createObservable";
-import { Observer } from "./observer";
 
 export const defer = <T>(
   factory: Factory<SideEffect1<Observer<T>>>,

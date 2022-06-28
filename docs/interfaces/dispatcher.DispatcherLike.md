@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [observable](../modules/observable.md) / DispatcherLike
+[Reactive-JS](../README.md) / [dispatcher](../modules/dispatcher.md) / DispatcherLike
 
 # Interface: DispatcherLike<T\>
 
-[observable](../modules/observable.md).DispatcherLike
+[dispatcher](../modules/dispatcher.md).DispatcherLike
 
 ## Type parameters
 
@@ -22,7 +22,7 @@
 
 ### Methods
 
-- [dispatch](observable.DispatcherLike.md#dispatch)
+- [dispatch](dispatcher.DispatcherLike.md#dispatch)
 
 ## Methods
 
@@ -36,7 +36,7 @@ Dispatches the next request
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DispatcherLike`](observable.DispatcherLike.md)<`T`\> |
+| `this` | [`DispatcherLike`](dispatcher.DispatcherLike.md)<`T`\> |
 | `req` | `T` |
 
 #### Returns

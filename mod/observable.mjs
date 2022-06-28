@@ -1,11 +1,12 @@
 /// <reference types="./observable.d.ts" />
-import { AbstractDisposableContainer, empty, fromValue, throws, concatMap } from './container.mjs';
-import { dispose, isDisposed, onDisposed, add, addTo, onComplete, AbstractDisposable, disposed, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
+import { empty, fromValue, throws, concatMap } from './container.mjs';
+import { dispatchTo } from './dispatcher.mjs';
+import { dispose, isDisposed, onDisposed, add, addTo, disposed, onComplete, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
 import { move, current, AbstractEnumerator, hasCurrent, zip as zip$1, forEach } from './enumerator.mjs';
-import { pipe, raise, arrayEquality, ignore, defer as defer$1, compose, returns } from './functions.mjs';
+import { pipe, arrayEquality, ignore, raise, defer as defer$1, compose, returns } from './functions.mjs';
 import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, notifySink, createUsing, notify, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { schedule, __yield, runContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
-import { __DEV__ } from './env.mjs';
+import { Observer, createDelegatingObserver } from './observer.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { createRunnable } from './runnable.mjs';
 import { map as map$1, everySatisfy as everySatisfy$1 } from './readonlyArray.mjs';
@@ -164,85 +165,6 @@ const liftSynchronousT = {
     variance: "contravariant",
     lift: op => lift(op, true),
 };
-
-const scheduleDrainQueue = (dispatcher) => {
-    if (dispatcher.nextQueue.length === 1) {
-        const { observer } = dispatcher;
-        pipe(observer.scheduler, schedule(dispatcher.continuation), addTo(observer), onComplete(dispatcher.onContinuationDispose));
-    }
-};
-class ObserverDelegatingDispatcher extends AbstractDisposable {
-    constructor(observer) {
-        super();
-        this.observer = observer;
-        this.continuation = () => {
-            const { nextQueue } = this;
-            const { observer } = this;
-            while (nextQueue.length > 0) {
-                const next = nextQueue.shift();
-                observer.notify(next);
-                __yield();
-            }
-        };
-        this.onContinuationDispose = () => {
-            if (isDisposed(this)) {
-                pipe(this.observer, dispose(this.error));
-            }
-        };
-        this.nextQueue = [];
-    }
-    dispatch(next) {
-        if (!isDisposed(this)) {
-            this.nextQueue.push(next);
-            scheduleDrainQueue(this);
-        }
-    }
-}
-/**
- * Abstract base class for implementing the `ObserverLike` interface.
- */
-class Observer extends AbstractDisposableContainer {
-    constructor(scheduler) {
-        super();
-        this.scheduler = scheduler;
-        this._dispatcher = none;
-    }
-    get dispatcher() {
-        if (isNone(this._dispatcher)) {
-            const dispatcher = pipe(new ObserverDelegatingDispatcher(this), addTo(this, true), onDisposed(e => {
-                if (dispatcher.nextQueue.length === 0) {
-                    pipe(this, dispose(e));
-                }
-            }));
-            this._dispatcher = dispatcher;
-        }
-        return this._dispatcher;
-    }
-    assertState() { }
-    notify(_) {
-        this.assertState();
-    }
-}
-if (__DEV__) {
-    Observer.prototype.assertState = function assertStateDev() {
-        if (!this.scheduler.inContinuation) {
-            raise("Observer.notify() may only be invoked within a scheduled SchedulerContinuation");
-        }
-        else if (isDisposed(this)) {
-            raise("Observer is disposed");
-        }
-    };
-}
-class DelegatingObserver extends Observer {
-    constructor(delegate) {
-        super(delegate.scheduler);
-        this.delegate = delegate;
-    }
-    notify(next) {
-        this.delegate.notify(next);
-    }
-}
-const createDelegatingObserver = (delegate) => new DelegatingObserver(delegate);
 
 const map = createMapOperator(liftSynchronousT, class MapObserver extends Observer {
     constructor(delegate, mapper) {
@@ -1275,7 +1197,6 @@ const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftSynchronousT,
 const decodeWithCharsetT = {
     decodeWithCharset,
 };
-const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
 /**
  * Returns an `ObservableLike` that emits all items emitted by the source that
  * are distinct by comparison from the previous item.
@@ -1529,4 +1450,4 @@ const toRunnableT = {
     toRunnable,
 };
 
-export { AbstractDisposableObservable, AbstractObservable, Observer, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, createT, decodeWithCharset, decodeWithCharsetT, defer, dispatchTo, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, generateT, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AbstractDisposableObservable, AbstractObservable, __currentScheduler, __do, __memo, __observe, __using, buffer, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, createT, decodeWithCharset, decodeWithCharsetT, defer, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, generateT, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

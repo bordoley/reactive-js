@@ -1,4 +1,5 @@
-import { AbstractDisposableContainer } from "../container";
+import { AbstractDisposableContainer } from "./container";
+import { DispatcherLike } from "./dispatcher";
 import {
   AbstractDisposable,
   addTo,
@@ -6,13 +7,12 @@ import {
   isDisposed,
   onComplete,
   onDisposed,
-} from "../disposable";
-import { __DEV__ } from "../env";
-import { pipe, raise } from "../functions";
-import { DispatcherLike } from "../observable";
-import { Option, isNone, none } from "../option";
-import { SchedulerLike, __yield, schedule } from "../scheduler";
-import { SinkLike } from "../source";
+} from "./disposable";
+import { __DEV__ } from "./env";
+import { pipe, raise } from "./functions";
+import { Option, isNone, none } from "./option";
+import { SchedulerLike, __yield, schedule } from "./scheduler";
+import { SinkLike } from "./source";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (dispatcher.nextQueue.length === 1) {

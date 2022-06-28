@@ -8,9 +8,9 @@ import {
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
+import { Observer } from "../observer";
 import { notifySink } from "../source";
 import { lift } from "./lift";
-import { Observer } from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 

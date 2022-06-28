@@ -1,13 +1,9 @@
 import fs from "fs";
 import { Readable } from "stream";
+import { dispatchTo } from "../dispatcher";
 import { DisposableValueLike, add, addTo, dispose } from "../disposable";
 import { Factory, pipe } from "../functions";
-import {
-  createObservable,
-  dispatchTo,
-  onNotify,
-  subscribe,
-} from "../observable";
+import { createObservable, onNotify, subscribe } from "../observable";
 import { FlowableLike, createLiftedStreamable } from "../streamable";
 import { createDisposableNodeStream } from "./nodeStream";
 

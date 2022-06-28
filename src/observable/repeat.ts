@@ -2,10 +2,10 @@ import { Repeat } from "../container";
 import { Error, addTo, dispose, onDisposed } from "../disposable";
 import { Function2, Predicate, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
+import { Observer, createDelegatingObserver } from "../observer";
 import { isNone, isSome } from "../option";
 import { notifySink } from "../source";
 import { lift } from "./lift";
-import { Observer, createDelegatingObserver } from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 

@@ -3,6 +3,7 @@ import { EnumerableLike, ToEnumerable, createEnumerable } from "../enumerable";
 import { AbstractEnumerator, Enumerator, hasCurrent } from "../enumerator";
 import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
+import { Observer } from "../observer";
 import { isNone } from "../option";
 import {
   SchedulerContinuationLike,
@@ -11,7 +12,6 @@ import {
   runContinuation,
 } from "../scheduler";
 import { sourceFrom } from "../source";
-import { Observer } from "./observer";
 
 class EnumeratorScheduler<T>
   extends AbstractEnumerator<T>

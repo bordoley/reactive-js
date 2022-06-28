@@ -6,6 +6,7 @@ import {
   mapTo,
   startWith,
 } from "../container";
+import { dispatchTo } from "../dispatcher";
 import { Error, dispose, isDisposed, onDisposed } from "../disposable";
 import { forEach } from "../enumerator";
 import {
@@ -24,7 +25,6 @@ import {
   buffer,
   concatT,
   decodeWithCharset,
-  dispatchTo,
   fromArray,
   fromArrayT,
   generate,
