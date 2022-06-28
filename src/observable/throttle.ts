@@ -13,11 +13,11 @@ import {
   ObservableOperator,
   ThrottleMode,
 } from "../observable";
+import { Observer } from "../observer";
 import { Option, none } from "../option";
 import { sinkInto } from "../source";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
-import { Observer } from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 

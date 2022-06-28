@@ -11,12 +11,12 @@ import {
 } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
+import { Observer } from "../observer";
 import { none } from "../option";
 import { sinkInto } from "../source";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { never } from "./never";
-import { Observer } from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 

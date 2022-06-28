@@ -58,7 +58,7 @@ ___
 
 ### liftedStateType
 
-• `Readonly` **liftedStateType**: [`Observer`](../classes/observable.Observer.md)<`unknown`\>
+• `Readonly` **liftedStateType**: [`Observer`](../classes/observer.Observer.md)<`unknown`\>
 
 #### Overrides
 
@@ -85,7 +85,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `this` | [`ObservableLike`](observable.ObservableLike.md)<`T`\> |
-| `sink` | [`Observer`](../classes/observable.Observer.md)<`T`\> |
+| `sink` | [`Observer`](../classes/observer.Observer.md)<`T`\> |
 
 #### Returns
 

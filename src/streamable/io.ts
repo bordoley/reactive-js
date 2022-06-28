@@ -1,19 +1,19 @@
 import { ignoreElements, startWith } from "../container";
+import { dispatchTo } from "../dispatcher";
 import { add, addTo } from "../disposable";
 import { Factory, Reducer, pipe } from "../functions";
 import {
   AbstractDisposableObservable,
   MulticastObservableLike,
-  Observer,
   StreamLike,
   concatT,
   createSubject,
-  dispatchTo,
   fromArrayT,
   keepT,
   onNotify,
   reduce,
 } from "../observable";
+import { Observer } from "../observer";
 
 import { SchedulerLike } from "../scheduler";
 import { sinkInto } from "../source";

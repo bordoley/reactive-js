@@ -1,13 +1,13 @@
 import { Function1, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
+import { Observer } from "../observer";
 import { Lift, sourceFrom } from "../source";
 import { AbstractObservable } from "./observable";
-import { Observer } from "./observer";
 
 /**
  * A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.
  */
-export type ObserverOperator<A, B> = Function1<Observer<B>, Observer<A>>;
+type ObserverOperator<A, B> = Function1<Observer<B>, Observer<A>>;
 
 class LiftedObservable<TIn, TOut> extends AbstractObservable<TOut> {
   constructor(

@@ -8,6 +8,7 @@ import {
   throws,
   zipWith,
 } from "../container";
+import { dispatchTo } from "../dispatcher";
 import { dispose } from "../disposable";
 import { forEach as enumeratorForEach } from "../enumerator";
 import {
@@ -35,7 +36,6 @@ import {
   concatT,
   createObservable,
   createSubject,
-  dispatchTo,
   distinctUntilChanged,
   exhaustT,
   fromArray,

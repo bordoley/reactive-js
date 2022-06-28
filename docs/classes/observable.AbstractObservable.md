@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`AbstractSource`](source.AbstractSource.md)<`T`, [`Observer`](observable.Observer.md)<`T`\>\>
+- [`AbstractSource`](source.AbstractSource.md)<`T`, [`Observer`](observer.Observer.md)<`T`\>\>
 
   ↳ **`AbstractObservable`**
 
@@ -117,7 +117,7 @@ AbstractSource.type
 | Name | Type |
 | :------ | :------ |
 | `this` | [`AbstractObservable`](observable.AbstractObservable.md)<`T`\> |
-| `sink` | [`Observer`](observable.Observer.md)<`T`\> |
+| `sink` | [`Observer`](observer.Observer.md)<`T`\> |
 
 #### Returns
 

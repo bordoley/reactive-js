@@ -1,9 +1,9 @@
 import { dispose } from "../disposable";
 import { SideEffect1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
+import { Observer } from "../observer";
 import { CreateSource } from "../source";
 import { AbstractObservable } from "./observable";
-import { Observer } from "./observer";
 
 class CreateObservable<T> extends AbstractObservable<T> {
   constructor(private readonly f: SideEffect1<Observer<T>>) {

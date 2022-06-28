@@ -1,9 +1,9 @@
 import { add, dispose, isDisposed, onComplete } from "../disposable";
 import { Function2, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
+import { Observer } from "../observer";
 import { Option } from "../option";
 import { lift } from "./lift";
-import { Observer } from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 

@@ -10,13 +10,13 @@ Represents an unmanaged resource that can be disposed.
 
 - **`DisposableLike`**
 
+  ↳ [`DispatcherLike`](dispatcher.DispatcherLike.md)
+
   ↳ [`DisposableValueLike`](disposable.DisposableValueLike.md)
 
   ↳ [`SerialDisposableLike`](disposable.SerialDisposableLike.md)
 
   ↳ [`LiftedStateLike`](liftable.LiftedStateLike.md)
-
-  ↳ [`DispatcherLike`](observable.DispatcherLike.md)
 
   ↳ [`MulticastObservableLike`](observable.MulticastObservableLike.md)
 

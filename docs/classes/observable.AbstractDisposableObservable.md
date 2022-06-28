@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`AbstractDisposableSource`](source.AbstractDisposableSource.md)<`T`, [`Observer`](observable.Observer.md)<`T`\>\>
+- [`AbstractDisposableSource`](source.AbstractDisposableSource.md)<`T`, [`Observer`](observer.Observer.md)<`T`\>\>
 
   ↳ **`AbstractDisposableObservable`**
 
@@ -117,7 +117,7 @@ AbstractDisposableSource.type
 | Name | Type |
 | :------ | :------ |
 | `this` | [`AbstractDisposableObservable`](observable.AbstractDisposableObservable.md)<`T`\> |
-| `sink` | [`Observer`](observable.Observer.md)<`T`\> |
+| `sink` | [`Observer`](observer.Observer.md)<`T`\> |
 
 #### Returns
 

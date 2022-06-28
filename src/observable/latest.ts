@@ -1,11 +1,11 @@
 import { addTo, dispose, onComplete } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
+import { Observer } from "../observer";
 import { none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
 import { sourceFrom } from "../source";
 import { defer } from "./defer";
-import { Observer } from "./observer";
 
 type LatestCtx = {
   completedCount: number;

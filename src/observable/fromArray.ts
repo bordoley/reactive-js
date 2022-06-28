@@ -2,10 +2,10 @@ import { FromArray } from "../container";
 import { dispose } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
+import { Observer } from "../observer";
 import { __yield } from "../scheduler";
 import { createObservable } from "./createObservable";
 import { defer } from "./defer";
-import { Observer } from "./observer";
 
 const deferEmpty = createObservable(dispose());
 (deferEmpty as any).isEnumerable = true;

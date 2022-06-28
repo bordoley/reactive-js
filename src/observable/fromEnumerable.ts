@@ -3,9 +3,9 @@ import { EnumerableLike, enumerate } from "../enumerable";
 import { Enumerator, current, move } from "../enumerator";
 import { Factory, Function1, defer, pipe } from "../functions";
 import { ObservableLike } from "../observable";
+import { Observer } from "../observer";
 import { __yield } from "../scheduler";
 import { defer as deferObs } from "./defer";
-import { Observer } from "./observer";
 import { using } from "./using";
 
 /**

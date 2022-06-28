@@ -15,6 +15,7 @@ import {
   ThrowIfEmpty,
   concatMap,
 } from "./container";
+import { DispatcherLike, dispatchTo } from "./dispatcher";
 import {
   DisposableLike,
   addTo,
@@ -32,7 +33,6 @@ import {
   Function2,
   Predicate,
   Reducer,
-  SideEffect1,
   Updater,
   ignore,
   pipe,
@@ -43,12 +43,12 @@ import { defer } from "./observable/defer";
 import { fromArrayT } from "./observable/fromArray";
 import { lift, liftSynchronousT } from "./observable/lift";
 import { mapT } from "./observable/map";
-import { Observer, createDelegatingObserver } from "./observable/observer";
 import { onNotify } from "./observable/onNotify";
 import { subscribe } from "./observable/subscribe";
 import { switchAll, switchAllT } from "./observable/switchAll";
 import { using } from "./observable/using";
 import { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
+import { Observer, createDelegatingObserver } from "./observer";
 import { Option, isNone, isSome, none } from "./option";
 import { RunnableLike, ToRunnable, createRunnable } from "./runnable";
 import {
@@ -116,15 +116,6 @@ export interface MulticastObservableLike<T>
   readonly observerCount: number;
 }
 
-/** @noInheritDoc */
-export interface DispatcherLike<T> extends DisposableLike {
-  /**
-   * Dispatches the next request
-   * @param req
-   */
-  dispatch(this: DispatcherLike<T>, req: T): void;
-}
-
 /**
  * Represents a duplex stream
  *
@@ -184,7 +175,6 @@ export {
   AbstractObservable,
   AbstractDisposableObservable,
 } from "./observable/observable";
-export { Observer } from "./observable/observer";
 export { buffer } from "./observable/buffer";
 export { map, mapT } from "./observable/map";
 export {
@@ -236,11 +226,6 @@ export const decodeWithCharset: (
 export const decodeWithCharsetT: DecodeWithCharset<ObservableLike<unknown>> = {
   decodeWithCharset,
 };
-
-export const dispatchTo =
-  <T>(dispatcher: DispatcherLike<T>): SideEffect1<T> =>
-  v =>
-    dispatcher.dispatch(v);
 
 /**
  * Returns an `ObservableLike` that emits all items emitted by the source that

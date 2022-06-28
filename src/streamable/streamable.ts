@@ -1,11 +1,10 @@
+import { DispatcherLike } from "../dispatcher";
 import { add, addTo } from "../disposable";
 import { Function1, compose, pipe } from "../functions";
 import {
   AbstractDisposableObservable,
-  DispatcherLike,
   MulticastObservableLike,
   ObservableOperator,
-  Observer,
   StreamLike,
   __currentScheduler,
   __memo,
@@ -14,6 +13,7 @@ import {
   createSubject,
   publish,
 } from "../observable";
+import { Observer } from "../observer";
 import { SchedulerLike } from "../scheduler";
 import { sinkInto } from "../source";
 import { StreamableLike } from "../streamable";

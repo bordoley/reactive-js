@@ -1,4 +1,5 @@
 import { Writable } from "stream";
+import { dispatchTo } from "../dispatcher";
 import {
   DisposableValueLike,
   add,
@@ -7,12 +8,7 @@ import {
   onComplete,
 } from "../disposable";
 import { Factory, defer, pipe } from "../functions";
-import {
-  createObservable,
-  dispatchTo,
-  onNotify,
-  subscribe,
-} from "../observable";
+import { createObservable, onNotify, subscribe } from "../observable";
 
 import { FlowableSinkLike, createLiftedStreamable } from "../streamable";
 

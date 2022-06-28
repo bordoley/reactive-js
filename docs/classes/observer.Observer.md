@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [observable](../modules/observable.md) / Observer
+[Reactive-JS](../README.md) / [observer](../modules/observer.md) / Observer
 
 # Class: Observer<T\>
 
-[observable](../modules/observable.md).Observer
+[observer](../modules/observer.md).Observer
 
 Abstract base class for implementing the `ObserverLike` interface.
 
@@ -26,22 +26,22 @@ Abstract base class for implementing the `ObserverLike` interface.
 
 ### Constructors
 
-- [constructor](observable.Observer.md#constructor)
+- [constructor](observer.Observer.md#constructor)
 
 ### Properties
 
-- [scheduler](observable.Observer.md#scheduler)
+- [scheduler](observer.Observer.md#scheduler)
 
 ### Accessors
 
-- [T](observable.Observer.md#t)
-- [dispatcher](observable.Observer.md#dispatcher)
-- [type](observable.Observer.md#type)
+- [T](observer.Observer.md#t)
+- [dispatcher](observer.Observer.md#dispatcher)
+- [type](observer.Observer.md#type)
 
 ### Methods
 
-- [assertState](observable.Observer.md#assertstate)
-- [notify](observable.Observer.md#notify)
+- [assertState](observer.Observer.md#assertstate)
+- [notify](observer.Observer.md#notify)
 
 ## Constructors
 
@@ -93,11 +93,11 @@ ___
 
 ### dispatcher
 
-• `get` **dispatcher**(): [`DispatcherLike`](../interfaces/observable.DispatcherLike.md)<`T`\>
+• `get` **dispatcher**(): [`DispatcherLike`](../interfaces/dispatcher.DispatcherLike.md)<`T`\>
 
 #### Returns
 
-[`DispatcherLike`](../interfaces/observable.DispatcherLike.md)<`T`\>
+[`DispatcherLike`](../interfaces/dispatcher.DispatcherLike.md)<`T`\>
 
 ___
 
@@ -127,7 +127,7 @@ AbstractDisposableContainer.type
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`Observer`](observable.Observer.md)<`T`\> |
+| `this` | [`Observer`](observer.Observer.md)<`T`\> |
 
 #### Returns
 

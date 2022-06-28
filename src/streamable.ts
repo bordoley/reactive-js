@@ -5,6 +5,7 @@ import {
   fromValue as fromValueContainer,
   ignoreElements,
 } from "./container";
+import { dispatchTo } from "./dispatcher";
 import { add, bindTo } from "./disposable";
 import {
   EnumerableLike,
@@ -31,7 +32,6 @@ import {
   concatAllT,
   concatT,
   createObservable,
-  dispatchTo,
   distinctUntilChanged,
   fromArrayT,
   fromDisposable,

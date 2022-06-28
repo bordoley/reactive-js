@@ -8,11 +8,11 @@ import {
 } from "../disposable";
 import { pipe, returns } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
+import { Observer } from "../observer";
 import { concat } from "./concat";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { mapT } from "./map";
-import { Observer } from "./observer";
 import { subscribe } from "./subscribe";
 
 const _timeoutError = Symbol("@reactive-js/core/lib/observable/timeoutError");

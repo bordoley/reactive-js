@@ -30,12 +30,12 @@ import {
   raise,
 } from "../functions";
 import { ObservableEffectMode, ObservableLike } from "../observable";
+import { Observer } from "../observer";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerLike, schedule } from "../scheduler";
 import { notify } from "../source";
 import { defer } from "./defer";
 import { fromArrayT } from "./fromArray";
-import { Observer } from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 

@@ -16,11 +16,11 @@ import {
 } from "../enumerator";
 import { defer, pipe, returns } from "../functions";
 import { ObservableLike } from "../observable";
+import { Observer } from "../observer";
 import { everySatisfy, map } from "../readonlyArray";
 import { sinkInto, sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
 import { fromEnumerator } from "./fromEnumerable";
-import { Observer } from "./observer";
 import { enumerateObs } from "./toEnumerable";
 
 import { using } from "./using";

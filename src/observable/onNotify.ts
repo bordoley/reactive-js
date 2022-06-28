@@ -1,8 +1,8 @@
 import { SideEffect1 } from "../functions";
 import { ObservableOperator } from "../observable";
+import { Observer } from "../observer";
 import { createOnNotifyOperator } from "../source";
 import { liftSynchronousT } from "./lift";
-import { Observer } from "./observer";
 
 /**
  * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.

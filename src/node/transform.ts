@@ -9,6 +9,7 @@ import {
   createGzip,
   createInflate,
 } from "zlib";
+import { dispatchTo } from "../dispatcher";
 import {
   DisposableValueLike,
   add,
@@ -18,12 +19,7 @@ import {
   onError,
 } from "../disposable";
 import { Factory, defer, ignore, pipe, returns } from "../functions";
-import {
-  createObservable,
-  dispatchTo,
-  onNotify,
-  subscribe,
-} from "../observable";
+import { createObservable, onNotify, subscribe } from "../observable";
 import { sinkInto } from "../source";
 
 import {

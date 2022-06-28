@@ -1,8 +1,9 @@
+import { DispatcherLike } from "../dispatcher";
 import { add, isDisposed, onDisposed } from "../disposable";
 import { pipe } from "../functions";
-import { DispatcherLike, SubjectLike } from "../observable";
+import { SubjectLike } from "../observable";
+import { Observer } from "../observer";
 import { AbstractDisposableObservable } from "./observable";
-import { Observer } from "./observer";
 
 class SubjectImpl<T>
   extends AbstractDisposableObservable<T>
