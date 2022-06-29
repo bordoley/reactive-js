@@ -139,10 +139,12 @@ function flip(f) {
     };
 }
 const { max, min, floor } = Math;
+const _newInstance = (Constructor, ...args) => new Constructor(...args);
+function newInstance(Constructor, ...args) {
+    return _newInstance(Constructor, ...args);
+}
 function newInstanceWith(...args) {
-    return Constructor => {
-        return new Constructor(...args);
-    };
+    return Constructor => _newInstance(Constructor, ...args);
 }
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isOdd, length, max, min, negate, newInstanceWith, pipe, pipeLazy, raise, returns, strictEquality, sum, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isOdd, length, max, min, negate, newInstance, newInstanceWith, pipe, pipeLazy, raise, returns, strictEquality, sum, updateReducer };

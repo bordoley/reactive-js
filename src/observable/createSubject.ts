@@ -1,6 +1,6 @@
 import { DispatcherLike, dispatch } from "../dispatcher";
 import { add, isDisposed, onDisposed } from "../disposable";
-import { length, pipe } from "../functions";
+import { length, newInstance, pipe } from "../functions";
 import { SubjectLike } from "../observable";
 import { Observer } from "../observer";
 import { AbstractDisposableObservable } from "./observable";
@@ -9,7 +9,8 @@ class SubjectImpl<T>
   extends AbstractDisposableObservable<T>
   implements SubjectLike<T>
 {
-  private readonly dispatchers: Set<DispatcherLike<T>> = new Set();
+  private readonly dispatchers: Set<DispatcherLike<T>> =
+    newInstance<Set<DispatcherLike<T>>>(Set);
   private readonly replayed: T[] = [];
 
   constructor(public readonly replay: number) {
@@ -67,5 +68,5 @@ export const createSubject = <T>(
   options: { readonly replay?: number } = {},
 ): SubjectLike<T> => {
   const { replay = 0 } = options;
-  return new SubjectImpl(replay);
+  return newInstance(SubjectImpl, replay);
 };

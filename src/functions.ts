@@ -752,6 +752,38 @@ export type Constructor4<TA, TB, TC, TD, T> = new (
   d: TD,
 ) => T;
 
+const _newInstance = (
+  Constructor: new (...args: readonly any[]) => any,
+  ...args: readonly any[]
+): any => new Constructor(...args);
+
+export function newInstance<T>(Constructor: Constructor<T>): T;
+export function newInstance<TA, T>(Constructor: Constructor1<TA, T>, a: TA): T;
+export function newInstance<TA, TB, T>(
+  Constructor: Constructor2<TA, TB, T>,
+  a: TA,
+  b: TB,
+): T;
+export function newInstance<TA, TB, TC, T>(
+  Constructor: Constructor3<TA, TB, TC, T>,
+  a: TA,
+  b: TB,
+  c: TC,
+): T;
+export function newInstance<TA, TB, TC, TD, T>(
+  Constructor: Constructor4<TA, TB, TC, TD, T>,
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+): T;
+export function newInstance(
+  Constructor: new (...args: readonly any[]) => any,
+  ...args: readonly any[]
+): any {
+  return _newInstance(Constructor, ...args);
+}
+
 export function newInstanceWith<T>(): Function1<Constructor<T>, T>;
 export function newInstanceWith<TA, T>(
   a: TA,
@@ -774,7 +806,5 @@ export function newInstanceWith<TA, TB, TC, TD, T>(
 export function newInstanceWith(
   ...args: readonly any[]
 ): Function1<new (...args: readonly any[]) => any, any> {
-  return Constructor => {
-    return new Constructor(...args);
-  };
+  return Constructor => _newInstance(Constructor, ...args);
 }

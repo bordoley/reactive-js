@@ -1,6 +1,6 @@
 /// <reference types="./__tests__.d.ts" />
 import { createDisposable, add, dispose, isDisposed, onDisposed, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
-import { pipe, pipeLazy, raise, increment, sum, returns, alwaysTrue, incrementBy, alwaysFalse, arrayEquality, ignore, identity } from './functions.mjs';
+import { pipe, pipeLazy, raise, increment, sum, returns, alwaysTrue, incrementBy, alwaysFalse, arrayEquality, newInstance, ignore, identity } from './functions.mjs';
 import { none, isSome } from './option.mjs';
 import { describe, test, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectNone, expectEquals, expectArrayEquals, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
 import { empty, endWith, fromValue, concatMap, mapTo, startWith, ignoreElements, contains, compute, noneSatisfy, zipWith, throws, concatWith, genMap, encodeUtf8 } from './container.mjs';
@@ -110,13 +110,13 @@ const tests$4 = describe("enumerable", test("toIterable", pipeLazy([1, 2, 3], fr
 const tests$3 = describe("observable", describe("buffer", test("with duration and maxBufferSize", pipeLazy(concat$2(pipe([1, 2, 3, 4], fromArray$2()), pipe([1, 2, 3], fromArray$2({ delay: 1 })), pipe(4, fromValue(fromArrayT$2, { delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toRunnable$2(), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", pipeLazy(pipeLazy([1, 2, 3, 4], fromArray$2(), buffer({ duration: _ => throws({ ...fromArrayT$2, ...mapT })(raise) }), toRunnable$2({
     schedulerFactory: pipeLazy({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
 }), toArray()), expectToThrow))), describe("catchError", test("source completes successfully", pipeLazy(pipe(1, fromValue(fromArrayT$2)), catchError(_ => fromValue(fromArrayT$2)(2)), toRunnable$2(), toArray(), expectArrayEquals([1]))), test("source throws, error caught and ignored", () => {
-    const error = new Error();
+    const error = newInstance(Error);
     pipe(1, fromValue(fromArrayT$2), concatWith(concatT, pipe(error, returns, throws({ ...fromArrayT$2, ...mapT }))), catchError(ignore), toRunnable$2(), toArray(), expectArrayEquals([1]));
 }), test("source throws, continues with second observable", () => {
-    const error = new Error();
+    const error = newInstance(Error);
     pipe(1, fromValue(fromArrayT$2), concatWith(concatT, pipe(error, returns, throws({ ...fromArrayT$2, ...mapT }))), catchError(_ => fromValue(fromArrayT$2)(2)), toRunnable$2(), toArray(), expectArrayEquals([1, 2]));
 }), test("source throws, catch throws", () => {
-    const error = new Error();
+    const error = newInstance(Error);
     expectToThrow(() => pipe(1, fromValue(fromArrayT$2), concatWith(concatT, pipe(error, returns, throws({ ...fromArrayT$2, ...mapT }))), catchError(_ => {
         throw error;
     }), toRunnable$2(), toArray()));
@@ -126,7 +126,7 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
     [5, 4],
     [7, 4],
 ], arrayEquality()))), describe("createObservable", test("disposes the observer if onSubscribe throws", () => {
-    const cause = new Error();
+    const cause = newInstance(Error);
     const observable = createObservable(_ => {
         throw cause;
     });
@@ -162,7 +162,7 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
     pipe(result, expectEquals(1));
     scheduler.dispose();
 }), testAsync("when the promise reject", async () => {
-    const error = new Error();
+    const error = newInstance(Error);
     const factory = () => Promise.reject(error);
     const scheduler = createHostScheduler();
     await pipe(pipe(factory, fromPromise, toPromise(scheduler)), expectPromiseToThrow);
@@ -226,7 +226,7 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
         }
         else {
             retried = true;
-            pipe(dispatcher, dispose({ cause: new Error() }));
+            pipe(dispatcher, dispose({ cause: newInstance(Error) }));
         }
     });
     pipe(src, retry(), toRunnable$2(), toArray(), expectArrayEquals([1, 1, 2]));
@@ -251,7 +251,7 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
     [2, 0],
     [3, 1],
 ], arrayEquality()))), test("when latest produces no values", pipeLazy([0], fromArray$2({ delay: 1 }), withLatestFrom(empty(fromArrayT$2), sum), toRunnable$2(), toArray(), expectArrayEquals([]))), test("when latest throws", () => {
-    const error = new Error();
+    const error = newInstance(Error);
     pipe(pipeLazy([0], fromArray$2({ delay: 1 }), withLatestFrom(throws({ ...fromArrayT$2, ...mapT })(returns(error)), sum), toRunnable$2(), toArray(), expectArrayEquals([])), expectToThrowError(error));
 })), describe("zip", test("with synchronous and non-synchronous sources", pipeLazy(zip$1(pipe([1, 2], fromArray$2({ delay: 1 })), pipe([2, 3], fromIterable$1()), pipe([3, 4, 5], fromArray$2({ delay: 1 }))), toRunnable$2(), toArray(), expectArrayEquals([
     [1, 2, 3],

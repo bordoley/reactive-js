@@ -1,11 +1,11 @@
-import { floor, pipe } from "../functions";
+import { floor, newInstance, pipe } from "../functions";
 import { createPriorityQueue } from "../scheduler/queue";
 import { describe, expectArrayEquals, test } from "../testing";
 
 const compare = (a: number, b: number): number => a - b;
 
 const makeSortedArray = (n: number) => {
-  const result = new Array(n);
+  const result = newInstance<number, Array<number>>(Array, n);
   for (let i = 0; i < n; i++) {
     result[i] = i;
   }

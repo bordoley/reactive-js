@@ -1,6 +1,6 @@
 /// <reference types="./runnable.d.ts" />
 import { dispose, isDisposed, addTo, bindTo } from './disposable.mjs';
-import { pipe, raise, pipeLazy, newInstanceWith, length, min, max, ignore, identity, alwaysTrue, compose } from './functions.mjs';
+import { pipe, newInstance, raise, pipeLazy, newInstanceWith, length, min, max, ignore, identity, alwaysTrue, compose } from './functions.mjs';
 import { isSome, none, isNone, getOrDefault } from './option.mjs';
 import { empty } from './readonlyArray.mjs';
 import { AbstractSource, sourceFrom, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
@@ -25,7 +25,7 @@ class RunnableImpl extends AbstractRunnable {
         }
     }
 }
-const createRunnable = (run) => new RunnableImpl(run);
+const createRunnable = (run) => newInstance(RunnableImpl, run);
 const createT = {
     create: createRunnable,
 };

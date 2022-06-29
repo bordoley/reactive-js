@@ -1,7 +1,7 @@
 /// <reference types="./enumerable.d.ts" />
 import { isDisposed, dispose, createSerialDisposable, bindTo, add, addTo } from './disposable.mjs';
 import { AbstractEnumerator, reset, hasCurrent, AbstractDelegatingEnumerator, move, Enumerator, current, forEach, zip as zip$1, AbstractPassThroughEnumerator } from './enumerator.mjs';
-import { pipe, newInstanceWith, length, max, raise, alwaysTrue, identity } from './functions.mjs';
+import { pipe, newInstance, newInstanceWith, length, max, raise, alwaysTrue, identity } from './functions.mjs';
 import { createFromArray, empty } from './container.mjs';
 import { AbstractLiftable, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, delegate, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -38,7 +38,7 @@ class ArrayEnumerator extends AbstractEnumerator {
  *
  * @param values
  */
-const fromArray = createFromArray((values, startIndex, endIndex) => createEnumerable(() => new ArrayEnumerator(values, startIndex - 1, endIndex)));
+const fromArray = createFromArray((values, startIndex, endIndex) => createEnumerable(() => newInstance(ArrayEnumerator, values, startIndex - 1, endIndex)));
 const fromArrayT = {
     fromArray,
 };
@@ -59,7 +59,7 @@ class CreateEnumerable extends AbstractEnumerable {
         }
     }
 }
-const createEnumerable = (enumerate) => new CreateEnumerable(enumerate);
+const createEnumerable = (enumerate) => newInstance(CreateEnumerable, enumerate);
 const enumerate = (enumerable) => enumerable.enumerate();
 
 class LiftedEnumerable extends AbstractEnumerable {
@@ -84,7 +84,7 @@ const lift = (operator) => enumerable => {
     const allFunctions = enumerable instanceof LiftedEnumerable
         ? [...enumerable.operators, operator]
         : [operator];
-    return new LiftedEnumerable(src, allFunctions);
+    return newInstance(LiftedEnumerable, src, allFunctions);
 };
 const liftT = {
     variance: covariant,
@@ -187,7 +187,7 @@ class IteratorEnumerator extends Enumerator {
 }
 const _fromIterator = (f) => createEnumerable(() => {
     const iterator = f();
-    const enumerator = new IteratorEnumerator(iterator);
+    const enumerator = newInstance(IteratorEnumerator, iterator);
     return enumerator;
 });
 /**
@@ -236,7 +236,7 @@ class GenerateEnumerator extends AbstractEnumerator {
  * @param generator the generator function.
  * @param initialValue Factory function used to generate the initial accumulator.
  */
-const generate = (generator, initialValue) => createEnumerable(() => new GenerateEnumerator(generator, initialValue()));
+const generate = (generator, initialValue) => createEnumerable(() => newInstance(GenerateEnumerator, generator, initialValue()));
 const generateT = {
     generate,
 };
@@ -284,7 +284,7 @@ function repeat(predicate) {
         : typeof predicate === "number"
             ? (count) => count < predicate
             : (count) => predicate(count);
-    return enumerable => createEnumerable(() => new RepeatEnumerator(enumerable, repeatPredicate));
+    return enumerable => createEnumerable(() => newInstance(RepeatEnumerator, enumerable, repeatPredicate));
 }
 const repeatT = {
     repeat,
@@ -363,7 +363,7 @@ class EnumerableIterable {
         }
     }
 }
-const _toIterable = (source) => new EnumerableIterable(source);
+const _toIterable = (source) => newInstance(EnumerableIterable, source);
 /**
  * Converts an EnumerableLike into a javascript Iterable.
  */

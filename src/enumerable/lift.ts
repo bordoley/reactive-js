@@ -1,6 +1,6 @@
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { Enumerator } from "../enumerator";
-import { Function1, pipe } from "../functions";
+import { Function1, newInstance, pipe } from "../functions";
 import { Covariant, Lift, covariant } from "../liftable";
 import { AbstractEnumerable, enumerate } from "./enumerable";
 
@@ -37,7 +37,11 @@ export const lift =
         ? [...enumerable.operators, operator]
         : [operator];
 
-    return new LiftedEnumerable<TB>(src, allFunctions);
+    return newInstance<
+      EnumerableLike<any>,
+      readonly Function1<Enumerator<any>, Enumerator<any>>[],
+      LiftedEnumerable<TB>
+    >(LiftedEnumerable, src, allFunctions);
   };
 
 export const liftT: Lift<EnumerableLike<unknown>, Covariant> = {

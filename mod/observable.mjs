@@ -3,7 +3,7 @@ import { createFromArray, empty, fromValue, throws, concatMap } from './containe
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { dispose, isDisposed, onDisposed, add, addTo, disposed, onComplete, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
 import { move, current, AbstractEnumerator, reset, hasCurrent, zip as zip$1, forEach } from './enumerator.mjs';
-import { pipe, length, newInstanceWith, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, max, returns } from './functions.mjs';
+import { pipe, newInstance, length, newInstanceWith, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, max, returns } from './functions.mjs';
 import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, assertState, notifySink, createUsing, notify, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { scheduler, AbstractDelegatingObserver, Observer, createDelegatingObserver } from './observer.mjs';
 import { schedule, hasDelay, __yield, inContinuation, runContinuation, getDelay, createVirtualTimeScheduler } from './scheduler.mjs';
@@ -38,7 +38,7 @@ class CreateObservable extends AbstractObservable {
         }
     }
 }
-const createObservable = (f) => new CreateObservable(f);
+const createObservable = (f) => newInstance(CreateObservable, f);
 const createT = {
     create: createObservable,
 };
@@ -47,7 +47,7 @@ class SubjectImpl extends AbstractDisposableObservable {
     constructor(replay) {
         super();
         this.replay = replay;
-        this.dispatchers = new Set();
+        this.dispatchers = newInstance(Set);
         this.replayed = [];
     }
     get observerCount() {
@@ -87,7 +87,7 @@ class SubjectImpl extends AbstractDisposableObservable {
 }
 const createSubject = (options = {}) => {
     const { replay = 0 } = options;
-    return new SubjectImpl(replay);
+    return newInstance(SubjectImpl, replay);
 };
 
 const defer = (factory, options) => createObservable(observer => {
@@ -151,7 +151,7 @@ const lift = (operator, isEnumerableOperator = false) => source => {
         ? [operator, ...source.operators]
         : [operator];
     isEnumerableOperator = isEnumerable(source) && isEnumerableOperator;
-    return new LiftedObservable(sourceSource, allFunctions, isEnumerableOperator);
+    return newInstance(LiftedObservable, sourceSource, allFunctions, isEnumerableOperator);
 };
 const liftT = {
     variance: contraVariant,
@@ -441,7 +441,7 @@ const observable = (computation, { mode = "batched" } = {}) => defer(() => (obse
             pipe(observer, dispose(error));
         }
     };
-    const ctx = new ObservableContext(observer, runComputation, mode);
+    const ctx = newInstance(ObservableContext, observer, runComputation, mode);
     return runComputation();
 });
 const assertCurrentContext = () => isNone(currentCtx)
@@ -759,7 +759,7 @@ const mergeAll = (options = {}) => {
     const operator = (delegate) => {
         const observer = pipe(delegate, onDisposed(_ => {
             observer.queue.length = 0;
-        }), delegate => new MergeObserver(delegate, maxBufferSize, maxConcurrency), addTo(delegate), onComplete(() => {
+        }), delegate => newInstance(MergeObserver, delegate, maxBufferSize, maxConcurrency), addTo(delegate), onComplete(() => {
             if (length(observer.queue) + observer.activeCount === 0) {
                 pipe(observer.delegate, dispose());
             }

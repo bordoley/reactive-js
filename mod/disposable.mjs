@@ -1,5 +1,5 @@
 /// <reference types="./disposable.d.ts" />
-import { pipe, newInstanceWith, pipeLazy } from './functions.mjs';
+import { pipe, newInstance, newInstanceWith, pipeLazy } from './functions.mjs';
 import { isSome, isNone, none } from './option.mjs';
 
 /**
@@ -79,7 +79,7 @@ class AbstractDisposable {
     constructor() {
         /** @ignore */
         this.isDisposed = false;
-        this.disposables = new Set();
+        this.disposables = newInstance(Set);
         this._error = none;
     }
     /** @ignore */
@@ -125,7 +125,7 @@ class DisposableImpl extends AbstractDisposable {
  * @param onDispose Optional teardown logic to attach to the newly created disposable.
  */
 const createDisposable = (onDispose) => {
-    const disposable = new DisposableImpl();
+    const disposable = newInstance(DisposableImpl);
     if (isSome(onDispose)) {
         addDisposableOrTeardown(disposable, onDispose);
     }
@@ -165,7 +165,7 @@ class SerialDisposableImpl extends AbstractDisposable {
 /**
  * Creates a new `SerialDisposableLike` instance containing a disposed instance.
  */
-const createSerialDisposable = () => new SerialDisposableImpl();
+const createSerialDisposable = () => newInstance(SerialDisposableImpl);
 class DisposableValueImpl extends AbstractDisposable {
     constructor(value) {
         super();
@@ -178,7 +178,7 @@ class DisposableValueImpl extends AbstractDisposable {
  */
 const createDisposableValue = (value, cleanup) => pipe(DisposableValueImpl, newInstanceWith(value), onDisposed(pipeLazy(value, cleanup)));
 const toAbortSignal = (disposable) => {
-    const abortController = new AbortController();
+    const abortController = newInstance(AbortController);
     addDisposableOrTeardown(disposable, () => abortController.abort());
     return abortController.signal;
 };

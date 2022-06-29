@@ -29,7 +29,15 @@ import {
   isDisposed,
   onError,
 } from "./disposable";
-import { Factory, compose, ignore, pipe, pipeLazy, returns } from "./functions";
+import {
+  Factory,
+  compose,
+  ignore,
+  newInstance,
+  pipe,
+  pipeLazy,
+  returns,
+} from "./functions";
 import {
   ObservableLike,
   SubjectLike,
@@ -173,7 +181,7 @@ class ReactPriorityScheduler
 }
 
 const createReactPriorityScheduler: Factory<PrioritySchedulerLike> = () =>
-  new ReactPriorityScheduler();
+  newInstance(ReactPriorityScheduler);
 
 const createReactSchedulerFactory =
   (priority: number): Factory<SchedulerLike> =>

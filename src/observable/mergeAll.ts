@@ -7,7 +7,7 @@ import {
   onDisposed,
 } from "../disposable";
 import { MAX_SAFE_INTEGER } from "../env";
-import { length, pipe } from "../functions";
+import { length, newInstance, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
 import { isSome } from "../option";
@@ -96,7 +96,8 @@ export const mergeAll = <T>(
       onDisposed(_ => {
         observer.queue.length = 0;
       }),
-      delegate => new MergeObserver(delegate, maxBufferSize, maxConcurrency),
+      delegate =>
+        newInstance(MergeObserver, delegate, maxBufferSize, maxConcurrency),
       addTo(delegate),
       onComplete(() => {
         if (length(observer.queue) + observer.activeCount === 0) {

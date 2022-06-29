@@ -9,7 +9,14 @@ import {
   onDisposed,
 } from "./disposable";
 import { __DEV__ } from "./env";
-import { isEmpty, length, newInstanceWith, pipe, raise } from "./functions";
+import {
+  isEmpty,
+  length,
+  newInstance,
+  newInstanceWith,
+  pipe,
+  raise,
+} from "./functions";
 import { delegate } from "./liftable";
 import { Option, isNone, none } from "./option";
 import { SchedulerLike, __yield, inContinuation, schedule } from "./scheduler";
@@ -130,7 +137,7 @@ class DelegatingObserver<T> extends AbstractDelegatingObserver<T, T> {
 
 export const createDelegatingObserver = <T>(
   delegate: Observer<T>,
-): Observer<T> => new DelegatingObserver(delegate);
+): Observer<T> => newInstance(DelegatingObserver, delegate);
 
 export const scheduler = <T>(observer: Observer<T>): SchedulerLike =>
   observer.scheduler;

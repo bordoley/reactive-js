@@ -1,6 +1,13 @@
 import { AbstractDisposableContainer } from "./container";
 import { addTo, dispose, isDisposed, onDisposed } from "./disposable";
-import { Function1, SideEffect1, pipe, pipeLazy, raise } from "./functions";
+import {
+  Function1,
+  SideEffect1,
+  newInstance,
+  pipe,
+  pipeLazy,
+  raise,
+} from "./functions";
 import { LiftableStateLike, delegate } from "./liftable";
 import { Option, none } from "./option";
 import {
@@ -195,7 +202,7 @@ export function zip<T>(
 export function zip(
   ...enumerators: readonly Enumerator<unknown>[]
 ): Enumerator<readonly any[]> {
-  const enumerator = new ZipEnumerator(enumerators);
+  const enumerator = newInstance(ZipEnumerator, enumerators);
   pipe(enumerators, forEachReadonlyArray(addTo(enumerator)));
   return enumerator;
 }

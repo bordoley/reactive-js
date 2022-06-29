@@ -2,7 +2,7 @@ import { Repeat } from "../container";
 import { addTo, dispose } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { Enumerator, hasCurrent, move } from "../enumerator";
-import { Predicate, alwaysTrue, pipe, raise } from "../functions";
+import { Predicate, alwaysTrue, newInstance, pipe, raise } from "../functions";
 import { Option, isNone } from "../option";
 import { createEnumerable, enumerate } from "./enumerable";
 
@@ -80,7 +80,9 @@ export function repeat<T>(
     : (count: number) => predicate(count);
 
   return enumerable =>
-    createEnumerable(() => new RepeatEnumerator(enumerable, repeatPredicate));
+    createEnumerable(() =>
+      newInstance(RepeatEnumerator, enumerable, repeatPredicate),
+    );
 }
 
 export const repeatT: Repeat<EnumerableLike<unknown>> = {

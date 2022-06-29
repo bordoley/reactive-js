@@ -1,5 +1,5 @@
 import { dispose } from "../disposable";
-import { SideEffect1, pipe } from "../functions";
+import { SideEffect1, newInstance, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
 import { CreateSource } from "../source";
@@ -21,7 +21,7 @@ class CreateObservable<T> extends AbstractObservable<T> {
 
 export const createObservable = <T>(
   f: SideEffect1<Observer<T>>,
-): ObservableLike<T> => new CreateObservable(f);
+): ObservableLike<T> => newInstance(CreateObservable, f);
 
 export const createT: CreateSource<ObservableLike<unknown>> = {
   create: createObservable,

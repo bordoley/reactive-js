@@ -27,6 +27,7 @@ import {
   arrayEquality,
   ignore,
   length,
+  newInstance,
   pipe,
   raise,
 } from "../functions";
@@ -302,7 +303,7 @@ export const observable = <T>(
       }
     };
 
-    const ctx = new ObservableContext(observer, runComputation, mode);
+    const ctx = newInstance(ObservableContext, observer, runComputation, mode);
 
     return runComputation();
   });

@@ -24,6 +24,7 @@ import {
   max,
   min,
   negate,
+  newInstance,
   pipe,
   pipeLazy,
   raise,
@@ -432,7 +433,7 @@ export const encodeUtf8 =
   ): ContainerOperator<C, string, Uint8Array> =>
   obs =>
     m.using(
-      () => createDisposableValue(new TextEncoder(), ignore),
+      () => createDisposableValue(newInstance(TextEncoder), ignore),
       v =>
         pipe(
           obs,

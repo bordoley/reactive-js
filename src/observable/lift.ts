@@ -1,4 +1,4 @@
-import { Function1, pipe } from "../functions";
+import { Function1, newInstance, pipe } from "../functions";
 import { contraVariant } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer } from "../observer";
@@ -46,7 +46,8 @@ export const lift =
 
     isEnumerableOperator = isEnumerable(source) && isEnumerableOperator;
 
-    return new LiftedObservable(
+    return newInstance(
+      LiftedObservable,
       sourceSource,
       allFunctions,
       isEnumerableOperator,
