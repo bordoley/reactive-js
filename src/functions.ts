@@ -228,7 +228,7 @@ export function callWith<T>(
 export const identity = <T>(v: T): T => v;
 
 export const isEmpty = (arr: readonly unknown[] | string): boolean =>
-  arr.length === 0;
+  length(arr) === 0;
 
 export const length = (arr: readonly unknown[] | string): number => arr.length;
 

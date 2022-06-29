@@ -14,7 +14,7 @@ function callWith(...args) {
  * @returns `v`
  */
 const identity = (v) => v;
-const isEmpty = (arr) => arr.length === 0;
+const isEmpty = (arr) => length(arr) === 0;
 const length = (arr) => arr.length;
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
