@@ -8,6 +8,7 @@ import {
 import { Function1, SideEffect, pipe, raise } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
+import { shouldYield } from "./scheduler";
 
 const isYieldError = (e: unknown): e is YieldError => e instanceof YieldError;
 
@@ -65,7 +66,7 @@ export const __yield = (options: { delay?: number } = {}) => {
       )
     : currentScheduler;
 
-  if (delay > 0 || scheduler.shouldYield) {
+  if (delay > 0 || shouldYield(scheduler)) {
     throw new YieldError(delay);
   }
 };

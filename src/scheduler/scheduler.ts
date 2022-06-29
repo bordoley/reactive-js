@@ -25,3 +25,6 @@ export const inContinuation = (
 ): boolean => scheduler.inContinuation;
 
 export const now = (scheduler: SchedulerLike): number => scheduler.now;
+
+export const shouldYield = (scheduler: SchedulerLike): boolean =>
+  scheduler.shouldYield;

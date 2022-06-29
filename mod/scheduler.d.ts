@@ -39,6 +39,7 @@ declare const createVirtualTimeScheduler: (options?: {
 declare const runContinuation: <TScheduler extends SchedulerImplementationLike>(continuation: SchedulerContinuationLike) => Function1<TScheduler, TScheduler>;
 declare const inContinuation: (scheduler: SchedulerLike | PrioritySchedulerLike) => boolean;
 declare const now: (scheduler: SchedulerLike) => number;
+declare const shouldYield: (scheduler: SchedulerLike) => boolean;
 /**
  * A unit of work to be executed by a scheduler.
  *
@@ -107,4 +108,4 @@ interface PrioritySchedulerLike extends DisposableLike {
 interface SchedulerImplementationLike extends DisposableLike {
     inContinuation: boolean;
 }
-export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerImplementationLike, SchedulerLike, VirtualTimeSchedulerLike, __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, inContinuation, now, runContinuation, schedule, toSchedulerWithPriority };
+export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerImplementationLike, SchedulerLike, VirtualTimeSchedulerLike, __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, inContinuation, now, runContinuation, schedule, shouldYield, toSchedulerWithPriority };
