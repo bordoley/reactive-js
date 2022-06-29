@@ -2,6 +2,7 @@
 import { AbstractDisposableContainer } from './container.mjs';
 import { onDisposed, isDisposed, dispose, addTo } from './disposable.mjs';
 import { pipe, pipeLazy, raise } from './functions.mjs';
+import { delegate } from './liftable.mjs';
 import { none } from './option.mjs';
 import { everySatisfy, map, forEach as forEach$1 } from './readonlyArray.mjs';
 
@@ -43,10 +44,10 @@ class AbstractPassThroughEnumerator extends Enumerator {
         this.delegate = delegate;
     }
     get current() {
-        return current(this.delegate);
+        return current(delegate(this));
     }
     get hasCurrent() {
-        return hasCurrent(this.delegate);
+        return hasCurrent(delegate(this));
     }
 }
 const current = (enumerator) => enumerator.current;

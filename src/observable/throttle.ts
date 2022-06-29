@@ -8,6 +8,7 @@ import {
   onComplete,
 } from "../disposable";
 import { Function1, pipe } from "../functions";
+import { delegate as delegateLiftable } from "../liftable";
 import {
   ObservableLike,
   ObservableOperator,
@@ -43,7 +44,7 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
       this.hasValue = false;
 
       setupDurationSubscription(this, value);
-      this.delegate.notify(value);
+      delegateLiftable(this).notify(value);
     }
   };
 

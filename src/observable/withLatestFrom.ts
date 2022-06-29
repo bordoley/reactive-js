@@ -1,5 +1,6 @@
 import { addTo, bindTo, dispose, isDisposed, onComplete } from "../disposable";
 import { Function2, pipe } from "../functions";
+import { delegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
 import { Option } from "../option";
@@ -27,7 +28,7 @@ class WithLatestFromObserver<TA, TB, T> extends AbstractDelegatingObserver<
 
     if (!isDisposed(this) && this.hasLatest) {
       const result = this.selector(next, this.otherLatest as TB);
-      this.delegate.notify(result);
+      delegate(this).notify(result);
     }
   }
 }

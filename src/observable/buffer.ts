@@ -10,6 +10,7 @@ import {
   onComplete,
 } from "../disposable";
 import { Function1, pipe } from "../functions";
+import { delegate, delegate as observerDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
 import { none } from "../option";
@@ -45,7 +46,7 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
       const buffer = this.buffer;
       this.buffer = [];
 
-      this.delegate.notify(buffer);
+      delegate(this).notify(buffer);
     };
 
     if (buffer.length === maxBufferSize) {
@@ -103,9 +104,9 @@ export function buffer<T>(
         this.buffer = [];
 
         if (buffer.length === 0) {
-          pipe(this.delegate, dispose());
+          pipe(this, observerDelegate, dispose());
         } else {
-          pipe(buffer, fromValue(fromArrayT), sinkInto(this.delegate));
+          pipe(buffer, fromValue(fromArrayT), sinkInto(observerDelegate(this)));
         }
       }),
     );
