@@ -93,6 +93,7 @@ const runContinuation = (continuation) => scheduler => {
 };
 const inContinuation = (scheduler) => scheduler.inContinuation;
 const now = (scheduler) => scheduler.now;
+const shouldYield = (scheduler) => scheduler.shouldYield;
 
 const isYieldError = (e) => e instanceof YieldError;
 class YieldError {
@@ -141,7 +142,7 @@ const __yield = (options = {}) => {
     const scheduler = isNone(currentScheduler)
         ? raise("__yield effect may only be invoked from within a SchedulerContinuation")
         : currentScheduler;
-    if (delay > 0 || scheduler.shouldYield) {
+    if (delay > 0 || shouldYield(scheduler)) {
         throw new YieldError(delay);
     }
 };
@@ -237,7 +238,7 @@ class AbstractQueueScheduler extends AbstractEnumerator {
                 !hasCurrent(this) ||
                 this.isPaused ||
                 (isSome(next) ? this._shouldYield(next) : false) ||
-                this.host.shouldYield));
+                shouldYield(this.host)));
     }
     move() {
         reset(this);
@@ -374,7 +375,7 @@ class SchedulerWithPriorityImpl extends AbstractDisposable {
         return now(this.priorityScheduler);
     }
     get shouldYield() {
-        return this.priorityScheduler.shouldYield;
+        return shouldYield(this.priorityScheduler);
     }
     requestYield() {
         this.priorityScheduler.requestYield();
@@ -580,4 +581,4 @@ const createVirtualTimeScheduler = (options = {}) => {
     return new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
 };
 
-export { __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, inContinuation, now, runContinuation, schedule, toSchedulerWithPriority };
+export { __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, inContinuation, now, runContinuation, schedule, shouldYield, toSchedulerWithPriority };

@@ -18,6 +18,7 @@ import {
   inContinuation,
   runContinuation,
   now as schedulerNow,
+  shouldYield,
 } from "./scheduler";
 import { __yield, schedule } from "./schedulerContinuation";
 
@@ -131,7 +132,7 @@ export abstract class AbstractQueueScheduler<
         !hasCurrent(this) ||
         this.isPaused ||
         (isSome(next) ? this._shouldYield(next) : false) ||
-        this.host.shouldYield)
+        shouldYield(this.host))
     );
   }
 

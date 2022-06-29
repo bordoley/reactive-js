@@ -90,4 +90,9 @@ export { schedule, __yield } from "./scheduler/schedulerContinuation";
 export { toSchedulerWithPriority } from "./scheduler/schedulerWithPriority";
 export { createHostScheduler } from "./scheduler/hostScheduler";
 export { createVirtualTimeScheduler } from "./scheduler/virtualTimeScheduler";
-export { runContinuation, inContinuation, now } from "./scheduler/scheduler";
+export {
+  runContinuation,
+  inContinuation,
+  now,
+  shouldYield,
+} from "./scheduler/scheduler";

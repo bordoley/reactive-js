@@ -24,6 +24,7 @@
 - [now](scheduler.md#now)
 - [runContinuation](scheduler.md#runcontinuation)
 - [schedule](scheduler.md#schedule)
+- [shouldYield](scheduler.md#shouldyield)
 - [toSchedulerWithPriority](scheduler.md#toschedulerwithpriority)
 
 ## Functions
@@ -185,6 +186,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md), [`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
+
+___
+
+### shouldYield
+
+▸ **shouldYield**(`scheduler`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) |
+
+#### Returns
+
+`boolean`
 
 ___
 
