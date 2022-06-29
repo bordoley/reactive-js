@@ -31,6 +31,8 @@ import {
 } from "../web";
 import { fromEvent } from "./event";
 
+const { history, location } = window;
+
 const windowLocationURIToString = ({
   path,
   query,
@@ -39,7 +41,7 @@ const windowLocationURIToString = ({
   let uri = isEmpty(path) ? "/" : !path.startsWith("/") ? `/${path}` : path;
   uri = length(query) > 0 ? `${uri}?${query}` : uri;
   uri = length(fragment) > 0 ? `${uri}#${fragment}` : uri;
-  return new URL(uri, window.location.href).toString();
+  return new URL(uri, location.href).toString();
 };
 
 const getCurrentWindowLocationURI = (): WindowLocationURI => {
@@ -47,7 +49,7 @@ const getCurrentWindowLocationURI = (): WindowLocationURI => {
     pathname: path,
     search: query,
     hash: fragment,
-  } = new URL(window.location.href);
+  } = new URL(location.href);
   return {
     title: document.title,
     path,
@@ -74,7 +76,7 @@ const windowHistoryReplaceState = (
   title: string,
   uri: string,
 ) => {
-  window.history.replaceState({ counter: self.historyCounter, title }, "", uri);
+  history.replaceState({ counter: self.historyCounter, title }, "", uri);
 };
 
 const windowHistoryPushState = (
@@ -83,7 +85,7 @@ const windowHistoryPushState = (
   uri: string,
 ) => {
   self.historyCounter++;
-  window.history.pushState({ counter: self.historyCounter, title }, "", uri);
+  history.pushState({ counter: self.historyCounter, title }, "", uri);
 };
 
 class WindowLocationStream
@@ -121,7 +123,7 @@ class WindowLocationStream
     const canGoBack = this.historyCounter > 0;
 
     if (canGoBack) {
-      window.history.back();
+      history.back();
     }
 
     return canGoBack;
@@ -188,7 +190,7 @@ export const windowLocation: WindowLocationStreamableLike = createStreamble(
         compose(
           keep<TSerializedState>(({ replace, title, uri }) => {
             const titleChanged = document.title !== title;
-            const uriChanged = uri !== window.location.href;
+            const uriChanged = uri !== location.href;
 
             return replace || (titleChanged && !uriChanged);
           }),
@@ -201,7 +203,7 @@ export const windowLocation: WindowLocationStreamableLike = createStreamble(
         ),
         compose(
           keep<TSerializedState>(({ replace, uri }) => {
-            const uriChanged = uri !== window.location.href;
+            const uriChanged = uri !== location.href;
             return !replace && uriChanged;
           }),
           throttle(100),
