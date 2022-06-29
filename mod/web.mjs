@@ -47,14 +47,15 @@ const createEventSource = (url, options = {}) => {
     });
 };
 
+const { history, location } = window;
 const windowLocationURIToString = ({ path, query, fragment, }) => {
     let uri = isEmpty(path) ? "/" : !path.startsWith("/") ? `/${path}` : path;
     uri = length(query) > 0 ? `${uri}?${query}` : uri;
     uri = length(fragment) > 0 ? `${uri}#${fragment}` : uri;
-    return new URL(uri, window.location.href).toString();
+    return new URL(uri, location.href).toString();
 };
 const getCurrentWindowLocationURI = () => {
-    const { pathname: path, search: query, hash: fragment, } = new URL(window.location.href);
+    const { pathname: path, search: query, hash: fragment, } = new URL(location.href);
     return {
         title: document.title,
         path,
@@ -70,11 +71,11 @@ a === b ||
         a.query === b.query &&
         a.fragment === b.fragment);
 const windowHistoryReplaceState = (self, title, uri) => {
-    window.history.replaceState({ counter: self.historyCounter, title }, "", uri);
+    history.replaceState({ counter: self.historyCounter, title }, "", uri);
 };
 const windowHistoryPushState = (self, title, uri) => {
     self.historyCounter++;
-    window.history.pushState({ counter: self.historyCounter, title }, "", uri);
+    history.pushState({ counter: self.historyCounter, title }, "", uri);
 };
 class WindowLocationStream extends AbstractDisposableObservable {
     constructor(stateStream) {
@@ -99,7 +100,7 @@ class WindowLocationStream extends AbstractDisposableObservable {
     goBack() {
         const canGoBack = this.historyCounter > 0;
         if (canGoBack) {
-            window.history.back();
+            history.back();
         }
         return canGoBack;
     }
@@ -127,13 +128,13 @@ const windowLocation = createStreamble((scheduler, options) => {
         windowHistoryReplaceState(windowLocationStream, title, uri);
     }), ignoreElements(keepT)), compose(keep$1(({ replace, title, uri }) => {
         const titleChanged = document.title !== title;
-        const uriChanged = uri !== window.location.href;
+        const uriChanged = uri !== location.href;
         return replace || (titleChanged && !uriChanged);
     }), throttle(100), onNotify(({ title, uri }) => {
         document.title = title;
         windowHistoryReplaceState(windowLocationStream, title, uri);
     }), ignoreElements(keepT)), compose(keep$1(({ replace, uri }) => {
-        const uriChanged = uri !== window.location.href;
+        const uriChanged = uri !== location.href;
         return !replace && uriChanged;
     }), throttle(100), onNotify(({ title, uri }) => {
         document.title = title;
