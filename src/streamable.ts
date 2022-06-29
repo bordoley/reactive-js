@@ -10,6 +10,7 @@ import {
   compose,
   identity as identityF,
   length,
+  newInstance,
   newInstanceWith,
   pipe,
   returns,
@@ -150,7 +151,8 @@ export const createStreamble = <
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
   ) => TStream,
-): StreamableLike<TReq, TData, TStream> => new CreateStreamable(stream);
+): StreamableLike<TReq, TData, TStream> =>
+  newInstance(CreateStreamable, stream);
 
 export function createLiftedStreamable<T, A>(
   op1: ObservableOperator<T, A>,
@@ -486,7 +488,7 @@ export const createFlowableSinkAccumulator = <T, TAcc>(
       ignoreElements(keepT),
       startWith({ ...concatT, ...fromArrayT }, "pause", "resume"),
     ),
-    streamable => new FlowableSinkAccumulatorImpl(subject, streamable),
+    streamable => newInstance(FlowableSinkAccumulatorImpl, subject, streamable),
     add(subject),
   );
 };

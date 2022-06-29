@@ -2,7 +2,7 @@ import { FromIterable, FromIterator } from "../container";
 import { dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { Enumerator, hasCurrent } from "../enumerator";
-import { Factory, Function1, pipe } from "../functions";
+import { Factory, Function1, newInstance, pipe } from "../functions";
 import { none } from "../option";
 import { createEnumerable } from "./enumerable";
 
@@ -42,7 +42,7 @@ const _fromIterator = <T, TReturn = any, TNext = unknown>(
 ): EnumerableLike<T> =>
   createEnumerable(() => {
     const iterator = f();
-    const enumerator = new IteratorEnumerator(iterator);
+    const enumerator = newInstance(IteratorEnumerator, iterator);
     return enumerator;
   });
 

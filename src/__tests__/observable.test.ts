@@ -17,6 +17,7 @@ import {
   ignore,
   increment,
   incrementBy,
+  newInstance,
   pipe,
   pipeLazy,
   raise,
@@ -155,7 +156,7 @@ export const tests = describe(
       ),
     ),
     test("source throws, error caught and ignored", () => {
-      const error = new Error();
+      const error = newInstance(Error);
       pipe(
         1,
         fromValue(fromArrayT),
@@ -170,7 +171,7 @@ export const tests = describe(
       );
     }),
     test("source throws, continues with second observable", () => {
-      const error = new Error();
+      const error = newInstance(Error);
       pipe(
         1,
         fromValue(fromArrayT),
@@ -185,7 +186,7 @@ export const tests = describe(
       );
     }),
     test("source throws, catch throws", () => {
-      const error = new Error();
+      const error = newInstance(Error);
       expectToThrow(() =>
         pipe(
           1,
@@ -231,7 +232,7 @@ export const tests = describe(
   describe(
     "createObservable",
     test("disposes the observer if onSubscribe throws", () => {
-      const cause = new Error();
+      const cause = newInstance(Error);
       const observable = createObservable(_ => {
         throw cause;
       });
@@ -308,7 +309,7 @@ export const tests = describe(
     }),
 
     testAsync("when the promise reject", async () => {
-      const error = new Error();
+      const error = newInstance(Error);
       const factory = () => Promise.reject(error);
       const scheduler = createHostScheduler();
 
@@ -499,7 +500,7 @@ export const tests = describe(
           dispatcher.dispose();
         } else {
           retried = true;
-          pipe(dispatcher, dispose({ cause: new Error() }));
+          pipe(dispatcher, dispose({ cause: newInstance(Error) }));
         }
       });
       pipe(src, retry(), toRunnable(), toArray(), expectArrayEquals([1, 1, 2]));
@@ -803,7 +804,7 @@ export const tests = describe(
       ),
     ),
     test("when latest throws", () => {
-      const error = new Error();
+      const error = newInstance(Error);
 
       pipe(
         pipeLazy(

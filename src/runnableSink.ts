@@ -1,7 +1,7 @@
 import { AbstractDisposableContainer } from "./container";
 import { isDisposed } from "./disposable";
 import { __DEV__ } from "./env";
-import { raise } from "./functions";
+import { newInstance, raise } from "./functions";
 import { delegate } from "./liftable";
 import { SinkLike } from "./source";
 
@@ -40,4 +40,4 @@ class DelegatingRunnableSink<T> extends AbstractDelegatingRunnableSink<T, T> {
 
 export const createDelegatingRunnableSink = <T>(
   delegate: RunnableSink<T>,
-): RunnableSink<T> => new DelegatingRunnableSink(delegate);
+): RunnableSink<T> => newInstance(DelegatingRunnableSink, delegate);

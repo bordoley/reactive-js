@@ -30,6 +30,7 @@ import {
   alwaysTrue,
   callWith,
   length,
+  newInstance,
   pipe,
   strictEquality,
 } from "./functions";
@@ -511,7 +512,7 @@ class SequenceEnumerator<T> extends AbstractEnumerator<T> {
 export const toEnumerable =
   <T>() =>
   (seq: Sequence<T>): EnumerableLike<T> =>
-    createEnumerable(() => new SequenceEnumerator(seq));
+    createEnumerable(() => newInstance(SequenceEnumerator, seq));
 
 export const toEnumerableT: ToEnumerable<Sequence<unknown>> = {
   toEnumerable,

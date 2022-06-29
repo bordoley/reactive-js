@@ -1,5 +1,5 @@
 import { dispose } from "../disposable";
-import { SideEffect1, pipe } from "../functions";
+import { SideEffect1, newInstance, pipe } from "../functions";
 import { RunnableLike } from "../runnable";
 import { RunnableSink } from "../runnableSink";
 import { CreateSource } from "../source";
@@ -22,7 +22,7 @@ class RunnableImpl<T> extends AbstractRunnable<T> {
 
 export const createRunnable = <T>(
   run: SideEffect1<RunnableSink<T>>,
-): RunnableLike<T> => new RunnableImpl(run);
+): RunnableLike<T> => newInstance(RunnableImpl, run);
 
 export const createT: CreateSource<RunnableLike<unknown>> = {
   create: createRunnable,

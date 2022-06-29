@@ -1,6 +1,6 @@
 import { Readable, Writable } from "stream";
 import { endWith } from "../container";
-import { pipe, pipeLazy, returns } from "../functions";
+import { newInstance, pipe, pipeLazy, returns } from "../functions";
 import {
   createDisposableNodeStream,
   createReadableIOSource,
@@ -31,9 +31,9 @@ export const tests = describe(
   describe(
     "createWritableIOSink",
     testAsync("sinking to writable", async () => {
-      const encoder = new TextEncoder();
+      const encoder = newInstance(TextEncoder);
       let data = "";
-      const writable = new Writable({
+      const writable = newInstance(Writable, {
         autoDestroy: true,
         highWaterMark: 4,
 
@@ -60,10 +60,10 @@ export const tests = describe(
     }),
 
     testAsync("sinking to writable that throws", async () => {
-      const encoder = new TextEncoder();
+      const encoder = newInstance(TextEncoder);
 
-      const cause = new Error();
-      const writable = new Writable({
+      const cause = newInstance(Error);
+      const writable = newInstance(Writable, {
         autoDestroy: true,
         highWaterMark: 4,
 
@@ -97,7 +97,7 @@ export const tests = describe(
         yield Buffer.from("defg", "utf8");
       }
 
-      const textDecoder = new TextDecoder();
+      const textDecoder = newInstance(TextDecoder);
       const dest = createFlowableSinkAccumulator(
         (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
         returns(""),
@@ -121,14 +121,14 @@ export const tests = describe(
       pipe(acc, expectEquals("abcdefg"));
     }),
     testAsync("reading from readable that throws", async () => {
-      const cause = new Error();
+      const cause = newInstance(Error);
 
       function* generate() {
         yield Buffer.from("abc", "utf8");
         throw cause;
       }
 
-      const textDecoder = new TextDecoder();
+      const textDecoder = newInstance(TextDecoder);
       const dest = createFlowableSinkAccumulator(
         (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
         returns(""),
@@ -147,9 +147,9 @@ export const tests = describe(
     }),
   ),
   testAsync("transform", async () => {
-    const encoder = new TextEncoder();
+    const encoder = newInstance(TextEncoder);
 
-    const textDecoder = new TextDecoder();
+    const textDecoder = newInstance(TextDecoder);
     const dest = createFlowableSinkAccumulator(
       (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
       returns(""),

@@ -59,6 +59,7 @@
 - [max](functions.md#max)
 - [min](functions.md#min)
 - [negate](functions.md#negate)
+- [newInstance](functions.md#newinstance)
 - [newInstanceWith](functions.md#newinstancewith)
 - [pipe](functions.md#pipe)
 - [pipeLazy](functions.md#pipelazy)
@@ -1812,6 +1813,120 @@ Applies logical negation to the value `v`.
 #### Returns
 
 `boolean`
+
+___
+
+### newInstance
+
+▸ **newInstance**<`T`\>(`Constructor`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Constructor` | [`Constructor`](functions.md#constructor)<`T`\> |
+
+#### Returns
+
+`T`
+
+▸ **newInstance**<`TA`, `T`\>(`Constructor`, `a`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Constructor` | [`Constructor1`](functions.md#constructor1)<`TA`, `T`\> |
+| `a` | `TA` |
+
+#### Returns
+
+`T`
+
+▸ **newInstance**<`TA`, `TB`, `T`\>(`Constructor`, `a`, `b`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Constructor` | [`Constructor2`](functions.md#constructor2)<`TA`, `TB`, `T`\> |
+| `a` | `TA` |
+| `b` | `TB` |
+
+#### Returns
+
+`T`
+
+▸ **newInstance**<`TA`, `TB`, `TC`, `T`\>(`Constructor`, `a`, `b`, `c`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Constructor` | [`Constructor3`](functions.md#constructor3)<`TA`, `TB`, `TC`, `T`\> |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+
+#### Returns
+
+`T`
+
+▸ **newInstance**<`TA`, `TB`, `TC`, `TD`, `T`\>(`Constructor`, `a`, `b`, `c`, `d`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Constructor` | [`Constructor4`](functions.md#constructor4)<`TA`, `TB`, `TC`, `TD`, `T`\> |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+
+#### Returns
+
+`T`
 
 ___
 

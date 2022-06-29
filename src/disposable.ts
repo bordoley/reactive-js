@@ -2,6 +2,7 @@ import {
   Function1,
   SideEffect,
   SideEffect1,
+  newInstance,
   newInstanceWith,
   pipe,
   pipeLazy,
@@ -179,7 +180,8 @@ export abstract class AbstractDisposable implements DisposableLike {
   /** @ignore */
   public isDisposed = false;
 
-  private readonly disposables: Set<DisposableOrTeardown> = new Set();
+  private readonly disposables: Set<DisposableOrTeardown> =
+    newInstance<Set<DisposableOrTeardown>>(Set);
   private _error: Option<Error> = none;
 
   /** @ignore */
@@ -241,7 +243,7 @@ class DisposableImpl extends AbstractDisposable {}
 export const createDisposable = (
   onDispose?: (error?: Error) => void,
 ): DisposableLike => {
-  const disposable = new DisposableImpl();
+  const disposable = newInstance(DisposableImpl);
   if (isSome(onDispose)) {
     addDisposableOrTeardown(disposable, onDispose);
   }
@@ -306,7 +308,7 @@ class SerialDisposableImpl
  * Creates a new `SerialDisposableLike` instance containing a disposed instance.
  */
 export const createSerialDisposable = (): SerialDisposableLike =>
-  new SerialDisposableImpl();
+  newInstance(SerialDisposableImpl);
 
 /**
  * A `DisposableLike` that provides disposable semantics to an underlying resource.
@@ -342,7 +344,7 @@ export const createDisposableValue = <T>(
   );
 
 export const toAbortSignal = (disposable: DisposableLike): AbortSignal => {
-  const abortController = new AbortController();
+  const abortController = newInstance(AbortController);
   addDisposableOrTeardown(disposable, () => abortController.abort());
   return abortController.signal;
 };

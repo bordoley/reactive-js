@@ -2,7 +2,7 @@ import { empty } from "../container";
 import { dispose } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { Enumerator } from "../enumerator";
-import { Factory, pipe } from "../functions";
+import { Factory, newInstance, pipe } from "../functions";
 import { AbstractLiftable } from "../liftable";
 import { fromArrayT } from "./fromArray";
 
@@ -33,7 +33,7 @@ class CreateEnumerable<T> extends AbstractEnumerable<T> {
 
 export const createEnumerable = <T>(
   enumerate: Factory<Enumerator<T>>,
-): EnumerableLike<T> => new CreateEnumerable(enumerate);
+): EnumerableLike<T> => newInstance(CreateEnumerable, enumerate);
 
 export const enumerate = <T>(enumerable: EnumerableLike<T>): Enumerator<T> =>
   enumerable.enumerate();

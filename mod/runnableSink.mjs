@@ -2,7 +2,7 @@
 import { AbstractDisposableContainer } from './container.mjs';
 import { isDisposed } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
-import { raise } from './functions.mjs';
+import { raise, newInstance } from './functions.mjs';
 import { delegate } from './liftable.mjs';
 
 class RunnableSink extends AbstractDisposableContainer {
@@ -28,6 +28,6 @@ class DelegatingRunnableSink extends AbstractDelegatingRunnableSink {
         delegate(this).notify(next);
     }
 }
-const createDelegatingRunnableSink = (delegate) => new DelegatingRunnableSink(delegate);
+const createDelegatingRunnableSink = (delegate) => newInstance(DelegatingRunnableSink, delegate);
 
 export { AbstractDelegatingRunnableSink, RunnableSink, createDelegatingRunnableSink };

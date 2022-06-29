@@ -2,7 +2,7 @@
 import { AbstractDisposableContainer } from './container.mjs';
 import { addTo, onComplete, AbstractDisposable, isDisposed, dispose, onDisposed } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
-import { length, pipe, newInstanceWith, isEmpty, raise } from './functions.mjs';
+import { length, pipe, newInstanceWith, isEmpty, raise, newInstance } from './functions.mjs';
 import { delegate } from './liftable.mjs';
 import { none, isNone } from './option.mjs';
 import { schedule, __yield, inContinuation } from './scheduler.mjs';
@@ -88,7 +88,7 @@ class DelegatingObserver extends AbstractDelegatingObserver {
         delegate(this).notify(next);
     }
 }
-const createDelegatingObserver = (delegate) => new DelegatingObserver(delegate);
+const createDelegatingObserver = (delegate) => newInstance(DelegatingObserver, delegate);
 const scheduler = (observer) => observer.scheduler;
 
 export { AbstractDelegatingObserver, Observer, createDelegatingObserver, scheduler };

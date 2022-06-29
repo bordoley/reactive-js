@@ -2,7 +2,7 @@
 import { concatWith, fromValue, ignoreElements, startWith } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
-import { pipe, newInstanceWith, length, compose, returns, updateReducer, identity as identity$1 } from './functions.mjs';
+import { pipe, newInstanceWith, newInstance, length, compose, returns, updateReducer, identity as identity$1 } from './functions.mjs';
 import { AbstractDisposableObservable, observerCount, replay, createSubject, publish, createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, onNotify, subscribe, takeFirst, subscribeOn, fromDisposable, takeUntil, merge, keepT, onSubscribe, __currentScheduler, __using, __memo, reduce, concatT } from './observable.mjs';
 import { scheduler } from './observer.mjs';
 import { isSome, none } from './option.mjs';
@@ -41,7 +41,7 @@ class CreateStreamable {
         this.stream = stream;
     }
 }
-const createStreamble = (stream) => new CreateStreamable(stream);
+const createStreamble = (stream) => newInstance(CreateStreamable, stream);
 function createLiftedStreamable(...ops) {
     const op = length(ops) > 1 ? compose(...ops) : ops[0];
     return createStreamble((scheduler, options) => createStream(op, scheduler, options));
@@ -136,7 +136,7 @@ class FlowableSinkAccumulatorImpl extends AbstractDisposableObservable {
 /** @experimental */
 const createFlowableSinkAccumulator = (reducer, initialValue, options) => {
     const subject = createSubject(options);
-    return pipe(createLiftedStreamable(reduce(reducer, initialValue), onNotify(dispatchTo(subject)), ignoreElements(keepT), startWith({ ...concatT, ...fromArrayT }, "pause", "resume")), streamable => new FlowableSinkAccumulatorImpl(subject, streamable), add(subject));
+    return pipe(createLiftedStreamable(reduce(reducer, initialValue), onNotify(dispatchTo(subject)), ignoreElements(keepT), startWith({ ...concatT, ...fromArrayT }, "pause", "resume")), streamable => newInstance(FlowableSinkAccumulatorImpl, subject, streamable), add(subject));
 };
 
 export { __state, __stream, createActionReducer, createFlowableSinkAccumulator, createLiftedStreamable, createStateStore, createStreamble, empty, flow, identity, sinkInto, stream };
