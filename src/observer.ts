@@ -10,6 +10,7 @@ import {
 } from "./disposable";
 import { __DEV__ } from "./env";
 import { pipe, raise } from "./functions";
+import { delegate } from "./liftable";
 import { Option, isNone, none } from "./option";
 import { SchedulerLike, __yield, inContinuation, schedule } from "./scheduler";
 import { SinkLike } from "./source";
@@ -122,7 +123,7 @@ export class AbstractDelegatingObserver<TIn, TOut> extends Observer<TIn> {
 
 class DelegatingObserver<T> extends AbstractDelegatingObserver<T, T> {
   notify(next: T) {
-    this.delegate.notify(next);
+    delegate(this).notify(next);
   }
 }
 

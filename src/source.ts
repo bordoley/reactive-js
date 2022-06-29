@@ -49,7 +49,7 @@ import {
   createTakeFirstLiftOperator,
   createTakeWhileLiftOperator,
   createThrowIfEmptyLiftOperator,
-  delegate,
+  delegate as delegateLiftable,
   lift,
 } from "./liftable";
 import { Option, isSome, none } from "./option";
@@ -145,7 +145,13 @@ export const createBufferOperator = <C extends SourceLike>(
     readonly maxBufferSize: number;
   },
 ) => {
-  BufferSink.prototype.notify = function notifyBuffer<T>(next: T) {
+  BufferSink.prototype.notify = function notifyBuffer<T>(
+    this: DelegatingLiftableStateOf<C, T, readonly T[]> & {
+      buffer: T[];
+      readonly maxBufferSize: number;
+    },
+    next: T,
+  ) {
     this.assertState();
 
     const { buffer, maxBufferSize } = this;
@@ -156,7 +162,7 @@ export const createBufferOperator = <C extends SourceLike>(
       const buffer = this.buffer;
       this.buffer = [];
 
-      this.delegate.notify(buffer);
+      delegateLiftable(this).notify(buffer);
     }
   };
 
@@ -184,9 +190,9 @@ export const createBufferOperator = <C extends SourceLike>(
             this.buffer = [];
 
             if (buffer.length === 0) {
-              pipe(this.delegate, dispose());
+              pipe(this, delegateLiftable, dispose());
             } else {
-              pipe(buffer, fromValue(m), sinkInto(this.delegate));
+              pipe(buffer, fromValue(m), sinkInto(delegateLiftable(this)));
             }
           }),
         ),
@@ -209,7 +215,7 @@ export const createCatchErrorOperator =
       this: DelegatingLiftableStateOf<C, T, T>,
       next: T,
     ) {
-      delegate(this).notify(next);
+      delegateLiftable(this).notify(next);
     };
 
     return pipe(
@@ -252,7 +258,7 @@ export const createDecodeWithCharsetOperator = <C extends SourceLike>(
   ) {
     const data = this.textDecoder.decode(next, { stream: true });
     if (data.length > 0) {
-      delegate(this).notify(data);
+      delegateLiftable(this).notify(data);
     }
   };
 
@@ -309,7 +315,7 @@ export const createDistinctUntilChangedOperator = <C extends SourceLike>(
       if (shouldEmit) {
         this.prev = next;
         this.hasValue = true;
-        delegate(this).notify(next);
+        delegateLiftable(this).notify(next);
       }
     };
 
@@ -386,7 +392,7 @@ export const createKeepOperator = <C extends SourceLike>(
   ) {
     this.assertState();
     if (this.predicate(next)) {
-      delegate(this).notify(next);
+      delegateLiftable(this).notify(next);
     }
   };
 
@@ -410,7 +416,7 @@ export const createMapOperator = <C extends SourceLike>(
   ) {
     this.assertState();
     const mapped = this.mapper(next);
-    delegate(this).notify(mapped);
+    delegateLiftable(this).notify(mapped);
   };
 
   return createMapLiftOperator(m, MapSink);
@@ -434,7 +440,7 @@ export const createOnNotifyOperator = <C extends SourceLike>(
     this.assertState();
 
     this.onNotify(next);
-    delegate(this).notify(next);
+    delegateLiftable(this).notify(next);
   };
 
   return createOnNotifyLiftOperator(m, OnNotifySink);
@@ -462,7 +468,7 @@ export const createPairwiseOperator = <C extends SourceLike>(
     this.hasPrev = true;
     this.prev = value;
 
-    delegate(this).notify([prev, value]);
+    delegateLiftable(this).notify([prev, value]);
   };
 
   return createPairwiseLiftOperator(m, PairwiseSink);
@@ -535,7 +541,7 @@ export const createScanOperator = <C extends SourceLike>(
     const nextAcc = this.reducer(this.acc, next);
     this.acc = nextAcc;
 
-    delegate(this).notify(nextAcc);
+    delegateLiftable(this).notify(nextAcc);
   };
 
   return createScanLiftOperator(m, ScanSink);
@@ -562,7 +568,7 @@ export const createSkipFirstOperator = <C extends SourceLike>(
   ) {
     this.count++;
     if (this.count > this.skipCount) {
-      delegate(this).notify(next);
+      delegateLiftable(this).notify(next);
     }
   };
 
@@ -602,7 +608,7 @@ export const createTakeFirstOperator = <C extends SourceLike>(
     this.assertState();
 
     this.count++;
-    delegate(this).notify(next);
+    delegateLiftable(this).notify(next);
     if (this.count >= this.maxCount) {
       pipe(this, dispose());
     }
@@ -692,7 +698,7 @@ export const createTakeWhileOperator = <C extends SourceLike>(
     const satisfiesPredicate = this.predicate(next);
 
     if (satisfiesPredicate || this.inclusive) {
-      delegate(this).notify(next);
+      delegateLiftable(this).notify(next);
     }
 
     if (!satisfiesPredicate) {
@@ -720,7 +726,7 @@ export const createThrowIfEmptyOperator = <C extends SourceLike>(
     this.assertState();
 
     this.isEmpty = false;
-    delegate(this).notify(next);
+    delegateLiftable(this).notify(next);
   };
 
   return createThrowIfEmptyLiftOperator(m, ThrowIfEmptySink);

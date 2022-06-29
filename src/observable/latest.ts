@@ -1,5 +1,6 @@
 import { addTo, dispose, onComplete } from "../disposable";
 import { pipe } from "../functions";
+import { delegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer } from "../observer";
 import { none } from "../option";
@@ -24,7 +25,7 @@ function onDispose(this: LatestObserver) {
   ctx.completedCount++;
 
   if (ctx.completedCount === ctx.observers.length) {
-    pipe(this.delegate, dispose());
+    pipe(this, delegate, dispose());
   }
 }
 
@@ -60,7 +61,7 @@ class LatestObserver extends AbstractDelegatingObserver<
         observers,
         map(observer => observer.latest),
       );
-      this.delegate.notify(result);
+      delegate(this).notify(result);
 
       if (this.mode === LatestMode.Zip) {
         for (const sub of observers) {

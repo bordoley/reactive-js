@@ -7,6 +7,7 @@ import {
   onComplete,
 } from "../disposable";
 import { pipe } from "../functions";
+import { delegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
 import { notifySink } from "../source";
@@ -16,7 +17,7 @@ import { subscribe } from "./subscribe";
 
 function onDispose(this: SwitchObserver<unknown>) {
   if (isDisposed(this.inner)) {
-    pipe(this.delegate, dispose());
+    pipe(this, delegate, dispose());
   }
 }
 
@@ -33,12 +34,12 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
 
     const inner = pipe(
       next,
-      onNotify(notifySink(this.delegate)),
+      onNotify(notifySink(delegate(this))),
       subscribe(scheduler(this)),
-      addTo(this.delegate),
+      addTo(delegate(this)),
       onComplete(() => {
         if (isDisposed(this)) {
-          pipe(this.delegate, dispose());
+          pipe(this, delegate, dispose());
         }
       }),
     );

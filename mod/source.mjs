@@ -2,7 +2,7 @@
 import { fromValue, empty } from './container.mjs';
 import { addTo, onComplete, dispose, onError, isDisposed, onDisposed, add } from './disposable.mjs';
 import { pipe, compose, negate, ignore, identity } from './functions.mjs';
-import { AbstractLiftable, AbstractDisposableLiftable, lift, delegate, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
+import { AbstractLiftable, AbstractDisposableLiftable, delegate, lift, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
 import { none, isSome } from './option.mjs';
 import { forEach } from './readonlyArray.mjs';
 
@@ -32,20 +32,20 @@ const createBufferOperator = (m, BufferSink) => {
         if (buffer.length === maxBufferSize) {
             const buffer = this.buffer;
             this.buffer = [];
-            this.delegate.notify(buffer);
+            delegate(this).notify(buffer);
         }
     };
     return (options = {}) => {
         var _a;
         const maxBufferSize = Math.max((_a = options.maxBufferSize) !== null && _a !== void 0 ? _a : Number.MAX_SAFE_INTEGER, 1);
-        return pipe((delegate) => pipe(new BufferSink(delegate, maxBufferSize), addTo(delegate), onComplete(function onDispose() {
+        return pipe((delegate$1) => pipe(new BufferSink(delegate$1, maxBufferSize), addTo(delegate$1), onComplete(function onDispose() {
             const { buffer } = this;
             this.buffer = [];
             if (buffer.length === 0) {
-                pipe(this.delegate, dispose());
+                pipe(this, delegate, dispose());
             }
             else {
-                pipe(buffer, fromValue(m), sinkInto(this.delegate));
+                pipe(buffer, fromValue(m), sinkInto(delegate(this)));
             }
         })), lift(m));
     };

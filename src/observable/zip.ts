@@ -16,6 +16,7 @@ import {
   zip as zipEnumerators,
 } from "../enumerator";
 import { pipe, pipeLazy, returns } from "../functions";
+import { delegate } from "../liftable";
 import { ObservableLike } from "../observable";
 import { AbstractDelegatingObserver, Observer } from "../observer";
 import { everySatisfy, map } from "../readonlyArray";
@@ -90,7 +91,7 @@ class ZipObserver extends AbstractDelegatingObserver<
         const next = pipe(enumerators, map(current));
         const shouldCompleteResult = shouldComplete(enumerators);
 
-        this.delegate.notify(next);
+        delegate(this).notify(next);
 
         if (shouldCompleteResult) {
           pipe(this, dispose());

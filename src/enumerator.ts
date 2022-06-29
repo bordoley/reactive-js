@@ -1,7 +1,7 @@
 import { AbstractDisposableContainer } from "./container";
 import { addTo, dispose, isDisposed, onDisposed } from "./disposable";
 import { Function1, SideEffect1, pipe, pipeLazy, raise } from "./functions";
-import { LiftableStateLike } from "./liftable";
+import { LiftableStateLike, delegate } from "./liftable";
 import { Option, none } from "./option";
 import {
   everySatisfy,
@@ -66,11 +66,11 @@ export abstract class AbstractPassThroughEnumerator<T> extends Enumerator<T> {
   }
 
   get current(): T {
-    return current(this.delegate);
+    return current(delegate(this));
   }
 
   get hasCurrent(): boolean {
-    return hasCurrent(this.delegate);
+    return hasCurrent(delegate(this));
   }
 
   abstract move(): boolean;
