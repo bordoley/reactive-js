@@ -9,7 +9,7 @@ import {
   onDisposed,
 } from "./disposable";
 import { __DEV__ } from "./env";
-import { isEmpty, length, pipe, raise } from "./functions";
+import { isEmpty, length, newInstanceWith, pipe, raise } from "./functions";
 import { delegate } from "./liftable";
 import { Option, isNone, none } from "./option";
 import { SchedulerLike, __yield, inContinuation, schedule } from "./scheduler";
@@ -78,7 +78,8 @@ export class Observer<T>
   get dispatcher(): DispatcherLike<T> {
     if (isNone(this._dispatcher)) {
       const dispatcher = pipe(
-        new ObserverDelegatingDispatcher(this),
+        ObserverDelegatingDispatcher,
+        newInstanceWith<Observer<T>, ObserverDelegatingDispatcher<T>>(this),
         addTo(this, true),
         onDisposed(e => {
           if (isEmpty(dispatcher.nextQueue)) {

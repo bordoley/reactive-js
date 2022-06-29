@@ -1,5 +1,5 @@
 import { addTo, dispose, onComplete } from "../disposable";
-import { length, pipe } from "../functions";
+import { length, newInstanceWith, pipe } from "../functions";
 import { delegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer } from "../observer";
@@ -90,7 +90,13 @@ export const latest = (
 
     for (const observable of observables) {
       const innerObserver = pipe(
-        new LatestObserver(delegate, ctx, mode),
+        LatestObserver,
+        newInstanceWith<
+          Observer<readonly unknown[]>,
+          LatestCtx,
+          LatestMode,
+          LatestObserver
+        >(delegate, ctx, mode),
         addTo(delegate),
         onComplete(onDispose),
         sourceFrom(observable),

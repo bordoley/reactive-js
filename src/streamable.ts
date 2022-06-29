@@ -10,6 +10,7 @@ import {
   compose,
   identity as identityF,
   length,
+  newInstanceWith,
   pipe,
   returns,
   updateReducer,
@@ -118,7 +119,8 @@ const createStream = <TReq, T>(
   const observable = pipe(subject, op, publish(scheduler, options));
 
   return pipe(
-    new StreamImpl(subject, observable),
+    StreamImpl,
+    newInstanceWith(subject, observable),
     add(subject),
     // FIXME: This seems wrong.
     addTo(observable),

@@ -1,5 +1,5 @@
 import { addTo, disposed, onDisposed } from "../disposable";
-import { pipe } from "../functions";
+import { newInstanceWith, pipe } from "../functions";
 import {
   PausableSchedulerLike,
   SchedulerContinuationLike,
@@ -50,7 +50,8 @@ export const createPausableScheduler = (
   hostScheduler: SchedulerLike,
 ): PausableSchedulerLike => {
   const scheduler = pipe(
-    new PausableScheduler(hostScheduler),
+    PausableScheduler,
+    newInstanceWith(hostScheduler),
     addTo(hostScheduler, true),
     onDisposed(() => {
       scheduler.queue.clear();

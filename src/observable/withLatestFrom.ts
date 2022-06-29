@@ -1,5 +1,5 @@
 import { addTo, bindTo, dispose, isDisposed, onComplete } from "../disposable";
-import { Function2, pipe } from "../functions";
+import { Function2, newInstanceWith, pipe } from "../functions";
 import { delegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
@@ -47,7 +47,12 @@ export const withLatestFrom = <TA, TB, T>(
 ): ObservableOperator<TA, T> => {
   const operator = (delegate: Observer<T>) => {
     const observer = pipe(
-      new WithLatestFromObserver(delegate, selector),
+      WithLatestFromObserver,
+      newInstanceWith<
+        Observer<T>,
+        Function2<TA, TB, T>,
+        WithLatestFromObserver<TA, TB, T>
+      >(delegate, selector),
       bindTo(delegate),
     );
 

@@ -1,4 +1,4 @@
-import { Function1 } from "../functions";
+import { Function1, newInstanceWith, pipeLazy } from "../functions";
 import { Option, none } from "../option";
 import { RunnableLike } from "../runnable";
 import { RunnableSink } from "../runnableSink";
@@ -13,6 +13,6 @@ class LastSink<T> extends RunnableSink<T> {
 }
 
 export const last = <T>(): Function1<RunnableLike<T>, Option<T>> => {
-  const createSink = () => new LastSink<T>();
+  const createSink = pipeLazy(LastSink, newInstanceWith<LastSink<T>>());
   return run<T, Option<T>>(createSink);
 };

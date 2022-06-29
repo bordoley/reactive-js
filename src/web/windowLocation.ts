@@ -1,7 +1,15 @@
 import { ignoreElements } from "../container";
 import { dispatchTo } from "../dispatcher";
 import { addTo, bindTo } from "../disposable";
-import { Updater, compose, isEmpty, length, pipe, raise } from "../functions";
+import {
+  Updater,
+  compose,
+  isEmpty,
+  length,
+  newInstanceWith,
+  pipe,
+  raise,
+} from "../functions";
 import {
   AbstractDisposableObservable,
   forkCombineLatest,
@@ -164,7 +172,8 @@ export const windowLocation: WindowLocationStreamableLike = createStreamble(
     );
 
     const windowLocationStream = pipe(
-      new WindowLocationStream(stateStream),
+      WindowLocationStream,
+      newInstanceWith(stateStream),
       bindTo(stateStream),
     );
 

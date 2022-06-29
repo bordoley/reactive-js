@@ -7,6 +7,11 @@
 ### Type Aliases
 
 - [Comparator](functions.md#comparator)
+- [Constructor](functions.md#constructor)
+- [Constructor1](functions.md#constructor1)
+- [Constructor2](functions.md#constructor2)
+- [Constructor3](functions.md#constructor3)
+- [Constructor4](functions.md#constructor4)
 - [Equality](functions.md#equality)
 - [Factory](functions.md#factory)
 - [Function1](functions.md#function1)
@@ -54,6 +59,7 @@
 - [max](functions.md#max)
 - [min](functions.md#min)
 - [negate](functions.md#negate)
+- [newInstanceWith](functions.md#newinstancewith)
 - [pipe](functions.md#pipe)
 - [pipeLazy](functions.md#pipelazy)
 - [raise](functions.md#raise)
@@ -95,6 +101,126 @@ A signed number indicating the relative order of `a` and `b`:
   - If less than 0, `a` is less `b`.
   - If 0, `a` equals `b`.
   - If greater than 0, `a` is greater than `b`.
+
+___
+
+### Constructor
+
+Ƭ **Constructor**<`T`\>: () => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Type declaration
+
+• ()
+
+___
+
+### Constructor1
+
+Ƭ **Constructor1**<`TA`, `T`\>: (`a`: `TA`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `T` |
+
+#### Type declaration
+
+• (`a`)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+
+___
+
+### Constructor2
+
+Ƭ **Constructor2**<`TA`, `TB`, `T`\>: (`a`: `TA`, `b`: `TB`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `T` |
+
+#### Type declaration
+
+• (`a`, `b`)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+
+___
+
+### Constructor3
+
+Ƭ **Constructor3**<`TA`, `TB`, `TC`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `T` |
+
+#### Type declaration
+
+• (`a`, `b`, `c`)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+
+___
+
+### Constructor4
+
+Ƭ **Constructor4**<`TA`, `TB`, `TC`, `TD`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `T` |
+
+#### Type declaration
+
+• (`a`, `b`, `c`, `d`)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
 
 ___
 
@@ -1686,6 +1812,110 @@ Applies logical negation to the value `v`.
 #### Returns
 
 `boolean`
+
+___
+
+### newInstanceWith
+
+▸ **newInstanceWith**<`T`\>(): [`Function1`](functions.md#function1)<[`Constructor`](functions.md#constructor)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Constructor`](functions.md#constructor)<`T`\>, `T`\>
+
+▸ **newInstanceWith**<`TA`, `T`\>(`a`): [`Function1`](functions.md#function1)<[`Constructor1`](functions.md#constructor1)<`TA`, `T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Constructor1`](functions.md#constructor1)<`TA`, `T`\>, `T`\>
+
+▸ **newInstanceWith**<`TA`, `TB`, `T`\>(`a`, `b`): [`Function1`](functions.md#function1)<[`Constructor2`](functions.md#constructor2)<`TA`, `TB`, `T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Constructor2`](functions.md#constructor2)<`TA`, `TB`, `T`\>, `T`\>
+
+▸ **newInstanceWith**<`TA`, `TB`, `TC`, `T`\>(`a`, `b`, `c`): [`Function1`](functions.md#function1)<[`Constructor3`](functions.md#constructor3)<`TA`, `TB`, `TC`, `T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Constructor3`](functions.md#constructor3)<`TA`, `TB`, `TC`, `T`\>, `T`\>
+
+▸ **newInstanceWith**<`TA`, `TB`, `TC`, `TD`, `T`\>(`a`, `b`, `c`, `d`): [`Function1`](functions.md#function1)<[`Constructor4`](functions.md#constructor4)<`TA`, `TB`, `TC`, `TD`, `T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Constructor4`](functions.md#constructor4)<`TA`, `TB`, `TC`, `TD`, `T`\>, `T`\>
 
 ___
 

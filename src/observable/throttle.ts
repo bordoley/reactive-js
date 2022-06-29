@@ -7,7 +7,7 @@ import {
   isDisposed,
   onComplete,
 } from "../disposable";
-import { Function1, pipe } from "../functions";
+import { Function1, newInstanceWith, pipe } from "../functions";
 import { delegate as delegateLiftable } from "../liftable";
 import {
   ObservableLike,
@@ -110,13 +110,16 @@ export function throttle<T>(
       : duration;
   const operator = (delegate: Observer<T>) => {
     const durationSubscription = createSerialDisposable();
+
     const observer = pipe(
-      new ThrottleObserver(
-        delegate,
-        durationFunction,
-        mode,
-        durationSubscription,
-      ),
+      ThrottleObserver,
+      newInstanceWith<
+        Observer<T>,
+        Function1<T, ObservableLike<unknown>>,
+        ThrottleMode,
+        SerialDisposableLike,
+        ThrottleObserver<T>
+      >(delegate, durationFunction, mode, durationSubscription),
       addTo(delegate),
       onComplete(() => {
         if (observer.mode !== "first" && observer.hasValue) {

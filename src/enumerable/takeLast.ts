@@ -2,7 +2,7 @@ import { TakeLast, empty } from "../container";
 import { add, bindTo, isDisposed } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { Enumerator, current, hasCurrent, move } from "../enumerator";
-import { length, pipe, raise } from "../functions";
+import { length, newInstanceWith, pipe, raise } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
 import { enumerate } from "./enumerable";
 import { fromArray, fromArrayT } from "./fromArray";
@@ -60,7 +60,14 @@ export const takeLast = <T>(
 ): EnumerableOperator<T, T> => {
   const { count = 1 } = options;
   const operator = (delegate: Enumerator<T>) =>
-    pipe(new TakeLastEnumerator(delegate, count), add(delegate));
+    pipe(
+      TakeLastEnumerator,
+      newInstanceWith<Enumerator<T>, number, TakeLastEnumerator<T>>(
+        delegate,
+        count,
+      ),
+      add(delegate),
+    );
   return enumerable =>
     count > 0
       ? pipe(enumerable, lift(operator))

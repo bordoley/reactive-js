@@ -6,7 +6,7 @@ import {
   isDisposed,
   onComplete,
 } from "../disposable";
-import { pipe } from "../functions";
+import { newInstanceWith, pipe } from "../functions";
 import { delegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
@@ -48,7 +48,12 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
 }
 
 const operator = <T>(delegate: Observer<T>) =>
-  pipe(new SwitchObserver(delegate), addTo(delegate), onComplete(onDispose));
+  pipe(
+    SwitchObserver,
+    newInstanceWith(delegate),
+    addTo(delegate),
+    onComplete(onDispose),
+  );
 
 const switchAllInstance = lift(operator);
 /**

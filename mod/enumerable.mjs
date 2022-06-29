@@ -1,7 +1,7 @@
 /// <reference types="./enumerable.d.ts" />
 import { isDisposed, dispose, createSerialDisposable, bindTo, add, addTo } from './disposable.mjs';
 import { AbstractEnumerator, reset, hasCurrent, AbstractDelegatingEnumerator, move, Enumerator, current, forEach, zip as zip$1, AbstractPassThroughEnumerator } from './enumerator.mjs';
-import { pipe, length, max, raise, alwaysTrue, identity } from './functions.mjs';
+import { pipe, newInstanceWith, length, max, raise, alwaysTrue, identity } from './functions.mjs';
 import { createFromArray, empty } from './container.mjs';
 import { AbstractLiftable, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, delegate, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -120,7 +120,7 @@ class ConcatAllEnumerator extends AbstractDelegatingEnumerator {
 }
 const operator = (delegate) => {
     const inner = createSerialDisposable();
-    return pipe(new ConcatAllEnumerator(delegate, inner), bindTo(inner), add(delegate));
+    return pipe(ConcatAllEnumerator, newInstanceWith(delegate, inner), bindTo(inner), add(delegate));
 };
 /**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
@@ -155,7 +155,7 @@ class BufferEnumerator extends AbstractDelegatingEnumerator {
 const buffer = (options = {}) => {
     var _a;
     const maxBufferSize = max((_a = options.maxBufferSize) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER, 1);
-    const operator = (delegate) => pipe(new BufferEnumerator(delegate, maxBufferSize), add(delegate));
+    const operator = (delegate) => pipe(BufferEnumerator, newInstanceWith(delegate, maxBufferSize), add(delegate));
     return lift(operator);
 };
 const bufferT = {
@@ -330,7 +330,7 @@ class TakeLastEnumerator extends Enumerator {
  */
 const takeLast = (options = {}) => {
     const { count = 1 } = options;
-    const operator = (delegate) => pipe(new TakeLastEnumerator(delegate, count), add(delegate));
+    const operator = (delegate) => pipe(TakeLastEnumerator, newInstanceWith(delegate, count), add(delegate));
     return enumerable => count > 0
         ? pipe(enumerable, lift(operator))
         : // FIXME: why do we need the annotations?

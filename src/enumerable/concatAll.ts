@@ -16,7 +16,7 @@ import {
   move,
   reset,
 } from "../enumerator";
-import { pipe } from "../functions";
+import { newInstanceWith, pipe } from "../functions";
 import { enumerate } from "./enumerable";
 import { lift } from "./lift";
 
@@ -61,7 +61,12 @@ class ConcatAllEnumerator<T> extends AbstractDelegatingEnumerator<
 const operator = <T>(delegate: Enumerator<EnumerableLike<T>>) => {
   const inner = createSerialDisposable();
   return pipe(
-    new ConcatAllEnumerator(delegate, inner),
+    ConcatAllEnumerator,
+    newInstanceWith<
+      Enumerator<EnumerableLike<T>>,
+      SerialDisposableLike,
+      ConcatAllEnumerator<T>
+    >(delegate, inner),
     bindTo(inner),
     add(delegate),
   );

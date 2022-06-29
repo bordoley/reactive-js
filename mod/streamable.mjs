@@ -2,7 +2,7 @@
 import { concatWith, fromValue, ignoreElements, startWith } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
-import { pipe, length, compose, returns, updateReducer, identity as identity$1 } from './functions.mjs';
+import { pipe, newInstanceWith, length, compose, returns, updateReducer, identity as identity$1 } from './functions.mjs';
 import { AbstractDisposableObservable, observerCount, replay, createSubject, publish, createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, onNotify, subscribe, takeFirst, subscribeOn, fromDisposable, takeUntil, merge, keepT, onSubscribe, __currentScheduler, __using, __memo, reduce, concatT } from './observable.mjs';
 import { scheduler } from './observer.mjs';
 import { isSome, none } from './option.mjs';
@@ -32,7 +32,7 @@ class StreamImpl extends AbstractDisposableObservable {
 const createStream = (op, scheduler, options) => {
     const subject = createSubject();
     const observable = pipe(subject, op, publish(scheduler, options));
-    return pipe(new StreamImpl(subject, observable), add(subject), 
+    return pipe(StreamImpl, newInstanceWith(subject, observable), add(subject), 
     // FIXME: This seems wrong.
     addTo(observable));
 };

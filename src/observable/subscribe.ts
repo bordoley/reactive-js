@@ -1,5 +1,5 @@
 import { DisposableLike, addTo } from "../disposable";
-import { Function1, pipe } from "../functions";
+import { Function1, newInstanceWith, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
 import { SchedulerLike } from "../scheduler";
@@ -16,7 +16,8 @@ export const subscribe =
   <T>(scheduler: SchedulerLike): Function1<ObservableLike<T>, DisposableLike> =>
   observable =>
     pipe(
-      new Observer(scheduler),
+      Observer,
+      newInstanceWith(scheduler),
       addTo(scheduler, true),
       sourceFrom(observable),
     );

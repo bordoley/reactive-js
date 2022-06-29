@@ -2,7 +2,7 @@
 import { AbstractDisposableContainer } from './container.mjs';
 import { addTo, onComplete, AbstractDisposable, isDisposed, dispose, onDisposed } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
-import { length, pipe, isEmpty, raise } from './functions.mjs';
+import { length, pipe, newInstanceWith, isEmpty, raise } from './functions.mjs';
 import { delegate } from './liftable.mjs';
 import { none, isNone } from './option.mjs';
 import { schedule, __yield, inContinuation } from './scheduler.mjs';
@@ -52,7 +52,7 @@ class Observer extends AbstractDisposableContainer {
     }
     get dispatcher() {
         if (isNone(this._dispatcher)) {
-            const dispatcher = pipe(new ObserverDelegatingDispatcher(this), addTo(this, true), onDisposed(e => {
+            const dispatcher = pipe(ObserverDelegatingDispatcher, newInstanceWith(this), addTo(this, true), onDisposed(e => {
                 if (isEmpty(dispatcher.nextQueue)) {
                     pipe(this, dispose(e));
                 }

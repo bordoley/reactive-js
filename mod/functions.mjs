@@ -83,7 +83,7 @@ const negate = (v) => !v;
  */
 const raise = (message) => {
     if (message === undefined || typeof message === "string") {
-        throw new Error(message);
+        throw newInstanceWith(Error, message);
     }
     else {
         throw message;
@@ -139,5 +139,10 @@ function flip(f) {
     };
 }
 const { max, min, floor } = Math;
+function newInstanceWith(...args) {
+    return Constructor => {
+        return new Constructor(...args);
+    };
+}
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isOdd, length, max, min, negate, pipe, pipeLazy, raise, returns, strictEquality, sum, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isOdd, length, max, min, negate, newInstanceWith, pipe, pipeLazy, raise, returns, strictEquality, sum, updateReducer };

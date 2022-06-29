@@ -1,7 +1,7 @@
 /// <reference types="./scheduler.d.ts" />
 import { isDisposed, AbstractDisposable, dispose, disposed, add, addTo, onDisposed, createDisposable } from './disposable.mjs';
 import { MAX_SAFE_INTEGER } from './env.mjs';
-import { floor, length, max, pipe, raise } from './functions.mjs';
+import { floor, length, max, pipe, raise, newInstanceWith } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractEnumerator, move, hasCurrent, reset, current } from './enumerator.mjs';
 
@@ -326,7 +326,7 @@ class PriorityScheduler extends AbstractQueueScheduler {
  * scheduler to schedule work.
  */
 const createPriorityScheduler = (hostScheduler) => {
-    const scheduler = pipe(new PriorityScheduler(hostScheduler), addTo(hostScheduler, true), onDisposed(() => {
+    const scheduler = pipe(PriorityScheduler, newInstanceWith(hostScheduler), addTo(hostScheduler, true), onDisposed(() => {
         scheduler.queue.clear();
         scheduler.delayed.clear();
     }));
@@ -360,7 +360,7 @@ class PausableScheduler extends AbstractQueueScheduler {
     }
 }
 const createPausableScheduler = (hostScheduler) => {
-    const scheduler = pipe(new PausableScheduler(hostScheduler), addTo(hostScheduler, true), onDisposed(() => {
+    const scheduler = pipe(PausableScheduler, newInstanceWith(hostScheduler), addTo(hostScheduler, true), onDisposed(() => {
         scheduler.queue.clear();
         scheduler.delayed.clear();
     }));
@@ -403,7 +403,7 @@ class SchedulerWithPriorityImpl extends AbstractDisposable {
  * @param priorityScheduler The underlying scheduler upon which to scheduler work.
  * @param priority The priority to schedule work at.
  */
-const toSchedulerWithPriority = (priority) => priorityScheduler => pipe(new SchedulerWithPriorityImpl(priorityScheduler, priority), addTo(priorityScheduler, true));
+const toSchedulerWithPriority = (priority) => priorityScheduler => pipe(SchedulerWithPriorityImpl, newInstanceWith(priorityScheduler, priority), addTo(priorityScheduler, true));
 
 const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
     const disposable = pipe(createDisposable(), addTo(continuation), onDisposed(() => clearImmediate(immmediate)));
