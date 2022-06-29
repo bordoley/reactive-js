@@ -381,7 +381,7 @@ class ObservableContext {
                         ? pipe(scheduler, schedule(runComputation), addTo(observer))
                         : scheduledComputationSubscription;
                 }
-            }), subscribe(observer.scheduler), addTo(observer), onComplete(this.cleanup));
+            }), subscribe(scheduler), addTo(observer), onComplete(this.cleanup));
             effect.observable = observable;
             effect.subscription = subscription;
             effect.value = none;
@@ -462,9 +462,7 @@ function __memo(f, ...args) {
 }
 const __observe = (observable) => {
     const ctx = assertCurrentContext();
-    return ctx instanceof ObservableContext
-        ? ctx.observe(observable)
-        : raise("__observe may only be called within an observable or concurrent computation");
+    return ctx.observe(observable);
 };
 const deferSideEffect = (f, ...args) => defer(() => observer => {
     f(...args);
@@ -472,7 +470,7 @@ const deferSideEffect = (f, ...args) => defer(() => observer => {
 });
 function __do(f, ...args) {
     const ctx = assertCurrentContext();
-    const scheduler = __currentScheduler();
+    const scheduler = ctx.observer.scheduler;
     const observable = ctx.memo(deferSideEffect, f, ...args);
     const subscribeOnScheduler = ctx.memo(subscribe, scheduler);
     ctx.using(subscribeOnScheduler, observable);
@@ -483,9 +481,7 @@ function __using(f, ...args) {
 }
 function __currentScheduler() {
     const ctx = assertCurrentContext();
-    return ctx instanceof ObservableContext
-        ? ctx.observer.scheduler
-        : raise("__currentScheduler may only be called within an observable computation");
+    return ctx.observer.scheduler;
 }
 
 function onDispose() {

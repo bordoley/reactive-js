@@ -201,7 +201,7 @@ class ObservableContext {
               : scheduledComputationSubscription;
           }
         }),
-        subscribe(observer.scheduler),
+        subscribe(scheduler),
         addTo(observer),
         onComplete(this.cleanup),
       );
@@ -351,11 +351,7 @@ export function __memo<T>(f: (...args: any[]) => T, ...args: any[]): T {
 
 export const __observe = <T>(observable: ObservableLike<T>): Option<T> => {
   const ctx = assertCurrentContext();
-  return ctx instanceof ObservableContext
-    ? ctx.observe(observable)
-    : raise(
-        "__observe may only be called within an observable or concurrent computation",
-      );
+  return ctx.observe(observable);
 };
 
 const deferSideEffect = (f: (...args: any[]) => void, ...args: any[]) =>
@@ -400,7 +396,7 @@ export function __do<TA, TB, TC, TD, TE, TF>(
 export function __do(f: (...args: any[]) => void, ...args: any[]): void {
   const ctx = assertCurrentContext();
 
-  const scheduler = __currentScheduler();
+  const scheduler = ctx.observer.scheduler;
   const observable = ctx.memo(deferSideEffect, f, ...args);
   const subscribeOnScheduler = ctx.memo(subscribe, scheduler);
   ctx.using(subscribeOnScheduler, observable);
@@ -456,9 +452,5 @@ export function __using<T extends DisposableLike>(
 
 export function __currentScheduler(): SchedulerLike {
   const ctx = assertCurrentContext();
-  return ctx instanceof ObservableContext
-    ? ctx.observer.scheduler
-    : raise(
-        "__currentScheduler may only be called within an observable computation",
-      );
+  return ctx.observer.scheduler;
 }
