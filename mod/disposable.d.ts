@@ -1,4 +1,4 @@
-import { SideEffect1, Function1, SideEffect } from "./functions.mjs";
+import { SideEffect1, Function1, SideEffect, Factory } from "./functions.mjs";
 import { Option } from "./option.mjs";
 /**
  * A wrapper around a caught error to handle corner cases such
@@ -98,7 +98,7 @@ interface SerialDisposableLike extends DisposableLike {
 /**
  * Creates a new `SerialDisposableLike` instance containing a disposed instance.
  */
-declare const createSerialDisposable: () => SerialDisposableLike;
+declare const createSerialDisposable: Factory<SerialDisposableLike>;
 /**
  * A `DisposableLike` that provides disposable semantics to an underlying resource.
  *

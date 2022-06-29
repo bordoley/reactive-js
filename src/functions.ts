@@ -808,3 +808,20 @@ export function newInstanceWith(
 ): Function1<new (...args: readonly any[]) => any, any> {
   return Constructor => _newInstance(Constructor, ...args);
 }
+
+export function instanceFactory<T>(Constructor: Constructor<T>): Factory<T>;
+
+export function instanceFactory<TA, T>(
+  Constructor: Constructor1<TA, T>,
+): Function1<TA, T>;
+export function instanceFactory<TA, TB, T>(
+  Constructor: Constructor2<TA, TB, T>,
+): Function2<TA, TB, T>;
+export function instanceFactory<TA, TB, TC, T>(
+  Constructor: Constructor3<TA, TB, TC, T>,
+): Function3<TA, TB, TC, T>;
+export function instanceFactory(
+  Constructor: new (...args: readonly any[]) => any,
+): (...args: readonly any[]) => any {
+  return (...args) => _newInstance(Constructor, ...args);
+}

@@ -1,5 +1,5 @@
 /// <reference types="./disposable.d.ts" />
-import { pipe, newInstance, newInstanceWith, pipeLazy } from './functions.mjs';
+import { pipe, newInstance, instanceFactory, newInstanceWith, pipeLazy } from './functions.mjs';
 import { isSome, isNone, none } from './option.mjs';
 
 /**
@@ -165,7 +165,7 @@ class SerialDisposableImpl extends AbstractDisposable {
 /**
  * Creates a new `SerialDisposableLike` instance containing a disposed instance.
  */
-const createSerialDisposable = () => newInstance(SerialDisposableImpl);
+const createSerialDisposable = instanceFactory(SerialDisposableImpl);
 class DisposableValueImpl extends AbstractDisposable {
     constructor(value) {
         super();

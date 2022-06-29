@@ -1,7 +1,7 @@
 /// <reference types="./scheduler.d.ts" />
 import { isDisposed, AbstractDisposable, dispose, disposed, add, addTo, onDisposed, createDisposable } from './disposable.mjs';
 import { MAX_SAFE_INTEGER } from './env.mjs';
-import { floor, length, newInstance, max, pipe, raise, newInstanceWith } from './functions.mjs';
+import { floor, length, newInstance, max, pipe, raise, instanceFactory, newInstanceWith } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractEnumerator, move, hasCurrent, reset, current } from './enumerator.mjs';
 
@@ -145,7 +145,7 @@ const __yield = (options) => {
         ? raise("__yield effect may only be invoked from within a SchedulerContinuation")
         : currentScheduler;
     if (delay > 0 || shouldYield(scheduler)) {
-        throw newInstance(YieldError, delay);
+        pipe(delay, instanceFactory(YieldError), raise);
     }
 };
 const schedule = (f, options) => scheduler => {

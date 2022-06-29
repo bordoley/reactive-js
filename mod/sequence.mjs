@@ -3,7 +3,7 @@ import { createFromArray } from './container.mjs';
 import { isDisposed, dispose } from './disposable.mjs';
 import { createEnumerable } from './enumerable.mjs';
 import { AbstractEnumerator, hasCurrent } from './enumerator.mjs';
-import { pipe, strictEquality, alwaysTrue, length, callWith, newInstance } from './functions.mjs';
+import { pipe, strictEquality, alwaysTrue, length, callWith, pipeLazy, newInstanceWith } from './functions.mjs';
 import { none, isNone } from './option.mjs';
 import { map as map$1, keepType } from './readonlyArray.mjs';
 import { createRunnable } from './runnable.mjs';
@@ -286,7 +286,7 @@ class SequenceEnumerator extends AbstractEnumerator {
         return hasCurrent(this);
     }
 }
-const toEnumerable = () => (seq) => createEnumerable(() => newInstance(SequenceEnumerator, seq));
+const toEnumerable = () => seq => createEnumerable(pipeLazy(SequenceEnumerator, newInstanceWith(seq)));
 const toEnumerableT = {
     toEnumerable,
 };

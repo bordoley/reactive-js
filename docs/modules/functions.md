@@ -51,6 +51,7 @@
 - [ignore](functions.md#ignore)
 - [increment](functions.md#increment)
 - [incrementBy](functions.md#incrementby)
+- [instanceFactory](functions.md#instancefactory)
 - [isEmpty](functions.md#isempty)
 - [isEqualTo](functions.md#isequalto)
 - [isEven](functions.md#iseven)
@@ -1668,6 +1669,88 @@ Returns a function that increments a number `x` by the value `incr`.
 #### Returns
 
 [`Updater`](functions.md#updater)<`number`\>
+
+___
+
+### instanceFactory
+
+▸ **instanceFactory**<`T`\>(`Constructor`): [`Factory`](functions.md#factory)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Constructor` | [`Constructor`](functions.md#constructor)<`T`\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`T`\>
+
+▸ **instanceFactory**<`TA`, `T`\>(`Constructor`): [`Function1`](functions.md#function1)<`TA`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Constructor` | [`Constructor1`](functions.md#constructor1)<`TA`, `T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`TA`, `T`\>
+
+▸ **instanceFactory**<`TA`, `TB`, `T`\>(`Constructor`): [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Constructor` | [`Constructor2`](functions.md#constructor2)<`TA`, `TB`, `T`\> |
+
+#### Returns
+
+[`Function2`](functions.md#function2)<`TA`, `TB`, `T`\>
+
+▸ **instanceFactory**<`TA`, `TB`, `TC`, `T`\>(`Constructor`): [`Function3`](functions.md#function3)<`TA`, `TB`, `TC`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Constructor` | [`Constructor3`](functions.md#constructor3)<`TA`, `TB`, `TC`, `T`\> |
+
+#### Returns
+
+[`Function3`](functions.md#function3)<`TA`, `TB`, `TC`, `T`\>
 
 ___
 

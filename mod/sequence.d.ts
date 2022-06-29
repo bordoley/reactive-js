@@ -64,6 +64,6 @@ declare const toRunnable: <T>() => Function1<Sequence<T>, RunnableLike<T>>;
 declare const toRunnableT: ToRunnable<Sequence<unknown>>;
 declare const zip: Zip<Sequence<unknown>>["zip"];
 declare const zipT: Zip<Sequence<unknown>>;
-declare const toEnumerable: <T>() => (seq: Sequence<T>) => EnumerableLike<T>;
+declare const toEnumerable: <T>() => Function1<Sequence<T>, EnumerableLike<T>>;
 declare const toEnumerableT: ToEnumerable<Sequence<unknown>>;
 export { Sequence, SequenceLike, SequenceOperator, SequenceResult, SequenceResultNotify, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, fromArray, fromArrayT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, sequenceResultDone, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toRunnable, toRunnableT, type, zip, zipT };

@@ -146,5 +146,8 @@ function newInstance(Constructor, ...args) {
 function newInstanceWith(...args) {
     return Constructor => _newInstance(Constructor, ...args);
 }
+function instanceFactory(Constructor) {
+    return (...args) => _newInstance(Constructor, ...args);
+}
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isOdd, length, max, min, negate, newInstance, newInstanceWith, pipe, pipeLazy, raise, returns, strictEquality, sum, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, identity, ignore, increment, incrementBy, instanceFactory, isEmpty, isEqualTo, isEven, isOdd, length, max, min, negate, newInstance, newInstanceWith, pipe, pipeLazy, raise, returns, strictEquality, sum, updateReducer };

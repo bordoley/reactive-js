@@ -1,7 +1,9 @@
 import {
+  Factory,
   Function1,
   SideEffect,
   SideEffect1,
+  instanceFactory,
   newInstance,
   newInstanceWith,
   pipe,
@@ -307,8 +309,8 @@ class SerialDisposableImpl
 /**
  * Creates a new `SerialDisposableLike` instance containing a disposed instance.
  */
-export const createSerialDisposable = (): SerialDisposableLike =>
-  newInstance(SerialDisposableImpl);
+export const createSerialDisposable: Factory<SerialDisposableLike> =
+  instanceFactory(SerialDisposableImpl);
 
 /**
  * A `DisposableLike` that provides disposable semantics to an underlying resource.
