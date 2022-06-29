@@ -5,7 +5,7 @@ import { add, addTo, bindTo } from './disposable.mjs';
 import { enumerate, fromIterable as fromIterable$1 } from './enumerable.mjs';
 import { move, hasCurrent, current } from './enumerator.mjs';
 import { pipe, compose, flip, returns, updateReducer, increment, identity as identity$1 } from './functions.mjs';
-import { AbstractDisposableObservable, observerCount, replay, createSubject, publish, __currentScheduler, __using, reduce, onNotify, keepT, concatT, fromArrayT, scanAsync, scan, map, onSubscribe, observable, __memo, __observe, zipWithLatestFrom, takeFirst, switchAll, createObservable, mergeT, distinctUntilChanged, subscribe, subscribeOn, fromDisposable, takeUntil, mapT, concatAllT, withLatestFrom, using, never, takeWhile, merge } from './observable.mjs';
+import { AbstractDisposableObservable, observerCount, replay, createSubject, publish, __currentScheduler, __using, reduce, onNotify, keepT, concatT, fromArrayT, scanAsync, scan, createObservable, map, onSubscribe, zipWithLatestFrom, takeFirst, switchAll, mergeT, distinctUntilChanged, subscribe, subscribeOn, fromDisposable, takeUntil, mapT, concatAllT, withLatestFrom, using, never, takeWhile, merge } from './observable.mjs';
 import { createPausableScheduler } from './scheduler.mjs';
 import { sinkInto as sinkInto$1, notifySink, sourceFrom } from './source.mjs';
 import { none } from './option.mjs';
@@ -106,8 +106,10 @@ const consumeDone = (data) => ({
     type: "done",
     data,
 });
-const consumeImpl = (consumer, initial) => {
-    const createObservable = (accFeedback, enumerator) => pipe(enumerator, consumer(accFeedback), onNotify(ev => {
+const consumeImpl = (consumer, initial) => enumerable => createObservable(observer => {
+    const enumerator = pipe(enumerable, stream(observer.scheduler), addTo(observer));
+    const accFeedback = pipe(createSubject(), addTo(observer));
+    pipe(enumerator, consumer(accFeedback), onNotify(ev => {
         switch (ev.type) {
             case "continue":
                 pipe(accFeedback, dispatch(ev.data));
@@ -117,14 +119,8 @@ const consumeImpl = (consumer, initial) => {
     }), map(ev => ev.data), onSubscribe(() => {
         pipe(accFeedback, dispatch(initial()));
         pipe(enumerator, dispatch(none));
-    }));
-    return enumerable => observable(() => {
-        const enumerator = __stream(enumerable);
-        const accFeedback = __using(createSubject);
-        const observable = __memo(createObservable, accFeedback, enumerator);
-        return __observe(observable);
-    });
-};
+    }), sinkInto$1(observer));
+});
 const consume = (consumer, initial) => consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
 const consumeAsync = (consumer, initial) => consumeImpl(accObs => compose(zipWithLatestFrom(accObs, (next, acc) => pipe(consumer(acc, next), takeFirst())), switchAll()), initial);
 
