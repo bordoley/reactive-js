@@ -5,7 +5,7 @@ import { add, addTo, bindTo } from './disposable.mjs';
 import { enumerate, fromIterable as fromIterable$1 } from './enumerable.mjs';
 import { move, hasCurrent, current } from './enumerator.mjs';
 import { pipe, compose, flip, returns, updateReducer, increment, identity as identity$1 } from './functions.mjs';
-import { AbstractDisposableObservable, observerCount, createSubject, publish, __currentScheduler, __using, reduce, onNotify, keepT, concatT, fromArrayT, scanAsync, scan, map, onSubscribe, observable, __memo, __observe, zipWithLatestFrom, takeFirst, switchAll, createObservable, mergeT, distinctUntilChanged, subscribe, subscribeOn, fromDisposable, takeUntil, mapT, concatAllT, withLatestFrom, using, never, takeWhile, merge } from './observable.mjs';
+import { AbstractDisposableObservable, observerCount, replay, createSubject, publish, __currentScheduler, __using, reduce, onNotify, keepT, concatT, fromArrayT, scanAsync, scan, map, onSubscribe, observable, __memo, __observe, zipWithLatestFrom, takeFirst, switchAll, createObservable, mergeT, distinctUntilChanged, subscribe, subscribeOn, fromDisposable, takeUntil, mapT, concatAllT, withLatestFrom, using, never, takeWhile, merge } from './observable.mjs';
 import { createPausableScheduler } from './scheduler.mjs';
 import { sinkInto as sinkInto$1, notifySink, sourceFrom } from './source.mjs';
 import { none } from './option.mjs';
@@ -18,6 +18,9 @@ class StreamImpl extends AbstractDisposableObservable {
     }
     get observerCount() {
         return observerCount(this.observable);
+    }
+    get replay() {
+        return replay(this.observable);
     }
     dispatch(req) {
         pipe(this.dispatcher, dispatch(req));
@@ -58,6 +61,9 @@ class FlowableSinkAccumulatorImpl extends AbstractDisposableObservable {
     }
     get observerCount() {
         return observerCount(this.subject);
+    }
+    get replay() {
+        return replay(this.subject);
     }
     sink(observer) {
         pipe(this.subject, sinkInto$1(observer));

@@ -13,6 +13,7 @@ import {
   createSubject,
   observerCount,
   publish,
+  replay,
 } from "../observable";
 import { Observer } from "../observer";
 import { SchedulerLike } from "../scheduler";
@@ -32,6 +33,10 @@ class StreamImpl<TReq, T>
 
   get observerCount(): number {
     return observerCount(this.observable);
+  }
+
+  get replay(): number {
+    return replay(this.observable);
   }
 
   dispatch(req: TReq) {
