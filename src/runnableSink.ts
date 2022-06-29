@@ -20,11 +20,18 @@ if (__DEV__) {
   };
 }
 
-class DelegatingRunnableSink<T> extends RunnableSink<T> {
-  constructor(readonly delegate: RunnableSink<T>) {
+export class AbstractDelegatingRunnableSink<
+  TIn,
+  TOut,
+> extends RunnableSink<TIn> {
+  constructor(readonly delegate: RunnableSink<TOut>) {
     super();
   }
 
+  notify(_: TIn) {}
+}
+
+class DelegatingRunnableSink<T> extends AbstractDelegatingRunnableSink<T, T> {
   notify(next: T) {
     this.delegate.notify(next);
   }

@@ -6,6 +6,7 @@
 
 ### Classes
 
+- [AbstractDelegatingRunnableSink](../classes/runnableSink.AbstractDelegatingRunnableSink.md)
 - [RunnableSink](../classes/runnableSink.RunnableSink.md)
 
 ### Functions

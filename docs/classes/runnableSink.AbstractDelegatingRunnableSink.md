@@ -1,0 +1,140 @@
+[Reactive-JS](../README.md) / [runnableSink](../modules/runnableSink.md) / AbstractDelegatingRunnableSink
+
+# Class: AbstractDelegatingRunnableSink<TIn, TOut\>
+
+[runnableSink](../modules/runnableSink.md).AbstractDelegatingRunnableSink
+
+## Type parameters
+
+| Name |
+| :------ |
+| `TIn` |
+| `TOut` |
+
+## Hierarchy
+
+- [`RunnableSink`](runnableSink.RunnableSink.md)<`TIn`\>
+
+  ↳ **`AbstractDelegatingRunnableSink`**
+
+## Table of contents
+
+### Constructors
+
+- [constructor](runnableSink.AbstractDelegatingRunnableSink.md#constructor)
+
+### Properties
+
+- [delegate](runnableSink.AbstractDelegatingRunnableSink.md#delegate)
+
+### Accessors
+
+- [T](runnableSink.AbstractDelegatingRunnableSink.md#t)
+- [type](runnableSink.AbstractDelegatingRunnableSink.md#type)
+
+### Methods
+
+- [assertState](runnableSink.AbstractDelegatingRunnableSink.md#assertstate)
+- [notify](runnableSink.AbstractDelegatingRunnableSink.md#notify)
+
+## Constructors
+
+### constructor
+
+• **new AbstractDelegatingRunnableSink**<`TIn`, `TOut`\>(`delegate`)
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TIn` |
+| `TOut` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `delegate` | [`RunnableSink`](runnableSink.RunnableSink.md)<`TOut`\> |
+
+#### Overrides
+
+[RunnableSink](runnableSink.RunnableSink.md).[constructor](runnableSink.RunnableSink.md#constructor)
+
+## Properties
+
+### delegate
+
+• `Readonly` **delegate**: [`RunnableSink`](runnableSink.RunnableSink.md)<`TOut`\>
+
+## Accessors
+
+### T
+
+• `get` **T**(): `unknown`
+
+#### Returns
+
+`unknown`
+
+#### Inherited from
+
+RunnableSink.T
+
+___
+
+### type
+
+• `get` **type**(): `this`
+
+#### Returns
+
+`this`
+
+#### Inherited from
+
+RunnableSink.type
+
+## Methods
+
+### assertState
+
+▸ **assertState**(`this`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`AbstractDelegatingRunnableSink`](runnableSink.AbstractDelegatingRunnableSink.md)<`TIn`, `TOut`\> |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[RunnableSink](runnableSink.RunnableSink.md).[assertState](runnableSink.RunnableSink.md#assertstate)
+
+___
+
+### notify
+
+▸ **notify**(`_`): `void`
+
+Notifies the the sink of the next notification produced by the observable source.
+
+Note: The `notify` method must be called from within a `SchedulerContinuationLike`
+scheduled using the sink's `schedule` method.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `_` | `TIn` |
+
+#### Returns
+
+`void`
+
+#### Overrides
+
+[RunnableSink](runnableSink.RunnableSink.md).[notify](runnableSink.RunnableSink.md#notify)

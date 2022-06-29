@@ -16,6 +16,8 @@
 
   ↳ **`RunnableSink`**
 
+  ↳↳ [`AbstractDelegatingRunnableSink`](runnableSink.AbstractDelegatingRunnableSink.md)
+
 ## Implements
 
 - [`SinkLike`](../interfaces/source.SinkLike.md)<`T`\>

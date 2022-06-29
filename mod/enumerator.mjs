@@ -31,7 +31,13 @@ class AbstractEnumerator extends Enumerator {
         this._hasCurrent = false;
     }
 }
-class AbstractDelegatingEnumerator extends Enumerator {
+class AbstractDelegatingEnumerator extends AbstractEnumerator {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+    }
+}
+class AbstractPassThroughEnumerator extends Enumerator {
     constructor(delegate) {
         super();
         this.delegate = delegate;
@@ -85,4 +91,4 @@ function zip(...enumerators) {
     return enumerator;
 }
 
-export { AbstractDelegatingEnumerator, AbstractEnumerator, Enumerator, current, forEach, hasCurrent, move, reset, zip };
+export { AbstractDelegatingEnumerator, AbstractEnumerator, AbstractPassThroughEnumerator, Enumerator, current, forEach, hasCurrent, move, reset, zip };

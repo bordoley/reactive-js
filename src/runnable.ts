@@ -42,7 +42,11 @@ import { createRunnable, createT } from "./runnable/createRunnable";
 import { first } from "./runnable/first";
 import { fromArrayT } from "./runnable/fromArray";
 import { liftT } from "./runnable/lift";
-import { RunnableSink, createDelegatingRunnableSink } from "./runnableSink";
+import {
+  AbstractDelegatingRunnableSink,
+  RunnableSink,
+  createDelegatingRunnableSink,
+} from "./runnableSink";
 import {
   SourceLike,
   createBufferOperator,
@@ -101,13 +105,13 @@ export const buffer: <T>(options?: {
   readonly maxBufferSize?: number;
 }) => RunnableOperator<T, readonly T[]> = createBufferOperator(
   { ...liftT, ...fromArrayT },
-  class BufferSink<T> extends RunnableSink<T> {
+  class BufferSink<T> extends AbstractDelegatingRunnableSink<T, readonly T[]> {
     buffer: T[] = [];
     constructor(
-      readonly delegate: RunnableSink<readonly T[]>,
+      delegate: RunnableSink<readonly T[]>,
       readonly maxBufferSize: number,
     ) {
-      super();
+      super(delegate);
     }
   },
 );
@@ -120,11 +124,7 @@ export const catchError: <T>(
   onError: Function1<unknown, RunnableLike<T> | void>,
 ) => RunnableOperator<T, T> = createCatchErrorOperator(
   liftT,
-  class CatchErrorSink<T> extends RunnableSink<T> {
-    constructor(public readonly delegate: RunnableSink<T>) {
-      super();
-    }
-  },
+  class CatchErrorSink<T> extends AbstractDelegatingRunnableSink<T, T> {},
 );
 
 export const concat: Concat<RunnableLike<unknown>>["concat"] = <T>(
@@ -151,12 +151,15 @@ export const decodeWithCharset: (
 ) => RunnableOperator<ArrayBuffer, string> = createDecodeWithCharsetOperator(
   { ...liftT, ...fromArrayT },
 
-  class DecodeWithCharsetSink extends RunnableSink<ArrayBuffer> {
+  class DecodeWithCharsetSink extends AbstractDelegatingRunnableSink<
+    ArrayBuffer,
+    string
+  > {
     constructor(
-      readonly delegate: RunnableSink<string>,
+      delegate: RunnableSink<string>,
       readonly textDecoder: TextDecoder,
     ) {
-      super();
+      super(delegate);
     }
   },
 );
@@ -169,15 +172,15 @@ export const distinctUntilChanged: <T>(options?: {
   readonly equality?: Equality<T>;
 }) => RunnableOperator<T, T> = createDistinctUntilChangedOperator(
   liftT,
-  class DistinctUntilChangedSink<T> extends RunnableSink<T> {
+  class DistinctUntilChangedSink<T> extends AbstractDelegatingRunnableSink<
+    T,
+    T
+  > {
     prev: Option<T> = none;
     hasValue = false;
 
-    constructor(
-      readonly delegate: RunnableSink<T>,
-      readonly equality: Equality<T>,
-    ) {
-      super();
+    constructor(delegate: RunnableSink<T>, readonly equality: Equality<T>) {
+      super(delegate);
     }
   },
 );
@@ -192,12 +195,12 @@ export const everySatisfy: <T>(
   predicate: Predicate<T>,
 ) => RunnableOperator<T, boolean> = createEverySatisfyOperator(
   { ...fromArrayT, ...liftT },
-  class EverySatisfySink<T> extends RunnableSink<T> {
+  class EverySatisfySink<T> extends AbstractDelegatingRunnableSink<T, boolean> {
     constructor(
-      readonly delegate: RunnableSink<boolean>,
+      delegate: RunnableSink<boolean>,
       readonly predicate: Predicate<T>,
     ) {
-      super();
+      super(delegate);
     }
   },
 );
@@ -227,12 +230,9 @@ export const generateT: Generate<RunnableLike<unknown>> = {
 export const keep: <T>(predicate: Predicate<T>) => RunnableOperator<T, T> =
   createKeepOperator(
     liftT,
-    class KeepSink<T> extends RunnableSink<T> {
-      constructor(
-        readonly delegate: RunnableSink<T>,
-        readonly predicate: Predicate<T>,
-      ) {
-        super();
+    class KeepSink<T> extends AbstractDelegatingRunnableSink<T, T> {
+      constructor(delegate: RunnableSink<T>, readonly predicate: Predicate<T>) {
+        super(delegate);
       }
     },
   );
@@ -245,12 +245,12 @@ export const map: <TA, TB>(
   mapper: Function1<TA, TB>,
 ) => RunnableOperator<TA, TB> = createMapOperator(
   liftT,
-  class MapSink<TA, TB> extends RunnableSink<TA> {
+  class MapSink<TA, TB> extends AbstractDelegatingRunnableSink<TA, TB> {
     constructor(
-      readonly delegate: RunnableSink<TB>,
+      delegate: RunnableSink<TB>,
       readonly mapper: Function1<TA, TB>,
     ) {
-      super();
+      super(delegate);
     }
   },
 );
@@ -269,12 +269,12 @@ export const never = createNever(createT);
 export const onNotify: <T>(onNotify: SideEffect1<T>) => RunnableOperator<T, T> =
   createOnNotifyOperator(
     liftT,
-    class OnNotifySink<T> extends RunnableSink<T> {
+    class OnNotifySink<T> extends AbstractDelegatingRunnableSink<T, T> {
       constructor(
-        readonly delegate: RunnableSink<T>,
+        delegate: RunnableSink<T>,
         readonly onNotify: SideEffect1<T>,
       ) {
-        super();
+        super(delegate);
       }
     },
   );
@@ -284,13 +284,12 @@ export const onSink = createOnSink(createT);
 export const pairwise: <T>() => RunnableOperator<T, [Option<T>, T]> =
   createPairwiseOperator(
     liftT,
-    class PairwiseSink<T> extends RunnableSink<T> {
+    class PairwiseSink<T> extends AbstractDelegatingRunnableSink<
+      T,
+      [Option<T>, T]
+    > {
       prev: Option<T>;
       hasPrev = false;
-
-      constructor(readonly delegate: RunnableSink<[Option<T>, T]>) {
-        super();
-      }
     },
   );
 
@@ -303,13 +302,13 @@ export const reduce: <T, TAcc>(
   initialValue: Factory<TAcc>,
 ) => RunnableOperator<T, TAcc> = createReduceOperator(
   { ...fromArrayT, ...liftT },
-  class ReducerSink<T, TAcc> extends RunnableSink<T> {
+  class ReducerSink<T, TAcc> extends AbstractDelegatingRunnableSink<T, TAcc> {
     constructor(
-      readonly delegate: RunnableSink<TAcc>,
+      delegate: RunnableSink<TAcc>,
       readonly reducer: Reducer<T, TAcc>,
       public acc: TAcc,
     ) {
-      super();
+      super(delegate);
     }
   },
 );
@@ -351,13 +350,13 @@ export const scan: <T, TAcc>(
   initialValue: Factory<TAcc>,
 ) => RunnableOperator<T, TAcc> = createScanOperator(
   liftT,
-  class ScanSink<T, TAcc> extends RunnableSink<T> {
+  class ScanSink<T, TAcc> extends AbstractDelegatingRunnableSink<T, TAcc> {
     constructor(
-      readonly delegate: RunnableSink<TAcc>,
+      delegate: RunnableSink<TAcc>,
       readonly reducer: Reducer<T, TAcc>,
       public acc: TAcc,
     ) {
-      super();
+      super(delegate);
     }
   },
 );
@@ -370,14 +369,11 @@ export const skipFirst: <T>(options?: {
   readonly count?: number;
 }) => RunnableOperator<T, T> = createSkipFirstOperator(
   liftT,
-  class SkipFirstSink<T> extends RunnableSink<T> {
+  class SkipFirstSink<T> extends AbstractDelegatingRunnableSink<T, T> {
     count = 0;
 
-    constructor(
-      readonly delegate: RunnableSink<T>,
-      readonly skipCount: number,
-    ) {
-      super();
+    constructor(delegate: RunnableSink<T>, readonly skipCount: number) {
+      super(delegate);
     }
   },
 );
@@ -390,12 +386,12 @@ export const someSatisfy: <T>(
   predicate: Predicate<T>,
 ) => RunnableOperator<T, boolean> = createSomeSatisfyOperator(
   { ...fromArrayT, ...liftT },
-  class SomeSatisfySink<T> extends RunnableSink<T> {
+  class SomeSatisfySink<T> extends AbstractDelegatingRunnableSink<T, boolean> {
     constructor(
-      readonly delegate: RunnableSink<boolean>,
+      delegate: RunnableSink<boolean>,
       readonly predicate: Predicate<T>,
     ) {
-      super();
+      super(delegate);
     }
   },
 );
@@ -408,11 +404,11 @@ export const takeFirst: <T>(options?: {
   readonly count?: number;
 }) => RunnableOperator<T, T> = createTakeFirstOperator(
   { ...fromArrayT, ...liftT },
-  class TakeFirstSink<T> extends RunnableSink<T> {
+  class TakeFirstSink<T> extends AbstractDelegatingRunnableSink<T, T> {
     count = 0;
 
-    constructor(readonly delegate: RunnableSink<T>, readonly maxCount: number) {
-      super();
+    constructor(delegate: RunnableSink<T>, readonly maxCount: number) {
+      super(delegate);
     }
   },
 );
@@ -425,11 +421,11 @@ export const takeLast: <T>(options?: {
   readonly count?: number;
 }) => RunnableOperator<T, T> = createTakeLastOperator(
   { ...fromArrayT, ...liftT },
-  class TakeLastSink<T> extends RunnableSink<T> {
+  class TakeLastSink<T> extends AbstractDelegatingRunnableSink<T, T> {
     readonly last: T[] = [];
 
-    constructor(readonly delegate: RunnableSink<T>, readonly maxCount: number) {
-      super();
+    constructor(delegate: RunnableSink<T>, readonly maxCount: number) {
+      super(delegate);
     }
   },
 );
@@ -443,13 +439,13 @@ export const takeWhile: <T>(
   options?: { readonly inclusive?: boolean },
 ) => RunnableOperator<T, T> = createTakeWhileOperator(
   liftT,
-  class TakeWhileSink<T> extends RunnableSink<T> {
+  class TakeWhileSink<T> extends AbstractDelegatingRunnableSink<T, T> {
     constructor(
-      readonly delegate: RunnableSink<T>,
+      delegate: RunnableSink<T>,
       readonly predicate: Predicate<T>,
       readonly inclusive: boolean,
     ) {
-      super();
+      super(delegate);
     }
   },
 );
@@ -462,12 +458,8 @@ export const throwIfEmpty: <T>(
   factory: Factory<unknown>,
 ) => RunnableOperator<T, T> = createThrowIfEmptyOperator(
   liftT,
-  class ThrowIfEmptySink<T> extends RunnableSink<T> {
+  class ThrowIfEmptySink<T> extends AbstractDelegatingRunnableSink<T, T> {
     isEmpty = true;
-
-    constructor(readonly delegate: RunnableSink<T>) {
-      super();
-    }
   },
 );
 

@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [enumerator](../modules/enumerator.md) / AbstractEnumerator
+[Reactive-JS](../README.md) / [enumerator](../modules/enumerator.md) / AbstractPassThroughEnumerator
 
-# Class: AbstractEnumerator<T\>
+# Class: AbstractPassThroughEnumerator<T\>
 
-[enumerator](../modules/enumerator.md).AbstractEnumerator
+[enumerator](../modules/enumerator.md).AbstractPassThroughEnumerator
 
 ## Type parameters
 
@@ -14,33 +14,34 @@
 
 - [`Enumerator`](enumerator.Enumerator.md)<`T`\>
 
-  ↳ **`AbstractEnumerator`**
-
-  ↳↳ [`AbstractDelegatingEnumerator`](enumerator.AbstractDelegatingEnumerator.md)
+  ↳ **`AbstractPassThroughEnumerator`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](enumerator.AbstractEnumerator.md#constructor)
+- [constructor](enumerator.AbstractPassThroughEnumerator.md#constructor)
+
+### Properties
+
+- [delegate](enumerator.AbstractPassThroughEnumerator.md#delegate)
 
 ### Accessors
 
-- [T](enumerator.AbstractEnumerator.md#t)
-- [current](enumerator.AbstractEnumerator.md#current)
-- [hasCurrent](enumerator.AbstractEnumerator.md#hascurrent)
-- [type](enumerator.AbstractEnumerator.md#type)
+- [T](enumerator.AbstractPassThroughEnumerator.md#t)
+- [current](enumerator.AbstractPassThroughEnumerator.md#current)
+- [hasCurrent](enumerator.AbstractPassThroughEnumerator.md#hascurrent)
+- [type](enumerator.AbstractPassThroughEnumerator.md#type)
 
 ### Methods
 
-- [move](enumerator.AbstractEnumerator.md#move)
-- [reset](enumerator.AbstractEnumerator.md#reset)
+- [move](enumerator.AbstractPassThroughEnumerator.md#move)
 
 ## Constructors
 
 ### constructor
 
-• **new AbstractEnumerator**<`T`\>()
+• **new AbstractPassThroughEnumerator**<`T`\>(`delegate`)
 
 #### Type parameters
 
@@ -48,9 +49,21 @@
 | :------ |
 | `T` |
 
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `delegate` | [`Enumerator`](enumerator.Enumerator.md)<`T`\> |
+
 #### Overrides
 
 [Enumerator](enumerator.Enumerator.md).[constructor](enumerator.Enumerator.md#constructor)
+
+## Properties
+
+### delegate
+
+• `Readonly` **delegate**: [`Enumerator`](enumerator.Enumerator.md)<`T`\>
 
 ## Accessors
 
@@ -75,22 +88,6 @@ ___
 #### Returns
 
 `T`
-
-#### Overrides
-
-Enumerator.current
-
-• `set` **current**(`v`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `v` | `T` |
-
-#### Returns
-
-`void`
 
 #### Overrides
 
@@ -137,13 +134,3 @@ Enumerator.type
 #### Overrides
 
 [Enumerator](enumerator.Enumerator.md).[move](enumerator.Enumerator.md#move)
-
-___
-
-### reset
-
-▸ **reset**(): `void`
-
-#### Returns
-
-`void`

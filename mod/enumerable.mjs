@@ -1,6 +1,6 @@
 /// <reference types="./enumerable.d.ts" />
 import { isDisposed, dispose, createSerialDisposable, bindTo, add, addTo } from './disposable.mjs';
-import { AbstractEnumerator, reset, hasCurrent, move, Enumerator, current, forEach, zip as zip$1, AbstractDelegatingEnumerator } from './enumerator.mjs';
+import { AbstractEnumerator, reset, hasCurrent, AbstractDelegatingEnumerator, move, Enumerator, current, forEach, zip as zip$1, AbstractPassThroughEnumerator } from './enumerator.mjs';
 import { pipe, raise, alwaysTrue, identity } from './functions.mjs';
 import { empty } from './container.mjs';
 import { AbstractLiftable, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, delegate, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
@@ -96,10 +96,9 @@ const liftT = {
     lift,
 };
 
-class ConcatAllEnumerator extends AbstractEnumerator {
+class ConcatAllEnumerator extends AbstractDelegatingEnumerator {
     constructor(delegate, enumerator) {
-        super();
-        this.delegate = delegate;
+        super(delegate);
         this.enumerator = enumerator;
     }
     move() {
@@ -136,10 +135,9 @@ const concatAllT = {
     concatAll,
 };
 
-class BufferEnumerator extends AbstractEnumerator {
+class BufferEnumerator extends AbstractDelegatingEnumerator {
     constructor(delegate, maxBufferSize) {
-        super();
-        this.delegate = delegate;
+        super(delegate);
         this.maxBufferSize = maxBufferSize;
     }
     move() {
@@ -394,7 +392,7 @@ function concat(...enumerables) {
 const concatT = {
     concat,
 };
-const distinctUntilChanged = createDistinctUntilChangedLiftOperator(liftT, class DistinctUntilChangedEnumerator extends AbstractDelegatingEnumerator {
+const distinctUntilChanged = createDistinctUntilChangedLiftOperator(liftT, class DistinctUntilChangedEnumerator extends AbstractPassThroughEnumerator {
     constructor(delegate, equality) {
         super(delegate);
         this.equality = equality;
@@ -420,7 +418,7 @@ const distinctUntilChanged = createDistinctUntilChangedLiftOperator(liftT, class
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
-const keep = createKeepLiftOperator(liftT, class KeepEnumerator extends AbstractDelegatingEnumerator {
+const keep = createKeepLiftOperator(liftT, class KeepEnumerator extends AbstractPassThroughEnumerator {
     constructor(delegate, predicate) {
         super(delegate);
         this.predicate = predicate;
@@ -439,10 +437,9 @@ const keep = createKeepLiftOperator(liftT, class KeepEnumerator extends Abstract
 const keepT = {
     keep,
 };
-const map = createMapLiftOperator(liftT, class MapEnumerator extends AbstractEnumerator {
+const map = createMapLiftOperator(liftT, class MapEnumerator extends AbstractDelegatingEnumerator {
     constructor(delegate, mapper) {
-        super();
-        this.delegate = delegate;
+        super(delegate);
         this.mapper = mapper;
     }
     move() {
@@ -462,7 +459,7 @@ const map = createMapLiftOperator(liftT, class MapEnumerator extends AbstractEnu
 const mapT = {
     map,
 };
-const onNotify = createOnNotifyLiftOperator(liftT, class OnNotifyEnumerator extends AbstractDelegatingEnumerator {
+const onNotify = createOnNotifyLiftOperator(liftT, class OnNotifyEnumerator extends AbstractPassThroughEnumerator {
     constructor(delegate, onNotify) {
         super(delegate);
         this.onNotify = onNotify;
@@ -480,11 +477,7 @@ const onNotify = createOnNotifyLiftOperator(liftT, class OnNotifyEnumerator exte
         return hasCurrent(this);
     }
 });
-const pairwise = createPairwiseLiftOperator(liftT, class PairwiseEnumerator extends AbstractEnumerator {
-    constructor(delegate) {
-        super();
-        this.delegate = delegate;
-    }
+const pairwise = createPairwiseLiftOperator(liftT, class PairwiseEnumerator extends AbstractDelegatingEnumerator {
     move() {
         const prev = (hasCurrent(this) ? current(this) : empty$1)[1];
         reset(this);
@@ -499,10 +492,9 @@ const pairwise = createPairwiseLiftOperator(liftT, class PairwiseEnumerator exte
 const pairwiseT = {
     pairwise,
 };
-const scan = createScanLiftOperator(liftT, class ScanEnumerator extends AbstractEnumerator {
+const scan = createScanLiftOperator(liftT, class ScanEnumerator extends AbstractDelegatingEnumerator {
     constructor(delegate, reducer, current) {
-        super();
-        this.delegate = delegate;
+        super(delegate);
         this.reducer = reducer;
         this.current = current;
     }
@@ -524,7 +516,7 @@ const scan = createScanLiftOperator(liftT, class ScanEnumerator extends Abstract
 const scanT = {
     scan,
 };
-const skipFirst = createSkipFirstLiftOperator(liftT, class SkipFirstEnumerator extends AbstractDelegatingEnumerator {
+const skipFirst = createSkipFirstLiftOperator(liftT, class SkipFirstEnumerator extends AbstractPassThroughEnumerator {
     constructor(delegate, skipCount) {
         super(delegate);
         this.skipCount = skipCount;
@@ -544,7 +536,7 @@ const skipFirst = createSkipFirstLiftOperator(liftT, class SkipFirstEnumerator e
 const skipFirstT = {
     skipFirst,
 };
-const takeFirst = createTakeFirstLiftOperator({ ...fromArrayT, ...liftT }, class TakeFirstEnumerator extends AbstractDelegatingEnumerator {
+const takeFirst = createTakeFirstLiftOperator({ ...fromArrayT, ...liftT }, class TakeFirstEnumerator extends AbstractPassThroughEnumerator {
     constructor(delegate, maxCount) {
         super(delegate);
         this.maxCount = maxCount;
@@ -567,7 +559,7 @@ const takeFirst = createTakeFirstLiftOperator({ ...fromArrayT, ...liftT }, class
 const takeFirstT = {
     takeFirst,
 };
-const takeWhile = createTakeWhileLiftOperator(liftT, class TakeWhileEnumerator extends AbstractDelegatingEnumerator {
+const takeWhile = createTakeWhileLiftOperator(liftT, class TakeWhileEnumerator extends AbstractPassThroughEnumerator {
     constructor(delegate, predicate, inclusive) {
         super(delegate);
         this.predicate = predicate;
@@ -600,7 +592,7 @@ const takeWhile = createTakeWhileLiftOperator(liftT, class TakeWhileEnumerator e
 const takeWhileT = {
     takeWhile,
 };
-const throwIfEmpty = createThrowIfEmptyLiftOperator(liftT, class ThrowIfEmptyEnumerator extends AbstractDelegatingEnumerator {
+const throwIfEmpty = createThrowIfEmptyLiftOperator(liftT, class ThrowIfEmptyEnumerator extends AbstractPassThroughEnumerator {
     constructor() {
         super(...arguments);
         this.isEmpty = true;
