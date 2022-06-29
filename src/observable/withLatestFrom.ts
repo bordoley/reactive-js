@@ -1,21 +1,24 @@
 import { addTo, bindTo, dispose, isDisposed, onComplete } from "../disposable";
 import { Function2, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer, scheduler } from "../observer";
+import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
 import { Option } from "../option";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
-class WithLatestFromObserver<TA, TB, T> extends Observer<TA> {
+class WithLatestFromObserver<TA, TB, T> extends AbstractDelegatingObserver<
+  TA,
+  T
+> {
   otherLatest: Option<TB>;
   hasLatest = false;
 
   constructor(
-    readonly delegate: Observer<T>,
+    delegate: Observer<T>,
     private readonly selector: Function2<TA, TB, T>,
   ) {
-    super(delegate.scheduler);
+    super(delegate);
     this.selector = selector;
   }
 

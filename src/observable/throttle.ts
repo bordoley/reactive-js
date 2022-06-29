@@ -13,7 +13,7 @@ import {
   ObservableOperator,
   ThrottleMode,
 } from "../observable";
-import { Observer, scheduler } from "../observer";
+import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
 import { Option, none } from "../option";
 import { sinkInto } from "../source";
 import { fromArrayT } from "./fromArray";
@@ -32,7 +32,7 @@ const setupDurationSubscription = <T>(
   );
 };
 
-class ThrottleObserver<T> extends Observer<T> {
+class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
   value: Option<T> = none;
   hasValue = false;
 
@@ -48,12 +48,12 @@ class ThrottleObserver<T> extends Observer<T> {
   };
 
   constructor(
-    readonly delegate: Observer<T>,
+    delegate: Observer<T>,
     readonly durationFunction: Function1<T, ObservableLike<unknown>>,
     readonly mode: ThrottleMode,
     readonly durationSubscription: SerialDisposableLike,
   ) {
-    super(delegate.scheduler);
+    super(delegate);
   }
 
   notify(next: T) {

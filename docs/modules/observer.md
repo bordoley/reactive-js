@@ -6,6 +6,7 @@
 
 ### Classes
 
+- [AbstractDelegatingObserver](../classes/observer.AbstractDelegatingObserver.md)
 - [Observer](../classes/observer.Observer.md)
 
 ### Functions

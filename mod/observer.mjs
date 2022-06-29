@@ -9,7 +9,7 @@ import { schedule, __yield, inContinuation } from './scheduler.mjs';
 const scheduleDrainQueue = (dispatcher) => {
     if (dispatcher.nextQueue.length === 1) {
         const { observer } = dispatcher;
-        pipe(observer.scheduler, schedule(dispatcher.continuation), addTo(observer), onComplete(dispatcher.onContinuationDispose));
+        pipe(scheduler(observer), schedule(dispatcher.continuation), addTo(observer), onComplete(dispatcher.onContinuationDispose));
     }
 };
 class ObserverDelegatingDispatcher extends AbstractDisposable {
@@ -74,11 +74,14 @@ if (__DEV__) {
         }
     };
 }
-class DelegatingObserver extends Observer {
+class AbstractDelegatingObserver extends Observer {
     constructor(delegate) {
-        super(delegate.scheduler);
+        super(scheduler(delegate));
         this.delegate = delegate;
     }
+    notify(_) { }
+}
+class DelegatingObserver extends AbstractDelegatingObserver {
     notify(next) {
         this.delegate.notify(next);
     }
@@ -86,4 +89,4 @@ class DelegatingObserver extends Observer {
 const createDelegatingObserver = (delegate) => new DelegatingObserver(delegate);
 const scheduler = (observer) => observer.scheduler;
 
-export { Observer, createDelegatingObserver, scheduler };
+export { AbstractDelegatingObserver, Observer, createDelegatingObserver, scheduler };

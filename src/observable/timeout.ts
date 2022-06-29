@@ -8,7 +8,7 @@ import {
 } from "../disposable";
 import { pipe, returns } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer, scheduler } from "../observer";
+import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
 import { concat } from "./concat";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
@@ -27,13 +27,13 @@ const setupDurationSubscription = <T>(observer: TimeoutObserver<T>) => {
   );
 };
 
-class TimeoutObserver<T> extends Observer<T> {
+class TimeoutObserver<T> extends AbstractDelegatingObserver<T, T> {
   constructor(
-    readonly delegate: Observer<T>,
+    delegate: Observer<T>,
     readonly duration: ObservableLike<unknown>,
     readonly durationSubscription: SerialDisposableLike,
   ) {
-    super(delegate.scheduler);
+    super(delegate);
   }
 
   notify(next: T) {

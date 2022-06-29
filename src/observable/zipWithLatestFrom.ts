@@ -1,7 +1,7 @@
 import { add, dispose, isDisposed, onComplete } from "../disposable";
 import { Function2, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer } from "../observer";
+import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
 import { Option } from "../option";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
@@ -18,17 +18,17 @@ const notifyDelegate = <TA, TB, TC>(
   }
 };
 
-class ZipWithLatestFromObserver<TA, TB, T> extends Observer<TA> {
+class ZipWithLatestFromObserver<TA, TB, T> extends AbstractDelegatingObserver<
+  TA,
+  T
+> {
   otherLatest: Option<TB>;
   hasLatest = false;
 
   readonly queue: TA[] = [];
 
-  constructor(
-    readonly delegate: Observer<T>,
-    readonly selector: Function2<TA, TB, T>,
-  ) {
-    super(delegate.scheduler);
+  constructor(delegate: Observer<T>, readonly selector: Function2<TA, TB, T>) {
+    super(delegate);
     this.selector = selector;
   }
 
@@ -74,7 +74,7 @@ export const zipWithLatestFrom = <TA, TB, T>(
           pipe(observer.delegate, dispose());
         }
       }),
-      subscribe(delegate.scheduler),
+      subscribe(scheduler(delegate)),
       onComplete(disposeDelegate),
     );
 

@@ -17,7 +17,7 @@ import {
 } from "../enumerator";
 import { pipe, pipeLazy, returns } from "../functions";
 import { ObservableLike } from "../observable";
-import { Observer } from "../observer";
+import { AbstractDelegatingObserver, Observer } from "../observer";
 import { everySatisfy, map } from "../readonlyArray";
 import { sinkInto, sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
@@ -62,13 +62,16 @@ class ZipObserverEnumerator extends AbstractEnumerator<unknown> {
   }
 }
 
-class ZipObserver extends Observer<unknown> {
+class ZipObserver extends AbstractDelegatingObserver<
+  unknown,
+  readonly unknown[]
+> {
   constructor(
-    readonly delegate: Observer<readonly unknown[]>,
+    delegate: Observer<readonly unknown[]>,
     private readonly enumerators: readonly Enumerator<any>[],
     readonly enumerator: ZipObserverEnumerator,
   ) {
-    super(delegate.scheduler);
+    super(delegate);
   }
 
   notify(next: unknown) {

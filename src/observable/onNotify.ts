@@ -1,6 +1,6 @@
 import { SideEffect1 } from "../functions";
 import { ObservableOperator } from "../observable";
-import { Observer } from "../observer";
+import { AbstractDelegatingObserver, Observer } from "../observer";
 import { createOnNotifyOperator } from "../source";
 import { liftSynchronousT } from "./lift";
 
@@ -13,12 +13,9 @@ export const onNotify: <T>(
   onNotify: SideEffect1<T>,
 ) => ObservableOperator<T, T> = createOnNotifyOperator(
   liftSynchronousT,
-  class OnNotifyObserver<T> extends Observer<T> {
-    constructor(
-      readonly delegate: Observer<T>,
-      readonly onNotify: SideEffect1<T>,
-    ) {
-      super(delegate.scheduler);
+  class OnNotifyObserver<T> extends AbstractDelegatingObserver<T, T> {
+    constructor(delegate: Observer<T>, readonly onNotify: SideEffect1<T>) {
+      super(delegate);
     }
   },
 );

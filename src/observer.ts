@@ -18,7 +18,7 @@ const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (dispatcher.nextQueue.length === 1) {
     const { observer } = dispatcher;
     pipe(
-      observer.scheduler,
+      scheduler(observer),
       schedule(dispatcher.continuation),
       addTo(observer),
       onComplete(dispatcher.onContinuationDispose),
@@ -112,11 +112,15 @@ if (__DEV__) {
   };
 }
 
-class DelegatingObserver<T> extends Observer<T> {
-  constructor(public readonly delegate: Observer<T>) {
-    super(delegate.scheduler);
+export class AbstractDelegatingObserver<TIn, TOut> extends Observer<TIn> {
+  constructor(public readonly delegate: Observer<TOut>) {
+    super(scheduler(delegate));
   }
 
+  notify(_: TIn) {}
+}
+
+class DelegatingObserver<T> extends AbstractDelegatingObserver<T, T> {
   notify(next: T) {
     this.delegate.notify(next);
   }
