@@ -6,13 +6,11 @@ import {
   generate,
   __do,
   __memo,
-  StreamLike,
 } from "@reactive-js/core/observable";
 import {
   __state,
   flow,
   FlowMode,
-  StateStreamLike,
   __stream,
 } from "@reactive-js/core/streamable";
 import {
@@ -22,7 +20,8 @@ import {
   useObservable,
 } from "@reactive-js/core/react";
 import { windowLocation, WindowLocationURI } from "@reactive-js/core/web";
-import { increment, pipe, returns } from "@reactive-js/core/functions";
+import { increment, pipe, returns, Updater } from "@reactive-js/core/functions";
+import { DispatcherLike } from "@reactive-js/core/dispatcher";
 
 const idlePriorityScheduler = createReactIdlePriorityScheduler();
 const normalPriorityScheduler = createReactNormalPriorityScheduler();
@@ -30,31 +29,28 @@ const normalPriorityScheduler = createReactNormalPriorityScheduler();
 // History must be globally unique to an application
 const historyStream = windowLocation.stream(normalPriorityScheduler);
 
-const onValueChanged = (value: number) => {
-  historyStream.dispatch(
-    (uri: WindowLocationURI) => ({
-      ...uri,
-      query: `v=${value}`,
-    }),
-    { replace: true },
-  );
-};
-
-const setCounterMode = (
-  counter: StreamLike<FlowMode, number>,
-  mode: FlowMode,
-) => {
-  counter.dispatch(mode);
-};
-
 const counterFlowable = pipe(
   generate(increment, returns(0)),
   flow({ scheduler: idlePriorityScheduler }),
 );
 
-const createOnClick = (state: StateStreamLike<FlowMode>) => () => {
-  state.dispatch(mode => (mode === "pause" ? "resume" : "pause"));
-};
+const createActions = (
+  stateDispatcher: DispatcherLike<Updater<FlowMode>>,
+  counterDispatcher: DispatcherLike<FlowMode>,
+) => ({
+  onValueChanged: (value: number) => {
+    historyStream.dispatch(
+      (uri: WindowLocationURI) => ({
+        ...uri,
+        query: `v=${value}`,
+      }),
+      { replace: true },
+    );
+  },
+  toggleStateMode: () =>
+    stateDispatcher.dispatch(mode => (mode === "pause" ? "resume" : "pause")),
+  setCounterMode: (mode: FlowMode) => counterDispatcher.dispatch(mode),
+});
 
 const initialFlowModeState = () => "pause" as FlowMode;
 
@@ -63,19 +59,24 @@ const StreamPauseResume = createComponent(() =>
     const counter = __stream(counterFlowable);
     const state = __state(initialFlowModeState);
 
+    const { onValueChanged, toggleStateMode, setCounterMode } = __memo(
+      createActions,
+      state,
+      counter,
+    );
+
     const value = __observe(counter) ?? 0;
     const mode = __observe(state) ?? "pause";
 
-    __do(setCounterMode, counter, mode);
+    __do(setCounterMode, mode);
     __do(onValueChanged, value);
 
-    const onClick = __memo(createOnClick, state);
     const label = mode === "resume" ? "PAUSE" : "RESUME";
 
     return (
       <>
         <div>{value}</div>
-        <button onClick={onClick}>{label}</button>
+        <button onClick={toggleStateMode}>{label}</button>
       </>
     );
   }),
