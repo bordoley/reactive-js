@@ -24,6 +24,7 @@ interface Lift<C extends SourceLike> extends Lift$1<C, ContraVariant> {
 interface CreateSource<C extends SourceLike> extends Container<C> {
     create<T>(onSink: (sink: LiftableStateOf<C, T>) => void): ContainerOf<C, T>;
 }
+declare const assertState: <C extends SourceLike>(sink: LiftableStateOf<C, unknown>) => void;
 declare abstract class AbstractSource<T, TSink extends SinkLike<T>> extends AbstractLiftable<TSink> implements SourceLike {
     abstract sink(this: this, sink: TSink): void;
 }
@@ -146,4 +147,4 @@ declare const createFromDisposable: <C extends SourceLike>(m: CreateSource<C>) =
 declare const createNever: <C extends SourceLike>(m: CreateSource<C>) => <T>() => ContainerOf<C, T>;
 declare const createOnSink: <C extends SourceLike>(m: CreateSource<C>) => <T>(f: Factory<DisposableOrTeardown | void>) => ContainerOperator<C, T, T>;
 declare const createUsing: <C extends SourceLike>(m: CreateSource<C>) => <TResource extends DisposableLike, T>(resourceFactory: Factory<TResource | readonly TResource[]>, sourceFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>) => ContainerOf<C, T>;
-export { AbstractDisposableSource, AbstractSource, CreateSource, Lift, SinkLike, SourceLike, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, notify, notifySink, sinkInto, sourceFrom };
+export { AbstractDisposableSource, AbstractSource, CreateSource, Lift, SinkLike, SourceLike, assertState, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, notify, notifySink, sinkInto, sourceFrom };

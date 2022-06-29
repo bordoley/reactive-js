@@ -14,7 +14,7 @@ import { delegate, delegate as observerDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
 import { none } from "../option";
-import { sinkInto } from "../source";
+import { assertState, sinkInto } from "../source";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { never } from "./never";
@@ -34,7 +34,7 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
   }
 
   notify(next: T) {
-    this.assertState();
+    assertState(this);
 
     const { buffer, maxBufferSize } = this;
 

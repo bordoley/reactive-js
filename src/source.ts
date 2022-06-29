@@ -17,6 +17,7 @@ import {
   onDisposed,
   onError,
 } from "./disposable";
+import { __DEV__ } from "./env";
 import {
   Equality,
   Factory,
@@ -88,6 +89,14 @@ const create =
   <C extends SourceLike, T>(m: CreateSource<C>) =>
   (onSink: (sink: LiftableStateOf<C, T>) => void): ContainerOf<C, T> =>
     m.create(onSink);
+
+export const assertState = <C extends SourceLike>(
+  sink: LiftableStateOf<C, unknown>,
+): void => {
+  if (__DEV__) {
+    sink.assertState();
+  }
+};
 
 export abstract class AbstractSource<T, TSink extends SinkLike<T>>
   extends AbstractLiftable<TSink>
@@ -167,7 +176,7 @@ export const createBufferOperator = <C extends SourceLike>(
       },
       next: T,
     ) {
-      this.assertState();
+      assertState(this);
 
       const { buffer, maxBufferSize } = this;
 
@@ -331,7 +340,7 @@ export const createDistinctUntilChangedOperator = <C extends SourceLike>(
       },
       next: T,
     ) {
-      this.assertState();
+      assertState(this);
 
       const shouldEmit = !this.hasValue || !this.equality(this.prev as T, next);
 
@@ -364,7 +373,7 @@ const createSatisfyOperator = <C extends SourceLike>(
       },
       next: T,
     ) {
-      this.assertState();
+      assertState(this);
 
       if (this.predicate(next)) {
         const { delegate } = this;
@@ -420,7 +429,7 @@ export const createKeepOperator = <C extends SourceLike>(
       },
       next: T,
     ) {
-      this.assertState();
+      assertState(this);
       if (this.predicate(next)) {
         delegateLiftable(this).notify(next);
       }
@@ -447,7 +456,7 @@ export const createMapOperator = <C extends SourceLike>(
       },
       next: TA,
     ) {
-      this.assertState();
+      assertState(this);
       const mapped = this.mapper(next);
       delegateLiftable(this).notify(mapped);
     },
@@ -473,7 +482,7 @@ export const createOnNotifyOperator = <C extends SourceLike>(
       },
       next: T,
     ) {
-      this.assertState();
+      assertState(this);
 
       this.onNotify(next);
       delegateLiftable(this).notify(next);
@@ -501,7 +510,7 @@ export const createPairwiseOperator = <C extends SourceLike>(
       },
       value: T,
     ): void {
-      this.assertState();
+      assertState(this);
       const prev = this.hasPrev ? this.prev : none;
 
       this.hasPrev = true;
@@ -537,7 +546,7 @@ export const createReduceOperator = <C extends SourceLike>(
       },
       next: T,
     ) {
-      this.assertState();
+      assertState(this);
 
       this.acc = this.reducer(this.acc, next);
     },
@@ -582,7 +591,7 @@ export const createScanOperator = <C extends SourceLike>(
       },
       next: T,
     ) {
-      this.assertState();
+      assertState(this);
       const nextAcc = this.reducer(this.acc, next);
       this.acc = nextAcc;
 
@@ -656,7 +665,7 @@ export const createTakeFirstOperator = <C extends SourceLike>(
       },
       next: T,
     ) {
-      this.assertState();
+      assertState(this);
 
       this.count++;
       delegateLiftable(this).notify(next);
@@ -690,7 +699,7 @@ export const createTakeLastOperator = <C extends SourceLike>(
       },
       next: T,
     ) {
-      this.assertState();
+      assertState(this);
 
       const { last } = this;
 
@@ -750,7 +759,7 @@ export const createTakeWhileOperator = <C extends SourceLike>(
       },
       next: T,
     ) {
-      this.assertState();
+      assertState(this);
 
       const satisfiesPredicate = this.predicate(next);
 
@@ -783,7 +792,7 @@ export const createThrowIfEmptyOperator = <C extends SourceLike>(
       },
       next: T,
     ) {
-      this.assertState();
+      assertState(this);
 
       this.isEmpty = false;
       delegateLiftable(this).notify(next);

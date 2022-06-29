@@ -18,6 +18,7 @@
 
 ### Functions
 
+- [assertState](source.md#assertstate)
 - [createBufferOperator](source.md#createbufferoperator)
 - [createCatchErrorOperator](source.md#createcatcherroroperator)
 - [createDecodeWithCharsetOperator](source.md#createdecodewithcharsetoperator)
@@ -45,6 +46,28 @@
 - [sourceFrom](source.md#sourcefrom)
 
 ## Functions
+
+### assertState
+
+▸ **assertState**<`C`\>(`sink`): `void`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `sink` | [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `unknown`\> |
+
+#### Returns
+
+`void`
+
+___
 
 ### createBufferOperator
 

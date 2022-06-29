@@ -5,7 +5,7 @@ import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer } from "../observer";
 import { none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
-import { sourceFrom } from "../source";
+import { assertState, sourceFrom } from "../source";
 import { defer } from "./defer";
 import { isEnumerable } from "./observable";
 
@@ -45,7 +45,7 @@ class LatestObserver extends AbstractDelegatingObserver<
   }
 
   notify(next: unknown) {
-    this.assertState();
+    assertState(this);
 
     const { ctx } = this;
     this.latest = next;

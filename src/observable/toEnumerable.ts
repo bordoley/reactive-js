@@ -17,7 +17,7 @@ import {
   inContinuation,
   runContinuation,
 } from "../scheduler";
-import { sourceFrom } from "../source";
+import { assertState, sourceFrom } from "../source";
 
 class EnumeratorScheduler<T>
   extends AbstractEnumerator<T>
@@ -79,7 +79,7 @@ class EnumeratorObserver<T> extends Observer<T> {
   }
 
   notify(next: T) {
-    this.assertState();
+    assertState(this);
 
     this.enumerator.current = next;
   }

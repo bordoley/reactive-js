@@ -13,7 +13,7 @@ import { isEmpty, length, pipe, raise } from "./functions";
 import { delegate } from "./liftable";
 import { Option, isNone, none } from "./option";
 import { SchedulerLike, __yield, inContinuation, schedule } from "./scheduler";
-import { SinkLike } from "./source";
+import { SinkLike, assertState } from "./source";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (length(dispatcher.nextQueue) === 1) {
@@ -96,7 +96,7 @@ export class Observer<T>
   assertState(this: Observer<T>): void {}
 
   notify(_: T): void {
-    this.assertState();
+    assertState(this);
   }
 }
 if (__DEV__) {

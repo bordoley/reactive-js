@@ -3,6 +3,7 @@ import { Function2, isEmpty, length, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
 import { Option } from "../option";
+import { assertState } from "../source";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
@@ -33,7 +34,7 @@ class ZipWithLatestFromObserver<TA, TB, T> extends AbstractDelegatingObserver<
   }
 
   notify(next: TA) {
-    this.assertState();
+    assertState(this);
     this.queue.push(next);
 
     notifyDelegate(this);
