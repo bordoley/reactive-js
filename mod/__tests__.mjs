@@ -304,7 +304,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
         __observe(runLooper);
         return (_a = __observe(stream)) !== null && _a !== void 0 ? _a : -1;
     });
-    pipe(obs, toRunnable$2(), toArray(), console.log);
+    pipe(obs, toRunnable$2(), toArray(), expectArrayEquals([-1, 0, 1, 2, 3]));
 }), test("createActionReducer", () => {
     const scheduler = createVirtualTimeScheduler();
     const actionReducerStream = pipe(createActionReducer(sum, returns(0)), stream(scheduler));

@@ -17,7 +17,7 @@ import {
   onDisposed,
   onError,
 } from "./disposable";
-import { __DEV__ } from "./env";
+import { MAX_SAFE_INTEGER, __DEV__ } from "./env";
 import {
   Equality,
   Factory,
@@ -197,10 +197,7 @@ export const createBufferOperator = <C extends SourceLike>(
       readonly maxBufferSize?: number;
     } = {},
   ): ContainerOperator<C, T, readonly T[]> => {
-    const maxBufferSize = max(
-      options.maxBufferSize ?? Number.MAX_SAFE_INTEGER,
-      1,
-    );
+    const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
 
     return pipe(
       (delegate: LiftableStateOf<C, readonly T[]>) =>

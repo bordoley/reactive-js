@@ -1,6 +1,7 @@
 import { add, dispose, isDisposed } from "../disposable";
 import { AbstractEnumerator, hasCurrent, reset } from "../enumerator";
-import { max, pipe } from "../functions";
+import { MAX_SAFE_INTEGER } from "../env";
+import { pipe } from "../functions";
 import { isSome, none } from "../option";
 import {
   SchedulerContinuationLike,
@@ -8,7 +9,7 @@ import {
   VirtualTimeSchedulerLike,
 } from "../scheduler";
 import { QueueLike, createPriorityQueue } from "./queue";
-import { now, runContinuation } from "./scheduler";
+import { getDelay, now, runContinuation } from "./scheduler";
 
 type VirtualTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -36,9 +37,7 @@ class VirtualTimeSchedulerImpl
   private readonly taskQueue: QueueLike<VirtualTask> =
     createPriorityQueue(comparator);
 
-  constructor(
-    private readonly maxMicroTaskTicks: number = Number.MAX_SAFE_INTEGER,
-  ) {
+  constructor(private readonly maxMicroTaskTicks: number = MAX_SAFE_INTEGER) {
     super();
   }
 
@@ -86,9 +85,9 @@ class VirtualTimeSchedulerImpl
 
   schedule(
     continuation: SchedulerContinuationLike,
-    options: { readonly delay?: number } = {},
+    options?: { readonly delay?: number },
   ) {
-    const { delay = max(options.delay ?? 0, 0) } = options;
+    const delay = getDelay(options);
 
     pipe(this, add(continuation, true));
 
@@ -112,6 +111,6 @@ class VirtualTimeSchedulerImpl
 export const createVirtualTimeScheduler = (
   options: { readonly maxMicroTaskTicks?: number } = {},
 ): VirtualTimeSchedulerLike => {
-  const { maxMicroTaskTicks = Number.MAX_SAFE_INTEGER } = options;
+  const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
   return new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
 };

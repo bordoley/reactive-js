@@ -50,6 +50,7 @@
 - [concatMap](container.md#concatmap)
 - [concatWith](container.md#concatwith)
 - [contains](container.md#contains)
+- [createFromArray](container.md#createfromarray)
 - [empty](container.md#empty)
 - [encodeUtf8](container.md#encodeutf8)
 - [endWith](container.md#endwith)
@@ -101,7 +102,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | `C` |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
 | `T` | `T` |
 | `O` | extends [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md) = [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md) |
 
@@ -126,7 +127,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | `C` |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |
 | `O` | `Record`<`string`, `never`\> |
@@ -151,10 +152,10 @@ ___
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `C` |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
+| `T` | `T` |
 
 #### Parameters
 
@@ -175,10 +176,10 @@ ___
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `C` |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
+| `T` | `T` |
 
 #### Parameters
 
@@ -195,6 +196,47 @@ ___
 
 ___
 
+### createFromArray
+
+▸ **createFromArray**<`C`, `O`\>(`factory`): <T_1\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<readonly `T_1`[], [`ContainerOf`](container.md#containerof)<`C`, `T_1`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
+| `O` | extends [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md) = [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | <T\>(`values`: readonly `T`[], `startIndex`: `number`, `endIndex`: `number`, `options?`: `Partial`<`O`\>) => [`ContainerOf`](container.md#containerof)<`C`, `T`\> |
+
+#### Returns
+
+`fn`
+
+▸ <`T_1`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T_1`[], [`ContainerOf`](container.md#containerof)<`C`, `T_1`\>\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T_1` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Partial`<`O`\> |
+
+##### Returns
+
+[`Function1`](functions.md#function1)<readonly `T_1`[], [`ContainerOf`](container.md#containerof)<`C`, `T_1`\>\>
+
+___
+
 ### empty
 
 ▸ **empty**<`C`, `T`, `O`\>(`__namedParameters`, `options?`): [`ContainerOf`](container.md#containerof)<`C`, `T`\>
@@ -203,7 +245,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | `C` |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
 | `T` | `T` |
 | `O` | extends [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md) = [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md) |
 
@@ -226,9 +268,9 @@ ___
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `C` |
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
 
 #### Parameters
 
@@ -248,10 +290,10 @@ ___
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `C` |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
+| `T` | `T` |
 
 #### Parameters
 
@@ -275,7 +317,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | `C` |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
 | `T` | `T` |
 | `O` | extends [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md) = [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md) |
 
@@ -300,7 +342,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | `C` |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
 | `T` | `T` |
 | `O` | extends [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md) = [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md) |
 
@@ -325,7 +367,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | `C` |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |
 | `OConcatAll` | extends `Record`<`string`, `never`\> = `Record`<`string`, `never`\> |
@@ -353,10 +395,10 @@ ___
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `C` |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
+| `T` | `T` |
 
 #### Parameters
 
@@ -376,11 +418,11 @@ ___
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `C` |
-| `TA` |
-| `TB` |
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
 
 #### Parameters
 
@@ -401,11 +443,11 @@ ___
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `C` |
-| `TA` |
-| `TB` |
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
 
 #### Parameters
 
@@ -426,10 +468,10 @@ ___
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `C` |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
+| `T` | `T` |
 
 #### Parameters
 
@@ -450,10 +492,10 @@ ___
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `C` |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
+| `T` | `T` |
 
 #### Parameters
 
@@ -477,7 +519,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | `C` |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
 | `T` | `T` |
 | `O` | extends [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md) = [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md) |
 
@@ -500,11 +542,11 @@ ___
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `C` |
-| `TA` |
-| `TB` |
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
 
 #### Parameters
 

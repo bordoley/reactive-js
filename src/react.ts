@@ -29,15 +29,7 @@ import {
   isDisposed,
   onError,
 } from "./disposable";
-import {
-  Factory,
-  compose,
-  ignore,
-  max,
-  pipe,
-  pipeLazy,
-  returns,
-} from "./functions";
+import { Factory, compose, ignore, pipe, pipeLazy, returns } from "./functions";
 import {
   ObservableLike,
   SubjectLike,
@@ -52,6 +44,7 @@ import {
   SchedulerContinuationLike,
   SchedulerImplementationLike,
   SchedulerLike,
+  getDelay,
   inContinuation,
   runContinuation,
   toSchedulerWithPriority,
@@ -151,7 +144,9 @@ class ReactPriorityScheduler
       delay?: number;
     },
   ) {
-    const { delay = max(options.delay ?? 0, 0), priority } = options;
+    const delay = getDelay(options);
+
+    const { priority } = options;
 
     pipe(this, add(continuation, true));
 

@@ -15,6 +15,7 @@ import {
   TakeLast,
   TakeWhile,
   Zip,
+  createFromArray,
 } from "./container";
 import { dispose, isDisposed } from "./disposable";
 import { EnumerableLike, ToEnumerable, createEnumerable } from "./enumerable";
@@ -29,8 +30,6 @@ import {
   alwaysTrue,
   callWith,
   length,
-  max,
-  min,
   pipe,
   strictEquality,
 } from "./functions";
@@ -118,23 +117,16 @@ const _fromArray = <T>(
     ? notify(arr[index], () => _fromArray(arr, index + 1, endIndex))
     : done();
 
-export const fromArray =
-  <T>(
-    options: {
-      readonly startIndex?: number;
-      readonly endIndex?: number;
-    } = {},
-  ): Function1<readonly T[], Sequence<T>> =>
-  values => {
-    const valuesLength = length(values);
-    const startIndex = min(options.startIndex ?? 0, valuesLength);
-    const endIndex = max(
-      min(options.endIndex ?? valuesLength, valuesLength),
-      0,
-    );
-
-    return castToSequence(() => _fromArray(values, startIndex, endIndex));
-  };
+export const fromArray = createFromArray<
+  Sequence<unknown>,
+  {
+    readonly delay: number;
+    readonly startIndex: number;
+    readonly endIndex: number;
+  }
+>(<T>(values: readonly T[], startIndex: number, endIndex: number) =>
+  castToSequence(() => _fromArray(values, startIndex, endIndex)),
+);
 
 export const fromArrayT: FromArray<Sequence<unknown>> = {
   fromArray,

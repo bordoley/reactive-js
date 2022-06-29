@@ -288,9 +288,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Object` |
-| `options.endIndex?` | `number` |
-| `options.startIndex?` | `number` |
+| `options?` | `Partial`<{ `delay`: `number` ; `endIndex`: `number` ; `startIndex`: `number`  }\> |
 
 #### Returns
 

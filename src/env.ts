@@ -5,3 +5,5 @@ export const __DEV__ =
 
 declare const Deno: any;
 export const __DENO__ = typeof Deno === "object";
+
+export const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER;

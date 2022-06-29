@@ -7,7 +7,7 @@ import { none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
 import { assertState, sourceFrom } from "../source";
 import { defer } from "./defer";
-import { isEnumerable } from "./observable";
+import { isEnumerable, tagEnumerable } from "./observable";
 
 type LatestCtx = {
   completedCount: number;
@@ -78,6 +78,8 @@ export const latest = (
   observables: readonly ObservableLike<any>[],
   mode: LatestMode,
 ): ObservableLike<readonly unknown[]> => {
+  const isEnumerableTag = pipe(observables, everySatisfy(isEnumerable));
+
   const factory = () => (delegate: Observer<readonly unknown[]>) => {
     const observers: LatestObserver[] = [];
     const ctx = {
@@ -98,13 +100,7 @@ export const latest = (
     }
   };
 
-  const observable = defer(factory);
-  (observable as any).isEnumerable = pipe(
-    observables,
-    everySatisfy(isEnumerable),
-  );
-
-  return observable;
+  return pipe(defer(factory), tagEnumerable(isEnumerableTag));
 };
 
 export function combineLatest<TA, TB>(

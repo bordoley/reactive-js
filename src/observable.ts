@@ -35,7 +35,6 @@ import {
   Reducer,
   Updater,
   ignore,
-  max,
   pipe,
   pipeLazy,
 } from "./functions";
@@ -45,6 +44,7 @@ import { defer } from "./observable/defer";
 import { fromArrayT } from "./observable/fromArray";
 import { lift, liftSynchronousT } from "./observable/lift";
 import { mapT } from "./observable/map";
+import { tagEnumerable } from "./observable/observable";
 import { onNotify } from "./observable/onNotify";
 import { subscribe } from "./observable/subscribe";
 import { switchAll, switchAllT } from "./observable/switchAll";
@@ -63,6 +63,7 @@ import {
   VirtualTimeSchedulerLike,
   __yield,
   createVirtualTimeScheduler,
+  hasDelay,
 } from "./scheduler";
 import {
   SourceLike,
@@ -299,7 +300,7 @@ export const fromPromise = <T>(
 export const generate = <T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
-  options: { readonly delay?: number } = {},
+  options?: { readonly delay?: number },
 ): ObservableLike<T> => {
   const factory = () => {
     let acc = initialValue();
@@ -313,9 +314,7 @@ export const generate = <T>(
     };
   };
 
-  const observable = defer(factory, options);
-  (observable as any).isEnumerable = max(options.delay ?? 0, 0) === 0;
-  return observable;
+  return pipe(defer(factory, options), tagEnumerable(!hasDelay(options)));
 };
 
 export const generateT: Generate<ObservableLike<unknown>> = {

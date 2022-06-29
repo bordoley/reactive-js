@@ -9,6 +9,7 @@ import {
   isDisposed,
   onComplete,
 } from "../disposable";
+import { MAX_SAFE_INTEGER } from "../env";
 import { Function1, isEmpty, length, max, pipe } from "../functions";
 import { delegate, delegate as observerDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
@@ -75,18 +76,15 @@ export function buffer<T>(
     readonly maxBufferSize?: number;
   } = {},
 ): ObservableOperator<T, readonly T[]> {
-  const delay = options.duration ?? Number.MAX_SAFE_INTEGER;
+  const delay = options.duration ?? MAX_SAFE_INTEGER;
   const durationFunction =
-    delay === Number.MAX_SAFE_INTEGER
+    delay === MAX_SAFE_INTEGER
       ? never
       : typeof delay === "number"
       ? (_: T) => fromValue(fromArrayT, { delay })(none)
       : delay;
 
-  const maxBufferSize = max(
-    options.maxBufferSize ?? Number.MAX_SAFE_INTEGER,
-    1,
-  );
+  const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
 
   const operator = (delegate: Observer<readonly T[]>) => {
     const durationSubscription = createSerialDisposable();
@@ -112,7 +110,7 @@ export function buffer<T>(
     );
   };
 
-  return lift(operator, delay === Number.MAX_SAFE_INTEGER);
+  return lift(operator, delay === MAX_SAFE_INTEGER);
 }
 
 export const bufferT: Buffer<ObservableLike<unknown>> = {

@@ -1,5 +1,5 @@
 import { isDisposed } from "../disposable";
-import { Function1 } from "../functions";
+import { Function1, floor, max } from "../functions";
 import {
   PrioritySchedulerLike,
   SchedulerContinuationLike,
@@ -28,3 +28,9 @@ export const now = (scheduler: SchedulerLike): number => scheduler.now;
 
 export const shouldYield = (scheduler: SchedulerLike): boolean =>
   scheduler.shouldYield;
+
+export const getDelay = (options: { delay?: number } = {}): number =>
+  floor(max(options.delay ?? 0, 0));
+
+export const hasDelay = (options: { delay?: number } = {}): boolean =>
+  getDelay(options) > 0;

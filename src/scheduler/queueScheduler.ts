@@ -15,6 +15,7 @@ import {
 } from "../scheduler";
 import { QueueLike, createPriorityQueue } from "./queue";
 import {
+  getDelay,
   inContinuation,
   runContinuation,
   now as schedulerNow,
@@ -196,16 +197,16 @@ export abstract class AbstractQueueScheduler<
       continuation: SchedulerContinuationLike;
       dueTime: number;
     },
-    options: Record<string, unknown>,
+    options?: Record<string, unknown>,
   ): TTask;
 
   schedule(
     continuation: SchedulerContinuationLike,
-    options: {
+    options?: {
       readonly delay?: number;
-    } = {},
+    },
   ) {
-    const { delay = max(options.delay ?? 0, 0) } = options;
+    const delay = getDelay(options);
     pipe(this, add(continuation, true));
 
     if (!isDisposed(continuation)) {

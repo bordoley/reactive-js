@@ -6,7 +6,7 @@ import {
   hasCurrent,
   reset,
 } from "../enumerator";
-import { Function1, max, pipe } from "../functions";
+import { Function1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
 import { isNone } from "../option";
@@ -14,6 +14,7 @@ import {
   SchedulerContinuationLike,
   SchedulerImplementationLike,
   SchedulerLike,
+  getDelay,
   inContinuation,
   runContinuation,
 } from "../scheduler";
@@ -51,9 +52,9 @@ class EnumeratorScheduler<T>
 
   schedule(
     continuation: SchedulerContinuationLike,
-    options: { readonly delay?: number } = {},
+    options?: { readonly delay?: number },
   ): void {
-    const { delay = max(options.delay ?? 0, 0) } = options;
+    const delay = getDelay(options);
 
     pipe(this, add(continuation, true));
 

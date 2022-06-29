@@ -40,7 +40,7 @@ class PausableScheduler extends AbstractQueueScheduler {
       continuation: SchedulerContinuationLike;
       dueTime: number;
     },
-    _: Record<string, unknown>,
+    _?: Record<string, unknown>,
   ): QueueTask {
     return task;
   }

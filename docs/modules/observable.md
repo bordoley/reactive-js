@@ -1909,10 +1909,7 @@ An optional `startIndex` in the array maybe specified,
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options?` | `Object` | Config object that specifies an optional `delay` between emitted items and an optional `startIndex` into the array. |
-| `options.delay?` | `number` | - |
-| `options.endIndex?` | `number` | - |
-| `options.startIndex?` | `number` | - |
+| `options?` | `Partial`<{ `delay`: `number` ; `endIndex`: `number` ; `startIndex`: `number`  }\> | Config object that specifies an optional `delay` between emitted items and an optional `startIndex` into the array. |
 
 #### Returns
 

@@ -1,6 +1,7 @@
 import { fromValue } from "../container";
-import { Factory, Updater, max, pipe } from "../functions";
+import { Factory, Updater, pipe } from "../functions";
 import { fromArrayT, scan, scanAsync } from "../observable";
+import { getDelay } from "../scheduler";
 import { AsyncEnumerableLike } from "../streamable";
 import { createLiftedStreamable } from "./streamable";
 
@@ -11,7 +12,7 @@ const generateScanner =
 
 const asyncGeneratorScanner = <T>(
   generator: Updater<T>,
-  options: { readonly delay?: number },
+  options?: { readonly delay?: number },
 ) => {
   const fromValueWithDelay = fromValue(fromArrayT, options);
   return (acc: T, _: unknown) => pipe(acc, generator, fromValueWithDelay);
@@ -27,9 +28,9 @@ const asyncGeneratorScanner = <T>(
 export const generate = <T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
-  options: { readonly delay?: number } = {},
+  options?: { readonly delay?: number },
 ): AsyncEnumerableLike<T> => {
-  const { delay = max(options.delay ?? 0, 0) } = options;
+  const delay = getDelay(options);
 
   return createLiftedStreamable(
     delay > 0

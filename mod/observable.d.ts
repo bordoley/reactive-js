@@ -299,11 +299,11 @@ declare const createSubject: <T>(options?: {
  * @param options Config object that specifies an optional `delay` between emitted items and
  * an optional `startIndex` into the array.
  */
-declare const fromArray: <T>(options?: {
-    readonly delay?: number;
-    readonly startIndex?: number;
-    readonly endIndex?: number;
-}) => Function1<readonly T[], ObservableLike<T>>;
+declare const fromArray: <T>(options?: Partial<{
+    readonly delay: number;
+    readonly startIndex: number;
+    readonly endIndex: number;
+}>) => Function1<readonly T[], ObservableLike<T>>;
 declare const fromArrayT: FromArray<ObservableLike<unknown>, {
     readonly delay: number;
     readonly startIndex: number;

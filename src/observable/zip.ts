@@ -20,10 +20,10 @@ import { delegate } from "../liftable";
 import { ObservableLike } from "../observable";
 import { AbstractDelegatingObserver, Observer } from "../observer";
 import { everySatisfy, map } from "../readonlyArray";
-import { assertState, sinkInto, sourceFrom } from "../source";
+import { assertState, sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
 import { fromEnumerator } from "./fromEnumerable";
-import { isEnumerable } from "./observable";
+import { isEnumerable, tagEnumerable } from "./observable";
 import { enumerateObs } from "./toEnumerable";
 import { using } from "./using";
 
@@ -104,62 +104,55 @@ class ZipObserver extends AbstractDelegatingObserver<
 const _zip = (
   ...observables: readonly ObservableLike<unknown>[]
 ): ObservableLike<readonly unknown[]> => {
-  const isEnumerableOperator = pipe(observables, everySatisfy(isEnumerable));
+  const isEnumerableTag = pipe(observables, everySatisfy(isEnumerable));
 
-  const zipObservable = createObservable(observer => {
-    const count = length(observables);
+  return isEnumerableTag
+    ? pipe(
+        using(
+          pipeLazy(observables, map(enumerateObs)),
+          (...enumerators: readonly Enumerator<any>[]) =>
+            pipe(zipEnumerators(...enumerators), returns, fromEnumerator()),
+        ),
+        tagEnumerable(true),
+      )
+    : createObservable(observer => {
+        const count = length(observables);
+        const enumerators: Enumerator<unknown>[] = [];
+        for (let index = 0; index < count; index++) {
+          const next = observables[index];
 
-    if (isEnumerableOperator) {
-      const zipped = using(
-        pipeLazy(observables, map(enumerateObs)),
-        (...enumerators: readonly Enumerator<any>[]) =>
-          pipe(zipEnumerators(...enumerators), returns, fromEnumerator()),
-      );
-      (zipped as any).isEnumerable = true;
+          if (isEnumerable(next)) {
+            const enumerator = enumerateObs(next);
 
-      pipe(zipped, sinkInto(observer));
-    } else {
-      const enumerators: Enumerator<unknown>[] = [];
-      for (let index = 0; index < count; index++) {
-        const next = observables[index];
+            move(enumerator);
+            enumerators.push(enumerator);
+          } else {
+            const enumerator = pipe(
+              new ZipObserverEnumerator(),
+              onDisposed(() => {
+                enumerator.buffer.length = 0;
+              }),
+              addTo(observer),
+            );
 
-        if (isEnumerable(next)) {
-          const enumerator = enumerateObs(next);
+            const innerObserver = pipe(
+              new ZipObserver(observer, enumerators, enumerator),
+              onComplete(() => {
+                if (
+                  isDisposed(enumerator) ||
+                  (isEmpty(enumerator.buffer) && !hasCurrent(enumerator))
+                ) {
+                  pipe(observer, dispose());
+                }
+              }),
+              addTo(observer),
+              sourceFrom(next),
+            );
 
-          move(enumerator);
-          enumerators.push(enumerator);
-        } else {
-          const enumerator = pipe(
-            new ZipObserverEnumerator(),
-            onDisposed(() => {
-              enumerator.buffer.length = 0;
-            }),
-            addTo(observer),
-          );
-
-          const innerObserver = pipe(
-            new ZipObserver(observer, enumerators, enumerator),
-            onComplete(() => {
-              if (
-                isDisposed(enumerator) ||
-                (isEmpty(enumerator.buffer) && !hasCurrent(enumerator))
-              ) {
-                pipe(observer, dispose());
-              }
-            }),
-            addTo(observer),
-            sourceFrom(next),
-          );
-
-          enumerators.push(innerObserver.enumerator);
+            enumerators.push(innerObserver.enumerator);
+          }
         }
-      }
-    }
-  });
-
-  (zipObservable as any).isEnumerable = isEnumerableOperator;
-
-  return zipObservable;
+      });
 };
 
 /**

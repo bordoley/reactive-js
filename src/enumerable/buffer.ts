@@ -8,6 +8,7 @@ import {
   hasCurrent,
   reset,
 } from "../enumerator";
+import { MAX_SAFE_INTEGER } from "../env";
 import { length, max, pipe } from "../functions";
 import { lift } from "./lift";
 
@@ -48,10 +49,7 @@ export const buffer = <T>(
     readonly maxBufferSize?: number;
   } = {},
 ): EnumerableOperator<T, readonly T[]> => {
-  const maxBufferSize = max(
-    options.maxBufferSize ?? Number.MAX_SAFE_INTEGER,
-    1,
-  );
+  const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
 
   const operator = (delegate: Enumerator<T>) =>
     pipe(new BufferEnumerator(delegate, maxBufferSize), add(delegate));
