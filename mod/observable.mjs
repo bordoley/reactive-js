@@ -5,9 +5,9 @@ import { dispose, isDisposed, onDisposed, add, addTo, disposed, onComplete, crea
 import { move, current, AbstractEnumerator, reset, hasCurrent, zip as zip$1, forEach } from './enumerator.mjs';
 import { pipe, arrayEquality, ignore, raise, pipeLazy, compose, returns } from './functions.mjs';
 import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, notifySink, createUsing, notify, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
+import { scheduler, Observer, createDelegatingObserver } from './observer.mjs';
 import { schedule, __yield, inContinuation, runContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { contraVariant } from './liftable.mjs';
-import { Observer, createDelegatingObserver } from './observer.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { createRunnable } from './runnable.mjs';
 import { map as map$1, everySatisfy as everySatisfy$1 } from './readonlyArray.mjs';
@@ -88,7 +88,7 @@ const createSubject = (options = {}) => {
 const defer = (factory, options) => createObservable(observer => {
     const sideEffect = factory();
     const callback = () => sideEffect(observer);
-    pipe(observer.scheduler, schedule(callback, options), addTo(observer));
+    pipe(scheduler(observer), schedule(callback, options), addTo(observer));
 });
 
 const deferEmpty = createObservable(dispose());
@@ -368,7 +368,7 @@ class ObservableContext {
         else {
             pipe(effect.subscription, dispose());
             const { observer, runComputation } = this;
-            const { scheduler } = observer;
+            const scheduler$1 = scheduler(observer);
             const subscription = pipe(observable, onNotify(next => {
                 effect.value = next;
                 effect.hasValue = true;
@@ -378,10 +378,10 @@ class ObservableContext {
                 else {
                     let { scheduledComputationSubscription } = this;
                     this.scheduledComputationSubscription = isDisposed(scheduledComputationSubscription)
-                        ? pipe(scheduler, schedule(runComputation), addTo(observer))
+                        ? pipe(scheduler$1, schedule(runComputation), addTo(observer))
                         : scheduledComputationSubscription;
                 }
-            }), subscribe(scheduler), addTo(observer), onComplete(this.cleanup));
+            }), subscribe(scheduler$1), addTo(observer), onComplete(this.cleanup));
             effect.observable = observable;
             effect.subscription = subscription;
             effect.value = none;
@@ -470,9 +470,9 @@ const deferSideEffect = (f, ...args) => defer(() => observer => {
 });
 function __do(f, ...args) {
     const ctx = assertCurrentContext();
-    const scheduler = ctx.observer.scheduler;
+    const scheduler$1 = scheduler(ctx.observer);
     const observable = ctx.memo(deferSideEffect, f, ...args);
-    const subscribeOnScheduler = ctx.memo(subscribe, scheduler);
+    const subscribeOnScheduler = ctx.memo(subscribe, scheduler$1);
     ctx.using(subscribeOnScheduler, observable);
 }
 function __using(f, ...args) {
@@ -481,7 +481,7 @@ function __using(f, ...args) {
 }
 function __currentScheduler() {
     const ctx = assertCurrentContext();
-    return ctx.observer.scheduler;
+    return scheduler(ctx.observer);
 }
 
 function onDispose() {
@@ -734,7 +734,7 @@ const subscribeNext = (observer) => {
         const nextObs = observer.queue.shift();
         if (isSome(nextObs)) {
             observer.activeCount++;
-            pipe(nextObs, onNotify(notifySink(observer.delegate)), subscribe(observer.scheduler), addTo(observer.delegate), onComplete(observer.onDispose));
+            pipe(nextObs, onNotify(notifySink(observer.delegate)), subscribe(scheduler(observer)), addTo(observer.delegate), onComplete(observer.onDispose));
         }
         else if (isDisposed(observer)) {
             pipe(observer.delegate, dispose());
@@ -860,7 +860,7 @@ function retry(predicate) {
 }
 
 const setupDurationSubscription$1 = (observer, next) => {
-    observer.durationSubscription.inner = pipe(observer.durationFunction(next), onNotify(observer.onNotify), subscribe(observer.scheduler));
+    observer.durationSubscription.inner = pipe(observer.durationFunction(next), onNotify(observer.onNotify), subscribe(scheduler(observer)));
 };
 class ThrottleObserver extends Observer {
     constructor(delegate, durationFunction, mode, durationSubscription) {
@@ -915,7 +915,7 @@ const _timeoutError = Symbol("@reactive-js/core/lib/observable/timeoutError");
 /** Symbol thrown when the timeout operator times out */
 const timeoutError = _timeoutError;
 const setupDurationSubscription = (observer) => {
-    observer.durationSubscription.inner = pipe(observer.duration, subscribe(observer.scheduler));
+    observer.durationSubscription.inner = pipe(observer.duration, subscribe(scheduler(observer)));
 };
 class TimeoutObserver extends Observer {
     constructor(delegate, duration, durationSubscription) {
@@ -973,7 +973,7 @@ const withLatestFrom = (other, selector) => {
         pipe(other, onNotify(next => {
             observer.hasLatest = true;
             observer.otherLatest = next;
-        }), subscribe(observer.scheduler), addTo(observer), onComplete(() => {
+        }), subscribe(scheduler(observer)), addTo(observer), onComplete(() => {
             if (!observer.hasLatest) {
                 pipe(observer, dispose());
             }

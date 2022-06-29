@@ -4,6 +4,7 @@ import { dispatchTo } from "../dispatcher";
 import { DisposableValueLike, add, addTo, dispose } from "../disposable";
 import { Factory, pipe } from "../functions";
 import { createObservable, onNotify, subscribe } from "../observable";
+import { scheduler } from "../observer";
 import { FlowableLike, createLiftedStreamable } from "../streamable";
 import { createDisposableNodeStream } from "./nodeStream";
 
@@ -30,7 +31,7 @@ export const createReadableIOSource = (
               break;
           }
         }),
-        subscribe(observer.scheduler),
+        subscribe(scheduler(observer)),
         addTo(observer),
       );
 

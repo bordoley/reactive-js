@@ -84,5 +84,6 @@ class DelegatingObserver extends Observer {
     }
 }
 const createDelegatingObserver = (delegate) => new DelegatingObserver(delegate);
+const scheduler = (observer) => observer.scheduler;
 
-export { Observer, createDelegatingObserver };
+export { Observer, createDelegatingObserver, scheduler };

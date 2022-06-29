@@ -8,7 +8,7 @@ import {
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer } from "../observer";
+import { Observer, scheduler } from "../observer";
 import { isSome } from "../option";
 import { notifySink } from "../source";
 import { lift } from "./lift";
@@ -25,7 +25,7 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
       pipe(
         nextObs,
         onNotify(notifySink(observer.delegate)),
-        subscribe(observer.scheduler),
+        subscribe(scheduler(observer)),
         addTo(observer.delegate),
         onComplete(observer.onDispose),
       );

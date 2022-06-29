@@ -20,6 +20,7 @@ import {
   takeFirst,
   zipWithLatestFrom,
 } from "../observable";
+import { scheduler } from "../observer";
 import { none } from "../option";
 import { sinkInto } from "../source";
 import {
@@ -50,7 +51,7 @@ const consumeImpl =
     createObservable(observer => {
       const enumerator = pipe(
         enumerable,
-        stream(observer.scheduler),
+        stream(scheduler(observer)),
         addTo(observer),
       );
       const accFeedback = pipe(createSubject<TAcc>(), addTo(observer));

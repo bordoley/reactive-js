@@ -11,6 +11,7 @@
 ### Functions
 
 - [createDelegatingObserver](observer.md#createdelegatingobserver)
+- [scheduler](observer.md#scheduler)
 
 ## Functions
 
@@ -33,3 +34,25 @@
 #### Returns
 
 [`Observer`](../classes/observer.Observer.md)<`T`\>
+
+___
+
+### scheduler
+
+▸ **scheduler**<`T`\>(`observer`): [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observer` | [`Observer`](../classes/observer.Observer.md)<`T`\> |
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)

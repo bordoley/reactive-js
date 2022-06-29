@@ -1,7 +1,7 @@
 import { addTo } from "../disposable";
 import { Factory, SideEffect1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
-import { Observer } from "../observer";
+import { Observer, scheduler } from "../observer";
 import { schedule } from "../scheduler";
 import { createObservable } from "./createObservable";
 
@@ -12,5 +12,5 @@ export const defer = <T>(
   createObservable(observer => {
     const sideEffect = factory();
     const callback = () => sideEffect(observer);
-    pipe(observer.scheduler, schedule(callback, options), addTo(observer));
+    pipe(scheduler(observer), schedule(callback, options), addTo(observer));
   });

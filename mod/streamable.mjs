@@ -6,6 +6,7 @@ import { enumerate, fromIterable as fromIterable$1 } from './enumerable.mjs';
 import { move, hasCurrent, current } from './enumerator.mjs';
 import { pipe, compose, flip, returns, updateReducer, increment, identity as identity$1 } from './functions.mjs';
 import { AbstractDisposableObservable, observerCount, replay, createSubject, publish, reduce, onNotify, keepT, concatT, fromArrayT, scanAsync, scan, createObservable, map, onSubscribe, zipWithLatestFrom, takeFirst, switchAll, mergeT, distinctUntilChanged, subscribe, subscribeOn, fromDisposable, takeUntil, mapT, concatAllT, withLatestFrom, using, never, takeWhile, merge, __currentScheduler, __using, __memo } from './observable.mjs';
+import { scheduler } from './observer.mjs';
 import { none, isSome } from './option.mjs';
 import { createPausableScheduler } from './scheduler.mjs';
 import { sinkInto as sinkInto$1, notifySink, sourceFrom } from './source.mjs';
@@ -102,7 +103,7 @@ const consumeDone = (data) => ({
     data,
 });
 const consumeImpl = (consumer, initial) => enumerable => createObservable(observer => {
-    const enumerator = pipe(enumerable, stream(observer.scheduler), addTo(observer));
+    const enumerator = pipe(enumerable, stream(scheduler(observer)), addTo(observer));
     const accFeedback = pipe(createSubject(), addTo(observer));
     pipe(enumerator, consumer(accFeedback), onNotify(ev => {
         switch (ev.type) {
@@ -130,7 +131,7 @@ const consumeAsync = (consumer, initial) => consumeImpl(accObs => compose(zipWit
  */
 const createActionReducer = (reducer, initialState, options) => createLiftedStreamable(obs => createObservable(observer => {
     const acc = initialState();
-    return pipe(obs, scan(reducer, returns(acc)), concatWith(mergeT, fromValue(fromArrayT)(acc)), distinctUntilChanged(options), onNotify(notifySink(observer)), subscribe(observer.scheduler), bindTo(observer));
+    return pipe(obs, scan(reducer, returns(acc)), concatWith(mergeT, fromValue(fromArrayT)(acc)), distinctUntilChanged(options), onNotify(notifySink(observer)), subscribe(scheduler(observer)), bindTo(observer));
 }));
 /**
  * Returns a new `StateStoreLike` instance that stores state which can
@@ -148,8 +149,8 @@ const _empty = createLiftedStreamable(takeFirst({ count: 0 }));
  * a disposed `StreamLike` instance.
  */
 const empty = () => _empty;
-const flow = ({ scheduler, } = {}) => observable => createLiftedStreamable((modeObs) => createObservable(observer => {
-    const pausableScheduler = createPausableScheduler(scheduler !== null && scheduler !== void 0 ? scheduler : observer.scheduler);
+const flow = ({ scheduler: scheduler$1, } = {}) => observable => createLiftedStreamable((modeObs) => createObservable(observer => {
+    const pausableScheduler = createPausableScheduler(scheduler$1 !== null && scheduler$1 !== void 0 ? scheduler$1 : scheduler(observer));
     pipe(observer, sourceFrom(pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil))), add(pipe(modeObs, onNotify((mode) => {
         switch (mode) {
             case "pause":
@@ -159,7 +160,7 @@ const flow = ({ scheduler, } = {}) => observable => createLiftedStreamable((mode
                 pausableScheduler.resume();
                 break;
         }
-    }), subscribe(observer.scheduler), bindTo(pausableScheduler))), add(pausableScheduler));
+    }), subscribe(scheduler(observer)), bindTo(pausableScheduler))), add(pausableScheduler));
 }));
 /**
  * Returns an `AsyncEnumerableLike` from the provided array.
@@ -203,9 +204,8 @@ const _identity = {
  */
 const identity = () => _identity;
 const sinkInto = (dest) => (src) => createObservable(observer => {
-    const { scheduler } = observer;
-    const srcStream = src.stream(scheduler);
-    const destStream = dest.stream(scheduler);
+    const srcStream = pipe(src, stream(scheduler(observer)));
+    const destStream = pipe(dest, stream(scheduler(observer)));
     pipe(merge(pipe(srcStream, onNotify(dispatchTo(destStream)), ignoreElements(keepT), onSubscribe(() => destStream)), pipe(destStream, onNotify(dispatchTo(srcStream)), ignoreElements(keepT), onSubscribe(() => srcStream))), ignoreElements(keepT), sinkInto$1(observer));
 });
 const streamOnSchedulerFactory = (streamable, scheduler, replay) => pipe(streamable, stream(scheduler, { replay }));

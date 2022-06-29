@@ -13,7 +13,7 @@ import {
   ObservableOperator,
   ThrottleMode,
 } from "../observable";
-import { Observer } from "../observer";
+import { Observer, scheduler } from "../observer";
 import { Option, none } from "../option";
 import { sinkInto } from "../source";
 import { fromArrayT } from "./fromArray";
@@ -28,7 +28,7 @@ const setupDurationSubscription = <T>(
   observer.durationSubscription.inner = pipe(
     observer.durationFunction(next),
     onNotify(observer.onNotify),
-    subscribe(observer.scheduler),
+    subscribe(scheduler(observer)),
   );
 };
 
