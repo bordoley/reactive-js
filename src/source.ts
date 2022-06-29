@@ -32,6 +32,7 @@ import {
   length,
   max,
   negate,
+  newInstanceWith,
   pipe,
 } from "./functions";
 import {
@@ -202,7 +203,15 @@ export const createBufferOperator = <C extends SourceLike>(
     return pipe(
       (delegate: LiftableStateOf<C, readonly T[]>) =>
         pipe(
-          new BufferSink(delegate, maxBufferSize),
+          BufferSink,
+          newInstanceWith<
+            LiftableStateOf<C, readonly T[]>,
+            number,
+            DelegatingLiftableStateOf<C, T, readonly T[]> & {
+              buffer: T[];
+              readonly maxBufferSize: number;
+            }
+          >(delegate, maxBufferSize),
           addTo(delegate),
           onComplete(function onDispose(
             this: DelegatingLiftableStateOf<C, T, readonly T[]> & {
@@ -247,7 +256,11 @@ export const createCatchErrorOperator =
     return pipe(
       (delegate: LiftableStateOf<C, T>): LiftableStateOf<C, T> =>
         pipe(
-          new CatchErrorSink(delegate),
+          CatchErrorSink,
+          newInstanceWith<
+            LiftableStateOf<C, T>,
+            DelegatingLiftableStateOf<C, T, T>
+          >(delegate),
           addTo(delegate, true),
           onComplete(() => pipe(delegate, dispose())),
           onError(e => {
@@ -298,7 +311,8 @@ export const createDecodeWithCharsetOperator = <C extends SourceLike>(
       ): LiftableStateOf<C, ArrayBuffer> => {
         const textDecoder = new TextDecoder(charset, { fatal: true });
         return pipe(
-          new DecodeWithCharsetSink(delegate, textDecoder),
+          DecodeWithCharsetSink,
+          newInstanceWith(delegate, textDecoder),
           addTo(delegate),
           onComplete(() => {
             const data = textDecoder.decode();
@@ -384,7 +398,14 @@ const createSatisfyOperator = <C extends SourceLike>(
     pipe(
       (delegate: LiftableStateOf<C, boolean>): LiftableStateOf<C, T> =>
         pipe(
-          new SatisfySink(delegate, predicate),
+          SatisfySink,
+          newInstanceWith<
+            LiftableStateOf<C, boolean>,
+            Predicate<T>,
+            DelegatingLiftableStateOf<C, T, boolean> & {
+              readonly predicate: Predicate<T>;
+            }
+          >(delegate, predicate),
           addTo(delegate),
           onComplete(() => {
             if (!isDisposed(delegate)) {
@@ -556,7 +577,16 @@ export const createReduceOperator = <C extends SourceLike>(
   ): ContainerOperator<C, T, TAcc> =>
     pipe((delegate: LiftableStateOf<C, TAcc>): LiftableStateOf<C, T> => {
       const sink = pipe(
-        new ReduceSink(delegate, reducer, initialValue()),
+        ReduceSink,
+        newInstanceWith<
+          LiftableStateOf<C, TAcc>,
+          Reducer<T, TAcc>,
+          TAcc,
+          LiftableStateOf<C, T> & {
+            readonly reducer: Reducer<T, TAcc>;
+            acc: TAcc;
+          }
+        >(delegate, reducer, initialValue()),
         addTo(delegate),
         onComplete(() => {
           pipe(sink.acc, fromValue(m), sinkInto(delegate));
@@ -718,7 +748,15 @@ export const createTakeLastOperator = <C extends SourceLike>(
       delegate: LiftableStateOf<C, T>,
     ): LiftableStateOf<C, T> => {
       const sink = pipe(
-        new TakeLastSink(delegate, count),
+        TakeLastSink,
+        newInstanceWith<
+          LiftableStateOf<C, T>,
+          number,
+          LiftableStateOf<C, T> & {
+            readonly last: T[];
+            readonly maxCount: number;
+          }
+        >(delegate, count),
         addTo(delegate),
         onComplete(() => {
           pipe(sink.last, m.fromArray(), sinkInto(delegate));

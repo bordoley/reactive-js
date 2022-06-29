@@ -1,6 +1,6 @@
 import { addTo, onDisposed } from "../disposable";
 import { MAX_SAFE_INTEGER } from "../env";
-import { max, pipe } from "../functions";
+import { max, newInstanceWith, pipe } from "../functions";
 import { isSome } from "../option";
 import {
   PrioritySchedulerLike,
@@ -72,7 +72,8 @@ export const createPriorityScheduler = (
   hostScheduler: SchedulerLike,
 ): PrioritySchedulerLike => {
   const scheduler = pipe(
-    new PriorityScheduler(hostScheduler),
+    PriorityScheduler,
+    newInstanceWith(hostScheduler),
     addTo(hostScheduler, true),
     onDisposed(() => {
       scheduler.queue.clear();

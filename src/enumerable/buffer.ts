@@ -9,7 +9,7 @@ import {
   reset,
 } from "../enumerator";
 import { MAX_SAFE_INTEGER } from "../env";
-import { length, max, pipe } from "../functions";
+import { length, max, newInstanceWith, pipe } from "../functions";
 import { lift } from "./lift";
 
 class BufferEnumerator<T> extends AbstractDelegatingEnumerator<
@@ -52,7 +52,14 @@ export const buffer = <T>(
   const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
 
   const operator = (delegate: Enumerator<T>) =>
-    pipe(new BufferEnumerator(delegate, maxBufferSize), add(delegate));
+    pipe(
+      BufferEnumerator,
+      newInstanceWith<Enumerator<T>, number, BufferEnumerator<T>>(
+        delegate,
+        maxBufferSize,
+      ),
+      add(delegate),
+    );
 
   return lift(operator);
 };

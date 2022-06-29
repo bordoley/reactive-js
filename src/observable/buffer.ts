@@ -10,7 +10,14 @@ import {
   onComplete,
 } from "../disposable";
 import { MAX_SAFE_INTEGER } from "../env";
-import { Function1, isEmpty, length, max, pipe } from "../functions";
+import {
+  Function1,
+  isEmpty,
+  length,
+  max,
+  newInstanceWith,
+  pipe,
+} from "../functions";
 import { delegate, delegate as observerDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
@@ -89,12 +96,14 @@ export function buffer<T>(
   const operator = (delegate: Observer<readonly T[]>) => {
     const durationSubscription = createSerialDisposable();
     return pipe(
-      new BufferObserver(
-        delegate,
-        durationFunction,
-        maxBufferSize,
-        durationSubscription,
-      ),
+      BufferObserver,
+      newInstanceWith<
+        Observer<readonly T[]>,
+        Function1<T, ObservableLike<unknown>>,
+        number,
+        SerialDisposableLike,
+        BufferObserver<T>
+      >(delegate, durationFunction, maxBufferSize, durationSubscription),
       add(durationSubscription),
       addTo(delegate),
       onComplete(function onDispose(this: BufferObserver<void>) {

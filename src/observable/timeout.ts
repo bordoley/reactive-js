@@ -6,7 +6,7 @@ import {
   createSerialDisposable,
   dispose,
 } from "../disposable";
-import { pipe, returns } from "../functions";
+import { newInstanceWith, pipe, returns } from "../functions";
 import { delegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
@@ -80,7 +80,8 @@ export function timeout<T>(
   const operator = (delegate: Observer<T>) => {
     const durationSubscription = createSerialDisposable();
     const observer = pipe(
-      new TimeoutObserver(delegate, durationObs, durationSubscription),
+      TimeoutObserver,
+      newInstanceWith(delegate, durationObs, durationSubscription),
       bindTo(delegate),
       add(durationSubscription),
     );

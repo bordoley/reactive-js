@@ -1,4 +1,9 @@
-import { Function1, SideEffect1 } from "../functions";
+import {
+  Function1,
+  SideEffect1,
+  newInstanceWith,
+  pipeLazy,
+} from "../functions";
 import { RunnableLike } from "../runnable";
 import { RunnableSink } from "../runnableSink";
 import { run } from "./run";
@@ -14,6 +19,9 @@ class ForEachSink<T> extends RunnableSink<T> {
 export const forEach = <T>(
   f: SideEffect1<T>,
 ): Function1<RunnableLike<T>, void> => {
-  const createSink = () => new ForEachSink<T>(f);
+  const createSink = pipeLazy(
+    ForEachSink,
+    newInstanceWith<SideEffect1<T>, ForEachSink<T>>(f),
+  );
   return run<T, void>(createSink);
 };

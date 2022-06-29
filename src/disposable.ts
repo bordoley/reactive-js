@@ -2,6 +2,7 @@ import {
   Function1,
   SideEffect,
   SideEffect1,
+  newInstanceWith,
   pipe,
   pipeLazy,
 } from "./functions";
@@ -334,7 +335,11 @@ export const createDisposableValue = <T>(
   value: T,
   cleanup: SideEffect1<T>,
 ): DisposableValueLike<T> =>
-  pipe(new DisposableValueImpl(value), onDisposed(pipeLazy(value, cleanup)));
+  pipe(
+    DisposableValueImpl,
+    newInstanceWith<T, DisposableValueImpl<T>>(value),
+    onDisposed(pipeLazy(value, cleanup)),
+  );
 
 export const toAbortSignal = (disposable: DisposableLike): AbortSignal => {
   const abortController = new AbortController();

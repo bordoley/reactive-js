@@ -1,5 +1,11 @@
 import { add, dispose, isDisposed, onComplete } from "../disposable";
-import { Function2, isEmpty, length, pipe } from "../functions";
+import {
+  Function2,
+  isEmpty,
+  length,
+  newInstanceWith,
+  pipe,
+} from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
 import { Option } from "../option";
@@ -60,7 +66,12 @@ export const zipWithLatestFrom = <TA, TB, T>(
     };
 
     const observer = pipe(
-      new ZipWithLatestFromObserver(delegate, selector),
+      ZipWithLatestFromObserver,
+      newInstanceWith<
+        Observer<T>,
+        Function2<TA, TB, T>,
+        ZipWithLatestFromObserver<TA, TB, T>
+      >(delegate, selector),
       onComplete(disposeDelegate),
     );
 

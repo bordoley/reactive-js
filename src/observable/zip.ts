@@ -15,7 +15,14 @@ import {
   reset,
   zip as zipEnumerators,
 } from "../enumerator";
-import { isEmpty, length, pipe, pipeLazy, returns } from "../functions";
+import {
+  isEmpty,
+  length,
+  newInstanceWith,
+  pipe,
+  pipeLazy,
+  returns,
+} from "../functions";
 import { delegate } from "../liftable";
 import { ObservableLike } from "../observable";
 import { AbstractDelegatingObserver, Observer } from "../observer";
@@ -128,7 +135,8 @@ const _zip = (
             enumerators.push(enumerator);
           } else {
             const enumerator = pipe(
-              new ZipObserverEnumerator(),
+              ZipObserverEnumerator,
+              newInstanceWith(),
               onDisposed(() => {
                 enumerator.buffer.length = 0;
               }),
@@ -136,7 +144,8 @@ const _zip = (
             );
 
             const innerObserver = pipe(
-              new ZipObserver(observer, enumerators, enumerator),
+              ZipObserver,
+              newInstanceWith(observer, enumerators, enumerator),
               onComplete(() => {
                 if (
                   isDisposed(enumerator) ||

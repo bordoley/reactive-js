@@ -2,7 +2,7 @@
 import { fromValue, empty } from './container.mjs';
 import { addTo, onComplete, dispose, onError, isDisposed, onDisposed, add } from './disposable.mjs';
 import { __DEV__, MAX_SAFE_INTEGER } from './env.mjs';
-import { length, max, pipe, isEmpty, compose, negate, ignore, identity } from './functions.mjs';
+import { length, max, pipe, newInstanceWith, isEmpty, compose, negate, ignore, identity } from './functions.mjs';
 import { AbstractLiftable, AbstractDisposableLiftable, delegate, lift, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
 import { none, isSome } from './option.mjs';
 import { forEach } from './readonlyArray.mjs';
@@ -47,7 +47,7 @@ const createBufferOperator = (m, BufferSink) => {
     return (options = {}) => {
         var _a;
         const maxBufferSize = max((_a = options.maxBufferSize) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER, 1);
-        return pipe((delegate$1) => pipe(new BufferSink(delegate$1, maxBufferSize), addTo(delegate$1), onComplete(function onDispose() {
+        return pipe((delegate$1) => pipe(BufferSink, newInstanceWith(delegate$1, maxBufferSize), addTo(delegate$1), onComplete(function onDispose() {
             const { buffer } = this;
             this.buffer = [];
             if (isEmpty(buffer)) {
@@ -63,7 +63,7 @@ const createCatchErrorOperator = (m, CatchErrorSink) => (f) => {
     decorateWithNotify(CatchErrorSink, function notifyDelegate(next) {
         delegate(this).notify(next);
     });
-    return pipe((delegate) => pipe(new CatchErrorSink(delegate), addTo(delegate, true), onComplete(() => pipe(delegate, dispose())), onError(e => {
+    return pipe((delegate) => pipe(CatchErrorSink, newInstanceWith(delegate), addTo(delegate, true), onComplete(() => pipe(delegate, dispose())), onError(e => {
         try {
             const result = f(e.cause) || none;
             if (isSome(result)) {
@@ -87,7 +87,7 @@ const createDecodeWithCharsetOperator = (m, DecodeWithCharsetSink) => {
     });
     return (charset = "utf-8") => pipe((delegate) => {
         const textDecoder = new TextDecoder(charset, { fatal: true });
-        return pipe(new DecodeWithCharsetSink(delegate, textDecoder), addTo(delegate), onComplete(() => {
+        return pipe(DecodeWithCharsetSink, newInstanceWith(delegate, textDecoder), addTo(delegate), onComplete(() => {
             const data = textDecoder.decode();
             if (!isEmpty(data)) {
                 pipe(data, fromValue(m), sinkInto(delegate));
@@ -118,7 +118,7 @@ const createSatisfyOperator = (m, SatisfySink, defaultResult) => {
             pipe(delegate, notify(!defaultResult), dispose());
         }
     });
-    return (predicate) => pipe((delegate) => pipe(new SatisfySink(delegate, predicate), addTo(delegate), onComplete(() => {
+    return (predicate) => pipe((delegate) => pipe(SatisfySink, newInstanceWith(delegate, predicate), addTo(delegate), onComplete(() => {
         if (!isDisposed(delegate)) {
             pipe(defaultResult, fromValue(m), sinkInto(delegate));
         }
@@ -166,7 +166,7 @@ const createReduceOperator = (m, ReduceSink) => {
         this.acc = this.reducer(this.acc, next);
     });
     return (reducer, initialValue) => pipe((delegate) => {
-        const sink = pipe(new ReduceSink(delegate, reducer, initialValue()), addTo(delegate), onComplete(() => {
+        const sink = pipe(ReduceSink, newInstanceWith(delegate, reducer, initialValue()), addTo(delegate), onComplete(() => {
             pipe(sink.acc, fromValue(m), sinkInto(delegate));
         }));
         return sink;
@@ -214,7 +214,7 @@ const createTakeLastOperator = (m, TakeLastSink) => {
     return (options = {}) => {
         const { count = 1 } = options;
         const operator = (delegate) => {
-            const sink = pipe(new TakeLastSink(delegate, count), addTo(delegate), onComplete(() => {
+            const sink = pipe(TakeLastSink, newInstanceWith(delegate, count), addTo(delegate), onComplete(() => {
                 pipe(sink.last, m.fromArray(), sinkInto(delegate));
             }));
             return sink;

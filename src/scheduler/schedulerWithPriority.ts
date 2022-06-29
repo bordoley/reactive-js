@@ -1,5 +1,5 @@
 import { AbstractDisposable, add, addTo, isDisposed } from "../disposable";
-import { Function1, pipe } from "../functions";
+import { Function1, newInstanceWith, pipe } from "../functions";
 import {
   PrioritySchedulerLike,
   SchedulerContinuationLike,
@@ -61,6 +61,7 @@ export const toSchedulerWithPriority =
   (priority: number): Function1<PrioritySchedulerLike, SchedulerLike> =>
   priorityScheduler =>
     pipe(
-      new SchedulerWithPriorityImpl(priorityScheduler, priority),
+      SchedulerWithPriorityImpl,
+      newInstanceWith(priorityScheduler, priority),
       addTo(priorityScheduler, true),
     );

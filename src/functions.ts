@@ -328,7 +328,7 @@ export const negate = (v: boolean): boolean => !v;
  */
 export const raise = <T>(message?: unknown): T => {
   if (message === undefined || typeof message === "string") {
-    throw new Error(message);
+    throw newInstanceWith(Error, message);
   } else {
     throw message;
   }
@@ -740,3 +740,41 @@ export function flip<T>(f: (...args: any[]) => T): (...args: any[]) => T {
 }
 
 export const { max, min, floor } = Math;
+
+export type Constructor<T> = new () => T;
+export type Constructor1<TA, T> = new (a: TA) => T;
+export type Constructor2<TA, TB, T> = new (a: TA, b: TB) => T;
+export type Constructor3<TA, TB, TC, T> = new (a: TA, b: TB, c: TC) => T;
+export type Constructor4<TA, TB, TC, TD, T> = new (
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+) => T;
+
+export function newInstanceWith<T>(): Function1<Constructor<T>, T>;
+export function newInstanceWith<TA, T>(
+  a: TA,
+): Function1<Constructor1<TA, T>, T>;
+export function newInstanceWith<TA, TB, T>(
+  a: TA,
+  b: TB,
+): Function1<Constructor2<TA, TB, T>, T>;
+export function newInstanceWith<TA, TB, TC, T>(
+  a: TA,
+  b: TB,
+  c: TC,
+): Function1<Constructor3<TA, TB, TC, T>, T>;
+export function newInstanceWith<TA, TB, TC, TD, T>(
+  a: TA,
+  b: TB,
+  c: TC,
+  d: TD,
+): Function1<Constructor4<TA, TB, TC, TD, T>, T>;
+export function newInstanceWith(
+  ...args: readonly any[]
+): Function1<new (...args: readonly any[]) => any, any> {
+  return Constructor => {
+    return new Constructor(...args);
+  };
+}

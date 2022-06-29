@@ -1,6 +1,6 @@
 import { ConcatAll } from "../container";
 import { addTo, bindTo, dispose } from "../disposable";
-import { pipe } from "../functions";
+import { newInstanceWith, pipe } from "../functions";
 import { RunnableLike, RunnableOperator } from "../runnable";
 import {
   AbstractDelegatingRunnableSink,
@@ -25,7 +25,7 @@ class FlattenSink<T> extends AbstractDelegatingRunnableSink<
 }
 
 const _concatAll = lift(delegate =>
-  pipe(new FlattenSink(delegate), bindTo(delegate)),
+  pipe(FlattenSink, newInstanceWith(delegate), bindTo(delegate)),
 );
 
 export const concatAll: ConcatAll<RunnableLike<unknown>>["concatAll"] = <

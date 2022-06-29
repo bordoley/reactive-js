@@ -1,7 +1,7 @@
 /// <reference types="./web.d.ts" />
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { onDisposed, bindTo, addTo, toAbortSignal, dispose } from './disposable.mjs';
-import { pipe, isEmpty, length, raise, compose, returns } from './functions.mjs';
+import { pipe, isEmpty, length, raise, newInstanceWith, compose, returns } from './functions.mjs';
 import { createObservable, AbstractDisposableObservable, observerCount, replay, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { ignoreElements } from './container.mjs';
@@ -117,7 +117,7 @@ const windowLocation = createStreamble((scheduler, options) => {
         replace: true,
         uri: getCurrentWindowLocationURI(),
     }), { equality: areWindowLocationStatesEqual }), stream(scheduler, options));
-    const windowLocationStream = pipe(new WindowLocationStream(stateStream), bindTo(stateStream));
+    const windowLocationStream = pipe(WindowLocationStream, newInstanceWith(stateStream), bindTo(stateStream));
     pipe(stateStream, map(({ uri, replace }) => ({
         uri: windowLocationURIToString(uri),
         title: uri.title,
