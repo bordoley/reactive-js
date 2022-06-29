@@ -1,7 +1,7 @@
 import { addTo, dispose, onComplete } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer } from "../observer";
+import { AbstractDelegatingObserver, Observer } from "../observer";
 import { none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
 import { sourceFrom } from "../source";
@@ -28,16 +28,19 @@ function onDispose(this: LatestObserver) {
   }
 }
 
-class LatestObserver extends Observer<unknown> {
+class LatestObserver extends AbstractDelegatingObserver<
+  unknown,
+  readonly unknown[]
+> {
   ready = false;
   latest: unknown = none;
 
   constructor(
-    readonly delegate: Observer<readonly unknown[]>,
+    delegate: Observer<readonly unknown[]>,
     readonly ctx: LatestCtx,
     private readonly mode: LatestMode,
   ) {
-    super(delegate.scheduler);
+    super(delegate);
   }
 
   notify(next: unknown) {

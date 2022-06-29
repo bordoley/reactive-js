@@ -8,7 +8,7 @@ import {
 } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer, scheduler } from "../observer";
+import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
 import { isSome } from "../option";
 import { notifySink } from "../source";
 import { lift } from "./lift";
@@ -35,7 +35,10 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
   }
 };
 
-class MergeObserver<T> extends Observer<ObservableLike<T>> {
+class MergeObserver<T> extends AbstractDelegatingObserver<
+  ObservableLike<T>,
+  T
+> {
   activeCount = 0;
 
   readonly onDispose = () => {
@@ -46,11 +49,11 @@ class MergeObserver<T> extends Observer<ObservableLike<T>> {
   readonly queue: ObservableLike<T>[] = [];
 
   constructor(
-    readonly delegate: Observer<T>,
+    delegate: Observer<T>,
     readonly maxBufferSize: number,
     readonly maxConcurrency: number,
   ) {
-    super(delegate.scheduler);
+    super(delegate);
   }
 
   notify(next: ObservableLike<T>) {

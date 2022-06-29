@@ -11,7 +11,7 @@ import {
 } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer } from "../observer";
+import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
 import { none } from "../option";
 import { sinkInto } from "../source";
 import { fromArrayT } from "./fromArray";
@@ -20,16 +20,16 @@ import { never } from "./never";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
-class BufferObserver<T> extends Observer<T> {
+class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
   buffer: T[] = [];
 
   constructor(
-    readonly delegate: Observer<readonly T[]>,
+    delegate: Observer<readonly T[]>,
     private readonly durationFunction: Function1<T, ObservableLike<unknown>>,
     private readonly maxBufferSize: number,
     readonly durationSubscription: SerialDisposableLike,
   ) {
-    super(delegate.scheduler);
+    super(delegate);
   }
 
   notify(next: T) {
@@ -55,7 +55,7 @@ class BufferObserver<T> extends Observer<T> {
         next,
         this.durationFunction,
         onNotify(doOnNotify),
-        subscribe(this.scheduler),
+        subscribe(scheduler(this)),
       );
     }
   }

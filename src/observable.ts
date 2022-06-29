@@ -49,7 +49,12 @@ import { subscribe } from "./observable/subscribe";
 import { switchAll, switchAllT } from "./observable/switchAll";
 import { using } from "./observable/using";
 import { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
-import { Observer, createDelegatingObserver } from "./observer";
+import {
+  AbstractDelegatingObserver,
+  Observer,
+  createDelegatingObserver,
+  scheduler,
+} from "./observer";
 import { Option, isNone, isSome, none } from "./option";
 import { RunnableLike, ToRunnable, createRunnable } from "./runnable";
 import {
@@ -202,11 +207,7 @@ export const catchError: <T>(
   onError: Function1<unknown, ObservableLike<T> | void>,
 ) => ObservableOperator<T, T> = createCatchErrorOperator(
   liftSynchronousT,
-  class CatchErrorObserver<T> extends Observer<T> {
-    constructor(public readonly delegate: Observer<T>) {
-      super(delegate.scheduler);
-    }
-  },
+  class CatchErrorObserver<T> extends AbstractDelegatingObserver<T, T> {},
 );
 
 export const fromDisposable = createFromDisposable(createT);
@@ -215,12 +216,12 @@ export const decodeWithCharset: (
   charset?: string,
 ) => ObservableOperator<ArrayBuffer, string> = createDecodeWithCharsetOperator(
   { ...liftSynchronousT, ...fromArrayT },
-  class DecodeWithCharsetObserver extends Observer<ArrayBuffer> {
-    constructor(
-      readonly delegate: Observer<string>,
-      readonly textDecoder: TextDecoder,
-    ) {
-      super(delegate.scheduler);
+  class DecodeWithCharsetObserver extends AbstractDelegatingObserver<
+    ArrayBuffer,
+    string
+  > {
+    constructor(delegate: Observer<string>, readonly textDecoder: TextDecoder) {
+      super(delegate);
     }
   },
 );
@@ -240,15 +241,15 @@ export const distinctUntilChanged: <T>(options?: {
   readonly equality?: Equality<T>;
 }) => ObservableOperator<T, T> = createDistinctUntilChangedOperator(
   liftSynchronousT,
-  class DistinctUntilChangedObserver<T> extends Observer<T> {
+  class DistinctUntilChangedObserver<T> extends AbstractDelegatingObserver<
+    T,
+    T
+  > {
     prev: Option<T> = none;
     hasValue = false;
 
-    constructor(
-      readonly delegate: Observer<T>,
-      readonly equality: Equality<T>,
-    ) {
-      super(delegate.scheduler);
+    constructor(delegate: Observer<T>, readonly equality: Equality<T>) {
+      super(delegate);
     }
   },
 );
@@ -263,12 +264,9 @@ export const everySatisfy: <T>(
   predicate: Predicate<T>,
 ) => ObservableOperator<T, boolean> = createEverySatisfyOperator(
   { ...fromArrayT, ...liftSynchronousT },
-  class EverySatisfyObserver<T> extends Observer<T> {
-    constructor(
-      readonly delegate: Observer<boolean>,
-      readonly predicate: Predicate<T>,
-    ) {
-      super(delegate.scheduler);
+  class EverySatisfyObserver<T> extends AbstractDelegatingObserver<T, boolean> {
+    constructor(delegate: Observer<boolean>, readonly predicate: Predicate<T>) {
+      super(delegate);
     }
   },
 );
@@ -326,12 +324,9 @@ export const generateT: Generate<ObservableLike<unknown>> = {
 export const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T> =
   createKeepOperator(
     liftSynchronousT,
-    class KeepObserver<T> extends Observer<T> {
-      constructor(
-        readonly delegate: Observer<T>,
-        readonly predicate: Predicate<T>,
-      ) {
-        super(delegate.scheduler);
+    class KeepObserver<T> extends AbstractDelegatingObserver<T, T> {
+      constructor(delegate: Observer<T>, readonly predicate: Predicate<T>) {
+        super(delegate);
       }
     },
   );
@@ -356,13 +351,12 @@ export const replay = <T>(observable: MulticastObservableLike<T>) =>
 export const pairwise: <T>() => ObservableOperator<T, [Option<T>, T]> =
   createPairwiseOperator(
     liftSynchronousT,
-    class PairwiseObserver<T> extends Observer<T> {
+    class PairwiseObserver<T> extends AbstractDelegatingObserver<
+      T,
+      [Option<T>, T]
+    > {
       prev: Option<T>;
       hasPrev = false;
-
-      constructor(readonly delegate: Observer<[Option<T>, T]>) {
-        super(delegate.scheduler);
-      }
     },
   );
 
@@ -399,13 +393,13 @@ export const reduce: <T, TAcc>(
   initialValue: Factory<TAcc>,
 ) => ObservableOperator<T, TAcc> = createReduceOperator(
   { ...fromArrayT, ...liftSynchronousT },
-  class ReducerObserver<T, TAcc> extends Observer<T> {
+  class ReducerObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
     constructor(
-      readonly delegate: Observer<TAcc>,
+      delegate: Observer<TAcc>,
       readonly reducer: Reducer<T, TAcc>,
       public acc: TAcc,
     ) {
-      super(delegate.scheduler);
+      super(delegate);
     }
   },
 );
@@ -419,13 +413,13 @@ export const scan: <T, TAcc>(
   initialValue: Factory<TAcc>,
 ) => ObservableOperator<T, TAcc> = createScanOperator(
   liftSynchronousT,
-  class ScanObserver<T, TAcc> extends Observer<T> {
+  class ScanObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
     constructor(
-      readonly delegate: Observer<TAcc>,
+      delegate: Observer<TAcc>,
       readonly reducer: Reducer<T, TAcc>,
       public acc: TAcc,
     ) {
-      super(delegate.scheduler);
+      super(delegate);
     }
   },
 );
@@ -506,11 +500,11 @@ export const skipFirst: <T>(options?: {
   readonly count?: number;
 }) => ObservableOperator<T, T> = createSkipFirstOperator(
   liftSynchronousT,
-  class SkipFirstObserver<T> extends Observer<T> {
+  class SkipFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
     count = 0;
 
-    constructor(readonly delegate: Observer<T>, readonly skipCount: number) {
-      super(delegate.scheduler);
+    constructor(delegate: Observer<T>, readonly skipCount: number) {
+      super(delegate);
     }
   },
 );
@@ -523,12 +517,9 @@ export const someSatisfy: <T>(
   predicate: Predicate<T>,
 ) => ObservableOperator<T, boolean> = createSomeSatisfyOperator(
   { ...fromArrayT, ...liftSynchronousT },
-  class SomeSatisfyObserver<T> extends Observer<T> {
-    constructor(
-      readonly delegate: Observer<boolean>,
-      readonly predicate: Predicate<T>,
-    ) {
-      super(delegate.scheduler);
+  class SomeSatisfyObserver<T> extends AbstractDelegatingObserver<T, boolean> {
+    constructor(delegate: Observer<boolean>, readonly predicate: Predicate<T>) {
+      super(delegate);
     }
   },
 );
@@ -553,11 +544,11 @@ export const takeFirst: <T>(options?: {
   readonly count?: number;
 }) => ObservableOperator<T, T> = createTakeFirstOperator(
   { ...fromArrayT, ...liftSynchronousT },
-  class TakeFirstObserver<T> extends Observer<T> {
+  class TakeFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
     count = 0;
 
-    constructor(readonly delegate: Observer<T>, readonly maxCount: number) {
-      super(delegate.scheduler);
+    constructor(delegate: Observer<T>, readonly maxCount: number) {
+      super(delegate);
     }
   },
 );
@@ -575,11 +566,11 @@ export const takeLast: <T>(options?: {
   readonly count?: number;
 }) => ObservableOperator<T, T> = createTakeLastOperator(
   { ...fromArrayT, ...liftSynchronousT },
-  class TakeLastObserver<T> extends Observer<T> {
+  class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
     readonly last: T[] = [];
 
-    constructor(readonly delegate: Observer<T>, readonly maxCount: number) {
-      super(delegate.scheduler);
+    constructor(delegate: Observer<T>, readonly maxCount: number) {
+      super(delegate);
     }
   },
 );
@@ -595,7 +586,7 @@ export const takeUntil = <T>(
     const takeUntilObserver: Observer<T> = pipe(
       createDelegatingObserver(delegate),
       bindTo(delegate),
-      bindTo(pipe(notifier, takeFirst(), subscribe(delegate.scheduler))),
+      bindTo(pipe(notifier, takeFirst(), subscribe(scheduler(delegate)))),
     );
 
     return takeUntilObserver;
@@ -615,13 +606,13 @@ export const takeWhile: <T>(
   options?: { readonly inclusive?: boolean },
 ) => ObservableOperator<T, T> = createTakeWhileOperator(
   liftSynchronousT,
-  class TakeWhileObserver<T> extends Observer<T> {
+  class TakeWhileObserver<T> extends AbstractDelegatingObserver<T, T> {
     constructor(
-      readonly delegate: Observer<T>,
+      delegate: Observer<T>,
       readonly predicate: Predicate<T>,
       readonly inclusive: boolean,
     ) {
-      super(delegate.scheduler);
+      super(delegate);
     }
   },
 );
@@ -634,12 +625,8 @@ export const throwIfEmpty: <T>(
   factory: Factory<unknown>,
 ) => ObservableOperator<T, T> = createThrowIfEmptyOperator(
   liftSynchronousT,
-  class ThrowIfEmptyObserver<T> extends Observer<T> {
+  class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
     isEmpty = true;
-
-    constructor(readonly delegate: Observer<T>) {
-      super(delegate.scheduler);
-    }
   },
 );
 

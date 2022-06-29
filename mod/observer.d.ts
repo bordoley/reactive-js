@@ -13,6 +13,11 @@ declare class Observer<T> extends AbstractDisposableContainer implements SinkLik
     assertState(this: Observer<T>): void;
     notify(_: T): void;
 }
+declare class AbstractDelegatingObserver<TIn, TOut> extends Observer<TIn> {
+    readonly delegate: Observer<TOut>;
+    constructor(delegate: Observer<TOut>);
+    notify(_: TIn): void;
+}
 declare const createDelegatingObserver: <T>(delegate: Observer<T>) => Observer<T>;
 declare const scheduler: <T>(observer: Observer<T>) => SchedulerLike;
-export { Observer, createDelegatingObserver, scheduler };
+export { AbstractDelegatingObserver, Observer, createDelegatingObserver, scheduler };
