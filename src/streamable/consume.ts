@@ -1,4 +1,5 @@
 import { dispatch } from "../dispatcher";
+import { addTo } from "../disposable";
 import {
   Factory,
   Function1,
@@ -10,14 +11,9 @@ import {
 import {
   ObservableLike,
   ObservableOperator,
-  StreamLike,
-  SubjectLike,
-  __memo,
-  __observe,
-  __using,
+  createObservable,
   createSubject,
   map,
-  observable,
   onNotify,
   onSubscribe,
   switchAll,
@@ -25,12 +21,13 @@ import {
   zipWithLatestFrom,
 } from "../observable";
 import { none } from "../option";
+import { sinkInto } from "../source";
 import {
   AsyncEnumerableLike,
   ConsumeContinue,
   ConsumeDone,
 } from "../streamable";
-import { __stream } from "./streamable";
+import { stream } from "./streamable";
 
 export const consumeContinue = <T>(data: T): ConsumeContinue<T> => ({
   type: "continue",
@@ -42,43 +39,41 @@ export const consumeDone = <T>(data: T): ConsumeDone<T> => ({
   data,
 });
 
-const consumeImpl = <TSrc, TAcc>(
-  consumer: (
-    acc: ObservableLike<TAcc>,
-  ) => ObservableOperator<TSrc, ConsumeContinue<TAcc> | ConsumeDone<TAcc>>,
-  initial: Factory<TAcc>,
-): Function1<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> => {
-  const createObservable = (
-    accFeedback: SubjectLike<TAcc>,
-    enumerator: StreamLike<void, TSrc>,
-  ) =>
-    pipe(
-      enumerator,
-      consumer(accFeedback),
-      onNotify(ev => {
-        switch (ev.type) {
-          case "continue":
-            pipe(accFeedback, dispatch(ev.data));
-            pipe(enumerator, dispatch(none));
-            break;
-        }
-      }),
-      map(ev => ev.data),
-      onSubscribe(() => {
-        pipe(accFeedback, dispatch(initial()));
-        pipe(enumerator, dispatch(none));
-      }),
-    );
+const consumeImpl =
+  <TSrc, TAcc>(
+    consumer: (
+      acc: ObservableLike<TAcc>,
+    ) => ObservableOperator<TSrc, ConsumeContinue<TAcc> | ConsumeDone<TAcc>>,
+    initial: Factory<TAcc>,
+  ): Function1<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> =>
+  enumerable =>
+    createObservable(observer => {
+      const enumerator = pipe(
+        enumerable,
+        stream(observer.scheduler),
+        addTo(observer),
+      );
+      const accFeedback = pipe(createSubject<TAcc>(), addTo(observer));
 
-  return enumerable =>
-    observable(() => {
-      const enumerator = __stream(enumerable);
-      const accFeedback = __using(createSubject);
-      const observable = __memo(createObservable, accFeedback, enumerator);
-
-      return __observe(observable);
+      pipe(
+        enumerator,
+        consumer(accFeedback),
+        onNotify(ev => {
+          switch (ev.type) {
+            case "continue":
+              pipe(accFeedback, dispatch(ev.data));
+              pipe(enumerator, dispatch(none));
+              break;
+          }
+        }),
+        map(ev => ev.data),
+        onSubscribe(() => {
+          pipe(accFeedback, dispatch(initial()));
+          pipe(enumerator, dispatch(none));
+        }),
+        sinkInto(observer),
+      );
     });
-};
 
 export const consume = <T, TAcc>(
   consumer: Function2<TAcc, T, ConsumeContinue<TAcc> | ConsumeDone<TAcc>>,
