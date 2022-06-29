@@ -3,7 +3,7 @@ import { empty, fromValue, throws, concatMap } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { dispose, isDisposed, onDisposed, add, addTo, disposed, onComplete, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
 import { move, current, AbstractEnumerator, reset, hasCurrent, zip as zip$1, forEach } from './enumerator.mjs';
-import { pipe, length, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, returns } from './functions.mjs';
+import { pipe, length, max, min, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, returns } from './functions.mjs';
 import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, assertState, notifySink, createUsing, notify, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { scheduler, AbstractDelegatingObserver, Observer, createDelegatingObserver } from './observer.mjs';
 import { schedule, __yield, inContinuation, runContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
@@ -102,10 +102,10 @@ deferEmpty.isEnumerable = true;
  */
 const fromArray = (options = {}) => values => {
     var _a, _b, _c;
-    const delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0);
+    const delay = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0);
     const valuesLength = length(values);
-    const startIndex = Math.min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, valuesLength);
-    const endIndex = Math.max(Math.min((_c = options.endIndex) !== null && _c !== void 0 ? _c : length(values), valuesLength), 0);
+    const startIndex = min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, valuesLength);
+    const endIndex = max(min((_c = options.endIndex) !== null && _c !== void 0 ? _c : length(values), valuesLength), 0);
     const count = endIndex - startIndex;
     if (count === 0 && delay === 0) {
         return deferEmpty;
@@ -596,7 +596,7 @@ const fromEnumerator = (options = {}) => f => {
         }
         pipe(observer, dispose());
     }, options));
-    result.isEnumerable = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) === 0;
+    result.isEnumerable = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) === 0;
     return result;
 };
 /**
@@ -703,7 +703,7 @@ function buffer(options = {}) {
         : typeof delay === "number"
             ? (_) => fromValue(fromArrayT, { delay })(none)
             : delay;
-    const maxBufferSize = Math.max((_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : Number.MAX_SAFE_INTEGER, 1);
+    const maxBufferSize = max((_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : Number.MAX_SAFE_INTEGER, 1);
     const operator = (delegate$1) => {
         const durationSubscription = createSerialDisposable();
         return pipe(new BufferObserver(delegate$1, durationFunction, maxBufferSize, durationSubscription), add(durationSubscription), addTo(delegate$1), onComplete(function onDispose() {
@@ -999,7 +999,7 @@ class EnumeratorScheduler extends AbstractEnumerator {
     }
     schedule(continuation, options = {}) {
         var _a;
-        const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
+        const { delay = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
         pipe(this, add(continuation, true));
         if (!isDisposed(continuation) && delay === 0) {
             this.continuations.push(continuation);
@@ -1235,7 +1235,7 @@ const generate = (generator, initialValue, options = {}) => {
         };
     };
     const observable = defer(factory, options);
-    observable.isEnumerable = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) === 0;
+    observable.isEnumerable = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) === 0;
     return observable;
 };
 const generateT = {

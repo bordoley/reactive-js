@@ -8,7 +8,7 @@ import {
   hasCurrent,
   reset,
 } from "../enumerator";
-import { length, pipe } from "../functions";
+import { length, max, pipe } from "../functions";
 import { lift } from "./lift";
 
 class BufferEnumerator<T> extends AbstractDelegatingEnumerator<
@@ -48,7 +48,7 @@ export const buffer = <T>(
     readonly maxBufferSize?: number;
   } = {},
 ): EnumerableOperator<T, readonly T[]> => {
-  const maxBufferSize = Math.max(
+  const maxBufferSize = max(
     options.maxBufferSize ?? Number.MAX_SAFE_INTEGER,
     1,
   );

@@ -35,6 +35,7 @@ import {
   Reducer,
   Updater,
   ignore,
+  max,
   pipe,
   pipeLazy,
 } from "./functions";
@@ -313,7 +314,7 @@ export const generate = <T>(
   };
 
   const observable = defer(factory, options);
-  (observable as any).isEnumerable = Math.max(options.delay ?? 0, 0) === 0;
+  (observable as any).isEnumerable = max(options.delay ?? 0, 0) === 0;
   return observable;
 };
 

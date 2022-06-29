@@ -30,6 +30,7 @@ import {
   ignore,
   isEmpty,
   length,
+  max,
   negate,
   pipe,
 } from "./functions";
@@ -196,7 +197,7 @@ export const createBufferOperator = <C extends SourceLike>(
       readonly maxBufferSize?: number;
     } = {},
   ): ContainerOperator<C, T, readonly T[]> => {
-    const maxBufferSize = Math.max(
+    const maxBufferSize = max(
       options.maxBufferSize ?? Number.MAX_SAFE_INTEGER,
       1,
     );

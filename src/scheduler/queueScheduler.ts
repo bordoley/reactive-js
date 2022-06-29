@@ -6,7 +6,7 @@ import {
   move,
   reset,
 } from "../enumerator";
-import { pipe } from "../functions";
+import { max, pipe } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
 import {
   SchedulerContinuationLike,
@@ -161,7 +161,7 @@ export abstract class AbstractQueueScheduler<
       task = peek(this)
     ) {
       const { continuation, dueTime } = task;
-      const delay = Math.max(dueTime - schedulerNow(this), 0);
+      const delay = max(dueTime - schedulerNow(this), 0);
 
       if (delay === 0) {
         move(this);
@@ -184,7 +184,7 @@ export abstract class AbstractQueueScheduler<
     }
 
     const dueTime = task.dueTime;
-    const delay = Math.max(dueTime - schedulerNow(this), 0);
+    const delay = max(dueTime - schedulerNow(this), 0);
     this.dueTime = dueTime;
 
     this.inner = pipe(this.host, schedule(this.hostContinuation, { delay }));
@@ -205,12 +205,12 @@ export abstract class AbstractQueueScheduler<
       readonly delay?: number;
     } = {},
   ) {
-    const { delay = Math.max(options.delay ?? 0, 0) } = options;
+    const { delay = max(options.delay ?? 0, 0) } = options;
     pipe(this, add(continuation, true));
 
     if (!isDisposed(continuation)) {
       const { now } = this;
-      const dueTime = Math.max(now + delay, now);
+      const dueTime = max(now + delay, now);
 
       const task =
         inContinuation(this) &&

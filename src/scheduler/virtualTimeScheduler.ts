@@ -1,6 +1,6 @@
 import { add, dispose, isDisposed } from "../disposable";
 import { AbstractEnumerator, hasCurrent, reset } from "../enumerator";
-import { pipe } from "../functions";
+import { max, pipe } from "../functions";
 import { isSome, none } from "../option";
 import {
   SchedulerContinuationLike,
@@ -88,7 +88,7 @@ class VirtualTimeSchedulerImpl
     continuation: SchedulerContinuationLike,
     options: { readonly delay?: number } = {},
   ) {
-    const { delay = Math.max(options.delay ?? 0, 0) } = options;
+    const { delay = max(options.delay ?? 0, 0) } = options;
 
     pipe(this, add(continuation, true));
 

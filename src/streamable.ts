@@ -23,6 +23,8 @@ import {
   identity as identityF,
   increment,
   length,
+  max,
+  min,
   pipe,
   returns,
   updateReducer,
@@ -231,9 +233,9 @@ export const fromArray =
   ): Function1<readonly T[], AsyncEnumerableLike<T>> =>
   values => {
     const valuesLength = length(values);
-    const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
-    const endIndex = Math.max(
-      Math.min(options.endIndex ?? valuesLength, valuesLength),
+    const startIndex = min(options.startIndex ?? 0, valuesLength);
+    const endIndex = max(
+      min(options.endIndex ?? valuesLength, valuesLength),
       0,
     );
 

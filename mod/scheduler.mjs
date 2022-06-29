@@ -1,10 +1,10 @@
 /// <reference types="./scheduler.d.ts" />
 import { isDisposed, AbstractDisposable, dispose, disposed, add, addTo, onDisposed, createDisposable } from './disposable.mjs';
-import { length, pipe, raise } from './functions.mjs';
+import { floor, length, pipe, max, raise } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractEnumerator, move, hasCurrent, reset, current } from './enumerator.mjs';
 
-const computeParentIndex = (index) => Math.floor((index - 1) / 2);
+const computeParentIndex = (index) => floor((index - 1) / 2);
 const siftDown = (queue, item) => {
     const { values, compare } = queue;
     const length$1 = length(values);
@@ -138,7 +138,7 @@ class SchedulerContinuationImpl extends AbstractDisposable {
 }
 const __yield = (options = {}) => {
     var _a;
-    const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
+    const { delay = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
     const scheduler = isNone(currentScheduler)
         ? raise("__yield effect may only be invoked from within a SchedulerContinuation")
         : currentScheduler;
@@ -201,7 +201,7 @@ class AbstractQueueScheduler extends AbstractEnumerator {
         this.hostContinuation = () => {
             for (let task = peek(this); isSome(task) && !isDisposed(this); task = peek(this)) {
                 const { continuation, dueTime } = task;
-                const delay = Math.max(dueTime - now(this), 0);
+                const delay = max(dueTime - now(this), 0);
                 if (delay === 0) {
                     move(this);
                     pipe(this, runContinuation(continuation));
@@ -260,17 +260,17 @@ class AbstractQueueScheduler extends AbstractEnumerator {
             return;
         }
         const dueTime = task.dueTime;
-        const delay = Math.max(dueTime - now(this), 0);
+        const delay = max(dueTime - now(this), 0);
         this.dueTime = dueTime;
         this.inner = pipe(this.host, schedule(this.hostContinuation, { delay }));
     }
     schedule(continuation, options = {}) {
         var _a;
-        const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
+        const { delay = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
         pipe(this, add(continuation, true));
         if (!isDisposed(continuation)) {
             const { now } = this;
-            const dueTime = Math.max(now + delay, now);
+            const dueTime = max(now + delay, now);
             const task = inContinuation(this) &&
                 hasCurrent(this) &&
                 current(this).continuation === continuation &&
@@ -382,7 +382,7 @@ class SchedulerWithPriorityImpl extends AbstractDisposable {
     }
     schedule(continuation, options = {}) {
         var _a;
-        const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
+        const { delay = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
         pipe(this, add(continuation, true));
         if (!isDisposed(continuation)) {
             this.priorityScheduler.schedule(continuation, {
@@ -475,7 +475,7 @@ class HostScheduler extends AbstractDisposable {
     }
     schedule(continuation, options = {}) {
         var _a;
-        const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
+        const { delay = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
         pipe(this, add(continuation, true));
         const continuationIsDisposed = isDisposed(continuation);
         if (!continuationIsDisposed && delay > 0) {
@@ -558,7 +558,7 @@ class VirtualTimeSchedulerImpl extends AbstractEnumerator {
     }
     schedule(continuation, options = {}) {
         var _a;
-        const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
+        const { delay = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
         pipe(this, add(continuation, true));
         if (!isDisposed(continuation)) {
             this.taskQueue.push({

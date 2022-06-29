@@ -41,6 +41,7 @@
 - [decrement](functions.md#decrement)
 - [decrementBy](functions.md#decrementby)
 - [flip](functions.md#flip)
+- [floor](functions.md#floor)
 - [identity](functions.md#identity)
 - [ignore](functions.md#ignore)
 - [increment](functions.md#increment)
@@ -50,6 +51,8 @@
 - [isEven](functions.md#iseven)
 - [isOdd](functions.md#isodd)
 - [length](functions.md#length)
+- [max](functions.md#max)
+- [min](functions.md#min)
 - [negate](functions.md#negate)
 - [pipe](functions.md#pipe)
 - [pipeLazy](functions.md#pipelazy)
@@ -1445,6 +1448,22 @@ ___
 
 ___
 
+### floor
+
+▸ **floor**(`x`): `number`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `x` | `number` |
+
+#### Returns
+
+`number`
+
+___
+
 ### identity
 
 ▸ **identity**<`T`\>(`v`): `T`
@@ -1613,6 +1632,38 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `arr` | `string` \| readonly `unknown`[] |
+
+#### Returns
+
+`number`
+
+___
+
+### max
+
+▸ **max**(...`values`): `number`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...values` | `number`[] |
+
+#### Returns
+
+`number`
+
+___
+
+### min
+
+▸ **min**(...`values`): `number`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...values` | `number`[] |
 
 #### Returns
 

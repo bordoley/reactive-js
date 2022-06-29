@@ -1,6 +1,6 @@
 import { FromArray, FromArrayOptions } from "../container";
 import { isDisposed } from "../disposable";
-import { Function1, ignore, length } from "../functions";
+import { Function1, ignore, length, max, min } from "../functions";
 import { RunnableLike } from "../runnable";
 import { RunnableSink } from "../runnableSink";
 import { createRunnable } from "./createRunnable";
@@ -14,9 +14,9 @@ export const fromArray =
   ): Function1<readonly T[], RunnableLike<T>> =>
   values => {
     const valuesLength = length(values);
-    const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
-    const endIndex = Math.max(
-      Math.min(options.endIndex ?? length(values), valuesLength),
+    const startIndex = min(options.startIndex ?? 0, valuesLength);
+    const endIndex = max(
+      min(options.endIndex ?? length(values), valuesLength),
       0,
     );
     const count = endIndex - startIndex;

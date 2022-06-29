@@ -738,3 +738,5 @@ export function flip<T>(f: (...args: any[]) => T): (...args: any[]) => T {
     return f(...args);
   };
 }
+
+export const { max, min, floor } = Math;

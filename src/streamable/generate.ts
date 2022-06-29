@@ -1,5 +1,5 @@
 import { fromValue } from "../container";
-import { Factory, Updater, pipe } from "../functions";
+import { Factory, Updater, max, pipe } from "../functions";
 import { fromArrayT, scan, scanAsync } from "../observable";
 import { AsyncEnumerableLike } from "../streamable";
 import { createLiftedStreamable } from "./streamable";
@@ -29,7 +29,7 @@ export const generate = <T>(
   initialValue: Factory<T>,
   options: { readonly delay?: number } = {},
 ): AsyncEnumerableLike<T> => {
-  const { delay = Math.max(options.delay ?? 0, 0) } = options;
+  const { delay = max(options.delay ?? 0, 0) } = options;
 
   return createLiftedStreamable(
     delay > 0

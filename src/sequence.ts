@@ -29,6 +29,8 @@ import {
   alwaysTrue,
   callWith,
   length,
+  max,
+  min,
   pipe,
   strictEquality,
 } from "./functions";
@@ -125,9 +127,9 @@ export const fromArray =
   ): Function1<readonly T[], Sequence<T>> =>
   values => {
     const valuesLength = length(values);
-    const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
-    const endIndex = Math.max(
-      Math.min(options.endIndex ?? valuesLength, valuesLength),
+    const startIndex = min(options.startIndex ?? 0, valuesLength);
+    const endIndex = max(
+      min(options.endIndex ?? valuesLength, valuesLength),
       0,
     );
 
