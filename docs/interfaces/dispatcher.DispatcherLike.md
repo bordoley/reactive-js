@@ -16,7 +16,9 @@
 
   ↳ **`DispatcherLike`**
 
-  ↳↳ [`StreamLike`](observable.StreamLike.md)
+  ↳↳ [`SubjectLike`](observable.SubjectLike.md)
+
+  ↳↳ [`StreamLike`](streamable.StreamLike.md)
 
 ## Table of contents
 

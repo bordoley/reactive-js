@@ -11,7 +11,6 @@ import {
   identity as identityF,
   length,
   newInstance,
-  newInstanceWith,
   pipe,
   returns,
   updateReducer,
@@ -21,7 +20,7 @@ import {
   MulticastObservableLike,
   ObservableLike,
   ObservableOperator,
-  StreamLike,
+  SubjectLike,
   __currentScheduler,
   __memo,
   __observe,
@@ -52,6 +51,17 @@ import { Observer, scheduler as getScheduler } from "./observer";
 import { Option, isSome, none } from "./option";
 import { SchedulerLike, createPausableScheduler } from "./scheduler";
 import { notifySink, sinkInto as sinkIntoSink, sourceFrom } from "./source";
+
+/**
+ * Represents a duplex stream
+ *
+ * @noInheritDoc
+ */
+export interface StreamLike<TReq, T>
+  extends DispatcherLike<TReq>,
+    MulticastObservableLike<T> {
+  readonly scheduler: SchedulerLike;
+}
 
 export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T>> {
   stream(
@@ -87,11 +97,23 @@ class StreamImpl<TReq, T>
   extends AbstractDisposableObservable<T>
   implements StreamLike<TReq, T>
 {
+  private readonly dispatcher: DispatcherLike<TReq>;
+  private readonly observable: MulticastObservableLike<T>;
+
   constructor(
-    private readonly dispatcher: DispatcherLike<TReq>,
-    private readonly observable: MulticastObservableLike<T>,
+    op: ObservableOperator<TReq, T>,
+    readonly scheduler: SchedulerLike,
+    options?: { readonly replay?: number },
   ) {
     super();
+
+    const subject = createSubject<TReq>();
+    const observable = pipe(subject, op, publish<T>(scheduler, options));
+
+    this.dispatcher = subject;
+    this.observable = observable;
+
+    return pipe(this, add(subject), addTo(this.observable));
   }
 
   get observerCount(): number {
@@ -115,18 +137,7 @@ const createStream = <TReq, T>(
   op: ObservableOperator<TReq, T>,
   scheduler: SchedulerLike,
   options?: { readonly replay?: number },
-): StreamLike<TReq, T> => {
-  const subject = createSubject<TReq>();
-  const observable = pipe(subject, op, publish(scheduler, options));
-
-  return pipe(
-    StreamImpl,
-    newInstanceWith(subject, observable),
-    add(subject),
-    // FIXME: This seems wrong.
-    addTo(observable),
-  );
-};
+): StreamLike<TReq, T> => newInstance(StreamImpl, op, scheduler, options);
 
 class CreateStreamable<
   TReq,
@@ -449,7 +460,7 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
   implements FlowableSinkLike<T>, MulticastObservableLike<TAcc>
 {
   constructor(
-    private readonly subject: StreamLike<TAcc, TAcc>,
+    private readonly subject: SubjectLike<TAcc>,
     private readonly streamable: FlowableSinkLike<T>,
   ) {
     super();

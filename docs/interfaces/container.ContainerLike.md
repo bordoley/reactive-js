@@ -8,8 +8,6 @@
 
 - **`ContainerLike`**
 
-  ↳ [`AsyncEnumerableLike`](asyncEnumerable.AsyncEnumerableLike.md)
-
   ↳ [`LiftableLike`](liftable.LiftableLike.md)
 
   ↳ [`LiftableStateLike`](liftable.LiftableStateLike.md)

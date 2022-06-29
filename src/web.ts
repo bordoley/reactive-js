@@ -1,7 +1,6 @@
 import { Updater } from "./functions";
-import { StreamLike } from "./observable";
 import { SchedulerLike } from "./scheduler";
-import { StreamableLike } from "./streamable";
+import { StreamLike, StreamableLike } from "./streamable";
 
 export interface WindowLocationURI {
   title: string;

@@ -16,6 +16,7 @@
 
 ## Implemented by
 
+- [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)
 - [`Enumerator`](../classes/enumerator.Enumerator.md)
 
 ## Table of contents

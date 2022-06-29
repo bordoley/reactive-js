@@ -89,6 +89,9 @@ class WindowLocationStream extends AbstractDisposableObservable {
     get replay() {
         return replay(this.stateStream);
     }
+    get scheduler() {
+        return this.stateStream.scheduler;
+    }
     dispatch(stateOrUpdater, { replace } = { replace: false }) {
         pipe(({ uri: stateURI }) => {
             const uri = typeof stateOrUpdater === "function"

@@ -7,7 +7,6 @@
 ### Interfaces
 
 - [AsyncEnumerableLike](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)
-- [AsyncEnumeratorLike](../interfaces/asyncEnumerable.AsyncEnumeratorLike.md)
 
 ### Type Aliases
 
@@ -24,6 +23,8 @@
 - [consumeAsync](asyncEnumerable.md#consumeasync)
 - [consumeContinue](asyncEnumerable.md#consumecontinue-1)
 - [consumeDone](asyncEnumerable.md#consumedone-1)
+- [createAsyncEnumerable](asyncEnumerable.md#createasyncenumerable)
+- [createLiftedAsyncEnumerable](asyncEnumerable.md#createliftedasyncenumerable)
 - [fromArray](asyncEnumerable.md#fromarray)
 - [fromEnumerable](asyncEnumerable.md#fromenumerable)
 - [fromIterable](asyncEnumerable.md#fromiterable)
@@ -164,6 +165,380 @@ ___
 #### Returns
 
 [`ConsumeDone`](asyncEnumerable.md#consumedone)<`T`\>
+
+___
+
+### createAsyncEnumerable
+
+▸ **createAsyncEnumerable**<`T`\>(`stream`): [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `stream` | (`scheduler`: [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md), `options?`: { `replay?`: `number`  }) => [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<`T`\> |
+
+#### Returns
+
+[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>
+
+___
+
+### createLiftedAsyncEnumerable
+
+▸ **createLiftedAsyncEnumerable**<`A`\>(`op1`): [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`A`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `A` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ObservableOperator`](observable.md#observableoperator)<`void`, `A`\> |
+
+#### Returns
+
+[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`A`\>
+
+▸ **createLiftedAsyncEnumerable**<`A`, `B`\>(`op1`, `op2`): [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`B`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `A` |
+| `B` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ObservableOperator`](observable.md#observableoperator)<`void`, `A`\> |
+| `op2` | [`ObservableOperator`](observable.md#observableoperator)<`A`, `B`\> |
+
+#### Returns
+
+[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`B`\>
+
+▸ **createLiftedAsyncEnumerable**<`A`, `B`, `C`\>(`op1`, `op2`, `op3`): [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`C`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `A` |
+| `B` |
+| `C` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ObservableOperator`](observable.md#observableoperator)<`void`, `A`\> |
+| `op2` | [`ObservableOperator`](observable.md#observableoperator)<`A`, `B`\> |
+| `op3` | [`ObservableOperator`](observable.md#observableoperator)<`B`, `C`\> |
+
+#### Returns
+
+[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`C`\>
+
+▸ **createLiftedAsyncEnumerable**<`A`, `B`, `C`, `D`\>(`op1`, `op2`, `op3`, `op4`): [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`D`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ObservableOperator`](observable.md#observableoperator)<`void`, `A`\> |
+| `op2` | [`ObservableOperator`](observable.md#observableoperator)<`A`, `B`\> |
+| `op3` | [`ObservableOperator`](observable.md#observableoperator)<`B`, `C`\> |
+| `op4` | [`ObservableOperator`](observable.md#observableoperator)<`C`, `D`\> |
+
+#### Returns
+
+[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`D`\>
+
+▸ **createLiftedAsyncEnumerable**<`A`, `B`, `C`, `D`, `E`\>(`op1`, `op2`, `op3`, `op4`, `op5`): [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`E`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ObservableOperator`](observable.md#observableoperator)<`void`, `A`\> |
+| `op2` | [`ObservableOperator`](observable.md#observableoperator)<`A`, `B`\> |
+| `op3` | [`ObservableOperator`](observable.md#observableoperator)<`B`, `C`\> |
+| `op4` | [`ObservableOperator`](observable.md#observableoperator)<`C`, `D`\> |
+| `op5` | [`ObservableOperator`](observable.md#observableoperator)<`D`, `E`\> |
+
+#### Returns
+
+[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`E`\>
+
+▸ **createLiftedAsyncEnumerable**<`A`, `B`, `C`, `D`, `E`, `F`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`F`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ObservableOperator`](observable.md#observableoperator)<`void`, `A`\> |
+| `op2` | [`ObservableOperator`](observable.md#observableoperator)<`A`, `B`\> |
+| `op3` | [`ObservableOperator`](observable.md#observableoperator)<`B`, `C`\> |
+| `op4` | [`ObservableOperator`](observable.md#observableoperator)<`C`, `D`\> |
+| `op5` | [`ObservableOperator`](observable.md#observableoperator)<`D`, `E`\> |
+| `op6` | [`ObservableOperator`](observable.md#observableoperator)<`E`, `F`\> |
+
+#### Returns
+
+[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`F`\>
+
+▸ **createLiftedAsyncEnumerable**<`A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`G`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ObservableOperator`](observable.md#observableoperator)<`void`, `A`\> |
+| `op2` | [`ObservableOperator`](observable.md#observableoperator)<`A`, `B`\> |
+| `op3` | [`ObservableOperator`](observable.md#observableoperator)<`B`, `C`\> |
+| `op4` | [`ObservableOperator`](observable.md#observableoperator)<`C`, `D`\> |
+| `op5` | [`ObservableOperator`](observable.md#observableoperator)<`D`, `E`\> |
+| `op6` | [`ObservableOperator`](observable.md#observableoperator)<`E`, `F`\> |
+| `op7` | [`ObservableOperator`](observable.md#observableoperator)<`F`, `G`\> |
+
+#### Returns
+
+[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`G`\>
+
+▸ **createLiftedAsyncEnumerable**<`A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`H`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ObservableOperator`](observable.md#observableoperator)<`void`, `A`\> |
+| `op2` | [`ObservableOperator`](observable.md#observableoperator)<`A`, `B`\> |
+| `op3` | [`ObservableOperator`](observable.md#observableoperator)<`B`, `C`\> |
+| `op4` | [`ObservableOperator`](observable.md#observableoperator)<`C`, `D`\> |
+| `op5` | [`ObservableOperator`](observable.md#observableoperator)<`D`, `E`\> |
+| `op6` | [`ObservableOperator`](observable.md#observableoperator)<`E`, `F`\> |
+| `op7` | [`ObservableOperator`](observable.md#observableoperator)<`F`, `G`\> |
+| `op8` | [`ObservableOperator`](observable.md#observableoperator)<`G`, `H`\> |
+
+#### Returns
+
+[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`H`\>
+
+▸ **createLiftedAsyncEnumerable**<`A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`I`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ObservableOperator`](observable.md#observableoperator)<`void`, `A`\> |
+| `op2` | [`ObservableOperator`](observable.md#observableoperator)<`A`, `B`\> |
+| `op3` | [`ObservableOperator`](observable.md#observableoperator)<`B`, `C`\> |
+| `op4` | [`ObservableOperator`](observable.md#observableoperator)<`C`, `D`\> |
+| `op5` | [`ObservableOperator`](observable.md#observableoperator)<`D`, `E`\> |
+| `op6` | [`ObservableOperator`](observable.md#observableoperator)<`E`, `F`\> |
+| `op7` | [`ObservableOperator`](observable.md#observableoperator)<`F`, `G`\> |
+| `op8` | [`ObservableOperator`](observable.md#observableoperator)<`G`, `H`\> |
+| `op9` | [`ObservableOperator`](observable.md#observableoperator)<`H`, `I`\> |
+
+#### Returns
+
+[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`I`\>
+
+▸ **createLiftedAsyncEnumerable**<`A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`J`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ObservableOperator`](observable.md#observableoperator)<`void`, `A`\> |
+| `op2` | [`ObservableOperator`](observable.md#observableoperator)<`A`, `B`\> |
+| `op3` | [`ObservableOperator`](observable.md#observableoperator)<`B`, `C`\> |
+| `op4` | [`ObservableOperator`](observable.md#observableoperator)<`C`, `D`\> |
+| `op5` | [`ObservableOperator`](observable.md#observableoperator)<`D`, `E`\> |
+| `op6` | [`ObservableOperator`](observable.md#observableoperator)<`E`, `F`\> |
+| `op7` | [`ObservableOperator`](observable.md#observableoperator)<`F`, `G`\> |
+| `op8` | [`ObservableOperator`](observable.md#observableoperator)<`G`, `H`\> |
+| `op9` | [`ObservableOperator`](observable.md#observableoperator)<`H`, `I`\> |
+| `op10` | [`ObservableOperator`](observable.md#observableoperator)<`I`, `J`\> |
+
+#### Returns
+
+[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`J`\>
+
+▸ **createLiftedAsyncEnumerable**<`A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`K`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ObservableOperator`](observable.md#observableoperator)<`void`, `A`\> |
+| `op2` | [`ObservableOperator`](observable.md#observableoperator)<`A`, `B`\> |
+| `op3` | [`ObservableOperator`](observable.md#observableoperator)<`B`, `C`\> |
+| `op4` | [`ObservableOperator`](observable.md#observableoperator)<`C`, `D`\> |
+| `op5` | [`ObservableOperator`](observable.md#observableoperator)<`D`, `E`\> |
+| `op6` | [`ObservableOperator`](observable.md#observableoperator)<`E`, `F`\> |
+| `op7` | [`ObservableOperator`](observable.md#observableoperator)<`F`, `G`\> |
+| `op8` | [`ObservableOperator`](observable.md#observableoperator)<`G`, `H`\> |
+| `op9` | [`ObservableOperator`](observable.md#observableoperator)<`H`, `I`\> |
+| `op10` | [`ObservableOperator`](observable.md#observableoperator)<`I`, `J`\> |
+| `op11` | [`ObservableOperator`](observable.md#observableoperator)<`J`, `K`\> |
+
+#### Returns
+
+[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`K`\>
+
+▸ **createLiftedAsyncEnumerable**<`A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`L`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+| `L` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`ObservableOperator`](observable.md#observableoperator)<`void`, `A`\> |
+| `op2` | [`ObservableOperator`](observable.md#observableoperator)<`A`, `B`\> |
+| `op3` | [`ObservableOperator`](observable.md#observableoperator)<`B`, `C`\> |
+| `op4` | [`ObservableOperator`](observable.md#observableoperator)<`C`, `D`\> |
+| `op5` | [`ObservableOperator`](observable.md#observableoperator)<`D`, `E`\> |
+| `op6` | [`ObservableOperator`](observable.md#observableoperator)<`E`, `F`\> |
+| `op7` | [`ObservableOperator`](observable.md#observableoperator)<`F`, `G`\> |
+| `op8` | [`ObservableOperator`](observable.md#observableoperator)<`G`, `H`\> |
+| `op9` | [`ObservableOperator`](observable.md#observableoperator)<`H`, `I`\> |
+| `op10` | [`ObservableOperator`](observable.md#observableoperator)<`I`, `J`\> |
+| `op11` | [`ObservableOperator`](observable.md#observableoperator)<`J`, `K`\> |
+| `op12` | [`ObservableOperator`](observable.md#observableoperator)<`K`, `L`\> |
+
+#### Returns
+
+[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`L`\>
 
 ___
 

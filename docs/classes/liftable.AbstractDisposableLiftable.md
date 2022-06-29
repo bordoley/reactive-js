@@ -16,6 +16,8 @@
 
   ↳ **`AbstractDisposableLiftable`**
 
+  ↳↳ [`AsyncEnumerator`](asyncEnumerator.AsyncEnumerator.md)
+
   ↳↳ [`AbstractDisposableSource`](source.AbstractDisposableSource.md)
 
 ## Implements
