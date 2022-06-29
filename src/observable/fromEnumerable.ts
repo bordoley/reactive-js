@@ -1,11 +1,12 @@
 import { dispose } from "../disposable";
 import { EnumerableLike, enumerate } from "../enumerable";
 import { Enumerator, current, move } from "../enumerator";
-import { Factory, Function1, max, pipe, pipeLazy } from "../functions";
+import { Factory, Function1, pipe, pipeLazy } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
-import { __yield } from "../scheduler";
+import { __yield, hasDelay } from "../scheduler";
 import { defer } from "./defer";
+import { tagEnumerable } from "./observable";
 import { using } from "./using";
 
 /**
@@ -15,27 +16,25 @@ import { using } from "./using";
  * @param delay The requested delay between emitted items by the observable.
  */
 export const fromEnumerator =
-  <T>(
-    options: { readonly delay?: number } = {},
-  ): Function1<Factory<Enumerator<T>>, ObservableLike<T>> =>
-  f => {
-    const result = using(f, enumerator =>
-      defer(
-        () => (observer: Observer<T>) => {
-          while (move(enumerator)) {
-            observer.notify(current(enumerator));
-            __yield(options);
-          }
-          pipe(observer, dispose());
-        },
-        options,
+  <T>(options?: {
+    readonly delay?: number;
+  }): Function1<Factory<Enumerator<T>>, ObservableLike<T>> =>
+  f =>
+    pipe(
+      using(f, enumerator =>
+        defer(
+          () => (observer: Observer<T>) => {
+            while (move(enumerator)) {
+              observer.notify(current(enumerator));
+              __yield(options);
+            }
+            pipe(observer, dispose());
+          },
+          options,
+        ),
       ),
+      tagEnumerable(!hasDelay(options)),
     );
-
-    (result as any).isEnumerable = max(options.delay ?? 0, 0) === 0;
-
-    return result;
-  };
 
 /**
  * Creates an `ObservableLike` which enumerates through the values

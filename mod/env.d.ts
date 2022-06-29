@@ -1,3 +1,4 @@
 declare const __DEV__: boolean;
 declare const __DENO__: boolean;
-export { __DENO__, __DEV__ };
+declare const MAX_SAFE_INTEGER: number;
+export { MAX_SAFE_INTEGER, __DENO__, __DEV__ };

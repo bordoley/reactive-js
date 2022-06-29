@@ -6,6 +6,7 @@ import {
   onComplete,
   onDisposed,
 } from "../disposable";
+import { MAX_SAFE_INTEGER } from "../env";
 import { length, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
@@ -86,8 +87,8 @@ export const mergeAll = <T>(
   } = {},
 ): ObservableOperator<ObservableLike<T>, T> => {
   const {
-    maxBufferSize = Number.MAX_SAFE_INTEGER,
-    maxConcurrency = Number.MAX_SAFE_INTEGER,
+    maxBufferSize = MAX_SAFE_INTEGER,
+    maxConcurrency = MAX_SAFE_INTEGER,
   } = options;
   const operator = (delegate: Observer<T>) => {
     const observer = pipe(
@@ -128,7 +129,7 @@ export const mergeAllT: ConcatAll<
 export const concatAll = <T>(
   options: { readonly maxBufferSize?: number } = {},
 ): ObservableOperator<ObservableLike<T>, T> => {
-  const { maxBufferSize = Number.MAX_SAFE_INTEGER } = options;
+  const { maxBufferSize = MAX_SAFE_INTEGER } = options;
   return mergeAll({ maxBufferSize, maxConcurrency: 1 });
 };
 

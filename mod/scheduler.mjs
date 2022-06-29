@@ -1,6 +1,7 @@
 /// <reference types="./scheduler.d.ts" />
 import { isDisposed, AbstractDisposable, dispose, disposed, add, addTo, onDisposed, createDisposable } from './disposable.mjs';
-import { floor, length, pipe, max, raise } from './functions.mjs';
+import { MAX_SAFE_INTEGER } from './env.mjs';
+import { floor, length, max, pipe, raise } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractEnumerator, move, hasCurrent, reset, current } from './enumerator.mjs';
 
@@ -94,6 +95,8 @@ const runContinuation = (continuation) => scheduler => {
 const inContinuation = (scheduler) => scheduler.inContinuation;
 const now = (scheduler) => scheduler.now;
 const shouldYield = (scheduler) => scheduler.shouldYield;
+const getDelay = (options = {}) => { var _a; return floor(max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0)); };
+const hasDelay = (options = {}) => getDelay(options) > 0;
 
 const isYieldError = (e) => e instanceof YieldError;
 class YieldError {
@@ -136,9 +139,8 @@ class SchedulerContinuationImpl extends AbstractDisposable {
         }
     }
 }
-const __yield = (options = {}) => {
-    var _a;
-    const { delay = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
+const __yield = (options) => {
+    const delay = getDelay(options);
     const scheduler = isNone(currentScheduler)
         ? raise("__yield effect may only be invoked from within a SchedulerContinuation")
         : currentScheduler;
@@ -264,9 +266,8 @@ class AbstractQueueScheduler extends AbstractEnumerator {
         this.dueTime = dueTime;
         this.inner = pipe(this.host, schedule(this.hostContinuation, { delay }));
     }
-    schedule(continuation, options = {}) {
-        var _a;
-        const { delay = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
+    schedule(continuation, options) {
+        const delay = getDelay(options);
         pipe(this, add(continuation, true));
         if (!isDisposed(continuation)) {
             const { now } = this;
@@ -307,9 +308,14 @@ class PriorityScheduler extends AbstractQueueScheduler {
             next.dueTime <= now(this) &&
             next.priority > current.priority);
     }
-    createTask(task, options) {
-        var _a;
-        return { ...task, priority: (_a = Number(options.delay)) !== null && _a !== void 0 ? _a : 0 };
+    createTask(task, options = {}) {
+        const { priority } = options;
+        return {
+            ...task,
+            priority: isSome(priority)
+                ? max(priority, 0)
+                : MAX_SAFE_INTEGER,
+        };
     }
 }
 /**
@@ -380,9 +386,8 @@ class SchedulerWithPriorityImpl extends AbstractDisposable {
     requestYield() {
         this.priorityScheduler.requestYield();
     }
-    schedule(continuation, options = {}) {
-        var _a;
-        const { delay = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
+    schedule(continuation, options) {
+        const delay = getDelay(options);
         pipe(this, add(continuation, true));
         if (!isDisposed(continuation)) {
             this.priorityScheduler.schedule(continuation, {
@@ -473,9 +478,8 @@ class HostScheduler extends AbstractDisposable {
     requestYield() {
         this.yieldRequested = true;
     }
-    schedule(continuation, options = {}) {
-        var _a;
-        const { delay = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
+    schedule(continuation, options) {
+        const delay = getDelay(options);
         pipe(this, add(continuation, true));
         const continuationIsDisposed = isDisposed(continuation);
         if (!continuationIsDisposed && delay > 0) {
@@ -516,7 +520,7 @@ const comparator = (a, b) => {
     return diff;
 };
 class VirtualTimeSchedulerImpl extends AbstractEnumerator {
-    constructor(maxMicroTaskTicks = Number.MAX_SAFE_INTEGER) {
+    constructor(maxMicroTaskTicks = MAX_SAFE_INTEGER) {
         super();
         this.maxMicroTaskTicks = maxMicroTaskTicks;
         this.inContinuation = false;
@@ -556,9 +560,8 @@ class VirtualTimeSchedulerImpl extends AbstractEnumerator {
     requestYield() {
         this.yieldRequested = true;
     }
-    schedule(continuation, options = {}) {
-        var _a;
-        const { delay = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
+    schedule(continuation, options) {
+        const delay = getDelay(options);
         pipe(this, add(continuation, true));
         if (!isDisposed(continuation)) {
             this.taskQueue.push({
@@ -577,8 +580,8 @@ class VirtualTimeSchedulerImpl extends AbstractEnumerator {
  * for testing cooperative multitasking.
  */
 const createVirtualTimeScheduler = (options = {}) => {
-    const { maxMicroTaskTicks = Number.MAX_SAFE_INTEGER } = options;
+    const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
     return new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
 };
 
-export { __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, inContinuation, now, runContinuation, schedule, shouldYield, toSchedulerWithPriority };
+export { __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, getDelay, hasDelay, inContinuation, now, runContinuation, schedule, shouldYield, toSchedulerWithPriority };

@@ -20,6 +20,9 @@ import {
   compose,
   ignore,
   isEqualTo,
+  length,
+  max,
+  min,
   negate,
   pipe,
   pipeLazy,
@@ -358,39 +361,75 @@ export interface Zip<C extends ContainerLike> extends Container<C> {
   ): ContainerOf<C, readonly T[]>;
 }
 
-export const compute = <C, T, O extends FromArrayOptions = FromArrayOptions>(
+export const compute = <
+  C extends ContainerLike,
+  T,
+  O extends FromArrayOptions = FromArrayOptions,
+>(
   m: Map<C> & FromArray<C, O>,
   options?: Omit<Partial<O>, keyof FromArrayOptions>,
 ): Function1<Factory<T>, ContainerOf<C, T>> =>
   compose(fromValue(m, options), m.map(callWith()));
 
-export const concatMap = <C, TA, TB, O = Record<string, never>>(
+export const concatMap = <
+  C extends ContainerLike,
+  TA,
+  TB,
+  O = Record<string, never>,
+>(
   { map, concatAll }: Map<C> & ConcatAll<C, O>,
   mapper: Function1<TA, ContainerOf<C, TB>>,
   options?: Partial<O>,
 ): ContainerOperator<C, TA, TB> => compose(map(mapper), concatAll(options));
 
 export const concatWith =
-  <C, T>(
+  <C extends ContainerLike, T>(
     { concat }: Concat<C>,
     snd: ContainerOf<C, T>,
   ): ContainerOperator<C, T, T> =>
   first =>
     concat(first, snd);
 
-export const empty = <C, T, O extends FromArrayOptions = FromArrayOptions>(
+export const createFromArray =
+  <C extends ContainerLike, O extends FromArrayOptions = FromArrayOptions>(
+    factory: <T>(
+      values: readonly T[],
+      startIndex: number,
+      endIndex: number,
+      options?: Partial<O>,
+    ) => ContainerOf<C, T>,
+  ) =>
+  <T>(options: Partial<O> = {}): Function1<readonly T[], ContainerOf<C, T>> =>
+  values => {
+    const valuesLength = length(values);
+    const startIndex = min(options.startIndex ?? 0, valuesLength);
+    const endIndex = max(
+      min(options.endIndex ?? valuesLength, valuesLength),
+      0,
+    );
+
+    return factory(values, startIndex, endIndex, options);
+  };
+
+export const empty = <
+  C extends ContainerLike,
+  T,
+  O extends FromArrayOptions = FromArrayOptions,
+>(
   { fromArray }: FromArray<C, O>,
   options?: Omit<Partial<O>, keyof FromArrayOptions>,
 ): ContainerOf<C, T> => fromArray<T>({ ...options })(emptyArray);
 
-export const contains = <C, T>(
+export const contains = <C extends ContainerLike, T>(
   { someSatisfy }: SomeSatisfy<C>,
   value: T,
   options: { readonly equality?: Equality<T> } = {},
 ): ContainerOperator<C, T, boolean> => someSatisfy(isEqualTo(value, options));
 
 export const encodeUtf8 =
-  <C>(m: Using<C> & Map<C>): ContainerOperator<C, string, Uint8Array> =>
+  <C extends ContainerLike>(
+    m: Using<C> & Map<C>,
+  ): ContainerOperator<C, string, Uint8Array> =>
   obs =>
     m.using(
       () => createDisposableValue(new TextEncoder(), ignore),
@@ -401,12 +440,12 @@ export const encodeUtf8 =
         ),
     );
 
-export function endWith<C, T>(
+export function endWith<C extends ContainerLike, T>(
   m: Concat<C> & FromArray<C>,
   value: T,
   ...values: readonly T[]
 ): ContainerOperator<C, T, T>;
-export function endWith<C, T>(
+export function endWith<C extends ContainerLike, T>(
   m: Concat<C> & FromArray<C, FromArrayOptions>,
   ...values: readonly T[]
 ): ContainerOperator<C, T, T> {
@@ -414,7 +453,7 @@ export function endWith<C, T>(
 }
 
 export const fromOption =
-  <C, T, O extends FromArrayOptions = FromArrayOptions>(
+  <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(
     m: FromArray<C, O>,
     options?: Omit<Partial<O>, keyof FromArrayOptions>,
   ): Function1<Option<T>, ContainerOf<C, T>> =>
@@ -424,7 +463,7 @@ export const fromOption =
       : empty<C, T, O>(m, options);
 
 export const fromValue =
-  <C, T, O extends FromArrayOptions = FromArrayOptions>(
+  <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(
     { fromArray }: FromArray<C, O>,
     options?: Omit<Partial<O>, keyof FromArrayOptions>,
   ): Function1<T, ContainerOf<C, T>> =>
@@ -437,7 +476,7 @@ export const fromValue =
     );
 
 export const genMap = <
-  C,
+  C extends ContainerLike,
   TA,
   TB,
   OConcatAll extends Record<string, never> = Record<string, never>,
@@ -454,33 +493,33 @@ export const genMap = <
     m.concatAll(options),
   );
 
-export const keepType = <C, TA, TB extends TA>(
+export const keepType = <C extends ContainerLike, TA, TB extends TA>(
   { keep }: Keep<C>,
   predicate: TypePredicate<TA, TB>,
 ): ContainerOperator<C, TA, TB> =>
   keep(predicate) as ContainerOperator<C, TA, TB>;
 
-export const ignoreElements = <C, T>({
+export const ignoreElements = <C extends ContainerLike, T>({
   keep,
 }: Keep<C>): ContainerOperator<C, unknown, T> =>
   keep(alwaysFalse) as ContainerOperator<C, unknown, T>;
 
-export const mapTo = <C, TA, TB>(
+export const mapTo = <C extends ContainerLike, TA, TB>(
   { map }: Map<C>,
   value: TB,
 ): ContainerOperator<C, TA, TB> => pipe(value, returns, map);
 
-export const noneSatisfy = <C, T>(
+export const noneSatisfy = <C extends ContainerLike, T>(
   { everySatisfy }: EverySatisfy<C>,
   predicate: Predicate<T>,
 ): ContainerOperator<C, T, boolean> => everySatisfy(compose(predicate, negate));
 
-export function startWith<C, T>(
+export function startWith<C extends ContainerLike, T>(
   m: Concat<C> & FromArray<C>,
   value: T,
   ...values: readonly T[]
 ): ContainerOperator<C, T, T>;
-export function startWith<C, T>(
+export function startWith<C extends ContainerLike, T>(
   m: Concat<C> & FromArray<C>,
   ...values: readonly T[]
 ): ContainerOperator<C, T, T> {
@@ -488,7 +527,7 @@ export function startWith<C, T>(
 }
 
 export const throws =
-  <C, T, O extends FromArrayOptions = FromArrayOptions>(
+  <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(
     m: Map<C> & FromArray<C, O>,
     options?: Omit<Partial<O>, keyof FromArrayOptions>,
   ): Function1<Factory<unknown>, ContainerOf<C, T>> =>
@@ -499,7 +538,7 @@ export const throws =
     }, compute(m, options)) as ContainerOf<C, T>;
 
 export const zipWith =
-  <C, TA, TB>(
+  <C extends ContainerLike, TA, TB>(
     { zip }: Zip<C>,
     snd: ContainerOf<C, TB>,
   ): ContainerOperator<C, TA, readonly [TA, TB]> =>

@@ -5,10 +5,10 @@ import {
   dispose,
   isDisposed,
 } from "../disposable";
-import { Function1, SideEffect, max, pipe, raise } from "../functions";
+import { Function1, SideEffect, pipe, raise } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
-import { shouldYield } from "./scheduler";
+import { getDelay, shouldYield } from "./scheduler";
 
 const isYieldError = (e: unknown): e is YieldError => e instanceof YieldError;
 
@@ -57,8 +57,8 @@ class SchedulerContinuationImpl
   }
 }
 
-export const __yield = (options: { delay?: number } = {}) => {
-  const { delay = max(options.delay ?? 0, 0) } = options;
+export const __yield = (options?: { delay?: number }) => {
+  const delay = getDelay(options);
 
   const scheduler = isNone(currentScheduler)
     ? raise<SchedulerLike>(

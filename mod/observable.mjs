@@ -1,23 +1,28 @@
 /// <reference types="./observable.d.ts" />
-import { empty, fromValue, throws, concatMap } from './container.mjs';
+import { createFromArray, empty, fromValue, throws, concatMap } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { dispose, isDisposed, onDisposed, add, addTo, disposed, onComplete, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
 import { move, current, AbstractEnumerator, reset, hasCurrent, zip as zip$1, forEach } from './enumerator.mjs';
-import { pipe, length, max, min, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, returns } from './functions.mjs';
+import { pipe, length, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, max, returns } from './functions.mjs';
 import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, assertState, notifySink, createUsing, notify, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { scheduler, AbstractDelegatingObserver, Observer, createDelegatingObserver } from './observer.mjs';
-import { schedule, __yield, inContinuation, runContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
+import { schedule, hasDelay, __yield, inContinuation, runContinuation, getDelay, createVirtualTimeScheduler } from './scheduler.mjs';
 import { contraVariant, delegate } from './liftable.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { createRunnable } from './runnable.mjs';
 import { map as map$1, everySatisfy as everySatisfy$1 } from './readonlyArray.mjs';
 import { enumerate, fromIterator as fromIterator$1, fromIterable as fromIterable$1, createEnumerable } from './enumerable.mjs';
+import { MAX_SAFE_INTEGER } from './env.mjs';
 
 class AbstractObservable extends AbstractSource {
 }
 class AbstractDisposableObservable extends AbstractDisposableSource {
 }
 const isEnumerable = (obs) => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; };
+const tagEnumerable = (isEnumerable) => (obs) => {
+    obs.isEnumerable = isEnumerable;
+    return obs;
+};
 
 class CreateObservable extends AbstractObservable {
     constructor(f) {
@@ -91,8 +96,7 @@ const defer = (factory, options) => createObservable(observer => {
     pipe(scheduler(observer), schedule(callback, options), addTo(observer));
 });
 
-const deferEmpty = createObservable(dispose());
-deferEmpty.isEnumerable = true;
+const deferEmpty = pipe(createObservable(dispose()), tagEnumerable(true));
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
  * An optional `startIndex` in the array maybe specified,
@@ -100,18 +104,12 @@ deferEmpty.isEnumerable = true;
  * @param options Config object that specifies an optional `delay` between emitted items and
  * an optional `startIndex` into the array.
  */
-const fromArray = (options = {}) => values => {
-    var _a, _b, _c;
-    const delay = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0);
-    const valuesLength = length(values);
-    const startIndex = min((_b = options.startIndex) !== null && _b !== void 0 ? _b : 0, valuesLength);
-    const endIndex = max(min((_c = options.endIndex) !== null && _c !== void 0 ? _c : length(values), valuesLength), 0);
+const fromArray = createFromArray((values, startIndex, endIndex, options) => {
     const count = endIndex - startIndex;
-    if (count === 0 && delay === 0) {
-        return deferEmpty;
-    }
-    else {
-        const observable = defer(() => {
+    const isEnumerableTag = !hasDelay(options);
+    return count === 0 && isEnumerableTag
+        ? deferEmpty
+        : pipe(defer(() => {
             let index = startIndex;
             return (observer) => {
                 while (index < endIndex) {
@@ -124,11 +122,8 @@ const fromArray = (options = {}) => values => {
                 }
                 pipe(observer, dispose());
             };
-        }, options);
-        observable.isEnumerable = delay === 0;
-        return observable;
-    }
-};
+        }, options), tagEnumerable(isEnumerableTag));
+});
 const fromArrayT = {
     fromArray,
 };
@@ -518,6 +513,7 @@ class LatestObserver extends AbstractDelegatingObserver {
     }
 }
 const latest = (observables, mode) => {
+    const isEnumerableTag = pipe(observables, everySatisfy$1(isEnumerable));
     const factory = () => (delegate) => {
         const observers = [];
         const ctx = {
@@ -530,9 +526,7 @@ const latest = (observables, mode) => {
             observers.push(innerObserver);
         }
     };
-    const observable = defer(factory);
-    observable.isEnumerable = pipe(observables, everySatisfy$1(isEnumerable));
-    return observable;
+    return pipe(defer(factory), tagEnumerable(isEnumerableTag));
 };
 /**
  * Returns an `ObservableLike` that combines the latest values from
@@ -566,16 +560,15 @@ const createConcatObserver = (delegate, observables, next) => pipe(createDelegat
     }
 }));
 function concat(...observables) {
-    const observable = createObservable(observer => {
+    const isEnumerableTag = pipe(observables, everySatisfy$1(isEnumerable));
+    return pipe(createObservable(observer => {
         if (!isEmpty(observables)) {
             pipe(createConcatObserver(observer, observables, 1), sourceFrom(observables[0]));
         }
         else {
             pipe(observer, dispose());
         }
-    });
-    observable.isEnumerable = pipe(observables, everySatisfy$1(isEnumerable));
-    return observable;
+    }), tagEnumerable(isEnumerableTag));
 }
 const concatT = {
     concat,
@@ -587,18 +580,13 @@ const concatT = {
  *
  * @param delay The requested delay between emitted items by the observable.
  */
-const fromEnumerator = (options = {}) => f => {
-    var _a;
-    const result = using(f, enumerator => defer(() => (observer) => {
-        while (move(enumerator)) {
-            observer.notify(current(enumerator));
-            __yield(options);
-        }
-        pipe(observer, dispose());
-    }, options));
-    result.isEnumerable = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) === 0;
-    return result;
-};
+const fromEnumerator = (options) => f => pipe(using(f, enumerator => defer(() => (observer) => {
+    while (move(enumerator)) {
+        observer.notify(current(enumerator));
+        __yield(options);
+    }
+    pipe(observer, dispose());
+}, options)), tagEnumerable(!hasDelay(options)));
 /**
  * Creates an `ObservableLike` which enumerates through the values
  * produced by the provided `Enumerable` with a specified `delay` between emitted items.
@@ -697,13 +685,13 @@ class BufferObserver extends AbstractDelegatingObserver {
  */
 function buffer(options = {}) {
     var _a, _b;
-    const delay = (_a = options.duration) !== null && _a !== void 0 ? _a : Number.MAX_SAFE_INTEGER;
-    const durationFunction = delay === Number.MAX_SAFE_INTEGER
+    const delay = (_a = options.duration) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER;
+    const durationFunction = delay === MAX_SAFE_INTEGER
         ? never
         : typeof delay === "number"
             ? (_) => fromValue(fromArrayT, { delay })(none)
             : delay;
-    const maxBufferSize = max((_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : Number.MAX_SAFE_INTEGER, 1);
+    const maxBufferSize = max((_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : MAX_SAFE_INTEGER, 1);
     const operator = (delegate$1) => {
         const durationSubscription = createSerialDisposable();
         return pipe(new BufferObserver(delegate$1, durationFunction, maxBufferSize, durationSubscription), add(durationSubscription), addTo(delegate$1), onComplete(function onDispose() {
@@ -717,7 +705,7 @@ function buffer(options = {}) {
             }
         }));
     };
-    return lift(operator, delay === Number.MAX_SAFE_INTEGER);
+    return lift(operator, delay === MAX_SAFE_INTEGER);
 }
 const bufferT = {
     buffer,
@@ -767,7 +755,7 @@ class MergeObserver extends AbstractDelegatingObserver {
  * property specifies the maximum number of inner observables that may be subscribed to concurrently.
  */
 const mergeAll = (options = {}) => {
-    const { maxBufferSize = Number.MAX_SAFE_INTEGER, maxConcurrency = Number.MAX_SAFE_INTEGER, } = options;
+    const { maxBufferSize = MAX_SAFE_INTEGER, maxConcurrency = MAX_SAFE_INTEGER, } = options;
     const operator = (delegate) => {
         const observer = pipe(delegate, onDisposed(_ => {
             observer.queue.length = 0;
@@ -790,7 +778,7 @@ const mergeAllT = {
  * @param maxBufferSize The number of source observables that may be queued before dropping previous observables.
  */
 const concatAll = (options = {}) => {
-    const { maxBufferSize = Number.MAX_SAFE_INTEGER } = options;
+    const { maxBufferSize = MAX_SAFE_INTEGER } = options;
     return mergeAll({ maxBufferSize, maxConcurrency: 1 });
 };
 const concatAllT = {
@@ -997,9 +985,8 @@ class EnumeratorScheduler extends AbstractEnumerator {
     requestYield() {
         // No-Op: We yield whenever the continuation is running.
     }
-    schedule(continuation, options = {}) {
-        var _a;
-        const { delay = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
+    schedule(continuation, options) {
+        const delay = getDelay(options);
         pipe(this, add(continuation, true));
         if (!isDisposed(continuation) && delay === 0) {
             this.continuations.push(continuation);
@@ -1096,15 +1083,11 @@ class ZipObserver extends AbstractDelegatingObserver {
     }
 }
 const _zip = (...observables) => {
-    const isEnumerableOperator = pipe(observables, everySatisfy$1(isEnumerable));
-    const zipObservable = createObservable(observer => {
-        const count = length(observables);
-        if (isEnumerableOperator) {
-            const zipped = using(pipeLazy(observables, map$1(enumerateObs)), (...enumerators) => pipe(zip$1(...enumerators), returns, fromEnumerator()));
-            zipped.isEnumerable = true;
-            pipe(zipped, sinkInto(observer));
-        }
-        else {
+    const isEnumerableTag = pipe(observables, everySatisfy$1(isEnumerable));
+    return isEnumerableTag
+        ? pipe(using(pipeLazy(observables, map$1(enumerateObs)), (...enumerators) => pipe(zip$1(...enumerators), returns, fromEnumerator())), tagEnumerable(true))
+        : createObservable(observer => {
+            const count = length(observables);
             const enumerators = [];
             for (let index = 0; index < count; index++) {
                 const next = observables[index];
@@ -1126,10 +1109,7 @@ const _zip = (...observables) => {
                     enumerators.push(innerObserver.enumerator);
                 }
             }
-        }
-    });
-    zipObservable.isEnumerable = isEnumerableOperator;
-    return zipObservable;
+        });
 };
 /**
  * Combines multiple sources to create an `ObservableLike` whose values are calculated from the values,
@@ -1222,8 +1202,7 @@ const fromPromise = (factory) => createObservable(({ dispatcher }) => {
  * @param initialValue Factory function used to generate the initial accumulator.
  * @param delay The requested delay between emitted items by the observable.
  */
-const generate = (generator, initialValue, options = {}) => {
-    var _a;
+const generate = (generator, initialValue, options) => {
     const factory = () => {
         let acc = initialValue();
         return (observer) => {
@@ -1234,9 +1213,7 @@ const generate = (generator, initialValue, options = {}) => {
             }
         };
     };
-    const observable = defer(factory, options);
-    observable.isEnumerable = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) === 0;
-    return observable;
+    return pipe(defer(factory, options), tagEnumerable(!hasDelay(options)));
 };
 const generateT = {
     generate,

@@ -1,8 +1,8 @@
-import { FromArray, FromArrayOptions } from "../container";
+import { FromArray, FromArrayOptions, createFromArray } from "../container";
 import { dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { AbstractEnumerator, hasCurrent, reset } from "../enumerator";
-import { length, max, min, pipe } from "../functions";
+import { pipe } from "../functions";
 import { createEnumerable } from "./enumerable";
 
 class ArrayEnumerator<T> extends AbstractEnumerator<T> {
@@ -39,25 +39,16 @@ class ArrayEnumerator<T> extends AbstractEnumerator<T> {
  *
  * @param values
  */
-export const fromArray =
-  <T>(
-    options: {
-      readonly startIndex?: number;
-      readonly endIndex?: number;
-    } = {},
-  ) =>
-  (values: readonly T[]): EnumerableLike<T> => {
-    const valuesLength = length(values);
-    const startIndex = min(options.startIndex ?? 0, valuesLength);
-    const endIndex = max(
-      min(options.endIndex ?? length(values), valuesLength),
-      0,
-    );
-
-    return createEnumerable(
-      () => new ArrayEnumerator(values, startIndex - 1, endIndex),
-    );
-  };
+export const fromArray = createFromArray<
+  EnumerableLike<unknown>,
+  {
+    readonly delay: number;
+    readonly startIndex: number;
+    readonly endIndex: number;
+  }
+>(<T>(values: readonly T[], startIndex: number, endIndex: number) =>
+  createEnumerable(() => new ArrayEnumerator(values, startIndex - 1, endIndex)),
+);
 
 export const fromArrayT: FromArray<
   EnumerableLike<unknown>,

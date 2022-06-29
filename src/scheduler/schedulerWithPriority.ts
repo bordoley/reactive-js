@@ -1,11 +1,11 @@
 import { AbstractDisposable, add, addTo, isDisposed } from "../disposable";
-import { Function1, max, pipe } from "../functions";
+import { Function1, pipe } from "../functions";
 import {
   PrioritySchedulerLike,
   SchedulerContinuationLike,
   SchedulerLike,
 } from "../scheduler";
-import { inContinuation, now, shouldYield } from "./scheduler";
+import { getDelay, inContinuation, now, shouldYield } from "./scheduler";
 
 class SchedulerWithPriorityImpl
   extends AbstractDisposable
@@ -36,9 +36,9 @@ class SchedulerWithPriorityImpl
 
   schedule(
     continuation: SchedulerContinuationLike,
-    options: { readonly delay?: number } = {},
+    options?: { readonly delay?: number },
   ) {
-    const { delay = max(options.delay ?? 0, 0) } = options;
+    const delay = getDelay(options);
 
     pipe(this, add(continuation, true));
 

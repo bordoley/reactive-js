@@ -356,7 +356,7 @@ ___
 
 ### fromArray
 
-▸ **fromArray**<`T`\>(`options?`): (`values`: readonly `T`[]) => [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
+▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
 
 Returns an EnumerableLike view over the `values` array.
 
@@ -370,25 +370,11 @@ Returns an EnumerableLike view over the `values` array.
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Object` |
-| `options.endIndex?` | `number` |
-| `options.startIndex?` | `number` |
+| `options?` | `Partial`<{ `delay`: `number` ; `endIndex`: `number` ; `startIndex`: `number`  }\> |
 
 #### Returns
 
-`fn`
-
-▸ (`values`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `values` | readonly `T`[] |
-
-##### Returns
-
-[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
+[`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
 
 ___
 

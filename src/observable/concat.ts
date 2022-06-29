@@ -6,7 +6,7 @@ import { Observer, createDelegatingObserver } from "../observer";
 import { everySatisfy } from "../readonlyArray";
 import { sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
-import { isEnumerable } from "./observable";
+import { isEnumerable, tagEnumerable } from "./observable";
 
 const createConcatObserver = <T>(
   delegate: Observer<T>,
@@ -40,23 +40,21 @@ export function concat<T>(
 export function concat<T>(
   ...observables: readonly ObservableLike<T>[]
 ): ObservableLike<T> {
-  const observable = createObservable(observer => {
-    if (!isEmpty(observables)) {
-      pipe(
-        createConcatObserver(observer, observables, 1),
-        sourceFrom(observables[0]),
-      );
-    } else {
-      pipe(observer, dispose());
-    }
-  });
+  const isEnumerableTag = pipe(observables, everySatisfy(isEnumerable));
 
-  (observable as any).isEnumerable = pipe(
-    observables,
-    everySatisfy(isEnumerable),
+  return pipe(
+    createObservable(observer => {
+      if (!isEmpty(observables)) {
+        pipe(
+          createConcatObserver(observer, observables, 1),
+          sourceFrom(observables[0]),
+        );
+      } else {
+        pipe(observer, dispose());
+      }
+    }),
+    tagEnumerable(isEnumerableTag),
   );
-
-  return observable;
 }
 
 export const concatT: Concat<ObservableLike<unknown>> = {

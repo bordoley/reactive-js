@@ -1,5 +1,7 @@
 import { addTo, onDisposed } from "../disposable";
-import { pipe } from "../functions";
+import { MAX_SAFE_INTEGER } from "../env";
+import { max, pipe } from "../functions";
+import { isSome } from "../option";
 import {
   PrioritySchedulerLike,
   SchedulerContinuationLike,
@@ -47,9 +49,15 @@ class PriorityScheduler
       continuation: SchedulerContinuationLike;
       dueTime: number;
     },
-    options: Record<string, unknown>,
+    options: Record<string, unknown> = {},
   ): PriorityTask {
-    return { ...task, priority: Number(options.delay) ?? 0 };
+    const { priority } = options;
+    return {
+      ...task,
+      priority: isSome(priority)
+        ? max(priority as number, 0)
+        : MAX_SAFE_INTEGER,
+    };
   }
 }
 

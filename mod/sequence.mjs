@@ -1,8 +1,9 @@
 /// <reference types="./sequence.d.ts" />
+import { createFromArray } from './container.mjs';
 import { isDisposed, dispose } from './disposable.mjs';
 import { createEnumerable } from './enumerable.mjs';
 import { AbstractEnumerator, hasCurrent } from './enumerator.mjs';
-import { length, min, max, pipe, strictEquality, alwaysTrue, callWith } from './functions.mjs';
+import { pipe, strictEquality, alwaysTrue, length, callWith } from './functions.mjs';
 import { none, isNone } from './option.mjs';
 import { map as map$1, keepType } from './readonlyArray.mjs';
 import { createRunnable } from './runnable.mjs';
@@ -41,13 +42,7 @@ const concatAllT = {
 const _fromArray = (arr, index, endIndex) => index < endIndex && index >= 0
     ? notify(arr[index], () => _fromArray(arr, index + 1, endIndex))
     : done();
-const fromArray = (options = {}) => values => {
-    var _a, _b;
-    const valuesLength = length(values);
-    const startIndex = min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
-    const endIndex = max(min((_b = options.endIndex) !== null && _b !== void 0 ? _b : valuesLength, valuesLength), 0);
-    return castToSequence(() => _fromArray(values, startIndex, endIndex));
-};
+const fromArray = createFromArray((values, startIndex, endIndex) => castToSequence(() => _fromArray(values, startIndex, endIndex)));
 const fromArrayT = {
     fromArray,
 };

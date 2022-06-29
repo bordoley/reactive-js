@@ -18,10 +18,11 @@ declare type SequenceOperator<TA, TB> = Function1<Sequence<TA>, Sequence<TB>>;
 declare const type: Sequence<unknown>;
 declare const concatAll: <T>() => SequenceOperator<Sequence<T>, T>;
 declare const concatAllT: ConcatAll<Sequence<unknown>>;
-declare const fromArray: <T>(options?: {
-    readonly startIndex?: number;
-    readonly endIndex?: number;
-}) => Function1<readonly T[], Sequence<T>>;
+declare const fromArray: <T>(options?: Partial<{
+    readonly delay: number;
+    readonly startIndex: number;
+    readonly endIndex: number;
+}>) => Function1<readonly T[], Sequence<T>>;
 declare const fromArrayT: FromArray<Sequence<unknown>>;
 declare function concat<T>(fst: Sequence<T>, snd: Sequence<T>, ...tail: readonly Sequence<T>[]): Sequence<T>;
 declare const concatT: Concat<Sequence<unknown>>;

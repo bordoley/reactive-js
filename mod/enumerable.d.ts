@@ -23,10 +23,11 @@ declare const concatAllT: ConcatAll<EnumerableLike<unknown>>;
  *
  * @param values
  */
-declare const fromArray: <T>(options?: {
-    readonly startIndex?: number;
-    readonly endIndex?: number;
-}) => (values: readonly T[]) => EnumerableLike<T>;
+declare const fromArray: <T>(options?: Partial<{
+    readonly delay: number;
+    readonly startIndex: number;
+    readonly endIndex: number;
+}>) => Function1<readonly T[], EnumerableLike<T>>;
 declare const fromArrayT: FromArray<EnumerableLike<unknown>, FromArrayOptions>;
 /**
  * Returns a single use EnumerableLike over the javascript Iterator

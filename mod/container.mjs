@@ -1,6 +1,6 @@
 /// <reference types="./container.d.ts" />
 import { AbstractDisposable, createDisposableValue } from './disposable.mjs';
-import { raise, compose, callWith, isEqualTo, ignore, pipe, pipeLazy, alwaysFalse, returns, negate } from './functions.mjs';
+import { raise, compose, callWith, length, min, max, isEqualTo, ignore, pipe, pipeLazy, alwaysFalse, returns, negate } from './functions.mjs';
 import { isSome } from './option.mjs';
 import { empty as empty$1 } from './readonlyArray.mjs';
 
@@ -23,6 +23,13 @@ class AbstractDisposableContainer extends AbstractDisposable {
 const compute = (m, options) => compose(fromValue(m, options), m.map(callWith()));
 const concatMap = ({ map, concatAll }, mapper, options) => compose(map(mapper), concatAll(options));
 const concatWith = ({ concat }, snd) => first => concat(first, snd);
+const createFromArray = (factory) => (options = {}) => values => {
+    var _a, _b;
+    const valuesLength = length(values);
+    const startIndex = min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
+    const endIndex = max(min((_b = options.endIndex) !== null && _b !== void 0 ? _b : valuesLength, valuesLength), 0);
+    return factory(values, startIndex, endIndex, options);
+};
 const empty = ({ fromArray }, options) => fromArray({ ...options })(empty$1);
 const contains = ({ someSatisfy }, value, options = {}) => someSatisfy(isEqualTo(value, options));
 const encodeUtf8 = (m) => obs => m.using(() => createDisposableValue(new TextEncoder(), ignore), v => pipe(obs, m.map(s => v.value.encode(s))));
@@ -49,4 +56,4 @@ const throws = (m, options) => errorFactory => pipe(() => {
 }, compute(m, options));
 const zipWith = ({ zip }, snd) => fst => zip(fst, snd);
 
-export { AbstractContainer, AbstractDisposableContainer, compute, concatMap, concatWith, contains, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };
+export { AbstractContainer, AbstractDisposableContainer, compute, concatMap, concatWith, contains, createFromArray, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };

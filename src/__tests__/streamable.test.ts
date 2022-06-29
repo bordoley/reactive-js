@@ -94,7 +94,7 @@ export const tests = describe(
       return __observe(stream) ?? -1;
     });
 
-    pipe(obs, toRunnable(), toArray(), console.log);
+    pipe(obs, toRunnable(), toArray(), expectArrayEquals([-1, 0, 1, 2, 3]));
   }),
   test("createActionReducer", () => {
     const scheduler = createVirtualTimeScheduler();

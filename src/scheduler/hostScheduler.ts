@@ -9,14 +9,14 @@ import {
   isDisposed,
   onDisposed,
 } from "../disposable";
-import { max, pipe } from "../functions";
+import { pipe } from "../functions";
 import { Option, isSome, none } from "../option";
 import {
   SchedulerContinuationLike,
   SchedulerImplementationLike,
   SchedulerLike,
 } from "../scheduler";
-import { now, runContinuation } from "./scheduler";
+import { getDelay, now, runContinuation } from "./scheduler";
 
 const scheduleImmediateWithSetImmediate = (
   scheduler: HostScheduler,
@@ -150,9 +150,9 @@ class HostScheduler
 
   schedule(
     continuation: SchedulerContinuationLike,
-    options: { readonly delay?: number } = {},
+    options?: { readonly delay?: number },
   ) {
-    const { delay = max(options.delay ?? 0, 0) } = options;
+    const delay = getDelay(options);
 
     pipe(this, add(continuation, true));
 
