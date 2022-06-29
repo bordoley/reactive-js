@@ -1,5 +1,5 @@
 import { dispose } from "../disposable";
-import { Function1, pipe } from "../functions";
+import { Function1, newInstance, pipe } from "../functions";
 import { contraVariant } from "../liftable";
 import { RunnableLike, RunnableOperator } from "../runnable";
 import { RunnableSink } from "../runnableSink";
@@ -38,7 +38,7 @@ export const lift =
         ? [operator, ...runnable.operators]
         : [operator];
 
-    return new LiftedRunnable(src, allFunctions);
+    return newInstance(LiftedRunnable, src, allFunctions);
   };
 
 export const liftT: Lift<RunnableLike<unknown>> = {

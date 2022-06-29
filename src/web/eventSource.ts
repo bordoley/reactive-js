@@ -1,6 +1,6 @@
 import { dispatch } from "../dispatcher";
 import { onDisposed } from "../disposable";
-import { pipe } from "../functions";
+import { newInstance, pipe } from "../functions";
 import { ObservableLike, createObservable } from "../observable";
 import { keep } from "../readonlyArray";
 
@@ -34,7 +34,7 @@ export const createEventSource = (
       }),
     );
 
-    const eventSource = new EventSource(requestURL, options);
+    const eventSource = newInstance(EventSource, requestURL, options);
     const listener = (ev: MessageEvent) => {
       pipe(
         dispatcher,

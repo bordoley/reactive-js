@@ -6,6 +6,7 @@ import {
   compose,
   isEmpty,
   length,
+  newInstance,
   newInstanceWith,
   pipe,
   raise,
@@ -49,7 +50,7 @@ const windowLocationURIToString = ({
   let uri = isEmpty(path) ? "/" : !path.startsWith("/") ? `/${path}` : path;
   uri = length(query) > 0 ? `${uri}?${query}` : uri;
   uri = length(fragment) > 0 ? `${uri}#${fragment}` : uri;
-  return new URL(uri, location.href).toString();
+  return newInstance(URL, uri, location.href).toString();
 };
 
 const getCurrentWindowLocationURI = (): WindowLocationURI => {
@@ -57,7 +58,7 @@ const getCurrentWindowLocationURI = (): WindowLocationURI => {
     pathname: path,
     search: query,
     hash: fragment,
-  } = new URL(location.href);
+  } = newInstance(URL, location.href);
   return {
     title: document.title,
     path,

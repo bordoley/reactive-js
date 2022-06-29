@@ -6,7 +6,7 @@ import {
   hasCurrent,
   reset,
 } from "../enumerator";
-import { Function1, newInstanceWith, pipe } from "../functions";
+import { Function1, newInstance, newInstanceWith, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
 import { isNone } from "../option";
@@ -87,7 +87,7 @@ class EnumeratorObserver<T> extends Observer<T> {
 }
 
 export const enumerateObs = <T>(obs: ObservableLike<T>): Enumerator<T> => {
-  const scheduler = new EnumeratorScheduler<T>();
+  const scheduler = newInstance<EnumeratorScheduler<T>>(EnumeratorScheduler);
 
   pipe(
     EnumeratorObserver,

@@ -81,7 +81,7 @@ const lift = (operator) => runnable => {
     const allFunctions = runnable instanceof LiftedRunnable
         ? [operator, ...runnable.operators]
         : [operator];
-    return new LiftedRunnable(src, allFunctions);
+    return newInstance(LiftedRunnable, src, allFunctions);
 };
 const liftT = {
     variance: contraVariant,

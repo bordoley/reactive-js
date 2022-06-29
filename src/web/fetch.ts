@@ -1,5 +1,5 @@
 import { dispose, toAbortSignal } from "../disposable";
-import { Function1, pipe, returns } from "../functions";
+import { Function1, newInstance, pipe, returns } from "../functions";
 import { ObservableLike, defer, fromPromise } from "../observable";
 import { Option, none } from "../option";
 import { sinkInto } from "../source";
@@ -20,7 +20,7 @@ export const fetch =
         request = fetchRequest;
       } else {
         const { uri, ...requestInit } = fetchRequest;
-        request = new Request(uri, requestInit);
+        request = newInstance(Request, uri, requestInit);
       }
 
       // This try/catch is necessary because we await in the try block.

@@ -5,7 +5,7 @@ import {
   dispose,
   isDisposed,
 } from "../disposable";
-import { Function1, SideEffect, pipe, raise } from "../functions";
+import { Function1, SideEffect, newInstance, pipe, raise } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
 import { getDelay, shouldYield } from "./scheduler";
@@ -67,7 +67,7 @@ export const __yield = (options?: { delay?: number }) => {
     : currentScheduler;
 
   if (delay > 0 || shouldYield(scheduler)) {
-    throw new YieldError(delay);
+    throw newInstance(YieldError, delay);
   }
 };
 
@@ -77,7 +77,7 @@ export const schedule =
     options?: { readonly delay?: number },
   ): Function1<SchedulerLike, DisposableLike> =>
   scheduler => {
-    const continuation = new SchedulerContinuationImpl(scheduler, f);
+    const continuation = newInstance(SchedulerContinuationImpl, scheduler, f);
     scheduler.schedule(continuation, options);
     return continuation;
   };

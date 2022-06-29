@@ -1,7 +1,7 @@
 /// <reference types="./scheduler.d.ts" />
 import { isDisposed, AbstractDisposable, dispose, disposed, add, addTo, onDisposed, createDisposable } from './disposable.mjs';
 import { MAX_SAFE_INTEGER } from './env.mjs';
-import { floor, length, max, pipe, raise, newInstanceWith } from './functions.mjs';
+import { floor, length, newInstance, max, pipe, raise, newInstanceWith } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractEnumerator, move, hasCurrent, reset, current } from './enumerator.mjs';
 
@@ -82,7 +82,7 @@ class PriorityQueueImpl {
         siftUp(this, item);
     }
 }
-const createPriorityQueue = (comparator) => new PriorityQueueImpl(comparator);
+const createPriorityQueue = (comparator) => newInstance(PriorityQueueImpl, comparator);
 
 const runContinuation = (continuation) => scheduler => {
     if (!isDisposed(continuation)) {
@@ -145,11 +145,11 @@ const __yield = (options) => {
         ? raise("__yield effect may only be invoked from within a SchedulerContinuation")
         : currentScheduler;
     if (delay > 0 || shouldYield(scheduler)) {
-        throw new YieldError(delay);
+        throw newInstance(YieldError, delay);
     }
 };
 const schedule = (f, options) => scheduler => {
-    const continuation = new SchedulerContinuationImpl(scheduler, f);
+    const continuation = newInstance(SchedulerContinuationImpl, scheduler, f);
     scheduler.schedule(continuation, options);
     return continuation;
 };
@@ -492,7 +492,7 @@ class HostScheduler extends AbstractDisposable {
 }
 const createHostScheduler = (options = {}) => {
     const { yieldInterval = 5 } = options;
-    const hostScheduler = new HostScheduler(yieldInterval);
+    const hostScheduler = newInstance(HostScheduler, yieldInterval);
     hostScheduler.supportsPerformanceNow =
         typeof performance === "object" && typeof performance.now === "function";
     hostScheduler.supportsSetImmediate = typeof setImmediate === "function";
@@ -503,7 +503,7 @@ const createHostScheduler = (options = {}) => {
             navigator.scheduling !== undefined &&
             navigator.scheduling.isInputPending !== undefined;
     if (typeof MessageChannel === "function") {
-        const messageChannel = new MessageChannel();
+        const messageChannel = newInstance(MessageChannel);
         hostScheduler.messageChannel = messageChannel;
         pipe(hostScheduler, onDisposed(_ => {
             messageChannel.port1.close();
@@ -581,7 +581,7 @@ class VirtualTimeSchedulerImpl extends AbstractEnumerator {
  */
 const createVirtualTimeScheduler = (options = {}) => {
     const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
-    return new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
+    return newInstance(VirtualTimeSchedulerImpl, maxMicroTaskTicks);
 };
 
 export { __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, getDelay, hasDelay, inContinuation, now, runContinuation, schedule, shouldYield, toSchedulerWithPriority };

@@ -1,7 +1,7 @@
 import { add, dispose, isDisposed } from "../disposable";
 import { AbstractEnumerator, hasCurrent, reset } from "../enumerator";
 import { MAX_SAFE_INTEGER } from "../env";
-import { pipe } from "../functions";
+import { newInstance, pipe } from "../functions";
 import { isSome, none } from "../option";
 import {
   SchedulerContinuationLike,
@@ -112,5 +112,5 @@ export const createVirtualTimeScheduler = (
   options: { readonly maxMicroTaskTicks?: number } = {},
 ): VirtualTimeSchedulerLike => {
   const { maxMicroTaskTicks = MAX_SAFE_INTEGER } = options;
-  return new VirtualTimeSchedulerImpl(maxMicroTaskTicks);
+  return newInstance(VirtualTimeSchedulerImpl, maxMicroTaskTicks);
 };

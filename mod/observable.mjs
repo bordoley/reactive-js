@@ -1012,7 +1012,7 @@ class EnumeratorObserver extends Observer {
     }
 }
 const enumerateObs = (obs) => {
-    const scheduler = new EnumeratorScheduler();
+    const scheduler = newInstance(EnumeratorScheduler);
     pipe(EnumeratorObserver, newInstanceWith(scheduler), addTo(scheduler), sourceFrom(obs));
     return scheduler;
 };
@@ -1126,7 +1126,7 @@ const zipT = {
  *
  * @param scheduler The scheduler upon which to subscribe to the source.
  */
-const toPromise = (scheduler) => observable => new Promise((resolve, reject) => {
+const toPromise = (scheduler) => observable => newInstance(Promise, (resolve, reject) => {
     let result = none;
     let hasResult = false;
     pipe(observable, onNotify(next => {
@@ -1138,7 +1138,7 @@ const toPromise = (scheduler) => observable => new Promise((resolve, reject) => 
             reject(cause);
         }
         else if (!hasResult) {
-            reject(new Error("Observable completed without producing a value"));
+            reject(newInstance(Error, "Observable completed without producing a value"));
         }
         else {
             resolve(result);
