@@ -6,10 +6,6 @@ import {
   MulticastObservableLike,
   ObservableOperator,
   StreamLike,
-  __currentScheduler,
-  __memo,
-  __observe,
-  __using,
   createSubject,
   observerCount,
   publish,
@@ -204,25 +200,3 @@ export const stream =
   ): Function1<StreamableLike<TReq, T, TStream>, TStream> =>
   streamable =>
     streamable.stream(scheduler, options);
-
-const streamOnSchedulerFactory = <TReq, T, TStream extends StreamLike<TReq, T>>(
-  streamable: StreamableLike<TReq, T, TStream>,
-  scheduler: SchedulerLike,
-  replay: number,
-) => pipe(streamable, stream(scheduler, { replay }));
-
-export const __stream = <TReq, T, TStream extends StreamLike<TReq, T>>(
-  streamable: StreamableLike<TReq, T, TStream>,
-  {
-    replay = 0,
-    scheduler,
-  }: { readonly replay?: number; readonly scheduler?: SchedulerLike } = {},
-): TStream => {
-  const currentScheduler = __currentScheduler();
-  return __using(
-    streamOnSchedulerFactory,
-    streamable,
-    scheduler ?? currentScheduler,
-    replay,
-  );
-};

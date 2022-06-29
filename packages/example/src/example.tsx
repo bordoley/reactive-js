@@ -9,7 +9,7 @@ import {
   StreamLike,
 } from "@reactive-js/core/observable";
 import {
-  createStateStore,
+  __state,
   flow,
   FlowMode,
   StateStreamLike,
@@ -26,9 +26,11 @@ import { increment, pipe, returns } from "@reactive-js/core/functions";
 
 const idlePriorityScheduler = createReactIdlePriorityScheduler();
 const normalPriorityScheduler = createReactNormalPriorityScheduler();
+
+// History must be globally unique to an application
 const historyStream = windowLocation.stream(normalPriorityScheduler);
 
-const onValue = (value: number) => {
+const onValueChanged = (value: number) => {
   historyStream.dispatch(
     (uri: WindowLocationURI) => ({
       ...uri,
@@ -54,18 +56,18 @@ const createOnClick = (state: StateStreamLike<FlowMode>) => () => {
   state.dispatch(mode => (mode === "pause" ? "resume" : "pause"));
 };
 
-const stateStore = createStateStore(() => "pause" as FlowMode);
+const initialFlowModeState = () => "pause" as FlowMode;
 
 const StreamPauseResume = createComponent(() =>
   observable(() => {
     const counter = __stream(counterFlowable);
-    const state = __stream(stateStore);
+    const state = __state(initialFlowModeState);
 
     const value = __observe(counter) ?? 0;
     const mode = __observe(state) ?? "pause";
 
     __do(setCounterMode, counter, mode);
-    __do(onValue, value);
+    __do(onValueChanged, value);
 
     const onClick = __memo(createOnClick, state);
     const label = mode === "resume" ? "PAUSE" : "RESUME";

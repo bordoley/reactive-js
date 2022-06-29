@@ -24,6 +24,7 @@
 
 ### Functions
 
+- [\_\_state](streamable.md#__state)
 - [\_\_stream](streamable.md#__stream)
 - [consume](streamable.md#consume)
 - [consumeAsync](streamable.md#consumeasync)
@@ -89,6 +90,30 @@ ___
 Ƭ **FlowMode**: ``"resume"`` \| ``"pause"``
 
 ## Functions
+
+### \_\_state
+
+▸ **__state**<`T`\>(`initialState`, `options?`): [`StateStreamLike`](../interfaces/streamable.StateStreamLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `initialState` | () => `T` |
+| `options?` | `Object` |
+| `options.equality?` | [`Option`](option.md#option)<[`Equality`](functions.md#equality)<`T`\>\> |
+
+#### Returns
+
+[`StateStreamLike`](../interfaces/streamable.StateStreamLike.md)<`T`\>
+
+___
 
 ### \_\_stream
 
