@@ -1,7 +1,7 @@
 import { ignoreElements } from "../container";
 import { dispatchTo } from "../dispatcher";
 import { addTo, bindTo } from "../disposable";
-import { Updater, compose, pipe, raise } from "../functions";
+import { Updater, compose, isEmpty, length, pipe, raise } from "../functions";
 import {
   AbstractDisposableObservable,
   forkCombineLatest,
@@ -36,9 +36,9 @@ const windowLocationURIToString = ({
   query,
   fragment,
 }: WindowLocationURI): string => {
-  let uri = path.length === 0 ? "/" : !path.startsWith("/") ? `/${path}` : path;
-  uri = query.length > 0 ? `${uri}?${query}` : uri;
-  uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
+  let uri = isEmpty(path) ? "/" : !path.startsWith("/") ? `/${path}` : path;
+  uri = length(query) > 0 ? `${uri}?${query}` : uri;
+  uri = length(fragment) > 0 ? `${uri}#${fragment}` : uri;
   return new URL(uri, window.location.href).toString();
 };
 

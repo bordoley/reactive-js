@@ -1,6 +1,6 @@
 import { Concat } from "../container";
 import { addTo, dispose, onComplete } from "../disposable";
-import { pipe } from "../functions";
+import { length, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer, createDelegatingObserver } from "../observer";
 import { map } from "../readonlyArray";
@@ -29,7 +29,7 @@ function _merge<T>(
   observables: readonly ObservableLike<T>[],
 ): ObservableLike<T> {
   return createObservable(observer => {
-    const count = observables.length;
+    const count = length(observables);
     const ctx = { completedCount: 0 };
 
     for (const observable of observables) {

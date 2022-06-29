@@ -9,9 +9,8 @@ declare const fromObject: <T>() => Function1<Readonly<Record<string, T>>, readon
 declare const join: (separator?: string) => Function1<readonly string[], string>;
 declare const keep: <T>(predicate: Predicate<T>) => ReadonlyArrayOperator<T, T>;
 declare const keepType: <TA, TB extends TA>(predicate: TypePredicate<TA, TB>) => ReadonlyArrayOperator<TA, TB>;
-declare const length: (arr: readonly unknown[]) => number;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => ReadonlyArrayOperator<TA, TB>;
 declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => Function1<readonly T[], TAcc>;
 declare const reduceRight: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => Function1<readonly T[], TAcc>;
 declare const forEach: <T>(f: SideEffect1<T>) => Function1<readonly T[], readonly T[]>;
-export { ReadonlyArrayOperator, empty, everySatisfy, forEach, fromObject, join, keep, keepType, length, map, reduce, reduceRight };
+export { ReadonlyArrayOperator, empty, everySatisfy, forEach, fromObject, join, keep, keepType, map, reduce, reduceRight };

@@ -45,9 +45,11 @@
 - [ignore](functions.md#ignore)
 - [increment](functions.md#increment)
 - [incrementBy](functions.md#incrementby)
+- [isEmpty](functions.md#isempty)
 - [isEqualTo](functions.md#isequalto)
 - [isEven](functions.md#iseven)
 - [isOdd](functions.md#isodd)
+- [length](functions.md#length)
 - [negate](functions.md#negate)
 - [pipe](functions.md#pipe)
 - [pipeLazy](functions.md#pipelazy)
@@ -1523,6 +1525,22 @@ Returns a function that increments a number `x` by the value `incr`.
 
 ___
 
+### isEmpty
+
+▸ **isEmpty**(`arr`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `arr` | `string` \| readonly `unknown`[] |
+
+#### Returns
+
+`boolean`
+
+___
+
 ### isEqualTo
 
 ▸ **isEqualTo**<`T`\>(`b`, `options?`): [`Predicate`](functions.md#predicate)<`T`\>
@@ -1583,6 +1601,22 @@ Returns `true` if `x` is an odd number, otherwise `false`.
 #### Returns
 
 `boolean`
+
+___
+
+### length
+
+▸ **length**(`arr`): `number`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `arr` | `string` \| readonly `unknown`[] |
+
+#### Returns
+
+`number`
 
 ___
 

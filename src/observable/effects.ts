@@ -26,6 +26,7 @@ import {
   SideEffect6,
   arrayEquality,
   ignore,
+  length,
   pipe,
   raise,
 } from "../functions";
@@ -252,7 +253,7 @@ export const observable = <T>(
       ctx.index = 0;
 
       const { effects } = ctx;
-      const effectsLength = effects.length;
+      const effectsLength = length(effects);
 
       // Inline this for perf
       let allObserveEffectsHaveValues = true;

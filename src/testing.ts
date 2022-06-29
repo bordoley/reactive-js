@@ -5,6 +5,7 @@ import {
   SideEffect,
   arrayEquality,
   ignore,
+  length,
   raise,
   strictEquality,
 } from "./functions";
@@ -151,9 +152,11 @@ export const mockFn = (retval?: any): MockFunction => {
 
 export const expectToHaveBeenCalledTimes =
   (times: number) => (fn: MockFunction) => {
-    if (fn.calls.length !== times) {
+    if (length(fn.calls) !== times) {
       raise(
-        `expected fn to be called ${times} times, but was only called ${fn.calls.length} times.`,
+        `expected fn to be called ${times} times, but was only called ${length(
+          fn.calls,
+        )} times.`,
       );
     }
   };

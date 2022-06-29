@@ -34,6 +34,7 @@ import {
   alwaysTrue,
   compose,
   identity,
+  length,
   pipe,
 } from "./functions";
 import { Option, getOrDefault, isNone, none } from "./option";
@@ -131,7 +132,7 @@ export const concat: Concat<RunnableLike<unknown>>["concat"] = <T>(
   ...runnables: readonly RunnableLike<T>[]
 ) =>
   createRunnable((sink: RunnableSink<T>) => {
-    const runnablesLength = runnables.length;
+    const runnablesLength = length(runnables);
     for (let i = 0; i < runnablesLength && !isDisposed(sink); i++) {
       pipe(
         createDelegatingRunnableSink(sink),

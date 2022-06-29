@@ -28,6 +28,7 @@ import {
   Updater,
   alwaysTrue,
   callWith,
+  length,
   pipe,
   strictEquality,
 } from "./functions";
@@ -123,7 +124,7 @@ export const fromArray =
     } = {},
   ): Function1<readonly T[], Sequence<T>> =>
   values => {
-    const valuesLength = values.length;
+    const valuesLength = length(values);
     const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
     const endIndex = Math.max(
       Math.min(options.endIndex ?? valuesLength, valuesLength),
@@ -403,7 +404,7 @@ const _takeLast = <T>(maxCount: number, seq: Sequence<T>): Sequence<T> =>
     while (true) {
       if (isNotify(result)) {
         last.push(result.data);
-        if (last.length > maxCount) {
+        if (length(last) > maxCount) {
           last.shift();
         }
         result = result.next();
@@ -411,7 +412,7 @@ const _takeLast = <T>(maxCount: number, seq: Sequence<T>): Sequence<T> =>
         break;
       }
     }
-    return _fromArray(last, 0, last.length);
+    return _fromArray(last, 0, length(last));
   });
 export const takeLast =
   <T>(options: { readonly count?: number } = {}): SequenceOperator<T, T> =>
@@ -478,7 +479,7 @@ const _zip = <T>(
       keepTypeArray(isNotify),
     );
 
-    return notifyResults.length === sequences.length
+    return length(notifyResults) === length(sequences)
       ? notify(
           pipe(
             notifyResults,

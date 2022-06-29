@@ -44,8 +44,6 @@ export const keepType =
   arr =>
     arr.filter(predicate);
 
-export const length = (arr: readonly unknown[]): number => arr.length;
-
 export const map =
   <TA, TB>(mapper: Function1<TA, TB>): ReadonlyArrayOperator<TA, TB> =>
   arr =>

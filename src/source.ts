@@ -27,6 +27,8 @@ import {
   compose,
   identity,
   ignore,
+  isEmpty,
+  length,
   negate,
   pipe,
 } from "./functions";
@@ -158,7 +160,7 @@ export const createBufferOperator = <C extends SourceLike>(
 
     buffer.push(next);
 
-    if (buffer.length === maxBufferSize) {
+    if (length(buffer) === maxBufferSize) {
       const buffer = this.buffer;
       this.buffer = [];
 
@@ -189,7 +191,7 @@ export const createBufferOperator = <C extends SourceLike>(
             const { buffer } = this;
             this.buffer = [];
 
-            if (buffer.length === 0) {
+            if (isEmpty(buffer)) {
               pipe(this, delegateLiftable, dispose());
             } else {
               pipe(buffer, fromValue(m), sinkInto(delegateLiftable(this)));
@@ -257,7 +259,7 @@ export const createDecodeWithCharsetOperator = <C extends SourceLike>(
     next: ArrayBuffer,
   ) {
     const data = this.textDecoder.decode(next, { stream: true });
-    if (data.length > 0) {
+    if (!isEmpty(data)) {
       delegateLiftable(this).notify(data);
     }
   };
@@ -274,7 +276,7 @@ export const createDecodeWithCharsetOperator = <C extends SourceLike>(
           onComplete(() => {
             const data = textDecoder.decode();
 
-            if (data.length > 0) {
+            if (!isEmpty(data)) {
               pipe(data, fromValue(m), sinkInto(delegate));
             } else {
               pipe(delegate, dispose());
@@ -642,7 +644,7 @@ export const createTakeLastOperator = <C extends SourceLike>(
 
     last.push(next);
 
-    if (last.length > this.maxCount) {
+    if (length(last) > this.maxCount) {
       last.shift();
     }
   };

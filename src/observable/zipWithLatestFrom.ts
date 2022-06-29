@@ -1,5 +1,5 @@
 import { add, dispose, isDisposed, onComplete } from "../disposable";
-import { Function2, pipe } from "../functions";
+import { Function2, isEmpty, length, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
 import { Option } from "../option";
@@ -10,7 +10,7 @@ import { subscribe } from "./subscribe";
 const notifyDelegate = <TA, TB, TC>(
   observer: ZipWithLatestFromObserver<TA, TB, TC>,
 ) => {
-  if (observer.queue.length > 0 && observer.hasLatest) {
+  if (length(observer.queue) > 0 && observer.hasLatest) {
     observer.hasLatest = false;
     const next = observer.queue.shift() as TA;
     const result = observer.selector(next, observer.otherLatest as TB);
@@ -70,7 +70,7 @@ export const zipWithLatestFrom = <TA, TB, T>(
         observer.otherLatest = otherLatest;
         notifyDelegate(observer);
 
-        if (isDisposed(observer) && observer.queue.length === 0) {
+        if (isDisposed(observer) && isEmpty(observer.queue)) {
           pipe(observer.delegate, dispose());
         }
       }),

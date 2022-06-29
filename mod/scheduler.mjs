@@ -1,14 +1,14 @@
 /// <reference types="./scheduler.d.ts" />
 import { isDisposed, AbstractDisposable, dispose, disposed, add, addTo, onDisposed, createDisposable } from './disposable.mjs';
-import { pipe, raise } from './functions.mjs';
+import { length, pipe, raise } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractEnumerator, move, hasCurrent, reset, current } from './enumerator.mjs';
 
 const computeParentIndex = (index) => Math.floor((index - 1) / 2);
 const siftDown = (queue, item) => {
     const { values, compare } = queue;
-    const length = values.length;
-    for (let index = 0; index < length;) {
+    const length$1 = length(values);
+    for (let index = 0; index < length$1;) {
         const leftIndex = (index + 1) * 2 - 1;
         const rightIndex = leftIndex + 1;
         const left = values[leftIndex];
@@ -37,7 +37,7 @@ const siftDown = (queue, item) => {
 };
 const siftUp = (queue, item) => {
     const { values, compare } = queue;
-    for (let index = values.length - 1, parentIndex = computeParentIndex(index), parent = values[parentIndex]; isSome(parent) && compare(parent, item) > 0; index = parentIndex,
+    for (let index = length(values) - 1, parentIndex = computeParentIndex(index), parent = values[parentIndex]; isSome(parent) && compare(parent, item) > 0; index = parentIndex,
         parentIndex = computeParentIndex(index),
         parent = values[parentIndex]) {
         values[parentIndex] = item;
@@ -50,7 +50,7 @@ class PriorityQueueImpl {
         this.values = [];
     }
     get count() {
-        return this.values.length;
+        return length(this.values);
     }
     clear() {
         this.values.length = 0;
@@ -60,11 +60,11 @@ class PriorityQueueImpl {
     }
     pop() {
         const { values } = this;
-        const length = values.length;
-        if (length === 0) {
+        const length$1 = length(values);
+        if (length$1 === 0) {
             return none;
         }
-        else if (length === 1) {
+        else if (length$1 === 1) {
             return values.shift();
         }
         else {

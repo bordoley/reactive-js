@@ -4,10 +4,11 @@ import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import {
   AbstractDelegatingEnumerator,
   Enumerator,
+  current,
   hasCurrent,
   reset,
 } from "../enumerator";
-import { pipe } from "../functions";
+import { length, pipe } from "../functions";
 import { lift } from "./lift";
 
 class BufferEnumerator<T> extends AbstractDelegatingEnumerator<
@@ -25,11 +26,11 @@ class BufferEnumerator<T> extends AbstractDelegatingEnumerator<
 
     const { delegate, maxBufferSize } = this;
 
-    while (buffer.length < maxBufferSize && delegate.move()) {
-      buffer.push(delegate.current);
+    while (length(buffer) < maxBufferSize && delegate.move()) {
+      buffer.push(current(delegate));
     }
 
-    const bufferLength = buffer.length;
+    const bufferLength = length(buffer);
     if (bufferLength > 0) {
       this.current = buffer;
     }

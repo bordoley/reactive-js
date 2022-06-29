@@ -1,11 +1,11 @@
-import { Comparator } from "../functions";
+import { Comparator, length as readonlyArrayLength } from "../functions";
 import { Option, isSome, none } from "../option";
 
 const computeParentIndex = (index: number) => Math.floor((index - 1) / 2);
 
 const siftDown = <T>(queue: PriorityQueueImpl<T>, item: T) => {
   const { values, compare } = queue;
-  const length = values.length;
+  const length = readonlyArrayLength(values);
 
   for (let index = 0; index < length; ) {
     const leftIndex = (index + 1) * 2 - 1;
@@ -38,7 +38,7 @@ const siftUp = <T>(queue: PriorityQueueImpl<T>, item: T) => {
   const { values, compare } = queue;
 
   for (
-    let index = values.length - 1,
+    let index = readonlyArrayLength(values) - 1,
       parentIndex = computeParentIndex(index),
       parent = values[parentIndex];
     isSome(parent) && compare(parent, item) > 0;
@@ -66,7 +66,7 @@ class PriorityQueueImpl<T> implements QueueLike<T> {
   constructor(readonly compare: Comparator<T>) {}
 
   get count(): number {
-    return this.values.length;
+    return readonlyArrayLength(this.values);
   }
 
   clear() {
@@ -79,7 +79,7 @@ class PriorityQueueImpl<T> implements QueueLike<T> {
 
   pop() {
     const { values } = this;
-    const length = values.length;
+    const length = readonlyArrayLength(values);
     if (length === 0) {
       return none;
     } else if (length === 1) {

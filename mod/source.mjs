@@ -1,7 +1,7 @@
 /// <reference types="./source.d.ts" />
 import { fromValue, empty } from './container.mjs';
 import { addTo, onComplete, dispose, onError, isDisposed, onDisposed, add } from './disposable.mjs';
-import { pipe, compose, negate, ignore, identity } from './functions.mjs';
+import { length, pipe, isEmpty, compose, negate, ignore, identity } from './functions.mjs';
 import { AbstractLiftable, AbstractDisposableLiftable, delegate, lift, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
 import { none, isSome } from './option.mjs';
 import { forEach } from './readonlyArray.mjs';
@@ -29,7 +29,7 @@ const createBufferOperator = (m, BufferSink) => {
         this.assertState();
         const { buffer, maxBufferSize } = this;
         buffer.push(next);
-        if (buffer.length === maxBufferSize) {
+        if (length(buffer) === maxBufferSize) {
             const buffer = this.buffer;
             this.buffer = [];
             delegate(this).notify(buffer);
@@ -41,7 +41,7 @@ const createBufferOperator = (m, BufferSink) => {
         return pipe((delegate$1) => pipe(new BufferSink(delegate$1, maxBufferSize), addTo(delegate$1), onComplete(function onDispose() {
             const { buffer } = this;
             this.buffer = [];
-            if (buffer.length === 0) {
+            if (isEmpty(buffer)) {
                 pipe(this, delegate, dispose());
             }
             else {
@@ -72,7 +72,7 @@ const createCatchErrorOperator = (m, CatchErrorSink) => (f) => {
 const createDecodeWithCharsetOperator = (m, DecodeWithCharsetSink) => {
     DecodeWithCharsetSink.prototype.notify = function notifyDecodeWithCharset(next) {
         const data = this.textDecoder.decode(next, { stream: true });
-        if (data.length > 0) {
+        if (!isEmpty(data)) {
             delegate(this).notify(data);
         }
     };
@@ -80,7 +80,7 @@ const createDecodeWithCharsetOperator = (m, DecodeWithCharsetSink) => {
         const textDecoder = new TextDecoder(charset, { fatal: true });
         return pipe(new DecodeWithCharsetSink(delegate, textDecoder), addTo(delegate), onComplete(() => {
             const data = textDecoder.decode();
-            if (data.length > 0) {
+            if (!isEmpty(data)) {
                 pipe(data, fromValue(m), sinkInto(delegate));
             }
             else {
@@ -199,7 +199,7 @@ const createTakeLastOperator = (m, TakeLastSink) => {
         this.assertState();
         const { last } = this;
         last.push(next);
-        if (last.length > this.maxCount) {
+        if (length(last) > this.maxCount) {
             last.shift();
         }
     };

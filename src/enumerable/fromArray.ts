@@ -2,7 +2,7 @@ import { FromArray, FromArrayOptions } from "../container";
 import { dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { AbstractEnumerator, hasCurrent, reset } from "../enumerator";
-import { pipe } from "../functions";
+import { length, pipe } from "../functions";
 import { createEnumerable } from "./enumerable";
 
 class ArrayEnumerator<T> extends AbstractEnumerator<T> {
@@ -47,10 +47,10 @@ export const fromArray =
     } = {},
   ) =>
   (values: readonly T[]): EnumerableLike<T> => {
-    const valuesLength = values.length;
+    const valuesLength = length(values);
     const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
     const endIndex = Math.max(
-      Math.min(options.endIndex ?? values.length, valuesLength),
+      Math.min(options.endIndex ?? length(values), valuesLength),
       0,
     );
 

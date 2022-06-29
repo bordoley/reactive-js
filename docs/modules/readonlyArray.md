@@ -20,7 +20,6 @@
 - [join](readonlyArray.md#join)
 - [keep](readonlyArray.md#keep)
 - [keepType](readonlyArray.md#keeptype)
-- [length](readonlyArray.md#length)
 - [map](readonlyArray.md#map)
 - [reduce](readonlyArray.md#reduce)
 - [reduceRight](readonlyArray.md#reduceright)
@@ -164,22 +163,6 @@ ___
 #### Returns
 
 [`ReadonlyArrayOperator`](readonlyArray.md#readonlyarrayoperator)<`TA`, `TB`\>
-
-___
-
-### length
-
-▸ **length**(`arr`): `number`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `arr` | readonly `unknown`[] |
-
-#### Returns
-
-`number`
 
 ___
 

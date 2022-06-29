@@ -2,7 +2,7 @@
 import { isDisposed, dispose } from './disposable.mjs';
 import { createEnumerable } from './enumerable.mjs';
 import { AbstractEnumerator, hasCurrent } from './enumerator.mjs';
-import { pipe, strictEquality, alwaysTrue, callWith } from './functions.mjs';
+import { length, pipe, strictEquality, alwaysTrue, callWith } from './functions.mjs';
 import { none, isNone } from './option.mjs';
 import { map as map$1, keepType } from './readonlyArray.mjs';
 import { createRunnable } from './runnable.mjs';
@@ -43,7 +43,7 @@ const _fromArray = (arr, index, endIndex) => index < endIndex && index >= 0
     : done();
 const fromArray = (options = {}) => values => {
     var _a, _b;
-    const valuesLength = values.length;
+    const valuesLength = length(values);
     const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
     const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : valuesLength, valuesLength), 0);
     return castToSequence(() => _fromArray(values, startIndex, endIndex));
@@ -219,7 +219,7 @@ const _takeLast = (maxCount, seq) => castToSequence(() => {
     while (true) {
         if (isNotify(result)) {
             last.push(result.data);
-            if (last.length > maxCount) {
+            if (length(last) > maxCount) {
                 last.shift();
             }
             result = result.next();
@@ -228,7 +228,7 @@ const _takeLast = (maxCount, seq) => castToSequence(() => {
             break;
         }
     }
-    return _fromArray(last, 0, last.length);
+    return _fromArray(last, 0, length(last));
 });
 const takeLast = (options = {}) => seq => {
     const { count = 1 } = options;
@@ -264,7 +264,7 @@ const toRunnableT = {
 };
 const _zip = (...sequences) => castToSequence(() => {
     const notifyResults = pipe(sequences, map$1(callWith()), keepType(isNotify));
-    return notifyResults.length === sequences.length
+    return length(notifyResults) === length(sequences)
         ? notify(pipe(notifyResults, map$1(x => x.data)), _zip(...pipe(notifyResults, map$1(x => x.next))))
         : done();
 });
