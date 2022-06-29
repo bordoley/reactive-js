@@ -29,6 +29,10 @@ import {
 import {
   ObservableLike,
   StreamLike,
+  __currentScheduler,
+  __memo,
+  __observe,
+  __using,
   concatAllT,
   concatT,
   createObservable,
@@ -52,9 +56,14 @@ import {
   using,
   withLatestFrom,
 } from "./observable";
+import { Option, isSome, none } from "./option";
 import { SchedulerLike, createPausableScheduler } from "./scheduler";
 import { notifySink, sinkInto as sinkIntoSink, sourceFrom } from "./source";
-import { createLiftedStreamable, createStream } from "./streamable/streamable";
+import {
+  createLiftedStreamable,
+  createStream,
+  stream,
+} from "./streamable/streamable";
 
 export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T>> {
   stream(
@@ -95,7 +104,6 @@ export {
   createStreamble,
   createLiftedStreamable,
   stream,
-  __stream,
 } from "./streamable/streamable";
 export { createFlowableSinkAccumulator } from "./streamable/io";
 export { generate } from "./streamable/generate";
@@ -321,3 +329,40 @@ export const sinkInto =
         sinkIntoSink(observer),
       );
     });
+
+const streamOnSchedulerFactory = <TReq, T, TStream extends StreamLike<TReq, T>>(
+  streamable: StreamableLike<TReq, T, TStream>,
+  scheduler: SchedulerLike,
+  replay: number,
+) => pipe(streamable, stream(scheduler, { replay }));
+
+export const __stream = <TReq, T, TStream extends StreamLike<TReq, T>>(
+  streamable: StreamableLike<TReq, T, TStream>,
+  {
+    replay = 0,
+    scheduler,
+  }: { readonly replay?: number; readonly scheduler?: SchedulerLike } = {},
+): TStream => {
+  const currentScheduler = __currentScheduler();
+  return __using(
+    streamOnSchedulerFactory,
+    streamable,
+    scheduler ?? currentScheduler,
+    replay,
+  );
+};
+
+const createStateOptions = <T>(equality: Option<Equality<T>>) =>
+  isSome(equality) ? { equality } : none;
+
+export const __state = <T>(
+  initialState: () => T,
+  options: {
+    readonly equality?: Option<Equality<T>>;
+  } = {},
+): StateStreamLike<T> => {
+  const { equality } = options;
+  const optionsMemo = __memo(createStateOptions, equality);
+  const streamable = __memo(createStateStore, initialState, optionsMemo);
+  return __stream(streamable);
+};

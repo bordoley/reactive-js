@@ -5,10 +5,10 @@ import { add, addTo, bindTo } from './disposable.mjs';
 import { enumerate, fromIterable as fromIterable$1 } from './enumerable.mjs';
 import { move, hasCurrent, current } from './enumerator.mjs';
 import { pipe, compose, flip, returns, updateReducer, increment, identity as identity$1 } from './functions.mjs';
-import { AbstractDisposableObservable, observerCount, replay, createSubject, publish, __currentScheduler, __using, reduce, onNotify, keepT, concatT, fromArrayT, scanAsync, scan, createObservable, map, onSubscribe, zipWithLatestFrom, takeFirst, switchAll, mergeT, distinctUntilChanged, subscribe, subscribeOn, fromDisposable, takeUntil, mapT, concatAllT, withLatestFrom, using, never, takeWhile, merge } from './observable.mjs';
+import { AbstractDisposableObservable, observerCount, replay, createSubject, publish, reduce, onNotify, keepT, concatT, fromArrayT, scanAsync, scan, createObservable, map, onSubscribe, zipWithLatestFrom, takeFirst, switchAll, mergeT, distinctUntilChanged, subscribe, subscribeOn, fromDisposable, takeUntil, mapT, concatAllT, withLatestFrom, using, never, takeWhile, merge, __currentScheduler, __using, __memo } from './observable.mjs';
+import { none, isSome } from './option.mjs';
 import { createPausableScheduler } from './scheduler.mjs';
 import { sinkInto as sinkInto$1, notifySink, sourceFrom } from './source.mjs';
-import { none } from './option.mjs';
 
 class StreamImpl extends AbstractDisposableObservable {
     constructor(dispatcher, observable) {
@@ -47,11 +47,6 @@ function createLiftedStreamable(...ops) {
     return createStreamble((scheduler, options) => createStream(op, scheduler, options));
 }
 const stream = (scheduler, options) => streamable => streamable.stream(scheduler, options);
-const streamOnSchedulerFactory = (streamable, scheduler, replay) => pipe(streamable, stream(scheduler, { replay }));
-const __stream = (streamable, { replay = 0, scheduler, } = {}) => {
-    const currentScheduler = __currentScheduler();
-    return __using(streamOnSchedulerFactory, streamable, scheduler !== null && scheduler !== void 0 ? scheduler : currentScheduler, replay);
-};
 
 class FlowableSinkAccumulatorImpl extends AbstractDisposableObservable {
     constructor(subject, streamable) {
@@ -213,5 +208,17 @@ const sinkInto = (dest) => (src) => createObservable(observer => {
     const destStream = dest.stream(scheduler);
     pipe(merge(pipe(srcStream, onNotify(dispatchTo(destStream)), ignoreElements(keepT), onSubscribe(() => destStream)), pipe(destStream, onNotify(dispatchTo(srcStream)), ignoreElements(keepT), onSubscribe(() => srcStream))), ignoreElements(keepT), sinkInto$1(observer));
 });
+const streamOnSchedulerFactory = (streamable, scheduler, replay) => pipe(streamable, stream(scheduler, { replay }));
+const __stream = (streamable, { replay = 0, scheduler, } = {}) => {
+    const currentScheduler = __currentScheduler();
+    return __using(streamOnSchedulerFactory, streamable, scheduler !== null && scheduler !== void 0 ? scheduler : currentScheduler, replay);
+};
+const createStateOptions = (equality) => isSome(equality) ? { equality } : none;
+const __state = (initialState, options = {}) => {
+    const { equality } = options;
+    const optionsMemo = __memo(createStateOptions, equality);
+    const streamable = __memo(createStateStore, initialState, optionsMemo);
+    return __stream(streamable);
+};
 
-export { __stream, consume, consumeAsync, consumeContinue, consumeDone, createActionReducer, createFlowableSinkAccumulator, createLiftedStreamable, createStateStore, createStreamble, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, sinkInto, stream };
+export { __state, __stream, consume, consumeAsync, consumeContinue, consumeDone, createActionReducer, createFlowableSinkAccumulator, createLiftedStreamable, createStateStore, createStreamble, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, sinkInto, stream };
