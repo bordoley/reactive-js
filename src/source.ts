@@ -137,6 +137,17 @@ export const sourceFrom =
     return sink;
   };
 
+const decorateWithNotify = <
+  C extends SourceLike,
+  T,
+  TSTate extends LiftableStateOf<C, T>,
+>(
+  SinkClass: new (...a: readonly any[]) => TSTate,
+  notify: (this: TSTate, next: T) => void,
+): void => {
+  SinkClass.prototype.notify = notify;
+};
+
 export const createBufferOperator = <C extends SourceLike>(
   m: Lift<C> & FromArray<C>,
   BufferSink: new <T>(
@@ -147,26 +158,29 @@ export const createBufferOperator = <C extends SourceLike>(
     readonly maxBufferSize: number;
   },
 ) => {
-  BufferSink.prototype.notify = function notifyBuffer<T>(
-    this: DelegatingLiftableStateOf<C, T, readonly T[]> & {
-      buffer: T[];
-      readonly maxBufferSize: number;
+  decorateWithNotify(
+    BufferSink,
+    function notifyBuffer<T>(
+      this: DelegatingLiftableStateOf<C, T, readonly T[]> & {
+        buffer: T[];
+        readonly maxBufferSize: number;
+      },
+      next: T,
+    ) {
+      this.assertState();
+
+      const { buffer, maxBufferSize } = this;
+
+      buffer.push(next);
+
+      if (length(buffer) === maxBufferSize) {
+        const buffer = this.buffer;
+        this.buffer = [];
+
+        delegateLiftable(this).notify(buffer);
+      }
     },
-    next: T,
-  ) {
-    this.assertState();
-
-    const { buffer, maxBufferSize } = this;
-
-    buffer.push(next);
-
-    if (length(buffer) === maxBufferSize) {
-      const buffer = this.buffer;
-      this.buffer = [];
-
-      delegateLiftable(this).notify(buffer);
-    }
-  };
+  );
 
   return <T>(
     options: {
@@ -213,12 +227,15 @@ export const createCatchErrorOperator =
   <T>(
     f: Function1<unknown, ContainerOf<C, T> | void>,
   ): ContainerOperator<C, T, T> => {
-    CatchErrorSink.prototype.notify = function notifyDelegate(
-      this: DelegatingLiftableStateOf<C, T, T>,
-      next: T,
-    ) {
-      delegateLiftable(this).notify(next);
-    };
+    decorateWithNotify(
+      CatchErrorSink,
+      function notifyDelegate(
+        this: DelegatingLiftableStateOf<C, T, T>,
+        next: T,
+      ) {
+        delegateLiftable(this).notify(next);
+      },
+    );
 
     return pipe(
       (delegate: LiftableStateOf<C, T>): LiftableStateOf<C, T> =>
@@ -252,17 +269,20 @@ export const createDecodeWithCharsetOperator = <C extends SourceLike>(
     readonly textDecoder: TextDecoder;
   },
 ): ((charset?: string) => ContainerOperator<C, ArrayBuffer, string>) => {
-  DecodeWithCharsetSink.prototype.notify = function notifyDecodeWithCharset(
-    this: DelegatingLiftableStateOf<C, ArrayBuffer, string> & {
-      readonly textDecoder: TextDecoder;
+  decorateWithNotify(
+    DecodeWithCharsetSink,
+    function notifyDecodeWithCharset(
+      this: DelegatingLiftableStateOf<C, ArrayBuffer, string> & {
+        readonly textDecoder: TextDecoder;
+      },
+      next: ArrayBuffer,
+    ) {
+      const data = this.textDecoder.decode(next, { stream: true });
+      if (!isEmpty(data)) {
+        delegateLiftable(this).notify(data);
+      }
     },
-    next: ArrayBuffer,
-  ) {
-    const data = this.textDecoder.decode(next, { stream: true });
-    if (!isEmpty(data)) {
-      delegateLiftable(this).notify(data);
-    }
-  };
+  );
 
   return (charset = "utf-8") =>
     pipe(
@@ -301,7 +321,8 @@ export const createDistinctUntilChangedOperator = <C extends SourceLike>(
 ): (<T>(options?: {
   readonly equality?: Equality<T>;
 }) => ContainerOperator<C, T, T>) => {
-  DistinctUntilChangedSink.prototype.notify =
+  decorateWithNotify(
+    DistinctUntilChangedSink,
     function notifyDistinctUntilChanged<T>(
       this: DelegatingLiftableStateOf<C, T, T> & {
         readonly equality: Equality<T>;
@@ -319,7 +340,8 @@ export const createDistinctUntilChangedOperator = <C extends SourceLike>(
         this.hasValue = true;
         delegateLiftable(this).notify(next);
       }
-    };
+    },
+  );
 
   return createDistinctUntilChangedLiftOperator(m, DistinctUntilChangedSink);
 };
@@ -334,19 +356,23 @@ const createSatisfyOperator = <C extends SourceLike>(
   },
   defaultResult: boolean,
 ): (<T>(predicate: Predicate<T>) => ContainerOperator<C, T, boolean>) => {
-  SatisfySink.prototype.notify = function notifyEverySatisfy<T>(
-    this: DelegatingLiftableStateOf<C, T, boolean> & {
-      readonly predicate: Predicate<T>;
-    },
-    next: T,
-  ) {
-    this.assertState();
+  decorateWithNotify(
+    SatisfySink,
+    function notifyEverySatisfy<T>(
+      this: DelegatingLiftableStateOf<C, T, boolean> & {
+        readonly predicate: Predicate<T>;
+      },
+      next: T,
+    ) {
+      this.assertState();
 
-    if (this.predicate(next)) {
-      const { delegate } = this;
-      pipe(delegate, notify(!defaultResult), dispose());
-    }
-  };
+      if (this.predicate(next)) {
+        const { delegate } = this;
+        pipe(delegate, notify(!defaultResult), dispose());
+      }
+    },
+  );
+
   return <T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean> =>
     pipe(
       (delegate: LiftableStateOf<C, boolean>): LiftableStateOf<C, T> =>
@@ -386,17 +412,20 @@ export const createKeepOperator = <C extends SourceLike>(
     readonly predicate: Predicate<T>;
   },
 ): (<T>(predicate: Predicate<T>) => ContainerOperator<C, T, T>) => {
-  KeepSink.prototype.notify = function notifyKeep<T>(
-    this: DelegatingLiftableStateOf<C, T, T> & {
-      readonly predicate: Predicate<T>;
+  decorateWithNotify(
+    KeepSink,
+    function notifyKeep<T>(
+      this: DelegatingLiftableStateOf<C, T, T> & {
+        readonly predicate: Predicate<T>;
+      },
+      next: T,
+    ) {
+      this.assertState();
+      if (this.predicate(next)) {
+        delegateLiftable(this).notify(next);
+      }
     },
-    next: T,
-  ) {
-    this.assertState();
-    if (this.predicate(next)) {
-      delegateLiftable(this).notify(next);
-    }
-  };
+  );
 
   return createKeepLiftOperator(m, KeepSink);
 };
@@ -410,16 +439,19 @@ export const createMapOperator = <C extends SourceLike>(
     readonly mapper: Function1<TA, TB>;
   },
 ): (<TA, TB>(mapper: Function1<TA, TB>) => ContainerOperator<C, TA, TB>) => {
-  MapSink.prototype.notify = function notifyMap<TA, TB>(
-    this: DelegatingLiftableStateOf<C, TA, TB> & {
-      readonly mapper: Function1<TA, TB>;
+  decorateWithNotify(
+    MapSink,
+    function notifyMap<TA, TB>(
+      this: DelegatingLiftableStateOf<C, TA, TB> & {
+        readonly mapper: Function1<TA, TB>;
+      },
+      next: TA,
+    ) {
+      this.assertState();
+      const mapped = this.mapper(next);
+      delegateLiftable(this).notify(mapped);
     },
-    next: TA,
-  ) {
-    this.assertState();
-    const mapped = this.mapper(next);
-    delegateLiftable(this).notify(mapped);
-  };
+  );
 
   return createMapLiftOperator(m, MapSink);
 };
@@ -433,17 +465,20 @@ export const createOnNotifyOperator = <C extends SourceLike>(
     readonly onNotify: SideEffect1<T>;
   },
 ): (<T>(onNotify: SideEffect1<T>) => ContainerOperator<C, T, T>) => {
-  OnNotifySink.prototype.notify = function notifyOnNotify<T>(
-    this: DelegatingLiftableStateOf<C, T, T> & {
-      readonly onNotify: SideEffect1<T>;
-    },
-    next: T,
-  ) {
-    this.assertState();
+  decorateWithNotify(
+    OnNotifySink,
+    function notifyOnNotify<T>(
+      this: DelegatingLiftableStateOf<C, T, T> & {
+        readonly onNotify: SideEffect1<T>;
+      },
+      next: T,
+    ) {
+      this.assertState();
 
-    this.onNotify(next);
-    delegateLiftable(this).notify(next);
-  };
+      this.onNotify(next);
+      delegateLiftable(this).notify(next);
+    },
+  );
 
   return createOnNotifyLiftOperator(m, OnNotifySink);
 };
@@ -457,21 +492,24 @@ export const createPairwiseOperator = <C extends SourceLike>(
     hasPrev: boolean;
   },
 ): (<T>() => ContainerOperator<C, T, [Option<T>, T]>) => {
-  PairwiseSink.prototype.notify = function notifyPairwise<T>(
-    this: DelegatingLiftableStateOf<C, T, [Option<T>, T]> & {
-      prev: Option<T>;
-      hasPrev: boolean;
+  decorateWithNotify(
+    PairwiseSink,
+    function notifyPairwise<T>(
+      this: DelegatingLiftableStateOf<C, T, [Option<T>, T]> & {
+        prev: Option<T>;
+        hasPrev: boolean;
+      },
+      value: T,
+    ): void {
+      this.assertState();
+      const prev = this.hasPrev ? this.prev : none;
+
+      this.hasPrev = true;
+      this.prev = value;
+
+      delegateLiftable(this).notify([prev, value]);
     },
-    value: T,
-  ): void {
-    this.assertState();
-    const prev = this.hasPrev ? this.prev : none;
-
-    this.hasPrev = true;
-    this.prev = value;
-
-    delegateLiftable(this).notify([prev, value]);
-  };
+  );
 
   return createPairwiseLiftOperator(m, PairwiseSink);
 };
@@ -490,17 +528,20 @@ export const createReduceOperator = <C extends SourceLike>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ) => ContainerOperator<C, T, TAcc>) => {
-  ReduceSink.prototype.notify = function notifyReduce<T, TAcc>(
-    this: LiftableStateOf<C, T> & {
-      readonly reducer: Reducer<T, TAcc>;
-      acc: TAcc;
-    },
-    next: T,
-  ) {
-    this.assertState();
+  decorateWithNotify(
+    ReduceSink,
+    function notifyReduce<T, TAcc>(
+      this: LiftableStateOf<C, T> & {
+        readonly reducer: Reducer<T, TAcc>;
+        acc: TAcc;
+      },
+      next: T,
+    ) {
+      this.assertState();
 
-    this.acc = this.reducer(this.acc, next);
-  };
+      this.acc = this.reducer(this.acc, next);
+    },
+  );
 
   return <T, TAcc>(
     reducer: Reducer<T, TAcc>,
@@ -532,19 +573,22 @@ export const createScanOperator = <C extends SourceLike>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ) => ContainerOperator<C, T, TAcc>) => {
-  ScanSink.prototype.notify = function notifyScan<T, TAcc>(
-    this: DelegatingLiftableStateOf<C, T, TAcc> & {
-      readonly reducer: Reducer<T, TAcc>;
-      acc: TAcc;
-    },
-    next: T,
-  ) {
-    this.assertState();
-    const nextAcc = this.reducer(this.acc, next);
-    this.acc = nextAcc;
+  decorateWithNotify(
+    ScanSink,
+    function notifyScan<T, TAcc>(
+      this: DelegatingLiftableStateOf<C, T, TAcc> & {
+        readonly reducer: Reducer<T, TAcc>;
+        acc: TAcc;
+      },
+      next: T,
+    ) {
+      this.assertState();
+      const nextAcc = this.reducer(this.acc, next);
+      this.acc = nextAcc;
 
-    delegateLiftable(this).notify(nextAcc);
-  };
+      delegateLiftable(this).notify(nextAcc);
+    },
+  );
 
   return createScanLiftOperator(m, ScanSink);
 };
@@ -561,18 +605,21 @@ export const createSkipFirstOperator = <C extends SourceLike>(
 ): (<T>(options?: {
   readonly count?: number;
 }) => ContainerOperator<C, T, T>) => {
-  SkipFirstSink.prototype.notify = function notifySkipFirst<T>(
-    this: DelegatingLiftableStateOf<C, T, T> & {
-      count: number;
-      readonly skipCount: number;
+  decorateWithNotify(
+    SkipFirstSink,
+    function notifySkipFirst<T>(
+      this: DelegatingLiftableStateOf<C, T, T> & {
+        count: number;
+        readonly skipCount: number;
+      },
+      next: T,
+    ) {
+      this.count++;
+      if (this.count > this.skipCount) {
+        delegateLiftable(this).notify(next);
+      }
     },
-    next: T,
-  ) {
-    this.count++;
-    if (this.count > this.skipCount) {
-      delegateLiftable(this).notify(next);
-    }
-  };
+  );
 
   return createSkipFirstLiftOperator(m, SkipFirstSink);
 };
@@ -600,21 +647,24 @@ export const createTakeFirstOperator = <C extends SourceLike>(
 ): (<T>(options?: {
   readonly count?: number;
 }) => ContainerOperator<C, T, T>) => {
-  TakeFirstSink.prototype.notify = function notifyTakeFirst<T>(
-    this: DelegatingLiftableStateOf<C, T, T> & {
-      count: number;
-      readonly maxCount: number;
-    },
-    next: T,
-  ) {
-    this.assertState();
+  decorateWithNotify(
+    TakeFirstSink,
+    function notifyTakeFirst<T>(
+      this: DelegatingLiftableStateOf<C, T, T> & {
+        count: number;
+        readonly maxCount: number;
+      },
+      next: T,
+    ) {
+      this.assertState();
 
-    this.count++;
-    delegateLiftable(this).notify(next);
-    if (this.count >= this.maxCount) {
-      pipe(this, dispose());
-    }
-  };
+      this.count++;
+      delegateLiftable(this).notify(next);
+      if (this.count >= this.maxCount) {
+        pipe(this, dispose());
+      }
+    },
+  );
 
   return createTakeFirstLiftOperator(m, TakeFirstSink);
 };
@@ -631,23 +681,26 @@ export const createTakeLastOperator = <C extends SourceLike>(
 ): (<T>(options?: {
   readonly count?: number;
 }) => ContainerOperator<C, T, T>) => {
-  TakeLastSink.prototype.notify = function notifyTakeLast<T>(
-    this: LiftableStateOf<C, T> & {
-      readonly last: T[];
-      readonly maxCount: number;
+  decorateWithNotify(
+    TakeLastSink,
+    function notifyTakeLast<T>(
+      this: LiftableStateOf<C, T> & {
+        readonly last: T[];
+        readonly maxCount: number;
+      },
+      next: T,
+    ) {
+      this.assertState();
+
+      const { last } = this;
+
+      last.push(next);
+
+      if (length(last) > this.maxCount) {
+        last.shift();
+      }
     },
-    next: T,
-  ) {
-    this.assertState();
-
-    const { last } = this;
-
-    last.push(next);
-
-    if (length(last) > this.maxCount) {
-      last.shift();
-    }
-  };
+  );
 
   return <T>(
     options: { readonly count?: number } = {},
@@ -688,25 +741,28 @@ export const createTakeWhileOperator = <C extends SourceLike>(
   predicate: Predicate<T>,
   options?: { readonly inclusive?: boolean },
 ) => ContainerOperator<C, T, T>) => {
-  TakeWhileSink.prototype.notify = function notifyTakeWhile<T>(
-    this: DelegatingLiftableStateOf<C, T, T> & {
-      readonly predicate: Predicate<T>;
-      readonly inclusive: boolean;
+  decorateWithNotify(
+    TakeWhileSink,
+    function notifyTakeWhile<T>(
+      this: DelegatingLiftableStateOf<C, T, T> & {
+        readonly predicate: Predicate<T>;
+        readonly inclusive: boolean;
+      },
+      next: T,
+    ) {
+      this.assertState();
+
+      const satisfiesPredicate = this.predicate(next);
+
+      if (satisfiesPredicate || this.inclusive) {
+        delegateLiftable(this).notify(next);
+      }
+
+      if (!satisfiesPredicate) {
+        pipe(this, dispose());
+      }
     },
-    next: T,
-  ) {
-    this.assertState();
-
-    const satisfiesPredicate = this.predicate(next);
-
-    if (satisfiesPredicate || this.inclusive) {
-      delegateLiftable(this).notify(next);
-    }
-
-    if (!satisfiesPredicate) {
-      pipe(this, dispose());
-    }
-  };
+  );
 
   return createTakeWhileLiftOperator(m, TakeWhileSink);
 };
@@ -719,17 +775,20 @@ export const createThrowIfEmptyOperator = <C extends SourceLike>(
     isEmpty: boolean;
   },
 ): (<T>(factory: Factory<unknown>) => ContainerOperator<C, T, T>) => {
-  ThrowIfEmptySink.prototype.notify = function notify<T>(
-    this: DelegatingLiftableStateOf<C, T, T> & {
-      isEmpty: boolean;
-    },
-    next: T,
-  ) {
-    this.assertState();
+  decorateWithNotify(
+    ThrowIfEmptySink,
+    function notify<T>(
+      this: DelegatingLiftableStateOf<C, T, T> & {
+        isEmpty: boolean;
+      },
+      next: T,
+    ) {
+      this.assertState();
 
-    this.isEmpty = false;
-    delegateLiftable(this).notify(next);
-  };
+      this.isEmpty = false;
+      delegateLiftable(this).notify(next);
+    },
+  );
 
   return createThrowIfEmptyLiftOperator(m, ThrowIfEmptySink);
 };
