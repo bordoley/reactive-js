@@ -370,7 +370,7 @@ Returns an EnumerableLike view over the `values` array.
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Partial`<{ `delay`: `number` ; `endIndex`: `number` ; `startIndex`: `number`  }\> |
+| `options?` | `Partial`<[`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> |
 
 #### Returns
 

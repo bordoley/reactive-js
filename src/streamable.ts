@@ -1,30 +1,13 @@
-import {
-  concatMap,
-  concatWith,
-  fromValue,
-  fromValue as fromValueContainer,
-  ignoreElements,
-} from "./container";
+import { concatWith, fromValue, ignoreElements } from "./container";
 import { dispatchTo } from "./dispatcher";
 import { add, bindTo } from "./disposable";
-import {
-  EnumerableLike,
-  enumerate,
-  fromIterable as fromIterableEnumerable,
-} from "./enumerable";
-import { Enumerator, current, hasCurrent, move } from "./enumerator";
 import {
   Equality,
   Factory,
   Function1,
   Reducer,
   Updater,
-  compose,
   identity as identityF,
-  increment,
-  length,
-  max,
-  min,
   pipe,
   returns,
   updateReducer,
@@ -36,18 +19,13 @@ import {
   __memo,
   __observe,
   __using,
-  concatAllT,
-  concatT,
   createObservable,
   distinctUntilChanged,
-  fromArrayT,
+  fromArrayT as fromArrayTObs,
   fromDisposable,
   keepT,
-  map,
-  mapT,
   merge,
   mergeT,
-  never,
   onNotify,
   onSubscribe,
   scan,
@@ -55,9 +33,6 @@ import {
   subscribeOn,
   takeFirst,
   takeUntil,
-  takeWhile,
-  using,
-  withLatestFrom,
 } from "./observable";
 import { scheduler as getScheduler } from "./observer";
 import { Option, isSome, none } from "./option";
@@ -77,10 +52,6 @@ export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T>> {
   ): TStream;
 }
 
-export interface AsyncEnumerableLike<T>
-  extends StreamableLike<void, T, AsyncEnumeratorLike<T>> {}
-export interface AsyncEnumeratorLike<T> extends StreamLike<void, T> {}
-
 export interface StreamableStateLike<T>
   extends StreamableLike<Updater<T>, T, StateStreamLike<T>> {}
 export interface StateStreamLike<T> extends StreamLike<Updater<T>, T> {}
@@ -95,28 +66,12 @@ export interface FlowableSinkLike<T>
   extends StreamableLike<T, FlowMode, FlowableSinkStreamLike<T>> {}
 export interface FlowableSinkStreamLike<T> extends StreamLike<T, FlowMode> {}
 
-export type ConsumeContinue<T> = {
-  readonly type: "continue";
-  readonly data: T;
-};
-export type ConsumeDone<T> = {
-  readonly type: "done";
-  readonly data: T;
-};
-
 export {
   createStreamble,
   createLiftedStreamable,
   stream,
 } from "./streamable/streamable";
 export { createFlowableSinkAccumulator } from "./streamable/io";
-export { generate } from "./streamable/generate";
-export {
-  consumeContinue,
-  consumeDone,
-  consume,
-  consumeAsync,
-} from "./streamable/consume";
 
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
@@ -138,7 +93,7 @@ export const createActionReducer = <TAction, T>(
       return pipe(
         obs,
         scan(reducer, returns(acc)),
-        concatWith(mergeT, fromValue(fromArrayT)(acc)),
+        concatWith(mergeT, fromValue(fromArrayTObs)(acc)),
         distinctUntilChanged(options),
         onNotify(notifySink(observer)),
         subscribe(getScheduler(observer)),
@@ -217,82 +172,6 @@ export const flow =
         );
       }),
     );
-
-/**
- * Returns an `AsyncEnumerableLike` from the provided array.
- *
- * @param values The array.
- */
-export const fromArray =
-  <T>(
-    options: {
-      readonly delay?: number;
-      readonly startIndex?: number;
-      readonly endIndex?: number;
-    } = {},
-  ): Function1<readonly T[], AsyncEnumerableLike<T>> =>
-  values => {
-    const valuesLength = length(values);
-    const startIndex = min(options.startIndex ?? 0, valuesLength);
-    const endIndex = max(
-      min(options.endIndex ?? valuesLength, valuesLength),
-      0,
-    );
-
-    const fromValueWithDelay = fromValueContainer(fromArrayT, options);
-
-    return createLiftedStreamable(
-      scan(increment, returns(startIndex - 1)),
-      concatMap({ ...mapT, ...concatAllT }, (i: number) =>
-        fromValueWithDelay(values[i]),
-      ),
-      takeFirst({ count: endIndex - startIndex }),
-    );
-  };
-
-const _fromEnumerable = <T>(
-  enumerable: EnumerableLike<T>,
-): AsyncEnumerableLike<T> =>
-  createLiftedStreamable(
-    withLatestFrom<void, Enumerator<T>, Enumerator<T>>(
-      using(
-        () => enumerate(enumerable),
-        compose(fromValue(fromArrayT), concatWith(concatT, never())),
-      ),
-      (_, enumerator) => enumerator,
-    ),
-    onNotify(move),
-    takeWhile(hasCurrent),
-    map(current),
-  );
-
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
-export const fromEnumerable = <T>(): Function1<
-  EnumerableLike<T>,
-  AsyncEnumerableLike<T>
-> => _fromEnumerable;
-
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
-const _fromIterable = <T>(iterable: Iterable<T>): AsyncEnumerableLike<T> =>
-  pipe(iterable, fromIterableEnumerable(), fromEnumerable());
-
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
-export const fromIterable = <T>(): Function1<
-  Iterable<T>,
-  AsyncEnumerableLike<T>
-> => _fromIterable;
 
 const _identity = {
   stream(scheduler: SchedulerLike, options?: { readonly replay: number }) {

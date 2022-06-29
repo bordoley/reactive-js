@@ -21,9 +21,9 @@ Represents a duplex stream
 
   ↳ **`StreamLike`**
 
-  ↳↳ [`SubjectLike`](observable.SubjectLike.md)
+  ↳↳ [`AsyncEnumeratorLike`](asyncEnumerable.AsyncEnumeratorLike.md)
 
-  ↳↳ [`AsyncEnumeratorLike`](streamable.AsyncEnumeratorLike.md)
+  ↳↳ [`SubjectLike`](observable.SubjectLike.md)
 
   ↳↳ [`FlowableSinkStreamLike`](streamable.FlowableSinkStreamLike.md)
 

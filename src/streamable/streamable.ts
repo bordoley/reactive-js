@@ -60,8 +60,11 @@ export const createStream = <TReq, T>(
   );
 };
 
-class CreateStreamable<TReq, TData, TStream extends StreamLike<TReq, TData>>
-  implements StreamableLike<TReq, TData, TStream>
+class CreateStreamable<
+  TReq,
+  TData,
+  TStream extends StreamLike<TReq, TData> = StreamLike<TReq, TData>,
+> implements StreamableLike<TReq, TData, TStream>
 {
   constructor(
     readonly stream: (
@@ -74,7 +77,7 @@ class CreateStreamable<TReq, TData, TStream extends StreamLike<TReq, TData>>
 export const createStreamble = <
   TReq,
   TData,
-  TStream extends StreamLike<TReq, TData>,
+  TStream extends StreamLike<TReq, TData> = StreamLike<TReq, TData>,
 >(
   stream: (
     scheduler: SchedulerLike,
@@ -184,6 +187,7 @@ export function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I, J, K, L>(
   op11: ObservableOperator<J, K>,
   op12: ObservableOperator<K, L>,
 ): StreamableLike<T, L, StreamLike<T, L>>;
+
 export function createLiftedStreamable<TReq, TData>(
   ...ops: readonly ObservableOperator<unknown, unknown>[]
 ): StreamableLike<TReq, TData, StreamLike<TReq, TData>> {

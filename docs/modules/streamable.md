@@ -6,8 +6,6 @@
 
 ### Interfaces
 
-- [AsyncEnumerableLike](../interfaces/streamable.AsyncEnumerableLike.md)
-- [AsyncEnumeratorLike](../interfaces/streamable.AsyncEnumeratorLike.md)
 - [FlowableLike](../interfaces/streamable.FlowableLike.md)
 - [FlowableSinkLike](../interfaces/streamable.FlowableSinkLike.md)
 - [FlowableSinkStreamLike](../interfaces/streamable.FlowableSinkStreamLike.md)
@@ -18,18 +16,12 @@
 
 ### Type Aliases
 
-- [ConsumeContinue](streamable.md#consumecontinue)
-- [ConsumeDone](streamable.md#consumedone)
 - [FlowMode](streamable.md#flowmode)
 
 ### Functions
 
 - [\_\_state](streamable.md#__state)
 - [\_\_stream](streamable.md#__stream)
-- [consume](streamable.md#consume)
-- [consumeAsync](streamable.md#consumeasync)
-- [consumeContinue](streamable.md#consumecontinue-1)
-- [consumeDone](streamable.md#consumedone-1)
 - [createActionReducer](streamable.md#createactionreducer)
 - [createFlowableSinkAccumulator](streamable.md#createflowablesinkaccumulator)
 - [createLiftedStreamable](streamable.md#createliftedstreamable)
@@ -37,53 +29,11 @@
 - [createStreamble](streamable.md#createstreamble)
 - [empty](streamable.md#empty)
 - [flow](streamable.md#flow)
-- [fromArray](streamable.md#fromarray)
-- [fromEnumerable](streamable.md#fromenumerable)
-- [fromIterable](streamable.md#fromiterable)
-- [generate](streamable.md#generate)
 - [identity](streamable.md#identity)
 - [sinkInto](streamable.md#sinkinto)
 - [stream](streamable.md#stream)
 
 ## Type Aliases
-
-### ConsumeContinue
-
-Ƭ **ConsumeContinue**<`T`\>: `Object`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `data` | `T` |
-| `type` | ``"continue"`` |
-
-___
-
-### ConsumeDone
-
-Ƭ **ConsumeDone**<`T`\>: `Object`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `data` | `T` |
-| `type` | ``"done"`` |
-
-___
 
 ### FlowMode
 
@@ -139,98 +89,6 @@ ___
 #### Returns
 
 `TStream`
-
-___
-
-### consume
-
-▸ **consume**<`T`, `TAcc`\>(`consumer`, `initial`): [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `TAcc` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `consumer` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ConsumeContinue`](streamable.md#consumecontinue)<`TAcc`\> \| [`ConsumeDone`](streamable.md#consumedone)<`TAcc`\>\> |
-| `initial` | [`Factory`](functions.md#factory)<`TAcc`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
-
-___
-
-### consumeAsync
-
-▸ **consumeAsync**<`T`, `TAcc`\>(`consumer`, `initial`): [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `TAcc` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `consumer` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`ConsumeContinue`](streamable.md#consumecontinue)<`TAcc`\> \| [`ConsumeDone`](streamable.md#consumedone)<`TAcc`\>\>\> |
-| `initial` | [`Factory`](functions.md#factory)<`TAcc`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
-
-___
-
-### consumeContinue
-
-▸ **consumeContinue**<`T`\>(`data`): [`ConsumeContinue`](streamable.md#consumecontinue)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `data` | `T` |
-
-#### Returns
-
-[`ConsumeContinue`](streamable.md#consumecontinue)<`T`\>
-
-___
-
-### consumeDone
-
-▸ **consumeDone**<`T`\>(`data`): [`ConsumeDone`](streamable.md#consumedone)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `data` | `T` |
-
-#### Returns
-
-[`ConsumeDone`](streamable.md#consumedone)<`T`\>
 
 ___
 
@@ -693,7 +551,7 @@ ___
 | :------ | :------ |
 | `TReq` | `TReq` |
 | `TData` | `TData` |
-| `TStream` | extends [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `TData`, `TStream`\> |
+| `TStream` | extends [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `TData`, `TStream`\> = [`StreamLike`](../interfaces/observable.StreamLike.md)<`TReq`, `TData`\> |
 
 #### Parameters
 
@@ -747,97 +605,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`T`\>\>
-
-___
-
-### fromArray
-
-▸ **fromArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>\>
-
-Returns an `AsyncEnumerableLike` from the provided array.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-| `options.endIndex?` | `number` |
-| `options.startIndex?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], [`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>\>
-
-___
-
-### fromEnumerable
-
-▸ **fromEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>\>
-
-Returns an `AsyncEnumerableLike` from the provided iterable.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>, [`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>\>
-
-___
-
-### fromIterable
-
-▸ **fromIterable**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>\>
-
-Returns an `AsyncEnumerableLike` from the provided iterable.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>\>
-
-___
-
-### generate
-
-▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>
-
-Generates an `AsyncEnumerableLike` sequence from a generator function
-that is applied to an accumulator value.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> | The generator function. |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function to generate the initial accumulator. |
-| `options?` | `Object` | - |
-| `options.delay?` | `number` | - |
-
-#### Returns
-
-[`AsyncEnumerableLike`](../interfaces/streamable.AsyncEnumerableLike.md)<`T`\>
 
 ___
 
