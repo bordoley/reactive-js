@@ -16,7 +16,7 @@
 
 - **`StreamableLike`**
 
-  ↳ [`AsyncEnumerableLike`](streamable.AsyncEnumerableLike.md)
+  ↳ [`AsyncEnumerableLike`](asyncEnumerable.AsyncEnumerableLike.md)
 
   ↳ [`FlowableLike`](streamable.FlowableLike.md)
 

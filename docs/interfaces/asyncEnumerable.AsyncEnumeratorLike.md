@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [streamable](../modules/streamable.md) / AsyncEnumeratorLike
+[Reactive-JS](../README.md) / [asyncEnumerable](../modules/asyncEnumerable.md) / AsyncEnumeratorLike
 
 # Interface: AsyncEnumeratorLike<T\>
 
-[streamable](../modules/streamable.md).AsyncEnumeratorLike
+[asyncEnumerable](../modules/asyncEnumerable.md).AsyncEnumeratorLike
 
 ## Type parameters
 
@@ -20,7 +20,7 @@
 
 ### Properties
 
-- [T](streamable.AsyncEnumeratorLike.md#t)
+- [T](asyncEnumerable.AsyncEnumeratorLike.md#t)
 
 ## Properties
 

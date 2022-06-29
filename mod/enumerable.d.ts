@@ -1,4 +1,4 @@
-import { Buffer, ConcatAll, FromArray, FromArrayOptions, FromIterator, FromIterable, Generate, Repeat, TakeLast, Zip, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
+import { Buffer, ConcatAll, FromArrayOptions, FromArray, FromIterator, FromIterable, Generate, Repeat, TakeLast, Zip, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
 import { Enumerator } from "./enumerator.mjs";
 import { Factory, Function1, Updater, Predicate, Equality, SideEffect1, Reducer } from "./functions.mjs";
 import { AbstractLiftable, LiftableLike } from "./liftable.mjs";
@@ -23,11 +23,7 @@ declare const concatAllT: ConcatAll<EnumerableLike<unknown>>;
  *
  * @param values
  */
-declare const fromArray: <T>(options?: Partial<{
-    readonly delay: number;
-    readonly startIndex: number;
-    readonly endIndex: number;
-}>) => Function1<readonly T[], EnumerableLike<T>>;
+declare const fromArray: <T>(options?: Partial<FromArrayOptions>) => Function1<readonly T[], EnumerableLike<T>>;
 declare const fromArrayT: FromArray<EnumerableLike<unknown>, FromArrayOptions>;
 /**
  * Returns a single use EnumerableLike over the javascript Iterator

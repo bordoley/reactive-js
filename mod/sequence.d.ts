@@ -1,4 +1,4 @@
-import { ContainerLike, ConcatAll, FromArray, Concat, DistinctUntilChanged, Keep, Map, Generate, Pairwise, TakeFirst, Repeat, Scan, SkipFirst, TakeLast, TakeWhile, Zip } from "./container.mjs";
+import { ContainerLike, ConcatAll, FromArrayOptions, FromArray, Concat, DistinctUntilChanged, Keep, Map, Generate, Pairwise, TakeFirst, Repeat, Scan, SkipFirst, TakeLast, TakeWhile, Zip } from "./container.mjs";
 import { EnumerableLike, ToEnumerable } from "./enumerable.mjs";
 import { Factory, Function1, Equality, Predicate, Updater, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
@@ -18,11 +18,7 @@ declare type SequenceOperator<TA, TB> = Function1<Sequence<TA>, Sequence<TB>>;
 declare const type: Sequence<unknown>;
 declare const concatAll: <T>() => SequenceOperator<Sequence<T>, T>;
 declare const concatAllT: ConcatAll<Sequence<unknown>>;
-declare const fromArray: <T>(options?: Partial<{
-    readonly delay: number;
-    readonly startIndex: number;
-    readonly endIndex: number;
-}>) => Function1<readonly T[], Sequence<T>>;
+declare const fromArray: <T>(options?: Partial<FromArrayOptions>) => Function1<readonly T[], Sequence<T>>;
 declare const fromArrayT: FromArray<Sequence<unknown>>;
 declare function concat<T>(fst: Sequence<T>, snd: Sequence<T>, ...tail: readonly Sequence<T>[]): Sequence<T>;
 declare const concatT: Concat<Sequence<unknown>>;

@@ -1,4 +1,13 @@
 import {
+  consume,
+  consumeAsync,
+  consumeContinue,
+  consumeDone,
+  fromArray as fromArrayStream,
+  fromIterable,
+  generate as generateStream,
+} from "../asyncEnumerable";
+import {
   empty as emptyContainer,
   encodeUtf8,
   fromValue,
@@ -46,18 +55,11 @@ import { last, toArray } from "../runnable";
 import { createVirtualTimeScheduler, now, schedule } from "../scheduler";
 import {
   __stream,
-  consume,
-  consumeAsync,
-  consumeContinue,
-  consumeDone,
   createActionReducer,
   createFlowableSinkAccumulator,
   createLiftedStreamable,
   empty,
   flow,
-  fromArray as fromArrayStream,
-  fromIterable,
-  generate as generateStream,
   identity,
   sinkInto,
   stream,

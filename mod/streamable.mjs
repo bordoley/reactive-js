@@ -1,14 +1,12 @@
 /// <reference types="./streamable.d.ts" />
-import { ignoreElements, startWith, fromValue, concatWith, concatMap } from './container.mjs';
+import { ignoreElements, startWith, concatWith, fromValue } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
-import { enumerate, fromIterable as fromIterable$1 } from './enumerable.mjs';
-import { move, hasCurrent, current } from './enumerator.mjs';
-import { pipe, length, compose, flip, returns, updateReducer, min, max, increment, identity as identity$1 } from './functions.mjs';
-import { AbstractDisposableObservable, observerCount, replay, createSubject, publish, reduce, onNotify, keepT, concatT, fromArrayT, scanAsync, scan, createObservable, map, onSubscribe, zipWithLatestFrom, takeFirst, switchAll, mergeT, distinctUntilChanged, subscribe, subscribeOn, fromDisposable, takeUntil, mapT, concatAllT, withLatestFrom, using, never, takeWhile, merge, __currentScheduler, __using, __memo } from './observable.mjs';
+import { pipe, length, compose, returns, updateReducer, identity as identity$1 } from './functions.mjs';
+import { AbstractDisposableObservable, observerCount, replay, createSubject, publish, reduce, onNotify, keepT, concatT, fromArrayT, createObservable, scan, mergeT, distinctUntilChanged, subscribe, takeFirst, subscribeOn, fromDisposable, takeUntil, merge, onSubscribe, __currentScheduler, __using, __memo } from './observable.mjs';
 import { scheduler } from './observer.mjs';
-import { none, isSome } from './option.mjs';
-import { getDelay, createPausableScheduler } from './scheduler.mjs';
+import { isSome, none } from './option.mjs';
+import { createPausableScheduler } from './scheduler.mjs';
 import { sinkInto as sinkInto$1, notifySink, sourceFrom } from './source.mjs';
 
 class StreamImpl extends AbstractDisposableObservable {
@@ -74,51 +72,6 @@ const createFlowableSinkAccumulator = (reducer, initialValue, options) => {
     return pipe(createLiftedStreamable(reduce(reducer, initialValue), onNotify(dispatchTo(subject)), ignoreElements(keepT), startWith({ ...concatT, ...fromArrayT }, "pause", "resume")), streamable => new FlowableSinkAccumulatorImpl(subject, streamable), add(subject));
 };
 
-const generateScanner = (generator) => (acc, _) => generator(acc);
-const asyncGeneratorScanner = (generator, options) => {
-    const fromValueWithDelay = fromValue(fromArrayT, options);
-    return (acc, _) => pipe(acc, generator, fromValueWithDelay);
-};
-/**
- * Generates an `AsyncEnumerableLike` sequence from a generator function
- * that is applied to an accumulator value.
- *
- * @param generator The generator function.
- * @param initialValue Factory function to generate the initial accumulator.
- */
-const generate = (generator, initialValue, options) => {
-    const delay = getDelay(options);
-    return createLiftedStreamable(delay > 0
-        ? scanAsync(asyncGeneratorScanner(generator, options), initialValue)
-        : scan(generateScanner(generator), initialValue));
-};
-
-const consumeContinue = (data) => ({
-    type: "continue",
-    data,
-});
-const consumeDone = (data) => ({
-    type: "done",
-    data,
-});
-const consumeImpl = (consumer, initial) => enumerable => createObservable(observer => {
-    const enumerator = pipe(enumerable, stream(scheduler(observer)), addTo(observer));
-    const accFeedback = pipe(createSubject(), addTo(observer));
-    pipe(enumerator, consumer(accFeedback), onNotify(ev => {
-        switch (ev.type) {
-            case "continue":
-                pipe(accFeedback, dispatch(ev.data));
-                pipe(enumerator, dispatch(none));
-                break;
-        }
-    }), map(ev => ev.data), onSubscribe(() => {
-        pipe(accFeedback, dispatch(initial()));
-        pipe(enumerator, dispatch(none));
-    }), sinkInto$1(observer));
-});
-const consume = (consumer, initial) => consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
-const consumeAsync = (consumer, initial) => consumeImpl(accObs => compose(zipWithLatestFrom(accObs, (next, acc) => pipe(consumer(acc, next), takeFirst())), switchAll()), initial);
-
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
  * over the notified actions, emitting each intermediate result.
@@ -161,38 +114,6 @@ const flow = ({ scheduler: scheduler$1, } = {}) => observable => createLiftedStr
         }
     }), subscribe(scheduler(observer)), bindTo(pausableScheduler))), add(pausableScheduler));
 }));
-/**
- * Returns an `AsyncEnumerableLike` from the provided array.
- *
- * @param values The array.
- */
-const fromArray = (options = {}) => values => {
-    var _a, _b;
-    const valuesLength = length(values);
-    const startIndex = min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
-    const endIndex = max(min((_b = options.endIndex) !== null && _b !== void 0 ? _b : valuesLength, valuesLength), 0);
-    const fromValueWithDelay = fromValue(fromArrayT, options);
-    return createLiftedStreamable(scan(increment, returns(startIndex - 1)), concatMap({ ...mapT, ...concatAllT }, (i) => fromValueWithDelay(values[i])), takeFirst({ count: endIndex - startIndex }));
-};
-const _fromEnumerable = (enumerable) => createLiftedStreamable(withLatestFrom(using(() => enumerate(enumerable), compose(fromValue(fromArrayT), concatWith(concatT, never()))), (_, enumerator) => enumerator), onNotify(move), takeWhile(hasCurrent), map(current));
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
-const fromEnumerable = () => _fromEnumerable;
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
-const _fromIterable = (iterable) => pipe(iterable, fromIterable$1(), fromEnumerable());
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
-const fromIterable = () => _fromIterable;
 const _identity = {
     stream(scheduler, options) {
         return createStream(identity$1, scheduler, options);
@@ -220,4 +141,4 @@ const __state = (initialState, options = {}) => {
     return __stream(streamable);
 };
 
-export { __state, __stream, consume, consumeAsync, consumeContinue, consumeDone, createActionReducer, createFlowableSinkAccumulator, createLiftedStreamable, createStateStore, createStreamble, empty, flow, fromArray, fromEnumerable, fromIterable, generate, identity, sinkInto, stream };
+export { __state, __stream, createActionReducer, createFlowableSinkAccumulator, createLiftedStreamable, createStateStore, createStreamble, empty, flow, identity, sinkInto, stream };

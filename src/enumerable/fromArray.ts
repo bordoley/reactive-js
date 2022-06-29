@@ -39,15 +39,11 @@ class ArrayEnumerator<T> extends AbstractEnumerator<T> {
  *
  * @param values
  */
-export const fromArray = createFromArray<
-  EnumerableLike<unknown>,
-  {
-    readonly delay: number;
-    readonly startIndex: number;
-    readonly endIndex: number;
-  }
->(<T>(values: readonly T[], startIndex: number, endIndex: number) =>
-  createEnumerable(() => new ArrayEnumerator(values, startIndex - 1, endIndex)),
+export const fromArray = createFromArray<EnumerableLike<unknown>>(
+  <T>(values: readonly T[], startIndex: number, endIndex: number) =>
+    createEnumerable(
+      () => new ArrayEnumerator(values, startIndex - 1, endIndex),
+    ),
 );
 
 export const fromArrayT: FromArray<

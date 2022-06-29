@@ -117,15 +117,9 @@ const _fromArray = <T>(
     ? notify(arr[index], () => _fromArray(arr, index + 1, endIndex))
     : done();
 
-export const fromArray = createFromArray<
-  Sequence<unknown>,
-  {
-    readonly delay: number;
-    readonly startIndex: number;
-    readonly endIndex: number;
-  }
->(<T>(values: readonly T[], startIndex: number, endIndex: number) =>
-  castToSequence(() => _fromArray(values, startIndex, endIndex)),
+export const fromArray = createFromArray<Sequence<unknown>>(
+  <T>(values: readonly T[], startIndex: number, endIndex: number) =>
+    castToSequence(() => _fromArray(values, startIndex, endIndex)),
 );
 
 export const fromArrayT: FromArray<Sequence<unknown>> = {
