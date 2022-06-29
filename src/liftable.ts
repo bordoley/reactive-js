@@ -23,6 +23,7 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
+  max,
   newInstanceWith,
   pipe,
   raise,
@@ -323,7 +324,7 @@ export const createTakeFirstLiftOperator =
   <T>(
     options: { readonly count?: number } = {},
   ): ContainerOperator<C, T, T> => {
-    const { count = Math.max(options.count ?? 1, 0) } = options;
+    const { count = max(options.count ?? 1, 0) } = options;
     const operator: LiftOperator<C, T, T, typeof m> = delegate =>
       pipe(
         TakeFirstLiftableState,
