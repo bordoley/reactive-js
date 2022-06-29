@@ -7,6 +7,7 @@ Reactive-JS
 ### Modules
 
 - [asyncEnumerable](modules/asyncEnumerable.md)
+- [asyncEnumerator](modules/asyncEnumerator.md)
 - [container](modules/container.md)
 - [dispatcher](modules/dispatcher.md)
 - [disposable](modules/disposable.md)

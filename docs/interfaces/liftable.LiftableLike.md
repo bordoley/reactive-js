@@ -10,6 +10,8 @@
 
   ↳ **`LiftableLike`**
 
+  ↳↳ [`AsyncEnumerableLike`](asyncEnumerable.AsyncEnumerableLike.md)
+
   ↳↳ [`EnumerableLike`](enumerable.EnumerableLike.md)
 
   ↳↳ [`SourceLike`](source.SourceLike.md)

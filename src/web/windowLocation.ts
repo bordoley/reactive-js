@@ -26,6 +26,7 @@ import {
 } from "../observable";
 import { Observer } from "../observer";
 import { Option, isSome, none } from "../option";
+import { SchedulerLike } from "../scheduler";
 import { sinkInto } from "../source";
 import {
   StateStreamLike,
@@ -113,6 +114,10 @@ class WindowLocationStream
 
   get replay(): number {
     return replay(this.stateStream);
+  }
+
+  get scheduler(): SchedulerLike {
+    return this.stateStream.scheduler;
   }
 
   dispatch(

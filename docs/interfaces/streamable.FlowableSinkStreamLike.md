@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`StreamLike`](observable.StreamLike.md)<`T`, [`FlowMode`](../modules/streamable.md#flowmode)\>
+- [`StreamLike`](streamable.StreamLike.md)<`T`, [`FlowMode`](../modules/streamable.md#flowmode)\>
 
   ↳ **`FlowableSinkStreamLike`**
 
@@ -21,6 +21,7 @@
 ### Properties
 
 - [T](streamable.FlowableSinkStreamLike.md#t)
+- [scheduler](streamable.FlowableSinkStreamLike.md#scheduler)
 
 ## Properties
 
@@ -31,3 +32,13 @@
 #### Inherited from
 
 StreamLike.T
+
+___
+
+### scheduler
+
+• `Readonly` **scheduler**: [`SchedulerLike`](scheduler.SchedulerLike.md)
+
+#### Inherited from
+
+[StreamLike](streamable.StreamLike.md).[scheduler](streamable.StreamLike.md#scheduler)

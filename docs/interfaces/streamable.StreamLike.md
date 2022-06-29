@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [observable](../modules/observable.md) / StreamLike
+[Reactive-JS](../README.md) / [streamable](../modules/streamable.md) / StreamLike
 
 # Interface: StreamLike<TReq, T\>
 
-[observable](../modules/observable.md).StreamLike
+[streamable](../modules/streamable.md).StreamLike
 
 Represents a duplex stream
 
@@ -21,10 +21,6 @@ Represents a duplex stream
 
   ↳ **`StreamLike`**
 
-  ↳↳ [`AsyncEnumeratorLike`](asyncEnumerable.AsyncEnumeratorLike.md)
-
-  ↳↳ [`SubjectLike`](observable.SubjectLike.md)
-
   ↳↳ [`FlowableSinkStreamLike`](streamable.FlowableSinkStreamLike.md)
 
   ↳↳ [`FlowableStreamLike`](streamable.FlowableStreamLike.md)
@@ -32,3 +28,19 @@ Represents a duplex stream
   ↳↳ [`StateStreamLike`](streamable.StateStreamLike.md)
 
   ↳↳ [`WindowLocationStreamLike`](web.WindowLocationStreamLike.md)
+
+## Implemented by
+
+- [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)
+
+## Table of contents
+
+### Properties
+
+- [scheduler](streamable.StreamLike.md#scheduler)
+
+## Properties
+
+### scheduler
+
+• `Readonly` **scheduler**: [`SchedulerLike`](scheduler.SchedulerLike.md)

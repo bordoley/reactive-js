@@ -1,7 +1,16 @@
+import { DispatcherLike } from "./dispatcher.mjs";
 import { Updater, Function1, Reducer, Factory, Equality } from "./functions.mjs";
-import { StreamLike, ObservableOperator, ObservableLike, MulticastObservableLike } from "./observable.mjs";
+import { MulticastObservableLike, ObservableOperator, ObservableLike } from "./observable.mjs";
 import { Option } from "./option.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
+/**
+ * Represents a duplex stream
+ *
+ * @noInheritDoc
+ */
+interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableLike<T> {
+    readonly scheduler: SchedulerLike;
+}
 interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T>> {
     stream(this: StreamableLike<TReq, T, TStream>, scheduler: SchedulerLike, options?: {
         readonly replay?: number;
@@ -83,4 +92,4 @@ declare const __state: <T>(initialState: () => T, options?: {
 declare const createFlowableSinkAccumulator: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: {
     readonly replay?: number;
 }) => FlowableSinkLike<T> & MulticastObservableLike<TAcc>;
-export { FlowMode, FlowableLike, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, StateStreamLike, StreamableLike, StreamableStateLike, __state, __stream, createActionReducer, createFlowableSinkAccumulator, createLiftedStreamable, createStateStore, createStreamble, empty, flow, identity, sinkInto, stream };
+export { FlowMode, FlowableLike, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, StateStreamLike, StreamLike, StreamableLike, StreamableStateLike, __state, __stream, createActionReducer, createFlowableSinkAccumulator, createLiftedStreamable, createStateStore, createStreamble, empty, flow, identity, sinkInto, stream };

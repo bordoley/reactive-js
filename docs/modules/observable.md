@@ -13,7 +13,6 @@
 
 - [MulticastObservableLike](../interfaces/observable.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/observable.ObservableLike.md)
-- [StreamLike](../interfaces/observable.StreamLike.md)
 - [SubjectLike](../interfaces/observable.SubjectLike.md)
 
 ### Type Aliases

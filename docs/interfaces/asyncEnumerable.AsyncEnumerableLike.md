@@ -12,9 +12,9 @@
 
 ## Hierarchy
 
-- [`StreamableLike`](streamable.StreamableLike.md)<`void`, [`T`](asyncEnumerable.AsyncEnumerableLike.md#t), [`AsyncEnumeratorLike`](asyncEnumerable.AsyncEnumeratorLike.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>\>
+- [`StreamableLike`](streamable.StreamableLike.md)<`void`, [`T`](asyncEnumerable.AsyncEnumerableLike.md#t), [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>\>
 
-- [`ContainerLike`](container.ContainerLike.md)
+- [`LiftableLike`](liftable.LiftableLike.md)
 
   ↳ **`AsyncEnumerableLike`**
 
@@ -23,6 +23,7 @@
 ### Properties
 
 - [T](asyncEnumerable.AsyncEnumerableLike.md#t)
+- [liftableStateType](asyncEnumerable.AsyncEnumerableLike.md#liftablestatetype)
 - [type](asyncEnumerable.AsyncEnumerableLike.md#type)
 
 ### Methods
@@ -37,7 +38,17 @@
 
 #### Overrides
 
-[ContainerLike](container.ContainerLike.md).[T](container.ContainerLike.md#t)
+[LiftableLike](liftable.LiftableLike.md).[T](liftable.LiftableLike.md#t)
+
+___
+
+### liftableStateType
+
+• `Readonly` **liftableStateType**: [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<`unknown`\>
+
+#### Overrides
+
+[LiftableLike](liftable.LiftableLike.md).[liftableStateType](liftable.LiftableLike.md#liftablestatetype)
 
 ___
 
@@ -47,26 +58,26 @@ ___
 
 #### Overrides
 
-[ContainerLike](container.ContainerLike.md).[type](container.ContainerLike.md#type)
+[LiftableLike](liftable.LiftableLike.md).[type](liftable.LiftableLike.md#type)
 
 ## Methods
 
 ### stream
 
-▸ **stream**(`this`, `scheduler`, `options?`): [`AsyncEnumeratorLike`](asyncEnumerable.AsyncEnumeratorLike.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>
+▸ **stream**(`this`, `scheduler`, `options?`): [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StreamableLike`](streamable.StreamableLike.md)<`void`, [`T`](asyncEnumerable.AsyncEnumerableLike.md#t), [`AsyncEnumeratorLike`](asyncEnumerable.AsyncEnumeratorLike.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>\> |
+| `this` | [`StreamableLike`](streamable.StreamableLike.md)<`void`, [`T`](asyncEnumerable.AsyncEnumerableLike.md#t), [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>\> |
 | `scheduler` | [`SchedulerLike`](scheduler.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.replay?` | `number` |
 
 #### Returns
 
-[`AsyncEnumeratorLike`](asyncEnumerable.AsyncEnumeratorLike.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>
+[`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>
 
 #### Inherited from
 

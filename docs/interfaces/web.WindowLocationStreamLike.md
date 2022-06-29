@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`StreamLike`](observable.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](web.WindowLocationURI.md)\> \| [`WindowLocationURI`](web.WindowLocationURI.md), [`WindowLocationURI`](web.WindowLocationURI.md)\>
+- [`StreamLike`](streamable.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](web.WindowLocationURI.md)\> \| [`WindowLocationURI`](web.WindowLocationURI.md), [`WindowLocationURI`](web.WindowLocationURI.md)\>
 
   ↳ **`WindowLocationStreamLike`**
 
@@ -15,6 +15,7 @@
 ### Properties
 
 - [T](web.WindowLocationStreamLike.md#t)
+- [scheduler](web.WindowLocationStreamLike.md#scheduler)
 
 ### Methods
 
@@ -30,6 +31,16 @@
 #### Inherited from
 
 StreamLike.T
+
+___
+
+### scheduler
+
+• `Readonly` **scheduler**: [`SchedulerLike`](scheduler.SchedulerLike.md)
+
+#### Inherited from
+
+[StreamLike](streamable.StreamLike.md).[scheduler](streamable.StreamLike.md#scheduler)
 
 ## Methods
 

@@ -125,17 +125,10 @@ export interface MulticastObservableLike<T>
   readonly replay: number;
 }
 
-/**
- * Represents a duplex stream
- *
- * @noInheritDoc
- */
-export interface StreamLike<TReq, T>
-  extends DispatcherLike<TReq>,
-    MulticastObservableLike<T> {}
-
 /** @noInheritDoc */
-export interface SubjectLike<T> extends StreamLike<T, T> {}
+export interface SubjectLike<T>
+  extends DispatcherLike<T>,
+    MulticastObservableLike<T> {}
 
 export type AsyncReducer<TAcc, T> = Function2<TAcc, T, ObservableLike<TAcc>>;
 export type ObservableEffectMode = "batched" | "combine-latest";

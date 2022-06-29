@@ -1,7 +1,10 @@
-import { ContainerLike, FromArray } from "./container.mjs";
+import { AsyncEnumerator } from "./asyncEnumerator.mjs";
+import { FromArray } from "./container.mjs";
 import { EnumerableLike } from "./enumerable.mjs";
 import { Function1, Function2, Factory, Updater } from "./functions.mjs";
-import { StreamLike, ObservableLike } from "./observable.mjs";
+import { LiftableLike } from "./liftable.mjs";
+import { ObservableOperator, ObservableLike } from "./observable.mjs";
+import { SchedulerLike } from "./scheduler.mjs";
 import { StreamableLike } from "./streamable.mjs";
 declare type ConsumeContinue<T> = {
     readonly type: "continue";
@@ -11,12 +14,26 @@ declare type ConsumeDone<T> = {
     readonly type: "done";
     readonly data: T;
 };
-interface AsyncEnumerableLike<T> extends StreamableLike<void, T, AsyncEnumeratorLike<T>>, ContainerLike {
+interface AsyncEnumerableLike<T> extends StreamableLike<void, T, AsyncEnumerator<T>>, LiftableLike {
     readonly T: unknown;
     readonly type: AsyncEnumerableLike<this["T"]>;
+    readonly liftableStateType: AsyncEnumerator<this["T"]>;
 }
-interface AsyncEnumeratorLike<T> extends StreamLike<void, T> {
-}
+declare const createAsyncEnumerable: <T>(stream: (scheduler: SchedulerLike, options?: {
+    readonly replay?: number;
+}) => AsyncEnumerator<T>) => AsyncEnumerableLike<T>;
+declare function createLiftedAsyncEnumerable<A>(op1: ObservableOperator<void, A>): AsyncEnumerableLike<A>;
+declare function createLiftedAsyncEnumerable<A, B>(op1: ObservableOperator<void, A>, op2: ObservableOperator<A, B>): AsyncEnumerableLike<B>;
+declare function createLiftedAsyncEnumerable<A, B, C>(op1: ObservableOperator<void, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>): AsyncEnumerableLike<C>;
+declare function createLiftedAsyncEnumerable<A, B, C, D>(op1: ObservableOperator<void, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>): AsyncEnumerableLike<D>;
+declare function createLiftedAsyncEnumerable<A, B, C, D, E>(op1: ObservableOperator<void, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>): AsyncEnumerableLike<E>;
+declare function createLiftedAsyncEnumerable<A, B, C, D, E, F>(op1: ObservableOperator<void, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>, op6: ObservableOperator<E, F>): AsyncEnumerableLike<F>;
+declare function createLiftedAsyncEnumerable<A, B, C, D, E, F, G>(op1: ObservableOperator<void, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>, op6: ObservableOperator<E, F>, op7: ObservableOperator<F, G>): AsyncEnumerableLike<G>;
+declare function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H>(op1: ObservableOperator<void, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>, op6: ObservableOperator<E, F>, op7: ObservableOperator<F, G>, op8: ObservableOperator<G, H>): AsyncEnumerableLike<H>;
+declare function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I>(op1: ObservableOperator<void, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>, op6: ObservableOperator<E, F>, op7: ObservableOperator<F, G>, op8: ObservableOperator<G, H>, op9: ObservableOperator<H, I>): AsyncEnumerableLike<I>;
+declare function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I, J>(op1: ObservableOperator<void, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>, op6: ObservableOperator<E, F>, op7: ObservableOperator<F, G>, op8: ObservableOperator<G, H>, op9: ObservableOperator<H, I>, op10: ObservableOperator<I, J>): AsyncEnumerableLike<J>;
+declare function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I, J, K>(op1: ObservableOperator<void, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>, op6: ObservableOperator<E, F>, op7: ObservableOperator<F, G>, op8: ObservableOperator<G, H>, op9: ObservableOperator<H, I>, op10: ObservableOperator<I, J>, op11: ObservableOperator<J, K>): AsyncEnumerableLike<K>;
+declare function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I, J, K, L>(op1: ObservableOperator<void, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>, op6: ObservableOperator<E, F>, op7: ObservableOperator<F, G>, op8: ObservableOperator<G, H>, op9: ObservableOperator<H, I>, op10: ObservableOperator<I, J>, op11: ObservableOperator<J, K>, op12: ObservableOperator<K, L>): AsyncEnumerableLike<L>;
 /**
  * Returns an `AsyncEnumerableLike` from the provided array.
  *
@@ -54,4 +71,4 @@ declare const consumeAsync: <T, TAcc>(consumer: Function2<TAcc, T, ObservableLik
 declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
     readonly delay?: number;
 }) => AsyncEnumerableLike<T>;
-export { AsyncEnumerableLike, AsyncEnumeratorLike, ConsumeContinue, ConsumeDone, consume, consumeAsync, consumeContinue, consumeDone, fromArray, fromArrayT, fromEnumerable, fromIterable, generate };
+export { AsyncEnumerableLike, ConsumeContinue, ConsumeDone, consume, consumeAsync, consumeContinue, consumeDone, createAsyncEnumerable, createLiftedAsyncEnumerable, fromArray, fromArrayT, fromEnumerable, fromIterable, generate };

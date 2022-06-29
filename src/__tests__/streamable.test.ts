@@ -28,7 +28,6 @@ import {
   sum,
 } from "../functions";
 import {
-  StreamLike,
   __memo,
   __observe,
   buffer,
@@ -54,6 +53,7 @@ import { Option, none } from "../option";
 import { last, toArray } from "../runnable";
 import { createVirtualTimeScheduler, now, schedule } from "../scheduler";
 import {
+  StreamLike,
   __stream,
   createActionReducer,
   createFlowableSinkAccumulator,

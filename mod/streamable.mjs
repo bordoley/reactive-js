@@ -2,8 +2,8 @@
 import { concatWith, fromValue, ignoreElements, startWith } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
-import { pipe, newInstanceWith, newInstance, length, compose, returns, updateReducer, identity as identity$1 } from './functions.mjs';
-import { AbstractDisposableObservable, observerCount, replay, createSubject, publish, createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, onNotify, subscribe, takeFirst, subscribeOn, fromDisposable, takeUntil, merge, keepT, onSubscribe, __currentScheduler, __using, __memo, reduce, concatT } from './observable.mjs';
+import { pipe, newInstance, length, compose, returns, updateReducer, identity as identity$1 } from './functions.mjs';
+import { AbstractDisposableObservable, createSubject, publish, observerCount, replay, createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, onNotify, subscribe, takeFirst, subscribeOn, fromDisposable, takeUntil, merge, keepT, onSubscribe, __currentScheduler, __using, __memo, reduce, concatT } from './observable.mjs';
 import { scheduler } from './observer.mjs';
 import { isSome, none } from './option.mjs';
 import { createPausableScheduler } from './scheduler.mjs';
@@ -11,10 +11,14 @@ import { sinkInto as sinkInto$1, notifySink, sourceFrom } from './source.mjs';
 
 const stream = (scheduler, options) => streamable => streamable.stream(scheduler, options);
 class StreamImpl extends AbstractDisposableObservable {
-    constructor(dispatcher, observable) {
+    constructor(op, scheduler, options) {
         super();
-        this.dispatcher = dispatcher;
+        this.scheduler = scheduler;
+        const subject = createSubject();
+        const observable = pipe(subject, op, publish(scheduler, options));
+        this.dispatcher = subject;
         this.observable = observable;
+        return pipe(this, add(subject), addTo(this.observable));
     }
     get observerCount() {
         return observerCount(this.observable);
@@ -29,13 +33,7 @@ class StreamImpl extends AbstractDisposableObservable {
         pipe(this.observable, sinkInto$1(observer));
     }
 }
-const createStream = (op, scheduler, options) => {
-    const subject = createSubject();
-    const observable = pipe(subject, op, publish(scheduler, options));
-    return pipe(StreamImpl, newInstanceWith(subject, observable), add(subject), 
-    // FIXME: This seems wrong.
-    addTo(observable));
-};
+const createStream = (op, scheduler, options) => newInstance(StreamImpl, op, scheduler, options);
 class CreateStreamable {
     constructor(stream) {
         this.stream = stream;

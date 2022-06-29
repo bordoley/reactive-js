@@ -12,6 +12,8 @@
 
 ## Hierarchy
 
-- [`StreamLike`](observable.StreamLike.md)<`T`, `T`\>
+- [`DispatcherLike`](dispatcher.DispatcherLike.md)<`T`\>
+
+- [`MulticastObservableLike`](observable.MulticastObservableLike.md)<`T`\>
 
   ↳ **`SubjectLike`**

@@ -20,7 +20,9 @@ An `ObservableLike` that shares a common subscription to an underlying observabl
 
   ↳ **`MulticastObservableLike`**
 
-  ↳↳ [`StreamLike`](observable.StreamLike.md)
+  ↳↳ [`SubjectLike`](observable.SubjectLike.md)
+
+  ↳↳ [`StreamLike`](streamable.StreamLike.md)
 
 ## Table of contents
 
