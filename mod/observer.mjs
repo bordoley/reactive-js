@@ -2,13 +2,13 @@
 import { AbstractDisposableContainer } from './container.mjs';
 import { addTo, onComplete, AbstractDisposable, isDisposed, dispose, onDisposed } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
-import { pipe, raise } from './functions.mjs';
+import { length, pipe, isEmpty, raise } from './functions.mjs';
 import { delegate } from './liftable.mjs';
 import { none, isNone } from './option.mjs';
 import { schedule, __yield, inContinuation } from './scheduler.mjs';
 
 const scheduleDrainQueue = (dispatcher) => {
-    if (dispatcher.nextQueue.length === 1) {
+    if (length(dispatcher.nextQueue) === 1) {
         const { observer } = dispatcher;
         pipe(scheduler(observer), schedule(dispatcher.continuation), addTo(observer), onComplete(dispatcher.onContinuationDispose));
     }
@@ -20,7 +20,7 @@ class ObserverDelegatingDispatcher extends AbstractDisposable {
         this.continuation = () => {
             const { nextQueue } = this;
             const { observer } = this;
-            while (nextQueue.length > 0) {
+            while (length(nextQueue) > 0) {
                 const next = nextQueue.shift();
                 observer.notify(next);
                 __yield();
@@ -52,7 +52,7 @@ class Observer extends AbstractDisposableContainer {
     get dispatcher() {
         if (isNone(this._dispatcher)) {
             const dispatcher = pipe(new ObserverDelegatingDispatcher(this), addTo(this, true), onDisposed(e => {
-                if (dispatcher.nextQueue.length === 0) {
+                if (isEmpty(dispatcher.nextQueue)) {
                     pipe(this, dispose(e));
                 }
             }));

@@ -27,7 +27,9 @@ const idlePriorityScheduler = createReactIdlePriorityScheduler();
 const normalPriorityScheduler = createReactNormalPriorityScheduler();
 
 // History must be globally unique to an application
-const historyStream = windowLocation.stream(normalPriorityScheduler, {replay: 1});
+const historyStream = windowLocation.stream(normalPriorityScheduler, {
+  replay: 1,
+});
 
 const counterFlowable = pipe(
   generate(increment, returns(0)),

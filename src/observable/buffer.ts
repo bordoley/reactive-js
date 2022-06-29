@@ -9,7 +9,7 @@ import {
   isDisposed,
   onComplete,
 } from "../disposable";
-import { Function1, pipe } from "../functions";
+import { Function1, isEmpty, length, pipe } from "../functions";
 import { delegate, delegate as observerDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
@@ -49,7 +49,7 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
       delegate(this).notify(buffer);
     };
 
-    if (buffer.length === maxBufferSize) {
+    if (length(buffer) === maxBufferSize) {
       doOnNotify();
     } else if (isDisposed(this.durationSubscription.inner)) {
       this.durationSubscription.inner = pipe(
@@ -103,7 +103,7 @@ export function buffer<T>(
         const { buffer } = this;
         this.buffer = [];
 
-        if (buffer.length === 0) {
+        if (isEmpty(buffer)) {
           pipe(this, observerDelegate, dispose());
         } else {
           pipe(buffer, fromValue(fromArrayT), sinkInto(observerDelegate(this)));

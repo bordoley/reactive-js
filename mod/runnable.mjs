@@ -1,6 +1,6 @@
 /// <reference types="./runnable.d.ts" />
 import { dispose, isDisposed, addTo, bindTo } from './disposable.mjs';
-import { pipe, raise, ignore, identity, alwaysTrue, compose } from './functions.mjs';
+import { pipe, raise, length, ignore, identity, alwaysTrue, compose } from './functions.mjs';
 import { isSome, none, isNone, getOrDefault } from './option.mjs';
 import { empty } from './readonlyArray.mjs';
 import { AbstractSource, sourceFrom, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
@@ -49,9 +49,9 @@ const first = () => {
 
 const fromArray = (options = {}) => values => {
     var _a, _b;
-    const valuesLength = values.length;
+    const valuesLength = length(values);
     const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
-    const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : values.length, valuesLength), 0);
+    const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : length(values), valuesLength), 0);
     const count = endIndex - startIndex;
     const run = count === 0
         ? ignore
@@ -141,7 +141,7 @@ const bufferT = {
 const catchError = createCatchErrorOperator(liftT, class CatchErrorSink extends AbstractDelegatingRunnableSink {
 });
 const concat = (...runnables) => createRunnable((sink) => {
-    const runnablesLength = runnables.length;
+    const runnablesLength = length(runnables);
     for (let i = 0; i < runnablesLength && !isDisposed(sink); i++) {
         pipe(createDelegatingRunnableSink(sink), addTo(sink), sourceFrom(runnables[i]), dispose());
     }

@@ -15,7 +15,7 @@ import {
   reset,
   zip as zipEnumerators,
 } from "../enumerator";
-import { pipe, pipeLazy, returns } from "../functions";
+import { isEmpty, length, pipe, pipeLazy, returns } from "../functions";
 import { delegate } from "../liftable";
 import { ObservableLike } from "../observable";
 import { AbstractDelegatingObserver, Observer } from "../observer";
@@ -52,7 +52,7 @@ class ZipObserverEnumerator extends AbstractEnumerator<unknown> {
   move(): boolean {
     const { buffer } = this;
 
-    if (!isDisposed(this) && buffer.length > 0) {
+    if (!isDisposed(this) && length(buffer) > 0) {
       const next = buffer.shift();
       this.current = next;
     } else {
@@ -107,7 +107,7 @@ const _zip = (
   const isEnumerableOperator = pipe(observables, everySatisfy(isEnumerable));
 
   const zipObservable = createObservable(observer => {
-    const count = observables.length;
+    const count = length(observables);
 
     if (isEnumerableOperator) {
       const zipped = using(
@@ -142,7 +142,7 @@ const _zip = (
             onComplete(() => {
               if (
                 isDisposed(enumerator) ||
-                (enumerator.buffer.length === 0 && !hasCurrent(enumerator))
+                (isEmpty(enumerator.buffer) && !hasCurrent(enumerator))
               ) {
                 pipe(observer, dispose());
               }

@@ -1,5 +1,5 @@
 /// <reference types="./testing.d.ts" />
-import { ignore, raise, strictEquality, arrayEquality } from './functions.mjs';
+import { ignore, raise, strictEquality, arrayEquality, length } from './functions.mjs';
 import { none, isSome, isNone } from './option.mjs';
 import { __DENO__ } from './env.mjs';
 
@@ -135,8 +135,8 @@ const mockFn = (retval) => {
     return cb;
 };
 const expectToHaveBeenCalledTimes = (times) => (fn) => {
-    if (fn.calls.length !== times) {
-        raise(`expected fn to be called ${times} times, but was only called ${fn.calls.length} times.`);
+    if (length(fn.calls) !== times) {
+        raise(`expected fn to be called ${times} times, but was only called ${length(fn.calls)} times.`);
     }
 };
 const expectPromiseToThrow = async (promise) => {

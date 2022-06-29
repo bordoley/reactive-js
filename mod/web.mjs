@@ -1,7 +1,7 @@
 /// <reference types="./web.d.ts" />
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { onDisposed, bindTo, addTo, toAbortSignal, dispose } from './disposable.mjs';
-import { pipe, raise, compose, returns } from './functions.mjs';
+import { pipe, isEmpty, length, raise, compose, returns } from './functions.mjs';
 import { createObservable, AbstractDisposableObservable, observerCount, replay, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { ignoreElements } from './container.mjs';
@@ -48,9 +48,9 @@ const createEventSource = (url, options = {}) => {
 };
 
 const windowLocationURIToString = ({ path, query, fragment, }) => {
-    let uri = path.length === 0 ? "/" : !path.startsWith("/") ? `/${path}` : path;
-    uri = query.length > 0 ? `${uri}?${query}` : uri;
-    uri = fragment.length > 0 ? `${uri}#${fragment}` : uri;
+    let uri = isEmpty(path) ? "/" : !path.startsWith("/") ? `/${path}` : path;
+    uri = length(query) > 0 ? `${uri}?${query}` : uri;
+    uri = length(fragment) > 0 ? `${uri}#${fragment}` : uri;
     return new URL(uri, window.location.href).toString();
 };
 const getCurrentWindowLocationURI = () => {

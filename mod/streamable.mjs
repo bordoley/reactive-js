@@ -4,7 +4,7 @@ import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
 import { enumerate, fromIterable as fromIterable$1 } from './enumerable.mjs';
 import { move, hasCurrent, current } from './enumerator.mjs';
-import { pipe, compose, flip, returns, updateReducer, increment, identity as identity$1 } from './functions.mjs';
+import { pipe, length, compose, flip, returns, updateReducer, increment, identity as identity$1 } from './functions.mjs';
 import { AbstractDisposableObservable, observerCount, replay, createSubject, publish, reduce, onNotify, keepT, concatT, fromArrayT, scanAsync, scan, createObservable, map, onSubscribe, zipWithLatestFrom, takeFirst, switchAll, mergeT, distinctUntilChanged, subscribe, subscribeOn, fromDisposable, takeUntil, mapT, concatAllT, withLatestFrom, using, never, takeWhile, merge, __currentScheduler, __using, __memo } from './observable.mjs';
 import { scheduler } from './observer.mjs';
 import { none, isSome } from './option.mjs';
@@ -44,7 +44,7 @@ class CreateStreamable {
 }
 const createStreamble = (stream) => new CreateStreamable(stream);
 function createLiftedStreamable(...ops) {
-    const op = ops.length > 1 ? compose(...ops) : ops[0];
+    const op = length(ops) > 1 ? compose(...ops) : ops[0];
     return createStreamble((scheduler, options) => createStream(op, scheduler, options));
 }
 const stream = (scheduler, options) => streamable => streamable.stream(scheduler, options);
@@ -169,7 +169,7 @@ const flow = ({ scheduler: scheduler$1, } = {}) => observable => createLiftedStr
  */
 const fromArray = (options = {}) => values => {
     var _a, _b;
-    const valuesLength = values.length;
+    const valuesLength = length(values);
     const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
     const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : valuesLength, valuesLength), 0);
     const fromValueWithDelay = fromValue(fromArrayT, options);

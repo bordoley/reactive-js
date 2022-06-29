@@ -1,7 +1,7 @@
 /// <reference types="./enumerable.d.ts" />
 import { isDisposed, dispose, createSerialDisposable, bindTo, add, addTo } from './disposable.mjs';
 import { AbstractEnumerator, reset, hasCurrent, AbstractDelegatingEnumerator, move, Enumerator, current, forEach, zip as zip$1, AbstractPassThroughEnumerator } from './enumerator.mjs';
-import { pipe, raise, alwaysTrue, identity } from './functions.mjs';
+import { pipe, length, raise, alwaysTrue, identity } from './functions.mjs';
 import { empty } from './container.mjs';
 import { AbstractLiftable, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, delegate, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -39,9 +39,9 @@ class ArrayEnumerator extends AbstractEnumerator {
  */
 const fromArray = (options = {}) => (values) => {
     var _a, _b;
-    const valuesLength = values.length;
+    const valuesLength = length(values);
     const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
-    const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : values.length, valuesLength), 0);
+    const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : length(values), valuesLength), 0);
     return createEnumerable(() => new ArrayEnumerator(values, startIndex - 1, endIndex));
 };
 const fromArrayT = {
@@ -144,10 +144,10 @@ class BufferEnumerator extends AbstractDelegatingEnumerator {
         reset(this);
         const buffer = [];
         const { delegate, maxBufferSize } = this;
-        while (buffer.length < maxBufferSize && delegate.move()) {
-            buffer.push(delegate.current);
+        while (length(buffer) < maxBufferSize && delegate.move()) {
+            buffer.push(current(delegate));
         }
-        const bufferLength = buffer.length;
+        const bufferLength = length(buffer);
         if (bufferLength > 0) {
             this.current = buffer;
         }
@@ -316,7 +316,7 @@ class TakeLastEnumerator extends Enumerator {
             const last = [];
             while (move(delegate)) {
                 last.push(current(delegate));
-                if (last.length > this.maxCount) {
+                if (length(last) > this.maxCount) {
                     last.shift();
                 }
             }

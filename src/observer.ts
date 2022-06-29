@@ -9,14 +9,14 @@ import {
   onDisposed,
 } from "./disposable";
 import { __DEV__ } from "./env";
-import { pipe, raise } from "./functions";
+import { isEmpty, length, pipe, raise } from "./functions";
 import { delegate } from "./liftable";
 import { Option, isNone, none } from "./option";
 import { SchedulerLike, __yield, inContinuation, schedule } from "./scheduler";
 import { SinkLike } from "./source";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
-  if (dispatcher.nextQueue.length === 1) {
+  if (length(dispatcher.nextQueue) === 1) {
     const { observer } = dispatcher;
     pipe(
       scheduler(observer),
@@ -35,7 +35,7 @@ class ObserverDelegatingDispatcher<T>
     const { nextQueue } = this;
 
     const { observer } = this;
-    while (nextQueue.length > 0) {
+    while (length(nextQueue) > 0) {
       const next = nextQueue.shift() as T;
       observer.notify(next);
       __yield();
@@ -81,7 +81,7 @@ export class Observer<T>
         new ObserverDelegatingDispatcher(this),
         addTo(this, true),
         onDisposed(e => {
-          if (dispatcher.nextQueue.length === 0) {
+          if (isEmpty(dispatcher.nextQueue)) {
             pipe(this, dispose(e));
           }
         }),

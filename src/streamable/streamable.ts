@@ -1,6 +1,6 @@
 import { DispatcherLike, dispatch } from "../dispatcher";
 import { add, addTo } from "../disposable";
-import { Function1, compose, pipe } from "../functions";
+import { Function1, compose, length, pipe } from "../functions";
 import {
   AbstractDisposableObservable,
   MulticastObservableLike,
@@ -187,7 +187,7 @@ export function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I, J, K, L>(
 export function createLiftedStreamable<TReq, TData>(
   ...ops: readonly ObservableOperator<unknown, unknown>[]
 ): StreamableLike<TReq, TData, StreamLike<TReq, TData>> {
-  const op = ops.length > 1 ? (compose as any)(...ops) : ops[0];
+  const op = length(ops) > 1 ? (compose as any)(...ops) : ops[0];
   return createStreamble((scheduler, options) =>
     createStream(op, scheduler, options),
   );

@@ -22,6 +22,7 @@ import {
   compose,
   identity as identityF,
   increment,
+  length,
   pipe,
   returns,
   updateReducer,
@@ -229,7 +230,7 @@ export const fromArray =
     } = {},
   ): Function1<readonly T[], AsyncEnumerableLike<T>> =>
   values => {
-    const valuesLength = values.length;
+    const valuesLength = length(values);
     const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
     const endIndex = Math.max(
       Math.min(options.endIndex ?? valuesLength, valuesLength),

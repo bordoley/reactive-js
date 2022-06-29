@@ -14,6 +14,8 @@ function callWith(...args) {
  * @returns `v`
  */
 const identity = (v) => v;
+const isEmpty = (arr) => arr.length === 0;
+const length = (arr) => arr.length;
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
  */
@@ -93,7 +95,7 @@ const raise = (message) => {
  */
 const sum = (...args) => {
     let acc = 0;
-    for (let i = 0; i < args.length; i++) {
+    for (let i = 0; i < length(args); i++) {
         acc += args[i];
     }
     return acc;
@@ -102,7 +104,7 @@ const sum = (...args) => {
  * Returns an equality function that compares two readonly arrays for equality,
  * comparing their values using `valuesEquality`.
  */
-const arrayEquality = (valuesEquality = strictEquality) => (a, b) => a.length === b.length && a.every((v, i) => valuesEquality(b[i], v));
+const arrayEquality = (valuesEquality = strictEquality) => (a, b) => length(a) === length(b) && a.every((v, i) => valuesEquality(b[i], v));
 /**
  * A `Reducer` functions that applies `updater` to `acc` to compute the next
  * accumulator value.
@@ -137,4 +139,4 @@ function flip(f) {
     };
 }
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, identity, ignore, increment, incrementBy, isEqualTo, isEven, isOdd, negate, pipe, pipeLazy, raise, returns, strictEquality, sum, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isOdd, length, negate, pipe, pipeLazy, raise, returns, strictEquality, sum, updateReducer };
