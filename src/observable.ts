@@ -207,26 +207,30 @@ export { toPromise } from "./observable/toPromise";
 
 export const catchError: <T>(
   onError: Function1<unknown, ObservableLike<T> | void>,
-) => ObservableOperator<T, T> = createCatchErrorOperator(
+) => ObservableOperator<T, T> = /*@__PURE__*/ createCatchErrorOperator(
   liftSynchronousT,
   class CatchErrorObserver<T> extends AbstractDelegatingObserver<T, T> {},
 );
 
-export const fromDisposable = createFromDisposable(createT);
+export const fromDisposable = /*@__PURE__*/ createFromDisposable(createT);
 
 export const decodeWithCharset: (
   charset?: string,
-) => ObservableOperator<ArrayBuffer, string> = createDecodeWithCharsetOperator(
-  { ...liftSynchronousT, ...fromArrayT },
-  class DecodeWithCharsetObserver extends AbstractDelegatingObserver<
-    ArrayBuffer,
-    string
-  > {
-    constructor(delegate: Observer<string>, readonly textDecoder: TextDecoder) {
-      super(delegate);
-    }
-  },
-);
+) => ObservableOperator<ArrayBuffer, string> =
+  /*@__PURE__*/ createDecodeWithCharsetOperator(
+    { ...liftSynchronousT, ...fromArrayT },
+    class DecodeWithCharsetObserver extends AbstractDelegatingObserver<
+      ArrayBuffer,
+      string
+    > {
+      constructor(
+        delegate: Observer<string>,
+        readonly textDecoder: TextDecoder,
+      ) {
+        super(delegate);
+      }
+    },
+  );
 
 export const decodeWithCharsetT: DecodeWithCharset<ObservableLike<unknown>> = {
   decodeWithCharset,
@@ -241,20 +245,21 @@ export const decodeWithCharsetT: DecodeWithCharset<ObservableLike<unknown>> = {
  */
 export const distinctUntilChanged: <T>(options?: {
   readonly equality?: Equality<T>;
-}) => ObservableOperator<T, T> = createDistinctUntilChangedOperator(
-  liftSynchronousT,
-  class DistinctUntilChangedObserver<T> extends AbstractDelegatingObserver<
-    T,
-    T
-  > {
-    prev: Option<T> = none;
-    hasValue = false;
+}) => ObservableOperator<T, T> =
+  /*@__PURE__*/ createDistinctUntilChangedOperator(
+    liftSynchronousT,
+    class DistinctUntilChangedObserver<T> extends AbstractDelegatingObserver<
+      T,
+      T
+    > {
+      prev: Option<T> = none;
+      hasValue = false;
 
-    constructor(delegate: Observer<T>, readonly equality: Equality<T>) {
-      super(delegate);
-    }
-  },
-);
+      constructor(delegate: Observer<T>, readonly equality: Equality<T>) {
+        super(delegate);
+      }
+    },
+  );
 
 export const distinctUntilChangedT: DistinctUntilChanged<
   ObservableLike<unknown>
@@ -264,7 +269,7 @@ export const distinctUntilChangedT: DistinctUntilChanged<
 
 export const everySatisfy: <T>(
   predicate: Predicate<T>,
-) => ObservableOperator<T, boolean> = createEverySatisfyOperator(
+) => ObservableOperator<T, boolean> = /*@__PURE__*/ createEverySatisfyOperator(
   { ...fromArrayT, ...liftSynchronousT },
   class EverySatisfyObserver<T> extends AbstractDelegatingObserver<T, boolean> {
     constructor(delegate: Observer<boolean>, readonly predicate: Predicate<T>) {
@@ -280,7 +285,7 @@ export const everySatisfyT: EverySatisfy<ObservableLike<unknown>> = {
 export const fromPromise = <T>(
   factory: Factory<Promise<T>>,
 ): ObservableLike<T> =>
-  createObservable(({ dispatcher }) => {
+  /*@__PURE__*/ createObservable(({ dispatcher }) => {
     factory().then(next => {
       if (!isDisposed(dispatcher)) {
         pipe(dispatcher, dispatch(next), dispose());
@@ -322,7 +327,7 @@ export const generateT: Generate<ObservableLike<unknown>> = {
 };
 
 export const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T> =
-  createKeepOperator(
+  /*@__PURE__*/ createKeepOperator(
     liftSynchronousT,
     class KeepObserver<T> extends AbstractDelegatingObserver<T, T> {
       constructor(delegate: Observer<T>, readonly predicate: Predicate<T>) {
@@ -340,16 +345,13 @@ export const mapAsync = <TA, TB>(
 ): ObservableOperator<TA, TB> =>
   concatMap({ ...switchAllT, ...mapT }, (a: TA) => fromPromise(() => f(a)));
 
-export const onSubscribe = createOnSink(createT);
+export const onSubscribe = /*@__PURE__*/ createOnSink(createT);
 
 export const observerCount = <T>(observable: MulticastObservableLike<T>) =>
   observable.observerCount;
 
-export const replay = <T>(observable: MulticastObservableLike<T>) =>
-  observable.replay;
-
 export const pairwise: <T>() => ObservableOperator<T, [Option<T>, T]> =
-  createPairwiseOperator(
+  /*@__PURE__*/ createPairwiseOperator(
     liftSynchronousT,
     class PairwiseObserver<T> extends AbstractDelegatingObserver<
       T,
@@ -391,7 +393,7 @@ export const publish =
 export const reduce: <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-) => ObservableOperator<T, TAcc> = createReduceOperator(
+) => ObservableOperator<T, TAcc> = /*@__PURE__*/ createReduceOperator(
   { ...fromArrayT, ...liftSynchronousT },
   class ReducerObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
     constructor(
@@ -408,10 +410,13 @@ export const reduceT: Reduce<ObservableLike<unknown>> = {
   reduce,
 };
 
+export const replay = <T>(observable: MulticastObservableLike<T>) =>
+  observable.replay;
+
 export const scan: <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-) => ObservableOperator<T, TAcc> = createScanOperator(
+) => ObservableOperator<T, TAcc> = /*@__PURE__*/ createScanOperator(
   liftSynchronousT,
   class ScanObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
     constructor(
@@ -498,7 +503,7 @@ export const share =
  */
 export const skipFirst: <T>(options?: {
   readonly count?: number;
-}) => ObservableOperator<T, T> = createSkipFirstOperator(
+}) => ObservableOperator<T, T> = /*@__PURE__*/ createSkipFirstOperator(
   liftSynchronousT,
   class SkipFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
     count = 0;
@@ -515,7 +520,7 @@ export const skipFirstT: SkipFirst<ObservableLike<unknown>> = {
 
 export const someSatisfy: <T>(
   predicate: Predicate<T>,
-) => ObservableOperator<T, boolean> = createSomeSatisfyOperator(
+) => ObservableOperator<T, boolean> = /*@__PURE__*/ createSomeSatisfyOperator(
   { ...fromArrayT, ...liftSynchronousT },
   class SomeSatisfyObserver<T> extends AbstractDelegatingObserver<T, boolean> {
     constructor(delegate: Observer<boolean>, readonly predicate: Predicate<T>) {
@@ -542,7 +547,7 @@ export const subscribeOn =
 
 export const takeFirst: <T>(options?: {
   readonly count?: number;
-}) => ObservableOperator<T, T> = createTakeFirstOperator(
+}) => ObservableOperator<T, T> = /*@__PURE__*/ createTakeFirstOperator(
   { ...fromArrayT, ...liftSynchronousT },
   class TakeFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
     count = 0;
@@ -564,7 +569,7 @@ export const takeFirstT: TakeFirst<ObservableLike<unknown>> = {
  */
 export const takeLast: <T>(options?: {
   readonly count?: number;
-}) => ObservableOperator<T, T> = createTakeLastOperator(
+}) => ObservableOperator<T, T> = /*@__PURE__*/ createTakeLastOperator(
   { ...fromArrayT, ...liftSynchronousT },
   class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
     readonly last: T[] = [];
@@ -604,7 +609,7 @@ export const takeUntil = <T>(
 export const takeWhile: <T>(
   predicate: Predicate<T>,
   options?: { readonly inclusive?: boolean },
-) => ObservableOperator<T, T> = createTakeWhileOperator(
+) => ObservableOperator<T, T> = /*@__PURE__*/ createTakeWhileOperator(
   liftSynchronousT,
   class TakeWhileObserver<T> extends AbstractDelegatingObserver<T, T> {
     constructor(
@@ -623,7 +628,7 @@ export const takeWhileT: TakeWhile<ObservableLike<unknown>> = {
 
 export const throwIfEmpty: <T>(
   factory: Factory<unknown>,
-) => ObservableOperator<T, T> = createThrowIfEmptyOperator(
+) => ObservableOperator<T, T> = /*@__PURE__*/ createThrowIfEmptyOperator(
   liftSynchronousT,
   class ThrowIfEmptyObserver<T> extends AbstractDelegatingObserver<T, T> {
     isEmpty = true;

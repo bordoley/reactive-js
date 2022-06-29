@@ -310,7 +310,9 @@ export const createStateStore = <T>(
 ): StreamableStateLike<T> =>
   createActionReducer(updateReducer, initialState, options);
 
-const _empty = createLiftedStreamable<any, any>(takeFirst({ count: 0 }));
+const _empty = /*@__PURE__*/ createLiftedStreamable<any, any>(
+  takeFirst({ count: 0 }),
+);
 
 /**
  * Returns an empty `StreamableLike` that always returns

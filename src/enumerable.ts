@@ -127,40 +127,41 @@ export const concatT: Concat<EnumerableLike<unknown>> = {
 
 export const distinctUntilChanged: <T>(options?: {
   readonly equality?: Equality<T>;
-}) => EnumerableOperator<T, T> = createDistinctUntilChangedLiftOperator(
-  liftT,
-  class DistinctUntilChangedEnumerator<
-    T,
-  > extends AbstractPassThroughEnumerator<T> {
-    constructor(
-      delegate: Enumerator<T>,
-      private readonly equality: Equality<T>,
-    ) {
-      super(delegate);
-    }
-
-    move(): boolean {
-      const hadCurrent = hasCurrent(this);
-      const prevCurrent = hadCurrent ? current(this) : none;
-
-      try {
-        const { delegate } = this;
-        while (move(delegate)) {
-          if (
-            !hadCurrent ||
-            !this.equality(prevCurrent as any, current(delegate))
-          ) {
-            break;
-          }
-        }
-      } catch (cause) {
-        pipe(this, dispose({ cause }));
+}) => EnumerableOperator<T, T> =
+  /*@__PURE__*/ createDistinctUntilChangedLiftOperator(
+    liftT,
+    class DistinctUntilChangedEnumerator<
+      T,
+    > extends AbstractPassThroughEnumerator<T> {
+      constructor(
+        delegate: Enumerator<T>,
+        private readonly equality: Equality<T>,
+      ) {
+        super(delegate);
       }
 
-      return hasCurrent(this);
-    }
-  },
-);
+      move(): boolean {
+        const hadCurrent = hasCurrent(this);
+        const prevCurrent = hadCurrent ? current(this) : none;
+
+        try {
+          const { delegate } = this;
+          while (move(delegate)) {
+            if (
+              !hadCurrent ||
+              !this.equality(prevCurrent as any, current(delegate))
+            ) {
+              break;
+            }
+          }
+        } catch (cause) {
+          pipe(this, dispose({ cause }));
+        }
+
+        return hasCurrent(this);
+      }
+    },
+  );
 
 export const distinctUntilChangedT: DistinctUntilChanged<
   EnumerableLike<unknown>
@@ -169,7 +170,7 @@ export const distinctUntilChangedT: DistinctUntilChanged<
 };
 
 export const keep: <T>(predicate: Predicate<T>) => EnumerableOperator<T, T> =
-  createKeepLiftOperator(
+  /*@__PURE__*/ createKeepLiftOperator(
     liftT,
     class KeepEnumerator<T> extends AbstractPassThroughEnumerator<T> {
       constructor(
@@ -199,7 +200,7 @@ export const keepT: Keep<EnumerableLike<unknown>> = {
 
 export const map: <TA, TB>(
   mapper: Function1<TA, TB>,
-) => EnumerableOperator<TA, TB> = createMapLiftOperator(
+) => EnumerableOperator<TA, TB> = /*@__PURE__*/ createMapLiftOperator(
   liftT,
   class MapEnumerator<TA, TB> extends AbstractDelegatingEnumerator<TA, TB> {
     constructor(delegate: Enumerator<TA>, readonly mapper: Function1<TA, TB>) {
@@ -230,7 +231,7 @@ export const mapT: Map<EnumerableLike<unknown>> = {
 
 export const onNotify: <T>(
   onNotify: SideEffect1<T>,
-) => EnumerableOperator<T, T> = createOnNotifyLiftOperator(
+) => EnumerableOperator<T, T> = /*@__PURE__*/ createOnNotifyLiftOperator(
   liftT,
   class OnNotifyEnumerator<T> extends AbstractPassThroughEnumerator<T> {
     constructor(
@@ -257,7 +258,7 @@ export const onNotify: <T>(
 );
 
 export const pairwise: <T>() => EnumerableOperator<T, [Option<T>, T]> =
-  createPairwiseLiftOperator(
+  /*@__PURE__*/ createPairwiseLiftOperator(
     liftT,
     class PairwiseEnumerator<T> extends AbstractDelegatingEnumerator<
       T,
@@ -286,7 +287,7 @@ export const pairwiseT: Pairwise<EnumerableLike<unknown>> = {
 export const scan: <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-) => EnumerableOperator<T, TAcc> = createScanLiftOperator(
+) => EnumerableOperator<T, TAcc> = /*@__PURE__*/ createScanLiftOperator(
   liftT,
   class ScanEnumerator<T, TAcc> extends AbstractDelegatingEnumerator<T, TAcc> {
     constructor(
@@ -323,7 +324,7 @@ export const scanT: Scan<EnumerableLike<unknown>> = {
 
 export const skipFirst: <T>(options?: {
   readonly count?: number;
-}) => EnumerableOperator<T, T> = createSkipFirstLiftOperator(
+}) => EnumerableOperator<T, T> = /*@__PURE__*/ createSkipFirstLiftOperator(
   liftT,
   class SkipFirstEnumerator<T> extends AbstractPassThroughEnumerator<T> {
     private count = 0;
@@ -353,7 +354,7 @@ export const skipFirstT: SkipFirst<EnumerableLike<unknown>> = {
 
 export const takeFirst: <T>(options?: {
   readonly count?: number;
-}) => EnumerableOperator<T, T> = createTakeFirstLiftOperator(
+}) => EnumerableOperator<T, T> = /*@__PURE__*/ createTakeFirstLiftOperator(
   { ...fromArrayT, ...liftT },
   class TakeFirstEnumerator<T> extends AbstractPassThroughEnumerator<T> {
     private count = 0;
@@ -386,7 +387,7 @@ export const takeFirstT: TakeFirst<EnumerableLike<unknown>> = {
 export const takeWhile: <T>(
   predicate: Predicate<T>,
   options?: { readonly inclusive?: boolean },
-) => EnumerableOperator<T, T> = createTakeWhileLiftOperator(
+) => EnumerableOperator<T, T> = /*@__PURE__*/ createTakeWhileLiftOperator(
   liftT,
   class TakeWhileEnumerator<T> extends AbstractPassThroughEnumerator<T> {
     private done = false;
@@ -431,7 +432,7 @@ export const takeWhileT: TakeWhile<EnumerableLike<unknown>> = {
 
 export const throwIfEmpty: <T>(
   factory: Factory<unknown>,
-) => EnumerableOperator<T, T> = createThrowIfEmptyLiftOperator(
+) => EnumerableOperator<T, T> = /*@__PURE__*/ createThrowIfEmptyLiftOperator(
   liftT,
   class ThrowIfEmptyEnumerator<T> extends AbstractPassThroughEnumerator<T> {
     isEmpty = true;

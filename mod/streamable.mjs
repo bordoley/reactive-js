@@ -69,7 +69,7 @@ const createActionReducer = (reducer, initialState, options) => createLiftedStre
  * if a state value is distinct from the previous one.
  */
 const createStateStore = (initialState, options) => createActionReducer(updateReducer, initialState, options);
-const _empty = createLiftedStreamable(takeFirst({ count: 0 }));
+const _empty = /*@__PURE__*/ createLiftedStreamable(takeFirst({ count: 0 }));
 /**
  * Returns an empty `StreamableLike` that always returns
  * a disposed `StreamLike` instance.

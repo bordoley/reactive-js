@@ -39,7 +39,7 @@ class ArrayEnumerator<T> extends AbstractEnumerator<T> {
  *
  * @param values
  */
-export const fromArray = createFromArray<EnumerableLike<unknown>>(
+export const fromArray = /*@__PURE__*/ createFromArray<EnumerableLike<unknown>>(
   <T>(values: readonly T[], startIndex: number, endIndex: number) =>
     createEnumerable(
       pipeLazy(

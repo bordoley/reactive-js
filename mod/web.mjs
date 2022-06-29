@@ -109,7 +109,8 @@ class WindowLocationStream extends AbstractDisposableObservable {
     }
 }
 let currentWindowLocationStream = none;
-const windowLocation = createStreamble((scheduler, options) => {
+const windowLocation = 
+/*@__PURE__*/ createStreamble((scheduler, options) => {
     if (isSome(currentWindowLocationStream)) {
         raise("Cannot stream more than once");
     }

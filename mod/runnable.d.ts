@@ -1,4 +1,4 @@
-import { ConcatAll, FromArray, FromArrayOptions, ContainerLike, Container, ContainerOf, Buffer, Concat, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Generate, Keep, Map, ContainerOperator, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
+import { ConcatAll, FromArrayOptions, FromArray, ContainerLike, Container, ContainerOf, Buffer, Concat, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Generate, Keep, Map, ContainerOperator, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
 import { DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Function1, Equality, Predicate, Updater, Factory, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
@@ -10,10 +10,7 @@ declare const createRunnable: <T>(run: SideEffect1<RunnableSink<T>>) => Runnable
 declare const createT: CreateSource<RunnableLike<unknown>>;
 declare const first: <T>() => Function1<RunnableLike<T>, Option<T>>;
 declare const forEach: <T>(f: SideEffect1<T>) => Function1<RunnableLike<T>, void>;
-declare const fromArray: <T>(options?: {
-    readonly startIndex?: number;
-    readonly endIndex?: number;
-}) => Function1<readonly T[], RunnableLike<T>>;
+declare const fromArray: <T>(options?: Partial<FromArrayOptions>) => Function1<readonly T[], RunnableLike<T>>;
 declare const fromArrayT: FromArray<RunnableLike<unknown>, FromArrayOptions>;
 declare const last: <T>() => Function1<RunnableLike<T>, Option<T>>;
 interface RunnableLike<T> extends SourceLike {

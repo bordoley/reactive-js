@@ -602,7 +602,6 @@ declare const keepT: Keep<ObservableLike<unknown>>;
 declare const mapAsync: <TA, TB>(f: Function1<TA, Promise<TB>>) => ObservableOperator<TA, TB>;
 declare const onSubscribe: <T>(f: Factory<void | DisposableOrTeardown>) => ContainerOperator<ObservableLike<unknown>, T, T>;
 declare const observerCount: <T>(observable: MulticastObservableLike<T>) => number;
-declare const replay: <T>(observable: MulticastObservableLike<T>) => number;
 declare const pairwise: <T>() => ObservableOperator<T, [
     Option<T>,
     T
@@ -620,6 +619,7 @@ declare const publish: <T>(scheduler: SchedulerLike, options?: {
 }) => Function1<ObservableLike<T>, MulticastObservableLike<T>>;
 declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
 declare const reduceT: Reduce<ObservableLike<unknown>>;
+declare const replay: <T>(observable: MulticastObservableLike<T>) => number;
 declare const scan: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
 declare const scanT: Scan<ObservableLike<unknown>>;
 /**

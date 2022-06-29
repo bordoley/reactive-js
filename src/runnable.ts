@@ -104,7 +104,7 @@ export const type: RunnableLike<unknown> = undefined as any;
 
 export const buffer: <T>(options?: {
   readonly maxBufferSize?: number;
-}) => RunnableOperator<T, readonly T[]> = createBufferOperator(
+}) => RunnableOperator<T, readonly T[]> = /*@__PURE__*/ createBufferOperator(
   { ...liftT, ...fromArrayT },
   class BufferSink<T> extends AbstractDelegatingRunnableSink<T, readonly T[]> {
     buffer: T[] = [];
@@ -123,7 +123,7 @@ export const bufferT: Buffer<RunnableLike<unknown>> = {
 
 export const catchError: <T>(
   onError: Function1<unknown, RunnableLike<T> | void>,
-) => RunnableOperator<T, T> = createCatchErrorOperator(
+) => RunnableOperator<T, T> = /*@__PURE__*/ createCatchErrorOperator(
   liftT,
   class CatchErrorSink<T> extends AbstractDelegatingRunnableSink<T, T> {},
 );
@@ -149,21 +149,22 @@ export const concatT: Concat<RunnableLike<unknown>> = {
 
 export const decodeWithCharset: (
   charset?: string,
-) => RunnableOperator<ArrayBuffer, string> = createDecodeWithCharsetOperator(
-  { ...liftT, ...fromArrayT },
+) => RunnableOperator<ArrayBuffer, string> =
+  /*@__PURE__*/ createDecodeWithCharsetOperator(
+    { ...liftT, ...fromArrayT },
 
-  class DecodeWithCharsetSink extends AbstractDelegatingRunnableSink<
-    ArrayBuffer,
-    string
-  > {
-    constructor(
-      delegate: RunnableSink<string>,
-      readonly textDecoder: TextDecoder,
-    ) {
-      super(delegate);
-    }
-  },
-);
+    class DecodeWithCharsetSink extends AbstractDelegatingRunnableSink<
+      ArrayBuffer,
+      string
+    > {
+      constructor(
+        delegate: RunnableSink<string>,
+        readonly textDecoder: TextDecoder,
+      ) {
+        super(delegate);
+      }
+    },
+  );
 
 export const decodeWithCharsetT: DecodeWithCharset<RunnableLike<unknown>> = {
   decodeWithCharset,
@@ -171,7 +172,7 @@ export const decodeWithCharsetT: DecodeWithCharset<RunnableLike<unknown>> = {
 
 export const distinctUntilChanged: <T>(options?: {
   readonly equality?: Equality<T>;
-}) => RunnableOperator<T, T> = createDistinctUntilChangedOperator(
+}) => RunnableOperator<T, T> = /*@__PURE__*/ createDistinctUntilChangedOperator(
   liftT,
   class DistinctUntilChangedSink<T> extends AbstractDelegatingRunnableSink<
     T,
@@ -194,7 +195,7 @@ export const distinctUntilChangedT: DistinctUntilChanged<
 
 export const everySatisfy: <T>(
   predicate: Predicate<T>,
-) => RunnableOperator<T, boolean> = createEverySatisfyOperator(
+) => RunnableOperator<T, boolean> = /*@__PURE__*/ createEverySatisfyOperator(
   { ...fromArrayT, ...liftT },
   class EverySatisfySink<T> extends AbstractDelegatingRunnableSink<T, boolean> {
     constructor(
@@ -229,7 +230,7 @@ export const generateT: Generate<RunnableLike<unknown>> = {
 };
 
 export const keep: <T>(predicate: Predicate<T>) => RunnableOperator<T, T> =
-  createKeepOperator(
+  /*@__PURE__*/ createKeepOperator(
     liftT,
     class KeepSink<T> extends AbstractDelegatingRunnableSink<T, T> {
       constructor(delegate: RunnableSink<T>, readonly predicate: Predicate<T>) {
@@ -244,7 +245,7 @@ export const keepT: Keep<RunnableLike<unknown>> = {
 
 export const map: <TA, TB>(
   mapper: Function1<TA, TB>,
-) => RunnableOperator<TA, TB> = createMapOperator(
+) => RunnableOperator<TA, TB> = /*@__PURE__*/ createMapOperator(
   liftT,
   class MapSink<TA, TB> extends AbstractDelegatingRunnableSink<TA, TB> {
     constructor(
@@ -260,7 +261,7 @@ export const mapT: Map<RunnableLike<unknown>> = {
   map,
 };
 
-export const never = createNever(createT);
+export const never = /*@__PURE__*/ createNever(createT);
 
 /**
  * Returns an `RunnableLike` that forwards notifications to the provided `onNotify` function.
@@ -268,7 +269,7 @@ export const never = createNever(createT);
  * @param onNotify The function that is invoked when the observable source produces values.
  */
 export const onNotify: <T>(onNotify: SideEffect1<T>) => RunnableOperator<T, T> =
-  createOnNotifyOperator(
+  /*@__PURE__*/ createOnNotifyOperator(
     liftT,
     class OnNotifySink<T> extends AbstractDelegatingRunnableSink<T, T> {
       constructor(
@@ -280,10 +281,10 @@ export const onNotify: <T>(onNotify: SideEffect1<T>) => RunnableOperator<T, T> =
     },
   );
 
-export const onSink = createOnSink(createT);
+export const onSink = /*@__PURE__*/ createOnSink(createT);
 
 export const pairwise: <T>() => RunnableOperator<T, [Option<T>, T]> =
-  createPairwiseOperator(
+  /*@__PURE__*/ createPairwiseOperator(
     liftT,
     class PairwiseSink<T> extends AbstractDelegatingRunnableSink<
       T,
@@ -301,7 +302,7 @@ export const pairwiseT: Pairwise<RunnableLike<unknown>> = {
 export const reduce: <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-) => RunnableOperator<T, TAcc> = createReduceOperator(
+) => RunnableOperator<T, TAcc> = /*@__PURE__*/ createReduceOperator(
   { ...fromArrayT, ...liftT },
   class ReducerSink<T, TAcc> extends AbstractDelegatingRunnableSink<T, TAcc> {
     constructor(
@@ -349,7 +350,7 @@ export const repeatT: Repeat<RunnableLike<unknown>> = {
 export const scan: <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-) => RunnableOperator<T, TAcc> = createScanOperator(
+) => RunnableOperator<T, TAcc> = /*@__PURE__*/ createScanOperator(
   liftT,
   class ScanSink<T, TAcc> extends AbstractDelegatingRunnableSink<T, TAcc> {
     constructor(
@@ -368,7 +369,7 @@ export const scanT: Scan<RunnableLike<unknown>> = {
 
 export const skipFirst: <T>(options?: {
   readonly count?: number;
-}) => RunnableOperator<T, T> = createSkipFirstOperator(
+}) => RunnableOperator<T, T> = /*@__PURE__*/ createSkipFirstOperator(
   liftT,
   class SkipFirstSink<T> extends AbstractDelegatingRunnableSink<T, T> {
     count = 0;
@@ -385,7 +386,7 @@ export const skipFirstT: SkipFirst<RunnableLike<unknown>> = {
 
 export const someSatisfy: <T>(
   predicate: Predicate<T>,
-) => RunnableOperator<T, boolean> = createSomeSatisfyOperator(
+) => RunnableOperator<T, boolean> = /*@__PURE__*/ createSomeSatisfyOperator(
   { ...fromArrayT, ...liftT },
   class SomeSatisfySink<T> extends AbstractDelegatingRunnableSink<T, boolean> {
     constructor(
@@ -403,7 +404,7 @@ export const someSatisfyT: SomeSatisfy<RunnableLike<unknown>> = {
 
 export const takeFirst: <T>(options?: {
   readonly count?: number;
-}) => RunnableOperator<T, T> = createTakeFirstOperator(
+}) => RunnableOperator<T, T> = /*@__PURE__*/ createTakeFirstOperator(
   { ...fromArrayT, ...liftT },
   class TakeFirstSink<T> extends AbstractDelegatingRunnableSink<T, T> {
     count = 0;
@@ -420,7 +421,7 @@ export const takeFirstT: TakeFirst<RunnableLike<unknown>> = {
 
 export const takeLast: <T>(options?: {
   readonly count?: number;
-}) => RunnableOperator<T, T> = createTakeLastOperator(
+}) => RunnableOperator<T, T> = /*@__PURE__*/ createTakeLastOperator(
   { ...fromArrayT, ...liftT },
   class TakeLastSink<T> extends AbstractDelegatingRunnableSink<T, T> {
     readonly last: T[] = [];
@@ -438,7 +439,7 @@ export const takeLastT: TakeLast<RunnableLike<unknown>> = {
 export const takeWhile: <T>(
   predicate: Predicate<T>,
   options?: { readonly inclusive?: boolean },
-) => RunnableOperator<T, T> = createTakeWhileOperator(
+) => RunnableOperator<T, T> = /*@__PURE__*/ createTakeWhileOperator(
   liftT,
   class TakeWhileSink<T> extends AbstractDelegatingRunnableSink<T, T> {
     constructor(
@@ -457,7 +458,7 @@ export const takeWhileT: TakeWhile<RunnableLike<unknown>> = {
 
 export const throwIfEmpty: <T>(
   factory: Factory<unknown>,
-) => RunnableOperator<T, T> = createThrowIfEmptyOperator(
+) => RunnableOperator<T, T> = /*@__PURE__*/ createThrowIfEmptyOperator(
   liftT,
   class ThrowIfEmptySink<T> extends AbstractDelegatingRunnableSink<T, T> {
     isEmpty = true;
@@ -475,7 +476,7 @@ export const toArray = <T>(): Function1<RunnableLike<T>, readonly T[]> =>
   compose(buffer(), first(), getOrDefault(emptyArray));
 
 export const using: Using<RunnableLike<unknown>>["using"] =
-  createUsing(createT);
+  /*@__PURE__*/ createUsing(createT);
 
 export const usingT: Using<RunnableLike<unknown>> = {
   using,

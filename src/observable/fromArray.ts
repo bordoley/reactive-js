@@ -8,7 +8,10 @@ import { createObservable } from "./createObservable";
 import { defer } from "./defer";
 import { tagEnumerable } from "./observable";
 
-const deferEmpty = pipe(createObservable(dispose()), tagEnumerable(true));
+const deferEmpty = /*@__PURE__*/ pipe(
+  createObservable(dispose()),
+  tagEnumerable(true),
+);
 
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
@@ -18,7 +21,7 @@ const deferEmpty = pipe(createObservable(dispose()), tagEnumerable(true));
  * an optional `startIndex` into the array.
  */
 
-export const fromArray = createFromArray<
+export const fromArray = /*@__PURE__*/ createFromArray<
   ObservableLike<unknown>,
   {
     readonly delay: number;

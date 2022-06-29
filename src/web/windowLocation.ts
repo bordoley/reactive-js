@@ -155,101 +155,102 @@ type TSerializedState = {
   replace: boolean;
 };
 
-export const windowLocation: WindowLocationStreamableLike = createStreamble(
-  (scheduler, options): WindowLocationStreamLike => {
-    if (isSome(currentWindowLocationStream)) {
-      raise("Cannot stream more than once");
-    }
+export const windowLocation: WindowLocationStreamableLike =
+  /*@__PURE__*/ createStreamble(
+    (scheduler, options): WindowLocationStreamLike => {
+      if (isSome(currentWindowLocationStream)) {
+        raise("Cannot stream more than once");
+      }
 
-    const stateStream = pipe(
-      createStateStore(
-        () => ({
-          replace: true,
-          uri: getCurrentWindowLocationURI(),
-        }),
-        { equality: areWindowLocationStatesEqual },
-      ),
-      stream(scheduler, options),
-    );
+      const stateStream = pipe(
+        createStateStore(
+          () => ({
+            replace: true,
+            uri: getCurrentWindowLocationURI(),
+          }),
+          { equality: areWindowLocationStatesEqual },
+        ),
+        stream(scheduler, options),
+      );
 
-    const windowLocationStream = pipe(
-      WindowLocationStream,
-      newInstanceWith(stateStream),
-      bindTo(stateStream),
-    );
+      const windowLocationStream = pipe(
+        WindowLocationStream,
+        newInstanceWith(stateStream),
+        bindTo(stateStream),
+      );
 
-    pipe(
-      stateStream,
-      map(({ uri, replace }) => ({
-        uri: windowLocationURIToString(uri),
-        title: uri.title,
-        replace,
-      })),
-      forkCombineLatest(
-        compose(
-          takeWhile<TSerializedState>(
-            _ => windowLocationStream.historyCounter === -1,
+      pipe(
+        stateStream,
+        map(({ uri, replace }) => ({
+          uri: windowLocationURIToString(uri),
+          title: uri.title,
+          replace,
+        })),
+        forkCombineLatest(
+          compose(
+            takeWhile<TSerializedState>(
+              _ => windowLocationStream.historyCounter === -1,
+            ),
+            onNotify(({ uri, title }) => {
+              // Initialize the history state on page load
+              windowLocationStream.historyCounter++;
+              windowHistoryReplaceState(windowLocationStream, title, uri);
+            }),
+            ignoreElements(keepT),
           ),
-          onNotify(({ uri, title }) => {
-            // Initialize the history state on page load
-            windowLocationStream.historyCounter++;
-            windowHistoryReplaceState(windowLocationStream, title, uri);
-          }),
-          ignoreElements(keepT),
+          compose(
+            keep<TSerializedState>(({ replace, title, uri }) => {
+              const titleChanged = document.title !== title;
+              const uriChanged = uri !== location.href;
+
+              return replace || (titleChanged && !uriChanged);
+            }),
+            throttle(100),
+            onNotify(({ title, uri }) => {
+              document.title = title;
+              windowHistoryReplaceState(windowLocationStream, title, uri);
+            }),
+            ignoreElements(keepT),
+          ),
+          compose(
+            keep<TSerializedState>(({ replace, uri }) => {
+              const uriChanged = uri !== location.href;
+              return !replace && uriChanged;
+            }),
+            throttle(100),
+            onNotify(({ title, uri }) => {
+              document.title = title;
+              windowHistoryPushState(windowLocationStream, title, uri);
+            }),
+            ignoreElements(keepT),
+          ),
         ),
-        compose(
-          keep<TSerializedState>(({ replace, title, uri }) => {
-            const titleChanged = document.title !== title;
-            const uriChanged = uri !== location.href;
+        subscribe(scheduler),
+        addTo(windowLocationStream),
+      );
 
-            return replace || (titleChanged && !uriChanged);
-          }),
-          throttle(100),
-          onNotify(({ title, uri }) => {
-            document.title = title;
-            windowHistoryReplaceState(windowLocationStream, title, uri);
-          }),
-          ignoreElements(keepT),
-        ),
-        compose(
-          keep<TSerializedState>(({ replace, uri }) => {
-            const uriChanged = uri !== location.href;
-            return !replace && uriChanged;
-          }),
-          throttle(100),
-          onNotify(({ title, uri }) => {
-            document.title = title;
-            windowHistoryPushState(windowLocationStream, title, uri);
-          }),
-          ignoreElements(keepT),
-        ),
-      ),
-      subscribe(scheduler),
-      addTo(windowLocationStream),
-    );
+      pipe(
+        fromEvent(window, "popstate", (e: Event) => {
+          const { counter, title } = (e as any).state as {
+            counter: number;
+            title: string;
+          };
 
-    pipe(
-      fromEvent(window, "popstate", (e: Event) => {
-        const { counter, title } = (e as any).state as {
-          counter: number;
-          title: string;
-        };
+          const uri = {
+            ...getCurrentWindowLocationURI(),
+            title,
+          };
 
-        const uri = {
-          ...getCurrentWindowLocationURI(),
-          title,
-        };
+          return { counter, uri };
+        }),
+        onNotify(({ counter, uri }) => {
+          windowLocationStream.historyCounter = counter;
+          windowLocationStream.dispatch(uri, { replace: true });
+        }),
+        subscribe(scheduler),
+        addTo(windowLocationStream),
+      );
 
-        return { counter, uri };
-      }),
-      onNotify(({ counter, uri }) => {
-        windowLocationStream.historyCounter = counter;
-        windowLocationStream.dispatch(uri, { replace: true });
-      }),
-      subscribe(scheduler),
-      addTo(windowLocationStream),
-    );
-
-    return windowLocationStream;
-  },
-);
+      return windowLocationStream;
+    },
+  );

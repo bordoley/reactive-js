@@ -42,7 +42,7 @@ const concatAllT = {
 const _fromArray = (arr, index, endIndex) => index < endIndex && index >= 0
     ? notify(arr[index], () => _fromArray(arr, index + 1, endIndex))
     : done();
-const fromArray = createFromArray((values, startIndex, endIndex) => castToSequence(() => _fromArray(values, startIndex, endIndex)));
+const fromArray = /*@__PURE__*/ createFromArray((values, startIndex, endIndex) => castToSequence(() => _fromArray(values, startIndex, endIndex)));
 const fromArrayT = {
     fromArray,
 };

@@ -181,26 +181,24 @@ class ReactPriorityScheduler
 }
 
 const createReactPriorityScheduler: Factory<PrioritySchedulerLike> =
-  instanceFactory(ReactPriorityScheduler);
+  /*@__PURE__*/ instanceFactory(ReactPriorityScheduler);
 
 const createReactSchedulerFactory =
   (priority: number): Factory<SchedulerLike> =>
   () =>
     pipe(createReactPriorityScheduler(), toSchedulerWithPriority(priority));
 
-export const createReactIdlePriorityScheduler = createReactSchedulerFactory(
-  unstable_IdlePriority,
-);
+export const createReactIdlePriorityScheduler =
+  /*@__PURE__*/ createReactSchedulerFactory(unstable_IdlePriority);
 
 export const createReactImmediatePriorityScheduler =
-  createReactSchedulerFactory(unstable_ImmediatePriority);
+  /*@__PURE__*/ createReactSchedulerFactory(unstable_ImmediatePriority);
 
-export const createReactNormalPriorityScheduler = createReactSchedulerFactory(
-  unstable_NormalPriority,
-);
+export const createReactNormalPriorityScheduler =
+  /*@__PURE__*/ createReactSchedulerFactory(unstable_NormalPriority);
 
 export const createReactLowPriorityScheduler =
-  createReactSchedulerFactory(unstable_LowPriority);
+  /*@__PURE__*/ createReactSchedulerFactory(unstable_LowPriority);
 
 export const createReactUserBlockingPriorityScheduler =
-  createReactSchedulerFactory(unstable_UserBlockingPriority);
+  /*@__PURE__*/ createReactSchedulerFactory(unstable_UserBlockingPriority);

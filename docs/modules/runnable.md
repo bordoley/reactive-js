@@ -452,9 +452,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Object` |
-| `options.endIndex?` | `number` |
-| `options.startIndex?` | `number` |
+| `options?` | `Partial`<[`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\> |
 
 #### Returns
 
