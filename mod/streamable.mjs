@@ -1,14 +1,15 @@
 /// <reference types="./streamable.d.ts" />
-import { ignoreElements, startWith, concatWith, fromValue } from './container.mjs';
+import { concatWith, fromValue, ignoreElements, startWith } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
 import { pipe, length, compose, returns, updateReducer, identity as identity$1 } from './functions.mjs';
-import { AbstractDisposableObservable, observerCount, replay, createSubject, publish, reduce, onNotify, keepT, concatT, fromArrayT, createObservable, scan, mergeT, distinctUntilChanged, subscribe, takeFirst, subscribeOn, fromDisposable, takeUntil, merge, onSubscribe, __currentScheduler, __using, __memo } from './observable.mjs';
+import { AbstractDisposableObservable, observerCount, replay, createSubject, publish, createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, onNotify, subscribe, takeFirst, subscribeOn, fromDisposable, takeUntil, merge, keepT, onSubscribe, __currentScheduler, __using, __memo, reduce, concatT } from './observable.mjs';
 import { scheduler } from './observer.mjs';
 import { isSome, none } from './option.mjs';
 import { createPausableScheduler } from './scheduler.mjs';
 import { sinkInto as sinkInto$1, notifySink, sourceFrom } from './source.mjs';
 
+const stream = (scheduler, options) => streamable => streamable.stream(scheduler, options);
 class StreamImpl extends AbstractDisposableObservable {
     constructor(dispatcher, observable) {
         super();
@@ -45,33 +46,6 @@ function createLiftedStreamable(...ops) {
     const op = length(ops) > 1 ? compose(...ops) : ops[0];
     return createStreamble((scheduler, options) => createStream(op, scheduler, options));
 }
-const stream = (scheduler, options) => streamable => streamable.stream(scheduler, options);
-
-class FlowableSinkAccumulatorImpl extends AbstractDisposableObservable {
-    constructor(subject, streamable) {
-        super();
-        this.subject = subject;
-        this.streamable = streamable;
-    }
-    get observerCount() {
-        return observerCount(this.subject);
-    }
-    get replay() {
-        return replay(this.subject);
-    }
-    sink(observer) {
-        pipe(this.subject, sinkInto$1(observer));
-    }
-    stream(scheduler, options) {
-        return pipe(this.streamable, stream(scheduler, options), addTo(this));
-    }
-}
-/** @experimental */
-const createFlowableSinkAccumulator = (reducer, initialValue, options) => {
-    const subject = createSubject(options);
-    return pipe(createLiftedStreamable(reduce(reducer, initialValue), onNotify(dispatchTo(subject)), ignoreElements(keepT), startWith({ ...concatT, ...fromArrayT }, "pause", "resume")), streamable => new FlowableSinkAccumulatorImpl(subject, streamable), add(subject));
-};
-
 /**
  * Returns a new `StreamableLike` instance that applies an accumulator function
  * over the notified actions, emitting each intermediate result.
@@ -139,6 +113,30 @@ const __state = (initialState, options = {}) => {
     const optionsMemo = __memo(createStateOptions, equality);
     const streamable = __memo(createStateStore, initialState, optionsMemo);
     return __stream(streamable);
+};
+class FlowableSinkAccumulatorImpl extends AbstractDisposableObservable {
+    constructor(subject, streamable) {
+        super();
+        this.subject = subject;
+        this.streamable = streamable;
+    }
+    get observerCount() {
+        return observerCount(this.subject);
+    }
+    get replay() {
+        return replay(this.subject);
+    }
+    sink(observer) {
+        pipe(this.subject, sinkInto$1(observer));
+    }
+    stream(scheduler, options) {
+        return pipe(this.streamable, stream(scheduler, options), addTo(this));
+    }
+}
+/** @experimental */
+const createFlowableSinkAccumulator = (reducer, initialValue, options) => {
+    const subject = createSubject(options);
+    return pipe(createLiftedStreamable(reduce(reducer, initialValue), onNotify(dispatchTo(subject)), ignoreElements(keepT), startWith({ ...concatT, ...fromArrayT }, "pause", "resume")), streamable => new FlowableSinkAccumulatorImpl(subject, streamable), add(subject));
 };
 
 export { __state, __stream, createActionReducer, createFlowableSinkAccumulator, createLiftedStreamable, createStateStore, createStreamble, empty, flow, identity, sinkInto, stream };
