@@ -14,4 +14,5 @@ declare class Observer<T> extends AbstractDisposableContainer implements SinkLik
     notify(_: T): void;
 }
 declare const createDelegatingObserver: <T>(delegate: Observer<T>) => Observer<T>;
-export { Observer, createDelegatingObserver };
+declare const scheduler: <T>(observer: Observer<T>) => SchedulerLike;
+export { Observer, createDelegatingObserver, scheduler };

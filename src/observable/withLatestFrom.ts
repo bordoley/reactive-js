@@ -1,7 +1,7 @@
 import { addTo, bindTo, dispose, isDisposed, onComplete } from "../disposable";
 import { Function2, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer } from "../observer";
+import { Observer, scheduler } from "../observer";
 import { Option } from "../option";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
@@ -52,7 +52,7 @@ export const withLatestFrom = <TA, TB, T>(
         observer.hasLatest = true;
         observer.otherLatest = next;
       }),
-      subscribe(observer.scheduler),
+      subscribe(scheduler(observer)),
       addTo(observer),
       onComplete(() => {
         if (!observer.hasLatest) {

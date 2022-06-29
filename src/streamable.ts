@@ -56,6 +56,7 @@ import {
   using,
   withLatestFrom,
 } from "./observable";
+import { scheduler as getScheduler } from "./observer";
 import { Option, isSome, none } from "./option";
 import { SchedulerLike, createPausableScheduler } from "./scheduler";
 import { notifySink, sinkInto as sinkIntoSink, sourceFrom } from "./source";
@@ -137,7 +138,7 @@ export const createActionReducer = <TAction, T>(
         concatWith(mergeT, fromValue(fromArrayT)(acc)),
         distinctUntilChanged(options),
         onNotify(notifySink(observer)),
-        subscribe(observer.scheduler),
+        subscribe(getScheduler(observer)),
         bindTo(observer),
       );
     }),
@@ -180,7 +181,7 @@ export const flow =
     createLiftedStreamable((modeObs: ObservableLike<FlowMode>) =>
       createObservable(observer => {
         const pausableScheduler = createPausableScheduler(
-          scheduler ?? observer.scheduler,
+          scheduler ?? getScheduler(observer),
         );
 
         pipe(
@@ -205,7 +206,7 @@ export const flow =
                     break;
                 }
               }),
-              subscribe(observer.scheduler),
+              subscribe(getScheduler(observer)),
               bindTo(pausableScheduler),
             ),
           ),
@@ -306,9 +307,8 @@ export const sinkInto =
   <TReq, T, TOut>(dest: StreamableLike<T, TReq, StreamLike<T, TReq>>) =>
   (src: StreamableLike<TReq, T, StreamLike<TReq, T>>): ObservableLike<TOut> =>
     createObservable(observer => {
-      const { scheduler } = observer;
-      const srcStream = src.stream(scheduler);
-      const destStream = dest.stream(scheduler);
+      const srcStream = pipe(src, stream(getScheduler(observer)));
+      const destStream = pipe(dest, stream(getScheduler(observer)));
 
       pipe(
         merge(

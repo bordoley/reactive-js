@@ -27,6 +27,7 @@ import {
   returns,
 } from "../functions";
 import { createObservable, onNotify, subscribe } from "../observable";
+import { scheduler } from "../observer";
 import { sinkInto } from "../source";
 
 import {
@@ -58,21 +59,21 @@ export const transform =
 
         const transformReadableStream = pipe(
           createReadableIOSource(returns(transform)),
-          stream(observer.scheduler),
+          stream(scheduler(observer)),
           addTo(observer),
         );
 
         const sinkSubscription = pipe(
           src,
           sinkIntoTransformSink(transformSink),
-          subscribe(observer.scheduler),
+          subscribe(scheduler(observer)),
           addTo(observer),
         );
 
         const modeSubscription = pipe(
           modeObs,
           onNotify(dispatchTo(transformReadableStream)),
-          subscribe(observer.scheduler),
+          subscribe(scheduler(observer)),
           addTo(observer),
         );
 

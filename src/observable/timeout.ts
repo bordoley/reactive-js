@@ -8,7 +8,7 @@ import {
 } from "../disposable";
 import { pipe, returns } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer } from "../observer";
+import { Observer, scheduler } from "../observer";
 import { concat } from "./concat";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
@@ -23,7 +23,7 @@ export const timeoutError = _timeoutError;
 const setupDurationSubscription = <T>(observer: TimeoutObserver<T>) => {
   observer.durationSubscription.inner = pipe(
     observer.duration,
-    subscribe(observer.scheduler),
+    subscribe(scheduler(observer)),
   );
 };
 

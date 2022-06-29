@@ -9,6 +9,7 @@ import {
 } from "../disposable";
 import { Factory, pipe, pipeLazy } from "../functions";
 import { createObservable, onNotify, subscribe } from "../observable";
+import { scheduler } from "../observer";
 
 import { FlowableSinkLike, createLiftedStreamable } from "../streamable";
 
@@ -35,7 +36,7 @@ export const createWritableIOSink = (
             writableValue.emit(NODE_JS_PAUSE_EVENT);
           }
         }),
-        subscribe(observer.scheduler),
+        subscribe(scheduler(observer)),
         addTo(observer),
         onComplete(() => {
           writableValue.end();

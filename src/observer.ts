@@ -125,3 +125,6 @@ class DelegatingObserver<T> extends Observer<T> {
 export const createDelegatingObserver = <T>(
   delegate: Observer<T>,
 ): Observer<T> => new DelegatingObserver(delegate);
+
+export const scheduler = <T>(observer: Observer<T>): SchedulerLike =>
+  observer.scheduler;
