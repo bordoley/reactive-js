@@ -32,6 +32,7 @@ import {
   length,
   max,
   negate,
+  newInstance,
   newInstanceWith,
   pipe,
 } from "./functions";
@@ -309,7 +310,7 @@ export const createDecodeWithCharsetOperator = <C extends SourceLike>(
       (
         delegate: LiftableStateOf<C, string>,
       ): LiftableStateOf<C, ArrayBuffer> => {
-        const textDecoder = new TextDecoder(charset, { fatal: true });
+        const textDecoder = newInstance(TextDecoder, charset, { fatal: true });
         return pipe(
           DecodeWithCharsetSink,
           newInstanceWith(delegate, textDecoder),
