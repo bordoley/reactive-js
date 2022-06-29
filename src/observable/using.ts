@@ -4,7 +4,7 @@ import { createUsing } from "../source";
 import { createT } from "./createObservable";
 
 export const using: Using<ObservableLike<unknown>>["using"] =
-  createUsing(createT);
+  /*@__PURE__*/ createUsing(createT);
 
 export const usingT: Using<ObservableLike<unknown>> = {
   using,

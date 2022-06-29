@@ -96,7 +96,7 @@ const defer = (factory, options) => createObservable(observer => {
     pipe(scheduler(observer), schedule(callback, options), addTo(observer));
 });
 
-const deferEmpty = pipe(createObservable(dispose()), tagEnumerable(true));
+const deferEmpty = /*@__PURE__*/ pipe(createObservable(dispose()), tagEnumerable(true));
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
  * An optional `startIndex` in the array maybe specified,
@@ -104,7 +104,7 @@ const deferEmpty = pipe(createObservable(dispose()), tagEnumerable(true));
  * @param options Config object that specifies an optional `delay` between emitted items and
  * an optional `startIndex` into the array.
  */
-const fromArray = createFromArray((values, startIndex, endIndex, options) => {
+const fromArray = /*@__PURE__*/ createFromArray((values, startIndex, endIndex, options) => {
     const count = endIndex - startIndex;
     const isEnumerableTag = !hasDelay(options);
     return count === 0 && isEnumerableTag
@@ -162,7 +162,7 @@ const liftSynchronousT = {
     lift: op => lift(op, true),
 };
 
-const map = createMapOperator(liftSynchronousT, class MapObserver extends AbstractDelegatingObserver {
+const map = /*@__PURE__*/ createMapOperator(liftSynchronousT, class MapObserver extends AbstractDelegatingObserver {
     constructor(delegate, mapper) {
         super(delegate);
         this.mapper = mapper;
@@ -177,7 +177,7 @@ const mapT = {
  *
  * @param onNotify The function that is invoked when the observable source produces values.
  */
-const onNotify = createOnNotifyOperator(liftSynchronousT, class OnNotifyObserver extends AbstractDelegatingObserver {
+const onNotify = /*@__PURE__*/ createOnNotifyOperator(liftSynchronousT, class OnNotifyObserver extends AbstractDelegatingObserver {
     constructor(delegate, onNotify) {
         super(delegate);
         this.onNotify = onNotify;
@@ -215,7 +215,7 @@ class SwitchObserver extends AbstractDelegatingObserver {
     }
 }
 const operator = (delegate) => pipe(SwitchObserver, newInstanceWith(delegate), addTo(delegate), onComplete(onDispose$1));
-const switchAllInstance = lift(operator);
+const switchAllInstance = /*@__PURE__*/ lift(operator);
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
  * values only from the most recent source.
@@ -225,7 +225,8 @@ const switchAllT = {
     concatAll: switchAll,
 };
 
-const using = createUsing(createT);
+const using = 
+/*@__PURE__*/ createUsing(createT);
 const usingT = {
     using,
 };
@@ -648,7 +649,7 @@ function forkMerge(...ops) {
     return (obs) => _merge(pipe(ops, map$1(op => pipe(obs, op))));
 }
 
-const never = createNever(createT);
+const never = /*@__PURE__*/ createNever(createT);
 
 class BufferObserver extends AbstractDelegatingObserver {
     constructor(delegate, durationFunction, maxBufferSize, durationSubscription) {
@@ -784,7 +785,10 @@ const concatAll = (options = {}) => {
 const concatAllT = {
     concatAll,
 };
-const _exhaust = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
+const _exhaust = /*@__PURE__*/ mergeAll({
+    maxBufferSize: 1,
+    maxConcurrency: 1,
+});
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`
  * by dropping inner sources while the previous inner source
@@ -891,7 +895,7 @@ function throttle(duration, options = {}) {
     return lift(operator);
 }
 
-const _timeoutError = Symbol("@reactive-js/core/lib/observable/timeoutError");
+const _timeoutError = /*@__PURE__*/ Symbol("@reactive-js/core/lib/observable/timeoutError");
 /** Symbol thrown when the timeout operator times out */
 const timeoutError = _timeoutError;
 const setupDurationSubscription = (observer) => {
@@ -1147,10 +1151,11 @@ const toPromise = (scheduler) => observable => newInstance(Promise, (resolve, re
 });
 
 const type = undefined;
-const catchError = createCatchErrorOperator(liftSynchronousT, class CatchErrorObserver extends AbstractDelegatingObserver {
+const catchError = /*@__PURE__*/ createCatchErrorOperator(liftSynchronousT, class CatchErrorObserver extends AbstractDelegatingObserver {
 });
-const fromDisposable = createFromDisposable(createT);
-const decodeWithCharset = createDecodeWithCharsetOperator({ ...liftSynchronousT, ...fromArrayT }, class DecodeWithCharsetObserver extends AbstractDelegatingObserver {
+const fromDisposable = /*@__PURE__*/ createFromDisposable(createT);
+const decodeWithCharset = 
+/*@__PURE__*/ createDecodeWithCharsetOperator({ ...liftSynchronousT, ...fromArrayT }, class DecodeWithCharsetObserver extends AbstractDelegatingObserver {
     constructor(delegate, textDecoder) {
         super(delegate);
         this.textDecoder = textDecoder;
@@ -1166,7 +1171,8 @@ const decodeWithCharsetT = {
  * @param equals Optional equality function that is used to compare
  * if an item is distinct from the previous item.
  */
-const distinctUntilChanged = createDistinctUntilChangedOperator(liftSynchronousT, class DistinctUntilChangedObserver extends AbstractDelegatingObserver {
+const distinctUntilChanged = 
+/*@__PURE__*/ createDistinctUntilChangedOperator(liftSynchronousT, class DistinctUntilChangedObserver extends AbstractDelegatingObserver {
     constructor(delegate, equality) {
         super(delegate);
         this.equality = equality;
@@ -1177,7 +1183,7 @@ const distinctUntilChanged = createDistinctUntilChangedOperator(liftSynchronousT
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
-const everySatisfy = createEverySatisfyOperator({ ...fromArrayT, ...liftSynchronousT }, class EverySatisfyObserver extends AbstractDelegatingObserver {
+const everySatisfy = /*@__PURE__*/ createEverySatisfyOperator({ ...fromArrayT, ...liftSynchronousT }, class EverySatisfyObserver extends AbstractDelegatingObserver {
     constructor(delegate, predicate) {
         super(delegate);
         this.predicate = predicate;
@@ -1186,7 +1192,8 @@ const everySatisfy = createEverySatisfyOperator({ ...fromArrayT, ...liftSynchron
 const everySatisfyT = {
     everySatisfy,
 };
-const fromPromise = (factory) => createObservable(({ dispatcher }) => {
+const fromPromise = (factory) => 
+/*@__PURE__*/ createObservable(({ dispatcher }) => {
     factory().then(next => {
         if (!isDisposed(dispatcher)) {
             pipe(dispatcher, dispatch(next), dispose());
@@ -1218,7 +1225,8 @@ const generate = (generator, initialValue, options) => {
 const generateT = {
     generate,
 };
-const keep = createKeepOperator(liftSynchronousT, class KeepObserver extends AbstractDelegatingObserver {
+const keep = 
+/*@__PURE__*/ createKeepOperator(liftSynchronousT, class KeepObserver extends AbstractDelegatingObserver {
     constructor(delegate, predicate) {
         super(delegate);
         this.predicate = predicate;
@@ -1228,10 +1236,10 @@ const keepT = {
     keep,
 };
 const mapAsync = (f) => concatMap({ ...switchAllT, ...mapT }, (a) => fromPromise(() => f(a)));
-const onSubscribe = createOnSink(createT);
+const onSubscribe = /*@__PURE__*/ createOnSink(createT);
 const observerCount = (observable) => observable.observerCount;
-const replay = (observable) => observable.replay;
-const pairwise = createPairwiseOperator(liftSynchronousT, class PairwiseObserver extends AbstractDelegatingObserver {
+const pairwise = 
+/*@__PURE__*/ createPairwiseOperator(liftSynchronousT, class PairwiseObserver extends AbstractDelegatingObserver {
     constructor() {
         super(...arguments);
         this.hasPrev = false;
@@ -1252,7 +1260,7 @@ const publish = (scheduler, options) => observable => {
     pipe(observable, onNotify(dispatchTo(subject)), subscribe(scheduler), bindTo(subject));
     return subject;
 };
-const reduce = createReduceOperator({ ...fromArrayT, ...liftSynchronousT }, class ReducerObserver extends AbstractDelegatingObserver {
+const reduce = /*@__PURE__*/ createReduceOperator({ ...fromArrayT, ...liftSynchronousT }, class ReducerObserver extends AbstractDelegatingObserver {
     constructor(delegate, reducer, acc) {
         super(delegate);
         this.reducer = reducer;
@@ -1262,7 +1270,8 @@ const reduce = createReduceOperator({ ...fromArrayT, ...liftSynchronousT }, clas
 const reduceT = {
     reduce,
 };
-const scan = createScanOperator(liftSynchronousT, class ScanObserver extends AbstractDelegatingObserver {
+const replay = (observable) => observable.replay;
+const scan = /*@__PURE__*/ createScanOperator(liftSynchronousT, class ScanObserver extends AbstractDelegatingObserver {
     constructor(delegate, reducer, acc) {
         super(delegate);
         this.reducer = reducer;
@@ -1308,7 +1317,7 @@ const share = (scheduler, options) => source => {
  *
  * @param count The number of items emitted by source that should be skipped.
  */
-const skipFirst = createSkipFirstOperator(liftSynchronousT, class SkipFirstObserver extends AbstractDelegatingObserver {
+const skipFirst = /*@__PURE__*/ createSkipFirstOperator(liftSynchronousT, class SkipFirstObserver extends AbstractDelegatingObserver {
     constructor(delegate, skipCount) {
         super(delegate);
         this.skipCount = skipCount;
@@ -1318,7 +1327,7 @@ const skipFirst = createSkipFirstOperator(liftSynchronousT, class SkipFirstObser
 const skipFirstT = {
     skipFirst,
 };
-const someSatisfy = createSomeSatisfyOperator({ ...fromArrayT, ...liftSynchronousT }, class SomeSatisfyObserver extends AbstractDelegatingObserver {
+const someSatisfy = /*@__PURE__*/ createSomeSatisfyOperator({ ...fromArrayT, ...liftSynchronousT }, class SomeSatisfyObserver extends AbstractDelegatingObserver {
     constructor(delegate, predicate) {
         super(delegate);
         this.predicate = predicate;
@@ -1328,7 +1337,7 @@ const someSatisfyT = {
     someSatisfy,
 };
 const subscribeOn = (scheduler) => observable => createObservable(({ dispatcher }) => pipe(observable, onNotify(dispatchTo(dispatcher)), subscribe(scheduler), bindTo(dispatcher)));
-const takeFirst = createTakeFirstOperator({ ...fromArrayT, ...liftSynchronousT }, class TakeFirstObserver extends AbstractDelegatingObserver {
+const takeFirst = /*@__PURE__*/ createTakeFirstOperator({ ...fromArrayT, ...liftSynchronousT }, class TakeFirstObserver extends AbstractDelegatingObserver {
     constructor(delegate, maxCount) {
         super(delegate);
         this.maxCount = maxCount;
@@ -1343,7 +1352,7 @@ const takeFirstT = {
  *
  * @param count The maximum number of values to emit.
  */
-const takeLast = createTakeLastOperator({ ...fromArrayT, ...liftSynchronousT }, class TakeLastObserver extends AbstractDelegatingObserver {
+const takeLast = /*@__PURE__*/ createTakeLastOperator({ ...fromArrayT, ...liftSynchronousT }, class TakeLastObserver extends AbstractDelegatingObserver {
     constructor(delegate, maxCount) {
         super(delegate);
         this.maxCount = maxCount;
@@ -1367,7 +1376,7 @@ const takeUntil = (notifier) => {
  *
  * @param predicate The predicate function.
  */
-const takeWhile = createTakeWhileOperator(liftSynchronousT, class TakeWhileObserver extends AbstractDelegatingObserver {
+const takeWhile = /*@__PURE__*/ createTakeWhileOperator(liftSynchronousT, class TakeWhileObserver extends AbstractDelegatingObserver {
     constructor(delegate, predicate, inclusive) {
         super(delegate);
         this.predicate = predicate;
@@ -1377,7 +1386,7 @@ const takeWhile = createTakeWhileOperator(liftSynchronousT, class TakeWhileObser
 const takeWhileT = {
     takeWhile,
 };
-const throwIfEmpty = createThrowIfEmptyOperator(liftSynchronousT, class ThrowIfEmptyObserver extends AbstractDelegatingObserver {
+const throwIfEmpty = /*@__PURE__*/ createThrowIfEmptyOperator(liftSynchronousT, class ThrowIfEmptyObserver extends AbstractDelegatingObserver {
     constructor() {
         super(...arguments);
         this.isEmpty = true;

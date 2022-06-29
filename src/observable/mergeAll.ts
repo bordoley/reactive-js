@@ -141,7 +141,10 @@ export const concatAllT: ConcatAll<
   concatAll,
 };
 
-const _exhaust = mergeAll({ maxBufferSize: 1, maxConcurrency: 1 });
+const _exhaust = /*@__PURE__*/ mergeAll({
+  maxBufferSize: 1,
+  maxConcurrency: 1,
+});
 
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike`

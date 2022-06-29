@@ -11,7 +11,7 @@ import { liftSynchronousT } from "./lift";
  */
 export const onNotify: <T>(
   onNotify: SideEffect1<T>,
-) => ObservableOperator<T, T> = createOnNotifyOperator(
+) => ObservableOperator<T, T> = /*@__PURE__*/ createOnNotifyOperator(
   liftSynchronousT,
   class OnNotifyObserver<T> extends AbstractDelegatingObserver<T, T> {
     constructor(delegate: Observer<T>, readonly onNotify: SideEffect1<T>) {

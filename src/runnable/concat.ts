@@ -24,7 +24,7 @@ class FlattenSink<T> extends AbstractDelegatingRunnableSink<
   }
 }
 
-const _concatAll = lift(delegate =>
+const _concatAll = /*@__PURE__*/ lift(delegate =>
   pipe(FlattenSink, newInstanceWith(delegate), bindTo(delegate)),
 );
 

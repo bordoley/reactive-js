@@ -55,7 +55,7 @@ const operator = <T>(delegate: Observer<T>) =>
     onComplete(onDispose),
   );
 
-const switchAllInstance = lift(operator);
+const switchAllInstance = /*@__PURE__*/ lift(operator);
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
  * values only from the most recent source.

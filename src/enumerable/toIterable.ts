@@ -13,7 +13,7 @@ class EnumerableIterable<T> implements Iterable<T> {
   }
 }
 
-export const _toIterable = instanceFactory(EnumerableIterable);
+export const _toIterable = /*@__PURE__*/ instanceFactory(EnumerableIterable);
 
 /**
  * Converts an EnumerableLike into a javascript Iterable.

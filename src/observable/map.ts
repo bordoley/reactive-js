@@ -7,7 +7,7 @@ import { liftSynchronousT } from "./lift";
 
 export const map: <TA, TB>(
   mapper: Function1<TA, TB>,
-) => ObservableOperator<TA, TB> = createMapOperator(
+) => ObservableOperator<TA, TB> = /*@__PURE__*/ createMapOperator(
   liftSynchronousT,
   class MapObserver<TA, TB> extends AbstractDelegatingObserver<TA, TB> {
     constructor(delegate: Observer<TB>, readonly mapper: Function1<TA, TB>) {
