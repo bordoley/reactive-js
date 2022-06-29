@@ -1,9 +1,9 @@
 {
   "name": "@reactive-js/example",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "private": true,
   "dependencies": {
-    "@reactive-js/core": "^0.8.0",
+    "@reactive-js/core": "^0.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "scheduler": "^0.23.0"
