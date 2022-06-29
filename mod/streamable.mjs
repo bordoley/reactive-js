@@ -4,7 +4,7 @@ import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
 import { enumerate, fromIterable as fromIterable$1 } from './enumerable.mjs';
 import { move, hasCurrent, current } from './enumerator.mjs';
-import { pipe, length, compose, flip, returns, updateReducer, increment, identity as identity$1 } from './functions.mjs';
+import { pipe, length, compose, max, flip, returns, updateReducer, min, increment, identity as identity$1 } from './functions.mjs';
 import { AbstractDisposableObservable, observerCount, replay, createSubject, publish, reduce, onNotify, keepT, concatT, fromArrayT, scanAsync, scan, createObservable, map, onSubscribe, zipWithLatestFrom, takeFirst, switchAll, mergeT, distinctUntilChanged, subscribe, subscribeOn, fromDisposable, takeUntil, mapT, concatAllT, withLatestFrom, using, never, takeWhile, merge, __currentScheduler, __using, __memo } from './observable.mjs';
 import { scheduler } from './observer.mjs';
 import { none, isSome } from './option.mjs';
@@ -88,7 +88,7 @@ const asyncGeneratorScanner = (generator, options) => {
  */
 const generate = (generator, initialValue, options = {}) => {
     var _a;
-    const { delay = Math.max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
+    const { delay = max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0) } = options;
     return createLiftedStreamable(delay > 0
         ? scanAsync(asyncGeneratorScanner(generator, options), initialValue)
         : scan(generateScanner(generator), initialValue));
@@ -170,8 +170,8 @@ const flow = ({ scheduler: scheduler$1, } = {}) => observable => createLiftedStr
 const fromArray = (options = {}) => values => {
     var _a, _b;
     const valuesLength = length(values);
-    const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
-    const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : valuesLength, valuesLength), 0);
+    const startIndex = min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
+    const endIndex = max(min((_b = options.endIndex) !== null && _b !== void 0 ? _b : valuesLength, valuesLength), 0);
     const fromValueWithDelay = fromValue(fromArrayT, options);
     return createLiftedStreamable(scan(increment, returns(startIndex - 1)), concatMap({ ...mapT, ...concatAllT }, (i) => fromValueWithDelay(values[i])), takeFirst({ count: endIndex - startIndex }));
 };

@@ -1,6 +1,6 @@
 import { FromArray } from "../container";
 import { dispose } from "../disposable";
-import { Function1, length, pipe } from "../functions";
+import { Function1, length, max, min, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
 import { __yield } from "../scheduler";
@@ -26,11 +26,11 @@ export const fromArray =
     } = {},
   ): Function1<readonly T[], ObservableLike<T>> =>
   values => {
-    const delay = Math.max(options.delay ?? 0, 0);
+    const delay = max(options.delay ?? 0, 0);
     const valuesLength = length(values);
-    const startIndex = Math.min(options.startIndex ?? 0, valuesLength);
-    const endIndex = Math.max(
-      Math.min(options.endIndex ?? length(values), valuesLength),
+    const startIndex = min(options.startIndex ?? 0, valuesLength);
+    const endIndex = max(
+      min(options.endIndex ?? length(values), valuesLength),
       0,
     );
     const count = endIndex - startIndex;

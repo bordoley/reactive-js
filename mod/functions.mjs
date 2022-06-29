@@ -138,5 +138,6 @@ function flip(f) {
         return f(...args);
     };
 }
+const { max, min, floor } = Math;
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isOdd, length, negate, pipe, pipeLazy, raise, returns, strictEquality, sum, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, identity, ignore, increment, incrementBy, isEmpty, isEqualTo, isEven, isOdd, length, max, min, negate, pipe, pipeLazy, raise, returns, strictEquality, sum, updateReducer };

@@ -9,7 +9,7 @@ import {
   isDisposed,
   onComplete,
 } from "../disposable";
-import { Function1, isEmpty, length, pipe } from "../functions";
+import { Function1, isEmpty, length, max, pipe } from "../functions";
 import { delegate, delegate as observerDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
@@ -83,7 +83,7 @@ export function buffer<T>(
       ? (_: T) => fromValue(fromArrayT, { delay })(none)
       : delay;
 
-  const maxBufferSize = Math.max(
+  const maxBufferSize = max(
     options.maxBufferSize ?? Number.MAX_SAFE_INTEGER,
     1,
   );

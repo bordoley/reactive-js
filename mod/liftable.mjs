@@ -1,7 +1,7 @@
 /// <reference types="./liftable.d.ts" />
 import { AbstractContainer, AbstractDisposableContainer, empty } from './container.mjs';
 import { bindTo, add, addTo, onComplete, dispose } from './disposable.mjs';
-import { raise, strictEquality, pipe } from './functions.mjs';
+import { raise, strictEquality, pipe, max } from './functions.mjs';
 import { none } from './option.mjs';
 
 class AbstractLiftable extends AbstractContainer {
@@ -39,7 +39,7 @@ const createSkipFirstLiftOperator = (m, SkipLiftableState) => (options = {}) => 
 };
 const createTakeFirstLiftOperator = (m, TakeFirstLiftableState) => (options = {}) => {
     var _a;
-    const { count = Math.max((_a = options.count) !== null && _a !== void 0 ? _a : 1, 0) } = options;
+    const { count = max((_a = options.count) !== null && _a !== void 0 ? _a : 1, 0) } = options;
     const operator = delegate => pipe(new TakeFirstLiftableState(delegate, count), bindTo(delegate));
     const lifted = pipe(operator, lift(m));
     return source => (count > 0 ? pipe(source, lifted) : empty(m));

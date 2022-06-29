@@ -2,7 +2,7 @@
 import { fromValue, empty } from './container.mjs';
 import { addTo, onComplete, dispose, onError, isDisposed, onDisposed, add } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
-import { length, pipe, isEmpty, compose, negate, ignore, identity } from './functions.mjs';
+import { length, max, pipe, isEmpty, compose, negate, ignore, identity } from './functions.mjs';
 import { AbstractLiftable, AbstractDisposableLiftable, delegate, lift, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
 import { none, isSome } from './option.mjs';
 import { forEach } from './readonlyArray.mjs';
@@ -46,7 +46,7 @@ const createBufferOperator = (m, BufferSink) => {
     });
     return (options = {}) => {
         var _a;
-        const maxBufferSize = Math.max((_a = options.maxBufferSize) !== null && _a !== void 0 ? _a : Number.MAX_SAFE_INTEGER, 1);
+        const maxBufferSize = max((_a = options.maxBufferSize) !== null && _a !== void 0 ? _a : Number.MAX_SAFE_INTEGER, 1);
         return pipe((delegate$1) => pipe(new BufferSink(delegate$1, maxBufferSize), addTo(delegate$1), onComplete(function onDispose() {
             const { buffer } = this;
             this.buffer = [];

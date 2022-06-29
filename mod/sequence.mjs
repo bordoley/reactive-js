@@ -2,7 +2,7 @@
 import { isDisposed, dispose } from './disposable.mjs';
 import { createEnumerable } from './enumerable.mjs';
 import { AbstractEnumerator, hasCurrent } from './enumerator.mjs';
-import { length, pipe, strictEquality, alwaysTrue, callWith } from './functions.mjs';
+import { length, min, max, pipe, strictEquality, alwaysTrue, callWith } from './functions.mjs';
 import { none, isNone } from './option.mjs';
 import { map as map$1, keepType } from './readonlyArray.mjs';
 import { createRunnable } from './runnable.mjs';
@@ -44,8 +44,8 @@ const _fromArray = (arr, index, endIndex) => index < endIndex && index >= 0
 const fromArray = (options = {}) => values => {
     var _a, _b;
     const valuesLength = length(values);
-    const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
-    const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : valuesLength, valuesLength), 0);
+    const startIndex = min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
+    const endIndex = max(min((_b = options.endIndex) !== null && _b !== void 0 ? _b : valuesLength, valuesLength), 0);
     return castToSequence(() => _fromArray(values, startIndex, endIndex));
 };
 const fromArrayT = {

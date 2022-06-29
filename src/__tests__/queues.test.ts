@@ -1,4 +1,4 @@
-import { pipe } from "../functions";
+import { floor, pipe } from "../functions";
 import { createPriorityQueue } from "../scheduler/queue";
 import { describe, expectArrayEquals, test } from "../testing";
 
@@ -16,7 +16,7 @@ const makeShuffledArray = (n: number) => {
   const result = makeSortedArray(n);
 
   for (let count = n - 1; count >= 0; count--) {
-    const index = Math.floor(Math.random() * (count + 1));
+    const index = floor(Math.random() * (count + 1));
 
     const temp = result[count];
     result[count] = result[index];

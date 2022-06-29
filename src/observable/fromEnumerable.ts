@@ -1,7 +1,7 @@
 import { dispose } from "../disposable";
 import { EnumerableLike, enumerate } from "../enumerable";
 import { Enumerator, current, move } from "../enumerator";
-import { Factory, Function1, pipe, pipeLazy } from "../functions";
+import { Factory, Function1, max, pipe, pipeLazy } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
 import { __yield } from "../scheduler";
@@ -32,7 +32,7 @@ export const fromEnumerator =
       ),
     );
 
-    (result as any).isEnumerable = Math.max(options.delay ?? 0, 0) === 0;
+    (result as any).isEnumerable = max(options.delay ?? 0, 0) === 0;
 
     return result;
   };

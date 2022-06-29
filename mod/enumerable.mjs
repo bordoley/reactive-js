@@ -1,7 +1,7 @@
 /// <reference types="./enumerable.d.ts" />
 import { isDisposed, dispose, createSerialDisposable, bindTo, add, addTo } from './disposable.mjs';
 import { AbstractEnumerator, reset, hasCurrent, AbstractDelegatingEnumerator, move, Enumerator, current, forEach, zip as zip$1, AbstractPassThroughEnumerator } from './enumerator.mjs';
-import { pipe, length, raise, alwaysTrue, identity } from './functions.mjs';
+import { pipe, length, min, max, raise, alwaysTrue, identity } from './functions.mjs';
 import { empty } from './container.mjs';
 import { AbstractLiftable, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, delegate, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -40,8 +40,8 @@ class ArrayEnumerator extends AbstractEnumerator {
 const fromArray = (options = {}) => (values) => {
     var _a, _b;
     const valuesLength = length(values);
-    const startIndex = Math.min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
-    const endIndex = Math.max(Math.min((_b = options.endIndex) !== null && _b !== void 0 ? _b : length(values), valuesLength), 0);
+    const startIndex = min((_a = options.startIndex) !== null && _a !== void 0 ? _a : 0, valuesLength);
+    const endIndex = max(min((_b = options.endIndex) !== null && _b !== void 0 ? _b : length(values), valuesLength), 0);
     return createEnumerable(() => new ArrayEnumerator(values, startIndex - 1, endIndex));
 };
 const fromArrayT = {
@@ -159,7 +159,7 @@ class BufferEnumerator extends AbstractDelegatingEnumerator {
 }
 const buffer = (options = {}) => {
     var _a;
-    const maxBufferSize = Math.max((_a = options.maxBufferSize) !== null && _a !== void 0 ? _a : Number.MAX_SAFE_INTEGER, 1);
+    const maxBufferSize = max((_a = options.maxBufferSize) !== null && _a !== void 0 ? _a : Number.MAX_SAFE_INTEGER, 1);
     const operator = (delegate) => pipe(new BufferEnumerator(delegate, maxBufferSize), add(delegate));
     return lift(operator);
 };

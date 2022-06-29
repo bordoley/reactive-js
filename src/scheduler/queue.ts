@@ -1,7 +1,7 @@
-import { Comparator, length as readonlyArrayLength } from "../functions";
+import { Comparator, floor, length as readonlyArrayLength } from "../functions";
 import { Option, isSome, none } from "../option";
 
-const computeParentIndex = (index: number) => Math.floor((index - 1) / 2);
+const computeParentIndex = (index: number) => floor((index - 1) / 2);
 
 const siftDown = <T>(queue: PriorityQueueImpl<T>, item: T) => {
   const { values, compare } = queue;
