@@ -9,7 +9,7 @@ import {
   isDisposed,
   onDisposed,
 } from "../disposable";
-import { pipe } from "../functions";
+import { newInstance, pipe } from "../functions";
 import { Option, isSome, none } from "../option";
 import {
   SchedulerContinuationLike,
@@ -171,7 +171,7 @@ export const createHostScheduler = (
   } = {},
 ): SchedulerLike => {
   const { yieldInterval = 5 } = options;
-  const hostScheduler = new HostScheduler(yieldInterval);
+  const hostScheduler = newInstance(HostScheduler, yieldInterval);
 
   hostScheduler.supportsPerformanceNow =
     typeof performance === "object" && typeof performance.now === "function";
@@ -184,7 +184,7 @@ export const createHostScheduler = (
     (navigator as any).scheduling.isInputPending !== undefined;
 
   if (typeof MessageChannel === "function") {
-    const messageChannel = new MessageChannel();
+    const messageChannel = newInstance(MessageChannel);
     hostScheduler.messageChannel = messageChannel;
 
     pipe(

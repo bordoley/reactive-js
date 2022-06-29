@@ -1,7 +1,7 @@
 /// <reference types="./web.d.ts" />
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { onDisposed, bindTo, addTo, toAbortSignal, dispose } from './disposable.mjs';
-import { pipe, isEmpty, length, raise, newInstanceWith, compose, returns } from './functions.mjs';
+import { pipe, newInstance, isEmpty, length, raise, newInstanceWith, compose, returns } from './functions.mjs';
 import { createObservable, AbstractDisposableObservable, observerCount, replay, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { ignoreElements } from './container.mjs';
@@ -32,7 +32,7 @@ const createEventSource = (url, options = {}) => {
             }
             eventSource.close();
         }));
-        const eventSource = new EventSource(requestURL, options);
+        const eventSource = newInstance(EventSource, requestURL, options);
         const listener = (ev) => {
             var _a, _b, _c;
             pipe(dispatcher, dispatch({
@@ -52,10 +52,10 @@ const windowLocationURIToString = ({ path, query, fragment, }) => {
     let uri = isEmpty(path) ? "/" : !path.startsWith("/") ? `/${path}` : path;
     uri = length(query) > 0 ? `${uri}?${query}` : uri;
     uri = length(fragment) > 0 ? `${uri}#${fragment}` : uri;
-    return new URL(uri, location.href).toString();
+    return newInstance(URL, uri, location.href).toString();
 };
 const getCurrentWindowLocationURI = () => {
-    const { pathname: path, search: query, hash: fragment, } = new URL(location.href);
+    const { pathname: path, search: query, hash: fragment, } = newInstance(URL, location.href);
     return {
         title: document.title,
         path,
@@ -163,7 +163,7 @@ const fetch = (onResponse) => fetchRequest => defer(() => async (observer) => {
     }
     else {
         const { uri, ...requestInit } = fetchRequest;
-        request = new Request(uri, requestInit);
+        request = newInstance(Request, uri, requestInit);
     }
     // This try/catch is necessary because we await in the try block.
     try {

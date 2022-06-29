@@ -1,4 +1,9 @@
-import { Comparator, floor, length as readonlyArrayLength } from "../functions";
+import {
+  Comparator,
+  floor,
+  newInstance,
+  length as readonlyArrayLength,
+} from "../functions";
 import { Option, isSome, none } from "../option";
 
 const computeParentIndex = (index: number) => floor((index - 1) / 2);
@@ -104,4 +109,4 @@ class PriorityQueueImpl<T> implements QueueLike<T> {
 
 export const createPriorityQueue = <T>(
   comparator: Comparator<T>,
-): QueueLike<T> => new PriorityQueueImpl(comparator);
+): QueueLike<T> => newInstance(PriorityQueueImpl, comparator);
