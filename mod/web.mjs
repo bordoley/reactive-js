@@ -2,7 +2,7 @@
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { onDisposed, bindTo, addTo, toAbortSignal, dispose } from './disposable.mjs';
 import { pipe, raise, compose, returns } from './functions.mjs';
-import { createObservable, AbstractDisposableObservable, observerCount, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
+import { createObservable, AbstractDisposableObservable, observerCount, replay, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { ignoreElements } from './container.mjs';
 import { none, isSome } from './option.mjs';
@@ -84,6 +84,9 @@ class WindowLocationStream extends AbstractDisposableObservable {
     }
     get observerCount() {
         return observerCount(this.stateStream);
+    }
+    get replay() {
+        return replay(this.stateStream);
     }
     dispatch(stateOrUpdater, { replace } = { replace: false }) {
         pipe(({ uri: stateURI }) => {

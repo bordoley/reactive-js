@@ -103,6 +103,7 @@
 - [publish](observable.md#publish)
 - [reduce](observable.md#reduce)
 - [repeat](observable.md#repeat)
+- [replay](observable.md#replay)
 - [retry](observable.md#retry)
 - [scan](observable.md#scan)
 - [scanAsync](observable.md#scanasync)
@@ -2423,6 +2424,28 @@ Returns an `ObservableLike` that continually repeats the source.
 #### Returns
 
 [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
+
+___
+
+### replay
+
+▸ **replay**<`T`\>(`observable`): `number`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)<`T`\> |
+
+#### Returns
+
+`number`
 
 ___
 

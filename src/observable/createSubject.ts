@@ -12,7 +12,7 @@ class SubjectImpl<T>
   private readonly dispatchers: Set<DispatcherLike<T>> = new Set();
   private readonly replayed: T[] = [];
 
-  constructor(private readonly replay: number) {
+  constructor(public readonly replay: number) {
     super();
   }
 

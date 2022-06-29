@@ -10,6 +10,7 @@ import {
   map,
   observerCount,
   onNotify,
+  replay,
   subscribe,
   takeWhile,
   throttle,
@@ -97,6 +98,10 @@ class WindowLocationStream
 
   get observerCount() {
     return observerCount(this.stateStream);
+  }
+
+  get replay(): number {
+    return replay(this.stateStream);
   }
 
   dispatch(

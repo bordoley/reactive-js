@@ -115,6 +115,7 @@ export interface MulticastObservableLike<T>
    * The number of observers currently observing.
    */
   readonly observerCount: number;
+  readonly replay: number;
 }
 
 /**
@@ -348,6 +349,9 @@ export const onSubscribe = createOnSink(createT);
 
 export const observerCount = <T>(observable: MulticastObservableLike<T>) =>
   observable.observerCount;
+
+export const replay = <T>(observable: MulticastObservableLike<T>) =>
+  observable.replay;
 
 export const pairwise: <T>() => ObservableOperator<T, [Option<T>, T]> =
   createPairwiseOperator(

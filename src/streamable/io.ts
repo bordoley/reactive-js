@@ -13,6 +13,7 @@ import {
   observerCount,
   onNotify,
   reduce,
+  replay,
 } from "../observable";
 import { Observer } from "../observer";
 
@@ -34,6 +35,10 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
 
   get observerCount(): number {
     return observerCount(this.subject);
+  }
+
+  get replay(): number {
+    return replay(this.subject);
   }
 
   sink(observer: Observer<TAcc>): void {

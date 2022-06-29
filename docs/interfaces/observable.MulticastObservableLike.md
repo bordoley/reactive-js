@@ -27,6 +27,7 @@ An `ObservableLike` that shares a common subscription to an underlying observabl
 ### Properties
 
 - [observerCount](observable.MulticastObservableLike.md#observercount)
+- [replay](observable.MulticastObservableLike.md#replay)
 
 ## Properties
 
@@ -35,3 +36,9 @@ An `ObservableLike` that shares a common subscription to an underlying observabl
 • `Readonly` **observerCount**: `number`
 
 The number of observers currently observing.
+
+___
+
+### replay
+
+• `Readonly` **replay**: `number`
