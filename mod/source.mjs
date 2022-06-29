@@ -2,7 +2,7 @@
 import { fromValue, empty } from './container.mjs';
 import { addTo, onComplete, dispose, onError, isDisposed, onDisposed, add } from './disposable.mjs';
 import { __DEV__, MAX_SAFE_INTEGER } from './env.mjs';
-import { length, max, pipe, newInstanceWith, isEmpty, compose, negate, ignore, identity } from './functions.mjs';
+import { length, max, pipe, newInstanceWith, isEmpty, newInstance, compose, negate, ignore, identity } from './functions.mjs';
 import { AbstractLiftable, AbstractDisposableLiftable, delegate, lift, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
 import { none, isSome } from './option.mjs';
 import { forEach } from './readonlyArray.mjs';
@@ -86,7 +86,7 @@ const createDecodeWithCharsetOperator = (m, DecodeWithCharsetSink) => {
         }
     });
     return (charset = "utf-8") => pipe((delegate) => {
-        const textDecoder = new TextDecoder(charset, { fatal: true });
+        const textDecoder = newInstance(TextDecoder, charset, { fatal: true });
         return pipe(DecodeWithCharsetSink, newInstanceWith(delegate, textDecoder), addTo(delegate), onComplete(() => {
             const data = textDecoder.decode();
             if (!isEmpty(data)) {
