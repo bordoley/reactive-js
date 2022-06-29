@@ -573,7 +573,7 @@ ___
 
 ### toEnumerable
 
-▸ **toEnumerable**<`T`\>(): (`seq`: [`Sequence`](sequence.md#sequence)<`T`\>) => [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
+▸ **toEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`Sequence`](sequence.md#sequence)<`T`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -583,19 +583,7 @@ ___
 
 #### Returns
 
-`fn`
-
-▸ (`seq`): [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `seq` | [`Sequence`](sequence.md#sequence)<`T`\> |
-
-##### Returns
-
-[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>
+[`Function1`](functions.md#function1)<[`Sequence`](sequence.md#sequence)<`T`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
 
 ___
 

@@ -33,7 +33,7 @@ import {
   Factory,
   compose,
   ignore,
-  newInstance,
+  instanceFactory,
   pipe,
   pipeLazy,
   returns,
@@ -180,8 +180,8 @@ class ReactPriorityScheduler
   }
 }
 
-const createReactPriorityScheduler: Factory<PrioritySchedulerLike> = () =>
-  newInstance(ReactPriorityScheduler);
+const createReactPriorityScheduler: Factory<PrioritySchedulerLike> =
+  instanceFactory(ReactPriorityScheduler);
 
 const createReactSchedulerFactory =
   (priority: number): Factory<SchedulerLike> =>

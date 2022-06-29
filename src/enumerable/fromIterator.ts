@@ -2,7 +2,14 @@ import { FromIterable, FromIterator } from "../container";
 import { dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { Enumerator, hasCurrent } from "../enumerator";
-import { Factory, Function1, newInstance, pipe } from "../functions";
+import {
+  Factory,
+  Function1,
+  callWith,
+  instanceFactory,
+  pipe,
+  pipeLazy,
+} from "../functions";
 import { none } from "../option";
 import { createEnumerable } from "./enumerable";
 
@@ -40,11 +47,9 @@ class IteratorEnumerator<
 const _fromIterator = <T, TReturn = any, TNext = unknown>(
   f: Factory<Iterator<T, TReturn, TNext>>,
 ): EnumerableLike<T> =>
-  createEnumerable(() => {
-    const iterator = f();
-    const enumerator = newInstance(IteratorEnumerator, iterator);
-    return enumerator;
-  });
+  createEnumerable(
+    pipeLazy(f, callWith(), instanceFactory(IteratorEnumerator)),
+  );
 
 /**
  * Returns a single use EnumerableLike over the javascript Iterator

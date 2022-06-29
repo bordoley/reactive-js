@@ -1,7 +1,7 @@
 /// <reference types="./enumerable.d.ts" />
 import { isDisposed, dispose, createSerialDisposable, bindTo, add, addTo } from './disposable.mjs';
 import { AbstractEnumerator, reset, hasCurrent, AbstractDelegatingEnumerator, move, Enumerator, current, forEach, zip as zip$1, AbstractPassThroughEnumerator } from './enumerator.mjs';
-import { pipe, newInstance, newInstanceWith, length, max, raise, alwaysTrue, identity } from './functions.mjs';
+import { pipe, pipeLazy, instanceFactory, callWith, newInstance, newInstanceWith, length, max, raise, alwaysTrue, identity } from './functions.mjs';
 import { createFromArray, empty } from './container.mjs';
 import { AbstractLiftable, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, delegate, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -38,7 +38,7 @@ class ArrayEnumerator extends AbstractEnumerator {
  *
  * @param values
  */
-const fromArray = createFromArray((values, startIndex, endIndex) => createEnumerable(() => newInstance(ArrayEnumerator, values, startIndex - 1, endIndex)));
+const fromArray = createFromArray((values, startIndex, endIndex) => createEnumerable(pipeLazy(instanceFactory(ArrayEnumerator), callWith(values, startIndex - 1, endIndex))));
 const fromArrayT = {
     fromArray,
 };
@@ -185,11 +185,7 @@ class IteratorEnumerator extends Enumerator {
         return hasCurrent(this);
     }
 }
-const _fromIterator = (f) => createEnumerable(() => {
-    const iterator = f();
-    const enumerator = newInstance(IteratorEnumerator, iterator);
-    return enumerator;
-});
+const _fromIterator = (f) => createEnumerable(pipeLazy(f, callWith(), instanceFactory(IteratorEnumerator)));
 /**
  * Returns a single use EnumerableLike over the javascript Iterator
  * returned by the function `f`.
@@ -363,7 +359,7 @@ class EnumerableIterable {
         }
     }
 }
-const _toIterable = (source) => newInstance(EnumerableIterable, source);
+const _toIterable = instanceFactory(EnumerableIterable);
 /**
  * Converts an EnumerableLike into a javascript Iterable.
  */

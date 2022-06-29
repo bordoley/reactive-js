@@ -2,7 +2,7 @@ import { FromArray, FromArrayOptions, createFromArray } from "../container";
 import { dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { AbstractEnumerator, hasCurrent, reset } from "../enumerator";
-import { newInstance, pipe } from "../functions";
+import { callWith, instanceFactory, pipe, pipeLazy } from "../functions";
 import { createEnumerable } from "./enumerable";
 
 class ArrayEnumerator<T> extends AbstractEnumerator<T> {
@@ -41,8 +41,13 @@ class ArrayEnumerator<T> extends AbstractEnumerator<T> {
  */
 export const fromArray = createFromArray<EnumerableLike<unknown>>(
   <T>(values: readonly T[], startIndex: number, endIndex: number) =>
-    createEnumerable(() =>
-      newInstance(ArrayEnumerator, values, startIndex - 1, endIndex),
+    createEnumerable(
+      pipeLazy(
+        instanceFactory<readonly T[], number, number, ArrayEnumerator<T>>(
+          ArrayEnumerator,
+        ),
+        callWith(values, startIndex - 1, endIndex),
+      ),
     ),
 );
 
