@@ -10,7 +10,7 @@ import { pipe } from "../functions";
 import { delegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
-import { notifySink } from "../source";
+import { assertState, notifySink } from "../source";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
@@ -28,7 +28,7 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
   inner = disposed;
 
   notify(next: ObservableLike<T>) {
-    this.assertState();
+    assertState(this);
 
     pipe(this.inner, dispose());
 

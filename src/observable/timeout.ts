@@ -10,6 +10,7 @@ import { pipe, returns } from "../functions";
 import { delegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
+import { assertState } from "../source";
 import { concat } from "./concat";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
@@ -38,7 +39,7 @@ class TimeoutObserver<T> extends AbstractDelegatingObserver<T, T> {
   }
 
   notify(next: T) {
-    this.assertState();
+    assertState(this);
 
     pipe(this.durationSubscription, dispose());
     delegate(this).notify(next);

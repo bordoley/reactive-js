@@ -20,7 +20,7 @@ import { delegate } from "../liftable";
 import { ObservableLike } from "../observable";
 import { AbstractDelegatingObserver, Observer } from "../observer";
 import { everySatisfy, map } from "../readonlyArray";
-import { sinkInto, sourceFrom } from "../source";
+import { assertState, sinkInto, sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
 import { fromEnumerator } from "./fromEnumerable";
 import { isEnumerable } from "./observable";
@@ -76,7 +76,7 @@ class ZipObserver extends AbstractDelegatingObserver<
   }
 
   notify(next: unknown) {
-    this.assertState();
+    assertState(this);
 
     const { enumerator, enumerators } = this;
 

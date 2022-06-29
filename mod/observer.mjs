@@ -6,6 +6,7 @@ import { length, pipe, isEmpty, raise } from './functions.mjs';
 import { delegate } from './liftable.mjs';
 import { none, isNone } from './option.mjs';
 import { schedule, __yield, inContinuation } from './scheduler.mjs';
+import { assertState } from './source.mjs';
 
 const scheduleDrainQueue = (dispatcher) => {
     if (length(dispatcher.nextQueue) === 1) {
@@ -62,7 +63,7 @@ class Observer extends AbstractDisposableContainer {
     }
     assertState() { }
     notify(_) {
-        this.assertState();
+        assertState(this);
     }
 }
 if (__DEV__) {

@@ -4,7 +4,7 @@ import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { dispose, isDisposed, onDisposed, add, addTo, disposed, onComplete, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
 import { move, current, AbstractEnumerator, reset, hasCurrent, zip as zip$1, forEach } from './enumerator.mjs';
 import { pipe, length, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, returns } from './functions.mjs';
-import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, notifySink, createUsing, notify, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
+import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, assertState, notifySink, createUsing, notify, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { scheduler, AbstractDelegatingObserver, Observer, createDelegatingObserver } from './observer.mjs';
 import { schedule, __yield, inContinuation, runContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { contraVariant, delegate } from './liftable.mjs';
@@ -209,7 +209,7 @@ class SwitchObserver extends AbstractDelegatingObserver {
         this.inner = disposed;
     }
     notify(next) {
-        this.assertState();
+        assertState(this);
         pipe(this.inner, dispose());
         const inner = pipe(next, onNotify(notifySink(delegate(this))), subscribe(scheduler(this)), addTo(delegate(this)), onComplete(() => {
             if (isDisposed(this)) {
@@ -252,7 +252,7 @@ class ZipWithLatestFromObserver extends AbstractDelegatingObserver {
         this.selector = selector;
     }
     notify(next) {
-        this.assertState();
+        assertState(this);
         this.queue.push(next);
         notifyDelegate(this);
     }
@@ -496,7 +496,7 @@ class LatestObserver extends AbstractDelegatingObserver {
         this.latest = none;
     }
     notify(next) {
-        this.assertState();
+        assertState(this);
         const { ctx } = this;
         this.latest = next;
         if (!this.ready) {
@@ -671,7 +671,7 @@ class BufferObserver extends AbstractDelegatingObserver {
         this.buffer = [];
     }
     notify(next) {
-        this.assertState();
+        assertState(this);
         const { buffer, maxBufferSize } = this;
         buffer.push(next);
         const doOnNotify = () => {
@@ -748,7 +748,7 @@ class MergeObserver extends AbstractDelegatingObserver {
         this.queue = [];
     }
     notify(next) {
-        this.assertState();
+        assertState(this);
         const { queue } = this;
         queue.push(next);
         // Drop old events if the maxBufferSize has been exceeded
@@ -874,7 +874,7 @@ class ThrottleObserver extends AbstractDelegatingObserver {
         };
     }
     notify(next) {
-        this.assertState();
+        assertState(this);
         this.value = next;
         this.hasValue = true;
         const durationSubscriptionDisposableIsDisposed = isDisposed(this.durationSubscription.inner);
@@ -916,7 +916,7 @@ class TimeoutObserver extends AbstractDelegatingObserver {
         this.durationSubscription = durationSubscription;
     }
     notify(next) {
-        this.assertState();
+        assertState(this);
         pipe(this.durationSubscription, dispose());
         delegate(this).notify(next);
     }
@@ -943,7 +943,7 @@ class WithLatestFromObserver extends AbstractDelegatingObserver {
         this.selector = selector;
     }
     notify(next) {
-        this.assertState();
+        assertState(this);
         if (!isDisposed(this) && this.hasLatest) {
             const result = this.selector(next, this.otherLatest);
             delegate(this).notify(result);
@@ -1020,7 +1020,7 @@ class EnumeratorObserver extends Observer {
         this.enumerator = enumerator;
     }
     notify(next) {
-        this.assertState();
+        assertState(this);
         this.enumerator.current = next;
     }
 }
@@ -1075,7 +1075,7 @@ class ZipObserver extends AbstractDelegatingObserver {
         this.enumerator = enumerator;
     }
     notify(next) {
-        this.assertState();
+        assertState(this);
         const { enumerator, enumerators } = this;
         if (!isDisposed(this)) {
             if (hasCurrent(enumerator)) {

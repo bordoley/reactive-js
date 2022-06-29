@@ -16,7 +16,7 @@ import {
 } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
 import { Option, none } from "../option";
-import { sinkInto } from "../source";
+import { assertState, sinkInto } from "../source";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
@@ -58,7 +58,7 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
   }
 
   notify(next: T) {
-    this.assertState();
+    assertState(this);
 
     this.value = next;
     this.hasValue = true;
