@@ -51,7 +51,16 @@ export abstract class AbstractEnumerator<T> extends Enumerator<T> {
   abstract move(): boolean;
 }
 
-export abstract class AbstractDelegatingEnumerator<T> extends Enumerator<T> {
+export abstract class AbstractDelegatingEnumerator<
+  TIn,
+  TOut,
+> extends AbstractEnumerator<TOut> {
+  constructor(readonly delegate: Enumerator<TIn>) {
+    super();
+  }
+}
+
+export abstract class AbstractPassThroughEnumerator<T> extends Enumerator<T> {
   constructor(readonly delegate: Enumerator<T>) {
     super();
   }

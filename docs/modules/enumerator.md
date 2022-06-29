@@ -8,6 +8,7 @@
 
 - [AbstractDelegatingEnumerator](../classes/enumerator.AbstractDelegatingEnumerator.md)
 - [AbstractEnumerator](../classes/enumerator.AbstractEnumerator.md)
+- [AbstractPassThroughEnumerator](../classes/enumerator.AbstractPassThroughEnumerator.md)
 - [Enumerator](../classes/enumerator.Enumerator.md)
 
 ### Functions

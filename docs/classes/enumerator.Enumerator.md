@@ -16,9 +16,9 @@
 
   ↳ **`Enumerator`**
 
-  ↳↳ [`AbstractDelegatingEnumerator`](enumerator.AbstractDelegatingEnumerator.md)
-
   ↳↳ [`AbstractEnumerator`](enumerator.AbstractEnumerator.md)
+
+  ↳↳ [`AbstractPassThroughEnumerator`](enumerator.AbstractPassThroughEnumerator.md)
 
   ↳↳ [`VirtualTimeSchedulerLike`](../interfaces/scheduler.VirtualTimeSchedulerLike.md)
 

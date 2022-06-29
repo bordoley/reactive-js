@@ -2,7 +2,7 @@ import { Buffer } from "../container";
 import { add, dispose } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import {
-  AbstractEnumerator,
+  AbstractDelegatingEnumerator,
   Enumerator,
   hasCurrent,
   reset,
@@ -10,18 +10,18 @@ import {
 import { pipe } from "../functions";
 import { lift } from "./lift";
 
-class BufferEnumerator<T> extends AbstractEnumerator<readonly T[]> {
-  constructor(
-    private readonly delegate: Enumerator<T>,
-    private readonly maxBufferSize: number,
-  ) {
-    super();
+class BufferEnumerator<T> extends AbstractDelegatingEnumerator<
+  T,
+  readonly T[]
+> {
+  constructor(delegate: Enumerator<T>, private readonly maxBufferSize: number) {
+    super(delegate);
   }
 
   move(): boolean {
     reset(this);
 
-    const buffer = [];
+    const buffer: T[] = [];
 
     const { delegate, maxBufferSize } = this;
 

@@ -2,15 +2,17 @@ import { ConcatAll } from "../container";
 import { addTo, bindTo, dispose } from "../disposable";
 import { pipe } from "../functions";
 import { RunnableLike, RunnableOperator } from "../runnable";
-import { RunnableSink, createDelegatingRunnableSink } from "../runnableSink";
+import {
+  AbstractDelegatingRunnableSink,
+  createDelegatingRunnableSink,
+} from "../runnableSink";
 import { sourceFrom } from "../source";
 import { lift } from "./lift";
 
-class FlattenSink<T> extends RunnableSink<RunnableLike<T>> {
-  constructor(readonly delegate: RunnableSink<T>) {
-    super();
-  }
-
+class FlattenSink<T> extends AbstractDelegatingRunnableSink<
+  RunnableLike<T>,
+  T
+> {
   notify(next: RunnableLike<T>) {
     const { delegate } = this;
     pipe(

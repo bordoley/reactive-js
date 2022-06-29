@@ -15,15 +15,18 @@ if (__DEV__) {
         }
     };
 }
-class DelegatingRunnableSink extends RunnableSink {
+class AbstractDelegatingRunnableSink extends RunnableSink {
     constructor(delegate) {
         super();
         this.delegate = delegate;
     }
+    notify(_) { }
+}
+class DelegatingRunnableSink extends AbstractDelegatingRunnableSink {
     notify(next) {
         this.delegate.notify(next);
     }
 }
 const createDelegatingRunnableSink = (delegate) => new DelegatingRunnableSink(delegate);
 
-export { RunnableSink, createDelegatingRunnableSink };
+export { AbstractDelegatingRunnableSink, RunnableSink, createDelegatingRunnableSink };

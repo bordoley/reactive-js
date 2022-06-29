@@ -9,7 +9,7 @@ import {
 } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import {
-  AbstractEnumerator,
+  AbstractDelegatingEnumerator,
   Enumerator,
   current,
   hasCurrent,
@@ -20,12 +20,15 @@ import { pipe } from "../functions";
 import { enumerate } from "./enumerable";
 import { lift } from "./lift";
 
-class ConcatAllEnumerator<T> extends AbstractEnumerator<T> {
+class ConcatAllEnumerator<T> extends AbstractDelegatingEnumerator<
+  EnumerableLike<T>,
+  T
+> {
   constructor(
-    private readonly delegate: Enumerator<EnumerableLike<T>>,
+    delegate: Enumerator<EnumerableLike<T>>,
     readonly enumerator: SerialDisposableLike,
   ) {
-    super();
+    super(delegate);
   }
 
   move(): boolean {

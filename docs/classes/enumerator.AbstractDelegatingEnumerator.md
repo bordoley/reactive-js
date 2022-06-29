@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [enumerator](../modules/enumerator.md) / AbstractDelegatingEnumerator
 
-# Class: AbstractDelegatingEnumerator<T\>
+# Class: AbstractDelegatingEnumerator<TIn, TOut\>
 
 [enumerator](../modules/enumerator.md).AbstractDelegatingEnumerator
 
@@ -8,11 +8,12 @@
 
 | Name |
 | :------ |
-| `T` |
+| `TIn` |
+| `TOut` |
 
 ## Hierarchy
 
-- [`Enumerator`](enumerator.Enumerator.md)<`T`\>
+- [`AbstractEnumerator`](enumerator.AbstractEnumerator.md)<`TOut`\>
 
   ↳ **`AbstractDelegatingEnumerator`**
 
@@ -36,34 +37,36 @@
 ### Methods
 
 - [move](enumerator.AbstractDelegatingEnumerator.md#move)
+- [reset](enumerator.AbstractDelegatingEnumerator.md#reset)
 
 ## Constructors
 
 ### constructor
 
-• **new AbstractDelegatingEnumerator**<`T`\>(`delegate`)
+• **new AbstractDelegatingEnumerator**<`TIn`, `TOut`\>(`delegate`)
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `T` |
+| `TIn` |
+| `TOut` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `delegate` | [`Enumerator`](enumerator.Enumerator.md)<`T`\> |
+| `delegate` | [`Enumerator`](enumerator.Enumerator.md)<`TIn`\> |
 
 #### Overrides
 
-[Enumerator](enumerator.Enumerator.md).[constructor](enumerator.Enumerator.md#constructor)
+[AbstractEnumerator](enumerator.AbstractEnumerator.md).[constructor](enumerator.AbstractEnumerator.md#constructor)
 
 ## Properties
 
 ### delegate
 
-• `Readonly` **delegate**: [`Enumerator`](enumerator.Enumerator.md)<`T`\>
+• `Readonly` **delegate**: [`Enumerator`](enumerator.Enumerator.md)<`TIn`\>
 
 ## Accessors
 
@@ -77,7 +80,7 @@
 
 #### Inherited from
 
-Enumerator.T
+AbstractEnumerator.T
 
 ___
 
@@ -89,9 +92,25 @@ ___
 
 `T`
 
-#### Overrides
+#### Inherited from
 
-Enumerator.current
+AbstractEnumerator.current
+
+• `set` **current**(`v`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `T` |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+AbstractEnumerator.current
 
 ___
 
@@ -103,9 +122,9 @@ ___
 
 `boolean`
 
-#### Overrides
+#### Inherited from
 
-Enumerator.hasCurrent
+AbstractEnumerator.hasCurrent
 
 ___
 
@@ -119,7 +138,7 @@ ___
 
 #### Inherited from
 
-Enumerator.type
+AbstractEnumerator.type
 
 ## Methods
 
@@ -131,6 +150,20 @@ Enumerator.type
 
 `boolean`
 
-#### Overrides
+#### Inherited from
 
-[Enumerator](enumerator.Enumerator.md).[move](enumerator.Enumerator.md#move)
+[AbstractEnumerator](enumerator.AbstractEnumerator.md).[move](enumerator.AbstractEnumerator.md#move)
+
+___
+
+### reset
+
+▸ **reset**(): `void`
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[AbstractEnumerator](enumerator.AbstractEnumerator.md).[reset](enumerator.AbstractEnumerator.md#reset)
