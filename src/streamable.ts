@@ -1,5 +1,7 @@
 import { concatWith, fromValue, ignoreElements, startWith } from "./container";
-import { dispatchTo } from "./dispatcher";
+
+import { dispatch, dispatchTo } from "./dispatcher";
+
 import { add, addTo, bindTo } from "./disposable";
 import {
   Equality,
@@ -11,13 +13,12 @@ import {
   identity as identityF,
   length,
   newInstance,
+  newInstanceWith,
   pipe,
   returns,
   updateReducer,
 } from "./functions";
 import {
-  AbstractDisposableObservable,
-  MulticastObservableLike,
   ObservableLike,
   ObservableOperator,
   Subject,
@@ -34,11 +35,9 @@ import {
   keepT,
   merge,
   mergeT,
-  observerCount,
   onNotify,
   onSubscribe,
   reduce,
-  replay,
   scan,
   subscribe,
   subscribeOn,
@@ -52,7 +51,7 @@ import {
   sinkInto as sinkIntoSink,
   sourceFrom as sourceFromSource,
 } from "./source";
-import { StreamLike, createStream } from "./stream";
+import { AbstractDelegatingStream, StreamLike, createStream } from "./stream";
 
 export interface StreamableLike<
   TReq,
@@ -374,80 +373,87 @@ export const __state = <T>(
 };
 
 export const sinkInto =
-  <TReq, T, TOut>(dest: StreamableLike<T, TReq, StreamLike<T, TReq>>) =>
-  (src: StreamableLike<TReq, T, StreamLike<TReq, T>>): ObservableLike<TOut> =>
-    createObservable(observer => {
-      const srcStream = pipe(src, stream(getScheduler(observer)));
-      const destStream = pipe(dest, stream(getScheduler(observer)));
+  <TReq, T, TSinkStream extends StreamLike<T, TReq>>(dest: TSinkStream) =>
+  (src: StreamableLike<TReq, T>): StreamableLike<TReq, T> => {
+    const { scheduler } = dest;
+    const srcStream = pipe(src, stream(scheduler), addTo(dest));
 
-      pipe(
-        merge(
-          pipe(
-            srcStream,
-            onNotify(dispatchTo(destStream)),
-            ignoreElements(keepT),
-            onSubscribe(() => destStream),
-          ),
-          pipe(
-            destStream,
-            onNotify(dispatchTo(srcStream)),
-            ignoreElements(keepT),
-            onSubscribe(() => srcStream),
-          ),
+    pipe(
+      merge(
+        pipe(
+          srcStream,
+          onNotify<T>(dispatchTo(dest)),
+          ignoreElements(keepT),
+          onSubscribe(() => dest),
         ),
-        ignoreElements(keepT),
-        sinkIntoSink(observer),
-      );
-    });
+        pipe(dest, onNotify(dispatchTo(srcStream)), ignoreElements(keepT)),
+      ),
+      ignoreElements(keepT),
+      subscribe(scheduler),
+      addTo(dest),
+    );
 
-class FlowableSinkAccumulatorImpl<T, TAcc>
-  extends AbstractDisposableObservable<TAcc>
-  implements FlowableSinkLike<T>, MulticastObservableLike<TAcc>
+    return src;
+  };
+
+export const sourceFrom =
+  <TReq, T, TSinkStream extends StreamLike<T, TReq>>(
+    streamable: StreamableLike<TReq, T>,
+  ): Function1<TSinkStream, TSinkStream> =>
+  dest => {
+    pipe(streamable, sinkInto(dest));
+    return dest;
+  };
+
+class AccumulatorStream<TReq, T, TAcc>
+  extends AbstractDelegatingStream<TReq, T, TReq, T>
+  implements StreamLike<TReq, T>
 {
   constructor(
-    private readonly subject: Subject<TAcc>,
-    private readonly streamable: FlowableSinkLike<T>,
+    delegate: StreamLike<TReq, T>,
+    readonly result: ObservableLike<TAcc>,
   ) {
-    super();
+    super(delegate);
   }
 
-  get observerCount(): number {
-    return observerCount(this.subject);
+  dispatch(req: TReq): void {
+    pipe(this.delegate, dispatch(req));
   }
 
-  get replay(): number {
-    return replay(this.subject);
-  }
-
-  sink(observer: Observer<TAcc>): void {
-    pipe(this.subject, sinkIntoSink(observer));
-  }
-
-  stream(
-    scheduler: SchedulerLike,
-    options?: { readonly replay: number },
-  ): StreamLike<T, FlowMode> {
-    return pipe(this.streamable, stream(scheduler, options), addTo(this));
+  sink(observer: Observer<T>): void {
+    pipe(this.delegate, sinkIntoSink(observer));
   }
 }
 
-/** @experimental */
 export const createFlowableSinkAccumulator = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
   options: { readonly replay?: number } = {},
-): FlowableSinkLike<T> & MulticastObservableLike<TAcc> => {
+): FlowableSinkLike<
+  T,
+  FlowableSinkStreamLike<T> & {
+    readonly result: ObservableLike<TAcc>;
+  }
+> => {
   const { replay = 0 } = options;
-  const subject = newInstance(Subject, replay);
 
-  return pipe(
-    createLiftedStreamable(
+  return createStreamble((scheduler, options) => {
+    const accumulator = newInstance(Subject, replay);
+
+    const op = compose(
       reduce(reducer, initialValue),
-      onNotify(dispatchTo(subject)),
+      onNotify(dispatchTo(accumulator)),
       ignoreElements(keepT),
       startWith({ ...concatT, ...fromArrayT }, "pause", "resume"),
-    ),
-    streamable => newInstance(FlowableSinkAccumulatorImpl, subject, streamable),
-    add(subject),
-  );
+    );
+
+    const delegate = createStream(op, scheduler, options);
+
+    return pipe(
+      AccumulatorStream,
+      newInstanceWith(delegate, accumulator),
+      add(accumulator),
+      add(delegate),
+    );
+  });
 };
