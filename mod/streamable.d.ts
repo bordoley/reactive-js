@@ -1,5 +1,5 @@
 import { Updater, Function1, Reducer, Factory, Equality } from "./functions.mjs";
-import { ObservableOperator, ObservableLike, MulticastObservableLike } from "./observable.mjs";
+import { ObservableOperator, ObservableLike } from "./observable.mjs";
 import { Option } from "./option.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
 import { StreamLike } from "./stream.mjs";
@@ -79,8 +79,9 @@ declare const __state: <T>(initialState: () => T, options?: {
 }) => StateStreamLike<T>;
 declare const sinkInto: <TReq, T, TSinkStream extends StreamLike<T, TReq>>(dest: TSinkStream) => (src: StreamableLike<TReq, T, StreamLike<TReq, T>>) => StreamableLike<TReq, T, StreamLike<TReq, T>>;
 declare const sourceFrom: <TReq, T, TSinkStream extends StreamLike<T, TReq>>(streamable: StreamableLike<TReq, T, StreamLike<TReq, T>>) => Function1<TSinkStream, TSinkStream>;
-/** @experimental */
-declare const createFlowableSinkAccumulator: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>, options?: {
+declare const createEagerFlowableSink: <T>(options?: {
     readonly replay?: number;
-}) => FlowableSinkLike<T, FlowableSinkStreamLike<T>> & MulticastObservableLike<TAcc>;
-export { FlowMode, FlowableLike, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, StateStreamLike, StreamableLike, StreamableStateLike, __state, __stream, createActionReducer, createFlowableSinkAccumulator, createLiftedStreamable, createStateStore, createStreamble, empty, flow, identity, sinkInto, sourceFrom, stream };
+}) => FlowableSinkLike<T, FlowableSinkStreamLike<T> & {
+    readonly data: ObservableLike<T>;
+}>;
+export { FlowMode, FlowableLike, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, StateStreamLike, StreamableLike, StreamableStateLike, __state, __stream, createActionReducer, createEagerFlowableSink, createLiftedStreamable, createStateStore, createStreamble, empty, flow, identity, sinkInto, sourceFrom, stream };
