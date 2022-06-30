@@ -1,13 +1,4 @@
 import {
-  consume,
-  consumeAsync,
-  consumeContinue,
-  consumeDone,
-  fromArray as fromArrayStream,
-  fromIterable,
-  generate as generateStream,
-} from "../asyncEnumerable";
-import {
   empty as emptyContainer,
   encodeUtf8,
   fromValue,
@@ -16,7 +7,7 @@ import {
   startWith,
 } from "../container";
 import { dispatchTo } from "../dispatcher";
-import { Error, dispose, isDisposed, onDisposed } from "../disposable";
+import { dispose, isDisposed } from "../disposable";
 import { forEach } from "../enumerator";
 import {
   ignore,
@@ -50,8 +41,8 @@ import {
   toRunnable,
   usingT,
 } from "../observable";
-import { Option, none } from "../option";
-import { last, toArray } from "../runnable";
+import { none } from "../option";
+import { toArray } from "../runnable";
 import { createVirtualTimeScheduler, now, schedule } from "../scheduler";
 import { StreamLike } from "../stream";
 import {
@@ -70,7 +61,6 @@ import {
   expectArrayEquals,
   expectEquals,
   expectFalse,
-  expectNone,
   expectToHaveBeenCalledTimes,
   expectTrue,
   mockFn,
@@ -476,144 +466,5 @@ export const tests = describe(
       pipe(f.calls[0][0], expectEquals(2));
       pipe(src, isDisposed, expectTrue);
     }),
-  ),
-
-  test("fromArray", () => {
-    const scheduler = createVirtualTimeScheduler();
-    const enumerable = pipe([1, 2, 3, 4, 5, 6], fromArrayStream<number>());
-    const enumerator = pipe(enumerable, stream(scheduler));
-
-    const result: number[] = [];
-    pipe(
-      enumerator,
-      onNotify((x: number) => result.push(x)),
-      subscribe(scheduler),
-    );
-
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-
-    pipe(scheduler, forEach(ignore));
-
-    pipe(result, expectArrayEquals([1, 2, 3]));
-  }),
-
-  test("fromIterable", () => {
-    const scheduler = createVirtualTimeScheduler();
-
-    const result: number[] = [];
-    let error: Option<Error> = none;
-
-    const enumerator = pipe(
-      fromIterable<number>()([1, 2, 3, 4, 5, 6]),
-      stream(scheduler),
-    );
-
-    pipe(
-      enumerator,
-      onNotify(x => result.push(x)),
-      subscribe(scheduler),
-      onDisposed(e => {
-        error = e;
-      }),
-    );
-
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-
-    pipe(scheduler, forEach(ignore));
-
-    pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
-    pipe(error, expectNone);
-  }),
-
-  test("generate", () => {
-    const scheduler = createVirtualTimeScheduler();
-    const enumerator = pipe(
-      generateStream(increment, returns<number>(0)),
-      stream(scheduler),
-    );
-
-    const result: number[] = [];
-    pipe(
-      enumerator,
-      onNotify(x => result.push(x)),
-      subscribe(scheduler),
-    );
-
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-
-    pipe(scheduler, forEach(ignore));
-
-    pipe(result, expectArrayEquals([1, 2, 3]));
-  }),
-  describe(
-    "async-enumerable",
-    test("consume", () => {
-      const enumerable = fromIterable<number>()([1, 2, 3, 4, 5, 6]);
-
-      pipe(
-        enumerable,
-        consume((acc, next) => consumeContinue(acc + next), returns<number>(0)),
-        toRunnable(),
-        last(),
-        expectEquals(21),
-      );
-
-      pipe(
-        enumerable,
-        consume(
-          (acc, next) =>
-            acc > 0 ? consumeDone(acc + next) : consumeContinue(acc + next),
-          returns<number>(0),
-        ),
-        toRunnable(),
-        last(),
-        expectEquals(3),
-      );
-    }),
-
-    describe(
-      "consumeAsync",
-      test(
-        "when the consumer early terminates",
-        pipeLazy(
-          [1, 2, 3, 4, 5, 6],
-          fromIterable(),
-          consumeAsync(
-            (acc, next) =>
-              fromValue(fromArrayT)(
-                acc > 0 ? consumeDone(acc + next) : consumeContinue(acc + next),
-              ),
-            returns<number>(0),
-          ),
-          toRunnable(),
-          last(),
-          expectEquals(3),
-        ),
-      ),
-      test(
-        "when the consumer never terminates",
-        pipeLazy(
-          [1, 2, 3, 4, 5, 6],
-          fromIterable(),
-          consumeAsync(
-            (acc, next) =>
-              pipe(acc + next, consumeContinue, fromValue(fromArrayT)),
-            returns<number>(0),
-          ),
-          toRunnable(),
-          last(),
-          expectEquals(21),
-        ),
-      ),
-    ),
   ),
 );

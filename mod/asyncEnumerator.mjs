@@ -1,37 +1,32 @@
 /// <reference types="./asyncEnumerator.d.ts" />
 import { dispatch } from './dispatcher.mjs';
-import { add, addTo } from './disposable.mjs';
-import { newInstance, pipe } from './functions.mjs';
-import { AbstractDisposableLiftable } from './liftable.mjs';
-import { Subject, publish, observerCount, replay } from './observable.mjs';
-import { sinkInto } from './source.mjs';
+import { pipe } from './functions.mjs';
+import { AbstractDisposableLiftable, delegate } from './liftable.mjs';
+import { observerCount, replay } from './observable.mjs';
 
 class AsyncEnumerator extends AbstractDisposableLiftable {
-    constructor(
-    //FIXME: Needs to tag ObservableOperator so only operators that are unary
-    // maybe provided as an argument.
-    op, scheduler, replay) {
+    constructor() {
+        super(...arguments);
+        this.isEnumerable = false;
+    }
+}
+class AbstractDelegatingAsyncEnumerator extends AsyncEnumerator {
+    constructor(delegate) {
         super();
-        this.op = op;
-        this.scheduler = scheduler;
-        const subject = newInstance(Subject);
-        const observable = pipe(subject, op, publish(scheduler, { replay }));
-        this.dispatcher = subject;
-        this.observable = observable;
-        return pipe(this, add(subject), addTo(this.observable));
+        this.delegate = delegate;
     }
     get observerCount() {
-        return observerCount(this.observable);
+        return observerCount(this.delegate);
     }
     get replay() {
-        return replay(this.observable);
+        return replay(this.delegate);
+    }
+    get scheduler() {
+        return this.delegate.scheduler;
     }
     dispatch(req) {
-        pipe(this.dispatcher, dispatch(req));
-    }
-    sink(observer) {
-        pipe(this.observable, sinkInto(observer));
+        pipe(delegate(this), dispatch(req));
     }
 }
 
-export { AsyncEnumerator };
+export { AbstractDelegatingAsyncEnumerator, AsyncEnumerator };
