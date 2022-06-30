@@ -1,9 +1,10 @@
 import { AsyncEnumerator } from "./asyncEnumerator.mjs";
-import { FromArray } from "./container.mjs";
+import { FromArray, Keep, Map, Scan } from "./container.mjs";
 import { EnumerableLike } from "./enumerable.mjs";
-import { Function1, Function2, Factory, Updater } from "./functions.mjs";
+import { Function1, Function2, Factory, Updater, Predicate, Reducer } from "./functions.mjs";
 import { LiftableLike } from "./liftable.mjs";
 import { ObservableOperator, ObservableLike } from "./observable.mjs";
+import { Observer } from "./observer.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
 import { StreamableLike } from "./streamable.mjs";
 declare type ConsumeContinue<T> = {
@@ -19,9 +20,21 @@ interface AsyncEnumerableLike<T> extends StreamableLike<void, T, AsyncEnumerator
     readonly type: AsyncEnumerableLike<this["T"]>;
     readonly liftableStateType: AsyncEnumerator<this["T"]>;
 }
+declare type AsyncEnumerableOperator<TA, TB> = Function1<AsyncEnumerableLike<TA>, AsyncEnumerableLike<TB>>;
 declare const createAsyncEnumerable: <T>(stream: (scheduler: SchedulerLike, options?: {
     readonly replay?: number;
 }) => AsyncEnumerator<T>) => AsyncEnumerableLike<T>;
+declare class LiftedAsyncEnumerator<T> extends AsyncEnumerator<T> {
+    readonly op: ObservableOperator<void, T>;
+    readonly scheduler: SchedulerLike;
+    private readonly dispatcher;
+    private readonly observable;
+    constructor(op: ObservableOperator<void, T>, scheduler: SchedulerLike, replay: number);
+    get observerCount(): number;
+    get replay(): number;
+    dispatch(req: void): void;
+    sink(observer: Observer<T>): void;
+}
 declare function createLiftedAsyncEnumerable<A>(op1: ObservableOperator<void, A>): AsyncEnumerableLike<A>;
 declare function createLiftedAsyncEnumerable<A, B>(op1: ObservableOperator<void, A>, op2: ObservableOperator<A, B>): AsyncEnumerableLike<B>;
 declare function createLiftedAsyncEnumerable<A, B, C>(op1: ObservableOperator<void, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>): AsyncEnumerableLike<C>;
@@ -71,4 +84,11 @@ declare const consumeAsync: <T, TAcc>(consumer: Function2<TAcc, T, ObservableLik
 declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
     readonly delay?: number;
 }) => AsyncEnumerableLike<T>;
-export { AsyncEnumerableLike, ConsumeContinue, ConsumeDone, consume, consumeAsync, consumeContinue, consumeDone, createAsyncEnumerable, createLiftedAsyncEnumerable, fromArray, fromArrayT, fromEnumerable, fromIterable, generate };
+declare const keep: <T>(predicate: Predicate<T>) => AsyncEnumerableOperator<T, T>;
+declare const keepT: Keep<AsyncEnumerableLike<unknown>>;
+declare const map: <TA, TB>(mapper: Function1<TA, TB>) => AsyncEnumerableOperator<TA, TB>;
+declare const mapT: Map<AsyncEnumerableLike<unknown>>;
+declare const scan: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => AsyncEnumerableOperator<T, TAcc>;
+declare const scanT: Scan<AsyncEnumerableLike<unknown>>;
+declare const toObservable: <T>() => Function1<AsyncEnumerableLike<T>, ObservableLike<T>>;
+export { AsyncEnumerableLike, AsyncEnumerableOperator, ConsumeContinue, ConsumeDone, LiftedAsyncEnumerator, consume, consumeAsync, consumeContinue, consumeDone, createAsyncEnumerable, createLiftedAsyncEnumerable, fromArray, fromArrayT, fromEnumerable, fromIterable, generate, keep, keepT, map, mapT, scan, scanT, toObservable };

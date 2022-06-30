@@ -4,18 +4,26 @@
 
 ## Table of contents
 
+### Classes
+
+- [LiftedAsyncEnumerator](../classes/asyncEnumerable.LiftedAsyncEnumerator.md)
+
 ### Interfaces
 
 - [AsyncEnumerableLike](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)
 
 ### Type Aliases
 
+- [AsyncEnumerableOperator](asyncEnumerable.md#asyncenumerableoperator)
 - [ConsumeContinue](asyncEnumerable.md#consumecontinue)
 - [ConsumeDone](asyncEnumerable.md#consumedone)
 
 ### Variables
 
 - [fromArrayT](asyncEnumerable.md#fromarrayt)
+- [keepT](asyncEnumerable.md#keept)
+- [mapT](asyncEnumerable.md#mapt)
+- [scanT](asyncEnumerable.md#scant)
 
 ### Functions
 
@@ -29,8 +37,25 @@
 - [fromEnumerable](asyncEnumerable.md#fromenumerable)
 - [fromIterable](asyncEnumerable.md#fromiterable)
 - [generate](asyncEnumerable.md#generate)
+- [keep](asyncEnumerable.md#keep)
+- [map](asyncEnumerable.md#map)
+- [scan](asyncEnumerable.md#scan)
+- [toObservable](asyncEnumerable.md#toobservable)
 
 ## Type Aliases
+
+### AsyncEnumerableOperator
+
+Ƭ **AsyncEnumerableOperator**<`TA`, `TB`\>: [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`TA`\>, [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`TB`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+___
 
 ### ConsumeContinue
 
@@ -73,6 +98,24 @@ ___
 ### fromArrayT
 
 • `Const` **fromArrayT**: [`FromArray`](../interfaces/container.FromArray.md)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>\>
+
+___
+
+### keepT
+
+• `Const` **keepT**: [`Keep`](../interfaces/container.Keep.md)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>\>
+
+___
+
+### mapT
+
+• `Const` **mapT**: [`Map`](../interfaces/container.Map.md)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>\>
+
+___
+
+### scanT
+
+• `Const` **scanT**: [`Scan`](../interfaces/container.Scan.md)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>\>
 
 ## Functions
 
@@ -627,3 +670,88 @@ that is applied to an accumulator value.
 #### Returns
 
 [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>
+
+___
+
+### keep
+
+▸ **keep**<`T`\>(`predicate`): [`AsyncEnumerableOperator`](asyncEnumerable.md#asyncenumerableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`AsyncEnumerableOperator`](asyncEnumerable.md#asyncenumerableoperator)<`T`, `T`\>
+
+___
+
+### map
+
+▸ **map**<`TA`, `TB`\>(`mapper`): [`AsyncEnumerableOperator`](asyncEnumerable.md#asyncenumerableoperator)<`TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
+
+#### Returns
+
+[`AsyncEnumerableOperator`](asyncEnumerable.md#asyncenumerableoperator)<`TA`, `TB`\>
+
+___
+
+### scan
+
+▸ **scan**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`AsyncEnumerableOperator`](asyncEnumerable.md#asyncenumerableoperator)<`T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`AsyncEnumerableOperator`](asyncEnumerable.md#asyncenumerableoperator)<`T`, `TAcc`\>
+
+___
+
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
