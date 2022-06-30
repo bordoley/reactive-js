@@ -1,11 +1,11 @@
 import { DispatcherLike, dispatch } from "./dispatcher";
 import { add, addTo } from "./disposable";
-import { pipe } from "./functions";
+import { newInstance, pipe } from "./functions";
 import { AbstractDisposableLiftable, LiftableStateLike } from "./liftable";
 import {
   MulticastObservableLike,
   ObservableOperator,
-  createSubject,
+  Subject,
   observerCount,
   publish,
   replay,
@@ -31,7 +31,7 @@ export class AsyncEnumerator<T>
   ) {
     super();
 
-    const subject = createSubject<void>();
+    const subject = newInstance(Subject);
     const observable = pipe(subject, op, publish<T>(scheduler, { replay }));
 
     this.dispatcher = subject;

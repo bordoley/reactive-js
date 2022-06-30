@@ -7,7 +7,7 @@ import { enumerate, fromIterable as fromIterable$1 } from './enumerable.mjs';
 import { move, hasCurrent, current } from './enumerator.mjs';
 import { newInstance, length, compose, increment, returns, pipe, flip } from './functions.mjs';
 import { AbstractLiftable } from './liftable.mjs';
-import { fromArrayT as fromArrayT$1, scan, mapT, concatAllT, takeFirst, withLatestFrom, using, concatT, never, onNotify, takeWhile, map, createObservable, createSubject, onSubscribe, zipWithLatestFrom, switchAll, scanAsync } from './observable.mjs';
+import { fromArrayT as fromArrayT$1, scan, mapT, concatAllT, takeFirst, withLatestFrom, using, concatT, never, onNotify, takeWhile, map, createObservable, Subject, onSubscribe, zipWithLatestFrom, switchAll, scanAsync } from './observable.mjs';
 import { scheduler } from './observer.mjs';
 import { none } from './option.mjs';
 import { getDelay } from './scheduler.mjs';
@@ -70,7 +70,7 @@ const consumeDone = (data) => ({
 });
 const consumeImpl = (consumer, initial) => enumerable => createObservable(observer => {
     const enumerator = pipe(enumerable, stream(scheduler(observer)), addTo(observer));
-    const accFeedback = pipe(createSubject(), addTo(observer));
+    const accFeedback = pipe(newInstance(Subject), addTo(observer));
     pipe(enumerator, consumer(accFeedback), onNotify(ev => {
         switch (ev.type) {
             case "continue":

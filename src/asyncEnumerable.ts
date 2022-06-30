@@ -31,10 +31,10 @@ import { AbstractLiftable, LiftableLike } from "./liftable";
 import {
   ObservableLike,
   ObservableOperator,
+  Subject,
   concatAllT,
   concatT,
   createObservable,
-  createSubject,
   fromArrayT as fromArrayTObs,
   map,
   mapT,
@@ -313,7 +313,7 @@ const consumeImpl =
         stream(scheduler(observer)),
         addTo(observer),
       );
-      const accFeedback = pipe(createSubject<TAcc>(), addTo(observer));
+      const accFeedback = pipe(newInstance(Subject), addTo(observer));
 
       pipe(
         enumerator,

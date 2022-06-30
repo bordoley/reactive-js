@@ -16,9 +16,11 @@
 
   ↳ **`DispatcherLike`**
 
-  ↳↳ [`SubjectLike`](observable.SubjectLike.md)
-
   ↳↳ [`StreamLike`](streamable.StreamLike.md)
+
+## Implemented by
+
+- [`Subject`](../classes/observable.Subject.md)
 
 ## Table of contents
 

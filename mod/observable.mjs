@@ -1,9 +1,9 @@
 /// <reference types="./observable.d.ts" />
 import { createFromArray, empty, fromValue, throws, concatMap } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
-import { dispose, isDisposed, onDisposed, add, addTo, disposed, onComplete, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
+import { dispose, addTo, isDisposed, onDisposed, add, disposed, onComplete, createSerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
 import { move, current, AbstractEnumerator, reset, hasCurrent, zip as zip$1, forEach } from './enumerator.mjs';
-import { pipe, newInstance, length, newInstanceWith, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, max, returns } from './functions.mjs';
+import { pipe, newInstance, length, newInstanceWith, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, max, returns, instanceFactory } from './functions.mjs';
 import { AbstractSource, AbstractDisposableSource, sourceFrom, createMapOperator, createOnNotifyOperator, assertState, notifySink, createUsing, notify, createNever, sinkInto, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './source.mjs';
 import { scheduler, AbstractDelegatingObserver, Observer, createDelegatingObserver } from './observer.mjs';
 import { schedule, hasDelay, __yield, inContinuation, runContinuation, getDelay, createVirtualTimeScheduler } from './scheduler.mjs';
@@ -41,53 +41,6 @@ class CreateObservable extends AbstractObservable {
 const createObservable = (f) => newInstance(CreateObservable, f);
 const createT = {
     create: createObservable,
-};
-
-class SubjectImpl extends AbstractDisposableObservable {
-    constructor(replay) {
-        super();
-        this.replay = replay;
-        this.dispatchers = newInstance(Set);
-        this.replayed = [];
-    }
-    get observerCount() {
-        return this.dispatchers.size;
-    }
-    dispatch(next) {
-        if (!isDisposed(this)) {
-            const { replay, replayed } = this;
-            if (replay > 0) {
-                replayed.push(next);
-                if (length(replayed) > replay) {
-                    replayed.shift();
-                }
-            }
-            for (const observer of this.dispatchers) {
-                pipe(observer, dispatch(next));
-            }
-        }
-    }
-    sink(observer) {
-        // The idea here is that an onSubscribe function may
-        // call next from unscheduled sources such as event handlers.
-        // So we marshall those events back to the scheduler.
-        const { dispatcher } = observer;
-        if (!isDisposed(this)) {
-            const { dispatchers } = this;
-            dispatchers.add(dispatcher);
-            pipe(observer, onDisposed(_ => {
-                dispatchers.delete(dispatcher);
-            }));
-        }
-        for (const next of this.replayed) {
-            pipe(dispatcher, dispatch(next));
-        }
-        pipe(this, add(dispatcher, true));
-    }
-}
-const createSubject = (options = {}) => {
-    const { replay = 0 } = options;
-    return newInstance(SubjectImpl, replay);
 };
 
 const defer = (factory, options) => createObservable(observer => {
@@ -183,6 +136,49 @@ const onNotify = /*@__PURE__*/ createOnNotifyOperator(liftSynchronousT, class On
         this.onNotify = onNotify;
     }
 });
+
+class Subject extends AbstractDisposableObservable {
+    constructor(replay = 1) {
+        super();
+        this.replay = replay;
+        this.dispatchers = newInstance(Set);
+        this.replayed = [];
+    }
+    get observerCount() {
+        return this.dispatchers.size;
+    }
+    dispatch(next) {
+        if (!isDisposed(this)) {
+            const { replay, replayed } = this;
+            if (replay > 0) {
+                replayed.push(next);
+                if (length(replayed) > replay) {
+                    replayed.shift();
+                }
+            }
+            for (const observer of this.dispatchers) {
+                pipe(observer, dispatch(next));
+            }
+        }
+    }
+    sink(observer) {
+        // The idea here is that an onSubscribe function may
+        // call next from unscheduled sources such as event handlers.
+        // So we marshall those events back to the scheduler.
+        const { dispatcher } = observer;
+        if (!isDisposed(this)) {
+            const { dispatchers } = this;
+            dispatchers.add(dispatcher);
+            pipe(observer, onDisposed(_ => {
+                dispatchers.delete(dispatcher);
+            }));
+        }
+        for (const next of this.replayed) {
+            pipe(dispatcher, dispatch(next));
+        }
+        pipe(this, add(dispatcher, true));
+    }
+}
 
 /**
  * Safely subscribes to an `ObservableLike` with a `ObserverLike` instance
@@ -1255,8 +1251,9 @@ const pairwiseT = {
  * @param replay The number of events that should be replayed when the `MulticastObservableLike`
  * is subscribed to.
  */
-const publish = (scheduler, options) => observable => {
-    const subject = createSubject(options);
+const publish = (scheduler, options = {}) => observable => {
+    const { replay = 0 } = options;
+    const subject = newInstance(Subject, replay);
     pipe(observable, onNotify(dispatchTo(subject)), subscribe(scheduler), bindTo(subject));
     return subject;
 };
@@ -1288,7 +1285,7 @@ const scanT = {
  * @param scanner The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.
  */
-const scanAsync = (scanner, initialValue) => observable => using(() => createSubject(), accFeedbackStream => pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), switchAll(), onNotify(dispatchTo(accFeedbackStream)), onSubscribe(pipeLazy(accFeedbackStream, dispatch(initialValue())))));
+const scanAsync = (scanner, initialValue) => observable => using(instanceFactory(Subject), accFeedbackStream => pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), switchAll(), onNotify(dispatchTo(accFeedbackStream)), onSubscribe(pipeLazy(accFeedbackStream, dispatch(initialValue())))));
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
  * source. When the refcount goes to 0, the underlying subscription
@@ -1405,4 +1402,4 @@ const toRunnableT = {
     toRunnable,
 };
 
-export { AbstractDisposableObservable, AbstractObservable, __currentScheduler, __do, __memo, __observe, __using, buffer, bufferT, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createSubject, createT, decodeWithCharset, decodeWithCharsetT, defer, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, generateT, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, observerCount, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, replay, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AbstractDisposableObservable, AbstractObservable, Subject, __currentScheduler, __do, __memo, __observe, __using, buffer, bufferT, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createT, decodeWithCharset, decodeWithCharsetT, defer, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, generateT, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, observerCount, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, replay, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

@@ -2,8 +2,8 @@
 import { concatWith, fromValue, ignoreElements, startWith } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
-import { pipe, newInstance, length, compose, returns, updateReducer, identity as identity$1 } from './functions.mjs';
-import { AbstractDisposableObservable, createSubject, publish, observerCount, replay, createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, onNotify, subscribe, takeFirst, subscribeOn, fromDisposable, takeUntil, merge, keepT, onSubscribe, __currentScheduler, __using, __memo, reduce, concatT } from './observable.mjs';
+import { newInstance, pipe, length, compose, returns, updateReducer, identity as identity$1 } from './functions.mjs';
+import { AbstractDisposableObservable, Subject, publish, observerCount, replay, createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, onNotify, subscribe, takeFirst, subscribeOn, fromDisposable, takeUntil, merge, keepT, onSubscribe, __currentScheduler, __using, __memo, reduce, concatT } from './observable.mjs';
 import { scheduler } from './observer.mjs';
 import { isSome, none } from './option.mjs';
 import { createPausableScheduler } from './scheduler.mjs';
@@ -14,7 +14,7 @@ class StreamImpl extends AbstractDisposableObservable {
     constructor(op, scheduler, options) {
         super();
         this.scheduler = scheduler;
-        const subject = createSubject();
+        const subject = newInstance(Subject);
         const observable = pipe(subject, op, publish(scheduler, options));
         this.dispatcher = subject;
         this.observable = observable;
@@ -132,8 +132,9 @@ class FlowableSinkAccumulatorImpl extends AbstractDisposableObservable {
     }
 }
 /** @experimental */
-const createFlowableSinkAccumulator = (reducer, initialValue, options) => {
-    const subject = createSubject(options);
+const createFlowableSinkAccumulator = (reducer, initialValue, options = {}) => {
+    const { replay = 0 } = options;
+    const subject = newInstance(Subject, replay);
     return pipe(createLiftedStreamable(reduce(reducer, initialValue), onNotify(dispatchTo(subject)), ignoreElements(keepT), startWith({ ...concatT, ...fromArrayT }, "pause", "resume")), streamable => newInstance(FlowableSinkAccumulatorImpl, subject, streamable), add(subject));
 };
 
