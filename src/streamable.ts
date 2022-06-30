@@ -374,31 +374,38 @@ export const __state = <T>(
 };
 
 export const sinkInto =
-  <TReq, T, TOut>(dest: StreamableLike<T, TReq, StreamLike<T, TReq>>) =>
-  (src: StreamableLike<TReq, T, StreamLike<TReq, T>>): ObservableLike<TOut> =>
-    createObservable(observer => {
-      const srcStream = pipe(src, stream(getScheduler(observer)));
-      const destStream = pipe(dest, stream(getScheduler(observer)));
+  <TReq, T, TSinkStream extends StreamLike<T, TReq>>(dest: TSinkStream) =>
+  (src: StreamableLike<TReq, T>): StreamableLike<TReq, T> => {
+    const { scheduler } = dest;
+    const srcStream = pipe(src, stream(scheduler));
 
-      pipe(
-        merge(
-          pipe(
-            srcStream,
-            onNotify(dispatchTo(destStream)),
-            ignoreElements(keepT),
-            onSubscribe(() => destStream),
-          ),
-          pipe(
-            destStream,
-            onNotify(dispatchTo(srcStream)),
-            ignoreElements(keepT),
-            onSubscribe(() => srcStream),
-          ),
+    pipe(
+      merge(
+        pipe(
+          srcStream,
+          onNotify<T>(dispatchTo(dest)),
+          ignoreElements(keepT),
+          onSubscribe(() => dest),
         ),
-        ignoreElements(keepT),
-        sinkIntoSink(observer),
-      );
-    });
+        pipe(dest, onNotify(dispatchTo(srcStream)), ignoreElements(keepT)),
+      ),
+      ignoreElements(keepT),
+      subscribe(scheduler),
+      addTo(dest),
+      add(srcStream),
+    );
+
+    return src;
+  };
+
+export const sourceFrom =
+  <TReq, T, TSinkStream extends StreamLike<T, TReq>>(
+    streamable: StreamableLike<TReq, T>,
+  ): Function1<TSinkStream, TSinkStream> =>
+  dest => {
+    pipe(streamable, sinkInto(dest));
+    return dest;
+  };
 
 class FlowableSinkAccumulatorImpl<T, TAcc>
   extends AbstractDisposableObservable<TAcc>

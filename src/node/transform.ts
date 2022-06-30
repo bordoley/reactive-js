@@ -33,7 +33,7 @@ import { sinkInto } from "../source";
 import {
   FlowableLike,
   createLiftedStreamable,
-  sinkInto as sinkIntoTransformSink,
+  sourceFrom,
   stream,
 } from "../streamable";
 import { createReadableIOSource } from "./createReadableIOSource";
@@ -49,24 +49,21 @@ export const transform =
       createObservable(observer => {
         const transform = factory();
 
-        const transformSink = createWritableIOSink(() =>
-          pipe(
-            createDisposableValue<Transform>(transform.value, ignore),
-            // only dispose the transform when the writable is disposed.
-            onError(e => pipe(transform, dispose(e))),
+        pipe(
+          createWritableIOSink(() =>
+            pipe(
+              createDisposableValue<Transform>(transform.value, ignore),
+              // only dispose the transform when the writable is disposed.
+              onError(e => pipe(transform, dispose(e))),
+            ),
           ),
+          stream(scheduler(observer)),
+          sourceFrom(src),
         );
 
         const transformReadableStream = pipe(
           createReadableIOSource(returns(transform)),
           stream(scheduler(observer)),
-          addTo(observer),
-        );
-
-        const sinkSubscription = pipe(
-          src,
-          sinkIntoTransformSink(transformSink),
-          subscribe(scheduler(observer)),
           addTo(observer),
         );
 
@@ -79,7 +76,6 @@ export const transform =
 
         pipe(
           transformReadableStream,
-          add(sinkSubscription),
           add(modeSubscription),
           sinkInto(observer),
         );

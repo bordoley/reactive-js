@@ -7,7 +7,7 @@ import { createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, takeF
 import { scheduler } from './observer.mjs';
 import { isSome, none } from './option.mjs';
 import { createPausableScheduler } from './scheduler.mjs';
-import { sinkInto as sinkInto$1, sourceFrom } from './source.mjs';
+import { sinkInto as sinkInto$1, sourceFrom as sourceFrom$1 } from './source.mjs';
 import { createStream } from './stream.mjs';
 
 const stream = (scheduler, options) => streamable => streamable.stream(scheduler, options);
@@ -52,7 +52,7 @@ const _empty = /*@__PURE__*/ createLiftedStreamable(takeFirst({ count: 0 }));
 const empty = () => _empty;
 const flow = () => observable => createLiftedStreamable((modeObs) => createObservable(observer => {
     const pausableScheduler = createPausableScheduler(scheduler(observer));
-    pipe(observer, sourceFrom(pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil))), add(pipe(modeObs, onNotify((mode) => {
+    pipe(observer, sourceFrom$1(pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil))), add(pipe(modeObs, onNotify((mode) => {
         switch (mode) {
             case "pause":
                 pausableScheduler.pause();
@@ -84,11 +84,16 @@ const __state = (initialState, options = {}) => {
     const streamable = __memo(createStateStore, initialState, optionsMemo);
     return __stream(streamable);
 };
-const sinkInto = (dest) => (src) => createObservable(observer => {
-    const srcStream = pipe(src, stream(scheduler(observer)));
-    const destStream = pipe(dest, stream(scheduler(observer)));
-    pipe(merge(pipe(srcStream, onNotify(dispatchTo(destStream)), ignoreElements(keepT), onSubscribe(() => destStream)), pipe(destStream, onNotify(dispatchTo(srcStream)), ignoreElements(keepT), onSubscribe(() => srcStream))), ignoreElements(keepT), sinkInto$1(observer));
-});
+const sinkInto = (dest) => (src) => {
+    const { scheduler } = dest;
+    const srcStream = pipe(src, stream(scheduler));
+    pipe(merge(pipe(srcStream, onNotify(dispatchTo(dest)), ignoreElements(keepT), onSubscribe(() => dest)), pipe(dest, onNotify(dispatchTo(srcStream)), ignoreElements(keepT))), ignoreElements(keepT), subscribe(scheduler), addTo(dest), add(srcStream));
+    return src;
+};
+const sourceFrom = (streamable) => dest => {
+    pipe(streamable, sinkInto(dest));
+    return dest;
+};
 class FlowableSinkAccumulatorImpl extends AbstractDisposableObservable {
     constructor(subject, streamable) {
         super();
@@ -115,4 +120,4 @@ const createFlowableSinkAccumulator = (reducer, initialValue, options = {}) => {
     return pipe(createLiftedStreamable(reduce(reducer, initialValue), onNotify(dispatchTo(subject)), ignoreElements(keepT), startWith({ ...concatT, ...fromArrayT }, "pause", "resume")), streamable => newInstance(FlowableSinkAccumulatorImpl, subject, streamable), add(subject));
 };
 
-export { __state, __stream, createActionReducer, createFlowableSinkAccumulator, createLiftedStreamable, createStateStore, createStreamble, empty, flow, identity, sinkInto, stream };
+export { __state, __stream, createActionReducer, createFlowableSinkAccumulator, createLiftedStreamable, createStateStore, createStreamble, empty, flow, identity, sinkInto, sourceFrom, stream };
