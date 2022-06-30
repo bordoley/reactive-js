@@ -23,12 +23,12 @@
 - [\_\_state](streamable.md#__state)
 - [\_\_stream](streamable.md#__stream)
 - [createActionReducer](streamable.md#createactionreducer)
-- [createEagerFlowableSink](streamable.md#createeagerflowablesink)
 - [createLiftedStreamable](streamable.md#createliftedstreamable)
 - [createStateStore](streamable.md#createstatestore)
 - [createStreamble](streamable.md#createstreamble)
 - [empty](streamable.md#empty)
 - [flow](streamable.md#flow)
+- [flowToObservable](streamable.md#flowtoobservable)
 - [identity](streamable.md#identity)
 - [sinkInto](streamable.md#sinkinto)
 - [sourceFrom](streamable.md#sourcefrom)
@@ -119,29 +119,6 @@ over the notified actions, emitting each intermediate result.
 #### Returns
 
 [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TAction`, `T`, [`StreamLike`](../interfaces/stream.StreamLike.md)<`TAction`, `T`\>\>
-
-___
-
-### createEagerFlowableSink
-
-▸ **createEagerFlowableSink**<`T`\>(`options?`): [`FlowableSinkLike`](../interfaces/streamable.FlowableSinkLike.md)<`T`, [`FlowableSinkStreamLike`](../interfaces/streamable.FlowableSinkStreamLike.md)<`T`\> & { `data`: [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>  }\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.replay?` | `number` |
-
-#### Returns
-
-[`FlowableSinkLike`](../interfaces/streamable.FlowableSinkLike.md)<`T`, [`FlowableSinkStreamLike`](../interfaces/streamable.FlowableSinkStreamLike.md)<`T`\> & { `data`: [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>  }\>
 
 ___
 
@@ -594,6 +571,30 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/streamable.FlowableStreamLike.md)<`T`\>\>\>
+
+___
+
+### flowToObservable
+
+▸ **flowToObservable**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/streamable.FlowableStreamLike.md)<`T`\>\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/streamable.FlowableStreamLike.md)<`T`\>\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
 ___
 
