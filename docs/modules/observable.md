@@ -8,12 +8,12 @@
 
 - [AbstractDisposableObservable](../classes/observable.AbstractDisposableObservable.md)
 - [AbstractObservable](../classes/observable.AbstractObservable.md)
+- [Subject](../classes/observable.Subject.md)
 
 ### Interfaces
 
 - [MulticastObservableLike](../interfaces/observable.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/observable.ObservableLike.md)
-- [SubjectLike](../interfaces/observable.SubjectLike.md)
 
 ### Type Aliases
 
@@ -72,7 +72,6 @@
 - [concat](observable.md#concat)
 - [concatAll](observable.md#concatall)
 - [createObservable](observable.md#createobservable)
-- [createSubject](observable.md#createsubject)
 - [decodeWithCharset](observable.md#decodewithcharset)
 - [defer](observable.md#defer)
 - [distinctUntilChanged](observable.md#distinctuntilchanged)
@@ -1276,29 +1275,6 @@ ___
 #### Returns
 
 [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
-
-___
-
-### createSubject
-
-▸ **createSubject**<`T`\>(`options?`): [`SubjectLike`](../interfaces/observable.SubjectLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.replay?` | `number` |
-
-#### Returns
-
-[`SubjectLike`](../interfaces/observable.SubjectLike.md)<`T`\>
 
 ___
 

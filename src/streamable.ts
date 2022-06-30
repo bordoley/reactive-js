@@ -20,14 +20,13 @@ import {
   MulticastObservableLike,
   ObservableLike,
   ObservableOperator,
-  SubjectLike,
+  Subject,
   __currentScheduler,
   __memo,
   __observe,
   __using,
   concatT,
   createObservable,
-  createSubject,
   distinctUntilChanged,
   fromArrayT,
   fromArrayT as fromArrayTObs,
@@ -107,7 +106,7 @@ class StreamImpl<TReq, T>
   ) {
     super();
 
-    const subject = createSubject<TReq>();
+    const subject = newInstance(Subject);
     const observable = pipe(subject, op, publish<T>(scheduler, options));
 
     this.dispatcher = subject;
@@ -460,7 +459,7 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
   implements FlowableSinkLike<T>, MulticastObservableLike<TAcc>
 {
   constructor(
-    private readonly subject: SubjectLike<TAcc>,
+    private readonly subject: Subject<TAcc>,
     private readonly streamable: FlowableSinkLike<T>,
   ) {
     super();
@@ -490,9 +489,10 @@ class FlowableSinkAccumulatorImpl<T, TAcc>
 export const createFlowableSinkAccumulator = <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-  options?: { readonly replay?: number },
+  options: { readonly replay?: number } = {},
 ): FlowableSinkLike<T> & MulticastObservableLike<TAcc> => {
-  const subject = createSubject(options);
+  const { replay = 0 } = options;
+  const subject = newInstance(Subject, replay);
 
   return pipe(
     createLiftedStreamable(

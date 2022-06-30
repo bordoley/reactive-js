@@ -34,14 +34,14 @@ import {
   compose,
   ignore,
   instanceFactory,
+  newInstance,
   pipe,
   pipeLazy,
   returns,
 } from "./functions";
 import {
   ObservableLike,
-  SubjectLike,
-  createSubject,
+  Subject,
   distinctUntilChanged,
   onNotify,
   subscribe,
@@ -104,14 +104,15 @@ export const useObservable = <T>(
   return state;
 };
 
-const createReplaySubject = () => createSubject({ replay: 1 });
+const createReplaySubject = <TProps>() =>
+  newInstance<number, Subject<TProps>>(Subject, 1);
 
 export const createComponent = <TProps>(
   fn: (props: ObservableLike<TProps>) => ObservableLike<ReactElement>,
   options: { readonly scheduler?: SchedulerLike | Factory<SchedulerLike> } = {},
 ): ComponentType<TProps> => {
   const ObservableComponent = (props: TProps) => {
-    const propsSubject = useMemo<SubjectLike<TProps>>(createReplaySubject, [
+    const propsSubject = useMemo<Subject<TProps>>(createReplaySubject, [
       createReplaySubject,
     ]);
 

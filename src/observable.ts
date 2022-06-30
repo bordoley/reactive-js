@@ -15,7 +15,7 @@ import {
   ThrowIfEmpty,
   concatMap,
 } from "./container";
-import { DispatcherLike, dispatch, dispatchTo } from "./dispatcher";
+import { dispatch, dispatchTo } from "./dispatcher";
 import {
   DisposableLike,
   addTo,
@@ -35,17 +35,19 @@ import {
   Reducer,
   Updater,
   ignore,
+  instanceFactory,
+  newInstance,
   pipe,
   pipeLazy,
 } from "./functions";
 import { createObservable, createT } from "./observable/createObservable";
-import { createSubject } from "./observable/createSubject";
 import { defer } from "./observable/defer";
 import { fromArrayT } from "./observable/fromArray";
 import { lift, liftSynchronousT } from "./observable/lift";
 import { mapT } from "./observable/map";
 import { tagEnumerable } from "./observable/observable";
 import { onNotify } from "./observable/onNotify";
+import { Subject } from "./observable/subject";
 import { subscribe } from "./observable/subscribe";
 import { switchAll, switchAllT } from "./observable/switchAll";
 import { using } from "./observable/using";
@@ -125,11 +127,6 @@ export interface MulticastObservableLike<T>
   readonly replay: number;
 }
 
-/** @noInheritDoc */
-export interface SubjectLike<T>
-  extends DispatcherLike<T>,
-    MulticastObservableLike<T> {}
-
 export type AsyncReducer<TAcc, T> = Function2<TAcc, T, ObservableLike<TAcc>>;
 export type ObservableEffectMode = "batched" | "combine-latest";
 
@@ -159,7 +156,7 @@ export {
 } from "./observable/latest";
 export { concat, concatT } from "./observable/concat";
 export { createObservable, createT } from "./observable/createObservable";
-export { createSubject } from "./observable/createSubject";
+export { Subject } from "./observable/subject";
 export { fromArray, fromArrayT } from "./observable/fromArray";
 export { fromEnumerable } from "./observable/fromEnumerable";
 export {
@@ -369,10 +366,11 @@ export const pairwiseT: Pairwise<ObservableLike<unknown>> = {
 export const publish =
   <T>(
     scheduler: SchedulerLike,
-    options?: { readonly replay?: number },
+    options: { readonly replay?: number } = {},
   ): Function1<ObservableLike<T>, MulticastObservableLike<T>> =>
   observable => {
-    const subject = createSubject<T>(options);
+    const { replay = 0 } = options;
+    const subject = newInstance<number, Subject<T>>(Subject, replay);
     pipe(
       observable,
       onNotify(dispatchTo(subject)),
@@ -439,19 +437,17 @@ export const scanAsync =
     initialValue: Factory<TAcc>,
   ): ObservableOperator<T, TAcc> =>
   observable =>
-    using(
-      () => createSubject<TAcc>(),
-      accFeedbackStream =>
-        pipe(
-          observable,
-          zipWithLatestFrom<T, TAcc, ObservableLike<TAcc>>(
-            accFeedbackStream,
-            (next, acc) => pipe(scanner(acc, next), takeFirst()),
-          ),
-          switchAll<TAcc>(),
-          onNotify(dispatchTo(accFeedbackStream)),
-          onSubscribe(pipeLazy(accFeedbackStream, dispatch(initialValue()))),
+    using(instanceFactory<Subject<TAcc>>(Subject), accFeedbackStream =>
+      pipe(
+        observable,
+        zipWithLatestFrom<T, TAcc, ObservableLike<TAcc>>(
+          accFeedbackStream,
+          (next, acc) => pipe(scanner(acc, next), takeFirst()),
         ),
+        switchAll<TAcc>(),
+        onNotify(dispatchTo(accFeedbackStream)),
+        onSubscribe(pipeLazy(accFeedbackStream, dispatch(initialValue()))),
+      ),
     );
 
 /**

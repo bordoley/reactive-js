@@ -1,9 +1,9 @@
 /// <reference types="./asyncEnumerator.d.ts" />
 import { dispatch } from './dispatcher.mjs';
 import { add, addTo } from './disposable.mjs';
-import { pipe } from './functions.mjs';
+import { newInstance, pipe } from './functions.mjs';
 import { AbstractDisposableLiftable } from './liftable.mjs';
-import { createSubject, publish, observerCount, replay } from './observable.mjs';
+import { Subject, publish, observerCount, replay } from './observable.mjs';
 import { sinkInto } from './source.mjs';
 
 class AsyncEnumerator extends AbstractDisposableLiftable {
@@ -14,7 +14,7 @@ class AsyncEnumerator extends AbstractDisposableLiftable {
         super();
         this.op = op;
         this.scheduler = scheduler;
-        const subject = createSubject();
+        const subject = newInstance(Subject);
         const observable = pipe(subject, op, publish(scheduler, { replay }));
         this.dispatcher = subject;
         this.observable = observable;

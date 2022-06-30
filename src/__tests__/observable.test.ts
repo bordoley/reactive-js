@@ -26,6 +26,7 @@ import {
 } from "../functions";
 import {
   ObservableLike,
+  Subject,
   __do,
   __memo,
   __observe,
@@ -36,7 +37,6 @@ import {
   concatAllT,
   concatT,
   createObservable,
-  createSubject,
   distinctUntilChanged,
   exhaustT,
   fromArray,
@@ -263,9 +263,9 @@ export const tests = describe(
   ),
 
   describe(
-    "createSubject",
+    "Subject",
     test("with replay", () => {
-      const subject = createSubject({ replay: 2 });
+      const subject = newInstance(Subject, 2);
       pipe([1, 2, 3, 4], fromArrayRunnable(), forEach(dispatchTo(subject)));
       pipe(subject, dispose());
 
@@ -274,7 +274,7 @@ export const tests = describe(
     test("with multiple observers", () => {
       const scheduler = createVirtualTimeScheduler();
 
-      const subject = createSubject();
+      const subject = newInstance(Subject);
       pipe(subject, observerCount, expectEquals(0));
       const sub1 = pipe(subject, subscribe(scheduler));
       pipe(subject, observerCount, expectEquals(1));

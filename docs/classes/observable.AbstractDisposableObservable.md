@@ -16,6 +16,8 @@
 
   ↳ **`AbstractDisposableObservable`**
 
+  ↳↳ [`Subject`](observable.Subject.md)
+
 ## Implements
 
 - [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
