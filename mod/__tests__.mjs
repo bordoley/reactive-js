@@ -443,7 +443,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
         Uint8Array.from([226]),
         Uint8Array.from([130]),
         Uint8Array.from([172]),
-    ], fromArray$2(), decodeWithCharset(), flow(), flowToObservable(scheduler, { replay: 1 }), reduce((acc, next) => acc + next, returns("")), onNotify(f), subscribe(scheduler));
+    ], fromArray$2(), decodeWithCharset(), flow(), flowToObservable(), reduce((acc, next) => acc + next, returns("")), onNotify(f), subscribe(scheduler));
     pipe(scheduler, forEach$1(ignore));
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(String.fromCodePoint(8364)));
@@ -463,7 +463,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
     const scheduler = createVirtualTimeScheduler();
     const f = mockFn();
-    const subscription = pipe(str, fromValue(fromArrayT$2), encodeUtf8({ ...mapT, ...usingT }), decodeWithCharset(), flow(), flowToObservable(scheduler, { replay: 1 }), reduce((acc, next) => acc + next, returns("")), onNotify(f), subscribe(scheduler));
+    const subscription = pipe(str, fromValue(fromArrayT$2), encodeUtf8({ ...mapT, ...usingT }), decodeWithCharset(), flow(), flowToObservable(), reduce((acc, next) => acc + next, returns("")), onNotify(f), subscribe(scheduler));
     pipe(scheduler, forEach$1(ignore));
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(str));
@@ -482,7 +482,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
 }), test("map", () => {
     const scheduler = createVirtualTimeScheduler();
     const f = mockFn();
-    const src = pipe(1, fromValue(fromArrayT$2), map$2(returns(2)), flow(), flowToObservable(scheduler, { replay: 1 }), reduce(sum, returns(0)), onNotify(f), subscribe(scheduler));
+    const src = pipe(1, fromValue(fromArrayT$2), map$2(returns(2)), flow(), flowToObservable(), reduce(sum, returns(0)), onNotify(f), subscribe(scheduler));
     pipe(scheduler, forEach$1(ignore));
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(2));

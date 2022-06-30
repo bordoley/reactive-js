@@ -79,7 +79,5 @@ declare const __state: <T>(initialState: () => T, options?: {
 }) => StateStreamLike<T>;
 declare const sinkInto: <TReq, T, TSinkStream extends StreamLike<T, TReq>>(dest: TSinkStream) => (src: StreamableLike<TReq, T, StreamLike<TReq, T>>) => StreamableLike<TReq, T, StreamLike<TReq, T>>;
 declare const sourceFrom: <TReq, T, TSinkStream extends StreamLike<T, TReq>>(streamable: StreamableLike<TReq, T, StreamLike<TReq, T>>) => Function1<TSinkStream, TSinkStream>;
-declare const flowToObservable: <T>(scheduler: SchedulerLike, options?: {
-    readonly replay?: number;
-}) => Function1<FlowableLike<T, FlowableStreamLike<T>>, ObservableLike<T>>;
+declare const flowToObservable: <T>() => Function1<FlowableLike<T, FlowableStreamLike<T>>, ObservableLike<T>>;
 export { FlowMode, FlowableLike, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, StateStreamLike, StreamableLike, StreamableStateLike, __state, __stream, createActionReducer, createLiftedStreamable, createStateStore, createStreamble, empty, flow, flowToObservable, identity, sinkInto, sourceFrom, stream };

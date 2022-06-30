@@ -403,9 +403,9 @@ export const sourceFrom =
 
 export const flowToObservable =
   <T>(): Function1<FlowableLike<T>, ObservableLike<T>> =>
-  src => createObservable(
-    observer => {
-      const {dispatcher, scheduler} = observer;
+  src =>
+    createObservable(observer => {
+      const { dispatcher, scheduler } = observer;
 
       const op = compose(
         onNotify<T>(dispatchTo(dispatcher)),
@@ -415,5 +415,4 @@ export const flowToObservable =
       );
 
       pipe(createStream(op, scheduler), sourceFrom(src), addTo(observer));
-    }
-  );
+    });

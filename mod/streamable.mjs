@@ -3,7 +3,7 @@ import { concatWith, fromValue, ignoreElements, startWith } from './container.mj
 import { dispatchTo } from './dispatcher.mjs';
 import { add, bindTo, addTo } from './disposable.mjs';
 import { newInstance, length, compose, pipe, returns, updateReducer, identity as identity$1 } from './functions.mjs';
-import { createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, takeFirst, subscribeOn, fromDisposable, takeUntil, onNotify, subscribe, __currentScheduler, __using, __memo, merge, keepT, onSubscribe, Subject, concatT } from './observable.mjs';
+import { createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, takeFirst, subscribeOn, fromDisposable, takeUntil, onNotify, subscribe, __currentScheduler, __using, __memo, merge, keepT, onSubscribe, concatT } from './observable.mjs';
 import { scheduler } from './observer.mjs';
 import { isSome, none } from './option.mjs';
 import { createPausableScheduler } from './scheduler.mjs';
@@ -94,12 +94,10 @@ const sourceFrom = (streamable) => dest => {
     pipe(streamable, sinkInto(dest));
     return dest;
 };
-const flowToObservable = (scheduler, options = {}) => src => {
-    const { replay = 0 } = options;
-    const accumulator = newInstance(Subject, replay);
-    const op = compose(onNotify(dispatchTo(accumulator)), ignoreElements(keepT), startWith({ ...concatT, ...fromArrayT }, "pause", "resume"), onSubscribe(() => accumulator));
-    const dest = pipe(createStream(op, scheduler), sourceFrom(src));
-    return pipe(accumulator, add(dest));
-};
+const flowToObservable = () => src => createObservable(observer => {
+    const { dispatcher, scheduler } = observer;
+    const op = compose(onNotify(dispatchTo(dispatcher)), ignoreElements(keepT), startWith({ ...concatT, ...fromArrayT }, "pause", "resume"), onSubscribe(() => dispatcher));
+    pipe(createStream(op, scheduler), sourceFrom(src), addTo(observer));
+});
 
 export { __state, __stream, createActionReducer, createLiftedStreamable, createStateStore, createStreamble, empty, flow, flowToObservable, identity, sinkInto, sourceFrom, stream };
