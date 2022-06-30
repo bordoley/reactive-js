@@ -31,6 +31,7 @@
 - [flow](streamable.md#flow)
 - [identity](streamable.md#identity)
 - [sinkInto](streamable.md#sinkinto)
+- [sourceFrom](streamable.md#sourcefrom)
 - [stream](streamable.md#stream)
 
 ## Type Aliases
@@ -619,27 +620,27 @@ ___
 
 ### sinkInto
 
-▸ **sinkInto**<`TReq`, `T`, `TOut`\>(`dest`): (`src`: [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/stream.StreamLike.md)<`TReq`, `T`\>\>) => [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TOut`\>
+▸ **sinkInto**<`TReq`, `T`, `TSinkStream`\>(`dest`): (`src`: [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/stream.StreamLike.md)<`TReq`, `T`\>\>) => [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/stream.StreamLike.md)<`TReq`, `T`\>\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TReq` |
-| `T` |
-| `TOut` |
+| Name | Type |
+| :------ | :------ |
+| `TReq` | `TReq` |
+| `T` | `T` |
+| `TSinkStream` | extends [`StreamLike`](../interfaces/stream.StreamLike.md)<`T`, `TReq`, `TSinkStream`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `dest` | [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`T`, `TReq`, [`StreamLike`](../interfaces/stream.StreamLike.md)<`T`, `TReq`\>\> |
+| `dest` | `TSinkStream` |
 
 #### Returns
 
 `fn`
 
-▸ (`src`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TOut`\>
+▸ (`src`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/stream.StreamLike.md)<`TReq`, `T`\>\>
 
 ##### Parameters
 
@@ -649,7 +650,31 @@ ___
 
 ##### Returns
 
-[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TOut`\>
+[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/stream.StreamLike.md)<`TReq`, `T`\>\>
+
+___
+
+### sourceFrom
+
+▸ **sourceFrom**<`TReq`, `T`, `TSinkStream`\>(`streamable`): [`Function1`](functions.md#function1)<`TSinkStream`, `TSinkStream`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TReq` | `TReq` |
+| `T` | `T` |
+| `TSinkStream` | extends [`StreamLike`](../interfaces/stream.StreamLike.md)<`T`, `TReq`, `TSinkStream`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `streamable` | [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/stream.StreamLike.md)<`TReq`, `T`\>\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`TSinkStream`, `TSinkStream`\>
 
 ___
 

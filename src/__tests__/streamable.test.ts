@@ -61,7 +61,7 @@ import {
   empty,
   flow,
   identity,
-  sinkInto,
+  sourceFrom,
   stream,
 } from "../streamable";
 import {
@@ -249,21 +249,24 @@ export const tests = describe(
     );
 
     let result = 0;
-    const dest = createLiftedStreamable(
-      scan((acc, _) => acc + 1, returns<number>(0)),
-      onNotify(v => {
-        result = v;
-      }),
-      mapTo(mapT, none),
-      startWith({ ...concatT, ...fromArrayT }, none),
+    const dest = pipe(
+      createLiftedStreamable(
+        scan((acc, _) => acc + 1, returns<number>(0)),
+        onNotify(v => {
+          result = v;
+        }),
+        mapTo(mapT, none),
+        startWith({ ...concatT, ...fromArrayT }, none),
+      ),
+      stream(scheduler),
+      sourceFrom(src),
     );
 
-    const subscription = pipe(src, sinkInto(dest), subscribe(scheduler));
-    pipe(subscription, isDisposed, expectFalse);
+    pipe(dest, isDisposed, expectFalse);
 
     pipe(scheduler, forEach(ignore));
 
-    pipe(subscription, isDisposed, expectTrue);
+    pipe(dest, isDisposed, expectTrue);
     pipe(result, expectEquals(3));
   }),
   describe(
@@ -357,6 +360,8 @@ export const tests = describe(
   describe(
     "io",
     test("decodeWithCharset", () => {
+      const scheduler = createVirtualTimeScheduler();
+
       const src = pipe(
         [
           Uint8Array.from([226]),
@@ -367,23 +372,21 @@ export const tests = describe(
         decodeWithCharset(),
         flow(),
       );
-      const dest = createFlowableSinkAccumulator(
+      const flowAcc = createFlowableSinkAccumulator(
         (acc: string, next: string) => acc + next,
         returns(""),
         { replay: 1 },
       );
-
-      const scheduler = createVirtualTimeScheduler();
-      const subscription = pipe(src, sinkInto(dest), subscribe(scheduler));
+      const dest = pipe(flowAcc, stream(scheduler), sourceFrom(src));
 
       const f = mockFn();
-      pipe(dest, onNotify(f), subscribe(scheduler));
+      pipe(flowAcc, onNotify(f), subscribe(scheduler));
 
       pipe(scheduler, forEach(ignore));
 
       pipe(f, expectToHaveBeenCalledTimes(1));
       pipe(f.calls[0][0], expectEquals(String.fromCodePoint(8364)));
-      pipe(subscription, isDisposed, expectTrue);
+      pipe(dest, isDisposed, expectTrue);
     }),
     test("empty", () => {
       const scheduler = createVirtualTimeScheduler();
@@ -407,6 +410,7 @@ export const tests = describe(
     }),
     test("encodeUtf8", () => {
       const str = "abcdefghijklmnsopqrstuvwxyz";
+      const scheduler = createVirtualTimeScheduler();
 
       const src = pipe(
         str,
@@ -415,22 +419,20 @@ export const tests = describe(
         decodeWithCharset(),
         flow(),
       );
-      const dest = createFlowableSinkAccumulator(
+      const flowAcc = createFlowableSinkAccumulator(
         (acc: string, next: string) => acc + next,
         returns(""),
         { replay: 1 },
       );
-
-      const scheduler = createVirtualTimeScheduler();
-      const subscription = pipe(src, sinkInto(dest), subscribe(scheduler));
+      const dest = pipe(flowAcc, stream(scheduler), sourceFrom(src));
 
       const f = mockFn();
-      pipe(dest, onNotify(f), subscribe(scheduler));
+      pipe(flowAcc, onNotify(f), subscribe(scheduler));
       pipe(scheduler, forEach(ignore));
 
       pipe(f, expectToHaveBeenCalledTimes(1));
       pipe(f.calls[0][0], expectEquals(str));
-      pipe(subscription, isDisposed, expectTrue);
+      pipe(dest, isDisposed, expectTrue);
     }),
     test("fromValue", () => {
       const scheduler = createVirtualTimeScheduler();
@@ -458,22 +460,22 @@ export const tests = describe(
       pipe(fromValueStream, isDisposed, expectTrue);
     }),
     test("map", () => {
+      const scheduler = createVirtualTimeScheduler();
+
       const src = pipe(1, fromValue(fromArrayT), map(returns(2)), flow());
-      const dest = createFlowableSinkAccumulator(sum, returns(0), {
+      const flowAcc = createFlowableSinkAccumulator(sum, returns(0), {
         replay: 1,
       });
-
-      const scheduler = createVirtualTimeScheduler();
-      const subscription = pipe(src, sinkInto(dest), subscribe(scheduler));
+      const dest = pipe(flowAcc, stream(scheduler), sourceFrom(src));
 
       const f = mockFn();
-      pipe(dest, onNotify(f), subscribe(scheduler));
+      pipe(flowAcc, onNotify(f), subscribe(scheduler));
 
       pipe(scheduler, forEach(ignore));
 
       pipe(f, expectToHaveBeenCalledTimes(1));
       pipe(f.calls[0][0], expectEquals(2));
-      pipe(subscription, isDisposed, expectTrue);
+      pipe(dest, isDisposed, expectTrue);
     }),
   ),
 

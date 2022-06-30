@@ -1,5 +1,5 @@
 import { Readable, Writable } from "stream";
-import { endWith } from "../container";
+import { endWith, ignoreElements } from "../container";
 import { newInstance, pipe, pipeLazy, returns } from "../functions";
 import {
   createDisposableNodeStream,
@@ -9,14 +9,21 @@ import {
   gzip,
 } from "../node";
 import {
+  ObservableLike,
   concatT,
   fromArray,
   fromArrayT,
+  keepT,
   takeFirst,
   toPromise,
 } from "../observable";
 import { createHostScheduler } from "../scheduler";
-import { createFlowableSinkAccumulator, flow, sinkInto } from "../streamable";
+import {
+  createFlowableSinkAccumulator,
+  flow,
+  sourceFrom,
+  stream,
+} from "../streamable";
 import {
   describe,
   expectEquals,
@@ -43,15 +50,20 @@ export const tests = describe(
         },
       });
 
-      const dest = createWritableIOSink(
-        pipeLazy(writable, createDisposableNodeStream),
-      );
-
-      await pipe(
+      const src = pipe(
         [encoder.encode("abc"), encoder.encode("defg")],
         fromArray(),
         flow(),
-        sinkInto(dest),
+      );
+
+      const dest = pipe(
+        createWritableIOSink(pipeLazy(writable, createDisposableNodeStream)),
+        stream(scheduler),
+        sourceFrom(src),
+      );
+
+      await pipe(
+        dest,
         endWith({ ...fromArrayT, ...concatT }, 0),
         toPromise(scheduler),
       );
@@ -72,16 +84,25 @@ export const tests = describe(
         },
       });
 
-      const dest = createWritableIOSink(
-        pipeLazy(writable, createDisposableNodeStream),
-      );
-
-      const promise = pipe(
+      const src = pipe(
         [encoder.encode("abc"), encoder.encode("defg")],
         fromArray(),
         flow(),
-        sinkInto(dest),
-        endWith({ ...fromArrayT, ...concatT }, 0),
+      );
+
+      const dest = pipe(
+        createWritableIOSink(pipeLazy(writable, createDisposableNodeStream)),
+        stream(scheduler),
+        sourceFrom(src),
+      );
+
+      const promise = pipe(
+        dest,
+        ignoreElements(keepT),
+        endWith<ObservableLike<number>, number>(
+          { ...fromArrayT, ...concatT },
+          0,
+        ),
         toPromise(scheduler),
       );
 
@@ -97,24 +118,30 @@ export const tests = describe(
         yield Buffer.from("defg", "utf8");
       }
 
+      const src = createReadableIOSource(() =>
+        pipe(generate(), Readable.from, createDisposableNodeStream),
+      );
+
       const textDecoder = newInstance(TextDecoder);
-      const dest = createFlowableSinkAccumulator(
+      const flowAcc = createFlowableSinkAccumulator(
         (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
         returns(""),
         { replay: 1 },
       );
+      const dest = pipe(flowAcc, stream(scheduler), sourceFrom(src));
 
       await pipe(
-        createReadableIOSource(() =>
-          pipe(generate(), Readable.from, createDisposableNodeStream),
+        dest,
+        ignoreElements(keepT),
+        endWith<ObservableLike<number>, number>(
+          { ...fromArrayT, ...concatT },
+          0,
         ),
-        sinkInto(dest),
-        endWith({ ...fromArrayT, ...concatT }, 0),
         toPromise(scheduler),
       );
 
       const acc = await pipe(
-        dest,
+        flowAcc,
         takeFirst({ count: 1 }),
         toPromise(scheduler),
       );
@@ -129,17 +156,20 @@ export const tests = describe(
       }
 
       const textDecoder = newInstance(TextDecoder);
-      const dest = createFlowableSinkAccumulator(
+      const src = createReadableIOSource(() =>
+        pipe(generate(), Readable.from, createDisposableNodeStream),
+      );
+
+      const flowAcc = createFlowableSinkAccumulator(
         (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
         returns(""),
         { replay: 1 },
       );
 
+      pipe(flowAcc, stream(scheduler), sourceFrom(src));
+
       await pipe(
-        createReadableIOSource(() =>
-          pipe(generate(), Readable.from, createDisposableNodeStream),
-        ),
-        sinkInto(dest),
+        flowAcc,
         endWith({ ...fromArrayT, ...concatT }, 0),
         toPromise(scheduler),
         expectPromiseToThrow,
@@ -150,24 +180,33 @@ export const tests = describe(
     const encoder = newInstance(TextEncoder);
 
     const textDecoder = newInstance(TextDecoder);
-    const dest = createFlowableSinkAccumulator(
-      (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
-      returns(""),
-      { replay: 1 },
-    );
-
-    await pipe(
+    const src = pipe(
       [encoder.encode("abc"), encoder.encode("defg")],
       fromArray<Uint8Array>(),
       flow(),
       gzip(),
       gunzip(),
-      sinkInto(dest),
+    );
+
+    const flowAcc = createFlowableSinkAccumulator(
+      (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
+      returns(""),
+      { replay: 1 },
+    );
+
+    const dest = pipe(flowAcc, stream(scheduler), sourceFrom(src));
+
+    await pipe(
+      dest,
       endWith({ ...fromArrayT, ...concatT }, 0),
       toPromise(scheduler),
     );
 
-    const acc = await pipe(dest, takeFirst({ count: 1 }), toPromise(scheduler));
+    const acc = await pipe(
+      flowAcc,
+      takeFirst({ count: 1 }),
+      toPromise(scheduler),
+    );
     pipe(acc, expectEquals("abcdefg"));
   }),
 );
