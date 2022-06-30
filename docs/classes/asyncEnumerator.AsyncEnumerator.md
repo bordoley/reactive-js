@@ -16,6 +16,10 @@
 
   ↳ **`AsyncEnumerator`**
 
+  ↳↳ [`LiftedAsyncEnumerator`](asyncEnumerable.LiftedAsyncEnumerator.md)
+
+  ↳↳ [`AbstractDelegatingAsyncEnumerator`](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md)
+
 ## Implements
 
 - [`LiftableStateLike`](../interfaces/liftable.LiftableStateLike.md)
@@ -29,15 +33,15 @@
 
 ### Properties
 
-- [op](asyncEnumerator.AsyncEnumerator.md#op)
+- [isEnumerable](asyncEnumerator.AsyncEnumerator.md#isenumerable)
+- [observerCount](asyncEnumerator.AsyncEnumerator.md#observercount)
+- [replay](asyncEnumerator.AsyncEnumerator.md#replay)
 - [scheduler](asyncEnumerator.AsyncEnumerator.md#scheduler)
 
 ### Accessors
 
 - [T](asyncEnumerator.AsyncEnumerator.md#t)
 - [liftableStateType](asyncEnumerator.AsyncEnumerator.md#liftablestatetype)
-- [observerCount](asyncEnumerator.AsyncEnumerator.md#observercount)
-- [replay](asyncEnumerator.AsyncEnumerator.md#replay)
 - [type](asyncEnumerator.AsyncEnumerator.md#type)
 
 ### Methods
@@ -49,7 +53,7 @@
 
 ### constructor
 
-• **new AsyncEnumerator**<`T`\>(`op`, `scheduler`, `replay`)
+• **new AsyncEnumerator**<`T`\>()
 
 #### Type parameters
 
@@ -57,29 +61,45 @@
 | :------ |
 | `T` |
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `op` | [`ObservableOperator`](../modules/observable.md#observableoperator)<`void`, `T`\> |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) |
-| `replay` | `number` |
-
-#### Overrides
+#### Inherited from
 
 [AbstractDisposableLiftable](liftable.AbstractDisposableLiftable.md).[constructor](liftable.AbstractDisposableLiftable.md#constructor)
 
 ## Properties
 
-### op
+### isEnumerable
 
-• `Readonly` **op**: [`ObservableOperator`](../modules/observable.md#observableoperator)<`void`, `T`\>
+• `Optional` **isEnumerable**: ``false``
+
+#### Implementation of
+
+StreamLike.isEnumerable
+
+___
+
+### observerCount
+
+• `Abstract` **observerCount**: `number`
+
+#### Implementation of
+
+StreamLike.observerCount
+
+___
+
+### replay
+
+• `Abstract` **replay**: `number`
+
+#### Implementation of
+
+StreamLike.replay
 
 ___
 
 ### scheduler
 
-• `Readonly` **scheduler**: [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+• `Abstract` **scheduler**: [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
 
 #### Implementation of
 
@@ -123,34 +143,6 @@ AbstractDisposableLiftable.liftableStateType
 
 ___
 
-### observerCount
-
-• `get` **observerCount**(): `number`
-
-#### Returns
-
-`number`
-
-#### Implementation of
-
-StreamLike.observerCount
-
-___
-
-### replay
-
-• `get` **replay**(): `number`
-
-#### Returns
-
-`number`
-
-#### Implementation of
-
-StreamLike.replay
-
-___
-
 ### type
 
 • `get` **type**(): `this`
@@ -171,12 +163,13 @@ AbstractDisposableLiftable.type
 
 ### dispatch
 
-▸ **dispatch**(`req`): `void`
+▸ `Abstract` **dispatch**(`this`, `req`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
+| `this` | [`DispatcherLike`](../interfaces/dispatcher.DispatcherLike.md)<`void`\> |
 | `req` | `void` |
 
 #### Returns
@@ -191,13 +184,14 @@ ___
 
 ### sink
 
-▸ **sink**(`observer`): `void`
+▸ `Abstract` **sink**(`this`, `sink`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `observer` | [`Observer`](observer.Observer.md)<`T`\> |
+| `this` | [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\> |
+| `sink` | [`Observer`](observer.Observer.md)<`T`\> |
 
 #### Returns
 

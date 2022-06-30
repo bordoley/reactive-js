@@ -1,17 +1,24 @@
+import { DispatcherLike } from "./dispatcher.mjs";
 import { AbstractDisposableLiftable, LiftableStateLike } from "./liftable.mjs";
-import { ObservableOperator } from "./observable.mjs";
+import { ObservableLike } from "./observable.mjs";
 import { Observer } from "./observer.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
 import { StreamLike } from "./stream.mjs";
-declare class AsyncEnumerator<T> extends AbstractDisposableLiftable<Observer<T>> implements LiftableStateLike, StreamLike<void, T> {
-    readonly op: ObservableOperator<void, T>;
-    readonly scheduler: SchedulerLike;
-    private readonly dispatcher;
-    private readonly observable;
-    constructor(op: ObservableOperator<void, T>, scheduler: SchedulerLike, replay: number);
+declare abstract class AsyncEnumerator<T> extends AbstractDisposableLiftable<Observer<T>> implements LiftableStateLike, StreamLike<void, T> {
+    abstract scheduler: SchedulerLike;
+    abstract observerCount: number;
+    abstract replay: number;
+    isEnumerable?: false;
+    abstract dispatch(this: DispatcherLike<void>, req: void): void;
+    abstract sink(this: ObservableLike<T>, sink: Observer<T>): void;
+}
+declare abstract class AbstractDelegatingAsyncEnumerator<TA, TB> extends AsyncEnumerator<TB> implements StreamLike<void, TB> {
+    readonly delegate: StreamLike<void, TA>;
+    constructor(delegate: StreamLike<void, TA>);
     get observerCount(): number;
     get replay(): number;
+    get scheduler(): SchedulerLike;
     dispatch(req: void): void;
-    sink(observer: Observer<T>): void;
+    abstract sink(observer: Observer<TB>): void;
 }
-export { AsyncEnumerator };
+export { AbstractDelegatingAsyncEnumerator, AsyncEnumerator };
