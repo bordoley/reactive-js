@@ -333,16 +333,12 @@ export const empty = <TReq, T>(): StreamableLike<
 > => _empty;
 
 export const flow =
-  <T>({
-    scheduler,
-  }: {
-    scheduler?: SchedulerLike;
-  } = {}): Function1<ObservableLike<T>, FlowableLike<T>> =>
+  <T>(): Function1<ObservableLike<T>, FlowableLike<T>> =>
   observable =>
     createLiftedStreamable((modeObs: ObservableLike<FlowMode>) =>
       createObservable(observer => {
         const pausableScheduler = createPausableScheduler(
-          scheduler ?? getScheduler(observer),
+          getScheduler(observer),
         );
 
         pipe(

@@ -289,7 +289,7 @@ export const tests = describe(
       const scheduler = createVirtualTimeScheduler();
       const generateStream = pipe(
         generate(increment, returns(-1), { delay: 1 }),
-        flow({ scheduler }),
+        flow(),
         stream(scheduler),
       );
 

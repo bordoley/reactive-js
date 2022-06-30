@@ -23,7 +23,6 @@ import { windowLocation, WindowLocationURI } from "@reactive-js/core/web";
 import { increment, pipe, returns, Updater } from "@reactive-js/core/functions";
 import { DispatcherLike } from "@reactive-js/core/dispatcher";
 
-const idlePriorityScheduler = createReactIdlePriorityScheduler();
 const normalPriorityScheduler = createReactNormalPriorityScheduler();
 
 // History must be globally unique to an application
@@ -33,7 +32,7 @@ const historyStream = windowLocation.stream(normalPriorityScheduler, {
 
 const counterFlowable = pipe(
   generate(increment, returns(0)),
-  flow({ scheduler: idlePriorityScheduler }),
+  flow(),
 );
 
 const createActions = (
@@ -55,10 +54,11 @@ const createActions = (
 });
 
 const initialFlowModeState = () => "pause" as FlowMode;
+const idlePriorityScheduler = createReactIdlePriorityScheduler();
 
 const StreamPauseResume = createComponent(() =>
   observable(() => {
-    const counter = __stream(counterFlowable);
+    const counter = __stream(counterFlowable, {scheduler:idlePriorityScheduler});
     const state = __state(initialFlowModeState);
 
     const { onValueChanged, toggleStateMode, setCounterMode } = __memo(

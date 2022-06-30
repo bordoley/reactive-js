@@ -406,7 +406,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(emptyStream, isDisposed, expectTrue);
 }), test("generate source", () => {
     const scheduler = createVirtualTimeScheduler();
-    const generateStream = pipe(generate$2(increment, returns(-1), { delay: 1 }), flow({ scheduler }), stream(scheduler));
+    const generateStream = pipe(generate$2(increment, returns(-1), { delay: 1 }), flow(), stream(scheduler));
     generateStream.dispatch("resume");
     pipe(scheduler, schedule(pipeLazy("pause", dispatchTo(generateStream)), {
         delay: 2,
