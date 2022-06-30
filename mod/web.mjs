@@ -7,7 +7,7 @@ import { keep } from './readonlyArray.mjs';
 import { ignoreElements } from './container.mjs';
 import { none, isSome } from './option.mjs';
 import { sinkInto } from './source.mjs';
-import { createStreamble, createStateStore, stream } from './streamable.mjs';
+import { createStreamble, createActionReducer, stream } from './streamable.mjs';
 
 const fromEvent = (target, eventName, selector) => createObservable(observer => {
     const dispatcher = pipe(observer.dispatcher, onDisposed(_ => {
@@ -93,12 +93,7 @@ class WindowLocationStream extends AbstractDisposableObservable {
         return this.stateStream.scheduler;
     }
     dispatch(stateOrUpdater, { replace } = { replace: false }) {
-        pipe(({ uri: stateURI }) => {
-            const uri = typeof stateOrUpdater === "function"
-                ? stateOrUpdater(stateURI)
-                : stateOrUpdater;
-            return { uri, replace };
-        }, dispatchTo(this.stateStream));
+        pipe({ stateOrUpdater, replace }, dispatchTo(this.stateStream));
     }
     goBack() {
         const canGoBack = this.historyCounter > 0;
@@ -117,12 +112,17 @@ const windowLocation =
     if (isSome(currentWindowLocationStream)) {
         raise("Cannot stream more than once");
     }
-    const stateStream = pipe(createStateStore(() => ({
+    const actionReducer = pipe(createActionReducer(({ uri: stateURI }, { replace, stateOrUpdater }) => {
+        const uri = typeof stateOrUpdater === "function"
+            ? stateOrUpdater(stateURI)
+            : stateOrUpdater;
+        return { uri, replace };
+    }, () => ({
         replace: true,
         uri: getCurrentWindowLocationURI(),
     }), { equality: areWindowLocationStatesEqual }), stream(scheduler, options));
-    const windowLocationStream = pipe(WindowLocationStream, newInstanceWith(stateStream), bindTo(stateStream));
-    pipe(stateStream, map(({ uri, replace }) => ({
+    const windowLocationStream = pipe(WindowLocationStream, newInstanceWith(actionReducer), bindTo(actionReducer));
+    pipe(actionReducer, map(({ uri, replace }) => ({
         uri: windowLocationURIToString(uri),
         title: uri.title,
         replace,

@@ -29,8 +29,8 @@ import { Option, isSome, none } from "../option";
 import { SchedulerLike } from "../scheduler";
 import { sinkInto } from "../source";
 import {
-  StateStreamLike,
-  createStateStore,
+  StreamLike,
+  createActionReducer,
   createStreamble,
   stream,
 } from "../streamable";
@@ -73,6 +73,11 @@ type TState = {
   uri: WindowLocationURI;
 };
 
+type TAction = {
+  replace: boolean;
+  stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>;
+};
+
 const areWindowLocationStatesEqual = ({ uri: a }: TState, { uri: b }: TState) =>
   // Intentionally ignore the replace flag.
   a === b ||
@@ -104,7 +109,15 @@ class WindowLocationStream
 {
   historyCounter = -1;
 
-  constructor(readonly stateStream: StateStreamLike<TState>) {
+  constructor(
+    readonly stateStream: StreamLike<
+      TAction,
+      {
+        replace: boolean;
+        uri: WindowLocationURI;
+      }
+    >,
+  ) {
     super();
   }
 
@@ -124,13 +137,7 @@ class WindowLocationStream
     stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
     { replace }: { replace: boolean } = { replace: false },
   ): void {
-    pipe(({ uri: stateURI }: TState) => {
-      const uri =
-        typeof stateOrUpdater === "function"
-          ? stateOrUpdater(stateURI)
-          : stateOrUpdater;
-      return { uri, replace };
-    }, dispatchTo(this.stateStream));
+    pipe({ stateOrUpdater, replace }, dispatchTo(this.stateStream));
   }
 
   goBack(): boolean {
@@ -167,8 +174,15 @@ export const windowLocation: WindowLocationStreamableLike =
         raise("Cannot stream more than once");
       }
 
-      const stateStream = pipe(
-        createStateStore(
+      const actionReducer = pipe(
+        createActionReducer(
+          ({ uri: stateURI }, { replace, stateOrUpdater }: TAction) => {
+            const uri =
+              typeof stateOrUpdater === "function"
+                ? stateOrUpdater(stateURI)
+                : stateOrUpdater;
+            return { uri, replace };
+          },
           () => ({
             replace: true,
             uri: getCurrentWindowLocationURI(),
@@ -180,12 +194,12 @@ export const windowLocation: WindowLocationStreamableLike =
 
       const windowLocationStream = pipe(
         WindowLocationStream,
-        newInstanceWith(stateStream),
-        bindTo(stateStream),
+        newInstanceWith(actionReducer),
+        bindTo(actionReducer),
       );
 
       pipe(
-        stateStream,
+        actionReducer,
         map(({ uri, replace }) => ({
           uri: windowLocationURIToString(uri),
           title: uri.title,
