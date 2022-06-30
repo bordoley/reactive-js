@@ -49,7 +49,7 @@ import {
 import { Observer, scheduler as getScheduler } from "./observer";
 import { Option, isSome, none } from "./option";
 import { SchedulerLike, createPausableScheduler } from "./scheduler";
-import { notifySink, sinkInto as sinkIntoSink, sourceFrom } from "./source";
+import { sinkInto as sinkIntoSink, sourceFrom } from "./source";
 
 /**
  * Represents a duplex stream
@@ -298,9 +298,7 @@ export const createActionReducer = <TAction, T>(
         scan(reducer, returns(acc)),
         concatWith(mergeT, fromValue(fromArrayTObs)(acc)),
         distinctUntilChanged(options),
-        onNotify(notifySink(observer)),
-        subscribe(getScheduler(observer)),
-        bindTo(observer),
+        sinkIntoSink(observer),
       );
     }),
   );
