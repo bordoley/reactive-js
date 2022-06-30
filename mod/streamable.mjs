@@ -3,11 +3,11 @@ import { concatWith, fromValue, ignoreElements, startWith } from './container.mj
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
 import { newInstance, pipe, length, compose, returns, updateReducer, identity as identity$1 } from './functions.mjs';
-import { AbstractDisposableObservable, Subject, publish, observerCount, replay, createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, onNotify, subscribe, takeFirst, subscribeOn, fromDisposable, takeUntil, merge, keepT, onSubscribe, __currentScheduler, __using, __memo, reduce, concatT } from './observable.mjs';
+import { AbstractDisposableObservable, Subject, publish, observerCount, replay, createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, takeFirst, subscribeOn, fromDisposable, takeUntil, onNotify, subscribe, merge, keepT, onSubscribe, __currentScheduler, __using, __memo, reduce, concatT } from './observable.mjs';
 import { scheduler } from './observer.mjs';
 import { isSome, none } from './option.mjs';
 import { createPausableScheduler } from './scheduler.mjs';
-import { sinkInto as sinkInto$1, notifySink, sourceFrom } from './source.mjs';
+import { sinkInto as sinkInto$1, sourceFrom } from './source.mjs';
 
 const stream = (scheduler, options) => streamable => streamable.stream(scheduler, options);
 class StreamImpl extends AbstractDisposableObservable {
@@ -55,7 +55,7 @@ function createLiftedStreamable(...ops) {
  */
 const createActionReducer = (reducer, initialState, options) => createLiftedStreamable(obs => createObservable(observer => {
     const acc = initialState();
-    return pipe(obs, scan(reducer, returns(acc)), concatWith(mergeT, fromValue(fromArrayT)(acc)), distinctUntilChanged(options), onNotify(notifySink(observer)), subscribe(scheduler(observer)), bindTo(observer));
+    return pipe(obs, scan(reducer, returns(acc)), concatWith(mergeT, fromValue(fromArrayT)(acc)), distinctUntilChanged(options), sinkInto$1(observer));
 }));
 /**
  * Returns a new `StateStoreLike` instance that stores state which can
