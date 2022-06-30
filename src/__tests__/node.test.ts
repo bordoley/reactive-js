@@ -120,7 +120,7 @@ export const tests = describe(
         createReadableIOSource(() =>
           pipe(generate(), Readable.from, createDisposableNodeStream),
         ),
-        flowToObservable(scheduler, { replay: 1 }),
+        flowToObservable(),
         reduce(
           (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
           returns(""),
@@ -145,7 +145,7 @@ export const tests = describe(
         createReadableIOSource(() =>
           pipe(generate(), Readable.from, createDisposableNodeStream),
         ),
-        flowToObservable(scheduler, { replay: 1 }),
+        flowToObservable(),
         reduce(
           (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
           returns(""),
@@ -166,7 +166,7 @@ export const tests = describe(
       flow(),
       gzip(),
       gunzip(),
-      flowToObservable(scheduler, { replay: 1 }),
+      flowToObservable(),
       reduce(
         (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
         returns(""),
