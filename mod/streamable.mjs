@@ -73,8 +73,8 @@ const _empty = /*@__PURE__*/ createLiftedStreamable(takeFirst({ count: 0 }));
  * a disposed `StreamLike` instance.
  */
 const empty = () => _empty;
-const flow = ({ scheduler: scheduler$1, } = {}) => observable => createLiftedStreamable((modeObs) => createObservable(observer => {
-    const pausableScheduler = createPausableScheduler(scheduler$1 !== null && scheduler$1 !== void 0 ? scheduler$1 : scheduler(observer));
+const flow = () => observable => createLiftedStreamable((modeObs) => createObservable(observer => {
+    const pausableScheduler = createPausableScheduler(scheduler(observer));
     pipe(observer, sourceFrom(pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil))), add(pipe(modeObs, onNotify((mode) => {
         switch (mode) {
             case "pause":

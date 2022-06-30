@@ -76,9 +76,7 @@ declare const createStateStore: <T>(initialState: Factory<T>, options?: {
  * a disposed `StreamLike` instance.
  */
 declare const empty: <TReq, T>() => StreamableLike<TReq, T, StreamLike<TReq, T>>;
-declare const flow: <T>({ scheduler, }?: {
-    scheduler?: SchedulerLike | undefined;
-}) => Function1<ObservableLike<T>, FlowableLike<T>>;
+declare const flow: <T>() => Function1<ObservableLike<T>, FlowableLike<T>>;
 declare const identity: <T>() => StreamableLike<T, T, StreamLike<T, T>>;
 declare const sinkInto: <TReq, T, TOut>(dest: StreamableLike<T, TReq, StreamLike<T, TReq>>) => (src: StreamableLike<TReq, T, StreamLike<TReq, T>>) => ObservableLike<TOut>;
 declare const __stream: <TReq, T, TStream extends StreamLike<TReq, T>>(streamable: StreamableLike<TReq, T, TStream>, { replay, scheduler, }?: {
