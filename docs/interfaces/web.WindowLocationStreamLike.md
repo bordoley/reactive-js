@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`StreamLike`](streamable.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](web.WindowLocationURI.md)\> \| [`WindowLocationURI`](web.WindowLocationURI.md), [`WindowLocationURI`](web.WindowLocationURI.md)\>
+- [`StreamLike`](stream.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<[`WindowLocationURI`](web.WindowLocationURI.md)\> \| [`WindowLocationURI`](web.WindowLocationURI.md), [`WindowLocationURI`](web.WindowLocationURI.md)\>
 
   ↳ **`WindowLocationStreamLike`**
 
@@ -40,7 +40,7 @@ ___
 
 #### Inherited from
 
-[StreamLike](streamable.StreamLike.md).[scheduler](streamable.StreamLike.md#scheduler)
+[StreamLike](stream.StreamLike.md).[scheduler](stream.StreamLike.md#scheduler)
 
 ## Methods
 

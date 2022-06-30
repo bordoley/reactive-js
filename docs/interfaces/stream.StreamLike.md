@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [streamable](../modules/streamable.md) / StreamLike
+[Reactive-JS](../README.md) / [stream](../modules/stream.md) / StreamLike
 
 # Interface: StreamLike<TReq, T\>
 
-[streamable](../modules/streamable.md).StreamLike
+[stream](../modules/stream.md).StreamLike
 
 Represents a duplex stream
 
@@ -31,13 +31,14 @@ Represents a duplex stream
 
 ## Implemented by
 
+- [`AbstractDelegatingStream`](../classes/stream.AbstractDelegatingStream.md)
 - [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)
 
 ## Table of contents
 
 ### Properties
 
-- [scheduler](streamable.StreamLike.md#scheduler)
+- [scheduler](stream.StreamLike.md#scheduler)
 
 ## Properties
 

@@ -12,28 +12,20 @@ import {
   raise,
 } from "../functions";
 import {
-  AbstractDisposableObservable,
   forkCombineLatest,
   keep,
   keepT,
   map,
-  observerCount,
   onNotify,
-  replay,
   subscribe,
   takeWhile,
   throttle,
 } from "../observable";
 import { Observer } from "../observer";
 import { Option, isSome, none } from "../option";
-import { SchedulerLike } from "../scheduler";
 import { sinkInto } from "../source";
-import {
-  StreamLike,
-  createActionReducer,
-  createStreamble,
-  stream,
-} from "../streamable";
+import { AbstractDelegatingStream } from "../stream";
+import { createActionReducer, createStreamble, stream } from "../streamable";
 import {
   WindowLocationStreamLike,
   WindowLocationStreamableLike,
@@ -104,40 +96,24 @@ const windowHistoryPushState = (
 };
 
 class WindowLocationStream
-  extends AbstractDisposableObservable<WindowLocationURI>
+  extends AbstractDelegatingStream<
+    TAction,
+    {
+      replace: boolean;
+      uri: WindowLocationURI;
+    },
+    WindowLocationURI | Updater<WindowLocationURI>,
+    WindowLocationURI
+  >
   implements WindowLocationStreamLike
 {
   historyCounter = -1;
-
-  constructor(
-    readonly stateStream: StreamLike<
-      TAction,
-      {
-        replace: boolean;
-        uri: WindowLocationURI;
-      }
-    >,
-  ) {
-    super();
-  }
-
-  get observerCount() {
-    return observerCount(this.stateStream);
-  }
-
-  get replay(): number {
-    return replay(this.stateStream);
-  }
-
-  get scheduler(): SchedulerLike {
-    return this.stateStream.scheduler;
-  }
 
   dispatch(
     stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
     { replace }: { replace: boolean } = { replace: false },
   ): void {
-    pipe({ stateOrUpdater, replace }, dispatchTo(this.stateStream));
+    pipe({ stateOrUpdater, replace }, dispatchTo(this.delegate));
   }
 
   goBack(): boolean {
@@ -152,7 +128,7 @@ class WindowLocationStream
 
   sink(observer: Observer<WindowLocationURI>): void {
     pipe(
-      this.stateStream,
+      this.delegate,
       map(({ uri }) => uri),
       sinkInto(observer),
     );

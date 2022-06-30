@@ -30,10 +30,7 @@ const historyStream = windowLocation.stream(normalPriorityScheduler, {
   replay: 1,
 });
 
-const counterFlowable = pipe(
-  generate(increment, returns(0)),
-  flow(),
-);
+const counterFlowable = pipe(generate(increment, returns(0)), flow());
 
 const createActions = (
   stateDispatcher: DispatcherLike<Updater<FlowMode>>,
@@ -58,7 +55,9 @@ const idlePriorityScheduler = createReactIdlePriorityScheduler();
 
 const StreamPauseResume = createComponent(() =>
   observable(() => {
-    const counter = __stream(counterFlowable, {scheduler:idlePriorityScheduler});
+    const counter = __stream(counterFlowable, {
+      scheduler: idlePriorityScheduler,
+    });
     const state = __state(initialFlowModeState);
 
     const { onValueChanged, toggleStateMode, setCounterMode } = __memo(

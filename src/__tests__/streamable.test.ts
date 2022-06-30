@@ -52,8 +52,8 @@ import {
 import { Option, none } from "../option";
 import { last, toArray } from "../runnable";
 import { createVirtualTimeScheduler, now, schedule } from "../scheduler";
+import { StreamLike } from "../stream";
 import {
-  StreamLike,
   __stream,
   createActionReducer,
   createFlowableSinkAccumulator,

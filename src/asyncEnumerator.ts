@@ -13,7 +13,7 @@ import {
 import { Observer } from "./observer";
 import { SchedulerLike } from "./scheduler";
 import { sinkInto } from "./source";
-import { StreamLike } from "./streamable";
+import { StreamLike } from "./stream";
 
 export class AsyncEnumerator<T>
   extends AbstractDisposableLiftable<Observer<T>>
