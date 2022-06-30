@@ -23,7 +23,7 @@
 - [\_\_state](streamable.md#__state)
 - [\_\_stream](streamable.md#__stream)
 - [createActionReducer](streamable.md#createactionreducer)
-- [createFlowableSinkAccumulator](streamable.md#createflowablesinkaccumulator)
+- [createEagerFlowableSink](streamable.md#createeagerflowablesink)
 - [createLiftedStreamable](streamable.md#createliftedstreamable)
 - [createStateStore](streamable.md#createstatestore)
 - [createStreamble](streamable.md#createstreamble)
@@ -122,31 +122,26 @@ over the notified actions, emitting each intermediate result.
 
 ___
 
-### createFlowableSinkAccumulator
+### createEagerFlowableSink
 
-▸ **createFlowableSinkAccumulator**<`T`, `TAcc`\>(`reducer`, `initialValue`, `options?`): [`FlowableSinkLike`](../interfaces/streamable.FlowableSinkLike.md)<`T`, [`FlowableSinkStreamLike`](../interfaces/streamable.FlowableSinkStreamLike.md)<`T`\>\> & [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)<`TAcc`\>
-
-**`experimental`**
+▸ **createEagerFlowableSink**<`T`\>(`options?`): [`FlowableSinkLike`](../interfaces/streamable.FlowableSinkLike.md)<`T`, [`FlowableSinkStreamLike`](../interfaces/streamable.FlowableSinkStreamLike.md)<`T`\> & { `data`: [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>  }\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-| `TAcc` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 | `options?` | `Object` |
 | `options.replay?` | `number` |
 
 #### Returns
 
-[`FlowableSinkLike`](../interfaces/streamable.FlowableSinkLike.md)<`T`, [`FlowableSinkStreamLike`](../interfaces/streamable.FlowableSinkStreamLike.md)<`T`\>\> & [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)<`TAcc`\>
+[`FlowableSinkLike`](../interfaces/streamable.FlowableSinkLike.md)<`T`, [`FlowableSinkStreamLike`](../interfaces/streamable.FlowableSinkStreamLike.md)<`T`\> & { `data`: [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>  }\>
 
 ___
 

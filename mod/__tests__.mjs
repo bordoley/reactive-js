@@ -8,11 +8,11 @@ import { fromArray as fromArray$1, toIterable, fromIterable, toRunnable as toRun
 import { toArray, fromArray, someSatisfyT, first, generate, everySatisfy, map, forEach, everySatisfyT, fromArrayT, keepT, concat, concatAll, distinctUntilChanged, repeat, scan, skipFirst, takeFirst, takeLast, takeWhile, toRunnable, last } from './runnable.mjs';
 import { dispatchTo } from './dispatcher.mjs';
 import { forEach as forEach$1 } from './enumerator.mjs';
-import { concat as concat$2, fromArray as fromArray$2, fromArrayT as fromArrayT$2, buffer, toRunnable as toRunnable$2, mapT, catchError, concatT, generate as generate$2, takeFirst as takeFirst$2, combineLatestWith, createObservable, Subject, observerCount, subscribe, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeT, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync, share, zip as zip$1, map as map$2, onNotify, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$1, zipT, zipLatestWith, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$2, skipFirst as skipFirst$2, takeWhile as takeWhile$2, decodeWithCharset, usingT } from './observable.mjs';
+import { concat as concat$2, fromArray as fromArray$2, fromArrayT as fromArrayT$2, buffer, toRunnable as toRunnable$2, mapT, catchError, concatT, generate as generate$2, takeFirst as takeFirst$2, combineLatestWith, createObservable, Subject, observerCount, subscribe, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeT, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync, share, zip as zip$1, map as map$2, onNotify, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$1, zipT, zipLatestWith, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$2, skipFirst as skipFirst$2, takeWhile as takeWhile$2, decodeWithCharset, reduce, usingT } from './observable.mjs';
 import { createVirtualTimeScheduler, createHostScheduler, schedule, now } from './scheduler.mjs';
 import { type, fromArray as fromArray$3, concat as concat$3, concatAll as concatAll$2, distinctUntilChanged as distinctUntilChanged$3, generate as generate$3, keep, map as map$3, repeat as repeat$3, scan as scan$3, skipFirst as skipFirst$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$3, toRunnable as toRunnable$3, fromArrayT as fromArrayT$3, zipT as zipT$1 } from './sequence.mjs';
 import { fromArray as fromArray$4, fromIterable as fromIterable$2, generate as generate$4, consume, consumeContinue, consumeDone, consumeAsync } from './asyncEnumerable.mjs';
-import { identity as identity$1, __stream, createActionReducer, stream, empty as empty$1, createLiftedStreamable, sourceFrom, flow, createFlowableSinkAccumulator } from './streamable.mjs';
+import { identity as identity$1, __stream, createActionReducer, stream, empty as empty$1, createLiftedStreamable, sourceFrom, flow, createEagerFlowableSink } from './streamable.mjs';
 
 const tests$6 = describe("Disposable", describe("AbstractDisposable", test("disposes child disposable when disposed", () => {
     const child = createDisposable();
@@ -437,16 +437,17 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(subscription, isDisposed, expectTrue);
     pipe(fromValueStream, isDisposed, expectTrue);
 })), describe("io", test("decodeWithCharset", () => {
+    debugger;
     const scheduler = createVirtualTimeScheduler();
     const src = pipe([
         Uint8Array.from([226]),
         Uint8Array.from([130]),
         Uint8Array.from([172]),
     ], fromArray$2(), decodeWithCharset(), flow());
-    const flowAcc = createFlowableSinkAccumulator((acc, next) => acc + next, returns(""), { replay: 1 });
+    const flowAcc = createEagerFlowableSink({ replay: 1 });
     const dest = pipe(flowAcc, stream(scheduler), sourceFrom(src));
     const f = mockFn();
-    pipe(flowAcc, onNotify(f), subscribe(scheduler));
+    pipe(dest.data, reduce((acc, next) => acc + next, returns("")), onNotify(f), subscribe(scheduler));
     pipe(scheduler, forEach$1(ignore));
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(String.fromCodePoint(8364)));
@@ -466,10 +467,10 @@ const tests$1 = describe("streamable", test("__stream", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
     const scheduler = createVirtualTimeScheduler();
     const src = pipe(str, fromValue(fromArrayT$2), encodeUtf8({ ...mapT, ...usingT }), decodeWithCharset(), flow());
-    const flowAcc = createFlowableSinkAccumulator((acc, next) => acc + next, returns(""), { replay: 1 });
+    const flowAcc = createEagerFlowableSink({ replay: 1 });
     const dest = pipe(flowAcc, stream(scheduler), sourceFrom(src));
     const f = mockFn();
-    pipe(flowAcc, onNotify(f), subscribe(scheduler));
+    pipe(dest.data, reduce((acc, next) => acc + next, returns("")), onNotify(f), subscribe(scheduler));
     pipe(scheduler, forEach$1(ignore));
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(str));
@@ -488,12 +489,10 @@ const tests$1 = describe("streamable", test("__stream", () => {
 }), test("map", () => {
     const scheduler = createVirtualTimeScheduler();
     const src = pipe(1, fromValue(fromArrayT$2), map$2(returns(2)), flow());
-    const flowAcc = createFlowableSinkAccumulator(sum, returns(0), {
-        replay: 1,
-    });
+    const flowAcc = createEagerFlowableSink({ replay: 1 });
     const dest = pipe(flowAcc, stream(scheduler), sourceFrom(src));
     const f = mockFn();
-    pipe(flowAcc, onNotify(f), subscribe(scheduler));
+    pipe(dest.data, reduce(sum, returns(0)), onNotify(f), subscribe(scheduler));
     pipe(scheduler, forEach$1(ignore));
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(2));

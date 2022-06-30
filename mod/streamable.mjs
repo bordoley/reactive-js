@@ -1,14 +1,14 @@
 /// <reference types="./streamable.d.ts" />
 import { concatWith, fromValue, ignoreElements, startWith } from './container.mjs';
-import { dispatchTo } from './dispatcher.mjs';
+import { dispatchTo, dispatch } from './dispatcher.mjs';
 import { add, bindTo, addTo } from './disposable.mjs';
-import { newInstance, length, compose, pipe, returns, updateReducer, identity as identity$1 } from './functions.mjs';
-import { createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, takeFirst, subscribeOn, fromDisposable, takeUntil, onNotify, subscribe, __currentScheduler, __using, __memo, merge, keepT, onSubscribe, AbstractDisposableObservable, observerCount, replay, Subject, reduce, concatT } from './observable.mjs';
+import { newInstance, length, compose, pipe, returns, updateReducer, identity as identity$1, newInstanceWith } from './functions.mjs';
+import { createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, takeFirst, subscribeOn, fromDisposable, takeUntil, onNotify, subscribe, __currentScheduler, __using, __memo, merge, keepT, onSubscribe, Subject, concatT } from './observable.mjs';
 import { scheduler } from './observer.mjs';
 import { isSome, none } from './option.mjs';
 import { createPausableScheduler } from './scheduler.mjs';
 import { sinkInto as sinkInto$1, sourceFrom as sourceFrom$1 } from './source.mjs';
-import { createStream } from './stream.mjs';
+import { createStream, AbstractDelegatingStream } from './stream.mjs';
 
 const stream = (scheduler, options) => streamable => streamable.stream(scheduler, options);
 class CreateStreamable {
@@ -94,30 +94,26 @@ const sourceFrom = (streamable) => dest => {
     pipe(streamable, sinkInto(dest));
     return dest;
 };
-class FlowableSinkAccumulatorImpl extends AbstractDisposableObservable {
-    constructor(subject, streamable) {
-        super();
-        this.subject = subject;
-        this.streamable = streamable;
+class EagerFlowableSinkStream extends AbstractDelegatingStream {
+    constructor(delegate, data) {
+        super(delegate);
+        this.data = data;
     }
-    get observerCount() {
-        return observerCount(this.subject);
-    }
-    get replay() {
-        return replay(this.subject);
+    dispatch(req) {
+        pipe(this.delegate, dispatch(req));
     }
     sink(observer) {
-        pipe(this.subject, sinkInto$1(observer));
-    }
-    stream(scheduler, options) {
-        return pipe(this.streamable, stream(scheduler, options), addTo(this));
+        pipe(this.delegate, sinkInto$1(observer));
     }
 }
-/** @experimental */
-const createFlowableSinkAccumulator = (reducer, initialValue, options = {}) => {
+const createEagerFlowableSink = (options = {}) => {
     const { replay = 0 } = options;
-    const subject = newInstance(Subject, replay);
-    return pipe(createLiftedStreamable(reduce(reducer, initialValue), onNotify(dispatchTo(subject)), ignoreElements(keepT), startWith({ ...concatT, ...fromArrayT }, "pause", "resume")), streamable => newInstance(FlowableSinkAccumulatorImpl, subject, streamable), add(subject));
+    return createStreamble((scheduler, options) => {
+        const accumulator = newInstance(Subject, replay);
+        const op = compose(onNotify(dispatchTo(accumulator)), ignoreElements(keepT), startWith({ ...concatT, ...fromArrayT }, "pause", "resume"), onSubscribe(() => accumulator));
+        const delegate = createStream(op, scheduler, options);
+        return pipe(EagerFlowableSinkStream, newInstanceWith(delegate, accumulator), add(delegate));
+    });
 };
 
-export { __state, __stream, createActionReducer, createFlowableSinkAccumulator, createLiftedStreamable, createStateStore, createStreamble, empty, flow, identity, sinkInto, sourceFrom, stream };
+export { __state, __stream, createActionReducer, createEagerFlowableSink, createLiftedStreamable, createStateStore, createStreamble, empty, flow, identity, sinkInto, sourceFrom, stream };

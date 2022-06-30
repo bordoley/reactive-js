@@ -14,16 +14,12 @@ import {
   fromArray,
   fromArrayT,
   keepT,
+  reduce,
   takeFirst,
   toPromise,
 } from "../observable";
 import { createHostScheduler } from "../scheduler";
-import {
-  createFlowableSinkAccumulator,
-  flow,
-  sourceFrom,
-  stream,
-} from "../streamable";
+import { flow, flowToObservable, sourceFrom, stream } from "../streamable";
 import {
   describe,
   expectEquals,
@@ -118,33 +114,21 @@ export const tests = describe(
         yield Buffer.from("defg", "utf8");
       }
 
-      const src = createReadableIOSource(() =>
-        pipe(generate(), Readable.from, createDisposableNodeStream),
-      );
-
       const textDecoder = newInstance(TextDecoder);
-      const flowAcc = createFlowableSinkAccumulator(
-        (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
-        returns(""),
-        { replay: 1 },
-      );
-      const dest = pipe(flowAcc, stream(scheduler), sourceFrom(src));
-
-      await pipe(
-        dest,
-        ignoreElements(keepT),
-        endWith<ObservableLike<number>, number>(
-          { ...fromArrayT, ...concatT },
-          0,
-        ),
-        toPromise(scheduler),
-      );
 
       const acc = await pipe(
-        flowAcc,
+        createReadableIOSource(() =>
+          pipe(generate(), Readable.from, createDisposableNodeStream),
+        ),
+        flowToObservable(scheduler, { replay: 1 }),
+        reduce(
+          (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
+          returns(""),
+        ),
         takeFirst({ count: 1 }),
         toPromise(scheduler),
       );
+
       pipe(acc, expectEquals("abcdefg"));
     }),
     testAsync("reading from readable that throws", async () => {
@@ -156,20 +140,16 @@ export const tests = describe(
       }
 
       const textDecoder = newInstance(TextDecoder);
-      const src = createReadableIOSource(() =>
-        pipe(generate(), Readable.from, createDisposableNodeStream),
-      );
-
-      const flowAcc = createFlowableSinkAccumulator(
-        (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
-        returns(""),
-        { replay: 1 },
-      );
-
-      pipe(flowAcc, stream(scheduler), sourceFrom(src));
 
       await pipe(
-        flowAcc,
+        createReadableIOSource(() =>
+          pipe(generate(), Readable.from, createDisposableNodeStream),
+        ),
+        flowToObservable(scheduler, { replay: 1 }),
+        reduce(
+          (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
+          returns(""),
+        ),
         endWith({ ...fromArrayT, ...concatT }, 0),
         toPromise(scheduler),
         expectPromiseToThrow,
@@ -180,33 +160,21 @@ export const tests = describe(
     const encoder = newInstance(TextEncoder);
 
     const textDecoder = newInstance(TextDecoder);
-    const src = pipe(
+    const acc = await pipe(
       [encoder.encode("abc"), encoder.encode("defg")],
       fromArray<Uint8Array>(),
       flow(),
       gzip(),
       gunzip(),
-    );
-
-    const flowAcc = createFlowableSinkAccumulator(
-      (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
-      returns(""),
-      { replay: 1 },
-    );
-
-    const dest = pipe(flowAcc, stream(scheduler), sourceFrom(src));
-
-    await pipe(
-      dest,
-      endWith({ ...fromArrayT, ...concatT }, 0),
-      toPromise(scheduler),
-    );
-
-    const acc = await pipe(
-      flowAcc,
+      flowToObservable(scheduler, { replay: 1 }),
+      reduce(
+        (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
+        returns(""),
+      ),
       takeFirst({ count: 1 }),
       toPromise(scheduler),
     );
+
     pipe(acc, expectEquals("abcdefg"));
   }),
 );
