@@ -576,21 +576,13 @@ ___
 
 ### flowToObservable
 
-▸ **flowToObservable**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/streamable.FlowableStreamLike.md)<`T`\>\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
+▸ **flowToObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/streamable.FlowableStreamLike.md)<`T`\>\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.replay?` | `number` |
 
 #### Returns
 
