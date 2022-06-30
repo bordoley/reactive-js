@@ -18,7 +18,6 @@ import {
 import {
   ObservableLike,
   ObservableOperator,
-  Subject,
   __currentScheduler,
   __memo,
   __observe,
@@ -403,21 +402,18 @@ export const sourceFrom =
   };
 
 export const flowToObservable =
-  <T>(
-    scheduler: SchedulerLike,
-    options: { readonly replay?: number } = {},
-  ): Function1<FlowableLike<T>, ObservableLike<T>> =>
-  src => {
-    const { replay = 0 } = options;
-    const accumulator = newInstance<number, Subject<T>>(Subject, replay);
+  <T>(): Function1<FlowableLike<T>, ObservableLike<T>> =>
+  src => createObservable(
+    observer => {
+      const {dispatcher, scheduler} = observer;
 
-    const op = compose(
-      onNotify<T>(dispatchTo(accumulator)),
-      ignoreElements(keepT),
-      startWith({ ...concatT, ...fromArrayT }, "pause", "resume"),
-      onSubscribe(() => accumulator),
-    );
-    const dest = pipe(createStream(op, scheduler), sourceFrom(src));
+      const op = compose(
+        onNotify<T>(dispatchTo(dispatcher)),
+        ignoreElements(keepT),
+        startWith({ ...concatT, ...fromArrayT }, "pause", "resume"),
+        onSubscribe(() => dispatcher),
+      );
 
-    return pipe(accumulator, add(dest));
-  };
+      pipe(createStream(op, scheduler), sourceFrom(src), addTo(observer));
+    }
+  );
