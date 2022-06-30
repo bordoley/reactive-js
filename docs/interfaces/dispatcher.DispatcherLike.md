@@ -16,7 +16,7 @@
 
   ↳ **`DispatcherLike`**
 
-  ↳↳ [`StreamLike`](streamable.StreamLike.md)
+  ↳↳ [`StreamLike`](stream.StreamLike.md)
 
 ## Implemented by
 

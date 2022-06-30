@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`StreamLike`](streamable.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`\>
+- [`StreamLike`](stream.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`\>
 
   ↳ **`StateStreamLike`**
 
@@ -41,4 +41,4 @@ ___
 
 #### Inherited from
 
-[StreamLike](streamable.StreamLike.md).[scheduler](streamable.StreamLike.md#scheduler)
+[StreamLike](stream.StreamLike.md).[scheduler](stream.StreamLike.md#scheduler)

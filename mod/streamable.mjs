@@ -1,39 +1,16 @@
 /// <reference types="./streamable.d.ts" />
 import { concatWith, fromValue, ignoreElements, startWith } from './container.mjs';
-import { dispatch, dispatchTo } from './dispatcher.mjs';
-import { add, addTo, bindTo } from './disposable.mjs';
-import { newInstance, pipe, length, compose, returns, updateReducer, identity as identity$1 } from './functions.mjs';
-import { AbstractDisposableObservable, Subject, publish, observerCount, replay, createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, takeFirst, subscribeOn, fromDisposable, takeUntil, onNotify, subscribe, merge, keepT, onSubscribe, __currentScheduler, __using, __memo, reduce, concatT } from './observable.mjs';
+import { dispatchTo } from './dispatcher.mjs';
+import { add, bindTo, addTo } from './disposable.mjs';
+import { newInstance, length, compose, pipe, returns, updateReducer, identity as identity$1 } from './functions.mjs';
+import { createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, takeFirst, subscribeOn, fromDisposable, takeUntil, onNotify, subscribe, __currentScheduler, __using, __memo, merge, keepT, onSubscribe, AbstractDisposableObservable, observerCount, replay, Subject, reduce, concatT } from './observable.mjs';
 import { scheduler } from './observer.mjs';
 import { isSome, none } from './option.mjs';
 import { createPausableScheduler } from './scheduler.mjs';
 import { sinkInto as sinkInto$1, sourceFrom } from './source.mjs';
+import { createStream } from './stream.mjs';
 
 const stream = (scheduler, options) => streamable => streamable.stream(scheduler, options);
-class StreamImpl extends AbstractDisposableObservable {
-    constructor(op, scheduler, options) {
-        super();
-        this.scheduler = scheduler;
-        const subject = newInstance(Subject);
-        const observable = pipe(subject, op, publish(scheduler, options));
-        this.dispatcher = subject;
-        this.observable = observable;
-        return pipe(this, add(subject), addTo(this.observable));
-    }
-    get observerCount() {
-        return observerCount(this.observable);
-    }
-    get replay() {
-        return replay(this.observable);
-    }
-    dispatch(req) {
-        pipe(this.dispatcher, dispatch(req));
-    }
-    sink(observer) {
-        pipe(this.observable, sinkInto$1(observer));
-    }
-}
-const createStream = (op, scheduler, options) => newInstance(StreamImpl, op, scheduler, options);
 class CreateStreamable {
     constructor(stream) {
         this.stream = stream;
@@ -95,11 +72,6 @@ const _identity = {
  * Returns an `StreamableLike` that publishes it's notifications.
  */
 const identity = () => _identity;
-const sinkInto = (dest) => (src) => createObservable(observer => {
-    const srcStream = pipe(src, stream(scheduler(observer)));
-    const destStream = pipe(dest, stream(scheduler(observer)));
-    pipe(merge(pipe(srcStream, onNotify(dispatchTo(destStream)), ignoreElements(keepT), onSubscribe(() => destStream)), pipe(destStream, onNotify(dispatchTo(srcStream)), ignoreElements(keepT), onSubscribe(() => srcStream))), ignoreElements(keepT), sinkInto$1(observer));
-});
 const streamOnSchedulerFactory = (streamable, scheduler, replay) => pipe(streamable, stream(scheduler, { replay }));
 const __stream = (streamable, { replay = 0, scheduler, } = {}) => {
     const currentScheduler = __currentScheduler();
@@ -112,6 +84,11 @@ const __state = (initialState, options = {}) => {
     const streamable = __memo(createStateStore, initialState, optionsMemo);
     return __stream(streamable);
 };
+const sinkInto = (dest) => (src) => createObservable(observer => {
+    const srcStream = pipe(src, stream(scheduler(observer)));
+    const destStream = pipe(dest, stream(scheduler(observer)));
+    pipe(merge(pipe(srcStream, onNotify(dispatchTo(destStream)), ignoreElements(keepT), onSubscribe(() => destStream)), pipe(destStream, onNotify(dispatchTo(srcStream)), ignoreElements(keepT), onSubscribe(() => srcStream))), ignoreElements(keepT), sinkInto$1(observer));
+});
 class FlowableSinkAccumulatorImpl extends AbstractDisposableObservable {
     constructor(subject, streamable) {
         super();

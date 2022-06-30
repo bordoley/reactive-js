@@ -1,5 +1,5 @@
 import { concatWith, fromValue, ignoreElements, startWith } from "./container";
-import { DispatcherLike, dispatch, dispatchTo } from "./dispatcher";
+import { dispatchTo } from "./dispatcher";
 import { add, addTo, bindTo } from "./disposable";
 import {
   Equality,
@@ -37,7 +37,6 @@ import {
   observerCount,
   onNotify,
   onSubscribe,
-  publish,
   reduce,
   replay,
   scan,
@@ -49,20 +48,17 @@ import {
 import { Observer, scheduler as getScheduler } from "./observer";
 import { Option, isSome, none } from "./option";
 import { SchedulerLike, createPausableScheduler } from "./scheduler";
-import { sinkInto as sinkIntoSink, sourceFrom } from "./source";
+import {
+  sinkInto as sinkIntoSink,
+  sourceFrom as sourceFromSource,
+} from "./source";
+import { StreamLike, createStream } from "./stream";
 
-/**
- * Represents a duplex stream
- *
- * @noInheritDoc
- */
-export interface StreamLike<TReq, T>
-  extends DispatcherLike<TReq>,
-    MulticastObservableLike<T> {
-  readonly scheduler: SchedulerLike;
-}
-
-export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T>> {
+export interface StreamableLike<
+  TReq,
+  T,
+  TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>,
+> {
   stream(
     this: StreamableLike<TReq, T, TStream>,
     scheduler: SchedulerLike,
@@ -70,18 +66,24 @@ export interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T>> {
   ): TStream;
 }
 
-export interface StreamableStateLike<T>
-  extends StreamableLike<Updater<T>, T, StateStreamLike<T>> {}
+export interface StreamableStateLike<
+  T,
+  TStream extends StateStreamLike<T> = StateStreamLike<T>,
+> extends StreamableLike<Updater<T>, T, TStream> {}
 export interface StateStreamLike<T> extends StreamLike<Updater<T>, T> {}
 
 export type FlowMode = "resume" | "pause";
 
-export interface FlowableLike<T>
-  extends StreamableLike<FlowMode, T, FlowableStreamLike<T>> {}
+export interface FlowableLike<
+  T,
+  TStream extends FlowableStreamLike<T> = FlowableStreamLike<T>,
+> extends StreamableLike<FlowMode, T, TStream> {}
 export interface FlowableStreamLike<T> extends StreamLike<FlowMode, T> {}
 
-export interface FlowableSinkLike<T>
-  extends StreamableLike<T, FlowMode, FlowableSinkStreamLike<T>> {}
+export interface FlowableSinkLike<
+  T,
+  TStream extends FlowableSinkStreamLike<T> = FlowableSinkStreamLike<T>,
+> extends StreamableLike<T, FlowMode, TStream> {}
 export interface FlowableSinkStreamLike<T> extends StreamLike<T, FlowMode> {}
 
 export const stream =
@@ -91,52 +93,6 @@ export const stream =
   ): Function1<StreamableLike<TReq, T, TStream>, TStream> =>
   streamable =>
     streamable.stream(scheduler, options);
-
-class StreamImpl<TReq, T>
-  extends AbstractDisposableObservable<T>
-  implements StreamLike<TReq, T>
-{
-  private readonly dispatcher: DispatcherLike<TReq>;
-  private readonly observable: MulticastObservableLike<T>;
-
-  constructor(
-    op: ObservableOperator<TReq, T>,
-    readonly scheduler: SchedulerLike,
-    options?: { readonly replay?: number },
-  ) {
-    super();
-
-    const subject = newInstance(Subject);
-    const observable = pipe(subject, op, publish<T>(scheduler, options));
-
-    this.dispatcher = subject;
-    this.observable = observable;
-
-    return pipe(this, add(subject), addTo(this.observable));
-  }
-
-  get observerCount(): number {
-    return observerCount(this.observable);
-  }
-
-  get replay(): number {
-    return replay(this.observable);
-  }
-
-  dispatch(req: TReq) {
-    pipe(this.dispatcher, dispatch(req));
-  }
-
-  sink(observer: Observer<T>) {
-    pipe(this.observable, sinkIntoSink(observer));
-  }
-}
-
-const createStream = <TReq, T>(
-  op: ObservableOperator<TReq, T>,
-  scheduler: SchedulerLike,
-  options?: { readonly replay?: number },
-): StreamLike<TReq, T> => newInstance(StreamImpl, op, scheduler, options);
 
 class CreateStreamable<
   TReq,
@@ -166,29 +122,29 @@ export const createStreamble = <
 
 export function createLiftedStreamable<T, A>(
   op1: ObservableOperator<T, A>,
-): StreamableLike<T, A, StreamLike<T, A>>;
+): StreamableLike<T, A>;
 export function createLiftedStreamable<T, A, B>(
   op1: ObservableOperator<T, A>,
   op2: ObservableOperator<A, B>,
-): StreamableLike<T, B, StreamLike<T, B>>;
+): StreamableLike<T, B>;
 export function createLiftedStreamable<T, A, B, C>(
   op1: ObservableOperator<T, A>,
   op2: ObservableOperator<A, B>,
   op3: ObservableOperator<B, C>,
-): StreamableLike<T, C, StreamLike<T, C>>;
+): StreamableLike<T, C>;
 export function createLiftedStreamable<T, A, B, C, D>(
   op1: ObservableOperator<T, A>,
   op2: ObservableOperator<A, B>,
   op3: ObservableOperator<B, C>,
   op4: ObservableOperator<C, D>,
-): StreamableLike<T, D, StreamLike<T, D>>;
+): StreamableLike<T, D>;
 export function createLiftedStreamable<T, A, B, C, D, E>(
   op1: ObservableOperator<T, A>,
   op2: ObservableOperator<A, B>,
   op3: ObservableOperator<B, C>,
   op4: ObservableOperator<C, D>,
   op5: ObservableOperator<D, E>,
-): StreamableLike<T, E, StreamLike<T, E>>;
+): StreamableLike<T, E>;
 export function createLiftedStreamable<T, A, B, C, D, E, F>(
   op1: ObservableOperator<T, A>,
   op2: ObservableOperator<A, B>,
@@ -196,7 +152,7 @@ export function createLiftedStreamable<T, A, B, C, D, E, F>(
   op4: ObservableOperator<C, D>,
   op5: ObservableOperator<D, E>,
   op6: ObservableOperator<E, F>,
-): StreamableLike<T, F, StreamLike<T, F>>;
+): StreamableLike<T, F>;
 export function createLiftedStreamable<T, A, B, C, D, E, F, G>(
   op1: ObservableOperator<T, A>,
   op2: ObservableOperator<A, B>,
@@ -205,7 +161,7 @@ export function createLiftedStreamable<T, A, B, C, D, E, F, G>(
   op5: ObservableOperator<D, E>,
   op6: ObservableOperator<E, F>,
   op7: ObservableOperator<F, G>,
-): StreamableLike<T, G, StreamLike<T, G>>;
+): StreamableLike<T, G>;
 export function createLiftedStreamable<T, A, B, C, D, E, F, G, H>(
   op1: ObservableOperator<T, A>,
   op2: ObservableOperator<A, B>,
@@ -226,7 +182,7 @@ export function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I>(
   op7: ObservableOperator<F, G>,
   op8: ObservableOperator<G, H>,
   op9: ObservableOperator<H, I>,
-): StreamableLike<T, I, StreamLike<T, I>>;
+): StreamableLike<T, I>;
 export function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I, J>(
   op1: ObservableOperator<T, A>,
   op2: ObservableOperator<A, B>,
@@ -238,7 +194,7 @@ export function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I, J>(
   op8: ObservableOperator<G, H>,
   op9: ObservableOperator<H, I>,
   op10: ObservableOperator<I, J>,
-): StreamableLike<T, J, StreamLike<T, J>>;
+): StreamableLike<T, J>;
 export function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I, J, K>(
   op1: ObservableOperator<T, A>,
   op2: ObservableOperator<A, B>,
@@ -251,7 +207,7 @@ export function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I, J, K>(
   op9: ObservableOperator<H, I>,
   op10: ObservableOperator<I, J>,
   op11: ObservableOperator<J, K>,
-): StreamableLike<T, K, StreamLike<T, K>>;
+): StreamableLike<T, K>;
 export function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I, J, K, L>(
   op1: ObservableOperator<T, A>,
   op2: ObservableOperator<A, B>,
@@ -265,11 +221,11 @@ export function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I, J, K, L>(
   op10: ObservableOperator<I, J>,
   op11: ObservableOperator<J, K>,
   op12: ObservableOperator<K, L>,
-): StreamableLike<T, L, StreamLike<T, L>>;
+): StreamableLike<T, L>;
 
 export function createLiftedStreamable<TReq, TData>(
   ...ops: readonly ObservableOperator<unknown, unknown>[]
-): StreamableLike<TReq, TData, StreamLike<TReq, TData>> {
+): StreamableLike<TReq, TData> {
   const op = length(ops) > 1 ? (compose as any)(...ops) : ops[0];
   return createStreamble((scheduler, options) =>
     createStream(op, scheduler, options),
@@ -289,7 +245,7 @@ export const createActionReducer = <TAction, T>(
   reducer: Reducer<TAction, T>,
   initialState: Factory<T>,
   options?: { readonly equality?: Equality<T> },
-): StreamableLike<TAction, T, StreamLike<TAction, T>> =>
+): StreamableLike<TAction, T> =>
   createLiftedStreamable(obs =>
     createObservable(observer => {
       const acc = initialState();
@@ -326,11 +282,7 @@ const _empty = /*@__PURE__*/ createLiftedStreamable<any, any>(
  * Returns an empty `StreamableLike` that always returns
  * a disposed `StreamLike` instance.
  */
-export const empty = <TReq, T>(): StreamableLike<
-  TReq,
-  T,
-  StreamLike<TReq, T>
-> => _empty;
+export const empty = <TReq, T>(): StreamableLike<TReq, T> => _empty;
 
 export const flow =
   <T>(): Function1<ObservableLike<T>, FlowableLike<T>> =>
@@ -343,7 +295,7 @@ export const flow =
 
         pipe(
           observer,
-          sourceFrom(
+          sourceFromSource(
             pipe(
               observable,
               subscribeOn(pausableScheduler),
@@ -381,35 +333,8 @@ const _identity = {
 /*
  * Returns an `StreamableLike` that publishes it's notifications.
  */
-export const identity = <T>(): StreamableLike<T, T, StreamLike<T, T>> =>
-  _identity as StreamableLike<T, T, StreamLike<T, T>>;
-
-export const sinkInto =
-  <TReq, T, TOut>(dest: StreamableLike<T, TReq, StreamLike<T, TReq>>) =>
-  (src: StreamableLike<TReq, T, StreamLike<TReq, T>>): ObservableLike<TOut> =>
-    createObservable(observer => {
-      const srcStream = pipe(src, stream(getScheduler(observer)));
-      const destStream = pipe(dest, stream(getScheduler(observer)));
-
-      pipe(
-        merge(
-          pipe(
-            srcStream,
-            onNotify(dispatchTo(destStream)),
-            ignoreElements(keepT),
-            onSubscribe(() => destStream),
-          ),
-          pipe(
-            destStream,
-            onNotify(dispatchTo(srcStream)),
-            ignoreElements(keepT),
-            onSubscribe(() => srcStream),
-          ),
-        ),
-        ignoreElements(keepT),
-        sinkIntoSink(observer),
-      );
-    });
+export const identity = <T>(): StreamableLike<T, T> =>
+  _identity as StreamableLike<T, T>;
 
 const streamOnSchedulerFactory = <TReq, T, TStream extends StreamLike<TReq, T>>(
   streamable: StreamableLike<TReq, T, TStream>,
@@ -447,6 +372,33 @@ export const __state = <T>(
   const streamable = __memo(createStateStore, initialState, optionsMemo);
   return __stream(streamable);
 };
+
+export const sinkInto =
+  <TReq, T, TOut>(dest: StreamableLike<T, TReq, StreamLike<T, TReq>>) =>
+  (src: StreamableLike<TReq, T, StreamLike<TReq, T>>): ObservableLike<TOut> =>
+    createObservable(observer => {
+      const srcStream = pipe(src, stream(getScheduler(observer)));
+      const destStream = pipe(dest, stream(getScheduler(observer)));
+
+      pipe(
+        merge(
+          pipe(
+            srcStream,
+            onNotify(dispatchTo(destStream)),
+            ignoreElements(keepT),
+            onSubscribe(() => destStream),
+          ),
+          pipe(
+            destStream,
+            onNotify(dispatchTo(srcStream)),
+            ignoreElements(keepT),
+            onSubscribe(() => srcStream),
+          ),
+        ),
+        ignoreElements(keepT),
+        sinkIntoSink(observer),
+      );
+    });
 
 class FlowableSinkAccumulatorImpl<T, TAcc>
   extends AbstractDisposableObservable<TAcc>

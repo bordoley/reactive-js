@@ -2,7 +2,7 @@ import { AbstractDisposableLiftable, LiftableStateLike } from "./liftable.mjs";
 import { ObservableOperator } from "./observable.mjs";
 import { Observer } from "./observer.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
-import { StreamLike } from "./streamable.mjs";
+import { StreamLike } from "./stream.mjs";
 declare class AsyncEnumerator<T> extends AbstractDisposableLiftable<Observer<T>> implements LiftableStateLike, StreamLike<void, T> {
     readonly op: ObservableOperator<void, T>;
     readonly scheduler: SchedulerLike;

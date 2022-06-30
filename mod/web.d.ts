@@ -1,6 +1,7 @@
 import { Function1, Updater } from "./functions.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
-import { StreamLike, StreamableLike } from "./streamable.mjs";
+import { StreamLike } from "./stream.mjs";
+import { StreamableLike } from "./streamable.mjs";
 import { ObservableLike } from "./observable.mjs";
 declare const fromEvent: <T>(target: EventTarget, eventName: string, selector: Function1<Event, T>) => ObservableLike<T>;
 declare const createEventSource: (url: string | URL, options?: EventSourceInit & {

@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`StreamLike`](streamable.StreamLike.md)<`T`, [`FlowMode`](../modules/streamable.md#flowmode)\>
+- [`StreamLike`](stream.StreamLike.md)<`T`, [`FlowMode`](../modules/streamable.md#flowmode)\>
 
   ↳ **`FlowableSinkStreamLike`**
 
@@ -41,4 +41,4 @@ ___
 
 #### Inherited from
 
-[StreamLike](streamable.StreamLike.md).[scheduler](streamable.StreamLike.md#scheduler)
+[StreamLike](stream.StreamLike.md).[scheduler](stream.StreamLike.md#scheduler)

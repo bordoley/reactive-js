@@ -2,11 +2,12 @@
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { onDisposed, bindTo, addTo, toAbortSignal, dispose } from './disposable.mjs';
 import { pipe, newInstance, isEmpty, length, raise, newInstanceWith, compose, returns } from './functions.mjs';
-import { createObservable, AbstractDisposableObservable, observerCount, replay, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
+import { createObservable, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { ignoreElements } from './container.mjs';
 import { none, isSome } from './option.mjs';
 import { sinkInto } from './source.mjs';
+import { AbstractDelegatingStream } from './stream.mjs';
 import { createStreamble, createActionReducer, stream } from './streamable.mjs';
 
 const fromEvent = (target, eventName, selector) => createObservable(observer => {
@@ -77,23 +78,13 @@ const windowHistoryPushState = (self, title, uri) => {
     self.historyCounter++;
     history.pushState({ counter: self.historyCounter, title }, "", uri);
 };
-class WindowLocationStream extends AbstractDisposableObservable {
-    constructor(stateStream) {
-        super();
-        this.stateStream = stateStream;
+class WindowLocationStream extends AbstractDelegatingStream {
+    constructor() {
+        super(...arguments);
         this.historyCounter = -1;
     }
-    get observerCount() {
-        return observerCount(this.stateStream);
-    }
-    get replay() {
-        return replay(this.stateStream);
-    }
-    get scheduler() {
-        return this.stateStream.scheduler;
-    }
     dispatch(stateOrUpdater, { replace } = { replace: false }) {
-        pipe({ stateOrUpdater, replace }, dispatchTo(this.stateStream));
+        pipe({ stateOrUpdater, replace }, dispatchTo(this.delegate));
     }
     goBack() {
         const canGoBack = this.historyCounter > 0;
@@ -103,7 +94,7 @@ class WindowLocationStream extends AbstractDisposableObservable {
         return canGoBack;
     }
     sink(observer) {
-        pipe(this.stateStream, map(({ uri }) => uri), sinkInto(observer));
+        pipe(this.delegate, map(({ uri }) => uri), sinkInto(observer));
     }
 }
 let currentWindowLocationStream = none;

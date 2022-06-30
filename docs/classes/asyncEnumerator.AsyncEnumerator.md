@@ -19,7 +19,7 @@
 ## Implements
 
 - [`LiftableStateLike`](../interfaces/liftable.LiftableStateLike.md)
-- [`StreamLike`](../interfaces/streamable.StreamLike.md)<`void`, `T`\>
+- [`StreamLike`](../interfaces/stream.StreamLike.md)<`void`, `T`\>
 
 ## Table of contents
 
@@ -83,7 +83,7 @@ ___
 
 #### Implementation of
 
-[StreamLike](../interfaces/streamable.StreamLike.md).[scheduler](../interfaces/streamable.StreamLike.md#scheduler)
+[StreamLike](../interfaces/stream.StreamLike.md).[scheduler](../interfaces/stream.StreamLike.md#scheduler)
 
 ## Accessors
 
