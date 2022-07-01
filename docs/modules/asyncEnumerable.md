@@ -20,12 +20,12 @@
 - [keepT](asyncEnumerable.md#keept)
 - [mapT](asyncEnumerable.md#mapt)
 - [scanT](asyncEnumerable.md#scant)
+- [takeWhileT](asyncEnumerable.md#takewhilet)
 - [toObservableT](asyncEnumerable.md#toobservablet)
 - [type](asyncEnumerable.md#type)
 
 ### Functions
 
-- [consume](asyncEnumerable.md#consume)
 - [consumeAsync](asyncEnumerable.md#consumeasync)
 - [consumeContinue](asyncEnumerable.md#consumecontinue-1)
 - [consumeDone](asyncEnumerable.md#consumedone-1)
@@ -36,6 +36,7 @@
 - [keep](asyncEnumerable.md#keep)
 - [map](asyncEnumerable.md#map)
 - [scan](asyncEnumerable.md#scan)
+- [takeWhile](asyncEnumerable.md#takewhile)
 - [toObservable](asyncEnumerable.md#toobservable)
 
 ## Type Aliases
@@ -115,6 +116,12 @@ ___
 
 ___
 
+### takeWhileT
+
+• `Const` **takeWhileT**: [`TakeWhile`](../interfaces/container.TakeWhile.md)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>\>
+
+___
+
 ### toObservableT
 
 • `Const` **toObservableT**: [`ToObservable`](../interfaces/observable.ToObservable.md)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>\>
@@ -126,30 +133,6 @@ ___
 • `Const` **type**: [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>
 
 ## Functions
-
-### consume
-
-▸ **consume**<`T`, `TAcc`\>(`consumer`, `initial`): [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `TAcc` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `consumer` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ConsumeContinue`](asyncEnumerable.md#consumecontinue)<`TAcc`\> \| [`ConsumeDone`](asyncEnumerable.md#consumedone)<`TAcc`\>\> |
-| `initial` | [`Factory`](functions.md#factory)<`TAcc`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
-
-___
 
 ### consumeAsync
 
@@ -373,6 +356,30 @@ ___
 #### Returns
 
 [`AsyncEnumerableOperator`](asyncEnumerable.md#asyncenumerableoperator)<`T`, `TAcc`\>
+
+___
+
+### takeWhile
+
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`AsyncEnumerableOperator`](asyncEnumerable.md#asyncenumerableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+| `options?` | `Object` |
+| `options.inclusive?` | `boolean` |
+
+#### Returns
+
+[`AsyncEnumerableOperator`](asyncEnumerable.md#asyncenumerableoperator)<`T`, `T`\>
 
 ___
 

@@ -1,17 +1,17 @@
 /// <reference types="./__tests__.d.ts" />
-import { fromArray, fromIterable, generate, consume, consumeContinue, consumeDone, consumeAsync, toObservable, map, keep, scan } from './asyncEnumerable.mjs';
+import { fromArray, fromIterable, generate, consumeAsync, consumeDone, consumeContinue, toObservable, map, keep, scan, takeWhile, fromArrayT as fromArrayT$1 } from './asyncEnumerable.mjs';
 import { fromValue, empty, endWith, concatMap, mapTo, startWith, ignoreElements, contains, compute, noneSatisfy, zipWith, throws, concatWith, genMap, encodeUtf8 } from './container.mjs';
 import { onDisposed, Disposable, add, dispose, isDisposed, SerialDisposable, disposed, DisposableValue } from './disposable.mjs';
 import { forEach } from './enumerator.mjs';
-import { pipe, ignore, increment, returns, pipeLazy, isEven, sum, newInstance, raise, newInstanceWith, alwaysTrue, incrementBy, alwaysFalse, arrayEquality, identity } from './functions.mjs';
-import { onNotify, subscribe, toRunnable, fromArrayT, concat as concat$2, fromArray as fromArray$3, buffer, mapT, catchError, concatT, generate as generate$3, takeFirst as takeFirst$2, combineLatestWith, createObservable, Subject, observerCount, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeT, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync, share, zip as zip$1, map as map$3, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$2, zipT, zipLatestWith, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$3, skipFirst as skipFirst$2, takeWhile as takeWhile$2, decodeWithCharset, reduce, usingT } from './observable.mjs';
+import { pipe, ignore, increment, returns, pipeLazy, isEven, sum, alwaysTrue, newInstance, raise, newInstanceWith, incrementBy, alwaysFalse, arrayEquality, identity } from './functions.mjs';
+import { onNotify, subscribe, fromArrayT, toRunnable, concat as concat$2, fromArray as fromArray$3, buffer, mapT, catchError, concatT, generate as generate$3, takeFirst as takeFirst$2, combineLatestWith, createObservable, Subject, observerCount, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeT, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync, share, zip as zip$1, map as map$3, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$2, zipT, zipLatestWith, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$3, skipFirst as skipFirst$2, takeWhile as takeWhile$3, decodeWithCharset, reduce, usingT } from './observable.mjs';
 import { none, isSome } from './option.mjs';
-import { last, toArray, fromArray as fromArray$1, someSatisfyT, first, generate as generate$1, everySatisfy, map as map$1, forEach as forEach$1, everySatisfyT, fromArrayT as fromArrayT$1, keepT, concat, concatAll, distinctUntilChanged, repeat, scan as scan$1, skipFirst, takeFirst, takeLast, takeWhile, toRunnable as toRunnable$1 } from './runnable.mjs';
+import { last, toArray, fromArray as fromArray$1, someSatisfyT, first, generate as generate$1, everySatisfy, map as map$1, forEach as forEach$1, everySatisfyT, fromArrayT as fromArrayT$2, keepT, concat, concatAll, distinctUntilChanged, repeat, scan as scan$1, skipFirst, takeFirst, takeLast, takeWhile as takeWhile$1, toRunnable as toRunnable$1 } from './runnable.mjs';
 import { createVirtualTimeScheduler, createHostScheduler, schedule, now } from './scheduler.mjs';
 import { stream, createStateStore, __stream, createActionReducer, createLiftedStreamable, sourceFrom } from './streamable.mjs';
 import { describe, test, expectArrayEquals, expectNone, expectEquals, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
-import { fromArray as fromArray$2, toIterable, fromIterable as fromIterable$1, toRunnable as toRunnable$2, fromArrayT as fromArrayT$2, keepT as keepT$1, concat as concat$1, concatAll as concatAll$1, distinctUntilChanged as distinctUntilChanged$1, generate as generate$2, map as map$2, repeat as repeat$1, scan as scan$2, skipFirst as skipFirst$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, zip } from './enumerable.mjs';
-import { type, fromArray as fromArray$4, concat as concat$3, concatAll as concatAll$2, distinctUntilChanged as distinctUntilChanged$3, generate as generate$4, keep as keep$1, map as map$4, repeat as repeat$3, scan as scan$4, skipFirst as skipFirst$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$3, toRunnable as toRunnable$3, fromArrayT as fromArrayT$3, zipT as zipT$1 } from './sequence.mjs';
+import { fromArray as fromArray$2, toIterable, fromIterable as fromIterable$1, toRunnable as toRunnable$2, fromArrayT as fromArrayT$3, keepT as keepT$1, concat as concat$1, concatAll as concatAll$1, distinctUntilChanged as distinctUntilChanged$1, generate as generate$2, map as map$2, repeat as repeat$1, scan as scan$2, skipFirst as skipFirst$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$2, zip } from './enumerable.mjs';
+import { type, fromArray as fromArray$4, concat as concat$3, concatAll as concatAll$2, distinctUntilChanged as distinctUntilChanged$3, generate as generate$4, keep as keep$1, map as map$4, repeat as repeat$3, scan as scan$4, skipFirst as skipFirst$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$4, toRunnable as toRunnable$3, fromArrayT as fromArrayT$4, zipT as zipT$1 } from './sequence.mjs';
 import { dispatchTo } from './dispatcher.mjs';
 import { flow, toObservable as toObservable$1 } from './flowable.mjs';
 
@@ -53,11 +53,11 @@ const tests$7 = describe("async enumerable", test("fromArray", () => {
     enumerator.dispatch(none);
     pipe(scheduler, forEach(ignore));
     pipe(result, expectArrayEquals([1, 2, 3]));
-}), test("consume", () => {
-    const enumerable = fromIterable()([1, 2, 3, 4, 5, 6]);
-    pipe(enumerable, consume((acc, next) => consumeContinue(acc + next), returns(0)), toRunnable(), last(), expectEquals(21));
-    pipe(enumerable, consume((acc, next) => acc > 0 ? consumeDone(acc + next) : consumeContinue(acc + next), returns(0)), toRunnable(), last(), expectEquals(3));
-}), describe("consumeAsync", test("when the consumer early terminates", pipeLazy([1, 2, 3, 4, 5, 6], fromIterable(), consumeAsync((acc, next) => fromValue(fromArrayT)(acc > 0 ? consumeDone(acc + next) : consumeContinue(acc + next)), returns(0)), toRunnable(), last(), expectEquals(3))), test("when the consumer never terminates", pipeLazy([1, 2, 3, 4, 5, 6], fromIterable(), consumeAsync((acc, next) => pipe(acc + next, consumeContinue, fromValue(fromArrayT)), returns(0)), toRunnable(), last(), expectEquals(21)))), test("toObservable", pipeLazy([1, 2, 3, 4, 5], fromArray(), toObservable(), toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4, 5]))), test("toObservable", pipeLazy([1, 2, 3, 4, 5], fromArray(), toObservable(), toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4, 5]))), test("map", pipeLazy([1, 2, 3, 4, 5], fromArray(), map(increment), toObservable(), toRunnable(), toArray(), expectArrayEquals([2, 3, 4, 5, 6]))), test("keep", pipeLazy([1, 2, 3, 4, 5], fromArray(), keep(isEven), toObservable(), toRunnable(), toArray(), expectArrayEquals([2, 4]))), test("map/keep", pipeLazy([1, 2, 3, 4, 5], fromArray(), map(increment), keep(isEven), toObservable(), toRunnable(), toArray(), expectArrayEquals([2, 4, 6]))), test("keep/map", pipeLazy([1, 2, 3, 4, 5, 6], fromArray(), keep(isEven), map(increment), toObservable(), toRunnable(), toArray(), expectArrayEquals([3, 5, 7]))), test("scan", pipeLazy([1, 1, 1], fromArray(), scan(sum, returns(0)), toObservable(), toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))));
+}), describe("consumeAsync", test("when the consumer early terminates", pipeLazy([1, 2, 3, 4, 5, 6], fromIterable(), consumeAsync((acc, next) => fromValue(fromArrayT)(acc > 0 ? consumeDone(acc + next) : consumeContinue(acc + next)), returns(0)), toRunnable(), last(), expectEquals(3))), test("when the consumer never terminates", pipeLazy([1, 2, 3, 4, 5, 6], fromIterable(), consumeAsync((acc, next) => pipe(acc + next, consumeContinue, fromValue(fromArrayT)), returns(0)), toRunnable(), last(), expectEquals(21)))), test("toObservable", pipeLazy([1, 2, 3, 4, 5], fromArray(), toObservable(), toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4, 5]))), test("toObservable", pipeLazy([1, 2, 3, 4, 5], fromArray(), toObservable(), toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4, 5]))), test("map", pipeLazy([1, 2, 3, 4, 5], fromArray(), map(increment), toObservable(), toRunnable(), toArray(), expectArrayEquals([2, 3, 4, 5, 6]))), test("keep", pipeLazy([1, 2, 3, 4, 5], fromArray(), keep(isEven), toObservable(), toRunnable(), toArray(), expectArrayEquals([2, 4]))), test("map/keep", pipeLazy([1, 2, 3, 4, 5], fromArray(), map(increment), keep(isEven), toObservable(), toRunnable(), toArray(), expectArrayEquals([2, 4, 6]))), test("keep/map", pipeLazy([1, 2, 3, 4, 5, 6], fromArray(), keep(isEven), map(increment), toObservable(), toRunnable(), toArray(), expectArrayEquals([3, 5, 7]))), test("scan", pipeLazy([1, 1, 1], fromArray(), scan(sum, returns(0)), toObservable(), toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), describe("takeWhile", test("exclusive", () => {
+    pipe(generate(increment, returns(0)), takeWhile(x => x < 4), toObservable(), toRunnable(), toArray(), expectArrayEquals([1, 2, 3]));
+    pipe([1, 2, 3], fromArray(), takeWhile(alwaysTrue), toObservable(), toRunnable(), toArray(), expectArrayEquals([1, 2, 3]));
+    pipe(empty(fromArrayT$1), takeWhile(alwaysTrue), toObservable(), toRunnable(), toArray(), expectArrayEquals([]));
+}), test("inclusive", pipeLazy(generate(increment, returns(0)), takeWhile(x => x < 4, { inclusive: true }), toObservable(), toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4])))));
 
 const tests$6 = describe("Disposable", describe("Disposable", test("disposes child disposable when disposed", () => {
     const child = newInstance(Disposable);
@@ -115,7 +115,7 @@ const tests$5 = describe("runnable", describe("contains", test("source is empty"
     pipe([1, 2, 3], fromArray$1(), forEach$1(fn));
     pipe(fn, expectToHaveBeenCalledTimes(3));
 }), describe("noneSatisfy", test("source is empty", pipeLazy(empty({ fromArray: fromArray$1 }), noneSatisfy(everySatisfyT, alwaysFalse), first(), expectTrue)), test("source values pass predicate", pipeLazy([1, 2, 3], fromArray$1(), noneSatisfy(everySatisfyT, alwaysTrue), first(), expectFalse)), test("source values fail predicate", pipeLazy([1, 2, 3], fromArray$1(), noneSatisfy(everySatisfyT, alwaysFalse), first(), expectTrue))), createRunnableTests({
-    ...fromArrayT$1,
+    ...fromArrayT$2,
     ...keepT,
     concat,
     concatAll,
@@ -127,7 +127,7 @@ const tests$5 = describe("runnable", describe("contains", test("source is empty"
     skipFirst,
     takeFirst,
     takeLast,
-    takeWhile,
+    takeWhile: takeWhile$1,
     toRunnable: toRunnable$1,
 }));
 
@@ -136,7 +136,7 @@ const createZippableTests = (m) => describe("ZippableContainer", test("zip", pip
     [2, 3, 4],
 ], arrayEquality()))));
 const tests$4 = describe("enumerable", test("toIterable", pipeLazy([1, 2, 3], fromArray$2(), toIterable(), fromIterable$1(), toRunnable$2(), toArray(), expectArrayEquals([1, 2, 3]))), createRunnableTests({
-    ...fromArrayT$2,
+    ...fromArrayT$3,
     ...keepT$1,
     concat: concat$1,
     concatAll: concatAll$1,
@@ -148,9 +148,9 @@ const tests$4 = describe("enumerable", test("toIterable", pipeLazy([1, 2, 3], fr
     skipFirst: skipFirst$1,
     takeFirst: takeFirst$1,
     takeLast: takeLast$1,
-    takeWhile: takeWhile$1,
+    takeWhile: takeWhile$2,
     toRunnable: toRunnable$2,
-}), createZippableTests({ ...fromArrayT$2, generate: generate$2, map: map$2, toRunnable: toRunnable$2, zip }));
+}), createZippableTests({ ...fromArrayT$3, generate: generate$2, map: map$2, toRunnable: toRunnable$2, zip }));
 
 const tests$3 = describe("observable", describe("buffer", test("with duration and maxBufferSize", pipeLazy(concat$2(pipe([1, 2, 3, 4], fromArray$3()), pipe([1, 2, 3], fromArray$3({ delay: 1 })), pipe(4, fromValue(fromArrayT, { delay: 8 }))), buffer({ duration: 4, maxBufferSize: 3 }), toRunnable(), toArray(), expectArrayEquals([[1, 2, 3], [4, 1, 2], [3], [4]], arrayEquality()))), test("when duration observable throws", pipeLazy(pipeLazy([1, 2, 3, 4], fromArray$3(), buffer({ duration: _ => throws({ ...fromArrayT, ...mapT })(raise) }), toRunnable({
     schedulerFactory: pipeLazy({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
@@ -318,7 +318,7 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
     skipFirst: skipFirst$2,
     takeFirst: takeFirst$2,
     takeLast: takeLast$2,
-    takeWhile: takeWhile$2,
+    takeWhile: takeWhile$3,
     toRunnable,
 }), createZippableTests({ ...fromArrayT, generate: generate$3, map: map$3, toRunnable, zip: zip$1 }));
 
@@ -336,9 +336,9 @@ const tests$2 = describe("sequence", createRunnableTests({
     skipFirst: skipFirst$3,
     takeFirst: takeFirst$3,
     takeLast: takeLast$3,
-    takeWhile: takeWhile$3,
+    takeWhile: takeWhile$4,
     toRunnable: toRunnable$3,
-}), createZippableTests({ ...fromArrayT$3, generate: generate$4, map: map$4, toRunnable: toRunnable$3, ...zipT$1 }));
+}), createZippableTests({ ...fromArrayT$4, generate: generate$4, map: map$4, toRunnable: toRunnable$3, ...zipT$1 }));
 
 const tests$1 = describe("streamable", test("__stream", () => {
     const streamable = createStateStore(() => 0);

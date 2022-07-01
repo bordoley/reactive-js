@@ -1,20 +1,22 @@
 import {
-  consume,
   consumeAsync,
   consumeContinue,
   consumeDone,
   fromArray,
+  fromArrayT,
   fromIterable,
   generate,
   keep,
   map,
   scan,
+  takeWhile,
   toObservable,
 } from "../asyncEnumerable";
-import { fromValue } from "../container";
+import { empty, fromValue } from "../container";
 import { Error, onDisposed } from "../disposable";
 import { forEach } from "../enumerator";
 import {
+  alwaysTrue,
   ignore,
   increment,
   isEven,
@@ -26,7 +28,7 @@ import {
 import {
   __memo,
   __observe,
-  fromArrayT,
+  fromArrayT as fromArrayTObs,
   onNotify,
   subscribe,
   toRunnable,
@@ -123,30 +125,6 @@ export const tests = describe(
     pipe(result, expectArrayEquals([1, 2, 3]));
   }),
 
-  test("consume", () => {
-    const enumerable = fromIterable<number>()([1, 2, 3, 4, 5, 6]);
-
-    pipe(
-      enumerable,
-      consume((acc, next) => consumeContinue(acc + next), returns<number>(0)),
-      toRunnable(),
-      last(),
-      expectEquals(21),
-    );
-
-    pipe(
-      enumerable,
-      consume(
-        (acc, next) =>
-          acc > 0 ? consumeDone(acc + next) : consumeContinue(acc + next),
-        returns<number>(0),
-      ),
-      toRunnable(),
-      last(),
-      expectEquals(3),
-    );
-  }),
-
   describe(
     "consumeAsync",
     test(
@@ -156,7 +134,7 @@ export const tests = describe(
         fromIterable(),
         consumeAsync(
           (acc, next) =>
-            fromValue(fromArrayT)(
+            fromValue(fromArrayTObs)(
               acc > 0 ? consumeDone(acc + next) : consumeContinue(acc + next),
             ),
           returns<number>(0),
@@ -173,7 +151,7 @@ export const tests = describe(
         fromIterable(),
         consumeAsync(
           (acc, next) =>
-            pipe(acc + next, consumeContinue, fromValue(fromArrayT)),
+            pipe(acc + next, consumeContinue, fromValue(fromArrayTObs)),
           returns<number>(0),
         ),
         toRunnable(),
@@ -266,6 +244,48 @@ export const tests = describe(
       toRunnable(),
       toArray(),
       expectArrayEquals([1, 2, 3]),
+    ),
+  ),
+  describe(
+    "takeWhile",
+    test("exclusive", () => {
+      pipe(
+        generate(increment, returns(0)),
+        takeWhile(x => x < 4),
+        toObservable(),
+        toRunnable(),
+        toArray(),
+        expectArrayEquals([1, 2, 3]),
+      );
+      pipe(
+        [1, 2, 3],
+        fromArray(),
+        takeWhile(alwaysTrue),
+        toObservable(),
+        toRunnable(),
+        toArray(),
+        expectArrayEquals([1, 2, 3]),
+      );
+      pipe(
+        empty(fromArrayT),
+        takeWhile(alwaysTrue),
+        toObservable(),
+        toRunnable(),
+        toArray(),
+        expectArrayEquals([]),
+      );
+    }),
+
+    test(
+      "inclusive",
+      pipeLazy(
+        generate(increment, returns(0)),
+        takeWhile(x => x < 4, { inclusive: true }),
+        toObservable(),
+        toRunnable(),
+        toArray(),
+        expectArrayEquals([1, 2, 3, 4]),
+      ),
     ),
   ),
 );
