@@ -328,7 +328,7 @@ export const negate = (v: boolean): boolean => !v;
  */
 export const raise = <T>(message?: unknown): T => {
   if (message === undefined || typeof message === "string") {
-    throw newInstanceWith(Error, message);
+    throw newInstance(Error, message);
   } else {
     throw message;
   }

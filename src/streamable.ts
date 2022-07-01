@@ -8,7 +8,6 @@ import {
   Reducer,
   Updater,
   compose,
-  identity as identityF,
   length,
   newInstance,
   pipe,
@@ -242,18 +241,6 @@ export const createStateStore = <T>(
   options?: { readonly equality?: Equality<T> },
 ): StreamableStateLike<T> =>
   createActionReducer(updateReducer, initialState, options);
-
-const _identity = {
-  stream(scheduler: SchedulerLike, options?: { readonly replay: number }) {
-    return createStream(identityF, scheduler, options);
-  },
-};
-
-/*
- * Returns an `StreamableLike` that publishes it's notifications.
- */
-export const identity = <T>(): StreamableLike<T, T> =>
-  _identity as StreamableLike<T, T>;
 
 const streamOnSchedulerFactory = <TReq, T, TStream extends StreamLike<TReq, T>>(
   streamable: StreamableLike<TReq, T, TStream>,

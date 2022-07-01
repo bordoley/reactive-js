@@ -2,7 +2,7 @@
 import { concatWith, fromValue, ignoreElements } from './container.mjs';
 import { dispatchTo } from './dispatcher.mjs';
 import { addTo, add } from './disposable.mjs';
-import { newInstance, length, compose, pipe, returns, updateReducer, identity as identity$1 } from './functions.mjs';
+import { newInstance, length, compose, pipe, returns, updateReducer } from './functions.mjs';
 import { createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, __currentScheduler, __using, __memo, merge, onNotify, keepT, onSubscribe, subscribe } from './observable.mjs';
 import { isSome, none } from './option.mjs';
 import { sinkInto as sinkInto$1 } from './source.mjs';
@@ -42,15 +42,6 @@ const createActionReducer = (reducer, initialState, options) => createLiftedStre
  * if a state value is distinct from the previous one.
  */
 const createStateStore = (initialState, options) => createActionReducer(updateReducer, initialState, options);
-const _identity = {
-    stream(scheduler, options) {
-        return createStream(identity$1, scheduler, options);
-    },
-};
-/*
- * Returns an `StreamableLike` that publishes it's notifications.
- */
-const identity = () => _identity;
 const streamOnSchedulerFactory = (streamable, scheduler, replay) => pipe(streamable, stream(scheduler, { replay }));
 const __stream = (streamable, { replay = 0, scheduler, } = {}) => {
     const currentScheduler = __currentScheduler();
@@ -74,4 +65,4 @@ const sourceFrom = (streamable) => dest => {
     return dest;
 };
 
-export { __state, __stream, createActionReducer, createLiftedStreamable, createStateStore, createStreamble, identity, sinkInto, sourceFrom, stream };
+export { __state, __stream, createActionReducer, createLiftedStreamable, createStateStore, createStreamble, sinkInto, sourceFrom, stream };

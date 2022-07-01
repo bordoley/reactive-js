@@ -54,7 +54,6 @@ declare const createActionReducer: <TAction, T>(reducer: Reducer<TAction, T>, in
 declare const createStateStore: <T>(initialState: Factory<T>, options?: {
     readonly equality?: Equality<T> | undefined;
 } | undefined) => StreamableStateLike<T, StateStreamLike<T>>;
-declare const identity: <T>() => StreamableLike<T, T, StreamLike<T, T>>;
 declare const __stream: <TReq, T, TStream extends StreamLike<TReq, T>>(streamable: StreamableLike<TReq, T, TStream>, { replay, scheduler, }?: {
     readonly replay?: number | undefined;
     readonly scheduler?: SchedulerLike | undefined;
@@ -64,4 +63,4 @@ declare const __state: <T>(initialState: () => T, options?: {
 }) => StateStreamLike<T>;
 declare const sinkInto: <TReq, T, TSinkStream extends StreamLike<T, TReq>>(dest: TSinkStream) => (src: StreamableLike<TReq, T, StreamLike<TReq, T>>) => StreamableLike<TReq, T, StreamLike<TReq, T>>;
 declare const sourceFrom: <TReq, T, TSinkStream extends StreamLike<T, TReq>>(streamable: StreamableLike<TReq, T, StreamLike<TReq, T>>) => Function1<TSinkStream, TSinkStream>;
-export { StateStreamLike, StreamableLike, StreamableStateLike, __state, __stream, createActionReducer, createLiftedStreamable, createStateStore, createStreamble, identity, sinkInto, sourceFrom, stream };
+export { StateStreamLike, StreamableLike, StreamableStateLike, __state, __stream, createActionReducer, createLiftedStreamable, createStateStore, createStreamble, sinkInto, sourceFrom, stream };
