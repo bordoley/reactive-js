@@ -278,7 +278,7 @@ export function createLiftedAsyncEnumerable<T>(
  * @param values The array.
  */
 
-export const fromArray = createFromArray<
+export const fromArray = /*@__PURE__*/ createFromArray<
   AsyncEnumerableLike<unknown>,
   {
     readonly delay: number;
