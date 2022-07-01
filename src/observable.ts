@@ -378,7 +378,7 @@ export const publish =
   ): Function1<ObservableLike<T>, MulticastObservableLike<T>> =>
   observable => {
     const { replay = 0 } = options;
-    const subject = newInstance<number, Subject<T>>(Subject, replay);
+    const subject = newInstance<Subject<T>, number>(Subject, replay);
     pipe(
       observable,
       onNotify(dispatchTo(subject)),

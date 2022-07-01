@@ -43,7 +43,7 @@ export const fromArray = /*@__PURE__*/ createFromArray<EnumerableLike<unknown>>(
   <T>(values: readonly T[], startIndex: number, endIndex: number) =>
     createEnumerable(
       pipeLazy(
-        instanceFactory<readonly T[], number, number, ArrayEnumerator<T>>(
+        instanceFactory<ArrayEnumerator<T>, readonly T[], number, number>(
           ArrayEnumerator,
         ),
         callWith(values, startIndex - 1, endIndex),
