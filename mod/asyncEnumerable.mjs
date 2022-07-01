@@ -1,5 +1,5 @@
 /// <reference types="./asyncEnumerable.d.ts" />
-import { pipe, newInstance, length, compose, increment, returns, flip } from './functions.mjs';
+import { pipe, newInstance, length, compose, increment, returns, pipeLazy, flip } from './functions.mjs';
 import { AbstractLiftable, covariant, createKeepLiftOperator, createMapLiftOperator, createScanLiftOperator } from './liftable.mjs';
 import { stream } from './streamable.mjs';
 import { AsyncEnumerator, AbstractDelegatingAsyncEnumerator } from './asyncEnumerator.mjs';
@@ -91,7 +91,7 @@ const fromArray = /*@__PURE__*/ createFromArray((values, startIndex, endIndex, o
 const fromArrayT = {
     fromArray,
 };
-const _fromEnumerable = (enumerable) => createLiftedAsyncEnumerable(withLatestFrom(using(() => enumerate(enumerable), compose(fromValue(fromArrayT$1), concatWith(concatT, never()))), (_, enumerator) => enumerator), onNotify(move), takeWhile(hasCurrent), map$1(current));
+const _fromEnumerable = (enumerable) => createLiftedAsyncEnumerable(withLatestFrom(using(pipeLazy(enumerable, enumerate), compose(fromValue(fromArrayT$1), concatWith(concatT, never()))), (_, enumerator) => enumerator), onNotify(move), takeWhile(hasCurrent), map$1(current));
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
  *

@@ -30,12 +30,14 @@ class RepeatEnumerator<T> extends Enumerator<T> {
       this.enumerator = pipe(this.src, enumerate, addTo(this));
     }
 
-    while (!move(this.enumerator)) {
+    let { enumerator } = this;
+    while (!move(enumerator)) {
       this.count++;
 
       try {
         if (this.shouldRepeat(this.count)) {
-          this.enumerator = pipe(this.src, enumerate, addTo(this));
+          enumerator = pipe(this.src, enumerate, addTo(this));
+          this.enumerator = enumerator;
         } else {
           break;
         }

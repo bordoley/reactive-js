@@ -34,6 +34,7 @@ import {
   length,
   newInstance,
   pipe,
+  pipeLazy,
   returns,
 } from "./functions";
 import {
@@ -316,7 +317,7 @@ const _fromEnumerable = <T>(
   createLiftedAsyncEnumerable(
     withLatestFrom<void, Enumerator<T>, Enumerator<T>>(
       using(
-        () => enumerate(enumerable),
+        pipeLazy(enumerable, enumerate),
         compose(fromValue(fromArrayTObs), concatWith(concatT, never())),
       ),
       (_, enumerator) => enumerator,

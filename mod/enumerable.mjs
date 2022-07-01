@@ -1,6 +1,6 @@
 /// <reference types="./enumerable.d.ts" />
 import { isDisposed, dispose, createSerialDisposable, bindTo, add, addTo } from './disposable.mjs';
-import { AbstractEnumerator, reset, hasCurrent, AbstractDelegatingEnumerator, move, Enumerator, current, forEach, zip as zip$1, AbstractPassThroughEnumerator } from './enumerator.mjs';
+import { AbstractEnumerator, reset, hasCurrent, AbstractDelegatingEnumerator, move, current, Enumerator, forEach, zip as zip$1, AbstractPassThroughEnumerator } from './enumerator.mjs';
 import { pipe, pipeLazy, instanceFactory, callWith, newInstance, newInstanceWith, length, max, raise, alwaysTrue, identity } from './functions.mjs';
 import { createFromArray, empty } from './container.mjs';
 import { AbstractLiftable, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, delegate, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
@@ -43,6 +43,7 @@ const fromArrayT = {
     fromArray,
 };
 
+const enumerate = (enumerable) => enumerable.enumerate();
 class AbstractEnumerable extends AbstractLiftable {
 }
 class CreateEnumerable extends AbstractEnumerable {
@@ -60,7 +61,6 @@ class CreateEnumerable extends AbstractEnumerable {
     }
 }
 const createEnumerable = (enumerate) => newInstance(CreateEnumerable, enumerate);
-const enumerate = (enumerable) => enumerable.enumerate();
 
 class LiftedEnumerable extends AbstractEnumerable {
     constructor(src, operators) {
@@ -69,8 +69,7 @@ class LiftedEnumerable extends AbstractEnumerable {
         this.operators = operators;
     }
     enumerate() {
-        const src = enumerate(this.src);
-        return pipe(src, ...this.operators);
+        return pipe(this.src, enumerate, ...this.operators);
     }
 }
 /**
@@ -100,7 +99,7 @@ class ConcatAllEnumerator extends AbstractDelegatingEnumerator {
         reset(this);
         const { delegate, enumerator } = this;
         if (isDisposed(enumerator.inner) && move(delegate)) {
-            enumerator.inner = enumerate(delegate.current);
+            enumerator.inner = pipe(delegate, current, enumerate);
         }
         while (enumerator.inner instanceof Enumerator &&
             !isDisposed(enumerator.inner)) {
@@ -109,7 +108,7 @@ class ConcatAllEnumerator extends AbstractDelegatingEnumerator {
                 break;
             }
             else if (move(delegate)) {
-                enumerator.inner = enumerate(current(delegate));
+                enumerator.inner = pipe(delegate, current, enumerate);
             }
             else {
                 pipe(this, dispose());
@@ -256,11 +255,13 @@ class RepeatEnumerator extends Enumerator {
         if (isNone(this.enumerator)) {
             this.enumerator = pipe(this.src, enumerate, addTo(this));
         }
-        while (!move(this.enumerator)) {
+        let { enumerator } = this;
+        while (!move(enumerator)) {
             this.count++;
             try {
                 if (this.shouldRepeat(this.count)) {
-                    this.enumerator = pipe(this.src, enumerate, addTo(this));
+                    enumerator = pipe(this.src, enumerate, addTo(this));
+                    this.enumerator = enumerator;
                 }
                 else {
                     break;
@@ -353,7 +354,7 @@ class EnumerableIterable {
         this.enumerable = enumerable;
     }
     *[Symbol.iterator]() {
-        const enumerator = enumerate(this.enumerable);
+        const enumerator = pipe(this.enumerable, enumerate);
         while (move(enumerator)) {
             yield current(enumerator);
         }
@@ -606,8 +607,7 @@ const toEnumerableT = {
 const _using = (resourceFactory, enumerableFactory) => createEnumerable(() => {
     const resources = resourceFactory();
     const resourcesArray = Array.isArray(resources) ? resources : [resources];
-    const source = enumerableFactory(...resourcesArray);
-    const enumerator = enumerate(source);
+    const enumerator = pipe(enumerableFactory(...resourcesArray), enumerate);
     pipe(resources, forEach$1(addTo(enumerator)));
     return enumerator;
 });

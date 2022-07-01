@@ -8,11 +8,11 @@ declare const buffer: <T>(options?: {
     readonly maxBufferSize?: number;
 }) => EnumerableOperator<T, readonly T[]>;
 declare const bufferT: Buffer<EnumerableLike<unknown>>;
+declare const enumerate: <T>(enumerable: EnumerableLike<T>) => Enumerator<T>;
 declare abstract class AbstractEnumerable<T> extends AbstractLiftable<Enumerator<T>> implements EnumerableLike<T> {
     abstract enumerate(this: EnumerableLike<T>): Enumerator<T>;
 }
 declare const createEnumerable: <T>(enumerate: Factory<Enumerator<T>>) => EnumerableLike<T>;
-declare const enumerate: <T>(enumerable: EnumerableLike<T>) => Enumerator<T>;
 /**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
  */

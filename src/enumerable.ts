@@ -460,8 +460,7 @@ const _using = <TResource extends DisposableLike, T>(
   createEnumerable<T>(() => {
     const resources = resourceFactory();
     const resourcesArray = Array.isArray(resources) ? resources : [resources];
-    const source = enumerableFactory(...resourcesArray);
-    const enumerator = enumerate(source);
+    const enumerator = pipe(enumerableFactory(...resourcesArray), enumerate);
 
     pipe(resources, forEach(addTo(enumerator)));
 
