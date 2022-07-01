@@ -18,9 +18,9 @@
 
   ↳ [`AsyncEnumerableLike`](asyncEnumerable.AsyncEnumerableLike.md)
 
-  ↳ [`FlowableLike`](streamable.FlowableLike.md)
+  ↳ [`FlowableLike`](flowable.FlowableLike.md)
 
-  ↳ [`FlowableSinkLike`](streamable.FlowableSinkLike.md)
+  ↳ [`FlowableSinkLike`](flowable.FlowableSinkLike.md)
 
   ↳ [`StreamableStateLike`](streamable.StreamableStateLike.md)
 

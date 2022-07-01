@@ -1,5 +1,6 @@
 import { Readable, Writable } from "stream";
 import { endWith, ignoreElements } from "../container";
+import { flow, toObservable } from "../flowable";
 import { newInstance, pipe, pipeLazy, returns } from "../functions";
 import {
   createDisposableNodeStream,
@@ -19,7 +20,7 @@ import {
   toPromise,
 } from "../observable";
 import { createHostScheduler } from "../scheduler";
-import { flow, flowToObservable, sourceFrom, stream } from "../streamable";
+import { sourceFrom, stream } from "../streamable";
 import {
   describe,
   expectEquals,
@@ -120,7 +121,7 @@ export const tests = describe(
         createReadableIOSource(() =>
           pipe(generate(), Readable.from, createDisposableNodeStream),
         ),
-        flowToObservable(),
+        toObservable(),
         reduce(
           (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
           returns(""),
@@ -145,7 +146,7 @@ export const tests = describe(
         createReadableIOSource(() =>
           pipe(generate(), Readable.from, createDisposableNodeStream),
         ),
-        flowToObservable(),
+        toObservable(),
         reduce(
           (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
           returns(""),
@@ -166,7 +167,7 @@ export const tests = describe(
       flow(),
       gzip(),
       gunzip(),
-      flowToObservable(),
+      toObservable(),
       reduce(
         (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
         returns(""),

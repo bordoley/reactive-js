@@ -6,17 +6,9 @@
 
 ### Interfaces
 
-- [FlowableLike](../interfaces/streamable.FlowableLike.md)
-- [FlowableSinkLike](../interfaces/streamable.FlowableSinkLike.md)
-- [FlowableSinkStreamLike](../interfaces/streamable.FlowableSinkStreamLike.md)
-- [FlowableStreamLike](../interfaces/streamable.FlowableStreamLike.md)
 - [StateStreamLike](../interfaces/streamable.StateStreamLike.md)
 - [StreamableLike](../interfaces/streamable.StreamableLike.md)
 - [StreamableStateLike](../interfaces/streamable.StreamableStateLike.md)
-
-### Type Aliases
-
-- [FlowMode](streamable.md#flowmode)
 
 ### Functions
 
@@ -27,18 +19,10 @@
 - [createStateStore](streamable.md#createstatestore)
 - [createStreamble](streamable.md#createstreamble)
 - [empty](streamable.md#empty)
-- [flow](streamable.md#flow)
-- [flowToObservable](streamable.md#flowtoobservable)
 - [identity](streamable.md#identity)
 - [sinkInto](streamable.md#sinkinto)
 - [sourceFrom](streamable.md#sourcefrom)
 - [stream](streamable.md#stream)
-
-## Type Aliases
-
-### FlowMode
-
-Ƭ **FlowMode**: ``"resume"`` \| ``"pause"``
 
 ## Functions
 
@@ -555,38 +539,6 @@ a disposed `StreamLike` instance.
 #### Returns
 
 [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/stream.StreamLike.md)<`TReq`, `T`\>\>
-
-___
-
-### flow
-
-▸ **flow**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/streamable.FlowableStreamLike.md)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/streamable.FlowableStreamLike.md)<`T`\>\>\>
-
-___
-
-### flowToObservable
-
-▸ **flowToObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/streamable.FlowableStreamLike.md)<`T`\>\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/streamable.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/streamable.FlowableStreamLike.md)<`T`\>\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
 ___
 

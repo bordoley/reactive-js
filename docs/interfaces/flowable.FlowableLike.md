@@ -1,19 +1,19 @@
-[Reactive-JS](../README.md) / [streamable](../modules/streamable.md) / FlowableLike
+[Reactive-JS](../README.md) / [flowable](../modules/flowable.md) / FlowableLike
 
 # Interface: FlowableLike<T, TStream\>
 
-[streamable](../modules/streamable.md).FlowableLike
+[flowable](../modules/flowable.md).FlowableLike
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TStream` | extends [`FlowableStreamLike`](streamable.FlowableStreamLike.md)<`T`\> = [`FlowableStreamLike`](streamable.FlowableStreamLike.md)<`T`\> |
+| `TStream` | extends [`FlowableStreamLike`](flowable.FlowableStreamLike.md)<`T`\> = [`FlowableStreamLike`](flowable.FlowableStreamLike.md)<`T`\> |
 
 ## Hierarchy
 
-- [`StreamableLike`](streamable.StreamableLike.md)<[`FlowMode`](../modules/streamable.md#flowmode), `T`, `TStream`\>
+- [`StreamableLike`](streamable.StreamableLike.md)<[`FlowMode`](../modules/flowable.md#flowmode), `T`, `TStream`\>
 
   ↳ **`FlowableLike`**
 
@@ -21,7 +21,7 @@
 
 ### Methods
 
-- [stream](streamable.FlowableLike.md#stream)
+- [stream](flowable.FlowableLike.md#stream)
 
 ## Methods
 
@@ -33,7 +33,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StreamableLike`](streamable.StreamableLike.md)<[`FlowMode`](../modules/streamable.md#flowmode), `T`, `TStream`\> |
+| `this` | [`StreamableLike`](streamable.StreamableLike.md)<[`FlowMode`](../modules/flowable.md#flowmode), `T`, `TStream`\> |
 | `scheduler` | [`SchedulerLike`](scheduler.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.replay?` | `number` |

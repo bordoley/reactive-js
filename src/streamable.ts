@@ -1,6 +1,6 @@
-import { concatWith, fromValue, ignoreElements, startWith } from "./container";
+import { concatWith, fromValue, ignoreElements } from "./container";
 import { dispatchTo } from "./dispatcher";
-import { add, addTo, bindTo } from "./disposable";
+import { add, addTo } from "./disposable";
 import {
   Equality,
   Factory,
@@ -16,18 +16,14 @@ import {
   updateReducer,
 } from "./functions";
 import {
-  ObservableLike,
   ObservableOperator,
   __currentScheduler,
   __memo,
   __observe,
   __using,
-  concatT,
   createObservable,
   distinctUntilChanged,
-  fromArrayT,
   fromArrayT as fromArrayTObs,
-  fromDisposable,
   keepT,
   merge,
   mergeT,
@@ -35,17 +31,11 @@ import {
   onSubscribe,
   scan,
   subscribe,
-  subscribeOn,
   takeFirst,
-  takeUntil,
 } from "./observable";
-import { scheduler as getScheduler } from "./observer";
 import { Option, isSome, none } from "./option";
-import { SchedulerLike, createPausableScheduler } from "./scheduler";
-import {
-  sinkInto as sinkIntoSink,
-  sourceFrom as sourceFromSource,
-} from "./source";
+import { SchedulerLike } from "./scheduler";
+import { sinkInto as sinkIntoSink } from "./source";
 import { StreamLike, createStream } from "./stream";
 
 export interface StreamableLike<
@@ -65,20 +55,6 @@ export interface StreamableStateLike<
   TStream extends StateStreamLike<T> = StateStreamLike<T>,
 > extends StreamableLike<Updater<T>, T, TStream> {}
 export interface StateStreamLike<T> extends StreamLike<Updater<T>, T> {}
-
-export type FlowMode = "resume" | "pause";
-
-export interface FlowableLike<
-  T,
-  TStream extends FlowableStreamLike<T> = FlowableStreamLike<T>,
-> extends StreamableLike<FlowMode, T, TStream> {}
-export interface FlowableStreamLike<T> extends StreamLike<FlowMode, T> {}
-
-export interface FlowableSinkLike<
-  T,
-  TStream extends FlowableSinkStreamLike<T> = FlowableSinkStreamLike<T>,
-> extends StreamableLike<T, FlowMode, TStream> {}
-export interface FlowableSinkStreamLike<T> extends StreamLike<T, FlowMode> {}
 
 export const stream =
   <TReq, T, TStream extends StreamLike<TReq, T>>(
@@ -278,46 +254,6 @@ const _empty = /*@__PURE__*/ createLiftedStreamable<any, any>(
  */
 export const empty = <TReq, T>(): StreamableLike<TReq, T> => _empty;
 
-export const flow =
-  <T>(): Function1<ObservableLike<T>, FlowableLike<T>> =>
-  observable =>
-    createLiftedStreamable((modeObs: ObservableLike<FlowMode>) =>
-      createObservable(observer => {
-        const pausableScheduler = createPausableScheduler(
-          getScheduler(observer),
-        );
-
-        pipe(
-          observer,
-          sourceFromSource(
-            pipe(
-              observable,
-              subscribeOn(pausableScheduler),
-              pipe(pausableScheduler, fromDisposable, takeUntil),
-            ),
-          ),
-          add(
-            pipe(
-              modeObs,
-              onNotify((mode: FlowMode) => {
-                switch (mode) {
-                  case "pause":
-                    pausableScheduler.pause();
-                    break;
-                  case "resume":
-                    pausableScheduler.resume();
-                    break;
-                }
-              }),
-              subscribe(getScheduler(observer)),
-              bindTo(pausableScheduler),
-            ),
-          ),
-          add(pausableScheduler),
-        );
-      }),
-    );
-
 const _identity = {
   stream(scheduler: SchedulerLike, options?: { readonly replay: number }) {
     return createStream(identityF, scheduler, options);
@@ -400,19 +336,3 @@ export const sourceFrom =
     pipe(streamable, sinkInto(dest));
     return dest;
   };
-
-export const flowToObservable =
-  <T>(): Function1<FlowableLike<T>, ObservableLike<T>> =>
-  src =>
-    createObservable(observer => {
-      const { dispatcher, scheduler } = observer;
-
-      const op = compose(
-        onNotify<T>(dispatchTo(dispatcher)),
-        ignoreElements(keepT),
-        startWith({ ...concatT, ...fromArrayT }, "pause", "resume"),
-        onSubscribe(() => dispatcher),
-      );
-
-      pipe(createStream(op, scheduler), sourceFrom(src), addTo(observer));
-    });

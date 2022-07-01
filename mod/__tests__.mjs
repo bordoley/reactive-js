@@ -8,11 +8,12 @@ import { onNotify, subscribe, toRunnable, fromArrayT, concat as concat$2, fromAr
 import { none, isSome } from './option.mjs';
 import { last, toArray, fromArray as fromArray$1, someSatisfyT, first, generate as generate$1, everySatisfy, map as map$1, forEach as forEach$1, everySatisfyT, fromArrayT as fromArrayT$1, keepT, concat, concatAll, distinctUntilChanged, repeat, scan as scan$1, skipFirst, takeFirst, takeLast, takeWhile, toRunnable as toRunnable$1 } from './runnable.mjs';
 import { createVirtualTimeScheduler, createHostScheduler, schedule, now } from './scheduler.mjs';
-import { stream, identity as identity$1, __stream, createActionReducer, empty as empty$1, createLiftedStreamable, sourceFrom, flow, flowToObservable } from './streamable.mjs';
+import { stream, identity as identity$1, __stream, createActionReducer, empty as empty$1, createLiftedStreamable, sourceFrom } from './streamable.mjs';
 import { describe, test, expectArrayEquals, expectNone, expectEquals, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
 import { fromArray as fromArray$2, toIterable, fromIterable as fromIterable$1, toRunnable as toRunnable$2, fromArrayT as fromArrayT$2, keepT as keepT$1, concat as concat$1, concatAll as concatAll$1, distinctUntilChanged as distinctUntilChanged$1, generate as generate$2, map as map$2, repeat as repeat$1, scan as scan$2, skipFirst as skipFirst$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, zip } from './enumerable.mjs';
 import { dispatchTo } from './dispatcher.mjs';
 import { type, fromArray as fromArray$4, concat as concat$3, concatAll as concatAll$2, distinctUntilChanged as distinctUntilChanged$3, generate as generate$4, keep as keep$1, map as map$4, repeat as repeat$3, scan as scan$4, skipFirst as skipFirst$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$3, toRunnable as toRunnable$3, fromArrayT as fromArrayT$3, zipT as zipT$1 } from './sequence.mjs';
+import { flow, toObservable as toObservable$1 } from './flowable.mjs';
 
 const tests$7 = describe("async enumerable", test("fromArray", () => {
     const scheduler = createVirtualTimeScheduler();
@@ -487,7 +488,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
         Uint8Array.from([226]),
         Uint8Array.from([130]),
         Uint8Array.from([172]),
-    ], fromArray$3(), decodeWithCharset(), flow(), flowToObservable(), reduce((acc, next) => acc + next, returns("")), onNotify(f), subscribe(scheduler));
+    ], fromArray$3(), decodeWithCharset(), flow(), toObservable$1(), reduce((acc, next) => acc + next, returns("")), onNotify(f), subscribe(scheduler));
     pipe(scheduler, forEach(ignore));
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(String.fromCodePoint(8364)));
@@ -507,7 +508,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
     const scheduler = createVirtualTimeScheduler();
     const f = mockFn();
-    const subscription = pipe(str, fromValue(fromArrayT), encodeUtf8({ ...mapT, ...usingT }), decodeWithCharset(), flow(), flowToObservable(), reduce((acc, next) => acc + next, returns("")), onNotify(f), subscribe(scheduler));
+    const subscription = pipe(str, fromValue(fromArrayT), encodeUtf8({ ...mapT, ...usingT }), decodeWithCharset(), flow(), toObservable$1(), reduce((acc, next) => acc + next, returns("")), onNotify(f), subscribe(scheduler));
     pipe(scheduler, forEach(ignore));
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(str));
@@ -526,7 +527,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
 }), test("map", () => {
     const scheduler = createVirtualTimeScheduler();
     const f = mockFn();
-    const src = pipe(1, fromValue(fromArrayT), map$3(returns(2)), flow(), flowToObservable(), reduce(sum, returns(0)), onNotify(f), subscribe(scheduler));
+    const src = pipe(1, fromValue(fromArrayT), map$3(returns(2)), flow(), toObservable$1(), reduce(sum, returns(0)), onNotify(f), subscribe(scheduler));
     pipe(scheduler, forEach(ignore));
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(2));

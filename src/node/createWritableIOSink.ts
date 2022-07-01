@@ -7,11 +7,11 @@ import {
   dispose,
   onComplete,
 } from "../disposable";
+import { FlowableSinkLike } from "../flowable";
 import { Factory, pipe, pipeLazy } from "../functions";
 import { createObservable, onNotify, subscribe } from "../observable";
 import { scheduler } from "../observer";
-
-import { FlowableSinkLike, createLiftedStreamable } from "../streamable";
+import { createLiftedStreamable } from "../streamable";
 
 const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
 
