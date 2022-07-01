@@ -99,13 +99,6 @@ export { toRunnable, toRunnableT } from "./enumerable/toRunnable";
 export { toIterable } from "./enumerable/toIterable";
 export { zip, zipT } from "./enumerable/zip";
 
-export const toEnumerable = <T>(): Function1<
-  EnumerableLike<T>,
-  EnumerableLike<T>
-> => identity;
-
-export const type: EnumerableLike<unknown> = undefined as any;
-
 /**
  * Creates an EnumerableLike which yields all values from each source sequentially.
  */
@@ -451,6 +444,15 @@ export const throwIfEmptyT: ThrowIfEmpty<EnumerableLike<unknown>> = {
   throwIfEmpty,
 };
 
+export const toEnumerable = <T>(): Function1<
+  EnumerableLike<T>,
+  EnumerableLike<T>
+> => identity;
+
+export const toEnumerableT: ToEnumerable<EnumerableLike<unknown>> = {
+  toEnumerable,
+};
+
 const _using = <TResource extends DisposableLike, T>(
   resourceFactory: Factory<TResource | readonly TResource[]>,
   enumerableFactory: (...resources: readonly TResource[]) => EnumerableLike<T>,
@@ -465,6 +467,8 @@ const _using = <TResource extends DisposableLike, T>(
 
     return enumerator;
   });
+
+export const type: EnumerableLike<unknown> = undefined as any;
 
 export const using: Using<EnumerableLike<unknown>>["using"] = _using;
 
