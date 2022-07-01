@@ -46,3 +46,7 @@ Represents a duplex stream
 ### scheduler
 
 • `Readonly` **scheduler**: [`SchedulerLike`](scheduler.SchedulerLike.md)
+
+#### Overrides
+
+[DispatcherLike](dispatcher.DispatcherLike.md).[scheduler](dispatcher.DispatcherLike.md#scheduler)

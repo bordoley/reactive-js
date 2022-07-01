@@ -18,7 +18,6 @@ import {
   unstable_scheduleCallback,
   unstable_shouldYield,
 } from "scheduler";
-import { dispatch } from "./dispatcher";
 import {
   Disposable,
   Error,
@@ -115,7 +114,7 @@ export const createComponent = <TProps>(
       createReplaySubject,
     ]);
 
-    pipe(propsSubject, dispatch(props));
+    propsSubject.publish(props);
 
     const elementObservable = useMemo(
       () => pipe(propsSubject, distinctUntilChanged(), fn),

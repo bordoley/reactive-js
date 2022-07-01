@@ -13,7 +13,7 @@ import {
   createFromArray,
   fromValue,
 } from "./container";
-import { DispatcherLike, dispatch } from "./dispatcher";
+import { dispatch } from "./dispatcher";
 import { add, addTo } from "./disposable";
 import {
   EnumerableLike,
@@ -123,7 +123,7 @@ const createAsyncEnumerable = <T>(
 ): AsyncEnumerableLike<T> => newInstance(CreateAsyncEnumerable, stream);
 
 class LiftedAsyncEnumerator<T> extends AsyncEnumerator<T> {
-  private readonly dispatcher: DispatcherLike<void>;
+  private readonly subject: Subject<void>;
   private readonly observable: MulticastObservableLike<T>;
 
   constructor(
@@ -135,10 +135,10 @@ class LiftedAsyncEnumerator<T> extends AsyncEnumerator<T> {
   ) {
     super();
 
-    const subject = newInstance(Subject);
+    const subject = newInstance<Subject<void>>(Subject);
     const observable = pipe(subject, op, publish<T>(scheduler, { replay }));
 
-    this.dispatcher = subject;
+    this.subject = subject;
     this.observable = observable;
 
     return pipe(this, add(subject), addTo(this.observable));
@@ -153,7 +153,7 @@ class LiftedAsyncEnumerator<T> extends AsyncEnumerator<T> {
   }
 
   dispatch(req: void) {
-    pipe(this.dispatcher, dispatch(req));
+    this.subject.publish(req);
   }
 
   sink(observer: Observer<T>) {
@@ -306,14 +306,14 @@ const consumeImpl =
         onNotify(ev => {
           switch (ev.type) {
             case "continue":
-              pipe(accFeedback, dispatch(ev.data));
+              accFeedback.publish(ev.data);
               pipe(enumerator, dispatch(none));
               break;
           }
         }),
         mapObs(ev => ev.data),
         onSubscribe(() => {
-          pipe(accFeedback, dispatch(initial()));
+          accFeedback.publish(initial());
           pipe(enumerator, dispatch(none));
         }),
         sinkInto(observer),

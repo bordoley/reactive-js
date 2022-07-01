@@ -54,7 +54,7 @@ class LiftedAsyncEnumerator extends AsyncEnumerator {
         this.scheduler = scheduler;
         const subject = newInstance(Subject);
         const observable = pipe(subject, op, publish(scheduler, { replay }));
-        this.dispatcher = subject;
+        this.subject = subject;
         this.observable = observable;
         return pipe(this, add(subject), addTo(this.observable));
     }
@@ -65,7 +65,7 @@ class LiftedAsyncEnumerator extends AsyncEnumerator {
         return replay(this.observable);
     }
     dispatch(req) {
-        pipe(this.dispatcher, dispatch(req));
+        this.subject.publish(req);
     }
     sink(observer) {
         pipe(this.observable, sinkInto(observer));
@@ -93,12 +93,12 @@ const consumeImpl = (consumer, initial) => enumerable => createObservable(observ
     pipe(enumerator, consumer(accFeedback), onNotify(ev => {
         switch (ev.type) {
             case "continue":
-                pipe(accFeedback, dispatch(ev.data));
+                accFeedback.publish(ev.data);
                 pipe(enumerator, dispatch(none));
                 break;
         }
     }), map$1(ev => ev.data), onSubscribe(() => {
-        pipe(accFeedback, dispatch(initial()));
+        accFeedback.publish(initial());
         pipe(enumerator, dispatch(none));
     }), sinkInto(observer));
 });

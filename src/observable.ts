@@ -42,7 +42,6 @@ import {
   instanceFactory,
   newInstance,
   pipe,
-  pipeLazy,
 } from "./functions";
 import { createObservable, createT } from "./observable/createObservable";
 import { defer } from "./observable/defer";
@@ -381,7 +380,7 @@ export const publish =
     const subject = newInstance<Subject<T>, number>(Subject, replay);
     pipe(
       observable,
-      onNotify(dispatchTo(subject)),
+      onNotify(x => subject.publish(x)),
       subscribe(scheduler),
       bindTo(subject),
     );
@@ -453,8 +452,8 @@ export const scanAsync =
           (next, acc) => pipe(scanner(acc, next), takeFirst()),
         ),
         switchAll<TAcc>(),
-        onNotify(dispatchTo(accFeedbackStream)),
-        onSubscribe(pipeLazy(accFeedbackStream, dispatch(initialValue()))),
+        onNotify(x => accFeedbackStream.publish(x)),
+        onSubscribe(() => accFeedbackStream.publish(initialValue())),
       ),
     );
 

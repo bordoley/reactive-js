@@ -19,7 +19,6 @@
 ## Implements
 
 - [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)<`T`\>
-- [`DispatcherLike`](../interfaces/dispatcher.DispatcherLike.md)<`T`\>
 
 ## Table of contents
 
@@ -43,8 +42,8 @@
 ### Methods
 
 - [add](observable.Subject.md#add)
-- [dispatch](observable.Subject.md#dispatch)
 - [dispose](observable.Subject.md#dispose)
+- [publish](observable.Subject.md#publish)
 - [sink](observable.Subject.md#sink)
 
 ## Constructors
@@ -221,28 +220,6 @@ MulticastObservableLike.add
 
 ___
 
-### dispatch
-
-▸ **dispatch**(`next`): `void`
-
-Dispatches the next request
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `next` | `T` |
-
-#### Returns
-
-`void`
-
-#### Implementation of
-
-[DispatcherLike](../interfaces/dispatcher.DispatcherLike.md).[dispatch](../interfaces/dispatcher.DispatcherLike.md#dispatch)
-
-___
-
 ### dispose
 
 ▸ **dispose**(`this`, `error?`): `void`
@@ -267,6 +244,22 @@ MulticastObservableLike.dispose
 #### Inherited from
 
 [DisposableObservable](observable.DisposableObservable.md).[dispose](observable.DisposableObservable.md#dispose)
+
+___
+
+### publish
+
+▸ **publish**(`next`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `next` | `T` |
+
+#### Returns
+
+`void`
 
 ___
 

@@ -34,6 +34,9 @@ class ObserverDelegatingDispatcher extends Disposable {
         };
         this.nextQueue = [];
     }
+    get scheduler() {
+        return this.observer.scheduler;
+    }
     dispatch(next) {
         if (!isDisposed(this)) {
             this.nextQueue.push(next);
@@ -90,5 +93,6 @@ class DelegatingObserver extends AbstractDelegatingObserver {
 }
 const createDelegatingObserver = (delegate) => newInstance(DelegatingObserver, delegate);
 const scheduler = (observer) => observer.scheduler;
+const dispatcher = (observer) => observer.dispatcher;
 
-export { AbstractDelegatingObserver, Observer, createDelegatingObserver, scheduler };
+export { AbstractDelegatingObserver, Observer, createDelegatingObserver, dispatcher, scheduler };

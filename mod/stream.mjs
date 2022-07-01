@@ -1,5 +1,4 @@
 /// <reference types="./stream.d.ts" />
-import { dispatch } from './dispatcher.mjs';
 import { add, addTo } from './disposable.mjs';
 import { newInstance, pipe } from './functions.mjs';
 import { DisposableObservable, Subject, publish, observerCount, replay } from './observable.mjs';
@@ -11,7 +10,7 @@ class StreamImpl extends DisposableObservable {
         this.scheduler = scheduler;
         const subject = newInstance(Subject);
         const observable = pipe(subject, op, publish(scheduler, options));
-        this.dispatcher = subject;
+        this.subject = subject;
         this.observable = observable;
         return pipe(this, add(subject), addTo(this.observable));
     }
@@ -22,7 +21,7 @@ class StreamImpl extends DisposableObservable {
         return replay(this.observable);
     }
     dispatch(req) {
-        pipe(this.dispatcher, dispatch(req));
+        this.subject.publish(req);
     }
     sink(observer) {
         pipe(this.observable, sinkInto(observer));

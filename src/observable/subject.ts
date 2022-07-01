@@ -7,7 +7,7 @@ import { DisposableObservable } from "./observable";
 
 export class Subject<T>
   extends DisposableObservable<T>
-  implements MulticastObservableLike<T>, DispatcherLike<T>
+  implements MulticastObservableLike<T>
 {
   private readonly dispatchers: Set<DispatcherLike<T>> =
     newInstance<Set<DispatcherLike<T>>>(Set);
@@ -21,7 +21,7 @@ export class Subject<T>
     return this.dispatchers.size;
   }
 
-  dispatch(next: T) {
+  publish(next: T) {
     if (!isDisposed(this)) {
       const { replay, replayed } = this;
 

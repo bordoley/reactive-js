@@ -3,6 +3,7 @@ import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { onDisposed, bindTo, addTo, toAbortSignal, dispose } from './disposable.mjs';
 import { pipe, newInstance, isEmpty, length, raise, newInstanceWith, compose, returns } from './functions.mjs';
 import { createObservable, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
+import { dispatcher } from './observer.mjs';
 import { keep } from './readonlyArray.mjs';
 import { ignoreElements } from './container.mjs';
 import { delegate } from './liftable.mjs';
@@ -12,12 +13,12 @@ import { AbstractDelegatingStream } from './stream.mjs';
 import { createStreamble, createActionReducer, stream } from './streamable.mjs';
 
 const fromEvent = (target, eventName, selector) => createObservable(observer => {
-    const dispatcher = pipe(observer.dispatcher, onDisposed(_ => {
+    const dispatcher$1 = pipe(observer, dispatcher, onDisposed(_ => {
         target.removeEventListener(eventName, listener);
     }));
     const listener = (event) => {
         const result = selector(event);
-        pipe(dispatcher, dispatch(result));
+        pipe(dispatcher$1, dispatch(result));
     };
     target.addEventListener(eventName, listener, { passive: true });
 });
@@ -28,7 +29,7 @@ const createEventSource = (url, options = {}) => {
     const events = pipe(eventsOption, keep(x => !reservedEvents.includes(x)));
     const requestURL = url instanceof URL ? url.toString() : url;
     return createObservable(observer => {
-        const dispatcher = pipe(observer.dispatcher, onDisposed(_ => {
+        const dispatcher$1 = pipe(observer, dispatcher, onDisposed(_ => {
             for (const ev of events) {
                 eventSource.removeEventListener(ev, listener);
             }
@@ -37,7 +38,7 @@ const createEventSource = (url, options = {}) => {
         const eventSource = newInstance(EventSource, requestURL, options);
         const listener = (ev) => {
             var _a, _b, _c;
-            pipe(dispatcher, dispatch({
+            pipe(dispatcher$1, dispatch({
                 id: (_a = ev.lastEventId) !== null && _a !== void 0 ? _a : "",
                 type: (_b = ev.type) !== null && _b !== void 0 ? _b : "",
                 data: (_c = ev.data) !== null && _c !== void 0 ? _c : "",

@@ -20,4 +20,5 @@ declare class AbstractDelegatingObserver<TIn, TOut> extends Observer<TIn> {
 }
 declare const createDelegatingObserver: <T>(delegate: Observer<T>) => Observer<T>;
 declare const scheduler: <T>(observer: Observer<T>) => SchedulerLike;
-export { AbstractDelegatingObserver, Observer, createDelegatingObserver, scheduler };
+declare const dispatcher: <T>(observer: Observer<T>) => DispatcherLike<T>;
+export { AbstractDelegatingObserver, Observer, createDelegatingObserver, dispatcher, scheduler };

@@ -1,5 +1,6 @@
 import { Disposable } from "./disposable";
 import { Function1, SideEffect1 } from "./functions";
+import { SchedulerLike } from "./scheduler";
 
 /** @noInheritDoc */
 export interface DispatcherLike<T> extends Disposable {
@@ -8,6 +9,8 @@ export interface DispatcherLike<T> extends Disposable {
    * @param req
    */
   dispatch(this: DispatcherLike<T>, req: T): void;
+
+  readonly scheduler: SchedulerLike;
 }
 
 export const dispatch =
@@ -23,3 +26,6 @@ export const dispatchTo =
   <T>(dispatcher: DispatcherLike<T>): SideEffect1<T> =>
   v =>
     dispatcher.dispatch(v);
+
+export const scheduler = <T>(observer: DispatcherLike<T>): SchedulerLike =>
+  observer.scheduler;

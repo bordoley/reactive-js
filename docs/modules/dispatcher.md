@@ -12,6 +12,7 @@
 
 - [dispatch](dispatcher.md#dispatch)
 - [dispatchTo](dispatcher.md#dispatchto)
+- [scheduler](dispatcher.md#scheduler)
 
 ## Functions
 
@@ -57,3 +58,25 @@ ___
 #### Returns
 
 [`SideEffect1`](functions.md#sideeffect1)<`T`\>
+
+___
+
+### scheduler
+
+▸ **scheduler**<`T`\>(`observer`): [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observer` | [`DispatcherLike`](../interfaces/dispatcher.DispatcherLike.md)<`T`\> |
+
+#### Returns
+
+[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
