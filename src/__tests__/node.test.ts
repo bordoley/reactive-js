@@ -1,9 +1,8 @@
 import { Readable, Writable } from "stream";
 import { endWith, ignoreElements } from "../container";
 import { flow, toObservable } from "../flowable";
-import { newInstance, pipe, pipeLazy, returns } from "../functions";
+import { newInstance, pipe, returns } from "../functions";
 import {
-  createDisposableNodeStream,
   createReadableSource,
   createWritableSink,
   gunzip,
@@ -54,7 +53,7 @@ export const tests = describe(
       );
 
       const dest = pipe(
-        createWritableSink(pipeLazy(writable, createDisposableNodeStream)),
+        createWritableSink(returns(writable)),
         stream(scheduler),
         sourceFrom(src),
       );
@@ -65,6 +64,7 @@ export const tests = describe(
         toPromise(scheduler),
       );
 
+      pipe(writable.destroyed, expectEquals(true));
       pipe(data, expectEquals("abcdefg"));
     }),
 
@@ -88,7 +88,7 @@ export const tests = describe(
       );
 
       const dest = pipe(
-        createWritableSink(pipeLazy(writable, createDisposableNodeStream)),
+        createWritableSink(returns(writable)),
         stream(scheduler),
         sourceFrom(src),
       );
@@ -104,6 +104,7 @@ export const tests = describe(
       );
 
       await expectPromiseToThrow(promise);
+      pipe(writable.destroyed, expectEquals(true));
     }),
   ),
 
@@ -118,9 +119,7 @@ export const tests = describe(
       const textDecoder = newInstance(TextDecoder);
 
       const acc = await pipe(
-        createReadableSource(() =>
-          pipe(generate(), Readable.from, createDisposableNodeStream),
-        ),
+        createReadableSource(() => pipe(generate(), Readable.from)),
         toObservable(),
         reduce(
           (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
@@ -143,9 +142,7 @@ export const tests = describe(
       const textDecoder = newInstance(TextDecoder);
 
       await pipe(
-        createReadableSource(() =>
-          pipe(generate(), Readable.from, createDisposableNodeStream),
-        ),
+        createReadableSource(() => pipe(generate(), Readable.from)),
         toObservable(),
         reduce(
           (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),

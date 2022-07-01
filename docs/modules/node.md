@@ -9,7 +9,6 @@
 - [bindNodeCallback](node.md#bindnodecallback)
 - [brotliCompress](node.md#brotlicompress)
 - [brotliDecompress](node.md#brotlidecompress)
-- [createDisposableNodeStream](node.md#createdisposablenodestream)
 - [createReadableSource](node.md#createreadablesource)
 - [createWritableSink](node.md#createwritablesink)
 - [deflate](node.md#deflate)
@@ -292,28 +291,6 @@ ___
 
 ___
 
-### createDisposableNodeStream
-
-▸ **createDisposableNodeStream**<`T`\>(`stream`): [`DisposableValue`](../classes/disposable.DisposableValue.md)<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `Writable` \| `Readable` \| `Transform` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `stream` | `T` |
-
-#### Returns
-
-[`DisposableValue`](../classes/disposable.DisposableValue.md)<`T`\>
-
-___
-
 ### createReadableSource
 
 ▸ **createReadableSource**(`factory`): [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>
@@ -322,7 +299,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`DisposableValue`](../classes/disposable.DisposableValue.md)<`Readable`\>\> |
+| `factory` | [`Factory`](functions.md#factory)<`Readable`\> |
 
 #### Returns
 
@@ -338,7 +315,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`DisposableValue`](../classes/disposable.DisposableValue.md)<`Writable`\>\> |
+| `factory` | [`Factory`](functions.md#factory)<`Writable`\> |
 
 #### Returns
 
@@ -440,7 +417,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`DisposableValue`](../classes/disposable.DisposableValue.md)<`Transform`\>\> |
+| `factory` | [`Factory`](functions.md#factory)<`Transform`\> |
 
 #### Returns
 

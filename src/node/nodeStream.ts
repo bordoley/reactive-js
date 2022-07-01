@@ -1,26 +1,53 @@
 import { Readable, Transform, Writable } from "stream";
-import { DisposableValue, toErrorHandler } from "../disposable";
-import { ignore, newInstance } from "../functions";
+import {
+  Disposable,
+  dispose,
+  onDisposed,
+  onError,
+  toErrorHandler,
+} from "../disposable";
+import { Function1, ignore, pipe, pipeLazy } from "../functions";
 
-const dispose = (writable: Readable | Writable | Transform) => {
-  writable.removeAllListeners();
+export type NodeStream = Readable | Writable | Transform;
+
+const disposeStream = (stream: NodeStream) => () => {
+  stream.removeAllListeners();
   // Calling destory can result in onError being called
   // if we don't catch the error, it crashes the process.
   // This kind of sucks, but its the best we can do;
-  writable.once("error", ignore);
-  writable.once("close", () => {
-    writable.removeAllListeners();
+  stream.once("error", ignore);
+  stream.once("close", () => {
+    stream.removeAllListeners();
   });
-  writable.destroy();
+  stream.destroy();
 };
 
-export const createDisposableNodeStream = <
-  T extends Readable | Writable | Transform,
->(
-  stream: T,
-): DisposableValue<T> => {
-  const retval = newInstance(DisposableValue, stream, dispose);
-  stream.on("error", toErrorHandler(retval));
+export const addToNodeStream =
+  <TDisposable extends Disposable>(
+    stream: NodeStream,
+  ): Function1<TDisposable, TDisposable> =>
+  disposable => {
+    pipe(stream, addDisposable(disposable));
+    return disposable;
+  };
 
-  return retval;
-};
+export const addDisposable =
+  <TNodeStream extends NodeStream>(
+    disposable: Disposable,
+  ): Function1<TNodeStream, TNodeStream> =>
+  stream => {
+    stream.on("error", toErrorHandler(disposable));
+    stream.once("close", pipeLazy(disposable, dispose()));
+    pipe(disposable, onError(disposeStream(stream)));
+    return stream;
+  };
+
+export const addToDisposable =
+  <TNodeStream extends NodeStream>(
+    disposable: Disposable,
+  ): Function1<TNodeStream, TNodeStream> =>
+  stream => {
+    pipe(disposable, onDisposed(disposeStream(stream)));
+    stream.on("error", toErrorHandler(disposable));
+    return stream;
+  };
