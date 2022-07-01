@@ -45,12 +45,12 @@ import {
 import { none } from "../option";
 import { toArray } from "../runnable";
 import { createVirtualTimeScheduler, now, schedule } from "../scheduler";
-import { StreamLike } from "../stream";
 import {
+  StateStreamLike,
   __stream,
   createActionReducer,
   createLiftedStreamable,
-  identity,
+  createStateStore,
   sourceFrom,
   stream,
 } from "../streamable";
@@ -68,12 +68,12 @@ import {
 export const tests = describe(
   "streamable",
   test("__stream", () => {
-    const streamable = identity<number>();
-    const createLooper = (stream: StreamLike<number, number>) =>
+    const streamable = createStateStore(() => 0);
+    const createLooper = (stream: StateStreamLike<number>) =>
       pipe(
-        [0, 1, 2, 3],
+        [1, 2, 3],
         fromArray({ delay: 10 }),
-        onNotifyObs(dispatchTo(stream)),
+        onNotifyObs(x => pipe(returns(x), dispatchTo(stream))),
         ignoreElements(keepT),
       );
 

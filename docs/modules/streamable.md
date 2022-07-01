@@ -18,7 +18,6 @@
 - [createLiftedStreamable](streamable.md#createliftedstreamable)
 - [createStateStore](streamable.md#createstatestore)
 - [createStreamble](streamable.md#createstreamble)
-- [identity](streamable.md#identity)
 - [sinkInto](streamable.md#sinkinto)
 - [sourceFrom](streamable.md#sourcefrom)
 - [stream](streamable.md#stream)
@@ -518,22 +517,6 @@ ___
 #### Returns
 
 [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `TData`, `TStream`\>
-
-___
-
-### identity
-
-▸ **identity**<`T`\>(): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/stream.StreamLike.md)<`T`, `T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/stream.StreamLike.md)<`T`, `T`\>\>
 
 ___
 

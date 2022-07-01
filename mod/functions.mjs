@@ -83,7 +83,7 @@ const negate = (v) => !v;
  */
 const raise = (message) => {
     if (message === undefined || typeof message === "string") {
-        throw newInstanceWith(Error, message);
+        throw newInstance(Error, message);
     }
     else {
         throw message;

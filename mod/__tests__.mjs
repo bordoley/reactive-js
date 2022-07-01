@@ -8,7 +8,7 @@ import { onNotify, subscribe, toRunnable, fromArrayT, concat as concat$2, fromAr
 import { none, isSome } from './option.mjs';
 import { last, toArray, fromArray as fromArray$1, someSatisfyT, first, generate as generate$1, everySatisfy, map as map$1, forEach as forEach$1, everySatisfyT, fromArrayT as fromArrayT$1, keepT, concat, concatAll, distinctUntilChanged, repeat, scan as scan$1, skipFirst, takeFirst, takeLast, takeWhile, toRunnable as toRunnable$1 } from './runnable.mjs';
 import { createVirtualTimeScheduler, createHostScheduler, schedule, now } from './scheduler.mjs';
-import { stream, identity as identity$1, __stream, createActionReducer, createLiftedStreamable, sourceFrom } from './streamable.mjs';
+import { stream, createStateStore, __stream, createActionReducer, createLiftedStreamable, sourceFrom } from './streamable.mjs';
 import { describe, test, expectArrayEquals, expectNone, expectEquals, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
 import { fromArray as fromArray$2, toIterable, fromIterable as fromIterable$1, toRunnable as toRunnable$2, fromArrayT as fromArrayT$2, keepT as keepT$1, concat as concat$1, concatAll as concatAll$1, distinctUntilChanged as distinctUntilChanged$1, generate as generate$2, map as map$2, repeat as repeat$1, scan as scan$2, skipFirst as skipFirst$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$1, zip } from './enumerable.mjs';
 import { dispatchTo } from './dispatcher.mjs';
@@ -341,8 +341,8 @@ const tests$2 = describe("sequence", createRunnableTests({
 }), createZippableTests({ ...fromArrayT$3, generate: generate$4, map: map$4, toRunnable: toRunnable$3, ...zipT$1 }));
 
 const tests$1 = describe("streamable", test("__stream", () => {
-    const streamable = identity$1();
-    const createLooper = (stream) => pipe([0, 1, 2, 3], fromArray$3({ delay: 10 }), onNotify(dispatchTo(stream)), ignoreElements(keepT$2));
+    const streamable = createStateStore(() => 0);
+    const createLooper = (stream) => pipe([1, 2, 3], fromArray$3({ delay: 10 }), onNotify(x => pipe(returns(x), dispatchTo(stream))), ignoreElements(keepT$2));
     const obs = observable(() => {
         var _a;
         const stream = __stream(streamable);
