@@ -1,5 +1,5 @@
 import { AsyncEnumerator } from "./asyncEnumerator.mjs";
-import { FromArray, Keep, Map, Scan } from "./container.mjs";
+import { FromArray, Keep, Map, Scan, TakeWhile } from "./container.mjs";
 import { EnumerableLike } from "./enumerable.mjs";
 import { Function1, Function2, Factory, Updater, Predicate, Reducer } from "./functions.mjs";
 import { LiftableLike } from "./liftable.mjs";
@@ -21,7 +21,6 @@ interface AsyncEnumerableLike<T> extends StreamableLike<void, T, AsyncEnumerator
 declare type AsyncEnumerableOperator<TA, TB> = Function1<AsyncEnumerableLike<TA>, AsyncEnumerableLike<TB>>;
 declare const consumeContinue: <T>(data: T) => ConsumeContinue<T>;
 declare const consumeDone: <T>(data: T) => ConsumeDone<T>;
-declare const consume: <T, TAcc>(consumer: Function2<TAcc, T, ConsumeContinue<TAcc> | ConsumeDone<TAcc>>, initial: Factory<TAcc>) => Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>>;
 declare const consumeAsync: <T, TAcc>(consumer: Function2<TAcc, T, ObservableLike<ConsumeContinue<TAcc> | ConsumeDone<TAcc>>>, initial: Factory<TAcc>) => Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>>;
 /**
  * Returns an `AsyncEnumerableLike` from the provided array.
@@ -62,7 +61,11 @@ declare const map: <TA, TB>(mapper: Function1<TA, TB>) => AsyncEnumerableOperato
 declare const mapT: Map<AsyncEnumerableLike<unknown>>;
 declare const scan: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => AsyncEnumerableOperator<T, TAcc>;
 declare const scanT: Scan<AsyncEnumerableLike<unknown>>;
+declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
+    readonly inclusive?: boolean;
+}) => AsyncEnumerableOperator<T, T>;
+declare const takeWhileT: TakeWhile<AsyncEnumerableLike<unknown>>;
 declare const toObservable: <T>() => Function1<AsyncEnumerableLike<T>, ObservableLike<T>>;
 declare const toObservableT: ToObservable<AsyncEnumerableLike<unknown>>;
 declare const type: AsyncEnumerableLike<unknown>;
-export { AsyncEnumerableLike, AsyncEnumerableOperator, ConsumeContinue, ConsumeDone, consume, consumeAsync, consumeContinue, consumeDone, fromArray, fromArrayT, fromEnumerable, fromIterable, generate, keep, keepT, map, mapT, scan, scanT, toObservable, toObservableT, type };
+export { AsyncEnumerableLike, AsyncEnumerableOperator, ConsumeContinue, ConsumeDone, consumeAsync, consumeContinue, consumeDone, fromArray, fromArrayT, fromEnumerable, fromIterable, generate, keep, keepT, map, mapT, scan, scanT, takeWhile, takeWhileT, toObservable, toObservableT, type };

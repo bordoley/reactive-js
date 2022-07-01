@@ -8,6 +8,7 @@ import {
   Keep,
   Map,
   Scan,
+  TakeWhile,
   concatMap,
   concatWith,
   createFromArray,
@@ -29,7 +30,6 @@ import {
   Reducer,
   Updater,
   compose,
-  flip,
   increment,
   length,
   newInstance,
@@ -43,6 +43,7 @@ import {
   createKeepLiftOperator,
   createMapLiftOperator,
   createScanLiftOperator,
+  createTakeWhileLiftOperator,
   delegate as liftDelegate,
 } from "./liftable";
 import {
@@ -68,7 +69,7 @@ import {
   scan as scanObs,
   switchAll,
   takeFirst,
-  takeWhile,
+  takeWhile as takeWhileObs,
   using,
   withLatestFrom,
   zipWithLatestFrom,
@@ -320,12 +321,6 @@ const consumeImpl =
       );
     });
 
-export const consume = <T, TAcc>(
-  consumer: Function2<TAcc, T, ConsumeContinue<TAcc> | ConsumeDone<TAcc>>,
-  initial: Factory<TAcc>,
-): Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
-  consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
-
 export const consumeAsync = <T, TAcc>(
   consumer: Function2<
     TAcc,
@@ -395,7 +390,7 @@ const _fromEnumerable = <T>(
       (_, enumerator) => enumerator,
     ),
     onNotify(move),
-    takeWhile(hasCurrent),
+    takeWhileObs(hasCurrent),
     mapObs(current),
   );
 
@@ -555,6 +550,50 @@ export const scan: <T, TAcc>(
 
 export const scanT: Scan<AsyncEnumerableLike<unknown>> = {
   scan,
+};
+
+export const takeWhile: <T>(
+  predicate: Predicate<T>,
+  options?: { readonly inclusive?: boolean },
+) => AsyncEnumerableOperator<T, T> = /*@__PURE__*/ createTakeWhileLiftOperator(
+  liftT,
+  class TakeWhileAsyncEnumerator<T> extends AbstractDelegatingAsyncEnumerator<
+    T,
+    T
+  > {
+    readonly obs: MulticastObservableLike<T>;
+
+    constructor(
+      delegate: AsyncEnumerator<T>,
+      predicate: Predicate<T>,
+      inclusive: boolean,
+    ) {
+      super(delegate);
+
+      this.obs = pipe(
+        delegate,
+        takeWhileObs(predicate, { inclusive }),
+        publish(delegate.scheduler),
+        add(this),
+      );
+    }
+
+    get observerCount() {
+      return observerCount(this.obs);
+    }
+
+    get replay(): number {
+      return replay(this.obs);
+    }
+
+    sink(observer: Observer<T>): void {
+      pipe(this.obs, sinkInto(observer));
+    }
+  },
+);
+
+export const takeWhileT: TakeWhile<AsyncEnumerableLike<unknown>> = {
+  takeWhile,
 };
 
 export const toObservable =
