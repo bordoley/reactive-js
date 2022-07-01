@@ -6,6 +6,9 @@ import { Factory, newInstance, pipe } from "../functions";
 import { AbstractLiftable } from "../liftable";
 import { fromArrayT } from "./fromArray";
 
+export const enumerate = <T>(enumerable: EnumerableLike<T>): Enumerator<T> =>
+  enumerable.enumerate();
+
 export abstract class AbstractEnumerable<T>
   extends AbstractLiftable<Enumerator<T>>
   implements EnumerableLike<T>
@@ -34,6 +37,3 @@ class CreateEnumerable<T> extends AbstractEnumerable<T> {
 export const createEnumerable = <T>(
   enumerate: Factory<Enumerator<T>>,
 ): EnumerableLike<T> => newInstance(CreateEnumerable, enumerate);
-
-export const enumerate = <T>(enumerable: EnumerableLike<T>): Enumerator<T> =>
-  enumerable.enumerate();

@@ -37,7 +37,7 @@ class ConcatAllEnumerator<T> extends AbstractDelegatingEnumerator<
     const { delegate, enumerator } = this;
 
     if (isDisposed(enumerator.inner) && move(delegate)) {
-      enumerator.inner = enumerate(delegate.current);
+      enumerator.inner = pipe(delegate, current, enumerate);
     }
 
     while (
@@ -48,7 +48,7 @@ class ConcatAllEnumerator<T> extends AbstractDelegatingEnumerator<
         this.current = current(enumerator.inner);
         break;
       } else if (move(delegate)) {
-        enumerator.inner = enumerate(current(delegate));
+        enumerator.inner = pipe(delegate, current, enumerate);
       } else {
         pipe(this, dispose());
       }

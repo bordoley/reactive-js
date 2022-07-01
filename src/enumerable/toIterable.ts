@@ -1,12 +1,12 @@
 import { EnumerableLike, enumerate } from "../enumerable";
 import { current, move } from "../enumerator";
-import { Function1, instanceFactory } from "../functions";
+import { Function1, instanceFactory, pipe } from "../functions";
 
 class EnumerableIterable<T> implements Iterable<T> {
   constructor(private readonly enumerable: EnumerableLike<T>) {}
 
   *[Symbol.iterator]() {
-    const enumerator = enumerate(this.enumerable);
+    const enumerator = pipe(this.enumerable, enumerate);
     while (move(enumerator)) {
       yield current(enumerator);
     }

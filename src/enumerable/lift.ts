@@ -13,8 +13,7 @@ class LiftedEnumerable<T> extends AbstractEnumerable<T> {
   }
 
   enumerate(): Enumerator<T> {
-    const src = enumerate(this.src);
-    return pipe(src, ...this.operators) as Enumerator<T>;
+    return pipe(this.src, enumerate, ...this.operators) as Enumerator<T>;
   }
 }
 
