@@ -1,4 +1,4 @@
-import { DispatcherLike, dispatch } from "./dispatcher";
+import { DispatcherLike } from "./dispatcher";
 import { add, addTo } from "./disposable";
 import { newInstance, pipe } from "./functions";
 import {
@@ -29,7 +29,7 @@ class StreamImpl<TReq, T>
   extends DisposableObservable<T>
   implements StreamLike<TReq, T>
 {
-  private readonly dispatcher: DispatcherLike<TReq>;
+  private readonly subject: Subject<TReq>;
   private readonly observable: MulticastObservableLike<T>;
 
   constructor(
@@ -39,10 +39,10 @@ class StreamImpl<TReq, T>
   ) {
     super();
 
-    const subject = newInstance(Subject);
+    const subject = newInstance<Subject<TReq>>(Subject);
     const observable = pipe(subject, op, publish<T>(scheduler, options));
 
-    this.dispatcher = subject;
+    this.subject = subject;
     this.observable = observable;
 
     return pipe(this, add(subject), addTo(this.observable));
@@ -57,7 +57,7 @@ class StreamImpl<TReq, T>
   }
 
   dispatch(req: TReq) {
-    pipe(this.dispatcher, dispatch(req));
+    this.subject.publish(req);
   }
 
   sink(observer: Observer<T>) {

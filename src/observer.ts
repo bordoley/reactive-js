@@ -61,6 +61,10 @@ class ObserverDelegatingDispatcher<T>
     super();
   }
 
+  get scheduler() {
+    return this.observer.scheduler;
+  }
+
   dispatch(next: T) {
     if (!isDisposed(this)) {
       this.nextQueue.push(next);
@@ -138,3 +142,6 @@ export const createDelegatingObserver = <T>(
 
 export const scheduler = <T>(observer: Observer<T>): SchedulerLike =>
   observer.scheduler;
+
+export const dispatcher = <T>(observer: Observer<T>): DispatcherLike<T> =>
+  observer.dispatcher;

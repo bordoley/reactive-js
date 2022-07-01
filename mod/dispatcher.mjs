@@ -4,5 +4,6 @@ const dispatch = (v) => dispatcher => {
     return dispatcher;
 };
 const dispatchTo = (dispatcher) => v => dispatcher.dispatch(v);
+const scheduler = (observer) => observer.scheduler;
 
-export { dispatch, dispatchTo };
+export { dispatch, dispatchTo, scheduler };

@@ -147,7 +147,7 @@ class Subject extends DisposableObservable {
     get observerCount() {
         return this.dispatchers.size;
     }
-    dispatch(next) {
+    publish(next) {
         if (!isDisposed(this)) {
             const { replay, replayed } = this;
             if (replay > 0) {
@@ -1254,7 +1254,7 @@ const pairwiseT = {
 const publish = (scheduler, options = {}) => observable => {
     const { replay = 0 } = options;
     const subject = newInstance(Subject, replay);
-    pipe(observable, onNotify(dispatchTo(subject)), subscribe(scheduler), bindTo(subject));
+    pipe(observable, onNotify(x => subject.publish(x)), subscribe(scheduler), bindTo(subject));
     return subject;
 };
 const reduce = /*@__PURE__*/ createReduceOperator({ ...fromArrayT, ...liftSynchronousT }, class ReducerObserver extends AbstractDelegatingObserver {
@@ -1285,7 +1285,7 @@ const scanT = {
  * @param scanner The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.
  */
-const scanAsync = (scanner, initialValue) => observable => using(instanceFactory(Subject), accFeedbackStream => pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), switchAll(), onNotify(dispatchTo(accFeedbackStream)), onSubscribe(pipeLazy(accFeedbackStream, dispatch(initialValue())))));
+const scanAsync = (scanner, initialValue) => observable => using(instanceFactory(Subject), accFeedbackStream => pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), switchAll(), onNotify(x => accFeedbackStream.publish(x)), onSubscribe(() => accFeedbackStream.publish(initialValue()))));
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
  * source. When the refcount goes to 0, the underlying subscription

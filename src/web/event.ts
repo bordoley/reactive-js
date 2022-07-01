@@ -2,6 +2,7 @@ import { dispatch } from "../dispatcher";
 import { onDisposed } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike, createObservable } from "../observable";
+import { dispatcher as getDispatcher } from "../observer";
 
 export const fromEvent = <T>(
   target: EventTarget,
@@ -10,7 +11,8 @@ export const fromEvent = <T>(
 ): ObservableLike<T> =>
   createObservable(observer => {
     const dispatcher = pipe(
-      observer.dispatcher,
+      observer,
+      getDispatcher,
       onDisposed(_ => {
         target.removeEventListener(eventName, listener);
       }),

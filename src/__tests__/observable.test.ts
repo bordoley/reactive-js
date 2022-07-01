@@ -8,7 +8,6 @@ import {
   throws,
   zipWith,
 } from "../container";
-import { dispatchTo } from "../dispatcher";
 import { dispose } from "../disposable";
 import { forEach as enumeratorForEach } from "../enumerator";
 import {
@@ -266,7 +265,11 @@ export const tests = describe(
     "Subject",
     test("with replay", () => {
       const subject = newInstance(Subject, 2);
-      pipe([1, 2, 3, 4], fromArrayRunnable(), forEach(dispatchTo(subject)));
+      pipe(
+        [1, 2, 3, 4],
+        fromArrayRunnable(),
+        forEach(x => subject.publish(x)),
+      );
       pipe(subject, dispose());
 
       pipe(subject, toRunnable(), toArray(), expectArrayEquals([3, 4]));

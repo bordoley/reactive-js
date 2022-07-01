@@ -18,15 +18,21 @@
 
   ↳↳ [`StreamLike`](stream.StreamLike.md)
 
-## Implemented by
-
-- [`Subject`](../classes/observable.Subject.md)
-
 ## Table of contents
+
+### Properties
+
+- [scheduler](dispatcher.DispatcherLike.md#scheduler)
 
 ### Methods
 
 - [dispatch](dispatcher.DispatcherLike.md#dispatch)
+
+## Properties
+
+### scheduler
+
+• `Readonly` **scheduler**: [`SchedulerLike`](scheduler.SchedulerLike.md)
 
 ## Methods
 

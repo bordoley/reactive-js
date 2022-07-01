@@ -6,7 +6,6 @@ import { Option } from "./option.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
 import { SchedulerLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
 import { CreateSource, AbstractSource, DisposableSource, SourceLike } from "./source.mjs";
-import { DispatcherLike } from "./dispatcher.mjs";
 import { EnumerableLike, ToEnumerable } from "./enumerable.mjs";
 declare const observable: <T>(computation: Factory<T>, { mode }?: {
     mode?: ObservableEffectMode | undefined;
@@ -293,13 +292,13 @@ declare abstract class AbstractObservable<T> extends AbstractSource<T, Observer<
 }
 declare abstract class DisposableObservable<T> extends DisposableSource<T, Observer<T>> implements ObservableLike<T> {
 }
-declare class Subject<T> extends DisposableObservable<T> implements MulticastObservableLike<T>, DispatcherLike<T> {
+declare class Subject<T> extends DisposableObservable<T> implements MulticastObservableLike<T> {
     readonly replay: number;
     private readonly dispatchers;
     private readonly replayed;
     constructor(replay?: number);
     get observerCount(): number;
-    dispatch(next: T): void;
+    publish(next: T): void;
     sink(observer: Observer<T>): void;
 }
 /**
