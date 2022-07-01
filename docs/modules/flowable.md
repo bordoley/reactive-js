@@ -14,6 +14,7 @@
 ### Type Aliases
 
 - [FlowMode](flowable.md#flowmode)
+- [FlowableOperator](flowable.md#flowableoperator)
 
 ### Variables
 
@@ -30,6 +31,19 @@
 ### FlowMode
 
 Ƭ **FlowMode**: ``"resume"`` \| ``"pause"``
+
+___
+
+### FlowableOperator
+
+Ƭ **FlowableOperator**<`TA`, `TB`\>: [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`TA`\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`TB`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
 
 ## Variables
 

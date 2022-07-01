@@ -43,6 +43,11 @@ export interface FlowableLike<
 }
 export interface FlowableStreamLike<T> extends StreamLike<FlowMode, T> {}
 
+export type FlowableOperator<TA, TB> = Function1<
+  FlowableLike<TA>,
+  FlowableLike<TB>
+>;
+
 export interface FlowableSinkLike<
   T,
   TStream extends FlowableSinkStreamLike<T> = FlowableSinkStreamLike<T>,
