@@ -585,3 +585,5 @@ export const toObservable =
 export const toObservableT: ToObservable<AsyncEnumerableLike<unknown>> = {
   toObservable,
 };
+
+export const type: AsyncEnumerableLike<unknown> = undefined as any;

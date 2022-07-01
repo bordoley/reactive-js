@@ -211,5 +211,6 @@ const toObservable = () => enumerable => createObservable(observer => {
 const toObservableT = {
     toObservable,
 };
+const type = undefined;
 
-export { LiftedAsyncEnumerator, consume, consumeAsync, consumeContinue, consumeDone, createAsyncEnumerable, createLiftedAsyncEnumerable, fromArray, fromArrayT, fromEnumerable, fromIterable, generate, keep, keepT, map, mapT, scan, scanT, toObservable, toObservableT };
+export { LiftedAsyncEnumerator, consume, consumeAsync, consumeContinue, consumeDone, createAsyncEnumerable, createLiftedAsyncEnumerable, fromArray, fromArrayT, fromEnumerable, fromIterable, generate, keep, keepT, map, mapT, scan, scanT, toObservable, toObservableT, type };
