@@ -36,6 +36,7 @@
 - [takeLastT](runnable.md#takelastt)
 - [takeWhileT](runnable.md#takewhilet)
 - [throwIfEmptyT](runnable.md#throwifemptyt)
+- [toRunnableT](runnable.md#torunnablet)
 - [type](runnable.md#type)
 - [usingT](runnable.md#usingt)
 
@@ -211,6 +212,12 @@ ___
 ### throwIfEmptyT
 
 • `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](../interfaces/container.ThrowIfEmpty.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
+### toRunnableT
+
+• `Const` **toRunnableT**: [`ToRunnable`](../interfaces/runnable.ToRunnable.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
 
 ___
 
