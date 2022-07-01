@@ -4,8 +4,8 @@ import { flow, toObservable } from "../flowable";
 import { newInstance, pipe, pipeLazy, returns } from "../functions";
 import {
   createDisposableNodeStream,
-  createReadableIOSource,
-  createWritableIOSink,
+  createReadableSource,
+  createWritableSink,
   gunzip,
   gzip,
 } from "../node";
@@ -54,7 +54,7 @@ export const tests = describe(
       );
 
       const dest = pipe(
-        createWritableIOSink(pipeLazy(writable, createDisposableNodeStream)),
+        createWritableSink(pipeLazy(writable, createDisposableNodeStream)),
         stream(scheduler),
         sourceFrom(src),
       );
@@ -88,7 +88,7 @@ export const tests = describe(
       );
 
       const dest = pipe(
-        createWritableIOSink(pipeLazy(writable, createDisposableNodeStream)),
+        createWritableSink(pipeLazy(writable, createDisposableNodeStream)),
         stream(scheduler),
         sourceFrom(src),
       );
@@ -118,7 +118,7 @@ export const tests = describe(
       const textDecoder = newInstance(TextDecoder);
 
       const acc = await pipe(
-        createReadableIOSource(() =>
+        createReadableSource(() =>
           pipe(generate(), Readable.from, createDisposableNodeStream),
         ),
         toObservable(),
@@ -143,7 +143,7 @@ export const tests = describe(
       const textDecoder = newInstance(TextDecoder);
 
       await pipe(
-        createReadableIOSource(() =>
+        createReadableSource(() =>
           pipe(generate(), Readable.from, createDisposableNodeStream),
         ),
         toObservable(),

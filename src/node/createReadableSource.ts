@@ -8,7 +8,7 @@ import { createObservable, onNotify, subscribe } from "../observable";
 import { scheduler } from "../observer";
 import { createDisposableNodeStream } from "./nodeStream";
 
-export const createReadableIOSource = (
+export const createReadableSource = (
   factory: Factory<DisposableValue<Readable>>,
 ): FlowableLike<Uint8Array> =>
   createLiftedFlowable(mode =>
@@ -45,7 +45,7 @@ export const createReadableIOSource = (
     }),
   );
 
-export const readFileIOSource = (
+export const readFile = (
   path: fs.PathLike,
   options?: {
     readonly flags?: string;
@@ -55,6 +55,6 @@ export const readFileIOSource = (
     readonly highWaterMark?: number;
   },
 ) =>
-  createReadableIOSource(() =>
+  createReadableSource(() =>
     pipe(fs.createReadStream(path, options), createDisposableNodeStream),
   );

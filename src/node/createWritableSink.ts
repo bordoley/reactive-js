@@ -15,7 +15,7 @@ import { createLiftedStreamable } from "../streamable";
 
 const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
 
-export const createWritableIOSink = (
+export const createWritableSink = (
   factory: Factory<DisposableValue<Writable>>,
 ): FlowableSinkLike<Uint8Array> =>
   createLiftedStreamable(events =>
