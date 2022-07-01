@@ -84,7 +84,7 @@ function createLiftedAsyncEnumerable(...ops) {
  *
  * @param values The array.
  */
-const fromArray = createFromArray((values, startIndex, endIndex, options) => {
+const fromArray = /*@__PURE__*/ createFromArray((values, startIndex, endIndex, options) => {
     const fromValueWithDelay = fromValue(fromArrayT$1, options);
     return createLiftedAsyncEnumerable(scan$1(increment, returns(startIndex - 1)), concatMap({ ...mapT$1, ...concatAllT }, (i) => fromValueWithDelay(values[i])), takeFirst({ count: endIndex - startIndex }));
 });
