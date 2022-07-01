@@ -14,11 +14,14 @@
 
 ### Properties
 
-- [error](scheduler.PausableSchedulerLike.md#error)
 - [inContinuation](scheduler.PausableSchedulerLike.md#incontinuation)
-- [isDisposed](scheduler.PausableSchedulerLike.md#isdisposed)
 - [now](scheduler.PausableSchedulerLike.md#now)
 - [shouldYield](scheduler.PausableSchedulerLike.md#shouldyield)
+
+### Accessors
+
+- [error](scheduler.PausableSchedulerLike.md#error)
+- [isDisposed](scheduler.PausableSchedulerLike.md#isdisposed)
 
 ### Methods
 
@@ -31,18 +34,6 @@
 
 ## Properties
 
-### error
-
-• `Readonly` **error**: [`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
-
-The error the `DisposableLike` was disposed with if disposed.
-
-#### Inherited from
-
-[SchedulerLike](scheduler.SchedulerLike.md).[error](scheduler.SchedulerLike.md#error)
-
-___
-
 ### inContinuation
 
 • `Readonly` **inContinuation**: `boolean`
@@ -50,18 +41,6 @@ ___
 #### Inherited from
 
 [SchedulerLike](scheduler.SchedulerLike.md).[inContinuation](scheduler.SchedulerLike.md#incontinuation)
-
-___
-
-### isDisposed
-
-• `Readonly` **isDisposed**: `boolean`
-
-`true` if this resource has been disposed, otherwise false
-
-#### Inherited from
-
-[SchedulerLike](scheduler.SchedulerLike.md).[isDisposed](scheduler.SchedulerLike.md#isdisposed)
 
 ___
 
@@ -82,6 +61,38 @@ ___
 #### Inherited from
 
 [SchedulerLike](scheduler.SchedulerLike.md).[shouldYield](scheduler.SchedulerLike.md#shouldyield)
+
+## Accessors
+
+### error
+
+• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Returns
+
+[`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
+
+#### Inherited from
+
+SchedulerLike.error
+
+___
+
+### isDisposed
+
+• `get` **isDisposed**(): `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+SchedulerLike.isDisposed
 
 ## Methods
 
@@ -115,13 +126,13 @@ ___
 
 ▸ **dispose**(`this`, `error?`): `void`
 
-Dispose the resource. Must be idempotent.
+Dispose the resource.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `this` | [`DisposableLike`](disposable.DisposableLike.md) | - |
+| `this` | [`PausableSchedulerLike`](scheduler.PausableSchedulerLike.md) | - |
 | `error?` | [`Error`](disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns

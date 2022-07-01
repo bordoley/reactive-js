@@ -15,7 +15,7 @@
 
 ## Hierarchy
 
-- [`AbstractDisposableObservable`](observable.AbstractDisposableObservable.md)<`TB`\>
+- [`DisposableObservable`](observable.DisposableObservable.md)<`TB`\>
 
   ↳ **`AbstractDelegatingStream`**
 
@@ -36,6 +36,8 @@
 ### Accessors
 
 - [T](stream.AbstractDelegatingStream.md#t)
+- [error](stream.AbstractDelegatingStream.md#error)
+- [isDisposed](stream.AbstractDelegatingStream.md#isdisposed)
 - [liftableStateType](stream.AbstractDelegatingStream.md#liftablestatetype)
 - [observerCount](stream.AbstractDelegatingStream.md#observercount)
 - [replay](stream.AbstractDelegatingStream.md#replay)
@@ -44,7 +46,9 @@
 
 ### Methods
 
+- [add](stream.AbstractDelegatingStream.md#add)
 - [dispatch](stream.AbstractDelegatingStream.md#dispatch)
+- [dispose](stream.AbstractDelegatingStream.md#dispose)
 - [sink](stream.AbstractDelegatingStream.md#sink)
 
 ## Constructors
@@ -70,7 +74,7 @@
 
 #### Overrides
 
-[AbstractDisposableObservable](observable.AbstractDisposableObservable.md).[constructor](observable.AbstractDisposableObservable.md#constructor)
+[DisposableObservable](observable.DisposableObservable.md).[constructor](observable.DisposableObservable.md#constructor)
 
 ## Properties
 
@@ -94,7 +98,47 @@ StreamLike.T
 
 #### Inherited from
 
-AbstractDisposableObservable.T
+DisposableObservable.T
+
+___
+
+### error
+
+• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Returns
+
+[`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+#### Implementation of
+
+StreamLike.error
+
+#### Inherited from
+
+DisposableObservable.error
+
+___
+
+### isDisposed
+
+• `get` **isDisposed**(): `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Returns
+
+`boolean`
+
+#### Implementation of
+
+StreamLike.isDisposed
+
+#### Inherited from
+
+DisposableObservable.isDisposed
 
 ___
 
@@ -112,7 +156,7 @@ StreamLike.liftableStateType
 
 #### Inherited from
 
-AbstractDisposableObservable.liftableStateType
+DisposableObservable.liftableStateType
 
 ___
 
@@ -172,9 +216,39 @@ StreamLike.type
 
 #### Inherited from
 
-AbstractDisposableObservable.type
+DisposableObservable.type
 
 ## Methods
+
+### add
+
+▸ **add**(`this`, `disposable`, `ignoreChildErrors`): `void`
+
+Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`AbstractDelegatingStream`](stream.AbstractDelegatingStream.md)<`TReqA`, `TA`, `TReqB`, `TB`\> |
+| `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
+| `ignoreChildErrors` | `boolean` |
+
+#### Returns
+
+`void`
+
+`this`
+
+#### Implementation of
+
+StreamLike.add
+
+#### Inherited from
+
+[DisposableObservable](observable.DisposableObservable.md).[add](observable.DisposableObservable.md#add)
+
+___
 
 ### dispatch
 
@@ -193,6 +267,33 @@ AbstractDisposableObservable.type
 #### Implementation of
 
 StreamLike.dispatch
+
+___
+
+### dispose
+
+▸ **dispose**(`this`, `error?`): `void`
+
+Dispose the resource.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`AbstractDelegatingStream`](stream.AbstractDelegatingStream.md)<`TReqA`, `TA`, `TReqB`, `TB`\> | - |
+| `error?` | [`Error`](../interfaces/disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+StreamLike.dispose
+
+#### Inherited from
+
+[DisposableObservable](observable.DisposableObservable.md).[dispose](observable.DisposableObservable.md#dispose)
 
 ___
 
@@ -216,4 +317,4 @@ StreamLike.sink
 
 #### Overrides
 
-[AbstractDisposableObservable](observable.AbstractDisposableObservable.md).[sink](observable.AbstractDisposableObservable.md#sink)
+[DisposableObservable](observable.DisposableObservable.md).[sink](observable.DisposableObservable.md#sink)

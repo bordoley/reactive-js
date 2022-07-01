@@ -1,12 +1,6 @@
 import { throws } from "../container";
-import {
-  SerialDisposableLike,
-  add,
-  bindTo,
-  createSerialDisposable,
-  dispose,
-} from "../disposable";
-import { newInstanceWith, pipe, returns } from "../functions";
+import { SerialDisposable, add, bindTo, dispose } from "../disposable";
+import { newInstance, newInstanceWith, pipe, returns } from "../functions";
 import { delegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
@@ -35,7 +29,7 @@ class TimeoutObserver<T> extends AbstractDelegatingObserver<T, T> {
   constructor(
     delegate: Observer<T>,
     readonly duration: ObservableLike<unknown>,
-    readonly durationSubscription: SerialDisposableLike,
+    readonly durationSubscription: SerialDisposable,
   ) {
     super(delegate);
   }
@@ -80,7 +74,7 @@ export function timeout<T>(
           throws({ ...fromArrayT, ...mapT })(returnTimeoutError),
         );
   const operator = (delegate: Observer<T>) => {
-    const durationSubscription = createSerialDisposable();
+    const durationSubscription = newInstance(SerialDisposable);
     const observer = pipe(
       TimeoutObserver,
       newInstanceWith(delegate, durationObs, durationSubscription),

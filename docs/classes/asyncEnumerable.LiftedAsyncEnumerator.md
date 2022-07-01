@@ -31,6 +31,8 @@
 ### Accessors
 
 - [T](asyncEnumerable.LiftedAsyncEnumerator.md#t)
+- [error](asyncEnumerable.LiftedAsyncEnumerator.md#error)
+- [isDisposed](asyncEnumerable.LiftedAsyncEnumerator.md#isdisposed)
 - [liftableStateType](asyncEnumerable.LiftedAsyncEnumerator.md#liftablestatetype)
 - [observerCount](asyncEnumerable.LiftedAsyncEnumerator.md#observercount)
 - [replay](asyncEnumerable.LiftedAsyncEnumerator.md#replay)
@@ -38,7 +40,9 @@
 
 ### Methods
 
+- [add](asyncEnumerable.LiftedAsyncEnumerator.md#add)
 - [dispatch](asyncEnumerable.LiftedAsyncEnumerator.md#dispatch)
+- [dispose](asyncEnumerable.LiftedAsyncEnumerator.md#dispose)
 - [sink](asyncEnumerable.LiftedAsyncEnumerator.md#sink)
 
 ## Constructors
@@ -107,6 +111,38 @@ AsyncEnumerator.T
 
 ___
 
+### error
+
+• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Returns
+
+[`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+#### Inherited from
+
+AsyncEnumerator.error
+
+___
+
+### isDisposed
+
+• `get` **isDisposed**(): `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+AsyncEnumerator.isDisposed
+
+___
+
 ### liftableStateType
 
 • `get` **liftableStateType**(): `TState`
@@ -163,6 +199,32 @@ AsyncEnumerator.type
 
 ## Methods
 
+### add
+
+▸ **add**(`this`, `disposable`, `ignoreChildErrors`): `void`
+
+Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`LiftedAsyncEnumerator`](asyncEnumerable.LiftedAsyncEnumerator.md)<`T`\> |
+| `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
+| `ignoreChildErrors` | `boolean` |
+
+#### Returns
+
+`void`
+
+`this`
+
+#### Inherited from
+
+[AsyncEnumerator](asyncEnumerator.AsyncEnumerator.md).[add](asyncEnumerator.AsyncEnumerator.md#add)
+
+___
+
 ### dispatch
 
 ▸ **dispatch**(`req`): `void`
@@ -180,6 +242,29 @@ AsyncEnumerator.type
 #### Overrides
 
 [AsyncEnumerator](asyncEnumerator.AsyncEnumerator.md).[dispatch](asyncEnumerator.AsyncEnumerator.md#dispatch)
+
+___
+
+### dispose
+
+▸ **dispose**(`this`, `error?`): `void`
+
+Dispose the resource.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`LiftedAsyncEnumerator`](asyncEnumerable.LiftedAsyncEnumerator.md)<`T`\> | - |
+| `error?` | [`Error`](../interfaces/disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[AsyncEnumerator](asyncEnumerator.AsyncEnumerator.md).[dispose](asyncEnumerator.AsyncEnumerator.md#dispose)
 
 ___
 

@@ -209,7 +209,7 @@ ___
 
 ### schedule
 
-▸ **schedule**(`f`, `options?`): [`Function1`](functions.md#function1)<[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md), [`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
+▸ **schedule**(`f`, `options?`): [`Function1`](functions.md#function1)<[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md), [`Disposable`](../classes/disposable.Disposable.md)\>
 
 #### Parameters
 
@@ -221,7 +221,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md), [`DisposableLike`](../interfaces/disposable.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<[`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md), [`Disposable`](../classes/disposable.Disposable.md)\>
 
 ___
 

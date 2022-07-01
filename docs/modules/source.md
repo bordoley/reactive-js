@@ -6,8 +6,8 @@
 
 ### Classes
 
-- [AbstractDisposableSource](../classes/source.AbstractDisposableSource.md)
 - [AbstractSource](../classes/source.AbstractSource.md)
+- [DisposableSource](../classes/source.DisposableSource.md)
 
 ### Interfaces
 
@@ -272,7 +272,7 @@ ___
 
 ### createFromDisposable
 
-▸ **createFromDisposable**<`C`\>(`m`): <T\>(`disposable`: [`DisposableLike`](../interfaces/disposable.DisposableLike.md)) => [`ContainerOf`](container.md#containerof)<`C`, `T`\>
+▸ **createFromDisposable**<`C`\>(`m`): <T\>(`disposable`: [`Disposable`](../classes/disposable.Disposable.md)) => [`ContainerOf`](container.md#containerof)<`C`, `T`\>
 
 #### Type parameters
 
@@ -302,7 +302,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `disposable` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
+| `disposable` | [`Disposable`](../classes/disposable.Disposable.md) |
 
 ##### Returns
 
@@ -906,7 +906,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TResource` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource`\> |
+| `TResource` | extends [`Disposable`](../classes/disposable.Disposable.md)<`TResource`\> |
 | `T` | `T` |
 
 ##### Parameters

@@ -1,5 +1,5 @@
 /// <reference types="./container.d.ts" />
-import { AbstractDisposable, createDisposableValue } from './disposable.mjs';
+import { Disposable, DisposableValue } from './disposable.mjs';
 import { raise, compose, callWith, length, min, max, isEqualTo, newInstance, ignore, pipe, pipeLazy, alwaysFalse, returns, negate } from './functions.mjs';
 import { isSome } from './option.mjs';
 import { empty as empty$1 } from './readonlyArray.mjs';
@@ -12,7 +12,7 @@ class AbstractContainer {
         return raise();
     }
 }
-class AbstractDisposableContainer extends AbstractDisposable {
+class DisposableContainer extends Disposable {
     get type() {
         return raise();
     }
@@ -32,7 +32,7 @@ const createFromArray = (factory) => (options = {}) => values => {
 };
 const empty = ({ fromArray }, options) => fromArray({ ...options })(empty$1);
 const contains = ({ someSatisfy }, value, options = {}) => someSatisfy(isEqualTo(value, options));
-const encodeUtf8 = (m) => obs => m.using(() => createDisposableValue(newInstance(TextEncoder), ignore), v => pipe(obs, m.map(s => v.value.encode(s))));
+const encodeUtf8 = (m) => obs => m.using(() => newInstance(DisposableValue, newInstance(TextEncoder), ignore), v => pipe(obs, m.map(s => v.value.encode(s))));
 function endWith(m, ...values) {
     return concatWith(m, m.fromArray()(values));
 }
@@ -56,4 +56,4 @@ const throws = (m, options) => errorFactory => pipe(() => {
 }, compute(m, options));
 const zipWith = ({ zip }, snd) => fst => zip(fst, snd);
 
-export { AbstractContainer, AbstractDisposableContainer, compute, concatMap, concatWith, contains, createFromArray, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };
+export { AbstractContainer, DisposableContainer, compute, concatMap, concatWith, contains, createFromArray, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };

@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`AbstractDisposableLiftable`](liftable.AbstractDisposableLiftable.md)<[`Observer`](observer.Observer.md)<`T`\>\>
+- [`DisposableLiftable`](liftable.DisposableLiftable.md)<[`Observer`](observer.Observer.md)<`T`\>\>
 
   ↳ **`AsyncEnumerator`**
 
@@ -41,12 +41,16 @@
 ### Accessors
 
 - [T](asyncEnumerator.AsyncEnumerator.md#t)
+- [error](asyncEnumerator.AsyncEnumerator.md#error)
+- [isDisposed](asyncEnumerator.AsyncEnumerator.md#isdisposed)
 - [liftableStateType](asyncEnumerator.AsyncEnumerator.md#liftablestatetype)
 - [type](asyncEnumerator.AsyncEnumerator.md#type)
 
 ### Methods
 
+- [add](asyncEnumerator.AsyncEnumerator.md#add)
 - [dispatch](asyncEnumerator.AsyncEnumerator.md#dispatch)
+- [dispose](asyncEnumerator.AsyncEnumerator.md#dispose)
 - [sink](asyncEnumerator.AsyncEnumerator.md#sink)
 
 ## Constructors
@@ -63,7 +67,7 @@
 
 #### Inherited from
 
-[AbstractDisposableLiftable](liftable.AbstractDisposableLiftable.md).[constructor](liftable.AbstractDisposableLiftable.md#constructor)
+[DisposableLiftable](liftable.DisposableLiftable.md).[constructor](liftable.DisposableLiftable.md#constructor)
 
 ## Properties
 
@@ -121,7 +125,47 @@ ___
 
 #### Inherited from
 
-AbstractDisposableLiftable.T
+DisposableLiftable.T
+
+___
+
+### error
+
+• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Returns
+
+[`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+#### Implementation of
+
+LiftableStateLike.error
+
+#### Inherited from
+
+DisposableLiftable.error
+
+___
+
+### isDisposed
+
+• `get` **isDisposed**(): `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Returns
+
+`boolean`
+
+#### Implementation of
+
+LiftableStateLike.isDisposed
+
+#### Inherited from
+
+DisposableLiftable.isDisposed
 
 ___
 
@@ -139,7 +183,7 @@ StreamLike.liftableStateType
 
 #### Inherited from
 
-AbstractDisposableLiftable.liftableStateType
+DisposableLiftable.liftableStateType
 
 ___
 
@@ -157,9 +201,39 @@ ___
 
 #### Inherited from
 
-AbstractDisposableLiftable.type
+DisposableLiftable.type
 
 ## Methods
+
+### add
+
+▸ **add**(`this`, `disposable`, `ignoreChildErrors`): `void`
+
+Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`AsyncEnumerator`](asyncEnumerator.AsyncEnumerator.md)<`T`\> |
+| `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
+| `ignoreChildErrors` | `boolean` |
+
+#### Returns
+
+`void`
+
+`this`
+
+#### Implementation of
+
+[LiftableStateLike](../interfaces/liftable.LiftableStateLike.md).[add](../interfaces/liftable.LiftableStateLike.md#add)
+
+#### Inherited from
+
+[DisposableLiftable](liftable.DisposableLiftable.md).[add](liftable.DisposableLiftable.md#add)
+
+___
 
 ### dispatch
 
@@ -179,6 +253,33 @@ AbstractDisposableLiftable.type
 #### Implementation of
 
 StreamLike.dispatch
+
+___
+
+### dispose
+
+▸ **dispose**(`this`, `error?`): `void`
+
+Dispose the resource.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`AsyncEnumerator`](asyncEnumerator.AsyncEnumerator.md)<`T`\> | - |
+| `error?` | [`Error`](../interfaces/disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[LiftableStateLike](../interfaces/liftable.LiftableStateLike.md).[dispose](../interfaces/liftable.LiftableStateLike.md#dispose)
+
+#### Inherited from
+
+[DisposableLiftable](liftable.DisposableLiftable.md).[dispose](liftable.DisposableLiftable.md#dispose)
 
 ___
 

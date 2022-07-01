@@ -1,14 +1,20 @@
 import {
+  Disposable,
+  DisposableValue,
+  SerialDisposable,
   add,
-  createDisposable,
-  createDisposableValue,
-  createSerialDisposable,
   dispose,
   disposed,
   isDisposed,
   onDisposed,
 } from "../disposable";
-import { pipe, pipeLazy, raise } from "../functions";
+import {
+  newInstance,
+  newInstanceWith,
+  pipe,
+  pipeLazy,
+  raise,
+} from "../functions";
 import { none } from "../option";
 import {
   describe,
@@ -26,29 +32,38 @@ export const tests = describe(
   "Disposable",
 
   describe(
-    "AbstractDisposable",
+    "Disposable",
     test("disposes child disposable when disposed", () => {
-      const child = createDisposable();
-      pipe(createDisposable(), add(child, true), dispose());
+      const child = newInstance(Disposable);
+      pipe(newInstance(Disposable), add(child, true), dispose());
       pipe(child, isDisposed, expectTrue);
     }),
 
     test("adding to disposed disposable disposes the child", () => {
-      const child = createDisposable();
-      pipe(createDisposable(), dispose(), add(child, true));
+      const child = newInstance(Disposable);
+      pipe(newInstance(Disposable), dispose(), add(child, true));
       pipe(child, isDisposed, expectTrue);
     }),
 
     test("disposes teardown function exactly once when disposed", () => {
       const teardown = mockFn();
-      pipe(createDisposable(teardown), onDisposed(teardown), dispose());
+      pipe(
+        newInstance(Disposable),
+        onDisposed(teardown),
+        onDisposed(teardown),
+        dispose(),
+      );
       pipe(teardown, expectToHaveBeenCalledTimes(1));
     }),
 
     test("catches and swallows Errors thrown by teardown function", () => {
       const teardown = pipeLazy(none, raise);
 
-      const disposable = pipe(createDisposable(teardown), dispose());
+      const disposable = pipe(
+        newInstance(Disposable),
+        onDisposed(teardown),
+        dispose(),
+      );
       pipe(disposable.error, expectNone);
     }),
 
@@ -56,7 +71,11 @@ export const tests = describe(
       const error = { cause: null };
 
       const childTeardown = mockFn();
-      const disposable = createDisposable(childTeardown);
+      const disposable = pipe(
+        Disposable,
+        newInstanceWith<Disposable>(),
+        onDisposed(childTeardown),
+      );
 
       pipe(disposable, dispose(error));
 
@@ -70,8 +89,8 @@ export const tests = describe(
     "AbstractSerialDisposable",
 
     test("setting inner disposable disposes the previous inner disposable", () => {
-      const serialDisposable = createSerialDisposable();
-      const child = createDisposable();
+      const serialDisposable = newInstance(SerialDisposable);
+      const child = newInstance(Disposable);
 
       serialDisposable.inner = child;
       pipe(serialDisposable.inner, expectEquals(child));
@@ -81,8 +100,8 @@ export const tests = describe(
     }),
 
     test("setting inner disposable with the same inner disposable has no effect", () => {
-      const serialDisposable = createSerialDisposable();
-      const child = createDisposable();
+      const serialDisposable = newInstance(SerialDisposable);
+      const child = newInstance(Disposable);
 
       serialDisposable.inner = child;
       pipe(serialDisposable.inner, expectEquals(child));
@@ -96,8 +115,8 @@ export const tests = describe(
     "DisposableValue",
 
     test("disposes the value when disposed", () => {
-      const value = createDisposable();
-      const disposable = createDisposableValue(value, dispose());
+      const value = newInstance(Disposable);
+      const disposable = newInstance(DisposableValue, value, dispose());
 
       pipe(disposable, dispose());
 

@@ -1,4 +1,4 @@
-import { AbstractDisposable, DisposableLike } from "./disposable.mjs";
+import { Disposable } from "./disposable.mjs";
 import { Function1, Equality, Predicate, Updater, Factory, Reducer, Function2, Function3, Function4, Function5, TypePredicate } from "./functions.mjs";
 import { Option } from "./option.mjs";
 interface ContainerLike {
@@ -9,7 +9,7 @@ declare abstract class AbstractContainer implements ContainerLike {
     get type(): this;
     get T(): unknown;
 }
-declare abstract class AbstractDisposableContainer extends AbstractDisposable implements ContainerLike {
+declare abstract class DisposableContainer extends Disposable implements ContainerLike {
     get type(): this;
     get T(): unknown;
 }
@@ -113,30 +113,30 @@ interface ThrowIfEmpty<C extends ContainerLike> extends Container<C> {
     throwIfEmpty<T>(factory: Factory<unknown>): ContainerOperator<C, T, T>;
 }
 interface Using<C extends ContainerLike> extends Container<C> {
-    using<TResource extends DisposableLike, T>(resourceFactory: Factory<TResource>, containerFactory: Function1<TResource, ContainerOf<C, T>>): ContainerOf<C, T>;
-    using<TResource1 extends DisposableLike, TResource2 extends DisposableLike, T>(resourceFactory: Factory<[
+    using<TResource extends Disposable, T>(resourceFactory: Factory<TResource>, containerFactory: Function1<TResource, ContainerOf<C, T>>): ContainerOf<C, T>;
+    using<TResource1 extends Disposable, TResource2 extends Disposable, T>(resourceFactory: Factory<[
         TResource1,
         TResource2
     ]>, containerFactory: Function2<TResource1, TResource2, ContainerOf<C, T>>): ContainerOf<C, T>;
-    using<TResource1 extends DisposableLike, TResource2 extends DisposableLike, TResource3 extends DisposableLike, T>(resourceFactory: Factory<[
+    using<TResource1 extends Disposable, TResource2 extends Disposable, TResource3 extends Disposable, T>(resourceFactory: Factory<[
         TResource1,
         TResource2,
         TResource3
     ]>, containerFactory: Function3<TResource1, TResource2, TResource3, ContainerOf<C, T>>): ContainerOf<C, T>;
-    using<TResource1 extends DisposableLike, TResource2 extends DisposableLike, TResource3 extends DisposableLike, TResource4 extends DisposableLike, T>(resourceFactory: Factory<[
+    using<TResource1 extends Disposable, TResource2 extends Disposable, TResource3 extends Disposable, TResource4 extends Disposable, T>(resourceFactory: Factory<[
         TResource1,
         TResource2,
         TResource3,
         TResource4
     ]>, containerFactory: Function4<TResource1, TResource2, TResource3, TResource4, ContainerOf<C, T>>): ContainerOf<C, T>;
-    using<TResource1 extends DisposableLike, TResource2 extends DisposableLike, TResource3 extends DisposableLike, TResource4 extends DisposableLike, TResource5 extends DisposableLike, T>(resourceFactory: Factory<[
+    using<TResource1 extends Disposable, TResource2 extends Disposable, TResource3 extends Disposable, TResource4 extends Disposable, TResource5 extends Disposable, T>(resourceFactory: Factory<[
         TResource1,
         TResource2,
         TResource3,
         TResource4,
         TResource5
     ]>, containerFactory: Function5<TResource1, TResource2, TResource3, TResource4, TResource5, ContainerOf<C, T>>): ContainerOf<C, T>;
-    using<TResource extends DisposableLike, T>(resourceFactory: Factory<TResource | readonly TResource[]>, runnableFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>): ContainerOf<C, T>;
+    using<TResource extends Disposable, T>(resourceFactory: Factory<TResource | readonly TResource[]>, runnableFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>): ContainerOf<C, T>;
 }
 interface Zip<C extends ContainerLike> extends Container<C> {
     zip<TA, TB>(a: ContainerOf<C, TA>, b: ContainerOf<C, TB>): ContainerOf<C, readonly [
@@ -224,4 +224,4 @@ declare const zipWith: <C extends ContainerLike, TA, TB>({ zip }: Zip<C>, snd: C
     TA,
     TB
 ]>;
-export { AbstractContainer, AbstractDisposableContainer, Buffer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using, Zip, compute, concatMap, concatWith, contains, createFromArray, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };
+export { AbstractContainer, Buffer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, DisposableContainer, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using, Zip, compute, concatMap, concatWith, contains, createFromArray, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };

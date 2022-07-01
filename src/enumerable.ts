@@ -14,7 +14,7 @@ import {
   ThrowIfEmpty,
   Using,
 } from "./container";
-import { DisposableLike, addTo, dispose, isDisposed } from "./disposable";
+import { Disposable, addTo, dispose, isDisposed } from "./disposable";
 import { concatAll } from "./enumerable/concatAll";
 import { createEnumerable, enumerate } from "./enumerable/enumerable";
 import { fromArray, fromArrayT } from "./enumerable/fromArray";
@@ -453,7 +453,7 @@ export const toEnumerableT: ToEnumerable<EnumerableLike<unknown>> = {
   toEnumerable,
 };
 
-const _using = <TResource extends DisposableLike, T>(
+const _using = <TResource extends Disposable, T>(
   resourceFactory: Factory<TResource | readonly TResource[]>,
   enumerableFactory: (...resources: readonly TResource[]) => EnumerableLike<T>,
 ): EnumerableLike<T> =>

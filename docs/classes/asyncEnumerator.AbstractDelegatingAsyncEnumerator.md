@@ -35,6 +35,8 @@
 ### Accessors
 
 - [T](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#t)
+- [error](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#error)
+- [isDisposed](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#isdisposed)
 - [liftableStateType](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#liftablestatetype)
 - [observerCount](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#observercount)
 - [replay](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#replay)
@@ -43,7 +45,9 @@
 
 ### Methods
 
+- [add](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#add)
 - [dispatch](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#dispatch)
+- [dispose](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#dispose)
 - [sink](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#sink)
 
 ## Constructors
@@ -106,6 +110,46 @@ StreamLike.T
 #### Inherited from
 
 AsyncEnumerator.T
+
+___
+
+### error
+
+• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Returns
+
+[`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+#### Implementation of
+
+StreamLike.error
+
+#### Inherited from
+
+AsyncEnumerator.error
+
+___
+
+### isDisposed
+
+• `get` **isDisposed**(): `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Returns
+
+`boolean`
+
+#### Implementation of
+
+StreamLike.isDisposed
+
+#### Inherited from
+
+AsyncEnumerator.isDisposed
 
 ___
 
@@ -199,6 +243,36 @@ AsyncEnumerator.type
 
 ## Methods
 
+### add
+
+▸ **add**(`this`, `disposable`, `ignoreChildErrors`): `void`
+
+Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`AbstractDelegatingAsyncEnumerator`](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md)<`TA`, `TB`\> |
+| `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
+| `ignoreChildErrors` | `boolean` |
+
+#### Returns
+
+`void`
+
+`this`
+
+#### Implementation of
+
+StreamLike.add
+
+#### Inherited from
+
+[AsyncEnumerator](asyncEnumerator.AsyncEnumerator.md).[add](asyncEnumerator.AsyncEnumerator.md#add)
+
+___
+
 ### dispatch
 
 ▸ **dispatch**(`req`): `void`
@@ -220,6 +294,33 @@ StreamLike.dispatch
 #### Overrides
 
 [AsyncEnumerator](asyncEnumerator.AsyncEnumerator.md).[dispatch](asyncEnumerator.AsyncEnumerator.md#dispatch)
+
+___
+
+### dispose
+
+▸ **dispose**(`this`, `error?`): `void`
+
+Dispose the resource.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`AbstractDelegatingAsyncEnumerator`](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md)<`TA`, `TB`\> | - |
+| `error?` | [`Error`](../interfaces/disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+StreamLike.dispose
+
+#### Inherited from
+
+[AsyncEnumerator](asyncEnumerator.AsyncEnumerator.md).[dispose](asyncEnumerator.AsyncEnumerator.md#dispose)
 
 ___
 

@@ -7,7 +7,7 @@ import {
   fromValue,
 } from "./container";
 import {
-  DisposableLike,
+  Disposable,
   DisposableOrTeardown,
   add,
   addTo,
@@ -37,10 +37,10 @@ import {
   pipe,
 } from "./functions";
 import {
-  AbstractDisposableLiftable,
   AbstractLiftable,
   ContraVariant,
   DelegatingLiftableStateOf,
+  DisposableLiftable,
   Lift as LiftableLift,
   LiftableLike,
   LiftableStateLike,
@@ -108,8 +108,8 @@ export abstract class AbstractSource<T, TSink extends SinkLike<T>>
   abstract sink(this: this, sink: TSink): void;
 }
 
-export abstract class AbstractDisposableSource<T, TSink extends SinkLike<T>>
-  extends AbstractDisposableLiftable<TSink>
+export abstract class DisposableSource<T, TSink extends SinkLike<T>>
+  extends DisposableLiftable<TSink>
   implements SourceLike
 {
   abstract sink(this: this, sink: TSink): void;
@@ -841,7 +841,7 @@ export const createThrowIfEmptyOperator = <C extends SourceLike>(
 
 export const createFromDisposable =
   <C extends SourceLike>(m: CreateSource<C>) =>
-  <T>(disposable: DisposableLike): ContainerOf<C, T> =>
+  <T>(disposable: Disposable): ContainerOf<C, T> =>
     pipe(disposable, addTo, create(m));
 
 export const createNever = <C extends SourceLike>(m: CreateSource<C>) => {
@@ -868,7 +868,7 @@ export const createOnSink =
 
 export const createUsing =
   <C extends SourceLike>(m: CreateSource<C>) =>
-  <TResource extends DisposableLike, T>(
+  <TResource extends Disposable, T>(
     resourceFactory: Factory<TResource | readonly TResource[]>,
     sourceFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>,
   ): ContainerOf<C, T> =>

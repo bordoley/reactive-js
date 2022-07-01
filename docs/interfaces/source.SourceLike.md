@@ -16,8 +16,8 @@
 
 ## Implemented by
 
-- [`AbstractDisposableSource`](../classes/source.AbstractDisposableSource.md)
 - [`AbstractSource`](../classes/source.AbstractSource.md)
+- [`DisposableSource`](../classes/source.DisposableSource.md)
 
 ## Table of contents
 

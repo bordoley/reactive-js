@@ -20,13 +20,12 @@ import {
 } from "scheduler";
 import { dispatch } from "./dispatcher";
 import {
-  AbstractDisposable,
+  Disposable,
   Error,
   add,
-  addTo,
-  createDisposable,
   dispose,
   isDisposed,
+  onDisposed,
   onError,
 } from "./disposable";
 import {
@@ -129,7 +128,7 @@ export const createComponent = <TProps>(
 };
 
 class ReactPriorityScheduler
-  extends AbstractDisposable
+  extends Disposable
   implements PrioritySchedulerLike, SchedulerImplementationLike
 {
   inContinuation = false;
@@ -175,8 +174,8 @@ class ReactPriorityScheduler
     );
 
     const callbackNodeDisposable = pipe(
-      createDisposable(pipeLazy(callbackNode, unstable_cancelCallback)),
-      addTo(continuation),
+      continuation,
+      onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)),
     );
   }
 }

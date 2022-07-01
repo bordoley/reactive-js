@@ -1,13 +1,12 @@
 import { fromValue } from "../container";
 import {
-  SerialDisposableLike,
+  SerialDisposable,
   add,
   addTo,
-  createSerialDisposable,
   isDisposed,
   onComplete,
 } from "../disposable";
-import { Function1, newInstanceWith, pipe } from "../functions";
+import { Function1, newInstance, newInstanceWith, pipe } from "../functions";
 import { delegate as delegateLiftable } from "../liftable";
 import {
   ObservableLike,
@@ -52,7 +51,7 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
     delegate: Observer<T>,
     readonly durationFunction: Function1<T, ObservableLike<unknown>>,
     readonly mode: ThrottleMode,
-    readonly durationSubscription: SerialDisposableLike,
+    readonly durationSubscription: SerialDisposable,
   ) {
     super(delegate);
   }
@@ -109,7 +108,7 @@ export function throttle<T>(
       ? (_: T) => fromValue(fromArrayT, { delay: duration })(none)
       : duration;
   const operator = (delegate: Observer<T>) => {
-    const durationSubscription = createSerialDisposable();
+    const durationSubscription = newInstance(SerialDisposable);
 
     const observer = pipe(
       ThrottleObserver,
@@ -117,7 +116,7 @@ export function throttle<T>(
         Observer<T>,
         Function1<T, ObservableLike<unknown>>,
         ThrottleMode,
-        SerialDisposableLike,
+        SerialDisposable,
         ThrottleObserver<T>
       >(delegate, durationFunction, mode, durationSubscription),
       addTo(delegate),

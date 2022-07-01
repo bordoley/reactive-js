@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`AbstractDisposableContainer`](container.AbstractDisposableContainer.md)
+- [`DisposableContainer`](container.DisposableContainer.md)
 
   ↳ **`Enumerator`**
 
@@ -36,11 +36,15 @@
 
 - [T](enumerator.Enumerator.md#t)
 - [current](enumerator.Enumerator.md#current)
+- [error](enumerator.Enumerator.md#error)
 - [hasCurrent](enumerator.Enumerator.md#hascurrent)
+- [isDisposed](enumerator.Enumerator.md#isdisposed)
 - [type](enumerator.Enumerator.md#type)
 
 ### Methods
 
+- [add](enumerator.Enumerator.md#add)
+- [dispose](enumerator.Enumerator.md#dispose)
 - [move](enumerator.Enumerator.md#move)
 
 ## Constructors
@@ -57,7 +61,7 @@
 
 #### Inherited from
 
-[AbstractDisposableContainer](container.AbstractDisposableContainer.md).[constructor](container.AbstractDisposableContainer.md#constructor)
+[DisposableContainer](container.DisposableContainer.md).[constructor](container.DisposableContainer.md#constructor)
 
 ## Accessors
 
@@ -75,7 +79,7 @@
 
 #### Inherited from
 
-AbstractDisposableContainer.T
+DisposableContainer.T
 
 ___
 
@@ -89,6 +93,26 @@ ___
 
 ___
 
+### error
+
+• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Returns
+
+[`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+#### Implementation of
+
+LiftableStateLike.error
+
+#### Inherited from
+
+DisposableContainer.error
+
+___
+
 ### hasCurrent
 
 • `Abstract` `get` **hasCurrent**(): `boolean`
@@ -96,6 +120,26 @@ ___
 #### Returns
 
 `boolean`
+
+___
+
+### isDisposed
+
+• `get` **isDisposed**(): `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Returns
+
+`boolean`
+
+#### Implementation of
+
+LiftableStateLike.isDisposed
+
+#### Inherited from
+
+DisposableContainer.isDisposed
 
 ___
 
@@ -113,9 +157,66 @@ ___
 
 #### Inherited from
 
-AbstractDisposableContainer.type
+DisposableContainer.type
 
 ## Methods
+
+### add
+
+▸ **add**(`this`, `disposable`, `ignoreChildErrors`): `void`
+
+Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`Enumerator`](enumerator.Enumerator.md)<`T`\> |
+| `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
+| `ignoreChildErrors` | `boolean` |
+
+#### Returns
+
+`void`
+
+`this`
+
+#### Implementation of
+
+[LiftableStateLike](../interfaces/liftable.LiftableStateLike.md).[add](../interfaces/liftable.LiftableStateLike.md#add)
+
+#### Inherited from
+
+[DisposableContainer](container.DisposableContainer.md).[add](container.DisposableContainer.md#add)
+
+___
+
+### dispose
+
+▸ **dispose**(`this`, `error?`): `void`
+
+Dispose the resource.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`Enumerator`](enumerator.Enumerator.md)<`T`\> | - |
+| `error?` | [`Error`](../interfaces/disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[LiftableStateLike](../interfaces/liftable.LiftableStateLike.md).[dispose](../interfaces/liftable.LiftableStateLike.md#dispose)
+
+#### Inherited from
+
+[DisposableContainer](container.DisposableContainer.md).[dispose](container.DisposableContainer.md#dispose)
+
+___
 
 ### move
 

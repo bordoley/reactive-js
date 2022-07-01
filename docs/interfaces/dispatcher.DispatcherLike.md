@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`DisposableLike`](disposable.DisposableLike.md)
+- [`Disposable`](../classes/disposable.Disposable.md)
 
   ↳ **`DispatcherLike`**
 

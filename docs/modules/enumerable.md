@@ -791,7 +791,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TResource` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource`\> |
+| `TResource` | extends [`Disposable`](../classes/disposable.Disposable.md)<`TResource`\> |
 | `T` | `T` |
 
 #### Parameters
@@ -811,8 +811,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource1`\> |
-| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource2`\> |
+| `TResource1` | extends [`Disposable`](../classes/disposable.Disposable.md)<`TResource1`\> |
+| `TResource2` | extends [`Disposable`](../classes/disposable.Disposable.md)<`TResource2`\> |
 | `T` | `T` |
 
 #### Parameters
@@ -832,9 +832,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource1`\> |
-| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource2`\> |
-| `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource3`\> |
+| `TResource1` | extends [`Disposable`](../classes/disposable.Disposable.md)<`TResource1`\> |
+| `TResource2` | extends [`Disposable`](../classes/disposable.Disposable.md)<`TResource2`\> |
+| `TResource3` | extends [`Disposable`](../classes/disposable.Disposable.md)<`TResource3`\> |
 | `T` | `T` |
 
 #### Parameters
@@ -854,10 +854,10 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource1`\> |
-| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource2`\> |
-| `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource3`\> |
-| `TResource4` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource4`\> |
+| `TResource1` | extends [`Disposable`](../classes/disposable.Disposable.md)<`TResource1`\> |
+| `TResource2` | extends [`Disposable`](../classes/disposable.Disposable.md)<`TResource2`\> |
+| `TResource3` | extends [`Disposable`](../classes/disposable.Disposable.md)<`TResource3`\> |
+| `TResource4` | extends [`Disposable`](../classes/disposable.Disposable.md)<`TResource4`\> |
 | `T` | `T` |
 
 #### Parameters
@@ -877,11 +877,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TResource1` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource1`\> |
-| `TResource2` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource2`\> |
-| `TResource3` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource3`\> |
-| `TResource4` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource4`\> |
-| `TResource5` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource5`\> |
+| `TResource1` | extends [`Disposable`](../classes/disposable.Disposable.md)<`TResource1`\> |
+| `TResource2` | extends [`Disposable`](../classes/disposable.Disposable.md)<`TResource2`\> |
+| `TResource3` | extends [`Disposable`](../classes/disposable.Disposable.md)<`TResource3`\> |
+| `TResource4` | extends [`Disposable`](../classes/disposable.Disposable.md)<`TResource4`\> |
+| `TResource5` | extends [`Disposable`](../classes/disposable.Disposable.md)<`TResource5`\> |
 | `T` | `T` |
 
 #### Parameters
@@ -901,7 +901,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TResource` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`TResource`\> |
+| `TResource` | extends [`Disposable`](../classes/disposable.Disposable.md)<`TResource`\> |
 | `T` | `T` |
 
 #### Parameters

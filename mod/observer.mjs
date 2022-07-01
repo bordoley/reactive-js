@@ -1,6 +1,6 @@
 /// <reference types="./observer.d.ts" />
-import { AbstractDisposableContainer } from './container.mjs';
-import { addTo, onComplete, AbstractDisposable, isDisposed, dispose, onDisposed } from './disposable.mjs';
+import { DisposableContainer } from './container.mjs';
+import { addTo, onComplete, Disposable, isDisposed, dispose, onDisposed } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 import { length, pipe, newInstanceWith, isEmpty, raise, newInstance } from './functions.mjs';
 import { delegate } from './liftable.mjs';
@@ -14,7 +14,7 @@ const scheduleDrainQueue = (dispatcher) => {
         pipe(scheduler(observer), schedule(dispatcher.continuation), addTo(observer), onComplete(dispatcher.onContinuationDispose));
     }
 };
-class ObserverDelegatingDispatcher extends AbstractDisposable {
+class ObserverDelegatingDispatcher extends Disposable {
     constructor(observer) {
         super();
         this.observer = observer;
@@ -44,7 +44,7 @@ class ObserverDelegatingDispatcher extends AbstractDisposable {
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
-class Observer extends AbstractDisposableContainer {
+class Observer extends DisposableContainer {
     constructor(scheduler) {
         super();
         this.scheduler = scheduler;

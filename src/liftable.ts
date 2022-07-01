@@ -1,14 +1,14 @@
 import {
   AbstractContainer,
-  AbstractDisposableContainer,
   Container,
   ContainerLike,
   ContainerOperator,
+  DisposableContainer,
   FromArray,
   empty,
 } from "./container";
 import {
-  DisposableLike,
+  Disposable,
   Error,
   add,
   addTo,
@@ -31,7 +31,7 @@ import {
 } from "./functions";
 import { Option, none } from "./option";
 
-export interface LiftableStateLike extends DisposableLike, ContainerLike {}
+export interface LiftableStateLike extends Disposable, ContainerLike {}
 
 export interface LiftableLike extends ContainerLike {
   readonly liftableStateType: LiftableStateLike;
@@ -46,10 +46,8 @@ export abstract class AbstractLiftable<TState extends LiftableStateLike>
   }
 }
 
-export abstract class AbstractDisposableLiftable<
-    TState extends LiftableStateLike,
-  >
-  extends AbstractDisposableContainer
+export abstract class DisposableLiftable<TState extends LiftableStateLike>
+  extends DisposableContainer
   implements LiftableLike
 {
   get liftableStateType(): TState {

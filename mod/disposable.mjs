@@ -1,7 +1,69 @@
 /// <reference types="./disposable.d.ts" />
-import { pipe, newInstance, instanceFactory, newInstanceWith, pipeLazy } from './functions.mjs';
-import { isSome, isNone, none } from './option.mjs';
+import { newInstance, pipe, pipeLazy } from './functions.mjs';
+import { none, isSome, isNone } from './option.mjs';
 
+/**
+ * Represents an unmanaged resource that can be disposed.
+ */
+class Disposable {
+    constructor() {
+        /** @ignore */
+        this._isDisposed = false;
+        this.disposables = newInstance(Set);
+        this._error = none;
+    }
+    /**
+     * The error the `Disposable` was disposed with if disposed.
+     */
+    get error() {
+        return this._error;
+    }
+    /**
+     * `true` if this resource has been disposed, otherwise false
+     */
+    get isDisposed() {
+        return this._isDisposed;
+    }
+    /**
+     * Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
+     *
+     * @param disposable
+     * @returns `this`
+     */
+    add(disposable, ignoreChildErrors) {
+        const { disposables } = this;
+        if (isDisposed(this)) {
+            doDispose(this, disposable);
+        }
+        else if (!disposables.has(disposable)) {
+            disposables.add(disposable);
+            if (!(disposable instanceof Function)) {
+                addDisposableOrTeardown(disposable, e => {
+                    disposables.delete(disposable);
+                    if (isSome(e) && !ignoreChildErrors) {
+                        pipe(this, dispose(e));
+                    }
+                }, true);
+            }
+        }
+    }
+    /**
+     * Dispose the resource.
+     *
+     * @param error An optional error that signals the resource is being disposed due to an error.
+     */
+    dispose(error) {
+        if (!isDisposed(this)) {
+            this._isDisposed = true;
+            this._error = error;
+            const { disposables } = this;
+            for (const disposable of disposables) {
+                disposables.delete(disposable);
+                doDispose(this, disposable);
+            }
+        }
+    }
+}
 /**
  * Dispose `disposable` with an optional error.
  */
@@ -70,85 +132,25 @@ const doDispose = (self, disposable) => {
         pipe(disposable, dispose(error));
     }
 };
+const disposed = /*@__PURE__*/ pipe(newInstance(Disposable), dispose());
 /**
- * Abstract base class for implementing the `DisposableLike` interface.
+ * A `Disposable` container that allows replacing an inner `Disposable` with another,
+ * disposing the previous inner `Disposable` in the process. Disposing the
+ * container also disposes the inner `Disposable`. Disposing the inner `Disposable`
+ * with an error, disposes the container with the error.
  *
  * @noInheritDoc
  */
-class AbstractDisposable {
-    constructor() {
-        /** @ignore */
-        this.isDisposed = false;
-        this.disposables = newInstance(Set);
-        this._error = none;
-    }
-    /** @ignore */
-    get error() {
-        return this._error;
-    }
-    /** @ignore */
-    add(disposable, ignoreChildErrors) {
-        const { disposables } = this;
-        if (isDisposed(this)) {
-            doDispose(this, disposable);
-        }
-        else if (!disposables.has(disposable)) {
-            disposables.add(disposable);
-            if (!(disposable instanceof Function)) {
-                addDisposableOrTeardown(disposable, e => {
-                    disposables.delete(disposable);
-                    if (isSome(e) && !ignoreChildErrors) {
-                        pipe(this, dispose(e));
-                    }
-                }, true);
-            }
-        }
-    }
-    /** @ignore */
-    dispose(error) {
-        if (!isDisposed(this)) {
-            this.isDisposed = true;
-            this._error = error;
-            const { disposables } = this;
-            for (const disposable of disposables) {
-                disposables.delete(disposable);
-                doDispose(this, disposable);
-            }
-        }
-    }
-}
-class DisposableImpl extends AbstractDisposable {
-}
-/**
- * Creates an empty `DisposableLike` instance.
- *
- * @param onDispose Optional teardown logic to attach to the newly created disposable.
- */
-const createDisposable = (onDispose) => {
-    const disposable = newInstance(DisposableImpl);
-    if (isSome(onDispose)) {
-        addDisposableOrTeardown(disposable, onDispose);
-    }
-    return disposable;
-};
-const _disposed = {
-    add(disposable) {
-        doDispose(_disposed, disposable);
-    },
-    error: none,
-    isDisposed: true,
-    dispose(_) { },
-};
-/**
- * A disposed `DisposableLike` instance.
- */
-const disposed = _disposed;
-class SerialDisposableImpl extends AbstractDisposable {
+class SerialDisposable extends Disposable {
     constructor() {
         super(...arguments);
         this._inner = disposed;
     }
-    /** @ignore */
+    /**
+     *  The inner `Disposable` that may be get or set. Setting the inner
+     *  `Disposable` disposes the old `Disposable` unless it is strictly equal
+     *  to the new one.
+     */
     get inner() {
         return this._inner;
     }
@@ -163,24 +165,23 @@ class SerialDisposableImpl extends AbstractDisposable {
     }
 }
 /**
- * Creates a new `SerialDisposableLike` instance containing a disposed instance.
+ * A `Disposable` that provides disposable semantics to an underlying resource.
+ *
+ * @noInheritDoc
  */
-const createSerialDisposable = instanceFactory(SerialDisposableImpl);
-class DisposableValueImpl extends AbstractDisposable {
-    constructor(value) {
+class DisposableValue extends Disposable {
+    constructor(
+    /** The underlying resource */
+    value, cleanup) {
         super();
         this.value = value;
+        pipe(this, onDisposed(pipeLazy(value, cleanup)));
     }
 }
-/**
- * Creates a new DisposableValueLike instance, which applies
- * the supplied `cleanup` side effect to `value` when disposed.
- */
-const createDisposableValue = (value, cleanup) => pipe(DisposableValueImpl, newInstanceWith(value), onDisposed(pipeLazy(value, cleanup)));
 const toAbortSignal = (disposable) => {
     const abortController = newInstance(AbortController);
     addDisposableOrTeardown(disposable, () => abortController.abort());
     return abortController.signal;
 };
 
-export { AbstractDisposable, add, addTo, bindTo, createDisposable, createDisposableValue, createSerialDisposable, dispose, disposed, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
+export { Disposable, DisposableValue, SerialDisposable, add, addTo, bindTo, dispose, disposed, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

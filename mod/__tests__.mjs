@@ -1,9 +1,9 @@
 /// <reference types="./__tests__.d.ts" />
 import { fromArray, fromIterable, generate, consume, consumeContinue, consumeDone, consumeAsync, toObservable, map, keep, scan } from './asyncEnumerable.mjs';
 import { fromValue, empty, endWith, concatMap, mapTo, startWith, ignoreElements, contains, compute, noneSatisfy, zipWith, throws, concatWith, genMap, encodeUtf8 } from './container.mjs';
-import { onDisposed, createDisposable, add, dispose, isDisposed, createSerialDisposable, disposed, createDisposableValue } from './disposable.mjs';
+import { onDisposed, Disposable, add, dispose, isDisposed, SerialDisposable, disposed, DisposableValue } from './disposable.mjs';
 import { forEach } from './enumerator.mjs';
-import { pipe, ignore, increment, returns, pipeLazy, isEven, sum, raise, alwaysTrue, incrementBy, alwaysFalse, arrayEquality, newInstance, identity } from './functions.mjs';
+import { pipe, ignore, increment, returns, pipeLazy, isEven, sum, newInstance, raise, newInstanceWith, alwaysTrue, incrementBy, alwaysFalse, arrayEquality, identity } from './functions.mjs';
 import { onNotify, subscribe, toRunnable, fromArrayT, concat as concat$2, fromArray as fromArray$3, buffer, mapT, catchError, concatT, generate as generate$3, takeFirst as takeFirst$2, combineLatestWith, createObservable, Subject, observerCount, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeT, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync, share, zip as zip$1, map as map$3, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$2, zipT, zipLatestWith, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$3, skipFirst as skipFirst$2, takeWhile as takeWhile$2, decodeWithCharset, reduce, usingT } from './observable.mjs';
 import { none, isSome } from './option.mjs';
 import { last, toArray, fromArray as fromArray$1, someSatisfyT, first, generate as generate$1, everySatisfy, map as map$1, forEach as forEach$1, everySatisfyT, fromArrayT as fromArrayT$1, keepT, concat, concatAll, distinctUntilChanged, repeat, scan as scan$1, skipFirst, takeFirst, takeLast, takeWhile, toRunnable as toRunnable$1 } from './runnable.mjs';
@@ -59,47 +59,47 @@ const tests$7 = describe("async enumerable", test("fromArray", () => {
     pipe(enumerable, consume((acc, next) => acc > 0 ? consumeDone(acc + next) : consumeContinue(acc + next), returns(0)), toRunnable(), last(), expectEquals(3));
 }), describe("consumeAsync", test("when the consumer early terminates", pipeLazy([1, 2, 3, 4, 5, 6], fromIterable(), consumeAsync((acc, next) => fromValue(fromArrayT)(acc > 0 ? consumeDone(acc + next) : consumeContinue(acc + next)), returns(0)), toRunnable(), last(), expectEquals(3))), test("when the consumer never terminates", pipeLazy([1, 2, 3, 4, 5, 6], fromIterable(), consumeAsync((acc, next) => pipe(acc + next, consumeContinue, fromValue(fromArrayT)), returns(0)), toRunnable(), last(), expectEquals(21)))), test("toObservable", pipeLazy([1, 2, 3, 4, 5], fromArray(), toObservable(), toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4, 5]))), test("toObservable", pipeLazy([1, 2, 3, 4, 5], fromArray(), toObservable(), toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4, 5]))), test("map", pipeLazy([1, 2, 3, 4, 5], fromArray(), map(increment), toObservable(), toRunnable(), toArray(), expectArrayEquals([2, 3, 4, 5, 6]))), test("keep", pipeLazy([1, 2, 3, 4, 5], fromArray(), keep(isEven), toObservable(), toRunnable(), toArray(), expectArrayEquals([2, 4]))), test("map/keep", pipeLazy([1, 2, 3, 4, 5], fromArray(), map(increment), keep(isEven), toObservable(), toRunnable(), toArray(), expectArrayEquals([2, 4, 6]))), test("keep/map", pipeLazy([1, 2, 3, 4, 5, 6], fromArray(), keep(isEven), map(increment), toObservable(), toRunnable(), toArray(), expectArrayEquals([3, 5, 7]))), test("scan", pipeLazy([1, 1, 1], fromArray(), scan(sum, returns(0)), toObservable(), toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))));
 
-const tests$6 = describe("Disposable", describe("AbstractDisposable", test("disposes child disposable when disposed", () => {
-    const child = createDisposable();
-    pipe(createDisposable(), add(child, true), dispose());
+const tests$6 = describe("Disposable", describe("Disposable", test("disposes child disposable when disposed", () => {
+    const child = newInstance(Disposable);
+    pipe(newInstance(Disposable), add(child, true), dispose());
     pipe(child, isDisposed, expectTrue);
 }), test("adding to disposed disposable disposes the child", () => {
-    const child = createDisposable();
-    pipe(createDisposable(), dispose(), add(child, true));
+    const child = newInstance(Disposable);
+    pipe(newInstance(Disposable), dispose(), add(child, true));
     pipe(child, isDisposed, expectTrue);
 }), test("disposes teardown function exactly once when disposed", () => {
     const teardown = mockFn();
-    pipe(createDisposable(teardown), onDisposed(teardown), dispose());
+    pipe(newInstance(Disposable), onDisposed(teardown), onDisposed(teardown), dispose());
     pipe(teardown, expectToHaveBeenCalledTimes(1));
 }), test("catches and swallows Errors thrown by teardown function", () => {
     const teardown = pipeLazy(none, raise);
-    const disposable = pipe(createDisposable(teardown), dispose());
+    const disposable = pipe(newInstance(Disposable), onDisposed(teardown), dispose());
     pipe(disposable.error, expectNone);
 }), test("propogates errors when disposed with an Error", () => {
     const error = { cause: null };
     const childTeardown = mockFn();
-    const disposable = createDisposable(childTeardown);
+    const disposable = pipe(Disposable, newInstanceWith(), onDisposed(childTeardown));
     pipe(disposable, dispose(error));
     pipe(disposable.error, expectEquals(error));
     pipe(childTeardown, expectToHaveBeenCalledTimes(1));
     pipe(childTeardown.calls[0], expectArrayEquals([error]));
 })), describe("AbstractSerialDisposable", test("setting inner disposable disposes the previous inner disposable", () => {
-    const serialDisposable = createSerialDisposable();
-    const child = createDisposable();
+    const serialDisposable = newInstance(SerialDisposable);
+    const child = newInstance(Disposable);
     serialDisposable.inner = child;
     pipe(serialDisposable.inner, expectEquals(child));
     serialDisposable.inner = disposed;
     pipe(child, isDisposed, expectTrue);
 }), test("setting inner disposable with the same inner disposable has no effect", () => {
-    const serialDisposable = createSerialDisposable();
-    const child = createDisposable();
+    const serialDisposable = newInstance(SerialDisposable);
+    const child = newInstance(Disposable);
     serialDisposable.inner = child;
     pipe(serialDisposable.inner, expectEquals(child));
     serialDisposable.inner = child;
     pipe(child, isDisposed, expectFalse);
 })), describe("DisposableValue", test("disposes the value when disposed", () => {
-    const value = createDisposable();
-    const disposable = createDisposableValue(value, dispose());
+    const value = newInstance(Disposable);
+    const disposable = newInstance(DisposableValue, value, dispose());
     pipe(disposable, dispose());
     pipe(disposable.value, expectEquals(value));
     pipe(value, isDisposed, expectTrue);

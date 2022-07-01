@@ -8,7 +8,7 @@ A unit of work to be executed by a scheduler.
 
 ## Hierarchy
 
-- [`DisposableLike`](disposable.DisposableLike.md)
+- [`Disposable`](../classes/disposable.Disposable.md)
 
   ↳ **`SchedulerContinuationLike`**
 

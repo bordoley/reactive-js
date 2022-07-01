@@ -2,10 +2,10 @@
 import { dispatch } from './dispatcher.mjs';
 import { add, addTo } from './disposable.mjs';
 import { newInstance, pipe } from './functions.mjs';
-import { AbstractDisposableObservable, Subject, publish, observerCount, replay } from './observable.mjs';
+import { DisposableObservable, Subject, publish, observerCount, replay } from './observable.mjs';
 import { sinkInto } from './source.mjs';
 
-class StreamImpl extends AbstractDisposableObservable {
+class StreamImpl extends DisposableObservable {
     constructor(op, scheduler, options) {
         super();
         this.scheduler = scheduler;
@@ -28,7 +28,7 @@ class StreamImpl extends AbstractDisposableObservable {
         pipe(this.observable, sinkInto(observer));
     }
 }
-class AbstractDelegatingStream extends AbstractDisposableObservable {
+class AbstractDelegatingStream extends DisposableObservable {
     constructor(delegate) {
         super();
         this.delegate = delegate;

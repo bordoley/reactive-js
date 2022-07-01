@@ -1,5 +1,5 @@
 /// <reference types="./enumerable.d.ts" />
-import { isDisposed, dispose, createSerialDisposable, bindTo, add, addTo } from './disposable.mjs';
+import { isDisposed, dispose, SerialDisposable, bindTo, add, addTo } from './disposable.mjs';
 import { AbstractEnumerator, reset, hasCurrent, AbstractDelegatingEnumerator, move, current, Enumerator, forEach, zip as zip$1, AbstractPassThroughEnumerator } from './enumerator.mjs';
 import { pipe, pipeLazy, instanceFactory, callWith, newInstance, newInstanceWith, length, max, raise, alwaysTrue, identity } from './functions.mjs';
 import { createFromArray, empty } from './container.mjs';
@@ -118,7 +118,7 @@ class ConcatAllEnumerator extends AbstractDelegatingEnumerator {
     }
 }
 const operator = (delegate) => {
-    const inner = createSerialDisposable();
+    const inner = newInstance(SerialDisposable);
     return pipe(ConcatAllEnumerator, newInstanceWith(delegate, inner), bindTo(inner), add(delegate));
 };
 /**

@@ -294,7 +294,7 @@ ___
 
 ### createDisposableNodeStream
 
-▸ **createDisposableNodeStream**<`T`\>(`stream`): [`DisposableValueLike`](../interfaces/disposable.DisposableValueLike.md)<`T`\>
+▸ **createDisposableNodeStream**<`T`\>(`stream`): [`DisposableValue`](../classes/disposable.DisposableValue.md)<`T`\>
 
 #### Type parameters
 
@@ -310,7 +310,7 @@ ___
 
 #### Returns
 
-[`DisposableValueLike`](../interfaces/disposable.DisposableValueLike.md)<`T`\>
+[`DisposableValue`](../classes/disposable.DisposableValue.md)<`T`\>
 
 ___
 
@@ -322,7 +322,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`DisposableValueLike`](../interfaces/disposable.DisposableValueLike.md)<`Readable`\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`DisposableValue`](../classes/disposable.DisposableValue.md)<`Readable`\>\> |
 
 #### Returns
 
@@ -338,7 +338,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`DisposableValueLike`](../interfaces/disposable.DisposableValueLike.md)<`Writable`\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`DisposableValue`](../classes/disposable.DisposableValue.md)<`Writable`\>\> |
 
 #### Returns
 
@@ -440,7 +440,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`DisposableValueLike`](../interfaces/disposable.DisposableValueLike.md)<`Transform`\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`DisposableValue`](../classes/disposable.DisposableValue.md)<`Transform`\>\> |
 
 #### Returns
 

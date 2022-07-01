@@ -1,9 +1,8 @@
 import { Buffer, fromValue } from "../container";
 import {
-  SerialDisposableLike,
+  SerialDisposable,
   add,
   addTo,
-  createSerialDisposable,
   dispose,
   disposed,
   isDisposed,
@@ -15,6 +14,7 @@ import {
   isEmpty,
   length,
   max,
+  newInstance,
   newInstanceWith,
   pipe,
 } from "../functions";
@@ -36,7 +36,7 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
     delegate: Observer<readonly T[]>,
     private readonly durationFunction: Function1<T, ObservableLike<unknown>>,
     private readonly maxBufferSize: number,
-    readonly durationSubscription: SerialDisposableLike,
+    readonly durationSubscription: SerialDisposable,
   ) {
     super(delegate);
   }
@@ -94,14 +94,14 @@ export function buffer<T>(
   const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
 
   const operator = (delegate: Observer<readonly T[]>) => {
-    const durationSubscription = createSerialDisposable();
+    const durationSubscription = newInstance(SerialDisposable);
     return pipe(
       BufferObserver,
       newInstanceWith<
         Observer<readonly T[]>,
         Function1<T, ObservableLike<unknown>>,
         number,
-        SerialDisposableLike,
+        SerialDisposable,
         BufferObserver<T>
       >(delegate, durationFunction, maxBufferSize, durationSubscription),
       add(durationSubscription),

@@ -1,4 +1,4 @@
-import { AbstractDisposable, add, addTo, isDisposed } from "../disposable";
+import { Disposable, add, addTo, isDisposed } from "../disposable";
 import { Function1, newInstanceWith, pipe } from "../functions";
 import {
   PrioritySchedulerLike,
@@ -7,10 +7,7 @@ import {
 } from "../scheduler";
 import { getDelay, inContinuation, now, shouldYield } from "./scheduler";
 
-class SchedulerWithPriorityImpl
-  extends AbstractDisposable
-  implements SchedulerLike
-{
+class SchedulerWithPriorityImpl extends Disposable implements SchedulerLike {
   constructor(
     private readonly priorityScheduler: PrioritySchedulerLike,
     private readonly priority: number,

@@ -1,10 +1,4 @@
-import {
-  AbstractDisposable,
-  DisposableLike,
-  Error,
-  dispose,
-  isDisposed,
-} from "../disposable";
+import { Disposable, Error, dispose, isDisposed } from "../disposable";
 import {
   Function1,
   SideEffect,
@@ -26,7 +20,7 @@ export class YieldError {
 let currentScheduler: Option<SchedulerLike> = none;
 
 class SchedulerContinuationImpl
-  extends AbstractDisposable
+  extends Disposable
   implements SchedulerContinuationLike
 {
   constructor(
@@ -82,7 +76,7 @@ export const schedule =
   (
     f: SideEffect,
     options?: { readonly delay?: number },
-  ): Function1<SchedulerLike, DisposableLike> =>
+  ): Function1<SchedulerLike, Disposable> =>
   scheduler => {
     const continuation = newInstance(SchedulerContinuationImpl, scheduler, f);
     scheduler.schedule(continuation, options);
