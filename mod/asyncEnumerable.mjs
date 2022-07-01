@@ -1,5 +1,5 @@
 /// <reference types="./asyncEnumerable.d.ts" />
-import { pipe, newInstance, length, compose, increment, returns, pipeLazy, flip } from './functions.mjs';
+import { pipe, newInstance, length, compose, flip, increment, returns, pipeLazy } from './functions.mjs';
 import { AbstractLiftable, covariant, createKeepLiftOperator, createMapLiftOperator, createScanLiftOperator } from './liftable.mjs';
 import { stream } from './streamable.mjs';
 import { AsyncEnumerator, AbstractDelegatingAsyncEnumerator } from './asyncEnumerator.mjs';
@@ -8,7 +8,7 @@ import { dispatch } from './dispatcher.mjs';
 import { add, addTo } from './disposable.mjs';
 import { enumerate, fromIterable as fromIterable$1 } from './enumerable.mjs';
 import { move, hasCurrent, current } from './enumerator.mjs';
-import { Subject, publish, observerCount, replay, fromArrayT as fromArrayT$1, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, withLatestFrom, using, concatT, never, onNotify, takeWhile, map as map$1, createObservable, onSubscribe, zipWithLatestFrom, switchAll, scanAsync, keep as keep$1 } from './observable.mjs';
+import { Subject, publish, observerCount, replay, createObservable, onNotify, map as map$1, onSubscribe, zipWithLatestFrom, takeFirst, switchAll, fromArrayT as fromArrayT$1, scan as scan$1, mapT as mapT$1, concatAllT, withLatestFrom, using, concatT, never, takeWhile, scanAsync, keep as keep$1 } from './observable.mjs';
 import { scheduler } from './observer.mjs';
 import { none } from './option.mjs';
 import { getDelay } from './scheduler.mjs';
@@ -79,37 +79,6 @@ function createLiftedAsyncEnumerable(...ops) {
         return newInstance(LiftedAsyncEnumerator, op, scheduler, replay);
     });
 }
-/**
- * Returns an `AsyncEnumerableLike` from the provided array.
- *
- * @param values The array.
- */
-const fromArray = /*@__PURE__*/ createFromArray((values, startIndex, endIndex, options) => {
-    const fromValueWithDelay = fromValue(fromArrayT$1, options);
-    return createLiftedAsyncEnumerable(scan$1(increment, returns(startIndex - 1)), concatMap({ ...mapT$1, ...concatAllT }, (i) => fromValueWithDelay(values[i])), takeFirst({ count: endIndex - startIndex }));
-});
-const fromArrayT = {
-    fromArray,
-};
-const _fromEnumerable = (enumerable) => createLiftedAsyncEnumerable(withLatestFrom(using(pipeLazy(enumerable, enumerate), compose(fromValue(fromArrayT$1), concatWith(concatT, never()))), (_, enumerator) => enumerator), onNotify(move), takeWhile(hasCurrent), map$1(current));
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
-const fromEnumerable = () => _fromEnumerable;
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
-const _fromIterable = (iterable) => pipe(iterable, fromIterable$1(), fromEnumerable());
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
-const fromIterable = () => _fromIterable;
 const consumeContinue = (data) => ({
     type: "continue",
     data,
@@ -135,6 +104,32 @@ const consumeImpl = (consumer, initial) => enumerable => createObservable(observ
 });
 const consume = (consumer, initial) => consumeImpl(accObs => zipWithLatestFrom(accObs, flip(consumer)), initial);
 const consumeAsync = (consumer, initial) => consumeImpl(accObs => compose(zipWithLatestFrom(accObs, (next, acc) => pipe(consumer(acc, next), takeFirst())), switchAll()), initial);
+/**
+ * Returns an `AsyncEnumerableLike` from the provided array.
+ *
+ * @param values The array.
+ */
+const fromArray = /*@__PURE__*/ createFromArray((values, startIndex, endIndex, options) => {
+    const fromValueWithDelay = fromValue(fromArrayT$1, options);
+    return createLiftedAsyncEnumerable(scan$1(increment, returns(startIndex - 1)), concatMap({ ...mapT$1, ...concatAllT }, (i) => fromValueWithDelay(values[i])), takeFirst({ count: endIndex - startIndex }));
+});
+const fromArrayT = {
+    fromArray,
+};
+const _fromEnumerable = (enumerable) => createLiftedAsyncEnumerable(withLatestFrom(using(pipeLazy(enumerable, enumerate), compose(fromValue(fromArrayT$1), concatWith(concatT, never()))), (_, enumerator) => enumerator), onNotify(move), takeWhile(hasCurrent), map$1(current));
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+const fromEnumerable = () => _fromEnumerable;
+const _fromIterable = (iterable) => pipe(iterable, fromIterable$1(), fromEnumerable());
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+const fromIterable = () => _fromIterable;
 const generateScanner = (generator) => (acc, _) => generator(acc);
 const asyncGeneratorScanner = (generator, options) => {
     const fromValueWithDelay = fromValue(fromArrayT$1, options);
@@ -213,4 +208,4 @@ const toObservableT = {
 };
 const type = undefined;
 
-export { LiftedAsyncEnumerator, consume, consumeAsync, consumeContinue, consumeDone, createAsyncEnumerable, createLiftedAsyncEnumerable, fromArray, fromArrayT, fromEnumerable, fromIterable, generate, keep, keepT, map, mapT, scan, scanT, toObservable, toObservableT, type };
+export { consume, consumeAsync, consumeContinue, consumeDone, fromArray, fromArrayT, fromEnumerable, fromIterable, generate, keep, keepT, map, mapT, scan, scanT, toObservable, toObservableT, type };

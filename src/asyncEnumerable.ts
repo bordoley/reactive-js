@@ -114,14 +114,14 @@ class CreateAsyncEnumerable<T>
   }
 }
 
-export const createAsyncEnumerable = <T>(
+const createAsyncEnumerable = <T>(
   stream: (
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
   ) => AsyncEnumerator<T>,
 ): AsyncEnumerableLike<T> => newInstance(CreateAsyncEnumerable, stream);
 
-export class LiftedAsyncEnumerator<T> extends AsyncEnumerator<T> {
+class LiftedAsyncEnumerator<T> extends AsyncEnumerator<T> {
   private readonly dispatcher: DispatcherLike<void>;
   private readonly observable: MulticastObservableLike<T>;
 
@@ -160,32 +160,32 @@ export class LiftedAsyncEnumerator<T> extends AsyncEnumerator<T> {
   }
 }
 
-export function createLiftedAsyncEnumerable<A>(
+function createLiftedAsyncEnumerable<A>(
   op1: ObservableOperator<void, A>,
 ): AsyncEnumerableLike<A>;
-export function createLiftedAsyncEnumerable<A, B>(
+function createLiftedAsyncEnumerable<A, B>(
   op1: ObservableOperator<void, A>,
   op2: ObservableOperator<A, B>,
 ): AsyncEnumerableLike<B>;
-export function createLiftedAsyncEnumerable<A, B, C>(
+function createLiftedAsyncEnumerable<A, B, C>(
   op1: ObservableOperator<void, A>,
   op2: ObservableOperator<A, B>,
   op3: ObservableOperator<B, C>,
 ): AsyncEnumerableLike<C>;
-export function createLiftedAsyncEnumerable<A, B, C, D>(
+function createLiftedAsyncEnumerable<A, B, C, D>(
   op1: ObservableOperator<void, A>,
   op2: ObservableOperator<A, B>,
   op3: ObservableOperator<B, C>,
   op4: ObservableOperator<C, D>,
 ): AsyncEnumerableLike<D>;
-export function createLiftedAsyncEnumerable<A, B, C, D, E>(
+function createLiftedAsyncEnumerable<A, B, C, D, E>(
   op1: ObservableOperator<void, A>,
   op2: ObservableOperator<A, B>,
   op3: ObservableOperator<B, C>,
   op4: ObservableOperator<C, D>,
   op5: ObservableOperator<D, E>,
 ): AsyncEnumerableLike<E>;
-export function createLiftedAsyncEnumerable<A, B, C, D, E, F>(
+function createLiftedAsyncEnumerable<A, B, C, D, E, F>(
   op1: ObservableOperator<void, A>,
   op2: ObservableOperator<A, B>,
   op3: ObservableOperator<B, C>,
@@ -193,7 +193,7 @@ export function createLiftedAsyncEnumerable<A, B, C, D, E, F>(
   op5: ObservableOperator<D, E>,
   op6: ObservableOperator<E, F>,
 ): AsyncEnumerableLike<F>;
-export function createLiftedAsyncEnumerable<A, B, C, D, E, F, G>(
+function createLiftedAsyncEnumerable<A, B, C, D, E, F, G>(
   op1: ObservableOperator<void, A>,
   op2: ObservableOperator<A, B>,
   op3: ObservableOperator<B, C>,
@@ -202,7 +202,7 @@ export function createLiftedAsyncEnumerable<A, B, C, D, E, F, G>(
   op6: ObservableOperator<E, F>,
   op7: ObservableOperator<F, G>,
 ): AsyncEnumerableLike<G>;
-export function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H>(
+function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H>(
   op1: ObservableOperator<void, A>,
   op2: ObservableOperator<A, B>,
   op3: ObservableOperator<B, C>,
@@ -212,7 +212,7 @@ export function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H>(
   op7: ObservableOperator<F, G>,
   op8: ObservableOperator<G, H>,
 ): AsyncEnumerableLike<H>;
-export function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I>(
+function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I>(
   op1: ObservableOperator<void, A>,
   op2: ObservableOperator<A, B>,
   op3: ObservableOperator<B, C>,
@@ -223,7 +223,7 @@ export function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I>(
   op8: ObservableOperator<G, H>,
   op9: ObservableOperator<H, I>,
 ): AsyncEnumerableLike<I>;
-export function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I, J>(
+function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I, J>(
   op1: ObservableOperator<void, A>,
   op2: ObservableOperator<A, B>,
   op3: ObservableOperator<B, C>,
@@ -235,7 +235,7 @@ export function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I, J>(
   op9: ObservableOperator<H, I>,
   op10: ObservableOperator<I, J>,
 ): AsyncEnumerableLike<J>;
-export function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I, J, K>(
+function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I, J, K>(
   op1: ObservableOperator<void, A>,
   op2: ObservableOperator<A, B>,
   op3: ObservableOperator<B, C>,
@@ -248,7 +248,7 @@ export function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I, J, K>(
   op10: ObservableOperator<I, J>,
   op11: ObservableOperator<J, K>,
 ): AsyncEnumerableLike<K>;
-export function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I, J, K, L>(
+function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I, J, K, L>(
   op1: ObservableOperator<void, A>,
   op2: ObservableOperator<A, B>,
   op3: ObservableOperator<B, C>,
@@ -262,7 +262,7 @@ export function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I, J, K, L>(
   op11: ObservableOperator<J, K>,
   op12: ObservableOperator<K, L>,
 ): AsyncEnumerableLike<L>;
-export function createLiftedAsyncEnumerable<T>(
+function createLiftedAsyncEnumerable<T>(
   ...ops: readonly ObservableOperator<unknown, unknown>[]
 ): AsyncEnumerableLike<T> {
   const op = length(ops) > 1 ? (compose as any)(...ops) : ops[0];
@@ -272,88 +272,6 @@ export function createLiftedAsyncEnumerable<T>(
     return newInstance(LiftedAsyncEnumerator, op, scheduler, replay);
   });
 }
-
-/**
- * Returns an `AsyncEnumerableLike` from the provided array.
- *
- * @param values The array.
- */
-
-export const fromArray = /*@__PURE__*/ createFromArray<
-  AsyncEnumerableLike<unknown>,
-  {
-    readonly delay: number;
-    readonly startIndex: number;
-    readonly endIndex: number;
-  }
->(
-  <T>(
-    values: readonly T[],
-    startIndex: number,
-    endIndex: number,
-    options?: {
-      readonly delay?: number;
-    },
-  ) => {
-    const fromValueWithDelay = fromValue(fromArrayTObs, options);
-
-    return createLiftedAsyncEnumerable(
-      scanObs(increment, returns(startIndex - 1)),
-      concatMap({ ...mapTObs, ...concatAllT }, (i: number) =>
-        fromValueWithDelay(values[i]),
-      ),
-      takeFirst({ count: endIndex - startIndex }),
-    );
-  },
-);
-
-export const fromArrayT: FromArray<AsyncEnumerableLike<unknown>> = {
-  fromArray,
-};
-
-const _fromEnumerable = <T>(
-  enumerable: EnumerableLike<T>,
-): AsyncEnumerableLike<T> =>
-  createLiftedAsyncEnumerable(
-    withLatestFrom<void, Enumerator<T>, Enumerator<T>>(
-      using(
-        pipeLazy(enumerable, enumerate),
-        compose(fromValue(fromArrayTObs), concatWith(concatT, never())),
-      ),
-      (_, enumerator) => enumerator,
-    ),
-    onNotify(move),
-    takeWhile(hasCurrent),
-    mapObs(current),
-  );
-
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
-export const fromEnumerable = <T>(): Function1<
-  EnumerableLike<T>,
-  AsyncEnumerableLike<T>
-> => _fromEnumerable;
-
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
-const _fromIterable = <T>(iterable: Iterable<T>): AsyncEnumerableLike<T> =>
-  pipe(iterable, fromIterableEnumerable(), fromEnumerable());
-
-/**
- * Returns an `AsyncEnumerableLike` from the provided iterable.
- *
- * @param iterable
- */
-export const fromIterable = <T>(): Function1<
-  Iterable<T>,
-  AsyncEnumerableLike<T>
-> => _fromIterable;
 
 export const consumeContinue = <T>(data: T): ConsumeContinue<T> => ({
   type: "continue",
@@ -425,6 +343,83 @@ export const consumeAsync = <T, TAcc>(
       ),
     initial,
   );
+
+/**
+ * Returns an `AsyncEnumerableLike` from the provided array.
+ *
+ * @param values The array.
+ */
+
+export const fromArray = /*@__PURE__*/ createFromArray<
+  AsyncEnumerableLike<unknown>,
+  {
+    readonly delay: number;
+    readonly startIndex: number;
+    readonly endIndex: number;
+  }
+>(
+  <T>(
+    values: readonly T[],
+    startIndex: number,
+    endIndex: number,
+    options?: {
+      readonly delay?: number;
+    },
+  ) => {
+    const fromValueWithDelay = fromValue(fromArrayTObs, options);
+
+    return createLiftedAsyncEnumerable(
+      scanObs(increment, returns(startIndex - 1)),
+      concatMap({ ...mapTObs, ...concatAllT }, (i: number) =>
+        fromValueWithDelay(values[i]),
+      ),
+      takeFirst({ count: endIndex - startIndex }),
+    );
+  },
+);
+
+export const fromArrayT: FromArray<AsyncEnumerableLike<unknown>> = {
+  fromArray,
+};
+
+const _fromEnumerable = <T>(
+  enumerable: EnumerableLike<T>,
+): AsyncEnumerableLike<T> =>
+  createLiftedAsyncEnumerable(
+    withLatestFrom<void, Enumerator<T>, Enumerator<T>>(
+      using(
+        pipeLazy(enumerable, enumerate),
+        compose(fromValue(fromArrayTObs), concatWith(concatT, never())),
+      ),
+      (_, enumerator) => enumerator,
+    ),
+    onNotify(move),
+    takeWhile(hasCurrent),
+    mapObs(current),
+  );
+
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+export const fromEnumerable = <T>(): Function1<
+  EnumerableLike<T>,
+  AsyncEnumerableLike<T>
+> => _fromEnumerable;
+
+const _fromIterable = <T>(iterable: Iterable<T>): AsyncEnumerableLike<T> =>
+  pipe(iterable, fromIterableEnumerable(), fromEnumerable());
+
+/**
+ * Returns an `AsyncEnumerableLike` from the provided iterable.
+ *
+ * @param iterable
+ */
+export const fromIterable = <T>(): Function1<
+  Iterable<T>,
+  AsyncEnumerableLike<T>
+> => _fromIterable;
 
 const generateScanner =
   <T>(generator: Updater<T>) =>

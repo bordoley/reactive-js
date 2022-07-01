@@ -16,8 +16,6 @@
 
   ↳ **`AsyncEnumerator`**
 
-  ↳↳ [`LiftedAsyncEnumerator`](asyncEnumerable.LiftedAsyncEnumerator.md)
-
   ↳↳ [`AbstractDelegatingAsyncEnumerator`](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md)
 
 ## Implements
