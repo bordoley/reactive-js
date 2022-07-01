@@ -16,16 +16,16 @@ class AbstractDelegatingAsyncEnumerator extends AsyncEnumerator {
         this.delegate = delegate;
     }
     get observerCount() {
-        return observerCount(this.delegate);
+        return pipe(this, delegate, observerCount);
     }
     get replay() {
-        return replay(this.delegate);
+        return pipe(this, delegate, replay);
     }
     get scheduler() {
-        return this.delegate.scheduler;
+        return delegate(this).scheduler;
     }
     dispatch(req) {
-        pipe(delegate(this), dispatch(req));
+        pipe(this, delegate, dispatch(req));
     }
 }
 

@@ -5,7 +5,7 @@ import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer } from "../observer";
 import { none } from "../option";
 import { everySatisfy, map } from "../readonlyArray";
-import { assertState, sourceFrom } from "../source";
+import { assertState, notify, sourceFrom } from "../source";
 import { defer } from "./defer";
 import { isEnumerable, tagEnumerable } from "./observable";
 
@@ -61,7 +61,7 @@ class LatestObserver extends AbstractDelegatingObserver<
         observers,
         map(observer => observer.latest),
       );
-      delegate(this).notify(result);
+      pipe(this, delegate, notify(result));
 
       if (this.mode === LatestMode.Zip) {
         for (const sub of observers) {

@@ -536,12 +536,12 @@ const takeFirst = /*@__PURE__*/ createTakeFirstLiftOperator({ ...fromArrayT, ...
         this.count = 0;
     }
     get current() {
-        return current(delegate(this));
+        return pipe(this, delegate, current);
     }
     move() {
         if (this.count < this.maxCount) {
             this.count++;
-            move(delegate(this));
+            pipe(this, delegate, move);
         }
         else {
             pipe(this, dispose());
@@ -591,7 +591,7 @@ const throwIfEmpty = /*@__PURE__*/ createThrowIfEmptyLiftOperator(liftT, class T
         this.isEmpty = true;
     }
     move() {
-        if (move(delegate(this))) {
+        if (pipe(this, delegate, move)) {
             this.isEmpty = false;
         }
         return hasCurrent(this);

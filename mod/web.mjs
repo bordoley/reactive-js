@@ -5,6 +5,7 @@ import { pipe, newInstance, isEmpty, length, raise, newInstanceWith, compose, re
 import { createObservable, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
 import { keep } from './readonlyArray.mjs';
 import { ignoreElements } from './container.mjs';
+import { delegate } from './liftable.mjs';
 import { none, isSome } from './option.mjs';
 import { sinkInto } from './source.mjs';
 import { AbstractDelegatingStream } from './stream.mjs';
@@ -84,7 +85,7 @@ class WindowLocationStream extends AbstractDelegatingStream {
         this.historyCounter = -1;
     }
     dispatch(stateOrUpdater, { replace } = { replace: false }) {
-        pipe({ stateOrUpdater, replace }, dispatchTo(this.delegate));
+        pipe({ stateOrUpdater, replace }, dispatchTo(delegate(this)));
     }
     goBack() {
         const canGoBack = this.historyCounter > 0;
@@ -94,7 +95,7 @@ class WindowLocationStream extends AbstractDelegatingStream {
         return canGoBack;
     }
     sink(observer) {
-        pipe(this.delegate, map(({ uri }) => uri), sinkInto(observer));
+        pipe(this, delegate, map(({ uri }) => uri), sinkInto(observer));
     }
 }
 let currentWindowLocationStream = none;

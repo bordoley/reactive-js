@@ -34,7 +34,7 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
 
     const inner = pipe(
       next,
-      onNotify(notifySink(delegate(this))),
+      onNotify(pipe(this, delegate, notifySink)),
       subscribe(scheduler(this)),
       addTo(delegate(this)),
       onComplete(() => {

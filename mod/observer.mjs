@@ -6,7 +6,7 @@ import { length, pipe, newInstanceWith, isEmpty, raise, newInstance } from './fu
 import { delegate } from './liftable.mjs';
 import { none, isNone } from './option.mjs';
 import { schedule, __yield, inContinuation } from './scheduler.mjs';
-import { assertState } from './source.mjs';
+import { assertState, notify } from './source.mjs';
 
 const scheduleDrainQueue = (dispatcher) => {
     if (length(dispatcher.nextQueue) === 1) {
@@ -85,7 +85,7 @@ class AbstractDelegatingObserver extends Observer {
 }
 class DelegatingObserver extends AbstractDelegatingObserver {
     notify(next) {
-        delegate(this).notify(next);
+        pipe(this, delegate, notify(next));
     }
 }
 const createDelegatingObserver = (delegate) => newInstance(DelegatingObserver, delegate);

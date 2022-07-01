@@ -44,10 +44,10 @@ class AbstractPassThroughEnumerator extends Enumerator {
         this.delegate = delegate;
     }
     get current() {
-        return current(delegate(this));
+        return pipe(this, delegate, current);
     }
     get hasCurrent() {
-        return hasCurrent(delegate(this));
+        return pipe(this, delegate, hasCurrent);
     }
 }
 const current = (enumerator) => enumerator.current;

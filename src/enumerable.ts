@@ -357,13 +357,13 @@ export const takeFirst: <T>(options?: {
     }
 
     get current() {
-      return current(delegate(this));
+      return pipe(this, delegate, current);
     }
 
     move(): boolean {
       if (this.count < this.maxCount) {
         this.count++;
-        move(delegate(this));
+        pipe(this, delegate, move);
       } else {
         pipe(this, dispose());
       }
@@ -431,7 +431,7 @@ export const throwIfEmpty: <T>(
     isEmpty = true;
 
     move(): boolean {
-      if (move(delegate(this))) {
+      if (pipe(this, delegate, move)) {
         this.isEmpty = false;
       }
 

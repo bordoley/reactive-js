@@ -73,11 +73,11 @@ export abstract class AbstractPassThroughEnumerator<T> extends Enumerator<T> {
   }
 
   get current(): T {
-    return current(delegate(this));
+    return pipe(this, delegate, current);
   }
 
   get hasCurrent(): boolean {
-    return hasCurrent(delegate(this));
+    return pipe(this, delegate, hasCurrent);
   }
 
   abstract move(): boolean;

@@ -4,7 +4,7 @@ import { delegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
 import { Option } from "../option";
-import { assertState } from "../source";
+import { assertState, notify } from "../source";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
@@ -29,7 +29,7 @@ class WithLatestFromObserver<TA, TB, T> extends AbstractDelegatingObserver<
 
     if (!isDisposed(this) && this.hasLatest) {
       const result = this.selector(next, this.otherLatest as TB);
-      delegate(this).notify(result);
+      pipe(this, delegate, notify(result));
     }
   }
 }
