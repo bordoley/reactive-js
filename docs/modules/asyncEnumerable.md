@@ -25,6 +25,7 @@
 - [mapT](asyncEnumerable.md#mapt)
 - [scanT](asyncEnumerable.md#scant)
 - [toObservableT](asyncEnumerable.md#toobservablet)
+- [type](asyncEnumerable.md#type)
 
 ### Functions
 
@@ -123,6 +124,12 @@ ___
 ### toObservableT
 
 • `Const` **toObservableT**: [`ToObservable`](../interfaces/observable.ToObservable.md)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>\>
+
+___
+
+### type
+
+• `Const` **type**: [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>
 
 ## Functions
 

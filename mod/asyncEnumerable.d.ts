@@ -92,4 +92,5 @@ declare const scan: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<T
 declare const scanT: Scan<AsyncEnumerableLike<unknown>>;
 declare const toObservable: <T>() => Function1<AsyncEnumerableLike<T>, ObservableLike<T>>;
 declare const toObservableT: ToObservable<AsyncEnumerableLike<unknown>>;
-export { AsyncEnumerableLike, AsyncEnumerableOperator, ConsumeContinue, ConsumeDone, LiftedAsyncEnumerator, consume, consumeAsync, consumeContinue, consumeDone, createAsyncEnumerable, createLiftedAsyncEnumerable, fromArray, fromArrayT, fromEnumerable, fromIterable, generate, keep, keepT, map, mapT, scan, scanT, toObservable, toObservableT };
+declare const type: AsyncEnumerableLike<unknown>;
+export { AsyncEnumerableLike, AsyncEnumerableOperator, ConsumeContinue, ConsumeDone, LiftedAsyncEnumerator, consume, consumeAsync, consumeContinue, consumeDone, createAsyncEnumerable, createLiftedAsyncEnumerable, fromArray, fromArrayT, fromEnumerable, fromIterable, generate, keep, keepT, map, mapT, scan, scanT, toObservable, toObservableT, type };
