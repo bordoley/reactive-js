@@ -24,8 +24,8 @@ import { createObservable, onNotify, subscribe } from "../observable";
 import { scheduler } from "../observer";
 import { sinkInto } from "../source";
 import { sourceFrom, stream } from "../streamable";
-import { createReadableIOSource } from "./createReadableIOSource";
-import { createWritableIOSink } from "./createWritableIOSink";
+import { createReadableSource } from "./createReadableSource";
+import { createWritableSink } from "./createWritableSink";
 import { createDisposableNodeStream } from "./nodeStream";
 
 export const transform =
@@ -38,7 +38,7 @@ export const transform =
         const transform = factory();
 
         pipe(
-          createWritableIOSink(() =>
+          createWritableSink(() =>
             pipe(
               newInstance(DisposableValue, transform.value, ignore),
               // only dispose the transform when the writable is disposed.
@@ -50,7 +50,7 @@ export const transform =
         );
 
         const transformReadableStream = pipe(
-          createReadableIOSource(returns(transform)),
+          createReadableSource(returns(transform)),
           stream(scheduler(observer)),
           addTo(observer),
         );

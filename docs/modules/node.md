@@ -10,13 +10,13 @@
 - [brotliCompress](node.md#brotlicompress)
 - [brotliDecompress](node.md#brotlidecompress)
 - [createDisposableNodeStream](node.md#createdisposablenodestream)
-- [createReadableIOSource](node.md#createreadableiosource)
-- [createWritableIOSink](node.md#createwritableiosink)
+- [createReadableSource](node.md#createreadablesource)
+- [createWritableSink](node.md#createwritablesink)
 - [deflate](node.md#deflate)
 - [gunzip](node.md#gunzip)
 - [gzip](node.md#gzip)
 - [inflate](node.md#inflate)
-- [readFileIOSource](node.md#readfileiosource)
+- [readFile](node.md#readfile)
 - [transform](node.md#transform)
 
 ## Functions
@@ -314,9 +314,9 @@ ___
 
 ___
 
-### createReadableIOSource
+### createReadableSource
 
-▸ **createReadableIOSource**(`factory`): [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>
+▸ **createReadableSource**(`factory`): [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -330,9 +330,9 @@ ___
 
 ___
 
-### createWritableIOSink
+### createWritableSink
 
-▸ **createWritableIOSink**(`factory`): [`FlowableSinkLike`](../interfaces/flowable.FlowableSinkLike.md)<`Uint8Array`, [`FlowableSinkStreamLike`](../interfaces/flowable.FlowableSinkStreamLike.md)<`Uint8Array`\>\>
+▸ **createWritableSink**(`factory`): [`FlowableSinkLike`](../interfaces/flowable.FlowableSinkLike.md)<`Uint8Array`, [`FlowableSinkStreamLike`](../interfaces/flowable.FlowableSinkStreamLike.md)<`Uint8Array`\>\>
 
 #### Parameters
 
@@ -410,9 +410,9 @@ ___
 
 ___
 
-### readFileIOSource
+### readFile
 
-▸ **readFileIOSource**(`path`, `options?`): [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>
+▸ **readFile**(`path`, `options?`): [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>
 
 #### Parameters
 
