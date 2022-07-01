@@ -8,6 +8,8 @@
 
 - **`ContainerLike`**
 
+  ↳ [`FlowableLike`](flowable.FlowableLike.md)
+
   ↳ [`LiftableLike`](liftable.LiftableLike.md)
 
   ↳ [`LiftableStateLike`](liftable.LiftableStateLike.md)

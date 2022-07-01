@@ -14,6 +14,7 @@
 
 - [MulticastObservableLike](../interfaces/observable.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/observable.ObservableLike.md)
+- [ToObservable](../interfaces/observable.ToObservable.md)
 
 ### Type Aliases
 
@@ -53,6 +54,7 @@
 - [throwIfEmptyT](observable.md#throwifemptyt)
 - [timeoutError](observable.md#timeouterror)
 - [toEnumerableT](observable.md#toenumerablet)
+- [toObservableT](observable.md#toobservablet)
 - [toRunnableT](observable.md#torunnablet)
 - [type](observable.md#type)
 - [usingT](observable.md#usingt)
@@ -119,6 +121,7 @@
 - [throwIfEmpty](observable.md#throwifempty)
 - [timeout](observable.md#timeout)
 - [toEnumerable](observable.md#toenumerable)
+- [toObservable](observable.md#toobservable)
 - [toPromise](observable.md#topromise)
 - [toRunnable](observable.md#torunnable)
 - [using](observable.md#using)
@@ -348,6 +351,12 @@ ___
 ### toEnumerableT
 
 • `Const` **toEnumerableT**: [`ToEnumerable`](../interfaces/enumerable.ToEnumerable.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### toObservableT
+
+• `Const` **toObservableT**: [`ToObservable`](../interfaces/observable.ToObservable.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
@@ -2879,6 +2888,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
+
+___
+
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
 ___
 

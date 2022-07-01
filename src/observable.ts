@@ -1,4 +1,7 @@
 import {
+  Container,
+  ContainerLike,
+  ContainerOf,
   DecodeWithCharset,
   DistinctUntilChanged,
   EverySatisfy,
@@ -34,6 +37,7 @@ import {
   Predicate,
   Reducer,
   Updater,
+  identity,
   ignore,
   instanceFactory,
   newInstance,
@@ -102,6 +106,10 @@ export interface ObservableLike<T> extends SourceLike {
   readonly isEnumerable?: boolean;
 
   sink(this: ObservableLike<T>, sink: Observer<T>): void;
+}
+
+export interface ToObservable<C extends ContainerLike> extends Container<C> {
+  toObservable: <T>() => Function1<ContainerOf<C, T>, ObservableLike<T>>;
 }
 
 export const type: ObservableLike<unknown> = undefined as any;
@@ -626,6 +634,15 @@ export const throwIfEmpty: <T>(
 
 export const throwIfEmptyT: ThrowIfEmpty<ObservableLike<unknown>> = {
   throwIfEmpty,
+};
+
+export const toObservable = <T>(): Function1<
+  ObservableLike<T>,
+  ObservableLike<T>
+> => identity;
+
+export const toObservableT: ToObservable<ObservableLike<unknown>> = {
+  toObservable,
 };
 
 export const toRunnable =

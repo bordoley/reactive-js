@@ -283,7 +283,7 @@ ___
 
 [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`T`, `G`\>
 
-▸ **createLiftedStreamable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`T`, `H`, [`StreamLike`](../interfaces/stream.StreamLike.md)<`T`, `H`\>\>
+▸ **createLiftedStreamable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`T`, `H`\>
 
 #### Type parameters
 
@@ -314,7 +314,7 @@ ___
 
 #### Returns
 
-[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`T`, `H`, [`StreamLike`](../interfaces/stream.StreamLike.md)<`T`, `H`\>\>
+[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`T`, `H`\>
 
 ▸ **createLiftedStreamable**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`T`, `I`\>
 

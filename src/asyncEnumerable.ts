@@ -48,6 +48,7 @@ import {
   ObservableLike,
   ObservableOperator,
   Subject,
+  ToObservable,
   concatAllT,
   concatT,
   createObservable,
@@ -580,3 +581,7 @@ export const toObservable =
         sinkInto(observer),
       );
     });
+
+export const toObservableT: ToObservable<AsyncEnumerableLike<unknown>> = {
+  toObservable,
+};
