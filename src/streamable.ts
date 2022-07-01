@@ -31,7 +31,6 @@ import {
   onSubscribe,
   scan,
   subscribe,
-  takeFirst,
 } from "./observable";
 import { Option, isSome, none } from "./option";
 import { SchedulerLike } from "./scheduler";
@@ -243,16 +242,6 @@ export const createStateStore = <T>(
   options?: { readonly equality?: Equality<T> },
 ): StreamableStateLike<T> =>
   createActionReducer(updateReducer, initialState, options);
-
-const _empty = /*@__PURE__*/ createLiftedStreamable<any, any>(
-  takeFirst({ count: 0 }),
-);
-
-/**
- * Returns an empty `StreamableLike` that always returns
- * a disposed `StreamLike` instance.
- */
-export const empty = <TReq, T>(): StreamableLike<TReq, T> => _empty;
 
 const _identity = {
   stream(scheduler: SchedulerLike, options?: { readonly replay: number }) {

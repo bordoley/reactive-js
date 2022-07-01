@@ -50,7 +50,6 @@ import {
   __stream,
   createActionReducer,
   createLiftedStreamable,
-  empty,
   identity,
   sourceFrom,
   stream,
@@ -112,31 +111,6 @@ export const tests = describe(
 
     pipe(result, expectArrayEquals([0, 1, 3]));
   }),
-  describe(
-    "empty",
-    test("with no delay", () => {
-      const scheduler = createVirtualTimeScheduler();
-      const emptyStream = pipe(empty<void, number>(), stream(scheduler));
-
-      emptyStream.dispatch(none);
-      emptyStream.dispatch(none);
-
-      let result: number[] = [];
-      const subscription = pipe(
-        emptyStream,
-        onNotify(x => {
-          result.push(x);
-        }),
-        subscribe(scheduler),
-      );
-
-      pipe(scheduler, forEach(ignore));
-
-      pipe(result, expectArrayEquals([]));
-      pipe(emptyStream, isDisposed, expectTrue);
-      pipe(subscription, isDisposed, expectTrue);
-    }),
-  ),
   test("with multiple observers", () => {
     const scheduler = createVirtualTimeScheduler();
 
