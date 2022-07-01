@@ -30,11 +30,15 @@
 ### Accessors
 
 - [T](runnableSink.AbstractDelegatingRunnableSink.md#t)
+- [error](runnableSink.AbstractDelegatingRunnableSink.md#error)
+- [isDisposed](runnableSink.AbstractDelegatingRunnableSink.md#isdisposed)
 - [type](runnableSink.AbstractDelegatingRunnableSink.md#type)
 
 ### Methods
 
+- [add](runnableSink.AbstractDelegatingRunnableSink.md#add)
 - [assertState](runnableSink.AbstractDelegatingRunnableSink.md#assertstate)
+- [dispose](runnableSink.AbstractDelegatingRunnableSink.md#dispose)
 - [notify](runnableSink.AbstractDelegatingRunnableSink.md#notify)
 
 ## Constructors
@@ -82,6 +86,38 @@ RunnableSink.T
 
 ___
 
+### error
+
+• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Returns
+
+[`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+#### Inherited from
+
+RunnableSink.error
+
+___
+
+### isDisposed
+
+• `get` **isDisposed**(): `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+RunnableSink.isDisposed
+
+___
+
 ### type
 
 • `get` **type**(): `this`
@@ -95,6 +131,32 @@ ___
 RunnableSink.type
 
 ## Methods
+
+### add
+
+▸ **add**(`this`, `disposable`, `ignoreChildErrors`): `void`
+
+Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`AbstractDelegatingRunnableSink`](runnableSink.AbstractDelegatingRunnableSink.md)<`TIn`, `TOut`\> |
+| `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
+| `ignoreChildErrors` | `boolean` |
+
+#### Returns
+
+`void`
+
+`this`
+
+#### Inherited from
+
+[RunnableSink](runnableSink.RunnableSink.md).[add](runnableSink.RunnableSink.md#add)
+
+___
 
 ### assertState
 
@@ -113,6 +175,29 @@ RunnableSink.type
 #### Inherited from
 
 [RunnableSink](runnableSink.RunnableSink.md).[assertState](runnableSink.RunnableSink.md#assertstate)
+
+___
+
+### dispose
+
+▸ **dispose**(`this`, `error?`): `void`
+
+Dispose the resource.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`AbstractDelegatingRunnableSink`](runnableSink.AbstractDelegatingRunnableSink.md)<`TIn`, `TOut`\> | - |
+| `error?` | [`Error`](../interfaces/disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[RunnableSink](runnableSink.RunnableSink.md).[dispose](runnableSink.RunnableSink.md#dispose)
 
 ___
 

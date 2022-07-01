@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`DisposableLike`](disposable.DisposableLike.md)
+- [`Disposable`](../classes/disposable.Disposable.md)
 
   ↳ **`SchedulerImplementationLike`**
 
@@ -14,8 +14,11 @@
 
 ### Properties
 
-- [error](scheduler.SchedulerImplementationLike.md#error)
 - [inContinuation](scheduler.SchedulerImplementationLike.md#incontinuation)
+
+### Accessors
+
+- [error](scheduler.SchedulerImplementationLike.md#error)
 - [isDisposed](scheduler.SchedulerImplementationLike.md#isdisposed)
 
 ### Methods
@@ -25,33 +28,41 @@
 
 ## Properties
 
-### error
-
-• `Readonly` **error**: [`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
-
-The error the `DisposableLike` was disposed with if disposed.
-
-#### Inherited from
-
-[DisposableLike](disposable.DisposableLike.md).[error](disposable.DisposableLike.md#error)
-
-___
-
 ### inContinuation
 
 • **inContinuation**: `boolean`
+
+## Accessors
+
+### error
+
+• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Returns
+
+[`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
+
+#### Inherited from
+
+Disposable.error
 
 ___
 
 ### isDisposed
 
-• `Readonly` **isDisposed**: `boolean`
+• `get` **isDisposed**(): `boolean`
 
 `true` if this resource has been disposed, otherwise false
 
+#### Returns
+
+`boolean`
+
 #### Inherited from
 
-[DisposableLike](disposable.DisposableLike.md).[isDisposed](disposable.DisposableLike.md#isdisposed)
+Disposable.isDisposed
 
 ## Methods
 
@@ -77,7 +88,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Inherited from
 
-[DisposableLike](disposable.DisposableLike.md).[add](disposable.DisposableLike.md#add)
+[Disposable](../classes/disposable.Disposable.md).[add](../classes/disposable.Disposable.md#add)
 
 ___
 
@@ -85,13 +96,13 @@ ___
 
 ▸ **dispose**(`this`, `error?`): `void`
 
-Dispose the resource. Must be idempotent.
+Dispose the resource.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `this` | [`DisposableLike`](disposable.DisposableLike.md) | - |
+| `this` | [`SchedulerImplementationLike`](scheduler.SchedulerImplementationLike.md) | - |
 | `error?` | [`Error`](disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns
@@ -100,4 +111,4 @@ Dispose the resource. Must be idempotent.
 
 #### Inherited from
 
-[DisposableLike](disposable.DisposableLike.md).[dispose](disposable.DisposableLike.md#dispose)
+[Disposable](../classes/disposable.Disposable.md).[dispose](../classes/disposable.Disposable.md#dispose)

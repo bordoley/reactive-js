@@ -14,7 +14,7 @@ Abstract base class for implementing the `ObserverLike` interface.
 
 ## Hierarchy
 
-- [`AbstractDisposableContainer`](container.AbstractDisposableContainer.md)
+- [`DisposableContainer`](container.DisposableContainer.md)
 
   ↳ **`Observer`**
 
@@ -38,11 +38,15 @@ Abstract base class for implementing the `ObserverLike` interface.
 
 - [T](observer.Observer.md#t)
 - [dispatcher](observer.Observer.md#dispatcher)
+- [error](observer.Observer.md#error)
+- [isDisposed](observer.Observer.md#isdisposed)
 - [type](observer.Observer.md#type)
 
 ### Methods
 
+- [add](observer.Observer.md#add)
 - [assertState](observer.Observer.md#assertstate)
+- [dispose](observer.Observer.md#dispose)
 - [notify](observer.Observer.md#notify)
 
 ## Constructors
@@ -65,7 +69,7 @@ Abstract base class for implementing the `ObserverLike` interface.
 
 #### Overrides
 
-[AbstractDisposableContainer](container.AbstractDisposableContainer.md).[constructor](container.AbstractDisposableContainer.md#constructor)
+[DisposableContainer](container.DisposableContainer.md).[constructor](container.DisposableContainer.md#constructor)
 
 ## Properties
 
@@ -89,7 +93,7 @@ Abstract base class for implementing the `ObserverLike` interface.
 
 #### Inherited from
 
-AbstractDisposableContainer.T
+DisposableContainer.T
 
 ___
 
@@ -100,6 +104,46 @@ ___
 #### Returns
 
 [`DispatcherLike`](../interfaces/dispatcher.DispatcherLike.md)<`T`\>
+
+___
+
+### error
+
+• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Returns
+
+[`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+#### Implementation of
+
+SinkLike.error
+
+#### Inherited from
+
+DisposableContainer.error
+
+___
+
+### isDisposed
+
+• `get` **isDisposed**(): `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Returns
+
+`boolean`
+
+#### Implementation of
+
+SinkLike.isDisposed
+
+#### Inherited from
+
+DisposableContainer.isDisposed
 
 ___
 
@@ -117,9 +161,39 @@ ___
 
 #### Inherited from
 
-AbstractDisposableContainer.type
+DisposableContainer.type
 
 ## Methods
+
+### add
+
+▸ **add**(`this`, `disposable`, `ignoreChildErrors`): `void`
+
+Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`Observer`](observer.Observer.md)<`T`\> |
+| `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
+| `ignoreChildErrors` | `boolean` |
+
+#### Returns
+
+`void`
+
+`this`
+
+#### Implementation of
+
+[SinkLike](../interfaces/source.SinkLike.md).[add](../interfaces/source.SinkLike.md#add)
+
+#### Inherited from
+
+[DisposableContainer](container.DisposableContainer.md).[add](container.DisposableContainer.md#add)
+
+___
 
 ### assertState
 
@@ -138,6 +212,33 @@ AbstractDisposableContainer.type
 #### Implementation of
 
 [SinkLike](../interfaces/source.SinkLike.md).[assertState](../interfaces/source.SinkLike.md#assertstate)
+
+___
+
+### dispose
+
+▸ **dispose**(`this`, `error?`): `void`
+
+Dispose the resource.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`Observer`](observer.Observer.md)<`T`\> | - |
+| `error?` | [`Error`](../interfaces/disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[SinkLike](../interfaces/source.SinkLike.md).[dispose](../interfaces/source.SinkLike.md#dispose)
+
+#### Inherited from
+
+[DisposableContainer](container.DisposableContainer.md).[dispose](container.DisposableContainer.md#dispose)
 
 ___
 

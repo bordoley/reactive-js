@@ -1,9 +1,7 @@
 import {
-  AbstractDisposable,
-  DisposableLike,
+  Disposable,
   add,
   addTo,
-  createDisposable,
   dispose,
   disposed,
   isDisposed,
@@ -23,7 +21,7 @@ const scheduleImmediateWithSetImmediate = (
   continuation: SchedulerContinuationLike,
 ) => {
   const disposable = pipe(
-    createDisposable(),
+    newInstance(Disposable),
     addTo(continuation),
     onDisposed(() => clearImmediate(immmediate)),
   );
@@ -50,7 +48,7 @@ const scheduleDelayed = (
   delay: number,
 ) => {
   const disposable = pipe(
-    createDisposable(),
+    newInstance(Disposable),
     addTo(continuation),
     onDisposed(_ => clearTimeout(timeout)),
   );
@@ -85,7 +83,7 @@ const scheduleImmediate = (
 const run = (
   scheduler: HostScheduler,
   continuation: SchedulerContinuationLike,
-  immmediateOrTimerDisposable: DisposableLike,
+  immmediateOrTimerDisposable: Disposable,
 ) => {
   // clear the immediateOrTimer disposable
   pipe(immmediateOrTimerDisposable, dispose());
@@ -94,7 +92,7 @@ const run = (
 };
 
 class HostScheduler
-  extends AbstractDisposable
+  extends Disposable
   implements SchedulerLike, SchedulerImplementationLike
 {
   inContinuation = false;

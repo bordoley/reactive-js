@@ -1,7 +1,7 @@
-import { AbstractDisposableContainer } from "./container.mjs";
+import { DisposableContainer } from "./container.mjs";
 import { SideEffect1, Function1 } from "./functions.mjs";
 import { LiftableStateLike } from "./liftable.mjs";
-declare abstract class Enumerator<T> extends AbstractDisposableContainer implements LiftableStateLike {
+declare abstract class Enumerator<T> extends DisposableContainer implements LiftableStateLike {
     abstract get current(): T;
     abstract get hasCurrent(): boolean;
     abstract move(): boolean;

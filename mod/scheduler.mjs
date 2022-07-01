@@ -1,5 +1,5 @@
 /// <reference types="./scheduler.d.ts" />
-import { isDisposed, AbstractDisposable, dispose, disposed, add, addTo, onDisposed, createDisposable } from './disposable.mjs';
+import { isDisposed, Disposable, dispose, disposed, add, addTo, onDisposed } from './disposable.mjs';
 import { MAX_SAFE_INTEGER } from './env.mjs';
 import { floor, length, newInstance, max, pipe, raise, instanceFactory, newInstanceWith } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
@@ -105,7 +105,7 @@ class YieldError {
     }
 }
 let currentScheduler = none;
-class SchedulerContinuationImpl extends AbstractDisposable {
+class SchedulerContinuationImpl extends Disposable {
     constructor(scheduler, f) {
         super();
         this.scheduler = scheduler;
@@ -368,7 +368,7 @@ const createPausableScheduler = (hostScheduler) => {
     return scheduler;
 };
 
-class SchedulerWithPriorityImpl extends AbstractDisposable {
+class SchedulerWithPriorityImpl extends Disposable {
     constructor(priorityScheduler, priority) {
         super();
         this.priorityScheduler = priorityScheduler;
@@ -406,7 +406,7 @@ class SchedulerWithPriorityImpl extends AbstractDisposable {
 const toSchedulerWithPriority = (priority) => priorityScheduler => pipe(SchedulerWithPriorityImpl, newInstanceWith(priorityScheduler, priority), addTo(priorityScheduler, true));
 
 const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
-    const disposable = pipe(createDisposable(), addTo(continuation), onDisposed(() => clearImmediate(immmediate)));
+    const disposable = pipe(newInstance(Disposable), addTo(continuation), onDisposed(() => clearImmediate(immmediate)));
     const immmediate = setImmediate(run, scheduler, continuation, disposable);
 };
 const scheduleImmediateWithMessageChannel = (scheduler, channel, continuation) => {
@@ -414,7 +414,7 @@ const scheduleImmediateWithMessageChannel = (scheduler, channel, continuation) =
     channel.port2.postMessage(null);
 };
 const scheduleDelayed = (scheduler, continuation, delay) => {
-    const disposable = pipe(createDisposable(), addTo(continuation), onDisposed(_ => clearTimeout(timeout)));
+    const disposable = pipe(newInstance(Disposable), addTo(continuation), onDisposed(_ => clearTimeout(timeout)));
     const timeout = setTimeout(run, delay, scheduler, continuation, disposable);
 };
 const scheduleImmediate = (scheduler, continuation) => {
@@ -435,7 +435,7 @@ const run = (scheduler, continuation, immmediateOrTimerDisposable) => {
     scheduler.startTime = now(scheduler);
     pipe(scheduler, runContinuation(continuation));
 };
-class HostScheduler extends AbstractDisposable {
+class HostScheduler extends Disposable {
     constructor(yieldInterval) {
         super();
         this.yieldInterval = yieldInterval;

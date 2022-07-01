@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`AbstractDisposableObservable`](observable.AbstractDisposableObservable.md)<`T`\>
+- [`DisposableObservable`](observable.DisposableObservable.md)<`T`\>
 
   ↳ **`Subject`**
 
@@ -34,13 +34,17 @@
 ### Accessors
 
 - [T](observable.Subject.md#t)
+- [error](observable.Subject.md#error)
+- [isDisposed](observable.Subject.md#isdisposed)
 - [liftableStateType](observable.Subject.md#liftablestatetype)
 - [observerCount](observable.Subject.md#observercount)
 - [type](observable.Subject.md#type)
 
 ### Methods
 
+- [add](observable.Subject.md#add)
 - [dispatch](observable.Subject.md#dispatch)
+- [dispose](observable.Subject.md#dispose)
 - [sink](observable.Subject.md#sink)
 
 ## Constructors
@@ -63,7 +67,7 @@
 
 #### Overrides
 
-[AbstractDisposableObservable](observable.AbstractDisposableObservable.md).[constructor](observable.AbstractDisposableObservable.md#constructor)
+[DisposableObservable](observable.DisposableObservable.md).[constructor](observable.DisposableObservable.md#constructor)
 
 ## Properties
 
@@ -91,7 +95,47 @@ MulticastObservableLike.T
 
 #### Inherited from
 
-AbstractDisposableObservable.T
+DisposableObservable.T
+
+___
+
+### error
+
+• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Returns
+
+[`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+#### Implementation of
+
+MulticastObservableLike.error
+
+#### Inherited from
+
+DisposableObservable.error
+
+___
+
+### isDisposed
+
+• `get` **isDisposed**(): `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Returns
+
+`boolean`
+
+#### Implementation of
+
+MulticastObservableLike.isDisposed
+
+#### Inherited from
+
+DisposableObservable.isDisposed
 
 ___
 
@@ -109,7 +153,7 @@ MulticastObservableLike.liftableStateType
 
 #### Inherited from
 
-AbstractDisposableObservable.liftableStateType
+DisposableObservable.liftableStateType
 
 ___
 
@@ -143,9 +187,39 @@ MulticastObservableLike.type
 
 #### Inherited from
 
-AbstractDisposableObservable.type
+DisposableObservable.type
 
 ## Methods
+
+### add
+
+▸ **add**(`this`, `disposable`, `ignoreChildErrors`): `void`
+
+Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`Subject`](observable.Subject.md)<`T`\> |
+| `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
+| `ignoreChildErrors` | `boolean` |
+
+#### Returns
+
+`void`
+
+`this`
+
+#### Implementation of
+
+MulticastObservableLike.add
+
+#### Inherited from
+
+[DisposableObservable](observable.DisposableObservable.md).[add](observable.DisposableObservable.md#add)
+
+___
 
 ### dispatch
 
@@ -169,6 +243,33 @@ Dispatches the next request
 
 ___
 
+### dispose
+
+▸ **dispose**(`this`, `error?`): `void`
+
+Dispose the resource.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`Subject`](observable.Subject.md)<`T`\> | - |
+| `error?` | [`Error`](../interfaces/disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+MulticastObservableLike.dispose
+
+#### Inherited from
+
+[DisposableObservable](observable.DisposableObservable.md).[dispose](observable.DisposableObservable.md#dispose)
+
+___
+
 ### sink
 
 ▸ **sink**(`observer`): `void`
@@ -189,4 +290,4 @@ MulticastObservableLike.sink
 
 #### Overrides
 
-[AbstractDisposableObservable](observable.AbstractDisposableObservable.md).[sink](observable.AbstractDisposableObservable.md#sink)
+[DisposableObservable](observable.DisposableObservable.md).[sink](observable.DisposableObservable.md#sink)

@@ -1,7 +1,7 @@
 import { Writable } from "stream";
 import { dispatch, dispatchTo } from "../dispatcher";
 import {
-  DisposableValueLike,
+  DisposableValue,
   add,
   addTo,
   dispose,
@@ -16,7 +16,7 @@ import { createLiftedStreamable } from "../streamable";
 const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
 
 export const createWritableIOSink = (
-  factory: Factory<DisposableValueLike<Writable>>,
+  factory: Factory<DisposableValue<Writable>>,
 ): FlowableSinkLike<Uint8Array> =>
   createLiftedStreamable(events =>
     createObservable(observer => {

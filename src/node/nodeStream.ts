@@ -1,10 +1,6 @@
 import { Readable, Transform, Writable } from "stream";
-import {
-  DisposableValueLike,
-  createDisposableValue,
-  toErrorHandler,
-} from "../disposable";
-import { ignore } from "../functions";
+import { DisposableValue, toErrorHandler } from "../disposable";
+import { ignore, newInstance } from "../functions";
 
 const dispose = (writable: Readable | Writable | Transform) => {
   writable.removeAllListeners();
@@ -22,8 +18,8 @@ export const createDisposableNodeStream = <
   T extends Readable | Writable | Transform,
 >(
   stream: T,
-): DisposableValueLike<T> => {
-  const retval = createDisposableValue<T>(stream, dispose);
+): DisposableValue<T> => {
+  const retval = newInstance(DisposableValue, stream, dispose);
   stream.on("error", toErrorHandler(retval));
 
   return retval;

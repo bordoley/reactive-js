@@ -18,8 +18,8 @@
 
 ## Implemented by
 
-- [`AbstractDisposableLiftable`](../classes/liftable.AbstractDisposableLiftable.md)
 - [`AbstractLiftable`](../classes/liftable.AbstractLiftable.md)
+- [`DisposableLiftable`](../classes/liftable.DisposableLiftable.md)
 
 ## Table of contents
 

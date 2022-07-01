@@ -1,17 +1,13 @@
 import { DispatcherLike, dispatch } from "./dispatcher";
 import { pipe } from "./functions";
-import {
-  AbstractDisposableLiftable,
-  LiftableStateLike,
-  delegate,
-} from "./liftable";
+import { DisposableLiftable, LiftableStateLike, delegate } from "./liftable";
 import { ObservableLike, observerCount, replay } from "./observable";
 import { Observer } from "./observer";
 import { SchedulerLike } from "./scheduler";
 import { StreamLike } from "./stream";
 
 export abstract class AsyncEnumerator<T>
-  extends AbstractDisposableLiftable<Observer<T>>
+  extends DisposableLiftable<Observer<T>>
   implements LiftableStateLike, StreamLike<void, T>
 {
   abstract scheduler: SchedulerLike;

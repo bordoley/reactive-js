@@ -2,7 +2,7 @@ import { DispatcherLike, dispatch } from "./dispatcher";
 import { add, addTo } from "./disposable";
 import { newInstance, pipe } from "./functions";
 import {
-  AbstractDisposableObservable,
+  DisposableObservable,
   MulticastObservableLike,
   ObservableOperator,
   Subject,
@@ -26,7 +26,7 @@ export interface StreamLike<TReq, T>
 }
 
 class StreamImpl<TReq, T>
-  extends AbstractDisposableObservable<T>
+  extends DisposableObservable<T>
   implements StreamLike<TReq, T>
 {
   private readonly dispatcher: DispatcherLike<TReq>;
@@ -66,7 +66,7 @@ class StreamImpl<TReq, T>
 }
 
 export abstract class AbstractDelegatingStream<TReqA, TA, TReqB, TB>
-  extends AbstractDisposableObservable<TB>
+  extends DisposableObservable<TB>
   implements StreamLike<TReqB, TB>
 {
   constructor(readonly delegate: StreamLike<TReqA, TA>) {

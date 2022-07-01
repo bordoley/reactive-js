@@ -1,7 +1,7 @@
 import fs from "fs";
 import { Readable } from "stream";
 import { dispatchTo } from "../dispatcher";
-import { DisposableValueLike, add, addTo, dispose } from "../disposable";
+import { DisposableValue, add, addTo, dispose } from "../disposable";
 import { FlowableLike, createLiftedFlowable } from "../flowable";
 import { Factory, pipe } from "../functions";
 import { createObservable, onNotify, subscribe } from "../observable";
@@ -9,7 +9,7 @@ import { scheduler } from "../observer";
 import { createDisposableNodeStream } from "./nodeStream";
 
 export const createReadableIOSource = (
-  factory: Factory<DisposableValueLike<Readable>>,
+  factory: Factory<DisposableValue<Readable>>,
 ): FlowableLike<Uint8Array> =>
   createLiftedFlowable(mode =>
     createObservable(observer => {

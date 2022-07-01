@@ -1,12 +1,12 @@
 /// <reference types="./enumerator.d.ts" />
-import { AbstractDisposableContainer } from './container.mjs';
+import { DisposableContainer } from './container.mjs';
 import { onDisposed, isDisposed, dispose, addTo } from './disposable.mjs';
 import { pipe, pipeLazy, raise, newInstance } from './functions.mjs';
 import { delegate } from './liftable.mjs';
 import { none } from './option.mjs';
 import { everySatisfy, map, forEach as forEach$1 } from './readonlyArray.mjs';
 
-class Enumerator extends AbstractDisposableContainer {
+class Enumerator extends DisposableContainer {
 }
 class AbstractEnumerator extends Enumerator {
     constructor() {

@@ -1,4 +1,4 @@
-import { DisposableLike } from "./disposable.mjs";
+import { Disposable } from "./disposable.mjs";
 import { Enumerator } from "./enumerator.mjs";
 import { SideEffect, Function1 } from "./functions.mjs";
 /**
@@ -15,7 +15,7 @@ declare const __yield: (options?: {
 }) => void;
 declare const schedule: (f: SideEffect, options?: {
     readonly delay?: number;
-}) => Function1<SchedulerLike, DisposableLike>;
+}) => Function1<SchedulerLike, Disposable>;
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
  *
@@ -51,7 +51,7 @@ declare const hasDelay: (options?: {
  *
  * @noInheritDoc
  */
-interface SchedulerContinuationLike extends DisposableLike {
+interface SchedulerContinuationLike extends Disposable {
     /**
      * Work function to be invoked by the scheduler after the specified delay.
      */
@@ -60,7 +60,7 @@ interface SchedulerContinuationLike extends DisposableLike {
 /**
  * An object that schedules units of work on a runloop.
  */
-interface SchedulerLike extends DisposableLike {
+interface SchedulerLike extends Disposable {
     readonly inContinuation: boolean;
     readonly now: number;
     readonly shouldYield: boolean;
@@ -90,7 +90,7 @@ interface PausableSchedulerLike extends SchedulerLike {
  *
  * @noInheritDoc
  */
-interface PrioritySchedulerLike extends DisposableLike {
+interface PrioritySchedulerLike extends Disposable {
     readonly inContinuation: boolean;
     readonly now: number;
     readonly shouldYield: boolean;
@@ -111,7 +111,7 @@ interface PrioritySchedulerLike extends DisposableLike {
         readonly delay?: number;
     }): void;
 }
-interface SchedulerImplementationLike extends DisposableLike {
+interface SchedulerImplementationLike extends Disposable {
     inContinuation: boolean;
 }
 export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerImplementationLike, SchedulerLike, VirtualTimeSchedulerLike, __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, getDelay, hasDelay, inContinuation, now, runContinuation, schedule, shouldYield, toSchedulerWithPriority };

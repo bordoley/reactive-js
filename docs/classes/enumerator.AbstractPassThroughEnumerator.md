@@ -30,11 +30,15 @@
 
 - [T](enumerator.AbstractPassThroughEnumerator.md#t)
 - [current](enumerator.AbstractPassThroughEnumerator.md#current)
+- [error](enumerator.AbstractPassThroughEnumerator.md#error)
 - [hasCurrent](enumerator.AbstractPassThroughEnumerator.md#hascurrent)
+- [isDisposed](enumerator.AbstractPassThroughEnumerator.md#isdisposed)
 - [type](enumerator.AbstractPassThroughEnumerator.md#type)
 
 ### Methods
 
+- [add](enumerator.AbstractPassThroughEnumerator.md#add)
+- [dispose](enumerator.AbstractPassThroughEnumerator.md#dispose)
 - [move](enumerator.AbstractPassThroughEnumerator.md#move)
 
 ## Constructors
@@ -95,6 +99,22 @@ Enumerator.current
 
 ___
 
+### error
+
+• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Returns
+
+[`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+#### Inherited from
+
+Enumerator.error
+
+___
+
 ### hasCurrent
 
 • `get` **hasCurrent**(): `boolean`
@@ -106,6 +126,22 @@ ___
 #### Overrides
 
 Enumerator.hasCurrent
+
+___
+
+### isDisposed
+
+• `get` **isDisposed**(): `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+Enumerator.isDisposed
 
 ___
 
@@ -122,6 +158,55 @@ ___
 Enumerator.type
 
 ## Methods
+
+### add
+
+▸ **add**(`this`, `disposable`, `ignoreChildErrors`): `void`
+
+Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`AbstractPassThroughEnumerator`](enumerator.AbstractPassThroughEnumerator.md)<`T`\> |
+| `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
+| `ignoreChildErrors` | `boolean` |
+
+#### Returns
+
+`void`
+
+`this`
+
+#### Inherited from
+
+[Enumerator](enumerator.Enumerator.md).[add](enumerator.Enumerator.md#add)
+
+___
+
+### dispose
+
+▸ **dispose**(`this`, `error?`): `void`
+
+Dispose the resource.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`AbstractPassThroughEnumerator`](enumerator.AbstractPassThroughEnumerator.md)<`T`\> | - |
+| `error?` | [`Error`](../interfaces/disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Enumerator](enumerator.Enumerator.md).[dispose](enumerator.Enumerator.md#dispose)
+
+___
 
 ### move
 

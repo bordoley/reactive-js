@@ -1,6 +1,6 @@
-import { AbstractDisposableContainer } from "./container.mjs";
+import { DisposableContainer } from "./container.mjs";
 import { SinkLike } from "./source.mjs";
-declare class RunnableSink<T> extends AbstractDisposableContainer implements SinkLike<T> {
+declare class RunnableSink<T> extends DisposableContainer implements SinkLike<T> {
     assertState(this: this): void;
     notify(_: T): void;
 }

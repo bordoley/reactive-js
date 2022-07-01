@@ -1,11 +1,11 @@
 import { Concat, FromArray, FromIterator, FromIterable, Using, Buffer, Map, ConcatAll, Repeat, Zip, ContainerLike, Container, ContainerOf, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Generate, Keep, ContainerOperator, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty } from "./container.mjs";
-import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
+import { Disposable, DisposableOrTeardown } from "./disposable.mjs";
 import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Predicate, Equality, Updater, Reducer } from "./functions.mjs";
 import { Observer } from "./observer.mjs";
 import { Option } from "./option.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
 import { SchedulerLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
-import { CreateSource, AbstractSource, AbstractDisposableSource, SourceLike } from "./source.mjs";
+import { CreateSource, AbstractSource, DisposableSource, SourceLike } from "./source.mjs";
 import { DispatcherLike } from "./dispatcher.mjs";
 import { EnumerableLike, ToEnumerable } from "./enumerable.mjs";
 declare const observable: <T>(computation: Factory<T>, { mode }?: {
@@ -26,13 +26,13 @@ declare function __do<TA, TB, TC>(fn: SideEffect3<TA, TB, TC>, a: TA, b: TB, c: 
 declare function __do<TA, TB, TC, TD>(fn: SideEffect4<TA, TB, TC, TD>, a: TA, b: TB, c: TC, d: TD): void;
 declare function __do<TA, TB, TC, TD, TE>(fn: SideEffect5<TA, TB, TC, TD, TE>, a: TA, b: TB, c: TC, d: TD, e: TE): void;
 declare function __do<TA, TB, TC, TD, TE, TF>(fn: SideEffect6<TA, TB, TC, TD, TE, TF>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): void;
-declare function __using<T extends DisposableLike>(fn: Factory<T>): T;
-declare function __using<TA, T extends DisposableLike>(fn: Function1<TA, T>, a: TA): T;
-declare function __using<TA, TB, T extends DisposableLike>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
-declare function __using<TA, TB, TC, T extends DisposableLike>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
-declare function __using<TA, TB, TC, TD, T extends DisposableLike>(fn: Function4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
-declare function __using<TA, TB, TC, TD, TE, T extends DisposableLike>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
-declare function __using<TA, TB, TC, TD, TE, TF, T extends DisposableLike>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
+declare function __using<T extends Disposable>(fn: Factory<T>): T;
+declare function __using<TA, T extends Disposable>(fn: Function1<TA, T>, a: TA): T;
+declare function __using<TA, TB, T extends Disposable>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
+declare function __using<TA, TB, TC, T extends Disposable>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
+declare function __using<TA, TB, TC, TD, T extends Disposable>(fn: Function4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
+declare function __using<TA, TB, TC, TD, TE, T extends Disposable>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
+declare function __using<TA, TB, TC, TD, TE, TF, T extends Disposable>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
 declare function __currentScheduler(): SchedulerLike;
 declare function combineLatest<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<[
     TA,
@@ -291,9 +291,9 @@ declare const createObservable: <T>(f: SideEffect1<Observer<T>>) => ObservableLi
 declare const createT: CreateSource<ObservableLike<unknown>>;
 declare abstract class AbstractObservable<T> extends AbstractSource<T, Observer<T>> implements ObservableLike<T> {
 }
-declare abstract class AbstractDisposableObservable<T> extends AbstractDisposableSource<T, Observer<T>> implements ObservableLike<T> {
+declare abstract class DisposableObservable<T> extends DisposableSource<T, Observer<T>> implements ObservableLike<T> {
 }
-declare class Subject<T> extends AbstractDisposableObservable<T> implements MulticastObservableLike<T>, DispatcherLike<T> {
+declare class Subject<T> extends DisposableObservable<T> implements MulticastObservableLike<T>, DispatcherLike<T> {
     readonly replay: number;
     private readonly dispatchers;
     private readonly replayed;
@@ -360,12 +360,12 @@ declare function forkMerge<TIn, TOut>(fst: ObservableOperator<TIn, TOut>, snd: O
 declare const never: <T>() => ObservableLike<T>;
 /**
  * Safely subscribes to an `ObservableLike` with a `ObserverLike` instance
- * using the provided scheduler. The returned `DisposableLike`
+ * using the provided scheduler. The returned `Disposable`
  * may used to cancel the subscription.
  *
  * @param scheduler The SchedulerLike instance that should be used by the source to notify it's observer.
  */
-declare const subscribe: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, DisposableLike>;
+declare const subscribe: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, Disposable>;
 declare const using: Using<ObservableLike<unknown>>["using"];
 declare const usingT: Using<ObservableLike<unknown>>;
 declare const defer: <T>(factory: Factory<SideEffect1<Observer<T>>>, options?: {
@@ -549,7 +549,7 @@ declare type ObservableOperator<A, B> = Function1<ObservableLike<A>, ObservableL
  *
  * @noInheritDoc
  */
-interface MulticastObservableLike<T> extends ObservableLike<T>, DisposableLike {
+interface MulticastObservableLike<T> extends ObservableLike<T>, Disposable {
     /**
      * The number of observers currently observing.
      */
@@ -566,7 +566,7 @@ declare type ObservableEffectMode = "batched" | "combine-latest";
  */
 declare type ThrottleMode = "first" | "last" | "interval";
 declare const catchError: <T>(onError: Function1<unknown, ObservableLike<T> | void>) => ObservableOperator<T, T>;
-declare const fromDisposable: <T>(disposable: DisposableLike) => ObservableLike<T>;
+declare const fromDisposable: <T>(disposable: Disposable) => ObservableLike<T>;
 declare const decodeWithCharset: (charset?: string) => ObservableOperator<ArrayBuffer, string>;
 declare const decodeWithCharsetT: DecodeWithCharset<ObservableLike<unknown>>;
 /**
@@ -686,4 +686,4 @@ declare const toRunnable: <T>(options?: {
     readonly schedulerFactory?: Factory<VirtualTimeSchedulerLike>;
 }) => Function1<ObservableLike<T>, RunnableLike<T>>;
 declare const toRunnableT: ToRunnable<ObservableLike<unknown>>;
-export { AbstractDisposableObservable, AbstractObservable, AsyncReducer, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Subject, ThrottleMode, ToObservable, __currentScheduler, __do, __memo, __observe, __using, buffer, bufferT, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createT, decodeWithCharset, decodeWithCharsetT, defer, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, generateT, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, observerCount, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, replay, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toObservable, toObservableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AbstractObservable, AsyncReducer, DisposableObservable, MulticastObservableLike, ObservableEffectMode, ObservableLike, ObservableOperator, Subject, ThrottleMode, ToObservable, __currentScheduler, __do, __memo, __observe, __using, buffer, bufferT, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createT, decodeWithCharset, decodeWithCharsetT, defer, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, generateT, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, observerCount, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, replay, retry, scan, scanAsync, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toObservable, toObservableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

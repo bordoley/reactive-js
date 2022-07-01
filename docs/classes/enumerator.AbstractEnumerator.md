@@ -28,11 +28,15 @@
 
 - [T](enumerator.AbstractEnumerator.md#t)
 - [current](enumerator.AbstractEnumerator.md#current)
+- [error](enumerator.AbstractEnumerator.md#error)
 - [hasCurrent](enumerator.AbstractEnumerator.md#hascurrent)
+- [isDisposed](enumerator.AbstractEnumerator.md#isdisposed)
 - [type](enumerator.AbstractEnumerator.md#type)
 
 ### Methods
 
+- [add](enumerator.AbstractEnumerator.md#add)
+- [dispose](enumerator.AbstractEnumerator.md#dispose)
 - [move](enumerator.AbstractEnumerator.md#move)
 - [reset](enumerator.AbstractEnumerator.md#reset)
 
@@ -98,6 +102,22 @@ Enumerator.current
 
 ___
 
+### error
+
+• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Returns
+
+[`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+#### Inherited from
+
+Enumerator.error
+
+___
+
 ### hasCurrent
 
 • `get` **hasCurrent**(): `boolean`
@@ -109,6 +129,22 @@ ___
 #### Overrides
 
 Enumerator.hasCurrent
+
+___
+
+### isDisposed
+
+• `get` **isDisposed**(): `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+Enumerator.isDisposed
 
 ___
 
@@ -125,6 +161,55 @@ ___
 Enumerator.type
 
 ## Methods
+
+### add
+
+▸ **add**(`this`, `disposable`, `ignoreChildErrors`): `void`
+
+Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`AbstractEnumerator`](enumerator.AbstractEnumerator.md)<`T`\> |
+| `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
+| `ignoreChildErrors` | `boolean` |
+
+#### Returns
+
+`void`
+
+`this`
+
+#### Inherited from
+
+[Enumerator](enumerator.Enumerator.md).[add](enumerator.Enumerator.md#add)
+
+___
+
+### dispose
+
+▸ **dispose**(`this`, `error?`): `void`
+
+Dispose the resource.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`AbstractEnumerator`](enumerator.AbstractEnumerator.md)<`T`\> | - |
+| `error?` | [`Error`](../interfaces/disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Enumerator](enumerator.Enumerator.md).[dispose](enumerator.Enumerator.md#dispose)
+
+___
 
 ### move
 

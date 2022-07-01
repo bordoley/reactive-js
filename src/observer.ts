@@ -1,7 +1,7 @@
-import { AbstractDisposableContainer } from "./container";
+import { DisposableContainer } from "./container";
 import { DispatcherLike } from "./dispatcher";
 import {
-  AbstractDisposable,
+  Disposable,
   addTo,
   dispose,
   isDisposed,
@@ -35,7 +35,7 @@ const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
 };
 
 class ObserverDelegatingDispatcher<T>
-  extends AbstractDisposable
+  extends Disposable
   implements DispatcherLike<T>
 {
   readonly continuation = () => {
@@ -72,10 +72,7 @@ class ObserverDelegatingDispatcher<T>
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
-export class Observer<T>
-  extends AbstractDisposableContainer
-  implements SinkLike<T>
-{
+export class Observer<T> extends DisposableContainer implements SinkLike<T> {
   private _dispatcher: Option<DispatcherLike<T>> = none;
 
   constructor(readonly scheduler: SchedulerLike) {

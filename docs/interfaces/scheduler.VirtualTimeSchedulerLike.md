@@ -25,11 +25,13 @@
 
 - [T](scheduler.VirtualTimeSchedulerLike.md#t)
 - [current](scheduler.VirtualTimeSchedulerLike.md#current)
+- [error](scheduler.VirtualTimeSchedulerLike.md#error)
 - [hasCurrent](scheduler.VirtualTimeSchedulerLike.md#hascurrent)
 - [type](scheduler.VirtualTimeSchedulerLike.md#type)
 
 ### Methods
 
+- [add](scheduler.VirtualTimeSchedulerLike.md#add)
 - [dispose](scheduler.VirtualTimeSchedulerLike.md#dispose)
 - [move](scheduler.VirtualTimeSchedulerLike.md#move)
 - [requestYield](scheduler.VirtualTimeSchedulerLike.md#requestyield)
@@ -107,6 +109,22 @@ Enumerator.current
 
 ___
 
+### error
+
+• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Returns
+
+[`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
+
+#### Inherited from
+
+Enumerator.error
+
+___
+
 ### hasCurrent
 
 • `Abstract` `get` **hasCurrent**(): `boolean`
@@ -135,11 +153,37 @@ Enumerator.type
 
 ## Methods
 
+### add
+
+▸ **add**(`this`, `disposable`, `ignoreChildErrors`): `void`
+
+Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`VirtualTimeSchedulerLike`](scheduler.VirtualTimeSchedulerLike.md) |
+| `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
+| `ignoreChildErrors` | `boolean` |
+
+#### Returns
+
+`void`
+
+`this`
+
+#### Inherited from
+
+[SchedulerLike](scheduler.SchedulerLike.md).[add](scheduler.SchedulerLike.md#add)
+
+___
+
 ### dispose
 
 ▸ **dispose**(`this`): `void`
 
-Dispose the resource. Must be idempotent.
+Dispose the resource.
 
 #### Parameters
 

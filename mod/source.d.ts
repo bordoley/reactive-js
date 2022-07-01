@@ -1,7 +1,7 @@
 import { Container, ContainerOf, FromArray, FromArrayOptions, ContainerOperator } from "./container.mjs";
-import { DisposableLike, DisposableOrTeardown } from "./disposable.mjs";
+import { Disposable, DisposableOrTeardown } from "./disposable.mjs";
 import { Function1, SideEffect1, Equality, Predicate, Reducer, Factory } from "./functions.mjs";
-import { LiftableStateLike, LiftableLike, Lift as Lift$1, ContraVariant, LiftableStateOf, AbstractLiftable, AbstractDisposableLiftable, DelegatingLiftableStateOf } from "./liftable.mjs";
+import { LiftableStateLike, LiftableLike, Lift as Lift$1, ContraVariant, LiftableStateOf, AbstractLiftable, DisposableLiftable, DelegatingLiftableStateOf } from "./liftable.mjs";
 import { Option } from "./option.mjs";
 interface SinkLike<T> extends LiftableStateLike {
     assertState(this: SinkLike<T>): void;
@@ -28,7 +28,7 @@ declare const assertState: <C extends SourceLike>(sink: LiftableStateOf<C, unkno
 declare abstract class AbstractSource<T, TSink extends SinkLike<T>> extends AbstractLiftable<TSink> implements SourceLike {
     abstract sink(this: this, sink: TSink): void;
 }
-declare abstract class AbstractDisposableSource<T, TSink extends SinkLike<T>> extends AbstractDisposableLiftable<TSink> implements SourceLike {
+declare abstract class DisposableSource<T, TSink extends SinkLike<T>> extends DisposableLiftable<TSink> implements SourceLike {
     abstract sink(this: this, sink: TSink): void;
 }
 declare const notify: <C extends SourceLike, T, TSink extends LiftableStateOf<C, T>>(v: T) => Function1<TSink, TSink>;
@@ -143,8 +143,8 @@ declare const createThrowIfEmptyOperator: <C extends SourceLike>(m: Lift<C>, Thr
 } & {
     isEmpty: boolean;
 }) => <T_1>(factory: Factory<unknown>) => ContainerOperator<C, T_1, T_1>;
-declare const createFromDisposable: <C extends SourceLike>(m: CreateSource<C>) => <T>(disposable: DisposableLike) => ContainerOf<C, T>;
+declare const createFromDisposable: <C extends SourceLike>(m: CreateSource<C>) => <T>(disposable: Disposable) => ContainerOf<C, T>;
 declare const createNever: <C extends SourceLike>(m: CreateSource<C>) => <T>() => ContainerOf<C, T>;
 declare const createOnSink: <C extends SourceLike>(m: CreateSource<C>) => <T>(f: Factory<DisposableOrTeardown | void>) => ContainerOperator<C, T, T>;
-declare const createUsing: <C extends SourceLike>(m: CreateSource<C>) => <TResource extends DisposableLike, T>(resourceFactory: Factory<TResource | readonly TResource[]>, sourceFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>) => ContainerOf<C, T>;
-export { AbstractDisposableSource, AbstractSource, CreateSource, Lift, SinkLike, SourceLike, assertState, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, notify, notifySink, sinkInto, sourceFrom };
+declare const createUsing: <C extends SourceLike>(m: CreateSource<C>) => <TResource extends Disposable, T>(resourceFactory: Factory<TResource | readonly TResource[]>, sourceFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>) => ContainerOf<C, T>;
+export { AbstractSource, CreateSource, DisposableSource, Lift, SinkLike, SourceLike, assertState, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, notify, notifySink, sinkInto, sourceFrom };

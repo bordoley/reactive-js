@@ -1,4 +1,4 @@
-import { DisposableLike, add, disposed, isDisposed } from "../disposable";
+import { Disposable, add, disposed, isDisposed } from "../disposable";
 import {
   AbstractEnumerator,
   current,
@@ -100,11 +100,11 @@ export abstract class AbstractQueueScheduler<
     super();
   }
 
-  get inner(): DisposableLike {
+  get inner(): Disposable {
     return this._inner;
   }
 
-  set inner(newInner: DisposableLike) {
+  set inner(newInner: Disposable) {
     const { _inner: oldInner } = this;
     if (oldInner !== newInner) {
       oldInner.dispose();

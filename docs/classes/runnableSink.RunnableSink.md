@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`AbstractDisposableContainer`](container.AbstractDisposableContainer.md)
+- [`DisposableContainer`](container.DisposableContainer.md)
 
   ↳ **`RunnableSink`**
 
@@ -31,11 +31,15 @@
 ### Accessors
 
 - [T](runnableSink.RunnableSink.md#t)
+- [error](runnableSink.RunnableSink.md#error)
+- [isDisposed](runnableSink.RunnableSink.md#isdisposed)
 - [type](runnableSink.RunnableSink.md#type)
 
 ### Methods
 
+- [add](runnableSink.RunnableSink.md#add)
 - [assertState](runnableSink.RunnableSink.md#assertstate)
+- [dispose](runnableSink.RunnableSink.md#dispose)
 - [notify](runnableSink.RunnableSink.md#notify)
 
 ## Constructors
@@ -52,7 +56,7 @@
 
 #### Inherited from
 
-[AbstractDisposableContainer](container.AbstractDisposableContainer.md).[constructor](container.AbstractDisposableContainer.md#constructor)
+[DisposableContainer](container.DisposableContainer.md).[constructor](container.DisposableContainer.md#constructor)
 
 ## Accessors
 
@@ -70,7 +74,47 @@
 
 #### Inherited from
 
-AbstractDisposableContainer.T
+DisposableContainer.T
+
+___
+
+### error
+
+• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Returns
+
+[`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+#### Implementation of
+
+SinkLike.error
+
+#### Inherited from
+
+DisposableContainer.error
+
+___
+
+### isDisposed
+
+• `get` **isDisposed**(): `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Returns
+
+`boolean`
+
+#### Implementation of
+
+SinkLike.isDisposed
+
+#### Inherited from
+
+DisposableContainer.isDisposed
 
 ___
 
@@ -88,9 +132,39 @@ ___
 
 #### Inherited from
 
-AbstractDisposableContainer.type
+DisposableContainer.type
 
 ## Methods
+
+### add
+
+▸ **add**(`this`, `disposable`, `ignoreChildErrors`): `void`
+
+Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`RunnableSink`](runnableSink.RunnableSink.md)<`T`\> |
+| `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
+| `ignoreChildErrors` | `boolean` |
+
+#### Returns
+
+`void`
+
+`this`
+
+#### Implementation of
+
+[SinkLike](../interfaces/source.SinkLike.md).[add](../interfaces/source.SinkLike.md#add)
+
+#### Inherited from
+
+[DisposableContainer](container.DisposableContainer.md).[add](container.DisposableContainer.md#add)
+
+___
 
 ### assertState
 
@@ -109,6 +183,33 @@ AbstractDisposableContainer.type
 #### Implementation of
 
 [SinkLike](../interfaces/source.SinkLike.md).[assertState](../interfaces/source.SinkLike.md#assertstate)
+
+___
+
+### dispose
+
+▸ **dispose**(`this`, `error?`): `void`
+
+Dispose the resource.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`RunnableSink`](runnableSink.RunnableSink.md)<`T`\> | - |
+| `error?` | [`Error`](../interfaces/disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[SinkLike](../interfaces/source.SinkLike.md).[dispose](../interfaces/source.SinkLike.md#dispose)
+
+#### Inherited from
+
+[DisposableContainer](container.DisposableContainer.md).[dispose](container.DisposableContainer.md#dispose)
 
 ___
 

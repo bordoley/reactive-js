@@ -10,19 +10,13 @@ import {
   createInflate,
 } from "zlib";
 import { dispatchTo } from "../dispatcher";
-import {
-  DisposableValueLike,
-  add,
-  addTo,
-  createDisposableValue,
-  dispose,
-  onError,
-} from "../disposable";
+import { DisposableValue, add, addTo, dispose, onError } from "../disposable";
 import { FlowableLike, createLiftedFlowable } from "../flowable";
 import {
   Factory,
   Function1,
   ignore,
+  newInstance,
   pipe,
   pipeLazy,
   returns,
@@ -37,7 +31,7 @@ import { createDisposableNodeStream } from "./nodeStream";
 
 export const transform =
   (
-    factory: Factory<DisposableValueLike<Transform>>,
+    factory: Factory<DisposableValue<Transform>>,
   ): Function1<FlowableLike<Uint8Array>, FlowableLike<Uint8Array>> =>
   src =>
     createLiftedFlowable(modeObs =>
@@ -47,7 +41,7 @@ export const transform =
         pipe(
           createWritableIOSink(() =>
             pipe(
-              createDisposableValue<Transform>(transform.value, ignore),
+              newInstance(DisposableValue, transform.value, ignore),
               // only dispose the transform when the writable is disposed.
               onError(e => pipe(transform, dispose(e))),
             ),

@@ -26,9 +26,12 @@
 ### Properties
 
 - [T](source.SinkLike.md#t)
+- [type](source.SinkLike.md#type)
+
+### Accessors
+
 - [error](source.SinkLike.md#error)
 - [isDisposed](source.SinkLike.md#isdisposed)
-- [type](source.SinkLike.md#type)
 
 ### Methods
 
@@ -49,30 +52,6 @@
 
 ___
 
-### error
-
-• `Readonly` **error**: [`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
-
-The error the `DisposableLike` was disposed with if disposed.
-
-#### Inherited from
-
-[LiftableStateLike](liftable.LiftableStateLike.md).[error](liftable.LiftableStateLike.md#error)
-
-___
-
-### isDisposed
-
-• `Readonly` **isDisposed**: `boolean`
-
-`true` if this resource has been disposed, otherwise false
-
-#### Inherited from
-
-[LiftableStateLike](liftable.LiftableStateLike.md).[isDisposed](liftable.LiftableStateLike.md#isdisposed)
-
-___
-
 ### type
 
 • `Optional` `Readonly` **type**: `unknown`
@@ -80,6 +59,38 @@ ___
 #### Inherited from
 
 [LiftableStateLike](liftable.LiftableStateLike.md).[type](liftable.LiftableStateLike.md#type)
+
+## Accessors
+
+### error
+
+• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Returns
+
+[`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
+
+#### Inherited from
+
+LiftableStateLike.error
+
+___
+
+### isDisposed
+
+• `get` **isDisposed**(): `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+LiftableStateLike.isDisposed
 
 ## Methods
 
@@ -129,13 +140,13 @@ ___
 
 ▸ **dispose**(`this`, `error?`): `void`
 
-Dispose the resource. Must be idempotent.
+Dispose the resource.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `this` | [`DisposableLike`](disposable.DisposableLike.md) | - |
+| `this` | [`SinkLike`](source.SinkLike.md)<`T`\> | - |
 | `error?` | [`Error`](disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns
