@@ -375,8 +375,6 @@ const zipT = {
     zip,
 };
 
-const toEnumerable = () => identity;
-const type = undefined;
 function concat(...enumerables) {
     return pipe(enumerables, fromArray(), concatAll());
 }
@@ -601,6 +599,10 @@ const throwIfEmpty = /*@__PURE__*/ createThrowIfEmptyLiftOperator(liftT, class T
 const throwIfEmptyT = {
     throwIfEmpty,
 };
+const toEnumerable = () => identity;
+const toEnumerableT = {
+    toEnumerable,
+};
 const _using = (resourceFactory, enumerableFactory) => createEnumerable(() => {
     const resources = resourceFactory();
     const resourcesArray = Array.isArray(resources) ? resources : [resources];
@@ -609,9 +611,10 @@ const _using = (resourceFactory, enumerableFactory) => createEnumerable(() => {
     pipe(resources, forEach$1(addTo(enumerator)));
     return enumerator;
 });
+const type = undefined;
 const using = _using;
 const usingT = {
     using,
 };
 
-export { AbstractEnumerable, buffer, bufferT, concat, concatAll, concatAllT, concatT, createEnumerable, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, toRunnableT, type, using, usingT, zip, zipT };
+export { AbstractEnumerable, buffer, bufferT, concat, concatAll, concatAllT, concatT, createEnumerable, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toRunnable, toRunnableT, type, using, usingT, zip, zipT };

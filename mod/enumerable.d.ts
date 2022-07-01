@@ -100,8 +100,6 @@ declare type EnumerableOperator<TA, TB> = Function1<EnumerableLike<TA>, Enumerab
 interface ToEnumerable<C extends ContainerLike> extends Container<C> {
     toEnumerable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 }
-declare const toEnumerable: <T>() => Function1<EnumerableLike<T>, EnumerableLike<T>>;
-declare const type: EnumerableLike<unknown>;
 /**
  * Creates an EnumerableLike which yields all values from each source sequentially.
  */
@@ -137,6 +135,9 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
 declare const takeWhileT: TakeWhile<EnumerableLike<unknown>>;
 declare const throwIfEmpty: <T>(factory: Factory<unknown>) => EnumerableOperator<T, T>;
 declare const throwIfEmptyT: ThrowIfEmpty<EnumerableLike<unknown>>;
+declare const toEnumerable: <T>() => Function1<EnumerableLike<T>, EnumerableLike<T>>;
+declare const toEnumerableT: ToEnumerable<EnumerableLike<unknown>>;
+declare const type: EnumerableLike<unknown>;
 declare const using: Using<EnumerableLike<unknown>>["using"];
 declare const usingT: Using<EnumerableLike<unknown>>;
-export { AbstractEnumerable, EnumerableLike, EnumerableOperator, ToEnumerable, buffer, bufferT, concat, concatAll, concatAllT, concatT, createEnumerable, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toIterable, toRunnable, toRunnableT, type, using, usingT, zip, zipT };
+export { AbstractEnumerable, EnumerableLike, EnumerableOperator, ToEnumerable, buffer, bufferT, concat, concatAll, concatAllT, concatT, createEnumerable, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toRunnable, toRunnableT, type, using, usingT, zip, zipT };
