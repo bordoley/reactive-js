@@ -1692,14 +1692,14 @@ ___
 
 [`Factory`](functions.md#factory)<`T`\>
 
-▸ **instanceFactory**<`TA`, `T`\>(`Constructor`): [`Function1`](functions.md#function1)<`TA`, `T`\>
+▸ **instanceFactory**<`T`, `TA`\>(`Constructor`): [`Function1`](functions.md#function1)<`TA`, `T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
 | `T` |
+| `TA` |
 
 #### Parameters
 
@@ -1711,15 +1711,15 @@ ___
 
 [`Function1`](functions.md#function1)<`TA`, `T`\>
 
-▸ **instanceFactory**<`TA`, `TB`, `T`\>(`Constructor`): [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\>
+▸ **instanceFactory**<`T`, `TA`, `TB`\>(`Constructor`): [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
+| `T` |
 | `TA` |
 | `TB` |
-| `T` |
 
 #### Parameters
 
@@ -1731,16 +1731,16 @@ ___
 
 [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\>
 
-▸ **instanceFactory**<`TA`, `TB`, `TC`, `T`\>(`Constructor`): [`Function3`](functions.md#function3)<`TA`, `TB`, `TC`, `T`\>
+▸ **instanceFactory**<`T`, `TA`, `TB`, `TC`\>(`Constructor`): [`Function3`](functions.md#function3)<`TA`, `TB`, `TC`, `T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
+| `T` |
 | `TA` |
 | `TB` |
 | `TC` |
-| `T` |
 
 #### Parameters
 
@@ -1919,14 +1919,14 @@ ___
 
 `T`
 
-▸ **newInstance**<`TA`, `T`\>(`Constructor`, `a`): `T`
+▸ **newInstance**<`T`, `TA`\>(`Constructor`, `a`): `T`
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
 | `T` |
+| `TA` |
 
 #### Parameters
 
@@ -1939,15 +1939,15 @@ ___
 
 `T`
 
-▸ **newInstance**<`TA`, `TB`, `T`\>(`Constructor`, `a`, `b`): `T`
+▸ **newInstance**<`T`, `TA`, `TB`\>(`Constructor`, `a`, `b`): `T`
 
 #### Type parameters
 
 | Name |
 | :------ |
+| `T` |
 | `TA` |
 | `TB` |
-| `T` |
 
 #### Parameters
 
@@ -1961,16 +1961,16 @@ ___
 
 `T`
 
-▸ **newInstance**<`TA`, `TB`, `TC`, `T`\>(`Constructor`, `a`, `b`, `c`): `T`
+▸ **newInstance**<`T`, `TA`, `TB`, `TC`\>(`Constructor`, `a`, `b`, `c`): `T`
 
 #### Type parameters
 
 | Name |
 | :------ |
+| `T` |
 | `TA` |
 | `TB` |
 | `TC` |
-| `T` |
 
 #### Parameters
 
@@ -1985,17 +1985,17 @@ ___
 
 `T`
 
-▸ **newInstance**<`TA`, `TB`, `TC`, `TD`, `T`\>(`Constructor`, `a`, `b`, `c`, `d`): `T`
+▸ **newInstance**<`T`, `TA`, `TB`, `TC`, `TD`\>(`Constructor`, `a`, `b`, `c`, `d`): `T`
 
 #### Type parameters
 
 | Name |
 | :------ |
+| `T` |
 | `TA` |
 | `TB` |
 | `TC` |
 | `TD` |
-| `T` |
 
 #### Parameters
 

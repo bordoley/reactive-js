@@ -104,7 +104,7 @@ export const useObservable = <T>(
 };
 
 const createReplaySubject = <TProps>() =>
-  newInstance<number, Subject<TProps>>(Subject, 1);
+  newInstance<Subject<TProps>, number>(Subject, 1);
 
 export const createComponent = <TProps>(
   fn: (props: ObservableLike<TProps>) => ObservableLike<ReactElement>,

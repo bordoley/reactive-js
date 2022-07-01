@@ -758,19 +758,19 @@ const _newInstance = (
 ): any => new Constructor(...args);
 
 export function newInstance<T>(Constructor: Constructor<T>): T;
-export function newInstance<TA, T>(Constructor: Constructor1<TA, T>, a: TA): T;
-export function newInstance<TA, TB, T>(
+export function newInstance<T, TA>(Constructor: Constructor1<TA, T>, a: TA): T;
+export function newInstance<T, TA, TB>(
   Constructor: Constructor2<TA, TB, T>,
   a: TA,
   b: TB,
 ): T;
-export function newInstance<TA, TB, TC, T>(
+export function newInstance<T, TA, TB, TC>(
   Constructor: Constructor3<TA, TB, TC, T>,
   a: TA,
   b: TB,
   c: TC,
 ): T;
-export function newInstance<TA, TB, TC, TD, T>(
+export function newInstance<T, TA, TB, TC, TD>(
   Constructor: Constructor4<TA, TB, TC, TD, T>,
   a: TA,
   b: TB,
@@ -811,13 +811,13 @@ export function newInstanceWith(
 
 export function instanceFactory<T>(Constructor: Constructor<T>): Factory<T>;
 
-export function instanceFactory<TA, T>(
+export function instanceFactory<T, TA>(
   Constructor: Constructor1<TA, T>,
 ): Function1<TA, T>;
-export function instanceFactory<TA, TB, T>(
+export function instanceFactory<T, TA, TB>(
   Constructor: Constructor2<TA, TB, T>,
 ): Function2<TA, TB, T>;
-export function instanceFactory<TA, TB, TC, T>(
+export function instanceFactory<T, TA, TB, TC>(
   Constructor: Constructor3<TA, TB, TC, T>,
 ): Function3<TA, TB, TC, T>;
 export function instanceFactory(

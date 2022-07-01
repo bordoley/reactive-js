@@ -5,7 +5,7 @@ import { describe, expectArrayEquals, test } from "../testing";
 const compare = (a: number, b: number): number => a - b;
 
 const makeSortedArray = (n: number) => {
-  const result = newInstance<number, Array<number>>(Array, n);
+  const result = newInstance<Array<number>, number>(Array, n);
   for (let i = 0; i < n; i++) {
     result[i] = i;
   }

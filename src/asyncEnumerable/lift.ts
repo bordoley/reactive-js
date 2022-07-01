@@ -45,9 +45,9 @@ export const lift =
         : [operator];
 
     return newInstance<
+      LiftedAsyncEnumerable<TB>,
       AsyncEnumerableLike<any>,
-      readonly Function1<AsyncEnumerator<any>, AsyncEnumerator<any>>[],
-      LiftedAsyncEnumerable<TB>
+      readonly Function1<AsyncEnumerator<any>, AsyncEnumerator<any>>[]
     >(LiftedAsyncEnumerable, src, allFunctions);
   };
 

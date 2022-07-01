@@ -16,11 +16,11 @@ export const toPromise =
   <T>(scheduler: SchedulerLike): Function1<ObservableLike<T>, Promise<T>> =>
   observable =>
     newInstance<
+      Promise<T>,
       (
         resolve: (value: T | PromiseLike<T>) => void,
         reject: (ex: unknown) => void,
-      ) => void,
-      Promise<T>
+      ) => void
     >(Promise, (resolve, reject) => {
       let result: Option<T> = none;
       let hasResult = false;
