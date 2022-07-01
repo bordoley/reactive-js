@@ -97,11 +97,6 @@ export { forEach } from "./runnable/forEach";
 export { fromArray, fromArrayT } from "./runnable/fromArray";
 export { last } from "./runnable/last";
 
-export const toRunnable = <T>(): Function1<RunnableLike<T>, RunnableLike<T>> =>
-  identity;
-
-export const type: RunnableLike<unknown> = undefined as any;
-
 export const buffer: <T>(options?: {
   readonly maxBufferSize?: number;
 }) => RunnableOperator<T, readonly T[]> = /*@__PURE__*/ createBufferOperator(
@@ -474,6 +469,15 @@ export const throwIfEmptyT: ThrowIfEmpty<RunnableLike<unknown>> = {
  */
 export const toArray = <T>(): Function1<RunnableLike<T>, readonly T[]> =>
   compose(buffer(), first(), getOrDefault(emptyArray));
+
+export const toRunnable = <T>(): Function1<RunnableLike<T>, RunnableLike<T>> =>
+  identity;
+
+export const toRunnableT: ToRunnable<RunnableLike<unknown>> = {
+  toRunnable,
+};
+
+export const type: RunnableLike<unknown> = undefined as any;
 
 export const using: Using<RunnableLike<unknown>>["using"] =
   /*@__PURE__*/ createUsing(createT);

@@ -1,6 +1,6 @@
 /// <reference types="./runnable.d.ts" />
 import { dispose, isDisposed, addTo, bindTo } from './disposable.mjs';
-import { pipe, newInstance, raise, pipeLazy, newInstanceWith, ignore, identity, length, alwaysTrue, compose } from './functions.mjs';
+import { pipe, newInstance, raise, pipeLazy, newInstanceWith, ignore, length, alwaysTrue, compose, identity } from './functions.mjs';
 import { isSome, none, isNone, getOrDefault } from './option.mjs';
 import { empty } from './readonlyArray.mjs';
 import { AbstractSource, sourceFrom, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './source.mjs';
@@ -123,8 +123,6 @@ const last = () => {
     return run(createSink);
 };
 
-const toRunnable = () => identity;
-const type = undefined;
 const buffer = /*@__PURE__*/ createBufferOperator({ ...liftT, ...fromArrayT }, class BufferSink extends AbstractDelegatingRunnableSink {
     constructor(delegate, maxBufferSize) {
         super(delegate);
@@ -331,10 +329,15 @@ const throwIfEmptyT = {
  * Accumulates all values emitted by `runnable` into an array.
  */
 const toArray = () => compose(buffer(), first(), getOrDefault(empty));
+const toRunnable = () => identity;
+const toRunnableT = {
+    toRunnable,
+};
+const type = undefined;
 const using = 
 /*@__PURE__*/ createUsing(createT);
 const usingT = {
     using,
 };
 
-export { buffer, bufferT, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, type, using, usingT };
+export { buffer, bufferT, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, toRunnableT, type, using, usingT };
