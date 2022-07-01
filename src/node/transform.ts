@@ -10,62 +10,46 @@ import {
   createInflate,
 } from "zlib";
 import { dispatchTo } from "../dispatcher";
-import { DisposableValue, add, addTo, dispose, onError } from "../disposable";
 import { FlowableOperator, createLiftedFlowable } from "../flowable";
-import {
-  Factory,
-  ignore,
-  newInstance,
-  pipe,
-  pipeLazy,
-  returns,
-} from "../functions";
+import { Factory, pipe, pipeLazy, returns } from "../functions";
 import { createObservable, onNotify, subscribe } from "../observable";
 import { scheduler } from "../observer";
 import { sinkInto } from "../source";
 import { sourceFrom, stream } from "../streamable";
 import { createReadableSource } from "./createReadableSource";
-import { createWritableSink } from "./createWritableSink";
-import { createDisposableNodeStream } from "./nodeStream";
+import { createWritableSinkStream } from "./createWritableSink";
+import { addDisposable, addToDisposable, addToNodeStream } from "./nodeStream";
 
 export const transform =
-  (
-    factory: Factory<DisposableValue<Transform>>,
-  ): FlowableOperator<Uint8Array, Uint8Array> =>
+  (factory: Factory<Transform>): FlowableOperator<Uint8Array, Uint8Array> =>
   src =>
     createLiftedFlowable(modeObs =>
       createObservable(observer => {
-        const transform = factory();
+        const { dispatcher } = observer;
+        const transform = pipe(
+          factory(),
+          addToDisposable(observer),
+          addDisposable(dispatcher),
+        );
 
         pipe(
-          createWritableSink(() =>
-            pipe(
-              newInstance(DisposableValue, transform.value, ignore),
-              // only dispose the transform when the writable is disposed.
-              onError(e => pipe(transform, dispose(e))),
-            ),
-          ),
-          stream(scheduler(observer)),
+          createWritableSinkStream(transform, scheduler(observer)),
           sourceFrom(src),
+          addToNodeStream(transform),
         );
 
         const transformReadableStream = pipe(
           createReadableSource(returns(transform)),
           stream(scheduler(observer)),
-          addTo(observer),
-        );
-
-        const modeSubscription = pipe(
-          modeObs,
-          onNotify(dispatchTo(transformReadableStream)),
-          subscribe(scheduler(observer)),
-          addTo(observer),
+          addToNodeStream(transform),
+          sinkInto(observer),
         );
 
         pipe(
-          transformReadableStream,
-          add(modeSubscription),
-          sinkInto(observer),
+          modeObs,
+          onNotify(dispatchTo(transformReadableStream)),
+          subscribe(scheduler(observer)),
+          addToNodeStream(transform),
         );
       }),
     );
@@ -73,33 +57,29 @@ export const transform =
 export const brotliDecompress = (
   options: BrotliOptions = {},
 ): FlowableOperator<Uint8Array, Uint8Array> =>
-  transform(
-    pipeLazy(options, createBrotliDecompress, createDisposableNodeStream),
-  );
+  transform(pipeLazy(options, createBrotliDecompress));
 
 export const gunzip = (
   options: ZlibOptions = {},
 ): FlowableOperator<Uint8Array, Uint8Array> =>
-  transform(pipeLazy(options, createGunzip, createDisposableNodeStream));
+  transform(pipeLazy(options, createGunzip));
 
 export const inflate = (
   options: ZlibOptions = {},
 ): FlowableOperator<Uint8Array, Uint8Array> =>
-  transform(pipeLazy(options, createInflate, createDisposableNodeStream));
+  transform(pipeLazy(options, createInflate));
 
 export const brotliCompress = (
   options: BrotliOptions = {},
 ): FlowableOperator<Uint8Array, Uint8Array> =>
-  transform(
-    pipeLazy(options, createBrotliCompress, createDisposableNodeStream),
-  );
+  transform(pipeLazy(options, createBrotliCompress));
 
 export const gzip = (
   options: ZlibOptions = {},
 ): FlowableOperator<Uint8Array, Uint8Array> =>
-  transform(pipeLazy(options, createGzip, createDisposableNodeStream));
+  transform(pipeLazy(options, createGzip));
 
 export const deflate = (
   options: ZlibOptions = {},
 ): FlowableOperator<Uint8Array, Uint8Array> =>
-  transform(pipeLazy(options, createDeflate, createDisposableNodeStream));
+  transform(pipeLazy(options, createDeflate));

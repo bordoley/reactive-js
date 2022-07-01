@@ -76,8 +76,8 @@ function addDisposableOrTeardown(parent, child, ignoreChildErrors = false) {
     parent.add(child, ignoreChildErrors);
 }
 const bindTo = (child) => (parent) => {
-    addDisposableOrTeardown(parent, child, true);
-    addDisposableOrTeardown(child, parent, true);
+    addDisposableOrTeardown(parent, child);
+    addDisposableOrTeardown(child, parent);
     return parent;
 };
 function add(child, ignoreChildErrors = false) {

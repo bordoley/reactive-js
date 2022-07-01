@@ -121,8 +121,8 @@ function addDisposableOrTeardown(
 export const bindTo =
   <T extends Disposable>(child: Disposable): Function1<T, T> =>
   (parent: T): T => {
-    addDisposableOrTeardown(parent, child, true);
-    addDisposableOrTeardown(child, parent, true);
+    addDisposableOrTeardown(parent, child);
+    addDisposableOrTeardown(child, parent);
     return parent;
   };
 

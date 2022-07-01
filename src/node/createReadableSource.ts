@@ -1,38 +1,42 @@
 import fs from "fs";
 import { Readable } from "stream";
 import { dispatchTo } from "../dispatcher";
-import { DisposableValue, add, addTo, dispose } from "../disposable";
+import { dispose } from "../disposable";
 import { FlowableLike, createLiftedFlowable } from "../flowable";
 import { Factory, pipe } from "../functions";
 import { createObservable, onNotify, subscribe } from "../observable";
 import { scheduler } from "../observer";
-import { createDisposableNodeStream } from "./nodeStream";
+import { addDisposable, addToDisposable, addToNodeStream } from "./nodeStream";
 
 export const createReadableSource = (
-  factory: Factory<DisposableValue<Readable>>,
+  factory: Factory<Readable>,
 ): FlowableLike<Uint8Array> =>
   createLiftedFlowable(mode =>
     createObservable(observer => {
       const { dispatcher } = observer;
 
-      const readable = pipe(factory(), addTo(observer), add(dispatcher, true));
-      const readableValue = readable.value;
-      readableValue.pause();
+      const readable = pipe(
+        factory(),
+        addToDisposable(observer),
+        addDisposable(dispatcher),
+      );
+
+      readable.pause();
 
       pipe(
         mode,
         onNotify(ev => {
           switch (ev) {
             case "pause":
-              readableValue.pause();
+              readable.pause();
               break;
             case "resume":
-              readableValue.resume();
+              readable.resume();
               break;
           }
         }),
         subscribe(scheduler(observer)),
-        addTo(observer),
+        addToNodeStream(readable),
       );
 
       const onData = dispatchTo(dispatcher);
@@ -40,8 +44,8 @@ export const createReadableSource = (
         pipe(dispatcher, dispose());
       };
 
-      readableValue.on("data", onData);
-      readableValue.on("end", onEnd);
+      readable.on("data", onData);
+      readable.on("end", onEnd);
     }),
   );
 
@@ -54,7 +58,4 @@ export const readFile = (
     readonly end?: number;
     readonly highWaterMark?: number;
   },
-) =>
-  createReadableSource(() =>
-    pipe(fs.createReadStream(path, options), createDisposableNodeStream),
-  );
+) => createReadableSource(() => fs.createReadStream(path, options));
