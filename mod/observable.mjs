@@ -202,7 +202,7 @@ class SwitchObserver extends AbstractDelegatingObserver {
     notify(next) {
         assertState(this);
         pipe(this.inner, dispose());
-        const inner = pipe(next, onNotify(notifySink(delegate(this))), subscribe(scheduler(this)), addTo(delegate(this)), onComplete(() => {
+        const inner = pipe(next, onNotify(pipe(this, delegate, notifySink)), subscribe(scheduler(this)), addTo(delegate(this)), onComplete(() => {
             if (isDisposed(this)) {
                 pipe(this, delegate, dispose());
             }
@@ -232,7 +232,7 @@ const notifyDelegate = (observer) => {
         observer.hasLatest = false;
         const next = observer.queue.shift();
         const result = observer.selector(next, observer.otherLatest);
-        observer.delegate.notify(result);
+        pipe(observer, delegate, notify(result));
     }
 };
 class ZipWithLatestFromObserver extends AbstractDelegatingObserver {
@@ -257,22 +257,22 @@ class ZipWithLatestFromObserver extends AbstractDelegatingObserver {
  * @param selector
  */
 const zipWithLatestFrom = (other, selector) => {
-    const operator = (delegate) => {
+    const operator = (delegate$1) => {
         const disposeDelegate = () => {
             if (isDisposed(observer) && isDisposed(otherSubscription)) {
-                pipe(delegate, dispose());
+                pipe(delegate$1, dispose());
             }
         };
-        const observer = pipe(ZipWithLatestFromObserver, newInstanceWith(delegate, selector), onComplete(disposeDelegate));
+        const observer = pipe(ZipWithLatestFromObserver, newInstanceWith(delegate$1, selector), onComplete(disposeDelegate));
         const otherSubscription = pipe(other, onNotify(otherLatest => {
             observer.hasLatest = true;
             observer.otherLatest = otherLatest;
             notifyDelegate(observer);
             if (isDisposed(observer) && isEmpty(observer.queue)) {
-                pipe(observer.delegate, dispose());
+                pipe(observer, delegate, dispose());
             }
-        }), subscribe(scheduler(delegate)), onComplete(disposeDelegate));
-        pipe(delegate, add(observer), add(otherSubscription));
+        }), subscribe(scheduler(delegate$1)), onComplete(disposeDelegate));
+        pipe(delegate$1, add(observer), add(otherSubscription));
         return observer;
     };
     return lift(operator);
@@ -498,7 +498,7 @@ class LatestObserver extends AbstractDelegatingObserver {
         const observers = ctx.observers;
         if (ctx.readyCount === length(observers)) {
             const result = pipe(observers, map$1(observer => observer.latest));
-            delegate(this).notify(result);
+            pipe(this, delegate, notify(result));
             if (this.mode === 2 /* LatestMode.Zip */) {
                 for (const sub of observers) {
                     sub.ready = false;
@@ -663,7 +663,7 @@ class BufferObserver extends AbstractDelegatingObserver {
             this.durationSubscription.inner = disposed;
             const buffer = this.buffer;
             this.buffer = [];
-            delegate(this).notify(buffer);
+            pipe(this, delegate, notify(buffer));
         };
         if (length(buffer) === maxBufferSize) {
             doOnNotify();
@@ -713,10 +713,10 @@ const subscribeNext = (observer) => {
         const nextObs = observer.queue.shift();
         if (isSome(nextObs)) {
             observer.activeCount++;
-            pipe(nextObs, onNotify(notifySink(observer.delegate)), subscribe(scheduler(observer)), addTo(observer.delegate), onComplete(observer.onDispose));
+            pipe(nextObs, onNotify(notifySink(delegate(observer))), subscribe(scheduler(observer)), addTo(delegate(observer)), onComplete(observer.onDispose));
         }
         else if (isDisposed(observer)) {
-            pipe(observer.delegate, dispose());
+            pipe(observer, delegate, dispose());
         }
     }
 };
@@ -753,12 +753,12 @@ class MergeObserver extends AbstractDelegatingObserver {
  */
 const mergeAll = (options = {}) => {
     const { maxBufferSize = MAX_SAFE_INTEGER, maxConcurrency = MAX_SAFE_INTEGER, } = options;
-    const operator = (delegate) => {
-        const observer = pipe(delegate, onDisposed(_ => {
+    const operator = (delegate$1) => {
+        const observer = pipe(delegate$1, onDisposed(_ => {
             observer.queue.length = 0;
-        }), delegate => newInstance(MergeObserver, delegate, maxBufferSize, maxConcurrency), addTo(delegate), onComplete(() => {
+        }), delegate => newInstance(MergeObserver, delegate, maxBufferSize, maxConcurrency), addTo(delegate$1), onComplete(() => {
             if (length(observer.queue) + observer.activeCount === 0) {
-                pipe(observer.delegate, dispose());
+                pipe(observer, delegate, dispose());
             }
         }));
         return observer;
@@ -906,7 +906,7 @@ class TimeoutObserver extends AbstractDelegatingObserver {
     notify(next) {
         assertState(this);
         pipe(this.durationSubscription, dispose());
-        delegate(this).notify(next);
+        pipe(this, delegate, notify(next));
     }
 }
 const returnTimeoutError = returns(timeoutError);
@@ -934,7 +934,7 @@ class WithLatestFromObserver extends AbstractDelegatingObserver {
         assertState(this);
         if (!isDisposed(this) && this.hasLatest) {
             const result = this.selector(next, this.otherLatest);
-            delegate(this).notify(result);
+            pipe(this, delegate, notify(result));
         }
     }
 }
@@ -1074,7 +1074,7 @@ class ZipObserver extends AbstractDelegatingObserver {
             if (shouldEmit(enumerators)) {
                 const next = pipe(enumerators, map$1(current));
                 const shouldCompleteResult = shouldComplete(enumerators);
-                delegate(this).notify(next);
+                pipe(this, delegate, notify(next));
                 if (shouldCompleteResult) {
                     pipe(this, dispose());
                 }

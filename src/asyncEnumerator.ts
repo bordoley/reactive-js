@@ -29,19 +29,19 @@ export abstract class AbstractDelegatingAsyncEnumerator<TA, TB>
   }
 
   get observerCount() {
-    return observerCount(this.delegate);
+    return pipe(this, delegate, observerCount);
   }
 
   get replay(): number {
-    return replay(this.delegate);
+    return pipe(this, delegate, replay);
   }
 
   get scheduler(): SchedulerLike {
-    return this.delegate.scheduler;
+    return delegate(this).scheduler;
   }
 
   dispatch(req: void): void {
-    pipe(delegate(this), dispatch(req));
+    pipe(this, delegate, dispatch(req));
   }
 
   abstract sink(observer: Observer<TB>): void;

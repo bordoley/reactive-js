@@ -1,9 +1,9 @@
 import { DisposableContainer } from "./container";
 import { isDisposed } from "./disposable";
 import { __DEV__ } from "./env";
-import { newInstance, raise } from "./functions";
+import { newInstance, pipe, raise } from "./functions";
 import { delegate } from "./liftable";
-import { SinkLike } from "./source";
+import { SinkLike, notify } from "./source";
 
 export class RunnableSink<T>
   extends DisposableContainer
@@ -34,7 +34,7 @@ export class AbstractDelegatingRunnableSink<
 
 class DelegatingRunnableSink<T> extends AbstractDelegatingRunnableSink<T, T> {
   notify(next: T) {
-    delegate(this).notify(next);
+    pipe(this, delegate, notify(next));
   }
 }
 

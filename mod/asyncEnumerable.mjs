@@ -1,6 +1,6 @@
 /// <reference types="./asyncEnumerable.d.ts" />
 import { pipe, newInstance, length, compose, flip, increment, returns, pipeLazy } from './functions.mjs';
-import { AbstractLiftable, covariant, createKeepLiftOperator, createMapLiftOperator, createScanLiftOperator } from './liftable.mjs';
+import { AbstractLiftable, covariant, createKeepLiftOperator, delegate, createMapLiftOperator, createScanLiftOperator } from './liftable.mjs';
 import { stream } from './streamable.mjs';
 import { AsyncEnumerator, AbstractDelegatingAsyncEnumerator } from './asyncEnumerator.mjs';
 import { createFromArray, fromValue, concatMap, concatWith } from './container.mjs';
@@ -149,13 +149,13 @@ const generate = (generator, initialValue, options) => {
         : scan$1(generateScanner(generator), initialValue));
 };
 const keep = /*@__PURE__*/ createKeepLiftOperator(liftT, class KeepAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
-    constructor(delegate, predicate) {
-        super(delegate);
-        this.obs = pipe(delegate, onNotify(x => {
+    constructor(delegate$1, predicate) {
+        super(delegate$1);
+        this.obs = pipe(delegate$1, onNotify(x => {
             if (!predicate(x)) {
-                pipe(this.delegate, dispatch(none));
+                pipe(this, delegate, dispatch(none));
             }
-        }), keep$1(predicate), publish(delegate.scheduler));
+        }), keep$1(predicate), publish(delegate$1.scheduler));
     }
     get observerCount() {
         return observerCount(this.obs);
@@ -177,7 +177,7 @@ const map = /*@__PURE__*/ createMapLiftOperator(liftT, class MapAsyncEnumerator 
         this.op = map$1(this.mapper);
     }
     sink(observer) {
-        pipe(this.delegate, this.op, sinkInto(observer));
+        pipe(this, delegate, this.op, sinkInto(observer));
     }
 });
 const mapT = {
@@ -189,7 +189,7 @@ const scan = /*@__PURE__*/ createScanLiftOperator(liftT, class ScanAsyncEnumerat
         this.op = scan$1(reducer, returns(acc));
     }
     sink(observer) {
-        pipe(this.delegate, this.op, sinkInto(observer));
+        pipe(this, delegate, this.op, sinkInto(observer));
     }
 });
 const scanT = {

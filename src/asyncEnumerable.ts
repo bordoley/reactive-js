@@ -43,6 +43,7 @@ import {
   createKeepLiftOperator,
   createMapLiftOperator,
   createScanLiftOperator,
+  delegate as liftDelegate,
 } from "./liftable";
 import {
   MulticastObservableLike,
@@ -472,7 +473,7 @@ export const keep: <T>(
         delegate,
         onNotify(x => {
           if (!predicate(x)) {
-            pipe(this.delegate, dispatch(none));
+            pipe(this, liftDelegate, dispatch(none));
           }
         }),
         keepObs(predicate),
@@ -517,7 +518,7 @@ export const map: <TA, TB>(
     }
 
     sink(observer: Observer<TB>): void {
-      pipe(this.delegate, this.op, sinkInto(observer));
+      pipe(this, liftDelegate, this.op, sinkInto(observer));
     }
   },
 );
@@ -547,7 +548,7 @@ export const scan: <T, TAcc>(
     }
 
     sink(observer: Observer<TAcc>): void {
-      pipe(this.delegate, this.op, sinkInto(observer));
+      pipe(this, liftDelegate, this.op, sinkInto(observer));
     }
   },
 );

@@ -27,7 +27,7 @@ import { delegate } from "../liftable";
 import { ObservableLike } from "../observable";
 import { AbstractDelegatingObserver, Observer } from "../observer";
 import { everySatisfy, map } from "../readonlyArray";
-import { assertState, sourceFrom } from "../source";
+import { assertState, notify, sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
 import { fromEnumerator } from "./fromEnumerable";
 import { isEnumerable, tagEnumerable } from "./observable";
@@ -98,7 +98,7 @@ class ZipObserver extends AbstractDelegatingObserver<
         const next = pipe(enumerators, map(current));
         const shouldCompleteResult = shouldComplete(enumerators);
 
-        delegate(this).notify(next);
+        pipe(this, delegate, notify(next));
 
         if (shouldCompleteResult) {
           pipe(this, dispose());

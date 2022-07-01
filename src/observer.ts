@@ -20,7 +20,7 @@ import {
 import { delegate } from "./liftable";
 import { Option, isNone, none } from "./option";
 import { SchedulerLike, __yield, inContinuation, schedule } from "./scheduler";
-import { SinkLike, assertState } from "./source";
+import { SinkLike, assertState, notify } from "./source";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (length(dispatcher.nextQueue) === 1) {
@@ -128,7 +128,7 @@ export class AbstractDelegatingObserver<TIn, TOut> extends Observer<TIn> {
 
 class DelegatingObserver<T> extends AbstractDelegatingObserver<T, T> {
   notify(next: T) {
-    delegate(this).notify(next);
+    pipe(this, delegate, notify(next));
   }
 }
 
