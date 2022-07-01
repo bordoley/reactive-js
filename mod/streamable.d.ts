@@ -1,5 +1,5 @@
 import { Updater, Function1, Reducer, Factory, Equality } from "./functions.mjs";
-import { ObservableOperator, ObservableLike } from "./observable.mjs";
+import { ObservableOperator } from "./observable.mjs";
 import { Option } from "./option.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
 import { StreamLike } from "./stream.mjs";
@@ -11,15 +11,6 @@ interface StreamableLike<TReq, T, TStream extends StreamLike<TReq, T> = StreamLi
 interface StreamableStateLike<T, TStream extends StateStreamLike<T> = StateStreamLike<T>> extends StreamableLike<Updater<T>, T, TStream> {
 }
 interface StateStreamLike<T> extends StreamLike<Updater<T>, T> {
-}
-declare type FlowMode = "resume" | "pause";
-interface FlowableLike<T, TStream extends FlowableStreamLike<T> = FlowableStreamLike<T>> extends StreamableLike<FlowMode, T, TStream> {
-}
-interface FlowableStreamLike<T> extends StreamLike<FlowMode, T> {
-}
-interface FlowableSinkLike<T, TStream extends FlowableSinkStreamLike<T> = FlowableSinkStreamLike<T>> extends StreamableLike<T, FlowMode, TStream> {
-}
-interface FlowableSinkStreamLike<T> extends StreamLike<T, FlowMode> {
 }
 declare const stream: <TReq, T, TStream extends StreamLike<TReq, T>>(scheduler: SchedulerLike, options?: {
     readonly replay?: number;
@@ -68,7 +59,6 @@ declare const createStateStore: <T>(initialState: Factory<T>, options?: {
  * a disposed `StreamLike` instance.
  */
 declare const empty: <TReq, T>() => StreamableLike<TReq, T, StreamLike<TReq, T>>;
-declare const flow: <T>() => Function1<ObservableLike<T>, FlowableLike<T, FlowableStreamLike<T>>>;
 declare const identity: <T>() => StreamableLike<T, T, StreamLike<T, T>>;
 declare const __stream: <TReq, T, TStream extends StreamLike<TReq, T>>(streamable: StreamableLike<TReq, T, TStream>, { replay, scheduler, }?: {
     readonly replay?: number | undefined;
@@ -79,5 +69,4 @@ declare const __state: <T>(initialState: () => T, options?: {
 }) => StateStreamLike<T>;
 declare const sinkInto: <TReq, T, TSinkStream extends StreamLike<T, TReq>>(dest: TSinkStream) => (src: StreamableLike<TReq, T, StreamLike<TReq, T>>) => StreamableLike<TReq, T, StreamLike<TReq, T>>;
 declare const sourceFrom: <TReq, T, TSinkStream extends StreamLike<T, TReq>>(streamable: StreamableLike<TReq, T, StreamLike<TReq, T>>) => Function1<TSinkStream, TSinkStream>;
-declare const flowToObservable: <T>() => Function1<FlowableLike<T, FlowableStreamLike<T>>, ObservableLike<T>>;
-export { FlowMode, FlowableLike, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, StateStreamLike, StreamableLike, StreamableStateLike, __state, __stream, createActionReducer, createLiftedStreamable, createStateStore, createStreamble, empty, flow, flowToObservable, identity, sinkInto, sourceFrom, stream };
+export { StateStreamLike, StreamableLike, StreamableStateLike, __state, __stream, createActionReducer, createLiftedStreamable, createStateStore, createStreamble, empty, identity, sinkInto, sourceFrom, stream };

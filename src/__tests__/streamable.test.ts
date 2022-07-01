@@ -9,6 +9,7 @@ import {
 import { dispatchTo } from "../dispatcher";
 import { dispose, isDisposed } from "../disposable";
 import { forEach } from "../enumerator";
+import { flow, toObservable } from "../flowable";
 import {
   ignore,
   increment,
@@ -50,8 +51,6 @@ import {
   createActionReducer,
   createLiftedStreamable,
   empty,
-  flow,
-  flowToObservable,
   identity,
   sourceFrom,
   stream,
@@ -364,7 +363,7 @@ export const tests = describe(
         fromArray(),
         decodeWithCharset(),
         flow(),
-        flowToObservable(),
+        toObservable(),
         reduce((acc: string, next: string) => acc + next, returns("")),
         onNotify(f),
         subscribe(scheduler),
@@ -408,7 +407,7 @@ export const tests = describe(
         encodeUtf8({ ...mapT, ...usingT }),
         decodeWithCharset(),
         flow(),
-        flowToObservable(),
+        toObservable(),
         reduce((acc: string, next: string) => acc + next, returns("")),
         onNotify(f),
         subscribe(scheduler),
@@ -454,7 +453,7 @@ export const tests = describe(
         fromValue(fromArrayT),
         map(returns(2)),
         flow(),
-        flowToObservable(),
+        toObservable(),
         reduce(sum, returns(0)),
         onNotify(f),
         subscribe(scheduler),

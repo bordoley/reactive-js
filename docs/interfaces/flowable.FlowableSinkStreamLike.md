@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [streamable](../modules/streamable.md) / FlowableSinkStreamLike
+[Reactive-JS](../README.md) / [flowable](../modules/flowable.md) / FlowableSinkStreamLike
 
 # Interface: FlowableSinkStreamLike<T\>
 
-[streamable](../modules/streamable.md).FlowableSinkStreamLike
+[flowable](../modules/flowable.md).FlowableSinkStreamLike
 
 ## Type parameters
 
@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`StreamLike`](stream.StreamLike.md)<`T`, [`FlowMode`](../modules/streamable.md#flowmode)\>
+- [`StreamLike`](stream.StreamLike.md)<`T`, [`FlowMode`](../modules/flowable.md#flowmode)\>
 
   ↳ **`FlowableSinkStreamLike`**
 
@@ -20,8 +20,8 @@
 
 ### Properties
 
-- [T](streamable.FlowableSinkStreamLike.md#t)
-- [scheduler](streamable.FlowableSinkStreamLike.md#scheduler)
+- [T](flowable.FlowableSinkStreamLike.md#t)
+- [scheduler](flowable.FlowableSinkStreamLike.md#scheduler)
 
 ## Properties
 

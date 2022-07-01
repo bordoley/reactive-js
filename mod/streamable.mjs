@@ -1,13 +1,11 @@
 /// <reference types="./streamable.d.ts" />
-import { concatWith, fromValue, ignoreElements, startWith } from './container.mjs';
+import { concatWith, fromValue, ignoreElements } from './container.mjs';
 import { dispatchTo } from './dispatcher.mjs';
-import { add, bindTo, addTo } from './disposable.mjs';
+import { addTo, add } from './disposable.mjs';
 import { newInstance, length, compose, pipe, returns, updateReducer, identity as identity$1 } from './functions.mjs';
-import { createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, takeFirst, subscribeOn, fromDisposable, takeUntil, onNotify, subscribe, __currentScheduler, __using, __memo, merge, keepT, onSubscribe, concatT } from './observable.mjs';
-import { scheduler } from './observer.mjs';
+import { createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, takeFirst, __currentScheduler, __using, __memo, merge, onNotify, keepT, onSubscribe, subscribe } from './observable.mjs';
 import { isSome, none } from './option.mjs';
-import { createPausableScheduler } from './scheduler.mjs';
-import { sinkInto as sinkInto$1, sourceFrom as sourceFrom$1 } from './source.mjs';
+import { sinkInto as sinkInto$1 } from './source.mjs';
 import { createStream } from './stream.mjs';
 
 const stream = (scheduler, options) => streamable => streamable.stream(scheduler, options);
@@ -50,19 +48,6 @@ const _empty = /*@__PURE__*/ createLiftedStreamable(takeFirst({ count: 0 }));
  * a disposed `StreamLike` instance.
  */
 const empty = () => _empty;
-const flow = () => observable => createLiftedStreamable((modeObs) => createObservable(observer => {
-    const pausableScheduler = createPausableScheduler(scheduler(observer));
-    pipe(observer, sourceFrom$1(pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil))), add(pipe(modeObs, onNotify((mode) => {
-        switch (mode) {
-            case "pause":
-                pausableScheduler.pause();
-                break;
-            case "resume":
-                pausableScheduler.resume();
-                break;
-        }
-    }), subscribe(scheduler(observer)), bindTo(pausableScheduler))), add(pausableScheduler));
-}));
 const _identity = {
     stream(scheduler, options) {
         return createStream(identity$1, scheduler, options);
@@ -94,10 +79,5 @@ const sourceFrom = (streamable) => dest => {
     pipe(streamable, sinkInto(dest));
     return dest;
 };
-const flowToObservable = () => src => createObservable(observer => {
-    const { dispatcher, scheduler } = observer;
-    const op = compose(onNotify(dispatchTo(dispatcher)), ignoreElements(keepT), startWith({ ...concatT, ...fromArrayT }, "pause", "resume"), onSubscribe(() => dispatcher));
-    pipe(createStream(op, scheduler), sourceFrom(src), addTo(observer));
-});
 
-export { __state, __stream, createActionReducer, createLiftedStreamable, createStateStore, createStreamble, empty, flow, flowToObservable, identity, sinkInto, sourceFrom, stream };
+export { __state, __stream, createActionReducer, createLiftedStreamable, createStateStore, createStreamble, empty, identity, sinkInto, sourceFrom, stream };

@@ -7,12 +7,8 @@ import {
   __do,
   __memo,
 } from "@reactive-js/core/observable";
-import {
-  __state,
-  flow,
-  FlowMode,
-  __stream,
-} from "@reactive-js/core/streamable";
+import { flow, FlowMode } from "@reactive-js/core/flowable";
+import { __state, __stream } from "@reactive-js/core/streamable";
 import {
   createComponent,
   createReactIdlePriorityScheduler,

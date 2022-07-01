@@ -18,6 +18,7 @@ import {
   dispose,
   onError,
 } from "../disposable";
+import { FlowableLike } from "../flowable";
 import {
   Factory,
   Function1,
@@ -30,12 +31,7 @@ import { createObservable, onNotify, subscribe } from "../observable";
 import { scheduler } from "../observer";
 import { sinkInto } from "../source";
 
-import {
-  FlowableLike,
-  createLiftedStreamable,
-  sourceFrom,
-  stream,
-} from "../streamable";
+import { createLiftedStreamable, sourceFrom, stream } from "../streamable";
 import { createReadableIOSource } from "./createReadableIOSource";
 import { createWritableIOSink } from "./createWritableIOSink";
 import { createDisposableNodeStream } from "./nodeStream";
