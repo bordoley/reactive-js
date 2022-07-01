@@ -10,6 +10,7 @@ interface FlowableLike<T, TStream extends FlowableStreamLike<T> = FlowableStream
 }
 interface FlowableStreamLike<T> extends StreamLike<FlowMode, T> {
 }
+declare type FlowableOperator<TA, TB> = Function1<FlowableLike<TA>, FlowableLike<TB>>;
 interface FlowableSinkLike<T, TStream extends FlowableSinkStreamLike<T> = FlowableSinkStreamLike<T>> extends StreamableLike<T, FlowMode, TStream> {
 }
 interface FlowableSinkStreamLike<T> extends StreamLike<T, FlowMode> {
@@ -29,4 +30,4 @@ declare function createLiftedFlowable<T, A, B, C, D, E, F, G, H, I, J, K, L>(op1
 declare const flow: <T>() => Function1<ObservableLike<T>, FlowableLike<T, FlowableStreamLike<T>>>;
 declare const toObservable: <T>() => Function1<FlowableLike<T, FlowableStreamLike<T>>, ObservableLike<T>>;
 declare const toObservableT: ToObservable<FlowableLike<unknown>>;
-export { FlowMode, FlowableLike, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, createLiftedFlowable, flow, toObservable, toObservableT };
+export { FlowMode, FlowableLike, FlowableOperator, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, createLiftedFlowable, flow, toObservable, toObservableT };

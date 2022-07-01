@@ -11,10 +11,9 @@ import {
 } from "zlib";
 import { dispatchTo } from "../dispatcher";
 import { DisposableValue, add, addTo, dispose, onError } from "../disposable";
-import { FlowableLike, createLiftedFlowable } from "../flowable";
+import { FlowableOperator, createLiftedFlowable } from "../flowable";
 import {
   Factory,
-  Function1,
   ignore,
   newInstance,
   pipe,
@@ -32,7 +31,7 @@ import { createDisposableNodeStream } from "./nodeStream";
 export const transform =
   (
     factory: Factory<DisposableValue<Transform>>,
-  ): Function1<FlowableLike<Uint8Array>, FlowableLike<Uint8Array>> =>
+  ): FlowableOperator<Uint8Array, Uint8Array> =>
   src =>
     createLiftedFlowable(modeObs =>
       createObservable(observer => {
@@ -73,34 +72,34 @@ export const transform =
 
 export const brotliDecompress = (
   options: BrotliOptions = {},
-): Function1<FlowableLike<Uint8Array>, FlowableLike<Uint8Array>> =>
+): FlowableOperator<Uint8Array, Uint8Array> =>
   transform(
     pipeLazy(options, createBrotliDecompress, createDisposableNodeStream),
   );
 
 export const gunzip = (
   options: ZlibOptions = {},
-): Function1<FlowableLike<Uint8Array>, FlowableLike<Uint8Array>> =>
+): FlowableOperator<Uint8Array, Uint8Array> =>
   transform(pipeLazy(options, createGunzip, createDisposableNodeStream));
 
 export const inflate = (
   options: ZlibOptions = {},
-): Function1<FlowableLike<Uint8Array>, FlowableLike<Uint8Array>> =>
+): FlowableOperator<Uint8Array, Uint8Array> =>
   transform(pipeLazy(options, createInflate, createDisposableNodeStream));
 
 export const brotliCompress = (
   options: BrotliOptions = {},
-): Function1<FlowableLike<Uint8Array>, FlowableLike<Uint8Array>> =>
+): FlowableOperator<Uint8Array, Uint8Array> =>
   transform(
     pipeLazy(options, createBrotliCompress, createDisposableNodeStream),
   );
 
 export const gzip = (
   options: ZlibOptions = {},
-): Function1<FlowableLike<Uint8Array>, FlowableLike<Uint8Array>> =>
+): FlowableOperator<Uint8Array, Uint8Array> =>
   transform(pipeLazy(options, createGzip, createDisposableNodeStream));
 
 export const deflate = (
   options: ZlibOptions = {},
-): Function1<FlowableLike<Uint8Array>, FlowableLike<Uint8Array>> =>
+): FlowableOperator<Uint8Array, Uint8Array> =>
   transform(pipeLazy(options, createDeflate, createDisposableNodeStream));

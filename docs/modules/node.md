@@ -262,7 +262,7 @@ ___
 
 ### brotliCompress
 
-▸ **brotliCompress**(`options?`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>\>
+▸ **brotliCompress**(`options?`): [`FlowableOperator`](flowable.md#flowableoperator)<`Uint8Array`, `Uint8Array`\>
 
 #### Parameters
 
@@ -272,13 +272,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>\>
+[`FlowableOperator`](flowable.md#flowableoperator)<`Uint8Array`, `Uint8Array`\>
 
 ___
 
 ### brotliDecompress
 
-▸ **brotliDecompress**(`options?`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>\>
+▸ **brotliDecompress**(`options?`): [`FlowableOperator`](flowable.md#flowableoperator)<`Uint8Array`, `Uint8Array`\>
 
 #### Parameters
 
@@ -288,7 +288,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>\>
+[`FlowableOperator`](flowable.md#flowableoperator)<`Uint8Array`, `Uint8Array`\>
 
 ___
 
@@ -348,7 +348,7 @@ ___
 
 ### deflate
 
-▸ **deflate**(`options?`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>\>
+▸ **deflate**(`options?`): [`FlowableOperator`](flowable.md#flowableoperator)<`Uint8Array`, `Uint8Array`\>
 
 #### Parameters
 
@@ -358,13 +358,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>\>
+[`FlowableOperator`](flowable.md#flowableoperator)<`Uint8Array`, `Uint8Array`\>
 
 ___
 
 ### gunzip
 
-▸ **gunzip**(`options?`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>\>
+▸ **gunzip**(`options?`): [`FlowableOperator`](flowable.md#flowableoperator)<`Uint8Array`, `Uint8Array`\>
 
 #### Parameters
 
@@ -374,13 +374,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>\>
+[`FlowableOperator`](flowable.md#flowableoperator)<`Uint8Array`, `Uint8Array`\>
 
 ___
 
 ### gzip
 
-▸ **gzip**(`options?`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>\>
+▸ **gzip**(`options?`): [`FlowableOperator`](flowable.md#flowableoperator)<`Uint8Array`, `Uint8Array`\>
 
 #### Parameters
 
@@ -390,13 +390,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>\>
+[`FlowableOperator`](flowable.md#flowableoperator)<`Uint8Array`, `Uint8Array`\>
 
 ___
 
 ### inflate
 
-▸ **inflate**(`options?`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>\>
+▸ **inflate**(`options?`): [`FlowableOperator`](flowable.md#flowableoperator)<`Uint8Array`, `Uint8Array`\>
 
 #### Parameters
 
@@ -406,7 +406,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>\>
+[`FlowableOperator`](flowable.md#flowableoperator)<`Uint8Array`, `Uint8Array`\>
 
 ___
 
@@ -434,7 +434,7 @@ ___
 
 ### transform
 
-▸ **transform**(`factory`): [`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>\>
+▸ **transform**(`factory`): [`FlowableOperator`](flowable.md#flowableoperator)<`Uint8Array`, `Uint8Array`\>
 
 #### Parameters
 
@@ -444,4 +444,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`Uint8Array`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`Uint8Array`\>\>\>
+[`FlowableOperator`](flowable.md#flowableoperator)<`Uint8Array`, `Uint8Array`\>
