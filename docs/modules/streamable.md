@@ -18,7 +18,6 @@
 - [createLiftedStreamable](streamable.md#createliftedstreamable)
 - [createStateStore](streamable.md#createstatestore)
 - [createStreamble](streamable.md#createstreamble)
-- [empty](streamable.md#empty)
 - [identity](streamable.md#identity)
 - [sinkInto](streamable.md#sinkinto)
 - [sourceFrom](streamable.md#sourcefrom)
@@ -519,26 +518,6 @@ ___
 #### Returns
 
 [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `TData`, `TStream`\>
-
-___
-
-### empty
-
-▸ **empty**<`TReq`, `T`\>(): [`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/stream.StreamLike.md)<`TReq`, `T`\>\>
-
-Returns an empty `StreamableLike` that always returns
-a disposed `StreamLike` instance.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TReq` |
-| `T` |
-
-#### Returns
-
-[`StreamableLike`](../interfaces/streamable.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/stream.StreamLike.md)<`TReq`, `T`\>\>
 
 ___
 
