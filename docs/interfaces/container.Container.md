@@ -66,6 +66,8 @@
 
   ↳ [`Lift`](liftable.Lift.md)
 
+  ↳ [`ToObservable`](observable.ToObservable.md)
+
   ↳ [`ToRunnable`](runnable.ToRunnable.md)
 
   ↳ [`CreateSource`](source.CreateSource.md)

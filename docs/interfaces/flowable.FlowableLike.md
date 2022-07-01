@@ -9,19 +9,46 @@
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TStream` | extends [`FlowableStreamLike`](flowable.FlowableStreamLike.md)<`T`\> = [`FlowableStreamLike`](flowable.FlowableStreamLike.md)<`T`\> |
+| `TStream` | extends [`FlowableStreamLike`](flowable.FlowableStreamLike.md)<[`T`](flowable.FlowableLike.md#t)\> = [`FlowableStreamLike`](flowable.FlowableStreamLike.md)<[`T`](flowable.FlowableLike.md#t)\> |
 
 ## Hierarchy
 
-- [`StreamableLike`](streamable.StreamableLike.md)<[`FlowMode`](../modules/flowable.md#flowmode), `T`, `TStream`\>
+- [`StreamableLike`](streamable.StreamableLike.md)<[`FlowMode`](../modules/flowable.md#flowmode), [`T`](flowable.FlowableLike.md#t), `TStream`\>
+
+- [`ContainerLike`](container.ContainerLike.md)
 
   ↳ **`FlowableLike`**
 
 ## Table of contents
 
+### Properties
+
+- [T](flowable.FlowableLike.md#t)
+- [type](flowable.FlowableLike.md#type)
+
 ### Methods
 
 - [stream](flowable.FlowableLike.md#stream)
+
+## Properties
+
+### T
+
+• **T**: `unknown`
+
+#### Overrides
+
+[ContainerLike](container.ContainerLike.md).[T](container.ContainerLike.md#t)
+
+___
+
+### type
+
+• `Readonly` **type**: [`FlowableLike`](flowable.FlowableLike.md)<`unknown`, [`FlowableStreamLike`](flowable.FlowableStreamLike.md)<`unknown`\>\>
+
+#### Overrides
+
+[ContainerLike](container.ContainerLike.md).[type](container.ContainerLike.md#type)
 
 ## Methods
 
@@ -33,7 +60,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StreamableLike`](streamable.StreamableLike.md)<[`FlowMode`](../modules/flowable.md#flowmode), `T`, `TStream`\> |
+| `this` | [`StreamableLike`](streamable.StreamableLike.md)<[`FlowMode`](../modules/flowable.md#flowmode), [`T`](flowable.FlowableLike.md#t), `TStream`\> |
 | `scheduler` | [`SchedulerLike`](scheduler.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.replay?` | `number` |

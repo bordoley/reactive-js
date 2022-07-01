@@ -141,7 +141,7 @@ export function createLiftedStreamable<T, A, B, C, D, E, F, G, H>(
   op6: ObservableOperator<E, F>,
   op7: ObservableOperator<F, G>,
   op8: ObservableOperator<G, H>,
-): StreamableLike<T, H, StreamLike<T, H>>;
+): StreamableLike<T, H>;
 export function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I>(
   op1: ObservableOperator<T, A>,
   op2: ObservableOperator<A, B>,

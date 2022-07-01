@@ -208,5 +208,8 @@ const toObservable = () => enumerable => createObservable(observer => {
         pipe(enumerator, dispatch(none));
     }), sinkInto(observer));
 });
+const toObservableT = {
+    toObservable,
+};
 
-export { LiftedAsyncEnumerator, consume, consumeAsync, consumeContinue, consumeDone, createAsyncEnumerable, createLiftedAsyncEnumerable, fromArray, fromArrayT, fromEnumerable, fromIterable, generate, keep, keepT, map, mapT, scan, scanT, toObservable };
+export { LiftedAsyncEnumerator, consume, consumeAsync, consumeContinue, consumeDone, createAsyncEnumerable, createLiftedAsyncEnumerable, fromArray, fromArrayT, fromEnumerable, fromIterable, generate, keep, keepT, map, mapT, scan, scanT, toObservable, toObservableT };

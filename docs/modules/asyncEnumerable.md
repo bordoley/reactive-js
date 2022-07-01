@@ -24,6 +24,7 @@
 - [keepT](asyncEnumerable.md#keept)
 - [mapT](asyncEnumerable.md#mapt)
 - [scanT](asyncEnumerable.md#scant)
+- [toObservableT](asyncEnumerable.md#toobservablet)
 
 ### Functions
 
@@ -116,6 +117,12 @@ ___
 ### scanT
 
 • `Const` **scanT**: [`Scan`](../interfaces/container.Scan.md)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>\>
+
+___
+
+### toObservableT
+
+• `Const` **toObservableT**: [`ToObservable`](../interfaces/observable.ToObservable.md)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>\>
 
 ## Functions
 

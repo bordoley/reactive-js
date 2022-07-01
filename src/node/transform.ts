@@ -18,7 +18,7 @@ import {
   dispose,
   onError,
 } from "../disposable";
-import { FlowableLike } from "../flowable";
+import { FlowableLike, createLiftedFlowable } from "../flowable";
 import {
   Factory,
   Function1,
@@ -30,8 +30,7 @@ import {
 import { createObservable, onNotify, subscribe } from "../observable";
 import { scheduler } from "../observer";
 import { sinkInto } from "../source";
-
-import { createLiftedStreamable, sourceFrom, stream } from "../streamable";
+import { sourceFrom, stream } from "../streamable";
 import { createReadableIOSource } from "./createReadableIOSource";
 import { createWritableIOSink } from "./createWritableIOSink";
 import { createDisposableNodeStream } from "./nodeStream";
@@ -41,7 +40,7 @@ export const transform =
     factory: Factory<DisposableValueLike<Transform>>,
   ): Function1<FlowableLike<Uint8Array>, FlowableLike<Uint8Array>> =>
   src =>
-    createLiftedStreamable(modeObs =>
+    createLiftedFlowable(modeObs =>
       createObservable(observer => {
         const transform = factory();
 
