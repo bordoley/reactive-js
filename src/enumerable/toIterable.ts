@@ -1,3 +1,4 @@
+import { ToIterable } from "../container";
 import { EnumerableLike, enumerate } from "../enumerable";
 import { getCurrent, move } from "../enumerator";
 import { Function1, instanceFactory, pipe } from "../functions";
@@ -20,3 +21,7 @@ export const _toIterable = /*@__PURE__*/ instanceFactory(EnumerableIterable);
  */
 export const toIterable = <T>(): Function1<EnumerableLike<T>, Iterable<T>> =>
   _toIterable;
+
+export const toIterableT: ToIterable<EnumerableLike<unknown>> = {
+  toIterable,
+};

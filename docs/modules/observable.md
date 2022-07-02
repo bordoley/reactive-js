@@ -201,7 +201,7 @@ ___
 
 ### createT
 
-• `Const` **createT**: `CreateSource`<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+• `Const` **createT**: [`CreateSource`](../interfaces/source.CreateSource.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 

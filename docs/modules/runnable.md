@@ -109,7 +109,7 @@ ___
 
 ### createT
 
-• `Const` **createT**: `CreateSource`<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+• `Const` **createT**: [`CreateSource`](../interfaces/source.CreateSource.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
 
 ___
 

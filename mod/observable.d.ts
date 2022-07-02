@@ -5,8 +5,7 @@ import { Observer } from "./observer.mjs";
 import { Option } from "./option.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
 import { SchedulerLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
-import { AbstractSource, AbtractDisposableSource, SourceLike } from "./source.mjs";
-import { CreateSource } from "./__internal__.source.mjs";
+import { CreateSource, AbstractSource, AbtractDisposableSource, SourceLike } from "./source.mjs";
 import { EnumerableLike, ToEnumerable } from "./enumerable.mjs";
 declare const observable: <T>(computation: Factory<T>, { mode }?: {
     mode?: ObservableEffectMode | undefined;

@@ -60,6 +60,8 @@
 
   ↳ [`ThrowIfEmpty`](container.ThrowIfEmpty.md)
 
+  ↳ [`ToIterable`](container.ToIterable.md)
+
   ↳ [`Using`](container.Using.md)
 
   ↳ [`Zip`](container.Zip.md)
@@ -73,6 +75,8 @@
   ↳ [`ToObservable`](observable.ToObservable.md)
 
   ↳ [`ToRunnable`](runnable.ToRunnable.md)
+
+  ↳ [`CreateSource`](source.CreateSource.md)
 
 ## Table of contents
 

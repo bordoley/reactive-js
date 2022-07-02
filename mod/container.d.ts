@@ -115,6 +115,9 @@ interface TakeWhile<C extends ContainerLike> extends Container<C> {
 interface ThrowIfEmpty<C extends ContainerLike> extends Container<C> {
     throwIfEmpty<T>(factory: Factory<unknown>): ContainerOperator<C, T, T>;
 }
+interface ToIterable<C extends ContainerLike> extends Container<C> {
+    toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
+}
 interface Using<C extends ContainerLike> extends Container<C> {
     using<TResource extends Disposable, T>(resourceFactory: Factory<TResource>, containerFactory: Function1<TResource, ContainerOf<C, T>>): ContainerOf<C, T>;
     using<TResource1 extends Disposable, TResource2 extends Disposable, T>(resourceFactory: Factory<[
@@ -226,4 +229,4 @@ declare const zipWith: <C extends ContainerLike, TA, TB>({ zip }: Zip<C>, snd: C
     TA,
     TB
 ]>;
-export { AbstractContainer, AbstractDisposableContainer, Buffer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using, Zip, compute, concatMap, concatWith, contains, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };
+export { AbstractContainer, AbstractDisposableContainer, Buffer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, Using, Zip, compute, concatMap, concatWith, contains, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };

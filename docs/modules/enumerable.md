@@ -38,6 +38,7 @@
 - [takeWhileT](enumerable.md#takewhilet)
 - [throwIfEmptyT](enumerable.md#throwifemptyt)
 - [toEnumerableT](enumerable.md#toenumerablet)
+- [toIterableT](enumerable.md#toiterablet)
 - [toRunnableT](enumerable.md#torunnablet)
 - [type](enumerable.md#type)
 - [usingT](enumerable.md#usingt)
@@ -200,6 +201,12 @@ ___
 ### toEnumerableT
 
 • `Const` **toEnumerableT**: [`ToEnumerable`](../interfaces/enumerable.ToEnumerable.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+
+___
+
+### toIterableT
+
+• `Const` **toIterableT**: [`ToIterable`](../interfaces/container.ToIterable.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
 
 ___
 
