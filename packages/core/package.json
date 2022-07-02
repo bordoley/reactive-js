@@ -41,5 +41,9 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "exports": {
+    "./__internal__*": null,
+    "./*": [ "./*"]
   }
 }
