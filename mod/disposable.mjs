@@ -1,5 +1,5 @@
 /// <reference types="./disposable.d.ts" />
-import { newInstance, pipe, pipeLazy } from './functions.mjs';
+import { newInstance, pipe } from './functions.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
 /**
@@ -164,24 +164,10 @@ class SerialDisposable extends Disposable {
         }
     }
 }
-/**
- * A `Disposable` that provides disposable semantics to an underlying resource.
- *
- * @noInheritDoc
- */
-class DisposableValue extends Disposable {
-    constructor(
-    /** The underlying resource */
-    value, cleanup) {
-        super();
-        this.value = value;
-        pipe(this, onDisposed(pipeLazy(value, cleanup)));
-    }
-}
 const toAbortSignal = (disposable) => {
     const abortController = newInstance(AbortController);
     addDisposableOrTeardown(disposable, () => abortController.abort());
     return abortController.signal;
 };
 
-export { Disposable, DisposableValue, SerialDisposable, add, addTo, bindTo, dispose, disposed, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
+export { Disposable, SerialDisposable, add, addTo, bindTo, dispose, disposed, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

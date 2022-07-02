@@ -173,7 +173,7 @@ export { forkMerge, merge, mergeT } from "./observable/merge";
 export { never } from "./observable/never";
 export { subscribe } from "./observable/subscribe";
 export { using, usingT } from "./observable/using";
-export { defer } from "./observable/defer";
+export { defer, deferT } from "./observable/defer";
 export {
   AbstractObservable,
   DisposableObservable,

@@ -76,17 +76,5 @@ declare class SerialDisposable extends Disposable {
     /** @ignore */
     set inner(newInner: Disposable);
 }
-/**
- * A `Disposable` that provides disposable semantics to an underlying resource.
- *
- * @noInheritDoc
- */
-declare class DisposableValue<T> extends Disposable {
-    /** The underlying resource */
-    readonly value: T;
-    constructor(
-    /** The underlying resource */
-    value: T, cleanup: SideEffect1<T>);
-}
 declare const toAbortSignal: (disposable: Disposable) => AbortSignal;
-export { Disposable, DisposableOrTeardown, DisposableValue, Error, SerialDisposable, add, addTo, bindTo, dispose, disposed, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
+export { Disposable, DisposableOrTeardown, Error, SerialDisposable, add, addTo, bindTo, dispose, disposed, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

@@ -1,6 +1,6 @@
 /// <reference types="./container.d.ts" />
-import { Disposable, DisposableValue } from './disposable.mjs';
-import { raise, compose, callWith, length, min, max, isEqualTo, newInstance, ignore, pipe, pipeLazy, alwaysFalse, returns, negate } from './functions.mjs';
+import { Disposable } from './disposable.mjs';
+import { raise, compose, callWith, length, min, max, isEqualTo, newInstance, pipe, pipeLazy, alwaysFalse, returns, negate } from './functions.mjs';
 import { isSome } from './option.mjs';
 import { empty as empty$1 } from './readonlyArray.mjs';
 
@@ -32,7 +32,10 @@ const createFromArray = (factory) => (options = {}) => values => {
 };
 const empty = ({ fromArray }, options) => fromArray({ ...options })(empty$1);
 const contains = ({ someSatisfy }, value, options = {}) => someSatisfy(isEqualTo(value, options));
-const encodeUtf8 = (m) => obs => m.using(() => newInstance(DisposableValue, newInstance(TextEncoder), ignore), v => pipe(obs, m.map(s => v.value.encode(s))));
+const encodeUtf8 = (m) => obs => m.defer(() => {
+    const textEncoder = newInstance(TextEncoder);
+    return pipe(obs, m.map(s => textEncoder.encode(s)));
+});
 function endWith(m, ...values) {
     return concatWith(m, m.fromArray()(values));
 }

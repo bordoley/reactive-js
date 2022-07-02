@@ -25,6 +25,7 @@ import {
   buffer,
   concatT,
   decodeWithCharset,
+  deferT,
   fromArray,
   fromArrayT,
   generate,
@@ -40,7 +41,6 @@ import {
   subscribe,
   takeFirst,
   toRunnable,
-  usingT,
 } from "../observable";
 import { none } from "../option";
 import { toArray } from "../runnable";
@@ -378,7 +378,7 @@ export const tests = describe(
       const subscription = pipe(
         str,
         fromValue(fromArrayT),
-        encodeUtf8({ ...mapT, ...usingT }),
+        encodeUtf8({ ...mapT, ...deferT }),
         decodeWithCharset(),
         flow(),
         toObservable(),
