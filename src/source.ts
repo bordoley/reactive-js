@@ -1,11 +1,8 @@
 import { __DEV__ } from "./__internal__.env";
-import { Container, ContainerOf } from "./container";
 import { Function1, SideEffect1 } from "./functions";
 import {
   AbstractLiftable,
   AbtractDisposableLiftable,
-  ContraVariant,
-  Lift as LiftableLift,
   LiftableLike,
   LiftableStateLike,
   LiftableStateOf,
@@ -29,13 +26,6 @@ export interface SourceLike extends LiftableLike {
   readonly liftableStateType: SinkLike<unknown>;
 
   sink(this: this["type"], sink: this["liftableStateType"]): void;
-}
-
-export interface Lift<C extends SourceLike>
-  extends LiftableLift<C, ContraVariant> {}
-
-export interface CreateSource<C extends SourceLike> extends Container<C> {
-  create<T>(onSink: (sink: LiftableStateOf<C, T>) => void): ContainerOf<C, T>;
 }
 
 export const assertState = <C extends SourceLike>(

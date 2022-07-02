@@ -1,9 +1,10 @@
+import { Lift } from "../__internal__.source";
 import { dispose } from "../disposable";
 import { Function1, newInstance, pipe } from "../functions";
 import { contraVariant } from "../liftable";
 import { RunnableLike, RunnableOperator } from "../runnable";
 import { RunnableSink } from "../runnableSink";
-import { Lift, sourceFrom } from "../source";
+import { sourceFrom } from "../source";
 import { AbstractRunnable } from "./runnable";
 
 class LiftedRunnable<T> extends AbstractRunnable<T> {

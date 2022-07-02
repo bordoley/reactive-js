@@ -11,8 +11,6 @@
 
 ### Interfaces
 
-- [CreateSource](../interfaces/source.CreateSource.md)
-- [Lift](../interfaces/source.Lift.md)
 - [SinkLike](../interfaces/source.SinkLike.md)
 - [SourceLike](../interfaces/source.SourceLike.md)
 

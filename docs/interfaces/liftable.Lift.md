@@ -17,8 +17,6 @@
 
   ↳ **`Lift`**
 
-  ↳↳ [`Lift`](source.Lift.md)
-
 ## Table of contents
 
 ### Properties
