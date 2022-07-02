@@ -9,7 +9,6 @@
 - [PausableSchedulerLike](../interfaces/scheduler.PausableSchedulerLike.md)
 - [PrioritySchedulerLike](../interfaces/scheduler.PrioritySchedulerLike.md)
 - [SchedulerContinuationLike](../interfaces/scheduler.SchedulerContinuationLike.md)
-- [SchedulerImplementationLike](../interfaces/scheduler.SchedulerImplementationLike.md)
 - [SchedulerLike](../interfaces/scheduler.SchedulerLike.md)
 - [VirtualTimeSchedulerLike](../interfaces/scheduler.VirtualTimeSchedulerLike.md)
 
@@ -22,7 +21,6 @@
 - [createVirtualTimeScheduler](scheduler.md#createvirtualtimescheduler)
 - [getNow](scheduler.md#getnow)
 - [inContinuation](scheduler.md#incontinuation)
-- [runContinuation](scheduler.md#runcontinuation)
 - [schedule](scheduler.md#schedule)
 - [shouldYield](scheduler.md#shouldyield)
 - [toSchedulerWithPriority](scheduler.md#toschedulerwithpriority)
@@ -146,28 +144,6 @@ ___
 #### Returns
 
 `boolean`
-
-___
-
-### runContinuation
-
-▸ **runContinuation**<`TScheduler`\>(`continuation`): [`Function1`](functions.md#function1)<`TScheduler`, `TScheduler`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TScheduler` | extends [`SchedulerImplementationLike`](../interfaces/scheduler.SchedulerImplementationLike.md)<`TScheduler`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `continuation` | [`SchedulerContinuationLike`](../interfaces/scheduler.SchedulerContinuationLike.md) |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`TScheduler`, `TScheduler`\>
 
 ___
 

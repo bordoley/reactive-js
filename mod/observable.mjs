@@ -8,7 +8,7 @@ import { move, getCurrent, AbstractEnumerator, reset, hasCurrent, zip as zip$1, 
 import { pipe, newInstance, getLength, newInstanceWith, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, max, returns, identity, instanceFactory } from './functions.mjs';
 import { AbstractSource, AbtractDisposableSource, sinkInto, sourceFrom, assertState, notifySink, notify } from './source.mjs';
 import { getScheduler, AbstractDelegatingObserver, Observer, createDelegatingObserver } from './observer.mjs';
-import { schedule, __yield, inContinuation, runContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
+import { schedule, __yield, inContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { createFromArray } from './__internal__.container.mjs';
 import { contraVariant, getDelegate } from './liftable.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -16,6 +16,7 @@ import { createRunnable } from './runnable.mjs';
 import { map as map$1, everySatisfy as everySatisfy$1 } from './__internal__.readonlyArray.mjs';
 import { enumerate, fromIterator as fromIterator$1, fromIterable as fromIterable$1, createEnumerable } from './enumerable.mjs';
 import { MAX_SAFE_INTEGER } from './__internal__.env.mjs';
+import { runContinuation } from './__internal__.schedulerImplementation.mjs';
 
 class AbstractObservable extends AbstractSource {
 }

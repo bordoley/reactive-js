@@ -1,7 +1,8 @@
 import { ToIterable } from "../container";
-import { EnumerableLike, enumerate } from "../enumerable";
+import { EnumerableLike } from "../enumerable";
 import { getCurrent, move } from "../enumerator";
 import { Function1, instanceFactory, pipe } from "../functions";
+import { enumerate } from "./enumerable";
 
 class EnumerableIterable<T> implements Iterable<T> {
   constructor(private readonly enumerable: EnumerableLike<T>) {}

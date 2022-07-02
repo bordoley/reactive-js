@@ -1,16 +1,19 @@
 import { MAX_SAFE_INTEGER } from "../__internal__.env";
 import { getDelay } from "../__internal__.optionalArgs";
+import {
+  SchedulerImplementationLike,
+  runContinuation,
+} from "../__internal__.schedulerImplementation";
 import { add, dispose, isDisposed } from "../disposable";
 import { AbstractEnumerator, hasCurrent, reset } from "../enumerator";
 import { newInstance, pipe } from "../functions";
 import { isSome, none } from "../option";
 import {
   SchedulerContinuationLike,
-  SchedulerImplementationLike,
   VirtualTimeSchedulerLike,
 } from "../scheduler";
 import { QueueLike, createPriorityQueue } from "./queue";
-import { getNow, runContinuation } from "./scheduler";
+import { getNow } from "./scheduler";
 
 type VirtualTask = {
   readonly continuation: SchedulerContinuationLike;

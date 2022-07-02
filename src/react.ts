@@ -20,6 +20,10 @@ import {
 } from "scheduler";
 import { getDelay } from "./__internal__.optionalArgs";
 import {
+  SchedulerImplementationLike,
+  runContinuation,
+} from "./__internal__.schedulerImplementation";
+import {
   Disposable,
   Error,
   add,
@@ -49,10 +53,8 @@ import { Option, isSome, none } from "./option";
 import {
   PrioritySchedulerLike,
   SchedulerContinuationLike,
-  SchedulerImplementationLike,
   SchedulerLike,
   inContinuation,
-  runContinuation,
   toSchedulerWithPriority,
 } from "./scheduler";
 /**

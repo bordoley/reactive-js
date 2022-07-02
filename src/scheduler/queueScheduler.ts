@@ -1,4 +1,8 @@
 import { getDelay } from "../__internal__.optionalArgs";
+import {
+  SchedulerImplementationLike,
+  runContinuation,
+} from "../__internal__.schedulerImplementation";
 import { Disposable, add, disposed, isDisposed } from "../disposable";
 import {
   AbstractEnumerator,
@@ -9,18 +13,9 @@ import {
 } from "../enumerator";
 import { max, pipe } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
-import {
-  SchedulerContinuationLike,
-  SchedulerImplementationLike,
-  SchedulerLike,
-} from "../scheduler";
+import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
 import { QueueLike, createPriorityQueue } from "./queue";
-import {
-  getNow,
-  inContinuation,
-  runContinuation,
-  shouldYield,
-} from "./scheduler";
+import { getNow, inContinuation, shouldYield } from "./scheduler";
 import { __yield, schedule } from "./schedulerContinuation";
 
 const peek = <TTask extends QueueTask>(
