@@ -1,8 +1,9 @@
-import { DispatcherLike } from "./dispatcher";
+import { DispatcherLike, getScheduler } from "./dispatcher";
 import { add, addTo } from "./disposable";
 import { newInstance, pipe } from "./functions";
+import { getDelegate } from "./liftable";
 import {
-  DisposableObservable,
+  AbstractDisposableObservable,
   MulticastObservableLike,
   ObservableOperator,
   Subject,
@@ -24,7 +25,7 @@ export interface StreamLike<TReq, T>
     MulticastObservableLike<T> {}
 
 class StreamImpl<TReq, T>
-  extends DisposableObservable<T>
+  extends AbstractDisposableObservable<T>
   implements StreamLike<TReq, T>
 {
   private readonly subject: Subject<TReq>;
@@ -64,7 +65,7 @@ class StreamImpl<TReq, T>
 }
 
 export abstract class AbstractDelegatingStream<TReqA, TA, TReqB, TB>
-  extends DisposableObservable<TB>
+  extends AbstractDisposableObservable<TB>
   implements StreamLike<TReqB, TB>
 {
   constructor(readonly delegate: StreamLike<TReqA, TA>) {
@@ -72,15 +73,15 @@ export abstract class AbstractDelegatingStream<TReqA, TA, TReqB, TB>
   }
 
   get observerCount() {
-    return getObserverCount(this.delegate);
+    return pipe(this, getDelegate, getObserverCount);
   }
 
   get replay(): number {
-    return getReplay(this.delegate);
+    return pipe(this, getDelegate, getReplay);
   }
 
   get scheduler(): SchedulerLike {
-    return this.delegate.scheduler;
+    return pipe(this, getDelegate, getScheduler);
   }
 
   abstract dispatch(req: TReqB): void;

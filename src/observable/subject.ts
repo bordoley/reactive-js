@@ -3,10 +3,10 @@ import { add, isDisposed, onDisposed } from "../disposable";
 import { length, newInstance, pipe } from "../functions";
 import { MulticastObservableLike } from "../observable";
 import { Observer } from "../observer";
-import { DisposableObservable } from "./observable";
+import { AbstractDisposableObservable } from "./observable";
 
 export class Subject<T>
-  extends DisposableObservable<T>
+  extends AbstractDisposableObservable<T>
   implements MulticastObservableLike<T>
 {
   private readonly dispatchers: Set<DispatcherLike<T>> =
