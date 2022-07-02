@@ -8,9 +8,13 @@ import {
 } from "../disposable";
 import { MAX_SAFE_INTEGER } from "../env";
 import { length, newInstance, pipe } from "../functions";
-import { delegate as liftDelegate } from "../liftable";
+import { getDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
+import {
+  AbstractDelegatingObserver,
+  Observer,
+  getScheduler,
+} from "../observer";
 import { isSome } from "../option";
 import { assertState, notifySink } from "../source";
 import { lift } from "./lift";
@@ -26,13 +30,13 @@ const subscribeNext = <T>(observer: MergeObserver<T>) => {
 
       pipe(
         nextObs,
-        onNotify(notifySink(liftDelegate(observer))),
-        subscribe(scheduler(observer)),
-        addTo(liftDelegate(observer)),
+        onNotify(notifySink(getDelegate(observer))),
+        subscribe(getScheduler(observer)),
+        addTo(getDelegate(observer)),
         onComplete(observer.onDispose),
       );
     } else if (isDisposed(observer)) {
-      pipe(observer, liftDelegate, dispose());
+      pipe(observer, getDelegate, dispose());
     }
   }
 };
@@ -102,7 +106,7 @@ export const mergeAll = <T>(
       addTo(delegate),
       onComplete(() => {
         if (length(observer.queue) + observer.activeCount === 0) {
-          pipe(observer, liftDelegate, dispose());
+          pipe(observer, getDelegate, dispose());
         }
       }),
     );

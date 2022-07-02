@@ -78,7 +78,7 @@ export type DelegatingLiftableStateOf<
   readonly delegate: TDelegateLiftableState;
 };
 
-export const delegate = <
+export const getDelegate = <
   C extends LiftableLike,
   T,
   TDelegate,

@@ -4,7 +4,7 @@ import { dispatchTo } from './dispatcher.mjs';
 import { add, bindTo, addTo } from './disposable.mjs';
 import { pipe, compose } from './functions.mjs';
 import { createObservable, subscribeOn, fromDisposable, takeUntil, onNotify, subscribe, keepT, concatT, fromArrayT, onSubscribe } from './observable.mjs';
-import { scheduler } from './observer.mjs';
+import { getScheduler } from './observer.mjs';
 import { createPausableScheduler } from './scheduler.mjs';
 import { sourceFrom } from './source.mjs';
 import { createStream } from './stream.mjs';
@@ -14,7 +14,7 @@ function createLiftedFlowable(...ops) {
     return createLiftedStreamable(...ops);
 }
 const flow = () => observable => createLiftedFlowable((modeObs) => createObservable(observer => {
-    const pausableScheduler = createPausableScheduler(scheduler(observer));
+    const pausableScheduler = createPausableScheduler(getScheduler(observer));
     pipe(observer, sourceFrom(pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil))), add(pipe(modeObs, onNotify((mode) => {
         switch (mode) {
             case "pause":
@@ -24,7 +24,7 @@ const flow = () => observable => createLiftedFlowable((modeObs) => createObserva
                 pausableScheduler.resume();
                 break;
         }
-    }), subscribe(scheduler(observer)), bindTo(pausableScheduler))), add(pausableScheduler));
+    }), subscribe(getScheduler(observer)), bindTo(pausableScheduler))), add(pausableScheduler));
 }));
 const toObservable = () => src => createObservable(observer => {
     const { dispatcher, scheduler } = observer;

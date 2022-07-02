@@ -13,7 +13,7 @@ import {
   onNotify,
   subscribe,
 } from "../observable";
-import { Observer, scheduler } from "../observer";
+import { Observer, getScheduler } from "../observer";
 import { SchedulerLike } from "../scheduler";
 import { createStream } from "../stream";
 import { createLiftedStreamable } from "../streamable";
@@ -37,7 +37,7 @@ const setUp = (
         writable.emit(NODE_JS_PAUSE_EVENT);
       }
     }),
-    subscribe(scheduler(observer)),
+    subscribe(getScheduler(observer)),
     addToNodeStream(writable),
     onComplete(() => {
       writable.end();

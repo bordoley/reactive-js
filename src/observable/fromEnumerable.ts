@@ -1,6 +1,6 @@
 import { dispose } from "../disposable";
 import { EnumerableLike, enumerate } from "../enumerable";
-import { Enumerator, current, move } from "../enumerator";
+import { Enumerator, getCurrent, move } from "../enumerator";
 import { Factory, Function1, pipe, pipeLazy } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
@@ -25,7 +25,7 @@ export const fromEnumerator =
         defer(
           () => (observer: Observer<T>) => {
             while (move(enumerator)) {
-              observer.notify(current(enumerator));
+              observer.notify(getCurrent(enumerator));
               __yield(options);
             }
             pipe(observer, dispose());

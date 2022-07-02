@@ -6,9 +6,9 @@ import {
   MulticastObservableLike,
   ObservableOperator,
   Subject,
-  observerCount,
+  getObserverCount,
+  getReplay,
   publish,
-  replay,
 } from "./observable";
 import { Observer } from "./observer";
 import { SchedulerLike } from "./scheduler";
@@ -21,9 +21,7 @@ import { sinkInto } from "./source";
  */
 export interface StreamLike<TReq, T>
   extends DispatcherLike<TReq>,
-    MulticastObservableLike<T> {
-  readonly scheduler: SchedulerLike;
-}
+    MulticastObservableLike<T> {}
 
 class StreamImpl<TReq, T>
   extends DisposableObservable<T>
@@ -49,11 +47,11 @@ class StreamImpl<TReq, T>
   }
 
   get observerCount(): number {
-    return observerCount(this.observable);
+    return getObserverCount(this.observable);
   }
 
   get replay(): number {
-    return replay(this.observable);
+    return getReplay(this.observable);
   }
 
   dispatch(req: TReq) {
@@ -74,11 +72,11 @@ export abstract class AbstractDelegatingStream<TReqA, TA, TReqB, TB>
   }
 
   get observerCount() {
-    return observerCount(this.delegate);
+    return getObserverCount(this.delegate);
   }
 
   get replay(): number {
-    return replay(this.delegate);
+    return getReplay(this.delegate);
   }
 
   get scheduler(): SchedulerLike {

@@ -23,7 +23,7 @@ import {
   AbstractDelegatingEnumerator,
   AbstractPassThroughEnumerator,
   Enumerator,
-  current,
+  getCurrent,
   hasCurrent,
   move,
   reset,
@@ -50,7 +50,7 @@ import {
   createTakeFirstLiftOperator,
   createTakeWhileLiftOperator,
   createThrowIfEmptyLiftOperator,
-  delegate,
+  getDelegate,
 } from "./liftable";
 import { Option, isSome, none } from "./option";
 import { empty as emptyArray, forEach } from "./readonlyArray";
@@ -135,14 +135,14 @@ export const distinctUntilChanged: <T>(options?: {
 
       move(): boolean {
         const hadCurrent = hasCurrent(this);
-        const prevCurrent = hadCurrent ? current(this) : none;
+        const prevCurrent = hadCurrent ? getCurrent(this) : none;
 
         try {
           const { delegate } = this;
           while (move(delegate)) {
             if (
               !hadCurrent ||
-              !this.equality(prevCurrent as any, current(delegate))
+              !this.equality(prevCurrent as any, getCurrent(delegate))
             ) {
               break;
             }
@@ -177,7 +177,7 @@ export const keep: <T>(predicate: Predicate<T>) => EnumerableOperator<T, T> =
         const { delegate, predicate } = this;
 
         try {
-          while (move(delegate) && !predicate(current(delegate))) {}
+          while (move(delegate) && !predicate(getCurrent(delegate))) {}
         } catch (cause) {
           pipe(this, dispose({ cause }));
         }
@@ -207,7 +207,7 @@ export const map: <TA, TB>(
 
       if (move(delegate)) {
         try {
-          this.current = this.mapper(current(delegate));
+          this.current = this.mapper(getCurrent(delegate));
         } catch (cause) {
           pipe(this, dispose({ cause }));
         }
@@ -239,7 +239,7 @@ export const onNotify: <T>(
 
       if (move(delegate)) {
         try {
-          this.onNotify(current(this));
+          this.onNotify(getCurrent(this));
         } catch (cause) {
           pipe(this, dispose({ cause }));
         }
@@ -258,7 +258,7 @@ export const pairwise: <T>() => EnumerableOperator<T, [Option<T>, T]> =
       [Option<T>, T]
     > {
       move(): boolean {
-        const prev = (hasCurrent(this) ? current(this) : emptyArray)[1];
+        const prev = (hasCurrent(this) ? getCurrent(this) : emptyArray)[1];
 
         reset(this);
 
@@ -293,14 +293,14 @@ export const scan: <T, TAcc>(
     }
 
     move(): boolean {
-      const acc = hasCurrent(this) ? current(this) : none;
+      const acc = hasCurrent(this) ? getCurrent(this) : none;
 
       reset(this);
 
       const { delegate, reducer } = this;
       if (isSome(acc) && move(delegate)) {
         try {
-          this.current = reducer(acc, current(delegate));
+          this.current = reducer(acc, getCurrent(delegate));
         } catch (cause) {
           pipe(this, dispose({ cause }));
         }
@@ -357,13 +357,13 @@ export const takeFirst: <T>(options?: {
     }
 
     get current() {
-      return pipe(this, delegate, current);
+      return pipe(this, getDelegate, getCurrent);
     }
 
     move(): boolean {
       if (this.count < this.maxCount) {
         this.count++;
-        pipe(this, delegate, move);
+        pipe(this, getDelegate, move);
       } else {
         pipe(this, dispose());
       }
@@ -431,7 +431,7 @@ export const throwIfEmpty: <T>(
     isEmpty = true;
 
     move(): boolean {
-      if (pipe(this, delegate, move)) {
+      if (pipe(this, getDelegate, move)) {
         this.isEmpty = false;
       }
 

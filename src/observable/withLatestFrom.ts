@@ -1,8 +1,12 @@
 import { addTo, bindTo, dispose, isDisposed, onComplete } from "../disposable";
 import { Function2, newInstanceWith, pipe } from "../functions";
-import { delegate } from "../liftable";
+import { getDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
+import {
+  AbstractDelegatingObserver,
+  Observer,
+  getScheduler,
+} from "../observer";
 import { Option } from "../option";
 import { assertState, notify } from "../source";
 import { lift } from "./lift";
@@ -29,7 +33,7 @@ class WithLatestFromObserver<TA, TB, T> extends AbstractDelegatingObserver<
 
     if (!isDisposed(this) && this.hasLatest) {
       const result = this.selector(next, this.otherLatest as TB);
-      pipe(this, delegate, notify(result));
+      pipe(this, getDelegate, notify(result));
     }
   }
 }
@@ -62,7 +66,7 @@ export const withLatestFrom = <TA, TB, T>(
         observer.hasLatest = true;
         observer.otherLatest = next;
       }),
-      subscribe(scheduler(observer)),
+      subscribe(getScheduler(observer)),
       addTo(observer),
       onComplete(() => {
         if (!observer.hasLatest) {

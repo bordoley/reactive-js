@@ -1,7 +1,7 @@
 import { TakeLast, empty } from "../container";
 import { add, bindTo, isDisposed } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
-import { Enumerator, current, hasCurrent, move } from "../enumerator";
+import { Enumerator, getCurrent, hasCurrent, move } from "../enumerator";
 import { length, newInstanceWith, pipe, raise } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
 import { enumerate } from "./enumerable";
@@ -33,7 +33,7 @@ class TakeLastEnumerator<T> extends Enumerator<T> {
       const last: Array<T> = [];
 
       while (move(delegate)) {
-        last.push(current(delegate));
+        last.push(getCurrent(delegate));
 
         if (length(last) > this.maxCount) {
           last.shift();

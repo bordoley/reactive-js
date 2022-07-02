@@ -1,7 +1,7 @@
 import { Disposable, add, disposed, isDisposed } from "../disposable";
 import {
   AbstractEnumerator,
-  current,
+  getCurrent,
   hasCurrent,
   move,
   reset,
@@ -16,9 +16,9 @@ import {
 import { QueueLike, createPriorityQueue } from "./queue";
 import {
   getDelay,
+  getNow,
   inContinuation,
   runContinuation,
-  now as schedulerNow,
   shouldYield,
 } from "./scheduler";
 import { __yield, schedule } from "./schedulerContinuation";
@@ -27,7 +27,7 @@ const peek = <TTask extends QueueTask>(
   scheduler: AbstractQueueScheduler<TTask>,
 ): Option<TTask> => {
   const { delayed, queue } = scheduler;
-  const now = schedulerNow(scheduler);
+  const now = getNow(scheduler);
 
   while (true) {
     const task = delayed.peek();
@@ -113,7 +113,7 @@ export abstract class AbstractQueueScheduler<
   }
 
   get now(): number {
-    return schedulerNow(this.host);
+    return getNow(this.host);
   }
 
   abstract _shouldYield(next: TTask): boolean;
@@ -162,13 +162,13 @@ export abstract class AbstractQueueScheduler<
       task = peek(this)
     ) {
       const { continuation, dueTime } = task;
-      const delay = max(dueTime - schedulerNow(this), 0);
+      const delay = max(dueTime - getNow(this), 0);
 
       if (delay === 0) {
         move(this);
         pipe(this, runContinuation(continuation));
       } else {
-        this.dueTime = schedulerNow(this) + delay;
+        this.dueTime = getNow(this) + delay;
       }
       __yield({ delay });
     }
@@ -185,7 +185,7 @@ export abstract class AbstractQueueScheduler<
     }
 
     const dueTime = task.dueTime;
-    const delay = max(dueTime - schedulerNow(this), 0);
+    const delay = max(dueTime - getNow(this), 0);
     this.dueTime = dueTime;
 
     this.inner = pipe(this.host, schedule(this.hostContinuation, { delay }));
@@ -216,9 +216,9 @@ export abstract class AbstractQueueScheduler<
       const task =
         inContinuation(this) &&
         hasCurrent(this) &&
-        current(this).continuation === continuation &&
+        getCurrent(this).continuation === continuation &&
         delay <= 0
-          ? current(this)
+          ? getCurrent(this)
           : this.createTask(
               {
                 taskID: this.taskIDCounter++,

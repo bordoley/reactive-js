@@ -1,5 +1,5 @@
 import { EnumerableLike, enumerate } from "../enumerable";
-import { current, move } from "../enumerator";
+import { getCurrent, move } from "../enumerator";
 import { Function1, instanceFactory, pipe } from "../functions";
 
 class EnumerableIterable<T> implements Iterable<T> {
@@ -8,7 +8,7 @@ class EnumerableIterable<T> implements Iterable<T> {
   *[Symbol.iterator]() {
     const enumerator = pipe(this.enumerable, enumerate);
     while (move(enumerator)) {
-      yield current(enumerator);
+      yield getCurrent(enumerator);
     }
   }
 }

@@ -12,8 +12,8 @@
 ### Functions
 
 - [createDelegatingObserver](observer.md#createdelegatingobserver)
-- [dispatcher](observer.md#dispatcher)
-- [scheduler](observer.md#scheduler)
+- [getDispatcher](observer.md#getdispatcher)
+- [getScheduler](observer.md#getscheduler)
 
 ## Functions
 
@@ -39,9 +39,9 @@
 
 ___
 
-### dispatcher
+### getDispatcher
 
-▸ **dispatcher**<`T`\>(`observer`): [`DispatcherLike`](../interfaces/dispatcher.DispatcherLike.md)<`T`\>
+▸ **getDispatcher**<`T`\>(`observer`): [`DispatcherLike`](../interfaces/dispatcher.DispatcherLike.md)<`T`\>
 
 #### Type parameters
 
@@ -61,9 +61,9 @@ ___
 
 ___
 
-### scheduler
+### getScheduler
 
-▸ **scheduler**<`T`\>(`observer`): [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+▸ **getScheduler**<`T`\>(`observer`): [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
 
 #### Type parameters
 

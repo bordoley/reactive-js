@@ -2,7 +2,7 @@ import { Defer } from "../container";
 import { addTo } from "../disposable";
 import { Factory, SideEffect1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
-import { Observer, scheduler } from "../observer";
+import { Observer, getScheduler } from "../observer";
 import { schedule } from "../scheduler";
 import { sinkInto } from "../source";
 import { createObservable } from "./createObservable";
@@ -22,7 +22,12 @@ export function defer<T>(
     const sideEffect = factory();
     if (typeof sideEffect === "function") {
       const callback = () => sideEffect(observer);
-      pipe(scheduler(observer), schedule(callback, options), addTo(observer));
+      pipe(
+        observer,
+        getScheduler,
+        schedule(callback, options),
+        addTo(observer),
+      );
     } else {
       pipe(sideEffect, sinkInto(observer));
     }

@@ -5,7 +5,7 @@ import {
   SchedulerContinuationLike,
   SchedulerLike,
 } from "../scheduler";
-import { getDelay, inContinuation, now, shouldYield } from "./scheduler";
+import { getDelay, getNow, inContinuation, shouldYield } from "./scheduler";
 
 class SchedulerWithPriorityImpl extends Disposable implements SchedulerLike {
   constructor(
@@ -20,7 +20,7 @@ class SchedulerWithPriorityImpl extends Disposable implements SchedulerLike {
   }
 
   get now() {
-    return now(this.priorityScheduler);
+    return getNow(this.priorityScheduler);
   }
 
   get shouldYield() {

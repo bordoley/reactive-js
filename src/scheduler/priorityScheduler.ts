@@ -9,7 +9,7 @@ import {
 } from "../scheduler";
 import { QueueLike, createPriorityQueue } from "./queue";
 import { AbstractQueueScheduler } from "./queueScheduler";
-import { now as schedulerNow } from "./scheduler";
+import { getNow } from "./scheduler";
 
 type PriorityTask = {
   readonly continuation: SchedulerContinuationLike;
@@ -38,7 +38,7 @@ class PriorityScheduler
 
     return (
       current !== next &&
-      next.dueTime <= schedulerNow(this) &&
+      next.dueTime <= getNow(this) &&
       next.priority > current.priority
     );
   }

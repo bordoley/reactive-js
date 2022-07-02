@@ -21,7 +21,6 @@
 ### Properties
 
 - [T](flowable.FlowableStreamLike.md#t)
-- [scheduler](flowable.FlowableStreamLike.md#scheduler)
 
 ## Properties
 
@@ -32,13 +31,3 @@
 #### Inherited from
 
 StreamLike.T
-
-___
-
-### scheduler
-
-• `Readonly` **scheduler**: [`SchedulerLike`](scheduler.SchedulerLike.md)
-
-#### Inherited from
-
-[StreamLike](stream.StreamLike.md).[scheduler](stream.StreamLike.md#scheduler)

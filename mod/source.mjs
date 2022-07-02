@@ -3,7 +3,7 @@ import { fromValue, empty } from './container.mjs';
 import { addTo, onComplete, dispose, onError, isDisposed, onDisposed, add } from './disposable.mjs';
 import { __DEV__, MAX_SAFE_INTEGER } from './env.mjs';
 import { length, max, pipe, newInstanceWith, isEmpty, newInstance, compose, negate, ignore, identity } from './functions.mjs';
-import { AbstractLiftable, DisposableLiftable, delegate, lift, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
+import { AbstractLiftable, DisposableLiftable, getDelegate, lift, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
 import { none, isSome } from './option.mjs';
 import { forEach } from './readonlyArray.mjs';
 
@@ -41,27 +41,27 @@ const createBufferOperator = (m, BufferSink) => {
         if (length(buffer) === maxBufferSize) {
             const buffer = this.buffer;
             this.buffer = [];
-            delegate(this).notify(buffer);
+            getDelegate(this).notify(buffer);
         }
     });
     return (options = {}) => {
         var _a;
         const maxBufferSize = max((_a = options.maxBufferSize) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER, 1);
-        return pipe((delegate$1) => pipe(BufferSink, newInstanceWith(delegate$1, maxBufferSize), addTo(delegate$1), onComplete(function onDispose() {
+        return pipe((delegate) => pipe(BufferSink, newInstanceWith(delegate, maxBufferSize), addTo(delegate), onComplete(function onDispose() {
             const { buffer } = this;
             this.buffer = [];
             if (isEmpty(buffer)) {
-                pipe(this, delegate, dispose());
+                pipe(this, getDelegate, dispose());
             }
             else {
-                pipe(buffer, fromValue(m), sinkInto(delegate(this)));
+                pipe(buffer, fromValue(m), sinkInto(getDelegate(this)));
             }
         })), lift(m));
     };
 };
 const createCatchErrorOperator = (m, CatchErrorSink) => (f) => {
     decorateWithNotify(CatchErrorSink, function notifyDelegate(next) {
-        delegate(this).notify(next);
+        getDelegate(this).notify(next);
     });
     return pipe((delegate) => pipe(CatchErrorSink, newInstanceWith(delegate), addTo(delegate, true), onComplete(() => pipe(delegate, dispose())), onError(e => {
         try {
@@ -82,7 +82,7 @@ const createDecodeWithCharsetOperator = (m, DecodeWithCharsetSink) => {
     decorateWithNotify(DecodeWithCharsetSink, function notifyDecodeWithCharset(next) {
         const data = this.textDecoder.decode(next, { stream: true });
         if (!isEmpty(data)) {
-            delegate(this).notify(data);
+            getDelegate(this).notify(data);
         }
     });
     return (charset = "utf-8") => pipe((delegate) => {
@@ -105,7 +105,7 @@ const createDistinctUntilChangedOperator = (m, DistinctUntilChangedSink) => {
         if (shouldEmit) {
             this.prev = next;
             this.hasValue = true;
-            delegate(this).notify(next);
+            getDelegate(this).notify(next);
         }
     });
     return createDistinctUntilChangedLiftOperator(m, DistinctUntilChangedSink);
@@ -129,7 +129,7 @@ const createKeepOperator = (m, KeepSink) => {
     decorateWithNotify(KeepSink, function notifyKeep(next) {
         assertState(this);
         if (this.predicate(next)) {
-            delegate(this).notify(next);
+            getDelegate(this).notify(next);
         }
     });
     return createKeepLiftOperator(m, KeepSink);
@@ -138,7 +138,7 @@ const createMapOperator = (m, MapSink) => {
     decorateWithNotify(MapSink, function notifyMap(next) {
         assertState(this);
         const mapped = this.mapper(next);
-        delegate(this).notify(mapped);
+        getDelegate(this).notify(mapped);
     });
     return createMapLiftOperator(m, MapSink);
 };
@@ -146,7 +146,7 @@ const createOnNotifyOperator = (m, OnNotifySink) => {
     decorateWithNotify(OnNotifySink, function notifyOnNotify(next) {
         assertState(this);
         this.onNotify(next);
-        delegate(this).notify(next);
+        getDelegate(this).notify(next);
     });
     return createOnNotifyLiftOperator(m, OnNotifySink);
 };
@@ -156,7 +156,7 @@ const createPairwiseOperator = (m, PairwiseSink) => {
         const prev = this.hasPrev ? this.prev : none;
         this.hasPrev = true;
         this.prev = value;
-        delegate(this).notify([prev, value]);
+        getDelegate(this).notify([prev, value]);
     });
     return createPairwiseLiftOperator(m, PairwiseSink);
 };
@@ -177,7 +177,7 @@ const createScanOperator = (m, ScanSink) => {
         assertState(this);
         const nextAcc = this.reducer(this.acc, next);
         this.acc = nextAcc;
-        delegate(this).notify(nextAcc);
+        getDelegate(this).notify(nextAcc);
     });
     return createScanLiftOperator(m, ScanSink);
 };
@@ -185,7 +185,7 @@ const createSkipFirstOperator = (m, SkipFirstSink) => {
     decorateWithNotify(SkipFirstSink, function notifySkipFirst(next) {
         this.count++;
         if (this.count > this.skipCount) {
-            delegate(this).notify(next);
+            getDelegate(this).notify(next);
         }
     });
     return createSkipFirstLiftOperator(m, SkipFirstSink);
@@ -195,7 +195,7 @@ const createTakeFirstOperator = (m, TakeFirstSink) => {
     decorateWithNotify(TakeFirstSink, function notifyTakeFirst(next) {
         assertState(this);
         this.count++;
-        delegate(this).notify(next);
+        getDelegate(this).notify(next);
         if (this.count >= this.maxCount) {
             pipe(this, dispose());
         }
@@ -229,7 +229,7 @@ const createTakeWhileOperator = (m, TakeWhileSink) => {
         assertState(this);
         const satisfiesPredicate = this.predicate(next);
         if (satisfiesPredicate || this.inclusive) {
-            delegate(this).notify(next);
+            getDelegate(this).notify(next);
         }
         if (!satisfiesPredicate) {
             pipe(this, dispose());
@@ -241,7 +241,7 @@ const createThrowIfEmptyOperator = (m, ThrowIfEmptySink) => {
     decorateWithNotify(ThrowIfEmptySink, function notify(next) {
         assertState(this);
         this.isEmpty = false;
-        delegate(this).notify(next);
+        getDelegate(this).notify(next);
     });
     return createThrowIfEmptyLiftOperator(m, ThrowIfEmptySink);
 };

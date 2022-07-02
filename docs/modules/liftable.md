@@ -43,7 +43,7 @@
 - [createTakeFirstLiftOperator](liftable.md#createtakefirstliftoperator)
 - [createTakeWhileLiftOperator](liftable.md#createtakewhileliftoperator)
 - [createThrowIfEmptyLiftOperator](liftable.md#createthrowifemptyliftoperator)
-- [delegate](liftable.md#delegate)
+- [getDelegate](liftable.md#getdelegate)
 - [lift](liftable.md#lift)
 
 ## Type Aliases
@@ -573,9 +573,9 @@ ___
 
 ___
 
-### delegate
+### getDelegate
 
-▸ **delegate**<`C`, `T`, `TDelegate`, `TDelegateLiftableState`\>(`s`): `TDelegateLiftableState`
+▸ **getDelegate**<`C`, `T`, `TDelegate`, `TDelegateLiftableState`\>(`s`): `TDelegateLiftableState`
 
 #### Type parameters
 

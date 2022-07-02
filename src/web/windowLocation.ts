@@ -11,7 +11,7 @@ import {
   pipe,
   raise,
 } from "../functions";
-import { delegate } from "../liftable";
+import { getDelegate } from "../liftable";
 import {
   forkCombineLatest,
   keep,
@@ -114,7 +114,7 @@ class WindowLocationStream
     stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
     { replace }: { replace: boolean } = { replace: false },
   ): void {
-    pipe({ stateOrUpdater, replace }, dispatchTo(delegate(this)));
+    pipe({ stateOrUpdater, replace }, dispatchTo(getDelegate(this)));
   }
 
   goBack(): boolean {
@@ -130,7 +130,7 @@ class WindowLocationStream
   sink(observer: Observer<WindowLocationURI>): void {
     pipe(
       this,
-      delegate,
+      getDelegate,
       map(({ uri }) => uri),
       sinkInto(observer),
     );

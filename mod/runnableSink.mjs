@@ -3,7 +3,7 @@ import { DisposableContainer } from './container.mjs';
 import { isDisposed } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 import { raise, pipe, newInstance } from './functions.mjs';
-import { delegate } from './liftable.mjs';
+import { getDelegate } from './liftable.mjs';
 import { notify } from './source.mjs';
 
 class RunnableSink extends DisposableContainer {
@@ -26,7 +26,7 @@ class AbstractDelegatingRunnableSink extends RunnableSink {
 }
 class DelegatingRunnableSink extends AbstractDelegatingRunnableSink {
     notify(next) {
-        pipe(this, delegate, notify(next));
+        pipe(this, getDelegate, notify(next));
     }
 }
 const createDelegatingRunnableSink = (delegate) => newInstance(DelegatingRunnableSink, delegate);

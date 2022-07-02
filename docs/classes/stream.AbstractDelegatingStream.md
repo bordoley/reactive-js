@@ -198,7 +198,7 @@ ___
 
 #### Implementation of
 
-[StreamLike](../interfaces/stream.StreamLike.md).[scheduler](../interfaces/stream.StreamLike.md#scheduler)
+StreamLike.scheduler
 
 ___
 

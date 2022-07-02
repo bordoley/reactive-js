@@ -27,5 +27,5 @@ export const dispatchTo =
   v =>
     dispatcher.dispatch(v);
 
-export const scheduler = <T>(observer: DispatcherLike<T>): SchedulerLike =>
+export const getScheduler = <T>(observer: DispatcherLike<T>): SchedulerLike =>
   observer.scheduler;

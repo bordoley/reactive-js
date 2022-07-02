@@ -1,9 +1,13 @@
 import { throws } from "../container";
 import { SerialDisposable, add, bindTo, dispose } from "../disposable";
 import { newInstance, newInstanceWith, pipe, returns } from "../functions";
-import { delegate } from "../liftable";
+import { getDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
+import {
+  AbstractDelegatingObserver,
+  Observer,
+  getScheduler,
+} from "../observer";
 import { assertState, notify } from "../source";
 import { concat } from "./concat";
 import { fromArrayT } from "./fromArray";
@@ -21,7 +25,7 @@ export const timeoutError = _timeoutError;
 const setupDurationSubscription = <T>(observer: TimeoutObserver<T>) => {
   observer.durationSubscription.inner = pipe(
     observer.duration,
-    subscribe(scheduler(observer)),
+    subscribe(getScheduler(observer)),
   );
 };
 
@@ -38,7 +42,7 @@ class TimeoutObserver<T> extends AbstractDelegatingObserver<T, T> {
     assertState(this);
 
     pipe(this.durationSubscription, dispose());
-    pipe(this, delegate, notify(next));
+    pipe(this, getDelegate, notify(next));
   }
 }
 

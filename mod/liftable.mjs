@@ -14,7 +14,7 @@ class DisposableLiftable extends DisposableContainer {
         return raise();
     }
 }
-const delegate = (s) => s.delegate;
+const getDelegate = (s) => s.delegate;
 const covariant = 0;
 const contraVariant = 1;
 const lift = (m) => op => m.lift(op);
@@ -73,4 +73,4 @@ const createThrowIfEmptyLiftOperator = (m, ThrowIfEmptyLiftableState) => (factor
     return lifted;
 }, lift(m));
 
-export { AbstractLiftable, DisposableLiftable, contraVariant, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, delegate, lift };
+export { AbstractLiftable, DisposableLiftable, contraVariant, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, getDelegate, lift };

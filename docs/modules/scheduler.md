@@ -21,9 +21,9 @@
 - [createPriorityScheduler](scheduler.md#createpriorityscheduler)
 - [createVirtualTimeScheduler](scheduler.md#createvirtualtimescheduler)
 - [getDelay](scheduler.md#getdelay)
+- [getNow](scheduler.md#getnow)
 - [hasDelay](scheduler.md#hasdelay)
 - [inContinuation](scheduler.md#incontinuation)
-- [now](scheduler.md#now)
 - [runContinuation](scheduler.md#runcontinuation)
 - [schedule](scheduler.md#schedule)
 - [shouldYield](scheduler.md#shouldyield)
@@ -136,6 +136,22 @@ ___
 
 ___
 
+### getNow
+
+▸ **getNow**(`scheduler`): `number`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) |
+
+#### Returns
+
+`number`
+
+___
+
 ### hasDelay
 
 ▸ **hasDelay**(`options?`): `boolean`
@@ -166,22 +182,6 @@ ___
 #### Returns
 
 `boolean`
-
-___
-
-### now
-
-▸ **now**(`scheduler`): `number`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) |
-
-#### Returns
-
-`number`
 
 ___
 

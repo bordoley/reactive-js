@@ -27,7 +27,7 @@ declare abstract class AbstractPassThroughEnumerator<T> extends Enumerator<T> {
     get hasCurrent(): boolean;
     abstract move(): boolean;
 }
-declare const current: <T>(enumerator: Enumerator<T>) => T;
+declare const getCurrent: <T>(enumerator: Enumerator<T>) => T;
 declare const hasCurrent: <T>(enumerator: Enumerator<T>) => boolean;
 declare const move: <T>(enumerator: Enumerator<T>) => boolean;
 declare const forEach: <T, TEnumerator extends Enumerator<T> = Enumerator<T>>(f: SideEffect1<T>) => Function1<TEnumerator, TEnumerator>;
@@ -93,4 +93,4 @@ declare function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: Enumerator<TA>, b: E
     TI
 ]>;
 declare function zip<T>(...enumerators: readonly Enumerator<T>[]): Enumerator<readonly T[]>;
-export { AbstractDelegatingEnumerator, AbstractEnumerator, AbstractPassThroughEnumerator, Enumerator, current, forEach, hasCurrent, move, reset, zip };
+export { AbstractDelegatingEnumerator, AbstractEnumerator, AbstractPassThroughEnumerator, Enumerator, forEach, getCurrent, hasCurrent, move, reset, zip };

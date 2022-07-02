@@ -1,7 +1,7 @@
 /// <reference types="./stream.d.ts" />
 import { add, addTo } from './disposable.mjs';
 import { newInstance, pipe } from './functions.mjs';
-import { DisposableObservable, Subject, publish, observerCount, replay } from './observable.mjs';
+import { DisposableObservable, Subject, publish, getObserverCount, getReplay } from './observable.mjs';
 import { sinkInto } from './source.mjs';
 
 class StreamImpl extends DisposableObservable {
@@ -15,10 +15,10 @@ class StreamImpl extends DisposableObservable {
         return pipe(this, add(subject), addTo(this.observable));
     }
     get observerCount() {
-        return observerCount(this.observable);
+        return getObserverCount(this.observable);
     }
     get replay() {
-        return replay(this.observable);
+        return getReplay(this.observable);
     }
     dispatch(req) {
         this.subject.publish(req);
@@ -33,10 +33,10 @@ class AbstractDelegatingStream extends DisposableObservable {
         this.delegate = delegate;
     }
     get observerCount() {
-        return observerCount(this.delegate);
+        return getObserverCount(this.delegate);
     }
     get replay() {
-        return replay(this.delegate);
+        return getReplay(this.delegate);
     }
     get scheduler() {
         return this.delegate.scheduler;

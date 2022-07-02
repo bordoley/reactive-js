@@ -5,7 +5,7 @@ import { dispose } from "../disposable";
 import { FlowableLike, createLiftedFlowable } from "../flowable";
 import { Factory, pipe } from "../functions";
 import { createObservable, onNotify, subscribe } from "../observable";
-import { scheduler } from "../observer";
+import { getScheduler } from "../observer";
 import { addDisposable, addToDisposable, addToNodeStream } from "./nodeStream";
 
 export const createReadableSource = (
@@ -35,7 +35,7 @@ export const createReadableSource = (
               break;
           }
         }),
-        subscribe(scheduler(observer)),
+        subscribe(getScheduler(observer)),
         addToNodeStream(readable),
       );
 

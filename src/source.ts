@@ -55,7 +55,7 @@ import {
   createTakeFirstLiftOperator,
   createTakeWhileLiftOperator,
   createThrowIfEmptyLiftOperator,
-  delegate as delegateLiftable,
+  getDelegate,
   lift,
 } from "./liftable";
 import { Option, isSome, none } from "./option";
@@ -189,7 +189,7 @@ export const createBufferOperator = <C extends SourceLike>(
         const buffer = this.buffer;
         this.buffer = [];
 
-        delegateLiftable(this).notify(buffer);
+        getDelegate(this).notify(buffer);
       }
     },
   );
@@ -223,9 +223,9 @@ export const createBufferOperator = <C extends SourceLike>(
             this.buffer = [];
 
             if (isEmpty(buffer)) {
-              pipe(this, delegateLiftable, dispose());
+              pipe(this, getDelegate, dispose());
             } else {
-              pipe(buffer, fromValue(m), sinkInto(delegateLiftable(this)));
+              pipe(buffer, fromValue(m), sinkInto(getDelegate(this)));
             }
           }),
         ),
@@ -250,7 +250,7 @@ export const createCatchErrorOperator =
         this: DelegatingLiftableStateOf<C, T, T>,
         next: T,
       ) {
-        delegateLiftable(this).notify(next);
+        getDelegate(this).notify(next);
       },
     );
 
@@ -300,7 +300,7 @@ export const createDecodeWithCharsetOperator = <C extends SourceLike>(
     ) {
       const data = this.textDecoder.decode(next, { stream: true });
       if (!isEmpty(data)) {
-        delegateLiftable(this).notify(data);
+        getDelegate(this).notify(data);
       }
     },
   );
@@ -360,7 +360,7 @@ export const createDistinctUntilChangedOperator = <C extends SourceLike>(
       if (shouldEmit) {
         this.prev = next;
         this.hasValue = true;
-        delegateLiftable(this).notify(next);
+        getDelegate(this).notify(next);
       }
     },
   );
@@ -451,7 +451,7 @@ export const createKeepOperator = <C extends SourceLike>(
     ) {
       assertState(this);
       if (this.predicate(next)) {
-        delegateLiftable(this).notify(next);
+        getDelegate(this).notify(next);
       }
     },
   );
@@ -478,7 +478,7 @@ export const createMapOperator = <C extends SourceLike>(
     ) {
       assertState(this);
       const mapped = this.mapper(next);
-      delegateLiftable(this).notify(mapped);
+      getDelegate(this).notify(mapped);
     },
   );
 
@@ -505,7 +505,7 @@ export const createOnNotifyOperator = <C extends SourceLike>(
       assertState(this);
 
       this.onNotify(next);
-      delegateLiftable(this).notify(next);
+      getDelegate(this).notify(next);
     },
   );
 
@@ -536,7 +536,7 @@ export const createPairwiseOperator = <C extends SourceLike>(
       this.hasPrev = true;
       this.prev = value;
 
-      delegateLiftable(this).notify([prev, value]);
+      getDelegate(this).notify([prev, value]);
     },
   );
 
@@ -624,7 +624,7 @@ export const createScanOperator = <C extends SourceLike>(
       const nextAcc = this.reducer(this.acc, next);
       this.acc = nextAcc;
 
-      delegateLiftable(this).notify(nextAcc);
+      getDelegate(this).notify(nextAcc);
     },
   );
 
@@ -654,7 +654,7 @@ export const createSkipFirstOperator = <C extends SourceLike>(
     ) {
       this.count++;
       if (this.count > this.skipCount) {
-        delegateLiftable(this).notify(next);
+        getDelegate(this).notify(next);
       }
     },
   );
@@ -697,7 +697,7 @@ export const createTakeFirstOperator = <C extends SourceLike>(
       assertState(this);
 
       this.count++;
-      delegateLiftable(this).notify(next);
+      getDelegate(this).notify(next);
       if (this.count >= this.maxCount) {
         pipe(this, dispose());
       }
@@ -801,7 +801,7 @@ export const createTakeWhileOperator = <C extends SourceLike>(
       const satisfiesPredicate = this.predicate(next);
 
       if (satisfiesPredicate || this.inclusive) {
-        delegateLiftable(this).notify(next);
+        getDelegate(this).notify(next);
       }
 
       if (!satisfiesPredicate) {
@@ -832,7 +832,7 @@ export const createThrowIfEmptyOperator = <C extends SourceLike>(
       assertState(this);
 
       this.isEmpty = false;
-      delegateLiftable(this).notify(next);
+      getDelegate(this).notify(next);
     },
   );
 

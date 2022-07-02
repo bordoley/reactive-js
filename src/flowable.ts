@@ -21,7 +21,7 @@ import {
   subscribeOn,
   takeUntil,
 } from "./observable";
-import { scheduler as getScheduler } from "./observer";
+import { getScheduler } from "./observer";
 import { createPausableScheduler } from "./scheduler";
 import { sourceFrom as sourceFromSource } from "./source";
 import { StreamLike, createStream } from "./stream";

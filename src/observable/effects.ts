@@ -32,7 +32,7 @@ import {
   raise,
 } from "../functions";
 import { ObservableEffectMode, ObservableLike } from "../observable";
-import { Observer, scheduler as observerScheduler } from "../observer";
+import { Observer, getScheduler } from "../observer";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerLike, schedule } from "../scheduler";
 import { notify } from "../source";
@@ -183,7 +183,7 @@ class ObservableContext {
       pipe(effect.subscription, dispose());
 
       const { observer, runComputation } = this;
-      const scheduler = observerScheduler(observer);
+      const scheduler = getScheduler(observer);
 
       const subscription = pipe(
         observable,
@@ -398,7 +398,7 @@ export function __do<TA, TB, TC, TD, TE, TF>(
 export function __do(f: (...args: any[]) => void, ...args: any[]): void {
   const ctx = assertCurrentContext();
 
-  const scheduler = observerScheduler(ctx.observer);
+  const scheduler = getScheduler(ctx.observer);
   const observable = ctx.memo(deferSideEffect, f, ...args);
   const subscribeOnScheduler = ctx.memo(subscribe, scheduler);
   ctx.using(subscribeOnScheduler, observable);
@@ -454,5 +454,5 @@ export function __using<T extends Disposable>(
 
 export function __currentScheduler(): SchedulerLike {
   const ctx = assertCurrentContext();
-  return observerScheduler(ctx.observer);
+  return getScheduler(ctx.observer);
 }

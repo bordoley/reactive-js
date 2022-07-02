@@ -4,7 +4,7 @@ import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import {
   AbstractDelegatingEnumerator,
   Enumerator,
-  current,
+  getCurrent,
   hasCurrent,
   reset,
 } from "../enumerator";
@@ -28,7 +28,7 @@ class BufferEnumerator<T> extends AbstractDelegatingEnumerator<
     const { delegate, maxBufferSize } = this;
 
     while (length(buffer) < maxBufferSize && delegate.move()) {
-      buffer.push(current(delegate));
+      buffer.push(getCurrent(delegate));
     }
 
     const bufferLength = length(buffer);
