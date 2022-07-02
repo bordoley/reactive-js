@@ -1,3 +1,4 @@
+import { empty as emptyArray } from "./__internal__.readonlyArray";
 import {
   createBufferOperator,
   createCatchErrorOperator,
@@ -60,7 +61,6 @@ import {
   pipe,
 } from "./functions";
 import { Option, getOrDefault, isNone, none } from "./option";
-import { empty as emptyArray } from "./readonlyArray";
 import { createRunnable, createT } from "./runnable/createRunnable";
 import { first } from "./runnable/first";
 import { fromArrayT } from "./runnable/fromArray";

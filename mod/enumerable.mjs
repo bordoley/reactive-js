@@ -1,5 +1,6 @@
 /// <reference types="./enumerable.d.ts" />
 import { createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './__internal__.liftable.mjs';
+import { map as map$1, empty as empty$1, forEach as forEach$1 } from './__internal__.readonlyArray.mjs';
 import { isDisposed, dispose, SerialDisposable, bindTo, add, addTo } from './disposable.mjs';
 import { AbstractEnumerator, reset, hasCurrent, AbstractDelegatingEnumerator, move, getCurrent, Enumerator, forEach, zip as zip$1, AbstractPassThroughEnumerator } from './enumerator.mjs';
 import { pipe, pipeLazy, instanceFactory, callWith, newInstance, newInstanceWith, getLength, max, raise, alwaysTrue, identity } from './functions.mjs';
@@ -7,7 +8,6 @@ import { empty } from './container.mjs';
 import { AbstractLiftable, covariant, getDelegate } from './liftable.mjs';
 import { createFromArray } from './__internal__.container.mjs';
 import { none, isNone, isSome } from './option.mjs';
-import { map as map$1, empty as empty$1, forEach as forEach$1 } from './readonlyArray.mjs';
 import { MAX_SAFE_INTEGER } from './__internal__.env.mjs';
 import { createRunnable } from './runnable.mjs';
 import { notifySink } from './source.mjs';

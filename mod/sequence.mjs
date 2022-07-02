@@ -1,11 +1,11 @@
 /// <reference types="./sequence.d.ts" />
 import { createFromArray } from './__internal__.container.mjs';
+import { map as map$1, keepType } from './__internal__.readonlyArray.mjs';
 import { isDisposed, dispose } from './disposable.mjs';
 import { createEnumerable } from './enumerable.mjs';
 import { AbstractEnumerator, hasCurrent } from './enumerator.mjs';
 import { pipe, strictEquality, alwaysTrue, getLength, callWith, pipeLazy, newInstanceWith } from './functions.mjs';
 import { none, isNone } from './option.mjs';
-import { map as map$1, keepType } from './readonlyArray.mjs';
 import { createRunnable } from './runnable.mjs';
 
 const sequenceResultDone = Symbol("SequenceResultDone");

@@ -11,6 +11,7 @@ import {
   createTakeWhileLiftOperator,
   createThrowIfEmptyLiftOperator,
 } from "./__internal__.liftable";
+import { forEach } from "./__internal__.readonlyArray";
 import {
   ContainerOf,
   ContainerOperator,
@@ -54,7 +55,6 @@ import {
   lift,
 } from "./liftable";
 import { Option, isSome, none } from "./option";
-import { forEach } from "./readonlyArray";
 import {
   CreateSource,
   Lift,

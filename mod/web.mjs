@@ -4,7 +4,7 @@ import { onDisposed, bindTo, addTo, toAbortSignal, dispose } from './disposable.
 import { pipe, newInstance, isEmpty, getLength, raise, newInstanceWith, compose, returns } from './functions.mjs';
 import { createObservable, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
 import { getDispatcher } from './observer.mjs';
-import { keep } from './readonlyArray.mjs';
+import { keep } from './__internal__.readonlyArray.mjs';
 import { ignoreElements } from './container.mjs';
 import { getDelegate } from './liftable.mjs';
 import { none, isSome } from './option.mjs';

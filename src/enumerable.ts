@@ -10,6 +10,7 @@ import {
   createTakeWhileLiftOperator,
   createThrowIfEmptyLiftOperator,
 } from "./__internal__.liftable";
+import { empty as emptyArray, forEach } from "./__internal__.readonlyArray";
 import {
   Concat,
   Container,
@@ -52,7 +53,6 @@ import {
 } from "./functions";
 import { LiftableLike, getDelegate } from "./liftable";
 import { Option, isSome, none } from "./option";
-import { empty as emptyArray, forEach } from "./readonlyArray";
 
 /**
  * Interface for iterating a Container of items.

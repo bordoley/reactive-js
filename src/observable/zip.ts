@@ -1,3 +1,4 @@
+import { everySatisfy, map } from "../__internal__.readonlyArray";
 import { Zip } from "../container";
 import {
   addTo,
@@ -26,7 +27,6 @@ import {
 import { getDelegate } from "../liftable";
 import { ObservableLike } from "../observable";
 import { AbstractDelegatingObserver, Observer } from "../observer";
-import { everySatisfy, map } from "../readonlyArray";
 import { assertState, notify, sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
 import { fromEnumerator } from "./fromEnumerable";

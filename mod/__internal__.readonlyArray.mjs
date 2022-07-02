@@ -1,4 +1,4 @@
-/// <reference types="./readonlyArray.d.ts" />
+/// <reference types="./__internal__.readonlyArray.d.ts" />
 const empty = [];
 const everySatisfy = (predicate) => arr => arr.every(predicate);
 const _fromObject = (object) => Object.entries(object);

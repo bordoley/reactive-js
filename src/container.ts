@@ -1,3 +1,4 @@
+import { empty as emptyArray } from "./__internal__.readonlyArray";
 import { Disposable } from "./disposable";
 import {
   Equality,
@@ -23,7 +24,6 @@ import {
   returns,
 } from "./functions";
 import { Option, isSome } from "./option";
-import { empty as emptyArray } from "./readonlyArray";
 
 export interface ContainerLike {
   readonly T?: unknown;
