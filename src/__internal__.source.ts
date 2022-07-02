@@ -13,7 +13,6 @@ import {
 } from "./__internal__.liftable";
 import { forEach } from "./__internal__.readonlyArray";
 import {
-  Container,
   ContainerOf,
   ContainerOperator,
   FromArray,
@@ -58,14 +57,16 @@ import {
   lift,
 } from "./liftable";
 import { Option, isSome, none } from "./option";
-import { SourceLike, assertState, notify, sinkInto } from "./source";
+import {
+  CreateSource,
+  SourceLike,
+  assertState,
+  notify,
+  sinkInto,
+} from "./source";
 
 export interface Lift<C extends SourceLike>
   extends LiftableLift<C, ContraVariant> {}
-
-export interface CreateSource<C extends SourceLike> extends Container<C> {
-  create<T>(onSink: (sink: LiftableStateOf<C, T>) => void): ContainerOf<C, T>;
-}
 
 const create =
   <C extends SourceLike, T>(m: CreateSource<C>) =>

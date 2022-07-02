@@ -95,7 +95,7 @@ export { generate, generateT } from "./enumerable/generate";
 export { repeat, repeatT } from "./enumerable/repeat";
 export { takeLast, takeLastT } from "./enumerable/takeLast";
 export { toRunnable, toRunnableT } from "./enumerable/toRunnable";
-export { toIterable } from "./enumerable/toIterable";
+export { toIterable, toIterableT } from "./enumerable/toIterable";
 export { zip, zipT } from "./enumerable/zip";
 
 /**

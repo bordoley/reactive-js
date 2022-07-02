@@ -218,6 +218,10 @@ export interface ThrowIfEmpty<C extends ContainerLike> extends Container<C> {
   throwIfEmpty<T>(factory: Factory<unknown>): ContainerOperator<C, T, T>;
 }
 
+export interface ToIterable<C extends ContainerLike> extends Container<C> {
+  toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
+}
+
 export interface Using<C extends ContainerLike> extends Container<C> {
   using<TResource extends Disposable, T>(
     resourceFactory: Factory<TResource>,
