@@ -186,6 +186,9 @@ class ScanAsyncAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
     }
 }
 const scanAsync = (reducer, initialValue) => pipe((delegate) => pipe(ScanAsyncAsyncEnumerator, newInstanceWith(delegate, reducer, initialValue), bindTo(delegate)), lift);
+const scanAsyncT = {
+    scanAsync,
+};
 const takeWhile = /*@__PURE__*/ createTakeWhileLiftOperator(liftT, class TakeWhileAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
     constructor(delegate, predicate, inclusive) {
         super(delegate);
@@ -217,4 +220,4 @@ const toObservableT = {
 };
 const type = undefined;
 
-export { fromArray, fromArrayT, fromEnumerable, fromIterable, generate, keep, keepT, map, mapT, scan, scanAsync, scanT, takeWhile, takeWhileT, toObservable, toObservableT, type };
+export { fromArray, fromArrayT, fromEnumerable, fromIterable, generate, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, type };
