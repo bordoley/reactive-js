@@ -2,6 +2,7 @@ import {
   Container,
   ContainerLike,
   ContainerOf,
+  ContainerOperator,
   DecodeWithCharset,
   DistinctUntilChanged,
   EverySatisfy,
@@ -105,10 +106,6 @@ export interface ObservableLike<T> extends SourceLike {
   readonly isEnumerable?: boolean;
 
   sink(this: ObservableLike<T>, sink: Observer<T>): void;
-}
-
-export interface ToObservable<C extends ContainerLike> extends Container<C> {
-  toObservable: <T>() => Function1<ContainerOf<C, T>, ObservableLike<T>>;
 }
 
 export const type: ObservableLike<unknown> = undefined as any;
@@ -431,6 +428,12 @@ export const scanT: Scan<ObservableLike<unknown>> = {
   scan,
 };
 
+export interface ScanAsync<C extends ContainerLike> extends Container<C> {
+  scanAsync: <T, TAcc>(
+    scanner: AsyncReducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ) => ContainerOperator<C, T, TAcc>;
+}
 /**
  * Returns the `ObservableLike` that applies an asynchronous accumulator function
  * over the source, and emits each intermediate result.
@@ -456,6 +459,10 @@ export const scanAsync =
         onSubscribe(() => accFeedbackStream.publish(initialValue())),
       ),
     );
+
+export const scanAsyncT: ScanAsync<ObservableLike<unknown>> = {
+  scanAsync,
+};
 
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
@@ -634,6 +641,10 @@ export const throwIfEmpty: <T>(
 export const throwIfEmptyT: ThrowIfEmpty<ObservableLike<unknown>> = {
   throwIfEmpty,
 };
+
+export interface ToObservable<C extends ContainerLike> extends Container<C> {
+  toObservable: <T>() => Function1<ContainerOf<C, T>, ObservableLike<T>>;
+}
 
 export const toObservable = <T>(): Function1<
   ObservableLike<T>,

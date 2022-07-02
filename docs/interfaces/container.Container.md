@@ -66,6 +66,8 @@
 
   ↳ [`Lift`](liftable.Lift.md)
 
+  ↳ [`ScanAsync`](observable.ScanAsync.md)
+
   ↳ [`ToObservable`](observable.ToObservable.md)
 
   ↳ [`ToRunnable`](runnable.ToRunnable.md)

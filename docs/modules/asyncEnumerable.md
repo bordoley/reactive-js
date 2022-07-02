@@ -17,6 +17,7 @@
 - [fromArrayT](asyncEnumerable.md#fromarrayt)
 - [keepT](asyncEnumerable.md#keept)
 - [mapT](asyncEnumerable.md#mapt)
+- [scanAsyncT](asyncEnumerable.md#scanasynct)
 - [scanT](asyncEnumerable.md#scant)
 - [takeWhileT](asyncEnumerable.md#takewhilet)
 - [toObservableT](asyncEnumerable.md#toobservablet)
@@ -65,6 +66,12 @@ ___
 ### mapT
 
 • `Const` **mapT**: [`Map`](../interfaces/container.Map.md)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>\>
+
+___
+
+### scanAsyncT
+
+• `Const` **scanAsyncT**: [`ScanAsync`](../interfaces/observable.ScanAsync.md)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>\>
 
 ___
 

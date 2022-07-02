@@ -14,6 +14,7 @@
 
 - [MulticastObservableLike](../interfaces/observable.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/observable.ObservableLike.md)
+- [ScanAsync](../interfaces/observable.ScanAsync.md)
 - [ToObservable](../interfaces/observable.ToObservable.md)
 
 ### Type Aliases
@@ -44,6 +45,7 @@
 - [pairwiseT](observable.md#pairwiset)
 - [reduceT](observable.md#reducet)
 - [repeatT](observable.md#repeatt)
+- [scanAsyncT](observable.md#scanasynct)
 - [scanT](observable.md#scant)
 - [skipFirstT](observable.md#skipfirstt)
 - [someSatisfyT](observable.md#somesatisfyt)
@@ -289,6 +291,12 @@ ___
 ### repeatT
 
 • `Const` **repeatT**: [`Repeat`](../interfaces/container.Repeat.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### scanAsyncT
+
+• `Const` **scanAsyncT**: [`ScanAsync`](../interfaces/observable.ScanAsync.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 

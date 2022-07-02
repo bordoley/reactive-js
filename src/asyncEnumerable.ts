@@ -51,6 +51,7 @@ import {
   MulticastObservableLike,
   ObservableLike,
   ObservableOperator,
+  ScanAsync,
   Subject,
   ToObservable,
   concatAllT,
@@ -528,6 +529,10 @@ export const scanAsync = <T, TAcc>(
       ),
     lift,
   );
+
+export const scanAsyncT: ScanAsync<AsyncEnumerableLike<unknown>> = {
+  scanAsync,
+};
 
 export const takeWhile: <T>(
   predicate: Predicate<T>,
