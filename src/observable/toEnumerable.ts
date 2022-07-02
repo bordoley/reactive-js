@@ -1,4 +1,8 @@
 import { getDelay } from "../__internal__.optionalArgs";
+import {
+  SchedulerImplementationLike,
+  runContinuation,
+} from "../__internal__.schedulerImplementation";
 import { add, addTo, dispose, isDisposed } from "../disposable";
 import { EnumerableLike, ToEnumerable, createEnumerable } from "../enumerable";
 import {
@@ -13,10 +17,8 @@ import { Observer } from "../observer";
 import { isNone } from "../option";
 import {
   SchedulerContinuationLike,
-  SchedulerImplementationLike,
   SchedulerLike,
   inContinuation,
-  runContinuation,
 } from "../scheduler";
 import { assertState, sourceFrom } from "../source";
 

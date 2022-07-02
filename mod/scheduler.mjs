@@ -1,9 +1,10 @@
 /// <reference types="./scheduler.d.ts" />
 import { MAX_SAFE_INTEGER } from './__internal__.env.mjs';
-import { isDisposed, Disposable, dispose, disposed, add, addTo, onDisposed } from './disposable.mjs';
+import { Disposable, isDisposed, dispose, disposed, add, addTo, onDisposed } from './disposable.mjs';
 import { floor, getLength, newInstance, pipe, raise, instanceFactory, max, newInstanceWith } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { getDelay } from './__internal__.optionalArgs.mjs';
+import { runContinuation } from './__internal__.schedulerImplementation.mjs';
 import { AbstractEnumerator, move, hasCurrent, reset, getCurrent } from './enumerator.mjs';
 
 const computeParentIndex = (index) => floor((index - 1) / 2);
@@ -85,14 +86,6 @@ class PriorityQueueImpl {
 }
 const createPriorityQueue = (comparator) => newInstance(PriorityQueueImpl, comparator);
 
-const runContinuation = (continuation) => scheduler => {
-    if (!isDisposed(continuation)) {
-        scheduler.inContinuation = true;
-        continuation.continue();
-        scheduler.inContinuation = false;
-    }
-    return scheduler;
-};
 const inContinuation = (scheduler) => scheduler.inContinuation;
 const getNow = (scheduler) => scheduler.now;
 const shouldYield = (scheduler) => scheduler.shouldYield;
@@ -583,4 +576,4 @@ const createVirtualTimeScheduler = (options = {}) => {
     return newInstance(VirtualTimeSchedulerImpl, maxMicroTaskTicks);
 };
 
-export { __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, getNow, inContinuation, runContinuation, schedule, shouldYield, toSchedulerWithPriority };
+export { __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, getNow, inContinuation, schedule, shouldYield, toSchedulerWithPriority };

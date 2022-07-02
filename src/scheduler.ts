@@ -80,19 +80,10 @@ export interface PrioritySchedulerLike extends Disposable {
   ): void;
 }
 
-export interface SchedulerImplementationLike extends Disposable {
-  inContinuation: boolean;
-}
-
 export { createPriorityScheduler } from "./scheduler/priorityScheduler";
 export { createPausableScheduler } from "./scheduler/pausableScheduler";
 export { schedule, __yield } from "./scheduler/schedulerContinuation";
 export { toSchedulerWithPriority } from "./scheduler/schedulerWithPriority";
 export { createHostScheduler } from "./scheduler/hostScheduler";
 export { createVirtualTimeScheduler } from "./scheduler/virtualTimeScheduler";
-export {
-  runContinuation,
-  inContinuation,
-  getNow,
-  shouldYield,
-} from "./scheduler/scheduler";
+export { inContinuation, getNow, shouldYield } from "./scheduler/scheduler";
