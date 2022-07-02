@@ -3,7 +3,7 @@ import { isDisposed, Disposable, dispose, disposed, add, addTo, onDisposed } fro
 import { MAX_SAFE_INTEGER } from './env.mjs';
 import { floor, length, newInstance, max, pipe, raise, instanceFactory, newInstanceWith } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
-import { AbstractEnumerator, move, hasCurrent, reset, current } from './enumerator.mjs';
+import { AbstractEnumerator, move, hasCurrent, reset, getCurrent } from './enumerator.mjs';
 
 const computeParentIndex = (index) => floor((index - 1) / 2);
 const siftDown = (queue, item) => {
@@ -93,7 +93,7 @@ const runContinuation = (continuation) => scheduler => {
     return scheduler;
 };
 const inContinuation = (scheduler) => scheduler.inContinuation;
-const now = (scheduler) => scheduler.now;
+const getNow = (scheduler) => scheduler.now;
 const shouldYield = (scheduler) => scheduler.shouldYield;
 const getDelay = (options = {}) => { var _a; return floor(max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0)); };
 const hasDelay = (options = {}) => getDelay(options) > 0;
@@ -156,14 +156,14 @@ const schedule = (f, options) => scheduler => {
 
 const peek = (scheduler) => {
     const { delayed, queue } = scheduler;
-    const now$1 = now(scheduler);
+    const now = getNow(scheduler);
     while (true) {
         const task = delayed.peek();
         if (isNone(task)) {
             break;
         }
         const taskIsDispose = isDisposed(task.continuation);
-        if (task.dueTime > now$1 && !taskIsDispose) {
+        if (task.dueTime > now && !taskIsDispose) {
             break;
         }
         delayed.pop();
@@ -203,13 +203,13 @@ class AbstractQueueScheduler extends AbstractEnumerator {
         this.hostContinuation = () => {
             for (let task = peek(this); isSome(task) && !isDisposed(this); task = peek(this)) {
                 const { continuation, dueTime } = task;
-                const delay = max(dueTime - now(this), 0);
+                const delay = max(dueTime - getNow(this), 0);
                 if (delay === 0) {
                     move(this);
                     pipe(this, runContinuation(continuation));
                 }
                 else {
-                    this.dueTime = now(this) + delay;
+                    this.dueTime = getNow(this) + delay;
                 }
                 __yield({ delay });
             }
@@ -226,7 +226,7 @@ class AbstractQueueScheduler extends AbstractEnumerator {
         }
     }
     get now() {
-        return now(this.host);
+        return getNow(this.host);
     }
     get shouldYield() {
         const { inContinuation, yieldRequested } = this;
@@ -262,7 +262,7 @@ class AbstractQueueScheduler extends AbstractEnumerator {
             return;
         }
         const dueTime = task.dueTime;
-        const delay = max(dueTime - now(this), 0);
+        const delay = max(dueTime - getNow(this), 0);
         this.dueTime = dueTime;
         this.inner = pipe(this.host, schedule(this.hostContinuation, { delay }));
     }
@@ -274,9 +274,9 @@ class AbstractQueueScheduler extends AbstractEnumerator {
             const dueTime = max(now + delay, now);
             const task = inContinuation(this) &&
                 hasCurrent(this) &&
-                current(this).continuation === continuation &&
+                getCurrent(this).continuation === continuation &&
                 delay <= 0
-                ? current(this)
+                ? getCurrent(this)
                 : this.createTask({
                     taskID: this.taskIDCounter++,
                     continuation,
@@ -305,7 +305,7 @@ class PriorityScheduler extends AbstractQueueScheduler {
     _shouldYield(next) {
         const { current } = this;
         return (current !== next &&
-            next.dueTime <= now(this) &&
+            next.dueTime <= getNow(this) &&
             next.priority > current.priority);
     }
     createTask(task, options = {}) {
@@ -378,7 +378,7 @@ class SchedulerWithPriorityImpl extends Disposable {
         return inContinuation(this.priorityScheduler);
     }
     get now() {
-        return now(this.priorityScheduler);
+        return getNow(this.priorityScheduler);
     }
     get shouldYield() {
         return shouldYield(this.priorityScheduler);
@@ -432,7 +432,7 @@ const scheduleImmediate = (scheduler, continuation) => {
 const run = (scheduler, continuation, immmediateOrTimerDisposable) => {
     // clear the immediateOrTimer disposable
     pipe(immmediateOrTimerDisposable, dispose());
-    scheduler.startTime = now(scheduler);
+    scheduler.startTime = getNow(scheduler);
     pipe(scheduler, runContinuation(continuation));
 };
 class HostScheduler extends Disposable {
@@ -445,7 +445,7 @@ class HostScheduler extends Disposable {
         this.supportsIsInputPending = false;
         this.supportsSetImmediate = false;
         this.supportsProcessHRTime = false;
-        this.startTime = now(this);
+        this.startTime = getNow(this);
         this.yieldRequested = false;
     }
     get now() {
@@ -468,7 +468,7 @@ class HostScheduler extends Disposable {
         }
         return (inContinuation &&
             (yieldRequested ||
-                now(this) > this.startTime + this.yieldInterval ||
+                getNow(this) > this.startTime + this.yieldInterval ||
                 this.isInputPending));
     }
     get isInputPending() {
@@ -566,7 +566,7 @@ class VirtualTimeSchedulerImpl extends AbstractEnumerator {
         if (!isDisposed(continuation)) {
             this.taskQueue.push({
                 id: this.taskIDCount++,
-                dueTime: now(this) + delay,
+                dueTime: getNow(this) + delay,
                 continuation,
             });
         }
@@ -584,4 +584,4 @@ const createVirtualTimeScheduler = (options = {}) => {
     return newInstance(VirtualTimeSchedulerImpl, maxMicroTaskTicks);
 };
 
-export { __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, getDelay, hasDelay, inContinuation, now, runContinuation, schedule, shouldYield, toSchedulerWithPriority };
+export { __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, getDelay, getNow, hasDelay, inContinuation, runContinuation, schedule, shouldYield, toSchedulerWithPriority };

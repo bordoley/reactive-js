@@ -9,7 +9,7 @@ import {
 import {
   AbstractEnumerator,
   Enumerator,
-  current,
+  getCurrent,
   hasCurrent,
   move,
   reset,
@@ -23,7 +23,7 @@ import {
   pipeLazy,
   returns,
 } from "../functions";
-import { delegate } from "../liftable";
+import { getDelegate } from "../liftable";
 import { ObservableLike } from "../observable";
 import { AbstractDelegatingObserver, Observer } from "../observer";
 import { everySatisfy, map } from "../readonlyArray";
@@ -95,10 +95,10 @@ class ZipObserver extends AbstractDelegatingObserver<
       }
 
       if (shouldEmit(enumerators)) {
-        const next = pipe(enumerators, map(current));
+        const next = pipe(enumerators, map(getCurrent));
         const shouldCompleteResult = shouldComplete(enumerators);
 
-        pipe(this, delegate, notify(next));
+        pipe(this, getDelegate, notify(next));
 
         if (shouldCompleteResult) {
           pipe(this, dispose());

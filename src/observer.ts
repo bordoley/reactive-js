@@ -17,7 +17,7 @@ import {
   pipe,
   raise,
 } from "./functions";
-import { delegate } from "./liftable";
+import { getDelegate } from "./liftable";
 import { Option, isNone, none } from "./option";
 import { SchedulerLike, __yield, inContinuation, schedule } from "./scheduler";
 import { SinkLike, assertState, notify } from "./source";
@@ -26,7 +26,7 @@ const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (length(dispatcher.nextQueue) === 1) {
     const { observer } = dispatcher;
     pipe(
-      scheduler(observer),
+      getScheduler(observer),
       schedule(dispatcher.continuation),
       addTo(observer),
       onComplete(dispatcher.onContinuationDispose),
@@ -124,7 +124,7 @@ if (__DEV__) {
 
 export class AbstractDelegatingObserver<TIn, TOut> extends Observer<TIn> {
   constructor(public readonly delegate: Observer<TOut>) {
-    super(scheduler(delegate));
+    super(getScheduler(delegate));
   }
 
   notify(_: TIn) {}
@@ -132,7 +132,7 @@ export class AbstractDelegatingObserver<TIn, TOut> extends Observer<TIn> {
 
 class DelegatingObserver<T> extends AbstractDelegatingObserver<T, T> {
   notify(next: T) {
-    pipe(this, delegate, notify(next));
+    pipe(this, getDelegate, notify(next));
   }
 }
 
@@ -140,8 +140,8 @@ export const createDelegatingObserver = <T>(
   delegate: Observer<T>,
 ): Observer<T> => newInstance(DelegatingObserver, delegate);
 
-export const scheduler = <T>(observer: Observer<T>): SchedulerLike =>
+export const getScheduler = <T>(observer: Observer<T>): SchedulerLike =>
   observer.scheduler;
 
-export const dispatcher = <T>(observer: Observer<T>): DispatcherLike<T> =>
+export const getDispatcher = <T>(observer: Observer<T>): DispatcherLike<T> =>
   observer.dispatcher;

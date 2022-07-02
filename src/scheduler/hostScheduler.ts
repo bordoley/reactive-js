@@ -14,7 +14,7 @@ import {
   SchedulerImplementationLike,
   SchedulerLike,
 } from "../scheduler";
-import { getDelay, now, runContinuation } from "./scheduler";
+import { getDelay, getNow, runContinuation } from "./scheduler";
 
 const scheduleImmediateWithSetImmediate = (
   scheduler: HostScheduler,
@@ -87,7 +87,7 @@ const run = (
 ) => {
   // clear the immediateOrTimer disposable
   pipe(immmediateOrTimerDisposable, dispose());
-  scheduler.startTime = now(scheduler);
+  scheduler.startTime = getNow(scheduler);
   pipe(scheduler, runContinuation(continuation));
 };
 
@@ -101,7 +101,7 @@ class HostScheduler
   supportsIsInputPending = false;
   supportsSetImmediate = false;
   supportsProcessHRTime = false;
-  startTime = now(this);
+  startTime = getNow(this);
   private yieldRequested = false;
 
   constructor(private readonly yieldInterval: number) {
@@ -130,7 +130,7 @@ class HostScheduler
     return (
       inContinuation &&
       (yieldRequested ||
-        now(this) > this.startTime + this.yieldInterval ||
+        getNow(this) > this.startTime + this.yieldInterval ||
         this.isInputPending)
     );
   }

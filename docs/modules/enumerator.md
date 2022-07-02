@@ -13,36 +13,14 @@
 
 ### Functions
 
-- [current](enumerator.md#current)
 - [forEach](enumerator.md#foreach)
+- [getCurrent](enumerator.md#getcurrent)
 - [hasCurrent](enumerator.md#hascurrent)
 - [move](enumerator.md#move)
 - [reset](enumerator.md#reset)
 - [zip](enumerator.md#zip)
 
 ## Functions
-
-### current
-
-▸ **current**<`T`\>(`enumerator`): `T`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `enumerator` | [`Enumerator`](../classes/enumerator.Enumerator.md)<`T`\> |
-
-#### Returns
-
-`T`
-
-___
 
 ### forEach
 
@@ -64,6 +42,28 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`TEnumerator`, `TEnumerator`\>
+
+___
+
+### getCurrent
+
+▸ **getCurrent**<`T`\>(`enumerator`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `enumerator` | [`Enumerator`](../classes/enumerator.Enumerator.md)<`T`\> |
+
+#### Returns
+
+`T`
 
 ___
 

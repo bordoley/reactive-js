@@ -29,11 +29,11 @@ import {
   fromArray,
   fromArrayT,
   generate,
+  getObserverCount,
   keepT,
   map,
   mapT,
   observable,
-  observerCount,
   onNotify,
   onNotify as onNotifyObs,
   reduce,
@@ -44,7 +44,7 @@ import {
 } from "../observable";
 import { none } from "../option";
 import { toArray } from "../runnable";
-import { createVirtualTimeScheduler, now, schedule } from "../scheduler";
+import { createVirtualTimeScheduler, getNow, schedule } from "../scheduler";
 import {
   StateStreamLike,
   __stream,
@@ -119,15 +119,15 @@ export const tests = describe(
       stream(scheduler),
     );
 
-    pipe(incrStream, observerCount, expectEquals(0));
+    pipe(incrStream, getObserverCount, expectEquals(0));
     const sub1 = pipe(incrStream, subscribe(scheduler));
-    pipe(incrStream, observerCount, expectEquals(1));
+    pipe(incrStream, getObserverCount, expectEquals(1));
     const sub2 = pipe(incrStream, subscribe(scheduler));
-    pipe(incrStream, observerCount, expectEquals(2));
+    pipe(incrStream, getObserverCount, expectEquals(2));
     pipe(sub1, dispose());
-    pipe(incrStream, observerCount, expectEquals(1));
+    pipe(incrStream, getObserverCount, expectEquals(1));
     pipe(sub2, dispose());
-    pipe(incrStream, observerCount, expectEquals(0));
+    pipe(incrStream, getObserverCount, expectEquals(0));
   }),
   test("map", () => {
     const scheduler = createVirtualTimeScheduler();
@@ -284,7 +284,7 @@ export const tests = describe(
       const subscription = pipe(
         generateStream,
         onNotify(x => {
-          f(now(scheduler), x);
+          f(getNow(scheduler), x);
         }),
         subscribe(scheduler),
       );

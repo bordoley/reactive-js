@@ -8,7 +8,6 @@ import { SchedulerLike } from "./scheduler.mjs";
  * @noInheritDoc
  */
 interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableLike<T> {
-    readonly scheduler: SchedulerLike;
 }
 declare abstract class AbstractDelegatingStream<TReqA, TA, TReqB, TB> extends DisposableObservable<TB> implements StreamLike<TReqB, TB> {
     readonly delegate: StreamLike<TReqA, TA>;

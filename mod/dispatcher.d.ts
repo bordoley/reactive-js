@@ -12,5 +12,5 @@ interface DispatcherLike<T> extends Disposable {
 }
 declare const dispatch: <T, TDispatcher extends DispatcherLike<T>>(v: T) => Function1<TDispatcher, TDispatcher>;
 declare const dispatchTo: <T>(dispatcher: DispatcherLike<T>) => SideEffect1<T>;
-declare const scheduler: <T>(observer: DispatcherLike<T>) => SchedulerLike;
-export { DispatcherLike, dispatch, dispatchTo, scheduler };
+declare const getScheduler: <T>(observer: DispatcherLike<T>) => SchedulerLike;
+export { DispatcherLike, dispatch, dispatchTo, getScheduler };

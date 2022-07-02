@@ -3,7 +3,7 @@ import { DisposableContainer } from './container.mjs';
 import { addTo, onComplete, Disposable, isDisposed, dispose, onDisposed } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 import { length, pipe, newInstanceWith, isEmpty, raise, newInstance } from './functions.mjs';
-import { delegate } from './liftable.mjs';
+import { getDelegate } from './liftable.mjs';
 import { none, isNone } from './option.mjs';
 import { schedule, __yield, inContinuation } from './scheduler.mjs';
 import { assertState, notify } from './source.mjs';
@@ -11,7 +11,7 @@ import { assertState, notify } from './source.mjs';
 const scheduleDrainQueue = (dispatcher) => {
     if (length(dispatcher.nextQueue) === 1) {
         const { observer } = dispatcher;
-        pipe(scheduler(observer), schedule(dispatcher.continuation), addTo(observer), onComplete(dispatcher.onContinuationDispose));
+        pipe(getScheduler(observer), schedule(dispatcher.continuation), addTo(observer), onComplete(dispatcher.onContinuationDispose));
     }
 };
 class ObserverDelegatingDispatcher extends Disposable {
@@ -81,18 +81,18 @@ if (__DEV__) {
 }
 class AbstractDelegatingObserver extends Observer {
     constructor(delegate) {
-        super(scheduler(delegate));
+        super(getScheduler(delegate));
         this.delegate = delegate;
     }
     notify(_) { }
 }
 class DelegatingObserver extends AbstractDelegatingObserver {
     notify(next) {
-        pipe(this, delegate, notify(next));
+        pipe(this, getDelegate, notify(next));
     }
 }
 const createDelegatingObserver = (delegate) => newInstance(DelegatingObserver, delegate);
-const scheduler = (observer) => observer.scheduler;
-const dispatcher = (observer) => observer.dispatcher;
+const getScheduler = (observer) => observer.scheduler;
+const getDispatcher = (observer) => observer.dispatcher;
 
-export { AbstractDelegatingObserver, Observer, createDelegatingObserver, dispatcher, scheduler };
+export { AbstractDelegatingObserver, Observer, createDelegatingObserver, getDispatcher, getScheduler };

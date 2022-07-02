@@ -2,7 +2,7 @@
 import { DisposableContainer } from './container.mjs';
 import { onDisposed, isDisposed, dispose, addTo } from './disposable.mjs';
 import { pipe, pipeLazy, raise, newInstance } from './functions.mjs';
-import { delegate } from './liftable.mjs';
+import { getDelegate } from './liftable.mjs';
 import { none } from './option.mjs';
 import { everySatisfy, map, forEach as forEach$1 } from './readonlyArray.mjs';
 
@@ -44,18 +44,18 @@ class AbstractPassThroughEnumerator extends Enumerator {
         this.delegate = delegate;
     }
     get current() {
-        return pipe(this, delegate, current);
+        return pipe(this, getDelegate, getCurrent);
     }
     get hasCurrent() {
-        return pipe(this, delegate, hasCurrent);
+        return pipe(this, getDelegate, hasCurrent);
     }
 }
-const current = (enumerator) => enumerator.current;
+const getCurrent = (enumerator) => enumerator.current;
 const hasCurrent = (enumerator) => enumerator.hasCurrent;
 const move = (enumerator) => enumerator.move();
 const forEach = (f) => enumerator => {
     while (move(enumerator)) {
-        f(current(enumerator));
+        f(getCurrent(enumerator));
     }
     return enumerator;
 };
@@ -77,7 +77,7 @@ class ZipEnumerator extends AbstractEnumerator {
             const { enumerators } = this;
             moveAll(enumerators);
             if (allHaveCurrent(enumerators)) {
-                this.current = pipe(enumerators, map(current));
+                this.current = pipe(enumerators, map(getCurrent));
             }
             else {
                 pipe(this, dispose());
@@ -92,4 +92,4 @@ function zip(...enumerators) {
     return enumerator;
 }
 
-export { AbstractDelegatingEnumerator, AbstractEnumerator, AbstractPassThroughEnumerator, Enumerator, current, forEach, hasCurrent, move, reset, zip };
+export { AbstractDelegatingEnumerator, AbstractEnumerator, AbstractPassThroughEnumerator, Enumerator, forEach, getCurrent, hasCurrent, move, reset, zip };

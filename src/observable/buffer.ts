@@ -18,9 +18,13 @@ import {
   newInstanceWith,
   pipe,
 } from "../functions";
-import { delegate, delegate as observerDelegate } from "../liftable";
+import { getDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
+import {
+  AbstractDelegatingObserver,
+  Observer,
+  getScheduler,
+} from "../observer";
 import { none } from "../option";
 import { assertState, notify, sinkInto } from "../source";
 import { fromArrayT } from "./fromArray";
@@ -54,7 +58,7 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
       const buffer = this.buffer;
       this.buffer = [];
 
-      pipe(this, delegate, notify(buffer));
+      pipe(this, getDelegate, notify(buffer));
     };
 
     if (length(buffer) === maxBufferSize) {
@@ -64,7 +68,7 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
         next,
         this.durationFunction,
         onNotify(doOnNotify),
-        subscribe(scheduler(this)),
+        subscribe(getScheduler(this)),
       );
     }
   }
@@ -111,9 +115,9 @@ export function buffer<T>(
         this.buffer = [];
 
         if (isEmpty(buffer)) {
-          pipe(this, observerDelegate, dispose());
+          pipe(this, getDelegate, dispose());
         } else {
-          pipe(buffer, fromValue(fromArrayT), sinkInto(observerDelegate(this)));
+          pipe(buffer, fromValue(fromArrayT), sinkInto(getDelegate(this)));
         }
       }),
     );

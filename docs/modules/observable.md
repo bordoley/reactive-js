@@ -92,6 +92,8 @@
 - [fromIterator](observable.md#fromiterator)
 - [fromPromise](observable.md#frompromise)
 - [generate](observable.md#generate)
+- [getObserverCount](observable.md#getobservercount)
+- [getReplay](observable.md#getreplay)
 - [keep](observable.md#keep)
 - [map](observable.md#map)
 - [mapAsync](observable.md#mapasync)
@@ -99,14 +101,12 @@
 - [mergeAll](observable.md#mergeall)
 - [never](observable.md#never)
 - [observable](observable.md#observable)
-- [observerCount](observable.md#observercount)
 - [onNotify](observable.md#onnotify)
 - [onSubscribe](observable.md#onsubscribe)
 - [pairwise](observable.md#pairwise)
 - [publish](observable.md#publish)
 - [reduce](observable.md#reduce)
 - [repeat](observable.md#repeat)
-- [replay](observable.md#replay)
 - [retry](observable.md#retry)
 - [scan](observable.md#scan)
 - [scanAsync](observable.md#scanasync)
@@ -2087,6 +2087,50 @@ between emitted items.
 
 ___
 
+### getObserverCount
+
+▸ **getObserverCount**<`T`\>(`observable`): `number`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)<`T`\> |
+
+#### Returns
+
+`number`
+
+___
+
+### getReplay
+
+▸ **getReplay**<`T`\>(`observable`): `number`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)<`T`\> |
+
+#### Returns
+
+`number`
+
+___
+
 ### keep
 
 ▸ **keep**<`T`\>(`predicate`): [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
@@ -2245,28 +2289,6 @@ ___
 #### Returns
 
 [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
-
-___
-
-### observerCount
-
-▸ **observerCount**<`T`\>(`observable`): `number`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observable` | [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)<`T`\> |
-
-#### Returns
-
-`number`
 
 ___
 
@@ -2438,28 +2460,6 @@ Returns an `ObservableLike` that continually repeats the source.
 #### Returns
 
 [`ObservableOperator`](observable.md#observableoperator)<`T`, `T`\>
-
-___
-
-### replay
-
-▸ **replay**<`T`\>(`observable`): `number`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observable` | [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)<`T`\> |
-
-#### Returns
-
-`number`
 
 ___
 

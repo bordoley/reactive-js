@@ -60,7 +60,7 @@ import {
   AbstractDelegatingObserver,
   Observer,
   createDelegatingObserver,
-  scheduler,
+  getScheduler,
 } from "./observer";
 import { Option, isNone, isSome, none } from "./option";
 import { RunnableLike, ToRunnable, createRunnable } from "./runnable";
@@ -341,7 +341,7 @@ export const mapAsync = <TA, TB>(
 
 export const onSubscribe = /*@__PURE__*/ createOnSink(createT);
 
-export const observerCount = <T>(observable: MulticastObservableLike<T>) =>
+export const getObserverCount = <T>(observable: MulticastObservableLike<T>) =>
   observable.observerCount;
 
 export const pairwise: <T>() => ObservableOperator<T, [Option<T>, T]> =
@@ -405,7 +405,7 @@ export const reduceT: Reduce<ObservableLike<unknown>> = {
   reduce,
 };
 
-export const replay = <T>(observable: MulticastObservableLike<T>) =>
+export const getReplay = <T>(observable: MulticastObservableLike<T>) =>
   observable.replay;
 
 export const scan: <T, TAcc>(
@@ -490,7 +490,7 @@ export const share =
         observer,
         sourceFrom(multicast),
         onDisposed(() => {
-          if (isSome(multicast) && observerCount(multicast) === 0) {
+          if (isSome(multicast) && getObserverCount(multicast) === 0) {
             pipe(multicast, dispose());
             multicast = none;
           }
@@ -594,7 +594,7 @@ export const takeUntil = <T>(
     const takeUntilObserver: Observer<T> = pipe(
       createDelegatingObserver(delegate),
       bindTo(delegate),
-      bindTo(pipe(notifier, takeFirst(), subscribe(scheduler(delegate)))),
+      bindTo(pipe(notifier, takeFirst(), subscribe(getScheduler(delegate)))),
     );
 
     return takeUntilObserver;

@@ -12,7 +12,7 @@
 
 - [dispatch](dispatcher.md#dispatch)
 - [dispatchTo](dispatcher.md#dispatchto)
-- [scheduler](dispatcher.md#scheduler)
+- [getScheduler](dispatcher.md#getscheduler)
 
 ## Functions
 
@@ -61,9 +61,9 @@ ___
 
 ___
 
-### scheduler
+### getScheduler
 
-▸ **scheduler**<`T`\>(`observer`): [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+▸ **getScheduler**<`T`\>(`observer`): [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
 
 #### Type parameters
 

@@ -38,7 +38,7 @@ declare const createVirtualTimeScheduler: (options?: {
 }) => VirtualTimeSchedulerLike;
 declare const runContinuation: <TScheduler extends SchedulerImplementationLike>(continuation: SchedulerContinuationLike) => Function1<TScheduler, TScheduler>;
 declare const inContinuation: (scheduler: SchedulerLike | PrioritySchedulerLike) => boolean;
-declare const now: (scheduler: SchedulerLike) => number;
+declare const getNow: (scheduler: SchedulerLike) => number;
 declare const shouldYield: (scheduler: SchedulerLike) => boolean;
 declare const getDelay: (options?: {
     delay?: number;
@@ -114,4 +114,4 @@ interface PrioritySchedulerLike extends Disposable {
 interface SchedulerImplementationLike extends Disposable {
     inContinuation: boolean;
 }
-export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerImplementationLike, SchedulerLike, VirtualTimeSchedulerLike, __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, getDelay, hasDelay, inContinuation, now, runContinuation, schedule, shouldYield, toSchedulerWithPriority };
+export { PausableSchedulerLike, PrioritySchedulerLike, SchedulerContinuationLike, SchedulerImplementationLike, SchedulerLike, VirtualTimeSchedulerLike, __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, getDelay, getNow, hasDelay, inContinuation, runContinuation, schedule, shouldYield, toSchedulerWithPriority };

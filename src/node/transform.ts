@@ -13,7 +13,7 @@ import { dispatchTo } from "../dispatcher";
 import { FlowableOperator, createLiftedFlowable } from "../flowable";
 import { Factory, pipe, pipeLazy, returns } from "../functions";
 import { createObservable, onNotify, subscribe } from "../observable";
-import { scheduler } from "../observer";
+import { getScheduler } from "../observer";
 import { sinkInto } from "../source";
 import { sourceFrom, stream } from "../streamable";
 import { createReadableSource } from "./createReadableSource";
@@ -33,14 +33,14 @@ export const transform =
         );
 
         pipe(
-          createWritableSinkStream(transform, scheduler(observer)),
+          createWritableSinkStream(transform, getScheduler(observer)),
           sourceFrom(src),
           addToNodeStream(transform),
         );
 
         const transformReadableStream = pipe(
           createReadableSource(returns(transform)),
-          stream(scheduler(observer)),
+          stream(getScheduler(observer)),
           addToNodeStream(transform),
           sinkInto(observer),
         );
@@ -48,7 +48,7 @@ export const transform =
         pipe(
           modeObs,
           onNotify(dispatchTo(transformReadableStream)),
-          subscribe(scheduler(observer)),
+          subscribe(getScheduler(observer)),
           addToNodeStream(transform),
         );
       }),

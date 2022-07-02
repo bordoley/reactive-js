@@ -6,9 +6,13 @@ import {
   newInstanceWith,
   pipe,
 } from "../functions";
-import { delegate as liftDelegate } from "../liftable";
+import { getDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
+import {
+  AbstractDelegatingObserver,
+  Observer,
+  getScheduler,
+} from "../observer";
 import { Option } from "../option";
 import { assertState, notify } from "../source";
 import { lift } from "./lift";
@@ -22,7 +26,7 @@ const notifyDelegate = <TA, TB, TC>(
     observer.hasLatest = false;
     const next = observer.queue.shift() as TA;
     const result = observer.selector(next, observer.otherLatest as TB);
-    pipe(observer, liftDelegate, notify(result));
+    pipe(observer, getDelegate, notify(result));
   }
 };
 
@@ -84,10 +88,10 @@ export const zipWithLatestFrom = <TA, TB, T>(
         notifyDelegate(observer);
 
         if (isDisposed(observer) && isEmpty(observer.queue)) {
-          pipe(observer, liftDelegate, dispose());
+          pipe(observer, getDelegate, dispose());
         }
       }),
-      subscribe(scheduler(delegate)),
+      subscribe(getScheduler(delegate)),
       onComplete(disposeDelegate),
     );
 

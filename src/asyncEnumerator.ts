@@ -1,7 +1,7 @@
 import { DispatcherLike, dispatch } from "./dispatcher";
 import { pipe } from "./functions";
-import { DisposableLiftable, LiftableStateLike, delegate } from "./liftable";
-import { ObservableLike, observerCount, replay } from "./observable";
+import { DisposableLiftable, LiftableStateLike, getDelegate } from "./liftable";
+import { ObservableLike, getObserverCount, getReplay } from "./observable";
 import { Observer } from "./observer";
 import { SchedulerLike } from "./scheduler";
 import { StreamLike } from "./stream";
@@ -29,19 +29,19 @@ export abstract class AbstractDelegatingAsyncEnumerator<TA, TB>
   }
 
   get observerCount() {
-    return pipe(this, delegate, observerCount);
+    return pipe(this, getDelegate, getObserverCount);
   }
 
   get replay(): number {
-    return pipe(this, delegate, replay);
+    return pipe(this, getDelegate, getReplay);
   }
 
   get scheduler(): SchedulerLike {
-    return delegate(this).scheduler;
+    return getDelegate(this).scheduler;
   }
 
   dispatch(req: void): void {
-    pipe(this, delegate, dispatch(req));
+    pipe(this, getDelegate, dispatch(req));
   }
 
   abstract sink(observer: Observer<TB>): void;

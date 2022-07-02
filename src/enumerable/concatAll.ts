@@ -10,7 +10,7 @@ import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import {
   AbstractDelegatingEnumerator,
   Enumerator,
-  current,
+  getCurrent,
   hasCurrent,
   move,
   reset,
@@ -36,7 +36,7 @@ class ConcatAllEnumerator<T> extends AbstractDelegatingEnumerator<
     const { delegate, enumerator } = this;
 
     if (isDisposed(enumerator.inner) && move(delegate)) {
-      enumerator.inner = pipe(delegate, current, enumerate);
+      enumerator.inner = pipe(delegate, getCurrent, enumerate);
     }
 
     while (
@@ -44,10 +44,10 @@ class ConcatAllEnumerator<T> extends AbstractDelegatingEnumerator<
       !isDisposed(enumerator.inner)
     ) {
       if (move(enumerator.inner)) {
-        this.current = current(enumerator.inner);
+        this.current = getCurrent(enumerator.inner);
         break;
       } else if (move(delegate)) {
-        enumerator.inner = pipe(delegate, current, enumerate);
+        enumerator.inner = pipe(delegate, getCurrent, enumerate);
       } else {
         pipe(this, dispose());
       }

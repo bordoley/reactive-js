@@ -93,7 +93,7 @@ export { createVirtualTimeScheduler } from "./scheduler/virtualTimeScheduler";
 export {
   runContinuation,
   inContinuation,
-  now,
+  getNow,
   shouldYield,
   getDelay,
   hasDelay,

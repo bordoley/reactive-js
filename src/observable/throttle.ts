@@ -7,13 +7,17 @@ import {
   onComplete,
 } from "../disposable";
 import { Function1, newInstance, newInstanceWith, pipe } from "../functions";
-import { delegate as delegateLiftable } from "../liftable";
+import { getDelegate } from "../liftable";
 import {
   ObservableLike,
   ObservableOperator,
   ThrottleMode,
 } from "../observable";
-import { AbstractDelegatingObserver, Observer, scheduler } from "../observer";
+import {
+  AbstractDelegatingObserver,
+  Observer,
+  getScheduler,
+} from "../observer";
 import { Option, none } from "../option";
 import { assertState, sinkInto } from "../source";
 import { fromArrayT } from "./fromArray";
@@ -28,7 +32,7 @@ const setupDurationSubscription = <T>(
   observer.durationSubscription.inner = pipe(
     observer.durationFunction(next),
     onNotify(observer.onNotify),
-    subscribe(scheduler(observer)),
+    subscribe(getScheduler(observer)),
   );
 };
 
@@ -43,7 +47,7 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
       this.hasValue = false;
 
       setupDurationSubscription(this, value);
-      delegateLiftable(this).notify(value);
+      getDelegate(this).notify(value);
     }
   };
 

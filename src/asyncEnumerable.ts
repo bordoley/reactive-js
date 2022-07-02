@@ -21,7 +21,7 @@ import {
   enumerate,
   fromIterable as fromIterableEnumerable,
 } from "./enumerable";
-import { Enumerator, current, hasCurrent, move } from "./enumerator";
+import { Enumerator, getCurrent, hasCurrent, move } from "./enumerator";
 import {
   Factory,
   Function1,
@@ -44,7 +44,7 @@ import {
   createMapLiftOperator,
   createScanLiftOperator,
   createTakeWhileLiftOperator,
-  delegate as liftDelegate,
+  getDelegate,
 } from "./liftable";
 import {
   AsyncReducer,
@@ -58,15 +58,15 @@ import {
   concatT,
   createObservable,
   fromArrayT as fromArrayTObs,
+  getObserverCount,
+  getReplay,
   keep as keepObs,
   map as mapObs,
   mapT as mapTObs,
   never,
-  observerCount,
   onNotify,
   onSubscribe,
   publish,
-  replay,
   scanAsync as scanAsyncObs,
   scan as scanObs,
   takeFirst,
@@ -74,7 +74,7 @@ import {
   using,
   withLatestFrom,
 } from "./observable";
-import { Observer, scheduler } from "./observer";
+import { Observer, getScheduler } from "./observer";
 import { none } from "./option";
 import { SchedulerLike, getDelay } from "./scheduler";
 import { sinkInto } from "./source";
@@ -137,11 +137,11 @@ class LiftedAsyncEnumerator<T> extends AsyncEnumerator<T> {
   }
 
   get observerCount(): number {
-    return observerCount(this.observable);
+    return getObserverCount(this.observable);
   }
 
   get replay(): number {
-    return replay(this.observable);
+    return getReplay(this.observable);
   }
 
   dispatch(req: void) {
@@ -317,7 +317,7 @@ const _fromEnumerable = <T>(
     ),
     onNotify(move),
     takeWhileObs(hasCurrent),
-    mapObs(current),
+    mapObs(getCurrent),
   );
 
 /**
@@ -394,7 +394,7 @@ export const keep: <T>(
         delegate,
         onNotify(x => {
           if (!predicate(x)) {
-            pipe(this, liftDelegate, dispatch(none));
+            pipe(this, getDelegate, dispatch(none));
           }
         }),
         keepObs(predicate),
@@ -403,11 +403,11 @@ export const keep: <T>(
     }
 
     get observerCount() {
-      return observerCount(this.obs);
+      return getObserverCount(this.obs);
     }
 
     get replay(): number {
-      return replay(this.obs);
+      return getReplay(this.obs);
     }
 
     sink(observer: Observer<T>): void {
@@ -439,7 +439,7 @@ export const map: <TA, TB>(
     }
 
     sink(observer: Observer<TB>): void {
-      pipe(this, liftDelegate, this.op, sinkInto(observer));
+      pipe(this, getDelegate, this.op, sinkInto(observer));
     }
   },
 );
@@ -469,7 +469,7 @@ export const scan: <T, TAcc>(
     }
 
     sink(observer: Observer<TAcc>): void {
-      pipe(this, liftDelegate, this.op, sinkInto(observer));
+      pipe(this, getDelegate, this.op, sinkInto(observer));
     }
   },
 );
@@ -499,11 +499,11 @@ class ScanAsyncAsyncEnumerator<
   }
 
   get observerCount() {
-    return observerCount(this.obs);
+    return getObserverCount(this.obs);
   }
 
   get replay(): number {
-    return replay(this.obs);
+    return getReplay(this.obs);
   }
 
   sink(observer: Observer<TAcc>): void {
@@ -561,11 +561,11 @@ export const takeWhile: <T>(
     }
 
     get observerCount() {
-      return observerCount(this.obs);
+      return getObserverCount(this.obs);
     }
 
     get replay(): number {
-      return replay(this.obs);
+      return getReplay(this.obs);
     }
 
     sink(observer: Observer<T>): void {
@@ -584,7 +584,7 @@ export const toObservable =
     createObservable(observer => {
       const enumerator = pipe(
         enumerable,
-        stream(scheduler(observer)),
+        stream(getScheduler(observer)),
         addTo(observer),
       );
 

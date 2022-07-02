@@ -1,8 +1,8 @@
 /// <reference types="./asyncEnumerator.d.ts" />
 import { dispatch } from './dispatcher.mjs';
 import { pipe } from './functions.mjs';
-import { DisposableLiftable, delegate } from './liftable.mjs';
-import { observerCount, replay } from './observable.mjs';
+import { DisposableLiftable, getDelegate } from './liftable.mjs';
+import { getObserverCount, getReplay } from './observable.mjs';
 
 class AsyncEnumerator extends DisposableLiftable {
     constructor() {
@@ -16,16 +16,16 @@ class AbstractDelegatingAsyncEnumerator extends AsyncEnumerator {
         this.delegate = delegate;
     }
     get observerCount() {
-        return pipe(this, delegate, observerCount);
+        return pipe(this, getDelegate, getObserverCount);
     }
     get replay() {
-        return pipe(this, delegate, replay);
+        return pipe(this, getDelegate, getReplay);
     }
     get scheduler() {
-        return delegate(this).scheduler;
+        return getDelegate(this).scheduler;
     }
     dispatch(req) {
-        pipe(this, delegate, dispatch(req));
+        pipe(this, getDelegate, dispatch(req));
     }
 }
 

@@ -15,7 +15,6 @@
 ### Properties
 
 - [T](web.WindowLocationStreamLike.md#t)
-- [scheduler](web.WindowLocationStreamLike.md#scheduler)
 
 ### Methods
 
@@ -31,16 +30,6 @@
 #### Inherited from
 
 StreamLike.T
-
-___
-
-### scheduler
-
-• `Readonly` **scheduler**: [`SchedulerLike`](scheduler.SchedulerLike.md)
-
-#### Inherited from
-
-[StreamLike](stream.StreamLike.md).[scheduler](stream.StreamLike.md#scheduler)
 
 ## Methods
 

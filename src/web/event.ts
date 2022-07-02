@@ -2,7 +2,7 @@ import { dispatch } from "../dispatcher";
 import { onDisposed } from "../disposable";
 import { Function1, pipe } from "../functions";
 import { ObservableLike, createObservable } from "../observable";
-import { dispatcher as getDispatcher } from "../observer";
+import { getDispatcher } from "../observer";
 
 export const fromEvent = <T>(
   target: EventTarget,

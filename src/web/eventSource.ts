@@ -2,7 +2,7 @@ import { dispatch } from "../dispatcher";
 import { onDisposed } from "../disposable";
 import { newInstance, pipe } from "../functions";
 import { ObservableLike, createObservable } from "../observable";
-import { dispatcher as getDispatcher } from "../observer";
+import { getDispatcher } from "../observer";
 import { keep } from "../readonlyArray";
 
 const reservedEvents = ["error", "open"];

@@ -8,7 +8,7 @@ import {
   pipeLazy,
   raise,
 } from "./functions";
-import { LiftableStateLike, delegate } from "./liftable";
+import { LiftableStateLike, getDelegate } from "./liftable";
 import { Option, none } from "./option";
 import {
   everySatisfy,
@@ -73,17 +73,18 @@ export abstract class AbstractPassThroughEnumerator<T> extends Enumerator<T> {
   }
 
   get current(): T {
-    return pipe(this, delegate, current);
+    return pipe(this, getDelegate, getCurrent);
   }
 
   get hasCurrent(): boolean {
-    return pipe(this, delegate, hasCurrent);
+    return pipe(this, getDelegate, hasCurrent);
   }
 
   abstract move(): boolean;
 }
 
-export const current = <T>(enumerator: Enumerator<T>): T => enumerator.current;
+export const getCurrent = <T>(enumerator: Enumerator<T>): T =>
+  enumerator.current;
 
 export const hasCurrent = <T>(enumerator: Enumerator<T>) =>
   enumerator.hasCurrent;
@@ -96,7 +97,7 @@ export const forEach =
   ): Function1<TEnumerator, TEnumerator> =>
   enumerator => {
     while (move(enumerator)) {
-      f(current(enumerator));
+      f(getCurrent(enumerator));
     }
     return enumerator;
   };
@@ -126,7 +127,7 @@ class ZipEnumerator<T> extends AbstractEnumerator<readonly T[]> {
       moveAll(enumerators);
 
       if (allHaveCurrent(enumerators)) {
-        this.current = pipe(enumerators, map(current));
+        this.current = pipe(enumerators, map(getCurrent));
       } else {
         pipe(this, dispose());
       }
