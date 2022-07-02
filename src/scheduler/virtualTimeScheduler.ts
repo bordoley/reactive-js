@@ -1,6 +1,6 @@
+import { MAX_SAFE_INTEGER } from "../__internal__.env";
 import { add, dispose, isDisposed } from "../disposable";
 import { AbstractEnumerator, hasCurrent, reset } from "../enumerator";
-import { MAX_SAFE_INTEGER } from "../env";
 import { newInstance, pipe } from "../functions";
 import { isSome, none } from "../option";
 import {

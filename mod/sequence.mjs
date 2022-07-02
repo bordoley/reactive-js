@@ -1,5 +1,5 @@
 /// <reference types="./sequence.d.ts" />
-import { createFromArray } from './container.mjs';
+import { createFromArray } from './__internal__.container.mjs';
 import { isDisposed, dispose } from './disposable.mjs';
 import { createEnumerable } from './enumerable.mjs';
 import { AbstractEnumerator, hasCurrent } from './enumerator.mjs';

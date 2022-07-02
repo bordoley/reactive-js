@@ -1,3 +1,4 @@
+import { __DEV__ } from "./__internal__.env";
 import { AbstractDisposableContainer } from "./container";
 import { DispatcherLike } from "./dispatcher";
 import {
@@ -8,7 +9,6 @@ import {
   onComplete,
   onDisposed,
 } from "./disposable";
-import { __DEV__ } from "./env";
 import {
   isEmpty,
   length,

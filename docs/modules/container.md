@@ -51,7 +51,6 @@
 - [concatMap](container.md#concatmap)
 - [concatWith](container.md#concatwith)
 - [contains](container.md#contains)
-- [createFromArray](container.md#createfromarray)
 - [empty](container.md#empty)
 - [encodeUtf8](container.md#encodeutf8)
 - [endWith](container.md#endwith)
@@ -194,47 +193,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](container.md#containeroperator)<`C`, `T`, `boolean`\>
-
-___
-
-### createFromArray
-
-▸ **createFromArray**<`C`, `O`\>(`factory`): <T_1\>(`options?`: `Partial`<`O`\>) => [`Function1`](functions.md#function1)<readonly `T_1`[], [`ContainerOf`](container.md#containerof)<`C`, `T_1`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
-| `O` | extends [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md) = [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md) |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | <T\>(`values`: readonly `T`[], `startIndex`: `number`, `endIndex`: `number`, `options?`: `Partial`<`O`\>) => [`ContainerOf`](container.md#containerof)<`C`, `T`\> |
-
-#### Returns
-
-`fn`
-
-▸ <`T_1`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T_1`[], [`ContainerOf`](container.md#containerof)<`C`, `T_1`\>\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `T_1` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Partial`<`O`\> |
-
-##### Returns
-
-[`Function1`](functions.md#function1)<readonly `T_1`[], [`ContainerOf`](container.md#containerof)<`C`, `T_1`\>\>
 
 ___
 

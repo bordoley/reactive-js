@@ -1,6 +1,6 @@
+import { createUsing } from "../__internal__.source";
 import { Using } from "../container";
 import { ObservableLike } from "../observable";
-import { createUsing } from "../source";
 import { createT } from "./createObservable";
 
 export const using: Using<ObservableLike<unknown>>["using"] =

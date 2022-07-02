@@ -15,9 +15,6 @@ import {
   callWith,
   compose,
   isEqualTo,
-  length,
-  max,
-  min,
   negate,
   newInstance,
   pipe,
@@ -385,27 +382,6 @@ export const concatWith =
   ): ContainerOperator<C, T, T> =>
   first =>
     concat(first, snd);
-
-export const createFromArray =
-  <C extends ContainerLike, O extends FromArrayOptions = FromArrayOptions>(
-    factory: <T>(
-      values: readonly T[],
-      startIndex: number,
-      endIndex: number,
-      options?: Partial<O>,
-    ) => ContainerOf<C, T>,
-  ) =>
-  <T>(options: Partial<O> = {}): Function1<readonly T[], ContainerOf<C, T>> =>
-  values => {
-    const valuesLength = length(values);
-    const startIndex = min(options.startIndex ?? 0, valuesLength);
-    const endIndex = max(
-      min(options.endIndex ?? valuesLength, valuesLength),
-      0,
-    );
-
-    return factory(values, startIndex, endIndex, options);
-  };
 
 export const empty = <
   C extends ContainerLike,

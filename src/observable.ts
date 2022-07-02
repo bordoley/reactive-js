@@ -1,4 +1,22 @@
 import {
+  createCatchErrorOperator,
+  createDecodeWithCharsetOperator,
+  createDistinctUntilChangedOperator,
+  createEverySatisfyOperator,
+  createFromDisposable,
+  createKeepOperator,
+  createOnSink,
+  createPairwiseOperator,
+  createReduceOperator,
+  createScanOperator,
+  createSkipFirstOperator,
+  createSomeSatisfyOperator,
+  createTakeFirstOperator,
+  createTakeLastOperator,
+  createTakeWhileOperator,
+  createThrowIfEmptyOperator,
+} from "./__internal__.source";
+import {
   Container,
   ContainerLike,
   ContainerOf,
@@ -71,27 +89,7 @@ import {
   createVirtualTimeScheduler,
   hasDelay,
 } from "./scheduler";
-import {
-  SourceLike,
-  createCatchErrorOperator,
-  createDecodeWithCharsetOperator,
-  createDistinctUntilChangedOperator,
-  createEverySatisfyOperator,
-  createFromDisposable,
-  createKeepOperator,
-  createOnSink,
-  createPairwiseOperator,
-  createReduceOperator,
-  createScanOperator,
-  createSkipFirstOperator,
-  createSomeSatisfyOperator,
-  createTakeFirstOperator,
-  createTakeLastOperator,
-  createTakeWhileOperator,
-  createThrowIfEmptyOperator,
-  notifySink,
-  sourceFrom,
-} from "./source";
+import { SourceLike, notifySink, sourceFrom } from "./source";
 
 /**
  * The source of notifications which notifies a `ObserverLike` instance.

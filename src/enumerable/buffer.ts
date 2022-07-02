@@ -1,3 +1,4 @@
+import { MAX_SAFE_INTEGER } from "../__internal__.env";
 import { Buffer } from "../container";
 import { add, dispose } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
@@ -8,7 +9,6 @@ import {
   hasCurrent,
   reset,
 } from "../enumerator";
-import { MAX_SAFE_INTEGER } from "../env";
 import { length, max, newInstanceWith, pipe } from "../functions";
 import { lift } from "./lift";
 

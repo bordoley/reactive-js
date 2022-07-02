@@ -1,4 +1,5 @@
-import { FromArray, createFromArray } from "../container";
+import { createFromArray } from "../__internal__.container";
+import { FromArray } from "../container";
 import { dispose } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike } from "../observable";

@@ -1,0 +1,63 @@
+/// <reference types="./__internal__.liftable.d.ts" />
+import { empty } from './container.mjs';
+import { bindTo, add, addTo, onComplete, dispose } from './disposable.mjs';
+import { strictEquality, pipe, newInstanceWith, max } from './functions.mjs';
+import { lift, covariant } from './liftable.mjs';
+import { none } from './option.mjs';
+
+const createDistinctUntilChangedLiftOperator = (m, DistinctUntilChangedLiftableState) => (options = {}) => {
+    const { equality = strictEquality } = options;
+    const operator = delegate => pipe(DistinctUntilChangedLiftableState, newInstanceWith(delegate, equality), bindTo(delegate));
+    return pipe(operator, lift(m));
+};
+const createKeepLiftOperator = (m, KeepLiftableState) => (predicate) => {
+    const operator = (delegate) => pipe(KeepLiftableState, newInstanceWith(delegate, predicate), bindTo(delegate));
+    return pipe(operator, lift(m));
+};
+const createMapLiftOperator = (m, MapLiftableState) => (mapper) => pipe((delegate) => pipe(MapLiftableState, newInstanceWith(delegate, mapper), bindTo(delegate)), lift(m));
+const createOnNotifyLiftOperator = (m, OnNotifyLiftableState) => (onNotify) => pipe((delegate) => pipe(OnNotifyLiftableState, newInstanceWith(delegate, onNotify), bindTo(delegate)), lift(m));
+const createPairwiseLiftOperator = (m, PairwiseLiftableState) => () => pipe((delegate) => pipe(PairwiseLiftableState, newInstanceWith(delegate), bindTo(delegate)), lift(m));
+const createScanLiftOperator = (m, ScanLiftableState) => (reducer, initialValue) => pipe((delegate) => pipe(ScanLiftableState, newInstanceWith(delegate, reducer, initialValue()), bindTo(delegate)), lift(m));
+const createSkipFirstLiftOperator = (m, SkipLiftableState) => (options = {}) => {
+    const { count = 1 } = options;
+    const operator = delegate => pipe(SkipLiftableState, newInstanceWith(delegate, count), bindTo(delegate));
+    const lifted = pipe(operator, lift(m));
+    return runnable => (count > 0 ? pipe(runnable, lifted) : runnable);
+};
+const createTakeFirstLiftOperator = (m, TakeFirstLiftableState) => (options = {}) => {
+    var _a;
+    const { count = max((_a = options.count) !== null && _a !== void 0 ? _a : 1, 0) } = options;
+    const operator = delegate => pipe(TakeFirstLiftableState, newInstanceWith(delegate, count), bindTo(delegate));
+    const lifted = pipe(operator, lift(m));
+    return source => (count > 0 ? pipe(source, lifted) : empty(m));
+};
+const createTakeWhileLiftOperator = (m, TakeWhileLiftableState) => (predicate, options = {}) => {
+    const { inclusive = false } = options;
+    return pipe((delegate) => {
+        const lifted = pipe(TakeWhileLiftableState, newInstanceWith(delegate, predicate, inclusive), bindTo(delegate));
+        return lifted;
+    }, lift(m));
+};
+const createThrowIfEmptyLiftOperator = (m, ThrowIfEmptyLiftableState) => (factory) => pipe((delegate) => {
+    const lifted = pipe(ThrowIfEmptyLiftableState, newInstanceWith(delegate), m.variance === covariant ? add(delegate, true) : addTo(delegate));
+    const { parent, child } = m.variance === covariant
+        ? { parent: lifted, child: delegate }
+        : { parent: delegate, child: lifted };
+    pipe(child, onComplete(() => {
+        let error = none;
+        if (lifted.isEmpty) {
+            let cause = none;
+            try {
+                cause = factory();
+            }
+            catch (e) {
+                cause = e;
+            }
+            error = { cause };
+        }
+        pipe(parent, dispose(error));
+    }));
+    return lifted;
+}, lift(m));
+
+export { createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator };
