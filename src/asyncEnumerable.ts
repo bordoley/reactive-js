@@ -5,6 +5,7 @@ import {
   createScanLiftOperator,
   createTakeWhileLiftOperator,
 } from "./__internal__.liftable";
+import { getDelay } from "./__internal__.optionalArgs";
 import { lift, liftT } from "./asyncEnumerable/lift";
 import {
   AbstractDelegatingAsyncEnumerator,
@@ -76,7 +77,7 @@ import {
 } from "./observable";
 import { Observer, getScheduler } from "./observer";
 import { none } from "./option";
-import { SchedulerLike, getDelay } from "./scheduler";
+import { SchedulerLike } from "./scheduler";
 import { sinkInto } from "./source";
 import { StreamableLike, stream } from "./streamable";
 

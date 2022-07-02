@@ -1,3 +1,4 @@
+import { getDelay } from "../__internal__.optionalArgs";
 import { Disposable, Error, dispose, isDisposed } from "../disposable";
 import {
   Function1,
@@ -9,7 +10,7 @@ import {
 } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
-import { getDelay, shouldYield } from "./scheduler";
+import { shouldYield } from "./scheduler";
 
 const isYieldError = (e: unknown): e is YieldError => e instanceof YieldError;
 

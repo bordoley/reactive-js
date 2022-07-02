@@ -1,3 +1,4 @@
+import { getDelay } from "../__internal__.optionalArgs";
 import {
   Disposable,
   add,
@@ -14,7 +15,7 @@ import {
   SchedulerImplementationLike,
   SchedulerLike,
 } from "../scheduler";
-import { getDelay, getNow, runContinuation } from "./scheduler";
+import { getNow, runContinuation } from "./scheduler";
 
 const scheduleImmediateWithSetImmediate = (
   scheduler: HostScheduler,

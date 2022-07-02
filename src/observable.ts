@@ -1,3 +1,4 @@
+import { hasDelay } from "./__internal__.optionalArgs";
 import {
   createCatchErrorOperator,
   createDecodeWithCharsetOperator,
@@ -87,7 +88,6 @@ import {
   VirtualTimeSchedulerLike,
   __yield,
   createVirtualTimeScheduler,
-  hasDelay,
 } from "./scheduler";
 import { SourceLike, notifySink, sourceFrom } from "./source";
 

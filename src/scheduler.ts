@@ -95,6 +95,4 @@ export {
   inContinuation,
   getNow,
   shouldYield,
-  getDelay,
-  hasDelay,
 } from "./scheduler/scheduler";

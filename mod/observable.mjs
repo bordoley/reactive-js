@@ -1,4 +1,5 @@
 /// <reference types="./observable.d.ts" />
+import { hasDelay, getDelay } from './__internal__.optionalArgs.mjs';
 import { createMapOperator, createOnNotifyOperator, createUsing, createNever, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './__internal__.source.mjs';
 import { empty as empty$1, fromValue, throws, concatMap } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
@@ -7,7 +8,7 @@ import { move, getCurrent, AbstractEnumerator, reset, hasCurrent, zip as zip$1, 
 import { pipe, newInstance, getLength, newInstanceWith, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, max, returns, identity, instanceFactory } from './functions.mjs';
 import { AbstractSource, AbtractDisposableSource, sinkInto, sourceFrom, assertState, notifySink, notify } from './source.mjs';
 import { getScheduler, AbstractDelegatingObserver, Observer, createDelegatingObserver } from './observer.mjs';
-import { schedule, hasDelay, __yield, inContinuation, runContinuation, getDelay, createVirtualTimeScheduler } from './scheduler.mjs';
+import { schedule, __yield, inContinuation, runContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { createFromArray } from './__internal__.container.mjs';
 import { contraVariant, getDelegate } from './liftable.mjs';
 import { none, isNone, isSome } from './option.mjs';

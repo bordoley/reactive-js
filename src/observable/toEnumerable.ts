@@ -1,3 +1,4 @@
+import { getDelay } from "../__internal__.optionalArgs";
 import { add, addTo, dispose, isDisposed } from "../disposable";
 import { EnumerableLike, ToEnumerable, createEnumerable } from "../enumerable";
 import {
@@ -14,7 +15,6 @@ import {
   SchedulerContinuationLike,
   SchedulerImplementationLike,
   SchedulerLike,
-  getDelay,
   inContinuation,
   runContinuation,
 } from "../scheduler";

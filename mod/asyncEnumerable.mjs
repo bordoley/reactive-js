@@ -1,6 +1,7 @@
 /// <reference types="./asyncEnumerable.d.ts" />
 import { createFromArray } from './__internal__.container.mjs';
 import { createKeepLiftOperator, createMapLiftOperator, createScanLiftOperator, createTakeWhileLiftOperator } from './__internal__.liftable.mjs';
+import { getDelay } from './__internal__.optionalArgs.mjs';
 import { pipe, newInstance, getLength, compose, increment, returns, pipeLazy, newInstanceWith } from './functions.mjs';
 import { AbstractLiftable, covariant, getDelegate } from './liftable.mjs';
 import { stream } from './streamable.mjs';
@@ -13,7 +14,6 @@ import { move, hasCurrent, getCurrent } from './enumerator.mjs';
 import { Subject, publish, getObserverCount, getReplay, fromArrayT as fromArrayT$1, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, withLatestFrom, using, concatT, never, onNotify, takeWhile as takeWhile$1, map as map$1, scanAsync as scanAsync$1, keep as keep$1, createObservable, onSubscribe } from './observable.mjs';
 import { getScheduler } from './observer.mjs';
 import { none } from './option.mjs';
-import { getDelay } from './scheduler.mjs';
 import { sinkInto } from './source.mjs';
 
 class LiftedAsyncEnumerable extends AbstractLiftable {

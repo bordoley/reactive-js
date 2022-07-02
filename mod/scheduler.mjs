@@ -1,8 +1,9 @@
 /// <reference types="./scheduler.d.ts" />
 import { MAX_SAFE_INTEGER } from './__internal__.env.mjs';
 import { isDisposed, Disposable, dispose, disposed, add, addTo, onDisposed } from './disposable.mjs';
-import { floor, getLength, newInstance, max, pipe, raise, instanceFactory, newInstanceWith } from './functions.mjs';
+import { floor, getLength, newInstance, pipe, raise, instanceFactory, max, newInstanceWith } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
+import { getDelay } from './__internal__.optionalArgs.mjs';
 import { AbstractEnumerator, move, hasCurrent, reset, getCurrent } from './enumerator.mjs';
 
 const computeParentIndex = (index) => floor((index - 1) / 2);
@@ -95,8 +96,6 @@ const runContinuation = (continuation) => scheduler => {
 const inContinuation = (scheduler) => scheduler.inContinuation;
 const getNow = (scheduler) => scheduler.now;
 const shouldYield = (scheduler) => scheduler.shouldYield;
-const getDelay = (options = {}) => { var _a; return floor(max((_a = options.delay) !== null && _a !== void 0 ? _a : 0, 0)); };
-const hasDelay = (options = {}) => getDelay(options) > 0;
 
 const isYieldError = (e) => e instanceof YieldError;
 class YieldError {
@@ -584,4 +583,4 @@ const createVirtualTimeScheduler = (options = {}) => {
     return newInstance(VirtualTimeSchedulerImpl, maxMicroTaskTicks);
 };
 
-export { __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, getDelay, getNow, hasDelay, inContinuation, runContinuation, schedule, shouldYield, toSchedulerWithPriority };
+export { __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, getNow, inContinuation, runContinuation, schedule, shouldYield, toSchedulerWithPriority };

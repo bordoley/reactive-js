@@ -1,10 +1,11 @@
 import { createFromArray } from "../__internal__.container";
+import { hasDelay } from "../__internal__.optionalArgs";
 import { FromArray } from "../container";
 import { dispose } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
-import { __yield, hasDelay } from "../scheduler";
+import { __yield } from "../scheduler";
 import { createObservable } from "./createObservable";
 import { defer } from "./defer";
 import { tagEnumerable } from "./observable";
