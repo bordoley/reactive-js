@@ -42,7 +42,7 @@ export abstract class AbstractContainer implements ContainerLike {
   }
 }
 
-export abstract class DisposableContainer
+export abstract class AbstractDisposableContainer
   extends Disposable
   implements ContainerLike
 {

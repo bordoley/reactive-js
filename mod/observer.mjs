@@ -1,5 +1,5 @@
 /// <reference types="./observer.d.ts" />
-import { DisposableContainer } from './container.mjs';
+import { AbstractDisposableContainer } from './container.mjs';
 import { addTo, onComplete, Disposable, isDisposed, dispose, onDisposed } from './disposable.mjs';
 import { __DEV__ } from './env.mjs';
 import { length, pipe, newInstanceWith, isEmpty, raise, newInstance } from './functions.mjs';
@@ -35,7 +35,7 @@ class ObserverDelegatingDispatcher extends Disposable {
         this.nextQueue = [];
     }
     get scheduler() {
-        return this.observer.scheduler;
+        return getScheduler(this.observer);
     }
     dispatch(next) {
         if (!isDisposed(this)) {
@@ -47,7 +47,7 @@ class ObserverDelegatingDispatcher extends Disposable {
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
-class Observer extends DisposableContainer {
+class Observer extends AbstractDisposableContainer {
     constructor(scheduler) {
         super();
         this.scheduler = scheduler;
@@ -71,7 +71,7 @@ class Observer extends DisposableContainer {
 }
 if (__DEV__) {
     Observer.prototype.assertState = function assertStateDev() {
-        if (!inContinuation(this.scheduler)) {
+        if (!pipe(this, getScheduler, inContinuation)) {
             raise("Observer.notify() may only be invoked within a scheduled SchedulerContinuation");
         }
         else if (isDisposed(this)) {

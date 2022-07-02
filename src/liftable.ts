@@ -1,9 +1,9 @@
 import {
   AbstractContainer,
+  AbstractDisposableContainer,
   Container,
   ContainerLike,
   ContainerOperator,
-  DisposableContainer,
   FromArray,
   empty,
 } from "./container";
@@ -46,8 +46,10 @@ export abstract class AbstractLiftable<TState extends LiftableStateLike>
   }
 }
 
-export abstract class DisposableLiftable<TState extends LiftableStateLike>
-  extends DisposableContainer
+export abstract class AbtractDisposableLiftable<
+    TState extends LiftableStateLike,
+  >
+  extends AbstractDisposableContainer
   implements LiftableLike
 {
   get liftableStateType(): TState {

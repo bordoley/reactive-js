@@ -1,10 +1,12 @@
 /// <reference types="./stream.d.ts" />
+import { getScheduler } from './dispatcher.mjs';
 import { add, addTo } from './disposable.mjs';
 import { newInstance, pipe } from './functions.mjs';
-import { DisposableObservable, Subject, publish, getObserverCount, getReplay } from './observable.mjs';
+import { getDelegate } from './liftable.mjs';
+import { AbstractDisposableObservable, Subject, publish, getObserverCount, getReplay } from './observable.mjs';
 import { sinkInto } from './source.mjs';
 
-class StreamImpl extends DisposableObservable {
+class StreamImpl extends AbstractDisposableObservable {
     constructor(op, scheduler, options) {
         super();
         this.scheduler = scheduler;
@@ -27,19 +29,19 @@ class StreamImpl extends DisposableObservable {
         pipe(this.observable, sinkInto(observer));
     }
 }
-class AbstractDelegatingStream extends DisposableObservable {
+class AbstractDelegatingStream extends AbstractDisposableObservable {
     constructor(delegate) {
         super();
         this.delegate = delegate;
     }
     get observerCount() {
-        return getObserverCount(this.delegate);
+        return pipe(this, getDelegate, getObserverCount);
     }
     get replay() {
-        return getReplay(this.delegate);
+        return pipe(this, getDelegate, getReplay);
     }
     get scheduler() {
-        return this.delegate.scheduler;
+        return pipe(this, getDelegate, getScheduler);
     }
 }
 const createStream = (op, scheduler, options) => newInstance(StreamImpl, op, scheduler, options);

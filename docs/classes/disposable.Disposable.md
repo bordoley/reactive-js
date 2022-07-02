@@ -10,7 +10,7 @@ Represents an unmanaged resource that can be disposed.
 
 - **`Disposable`**
 
-  ↳ [`DisposableContainer`](container.DisposableContainer.md)
+  ↳ [`AbstractDisposableContainer`](container.AbstractDisposableContainer.md)
 
   ↳ [`DispatcherLike`](../interfaces/dispatcher.DispatcherLike.md)
 

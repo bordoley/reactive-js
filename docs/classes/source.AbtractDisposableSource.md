@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [source](../modules/source.md) / DisposableSource
+[Reactive-JS](../README.md) / [source](../modules/source.md) / AbtractDisposableSource
 
-# Class: DisposableSource<T, TSink\>
+# Class: AbtractDisposableSource<T, TSink\>
 
-[source](../modules/source.md).DisposableSource
+[source](../modules/source.md).AbtractDisposableSource
 
 ## Type parameters
 
@@ -13,11 +13,11 @@
 
 ## Hierarchy
 
-- [`DisposableLiftable`](liftable.DisposableLiftable.md)<`TSink`\>
+- [`AbtractDisposableLiftable`](liftable.AbtractDisposableLiftable.md)<`TSink`\>
 
-  ↳ **`DisposableSource`**
+  ↳ **`AbtractDisposableSource`**
 
-  ↳↳ [`DisposableObservable`](observable.DisposableObservable.md)
+  ↳↳ [`AbstractDisposableObservable`](observable.AbstractDisposableObservable.md)
 
 ## Implements
 
@@ -27,27 +27,27 @@
 
 ### Constructors
 
-- [constructor](source.DisposableSource.md#constructor)
+- [constructor](source.AbtractDisposableSource.md#constructor)
 
 ### Accessors
 
-- [T](source.DisposableSource.md#t)
-- [error](source.DisposableSource.md#error)
-- [isDisposed](source.DisposableSource.md#isdisposed)
-- [liftableStateType](source.DisposableSource.md#liftablestatetype)
-- [type](source.DisposableSource.md#type)
+- [T](source.AbtractDisposableSource.md#t)
+- [error](source.AbtractDisposableSource.md#error)
+- [isDisposed](source.AbtractDisposableSource.md#isdisposed)
+- [liftableStateType](source.AbtractDisposableSource.md#liftablestatetype)
+- [type](source.AbtractDisposableSource.md#type)
 
 ### Methods
 
-- [add](source.DisposableSource.md#add)
-- [dispose](source.DisposableSource.md#dispose)
-- [sink](source.DisposableSource.md#sink)
+- [add](source.AbtractDisposableSource.md#add)
+- [dispose](source.AbtractDisposableSource.md#dispose)
+- [sink](source.AbtractDisposableSource.md#sink)
 
 ## Constructors
 
 ### constructor
 
-• **new DisposableSource**<`T`, `TSink`\>()
+• **new AbtractDisposableSource**<`T`, `TSink`\>()
 
 #### Type parameters
 
@@ -58,7 +58,7 @@
 
 #### Inherited from
 
-[DisposableLiftable](liftable.DisposableLiftable.md).[constructor](liftable.DisposableLiftable.md#constructor)
+[AbtractDisposableLiftable](liftable.AbtractDisposableLiftable.md).[constructor](liftable.AbtractDisposableLiftable.md#constructor)
 
 ## Accessors
 
@@ -76,7 +76,7 @@
 
 #### Inherited from
 
-DisposableLiftable.T
+AbtractDisposableLiftable.T
 
 ___
 
@@ -92,7 +92,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-DisposableLiftable.error
+AbtractDisposableLiftable.error
 
 ___
 
@@ -108,7 +108,7 @@ ___
 
 #### Inherited from
 
-DisposableLiftable.isDisposed
+AbtractDisposableLiftable.isDisposed
 
 ___
 
@@ -126,7 +126,7 @@ ___
 
 #### Inherited from
 
-DisposableLiftable.liftableStateType
+AbtractDisposableLiftable.liftableStateType
 
 ___
 
@@ -144,7 +144,7 @@ ___
 
 #### Inherited from
 
-DisposableLiftable.type
+AbtractDisposableLiftable.type
 
 ## Methods
 
@@ -158,7 +158,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DisposableSource`](source.DisposableSource.md)<`T`, `TSink`\> |
+| `this` | [`AbtractDisposableSource`](source.AbtractDisposableSource.md)<`T`, `TSink`\> |
 | `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
 | `ignoreChildErrors` | `boolean` |
 
@@ -170,7 +170,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Inherited from
 
-[DisposableLiftable](liftable.DisposableLiftable.md).[add](liftable.DisposableLiftable.md#add)
+[AbtractDisposableLiftable](liftable.AbtractDisposableLiftable.md).[add](liftable.AbtractDisposableLiftable.md#add)
 
 ___
 
@@ -184,7 +184,7 @@ Dispose the resource.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `this` | [`DisposableSource`](source.DisposableSource.md)<`T`, `TSink`\> | - |
+| `this` | [`AbtractDisposableSource`](source.AbtractDisposableSource.md)<`T`, `TSink`\> | - |
 | `error?` | [`Error`](../interfaces/disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns
@@ -193,7 +193,7 @@ Dispose the resource.
 
 #### Inherited from
 
-[DisposableLiftable](liftable.DisposableLiftable.md).[dispose](liftable.DisposableLiftable.md#dispose)
+[AbtractDisposableLiftable](liftable.AbtractDisposableLiftable.md).[dispose](liftable.AbtractDisposableLiftable.md#dispose)
 
 ___
 
@@ -205,7 +205,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DisposableSource`](source.DisposableSource.md)<`T`, `TSink`\> |
+| `this` | [`AbtractDisposableSource`](source.AbtractDisposableSource.md)<`T`, `TSink`\> |
 | `sink` | `TSink` |
 
 #### Returns

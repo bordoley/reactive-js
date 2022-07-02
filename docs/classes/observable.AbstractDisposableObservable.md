@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [observable](../modules/observable.md) / DisposableObservable
+[Reactive-JS](../README.md) / [observable](../modules/observable.md) / AbstractDisposableObservable
 
-# Class: DisposableObservable<T\>
+# Class: AbstractDisposableObservable<T\>
 
-[observable](../modules/observable.md).DisposableObservable
+[observable](../modules/observable.md).AbstractDisposableObservable
 
 ## Type parameters
 
@@ -12,9 +12,9 @@
 
 ## Hierarchy
 
-- [`DisposableSource`](source.DisposableSource.md)<`T`, [`Observer`](observer.Observer.md)<`T`\>\>
+- [`AbtractDisposableSource`](source.AbtractDisposableSource.md)<`T`, [`Observer`](observer.Observer.md)<`T`\>\>
 
-  ↳ **`DisposableObservable`**
+  ↳ **`AbstractDisposableObservable`**
 
   ↳↳ [`Subject`](observable.Subject.md)
 
@@ -28,27 +28,27 @@
 
 ### Constructors
 
-- [constructor](observable.DisposableObservable.md#constructor)
+- [constructor](observable.AbstractDisposableObservable.md#constructor)
 
 ### Accessors
 
-- [T](observable.DisposableObservable.md#t)
-- [error](observable.DisposableObservable.md#error)
-- [isDisposed](observable.DisposableObservable.md#isdisposed)
-- [liftableStateType](observable.DisposableObservable.md#liftablestatetype)
-- [type](observable.DisposableObservable.md#type)
+- [T](observable.AbstractDisposableObservable.md#t)
+- [error](observable.AbstractDisposableObservable.md#error)
+- [isDisposed](observable.AbstractDisposableObservable.md#isdisposed)
+- [liftableStateType](observable.AbstractDisposableObservable.md#liftablestatetype)
+- [type](observable.AbstractDisposableObservable.md#type)
 
 ### Methods
 
-- [add](observable.DisposableObservable.md#add)
-- [dispose](observable.DisposableObservable.md#dispose)
-- [sink](observable.DisposableObservable.md#sink)
+- [add](observable.AbstractDisposableObservable.md#add)
+- [dispose](observable.AbstractDisposableObservable.md#dispose)
+- [sink](observable.AbstractDisposableObservable.md#sink)
 
 ## Constructors
 
 ### constructor
 
-• **new DisposableObservable**<`T`\>()
+• **new AbstractDisposableObservable**<`T`\>()
 
 #### Type parameters
 
@@ -58,7 +58,7 @@
 
 #### Inherited from
 
-[DisposableSource](source.DisposableSource.md).[constructor](source.DisposableSource.md#constructor)
+[AbtractDisposableSource](source.AbtractDisposableSource.md).[constructor](source.AbtractDisposableSource.md#constructor)
 
 ## Accessors
 
@@ -76,7 +76,7 @@
 
 #### Inherited from
 
-DisposableSource.T
+AbtractDisposableSource.T
 
 ___
 
@@ -92,7 +92,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-DisposableSource.error
+AbtractDisposableSource.error
 
 ___
 
@@ -108,7 +108,7 @@ ___
 
 #### Inherited from
 
-DisposableSource.isDisposed
+AbtractDisposableSource.isDisposed
 
 ___
 
@@ -126,7 +126,7 @@ ___
 
 #### Inherited from
 
-DisposableSource.liftableStateType
+AbtractDisposableSource.liftableStateType
 
 ___
 
@@ -144,7 +144,7 @@ ___
 
 #### Inherited from
 
-DisposableSource.type
+AbtractDisposableSource.type
 
 ## Methods
 
@@ -158,7 +158,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DisposableObservable`](observable.DisposableObservable.md)<`T`\> |
+| `this` | [`AbstractDisposableObservable`](observable.AbstractDisposableObservable.md)<`T`\> |
 | `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
 | `ignoreChildErrors` | `boolean` |
 
@@ -170,7 +170,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Inherited from
 
-[DisposableSource](source.DisposableSource.md).[add](source.DisposableSource.md#add)
+[AbtractDisposableSource](source.AbtractDisposableSource.md).[add](source.AbtractDisposableSource.md#add)
 
 ___
 
@@ -184,7 +184,7 @@ Dispose the resource.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `this` | [`DisposableObservable`](observable.DisposableObservable.md)<`T`\> | - |
+| `this` | [`AbstractDisposableObservable`](observable.AbstractDisposableObservable.md)<`T`\> | - |
 | `error?` | [`Error`](../interfaces/disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns
@@ -193,7 +193,7 @@ Dispose the resource.
 
 #### Inherited from
 
-[DisposableSource](source.DisposableSource.md).[dispose](source.DisposableSource.md#dispose)
+[AbtractDisposableSource](source.AbtractDisposableSource.md).[dispose](source.AbtractDisposableSource.md#dispose)
 
 ___
 
@@ -205,7 +205,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DisposableObservable`](observable.DisposableObservable.md)<`T`\> |
+| `this` | [`AbstractDisposableObservable`](observable.AbstractDisposableObservable.md)<`T`\> |
 | `sink` | [`Observer`](observer.Observer.md)<`T`\> |
 
 #### Returns
@@ -218,4 +218,4 @@ ___
 
 #### Inherited from
 
-[DisposableSource](source.DisposableSource.md).[sink](source.DisposableSource.md#sink)
+[AbtractDisposableSource](source.AbtractDisposableSource.md).[sink](source.AbtractDisposableSource.md#sink)

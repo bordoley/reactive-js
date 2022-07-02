@@ -1,4 +1,4 @@
-import { ContainerLike, AbstractContainer, DisposableContainer, Container, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
+import { ContainerLike, AbstractContainer, AbstractDisposableContainer, Container, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
 import { Disposable } from "./disposable.mjs";
 import { Function1, Equality, Predicate, SideEffect1, Reducer, Factory } from "./functions.mjs";
 import { Option } from "./option.mjs";
@@ -10,7 +10,7 @@ interface LiftableLike extends ContainerLike {
 declare abstract class AbstractLiftable<TState extends LiftableStateLike> extends AbstractContainer implements LiftableLike {
     get liftableStateType(): TState;
 }
-declare abstract class DisposableLiftable<TState extends LiftableStateLike> extends DisposableContainer implements LiftableLike {
+declare abstract class AbtractDisposableLiftable<TState extends LiftableStateLike> extends AbstractDisposableContainer implements LiftableLike {
     get liftableStateType(): TState;
 }
 declare type LiftableStateOf<C extends LiftableLike, T> = C extends {
@@ -71,4 +71,4 @@ declare const createTakeWhileLiftOperator: <C extends LiftableLike, TVariance ex
 declare const createThrowIfEmptyLiftOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, ThrowIfEmptyLiftableState: new <T>(delegate: LiftOperatorIn<C, T, T, Lift<C, TVariance>>) => LiftOperatorOut<C, T, T, Lift<C, TVariance>> & {
     readonly isEmpty: boolean;
 }) => <T_1>(factory: Factory<unknown>) => ContainerOperator<C, T_1, T_1>;
-export { AbstractLiftable, ContraVariant, Covariant, DelegatingLiftableStateOf, DisposableLiftable, Lift, LiftOperator, LiftOperatorIn, LiftOperatorOut, LiftableLike, LiftableStateLike, LiftableStateOf, Variance, contraVariant, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, getDelegate, lift };
+export { AbstractLiftable, AbtractDisposableLiftable, ContraVariant, Covariant, DelegatingLiftableStateOf, Lift, LiftOperator, LiftOperatorIn, LiftOperatorOut, LiftableLike, LiftableStateLike, LiftableStateOf, Variance, contraVariant, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, getDelegate, lift };

@@ -7,7 +7,7 @@
 ### Classes
 
 - [AbstractLiftable](../classes/liftable.AbstractLiftable.md)
-- [DisposableLiftable](../classes/liftable.DisposableLiftable.md)
+- [AbtractDisposableLiftable](../classes/liftable.AbtractDisposableLiftable.md)
 
 ### Interfaces
 
