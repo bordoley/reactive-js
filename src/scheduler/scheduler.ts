@@ -1,6 +1,6 @@
 import { PrioritySchedulerLike, SchedulerLike } from "../scheduler";
 
-export const inContinuation = (
+export const isInContinuation = (
   scheduler: SchedulerLike | PrioritySchedulerLike,
 ): boolean => scheduler.inContinuation;
 

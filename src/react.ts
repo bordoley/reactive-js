@@ -54,7 +54,7 @@ import {
   PrioritySchedulerLike,
   SchedulerContinuationLike,
   SchedulerLike,
-  inContinuation,
+  isInContinuation,
   toSchedulerWithPriority,
 } from "./scheduler";
 /**
@@ -139,7 +139,7 @@ class ReactPriorityScheduler
   }
 
   get shouldYield(): boolean {
-    return inContinuation(this) && unstable_shouldYield();
+    return isInContinuation(this) && unstable_shouldYield();
   }
 
   requestYield() {
