@@ -1,9 +1,9 @@
+import { keep } from "../__internal__.readonlyArray";
 import { dispatch } from "../dispatcher";
 import { onDisposed } from "../disposable";
 import { newInstance, pipe } from "../functions";
 import { ObservableLike, createObservable } from "../observable";
 import { getDispatcher } from "../observer";
-import { keep } from "../readonlyArray";
 
 const reservedEvents = ["error", "open"];
 

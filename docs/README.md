@@ -21,7 +21,6 @@ Reactive-JS
 - [observer](modules/observer.md)
 - [option](modules/option.md)
 - [react](modules/react.md)
-- [readonlyArray](modules/readonlyArray.md)
 - [runnable](modules/runnable.md)
 - [runnableSink](modules/runnableSink.md)
 - [scheduler](modules/scheduler.md)

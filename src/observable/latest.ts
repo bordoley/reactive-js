@@ -1,10 +1,10 @@
+import { everySatisfy, map } from "../__internal__.readonlyArray";
 import { addTo, dispose, onComplete } from "../disposable";
 import { getLength, newInstanceWith, pipe } from "../functions";
 import { getDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { AbstractDelegatingObserver, Observer } from "../observer";
 import { none } from "../option";
-import { everySatisfy, map } from "../readonlyArray";
 import { assertState, notify, sourceFrom } from "../source";
 import { defer } from "./defer";
 import { isEnumerable, tagEnumerable } from "./observable";

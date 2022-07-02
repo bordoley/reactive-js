@@ -1,9 +1,9 @@
+import { map } from "../__internal__.readonlyArray";
 import { Concat } from "../container";
 import { addTo, dispose, onComplete } from "../disposable";
 import { getLength, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer, createDelegatingObserver } from "../observer";
-import { map } from "../readonlyArray";
 import { sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
 

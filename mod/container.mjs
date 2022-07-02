@@ -1,8 +1,8 @@
 /// <reference types="./container.d.ts" />
+import { empty as empty$1 } from './__internal__.readonlyArray.mjs';
 import { Disposable } from './disposable.mjs';
 import { raise, compose, callWith, isEqualTo, newInstance, pipe, pipeLazy, alwaysFalse, returns, negate } from './functions.mjs';
 import { isSome } from './option.mjs';
-import { empty as empty$1 } from './readonlyArray.mjs';
 
 class AbstractContainer {
     get type() {

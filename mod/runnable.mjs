@@ -1,9 +1,9 @@
 /// <reference types="./runnable.d.ts" />
+import { empty } from './__internal__.readonlyArray.mjs';
 import { createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './__internal__.source.mjs';
 import { dispose, isDisposed, addTo, bindTo } from './disposable.mjs';
 import { pipe, newInstance, raise, pipeLazy, newInstanceWith, ignore, getLength, alwaysTrue, compose, identity } from './functions.mjs';
 import { isSome, none, isNone, getOrDefault } from './option.mjs';
-import { empty } from './readonlyArray.mjs';
 import { AbstractSource, sourceFrom } from './source.mjs';
 import { RunnableSink, AbstractDelegatingRunnableSink, createDelegatingRunnableSink } from './runnableSink.mjs';
 import { createFromArray } from './__internal__.container.mjs';

@@ -1,3 +1,8 @@
+import {
+  everySatisfy,
+  forEach as forEachReadonlyArray,
+  map,
+} from "./__internal__.readonlyArray";
 import { AbstractDisposableContainer } from "./container";
 import { addTo, dispose, isDisposed, onDisposed } from "./disposable";
 import {
@@ -10,11 +15,6 @@ import {
 } from "./functions";
 import { LiftableStateLike, getDelegate } from "./liftable";
 import { Option, none } from "./option";
-import {
-  everySatisfy,
-  forEach as forEachReadonlyArray,
-  map,
-} from "./readonlyArray";
 
 export abstract class Enumerator<T>
   extends AbstractDisposableContainer

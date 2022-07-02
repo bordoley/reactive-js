@@ -1,5 +1,9 @@
 import { createFromArray } from "./__internal__.container";
 import {
+  keepType as keepTypeArray,
+  map as mapArray,
+} from "./__internal__.readonlyArray";
+import {
   Concat,
   ConcatAll,
   ContainerLike,
@@ -36,7 +40,6 @@ import {
   strictEquality,
 } from "./functions";
 import { Option, isNone, none } from "./option";
-import { keepType as keepTypeArray, map as mapArray } from "./readonlyArray";
 import { RunnableLike, ToRunnable, createRunnable } from "./runnable";
 
 export interface SequenceResultNotify<T> {
