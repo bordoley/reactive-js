@@ -4,7 +4,7 @@ import { empty as empty$1, fromValue, throws, concatMap } from './container.mjs'
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { dispose, addTo, isDisposed, onDisposed, add, disposed, onComplete, SerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
 import { move, getCurrent, AbstractEnumerator, reset, hasCurrent, zip as zip$1, forEach } from './enumerator.mjs';
-import { pipe, newInstance, getLength, newInstanceWith, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, max, returns, instanceFactory, identity } from './functions.mjs';
+import { pipe, newInstance, getLength, newInstanceWith, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, max, returns, identity, instanceFactory } from './functions.mjs';
 import { AbstractSource, AbtractDisposableSource, sinkInto, sourceFrom, assertState, notifySink, notify } from './source.mjs';
 import { getScheduler, AbstractDelegatingObserver, Observer, createDelegatingObserver } from './observer.mjs';
 import { schedule, hasDelay, __yield, inContinuation, runContinuation, getDelay, createVirtualTimeScheduler } from './scheduler.mjs';
@@ -604,6 +604,9 @@ const fromEnumerator = (options) => f => pipe(using(f, enumerator => defer(() =>
  * @param delay The requested delay between emitted items by the observable.
  */
 const fromEnumerable = (options) => enumerable => pipe(pipeLazy(enumerable, enumerate), fromEnumerator(options));
+const fromEnumerableT = {
+    fromEnumerable,
+};
 
 /**
  * Creates an `ObservableLike` which iterates through the values
@@ -1158,7 +1161,6 @@ const toPromise = (scheduler) => observable => newInstance(Promise, (resolve, re
     }));
 });
 
-const type = undefined;
 const catchError = /*@__PURE__*/ createCatchErrorOperator(liftSynchronousT, class CatchErrorObserver extends AbstractDelegatingObserver {
 });
 const fromDisposable = /*@__PURE__*/ createFromDisposable(createT);
@@ -1199,6 +1201,10 @@ const everySatisfy = /*@__PURE__*/ createEverySatisfyOperator({ ...fromArrayT, .
 });
 const everySatisfyT = {
     everySatisfy,
+};
+const fromObservable = () => identity;
+const fromObservableT = {
+    fromObservable,
 };
 const fromPromise = (factory) => 
 /*@__PURE__*/ createObservable(({ dispatcher }) => {
@@ -1420,5 +1426,6 @@ const toRunnable = (options = {}) => source => createRunnable(sink => {
 const toRunnableT = {
     toRunnable,
 };
+const type = undefined;
 
-export { AbstractDisposableObservable, AbstractObservable, Subject, __currentScheduler, __do, __memo, __observe, __using, buffer, bufferT, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createT, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromPromise, generate, generateT, getObserverCount, getReplay, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toObservable, toObservableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AbstractDisposableObservable, AbstractObservable, Subject, __currentScheduler, __do, __memo, __observe, __using, buffer, bufferT, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createT, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromObservable, fromObservableT, fromPromise, generate, generateT, getObserverCount, getReplay, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toObservable, toObservableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

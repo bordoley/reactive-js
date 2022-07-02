@@ -106,7 +106,13 @@ export interface ObservableLike<T> extends SourceLike {
   sink(this: ObservableLike<T>, sink: Observer<T>): void;
 }
 
-export const type: ObservableLike<unknown> = undefined as any;
+export interface FromObservable<C extends ContainerLike> extends Container<C> {
+  fromObservable<T>(): Function1<ObservableLike<T>, ContainerOf<C, T>>;
+}
+
+export interface ToObservable<C extends ContainerLike> extends Container<C> {
+  toObservable: <T>() => Function1<ContainerOf<C, T>, ObservableLike<T>>;
+}
 
 /** A function which converts an ObservableLike<A> to an ObservableLike<B>. */
 export type ObservableOperator<A, B> = Function1<
@@ -160,7 +166,7 @@ export { concat, concatT } from "./observable/concat";
 export { createObservable, createT } from "./observable/createObservable";
 export { Subject } from "./observable/subject";
 export { fromArray, fromArrayT } from "./observable/fromArray";
-export { fromEnumerable } from "./observable/fromEnumerable";
+export { fromEnumerable, fromEnumerableT } from "./observable/fromEnumerable";
 export {
   fromIterable,
   fromIterableT,
@@ -272,6 +278,14 @@ export const everySatisfy: <T>(
 
 export const everySatisfyT: EverySatisfy<ObservableLike<unknown>> = {
   everySatisfy,
+};
+
+export const fromObservable = <T>(): Function1<
+  ObservableLike<T>,
+  ObservableLike<T>
+> => identity;
+export const fromObservableT: FromObservable<ObservableLike<unknown>> = {
+  fromObservable,
 };
 
 export const fromPromise = <T>(
@@ -640,10 +654,6 @@ export const throwIfEmptyT: ThrowIfEmpty<ObservableLike<unknown>> = {
   throwIfEmpty,
 };
 
-export interface ToObservable<C extends ContainerLike> extends Container<C> {
-  toObservable: <T>() => Function1<ContainerOf<C, T>, ObservableLike<T>>;
-}
-
 export const toObservable = <T>(): Function1<
   ObservableLike<T>,
   ObservableLike<T>
@@ -676,3 +686,5 @@ export const toRunnable =
 export const toRunnableT: ToRunnable<ObservableLike<unknown>> = {
   toRunnable,
 };
+
+export const type: ObservableLike<unknown> = undefined as any;

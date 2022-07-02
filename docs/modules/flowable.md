@@ -18,12 +18,15 @@
 
 ### Variables
 
+- [fromObservableT](flowable.md#fromobservablet)
 - [toObservableT](flowable.md#toobservablet)
+- [type](flowable.md#type)
 
 ### Functions
 
 - [createLiftedFlowable](flowable.md#createliftedflowable)
 - [flow](flowable.md#flow)
+- [fromObservable](flowable.md#fromobservable)
 - [toObservable](flowable.md#toobservable)
 
 ## Type Aliases
@@ -47,9 +50,21 @@ ___
 
 ## Variables
 
+### fromObservableT
+
+• `Const` **fromObservableT**: [`FromObservable`](../interfaces/observable.FromObservable.md)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`unknown`\>\>
+
+___
+
 ### toObservableT
 
 • `Const` **toObservableT**: [`ToObservable`](../interfaces/observable.ToObservable.md)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`unknown`\>\>
+
+___
+
+### type
+
+• `Const` **type**: [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`unknown`\>
 
 ## Functions
 
@@ -420,6 +435,22 @@ ___
 ### flow
 
 ▸ **flow**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`T`\>\>\>
+
+___
+
+### fromObservable
+
+▸ **fromObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`T`\>\>\>
 
 #### Type parameters
 

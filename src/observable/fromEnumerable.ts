@@ -1,5 +1,5 @@
 import { dispose } from "../disposable";
-import { EnumerableLike, enumerate } from "../enumerable";
+import { EnumerableLike, FromEnumerable, enumerate } from "../enumerable";
 import { Enumerator, getCurrent, move } from "../enumerator";
 import { Factory, Function1, pipe, pipeLazy } from "../functions";
 import { ObservableLike } from "../observable";
@@ -49,3 +49,7 @@ export const fromEnumerable =
   }): Function1<EnumerableLike<T>, ObservableLike<T>> =>
   enumerable =>
     pipe(pipeLazy(enumerable, enumerate), fromEnumerator(options));
+
+export const fromEnumerableT: FromEnumerable<ObservableLike<unknown>> = {
+  fromEnumerable,
+};

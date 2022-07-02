@@ -57,14 +57,14 @@ interface FromArrayOptions {
 interface FromArray<C extends ContainerLike, O extends FromArrayOptions = FromArrayOptions> extends Container<C> {
     fromArray<T>(options?: Partial<O>): Function1<readonly T[], ContainerOf<C, T>>;
 }
-interface Generate<C extends ContainerLike> extends Container<C> {
-    generate<T>(generator: Updater<T>, initialValue: Factory<T>): ContainerOf<C, T>;
-}
 interface FromIterable<C extends ContainerLike, O extends Record<string, never> = Record<string, never>> extends Container<C> {
     fromIterable<T>(options?: Partial<O>): Function1<Iterable<T>, ContainerOf<C, T>>;
 }
 interface FromIterator<C extends ContainerLike, O extends Record<string, unknown> = Record<string, never>> extends Container<C> {
     fromIterator<T, TReturn = any, TNext = unknown>(options?: Partial<O>): Function1<Factory<Iterator<T, TReturn, TNext>>, ContainerOf<C, T>>;
+}
+interface Generate<C extends ContainerLike> extends Container<C> {
+    generate<T>(generator: Updater<T>, initialValue: Factory<T>): ContainerOf<C, T>;
 }
 interface Keep<C extends ContainerLike> extends Container<C> {
     keep<T>(predicate: Predicate<T>): ContainerOperator<C, T, T>;
