@@ -1,4 +1,4 @@
-import { DisposableContainer } from "./container";
+import { AbstractDisposableContainer } from "./container";
 import { addTo, dispose, isDisposed, onDisposed } from "./disposable";
 import {
   Function1,
@@ -17,7 +17,7 @@ import {
 } from "./readonlyArray";
 
 export abstract class Enumerator<T>
-  extends DisposableContainer
+  extends AbstractDisposableContainer
   implements LiftableStateLike
 {
   abstract get current(): T;

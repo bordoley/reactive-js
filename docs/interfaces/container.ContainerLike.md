@@ -19,7 +19,7 @@
 ## Implemented by
 
 - [`AbstractContainer`](../classes/container.AbstractContainer.md)
-- [`DisposableContainer`](../classes/container.DisposableContainer.md)
+- [`AbstractDisposableContainer`](../classes/container.AbstractDisposableContainer.md)
 
 ## Table of contents
 

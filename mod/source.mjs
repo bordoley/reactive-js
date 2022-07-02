@@ -3,7 +3,7 @@ import { fromValue, empty } from './container.mjs';
 import { addTo, onComplete, dispose, onError, isDisposed, onDisposed, add } from './disposable.mjs';
 import { __DEV__, MAX_SAFE_INTEGER } from './env.mjs';
 import { length, max, pipe, newInstanceWith, isEmpty, newInstance, compose, negate, ignore, identity } from './functions.mjs';
-import { AbstractLiftable, DisposableLiftable, getDelegate, lift, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
+import { AbstractLiftable, AbtractDisposableLiftable, getDelegate, lift, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './liftable.mjs';
 import { none, isSome } from './option.mjs';
 import { forEach } from './readonlyArray.mjs';
 
@@ -15,7 +15,7 @@ const assertState = (sink) => {
 };
 class AbstractSource extends AbstractLiftable {
 }
-class DisposableSource extends DisposableLiftable {
+class AbtractDisposableSource extends AbtractDisposableLiftable {
 }
 const notify = (v) => (sink) => {
     sink.notify(v);
@@ -261,4 +261,4 @@ const createOnSink = (m) => (f) => src => pipe((sink) => {
 }, create(m));
 const createUsing = (m) => (resourceFactory, sourceFactory) => pipe((sink) => pipe(resourceFactory(), resources => (Array.isArray(resources) ? resources : [resources]), forEach(addTo(sink)), (resources) => sourceFactory(...resources), sinkInto(sink)), create(m));
 
-export { AbstractSource, DisposableSource, assertState, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, notify, notifySink, sinkInto, sourceFrom };
+export { AbstractSource, AbtractDisposableSource, assertState, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing, notify, notifySink, sinkInto, sourceFrom };

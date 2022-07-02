@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`DisposableObservable`](observable.DisposableObservable.md)<`T`\>
+- [`AbstractDisposableObservable`](observable.AbstractDisposableObservable.md)<`T`\>
 
   ↳ **`Subject`**
 
@@ -66,7 +66,7 @@
 
 #### Overrides
 
-[DisposableObservable](observable.DisposableObservable.md).[constructor](observable.DisposableObservable.md#constructor)
+[AbstractDisposableObservable](observable.AbstractDisposableObservable.md).[constructor](observable.AbstractDisposableObservable.md#constructor)
 
 ## Properties
 
@@ -94,7 +94,7 @@ MulticastObservableLike.T
 
 #### Inherited from
 
-DisposableObservable.T
+AbstractDisposableObservable.T
 
 ___
 
@@ -114,7 +114,7 @@ MulticastObservableLike.error
 
 #### Inherited from
 
-DisposableObservable.error
+AbstractDisposableObservable.error
 
 ___
 
@@ -134,7 +134,7 @@ MulticastObservableLike.isDisposed
 
 #### Inherited from
 
-DisposableObservable.isDisposed
+AbstractDisposableObservable.isDisposed
 
 ___
 
@@ -152,7 +152,7 @@ MulticastObservableLike.liftableStateType
 
 #### Inherited from
 
-DisposableObservable.liftableStateType
+AbstractDisposableObservable.liftableStateType
 
 ___
 
@@ -186,7 +186,7 @@ MulticastObservableLike.type
 
 #### Inherited from
 
-DisposableObservable.type
+AbstractDisposableObservable.type
 
 ## Methods
 
@@ -216,7 +216,7 @@ MulticastObservableLike.add
 
 #### Inherited from
 
-[DisposableObservable](observable.DisposableObservable.md).[add](observable.DisposableObservable.md#add)
+[AbstractDisposableObservable](observable.AbstractDisposableObservable.md).[add](observable.AbstractDisposableObservable.md#add)
 
 ___
 
@@ -243,7 +243,7 @@ MulticastObservableLike.dispose
 
 #### Inherited from
 
-[DisposableObservable](observable.DisposableObservable.md).[dispose](observable.DisposableObservable.md#dispose)
+[AbstractDisposableObservable](observable.AbstractDisposableObservable.md).[dispose](observable.AbstractDisposableObservable.md#dispose)
 
 ___
 
@@ -283,4 +283,4 @@ MulticastObservableLike.sink
 
 #### Overrides
 
-[DisposableObservable](observable.DisposableObservable.md).[sink](observable.DisposableObservable.md#sink)
+[AbstractDisposableObservable](observable.AbstractDisposableObservable.md).[sink](observable.AbstractDisposableObservable.md#sink)

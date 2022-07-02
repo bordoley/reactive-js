@@ -1,4 +1,4 @@
-import { DisposableContainer } from "./container";
+import { AbstractDisposableContainer } from "./container";
 import { isDisposed } from "./disposable";
 import { __DEV__ } from "./env";
 import { newInstance, pipe, raise } from "./functions";
@@ -6,7 +6,7 @@ import { getDelegate } from "./liftable";
 import { SinkLike, notify } from "./source";
 
 export class RunnableSink<T>
-  extends DisposableContainer
+  extends AbstractDisposableContainer
   implements SinkLike<T>
 {
   assertState(this: this): void {}

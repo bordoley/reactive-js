@@ -9,7 +9,7 @@ declare abstract class AbstractContainer implements ContainerLike {
     get type(): this;
     get T(): unknown;
 }
-declare abstract class DisposableContainer extends Disposable implements ContainerLike {
+declare abstract class AbstractDisposableContainer extends Disposable implements ContainerLike {
     get type(): this;
     get T(): unknown;
 }
@@ -227,4 +227,4 @@ declare const zipWith: <C extends ContainerLike, TA, TB>({ zip }: Zip<C>, snd: C
     TA,
     TB
 ]>;
-export { AbstractContainer, Buffer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DisposableContainer, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using, Zip, compute, concatMap, concatWith, contains, createFromArray, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };
+export { AbstractContainer, AbstractDisposableContainer, Buffer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using, Zip, compute, concatMap, concatWith, contains, createFromArray, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };

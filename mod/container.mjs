@@ -12,7 +12,7 @@ class AbstractContainer {
         return raise();
     }
 }
-class DisposableContainer extends Disposable {
+class AbstractDisposableContainer extends Disposable {
     get type() {
         return raise();
     }
@@ -59,4 +59,4 @@ const throws = (m, options) => errorFactory => pipe(() => {
 }, compute(m, options));
 const zipWith = ({ zip }, snd) => fst => zip(fst, snd);
 
-export { AbstractContainer, DisposableContainer, compute, concatMap, concatWith, contains, createFromArray, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };
+export { AbstractContainer, AbstractDisposableContainer, compute, concatMap, concatWith, contains, createFromArray, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };

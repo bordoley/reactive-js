@@ -38,9 +38,9 @@ import {
 } from "./functions";
 import {
   AbstractLiftable,
+  AbtractDisposableLiftable,
   ContraVariant,
   DelegatingLiftableStateOf,
-  DisposableLiftable,
   Lift as LiftableLift,
   LiftableLike,
   LiftableStateLike,
@@ -108,8 +108,8 @@ export abstract class AbstractSource<T, TSink extends SinkLike<T>>
   abstract sink(this: this, sink: TSink): void;
 }
 
-export abstract class DisposableSource<T, TSink extends SinkLike<T>>
-  extends DisposableLiftable<TSink>
+export abstract class AbtractDisposableSource<T, TSink extends SinkLike<T>>
+  extends AbtractDisposableLiftable<TSink>
   implements SourceLike
 {
   abstract sink(this: this, sink: TSink): void;

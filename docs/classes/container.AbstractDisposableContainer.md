@@ -1,18 +1,18 @@
-[Reactive-JS](../README.md) / [container](../modules/container.md) / DisposableContainer
+[Reactive-JS](../README.md) / [container](../modules/container.md) / AbstractDisposableContainer
 
-# Class: DisposableContainer
+# Class: AbstractDisposableContainer
 
-[container](../modules/container.md).DisposableContainer
+[container](../modules/container.md).AbstractDisposableContainer
 
 ## Hierarchy
 
 - [`Disposable`](disposable.Disposable.md)
 
-  ↳ **`DisposableContainer`**
+  ↳ **`AbstractDisposableContainer`**
 
   ↳↳ [`Enumerator`](enumerator.Enumerator.md)
 
-  ↳↳ [`DisposableLiftable`](liftable.DisposableLiftable.md)
+  ↳↳ [`AbtractDisposableLiftable`](liftable.AbtractDisposableLiftable.md)
 
   ↳↳ [`Observer`](observer.Observer.md)
 
@@ -26,25 +26,25 @@
 
 ### Constructors
 
-- [constructor](container.DisposableContainer.md#constructor)
+- [constructor](container.AbstractDisposableContainer.md#constructor)
 
 ### Accessors
 
-- [T](container.DisposableContainer.md#t)
-- [error](container.DisposableContainer.md#error)
-- [isDisposed](container.DisposableContainer.md#isdisposed)
-- [type](container.DisposableContainer.md#type)
+- [T](container.AbstractDisposableContainer.md#t)
+- [error](container.AbstractDisposableContainer.md#error)
+- [isDisposed](container.AbstractDisposableContainer.md#isdisposed)
+- [type](container.AbstractDisposableContainer.md#type)
 
 ### Methods
 
-- [add](container.DisposableContainer.md#add)
-- [dispose](container.DisposableContainer.md#dispose)
+- [add](container.AbstractDisposableContainer.md#add)
+- [dispose](container.AbstractDisposableContainer.md#dispose)
 
 ## Constructors
 
 ### constructor
 
-• **new DisposableContainer**()
+• **new AbstractDisposableContainer**()
 
 #### Inherited from
 
@@ -122,7 +122,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DisposableContainer`](container.DisposableContainer.md) |
+| `this` | [`AbstractDisposableContainer`](container.AbstractDisposableContainer.md) |
 | `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
 | `ignoreChildErrors` | `boolean` |
 
@@ -148,7 +148,7 @@ Dispose the resource.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `this` | [`DisposableContainer`](container.DisposableContainer.md) | - |
+| `this` | [`AbstractDisposableContainer`](container.AbstractDisposableContainer.md) | - |
 | `error?` | [`Error`](../interfaces/disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns

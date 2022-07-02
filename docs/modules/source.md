@@ -7,7 +7,7 @@
 ### Classes
 
 - [AbstractSource](../classes/source.AbstractSource.md)
-- [DisposableSource](../classes/source.DisposableSource.md)
+- [AbtractDisposableSource](../classes/source.AbtractDisposableSource.md)
 
 ### Interfaces
 

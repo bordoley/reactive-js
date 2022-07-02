@@ -1,5 +1,5 @@
 /// <reference types="./liftable.d.ts" />
-import { AbstractContainer, DisposableContainer, empty } from './container.mjs';
+import { AbstractContainer, AbstractDisposableContainer, empty } from './container.mjs';
 import { bindTo, add, addTo, onComplete, dispose } from './disposable.mjs';
 import { raise, strictEquality, pipe, newInstanceWith, max } from './functions.mjs';
 import { none } from './option.mjs';
@@ -9,7 +9,7 @@ class AbstractLiftable extends AbstractContainer {
         return raise();
     }
 }
-class DisposableLiftable extends DisposableContainer {
+class AbtractDisposableLiftable extends AbstractDisposableContainer {
     get liftableStateType() {
         return raise();
     }
@@ -73,4 +73,4 @@ const createThrowIfEmptyLiftOperator = (m, ThrowIfEmptyLiftableState) => (factor
     return lifted;
 }, lift(m));
 
-export { AbstractLiftable, DisposableLiftable, contraVariant, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, getDelegate, lift };
+export { AbstractLiftable, AbtractDisposableLiftable, contraVariant, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, getDelegate, lift };

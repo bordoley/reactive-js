@@ -6,8 +6,8 @@
 
 ### Classes
 
+- [AbstractDisposableObservable](../classes/observable.AbstractDisposableObservable.md)
 - [AbstractObservable](../classes/observable.AbstractObservable.md)
-- [DisposableObservable](../classes/observable.DisposableObservable.md)
 - [Subject](../classes/observable.Subject.md)
 
 ### Interfaces

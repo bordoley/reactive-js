@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [liftable](../modules/liftable.md) / DisposableLiftable
+[Reactive-JS](../README.md) / [liftable](../modules/liftable.md) / AbtractDisposableLiftable
 
-# Class: DisposableLiftable<TState\>
+# Class: AbtractDisposableLiftable<TState\>
 
-[liftable](../modules/liftable.md).DisposableLiftable
+[liftable](../modules/liftable.md).AbtractDisposableLiftable
 
 ## Type parameters
 
@@ -12,13 +12,13 @@
 
 ## Hierarchy
 
-- [`DisposableContainer`](container.DisposableContainer.md)
+- [`AbstractDisposableContainer`](container.AbstractDisposableContainer.md)
 
-  ↳ **`DisposableLiftable`**
+  ↳ **`AbtractDisposableLiftable`**
 
   ↳↳ [`AsyncEnumerator`](asyncEnumerator.AsyncEnumerator.md)
 
-  ↳↳ [`DisposableSource`](source.DisposableSource.md)
+  ↳↳ [`AbtractDisposableSource`](source.AbtractDisposableSource.md)
 
 ## Implements
 
@@ -28,26 +28,26 @@
 
 ### Constructors
 
-- [constructor](liftable.DisposableLiftable.md#constructor)
+- [constructor](liftable.AbtractDisposableLiftable.md#constructor)
 
 ### Accessors
 
-- [T](liftable.DisposableLiftable.md#t)
-- [error](liftable.DisposableLiftable.md#error)
-- [isDisposed](liftable.DisposableLiftable.md#isdisposed)
-- [liftableStateType](liftable.DisposableLiftable.md#liftablestatetype)
-- [type](liftable.DisposableLiftable.md#type)
+- [T](liftable.AbtractDisposableLiftable.md#t)
+- [error](liftable.AbtractDisposableLiftable.md#error)
+- [isDisposed](liftable.AbtractDisposableLiftable.md#isdisposed)
+- [liftableStateType](liftable.AbtractDisposableLiftable.md#liftablestatetype)
+- [type](liftable.AbtractDisposableLiftable.md#type)
 
 ### Methods
 
-- [add](liftable.DisposableLiftable.md#add)
-- [dispose](liftable.DisposableLiftable.md#dispose)
+- [add](liftable.AbtractDisposableLiftable.md#add)
+- [dispose](liftable.AbtractDisposableLiftable.md#dispose)
 
 ## Constructors
 
 ### constructor
 
-• **new DisposableLiftable**<`TState`\>()
+• **new AbtractDisposableLiftable**<`TState`\>()
 
 #### Type parameters
 
@@ -57,7 +57,7 @@
 
 #### Inherited from
 
-[DisposableContainer](container.DisposableContainer.md).[constructor](container.DisposableContainer.md#constructor)
+[AbstractDisposableContainer](container.AbstractDisposableContainer.md).[constructor](container.AbstractDisposableContainer.md#constructor)
 
 ## Accessors
 
@@ -75,7 +75,7 @@
 
 #### Inherited from
 
-DisposableContainer.T
+AbstractDisposableContainer.T
 
 ___
 
@@ -91,7 +91,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-DisposableContainer.error
+AbstractDisposableContainer.error
 
 ___
 
@@ -107,7 +107,7 @@ ___
 
 #### Inherited from
 
-DisposableContainer.isDisposed
+AbstractDisposableContainer.isDisposed
 
 ___
 
@@ -139,7 +139,7 @@ ___
 
 #### Inherited from
 
-DisposableContainer.type
+AbstractDisposableContainer.type
 
 ## Methods
 
@@ -153,7 +153,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`DisposableLiftable`](liftable.DisposableLiftable.md)<`TState`\> |
+| `this` | [`AbtractDisposableLiftable`](liftable.AbtractDisposableLiftable.md)<`TState`\> |
 | `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
 | `ignoreChildErrors` | `boolean` |
 
@@ -165,7 +165,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Inherited from
 
-[DisposableContainer](container.DisposableContainer.md).[add](container.DisposableContainer.md#add)
+[AbstractDisposableContainer](container.AbstractDisposableContainer.md).[add](container.AbstractDisposableContainer.md#add)
 
 ___
 
@@ -179,7 +179,7 @@ Dispose the resource.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `this` | [`DisposableLiftable`](liftable.DisposableLiftable.md)<`TState`\> | - |
+| `this` | [`AbtractDisposableLiftable`](liftable.AbtractDisposableLiftable.md)<`TState`\> | - |
 | `error?` | [`Error`](../interfaces/disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns
@@ -188,4 +188,4 @@ Dispose the resource.
 
 #### Inherited from
 
-[DisposableContainer](container.DisposableContainer.md).[dispose](container.DisposableContainer.md#dispose)
+[AbstractDisposableContainer](container.AbstractDisposableContainer.md).[dispose](container.AbstractDisposableContainer.md#dispose)

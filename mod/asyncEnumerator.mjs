@@ -1,10 +1,10 @@
 /// <reference types="./asyncEnumerator.d.ts" />
 import { dispatch } from './dispatcher.mjs';
 import { pipe } from './functions.mjs';
-import { DisposableLiftable, getDelegate } from './liftable.mjs';
+import { AbtractDisposableLiftable, getDelegate } from './liftable.mjs';
 import { getObserverCount, getReplay } from './observable.mjs';
 
-class AsyncEnumerator extends DisposableLiftable {
+class AsyncEnumerator extends AbtractDisposableLiftable {
     constructor() {
         super(...arguments);
         this.isEnumerable = false;

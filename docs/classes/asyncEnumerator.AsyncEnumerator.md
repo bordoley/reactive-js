@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`DisposableLiftable`](liftable.DisposableLiftable.md)<[`Observer`](observer.Observer.md)<`T`\>\>
+- [`AbtractDisposableLiftable`](liftable.AbtractDisposableLiftable.md)<[`Observer`](observer.Observer.md)<`T`\>\>
 
   ↳ **`AsyncEnumerator`**
 
@@ -65,7 +65,7 @@
 
 #### Inherited from
 
-[DisposableLiftable](liftable.DisposableLiftable.md).[constructor](liftable.DisposableLiftable.md#constructor)
+[AbtractDisposableLiftable](liftable.AbtractDisposableLiftable.md).[constructor](liftable.AbtractDisposableLiftable.md#constructor)
 
 ## Properties
 
@@ -123,7 +123,7 @@ StreamLike.scheduler
 
 #### Inherited from
 
-DisposableLiftable.T
+AbtractDisposableLiftable.T
 
 ___
 
@@ -143,7 +143,7 @@ LiftableStateLike.error
 
 #### Inherited from
 
-DisposableLiftable.error
+AbtractDisposableLiftable.error
 
 ___
 
@@ -163,7 +163,7 @@ LiftableStateLike.isDisposed
 
 #### Inherited from
 
-DisposableLiftable.isDisposed
+AbtractDisposableLiftable.isDisposed
 
 ___
 
@@ -181,7 +181,7 @@ StreamLike.liftableStateType
 
 #### Inherited from
 
-DisposableLiftable.liftableStateType
+AbtractDisposableLiftable.liftableStateType
 
 ___
 
@@ -199,7 +199,7 @@ ___
 
 #### Inherited from
 
-DisposableLiftable.type
+AbtractDisposableLiftable.type
 
 ## Methods
 
@@ -229,7 +229,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Inherited from
 
-[DisposableLiftable](liftable.DisposableLiftable.md).[add](liftable.DisposableLiftable.md#add)
+[AbtractDisposableLiftable](liftable.AbtractDisposableLiftable.md).[add](liftable.AbtractDisposableLiftable.md#add)
 
 ___
 
@@ -277,7 +277,7 @@ Dispose the resource.
 
 #### Inherited from
 
-[DisposableLiftable](liftable.DisposableLiftable.md).[dispose](liftable.DisposableLiftable.md#dispose)
+[AbtractDisposableLiftable](liftable.AbtractDisposableLiftable.md).[dispose](liftable.AbtractDisposableLiftable.md#dispose)
 
 ___
 
