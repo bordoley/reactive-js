@@ -96,7 +96,7 @@ const makeInput = modules => ({
 
 const makeCoreNPMPackage = () => {
   const packageModules = allModules.filter(
-    file => !file.startsWith("__") && !file.startsWith("testing"),
+    file => !file.startsWith("__tests__") && !file.startsWith("testing"),
   );
   const input = makeInput(packageModules);
 
