@@ -5,7 +5,7 @@ import { addTo, onComplete, Disposable, isDisposed, dispose, onDisposed } from '
 import { getLength, pipe, newInstanceWith, isEmpty, raise, newInstance } from './functions.mjs';
 import { getDelegate } from './liftable.mjs';
 import { none, isNone } from './option.mjs';
-import { schedule, __yield, inContinuation } from './scheduler.mjs';
+import { schedule, __yield, isInContinuation } from './scheduler.mjs';
 import { assertState, notify } from './source.mjs';
 
 const scheduleDrainQueue = (dispatcher) => {
@@ -71,7 +71,7 @@ class Observer extends AbstractDisposableContainer {
 }
 if (__DEV__) {
     Observer.prototype.assertState = function assertStateDev() {
-        if (!pipe(this, getScheduler, inContinuation)) {
+        if (!pipe(this, getScheduler, isInContinuation)) {
             raise("Observer.notify() may only be invoked within a scheduled SchedulerContinuation");
         }
         else if (isDisposed(this)) {

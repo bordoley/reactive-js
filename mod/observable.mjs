@@ -8,7 +8,7 @@ import { move, getCurrent, AbstractEnumerator, reset, hasCurrent, zip as zip$1, 
 import { pipe, newInstance, getLength, newInstanceWith, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, max, returns, identity, instanceFactory } from './functions.mjs';
 import { AbstractSource, AbtractDisposableSource, sinkInto, sourceFrom, assertState, notifySink, notify } from './source.mjs';
 import { getScheduler, AbstractDelegatingObserver, Observer, createDelegatingObserver } from './observer.mjs';
-import { schedule, __yield, inContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
+import { schedule, __yield, isInContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { createFromArray } from './__internal__.container.mjs';
 import { contraVariant, getDelegate } from './liftable.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -988,7 +988,7 @@ class EnumeratorScheduler extends AbstractEnumerator {
         return 0;
     }
     get shouldYield() {
-        return inContinuation(this);
+        return isInContinuation(this);
     }
     step() {
         const { continuations } = this;

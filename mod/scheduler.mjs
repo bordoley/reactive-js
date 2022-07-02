@@ -86,7 +86,7 @@ class PriorityQueueImpl {
 }
 const createPriorityQueue = (comparator) => newInstance(PriorityQueueImpl, comparator);
 
-const inContinuation = (scheduler) => scheduler.inContinuation;
+const isInContinuation = (scheduler) => scheduler.inContinuation;
 const getNow = (scheduler) => scheduler.now;
 const shouldYield = (scheduler) => scheduler.shouldYield;
 
@@ -264,7 +264,7 @@ class AbstractQueueScheduler extends AbstractEnumerator {
         if (!isDisposed(continuation)) {
             const { now } = this;
             const dueTime = max(now + delay, now);
-            const task = inContinuation(this) &&
+            const task = isInContinuation(this) &&
                 hasCurrent(this) &&
                 getCurrent(this).continuation === continuation &&
                 delay <= 0
@@ -367,7 +367,7 @@ class SchedulerWithPriorityImpl extends Disposable {
         this.priority = priority;
     }
     get inContinuation() {
-        return inContinuation(this.priorityScheduler);
+        return isInContinuation(this.priorityScheduler);
     }
     get now() {
         return getNow(this.priorityScheduler);
@@ -576,4 +576,4 @@ const createVirtualTimeScheduler = (options = {}) => {
     return newInstance(VirtualTimeSchedulerImpl, maxMicroTaskTicks);
 };
 
-export { __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, getNow, inContinuation, schedule, shouldYield, toSchedulerWithPriority };
+export { __yield, createHostScheduler, createPausableScheduler, createPriorityScheduler, createVirtualTimeScheduler, getNow, isInContinuation, schedule, shouldYield, toSchedulerWithPriority };

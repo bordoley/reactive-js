@@ -6,7 +6,7 @@ import {
   SchedulerContinuationLike,
   SchedulerLike,
 } from "../scheduler";
-import { getNow, inContinuation, shouldYield } from "./scheduler";
+import { getNow, isInContinuation, shouldYield } from "./scheduler";
 
 class SchedulerWithPriorityImpl extends Disposable implements SchedulerLike {
   constructor(
@@ -17,7 +17,7 @@ class SchedulerWithPriorityImpl extends Disposable implements SchedulerLike {
   }
 
   get inContinuation() {
-    return inContinuation(this.priorityScheduler);
+    return isInContinuation(this.priorityScheduler);
   }
 
   get now() {

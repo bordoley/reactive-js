@@ -18,7 +18,7 @@ import { isNone } from "../option";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
-  inContinuation,
+  isInContinuation,
 } from "../scheduler";
 import { assertState, sourceFrom } from "../source";
 
@@ -34,7 +34,7 @@ class EnumeratorScheduler<T>
   }
 
   get shouldYield(): boolean {
-    return inContinuation(this);
+    return isInContinuation(this);
   }
 
   step(): boolean {

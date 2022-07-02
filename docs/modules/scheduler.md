@@ -20,7 +20,7 @@
 - [createPriorityScheduler](scheduler.md#createpriorityscheduler)
 - [createVirtualTimeScheduler](scheduler.md#createvirtualtimescheduler)
 - [getNow](scheduler.md#getnow)
-- [inContinuation](scheduler.md#incontinuation)
+- [isInContinuation](scheduler.md#isincontinuation)
 - [schedule](scheduler.md#schedule)
 - [shouldYield](scheduler.md#shouldyield)
 - [toSchedulerWithPriority](scheduler.md#toschedulerwithpriority)
@@ -131,9 +131,9 @@ ___
 
 ___
 
-### inContinuation
+### isInContinuation
 
-▸ **inContinuation**(`scheduler`): `boolean`
+▸ **isInContinuation**(`scheduler`): `boolean`
 
 #### Parameters
 

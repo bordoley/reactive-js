@@ -15,7 +15,7 @@ import { max, pipe } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
 import { QueueLike, createPriorityQueue } from "./queue";
-import { getNow, inContinuation, shouldYield } from "./scheduler";
+import { getNow, isInContinuation, shouldYield } from "./scheduler";
 import { __yield, schedule } from "./schedulerContinuation";
 
 const peek = <TTask extends QueueTask>(
@@ -209,7 +209,7 @@ export abstract class AbstractQueueScheduler<
       const dueTime = max(now + delay, now);
 
       const task =
-        inContinuation(this) &&
+        isInContinuation(this) &&
         hasCurrent(this) &&
         getCurrent(this).continuation === continuation &&
         delay <= 0
