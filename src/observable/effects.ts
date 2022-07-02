@@ -25,8 +25,8 @@ import {
   SideEffect5,
   SideEffect6,
   arrayEquality,
+  getLength,
   ignore,
-  length,
   newInstance,
   pipe,
   raise,
@@ -254,7 +254,7 @@ export const observable = <T>(
       ctx.index = 0;
 
       const { effects } = ctx;
-      const effectsLength = length(effects);
+      const effectsLength = getLength(effects);
 
       // Inline this for perf
       let allObserveEffectsHaveValues = true;

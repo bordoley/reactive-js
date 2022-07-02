@@ -8,7 +8,7 @@ import {
   Reducer,
   Updater,
   compose,
-  length,
+  getLength,
   newInstance,
   pipe,
   returns,
@@ -194,7 +194,7 @@ export function createLiftedStreamable<T, A, B, C, D, E, F, G, H, I, J, K, L>(
 export function createLiftedStreamable<TReq, TData>(
   ...ops: readonly ObservableOperator<unknown, unknown>[]
 ): StreamableLike<TReq, TData> {
-  const op = length(ops) > 1 ? (compose as any)(...ops) : ops[0];
+  const op = getLength(ops) > 1 ? (compose as any)(...ops) : ops[0];
   return createStreamble((scheduler, options) =>
     createStream(op, scheduler, options),
   );

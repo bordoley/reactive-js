@@ -10,8 +10,8 @@ import {
   onDisposed,
 } from "./disposable";
 import {
+  getLength,
   isEmpty,
-  length,
   newInstance,
   newInstanceWith,
   pipe,
@@ -23,7 +23,7 @@ import { SchedulerLike, __yield, inContinuation, schedule } from "./scheduler";
 import { SinkLike, assertState, notify } from "./source";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
-  if (length(dispatcher.nextQueue) === 1) {
+  if (getLength(dispatcher.nextQueue) === 1) {
     const { observer } = dispatcher;
     pipe(
       getScheduler(observer),
@@ -42,7 +42,7 @@ class ObserverDelegatingDispatcher<T>
     const { nextQueue } = this;
 
     const { observer } = this;
-    while (length(nextQueue) > 0) {
+    while (getLength(nextQueue) > 0) {
       const next = nextQueue.shift() as T;
       observer.notify(next);
       __yield();

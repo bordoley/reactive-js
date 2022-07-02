@@ -1,6 +1,6 @@
 import { DispatcherLike, dispatch } from "../dispatcher";
 import { add, isDisposed, onDisposed } from "../disposable";
-import { length, newInstance, pipe } from "../functions";
+import { getLength, newInstance, pipe } from "../functions";
 import { MulticastObservableLike } from "../observable";
 import { Observer } from "../observer";
 import { AbstractDisposableObservable } from "./observable";
@@ -27,7 +27,7 @@ export class Subject<T>
 
       if (replay > 0) {
         replayed.push(next);
-        if (length(replayed) > replay) {
+        if (getLength(replayed) > replay) {
           replayed.shift();
         }
       }

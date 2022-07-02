@@ -7,7 +7,7 @@ import {
   onComplete,
   onDisposed,
 } from "../disposable";
-import { length, newInstance, pipe } from "../functions";
+import { getLength, newInstance, pipe } from "../functions";
 import { getDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import {
@@ -70,7 +70,7 @@ class MergeObserver<T> extends AbstractDelegatingObserver<
     queue.push(next);
 
     // Drop old events if the maxBufferSize has been exceeded
-    if (length(queue) + this.activeCount > this.maxBufferSize) {
+    if (getLength(queue) + this.activeCount > this.maxBufferSize) {
       queue.shift();
     }
     subscribeNext(this);
@@ -105,7 +105,7 @@ export const mergeAll = <T>(
         newInstance(MergeObserver, delegate, maxBufferSize, maxConcurrency),
       addTo(delegate),
       onComplete(() => {
-        if (length(observer.queue) + observer.activeCount === 0) {
+        if (getLength(observer.queue) + observer.activeCount === 0) {
           pipe(observer, getDelegate, dispose());
         }
       }),

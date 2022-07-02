@@ -117,7 +117,7 @@ declare function callWith<TA, TB, TC, TD, T>(a: TA, b: TB, c: TC, d: TD): Functi
  */
 declare const identity: <T>(v: T) => T;
 declare const isEmpty: (arr: readonly unknown[] | string) => boolean;
-declare const length: (arr: readonly unknown[] | string) => number;
+declare const getLength: (arr: readonly unknown[] | string) => number;
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
  */
@@ -253,4 +253,4 @@ declare function instanceFactory<T>(Constructor: Constructor<T>): Factory<T>;
 declare function instanceFactory<T, TA>(Constructor: Constructor1<TA, T>): Function1<TA, T>;
 declare function instanceFactory<T, TA, TB>(Constructor: Constructor2<TA, TB, T>): Function2<TA, TB, T>;
 declare function instanceFactory<T, TA, TB, TC>(Constructor: Constructor3<TA, TB, TC, T>): Function3<TA, TB, TC, T>;
-export { Comparator, Constructor, Constructor1, Constructor2, Constructor3, Constructor4, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, identity, ignore, increment, incrementBy, instanceFactory, isEmpty, isEqualTo, isEven, isOdd, length, max, min, negate, newInstance, newInstanceWith, pipe, pipeLazy, raise, returns, strictEquality, sum, updateReducer };
+export { Comparator, Constructor, Constructor1, Constructor2, Constructor3, Constructor4, Equality, Factory, Function1, Function2, Function3, Function4, Function5, Function6, Function7, Function8, Function9, Predicate, Reducer, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, SideEffect7, TypePredicate, Updater, alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, getLength, identity, ignore, increment, incrementBy, instanceFactory, isEmpty, isEqualTo, isEven, isOdd, max, min, negate, newInstance, newInstanceWith, pipe, pipeLazy, raise, returns, strictEquality, sum, updateReducer };

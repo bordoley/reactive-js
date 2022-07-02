@@ -4,7 +4,7 @@ import { empty as empty$1, fromValue, throws, concatMap } from './container.mjs'
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { dispose, addTo, isDisposed, onDisposed, add, disposed, onComplete, SerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
 import { move, getCurrent, AbstractEnumerator, reset, hasCurrent, zip as zip$1, forEach } from './enumerator.mjs';
-import { pipe, newInstance, length, newInstanceWith, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, max, returns, instanceFactory, identity } from './functions.mjs';
+import { pipe, newInstance, getLength, newInstanceWith, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, max, returns, instanceFactory, identity } from './functions.mjs';
 import { AbstractSource, AbtractDisposableSource, sinkInto, sourceFrom, assertState, notifySink, notify } from './source.mjs';
 import { getScheduler, AbstractDelegatingObserver, Observer, createDelegatingObserver } from './observer.mjs';
 import { schedule, hasDelay, __yield, inContinuation, runContinuation, getDelay, createVirtualTimeScheduler } from './scheduler.mjs';
@@ -164,7 +164,7 @@ class Subject extends AbstractDisposableObservable {
             const { replay, replayed } = this;
             if (replay > 0) {
                 replayed.push(next);
-                if (length(replayed) > replay) {
+                if (getLength(replayed) > replay) {
                     replayed.shift();
                 }
             }
@@ -240,7 +240,7 @@ const usingT = {
 };
 
 const notifyDelegate = (observer) => {
-    if (length(observer.queue) > 0 && observer.hasLatest) {
+    if (getLength(observer.queue) > 0 && observer.hasLatest) {
         observer.hasLatest = false;
         const next = observer.queue.shift();
         const result = observer.selector(next, observer.otherLatest);
@@ -418,7 +418,7 @@ const observable = (computation, { mode = "batched" } = {}) => defer(() => (obse
         currentCtx = none;
         ctx.index = 0;
         const { effects } = ctx;
-        const effectsLength = length(effects);
+        const effectsLength = getLength(effects);
         // Inline this for perf
         let allObserveEffectsHaveValues = true;
         let hasOutstandingEffects = false;
@@ -487,7 +487,7 @@ function __currentScheduler() {
 function onDispose() {
     const { ctx } = this;
     ctx.completedCount++;
-    if (ctx.completedCount === length(ctx.observers)) {
+    if (ctx.completedCount === getLength(ctx.observers)) {
         pipe(this, getDelegate, dispose());
     }
 }
@@ -508,7 +508,7 @@ class LatestObserver extends AbstractDelegatingObserver {
             this.ready = true;
         }
         const observers = ctx.observers;
-        if (ctx.readyCount === length(observers)) {
+        if (ctx.readyCount === getLength(observers)) {
             const result = pipe(observers, map$1(observer => observer.latest));
             pipe(this, getDelegate, notify(result));
             if (this.mode === 2 /* LatestMode.Zip */) {
@@ -561,7 +561,7 @@ function forkZipLatest(...ops) {
 }
 
 const createConcatObserver = (delegate, observables, next) => pipe(createDelegatingObserver(delegate), addTo(delegate), onComplete(() => {
-    if (next < length(observables)) {
+    if (next < getLength(observables)) {
         pipe(createConcatObserver(delegate, observables, next + 1), sourceFrom(observables[next]));
     }
     else {
@@ -640,7 +640,7 @@ const createMergeObserver = (delegate, count, ctx) => pipe(createDelegatingObser
 }));
 function _merge(observables) {
     return createObservable(observer => {
-        const count = length(observables);
+        const count = getLength(observables);
         const ctx = { completedCount: 0 };
         for (const observable of observables) {
             pipe(createMergeObserver(observer, count, ctx), sourceFrom(observable));
@@ -677,7 +677,7 @@ class BufferObserver extends AbstractDelegatingObserver {
             this.buffer = [];
             pipe(this, getDelegate, notify(buffer));
         };
-        if (length(buffer) === maxBufferSize) {
+        if (getLength(buffer) === maxBufferSize) {
             doOnNotify();
         }
         else if (isDisposed(this.durationSubscription.inner)) {
@@ -749,7 +749,7 @@ class MergeObserver extends AbstractDelegatingObserver {
         const { queue } = this;
         queue.push(next);
         // Drop old events if the maxBufferSize has been exceeded
-        if (length(queue) + this.activeCount > this.maxBufferSize) {
+        if (getLength(queue) + this.activeCount > this.maxBufferSize) {
             queue.shift();
         }
         subscribeNext(this);
@@ -769,7 +769,7 @@ const mergeAll = (options = {}) => {
         const observer = pipe(delegate, onDisposed(_ => {
             observer.queue.length = 0;
         }), delegate => newInstance(MergeObserver, delegate, maxBufferSize, maxConcurrency), addTo(delegate), onComplete(() => {
-            if (length(observer.queue) + observer.activeCount === 0) {
+            if (getLength(observer.queue) + observer.activeCount === 0) {
                 pipe(observer, getDelegate, dispose());
             }
         }));
@@ -1057,7 +1057,7 @@ class ZipObserverEnumerator extends AbstractEnumerator {
     }
     move() {
         const { buffer } = this;
-        if (!isDisposed(this) && length(buffer) > 0) {
+        if (!isDisposed(this) && getLength(buffer) > 0) {
             const next = buffer.shift();
             this.current = next;
         }
@@ -1099,7 +1099,7 @@ const _zip = (...observables) => {
     return isEnumerableTag
         ? pipe(using(pipeLazy(observables, map$1(enumerateObs)), (...enumerators) => pipe(zip$1(...enumerators), returns, fromEnumerator())), tagEnumerable(true))
         : createObservable(observer => {
-            const count = length(observables);
+            const count = getLength(observables);
             const enumerators = [];
             for (let index = 0; index < count; index++) {
                 const next = observables[index];

@@ -29,7 +29,7 @@ import {
   Updater,
   alwaysTrue,
   callWith,
-  length,
+  getLength,
   newInstanceWith,
   pipe,
   pipeLazy,
@@ -394,7 +394,7 @@ const _takeLast = <T>(maxCount: number, seq: Sequence<T>): Sequence<T> =>
     while (true) {
       if (isNotify(result)) {
         last.push(result.data);
-        if (length(last) > maxCount) {
+        if (getLength(last) > maxCount) {
           last.shift();
         }
         result = result.next();
@@ -402,7 +402,7 @@ const _takeLast = <T>(maxCount: number, seq: Sequence<T>): Sequence<T> =>
         break;
       }
     }
-    return _fromArray(last, 0, length(last));
+    return _fromArray(last, 0, getLength(last));
   });
 export const takeLast =
   <T>(options: { readonly count?: number } = {}): SequenceOperator<T, T> =>
@@ -469,7 +469,7 @@ const _zip = <T>(
       keepTypeArray(isNotify),
     );
 
-    return length(notifyResults) === length(sequences)
+    return getLength(notifyResults) === getLength(sequences)
       ? notify(
           pipe(
             notifyResults,

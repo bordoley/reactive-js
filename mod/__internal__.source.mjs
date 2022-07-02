@@ -3,7 +3,7 @@ import { MAX_SAFE_INTEGER } from './__internal__.env.mjs';
 import { createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './__internal__.liftable.mjs';
 import { fromValue, empty } from './container.mjs';
 import { addTo, onComplete, dispose, onError, isDisposed, onDisposed, add } from './disposable.mjs';
-import { length, max, pipe, newInstanceWith, isEmpty, newInstance, compose, negate, ignore, identity } from './functions.mjs';
+import { getLength, max, pipe, newInstanceWith, isEmpty, newInstance, compose, negate, ignore, identity } from './functions.mjs';
 import { getDelegate, lift } from './liftable.mjs';
 import { none, isSome } from './option.mjs';
 import { forEach } from './readonlyArray.mjs';
@@ -18,7 +18,7 @@ const createBufferOperator = (m, BufferSink) => {
         assertState(this);
         const { buffer, maxBufferSize } = this;
         buffer.push(next);
-        if (length(buffer) === maxBufferSize) {
+        if (getLength(buffer) === maxBufferSize) {
             const buffer = this.buffer;
             this.buffer = [];
             getDelegate(this).notify(buffer);
@@ -187,7 +187,7 @@ const createTakeLastOperator = (m, TakeLastSink) => {
         assertState(this);
         const { last } = this;
         last.push(next);
-        if (length(last) > this.maxCount) {
+        if (getLength(last) > this.maxCount) {
             last.shift();
         }
     });

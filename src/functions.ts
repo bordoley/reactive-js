@@ -228,9 +228,10 @@ export function callWith<T>(
 export const identity = <T>(v: T): T => v;
 
 export const isEmpty = (arr: readonly unknown[] | string): boolean =>
-  length(arr) === 0;
+  getLength(arr) === 0;
 
-export const length = (arr: readonly unknown[] | string): number => arr.length;
+export const getLength = (arr: readonly unknown[] | string): number =>
+  arr.length;
 
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
@@ -340,7 +341,7 @@ export const raise = <T>(message?: unknown): T => {
  */
 export const sum = (...args: number[]) => {
   let acc = 0;
-  for (let i = 0; i < length(args); i++) {
+  for (let i = 0; i < getLength(args); i++) {
     acc += args[i];
   }
   return acc;
@@ -353,7 +354,7 @@ export const sum = (...args: number[]) => {
 export const arrayEquality =
   <T>(valuesEquality: Equality<T> = strictEquality): Equality<readonly T[]> =>
   (a: readonly T[], b: readonly T[]) =>
-    length(a) === length(b) && a.every((v, i) => valuesEquality(b[i], v));
+    getLength(a) === getLength(b) && a.every((v, i) => valuesEquality(b[i], v));
 
 /**
  * A `Reducer` functions that applies `updater` to `acc` to compute the next

@@ -35,8 +35,8 @@ import {
   Reducer,
   Updater,
   compose,
+  getLength,
   increment,
-  length,
   newInstance,
   newInstanceWith,
   pipe,
@@ -256,7 +256,7 @@ function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I, J, K, L>(
 function createLiftedAsyncEnumerable<T>(
   ...ops: readonly ObservableOperator<unknown, unknown>[]
 ): AsyncEnumerableLike<T> {
-  const op = length(ops) > 1 ? (compose as any)(...ops) : ops[0];
+  const op = getLength(ops) > 1 ? (compose as any)(...ops) : ops[0];
 
   return createAsyncEnumerable((scheduler, options) => {
     const replay = options?.replay ?? 0;

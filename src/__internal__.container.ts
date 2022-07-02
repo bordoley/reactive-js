@@ -1,5 +1,5 @@
 import { ContainerLike, ContainerOf, FromArrayOptions } from "./container";
-import { Function1, length, max, min } from "./functions";
+import { Function1, getLength, max, min } from "./functions";
 
 export const createFromArray =
   <C extends ContainerLike, O extends FromArrayOptions = FromArrayOptions>(
@@ -12,7 +12,7 @@ export const createFromArray =
   ) =>
   <T>(options: Partial<O> = {}): Function1<readonly T[], ContainerOf<C, T>> =>
   values => {
-    const valuesLength = length(values);
+    const valuesLength = getLength(values);
     const startIndex = min(options.startIndex ?? 0, valuesLength);
     const endIndex = max(
       min(options.endIndex ?? valuesLength, valuesLength),

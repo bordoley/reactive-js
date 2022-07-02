@@ -37,10 +37,10 @@ import {
   Reducer,
   SideEffect1,
   compose,
+  getLength,
   identity,
   ignore,
   isEmpty,
-  length,
   max,
   negate,
   newInstance,
@@ -105,7 +105,7 @@ export const createBufferOperator = <C extends SourceLike>(
 
       buffer.push(next);
 
-      if (length(buffer) === maxBufferSize) {
+      if (getLength(buffer) === maxBufferSize) {
         const buffer = this.buffer;
         this.buffer = [];
 
@@ -654,7 +654,7 @@ export const createTakeLastOperator = <C extends SourceLike>(
 
       last.push(next);
 
-      if (length(last) > this.maxCount) {
+      if (getLength(last) > this.maxCount) {
         last.shift();
       }
     },

@@ -2,14 +2,14 @@
 import { __DEV__ } from './__internal__.env.mjs';
 import { AbstractDisposableContainer } from './container.mjs';
 import { addTo, onComplete, Disposable, isDisposed, dispose, onDisposed } from './disposable.mjs';
-import { length, pipe, newInstanceWith, isEmpty, raise, newInstance } from './functions.mjs';
+import { getLength, pipe, newInstanceWith, isEmpty, raise, newInstance } from './functions.mjs';
 import { getDelegate } from './liftable.mjs';
 import { none, isNone } from './option.mjs';
 import { schedule, __yield, inContinuation } from './scheduler.mjs';
 import { assertState, notify } from './source.mjs';
 
 const scheduleDrainQueue = (dispatcher) => {
-    if (length(dispatcher.nextQueue) === 1) {
+    if (getLength(dispatcher.nextQueue) === 1) {
         const { observer } = dispatcher;
         pipe(getScheduler(observer), schedule(dispatcher.continuation), addTo(observer), onComplete(dispatcher.onContinuationDispose));
     }
@@ -21,7 +21,7 @@ class ObserverDelegatingDispatcher extends Disposable {
         this.continuation = () => {
             const { nextQueue } = this;
             const { observer } = this;
-            while (length(nextQueue) > 0) {
+            while (getLength(nextQueue) > 0) {
                 const next = nextQueue.shift();
                 observer.notify(next);
                 __yield();
