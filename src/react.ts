@@ -163,10 +163,7 @@ class ReactPriorityScheduler
       return;
     }
 
-    const callback = () => {
-      pipe(callbackNodeDisposable, dispose());
-      pipe(this, runContinuation(continuation));
-    };
+    const callback = pipeLazy(this, runContinuation(continuation), ignore);
 
     const callbackNode = unstable_scheduleCallback(
       priority,
@@ -174,7 +171,7 @@ class ReactPriorityScheduler
       delay > 0 ? { delay } : none,
     );
 
-    const callbackNodeDisposable = pipe(
+    pipe(
       continuation,
       onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)),
     );
