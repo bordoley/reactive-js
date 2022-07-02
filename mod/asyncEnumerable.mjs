@@ -1,14 +1,14 @@
 /// <reference types="./asyncEnumerable.d.ts" />
-import { pipe, newInstance, length, compose, increment, returns, pipeLazy } from './functions.mjs';
+import { pipe, newInstance, length, compose, increment, returns, pipeLazy, newInstanceWith } from './functions.mjs';
 import { AbstractLiftable, covariant, createKeepLiftOperator, delegate, createMapLiftOperator, createScanLiftOperator, createTakeWhileLiftOperator } from './liftable.mjs';
 import { stream } from './streamable.mjs';
 import { AsyncEnumerator, AbstractDelegatingAsyncEnumerator } from './asyncEnumerator.mjs';
 import { createFromArray, fromValue, concatMap, concatWith } from './container.mjs';
 import { dispatch } from './dispatcher.mjs';
-import { add, addTo } from './disposable.mjs';
+import { add, addTo, bindTo } from './disposable.mjs';
 import { enumerate, fromIterable as fromIterable$1 } from './enumerable.mjs';
 import { move, hasCurrent, current } from './enumerator.mjs';
-import { Subject, publish, observerCount, replay, createObservable, onNotify, map as map$1, onSubscribe, zipWithLatestFrom, takeFirst, switchAll, fromArrayT as fromArrayT$1, scan as scan$1, mapT as mapT$1, concatAllT, withLatestFrom, using, concatT, never, takeWhile as takeWhile$1, scanAsync, keep as keep$1 } from './observable.mjs';
+import { Subject, publish, observerCount, replay, fromArrayT as fromArrayT$1, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, withLatestFrom, using, concatT, never, onNotify, takeWhile as takeWhile$1, map as map$1, scanAsync as scanAsync$1, keep as keep$1, createObservable, onSubscribe } from './observable.mjs';
 import { scheduler } from './observer.mjs';
 import { none } from './option.mjs';
 import { getDelay } from './scheduler.mjs';
@@ -79,30 +79,6 @@ function createLiftedAsyncEnumerable(...ops) {
         return newInstance(LiftedAsyncEnumerator, op, scheduler, replay);
     });
 }
-const consumeContinue = (data) => ({
-    type: "continue",
-    data,
-});
-const consumeDone = (data) => ({
-    type: "done",
-    data,
-});
-const consumeImpl = (consumer, initial) => enumerable => createObservable(observer => {
-    const enumerator = pipe(enumerable, stream(scheduler(observer)), addTo(observer));
-    const accFeedback = pipe(newInstance(Subject), addTo(observer));
-    pipe(enumerator, consumer(accFeedback), onNotify(ev => {
-        switch (ev.type) {
-            case "continue":
-                accFeedback.publish(ev.data);
-                pipe(enumerator, dispatch(none));
-                break;
-        }
-    }), map$1(ev => ev.data), onSubscribe(() => {
-        accFeedback.publish(initial());
-        pipe(enumerator, dispatch(none));
-    }), sinkInto(observer));
-});
-const consumeAsync = (consumer, initial) => consumeImpl(accObs => compose(zipWithLatestFrom(accObs, (next, acc) => pipe(consumer(acc, next), takeFirst())), switchAll()), initial);
 /**
  * Returns an `AsyncEnumerableLike` from the provided array.
  *
@@ -144,7 +120,7 @@ const asyncGeneratorScanner = (generator, options) => {
 const generate = (generator, initialValue, options) => {
     const delay = getDelay(options);
     return createLiftedAsyncEnumerable(delay > 0
-        ? scanAsync(asyncGeneratorScanner(generator, options), initialValue)
+        ? scanAsync$1(asyncGeneratorScanner(generator, options), initialValue)
         : scan$1(generateScanner(generator), initialValue));
 };
 const keep = /*@__PURE__*/ createKeepLiftOperator(liftT, class KeepAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
@@ -194,6 +170,22 @@ const scan = /*@__PURE__*/ createScanLiftOperator(liftT, class ScanAsyncEnumerat
 const scanT = {
     scan,
 };
+class ScanAsyncAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
+    constructor(delegate, reducer, initialValue) {
+        super(delegate);
+        this.obs = pipe(delegate, scanAsync$1(reducer, initialValue), publish(delegate.scheduler));
+    }
+    get observerCount() {
+        return observerCount(this.obs);
+    }
+    get replay() {
+        return replay(this.obs);
+    }
+    sink(observer) {
+        pipe(this.obs, sinkInto(observer));
+    }
+}
+const scanAsync = (reducer, initialValue) => pipe((delegate) => pipe(ScanAsyncAsyncEnumerator, newInstanceWith(delegate, reducer, initialValue), bindTo(delegate)), lift);
 const takeWhile = /*@__PURE__*/ createTakeWhileLiftOperator(liftT, class TakeWhileAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
     constructor(delegate, predicate, inclusive) {
         super(delegate);
@@ -225,4 +217,4 @@ const toObservableT = {
 };
 const type = undefined;
 
-export { consumeAsync, consumeContinue, consumeDone, fromArray, fromArrayT, fromEnumerable, fromIterable, generate, keep, keepT, map, mapT, scan, scanT, takeWhile, takeWhileT, toObservable, toObservableT, type };
+export { fromArray, fromArrayT, fromEnumerable, fromIterable, generate, keep, keepT, map, mapT, scan, scanAsync, scanT, takeWhile, takeWhileT, toObservable, toObservableT, type };

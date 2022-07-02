@@ -1,7 +1,4 @@
 import {
-  consumeAsync,
-  consumeContinue,
-  consumeDone,
   fromArray,
   fromArrayT,
   fromIterable,
@@ -9,6 +6,7 @@ import {
   keep,
   map,
   scan,
+  scanAsync,
   takeWhile,
   toObservable,
 } from "../asyncEnumerable";
@@ -124,53 +122,6 @@ export const tests = describe(
 
     pipe(result, expectArrayEquals([1, 2, 3]));
   }),
-
-  describe(
-    "consumeAsync",
-    test(
-      "when the consumer early terminates",
-      pipeLazy(
-        [1, 2, 3, 4, 5, 6],
-        fromIterable(),
-        consumeAsync(
-          (acc, next) =>
-            fromValue(fromArrayTObs)(
-              acc > 0 ? consumeDone(acc + next) : consumeContinue(acc + next),
-            ),
-          returns<number>(0),
-        ),
-        toRunnable(),
-        last(),
-        expectEquals(3),
-      ),
-    ),
-    test(
-      "when the consumer never terminates",
-      pipeLazy(
-        [1, 2, 3, 4, 5, 6],
-        fromIterable(),
-        consumeAsync(
-          (acc, next) =>
-            pipe(acc + next, consumeContinue, fromValue(fromArrayTObs)),
-          returns<number>(0),
-        ),
-        toRunnable(),
-        last(),
-        expectEquals(21),
-      ),
-    ),
-  ),
-  test(
-    "toObservable",
-    pipeLazy(
-      [1, 2, 3, 4, 5],
-      fromArray(),
-      toObservable(),
-      toRunnable(),
-      toArray(),
-      expectArrayEquals([1, 2, 3, 4, 5]),
-    ),
-  ),
   test(
     "toObservable",
     pipeLazy(
@@ -244,6 +195,41 @@ export const tests = describe(
       toRunnable(),
       toArray(),
       expectArrayEquals([1, 2, 3]),
+    ),
+  ),
+  describe(
+    "scanAsync",
+    test(
+      "when the consumer early terminates",
+      pipeLazy(
+        [1, 2, 3, 4, 5, 6],
+        fromIterable(),
+        scanAsync(
+          (acc, next) => fromValue(fromArrayTObs, { delay: 3 })(acc + next),
+          returns<number>(0),
+        ),
+        takeWhile(x => x < 3, { inclusive: true }),
+        toObservable(),
+        toRunnable(),
+        last(),
+        expectEquals(3),
+      ),
+    ),
+    test(
+      "when the consumer never terminates",
+      pipeLazy(
+        [1, 2, 3, 4, 5, 6],
+        fromIterable(),
+        scanAsync(
+          (acc, next) =>
+            pipe(acc + next, fromValue(fromArrayTObs, { delay: 40 })),
+          returns<number>(0),
+        ),
+        toObservable(),
+        toRunnable(),
+        last(),
+        expectEquals(21),
+      ),
     ),
   ),
   describe(

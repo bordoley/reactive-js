@@ -555,7 +555,7 @@ interface MulticastObservableLike<T> extends ObservableLike<T>, Disposable {
     readonly observerCount: number;
     readonly replay: number;
 }
-declare type AsyncReducer<TAcc, T> = Function2<TAcc, T, ObservableLike<TAcc>>;
+declare type AsyncReducer<T, TAcc> = Function2<TAcc, T, ObservableLike<TAcc>>;
 declare type ObservableEffectMode = "batched" | "combine-latest";
 /**
  * The throttle mode used by the `throttle` operator.
@@ -627,7 +627,7 @@ declare const scanT: Scan<ObservableLike<unknown>>;
  * @param scanner The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.
  */
-declare const scanAsync: <T, TAcc>(scanner: AsyncReducer<TAcc, T>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
+declare const scanAsync: <T, TAcc>(scanner: AsyncReducer<T, TAcc>, initialValue: Factory<TAcc>) => ObservableOperator<T, TAcc>;
 /**
  * Returns an `ObservableLike` backed by a shared refcounted subscription to the
  * source. When the refcount goes to 0, the underlying subscription

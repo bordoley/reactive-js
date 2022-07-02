@@ -135,14 +135,14 @@
 
 ### AsyncReducer
 
-Ƭ **AsyncReducer**<`TAcc`, `T`\>: [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
+Ƭ **AsyncReducer**<`T`, `TAcc`\>: [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TAcc` |
 | `T` |
+| `TAcc` |
 
 ___
 
@@ -2512,7 +2512,7 @@ over the source, and emits each intermediate result.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `scanner` | [`AsyncReducer`](observable.md#asyncreducer)<`TAcc`, `T`\> | The accumulator function called on each source value. |
+| `scanner` | [`AsyncReducer`](observable.md#asyncreducer)<`T`, `TAcc`\> | The accumulator function called on each source value. |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> | The initial accumulation value. |
 
 #### Returns

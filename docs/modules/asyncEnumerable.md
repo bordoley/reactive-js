@@ -11,8 +11,6 @@
 ### Type Aliases
 
 - [AsyncEnumerableOperator](asyncEnumerable.md#asyncenumerableoperator)
-- [ConsumeContinue](asyncEnumerable.md#consumecontinue)
-- [ConsumeDone](asyncEnumerable.md#consumedone)
 
 ### Variables
 
@@ -26,9 +24,6 @@
 
 ### Functions
 
-- [consumeAsync](asyncEnumerable.md#consumeasync)
-- [consumeContinue](asyncEnumerable.md#consumecontinue-1)
-- [consumeDone](asyncEnumerable.md#consumedone-1)
 - [fromArray](asyncEnumerable.md#fromarray)
 - [fromEnumerable](asyncEnumerable.md#fromenumerable)
 - [fromIterable](asyncEnumerable.md#fromiterable)
@@ -36,6 +31,7 @@
 - [keep](asyncEnumerable.md#keep)
 - [map](asyncEnumerable.md#map)
 - [scan](asyncEnumerable.md#scan)
+- [scanAsync](asyncEnumerable.md#scanasync)
 - [takeWhile](asyncEnumerable.md#takewhile)
 - [toObservable](asyncEnumerable.md#toobservable)
 
@@ -51,44 +47,6 @@
 | :------ |
 | `TA` |
 | `TB` |
-
-___
-
-### ConsumeContinue
-
-Ƭ **ConsumeContinue**<`T`\>: `Object`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `data` | `T` |
-| `type` | ``"continue"`` |
-
-___
-
-### ConsumeDone
-
-Ƭ **ConsumeDone**<`T`\>: `Object`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `data` | `T` |
-| `type` | ``"done"`` |
 
 ## Variables
 
@@ -133,74 +91,6 @@ ___
 • `Const` **type**: [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>
 
 ## Functions
-
-### consumeAsync
-
-▸ **consumeAsync**<`T`, `TAcc`\>(`consumer`, `initial`): [`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `TAcc` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `consumer` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`ConsumeContinue`](asyncEnumerable.md#consumecontinue)<`TAcc`\> \| [`ConsumeDone`](asyncEnumerable.md#consumedone)<`TAcc`\>\>\> |
-| `initial` | [`Factory`](functions.md#factory)<`TAcc`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TAcc`\>\>
-
-___
-
-### consumeContinue
-
-▸ **consumeContinue**<`T`\>(`data`): [`ConsumeContinue`](asyncEnumerable.md#consumecontinue)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `data` | `T` |
-
-#### Returns
-
-[`ConsumeContinue`](asyncEnumerable.md#consumecontinue)<`T`\>
-
-___
-
-### consumeDone
-
-▸ **consumeDone**<`T`\>(`data`): [`ConsumeDone`](asyncEnumerable.md#consumedone)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `data` | `T` |
-
-#### Returns
-
-[`ConsumeDone`](asyncEnumerable.md#consumedone)<`T`\>
-
-___
 
 ### fromArray
 
@@ -351,6 +241,30 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`AsyncEnumerableOperator`](asyncEnumerable.md#asyncenumerableoperator)<`T`, `TAcc`\>
+
+___
+
+### scanAsync
+
+▸ **scanAsync**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`AsyncEnumerableOperator`](asyncEnumerable.md#asyncenumerableoperator)<`T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`AsyncReducer`](observable.md#asyncreducer)<`T`, `TAcc`\> |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns

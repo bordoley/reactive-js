@@ -1,4 +1,4 @@
-import { liftT } from "./asyncEnumerable/lift";
+import { lift, liftT } from "./asyncEnumerable/lift";
 import {
   AbstractDelegatingAsyncEnumerator,
   AsyncEnumerator,
@@ -15,7 +15,7 @@ import {
   fromValue,
 } from "./container";
 import { dispatch } from "./dispatcher";
-import { add, addTo } from "./disposable";
+import { add, addTo, bindTo } from "./disposable";
 import {
   EnumerableLike,
   enumerate,
@@ -25,7 +25,6 @@ import { Enumerator, current, hasCurrent, move } from "./enumerator";
 import {
   Factory,
   Function1,
-  Function2,
   Predicate,
   Reducer,
   Updater,
@@ -33,6 +32,7 @@ import {
   increment,
   length,
   newInstance,
+  newInstanceWith,
   pipe,
   pipeLazy,
   returns,
@@ -47,6 +47,7 @@ import {
   delegate as liftDelegate,
 } from "./liftable";
 import {
+  AsyncReducer,
   MulticastObservableLike,
   ObservableLike,
   ObservableOperator,
@@ -65,29 +66,18 @@ import {
   onSubscribe,
   publish,
   replay,
-  scanAsync,
+  scanAsync as scanAsyncObs,
   scan as scanObs,
-  switchAll,
   takeFirst,
   takeWhile as takeWhileObs,
   using,
   withLatestFrom,
-  zipWithLatestFrom,
 } from "./observable";
 import { Observer, scheduler } from "./observer";
 import { none } from "./option";
 import { SchedulerLike, getDelay } from "./scheduler";
 import { sinkInto } from "./source";
 import { StreamableLike, stream } from "./streamable";
-
-export type ConsumeContinue<T> = {
-  readonly type: "continue";
-  readonly data: T;
-};
-export type ConsumeDone<T> = {
-  readonly type: "done";
-  readonly data: T;
-};
 
 export interface AsyncEnumerableLike<T>
   extends StreamableLike<void, T, AsyncEnumerator<T>>,
@@ -275,71 +265,6 @@ function createLiftedAsyncEnumerable<T>(
   });
 }
 
-export const consumeContinue = <T>(data: T): ConsumeContinue<T> => ({
-  type: "continue",
-  data,
-});
-
-export const consumeDone = <T>(data: T): ConsumeDone<T> => ({
-  type: "done",
-  data,
-});
-
-const consumeImpl =
-  <TSrc, TAcc>(
-    consumer: (
-      acc: ObservableLike<TAcc>,
-    ) => ObservableOperator<TSrc, ConsumeContinue<TAcc> | ConsumeDone<TAcc>>,
-    initial: Factory<TAcc>,
-  ): Function1<AsyncEnumerableLike<TSrc>, ObservableLike<TAcc>> =>
-  enumerable =>
-    createObservable(observer => {
-      const enumerator = pipe(
-        enumerable,
-        stream(scheduler(observer)),
-        addTo(observer),
-      );
-      const accFeedback = pipe(newInstance(Subject), addTo(observer));
-
-      pipe(
-        enumerator,
-        consumer(accFeedback),
-        onNotify(ev => {
-          switch (ev.type) {
-            case "continue":
-              accFeedback.publish(ev.data);
-              pipe(enumerator, dispatch(none));
-              break;
-          }
-        }),
-        mapObs(ev => ev.data),
-        onSubscribe(() => {
-          accFeedback.publish(initial());
-          pipe(enumerator, dispatch(none));
-        }),
-        sinkInto(observer),
-      );
-    });
-
-export const consumeAsync = <T, TAcc>(
-  consumer: Function2<
-    TAcc,
-    T,
-    ObservableLike<ConsumeContinue<TAcc> | ConsumeDone<TAcc>>
-  >,
-  initial: Factory<TAcc>,
-): Function1<AsyncEnumerableLike<T>, ObservableLike<TAcc>> =>
-  consumeImpl(
-    accObs =>
-      compose(
-        zipWithLatestFrom(accObs, (next, acc) =>
-          pipe(consumer(acc, next), takeFirst()),
-        ),
-        switchAll(),
-      ),
-    initial,
-  );
-
 /**
  * Returns an `AsyncEnumerableLike` from the provided array.
  *
@@ -446,7 +371,7 @@ export const generate = <T>(
 
   return createLiftedAsyncEnumerable(
     delay > 0
-      ? scanAsync<void, T>(
+      ? scanAsyncObs<void, T>(
           asyncGeneratorScanner(generator, options),
           initialValue,
         )
@@ -551,6 +476,58 @@ export const scan: <T, TAcc>(
 export const scanT: Scan<AsyncEnumerableLike<unknown>> = {
   scan,
 };
+
+class ScanAsyncAsyncEnumerator<
+  T,
+  TAcc,
+> extends AbstractDelegatingAsyncEnumerator<T, TAcc> {
+  readonly obs: MulticastObservableLike<TAcc>;
+
+  constructor(
+    delegate: AsyncEnumerator<T>,
+    reducer: AsyncReducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ) {
+    super(delegate);
+
+    this.obs = pipe(
+      delegate,
+      scanAsyncObs(reducer, initialValue),
+      publish(delegate.scheduler),
+    );
+  }
+
+  get observerCount() {
+    return observerCount(this.obs);
+  }
+
+  get replay(): number {
+    return replay(this.obs);
+  }
+
+  sink(observer: Observer<TAcc>): void {
+    pipe(this.obs, sinkInto(observer));
+  }
+}
+
+export const scanAsync = <T, TAcc>(
+  reducer: AsyncReducer<T, TAcc>,
+  initialValue: Factory<TAcc>,
+): AsyncEnumerableOperator<T, TAcc> =>
+  pipe(
+    (delegate: AsyncEnumerator<T>) =>
+      pipe(
+        ScanAsyncAsyncEnumerator,
+        newInstanceWith<
+          AsyncEnumerator<T>,
+          AsyncReducer<T, TAcc>,
+          Factory<TAcc>,
+          ScanAsyncAsyncEnumerator<T, TAcc>
+        >(delegate, reducer, initialValue),
+        bindTo(delegate),
+      ),
+    lift,
+  );
 
 export const takeWhile: <T>(
   predicate: Predicate<T>,
