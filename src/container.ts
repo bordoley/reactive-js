@@ -128,13 +128,6 @@ export interface FromArray<
   ): Function1<readonly T[], ContainerOf<C, T>>;
 }
 
-export interface Generate<C extends ContainerLike> extends Container<C> {
-  generate<T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-  ): ContainerOf<C, T>;
-}
-
 export interface FromIterable<
   C extends ContainerLike,
   O extends Record<string, never> = Record<string, never>,
@@ -151,6 +144,13 @@ export interface FromIterator<
   fromIterator<T, TReturn = any, TNext = unknown>(
     options?: Partial<O>,
   ): Function1<Factory<Iterator<T, TReturn, TNext>>, ContainerOf<C, T>>;
+}
+
+export interface Generate<C extends ContainerLike> extends Container<C> {
+  generate<T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+  ): ContainerOf<C, T>;
 }
 
 export interface Keep<C extends ContainerLike> extends Container<C> {

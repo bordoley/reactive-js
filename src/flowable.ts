@@ -3,6 +3,7 @@ import { dispatchTo } from "./dispatcher";
 import { add, addTo, bindTo } from "./disposable";
 import { Function1, compose, pipe } from "./functions";
 import {
+  FromObservable,
   ObservableLike,
   ObservableOperator,
   ToObservable,
@@ -203,6 +204,12 @@ export const flow =
       }),
     );
 
+export const fromObservable = flow;
+
+export const fromObservableT: FromObservable<FlowableLike<unknown>> = {
+  fromObservable: flow,
+};
+
 export const toObservable =
   <T>(): Function1<FlowableLike<T>, ObservableLike<T>> =>
   src =>
@@ -222,3 +229,5 @@ export const toObservable =
 export const toObservableT: ToObservable<FlowableLike<unknown>> = {
   toObservable,
 };
+
+export const type: FlowableLike<unknown> = undefined as any;

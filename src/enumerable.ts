@@ -74,6 +74,10 @@ export type EnumerableOperator<TA, TB> = Function1<
   EnumerableLike<TB>
 >;
 
+export interface FromEnumerable<C extends ContainerLike> extends Container<C> {
+  fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
+}
+
 export interface ToEnumerable<C extends ContainerLike> extends Container<C> {
   toEnumerable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 }
@@ -159,6 +163,15 @@ export const distinctUntilChangedT: DistinctUntilChanged<
   EnumerableLike<unknown>
 > = {
   distinctUntilChanged,
+};
+
+export const fromEnumerable = <T>(): Function1<
+  EnumerableLike<T>,
+  EnumerableLike<T>
+> => identity;
+
+export const fromEnumerableT: FromEnumerable<EnumerableLike<unknown>> = {
+  fromEnumerable,
 };
 
 export const keep: <T>(predicate: Predicate<T>) => EnumerableOperator<T, T> =

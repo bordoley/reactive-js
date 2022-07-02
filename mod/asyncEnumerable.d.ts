@@ -1,6 +1,6 @@
 import { AsyncEnumerator } from "./asyncEnumerator.mjs";
-import { FromArray, Keep, Map, Scan, TakeWhile } from "./container.mjs";
-import { EnumerableLike } from "./enumerable.mjs";
+import { FromArray, FromIterable, Keep, Map, Scan, TakeWhile } from "./container.mjs";
+import { EnumerableLike, FromEnumerable } from "./enumerable.mjs";
 import { Function1, Updater, Factory, Predicate, Reducer } from "./functions.mjs";
 import { LiftableLike } from "./liftable.mjs";
 import { AsyncReducer, ScanAsync, ObservableLike, ToObservable } from "./observable.mjs";
@@ -28,12 +28,14 @@ declare const fromArrayT: FromArray<AsyncEnumerableLike<unknown>>;
  * @param iterable
  */
 declare const fromEnumerable: <T>() => Function1<EnumerableLike<T>, AsyncEnumerableLike<T>>;
+declare const fromEnumerableT: FromEnumerable<AsyncEnumerableLike<unknown>>;
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
  *
  * @param iterable
  */
 declare const fromIterable: <T>() => Function1<Iterable<T>, AsyncEnumerableLike<T>>;
+declare const fromIterableT: FromIterable<AsyncEnumerableLike<unknown>>;
 /**
  * Generates an `AsyncEnumerableLike` sequence from a generator function
  * that is applied to an accumulator value.
@@ -59,4 +61,4 @@ declare const takeWhileT: TakeWhile<AsyncEnumerableLike<unknown>>;
 declare const toObservable: <T>() => Function1<AsyncEnumerableLike<T>, ObservableLike<T>>;
 declare const toObservableT: ToObservable<AsyncEnumerableLike<unknown>>;
 declare const type: AsyncEnumerableLike<unknown>;
-export { AsyncEnumerableLike, AsyncEnumerableOperator, fromArray, fromArrayT, fromEnumerable, fromIterable, generate, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, type };
+export { AsyncEnumerableLike, AsyncEnumerableOperator, fromArray, fromArrayT, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, generate, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, type };

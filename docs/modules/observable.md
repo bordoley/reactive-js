@@ -12,6 +12,7 @@
 
 ### Interfaces
 
+- [FromObservable](../interfaces/observable.FromObservable.md)
 - [MulticastObservableLike](../interfaces/observable.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/observable.ObservableLike.md)
 - [ScanAsync](../interfaces/observable.ScanAsync.md)
@@ -36,8 +37,10 @@
 - [everySatisfyT](observable.md#everysatisfyt)
 - [exhaustT](observable.md#exhaustt)
 - [fromArrayT](observable.md#fromarrayt)
+- [fromEnumerableT](observable.md#fromenumerablet)
 - [fromIterableT](observable.md#fromiterablet)
 - [fromIteratorT](observable.md#fromiteratort)
+- [fromObservableT](observable.md#fromobservablet)
 - [generateT](observable.md#generatet)
 - [keepT](observable.md#keept)
 - [mapT](observable.md#mapt)
@@ -90,6 +93,7 @@
 - [fromEnumerable](observable.md#fromenumerable)
 - [fromIterable](observable.md#fromiterable)
 - [fromIterator](observable.md#fromiterator)
+- [fromObservable](observable.md#fromobservable)
 - [fromPromise](observable.md#frompromise)
 - [generate](observable.md#generate)
 - [getObserverCount](observable.md#getobservercount)
@@ -241,6 +245,12 @@ ___
 
 ___
 
+### fromEnumerableT
+
+• `Const` **fromEnumerableT**: [`FromEnumerable`](../interfaces/enumerable.FromEnumerable.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
 ### fromIterableT
 
 • `Const` **fromIterableT**: [`FromIterable`](../interfaces/container.FromIterable.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
@@ -250,6 +260,12 @@ ___
 ### fromIteratorT
 
 • `Const` **fromIteratorT**: [`FromIterator`](../interfaces/container.FromIterator.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, { `delay?`: `number`  }\>
+
+___
+
+### fromObservableT
+
+• `Const` **fromObservableT**: [`FromObservable`](../interfaces/observable.FromObservable.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
@@ -2033,6 +2049,22 @@ produced by the provided `Iterator` with a specified `delay` between emitted ite
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`Iterator`<`T`, `TReturn`, `TNext`\>\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
+
+___
+
+### fromObservable
+
+▸ **fromObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\>
 
 ___
 

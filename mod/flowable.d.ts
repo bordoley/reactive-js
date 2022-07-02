@@ -1,6 +1,6 @@
 import { ContainerLike } from "./container.mjs";
 import { Function1 } from "./functions.mjs";
-import { ObservableOperator, ObservableLike, ToObservable } from "./observable.mjs";
+import { ObservableOperator, ObservableLike, FromObservable, ToObservable } from "./observable.mjs";
 import { StreamLike } from "./stream.mjs";
 import { StreamableLike } from "./streamable.mjs";
 declare type FlowMode = "resume" | "pause";
@@ -28,6 +28,9 @@ declare function createLiftedFlowable<T, A, B, C, D, E, F, G, H, I, J>(op1: Obse
 declare function createLiftedFlowable<T, A, B, C, D, E, F, G, H, I, J, K>(op1: ObservableOperator<T, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>, op6: ObservableOperator<E, F>, op7: ObservableOperator<F, G>, op8: ObservableOperator<G, H>, op9: ObservableOperator<H, I>, op10: ObservableOperator<I, J>, op11: ObservableOperator<J, K>): FlowableLike<K>;
 declare function createLiftedFlowable<T, A, B, C, D, E, F, G, H, I, J, K, L>(op1: ObservableOperator<T, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>, op4: ObservableOperator<C, D>, op5: ObservableOperator<D, E>, op6: ObservableOperator<E, F>, op7: ObservableOperator<F, G>, op8: ObservableOperator<G, H>, op9: ObservableOperator<H, I>, op10: ObservableOperator<I, J>, op11: ObservableOperator<J, K>, op12: ObservableOperator<K, L>): FlowableLike<L>;
 declare const flow: <T>() => Function1<ObservableLike<T>, FlowableLike<T, FlowableStreamLike<T>>>;
+declare const fromObservable: <T>() => Function1<ObservableLike<T>, FlowableLike<T, FlowableStreamLike<T>>>;
+declare const fromObservableT: FromObservable<FlowableLike<unknown>>;
 declare const toObservable: <T>() => Function1<FlowableLike<T, FlowableStreamLike<T>>, ObservableLike<T>>;
 declare const toObservableT: ToObservable<FlowableLike<unknown>>;
-export { FlowMode, FlowableLike, FlowableOperator, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, createLiftedFlowable, flow, toObservable, toObservableT };
+declare const type: FlowableLike<unknown>;
+export { FlowMode, FlowableLike, FlowableOperator, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, createLiftedFlowable, flow, fromObservable, fromObservableT, toObservable, toObservableT, type };

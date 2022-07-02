@@ -11,6 +11,7 @@
 ### Interfaces
 
 - [EnumerableLike](../interfaces/enumerable.EnumerableLike.md)
+- [FromEnumerable](../interfaces/enumerable.FromEnumerable.md)
 - [ToEnumerable](../interfaces/enumerable.ToEnumerable.md)
 
 ### Type Aliases
@@ -24,6 +25,7 @@
 - [concatT](enumerable.md#concatt)
 - [distinctUntilChangedT](enumerable.md#distinctuntilchangedt)
 - [fromArrayT](enumerable.md#fromarrayt)
+- [fromEnumerableT](enumerable.md#fromenumerablet)
 - [fromIterableT](enumerable.md#fromiterablet)
 - [fromIteratorT](enumerable.md#fromiteratort)
 - [generateT](enumerable.md#generatet)
@@ -53,6 +55,7 @@
 - [distinctUntilChanged](enumerable.md#distinctuntilchanged)
 - [enumerate](enumerable.md#enumerate)
 - [fromArray](enumerable.md#fromarray)
+- [fromEnumerable](enumerable.md#fromenumerable)
 - [fromIterable](enumerable.md#fromiterable)
 - [fromIterator](enumerable.md#fromiterator)
 - [generate](enumerable.md#generate)
@@ -117,6 +120,12 @@ ___
 ### fromArrayT
 
 • `Const` **fromArrayT**: [`FromArray`](../interfaces/container.FromArray.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>, [`FromArrayOptions`](../interfaces/container.FromArrayOptions.md)\>
+
+___
+
+### fromEnumerableT
+
+• `Const` **fromEnumerableT**: [`FromEnumerable`](../interfaces/enumerable.FromEnumerable.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
 
 ___
 
@@ -389,6 +398,22 @@ Returns an EnumerableLike view over the `values` array.
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
+
+___
+
+### fromEnumerable
+
+▸ **fromEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`T`\>\>
 
 ___
 

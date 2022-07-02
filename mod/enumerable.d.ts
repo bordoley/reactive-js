@@ -98,6 +98,9 @@ interface EnumerableLike<T> extends LiftableLike {
 }
 /** A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB> */
 declare type EnumerableOperator<TA, TB> = Function1<EnumerableLike<TA>, EnumerableLike<TB>>;
+interface FromEnumerable<C extends ContainerLike> extends Container<C> {
+    fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
+}
 interface ToEnumerable<C extends ContainerLike> extends Container<C> {
     toEnumerable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 }
@@ -110,6 +113,8 @@ declare const distinctUntilChanged: <T>(options?: {
     readonly equality?: Equality<T>;
 }) => EnumerableOperator<T, T>;
 declare const distinctUntilChangedT: DistinctUntilChanged<EnumerableLike<unknown>>;
+declare const fromEnumerable: <T>() => Function1<EnumerableLike<T>, EnumerableLike<T>>;
+declare const fromEnumerableT: FromEnumerable<EnumerableLike<unknown>>;
 declare const keep: <T>(predicate: Predicate<T>) => EnumerableOperator<T, T>;
 declare const keepT: Keep<EnumerableLike<unknown>>;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => EnumerableOperator<TA, TB>;
@@ -141,4 +146,4 @@ declare const toEnumerableT: ToEnumerable<EnumerableLike<unknown>>;
 declare const type: EnumerableLike<unknown>;
 declare const using: Using<EnumerableLike<unknown>>["using"];
 declare const usingT: Using<EnumerableLike<unknown>>;
-export { AbstractEnumerable, EnumerableLike, EnumerableOperator, ToEnumerable, buffer, bufferT, concat, concatAll, concatAllT, concatT, createEnumerable, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toRunnable, toRunnableT, type, using, usingT, zip, zipT };
+export { AbstractEnumerable, EnumerableLike, EnumerableOperator, FromEnumerable, ToEnumerable, buffer, bufferT, concat, concatAll, concatAllT, concatT, createEnumerable, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toRunnable, toRunnableT, type, using, usingT, zip, zipT };

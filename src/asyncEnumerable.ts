@@ -12,6 +12,7 @@ import {
 } from "./asyncEnumerator";
 import {
   FromArray,
+  FromIterable,
   Keep,
   Map,
   Scan,
@@ -24,6 +25,7 @@ import { dispatch } from "./dispatcher";
 import { add, addTo, bindTo } from "./disposable";
 import {
   EnumerableLike,
+  FromEnumerable,
   enumerate,
   fromIterable as fromIterableEnumerable,
 } from "./enumerable";
@@ -328,6 +330,10 @@ export const fromEnumerable = <T>(): Function1<
   AsyncEnumerableLike<T>
 > => _fromEnumerable;
 
+export const fromEnumerableT: FromEnumerable<AsyncEnumerableLike<unknown>> = {
+  fromEnumerable,
+};
+
 const _fromIterable = <T>(iterable: Iterable<T>): AsyncEnumerableLike<T> =>
   pipe(iterable, fromIterableEnumerable(), fromEnumerable());
 
@@ -340,6 +346,10 @@ export const fromIterable = <T>(): Function1<
   Iterable<T>,
   AsyncEnumerableLike<T>
 > => _fromIterable;
+
+export const fromIterableT: FromIterable<AsyncEnumerableLike<unknown>> = {
+  fromIterable,
+};
 
 const generateScanner =
   <T>(generator: Updater<T>) =>

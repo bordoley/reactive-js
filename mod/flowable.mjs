@@ -26,6 +26,10 @@ const flow = () => observable => createLiftedFlowable((modeObs) => createObserva
         }
     }), subscribe(getScheduler(observer)), bindTo(pausableScheduler))), add(pausableScheduler));
 }));
+const fromObservable = flow;
+const fromObservableT = {
+    fromObservable: flow,
+};
 const toObservable = () => src => createObservable(observer => {
     const { dispatcher, scheduler } = observer;
     const op = compose(onNotify(dispatchTo(dispatcher)), ignoreElements(keepT), startWith({ ...concatT, ...fromArrayT }, "pause", "resume"), onSubscribe(() => dispatcher));
@@ -34,5 +38,6 @@ const toObservable = () => src => createObservable(observer => {
 const toObservableT = {
     toObservable,
 };
+const type = undefined;
 
-export { createLiftedFlowable, flow, toObservable, toObservableT };
+export { createLiftedFlowable, flow, fromObservable, fromObservableT, toObservable, toObservableT, type };

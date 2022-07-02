@@ -15,6 +15,8 @@
 ### Variables
 
 - [fromArrayT](asyncEnumerable.md#fromarrayt)
+- [fromEnumerableT](asyncEnumerable.md#fromenumerablet)
+- [fromIterableT](asyncEnumerable.md#fromiterablet)
 - [keepT](asyncEnumerable.md#keept)
 - [mapT](asyncEnumerable.md#mapt)
 - [scanAsyncT](asyncEnumerable.md#scanasynct)
@@ -54,6 +56,18 @@
 ### fromArrayT
 
 • `Const` **fromArrayT**: [`FromArray`](../interfaces/container.FromArray.md)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>\>
+
+___
+
+### fromEnumerableT
+
+• `Const` **fromEnumerableT**: [`FromEnumerable`](../interfaces/enumerable.FromEnumerable.md)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>\>
+
+___
+
+### fromIterableT
+
+• `Const` **fromIterableT**: [`FromIterable`](../interfaces/container.FromIterable.md)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>\>
 
 ___
 

@@ -414,6 +414,10 @@ const distinctUntilChanged =
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
+const fromEnumerable = () => identity;
+const fromEnumerableT = {
+    fromEnumerable,
+};
 const keep = 
 /*@__PURE__*/ createKeepLiftOperator(liftT, class KeepEnumerator extends AbstractPassThroughEnumerator {
     constructor(delegate, predicate) {
@@ -622,4 +626,4 @@ const usingT = {
     using,
 };
 
-export { AbstractEnumerable, buffer, bufferT, concat, concatAll, concatAllT, concatT, createEnumerable, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toRunnable, toRunnableT, type, using, usingT, zip, zipT };
+export { AbstractEnumerable, buffer, bufferT, concat, concatAll, concatAllT, concatT, createEnumerable, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toRunnable, toRunnableT, type, using, usingT, zip, zipT };

@@ -100,6 +100,9 @@ const _fromEnumerable = (enumerable) => createLiftedAsyncEnumerable(withLatestFr
  * @param iterable
  */
 const fromEnumerable = () => _fromEnumerable;
+const fromEnumerableT = {
+    fromEnumerable,
+};
 const _fromIterable = (iterable) => pipe(iterable, fromIterable$1(), fromEnumerable());
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
@@ -107,6 +110,9 @@ const _fromIterable = (iterable) => pipe(iterable, fromIterable$1(), fromEnumera
  * @param iterable
  */
 const fromIterable = () => _fromIterable;
+const fromIterableT = {
+    fromIterable,
+};
 const generateScanner = (generator) => (acc, _) => generator(acc);
 const asyncGeneratorScanner = (generator, options) => {
     const fromValueWithDelay = fromValue(fromArrayT$1, options);
@@ -222,4 +228,4 @@ const toObservableT = {
 };
 const type = undefined;
 
-export { fromArray, fromArrayT, fromEnumerable, fromIterable, generate, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, type };
+export { fromArray, fromArrayT, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, generate, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, type };
