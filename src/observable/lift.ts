@@ -1,8 +1,9 @@
+import { Lift } from "../__internal__.source";
 import { Function1, newInstance, pipe } from "../functions";
 import { contraVariant } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer } from "../observer";
-import { Lift, sourceFrom } from "../source";
+import { sourceFrom } from "../source";
 import { AbstractObservable, isEnumerable } from "./observable";
 
 /**

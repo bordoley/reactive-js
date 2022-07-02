@@ -1,8 +1,8 @@
+import { CreateSource } from "../__internal__.source";
 import { dispose } from "../disposable";
 import { SideEffect1, newInstance, pipe } from "../functions";
 import { RunnableLike } from "../runnable";
 import { RunnableSink } from "../runnableSink";
-import { CreateSource } from "../source";
 import { AbstractRunnable } from "./runnable";
 
 class RunnableImpl<T> extends AbstractRunnable<T> {
