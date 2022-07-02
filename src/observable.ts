@@ -134,7 +134,7 @@ export interface MulticastObservableLike<T>
   readonly replay: number;
 }
 
-export type AsyncReducer<TAcc, T> = Function2<TAcc, T, ObservableLike<TAcc>>;
+export type AsyncReducer<T, TAcc> = Function2<TAcc, T, ObservableLike<TAcc>>;
 export type ObservableEffectMode = "batched" | "combine-latest";
 
 /**
@@ -440,7 +440,7 @@ export const scanT: Scan<ObservableLike<unknown>> = {
  */
 export const scanAsync =
   <T, TAcc>(
-    scanner: AsyncReducer<TAcc, T>,
+    scanner: AsyncReducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ): ObservableOperator<T, TAcc> =>
   observable =>
