@@ -6,7 +6,7 @@ export abstract class AbstractObservable<T>
   extends AbstractSource<T, Observer<T>>
   implements ObservableLike<T> {}
 
-export abstract class DisposableObservable<T>
+export abstract class AbstractDisposableObservable<T>
   extends DisposableSource<T, Observer<T>>
   implements ObservableLike<T> {}
 

@@ -62,7 +62,7 @@ class ObserverDelegatingDispatcher<T>
   }
 
   get scheduler() {
-    return this.observer.scheduler;
+    return getScheduler(this.observer);
   }
 
   dispatch(next: T) {
@@ -112,7 +112,7 @@ if (__DEV__) {
   Observer.prototype.assertState = function assertStateDev<T>(
     this: Observer<T>,
   ) {
-    if (!inContinuation(this.scheduler)) {
+    if (!pipe(this, getScheduler, inContinuation)) {
       raise(
         "Observer.notify() may only be invoked within a scheduled SchedulerContinuation",
       );
