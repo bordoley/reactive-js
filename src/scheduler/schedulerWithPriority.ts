@@ -1,3 +1,4 @@
+import { getDelay } from "../__internal__.optionalArgs";
 import { Disposable, add, addTo, isDisposed } from "../disposable";
 import { Function1, newInstanceWith, pipe } from "../functions";
 import {
@@ -5,7 +6,7 @@ import {
   SchedulerContinuationLike,
   SchedulerLike,
 } from "../scheduler";
-import { getDelay, getNow, inContinuation, shouldYield } from "./scheduler";
+import { getNow, inContinuation, shouldYield } from "./scheduler";
 
 class SchedulerWithPriorityImpl extends Disposable implements SchedulerLike {
   constructor(

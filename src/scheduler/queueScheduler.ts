@@ -1,3 +1,4 @@
+import { getDelay } from "../__internal__.optionalArgs";
 import { Disposable, add, disposed, isDisposed } from "../disposable";
 import {
   AbstractEnumerator,
@@ -15,7 +16,6 @@ import {
 } from "../scheduler";
 import { QueueLike, createPriorityQueue } from "./queue";
 import {
-  getDelay,
   getNow,
   inContinuation,
   runContinuation,

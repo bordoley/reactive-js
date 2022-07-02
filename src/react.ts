@@ -18,6 +18,7 @@ import {
   unstable_scheduleCallback,
   unstable_shouldYield,
 } from "scheduler";
+import { getDelay } from "./__internal__.optionalArgs";
 import {
   Disposable,
   Error,
@@ -50,7 +51,6 @@ import {
   SchedulerContinuationLike,
   SchedulerImplementationLike,
   SchedulerLike,
-  getDelay,
   inContinuation,
   runContinuation,
   toSchedulerWithPriority,

@@ -20,9 +20,7 @@
 - [createPausableScheduler](scheduler.md#createpausablescheduler)
 - [createPriorityScheduler](scheduler.md#createpriorityscheduler)
 - [createVirtualTimeScheduler](scheduler.md#createvirtualtimescheduler)
-- [getDelay](scheduler.md#getdelay)
 - [getNow](scheduler.md#getnow)
-- [hasDelay](scheduler.md#hasdelay)
 - [inContinuation](scheduler.md#incontinuation)
 - [runContinuation](scheduler.md#runcontinuation)
 - [schedule](scheduler.md#schedule)
@@ -119,23 +117,6 @@ Creates a new virtual time scheduler instance.
 
 ___
 
-### getDelay
-
-▸ **getDelay**(`options?`): `number`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-
-#### Returns
-
-`number`
-
-___
-
 ### getNow
 
 ▸ **getNow**(`scheduler`): `number`
@@ -149,23 +130,6 @@ ___
 #### Returns
 
 `number`
-
-___
-
-### hasDelay
-
-▸ **hasDelay**(`options?`): `boolean`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-
-#### Returns
-
-`boolean`
 
 ___
 

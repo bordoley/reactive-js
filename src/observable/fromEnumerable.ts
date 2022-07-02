@@ -1,10 +1,11 @@
+import { hasDelay } from "../__internal__.optionalArgs";
 import { dispose } from "../disposable";
 import { EnumerableLike, FromEnumerable, enumerate } from "../enumerable";
 import { Enumerator, getCurrent, move } from "../enumerator";
 import { Factory, Function1, pipe, pipeLazy } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
-import { __yield, hasDelay } from "../scheduler";
+import { __yield } from "../scheduler";
 import { defer } from "./defer";
 import { tagEnumerable } from "./observable";
 import { using } from "./using";
