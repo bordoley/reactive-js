@@ -87,7 +87,7 @@ export class Observer<T> extends DisposableContainer implements SinkLike<T> {
     if (isNone(this._dispatcher)) {
       const dispatcher = pipe(
         ObserverDelegatingDispatcher,
-        newInstanceWith<Observer<T>, ObserverDelegatingDispatcher<T>>(this),
+        newInstanceWith<ObserverDelegatingDispatcher<T>, Observer<T>>(this),
         addTo(this, true),
         onDisposed(e => {
           if (isEmpty(dispatcher.nextQueue)) {

@@ -21,7 +21,7 @@ export const forEach = <T>(
 ): Function1<RunnableLike<T>, void> => {
   const createSink = pipeLazy(
     ForEachSink,
-    newInstanceWith<SideEffect1<T>, ForEachSink<T>>(f),
+    newInstanceWith<ForEachSink<T>, SideEffect1<T>>(f),
   );
   return run<T, void>(createSink);
 };

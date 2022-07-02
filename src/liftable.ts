@@ -157,8 +157,8 @@ export const createDistinctUntilChangedLiftOperator =
         DistinctUntilChangedLiftableState,
         newInstanceWith<
           LiftableStateOf<C, T>,
-          Equality<T>,
-          LiftableStateOf<C, T>
+          LiftableStateOf<C, T>,
+          Equality<T>
         >(delegate, equality),
         bindTo(delegate),
       );
@@ -179,8 +179,8 @@ export const createKeepLiftOperator =
         KeepLiftableState,
         newInstanceWith<
           LiftableStateOf<C, T>,
-          Predicate<T>,
-          LiftableStateOf<C, T>
+          LiftableStateOf<C, T>,
+          Predicate<T>
         >(delegate, predicate),
         bindTo(delegate),
       );
@@ -201,9 +201,9 @@ export const createMapLiftOperator =
         pipe(
           MapLiftableState,
           newInstanceWith<
+            LiftOperatorOut<C, TA, TB, typeof m>,
             LiftOperatorIn<C, TA, TB, typeof m>,
-            Function1<TA, TB>,
-            LiftOperatorOut<C, TA, TB, typeof m>
+            Function1<TA, TB>
           >(delegate, mapper),
           bindTo(delegate),
         ),
@@ -225,8 +225,8 @@ export const createOnNotifyLiftOperator =
           OnNotifyLiftableState,
           newInstanceWith<
             LiftableStateOf<C, T>,
-            SideEffect1<T>,
-            LiftableStateOf<C, T>
+            LiftableStateOf<C, T>,
+            SideEffect1<T>
           >(delegate, onNotify),
           bindTo(delegate),
         ),
@@ -248,8 +248,8 @@ export const createPairwiseLiftOperator =
         pipe(
           PairwiseLiftableState,
           newInstanceWith<
-            LiftOperatorIn<C, T, [Option<T>, T], typeof m>,
-            LiftOperatorOut<C, T, [Option<T>, T], typeof m>
+            LiftOperatorOut<C, T, [Option<T>, T], typeof m>,
+            LiftOperatorIn<C, T, [Option<T>, T], typeof m>
           >(delegate),
           bindTo(delegate),
         ),
@@ -274,10 +274,10 @@ export const createScanLiftOperator =
         pipe(
           ScanLiftableState,
           newInstanceWith<
+            LiftOperatorOut<C, T, TAcc, typeof m>,
             LiftOperatorIn<C, T, TAcc, typeof m>,
             Reducer<T, TAcc>,
-            TAcc,
-            LiftOperatorOut<C, T, TAcc, typeof m>
+            TAcc
           >(delegate, reducer, initialValue()),
           bindTo(delegate),
         ),
@@ -300,9 +300,9 @@ export const createSkipFirstLiftOperator =
       pipe(
         SkipLiftableState,
         newInstanceWith<
+          LiftOperatorOut<C, T, T, typeof m>,
           LiftOperatorIn<C, T, T, typeof m>,
-          number,
-          LiftOperatorOut<C, T, T, typeof m>
+          number
         >(delegate, count),
         bindTo(delegate),
       );
@@ -327,9 +327,9 @@ export const createTakeFirstLiftOperator =
       pipe(
         TakeFirstLiftableState,
         newInstanceWith<
+          LiftOperatorOut<C, T, T, typeof m>,
           LiftOperatorIn<C, T, T, typeof m>,
-          number,
-          LiftOperatorOut<C, T, T, typeof m>
+          number
         >(delegate, count),
         bindTo(delegate),
       );
@@ -355,10 +355,10 @@ export const createTakeWhileLiftOperator =
       const lifted = pipe(
         TakeWhileLiftableState,
         newInstanceWith<
+          LiftOperatorOut<C, T, T, typeof m>,
           LiftOperatorIn<C, T, T, typeof m>,
           Predicate<T>,
-          boolean,
-          LiftOperatorOut<C, T, T, typeof m>
+          boolean
         >(delegate, predicate, inclusive),
         bindTo(delegate),
       );
@@ -381,10 +381,10 @@ export const createThrowIfEmptyLiftOperator =
       const lifted = pipe(
         ThrowIfEmptyLiftableState,
         newInstanceWith<
-          LiftOperatorIn<C, T, T, typeof m>,
           LiftOperatorOut<C, T, T, typeof m> & {
             readonly isEmpty: boolean;
-          }
+          },
+          LiftOperatorIn<C, T, T, typeof m>
         >(delegate),
         m.variance === covariant ? add(delegate, true) : addTo(delegate),
       );

@@ -92,10 +92,10 @@ export const latest = (
       const innerObserver = pipe(
         LatestObserver,
         newInstanceWith<
+          LatestObserver,
           Observer<readonly unknown[]>,
           LatestCtx,
-          LatestMode,
-          LatestObserver
+          LatestMode
         >(delegate, ctx, mode),
         addTo(delegate),
         onComplete(onDispose),

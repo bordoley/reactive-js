@@ -98,11 +98,11 @@ export function buffer<T>(
     return pipe(
       BufferObserver,
       newInstanceWith<
+        BufferObserver<T>,
         Observer<readonly T[]>,
         Function1<T, ObservableLike<unknown>>,
         number,
-        SerialDisposable,
-        BufferObserver<T>
+        SerialDisposable
       >(delegate, durationFunction, maxBufferSize, durationSubscription),
       add(durationSubscription),
       addTo(delegate),

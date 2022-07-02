@@ -49,9 +49,9 @@ export const withLatestFrom = <TA, TB, T>(
     const observer = pipe(
       WithLatestFromObserver,
       newInstanceWith<
+        WithLatestFromObserver<TA, TB, T>,
         Observer<T>,
-        Function2<TA, TB, T>,
-        WithLatestFromObserver<TA, TB, T>
+        Function2<TA, TB, T>
       >(delegate, selector),
       bindTo(delegate),
     );

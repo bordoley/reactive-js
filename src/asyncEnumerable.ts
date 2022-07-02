@@ -520,10 +520,10 @@ export const scanAsync = <T, TAcc>(
       pipe(
         ScanAsyncAsyncEnumerator,
         newInstanceWith<
+          ScanAsyncAsyncEnumerator<T, TAcc>,
           AsyncEnumerator<T>,
           AsyncReducer<T, TAcc>,
-          Factory<TAcc>,
-          ScanAsyncAsyncEnumerator<T, TAcc>
+          Factory<TAcc>
         >(delegate, reducer, initialValue),
         bindTo(delegate),
       ),

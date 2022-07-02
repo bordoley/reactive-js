@@ -54,7 +54,7 @@ export const buffer = <T>(
   const operator = (delegate: Enumerator<T>) =>
     pipe(
       BufferEnumerator,
-      newInstanceWith<Enumerator<T>, number, BufferEnumerator<T>>(
+      newInstanceWith<BufferEnumerator<T>, Enumerator<T>, number>(
         delegate,
         maxBufferSize,
       ),
