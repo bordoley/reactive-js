@@ -2,7 +2,7 @@
 import { concatWith, fromValue, ignoreElements } from './container.mjs';
 import { dispatchTo } from './dispatcher.mjs';
 import { addTo, add } from './disposable.mjs';
-import { newInstance, length, compose, pipe, returns, updateReducer } from './functions.mjs';
+import { newInstance, getLength, compose, pipe, returns, updateReducer } from './functions.mjs';
 import { createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, __currentScheduler, __using, __memo, merge, onNotify, keepT, onSubscribe, subscribe } from './observable.mjs';
 import { isSome, none } from './option.mjs';
 import { sinkInto as sinkInto$1 } from './source.mjs';
@@ -16,7 +16,7 @@ class CreateStreamable {
 }
 const createStreamble = (stream) => newInstance(CreateStreamable, stream);
 function createLiftedStreamable(...ops) {
-    const op = length(ops) > 1 ? compose(...ops) : ops[0];
+    const op = getLength(ops) > 1 ? compose(...ops) : ops[0];
     return createStreamble((scheduler, options) => createStream(op, scheduler, options));
 }
 /**

@@ -14,8 +14,8 @@ function callWith(...args) {
  * @returns `v`
  */
 const identity = (v) => v;
-const isEmpty = (arr) => length(arr) === 0;
-const length = (arr) => arr.length;
+const isEmpty = (arr) => getLength(arr) === 0;
+const getLength = (arr) => arr.length;
 /**
  * Returns a function that takes an arbitrary number of arguments and always returns `v`.
  */
@@ -95,7 +95,7 @@ const raise = (message) => {
  */
 const sum = (...args) => {
     let acc = 0;
-    for (let i = 0; i < length(args); i++) {
+    for (let i = 0; i < getLength(args); i++) {
         acc += args[i];
     }
     return acc;
@@ -104,7 +104,7 @@ const sum = (...args) => {
  * Returns an equality function that compares two readonly arrays for equality,
  * comparing their values using `valuesEquality`.
  */
-const arrayEquality = (valuesEquality = strictEquality) => (a, b) => length(a) === length(b) && a.every((v, i) => valuesEquality(b[i], v));
+const arrayEquality = (valuesEquality = strictEquality) => (a, b) => getLength(a) === getLength(b) && a.every((v, i) => valuesEquality(b[i], v));
 /**
  * A `Reducer` functions that applies `updater` to `acc` to compute the next
  * accumulator value.
@@ -150,4 +150,4 @@ function instanceFactory(Constructor) {
     return (...args) => _newInstance(Constructor, ...args);
 }
 
-export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, identity, ignore, increment, incrementBy, instanceFactory, isEmpty, isEqualTo, isEven, isOdd, length, max, min, negate, newInstance, newInstanceWith, pipe, pipeLazy, raise, returns, strictEquality, sum, updateReducer };
+export { alwaysFalse, alwaysTrue, arrayEquality, callWith, compose, decrement, decrementBy, flip, floor, getLength, identity, ignore, increment, incrementBy, instanceFactory, isEmpty, isEqualTo, isEven, isOdd, max, min, negate, newInstance, newInstanceWith, pipe, pipeLazy, raise, returns, strictEquality, sum, updateReducer };

@@ -1,8 +1,8 @@
 import { add, dispose, isDisposed, onComplete } from "../disposable";
 import {
   Function2,
+  getLength,
   isEmpty,
-  length,
   newInstanceWith,
   pipe,
 } from "../functions";
@@ -22,7 +22,7 @@ import { subscribe } from "./subscribe";
 const notifyDelegate = <TA, TB, TC>(
   observer: ZipWithLatestFromObserver<TA, TB, TC>,
 ) => {
-  if (length(observer.queue) > 0 && observer.hasLatest) {
+  if (getLength(observer.queue) > 0 && observer.hasLatest) {
     observer.hasLatest = false;
     const next = observer.queue.shift() as TA;
     const result = observer.selector(next, observer.otherLatest as TB);

@@ -47,6 +47,7 @@
 - [decrementBy](functions.md#decrementby)
 - [flip](functions.md#flip)
 - [floor](functions.md#floor)
+- [getLength](functions.md#getlength)
 - [identity](functions.md#identity)
 - [ignore](functions.md#ignore)
 - [increment](functions.md#increment)
@@ -56,7 +57,6 @@
 - [isEqualTo](functions.md#isequalto)
 - [isEven](functions.md#iseven)
 - [isOdd](functions.md#isodd)
-- [length](functions.md#length)
 - [max](functions.md#max)
 - [min](functions.md#min)
 - [negate](functions.md#negate)
@@ -1592,6 +1592,22 @@ ___
 
 ___
 
+### getLength
+
+▸ **getLength**(`arr`): `number`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `arr` | `string` \| readonly `unknown`[] |
+
+#### Returns
+
+`number`
+
+___
+
 ### identity
 
 ▸ **identity**<`T`\>(`v`): `T`
@@ -1830,22 +1846,6 @@ Returns `true` if `x` is an odd number, otherwise `false`.
 #### Returns
 
 `boolean`
-
-___
-
-### length
-
-▸ **length**(`arr`): `number`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `arr` | `string` \| readonly `unknown`[] |
-
-#### Returns
-
-`number`
 
 ___
 

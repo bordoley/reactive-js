@@ -4,8 +4,8 @@ import {
   Function1,
   SideEffect,
   arrayEquality,
+  getLength,
   ignore,
-  length,
   raise,
   strictEquality,
 } from "./functions";
@@ -152,9 +152,9 @@ export const mockFn = (retval?: any): MockFunction => {
 
 export const expectToHaveBeenCalledTimes =
   (times: number) => (fn: MockFunction) => {
-    if (length(fn.calls) !== times) {
+    if (getLength(fn.calls) !== times) {
       raise(
-        `expected fn to be called ${times} times, but was only called ${length(
+        `expected fn to be called ${times} times, but was only called ${getLength(
           fn.calls,
         )} times.`,
       );

@@ -1,15 +1,15 @@
 /// <reference types="./scheduler.d.ts" />
 import { MAX_SAFE_INTEGER } from './__internal__.env.mjs';
 import { isDisposed, Disposable, dispose, disposed, add, addTo, onDisposed } from './disposable.mjs';
-import { floor, length, newInstance, max, pipe, raise, instanceFactory, newInstanceWith } from './functions.mjs';
+import { floor, getLength, newInstance, max, pipe, raise, instanceFactory, newInstanceWith } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractEnumerator, move, hasCurrent, reset, getCurrent } from './enumerator.mjs';
 
 const computeParentIndex = (index) => floor((index - 1) / 2);
 const siftDown = (queue, item) => {
     const { values, compare } = queue;
-    const length$1 = length(values);
-    for (let index = 0; index < length$1;) {
+    const length = getLength(values);
+    for (let index = 0; index < length;) {
         const leftIndex = (index + 1) * 2 - 1;
         const rightIndex = leftIndex + 1;
         const left = values[leftIndex];
@@ -38,7 +38,7 @@ const siftDown = (queue, item) => {
 };
 const siftUp = (queue, item) => {
     const { values, compare } = queue;
-    for (let index = length(values) - 1, parentIndex = computeParentIndex(index), parent = values[parentIndex]; isSome(parent) && compare(parent, item) > 0; index = parentIndex,
+    for (let index = getLength(values) - 1, parentIndex = computeParentIndex(index), parent = values[parentIndex]; isSome(parent) && compare(parent, item) > 0; index = parentIndex,
         parentIndex = computeParentIndex(index),
         parent = values[parentIndex]) {
         values[parentIndex] = item;
@@ -51,7 +51,7 @@ class PriorityQueueImpl {
         this.values = [];
     }
     get count() {
-        return length(this.values);
+        return getLength(this.values);
     }
     clear() {
         this.values.length = 0;
@@ -61,11 +61,11 @@ class PriorityQueueImpl {
     }
     pop() {
         const { values } = this;
-        const length$1 = length(values);
-        if (length$1 === 0) {
+        const length = getLength(values);
+        if (length === 0) {
             return none;
         }
-        else if (length$1 === 1) {
+        else if (length === 1) {
             return values.shift();
         }
         else {

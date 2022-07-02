@@ -3,7 +3,7 @@ import { createFromArray } from './__internal__.container.mjs';
 import { isDisposed, dispose } from './disposable.mjs';
 import { createEnumerable } from './enumerable.mjs';
 import { AbstractEnumerator, hasCurrent } from './enumerator.mjs';
-import { pipe, strictEquality, alwaysTrue, length, callWith, pipeLazy, newInstanceWith } from './functions.mjs';
+import { pipe, strictEquality, alwaysTrue, getLength, callWith, pipeLazy, newInstanceWith } from './functions.mjs';
 import { none, isNone } from './option.mjs';
 import { map as map$1, keepType } from './readonlyArray.mjs';
 import { createRunnable } from './runnable.mjs';
@@ -214,7 +214,7 @@ const _takeLast = (maxCount, seq) => castToSequence(() => {
     while (true) {
         if (isNotify(result)) {
             last.push(result.data);
-            if (length(last) > maxCount) {
+            if (getLength(last) > maxCount) {
                 last.shift();
             }
             result = result.next();
@@ -223,7 +223,7 @@ const _takeLast = (maxCount, seq) => castToSequence(() => {
             break;
         }
     }
-    return _fromArray(last, 0, length(last));
+    return _fromArray(last, 0, getLength(last));
 });
 const takeLast = (options = {}) => seq => {
     const { count = 1 } = options;
@@ -259,7 +259,7 @@ const toRunnableT = {
 };
 const _zip = (...sequences) => castToSequence(() => {
     const notifyResults = pipe(sequences, map$1(callWith()), keepType(isNotify));
-    return length(notifyResults) === length(sequences)
+    return getLength(notifyResults) === getLength(sequences)
         ? notify(pipe(notifyResults, map$1(x => x.data)), _zip(...pipe(notifyResults, map$1(x => x.next))))
         : done();
 });

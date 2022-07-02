@@ -2,7 +2,7 @@
 import { createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './__internal__.liftable.mjs';
 import { isDisposed, dispose, SerialDisposable, bindTo, add, addTo } from './disposable.mjs';
 import { AbstractEnumerator, reset, hasCurrent, AbstractDelegatingEnumerator, move, getCurrent, Enumerator, forEach, zip as zip$1, AbstractPassThroughEnumerator } from './enumerator.mjs';
-import { pipe, pipeLazy, instanceFactory, callWith, newInstance, newInstanceWith, length, max, raise, alwaysTrue, identity } from './functions.mjs';
+import { pipe, pipeLazy, instanceFactory, callWith, newInstance, newInstanceWith, getLength, max, raise, alwaysTrue, identity } from './functions.mjs';
 import { empty } from './container.mjs';
 import { AbstractLiftable, covariant, getDelegate } from './liftable.mjs';
 import { createFromArray } from './__internal__.container.mjs';
@@ -140,10 +140,10 @@ class BufferEnumerator extends AbstractDelegatingEnumerator {
         reset(this);
         const buffer = [];
         const { delegate, maxBufferSize } = this;
-        while (length(buffer) < maxBufferSize && delegate.move()) {
+        while (getLength(buffer) < maxBufferSize && delegate.move()) {
             buffer.push(getCurrent(delegate));
         }
-        const bufferLength = length(buffer);
+        const bufferLength = getLength(buffer);
         if (bufferLength > 0) {
             this.current = buffer;
         }
@@ -310,7 +310,7 @@ class TakeLastEnumerator extends Enumerator {
             const last = [];
             while (move(delegate)) {
                 last.push(getCurrent(delegate));
-                if (length(last) > this.maxCount) {
+                if (getLength(last) > this.maxCount) {
                     last.shift();
                 }
             }

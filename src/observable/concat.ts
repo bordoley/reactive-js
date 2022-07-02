@@ -1,6 +1,6 @@
 import { Concat } from "../container";
 import { addTo, dispose, onComplete } from "../disposable";
-import { isEmpty, length, pipe } from "../functions";
+import { getLength, isEmpty, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer, createDelegatingObserver } from "../observer";
 import { everySatisfy } from "../readonlyArray";
@@ -17,7 +17,7 @@ const createConcatObserver = <T>(
     createDelegatingObserver(delegate),
     addTo(delegate),
     onComplete(() => {
-      if (next < length(observables)) {
+      if (next < getLength(observables)) {
         pipe(
           createConcatObserver(delegate, observables, next + 1),
           sourceFrom(observables[next]),

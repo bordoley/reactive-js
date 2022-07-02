@@ -9,7 +9,7 @@ import {
   hasCurrent,
   reset,
 } from "../enumerator";
-import { length, max, newInstanceWith, pipe } from "../functions";
+import { getLength, max, newInstanceWith, pipe } from "../functions";
 import { lift } from "./lift";
 
 class BufferEnumerator<T> extends AbstractDelegatingEnumerator<
@@ -27,11 +27,11 @@ class BufferEnumerator<T> extends AbstractDelegatingEnumerator<
 
     const { delegate, maxBufferSize } = this;
 
-    while (length(buffer) < maxBufferSize && delegate.move()) {
+    while (getLength(buffer) < maxBufferSize && delegate.move()) {
       buffer.push(getCurrent(delegate));
     }
 
-    const bufferLength = length(buffer);
+    const bufferLength = getLength(buffer);
     if (bufferLength > 0) {
       this.current = buffer;
     }

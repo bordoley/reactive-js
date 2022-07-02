@@ -16,8 +16,8 @@ import {
   zip as zipEnumerators,
 } from "../enumerator";
 import {
+  getLength,
   isEmpty,
-  length,
   newInstanceWith,
   pipe,
   pipeLazy,
@@ -59,7 +59,7 @@ class ZipObserverEnumerator extends AbstractEnumerator<unknown> {
   move(): boolean {
     const { buffer } = this;
 
-    if (!isDisposed(this) && length(buffer) > 0) {
+    if (!isDisposed(this) && getLength(buffer) > 0) {
       const next = buffer.shift();
       this.current = next;
     } else {
@@ -123,7 +123,7 @@ const _zip = (
         tagEnumerable(true),
       )
     : createObservable(observer => {
-        const count = length(observables);
+        const count = getLength(observables);
         const enumerators: Enumerator<unknown>[] = [];
         for (let index = 0; index < count; index++) {
           const next = observables[index];

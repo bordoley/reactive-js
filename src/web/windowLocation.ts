@@ -4,8 +4,8 @@ import { addTo, bindTo } from "../disposable";
 import {
   Updater,
   compose,
+  getLength,
   isEmpty,
-  length,
   newInstance,
   newInstanceWith,
   pipe,
@@ -42,8 +42,8 @@ const windowLocationURIToString = ({
   fragment,
 }: WindowLocationURI): string => {
   let uri = isEmpty(path) ? "/" : !path.startsWith("/") ? `/${path}` : path;
-  uri = length(query) > 0 ? `${uri}?${query}` : uri;
-  uri = length(fragment) > 0 ? `${uri}#${fragment}` : uri;
+  uri = getLength(query) > 0 ? `${uri}?${query}` : uri;
+  uri = getLength(fragment) > 0 ? `${uri}#${fragment}` : uri;
   return newInstance(URL, uri, location.href).toString();
 };
 

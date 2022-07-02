@@ -11,8 +11,8 @@ import {
 } from "../disposable";
 import {
   Function1,
+  getLength,
   isEmpty,
-  length,
   max,
   newInstance,
   newInstanceWith,
@@ -61,7 +61,7 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
       pipe(this, getDelegate, notify(buffer));
     };
 
-    if (length(buffer) === maxBufferSize) {
+    if (getLength(buffer) === maxBufferSize) {
       doOnNotify();
     } else if (isDisposed(this.durationSubscription.inner)) {
       this.durationSubscription.inner = pipe(

@@ -1,7 +1,7 @@
 /// <reference types="./asyncEnumerable.d.ts" />
 import { createFromArray } from './__internal__.container.mjs';
 import { createKeepLiftOperator, createMapLiftOperator, createScanLiftOperator, createTakeWhileLiftOperator } from './__internal__.liftable.mjs';
-import { pipe, newInstance, length, compose, increment, returns, pipeLazy, newInstanceWith } from './functions.mjs';
+import { pipe, newInstance, getLength, compose, increment, returns, pipeLazy, newInstanceWith } from './functions.mjs';
 import { AbstractLiftable, covariant, getDelegate } from './liftable.mjs';
 import { stream } from './streamable.mjs';
 import { AsyncEnumerator, AbstractDelegatingAsyncEnumerator } from './asyncEnumerator.mjs';
@@ -74,7 +74,7 @@ class LiftedAsyncEnumerator extends AsyncEnumerator {
     }
 }
 function createLiftedAsyncEnumerable(...ops) {
-    const op = length(ops) > 1 ? compose(...ops) : ops[0];
+    const op = getLength(ops) > 1 ? compose(...ops) : ops[0];
     return createAsyncEnumerable((scheduler, options) => {
         var _a;
         const replay = (_a = options === null || options === void 0 ? void 0 : options.replay) !== null && _a !== void 0 ? _a : 0;
