@@ -17,6 +17,7 @@
 - [Container](../interfaces/container.Container.md)
 - [ContainerLike](../interfaces/container.ContainerLike.md)
 - [DecodeWithCharset](../interfaces/container.DecodeWithCharset.md)
+- [Defer](../interfaces/container.Defer.md)
 - [DistinctUntilChanged](../interfaces/container.DistinctUntilChanged.md)
 - [EverySatisfy](../interfaces/container.EverySatisfy.md)
 - [FromArray](../interfaces/container.FromArray.md)
@@ -276,7 +277,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Using`](../interfaces/container.Using.md)<`C`\> & [`Map`](../interfaces/container.Map.md)<`C`\> |
+| `m` | [`Defer`](../interfaces/container.Defer.md)<`C`\> & [`Map`](../interfaces/container.Map.md)<`C`\> |
 
 #### Returns
 

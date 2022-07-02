@@ -8,7 +8,7 @@ import { createObservable } from "./createObservable";
 import { defer } from "./defer";
 import { tagEnumerable } from "./observable";
 
-const deferEmpty = /*@__PURE__*/ pipe(
+const empty = /*@__PURE__*/ pipe(
   createObservable(dispose()),
   tagEnumerable(true),
 );
@@ -40,7 +40,7 @@ export const fromArray = /*@__PURE__*/ createFromArray<
     const count = endIndex - startIndex;
     const isEnumerableTag = !hasDelay(options);
     return count === 0 && isEnumerableTag
-      ? deferEmpty
+      ? empty
       : pipe(
           defer(() => {
             let index = startIndex;

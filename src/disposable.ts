@@ -4,7 +4,6 @@ import {
   SideEffect1,
   newInstance,
   pipe,
-  pipeLazy,
 } from "./functions";
 import { Option, isNone, isSome, none } from "./option";
 
@@ -241,22 +240,6 @@ export class SerialDisposable extends Disposable {
       addDisposableOrTeardown(this, newInner);
       pipe(oldInner, dispose());
     }
-  }
-}
-
-/**
- * A `Disposable` that provides disposable semantics to an underlying resource.
- *
- * @noInheritDoc
- */
-export class DisposableValue<T> extends Disposable {
-  constructor(
-    /** The underlying resource */
-    readonly value: T,
-    cleanup: SideEffect1<T>,
-  ) {
-    super();
-    pipe(this, onDisposed(pipeLazy(value, cleanup)));
   }
 }
 

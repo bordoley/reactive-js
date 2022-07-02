@@ -22,6 +22,8 @@
 
   ↳ [`DecodeWithCharset`](container.DecodeWithCharset.md)
 
+  ↳ [`Defer`](container.Defer.md)
+
   ↳ [`DistinctUntilChanged`](container.DistinctUntilChanged.md)
 
   ↳ [`EverySatisfy`](container.EverySatisfy.md)

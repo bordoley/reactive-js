@@ -1,4 +1,4 @@
-import { Disposable, DisposableValue } from "./disposable";
+import { Disposable } from "./disposable";
 import {
   Equality,
   Factory,
@@ -14,7 +14,6 @@ import {
   alwaysFalse,
   callWith,
   compose,
-  ignore,
   isEqualTo,
   length,
   max,
@@ -101,6 +100,10 @@ export interface DecodeWithCharset<C extends ContainerLike>
   decodeWithCharset(
     charset?: string,
   ): ContainerOperator<C, ArrayBuffer, string>;
+}
+
+export interface Defer<C extends ContainerLike> extends Container<C> {
+  defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 }
 
 export interface DistinctUntilChanged<C extends ContainerLike>
@@ -421,17 +424,16 @@ export const contains = <C extends ContainerLike, T>(
 
 export const encodeUtf8 =
   <C extends ContainerLike>(
-    m: Using<C> & Map<C>,
+    m: Defer<C> & Map<C>,
   ): ContainerOperator<C, string, Uint8Array> =>
   obs =>
-    m.using(
-      () => newInstance(DisposableValue, newInstance(TextEncoder), ignore),
-      v =>
-        pipe(
-          obs,
-          m.map(s => v.value.encode(s)),
-        ),
-    );
+    m.defer(() => {
+      const textEncoder = newInstance(TextEncoder);
+      return pipe(
+        obs,
+        m.map(s => textEncoder.encode(s)),
+      );
+    });
 
 export function endWith<C extends ContainerLike, T>(
   m: Concat<C> & FromArray<C>,

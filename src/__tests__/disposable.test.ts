@@ -1,6 +1,5 @@
 import {
   Disposable,
-  DisposableValue,
   SerialDisposable,
   add,
   dispose,
@@ -108,20 +107,6 @@ export const tests = describe(
       serialDisposable.inner = child;
 
       pipe(child, isDisposed, expectFalse);
-    }),
-  ),
-
-  describe(
-    "DisposableValue",
-
-    test("disposes the value when disposed", () => {
-      const value = newInstance(Disposable);
-      const disposable = newInstance(DisposableValue, value, dispose());
-
-      pipe(disposable, dispose());
-
-      pipe(disposable.value, expectEquals(value));
-      pipe(value, isDisposed, expectTrue);
     }),
   ),
 );

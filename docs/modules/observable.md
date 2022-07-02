@@ -31,6 +31,7 @@
 - [concatT](observable.md#concatt)
 - [createT](observable.md#createt)
 - [decodeWithCharsetT](observable.md#decodewithcharsett)
+- [deferT](observable.md#defert)
 - [distinctUntilChangedT](observable.md#distinctuntilchangedt)
 - [everySatisfyT](observable.md#everysatisfyt)
 - [exhaustT](observable.md#exhaustt)
@@ -207,6 +208,12 @@ ___
 ### decodeWithCharsetT
 
 • `Const` **decodeWithCharsetT**: [`DecodeWithCharset`](../interfaces/container.DecodeWithCharset.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### deferT
+
+• `Const` **deferT**: [`Defer`](../interfaces/container.Defer.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
@@ -1328,6 +1335,24 @@ ___
 | `factory` | [`Factory`](functions.md#factory)<[`SideEffect1`](functions.md#sideeffect1)<[`Observer`](../classes/observer.Observer.md)<`T`\>\>\> |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
+
+#### Returns
+
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
+
+▸ **defer**<`T`\>(`factory`): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>\> |
 
 #### Returns
 

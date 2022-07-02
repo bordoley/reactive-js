@@ -1,5 +1,5 @@
 import { Disposable } from "./disposable.mjs";
-import { Function1, Equality, Predicate, Updater, Factory, Reducer, Function2, Function3, Function4, Function5, TypePredicate } from "./functions.mjs";
+import { Function1, Factory, Equality, Predicate, Updater, Reducer, Function2, Function3, Function4, Function5, TypePredicate } from "./functions.mjs";
 import { Option } from "./option.mjs";
 interface ContainerLike {
     readonly T?: unknown;
@@ -38,6 +38,9 @@ interface ConcatAll<C extends ContainerLike, O = Record<string, never>> extends 
 }
 interface DecodeWithCharset<C extends ContainerLike> extends Container<C> {
     decodeWithCharset(charset?: string): ContainerOperator<C, ArrayBuffer, string>;
+}
+interface Defer<C extends ContainerLike> extends Container<C> {
+    defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 }
 interface DistinctUntilChanged<C extends ContainerLike> extends Container<C> {
     distinctUntilChanged<T>(options?: {
@@ -209,7 +212,7 @@ declare const empty: <C extends ContainerLike, T, O extends FromArrayOptions = F
 declare const contains: <C extends ContainerLike, T>({ someSatisfy }: SomeSatisfy<C>, value: T, options?: {
     readonly equality?: Equality<T> | undefined;
 }) => ContainerOperator<C, T, boolean>;
-declare const encodeUtf8: <C extends ContainerLike>(m: Using<C> & Map<C>) => ContainerOperator<C, string, Uint8Array>;
+declare const encodeUtf8: <C extends ContainerLike>(m: Defer<C> & Map<C>) => ContainerOperator<C, string, Uint8Array>;
 declare function endWith<C extends ContainerLike, T>(m: Concat<C> & FromArray<C>, value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
 declare const fromOption: <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(m: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Option<T>, ContainerOf<C, T>>;
 declare const fromValue: <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>({ fromArray }: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<T, ContainerOf<C, T>>;
@@ -224,4 +227,4 @@ declare const zipWith: <C extends ContainerLike, TA, TB>({ zip }: Zip<C>, snd: C
     TA,
     TB
 ]>;
-export { AbstractContainer, Buffer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, DisposableContainer, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using, Zip, compute, concatMap, concatWith, contains, createFromArray, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };
+export { AbstractContainer, Buffer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DisposableContainer, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using, Zip, compute, concatMap, concatWith, contains, createFromArray, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };
