@@ -1,7 +1,7 @@
 /// <reference types="./observer.d.ts" />
+import { __DEV__ } from './__internal__.env.mjs';
 import { AbstractDisposableContainer } from './container.mjs';
 import { addTo, onComplete, Disposable, isDisposed, dispose, onDisposed } from './disposable.mjs';
-import { __DEV__ } from './env.mjs';
 import { length, pipe, newInstanceWith, isEmpty, raise, newInstance } from './functions.mjs';
 import { getDelegate } from './liftable.mjs';
 import { none, isNone } from './option.mjs';

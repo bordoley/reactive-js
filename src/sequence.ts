@@ -1,3 +1,4 @@
+import { createFromArray } from "./__internal__.container";
 import {
   Concat,
   ConcatAll,
@@ -15,7 +16,6 @@ import {
   TakeLast,
   TakeWhile,
   Zip,
-  createFromArray,
 } from "./container";
 import { dispose, isDisposed } from "./disposable";
 import { EnumerableLike, ToEnumerable, createEnumerable } from "./enumerable";

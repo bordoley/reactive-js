@@ -1,3 +1,4 @@
+import { __DEV__ } from "../__internal__.env";
 import { empty } from "../container";
 import {
   Disposable,
@@ -8,7 +9,6 @@ import {
   isDisposed,
   onComplete,
 } from "../disposable";
-import { __DEV__ } from "../env";
 import {
   Factory,
   Function1,

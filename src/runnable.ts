@@ -1,4 +1,26 @@
 import {
+  createBufferOperator,
+  createCatchErrorOperator,
+  createDecodeWithCharsetOperator,
+  createDistinctUntilChangedOperator,
+  createEverySatisfyOperator,
+  createKeepOperator,
+  createMapOperator,
+  createNever,
+  createOnNotifyOperator,
+  createOnSink,
+  createPairwiseOperator,
+  createReduceOperator,
+  createScanOperator,
+  createSkipFirstOperator,
+  createSomeSatisfyOperator,
+  createTakeFirstOperator,
+  createTakeLastOperator,
+  createTakeWhileOperator,
+  createThrowIfEmptyOperator,
+  createUsing,
+} from "./__internal__.source";
+import {
   Buffer,
   Concat,
   Container,
@@ -48,30 +70,7 @@ import {
   RunnableSink,
   createDelegatingRunnableSink,
 } from "./runnableSink";
-import {
-  SourceLike,
-  createBufferOperator,
-  createCatchErrorOperator,
-  createDecodeWithCharsetOperator,
-  createDistinctUntilChangedOperator,
-  createEverySatisfyOperator,
-  createKeepOperator,
-  createMapOperator,
-  createNever,
-  createOnNotifyOperator,
-  createOnSink,
-  createPairwiseOperator,
-  createReduceOperator,
-  createScanOperator,
-  createSkipFirstOperator,
-  createSomeSatisfyOperator,
-  createTakeFirstOperator,
-  createTakeLastOperator,
-  createTakeWhileOperator,
-  createThrowIfEmptyOperator,
-  createUsing,
-  sourceFrom,
-} from "./source";
+import { SourceLike, sourceFrom } from "./source";
 
 export interface RunnableLike<T> extends SourceLike {
   readonly T: unknown;

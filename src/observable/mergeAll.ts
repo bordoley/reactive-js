@@ -1,3 +1,4 @@
+import { MAX_SAFE_INTEGER } from "../__internal__.env";
 import { ConcatAll } from "../container";
 import {
   addTo,
@@ -6,7 +7,6 @@ import {
   onComplete,
   onDisposed,
 } from "../disposable";
-import { MAX_SAFE_INTEGER } from "../env";
 import { length, newInstance, pipe } from "../functions";
 import { getDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";

@@ -1,3 +1,4 @@
+import { MAX_SAFE_INTEGER } from "../__internal__.env";
 import { Buffer, fromValue } from "../container";
 import {
   SerialDisposable,
@@ -8,7 +9,6 @@ import {
   isDisposed,
   onComplete,
 } from "../disposable";
-import { MAX_SAFE_INTEGER } from "../env";
 import {
   Function1,
   isEmpty,

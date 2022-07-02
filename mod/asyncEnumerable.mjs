@@ -1,9 +1,11 @@
 /// <reference types="./asyncEnumerable.d.ts" />
+import { createFromArray } from './__internal__.container.mjs';
+import { createKeepLiftOperator, createMapLiftOperator, createScanLiftOperator, createTakeWhileLiftOperator } from './__internal__.liftable.mjs';
 import { pipe, newInstance, length, compose, increment, returns, pipeLazy, newInstanceWith } from './functions.mjs';
-import { AbstractLiftable, covariant, createKeepLiftOperator, getDelegate, createMapLiftOperator, createScanLiftOperator, createTakeWhileLiftOperator } from './liftable.mjs';
+import { AbstractLiftable, covariant, getDelegate } from './liftable.mjs';
 import { stream } from './streamable.mjs';
 import { AsyncEnumerator, AbstractDelegatingAsyncEnumerator } from './asyncEnumerator.mjs';
-import { createFromArray, fromValue, concatMap, concatWith } from './container.mjs';
+import { fromValue, concatMap, concatWith } from './container.mjs';
 import { dispatch } from './dispatcher.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
 import { enumerate, fromIterable as fromIterable$1 } from './enumerable.mjs';

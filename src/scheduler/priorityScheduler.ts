@@ -1,5 +1,5 @@
+import { MAX_SAFE_INTEGER } from "../__internal__.env";
 import { addTo, onDisposed } from "../disposable";
-import { MAX_SAFE_INTEGER } from "../env";
 import { max, newInstanceWith, pipe } from "../functions";
 import { isSome } from "../option";
 import {

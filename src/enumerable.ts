@@ -1,4 +1,16 @@
 import {
+  createDistinctUntilChangedLiftOperator,
+  createKeepLiftOperator,
+  createMapLiftOperator,
+  createOnNotifyLiftOperator,
+  createPairwiseLiftOperator,
+  createScanLiftOperator,
+  createSkipFirstLiftOperator,
+  createTakeFirstLiftOperator,
+  createTakeWhileLiftOperator,
+  createThrowIfEmptyLiftOperator,
+} from "./__internal__.liftable";
+import {
   Concat,
   Container,
   ContainerLike,
@@ -38,20 +50,7 @@ import {
   identity,
   pipe,
 } from "./functions";
-import {
-  LiftableLike,
-  createDistinctUntilChangedLiftOperator,
-  createKeepLiftOperator,
-  createMapLiftOperator,
-  createOnNotifyLiftOperator,
-  createPairwiseLiftOperator,
-  createScanLiftOperator,
-  createSkipFirstLiftOperator,
-  createTakeFirstLiftOperator,
-  createTakeWhileLiftOperator,
-  createThrowIfEmptyLiftOperator,
-  getDelegate,
-} from "./liftable";
+import { LiftableLike, getDelegate } from "./liftable";
 import { Option, isSome, none } from "./option";
 import { empty as emptyArray, forEach } from "./readonlyArray";
 

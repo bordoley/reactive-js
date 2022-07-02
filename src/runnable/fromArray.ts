@@ -1,4 +1,5 @@
-import { FromArray, FromArrayOptions, createFromArray } from "../container";
+import { createFromArray } from "../__internal__.container";
+import { FromArray, FromArrayOptions } from "../container";
 import { isDisposed } from "../disposable";
 import { ignore } from "../functions";
 import { RunnableLike } from "../runnable";

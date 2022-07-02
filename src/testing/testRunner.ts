@@ -1,4 +1,4 @@
-import { __DENO__ } from "../env";
+import { __DENO__ } from "../__internal__.env";
 import { TestGroup } from "../testing";
 import { TestGroupType } from "./testGroup";
 

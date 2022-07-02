@@ -1,6 +1,6 @@
 /// <reference types="./scheduler.d.ts" />
+import { MAX_SAFE_INTEGER } from './__internal__.env.mjs';
 import { isDisposed, Disposable, dispose, disposed, add, addTo, onDisposed } from './disposable.mjs';
-import { MAX_SAFE_INTEGER } from './env.mjs';
 import { floor, length, newInstance, max, pipe, raise, instanceFactory, newInstanceWith } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { AbstractEnumerator, move, hasCurrent, reset, getCurrent } from './enumerator.mjs';

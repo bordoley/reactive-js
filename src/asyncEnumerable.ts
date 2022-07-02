@@ -1,3 +1,10 @@
+import { createFromArray } from "./__internal__.container";
+import {
+  createKeepLiftOperator,
+  createMapLiftOperator,
+  createScanLiftOperator,
+  createTakeWhileLiftOperator,
+} from "./__internal__.liftable";
 import { lift, liftT } from "./asyncEnumerable/lift";
 import {
   AbstractDelegatingAsyncEnumerator,
@@ -11,7 +18,6 @@ import {
   TakeWhile,
   concatMap,
   concatWith,
-  createFromArray,
   fromValue,
 } from "./container";
 import { dispatch } from "./dispatcher";
@@ -37,15 +43,7 @@ import {
   pipeLazy,
   returns,
 } from "./functions";
-import {
-  AbstractLiftable,
-  LiftableLike,
-  createKeepLiftOperator,
-  createMapLiftOperator,
-  createScanLiftOperator,
-  createTakeWhileLiftOperator,
-  getDelegate,
-} from "./liftable";
+import { AbstractLiftable, LiftableLike, getDelegate } from "./liftable";
 import {
   AsyncReducer,
   MulticastObservableLike,

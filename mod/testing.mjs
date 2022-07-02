@@ -1,7 +1,7 @@
 /// <reference types="./testing.d.ts" />
 import { ignore, raise, strictEquality, arrayEquality, length } from './functions.mjs';
 import { none, isSome, isNone } from './option.mjs';
-import { __DENO__ } from './env.mjs';
+import { __DENO__ } from './__internal__.env.mjs';
 
 const createJasmineTests = (testGroup, parents) => {
     const path = [...parents, testGroup.name];

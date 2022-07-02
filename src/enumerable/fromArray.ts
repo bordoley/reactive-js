@@ -1,4 +1,5 @@
-import { FromArray, FromArrayOptions, createFromArray } from "../container";
+import { createFromArray } from "../__internal__.container";
+import { FromArray, FromArrayOptions } from "../container";
 import { dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { AbstractEnumerator, hasCurrent, reset } from "../enumerator";
