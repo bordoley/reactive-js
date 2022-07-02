@@ -69,9 +69,9 @@ export const zipWithLatestFrom = <TA, TB, T>(
     const observer = pipe(
       ZipWithLatestFromObserver,
       newInstanceWith<
+        ZipWithLatestFromObserver<TA, TB, T>,
         Observer<T>,
-        Function2<TA, TB, T>,
-        ZipWithLatestFromObserver<TA, TB, T>
+        Function2<TA, TB, T>
       >(delegate, selector),
       onComplete(disposeDelegate),
     );

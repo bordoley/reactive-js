@@ -62,7 +62,7 @@ export const takeLast = <T>(
   const operator = (delegate: Enumerator<T>) =>
     pipe(
       TakeLastEnumerator,
-      newInstanceWith<Enumerator<T>, number, TakeLastEnumerator<T>>(
+      newInstanceWith<TakeLastEnumerator<T>, Enumerator<T>, number>(
         delegate,
         count,
       ),

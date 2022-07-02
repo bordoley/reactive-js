@@ -516,7 +516,7 @@ export const toEnumerable =
     createEnumerable(
       pipeLazy(
         SequenceEnumerator,
-        newInstanceWith<Sequence<T>, SequenceEnumerator<T>>(seq),
+        newInstanceWith<SequenceEnumerator<T>, Sequence<T>>(seq),
       ),
     );
 

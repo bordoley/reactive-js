@@ -2027,14 +2027,14 @@ ___
 
 [`Function1`](functions.md#function1)<[`Constructor`](functions.md#constructor)<`T`\>, `T`\>
 
-▸ **newInstanceWith**<`TA`, `T`\>(`a`): [`Function1`](functions.md#function1)<[`Constructor1`](functions.md#constructor1)<`TA`, `T`\>, `T`\>
+▸ **newInstanceWith**<`T`, `TA`\>(`a`): [`Function1`](functions.md#function1)<[`Constructor1`](functions.md#constructor1)<`TA`, `T`\>, `T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
 | `T` |
+| `TA` |
 
 #### Parameters
 
@@ -2046,15 +2046,15 @@ ___
 
 [`Function1`](functions.md#function1)<[`Constructor1`](functions.md#constructor1)<`TA`, `T`\>, `T`\>
 
-▸ **newInstanceWith**<`TA`, `TB`, `T`\>(`a`, `b`): [`Function1`](functions.md#function1)<[`Constructor2`](functions.md#constructor2)<`TA`, `TB`, `T`\>, `T`\>
+▸ **newInstanceWith**<`T`, `TA`, `TB`\>(`a`, `b`): [`Function1`](functions.md#function1)<[`Constructor2`](functions.md#constructor2)<`TA`, `TB`, `T`\>, `T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
+| `T` |
 | `TA` |
 | `TB` |
-| `T` |
 
 #### Parameters
 
@@ -2067,16 +2067,16 @@ ___
 
 [`Function1`](functions.md#function1)<[`Constructor2`](functions.md#constructor2)<`TA`, `TB`, `T`\>, `T`\>
 
-▸ **newInstanceWith**<`TA`, `TB`, `TC`, `T`\>(`a`, `b`, `c`): [`Function1`](functions.md#function1)<[`Constructor3`](functions.md#constructor3)<`TA`, `TB`, `TC`, `T`\>, `T`\>
+▸ **newInstanceWith**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Function1`](functions.md#function1)<[`Constructor3`](functions.md#constructor3)<`TA`, `TB`, `TC`, `T`\>, `T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
+| `T` |
 | `TA` |
 | `TB` |
 | `TC` |
-| `T` |
 
 #### Parameters
 
@@ -2090,17 +2090,17 @@ ___
 
 [`Function1`](functions.md#function1)<[`Constructor3`](functions.md#constructor3)<`TA`, `TB`, `TC`, `T`\>, `T`\>
 
-▸ **newInstanceWith**<`TA`, `TB`, `TC`, `TD`, `T`\>(`a`, `b`, `c`, `d`): [`Function1`](functions.md#function1)<[`Constructor4`](functions.md#constructor4)<`TA`, `TB`, `TC`, `TD`, `T`\>, `T`\>
+▸ **newInstanceWith**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`Function1`](functions.md#function1)<[`Constructor4`](functions.md#constructor4)<`TA`, `TB`, `TC`, `TD`, `T`\>, `T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
+| `T` |
 | `TA` |
 | `TB` |
 | `TC` |
 | `TD` |
-| `T` |
 
 #### Parameters
 

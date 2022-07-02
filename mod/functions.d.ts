@@ -245,10 +245,10 @@ declare function newInstance<T, TA, TB>(Constructor: Constructor2<TA, TB, T>, a:
 declare function newInstance<T, TA, TB, TC>(Constructor: Constructor3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
 declare function newInstance<T, TA, TB, TC, TD>(Constructor: Constructor4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
 declare function newInstanceWith<T>(): Function1<Constructor<T>, T>;
-declare function newInstanceWith<TA, T>(a: TA): Function1<Constructor1<TA, T>, T>;
-declare function newInstanceWith<TA, TB, T>(a: TA, b: TB): Function1<Constructor2<TA, TB, T>, T>;
-declare function newInstanceWith<TA, TB, TC, T>(a: TA, b: TB, c: TC): Function1<Constructor3<TA, TB, TC, T>, T>;
-declare function newInstanceWith<TA, TB, TC, TD, T>(a: TA, b: TB, c: TC, d: TD): Function1<Constructor4<TA, TB, TC, TD, T>, T>;
+declare function newInstanceWith<T, TA>(a: TA): Function1<Constructor1<TA, T>, T>;
+declare function newInstanceWith<T, TA, TB>(a: TA, b: TB): Function1<Constructor2<TA, TB, T>, T>;
+declare function newInstanceWith<T, TA, TB, TC>(a: TA, b: TB, c: TC): Function1<Constructor3<TA, TB, TC, T>, T>;
+declare function newInstanceWith<T, TA, TB, TC, TD>(a: TA, b: TB, c: TC, d: TD): Function1<Constructor4<TA, TB, TC, TD, T>, T>;
 declare function instanceFactory<T>(Constructor: Constructor<T>): Factory<T>;
 declare function instanceFactory<T, TA>(Constructor: Constructor1<TA, T>): Function1<TA, T>;
 declare function instanceFactory<T, TA, TB>(Constructor: Constructor2<TA, TB, T>): Function2<TA, TB, T>;

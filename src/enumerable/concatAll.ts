@@ -62,9 +62,9 @@ const operator = <T>(delegate: Enumerator<EnumerableLike<T>>) => {
   return pipe(
     ConcatAllEnumerator,
     newInstanceWith<
+      ConcatAllEnumerator<T>,
       Enumerator<EnumerableLike<T>>,
-      SerialDisposable,
-      ConcatAllEnumerator<T>
+      SerialDisposable
     >(delegate, inner),
     bindTo(inner),
     add(delegate),

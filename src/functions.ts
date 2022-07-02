@@ -785,19 +785,19 @@ export function newInstance(
 }
 
 export function newInstanceWith<T>(): Function1<Constructor<T>, T>;
-export function newInstanceWith<TA, T>(
+export function newInstanceWith<T, TA>(
   a: TA,
 ): Function1<Constructor1<TA, T>, T>;
-export function newInstanceWith<TA, TB, T>(
+export function newInstanceWith<T, TA, TB>(
   a: TA,
   b: TB,
 ): Function1<Constructor2<TA, TB, T>, T>;
-export function newInstanceWith<TA, TB, TC, T>(
+export function newInstanceWith<T, TA, TB, TC>(
   a: TA,
   b: TB,
   c: TC,
 ): Function1<Constructor3<TA, TB, TC, T>, T>;
-export function newInstanceWith<TA, TB, TC, TD, T>(
+export function newInstanceWith<T, TA, TB, TC, TD>(
   a: TA,
   b: TB,
   c: TC,

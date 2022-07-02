@@ -206,12 +206,12 @@ export const createBufferOperator = <C extends SourceLike>(
         pipe(
           BufferSink,
           newInstanceWith<
-            LiftableStateOf<C, readonly T[]>,
-            number,
             DelegatingLiftableStateOf<C, T, readonly T[]> & {
               buffer: T[];
               readonly maxBufferSize: number;
-            }
+            },
+            LiftableStateOf<C, readonly T[]>,
+            number
           >(delegate, maxBufferSize),
           addTo(delegate),
           onComplete(function onDispose(
@@ -259,8 +259,8 @@ export const createCatchErrorOperator =
         pipe(
           CatchErrorSink,
           newInstanceWith<
-            LiftableStateOf<C, T>,
-            DelegatingLiftableStateOf<C, T, T>
+            DelegatingLiftableStateOf<C, T, T>,
+            LiftableStateOf<C, T>
           >(delegate),
           addTo(delegate, true),
           onComplete(() => pipe(delegate, dispose())),
@@ -401,11 +401,11 @@ const createSatisfyOperator = <C extends SourceLike>(
         pipe(
           SatisfySink,
           newInstanceWith<
-            LiftableStateOf<C, boolean>,
-            Predicate<T>,
             DelegatingLiftableStateOf<C, T, boolean> & {
               readonly predicate: Predicate<T>;
-            }
+            },
+            LiftableStateOf<C, boolean>,
+            Predicate<T>
           >(delegate, predicate),
           addTo(delegate),
           onComplete(() => {
@@ -580,13 +580,13 @@ export const createReduceOperator = <C extends SourceLike>(
       const sink = pipe(
         ReduceSink,
         newInstanceWith<
-          LiftableStateOf<C, TAcc>,
-          Reducer<T, TAcc>,
-          TAcc,
           LiftableStateOf<C, T> & {
             readonly reducer: Reducer<T, TAcc>;
             acc: TAcc;
-          }
+          },
+          LiftableStateOf<C, TAcc>,
+          Reducer<T, TAcc>,
+          TAcc
         >(delegate, reducer, initialValue()),
         addTo(delegate),
         onComplete(() => {
@@ -751,12 +751,12 @@ export const createTakeLastOperator = <C extends SourceLike>(
       const sink = pipe(
         TakeLastSink,
         newInstanceWith<
-          LiftableStateOf<C, T>,
-          number,
           LiftableStateOf<C, T> & {
             readonly last: T[];
             readonly maxCount: number;
-          }
+          },
+          LiftableStateOf<C, T>,
+          number
         >(delegate, count),
         addTo(delegate),
         onComplete(() => {

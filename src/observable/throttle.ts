@@ -113,11 +113,11 @@ export function throttle<T>(
     const observer = pipe(
       ThrottleObserver,
       newInstanceWith<
+        ThrottleObserver<T>,
         Observer<T>,
         Function1<T, ObservableLike<unknown>>,
         ThrottleMode,
-        SerialDisposable,
-        ThrottleObserver<T>
+        SerialDisposable
       >(delegate, durationFunction, mode, durationSubscription),
       addTo(delegate),
       onComplete(() => {
