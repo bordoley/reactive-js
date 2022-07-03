@@ -24,7 +24,7 @@
 
 - [T](asyncEnumerable.AsyncEnumerableLike.md#t)
 - [TContainerOf](asyncEnumerable.AsyncEnumerableLike.md#tcontainerof)
-- [liftableStateType](asyncEnumerable.AsyncEnumerableLike.md#liftablestatetype)
+- [TLiftableState](asyncEnumerable.AsyncEnumerableLike.md#tliftablestate)
 
 ### Methods
 
@@ -52,13 +52,13 @@ ___
 
 ___
 
-### liftableStateType
+### TLiftableState
 
-• `Readonly` **liftableStateType**: [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<`unknown`\>
+• `Readonly` **TLiftableState**: [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<`unknown`\>
 
 #### Overrides
 
-[LiftableLike](liftable.LiftableLike.md).[liftableStateType](liftable.LiftableLike.md#liftablestatetype)
+[LiftableLike](liftable.LiftableLike.md).[TLiftableState](liftable.LiftableLike.md#tliftablestate)
 
 ## Methods
 

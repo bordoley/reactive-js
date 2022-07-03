@@ -22,7 +22,7 @@
 
 - [T](runnable.RunnableLike.md#t)
 - [TContainerOf](runnable.RunnableLike.md#tcontainerof)
-- [liftableStateType](runnable.RunnableLike.md#liftablestatetype)
+- [TLiftableState](runnable.RunnableLike.md#tliftablestate)
 
 ### Methods
 
@@ -50,13 +50,13 @@ ___
 
 ___
 
-### liftableStateType
+### TLiftableState
 
-• `Readonly` **liftableStateType**: [`RunnableSink`](../classes/runnableSink.RunnableSink.md)<`unknown`\>
+• `Readonly` **TLiftableState**: [`RunnableSink`](../classes/runnableSink.RunnableSink.md)<`unknown`\>
 
 #### Overrides
 
-[SourceLike](source.SourceLike.md).[liftableStateType](source.SourceLike.md#liftablestatetype)
+[SourceLike](source.SourceLike.md).[TLiftableState](source.SourceLike.md#tliftablestate)
 
 ## Methods
 

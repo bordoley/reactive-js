@@ -75,7 +75,7 @@ import { SourceLike, sourceFrom } from "./source";
 export interface RunnableLike<T> extends SourceLike {
   readonly T: unknown;
   readonly TContainerOf: RunnableLike<this["T"]>;
-  readonly liftableStateType: RunnableSink<this["T"]>;
+  readonly TLiftableState: RunnableSink<this["T"]>;
 
   sink(this: RunnableLike<T>, sink: RunnableSink<T>): void;
 }

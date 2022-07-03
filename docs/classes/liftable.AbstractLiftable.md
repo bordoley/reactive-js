@@ -34,7 +34,7 @@
 
 - [T](liftable.AbstractLiftable.md#t)
 - [TContainerOf](liftable.AbstractLiftable.md#tcontainerof)
-- [liftableStateType](liftable.AbstractLiftable.md#liftablestatetype)
+- [TLiftableState](liftable.AbstractLiftable.md#tliftablestate)
 
 ## Constructors
 
@@ -90,9 +90,9 @@ AbstractContainer.TContainerOf
 
 ___
 
-### liftableStateType
+### TLiftableState
 
-• `get` **liftableStateType**(): `TState`
+• `get` **TLiftableState**(): `TState`
 
 #### Returns
 
@@ -100,4 +100,4 @@ ___
 
 #### Implementation of
 
-[LiftableLike](../interfaces/liftable.LiftableLike.md).[liftableStateType](../interfaces/liftable.LiftableLike.md#liftablestatetype)
+[LiftableLike](../interfaces/liftable.LiftableLike.md).[TLiftableState](../interfaces/liftable.LiftableLike.md#tliftablestate)

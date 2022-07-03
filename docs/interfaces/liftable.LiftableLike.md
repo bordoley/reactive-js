@@ -27,7 +27,7 @@
 
 - [T](liftable.LiftableLike.md#t)
 - [TContainerOf](liftable.LiftableLike.md#tcontainerof)
-- [liftableStateType](liftable.LiftableLike.md#liftablestatetype)
+- [TLiftableState](liftable.LiftableLike.md#tliftablestate)
 
 ## Properties
 
@@ -51,6 +51,6 @@ ___
 
 ___
 
-### liftableStateType
+### TLiftableState
 
-• `Readonly` **liftableStateType**: [`LiftableStateLike`](liftable.LiftableStateLike.md)
+• `Readonly` **TLiftableState**: [`LiftableStateLike`](liftable.LiftableStateLike.md)

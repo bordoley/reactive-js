@@ -16,7 +16,7 @@ declare const last: <T>() => Function1<RunnableLike<T>, Option<T>>;
 interface RunnableLike<T> extends SourceLike {
     readonly T: unknown;
     readonly TContainerOf: RunnableLike<this["T"]>;
-    readonly liftableStateType: RunnableSink<this["T"]>;
+    readonly TLiftableState: RunnableSink<this["T"]>;
     sink(this: RunnableLike<T>, sink: RunnableSink<T>): void;
 }
 declare type RunnableOperator<TA, TB> = Function1<RunnableLike<TA>, RunnableLike<TB>>;

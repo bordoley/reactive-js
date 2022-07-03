@@ -14,8 +14,8 @@ interface SinkLike<T> extends LiftableStateLike {
     notify(this: SinkLike<T>, next: T): void;
 }
 interface SourceLike extends LiftableLike {
-    readonly liftableStateType: SinkLike<unknown>;
-    sink(this: this["TContainerOf"], sink: this["liftableStateType"]): void;
+    readonly TLiftableState: SinkLike<unknown>;
+    sink(this: this["TContainerOf"], sink: this["TLiftableState"]): void;
 }
 interface CreateSource<C extends SourceLike> extends Container<C> {
     create<T>(onSink: (sink: LiftableStateOf<C, T>) => void): ContainerOf<C, T>;

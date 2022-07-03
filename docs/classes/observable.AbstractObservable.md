@@ -30,7 +30,7 @@
 
 - [T](observable.AbstractObservable.md#t)
 - [TContainerOf](observable.AbstractObservable.md#tcontainerof)
-- [liftableStateType](observable.AbstractObservable.md#liftablestatetype)
+- [TLiftableState](observable.AbstractObservable.md#tliftablestate)
 
 ### Methods
 
@@ -90,9 +90,9 @@ AbstractSource.TContainerOf
 
 ___
 
-### liftableStateType
+### TLiftableState
 
-• `get` **liftableStateType**(): `TState`
+• `get` **TLiftableState**(): `TState`
 
 #### Returns
 
@@ -100,11 +100,11 @@ ___
 
 #### Implementation of
 
-[ObservableLike](../interfaces/observable.ObservableLike.md).[liftableStateType](../interfaces/observable.ObservableLike.md#liftablestatetype)
+[ObservableLike](../interfaces/observable.ObservableLike.md).[TLiftableState](../interfaces/observable.ObservableLike.md#tliftablestate)
 
 #### Inherited from
 
-AbstractSource.liftableStateType
+AbstractSource.TLiftableState
 
 ## Methods
 

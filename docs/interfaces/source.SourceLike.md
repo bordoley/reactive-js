@@ -25,7 +25,7 @@
 
 - [T](source.SourceLike.md#t)
 - [TContainerOf](source.SourceLike.md#tcontainerof)
-- [liftableStateType](source.SourceLike.md#liftablestatetype)
+- [TLiftableState](source.SourceLike.md#tliftablestate)
 
 ### Methods
 
@@ -53,13 +53,13 @@ ___
 
 ___
 
-### liftableStateType
+### TLiftableState
 
-• `Readonly` **liftableStateType**: [`SinkLike`](source.SinkLike.md)<`unknown`\>
+• `Readonly` **TLiftableState**: [`SinkLike`](source.SinkLike.md)<`unknown`\>
 
 #### Overrides
 
-[LiftableLike](liftable.LiftableLike.md).[liftableStateType](liftable.LiftableLike.md#liftablestatetype)
+[LiftableLike](liftable.LiftableLike.md).[TLiftableState](liftable.LiftableLike.md#tliftablestate)
 
 ## Methods
 

@@ -87,7 +87,7 @@ export interface AsyncEnumerableLike<T>
     LiftableLike {
   readonly T: unknown;
   readonly TContainerOf: AsyncEnumerableLike<this["T"]>;
-  readonly liftableStateType: AsyncEnumerator<this["T"]>;
+  readonly TLiftableState: AsyncEnumerator<this["T"]>;
 }
 
 export type AsyncEnumerableOperator<TA, TB> = Function1<

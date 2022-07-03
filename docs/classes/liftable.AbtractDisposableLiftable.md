@@ -34,9 +34,9 @@
 
 - [T](liftable.AbtractDisposableLiftable.md#t)
 - [TContainerOf](liftable.AbtractDisposableLiftable.md#tcontainerof)
+- [TLiftableState](liftable.AbtractDisposableLiftable.md#tliftablestate)
 - [error](liftable.AbtractDisposableLiftable.md#error)
 - [isDisposed](liftable.AbtractDisposableLiftable.md#isdisposed)
-- [liftableStateType](liftable.AbtractDisposableLiftable.md#liftablestatetype)
 
 ### Methods
 
@@ -97,6 +97,20 @@ AbstractDisposableContainer.TContainerOf
 
 ___
 
+### TLiftableState
+
+• `get` **TLiftableState**(): `TState`
+
+#### Returns
+
+`TState`
+
+#### Implementation of
+
+[LiftableLike](../interfaces/liftable.LiftableLike.md).[TLiftableState](../interfaces/liftable.LiftableLike.md#tliftablestate)
+
+___
+
 ### error
 
 • `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
@@ -126,20 +140,6 @@ ___
 #### Inherited from
 
 AbstractDisposableContainer.isDisposed
-
-___
-
-### liftableStateType
-
-• `get` **liftableStateType**(): `TState`
-
-#### Returns
-
-`TState`
-
-#### Implementation of
-
-[LiftableLike](../interfaces/liftable.LiftableLike.md).[liftableStateType](../interfaces/liftable.LiftableLike.md#liftablestatetype)
 
 ## Methods
 
