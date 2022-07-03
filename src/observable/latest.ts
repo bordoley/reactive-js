@@ -6,7 +6,8 @@ import { getLength, newInstanceWith, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer } from "../observer";
 import { none } from "../option";
-import { assertState, notify, sourceFrom } from "../source";
+import { assertState, notify } from "../sink";
+import { sourceFrom } from "../source";
 import { defer } from "./defer";
 import { isEnumerable, tagEnumerable } from "./observable";
 

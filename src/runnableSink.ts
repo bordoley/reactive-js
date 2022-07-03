@@ -3,7 +3,7 @@ import { getDelegate } from "./__internal__.liftable";
 import { AbstractDisposableContainer } from "./container";
 import { isDisposed } from "./disposable";
 import { newInstance, pipe, raise } from "./functions";
-import { SinkLike, notify } from "./source";
+import { SinkLike, notify } from "./sink";
 
 export class RunnableSink<T>
   extends AbstractDisposableContainer

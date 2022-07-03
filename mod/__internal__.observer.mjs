@@ -2,7 +2,7 @@
 import { getDelegate } from './__internal__.liftable.mjs';
 import { pipe, newInstance } from './functions.mjs';
 import { Observer, getScheduler } from './observer.mjs';
-import { notify } from './source.mjs';
+import { notify } from './sink.mjs';
 
 class AbstractDelegatingObserver extends Observer {
     constructor(delegate) {

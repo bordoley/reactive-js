@@ -3,7 +3,7 @@ import { getDelegate } from "./__internal__.liftable";
 import { newInstance, pipe } from "./functions";
 import { Observer, getScheduler } from "./observer";
 import { __yield } from "./scheduler";
-import { notify } from "./source";
+import { notify } from "./sink";
 
 export class AbstractDelegatingObserver<TIn, TOut> extends Observer<TIn> {
   constructor(public readonly delegate: Observer<TOut>) {

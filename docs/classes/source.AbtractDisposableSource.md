@@ -9,7 +9,7 @@
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TSink` | extends [`SinkLike`](../interfaces/source.SinkLike.md)<`T`\> |
+| `TSink` | extends [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\> |
 
 ## Hierarchy
 
@@ -54,7 +54,7 @@
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TSink` | extends [`SinkLike`](../interfaces/source.SinkLike.md)<`T`, `TSink`\> |
+| `TSink` | extends [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`, `TSink`\> |
 
 #### Inherited from
 

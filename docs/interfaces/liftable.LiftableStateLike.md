@@ -12,7 +12,7 @@
 
   ↳ **`LiftableStateLike`**
 
-  ↳↳ [`SinkLike`](source.SinkLike.md)
+  ↳↳ [`SinkLike`](sink.SinkLike.md)
 
 ## Implemented by
 

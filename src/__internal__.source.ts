@@ -56,14 +56,8 @@ import {
 } from "./functions";
 import { LiftableStateOf } from "./liftable";
 import { Option, isSome, none } from "./option";
-import {
-  CreateSource,
-  SinkLike,
-  SourceLike,
-  assertState,
-  notify,
-  sinkInto,
-} from "./source";
+import { SinkLike, assertState, notify } from "./sink";
+import { CreateSource, SourceLike, sinkInto } from "./source";
 
 export abstract class AbstractSource<T, TSink extends SinkLike<T>>
   extends AbstractLiftable<TSink>

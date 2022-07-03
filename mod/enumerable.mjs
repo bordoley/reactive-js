@@ -11,7 +11,7 @@ import { createFromArray } from './__internal__.container.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { MAX_SAFE_INTEGER } from './__internal__.env.mjs';
 import { createRunnable } from './runnable.mjs';
-import { notifySink } from './source.mjs';
+import { notifySink } from './sink.mjs';
 
 class ArrayEnumerator extends AbstractEnumerator {
     constructor(array, index, endIndex) {

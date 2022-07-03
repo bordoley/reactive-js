@@ -4,7 +4,7 @@ import { getDelegate } from './__internal__.liftable.mjs';
 import { AbstractDisposableContainer } from './container.mjs';
 import { isDisposed } from './disposable.mjs';
 import { raise, pipe, newInstance } from './functions.mjs';
-import { notify } from './source.mjs';
+import { notify } from './sink.mjs';
 
 class RunnableSink extends AbstractDisposableContainer {
     assertState() { }

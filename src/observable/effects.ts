@@ -35,7 +35,7 @@ import { ObservableEffectMode, ObservableLike } from "../observable";
 import { Observer, getScheduler } from "../observer";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerLike, schedule } from "../scheduler";
-import { notify } from "../source";
+import { notify } from "../sink";
 import { defer } from "./defer";
 import { fromArrayT } from "./fromArray";
 import { onNotify } from "./onNotify";

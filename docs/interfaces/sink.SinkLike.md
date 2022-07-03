@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [source](../modules/source.md) / SinkLike
+[Reactive-JS](../README.md) / [sink](../modules/sink.md) / SinkLike
 
 # Interface: SinkLike<T\>
 
-[source](../modules/source.md).SinkLike
+[sink](../modules/sink.md).SinkLike
 
 ## Type parameters
 
@@ -25,20 +25,20 @@
 
 ### Properties
 
-- [T](source.SinkLike.md#t)
-- [TContainerOf](source.SinkLike.md#tcontainerof)
+- [T](sink.SinkLike.md#t)
+- [TContainerOf](sink.SinkLike.md#tcontainerof)
 
 ### Accessors
 
-- [error](source.SinkLike.md#error)
-- [isDisposed](source.SinkLike.md#isdisposed)
+- [error](sink.SinkLike.md#error)
+- [isDisposed](sink.SinkLike.md#isdisposed)
 
 ### Methods
 
-- [add](source.SinkLike.md#add)
-- [assertState](source.SinkLike.md#assertstate)
-- [dispose](source.SinkLike.md#dispose)
-- [notify](source.SinkLike.md#notify)
+- [add](sink.SinkLike.md#add)
+- [assertState](sink.SinkLike.md#assertstate)
+- [dispose](sink.SinkLike.md#dispose)
+- [notify](sink.SinkLike.md#notify)
 
 ## Properties
 
@@ -104,7 +104,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`SinkLike`](source.SinkLike.md)<`T`\> |
+| `this` | [`SinkLike`](sink.SinkLike.md)<`T`\> |
 | `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
 | `ignoreChildErrors` | `boolean` |
 
@@ -128,7 +128,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`SinkLike`](source.SinkLike.md)<`T`\> |
+| `this` | [`SinkLike`](sink.SinkLike.md)<`T`\> |
 
 #### Returns
 
@@ -146,7 +146,7 @@ Dispose the resource.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `this` | [`SinkLike`](source.SinkLike.md)<`T`\> | - |
+| `this` | [`SinkLike`](sink.SinkLike.md)<`T`\> | - |
 | `error?` | [`Error`](disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns
@@ -172,7 +172,7 @@ scheduled using the sink's `schedule` method.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `this` | [`SinkLike`](source.SinkLike.md)<`T`\> | - |
+| `this` | [`SinkLike`](sink.SinkLike.md)<`T`\> | - |
 | `next` | `T` | The next notification value. |
 
 #### Returns

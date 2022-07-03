@@ -6,7 +6,7 @@ import { addTo, dispose, isDisposed, onComplete } from "../disposable";
 import { newInstance, newInstanceWith, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer, getScheduler } from "../observer";
-import { assertState, notifySink } from "../source";
+import { assertState, notifySink } from "../sink";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";

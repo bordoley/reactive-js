@@ -54,7 +54,7 @@ ___
 
 ### TLiftableState
 
-• `Readonly` **TLiftableState**: [`SinkLike`](source.SinkLike.md)<`unknown`\>
+• `Readonly` **TLiftableState**: [`SinkLike`](sink.SinkLike.md)<`unknown`\>
 
 #### Overrides
 
@@ -71,7 +71,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `this` | `unknown` |
-| `sink` | [`SinkLike`](source.SinkLike.md)<`unknown`\> |
+| `sink` | [`SinkLike`](sink.SinkLike.md)<`unknown`\> |
 
 #### Returns
 

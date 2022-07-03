@@ -16,7 +16,8 @@ import {
   SchedulerLike,
   isInContinuation,
 } from "../scheduler";
-import { assertState, sourceFrom } from "../source";
+import { assertState } from "../sink";
+import { sourceFrom } from "../source";
 
 class EnumeratorScheduler<T>
   extends AbstractEnumerator<T>

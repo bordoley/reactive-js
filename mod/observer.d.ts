@@ -1,7 +1,7 @@
 import { AbstractDisposableContainer } from "./container.mjs";
 import { DispatcherLike } from "./dispatcher.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
-import { SinkLike } from "./source.mjs";
+import { SinkLike } from "./sink.mjs";
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
