@@ -27,6 +27,7 @@ import {
   Disposable,
   Error,
   add,
+  addTo,
   dispose,
   isDisposed,
   onDisposed,
@@ -163,7 +164,10 @@ class ReactPriorityScheduler
       return;
     }
 
-    const callback = pipeLazy(this, runContinuation(continuation), ignore);
+    const callback = () => {
+      pipe(callbackNodeDisposable, dispose());
+      pipe(this, runContinuation(continuation));
+    };
 
     const callbackNode = unstable_scheduleCallback(
       priority,
@@ -171,9 +175,10 @@ class ReactPriorityScheduler
       delay > 0 ? { delay } : none,
     );
 
-    pipe(
-      continuation,
+    const callbackNodeDisposable = pipe(
+      newInstance(Disposable),
       onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)),
+      addTo(continuation),
     );
   }
 }
