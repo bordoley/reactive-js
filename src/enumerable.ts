@@ -59,7 +59,7 @@ import { Option, isSome, none } from "./option";
  */
 export interface EnumerableLike<T> extends LiftableLike {
   readonly T: unknown;
-  readonly type: EnumerableLike<this["T"]>;
+  readonly TContainerOf: EnumerableLike<this["T"]>;
   readonly liftableStateType: Enumerator<this["T"]>;
 
   /**
@@ -479,7 +479,7 @@ const _using = <TResource extends Disposable, T>(
     return enumerator;
   });
 
-export const type: EnumerableLike<unknown> = undefined as any;
+export const TContainerOf: EnumerableLike<unknown> = undefined as any;
 
 export const using: Using<EnumerableLike<unknown>>["using"] = _using;
 

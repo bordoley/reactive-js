@@ -24,7 +24,7 @@
 ### Properties
 
 - [T](liftable.LiftableStateLike.md#t)
-- [type](liftable.LiftableStateLike.md#type)
+- [TContainerOf](liftable.LiftableStateLike.md#tcontainerof)
 
 ### Accessors
 
@@ -48,13 +48,13 @@
 
 ___
 
-### type
+### TContainerOf
 
-• `Optional` `Readonly` **type**: `unknown`
+• `Optional` `Readonly` **TContainerOf**: `unknown`
 
 #### Inherited from
 
-[ContainerLike](container.ContainerLike.md).[type](container.ContainerLike.md#type)
+[ContainerLike](container.ContainerLike.md).[TContainerOf](container.ContainerLike.md#tcontainerof)
 
 ## Accessors
 

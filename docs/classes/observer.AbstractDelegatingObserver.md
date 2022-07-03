@@ -31,10 +31,10 @@
 ### Accessors
 
 - [T](observer.AbstractDelegatingObserver.md#t)
+- [TContainerOf](observer.AbstractDelegatingObserver.md#tcontainerof)
 - [dispatcher](observer.AbstractDelegatingObserver.md#dispatcher)
 - [error](observer.AbstractDelegatingObserver.md#error)
 - [isDisposed](observer.AbstractDelegatingObserver.md#isdisposed)
-- [type](observer.AbstractDelegatingObserver.md#type)
 
 ### Methods
 
@@ -98,6 +98,20 @@ Observer.T
 
 ___
 
+### TContainerOf
+
+• `get` **TContainerOf**(): `this`
+
+#### Returns
+
+`this`
+
+#### Inherited from
+
+Observer.TContainerOf
+
+___
+
 ### dispatcher
 
 • `get` **dispatcher**(): [`DispatcherLike`](../interfaces/dispatcher.DispatcherLike.md)<`T`\>
@@ -141,20 +155,6 @@ ___
 #### Inherited from
 
 Observer.isDisposed
-
-___
-
-### type
-
-• `get` **type**(): `this`
-
-#### Returns
-
-`this`
-
-#### Inherited from
-
-Observer.type
 
 ## Methods
 

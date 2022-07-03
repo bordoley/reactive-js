@@ -27,11 +27,11 @@
 ### Accessors
 
 - [T](enumerator.AbstractEnumerator.md#t)
+- [TContainerOf](enumerator.AbstractEnumerator.md#tcontainerof)
 - [current](enumerator.AbstractEnumerator.md#current)
 - [error](enumerator.AbstractEnumerator.md#error)
 - [hasCurrent](enumerator.AbstractEnumerator.md#hascurrent)
 - [isDisposed](enumerator.AbstractEnumerator.md#isdisposed)
-- [type](enumerator.AbstractEnumerator.md#type)
 
 ### Methods
 
@@ -69,6 +69,20 @@
 #### Inherited from
 
 Enumerator.T
+
+___
+
+### TContainerOf
+
+• `get` **TContainerOf**(): `this`
+
+#### Returns
+
+`this`
+
+#### Inherited from
+
+Enumerator.TContainerOf
 
 ___
 
@@ -145,20 +159,6 @@ ___
 #### Inherited from
 
 Enumerator.isDisposed
-
-___
-
-### type
-
-• `get` **type**(): `this`
-
-#### Returns
-
-`this`
-
-#### Inherited from
-
-Enumerator.type
 
 ## Methods
 

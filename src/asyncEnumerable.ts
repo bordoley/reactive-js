@@ -86,7 +86,7 @@ export interface AsyncEnumerableLike<T>
   extends StreamableLike<void, T, AsyncEnumerator<T>>,
     LiftableLike {
   readonly T: unknown;
-  readonly type: AsyncEnumerableLike<this["T"]>;
+  readonly TContainerOf: AsyncEnumerableLike<this["T"]>;
   readonly liftableStateType: AsyncEnumerator<this["T"]>;
 }
 
@@ -618,4 +618,4 @@ export const toObservableT: ToObservable<AsyncEnumerableLike<unknown>> = {
   toObservable,
 };
 
-export const type: AsyncEnumerableLike<unknown> = undefined as any;
+export const TContainerOf: AsyncEnumerableLike<unknown> = undefined as any;

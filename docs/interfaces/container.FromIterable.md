@@ -21,7 +21,7 @@
 
 ### Properties
 
-- [type](container.FromIterable.md#type)
+- [TContainerOf](container.FromIterable.md#tcontainerof)
 
 ### Methods
 
@@ -29,13 +29,13 @@
 
 ## Properties
 
-### type
+### TContainerOf
 
-• `Optional` `Readonly` **type**: `C`
+• `Optional` `Readonly` **TContainerOf**: `C`
 
 #### Inherited from
 
-[Container](container.Container.md).[type](container.Container.md#type)
+[Container](container.Container.md).[TContainerOf](container.Container.md#tcontainerof)
 
 ## Methods
 

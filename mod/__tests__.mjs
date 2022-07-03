@@ -11,7 +11,7 @@ import { createVirtualTimeScheduler, createHostScheduler, schedule, getNow } fro
 import { stream, createStateStore, __stream, createActionReducer, createLiftedStreamable, sourceFrom } from './streamable.mjs';
 import { describe, test, expectArrayEquals, expectNone, expectEquals, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
 import { fromArray as fromArray$2, toIterable, fromIterable as fromIterable$1, toRunnable as toRunnable$2, fromArrayT as fromArrayT$3, keepT as keepT$1, concat as concat$1, concatAll as concatAll$1, distinctUntilChanged as distinctUntilChanged$1, generate as generate$2, map as map$2, repeat as repeat$1, scan as scan$2, skipFirst as skipFirst$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$2, zip } from './enumerable.mjs';
-import { type, fromArray as fromArray$4, concat as concat$3, concatAll as concatAll$2, distinctUntilChanged as distinctUntilChanged$3, generate as generate$4, keep as keep$1, map as map$4, repeat as repeat$3, scan as scan$4, skipFirst as skipFirst$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$4, toRunnable as toRunnable$3, fromArrayT as fromArrayT$4, zipT as zipT$1 } from './sequence.mjs';
+import { TContainerOf, fromArray as fromArray$4, concat as concat$3, concatAll as concatAll$2, distinctUntilChanged as distinctUntilChanged$3, generate as generate$4, keep as keep$1, map as map$4, repeat as repeat$3, scan as scan$4, skipFirst as skipFirst$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$4, toRunnable as toRunnable$3, fromArrayT as fromArrayT$4, zipT as zipT$1 } from './sequence.mjs';
 import { dispatchTo } from './dispatcher.mjs';
 import { flow, toObservable as toObservable$1 } from './flowable.mjs';
 
@@ -317,7 +317,7 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
 }), createZippableTests({ ...fromArrayT, generate: generate$3, map: map$3, toRunnable, zip: zip$1 }));
 
 const tests$2 = describe("sequence", createRunnableTests({
-    type,
+    TContainerOf,
     fromArray: fromArray$4,
     concat: concat$3,
     concatAll: concatAll$2,

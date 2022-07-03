@@ -86,10 +86,10 @@
 
 ### Properties
 
-- [type](container.Container.md#type)
+- [TContainerOf](container.Container.md#tcontainerof)
 
 ## Properties
 
-### type
+### TContainerOf
 
-• `Optional` `Readonly` **type**: `C`
+• `Optional` `Readonly` **TContainerOf**: `C`

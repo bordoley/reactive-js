@@ -37,10 +37,10 @@ Abstract base class for implementing the `ObserverLike` interface.
 ### Accessors
 
 - [T](observer.Observer.md#t)
+- [TContainerOf](observer.Observer.md#tcontainerof)
 - [dispatcher](observer.Observer.md#dispatcher)
 - [error](observer.Observer.md#error)
 - [isDisposed](observer.Observer.md#isdisposed)
-- [type](observer.Observer.md#type)
 
 ### Methods
 
@@ -97,6 +97,24 @@ AbstractDisposableContainer.T
 
 ___
 
+### TContainerOf
+
+• `get` **TContainerOf**(): `this`
+
+#### Returns
+
+`this`
+
+#### Implementation of
+
+[SinkLike](../interfaces/source.SinkLike.md).[TContainerOf](../interfaces/source.SinkLike.md#tcontainerof)
+
+#### Inherited from
+
+AbstractDisposableContainer.TContainerOf
+
+___
+
 ### dispatcher
 
 • `get` **dispatcher**(): [`DispatcherLike`](../interfaces/dispatcher.DispatcherLike.md)<`T`\>
@@ -144,24 +162,6 @@ SinkLike.isDisposed
 #### Inherited from
 
 AbstractDisposableContainer.isDisposed
-
-___
-
-### type
-
-• `get` **type**(): `this`
-
-#### Returns
-
-`this`
-
-#### Implementation of
-
-[SinkLike](../interfaces/source.SinkLike.md).[type](../interfaces/source.SinkLike.md#type)
-
-#### Inherited from
-
-AbstractDisposableContainer.type
 
 ## Methods
 

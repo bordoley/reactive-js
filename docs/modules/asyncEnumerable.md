@@ -14,6 +14,7 @@
 
 ### Variables
 
+- [TContainerOf](asyncEnumerable.md#tcontainerof)
 - [fromArrayT](asyncEnumerable.md#fromarrayt)
 - [fromEnumerableT](asyncEnumerable.md#fromenumerablet)
 - [fromIterableT](asyncEnumerable.md#fromiterablet)
@@ -24,7 +25,6 @@
 - [scanT](asyncEnumerable.md#scant)
 - [takeWhileT](asyncEnumerable.md#takewhilet)
 - [toObservableT](asyncEnumerable.md#toobservablet)
-- [type](asyncEnumerable.md#type)
 
 ### Functions
 
@@ -53,6 +53,12 @@
 | `TB` |
 
 ## Variables
+
+### TContainerOf
+
+• `Const` **TContainerOf**: [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>
+
+___
 
 ### fromArrayT
 
@@ -111,12 +117,6 @@ ___
 ### toObservableT
 
 • `Const` **toObservableT**: [`ToObservable`](../interfaces/observable.ToObservable.md)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>\>
-
-___
-
-### type
-
-• `Const` **type**: [`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>
 
 ## Functions
 

@@ -33,10 +33,10 @@
 ### Accessors
 
 - [T](observable.AbstractDisposableObservable.md#t)
+- [TContainerOf](observable.AbstractDisposableObservable.md#tcontainerof)
 - [error](observable.AbstractDisposableObservable.md#error)
 - [isDisposed](observable.AbstractDisposableObservable.md#isdisposed)
 - [liftableStateType](observable.AbstractDisposableObservable.md#liftablestatetype)
-- [type](observable.AbstractDisposableObservable.md#type)
 
 ### Methods
 
@@ -77,6 +77,24 @@
 #### Inherited from
 
 AbtractDisposableSource.T
+
+___
+
+### TContainerOf
+
+• `get` **TContainerOf**(): `this`
+
+#### Returns
+
+`this`
+
+#### Implementation of
+
+[ObservableLike](../interfaces/observable.ObservableLike.md).[TContainerOf](../interfaces/observable.ObservableLike.md#tcontainerof)
+
+#### Inherited from
+
+AbtractDisposableSource.TContainerOf
 
 ___
 
@@ -127,24 +145,6 @@ ___
 #### Inherited from
 
 AbtractDisposableSource.liftableStateType
-
-___
-
-### type
-
-• `get` **type**(): `this`
-
-#### Returns
-
-`this`
-
-#### Implementation of
-
-[ObservableLike](../interfaces/observable.ObservableLike.md).[type](../interfaces/observable.ObservableLike.md#type)
-
-#### Inherited from
-
-AbtractDisposableSource.type
 
 ## Methods
 

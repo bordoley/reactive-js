@@ -38,6 +38,6 @@ const toObservable = () => src => createObservable(observer => {
 const toObservableT = {
     toObservable,
 };
-const type = undefined;
+const TContainerOf = undefined;
 
-export { createLiftedFlowable, flow, fromObservable, fromObservableT, toObservable, toObservableT, type };
+export { TContainerOf, createLiftedFlowable, flow, fromObservable, fromObservableT, toObservable, toObservableT };

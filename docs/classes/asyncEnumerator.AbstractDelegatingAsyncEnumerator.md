@@ -35,13 +35,13 @@
 ### Accessors
 
 - [T](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#t)
+- [TContainerOf](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#tcontainerof)
 - [error](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#error)
 - [isDisposed](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#isdisposed)
 - [liftableStateType](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#liftablestatetype)
 - [observerCount](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#observercount)
 - [replay](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#replay)
 - [scheduler](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#scheduler)
-- [type](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#type)
 
 ### Methods
 
@@ -110,6 +110,24 @@ StreamLike.T
 #### Inherited from
 
 AsyncEnumerator.T
+
+___
+
+### TContainerOf
+
+• `get` **TContainerOf**(): `this`
+
+#### Returns
+
+`this`
+
+#### Implementation of
+
+StreamLike.TContainerOf
+
+#### Inherited from
+
+AsyncEnumerator.TContainerOf
 
 ___
 
@@ -222,24 +240,6 @@ StreamLike.scheduler
 #### Overrides
 
 AsyncEnumerator.scheduler
-
-___
-
-### type
-
-• `get` **type**(): `this`
-
-#### Returns
-
-`this`
-
-#### Implementation of
-
-StreamLike.type
-
-#### Inherited from
-
-AsyncEnumerator.type
 
 ## Methods
 

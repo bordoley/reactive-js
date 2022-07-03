@@ -33,11 +33,11 @@
 ### Accessors
 
 - [T](observable.Subject.md#t)
+- [TContainerOf](observable.Subject.md#tcontainerof)
 - [error](observable.Subject.md#error)
 - [isDisposed](observable.Subject.md#isdisposed)
 - [liftableStateType](observable.Subject.md#liftablestatetype)
 - [observerCount](observable.Subject.md#observercount)
-- [type](observable.Subject.md#type)
 
 ### Methods
 
@@ -95,6 +95,24 @@ MulticastObservableLike.T
 #### Inherited from
 
 AbstractDisposableObservable.T
+
+___
+
+### TContainerOf
+
+• `get` **TContainerOf**(): `this`
+
+#### Returns
+
+`this`
+
+#### Implementation of
+
+MulticastObservableLike.TContainerOf
+
+#### Inherited from
+
+AbstractDisposableObservable.TContainerOf
 
 ___
 
@@ -169,24 +187,6 @@ The number of observers currently observing.
 #### Implementation of
 
 [MulticastObservableLike](../interfaces/observable.MulticastObservableLike.md).[observerCount](../interfaces/observable.MulticastObservableLike.md#observercount)
-
-___
-
-### type
-
-• `get` **type**(): `this`
-
-#### Returns
-
-`this`
-
-#### Implementation of
-
-MulticastObservableLike.type
-
-#### Inherited from
-
-AbstractDisposableObservable.type
 
 ## Methods
 

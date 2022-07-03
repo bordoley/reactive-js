@@ -3,27 +3,27 @@ import { Function1, Factory, Equality, Predicate, Updater, Reducer, Function2, F
 import { Option } from "./option.mjs";
 interface ContainerLike {
     readonly T?: unknown;
-    readonly type?: unknown;
+    readonly TContainerOf?: unknown;
 }
 declare abstract class AbstractContainer implements ContainerLike {
-    get type(): this;
+    get TContainerOf(): this;
     get T(): unknown;
 }
 declare abstract class AbstractDisposableContainer extends Disposable implements ContainerLike {
-    get type(): this;
+    get TContainerOf(): this;
     get T(): unknown;
 }
 declare type ContainerOf<C extends ContainerLike, T> = C extends {
-    readonly type: unknown;
+    readonly TContainerOf: unknown;
 } ? (C & {
     readonly T: T;
-})["type"] : {
+})["TContainerOf"] : {
     readonly _C: C;
     readonly _T: () => T;
 };
 declare type ContainerOperator<C, TA, TB> = Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 interface Container<C extends ContainerLike> {
-    readonly type?: C;
+    readonly TContainerOf?: C;
 }
 interface Buffer<C extends ContainerLike> extends Container<C> {
     buffer: <T>(options?: {

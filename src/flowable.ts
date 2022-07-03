@@ -40,7 +40,7 @@ export interface FlowableLike<
 > extends StreamableLike<FlowMode, T, TStream>,
     ContainerLike {
   readonly T: unknown;
-  readonly type: FlowableLike<this["T"]>;
+  readonly TContainerOf: FlowableLike<this["T"]>;
 }
 export interface FlowableStreamLike<T> extends StreamLike<FlowMode, T> {}
 
@@ -230,4 +230,4 @@ export const toObservableT: ToObservable<FlowableLike<unknown>> = {
   toObservable,
 };
 
-export const type: FlowableLike<unknown> = undefined as any;
+export const TContainerOf: FlowableLike<unknown> = undefined as any;

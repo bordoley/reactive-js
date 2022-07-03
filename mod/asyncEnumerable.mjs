@@ -229,6 +229,6 @@ const toObservable = () => enumerable => createObservable(observer => {
 const toObservableT = {
     toObservable,
 };
-const type = undefined;
+const TContainerOf = undefined;
 
-export { fromArray, fromArrayT, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, generate, generateT, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, type };
+export { TContainerOf, fromArray, fromArrayT, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, generate, generateT, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT };

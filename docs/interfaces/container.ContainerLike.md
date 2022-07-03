@@ -26,7 +26,7 @@
 ### Properties
 
 - [T](container.ContainerLike.md#t)
-- [type](container.ContainerLike.md#type)
+- [TContainerOf](container.ContainerLike.md#tcontainerof)
 
 ## Properties
 
@@ -36,6 +36,6 @@
 
 ___
 
-### type
+### TContainerOf
 
-• `Optional` `Readonly` **type**: `unknown`
+• `Optional` `Readonly` **TContainerOf**: `unknown`

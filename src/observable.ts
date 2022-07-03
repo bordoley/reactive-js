@@ -98,7 +98,7 @@ import { SourceLike, notifySink, sourceFrom } from "./source";
  */
 export interface ObservableLike<T> extends SourceLike {
   readonly T: unknown;
-  readonly type: ObservableLike<this["T"]>;
+  readonly TContainerOf: ObservableLike<this["T"]>;
   readonly liftableStateType: Observer<this["T"]>;
 
   readonly isEnumerable?: boolean;
@@ -687,4 +687,4 @@ export const toRunnableT: ToRunnable<ObservableLike<unknown>> = {
   toRunnable,
 };
 
-export const type: ObservableLike<unknown> = undefined as any;
+export const TContainerOf: ObservableLike<unknown> = undefined as any;

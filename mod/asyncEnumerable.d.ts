@@ -7,7 +7,7 @@ import { AsyncReducer, ScanAsync, ObservableLike, ToObservable } from "./observa
 import { StreamableLike } from "./streamable.mjs";
 interface AsyncEnumerableLike<T> extends StreamableLike<void, T, AsyncEnumerator<T>>, LiftableLike {
     readonly T: unknown;
-    readonly type: AsyncEnumerableLike<this["T"]>;
+    readonly TContainerOf: AsyncEnumerableLike<this["T"]>;
     readonly liftableStateType: AsyncEnumerator<this["T"]>;
 }
 declare type AsyncEnumerableOperator<TA, TB> = Function1<AsyncEnumerableLike<TA>, AsyncEnumerableLike<TB>>;
@@ -61,5 +61,5 @@ declare const takeWhile: <T>(predicate: Predicate<T>, options?: {
 declare const takeWhileT: TakeWhile<AsyncEnumerableLike<unknown>>;
 declare const toObservable: <T>() => Function1<AsyncEnumerableLike<T>, ObservableLike<T>>;
 declare const toObservableT: ToObservable<AsyncEnumerableLike<unknown>>;
-declare const type: AsyncEnumerableLike<unknown>;
-export { AsyncEnumerableLike, AsyncEnumerableOperator, fromArray, fromArrayT, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, generate, generateT, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, type };
+declare const TContainerOf: AsyncEnumerableLike<unknown>;
+export { AsyncEnumerableLike, AsyncEnumerableOperator, TContainerOf, fromArray, fromArrayT, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, generate, generateT, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT };

@@ -9,7 +9,7 @@ import { none, isNone } from './option.mjs';
 import { createRunnable } from './runnable.mjs';
 
 const sequenceResultDone = Symbol("SequenceResultDone");
-const type = undefined;
+const TContainerOf = undefined;
 const isNotify = (result) => result != sequenceResultDone;
 const notify = (data, next) => ({
     data,
@@ -291,4 +291,4 @@ const toEnumerableT = {
     toEnumerable,
 };
 
-export { concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, fromArray, fromArrayT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, sequenceResultDone, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toRunnable, toRunnableT, type, zip, zipT };
+export { TContainerOf, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, fromArray, fromArrayT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, sequenceResultDone, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toRunnable, toRunnableT, zip, zipT };

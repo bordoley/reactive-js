@@ -11,11 +11,11 @@ declare const sequenceResultDone: unique symbol;
 declare type SequenceResult<T> = SequenceResultNotify<T> | typeof sequenceResultDone;
 interface SequenceLike extends ContainerLike {
     readonly T: unknown;
-    readonly type: Sequence<this["T"]>;
+    readonly TContainerOf: Sequence<this["T"]>;
 }
 declare type Sequence<T> = Factory<SequenceResult<T>> & SequenceLike;
 declare type SequenceOperator<TA, TB> = Function1<Sequence<TA>, Sequence<TB>>;
-declare const type: Sequence<unknown>;
+declare const TContainerOf: Sequence<unknown>;
 declare const concatAll: <T>() => SequenceOperator<Sequence<T>, T>;
 declare const concatAllT: ConcatAll<Sequence<unknown>>;
 declare const fromArray: <T>(options?: Partial<FromArrayOptions>) => Function1<readonly T[], Sequence<T>>;
@@ -66,4 +66,4 @@ declare const zip: Zip<Sequence<unknown>>["zip"];
 declare const zipT: Zip<Sequence<unknown>>;
 declare const toEnumerable: <T>() => Function1<Sequence<T>, EnumerableLike<T>>;
 declare const toEnumerableT: ToEnumerable<Sequence<unknown>>;
-export { Sequence, SequenceLike, SequenceOperator, SequenceResult, SequenceResultNotify, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, fromArray, fromArrayT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, sequenceResultDone, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toRunnable, toRunnableT, type, zip, zipT };
+export { Sequence, SequenceLike, SequenceOperator, SequenceResult, SequenceResultNotify, TContainerOf, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, fromArray, fromArrayT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, sequenceResultDone, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toRunnable, toRunnableT, zip, zipT };

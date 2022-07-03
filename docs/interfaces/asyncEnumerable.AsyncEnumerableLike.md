@@ -23,8 +23,8 @@
 ### Properties
 
 - [T](asyncEnumerable.AsyncEnumerableLike.md#t)
+- [TContainerOf](asyncEnumerable.AsyncEnumerableLike.md#tcontainerof)
 - [liftableStateType](asyncEnumerable.AsyncEnumerableLike.md#liftablestatetype)
-- [type](asyncEnumerable.AsyncEnumerableLike.md#type)
 
 ### Methods
 
@@ -42,6 +42,16 @@
 
 ___
 
+### TContainerOf
+
+• `Readonly` **TContainerOf**: [`AsyncEnumerableLike`](asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>
+
+#### Overrides
+
+[LiftableLike](liftable.LiftableLike.md).[TContainerOf](liftable.LiftableLike.md#tcontainerof)
+
+___
+
 ### liftableStateType
 
 • `Readonly` **liftableStateType**: [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<`unknown`\>
@@ -49,16 +59,6 @@ ___
 #### Overrides
 
 [LiftableLike](liftable.LiftableLike.md).[liftableStateType](liftable.LiftableLike.md#liftablestatetype)
-
-___
-
-### type
-
-• `Readonly` **type**: [`AsyncEnumerableLike`](asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>
-
-#### Overrides
-
-[LiftableLike](liftable.LiftableLike.md).[type](liftable.LiftableLike.md#type)
 
 ## Methods
 

@@ -31,9 +31,9 @@
 ### Accessors
 
 - [T](runnableSink.RunnableSink.md#t)
+- [TContainerOf](runnableSink.RunnableSink.md#tcontainerof)
 - [error](runnableSink.RunnableSink.md#error)
 - [isDisposed](runnableSink.RunnableSink.md#isdisposed)
-- [type](runnableSink.RunnableSink.md#type)
 
 ### Methods
 
@@ -78,6 +78,24 @@ AbstractDisposableContainer.T
 
 ___
 
+### TContainerOf
+
+• `get` **TContainerOf**(): `this`
+
+#### Returns
+
+`this`
+
+#### Implementation of
+
+[SinkLike](../interfaces/source.SinkLike.md).[TContainerOf](../interfaces/source.SinkLike.md#tcontainerof)
+
+#### Inherited from
+
+AbstractDisposableContainer.TContainerOf
+
+___
+
 ### error
 
 • `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
@@ -115,24 +133,6 @@ SinkLike.isDisposed
 #### Inherited from
 
 AbstractDisposableContainer.isDisposed
-
-___
-
-### type
-
-• `get` **type**(): `this`
-
-#### Returns
-
-`this`
-
-#### Implementation of
-
-[SinkLike](../interfaces/source.SinkLike.md).[type](../interfaces/source.SinkLike.md#type)
-
-#### Inherited from
-
-AbstractDisposableContainer.type
 
 ## Methods
 

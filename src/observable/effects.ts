@@ -43,21 +43,21 @@ import { subscribe } from "./subscribe";
 
 const arrayStrictEquality = arrayEquality();
 
-const enum EffectType {
+const enum EffecTContainerOf {
   Memo = 1,
   Observe = 2,
   Using = 3,
 }
 
 type MemoEffect = {
-  readonly type: EffectType.Memo;
+  readonly type: EffecTContainerOf.Memo;
   f: (...args: any[]) => unknown;
   args: any[];
   value: unknown;
 };
 
 type ObserveEffect = {
-  readonly type: EffectType.Observe;
+  readonly type: EffecTContainerOf.Observe;
   observable: ObservableLike<unknown>;
   subscription: Disposable;
   value: Option<unknown>;
@@ -65,7 +65,7 @@ type ObserveEffect = {
 };
 
 type UsingEffect = {
-  readonly type: EffectType.Using;
+  readonly type: EffecTContainerOf.Using;
   f: (...args: any[]) => unknown;
   args: any[];
   value: Disposable;
@@ -77,19 +77,19 @@ type ObservableEffect = ObserveEffect | MemoEffect | UsingEffect;
 
 function validateObservableEffect(
   ctx: ObservableContext,
-  type: EffectType.Observe,
+  type: EffecTContainerOf.Observe,
 ): ObserveEffect;
 function validateObservableEffect(
   ctx: ObservableContext,
-  type: EffectType.Memo,
+  type: EffecTContainerOf.Memo,
 ): MemoEffect;
 function validateObservableEffect(
   ctx: ObservableContext,
-  type: EffectType.Using,
+  type: EffecTContainerOf.Using,
 ): UsingEffect;
 function validateObservableEffect(
   ctx: ObservableContext,
-  type: EffectType,
+  type: EffecTContainerOf,
 ): ObservableEffect {
   const { effects, index } = ctx;
   ctx.index++;
@@ -98,14 +98,14 @@ function validateObservableEffect(
 
   if (isNone(effect)) {
     const newEffect: ObservableEffect =
-      type === EffectType.Memo
+      type === EffecTContainerOf.Memo
         ? {
             type,
             f: ignore,
             args: [],
             value: none,
           }
-        : type === EffectType.Observe
+        : type === EffecTContainerOf.Observe
         ? {
             type,
             observable: empty(fromArrayT),
@@ -113,7 +113,7 @@ function validateObservableEffect(
             value: none,
             hasValue: false,
           }
-        : type === EffectType.Using
+        : type === EffecTContainerOf.Using
         ? {
             type,
             f: ignore,
@@ -148,7 +148,7 @@ class ObservableContext {
     const hasOutstandingEffects =
       effects.findIndex(
         effect =>
-          effect.type === EffectType.Observe &&
+          effect.type === EffecTContainerOf.Observe &&
           !isDisposed(effect.subscription),
       ) >= 0;
 
@@ -161,7 +161,7 @@ class ObservableContext {
   };
 
   memo<T>(f: (...args: any[]) => T, ...args: any[]): T {
-    const effect = validateObservableEffect(this, EffectType.Memo);
+    const effect = validateObservableEffect(this, EffecTContainerOf.Memo);
 
     if (f === effect.f && arrayStrictEquality(args, effect.args)) {
       return effect.value as T;
@@ -175,7 +175,7 @@ class ObservableContext {
   }
 
   observe<T>(observable: ObservableLike<T>): Option<T> {
-    const effect = validateObservableEffect(this, EffectType.Observe);
+    const effect = validateObservableEffect(this, EffecTContainerOf.Observe);
 
     if (effect.observable === observable) {
       return effect.value as Option<T>;
@@ -217,7 +217,7 @@ class ObservableContext {
   }
 
   using<T extends Disposable>(f: (...args: any[]) => T, ...args: any[]): T {
-    const effect = validateObservableEffect(this, EffectType.Using);
+    const effect = validateObservableEffect(this, EffecTContainerOf.Using);
 
     if (f === effect.f && arrayStrictEquality(args, effect.args)) {
       return effect.value as T;
@@ -264,14 +264,14 @@ export const observable = <T>(
         const { type } = effect;
 
         if (
-          type === EffectType.Observe &&
+          type === EffecTContainerOf.Observe &&
           !(effect as ObserveEffect).hasValue
         ) {
           allObserveEffectsHaveValues = false;
         }
 
         if (
-          type === EffectType.Observe &&
+          type === EffecTContainerOf.Observe &&
           !isDisposed((effect as ObserveEffect).subscription)
         ) {
           hasOutstandingEffects = true;
