@@ -1,6 +1,7 @@
+import { ContainerLike } from "./container.mjs";
+import { Disposable } from "./disposable.mjs";
 import { Function1, SideEffect1 } from "./functions.mjs";
-import { LiftableStateLike } from "./liftable.mjs";
-interface SinkLike<T> extends LiftableStateLike {
+interface SinkLike<T> extends Disposable, ContainerLike {
     assertState(this: SinkLike<T>): void;
     /**
      * Notifies the the sink of the next notification produced by the observable source.

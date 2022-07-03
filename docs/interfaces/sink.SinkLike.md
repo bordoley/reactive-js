@@ -12,7 +12,9 @@
 
 ## Hierarchy
 
-- [`LiftableStateLike`](liftable.LiftableStateLike.md)
+- [`Disposable`](../classes/disposable.Disposable.md)
+
+- [`ContainerLike`](container.ContainerLike.md)
 
   ↳ **`SinkLike`**
 
@@ -48,7 +50,7 @@
 
 #### Inherited from
 
-[LiftableStateLike](liftable.LiftableStateLike.md).[T](liftable.LiftableStateLike.md#t)
+[ContainerLike](container.ContainerLike.md).[T](container.ContainerLike.md#t)
 
 ___
 
@@ -58,7 +60,7 @@ ___
 
 #### Inherited from
 
-[LiftableStateLike](liftable.LiftableStateLike.md).[TContainerOf](liftable.LiftableStateLike.md#tcontainerof)
+[ContainerLike](container.ContainerLike.md).[TContainerOf](container.ContainerLike.md#tcontainerof)
 
 ## Accessors
 
@@ -74,7 +76,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-LiftableStateLike.error
+Disposable.error
 
 ___
 
@@ -90,7 +92,7 @@ ___
 
 #### Inherited from
 
-LiftableStateLike.isDisposed
+Disposable.isDisposed
 
 ## Methods
 
@@ -116,7 +118,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Inherited from
 
-[LiftableStateLike](liftable.LiftableStateLike.md).[add](liftable.LiftableStateLike.md#add)
+[Disposable](../classes/disposable.Disposable.md).[add](../classes/disposable.Disposable.md#add)
 
 ___
 
@@ -155,7 +157,7 @@ Dispose the resource.
 
 #### Inherited from
 
-[LiftableStateLike](liftable.LiftableStateLike.md).[dispose](liftable.LiftableStateLike.md#dispose)
+[Disposable](../classes/disposable.Disposable.md).[dispose](../classes/disposable.Disposable.md#dispose)
 
 ___
 

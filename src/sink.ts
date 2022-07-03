@@ -1,8 +1,9 @@
 import { __DEV__ } from "./__internal__.env";
+import { ContainerLike } from "./container";
+import { Disposable } from "./disposable";
 import { Function1, SideEffect1 } from "./functions";
-import { LiftableStateLike } from "./liftable";
 
-export interface SinkLike<T> extends LiftableStateLike {
+export interface SinkLike<T> extends Disposable, ContainerLike {
   assertState(this: SinkLike<T>): void;
 
   /**

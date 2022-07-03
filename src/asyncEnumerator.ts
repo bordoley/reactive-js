@@ -1,5 +1,6 @@
+import { ContainerLike } from "./container";
 import { DispatcherLike } from "./dispatcher";
-import { AbtractDisposableLiftable, LiftableStateLike } from "./liftable";
+import { AbtractDisposableLiftable } from "./liftable";
 import { ObservableLike } from "./observable";
 import { Observer } from "./observer";
 import { SchedulerLike } from "./scheduler";
@@ -7,7 +8,7 @@ import { StreamLike } from "./stream";
 
 export abstract class AsyncEnumerator<T>
   extends AbtractDisposableLiftable<Observer<T>>
-  implements LiftableStateLike, StreamLike<void, T>
+  implements ContainerLike, StreamLike<void, T>
 {
   abstract scheduler: SchedulerLike;
   abstract observerCount: number;

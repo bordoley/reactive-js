@@ -24,6 +24,8 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
 
+  ↳ [`SinkLike`](../interfaces/sink.SinkLike.md)
+
 ## Table of contents
 
 ### Constructors
