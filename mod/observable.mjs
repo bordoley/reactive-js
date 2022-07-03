@@ -11,9 +11,8 @@ import { AbtractDisposableSource, sinkInto, sourceFrom, assertState, notifySink,
 import { getScheduler, Observer } from './observer.mjs';
 import { schedule, __yield, isInContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { createFromArray } from './__internal__.container.mjs';
-import { contraVariant } from './liftable.mjs';
+import { contraVariant, getDelegate } from './__internal__.liftable.mjs';
 import { DisposableRef } from './__internal__.disposable.mjs';
-import { getDelegate } from './__internal__.liftable.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { createRunnable } from './runnable.mjs';
 import { map as map$1, everySatisfy as everySatisfy$1 } from './__internal__.readonlyArray.mjs';

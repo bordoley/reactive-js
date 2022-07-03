@@ -1,8 +1,8 @@
 import { FromArray, FromArrayOptions, ContainerOperator, ContainerOf } from "./container.mjs";
-import { AbstractLiftable, DelegatingLiftableStateOf } from "./__internal__.liftable.mjs";
+import { AbstractLiftable, Lift as Lift$1, ContraVariant, DelegatingLiftableStateOf } from "./__internal__.liftable.mjs";
 import { Disposable, DisposableOrTeardown } from "./disposable.mjs";
 import { Function1, Equality, Predicate, SideEffect1, Reducer, Factory } from "./functions.mjs";
-import { Lift as Lift$1, ContraVariant, LiftableStateOf } from "./liftable.mjs";
+import { LiftableStateOf } from "./liftable.mjs";
 import { Option } from "./option.mjs";
 import { SinkLike, SourceLike, CreateSource } from "./source.mjs";
 declare abstract class AbstractSource<T, TSink extends SinkLike<T>> extends AbstractLiftable<TSink> implements SourceLike {

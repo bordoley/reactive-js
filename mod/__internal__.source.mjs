@@ -1,11 +1,10 @@
 /// <reference types="./__internal__.source.d.ts" />
 import { MAX_SAFE_INTEGER } from './__internal__.env.mjs';
-import { AbstractLiftable, getDelegate, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './__internal__.liftable.mjs';
+import { AbstractLiftable, getDelegate, lift, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './__internal__.liftable.mjs';
 import { forEach } from './__internal__.readonlyArray.mjs';
 import { fromValue, empty } from './container.mjs';
 import { addTo, onComplete, dispose, onError, isDisposed, onDisposed, add } from './disposable.mjs';
 import { getLength, max, pipe, newInstanceWith, isEmpty, newInstance, compose, negate, ignore, identity } from './functions.mjs';
-import { lift } from './liftable.mjs';
 import { none, isSome } from './option.mjs';
 import { assertState, sinkInto, notify } from './source.mjs';
 

@@ -1,6 +1,6 @@
+import { contraVariant } from "../__internal__.liftable";
 import { Lift } from "../__internal__.source";
 import { Function1, newInstance, pipe } from "../functions";
-import { contraVariant } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer } from "../observer";
 import { sourceFrom } from "../source";

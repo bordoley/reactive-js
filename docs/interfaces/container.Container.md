@@ -70,8 +70,6 @@
 
   ↳ [`ToEnumerable`](enumerable.ToEnumerable.md)
 
-  ↳ [`Lift`](liftable.Lift.md)
-
   ↳ [`FromObservable`](observable.FromObservable.md)
 
   ↳ [`ScanAsync`](observable.ScanAsync.md)

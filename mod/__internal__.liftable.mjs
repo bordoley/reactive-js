@@ -3,9 +3,10 @@ import { AbstractContainer } from './__internal__.container.mjs';
 import { empty } from './container.mjs';
 import { bindTo, add, addTo, onComplete, dispose } from './disposable.mjs';
 import { raise, strictEquality, pipe, newInstanceWith, max } from './functions.mjs';
-import { lift, covariant } from './liftable.mjs';
 import { none } from './option.mjs';
 
+const covariant = 0;
+const contraVariant = 1;
 class AbstractLiftable extends AbstractContainer {
     get TLiftableState() {
         return raise();
@@ -66,5 +67,6 @@ const createThrowIfEmptyLiftOperator = (m, ThrowIfEmptyLiftableState) => (factor
     return lifted;
 }, lift(m));
 const getDelegate = (s) => s.delegate;
+const lift = (m) => op => m.lift(op);
 
-export { AbstractLiftable, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, getDelegate };
+export { AbstractLiftable, contraVariant, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, getDelegate, lift };
