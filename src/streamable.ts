@@ -1,3 +1,4 @@
+import { createStream } from "./__internal__.stream";
 import { concatWith, fromValue, ignoreElements } from "./container";
 import { dispatchTo } from "./dispatcher";
 import { add, addTo } from "./disposable";
@@ -34,7 +35,7 @@ import {
 import { Option, isSome, none } from "./option";
 import { SchedulerLike } from "./scheduler";
 import { sinkInto as sinkIntoSink } from "./source";
-import { StreamLike, createStream } from "./stream";
+import { StreamLike } from "./stream";
 
 export interface StreamableLike<
   TReq,

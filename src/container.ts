@@ -30,27 +30,6 @@ export interface ContainerLike {
   readonly TContainerOf?: unknown;
 }
 
-export abstract class AbstractContainer implements ContainerLike {
-  get TContainerOf(): this {
-    return raise();
-  }
-  get T(): unknown {
-    return raise();
-  }
-}
-
-export abstract class AbstractDisposableContainer
-  extends Disposable
-  implements ContainerLike
-{
-  get TContainerOf(): this {
-    return raise();
-  }
-  get T(): unknown {
-    return raise();
-  }
-}
-
 export type ContainerOf<C extends ContainerLike, T> = C extends {
   readonly TContainerOf: unknown;
 }
@@ -66,6 +45,18 @@ export type ContainerOperator<C, TA, TB> = Function1<
   ContainerOf<C, TA>,
   ContainerOf<C, TB>
 >;
+
+export abstract class AbstractDisposableContainer
+  extends Disposable
+  implements ContainerLike
+{
+  get TContainerOf(): this {
+    return raise();
+  }
+  get T(): unknown {
+    return raise();
+  }
+}
 
 export interface Container<C extends ContainerLike> {
   readonly TContainerOf?: C;

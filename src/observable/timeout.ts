@@ -1,14 +1,11 @@
 import { DisposableRef } from "../__internal__.disposable";
+import { getDelegate } from "../__internal__.liftable";
+import { AbstractDelegatingObserver } from "../__internal__.observer";
 import { throws } from "../container";
 import { bindTo, dispose } from "../disposable";
 import { newInstance, newInstanceWith, pipe, returns } from "../functions";
-import { getDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
-import {
-  AbstractDelegatingObserver,
-  Observer,
-  getScheduler,
-} from "../observer";
+import { Observer, getScheduler } from "../observer";
 import { assertState, notify } from "../source";
 import { concat } from "./concat";
 import { fromArrayT } from "./fromArray";

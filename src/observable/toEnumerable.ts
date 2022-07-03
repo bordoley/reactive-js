@@ -1,3 +1,4 @@
+import { AbstractEnumerator, reset } from "../__internal__.enumerator";
 import { getDelay } from "../__internal__.optionalArgs";
 import {
   SchedulerImplementationLike,
@@ -5,12 +6,7 @@ import {
 } from "../__internal__.schedulerImplementation";
 import { add, addTo, dispose, isDisposed } from "../disposable";
 import { EnumerableLike, ToEnumerable, createEnumerable } from "../enumerable";
-import {
-  AbstractEnumerator,
-  Enumerator,
-  hasCurrent,
-  reset,
-} from "../enumerator";
+import { Enumerator, hasCurrent } from "../enumerator";
 import { Function1, newInstance, newInstanceWith, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";

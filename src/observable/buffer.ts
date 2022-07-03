@@ -1,5 +1,7 @@
 import { DisposableRef } from "../__internal__.disposable";
 import { MAX_SAFE_INTEGER } from "../__internal__.env";
+import { getDelegate } from "../__internal__.liftable";
+import { AbstractDelegatingObserver } from "../__internal__.observer";
 import { Buffer, fromValue } from "../container";
 import {
   addTo,
@@ -17,13 +19,8 @@ import {
   newInstanceWith,
   pipe,
 } from "../functions";
-import { getDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
-import {
-  AbstractDelegatingObserver,
-  Observer,
-  getScheduler,
-} from "../observer";
+import { Observer, getScheduler } from "../observer";
 import { none } from "../option";
 import { assertState, notify, sinkInto } from "../source";
 import { fromArrayT } from "./fromArray";

@@ -12,13 +12,4 @@ declare abstract class AsyncEnumerator<T> extends AbtractDisposableLiftable<Obse
     abstract dispatch(this: DispatcherLike<void>, req: void): void;
     abstract sink(this: ObservableLike<T>, sink: Observer<T>): void;
 }
-declare abstract class AbstractDelegatingAsyncEnumerator<TA, TB> extends AsyncEnumerator<TB> implements StreamLike<void, TB> {
-    readonly delegate: StreamLike<void, TA>;
-    constructor(delegate: StreamLike<void, TA>);
-    get observerCount(): number;
-    get replay(): number;
-    get scheduler(): SchedulerLike;
-    dispatch(req: void): void;
-    abstract sink(observer: Observer<TB>): void;
-}
-export { AbstractDelegatingAsyncEnumerator, AsyncEnumerator };
+export { AsyncEnumerator };

@@ -2,7 +2,6 @@ import { __DEV__ } from "./__internal__.env";
 import { Container, ContainerOf } from "./container";
 import { Function1, SideEffect1 } from "./functions";
 import {
-  AbstractLiftable,
   AbtractDisposableLiftable,
   LiftableLike,
   LiftableStateLike,
@@ -29,6 +28,13 @@ export interface SourceLike extends LiftableLike {
   sink(this: this["TContainerOf"], sink: this["TLiftableState"]): void;
 }
 
+export abstract class AbtractDisposableSource<T, TSink extends SinkLike<T>>
+  extends AbtractDisposableLiftable<TSink>
+  implements SourceLike
+{
+  abstract sink(this: this, sink: TSink): void;
+}
+
 export interface CreateSource<C extends SourceLike> extends Container<C> {
   create<T>(onSink: (sink: LiftableStateOf<C, T>) => void): ContainerOf<C, T>;
 }
@@ -40,20 +46,6 @@ export const assertState = <C extends SourceLike>(
     sink.assertState();
   }
 };
-
-export abstract class AbstractSource<T, TSink extends SinkLike<T>>
-  extends AbstractLiftable<TSink>
-  implements SourceLike
-{
-  abstract sink(this: this, sink: TSink): void;
-}
-
-export abstract class AbtractDisposableSource<T, TSink extends SinkLike<T>>
-  extends AbtractDisposableLiftable<TSink>
-  implements SourceLike
-{
-  abstract sink(this: this, sink: TSink): void;
-}
 
 export const notify =
   <C extends SourceLike, T, TSink extends LiftableStateOf<C, T>>(

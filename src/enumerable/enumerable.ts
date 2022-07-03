@@ -1,9 +1,9 @@
+import { AbstractLiftable } from "../__internal__.liftable";
 import { empty } from "../container";
 import { dispose } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { Enumerator } from "../enumerator";
 import { Factory, newInstance, pipe } from "../functions";
-import { AbstractLiftable } from "../liftable";
 import { fromArrayT } from "./fromArray";
 
 export const enumerate = <T>(enumerable: EnumerableLike<T>): Enumerator<T> =>

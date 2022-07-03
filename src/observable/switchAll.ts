@@ -1,14 +1,11 @@
 import { DisposableRef } from "../__internal__.disposable";
+import { getDelegate } from "../__internal__.liftable";
+import { AbstractDelegatingObserver } from "../__internal__.observer";
 import { ConcatAll } from "../container";
 import { addTo, dispose, isDisposed, onComplete } from "../disposable";
 import { newInstance, newInstanceWith, pipe } from "../functions";
-import { getDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
-import {
-  AbstractDelegatingObserver,
-  Observer,
-  getScheduler,
-} from "../observer";
+import { Observer, getScheduler } from "../observer";
 import { assertState, notifySink } from "../source";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";

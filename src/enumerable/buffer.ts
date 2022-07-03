@@ -1,14 +1,12 @@
+import {
+  AbstractDelegatingEnumerator,
+  reset,
+} from "../__internal__.enumerator";
 import { MAX_SAFE_INTEGER } from "../__internal__.env";
 import { Buffer } from "../container";
 import { add, dispose } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
-import {
-  AbstractDelegatingEnumerator,
-  Enumerator,
-  getCurrent,
-  hasCurrent,
-  reset,
-} from "../enumerator";
+import { Enumerator, getCurrent, hasCurrent } from "../enumerator";
 import { getLength, max, newInstanceWith, pipe } from "../functions";
 import { lift } from "./lift";
 

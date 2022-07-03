@@ -5,11 +5,11 @@ import { pipe, newInstance, isEmpty, getLength, raise, newInstanceWith, compose,
 import { createObservable, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
 import { getDispatcher } from './observer.mjs';
 import { keep } from './__internal__.readonlyArray.mjs';
+import { getDelegate } from './__internal__.liftable.mjs';
+import { AbstractDelegatingStream } from './__internal__.stream.mjs';
 import { ignoreElements } from './container.mjs';
-import { getDelegate } from './liftable.mjs';
 import { none, isSome } from './option.mjs';
 import { sinkInto } from './source.mjs';
-import { AbstractDelegatingStream } from './stream.mjs';
 import { createStreamble, createActionReducer, stream } from './streamable.mjs';
 
 const fromEvent = (target, eventName, selector) => createObservable(observer => {

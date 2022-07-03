@@ -1,3 +1,4 @@
+import { AbstractContainer } from "./__internal__.container";
 import { ContainerOperator, FromArray, empty } from "./container";
 import { Error, add, addTo, bindTo, dispose, onComplete } from "./disposable";
 import {
@@ -10,6 +11,7 @@ import {
   max,
   newInstanceWith,
   pipe,
+  raise,
   strictEquality,
 } from "./functions";
 import {
@@ -18,12 +20,34 @@ import {
   LiftOperatorIn,
   LiftOperatorOut,
   LiftableLike,
+  LiftableStateLike,
   LiftableStateOf,
   Variance,
   covariant,
   lift,
 } from "./liftable";
 import { Option, none } from "./option";
+
+export abstract class AbstractLiftable<TState extends LiftableStateLike>
+  extends AbstractContainer
+  implements LiftableLike
+{
+  get TLiftableState(): TState {
+    return raise();
+  }
+}
+
+export type DelegatingLiftableStateOf<
+  C extends LiftableLike,
+  T,
+  TDelegate,
+  TDelegateLiftableState extends LiftableStateOf<
+    C,
+    TDelegate
+  > = LiftableStateOf<C, TDelegate>,
+> = LiftableStateOf<C, T> & {
+  readonly delegate: TDelegateLiftableState;
+};
 
 export const createDistinctUntilChangedLiftOperator =
   <C extends LiftableLike, TVariance extends Variance>(
@@ -300,3 +324,15 @@ export const createThrowIfEmptyLiftOperator =
 
       return lifted;
     }, lift(m));
+
+export const getDelegate = <
+  C extends LiftableLike,
+  T,
+  TDelegate,
+  TDelegateLiftableState extends LiftableStateOf<
+    C,
+    TDelegate
+  > = LiftableStateOf<C, TDelegate>,
+>(
+  s: DelegatingLiftableStateOf<C, T, TDelegate, TDelegateLiftableState>,
+): TDelegateLiftableState => s.delegate;

@@ -9,15 +9,7 @@ import {
   onComplete,
   onDisposed,
 } from "./disposable";
-import {
-  getLength,
-  isEmpty,
-  newInstance,
-  newInstanceWith,
-  pipe,
-  raise,
-} from "./functions";
-import { getDelegate } from "./liftable";
+import { getLength, isEmpty, newInstanceWith, pipe, raise } from "./functions";
 import { Option, isNone, none } from "./option";
 import {
   SchedulerLike,
@@ -25,7 +17,7 @@ import {
   isInContinuation,
   schedule,
 } from "./scheduler";
-import { SinkLike, assertState, notify } from "./source";
+import { SinkLike, assertState } from "./source";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (getLength(dispatcher.nextQueue) === 1) {
@@ -129,24 +121,6 @@ if (__DEV__) {
     }
   };
 }
-
-export class AbstractDelegatingObserver<TIn, TOut> extends Observer<TIn> {
-  constructor(public readonly delegate: Observer<TOut>) {
-    super(getScheduler(delegate));
-  }
-
-  notify(_: TIn) {}
-}
-
-class DelegatingObserver<T> extends AbstractDelegatingObserver<T, T> {
-  notify(next: T) {
-    pipe(this, getDelegate, notify(next));
-  }
-}
-
-export const createDelegatingObserver = <T>(
-  delegate: Observer<T>,
-): Observer<T> => newInstance(DelegatingObserver, delegate);
 
 export const getScheduler = <T>(observer: Observer<T>): SchedulerLike =>
   observer.scheduler;

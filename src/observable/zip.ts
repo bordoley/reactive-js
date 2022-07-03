@@ -1,3 +1,10 @@
+import {
+  AbstractEnumerator,
+  reset,
+  zip as zipEnumerators,
+} from "../__internal__.enumerator";
+import { getDelegate } from "../__internal__.liftable";
+import { AbstractDelegatingObserver } from "../__internal__.observer";
 import { everySatisfy, map } from "../__internal__.readonlyArray";
 import { Zip } from "../container";
 import {
@@ -7,15 +14,8 @@ import {
   onComplete,
   onDisposed,
 } from "../disposable";
-import {
-  AbstractEnumerator,
-  Enumerator,
-  getCurrent,
-  hasCurrent,
-  move,
-  reset,
-  zip as zipEnumerators,
-} from "../enumerator";
+import { Enumerator, getCurrent, hasCurrent, move } from "../enumerator";
+
 import {
   getLength,
   isEmpty,
@@ -24,9 +24,8 @@ import {
   pipeLazy,
   returns,
 } from "../functions";
-import { getDelegate } from "../liftable";
 import { ObservableLike } from "../observable";
-import { AbstractDelegatingObserver, Observer } from "../observer";
+import { Observer } from "../observer";
 import { assertState, notify, sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
 import { fromEnumerator } from "./fromEnumerable";

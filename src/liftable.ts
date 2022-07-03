@@ -1,5 +1,4 @@
 import {
-  AbstractContainer,
   AbstractDisposableContainer,
   Container,
   ContainerLike,
@@ -14,26 +13,6 @@ export interface LiftableLike extends ContainerLike {
   readonly TLiftableState: LiftableStateLike;
 }
 
-export abstract class AbstractLiftable<TState extends LiftableStateLike>
-  extends AbstractContainer
-  implements LiftableLike
-{
-  get TLiftableState(): TState {
-    return raise();
-  }
-}
-
-export abstract class AbtractDisposableLiftable<
-    TState extends LiftableStateLike,
-  >
-  extends AbstractDisposableContainer
-  implements LiftableLike
-{
-  get TLiftableState(): TState {
-    return raise();
-  }
-}
-
 export type LiftableStateOf<C extends LiftableLike, T> = C extends {
   readonly TLiftableState: unknown;
 }
@@ -45,29 +24,16 @@ export type LiftableStateOf<C extends LiftableLike, T> = C extends {
       readonly _T: () => T;
     };
 
-export type DelegatingLiftableStateOf<
-  C extends LiftableLike,
-  T,
-  TDelegate,
-  TDelegateLiftableState extends LiftableStateOf<
-    C,
-    TDelegate
-  > = LiftableStateOf<C, TDelegate>,
-> = LiftableStateOf<C, T> & {
-  readonly delegate: TDelegateLiftableState;
-};
-
-export const getDelegate = <
-  C extends LiftableLike,
-  T,
-  TDelegate,
-  TDelegateLiftableState extends LiftableStateOf<
-    C,
-    TDelegate
-  > = LiftableStateOf<C, TDelegate>,
->(
-  s: DelegatingLiftableStateOf<C, T, TDelegate, TDelegateLiftableState>,
-): TDelegateLiftableState => s.delegate;
+export abstract class AbtractDisposableLiftable<
+    TState extends LiftableStateLike,
+  >
+  extends AbstractDisposableContainer
+  implements LiftableLike
+{
+  get TLiftableState(): TState {
+    return raise();
+  }
+}
 
 export type Covariant = 0;
 export const covariant: Covariant = 0;

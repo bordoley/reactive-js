@@ -1,7 +1,8 @@
+import { AbstractEnumerator } from "../__internal__.enumerator";
 import { Generate } from "../container";
 import { dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
-import { AbstractEnumerator, getCurrent, hasCurrent } from "../enumerator";
+import { getCurrent, hasCurrent } from "../enumerator";
 import { Factory, Updater, newInstance, pipe } from "../functions";
 import { createEnumerable } from "./enumerable";
 

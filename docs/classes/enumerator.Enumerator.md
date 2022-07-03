@@ -16,10 +16,6 @@
 
   ↳ **`Enumerator`**
 
-  ↳↳ [`AbstractEnumerator`](enumerator.AbstractEnumerator.md)
-
-  ↳↳ [`AbstractPassThroughEnumerator`](enumerator.AbstractPassThroughEnumerator.md)
-
   ↳↳ [`VirtualTimeSchedulerLike`](../interfaces/scheduler.VirtualTimeSchedulerLike.md)
 
 ## Implements

@@ -16,8 +16,6 @@
 
   ↳ **`AsyncEnumerator`**
 
-  ↳↳ [`AbstractDelegatingAsyncEnumerator`](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md)
-
 ## Implements
 
 - [`LiftableStateLike`](../interfaces/liftable.LiftableStateLike.md)

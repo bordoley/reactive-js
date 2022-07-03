@@ -1,4 +1,9 @@
 import {
+  AbstractDelegatingEnumerator,
+  AbstractPassThroughEnumerator,
+  reset,
+} from "./__internal__.enumerator";
+import {
   createDistinctUntilChangedLiftOperator,
   createKeepLiftOperator,
   createMapLiftOperator,
@@ -9,6 +14,7 @@ import {
   createTakeFirstLiftOperator,
   createTakeWhileLiftOperator,
   createThrowIfEmptyLiftOperator,
+  getDelegate,
 } from "./__internal__.liftable";
 import { empty as emptyArray, forEach } from "./__internal__.readonlyArray";
 import {
@@ -32,15 +38,7 @@ import { concatAll } from "./enumerable/concatAll";
 import { createEnumerable, enumerate } from "./enumerable/enumerable";
 import { fromArray, fromArrayT } from "./enumerable/fromArray";
 import { liftT } from "./enumerable/lift";
-import {
-  AbstractDelegatingEnumerator,
-  AbstractPassThroughEnumerator,
-  Enumerator,
-  getCurrent,
-  hasCurrent,
-  move,
-  reset,
-} from "./enumerator";
+import { Enumerator, getCurrent, hasCurrent, move } from "./enumerator";
 import {
   Equality,
   Factory,
@@ -51,7 +49,7 @@ import {
   identity,
   pipe,
 } from "./functions";
-import { LiftableLike, getDelegate } from "./liftable";
+import { LiftableLike } from "./liftable";
 import { Option, isSome, none } from "./option";
 
 /**

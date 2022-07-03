@@ -6,7 +6,6 @@
 
 ### Classes
 
-- [AbstractLiftable](../classes/liftable.AbstractLiftable.md)
 - [AbtractDisposableLiftable](../classes/liftable.AbtractDisposableLiftable.md)
 
 ### Interfaces
@@ -19,7 +18,6 @@
 
 - [ContraVariant](liftable.md#contravariant)
 - [Covariant](liftable.md#covariant)
-- [DelegatingLiftableStateOf](liftable.md#delegatingliftablestateof)
 - [LiftOperator](liftable.md#liftoperator)
 - [LiftOperatorIn](liftable.md#liftoperatorin)
 - [LiftOperatorOut](liftable.md#liftoperatorout)
@@ -33,7 +31,6 @@
 
 ### Functions
 
-- [getDelegate](liftable.md#getdelegate)
 - [lift](liftable.md#lift)
 
 ## Type Aliases
@@ -47,21 +44,6 @@ ___
 ### Covariant
 
 Ƭ **Covariant**: ``0``
-
-___
-
-### DelegatingLiftableStateOf
-
-Ƭ **DelegatingLiftableStateOf**<`C`, `T`, `TDelegate`, `TDelegateLiftableState`\>: [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `T`\> & { `delegate`: `TDelegateLiftableState`  }
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
-| `T` | `T` |
-| `TDelegate` | `TDelegate` |
-| `TDelegateLiftableState` | extends [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `TDelegate`\> = [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `TDelegate`\> |
 
 ___
 
@@ -140,31 +122,6 @@ ___
 • `Const` **covariant**: [`Covariant`](liftable.md#covariant)
 
 ## Functions
-
-### getDelegate
-
-▸ **getDelegate**<`C`, `T`, `TDelegate`, `TDelegateLiftableState`\>(`s`): `TDelegateLiftableState`
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
-| `T` | `T` |
-| `TDelegate` | `TDelegate` |
-| `TDelegateLiftableState` | extends [`LiftableStateLike`](../interfaces/liftable.LiftableStateLike.md)<`TDelegateLiftableState`\> = [`LiftableStateOf`](liftable.md#liftablestateof)<`C`, `TDelegate`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `s` | [`DelegatingLiftableStateOf`](liftable.md#delegatingliftablestateof)<`C`, `T`, `TDelegate`, `TDelegateLiftableState`\> |
-
-#### Returns
-
-`TDelegateLiftableState`
-
-___
 
 ### lift
 

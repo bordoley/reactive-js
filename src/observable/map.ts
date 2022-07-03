@@ -1,8 +1,9 @@
+import { AbstractDelegatingObserver } from "../__internal__.observer";
 import { createMapOperator } from "../__internal__.source";
 import { Map } from "../container";
 import { Function1 } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { AbstractDelegatingObserver, Observer } from "../observer";
+import { Observer } from "../observer";
 import { liftSynchronousT } from "./lift";
 
 export const map: <TA, TB>(

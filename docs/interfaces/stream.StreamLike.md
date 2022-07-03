@@ -31,6 +31,4 @@ Represents a duplex stream
 
 ## Implemented by
 
-- [`AbstractDelegatingAsyncEnumerator`](../classes/asyncEnumerator.AbstractDelegatingAsyncEnumerator.md)
-- [`AbstractDelegatingStream`](../classes/stream.AbstractDelegatingStream.md)
 - [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)

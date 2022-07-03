@@ -1,4 +1,5 @@
 import { createFromArray } from "./__internal__.container";
+import { AbstractEnumerator } from "./__internal__.enumerator";
 import {
   keepType as keepTypeArray,
   map as mapArray,
@@ -23,7 +24,7 @@ import {
 } from "./container";
 import { dispose, isDisposed } from "./disposable";
 import { EnumerableLike, ToEnumerable, createEnumerable } from "./enumerable";
-import { AbstractEnumerator, hasCurrent } from "./enumerator";
+import { hasCurrent } from "./enumerator";
 import {
   Equality,
   Factory,

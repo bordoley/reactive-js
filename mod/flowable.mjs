@@ -1,4 +1,5 @@
 /// <reference types="./flowable.d.ts" />
+import { createStream } from './__internal__.stream.mjs';
 import { ignoreElements, startWith } from './container.mjs';
 import { dispatchTo } from './dispatcher.mjs';
 import { add, bindTo, addTo } from './disposable.mjs';
@@ -7,7 +8,6 @@ import { createObservable, subscribeOn, fromDisposable, takeUntil, onNotify, sub
 import { getScheduler } from './observer.mjs';
 import { createPausableScheduler } from './scheduler.mjs';
 import { sourceFrom } from './source.mjs';
-import { createStream } from './stream.mjs';
 import { createLiftedStreamable, sourceFrom as sourceFrom$1 } from './streamable.mjs';
 
 function createLiftedFlowable(...ops) {

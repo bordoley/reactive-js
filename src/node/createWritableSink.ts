@@ -1,4 +1,5 @@
 import { Writable } from "stream";
+import { createStream } from "../__internal__.stream";
 import { dispatch, dispatchTo } from "../dispatcher";
 import { dispose, onComplete } from "../disposable";
 import {
@@ -15,7 +16,6 @@ import {
 } from "../observable";
 import { Observer, getScheduler } from "../observer";
 import { SchedulerLike } from "../scheduler";
-import { createStream } from "../stream";
 import { createLiftedStreamable } from "../streamable";
 import { addDisposable, addToDisposable, addToNodeStream } from "./nodeStream";
 

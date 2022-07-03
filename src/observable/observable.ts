@@ -1,6 +1,7 @@
+import { AbstractSource } from "../__internal__.source";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
-import { AbstractSource, AbtractDisposableSource } from "../source";
+import { AbtractDisposableSource } from "../source";
 
 export abstract class AbstractObservable<T>
   extends AbstractSource<T, Observer<T>>

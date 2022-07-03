@@ -1,3 +1,4 @@
+import { AbstractEnumerator, reset } from "../__internal__.enumerator";
 import { MAX_SAFE_INTEGER } from "../__internal__.env";
 import { getDelay } from "../__internal__.optionalArgs";
 import {
@@ -5,7 +6,7 @@ import {
   runContinuation,
 } from "../__internal__.schedulerImplementation";
 import { add, dispose, isDisposed } from "../disposable";
-import { AbstractEnumerator, hasCurrent, reset } from "../enumerator";
+import { hasCurrent } from "../enumerator";
 import { newInstance, pipe } from "../functions";
 import { isSome, none } from "../option";
 import {
