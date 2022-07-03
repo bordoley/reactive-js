@@ -131,6 +131,9 @@ const generate = (generator, initialValue, options) => {
         ? scanAsync$1(asyncGeneratorScanner(generator, options), initialValue)
         : scan$1(generateScanner(generator), initialValue));
 };
+const generateT = {
+    generate,
+};
 const keep = /*@__PURE__*/ createKeepLiftOperator(liftT, class KeepAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
     constructor(delegate, predicate) {
         super(delegate);
@@ -228,4 +231,4 @@ const toObservableT = {
 };
 const type = undefined;
 
-export { fromArray, fromArrayT, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, generate, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, type };
+export { fromArray, fromArrayT, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, generate, generateT, keep, keepT, map, mapT, scan, scanAsync, scanAsyncT, scanT, takeWhile, takeWhileT, toObservable, toObservableT, type };

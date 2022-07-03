@@ -14,6 +14,7 @@ import {
 import {
   FromArray,
   FromIterable,
+  Generate,
   Keep,
   Map,
   Scan,
@@ -387,6 +388,10 @@ export const generate = <T>(
         )
       : scanObs(generateScanner(generator), initialValue),
   );
+};
+
+export const generateT: Generate<AsyncEnumerableLike<unknown>> = {
+  generate,
 };
 
 export const keep: <T>(
