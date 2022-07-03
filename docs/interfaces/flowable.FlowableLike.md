@@ -24,7 +24,7 @@
 ### Properties
 
 - [T](flowable.FlowableLike.md#t)
-- [type](flowable.FlowableLike.md#type)
+- [TContainerOf](flowable.FlowableLike.md#tcontainerof)
 
 ### Methods
 
@@ -42,13 +42,13 @@
 
 ___
 
-### type
+### TContainerOf
 
-• `Readonly` **type**: [`FlowableLike`](flowable.FlowableLike.md)<`unknown`, [`FlowableStreamLike`](flowable.FlowableStreamLike.md)<`unknown`\>\>
+• `Readonly` **TContainerOf**: [`FlowableLike`](flowable.FlowableLike.md)<`unknown`, [`FlowableStreamLike`](flowable.FlowableStreamLike.md)<`unknown`\>\>
 
 #### Overrides
 
-[ContainerLike](container.ContainerLike.md).[type](container.ContainerLike.md#type)
+[ContainerLike](container.ContainerLike.md).[TContainerOf](container.ContainerLike.md#tcontainerof)
 
 ## Methods
 

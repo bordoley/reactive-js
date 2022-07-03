@@ -5,7 +5,7 @@ import { raise, compose, callWith, isEqualTo, newInstance, pipe, pipeLazy, alway
 import { isSome } from './option.mjs';
 
 class AbstractContainer {
-    get type() {
+    get TContainerOf() {
         return raise();
     }
     get T() {
@@ -13,7 +13,7 @@ class AbstractContainer {
     }
 }
 class AbstractDisposableContainer extends Disposable {
-    get type() {
+    get TContainerOf() {
         return raise();
     }
     get T() {

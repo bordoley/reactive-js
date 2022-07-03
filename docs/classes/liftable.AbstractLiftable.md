@@ -33,8 +33,8 @@
 ### Accessors
 
 - [T](liftable.AbstractLiftable.md#t)
+- [TContainerOf](liftable.AbstractLiftable.md#tcontainerof)
 - [liftableStateType](liftable.AbstractLiftable.md#liftablestatetype)
-- [type](liftable.AbstractLiftable.md#type)
 
 ## Constructors
 
@@ -72,6 +72,24 @@ AbstractContainer.T
 
 ___
 
+### TContainerOf
+
+• `get` **TContainerOf**(): `this`
+
+#### Returns
+
+`this`
+
+#### Implementation of
+
+[LiftableLike](../interfaces/liftable.LiftableLike.md).[TContainerOf](../interfaces/liftable.LiftableLike.md#tcontainerof)
+
+#### Inherited from
+
+AbstractContainer.TContainerOf
+
+___
+
 ### liftableStateType
 
 • `get` **liftableStateType**(): `TState`
@@ -83,21 +101,3 @@ ___
 #### Implementation of
 
 [LiftableLike](../interfaces/liftable.LiftableLike.md).[liftableStateType](../interfaces/liftable.LiftableLike.md#liftablestatetype)
-
-___
-
-### type
-
-• `get` **type**(): `this`
-
-#### Returns
-
-`this`
-
-#### Implementation of
-
-[LiftableLike](../interfaces/liftable.LiftableLike.md).[type](../interfaces/liftable.LiftableLike.md#type)
-
-#### Inherited from
-
-AbstractContainer.type

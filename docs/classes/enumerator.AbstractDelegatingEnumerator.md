@@ -30,11 +30,11 @@
 ### Accessors
 
 - [T](enumerator.AbstractDelegatingEnumerator.md#t)
+- [TContainerOf](enumerator.AbstractDelegatingEnumerator.md#tcontainerof)
 - [current](enumerator.AbstractDelegatingEnumerator.md#current)
 - [error](enumerator.AbstractDelegatingEnumerator.md#error)
 - [hasCurrent](enumerator.AbstractDelegatingEnumerator.md#hascurrent)
 - [isDisposed](enumerator.AbstractDelegatingEnumerator.md#isdisposed)
-- [type](enumerator.AbstractDelegatingEnumerator.md#type)
 
 ### Methods
 
@@ -85,6 +85,20 @@
 #### Inherited from
 
 AbstractEnumerator.T
+
+___
+
+### TContainerOf
+
+• `get` **TContainerOf**(): `this`
+
+#### Returns
+
+`this`
+
+#### Inherited from
+
+AbstractEnumerator.TContainerOf
 
 ___
 
@@ -161,20 +175,6 @@ ___
 #### Inherited from
 
 AbstractEnumerator.isDisposed
-
-___
-
-### type
-
-• `get` **type**(): `this`
-
-#### Returns
-
-`this`
-
-#### Inherited from
-
-AbstractEnumerator.type
 
 ## Methods
 

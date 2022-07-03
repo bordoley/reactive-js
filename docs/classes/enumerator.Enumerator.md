@@ -35,11 +35,11 @@
 ### Accessors
 
 - [T](enumerator.Enumerator.md#t)
+- [TContainerOf](enumerator.Enumerator.md#tcontainerof)
 - [current](enumerator.Enumerator.md#current)
 - [error](enumerator.Enumerator.md#error)
 - [hasCurrent](enumerator.Enumerator.md#hascurrent)
 - [isDisposed](enumerator.Enumerator.md#isdisposed)
-- [type](enumerator.Enumerator.md#type)
 
 ### Methods
 
@@ -80,6 +80,24 @@
 #### Inherited from
 
 AbstractDisposableContainer.T
+
+___
+
+### TContainerOf
+
+• `get` **TContainerOf**(): `this`
+
+#### Returns
+
+`this`
+
+#### Implementation of
+
+[LiftableStateLike](../interfaces/liftable.LiftableStateLike.md).[TContainerOf](../interfaces/liftable.LiftableStateLike.md#tcontainerof)
+
+#### Inherited from
+
+AbstractDisposableContainer.TContainerOf
 
 ___
 
@@ -140,24 +158,6 @@ LiftableStateLike.isDisposed
 #### Inherited from
 
 AbstractDisposableContainer.isDisposed
-
-___
-
-### type
-
-• `get` **type**(): `this`
-
-#### Returns
-
-`this`
-
-#### Implementation of
-
-[LiftableStateLike](../interfaces/liftable.LiftableStateLike.md).[type](../interfaces/liftable.LiftableStateLike.md#type)
-
-#### Inherited from
-
-AbstractDisposableContainer.type
 
 ## Methods
 

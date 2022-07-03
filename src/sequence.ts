@@ -55,13 +55,13 @@ export type SequenceResult<T> =
 
 export interface SequenceLike extends ContainerLike {
   readonly T: unknown;
-  readonly type: Sequence<this["T"]>;
+  readonly TContainerOf: Sequence<this["T"]>;
 }
 
 export type Sequence<T> = Factory<SequenceResult<T>> & SequenceLike;
 export type SequenceOperator<TA, TB> = Function1<Sequence<TA>, Sequence<TB>>;
 
-export const type: Sequence<unknown> = undefined as any;
+export const TContainerOf: Sequence<unknown> = undefined as any;
 
 const isNotify = <T>(
   result: SequenceResult<T>,

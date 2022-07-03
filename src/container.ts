@@ -27,11 +27,11 @@ import { Option, isSome } from "./option";
 
 export interface ContainerLike {
   readonly T?: unknown;
-  readonly type?: unknown;
+  readonly TContainerOf?: unknown;
 }
 
 export abstract class AbstractContainer implements ContainerLike {
-  get type(): this {
+  get TContainerOf(): this {
     return raise();
   }
   get T(): unknown {
@@ -43,7 +43,7 @@ export abstract class AbstractDisposableContainer
   extends Disposable
   implements ContainerLike
 {
-  get type(): this {
+  get TContainerOf(): this {
     return raise();
   }
   get T(): unknown {
@@ -52,11 +52,11 @@ export abstract class AbstractDisposableContainer
 }
 
 export type ContainerOf<C extends ContainerLike, T> = C extends {
-  readonly type: unknown;
+  readonly TContainerOf: unknown;
 }
   ? (C & {
       readonly T: T;
-    })["type"]
+    })["TContainerOf"]
   : {
       readonly _C: C;
       readonly _T: () => T;
@@ -68,7 +68,7 @@ export type ContainerOperator<C, TA, TB> = Function1<
 >;
 
 export interface Container<C extends ContainerLike> {
-  readonly type?: C;
+  readonly TContainerOf?: C;
 }
 
 export interface Buffer<C extends ContainerLike> extends Container<C> {

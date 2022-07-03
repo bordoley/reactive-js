@@ -1,4 +1,5 @@
 import {
+  TContainerOf,
   concat,
   concatAll,
   distinctUntilChanged,
@@ -14,7 +15,6 @@ import {
   takeLast,
   takeWhile,
   toRunnable,
-  type,
   zipT,
 } from "../sequence";
 import { describe } from "../testing";
@@ -24,7 +24,7 @@ import { createRunnableTests } from "./runnable.test";
 export const tests = describe(
   "sequence",
   createRunnableTests({
-    type,
+    TContainerOf,
     fromArray,
     concat,
     concatAll,

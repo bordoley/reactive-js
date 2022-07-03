@@ -74,7 +74,7 @@ import { SourceLike, sourceFrom } from "./source";
 
 export interface RunnableLike<T> extends SourceLike {
   readonly T: unknown;
-  readonly type: RunnableLike<this["T"]>;
+  readonly TContainerOf: RunnableLike<this["T"]>;
   readonly liftableStateType: RunnableSink<this["T"]>;
 
   sink(this: RunnableLike<T>, sink: RunnableSink<T>): void;
@@ -476,7 +476,7 @@ export const toRunnableT: ToRunnable<RunnableLike<unknown>> = {
   toRunnable,
 };
 
-export const type: RunnableLike<unknown> = undefined as any;
+export const TContainerOf: RunnableLike<unknown> = undefined as any;
 
 export const using: Using<RunnableLike<unknown>>["using"] =
   /*@__PURE__*/ createUsing(createT);

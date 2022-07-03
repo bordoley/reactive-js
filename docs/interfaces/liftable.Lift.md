@@ -21,7 +21,7 @@
 
 ### Properties
 
-- [type](liftable.Lift.md#type)
+- [TContainerOf](liftable.Lift.md#tcontainerof)
 - [variance](liftable.Lift.md#variance)
 
 ### Methods
@@ -30,13 +30,13 @@
 
 ## Properties
 
-### type
+### TContainerOf
 
-• `Optional` `Readonly` **type**: `C`
+• `Optional` `Readonly` **TContainerOf**: `C`
 
 #### Inherited from
 
-[Container](container.Container.md).[type](container.Container.md#type)
+[Container](container.Container.md).[TContainerOf](container.Container.md#tcontainerof)
 
 ___
 

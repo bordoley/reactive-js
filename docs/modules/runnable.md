@@ -15,6 +15,7 @@
 
 ### Variables
 
+- [TContainerOf](runnable.md#tcontainerof)
 - [bufferT](runnable.md#buffert)
 - [concatAllT](runnable.md#concatallt)
 - [concatT](runnable.md#concatt)
@@ -37,7 +38,6 @@
 - [takeWhileT](runnable.md#takewhilet)
 - [throwIfEmptyT](runnable.md#throwifemptyt)
 - [toRunnableT](runnable.md#torunnablet)
-- [type](runnable.md#type)
 - [usingT](runnable.md#usingt)
 
 ### Functions
@@ -88,6 +88,12 @@
 | `TB` |
 
 ## Variables
+
+### TContainerOf
+
+• `Const` **TContainerOf**: [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
+
+___
 
 ### bufferT
 
@@ -218,12 +224,6 @@ ___
 ### toRunnableT
 
 • `Const` **toRunnableT**: [`ToRunnable`](../interfaces/runnable.ToRunnable.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
-
-___
-
-### type
-
-• `Const` **type**: [`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>
 
 ___
 

@@ -29,8 +29,8 @@
 ### Accessors
 
 - [T](observable.AbstractObservable.md#t)
+- [TContainerOf](observable.AbstractObservable.md#tcontainerof)
 - [liftableStateType](observable.AbstractObservable.md#liftablestatetype)
-- [type](observable.AbstractObservable.md#type)
 
 ### Methods
 
@@ -72,6 +72,24 @@ AbstractSource.T
 
 ___
 
+### TContainerOf
+
+• `get` **TContainerOf**(): `this`
+
+#### Returns
+
+`this`
+
+#### Implementation of
+
+[ObservableLike](../interfaces/observable.ObservableLike.md).[TContainerOf](../interfaces/observable.ObservableLike.md#tcontainerof)
+
+#### Inherited from
+
+AbstractSource.TContainerOf
+
+___
+
 ### liftableStateType
 
 • `get` **liftableStateType**(): `TState`
@@ -87,24 +105,6 @@ ___
 #### Inherited from
 
 AbstractSource.liftableStateType
-
-___
-
-### type
-
-• `get` **type**(): `this`
-
-#### Returns
-
-`this`
-
-#### Implementation of
-
-[ObservableLike](../interfaces/observable.ObservableLike.md).[type](../interfaces/observable.ObservableLike.md#type)
-
-#### Inherited from
-
-AbstractSource.type
 
 ## Methods
 

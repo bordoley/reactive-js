@@ -32,8 +32,8 @@
 ### Accessors
 
 - [T](source.AbstractSource.md#t)
+- [TContainerOf](source.AbstractSource.md#tcontainerof)
 - [liftableStateType](source.AbstractSource.md#liftablestatetype)
-- [type](source.AbstractSource.md#type)
 
 ### Methods
 
@@ -76,6 +76,24 @@ AbstractLiftable.T
 
 ___
 
+### TContainerOf
+
+• `get` **TContainerOf**(): `this`
+
+#### Returns
+
+`this`
+
+#### Implementation of
+
+[SourceLike](../interfaces/source.SourceLike.md).[TContainerOf](../interfaces/source.SourceLike.md#tcontainerof)
+
+#### Inherited from
+
+AbstractLiftable.TContainerOf
+
+___
+
 ### liftableStateType
 
 • `get` **liftableStateType**(): `TState`
@@ -91,24 +109,6 @@ ___
 #### Inherited from
 
 AbstractLiftable.liftableStateType
-
-___
-
-### type
-
-• `get` **type**(): `this`
-
-#### Returns
-
-`this`
-
-#### Implementation of
-
-[SourceLike](../interfaces/source.SourceLike.md).[type](../interfaces/source.SourceLike.md#type)
-
-#### Inherited from
-
-AbstractLiftable.type
 
 ## Methods
 

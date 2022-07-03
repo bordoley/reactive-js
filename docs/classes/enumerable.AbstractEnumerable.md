@@ -29,8 +29,8 @@
 ### Accessors
 
 - [T](enumerable.AbstractEnumerable.md#t)
+- [TContainerOf](enumerable.AbstractEnumerable.md#tcontainerof)
 - [liftableStateType](enumerable.AbstractEnumerable.md#liftablestatetype)
-- [type](enumerable.AbstractEnumerable.md#type)
 
 ### Methods
 
@@ -72,6 +72,24 @@ AbstractLiftable.T
 
 ___
 
+### TContainerOf
+
+• `get` **TContainerOf**(): `this`
+
+#### Returns
+
+`this`
+
+#### Implementation of
+
+[EnumerableLike](../interfaces/enumerable.EnumerableLike.md).[TContainerOf](../interfaces/enumerable.EnumerableLike.md#tcontainerof)
+
+#### Inherited from
+
+AbstractLiftable.TContainerOf
+
+___
+
 ### liftableStateType
 
 • `get` **liftableStateType**(): `TState`
@@ -87,24 +105,6 @@ ___
 #### Inherited from
 
 AbstractLiftable.liftableStateType
-
-___
-
-### type
-
-• `get` **type**(): `this`
-
-#### Returns
-
-`this`
-
-#### Implementation of
-
-[EnumerableLike](../interfaces/enumerable.EnumerableLike.md).[type](../interfaces/enumerable.EnumerableLike.md#type)
-
-#### Inherited from
-
-AbstractLiftable.type
 
 ## Methods
 

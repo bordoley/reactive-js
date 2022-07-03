@@ -20,6 +20,7 @@
 
 ### Variables
 
+- [TContainerOf](enumerable.md#tcontainerof)
 - [bufferT](enumerable.md#buffert)
 - [concatAllT](enumerable.md#concatallt)
 - [concatT](enumerable.md#concatt)
@@ -42,7 +43,6 @@
 - [toEnumerableT](enumerable.md#toenumerablet)
 - [toIterableT](enumerable.md#toiterablet)
 - [toRunnableT](enumerable.md#torunnablet)
-- [type](enumerable.md#type)
 - [usingT](enumerable.md#usingt)
 - [zipT](enumerable.md#zipt)
 
@@ -92,6 +92,12 @@ A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB>
 | `TB` |
 
 ## Variables
+
+### TContainerOf
+
+• `Const` **TContainerOf**: [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>
+
+___
 
 ### bufferT
 
@@ -222,12 +228,6 @@ ___
 ### toRunnableT
 
 • `Const` **toRunnableT**: [`ToRunnable`](../interfaces/runnable.ToRunnable.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
-
-___
-
-### type
-
-• `Const` **type**: [`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>
 
 ___
 

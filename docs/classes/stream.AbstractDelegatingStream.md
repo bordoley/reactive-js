@@ -36,13 +36,13 @@
 ### Accessors
 
 - [T](stream.AbstractDelegatingStream.md#t)
+- [TContainerOf](stream.AbstractDelegatingStream.md#tcontainerof)
 - [error](stream.AbstractDelegatingStream.md#error)
 - [isDisposed](stream.AbstractDelegatingStream.md#isdisposed)
 - [liftableStateType](stream.AbstractDelegatingStream.md#liftablestatetype)
 - [observerCount](stream.AbstractDelegatingStream.md#observercount)
 - [replay](stream.AbstractDelegatingStream.md#replay)
 - [scheduler](stream.AbstractDelegatingStream.md#scheduler)
-- [type](stream.AbstractDelegatingStream.md#type)
 
 ### Methods
 
@@ -99,6 +99,24 @@ StreamLike.T
 #### Inherited from
 
 AbstractDisposableObservable.T
+
+___
+
+### TContainerOf
+
+• `get` **TContainerOf**(): `this`
+
+#### Returns
+
+`this`
+
+#### Implementation of
+
+StreamLike.TContainerOf
+
+#### Inherited from
+
+AbstractDisposableObservable.TContainerOf
 
 ___
 
@@ -199,24 +217,6 @@ ___
 #### Implementation of
 
 StreamLike.scheduler
-
-___
-
-### type
-
-• `get` **type**(): `this`
-
-#### Returns
-
-`this`
-
-#### Implementation of
-
-StreamLike.type
-
-#### Inherited from
-
-AbstractDisposableObservable.type
 
 ## Methods
 

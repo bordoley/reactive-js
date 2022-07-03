@@ -27,8 +27,8 @@ Interface for iterating a Container of items.
 ### Properties
 
 - [T](enumerable.EnumerableLike.md#t)
+- [TContainerOf](enumerable.EnumerableLike.md#tcontainerof)
 - [liftableStateType](enumerable.EnumerableLike.md#liftablestatetype)
-- [type](enumerable.EnumerableLike.md#type)
 
 ### Methods
 
@@ -46,6 +46,16 @@ Interface for iterating a Container of items.
 
 ___
 
+### TContainerOf
+
+• `Readonly` **TContainerOf**: [`EnumerableLike`](enumerable.EnumerableLike.md)<`unknown`\>
+
+#### Overrides
+
+[LiftableLike](liftable.LiftableLike.md).[TContainerOf](liftable.LiftableLike.md#tcontainerof)
+
+___
+
 ### liftableStateType
 
 • `Readonly` **liftableStateType**: [`Enumerator`](../classes/enumerator.Enumerator.md)<`unknown`\>
@@ -53,16 +63,6 @@ ___
 #### Overrides
 
 [LiftableLike](liftable.LiftableLike.md).[liftableStateType](liftable.LiftableLike.md#liftablestatetype)
-
-___
-
-### type
-
-• `Readonly` **type**: [`EnumerableLike`](enumerable.EnumerableLike.md)<`unknown`\>
-
-#### Overrides
-
-[LiftableLike](liftable.LiftableLike.md).[type](liftable.LiftableLike.md#type)
 
 ## Methods
 

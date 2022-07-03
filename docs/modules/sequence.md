@@ -17,6 +17,7 @@
 
 ### Variables
 
+- [TContainerOf](sequence.md#tcontainerof)
 - [concatAllT](sequence.md#concatallt)
 - [concatT](sequence.md#concatt)
 - [distinctUntilChangedT](sequence.md#distinctuntilchangedt)
@@ -34,7 +35,6 @@
 - [takeWhileT](sequence.md#takewhilet)
 - [toEnumerableT](sequence.md#toenumerablet)
 - [toRunnableT](sequence.md#torunnablet)
-- [type](sequence.md#type)
 - [zipT](sequence.md#zipt)
 
 ### Functions
@@ -96,6 +96,12 @@ ___
 | `T` |
 
 ## Variables
+
+### TContainerOf
+
+• `Const` **TContainerOf**: [`Sequence`](sequence.md#sequence)<`unknown`\>
+
+___
 
 ### concatAllT
 
@@ -196,12 +202,6 @@ ___
 ### toRunnableT
 
 • `Const` **toRunnableT**: [`ToRunnable`](../interfaces/runnable.ToRunnable.md)<[`Sequence`](sequence.md#sequence)<`unknown`\>\>
-
-___
-
-### type
-
-• `Const` **type**: [`Sequence`](sequence.md#sequence)<`unknown`\>
 
 ___
 

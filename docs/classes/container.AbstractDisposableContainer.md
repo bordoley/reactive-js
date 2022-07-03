@@ -31,9 +31,9 @@
 ### Accessors
 
 - [T](container.AbstractDisposableContainer.md#t)
+- [TContainerOf](container.AbstractDisposableContainer.md#tcontainerof)
 - [error](container.AbstractDisposableContainer.md#error)
 - [isDisposed](container.AbstractDisposableContainer.md#isdisposed)
-- [type](container.AbstractDisposableContainer.md#type)
 
 ### Methods
 
@@ -66,6 +66,20 @@
 
 ___
 
+### TContainerOf
+
+• `get` **TContainerOf**(): `this`
+
+#### Returns
+
+`this`
+
+#### Implementation of
+
+[ContainerLike](../interfaces/container.ContainerLike.md).[TContainerOf](../interfaces/container.ContainerLike.md#tcontainerof)
+
+___
+
 ### error
 
 • `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
@@ -95,20 +109,6 @@ ___
 #### Inherited from
 
 Disposable.isDisposed
-
-___
-
-### type
-
-• `get` **type**(): `this`
-
-#### Returns
-
-`this`
-
-#### Implementation of
-
-[ContainerLike](../interfaces/container.ContainerLike.md).[type](../interfaces/container.ContainerLike.md#type)
 
 ## Methods
 

@@ -15,7 +15,7 @@
 ### Properties
 
 - [T](sequence.SequenceLike.md#t)
-- [type](sequence.SequenceLike.md#type)
+- [TContainerOf](sequence.SequenceLike.md#tcontainerof)
 
 ## Properties
 
@@ -29,10 +29,10 @@
 
 ___
 
-### type
+### TContainerOf
 
-• `Readonly` **type**: [`Sequence`](../modules/sequence.md#sequence)<`unknown`\>
+• `Readonly` **TContainerOf**: [`Sequence`](../modules/sequence.md#sequence)<`unknown`\>
 
 #### Overrides
 
-[ContainerLike](container.ContainerLike.md).[type](container.ContainerLike.md#type)
+[ContainerLike](container.ContainerLike.md).[TContainerOf](container.ContainerLike.md#tcontainerof)

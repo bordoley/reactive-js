@@ -23,7 +23,7 @@
 ### Accessors
 
 - [T](container.AbstractContainer.md#t)
-- [type](container.AbstractContainer.md#type)
+- [TContainerOf](container.AbstractContainer.md#tcontainerof)
 
 ## Constructors
 
@@ -47,9 +47,9 @@
 
 ___
 
-### type
+### TContainerOf
 
-• `get` **type**(): `this`
+• `get` **TContainerOf**(): `this`
 
 #### Returns
 
@@ -57,4 +57,4 @@ ___
 
 #### Implementation of
 
-[ContainerLike](../interfaces/container.ContainerLike.md).[type](../interfaces/container.ContainerLike.md#type)
+[ContainerLike](../interfaces/container.ContainerLike.md).[TContainerOf](../interfaces/container.ContainerLike.md#tcontainerof)

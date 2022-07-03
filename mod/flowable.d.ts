@@ -6,7 +6,7 @@ import { StreamableLike } from "./streamable.mjs";
 declare type FlowMode = "resume" | "pause";
 interface FlowableLike<T, TStream extends FlowableStreamLike<T> = FlowableStreamLike<T>> extends StreamableLike<FlowMode, T, TStream>, ContainerLike {
     readonly T: unknown;
-    readonly type: FlowableLike<this["T"]>;
+    readonly TContainerOf: FlowableLike<this["T"]>;
 }
 interface FlowableStreamLike<T> extends StreamLike<FlowMode, T> {
 }
@@ -32,5 +32,5 @@ declare const fromObservable: <T>() => Function1<ObservableLike<T>, FlowableLike
 declare const fromObservableT: FromObservable<FlowableLike<unknown>>;
 declare const toObservable: <T>() => Function1<FlowableLike<T, FlowableStreamLike<T>>, ObservableLike<T>>;
 declare const toObservableT: ToObservable<FlowableLike<unknown>>;
-declare const type: FlowableLike<unknown>;
-export { FlowMode, FlowableLike, FlowableOperator, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, createLiftedFlowable, flow, fromObservable, fromObservableT, toObservable, toObservableT, type };
+declare const TContainerOf: FlowableLike<unknown>;
+export { FlowMode, FlowableLike, FlowableOperator, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, TContainerOf, createLiftedFlowable, flow, fromObservable, fromObservableT, toObservable, toObservableT };

@@ -24,10 +24,10 @@
 ### Accessors
 
 - [T](scheduler.VirtualTimeSchedulerLike.md#t)
+- [TContainerOf](scheduler.VirtualTimeSchedulerLike.md#tcontainerof)
 - [current](scheduler.VirtualTimeSchedulerLike.md#current)
 - [error](scheduler.VirtualTimeSchedulerLike.md#error)
 - [hasCurrent](scheduler.VirtualTimeSchedulerLike.md#hascurrent)
-- [type](scheduler.VirtualTimeSchedulerLike.md#type)
 
 ### Methods
 
@@ -95,6 +95,20 @@ Enumerator.T
 
 ___
 
+### TContainerOf
+
+• `get` **TContainerOf**(): `this`
+
+#### Returns
+
+`this`
+
+#### Inherited from
+
+Enumerator.TContainerOf
+
+___
+
 ### current
 
 • `Abstract` `get` **current**(): `T`
@@ -136,20 +150,6 @@ ___
 #### Inherited from
 
 Enumerator.hasCurrent
-
-___
-
-### type
-
-• `get` **type**(): `this`
-
-#### Returns
-
-`this`
-
-#### Inherited from
-
-Enumerator.type
 
 ## Methods
 

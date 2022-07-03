@@ -15,7 +15,7 @@ declare const fromArrayT: FromArray<RunnableLike<unknown>, FromArrayOptions>;
 declare const last: <T>() => Function1<RunnableLike<T>, Option<T>>;
 interface RunnableLike<T> extends SourceLike {
     readonly T: unknown;
-    readonly type: RunnableLike<this["T"]>;
+    readonly TContainerOf: RunnableLike<this["T"]>;
     readonly liftableStateType: RunnableSink<this["T"]>;
     sink(this: RunnableLike<T>, sink: RunnableSink<T>): void;
 }
@@ -89,7 +89,7 @@ declare const throwIfEmptyT: ThrowIfEmpty<RunnableLike<unknown>>;
 declare const toArray: <T>() => Function1<RunnableLike<T>, readonly T[]>;
 declare const toRunnable: <T>() => Function1<RunnableLike<T>, RunnableLike<T>>;
 declare const toRunnableT: ToRunnable<RunnableLike<unknown>>;
-declare const type: RunnableLike<unknown>;
+declare const TContainerOf: RunnableLike<unknown>;
 declare const using: Using<RunnableLike<unknown>>["using"];
 declare const usingT: Using<RunnableLike<unknown>>;
-export { RunnableLike, RunnableOperator, ToRunnable, buffer, bufferT, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, toRunnableT, type, using, usingT };
+export { RunnableLike, RunnableOperator, TContainerOf, ToRunnable, buffer, bufferT, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, toRunnableT, using, usingT };

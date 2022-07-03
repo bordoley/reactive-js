@@ -30,9 +30,9 @@
 ### Accessors
 
 - [T](runnableSink.AbstractDelegatingRunnableSink.md#t)
+- [TContainerOf](runnableSink.AbstractDelegatingRunnableSink.md#tcontainerof)
 - [error](runnableSink.AbstractDelegatingRunnableSink.md#error)
 - [isDisposed](runnableSink.AbstractDelegatingRunnableSink.md#isdisposed)
-- [type](runnableSink.AbstractDelegatingRunnableSink.md#type)
 
 ### Methods
 
@@ -86,6 +86,20 @@ RunnableSink.T
 
 ___
 
+### TContainerOf
+
+• `get` **TContainerOf**(): `this`
+
+#### Returns
+
+`this`
+
+#### Inherited from
+
+RunnableSink.TContainerOf
+
+___
+
 ### error
 
 • `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
@@ -115,20 +129,6 @@ ___
 #### Inherited from
 
 RunnableSink.isDisposed
-
-___
-
-### type
-
-• `get` **type**(): `this`
-
-#### Returns
-
-`this`
-
-#### Inherited from
-
-RunnableSink.type
 
 ## Methods
 

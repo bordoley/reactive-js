@@ -27,6 +27,7 @@
 
 ### Variables
 
+- [TContainerOf](observable.md#tcontainerof)
 - [bufferT](observable.md#buffert)
 - [concatAllT](observable.md#concatallt)
 - [concatT](observable.md#concatt)
@@ -62,7 +63,6 @@
 - [toEnumerableT](observable.md#toenumerablet)
 - [toObservableT](observable.md#toobservablet)
 - [toRunnableT](observable.md#torunnablet)
-- [type](observable.md#type)
 - [usingT](observable.md#usingt)
 - [zipT](observable.md#zipt)
 
@@ -184,6 +184,12 @@ last - Takes the trailing value.
 interval -  Takes both the leading and trailing values.
 
 ## Variables
+
+### TContainerOf
+
+• `Const` **TContainerOf**: [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
+
+___
 
 ### bufferT
 
@@ -394,12 +400,6 @@ ___
 ### toRunnableT
 
 • `Const` **toRunnableT**: [`ToRunnable`](../interfaces/runnable.ToRunnable.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
-
-___
-
-### type
-
-• `Const` **type**: [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>
 
 ___
 

@@ -18,9 +18,9 @@
 
 ### Variables
 
+- [TContainerOf](flowable.md#tcontainerof)
 - [fromObservableT](flowable.md#fromobservablet)
 - [toObservableT](flowable.md#toobservablet)
-- [type](flowable.md#type)
 
 ### Functions
 
@@ -50,6 +50,12 @@ ___
 
 ## Variables
 
+### TContainerOf
+
+• `Const` **TContainerOf**: [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`unknown`\>
+
+___
+
 ### fromObservableT
 
 • `Const` **fromObservableT**: [`FromObservable`](../interfaces/observable.FromObservable.md)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`unknown`\>\>
@@ -59,12 +65,6 @@ ___
 ### toObservableT
 
 • `Const` **toObservableT**: [`ToObservable`](../interfaces/observable.ToObservable.md)<[`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`unknown`\>\>
-
-___
-
-### type
-
-• `Const` **type**: [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`unknown`\>
 
 ## Functions
 

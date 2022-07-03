@@ -70,7 +70,7 @@
 
 ### ContainerOf
 
-Ƭ **ContainerOf**<`C`, `T`\>: `C` extends { `type`: `unknown`  } ? `C` & { `T`: `T`  }[``"type"``] : { `_C`: `C` ; `_T`: () => `T`  }
+Ƭ **ContainerOf**<`C`, `T`\>: `C` extends { `TContainerOf`: `unknown`  } ? `C` & { `T`: `T`  }[``"TContainerOf"``] : { `_C`: `C` ; `_T`: () => `T`  }
 
 #### Type parameters
 

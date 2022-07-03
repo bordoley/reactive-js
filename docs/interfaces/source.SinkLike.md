@@ -26,7 +26,7 @@
 ### Properties
 
 - [T](source.SinkLike.md#t)
-- [type](source.SinkLike.md#type)
+- [TContainerOf](source.SinkLike.md#tcontainerof)
 
 ### Accessors
 
@@ -52,13 +52,13 @@
 
 ___
 
-### type
+### TContainerOf
 
-• `Optional` `Readonly` **type**: `unknown`
+• `Optional` `Readonly` **TContainerOf**: `unknown`
 
 #### Inherited from
 
-[LiftableStateLike](liftable.LiftableStateLike.md).[type](liftable.LiftableStateLike.md#type)
+[LiftableStateLike](liftable.LiftableStateLike.md).[TContainerOf](liftable.LiftableStateLike.md#tcontainerof)
 
 ## Accessors
 

@@ -299,14 +299,14 @@ function validateObservableEffect(ctx, type) {
     ctx.index++;
     const effect = effects[index];
     if (isNone(effect)) {
-        const newEffect = type === 1 /* EffectType.Memo */
+        const newEffect = type === 1 /* EffecTContainerOf.Memo */
             ? {
                 type,
                 f: ignore,
                 args: [],
                 value: none,
             }
-            : type === 2 /* EffectType.Observe */
+            : type === 2 /* EffecTContainerOf.Observe */
                 ? {
                     type,
                     observable: empty$1(fromArrayT),
@@ -314,7 +314,7 @@ function validateObservableEffect(ctx, type) {
                     value: none,
                     hasValue: false,
                 }
-                : type === 3 /* EffectType.Using */
+                : type === 3 /* EffecTContainerOf.Using */
                     ? {
                         type,
                         f: ignore,
@@ -341,7 +341,7 @@ class ObservableContext {
         this.scheduledComputationSubscription = disposed;
         this.cleanup = () => {
             const { effects } = this;
-            const hasOutstandingEffects = effects.findIndex(effect => effect.type === 2 /* EffectType.Observe */ &&
+            const hasOutstandingEffects = effects.findIndex(effect => effect.type === 2 /* EffecTContainerOf.Observe */ &&
                 !isDisposed(effect.subscription)) >= 0;
             if (!hasOutstandingEffects &&
                 isDisposed(this.scheduledComputationSubscription)) {
@@ -350,7 +350,7 @@ class ObservableContext {
         };
     }
     memo(f, ...args) {
-        const effect = validateObservableEffect(this, 1 /* EffectType.Memo */);
+        const effect = validateObservableEffect(this, 1 /* EffecTContainerOf.Memo */);
         if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
@@ -363,7 +363,7 @@ class ObservableContext {
         }
     }
     observe(observable) {
-        const effect = validateObservableEffect(this, 2 /* EffectType.Observe */);
+        const effect = validateObservableEffect(this, 2 /* EffecTContainerOf.Observe */);
         if (effect.observable === observable) {
             return effect.value;
         }
@@ -392,7 +392,7 @@ class ObservableContext {
         }
     }
     using(f, ...args) {
-        const effect = validateObservableEffect(this, 3 /* EffectType.Using */);
+        const effect = validateObservableEffect(this, 3 /* EffecTContainerOf.Using */);
         if (f === effect.f && arrayStrictEquality(args, effect.args)) {
             return effect.value;
         }
@@ -427,11 +427,11 @@ const observable = (computation, { mode = "batched" } = {}) => defer(() => (obse
         for (let i = 0; i < effectsLength; i++) {
             const effect = effects[i];
             const { type } = effect;
-            if (type === 2 /* EffectType.Observe */ &&
+            if (type === 2 /* EffecTContainerOf.Observe */ &&
                 !effect.hasValue) {
                 allObserveEffectsHaveValues = false;
             }
-            if (type === 2 /* EffectType.Observe */ &&
+            if (type === 2 /* EffecTContainerOf.Observe */ &&
                 !isDisposed(effect.subscription)) {
                 hasOutstandingEffects = true;
             }
@@ -1428,6 +1428,6 @@ const toRunnable = (options = {}) => source => createRunnable(sink => {
 const toRunnableT = {
     toRunnable,
 };
-const type = undefined;
+const TContainerOf = undefined;
 
-export { AbstractDisposableObservable, AbstractObservable, Subject, __currentScheduler, __do, __memo, __observe, __using, buffer, bufferT, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createT, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromObservable, fromObservableT, fromPromise, generate, generateT, getObserverCount, getReplay, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toObservable, toObservableT, toPromise, toRunnable, toRunnableT, type, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { AbstractDisposableObservable, AbstractObservable, Subject, TContainerOf, __currentScheduler, __do, __memo, __observe, __using, buffer, bufferT, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createT, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromObservable, fromObservableT, fromPromise, generate, generateT, getObserverCount, getReplay, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toObservable, toObservableT, toPromise, toRunnable, toRunnableT, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
