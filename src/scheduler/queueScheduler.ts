@@ -1,9 +1,10 @@
+import { DisposableRef } from "../__internal__.disposable";
 import { getDelay } from "../__internal__.optionalArgs";
 import {
   SchedulerImplementationLike,
   runContinuation,
 } from "../__internal__.schedulerImplementation";
-import { Disposable, add, disposed, isDisposed } from "../disposable";
+import { add, isDisposed } from "../disposable";
 import {
   AbstractEnumerator,
   getCurrent,
@@ -11,7 +12,7 @@ import {
   move,
   reset,
 } from "../enumerator";
-import { max, pipe } from "../functions";
+import { max, newInstance, pipe } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";
 import { QueueLike, createPriorityQueue } from "./queue";
@@ -89,22 +90,10 @@ export abstract class AbstractQueueScheduler<
   private dueTime = 0;
   private taskIDCounter = 0;
   private yieldRequested = false;
-  private _inner = disposed;
+  readonly currentRef = newInstance(DisposableRef, this);
 
   constructor(readonly host: SchedulerLike) {
     super();
-  }
-
-  get inner(): Disposable {
-    return this._inner;
-  }
-
-  set inner(newInner: Disposable) {
-    const { _inner: oldInner } = this;
-    if (oldInner !== newInner) {
-      oldInner.dispose();
-      this._inner = newInner;
-    }
   }
 
   get now(): number {
@@ -173,7 +162,9 @@ export abstract class AbstractQueueScheduler<
     const task = peek(this);
 
     const continuationActive =
-      !isDisposed(this.inner) && isSome(task) && this.dueTime <= task.dueTime;
+      !isDisposed(this.currentRef.current) &&
+      isSome(task) &&
+      this.dueTime <= task.dueTime;
 
     if (isNone(task) || continuationActive || this.isPaused) {
       return;
@@ -183,7 +174,10 @@ export abstract class AbstractQueueScheduler<
     const delay = max(dueTime - getNow(this), 0);
     this.dueTime = dueTime;
 
-    this.inner = pipe(this.host, schedule(this.hostContinuation, { delay }));
+    this.currentRef.current = pipe(
+      this.host,
+      schedule(this.hostContinuation, { delay }),
+    );
   }
 
   abstract createTask(

@@ -1,9 +1,7 @@
 import {
   Disposable,
-  SerialDisposable,
   add,
   dispose,
-  disposed,
   isDisposed,
   onDisposed,
 } from "../disposable";
@@ -19,7 +17,6 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
-  expectFalse,
   expectNone,
   expectToHaveBeenCalledTimes,
   expectTrue,
@@ -81,32 +78,6 @@ export const tests = describe(
       pipe(disposable.error, expectEquals(error));
       pipe(childTeardown, expectToHaveBeenCalledTimes(1));
       pipe(childTeardown.calls[0], expectArrayEquals([error]));
-    }),
-  ),
-
-  describe(
-    "AbstractSerialDisposable",
-
-    test("setting inner disposable disposes the previous inner disposable", () => {
-      const serialDisposable = newInstance(SerialDisposable);
-      const child = newInstance(Disposable);
-
-      serialDisposable.inner = child;
-      pipe(serialDisposable.inner, expectEquals(child));
-
-      serialDisposable.inner = disposed;
-      pipe(child, isDisposed, expectTrue);
-    }),
-
-    test("setting inner disposable with the same inner disposable has no effect", () => {
-      const serialDisposable = newInstance(SerialDisposable);
-      const child = newInstance(Disposable);
-
-      serialDisposable.inner = child;
-      pipe(serialDisposable.inner, expectEquals(child));
-      serialDisposable.inner = child;
-
-      pipe(child, isDisposed, expectFalse);
     }),
   ),
 );

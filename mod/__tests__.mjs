@@ -1,7 +1,7 @@
 /// <reference types="./__tests__.d.ts" />
 import { fromArray, fromIterable, generate, toObservable, map, keep, scan, scanAsync, takeWhile, fromArrayT as fromArrayT$1 } from './asyncEnumerable.mjs';
 import { fromValue, empty, endWith, concatMap, mapTo, startWith, ignoreElements, contains, compute, noneSatisfy, zipWith, throws, concatWith, genMap, encodeUtf8 } from './container.mjs';
-import { onDisposed, Disposable, add, dispose, isDisposed, SerialDisposable, disposed } from './disposable.mjs';
+import { onDisposed, Disposable, add, dispose, isDisposed } from './disposable.mjs';
 import { forEach } from './enumerator.mjs';
 import { pipe, ignore, increment, returns, pipeLazy, isEven, sum, alwaysTrue, newInstance, raise, newInstanceWith, incrementBy, alwaysFalse, arrayEquality, identity } from './functions.mjs';
 import { onNotify, subscribe, toRunnable, fromArrayT, concat as concat$2, fromArray as fromArray$3, buffer, mapT, catchError, concatT, generate as generate$3, takeFirst as takeFirst$2, combineLatestWith, createObservable, Subject, getObserverCount, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeT, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync as scanAsync$1, share, zip as zip$1, map as map$3, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$2, zipT, zipLatestWith, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$3, skipFirst as skipFirst$2, takeWhile as takeWhile$3, decodeWithCharset, reduce, deferT } from './observable.mjs';
@@ -83,20 +83,6 @@ const tests$6 = describe("Disposable", describe("Disposable", test("disposes chi
     pipe(disposable.error, expectEquals(error));
     pipe(childTeardown, expectToHaveBeenCalledTimes(1));
     pipe(childTeardown.calls[0], expectArrayEquals([error]));
-})), describe("AbstractSerialDisposable", test("setting inner disposable disposes the previous inner disposable", () => {
-    const serialDisposable = newInstance(SerialDisposable);
-    const child = newInstance(Disposable);
-    serialDisposable.inner = child;
-    pipe(serialDisposable.inner, expectEquals(child));
-    serialDisposable.inner = disposed;
-    pipe(child, isDisposed, expectTrue);
-}), test("setting inner disposable with the same inner disposable has no effect", () => {
-    const serialDisposable = newInstance(SerialDisposable);
-    const child = newInstance(Disposable);
-    serialDisposable.inner = child;
-    pipe(serialDisposable.inner, expectEquals(child));
-    serialDisposable.inner = child;
-    pipe(child, isDisposed, expectFalse);
 })));
 
 const createRunnableTests = (m) => describe("RunnableContainer", test("concat", pipeLazy(m.concat(empty(m), m.fromArray()([1, 2, 3]), empty(m), m.fromArray()([4, 5, 6])), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), describe("distinctUntilChanged", test("when source has duplicates in order", pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], m.fromArray(), m.distinctUntilChanged(), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4]))), test("when source is empty", pipeLazy([], m.fromArray(), m.distinctUntilChanged(), m.toRunnable(), toArray(), expectArrayEquals([])))), test("endWith", pipeLazy([1, 2, 3], m.fromArray(), endWith(m, 4), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4]))), test("concatMap", pipeLazy(0, fromValue(m), concatMap(m, pipeLazy([1, 2, 3], m.fromArray())), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), test("keep", pipeLazy([4, 8, 10, 7], m.fromArray(), m.keep(x => x > 5), m.toRunnable(), toArray(), expectArrayEquals([8, 10, 7]))), test("map", pipeLazy([1, 2, 3], m.fromArray(), m.map(increment), m.toRunnable(), toArray(), expectArrayEquals([2, 3, 4]))), test("mapTo", pipeLazy([1, 2, 3], m.fromArray(), mapTo(m, 2), m.toRunnable(), toArray(), expectArrayEquals([2, 2, 2]))), describe("repeat", test("when always repeating", pipeLazy([1, 2, 3], m.fromArray(), m.repeat(), m.takeFirst({ count: 6 }), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("when repeating a finite amount of times.", pipeLazy([1, 2, 3], m.fromArray(), m.repeat(3), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("when repeating with a predicate", pipeLazy([1, 2, 3], m.fromArray(), m.repeat(x => x < 1), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3])))), test("scan", pipeLazy([1, 1, 1], m.fromArray(), m.scan(sum, returns(0)), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), describe("skipFirst", test("when skipped source has additional elements", pipeLazy([1, 2, 3], m.fromArray(), m.skipFirst({ count: 2 }), m.toRunnable(), toArray(), expectArrayEquals([3]))), test("when all elements are skipped", pipeLazy([1, 2, 3], m.fromArray(), m.skipFirst({ count: 4 }), m.toRunnable(), toArray(), expectArrayEquals([])))), test("startWith", pipeLazy([1, 2, 3], m.fromArray(), startWith(m, 0), m.toRunnable(), toArray(), expectArrayEquals([0, 1, 2, 3]))), describe("takeFirst", test("when taking fewer than the total number of elements in the source", pipeLazy(m.generate(increment, returns(0)), m.takeFirst({ count: 3 }), m.toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), test("when taking more than all the items produced by the source", pipeLazy(1, fromValue(m), m.takeFirst({ count: 3 }), m.toRunnable(), toArray(), expectArrayEquals([1])))), test("takeLast", pipeLazy([1, 2, 3, 4, 5], m.fromArray(), m.takeLast({ count: 3 }), m.toRunnable(), toArray(), expectArrayEquals([3, 4, 5]))), describe("takeWhile", test("exclusive", () => {

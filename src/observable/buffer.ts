@@ -1,8 +1,7 @@
+import { DisposableRef } from "../__internal__.disposable";
 import { MAX_SAFE_INTEGER } from "../__internal__.env";
 import { Buffer, fromValue } from "../container";
 import {
-  SerialDisposable,
-  add,
   addTo,
   dispose,
   disposed,
@@ -35,12 +34,12 @@ import { subscribe } from "./subscribe";
 
 class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
   buffer: T[] = [];
+  private readonly durationSubscription = newInstance(DisposableRef, this);
 
   constructor(
     delegate: Observer<readonly T[]>,
     private readonly durationFunction: Function1<T, ObservableLike<unknown>>,
     private readonly maxBufferSize: number,
-    readonly durationSubscription: SerialDisposable,
   ) {
     super(delegate);
   }
@@ -53,7 +52,7 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
     buffer.push(next);
 
     const doOnNotify = () => {
-      this.durationSubscription.inner = disposed;
+      this.durationSubscription.current = disposed;
 
       const buffer = this.buffer;
       this.buffer = [];
@@ -63,8 +62,8 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
 
     if (getLength(buffer) === maxBufferSize) {
       doOnNotify();
-    } else if (isDisposed(this.durationSubscription.inner)) {
-      this.durationSubscription.inner = pipe(
+    } else if (isDisposed(this.durationSubscription.current)) {
+      this.durationSubscription.current = pipe(
         next,
         this.durationFunction,
         onNotify(doOnNotify),
@@ -98,17 +97,14 @@ export function buffer<T>(
   const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
 
   const operator = (delegate: Observer<readonly T[]>) => {
-    const durationSubscription = newInstance(SerialDisposable);
     return pipe(
       BufferObserver,
       newInstanceWith<
         BufferObserver<T>,
         Observer<readonly T[]>,
         Function1<T, ObservableLike<unknown>>,
-        number,
-        SerialDisposable
-      >(delegate, durationFunction, maxBufferSize, durationSubscription),
-      add(durationSubscription),
+        number
+      >(delegate, durationFunction, maxBufferSize),
       addTo(delegate),
       onComplete(function onDispose(this: BufferObserver<void>) {
         const { buffer } = this;

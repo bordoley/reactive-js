@@ -1,11 +1,6 @@
+import { DisposableRef } from "../__internal__.disposable";
 import { ConcatAll } from "../container";
-import {
-  SerialDisposable,
-  add,
-  bindTo,
-  dispose,
-  isDisposed,
-} from "../disposable";
+import { add, dispose, isDisposed } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import {
   AbstractDelegatingEnumerator,
@@ -23,31 +18,26 @@ class ConcatAllEnumerator<T> extends AbstractDelegatingEnumerator<
   EnumerableLike<T>,
   T
 > {
-  constructor(
-    delegate: Enumerator<EnumerableLike<T>>,
-    readonly enumerator: SerialDisposable,
-  ) {
-    super(delegate);
-  }
+  private readonly enumerator = newInstance(DisposableRef, this);
 
   move(): boolean {
     reset(this);
 
     const { delegate, enumerator } = this;
 
-    if (isDisposed(enumerator.inner) && move(delegate)) {
-      enumerator.inner = pipe(delegate, getCurrent, enumerate);
+    if (isDisposed(enumerator.current) && move(delegate)) {
+      enumerator.current = pipe(delegate, getCurrent, enumerate);
     }
 
     while (
-      enumerator.inner instanceof Enumerator &&
-      !isDisposed(enumerator.inner)
+      enumerator.current instanceof Enumerator &&
+      !isDisposed(enumerator.current)
     ) {
-      if (move(enumerator.inner)) {
-        this.current = getCurrent(enumerator.inner);
+      if (move(enumerator.current)) {
+        this.current = getCurrent(enumerator.current);
         break;
       } else if (move(delegate)) {
-        enumerator.inner = pipe(delegate, getCurrent, enumerate);
+        enumerator.current = pipe(delegate, getCurrent, enumerate);
       } else {
         pipe(this, dispose());
       }
@@ -57,19 +47,14 @@ class ConcatAllEnumerator<T> extends AbstractDelegatingEnumerator<
   }
 }
 
-const operator = <T>(delegate: Enumerator<EnumerableLike<T>>) => {
-  const inner = newInstance(SerialDisposable);
-  return pipe(
+const operator = <T>(delegate: Enumerator<EnumerableLike<T>>) =>
+  pipe(
     ConcatAllEnumerator,
-    newInstanceWith<
-      ConcatAllEnumerator<T>,
-      Enumerator<EnumerableLike<T>>,
-      SerialDisposable
-    >(delegate, inner),
-    bindTo(inner),
+    newInstanceWith<ConcatAllEnumerator<T>, Enumerator<EnumerableLike<T>>>(
+      delegate,
+    ),
     add(delegate),
   );
-};
 
 /**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
