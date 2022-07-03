@@ -6,7 +6,7 @@ import { bindTo, dispose } from "../disposable";
 import { newInstance, newInstanceWith, pipe, returns } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer, getScheduler } from "../observer";
-import { assertState, notify } from "../source";
+import { assertState, notify } from "../sink";
 import { concat } from "./concat";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";

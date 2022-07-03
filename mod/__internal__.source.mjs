@@ -6,7 +6,8 @@ import { fromValue, empty } from './container.mjs';
 import { addTo, onComplete, dispose, onError, isDisposed, onDisposed, add } from './disposable.mjs';
 import { getLength, max, pipe, newInstanceWith, isEmpty, newInstance, compose, negate, ignore, identity } from './functions.mjs';
 import { none, isSome } from './option.mjs';
-import { assertState, sinkInto, notify } from './source.mjs';
+import { assertState, notify } from './sink.mjs';
+import { sinkInto } from './source.mjs';
 
 class AbstractSource extends AbstractLiftable {
 }

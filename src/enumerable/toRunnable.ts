@@ -4,7 +4,7 @@ import { Enumerator, forEach } from "../enumerator";
 import { Factory, Function1, pipe } from "../functions";
 import { RunnableLike, ToRunnable, createRunnable } from "../runnable";
 import { RunnableSink } from "../runnableSink";
-import { notifySink } from "../source";
+import { notifySink } from "../sink";
 
 const enumeratorToRunnable = <T>(
   f: Factory<Enumerator<T>>,

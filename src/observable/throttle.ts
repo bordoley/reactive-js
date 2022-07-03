@@ -11,7 +11,8 @@ import {
 } from "../observable";
 import { Observer, getScheduler } from "../observer";
 import { Option, none } from "../option";
-import { assertState, sinkInto } from "../source";
+import { assertState } from "../sink";
+import { sinkInto } from "../source";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";

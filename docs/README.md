@@ -25,6 +25,7 @@ Reactive-JS
 - [runnableSink](modules/runnableSink.md)
 - [scheduler](modules/scheduler.md)
 - [sequence](modules/sequence.md)
+- [sink](modules/sink.md)
 - [source](modules/source.md)
 - [stream](modules/stream.md)
 - [streamable](modules/streamable.md)

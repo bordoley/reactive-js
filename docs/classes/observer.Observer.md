@@ -20,7 +20,7 @@ Abstract base class for implementing the `ObserverLike` interface.
 
 ## Implements
 
-- [`SinkLike`](../interfaces/source.SinkLike.md)<`T`\>
+- [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\>
 
 ## Table of contents
 
@@ -87,7 +87,7 @@ Abstract base class for implementing the `ObserverLike` interface.
 
 #### Implementation of
 
-[SinkLike](../interfaces/source.SinkLike.md).[T](../interfaces/source.SinkLike.md#t)
+[SinkLike](../interfaces/sink.SinkLike.md).[T](../interfaces/sink.SinkLike.md#t)
 
 #### Inherited from
 
@@ -105,7 +105,7 @@ ___
 
 #### Implementation of
 
-[SinkLike](../interfaces/source.SinkLike.md).[TContainerOf](../interfaces/source.SinkLike.md#tcontainerof)
+[SinkLike](../interfaces/sink.SinkLike.md).[TContainerOf](../interfaces/sink.SinkLike.md#tcontainerof)
 
 #### Inherited from
 
@@ -185,7 +185,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Implementation of
 
-[SinkLike](../interfaces/source.SinkLike.md).[add](../interfaces/source.SinkLike.md#add)
+[SinkLike](../interfaces/sink.SinkLike.md).[add](../interfaces/sink.SinkLike.md#add)
 
 #### Inherited from
 
@@ -209,7 +209,7 @@ ___
 
 #### Implementation of
 
-[SinkLike](../interfaces/source.SinkLike.md).[assertState](../interfaces/source.SinkLike.md#assertstate)
+[SinkLike](../interfaces/sink.SinkLike.md).[assertState](../interfaces/sink.SinkLike.md#assertstate)
 
 ___
 
@@ -232,7 +232,7 @@ Dispose the resource.
 
 #### Implementation of
 
-[SinkLike](../interfaces/source.SinkLike.md).[dispose](../interfaces/source.SinkLike.md#dispose)
+[SinkLike](../interfaces/sink.SinkLike.md).[dispose](../interfaces/sink.SinkLike.md#dispose)
 
 #### Inherited from
 
@@ -261,4 +261,4 @@ scheduled using the sink's `schedule` method.
 
 #### Implementation of
 
-[SinkLike](../interfaces/source.SinkLike.md).[notify](../interfaces/source.SinkLike.md#notify)
+[SinkLike](../interfaces/sink.SinkLike.md).[notify](../interfaces/sink.SinkLike.md#notify)

@@ -26,7 +26,8 @@ import {
 } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
-import { assertState, notify, sourceFrom } from "../source";
+import { assertState, notify } from "../sink";
+import { sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
 import { fromEnumerator } from "./fromEnumerable";
 import { isEnumerable, tagEnumerable } from "./observable";

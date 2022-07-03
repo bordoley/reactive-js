@@ -5,7 +5,7 @@ import { Function2, Predicate, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer, getScheduler } from "../observer";
 import { isNone, isSome } from "../option";
-import { notifySink } from "../source";
+import { notifySink } from "../sink";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";

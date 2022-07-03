@@ -88,7 +88,8 @@ import {
   __yield,
   createVirtualTimeScheduler,
 } from "./scheduler";
-import { SourceLike, notifySink, sourceFrom } from "./source";
+import { notifySink } from "./sink";
+import { SourceLike, sourceFrom } from "./source";
 
 /**
  * The source of notifications which notifies a `ObserverLike` instance.

@@ -17,7 +17,7 @@ import {
   isInContinuation,
   schedule,
 } from "./scheduler";
-import { SinkLike, assertState } from "./source";
+import { SinkLike, assertState } from "./sink";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (getLength(dispatcher.nextQueue) === 1) {

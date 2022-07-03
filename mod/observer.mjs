@@ -5,7 +5,7 @@ import { addTo, onComplete, Disposable, isDisposed, dispose, onDisposed } from '
 import { getLength, pipe, newInstanceWith, isEmpty, raise } from './functions.mjs';
 import { none, isNone } from './option.mjs';
 import { schedule, __yield, isInContinuation } from './scheduler.mjs';
-import { assertState } from './source.mjs';
+import { assertState } from './sink.mjs';
 
 const scheduleDrainQueue = (dispatcher) => {
     if (getLength(dispatcher.nextQueue) === 1) {

@@ -4,7 +4,8 @@ import { Disposable, DisposableOrTeardown } from "./disposable.mjs";
 import { Function1, Equality, Predicate, SideEffect1, Reducer, Factory } from "./functions.mjs";
 import { LiftableStateOf } from "./liftable.mjs";
 import { Option } from "./option.mjs";
-import { SinkLike, SourceLike, CreateSource } from "./source.mjs";
+import { SinkLike } from "./sink.mjs";
+import { SourceLike, CreateSource } from "./source.mjs";
 declare abstract class AbstractSource<T, TSink extends SinkLike<T>> extends AbstractLiftable<TSink> implements SourceLike {
     abstract sink(this: this, sink: TSink): void;
 }

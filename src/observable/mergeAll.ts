@@ -13,7 +13,7 @@ import { getLength, newInstance, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer, getScheduler } from "../observer";
 import { isSome } from "../option";
-import { assertState, notifySink } from "../source";
+import { assertState, notifySink } from "../sink";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
