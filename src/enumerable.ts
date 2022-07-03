@@ -60,7 +60,7 @@ import { Option, isSome, none } from "./option";
 export interface EnumerableLike<T> extends LiftableLike {
   readonly T: unknown;
   readonly TContainerOf: EnumerableLike<this["T"]>;
-  readonly liftableStateType: Enumerator<this["T"]>;
+  readonly TLiftableState: Enumerator<this["T"]>;
 
   /**
    * Returns an `EnumeratorLike` to iterate through the Container.

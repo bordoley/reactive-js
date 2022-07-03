@@ -3,12 +3,12 @@ import { AbstractContainer, AbstractDisposableContainer } from './container.mjs'
 import { raise } from './functions.mjs';
 
 class AbstractLiftable extends AbstractContainer {
-    get liftableStateType() {
+    get TLiftableState() {
         return raise();
     }
 }
 class AbtractDisposableLiftable extends AbstractDisposableContainer {
-    get liftableStateType() {
+    get TLiftableState() {
         return raise();
     }
 }

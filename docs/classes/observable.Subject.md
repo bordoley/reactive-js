@@ -34,9 +34,9 @@
 
 - [T](observable.Subject.md#t)
 - [TContainerOf](observable.Subject.md#tcontainerof)
+- [TLiftableState](observable.Subject.md#tliftablestate)
 - [error](observable.Subject.md#error)
 - [isDisposed](observable.Subject.md#isdisposed)
-- [liftableStateType](observable.Subject.md#liftablestatetype)
 - [observerCount](observable.Subject.md#observercount)
 
 ### Methods
@@ -116,6 +116,24 @@ AbstractDisposableObservable.TContainerOf
 
 ___
 
+### TLiftableState
+
+• `get` **TLiftableState**(): `TState`
+
+#### Returns
+
+`TState`
+
+#### Implementation of
+
+MulticastObservableLike.TLiftableState
+
+#### Inherited from
+
+AbstractDisposableObservable.TLiftableState
+
+___
+
 ### error
 
 • `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
@@ -153,24 +171,6 @@ MulticastObservableLike.isDisposed
 #### Inherited from
 
 AbstractDisposableObservable.isDisposed
-
-___
-
-### liftableStateType
-
-• `get` **liftableStateType**(): `TState`
-
-#### Returns
-
-`TState`
-
-#### Implementation of
-
-MulticastObservableLike.liftableStateType
-
-#### Inherited from
-
-AbstractDisposableObservable.liftableStateType
 
 ___
 

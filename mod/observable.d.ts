@@ -536,7 +536,7 @@ declare const toPromise: <T>(scheduler: SchedulerLike) => Function1<ObservableLi
 interface ObservableLike<T> extends SourceLike {
     readonly T: unknown;
     readonly TContainerOf: ObservableLike<this["T"]>;
-    readonly liftableStateType: Observer<this["T"]>;
+    readonly TLiftableState: Observer<this["T"]>;
     readonly isEnumerable?: boolean;
     sink(this: ObservableLike<T>, sink: Observer<T>): void;
 }

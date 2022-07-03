@@ -36,9 +36,9 @@
 
 - [T](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#t)
 - [TContainerOf](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#tcontainerof)
+- [TLiftableState](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#tliftablestate)
 - [error](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#error)
 - [isDisposed](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#isdisposed)
-- [liftableStateType](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#liftablestatetype)
 - [observerCount](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#observercount)
 - [replay](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#replay)
 - [scheduler](asyncEnumerator.AbstractDelegatingAsyncEnumerator.md#scheduler)
@@ -131,6 +131,24 @@ AsyncEnumerator.TContainerOf
 
 ___
 
+### TLiftableState
+
+• `get` **TLiftableState**(): `TState`
+
+#### Returns
+
+`TState`
+
+#### Implementation of
+
+StreamLike.TLiftableState
+
+#### Inherited from
+
+AsyncEnumerator.TLiftableState
+
+___
+
 ### error
 
 • `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
@@ -168,24 +186,6 @@ StreamLike.isDisposed
 #### Inherited from
 
 AsyncEnumerator.isDisposed
-
-___
-
-### liftableStateType
-
-• `get` **liftableStateType**(): `TState`
-
-#### Returns
-
-`TState`
-
-#### Implementation of
-
-StreamLike.liftableStateType
-
-#### Inherited from
-
-AsyncEnumerator.liftableStateType
 
 ___
 

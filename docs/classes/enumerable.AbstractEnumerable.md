@@ -30,7 +30,7 @@
 
 - [T](enumerable.AbstractEnumerable.md#t)
 - [TContainerOf](enumerable.AbstractEnumerable.md#tcontainerof)
-- [liftableStateType](enumerable.AbstractEnumerable.md#liftablestatetype)
+- [TLiftableState](enumerable.AbstractEnumerable.md#tliftablestate)
 
 ### Methods
 
@@ -90,9 +90,9 @@ AbstractLiftable.TContainerOf
 
 ___
 
-### liftableStateType
+### TLiftableState
 
-• `get` **liftableStateType**(): `TState`
+• `get` **TLiftableState**(): `TState`
 
 #### Returns
 
@@ -100,11 +100,11 @@ ___
 
 #### Implementation of
 
-[EnumerableLike](../interfaces/enumerable.EnumerableLike.md).[liftableStateType](../interfaces/enumerable.EnumerableLike.md#liftablestatetype)
+[EnumerableLike](../interfaces/enumerable.EnumerableLike.md).[TLiftableState](../interfaces/enumerable.EnumerableLike.md#tliftablestate)
 
 #### Inherited from
 
-AbstractLiftable.liftableStateType
+AbstractLiftable.TLiftableState
 
 ## Methods
 

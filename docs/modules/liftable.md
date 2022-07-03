@@ -112,7 +112,7 @@ ___
 
 ### LiftableStateOf
 
-Ƭ **LiftableStateOf**<`C`, `T`\>: `C` extends { `liftableStateType`: `unknown`  } ? `C` & { `T`: `T`  }[``"liftableStateType"``] : { `_C`: `C` ; `_T`: () => `T`  }
+Ƭ **LiftableStateOf**<`C`, `T`\>: `C` extends { `TLiftableState`: `unknown`  } ? `C` & { `T`: `T`  }[``"TLiftableState"``] : { `_C`: `C` ; `_T`: () => `T`  }
 
 #### Type parameters
 

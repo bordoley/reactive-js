@@ -37,9 +37,9 @@
 
 - [T](stream.AbstractDelegatingStream.md#t)
 - [TContainerOf](stream.AbstractDelegatingStream.md#tcontainerof)
+- [TLiftableState](stream.AbstractDelegatingStream.md#tliftablestate)
 - [error](stream.AbstractDelegatingStream.md#error)
 - [isDisposed](stream.AbstractDelegatingStream.md#isdisposed)
-- [liftableStateType](stream.AbstractDelegatingStream.md#liftablestatetype)
 - [observerCount](stream.AbstractDelegatingStream.md#observercount)
 - [replay](stream.AbstractDelegatingStream.md#replay)
 - [scheduler](stream.AbstractDelegatingStream.md#scheduler)
@@ -120,6 +120,24 @@ AbstractDisposableObservable.TContainerOf
 
 ___
 
+### TLiftableState
+
+• `get` **TLiftableState**(): `TState`
+
+#### Returns
+
+`TState`
+
+#### Implementation of
+
+StreamLike.TLiftableState
+
+#### Inherited from
+
+AbstractDisposableObservable.TLiftableState
+
+___
+
 ### error
 
 • `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
@@ -157,24 +175,6 @@ StreamLike.isDisposed
 #### Inherited from
 
 AbstractDisposableObservable.isDisposed
-
-___
-
-### liftableStateType
-
-• `get` **liftableStateType**(): `TState`
-
-#### Returns
-
-`TState`
-
-#### Implementation of
-
-StreamLike.liftableStateType
-
-#### Inherited from
-
-AbstractDisposableObservable.liftableStateType
 
 ___
 

@@ -31,8 +31,8 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 - [T](observable.ObservableLike.md#t)
 - [TContainerOf](observable.ObservableLike.md#tcontainerof)
+- [TLiftableState](observable.ObservableLike.md#tliftablestate)
 - [isEnumerable](observable.ObservableLike.md#isenumerable)
-- [liftableStateType](observable.ObservableLike.md#liftablestatetype)
 
 ### Methods
 
@@ -60,19 +60,19 @@ ___
 
 ___
 
-### isEnumerable
+### TLiftableState
 
-• `Optional` `Readonly` **isEnumerable**: `boolean`
-
-___
-
-### liftableStateType
-
-• `Readonly` **liftableStateType**: [`Observer`](../classes/observer.Observer.md)<`unknown`\>
+• `Readonly` **TLiftableState**: [`Observer`](../classes/observer.Observer.md)<`unknown`\>
 
 #### Overrides
 
-[SourceLike](source.SourceLike.md).[liftableStateType](source.SourceLike.md#liftablestatetype)
+[SourceLike](source.SourceLike.md).[TLiftableState](source.SourceLike.md#tliftablestate)
+
+___
+
+### isEnumerable
+
+• `Optional` `Readonly` **isEnumerable**: `boolean`
 
 ## Methods
 

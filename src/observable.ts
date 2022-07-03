@@ -99,7 +99,7 @@ import { SourceLike, notifySink, sourceFrom } from "./source";
 export interface ObservableLike<T> extends SourceLike {
   readonly T: unknown;
   readonly TContainerOf: ObservableLike<this["T"]>;
-  readonly liftableStateType: Observer<this["T"]>;
+  readonly TLiftableState: Observer<this["T"]>;
 
   readonly isEnumerable?: boolean;
 

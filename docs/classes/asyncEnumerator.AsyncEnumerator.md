@@ -40,9 +40,9 @@
 
 - [T](asyncEnumerator.AsyncEnumerator.md#t)
 - [TContainerOf](asyncEnumerator.AsyncEnumerator.md#tcontainerof)
+- [TLiftableState](asyncEnumerator.AsyncEnumerator.md#tliftablestate)
 - [error](asyncEnumerator.AsyncEnumerator.md#error)
 - [isDisposed](asyncEnumerator.AsyncEnumerator.md#isdisposed)
-- [liftableStateType](asyncEnumerator.AsyncEnumerator.md#liftablestatetype)
 
 ### Methods
 
@@ -145,6 +145,24 @@ AbtractDisposableLiftable.TContainerOf
 
 ___
 
+### TLiftableState
+
+• `get` **TLiftableState**(): `TState`
+
+#### Returns
+
+`TState`
+
+#### Implementation of
+
+StreamLike.TLiftableState
+
+#### Inherited from
+
+AbtractDisposableLiftable.TLiftableState
+
+___
+
 ### error
 
 • `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
@@ -182,24 +200,6 @@ LiftableStateLike.isDisposed
 #### Inherited from
 
 AbtractDisposableLiftable.isDisposed
-
-___
-
-### liftableStateType
-
-• `get` **liftableStateType**(): `TState`
-
-#### Returns
-
-`TState`
-
-#### Implementation of
-
-StreamLike.liftableStateType
-
-#### Inherited from
-
-AbtractDisposableLiftable.liftableStateType
 
 ## Methods
 

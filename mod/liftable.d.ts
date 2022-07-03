@@ -4,19 +4,19 @@ import { Function1 } from "./functions.mjs";
 interface LiftableStateLike extends Disposable, ContainerLike {
 }
 interface LiftableLike extends ContainerLike {
-    readonly liftableStateType: LiftableStateLike;
+    readonly TLiftableState: LiftableStateLike;
 }
 declare abstract class AbstractLiftable<TState extends LiftableStateLike> extends AbstractContainer implements LiftableLike {
-    get liftableStateType(): TState;
+    get TLiftableState(): TState;
 }
 declare abstract class AbtractDisposableLiftable<TState extends LiftableStateLike> extends AbstractDisposableContainer implements LiftableLike {
-    get liftableStateType(): TState;
+    get TLiftableState(): TState;
 }
 declare type LiftableStateOf<C extends LiftableLike, T> = C extends {
-    readonly liftableStateType: unknown;
+    readonly TLiftableState: unknown;
 } ? (C & {
     readonly T: T;
-})["liftableStateType"] : {
+})["TLiftableState"] : {
     readonly _C: C;
     readonly _T: () => T;
 };

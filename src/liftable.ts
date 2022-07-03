@@ -11,14 +11,14 @@ import { Function1, raise } from "./functions";
 export interface LiftableStateLike extends Disposable, ContainerLike {}
 
 export interface LiftableLike extends ContainerLike {
-  readonly liftableStateType: LiftableStateLike;
+  readonly TLiftableState: LiftableStateLike;
 }
 
 export abstract class AbstractLiftable<TState extends LiftableStateLike>
   extends AbstractContainer
   implements LiftableLike
 {
-  get liftableStateType(): TState {
+  get TLiftableState(): TState {
     return raise();
   }
 }
@@ -29,17 +29,17 @@ export abstract class AbtractDisposableLiftable<
   extends AbstractDisposableContainer
   implements LiftableLike
 {
-  get liftableStateType(): TState {
+  get TLiftableState(): TState {
     return raise();
   }
 }
 
 export type LiftableStateOf<C extends LiftableLike, T> = C extends {
-  readonly liftableStateType: unknown;
+  readonly TLiftableState: unknown;
 }
   ? (C & {
       readonly T: T;
-    })["liftableStateType"]
+    })["TLiftableState"]
   : {
       readonly _C: C;
       readonly _T: () => T;

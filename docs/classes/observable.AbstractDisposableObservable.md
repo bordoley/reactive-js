@@ -34,9 +34,9 @@
 
 - [T](observable.AbstractDisposableObservable.md#t)
 - [TContainerOf](observable.AbstractDisposableObservable.md#tcontainerof)
+- [TLiftableState](observable.AbstractDisposableObservable.md#tliftablestate)
 - [error](observable.AbstractDisposableObservable.md#error)
 - [isDisposed](observable.AbstractDisposableObservable.md#isdisposed)
-- [liftableStateType](observable.AbstractDisposableObservable.md#liftablestatetype)
 
 ### Methods
 
@@ -98,6 +98,24 @@ AbtractDisposableSource.TContainerOf
 
 ___
 
+### TLiftableState
+
+• `get` **TLiftableState**(): `TState`
+
+#### Returns
+
+`TState`
+
+#### Implementation of
+
+[ObservableLike](../interfaces/observable.ObservableLike.md).[TLiftableState](../interfaces/observable.ObservableLike.md#tliftablestate)
+
+#### Inherited from
+
+AbtractDisposableSource.TLiftableState
+
+___
+
 ### error
 
 • `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
@@ -127,24 +145,6 @@ ___
 #### Inherited from
 
 AbtractDisposableSource.isDisposed
-
-___
-
-### liftableStateType
-
-• `get` **liftableStateType**(): `TState`
-
-#### Returns
-
-`TState`
-
-#### Implementation of
-
-[ObservableLike](../interfaces/observable.ObservableLike.md).[liftableStateType](../interfaces/observable.ObservableLike.md#liftablestatetype)
-
-#### Inherited from
-
-AbtractDisposableSource.liftableStateType
 
 ## Methods
 

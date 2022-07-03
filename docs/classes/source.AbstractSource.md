@@ -33,7 +33,7 @@
 
 - [T](source.AbstractSource.md#t)
 - [TContainerOf](source.AbstractSource.md#tcontainerof)
-- [liftableStateType](source.AbstractSource.md#liftablestatetype)
+- [TLiftableState](source.AbstractSource.md#tliftablestate)
 
 ### Methods
 
@@ -94,9 +94,9 @@ AbstractLiftable.TContainerOf
 
 ___
 
-### liftableStateType
+### TLiftableState
 
-• `get` **liftableStateType**(): `TState`
+• `get` **TLiftableState**(): `TState`
 
 #### Returns
 
@@ -104,11 +104,11 @@ ___
 
 #### Implementation of
 
-[SourceLike](../interfaces/source.SourceLike.md).[liftableStateType](../interfaces/source.SourceLike.md#liftablestatetype)
+[SourceLike](../interfaces/source.SourceLike.md).[TLiftableState](../interfaces/source.SourceLike.md#tliftablestate)
 
 #### Inherited from
 
-AbstractLiftable.liftableStateType
+AbstractLiftable.TLiftableState
 
 ## Methods
 
