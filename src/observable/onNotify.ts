@@ -1,7 +1,8 @@
+import { AbstractDelegatingObserver } from "../__internal__.observer";
 import { createOnNotifyOperator } from "../__internal__.source";
 import { SideEffect1 } from "../functions";
 import { ObservableOperator } from "../observable";
-import { AbstractDelegatingObserver, Observer } from "../observer";
+import { Observer } from "../observer";
 import { liftSynchronousT } from "./lift";
 
 /**

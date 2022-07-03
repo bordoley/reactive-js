@@ -4,14 +4,6 @@ import { Disposable } from './disposable.mjs';
 import { raise, compose, callWith, isEqualTo, newInstance, pipe, pipeLazy, alwaysFalse, returns, negate } from './functions.mjs';
 import { isSome } from './option.mjs';
 
-class AbstractContainer {
-    get TContainerOf() {
-        return raise();
-    }
-    get T() {
-        return raise();
-    }
-}
 class AbstractDisposableContainer extends Disposable {
     get TContainerOf() {
         return raise();
@@ -52,4 +44,4 @@ const throws = (m, options) => errorFactory => pipe(() => {
 }, compute(m, options));
 const zipWith = ({ zip }, snd) => fst => zip(fst, snd);
 
-export { AbstractContainer, AbstractDisposableContainer, compute, concatMap, concatWith, contains, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };
+export { AbstractDisposableContainer, compute, concatMap, concatWith, contains, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };

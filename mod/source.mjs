@@ -1,16 +1,14 @@
 /// <reference types="./source.d.ts" />
 import { __DEV__ } from './__internal__.env.mjs';
-import { AbstractLiftable, AbtractDisposableLiftable } from './liftable.mjs';
+import { AbtractDisposableLiftable } from './liftable.mjs';
 
+class AbtractDisposableSource extends AbtractDisposableLiftable {
+}
 const assertState = (sink) => {
     if (__DEV__) {
         sink.assertState();
     }
 };
-class AbstractSource extends AbstractLiftable {
-}
-class AbtractDisposableSource extends AbtractDisposableLiftable {
-}
 const notify = (v) => (sink) => {
     sink.notify(v);
     return sink;
@@ -25,4 +23,4 @@ const sourceFrom = (source) => sink => {
     return sink;
 };
 
-export { AbstractSource, AbtractDisposableSource, assertState, notify, notifySink, sinkInto, sourceFrom };
+export { AbtractDisposableSource, assertState, notify, notifySink, sinkInto, sourceFrom };

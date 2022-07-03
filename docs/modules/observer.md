@@ -6,38 +6,14 @@
 
 ### Classes
 
-- [AbstractDelegatingObserver](../classes/observer.AbstractDelegatingObserver.md)
 - [Observer](../classes/observer.Observer.md)
 
 ### Functions
 
-- [createDelegatingObserver](observer.md#createdelegatingobserver)
 - [getDispatcher](observer.md#getdispatcher)
 - [getScheduler](observer.md#getscheduler)
 
 ## Functions
-
-### createDelegatingObserver
-
-▸ **createDelegatingObserver**<`T`\>(`delegate`): [`Observer`](../classes/observer.Observer.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `delegate` | [`Observer`](../classes/observer.Observer.md)<`T`\> |
-
-#### Returns
-
-[`Observer`](../classes/observer.Observer.md)<`T`\>
-
-___
 
 ### getDispatcher
 

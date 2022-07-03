@@ -1,3 +1,5 @@
+import { getDelegate } from "../__internal__.liftable";
+import { AbstractDelegatingStream } from "../__internal__.stream";
 import { ignoreElements } from "../container";
 import { dispatchTo } from "../dispatcher";
 import { addTo, bindTo } from "../disposable";
@@ -11,7 +13,6 @@ import {
   pipe,
   raise,
 } from "../functions";
-import { getDelegate } from "../liftable";
 import {
   forkCombineLatest,
   keep,
@@ -25,7 +26,6 @@ import {
 import { Observer } from "../observer";
 import { Option, isSome, none } from "../option";
 import { sinkInto } from "../source";
-import { AbstractDelegatingStream } from "../stream";
 import { createActionReducer, createStreamble, stream } from "../streamable";
 import {
   WindowLocationStreamLike,

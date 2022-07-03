@@ -1,8 +1,9 @@
 import { createFromArray } from "../__internal__.container";
+import { AbstractEnumerator, reset } from "../__internal__.enumerator";
 import { FromArray, FromArrayOptions } from "../container";
 import { dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
-import { AbstractEnumerator, hasCurrent, reset } from "../enumerator";
+import { hasCurrent } from "../enumerator";
 import { callWith, instanceFactory, pipe, pipeLazy } from "../functions";
 import { createEnumerable } from "./enumerable";
 

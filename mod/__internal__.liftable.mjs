@@ -1,10 +1,16 @@
 /// <reference types="./__internal__.liftable.d.ts" />
+import { AbstractContainer } from './__internal__.container.mjs';
 import { empty } from './container.mjs';
 import { bindTo, add, addTo, onComplete, dispose } from './disposable.mjs';
-import { strictEquality, pipe, newInstanceWith, max } from './functions.mjs';
+import { raise, strictEquality, pipe, newInstanceWith, max } from './functions.mjs';
 import { lift, covariant } from './liftable.mjs';
 import { none } from './option.mjs';
 
+class AbstractLiftable extends AbstractContainer {
+    get TLiftableState() {
+        return raise();
+    }
+}
 const createDistinctUntilChangedLiftOperator = (m, DistinctUntilChangedLiftableState) => (options = {}) => {
     const { equality = strictEquality } = options;
     const operator = delegate => pipe(DistinctUntilChangedLiftableState, newInstanceWith(delegate, equality), bindTo(delegate));
@@ -59,5 +65,6 @@ const createThrowIfEmptyLiftOperator = (m, ThrowIfEmptyLiftableState) => (factor
     }));
     return lifted;
 }, lift(m));
+const getDelegate = (s) => s.delegate;
 
-export { createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator };
+export { AbstractLiftable, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, getDelegate };

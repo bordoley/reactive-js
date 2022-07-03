@@ -1,18 +1,15 @@
 import { DisposableRef } from "../__internal__.disposable";
+import { getDelegate } from "../__internal__.liftable";
+import { AbstractDelegatingObserver } from "../__internal__.observer";
 import { fromValue } from "../container";
 import { addTo, isDisposed, onComplete } from "../disposable";
 import { Function1, newInstance, newInstanceWith, pipe } from "../functions";
-import { getDelegate } from "../liftable";
 import {
   ObservableLike,
   ObservableOperator,
   ThrottleMode,
 } from "../observable";
-import {
-  AbstractDelegatingObserver,
-  Observer,
-  getScheduler,
-} from "../observer";
+import { Observer, getScheduler } from "../observer";
 import { Option, none } from "../option";
 import { assertState, sinkInto } from "../source";
 import { fromArrayT } from "./fromArray";

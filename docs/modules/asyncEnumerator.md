@@ -6,5 +6,4 @@
 
 ### Classes
 
-- [AbstractDelegatingAsyncEnumerator](../classes/asyncEnumerator.AbstractDelegatingAsyncEnumerator.md)
 - [AsyncEnumerator](../classes/asyncEnumerator.AsyncEnumerator.md)

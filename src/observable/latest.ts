@@ -1,9 +1,10 @@
+import { getDelegate } from "../__internal__.liftable";
+import { AbstractDelegatingObserver } from "../__internal__.observer";
 import { everySatisfy, map } from "../__internal__.readonlyArray";
 import { addTo, dispose, onComplete } from "../disposable";
 import { getLength, newInstanceWith, pipe } from "../functions";
-import { getDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { AbstractDelegatingObserver, Observer } from "../observer";
+import { Observer } from "../observer";
 import { none } from "../option";
 import { assertState, notify, sourceFrom } from "../source";
 import { defer } from "./defer";

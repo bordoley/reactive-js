@@ -4,9 +4,10 @@ import { Disposable, isDisposed, dispose, add, addTo, onDisposed, disposed } fro
 import { floor, getLength, newInstance, pipe, raise, instanceFactory, max, newInstanceWith } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { DisposableRef } from './__internal__.disposable.mjs';
+import { AbstractEnumerator, reset } from './__internal__.enumerator.mjs';
 import { getDelay } from './__internal__.optionalArgs.mjs';
 import { runContinuation } from './__internal__.schedulerImplementation.mjs';
-import { AbstractEnumerator, move, hasCurrent, reset, getCurrent } from './enumerator.mjs';
+import { move, hasCurrent, getCurrent } from './enumerator.mjs';
 
 const computeParentIndex = (index) => floor((index - 1) / 2);
 const siftDown = (queue, item) => {

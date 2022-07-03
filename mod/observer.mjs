@@ -2,11 +2,10 @@
 import { __DEV__ } from './__internal__.env.mjs';
 import { AbstractDisposableContainer } from './container.mjs';
 import { addTo, onComplete, Disposable, isDisposed, dispose, onDisposed } from './disposable.mjs';
-import { getLength, pipe, newInstanceWith, isEmpty, raise, newInstance } from './functions.mjs';
-import { getDelegate } from './liftable.mjs';
+import { getLength, pipe, newInstanceWith, isEmpty, raise } from './functions.mjs';
 import { none, isNone } from './option.mjs';
 import { schedule, __yield, isInContinuation } from './scheduler.mjs';
-import { assertState, notify } from './source.mjs';
+import { assertState } from './source.mjs';
 
 const scheduleDrainQueue = (dispatcher) => {
     if (getLength(dispatcher.nextQueue) === 1) {
@@ -79,20 +78,7 @@ if (__DEV__) {
         }
     };
 }
-class AbstractDelegatingObserver extends Observer {
-    constructor(delegate) {
-        super(getScheduler(delegate));
-        this.delegate = delegate;
-    }
-    notify(_) { }
-}
-class DelegatingObserver extends AbstractDelegatingObserver {
-    notify(next) {
-        pipe(this, getDelegate, notify(next));
-    }
-}
-const createDelegatingObserver = (delegate) => newInstance(DelegatingObserver, delegate);
 const getScheduler = (observer) => observer.scheduler;
 const getDispatcher = (observer) => observer.dispatcher;
 
-export { AbstractDelegatingObserver, Observer, createDelegatingObserver, getDispatcher, getScheduler };
+export { Observer, getDispatcher, getScheduler };

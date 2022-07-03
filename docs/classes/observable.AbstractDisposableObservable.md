@@ -18,8 +18,6 @@
 
   ↳↳ [`Subject`](observable.Subject.md)
 
-  ↳↳ [`AbstractDelegatingStream`](stream.AbstractDelegatingStream.md)
-
 ## Implements
 
 - [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>

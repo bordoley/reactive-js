@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`AbstractLiftable`](liftable.AbstractLiftable.md)<[`Enumerator`](enumerator.Enumerator.md)<`T`\>\>
+- `AbstractLiftable`<[`Enumerator`](enumerator.Enumerator.md)<`T`\>\>
 
   ↳ **`AbstractEnumerable`**
 
@@ -25,12 +25,6 @@
 ### Constructors
 
 - [constructor](enumerable.AbstractEnumerable.md#constructor)
-
-### Accessors
-
-- [T](enumerable.AbstractEnumerable.md#t)
-- [TContainerOf](enumerable.AbstractEnumerable.md#tcontainerof)
-- [TLiftableState](enumerable.AbstractEnumerable.md#tliftablestate)
 
 ### Methods
 
@@ -50,61 +44,7 @@
 
 #### Inherited from
 
-[AbstractLiftable](liftable.AbstractLiftable.md).[constructor](liftable.AbstractLiftable.md#constructor)
-
-## Accessors
-
-### T
-
-• `get` **T**(): `unknown`
-
-#### Returns
-
-`unknown`
-
-#### Implementation of
-
-[EnumerableLike](../interfaces/enumerable.EnumerableLike.md).[T](../interfaces/enumerable.EnumerableLike.md#t)
-
-#### Inherited from
-
-AbstractLiftable.T
-
-___
-
-### TContainerOf
-
-• `get` **TContainerOf**(): `this`
-
-#### Returns
-
-`this`
-
-#### Implementation of
-
-[EnumerableLike](../interfaces/enumerable.EnumerableLike.md).[TContainerOf](../interfaces/enumerable.EnumerableLike.md#tcontainerof)
-
-#### Inherited from
-
-AbstractLiftable.TContainerOf
-
-___
-
-### TLiftableState
-
-• `get` **TLiftableState**(): `TState`
-
-#### Returns
-
-`TState`
-
-#### Implementation of
-
-[EnumerableLike](../interfaces/enumerable.EnumerableLike.md).[TLiftableState](../interfaces/enumerable.EnumerableLike.md#tliftablestate)
-
-#### Inherited from
-
-AbstractLiftable.TLiftableState
+AbstractLiftable<Enumerator<T\>\>.constructor
 
 ## Methods
 

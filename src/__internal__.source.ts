@@ -1,5 +1,7 @@
 import { MAX_SAFE_INTEGER, __DEV__ } from "./__internal__.env";
 import {
+  AbstractLiftable,
+  DelegatingLiftableStateOf,
   createDistinctUntilChangedLiftOperator,
   createKeepLiftOperator,
   createMapLiftOperator,
@@ -10,6 +12,7 @@ import {
   createTakeFirstLiftOperator,
   createTakeWhileLiftOperator,
   createThrowIfEmptyLiftOperator,
+  getDelegate,
 } from "./__internal__.liftable";
 import { forEach } from "./__internal__.readonlyArray";
 import {
@@ -50,20 +53,26 @@ import {
 } from "./functions";
 import {
   ContraVariant,
-  DelegatingLiftableStateOf,
   Lift as LiftableLift,
   LiftableStateOf,
-  getDelegate,
   lift,
 } from "./liftable";
 import { Option, isSome, none } from "./option";
 import {
   CreateSource,
+  SinkLike,
   SourceLike,
   assertState,
   notify,
   sinkInto,
 } from "./source";
+
+export abstract class AbstractSource<T, TSink extends SinkLike<T>>
+  extends AbstractLiftable<TSink>
+  implements SourceLike
+{
+  abstract sink(this: this, sink: TSink): void;
+}
 
 export interface Lift<C extends SourceLike>
   extends LiftableLift<C, ContraVariant> {}

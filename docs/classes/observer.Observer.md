@@ -18,8 +18,6 @@ Abstract base class for implementing the `ObserverLike` interface.
 
   ↳ **`Observer`**
 
-  ↳↳ [`AbstractDelegatingObserver`](observer.AbstractDelegatingObserver.md)
-
 ## Implements
 
 - [`SinkLike`](../interfaces/source.SinkLike.md)<`T`\>

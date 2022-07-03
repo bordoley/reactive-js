@@ -1,3 +1,4 @@
+import { createStream } from "./__internal__.stream";
 import { ContainerLike, ignoreElements, startWith } from "./container";
 import { dispatchTo } from "./dispatcher";
 import { add, addTo, bindTo } from "./disposable";
@@ -25,7 +26,7 @@ import {
 import { getScheduler } from "./observer";
 import { createPausableScheduler } from "./scheduler";
 import { sourceFrom as sourceFromSource } from "./source";
-import { StreamLike, createStream } from "./stream";
+import { StreamLike } from "./stream";
 import {
   StreamableLike,
   createLiftedStreamable,

@@ -1,3 +1,7 @@
+import {
+  AbstractDelegatingObserver,
+  createDelegatingObserver,
+} from "./__internal__.observer";
 import { hasDelay } from "./__internal__.optionalArgs";
 import {
   createCatchErrorOperator,
@@ -75,12 +79,7 @@ import { subscribe } from "./observable/subscribe";
 import { switchAll, switchAllT } from "./observable/switchAll";
 import { using } from "./observable/using";
 import { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
-import {
-  AbstractDelegatingObserver,
-  Observer,
-  createDelegatingObserver,
-  getScheduler,
-} from "./observer";
+import { Observer, getScheduler } from "./observer";
 import { Option, isNone, isSome, none } from "./option";
 import { RunnableLike, ToRunnable, createRunnable } from "./runnable";
 import {
@@ -178,10 +177,7 @@ export { never } from "./observable/never";
 export { subscribe } from "./observable/subscribe";
 export { using, usingT } from "./observable/using";
 export { defer, deferT } from "./observable/defer";
-export {
-  AbstractObservable,
-  AbstractDisposableObservable,
-} from "./observable/observable";
+export { AbstractDisposableObservable } from "./observable/observable";
 export { buffer, bufferT } from "./observable/buffer";
 export { map, mapT } from "./observable/map";
 export {

@@ -1,9 +1,13 @@
 import { FromArray, FromArrayOptions, ContainerOperator, ContainerOf } from "./container.mjs";
+import { AbstractLiftable, DelegatingLiftableStateOf } from "./__internal__.liftable.mjs";
 import { Disposable, DisposableOrTeardown } from "./disposable.mjs";
 import { Function1, Equality, Predicate, SideEffect1, Reducer, Factory } from "./functions.mjs";
-import { Lift as Lift$1, ContraVariant, LiftableStateOf, DelegatingLiftableStateOf } from "./liftable.mjs";
+import { Lift as Lift$1, ContraVariant, LiftableStateOf } from "./liftable.mjs";
 import { Option } from "./option.mjs";
-import { SourceLike, CreateSource } from "./source.mjs";
+import { SinkLike, SourceLike, CreateSource } from "./source.mjs";
+declare abstract class AbstractSource<T, TSink extends SinkLike<T>> extends AbstractLiftable<TSink> implements SourceLike {
+    abstract sink(this: this, sink: TSink): void;
+}
 interface Lift<C extends SourceLike> extends Lift$1<C, ContraVariant> {
 }
 declare const createBufferOperator: <C extends SourceLike>(m: Lift<C> & FromArray<C, FromArrayOptions>, BufferSink: new <T>(delegate: LiftableStateOf<C, readonly T[]>, maxBufferSize: number) => LiftableStateOf<C, T> & {
@@ -118,4 +122,4 @@ declare const createFromDisposable: <C extends SourceLike>(m: CreateSource<C>) =
 declare const createNever: <C extends SourceLike>(m: CreateSource<C>) => <T>() => ContainerOf<C, T>;
 declare const createOnSink: <C extends SourceLike>(m: CreateSource<C>) => <T>(f: Factory<DisposableOrTeardown | void>) => ContainerOperator<C, T, T>;
 declare const createUsing: <C extends SourceLike>(m: CreateSource<C>) => <TResource extends Disposable, T>(resourceFactory: Factory<TResource | readonly TResource[]>, sourceFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>) => ContainerOf<C, T>;
-export { Lift, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing };
+export { AbstractSource, Lift, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing };

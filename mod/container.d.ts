@@ -5,14 +5,6 @@ interface ContainerLike {
     readonly T?: unknown;
     readonly TContainerOf?: unknown;
 }
-declare abstract class AbstractContainer implements ContainerLike {
-    get TContainerOf(): this;
-    get T(): unknown;
-}
-declare abstract class AbstractDisposableContainer extends Disposable implements ContainerLike {
-    get TContainerOf(): this;
-    get T(): unknown;
-}
 declare type ContainerOf<C extends ContainerLike, T> = C extends {
     readonly TContainerOf: unknown;
 } ? (C & {
@@ -22,6 +14,10 @@ declare type ContainerOf<C extends ContainerLike, T> = C extends {
     readonly _T: () => T;
 };
 declare type ContainerOperator<C, TA, TB> = Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
+declare abstract class AbstractDisposableContainer extends Disposable implements ContainerLike {
+    get TContainerOf(): this;
+    get T(): unknown;
+}
 interface Container<C extends ContainerLike> {
     readonly TContainerOf?: C;
 }
@@ -229,4 +225,4 @@ declare const zipWith: <C extends ContainerLike, TA, TB>({ zip }: Zip<C>, snd: C
     TA,
     TB
 ]>;
-export { AbstractContainer, AbstractDisposableContainer, Buffer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, Using, Zip, compute, concatMap, concatWith, contains, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };
+export { AbstractDisposableContainer, Buffer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, FromIterable, FromIterator, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, ToIterable, Using, Zip, compute, concatMap, concatWith, contains, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };

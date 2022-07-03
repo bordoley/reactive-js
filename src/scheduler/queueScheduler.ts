@@ -1,17 +1,12 @@
 import { DisposableRef } from "../__internal__.disposable";
+import { AbstractEnumerator, reset } from "../__internal__.enumerator";
 import { getDelay } from "../__internal__.optionalArgs";
 import {
   SchedulerImplementationLike,
   runContinuation,
 } from "../__internal__.schedulerImplementation";
 import { add, isDisposed } from "../disposable";
-import {
-  AbstractEnumerator,
-  getCurrent,
-  hasCurrent,
-  move,
-  reset,
-} from "../enumerator";
+import { getCurrent, hasCurrent, move } from "../enumerator";
 import { max, newInstance, pipe } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
 import { SchedulerContinuationLike, SchedulerLike } from "../scheduler";

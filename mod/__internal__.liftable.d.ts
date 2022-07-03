@@ -1,7 +1,14 @@
 import { ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
+import { AbstractContainer } from "./__internal__.container.mjs";
 import { Equality, Predicate, Function1, SideEffect1, Reducer, Factory } from "./functions.mjs";
-import { LiftableLike, Variance, Lift, LiftableStateOf, LiftOperatorIn, LiftOperatorOut } from "./liftable.mjs";
+import { LiftableStateLike, LiftableLike, LiftableStateOf, Variance, Lift, LiftOperatorIn, LiftOperatorOut } from "./liftable.mjs";
 import { Option } from "./option.mjs";
+declare abstract class AbstractLiftable<TState extends LiftableStateLike> extends AbstractContainer implements LiftableLike {
+    get TLiftableState(): TState;
+}
+declare type DelegatingLiftableStateOf<C extends LiftableLike, T, TDelegate, TDelegateLiftableState extends LiftableStateOf<C, TDelegate> = LiftableStateOf<C, TDelegate>> = LiftableStateOf<C, T> & {
+    readonly delegate: TDelegateLiftableState;
+};
 declare const createDistinctUntilChangedLiftOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, DistinctUntilChangedLiftableState: new <T>(delegate: LiftableStateOf<C, T>, equality: Equality<T>) => LiftableStateOf<C, T>) => <T_1>(options?: {
     readonly equality?: Equality<T_1> | undefined;
 }) => ContainerOperator<C, T_1, T_1>;
@@ -31,4 +38,5 @@ declare const createTakeWhileLiftOperator: <C extends LiftableLike, TVariance ex
 declare const createThrowIfEmptyLiftOperator: <C extends LiftableLike, TVariance extends Variance>(m: Lift<C, TVariance>, ThrowIfEmptyLiftableState: new <T>(delegate: LiftOperatorIn<C, T, T, Lift<C, TVariance>>) => LiftOperatorOut<C, T, T, Lift<C, TVariance>> & {
     readonly isEmpty: boolean;
 }) => <T_1>(factory: Factory<unknown>) => ContainerOperator<C, T_1, T_1>;
-export { createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator };
+declare const getDelegate: <C extends LiftableLike, T, TDelegate, TDelegateLiftableState extends LiftableStateOf<C, TDelegate> = LiftableStateOf<C, TDelegate>>(s: DelegatingLiftableStateOf<C, T, TDelegate, TDelegateLiftableState>) => TDelegateLiftableState;
+export { AbstractLiftable, DelegatingLiftableStateOf, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, getDelegate };

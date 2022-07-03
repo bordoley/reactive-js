@@ -1,7 +1,7 @@
+import { zip as zipEnumerators } from "../__internal__.enumerator";
 import { map } from "../__internal__.readonlyArray";
 import { Zip } from "../container";
 import { EnumerableLike } from "../enumerable";
-import { zip as zipEnumerators } from "../enumerator";
 import { pipe } from "../functions";
 import { createEnumerable, enumerate } from "./enumerable";
 

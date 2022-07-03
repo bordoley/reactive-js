@@ -1,9 +1,10 @@
+import { createDelegatingObserver } from "../__internal__.observer";
 import { everySatisfy } from "../__internal__.readonlyArray";
 import { Concat } from "../container";
 import { addTo, dispose, onComplete } from "../disposable";
 import { getLength, isEmpty, pipe } from "../functions";
 import { ObservableLike } from "../observable";
-import { Observer, createDelegatingObserver } from "../observer";
+import { Observer } from "../observer";
 import { sourceFrom } from "../source";
 import { createObservable } from "./createObservable";
 import { isEnumerable, tagEnumerable } from "./observable";

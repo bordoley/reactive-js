@@ -1,8 +1,8 @@
 import { __DEV__ } from "./__internal__.env";
+import { getDelegate } from "./__internal__.liftable";
 import { AbstractDisposableContainer } from "./container";
 import { isDisposed } from "./disposable";
 import { newInstance, pipe, raise } from "./functions";
-import { getDelegate } from "./liftable";
 import { SinkLike, notify } from "./source";
 
 export class RunnableSink<T>
