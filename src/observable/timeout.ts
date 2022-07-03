@@ -1,5 +1,6 @@
+import { DisposableRef } from "../__internal__.disposable";
 import { throws } from "../container";
-import { SerialDisposable, add, bindTo, dispose } from "../disposable";
+import { bindTo, dispose } from "../disposable";
 import { newInstance, newInstanceWith, pipe, returns } from "../functions";
 import { getDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
@@ -23,17 +24,21 @@ const _timeoutError = /*@__PURE__*/ Symbol(
 export const timeoutError = _timeoutError;
 
 const setupDurationSubscription = <T>(observer: TimeoutObserver<T>) => {
-  observer.durationSubscription.inner = pipe(
+  observer.durationSubscription.current = pipe(
     observer.duration,
     subscribe(getScheduler(observer)),
   );
 };
 
 class TimeoutObserver<T> extends AbstractDelegatingObserver<T, T> {
+  readonly durationSubscription: DisposableRef = newInstance(
+    DisposableRef,
+    this,
+  );
+
   constructor(
     delegate: Observer<T>,
     readonly duration: ObservableLike<unknown>,
-    readonly durationSubscription: SerialDisposable,
   ) {
     super(delegate);
   }
@@ -41,7 +46,7 @@ class TimeoutObserver<T> extends AbstractDelegatingObserver<T, T> {
   notify(next: T) {
     assertState(this);
 
-    pipe(this.durationSubscription, dispose());
+    pipe(this.durationSubscription.current, dispose());
     pipe(this, getDelegate, notify(next));
   }
 }
@@ -78,12 +83,10 @@ export function timeout<T>(
           throws({ ...fromArrayT, ...mapT })(returnTimeoutError),
         );
   const operator = (delegate: Observer<T>) => {
-    const durationSubscription = newInstance(SerialDisposable);
     const observer = pipe(
       TimeoutObserver,
-      newInstanceWith(delegate, durationObs, durationSubscription),
+      newInstanceWith(delegate, durationObs),
       bindTo(delegate),
-      add(durationSubscription),
     );
 
     setupDurationSubscription(observer);

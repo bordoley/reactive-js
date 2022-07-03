@@ -133,41 +133,10 @@ const doDispose = (self, disposable) => {
     }
 };
 const disposed = /*@__PURE__*/ pipe(newInstance(Disposable), dispose());
-/**
- * A `Disposable` container that allows replacing an inner `Disposable` with another,
- * disposing the previous inner `Disposable` in the process. Disposing the
- * container also disposes the inner `Disposable`. Disposing the inner `Disposable`
- * with an error, disposes the container with the error.
- *
- * @noInheritDoc
- */
-class SerialDisposable extends Disposable {
-    constructor() {
-        super(...arguments);
-        this._inner = disposed;
-    }
-    /**
-     *  The inner `Disposable` that may be get or set. Setting the inner
-     *  `Disposable` disposes the old `Disposable` unless it is strictly equal
-     *  to the new one.
-     */
-    get inner() {
-        return this._inner;
-    }
-    /** @ignore */
-    set inner(newInner) {
-        const oldInner = this._inner;
-        this._inner = newInner;
-        if (oldInner !== newInner) {
-            addDisposableOrTeardown(this, newInner);
-            pipe(oldInner, dispose());
-        }
-    }
-}
 const toAbortSignal = (disposable) => {
     const abortController = newInstance(AbortController);
     addDisposableOrTeardown(disposable, () => abortController.abort());
     return abortController.signal;
 };
 
-export { Disposable, SerialDisposable, add, addTo, bindTo, dispose, disposed, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
+export { Disposable, add, addTo, bindTo, dispose, disposed, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

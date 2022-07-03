@@ -1,12 +1,7 @@
+import { DisposableRef } from "../__internal__.disposable";
 import { ConcatAll } from "../container";
-import {
-  addTo,
-  dispose,
-  disposed,
-  isDisposed,
-  onComplete,
-} from "../disposable";
-import { newInstanceWith, pipe } from "../functions";
+import { addTo, dispose, isDisposed, onComplete } from "../disposable";
+import { newInstance, newInstanceWith, pipe } from "../functions";
 import { getDelegate } from "../liftable";
 import { ObservableLike, ObservableOperator } from "../observable";
 import {
@@ -20,7 +15,7 @@ import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 function onDispose(this: SwitchObserver<unknown>) {
-  if (isDisposed(this.inner)) {
+  if (isDisposed(this.currentRef.current)) {
     pipe(this, getDelegate, dispose());
   }
 }
@@ -29,25 +24,21 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
   ObservableLike<T>,
   T
 > {
-  inner = disposed;
+  readonly currentRef = newInstance(DisposableRef, getDelegate(this));
 
   notify(next: ObservableLike<T>) {
     assertState(this);
 
-    pipe(this.inner, dispose());
-
-    const inner = pipe(
+    this.currentRef.current = pipe(
       next,
       onNotify(pipe(this, getDelegate, notifySink)),
       subscribe(getScheduler(this)),
-      addTo(getDelegate(this)),
       onComplete(() => {
         if (isDisposed(this)) {
           pipe(this, getDelegate, dispose());
         }
       }),
     );
-    this.inner = inner;
   }
 }
 

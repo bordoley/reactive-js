@@ -1,8 +1,9 @@
 /// <reference types="./scheduler.d.ts" />
 import { MAX_SAFE_INTEGER } from './__internal__.env.mjs';
-import { Disposable, isDisposed, dispose, disposed, add, addTo, onDisposed } from './disposable.mjs';
+import { Disposable, isDisposed, dispose, add, addTo, onDisposed, disposed } from './disposable.mjs';
 import { floor, getLength, newInstance, pipe, raise, instanceFactory, max, newInstanceWith } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
+import { DisposableRef } from './__internal__.disposable.mjs';
 import { getDelay } from './__internal__.optionalArgs.mjs';
 import { runContinuation } from './__internal__.schedulerImplementation.mjs';
 import { AbstractEnumerator, move, hasCurrent, reset, getCurrent } from './enumerator.mjs';
@@ -191,7 +192,7 @@ class AbstractQueueScheduler extends AbstractEnumerator {
         this.dueTime = 0;
         this.taskIDCounter = 0;
         this.yieldRequested = false;
-        this._inner = disposed;
+        this.currentRef = newInstance(DisposableRef, this);
         this.hostContinuation = () => {
             for (let task = peek(this); isSome(task) && !isDisposed(this); task = peek(this)) {
                 const { continuation, dueTime } = task;
@@ -206,16 +207,6 @@ class AbstractQueueScheduler extends AbstractEnumerator {
                 __yield({ delay });
             }
         };
-    }
-    get inner() {
-        return this._inner;
-    }
-    set inner(newInner) {
-        const { _inner: oldInner } = this;
-        if (oldInner !== newInner) {
-            oldInner.dispose();
-            this._inner = newInner;
-        }
     }
     get now() {
         return getNow(this.host);
@@ -249,14 +240,16 @@ class AbstractQueueScheduler extends AbstractEnumerator {
     }
     scheduleOnHost() {
         const task = peek(this);
-        const continuationActive = !isDisposed(this.inner) && isSome(task) && this.dueTime <= task.dueTime;
+        const continuationActive = !isDisposed(this.currentRef.current) &&
+            isSome(task) &&
+            this.dueTime <= task.dueTime;
         if (isNone(task) || continuationActive || this.isPaused) {
             return;
         }
         const dueTime = task.dueTime;
         const delay = max(dueTime - getNow(this), 0);
         this.dueTime = dueTime;
-        this.inner = pipe(this.host, schedule(this.hostContinuation, { delay }));
+        this.currentRef.current = pipe(this.host, schedule(this.hostContinuation, { delay }));
     }
     schedule(continuation, options) {
         const delay = getDelay(options);
@@ -338,7 +331,7 @@ class PausableScheduler extends AbstractQueueScheduler {
     }
     pause() {
         this.isPaused = true;
-        this.inner = disposed;
+        this.currentRef.current = disposed;
     }
     resume() {
         this.isPaused = false;

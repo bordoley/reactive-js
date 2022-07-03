@@ -14,8 +14,6 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`DispatcherLike`](../interfaces/dispatcher.DispatcherLike.md)
 
-  ↳ [`SerialDisposable`](disposable.SerialDisposable.md)
-
   ↳ [`LiftableStateLike`](../interfaces/liftable.LiftableStateLike.md)
 
   ↳ [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)

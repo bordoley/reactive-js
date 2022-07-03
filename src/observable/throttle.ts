@@ -1,11 +1,6 @@
+import { DisposableRef } from "../__internal__.disposable";
 import { fromValue } from "../container";
-import {
-  SerialDisposable,
-  add,
-  addTo,
-  isDisposed,
-  onComplete,
-} from "../disposable";
+import { addTo, isDisposed, onComplete } from "../disposable";
 import { Function1, newInstance, newInstanceWith, pipe } from "../functions";
 import { getDelegate } from "../liftable";
 import {
@@ -29,7 +24,7 @@ const setupDurationSubscription = <T>(
   observer: ThrottleObserver<T>,
   next: T,
 ) => {
-  observer.durationSubscription.inner = pipe(
+  observer.durationSubscription.current = pipe(
     observer.durationFunction(next),
     onNotify(observer.onNotify),
     subscribe(getScheduler(observer)),
@@ -39,6 +34,10 @@ const setupDurationSubscription = <T>(
 class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
   value: Option<T> = none;
   hasValue = false;
+  readonly durationSubscription: DisposableRef = newInstance(
+    DisposableRef,
+    this,
+  );
 
   readonly onNotify = (_?: unknown) => {
     if (this.hasValue) {
@@ -55,7 +54,6 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
     delegate: Observer<T>,
     readonly durationFunction: Function1<T, ObservableLike<unknown>>,
     readonly mode: ThrottleMode,
-    readonly durationSubscription: SerialDisposable,
   ) {
     super(delegate);
   }
@@ -67,7 +65,7 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
     this.hasValue = true;
 
     const durationSubscriptionDisposableIsDisposed = isDisposed(
-      this.durationSubscription.inner,
+      this.durationSubscription.current,
     );
 
     if (durationSubscriptionDisposableIsDisposed && this.mode !== "last") {
@@ -112,17 +110,14 @@ export function throttle<T>(
       ? (_: T) => fromValue(fromArrayT, { delay: duration })(none)
       : duration;
   const operator = (delegate: Observer<T>) => {
-    const durationSubscription = newInstance(SerialDisposable);
-
     const observer = pipe(
       ThrottleObserver,
       newInstanceWith<
         ThrottleObserver<T>,
         Observer<T>,
         Function1<T, ObservableLike<unknown>>,
-        ThrottleMode,
-        SerialDisposable
-      >(delegate, durationFunction, mode, durationSubscription),
+        ThrottleMode
+      >(delegate, durationFunction, mode),
       addTo(delegate),
       onComplete(() => {
         if (observer.mode !== "first" && observer.hasValue) {
@@ -130,7 +125,7 @@ export function throttle<T>(
         }
       }),
     );
-    return pipe(observer, add(durationSubscription));
+    return observer;
   };
   return lift(operator);
 }

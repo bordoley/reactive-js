@@ -1,7 +1,8 @@
 /// <reference types="./enumerable.d.ts" />
 import { createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './__internal__.liftable.mjs';
 import { map as map$1, empty as empty$1, forEach as forEach$1 } from './__internal__.readonlyArray.mjs';
-import { isDisposed, dispose, SerialDisposable, bindTo, add, addTo } from './disposable.mjs';
+import { isDisposed, dispose, add, addTo, bindTo } from './disposable.mjs';
+import { DisposableRef } from './__internal__.disposable.mjs';
 import { AbstractEnumerator, reset, hasCurrent, AbstractDelegatingEnumerator, move, getCurrent, Enumerator, forEach, zip as zip$1, AbstractPassThroughEnumerator } from './enumerator.mjs';
 import { pipe, pipeLazy, instanceFactory, callWith, newInstance, newInstanceWith, getLength, max, raise, alwaysTrue, identity } from './functions.mjs';
 import { empty } from './container.mjs';
@@ -93,24 +94,24 @@ const liftT = {
 };
 
 class ConcatAllEnumerator extends AbstractDelegatingEnumerator {
-    constructor(delegate, enumerator) {
-        super(delegate);
-        this.enumerator = enumerator;
+    constructor() {
+        super(...arguments);
+        this.enumerator = newInstance(DisposableRef, this);
     }
     move() {
         reset(this);
         const { delegate, enumerator } = this;
-        if (isDisposed(enumerator.inner) && move(delegate)) {
-            enumerator.inner = pipe(delegate, getCurrent, enumerate);
+        if (isDisposed(enumerator.current) && move(delegate)) {
+            enumerator.current = pipe(delegate, getCurrent, enumerate);
         }
-        while (enumerator.inner instanceof Enumerator &&
-            !isDisposed(enumerator.inner)) {
-            if (move(enumerator.inner)) {
-                this.current = getCurrent(enumerator.inner);
+        while (enumerator.current instanceof Enumerator &&
+            !isDisposed(enumerator.current)) {
+            if (move(enumerator.current)) {
+                this.current = getCurrent(enumerator.current);
                 break;
             }
             else if (move(delegate)) {
-                enumerator.inner = pipe(delegate, getCurrent, enumerate);
+                enumerator.current = pipe(delegate, getCurrent, enumerate);
             }
             else {
                 pipe(this, dispose());
@@ -119,10 +120,7 @@ class ConcatAllEnumerator extends AbstractDelegatingEnumerator {
         return hasCurrent(this);
     }
 }
-const operator = (delegate) => {
-    const inner = newInstance(SerialDisposable);
-    return pipe(ConcatAllEnumerator, newInstanceWith(delegate, inner), bindTo(inner), add(delegate));
-};
+const operator = (delegate) => pipe(ConcatAllEnumerator, newInstanceWith(delegate), add(delegate));
 /**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
  */

@@ -57,24 +57,5 @@ declare const onComplete: <T extends Disposable>(teardown: SideEffect) => Functi
  */
 declare const toErrorHandler: (disposable: Disposable) => SideEffect1<unknown>;
 declare const disposed: Disposable;
-/**
- * A `Disposable` container that allows replacing an inner `Disposable` with another,
- * disposing the previous inner `Disposable` in the process. Disposing the
- * container also disposes the inner `Disposable`. Disposing the inner `Disposable`
- * with an error, disposes the container with the error.
- *
- * @noInheritDoc
- */
-declare class SerialDisposable extends Disposable {
-    private _inner;
-    /**
-     *  The inner `Disposable` that may be get or set. Setting the inner
-     *  `Disposable` disposes the old `Disposable` unless it is strictly equal
-     *  to the new one.
-     */
-    get inner(): Disposable;
-    /** @ignore */
-    set inner(newInner: Disposable);
-}
 declare const toAbortSignal: (disposable: Disposable) => AbortSignal;
-export { Disposable, DisposableOrTeardown, Error, SerialDisposable, add, addTo, bindTo, dispose, disposed, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };
+export { Disposable, DisposableOrTeardown, Error, add, addTo, bindTo, dispose, disposed, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

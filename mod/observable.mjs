@@ -3,7 +3,7 @@ import { hasDelay, getDelay } from './__internal__.optionalArgs.mjs';
 import { createMapOperator, createOnNotifyOperator, createUsing, createNever, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './__internal__.source.mjs';
 import { empty as empty$1, fromValue, throws, concatMap } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
-import { dispose, addTo, isDisposed, onDisposed, add, disposed, onComplete, SerialDisposable, bindTo, toErrorHandler } from './disposable.mjs';
+import { dispose, addTo, isDisposed, onDisposed, add, onComplete, disposed, bindTo, toErrorHandler } from './disposable.mjs';
 import { move, getCurrent, AbstractEnumerator, reset, hasCurrent, zip as zip$1, forEach } from './enumerator.mjs';
 import { pipe, newInstance, getLength, newInstanceWith, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, max, returns, identity, instanceFactory } from './functions.mjs';
 import { AbstractSource, AbtractDisposableSource, sinkInto, sourceFrom, assertState, notifySink, notify } from './source.mjs';
@@ -11,6 +11,7 @@ import { getScheduler, AbstractDelegatingObserver, Observer, createDelegatingObs
 import { schedule, __yield, isInContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { createFromArray } from './__internal__.container.mjs';
 import { contraVariant, getDelegate } from './liftable.mjs';
+import { DisposableRef } from './__internal__.disposable.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { createRunnable } from './runnable.mjs';
 import { map as map$1, everySatisfy as everySatisfy$1 } from './__internal__.readonlyArray.mjs';
@@ -204,24 +205,22 @@ class Subject extends AbstractDisposableObservable {
 const subscribe = (scheduler) => observable => pipe(Observer, newInstanceWith(scheduler), addTo(scheduler, true), sourceFrom(observable));
 
 function onDispose$1() {
-    if (isDisposed(this.inner)) {
+    if (isDisposed(this.currentRef.current)) {
         pipe(this, getDelegate, dispose());
     }
 }
 class SwitchObserver extends AbstractDelegatingObserver {
     constructor() {
         super(...arguments);
-        this.inner = disposed;
+        this.currentRef = newInstance(DisposableRef, getDelegate(this));
     }
     notify(next) {
         assertState(this);
-        pipe(this.inner, dispose());
-        const inner = pipe(next, onNotify(pipe(this, getDelegate, notifySink)), subscribe(getScheduler(this)), addTo(getDelegate(this)), onComplete(() => {
+        this.currentRef.current = pipe(next, onNotify(pipe(this, getDelegate, notifySink)), subscribe(getScheduler(this)), onComplete(() => {
             if (isDisposed(this)) {
                 pipe(this, getDelegate, dispose());
             }
         }));
-        this.inner = inner;
     }
 }
 const operator = (delegate) => pipe(SwitchObserver, newInstanceWith(delegate), addTo(delegate), onComplete(onDispose$1));
@@ -665,19 +664,19 @@ function forkMerge(...ops) {
 const never = /*@__PURE__*/ createNever(createT);
 
 class BufferObserver extends AbstractDelegatingObserver {
-    constructor(delegate, durationFunction, maxBufferSize, durationSubscription) {
+    constructor(delegate, durationFunction, maxBufferSize) {
         super(delegate);
         this.durationFunction = durationFunction;
         this.maxBufferSize = maxBufferSize;
-        this.durationSubscription = durationSubscription;
         this.buffer = [];
+        this.durationSubscription = newInstance(DisposableRef, this);
     }
     notify(next) {
         assertState(this);
         const { buffer, maxBufferSize } = this;
         buffer.push(next);
         const doOnNotify = () => {
-            this.durationSubscription.inner = disposed;
+            this.durationSubscription.current = disposed;
             const buffer = this.buffer;
             this.buffer = [];
             pipe(this, getDelegate, notify(buffer));
@@ -685,8 +684,8 @@ class BufferObserver extends AbstractDelegatingObserver {
         if (getLength(buffer) === maxBufferSize) {
             doOnNotify();
         }
-        else if (isDisposed(this.durationSubscription.inner)) {
-            this.durationSubscription.inner = pipe(next, this.durationFunction, onNotify(doOnNotify), subscribe(getScheduler(this)));
+        else if (isDisposed(this.durationSubscription.current)) {
+            this.durationSubscription.current = pipe(next, this.durationFunction, onNotify(doOnNotify), subscribe(getScheduler(this)));
         }
     }
 }
@@ -707,8 +706,7 @@ function buffer(options = {}) {
             : delay;
     const maxBufferSize = max((_b = options.maxBufferSize) !== null && _b !== void 0 ? _b : MAX_SAFE_INTEGER, 1);
     const operator = (delegate) => {
-        const durationSubscription = newInstance(SerialDisposable);
-        return pipe(BufferObserver, newInstanceWith(delegate, durationFunction, maxBufferSize, durationSubscription), add(durationSubscription), addTo(delegate), onComplete(function onDispose() {
+        return pipe(BufferObserver, newInstanceWith(delegate, durationFunction, maxBufferSize), addTo(delegate), onComplete(function onDispose() {
             const { buffer } = this;
             this.buffer = [];
             if (isEmpty(buffer)) {
@@ -858,16 +856,16 @@ function retry(predicate) {
 }
 
 const setupDurationSubscription$1 = (observer, next) => {
-    observer.durationSubscription.inner = pipe(observer.durationFunction(next), onNotify(observer.onNotify), subscribe(getScheduler(observer)));
+    observer.durationSubscription.current = pipe(observer.durationFunction(next), onNotify(observer.onNotify), subscribe(getScheduler(observer)));
 };
 class ThrottleObserver extends AbstractDelegatingObserver {
-    constructor(delegate, durationFunction, mode, durationSubscription) {
+    constructor(delegate, durationFunction, mode) {
         super(delegate);
         this.durationFunction = durationFunction;
         this.mode = mode;
-        this.durationSubscription = durationSubscription;
         this.value = none;
         this.hasValue = false;
+        this.durationSubscription = newInstance(DisposableRef, this);
         this.onNotify = (_) => {
             if (this.hasValue) {
                 const value = this.value;
@@ -882,7 +880,7 @@ class ThrottleObserver extends AbstractDelegatingObserver {
         assertState(this);
         this.value = next;
         this.hasValue = true;
-        const durationSubscriptionDisposableIsDisposed = isDisposed(this.durationSubscription.inner);
+        const durationSubscriptionDisposableIsDisposed = isDisposed(this.durationSubscription.current);
         if (durationSubscriptionDisposableIsDisposed && this.mode !== "last") {
             this.onNotify();
         }
@@ -897,13 +895,12 @@ function throttle(duration, options = {}) {
         ? (_) => fromValue(fromArrayT, { delay: duration })(none)
         : duration;
     const operator = (delegate) => {
-        const durationSubscription = newInstance(SerialDisposable);
-        const observer = pipe(ThrottleObserver, newInstanceWith(delegate, durationFunction, mode, durationSubscription), addTo(delegate), onComplete(() => {
+        const observer = pipe(ThrottleObserver, newInstanceWith(delegate, durationFunction, mode), addTo(delegate), onComplete(() => {
             if (observer.mode !== "first" && observer.hasValue) {
                 pipe(observer.value, fromValue(fromArrayT), sinkInto(delegate));
             }
         }));
-        return pipe(observer, add(durationSubscription));
+        return observer;
     };
     return lift(operator);
 }
@@ -912,17 +909,17 @@ const _timeoutError = /*@__PURE__*/ Symbol("@reactive-js/core/lib/observable/tim
 /** Symbol thrown when the timeout operator times out */
 const timeoutError = _timeoutError;
 const setupDurationSubscription = (observer) => {
-    observer.durationSubscription.inner = pipe(observer.duration, subscribe(getScheduler(observer)));
+    observer.durationSubscription.current = pipe(observer.duration, subscribe(getScheduler(observer)));
 };
 class TimeoutObserver extends AbstractDelegatingObserver {
-    constructor(delegate, duration, durationSubscription) {
+    constructor(delegate, duration) {
         super(delegate);
         this.duration = duration;
-        this.durationSubscription = durationSubscription;
+        this.durationSubscription = newInstance(DisposableRef, this);
     }
     notify(next) {
         assertState(this);
-        pipe(this.durationSubscription, dispose());
+        pipe(this.durationSubscription.current, dispose());
         pipe(this, getDelegate, notify(next));
     }
 }
@@ -932,8 +929,7 @@ function timeout(duration) {
         ? throws({ ...fromArrayT, ...mapT }, { delay: duration })(returnTimeoutError)
         : concat(duration, throws({ ...fromArrayT, ...mapT })(returnTimeoutError));
     const operator = (delegate) => {
-        const durationSubscription = newInstance(SerialDisposable);
-        const observer = pipe(TimeoutObserver, newInstanceWith(delegate, durationObs, durationSubscription), bindTo(delegate), add(durationSubscription));
+        const observer = pipe(TimeoutObserver, newInstanceWith(delegate, durationObs), bindTo(delegate));
         setupDurationSubscription(observer);
         return observer;
     };

@@ -20,7 +20,7 @@ class PausableScheduler extends AbstractQueueScheduler {
 
   pause() {
     this.isPaused = true;
-    this.inner = disposed;
+    this.currentRef.current = disposed;
   }
 
   resume() {
