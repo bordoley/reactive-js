@@ -1,7 +1,7 @@
+import { Covariant, Lift, covariant } from "../__internal__.liftable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { Enumerator } from "../enumerator";
 import { Function1, newInstance, pipe } from "../functions";
-import { Covariant, Lift, covariant } from "../liftable";
 import { AbstractEnumerable, enumerate } from "./enumerable";
 
 class LiftedEnumerable<T> extends AbstractEnumerable<T> {

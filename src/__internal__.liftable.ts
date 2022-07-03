@@ -1,5 +1,5 @@
 import { AbstractContainer } from "./__internal__.container";
-import { ContainerOperator, FromArray, empty } from "./container";
+import { Container, ContainerOperator, FromArray, empty } from "./container";
 import { Error, add, addTo, bindTo, dispose, onComplete } from "./disposable";
 import {
   Equality,
@@ -14,19 +14,48 @@ import {
   raise,
   strictEquality,
 } from "./functions";
-import {
-  Lift,
-  LiftOperator,
-  LiftOperatorIn,
-  LiftOperatorOut,
-  LiftableLike,
-  LiftableStateLike,
-  LiftableStateOf,
-  Variance,
-  covariant,
-  lift,
-} from "./liftable";
+import { LiftableLike, LiftableStateLike, LiftableStateOf } from "./liftable";
 import { Option, none } from "./option";
+
+export type Covariant = 0;
+export const covariant: Covariant = 0;
+export type ContraVariant = 1;
+export const contraVariant: ContraVariant = 1;
+export type Variance = Covariant | ContraVariant;
+
+export interface Lift<C extends LiftableLike, TVariance extends Variance>
+  extends Container<C> {
+  variance: TVariance;
+
+  lift<TA, TB>(
+    operator: LiftOperator<C, TA, TB, this>,
+  ): ContainerOperator<C, TA, TB>;
+}
+
+export type LiftOperator<
+  C extends LiftableLike,
+  TA,
+  TB,
+  M extends Lift<C, Variance>,
+> = Function1<LiftOperatorIn<C, TA, TB, M>, LiftOperatorOut<C, TA, TB, M>>;
+
+export type LiftOperatorIn<
+  C extends LiftableLike,
+  TA,
+  TB,
+  M extends Lift<C, Variance>,
+> = M extends { variance?: ContraVariant }
+  ? LiftableStateOf<C, TB>
+  : LiftableStateOf<C, TA>;
+
+export type LiftOperatorOut<
+  C extends LiftableLike,
+  TA,
+  TB,
+  M extends Lift<C, Variance>,
+> = M extends { variance?: ContraVariant }
+  ? LiftableStateOf<C, TA>
+  : LiftableStateOf<C, TB>;
 
 export abstract class AbstractLiftable<TState extends LiftableStateLike>
   extends AbstractContainer
@@ -336,3 +365,13 @@ export const getDelegate = <
 >(
   s: DelegatingLiftableStateOf<C, T, TDelegate, TDelegateLiftableState>,
 ): TDelegateLiftableState => s.delegate;
+
+export const lift =
+  <C extends LiftableLike, TA, TB, TVariance extends Variance>(
+    m: Lift<C, TVariance>,
+  ): Function1<
+    LiftOperator<C, TA, TB, typeof m>,
+    ContainerOperator<C, TA, TB>
+  > =>
+  op =>
+    m.lift(op);

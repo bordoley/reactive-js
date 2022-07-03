@@ -1,8 +1,24 @@
-import { ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
+import { Container, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
 import { AbstractContainer } from "./__internal__.container.mjs";
-import { Equality, Predicate, Function1, SideEffect1, Reducer, Factory } from "./functions.mjs";
-import { LiftableStateLike, LiftableLike, LiftableStateOf, Variance, Lift, LiftOperatorIn, LiftOperatorOut } from "./liftable.mjs";
+import { Function1, Equality, Predicate, SideEffect1, Reducer, Factory } from "./functions.mjs";
+import { LiftableLike, LiftableStateOf, LiftableStateLike } from "./liftable.mjs";
 import { Option } from "./option.mjs";
+declare type Covariant = 0;
+declare const covariant: Covariant;
+declare type ContraVariant = 1;
+declare const contraVariant: ContraVariant;
+declare type Variance = Covariant | ContraVariant;
+interface Lift<C extends LiftableLike, TVariance extends Variance> extends Container<C> {
+    variance: TVariance;
+    lift<TA, TB>(operator: LiftOperator<C, TA, TB, this>): ContainerOperator<C, TA, TB>;
+}
+declare type LiftOperator<C extends LiftableLike, TA, TB, M extends Lift<C, Variance>> = Function1<LiftOperatorIn<C, TA, TB, M>, LiftOperatorOut<C, TA, TB, M>>;
+declare type LiftOperatorIn<C extends LiftableLike, TA, TB, M extends Lift<C, Variance>> = M extends {
+    variance?: ContraVariant;
+} ? LiftableStateOf<C, TB> : LiftableStateOf<C, TA>;
+declare type LiftOperatorOut<C extends LiftableLike, TA, TB, M extends Lift<C, Variance>> = M extends {
+    variance?: ContraVariant;
+} ? LiftableStateOf<C, TA> : LiftableStateOf<C, TB>;
 declare abstract class AbstractLiftable<TState extends LiftableStateLike> extends AbstractContainer implements LiftableLike {
     get TLiftableState(): TState;
 }
@@ -39,4 +55,5 @@ declare const createThrowIfEmptyLiftOperator: <C extends LiftableLike, TVariance
     readonly isEmpty: boolean;
 }) => <T_1>(factory: Factory<unknown>) => ContainerOperator<C, T_1, T_1>;
 declare const getDelegate: <C extends LiftableLike, T, TDelegate, TDelegateLiftableState extends LiftableStateOf<C, TDelegate> = LiftableStateOf<C, TDelegate>>(s: DelegatingLiftableStateOf<C, T, TDelegate, TDelegateLiftableState>) => TDelegateLiftableState;
-export { AbstractLiftable, DelegatingLiftableStateOf, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, getDelegate };
+declare const lift: <C extends LiftableLike, TA, TB, TVariance extends Variance>(m: Lift<C, TVariance>) => Function1<LiftOperator<C, TA, TB, Lift<C, TVariance>>, ContainerOperator<C, TA, TB>>;
+export { AbstractLiftable, ContraVariant, Covariant, DelegatingLiftableStateOf, Lift, LiftOperator, LiftOperatorIn, LiftOperatorOut, Variance, contraVariant, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, getDelegate, lift };

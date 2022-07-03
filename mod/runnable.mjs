@@ -7,7 +7,7 @@ import { isSome, none, isNone, getOrDefault } from './option.mjs';
 import { RunnableSink, AbstractDelegatingRunnableSink, createDelegatingRunnableSink } from './runnableSink.mjs';
 import { sourceFrom } from './source.mjs';
 import { createFromArray } from './__internal__.container.mjs';
-import { contraVariant } from './liftable.mjs';
+import { contraVariant } from './__internal__.liftable.mjs';
 
 class AbstractRunnable extends AbstractSource {
 }

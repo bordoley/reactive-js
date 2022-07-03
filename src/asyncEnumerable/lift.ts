@@ -1,11 +1,15 @@
-import { AbstractLiftable } from "../__internal__.liftable";
+import {
+  AbstractLiftable,
+  Covariant,
+  Lift,
+  covariant,
+} from "../__internal__.liftable";
 import {
   AsyncEnumerableLike,
   AsyncEnumerableOperator,
 } from "../asyncEnumerable";
 import { AsyncEnumerator } from "../asyncEnumerator";
 import { Function1, newInstance, pipe } from "../functions";
-import { Covariant, Lift, covariant } from "../liftable";
 import { SchedulerLike } from "../scheduler";
 import { stream } from "../streamable";
 

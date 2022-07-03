@@ -1,6 +1,5 @@
-import { ContainerLike, AbstractDisposableContainer, Container, ContainerOperator } from "./container.mjs";
+import { ContainerLike, AbstractDisposableContainer } from "./container.mjs";
 import { Disposable } from "./disposable.mjs";
-import { Function1 } from "./functions.mjs";
 interface LiftableStateLike extends Disposable, ContainerLike {
 }
 interface LiftableLike extends ContainerLike {
@@ -17,21 +16,4 @@ declare type LiftableStateOf<C extends LiftableLike, T> = C extends {
 declare abstract class AbtractDisposableLiftable<TState extends LiftableStateLike> extends AbstractDisposableContainer implements LiftableLike {
     get TLiftableState(): TState;
 }
-declare type Covariant = 0;
-declare const covariant: Covariant;
-declare type ContraVariant = 1;
-declare const contraVariant: ContraVariant;
-declare type Variance = Covariant | ContraVariant;
-interface Lift<C extends LiftableLike, TVariance extends Variance> extends Container<C> {
-    variance: TVariance;
-    lift<TA, TB>(operator: LiftOperator<C, TA, TB, this>): ContainerOperator<C, TA, TB>;
-}
-declare const lift: <C extends LiftableLike, TA, TB, TVariance extends Variance>(m: Lift<C, TVariance>) => Function1<LiftOperator<C, TA, TB, Lift<C, TVariance>>, ContainerOperator<C, TA, TB>>;
-declare type LiftOperator<C extends LiftableLike, TA, TB, M extends Lift<C, Variance>> = Function1<LiftOperatorIn<C, TA, TB, M>, LiftOperatorOut<C, TA, TB, M>>;
-declare type LiftOperatorIn<C extends LiftableLike, TA, TB, M extends Lift<C, Variance>> = M extends {
-    variance?: ContraVariant;
-} ? LiftableStateOf<C, TB> : LiftableStateOf<C, TA>;
-declare type LiftOperatorOut<C extends LiftableLike, TA, TB, M extends Lift<C, Variance>> = M extends {
-    variance?: ContraVariant;
-} ? LiftableStateOf<C, TA> : LiftableStateOf<C, TB>;
-export { AbtractDisposableLiftable, ContraVariant, Covariant, Lift, LiftOperator, LiftOperatorIn, LiftOperatorOut, LiftableLike, LiftableStateLike, LiftableStateOf, Variance, contraVariant, covariant, lift };
+export { AbtractDisposableLiftable, LiftableLike, LiftableStateLike, LiftableStateOf };

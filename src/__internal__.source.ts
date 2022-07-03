@@ -1,7 +1,9 @@
 import { MAX_SAFE_INTEGER, __DEV__ } from "./__internal__.env";
 import {
   AbstractLiftable,
+  ContraVariant,
   DelegatingLiftableStateOf,
+  Lift as LiftableLift,
   createDistinctUntilChangedLiftOperator,
   createKeepLiftOperator,
   createMapLiftOperator,
@@ -13,6 +15,7 @@ import {
   createTakeWhileLiftOperator,
   createThrowIfEmptyLiftOperator,
   getDelegate,
+  lift,
 } from "./__internal__.liftable";
 import { forEach } from "./__internal__.readonlyArray";
 import {
@@ -51,12 +54,7 @@ import {
   newInstanceWith,
   pipe,
 } from "./functions";
-import {
-  ContraVariant,
-  Lift as LiftableLift,
-  LiftableStateOf,
-  lift,
-} from "./liftable";
+import { LiftableStateOf } from "./liftable";
 import { Option, isSome, none } from "./option";
 import {
   CreateSource,

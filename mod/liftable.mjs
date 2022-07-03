@@ -7,8 +7,5 @@ class AbtractDisposableLiftable extends AbstractDisposableContainer {
         return raise();
     }
 }
-const covariant = 0;
-const contraVariant = 1;
-const lift = (m) => op => m.lift(op);
 
-export { AbtractDisposableLiftable, contraVariant, covariant, lift };
+export { AbtractDisposableLiftable };
