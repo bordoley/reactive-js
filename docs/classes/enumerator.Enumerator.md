@@ -20,7 +20,7 @@
 
 ## Implements
 
-- [`LiftableStateLike`](../interfaces/liftable.LiftableStateLike.md)
+- [`ContainerLike`](../interfaces/container.ContainerLike.md)
 
 ## Table of contents
 
@@ -71,7 +71,7 @@
 
 #### Implementation of
 
-[LiftableStateLike](../interfaces/liftable.LiftableStateLike.md).[T](../interfaces/liftable.LiftableStateLike.md#t)
+[ContainerLike](../interfaces/container.ContainerLike.md).[T](../interfaces/container.ContainerLike.md#t)
 
 #### Inherited from
 
@@ -89,7 +89,7 @@ ___
 
 #### Implementation of
 
-[LiftableStateLike](../interfaces/liftable.LiftableStateLike.md).[TContainerOf](../interfaces/liftable.LiftableStateLike.md#tcontainerof)
+[ContainerLike](../interfaces/container.ContainerLike.md).[TContainerOf](../interfaces/container.ContainerLike.md#tcontainerof)
 
 #### Inherited from
 
@@ -117,10 +117,6 @@ The error the `Disposable` was disposed with if disposed.
 
 [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
 
-#### Implementation of
-
-LiftableStateLike.error
-
 #### Inherited from
 
 AbstractDisposableContainer.error
@@ -146,10 +142,6 @@ ___
 #### Returns
 
 `boolean`
-
-#### Implementation of
-
-LiftableStateLike.isDisposed
 
 #### Inherited from
 
@@ -177,10 +169,6 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 `this`
 
-#### Implementation of
-
-[LiftableStateLike](../interfaces/liftable.LiftableStateLike.md).[add](../interfaces/liftable.LiftableStateLike.md#add)
-
 #### Inherited from
 
 [AbstractDisposableContainer](container.AbstractDisposableContainer.md).[add](container.AbstractDisposableContainer.md#add)
@@ -203,10 +191,6 @@ Dispose the resource.
 #### Returns
 
 `void`
-
-#### Implementation of
-
-[LiftableStateLike](../interfaces/liftable.LiftableStateLike.md).[dispose](../interfaces/liftable.LiftableStateLike.md#dispose)
 
 #### Inherited from
 

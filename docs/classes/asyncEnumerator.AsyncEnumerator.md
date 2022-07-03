@@ -18,7 +18,7 @@
 
 ## Implements
 
-- [`LiftableStateLike`](../interfaces/liftable.LiftableStateLike.md)
+- [`ContainerLike`](../interfaces/container.ContainerLike.md)
 - [`StreamLike`](../interfaces/stream.StreamLike.md)<`void`, `T`\>
 
 ## Table of contents
@@ -117,7 +117,7 @@ StreamLike.scheduler
 
 #### Implementation of
 
-[LiftableStateLike](../interfaces/liftable.LiftableStateLike.md).[T](../interfaces/liftable.LiftableStateLike.md#t)
+[ContainerLike](../interfaces/container.ContainerLike.md).[T](../interfaces/container.ContainerLike.md#t)
 
 #### Inherited from
 
@@ -135,7 +135,7 @@ ___
 
 #### Implementation of
 
-[LiftableStateLike](../interfaces/liftable.LiftableStateLike.md).[TContainerOf](../interfaces/liftable.LiftableStateLike.md#tcontainerof)
+[ContainerLike](../interfaces/container.ContainerLike.md).[TContainerOf](../interfaces/container.ContainerLike.md#tcontainerof)
 
 #### Inherited from
 
@@ -173,7 +173,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Implementation of
 
-LiftableStateLike.error
+StreamLike.error
 
 #### Inherited from
 
@@ -193,7 +193,7 @@ ___
 
 #### Implementation of
 
-LiftableStateLike.isDisposed
+StreamLike.isDisposed
 
 #### Inherited from
 
@@ -223,7 +223,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Implementation of
 
-[LiftableStateLike](../interfaces/liftable.LiftableStateLike.md).[add](../interfaces/liftable.LiftableStateLike.md#add)
+StreamLike.add
 
 #### Inherited from
 
@@ -271,7 +271,7 @@ Dispose the resource.
 
 #### Implementation of
 
-[LiftableStateLike](../interfaces/liftable.LiftableStateLike.md).[dispose](../interfaces/liftable.LiftableStateLike.md#dispose)
+StreamLike.dispose
 
 #### Inherited from
 
