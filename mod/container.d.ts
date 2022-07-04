@@ -91,6 +91,9 @@ interface TakeWhile<C extends ContainerLike> extends Container<C> {
         readonly inclusive?: boolean;
     }): ContainerOperator<C, T, T>;
 }
+interface ToArray<C extends ContainerLike> extends Container<C> {
+    toArray<T>(): Function1<ContainerOf<C, T>, readonly T[]>;
+}
 interface ToIterable<C extends ContainerLike> extends Container<C> {
     toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
 }
@@ -177,4 +180,4 @@ declare const zipWith: <C extends ContainerLike, TA, TB>({ zip }: Zip<C>, snd: C
     TA,
     TB
 ]>;
-export { Buffer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ToIterable, Zip, compute, concatMap, concatWith, contains, empty, endWith, fromOption, fromValue, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };
+export { Buffer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ToArray, ToIterable, Zip, compute, concatMap, concatWith, contains, empty, endWith, fromOption, fromValue, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };

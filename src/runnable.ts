@@ -45,6 +45,7 @@ import {
   TakeFirst,
   TakeLast,
   TakeWhile,
+  ToArray,
 } from "./container";
 import { addTo, dispose, isDisposed } from "./disposable";
 import {
@@ -470,6 +471,10 @@ export const throwIfEmptyT: ThrowIfEmpty<RunnableLike<unknown>> = {
  */
 export const toArray = <T>(): Function1<RunnableLike<T>, readonly T[]> =>
   compose(buffer(), first(), getOrDefault(emptyArray));
+
+export const toArrayT: ToArray<RunnableLike<unknown>> = {
+  toArray,
+};
 
 export const toRunnable = <T>(): Function1<RunnableLike<T>, RunnableLike<T>> =>
   identity;

@@ -38,6 +38,7 @@
 - [takeLastT](runnable.md#takelastt)
 - [takeWhileT](runnable.md#takewhilet)
 - [throwIfEmptyT](runnable.md#throwifemptyt)
+- [toArrayT](runnable.md#toarrayt)
 - [toRunnableT](runnable.md#torunnablet)
 - [usingT](runnable.md#usingt)
 
@@ -225,6 +226,12 @@ ___
 ### throwIfEmptyT
 
 • `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](../interfaces/liftable.ThrowIfEmpty.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
+### toArrayT
+
+• `Const` **toArrayT**: [`ToArray`](../interfaces/container.ToArray.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
 
 ___
 
