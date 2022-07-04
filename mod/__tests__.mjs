@@ -13,7 +13,7 @@ import { describe, test, expectArrayEquals, expectNone, expectEquals, expectTrue
 import { fromArray as fromArray$2, toIterable, fromIterable as fromIterable$1, toRunnable as toRunnable$2, fromArrayT as fromArrayT$3, keepT as keepT$1, concat as concat$1, concatAll as concatAll$1, distinctUntilChanged as distinctUntilChanged$1, generate as generate$2, map as map$2, repeat as repeat$1, scan as scan$2, skipFirst as skipFirst$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$2, zip } from './enumerable.mjs';
 import { TContainerOf, fromArray as fromArray$4, concat as concat$3, concatAll as concatAll$2, distinctUntilChanged as distinctUntilChanged$3, generate as generate$4, keep as keep$1, map as map$4, repeat as repeat$3, scan as scan$4, skipFirst as skipFirst$3, takeFirst as takeFirst$3, takeLast as takeLast$3, takeWhile as takeWhile$4, toRunnable as toRunnable$3, fromArrayT as fromArrayT$4, zipT as zipT$1 } from './sequence.mjs';
 import { dispatchTo } from './dispatcher.mjs';
-import { flow, toObservable as toObservable$1 } from './flowable.mjs';
+import { fromObservable, toObservable as toObservable$1 } from './flowable.mjs';
 
 const tests$7 = describe("async enumerable", test("fromArray", () => {
     const scheduler = createVirtualTimeScheduler();
@@ -404,9 +404,9 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(scheduler, forEach(ignore));
     pipe(dest, isDisposed, expectTrue);
     pipe(result, expectEquals(3));
-}), describe("flow", test("empty source", () => {
+}), describe("fromObservable", test("empty source", () => {
     const scheduler = createVirtualTimeScheduler();
-    const emptyStream = pipe([], fromArray$3(), flow(), stream(scheduler));
+    const emptyStream = pipe([], fromArray$3(), fromObservable(), stream(scheduler));
     emptyStream.dispatch("pause");
     emptyStream.dispatch("resume");
     const f = mockFn();
@@ -417,7 +417,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(emptyStream, isDisposed, expectTrue);
 }), test("generate source", () => {
     const scheduler = createVirtualTimeScheduler();
-    const generateStream = pipe(generate$3(increment, returns(-1), { delay: 1 }), flow(), stream(scheduler));
+    const generateStream = pipe(generate$3(increment, returns(-1), { delay: 1 }), fromObservable(), stream(scheduler));
     generateStream.dispatch("resume");
     pipe(scheduler, schedule(pipeLazy("pause", dispatchTo(generateStream)), {
         delay: 2,
@@ -438,7 +438,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
     pipe(subscription, isDisposed, expectTrue);
 }), test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
-    const fromValueStream = pipe([1], fromArray$3(), flow(), stream(scheduler));
+    const fromValueStream = pipe([1], fromArray$3(), fromObservable(), stream(scheduler));
     fromValueStream.dispatch("resume");
     fromValueStream.dispatch("resume");
     const f = mockFn();
@@ -455,14 +455,14 @@ const tests$1 = describe("streamable", test("__stream", () => {
         Uint8Array.from([226]),
         Uint8Array.from([130]),
         Uint8Array.from([172]),
-    ], fromArray$3(), decodeWithCharset(), flow(), toObservable$1(), reduce((acc, next) => acc + next, returns("")), onNotify(f), subscribe(scheduler));
+    ], fromArray$3(), decodeWithCharset(), fromObservable(), toObservable$1(), reduce((acc, next) => acc + next, returns("")), onNotify(f), subscribe(scheduler));
     pipe(scheduler, forEach(ignore));
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(String.fromCodePoint(8364)));
     pipe(subscription, isDisposed, expectTrue);
 }), test("empty", () => {
     const scheduler = createVirtualTimeScheduler();
-    const emptyStream = pipe(empty(fromArrayT), flow(), stream(scheduler));
+    const emptyStream = pipe(empty(fromArrayT), fromObservable(), stream(scheduler));
     emptyStream.dispatch("pause");
     emptyStream.dispatch("resume");
     const f = mockFn();
@@ -475,14 +475,14 @@ const tests$1 = describe("streamable", test("__stream", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
     const scheduler = createVirtualTimeScheduler();
     const f = mockFn();
-    const subscription = pipe(str, fromValue(fromArrayT), encodeUtf8({ ...mapT, ...deferT }), decodeWithCharset(), flow(), toObservable$1(), reduce((acc, next) => acc + next, returns("")), onNotify(f), subscribe(scheduler));
+    const subscription = pipe(str, fromValue(fromArrayT), encodeUtf8({ ...mapT, ...deferT }), decodeWithCharset(), fromObservable(), toObservable$1(), reduce((acc, next) => acc + next, returns("")), onNotify(f), subscribe(scheduler));
     pipe(scheduler, forEach(ignore));
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(str));
     pipe(subscription, isDisposed, expectTrue);
 }), test("fromValue", () => {
     const scheduler = createVirtualTimeScheduler();
-    const fromValueStream = pipe(1, fromValue(fromArrayT), flow(), stream(scheduler));
+    const fromValueStream = pipe(1, fromValue(fromArrayT), fromObservable(), stream(scheduler));
     fromValueStream.dispatch("resume");
     const f = mockFn();
     const subscription = pipe(fromValueStream, onNotify(f), subscribe(scheduler));
@@ -494,7 +494,7 @@ const tests$1 = describe("streamable", test("__stream", () => {
 }), test("map", () => {
     const scheduler = createVirtualTimeScheduler();
     const f = mockFn();
-    const src = pipe(1, fromValue(fromArrayT), map$3(returns(2)), flow(), toObservable$1(), reduce(sum, returns(0)), onNotify(f), subscribe(scheduler));
+    const src = pipe(1, fromValue(fromArrayT), map$3(returns(2)), fromObservable(), toObservable$1(), reduce(sum, returns(0)), onNotify(f), subscribe(scheduler));
     pipe(scheduler, forEach(ignore));
     pipe(f, expectToHaveBeenCalledTimes(1));
     pipe(f.calls[0][0], expectEquals(2));

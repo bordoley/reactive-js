@@ -1,6 +1,6 @@
 import { Readable, Writable } from "stream";
 import { endWith, ignoreElements } from "../container";
-import { flow, toObservable } from "../flowable";
+import { fromObservable, toObservable } from "../flowable";
 import { newInstance, pipe, returns } from "../functions";
 import {
   createReadableSource,
@@ -49,7 +49,7 @@ export const tests = describe(
       const src = pipe(
         [encoder.encode("abc"), encoder.encode("defg")],
         fromArray(),
-        flow(),
+        fromObservable(),
       );
 
       const dest = pipe(
@@ -84,7 +84,7 @@ export const tests = describe(
       const src = pipe(
         [encoder.encode("abc"), encoder.encode("defg")],
         fromArray(),
-        flow(),
+        fromObservable(),
       );
 
       const dest = pipe(
@@ -161,7 +161,7 @@ export const tests = describe(
     const acc = await pipe(
       [encoder.encode("abc"), encoder.encode("defg")],
       fromArray<Uint8Array>(),
-      flow(),
+      fromObservable(),
       gzip(),
       gunzip(),
       toObservable(),

@@ -9,7 +9,7 @@ import {
 import { dispatchTo } from "../dispatcher";
 import { dispose, isDisposed } from "../disposable";
 import { forEach } from "../enumerator";
-import { flow, toObservable } from "../flowable";
+import { fromObservable, toObservable } from "../flowable";
 import {
   ignore,
   increment,
@@ -234,10 +234,15 @@ export const tests = describe(
     pipe(result, expectEquals(3));
   }),
   describe(
-    "flow",
+    "fromObservable",
     test("empty source", () => {
       const scheduler = createVirtualTimeScheduler();
-      const emptyStream = pipe([], fromArray(), flow(), stream(scheduler));
+      const emptyStream = pipe(
+        [],
+        fromArray(),
+        fromObservable(),
+        stream(scheduler),
+      );
 
       emptyStream.dispatch("pause");
       emptyStream.dispatch("resume");
@@ -256,7 +261,7 @@ export const tests = describe(
       const scheduler = createVirtualTimeScheduler();
       const generateStream = pipe(
         generate(increment, returns(-1), { delay: 1 }),
-        flow(),
+        fromObservable(),
         stream(scheduler),
       );
 
@@ -301,7 +306,12 @@ export const tests = describe(
 
     test("fromValue", () => {
       const scheduler = createVirtualTimeScheduler();
-      const fromValueStream = pipe([1], fromArray(), flow(), stream(scheduler));
+      const fromValueStream = pipe(
+        [1],
+        fromArray(),
+        fromObservable(),
+        stream(scheduler),
+      );
 
       fromValueStream.dispatch("resume");
       fromValueStream.dispatch("resume");
@@ -336,7 +346,7 @@ export const tests = describe(
         ],
         fromArray(),
         decodeWithCharset(),
-        flow(),
+        fromObservable(),
         toObservable(),
         reduce((acc: string, next: string) => acc + next, returns("")),
         onNotify(f),
@@ -353,7 +363,7 @@ export const tests = describe(
       const scheduler = createVirtualTimeScheduler();
       const emptyStream = pipe(
         emptyContainer(fromArrayT),
-        flow(),
+        fromObservable(),
         stream(scheduler),
       );
 
@@ -380,7 +390,7 @@ export const tests = describe(
         fromValue(fromArrayT),
         encodeUtf8({ ...mapT, ...deferT }),
         decodeWithCharset(),
-        flow(),
+        fromObservable(),
         toObservable(),
         reduce((acc: string, next: string) => acc + next, returns("")),
         onNotify(f),
@@ -398,7 +408,7 @@ export const tests = describe(
       const fromValueStream = pipe(
         1,
         fromValue(fromArrayT),
-        flow(),
+        fromObservable(),
         stream(scheduler),
       );
 
@@ -426,7 +436,7 @@ export const tests = describe(
         1,
         fromValue(fromArrayT),
         map(returns(2)),
-        flow(),
+        fromObservable(),
         toObservable(),
         reduce(sum, returns(0)),
         onNotify(f),

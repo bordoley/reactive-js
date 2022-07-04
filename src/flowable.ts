@@ -159,7 +159,7 @@ export function createLiftedFlowable<T>(
   return (createLiftedStreamable as any)(...ops) as unknown as FlowableLike<T>;
 }
 
-export const flow =
+export const fromObservable =
   <T>(): Function1<ObservableLike<T>, FlowableLike<T>> =>
   observable =>
     createLiftedFlowable((modeObs: ObservableLike<FlowMode>) =>
@@ -199,10 +199,8 @@ export const flow =
       }),
     );
 
-export const fromObservable = flow;
-
 export const fromObservableT: FromObservable<FlowableLike<unknown>> = {
-  fromObservable: flow,
+  fromObservable,
 };
 
 export const toObservable =
