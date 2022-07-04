@@ -1,6 +1,7 @@
-import { ConcatAll, FromArrayOptions, FromArray, ContainerLike, Container, ContainerOf, Buffer, Concat, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Generate, Keep, Map, ContainerOperator, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty, Using } from "./container.mjs";
+import { ConcatAll, FromArrayOptions, FromArray, ContainerLike, Container, ContainerOf, Buffer, Concat, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Generate, Keep, Map, ContainerOperator, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty } from "./container.mjs";
 import { DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Function1, Equality, Predicate, Updater, Factory, Reducer } from "./functions.mjs";
+import { CatchError, Using } from "./liftable.mjs";
 import { Option } from "./option.mjs";
 import { CreateReactiveSource, ReactiveSourceLike } from "./reactive.mjs";
 import { RunnableSink } from "./runnableSink.mjs";
@@ -28,6 +29,7 @@ declare const buffer: <T>(options?: {
 }) => RunnableOperator<T, readonly T[]>;
 declare const bufferT: Buffer<RunnableLike<unknown>>;
 declare const catchError: <T>(onError: Function1<unknown, RunnableLike<T> | void>) => RunnableOperator<T, T>;
+declare const catchErrorT: CatchError<RunnableLike<unknown>>;
 declare const concat: Concat<RunnableLike<unknown>>["concat"];
 declare const concatT: Concat<RunnableLike<unknown>>;
 declare const decodeWithCharset: (charset?: string) => RunnableOperator<ArrayBuffer, string>;
@@ -92,4 +94,4 @@ declare const toRunnableT: ToRunnable<RunnableLike<unknown>>;
 declare const TContainerOf: RunnableLike<unknown>;
 declare const using: Using<RunnableLike<unknown>>["using"];
 declare const usingT: Using<RunnableLike<unknown>>;
-export { RunnableLike, RunnableOperator, TContainerOf, ToRunnable, buffer, bufferT, catchError, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, toRunnableT, using, usingT };
+export { RunnableLike, RunnableOperator, TContainerOf, ToRunnable, buffer, bufferT, catchError, catchErrorT, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toRunnable, toRunnableT, using, usingT };

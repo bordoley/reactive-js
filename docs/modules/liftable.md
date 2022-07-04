@@ -6,7 +6,9 @@
 
 ### Interfaces
 
+- [CatchError](../interfaces/liftable.CatchError.md)
 - [LiftableLike](../interfaces/liftable.LiftableLike.md)
+- [Using](../interfaces/liftable.Using.md)
 
 ### Type Aliases
 

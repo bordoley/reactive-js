@@ -1,14 +1,14 @@
-[Reactive-JS](../README.md) / [container](../modules/container.md) / Using
+[Reactive-JS](../README.md) / [liftable](../modules/liftable.md) / Using
 
 # Interface: Using<C\>
 
-[container](../modules/container.md).Using
+[liftable](../modules/liftable.md).Using
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](container.ContainerLike.md) |
+| `C` | extends [`LiftableLike`](liftable.LiftableLike.md) |
 
 ## Hierarchy
 
@@ -20,11 +20,11 @@
 
 ### Properties
 
-- [TContainerOf](container.Using.md#tcontainerof)
+- [TContainerOf](liftable.Using.md#tcontainerof)
 
 ### Methods
 
-- [using](container.Using.md#using)
+- [using](liftable.Using.md#using)
 
 ## Properties
 

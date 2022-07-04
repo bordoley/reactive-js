@@ -67,6 +67,7 @@ import {
   newInstance,
   pipe,
 } from "./functions";
+import { CatchError } from "./liftable";
 import { createObservable, createT } from "./observable/createObservable";
 import { defer } from "./observable/defer";
 import { fromArrayT } from "./observable/fromArray";
@@ -205,6 +206,10 @@ export const catchError: <T>(
   liftSynchronousT,
   class CatchErrorObserver<T> extends AbstractDelegatingObserver<T, T> {},
 );
+
+export const catchErrorT: CatchError<ObservableLike<unknown>> = {
+  catchError,
+};
 
 export const fromDisposable = /*@__PURE__*/ createFromDisposable(createT);
 

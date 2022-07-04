@@ -17,6 +17,7 @@
 
 - [TContainerOf](runnable.md#tcontainerof)
 - [bufferT](runnable.md#buffert)
+- [catchErrorT](runnable.md#catcherrort)
 - [concatAllT](runnable.md#concatallt)
 - [concatT](runnable.md#concatt)
 - [createT](runnable.md#createt)
@@ -98,6 +99,12 @@ ___
 ### bufferT
 
 • `Const` **bufferT**: [`Buffer`](../interfaces/container.Buffer.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
+### catchErrorT
+
+• `Const` **catchErrorT**: [`CatchError`](../interfaces/liftable.CatchError.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
 
 ___
 
@@ -229,7 +236,7 @@ ___
 
 ### usingT
 
-• `Const` **usingT**: [`Using`](../interfaces/container.Using.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+• `Const` **usingT**: [`Using`](../interfaces/liftable.Using.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
 
 ## Functions
 

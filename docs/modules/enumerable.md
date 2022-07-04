@@ -229,7 +229,7 @@ ___
 
 ### usingT
 
-• `Const` **usingT**: [`Using`](../interfaces/container.Using.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+• `Const` **usingT**: [`Using`](../interfaces/liftable.Using.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
 
 ___
 
