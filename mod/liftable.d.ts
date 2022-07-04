@@ -1,9 +1,7 @@
 import { ContainerLike, AbstractDisposableContainer } from "./container.mjs";
 import { Disposable } from "./disposable.mjs";
-interface LiftableStateLike extends Disposable, ContainerLike {
-}
 interface LiftableLike extends ContainerLike {
-    readonly TLiftableState: LiftableStateLike;
+    readonly TLiftableState: Disposable & ContainerLike;
 }
 declare type LiftableStateOf<C extends LiftableLike, T> = C extends {
     readonly TLiftableState: unknown;
@@ -13,7 +11,7 @@ declare type LiftableStateOf<C extends LiftableLike, T> = C extends {
     readonly _C: C;
     readonly _T: () => T;
 };
-declare abstract class AbtractDisposableLiftable<TState extends LiftableStateLike> extends AbstractDisposableContainer implements LiftableLike {
+declare abstract class AbtractDisposableLiftable<TState extends Disposable & ContainerLike> extends AbstractDisposableContainer implements LiftableLike {
     get TLiftableState(): TState;
 }
-export { AbtractDisposableLiftable, LiftableLike, LiftableStateLike, LiftableStateOf };
+export { AbtractDisposableLiftable, LiftableLike, LiftableStateOf };

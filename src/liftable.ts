@@ -2,10 +2,8 @@ import { AbstractDisposableContainer, ContainerLike } from "./container";
 import { Disposable } from "./disposable";
 import { raise } from "./functions";
 
-export interface LiftableStateLike extends Disposable, ContainerLike {}
-
 export interface LiftableLike extends ContainerLike {
-  readonly TLiftableState: LiftableStateLike;
+  readonly TLiftableState: Disposable & ContainerLike;
 }
 
 export type LiftableStateOf<C extends LiftableLike, T> = C extends {
@@ -20,7 +18,7 @@ export type LiftableStateOf<C extends LiftableLike, T> = C extends {
     };
 
 export abstract class AbtractDisposableLiftable<
-    TState extends LiftableStateLike,
+    TState extends Disposable & ContainerLike,
   >
   extends AbstractDisposableContainer
   implements LiftableLike
