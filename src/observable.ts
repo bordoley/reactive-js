@@ -178,7 +178,6 @@ export { never } from "./observable/never";
 export { subscribe } from "./observable/subscribe";
 export { using, usingT } from "./observable/using";
 export { defer, deferT } from "./observable/defer";
-export { AbstractDisposableObservable } from "./observable/observable";
 export { buffer, bufferT } from "./observable/buffer";
 export { map, mapT } from "./observable/map";
 export {

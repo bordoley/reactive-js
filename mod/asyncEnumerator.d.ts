@@ -1,11 +1,14 @@
 import { ContainerLike } from "./container.mjs";
 import { DispatcherLike } from "./dispatcher.mjs";
-import { AbtractDisposableLiftable } from "./liftable.mjs";
+import { Disposable } from "./disposable.mjs";
 import { ObservableLike } from "./observable.mjs";
 import { Observer } from "./observer.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
 import { StreamLike } from "./stream.mjs";
-declare abstract class AsyncEnumerator<T> extends AbtractDisposableLiftable<Observer<T>> implements ContainerLike, StreamLike<void, T> {
+declare abstract class AsyncEnumerator<T> extends Disposable implements ContainerLike, StreamLike<void, T> {
+    get T(): T;
+    get TContainerOf(): this;
+    get TLiftableState(): Observer<this["T"]>;
     abstract scheduler: SchedulerLike;
     abstract observerCount: number;
     abstract replay: number;

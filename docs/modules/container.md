@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Classes
-
-- [AbstractDisposableContainer](../classes/container.AbstractDisposableContainer.md)
-
 ### Interfaces
 
 - [Buffer](../interfaces/container.Buffer.md)

@@ -1,14 +1,16 @@
-import { AbstractDisposableContainer } from "./container.mjs";
 import { DispatcherLike } from "./dispatcher.mjs";
+import { Disposable } from "./disposable.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
 import { SinkLike } from "./sink.mjs";
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
-declare class Observer<T> extends AbstractDisposableContainer implements SinkLike<T> {
+declare class Observer<T> extends Disposable implements SinkLike<T> {
     readonly scheduler: SchedulerLike;
     private _dispatcher;
     constructor(scheduler: SchedulerLike);
+    get T(): T;
+    get TContainerOf(): this;
     get dispatcher(): DispatcherLike<T>;
     assertState(this: Observer<T>): void;
     notify(_: T): void;

@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`AbtractDisposableLiftable`](liftable.AbtractDisposableLiftable.md)<[`Observer`](observer.Observer.md)<`T`\>\>
+- [`Disposable`](disposable.Disposable.md)
 
   ↳ **`AsyncEnumerator`**
 
@@ -63,7 +63,7 @@
 
 #### Inherited from
 
-[AbtractDisposableLiftable](liftable.AbtractDisposableLiftable.md).[constructor](liftable.AbtractDisposableLiftable.md#constructor)
+[Disposable](disposable.Disposable.md).[constructor](disposable.Disposable.md#constructor)
 
 ## Properties
 
@@ -109,19 +109,15 @@ StreamLike.scheduler
 
 ### T
 
-• `get` **T**(): `unknown`
+• `get` **T**(): `T`
 
 #### Returns
 
-`unknown`
+`T`
 
 #### Implementation of
 
 [ContainerLike](../interfaces/container.ContainerLike.md).[T](../interfaces/container.ContainerLike.md#t)
-
-#### Inherited from
-
-AbtractDisposableLiftable.T
 
 ___
 
@@ -137,27 +133,19 @@ ___
 
 [ContainerLike](../interfaces/container.ContainerLike.md).[TContainerOf](../interfaces/container.ContainerLike.md#tcontainerof)
 
-#### Inherited from
-
-AbtractDisposableLiftable.TContainerOf
-
 ___
 
 ### TLiftableState
 
-• `get` **TLiftableState**(): `TState`
+• `get` **TLiftableState**(): [`Observer`](observer.Observer.md)<`this`[``"T"``]\>
 
 #### Returns
 
-`TState`
+[`Observer`](observer.Observer.md)<`this`[``"T"``]\>
 
 #### Implementation of
 
 StreamLike.TLiftableState
-
-#### Inherited from
-
-AbtractDisposableLiftable.TLiftableState
 
 ___
 
@@ -177,7 +165,7 @@ StreamLike.error
 
 #### Inherited from
 
-AbtractDisposableLiftable.error
+Disposable.error
 
 ___
 
@@ -197,7 +185,7 @@ StreamLike.isDisposed
 
 #### Inherited from
 
-AbtractDisposableLiftable.isDisposed
+Disposable.isDisposed
 
 ## Methods
 
@@ -227,7 +215,7 @@ StreamLike.add
 
 #### Inherited from
 
-[AbtractDisposableLiftable](liftable.AbtractDisposableLiftable.md).[add](liftable.AbtractDisposableLiftable.md#add)
+[Disposable](disposable.Disposable.md).[add](disposable.Disposable.md#add)
 
 ___
 
@@ -275,7 +263,7 @@ StreamLike.dispose
 
 #### Inherited from
 
-[AbtractDisposableLiftable](liftable.AbtractDisposableLiftable.md).[dispose](liftable.AbtractDisposableLiftable.md#dispose)
+[Disposable](disposable.Disposable.md).[dispose](disposable.Disposable.md#dispose)
 
 ___
 

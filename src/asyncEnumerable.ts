@@ -257,9 +257,9 @@ function createLiftedAsyncEnumerable<A, B, C, D, E, F, G, H, I, J, K, L>(
   op11: ObservableOperator<J, K>,
   op12: ObservableOperator<K, L>,
 ): AsyncEnumerableLike<L>;
-function createLiftedAsyncEnumerable<T>(
+function createLiftedAsyncEnumerable(
   ...ops: readonly ObservableOperator<unknown, unknown>[]
-): AsyncEnumerableLike<T> {
+): AsyncEnumerableLike<unknown> {
   const op = getLength(ops) > 1 ? (compose as any)(...ops) : ops[0];
 
   return createAsyncEnumerable((scheduler, options) => {
@@ -298,7 +298,7 @@ export const fromArray = /*@__PURE__*/ createFromArray<
         fromValueWithDelay(values[i]),
       ),
       takeFirst({ count: endIndex - startIndex }),
-    );
+    ) as AsyncEnumerableLike<T>;
   },
 );
 

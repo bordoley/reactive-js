@@ -10,11 +10,19 @@ Represents an unmanaged resource that can be disposed.
 
 - **`Disposable`**
 
-  ↳ [`AbstractDisposableContainer`](container.AbstractDisposableContainer.md)
+  ↳ [`AsyncEnumerator`](asyncEnumerator.AsyncEnumerator.md)
 
   ↳ [`DispatcherLike`](../interfaces/dispatcher.DispatcherLike.md)
 
+  ↳ [`Enumerator`](enumerator.Enumerator.md)
+
   ↳ [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)
+
+  ↳ [`Subject`](observable.Subject.md)
+
+  ↳ [`Observer`](observer.Observer.md)
+
+  ↳ [`RunnableSink`](runnableSink.RunnableSink.md)
 
   ↳ [`PrioritySchedulerLike`](../interfaces/scheduler.PrioritySchedulerLike.md)
 

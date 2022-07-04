@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Classes
-
-- [AbtractDisposableReactiveSource](../classes/reactive.AbtractDisposableReactiveSource.md)
-
 ### Interfaces
 
 - [CreateReactiveSource](../interfaces/reactive.CreateReactiveSource.md)

@@ -18,7 +18,6 @@
 
 ## Implemented by
 
-- [`AbstractDisposableContainer`](../classes/container.AbstractDisposableContainer.md)
 - [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)
 - [`Enumerator`](../classes/enumerator.Enumerator.md)
 

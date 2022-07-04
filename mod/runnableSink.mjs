@@ -1,10 +1,15 @@
 /// <reference types="./runnableSink.d.ts" />
 import { __DEV__ } from './__internal__.env.mjs';
-import { AbstractDisposableContainer } from './container.mjs';
-import { isDisposed } from './disposable.mjs';
+import { Disposable, isDisposed } from './disposable.mjs';
 import { raise } from './functions.mjs';
 
-class RunnableSink extends AbstractDisposableContainer {
+class RunnableSink extends Disposable {
+    get T() {
+        return raise();
+    }
+    get TContainerOf() {
+        return this;
+    }
     assertState() { }
     notify(_) { }
 }

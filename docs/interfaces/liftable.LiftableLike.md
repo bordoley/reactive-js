@@ -16,10 +16,6 @@
 
   ↳↳ [`ReactiveSourceLike`](reactive.ReactiveSourceLike.md)
 
-## Implemented by
-
-- [`AbtractDisposableLiftable`](../classes/liftable.AbtractDisposableLiftable.md)
-
 ## Table of contents
 
 ### Properties
