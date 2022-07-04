@@ -1,9 +1,8 @@
 import { __DEV__ } from "./__internal__.env";
-import { getDelegate } from "./__internal__.liftable";
 import { AbstractDisposableContainer } from "./container";
 import { isDisposed } from "./disposable";
-import { newInstance, pipe, raise } from "./functions";
-import { SinkLike, notify } from "./sink";
+import { raise } from "./functions";
+import { SinkLike } from "./sink";
 
 export class RunnableSink<T>
   extends AbstractDisposableContainer
@@ -20,24 +19,3 @@ if (__DEV__) {
     }
   };
 }
-
-export class AbstractDelegatingRunnableSink<
-  TIn,
-  TOut,
-> extends RunnableSink<TIn> {
-  constructor(readonly delegate: RunnableSink<TOut>) {
-    super();
-  }
-
-  notify(_: TIn) {}
-}
-
-class DelegatingRunnableSink<T> extends AbstractDelegatingRunnableSink<T, T> {
-  notify(next: T) {
-    pipe(this, getDelegate, notify(next));
-  }
-}
-
-export const createDelegatingRunnableSink = <T>(
-  delegate: RunnableSink<T>,
-): RunnableSink<T> => newInstance(DelegatingRunnableSink, delegate);
