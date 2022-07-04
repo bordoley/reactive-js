@@ -1,4 +1,4 @@
-import { Function1, Factory, Equality, Predicate, Updater, Reducer, TypePredicate } from "./functions.mjs";
+import { Function1, Equality, Predicate, Updater, Factory, Reducer, TypePredicate } from "./functions.mjs";
 import { Option } from "./option.mjs";
 interface ContainerLike {
     readonly T?: unknown;
@@ -26,9 +26,6 @@ interface Concat<C extends ContainerLike> extends Container<C> {
 }
 interface ConcatAll<C extends ContainerLike, O = Record<string, never>> extends Container<C> {
     concatAll: <T>(options?: Partial<O>) => ContainerOperator<C, ContainerOf<C, T>, T>;
-}
-interface Defer<C extends ContainerLike> extends Container<C> {
-    defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 }
 interface DistinctUntilChanged<C extends ContainerLike> extends Container<C> {
     distinctUntilChanged<T>(options?: {
@@ -180,4 +177,4 @@ declare const zipWith: <C extends ContainerLike, TA, TB>({ zip }: Zip<C>, snd: C
     TA,
     TB
 ]>;
-export { Buffer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, Defer, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ToIterable, Zip, compute, concatMap, concatWith, contains, empty, endWith, fromOption, fromValue, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };
+export { Buffer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ToIterable, Zip, compute, concatMap, concatWith, contains, empty, endWith, fromOption, fromValue, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };

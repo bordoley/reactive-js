@@ -228,7 +228,7 @@ ___
 
 ### deferT
 
-• `Const` **deferT**: [`Defer`](../interfaces/container.Defer.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+• `Const` **deferT**: [`Defer`](../interfaces/liftable.Defer.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 

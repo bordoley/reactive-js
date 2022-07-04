@@ -1,4 +1,4 @@
-import { ContainerLike, Container, ContainerOf, ContainerOperator, Defer, Map, ConcatAll } from "./container.mjs";
+import { ContainerLike, Container, ContainerOf, ContainerOperator, Map, ConcatAll } from "./container.mjs";
 import { Disposable } from "./disposable.mjs";
 import { Function1, Factory, Function2, Function3, Function4, Function5 } from "./functions.mjs";
 interface LiftableLike extends ContainerLike {
@@ -17,6 +17,9 @@ interface CatchError<C extends LiftableLike> extends Container<C> {
 }
 interface DecodeWithCharset<C extends LiftableLike> extends Container<C> {
     decodeWithCharset(charset?: string): ContainerOperator<C, ArrayBuffer, string>;
+}
+interface Defer<C extends LiftableLike> extends Container<C> {
+    defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 }
 interface FromIterable<C extends LiftableLike, O extends Record<string, never> = Record<string, never>> extends Container<C> {
     fromIterable<T>(options?: Partial<O>): Function1<Iterable<T>, ContainerOf<C, T>>;
@@ -55,4 +58,4 @@ interface Using<C extends LiftableLike> extends Container<C> {
 }
 declare const encodeUtf8: <C extends LiftableLike>(m: Defer<C> & Map<C>) => ContainerOperator<C, string, Uint8Array>;
 declare const genMap: <C extends LiftableLike, TA, TB, OConcatAll extends Record<string, never> = Record<string, never>, OFromIterator extends Record<string, never> = Record<string, never>, TReturn = any, TNext = unknown>(m: Map<C> & ConcatAll<C, OConcatAll> & FromIterator<C, OFromIterator>, mapper: Function1<TA, Generator<TB, TReturn, TNext>>, options?: Partial<OConcatAll & OFromIterator> | undefined) => ContainerOperator<C, TA, TB>;
-export { CatchError, DecodeWithCharset, FromIterable, FromIterator, LiftableLike, LiftableStateOf, ThrowIfEmpty, Using, encodeUtf8, genMap };
+export { CatchError, DecodeWithCharset, Defer, FromIterable, FromIterator, LiftableLike, LiftableStateOf, ThrowIfEmpty, Using, encodeUtf8, genMap };
