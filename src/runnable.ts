@@ -1,5 +1,9 @@
 import { empty as emptyArray } from "./__internal__.readonlyArray";
 import {
+  AbstractDelegatingRunnableSink,
+  createDelegatingRunnableSink,
+} from "./__internal__.runnableSink";
+import {
   createBufferOperator,
   createCatchErrorOperator,
   createDecodeWithCharsetOperator,
@@ -65,11 +69,7 @@ import { createRunnable, createT } from "./runnable/createRunnable";
 import { first } from "./runnable/first";
 import { fromArrayT } from "./runnable/fromArray";
 import { liftT } from "./runnable/lift";
-import {
-  AbstractDelegatingRunnableSink,
-  RunnableSink,
-  createDelegatingRunnableSink,
-} from "./runnableSink";
+import { RunnableSink } from "./runnableSink";
 import { SourceLike, sourceFrom } from "./source";
 
 export interface RunnableLike<T> extends SourceLike {

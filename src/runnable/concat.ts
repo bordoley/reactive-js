@@ -1,11 +1,11 @@
+import {
+  AbstractDelegatingRunnableSink,
+  createDelegatingRunnableSink,
+} from "../__internal__.runnableSink";
 import { ConcatAll } from "../container";
 import { addTo, bindTo, dispose } from "../disposable";
 import { newInstanceWith, pipe } from "../functions";
 import { RunnableLike, RunnableOperator } from "../runnable";
-import {
-  AbstractDelegatingRunnableSink,
-  createDelegatingRunnableSink,
-} from "../runnableSink";
 import { sourceFrom } from "../source";
 import { lift } from "./lift";
 
