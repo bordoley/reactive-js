@@ -27,6 +27,7 @@
 - [TakeFirst](../interfaces/container.TakeFirst.md)
 - [TakeLast](../interfaces/container.TakeLast.md)
 - [TakeWhile](../interfaces/container.TakeWhile.md)
+- [ToArray](../interfaces/container.ToArray.md)
 - [ToIterable](../interfaces/container.ToIterable.md)
 - [Zip](../interfaces/container.Zip.md)
 

@@ -156,6 +156,10 @@ export interface TakeWhile<C extends ContainerLike> extends Container<C> {
   ): ContainerOperator<C, T, T>;
 }
 
+export interface ToArray<C extends ContainerLike> extends Container<C> {
+  toArray<T>(): Function1<ContainerOf<C, T>, readonly T[]>;
+}
+
 export interface ToIterable<C extends ContainerLike> extends Container<C> {
   toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
 }

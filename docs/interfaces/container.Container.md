@@ -50,6 +50,8 @@
 
   ↳ [`TakeWhile`](container.TakeWhile.md)
 
+  ↳ [`ToArray`](container.ToArray.md)
+
   ↳ [`ToIterable`](container.ToIterable.md)
 
   ↳ [`Zip`](container.Zip.md)
