@@ -13,7 +13,7 @@ import { createLiftedStreamable, sourceFrom as sourceFrom$1 } from './streamable
 function createLiftedFlowable(...ops) {
     return createLiftedStreamable(...ops);
 }
-const flow = () => observable => createLiftedFlowable((modeObs) => createObservable(observer => {
+const fromObservable = () => observable => createLiftedFlowable((modeObs) => createObservable(observer => {
     const pausableScheduler = createPausableScheduler(getScheduler(observer));
     pipe(observer, sourceFrom(pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil))), add(pipe(modeObs, onNotify((mode) => {
         switch (mode) {
@@ -26,9 +26,8 @@ const flow = () => observable => createLiftedFlowable((modeObs) => createObserva
         }
     }), subscribe(getScheduler(observer)), bindTo(pausableScheduler))), add(pausableScheduler));
 }));
-const fromObservable = flow;
 const fromObservableT = {
-    fromObservable: flow,
+    fromObservable,
 };
 const toObservable = () => src => createObservable(observer => {
     const { dispatcher, scheduler } = observer;
@@ -40,4 +39,4 @@ const toObservableT = {
 };
 const TContainerOf = undefined;
 
-export { TContainerOf, createLiftedFlowable, flow, fromObservable, fromObservableT, toObservable, toObservableT };
+export { TContainerOf, createLiftedFlowable, fromObservable, fromObservableT, toObservable, toObservableT };

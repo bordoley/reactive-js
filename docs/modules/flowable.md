@@ -23,7 +23,6 @@
 ### Functions
 
 - [createLiftedFlowable](flowable.md#createliftedflowable)
-- [flow](flowable.md#flow)
 - [fromObservable](flowable.md#fromobservable)
 - [toObservable](flowable.md#toobservable)
 
@@ -427,22 +426,6 @@ ___
 #### Returns
 
 [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`L`\>
-
-___
-
-### flow
-
-▸ **flow**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`FlowableLike`](../interfaces/flowable.FlowableLike.md)<`T`, [`FlowableStreamLike`](../interfaces/flowable.FlowableStreamLike.md)<`T`\>\>\>
 
 ___
 
