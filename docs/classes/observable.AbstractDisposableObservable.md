@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`AbtractDisposableSource`](source.AbtractDisposableSource.md)<`T`, [`Observer`](observer.Observer.md)<`T`\>\>
+- [`AbtractDisposableReactiveSource`](reactive.AbtractDisposableReactiveSource.md)<`T`, [`Observer`](observer.Observer.md)<`T`\>\>
 
   ↳ **`AbstractDisposableObservable`**
 
@@ -56,7 +56,7 @@
 
 #### Inherited from
 
-[AbtractDisposableSource](source.AbtractDisposableSource.md).[constructor](source.AbtractDisposableSource.md#constructor)
+[AbtractDisposableReactiveSource](reactive.AbtractDisposableReactiveSource.md).[constructor](reactive.AbtractDisposableReactiveSource.md#constructor)
 
 ## Accessors
 
@@ -74,7 +74,7 @@
 
 #### Inherited from
 
-AbtractDisposableSource.T
+AbtractDisposableReactiveSource.T
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 #### Inherited from
 
-AbtractDisposableSource.TContainerOf
+AbtractDisposableReactiveSource.TContainerOf
 
 ___
 
@@ -110,7 +110,7 @@ ___
 
 #### Inherited from
 
-AbtractDisposableSource.TLiftableState
+AbtractDisposableReactiveSource.TLiftableState
 
 ___
 
@@ -126,7 +126,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-AbtractDisposableSource.error
+AbtractDisposableReactiveSource.error
 
 ___
 
@@ -142,7 +142,7 @@ ___
 
 #### Inherited from
 
-AbtractDisposableSource.isDisposed
+AbtractDisposableReactiveSource.isDisposed
 
 ## Methods
 
@@ -168,7 +168,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Inherited from
 
-[AbtractDisposableSource](source.AbtractDisposableSource.md).[add](source.AbtractDisposableSource.md#add)
+[AbtractDisposableReactiveSource](reactive.AbtractDisposableReactiveSource.md).[add](reactive.AbtractDisposableReactiveSource.md#add)
 
 ___
 
@@ -191,7 +191,7 @@ Dispose the resource.
 
 #### Inherited from
 
-[AbtractDisposableSource](source.AbtractDisposableSource.md).[dispose](source.AbtractDisposableSource.md#dispose)
+[AbtractDisposableReactiveSource](reactive.AbtractDisposableReactiveSource.md).[dispose](reactive.AbtractDisposableReactiveSource.md#dispose)
 
 ___
 
@@ -216,4 +216,4 @@ ___
 
 #### Inherited from
 
-[AbtractDisposableSource](source.AbtractDisposableSource.md).[sink](source.AbtractDisposableSource.md#sink)
+[AbtractDisposableReactiveSource](reactive.AbtractDisposableReactiveSource.md).[sink](reactive.AbtractDisposableReactiveSource.md#sink)

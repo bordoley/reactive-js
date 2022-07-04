@@ -33,8 +33,8 @@ import {
   subscribe,
 } from "./observable";
 import { Option, isSome, none } from "./option";
+import { sinkInto as sinkIntoSink } from "./reactive";
 import { SchedulerLike } from "./scheduler";
-import { sinkInto as sinkIntoSink } from "./source";
 import { StreamLike } from "./stream";
 
 export interface StreamableLike<

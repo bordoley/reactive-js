@@ -8,25 +8,29 @@ import {
 } from "./liftable";
 import { SinkLike } from "./sink";
 
-export interface SourceLike extends LiftableLike {
+export interface ReactiveSourceLike extends LiftableLike {
   readonly TLiftableState: SinkLike<unknown>;
 
   sink(this: this["TContainerOf"], sink: this["TLiftableState"]): void;
 }
 
-export abstract class AbtractDisposableSource<T, TSink extends SinkLike<T>>
+export abstract class AbtractDisposableReactiveSource<
+    T,
+    TSink extends SinkLike<T>,
+  >
   extends AbtractDisposableLiftable<TSink>
-  implements SourceLike
+  implements ReactiveSourceLike
 {
   abstract sink(this: this, sink: TSink): void;
 }
 
-export interface CreateSource<C extends SourceLike> extends Container<C> {
+export interface CreateReactiveSource<C extends ReactiveSourceLike>
+  extends Container<C> {
   create<T>(onSink: (sink: LiftableStateOf<C, T>) => void): ContainerOf<C, T>;
 }
 
 export const sinkInto =
-  <C extends SourceLike, T, TSink extends LiftableStateOf<C, T>>(
+  <C extends ReactiveSourceLike, T, TSink extends LiftableStateOf<C, T>>(
     sink: TSink,
   ): Function1<C, C> =>
   source => {
@@ -35,7 +39,7 @@ export const sinkInto =
   };
 
 export const sourceFrom =
-  <C extends SourceLike, T, TSink extends LiftableStateOf<C, T>>(
+  <C extends ReactiveSourceLike, T, TSink extends LiftableStateOf<C, T>>(
     source: C,
   ): Function1<TSink, TSink> =>
   sink => {

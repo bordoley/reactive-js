@@ -3,9 +3,9 @@ import { Concat, FromArray, FromIterator, FromIterable, Using, Defer, Buffer, Ma
 import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Predicate, Equality, Updater, Reducer } from "./functions.mjs";
 import { Observer } from "./observer.mjs";
 import { Option } from "./option.mjs";
+import { CreateReactiveSource, AbtractDisposableReactiveSource, ReactiveSourceLike } from "./reactive.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
 import { SchedulerLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
-import { CreateSource, AbtractDisposableSource, SourceLike } from "./source.mjs";
 import { EnumerableLike, FromEnumerable, ToEnumerable } from "./enumerable.mjs";
 declare const observable: <T>(computation: Factory<T>, { mode }?: {
     mode?: ObservableEffectMode | undefined;
@@ -287,8 +287,8 @@ declare function forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: Observa
 declare function concat<T>(fst: ObservableLike<T>, snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): ObservableLike<T>;
 declare const concatT: Concat<ObservableLike<unknown>>;
 declare const createObservable: <T>(f: SideEffect1<Observer<T>>) => ObservableLike<T>;
-declare const createT: CreateSource<ObservableLike<unknown>>;
-declare abstract class AbstractDisposableObservable<T> extends AbtractDisposableSource<T, Observer<T>> implements ObservableLike<T> {
+declare const createT: CreateReactiveSource<ObservableLike<unknown>>;
+declare abstract class AbstractDisposableObservable<T> extends AbtractDisposableReactiveSource<T, Observer<T>> implements ObservableLike<T> {
 }
 declare class Subject<T> extends AbstractDisposableObservable<T> implements MulticastObservableLike<T> {
     readonly replay: number;
@@ -531,7 +531,7 @@ declare const toPromise: <T>(scheduler: SchedulerLike) => Function1<ObservableLi
  *
  * @noInheritDoc
  */
-interface ObservableLike<T> extends SourceLike {
+interface ObservableLike<T> extends ReactiveSourceLike {
     readonly T: unknown;
     readonly TContainerOf: ObservableLike<this["T"]>;
     readonly TLiftableState: Observer<this["T"]>;

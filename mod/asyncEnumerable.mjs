@@ -14,7 +14,7 @@ import { move, hasCurrent, getCurrent } from './enumerator.mjs';
 import { Subject, publish, getObserverCount, getReplay, fromArrayT as fromArrayT$1, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, withLatestFrom, using, concatT, never, onNotify, takeWhile as takeWhile$1, map as map$1, scanAsync as scanAsync$1, keep as keep$1, createObservable, onSubscribe } from './observable.mjs';
 import { getScheduler } from './observer.mjs';
 import { none } from './option.mjs';
-import { sinkInto } from './source.mjs';
+import { sinkInto } from './reactive.mjs';
 
 class LiftedAsyncEnumerable extends AbstractLiftable {
     constructor(src, operators) {

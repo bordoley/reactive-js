@@ -1,7 +1,7 @@
-import { AbstractSource } from "../__internal__.source";
+import { AbstractReactiveSource } from "../__internal__.reactive";
 import { RunnableLike } from "../runnable";
 import { RunnableSink } from "../runnableSink";
 
 export abstract class AbstractRunnable<T>
-  extends AbstractSource<T, RunnableSink<T>>
+  extends AbstractReactiveSource<T, RunnableSink<T>>
   implements RunnableLike<T> {}

@@ -1,4 +1,4 @@
-/// <reference types="./__internal__.source.d.ts" />
+/// <reference types="./__internal__.reactive.d.ts" />
 import { MAX_SAFE_INTEGER } from './__internal__.env.mjs';
 import { AbstractLiftable, getDelegate, lift, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './__internal__.liftable.mjs';
 import { forEach } from './__internal__.readonlyArray.mjs';
@@ -6,10 +6,10 @@ import { fromValue, empty } from './container.mjs';
 import { addTo, onComplete, dispose, onError, isDisposed, onDisposed, add } from './disposable.mjs';
 import { getLength, max, pipe, newInstanceWith, isEmpty, newInstance, compose, negate, ignore, identity } from './functions.mjs';
 import { none, isSome } from './option.mjs';
+import { sinkInto } from './reactive.mjs';
 import { assertState, notify } from './sink.mjs';
-import { sinkInto } from './source.mjs';
 
-class AbstractSource extends AbstractLiftable {
+class AbstractReactiveSource extends AbstractLiftable {
 }
 const create = (m) => (onSink) => m.create(onSink);
 const decorateWithNotify = (SinkClass, notify) => {
@@ -243,4 +243,4 @@ const createOnSink = (m) => (f) => src => pipe((sink) => {
 }, create(m));
 const createUsing = (m) => (resourceFactory, sourceFactory) => pipe((sink) => pipe(resourceFactory(), resources => (Array.isArray(resources) ? resources : [resources]), forEach(addTo(sink)), (resources) => sourceFactory(...resources), sinkInto(sink)), create(m));
 
-export { AbstractSource, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing };
+export { AbstractReactiveSource, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing };

@@ -78,8 +78,8 @@ import {
 } from "./observable";
 import { Observer, getScheduler } from "./observer";
 import { none } from "./option";
+import { sinkInto } from "./reactive";
 import { SchedulerLike } from "./scheduler";
-import { sinkInto } from "./source";
 import { StreamableLike, stream } from "./streamable";
 
 export interface AsyncEnumerableLike<T>

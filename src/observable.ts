@@ -20,7 +20,7 @@ import {
   createTakeLastOperator,
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
-} from "./__internal__.source";
+} from "./__internal__.reactive";
 import {
   Container,
   ContainerLike,
@@ -81,6 +81,7 @@ import { using } from "./observable/using";
 import { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
 import { Observer, getScheduler } from "./observer";
 import { Option, isNone, isSome, none } from "./option";
+import { ReactiveSourceLike, sourceFrom } from "./reactive";
 import { RunnableLike, ToRunnable, createRunnable } from "./runnable";
 import {
   SchedulerLike,
@@ -89,14 +90,13 @@ import {
   createVirtualTimeScheduler,
 } from "./scheduler";
 import { notifySink } from "./sink";
-import { SourceLike, sourceFrom } from "./source";
 
 /**
  * The source of notifications which notifies a `ObserverLike` instance.
  *
  * @noInheritDoc
  */
-export interface ObservableLike<T> extends SourceLike {
+export interface ObservableLike<T> extends ReactiveSourceLike {
   readonly T: unknown;
   readonly TContainerOf: ObservableLike<this["T"]>;
   readonly TLiftableState: Observer<this["T"]>;

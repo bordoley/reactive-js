@@ -9,7 +9,7 @@ import { getDelegate } from './__internal__.liftable.mjs';
 import { AbstractDelegatingStream } from './__internal__.stream.mjs';
 import { ignoreElements } from './container.mjs';
 import { none, isSome } from './option.mjs';
-import { sinkInto } from './source.mjs';
+import { sinkInto } from './reactive.mjs';
 import { createStreamble, createActionReducer, stream } from './streamable.mjs';
 
 const fromEvent = (target, eventName, selector) => createObservable(observer => {

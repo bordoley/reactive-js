@@ -1,14 +1,14 @@
-import { AbstractSource } from "../__internal__.source";
+import { AbstractReactiveSource } from "../__internal__.reactive";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
-import { AbtractDisposableSource } from "../source";
+import { AbtractDisposableReactiveSource } from "../reactive";
 
 export abstract class AbstractObservable<T>
-  extends AbstractSource<T, Observer<T>>
+  extends AbstractReactiveSource<T, Observer<T>>
   implements ObservableLike<T> {}
 
 export abstract class AbstractDisposableObservable<T>
-  extends AbtractDisposableSource<T, Observer<T>>
+  extends AbtractDisposableReactiveSource<T, Observer<T>>
   implements ObservableLike<T> {}
 
 export const isEnumerable = (obs: ObservableLike<unknown>) =>

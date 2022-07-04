@@ -1,7 +1,7 @@
-/// <reference types="./source.d.ts" />
+/// <reference types="./reactive.d.ts" />
 import { AbtractDisposableLiftable } from './liftable.mjs';
 
-class AbtractDisposableSource extends AbtractDisposableLiftable {
+class AbtractDisposableReactiveSource extends AbtractDisposableLiftable {
 }
 const sinkInto = (sink) => source => {
     source.sink(sink);
@@ -12,4 +12,4 @@ const sourceFrom = (source) => sink => {
     return sink;
 };
 
-export { AbtractDisposableSource, sinkInto, sourceFrom };
+export { AbtractDisposableReactiveSource, sinkInto, sourceFrom };

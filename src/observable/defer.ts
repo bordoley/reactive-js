@@ -3,8 +3,8 @@ import { addTo } from "../disposable";
 import { Factory, SideEffect1, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer, getScheduler } from "../observer";
+import { sinkInto } from "../reactive";
 import { schedule } from "../scheduler";
-import { sinkInto } from "../source";
 import { createObservable } from "./createObservable";
 
 export function defer<T>(
