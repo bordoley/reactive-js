@@ -11,10 +11,6 @@ interface FlowableLike<T, TStream extends FlowableStreamLike<T> = FlowableStream
 interface FlowableStreamLike<T> extends StreamLike<FlowMode, T> {
 }
 declare type FlowableOperator<TA, TB> = Function1<FlowableLike<TA>, FlowableLike<TB>>;
-interface FlowableSinkLike<T, TStream extends FlowableSinkStreamLike<T> = FlowableSinkStreamLike<T>> extends StreamableLike<T, FlowMode, TStream> {
-}
-interface FlowableSinkStreamLike<T> extends StreamLike<T, FlowMode> {
-}
 declare function createLiftedFlowable<T, A>(op1: ObservableOperator<T, A>): FlowableLike<A>;
 declare function createLiftedFlowable<T, A, B>(op1: ObservableOperator<T, A>, op2: ObservableOperator<A, B>): FlowableLike<B>;
 declare function createLiftedFlowable<T, A, B, C>(op1: ObservableOperator<T, A>, op2: ObservableOperator<A, B>, op3: ObservableOperator<B, C>): FlowableLike<C>;
@@ -33,4 +29,4 @@ declare const fromObservableT: FromObservable<FlowableLike<unknown>>;
 declare const toObservable: <T>() => Function1<FlowableLike<T, FlowableStreamLike<T>>, ObservableLike<T>>;
 declare const toObservableT: ToObservable<FlowableLike<unknown>>;
 declare const TContainerOf: FlowableLike<unknown>;
-export { FlowMode, FlowableLike, FlowableOperator, FlowableSinkLike, FlowableSinkStreamLike, FlowableStreamLike, TContainerOf, createLiftedFlowable, flow, fromObservable, fromObservableT, toObservable, toObservableT };
+export { FlowMode, FlowableLike, FlowableOperator, FlowableStreamLike, TContainerOf, createLiftedFlowable, flow, fromObservable, fromObservableT, toObservable, toObservableT };

@@ -21,8 +21,6 @@ Represents a duplex stream
 
   ↳ **`StreamLike`**
 
-  ↳↳ [`FlowableSinkStreamLike`](flowable.FlowableSinkStreamLike.md)
-
   ↳↳ [`FlowableStreamLike`](flowable.FlowableStreamLike.md)
 
   ↳↳ [`StateStreamLike`](streamable.StateStreamLike.md)

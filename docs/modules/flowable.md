@@ -7,8 +7,6 @@
 ### Interfaces
 
 - [FlowableLike](../interfaces/flowable.FlowableLike.md)
-- [FlowableSinkLike](../interfaces/flowable.FlowableSinkLike.md)
-- [FlowableSinkStreamLike](../interfaces/flowable.FlowableSinkStreamLike.md)
 - [FlowableStreamLike](../interfaces/flowable.FlowableStreamLike.md)
 
 ### Type Aliases
