@@ -13,11 +13,11 @@ import { dispatchTo } from "../dispatcher";
 import { FlowableOperator, createLiftedFlowable } from "../flowable";
 import { Factory, pipe, pipeLazy, returns } from "../functions";
 import { createObservable, onNotify, subscribe } from "../observable";
-import { getScheduler } from "../observer";
+import { getDispatcher, getScheduler } from "../observer";
 import { sinkInto } from "../reactive";
 import { sourceFrom, stream } from "../streamable";
 import { createReadableSource } from "./createReadableSource";
-import { createWritableSinkStream } from "./createWritableSink";
+import { createWritableSink } from "./createWritableSink";
 import { addDisposable, addToDisposable, addToNodeStream } from "./nodeStream";
 
 export const transform =
@@ -25,15 +25,15 @@ export const transform =
   src =>
     createLiftedFlowable(modeObs =>
       createObservable(observer => {
-        const { dispatcher } = observer;
         const transform = pipe(
           factory(),
           addToDisposable(observer),
-          addDisposable(dispatcher),
+          addDisposable(getDispatcher(observer)),
         );
 
         pipe(
-          createWritableSinkStream(transform, getScheduler(observer)),
+          createWritableSink(transform),
+          stream(getScheduler(observer)),
           sourceFrom(src),
           addToNodeStream(transform),
         );

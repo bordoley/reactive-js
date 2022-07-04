@@ -315,7 +315,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<`Writable`\> |
+| `factory` | `Writable` \| [`Factory`](functions.md#factory)<`Writable`\> |
 
 #### Returns
 
