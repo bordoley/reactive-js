@@ -14,7 +14,7 @@ Interface for iterating a Container of items.
 
 ## Hierarchy
 
-- [`LiftableLike`](liftable.LiftableLike.md)
+- [`InteractiveContainerLike`](interactive.InteractiveContainerLike.md)<`void`\>
 
   ↳ **`EnumerableLike`**
 
@@ -29,6 +29,7 @@ Interface for iterating a Container of items.
 ### Methods
 
 - [enumerate](enumerable.EnumerableLike.md#enumerate)
+- [source](enumerable.EnumerableLike.md#source)
 
 ## Properties
 
@@ -38,7 +39,7 @@ Interface for iterating a Container of items.
 
 #### Overrides
 
-[LiftableLike](liftable.LiftableLike.md).[T](liftable.LiftableLike.md#t)
+[InteractiveContainerLike](interactive.InteractiveContainerLike.md).[T](interactive.InteractiveContainerLike.md#t)
 
 ___
 
@@ -48,7 +49,7 @@ ___
 
 #### Overrides
 
-[LiftableLike](liftable.LiftableLike.md).[TContainerOf](liftable.LiftableLike.md#tcontainerof)
+[InteractiveContainerLike](interactive.InteractiveContainerLike.md).[TContainerOf](interactive.InteractiveContainerLike.md#tcontainerof)
 
 ___
 
@@ -58,13 +59,13 @@ ___
 
 #### Overrides
 
-[LiftableLike](liftable.LiftableLike.md).[TLiftableState](liftable.LiftableLike.md#tliftablestate)
+[InteractiveContainerLike](interactive.InteractiveContainerLike.md).[TLiftableState](interactive.InteractiveContainerLike.md#tliftablestate)
 
 ## Methods
 
 ### enumerate
 
-▸ **enumerate**(`this`): [`Enumerator`](../classes/enumerator.Enumerator.md)<[`T`](enumerable.EnumerableLike.md#t)\>
+▸ **enumerate**(`this`, `_`): [`Enumerator`](../classes/enumerator.Enumerator.md)<[`T`](enumerable.EnumerableLike.md#t)\>
 
 Returns an `EnumeratorLike` to iterate through the Container.
 
@@ -72,8 +73,30 @@ Returns an `EnumeratorLike` to iterate through the Container.
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`EnumerableLike`](enumerable.EnumerableLike.md)<[`T`](enumerable.EnumerableLike.md#t)\> |
+| `this` | [`EnumerableLike`](enumerable.EnumerableLike.md)<`unknown`\> |
+| `_` | `void` |
 
 #### Returns
 
 [`Enumerator`](../classes/enumerator.Enumerator.md)<[`T`](enumerable.EnumerableLike.md#t)\>
+
+___
+
+### source
+
+▸ **source**(`this`, `_`): [`SourceLike`](interactive.SourceLike.md)<`unknown`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`InteractiveContainerLike`](interactive.InteractiveContainerLike.md)<`void`\> |
+| `_` | `void` |
+
+#### Returns
+
+[`SourceLike`](interactive.SourceLike.md)<`unknown`\>
+
+#### Inherited from
+
+[InteractiveContainerLike](interactive.InteractiveContainerLike.md).[source](interactive.InteractiveContainerLike.md#source)

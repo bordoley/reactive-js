@@ -47,13 +47,14 @@ import {
   identity,
   pipe,
 } from "./functions";
-import { LiftableLike, ThrowIfEmpty, Using } from "./liftable";
+import { InteractiveContainerLike } from "./interactive";
+import { ThrowIfEmpty, Using } from "./liftable";
 import { Option, isSome, none } from "./option";
 
 /**
  * Interface for iterating a Container of items.
  */
-export interface EnumerableLike<T> extends LiftableLike {
+export interface EnumerableLike<T> extends InteractiveContainerLike<void> {
   readonly T: unknown;
   readonly TContainerOf: EnumerableLike<this["T"]>;
   readonly TLiftableState: Enumerator<this["T"]>;
@@ -61,7 +62,7 @@ export interface EnumerableLike<T> extends LiftableLike {
   /**
    * Returns an `EnumeratorLike` to iterate through the Container.
    */
-  enumerate(this: EnumerableLike<T>): Enumerator<T>;
+  enumerate(this: EnumerableLike<this["T"]>, _: void): Enumerator<T>;
 }
 
 /** A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB> */

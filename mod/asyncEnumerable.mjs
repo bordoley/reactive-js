@@ -10,8 +10,8 @@ import { fromValue, concatMap, concatWith } from './container.mjs';
 import { dispatch } from './dispatcher.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
 import { enumerate, fromIterable as fromIterable$1 } from './enumerable.mjs';
-import { move, hasCurrent, getCurrent } from './enumerator.mjs';
-import { Subject, publish, getObserverCount, getReplay, fromArrayT as fromArrayT$1, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, withLatestFrom, using, concatT, never, onNotify, takeWhile as takeWhile$1, map as map$1, scanAsync as scanAsync$1, keep as keep$1, createObservable, onSubscribe } from './observable.mjs';
+import { move, getCurrent } from './enumerator.mjs';
+import { Subject, publish, getObserverCount, getReplay, fromArrayT as fromArrayT$1, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, withLatestFrom, using, concatT, never, takeWhile as takeWhile$1, map as map$1, scanAsync as scanAsync$1, onNotify, keep as keep$1, createObservable, onSubscribe } from './observable.mjs';
 import { getScheduler } from './observer.mjs';
 import { none } from './option.mjs';
 import { sinkInto } from './reactive.mjs';
@@ -21,6 +21,9 @@ class LiftedAsyncEnumerable extends AbstractLiftable {
         super();
         this.src = src;
         this.operators = operators;
+    }
+    source(scheduler) {
+        return pipe(this, stream(scheduler));
     }
     stream(scheduler, options) {
         const src = pipe(this.src, stream(scheduler, options));
@@ -43,6 +46,9 @@ class CreateAsyncEnumerable extends AbstractLiftable {
     constructor(stream) {
         super();
         this.stream = stream;
+    }
+    source(scheduler) {
+        return pipe(this, stream(scheduler));
     }
 }
 const createAsyncEnumerable = (stream) => newInstance(CreateAsyncEnumerable, stream);
@@ -93,7 +99,7 @@ const fromArray = /*@__PURE__*/ createFromArray((values, startIndex, endIndex, o
 const fromArrayT = {
     fromArray,
 };
-const _fromEnumerable = (enumerable) => createLiftedAsyncEnumerable(withLatestFrom(using(pipeLazy(enumerable, enumerate), compose(fromValue(fromArrayT$1), concatWith(concatT, never()))), (_, enumerator) => enumerator), onNotify(move), takeWhile$1(hasCurrent), map$1(getCurrent));
+const _fromEnumerable = (enumerable) => createLiftedAsyncEnumerable(withLatestFrom(using(pipeLazy(enumerable, enumerate), compose(fromValue(fromArrayT$1), concatWith(concatT, never()))), (_, enumerator) => enumerator), takeWhile$1(move), map$1(getCurrent));
 /**
  * Returns an `AsyncEnumerableLike` from the provided iterable.
  *

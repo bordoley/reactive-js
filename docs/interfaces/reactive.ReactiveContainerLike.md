@@ -1,14 +1,14 @@
-[Reactive-JS](../README.md) / [reactive](../modules/reactive.md) / ReactiveSourceLike
+[Reactive-JS](../README.md) / [reactive](../modules/reactive.md) / ReactiveContainerLike
 
-# Interface: ReactiveSourceLike
+# Interface: ReactiveContainerLike
 
-[reactive](../modules/reactive.md).ReactiveSourceLike
+[reactive](../modules/reactive.md).ReactiveContainerLike
 
 ## Hierarchy
 
 - [`LiftableLike`](liftable.LiftableLike.md)
 
-  ↳ **`ReactiveSourceLike`**
+  ↳ **`ReactiveContainerLike`**
 
   ↳↳ [`ObservableLike`](observable.ObservableLike.md)
 
@@ -18,13 +18,13 @@
 
 ### Properties
 
-- [T](reactive.ReactiveSourceLike.md#t)
-- [TContainerOf](reactive.ReactiveSourceLike.md#tcontainerof)
-- [TLiftableState](reactive.ReactiveSourceLike.md#tliftablestate)
+- [T](reactive.ReactiveContainerLike.md#t)
+- [TContainerOf](reactive.ReactiveContainerLike.md#tcontainerof)
+- [TLiftableState](reactive.ReactiveContainerLike.md#tliftablestate)
 
 ### Methods
 
-- [sink](reactive.ReactiveSourceLike.md#sink)
+- [sink](reactive.ReactiveContainerLike.md#sink)
 
 ## Properties
 

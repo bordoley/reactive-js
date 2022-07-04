@@ -14,7 +14,7 @@
 
 - [`StreamableLike`](streamable.StreamableLike.md)<`void`, [`T`](asyncEnumerable.AsyncEnumerableLike.md#t), [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>\>
 
-- [`LiftableLike`](liftable.LiftableLike.md)
+- [`InteractiveContainerLike`](interactive.InteractiveContainerLike.md)<[`SchedulerLike`](scheduler.SchedulerLike.md)\>
 
   ↳ **`AsyncEnumerableLike`**
 
@@ -28,6 +28,7 @@
 
 ### Methods
 
+- [source](asyncEnumerable.AsyncEnumerableLike.md#source)
 - [stream](asyncEnumerable.AsyncEnumerableLike.md#stream)
 
 ## Properties
@@ -38,7 +39,7 @@
 
 #### Overrides
 
-[LiftableLike](liftable.LiftableLike.md).[T](liftable.LiftableLike.md#t)
+[InteractiveContainerLike](interactive.InteractiveContainerLike.md).[T](interactive.InteractiveContainerLike.md#t)
 
 ___
 
@@ -48,7 +49,7 @@ ___
 
 #### Overrides
 
-[LiftableLike](liftable.LiftableLike.md).[TContainerOf](liftable.LiftableLike.md#tcontainerof)
+[InteractiveContainerLike](interactive.InteractiveContainerLike.md).[TContainerOf](interactive.InteractiveContainerLike.md#tcontainerof)
 
 ___
 
@@ -58,9 +59,30 @@ ___
 
 #### Overrides
 
-[LiftableLike](liftable.LiftableLike.md).[TLiftableState](liftable.LiftableLike.md#tliftablestate)
+[InteractiveContainerLike](interactive.InteractiveContainerLike.md).[TLiftableState](interactive.InteractiveContainerLike.md#tliftablestate)
 
 ## Methods
+
+### source
+
+▸ **source**(`this`, `_`): [`SourceLike`](interactive.SourceLike.md)<`unknown`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`InteractiveContainerLike`](interactive.InteractiveContainerLike.md)<[`SchedulerLike`](scheduler.SchedulerLike.md)\> |
+| `_` | [`SchedulerLike`](scheduler.SchedulerLike.md) |
+
+#### Returns
+
+[`SourceLike`](interactive.SourceLike.md)<`unknown`\>
+
+#### Inherited from
+
+[InteractiveContainerLike](interactive.InteractiveContainerLike.md).[source](interactive.InteractiveContainerLike.md#source)
+
+___
 
 ### stream
 

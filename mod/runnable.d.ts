@@ -3,18 +3,18 @@ import { DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Function1, Equality, Predicate, Updater, Factory, Reducer } from "./functions.mjs";
 import { CatchError, DecodeWithCharset, ThrowIfEmpty, Using } from "./liftable.mjs";
 import { Option } from "./option.mjs";
-import { CreateReactiveSource, ReactiveSourceLike } from "./reactive.mjs";
+import { CreateReactiveContainer, ReactiveContainerLike } from "./reactive.mjs";
 import { RunnableSink } from "./runnableSink.mjs";
 declare const concatAll: ConcatAll<RunnableLike<unknown>>["concatAll"];
 declare const concatAllT: ConcatAll<RunnableLike<unknown>>;
 declare const createRunnable: <T>(run: SideEffect1<RunnableSink<T>>) => RunnableLike<T>;
-declare const createT: CreateReactiveSource<RunnableLike<unknown>>;
+declare const createT: CreateReactiveContainer<RunnableLike<unknown>>;
 declare const first: <T>() => Function1<RunnableLike<T>, Option<T>>;
 declare const forEach: <T>(f: SideEffect1<T>) => Function1<RunnableLike<T>, void>;
 declare const fromArray: <T>(options?: Partial<FromArrayOptions>) => Function1<readonly T[], RunnableLike<T>>;
 declare const fromArrayT: FromArray<RunnableLike<unknown>, FromArrayOptions>;
 declare const last: <T>() => Function1<RunnableLike<T>, Option<T>>;
-interface RunnableLike<T> extends ReactiveSourceLike {
+interface RunnableLike<T> extends ReactiveContainerLike {
     readonly T: unknown;
     readonly TContainerOf: RunnableLike<this["T"]>;
     readonly TLiftableState: RunnableSink<this["T"]>;

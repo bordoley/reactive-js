@@ -1,7 +1,8 @@
 import { Buffer, ConcatAll, FromArrayOptions, FromArray, Generate, Repeat, TakeLast, ToIterable, Zip, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile } from "./container.mjs";
 import { Enumerator } from "./enumerator.mjs";
 import { Factory, Function1, Updater, Predicate, Equality, SideEffect1, Reducer } from "./functions.mjs";
-import { FromIterator, FromIterable, LiftableLike, ThrowIfEmpty, Using } from "./liftable.mjs";
+import { InteractiveContainerLike } from "./interactive.mjs";
+import { FromIterator, FromIterable, ThrowIfEmpty, Using } from "./liftable.mjs";
 import { Option } from "./option.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
 declare const buffer: <T>(options?: {
@@ -84,14 +85,14 @@ declare const zipT: Zip<EnumerableLike<unknown>>;
 /**
  * Interface for iterating a Container of items.
  */
-interface EnumerableLike<T> extends LiftableLike {
+interface EnumerableLike<T> extends InteractiveContainerLike<void> {
     readonly T: unknown;
     readonly TContainerOf: EnumerableLike<this["T"]>;
     readonly TLiftableState: Enumerator<this["T"]>;
     /**
      * Returns an `EnumeratorLike` to iterate through the Container.
      */
-    enumerate(this: EnumerableLike<T>): Enumerator<T>;
+    enumerate(this: EnumerableLike<this["T"]>, _: void): Enumerator<T>;
 }
 /** A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB> */
 declare type EnumerableOperator<TA, TB> = Function1<EnumerableLike<TA>, EnumerableLike<TB>>;

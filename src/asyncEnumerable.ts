@@ -30,7 +30,7 @@ import {
   enumerate,
   fromIterable as fromIterableEnumerable,
 } from "./enumerable";
-import { Enumerator, getCurrent, hasCurrent, move } from "./enumerator";
+import { Enumerator, getCurrent, move } from "./enumerator";
 import {
   Factory,
   Function1,
@@ -46,7 +46,8 @@ import {
   pipeLazy,
   returns,
 } from "./functions";
-import { FromIterable, LiftableLike } from "./liftable";
+import { InteractiveContainerLike } from "./interactive";
+import { FromIterable } from "./liftable";
 import {
   AsyncReducer,
   MulticastObservableLike,
@@ -83,7 +84,7 @@ import { StreamableLike, stream } from "./streamable";
 
 export interface AsyncEnumerableLike<T>
   extends StreamableLike<void, T, AsyncEnumerator<T>>,
-    LiftableLike {
+    InteractiveContainerLike<SchedulerLike> {
   readonly T: unknown;
   readonly TContainerOf: AsyncEnumerableLike<this["T"]>;
   readonly TLiftableState: AsyncEnumerator<this["T"]>;
@@ -105,6 +106,10 @@ class CreateAsyncEnumerable<T>
     ) => AsyncEnumerator<T>,
   ) {
     super();
+  }
+
+  source(scheduler: SchedulerLike): AsyncEnumerator<T> {
+    return pipe(this, stream(scheduler));
   }
 }
 
@@ -316,8 +321,7 @@ const _fromEnumerable = <T>(
       ),
       (_, enumerator) => enumerator,
     ),
-    onNotify(move),
-    takeWhileObs(hasCurrent),
+    takeWhileObs(move),
     mapObs(getCurrent),
   );
 

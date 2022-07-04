@@ -48,6 +48,9 @@ const fromArrayT = {
 
 const enumerate = (enumerable) => enumerable.enumerate();
 class AbstractEnumerable extends AbstractLiftable {
+    source(_) {
+        return pipe(this, enumerate);
+    }
 }
 class CreateEnumerable extends AbstractEnumerable {
     constructor(_enumerate) {

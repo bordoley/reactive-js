@@ -1,6 +1,6 @@
 import { dispose } from "../disposable";
 import { SideEffect1, newInstance, pipe } from "../functions";
-import { CreateReactiveSource } from "../reactive";
+import { CreateReactiveContainer } from "../reactive";
 import { RunnableLike } from "../runnable";
 import { RunnableSink } from "../runnableSink";
 import { AbstractRunnable } from "./runnable";
@@ -24,6 +24,6 @@ export const createRunnable = <T>(
   run: SideEffect1<RunnableSink<T>>,
 ): RunnableLike<T> => newInstance(RunnableImpl, run);
 
-export const createT: CreateReactiveSource<RunnableLike<unknown>> = {
+export const createT: CreateReactiveContainer<RunnableLike<unknown>> = {
   create: createRunnable,
 };

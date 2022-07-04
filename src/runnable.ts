@@ -64,14 +64,14 @@ import {
 } from "./functions";
 import { CatchError, DecodeWithCharset, ThrowIfEmpty, Using } from "./liftable";
 import { Option, getOrDefault, isNone, none } from "./option";
-import { ReactiveSourceLike, sourceFrom } from "./reactive";
+import { ReactiveContainerLike, sourceFrom } from "./reactive";
 import { createRunnable, createT } from "./runnable/createRunnable";
 import { first } from "./runnable/first";
 import { fromArrayT } from "./runnable/fromArray";
 import { liftT } from "./runnable/lift";
 import { RunnableSink } from "./runnableSink";
 
-export interface RunnableLike<T> extends ReactiveSourceLike {
+export interface RunnableLike<T> extends ReactiveContainerLike {
   readonly T: unknown;
   readonly TContainerOf: RunnableLike<this["T"]>;
   readonly TLiftableState: RunnableSink<this["T"]>;

@@ -80,7 +80,7 @@ import { using } from "./observable/using";
 import { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
 import { Observer, getScheduler } from "./observer";
 import { Option, isNone, isSome, none } from "./option";
-import { ReactiveSourceLike, sourceFrom } from "./reactive";
+import { ReactiveContainerLike, sourceFrom } from "./reactive";
 import { RunnableLike, ToRunnable, createRunnable } from "./runnable";
 import {
   SchedulerLike,
@@ -95,7 +95,7 @@ import { notifySink } from "./sink";
  *
  * @noInheritDoc
  */
-export interface ObservableLike<T> extends ReactiveSourceLike {
+export interface ObservableLike<T> extends ReactiveContainerLike {
   readonly T: unknown;
   readonly TContainerOf: ObservableLike<this["T"]>;
   readonly TLiftableState: Observer<this["T"]>;
