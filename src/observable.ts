@@ -26,7 +26,6 @@ import {
   ContainerLike,
   ContainerOf,
   ContainerOperator,
-  DecodeWithCharset,
   DistinctUntilChanged,
   EverySatisfy,
   Generate,
@@ -66,7 +65,7 @@ import {
   newInstance,
   pipe,
 } from "./functions";
-import { CatchError, ThrowIfEmpty } from "./liftable";
+import { CatchError, DecodeWithCharset, ThrowIfEmpty } from "./liftable";
 import { createObservable, createT } from "./observable/createObservable";
 import { defer } from "./observable/defer";
 import { fromArrayT } from "./observable/fromArray";

@@ -1,6 +1,5 @@
 import {
   empty as emptyContainer,
-  encodeUtf8,
   fromValue,
   ignoreElements,
   mapTo,
@@ -19,6 +18,7 @@ import {
   returns,
   sum,
 } from "../functions";
+import { encodeUtf8 } from "../liftable";
 import {
   __memo,
   __observe,

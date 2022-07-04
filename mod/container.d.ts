@@ -27,9 +27,6 @@ interface Concat<C extends ContainerLike> extends Container<C> {
 interface ConcatAll<C extends ContainerLike, O = Record<string, never>> extends Container<C> {
     concatAll: <T>(options?: Partial<O>) => ContainerOperator<C, ContainerOf<C, T>, T>;
 }
-interface DecodeWithCharset<C extends ContainerLike> extends Container<C> {
-    decodeWithCharset(charset?: string): ContainerOperator<C, ArrayBuffer, string>;
-}
 interface Defer<C extends ContainerLike> extends Container<C> {
     defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 }
@@ -170,7 +167,6 @@ declare const empty: <C extends ContainerLike, T, O extends FromArrayOptions = F
 declare const contains: <C extends ContainerLike, T>({ someSatisfy }: SomeSatisfy<C>, value: T, options?: {
     readonly equality?: Equality<T> | undefined;
 }) => ContainerOperator<C, T, boolean>;
-declare const encodeUtf8: <C extends ContainerLike>(m: Defer<C> & Map<C>) => ContainerOperator<C, string, Uint8Array>;
 declare function endWith<C extends ContainerLike, T>(m: Concat<C> & FromArray<C>, value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
 declare const fromOption: <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>(m: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<Option<T>, ContainerOf<C, T>>;
 declare const fromValue: <C extends ContainerLike, T, O extends FromArrayOptions = FromArrayOptions>({ fromArray }: FromArray<C, O>, options?: Omit<Partial<O>, keyof FromArrayOptions> | undefined) => Function1<T, ContainerOf<C, T>>;
@@ -184,4 +180,4 @@ declare const zipWith: <C extends ContainerLike, TA, TB>({ zip }: Zip<C>, snd: C
     TA,
     TB
 ]>;
-export { Buffer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, DecodeWithCharset, Defer, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ToIterable, Zip, compute, concatMap, concatWith, contains, empty, encodeUtf8, endWith, fromOption, fromValue, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };
+export { Buffer, Concat, ConcatAll, Container, ContainerLike, ContainerOf, ContainerOperator, Defer, DistinctUntilChanged, EverySatisfy, FromArray, FromArrayOptions, Generate, Keep, Map, Pairwise, Reduce, Repeat, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ToIterable, Zip, compute, concatMap, concatWith, contains, empty, endWith, fromOption, fromValue, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };

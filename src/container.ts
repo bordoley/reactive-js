@@ -12,7 +12,6 @@ import {
   compose,
   isEqualTo,
   negate,
-  newInstance,
   pipe,
   returns,
 } from "./functions";
@@ -62,13 +61,6 @@ export interface ConcatAll<C extends ContainerLike, O = Record<string, never>>
   concatAll: <T>(
     options?: Partial<O>,
   ) => ContainerOperator<C, ContainerOf<C, T>, T>;
-}
-
-export interface DecodeWithCharset<C extends ContainerLike>
-  extends Container<C> {
-  decodeWithCharset(
-    charset?: string,
-  ): ContainerOperator<C, ArrayBuffer, string>;
 }
 
 export interface Defer<C extends ContainerLike> extends Container<C> {
@@ -281,19 +273,6 @@ export const contains = <C extends ContainerLike, T>(
   value: T,
   options: { readonly equality?: Equality<T> } = {},
 ): ContainerOperator<C, T, boolean> => someSatisfy(isEqualTo(value, options));
-
-export const encodeUtf8 =
-  <C extends ContainerLike>(
-    m: Defer<C> & Map<C>,
-  ): ContainerOperator<C, string, Uint8Array> =>
-  obs =>
-    m.defer(() => {
-      const textEncoder = newInstance(TextEncoder);
-      return pipe(
-        obs,
-        m.map(s => textEncoder.encode(s)),
-      );
-    });
 
 export function endWith<C extends ContainerLike, T>(
   m: Concat<C> & FromArray<C>,
