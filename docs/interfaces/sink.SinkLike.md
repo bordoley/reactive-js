@@ -46,9 +46,9 @@
 
 ### T
 
-• `Optional` `Readonly` **T**: `unknown`
+• **T**: `T`
 
-#### Inherited from
+#### Overrides
 
 [ContainerLike](container.ContainerLike.md).[T](container.ContainerLike.md#t)
 
@@ -56,9 +56,9 @@ ___
 
 ### TContainerOf
 
-• `Optional` `Readonly` **TContainerOf**: `unknown`
+• `Readonly` **TContainerOf**: [`SinkLike`](sink.SinkLike.md)<`T`\>
 
-#### Inherited from
+#### Overrides
 
 [ContainerLike](container.ContainerLike.md).[TContainerOf](container.ContainerLike.md#tcontainerof)
 

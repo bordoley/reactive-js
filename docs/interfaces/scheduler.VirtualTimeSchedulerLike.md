@@ -81,11 +81,11 @@ ___
 
 ### T
 
-• `get` **T**(): `unknown`
+• `get` **T**(): `T`
 
 #### Returns
 
-`unknown`
+`T`
 
 #### Inherited from
 

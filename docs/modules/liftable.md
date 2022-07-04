@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Classes
-
-- [AbtractDisposableLiftable](../classes/liftable.AbtractDisposableLiftable.md)
-
 ### Interfaces
 
 - [LiftableLike](../interfaces/liftable.LiftableLike.md)

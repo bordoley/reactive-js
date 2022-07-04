@@ -1,10 +1,19 @@
-import { AbstractDisposableContainer, ContainerLike } from "./container";
-import { Function1, SideEffect1 } from "./functions";
+import { ContainerLike } from "./container";
+import { Disposable } from "./disposable";
+import { Function1, SideEffect1, raise } from "./functions";
 
 export abstract class Enumerator<T>
-  extends AbstractDisposableContainer
+  extends Disposable
   implements ContainerLike
 {
+  get T(): T {
+    return raise();
+  }
+
+  get TContainerOf(): this {
+    return this;
+  }
+
   abstract get current(): T;
   abstract get hasCurrent(): boolean;
 

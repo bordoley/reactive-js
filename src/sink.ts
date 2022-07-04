@@ -4,7 +4,10 @@ import { Disposable } from "./disposable";
 import { Function1, SideEffect1 } from "./functions";
 
 export interface SinkLike<T> extends Disposable, ContainerLike {
-  assertState(this: SinkLike<T>): void;
+  readonly T: T;
+  readonly TContainerOf: SinkLike<this["T"]>;
+
+  assertState(this: this["TContainerOf"]): void;
 
   /**
    * Notifies the the sink of the next notification produced by the observable source.
@@ -14,7 +17,7 @@ export interface SinkLike<T> extends Disposable, ContainerLike {
    *
    * @param next The next notification value.
    */
-  notify(this: SinkLike<T>, next: T): void;
+  notify(this: this["TContainerOf"], next: T): void;
 }
 
 export const assertState = (sink: SinkLike<unknown>): void => {

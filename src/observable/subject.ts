@@ -1,12 +1,11 @@
 import { DispatcherLike, dispatch } from "../dispatcher";
-import { add, isDisposed, onDisposed } from "../disposable";
-import { getLength, newInstance, pipe } from "../functions";
+import { Disposable, add, isDisposed, onDisposed } from "../disposable";
+import { getLength, newInstance, pipe, raise } from "../functions";
 import { MulticastObservableLike } from "../observable";
 import { Observer } from "../observer";
-import { AbstractDisposableObservable } from "./observable";
 
 export class Subject<T>
-  extends AbstractDisposableObservable<T>
+  extends Disposable
   implements MulticastObservableLike<T>
 {
   private readonly dispatchers: Set<DispatcherLike<T>> =
@@ -16,6 +15,20 @@ export class Subject<T>
   constructor(public readonly replay: number = 1) {
     super();
   }
+
+  get T(): T {
+    return raise();
+  }
+
+  get TContainerOf(): Subject<this["T"]> {
+    return raise();
+  }
+
+  get TLiftableState(): Observer<this["T"]> {
+    return raise();
+  }
+
+  isEnumerable?: boolean;
 
   get observerCount() {
     return this.dispatchers.size;

@@ -1,7 +1,14 @@
 /// <reference types="./enumerator.d.ts" />
-import { AbstractDisposableContainer } from './container.mjs';
+import { Disposable } from './disposable.mjs';
+import { raise } from './functions.mjs';
 
-class Enumerator extends AbstractDisposableContainer {
+class Enumerator extends Disposable {
+    get T() {
+        return raise();
+    }
+    get TContainerOf() {
+        return this;
+    }
 }
 const getCurrent = (enumerator) => enumerator.current;
 const hasCurrent = (enumerator) => enumerator.hasCurrent;

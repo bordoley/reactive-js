@@ -1,5 +1,4 @@
 import { __DEV__ } from "./__internal__.env";
-import { AbstractDisposableContainer } from "./container";
 import { DispatcherLike } from "./dispatcher";
 import {
   Disposable,
@@ -73,14 +72,19 @@ class ObserverDelegatingDispatcher<T>
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
-export class Observer<T>
-  extends AbstractDisposableContainer
-  implements SinkLike<T>
-{
+export class Observer<T> extends Disposable implements SinkLike<T> {
   private _dispatcher: Option<DispatcherLike<T>> = none;
 
   constructor(readonly scheduler: SchedulerLike) {
     super();
+  }
+
+  get T(): T {
+    return raise();
+  }
+
+  get TContainerOf(): this {
+    return this;
   }
 
   get dispatcher(): DispatcherLike<T> {

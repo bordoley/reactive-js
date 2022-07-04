@@ -1,8 +1,7 @@
 /// <reference types="./observer.d.ts" />
 import { __DEV__ } from './__internal__.env.mjs';
-import { AbstractDisposableContainer } from './container.mjs';
 import { addTo, onComplete, Disposable, isDisposed, dispose, onDisposed } from './disposable.mjs';
-import { getLength, pipe, newInstanceWith, isEmpty, raise } from './functions.mjs';
+import { getLength, pipe, raise, newInstanceWith, isEmpty } from './functions.mjs';
 import { none, isNone } from './option.mjs';
 import { schedule, __yield, isInContinuation } from './scheduler.mjs';
 import { assertState } from './sink.mjs';
@@ -46,11 +45,17 @@ class ObserverDelegatingDispatcher extends Disposable {
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
-class Observer extends AbstractDisposableContainer {
+class Observer extends Disposable {
     constructor(scheduler) {
         super();
         this.scheduler = scheduler;
         this._dispatcher = none;
+    }
+    get T() {
+        return raise();
+    }
+    get TContainerOf() {
+        return this;
     }
     get dispatcher() {
         if (isNone(this._dispatcher)) {

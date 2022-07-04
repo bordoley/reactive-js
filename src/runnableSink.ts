@@ -1,13 +1,17 @@
 import { __DEV__ } from "./__internal__.env";
-import { AbstractDisposableContainer } from "./container";
-import { isDisposed } from "./disposable";
+import { Disposable, isDisposed } from "./disposable";
 import { raise } from "./functions";
 import { SinkLike } from "./sink";
 
-export class RunnableSink<T>
-  extends AbstractDisposableContainer
-  implements SinkLike<T>
-{
+export class RunnableSink<T> extends Disposable implements SinkLike<T> {
+  get T(): T {
+    return raise();
+  }
+
+  get TContainerOf(): this {
+    return this;
+  }
+
   assertState(this: this): void {}
 
   notify(_: T): void {}

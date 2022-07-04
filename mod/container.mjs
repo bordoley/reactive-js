@@ -1,17 +1,8 @@
 /// <reference types="./container.d.ts" />
 import { empty as empty$1 } from './__internal__.readonlyArray.mjs';
-import { Disposable } from './disposable.mjs';
-import { raise, compose, callWith, isEqualTo, newInstance, pipe, pipeLazy, alwaysFalse, returns, negate } from './functions.mjs';
+import { compose, callWith, isEqualTo, newInstance, pipe, pipeLazy, alwaysFalse, returns, negate } from './functions.mjs';
 import { isSome } from './option.mjs';
 
-class AbstractDisposableContainer extends Disposable {
-    get TContainerOf() {
-        return raise();
-    }
-    get T() {
-        return raise();
-    }
-}
 const compute = (m, options) => compose(fromValue(m, options), m.map(callWith()));
 const concatMap = ({ map, concatAll }, mapper, options) => compose(map(mapper), concatAll(options));
 const concatWith = ({ concat }, snd) => first => concat(first, snd);
@@ -44,4 +35,4 @@ const throws = (m, options) => errorFactory => pipe(() => {
 }, compute(m, options));
 const zipWith = ({ zip }, snd) => fst => zip(fst, snd);
 
-export { AbstractDisposableContainer, compute, concatMap, concatWith, contains, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };
+export { compute, concatMap, concatWith, contains, empty, encodeUtf8, endWith, fromOption, fromValue, genMap, ignoreElements, keepType, mapTo, noneSatisfy, startWith, throws, zipWith };

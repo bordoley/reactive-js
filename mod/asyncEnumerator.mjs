@@ -1,10 +1,20 @@
 /// <reference types="./asyncEnumerator.d.ts" />
-import { AbtractDisposableLiftable } from './liftable.mjs';
+import { Disposable } from './disposable.mjs';
+import { raise } from './functions.mjs';
 
-class AsyncEnumerator extends AbtractDisposableLiftable {
+class AsyncEnumerator extends Disposable {
     constructor() {
         super(...arguments);
         this.isEnumerable = false;
+    }
+    get T() {
+        return raise();
+    }
+    get TContainerOf() {
+        return this;
+    }
+    get TLiftableState() {
+        return raise();
     }
 }
 

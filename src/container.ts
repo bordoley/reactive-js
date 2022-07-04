@@ -20,7 +20,6 @@ import {
   newInstance,
   pipe,
   pipeLazy,
-  raise,
   returns,
 } from "./functions";
 import { Option, isSome } from "./option";
@@ -45,18 +44,6 @@ export type ContainerOperator<C, TA, TB> = Function1<
   ContainerOf<C, TA>,
   ContainerOf<C, TB>
 >;
-
-export abstract class AbstractDisposableContainer
-  extends Disposable
-  implements ContainerLike
-{
-  get TContainerOf(): this {
-    return raise();
-  }
-  get T(): unknown {
-    return raise();
-  }
-}
 
 export interface Container<C extends ContainerLike> {
   readonly TContainerOf?: C;

@@ -1,10 +1,14 @@
-import { AbstractDisposableObservable, ObservableOperator } from "./observable.mjs";
+import { Disposable } from "./disposable.mjs";
+import { ObservableOperator } from "./observable.mjs";
 import { Observer } from "./observer.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
 import { StreamLike } from "./stream.mjs";
-declare abstract class AbstractDelegatingStream<TReqA, TA, TReqB, TB> extends AbstractDisposableObservable<TB> implements StreamLike<TReqB, TB> {
+declare abstract class AbstractDelegatingStream<TReqA, TA, TReqB, TB> extends Disposable implements StreamLike<TReqB, TB> {
     readonly delegate: StreamLike<TReqA, TA>;
     constructor(delegate: StreamLike<TReqA, TA>);
+    get T(): TB;
+    get TContainerOf(): this;
+    get TLiftableState(): Observer<this["T"]>;
     get observerCount(): number;
     get replay(): number;
     get scheduler(): SchedulerLike;

@@ -14,10 +14,6 @@
 
   ↳↳ [`RunnableLike`](runnable.RunnableLike.md)
 
-## Implemented by
-
-- [`AbtractDisposableReactiveSource`](../classes/reactive.AbtractDisposableReactiveSource.md)
-
 ## Table of contents
 
 ### Properties

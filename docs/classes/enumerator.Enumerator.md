@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`AbstractDisposableContainer`](container.AbstractDisposableContainer.md)
+- [`Disposable`](disposable.Disposable.md)
 
   ↳ **`Enumerator`**
 
@@ -57,25 +57,21 @@
 
 #### Inherited from
 
-[AbstractDisposableContainer](container.AbstractDisposableContainer.md).[constructor](container.AbstractDisposableContainer.md#constructor)
+[Disposable](disposable.Disposable.md).[constructor](disposable.Disposable.md#constructor)
 
 ## Accessors
 
 ### T
 
-• `get` **T**(): `unknown`
+• `get` **T**(): `T`
 
 #### Returns
 
-`unknown`
+`T`
 
 #### Implementation of
 
 [ContainerLike](../interfaces/container.ContainerLike.md).[T](../interfaces/container.ContainerLike.md#t)
-
-#### Inherited from
-
-AbstractDisposableContainer.T
 
 ___
 
@@ -90,10 +86,6 @@ ___
 #### Implementation of
 
 [ContainerLike](../interfaces/container.ContainerLike.md).[TContainerOf](../interfaces/container.ContainerLike.md#tcontainerof)
-
-#### Inherited from
-
-AbstractDisposableContainer.TContainerOf
 
 ___
 
@@ -119,7 +111,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-AbstractDisposableContainer.error
+Disposable.error
 
 ___
 
@@ -145,7 +137,7 @@ ___
 
 #### Inherited from
 
-AbstractDisposableContainer.isDisposed
+Disposable.isDisposed
 
 ## Methods
 
@@ -171,7 +163,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Inherited from
 
-[AbstractDisposableContainer](container.AbstractDisposableContainer.md).[add](container.AbstractDisposableContainer.md#add)
+[Disposable](disposable.Disposable.md).[add](disposable.Disposable.md#add)
 
 ___
 
@@ -194,7 +186,7 @@ Dispose the resource.
 
 #### Inherited from
 
-[AbstractDisposableContainer](container.AbstractDisposableContainer.md).[dispose](container.AbstractDisposableContainer.md#dispose)
+[Disposable](disposable.Disposable.md).[dispose](disposable.Disposable.md#dispose)
 
 ___
 

@@ -4,11 +4,11 @@ import { hasDelay, getDelay } from './__internal__.optionalArgs.mjs';
 import { AbstractReactiveSource, createMapOperator, createOnNotifyOperator, createUsing, createNever, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './__internal__.reactive.mjs';
 import { empty as empty$1, fromValue, throws, concatMap } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
-import { dispose, addTo, isDisposed, onDisposed, add, onComplete, disposed, bindTo, toErrorHandler } from './disposable.mjs';
+import { dispose, addTo, Disposable, isDisposed, onDisposed, add, onComplete, disposed, bindTo, toErrorHandler } from './disposable.mjs';
 import { move, getCurrent, hasCurrent, forEach } from './enumerator.mjs';
-import { pipe, newInstance, getLength, newInstanceWith, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, max, returns, identity, instanceFactory } from './functions.mjs';
-import { AbtractDisposableReactiveSource, sinkInto, sourceFrom } from './reactive.mjs';
+import { pipe, newInstance, raise, getLength, newInstanceWith, isEmpty, arrayEquality, ignore, pipeLazy, compose, max, returns, identity, instanceFactory } from './functions.mjs';
 import { getScheduler, Observer } from './observer.mjs';
+import { sinkInto, sourceFrom } from './reactive.mjs';
 import { schedule, __yield, isInContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { createFromArray } from './__internal__.container.mjs';
 import { contraVariant, getDelegate } from './__internal__.liftable.mjs';
@@ -23,8 +23,6 @@ import { AbstractEnumerator, reset, zip as zip$1 } from './__internal__.enumerat
 import { runContinuation } from './__internal__.schedulerImplementation.mjs';
 
 class AbstractObservable extends AbstractReactiveSource {
-}
-class AbstractDisposableObservable extends AbtractDisposableReactiveSource {
 }
 const isEnumerable = (obs) => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; };
 const tagEnumerable = (isEnumerable) => (obs) => {
@@ -155,12 +153,21 @@ const onNotify = /*@__PURE__*/ createOnNotifyOperator(liftSynchronousT, class On
     }
 });
 
-class Subject extends AbstractDisposableObservable {
+class Subject extends Disposable {
     constructor(replay = 1) {
         super();
         this.replay = replay;
         this.dispatchers = newInstance(Set);
         this.replayed = [];
+    }
+    get T() {
+        return raise();
+    }
+    get TContainerOf() {
+        return raise();
+    }
+    get TLiftableState() {
+        return raise();
     }
     get observerCount() {
         return this.dispatchers.size;
@@ -1429,4 +1436,4 @@ const toRunnableT = {
 };
 const TContainerOf = undefined;
 
-export { AbstractDisposableObservable, Subject, TContainerOf, __currentScheduler, __do, __memo, __observe, __using, buffer, bufferT, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createT, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromObservable, fromObservableT, fromPromise, generate, generateT, getObserverCount, getReplay, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toObservable, toObservableT, toPromise, toRunnable, toRunnableT, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { Subject, TContainerOf, __currentScheduler, __do, __memo, __observe, __using, buffer, bufferT, catchError, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createT, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromObservable, fromObservableT, fromPromise, generate, generateT, getObserverCount, getReplay, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toObservable, toObservableT, toPromise, toRunnable, toRunnableT, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

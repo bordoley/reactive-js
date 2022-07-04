@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`AbstractDisposableObservable`](observable.AbstractDisposableObservable.md)<`T`\>
+- [`Disposable`](disposable.Disposable.md)
 
   ↳ **`Subject`**
 
@@ -28,6 +28,7 @@
 
 ### Properties
 
+- [isEnumerable](observable.Subject.md#isenumerable)
 - [replay](observable.Subject.md#replay)
 
 ### Accessors
@@ -66,9 +67,19 @@
 
 #### Overrides
 
-[AbstractDisposableObservable](observable.AbstractDisposableObservable.md).[constructor](observable.AbstractDisposableObservable.md#constructor)
+[Disposable](disposable.Disposable.md).[constructor](disposable.Disposable.md#constructor)
 
 ## Properties
+
+### isEnumerable
+
+• `Optional` **isEnumerable**: `boolean`
+
+#### Implementation of
+
+MulticastObservableLike.isEnumerable
+
+___
 
 ### replay
 
@@ -82,55 +93,43 @@
 
 ### T
 
-• `get` **T**(): `unknown`
+• `get` **T**(): `T`
 
 #### Returns
 
-`unknown`
+`T`
 
 #### Implementation of
 
 MulticastObservableLike.T
 
-#### Inherited from
-
-AbstractDisposableObservable.T
-
 ___
 
 ### TContainerOf
 
-• `get` **TContainerOf**(): `this`
+• `get` **TContainerOf**(): [`Subject`](observable.Subject.md)<this[``"T"``]\>
 
 #### Returns
 
-`this`
+[`Subject`](observable.Subject.md)<this[``"T"``]\>
 
 #### Implementation of
 
 MulticastObservableLike.TContainerOf
 
-#### Inherited from
-
-AbstractDisposableObservable.TContainerOf
-
 ___
 
 ### TLiftableState
 
-• `get` **TLiftableState**(): `TState`
+• `get` **TLiftableState**(): [`Observer`](observer.Observer.md)<`this`[``"T"``]\>
 
 #### Returns
 
-`TState`
+[`Observer`](observer.Observer.md)<`this`[``"T"``]\>
 
 #### Implementation of
 
 MulticastObservableLike.TLiftableState
-
-#### Inherited from
-
-AbstractDisposableObservable.TLiftableState
 
 ___
 
@@ -150,7 +149,7 @@ MulticastObservableLike.error
 
 #### Inherited from
 
-AbstractDisposableObservable.error
+Disposable.error
 
 ___
 
@@ -170,7 +169,7 @@ MulticastObservableLike.isDisposed
 
 #### Inherited from
 
-AbstractDisposableObservable.isDisposed
+Disposable.isDisposed
 
 ___
 
@@ -216,7 +215,7 @@ MulticastObservableLike.add
 
 #### Inherited from
 
-[AbstractDisposableObservable](observable.AbstractDisposableObservable.md).[add](observable.AbstractDisposableObservable.md#add)
+[Disposable](disposable.Disposable.md).[add](disposable.Disposable.md#add)
 
 ___
 
@@ -243,7 +242,7 @@ MulticastObservableLike.dispose
 
 #### Inherited from
 
-[AbstractDisposableObservable](observable.AbstractDisposableObservable.md).[dispose](observable.AbstractDisposableObservable.md#dispose)
+[Disposable](disposable.Disposable.md).[dispose](disposable.Disposable.md#dispose)
 
 ___
 
@@ -280,7 +279,3 @@ ___
 #### Implementation of
 
 MulticastObservableLike.sink
-
-#### Overrides
-
-[AbstractDisposableObservable](observable.AbstractDisposableObservable.md).[sink](observable.AbstractDisposableObservable.md#sink)

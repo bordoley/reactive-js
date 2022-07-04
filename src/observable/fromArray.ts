@@ -11,7 +11,7 @@ import { defer } from "./defer";
 import { tagEnumerable } from "./observable";
 
 const empty = /*@__PURE__*/ pipe(
-  createObservable(dispose()),
+  createObservable(dispose<Observer<any>>()),
   tagEnumerable(true),
 );
 
