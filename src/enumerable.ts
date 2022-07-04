@@ -30,7 +30,6 @@ import {
   SkipFirst,
   TakeFirst,
   TakeWhile,
-  ThrowIfEmpty,
 } from "./container";
 import { Disposable, addTo, dispose, isDisposed } from "./disposable";
 import { concatAll } from "./enumerable/concatAll";
@@ -48,7 +47,7 @@ import {
   identity,
   pipe,
 } from "./functions";
-import { LiftableLike, Using } from "./liftable";
+import { LiftableLike, ThrowIfEmpty, Using } from "./liftable";
 import { Option, isSome, none } from "./option";
 
 /**

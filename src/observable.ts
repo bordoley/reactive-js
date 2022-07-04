@@ -39,7 +39,6 @@ import {
   TakeFirst,
   TakeLast,
   TakeWhile,
-  ThrowIfEmpty,
   concatMap,
 } from "./container";
 import { dispatch, dispatchTo } from "./dispatcher";
@@ -67,7 +66,7 @@ import {
   newInstance,
   pipe,
 } from "./functions";
-import { CatchError } from "./liftable";
+import { CatchError, ThrowIfEmpty } from "./liftable";
 import { createObservable, createT } from "./observable/createObservable";
 import { defer } from "./observable/defer";
 import { fromArrayT } from "./observable/fromArray";

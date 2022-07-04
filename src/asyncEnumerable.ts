@@ -13,7 +13,6 @@ import { lift, liftT } from "./asyncEnumerable/lift";
 import { AsyncEnumerator } from "./asyncEnumerator";
 import {
   FromArray,
-  FromIterable,
   Generate,
   Keep,
   Map,
@@ -47,7 +46,7 @@ import {
   pipeLazy,
   returns,
 } from "./functions";
-import { LiftableLike } from "./liftable";
+import { FromIterable, LiftableLike } from "./liftable";
 import {
   AsyncReducer,
   MulticastObservableLike,

@@ -14,7 +14,6 @@ import {
   negate,
   newInstance,
   pipe,
-  pipeLazy,
   returns,
 } from "./functions";
 import { Option, isSome } from "./option";
@@ -101,24 +100,6 @@ export interface FromArray<
   ): Function1<readonly T[], ContainerOf<C, T>>;
 }
 
-export interface FromIterable<
-  C extends ContainerLike,
-  O extends Record<string, never> = Record<string, never>,
-> extends Container<C> {
-  fromIterable<T>(
-    options?: Partial<O>,
-  ): Function1<Iterable<T>, ContainerOf<C, T>>;
-}
-
-export interface FromIterator<
-  C extends ContainerLike,
-  O extends Record<string, unknown> = Record<string, never>,
-> extends Container<C> {
-  fromIterator<T, TReturn = any, TNext = unknown>(
-    options?: Partial<O>,
-  ): Function1<Factory<Iterator<T, TReturn, TNext>>, ContainerOf<C, T>>;
-}
-
 export interface Generate<C extends ContainerLike> extends Container<C> {
   generate<T>(
     generator: Updater<T>,
@@ -185,10 +166,6 @@ export interface TakeWhile<C extends ContainerLike> extends Container<C> {
     predicate: Predicate<T>,
     options?: { readonly inclusive?: boolean },
   ): ContainerOperator<C, T, T>;
-}
-
-export interface ThrowIfEmpty<C extends ContainerLike> extends Container<C> {
-  throwIfEmpty<T>(factory: Factory<unknown>): ContainerOperator<C, T, T>;
 }
 
 export interface ToIterable<C extends ContainerLike> extends Container<C> {
@@ -352,24 +329,6 @@ export const fromValue =
         ...options,
       }),
     );
-
-export const genMap = <
-  C extends ContainerLike,
-  TA,
-  TB,
-  OConcatAll extends Record<string, never> = Record<string, never>,
-  OFromIterator extends Record<string, never> = Record<string, never>,
-  TReturn = any,
-  TNext = unknown,
->(
-  m: Map<C> & ConcatAll<C, OConcatAll> & FromIterator<C, OFromIterator>,
-  mapper: Function1<TA, Generator<TB, TReturn, TNext>>,
-  options?: Partial<OConcatAll & OFromIterator>,
-): ContainerOperator<C, TA, TB> =>
-  compose(
-    m.map(x => pipe(pipeLazy(x, mapper), m.fromIterator<TB>(options))),
-    m.concatAll(options),
-  );
 
 export const keepType = <C extends ContainerLike, TA, TB extends TA>(
   { keep }: Keep<C>,

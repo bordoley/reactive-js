@@ -1,9 +1,9 @@
-import { FromIterable, FromIterator } from "../container";
 import {
   fromIterable as enumerableFromIterable,
   fromIterator as enumerableFromIterator,
 } from "../enumerable";
 import { Factory, Function1, compose } from "../functions";
+import { FromIterable, FromIterator } from "../liftable";
 import { ObservableLike } from "../observable";
 import { fromEnumerable } from "./fromEnumerable";
 

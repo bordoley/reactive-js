@@ -1,7 +1,7 @@
 import { Disposable, DisposableOrTeardown } from "./disposable.mjs";
-import { Concat, FromArray, FromIterator, FromIterable, Defer, Buffer, Map, ConcatAll, Repeat, Zip, ContainerLike, Container, ContainerOf, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Generate, Keep, ContainerOperator, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile, ThrowIfEmpty } from "./container.mjs";
+import { Concat, FromArray, Defer, Buffer, Map, ConcatAll, Repeat, Zip, ContainerLike, Container, ContainerOf, DecodeWithCharset, DistinctUntilChanged, EverySatisfy, Generate, Keep, ContainerOperator, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile } from "./container.mjs";
 import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Predicate, Equality, Updater, Reducer } from "./functions.mjs";
-import { Using, CatchError } from "./liftable.mjs";
+import { FromIterator, FromIterable, Using, CatchError, ThrowIfEmpty } from "./liftable.mjs";
 import { Observer } from "./observer.mjs";
 import { Option } from "./option.mjs";
 import { CreateReactiveSource, ReactiveSourceLike } from "./reactive.mjs";

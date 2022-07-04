@@ -74,7 +74,7 @@ ___
 
 ### fromIterableT
 
-• `Const` **fromIterableT**: [`FromIterable`](../interfaces/container.FromIterable.md)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>\>
+• `Const` **fromIterableT**: [`FromIterable`](../interfaces/liftable.FromIterable.md)<[`AsyncEnumerableLike`](../interfaces/asyncEnumerable.AsyncEnumerableLike.md)<`unknown`\>\>
 
 ___
 

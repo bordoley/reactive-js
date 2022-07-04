@@ -1,8 +1,10 @@
 import {
+  ConcatAll,
   Container,
   ContainerLike,
   ContainerOf,
   ContainerOperator,
+  Map,
 } from "./container";
 import { Disposable } from "./disposable";
 import {
@@ -12,6 +14,9 @@ import {
   Function3,
   Function4,
   Function5,
+  compose,
+  pipe,
+  pipeLazy,
 } from "./functions";
 
 export interface LiftableLike extends ContainerLike {
@@ -33,6 +38,28 @@ export interface CatchError<C extends LiftableLike> extends Container<C> {
   catchError<T>(
     onError: Function1<unknown, ContainerOf<C, T> | void>,
   ): ContainerOperator<C, T, T>;
+}
+
+export interface FromIterable<
+  C extends LiftableLike,
+  O extends Record<string, never> = Record<string, never>,
+> extends Container<C> {
+  fromIterable<T>(
+    options?: Partial<O>,
+  ): Function1<Iterable<T>, ContainerOf<C, T>>;
+}
+
+export interface FromIterator<
+  C extends LiftableLike,
+  O extends Record<string, unknown> = Record<string, never>,
+> extends Container<C> {
+  fromIterator<T, TReturn = any, TNext = unknown>(
+    options?: Partial<O>,
+  ): Function1<Factory<Iterator<T, TReturn, TNext>>, ContainerOf<C, T>>;
+}
+
+export interface ThrowIfEmpty<C extends LiftableLike> extends Container<C> {
+  throwIfEmpty<T>(factory: Factory<unknown>): ContainerOperator<C, T, T>;
 }
 
 export interface Using<C extends LiftableLike> extends Container<C> {
@@ -104,3 +131,21 @@ export interface Using<C extends LiftableLike> extends Container<C> {
     runnableFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>,
   ): ContainerOf<C, T>;
 }
+
+export const genMap = <
+  C extends LiftableLike,
+  TA,
+  TB,
+  OConcatAll extends Record<string, never> = Record<string, never>,
+  OFromIterator extends Record<string, never> = Record<string, never>,
+  TReturn = any,
+  TNext = unknown,
+>(
+  m: Map<C> & ConcatAll<C, OConcatAll> & FromIterator<C, OFromIterator>,
+  mapper: Function1<TA, Generator<TB, TReturn, TNext>>,
+  options?: Partial<OConcatAll & OFromIterator>,
+): ContainerOperator<C, TA, TB> =>
+  compose(
+    m.map(x => pipe(pipeLazy(x, mapper), m.fromIterator<TB>(options))),
+    m.concatAll(options),
+  );

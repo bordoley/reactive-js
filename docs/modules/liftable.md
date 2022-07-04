@@ -7,12 +7,19 @@
 ### Interfaces
 
 - [CatchError](../interfaces/liftable.CatchError.md)
+- [FromIterable](../interfaces/liftable.FromIterable.md)
+- [FromIterator](../interfaces/liftable.FromIterator.md)
 - [LiftableLike](../interfaces/liftable.LiftableLike.md)
+- [ThrowIfEmpty](../interfaces/liftable.ThrowIfEmpty.md)
 - [Using](../interfaces/liftable.Using.md)
 
 ### Type Aliases
 
 - [LiftableStateOf](liftable.md#liftablestateof)
+
+### Functions
+
+- [genMap](liftable.md#genmap)
 
 ## Type Aliases
 
@@ -26,3 +33,33 @@
 | :------ | :------ |
 | `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
 | `T` | `T` |
+
+## Functions
+
+### genMap
+
+▸ **genMap**<`C`, `TA`, `TB`, `OConcatAll`, `OFromIterator`, `TReturn`, `TNext`\>(`m`, `mapper`, `options?`): [`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `OConcatAll` | extends `Record`<`string`, `never`\> = `Record`<`string`, `never`\> |
+| `OFromIterator` | extends `Record`<`string`, `never`\> = `Record`<`string`, `never`\> |
+| `TReturn` | `any` |
+| `TNext` | `unknown` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Map`](../interfaces/container.Map.md)<`C`\> & [`ConcatAll`](../interfaces/container.ConcatAll.md)<`C`, `OConcatAll`\> & [`FromIterator`](../interfaces/liftable.FromIterator.md)<`C`, `OFromIterator`\> |
+| `mapper` | [`Function1`](functions.md#function1)<`TA`, `Generator`<`TB`, `TReturn`, `TNext`\>\> |
+| `options?` | `Partial`<`OConcatAll` & `OFromIterator`\> |
+
+#### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, `TB`\>

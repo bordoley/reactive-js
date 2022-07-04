@@ -1,7 +1,7 @@
-import { Buffer, ConcatAll, FromArrayOptions, FromArray, FromIterator, FromIterable, Generate, Repeat, TakeLast, ToIterable, Zip, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile, ThrowIfEmpty } from "./container.mjs";
+import { Buffer, ConcatAll, FromArrayOptions, FromArray, Generate, Repeat, TakeLast, ToIterable, Zip, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile } from "./container.mjs";
 import { Enumerator } from "./enumerator.mjs";
 import { Factory, Function1, Updater, Predicate, Equality, SideEffect1, Reducer } from "./functions.mjs";
-import { LiftableLike, Using } from "./liftable.mjs";
+import { FromIterator, FromIterable, LiftableLike, ThrowIfEmpty, Using } from "./liftable.mjs";
 import { Option } from "./option.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
 declare const buffer: <T>(options?: {

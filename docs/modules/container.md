@@ -17,8 +17,6 @@
 - [EverySatisfy](../interfaces/container.EverySatisfy.md)
 - [FromArray](../interfaces/container.FromArray.md)
 - [FromArrayOptions](../interfaces/container.FromArrayOptions.md)
-- [FromIterable](../interfaces/container.FromIterable.md)
-- [FromIterator](../interfaces/container.FromIterator.md)
 - [Generate](../interfaces/container.Generate.md)
 - [Keep](../interfaces/container.Keep.md)
 - [Map](../interfaces/container.Map.md)
@@ -31,7 +29,6 @@
 - [TakeFirst](../interfaces/container.TakeFirst.md)
 - [TakeLast](../interfaces/container.TakeLast.md)
 - [TakeWhile](../interfaces/container.TakeWhile.md)
-- [ThrowIfEmpty](../interfaces/container.ThrowIfEmpty.md)
 - [ToIterable](../interfaces/container.ToIterable.md)
 - [Zip](../interfaces/container.Zip.md)
 
@@ -51,7 +48,6 @@
 - [endWith](container.md#endwith)
 - [fromOption](container.md#fromoption)
 - [fromValue](container.md#fromvalue)
-- [genMap](container.md#genmap)
 - [ignoreElements](container.md#ignoreelements)
 - [keepType](container.md#keeptype)
 - [mapTo](container.md#mapto)
@@ -310,36 +306,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`T`, [`ContainerOf`](container.md#containerof)<`C`, `T`\>\>
-
-___
-
-### genMap
-
-▸ **genMap**<`C`, `TA`, `TB`, `OConcatAll`, `OFromIterator`, `TReturn`, `TNext`\>(`m`, `mapper`, `options?`): [`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, `TB`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `OConcatAll` | extends `Record`<`string`, `never`\> = `Record`<`string`, `never`\> |
-| `OFromIterator` | extends `Record`<`string`, `never`\> = `Record`<`string`, `never`\> |
-| `TReturn` | `any` |
-| `TNext` | `unknown` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `m` | [`Map`](../interfaces/container.Map.md)<`C`\> & [`ConcatAll`](../interfaces/container.ConcatAll.md)<`C`, `OConcatAll`\> & [`FromIterator`](../interfaces/container.FromIterator.md)<`C`, `OFromIterator`\> |
-| `mapper` | [`Function1`](functions.md#function1)<`TA`, `Generator`<`TB`, `TReturn`, `TNext`\>\> |
-| `options?` | `Partial`<`OConcatAll` & `OFromIterator`\> |
-
-#### Returns
-
-[`ContainerOperator`](container.md#containeroperator)<`C`, `TA`, `TB`\>
 
 ___
 
