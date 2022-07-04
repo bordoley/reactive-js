@@ -222,7 +222,7 @@ ___
 
 ### decodeWithCharsetT
 
-• `Const` **decodeWithCharsetT**: [`DecodeWithCharset`](../interfaces/container.DecodeWithCharset.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+• `Const` **decodeWithCharsetT**: [`DecodeWithCharset`](../interfaces/liftable.DecodeWithCharset.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 

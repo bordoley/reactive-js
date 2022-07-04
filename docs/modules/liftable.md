@@ -7,6 +7,7 @@
 ### Interfaces
 
 - [CatchError](../interfaces/liftable.CatchError.md)
+- [DecodeWithCharset](../interfaces/liftable.DecodeWithCharset.md)
 - [FromIterable](../interfaces/liftable.FromIterable.md)
 - [FromIterator](../interfaces/liftable.FromIterator.md)
 - [LiftableLike](../interfaces/liftable.LiftableLike.md)
@@ -19,6 +20,7 @@
 
 ### Functions
 
+- [encodeUtf8](liftable.md#encodeutf8)
 - [genMap](liftable.md#genmap)
 
 ## Type Aliases
@@ -35,6 +37,28 @@
 | `T` | `T` |
 
 ## Functions
+
+### encodeUtf8
+
+▸ **encodeUtf8**<`C`\>(`m`): [`ContainerOperator`](container.md#containeroperator)<`C`, `string`, `Uint8Array`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | [`Defer`](../interfaces/container.Defer.md)<`C`\> & [`Map`](../interfaces/container.Map.md)<`C`\> |
+
+#### Returns
+
+[`ContainerOperator`](container.md#containeroperator)<`C`, `string`, `Uint8Array`\>
+
+___
 
 ### genMap
 

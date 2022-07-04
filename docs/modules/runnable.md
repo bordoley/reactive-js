@@ -128,7 +128,7 @@ ___
 
 ### decodeWithCharsetT
 
-• `Const` **decodeWithCharsetT**: [`DecodeWithCharset`](../interfaces/container.DecodeWithCharset.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+• `Const` **decodeWithCharsetT**: [`DecodeWithCharset`](../interfaces/liftable.DecodeWithCharset.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
 
 ___
 

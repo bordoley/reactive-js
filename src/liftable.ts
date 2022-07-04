@@ -4,6 +4,7 @@ import {
   ContainerLike,
   ContainerOf,
   ContainerOperator,
+  Defer,
   Map,
 } from "./container";
 import { Disposable } from "./disposable";
@@ -15,6 +16,7 @@ import {
   Function4,
   Function5,
   compose,
+  newInstance,
   pipe,
   pipeLazy,
 } from "./functions";
@@ -38,6 +40,13 @@ export interface CatchError<C extends LiftableLike> extends Container<C> {
   catchError<T>(
     onError: Function1<unknown, ContainerOf<C, T> | void>,
   ): ContainerOperator<C, T, T>;
+}
+
+export interface DecodeWithCharset<C extends LiftableLike>
+  extends Container<C> {
+  decodeWithCharset(
+    charset?: string,
+  ): ContainerOperator<C, ArrayBuffer, string>;
 }
 
 export interface FromIterable<
@@ -131,6 +140,19 @@ export interface Using<C extends LiftableLike> extends Container<C> {
     runnableFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>,
   ): ContainerOf<C, T>;
 }
+
+export const encodeUtf8 =
+  <C extends LiftableLike>(
+    m: Defer<C> & Map<C>,
+  ): ContainerOperator<C, string, Uint8Array> =>
+  obs =>
+    m.defer(() => {
+      const textEncoder = newInstance(TextEncoder);
+      return pipe(
+        obs,
+        m.map(s => textEncoder.encode(s)),
+      );
+    });
 
 export const genMap = <
   C extends LiftableLike,

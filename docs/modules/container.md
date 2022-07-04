@@ -11,7 +11,6 @@
 - [ConcatAll](../interfaces/container.ConcatAll.md)
 - [Container](../interfaces/container.Container.md)
 - [ContainerLike](../interfaces/container.ContainerLike.md)
-- [DecodeWithCharset](../interfaces/container.DecodeWithCharset.md)
 - [Defer](../interfaces/container.Defer.md)
 - [DistinctUntilChanged](../interfaces/container.DistinctUntilChanged.md)
 - [EverySatisfy](../interfaces/container.EverySatisfy.md)
@@ -44,7 +43,6 @@
 - [concatWith](container.md#concatwith)
 - [contains](container.md#contains)
 - [empty](container.md#empty)
-- [encodeUtf8](container.md#encodeutf8)
 - [endWith](container.md#endwith)
 - [fromOption](container.md#fromoption)
 - [fromValue](container.md#fromvalue)
@@ -209,28 +207,6 @@ ___
 #### Returns
 
 [`ContainerOf`](container.md#containerof)<`C`, `T`\>
-
-___
-
-### encodeUtf8
-
-▸ **encodeUtf8**<`C`\>(`m`): [`ContainerOperator`](container.md#containeroperator)<`C`, `string`, `Uint8Array`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | extends [`ContainerLike`](../interfaces/container.ContainerLike.md) |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `m` | [`Defer`](../interfaces/container.Defer.md)<`C`\> & [`Map`](../interfaces/container.Map.md)<`C`\> |
-
-#### Returns
-
-[`ContainerOperator`](container.md#containeroperator)<`C`, `string`, `Uint8Array`\>
 
 ___
 

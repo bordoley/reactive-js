@@ -20,8 +20,6 @@
 
   ↳ [`ConcatAll`](container.ConcatAll.md)
 
-  ↳ [`DecodeWithCharset`](container.DecodeWithCharset.md)
-
   ↳ [`Defer`](container.Defer.md)
 
   ↳ [`DistinctUntilChanged`](container.DistinctUntilChanged.md)
@@ -63,6 +61,8 @@
   ↳ [`ToEnumerable`](enumerable.ToEnumerable.md)
 
   ↳ [`CatchError`](liftable.CatchError.md)
+
+  ↳ [`DecodeWithCharset`](liftable.DecodeWithCharset.md)
 
   ↳ [`FromIterable`](liftable.FromIterable.md)
 
