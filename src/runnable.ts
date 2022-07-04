@@ -47,7 +47,6 @@ import {
   TakeLast,
   TakeWhile,
   ThrowIfEmpty,
-  Using,
 } from "./container";
 import { addTo, dispose, isDisposed } from "./disposable";
 import {
@@ -64,6 +63,7 @@ import {
   identity,
   pipe,
 } from "./functions";
+import { CatchError, Using } from "./liftable";
 import { Option, getOrDefault, isNone, none } from "./option";
 import { ReactiveSourceLike, sourceFrom } from "./reactive";
 import { createRunnable, createT } from "./runnable/createRunnable";
@@ -121,6 +121,10 @@ export const catchError: <T>(
   liftT,
   class CatchErrorSink<T> extends AbstractDelegatingRunnableSink<T, T> {},
 );
+
+export const catchErrorT: CatchError<RunnableLike<unknown>> = {
+  catchError,
+};
 
 export const concat: Concat<RunnableLike<unknown>>["concat"] = <T>(
   ...runnables: readonly RunnableLike<T>[]

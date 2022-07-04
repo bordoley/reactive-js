@@ -62,13 +62,15 @@
 
   ↳ [`ToIterable`](container.ToIterable.md)
 
-  ↳ [`Using`](container.Using.md)
-
   ↳ [`Zip`](container.Zip.md)
 
   ↳ [`FromEnumerable`](enumerable.FromEnumerable.md)
 
   ↳ [`ToEnumerable`](enumerable.ToEnumerable.md)
+
+  ↳ [`CatchError`](liftable.CatchError.md)
+
+  ↳ [`Using`](liftable.Using.md)
 
   ↳ [`FromObservable`](observable.FromObservable.md)
 

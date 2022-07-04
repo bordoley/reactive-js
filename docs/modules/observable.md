@@ -27,6 +27,7 @@
 
 - [TContainerOf](observable.md#tcontainerof)
 - [bufferT](observable.md#buffert)
+- [catchErrorT](observable.md#catcherrort)
 - [concatAllT](observable.md#concatallt)
 - [concatT](observable.md#concatt)
 - [createT](observable.md#createt)
@@ -192,6 +193,12 @@ ___
 ### bufferT
 
 • `Const` **bufferT**: [`Buffer`](../interfaces/container.Buffer.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### catchErrorT
+
+• `Const` **catchErrorT**: [`CatchError`](../interfaces/liftable.CatchError.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
@@ -403,7 +410,7 @@ ___
 
 ### usingT
 
-• `Const` **usingT**: [`Using`](../interfaces/container.Using.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+• `Const` **usingT**: [`Using`](../interfaces/liftable.Using.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
