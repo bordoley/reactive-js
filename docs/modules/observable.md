@@ -264,13 +264,13 @@ ___
 
 ### fromIterableT
 
-• `Const` **fromIterableT**: [`FromIterable`](../interfaces/container.FromIterable.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+• `Const` **fromIterableT**: [`FromIterable`](../interfaces/liftable.FromIterable.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
 ### fromIteratorT
 
-• `Const` **fromIteratorT**: [`FromIterator`](../interfaces/container.FromIterator.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, { `delay?`: `number`  }\>
+• `Const` **fromIteratorT**: [`FromIterator`](../interfaces/liftable.FromIterator.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, { `delay?`: `number`  }\>
 
 ___
 
@@ -378,7 +378,7 @@ ___
 
 ### throwIfEmptyT
 
-• `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](../interfaces/container.ThrowIfEmpty.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+• `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](../interfaces/liftable.ThrowIfEmpty.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 

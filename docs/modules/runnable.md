@@ -224,7 +224,7 @@ ___
 
 ### throwIfEmptyT
 
-• `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](../interfaces/container.ThrowIfEmpty.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+• `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](../interfaces/liftable.ThrowIfEmpty.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
 
 ___
 

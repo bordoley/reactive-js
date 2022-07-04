@@ -1,4 +1,3 @@
-import { FromIterable, FromIterator } from "../container";
 import { dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { Enumerator, hasCurrent } from "../enumerator";
@@ -10,6 +9,7 @@ import {
   pipe,
   pipeLazy,
 } from "../functions";
+import { FromIterable, FromIterator } from "../liftable";
 import { none } from "../option";
 import { createEnumerable } from "./enumerable";
 

@@ -46,7 +46,6 @@ import {
   TakeFirst,
   TakeLast,
   TakeWhile,
-  ThrowIfEmpty,
 } from "./container";
 import { addTo, dispose, isDisposed } from "./disposable";
 import {
@@ -63,7 +62,7 @@ import {
   identity,
   pipe,
 } from "./functions";
-import { CatchError, Using } from "./liftable";
+import { CatchError, ThrowIfEmpty, Using } from "./liftable";
 import { Option, getOrDefault, isNone, none } from "./option";
 import { ReactiveSourceLike, sourceFrom } from "./reactive";
 import { createRunnable, createT } from "./runnable/createRunnable";

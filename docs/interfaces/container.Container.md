@@ -30,10 +30,6 @@
 
   ↳ [`FromArray`](container.FromArray.md)
 
-  ↳ [`FromIterable`](container.FromIterable.md)
-
-  ↳ [`FromIterator`](container.FromIterator.md)
-
   ↳ [`Generate`](container.Generate.md)
 
   ↳ [`Keep`](container.Keep.md)
@@ -58,8 +54,6 @@
 
   ↳ [`TakeWhile`](container.TakeWhile.md)
 
-  ↳ [`ThrowIfEmpty`](container.ThrowIfEmpty.md)
-
   ↳ [`ToIterable`](container.ToIterable.md)
 
   ↳ [`Zip`](container.Zip.md)
@@ -69,6 +63,12 @@
   ↳ [`ToEnumerable`](enumerable.ToEnumerable.md)
 
   ↳ [`CatchError`](liftable.CatchError.md)
+
+  ↳ [`FromIterable`](liftable.FromIterable.md)
+
+  ↳ [`FromIterator`](liftable.FromIterator.md)
+
+  ↳ [`ThrowIfEmpty`](liftable.ThrowIfEmpty.md)
 
   ↳ [`Using`](liftable.Using.md)
 

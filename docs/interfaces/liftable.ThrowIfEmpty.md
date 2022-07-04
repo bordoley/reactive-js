@@ -1,14 +1,14 @@
-[Reactive-JS](../README.md) / [container](../modules/container.md) / ThrowIfEmpty
+[Reactive-JS](../README.md) / [liftable](../modules/liftable.md) / ThrowIfEmpty
 
 # Interface: ThrowIfEmpty<C\>
 
-[container](../modules/container.md).ThrowIfEmpty
+[liftable](../modules/liftable.md).ThrowIfEmpty
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ContainerLike`](container.ContainerLike.md) |
+| `C` | extends [`LiftableLike`](liftable.LiftableLike.md) |
 
 ## Hierarchy
 
@@ -20,11 +20,11 @@
 
 ### Properties
 
-- [TContainerOf](container.ThrowIfEmpty.md#tcontainerof)
+- [TContainerOf](liftable.ThrowIfEmpty.md#tcontainerof)
 
 ### Methods
 
-- [throwIfEmpty](container.ThrowIfEmpty.md#throwifempty)
+- [throwIfEmpty](liftable.ThrowIfEmpty.md#throwifempty)
 
 ## Properties
 

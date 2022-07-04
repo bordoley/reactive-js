@@ -4,7 +4,6 @@ import {
   concatWith,
   empty,
   fromValue,
-  genMap,
   throws,
   zipWith,
 } from "../container";
@@ -23,6 +22,7 @@ import {
   returns,
   sum,
 } from "../functions";
+import { genMap } from "../liftable";
 import {
   ObservableLike,
   Subject,
