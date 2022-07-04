@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Classes
-
-- [AbstractEnumerable](../classes/enumerable.AbstractEnumerable.md)
-
 ### Interfaces
 
 - [EnumerableLike](../interfaces/enumerable.EnumerableLike.md)
