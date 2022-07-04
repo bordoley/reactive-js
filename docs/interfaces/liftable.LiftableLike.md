@@ -14,7 +14,7 @@
 
   ↳↳ [`EnumerableLike`](enumerable.EnumerableLike.md)
 
-  ↳↳ [`SourceLike`](source.SourceLike.md)
+  ↳↳ [`ReactiveSourceLike`](reactive.ReactiveSourceLike.md)
 
 ## Implemented by
 

@@ -1,8 +1,3 @@
-import { empty as emptyArray } from "./__internal__.readonlyArray";
-import {
-  AbstractDelegatingRunnableSink,
-  createDelegatingRunnableSink,
-} from "./__internal__.runnableSink";
 import {
   createBufferOperator,
   createCatchErrorOperator,
@@ -24,7 +19,12 @@ import {
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
   createUsing,
-} from "./__internal__.source";
+} from "./__internal__.reactive";
+import { empty as emptyArray } from "./__internal__.readonlyArray";
+import {
+  AbstractDelegatingRunnableSink,
+  createDelegatingRunnableSink,
+} from "./__internal__.runnableSink";
 import {
   Buffer,
   Concat,
@@ -65,14 +65,14 @@ import {
   pipe,
 } from "./functions";
 import { Option, getOrDefault, isNone, none } from "./option";
+import { ReactiveSourceLike, sourceFrom } from "./reactive";
 import { createRunnable, createT } from "./runnable/createRunnable";
 import { first } from "./runnable/first";
 import { fromArrayT } from "./runnable/fromArray";
 import { liftT } from "./runnable/lift";
 import { RunnableSink } from "./runnableSink";
-import { SourceLike, sourceFrom } from "./source";
 
-export interface RunnableLike<T> extends SourceLike {
+export interface RunnableLike<T> extends ReactiveSourceLike {
   readonly T: unknown;
   readonly TContainerOf: RunnableLike<this["T"]>;
   readonly TLiftableState: RunnableSink<this["T"]>;

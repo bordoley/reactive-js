@@ -115,7 +115,7 @@ ___
 
 ### createT
 
-• `Const` **createT**: [`CreateSource`](../interfaces/source.CreateSource.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+• `Const` **createT**: [`CreateReactiveSource`](../interfaces/reactive.CreateReactiveSource.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
 
 ___
 

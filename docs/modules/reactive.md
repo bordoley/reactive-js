@@ -1,22 +1,22 @@
-[Reactive-JS](../README.md) / source
+[Reactive-JS](../README.md) / reactive
 
-# Module: source
+# Module: reactive
 
 ## Table of contents
 
 ### Classes
 
-- [AbtractDisposableSource](../classes/source.AbtractDisposableSource.md)
+- [AbtractDisposableReactiveSource](../classes/reactive.AbtractDisposableReactiveSource.md)
 
 ### Interfaces
 
-- [CreateSource](../interfaces/source.CreateSource.md)
-- [SourceLike](../interfaces/source.SourceLike.md)
+- [CreateReactiveSource](../interfaces/reactive.CreateReactiveSource.md)
+- [ReactiveSourceLike](../interfaces/reactive.ReactiveSourceLike.md)
 
 ### Functions
 
-- [sinkInto](source.md#sinkinto)
-- [sourceFrom](source.md#sourcefrom)
+- [sinkInto](reactive.md#sinkinto)
+- [sourceFrom](reactive.md#sourcefrom)
 
 ## Functions
 
@@ -28,7 +28,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
+| `C` | extends [`ReactiveSourceLike`](../interfaces/reactive.ReactiveSourceLike.md)<`C`\> |
 | `T` | `T` |
 | `TSink` | extends [`SinkLike`](../interfaces/sink.SinkLike.md)<`unknown`, `TSink`\> |
 
@@ -52,7 +52,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`SourceLike`](../interfaces/source.SourceLike.md)<`C`\> |
+| `C` | extends [`ReactiveSourceLike`](../interfaces/reactive.ReactiveSourceLike.md)<`C`\> |
 | `T` | `T` |
 | `TSink` | extends [`SinkLike`](../interfaces/sink.SinkLike.md)<`unknown`, `TSink`\> |
 

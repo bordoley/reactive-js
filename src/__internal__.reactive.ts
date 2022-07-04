@@ -56,26 +56,26 @@ import {
 } from "./functions";
 import { LiftableStateOf } from "./liftable";
 import { Option, isSome, none } from "./option";
+import { CreateReactiveSource, ReactiveSourceLike, sinkInto } from "./reactive";
 import { SinkLike, assertState, notify } from "./sink";
-import { CreateSource, SourceLike, sinkInto } from "./source";
 
-export abstract class AbstractSource<T, TSink extends SinkLike<T>>
+export abstract class AbstractReactiveSource<T, TSink extends SinkLike<T>>
   extends AbstractLiftable<TSink>
-  implements SourceLike
+  implements ReactiveSourceLike
 {
   abstract sink(this: this, sink: TSink): void;
 }
 
-export interface Lift<C extends SourceLike>
+export interface Lift<C extends ReactiveSourceLike>
   extends LiftableLift<C, ContraVariant> {}
 
 const create =
-  <C extends SourceLike, T>(m: CreateSource<C>) =>
+  <C extends ReactiveSourceLike, T>(m: CreateReactiveSource<C>) =>
   (onSink: (sink: LiftableStateOf<C, T>) => void): ContainerOf<C, T> =>
     m.create(onSink);
 
 const decorateWithNotify = <
-  C extends SourceLike,
+  C extends ReactiveSourceLike,
   T,
   TSTate extends LiftableStateOf<C, T>,
 >(
@@ -85,7 +85,7 @@ const decorateWithNotify = <
   SinkClass.prototype.notify = notify;
 };
 
-export const createBufferOperator = <C extends SourceLike>(
+export const createBufferOperator = <C extends ReactiveSourceLike>(
   m: Lift<C> & FromArray<C>,
   BufferSink: new <T>(
     delegate: LiftableStateOf<C, readonly T[]>,
@@ -160,7 +160,7 @@ export const createBufferOperator = <C extends SourceLike>(
 };
 
 export const createCatchErrorOperator =
-  <C extends SourceLike>(
+  <C extends ReactiveSourceLike>(
     m: Lift<C>,
     CatchErrorSink: new <T>(
       delegate: LiftableStateOf<C, T>,
@@ -206,7 +206,7 @@ export const createCatchErrorOperator =
     );
   };
 
-export const createDecodeWithCharsetOperator = <C extends SourceLike>(
+export const createDecodeWithCharsetOperator = <C extends ReactiveSourceLike>(
   m: FromArray<C> & Lift<C>,
   DecodeWithCharsetSink: new (
     delegate: LiftableStateOf<C, string>,
@@ -255,7 +255,9 @@ export const createDecodeWithCharsetOperator = <C extends SourceLike>(
     );
 };
 
-export const createDistinctUntilChangedOperator = <C extends SourceLike>(
+export const createDistinctUntilChangedOperator = <
+  C extends ReactiveSourceLike,
+>(
   m: Lift<C>,
   DistinctUntilChangedSink: new <T>(
     delegate: LiftableStateOf<C, T>,
@@ -293,7 +295,7 @@ export const createDistinctUntilChangedOperator = <C extends SourceLike>(
   return createDistinctUntilChangedLiftOperator(m, DistinctUntilChangedSink);
 };
 
-const createSatisfyOperator = <C extends SourceLike>(
+const createSatisfyOperator = <C extends ReactiveSourceLike>(
   m: FromArray<C> & Lift<C>,
   SatisfySink: new <T>(
     delegate: LiftableStateOf<C, boolean>,
@@ -343,7 +345,7 @@ const createSatisfyOperator = <C extends SourceLike>(
     );
 };
 
-export const createEverySatisfyOperator = <C extends SourceLike>(
+export const createEverySatisfyOperator = <C extends ReactiveSourceLike>(
   m: FromArray<C> & Lift<C>,
   EverySatisfySink: new <T>(
     delegate: LiftableStateOf<C, boolean>,
@@ -357,7 +359,7 @@ export const createEverySatisfyOperator = <C extends SourceLike>(
     createSatisfyOperator(m, EverySatisfySink, true),
   );
 
-export const createKeepOperator = <C extends SourceLike>(
+export const createKeepOperator = <C extends ReactiveSourceLike>(
   m: Lift<C>,
   KeepSink: new <T>(
     delegate: LiftableStateOf<C, T>,
@@ -384,7 +386,7 @@ export const createKeepOperator = <C extends SourceLike>(
   return createKeepLiftOperator(m, KeepSink);
 };
 
-export const createMapOperator = <C extends SourceLike>(
+export const createMapOperator = <C extends ReactiveSourceLike>(
   m: Lift<C>,
   MapSink: new <TA, TB>(
     delegate: LiftableStateOf<C, TB>,
@@ -410,7 +412,7 @@ export const createMapOperator = <C extends SourceLike>(
   return createMapLiftOperator(m, MapSink);
 };
 
-export const createOnNotifyOperator = <C extends SourceLike>(
+export const createOnNotifyOperator = <C extends ReactiveSourceLike>(
   m: Lift<C>,
   OnNotifySink: new <T>(
     delegate: LiftableStateOf<C, T>,
@@ -437,7 +439,7 @@ export const createOnNotifyOperator = <C extends SourceLike>(
   return createOnNotifyLiftOperator(m, OnNotifySink);
 };
 
-export const createPairwiseOperator = <C extends SourceLike>(
+export const createPairwiseOperator = <C extends ReactiveSourceLike>(
   m: Lift<C>,
   PairwiseSink: new <T>(
     delegate: LiftableStateOf<C, [Option<T>, T]>,
@@ -468,7 +470,7 @@ export const createPairwiseOperator = <C extends SourceLike>(
   return createPairwiseLiftOperator(m, PairwiseSink);
 };
 
-export const createReduceOperator = <C extends SourceLike>(
+export const createReduceOperator = <C extends ReactiveSourceLike>(
   m: FromArray<C> & Lift<C>,
   ReduceSink: new <T, TAcc>(
     delegate: LiftableStateOf<C, TAcc>,
@@ -522,7 +524,7 @@ export const createReduceOperator = <C extends SourceLike>(
     }, lift(m));
 };
 
-export const createScanOperator = <C extends SourceLike>(
+export const createScanOperator = <C extends ReactiveSourceLike>(
   m: Lift<C>,
   ScanSink: new <T, TAcc>(
     delegate: LiftableStateOf<C, TAcc>,
@@ -556,7 +558,7 @@ export const createScanOperator = <C extends SourceLike>(
   return createScanLiftOperator(m, ScanSink);
 };
 
-export const createSkipFirstOperator = <C extends SourceLike>(
+export const createSkipFirstOperator = <C extends ReactiveSourceLike>(
   m: Lift<C>,
   SkipFirstSink: new <T>(
     delegate: LiftableStateOf<C, T>,
@@ -587,7 +589,7 @@ export const createSkipFirstOperator = <C extends SourceLike>(
   return createSkipFirstLiftOperator(m, SkipFirstSink);
 };
 
-export const createSomeSatisfyOperator = <C extends SourceLike>(
+export const createSomeSatisfyOperator = <C extends ReactiveSourceLike>(
   m: FromArray<C> & Lift<C>,
   SomeSatisfySink: new <T>(
     delegate: LiftableStateOf<C, boolean>,
@@ -598,7 +600,7 @@ export const createSomeSatisfyOperator = <C extends SourceLike>(
 ): (<T>(predicate: Predicate<T>) => ContainerOperator<C, T, boolean>) =>
   createSatisfyOperator(m, SomeSatisfySink, false);
 
-export const createTakeFirstOperator = <C extends SourceLike>(
+export const createTakeFirstOperator = <C extends ReactiveSourceLike>(
   m: FromArray<C> & Lift<C>,
   TakeFirstSink: new <T>(
     delegate: LiftableStateOf<C, T>,
@@ -632,7 +634,7 @@ export const createTakeFirstOperator = <C extends SourceLike>(
   return createTakeFirstLiftOperator(m, TakeFirstSink);
 };
 
-export const createTakeLastOperator = <C extends SourceLike>(
+export const createTakeLastOperator = <C extends ReactiveSourceLike>(
   m: FromArray<C> & Lift<C>,
   TakeLastSink: new <T>(
     delegate: LiftableStateOf<C, T>,
@@ -698,7 +700,7 @@ export const createTakeLastOperator = <C extends SourceLike>(
   };
 };
 
-export const createTakeWhileOperator = <C extends SourceLike>(
+export const createTakeWhileOperator = <C extends ReactiveSourceLike>(
   m: Lift<C>,
   TakeWhileSink: new <T>(
     delegate: LiftableStateOf<C, T>,
@@ -738,7 +740,7 @@ export const createTakeWhileOperator = <C extends SourceLike>(
   return createTakeWhileLiftOperator(m, TakeWhileSink);
 };
 
-export const createThrowIfEmptyOperator = <C extends SourceLike>(
+export const createThrowIfEmptyOperator = <C extends ReactiveSourceLike>(
   m: Lift<C>,
   ThrowIfEmptySink: new <T>(
     delegate: LiftableStateOf<C, T>,
@@ -765,17 +767,19 @@ export const createThrowIfEmptyOperator = <C extends SourceLike>(
 };
 
 export const createFromDisposable =
-  <C extends SourceLike>(m: CreateSource<C>) =>
+  <C extends ReactiveSourceLike>(m: CreateReactiveSource<C>) =>
   <T>(disposable: Disposable): ContainerOf<C, T> =>
     pipe(disposable, addTo, create(m));
 
-export const createNever = <C extends SourceLike>(m: CreateSource<C>) => {
+export const createNever = <C extends ReactiveSourceLike>(
+  m: CreateReactiveSource<C>,
+) => {
   const neverInstance: ContainerOf<C, any> = pipe(ignore, create(m));
   return <T>(): ContainerOf<C, T> => neverInstance;
 };
 
 export const createOnSink =
-  <C extends SourceLike>(m: CreateSource<C>) =>
+  <C extends ReactiveSourceLike>(m: CreateReactiveSource<C>) =>
   <T>(f: Factory<DisposableOrTeardown | void>): ContainerOperator<C, T, T> =>
   src =>
     pipe((sink: LiftableStateOf<C, T>) => {
@@ -792,7 +796,7 @@ export const createOnSink =
     }, create(m));
 
 export const createUsing =
-  <C extends SourceLike>(m: CreateSource<C>) =>
+  <C extends ReactiveSourceLike>(m: CreateReactiveSource<C>) =>
   <TResource extends Disposable, T>(
     resourceFactory: Factory<TResource | readonly TResource[]>,
     sourceFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>,

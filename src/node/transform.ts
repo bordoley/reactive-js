@@ -14,7 +14,7 @@ import { FlowableOperator, createLiftedFlowable } from "../flowable";
 import { Factory, pipe, pipeLazy, returns } from "../functions";
 import { createObservable, onNotify, subscribe } from "../observable";
 import { getScheduler } from "../observer";
-import { sinkInto } from "../source";
+import { sinkInto } from "../reactive";
 import { sourceFrom, stream } from "../streamable";
 import { createReadableSource } from "./createReadableSource";
 import { createWritableSinkStream } from "./createWritableSink";

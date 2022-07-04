@@ -5,8 +5,8 @@ import {
 import { ConcatAll } from "../container";
 import { addTo, bindTo, dispose } from "../disposable";
 import { newInstanceWith, pipe } from "../functions";
+import { sourceFrom } from "../reactive";
 import { RunnableLike, RunnableOperator } from "../runnable";
-import { sourceFrom } from "../source";
 import { lift } from "./lift";
 
 class FlattenSink<T> extends AbstractDelegatingRunnableSink<

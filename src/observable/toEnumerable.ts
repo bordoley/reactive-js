@@ -11,13 +11,13 @@ import { Function1, newInstance, newInstanceWith, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
 import { isNone } from "../option";
+import { sourceFrom } from "../reactive";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
   isInContinuation,
 } from "../scheduler";
 import { assertState } from "../sink";
-import { sourceFrom } from "../source";
 
 class EnumeratorScheduler<T>
   extends AbstractEnumerator<T>

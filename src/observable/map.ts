@@ -1,5 +1,5 @@
 import { AbstractDelegatingObserver } from "../__internal__.observer";
-import { createMapOperator } from "../__internal__.source";
+import { createMapOperator } from "../__internal__.reactive";
 import { Map } from "../container";
 import { Function1 } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";

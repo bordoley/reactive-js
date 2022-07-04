@@ -5,7 +5,7 @@ import { addTo, dispose, onComplete } from "../disposable";
 import { getLength, isEmpty, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
-import { sourceFrom } from "../source";
+import { sourceFrom } from "../reactive";
 import { createObservable } from "./createObservable";
 import { isEnumerable, tagEnumerable } from "./observable";
 

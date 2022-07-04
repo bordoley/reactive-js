@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [source](../modules/source.md) / AbtractDisposableSource
+[Reactive-JS](../README.md) / [reactive](../modules/reactive.md) / AbtractDisposableReactiveSource
 
-# Class: AbtractDisposableSource<T, TSink\>
+# Class: AbtractDisposableReactiveSource<T, TSink\>
 
-[source](../modules/source.md).AbtractDisposableSource
+[reactive](../modules/reactive.md).AbtractDisposableReactiveSource
 
 ## Type parameters
 
@@ -15,39 +15,39 @@
 
 - [`AbtractDisposableLiftable`](liftable.AbtractDisposableLiftable.md)<`TSink`\>
 
-  ↳ **`AbtractDisposableSource`**
+  ↳ **`AbtractDisposableReactiveSource`**
 
   ↳↳ [`AbstractDisposableObservable`](observable.AbstractDisposableObservable.md)
 
 ## Implements
 
-- [`SourceLike`](../interfaces/source.SourceLike.md)
+- [`ReactiveSourceLike`](../interfaces/reactive.ReactiveSourceLike.md)
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](source.AbtractDisposableSource.md#constructor)
+- [constructor](reactive.AbtractDisposableReactiveSource.md#constructor)
 
 ### Accessors
 
-- [T](source.AbtractDisposableSource.md#t)
-- [TContainerOf](source.AbtractDisposableSource.md#tcontainerof)
-- [TLiftableState](source.AbtractDisposableSource.md#tliftablestate)
-- [error](source.AbtractDisposableSource.md#error)
-- [isDisposed](source.AbtractDisposableSource.md#isdisposed)
+- [T](reactive.AbtractDisposableReactiveSource.md#t)
+- [TContainerOf](reactive.AbtractDisposableReactiveSource.md#tcontainerof)
+- [TLiftableState](reactive.AbtractDisposableReactiveSource.md#tliftablestate)
+- [error](reactive.AbtractDisposableReactiveSource.md#error)
+- [isDisposed](reactive.AbtractDisposableReactiveSource.md#isdisposed)
 
 ### Methods
 
-- [add](source.AbtractDisposableSource.md#add)
-- [dispose](source.AbtractDisposableSource.md#dispose)
-- [sink](source.AbtractDisposableSource.md#sink)
+- [add](reactive.AbtractDisposableReactiveSource.md#add)
+- [dispose](reactive.AbtractDisposableReactiveSource.md#dispose)
+- [sink](reactive.AbtractDisposableReactiveSource.md#sink)
 
 ## Constructors
 
 ### constructor
 
-• **new AbtractDisposableSource**<`T`, `TSink`\>()
+• **new AbtractDisposableReactiveSource**<`T`, `TSink`\>()
 
 #### Type parameters
 
@@ -72,7 +72,7 @@
 
 #### Implementation of
 
-[SourceLike](../interfaces/source.SourceLike.md).[T](../interfaces/source.SourceLike.md#t)
+[ReactiveSourceLike](../interfaces/reactive.ReactiveSourceLike.md).[T](../interfaces/reactive.ReactiveSourceLike.md#t)
 
 #### Inherited from
 
@@ -90,7 +90,7 @@ ___
 
 #### Implementation of
 
-[SourceLike](../interfaces/source.SourceLike.md).[TContainerOf](../interfaces/source.SourceLike.md#tcontainerof)
+[ReactiveSourceLike](../interfaces/reactive.ReactiveSourceLike.md).[TContainerOf](../interfaces/reactive.ReactiveSourceLike.md#tcontainerof)
 
 #### Inherited from
 
@@ -108,7 +108,7 @@ ___
 
 #### Implementation of
 
-[SourceLike](../interfaces/source.SourceLike.md).[TLiftableState](../interfaces/source.SourceLike.md#tliftablestate)
+[ReactiveSourceLike](../interfaces/reactive.ReactiveSourceLike.md).[TLiftableState](../interfaces/reactive.ReactiveSourceLike.md#tliftablestate)
 
 #### Inherited from
 
@@ -158,7 +158,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`AbtractDisposableSource`](source.AbtractDisposableSource.md)<`T`, `TSink`\> |
+| `this` | [`AbtractDisposableReactiveSource`](reactive.AbtractDisposableReactiveSource.md)<`T`, `TSink`\> |
 | `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
 | `ignoreChildErrors` | `boolean` |
 
@@ -184,7 +184,7 @@ Dispose the resource.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `this` | [`AbtractDisposableSource`](source.AbtractDisposableSource.md)<`T`, `TSink`\> | - |
+| `this` | [`AbtractDisposableReactiveSource`](reactive.AbtractDisposableReactiveSource.md)<`T`, `TSink`\> | - |
 | `error?` | [`Error`](../interfaces/disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns
@@ -205,7 +205,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`AbtractDisposableSource`](source.AbtractDisposableSource.md)<`T`, `TSink`\> |
+| `this` | [`AbtractDisposableReactiveSource`](reactive.AbtractDisposableReactiveSource.md)<`T`, `TSink`\> |
 | `sink` | `TSink` |
 
 #### Returns
@@ -214,4 +214,4 @@ ___
 
 #### Implementation of
 
-[SourceLike](../interfaces/source.SourceLike.md).[sink](../interfaces/source.SourceLike.md#sink)
+[ReactiveSourceLike](../interfaces/reactive.ReactiveSourceLike.md).[sink](../interfaces/reactive.ReactiveSourceLike.md#sink)

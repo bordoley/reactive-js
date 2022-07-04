@@ -18,7 +18,7 @@
 
   ↳↳ [`AsyncEnumerator`](asyncEnumerator.AsyncEnumerator.md)
 
-  ↳↳ [`AbtractDisposableSource`](source.AbtractDisposableSource.md)
+  ↳↳ [`AbtractDisposableReactiveSource`](reactive.AbtractDisposableReactiveSource.md)
 
 ## Implements
 

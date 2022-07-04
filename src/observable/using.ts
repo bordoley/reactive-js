@@ -1,4 +1,4 @@
-import { createUsing } from "../__internal__.source";
+import { createUsing } from "../__internal__.reactive";
 import { Using } from "../container";
 import { ObservableLike } from "../observable";
 import { createT } from "./createObservable";

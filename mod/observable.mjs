@@ -1,13 +1,13 @@
 /// <reference types="./observable.d.ts" />
 import { AbstractDelegatingObserver, createDelegatingObserver } from './__internal__.observer.mjs';
 import { hasDelay, getDelay } from './__internal__.optionalArgs.mjs';
-import { AbstractSource, createMapOperator, createOnNotifyOperator, createUsing, createNever, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './__internal__.source.mjs';
+import { AbstractReactiveSource, createMapOperator, createOnNotifyOperator, createUsing, createNever, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './__internal__.reactive.mjs';
 import { empty as empty$1, fromValue, throws, concatMap } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { dispose, addTo, isDisposed, onDisposed, add, onComplete, disposed, bindTo, toErrorHandler } from './disposable.mjs';
 import { move, getCurrent, hasCurrent, forEach } from './enumerator.mjs';
 import { pipe, newInstance, getLength, newInstanceWith, isEmpty, arrayEquality, ignore, raise, pipeLazy, compose, max, returns, identity, instanceFactory } from './functions.mjs';
-import { AbtractDisposableSource, sinkInto, sourceFrom } from './source.mjs';
+import { AbtractDisposableReactiveSource, sinkInto, sourceFrom } from './reactive.mjs';
 import { getScheduler, Observer } from './observer.mjs';
 import { schedule, __yield, isInContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { createFromArray } from './__internal__.container.mjs';
@@ -22,9 +22,9 @@ import { MAX_SAFE_INTEGER } from './__internal__.env.mjs';
 import { AbstractEnumerator, reset, zip as zip$1 } from './__internal__.enumerator.mjs';
 import { runContinuation } from './__internal__.schedulerImplementation.mjs';
 
-class AbstractObservable extends AbstractSource {
+class AbstractObservable extends AbstractReactiveSource {
 }
-class AbstractDisposableObservable extends AbtractDisposableSource {
+class AbstractDisposableObservable extends AbtractDisposableReactiveSource {
 }
 const isEnumerable = (obs) => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; };
 const tagEnumerable = (isEnumerable) => (obs) => {

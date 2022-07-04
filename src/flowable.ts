@@ -24,8 +24,8 @@ import {
   takeUntil,
 } from "./observable";
 import { getScheduler } from "./observer";
+import { sourceFrom as sourceFromSource } from "./reactive";
 import { createPausableScheduler } from "./scheduler";
-import { sourceFrom as sourceFromSource } from "./source";
 import { StreamLike } from "./stream";
 import {
   StreamableLike,

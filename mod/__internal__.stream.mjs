@@ -4,7 +4,7 @@ import { getScheduler } from './dispatcher.mjs';
 import { add, addTo } from './disposable.mjs';
 import { newInstance, pipe } from './functions.mjs';
 import { AbstractDisposableObservable, Subject, publish, getObserverCount, getReplay } from './observable.mjs';
-import { sinkInto } from './source.mjs';
+import { sinkInto } from './reactive.mjs';
 
 class StreamImpl extends AbstractDisposableObservable {
     constructor(op, scheduler, options) {

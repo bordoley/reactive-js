@@ -12,8 +12,8 @@ import {
   publish,
 } from "./observable";
 import { Observer } from "./observer";
+import { sinkInto } from "./reactive";
 import { SchedulerLike } from "./scheduler";
-import { sinkInto } from "./source";
 import { StreamLike } from "./stream";
 
 class StreamImpl<TReq, T>

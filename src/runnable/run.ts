@@ -1,9 +1,9 @@
 import { dispose } from "../disposable";
 import { pipe, raise } from "../functions";
 import { isSome } from "../option";
+import { sourceFrom } from "../reactive";
 import { RunnableLike } from "../runnable";
 import { RunnableSink } from "../runnableSink";
-import { sourceFrom } from "../source";
 
 export const run =
   <T, TResult>(

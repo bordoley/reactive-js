@@ -210,7 +210,7 @@ ___
 
 ### createT
 
-• `Const` **createT**: [`CreateSource`](../interfaces/source.CreateSource.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+• `Const` **createT**: [`CreateReactiveSource`](../interfaces/reactive.CreateReactiveSource.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
