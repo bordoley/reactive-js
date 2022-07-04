@@ -4,7 +4,6 @@ import {
   ContainerLike,
   ContainerOf,
   ContainerOperator,
-  Defer,
   Map,
 } from "./container";
 import { Disposable } from "./disposable";
@@ -47,6 +46,10 @@ export interface DecodeWithCharset<C extends LiftableLike>
   decodeWithCharset(
     charset?: string,
   ): ContainerOperator<C, ArrayBuffer, string>;
+}
+
+export interface Defer<C extends LiftableLike> extends Container<C> {
+  defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 }
 
 export interface FromIterable<

@@ -63,10 +63,6 @@ export interface ConcatAll<C extends ContainerLike, O = Record<string, never>>
   ) => ContainerOperator<C, ContainerOf<C, T>, T>;
 }
 
-export interface Defer<C extends ContainerLike> extends Container<C> {
-  defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
-}
-
 export interface DistinctUntilChanged<C extends ContainerLike>
   extends Container<C> {
   distinctUntilChanged<T>(options?: {

@@ -11,7 +11,6 @@
 - [ConcatAll](../interfaces/container.ConcatAll.md)
 - [Container](../interfaces/container.Container.md)
 - [ContainerLike](../interfaces/container.ContainerLike.md)
-- [Defer](../interfaces/container.Defer.md)
 - [DistinctUntilChanged](../interfaces/container.DistinctUntilChanged.md)
 - [EverySatisfy](../interfaces/container.EverySatisfy.md)
 - [FromArray](../interfaces/container.FromArray.md)

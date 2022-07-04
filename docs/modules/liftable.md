@@ -8,6 +8,7 @@
 
 - [CatchError](../interfaces/liftable.CatchError.md)
 - [DecodeWithCharset](../interfaces/liftable.DecodeWithCharset.md)
+- [Defer](../interfaces/liftable.Defer.md)
 - [FromIterable](../interfaces/liftable.FromIterable.md)
 - [FromIterator](../interfaces/liftable.FromIterator.md)
 - [LiftableLike](../interfaces/liftable.LiftableLike.md)
@@ -52,7 +53,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Defer`](../interfaces/container.Defer.md)<`C`\> & [`Map`](../interfaces/container.Map.md)<`C`\> |
+| `m` | [`Defer`](../interfaces/liftable.Defer.md)<`C`\> & [`Map`](../interfaces/container.Map.md)<`C`\> |
 
 #### Returns
 
