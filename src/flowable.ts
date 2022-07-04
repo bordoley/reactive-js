@@ -50,12 +50,6 @@ export type FlowableOperator<TA, TB> = Function1<
   FlowableLike<TB>
 >;
 
-export interface FlowableSinkLike<
-  T,
-  TStream extends FlowableSinkStreamLike<T> = FlowableSinkStreamLike<T>,
-> extends StreamableLike<T, FlowMode, TStream> {}
-export interface FlowableSinkStreamLike<T> extends StreamLike<T, FlowMode> {}
-
 export function createLiftedFlowable<T, A>(
   op1: ObservableOperator<T, A>,
 ): FlowableLike<A>;

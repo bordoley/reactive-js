@@ -20,8 +20,6 @@
 
   ↳ [`FlowableLike`](flowable.FlowableLike.md)
 
-  ↳ [`FlowableSinkLike`](flowable.FlowableSinkLike.md)
-
   ↳ [`StreamableStateLike`](streamable.StreamableStateLike.md)
 
   ↳ [`WindowLocationStreamableLike`](web.WindowLocationStreamableLike.md)

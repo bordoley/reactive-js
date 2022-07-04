@@ -1,17 +1,17 @@
 import { Writable } from "stream";
 import { dispatch, dispatchTo, getScheduler } from "../dispatcher";
 import { dispose, onComplete } from "../disposable";
-import { FlowableSinkLike } from "../flowable";
+import { FlowMode } from "../flowable";
 import { Factory, pipe, pipeLazy } from "../functions";
 import { createObservable, onNotify, subscribe } from "../observable";
-import { createLiftedStreamable } from "../streamable";
+import { StreamableLike, createLiftedStreamable } from "../streamable";
 import { addDisposable, addToDisposable, addToNodeStream } from "./nodeStream";
 
 const NODE_JS_PAUSE_EVENT = "__REACTIVE_JS_NODE_WRITABLE_PAUSE__";
 
 export const createWritableSink = (
   factory: Factory<Writable> | Writable,
-): FlowableSinkLike<Uint8Array> =>
+): StreamableLike<Uint8Array, FlowMode> =>
   createLiftedStreamable(events =>
     createObservable(observer => {
       const { dispatcher } = observer;

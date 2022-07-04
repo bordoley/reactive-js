@@ -79,8 +79,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`ObservableLike`](observable.ObservableLike.md)<[`T`](flowable.FlowableSinkStreamLike.md#t)\> |
-| `sink` | [`Observer`](../classes/observer.Observer.md)<[`T`](flowable.FlowableSinkStreamLike.md#t)\> |
+| `this` | [`ObservableLike`](observable.ObservableLike.md)<[`T`](flowable.FlowableStreamLike.md#t)\> |
+| `sink` | [`Observer`](../classes/observer.Observer.md)<[`T`](flowable.FlowableStreamLike.md#t)\> |
 
 #### Returns
 
