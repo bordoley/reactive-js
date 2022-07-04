@@ -15,6 +15,7 @@ Reactive-JS
 - [enumerator](modules/enumerator.md)
 - [flowable](modules/flowable.md)
 - [functions](modules/functions.md)
+- [interactive](modules/interactive.md)
 - [liftable](modules/liftable.md)
 - [node](modules/node.md)
 - [observable](modules/observable.md)

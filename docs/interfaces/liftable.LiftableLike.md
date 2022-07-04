@@ -10,11 +10,9 @@
 
   ↳ **`LiftableLike`**
 
-  ↳↳ [`AsyncEnumerableLike`](asyncEnumerable.AsyncEnumerableLike.md)
+  ↳↳ [`InteractiveContainerLike`](interactive.InteractiveContainerLike.md)
 
-  ↳↳ [`EnumerableLike`](enumerable.EnumerableLike.md)
-
-  ↳↳ [`ReactiveSourceLike`](reactive.ReactiveSourceLike.md)
+  ↳↳ [`ReactiveContainerLike`](reactive.ReactiveContainerLike.md)
 
 ## Table of contents
 

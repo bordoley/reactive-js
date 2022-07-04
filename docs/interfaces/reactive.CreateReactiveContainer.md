@@ -1,30 +1,30 @@
-[Reactive-JS](../README.md) / [reactive](../modules/reactive.md) / CreateReactiveSource
+[Reactive-JS](../README.md) / [reactive](../modules/reactive.md) / CreateReactiveContainer
 
-# Interface: CreateReactiveSource<C\>
+# Interface: CreateReactiveContainer<C\>
 
-[reactive](../modules/reactive.md).CreateReactiveSource
+[reactive](../modules/reactive.md).CreateReactiveContainer
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ReactiveSourceLike`](reactive.ReactiveSourceLike.md) |
+| `C` | extends [`ReactiveContainerLike`](reactive.ReactiveContainerLike.md) |
 
 ## Hierarchy
 
 - [`Container`](container.Container.md)<`C`\>
 
-  ↳ **`CreateReactiveSource`**
+  ↳ **`CreateReactiveContainer`**
 
 ## Table of contents
 
 ### Properties
 
-- [TContainerOf](reactive.CreateReactiveSource.md#tcontainerof)
+- [TContainerOf](reactive.CreateReactiveContainer.md#tcontainerof)
 
 ### Methods
 
-- [create](reactive.CreateReactiveSource.md#create)
+- [create](reactive.CreateReactiveContainer.md#create)
 
 ## Properties
 

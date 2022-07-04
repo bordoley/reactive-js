@@ -1,0 +1,80 @@
+[Reactive-JS](../README.md) / [interactive](../modules/interactive.md) / InteractiveContainerLike
+
+# Interface: InteractiveContainerLike<TCtx\>
+
+[interactive](../modules/interactive.md).InteractiveContainerLike
+
+## Type parameters
+
+| Name |
+| :------ |
+| `TCtx` |
+
+## Hierarchy
+
+- [`LiftableLike`](liftable.LiftableLike.md)
+
+  ↳ **`InteractiveContainerLike`**
+
+  ↳↳ [`AsyncEnumerableLike`](asyncEnumerable.AsyncEnumerableLike.md)
+
+  ↳↳ [`EnumerableLike`](enumerable.EnumerableLike.md)
+
+## Table of contents
+
+### Properties
+
+- [T](interactive.InteractiveContainerLike.md#t)
+- [TContainerOf](interactive.InteractiveContainerLike.md#tcontainerof)
+- [TLiftableState](interactive.InteractiveContainerLike.md#tliftablestate)
+
+### Methods
+
+- [source](interactive.InteractiveContainerLike.md#source)
+
+## Properties
+
+### T
+
+• `Optional` `Readonly` **T**: `unknown`
+
+#### Inherited from
+
+[LiftableLike](liftable.LiftableLike.md).[T](liftable.LiftableLike.md#t)
+
+___
+
+### TContainerOf
+
+• `Optional` `Readonly` **TContainerOf**: `unknown`
+
+#### Inherited from
+
+[LiftableLike](liftable.LiftableLike.md).[TContainerOf](liftable.LiftableLike.md#tcontainerof)
+
+___
+
+### TLiftableState
+
+• `Readonly` **TLiftableState**: [`SourceLike`](interactive.SourceLike.md)<`unknown`\>
+
+#### Overrides
+
+[LiftableLike](liftable.LiftableLike.md).[TLiftableState](liftable.LiftableLike.md#tliftablestate)
+
+## Methods
+
+### source
+
+▸ **source**(`this`, `_`): [`SourceLike`](interactive.SourceLike.md)<`unknown`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`InteractiveContainerLike`](interactive.InteractiveContainerLike.md)<`TCtx`\> |
+| `_` | `TCtx` |
+
+#### Returns
+
+[`SourceLike`](interactive.SourceLike.md)<`unknown`\>

@@ -1,6 +1,8 @@
 /// <reference types="./asyncEnumerator.d.ts" />
+import { dispatch } from './dispatcher.mjs';
 import { Disposable } from './disposable.mjs';
-import { raise } from './functions.mjs';
+import { raise, pipe } from './functions.mjs';
+import { none } from './option.mjs';
 
 class AsyncEnumerator extends Disposable {
     constructor() {
@@ -15,6 +17,9 @@ class AsyncEnumerator extends Disposable {
     }
     get TLiftableState() {
         return raise();
+    }
+    move() {
+        pipe(this, dispatch(none));
     }
 }
 

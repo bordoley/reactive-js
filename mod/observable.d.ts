@@ -4,7 +4,7 @@ import { Factory, Function1, Function2, Function3, Function4, Function5, Functio
 import { FromIterator, FromIterable, Using, Defer, CatchError, DecodeWithCharset, ThrowIfEmpty } from "./liftable.mjs";
 import { Observer } from "./observer.mjs";
 import { Option } from "./option.mjs";
-import { CreateReactiveSource, ReactiveSourceLike } from "./reactive.mjs";
+import { CreateReactiveContainer, ReactiveContainerLike } from "./reactive.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
 import { SchedulerLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
 import { EnumerableLike, FromEnumerable, ToEnumerable } from "./enumerable.mjs";
@@ -288,7 +288,7 @@ declare function forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: Observa
 declare function concat<T>(fst: ObservableLike<T>, snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): ObservableLike<T>;
 declare const concatT: Concat<ObservableLike<unknown>>;
 declare const createObservable: <T>(f: SideEffect1<Observer<T>>) => ObservableLike<T>;
-declare const createT: CreateReactiveSource<ObservableLike<unknown>>;
+declare const createT: CreateReactiveContainer<ObservableLike<unknown>>;
 declare class Subject<T> extends Disposable implements MulticastObservableLike<T> {
     readonly replay: number;
     private readonly dispatchers;
@@ -534,7 +534,7 @@ declare const toPromise: <T>(scheduler: SchedulerLike) => Function1<ObservableLi
  *
  * @noInheritDoc
  */
-interface ObservableLike<T> extends ReactiveSourceLike {
+interface ObservableLike<T> extends ReactiveContainerLike {
     readonly T: unknown;
     readonly TContainerOf: ObservableLike<this["T"]>;
     readonly TLiftableState: Observer<this["T"]>;

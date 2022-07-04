@@ -6,8 +6,8 @@
 
 ### Interfaces
 
-- [CreateReactiveSource](../interfaces/reactive.CreateReactiveSource.md)
-- [ReactiveSourceLike](../interfaces/reactive.ReactiveSourceLike.md)
+- [CreateReactiveContainer](../interfaces/reactive.CreateReactiveContainer.md)
+- [ReactiveContainerLike](../interfaces/reactive.ReactiveContainerLike.md)
 
 ### Functions
 
@@ -24,7 +24,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ReactiveSourceLike`](../interfaces/reactive.ReactiveSourceLike.md)<`C`\> |
+| `C` | extends [`ReactiveContainerLike`](../interfaces/reactive.ReactiveContainerLike.md)<`C`\> |
 | `T` | `T` |
 | `TSink` | extends [`SinkLike`](../interfaces/sink.SinkLike.md)<`unknown`, `TSink`\> |
 
@@ -48,7 +48,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ReactiveSourceLike`](../interfaces/reactive.ReactiveSourceLike.md)<`C`\> |
+| `C` | extends [`ReactiveContainerLike`](../interfaces/reactive.ReactiveContainerLike.md)<`C`\> |
 | `T` | `T` |
 | `TSink` | extends [`SinkLike`](../interfaces/sink.SinkLike.md)<`unknown`, `TSink`\> |
 

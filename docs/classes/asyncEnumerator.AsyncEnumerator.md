@@ -18,7 +18,7 @@
 
 ## Implements
 
-- [`ContainerLike`](../interfaces/container.ContainerLike.md)
+- [`SourceLike`](../interfaces/interactive.SourceLike.md)<`T`\>
 - [`StreamLike`](../interfaces/stream.StreamLike.md)<`void`, `T`\>
 
 ## Table of contents
@@ -47,6 +47,7 @@
 - [add](asyncEnumerator.AsyncEnumerator.md#add)
 - [dispatch](asyncEnumerator.AsyncEnumerator.md#dispatch)
 - [dispose](asyncEnumerator.AsyncEnumerator.md#dispose)
+- [move](asyncEnumerator.AsyncEnumerator.md#move)
 - [sink](asyncEnumerator.AsyncEnumerator.md#sink)
 
 ## Constructors
@@ -117,7 +118,7 @@ StreamLike.scheduler
 
 #### Implementation of
 
-[ContainerLike](../interfaces/container.ContainerLike.md).[T](../interfaces/container.ContainerLike.md#t)
+[SourceLike](../interfaces/interactive.SourceLike.md).[T](../interfaces/interactive.SourceLike.md#t)
 
 ___
 
@@ -131,7 +132,7 @@ ___
 
 #### Implementation of
 
-[ContainerLike](../interfaces/container.ContainerLike.md).[TContainerOf](../interfaces/container.ContainerLike.md#tcontainerof)
+[SourceLike](../interfaces/interactive.SourceLike.md).[TContainerOf](../interfaces/interactive.SourceLike.md#tcontainerof)
 
 ___
 
@@ -161,7 +162,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Implementation of
 
-StreamLike.error
+SourceLike.error
 
 #### Inherited from
 
@@ -181,7 +182,7 @@ ___
 
 #### Implementation of
 
-StreamLike.isDisposed
+SourceLike.isDisposed
 
 #### Inherited from
 
@@ -211,7 +212,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Implementation of
 
-StreamLike.add
+[SourceLike](../interfaces/interactive.SourceLike.md).[add](../interfaces/interactive.SourceLike.md#add)
 
 #### Inherited from
 
@@ -259,11 +260,25 @@ Dispose the resource.
 
 #### Implementation of
 
-StreamLike.dispose
+[SourceLike](../interfaces/interactive.SourceLike.md).[dispose](../interfaces/interactive.SourceLike.md#dispose)
 
 #### Inherited from
 
 [Disposable](disposable.Disposable.md).[dispose](disposable.Disposable.md#dispose)
+
+___
+
+### move
+
+▸ **move**(): `void`
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[SourceLike](../interfaces/interactive.SourceLike.md).[move](../interfaces/interactive.SourceLike.md#move)
 
 ___
 

@@ -20,7 +20,7 @@
 
 ## Implements
 
-- [`ContainerLike`](../interfaces/container.ContainerLike.md)
+- [`SourceLike`](../interfaces/interactive.SourceLike.md)<`T`\>
 
 ## Table of contents
 
@@ -71,7 +71,7 @@
 
 #### Implementation of
 
-[ContainerLike](../interfaces/container.ContainerLike.md).[T](../interfaces/container.ContainerLike.md#t)
+[SourceLike](../interfaces/interactive.SourceLike.md).[T](../interfaces/interactive.SourceLike.md#t)
 
 ___
 
@@ -85,7 +85,7 @@ ___
 
 #### Implementation of
 
-[ContainerLike](../interfaces/container.ContainerLike.md).[TContainerOf](../interfaces/container.ContainerLike.md#tcontainerof)
+[SourceLike](../interfaces/interactive.SourceLike.md).[TContainerOf](../interfaces/interactive.SourceLike.md#tcontainerof)
 
 ___
 
@@ -108,6 +108,10 @@ The error the `Disposable` was disposed with if disposed.
 #### Returns
 
 [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
+
+#### Implementation of
+
+SourceLike.error
 
 #### Inherited from
 
@@ -135,6 +139,10 @@ ___
 
 `boolean`
 
+#### Implementation of
+
+SourceLike.isDisposed
+
 #### Inherited from
 
 Disposable.isDisposed
@@ -161,6 +169,10 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 `this`
 
+#### Implementation of
+
+[SourceLike](../interfaces/interactive.SourceLike.md).[add](../interfaces/interactive.SourceLike.md#add)
+
 #### Inherited from
 
 [Disposable](disposable.Disposable.md).[add](disposable.Disposable.md#add)
@@ -184,6 +196,10 @@ Dispose the resource.
 
 `void`
 
+#### Implementation of
+
+[SourceLike](../interfaces/interactive.SourceLike.md).[dispose](../interfaces/interactive.SourceLike.md#dispose)
+
 #### Inherited from
 
 [Disposable](disposable.Disposable.md).[dispose](disposable.Disposable.md#dispose)
@@ -197,3 +213,7 @@ ___
 #### Returns
 
 `boolean`
+
+#### Implementation of
+
+[SourceLike](../interfaces/interactive.SourceLike.md).[move](../interfaces/interactive.SourceLike.md#move)

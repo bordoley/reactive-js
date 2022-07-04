@@ -53,6 +53,8 @@ ___
 
 • `Readonly` **isDisposed**: `boolean`
 
+`true` if this resource has been disposed, otherwise false
+
 #### Overrides
 
 [SchedulerLike](scheduler.SchedulerLike.md).[isDisposed](scheduler.SchedulerLike.md#isdisposed)

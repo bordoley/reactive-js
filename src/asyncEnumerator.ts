@@ -1,15 +1,16 @@
-import { ContainerLike } from "./container";
-import { DispatcherLike } from "./dispatcher";
+import { DispatcherLike, dispatch } from "./dispatcher";
 import { Disposable } from "./disposable";
-import { raise } from "./functions";
+import { pipe, raise } from "./functions";
+import { SourceLike } from "./interactive";
 import { ObservableLike } from "./observable";
 import { Observer } from "./observer";
+import { none } from "./option";
 import { SchedulerLike } from "./scheduler";
 import { StreamLike } from "./stream";
 
 export abstract class AsyncEnumerator<T>
   extends Disposable
-  implements ContainerLike, StreamLike<void, T>
+  implements SourceLike<T>, StreamLike<void, T>
 {
   get T(): T {
     return raise();
@@ -31,4 +32,8 @@ export abstract class AsyncEnumerator<T>
 
   abstract dispatch(this: DispatcherLike<void>, req: void): void;
   abstract sink(this: ObservableLike<T>, sink: Observer<T>): void;
+
+  move(): void {
+    pipe(this, dispatch(none));
+  }
 }

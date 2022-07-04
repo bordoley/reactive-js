@@ -14,7 +14,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 ## Hierarchy
 
-- [`ReactiveSourceLike`](reactive.ReactiveSourceLike.md)
+- [`ReactiveContainerLike`](reactive.ReactiveContainerLike.md)
 
   ↳ **`ObservableLike`**
 
@@ -41,7 +41,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 #### Overrides
 
-[ReactiveSourceLike](reactive.ReactiveSourceLike.md).[T](reactive.ReactiveSourceLike.md#t)
+[ReactiveContainerLike](reactive.ReactiveContainerLike.md).[T](reactive.ReactiveContainerLike.md#t)
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 #### Overrides
 
-[ReactiveSourceLike](reactive.ReactiveSourceLike.md).[TContainerOf](reactive.ReactiveSourceLike.md#tcontainerof)
+[ReactiveContainerLike](reactive.ReactiveContainerLike.md).[TContainerOf](reactive.ReactiveContainerLike.md#tcontainerof)
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 #### Overrides
 
-[ReactiveSourceLike](reactive.ReactiveSourceLike.md).[TLiftableState](reactive.ReactiveSourceLike.md#tliftablestate)
+[ReactiveContainerLike](reactive.ReactiveContainerLike.md).[TLiftableState](reactive.ReactiveContainerLike.md#tliftablestate)
 
 ___
 
@@ -88,4 +88,4 @@ ___
 
 #### Overrides
 
-[ReactiveSourceLike](reactive.ReactiveSourceLike.md).[sink](reactive.ReactiveSourceLike.md#sink)
+[ReactiveContainerLike](reactive.ReactiveContainerLike.md).[sink](reactive.ReactiveContainerLike.md#sink)

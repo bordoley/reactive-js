@@ -2,7 +2,7 @@ import { dispose } from "../disposable";
 import { SideEffect1, newInstance, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
-import { CreateReactiveSource } from "../reactive";
+import { CreateReactiveContainer } from "../reactive";
 import { AbstractObservable } from "./observable";
 
 class CreateObservable<T> extends AbstractObservable<T> {
@@ -23,6 +23,6 @@ export const createObservable = <T>(
   f: SideEffect1<Observer<T>>,
 ): ObservableLike<T> => newInstance(CreateObservable, f);
 
-export const createT: CreateReactiveSource<ObservableLike<unknown>> = {
+export const createT: CreateReactiveContainer<ObservableLike<unknown>> = {
   create: createObservable,
 };

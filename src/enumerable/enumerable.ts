@@ -14,6 +14,10 @@ export abstract class AbstractEnumerable<T>
   implements EnumerableLike<T>
 {
   abstract enumerate(this: EnumerableLike<T>): Enumerator<T>;
+
+  source(_: void): Enumerator<T> {
+    return pipe(this, enumerate);
+  }
 }
 
 class CreateEnumerable<T> extends AbstractEnumerable<T> {

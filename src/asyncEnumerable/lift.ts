@@ -27,6 +27,10 @@ class LiftedAsyncEnumerable<T>
     super();
   }
 
+  source(scheduler: SchedulerLike): AsyncEnumerator<T> {
+    return pipe(this, stream(scheduler));
+  }
+
   stream(
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
