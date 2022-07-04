@@ -1,7 +1,8 @@
-import { Container, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
+import { Container, ContainerOperator, ContainerLike, FromArray, FromArrayOptions } from "./container.mjs";
 import { AbstractContainer } from "./__internal__.container.mjs";
+import { Disposable } from "./disposable.mjs";
 import { Function1, Equality, Predicate, SideEffect1, Reducer, Factory } from "./functions.mjs";
-import { LiftableLike, LiftableStateOf, LiftableStateLike } from "./liftable.mjs";
+import { LiftableLike, LiftableStateOf } from "./liftable.mjs";
 import { Option } from "./option.mjs";
 declare type Covariant = 0;
 declare const covariant: Covariant;
@@ -19,7 +20,7 @@ declare type LiftOperatorIn<C extends LiftableLike, TA, TB, M extends Lift<C, Va
 declare type LiftOperatorOut<C extends LiftableLike, TA, TB, M extends Lift<C, Variance>> = M extends {
     variance?: ContraVariant;
 } ? LiftableStateOf<C, TA> : LiftableStateOf<C, TB>;
-declare abstract class AbstractLiftable<TState extends LiftableStateLike> extends AbstractContainer implements LiftableLike {
+declare abstract class AbstractLiftable<TState extends Disposable & ContainerLike> extends AbstractContainer implements LiftableLike {
     get TLiftableState(): TState;
 }
 declare type DelegatingLiftableStateOf<C extends LiftableLike, T, TDelegate, TDelegateLiftableState extends LiftableStateOf<C, TDelegate> = LiftableStateOf<C, TDelegate>> = LiftableStateOf<C, T> & {

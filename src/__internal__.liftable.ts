@@ -1,6 +1,20 @@
 import { AbstractContainer } from "./__internal__.container";
-import { Container, ContainerOperator, FromArray, empty } from "./container";
-import { Error, add, addTo, bindTo, dispose, onComplete } from "./disposable";
+import {
+  Container,
+  ContainerLike,
+  ContainerOperator,
+  FromArray,
+  empty,
+} from "./container";
+import {
+  Disposable,
+  Error,
+  add,
+  addTo,
+  bindTo,
+  dispose,
+  onComplete,
+} from "./disposable";
 import {
   Equality,
   Factory,
@@ -14,7 +28,7 @@ import {
   raise,
   strictEquality,
 } from "./functions";
-import { LiftableLike, LiftableStateLike, LiftableStateOf } from "./liftable";
+import { LiftableLike, LiftableStateOf } from "./liftable";
 import { Option, none } from "./option";
 
 export type Covariant = 0;
@@ -57,7 +71,9 @@ export type LiftOperatorOut<
   ? LiftableStateOf<C, TA>
   : LiftableStateOf<C, TB>;
 
-export abstract class AbstractLiftable<TState extends LiftableStateLike>
+export abstract class AbstractLiftable<
+    TState extends Disposable & ContainerLike,
+  >
   extends AbstractContainer
   implements LiftableLike
 {

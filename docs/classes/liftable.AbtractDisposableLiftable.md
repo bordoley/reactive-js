@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TState` | extends [`LiftableStateLike`](../interfaces/liftable.LiftableStateLike.md) |
+| `TState` | extends [`Disposable`](disposable.Disposable.md) & [`ContainerLike`](../interfaces/container.ContainerLike.md) |
 
 ## Hierarchy
 
@@ -53,7 +53,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TState` | extends [`LiftableStateLike`](../interfaces/liftable.LiftableStateLike.md)<`TState`\> |
+| `TState` | extends [`Disposable`](disposable.Disposable.md)<`TState`\> & [`ContainerLike`](../interfaces/container.ContainerLike.md) |
 
 #### Inherited from
 

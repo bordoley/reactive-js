@@ -12,8 +12,6 @@
 
   ↳ [`LiftableLike`](liftable.LiftableLike.md)
 
-  ↳ [`LiftableStateLike`](liftable.LiftableStateLike.md)
-
   ↳ [`SequenceLike`](sequence.SequenceLike.md)
 
   ↳ [`SinkLike`](sink.SinkLike.md)

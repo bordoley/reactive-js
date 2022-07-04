@@ -11,7 +11,6 @@
 ### Interfaces
 
 - [LiftableLike](../interfaces/liftable.LiftableLike.md)
-- [LiftableStateLike](../interfaces/liftable.LiftableStateLike.md)
 
 ### Type Aliases
 
