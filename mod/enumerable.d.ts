@@ -3,16 +3,12 @@ import { Enumerator } from "./enumerator.mjs";
 import { Factory, Function1, Updater, Predicate, Equality, SideEffect1, Reducer } from "./functions.mjs";
 import { LiftableLike } from "./liftable.mjs";
 import { Option } from "./option.mjs";
-import { AbstractLiftable } from "./__internal__.liftable.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
 declare const buffer: <T>(options?: {
     readonly maxBufferSize?: number;
 }) => EnumerableOperator<T, readonly T[]>;
 declare const bufferT: Buffer<EnumerableLike<unknown>>;
 declare const enumerate: <T>(enumerable: EnumerableLike<T>) => Enumerator<T>;
-declare abstract class AbstractEnumerable<T> extends AbstractLiftable<Enumerator<T>> implements EnumerableLike<T> {
-    abstract enumerate(this: EnumerableLike<T>): Enumerator<T>;
-}
 declare const createEnumerable: <T>(enumerate: Factory<Enumerator<T>>) => EnumerableLike<T>;
 /**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
@@ -147,4 +143,4 @@ declare const toEnumerableT: ToEnumerable<EnumerableLike<unknown>>;
 declare const TContainerOf: EnumerableLike<unknown>;
 declare const using: Using<EnumerableLike<unknown>>["using"];
 declare const usingT: Using<EnumerableLike<unknown>>;
-export { AbstractEnumerable, EnumerableLike, EnumerableOperator, FromEnumerable, TContainerOf, ToEnumerable, buffer, bufferT, concat, concatAll, concatAllT, concatT, createEnumerable, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toRunnable, toRunnableT, using, usingT, zip, zipT };
+export { EnumerableLike, EnumerableOperator, FromEnumerable, TContainerOf, ToEnumerable, buffer, bufferT, concat, concatAll, concatAllT, concatT, createEnumerable, distinctUntilChanged, distinctUntilChangedT, enumerate, fromArray, fromArrayT, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, fromIterator, fromIteratorT, generate, generateT, keep, keepT, map, mapT, onNotify, pairwise, pairwiseT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toEnumerable, toEnumerableT, toIterable, toIterableT, toRunnable, toRunnableT, using, usingT, zip, zipT };
