@@ -1,19 +1,18 @@
 [Reactive-JS](../README.md) / [streamable](../modules/streamable.md) / StreamableStateLike
 
-# Interface: StreamableStateLike<T, TStream\>
+# Interface: StreamableStateLike<T\>
 
 [streamable](../modules/streamable.md).StreamableStateLike
 
 ## Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TStream` | extends [`StateStreamLike`](streamable.StateStreamLike.md)<`T`\> = [`StateStreamLike`](streamable.StateStreamLike.md)<`T`\> |
+| Name |
+| :------ |
+| `T` |
 
 ## Hierarchy
 
-- [`StreamableLike`](streamable.StreamableLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`, `TStream`\>
+- [`StreamableLike`](streamable.StreamableLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`\>
 
   ↳ **`StreamableStateLike`**
 
@@ -27,20 +26,20 @@
 
 ### stream
 
-▸ **stream**(`this`, `scheduler`, `options?`): `TStream`
+▸ **stream**(`this`, `scheduler`, `options?`): [`StreamLike`](stream.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StreamableLike`](streamable.StreamableLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`, `TStream`\> |
+| `this` | [`StreamableLike`](streamable.StreamableLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`, [`StreamLike`](stream.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`\>\> |
 | `scheduler` | [`SchedulerLike`](scheduler.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.replay?` | `number` |
 
 #### Returns
 
-`TStream`
+[`StreamLike`](stream.StreamLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>, `T`\>
 
 #### Inherited from
 

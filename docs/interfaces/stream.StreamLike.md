@@ -23,8 +23,6 @@ Represents a duplex stream
 
   ↳↳ [`FlowableStreamLike`](flowable.FlowableStreamLike.md)
 
-  ↳↳ [`StateStreamLike`](streamable.StateStreamLike.md)
-
   ↳↳ [`WindowLocationStreamLike`](web.WindowLocationStreamLike.md)
 
 ## Implemented by

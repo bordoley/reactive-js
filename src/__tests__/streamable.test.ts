@@ -10,6 +10,7 @@ import { dispose, isDisposed } from "../disposable";
 import { forEach } from "../enumerator";
 import { fromObservable, toObservable } from "../flowable";
 import {
+  Updater,
   ignore,
   increment,
   incrementBy,
@@ -45,8 +46,8 @@ import {
 import { none } from "../option";
 import { toArray } from "../runnable";
 import { createVirtualTimeScheduler, getNow, schedule } from "../scheduler";
+import { StreamLike } from "../stream";
 import {
-  StateStreamLike,
   __stream,
   createActionReducer,
   createLiftedStreamable,
@@ -69,7 +70,7 @@ export const tests = describe(
   "streamable",
   test("__stream", () => {
     const streamable = createStateStore(() => 0);
-    const createLooper = (stream: StateStreamLike<number>) =>
+    const createLooper = (stream: StreamLike<Updater<number>, number>) =>
       pipe(
         [1, 2, 3],
         fromArray({ delay: 10 }),
