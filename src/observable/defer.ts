@@ -3,7 +3,7 @@ import { Factory, SideEffect1, pipe } from "../functions";
 import { Defer } from "../liftable";
 import { ObservableLike } from "../observable";
 import { Observer, getScheduler } from "../observer";
-import { sinkInto } from "../reactive";
+import { sinkInto } from "../reactiveContainer";
 import { schedule } from "../scheduler";
 import { createObservable } from "./createObservable";
 

@@ -33,7 +33,7 @@ import {
   subscribe,
 } from "./observable";
 import { Option, isSome, none } from "./option";
-import { sinkInto as sinkIntoSink } from "./reactive";
+import { sinkInto as sinkIntoSink } from "./reactiveContainer";
 import { SchedulerLike } from "./scheduler";
 import { StreamLike } from "./stream";
 

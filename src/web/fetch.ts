@@ -2,7 +2,7 @@ import { dispose, toAbortSignal } from "../disposable";
 import { Function1, newInstance, pipe, returns } from "../functions";
 import { ObservableLike, defer, fromPromise } from "../observable";
 import { Option, none } from "../option";
-import { sinkInto } from "../reactive";
+import { sinkInto } from "../reactiveContainer";
 import { FetchRequest } from "../web";
 
 const globalFetch = self.fetch;

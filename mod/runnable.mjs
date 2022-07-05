@@ -1,11 +1,11 @@
 /// <reference types="./runnable.d.ts" />
-import { createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './__internal__.reactive.mjs';
+import { createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './__internal__.reactiveContainer.mjs';
 import { empty } from './__internal__.readonlyArray.mjs';
 import { AbstractDelegatingRunnableSink, createDelegatingRunnableSink } from './__internal__.runnableSink.mjs';
 import { dispose, isDisposed, addTo, bindTo } from './disposable.mjs';
 import { raise, pipe, newInstance, pipeLazy, newInstanceWith, ignore, getLength, alwaysTrue, compose, identity } from './functions.mjs';
 import { isSome, none, isNone, getOrDefault } from './option.mjs';
-import { sourceFrom } from './reactive.mjs';
+import { sourceFrom } from './reactiveContainer.mjs';
 import { RunnableSink } from './runnableSink.mjs';
 import { createFromArray } from './__internal__.container.mjs';
 import { contraVariant } from './__internal__.liftable.mjs';

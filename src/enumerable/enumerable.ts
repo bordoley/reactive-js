@@ -3,7 +3,7 @@ import { dispose } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { Enumerator } from "../enumerator";
 import { Factory, newInstance, pipe, raise } from "../functions";
-import { CreateInteractiveContainer } from "../interactive";
+import { CreateInteractiveContainer } from "../interactiveContainer";
 import { none } from "../option";
 import { fromArrayT } from "./fromArray";
 

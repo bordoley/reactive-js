@@ -4,7 +4,7 @@ import { Disposable, DisposableOrTeardown } from "./disposable.mjs";
 import { Function1, Equality, Predicate, SideEffect1, Reducer, Factory } from "./functions.mjs";
 import { LiftableStateOf } from "./liftable.mjs";
 import { Option } from "./option.mjs";
-import { ReactiveContainerLike, CreateReactiveContainer } from "./reactive.mjs";
+import { ReactiveContainerLike, CreateReactiveContainer } from "./reactiveContainer.mjs";
 interface Lift<C extends ReactiveContainerLike> extends Lift$1<C, ContraVariant> {
 }
 declare const createBufferOperator: <C extends ReactiveContainerLike>(m: Lift<C> & FromArray<C, FromArrayOptions>, BufferSink: new <T>(delegate: LiftableStateOf<C, readonly T[]>, maxBufferSize: number) => LiftableStateOf<C, T> & {

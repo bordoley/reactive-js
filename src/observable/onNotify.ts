@@ -1,5 +1,5 @@
 import { AbstractDelegatingObserver } from "../__internal__.observer";
-import { createOnNotifyOperator } from "../__internal__.reactive";
+import { createOnNotifyOperator } from "../__internal__.reactiveContainer";
 import { SideEffect1 } from "../functions";
 import { ObservableOperator } from "../observable";
 import { Observer } from "../observer";

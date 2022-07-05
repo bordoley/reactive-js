@@ -20,7 +20,7 @@ import {
   createTakeLastOperator,
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
-} from "./__internal__.reactive";
+} from "./__internal__.reactiveContainer";
 import {
   Container,
   ContainerLike,
@@ -80,7 +80,7 @@ import { using } from "./observable/using";
 import { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
 import { Observer, getScheduler } from "./observer";
 import { Option, isNone, isSome, none } from "./option";
-import { ReactiveContainerLike, sourceFrom } from "./reactive";
+import { ReactiveContainerLike, sourceFrom } from "./reactiveContainer";
 import { notifySink } from "./reactiveSink";
 import { RunnableLike, ToRunnable, createRunnable } from "./runnable";
 import {

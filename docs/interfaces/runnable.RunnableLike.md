@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`ReactiveContainerLike`](reactive.ReactiveContainerLike.md)
+- [`ReactiveContainerLike`](reactiveContainer.ReactiveContainerLike.md)
 
   ↳ **`RunnableLike`**
 
@@ -36,7 +36,7 @@
 
 #### Overrides
 
-[ReactiveContainerLike](reactive.ReactiveContainerLike.md).[T](reactive.ReactiveContainerLike.md#t)
+[ReactiveContainerLike](reactiveContainer.ReactiveContainerLike.md).[T](reactiveContainer.ReactiveContainerLike.md#t)
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 #### Overrides
 
-[ReactiveContainerLike](reactive.ReactiveContainerLike.md).[TContainerOf](reactive.ReactiveContainerLike.md#tcontainerof)
+[ReactiveContainerLike](reactiveContainer.ReactiveContainerLike.md).[TContainerOf](reactiveContainer.ReactiveContainerLike.md#tcontainerof)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 #### Overrides
 
-[ReactiveContainerLike](reactive.ReactiveContainerLike.md).[TLiftableState](reactive.ReactiveContainerLike.md#tliftablestate)
+[ReactiveContainerLike](reactiveContainer.ReactiveContainerLike.md).[TLiftableState](reactiveContainer.ReactiveContainerLike.md#tliftablestate)
 
 ## Methods
 
@@ -77,4 +77,4 @@ ___
 
 #### Overrides
 
-[ReactiveContainerLike](reactive.ReactiveContainerLike.md).[sink](reactive.ReactiveContainerLike.md#sink)
+[ReactiveContainerLike](reactiveContainer.ReactiveContainerLike.md).[sink](reactiveContainer.ReactiveContainerLike.md#sink)

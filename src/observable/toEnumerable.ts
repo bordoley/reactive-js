@@ -11,7 +11,7 @@ import { Function1, newInstance, newInstanceWith, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
 import { isNone } from "../option";
-import { sourceFrom } from "../reactive";
+import { sourceFrom } from "../reactiveContainer";
 import { assertState } from "../reactiveSink";
 import {
   SchedulerContinuationLike,

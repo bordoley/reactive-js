@@ -6,7 +6,7 @@ import { addTo, add } from './disposable.mjs';
 import { newInstance, getLength, compose, pipe, returns, updateReducer } from './functions.mjs';
 import { createObservable, scan, mergeT, fromArrayT, distinctUntilChanged, __currentScheduler, __using, __memo, merge, onNotify, keepT, onSubscribe, subscribe } from './observable.mjs';
 import { isSome, none } from './option.mjs';
-import { sinkInto as sinkInto$1 } from './reactive.mjs';
+import { sinkInto as sinkInto$1 } from './reactiveContainer.mjs';
 
 const stream = (scheduler, options) => streamable => streamable.stream(scheduler, options);
 class CreateStreamable {

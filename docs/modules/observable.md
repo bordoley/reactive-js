@@ -224,7 +224,7 @@ ___
 
 ### createT
 
-• `Const` **createT**: [`CreateReactiveContainer`](../interfaces/reactive.CreateReactiveContainer.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+• `Const` **createT**: [`CreateReactiveContainer`](../interfaces/reactiveContainer.CreateReactiveContainer.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 

@@ -10,9 +10,9 @@
 
   ↳ **`LiftableLike`**
 
-  ↳↳ [`InteractiveContainerLike`](interactive.InteractiveContainerLike.md)
+  ↳↳ [`InteractiveContainerLike`](interactiveContainer.InteractiveContainerLike.md)
 
-  ↳↳ [`ReactiveContainerLike`](reactive.ReactiveContainerLike.md)
+  ↳↳ [`ReactiveContainerLike`](reactiveContainer.ReactiveContainerLike.md)
 
 ## Table of contents
 

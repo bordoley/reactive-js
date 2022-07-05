@@ -1,7 +1,7 @@
 import { Buffer, ConcatAll, FromArrayOptions, FromArray, Generate, Repeat, TakeLast, ToIterable, Zip, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile } from "./container.mjs";
 import { Enumerator } from "./enumerator.mjs";
 import { Factory, Function1, Updater, Predicate, Equality, SideEffect1, Reducer } from "./functions.mjs";
-import { InteractiveContainerLike } from "./interactive.mjs";
+import { InteractiveContainerLike } from "./interactiveContainer.mjs";
 import { FromIterator, FromIterable, ThrowIfEmpty, Using } from "./liftable.mjs";
 import { Option } from "./option.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";

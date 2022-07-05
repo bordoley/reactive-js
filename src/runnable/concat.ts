@@ -5,7 +5,7 @@ import {
 import { ConcatAll } from "../container";
 import { addTo, bindTo, dispose } from "../disposable";
 import { newInstanceWith, pipe } from "../functions";
-import { sourceFrom } from "../reactive";
+import { sourceFrom } from "../reactiveContainer";
 import { RunnableLike, RunnableOperator } from "../runnable";
 import { lift } from "./lift";
 

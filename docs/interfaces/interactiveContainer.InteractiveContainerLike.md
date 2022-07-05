@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [interactive](../modules/interactive.md) / InteractiveContainerLike
+[Reactive-JS](../README.md) / [interactiveContainer](../modules/interactiveContainer.md) / InteractiveContainerLike
 
 # Interface: InteractiveContainerLike
 
-[interactive](../modules/interactive.md).InteractiveContainerLike
+[interactiveContainer](../modules/interactiveContainer.md).InteractiveContainerLike
 
 ## Hierarchy
 
@@ -18,14 +18,14 @@
 
 ### Properties
 
-- [T](interactive.InteractiveContainerLike.md#t)
-- [TContainerOf](interactive.InteractiveContainerLike.md#tcontainerof)
-- [TCtx](interactive.InteractiveContainerLike.md#tctx)
-- [TLiftableState](interactive.InteractiveContainerLike.md#tliftablestate)
+- [T](interactiveContainer.InteractiveContainerLike.md#t)
+- [TContainerOf](interactiveContainer.InteractiveContainerLike.md#tcontainerof)
+- [TCtx](interactiveContainer.InteractiveContainerLike.md#tctx)
+- [TLiftableState](interactiveContainer.InteractiveContainerLike.md#tliftablestate)
 
 ### Methods
 
-- [source](interactive.InteractiveContainerLike.md#source)
+- [source](interactiveContainer.InteractiveContainerLike.md#source)
 
 ## Properties
 
@@ -73,7 +73,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`InteractiveContainerLike`](interactive.InteractiveContainerLike.md) |
+| `this` | [`InteractiveContainerLike`](interactiveContainer.InteractiveContainerLike.md) |
 | `_` | `unknown` |
 
 #### Returns

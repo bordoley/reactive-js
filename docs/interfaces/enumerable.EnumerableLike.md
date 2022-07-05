@@ -14,7 +14,7 @@ Interface for iterating a Container of items.
 
 ## Hierarchy
 
-- [`InteractiveContainerLike`](interactive.InteractiveContainerLike.md)
+- [`InteractiveContainerLike`](interactiveContainer.InteractiveContainerLike.md)
 
   ↳ **`EnumerableLike`**
 
@@ -40,7 +40,7 @@ Interface for iterating a Container of items.
 
 #### Overrides
 
-[InteractiveContainerLike](interactive.InteractiveContainerLike.md).[T](interactive.InteractiveContainerLike.md#t)
+[InteractiveContainerLike](interactiveContainer.InteractiveContainerLike.md).[T](interactiveContainer.InteractiveContainerLike.md#t)
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 #### Overrides
 
-[InteractiveContainerLike](interactive.InteractiveContainerLike.md).[TContainerOf](interactive.InteractiveContainerLike.md#tcontainerof)
+[InteractiveContainerLike](interactiveContainer.InteractiveContainerLike.md).[TContainerOf](interactiveContainer.InteractiveContainerLike.md#tcontainerof)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 #### Overrides
 
-[InteractiveContainerLike](interactive.InteractiveContainerLike.md).[TCtx](interactive.InteractiveContainerLike.md#tctx)
+[InteractiveContainerLike](interactiveContainer.InteractiveContainerLike.md).[TCtx](interactiveContainer.InteractiveContainerLike.md#tctx)
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 #### Overrides
 
-[InteractiveContainerLike](interactive.InteractiveContainerLike.md).[TLiftableState](interactive.InteractiveContainerLike.md#tliftablestate)
+[InteractiveContainerLike](interactiveContainer.InteractiveContainerLike.md).[TLiftableState](interactiveContainer.InteractiveContainerLike.md#tliftablestate)
 
 ## Methods
 
@@ -110,4 +110,4 @@ ___
 
 #### Inherited from
 
-[InteractiveContainerLike](interactive.InteractiveContainerLike.md).[source](interactive.InteractiveContainerLike.md#source)
+[InteractiveContainerLike](interactiveContainer.InteractiveContainerLike.md).[source](interactiveContainer.InteractiveContainerLike.md#source)

@@ -1,14 +1,14 @@
-[Reactive-JS](../README.md) / [interactive](../modules/interactive.md) / CreateInteractiveContainer
+[Reactive-JS](../README.md) / [interactiveContainer](../modules/interactiveContainer.md) / CreateInteractiveContainer
 
 # Interface: CreateInteractiveContainer<C\>
 
-[interactive](../modules/interactive.md).CreateInteractiveContainer
+[interactiveContainer](../modules/interactiveContainer.md).CreateInteractiveContainer
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`InteractiveContainerLike`](interactive.InteractiveContainerLike.md) |
+| `C` | extends [`InteractiveContainerLike`](interactiveContainer.InteractiveContainerLike.md) |
 
 ## Hierarchy
 
@@ -20,11 +20,11 @@
 
 ### Properties
 
-- [TContainerOf](interactive.CreateInteractiveContainer.md#tcontainerof)
+- [TContainerOf](interactiveContainer.CreateInteractiveContainer.md#tcontainerof)
 
 ### Methods
 
-- [create](interactive.CreateInteractiveContainer.md#create)
+- [create](interactiveContainer.CreateInteractiveContainer.md#create)
 
 ## Properties
 

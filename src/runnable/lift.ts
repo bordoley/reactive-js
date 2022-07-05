@@ -1,8 +1,8 @@
 import { contraVariant } from "../__internal__.liftable";
-import { Lift } from "../__internal__.reactive";
+import { Lift } from "../__internal__.reactiveContainer";
 import { dispose } from "../disposable";
 import { Function1, newInstance, pipe } from "../functions";
-import { sourceFrom } from "../reactive";
+import { sourceFrom } from "../reactiveContainer";
 import { RunnableLike, RunnableOperator } from "../runnable";
 import { RunnableSink } from "../runnableSink";
 import { AbstractRunnable } from "./runnable";

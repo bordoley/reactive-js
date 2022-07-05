@@ -47,7 +47,7 @@ import {
   identity,
   pipe,
 } from "./functions";
-import { InteractiveContainerLike } from "./interactive";
+import { InteractiveContainerLike } from "./interactiveContainer";
 import { ThrowIfEmpty, Using } from "./liftable";
 import { Option, isSome, none } from "./option";
 
