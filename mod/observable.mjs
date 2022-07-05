@@ -7,7 +7,7 @@ import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { dispose, addTo, Disposable, isDisposed, onDisposed, add, onComplete, disposed, bindTo, toErrorHandler } from './disposable.mjs';
 import { move, getCurrent, hasCurrent, forEach } from './enumerator.mjs';
 import { pipe, newInstance, raise, getLength, newInstanceWith, isEmpty, arrayEquality, ignore, pipeLazy, compose, max, returns, identity, instanceFactory } from './functions.mjs';
-import { getScheduler, Observer } from './observer.mjs';
+import { getScheduler, getDispatcher, Observer } from './observer.mjs';
 import { sinkInto, sourceFrom } from './reactive.mjs';
 import { schedule, __yield, isInContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { createFromArray } from './__internal__.container.mjs';
@@ -157,7 +157,7 @@ class Subject extends Disposable {
     constructor(replay = 1) {
         super();
         this.replay = replay;
-        this.dispatchers = newInstance(Set);
+        this.observers = newInstance(Set);
         this.replayed = [];
     }
     get T() {
@@ -170,7 +170,7 @@ class Subject extends Disposable {
         return raise();
     }
     get observerCount() {
-        return this.dispatchers.size;
+        return this.observers.size;
     }
     publish(next) {
         if (!isDisposed(this)) {
@@ -181,23 +181,23 @@ class Subject extends Disposable {
                     replayed.shift();
                 }
             }
-            for (const observer of this.dispatchers) {
-                pipe(observer, dispatch(next));
+            for (const observer of this.observers) {
+                pipe(observer, getDispatcher, dispatch(next));
             }
         }
     }
     sink(observer) {
+        if (!isDisposed(this)) {
+            const { observers } = this;
+            observers.add(observer);
+            pipe(observer, onDisposed(_ => {
+                observers.delete(observer);
+            }));
+        }
         // The idea here is that an onSubscribe function may
         // call next from unscheduled sources such as event handlers.
         // So we marshall those events back to the scheduler.
         const { dispatcher } = observer;
-        if (!isDisposed(this)) {
-            const { dispatchers } = this;
-            dispatchers.add(dispatcher);
-            pipe(observer, onDisposed(_ => {
-                dispatchers.delete(dispatcher);
-            }));
-        }
         for (const next of this.replayed) {
             pipe(dispatcher, dispatch(next));
         }

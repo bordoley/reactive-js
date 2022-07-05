@@ -291,7 +291,7 @@ declare const createObservable: <T>(f: SideEffect1<Observer<T>>) => ObservableLi
 declare const createT: CreateReactiveContainer<ObservableLike<unknown>>;
 declare class Subject<T> extends Disposable implements MulticastObservableLike<T> {
     readonly replay: number;
-    private readonly dispatchers;
+    private readonly observers;
     private readonly replayed;
     constructor(replay?: number);
     get T(): T;
