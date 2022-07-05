@@ -5,15 +5,22 @@ import { Observer, getScheduler } from "./observer";
 import { __yield } from "./scheduler";
 import { notify } from "./sink";
 
-export class AbstractDelegatingObserver<TIn, TOut> extends Observer<TIn> {
-  constructor(public readonly delegate: Observer<TOut>) {
+export class AbstractDelegatingObserver<
+  TIn,
+  TOut,
+  TObserver extends Observer<TOut> = Observer<TOut>,
+> extends Observer<TIn> {
+  constructor(public readonly delegate: TObserver) {
     super(getScheduler(delegate));
   }
 
   notify(_: TIn) {}
 }
 
-class DelegatingObserver<T> extends AbstractDelegatingObserver<T, T> {
+export class DelegatingObserver<
+  T,
+  TObserver extends Observer<T> = Observer<T>,
+> extends AbstractDelegatingObserver<T, T, TObserver> {
   notify(next: T) {
     pipe(this, getDelegate, notify(next));
   }
@@ -21,4 +28,5 @@ class DelegatingObserver<T> extends AbstractDelegatingObserver<T, T> {
 
 export const createDelegatingObserver = <T>(
   delegate: Observer<T>,
-): Observer<T> => newInstance(DelegatingObserver, delegate);
+): Observer<T> =>
+  newInstance<DelegatingObserver<T>, Observer<T>>(DelegatingObserver, delegate);
