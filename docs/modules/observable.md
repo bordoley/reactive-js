@@ -28,6 +28,7 @@
 - [TContainerOf](observable.md#tcontainerof)
 - [bufferT](observable.md#buffert)
 - [catchErrorT](observable.md#catcherrort)
+- [combineLatestT](observable.md#combinelatestt)
 - [concatAllT](observable.md#concatallt)
 - [concatT](observable.md#concatt)
 - [createT](observable.md#createt)
@@ -63,6 +64,7 @@
 - [toObservableT](observable.md#toobservablet)
 - [toRunnableT](observable.md#torunnablet)
 - [usingT](observable.md#usingt)
+- [zipLatestT](observable.md#ziplatestt)
 - [zipT](observable.md#zipt)
 
 ### Functions
@@ -75,7 +77,6 @@
 - [buffer](observable.md#buffer)
 - [catchError](observable.md#catcherror)
 - [combineLatest](observable.md#combinelatest)
-- [combineLatestWith](observable.md#combinelatestwith)
 - [concat](observable.md#concat)
 - [concatAll](observable.md#concatall)
 - [createObservable](observable.md#createobservable)
@@ -136,7 +137,6 @@
 - [withLatestFrom](observable.md#withlatestfrom)
 - [zip](observable.md#zip)
 - [zipLatest](observable.md#ziplatest)
-- [zipLatestWith](observable.md#ziplatestwith)
 - [zipWithLatestFrom](observable.md#zipwithlatestfrom)
 
 ## Type Aliases
@@ -201,6 +201,12 @@ ___
 ### catchErrorT
 
 • `Const` **catchErrorT**: [`CatchError`](../interfaces/liftable.CatchError.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### combineLatestT
+
+• `Const` **combineLatestT**: [`Zip`](../interfaces/container.Zip.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
@@ -413,6 +419,12 @@ ___
 ### usingT
 
 • `Const` **usingT**: [`Using`](../interfaces/liftable.Using.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### zipLatestT
+
+• `Const` **zipLatestT**: [`Zip`](../interfaces/container.Zip.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
@@ -1225,29 +1237,6 @@ ___
 #### Returns
 
 [`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
-
-___
-
-### combineLatestWith
-
-▸ **combineLatestWith**<`TA`, `TB`\>(`snd`): [`ObservableOperator`](observable.md#observableoperator)<`TA`, [`TA`, `TB`]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `snd` | [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TB`\> |
-
-#### Returns
-
-[`ObservableOperator`](observable.md#observableoperator)<`TA`, [`TA`, `TB`]\>
 
 ___
 
@@ -3716,29 +3705,6 @@ ___
 #### Returns
 
 [`ObservableLike`](../interfaces/observable.ObservableLike.md)<[`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
-
-___
-
-### zipLatestWith
-
-▸ **zipLatestWith**<`TA`, `TB`\>(`snd`): [`ObservableOperator`](observable.md#observableoperator)<`TA`, [`TA`, `TB`]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `snd` | [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`TB`\> |
-
-#### Returns
-
-[`ObservableOperator`](observable.md#observableoperator)<`TA`, [`TA`, `TB`]\>
 
 ___
 
