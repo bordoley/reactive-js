@@ -1,14 +1,7 @@
 import { __DEV__ } from "./__internal__.env";
-import { Container, ContainerLike, ContainerOf } from "./container";
-import { Disposable } from "./disposable";
+import { Container, ContainerOf } from "./container";
 import { LiftableLike } from "./liftable";
-
-export interface SourceLike<T> extends Disposable, ContainerLike {
-  readonly T: T;
-  readonly TContainerOf: SourceLike<this["T"]>;
-
-  move(): void;
-}
+import { SourceLike } from "./source";
 
 export interface InteractiveContainerLike<TCtx> extends LiftableLike {
   readonly TLiftableState: SourceLike<this["T"]>;

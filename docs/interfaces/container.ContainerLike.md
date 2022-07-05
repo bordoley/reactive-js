@@ -10,13 +10,13 @@
 
   ↳ [`FlowableLike`](flowable.FlowableLike.md)
 
-  ↳ [`SourceLike`](interactive.SourceLike.md)
-
   ↳ [`LiftableLike`](liftable.LiftableLike.md)
 
   ↳ [`SequenceLike`](sequence.SequenceLike.md)
 
   ↳ [`SinkLike`](sink.SinkLike.md)
+
+  ↳ [`SourceLike`](source.SourceLike.md)
 
 ## Table of contents
 

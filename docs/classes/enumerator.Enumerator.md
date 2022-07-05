@@ -20,7 +20,7 @@
 
 ## Implements
 
-- [`SourceLike`](../interfaces/interactive.SourceLike.md)<`T`\>
+- [`SourceLike`](../interfaces/source.SourceLike.md)<`T`\>
 
 ## Table of contents
 
@@ -71,7 +71,7 @@
 
 #### Implementation of
 
-[SourceLike](../interfaces/interactive.SourceLike.md).[T](../interfaces/interactive.SourceLike.md#t)
+[SourceLike](../interfaces/source.SourceLike.md).[T](../interfaces/source.SourceLike.md#t)
 
 ___
 
@@ -85,7 +85,7 @@ ___
 
 #### Implementation of
 
-[SourceLike](../interfaces/interactive.SourceLike.md).[TContainerOf](../interfaces/interactive.SourceLike.md#tcontainerof)
+[SourceLike](../interfaces/source.SourceLike.md).[TContainerOf](../interfaces/source.SourceLike.md#tcontainerof)
 
 ___
 
@@ -171,7 +171,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Implementation of
 
-[SourceLike](../interfaces/interactive.SourceLike.md).[add](../interfaces/interactive.SourceLike.md#add)
+[SourceLike](../interfaces/source.SourceLike.md).[add](../interfaces/source.SourceLike.md#add)
 
 #### Inherited from
 
@@ -198,7 +198,7 @@ Dispose the resource.
 
 #### Implementation of
 
-[SourceLike](../interfaces/interactive.SourceLike.md).[dispose](../interfaces/interactive.SourceLike.md#dispose)
+[SourceLike](../interfaces/source.SourceLike.md).[dispose](../interfaces/source.SourceLike.md#dispose)
 
 #### Inherited from
 
@@ -216,4 +216,4 @@ ___
 
 #### Implementation of
 
-[SourceLike](../interfaces/interactive.SourceLike.md).[move](../interfaces/interactive.SourceLike.md#move)
+[SourceLike](../interfaces/source.SourceLike.md).[move](../interfaces/source.SourceLike.md#move)

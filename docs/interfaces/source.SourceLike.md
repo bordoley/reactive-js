@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [interactive](../modules/interactive.md) / SourceLike
+[Reactive-JS](../README.md) / [source](../modules/source.md) / SourceLike
 
 # Interface: SourceLike<T\>
 
-[interactive](../modules/interactive.md).SourceLike
+[source](../modules/source.md).SourceLike
 
 ## Type parameters
 
@@ -27,19 +27,19 @@
 
 ### Properties
 
-- [T](interactive.SourceLike.md#t)
-- [TContainerOf](interactive.SourceLike.md#tcontainerof)
+- [T](source.SourceLike.md#t)
+- [TContainerOf](source.SourceLike.md#tcontainerof)
 
 ### Accessors
 
-- [error](interactive.SourceLike.md#error)
-- [isDisposed](interactive.SourceLike.md#isdisposed)
+- [error](source.SourceLike.md#error)
+- [isDisposed](source.SourceLike.md#isdisposed)
 
 ### Methods
 
-- [add](interactive.SourceLike.md#add)
-- [dispose](interactive.SourceLike.md#dispose)
-- [move](interactive.SourceLike.md#move)
+- [add](source.SourceLike.md#add)
+- [dispose](source.SourceLike.md#dispose)
+- [move](source.SourceLike.md#move)
 
 ## Properties
 
@@ -55,7 +55,7 @@ ___
 
 ### TContainerOf
 
-• `Readonly` **TContainerOf**: [`SourceLike`](interactive.SourceLike.md)<`T`\>
+• `Readonly` **TContainerOf**: [`SourceLike`](source.SourceLike.md)<`T`\>
 
 #### Overrides
 
@@ -105,7 +105,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`SourceLike`](interactive.SourceLike.md)<`T`\> |
+| `this` | [`SourceLike`](source.SourceLike.md)<`T`\> |
 | `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
 | `ignoreChildErrors` | `boolean` |
 
@@ -131,7 +131,7 @@ Dispose the resource.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `this` | [`SourceLike`](interactive.SourceLike.md)<`T`\> | - |
+| `this` | [`SourceLike`](source.SourceLike.md)<`T`\> | - |
 | `error?` | [`Error`](disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns
