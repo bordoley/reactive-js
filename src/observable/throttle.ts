@@ -1,6 +1,5 @@
 import { DisposableRef } from "../__internal__.disposable";
 import { getDelegate } from "../__internal__.liftable";
-import { AbstractDelegatingObserver } from "../__internal__.observer";
 import { fromValue } from "../container";
 import { addTo, isDisposed, onComplete } from "../disposable";
 import { Function1, newInstance, newInstanceWith, pipe } from "../functions";
@@ -15,6 +14,7 @@ import { sinkInto } from "../reactiveContainer";
 import { assertState } from "../reactiveSink";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
+import { AbstractDelegatingObserver } from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 

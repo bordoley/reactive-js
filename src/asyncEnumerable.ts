@@ -1,4 +1,3 @@
-import { AbstractDelegatingAsyncEnumerator } from "./__internal__.asyncEnumerator";
 import { createFromArray } from "./__internal__.container";
 import {
   createKeepLiftOperator,
@@ -80,6 +79,7 @@ import { Observer, getScheduler } from "./observer";
 import { none } from "./option";
 import { sinkInto } from "./reactiveContainer";
 import { SchedulerLike } from "./scheduler";
+import { StreamLike } from "./stream";
 import { StreamableLike, stream } from "./streamable";
 
 export interface AsyncEnumerableLike<T>
@@ -394,6 +394,33 @@ export const generate = <T>(
 export const generateT: Generate<AsyncEnumerableLike<unknown>> = {
   generate,
 };
+
+abstract class AbstractDelegatingAsyncEnumerator<TA, TB>
+  extends AsyncEnumerator<TB>
+  implements StreamLike<void, TB>
+{
+  constructor(readonly delegate: StreamLike<void, TA>) {
+    super();
+  }
+
+  get observerCount() {
+    return pipe(this, getDelegate, getObserverCount);
+  }
+
+  get replay(): number {
+    return pipe(this, getDelegate, getReplay);
+  }
+
+  get scheduler(): SchedulerLike {
+    return getDelegate(this).scheduler;
+  }
+
+  dispatch(req: void): void {
+    pipe(this, getDelegate, dispatch(req));
+  }
+
+  abstract sink(observer: Observer<TB>): void;
+}
 
 export const keep: <T>(
   predicate: Predicate<T>,

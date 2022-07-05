@@ -1,7 +1,3 @@
-import {
-  AbstractDelegatingObserver,
-  createDelegatingObserver,
-} from "./__internal__.observer";
 import { hasDelay } from "./__internal__.optionalArgs";
 import {
   createCatchErrorOperator,
@@ -72,6 +68,10 @@ import { fromArrayT } from "./observable/fromArray";
 import { lift, liftSynchronousT } from "./observable/lift";
 import { mapT } from "./observable/map";
 import { tagEnumerable } from "./observable/observable";
+import {
+  AbstractDelegatingObserver,
+  createDelegatingObserver,
+} from "./observable/observer";
 import { onNotify } from "./observable/onNotify";
 import { Subject, publish, publishTo } from "./observable/subject";
 import { subscribe } from "./observable/subscribe";

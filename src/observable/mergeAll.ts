@@ -1,6 +1,5 @@
 import { MAX_SAFE_INTEGER } from "../__internal__.env";
 import { getDelegate } from "../__internal__.liftable";
-import { AbstractDelegatingObserver } from "../__internal__.observer";
 import { ConcatAll } from "../container";
 import {
   addTo,
@@ -15,6 +14,7 @@ import { Observer, getScheduler } from "../observer";
 import { isSome } from "../option";
 import { assertState, notifySink } from "../reactiveSink";
 import { lift } from "./lift";
+import { AbstractDelegatingObserver } from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 

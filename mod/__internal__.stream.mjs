@@ -1,6 +1,4 @@
 /// <reference types="./__internal__.stream.d.ts" />
-import { getDelegate } from './__internal__.liftable.mjs';
-import { getScheduler } from './dispatcher.mjs';
 import { Disposable, add, addTo } from './disposable.mjs';
 import { newInstance, pipe, raise } from './functions.mjs';
 import { Subject, multicast, getObserverCount, getReplay, publish } from './observable.mjs';
@@ -38,30 +36,6 @@ class StreamImpl extends Disposable {
         pipe(this.observable, sinkInto(observer));
     }
 }
-class AbstractDelegatingStream extends Disposable {
-    constructor(delegate) {
-        super();
-        this.delegate = delegate;
-    }
-    get T() {
-        return raise();
-    }
-    get TContainerOf() {
-        return raise();
-    }
-    get TLiftableState() {
-        return raise();
-    }
-    get observerCount() {
-        return pipe(this, getDelegate, getObserverCount);
-    }
-    get replay() {
-        return pipe(this, getDelegate, getReplay);
-    }
-    get scheduler() {
-        return pipe(this, getDelegate, getScheduler);
-    }
-}
 const createStream = (op, scheduler, options) => newInstance(StreamImpl, op, scheduler, options);
 
-export { AbstractDelegatingStream, createStream };
+export { createStream };

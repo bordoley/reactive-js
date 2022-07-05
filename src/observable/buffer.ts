@@ -1,7 +1,6 @@
 import { DisposableRef } from "../__internal__.disposable";
 import { MAX_SAFE_INTEGER } from "../__internal__.env";
 import { getDelegate } from "../__internal__.liftable";
-import { AbstractDelegatingObserver } from "../__internal__.observer";
 import { Buffer, fromValue } from "../container";
 import {
   addTo,
@@ -27,6 +26,7 @@ import { assertState, notify } from "../reactiveSink";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { never } from "./never";
+import { AbstractDelegatingObserver } from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 

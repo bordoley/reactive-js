@@ -4,7 +4,6 @@ import {
   zip as zipEnumerators,
 } from "../__internal__.enumerator";
 import { getDelegate } from "../__internal__.liftable";
-import { AbstractDelegatingObserver } from "../__internal__.observer";
 import { everySatisfy, map } from "../__internal__.readonlyArray";
 import { Zip } from "../container";
 import {
@@ -31,6 +30,7 @@ import { assertState, notify } from "../reactiveSink";
 import { createObservable } from "./createObservable";
 import { fromEnumerator } from "./fromEnumerable";
 import { isEnumerable, tagEnumerable } from "./observable";
+import { AbstractDelegatingObserver } from "./observer";
 import { enumerateObs } from "./toEnumerable";
 import { using } from "./using";
 

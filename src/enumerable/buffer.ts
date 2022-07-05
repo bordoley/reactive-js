@@ -1,13 +1,11 @@
-import {
-  AbstractDelegatingEnumerator,
-  reset,
-} from "../__internal__.enumerator";
+import { reset } from "../__internal__.enumerator";
 import { MAX_SAFE_INTEGER } from "../__internal__.env";
 import { Buffer } from "../container";
 import { add, dispose } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { Enumerator, getCurrent, hasCurrent } from "../enumerator";
 import { getLength, max, newInstanceWith, pipe } from "../functions";
+import { AbstractDelegatingEnumerator } from "./enumerator";
 import { lift } from "./lift";
 
 class BufferEnumerator<T> extends AbstractDelegatingEnumerator<

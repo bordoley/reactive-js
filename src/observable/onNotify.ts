@@ -1,9 +1,9 @@
-import { AbstractDelegatingObserver } from "../__internal__.observer";
 import { createOnNotifyOperator } from "../__internal__.reactiveContainer";
 import { SideEffect1 } from "../functions";
 import { ObservableOperator } from "../observable";
 import { Observer } from "../observer";
 import { liftSynchronousT } from "./lift";
+import { AbstractDelegatingObserver } from "./observer";
 
 /**
  * Returns an `ObservableLike` that forwards notifications to the provided `onNotify` function.

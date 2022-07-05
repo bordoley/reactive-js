@@ -1,6 +1,5 @@
 import { DisposableRef } from "../__internal__.disposable";
 import { getDelegate } from "../__internal__.liftable";
-import { AbstractDelegatingObserver } from "../__internal__.observer";
 import { throws } from "../container";
 import { bindTo, dispose } from "../disposable";
 import { newInstance, newInstanceWith, pipe, returns } from "../functions";
@@ -11,6 +10,7 @@ import { concat } from "./concat";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { mapT } from "./map";
+import { AbstractDelegatingObserver } from "./observer";
 import { subscribe } from "./subscribe";
 
 const _timeoutError = /*@__PURE__*/ Symbol(

@@ -8,10 +8,9 @@ const keep = (predicate) => arr => arr.filter(predicate);
 const keepType = (predicate) => arr => arr.filter(predicate);
 const map = (mapper) => arr => arr.map(mapper);
 const reduce = (reducer, initialValue) => arr => arr.reduce(reducer, initialValue());
-const reduceRight = (reducer, initialValue) => arr => arr.reduceRight(reducer, initialValue());
 const forEach = (f) => arr => {
     arr.forEach(f);
     return arr;
 };
 
-export { empty, everySatisfy, forEach, fromObject, join, keep, keepType, map, reduce, reduceRight };
+export { empty, everySatisfy, forEach, fromObject, join, keep, keepType, map, reduce };

@@ -1,9 +1,9 @@
-import { __DEV__ } from "./__internal__.env";
-import { getDelegate } from "./__internal__.liftable";
-import { newInstance, pipe } from "./functions";
-import { Observer, getScheduler } from "./observer";
-import { notify } from "./reactiveSink";
-import { __yield } from "./scheduler";
+import { __DEV__ } from "../__internal__.env";
+import { getDelegate } from "../__internal__.liftable";
+import { newInstance, pipe } from "../functions";
+import { Observer, getScheduler } from "../observer";
+import { notify } from "../reactiveSink";
+import { __yield } from "../scheduler";
 
 export class AbstractDelegatingObserver<
   TIn,

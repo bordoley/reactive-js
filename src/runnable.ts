@@ -22,10 +22,6 @@ import {
 } from "./__internal__.reactiveContainer";
 import { empty as emptyArray } from "./__internal__.readonlyArray";
 import {
-  AbstractDelegatingRunnableSink,
-  createDelegatingRunnableSink,
-} from "./__internal__.runnableSink";
-import {
   Buffer,
   Concat,
   Container,
@@ -69,6 +65,10 @@ import { createRunnable, createT } from "./runnable/createRunnable";
 import { first } from "./runnable/first";
 import { fromArrayT } from "./runnable/fromArray";
 import { liftT } from "./runnable/lift";
+import {
+  AbstractDelegatingRunnableSink,
+  createDelegatingRunnableSink,
+} from "./runnable/runnableSink";
 import { RunnableSink } from "./runnableSink";
 
 export interface RunnableLike<T> extends ReactiveContainerLike {

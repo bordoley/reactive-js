@@ -1,4 +1,3 @@
-import { createDelegatingObserver } from "../__internal__.observer";
 import { everySatisfy } from "../__internal__.readonlyArray";
 import { Concat } from "../container";
 import { addTo, dispose, onComplete } from "../disposable";
@@ -8,6 +7,7 @@ import { Observer } from "../observer";
 import { sourceFrom } from "../reactiveContainer";
 import { createObservable } from "./createObservable";
 import { isEnumerable, tagEnumerable } from "./observable";
+import { createDelegatingObserver } from "./observer";
 
 const createConcatObserver = <T>(
   delegate: Observer<T>,

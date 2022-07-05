@@ -11,6 +11,5 @@ declare const keep: <T>(predicate: Predicate<T>) => ReadonlyArrayOperator<T, T>;
 declare const keepType: <TA, TB extends TA>(predicate: TypePredicate<TA, TB>) => ReadonlyArrayOperator<TA, TB>;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => ReadonlyArrayOperator<TA, TB>;
 declare const reduce: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => Function1<readonly T[], TAcc>;
-declare const reduceRight: <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) => Function1<readonly T[], TAcc>;
 declare const forEach: <T>(f: SideEffect1<T>) => Function1<readonly T[], readonly T[]>;
-export { ReadonlyArrayOperator, empty, everySatisfy, forEach, fromObject, join, keep, keepType, map, reduce, reduceRight };
+export { ReadonlyArrayOperator, empty, everySatisfy, forEach, fromObject, join, keep, keepType, map, reduce };

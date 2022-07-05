@@ -1,10 +1,10 @@
 /// <reference types="./enumerable.d.ts" />
-import { AbstractEnumerator, reset, AbstractDelegatingEnumerator, zip as zip$1, AbstractPassThroughEnumerator } from './__internal__.enumerator.mjs';
-import { covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, getDelegate, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './__internal__.liftable.mjs';
+import { AbstractEnumerator, reset, zip as zip$1 } from './__internal__.enumerator.mjs';
+import { getDelegate, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './__internal__.liftable.mjs';
 import { map as map$1, empty as empty$1, forEach as forEach$1 } from './__internal__.readonlyArray.mjs';
 import { isDisposed, dispose, add, addTo, bindTo } from './disposable.mjs';
 import { DisposableRef } from './__internal__.disposable.mjs';
-import { hasCurrent, move, getCurrent, Enumerator, forEach } from './enumerator.mjs';
+import { hasCurrent, Enumerator, getCurrent, move, forEach } from './enumerator.mjs';
 import { pipe, pipeLazy, instanceFactory, callWith, raise, newInstance, newInstanceWith, getLength, max, alwaysTrue, identity } from './functions.mjs';
 import { empty } from './container.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -82,6 +82,25 @@ const createEnumerable = (enumerate) => newInstance(CreateEnumerable, enumerate)
 const createT = {
     create: (source) => createEnumerable(() => source(none)),
 };
+
+class AbstractDelegatingEnumerator extends AbstractEnumerator {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+    }
+}
+class AbstractPassThroughEnumerator extends Enumerator {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+    }
+    get current() {
+        return pipe(this, getDelegate, getCurrent);
+    }
+    get hasCurrent() {
+        return pipe(this, getDelegate, hasCurrent);
+    }
+}
 
 class LiftedEnumerable extends AbstractEnumerable {
     constructor(src, operators) {
