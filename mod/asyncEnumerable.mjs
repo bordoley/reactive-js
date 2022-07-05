@@ -1,9 +1,9 @@
 /// <reference types="./asyncEnumerable.d.ts" />
 import { AbstractDelegatingAsyncEnumerator } from './__internal__.asyncEnumerator.mjs';
 import { createFromArray } from './__internal__.container.mjs';
-import { AbstractLiftable, covariant, createKeepLiftOperator, getDelegate, createMapLiftOperator, createScanLiftOperator, createTakeWhileLiftOperator } from './__internal__.liftable.mjs';
+import { covariant, createKeepLiftOperator, getDelegate, createMapLiftOperator, createScanLiftOperator, createTakeWhileLiftOperator } from './__internal__.liftable.mjs';
 import { getDelay } from './__internal__.optionalArgs.mjs';
-import { pipe, newInstance, getLength, compose, increment, returns, pipeLazy, newInstanceWith } from './functions.mjs';
+import { raise, pipe, newInstance, getLength, compose, increment, returns, pipeLazy, newInstanceWith } from './functions.mjs';
 import { stream } from './streamable.mjs';
 import { AsyncEnumerator } from './asyncEnumerator.mjs';
 import { fromValue, concatMap, concatWith } from './container.mjs';
@@ -16,14 +16,25 @@ import { getScheduler } from './observer.mjs';
 import { none } from './option.mjs';
 import { sinkInto } from './reactive.mjs';
 
-class LiftedAsyncEnumerable extends AbstractLiftable {
+class AbstractAsyncEnumerable {
+    get T() {
+        return raise();
+    }
+    get TContainerOf() {
+        return this;
+    }
+    get TLiftableState() {
+        return raise();
+    }
+    source(scheduler) {
+        return pipe(this, stream(scheduler));
+    }
+}
+class LiftedAsyncEnumerable extends AbstractAsyncEnumerable {
     constructor(src, operators) {
         super();
         this.src = src;
         this.operators = operators;
-    }
-    source(scheduler) {
-        return pipe(this, stream(scheduler));
     }
     stream(scheduler, options) {
         const src = pipe(this.src, stream(scheduler, options));
@@ -42,7 +53,7 @@ const liftT = {
     lift,
 };
 
-class CreateAsyncEnumerable extends AbstractLiftable {
+class CreateAsyncEnumerable extends AbstractAsyncEnumerable {
     constructor(stream) {
         super();
         this.stream = stream;

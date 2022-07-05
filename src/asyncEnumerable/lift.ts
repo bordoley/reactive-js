@@ -1,22 +1,40 @@
-import {
-  AbstractLiftable,
-  Covariant,
-  Lift,
-  covariant,
-} from "../__internal__.liftable";
+import { Covariant, Lift, covariant } from "../__internal__.liftable";
 import {
   AsyncEnumerableLike,
   AsyncEnumerableOperator,
 } from "../asyncEnumerable";
 import { AsyncEnumerator } from "../asyncEnumerator";
-import { Function1, newInstance, pipe } from "../functions";
+import { Function1, newInstance, pipe, raise } from "../functions";
 import { SchedulerLike } from "../scheduler";
-import { stream } from "../streamable";
+import { StreamableLike, stream } from "../streamable";
 
-class LiftedAsyncEnumerable<T>
-  extends AbstractLiftable<AsyncEnumerator<T>>
+export abstract class AbstractAsyncEnumerable<T>
   implements AsyncEnumerableLike<T>
 {
+  get T(): T {
+    return raise();
+  }
+
+  get TContainerOf(): AsyncEnumerableLike<this["T"]> {
+    return this;
+  }
+
+  get TLiftableState(): AsyncEnumerator<this["T"]> {
+    return raise();
+  }
+
+  source(scheduler: SchedulerLike): AsyncEnumerator<T> {
+    return pipe(this, stream(scheduler));
+  }
+
+  abstract stream(
+    this: StreamableLike<void, T, AsyncEnumerator<T>>,
+    scheduler: SchedulerLike,
+    options?: { readonly replay?: number | undefined } | undefined,
+  ): AsyncEnumerator<T>;
+}
+
+class LiftedAsyncEnumerable<T> extends AbstractAsyncEnumerable<T> {
   constructor(
     readonly src: AsyncEnumerableLike<any>,
     readonly operators: readonly Function1<
@@ -25,10 +43,6 @@ class LiftedAsyncEnumerable<T>
     >[],
   ) {
     super();
-  }
-
-  source(scheduler: SchedulerLike): AsyncEnumerator<T> {
-    return pipe(this, stream(scheduler));
   }
 
   stream(

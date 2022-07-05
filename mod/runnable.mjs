@@ -1,16 +1,25 @@
 /// <reference types="./runnable.d.ts" />
-import { AbstractReactiveContainer, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './__internal__.reactive.mjs';
+import { createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './__internal__.reactive.mjs';
 import { empty } from './__internal__.readonlyArray.mjs';
 import { AbstractDelegatingRunnableSink, createDelegatingRunnableSink } from './__internal__.runnableSink.mjs';
 import { dispose, isDisposed, addTo, bindTo } from './disposable.mjs';
-import { pipe, newInstance, raise, pipeLazy, newInstanceWith, ignore, getLength, alwaysTrue, compose, identity } from './functions.mjs';
+import { raise, pipe, newInstance, pipeLazy, newInstanceWith, ignore, getLength, alwaysTrue, compose, identity } from './functions.mjs';
 import { isSome, none, isNone, getOrDefault } from './option.mjs';
 import { sourceFrom } from './reactive.mjs';
 import { RunnableSink } from './runnableSink.mjs';
 import { createFromArray } from './__internal__.container.mjs';
 import { contraVariant } from './__internal__.liftable.mjs';
 
-class AbstractRunnable extends AbstractReactiveContainer {
+class AbstractRunnable {
+    get T() {
+        return raise();
+    }
+    get TContainerOf() {
+        return this;
+    }
+    get TLiftableState() {
+        return raise();
+    }
 }
 
 class RunnableImpl extends AbstractRunnable {

@@ -1,18 +1,24 @@
-import { AbstractLiftable } from "../__internal__.liftable";
 import { empty } from "../container";
 import { dispose } from "../disposable";
 import { EnumerableLike } from "../enumerable";
 import { Enumerator } from "../enumerator";
-import { Factory, newInstance, pipe } from "../functions";
+import { Factory, newInstance, pipe, raise } from "../functions";
 import { fromArrayT } from "./fromArray";
 
 export const enumerate = <T>(enumerable: EnumerableLike<T>): Enumerator<T> =>
   enumerable.enumerate();
 
-export abstract class AbstractEnumerable<T>
-  extends AbstractLiftable<Enumerator<T>>
-  implements EnumerableLike<T>
-{
+export abstract class AbstractEnumerable<T> implements EnumerableLike<T> {
+  get T(): T {
+    return raise();
+  }
+  get TContainerOf(): EnumerableLike<this["T"]> {
+    return this;
+  }
+  get TLiftableState(): Enumerator<this["T"]> {
+    return raise();
+  }
+
   abstract enumerate(this: EnumerableLike<T>): Enumerator<T>;
 
   source(_: void): Enumerator<T> {

@@ -1,14 +1,5 @@
 import { ContainerLike, ContainerOf, FromArrayOptions } from "./container";
-import { Function1, getLength, max, min, raise } from "./functions";
-
-export abstract class AbstractContainer implements ContainerLike {
-  get TContainerOf(): this {
-    return raise();
-  }
-  get T(): unknown {
-    return raise();
-  }
-}
+import { Function1, getLength, max, min } from "./functions";
 
 export const createFromArray =
   <C extends ContainerLike, O extends FromArrayOptions = FromArrayOptions>(

@@ -1,6 +1,5 @@
 import { MAX_SAFE_INTEGER, __DEV__ } from "./__internal__.env";
 import {
-  AbstractLiftable,
   ContraVariant,
   DelegatingLiftableStateOf,
   Lift as LiftableLift,
@@ -61,17 +60,7 @@ import {
   ReactiveContainerLike,
   sinkInto,
 } from "./reactive";
-import { ReactiveSinkLike, assertState, notify } from "./reactiveSink";
-
-export abstract class AbstractReactiveContainer<
-    T,
-    TSink extends ReactiveSinkLike<T>,
-  >
-  extends AbstractLiftable<TSink>
-  implements ReactiveContainerLike
-{
-  abstract sink(this: this, sink: TSink): void;
-}
+import { assertState, notify } from "./reactiveSink";
 
 export interface Lift<C extends ReactiveContainerLike>
   extends LiftableLift<C, ContraVariant> {}

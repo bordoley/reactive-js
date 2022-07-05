@@ -1,14 +1,6 @@
 /// <reference types="./__internal__.container.d.ts" />
-import { raise, getLength, min, max } from './functions.mjs';
+import { getLength, min, max } from './functions.mjs';
 
-class AbstractContainer {
-    get TContainerOf() {
-        return raise();
-    }
-    get T() {
-        return raise();
-    }
-}
 const createFromArray = (factory) => (options = {}) => values => {
     var _a, _b;
     const valuesLength = getLength(values);
@@ -17,4 +9,4 @@ const createFromArray = (factory) => (options = {}) => values => {
     return factory(values, startIndex, endIndex, options);
 };
 
-export { AbstractContainer, createFromArray };
+export { createFromArray };
