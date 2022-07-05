@@ -299,7 +299,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<`Readable`\> |
+| `factory` | `Readable` \| [`Factory`](functions.md#factory)<`Readable`\> |
 
 #### Returns
 

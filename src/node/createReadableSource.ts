@@ -9,17 +9,20 @@ import { getScheduler } from "../observer";
 import { addDisposable, addToDisposable, addToNodeStream } from "./nodeStream";
 
 export const createReadableSource = (
-  factory: Factory<Readable>,
+  factory: Factory<Readable> | Readable,
 ): FlowableLike<Uint8Array> =>
   createLiftedFlowable(mode =>
     createObservable(observer => {
       const { dispatcher } = observer;
 
-      const readable = pipe(
-        factory(),
-        addToDisposable(observer),
-        addDisposable(dispatcher),
-      );
+      const readable =
+        typeof factory === "function"
+          ? pipe(
+              factory(),
+              addToDisposable(observer),
+              addDisposable(dispatcher),
+            )
+          : pipe(factory, addDisposable(dispatcher));
 
       readable.pause();
 
