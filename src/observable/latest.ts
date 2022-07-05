@@ -1,6 +1,7 @@
 import { getDelegate } from "../__internal__.liftable";
 import { AbstractDelegatingObserver } from "../__internal__.observer";
 import { everySatisfy, map } from "../__internal__.readonlyArray";
+import { Zip } from "../container";
 import { addTo, dispose, onComplete } from "../disposable";
 import { getLength, newInstanceWith, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
@@ -182,10 +183,9 @@ export function combineLatest(
   return latest(observables, LatestMode.Combine);
 }
 
-export const combineLatestWith =
-  <TA, TB>(snd: ObservableLike<TB>): ObservableOperator<TA, [TA, TB]> =>
-  fst =>
-    combineLatest(fst, snd);
+export const combineLatestT: Zip<ObservableLike<unknown>> = {
+  zip: combineLatest,
+};
 
 export function zipLatest<TA, TB>(
   a: ObservableLike<TA>,
@@ -258,10 +258,9 @@ export function zipLatest(
   return latest(observables, LatestMode.Zip);
 }
 
-export const zipLatestWith =
-  <TA, TB>(snd: ObservableLike<TB>): ObservableOperator<TA, [TA, TB]> =>
-  fst =>
-    zipLatest(fst, snd);
+export const zipLatestT: Zip<ObservableLike<unknown>> = {
+  zip: zipLatest,
+};
 
 export function forkCombineLatest<T, TA, TB>(
   a: ObservableOperator<T, TA>,

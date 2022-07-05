@@ -31,7 +31,7 @@ import {
   __observe,
   buffer,
   catchError,
-  combineLatestWith,
+  combineLatestT,
   concat,
   concatAllT,
   concatT,
@@ -75,7 +75,7 @@ import {
   toRunnable,
   withLatestFrom,
   zip,
-  zipLatestWith,
+  zipLatestT,
   zipT,
   zipWithLatestFrom,
 } from "../observable";
@@ -210,7 +210,8 @@ export const tests = describe(
     pipeLazy(
       generate(incrementBy(2), returns(1), { delay: 2 }),
       takeFirst({ count: 3 }),
-      combineLatestWith(
+      zipWith(
+        combineLatestT,
         pipe(
           generate(incrementBy(2), returns(0), { delay: 3 }),
           takeFirst({ count: 2 }),
@@ -883,7 +884,10 @@ export const tests = describe(
     pipeLazy(
       [1, 2, 3, 4, 5, 6, 7, 8],
       fromArray({ delay: 1 }),
-      zipLatestWith(pipe([1, 2, 3, 4], fromArray({ delay: 2 }))),
+      zipWith<ObservableLike<unknown>, number, number>(
+        zipLatestT,
+        pipe([1, 2, 3, 4], fromArray({ delay: 2 })),
+      ),
       map(([a, b]) => a + b),
       toRunnable(),
       toArray(),

@@ -155,11 +155,11 @@ export {
 } from "./observable/effects";
 export {
   combineLatest,
-  combineLatestWith,
+  combineLatestT,
   forkCombineLatest,
   forkZipLatest,
   zipLatest,
-  zipLatestWith,
+  zipLatestT,
 } from "./observable/latest";
 export { concat, concatT } from "./observable/concat";
 export { createObservable, createT } from "./observable/createObservable";
