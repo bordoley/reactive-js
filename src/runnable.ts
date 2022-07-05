@@ -19,7 +19,7 @@ import {
   createTakeWhileOperator,
   createThrowIfEmptyOperator,
   createUsing,
-} from "./__internal__.reactive";
+} from "./__internal__.reactiveContainer";
 import { empty as emptyArray } from "./__internal__.readonlyArray";
 import {
   AbstractDelegatingRunnableSink,
@@ -64,7 +64,7 @@ import {
 } from "./functions";
 import { CatchError, DecodeWithCharset, ThrowIfEmpty, Using } from "./liftable";
 import { Option, getOrDefault, isNone, none } from "./option";
-import { ReactiveContainerLike, sourceFrom } from "./reactive";
+import { ReactiveContainerLike, sourceFrom } from "./reactiveContainer";
 import { createRunnable, createT } from "./runnable/createRunnable";
 import { first } from "./runnable/first";
 import { fromArrayT } from "./runnable/fromArray";

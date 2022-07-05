@@ -59,7 +59,7 @@ import {
   CreateReactiveContainer,
   ReactiveContainerLike,
   sinkInto,
-} from "./reactive";
+} from "./reactiveContainer";
 import { assertState, notify } from "./reactiveSink";
 
 export interface Lift<C extends ReactiveContainerLike>

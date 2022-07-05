@@ -5,7 +5,7 @@ import { addTo, dispose, onComplete } from "../disposable";
 import { getLength, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer } from "../observer";
-import { sourceFrom } from "../reactive";
+import { sourceFrom } from "../reactiveContainer";
 import { createObservable } from "./createObservable";
 
 const createMergeObserver = <T>(

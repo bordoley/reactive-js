@@ -4,7 +4,7 @@ import { Factory, Function1, Function2, Function3, Function4, Function5, Functio
 import { FromIterator, FromIterable, Using, Defer, CatchError, DecodeWithCharset, ThrowIfEmpty } from "./liftable.mjs";
 import { Observer } from "./observer.mjs";
 import { Option } from "./option.mjs";
-import { CreateReactiveContainer, ReactiveContainerLike } from "./reactive.mjs";
+import { CreateReactiveContainer, ReactiveContainerLike } from "./reactiveContainer.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
 import { SchedulerLike, VirtualTimeSchedulerLike } from "./scheduler.mjs";
 import { EnumerableLike, FromEnumerable, ToEnumerable } from "./enumerable.mjs";

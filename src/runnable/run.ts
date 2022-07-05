@@ -1,7 +1,7 @@
 import { dispose } from "../disposable";
 import { pipe, raise } from "../functions";
 import { isSome } from "../option";
-import { sourceFrom } from "../reactive";
+import { sourceFrom } from "../reactiveContainer";
 import { RunnableLike } from "../runnable";
 import { RunnableSink } from "../runnableSink";
 

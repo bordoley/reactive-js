@@ -6,7 +6,7 @@ import { add, bindTo, addTo } from './disposable.mjs';
 import { pipe, compose } from './functions.mjs';
 import { createObservable, subscribeOn, fromDisposable, takeUntil, onNotify, subscribe, keepT, concatT, fromArrayT, onSubscribe } from './observable.mjs';
 import { getScheduler } from './observer.mjs';
-import { sourceFrom } from './reactive.mjs';
+import { sourceFrom } from './reactiveContainer.mjs';
 import { createPausableScheduler } from './scheduler.mjs';
 import { createLiftedStreamable, sourceFrom as sourceFrom$1 } from './streamable.mjs';
 

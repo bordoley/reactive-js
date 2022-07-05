@@ -25,7 +25,7 @@ import {
 } from "../observable";
 import { Observer } from "../observer";
 import { Option, isSome, none } from "../option";
-import { sinkInto } from "../reactive";
+import { sinkInto } from "../reactiveContainer";
 import { createActionReducer, createStreamble, stream } from "../streamable";
 import {
   WindowLocationStreamLike,

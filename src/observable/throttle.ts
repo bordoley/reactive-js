@@ -11,7 +11,7 @@ import {
 } from "../observable";
 import { Observer, getScheduler } from "../observer";
 import { Option, none } from "../option";
-import { sinkInto } from "../reactive";
+import { sinkInto } from "../reactiveContainer";
 import { assertState } from "../reactiveSink";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";

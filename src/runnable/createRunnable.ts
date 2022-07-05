@@ -1,6 +1,6 @@
 import { dispose } from "../disposable";
 import { SideEffect1, newInstance, pipe } from "../functions";
-import { CreateReactiveContainer } from "../reactive";
+import { CreateReactiveContainer } from "../reactiveContainer";
 import { RunnableLike } from "../runnable";
 import { RunnableSink } from "../runnableSink";
 import { AbstractRunnable } from "./runnable";

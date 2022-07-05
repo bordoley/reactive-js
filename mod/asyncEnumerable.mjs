@@ -14,7 +14,7 @@ import { move, getCurrent } from './enumerator.mjs';
 import { Subject, multicast, getObserverCount, getReplay, publish, fromArrayT as fromArrayT$1, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, withLatestFrom, using, concatT, never, takeWhile as takeWhile$1, map as map$1, scanAsync as scanAsync$1, onNotify, keep as keep$1, createObservable, onSubscribe } from './observable.mjs';
 import { getScheduler } from './observer.mjs';
 import { none } from './option.mjs';
-import { sinkInto } from './reactive.mjs';
+import { sinkInto } from './reactiveContainer.mjs';
 
 class AbstractAsyncEnumerable {
     get T() {

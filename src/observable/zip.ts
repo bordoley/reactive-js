@@ -26,7 +26,7 @@ import {
 } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
-import { sourceFrom } from "../reactive";
+import { sourceFrom } from "../reactiveContainer";
 import { assertState, notify } from "../reactiveSink";
 import { createObservable } from "./createObservable";
 import { fromEnumerator } from "./fromEnumerable";

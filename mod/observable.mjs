@@ -1,14 +1,14 @@
 /// <reference types="./observable.d.ts" />
 import { AbstractDelegatingObserver, createDelegatingObserver } from './__internal__.observer.mjs';
 import { hasDelay, getDelay } from './__internal__.optionalArgs.mjs';
-import { createMapOperator, createOnNotifyOperator, createUsing, createNever, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './__internal__.reactive.mjs';
+import { createMapOperator, createOnNotifyOperator, createUsing, createNever, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './__internal__.reactiveContainer.mjs';
 import { empty as empty$1, fromValue, throws, concatMap } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { dispose, addTo, Disposable, isDisposed, onDisposed, add, onComplete, disposed, bindTo, toErrorHandler } from './disposable.mjs';
 import { move, getCurrent, hasCurrent, forEach } from './enumerator.mjs';
 import { raise, pipe, newInstance, getLength, newInstanceWith, isEmpty, arrayEquality, ignore, pipeLazy, compose, max, returns, identity, instanceFactory } from './functions.mjs';
 import { getScheduler, getDispatcher, Observer } from './observer.mjs';
-import { sinkInto, sourceFrom } from './reactive.mjs';
+import { sinkInto, sourceFrom } from './reactiveContainer.mjs';
 import { schedule, __yield, isInContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { createFromArray } from './__internal__.container.mjs';
 import { contraVariant, getDelegate } from './__internal__.liftable.mjs';

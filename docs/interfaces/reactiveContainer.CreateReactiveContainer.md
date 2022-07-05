@@ -1,14 +1,14 @@
-[Reactive-JS](../README.md) / [reactive](../modules/reactive.md) / CreateReactiveContainer
+[Reactive-JS](../README.md) / [reactiveContainer](../modules/reactiveContainer.md) / CreateReactiveContainer
 
 # Interface: CreateReactiveContainer<C\>
 
-[reactive](../modules/reactive.md).CreateReactiveContainer
+[reactiveContainer](../modules/reactiveContainer.md).CreateReactiveContainer
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ReactiveContainerLike`](reactive.ReactiveContainerLike.md) |
+| `C` | extends [`ReactiveContainerLike`](reactiveContainer.ReactiveContainerLike.md) |
 
 ## Hierarchy
 
@@ -20,11 +20,11 @@
 
 ### Properties
 
-- [TContainerOf](reactive.CreateReactiveContainer.md#tcontainerof)
+- [TContainerOf](reactiveContainer.CreateReactiveContainer.md#tcontainerof)
 
 ### Methods
 
-- [create](reactive.CreateReactiveContainer.md#create)
+- [create](reactiveContainer.CreateReactiveContainer.md#create)
 
 ## Properties
 

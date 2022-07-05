@@ -60,7 +60,7 @@
 
   ↳ [`ToEnumerable`](enumerable.ToEnumerable.md)
 
-  ↳ [`CreateInteractiveContainer`](interactive.CreateInteractiveContainer.md)
+  ↳ [`CreateInteractiveContainer`](interactiveContainer.CreateInteractiveContainer.md)
 
   ↳ [`CatchError`](liftable.CatchError.md)
 
@@ -82,7 +82,7 @@
 
   ↳ [`ToObservable`](observable.ToObservable.md)
 
-  ↳ [`CreateReactiveContainer`](reactive.CreateReactiveContainer.md)
+  ↳ [`CreateReactiveContainer`](reactiveContainer.CreateReactiveContainer.md)
 
   ↳ [`ToRunnable`](runnable.ToRunnable.md)
 

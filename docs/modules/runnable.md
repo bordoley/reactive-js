@@ -123,7 +123,7 @@ ___
 
 ### createT
 
-• `Const` **createT**: [`CreateReactiveContainer`](../interfaces/reactive.CreateReactiveContainer.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+• `Const` **createT**: [`CreateReactiveContainer`](../interfaces/reactiveContainer.CreateReactiveContainer.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
 
 ___
 

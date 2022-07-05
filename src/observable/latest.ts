@@ -5,7 +5,7 @@ import { getLength, newInstanceWith, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer, getScheduler } from "../observer";
 import { none } from "../option";
-import { sourceFrom } from "../reactive";
+import { sourceFrom } from "../reactiveContainer";
 import { assertState, notify } from "../reactiveSink";
 import { SchedulerLike } from "../scheduler";
 import { defer } from "./defer";

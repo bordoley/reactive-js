@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [reactive](../modules/reactive.md) / ReactiveContainerLike
+[Reactive-JS](../README.md) / [reactiveContainer](../modules/reactiveContainer.md) / ReactiveContainerLike
 
 # Interface: ReactiveContainerLike
 
-[reactive](../modules/reactive.md).ReactiveContainerLike
+[reactiveContainer](../modules/reactiveContainer.md).ReactiveContainerLike
 
 ## Hierarchy
 
@@ -18,13 +18,13 @@
 
 ### Properties
 
-- [T](reactive.ReactiveContainerLike.md#t)
-- [TContainerOf](reactive.ReactiveContainerLike.md#tcontainerof)
-- [TLiftableState](reactive.ReactiveContainerLike.md#tliftablestate)
+- [T](reactiveContainer.ReactiveContainerLike.md#t)
+- [TContainerOf](reactiveContainer.ReactiveContainerLike.md#tcontainerof)
+- [TLiftableState](reactiveContainer.ReactiveContainerLike.md#tliftablestate)
 
 ### Methods
 
-- [sink](reactive.ReactiveContainerLike.md#sink)
+- [sink](reactiveContainer.ReactiveContainerLike.md#sink)
 
 ## Properties
 

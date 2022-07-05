@@ -45,7 +45,7 @@ import {
   pipeLazy,
   returns,
 } from "./functions";
-import { InteractiveContainerLike } from "./interactive";
+import { InteractiveContainerLike } from "./interactiveContainer";
 import { FromIterable } from "./liftable";
 import {
   AsyncReducer,
@@ -78,7 +78,7 @@ import {
 } from "./observable";
 import { Observer, getScheduler } from "./observer";
 import { none } from "./option";
-import { sinkInto } from "./reactive";
+import { sinkInto } from "./reactiveContainer";
 import { SchedulerLike } from "./scheduler";
 import { StreamableLike, stream } from "./streamable";
 

@@ -3,7 +3,7 @@ import { DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Function1, Equality, Predicate, Updater, Factory, Reducer } from "./functions.mjs";
 import { CatchError, DecodeWithCharset, ThrowIfEmpty, Using } from "./liftable.mjs";
 import { Option } from "./option.mjs";
-import { CreateReactiveContainer, ReactiveContainerLike } from "./reactive.mjs";
+import { CreateReactiveContainer, ReactiveContainerLike } from "./reactiveContainer.mjs";
 import { RunnableSink } from "./runnableSink.mjs";
 declare const concatAll: ConcatAll<RunnableLike<unknown>>["concatAll"];
 declare const concatAllT: ConcatAll<RunnableLike<unknown>>;

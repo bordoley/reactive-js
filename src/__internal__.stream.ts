@@ -12,7 +12,7 @@ import {
   publish,
 } from "./observable";
 import { Observer } from "./observer";
-import { sinkInto } from "./reactive";
+import { sinkInto } from "./reactiveContainer";
 import { SchedulerLike } from "./scheduler";
 import { StreamLike } from "./stream";
 

@@ -1,4 +1,4 @@
-/// <reference types="./reactive.d.ts" />
+/// <reference types="./reactiveContainer.d.ts" />
 const sinkInto = (sink) => source => {
     source.sink(sink);
     return source;

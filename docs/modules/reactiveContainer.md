@@ -1,18 +1,18 @@
-[Reactive-JS](../README.md) / reactive
+[Reactive-JS](../README.md) / reactiveContainer
 
-# Module: reactive
+# Module: reactiveContainer
 
 ## Table of contents
 
 ### Interfaces
 
-- [CreateReactiveContainer](../interfaces/reactive.CreateReactiveContainer.md)
-- [ReactiveContainerLike](../interfaces/reactive.ReactiveContainerLike.md)
+- [CreateReactiveContainer](../interfaces/reactiveContainer.CreateReactiveContainer.md)
+- [ReactiveContainerLike](../interfaces/reactiveContainer.ReactiveContainerLike.md)
 
 ### Functions
 
-- [sinkInto](reactive.md#sinkinto)
-- [sourceFrom](reactive.md#sourcefrom)
+- [sinkInto](reactiveContainer.md#sinkinto)
+- [sourceFrom](reactiveContainer.md#sourcefrom)
 
 ## Functions
 
@@ -24,7 +24,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ReactiveContainerLike`](../interfaces/reactive.ReactiveContainerLike.md)<`C`\> |
+| `C` | extends [`ReactiveContainerLike`](../interfaces/reactiveContainer.ReactiveContainerLike.md)<`C`\> |
 | `T` | `T` |
 | `TSink` | extends [`ReactiveSinkLike`](../interfaces/reactiveSink.ReactiveSinkLike.md)<`unknown`, `TSink`\> |
 
@@ -48,7 +48,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ReactiveContainerLike`](../interfaces/reactive.ReactiveContainerLike.md)<`C`\> |
+| `C` | extends [`ReactiveContainerLike`](../interfaces/reactiveContainer.ReactiveContainerLike.md)<`C`\> |
 | `T` | `T` |
 | `TSink` | extends [`ReactiveSinkLike`](../interfaces/reactiveSink.ReactiveSinkLike.md)<`unknown`, `TSink`\> |
 

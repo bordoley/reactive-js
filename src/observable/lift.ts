@@ -1,9 +1,9 @@
 import { contraVariant } from "../__internal__.liftable";
-import { Lift } from "../__internal__.reactive";
+import { Lift } from "../__internal__.reactiveContainer";
 import { Function1, newInstance, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer } from "../observer";
-import { sourceFrom } from "../reactive";
+import { sourceFrom } from "../reactiveContainer";
 import { AbstractObservable, isEnumerable } from "./observable";
 
 /**
