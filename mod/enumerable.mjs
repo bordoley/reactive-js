@@ -7,8 +7,8 @@ import { DisposableRef } from './__internal__.disposable.mjs';
 import { hasCurrent, move, getCurrent, Enumerator, forEach } from './enumerator.mjs';
 import { pipe, pipeLazy, instanceFactory, callWith, raise, newInstance, newInstanceWith, getLength, max, alwaysTrue, identity } from './functions.mjs';
 import { empty } from './container.mjs';
-import { createFromArray } from './__internal__.container.mjs';
 import { none, isNone, isSome } from './option.mjs';
+import { createFromArray } from './__internal__.container.mjs';
 import { MAX_SAFE_INTEGER } from './__internal__.env.mjs';
 import { notifySink } from './reactiveSink.mjs';
 import { createRunnable } from './runnable.mjs';
@@ -57,6 +57,9 @@ class AbstractEnumerable {
     get TLiftableState() {
         return raise();
     }
+    get TCtx() {
+        return none;
+    }
     source(_) {
         return pipe(this, enumerate);
     }
@@ -76,6 +79,9 @@ class CreateEnumerable extends AbstractEnumerable {
     }
 }
 const createEnumerable = (enumerate) => newInstance(CreateEnumerable, enumerate);
+const createT = {
+    create: (source) => createEnumerable(() => source(none)),
+};
 
 class LiftedEnumerable extends AbstractEnumerable {
     constructor(src, operators) {

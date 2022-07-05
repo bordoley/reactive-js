@@ -54,10 +54,11 @@ import { Option, isSome, none } from "./option";
 /**
  * Interface for iterating a Container of items.
  */
-export interface EnumerableLike<T> extends InteractiveContainerLike<void> {
+export interface EnumerableLike<T> extends InteractiveContainerLike {
   readonly T: unknown;
   readonly TContainerOf: EnumerableLike<this["T"]>;
   readonly TLiftableState: Enumerator<this["T"]>;
+  readonly TCtx: void;
 
   /**
    * Returns an `EnumeratorLike` to iterate through the Container.

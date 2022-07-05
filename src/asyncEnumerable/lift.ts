@@ -23,6 +23,10 @@ export abstract class AbstractAsyncEnumerable<T>
     return raise();
   }
 
+  get TCtx(): SchedulerLike {
+    return raise();
+  }
+
   source(scheduler: SchedulerLike): AsyncEnumerator<T> {
     return pipe(this, stream(scheduler));
   }

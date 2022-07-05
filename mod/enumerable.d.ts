@@ -85,10 +85,11 @@ declare const zipT: Zip<EnumerableLike<unknown>>;
 /**
  * Interface for iterating a Container of items.
  */
-interface EnumerableLike<T> extends InteractiveContainerLike<void> {
+interface EnumerableLike<T> extends InteractiveContainerLike {
     readonly T: unknown;
     readonly TContainerOf: EnumerableLike<this["T"]>;
     readonly TLiftableState: Enumerator<this["T"]>;
+    readonly TCtx: void;
     /**
      * Returns an `EnumeratorLike` to iterate through the Container.
      */

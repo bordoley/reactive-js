@@ -84,10 +84,11 @@ import { StreamableLike, stream } from "./streamable";
 
 export interface AsyncEnumerableLike<T>
   extends StreamableLike<void, T, AsyncEnumerator<T>>,
-    InteractiveContainerLike<SchedulerLike> {
+    InteractiveContainerLike {
   readonly T: unknown;
   readonly TContainerOf: AsyncEnumerableLike<this["T"]>;
   readonly TLiftableState: AsyncEnumerator<this["T"]>;
+  readonly TCtx: SchedulerLike;
 }
 
 export type AsyncEnumerableOperator<TA, TB> = Function1<

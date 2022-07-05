@@ -26,6 +26,9 @@ class AbstractAsyncEnumerable {
     get TLiftableState() {
         return raise();
     }
+    get TCtx() {
+        return raise();
+    }
     source(scheduler) {
         return pipe(this, stream(scheduler));
     }
