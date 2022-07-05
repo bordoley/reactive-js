@@ -11,7 +11,7 @@ import {
 } from "zlib";
 import { dispatchTo } from "../dispatcher";
 import { FlowableOperator, createLiftedFlowable } from "../flowable";
-import { Factory, pipe, pipeLazy, returns } from "../functions";
+import { Factory, pipe, pipeLazy } from "../functions";
 import { createObservable, onNotify, subscribe } from "../observable";
 import { getDispatcher, getScheduler } from "../observer";
 import { sinkInto } from "../reactive";
@@ -39,7 +39,7 @@ export const transform =
         );
 
         const transformReadableStream = pipe(
-          createReadableSource(returns(transform)),
+          createReadableSource(transform),
           stream(getScheduler(observer)),
           addToNodeStream(transform),
           sinkInto(observer),

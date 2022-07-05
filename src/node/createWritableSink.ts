@@ -1,5 +1,5 @@
 import { Writable } from "stream";
-import { dispatch, dispatchTo, getScheduler } from "../dispatcher";
+import { dispatch, getScheduler } from "../dispatcher";
 import { dispose, onComplete } from "../disposable";
 import { FlowMode } from "../flowable";
 import { Factory, pipe, pipeLazy } from "../functions";
@@ -43,9 +43,9 @@ export const createWritableSink = (
         }),
       );
 
-      const onDrain = pipeLazy("resume", dispatchTo(dispatcher));
+      const onDrain = pipeLazy(dispatcher, dispatch("resume"));
       const onFinish = pipeLazy(dispatcher, dispose());
-      const onPause = pipeLazy("pause", dispatchTo(dispatcher));
+      const onPause = pipeLazy(dispatcher, dispatch("pause"));
 
       writable.on("drain", onDrain);
       writable.on("finish", onFinish);
