@@ -6,8 +6,8 @@ import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer, getScheduler } from "../observer";
 import { none } from "../option";
 import { sourceFrom } from "../reactive";
+import { assertState, notify } from "../reactiveSink";
 import { SchedulerLike } from "../scheduler";
-import { assertState, notify } from "../sink";
 import { defer } from "./defer";
 import { isEnumerable, tagEnumerable } from "./observable";
 

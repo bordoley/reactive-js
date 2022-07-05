@@ -12,12 +12,12 @@ import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
 import { isNone } from "../option";
 import { sourceFrom } from "../reactive";
+import { assertState } from "../reactiveSink";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
   isInContinuation,
 } from "../scheduler";
-import { assertState } from "../sink";
 
 class EnumeratorScheduler<T>
   extends AbstractEnumerator<T>

@@ -1,9 +1,9 @@
 import { Container, ContainerOf } from "./container.mjs";
 import { Function1 } from "./functions.mjs";
 import { LiftableLike, LiftableStateOf } from "./liftable.mjs";
-import { SinkLike } from "./sink.mjs";
+import { ReactiveSinkLike } from "./reactiveSink.mjs";
 interface ReactiveContainerLike extends LiftableLike {
-    readonly TLiftableState: SinkLike<unknown>;
+    readonly TLiftableState: ReactiveSinkLike<unknown>;
     sink(this: this["TContainerOf"], sink: this["TLiftableState"]): void;
 }
 interface CreateReactiveContainer<C extends ReactiveContainerLike> extends Container<C> {

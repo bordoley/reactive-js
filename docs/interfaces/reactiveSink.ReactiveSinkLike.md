@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [source](../modules/source.md) / SourceLike
+[Reactive-JS](../README.md) / [reactiveSink](../modules/reactiveSink.md) / ReactiveSinkLike
 
-# Interface: SourceLike<T\>
+# Interface: ReactiveSinkLike<T\>
 
-[source](../modules/source.md).SourceLike
+[reactiveSink](../modules/reactiveSink.md).ReactiveSinkLike
 
 ## Type parameters
 
@@ -16,30 +16,31 @@
 
 - [`ContainerLike`](container.ContainerLike.md)
 
-  ↳ **`SourceLike`**
+  ↳ **`ReactiveSinkLike`**
 
 ## Implemented by
 
-- [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)
-- [`Enumerator`](../classes/enumerator.Enumerator.md)
+- [`Observer`](../classes/observer.Observer.md)
+- [`RunnableSink`](../classes/runnableSink.RunnableSink.md)
 
 ## Table of contents
 
 ### Properties
 
-- [T](source.SourceLike.md#t)
-- [TContainerOf](source.SourceLike.md#tcontainerof)
+- [T](reactiveSink.ReactiveSinkLike.md#t)
+- [TContainerOf](reactiveSink.ReactiveSinkLike.md#tcontainerof)
 
 ### Accessors
 
-- [error](source.SourceLike.md#error)
-- [isDisposed](source.SourceLike.md#isdisposed)
+- [error](reactiveSink.ReactiveSinkLike.md#error)
+- [isDisposed](reactiveSink.ReactiveSinkLike.md#isdisposed)
 
 ### Methods
 
-- [add](source.SourceLike.md#add)
-- [dispose](source.SourceLike.md#dispose)
-- [move](source.SourceLike.md#move)
+- [add](reactiveSink.ReactiveSinkLike.md#add)
+- [assertState](reactiveSink.ReactiveSinkLike.md#assertstate)
+- [dispose](reactiveSink.ReactiveSinkLike.md#dispose)
+- [notify](reactiveSink.ReactiveSinkLike.md#notify)
 
 ## Properties
 
@@ -55,7 +56,7 @@ ___
 
 ### TContainerOf
 
-• `Readonly` **TContainerOf**: [`SourceLike`](source.SourceLike.md)<`T`\>
+• `Readonly` **TContainerOf**: [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)<`T`\>
 
 #### Overrides
 
@@ -105,7 +106,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`SourceLike`](source.SourceLike.md)<`T`\> |
+| `this` | [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)<`T`\> |
 | `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
 | `ignoreChildErrors` | `boolean` |
 
@@ -121,6 +122,22 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 ___
 
+### assertState
+
+▸ **assertState**(`this`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)<`T`\> |
+
+#### Returns
+
+`void`
+
+___
+
 ### dispose
 
 ▸ **dispose**(`this`, `error?`): `void`
@@ -131,7 +148,7 @@ Dispose the resource.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `this` | [`SourceLike`](source.SourceLike.md)<`T`\> | - |
+| `this` | [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)<`T`\> | - |
 | `error?` | [`Error`](disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns
@@ -144,9 +161,21 @@ Dispose the resource.
 
 ___
 
-### move
+### notify
 
-▸ **move**(): `void`
+▸ **notify**(`this`, `next`): `void`
+
+Notifies the the sink of the next notification produced by the observable source.
+
+Note: The `notify` method must be called from within a `SchedulerContinuationLike`
+scheduled using the sink's `schedule` method.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `this` | [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)<`T`\> | - |
+| `next` | `T` | The next notification value. |
 
 #### Returns
 

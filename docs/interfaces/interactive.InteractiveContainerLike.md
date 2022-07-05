@@ -56,7 +56,7 @@ ___
 
 ### TLiftableState
 
-• `Readonly` **TLiftableState**: [`SourceLike`](source.SourceLike.md)<`unknown`\>
+• `Readonly` **TLiftableState**: [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)<`unknown`\>
 
 #### Overrides
 
@@ -66,7 +66,7 @@ ___
 
 ### source
 
-▸ **source**(`this`, `_`): [`SourceLike`](source.SourceLike.md)<`unknown`\>
+▸ **source**(`this`, `_`): [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)<`unknown`\>
 
 #### Parameters
 
@@ -77,4 +77,4 @@ ___
 
 #### Returns
 
-[`SourceLike`](source.SourceLike.md)<`unknown`\>
+[`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)<`unknown`\>

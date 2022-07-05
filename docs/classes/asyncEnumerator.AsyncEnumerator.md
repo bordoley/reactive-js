@@ -18,7 +18,7 @@
 
 ## Implements
 
-- [`SourceLike`](../interfaces/source.SourceLike.md)<`T`\>
+- [`InteractiveSourceLike`](../interfaces/interactiveSource.InteractiveSourceLike.md)<`T`\>
 - [`StreamLike`](../interfaces/stream.StreamLike.md)<`void`, `T`\>
 
 ## Table of contents
@@ -118,7 +118,7 @@ StreamLike.scheduler
 
 #### Implementation of
 
-[SourceLike](../interfaces/source.SourceLike.md).[T](../interfaces/source.SourceLike.md#t)
+[InteractiveSourceLike](../interfaces/interactiveSource.InteractiveSourceLike.md).[T](../interfaces/interactiveSource.InteractiveSourceLike.md#t)
 
 ___
 
@@ -132,7 +132,7 @@ ___
 
 #### Implementation of
 
-[SourceLike](../interfaces/source.SourceLike.md).[TContainerOf](../interfaces/source.SourceLike.md#tcontainerof)
+[InteractiveSourceLike](../interfaces/interactiveSource.InteractiveSourceLike.md).[TContainerOf](../interfaces/interactiveSource.InteractiveSourceLike.md#tcontainerof)
 
 ___
 
@@ -162,7 +162,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Implementation of
 
-SourceLike.error
+InteractiveSourceLike.error
 
 #### Inherited from
 
@@ -182,7 +182,7 @@ ___
 
 #### Implementation of
 
-SourceLike.isDisposed
+InteractiveSourceLike.isDisposed
 
 #### Inherited from
 
@@ -212,7 +212,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Implementation of
 
-[SourceLike](../interfaces/source.SourceLike.md).[add](../interfaces/source.SourceLike.md#add)
+[InteractiveSourceLike](../interfaces/interactiveSource.InteractiveSourceLike.md).[add](../interfaces/interactiveSource.InteractiveSourceLike.md#add)
 
 #### Inherited from
 
@@ -260,7 +260,7 @@ Dispose the resource.
 
 #### Implementation of
 
-[SourceLike](../interfaces/source.SourceLike.md).[dispose](../interfaces/source.SourceLike.md#dispose)
+[InteractiveSourceLike](../interfaces/interactiveSource.InteractiveSourceLike.md).[dispose](../interfaces/interactiveSource.InteractiveSourceLike.md#dispose)
 
 #### Inherited from
 
@@ -278,7 +278,7 @@ ___
 
 #### Implementation of
 
-[SourceLike](../interfaces/source.SourceLike.md).[move](../interfaces/source.SourceLike.md#move)
+[InteractiveSourceLike](../interfaces/interactiveSource.InteractiveSourceLike.md).[move](../interfaces/interactiveSource.InteractiveSourceLike.md#move)
 
 ___
 

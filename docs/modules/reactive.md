@@ -26,7 +26,7 @@
 | :------ | :------ |
 | `C` | extends [`ReactiveContainerLike`](../interfaces/reactive.ReactiveContainerLike.md)<`C`\> |
 | `T` | `T` |
-| `TSink` | extends [`SinkLike`](../interfaces/sink.SinkLike.md)<`unknown`, `TSink`\> |
+| `TSink` | extends [`ReactiveSinkLike`](../interfaces/reactiveSink.ReactiveSinkLike.md)<`unknown`, `TSink`\> |
 
 #### Parameters
 
@@ -50,7 +50,7 @@ ___
 | :------ | :------ |
 | `C` | extends [`ReactiveContainerLike`](../interfaces/reactive.ReactiveContainerLike.md)<`C`\> |
 | `T` | `T` |
-| `TSink` | extends [`SinkLike`](../interfaces/sink.SinkLike.md)<`unknown`, `TSink`\> |
+| `TSink` | extends [`ReactiveSinkLike`](../interfaces/reactiveSink.ReactiveSinkLike.md)<`unknown`, `TSink`\> |
 
 #### Parameters
 

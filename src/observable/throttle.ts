@@ -12,7 +12,7 @@ import {
 import { Observer, getScheduler } from "../observer";
 import { Option, none } from "../option";
 import { sinkInto } from "../reactive";
-import { assertState } from "../sink";
+import { assertState } from "../reactiveSink";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";

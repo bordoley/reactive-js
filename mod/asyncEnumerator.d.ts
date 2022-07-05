@@ -1,11 +1,11 @@
 import { DispatcherLike } from "./dispatcher.mjs";
 import { Disposable } from "./disposable.mjs";
+import { InteractiveSourceLike } from "./interactiveSource.mjs";
 import { ObservableLike } from "./observable.mjs";
 import { Observer } from "./observer.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
-import { SourceLike } from "./source.mjs";
 import { StreamLike } from "./stream.mjs";
-declare abstract class AsyncEnumerator<T> extends Disposable implements SourceLike<T>, StreamLike<void, T> {
+declare abstract class AsyncEnumerator<T> extends Disposable implements InteractiveSourceLike<T>, StreamLike<void, T> {
     get T(): T;
     get TContainerOf(): this;
     get TLiftableState(): Observer<this["T"]>;

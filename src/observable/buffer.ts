@@ -23,7 +23,7 @@ import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer, getScheduler } from "../observer";
 import { none } from "../option";
 import { sinkInto } from "../reactive";
-import { assertState, notify } from "../sink";
+import { assertState, notify } from "../reactiveSink";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { never } from "./never";

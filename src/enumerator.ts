@@ -1,10 +1,10 @@
 import { Disposable } from "./disposable";
 import { Function1, SideEffect1, raise } from "./functions";
-import { SourceLike } from "./source";
+import { InteractiveSourceLike } from "./interactiveSource";
 
 export abstract class Enumerator<T>
   extends Disposable
-  implements SourceLike<T>
+  implements InteractiveSourceLike<T>
 {
   get T(): T {
     return raise();

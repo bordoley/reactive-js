@@ -13,7 +13,7 @@ import { schedule, __yield, isInContinuation, createVirtualTimeScheduler } from 
 import { createFromArray } from './__internal__.container.mjs';
 import { contraVariant, getDelegate } from './__internal__.liftable.mjs';
 import { DisposableRef } from './__internal__.disposable.mjs';
-import { assertState, notifySink, notify } from './sink.mjs';
+import { assertState, notifySink, notify } from './reactiveSink.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { createRunnable } from './runnable.mjs';
 import { map as map$1, everySatisfy as everySatisfy$1 } from './__internal__.readonlyArray.mjs';

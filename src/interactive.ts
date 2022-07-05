@@ -1,12 +1,15 @@
 import { __DEV__ } from "./__internal__.env";
 import { Container, ContainerOf } from "./container";
+import { InteractiveSourceLike } from "./interactiveSource";
 import { LiftableLike } from "./liftable";
-import { SourceLike } from "./source";
 
 export interface InteractiveContainerLike<TCtx> extends LiftableLike {
-  readonly TLiftableState: SourceLike<this["T"]>;
+  readonly TLiftableState: InteractiveSourceLike<this["T"]>;
 
-  source(this: InteractiveContainerLike<TCtx>, _: TCtx): SourceLike<this["T"]>;
+  source(
+    this: InteractiveContainerLike<TCtx>,
+    _: TCtx,
+  ): InteractiveSourceLike<this["T"]>;
 }
 
 export interface CreateInteractiveContainer<

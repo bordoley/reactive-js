@@ -2,10 +2,10 @@ import { __DEV__ } from "./__internal__.env";
 import { Container, ContainerOf } from "./container";
 import { Function1 } from "./functions";
 import { LiftableLike, LiftableStateOf } from "./liftable";
-import { SinkLike } from "./sink";
+import { ReactiveSinkLike } from "./reactiveSink";
 
 export interface ReactiveContainerLike extends LiftableLike {
-  readonly TLiftableState: SinkLike<unknown>;
+  readonly TLiftableState: ReactiveSinkLike<unknown>;
 
   sink(this: this["TContainerOf"], sink: this["TLiftableState"]): void;
 }

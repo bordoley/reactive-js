@@ -7,7 +7,7 @@ import { addTo, onComplete, dispose, onError, isDisposed, onDisposed, add } from
 import { getLength, max, pipe, newInstanceWith, isEmpty, newInstance, compose, negate, ignore, identity } from './functions.mjs';
 import { none, isSome } from './option.mjs';
 import { sinkInto } from './reactive.mjs';
-import { assertState, notify } from './sink.mjs';
+import { assertState, notify } from './reactiveSink.mjs';
 
 class AbstractReactiveSource extends AbstractLiftable {
 }
