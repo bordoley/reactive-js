@@ -1,15 +1,15 @@
-import { DispatcherLike, dispatch } from "../dispatcher";
+import { dispatch } from "../dispatcher";
 import { Disposable, add, isDisposed, onDisposed } from "../disposable";
 import { getLength, newInstance, pipe, raise } from "../functions";
 import { MulticastObservableLike } from "../observable";
-import { Observer } from "../observer";
+import { Observer, getDispatcher } from "../observer";
 
 export class Subject<T>
   extends Disposable
   implements MulticastObservableLike<T>
 {
-  private readonly dispatchers: Set<DispatcherLike<T>> =
-    newInstance<Set<DispatcherLike<T>>>(Set);
+  private readonly observers: Set<Observer<T>> =
+    newInstance<Set<Observer<T>>>(Set);
   private readonly replayed: T[] = [];
 
   constructor(public readonly replay: number = 1) {
@@ -31,7 +31,7 @@ export class Subject<T>
   isEnumerable?: boolean;
 
   get observerCount() {
-    return this.dispatchers.size;
+    return this.observers.size;
   }
 
   publish(next: T) {
@@ -45,29 +45,29 @@ export class Subject<T>
         }
       }
 
-      for (const observer of this.dispatchers) {
-        pipe(observer, dispatch(next));
+      for (const observer of this.observers) {
+        pipe(observer, getDispatcher, dispatch(next));
       }
     }
   }
 
   sink(observer: Observer<T>) {
-    // The idea here is that an onSubscribe function may
-    // call next from unscheduled sources such as event handlers.
-    // So we marshall those events back to the scheduler.
-    const { dispatcher } = observer;
-
     if (!isDisposed(this)) {
-      const { dispatchers } = this;
-      dispatchers.add(dispatcher);
+      const { observers } = this;
+      observers.add(observer);
 
       pipe(
         observer,
         onDisposed(_ => {
-          dispatchers.delete(dispatcher);
+          observers.delete(observer);
         }),
       );
     }
+
+    // The idea here is that an onSubscribe function may
+    // call next from unscheduled sources such as event handlers.
+    // So we marshall those events back to the scheduler.
+    const { dispatcher } = observer;
 
     for (const next of this.replayed) {
       pipe(dispatcher, dispatch(next));
