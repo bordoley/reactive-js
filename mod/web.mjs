@@ -1,12 +1,11 @@
 /// <reference types="./web.d.ts" />
-import { dispatch, dispatchTo } from './dispatcher.mjs';
-import { onDisposed, bindTo, addTo, toAbortSignal, dispose } from './disposable.mjs';
+import { dispatch, getScheduler, dispatchTo } from './dispatcher.mjs';
+import { onDisposed, Disposable, bindTo, addTo, toAbortSignal, dispose } from './disposable.mjs';
 import { pipe, newInstance, isEmpty, getLength, raise, newInstanceWith, compose, returns } from './functions.mjs';
-import { createObservable, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
+import { createObservable, getObserverCount, getReplay, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
 import { getDispatcher } from './observer.mjs';
 import { keep } from './__internal__.readonlyArray.mjs';
 import { getDelegate } from './__internal__.liftable.mjs';
-import { AbstractDelegatingStream } from './__internal__.stream.mjs';
 import { ignoreElements } from './container.mjs';
 import { none, isSome } from './option.mjs';
 import { sinkInto } from './reactiveContainer.mjs';
@@ -80,10 +79,29 @@ const windowHistoryPushState = (self, title, uri) => {
     self.historyCounter++;
     history.pushState({ counter: self.historyCounter, title }, "", uri);
 };
-class WindowLocationStream extends AbstractDelegatingStream {
-    constructor() {
-        super(...arguments);
+class WindowLocationStream extends Disposable {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
         this.historyCounter = -1;
+    }
+    get T() {
+        return raise();
+    }
+    get TContainerOf() {
+        return this;
+    }
+    get TLiftableState() {
+        return raise();
+    }
+    get observerCount() {
+        return pipe(this, getDelegate, getObserverCount);
+    }
+    get replay() {
+        return pipe(this, getDelegate, getReplay);
+    }
+    get scheduler() {
+        return pipe(this, getDelegate, getScheduler);
     }
     dispatch(stateOrUpdater, { replace } = { replace: false }) {
         pipe({ stateOrUpdater, replace }, dispatchTo(getDelegate(this)));

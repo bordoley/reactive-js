@@ -9,17 +9,6 @@ declare abstract class AbstractEnumerator<T> extends Enumerator<T> {
     reset(): void;
     abstract move(): boolean;
 }
-declare abstract class AbstractDelegatingEnumerator<TIn, TOut> extends AbstractEnumerator<TOut> {
-    readonly delegate: Enumerator<TIn>;
-    constructor(delegate: Enumerator<TIn>);
-}
-declare abstract class AbstractPassThroughEnumerator<T> extends Enumerator<T> {
-    readonly delegate: Enumerator<T>;
-    constructor(delegate: Enumerator<T>);
-    get current(): T;
-    get hasCurrent(): boolean;
-    abstract move(): boolean;
-}
 declare const reset: <T>(enumerator: AbstractEnumerator<T>) => void;
 declare function zip<TA, TB>(a: Enumerator<TA>, b: Enumerator<TB>): Enumerator<readonly [
     TA,
@@ -82,4 +71,4 @@ declare function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: Enumerator<TA>, b: E
     TI
 ]>;
 declare function zip<T>(...enumerators: readonly Enumerator<T>[]): Enumerator<readonly T[]>;
-export { AbstractDelegatingEnumerator, AbstractEnumerator, AbstractPassThroughEnumerator, reset, zip };
+export { AbstractEnumerator, reset, zip };

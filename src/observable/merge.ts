@@ -1,4 +1,3 @@
-import { createDelegatingObserver } from "../__internal__.observer";
 import { map } from "../__internal__.readonlyArray";
 import { Concat } from "../container";
 import { addTo, dispose, onComplete } from "../disposable";
@@ -7,6 +6,7 @@ import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer } from "../observer";
 import { sourceFrom } from "../reactiveContainer";
 import { createObservable } from "./createObservable";
+import { createDelegatingObserver } from "./observer";
 
 const createMergeObserver = <T>(
   delegate: Observer<T>,

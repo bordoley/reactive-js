@@ -1,7 +1,6 @@
 /// <reference types="./asyncEnumerable.d.ts" />
-import { AbstractDelegatingAsyncEnumerator } from './__internal__.asyncEnumerator.mjs';
 import { createFromArray } from './__internal__.container.mjs';
-import { covariant, createKeepLiftOperator, getDelegate, createMapLiftOperator, createScanLiftOperator, createTakeWhileLiftOperator } from './__internal__.liftable.mjs';
+import { covariant, getDelegate, createKeepLiftOperator, createMapLiftOperator, createScanLiftOperator, createTakeWhileLiftOperator } from './__internal__.liftable.mjs';
 import { getDelay } from './__internal__.optionalArgs.mjs';
 import { raise, pipe, newInstance, getLength, compose, increment, returns, pipeLazy, newInstanceWith } from './functions.mjs';
 import { stream } from './streamable.mjs';
@@ -154,6 +153,24 @@ const generate = (generator, initialValue, options) => {
 const generateT = {
     generate,
 };
+class AbstractDelegatingAsyncEnumerator extends AsyncEnumerator {
+    constructor(delegate) {
+        super();
+        this.delegate = delegate;
+    }
+    get observerCount() {
+        return pipe(this, getDelegate, getObserverCount);
+    }
+    get replay() {
+        return pipe(this, getDelegate, getReplay);
+    }
+    get scheduler() {
+        return getDelegate(this).scheduler;
+    }
+    dispatch(req) {
+        pipe(this, getDelegate, dispatch(req));
+    }
+}
 const keep = /*@__PURE__*/ createKeepLiftOperator(liftT, class KeepAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
     constructor(delegate, predicate) {
         super(delegate);

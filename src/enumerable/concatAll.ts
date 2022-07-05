@@ -1,14 +1,12 @@
 import { DisposableRef } from "../__internal__.disposable";
-import {
-  AbstractDelegatingEnumerator,
-  reset,
-} from "../__internal__.enumerator";
+import { reset } from "../__internal__.enumerator";
 import { ConcatAll } from "../container";
 import { add, dispose, isDisposed } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { Enumerator, getCurrent, hasCurrent, move } from "../enumerator";
 import { newInstance, newInstanceWith, pipe } from "../functions";
 import { enumerate } from "./enumerable";
+import { AbstractDelegatingEnumerator } from "./enumerator";
 import { lift } from "./lift";
 
 class ConcatAllEnumerator<T> extends AbstractDelegatingEnumerator<

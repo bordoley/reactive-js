@@ -1,5 +1,3 @@
-import { getDelegate } from "./__internal__.liftable";
-import { getScheduler } from "./dispatcher";
 import { Disposable, add, addTo } from "./disposable";
 import { newInstance, pipe, raise } from "./functions";
 import {
@@ -65,43 +63,6 @@ class StreamImpl<TReq, T> extends Disposable implements StreamLike<TReq, T> {
   sink(observer: Observer<T>) {
     pipe(this.observable, sinkInto(observer));
   }
-}
-
-export abstract class AbstractDelegatingStream<TReqA, TA, TReqB, TB>
-  extends Disposable
-  implements StreamLike<TReqB, TB>
-{
-  constructor(readonly delegate: StreamLike<TReqA, TA>) {
-    super();
-  }
-
-  get T(): TB {
-    return raise();
-  }
-
-  get TContainerOf(): this {
-    return raise();
-  }
-
-  get TLiftableState(): Observer<this["T"]> {
-    return raise();
-  }
-
-  get observerCount() {
-    return pipe(this, getDelegate, getObserverCount);
-  }
-
-  get replay(): number {
-    return pipe(this, getDelegate, getReplay);
-  }
-
-  get scheduler(): SchedulerLike {
-    return pipe(this, getDelegate, getScheduler);
-  }
-
-  abstract dispatch(req: TReqB): void;
-
-  abstract sink(observer: Observer<TB>): void;
 }
 
 export const createStream = <TReq, T>(

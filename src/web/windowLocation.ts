@@ -1,8 +1,7 @@
 import { getDelegate } from "../__internal__.liftable";
-import { AbstractDelegatingStream } from "../__internal__.stream";
 import { ignoreElements } from "../container";
-import { dispatchTo } from "../dispatcher";
-import { addTo, bindTo } from "../disposable";
+import { dispatchTo, getScheduler } from "../dispatcher";
+import { Disposable, addTo, bindTo } from "../disposable";
 import {
   Updater,
   compose,
@@ -15,6 +14,8 @@ import {
 } from "../functions";
 import {
   forkCombineLatest,
+  getObserverCount,
+  getReplay,
   keep,
   keepT,
   map,
@@ -26,6 +27,8 @@ import {
 import { Observer } from "../observer";
 import { Option, isSome, none } from "../option";
 import { sinkInto } from "../reactiveContainer";
+import { SchedulerLike } from "../scheduler";
+import { StreamLike } from "../stream";
 import { createActionReducer, createStreamble, stream } from "../streamable";
 import {
   WindowLocationStreamLike,
@@ -97,18 +100,38 @@ const windowHistoryPushState = (
 };
 
 class WindowLocationStream
-  extends AbstractDelegatingStream<
-    TAction,
-    {
-      replace: boolean;
-      uri: WindowLocationURI;
-    },
-    WindowLocationURI | Updater<WindowLocationURI>,
-    WindowLocationURI
-  >
+  extends Disposable
   implements WindowLocationStreamLike
 {
   historyCounter = -1;
+
+  constructor(readonly delegate: StreamLike<TAction, TState>) {
+    super();
+  }
+
+  get T(): WindowLocationURI {
+    return raise();
+  }
+
+  get TContainerOf(): this {
+    return this;
+  }
+
+  get TLiftableState(): Observer<this["T"]> {
+    return raise();
+  }
+
+  get observerCount(): number {
+    return pipe(this, getDelegate, getObserverCount);
+  }
+
+  get replay(): number {
+    return pipe(this, getDelegate, getReplay);
+  }
+
+  get scheduler(): SchedulerLike {
+    return pipe(this, getDelegate, getScheduler);
+  }
 
   dispatch(
     stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,

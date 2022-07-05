@@ -1,5 +1,4 @@
 import { getDelegate } from "../__internal__.liftable";
-import { AbstractDelegatingObserver } from "../__internal__.observer";
 import { add, dispose, isDisposed, onComplete } from "../disposable";
 import {
   Function2,
@@ -13,6 +12,7 @@ import { Observer, getScheduler } from "../observer";
 import { Option } from "../option";
 import { assertState, notify } from "../reactiveSink";
 import { lift } from "./lift";
+import { AbstractDelegatingObserver } from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 

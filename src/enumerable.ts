@@ -1,8 +1,4 @@
-import {
-  AbstractDelegatingEnumerator,
-  AbstractPassThroughEnumerator,
-  reset,
-} from "./__internal__.enumerator";
+import { reset } from "./__internal__.enumerator";
 import {
   createDistinctUntilChangedLiftOperator,
   createKeepLiftOperator,
@@ -34,6 +30,10 @@ import {
 import { Disposable, addTo, dispose, isDisposed } from "./disposable";
 import { concatAll } from "./enumerable/concatAll";
 import { createEnumerable, enumerate } from "./enumerable/enumerable";
+import {
+  AbstractDelegatingEnumerator,
+  AbstractPassThroughEnumerator,
+} from "./enumerable/enumerator";
 import { fromArray, fromArrayT } from "./enumerable/fromArray";
 import { liftT } from "./enumerable/lift";
 import { Enumerator, getCurrent, hasCurrent, move } from "./enumerator";

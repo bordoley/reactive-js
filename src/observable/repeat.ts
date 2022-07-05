@@ -1,4 +1,3 @@
-import { createDelegatingObserver } from "../__internal__.observer";
 import { Repeat } from "../container";
 import { Error, addTo, dispose, onDisposed } from "../disposable";
 import { Function2, Predicate, pipe } from "../functions";
@@ -7,6 +6,7 @@ import { Observer, getScheduler } from "../observer";
 import { isNone, isSome } from "../option";
 import { notifySink } from "../reactiveSink";
 import { lift } from "./lift";
+import { createDelegatingObserver } from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 

@@ -1,8 +1,7 @@
 /// <reference types="./__internal__.enumerator.d.ts" />
-import { getDelegate } from './__internal__.liftable.mjs';
 import { everySatisfy, map, forEach } from './__internal__.readonlyArray.mjs';
 import { onDisposed, isDisposed, dispose, addTo } from './disposable.mjs';
-import { Enumerator, hasCurrent, getCurrent, move } from './enumerator.mjs';
+import { Enumerator, hasCurrent, move, getCurrent } from './enumerator.mjs';
 import { pipe, pipeLazy, raise, newInstance } from './functions.mjs';
 import { none } from './option.mjs';
 
@@ -28,24 +27,6 @@ class AbstractEnumerator extends Enumerator {
     reset() {
         this._current = none;
         this._hasCurrent = false;
-    }
-}
-class AbstractDelegatingEnumerator extends AbstractEnumerator {
-    constructor(delegate) {
-        super();
-        this.delegate = delegate;
-    }
-}
-class AbstractPassThroughEnumerator extends Enumerator {
-    constructor(delegate) {
-        super();
-        this.delegate = delegate;
-    }
-    get current() {
-        return pipe(this, getDelegate, getCurrent);
-    }
-    get hasCurrent() {
-        return pipe(this, getDelegate, hasCurrent);
     }
 }
 const reset = (enumerator) => enumerator.reset();
@@ -81,4 +62,4 @@ function zip(...enumerators) {
     return enumerator;
 }
 
-export { AbstractDelegatingEnumerator, AbstractEnumerator, AbstractPassThroughEnumerator, reset, zip };
+export { AbstractEnumerator, reset, zip };

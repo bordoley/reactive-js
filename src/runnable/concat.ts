@@ -1,13 +1,13 @@
-import {
-  AbstractDelegatingRunnableSink,
-  createDelegatingRunnableSink,
-} from "../__internal__.runnableSink";
 import { ConcatAll } from "../container";
 import { addTo, bindTo, dispose } from "../disposable";
 import { newInstanceWith, pipe } from "../functions";
 import { sourceFrom } from "../reactiveContainer";
 import { RunnableLike, RunnableOperator } from "../runnable";
 import { lift } from "./lift";
+import {
+  AbstractDelegatingRunnableSink,
+  createDelegatingRunnableSink,
+} from "./runnableSink";
 
 class FlattenSink<T> extends AbstractDelegatingRunnableSink<
   RunnableLike<T>,
