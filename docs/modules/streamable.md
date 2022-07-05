@@ -6,7 +6,6 @@
 
 ### Interfaces
 
-- [StateStreamLike](../interfaces/streamable.StateStreamLike.md)
 - [StreamableLike](../interfaces/streamable.StreamableLike.md)
 - [StreamableStateLike](../interfaces/streamable.StreamableStateLike.md)
 
@@ -26,7 +25,7 @@
 
 ### \_\_state
 
-▸ **__state**<`T`\>(`initialState`, `options?`): [`StateStreamLike`](../interfaces/streamable.StateStreamLike.md)<`T`\>
+▸ **__state**<`T`\>(`initialState`, `options?`): [`StreamLike`](../interfaces/stream.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -44,7 +43,7 @@
 
 #### Returns
 
-[`StateStreamLike`](../interfaces/streamable.StateStreamLike.md)<`T`\>
+[`StreamLike`](../interfaces/stream.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
 
 ___
 
@@ -470,7 +469,7 @@ ___
 
 ### createStateStore
 
-▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableStateLike`](../interfaces/streamable.StreamableStateLike.md)<`T`, [`StateStreamLike`](../interfaces/streamable.StateStreamLike.md)<`T`\>\>
+▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableStateLike`](../interfaces/streamable.StreamableStateLike.md)<`T`\>
 
 Returns a new `StateStoreLike` instance that stores state which can
 be updated by notifying the instance with a `StateUpdater` that computes a
@@ -492,7 +491,7 @@ new state based upon the previous state.
 
 #### Returns
 
-[`StreamableStateLike`](../interfaces/streamable.StreamableStateLike.md)<`T`, [`StateStreamLike`](../interfaces/streamable.StateStreamLike.md)<`T`\>\>
+[`StreamableStateLike`](../interfaces/streamable.StreamableStateLike.md)<`T`\>
 
 ___
 

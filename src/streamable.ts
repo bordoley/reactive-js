@@ -49,11 +49,7 @@ export interface StreamableLike<
   ): TStream;
 }
 
-export interface StreamableStateLike<
-  T,
-  TStream extends StateStreamLike<T> = StateStreamLike<T>,
-> extends StreamableLike<Updater<T>, T, TStream> {}
-export interface StateStreamLike<T> extends StreamLike<Updater<T>, T> {}
+export interface StreamableStateLike<T> extends StreamableLike<Updater<T>, T> {}
 
 export const stream =
   <TReq, T, TStream extends StreamLike<TReq, T>>(
@@ -273,7 +269,7 @@ export const __state = <T>(
   options: {
     readonly equality?: Option<Equality<T>>;
   } = {},
-): StateStreamLike<T> => {
+): StreamLike<Updater<T>, T> => {
   const { equality } = options;
   const optionsMemo = __memo(createStateOptions, equality);
   const streamable = __memo(createStateStore, initialState, optionsMemo);
