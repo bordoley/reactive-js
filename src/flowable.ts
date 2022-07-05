@@ -24,7 +24,7 @@ import {
   takeUntil,
 } from "./observable";
 import { getScheduler } from "./observer";
-import { sourceFrom as sourceFromSource } from "./reactive";
+import { sourceFrom as sourceFromReactiveContainer } from "./reactive";
 import { createPausableScheduler } from "./scheduler";
 import { StreamLike } from "./stream";
 import {
@@ -170,7 +170,7 @@ export const fromObservable =
 
         pipe(
           observer,
-          sourceFromSource(
+          sourceFromReactiveContainer(
             pipe(
               observable,
               subscribeOn(pausableScheduler),
