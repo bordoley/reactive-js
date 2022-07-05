@@ -1,50 +1,60 @@
-import { getDelegate } from "../__internal__.liftable";
-import { AbstractDelegatingObserver } from "../__internal__.observer";
 import { everySatisfy, map } from "../__internal__.readonlyArray";
 import { Zip } from "../container";
-import { addTo, dispose, onComplete } from "../disposable";
+import { Disposable, addTo, bindTo, dispose, onComplete } from "../disposable";
 import { getLength, newInstanceWith, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer } from "../observer";
+import { Observer, getScheduler } from "../observer";
 import { none } from "../option";
 import { sourceFrom } from "../reactive";
+import { SchedulerLike } from "../scheduler";
 import { assertState, notify } from "../sink";
 import { defer } from "./defer";
 import { isEnumerable, tagEnumerable } from "./observable";
 
-type LatestCtx = {
-  completedCount: number;
-  readonly observers: readonly LatestObserver[];
-  readyCount: number;
-};
-
-export const enum LatestMode {
+const enum LatestMode {
   Combine = 1,
   Zip = 2,
 }
 
-function onDispose(this: LatestObserver) {
-  const { ctx } = this;
-  ctx.completedCount++;
+class LatestCtx extends Disposable {
+  completedCount = 0;
+  readonly observers: LatestObserver[] = [];
+  readyCount = 0;
 
-  if (ctx.completedCount === getLength(ctx.observers)) {
-    pipe(this, getDelegate, dispose());
+  constructor(
+    private readonly delegate: Observer<readonly unknown[]>,
+    private readonly mode: LatestMode,
+  ) {
+    super();
+  }
+
+  notify() {
+    const { mode, observers, readyCount } = this;
+
+    if (readyCount === getLength(observers)) {
+      const result = pipe(
+        observers,
+        map(observer => observer.latest),
+      );
+      pipe(this.delegate, notify(result));
+
+      if (mode === LatestMode.Zip) {
+        for (const sub of observers) {
+          sub.ready = false;
+          sub.latest = none as any;
+        }
+        this.readyCount = 0;
+      }
+    }
   }
 }
 
-class LatestObserver extends AbstractDelegatingObserver<
-  unknown,
-  readonly unknown[]
-> {
+class LatestObserver extends Observer<unknown> {
   ready = false;
   latest: unknown = none;
 
-  constructor(
-    delegate: Observer<readonly unknown[]>,
-    readonly ctx: LatestCtx,
-    private readonly mode: LatestMode,
-  ) {
-    super(delegate);
+  constructor(scheduler: SchedulerLike, readonly ctx: LatestCtx) {
+    super(scheduler);
   }
 
   notify(next: unknown) {
@@ -58,22 +68,16 @@ class LatestObserver extends AbstractDelegatingObserver<
       this.ready = true;
     }
 
-    const observers = ctx.observers;
-    if (ctx.readyCount === getLength(observers)) {
-      const result = pipe(
-        observers,
-        map(observer => observer.latest),
-      );
-      pipe(this, getDelegate, notify(result));
+    ctx.notify();
+  }
+}
 
-      if (this.mode === LatestMode.Zip) {
-        for (const sub of observers) {
-          sub.ready = false;
-          sub.latest = none as any;
-        }
-        ctx.readyCount = 0;
-      }
-    }
+function onDispose(this: LatestObserver) {
+  const { ctx } = this;
+  ctx.completedCount++;
+
+  if (ctx.completedCount === getLength(ctx.observers)) {
+    pipe(ctx, dispose());
   }
 }
 
@@ -84,28 +88,26 @@ export const latest = (
   const isEnumerableTag = pipe(observables, everySatisfy(isEnumerable));
 
   const factory = () => (delegate: Observer<readonly unknown[]>) => {
-    const observers: LatestObserver[] = [];
-    const ctx = {
-      completedCount: 0,
-      observers,
-      readyCount: 0,
-    };
+    const latestCtxDelegate = pipe(
+      new LatestCtx(delegate, mode),
+      bindTo(delegate),
+    );
+
+    const scheduler = getScheduler(delegate);
 
     for (const observable of observables) {
       const innerObserver = pipe(
         LatestObserver,
-        newInstanceWith<
-          LatestObserver,
-          Observer<readonly unknown[]>,
-          LatestCtx,
-          LatestMode
-        >(delegate, ctx, mode),
+        newInstanceWith<LatestObserver, SchedulerLike, LatestCtx>(
+          scheduler,
+          latestCtxDelegate,
+        ),
         addTo(delegate),
         onComplete(onDispose),
         sourceFrom(observable),
       );
 
-      observers.push(innerObserver);
+      latestCtxDelegate.observers.push(innerObserver);
     }
   };
 

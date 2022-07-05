@@ -18,4 +18,4 @@ class DelegatingObserver extends AbstractDelegatingObserver {
 }
 const createDelegatingObserver = (delegate) => newInstance(DelegatingObserver, delegate);
 
-export { AbstractDelegatingObserver, createDelegatingObserver };
+export { AbstractDelegatingObserver, DelegatingObserver, createDelegatingObserver };

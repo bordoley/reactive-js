@@ -503,18 +503,34 @@ function __currentScheduler() {
     return getScheduler(ctx.observer);
 }
 
-function onDispose() {
-    const { ctx } = this;
-    ctx.completedCount++;
-    if (ctx.completedCount === getLength(ctx.observers)) {
-        pipe(this, getDelegate, dispose());
+class LatestCtx extends Disposable {
+    constructor(delegate, mode) {
+        super();
+        this.delegate = delegate;
+        this.mode = mode;
+        this.completedCount = 0;
+        this.observers = [];
+        this.readyCount = 0;
+    }
+    notify() {
+        const { mode, observers, readyCount } = this;
+        if (readyCount === getLength(observers)) {
+            const result = pipe(observers, map$1(observer => observer.latest));
+            pipe(this.delegate, notify(result));
+            if (mode === 2 /* LatestMode.Zip */) {
+                for (const sub of observers) {
+                    sub.ready = false;
+                    sub.latest = none;
+                }
+                this.readyCount = 0;
+            }
+        }
     }
 }
-class LatestObserver extends AbstractDelegatingObserver {
-    constructor(delegate, ctx, mode) {
-        super(delegate);
+class LatestObserver extends Observer {
+    constructor(scheduler, ctx) {
+        super(scheduler);
         this.ctx = ctx;
-        this.mode = mode;
         this.ready = false;
         this.latest = none;
     }
@@ -526,32 +542,24 @@ class LatestObserver extends AbstractDelegatingObserver {
             ctx.readyCount++;
             this.ready = true;
         }
-        const observers = ctx.observers;
-        if (ctx.readyCount === getLength(observers)) {
-            const result = pipe(observers, map$1(observer => observer.latest));
-            pipe(this, getDelegate, notify(result));
-            if (this.mode === 2 /* LatestMode.Zip */) {
-                for (const sub of observers) {
-                    sub.ready = false;
-                    sub.latest = none;
-                }
-                ctx.readyCount = 0;
-            }
-        }
+        ctx.notify();
+    }
+}
+function onDispose() {
+    const { ctx } = this;
+    ctx.completedCount++;
+    if (ctx.completedCount === getLength(ctx.observers)) {
+        pipe(ctx, dispose());
     }
 }
 const latest = (observables, mode) => {
     const isEnumerableTag = pipe(observables, everySatisfy$1(isEnumerable));
     const factory = () => (delegate) => {
-        const observers = [];
-        const ctx = {
-            completedCount: 0,
-            observers,
-            readyCount: 0,
-        };
+        const latestCtxDelegate = pipe(new LatestCtx(delegate, mode), bindTo(delegate));
+        const scheduler = getScheduler(delegate);
         for (const observable of observables) {
-            const innerObserver = pipe(LatestObserver, newInstanceWith(delegate, ctx, mode), addTo(delegate), onComplete(onDispose), sourceFrom(observable));
-            observers.push(innerObserver);
+            const innerObserver = pipe(LatestObserver, newInstanceWith(scheduler, latestCtxDelegate), addTo(delegate), onComplete(onDispose), sourceFrom(observable));
+            latestCtxDelegate.observers.push(innerObserver);
         }
     };
     return pipe(defer(factory), tagEnumerable(isEnumerableTag));
