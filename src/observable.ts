@@ -73,7 +73,7 @@ import { lift, liftSynchronousT } from "./observable/lift";
 import { mapT } from "./observable/map";
 import { tagEnumerable } from "./observable/observable";
 import { onNotify } from "./observable/onNotify";
-import { Subject } from "./observable/subject";
+import { Subject, publish, publishTo } from "./observable/subject";
 import { subscribe } from "./observable/subscribe";
 import { switchAll, switchAllT } from "./observable/switchAll";
 import { using } from "./observable/using";
@@ -163,7 +163,7 @@ export {
 } from "./observable/latest";
 export { concat, concatT } from "./observable/concat";
 export { createObservable, createT } from "./observable/createObservable";
-export { Subject } from "./observable/subject";
+export { Subject, publish, publishTo } from "./observable/subject";
 export { fromArray, fromArrayT } from "./observable/fromArray";
 export { fromEnumerable, fromEnumerableT } from "./observable/fromEnumerable";
 export {
@@ -378,7 +378,7 @@ export const pairwiseT: Pairwise<ObservableLike<unknown>> = {
  * @param replay The number of events that should be replayed when the `MulticastObservableLike`
  * is subscribed to.
  */
-export const publish =
+export const multicast =
   <T>(
     scheduler: SchedulerLike,
     options: { readonly replay?: number } = {},
@@ -388,7 +388,7 @@ export const publish =
     const subject = newInstance<Subject<T>, number>(Subject, replay);
     pipe(
       observable,
-      onNotify(x => subject.publish(x)),
+      onNotify(publishTo(subject)),
       subscribe(scheduler),
       bindTo(subject),
     );
@@ -466,8 +466,8 @@ export const scanAsync =
           (next, acc) => pipe(scanner(acc, next), takeFirst()),
         ),
         switchAll<TAcc>(),
-        onNotify(x => accFeedbackStream.publish(x)),
-        onSubscribe(() => accFeedbackStream.publish(initialValue())),
+        onNotify(publishTo(accFeedbackStream)),
+        onSubscribe(() => pipe(accFeedbackStream, publish(initialValue()))),
       ),
     );
 
@@ -490,20 +490,20 @@ export const share =
     options?: { readonly replay?: number },
   ): ObservableOperator<T, T> =>
   source => {
-    let multicast: Option<MulticastObservableLike<T>> = none;
+    let multicasted: Option<MulticastObservableLike<T>> = none;
 
     return createObservable(observer => {
-      if (isNone(multicast)) {
-        multicast = pipe(source, publish(scheduler, options));
+      if (isNone(multicasted)) {
+        multicasted = pipe(source, multicast(scheduler, options));
       }
 
       pipe(
         observer,
-        sourceFrom(multicast),
+        sourceFrom(multicasted),
         onDisposed(() => {
-          if (isSome(multicast) && getObserverCount(multicast) === 0) {
-            pipe(multicast, dispose());
-            multicast = none;
+          if (isSome(multicasted) && getObserverCount(multicasted) === 0) {
+            pipe(multicasted, dispose());
+            multicasted = none;
           }
         }),
       );

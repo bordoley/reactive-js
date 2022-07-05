@@ -11,7 +11,7 @@ import { dispatch } from './dispatcher.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
 import { enumerate, fromIterable as fromIterable$1 } from './enumerable.mjs';
 import { move, getCurrent } from './enumerator.mjs';
-import { Subject, publish, getObserverCount, getReplay, fromArrayT as fromArrayT$1, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, withLatestFrom, using, concatT, never, takeWhile as takeWhile$1, map as map$1, scanAsync as scanAsync$1, onNotify, keep as keep$1, createObservable, onSubscribe } from './observable.mjs';
+import { Subject, multicast, getObserverCount, getReplay, publish, fromArrayT as fromArrayT$1, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, withLatestFrom, using, concatT, never, takeWhile as takeWhile$1, map as map$1, scanAsync as scanAsync$1, onNotify, keep as keep$1, createObservable, onSubscribe } from './observable.mjs';
 import { getScheduler } from './observer.mjs';
 import { none } from './option.mjs';
 import { sinkInto } from './reactive.mjs';
@@ -61,7 +61,7 @@ class LiftedAsyncEnumerator extends AsyncEnumerator {
         this.op = op;
         this.scheduler = scheduler;
         const subject = newInstance(Subject);
-        const observable = pipe(subject, op, publish(scheduler, { replay }));
+        const observable = pipe(subject, op, multicast(scheduler, { replay }));
         this.subject = subject;
         this.observable = observable;
         return pipe(this, add(subject), addTo(this.observable));
@@ -73,7 +73,7 @@ class LiftedAsyncEnumerator extends AsyncEnumerator {
         return getReplay(this.observable);
     }
     dispatch(req) {
-        this.subject.publish(req);
+        pipe(this.subject, publish(req));
     }
     sink(observer) {
         pipe(this.observable, sinkInto(observer));
@@ -147,7 +147,7 @@ const keep = /*@__PURE__*/ createKeepLiftOperator(liftT, class KeepAsyncEnumerat
             if (!predicate(x)) {
                 pipe(this, getDelegate, dispatch(none));
             }
-        }), keep$1(predicate), publish(delegate.scheduler));
+        }), keep$1(predicate), multicast(delegate.scheduler));
     }
     get observerCount() {
         return getObserverCount(this.obs);
@@ -190,7 +190,7 @@ const scanT = {
 class ScanAsyncAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
     constructor(delegate, reducer, initialValue) {
         super(delegate);
-        this.obs = pipe(delegate, scanAsync$1(reducer, initialValue), publish(delegate.scheduler));
+        this.obs = pipe(delegate, scanAsync$1(reducer, initialValue), multicast(delegate.scheduler));
     }
     get observerCount() {
         return getObserverCount(this.obs);
@@ -209,7 +209,7 @@ const scanAsyncT = {
 const takeWhile = /*@__PURE__*/ createTakeWhileLiftOperator(liftT, class TakeWhileAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
     constructor(delegate, predicate, inclusive) {
         super(delegate);
-        this.obs = pipe(delegate, takeWhile$1(predicate, { inclusive }), publish(delegate.scheduler), add(this));
+        this.obs = pipe(delegate, takeWhile$1(predicate, { inclusive }), multicast(delegate.scheduler), add(this));
     }
     get observerCount() {
         return getObserverCount(this.obs);

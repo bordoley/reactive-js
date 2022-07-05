@@ -1,6 +1,13 @@
 import { dispatch } from "../dispatcher";
 import { Disposable, add, isDisposed, onDisposed } from "../disposable";
-import { getLength, newInstance, pipe, raise } from "../functions";
+import {
+  Function1,
+  SideEffect1,
+  getLength,
+  newInstance,
+  pipe,
+  raise,
+} from "../functions";
 import { MulticastObservableLike } from "../observable";
 import { Observer, getDispatcher } from "../observer";
 
@@ -76,3 +83,17 @@ export class Subject<T>
     pipe(this, add(dispatcher, true));
   }
 }
+
+export const publish =
+  <T>(v: T): Function1<Subject<T>, Subject<T>> =>
+  subject => {
+    subject.publish(v);
+    return subject;
+  };
+
+export const publishTo =
+  <T>(subject: Subject<T>): SideEffect1<T> =>
+  v => {
+    subject.publish(v);
+    return v;
+  };

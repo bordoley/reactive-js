@@ -8,6 +8,7 @@ import {
   Subject,
   getObserverCount,
   getReplay,
+  multicast,
   publish,
 } from "./observable";
 import { Observer } from "./observer";
@@ -27,7 +28,7 @@ class StreamImpl<TReq, T> extends Disposable implements StreamLike<TReq, T> {
     super();
 
     const subject = newInstance<Subject<TReq>>(Subject);
-    const observable = pipe(subject, op, publish<T>(scheduler, options));
+    const observable = pipe(subject, op, multicast<T>(scheduler, options));
 
     this.subject = subject;
     this.observable = observable;
@@ -58,7 +59,7 @@ class StreamImpl<TReq, T> extends Disposable implements StreamLike<TReq, T> {
   }
 
   dispatch(req: TReq) {
-    this.subject.publish(req);
+    pipe(this.subject, publish(req));
   }
 
   sink(observer: Observer<T>) {

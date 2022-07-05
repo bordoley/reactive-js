@@ -48,6 +48,7 @@ import {
   Subject,
   distinctUntilChanged,
   onNotify,
+  publish,
   subscribe,
 } from "./observable";
 import { Option, isSome, none } from "./option";
@@ -117,7 +118,7 @@ export const createComponent = <TProps>(
       createReplaySubject,
     ]);
 
-    propsSubject.publish(props);
+    pipe(propsSubject, publish(props));
 
     const elementObservable = useMemo(
       () => pipe(propsSubject, distinctUntilChanged(), fn),

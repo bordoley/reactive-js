@@ -102,12 +102,14 @@
 - [mapAsync](observable.md#mapasync)
 - [merge](observable.md#merge)
 - [mergeAll](observable.md#mergeall)
+- [multicast](observable.md#multicast)
 - [never](observable.md#never)
 - [observable](observable.md#observable)
 - [onNotify](observable.md#onnotify)
 - [onSubscribe](observable.md#onsubscribe)
 - [pairwise](observable.md#pairwise)
 - [publish](observable.md#publish)
+- [publishTo](observable.md#publishto)
 - [reduce](observable.md#reduce)
 - [repeat](observable.md#repeat)
 - [retry](observable.md#retry)
@@ -2289,6 +2291,32 @@ which concurrently delivers values emitted by the inner sources.
 
 ___
 
+### multicast
+
+▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)<`T`\>\>
+
+Returns a `MulticastObservableLike` backed by a single subscription to the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source observable. |
+| `options?` | `Object` | - |
+| `options.replay?` | `number` | - |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)<`T`\>\>
+
+___
+
 ### never
 
 ▸ **never**<`T`\>(): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>
@@ -2393,9 +2421,7 @@ ___
 
 ### publish
 
-▸ **publish**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)<`T`\>\>
-
-Returns a `MulticastObservableLike` backed by a single subscription to the source.
+▸ **publish**<`T`\>(`v`): [`Function1`](functions.md#function1)<[`Subject`](../classes/observable.Subject.md)<`T`\>, [`Subject`](../classes/observable.Subject.md)<`T`\>\>
 
 #### Type parameters
 
@@ -2405,15 +2431,35 @@ Returns a `MulticastObservableLike` backed by a single subscription to the sourc
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md) | A `SchedulerLike` that is used to subscribe to the source observable. |
-| `options?` | `Object` | - |
-| `options.replay?` | `number` | - |
+| Name | Type |
+| :------ | :------ |
+| `v` | `T` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`Subject`](../classes/observable.Subject.md)<`T`\>, [`Subject`](../classes/observable.Subject.md)<`T`\>\>
+
+___
+
+### publishTo
+
+▸ **publishTo**<`T`\>(`subject`): [`SideEffect1`](functions.md#sideeffect1)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `subject` | [`Subject`](../classes/observable.Subject.md)<`T`\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<`T`\>
 
 ___
 

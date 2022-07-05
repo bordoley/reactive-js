@@ -3,7 +3,7 @@ import { getDelegate } from './__internal__.liftable.mjs';
 import { getScheduler } from './dispatcher.mjs';
 import { Disposable, add, addTo } from './disposable.mjs';
 import { newInstance, pipe, raise } from './functions.mjs';
-import { Subject, publish, getObserverCount, getReplay } from './observable.mjs';
+import { Subject, multicast, getObserverCount, getReplay, publish } from './observable.mjs';
 import { sinkInto } from './reactive.mjs';
 
 class StreamImpl extends Disposable {
@@ -11,7 +11,7 @@ class StreamImpl extends Disposable {
         super();
         this.scheduler = scheduler;
         const subject = newInstance(Subject);
-        const observable = pipe(subject, op, publish(scheduler, options));
+        const observable = pipe(subject, op, multicast(scheduler, options));
         this.subject = subject;
         this.observable = observable;
         return pipe(this, add(subject), addTo(this.observable));
@@ -32,7 +32,7 @@ class StreamImpl extends Disposable {
         return getReplay(this.observable);
     }
     dispatch(req) {
-        this.subject.publish(req);
+        pipe(this.subject, publish(req));
     }
     sink(observer) {
         pipe(this.observable, sinkInto(observer));
