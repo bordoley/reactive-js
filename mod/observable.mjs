@@ -204,6 +204,14 @@ class Subject extends Disposable {
         pipe(this, add(dispatcher, true));
     }
 }
+const publish = (v) => subject => {
+    subject.publish(v);
+    return subject;
+};
+const publishTo = (subject) => v => {
+    subject.publish(v);
+    return v;
+};
 
 /**
  * Safely subscribes to an `ObservableLike` with a `ObserverLike` instance
@@ -1280,10 +1288,10 @@ const pairwiseT = {
  * @param replay The number of events that should be replayed when the `MulticastObservableLike`
  * is subscribed to.
  */
-const publish = (scheduler, options = {}) => observable => {
+const multicast = (scheduler, options = {}) => observable => {
     const { replay = 0 } = options;
     const subject = newInstance(Subject, replay);
-    pipe(observable, onNotify(x => subject.publish(x)), subscribe(scheduler), bindTo(subject));
+    pipe(observable, onNotify(publishTo(subject)), subscribe(scheduler), bindTo(subject));
     return subject;
 };
 const reduce = /*@__PURE__*/ createReduceOperator({ ...fromArrayT, ...liftSynchronousT }, class ReducerObserver extends AbstractDelegatingObserver {
@@ -1314,7 +1322,7 @@ const scanT = {
  * @param scanner The accumulator function called on each source value.
  * @param initialValue The initial accumulation value.
  */
-const scanAsync = (scanner, initialValue) => observable => using(instanceFactory(Subject), accFeedbackStream => pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), switchAll(), onNotify(x => accFeedbackStream.publish(x)), onSubscribe(() => accFeedbackStream.publish(initialValue()))));
+const scanAsync = (scanner, initialValue) => observable => using(instanceFactory(Subject), accFeedbackStream => pipe(observable, zipWithLatestFrom(accFeedbackStream, (next, acc) => pipe(scanner(acc, next), takeFirst())), switchAll(), onNotify(publishTo(accFeedbackStream)), onSubscribe(() => pipe(accFeedbackStream, publish(initialValue())))));
 const scanAsyncT = {
     scanAsync,
 };
@@ -1328,15 +1336,15 @@ const scanAsyncT = {
  * is subscribed to.
  */
 const share = (scheduler, options) => source => {
-    let multicast = none;
+    let multicasted = none;
     return createObservable(observer => {
-        if (isNone(multicast)) {
-            multicast = pipe(source, publish(scheduler, options));
+        if (isNone(multicasted)) {
+            multicasted = pipe(source, multicast(scheduler, options));
         }
-        pipe(observer, sourceFrom(multicast), onDisposed(() => {
-            if (isSome(multicast) && getObserverCount(multicast) === 0) {
-                pipe(multicast, dispose());
-                multicast = none;
+        pipe(observer, sourceFrom(multicasted), onDisposed(() => {
+            if (isSome(multicasted) && getObserverCount(multicasted) === 0) {
+                pipe(multicasted, dispose());
+                multicasted = none;
             }
         }));
     });
@@ -1439,4 +1447,4 @@ const toRunnableT = {
 };
 const TContainerOf = undefined;
 
-export { Subject, TContainerOf, __currentScheduler, __do, __memo, __observe, __using, buffer, bufferT, catchError, catchErrorT, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createT, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromObservable, fromObservableT, fromPromise, generate, generateT, getObserverCount, getReplay, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toObservable, toObservableT, toPromise, toRunnable, toRunnableT, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };
+export { Subject, TContainerOf, __currentScheduler, __do, __memo, __observe, __using, buffer, bufferT, catchError, catchErrorT, combineLatest, combineLatestWith, concat, concatAll, concatAllT, concatT, createObservable, createT, decodeWithCharset, decodeWithCharsetT, defer, deferT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, exhaust, exhaustT, forkCombineLatest, forkMerge, forkZipLatest, fromArray, fromArrayT, fromDisposable, fromEnumerable, fromEnumerableT, fromIterable, fromIterableT, fromIterator, fromIteratorT, fromObservable, fromObservableT, fromPromise, generate, generateT, getObserverCount, getReplay, keep, keepT, map, mapAsync, mapT, merge, mergeAll, mergeAllT, mergeT, multicast, never, observable, onNotify, onSubscribe, pairwise, pairwiseT, publish, publishTo, reduce, reduceT, repeat, repeatT, retry, scan, scanAsync, scanAsyncT, scanT, share, skipFirst, skipFirstT, someSatisfy, someSatisfyT, subscribe, subscribeOn, switchAll, switchAllT, takeFirst, takeFirstT, takeLast, takeLastT, takeUntil, takeWhile, takeWhileT, throttle, throwIfEmpty, throwIfEmptyT, timeout, timeoutError, toEnumerable, toEnumerableT, toObservable, toObservableT, toPromise, toRunnable, toRunnableT, using, usingT, withLatestFrom, zip, zipLatest, zipLatestWith, zipT, zipWithLatestFrom };

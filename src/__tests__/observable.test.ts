@@ -55,6 +55,7 @@ import {
   observable,
   onNotify,
   onSubscribe,
+  publishTo,
   repeat,
   retry,
   scan,
@@ -265,11 +266,7 @@ export const tests = describe(
     "Subject",
     test("with replay", () => {
       const subject = newInstance(Subject, 2);
-      pipe(
-        [1, 2, 3, 4],
-        fromArrayRunnable(),
-        forEach(x => subject.publish(x)),
-      );
+      pipe([1, 2, 3, 4], fromArrayRunnable(), forEach(publishTo(subject)));
       pipe(subject, dispose());
 
       pipe(subject, toRunnable(), toArray(), expectArrayEquals([3, 4]));

@@ -65,6 +65,7 @@ import {
   keep as keepObs,
   map as mapObs,
   mapT as mapTObs,
+  multicast,
   never,
   onNotify,
   onSubscribe,
@@ -134,7 +135,7 @@ class LiftedAsyncEnumerator<T> extends AsyncEnumerator<T> {
     super();
 
     const subject = newInstance<Subject<void>>(Subject);
-    const observable = pipe(subject, op, publish<T>(scheduler, { replay }));
+    const observable = pipe(subject, op, multicast<T>(scheduler, { replay }));
 
     this.subject = subject;
     this.observable = observable;
@@ -151,7 +152,7 @@ class LiftedAsyncEnumerator<T> extends AsyncEnumerator<T> {
   }
 
   dispatch(req: void) {
-    this.subject.publish(req);
+    pipe(this.subject, publish(req));
   }
 
   sink(observer: Observer<T>) {
@@ -415,7 +416,7 @@ export const keep: <T>(
           }
         }),
         keepObs(predicate),
-        publish(delegate.scheduler),
+        multicast(delegate.scheduler),
       );
     }
 
@@ -511,7 +512,7 @@ class ScanAsyncAsyncEnumerator<
     this.obs = pipe(
       delegate,
       scanAsyncObs(reducer, initialValue),
-      publish(delegate.scheduler),
+      multicast(delegate.scheduler),
     );
   }
 
@@ -572,7 +573,7 @@ export const takeWhile: <T>(
       this.obs = pipe(
         delegate,
         takeWhileObs(predicate, { inclusive }),
-        publish(delegate.scheduler),
+        multicast(delegate.scheduler),
         add(this),
       );
     }

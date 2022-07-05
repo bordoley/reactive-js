@@ -4,7 +4,7 @@ import { fromValue, empty, endWith, concatMap, mapTo, startWith, ignoreElements,
 import { onDisposed, Disposable, add, dispose, isDisposed } from './disposable.mjs';
 import { forEach } from './enumerator.mjs';
 import { pipe, ignore, increment, returns, pipeLazy, isEven, sum, alwaysTrue, newInstance, raise, newInstanceWith, incrementBy, alwaysFalse, arrayEquality, identity } from './functions.mjs';
-import { onNotify, subscribe, toRunnable, fromArrayT, concat as concat$2, fromArray as fromArray$3, buffer, mapT, catchError, concatT, generate as generate$3, takeFirst as takeFirst$2, combineLatestWith, createObservable, Subject, getObserverCount, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeT, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync as scanAsync$1, share, zip as zip$1, map as map$3, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$2, zipT, zipLatestWith, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$3, skipFirst as skipFirst$2, takeWhile as takeWhile$3, decodeWithCharset, reduce, deferT } from './observable.mjs';
+import { onNotify, subscribe, toRunnable, fromArrayT, concat as concat$2, fromArray as fromArray$3, buffer, mapT, catchError, concatT, generate as generate$3, takeFirst as takeFirst$2, combineLatestWith, createObservable, Subject, publishTo, getObserverCount, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeT, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync as scanAsync$1, share, zip as zip$1, map as map$3, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$2, zipT, zipLatestWith, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$3, skipFirst as skipFirst$2, takeWhile as takeWhile$3, decodeWithCharset, reduce, deferT } from './observable.mjs';
 import { none, isSome } from './option.mjs';
 import { toArray, last, fromArray as fromArray$1, someSatisfyT, first, generate as generate$1, everySatisfy, map as map$1, forEach as forEach$1, everySatisfyT, fromArrayT as fromArrayT$2, keepT, concat, concatAll, distinctUntilChanged, repeat, scan as scan$1, skipFirst, takeFirst, takeLast, takeWhile as takeWhile$1, toRunnable as toRunnable$1 } from './runnable.mjs';
 import { createVirtualTimeScheduler, createHostScheduler, schedule, getNow } from './scheduler.mjs';
@@ -166,7 +166,7 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
     schedulerFactory: pipeLazy({ maxMicroTaskTicks: 1 }, createVirtualTimeScheduler),
 }), toArray(), expectArrayEquals([1, 2, 3])))), describe("Subject", test("with replay", () => {
     const subject = newInstance(Subject, 2);
-    pipe([1, 2, 3, 4], fromArray$1(), forEach$1(x => subject.publish(x)));
+    pipe([1, 2, 3, 4], fromArray$1(), forEach$1(publishTo(subject)));
     pipe(subject, dispose());
     pipe(subject, toRunnable(), toArray(), expectArrayEquals([3, 4]));
 }), test("with multiple observers", () => {
