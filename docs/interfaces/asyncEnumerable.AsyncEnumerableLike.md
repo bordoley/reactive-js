@@ -14,7 +14,7 @@
 
 - [`StreamableLike`](streamable.StreamableLike.md)<`void`, [`T`](asyncEnumerable.AsyncEnumerableLike.md#t), [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\>\>
 
-- [`InteractiveContainerLike`](interactive.InteractiveContainerLike.md)<[`SchedulerLike`](scheduler.SchedulerLike.md)\>
+- [`InteractiveContainerLike`](interactive.InteractiveContainerLike.md)
 
   ↳ **`AsyncEnumerableLike`**
 
@@ -24,6 +24,7 @@
 
 - [T](asyncEnumerable.AsyncEnumerableLike.md#t)
 - [TContainerOf](asyncEnumerable.AsyncEnumerableLike.md#tcontainerof)
+- [TCtx](asyncEnumerable.AsyncEnumerableLike.md#tctx)
 - [TLiftableState](asyncEnumerable.AsyncEnumerableLike.md#tliftablestate)
 
 ### Methods
@@ -53,6 +54,16 @@ ___
 
 ___
 
+### TCtx
+
+• `Readonly` **TCtx**: [`SchedulerLike`](scheduler.SchedulerLike.md)
+
+#### Overrides
+
+[InteractiveContainerLike](interactive.InteractiveContainerLike.md).[TCtx](interactive.InteractiveContainerLike.md#tctx)
+
+___
+
 ### TLiftableState
 
 • `Readonly` **TLiftableState**: [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<`unknown`\>
@@ -71,7 +82,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`InteractiveContainerLike`](interactive.InteractiveContainerLike.md)<[`SchedulerLike`](scheduler.SchedulerLike.md)\> |
+| `this` | [`AsyncEnumerableLike`](asyncEnumerable.AsyncEnumerableLike.md)<[`T`](asyncEnumerable.AsyncEnumerableLike.md#t)\> |
 | `_` | [`SchedulerLike`](scheduler.SchedulerLike.md) |
 
 #### Returns

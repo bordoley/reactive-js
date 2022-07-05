@@ -1,14 +1,8 @@
 [Reactive-JS](../README.md) / [interactive](../modules/interactive.md) / InteractiveContainerLike
 
-# Interface: InteractiveContainerLike<TCtx\>
+# Interface: InteractiveContainerLike
 
 [interactive](../modules/interactive.md).InteractiveContainerLike
-
-## Type parameters
-
-| Name |
-| :------ |
-| `TCtx` |
 
 ## Hierarchy
 
@@ -26,6 +20,7 @@
 
 - [T](interactive.InteractiveContainerLike.md#t)
 - [TContainerOf](interactive.InteractiveContainerLike.md#tcontainerof)
+- [TCtx](interactive.InteractiveContainerLike.md#tctx)
 - [TLiftableState](interactive.InteractiveContainerLike.md#tliftablestate)
 
 ### Methods
@@ -54,6 +49,12 @@ ___
 
 ___
 
+### TCtx
+
+• `Readonly` **TCtx**: `unknown`
+
+___
+
 ### TLiftableState
 
 • `Readonly` **TLiftableState**: [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)<`unknown`\>
@@ -72,8 +73,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`InteractiveContainerLike`](interactive.InteractiveContainerLike.md)<`TCtx`\> |
-| `_` | `TCtx` |
+| `this` | [`InteractiveContainerLike`](interactive.InteractiveContainerLike.md) |
+| `_` | `unknown` |
 
 #### Returns
 

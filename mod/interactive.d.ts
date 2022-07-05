@@ -1,11 +1,12 @@
 import { Container, ContainerOf } from "./container.mjs";
 import { InteractiveSourceLike } from "./interactiveSource.mjs";
-import { LiftableLike } from "./liftable.mjs";
-interface InteractiveContainerLike<TCtx> extends LiftableLike {
+import { LiftableLike, LiftableStateOf } from "./liftable.mjs";
+interface InteractiveContainerLike extends LiftableLike {
     readonly TLiftableState: InteractiveSourceLike<this["T"]>;
-    source(this: InteractiveContainerLike<TCtx>, _: TCtx): InteractiveSourceLike<this["T"]>;
+    readonly TCtx: unknown;
+    source(this: this, _: this["TCtx"]): InteractiveSourceLike<this["T"]>;
 }
-interface CreateInteractiveContainer<C extends InteractiveContainerLike<TCtx>, TCtx> extends Container<C> {
-    create<T>(source: (ctx: TCtx) => ContainerOf<C["TLiftableState"], T>): ContainerOf<C, T>;
+interface CreateInteractiveContainer<C extends InteractiveContainerLike> extends Container<C> {
+    create<T>(source: (ctx: C["TCtx"]) => LiftableStateOf<C, T>): ContainerOf<C, T>;
 }
 export { CreateInteractiveContainer, InteractiveContainerLike };

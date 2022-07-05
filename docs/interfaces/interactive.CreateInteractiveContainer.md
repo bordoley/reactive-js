@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [interactive](../modules/interactive.md) / CreateInteractiveContainer
 
-# Interface: CreateInteractiveContainer<C, TCtx\>
+# Interface: CreateInteractiveContainer<C\>
 
 [interactive](../modules/interactive.md).CreateInteractiveContainer
 
@@ -8,8 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`InteractiveContainerLike`](interactive.InteractiveContainerLike.md)<`TCtx`\> |
-| `TCtx` | `TCtx` |
+| `C` | extends [`InteractiveContainerLike`](interactive.InteractiveContainerLike.md) |
 
 ## Hierarchy
 
@@ -53,7 +52,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `source` | (`ctx`: `TCtx`) => [`ContainerOf`](../modules/container.md#containerof)<`C`[``"TLiftableState"``], `T`\> |
+| `source` | (`ctx`: `C`[``"TCtx"``]) => [`LiftableStateOf`](../modules/liftable.md#liftablestateof)<`C`, `T`\> |
 
 #### Returns
 
