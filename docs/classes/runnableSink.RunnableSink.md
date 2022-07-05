@@ -18,7 +18,7 @@
 
 ## Implements
 
-- [`SinkLike`](../interfaces/sink.SinkLike.md)<`T`\>
+- [`ReactiveSinkLike`](../interfaces/reactiveSink.ReactiveSinkLike.md)<`T`\>
 
 ## Table of contents
 
@@ -68,7 +68,7 @@
 
 #### Implementation of
 
-[SinkLike](../interfaces/sink.SinkLike.md).[T](../interfaces/sink.SinkLike.md#t)
+[ReactiveSinkLike](../interfaces/reactiveSink.ReactiveSinkLike.md).[T](../interfaces/reactiveSink.ReactiveSinkLike.md#t)
 
 ___
 
@@ -82,7 +82,7 @@ ___
 
 #### Implementation of
 
-[SinkLike](../interfaces/sink.SinkLike.md).[TContainerOf](../interfaces/sink.SinkLike.md#tcontainerof)
+[ReactiveSinkLike](../interfaces/reactiveSink.ReactiveSinkLike.md).[TContainerOf](../interfaces/reactiveSink.ReactiveSinkLike.md#tcontainerof)
 
 ___
 
@@ -98,7 +98,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Implementation of
 
-SinkLike.error
+ReactiveSinkLike.error
 
 #### Inherited from
 
@@ -118,7 +118,7 @@ ___
 
 #### Implementation of
 
-SinkLike.isDisposed
+ReactiveSinkLike.isDisposed
 
 #### Inherited from
 
@@ -148,7 +148,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Implementation of
 
-[SinkLike](../interfaces/sink.SinkLike.md).[add](../interfaces/sink.SinkLike.md#add)
+[ReactiveSinkLike](../interfaces/reactiveSink.ReactiveSinkLike.md).[add](../interfaces/reactiveSink.ReactiveSinkLike.md#add)
 
 #### Inherited from
 
@@ -172,7 +172,7 @@ ___
 
 #### Implementation of
 
-[SinkLike](../interfaces/sink.SinkLike.md).[assertState](../interfaces/sink.SinkLike.md#assertstate)
+[ReactiveSinkLike](../interfaces/reactiveSink.ReactiveSinkLike.md).[assertState](../interfaces/reactiveSink.ReactiveSinkLike.md#assertstate)
 
 ___
 
@@ -195,7 +195,7 @@ Dispose the resource.
 
 #### Implementation of
 
-[SinkLike](../interfaces/sink.SinkLike.md).[dispose](../interfaces/sink.SinkLike.md#dispose)
+[ReactiveSinkLike](../interfaces/reactiveSink.ReactiveSinkLike.md).[dispose](../interfaces/reactiveSink.ReactiveSinkLike.md#dispose)
 
 #### Inherited from
 
@@ -224,4 +224,4 @@ scheduled using the sink's `schedule` method.
 
 #### Implementation of
 
-[SinkLike](../interfaces/sink.SinkLike.md).[notify](../interfaces/sink.SinkLike.md#notify)
+[ReactiveSinkLike](../interfaces/reactiveSink.ReactiveSinkLike.md).[notify](../interfaces/reactiveSink.ReactiveSinkLike.md#notify)

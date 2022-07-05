@@ -1,6 +1,6 @@
 import { Disposable } from "./disposable.mjs";
-import { SinkLike } from "./sink.mjs";
-declare class RunnableSink<T> extends Disposable implements SinkLike<T> {
+import { ReactiveSinkLike } from "./reactiveSink.mjs";
+declare class RunnableSink<T> extends Disposable implements ReactiveSinkLike<T> {
     get T(): T;
     get TContainerOf(): this;
     assertState(this: this): void;

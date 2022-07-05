@@ -1,4 +1,4 @@
-/// <reference types="./source.d.ts" />
+/// <reference types="./interactiveSource.d.ts" />
 const move = (source) => {
     source.move();
     return source;

@@ -1,11 +1,11 @@
 import { DispatcherLike } from "./dispatcher.mjs";
 import { Disposable } from "./disposable.mjs";
+import { ReactiveSinkLike } from "./reactiveSink.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
-import { SinkLike } from "./sink.mjs";
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
-declare class Observer<T> extends Disposable implements SinkLike<T> {
+declare class Observer<T> extends Disposable implements ReactiveSinkLike<T> {
     readonly scheduler: SchedulerLike;
     private _dispatcher;
     constructor(scheduler: SchedulerLike);

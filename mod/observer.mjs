@@ -3,8 +3,8 @@ import { __DEV__ } from './__internal__.env.mjs';
 import { addTo, onComplete, Disposable, isDisposed, dispose, onDisposed } from './disposable.mjs';
 import { getLength, pipe, raise, newInstanceWith, isEmpty } from './functions.mjs';
 import { none, isNone } from './option.mjs';
+import { assertState } from './reactiveSink.mjs';
 import { schedule, __yield, isInContinuation } from './scheduler.mjs';
-import { assertState } from './sink.mjs';
 
 const scheduleDrainQueue = (dispatcher) => {
     if (getLength(dispatcher.nextQueue) === 1) {

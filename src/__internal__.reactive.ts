@@ -61,9 +61,12 @@ import {
   ReactiveContainerLike,
   sinkInto,
 } from "./reactive";
-import { SinkLike, assertState, notify } from "./sink";
+import { ReactiveSinkLike, assertState, notify } from "./reactiveSink";
 
-export abstract class AbstractReactiveSource<T, TSink extends SinkLike<T>>
+export abstract class AbstractReactiveSource<
+    T,
+    TSink extends ReactiveSinkLike<T>,
+  >
   extends AbstractLiftable<TSink>
   implements ReactiveContainerLike
 {

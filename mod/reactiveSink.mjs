@@ -1,4 +1,4 @@
-/// <reference types="./sink.d.ts" />
+/// <reference types="./reactiveSink.d.ts" />
 import { __DEV__ } from './__internal__.env.mjs';
 
 const assertState = (sink) => {

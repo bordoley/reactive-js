@@ -81,6 +81,7 @@ import { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
 import { Observer, getScheduler } from "./observer";
 import { Option, isNone, isSome, none } from "./option";
 import { ReactiveContainerLike, sourceFrom } from "./reactive";
+import { notifySink } from "./reactiveSink";
 import { RunnableLike, ToRunnable, createRunnable } from "./runnable";
 import {
   SchedulerLike,
@@ -88,7 +89,6 @@ import {
   __yield,
   createVirtualTimeScheduler,
 } from "./scheduler";
-import { notifySink } from "./sink";
 
 /**
  * The source of notifications which notifies a `ObserverLike` instance.

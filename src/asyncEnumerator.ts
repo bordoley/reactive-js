@@ -1,16 +1,16 @@
 import { DispatcherLike, dispatch } from "./dispatcher";
 import { Disposable } from "./disposable";
 import { pipe, raise } from "./functions";
+import { InteractiveSourceLike } from "./interactiveSource";
 import { ObservableLike } from "./observable";
 import { Observer } from "./observer";
 import { none } from "./option";
 import { SchedulerLike } from "./scheduler";
-import { SourceLike } from "./source";
 import { StreamLike } from "./stream";
 
 export abstract class AsyncEnumerator<T>
   extends Disposable
-  implements SourceLike<T>, StreamLike<void, T>
+  implements InteractiveSourceLike<T>, StreamLike<void, T>
 {
   get T(): T {
     return raise();

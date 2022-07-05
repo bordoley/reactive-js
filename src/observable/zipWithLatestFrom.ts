@@ -11,7 +11,7 @@ import {
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer, getScheduler } from "../observer";
 import { Option } from "../option";
-import { assertState, notify } from "../sink";
+import { assertState, notify } from "../reactiveSink";
 import { lift } from "./lift";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";

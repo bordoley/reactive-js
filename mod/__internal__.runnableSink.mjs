@@ -1,8 +1,8 @@
 /// <reference types="./__internal__.runnableSink.d.ts" />
 import { getDelegate } from './__internal__.liftable.mjs';
 import { pipe, newInstance } from './functions.mjs';
+import { notify } from './reactiveSink.mjs';
 import { RunnableSink } from './runnableSink.mjs';
-import { notify } from './sink.mjs';
 
 class AbstractDelegatingRunnableSink extends RunnableSink {
     constructor(delegate) {

@@ -3,9 +3,9 @@ import { ContainerLike } from "./container";
 import { Disposable } from "./disposable";
 import { Function1, SideEffect1 } from "./functions";
 
-export interface SinkLike<T> extends Disposable, ContainerLike {
+export interface ReactiveSinkLike<T> extends Disposable, ContainerLike {
   readonly T: T;
-  readonly TContainerOf: SinkLike<this["T"]>;
+  readonly TContainerOf: ReactiveSinkLike<this["T"]>;
 
   assertState(this: this["TContainerOf"]): void;
 
@@ -20,20 +20,20 @@ export interface SinkLike<T> extends Disposable, ContainerLike {
   notify(this: this["TContainerOf"], next: T): void;
 }
 
-export const assertState = (sink: SinkLike<unknown>): void => {
+export const assertState = (sink: ReactiveSinkLike<unknown>): void => {
   if (__DEV__) {
     sink.assertState();
   }
 };
 
 export const notify =
-  <TSink extends SinkLike<T>, T>(v: T): Function1<TSink, TSink> =>
+  <TSink extends ReactiveSinkLike<T>, T>(v: T): Function1<TSink, TSink> =>
   (sink: TSink) => {
     sink.notify(v);
     return sink;
   };
 
 export const notifySink =
-  <TSink extends SinkLike<T>, T>(sink: TSink): SideEffect1<T> =>
+  <TSink extends ReactiveSinkLike<T>, T>(sink: TSink): SideEffect1<T> =>
   (next: T) =>
     sink.notify(next);

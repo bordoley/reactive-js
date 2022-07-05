@@ -16,11 +16,15 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`Enumerator`](enumerator.Enumerator.md)
 
+  ↳ [`InteractiveSourceLike`](../interfaces/interactiveSource.InteractiveSourceLike.md)
+
   ↳ [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)
 
   ↳ [`Subject`](observable.Subject.md)
 
   ↳ [`Observer`](observer.Observer.md)
+
+  ↳ [`ReactiveSinkLike`](../interfaces/reactiveSink.ReactiveSinkLike.md)
 
   ↳ [`RunnableSink`](runnableSink.RunnableSink.md)
 
@@ -29,10 +33,6 @@ Represents an unmanaged resource that can be disposed.
   ↳ [`SchedulerContinuationLike`](../interfaces/scheduler.SchedulerContinuationLike.md)
 
   ↳ [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
-
-  ↳ [`SinkLike`](../interfaces/sink.SinkLike.md)
-
-  ↳ [`SourceLike`](../interfaces/source.SourceLike.md)
 
 ## Table of contents
 

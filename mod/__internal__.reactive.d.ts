@@ -5,8 +5,8 @@ import { Function1, Equality, Predicate, SideEffect1, Reducer, Factory } from ".
 import { LiftableStateOf } from "./liftable.mjs";
 import { Option } from "./option.mjs";
 import { ReactiveContainerLike, CreateReactiveContainer } from "./reactive.mjs";
-import { SinkLike } from "./sink.mjs";
-declare abstract class AbstractReactiveSource<T, TSink extends SinkLike<T>> extends AbstractLiftable<TSink> implements ReactiveContainerLike {
+import { ReactiveSinkLike } from "./reactiveSink.mjs";
+declare abstract class AbstractReactiveSource<T, TSink extends ReactiveSinkLike<T>> extends AbstractLiftable<TSink> implements ReactiveContainerLike {
     abstract sink(this: this, sink: TSink): void;
 }
 interface Lift<C extends ReactiveContainerLike> extends Lift$1<C, ContraVariant> {

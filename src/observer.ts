@@ -10,13 +10,13 @@ import {
 } from "./disposable";
 import { getLength, isEmpty, newInstanceWith, pipe, raise } from "./functions";
 import { Option, isNone, none } from "./option";
+import { ReactiveSinkLike, assertState } from "./reactiveSink";
 import {
   SchedulerLike,
   __yield,
   isInContinuation,
   schedule,
 } from "./scheduler";
-import { SinkLike, assertState } from "./sink";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (getLength(dispatcher.nextQueue) === 1) {
@@ -72,7 +72,7 @@ class ObserverDelegatingDispatcher<T>
 /**
  * Abstract base class for implementing the `ObserverLike` interface.
  */
-export class Observer<T> extends Disposable implements SinkLike<T> {
+export class Observer<T> extends Disposable implements ReactiveSinkLike<T> {
   private _dispatcher: Option<DispatcherLike<T>> = none;
 
   constructor(readonly scheduler: SchedulerLike) {

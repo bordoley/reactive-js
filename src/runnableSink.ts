@@ -1,9 +1,9 @@
 import { __DEV__ } from "./__internal__.env";
 import { Disposable, isDisposed } from "./disposable";
 import { raise } from "./functions";
-import { SinkLike } from "./sink";
+import { ReactiveSinkLike } from "./reactiveSink";
 
-export class RunnableSink<T> extends Disposable implements SinkLike<T> {
+export class RunnableSink<T> extends Disposable implements ReactiveSinkLike<T> {
   get T(): T {
     return raise();
   }
