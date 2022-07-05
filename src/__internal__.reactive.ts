@@ -63,7 +63,7 @@ import {
 } from "./reactive";
 import { ReactiveSinkLike, assertState, notify } from "./reactiveSink";
 
-export abstract class AbstractReactiveSource<
+export abstract class AbstractReactiveContainer<
     T,
     TSink extends ReactiveSinkLike<T>,
   >

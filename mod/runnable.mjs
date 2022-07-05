@@ -1,5 +1,5 @@
 /// <reference types="./runnable.d.ts" />
-import { AbstractReactiveSource, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './__internal__.reactive.mjs';
+import { AbstractReactiveContainer, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './__internal__.reactive.mjs';
 import { empty } from './__internal__.readonlyArray.mjs';
 import { AbstractDelegatingRunnableSink, createDelegatingRunnableSink } from './__internal__.runnableSink.mjs';
 import { dispose, isDisposed, addTo, bindTo } from './disposable.mjs';
@@ -10,7 +10,7 @@ import { RunnableSink } from './runnableSink.mjs';
 import { createFromArray } from './__internal__.container.mjs';
 import { contraVariant } from './__internal__.liftable.mjs';
 
-class AbstractRunnable extends AbstractReactiveSource {
+class AbstractRunnable extends AbstractReactiveContainer {
 }
 
 class RunnableImpl extends AbstractRunnable {

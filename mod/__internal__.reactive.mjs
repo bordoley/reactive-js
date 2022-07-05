@@ -9,7 +9,7 @@ import { none, isSome } from './option.mjs';
 import { sinkInto } from './reactive.mjs';
 import { assertState, notify } from './reactiveSink.mjs';
 
-class AbstractReactiveSource extends AbstractLiftable {
+class AbstractReactiveContainer extends AbstractLiftable {
 }
 const create = (m) => (onSink) => m.create(onSink);
 const decorateWithNotify = (SinkClass, notify) => {
@@ -243,4 +243,4 @@ const createOnSink = (m) => (f) => src => pipe((sink) => {
 }, create(m));
 const createUsing = (m) => (resourceFactory, sourceFactory) => pipe((sink) => pipe(resourceFactory(), resources => (Array.isArray(resources) ? resources : [resources]), forEach(addTo(sink)), (resources) => sourceFactory(...resources), sinkInto(sink)), create(m));
 
-export { AbstractReactiveSource, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing };
+export { AbstractReactiveContainer, createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createFromDisposable, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing };
