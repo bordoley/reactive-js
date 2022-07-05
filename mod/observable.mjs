@@ -1,12 +1,12 @@
 /// <reference types="./observable.d.ts" />
 import { AbstractDelegatingObserver, createDelegatingObserver } from './__internal__.observer.mjs';
 import { hasDelay, getDelay } from './__internal__.optionalArgs.mjs';
-import { AbstractReactiveContainer, createMapOperator, createOnNotifyOperator, createUsing, createNever, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './__internal__.reactive.mjs';
+import { createMapOperator, createOnNotifyOperator, createUsing, createNever, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './__internal__.reactive.mjs';
 import { empty as empty$1, fromValue, throws, concatMap } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { dispose, addTo, Disposable, isDisposed, onDisposed, add, onComplete, disposed, bindTo, toErrorHandler } from './disposable.mjs';
 import { move, getCurrent, hasCurrent, forEach } from './enumerator.mjs';
-import { pipe, newInstance, raise, getLength, newInstanceWith, isEmpty, arrayEquality, ignore, pipeLazy, compose, max, returns, identity, instanceFactory } from './functions.mjs';
+import { raise, pipe, newInstance, getLength, newInstanceWith, isEmpty, arrayEquality, ignore, pipeLazy, compose, max, returns, identity, instanceFactory } from './functions.mjs';
 import { getScheduler, getDispatcher, Observer } from './observer.mjs';
 import { sinkInto, sourceFrom } from './reactive.mjs';
 import { schedule, __yield, isInContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
@@ -22,7 +22,16 @@ import { MAX_SAFE_INTEGER } from './__internal__.env.mjs';
 import { AbstractEnumerator, reset, zip as zip$1 } from './__internal__.enumerator.mjs';
 import { runContinuation } from './__internal__.schedulerImplementation.mjs';
 
-class AbstractObservable extends AbstractReactiveContainer {
+class AbstractObservable {
+    get T() {
+        return raise();
+    }
+    get TContainerOf() {
+        return this;
+    }
+    get TLiftableState() {
+        return raise();
+    }
 }
 const isEnumerable = (obs) => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; };
 const tagEnumerable = (isEnumerable) => (obs) => {

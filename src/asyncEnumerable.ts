@@ -1,7 +1,6 @@
 import { AbstractDelegatingAsyncEnumerator } from "./__internal__.asyncEnumerator";
 import { createFromArray } from "./__internal__.container";
 import {
-  AbstractLiftable,
   createKeepLiftOperator,
   createMapLiftOperator,
   createScanLiftOperator,
@@ -9,7 +8,7 @@ import {
   getDelegate,
 } from "./__internal__.liftable";
 import { getDelay } from "./__internal__.optionalArgs";
-import { lift, liftT } from "./asyncEnumerable/lift";
+import { AbstractAsyncEnumerable, lift, liftT } from "./asyncEnumerable/lift";
 import { AsyncEnumerator } from "./asyncEnumerator";
 import {
   FromArray,
@@ -96,10 +95,7 @@ export type AsyncEnumerableOperator<TA, TB> = Function1<
   AsyncEnumerableLike<TB>
 >;
 
-class CreateAsyncEnumerable<T>
-  extends AbstractLiftable<AsyncEnumerator<T>>
-  implements AsyncEnumerableLike<T>
-{
+class CreateAsyncEnumerable<T> extends AbstractAsyncEnumerable<T> {
   constructor(
     readonly stream: (
       scheduler: SchedulerLike,

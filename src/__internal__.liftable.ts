@@ -1,20 +1,5 @@
-import { AbstractContainer } from "./__internal__.container";
-import {
-  Container,
-  ContainerLike,
-  ContainerOperator,
-  FromArray,
-  empty,
-} from "./container";
-import {
-  Disposable,
-  Error,
-  add,
-  addTo,
-  bindTo,
-  dispose,
-  onComplete,
-} from "./disposable";
+import { Container, ContainerOperator, FromArray, empty } from "./container";
+import { Error, add, addTo, bindTo, dispose, onComplete } from "./disposable";
 import {
   Equality,
   Factory,
@@ -25,7 +10,6 @@ import {
   max,
   newInstanceWith,
   pipe,
-  raise,
   strictEquality,
 } from "./functions";
 import { LiftableLike, LiftableStateOf } from "./liftable";
@@ -70,17 +54,6 @@ export type LiftOperatorOut<
 > = M extends { variance?: ContraVariant }
   ? LiftableStateOf<C, TA>
   : LiftableStateOf<C, TB>;
-
-export abstract class AbstractLiftable<
-    TState extends Disposable & ContainerLike,
-  >
-  extends AbstractContainer
-  implements LiftableLike
-{
-  get TLiftableState(): TState {
-    return raise();
-  }
-}
 
 export type DelegatingLiftableStateOf<
   C extends LiftableLike,
