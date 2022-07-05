@@ -28,6 +28,7 @@ Reactive-JS
 - [scheduler](modules/scheduler.md)
 - [sequence](modules/sequence.md)
 - [sink](modules/sink.md)
+- [source](modules/source.md)
 - [stream](modules/stream.md)
 - [streamable](modules/streamable.md)
 - [web](modules/web.md)

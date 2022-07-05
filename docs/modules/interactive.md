@@ -8,4 +8,3 @@
 
 - [CreateInteractiveContainer](../interfaces/interactive.CreateInteractiveContainer.md)
 - [InteractiveContainerLike](../interfaces/interactive.InteractiveContainerLike.md)
-- [SourceLike](../interfaces/interactive.SourceLike.md)

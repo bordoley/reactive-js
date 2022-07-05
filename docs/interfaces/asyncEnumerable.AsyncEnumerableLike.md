@@ -65,7 +65,7 @@ ___
 
 ### source
 
-▸ **source**(`this`, `_`): [`SourceLike`](interactive.SourceLike.md)<`unknown`\>
+▸ **source**(`this`, `_`): [`SourceLike`](source.SourceLike.md)<`unknown`\>
 
 #### Parameters
 
@@ -76,7 +76,7 @@ ___
 
 #### Returns
 
-[`SourceLike`](interactive.SourceLike.md)<`unknown`\>
+[`SourceLike`](source.SourceLike.md)<`unknown`\>
 
 #### Inherited from
 

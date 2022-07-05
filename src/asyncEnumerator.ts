@@ -1,11 +1,11 @@
 import { DispatcherLike, dispatch } from "./dispatcher";
 import { Disposable } from "./disposable";
 import { pipe, raise } from "./functions";
-import { SourceLike } from "./interactive";
 import { ObservableLike } from "./observable";
 import { Observer } from "./observer";
 import { none } from "./option";
 import { SchedulerLike } from "./scheduler";
+import { SourceLike } from "./source";
 import { StreamLike } from "./stream";
 
 export abstract class AsyncEnumerator<T>
