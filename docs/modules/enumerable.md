@@ -133,13 +133,13 @@ ___
 
 ### fromIterableT
 
-• `Const` **fromIterableT**: [`FromIterable`](../interfaces/liftable.FromIterable.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+• `Const` **fromIterableT**: [`FromIterable`](../interfaces/liftableContainer.FromIterable.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
 
 ___
 
 ### fromIteratorT
 
-• `Const` **fromIteratorT**: [`FromIterator`](../interfaces/liftable.FromIterator.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+• `Const` **fromIteratorT**: [`FromIterator`](../interfaces/liftableContainer.FromIterator.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
 
 ___
 
@@ -205,7 +205,7 @@ ___
 
 ### throwIfEmptyT
 
-• `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](../interfaces/liftable.ThrowIfEmpty.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+• `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](../interfaces/liftableContainer.ThrowIfEmpty.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
 
 ___
 
@@ -229,7 +229,7 @@ ___
 
 ### usingT
 
-• `Const` **usingT**: [`Using`](../interfaces/liftable.Using.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
+• `Const` **usingT**: [`Using`](../interfaces/liftableContainer.Using.md)<[`EnumerableLike`](../interfaces/enumerable.EnumerableLike.md)<`unknown`\>\>
 
 ___
 

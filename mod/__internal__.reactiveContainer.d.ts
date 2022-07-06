@@ -2,7 +2,7 @@ import { ContainerOperator, FromArray, FromArrayOptions, ContainerOf } from "./c
 import { Lift as Lift$1, TReactive, LiftOperator, DelegatingLiftableContainerStateOf } from "./__internal__.liftable.mjs";
 import { Disposable, DisposableOrTeardown } from "./disposable.mjs";
 import { Function1, Equality, Predicate, SideEffect1, Reducer, Factory } from "./functions.mjs";
-import { LiftableContainerStateOf } from "./liftable.mjs";
+import { LiftableContainerStateOf } from "./liftableContainer.mjs";
 import { Option } from "./option.mjs";
 import { ReactiveContainerLike, CreateReactiveContainer } from "./reactiveContainer.mjs";
 interface Lift<C extends ReactiveContainerLike> extends Lift$1<C, TReactive> {

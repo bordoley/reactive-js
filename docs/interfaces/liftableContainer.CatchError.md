@@ -1,14 +1,14 @@
-[Reactive-JS](../README.md) / [liftable](../modules/liftable.md) / CatchError
+[Reactive-JS](../README.md) / [liftableContainer](../modules/liftableContainer.md) / CatchError
 
 # Interface: CatchError<C\>
 
-[liftable](../modules/liftable.md).CatchError
+[liftableContainer](../modules/liftableContainer.md).CatchError
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`LiftableContainerLike`](liftable.LiftableContainerLike.md) |
+| `C` | extends [`LiftableContainerLike`](liftableContainer.LiftableContainerLike.md) |
 
 ## Hierarchy
 
@@ -20,11 +20,11 @@
 
 ### Properties
 
-- [TContainerOf](liftable.CatchError.md#tcontainerof)
+- [TContainerOf](liftableContainer.CatchError.md#tcontainerof)
 
 ### Methods
 
-- [catchError](liftable.CatchError.md#catcherror)
+- [catchError](liftableContainer.CatchError.md#catcherror)
 
 ## Properties
 

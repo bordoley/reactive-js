@@ -12,7 +12,10 @@ import {
   pipe,
   strictEquality,
 } from "./functions";
-import { LiftableContainerLike, LiftableContainerStateOf } from "./liftable";
+import {
+  LiftableContainerLike,
+  LiftableContainerStateOf,
+} from "./liftableContainer";
 import { Option, none } from "./option";
 
 export type TInteractive = 0;

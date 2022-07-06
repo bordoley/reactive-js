@@ -52,7 +52,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `source` | (`ctx`: `C`[``"TCtx"``]) => [`LiftableContainerStateOf`](../modules/liftable.md#liftablecontainerstateof)<`C`, `T`\> |
+| `source` | (`ctx`: `C`[``"TCtx"``]) => [`LiftableContainerStateOf`](../modules/liftableContainer.md#liftablecontainerstateof)<`C`, `T`\> |
 
 #### Returns
 

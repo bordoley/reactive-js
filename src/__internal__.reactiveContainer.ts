@@ -56,7 +56,7 @@ import {
   newInstanceWith,
   pipe,
 } from "./functions";
-import { LiftableContainerStateOf } from "./liftable";
+import { LiftableContainerStateOf } from "./liftableContainer";
 import { Option, isSome, none } from "./option";
 import {
   CreateReactiveContainer,

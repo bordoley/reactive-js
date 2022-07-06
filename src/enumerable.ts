@@ -48,7 +48,7 @@ import {
   pipe,
 } from "./functions";
 import { InteractiveContainerLike } from "./interactiveContainer";
-import { ThrowIfEmpty, Using } from "./liftable";
+import { ThrowIfEmpty, Using } from "./liftableContainer";
 import { Option, isSome, none } from "./option";
 
 /**

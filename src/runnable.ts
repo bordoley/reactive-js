@@ -58,7 +58,12 @@ import {
   identity,
   pipe,
 } from "./functions";
-import { CatchError, DecodeWithCharset, ThrowIfEmpty, Using } from "./liftable";
+import {
+  CatchError,
+  DecodeWithCharset,
+  ThrowIfEmpty,
+  Using,
+} from "./liftableContainer";
 import { Option, getOrDefault, isNone, none } from "./option";
 import { ReactiveContainerLike, sourceFrom } from "./reactiveContainer";
 import { createRunnable, createT } from "./runnable/createRunnable";

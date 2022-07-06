@@ -22,7 +22,7 @@ import {
   returns,
   sum,
 } from "../functions";
-import { genMap } from "../liftable";
+import { genMap } from "../liftableContainer";
 import {
   ObservableLike,
   Subject,

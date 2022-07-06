@@ -19,7 +19,7 @@ import {
   returns,
   sum,
 } from "../functions";
-import { encodeUtf8 } from "../liftable";
+import { encodeUtf8 } from "../liftableContainer";
 import {
   __memo,
   __observe,

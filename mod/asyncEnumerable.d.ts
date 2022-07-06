@@ -3,7 +3,7 @@ import { FromArray, Generate, Keep, Map, Scan, TakeWhile } from "./container.mjs
 import { EnumerableLike, FromEnumerable } from "./enumerable.mjs";
 import { Function1, Updater, Factory, Predicate, Reducer } from "./functions.mjs";
 import { InteractiveContainerLike } from "./interactiveContainer.mjs";
-import { FromIterable } from "./liftable.mjs";
+import { FromIterable } from "./liftableContainer.mjs";
 import { AsyncReducer, ScanAsync, ObservableLike, ToObservable } from "./observable.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
 import { StreamableLike } from "./streamable.mjs";

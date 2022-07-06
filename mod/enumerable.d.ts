@@ -2,7 +2,7 @@ import { Buffer, ConcatAll, FromArrayOptions, FromArray, Generate, Repeat, TakeL
 import { Enumerator } from "./enumerator.mjs";
 import { Factory, Function1, Updater, Predicate, Equality, SideEffect1, Reducer } from "./functions.mjs";
 import { InteractiveContainerLike } from "./interactiveContainer.mjs";
-import { FromIterator, FromIterable, ThrowIfEmpty, Using } from "./liftable.mjs";
+import { FromIterator, FromIterable, ThrowIfEmpty, Using } from "./liftableContainer.mjs";
 import { Option } from "./option.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
 declare const buffer: <T>(options?: {

@@ -200,7 +200,7 @@ ___
 
 ### catchErrorT
 
-• `Const` **catchErrorT**: [`CatchError`](../interfaces/liftable.CatchError.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+• `Const` **catchErrorT**: [`CatchError`](../interfaces/liftableContainer.CatchError.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
@@ -230,13 +230,13 @@ ___
 
 ### decodeWithCharsetT
 
-• `Const` **decodeWithCharsetT**: [`DecodeWithCharset`](../interfaces/liftable.DecodeWithCharset.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+• `Const` **decodeWithCharsetT**: [`DecodeWithCharset`](../interfaces/liftableContainer.DecodeWithCharset.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
 ### deferT
 
-• `Const` **deferT**: [`Defer`](../interfaces/liftable.Defer.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+• `Const` **deferT**: [`Defer`](../interfaces/liftableContainer.Defer.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
@@ -272,13 +272,13 @@ ___
 
 ### fromIterableT
 
-• `Const` **fromIterableT**: [`FromIterable`](../interfaces/liftable.FromIterable.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+• `Const` **fromIterableT**: [`FromIterable`](../interfaces/liftableContainer.FromIterable.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
 ### fromIteratorT
 
-• `Const` **fromIteratorT**: [`FromIterator`](../interfaces/liftable.FromIterator.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, { `delay?`: `number`  }\>
+• `Const` **fromIteratorT**: [`FromIterator`](../interfaces/liftableContainer.FromIterator.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, { `delay?`: `number`  }\>
 
 ___
 
@@ -386,7 +386,7 @@ ___
 
 ### throwIfEmptyT
 
-• `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](../interfaces/liftable.ThrowIfEmpty.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+• `Const` **throwIfEmptyT**: [`ThrowIfEmpty`](../interfaces/liftableContainer.ThrowIfEmpty.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 
@@ -418,7 +418,7 @@ ___
 
 ### usingT
 
-• `Const` **usingT**: [`Using`](../interfaces/liftable.Using.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+• `Const` **usingT**: [`Using`](../interfaces/liftableContainer.Using.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 

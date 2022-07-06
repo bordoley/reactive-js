@@ -45,7 +45,7 @@ import {
   returns,
 } from "./functions";
 import { InteractiveContainerLike } from "./interactiveContainer";
-import { FromIterable } from "./liftable";
+import { FromIterable } from "./liftableContainer";
 import {
   AsyncReducer,
   MulticastObservableLike,
