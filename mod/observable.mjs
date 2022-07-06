@@ -245,7 +245,7 @@ const publishTo = (subject) => v => {
  */
 const subscribe = (scheduler) => observable => pipe(Observer, newInstanceWith(scheduler), addTo(scheduler, true), sourceFrom(observable));
 
-function onDispose$1() {
+function onDispose() {
     if (isDisposed(this.currentRef.current)) {
         pipe(this, getDelegate, dispose());
     }
@@ -264,7 +264,7 @@ class SwitchObserver extends AbstractDelegatingObserver {
         }));
     }
 }
-const operator = (delegate) => pipe(SwitchObserver, newInstanceWith(delegate), addTo(delegate), onComplete(onDispose$1));
+const operator = (delegate) => pipe(SwitchObserver, newInstanceWith(delegate), addTo(delegate), onComplete(onDispose));
 const switchAllInstance = /*@__PURE__*/ lift(operator);
 /**
  * Converts a higher-order `ObservableLike` into a first-order `ObservableLike` producing
@@ -526,14 +526,16 @@ function __currentScheduler() {
     return getScheduler(ctx.observer);
 }
 
-class LatestCtx extends Disposable {
+class LatestCtx {
     constructor(delegate, mode) {
-        super();
         this.delegate = delegate;
         this.mode = mode;
         this.completedCount = 0;
         this.observers = [];
         this.readyCount = 0;
+    }
+    add(observer) {
+        this.observers.push(observer);
     }
     notify() {
         const { mode, observers, readyCount } = this;
@@ -547,6 +549,12 @@ class LatestCtx extends Disposable {
                 }
                 this.readyCount = 0;
             }
+        }
+    }
+    onCompleted() {
+        this.completedCount++;
+        if (this.completedCount === getLength(this.observers)) {
+            pipe(this, getDelegate, dispose());
         }
     }
 }
@@ -568,21 +576,17 @@ class LatestObserver extends Observer {
         ctx.notify();
     }
 }
-function onDispose() {
-    const { ctx } = this;
-    ctx.completedCount++;
-    if (ctx.completedCount === getLength(ctx.observers)) {
-        pipe(ctx, dispose());
-    }
-}
 const latest = (observables, mode) => {
     const isEnumerableTag = pipe(observables, everySatisfy$1(isEnumerable));
     const factory = () => (delegate) => {
-        const latestCtxDelegate = pipe(new LatestCtx(delegate, mode), bindTo(delegate));
+        const latestCtxDelegate = new LatestCtx(delegate, mode);
+        const onCompleteCb = () => {
+            latestCtxDelegate.onCompleted();
+        };
         const scheduler = getScheduler(delegate);
         for (const observable of observables) {
-            const innerObserver = pipe(LatestObserver, newInstanceWith(scheduler, latestCtxDelegate), addTo(delegate), onComplete(onDispose), sourceFrom(observable));
-            latestCtxDelegate.observers.push(innerObserver);
+            const innerObserver = pipe(LatestObserver, newInstanceWith(scheduler, latestCtxDelegate), addTo(delegate), onComplete(onCompleteCb), sourceFrom(observable));
+            latestCtxDelegate.add(innerObserver);
         }
     };
     return pipe(defer(factory), tagEnumerable(isEnumerableTag));
