@@ -1,7 +1,7 @@
 import { getDelegate } from "../__internal__.delegating";
 import { everySatisfy, map } from "../__internal__.readonlyArray";
 import { Zip } from "../container";
-import { Disposable, addTo, bindTo, dispose, onComplete } from "../disposable";
+import { addTo, dispose, onComplete } from "../disposable";
 import { getLength, newInstanceWith, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer, getScheduler } from "../observer";
@@ -17,16 +17,18 @@ const enum LatestMode {
   Zip = 2,
 }
 
-class LatestCtx extends Disposable {
-  completedCount = 0;
-  readonly observers: LatestObserver[] = [];
+class LatestCtx {
+  private completedCount = 0;
+  private readonly observers: LatestObserver[] = [];
   readyCount = 0;
 
   constructor(
     readonly delegate: Observer<readonly unknown[]>,
     private readonly mode: LatestMode,
-  ) {
-    super();
+  ) {}
+
+  add(observer: LatestObserver): void {
+    this.observers.push(observer);
   }
 
   notify() {
@@ -46,6 +48,14 @@ class LatestCtx extends Disposable {
         }
         this.readyCount = 0;
       }
+    }
+  }
+
+  onCompleted() {
+    this.completedCount++;
+
+    if (this.completedCount === getLength(this.observers)) {
+      pipe(this, getDelegate, dispose());
     }
   }
 }
@@ -73,15 +83,6 @@ class LatestObserver extends Observer<unknown> {
   }
 }
 
-function onDispose(this: LatestObserver) {
-  const { ctx } = this;
-  ctx.completedCount++;
-
-  if (ctx.completedCount === getLength(ctx.observers)) {
-    pipe(ctx, dispose());
-  }
-}
-
 export const latest = (
   observables: readonly ObservableLike<any>[],
   mode: LatestMode,
@@ -89,10 +90,10 @@ export const latest = (
   const isEnumerableTag = pipe(observables, everySatisfy(isEnumerable));
 
   const factory = () => (delegate: Observer<readonly unknown[]>) => {
-    const latestCtxDelegate = pipe(
-      new LatestCtx(delegate, mode),
-      bindTo(delegate),
-    );
+    const latestCtxDelegate = new LatestCtx(delegate, mode);
+    const onCompleteCb = () => {
+      latestCtxDelegate.onCompleted();
+    };
 
     const scheduler = getScheduler(delegate);
 
@@ -104,11 +105,11 @@ export const latest = (
           latestCtxDelegate,
         ),
         addTo(delegate),
-        onComplete(onDispose),
+        onComplete(onCompleteCb),
         sourceFrom(observable),
       );
 
-      latestCtxDelegate.observers.push(innerObserver);
+      latestCtxDelegate.add(innerObserver);
     }
   };
 
