@@ -8,11 +8,11 @@ import { Observer } from "../observer";
 import { __yield } from "../scheduler";
 import { createObservable } from "./createObservable";
 import { defer } from "./defer";
-import { tagEnumerable } from "./observable";
+import { tagObservableType } from "./observable";
 
 const empty = /*@__PURE__*/ pipe(
   createObservable(dispose<Observer<any>>()),
-  tagEnumerable(true),
+  tagObservableType(2),
 );
 
 /**
@@ -60,7 +60,7 @@ export const fromArray = /*@__PURE__*/ createFromArray<
               pipe(observer, dispose());
             };
           }, options),
-          tagEnumerable(isEnumerableTag),
+          tagObservableType(hasDelay(options) ? 1 : 2),
         );
   },
 );

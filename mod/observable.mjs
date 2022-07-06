@@ -35,9 +35,18 @@ class AbstractObservable {
 }
 const isEnumerable = (obs) => obs.observableType === 2;
 const isRunnable = (obs) => obs.observableType === 1;
-const tagEnumerable = (isEnumerable) => (obs) => {
-    obs.observableType = isEnumerable ? 2 : 0;
+const tagObservableType = (tag) => (obs) => {
+    obs.observableType = tag;
     return obs;
+};
+const computeMinTag = (observables) => {
+    let min = 2;
+    const { length } = observables;
+    for (let i = 0; i < length; i++) {
+        const { observableType } = observables[i];
+        min = observableType < min ? observableType : min;
+    }
+    return min;
 };
 
 class CreateObservable extends AbstractObservable {
@@ -76,7 +85,7 @@ const deferT = {
     defer,
 };
 
-const empty = /*@__PURE__*/ pipe(createObservable(dispose()), tagEnumerable(true));
+const empty = /*@__PURE__*/ pipe(createObservable(dispose()), tagObservableType(2));
 /**
  * Creates an `ObservableLike` from the given array with a specified `delay` between emitted items.
  * An optional `startIndex` in the array maybe specified,
@@ -102,7 +111,7 @@ const fromArray = /*@__PURE__*/ createFromArray((values, startIndex, endIndex, o
                 }
                 pipe(observer, dispose());
             };
-        }, options), tagEnumerable(isEnumerableTag));
+        }, options), tagObservableType(hasDelay(options) ? 1 : 2));
 });
 const fromArrayT = {
     fromArray,
@@ -582,7 +591,6 @@ class LatestObserver extends Observer {
     }
 }
 const latest = (observables, mode) => {
-    const isEnumerableTag = pipe(observables, everySatisfy$1(isEnumerable));
     const factory = () => (delegate) => {
         const latestCtxDelegate = new LatestCtx(delegate, mode);
         const onCompleteCb = () => {
@@ -594,7 +602,7 @@ const latest = (observables, mode) => {
             latestCtxDelegate.add(innerObserver);
         }
     };
-    return pipe(defer(factory), tagEnumerable(isEnumerableTag));
+    return pipe(defer(factory), tagObservableType(computeMinTag(observables)));
 };
 /**
  * Returns an `ObservableLike` that combines the latest values from
@@ -632,7 +640,6 @@ const createConcatObserver = (delegate, observables, next) => pipe(createDelegat
     }
 }));
 function concat(...observables) {
-    const isEnumerableTag = pipe(observables, everySatisfy$1(isEnumerable));
     return pipe(createObservable(observer => {
         if (!isEmpty(observables)) {
             pipe(createConcatObserver(observer, observables, 1), sourceFrom(observables[0]));
@@ -640,7 +647,7 @@ function concat(...observables) {
         else {
             pipe(observer, dispose());
         }
-    }), tagEnumerable(isEnumerableTag));
+    }), tagObservableType(computeMinTag(observables)));
 }
 const concatT = {
     concat,
@@ -658,7 +665,7 @@ const fromEnumerator = (options) => f => pipe(using(f, enumerator => defer(() =>
         __yield(options);
     }
     pipe(observer, dispose());
-}, options)), tagEnumerable(!hasDelay(options)));
+}, options)), tagObservableType(hasDelay(options) ? 1 : 2));
 /**
  * Creates an `ObservableLike` which enumerates through the values
  * produced by the provided `Enumerable` with a specified `delay` between emitted items.
@@ -670,17 +677,13 @@ const fromEnumerable = (options) => enumerable => pipe(pipeLazy(enumerable, enum
 const fromEnumerableT = {
     fromEnumerable,
 };
-
 /**
  * Creates an `ObservableLike` which iterates through the values
  * produced by the provided `Iterator` with a specified `delay` between emitted items.
  *
  * @param delay The requested delay between emitted items by the observable.
  */
-const fromIterator = (options) => {
-    const call = fromEnumerable(options);
-    return compose(fromIterator$1(), call);
-};
+const fromIterator = (options) => compose(fromIterator$1(), fromEnumerable(options));
 const fromIteratorT = {
     fromIterator,
 };
@@ -690,10 +693,7 @@ const fromIteratorT = {
  *
  * @param delay The requested delay between emitted items by the observable.
  */
-const fromIterable = (options) => {
-    const call = fromEnumerable(options);
-    return compose(fromIterable$1(), call);
-};
+const fromIterable = (options) => compose(fromIterable$1(), fromEnumerable(options));
 const fromIterableT = {
     fromIterable,
 };
@@ -1160,7 +1160,7 @@ class ZipObserver extends AbstractDelegatingObserver {
 const _zip = (...observables) => {
     const isEnumerableTag = pipe(observables, everySatisfy$1(isEnumerable));
     return isEnumerableTag
-        ? pipe(using(pipeLazy(observables, map$1(enumerateObs)), (...enumerators) => pipe(zip$1(...enumerators), returns, fromEnumerator())), tagEnumerable(true))
+        ? pipe(using(pipeLazy(observables, map$1(enumerateObs)), (...enumerators) => pipe(zip$1(...enumerators), returns, fromEnumerator())), tagObservableType(2))
         : createObservable(observer => {
             const count = getLength(observables);
             const enumerators = [];
@@ -1297,7 +1297,7 @@ const generate = (generator, initialValue, options) => {
             }
         };
     };
-    return pipe(defer(factory, options), tagEnumerable(!hasDelay(options)));
+    return pipe(defer(factory, options), tagObservableType(hasDelay(options) ? 1 : 2));
 };
 const generateT = {
     generate,

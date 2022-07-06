@@ -38,9 +38,21 @@ export const isRunnable = <T>(
   obs: ObservableLike<T>,
 ): obs is RunnableObservableLike<T> => obs.observableType === 1;
 
-export const tagEnumerable =
-  <T>(isEnumerable: boolean) =>
+export const tagObservableType =
+  <T>(tag: EnumerableObservable | RunnableObservable | DefaultObservable) =>
   (obs: ObservableLike<T>): ObservableLike<T> => {
-    (obs as any).observableType = isEnumerable ? 2 : 0;
+    (obs as any).observableType = tag;
     return obs;
   };
+
+export const computeMinTag = (
+  observables: readonly ObservableLike<unknown>[],
+): EnumerableObservable | RunnableObservable | DefaultObservable => {
+  let min: EnumerableObservable | RunnableObservable | DefaultObservable = 2;
+  const { length } = observables;
+  for (let i = 0; i < length; i++) {
+    const { observableType } = observables[i];
+    min = observableType < min ? observableType : min;
+  }
+  return min;
+};

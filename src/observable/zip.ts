@@ -29,7 +29,7 @@ import { sourceFrom } from "../reactiveContainer";
 import { assertState, notify } from "../reactiveSink";
 import { createObservable } from "./createObservable";
 import { fromEnumerator } from "./fromEnumerable";
-import { isEnumerable, tagEnumerable } from "./observable";
+import { isEnumerable, tagObservableType } from "./observable";
 import { AbstractDelegatingObserver } from "./observer";
 import { enumerateObs } from "./toEnumerable";
 import { using } from "./using";
@@ -120,7 +120,7 @@ const _zip = (
           (...enumerators: readonly Enumerator<any>[]) =>
             pipe(zipEnumerators(...enumerators), returns, fromEnumerator()),
         ),
-        tagEnumerable(true),
+        tagObservableType(2),
       )
     : createObservable(observer => {
         const count = getLength(observables);
