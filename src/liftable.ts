@@ -20,11 +20,11 @@ import {
   pipeLazy,
 } from "./functions";
 
-export interface LiftableLike extends ContainerLike {
+export interface LiftableContainerLike extends ContainerLike {
   readonly TLiftableState: Disposable & ContainerLike;
 }
 
-export type LiftableStateOf<C extends LiftableLike, T> = C extends {
+export type LiftableStateOf<C extends LiftableContainerLike, T> = C extends {
   readonly TLiftableState: unknown;
 }
   ? (C & {
@@ -35,25 +35,26 @@ export type LiftableStateOf<C extends LiftableLike, T> = C extends {
       readonly _T: () => T;
     };
 
-export interface CatchError<C extends LiftableLike> extends Container<C> {
+export interface CatchError<C extends LiftableContainerLike>
+  extends Container<C> {
   catchError<T>(
     onError: Function1<unknown, ContainerOf<C, T> | void>,
   ): ContainerOperator<C, T, T>;
 }
 
-export interface DecodeWithCharset<C extends LiftableLike>
+export interface DecodeWithCharset<C extends LiftableContainerLike>
   extends Container<C> {
   decodeWithCharset(
     charset?: string,
   ): ContainerOperator<C, ArrayBuffer, string>;
 }
 
-export interface Defer<C extends LiftableLike> extends Container<C> {
+export interface Defer<C extends LiftableContainerLike> extends Container<C> {
   defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
 }
 
 export interface FromIterable<
-  C extends LiftableLike,
+  C extends LiftableContainerLike,
   O extends Record<string, never> = Record<string, never>,
 > extends Container<C> {
   fromIterable<T>(
@@ -62,7 +63,7 @@ export interface FromIterable<
 }
 
 export interface FromIterator<
-  C extends LiftableLike,
+  C extends LiftableContainerLike,
   O extends Record<string, unknown> = Record<string, never>,
 > extends Container<C> {
   fromIterator<T, TReturn = any, TNext = unknown>(
@@ -70,11 +71,12 @@ export interface FromIterator<
   ): Function1<Factory<Iterator<T, TReturn, TNext>>, ContainerOf<C, T>>;
 }
 
-export interface ThrowIfEmpty<C extends LiftableLike> extends Container<C> {
+export interface ThrowIfEmpty<C extends LiftableContainerLike>
+  extends Container<C> {
   throwIfEmpty<T>(factory: Factory<unknown>): ContainerOperator<C, T, T>;
 }
 
-export interface Using<C extends LiftableLike> extends Container<C> {
+export interface Using<C extends LiftableContainerLike> extends Container<C> {
   using<TResource extends Disposable, T>(
     resourceFactory: Factory<TResource>,
     containerFactory: Function1<TResource, ContainerOf<C, T>>,
@@ -145,7 +147,7 @@ export interface Using<C extends LiftableLike> extends Container<C> {
 }
 
 export const encodeUtf8 =
-  <C extends LiftableLike>(
+  <C extends LiftableContainerLike>(
     m: Defer<C> & Map<C>,
   ): ContainerOperator<C, string, Uint8Array> =>
   obs =>
@@ -158,7 +160,7 @@ export const encodeUtf8 =
     });
 
 export const genMap = <
-  C extends LiftableLike,
+  C extends LiftableContainerLike,
   TA,
   TB,
   OConcatAll extends Record<string, never> = Record<string, never>,

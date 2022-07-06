@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`LiftableLike`](liftable.LiftableLike.md)
+- [`LiftableContainerLike`](liftable.LiftableContainerLike.md)
 
   ↳ **`InteractiveContainerLike`**
 
@@ -35,7 +35,7 @@
 
 #### Inherited from
 
-[LiftableLike](liftable.LiftableLike.md).[T](liftable.LiftableLike.md#t)
+[LiftableContainerLike](liftable.LiftableContainerLike.md).[T](liftable.LiftableContainerLike.md#t)
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 #### Inherited from
 
-[LiftableLike](liftable.LiftableLike.md).[TContainerOf](liftable.LiftableLike.md#tcontainerof)
+[LiftableContainerLike](liftable.LiftableContainerLike.md).[TContainerOf](liftable.LiftableContainerLike.md#tcontainerof)
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 #### Overrides
 
-[LiftableLike](liftable.LiftableLike.md).[TLiftableState](liftable.LiftableLike.md#tliftablestate)
+[LiftableContainerLike](liftable.LiftableContainerLike.md).[TLiftableState](liftable.LiftableContainerLike.md#tliftablestate)
 
 ## Methods
 
