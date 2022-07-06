@@ -2,7 +2,7 @@ import { DispatcherLike, dispatch } from "./dispatcher";
 import { Disposable } from "./disposable";
 import { pipe, raise } from "./functions";
 import { InteractiveSourceLike } from "./interactiveSource";
-import { ObservableLike } from "./observable";
+import { DefaultObservable, ObservableLike } from "./observable";
 import { Observer } from "./observer";
 import { none } from "./option";
 import { SchedulerLike } from "./scheduler";
@@ -23,6 +23,8 @@ export abstract class AsyncEnumerator<T>
   get TLiftableContainerState(): Observer<this["T"]> {
     return raise();
   }
+
+  readonly observableType: DefaultObservable = 0;
 
   abstract scheduler: SchedulerLike;
   abstract observerCount: number;

@@ -1,6 +1,7 @@
 import { Disposable, add, addTo } from "./disposable";
 import { newInstance, pipe, raise } from "./functions";
 import {
+  DefaultObservable,
   MulticastObservableLike,
   ObservableOperator,
   Subject,
@@ -46,7 +47,7 @@ class StreamImpl<TReq, T> extends Disposable implements StreamLike<TReq, T> {
     return raise();
   }
 
-  isEnumerable?: boolean;
+  readonly observableType: DefaultObservable = 0;
 
   get observerCount(): number {
     return getObserverCount(this.observable);

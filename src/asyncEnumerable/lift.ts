@@ -5,6 +5,7 @@ import {
 } from "../asyncEnumerable";
 import { AsyncEnumerator } from "../asyncEnumerator";
 import { Function1, newInstance, pipe, raise } from "../functions";
+import { DefaultObservable } from "../observable";
 import { SchedulerLike } from "../scheduler";
 import { StreamableLike, stream } from "../streamable";
 
@@ -26,6 +27,8 @@ export abstract class AbstractAsyncEnumerable<T>
   get TCtx(): SchedulerLike {
     return raise();
   }
+
+  readonly observableType: DefaultObservable = 0;
 
   source(scheduler: SchedulerLike): AsyncEnumerator<T> {
     return pipe(this, stream(scheduler));

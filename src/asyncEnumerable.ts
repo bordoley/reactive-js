@@ -48,6 +48,7 @@ import { InteractiveContainerLike } from "./interactiveContainer";
 import { FromIterable } from "./liftableContainer";
 import {
   AsyncReducer,
+  DefaultObservable,
   MulticastObservableLike,
   ObservableLike,
   ObservableOperator,
@@ -403,6 +404,8 @@ abstract class AbstractDelegatingAsyncEnumerator<TA, TB>
     super();
   }
 
+  readonly observableType: DefaultObservable = 0;
+
   get observerCount() {
     return pipe(this, getDelegate, getObserverCount);
   }
@@ -451,6 +454,8 @@ export const keep: <T>(
     get replay(): number {
       return getReplay(this.obs);
     }
+
+    readonly observableType: DefaultObservable = 0;
 
     sink(observer: Observer<T>): void {
       pipe(this.obs, sinkInto(observer));

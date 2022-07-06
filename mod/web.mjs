@@ -84,6 +84,7 @@ class WindowLocationStream extends Disposable {
         super();
         this.delegate = delegate;
         this.historyCounter = -1;
+        this.observableType = 0;
     }
     get T() {
         return raise();

@@ -28,7 +28,7 @@
 
 ### Properties
 
-- [isEnumerable](observable.Subject.md#isenumerable)
+- [observableType](observable.Subject.md#observabletype)
 - [replay](observable.Subject.md#replay)
 
 ### Accessors
@@ -71,13 +71,13 @@
 
 ## Properties
 
-### isEnumerable
+### observableType
 
-• `Optional` **isEnumerable**: `boolean`
+• `Readonly` **observableType**: ``0``
 
 #### Implementation of
 
-MulticastObservableLike.isEnumerable
+MulticastObservableLike.observableType
 
 ___
 
@@ -107,11 +107,11 @@ ___
 
 ### TContainerOf
 
-• `get` **TContainerOf**(): [`Subject`](observable.Subject.md)<this[``"T"``]\>
+• `get` **TContainerOf**(): [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`this`[``"T"``]\>
 
 #### Returns
 
-[`Subject`](observable.Subject.md)<this[``"T"``]\>
+[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`this`[``"T"``]\>
 
 #### Implementation of
 

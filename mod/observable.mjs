@@ -33,9 +33,9 @@ class AbstractObservable {
         return raise();
     }
 }
-const isEnumerable = (obs) => { var _a; return (_a = obs.isEnumerable) !== null && _a !== void 0 ? _a : false; };
+const isEnumerable = (obs) => { var _a; return (_a = obs.observableType === 2) !== null && _a !== void 0 ? _a : false; };
 const tagEnumerable = (isEnumerable) => (obs) => {
-    obs.isEnumerable = isEnumerable;
+    obs.observableType = isEnumerable ? 2 : 0;
     return obs;
 };
 
@@ -43,6 +43,7 @@ class CreateObservable extends AbstractObservable {
     constructor(f) {
         super();
         this.f = f;
+        this.observableType = 0;
     }
     sink(observer) {
         try {
@@ -107,11 +108,11 @@ const fromArrayT = {
 };
 
 class LiftedObservable extends AbstractObservable {
-    constructor(source, operators, isEnumerable) {
+    constructor(source, operators, observableType) {
         super();
         this.source = source;
         this.operators = operators;
-        this.isEnumerable = isEnumerable;
+        this.observableType = observableType;
     }
     sink(observer) {
         pipe(observer, ...this.operators, sourceFrom(this.source));
@@ -129,7 +130,9 @@ const lift = (operator, isEnumerableOperator = false) => source => {
         ? [operator, ...source.operators]
         : [operator];
     isEnumerableOperator = isEnumerable(source) && isEnumerableOperator;
-    return newInstance(LiftedObservable, sourceSource, allFunctions, isEnumerableOperator);
+    return newInstance(LiftedObservable, sourceSource, allFunctions, isEnumerableOperator
+        ? 2
+        : 0);
 };
 const liftT = {
     lift,
@@ -182,6 +185,7 @@ class Subject extends Disposable {
         this.replay = replay;
         this.observers = newInstance(Set);
         this.replayed = [];
+        this.observableType = 0;
     }
     get T() {
         return raise();
