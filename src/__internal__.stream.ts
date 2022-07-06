@@ -42,7 +42,7 @@ class StreamImpl<TReq, T> extends Disposable implements StreamLike<TReq, T> {
     return this;
   }
 
-  get TLiftableState(): Observer<this["T"]> {
+  get TLiftableContainerState(): Observer<this["T"]> {
     return raise();
   }
 

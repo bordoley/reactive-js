@@ -5,10 +5,11 @@ import { ObservableLike } from "./observable.mjs";
 import { Observer } from "./observer.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
 import { StreamLike } from "./stream.mjs";
-declare abstract class AsyncEnumerator<T> extends Disposable implements InteractiveSourceLike<T>, StreamLike<void, T> {
+declare abstract class AsyncEnumerator<T> extends Disposable implements InteractiveSourceLike, StreamLike<void, T> {
     get T(): T;
     get TContainerOf(): this;
-    get TLiftableState(): Observer<this["T"]>;
+    get TLiftableContainerState(): Observer<this["T"]>;
+    get TLiftableContainerStateType(): 1;
     abstract scheduler: SchedulerLike;
     abstract observerCount: number;
     abstract replay: number;

@@ -1,6 +1,6 @@
 /// <reference types="./asyncEnumerable.d.ts" />
 import { createFromArray } from './__internal__.container.mjs';
-import { covariant, getDelegate, createKeepLiftOperator, createMapLiftOperator, createScanLiftOperator, createTakeWhileLiftOperator } from './__internal__.liftable.mjs';
+import { getDelegate, createKeepLiftOperator, createMapLiftOperator, createScanLiftOperator, createTakeWhileLiftOperator } from './__internal__.liftable.mjs';
 import { getDelay } from './__internal__.optionalArgs.mjs';
 import { raise, pipe, newInstance, getLength, compose, increment, returns, pipeLazy, newInstanceWith } from './functions.mjs';
 import { stream } from './streamable.mjs';
@@ -22,7 +22,7 @@ class AbstractAsyncEnumerable {
     get TContainerOf() {
         return this;
     }
-    get TLiftableState() {
+    get TLiftableContainerState() {
         return raise();
     }
     get TCtx() {
@@ -51,7 +51,6 @@ const lift = (operator) => enumerable => {
     return newInstance(LiftedAsyncEnumerable, src, allFunctions);
 };
 const liftT = {
-    variance: covariant,
     lift,
 };
 
@@ -159,13 +158,13 @@ class AbstractDelegatingAsyncEnumerator extends AsyncEnumerator {
         this.delegate = delegate;
     }
     get observerCount() {
-        return pipe(this, getDelegate, getObserverCount);
+        return pipe(this.delegate, getObserverCount);
     }
     get replay() {
-        return pipe(this, getDelegate, getReplay);
+        return pipe(this.delegate, getReplay);
     }
     get scheduler() {
-        return getDelegate(this).scheduler;
+        return this.delegate.scheduler;
     }
     dispatch(req) {
         pipe(this, getDelegate, dispatch(req));

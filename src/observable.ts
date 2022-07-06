@@ -98,7 +98,7 @@ import {
 export interface ObservableLike<T> extends ReactiveContainerLike {
   readonly T: unknown;
   readonly TContainerOf: ObservableLike<this["T"]>;
-  readonly TLiftableState: Observer<this["T"]>;
+  readonly TLiftableContainerState: Observer<this["T"]>;
 
   readonly isEnumerable?: boolean;
 

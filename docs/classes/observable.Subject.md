@@ -35,7 +35,7 @@
 
 - [T](observable.Subject.md#t)
 - [TContainerOf](observable.Subject.md#tcontainerof)
-- [TLiftableState](observable.Subject.md#tliftablestate)
+- [TLiftableContainerState](observable.Subject.md#tliftablecontainerstate)
 - [error](observable.Subject.md#error)
 - [isDisposed](observable.Subject.md#isdisposed)
 - [observerCount](observable.Subject.md#observercount)
@@ -119,9 +119,9 @@ MulticastObservableLike.TContainerOf
 
 ___
 
-### TLiftableState
+### TLiftableContainerState
 
-• `get` **TLiftableState**(): [`Observer`](observer.Observer.md)<`this`[``"T"``]\>
+• `get` **TLiftableContainerState**(): [`Observer`](observer.Observer.md)<`this`[``"T"``]\>
 
 #### Returns
 
@@ -129,7 +129,7 @@ ___
 
 #### Implementation of
 
-MulticastObservableLike.TLiftableState
+MulticastObservableLike.TLiftableContainerState
 
 ___
 

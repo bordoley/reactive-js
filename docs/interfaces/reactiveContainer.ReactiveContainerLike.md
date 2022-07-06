@@ -20,7 +20,7 @@
 
 - [T](reactiveContainer.ReactiveContainerLike.md#t)
 - [TContainerOf](reactiveContainer.ReactiveContainerLike.md#tcontainerof)
-- [TLiftableState](reactiveContainer.ReactiveContainerLike.md#tliftablestate)
+- [TLiftableContainerState](reactiveContainer.ReactiveContainerLike.md#tliftablecontainerstate)
 
 ### Methods
 
@@ -48,13 +48,13 @@ ___
 
 ___
 
-### TLiftableState
+### TLiftableContainerState
 
-• `Readonly` **TLiftableState**: [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)<`unknown`\>
+• `Readonly` **TLiftableContainerState**: [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)<`unknown`\>
 
 #### Overrides
 
-[LiftableContainerLike](liftable.LiftableContainerLike.md).[TLiftableState](liftable.LiftableContainerLike.md#tliftablestate)
+[LiftableContainerLike](liftable.LiftableContainerLike.md).[TLiftableContainerState](liftable.LiftableContainerLike.md#tliftablecontainerstate)
 
 ## Methods
 
@@ -66,7 +66,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | `unknown` |
+| `this` | [`ReactiveContainerLike`](reactiveContainer.ReactiveContainerLike.md) |
 | `sink` | [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)<`unknown`\> |
 
 #### Returns

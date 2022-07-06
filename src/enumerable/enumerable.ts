@@ -19,7 +19,7 @@ export abstract class AbstractEnumerable<T> implements EnumerableLike<T> {
     return this;
   }
 
-  get TLiftableState(): Enumerator<this["T"]> {
+  get TLiftableContainerState(): Enumerator<this["T"]> {
     return raise();
   }
 

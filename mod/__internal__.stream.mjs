@@ -20,7 +20,7 @@ class StreamImpl extends Disposable {
     get TContainerOf() {
         return this;
     }
-    get TLiftableState() {
+    get TLiftableContainerState() {
         return raise();
     }
     get observerCount() {

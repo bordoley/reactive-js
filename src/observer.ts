@@ -9,6 +9,7 @@ import {
   onDisposed,
 } from "./disposable";
 import { getLength, isEmpty, newInstanceWith, pipe, raise } from "./functions";
+import { reactive } from "./liftable";
 import { Option, isNone, none } from "./option";
 import { ReactiveSinkLike, assertState } from "./reactiveSink";
 import {
@@ -79,12 +80,8 @@ export class Observer<T> extends Disposable implements ReactiveSinkLike<T> {
     super();
   }
 
-  get T(): T {
-    return raise();
-  }
-
-  get TContainerOf(): this {
-    return this;
+  get TLiftableContainerStateType() {
+    return reactive;
   }
 
   get dispatcher(): DispatcherLike<T> {

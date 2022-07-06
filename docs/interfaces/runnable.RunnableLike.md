@@ -22,7 +22,7 @@
 
 - [T](runnable.RunnableLike.md#t)
 - [TContainerOf](runnable.RunnableLike.md#tcontainerof)
-- [TLiftableState](runnable.RunnableLike.md#tliftablestate)
+- [TLiftableContainerState](runnable.RunnableLike.md#tliftablecontainerstate)
 
 ### Methods
 
@@ -50,13 +50,13 @@ ___
 
 ___
 
-### TLiftableState
+### TLiftableContainerState
 
-• `Readonly` **TLiftableState**: [`RunnableSink`](../classes/runnableSink.RunnableSink.md)<`unknown`\>
+• `Readonly` **TLiftableContainerState**: [`RunnableSink`](../classes/runnableSink.RunnableSink.md)<`unknown`\>
 
 #### Overrides
 
-[ReactiveContainerLike](reactiveContainer.ReactiveContainerLike.md).[TLiftableState](reactiveContainer.ReactiveContainerLike.md#tliftablestate)
+[ReactiveContainerLike](reactiveContainer.ReactiveContainerLike.md).[TLiftableContainerState](reactiveContainer.ReactiveContainerLike.md#tliftablecontainerstate)
 
 ## Methods
 

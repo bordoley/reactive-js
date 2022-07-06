@@ -1,20 +1,17 @@
 import { __DEV__ } from "./__internal__.env";
-import { ContainerLike } from "./container";
 import { Disposable } from "./disposable";
+import { TInteractive } from "./liftable";
 
-export interface InteractiveSourceLike<T> extends Disposable, ContainerLike {
-  readonly T: T;
-  readonly TContainerOf: InteractiveSourceLike<this["T"]>;
-
-  move(): void;
+export interface InteractiveSourceLike extends Disposable {
+  readonly TLiftableContainerStateType: TInteractive;
+  move(this: this): void;
 }
 
 export const move = <
-  T,
-  TSource extends InteractiveSourceLike<T> = InteractiveSourceLike<T>,
+  TSource extends InteractiveSourceLike = InteractiveSourceLike,
 >(
   source: TSource,
-): InteractiveSourceLike<T> => {
+): TSource => {
   source.move();
   return source;
 };

@@ -16,14 +16,13 @@
 
 ### move
 
-▸ **move**<`T`, `TSource`\>(`source`): [`InteractiveSourceLike`](../interfaces/interactiveSource.InteractiveSourceLike.md)<`T`\>
+▸ **move**<`TSource`\>(`source`): `TSource`
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | `T` |
-| `TSource` | extends [`InteractiveSourceLike`](../interfaces/interactiveSource.InteractiveSourceLike.md)<`T`, `TSource`\> = [`InteractiveSourceLike`](../interfaces/interactiveSource.InteractiveSourceLike.md)<`T`\> |
+| `TSource` | extends [`InteractiveSourceLike`](../interfaces/interactiveSource.InteractiveSourceLike.md)<`TSource`\> = [`InteractiveSourceLike`](../interfaces/interactiveSource.InteractiveSourceLike.md) |
 
 #### Parameters
 
@@ -33,4 +32,4 @@
 
 #### Returns
 
-[`InteractiveSourceLike`](../interfaces/interactiveSource.InteractiveSourceLike.md)<`T`\>
+`TSource`

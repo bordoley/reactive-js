@@ -74,7 +74,7 @@ import { RunnableSink } from "./runnableSink";
 export interface RunnableLike<T> extends ReactiveContainerLike {
   readonly T: unknown;
   readonly TContainerOf: RunnableLike<this["T"]>;
-  readonly TLiftableState: RunnableSink<this["T"]>;
+  readonly TLiftableContainerState: RunnableSink<this["T"]>;
 
   sink(this: RunnableLike<T>, sink: RunnableSink<T>): void;
 }

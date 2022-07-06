@@ -18,7 +18,7 @@
 
 ## Implements
 
-- [`InteractiveSourceLike`](../interfaces/interactiveSource.InteractiveSourceLike.md)<`T`\>
+- [`InteractiveSourceLike`](../interfaces/interactiveSource.InteractiveSourceLike.md)
 - [`StreamLike`](../interfaces/stream.StreamLike.md)<`void`, `T`\>
 
 ## Table of contents
@@ -38,7 +38,8 @@
 
 - [T](asyncEnumerator.AsyncEnumerator.md#t)
 - [TContainerOf](asyncEnumerator.AsyncEnumerator.md#tcontainerof)
-- [TLiftableState](asyncEnumerator.AsyncEnumerator.md#tliftablestate)
+- [TLiftableContainerState](asyncEnumerator.AsyncEnumerator.md#tliftablecontainerstate)
+- [TLiftableContainerStateType](asyncEnumerator.AsyncEnumerator.md#tliftablecontainerstatetype)
 - [error](asyncEnumerator.AsyncEnumerator.md#error)
 - [isDisposed](asyncEnumerator.AsyncEnumerator.md#isdisposed)
 
@@ -118,7 +119,7 @@ StreamLike.scheduler
 
 #### Implementation of
 
-[InteractiveSourceLike](../interfaces/interactiveSource.InteractiveSourceLike.md).[T](../interfaces/interactiveSource.InteractiveSourceLike.md#t)
+StreamLike.T
 
 ___
 
@@ -132,13 +133,13 @@ ___
 
 #### Implementation of
 
-[InteractiveSourceLike](../interfaces/interactiveSource.InteractiveSourceLike.md).[TContainerOf](../interfaces/interactiveSource.InteractiveSourceLike.md#tcontainerof)
+StreamLike.TContainerOf
 
 ___
 
-### TLiftableState
+### TLiftableContainerState
 
-• `get` **TLiftableState**(): [`Observer`](observer.Observer.md)<`this`[``"T"``]\>
+• `get` **TLiftableContainerState**(): [`Observer`](observer.Observer.md)<`this`[``"T"``]\>
 
 #### Returns
 
@@ -146,7 +147,21 @@ ___
 
 #### Implementation of
 
-StreamLike.TLiftableState
+StreamLike.TLiftableContainerState
+
+___
+
+### TLiftableContainerStateType
+
+• `get` **TLiftableContainerStateType**(): ``1``
+
+#### Returns
+
+``1``
+
+#### Implementation of
+
+[InteractiveSourceLike](../interfaces/interactiveSource.InteractiveSourceLike.md).[TLiftableContainerStateType](../interfaces/interactiveSource.InteractiveSourceLike.md#tliftablecontainerstatetype)
 
 ___
 

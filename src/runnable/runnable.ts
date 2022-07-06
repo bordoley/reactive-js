@@ -11,7 +11,7 @@ export abstract class AbstractRunnable<T> implements RunnableLike<T> {
     return this;
   }
 
-  get TLiftableState(): RunnableSink<this["T"]> {
+  get TLiftableContainerState(): RunnableSink<this["T"]> {
     return raise();
   }
 

@@ -1,6 +1,6 @@
 /// <reference types="./enumerable.d.ts" />
 import { AbstractEnumerator, reset, zip as zip$1 } from './__internal__.enumerator.mjs';
-import { getDelegate, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './__internal__.liftable.mjs';
+import { getDelegate, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './__internal__.liftable.mjs';
 import { map as map$1, empty as empty$1, forEach as forEach$1 } from './__internal__.readonlyArray.mjs';
 import { isDisposed, dispose, add, addTo, bindTo } from './disposable.mjs';
 import { DisposableRef } from './__internal__.disposable.mjs';
@@ -54,7 +54,7 @@ class AbstractEnumerable {
     get TContainerOf() {
         return this;
     }
-    get TLiftableState() {
+    get TLiftableContainerState() {
         return raise();
     }
     get TCtx() {
@@ -126,7 +126,6 @@ const lift = (operator) => enumerable => {
     return newInstance(LiftedEnumerable, src, allFunctions);
 };
 const liftT = {
-    variance: covariant,
     lift,
 };
 

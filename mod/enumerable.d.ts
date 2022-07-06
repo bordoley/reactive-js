@@ -88,12 +88,13 @@ declare const zipT: Zip<EnumerableLike<unknown>>;
 interface EnumerableLike<T> extends InteractiveContainerLike {
     readonly T: unknown;
     readonly TContainerOf: EnumerableLike<this["T"]>;
-    readonly TLiftableState: Enumerator<this["T"]>;
+    readonly TLiftableContainerState: Enumerator<this["T"]>;
     readonly TCtx: void;
     /**
      * Returns an `EnumeratorLike` to iterate through the Container.
      */
-    enumerate(this: EnumerableLike<this["T"]>, _: void): Enumerator<T>;
+    enumerate(this: EnumerableLike<this["T"]>): Enumerator<T>;
+    source(this: EnumerableLike<this["T"]>, _: void): Enumerator<T>;
 }
 /** A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB> */
 declare type EnumerableOperator<TA, TB> = Function1<EnumerableLike<TA>, EnumerableLike<TB>>;

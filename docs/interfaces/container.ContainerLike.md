@@ -10,11 +10,7 @@
 
   ↳ [`FlowableLike`](flowable.FlowableLike.md)
 
-  ↳ [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)
-
   ↳ [`LiftableContainerLike`](liftable.LiftableContainerLike.md)
-
-  ↳ [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)
 
   ↳ [`SequenceLike`](sequence.SequenceLike.md)
 
