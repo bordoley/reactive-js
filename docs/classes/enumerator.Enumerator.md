@@ -20,7 +20,7 @@
 
 ## Implements
 
-- [`InteractiveSourceLike`](../interfaces/interactiveSource.InteractiveSourceLike.md)<`T`\>
+- [`InteractiveSourceLike`](../interfaces/interactiveSource.InteractiveSourceLike.md)
 
 ## Table of contents
 
@@ -30,8 +30,7 @@
 
 ### Accessors
 
-- [T](enumerator.Enumerator.md#t)
-- [TContainerOf](enumerator.Enumerator.md#tcontainerof)
+- [TLiftableContainerStateType](enumerator.Enumerator.md#tliftablecontainerstatetype)
 - [current](enumerator.Enumerator.md#current)
 - [error](enumerator.Enumerator.md#error)
 - [hasCurrent](enumerator.Enumerator.md#hascurrent)
@@ -61,31 +60,17 @@
 
 ## Accessors
 
-### T
+### TLiftableContainerStateType
 
-• `get` **T**(): `T`
-
-#### Returns
-
-`T`
-
-#### Implementation of
-
-[InteractiveSourceLike](../interfaces/interactiveSource.InteractiveSourceLike.md).[T](../interfaces/interactiveSource.InteractiveSourceLike.md#t)
-
-___
-
-### TContainerOf
-
-• `get` **TContainerOf**(): `this`
+• `get` **TLiftableContainerStateType**(): ``1``
 
 #### Returns
 
-`this`
+``1``
 
 #### Implementation of
 
-[InteractiveSourceLike](../interfaces/interactiveSource.InteractiveSourceLike.md).[TContainerOf](../interfaces/interactiveSource.InteractiveSourceLike.md#tcontainerof)
+[InteractiveSourceLike](../interfaces/interactiveSource.InteractiveSourceLike.md).[TLiftableContainerStateType](../interfaces/interactiveSource.InteractiveSourceLike.md#tliftablecontainerstatetype)
 
 ___
 

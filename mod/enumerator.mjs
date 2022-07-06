@@ -1,13 +1,10 @@
 /// <reference types="./enumerator.d.ts" />
 import { Disposable } from './disposable.mjs';
-import { raise } from './functions.mjs';
+import { interactive } from './liftable.mjs';
 
 class Enumerator extends Disposable {
-    get T() {
-        return raise();
-    }
-    get TContainerOf() {
-        return this;
+    get TLiftableContainerStateType() {
+        return interactive;
     }
 }
 const getCurrent = (enumerator) => enumerator.current;

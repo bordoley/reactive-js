@@ -1,14 +1,21 @@
 import { ContainerLike, Container, ContainerOf, ContainerOperator, Map, ConcatAll } from "./container.mjs";
 import { Disposable } from "./disposable.mjs";
 import { Function1, Factory, Function2, Function3, Function4, Function5 } from "./functions.mjs";
-interface LiftableContainerLike extends ContainerLike {
-    readonly TLiftableState: Disposable & ContainerLike;
+declare type TReactive = 0;
+declare const reactive: TReactive;
+declare type TInteractive = 1;
+declare const interactive: TInteractive;
+interface LiftableContainerStateLike extends Disposable {
+    readonly TLiftableContainerStateType: TReactive | TInteractive;
 }
-declare type LiftableStateOf<C extends LiftableContainerLike, T> = C extends {
-    readonly TLiftableState: unknown;
+interface LiftableContainerLike extends ContainerLike {
+    readonly TLiftableContainerState: LiftableContainerStateLike;
+}
+declare type LiftableContainerStateOf<C extends LiftableContainerLike, T> = C extends {
+    readonly TLiftableContainerState: unknown;
 } ? (C & {
     readonly T: T;
-})["TLiftableState"] : {
+})["TLiftableContainerState"] : {
     readonly _C: C;
     readonly _T: () => T;
 };
@@ -58,4 +65,4 @@ interface Using<C extends LiftableContainerLike> extends Container<C> {
 }
 declare const encodeUtf8: <C extends LiftableContainerLike>(m: Defer<C> & Map<C>) => ContainerOperator<C, string, Uint8Array>;
 declare const genMap: <C extends LiftableContainerLike, TA, TB, OConcatAll extends Record<string, never> = Record<string, never>, OFromIterator extends Record<string, never> = Record<string, never>, TReturn = any, TNext = unknown>(m: Map<C> & ConcatAll<C, OConcatAll> & FromIterator<C, OFromIterator>, mapper: Function1<TA, Generator<TB, TReturn, TNext>>, options?: Partial<OConcatAll & OFromIterator> | undefined) => ContainerOperator<C, TA, TB>;
-export { CatchError, DecodeWithCharset, Defer, FromIterable, FromIterator, LiftableContainerLike, LiftableStateOf, ThrowIfEmpty, Using, encodeUtf8, genMap };
+export { CatchError, DecodeWithCharset, Defer, FromIterable, FromIterator, LiftableContainerLike, LiftableContainerStateLike, LiftableContainerStateOf, TInteractive, TReactive, ThrowIfEmpty, Using, encodeUtf8, genMap, interactive, reactive };

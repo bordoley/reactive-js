@@ -10,7 +10,7 @@ import { getScheduler, Observer, getDispatcher } from './observer.mjs';
 import { sinkInto, sourceFrom } from './reactiveContainer.mjs';
 import { schedule, __yield, isInContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { createFromArray } from './__internal__.container.mjs';
-import { contraVariant, getDelegate } from './__internal__.liftable.mjs';
+import { getDelegate } from './__internal__.liftable.mjs';
 import { notify, assertState, notifySink } from './reactiveSink.mjs';
 import { DisposableRef } from './__internal__.disposable.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -28,7 +28,7 @@ class AbstractObservable {
     get TContainerOf() {
         return this;
     }
-    get TLiftableState() {
+    get TLiftableContainerState() {
         return raise();
     }
 }
@@ -131,11 +131,9 @@ const lift = (operator, isEnumerableOperator = false) => source => {
     return newInstance(LiftedObservable, sourceSource, allFunctions, isEnumerableOperator);
 };
 const liftT = {
-    variance: contraVariant,
     lift,
 };
 const liftSynchronousT = {
-    variance: contraVariant,
     lift: op => lift(op, true),
 };
 
@@ -188,7 +186,7 @@ class Subject extends Disposable {
     get TContainerOf() {
         return raise();
     }
-    get TLiftableState() {
+    get TLiftableContainerState() {
         return raise();
     }
     get observerCount() {

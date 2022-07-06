@@ -11,7 +11,7 @@ export abstract class AbstractObservable<T> implements ObservableLike<T> {
     return this;
   }
 
-  get TLiftableState(): Observer<this["T"]> {
+  get TLiftableContainerState(): Observer<this["T"]> {
     return raise();
   }
 

@@ -21,7 +21,7 @@
 - [T](interactiveContainer.InteractiveContainerLike.md#t)
 - [TContainerOf](interactiveContainer.InteractiveContainerLike.md#tcontainerof)
 - [TCtx](interactiveContainer.InteractiveContainerLike.md#tctx)
-- [TLiftableState](interactiveContainer.InteractiveContainerLike.md#tliftablestate)
+- [TLiftableContainerState](interactiveContainer.InteractiveContainerLike.md#tliftablecontainerstate)
 
 ### Methods
 
@@ -55,19 +55,19 @@ ___
 
 ___
 
-### TLiftableState
+### TLiftableContainerState
 
-• `Readonly` **TLiftableState**: [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)<`unknown`\>
+• `Readonly` **TLiftableContainerState**: [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)
 
 #### Overrides
 
-[LiftableContainerLike](liftable.LiftableContainerLike.md).[TLiftableState](liftable.LiftableContainerLike.md#tliftablestate)
+[LiftableContainerLike](liftable.LiftableContainerLike.md).[TLiftableContainerState](liftable.LiftableContainerLike.md#tliftablecontainerstate)
 
 ## Methods
 
 ### source
 
-▸ **source**(`this`, `_`): [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)<`unknown`\>
+▸ **source**(`this`, `_`): [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)
 
 #### Parameters
 
@@ -78,4 +78,4 @@ ___
 
 #### Returns
 
-[`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)<`unknown`\>
+[`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)

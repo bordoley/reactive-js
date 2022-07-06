@@ -1,22 +1,31 @@
 import { __DEV__ } from "./__internal__.env";
 import { Container, ContainerOf } from "./container";
 import { Function1 } from "./functions";
-import { LiftableContainerLike, LiftableStateOf } from "./liftable";
+import { LiftableContainerLike, LiftableContainerStateOf } from "./liftable";
 import { ReactiveSinkLike } from "./reactiveSink";
 
 export interface ReactiveContainerLike extends LiftableContainerLike {
-  readonly TLiftableState: ReactiveSinkLike<unknown>;
+  readonly TLiftableContainerState: ReactiveSinkLike<unknown>;
 
-  sink(this: this["TContainerOf"], sink: this["TLiftableState"]): void;
+  sink(
+    this: this,
+    sink: LiftableContainerStateOf<ReactiveContainerLike, this["T"]>,
+  ): void;
 }
 
 export interface CreateReactiveContainer<C extends ReactiveContainerLike>
   extends Container<C> {
-  create<T>(onSink: (sink: LiftableStateOf<C, T>) => void): ContainerOf<C, T>;
+  create<T>(
+    onSink: (sink: LiftableContainerStateOf<C, T>) => void,
+  ): ContainerOf<C, T>;
 }
 
 export const sinkInto =
-  <C extends ReactiveContainerLike, T, TSink extends LiftableStateOf<C, T>>(
+  <
+    C extends ReactiveContainerLike,
+    T,
+    TSink extends LiftableContainerStateOf<C, T>,
+  >(
     sink: TSink,
   ): Function1<C, C> =>
   source => {
@@ -25,7 +34,11 @@ export const sinkInto =
   };
 
 export const sourceFrom =
-  <C extends ReactiveContainerLike, T, TSink extends LiftableStateOf<C, T>>(
+  <
+    C extends ReactiveContainerLike,
+    T,
+    TSink extends LiftableContainerStateOf<C, T>,
+  >(
     source: C,
   ): Function1<TSink, TSink> =>
   sink => {

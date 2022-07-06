@@ -25,7 +25,7 @@
 - [T](asyncEnumerable.AsyncEnumerableLike.md#t)
 - [TContainerOf](asyncEnumerable.AsyncEnumerableLike.md#tcontainerof)
 - [TCtx](asyncEnumerable.AsyncEnumerableLike.md#tctx)
-- [TLiftableState](asyncEnumerable.AsyncEnumerableLike.md#tliftablestate)
+- [TLiftableContainerState](asyncEnumerable.AsyncEnumerableLike.md#tliftablecontainerstate)
 
 ### Methods
 
@@ -64,19 +64,19 @@ ___
 
 ___
 
-### TLiftableState
+### TLiftableContainerState
 
-• `Readonly` **TLiftableState**: [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<`unknown`\>
+• `Readonly` **TLiftableContainerState**: [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)<`unknown`\>
 
 #### Overrides
 
-[InteractiveContainerLike](interactiveContainer.InteractiveContainerLike.md).[TLiftableState](interactiveContainer.InteractiveContainerLike.md#tliftablestate)
+[InteractiveContainerLike](interactiveContainer.InteractiveContainerLike.md).[TLiftableContainerState](interactiveContainer.InteractiveContainerLike.md#tliftablecontainerstate)
 
 ## Methods
 
 ### source
 
-▸ **source**(`this`, `_`): [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)<`unknown`\>
+▸ **source**(`this`, `_`): [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)
 
 #### Parameters
 
@@ -87,7 +87,7 @@ ___
 
 #### Returns
 
-[`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)<`unknown`\>
+[`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)
 
 #### Inherited from
 

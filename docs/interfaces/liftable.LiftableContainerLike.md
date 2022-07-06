@@ -20,7 +20,7 @@
 
 - [T](liftable.LiftableContainerLike.md#t)
 - [TContainerOf](liftable.LiftableContainerLike.md#tcontainerof)
-- [TLiftableState](liftable.LiftableContainerLike.md#tliftablestate)
+- [TLiftableContainerState](liftable.LiftableContainerLike.md#tliftablecontainerstate)
 
 ## Properties
 
@@ -44,6 +44,6 @@ ___
 
 ___
 
-### TLiftableState
+### TLiftableContainerState
 
-• `Readonly` **TLiftableState**: [`Disposable`](../classes/disposable.Disposable.md) & [`ContainerLike`](container.ContainerLike.md)
+• `Readonly` **TLiftableContainerState**: [`LiftableContainerStateLike`](liftable.LiftableContainerStateLike.md)

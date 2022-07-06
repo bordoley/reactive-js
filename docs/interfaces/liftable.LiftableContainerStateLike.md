@@ -1,42 +1,36 @@
-[Reactive-JS](../README.md) / [interactiveSource](../modules/interactiveSource.md) / InteractiveSourceLike
+[Reactive-JS](../README.md) / [liftable](../modules/liftable.md) / LiftableContainerStateLike
 
-# Interface: InteractiveSourceLike
+# Interface: LiftableContainerStateLike
 
-[interactiveSource](../modules/interactiveSource.md).InteractiveSourceLike
+[liftable](../modules/liftable.md).LiftableContainerStateLike
 
 ## Hierarchy
 
 - [`Disposable`](../classes/disposable.Disposable.md)
 
-  ↳ **`InteractiveSourceLike`**
-
-## Implemented by
-
-- [`AsyncEnumerator`](../classes/asyncEnumerator.AsyncEnumerator.md)
-- [`Enumerator`](../classes/enumerator.Enumerator.md)
+  ↳ **`LiftableContainerStateLike`**
 
 ## Table of contents
 
 ### Properties
 
-- [TLiftableContainerStateType](interactiveSource.InteractiveSourceLike.md#tliftablecontainerstatetype)
+- [TLiftableContainerStateType](liftable.LiftableContainerStateLike.md#tliftablecontainerstatetype)
 
 ### Accessors
 
-- [error](interactiveSource.InteractiveSourceLike.md#error)
-- [isDisposed](interactiveSource.InteractiveSourceLike.md#isdisposed)
+- [error](liftable.LiftableContainerStateLike.md#error)
+- [isDisposed](liftable.LiftableContainerStateLike.md#isdisposed)
 
 ### Methods
 
-- [add](interactiveSource.InteractiveSourceLike.md#add)
-- [dispose](interactiveSource.InteractiveSourceLike.md#dispose)
-- [move](interactiveSource.InteractiveSourceLike.md#move)
+- [add](liftable.LiftableContainerStateLike.md#add)
+- [dispose](liftable.LiftableContainerStateLike.md#dispose)
 
 ## Properties
 
 ### TLiftableContainerStateType
 
-• `Readonly` **TLiftableContainerStateType**: ``1``
+• `Readonly` **TLiftableContainerStateType**: ``0`` \| ``1``
 
 ## Accessors
 
@@ -82,7 +76,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md) |
+| `this` | [`LiftableContainerStateLike`](liftable.LiftableContainerStateLike.md) |
 | `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
 | `ignoreChildErrors` | `boolean` |
 
@@ -108,7 +102,7 @@ Dispose the resource.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `this` | [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md) | - |
+| `this` | [`LiftableContainerStateLike`](liftable.LiftableContainerStateLike.md) | - |
 | `error?` | [`Error`](disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns
@@ -118,19 +112,3 @@ Dispose the resource.
 #### Inherited from
 
 [Disposable](../classes/disposable.Disposable.md).[dispose](../classes/disposable.Disposable.md#dispose)
-
-___
-
-### move
-
-▸ **move**(`this`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `this` | [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md) |
-
-#### Returns
-
-`void`

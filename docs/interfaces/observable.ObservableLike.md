@@ -26,7 +26,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 - [T](observable.ObservableLike.md#t)
 - [TContainerOf](observable.ObservableLike.md#tcontainerof)
-- [TLiftableState](observable.ObservableLike.md#tliftablestate)
+- [TLiftableContainerState](observable.ObservableLike.md#tliftablecontainerstate)
 - [isEnumerable](observable.ObservableLike.md#isenumerable)
 
 ### Methods
@@ -55,13 +55,13 @@ ___
 
 ___
 
-### TLiftableState
+### TLiftableContainerState
 
-• `Readonly` **TLiftableState**: [`Observer`](../classes/observer.Observer.md)<`unknown`\>
+• `Readonly` **TLiftableContainerState**: [`Observer`](../classes/observer.Observer.md)<`unknown`\>
 
 #### Overrides
 
-[ReactiveContainerLike](reactiveContainer.ReactiveContainerLike.md).[TLiftableState](reactiveContainer.ReactiveContainerLike.md#tliftablestate)
+[ReactiveContainerLike](reactiveContainer.ReactiveContainerLike.md).[TLiftableContainerState](reactiveContainer.ReactiveContainerLike.md#tliftablecontainerstate)
 
 ___
 

@@ -10,7 +10,7 @@ import { StreamableLike } from "./streamable.mjs";
 interface AsyncEnumerableLike<T> extends StreamableLike<void, T, AsyncEnumerator<T>>, InteractiveContainerLike {
     readonly T: unknown;
     readonly TContainerOf: AsyncEnumerableLike<this["T"]>;
-    readonly TLiftableState: AsyncEnumerator<this["T"]>;
+    readonly TLiftableContainerState: AsyncEnumerator<this["T"]>;
     readonly TCtx: SchedulerLike;
 }
 declare type AsyncEnumerableOperator<TA, TB> = Function1<AsyncEnumerableLike<TA>, AsyncEnumerableLike<TB>>;

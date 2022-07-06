@@ -12,12 +12,20 @@
 - [FromIterable](../interfaces/liftable.FromIterable.md)
 - [FromIterator](../interfaces/liftable.FromIterator.md)
 - [LiftableContainerLike](../interfaces/liftable.LiftableContainerLike.md)
+- [LiftableContainerStateLike](../interfaces/liftable.LiftableContainerStateLike.md)
 - [ThrowIfEmpty](../interfaces/liftable.ThrowIfEmpty.md)
 - [Using](../interfaces/liftable.Using.md)
 
 ### Type Aliases
 
-- [LiftableStateOf](liftable.md#liftablestateof)
+- [LiftableContainerStateOf](liftable.md#liftablecontainerstateof)
+- [TInteractive](liftable.md#tinteractive)
+- [TReactive](liftable.md#treactive)
+
+### Variables
+
+- [interactive](liftable.md#interactive)
+- [reactive](liftable.md#reactive)
 
 ### Functions
 
@@ -26,9 +34,9 @@
 
 ## Type Aliases
 
-### LiftableStateOf
+### LiftableContainerStateOf
 
-Ƭ **LiftableStateOf**<`C`, `T`\>: `C` extends { `TLiftableState`: `unknown`  } ? `C` & { `T`: `T`  }[``"TLiftableState"``] : { `_C`: `C` ; `_T`: () => `T`  }
+Ƭ **LiftableContainerStateOf**<`C`, `T`\>: `C` extends { `TLiftableContainerState`: `unknown`  } ? `C` & { `T`: `T`  }[``"TLiftableContainerState"``] : { `_C`: `C` ; `_T`: () => `T`  }
 
 #### Type parameters
 
@@ -36,6 +44,30 @@
 | :------ | :------ |
 | `C` | extends [`LiftableContainerLike`](../interfaces/liftable.LiftableContainerLike.md) |
 | `T` | `T` |
+
+___
+
+### TInteractive
+
+Ƭ **TInteractive**: ``1``
+
+___
+
+### TReactive
+
+Ƭ **TReactive**: ``0``
+
+## Variables
+
+### interactive
+
+• `Const` **interactive**: [`TInteractive`](liftable.md#tinteractive)
+
+___
+
+### reactive
+
+• `Const` **reactive**: [`TReactive`](liftable.md#treactive)
 
 ## Functions
 

@@ -52,7 +52,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `onSink` | (`sink`: [`LiftableStateOf`](../modules/liftable.md#liftablestateof)<`C`, `T`\>) => `void` |
+| `onSink` | (`sink`: [`LiftableContainerStateOf`](../modules/liftable.md#liftablecontainerstateof)<`C`, `T`\>) => `void` |
 
 #### Returns
 

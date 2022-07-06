@@ -23,8 +23,7 @@
 
 ### Accessors
 
-- [T](scheduler.VirtualTimeSchedulerLike.md#t)
-- [TContainerOf](scheduler.VirtualTimeSchedulerLike.md#tcontainerof)
+- [TLiftableContainerStateType](scheduler.VirtualTimeSchedulerLike.md#tliftablecontainerstatetype)
 - [current](scheduler.VirtualTimeSchedulerLike.md#current)
 - [error](scheduler.VirtualTimeSchedulerLike.md#error)
 - [hasCurrent](scheduler.VirtualTimeSchedulerLike.md#hascurrent)
@@ -81,31 +80,17 @@ ___
 
 ## Accessors
 
-### T
+### TLiftableContainerStateType
 
-• `get` **T**(): `T`
-
-#### Returns
-
-`T`
-
-#### Inherited from
-
-Enumerator.T
-
-___
-
-### TContainerOf
-
-• `get` **TContainerOf**(): `this`
+• `get` **TLiftableContainerStateType**(): ``1``
 
 #### Returns
 
-`this`
+``1``
 
 #### Inherited from
 
-Enumerator.TContainerOf
+Enumerator.TLiftableContainerStateType
 
 ___
 

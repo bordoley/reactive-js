@@ -2,6 +2,7 @@ import { DispatcherLike, dispatch } from "./dispatcher";
 import { Disposable } from "./disposable";
 import { pipe, raise } from "./functions";
 import { InteractiveSourceLike } from "./interactiveSource";
+import { interactive } from "./liftable";
 import { ObservableLike } from "./observable";
 import { Observer } from "./observer";
 import { none } from "./option";
@@ -10,7 +11,7 @@ import { StreamLike } from "./stream";
 
 export abstract class AsyncEnumerator<T>
   extends Disposable
-  implements InteractiveSourceLike<T>, StreamLike<void, T>
+  implements InteractiveSourceLike, StreamLike<void, T>
 {
   get T(): T {
     return raise();
@@ -20,8 +21,12 @@ export abstract class AsyncEnumerator<T>
     return this;
   }
 
-  get TLiftableState(): Observer<this["T"]> {
+  get TLiftableContainerState(): Observer<this["T"]> {
     return raise();
+  }
+
+  get TLiftableContainerStateType() {
+    return interactive;
   }
 
   abstract scheduler: SchedulerLike;

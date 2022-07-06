@@ -290,7 +290,7 @@ declare class Subject<T> extends Disposable implements MulticastObservableLike<T
     constructor(replay?: number);
     get T(): T;
     get TContainerOf(): Subject<this["T"]>;
-    get TLiftableState(): Observer<this["T"]>;
+    get TLiftableContainerState(): Observer<this["T"]>;
     isEnumerable?: boolean;
     get observerCount(): number;
     publish(next: T): void;
@@ -533,7 +533,7 @@ declare const toPromise: <T>(scheduler: SchedulerLike) => Function1<ObservableLi
 interface ObservableLike<T> extends ReactiveContainerLike {
     readonly T: unknown;
     readonly TContainerOf: ObservableLike<this["T"]>;
-    readonly TLiftableState: Observer<this["T"]>;
+    readonly TLiftableContainerState: Observer<this["T"]>;
     readonly isEnumerable?: boolean;
     sink(this: ObservableLike<T>, sink: Observer<T>): void;
 }
