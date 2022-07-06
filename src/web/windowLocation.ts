@@ -13,6 +13,7 @@ import {
   raise,
 } from "../functions";
 import {
+  DefaultObservable,
   forkCombineLatest,
   getObserverCount,
   getReplay,
@@ -132,6 +133,8 @@ class WindowLocationStream
   get scheduler(): SchedulerLike {
     return pipe(this, getDelegate, getScheduler);
   }
+
+  readonly observableType: DefaultObservable = 0;
 
   dispatch(
     stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,

@@ -1,5 +1,10 @@
 import { raise } from "../functions";
-import { ObservableLike } from "../observable";
+import {
+  DefaultObservable,
+  EnumerableObservable,
+  ObservableLike,
+  RunnableObservable,
+} from "../observable";
 import { Observer } from "../observer";
 
 export abstract class AbstractObservable<T> implements ObservableLike<T> {
@@ -15,17 +20,20 @@ export abstract class AbstractObservable<T> implements ObservableLike<T> {
     return raise();
   }
 
-  readonly isEnumerable?: boolean;
+  abstract readonly observableType:
+    | DefaultObservable
+    | RunnableObservable
+    | EnumerableObservable;
 
   abstract sink(this: ObservableLike<T>, sink: Observer<T>): void;
 }
 
 export const isEnumerable = (obs: ObservableLike<unknown>) =>
-  obs.isEnumerable ?? false;
+  obs.observableType === 2 ?? false;
 
 export const tagEnumerable =
   <T>(isEnumerable: boolean) =>
   (obs: ObservableLike<T>): ObservableLike<T> => {
-    (obs as any).isEnumerable = isEnumerable;
+    (obs as any).observableType = isEnumerable ? 2 : 0;
     return obs;
   };

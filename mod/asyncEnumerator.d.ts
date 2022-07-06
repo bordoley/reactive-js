@@ -1,7 +1,7 @@
 import { DispatcherLike } from "./dispatcher.mjs";
 import { Disposable } from "./disposable.mjs";
 import { InteractiveSourceLike } from "./interactiveSource.mjs";
-import { ObservableLike } from "./observable.mjs";
+import { DefaultObservable, ObservableLike } from "./observable.mjs";
 import { Observer } from "./observer.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
 import { StreamLike } from "./stream.mjs";
@@ -9,6 +9,7 @@ declare abstract class AsyncEnumerator<T> extends Disposable implements Interact
     get T(): T;
     get TContainerOf(): this;
     get TLiftableContainerState(): Observer<this["T"]>;
+    readonly observableType: DefaultObservable;
     abstract scheduler: SchedulerLike;
     abstract observerCount: number;
     abstract replay: number;

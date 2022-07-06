@@ -10,17 +10,22 @@
 
 ### Interfaces
 
+- [EnumerableObservableLike](../interfaces/observable.EnumerableObservableLike.md)
 - [FromObservable](../interfaces/observable.FromObservable.md)
 - [MulticastObservableLike](../interfaces/observable.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/observable.ObservableLike.md)
+- [RunnableObservableLike](../interfaces/observable.RunnableObservableLike.md)
 - [ScanAsync](../interfaces/observable.ScanAsync.md)
 - [ToObservable](../interfaces/observable.ToObservable.md)
 
 ### Type Aliases
 
 - [AsyncReducer](observable.md#asyncreducer)
+- [DefaultObservable](observable.md#defaultobservable)
+- [EnumerableObservable](observable.md#enumerableobservable)
 - [ObservableEffectMode](observable.md#observableeffectmode)
 - [ObservableOperator](observable.md#observableoperator)
+- [RunnableObservable](observable.md#runnableobservable)
 - [ThrottleMode](observable.md#throttlemode)
 
 ### Variables
@@ -154,6 +159,18 @@
 
 ___
 
+### DefaultObservable
+
+Ƭ **DefaultObservable**: ``0``
+
+___
+
+### EnumerableObservable
+
+Ƭ **EnumerableObservable**: ``2``
+
+___
+
 ### ObservableEffectMode
 
 Ƭ **ObservableEffectMode**: ``"batched"`` \| ``"combine-latest"``
@@ -172,6 +189,12 @@ A function which converts an ObservableLike<A> to an ObservableLike<B>.
 | :------ |
 | `A` |
 | `B` |
+
+___
+
+### RunnableObservable
+
+Ƭ **RunnableObservable**: ``1``
 
 ___
 

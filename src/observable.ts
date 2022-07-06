@@ -94,6 +94,10 @@ import {
   createVirtualTimeScheduler,
 } from "./scheduler";
 
+export type DefaultObservable = 0;
+export type RunnableObservable = 1;
+export type EnumerableObservable = 2;
+
 /**
  * The source of notifications which notifies a `ObserverLike` instance.
  *
@@ -104,9 +108,24 @@ export interface ObservableLike<T> extends ReactiveContainerLike {
   readonly TContainerOf: ObservableLike<this["T"]>;
   readonly TLiftableContainerState: Observer<this["T"]>;
 
-  readonly isEnumerable?: boolean;
+  readonly observableType:
+    | EnumerableObservable
+    | RunnableObservable
+    | DefaultObservable;
 
   sink(this: ObservableLike<T>, sink: Observer<T>): void;
+}
+
+export interface EnumerableObservableLike<T> extends ObservableLike<T> {
+  readonly TContainerOf: EnumerableObservableLike<this["T"]>;
+
+  readonly observableType: EnumerableObservable;
+}
+
+export interface RunnableObservableLike<T> extends ObservableLike<T> {
+  readonly TContainerOf: RunnableObservableLike<this["T"]>;
+
+  readonly observableType: RunnableObservable;
 }
 
 export interface FromObservable<C extends ContainerLike> extends Container<C> {

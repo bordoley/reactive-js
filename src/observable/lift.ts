@@ -1,7 +1,13 @@
 import { reactive } from "../__internal__.liftable";
 import { Lift } from "../__internal__.reactiveContainer";
 import { Function1, newInstance, pipe } from "../functions";
-import { ObservableLike, ObservableOperator } from "../observable";
+import {
+  DefaultObservable,
+  EnumerableObservable,
+  ObservableLike,
+  ObservableOperator,
+  RunnableObservable,
+} from "../observable";
 import { Observer } from "../observer";
 import { sourceFrom } from "../reactiveContainer";
 import { AbstractObservable, isEnumerable } from "./observable";
@@ -15,7 +21,10 @@ class LiftedObservable<TIn, TOut> extends AbstractObservable<TOut> {
   constructor(
     readonly source: ObservableLike<TIn>,
     readonly operators: readonly ObserverOperator<any, any>[],
-    readonly isEnumerable: boolean,
+    readonly observableType:
+      | DefaultObservable
+      | RunnableObservable
+      | EnumerableObservable,
   ) {
     super();
   }
@@ -51,7 +60,9 @@ export const lift =
       LiftedObservable,
       sourceSource,
       allFunctions,
-      isEnumerableOperator,
+      isEnumerableOperator
+        ? (2 as EnumerableObservable)
+        : (0 as DefaultObservable),
     );
   };
 

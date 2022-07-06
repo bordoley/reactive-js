@@ -8,6 +8,7 @@ class StreamImpl extends Disposable {
     constructor(op, scheduler, options) {
         super();
         this.scheduler = scheduler;
+        this.observableType = 0;
         const subject = newInstance(Subject);
         const observable = pipe(subject, op, multicast(scheduler, options));
         this.subject = subject;

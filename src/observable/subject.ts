@@ -8,7 +8,7 @@ import {
   pipe,
   raise,
 } from "../functions";
-import { MulticastObservableLike } from "../observable";
+import { MulticastObservableLike, ObservableLike } from "../observable";
 import { Observer, getDispatcher } from "../observer";
 
 export class Subject<T>
@@ -27,7 +27,7 @@ export class Subject<T>
     return raise();
   }
 
-  get TContainerOf(): Subject<this["T"]> {
+  get TContainerOf(): ObservableLike<this["T"]> {
     return raise();
   }
 
@@ -35,7 +35,7 @@ export class Subject<T>
     return raise();
   }
 
-  isEnumerable?: boolean;
+  readonly observableType = 0;
 
   get observerCount() {
     return this.observers.size;
