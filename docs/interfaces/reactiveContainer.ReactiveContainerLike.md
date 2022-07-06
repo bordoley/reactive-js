@@ -24,7 +24,7 @@
 
 ### Methods
 
-- [sink](reactiveContainer.ReactiveContainerLike.md#sink)
+- [sinkInto](reactiveContainer.ReactiveContainerLike.md#sinkinto)
 
 ## Properties
 
@@ -58,9 +58,9 @@ ___
 
 ## Methods
 
-### sink
+### sinkInto
 
-▸ **sink**(`this`, `sink`): `void`
+▸ **sinkInto**(`this`, `sink`): `void`
 
 #### Parameters
 

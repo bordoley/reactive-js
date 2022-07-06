@@ -81,7 +81,7 @@ export interface RunnableLike<T> extends ReactiveContainerLike {
   readonly TContainerOf: RunnableLike<this["T"]>;
   readonly TLiftableContainerState: RunnableSink<this["T"]>;
 
-  sink(this: RunnableLike<T>, sink: RunnableSink<T>): void;
+  sinkInto(this: RunnableLike<T>, sink: RunnableSink<T>): void;
 }
 
 export type RunnableOperator<TA, TB> = Function1<

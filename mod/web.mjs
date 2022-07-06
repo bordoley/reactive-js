@@ -114,7 +114,7 @@ class WindowLocationStream extends Disposable {
         }
         return canGoBack;
     }
-    sink(observer) {
+    sinkInto(observer) {
         pipe(this, getDelegate, map(({ uri }) => uri), sinkInto(observer));
     }
 }

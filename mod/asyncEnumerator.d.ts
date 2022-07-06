@@ -14,7 +14,7 @@ declare abstract class AsyncEnumerator<T> extends Disposable implements Interact
     abstract observerCount: number;
     abstract replay: number;
     abstract dispatch(this: DispatcherLike<void>, req: void): void;
-    abstract sink(this: ObservableLike<T>, sink: Observer<T>): void;
+    abstract sinkInto(this: ObservableLike<T>, sink: Observer<T>): void;
     move(): void;
 }
 export { AsyncEnumerator };

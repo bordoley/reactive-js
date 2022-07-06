@@ -28,7 +28,7 @@ class RunnableImpl extends AbstractRunnable {
         super();
         this._run = _run;
     }
-    sink(sink) {
+    sinkInto(sink) {
         try {
             this._run(sink);
             pipe(sink, dispose());
@@ -81,7 +81,7 @@ class LiftedRunnable extends AbstractRunnable {
         this.src = src;
         this.operators = operators;
     }
-    sink(sink) {
+    sinkInto(sink) {
         pipe(pipe(sink, ...this.operators), sourceFrom(this.src), dispose());
     }
 }

@@ -113,7 +113,7 @@ export interface ObservableLike<T> extends ReactiveContainerLike {
     | RunnableObservable
     | DefaultObservable;
 
-  sink(this: ObservableLike<T>, sink: Observer<T>): void;
+  sinkInto(this: ObservableLike<T>, sink: Observer<T>): void;
 }
 
 export interface EnumerableObservableLike<T> extends ObservableLike<T> {

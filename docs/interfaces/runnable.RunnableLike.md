@@ -26,7 +26,7 @@
 
 ### Methods
 
-- [sink](runnable.RunnableLike.md#sink)
+- [sinkInto](runnable.RunnableLike.md#sinkinto)
 
 ## Properties
 
@@ -60,9 +60,9 @@ ___
 
 ## Methods
 
-### sink
+### sinkInto
 
-▸ **sink**(`this`, `sink`): `void`
+▸ **sinkInto**(`this`, `sink`): `void`
 
 #### Parameters
 
@@ -77,4 +77,4 @@ ___
 
 #### Overrides
 
-[ReactiveContainerLike](reactiveContainer.ReactiveContainerLike.md).[sink](reactiveContainer.ReactiveContainerLike.md#sink)
+[ReactiveContainerLike](reactiveContainer.ReactiveContainerLike.md).[sinkInto](reactiveContainer.ReactiveContainerLike.md#sinkinto)

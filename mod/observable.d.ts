@@ -294,7 +294,7 @@ declare class Subject<T> extends Disposable implements MulticastObservableLike<T
     readonly observableType = 0;
     get observerCount(): number;
     publish(next: T): void;
-    sink(observer: Observer<T>): void;
+    sinkInto(observer: Observer<T>): void;
 }
 declare const publish: <T>(v: T) => Function1<Subject<T>, Subject<T>>;
 declare const publishTo: <T>(subject: Subject<T>) => SideEffect1<T>;
@@ -544,7 +544,7 @@ interface ObservableLike<T> extends ReactiveContainerLike {
     readonly TContainerOf: ObservableLike<this["T"]>;
     readonly TLiftableContainerState: Observer<this["T"]>;
     readonly observableType: EnumerableObservable | RunnableObservable | DefaultObservable;
-    sink(this: ObservableLike<T>, sink: Observer<T>): void;
+    sinkInto(this: ObservableLike<T>, sink: Observer<T>): void;
 }
 interface EnumerableObservableLike<T> extends ObservableLike<T> {
     readonly TContainerOf: EnumerableObservableLike<this["T"]>;

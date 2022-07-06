@@ -12,7 +12,7 @@ class CreateObservable<T> extends AbstractObservable<T> {
 
   readonly observableType: DefaultObservable = 0;
 
-  sink(observer: Observer<T>) {
+  sinkInto(observer: Observer<T>) {
     try {
       this.f(observer);
     } catch (cause) {

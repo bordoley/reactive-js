@@ -92,7 +92,7 @@ class LiftedAsyncEnumerator extends AsyncEnumerator {
     dispatch(req) {
         pipe(this.subject, publish(req));
     }
-    sink(observer) {
+    sinkInto(observer) {
         pipe(this.observable, sinkInto(observer));
     }
 }
@@ -192,7 +192,7 @@ const keep = /*@__PURE__*/ createKeepLiftOperator(liftT, class KeepAsyncEnumerat
     get replay() {
         return getReplay(this.obs);
     }
-    sink(observer) {
+    sinkInto(observer) {
         pipe(this.obs, sinkInto(observer));
     }
 });
@@ -205,7 +205,7 @@ const map = /*@__PURE__*/ createMapLiftOperator(liftT, class MapAsyncEnumerator 
         this.mapper = mapper;
         this.op = map$1(this.mapper);
     }
-    sink(observer) {
+    sinkInto(observer) {
         pipe(this, getDelegate, this.op, sinkInto(observer));
     }
 });
@@ -217,7 +217,7 @@ const scan = /*@__PURE__*/ createScanLiftOperator(liftT, class ScanAsyncEnumerat
         super(delegate);
         this.op = scan$1(reducer, returns(acc));
     }
-    sink(observer) {
+    sinkInto(observer) {
         pipe(this, getDelegate, this.op, sinkInto(observer));
     }
 });
@@ -235,7 +235,7 @@ class ScanAsyncAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
     get replay() {
         return getReplay(this.obs);
     }
-    sink(observer) {
+    sinkInto(observer) {
         pipe(this.obs, sinkInto(observer));
     }
 }
@@ -254,7 +254,7 @@ const takeWhile = /*@__PURE__*/ createTakeWhileLiftOperator(liftT, class TakeWhi
     get replay() {
         return getReplay(this.obs);
     }
-    sink(observer) {
+    sinkInto(observer) {
         pipe(this.obs, sinkInto(observer));
     }
 });

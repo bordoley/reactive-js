@@ -27,7 +27,7 @@
 
 ### Methods
 
-- [sink](observable.EnumerableObservableLike.md#sink)
+- [sinkInto](observable.EnumerableObservableLike.md#sinkinto)
 
 ## Properties
 
@@ -71,9 +71,9 @@ ___
 
 ## Methods
 
-### sink
+### sinkInto
 
-▸ **sink**(`this`, `sink`): `void`
+▸ **sinkInto**(`this`, `sink`): `void`
 
 #### Parameters
 
@@ -88,4 +88,4 @@ ___
 
 #### Inherited from
 
-[ObservableLike](observable.ObservableLike.md).[sink](observable.ObservableLike.md#sink)
+[ObservableLike](observable.ObservableLike.md).[sinkInto](observable.ObservableLike.md#sinkinto)

@@ -27,7 +27,7 @@ export abstract class AbstractObservable<T> implements ObservableLike<T> {
     | RunnableObservable
     | EnumerableObservable;
 
-  abstract sink(this: ObservableLike<T>, sink: Observer<T>): void;
+  abstract sinkInto(this: ObservableLike<T>, sink: Observer<T>): void;
 }
 
 export const isEnumerable = <T>(

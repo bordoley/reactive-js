@@ -10,7 +10,7 @@ class RunnableImpl<T> extends AbstractRunnable<T> {
     super();
   }
 
-  sink(sink: RunnableSink<T>) {
+  sinkInto(sink: RunnableSink<T>) {
     try {
       this._run(sink);
       pipe(sink, dispose());

@@ -4,7 +4,7 @@ import { LiftableContainerLike, LiftableContainerStateOf } from "./liftableConta
 import { ReactiveSinkLike } from "./reactiveSink.mjs";
 interface ReactiveContainerLike extends LiftableContainerLike {
     readonly TLiftableContainerState: ReactiveSinkLike<unknown>;
-    sink(this: this, sink: LiftableContainerStateOf<ReactiveContainerLike, this["T"]>): void;
+    sinkInto(this: this, sink: LiftableContainerStateOf<ReactiveContainerLike, this["T"]>): void;
 }
 interface CreateReactiveContainer<C extends ReactiveContainerLike> extends Container<C> {
     create<T>(onSink: (sink: LiftableContainerStateOf<C, T>) => void): ContainerOf<C, T>;

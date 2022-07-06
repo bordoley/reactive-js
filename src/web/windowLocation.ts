@@ -153,7 +153,7 @@ class WindowLocationStream
     return canGoBack;
   }
 
-  sink(observer: Observer<WindowLocationURI>): void {
+  sinkInto(observer: Observer<WindowLocationURI>): void {
     pipe(
       this,
       getDelegate,

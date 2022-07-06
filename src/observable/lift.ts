@@ -29,7 +29,7 @@ class LiftedObservable<TIn, TOut> extends AbstractObservable<TOut> {
     super();
   }
 
-  sink(observer: Observer<TOut>) {
+  sinkInto(observer: Observer<TOut>) {
     pipe(observer, ...this.operators, sourceFrom(this.source)) as Observer<any>;
   }
 }

@@ -61,7 +61,7 @@ class StreamImpl<TReq, T> extends Disposable implements StreamLike<TReq, T> {
     pipe(this.subject, publish(req));
   }
 
-  sink(observer: Observer<T>) {
+  sinkInto(observer: Observer<T>) {
     pipe(this.observable, sinkInto(observer));
   }
 }

@@ -18,7 +18,7 @@ interface RunnableLike<T> extends ReactiveContainerLike {
     readonly T: unknown;
     readonly TContainerOf: RunnableLike<this["T"]>;
     readonly TLiftableContainerState: RunnableSink<this["T"]>;
-    sink(this: RunnableLike<T>, sink: RunnableSink<T>): void;
+    sinkInto(this: RunnableLike<T>, sink: RunnableSink<T>): void;
 }
 declare type RunnableOperator<TA, TB> = Function1<RunnableLike<TA>, RunnableLike<TB>>;
 interface ToRunnable<C extends ContainerLike> extends Container<C> {

@@ -15,5 +15,5 @@ export abstract class AbstractRunnable<T> implements RunnableLike<T> {
     return raise();
   }
 
-  abstract sink(this: RunnableLike<T>, sink: RunnableSink<T>): void;
+  abstract sinkInto(this: RunnableLike<T>, sink: RunnableSink<T>): void;
 }
