@@ -13,7 +13,6 @@ declare abstract class AsyncEnumerator<T> extends Disposable implements Interact
     abstract scheduler: SchedulerLike;
     abstract observerCount: number;
     abstract replay: number;
-    isEnumerable?: false;
     abstract dispatch(this: DispatcherLike<void>, req: void): void;
     abstract sink(this: ObservableLike<T>, sink: Observer<T>): void;
     move(): void;

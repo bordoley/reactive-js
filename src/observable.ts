@@ -220,6 +220,7 @@ export { zip, zipT } from "./observable/zip";
 export { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
 export { toEnumerable, toEnumerableT } from "./observable/toEnumerable";
 export { toPromise } from "./observable/toPromise";
+export { isEnumerable, isRunnable } from "./observable/observable";
 
 export const catchError: <T>(
   onError: Function1<unknown, ObservableLike<T> | void>,

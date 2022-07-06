@@ -8,7 +8,6 @@ class AsyncEnumerator extends Disposable {
     constructor() {
         super(...arguments);
         this.observableType = 0;
-        this.isEnumerable = false;
     }
     get T() {
         return raise();

@@ -2,8 +2,10 @@ import { raise } from "../functions";
 import {
   DefaultObservable,
   EnumerableObservable,
+  EnumerableObservableLike,
   ObservableLike,
   RunnableObservable,
+  RunnableObservableLike,
 } from "../observable";
 import { Observer } from "../observer";
 
@@ -28,8 +30,13 @@ export abstract class AbstractObservable<T> implements ObservableLike<T> {
   abstract sink(this: ObservableLike<T>, sink: Observer<T>): void;
 }
 
-export const isEnumerable = (obs: ObservableLike<unknown>) =>
-  obs.observableType === 2 ?? false;
+export const isEnumerable = <T>(
+  obs: ObservableLike<T>,
+): obs is EnumerableObservableLike<T> => obs.observableType === 2;
+
+export const isRunnable = <T>(
+  obs: ObservableLike<T>,
+): obs is RunnableObservableLike<T> => obs.observableType === 1;
 
 export const tagEnumerable =
   <T>(isEnumerable: boolean) =>
