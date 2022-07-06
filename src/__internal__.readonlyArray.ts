@@ -1,9 +1,4 @@
-import {
-  Function1,
-  Predicate,
-  SideEffect1,
-  TypePredicate,
-} from "./functions";
+import { Function1, Predicate, SideEffect1, TypePredicate } from "./functions";
 
 export const empty: ReadonlyArray<any> = [];
 

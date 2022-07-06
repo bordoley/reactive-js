@@ -14,7 +14,7 @@ declare type DisposableOrTeardown = Disposable | SideEffect1<Option<Error>>;
  */
 declare class Disposable {
     /** @ignore */
-    _isDisposed: boolean;
+    private _isDisposed;
     private readonly disposables;
     private _error;
     /**

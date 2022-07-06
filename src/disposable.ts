@@ -23,7 +23,7 @@ export type DisposableOrTeardown = Disposable | SideEffect1<Option<Error>>;
  */
 export class Disposable {
   /** @ignore */
-  public _isDisposed = false;
+  private _isDisposed = false;
 
   private readonly disposables: Set<DisposableOrTeardown> =
     newInstance<Set<DisposableOrTeardown>>(Set);
