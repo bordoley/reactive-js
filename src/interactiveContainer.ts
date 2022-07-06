@@ -10,7 +10,7 @@ export interface InteractiveContainerLike extends LiftableContainerLike {
   readonly TLiftableContainerState: InteractiveSourceLike;
   readonly TCtx: unknown;
 
-  source(
+  interact(
     this: this,
     _: this["TCtx"],
   ): LiftableContainerStateOf<InteractiveContainerLike, this["T"]>;

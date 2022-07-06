@@ -32,7 +32,7 @@ class AbstractAsyncEnumerable {
     get TCtx() {
         return raise();
     }
-    source(scheduler) {
+    interact(scheduler) {
         return pipe(this, stream(scheduler));
     }
 }
@@ -64,7 +64,7 @@ class CreateAsyncEnumerable extends AbstractAsyncEnumerable {
         super();
         this.stream = stream;
     }
-    source(scheduler) {
+    interact(scheduler) {
         return pipe(this, stream(scheduler));
     }
 }

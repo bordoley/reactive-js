@@ -61,7 +61,7 @@ class AbstractEnumerable {
     get TCtx() {
         return none;
     }
-    source(_) {
+    interact(_) {
         return pipe(this, enumerate);
     }
 }

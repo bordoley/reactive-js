@@ -107,7 +107,7 @@ class CreateAsyncEnumerable<T> extends AbstractAsyncEnumerable<T> {
     super();
   }
 
-  source(scheduler: SchedulerLike): AsyncEnumerator<T> {
+  interact(scheduler: SchedulerLike): AsyncEnumerator<T> {
     return pipe(this, stream(scheduler));
   }
 }
