@@ -11,7 +11,6 @@ import { fromObservable, FlowMode } from "@reactive-js/core/flowable";
 import { __state, __stream } from "@reactive-js/core/streamable";
 import {
   createComponent,
-  createReactIdlePriorityScheduler,
   createReactNormalPriorityScheduler,
   useObservable,
 } from "@reactive-js/core/react";
@@ -26,7 +25,10 @@ const historyStream = windowLocation.stream(normalPriorityScheduler, {
   replay: 1,
 });
 
-const counterFlowable = pipe(generate(increment, returns(0)), fromObservable());
+const counterFlowable = pipe(
+  generate(increment, returns(0), { delay: 1000 }),
+  fromObservable(),
+);
 
 const createActions = (
   stateDispatcher: DispatcherLike<Updater<FlowMode>>,
@@ -47,13 +49,10 @@ const createActions = (
 });
 
 const initialFlowModeState = () => "pause" as FlowMode;
-const idlePriorityScheduler = createReactIdlePriorityScheduler();
 
 const StreamPauseResume = createComponent(() =>
   observable(() => {
-    const counter = __stream(counterFlowable, {
-      scheduler: idlePriorityScheduler,
-    });
+    const counter = __stream(counterFlowable);
     const state = __state(initialFlowModeState);
 
     const { onValueChanged, toggleStateMode, setCounterMode } = __memo(

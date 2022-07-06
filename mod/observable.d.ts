@@ -309,6 +309,7 @@ declare const fromArray: <T>(options?: Partial<{
     readonly delay: number;
     readonly startIndex: number;
     readonly endIndex: number;
+    readonly delayStart: boolean;
 }>) => Function1<readonly T[], ObservableLike<T>>;
 declare const fromArrayT: FromArray<ObservableLike<unknown>, {
     readonly delay: number;
@@ -324,6 +325,7 @@ declare const fromArrayT: FromArray<ObservableLike<unknown>, {
  */
 declare const fromEnumerable: <T>(options?: {
     readonly delay?: number;
+    readonly delayStart?: boolean;
 }) => Function1<EnumerableLike<T>, ObservableLike<T>>;
 declare const fromEnumerableT: FromEnumerable<ObservableLike<unknown>>;
 /**
@@ -334,6 +336,7 @@ declare const fromEnumerableT: FromEnumerable<ObservableLike<unknown>>;
  */
 declare const fromIterator: <T, TReturn = any, TNext = unknown>(options?: {
     readonly delay?: number;
+    readonly delayStart?: boolean;
 }) => Function1<Factory<Iterator<T, TReturn, TNext>>, ObservableLike<T>>;
 declare const fromIteratorT: FromIterator<ObservableLike<unknown>, {
     readonly delay?: number;
@@ -346,6 +349,7 @@ declare const fromIteratorT: FromIterator<ObservableLike<unknown>, {
  */
 declare const fromIterable: <T>(options?: {
     readonly delay?: number;
+    readonly delayStart?: boolean;
 }) => Function1<Iterable<T>, ObservableLike<T>>;
 declare const fromIterableT: FromIterable<ObservableLike<unknown>>;
 /**
@@ -611,6 +615,7 @@ declare const fromPromise: <T>(factory: Factory<Promise<T>>) => ObservableLike<T
  */
 declare const generate: <T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
     readonly delay?: number;
+    readonly delayStart?: boolean;
 }) => ObservableLike<T>;
 declare const generateT: Generate<ObservableLike<unknown>>;
 declare const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T>;

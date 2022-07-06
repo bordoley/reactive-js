@@ -12,6 +12,7 @@ import { Factory, Function1, compose, pipe, pipeLazy } from "../functions";
 import { FromIterable, FromIterator } from "../liftableContainer";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
+import { none } from "../option";
 import { __yield } from "../scheduler";
 import { defer } from "./defer";
 import { tagObservableType } from "./observable";
@@ -26,9 +27,11 @@ import { using } from "./using";
 export const fromEnumerator =
   <T>(options?: {
     readonly delay?: number;
+    readonly delayStart?: boolean;
   }): Function1<Factory<Enumerator<T>>, ObservableLike<T>> =>
-  f =>
-    pipe(
+  f => {
+    const { delayStart = true } = options ?? {};
+    return pipe(
       using(f, enumerator =>
         defer(
           () => (observer: Observer<T>) => {
@@ -38,11 +41,12 @@ export const fromEnumerator =
             }
             pipe(observer, dispose());
           },
-          options,
+          delayStart ? options : none,
         ),
       ),
       tagObservableType(hasDelay(options) ? 1 : 2),
     );
+  };
 
 /**
  * Creates an `ObservableLike` which enumerates through the values
@@ -54,6 +58,7 @@ export const fromEnumerator =
 export const fromEnumerable =
   <T>(options?: {
     readonly delay?: number;
+    readonly delayStart?: boolean;
   }): Function1<EnumerableLike<T>, ObservableLike<T>> =>
   enumerable =>
     pipe(pipeLazy(enumerable, enumerate), fromEnumerator(options));
@@ -70,6 +75,7 @@ export const fromEnumerableT: FromEnumerable<ObservableLike<unknown>> = {
  */
 export const fromIterator = <T, TReturn = any, TNext = unknown>(options?: {
   readonly delay?: number;
+  readonly delayStart?: boolean;
 }): Function1<Factory<Iterator<T, TReturn, TNext>>, ObservableLike<T>> =>
   compose(enumerableFromIterator(), fromEnumerable(options));
 
@@ -90,6 +96,7 @@ export const fromIteratorT: FromIterator<
  */
 export const fromIterable = <T>(options?: {
   readonly delay?: number;
+  readonly delayStart?: boolean;
 }): Function1<Iterable<T>, ObservableLike<T>> =>
   compose(enumerableFromIterable(), fromEnumerable(options));
 

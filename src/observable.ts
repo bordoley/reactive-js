@@ -335,8 +335,10 @@ export const fromPromise = <T>(
 export const generate = <T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
-  options?: { readonly delay?: number },
+  options?: { readonly delay?: number; readonly delayStart?: boolean },
 ): ObservableLike<T> => {
+  const { delayStart = true } = options ?? {};
+
   const factory = () => {
     let acc = initialValue();
 
@@ -350,7 +352,7 @@ export const generate = <T>(
   };
 
   return pipe(
-    defer(factory, options),
+    defer(factory, delayStart ? options : none),
     tagObservableType(hasDelay(options) ? 1 : 2),
   );
 };

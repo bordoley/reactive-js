@@ -5,6 +5,7 @@ import { dispose } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
+import { none } from "../option";
 import { __yield } from "../scheduler";
 import { createObservable } from "./createObservable";
 import { defer } from "./defer";
@@ -29,6 +30,7 @@ export const fromArray = /*@__PURE__*/ createFromArray<
     readonly delay: number;
     readonly startIndex: number;
     readonly endIndex: number;
+    readonly delayStart: boolean;
   }
 >(
   <T>(
@@ -37,29 +39,34 @@ export const fromArray = /*@__PURE__*/ createFromArray<
     endIndex: number,
     options?: {
       readonly delay?: number;
+      readonly delayStart?: boolean;
     },
   ) => {
     const count = endIndex - startIndex;
     const isEnumerableTag = !hasDelay(options);
+    const { delayStart = true } = options ?? {};
     return count === 0 && isEnumerableTag
       ? empty
       : pipe(
-          defer(() => {
-            let index = startIndex;
-            return (observer: Observer<T>) => {
-              while (index < endIndex) {
-                const value = values[index];
-                index++;
+          defer(
+            () => {
+              let index = startIndex;
+              return (observer: Observer<T>) => {
+                while (index < endIndex) {
+                  const value = values[index];
+                  index++;
 
-                observer.notify(value);
+                  observer.notify(value);
 
-                if (index < endIndex) {
-                  __yield(options);
+                  if (index < endIndex) {
+                    __yield(options);
+                  }
                 }
-              }
-              pipe(observer, dispose());
-            };
-          }, options),
+                pipe(observer, dispose());
+              };
+            },
+            delayStart ? options : none,
+          ),
           tagObservableType(hasDelay(options) ? 1 : 2),
         );
   },

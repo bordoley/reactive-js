@@ -1963,7 +1963,7 @@ An optional `startIndex` in the array maybe specified,
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options?` | `Partial`<{ `delay`: `number` ; `endIndex`: `number` ; `startIndex`: `number`  }\> | Config object that specifies an optional `delay` between emitted items and an optional `startIndex` into the array. |
+| `options?` | `Partial`<{ `delay`: `number` ; `delayStart`: `boolean` ; `endIndex`: `number` ; `startIndex`: `number`  }\> | Config object that specifies an optional `delay` between emitted items and an optional `startIndex` into the array. |
 
 #### Returns
 
@@ -2012,6 +2012,7 @@ produced by the provided `Enumerable` with a specified `delay` between emitted i
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
 
 #### Returns
 
@@ -2038,6 +2039,7 @@ produced by the provided `Iterable` with a specified `delay` between emitted ite
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
 
 #### Returns
 
@@ -2066,6 +2068,7 @@ produced by the provided `Iterator` with a specified `delay` between emitted ite
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
 
 #### Returns
 
@@ -2133,6 +2136,7 @@ between emitted items.
 | `initialValue` | [`Factory`](functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
 | `options?` | `Object` | - |
 | `options.delay?` | `number` | - |
+| `options.delayStart?` | `boolean` | - |
 
 #### Returns
 
