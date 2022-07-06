@@ -1,5 +1,5 @@
 import { getDelegate } from "../__internal__.delegating";
-import { everySatisfy, map } from "../__internal__.readonlyArray";
+import { map } from "../__internal__.readonlyArray";
 import { Zip } from "../container";
 import { addTo, dispose, onComplete } from "../disposable";
 import { getLength, newInstanceWith, pipe } from "../functions";
@@ -10,7 +10,7 @@ import { sourceFrom } from "../reactiveContainer";
 import { assertState, notify } from "../reactiveSink";
 import { SchedulerLike } from "../scheduler";
 import { defer } from "./defer";
-import { isEnumerable, tagEnumerable } from "./observable";
+import { computeMinTag, tagObservableType } from "./observable";
 
 const enum LatestMode {
   Combine = 1,
@@ -87,8 +87,6 @@ export const latest = (
   observables: readonly ObservableLike<any>[],
   mode: LatestMode,
 ): ObservableLike<readonly unknown[]> => {
-  const isEnumerableTag = pipe(observables, everySatisfy(isEnumerable));
-
   const factory = () => (delegate: Observer<readonly unknown[]>) => {
     const latestCtxDelegate = new LatestCtx(delegate, mode);
     const onCompleteCb = () => {
@@ -113,7 +111,7 @@ export const latest = (
     }
   };
 
-  return pipe(defer(factory), tagEnumerable(isEnumerableTag));
+  return pipe(defer(factory), tagObservableType(computeMinTag(observables)));
 };
 
 export function combineLatest<TA, TB>(

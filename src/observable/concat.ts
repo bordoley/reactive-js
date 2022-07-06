@@ -1,4 +1,3 @@
-import { everySatisfy } from "../__internal__.readonlyArray";
 import { Concat } from "../container";
 import { addTo, dispose, onComplete } from "../disposable";
 import { getLength, isEmpty, pipe } from "../functions";
@@ -6,7 +5,7 @@ import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
 import { sourceFrom } from "../reactiveContainer";
 import { createObservable } from "./createObservable";
-import { isEnumerable, tagEnumerable } from "./observable";
+import { computeMinTag, tagObservableType } from "./observable";
 import { createDelegatingObserver } from "./observer";
 
 const createConcatObserver = <T>(
@@ -41,8 +40,6 @@ export function concat<T>(
 export function concat<T>(
   ...observables: readonly ObservableLike<T>[]
 ): ObservableLike<T> {
-  const isEnumerableTag = pipe(observables, everySatisfy(isEnumerable));
-
   return pipe(
     createObservable(observer => {
       if (!isEmpty(observables)) {
@@ -54,7 +51,7 @@ export function concat<T>(
         pipe(observer, dispose());
       }
     }),
-    tagEnumerable(isEnumerableTag),
+    tagObservableType(computeMinTag(observables)),
   );
 }
 

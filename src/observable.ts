@@ -71,7 +71,7 @@ import { defer } from "./observable/defer";
 import { fromArrayT } from "./observable/fromArray";
 import { lift, liftSynchronousT } from "./observable/lift";
 import { mapT } from "./observable/map";
-import { tagEnumerable } from "./observable/observable";
+import { tagObservableType } from "./observable/observable";
 import {
   AbstractDelegatingObserver,
   createDelegatingObserver,
@@ -188,13 +188,14 @@ export { concat, concatT } from "./observable/concat";
 export { createObservable, createT } from "./observable/createObservable";
 export { Subject, publish, publishTo } from "./observable/subject";
 export { fromArray, fromArrayT } from "./observable/fromArray";
-export { fromEnumerable, fromEnumerableT } from "./observable/fromEnumerable";
 export {
+  fromEnumerable,
+  fromEnumerableT,
   fromIterable,
   fromIterableT,
   fromIterator,
   fromIteratorT,
-} from "./observable/fromIterable";
+} from "./observable/fromEnumerable";
 export { forkMerge, merge, mergeT } from "./observable/merge";
 export { never } from "./observable/never";
 export { subscribe } from "./observable/subscribe";
@@ -348,7 +349,10 @@ export const generate = <T>(
     };
   };
 
-  return pipe(defer(factory, options), tagEnumerable(!hasDelay(options)));
+  return pipe(
+    defer(factory, options),
+    tagObservableType(hasDelay(options) ? 1 : 2),
+  );
 };
 
 export const generateT: Generate<ObservableLike<unknown>> = {
