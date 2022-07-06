@@ -23,10 +23,6 @@
 
 ## Table of contents
 
-### Properties
-
-- [TLiftableContainerStateType](reactiveSink.ReactiveSinkLike.md#tliftablecontainerstatetype)
-
 ### Accessors
 
 - [error](reactiveSink.ReactiveSinkLike.md#error)
@@ -38,12 +34,6 @@
 - [assertState](reactiveSink.ReactiveSinkLike.md#assertstate)
 - [dispose](reactiveSink.ReactiveSinkLike.md#dispose)
 - [notify](reactiveSink.ReactiveSinkLike.md#notify)
-
-## Properties
-
-### TLiftableContainerStateType
-
-• `Readonly` **TLiftableContainerStateType**: ``0``
 
 ## Accessors
 

@@ -12,21 +12,19 @@ import {
   pipe,
   strictEquality,
 } from "./functions";
-import {
-  LiftableContainerLike,
-  LiftableContainerStateOf,
-  TInteractive,
-  TReactive,
-  interactive,
-} from "./liftable";
+import { LiftableContainerLike, LiftableContainerStateOf } from "./liftable";
 import { Option, none } from "./option";
 
-type TLiftableContainerStateType = TInteractive | TReactive;
+export type TInteractive = 0;
+export const interactive: TInteractive = 0;
+export type TReactive = 1;
+export const reactive: TReactive = 1;
 
 export interface Lift<
   C extends LiftableContainerLike,
-  TVar extends TLiftableContainerStateType = C["TLiftableContainerState"]["TLiftableContainerStateType"],
+  TVar extends TInteractive | TReactive,
 > extends Container<C> {
+  variance: TInteractive | TReactive;
   lift<TA, TB>(
     operator: LiftOperator<C, TA, TB, TVar>,
   ): ContainerOperator<C, TA, TB>;
@@ -36,7 +34,7 @@ export type LiftOperator<
   C extends LiftableContainerLike,
   TA,
   TB,
-  TVar extends TLiftableContainerStateType = C["TLiftableContainerState"]["TLiftableContainerStateType"],
+  TVar extends TInteractive | TReactive,
 > = Function1<
   LiftOperatorIn<C, TA, TB, TVar>,
   LiftOperatorOut<C, TA, TB, TVar>
@@ -46,7 +44,7 @@ export type LiftOperatorIn<
   C extends LiftableContainerLike,
   TA,
   TB,
-  TVar extends TLiftableContainerStateType = C["TLiftableContainerState"]["TLiftableContainerStateType"],
+  TVar extends TInteractive | TReactive,
 > = TVar extends TReactive
   ? LiftableContainerStateOf<C, TB>
   : LiftableContainerStateOf<C, TA>;
@@ -55,7 +53,7 @@ export type LiftOperatorOut<
   C extends LiftableContainerLike,
   TA,
   TB,
-  TVar extends TLiftableContainerStateType = C["TLiftableContainerState"]["TLiftableContainerStateType"],
+  TVar extends TInteractive | TReactive,
 > = TVar extends TReactive
   ? LiftableContainerStateOf<C, TA>
   : LiftableContainerStateOf<C, TB>;
@@ -73,10 +71,7 @@ export type DelegatingLiftableContainerStateOf<
 };
 
 export const createDistinctUntilChangedLiftOperator =
-  <
-    C extends LiftableContainerLike,
-    TVar extends TLiftableContainerStateType = C["TLiftableContainerState"]["TLiftableContainerStateType"],
-  >(
+  <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     DistinctUntilChangedLiftableState: new <T>(
       delegate: LiftableContainerStateOf<C, T>,
@@ -87,7 +82,7 @@ export const createDistinctUntilChangedLiftOperator =
     options: { readonly equality?: Equality<T> } = {},
   ): ContainerOperator<C, T, T> => {
     const { equality = strictEquality } = options;
-    const operator: LiftOperator<C, T, T> = delegate =>
+    const operator: LiftOperator<C, T, T, TVar> = delegate =>
       pipe(
         DistinctUntilChangedLiftableState,
         newInstanceWith<
@@ -101,10 +96,7 @@ export const createDistinctUntilChangedLiftOperator =
   };
 
 export const createKeepLiftOperator =
-  <
-    C extends LiftableContainerLike,
-    TVar extends TLiftableContainerStateType = C["TLiftableContainerState"]["TLiftableContainerStateType"],
-  >(
+  <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     KeepLiftableState: new <T>(
       delegate: LiftableContainerStateOf<C, T>,
@@ -128,24 +120,21 @@ export const createKeepLiftOperator =
   };
 
 export const createMapLiftOperator =
-  <
-    C extends LiftableContainerLike,
-    TVar extends TLiftableContainerStateType = C["TLiftableContainerState"]["TLiftableContainerStateType"],
-  >(
+  <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     MapLiftableState: new <TA, TB>(
-      delegate: LiftOperatorIn<C, TA, TB>,
+      delegate: LiftOperatorIn<C, TA, TB, TVar>,
       mapper: Function1<TA, TB>,
-    ) => LiftOperatorOut<C, TA, TB>,
+    ) => LiftOperatorOut<C, TA, TB, TVar>,
   ) =>
   <TA, TB>(mapper: Function1<TA, TB>): ContainerOperator<C, TA, TB> =>
     pipe(
-      (delegate: LiftOperatorIn<C, TA, TB>) =>
+      (delegate: LiftOperatorIn<C, TA, TB, TVar>) =>
         pipe(
           MapLiftableState,
           newInstanceWith<
-            LiftOperatorOut<C, TA, TB>,
-            LiftOperatorIn<C, TA, TB>,
+            LiftOperatorOut<C, TA, TB, TVar>,
+            LiftOperatorIn<C, TA, TB, TVar>,
             Function1<TA, TB>
           >(delegate, mapper),
           bindTo(delegate),
@@ -154,10 +143,7 @@ export const createMapLiftOperator =
     );
 
 export const createOnNotifyLiftOperator =
-  <
-    C extends LiftableContainerLike,
-    TVar extends TLiftableContainerStateType = C["TLiftableContainerState"]["TLiftableContainerStateType"],
-  >(
+  <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     OnNotifyLiftableState: new <T>(
       delegate: LiftableContainerStateOf<C, T>,
@@ -166,7 +152,7 @@ export const createOnNotifyLiftOperator =
   ) =>
   <T>(onNotify: SideEffect1<T>): ContainerOperator<C, T, T> =>
     pipe(
-      (delegate: LiftOperatorIn<C, T, T>) =>
+      (delegate: LiftOperatorIn<C, T, T, TVar>) =>
         pipe(
           OnNotifyLiftableState,
           newInstanceWith<
@@ -180,25 +166,22 @@ export const createOnNotifyLiftOperator =
     );
 
 export const createPairwiseLiftOperator =
-  <
-    C extends LiftableContainerLike,
-    TVar extends TLiftableContainerStateType = C["TLiftableContainerState"]["TLiftableContainerStateType"],
-  >(
+  <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     PairwiseLiftableState: new <T>(
-      delegate: LiftOperatorIn<C, T, [Option<T>, T]>,
-    ) => LiftOperatorOut<C, T, [Option<T>, T]>,
+      delegate: LiftOperatorIn<C, T, [Option<T>, T], TVar>,
+    ) => LiftOperatorOut<C, T, [Option<T>, T], TVar>,
   ) =>
   <T>(): ContainerOperator<C, T, [Option<T>, T]> =>
     pipe(
       (
-        delegate: LiftOperatorIn<C, T, [Option<T>, T]>,
-      ): LiftOperatorOut<C, T, [Option<T>, T]> =>
+        delegate: LiftOperatorIn<C, T, [Option<T>, T], TVar>,
+      ): LiftOperatorOut<C, T, [Option<T>, T], TVar> =>
         pipe(
           PairwiseLiftableState,
           newInstanceWith<
-            LiftOperatorOut<C, T, [Option<T>, T]>,
-            LiftOperatorIn<C, T, [Option<T>, T]>
+            LiftOperatorOut<C, T, [Option<T>, T], TVar>,
+            LiftOperatorIn<C, T, [Option<T>, T], TVar>
           >(delegate),
           bindTo(delegate),
         ),
@@ -206,28 +189,25 @@ export const createPairwiseLiftOperator =
     );
 
 export const createScanLiftOperator =
-  <
-    C extends LiftableContainerLike,
-    TVar extends TLiftableContainerStateType = C["TLiftableContainerState"]["TLiftableContainerStateType"],
-  >(
+  <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     ScanLiftableState: new <T, TAcc>(
-      delegate: LiftOperatorIn<C, T, TAcc>,
+      delegate: LiftOperatorIn<C, T, TAcc, TVar>,
       reducer: Reducer<T, TAcc>,
       acc: TAcc,
-    ) => LiftOperatorOut<C, T, TAcc>,
+    ) => LiftOperatorOut<C, T, TAcc, TVar>,
   ) =>
   <T, TAcc>(
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ): ContainerOperator<C, T, TAcc> =>
     pipe(
-      (delegate: LiftOperatorIn<C, T, TAcc>) =>
+      (delegate: LiftOperatorIn<C, T, TAcc, TVar>) =>
         pipe(
           ScanLiftableState,
           newInstanceWith<
-            LiftOperatorOut<C, T, TAcc>,
-            LiftOperatorIn<C, T, TAcc>,
+            LiftOperatorOut<C, T, TAcc, TVar>,
+            LiftOperatorIn<C, T, TAcc, TVar>,
             Reducer<T, TAcc>,
             TAcc
           >(delegate, reducer, initialValue()),
@@ -237,26 +217,23 @@ export const createScanLiftOperator =
     );
 
 export const createSkipFirstLiftOperator =
-  <
-    C extends LiftableContainerLike,
-    TVar extends TLiftableContainerStateType = C["TLiftableContainerState"]["TLiftableContainerStateType"],
-  >(
+  <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     SkipLiftableState: new <T>(
-      delegate: LiftOperatorIn<C, T, T>,
+      delegate: LiftOperatorIn<C, T, T, TVar>,
       skipCount: number,
-    ) => LiftOperatorOut<C, T, T>,
+    ) => LiftOperatorOut<C, T, T, TVar>,
   ) =>
   <T>(
     options: { readonly count?: number } = {},
   ): ContainerOperator<C, T, T> => {
     const { count = 1 } = options;
-    const operator: LiftOperator<C, T, T> = delegate =>
+    const operator: LiftOperator<C, T, T, TVar> = delegate =>
       pipe(
         SkipLiftableState,
         newInstanceWith<
-          LiftOperatorOut<C, T, T>,
-          LiftOperatorIn<C, T, T>,
+          LiftOperatorOut<C, T, T, TVar>,
+          LiftOperatorIn<C, T, T, TVar>,
           number
         >(delegate, count),
         bindTo(delegate),
@@ -267,26 +244,23 @@ export const createSkipFirstLiftOperator =
   };
 
 export const createTakeFirstLiftOperator =
-  <
-    C extends LiftableContainerLike,
-    TVar extends TLiftableContainerStateType = C["TLiftableContainerState"]["TLiftableContainerStateType"],
-  >(
+  <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: FromArray<C> & Lift<C, TVar>,
     TakeFirstLiftableState: new <T>(
-      delegate: LiftOperatorIn<C, T, T>,
+      delegate: LiftOperatorIn<C, T, T, TVar>,
       maxCount: number,
-    ) => LiftOperatorOut<C, T, T>,
+    ) => LiftOperatorOut<C, T, T, TVar>,
   ) =>
   <T>(
     options: { readonly count?: number } = {},
   ): ContainerOperator<C, T, T> => {
     const { count = max(options.count ?? 1, 0) } = options;
-    const operator: LiftOperator<C, T, T> = delegate =>
+    const operator: LiftOperator<C, T, T, TVar> = delegate =>
       pipe(
         TakeFirstLiftableState,
         newInstanceWith<
-          LiftOperatorOut<C, T, T>,
-          LiftOperatorIn<C, T, T>,
+          LiftOperatorOut<C, T, T, TVar>,
+          LiftOperatorIn<C, T, T, TVar>,
           number
         >(delegate, count),
         bindTo(delegate),
@@ -296,28 +270,25 @@ export const createTakeFirstLiftOperator =
   };
 
 export const createTakeWhileLiftOperator =
-  <
-    C extends LiftableContainerLike,
-    TVar extends TLiftableContainerStateType = C["TLiftableContainerState"]["TLiftableContainerStateType"],
-  >(
+  <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     TakeWhileLiftableState: new <T>(
-      delegate: LiftOperatorIn<C, T, T>,
+      delegate: LiftOperatorIn<C, T, T, TVar>,
       predicate: Predicate<T>,
       inclusive: boolean,
-    ) => LiftOperatorOut<C, T, T>,
+    ) => LiftOperatorOut<C, T, T, TVar>,
   ) =>
   <T>(
     predicate: Predicate<T>,
     options: { readonly inclusive?: boolean } = {},
   ): ContainerOperator<C, T, T> => {
     const { inclusive = false } = options;
-    return pipe((delegate: LiftOperatorIn<C, T, T>) => {
+    return pipe((delegate: LiftOperatorIn<C, T, T, TVar>) => {
       const lifted = pipe(
         TakeWhileLiftableState,
         newInstanceWith<
-          LiftOperatorOut<C, T, T>,
-          LiftOperatorIn<C, T, T>,
+          LiftOperatorOut<C, T, T, TVar>,
+          LiftOperatorIn<C, T, T, TVar>,
           Predicate<T>,
           boolean
         >(delegate, predicate, inclusive),
@@ -329,33 +300,28 @@ export const createTakeWhileLiftOperator =
   };
 
 export const createThrowIfEmptyLiftOperator =
-  <
-    C extends LiftableContainerLike,
-    TVar extends TLiftableContainerStateType = C["TLiftableContainerState"]["TLiftableContainerStateType"],
-  >(
+  <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     ThrowIfEmptyLiftableState: new <T>(
-      delegate: LiftOperatorIn<C, T, T>,
-    ) => LiftOperatorOut<C, T, T> & {
+      delegate: LiftOperatorIn<C, T, T, TVar>,
+    ) => LiftOperatorOut<C, T, T, TVar> & {
       readonly isEmpty: boolean;
     },
   ) =>
   <T>(factory: Factory<unknown>): ContainerOperator<C, T, T> =>
-    pipe((delegate: LiftOperatorIn<C, T, T>) => {
+    pipe((delegate: LiftOperatorIn<C, T, T, TVar>) => {
       const lifted = pipe(
         ThrowIfEmptyLiftableState,
         newInstanceWith<
-          LiftOperatorOut<C, T, T> & {
+          LiftOperatorOut<C, T, T, TVar> & {
             readonly isEmpty: boolean;
           },
-          LiftOperatorIn<C, T, T>
+          LiftOperatorIn<C, T, T, TVar>
         >(delegate),
-        delegate.TLiftableContainerStateType === interactive
-          ? add(delegate, true)
-          : addTo(delegate),
+        m.variance === interactive ? add(delegate, true) : addTo(delegate),
       );
       const { parent, child } =
-        delegate.TLiftableContainerStateType === interactive
+        m.variance === interactive
           ? { parent: lifted, child: delegate }
           : { parent: delegate, child: lifted };
 
@@ -404,7 +370,7 @@ export const lift =
     C extends LiftableContainerLike,
     TA,
     TB,
-    TVar extends TLiftableContainerStateType = C["TLiftableContainerState"]["TLiftableContainerStateType"],
+    TVar extends TInteractive | TReactive,
   >(
     m: Lift<C, TVar>,
   ): Function1<LiftOperator<C, TA, TB, TVar>, ContainerOperator<C, TA, TB>> =>

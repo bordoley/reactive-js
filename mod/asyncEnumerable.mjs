@@ -1,6 +1,6 @@
 /// <reference types="./asyncEnumerable.d.ts" />
 import { createFromArray } from './__internal__.container.mjs';
-import { getDelegate, createKeepLiftOperator, createMapLiftOperator, createScanLiftOperator, createTakeWhileLiftOperator } from './__internal__.liftable.mjs';
+import { interactive, getDelegate, createKeepLiftOperator, createMapLiftOperator, createScanLiftOperator, createTakeWhileLiftOperator } from './__internal__.liftable.mjs';
 import { getDelay } from './__internal__.optionalArgs.mjs';
 import { raise, pipe, newInstance, getLength, compose, increment, returns, pipeLazy, newInstanceWith } from './functions.mjs';
 import { stream } from './streamable.mjs';
@@ -52,6 +52,7 @@ const lift = (operator) => enumerable => {
 };
 const liftT = {
     lift,
+    variance: interactive,
 };
 
 class CreateAsyncEnumerable extends AbstractAsyncEnumerable {

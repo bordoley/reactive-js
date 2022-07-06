@@ -1,8 +1,8 @@
 import { ContainerOperator, FromArray, FromArrayOptions, ContainerOf } from "./container.mjs";
-import { Lift as Lift$1, LiftOperator, DelegatingLiftableContainerStateOf, LiftOperatorIn, LiftOperatorOut } from "./__internal__.liftable.mjs";
+import { Lift as Lift$1, TReactive, LiftOperator, DelegatingLiftableContainerStateOf } from "./__internal__.liftable.mjs";
 import { Disposable, DisposableOrTeardown } from "./disposable.mjs";
 import { Function1, Equality, Predicate, SideEffect1, Reducer, Factory } from "./functions.mjs";
-import { TReactive, LiftableContainerStateOf } from "./liftable.mjs";
+import { LiftableContainerStateOf } from "./liftable.mjs";
 import { Option } from "./option.mjs";
 import { ReactiveContainerLike, CreateReactiveContainer } from "./reactiveContainer.mjs";
 interface Lift<C extends ReactiveContainerLike> extends Lift$1<C, TReactive> {
@@ -41,7 +41,7 @@ declare const createKeepOperator: <C extends ReactiveContainerLike>(m: Lift<C>, 
 } & {
     readonly predicate: Predicate<T>;
 }) => <T_1>(predicate: Predicate<T_1>) => ContainerOperator<C, T_1, T_1>;
-declare const createMapOperator: <C extends ReactiveContainerLike>(m: Lift<C>, MapSink: new <TA, TB>(delegate: LiftOperatorIn<C, TA, TB, C["TLiftableContainerState"]["TLiftableContainerStateType"]>, mapper: Function1<TA, TB>) => LiftOperatorOut<C, TA, TB, C["TLiftableContainerState"]["TLiftableContainerStateType"]> & LiftableContainerStateOf<C, TA> & {
+declare const createMapOperator: <C extends ReactiveContainerLike>(m: Lift<C>, MapSink: new <TA, TB>(delegate: LiftableContainerStateOf<C, TB>, mapper: Function1<TA, TB>) => LiftableContainerStateOf<C, TA> & LiftableContainerStateOf<C, TA> & {
     readonly delegate: LiftableContainerStateOf<C, TB>;
 } & {
     readonly mapper: Function1<TA, TB>;
@@ -51,13 +51,10 @@ declare const createOnNotifyOperator: <C extends ReactiveContainerLike>(m: Lift<
 } & {
     readonly onNotify: SideEffect1<T>;
 }) => <T_1>(onNotify: SideEffect1<T_1>) => ContainerOperator<C, T_1, T_1>;
-declare const createPairwiseOperator: <C extends ReactiveContainerLike>(m: Lift<C>, PairwiseSink: new <T>(delegate: LiftOperatorIn<C, T, [
+declare const createPairwiseOperator: <C extends ReactiveContainerLike>(m: Lift<C>, PairwiseSink: new <T>(delegate: LiftableContainerStateOf<C, [
     Option<T>,
     T
-], C["TLiftableContainerState"]["TLiftableContainerStateType"]>) => LiftOperatorOut<C, T, [
-    Option<T>,
-    T
-], C["TLiftableContainerState"]["TLiftableContainerStateType"]> & LiftableContainerStateOf<C, T> & {
+]>) => LiftableContainerStateOf<C, T> & LiftableContainerStateOf<C, T> & {
     readonly delegate: LiftableContainerStateOf<C, [
         Option<T>,
         T
@@ -73,13 +70,13 @@ declare const createReduceOperator: <C extends ReactiveContainerLike>(m: FromArr
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
 }) => <T_1, TAcc_1>(reducer: Reducer<T_1, TAcc_1>, initialValue: Factory<TAcc_1>) => ContainerOperator<C, T_1, TAcc_1>;
-declare const createScanOperator: <C extends ReactiveContainerLike>(m: Lift<C>, ScanSink: new <T, TAcc>(delegate: LiftOperatorIn<C, T, TAcc, C["TLiftableContainerState"]["TLiftableContainerStateType"]>, reducer: Reducer<T, TAcc>, acc: TAcc) => LiftOperatorOut<C, T, TAcc, C["TLiftableContainerState"]["TLiftableContainerStateType"]> & LiftableContainerStateOf<C, T> & {
+declare const createScanOperator: <C extends ReactiveContainerLike>(m: Lift<C>, ScanSink: new <T, TAcc>(delegate: LiftableContainerStateOf<C, TAcc>, reducer: Reducer<T, TAcc>, acc: TAcc) => LiftableContainerStateOf<C, T> & LiftableContainerStateOf<C, T> & {
     readonly delegate: LiftableContainerStateOf<C, TAcc>;
 } & {
     readonly reducer: Reducer<T, TAcc>;
     acc: TAcc;
 }) => <T_1, TAcc_1>(reducer: Reducer<T_1, TAcc_1>, initialValue: Factory<TAcc_1>) => ContainerOperator<C, T_1, TAcc_1>;
-declare const createSkipFirstOperator: <C extends ReactiveContainerLike>(m: Lift<C>, SkipFirstSink: new <T>(delegate: LiftOperatorIn<C, T, T, C["TLiftableContainerState"]["TLiftableContainerStateType"]>, skipCount: number) => LiftableContainerStateOf<C, T> & {
+declare const createSkipFirstOperator: <C extends ReactiveContainerLike>(m: Lift<C>, SkipFirstSink: new <T>(delegate: LiftableContainerStateOf<C, T>, skipCount: number) => LiftableContainerStateOf<C, T> & {
     readonly delegate: LiftableContainerStateOf<C, T>;
 } & {
     count: number;
@@ -92,7 +89,7 @@ declare const createSomeSatisfyOperator: <C extends ReactiveContainerLike>(m: Fr
 } & {
     readonly predicate: Predicate<T>;
 }) => <T_1>(predicate: Predicate<T_1>) => ContainerOperator<C, T_1, boolean>;
-declare const createTakeFirstOperator: <C extends ReactiveContainerLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, TakeFirstSink: new <T>(delegate: LiftOperatorIn<C, T, T, C["TLiftableContainerState"]["TLiftableContainerStateType"]>, maxCount: number) => LiftableContainerStateOf<C, T> & {
+declare const createTakeFirstOperator: <C extends ReactiveContainerLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, TakeFirstSink: new <T>(delegate: LiftableContainerStateOf<C, T>, maxCount: number) => LiftableContainerStateOf<C, T> & {
     readonly delegate: LiftableContainerStateOf<C, T>;
 } & {
     count: number;
@@ -100,7 +97,7 @@ declare const createTakeFirstOperator: <C extends ReactiveContainerLike>(m: From
 }) => <T_1>(options?: {
     readonly count?: number;
 }) => ContainerOperator<C, T_1, T_1>;
-declare const createTakeLastOperator: <C extends ReactiveContainerLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, TakeLastSink: new <T>(delegate: LiftOperatorIn<C, T, T, C["TLiftableContainerState"]["TLiftableContainerStateType"]>, maxCount: number) => LiftOperatorOut<C, T, T, C["TLiftableContainerState"]["TLiftableContainerStateType"]> & {
+declare const createTakeLastOperator: <C extends ReactiveContainerLike>(m: FromArray<C, FromArrayOptions> & Lift<C>, TakeLastSink: new <T>(delegate: LiftableContainerStateOf<C, T>, maxCount: number) => LiftableContainerStateOf<C, T> & {
     readonly last: T[];
     readonly maxCount: number;
 }) => <T_1>(options?: {
@@ -114,7 +111,7 @@ declare const createTakeWhileOperator: <C extends ReactiveContainerLike>(m: Lift
 }) => <T_1>(predicate: Predicate<T_1>, options?: {
     readonly inclusive?: boolean;
 }) => ContainerOperator<C, T_1, T_1>;
-declare const createThrowIfEmptyOperator: <C extends ReactiveContainerLike>(m: Lift<C>, ThrowIfEmptySink: new <T>(delegate: LiftOperatorIn<C, T, T, C["TLiftableContainerState"]["TLiftableContainerStateType"]>) => LiftableContainerStateOf<C, T> & {
+declare const createThrowIfEmptyOperator: <C extends ReactiveContainerLike>(m: Lift<C>, ThrowIfEmptySink: new <T>(delegate: LiftableContainerStateOf<C, T>) => LiftableContainerStateOf<C, T> & {
     readonly delegate: LiftableContainerStateOf<C, T>;
 } & {
     isEmpty: boolean;

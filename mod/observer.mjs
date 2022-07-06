@@ -2,7 +2,6 @@
 import { __DEV__ } from './__internal__.env.mjs';
 import { addTo, onComplete, Disposable, isDisposed, dispose, onDisposed } from './disposable.mjs';
 import { getLength, pipe, newInstanceWith, isEmpty, raise } from './functions.mjs';
-import { reactive } from './liftable.mjs';
 import { none, isNone } from './option.mjs';
 import { assertState } from './reactiveSink.mjs';
 import { schedule, __yield, isInContinuation } from './scheduler.mjs';
@@ -51,9 +50,6 @@ class Observer extends Disposable {
         super();
         this.scheduler = scheduler;
         this._dispatcher = none;
-    }
-    get TLiftableContainerStateType() {
-        return reactive;
     }
     get dispatcher() {
         if (isNone(this._dispatcher)) {

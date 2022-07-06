@@ -10,7 +10,7 @@ import { getScheduler, Observer, getDispatcher } from './observer.mjs';
 import { sinkInto, sourceFrom } from './reactiveContainer.mjs';
 import { schedule, __yield, isInContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { createFromArray } from './__internal__.container.mjs';
-import { getDelegate } from './__internal__.liftable.mjs';
+import { reactive, getDelegate } from './__internal__.liftable.mjs';
 import { notify, assertState, notifySink } from './reactiveSink.mjs';
 import { DisposableRef } from './__internal__.disposable.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -132,9 +132,11 @@ const lift = (operator, isEnumerableOperator = false) => source => {
 };
 const liftT = {
     lift,
+    variance: reactive,
 };
 const liftSynchronousT = {
     lift: op => lift(op, true),
+    variance: reactive,
 };
 
 class AbstractDelegatingObserver extends Observer {

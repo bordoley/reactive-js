@@ -9,7 +9,6 @@ declare abstract class AsyncEnumerator<T> extends Disposable implements Interact
     get T(): T;
     get TContainerOf(): this;
     get TLiftableContainerState(): Observer<this["T"]>;
-    get TLiftableContainerStateType(): 1;
     abstract scheduler: SchedulerLike;
     abstract observerCount: number;
     abstract replay: number;
