@@ -11,7 +11,7 @@
 - [Defer](../interfaces/liftable.Defer.md)
 - [FromIterable](../interfaces/liftable.FromIterable.md)
 - [FromIterator](../interfaces/liftable.FromIterator.md)
-- [LiftableLike](../interfaces/liftable.LiftableLike.md)
+- [LiftableContainerLike](../interfaces/liftable.LiftableContainerLike.md)
 - [ThrowIfEmpty](../interfaces/liftable.ThrowIfEmpty.md)
 - [Using](../interfaces/liftable.Using.md)
 
@@ -34,7 +34,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `C` | extends [`LiftableContainerLike`](../interfaces/liftable.LiftableContainerLike.md) |
 | `T` | `T` |
 
 ## Functions
@@ -47,7 +47,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `C` | extends [`LiftableContainerLike`](../interfaces/liftable.LiftableContainerLike.md) |
 
 #### Parameters
 
@@ -69,7 +69,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`LiftableLike`](../interfaces/liftable.LiftableLike.md) |
+| `C` | extends [`LiftableContainerLike`](../interfaces/liftable.LiftableContainerLike.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |
 | `OConcatAll` | extends `Record`<`string`, `never`\> = `Record`<`string`, `never`\> |

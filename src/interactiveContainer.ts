@@ -1,9 +1,9 @@
 import { __DEV__ } from "./__internal__.env";
 import { Container, ContainerOf } from "./container";
 import { InteractiveSourceLike } from "./interactiveSource";
-import { LiftableLike, LiftableStateOf } from "./liftable";
+import { LiftableContainerLike, LiftableStateOf } from "./liftable";
 
-export interface InteractiveContainerLike extends LiftableLike {
+export interface InteractiveContainerLike extends LiftableContainerLike {
   readonly TLiftableState: InteractiveSourceLike<this["T"]>;
   readonly TCtx: unknown;
 

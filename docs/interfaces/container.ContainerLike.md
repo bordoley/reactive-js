@@ -12,7 +12,7 @@
 
   ↳ [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)
 
-  ↳ [`LiftableLike`](liftable.LiftableLike.md)
+  ↳ [`LiftableContainerLike`](liftable.LiftableContainerLike.md)
 
   ↳ [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)
 

@@ -1,14 +1,14 @@
-[Reactive-JS](../README.md) / [liftable](../modules/liftable.md) / LiftableLike
+[Reactive-JS](../README.md) / [liftable](../modules/liftable.md) / LiftableContainerLike
 
-# Interface: LiftableLike
+# Interface: LiftableContainerLike
 
-[liftable](../modules/liftable.md).LiftableLike
+[liftable](../modules/liftable.md).LiftableContainerLike
 
 ## Hierarchy
 
 - [`ContainerLike`](container.ContainerLike.md)
 
-  ↳ **`LiftableLike`**
+  ↳ **`LiftableContainerLike`**
 
   ↳↳ [`InteractiveContainerLike`](interactiveContainer.InteractiveContainerLike.md)
 
@@ -18,9 +18,9 @@
 
 ### Properties
 
-- [T](liftable.LiftableLike.md#t)
-- [TContainerOf](liftable.LiftableLike.md#tcontainerof)
-- [TLiftableState](liftable.LiftableLike.md#tliftablestate)
+- [T](liftable.LiftableContainerLike.md#t)
+- [TContainerOf](liftable.LiftableContainerLike.md#tcontainerof)
+- [TLiftableState](liftable.LiftableContainerLike.md#tliftablestate)
 
 ## Properties
 

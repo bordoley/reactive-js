@@ -12,7 +12,7 @@ import {
   pipe,
   strictEquality,
 } from "./functions";
-import { LiftableLike, LiftableStateOf } from "./liftable";
+import { LiftableContainerLike, LiftableStateOf } from "./liftable";
 import { Option, none } from "./option";
 
 export type Covariant = 0;
@@ -21,8 +21,10 @@ export type ContraVariant = 1;
 export const contraVariant: ContraVariant = 1;
 export type Variance = Covariant | ContraVariant;
 
-export interface Lift<C extends LiftableLike, TVariance extends Variance>
-  extends Container<C> {
+export interface Lift<
+  C extends LiftableContainerLike,
+  TVariance extends Variance,
+> extends Container<C> {
   variance: TVariance;
 
   lift<TA, TB>(
@@ -31,14 +33,14 @@ export interface Lift<C extends LiftableLike, TVariance extends Variance>
 }
 
 export type LiftOperator<
-  C extends LiftableLike,
+  C extends LiftableContainerLike,
   TA,
   TB,
   M extends Lift<C, Variance>,
 > = Function1<LiftOperatorIn<C, TA, TB, M>, LiftOperatorOut<C, TA, TB, M>>;
 
 export type LiftOperatorIn<
-  C extends LiftableLike,
+  C extends LiftableContainerLike,
   TA,
   TB,
   M extends Lift<C, Variance>,
@@ -47,7 +49,7 @@ export type LiftOperatorIn<
   : LiftableStateOf<C, TA>;
 
 export type LiftOperatorOut<
-  C extends LiftableLike,
+  C extends LiftableContainerLike,
   TA,
   TB,
   M extends Lift<C, Variance>,
@@ -56,7 +58,7 @@ export type LiftOperatorOut<
   : LiftableStateOf<C, TB>;
 
 export type DelegatingLiftableStateOf<
-  C extends LiftableLike,
+  C extends LiftableContainerLike,
   T,
   TDelegate,
   TDelegateLiftableState extends LiftableStateOf<
@@ -68,7 +70,7 @@ export type DelegatingLiftableStateOf<
 };
 
 export const createDistinctUntilChangedLiftOperator =
-  <C extends LiftableLike, TVariance extends Variance>(
+  <C extends LiftableContainerLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     DistinctUntilChangedLiftableState: new <T>(
       delegate: LiftableStateOf<C, T>,
@@ -93,7 +95,7 @@ export const createDistinctUntilChangedLiftOperator =
   };
 
 export const createKeepLiftOperator =
-  <C extends LiftableLike, TVariance extends Variance>(
+  <C extends LiftableContainerLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     KeepLiftableState: new <T>(
       delegate: LiftableStateOf<C, T>,
@@ -115,7 +117,7 @@ export const createKeepLiftOperator =
   };
 
 export const createMapLiftOperator =
-  <C extends LiftableLike, TVariance extends Variance>(
+  <C extends LiftableContainerLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     MapLiftableState: new <TA, TB>(
       delegate: LiftOperatorIn<C, TA, TB, typeof m>,
@@ -138,7 +140,7 @@ export const createMapLiftOperator =
     );
 
 export const createOnNotifyLiftOperator =
-  <C extends LiftableLike, TVariance extends Variance>(
+  <C extends LiftableContainerLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     OnNotifyLiftableState: new <T>(
       delegate: LiftableStateOf<C, T>,
@@ -161,7 +163,7 @@ export const createOnNotifyLiftOperator =
     );
 
 export const createPairwiseLiftOperator =
-  <C extends LiftableLike, TVariance extends Variance>(
+  <C extends LiftableContainerLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     PairwiseLiftableState: new <T>(
       delegate: LiftOperatorIn<C, T, [Option<T>, T], typeof m>,
@@ -184,7 +186,7 @@ export const createPairwiseLiftOperator =
     );
 
 export const createScanLiftOperator =
-  <C extends LiftableLike, TVariance extends Variance>(
+  <C extends LiftableContainerLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     ScanLiftableState: new <T, TAcc>(
       delegate: LiftOperatorIn<C, T, TAcc, typeof m>,
@@ -212,7 +214,7 @@ export const createScanLiftOperator =
     );
 
 export const createSkipFirstLiftOperator =
-  <C extends LiftableLike, TVariance extends Variance>(
+  <C extends LiftableContainerLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     SkipLiftableState: new <T>(
       delegate: LiftOperatorIn<C, T, T, typeof m>,
@@ -239,7 +241,7 @@ export const createSkipFirstLiftOperator =
   };
 
 export const createTakeFirstLiftOperator =
-  <C extends LiftableLike, TVariance extends Variance>(
+  <C extends LiftableContainerLike, TVariance extends Variance>(
     m: FromArray<C> & Lift<C, TVariance>,
     TakeFirstLiftableState: new <T>(
       delegate: LiftOperatorIn<C, T, T, typeof m>,
@@ -265,7 +267,7 @@ export const createTakeFirstLiftOperator =
   };
 
 export const createTakeWhileLiftOperator =
-  <C extends LiftableLike, TVariance extends Variance>(
+  <C extends LiftableContainerLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     TakeWhileLiftableState: new <T>(
       delegate: LiftOperatorIn<C, T, T, typeof m>,
@@ -295,7 +297,7 @@ export const createTakeWhileLiftOperator =
   };
 
 export const createThrowIfEmptyLiftOperator =
-  <C extends LiftableLike, TVariance extends Variance>(
+  <C extends LiftableContainerLike, TVariance extends Variance>(
     m: Lift<C, TVariance>,
     ThrowIfEmptyLiftableState: new <T>(
       delegate: LiftOperatorIn<C, T, T, typeof m>,
@@ -344,7 +346,7 @@ export const createThrowIfEmptyLiftOperator =
     }, lift(m));
 
 export const getDelegate = <
-  C extends LiftableLike,
+  C extends LiftableContainerLike,
   T,
   TDelegate,
   TDelegateLiftableState extends LiftableStateOf<
@@ -356,7 +358,7 @@ export const getDelegate = <
 ): TDelegateLiftableState => s.delegate;
 
 export const lift =
-  <C extends LiftableLike, TA, TB, TVariance extends Variance>(
+  <C extends LiftableContainerLike, TA, TB, TVariance extends Variance>(
     m: Lift<C, TVariance>,
   ): Function1<
     LiftOperator<C, TA, TB, typeof m>,
