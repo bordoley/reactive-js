@@ -1,5 +1,5 @@
+import { getDelegate } from "../__internal__.delegating";
 import { MAX_SAFE_INTEGER } from "../__internal__.env";
-import { getDelegate } from "../__internal__.liftable";
 import { ConcatAll } from "../container";
 import {
   addTo,

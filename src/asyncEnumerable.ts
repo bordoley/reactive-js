@@ -1,10 +1,10 @@
 import { createFromArray } from "./__internal__.container";
+import { getDelegate } from "./__internal__.delegating";
 import {
   createKeepLiftOperator,
   createMapLiftOperator,
   createScanLiftOperator,
   createTakeWhileLiftOperator,
-  getDelegate,
 } from "./__internal__.liftable";
 import { getDelay } from "./__internal__.optionalArgs";
 import { AbstractAsyncEnumerable, lift, liftT } from "./asyncEnumerable/lift";
@@ -20,7 +20,7 @@ import {
   concatWith,
   fromValue,
 } from "./container";
-import { dispatch } from "./dispatcher";
+import { dispatch, getScheduler as getDispatcherScheduler } from "./dispatcher";
 import { add, addTo, bindTo } from "./disposable";
 import {
   EnumerableLike,
@@ -404,15 +404,15 @@ abstract class AbstractDelegatingAsyncEnumerator<TA, TB>
   }
 
   get observerCount() {
-    return pipe(this.delegate, getObserverCount);
+    return pipe(this, getDelegate, getObserverCount);
   }
 
   get replay(): number {
-    return pipe(this.delegate, getReplay);
+    return pipe(this, getDelegate, getReplay);
   }
 
   get scheduler(): SchedulerLike {
-    return this.delegate.scheduler;
+    return pipe(this, getDelegate, getDispatcherScheduler);
   }
 
   dispatch(req: void): void {

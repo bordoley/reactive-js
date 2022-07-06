@@ -1,4 +1,4 @@
-import { getDelegate } from "../__internal__.liftable";
+import { getDelegate } from "../__internal__.delegating";
 import { add, dispose, isDisposed, onComplete } from "../disposable";
 import {
   Function2,

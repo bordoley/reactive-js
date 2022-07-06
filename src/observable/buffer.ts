@@ -1,6 +1,6 @@
+import { getDelegate } from "../__internal__.delegating";
 import { DisposableRef } from "../__internal__.disposable";
 import { MAX_SAFE_INTEGER } from "../__internal__.env";
-import { getDelegate } from "../__internal__.liftable";
 import { Buffer, fromValue } from "../container";
 import {
   addTo,

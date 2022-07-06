@@ -5,6 +5,7 @@ import { pipe, newInstance, isEmpty, getLength, raise, newInstanceWith, compose,
 import { createObservable, getObserverCount, getReplay, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
 import { getDispatcher } from './observer.mjs';
 import { keep } from './__internal__.readonlyArray.mjs';
+import { getDelegate } from './__internal__.delegating.mjs';
 import { ignoreElements } from './container.mjs';
 import { none, isSome } from './option.mjs';
 import { sinkInto } from './reactiveContainer.mjs';
@@ -94,16 +95,16 @@ class WindowLocationStream extends Disposable {
         return raise();
     }
     get observerCount() {
-        return pipe(this.delegate, getObserverCount);
+        return pipe(this, getDelegate, getObserverCount);
     }
     get replay() {
-        return pipe(this.delegate, getReplay);
+        return pipe(this, getDelegate, getReplay);
     }
     get scheduler() {
-        return pipe(this.delegate, getScheduler);
+        return pipe(this, getDelegate, getScheduler);
     }
     dispatch(stateOrUpdater, { replace } = { replace: false }) {
-        pipe({ stateOrUpdater, replace }, dispatchTo(this.delegate));
+        pipe({ stateOrUpdater, replace }, dispatchTo(getDelegate(this)));
     }
     goBack() {
         const canGoBack = this.historyCounter > 0;
@@ -113,7 +114,7 @@ class WindowLocationStream extends Disposable {
         return canGoBack;
     }
     sink(observer) {
-        pipe(this.delegate, map(({ uri }) => uri), sinkInto(observer));
+        pipe(this, getDelegate, map(({ uri }) => uri), sinkInto(observer));
     }
 }
 let currentWindowLocationStream = none;

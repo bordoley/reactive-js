@@ -1,3 +1,4 @@
+import { getDelegate } from "./__internal__.delegating";
 import { MAX_SAFE_INTEGER, __DEV__ } from "./__internal__.env";
 import {
   DelegatingLiftableContainerStateOf,
@@ -16,7 +17,6 @@ import {
   createTakeFirstLiftOperator,
   createTakeWhileLiftOperator,
   createThrowIfEmptyLiftOperator,
-  getDelegate,
   lift,
 } from "./__internal__.liftable";
 import { forEach } from "./__internal__.readonlyArray";

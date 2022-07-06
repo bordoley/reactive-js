@@ -1,17 +1,18 @@
 /// <reference types="./asyncEnumerable.d.ts" />
 import { createFromArray } from './__internal__.container.mjs';
-import { interactive, getDelegate, createKeepLiftOperator, createMapLiftOperator, createScanLiftOperator, createTakeWhileLiftOperator } from './__internal__.liftable.mjs';
+import { getDelegate } from './__internal__.delegating.mjs';
+import { interactive, createKeepLiftOperator, createMapLiftOperator, createScanLiftOperator, createTakeWhileLiftOperator } from './__internal__.liftable.mjs';
 import { getDelay } from './__internal__.optionalArgs.mjs';
 import { raise, pipe, newInstance, getLength, compose, increment, returns, pipeLazy, newInstanceWith } from './functions.mjs';
 import { stream } from './streamable.mjs';
 import { AsyncEnumerator } from './asyncEnumerator.mjs';
 import { fromValue, concatMap, concatWith } from './container.mjs';
-import { dispatch } from './dispatcher.mjs';
+import { getScheduler, dispatch } from './dispatcher.mjs';
 import { add, addTo, bindTo } from './disposable.mjs';
 import { enumerate, fromIterable as fromIterable$1 } from './enumerable.mjs';
 import { move, getCurrent } from './enumerator.mjs';
 import { Subject, multicast, getObserverCount, getReplay, publish, fromArrayT as fromArrayT$1, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, withLatestFrom, using, concatT, never, takeWhile as takeWhile$1, map as map$1, scanAsync as scanAsync$1, onNotify, keep as keep$1, createObservable, onSubscribe } from './observable.mjs';
-import { getScheduler } from './observer.mjs';
+import { getScheduler as getScheduler$1 } from './observer.mjs';
 import { none } from './option.mjs';
 import { sinkInto } from './reactiveContainer.mjs';
 
@@ -159,13 +160,13 @@ class AbstractDelegatingAsyncEnumerator extends AsyncEnumerator {
         this.delegate = delegate;
     }
     get observerCount() {
-        return pipe(this.delegate, getObserverCount);
+        return pipe(this, getDelegate, getObserverCount);
     }
     get replay() {
-        return pipe(this.delegate, getReplay);
+        return pipe(this, getDelegate, getReplay);
     }
     get scheduler() {
-        return this.delegate.scheduler;
+        return pipe(this, getDelegate, getScheduler);
     }
     dispatch(req) {
         pipe(this, getDelegate, dispatch(req));
@@ -256,7 +257,7 @@ const takeWhileT = {
     takeWhile,
 };
 const toObservable = () => enumerable => createObservable(observer => {
-    const enumerator = pipe(enumerable, stream(getScheduler(observer)), addTo(observer));
+    const enumerator = pipe(enumerable, stream(getScheduler$1(observer)), addTo(observer));
     pipe(enumerator, onNotify(_ => {
         pipe(enumerator, dispatch(none));
     }), onSubscribe(() => {

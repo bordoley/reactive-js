@@ -1,3 +1,4 @@
+import { getDelegate } from "./__internal__.delegating";
 import { reset } from "./__internal__.enumerator";
 import {
   createDistinctUntilChangedLiftOperator,
@@ -10,7 +11,6 @@ import {
   createTakeFirstLiftOperator,
   createTakeWhileLiftOperator,
   createThrowIfEmptyLiftOperator,
-  getDelegate,
 } from "./__internal__.liftable";
 import { empty as emptyArray, forEach } from "./__internal__.readonlyArray";
 import {
