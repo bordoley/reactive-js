@@ -103,6 +103,8 @@
 - [generate](observable.md#generate)
 - [getObserverCount](observable.md#getobservercount)
 - [getReplay](observable.md#getreplay)
+- [isEnumerable](observable.md#isenumerable)
+- [isRunnable](observable.md#isrunnable)
 - [keep](observable.md#keep)
 - [map](observable.md#map)
 - [mapAsync](observable.md#mapasync)
@@ -2179,6 +2181,50 @@ ___
 #### Returns
 
 `number`
+
+___
+
+### isEnumerable
+
+▸ **isEnumerable**<`T`\>(`obs`): obs is EnumerableObservableLike<T\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `obs` | [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\> |
+
+#### Returns
+
+obs is EnumerableObservableLike<T\>
+
+___
+
+### isRunnable
+
+▸ **isRunnable**<`T`\>(`obs`): obs is RunnableObservableLike<T\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `obs` | [`ObservableLike`](../interfaces/observable.ObservableLike.md)<`T`\> |
+
+#### Returns
+
+obs is RunnableObservableLike<T\>
 
 ___
 

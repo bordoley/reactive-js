@@ -30,8 +30,6 @@ export abstract class AsyncEnumerator<T>
   abstract observerCount: number;
   abstract replay: number;
 
-  isEnumerable?: false = false;
-
   abstract dispatch(this: DispatcherLike<void>, req: void): void;
   abstract sink(this: ObservableLike<T>, sink: Observer<T>): void;
 

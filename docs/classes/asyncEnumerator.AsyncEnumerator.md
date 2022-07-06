@@ -29,7 +29,6 @@
 
 ### Properties
 
-- [isEnumerable](asyncEnumerator.AsyncEnumerator.md#isenumerable)
 - [observableType](asyncEnumerator.AsyncEnumerator.md#observabletype)
 - [observerCount](asyncEnumerator.AsyncEnumerator.md#observercount)
 - [replay](asyncEnumerator.AsyncEnumerator.md#replay)
@@ -68,12 +67,6 @@
 [Disposable](disposable.Disposable.md).[constructor](disposable.Disposable.md#constructor)
 
 ## Properties
-
-### isEnumerable
-
-• `Optional` **isEnumerable**: ``false``
-
-___
 
 ### observableType
 
