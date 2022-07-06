@@ -7,7 +7,7 @@ import { pipe, ignore, increment, returns, pipeLazy, isEven, sum, alwaysTrue, ne
 import { onNotify, subscribe, toRunnable, fromArrayT, concat as concat$2, fromArray as fromArray$3, buffer, mapT, catchError, concatT, generate as generate$3, takeFirst as takeFirst$2, combineLatestT, createObservable, Subject, publishTo, getObserverCount, exhaustT, fromPromise, toPromise, concatAllT, fromIteratorT, merge, mergeT, mergeAllT, never, observable, __memo, __observe, takeLast as takeLast$2, onSubscribe, retry, scanAsync as scanAsync$1, share, zip as zip$1, map as map$3, switchAll, switchAllT, throttle, throwIfEmpty, timeout, withLatestFrom, fromIterable as fromIterable$2, zipT, zipLatestT, zipWithLatestFrom, keepT as keepT$2, distinctUntilChanged as distinctUntilChanged$2, repeat as repeat$2, scan as scan$3, skipFirst as skipFirst$2, takeWhile as takeWhile$3, decodeWithCharset, reduce, deferT } from './observable.mjs';
 import { none, isSome } from './option.mjs';
 import { toArray, last, fromArray as fromArray$1, someSatisfyT, first, generate as generate$1, everySatisfy, map as map$1, forEach as forEach$1, everySatisfyT, fromArrayT as fromArrayT$2, keepT, concat, concatAll, distinctUntilChanged, repeat, scan as scan$1, skipFirst, takeFirst, takeLast, takeWhile as takeWhile$1, toRunnable as toRunnable$1 } from './runnable.mjs';
-import { createVirtualTimeScheduler, createHostScheduler, schedule, getNow } from './scheduler.mjs';
+import { createVirtualTimeScheduler, schedule, createHostScheduler, getNow } from './scheduler.mjs';
 import { stream, createStateStore, __stream, createActionReducer, createLiftedStreamable, sourceFrom } from './streamable.mjs';
 import { describe, test, expectArrayEquals, expectNone, expectEquals, expectTrue, mockFn, expectToHaveBeenCalledTimes, expectFalse, expectToThrow, expectToThrowError, testAsync, expectPromiseToThrow, expectSome } from './testing.mjs';
 import { fromArray as fromArray$2, toIterable, fromIterable as fromIterable$1, toRunnable as toRunnable$2, fromArrayT as fromArrayT$3, keepT as keepT$1, concat as concat$1, concatAll as concatAll$1, distinctUntilChanged as distinctUntilChanged$1, generate as generate$2, map as map$2, repeat as repeat$1, scan as scan$2, skipFirst as skipFirst$1, takeFirst as takeFirst$1, takeLast as takeLast$1, takeWhile as takeWhile$2, zip } from './enumerable.mjs';
@@ -22,11 +22,28 @@ const tests$7 = describe("async enumerable", test("fromArray", () => {
     const enumerator = pipe(enumerable, stream(scheduler));
     const result = [];
     pipe(enumerator, onNotify((x) => result.push(x)), subscribe(scheduler));
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
+    enumerator.move();
+    enumerator.move();
+    enumerator.move();
     pipe(scheduler, forEach(ignore));
     pipe(result, expectArrayEquals([1, 2, 3]));
+}), test("fromArray with delay", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const enumerable = pipe([1, 2, 3], fromArray({ delay: 2 }));
+    const enumerator = pipe(enumerable, stream(scheduler));
+    const result = [];
+    pipe(enumerator, onNotify(_ => result.push(scheduler.now)), subscribe(scheduler));
+    pipe(scheduler, schedule(() => {
+        enumerator.move();
+    }, { delay: 2 }));
+    pipe(scheduler, schedule(() => {
+        enumerator.move();
+    }, { delay: 6 }));
+    pipe(scheduler, schedule(() => {
+        enumerator.move();
+    }, { delay: 10 }));
+    pipe(scheduler, forEach(ignore));
+    pipe(result, expectArrayEquals([4, 8, 12]));
 }), test("fromIterable", () => {
     const scheduler = createVirtualTimeScheduler();
     const result = [];
@@ -35,12 +52,12 @@ const tests$7 = describe("async enumerable", test("fromArray", () => {
     pipe(enumerator, onNotify(x => result.push(x)), subscribe(scheduler), onDisposed(e => {
         error = e;
     }));
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
+    enumerator.move();
+    enumerator.move();
+    enumerator.move();
+    enumerator.move();
+    enumerator.move();
+    enumerator.move();
     pipe(scheduler, forEach(ignore));
     pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
     pipe(error, expectNone);
@@ -49,9 +66,9 @@ const tests$7 = describe("async enumerable", test("fromArray", () => {
     const enumerator = pipe(generate(increment, returns(0)), stream(scheduler));
     const result = [];
     pipe(enumerator, onNotify(x => result.push(x)), subscribe(scheduler));
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
+    enumerator.move();
+    enumerator.move();
+    enumerator.move();
     pipe(scheduler, forEach(ignore));
     pipe(result, expectArrayEquals([1, 2, 3]));
 }), test("toObservable", pipeLazy([1, 2, 3, 4, 5], fromArray(), toObservable(), toRunnable(), toArray(), expectArrayEquals([1, 2, 3, 4, 5]))), test("map", pipeLazy([1, 2, 3, 4, 5], fromArray(), map(increment), toObservable(), toRunnable(), toArray(), expectArrayEquals([2, 3, 4, 5, 6]))), test("keep", pipeLazy([1, 2, 3, 4, 5], fromArray(), keep(isEven), toObservable(), toRunnable(), toArray(), expectArrayEquals([2, 4]))), test("map/keep", pipeLazy([1, 2, 3, 4, 5], fromArray(), map(increment), keep(isEven), toObservable(), toRunnable(), toArray(), expectArrayEquals([2, 4, 6]))), test("keep/map", pipeLazy([1, 2, 3, 4, 5, 6], fromArray(), keep(isEven), map(increment), toObservable(), toRunnable(), toArray(), expectArrayEquals([3, 5, 7]))), test("scan", pipeLazy([1, 1, 1], fromArray(), scan(sum, returns(0)), toObservable(), toRunnable(), toArray(), expectArrayEquals([1, 2, 3]))), describe("scanAsync", test("when the consumer early terminates", pipeLazy([1, 2, 3, 4, 5, 6], fromIterable(), scanAsync((acc, next) => fromValue(fromArrayT, { delay: 3 })(acc + next), returns(0)), takeWhile(x => x < 3, { inclusive: true }), toObservable(), toRunnable(), last(), expectEquals(3))), test("when the consumer never terminates", pipeLazy([1, 2, 3, 4, 5, 6], fromIterable(), scanAsync((acc, next) => pipe(acc + next, fromValue(fromArrayT, { delay: 40 })), returns(0)), toObservable(), toRunnable(), last(), expectEquals(21)))), describe("takeWhile", test("exclusive", () => {

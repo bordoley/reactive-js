@@ -33,7 +33,7 @@ import {
 } from "../observable";
 import { Option, none } from "../option";
 import { last, toArray } from "../runnable";
-import { createVirtualTimeScheduler } from "../scheduler";
+import { createVirtualTimeScheduler, schedule } from "../scheduler";
 import { __stream, stream } from "../streamable";
 import {
   describe,
@@ -58,13 +58,60 @@ export const tests = describe(
       subscribe(scheduler),
     );
 
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
+    enumerator.move();
+    enumerator.move();
+    enumerator.move();
 
     pipe(scheduler, forEach(ignore));
 
     pipe(result, expectArrayEquals([1, 2, 3]));
+  }),
+
+  test("fromArray with delay", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const enumerable = pipe([1, 2, 3], fromArray<number>({ delay: 2 }));
+    const enumerator = pipe(enumerable, stream(scheduler));
+
+    const result: number[] = [];
+    pipe(
+      enumerator,
+      onNotify(_ => result.push(scheduler.now)),
+      subscribe(scheduler),
+    );
+
+    pipe(
+      scheduler,
+      schedule(
+        () => {
+          enumerator.move();
+        },
+        { delay: 2 },
+      ),
+    );
+
+    pipe(
+      scheduler,
+      schedule(
+        () => {
+          enumerator.move();
+        },
+        { delay: 6 },
+      ),
+    );
+
+    pipe(
+      scheduler,
+      schedule(
+        () => {
+          enumerator.move();
+        },
+        { delay: 10 },
+      ),
+    );
+
+    pipe(scheduler, forEach(ignore));
+
+    pipe(result, expectArrayEquals([4, 8, 12]));
   }),
 
   test("fromIterable", () => {
@@ -87,12 +134,12 @@ export const tests = describe(
       }),
     );
 
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
+    enumerator.move();
+    enumerator.move();
+    enumerator.move();
+    enumerator.move();
+    enumerator.move();
+    enumerator.move();
 
     pipe(scheduler, forEach(ignore));
 
@@ -114,9 +161,9 @@ export const tests = describe(
       subscribe(scheduler),
     );
 
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
-    enumerator.dispatch(none);
+    enumerator.move();
+    enumerator.move();
+    enumerator.move();
 
     pipe(scheduler, forEach(ignore));
 
