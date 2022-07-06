@@ -17,6 +17,9 @@ import { none } from './option.mjs';
 import { sinkInto } from './reactiveContainer.mjs';
 
 class AbstractAsyncEnumerable {
+    constructor() {
+        this.observableType = 0;
+    }
     get T() {
         return raise();
     }
@@ -158,6 +161,7 @@ class AbstractDelegatingAsyncEnumerator extends AsyncEnumerator {
     constructor(delegate) {
         super();
         this.delegate = delegate;
+        this.observableType = 0;
     }
     get observerCount() {
         return pipe(this, getDelegate, getObserverCount);
@@ -175,6 +179,7 @@ class AbstractDelegatingAsyncEnumerator extends AsyncEnumerator {
 const keep = /*@__PURE__*/ createKeepLiftOperator(liftT, class KeepAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
     constructor(delegate, predicate) {
         super(delegate);
+        this.observableType = 0;
         this.obs = pipe(delegate, onNotify(x => {
             if (!predicate(x)) {
                 pipe(this, getDelegate, dispatch(none));

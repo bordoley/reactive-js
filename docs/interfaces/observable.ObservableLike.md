@@ -18,7 +18,11 @@ The source of notifications which notifies a `ObserverLike` instance.
 
   ↳ **`ObservableLike`**
 
+  ↳↳ [`EnumerableObservableLike`](observable.EnumerableObservableLike.md)
+
   ↳↳ [`MulticastObservableLike`](observable.MulticastObservableLike.md)
+
+  ↳↳ [`RunnableObservableLike`](observable.RunnableObservableLike.md)
 
 ## Table of contents
 
@@ -27,7 +31,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 - [T](observable.ObservableLike.md#t)
 - [TContainerOf](observable.ObservableLike.md#tcontainerof)
 - [TLiftableContainerState](observable.ObservableLike.md#tliftablecontainerstate)
-- [isEnumerable](observable.ObservableLike.md#isenumerable)
+- [observableType](observable.ObservableLike.md#observabletype)
 
 ### Methods
 
@@ -65,9 +69,9 @@ ___
 
 ___
 
-### isEnumerable
+### observableType
 
-• `Optional` `Readonly` **isEnumerable**: `boolean`
+• `Readonly` **observableType**: ``0`` \| ``2`` \| ``1``
 
 ## Methods
 

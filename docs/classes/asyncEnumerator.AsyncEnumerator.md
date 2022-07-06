@@ -30,6 +30,7 @@
 ### Properties
 
 - [isEnumerable](asyncEnumerator.AsyncEnumerator.md#isenumerable)
+- [observableType](asyncEnumerator.AsyncEnumerator.md#observabletype)
 - [observerCount](asyncEnumerator.AsyncEnumerator.md#observercount)
 - [replay](asyncEnumerator.AsyncEnumerator.md#replay)
 - [scheduler](asyncEnumerator.AsyncEnumerator.md#scheduler)
@@ -72,9 +73,15 @@
 
 • `Optional` **isEnumerable**: ``false``
 
+___
+
+### observableType
+
+• `Readonly` **observableType**: ``0``
+
 #### Implementation of
 
-StreamLike.isEnumerable
+StreamLike.observableType
 
 ___
 

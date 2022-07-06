@@ -7,6 +7,7 @@ import { none } from './option.mjs';
 class AsyncEnumerator extends Disposable {
     constructor() {
         super(...arguments);
+        this.observableType = 0;
         this.isEnumerable = false;
     }
     get T() {
