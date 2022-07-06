@@ -32,7 +32,10 @@ class Disposable {
      */
     add(disposable, ignoreChildErrors) {
         const { disposables } = this;
-        if (isDisposed(this)) {
+        if (this === disposable) {
+            return;
+        }
+        else if (isDisposed(this)) {
             doDispose(this, disposable);
         }
         else if (!disposables.has(disposable)) {
