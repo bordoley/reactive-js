@@ -1,4 +1,4 @@
-import { Lift } from "../__internal__.liftable";
+import { Lift, TInteractive, interactive } from "../__internal__.liftable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { Enumerator } from "../enumerator";
 import { Function1, newInstance, pipe } from "../functions";
@@ -43,6 +43,7 @@ export const lift =
     >(LiftedEnumerable, src, allFunctions);
   };
 
-export const liftT: Lift<EnumerableLike<unknown>> = {
+export const liftT: Lift<EnumerableLike<unknown>, TInteractive> = {
   lift,
+  variance: interactive,
 };

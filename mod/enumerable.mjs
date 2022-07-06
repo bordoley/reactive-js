@@ -1,6 +1,6 @@
 /// <reference types="./enumerable.d.ts" />
 import { AbstractEnumerator, reset, zip as zip$1 } from './__internal__.enumerator.mjs';
-import { getDelegate, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './__internal__.liftable.mjs';
+import { getDelegate, interactive, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './__internal__.liftable.mjs';
 import { map as map$1, empty as empty$1, forEach as forEach$1 } from './__internal__.readonlyArray.mjs';
 import { isDisposed, dispose, add, addTo, bindTo } from './disposable.mjs';
 import { DisposableRef } from './__internal__.disposable.mjs';
@@ -127,6 +127,7 @@ const lift = (operator) => enumerable => {
 };
 const liftT = {
     lift,
+    variance: interactive,
 };
 
 class ConcatAllEnumerator extends AbstractDelegatingEnumerator {

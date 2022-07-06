@@ -1,18 +1,11 @@
 import { ContainerLike, Container, ContainerOf, ContainerOperator, Map, ConcatAll } from "./container.mjs";
 import { Disposable } from "./disposable.mjs";
 import { Function1, Factory, Function2, Function3, Function4, Function5 } from "./functions.mjs";
-declare type TReactive = 0;
-declare const reactive: TReactive;
-declare type TInteractive = 1;
-declare const interactive: TInteractive;
-interface LiftableContainerStateLike extends Disposable {
-    readonly TLiftableContainerStateType: TReactive | TInteractive;
-}
 interface LiftableContainerLike extends ContainerLike {
-    readonly TLiftableContainerState: LiftableContainerStateLike;
+    readonly TLiftableContainerState: Disposable;
 }
 declare type LiftableContainerStateOf<C extends LiftableContainerLike, T> = C extends {
-    readonly TLiftableContainerState: unknown;
+    readonly TLiftableContainerState: Disposable;
 } ? (C & {
     readonly T: T;
 })["TLiftableContainerState"] : {
@@ -65,4 +58,4 @@ interface Using<C extends LiftableContainerLike> extends Container<C> {
 }
 declare const encodeUtf8: <C extends LiftableContainerLike>(m: Defer<C> & Map<C>) => ContainerOperator<C, string, Uint8Array>;
 declare const genMap: <C extends LiftableContainerLike, TA, TB, OConcatAll extends Record<string, never> = Record<string, never>, OFromIterator extends Record<string, never> = Record<string, never>, TReturn = any, TNext = unknown>(m: Map<C> & ConcatAll<C, OConcatAll> & FromIterator<C, OFromIterator>, mapper: Function1<TA, Generator<TB, TReturn, TNext>>, options?: Partial<OConcatAll & OFromIterator> | undefined) => ContainerOperator<C, TA, TB>;
-export { CatchError, DecodeWithCharset, Defer, FromIterable, FromIterator, LiftableContainerLike, LiftableContainerStateLike, LiftableContainerStateOf, TInteractive, TReactive, ThrowIfEmpty, Using, encodeUtf8, genMap, interactive, reactive };
+export { CatchError, DecodeWithCharset, Defer, FromIterable, FromIterator, LiftableContainerLike, LiftableContainerStateOf, ThrowIfEmpty, Using, encodeUtf8, genMap };

@@ -5,6 +5,7 @@ import {
   LiftOperatorIn,
   LiftOperatorOut,
   Lift as LiftableLift,
+  TReactive,
   createDistinctUntilChangedLiftOperator,
   createKeepLiftOperator,
   createMapLiftOperator,
@@ -55,7 +56,7 @@ import {
   newInstanceWith,
   pipe,
 } from "./functions";
-import { LiftableContainerStateOf, TReactive } from "./liftable";
+import { LiftableContainerStateOf } from "./liftable";
 import { Option, isSome, none } from "./option";
 import {
   CreateReactiveContainer,
@@ -397,9 +398,9 @@ export const createKeepOperator = <C extends ReactiveContainerLike>(
 export const createMapOperator = <C extends ReactiveContainerLike>(
   m: Lift<C>,
   MapSink: new <TA, TB>(
-    delegate: LiftOperatorIn<C, TA, TB>,
+    delegate: LiftOperatorIn<C, TA, TB, TReactive>,
     mapper: Function1<TA, TB>,
-  ) => LiftOperatorOut<C, TA, TB> &
+  ) => LiftOperatorOut<C, TA, TB, TReactive> &
     DelegatingLiftableContainerStateOf<C, TA, TB> & {
       readonly mapper: Function1<TA, TB>;
     },
@@ -418,7 +419,7 @@ export const createMapOperator = <C extends ReactiveContainerLike>(
     },
   );
 
-  return createMapLiftOperator(m, MapSink);
+  return createMapLiftOperator<C, TReactive>(m, MapSink);
 };
 
 export const createOnNotifyOperator = <C extends ReactiveContainerLike>(
@@ -451,8 +452,8 @@ export const createOnNotifyOperator = <C extends ReactiveContainerLike>(
 export const createPairwiseOperator = <C extends ReactiveContainerLike>(
   m: Lift<C>,
   PairwiseSink: new <T>(
-    delegate: LiftOperatorIn<C, T, [Option<T>, T]>,
-  ) => LiftOperatorOut<C, T, [Option<T>, T]> &
+    delegate: LiftOperatorIn<C, T, [Option<T>, T], TReactive>,
+  ) => LiftOperatorOut<C, T, [Option<T>, T], TReactive> &
     DelegatingLiftableContainerStateOf<C, T, [Option<T>, T]> & {
       prev: Option<T>;
       hasPrev: boolean;
@@ -477,7 +478,7 @@ export const createPairwiseOperator = <C extends ReactiveContainerLike>(
     },
   );
 
-  return createPairwiseLiftOperator(m, PairwiseSink);
+  return createPairwiseLiftOperator<C, TReactive>(m, PairwiseSink);
 };
 
 export const createReduceOperator = <C extends ReactiveContainerLike>(
@@ -542,10 +543,10 @@ export const createReduceOperator = <C extends ReactiveContainerLike>(
 export const createScanOperator = <C extends ReactiveContainerLike>(
   m: Lift<C>,
   ScanSink: new <T, TAcc>(
-    delegate: LiftOperatorIn<C, T, TAcc>,
+    delegate: LiftOperatorIn<C, T, TAcc, TReactive>,
     reducer: Reducer<T, TAcc>,
     acc: TAcc,
-  ) => LiftOperatorOut<C, T, TAcc> &
+  ) => LiftOperatorOut<C, T, TAcc, TReactive> &
     DelegatingLiftableContainerStateOf<C, T, TAcc> & {
       readonly reducer: Reducer<T, TAcc>;
       acc: TAcc;
@@ -571,13 +572,13 @@ export const createScanOperator = <C extends ReactiveContainerLike>(
     },
   );
 
-  return createScanLiftOperator(m, ScanSink);
+  return createScanLiftOperator<C, TReactive>(m, ScanSink);
 };
 
 export const createSkipFirstOperator = <C extends ReactiveContainerLike>(
   m: Lift<C>,
   SkipFirstSink: new <T>(
-    delegate: LiftOperatorIn<C, T, T>,
+    delegate: LiftOperatorIn<C, T, T, TReactive>,
     skipCount: number,
   ) => DelegatingLiftableContainerStateOf<C, T, T> & {
     count: number;
@@ -619,7 +620,7 @@ export const createSomeSatisfyOperator = <C extends ReactiveContainerLike>(
 export const createTakeFirstOperator = <C extends ReactiveContainerLike>(
   m: FromArray<C> & Lift<C>,
   TakeFirstSink: new <T>(
-    delegate: LiftOperatorIn<C, T, T>,
+    delegate: LiftOperatorIn<C, T, T, TReactive>,
     maxCount: number,
   ) => DelegatingLiftableContainerStateOf<C, T, T> & {
     count: number;
@@ -653,9 +654,9 @@ export const createTakeFirstOperator = <C extends ReactiveContainerLike>(
 export const createTakeLastOperator = <C extends ReactiveContainerLike>(
   m: FromArray<C> & Lift<C>,
   TakeLastSink: new <T>(
-    delegate: LiftOperatorIn<C, T, T>,
+    delegate: LiftOperatorIn<C, T, T, TReactive>,
     maxCount: number,
-  ) => LiftOperatorOut<C, T, T> & {
+  ) => LiftOperatorOut<C, T, T, TReactive> & {
     readonly last: T[];
     readonly maxCount: number;
   },
@@ -759,7 +760,7 @@ export const createTakeWhileOperator = <C extends ReactiveContainerLike>(
 export const createThrowIfEmptyOperator = <C extends ReactiveContainerLike>(
   m: Lift<C>,
   ThrowIfEmptySink: new <T>(
-    delegate: LiftOperatorIn<C, T, T>,
+    delegate: LiftOperatorIn<C, T, T, TReactive>,
   ) => DelegatingLiftableContainerStateOf<C, T, T> & {
     isEmpty: boolean;
   },
@@ -779,7 +780,7 @@ export const createThrowIfEmptyOperator = <C extends ReactiveContainerLike>(
     },
   );
 
-  return createThrowIfEmptyLiftOperator(m, ThrowIfEmptySink);
+  return createThrowIfEmptyLiftOperator<C, TReactive>(m, ThrowIfEmptySink);
 };
 
 export const createFromDisposable =

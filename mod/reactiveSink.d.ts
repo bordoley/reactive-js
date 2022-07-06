@@ -1,8 +1,6 @@
 import { Disposable } from "./disposable.mjs";
 import { Function1, SideEffect1 } from "./functions.mjs";
-import { TReactive } from "./liftable.mjs";
 interface ReactiveSinkLike<T> extends Disposable {
-    readonly TLiftableContainerStateType: TReactive;
     assertState(this: this): void;
     /**
      * Notifies the the sink of the next notification produced by the observable source.

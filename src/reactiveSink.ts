@@ -1,10 +1,8 @@
 import { __DEV__ } from "./__internal__.env";
 import { Disposable } from "./disposable";
 import { Function1, SideEffect1 } from "./functions";
-import { TReactive } from "./liftable";
 
 export interface ReactiveSinkLike<T> extends Disposable {
-  readonly TLiftableContainerStateType: TReactive;
   assertState(this: this): void;
 
   /**

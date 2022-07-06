@@ -34,7 +34,6 @@ Abstract base class for implementing the `ObserverLike` interface.
 
 ### Accessors
 
-- [TLiftableContainerStateType](observer.Observer.md#tliftablecontainerstatetype)
 - [dispatcher](observer.Observer.md#dispatcher)
 - [error](observer.Observer.md#error)
 - [isDisposed](observer.Observer.md#isdisposed)
@@ -75,20 +74,6 @@ Abstract base class for implementing the `ObserverLike` interface.
 • `Readonly` **scheduler**: [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
 
 ## Accessors
-
-### TLiftableContainerStateType
-
-• `get` **TLiftableContainerStateType**(): ``0``
-
-#### Returns
-
-``0``
-
-#### Implementation of
-
-[ReactiveSinkLike](../interfaces/reactiveSink.ReactiveSinkLike.md).[TLiftableContainerStateType](../interfaces/reactiveSink.ReactiveSinkLike.md#tliftablecontainerstatetype)
-
-___
 
 ### dispatcher
 

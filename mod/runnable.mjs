@@ -7,7 +7,7 @@ import { isSome, none, isNone, getOrDefault } from './option.mjs';
 import { sourceFrom } from './reactiveContainer.mjs';
 import { RunnableSink } from './runnableSink.mjs';
 import { createFromArray } from './__internal__.container.mjs';
-import { getDelegate } from './__internal__.liftable.mjs';
+import { reactive, getDelegate } from './__internal__.liftable.mjs';
 import { notify } from './reactiveSink.mjs';
 
 class AbstractRunnable {
@@ -93,6 +93,7 @@ const lift = (operator) => runnable => {
 };
 const liftT = {
     lift,
+    variance: reactive,
 };
 
 class AbstractDelegatingRunnableSink extends RunnableSink {

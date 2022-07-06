@@ -23,7 +23,6 @@
 
 ### Accessors
 
-- [TLiftableContainerStateType](scheduler.VirtualTimeSchedulerLike.md#tliftablecontainerstatetype)
 - [current](scheduler.VirtualTimeSchedulerLike.md#current)
 - [error](scheduler.VirtualTimeSchedulerLike.md#error)
 - [hasCurrent](scheduler.VirtualTimeSchedulerLike.md#hascurrent)
@@ -79,20 +78,6 @@ ___
 [SchedulerLike](scheduler.SchedulerLike.md).[shouldYield](scheduler.SchedulerLike.md#shouldyield)
 
 ## Accessors
-
-### TLiftableContainerStateType
-
-• `get` **TLiftableContainerStateType**(): ``1``
-
-#### Returns
-
-``1``
-
-#### Inherited from
-
-Enumerator.TLiftableContainerStateType
-
-___
 
 ### current
 

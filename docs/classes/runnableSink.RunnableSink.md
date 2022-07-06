@@ -28,7 +28,6 @@
 
 ### Accessors
 
-- [TLiftableContainerStateType](runnableSink.RunnableSink.md#tliftablecontainerstatetype)
 - [error](runnableSink.RunnableSink.md#error)
 - [isDisposed](runnableSink.RunnableSink.md#isdisposed)
 
@@ -56,20 +55,6 @@
 [Disposable](disposable.Disposable.md).[constructor](disposable.Disposable.md#constructor)
 
 ## Accessors
-
-### TLiftableContainerStateType
-
-• `get` **TLiftableContainerStateType**(): ``0``
-
-#### Returns
-
-``0``
-
-#### Implementation of
-
-[ReactiveSinkLike](../interfaces/reactiveSink.ReactiveSinkLike.md).[TLiftableContainerStateType](../interfaces/reactiveSink.ReactiveSinkLike.md#tliftablecontainerstatetype)
-
-___
 
 ### error
 

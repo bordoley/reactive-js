@@ -20,25 +20,15 @@ import {
   pipeLazy,
 } from "./functions";
 
-export type TReactive = 0;
-export const reactive: TReactive = 0;
-
-export type TInteractive = 1;
-export const interactive: TInteractive = 1;
-
-export interface LiftableContainerStateLike extends Disposable {
-  readonly TLiftableContainerStateType: TReactive | TInteractive;
-}
-
 export interface LiftableContainerLike extends ContainerLike {
-  readonly TLiftableContainerState: LiftableContainerStateLike;
+  readonly TLiftableContainerState: Disposable;
 }
 
 export type LiftableContainerStateOf<
   C extends LiftableContainerLike,
   T,
 > = C extends {
-  readonly TLiftableContainerState: unknown;
+  readonly TLiftableContainerState: Disposable;
 }
   ? (C & {
       readonly T: T;
