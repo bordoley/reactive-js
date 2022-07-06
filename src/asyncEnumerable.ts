@@ -87,7 +87,7 @@ export interface AsyncEnumerableLike<T>
     InteractiveContainerLike {
   readonly T: unknown;
   readonly TContainerOf: AsyncEnumerableLike<this["T"]>;
-  readonly TLiftableState: AsyncEnumerator<this["T"]>;
+  readonly TLiftableContainerState: AsyncEnumerator<this["T"]>;
   readonly TCtx: SchedulerLike;
 }
 
@@ -404,15 +404,15 @@ abstract class AbstractDelegatingAsyncEnumerator<TA, TB>
   }
 
   get observerCount() {
-    return pipe(this, getDelegate, getObserverCount);
+    return pipe(this.delegate, getObserverCount);
   }
 
   get replay(): number {
-    return pipe(this, getDelegate, getReplay);
+    return pipe(this.delegate, getReplay);
   }
 
   get scheduler(): SchedulerLike {
-    return getDelegate(this).scheduler;
+    return this.delegate.scheduler;
   }
 
   dispatch(req: void): void {

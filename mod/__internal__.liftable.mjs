@@ -2,10 +2,9 @@
 import { empty } from './container.mjs';
 import { bindTo, add, addTo, onComplete, dispose } from './disposable.mjs';
 import { strictEquality, pipe, newInstanceWith, max } from './functions.mjs';
+import { interactive } from './liftable.mjs';
 import { none } from './option.mjs';
 
-const covariant = 0;
-const contraVariant = 1;
 const createDistinctUntilChangedLiftOperator = (m, DistinctUntilChangedLiftableState) => (options = {}) => {
     const { equality = strictEquality } = options;
     const operator = delegate => pipe(DistinctUntilChangedLiftableState, newInstanceWith(delegate, equality), bindTo(delegate));
@@ -40,8 +39,10 @@ const createTakeWhileLiftOperator = (m, TakeWhileLiftableState) => (predicate, o
     }, lift(m));
 };
 const createThrowIfEmptyLiftOperator = (m, ThrowIfEmptyLiftableState) => (factory) => pipe((delegate) => {
-    const lifted = pipe(ThrowIfEmptyLiftableState, newInstanceWith(delegate), m.variance === covariant ? add(delegate, true) : addTo(delegate));
-    const { parent, child } = m.variance === covariant
+    const lifted = pipe(ThrowIfEmptyLiftableState, newInstanceWith(delegate), delegate.TLiftableContainerStateType === interactive
+        ? add(delegate, true)
+        : addTo(delegate));
+    const { parent, child } = delegate.TLiftableContainerStateType === interactive
         ? { parent: lifted, child: delegate }
         : { parent: delegate, child: lifted };
     pipe(child, onComplete(() => {
@@ -63,4 +64,4 @@ const createThrowIfEmptyLiftOperator = (m, ThrowIfEmptyLiftableState) => (factor
 const getDelegate = (s) => s.delegate;
 const lift = (m) => op => m.lift(op);
 
-export { contraVariant, covariant, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, getDelegate, lift };
+export { createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, getDelegate, lift };

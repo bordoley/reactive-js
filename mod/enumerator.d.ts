@@ -1,9 +1,8 @@
 import { Disposable } from "./disposable.mjs";
 import { SideEffect1, Function1 } from "./functions.mjs";
 import { InteractiveSourceLike } from "./interactiveSource.mjs";
-declare abstract class Enumerator<T> extends Disposable implements InteractiveSourceLike<T> {
-    get T(): T;
-    get TContainerOf(): this;
+declare abstract class Enumerator<T> extends Disposable implements InteractiveSourceLike {
+    get TLiftableContainerStateType(): 1;
     abstract get current(): T;
     abstract get hasCurrent(): boolean;
     abstract move(): boolean;

@@ -9,8 +9,7 @@ declare class Observer<T> extends Disposable implements ReactiveSinkLike<T> {
     readonly scheduler: SchedulerLike;
     private _dispatcher;
     constructor(scheduler: SchedulerLike);
-    get T(): T;
-    get TContainerOf(): this;
+    get TLiftableContainerStateType(): 0;
     get dispatcher(): DispatcherLike<T>;
     assertState(this: Observer<T>): void;
     notify(_: T): void;

@@ -18,6 +18,8 @@ Represents an unmanaged resource that can be disposed.
 
   ↳ [`InteractiveSourceLike`](../interfaces/interactiveSource.InteractiveSourceLike.md)
 
+  ↳ [`LiftableContainerStateLike`](../interfaces/liftable.LiftableContainerStateLike.md)
+
   ↳ [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)
 
   ↳ [`Subject`](observable.Subject.md)

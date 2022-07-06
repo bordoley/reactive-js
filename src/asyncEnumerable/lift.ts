@@ -1,4 +1,4 @@
-import { Covariant, Lift, covariant } from "../__internal__.liftable";
+import { Lift } from "../__internal__.liftable";
 import {
   AsyncEnumerableLike,
   AsyncEnumerableOperator,
@@ -19,7 +19,7 @@ export abstract class AbstractAsyncEnumerable<T>
     return this;
   }
 
-  get TLiftableState(): AsyncEnumerator<this["T"]> {
+  get TLiftableContainerState(): AsyncEnumerator<this["T"]> {
     return raise();
   }
 
@@ -78,7 +78,6 @@ export const lift =
     >(LiftedAsyncEnumerable, src, allFunctions);
   };
 
-export const liftT: Lift<AsyncEnumerableLike<unknown>, Covariant> = {
-  variance: covariant,
+export const liftT: Lift<AsyncEnumerableLike<unknown>> = {
   lift,
 };

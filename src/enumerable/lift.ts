@@ -1,4 +1,4 @@
-import { Covariant, Lift, covariant } from "../__internal__.liftable";
+import { Lift } from "../__internal__.liftable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
 import { Enumerator } from "../enumerator";
 import { Function1, newInstance, pipe } from "../functions";
@@ -43,7 +43,6 @@ export const lift =
     >(LiftedEnumerable, src, allFunctions);
   };
 
-export const liftT: Lift<EnumerableLike<unknown>, Covariant> = {
-  variance: covariant,
+export const liftT: Lift<EnumerableLike<unknown>> = {
   lift,
 };

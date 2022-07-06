@@ -34,8 +34,7 @@ Abstract base class for implementing the `ObserverLike` interface.
 
 ### Accessors
 
-- [T](observer.Observer.md#t)
-- [TContainerOf](observer.Observer.md#tcontainerof)
+- [TLiftableContainerStateType](observer.Observer.md#tliftablecontainerstatetype)
 - [dispatcher](observer.Observer.md#dispatcher)
 - [error](observer.Observer.md#error)
 - [isDisposed](observer.Observer.md#isdisposed)
@@ -77,31 +76,17 @@ Abstract base class for implementing the `ObserverLike` interface.
 
 ## Accessors
 
-### T
+### TLiftableContainerStateType
 
-• `get` **T**(): `T`
-
-#### Returns
-
-`T`
-
-#### Implementation of
-
-[ReactiveSinkLike](../interfaces/reactiveSink.ReactiveSinkLike.md).[T](../interfaces/reactiveSink.ReactiveSinkLike.md#t)
-
-___
-
-### TContainerOf
-
-• `get` **TContainerOf**(): `this`
+• `get` **TLiftableContainerStateType**(): ``0``
 
 #### Returns
 
-`this`
+``0``
 
 #### Implementation of
 
-[ReactiveSinkLike](../interfaces/reactiveSink.ReactiveSinkLike.md).[TContainerOf](../interfaces/reactiveSink.ReactiveSinkLike.md#tcontainerof)
+[ReactiveSinkLike](../interfaces/reactiveSink.ReactiveSinkLike.md).[TLiftableContainerStateType](../interfaces/reactiveSink.ReactiveSinkLike.md#tliftablecontainerstatetype)
 
 ___
 

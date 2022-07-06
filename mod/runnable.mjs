@@ -7,7 +7,7 @@ import { isSome, none, isNone, getOrDefault } from './option.mjs';
 import { sourceFrom } from './reactiveContainer.mjs';
 import { RunnableSink } from './runnableSink.mjs';
 import { createFromArray } from './__internal__.container.mjs';
-import { contraVariant, getDelegate } from './__internal__.liftable.mjs';
+import { getDelegate } from './__internal__.liftable.mjs';
 import { notify } from './reactiveSink.mjs';
 
 class AbstractRunnable {
@@ -17,7 +17,7 @@ class AbstractRunnable {
     get TContainerOf() {
         return this;
     }
-    get TLiftableState() {
+    get TLiftableContainerState() {
         return raise();
     }
 }
@@ -92,7 +92,6 @@ const lift = (operator) => runnable => {
     return newInstance(LiftedRunnable, src, allFunctions);
 };
 const liftT = {
-    variance: contraVariant,
     lift,
 };
 

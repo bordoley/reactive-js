@@ -1,4 +1,3 @@
-import { contraVariant } from "../__internal__.liftable";
 import { Lift } from "../__internal__.reactiveContainer";
 import { dispose } from "../disposable";
 import { Function1, newInstance, pipe } from "../functions";
@@ -43,6 +42,5 @@ export const lift =
   };
 
 export const liftT: Lift<RunnableLike<unknown>> = {
-  variance: contraVariant,
   lift,
 };

@@ -1,17 +1,14 @@
 import { Disposable } from "./disposable";
-import { Function1, SideEffect1, raise } from "./functions";
+import { Function1, SideEffect1 } from "./functions";
 import { InteractiveSourceLike } from "./interactiveSource";
+import { interactive } from "./liftable";
 
 export abstract class Enumerator<T>
   extends Disposable
-  implements InteractiveSourceLike<T>
+  implements InteractiveSourceLike
 {
-  get T(): T {
-    return raise();
-  }
-
-  get TContainerOf(): this {
-    return this;
+  get TLiftableContainerStateType() {
+    return interactive;
   }
 
   abstract get current(): T;

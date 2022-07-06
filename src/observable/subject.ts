@@ -31,7 +31,7 @@ export class Subject<T>
     return raise();
   }
 
-  get TLiftableState(): Observer<this["T"]> {
+  get TLiftableContainerState(): Observer<this["T"]> {
     return raise();
   }
 

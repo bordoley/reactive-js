@@ -1,4 +1,3 @@
-import { getDelegate } from "../__internal__.liftable";
 import { ignoreElements } from "../container";
 import { dispatchTo, getScheduler } from "../dispatcher";
 import { Disposable, addTo, bindTo } from "../disposable";
@@ -117,27 +116,27 @@ class WindowLocationStream
     return this;
   }
 
-  get TLiftableState(): Observer<this["T"]> {
+  get TLiftableContainerState(): Observer<this["T"]> {
     return raise();
   }
 
   get observerCount(): number {
-    return pipe(this, getDelegate, getObserverCount);
+    return pipe(this.delegate, getObserverCount);
   }
 
   get replay(): number {
-    return pipe(this, getDelegate, getReplay);
+    return pipe(this.delegate, getReplay);
   }
 
   get scheduler(): SchedulerLike {
-    return pipe(this, getDelegate, getScheduler);
+    return pipe(this.delegate, getScheduler);
   }
 
   dispatch(
     stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
     { replace }: { replace: boolean } = { replace: false },
   ): void {
-    pipe({ stateOrUpdater, replace }, dispatchTo(getDelegate(this)));
+    pipe({ stateOrUpdater, replace }, dispatchTo(this.delegate));
   }
 
   goBack(): boolean {
@@ -152,8 +151,7 @@ class WindowLocationStream
 
   sink(observer: Observer<WindowLocationURI>): void {
     pipe(
-      this,
-      getDelegate,
+      this.delegate,
       map(({ uri }) => uri),
       sinkInto(observer),
     );

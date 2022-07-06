@@ -1,13 +1,11 @@
 import { __DEV__ } from "./__internal__.env";
-import { ContainerLike } from "./container";
 import { Disposable } from "./disposable";
 import { Function1, SideEffect1 } from "./functions";
+import { TReactive } from "./liftable";
 
-export interface ReactiveSinkLike<T> extends Disposable, ContainerLike {
-  readonly T: T;
-  readonly TContainerOf: ReactiveSinkLike<this["T"]>;
-
-  assertState(this: this["TContainerOf"]): void;
+export interface ReactiveSinkLike<T> extends Disposable {
+  readonly TLiftableContainerStateType: TReactive;
+  assertState(this: this): void;
 
   /**
    * Notifies the the sink of the next notification produced by the observable source.
@@ -17,7 +15,7 @@ export interface ReactiveSinkLike<T> extends Disposable, ContainerLike {
    *
    * @param next The next notification value.
    */
-  notify(this: this["TContainerOf"], next: T): void;
+  notify(this: this, next: T): void;
 }
 
 export const assertState = (sink: ReactiveSinkLike<unknown>): void => {
@@ -27,13 +25,17 @@ export const assertState = (sink: ReactiveSinkLike<unknown>): void => {
 };
 
 export const notify =
-  <TSink extends ReactiveSinkLike<T>, T>(v: T): Function1<TSink, TSink> =>
+  <T, TSink extends ReactiveSinkLike<T> = ReactiveSinkLike<T>>(
+    v: T,
+  ): Function1<TSink, TSink> =>
   (sink: TSink) => {
     sink.notify(v);
     return sink;
   };
 
 export const notifySink =
-  <TSink extends ReactiveSinkLike<T>, T>(sink: TSink): SideEffect1<T> =>
+  <T, TSink extends ReactiveSinkLike<T> = ReactiveSinkLike<T>>(
+    sink: TSink,
+  ): SideEffect1<T> =>
   (next: T) =>
     sink.notify(next);

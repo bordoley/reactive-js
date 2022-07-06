@@ -14,8 +14,6 @@
 
 - [`Disposable`](../classes/disposable.Disposable.md)
 
-- [`ContainerLike`](container.ContainerLike.md)
-
   ↳ **`ReactiveSinkLike`**
 
 ## Implemented by
@@ -27,8 +25,7 @@
 
 ### Properties
 
-- [T](reactiveSink.ReactiveSinkLike.md#t)
-- [TContainerOf](reactiveSink.ReactiveSinkLike.md#tcontainerof)
+- [TLiftableContainerStateType](reactiveSink.ReactiveSinkLike.md#tliftablecontainerstatetype)
 
 ### Accessors
 
@@ -44,23 +41,9 @@
 
 ## Properties
 
-### T
+### TLiftableContainerStateType
 
-• **T**: `T`
-
-#### Overrides
-
-[ContainerLike](container.ContainerLike.md).[T](container.ContainerLike.md#t)
-
-___
-
-### TContainerOf
-
-• `Readonly` **TContainerOf**: [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)<`T`\>
-
-#### Overrides
-
-[ContainerLike](container.ContainerLike.md).[TContainerOf](container.ContainerLike.md#tcontainerof)
+• `Readonly` **TLiftableContainerStateType**: ``0``
 
 ## Accessors
 
