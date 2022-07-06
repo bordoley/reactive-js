@@ -1,5 +1,5 @@
+import { getDelegate } from "../__internal__.delegating";
 import { AbstractEnumerator } from "../__internal__.enumerator";
-import { getDelegate } from "../__internal__.liftable";
 import { Enumerator, getCurrent, hasCurrent } from "../enumerator";
 import { pipe } from "../functions";
 

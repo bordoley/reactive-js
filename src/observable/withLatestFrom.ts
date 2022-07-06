@@ -1,4 +1,4 @@
-import { getDelegate } from "../__internal__.liftable";
+import { getDelegate } from "../__internal__.delegating";
 import { addTo, bindTo, dispose, isDisposed, onComplete } from "../disposable";
 import { Function2, newInstanceWith, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";

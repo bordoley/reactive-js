@@ -1,3 +1,4 @@
+import { getDelegate } from "../__internal__.delegating";
 import { ignoreElements } from "../container";
 import { dispatchTo, getScheduler } from "../dispatcher";
 import { Disposable, addTo, bindTo } from "../disposable";
@@ -121,22 +122,22 @@ class WindowLocationStream
   }
 
   get observerCount(): number {
-    return pipe(this.delegate, getObserverCount);
+    return pipe(this, getDelegate, getObserverCount);
   }
 
   get replay(): number {
-    return pipe(this.delegate, getReplay);
+    return pipe(this, getDelegate, getReplay);
   }
 
   get scheduler(): SchedulerLike {
-    return pipe(this.delegate, getScheduler);
+    return pipe(this, getDelegate, getScheduler);
   }
 
   dispatch(
     stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,
     { replace }: { replace: boolean } = { replace: false },
   ): void {
-    pipe({ stateOrUpdater, replace }, dispatchTo(this.delegate));
+    pipe({ stateOrUpdater, replace }, dispatchTo(getDelegate(this)));
   }
 
   goBack(): boolean {
@@ -151,7 +152,8 @@ class WindowLocationStream
 
   sink(observer: Observer<WindowLocationURI>): void {
     pipe(
-      this.delegate,
+      this,
+      getDelegate,
       map(({ uri }) => uri),
       sinkInto(observer),
     );

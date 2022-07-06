@@ -7,7 +7,8 @@ import { isSome, none, isNone, getOrDefault } from './option.mjs';
 import { sourceFrom } from './reactiveContainer.mjs';
 import { RunnableSink } from './runnableSink.mjs';
 import { createFromArray } from './__internal__.container.mjs';
-import { reactive, getDelegate } from './__internal__.liftable.mjs';
+import { reactive } from './__internal__.liftable.mjs';
+import { getDelegate } from './__internal__.delegating.mjs';
 import { notify } from './reactiveSink.mjs';
 
 class AbstractRunnable {

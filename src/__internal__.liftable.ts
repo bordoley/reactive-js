@@ -348,23 +348,6 @@ export const createThrowIfEmptyLiftOperator =
       return lifted;
     }, lift(m));
 
-export const getDelegate = <
-  C extends LiftableContainerLike,
-  T,
-  TDelegate,
-  TDelegateLiftableState extends LiftableContainerStateOf<
-    C,
-    TDelegate
-  > = LiftableContainerStateOf<C, TDelegate>,
->(
-  s: DelegatingLiftableContainerStateOf<
-    C,
-    T,
-    TDelegate,
-    TDelegateLiftableState
-  >,
-): TDelegateLiftableState => s.delegate;
-
 export const lift =
   <
     C extends LiftableContainerLike,

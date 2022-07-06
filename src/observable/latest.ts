@@ -1,3 +1,4 @@
+import { getDelegate } from "../__internal__.delegating";
 import { everySatisfy, map } from "../__internal__.readonlyArray";
 import { Zip } from "../container";
 import { Disposable, addTo, bindTo, dispose, onComplete } from "../disposable";
@@ -22,7 +23,7 @@ class LatestCtx extends Disposable {
   readyCount = 0;
 
   constructor(
-    private readonly delegate: Observer<readonly unknown[]>,
+    readonly delegate: Observer<readonly unknown[]>,
     private readonly mode: LatestMode,
   ) {
     super();
@@ -36,7 +37,7 @@ class LatestCtx extends Disposable {
         observers,
         map(observer => observer.latest),
       );
-      pipe(this.delegate, notify(result));
+      pipe(this, getDelegate, notify(result));
 
       if (mode === LatestMode.Zip) {
         for (const sub of observers) {

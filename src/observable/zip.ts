@@ -1,9 +1,9 @@
+import { getDelegate } from "../__internal__.delegating";
 import {
   AbstractEnumerator,
   reset,
   zip as zipEnumerators,
 } from "../__internal__.enumerator";
-import { getDelegate } from "../__internal__.liftable";
 import { everySatisfy, map } from "../__internal__.readonlyArray";
 import { Zip } from "../container";
 import {

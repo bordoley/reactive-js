@@ -1,5 +1,5 @@
+import { getDelegate } from "../__internal__.delegating";
 import { __DEV__ } from "../__internal__.env";
-import { getDelegate } from "../__internal__.liftable";
 import { newInstance, pipe } from "../functions";
 import { notify } from "../reactiveSink";
 import { RunnableSink } from "../runnableSink";

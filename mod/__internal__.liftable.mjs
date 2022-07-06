@@ -60,7 +60,6 @@ const createThrowIfEmptyLiftOperator = (m, ThrowIfEmptyLiftableState) => (factor
     }));
     return lifted;
 }, lift(m));
-const getDelegate = (s) => s.delegate;
 const lift = (m) => op => m.lift(op);
 
-export { createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, getDelegate, interactive, lift, reactive };
+export { createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator, interactive, lift, reactive };

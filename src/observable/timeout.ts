@@ -1,5 +1,5 @@
+import { getDelegate } from "../__internal__.delegating";
 import { DisposableRef } from "../__internal__.disposable";
-import { getDelegate } from "../__internal__.liftable";
 import { throws } from "../container";
 import { bindTo, dispose } from "../disposable";
 import { newInstance, newInstanceWith, pipe, returns } from "../functions";

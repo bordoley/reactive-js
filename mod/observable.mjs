@@ -10,7 +10,8 @@ import { getScheduler, Observer, getDispatcher } from './observer.mjs';
 import { sinkInto, sourceFrom } from './reactiveContainer.mjs';
 import { schedule, __yield, isInContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { createFromArray } from './__internal__.container.mjs';
-import { reactive, getDelegate } from './__internal__.liftable.mjs';
+import { reactive } from './__internal__.liftable.mjs';
+import { getDelegate } from './__internal__.delegating.mjs';
 import { notify, assertState, notifySink } from './reactiveSink.mjs';
 import { DisposableRef } from './__internal__.disposable.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -538,7 +539,7 @@ class LatestCtx extends Disposable {
         const { mode, observers, readyCount } = this;
         if (readyCount === getLength(observers)) {
             const result = pipe(observers, map$1(observer => observer.latest));
-            pipe(this.delegate, notify(result));
+            pipe(this, getDelegate, notify(result));
             if (mode === 2 /* LatestMode.Zip */) {
                 for (const sub of observers) {
                     sub.ready = false;
