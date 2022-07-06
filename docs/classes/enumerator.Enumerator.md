@@ -30,7 +30,6 @@
 
 ### Accessors
 
-- [TLiftableContainerStateType](enumerator.Enumerator.md#tliftablecontainerstatetype)
 - [current](enumerator.Enumerator.md#current)
 - [error](enumerator.Enumerator.md#error)
 - [hasCurrent](enumerator.Enumerator.md#hascurrent)
@@ -59,20 +58,6 @@
 [Disposable](disposable.Disposable.md).[constructor](disposable.Disposable.md#constructor)
 
 ## Accessors
-
-### TLiftableContainerStateType
-
-• `get` **TLiftableContainerStateType**(): ``1``
-
-#### Returns
-
-``1``
-
-#### Implementation of
-
-[InteractiveSourceLike](../interfaces/interactiveSource.InteractiveSourceLike.md).[TLiftableContainerStateType](../interfaces/interactiveSource.InteractiveSourceLike.md#tliftablecontainerstatetype)
-
-___
 
 ### current
 

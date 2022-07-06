@@ -1,3 +1,4 @@
+import { reactive } from "../__internal__.liftable";
 import { Lift } from "../__internal__.reactiveContainer";
 import { Function1, newInstance, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
@@ -56,8 +57,10 @@ export const lift =
 
 export const liftT: Lift<ObservableLike<unknown>> = {
   lift,
+  variance: reactive,
 };
 
 export const liftSynchronousT: Lift<ObservableLike<unknown>> = {
   lift: op => lift(op, true),
+  variance: reactive,
 };

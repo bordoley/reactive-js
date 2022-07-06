@@ -1,4 +1,4 @@
-import { Lift } from "../__internal__.liftable";
+import { Lift, TInteractive, interactive } from "../__internal__.liftable";
 import {
   AsyncEnumerableLike,
   AsyncEnumerableOperator,
@@ -78,6 +78,7 @@ export const lift =
     >(LiftedAsyncEnumerable, src, allFunctions);
   };
 
-export const liftT: Lift<AsyncEnumerableLike<unknown>> = {
+export const liftT: Lift<AsyncEnumerableLike<unknown>, TInteractive> = {
   lift,
+  variance: interactive,
 };

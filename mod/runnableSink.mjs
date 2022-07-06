@@ -2,12 +2,8 @@
 import { __DEV__ } from './__internal__.env.mjs';
 import { Disposable, isDisposed } from './disposable.mjs';
 import { raise } from './functions.mjs';
-import { reactive } from './liftable.mjs';
 
 class RunnableSink extends Disposable {
-    get TLiftableContainerStateType() {
-        return reactive;
-    }
     assertState() { }
     notify(_) { }
 }

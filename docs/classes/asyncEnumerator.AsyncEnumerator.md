@@ -39,7 +39,6 @@
 - [T](asyncEnumerator.AsyncEnumerator.md#t)
 - [TContainerOf](asyncEnumerator.AsyncEnumerator.md#tcontainerof)
 - [TLiftableContainerState](asyncEnumerator.AsyncEnumerator.md#tliftablecontainerstate)
-- [TLiftableContainerStateType](asyncEnumerator.AsyncEnumerator.md#tliftablecontainerstatetype)
 - [error](asyncEnumerator.AsyncEnumerator.md#error)
 - [isDisposed](asyncEnumerator.AsyncEnumerator.md#isdisposed)
 
@@ -148,20 +147,6 @@ ___
 #### Implementation of
 
 StreamLike.TLiftableContainerState
-
-___
-
-### TLiftableContainerStateType
-
-• `get` **TLiftableContainerStateType**(): ``1``
-
-#### Returns
-
-``1``
-
-#### Implementation of
-
-[InteractiveSourceLike](../interfaces/interactiveSource.InteractiveSourceLike.md).[TLiftableContainerStateType](../interfaces/interactiveSource.InteractiveSourceLike.md#tliftablecontainerstatetype)
 
 ___
 

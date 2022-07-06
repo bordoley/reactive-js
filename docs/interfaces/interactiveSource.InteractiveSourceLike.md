@@ -17,10 +17,6 @@
 
 ## Table of contents
 
-### Properties
-
-- [TLiftableContainerStateType](interactiveSource.InteractiveSourceLike.md#tliftablecontainerstatetype)
-
 ### Accessors
 
 - [error](interactiveSource.InteractiveSourceLike.md#error)
@@ -31,12 +27,6 @@
 - [add](interactiveSource.InteractiveSourceLike.md#add)
 - [dispose](interactiveSource.InteractiveSourceLike.md#dispose)
 - [move](interactiveSource.InteractiveSourceLike.md#move)
-
-## Properties
-
-### TLiftableContainerStateType
-
-• `Readonly` **TLiftableContainerStateType**: ``1``
 
 ## Accessors
 
