@@ -30,7 +30,7 @@ Interface for iterating a Container of items.
 ### Methods
 
 - [enumerate](enumerable.EnumerableLike.md#enumerate)
-- [source](enumerable.EnumerableLike.md#source)
+- [interact](enumerable.EnumerableLike.md#interact)
 
 ## Properties
 
@@ -92,9 +92,9 @@ Returns an `EnumeratorLike` to iterate through the Container.
 
 ___
 
-### source
+### interact
 
-▸ **source**(`this`, `_`): [`Enumerator`](../classes/enumerator.Enumerator.md)<[`T`](enumerable.EnumerableLike.md#t)\>
+▸ **interact**(`this`, `_`): [`Enumerator`](../classes/enumerator.Enumerator.md)<[`T`](enumerable.EnumerableLike.md#t)\>
 
 #### Parameters
 
@@ -109,4 +109,4 @@ ___
 
 #### Overrides
 
-[InteractiveContainerLike](interactiveContainer.InteractiveContainerLike.md).[source](interactiveContainer.InteractiveContainerLike.md#source)
+[InteractiveContainerLike](interactiveContainer.InteractiveContainerLike.md).[interact](interactiveContainer.InteractiveContainerLike.md#interact)

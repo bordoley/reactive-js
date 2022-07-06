@@ -64,7 +64,7 @@ export interface EnumerableLike<T> extends InteractiveContainerLike {
    * Returns an `EnumeratorLike` to iterate through the Container.
    */
   enumerate(this: EnumerableLike<this["T"]>): Enumerator<T>;
-  source(this: EnumerableLike<this["T"]>, _: void): Enumerator<T>;
+  interact(this: EnumerableLike<this["T"]>, _: void): Enumerator<T>;
 }
 
 /** A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB> */

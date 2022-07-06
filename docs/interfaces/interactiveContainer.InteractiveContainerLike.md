@@ -25,7 +25,7 @@
 
 ### Methods
 
-- [source](interactiveContainer.InteractiveContainerLike.md#source)
+- [interact](interactiveContainer.InteractiveContainerLike.md#interact)
 
 ## Properties
 
@@ -65,9 +65,9 @@ ___
 
 ## Methods
 
-### source
+### interact
 
-▸ **source**(`this`, `_`): [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)
+▸ **interact**(`this`, `_`): [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)
 
 #### Parameters
 

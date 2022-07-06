@@ -29,7 +29,7 @@
 
 ### Methods
 
-- [source](asyncEnumerable.AsyncEnumerableLike.md#source)
+- [interact](asyncEnumerable.AsyncEnumerableLike.md#interact)
 - [stream](asyncEnumerable.AsyncEnumerableLike.md#stream)
 
 ## Properties
@@ -74,9 +74,9 @@ ___
 
 ## Methods
 
-### source
+### interact
 
-▸ **source**(`this`, `_`): [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)
+▸ **interact**(`this`, `_`): [`InteractiveSourceLike`](interactiveSource.InteractiveSourceLike.md)
 
 #### Parameters
 
@@ -91,7 +91,7 @@ ___
 
 #### Inherited from
 
-[InteractiveContainerLike](interactiveContainer.InteractiveContainerLike.md).[source](interactiveContainer.InteractiveContainerLike.md#source)
+[InteractiveContainerLike](interactiveContainer.InteractiveContainerLike.md).[interact](interactiveContainer.InteractiveContainerLike.md#interact)
 
 ___
 

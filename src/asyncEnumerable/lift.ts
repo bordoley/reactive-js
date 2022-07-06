@@ -30,7 +30,7 @@ export abstract class AbstractAsyncEnumerable<T>
 
   readonly observableType: DefaultObservable = 0;
 
-  source(scheduler: SchedulerLike): AsyncEnumerator<T> {
+  interact(scheduler: SchedulerLike): AsyncEnumerator<T> {
     return pipe(this, stream(scheduler));
   }
 
