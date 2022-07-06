@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`LiftableLike`](liftable.LiftableLike.md) |
+| `C` | extends [`LiftableContainerLike`](liftable.LiftableContainerLike.md) |
 | `O` | extends `Record`<`string`, `unknown`\> = `Record`<`string`, `never`\> |
 
 ## Hierarchy
