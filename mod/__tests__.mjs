@@ -286,7 +286,25 @@ const tests$3 = describe("observable", describe("buffer", test("with duration an
     [1, 1],
     [2, 2],
     [3, 3],
-], arrayEquality()))), test("when source throws", pipeLazy(pipeLazy(raise, throws({ ...fromArrayT, ...mapT }), zipWith(zipT, fromArray$3()([1, 2, 3])), map$3(([, b]) => b), toRunnable(), toArray()), expectToThrow))), test("zipLatestWith", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8], fromArray$3({ delay: 1 }), zipWith(zipLatestT, pipe([1, 2, 3, 4], fromArray$3({ delay: 2 }))), map$3(([a, b]) => a + b), toRunnable(), toArray(), expectArrayEquals([2, 5, 8, 11]))), describe("zipWithLatestFrom", test("when source throws", pipeLazy(pipeLazy(throws({ ...fromArrayT, ...mapT })(raise), zipWithLatestFrom(fromValue(fromArrayT)(1), (_, b) => b), toRunnable(), last()), expectToThrow)), test("when other throws", pipeLazy(pipeLazy([1, 2, 3], fromArray$3({ delay: 1 }), zipWithLatestFrom(throws({ ...fromArrayT, ...mapT })(raise), (_, b) => b), toRunnable(), last()), expectToThrow)), test("when other completes first", pipeLazy([1], fromArray$3({ delay: 1 }), zipWithLatestFrom(fromArray$3()([2]), (_, b) => b), toRunnable(), last(), expectEquals(2)))), createRunnableTests({
+], arrayEquality()))), test("when source throws", pipeLazy(pipeLazy(raise, throws({ ...fromArrayT, ...mapT }), zipWith(zipT, fromArray$3()([1, 2, 3])), map$3(([, b]) => b), toRunnable(), toArray()), expectToThrow))), test("zipLatestWith", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8], fromArray$3({ delay: 1 }), zipWith(zipLatestT, pipe([1, 2, 3, 4], fromArray$3({ delay: 2 }))), map$3(([a, b]) => a + b), toRunnable(), toArray(), expectArrayEquals([2, 5, 8, 11]))), describe("zipWithLatestFrom", test("when source throws", pipeLazy(pipeLazy(throws({ ...fromArrayT, ...mapT })(raise), zipWithLatestFrom(fromValue(fromArrayT)(1), (_, b) => b), toRunnable(), last()), expectToThrow)), test("when other throws", pipeLazy(pipeLazy([1, 2, 3], fromArray$3({ delay: 1 }), zipWithLatestFrom(throws({ ...fromArrayT, ...mapT })(raise), (_, b) => b), toRunnable(), last()), expectToThrow)), test("when other completes first", pipeLazy([1], fromArray$3({ delay: 1 }), zipWithLatestFrom(fromArray$3()([2]), (_, b) => b), toRunnable(), last(), expectEquals(2)))), test("fromArray with no start delay", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const publishTimes = [];
+    pipe([1, 2, 3], fromArray$3({ delay: 2, delayStart: false }), onNotify(_ => publishTimes.push(scheduler.now)), subscribe(scheduler));
+    pipe(scheduler, forEach(ignore));
+    pipe(publishTimes, expectArrayEquals([0, 2, 4]));
+}), test("fromIterable with no start delay", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const publishTimes = [];
+    pipe([1, 2, 3], fromIterable$2({ delay: 2, delayStart: false }), onNotify(_ => publishTimes.push(scheduler.now)), subscribe(scheduler));
+    pipe(scheduler, forEach(ignore));
+    pipe(publishTimes, expectArrayEquals([0, 2, 4]));
+}), test("generate with no start delay", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const publishTimes = [];
+    pipe(generate$3(incrementBy(2), returns(1), { delay: 2, delayStart: false }), takeFirst$2({ count: 3 }), onNotify(_ => publishTimes.push(scheduler.now)), subscribe(scheduler));
+    pipe(scheduler, forEach(ignore));
+    pipe(publishTimes, expectArrayEquals([0, 2, 4]));
+}), createRunnableTests({
     ...concatT,
     ...concatAllT,
     ...fromArrayT,

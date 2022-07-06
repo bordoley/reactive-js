@@ -10,11 +10,11 @@ import { getScheduler, Observer, getDispatcher } from './observer.mjs';
 import { sinkInto, sourceFrom } from './reactiveContainer.mjs';
 import { schedule, __yield, isInContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { createFromArray } from './__internal__.container.mjs';
+import { none, isNone, isSome } from './option.mjs';
 import { reactive } from './__internal__.liftable.mjs';
 import { getDelegate } from './__internal__.delegating.mjs';
 import { notify, assertState, notifySink } from './reactiveSink.mjs';
 import { DisposableRef } from './__internal__.disposable.mjs';
-import { none, isNone, isSome } from './option.mjs';
 import { createRunnable } from './runnable.mjs';
 import { map as map$1, everySatisfy as everySatisfy$1 } from './__internal__.readonlyArray.mjs';
 import { enumerate, fromIterator as fromIterator$1, fromIterable as fromIterable$1, createEnumerable } from './enumerable.mjs';
@@ -96,6 +96,7 @@ const empty = /*@__PURE__*/ pipe(createObservable(dispose()), tagObservableType(
 const fromArray = /*@__PURE__*/ createFromArray((values, startIndex, endIndex, options) => {
     const count = endIndex - startIndex;
     const isEnumerableTag = !hasDelay(options);
+    const { delayStart = true } = options !== null && options !== void 0 ? options : {};
     return count === 0 && isEnumerableTag
         ? empty
         : pipe(defer(() => {
@@ -111,7 +112,7 @@ const fromArray = /*@__PURE__*/ createFromArray((values, startIndex, endIndex, o
                 }
                 pipe(observer, dispose());
             };
-        }, options), tagObservableType(hasDelay(options) ? 1 : 2));
+        }, delayStart ? options : none), tagObservableType(hasDelay(options) ? 1 : 2));
 });
 const fromArrayT = {
     fromArray,
@@ -659,13 +660,16 @@ const concatT = {
  *
  * @param delay The requested delay between emitted items by the observable.
  */
-const fromEnumerator = (options) => f => pipe(using(f, enumerator => defer(() => (observer) => {
-    while (move(enumerator)) {
-        observer.notify(getCurrent(enumerator));
-        __yield(options);
-    }
-    pipe(observer, dispose());
-}, options)), tagObservableType(hasDelay(options) ? 1 : 2));
+const fromEnumerator = (options) => f => {
+    const { delayStart = true } = options !== null && options !== void 0 ? options : {};
+    return pipe(using(f, enumerator => defer(() => (observer) => {
+        while (move(enumerator)) {
+            observer.notify(getCurrent(enumerator));
+            __yield(options);
+        }
+        pipe(observer, dispose());
+    }, delayStart ? options : none)), tagObservableType(hasDelay(options) ? 1 : 2));
+};
 /**
  * Creates an `ObservableLike` which enumerates through the values
  * produced by the provided `Enumerable` with a specified `delay` between emitted items.
@@ -1287,6 +1291,7 @@ const fromPromise = (factory) =>
  * @param delay The requested delay between emitted items by the observable.
  */
 const generate = (generator, initialValue, options) => {
+    const { delayStart = true } = options !== null && options !== void 0 ? options : {};
     const factory = () => {
         let acc = initialValue();
         return (observer) => {
@@ -1297,7 +1302,7 @@ const generate = (generator, initialValue, options) => {
             }
         };
     };
-    return pipe(defer(factory, options), tagObservableType(hasDelay(options) ? 1 : 2));
+    return pipe(defer(factory, delayStart ? options : none), tagObservableType(hasDelay(options) ? 1 : 2));
 };
 const generateT = {
     generate,

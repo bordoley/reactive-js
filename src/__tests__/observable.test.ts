@@ -939,6 +939,48 @@ export const tests = describe(
       ),
     ),
   ),
+  test("fromArray with no start delay", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const publishTimes: number[] = [];
+    pipe(
+      [1, 2, 3],
+      fromArray({ delay: 2, delayStart: false }),
+      onNotify(_ => publishTimes.push(scheduler.now)),
+      subscribe(scheduler),
+    );
+
+    pipe(scheduler, enumeratorForEach(ignore));
+
+    pipe(publishTimes, expectArrayEquals([0, 2, 4]));
+  }),
+  test("fromIterable with no start delay", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const publishTimes: number[] = [];
+    pipe(
+      [1, 2, 3],
+      fromIterable({ delay: 2, delayStart: false }),
+      onNotify(_ => publishTimes.push(scheduler.now)),
+      subscribe(scheduler),
+    );
+
+    pipe(scheduler, enumeratorForEach(ignore));
+
+    pipe(publishTimes, expectArrayEquals([0, 2, 4]));
+  }),
+  test("generate with no start delay", () => {
+    const scheduler = createVirtualTimeScheduler();
+    const publishTimes: number[] = [];
+    pipe(
+      generate(incrementBy(2), returns(1), { delay: 2, delayStart: false }),
+      takeFirst({ count: 3 }),
+      onNotify(_ => publishTimes.push(scheduler.now)),
+      subscribe(scheduler),
+    );
+
+    pipe(scheduler, enumeratorForEach(ignore));
+
+    pipe(publishTimes, expectArrayEquals([0, 2, 4]));
+  }),
   createRunnableTests({
     ...concatT,
     ...concatAllT,
