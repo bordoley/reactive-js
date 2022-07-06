@@ -33,7 +33,7 @@ class StreamImpl extends Disposable {
     dispatch(req) {
         pipe(this.subject, publish(req));
     }
-    sink(observer) {
+    sinkInto(observer) {
         pipe(this.observable, sinkInto(observer));
     }
 }

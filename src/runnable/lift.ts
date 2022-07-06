@@ -18,7 +18,7 @@ class LiftedRunnable<T> extends AbstractRunnable<T> {
     super();
   }
 
-  sink(sink: RunnableSink<T>) {
+  sinkInto(sink: RunnableSink<T>) {
     pipe(
       pipe(sink, ...this.operators) as RunnableSink<T>,
       sourceFrom(this.src),

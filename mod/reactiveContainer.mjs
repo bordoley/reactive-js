@@ -1,10 +1,10 @@
 /// <reference types="./reactiveContainer.d.ts" />
 const sinkInto = (sink) => source => {
-    source.sink(sink);
+    source.sinkInto(sink);
     return source;
 };
 const sourceFrom = (source) => sink => {
-    source.sink(sink);
+    source.sinkInto(sink);
     return sink;
 };
 

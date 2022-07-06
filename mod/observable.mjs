@@ -55,7 +55,7 @@ class CreateObservable extends AbstractObservable {
         this.f = f;
         this.observableType = 0;
     }
-    sink(observer) {
+    sinkInto(observer) {
         try {
             this.f(observer);
         }
@@ -125,7 +125,7 @@ class LiftedObservable extends AbstractObservable {
         this.operators = operators;
         this.observableType = observableType;
     }
-    sink(observer) {
+    sinkInto(observer) {
         pipe(observer, ...this.operators, sourceFrom(this.source));
     }
 }
@@ -224,7 +224,7 @@ class Subject extends Disposable {
             }
         }
     }
-    sink(observer) {
+    sinkInto(observer) {
         if (!isDisposed(this)) {
             const { observers } = this;
             observers.add(observer);

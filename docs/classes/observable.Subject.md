@@ -45,7 +45,7 @@
 - [add](observable.Subject.md#add)
 - [dispose](observable.Subject.md#dispose)
 - [publish](observable.Subject.md#publish)
-- [sink](observable.Subject.md#sink)
+- [sinkInto](observable.Subject.md#sinkinto)
 
 ## Constructors
 
@@ -262,9 +262,9 @@ ___
 
 ___
 
-### sink
+### sinkInto
 
-▸ **sink**(`observer`): `void`
+▸ **sinkInto**(`observer`): `void`
 
 #### Parameters
 
@@ -278,4 +278,4 @@ ___
 
 #### Implementation of
 
-MulticastObservableLike.sink
+MulticastObservableLike.sinkInto

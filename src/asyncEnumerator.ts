@@ -31,7 +31,7 @@ export abstract class AsyncEnumerator<T>
   abstract replay: number;
 
   abstract dispatch(this: DispatcherLike<void>, req: void): void;
-  abstract sink(this: ObservableLike<T>, sink: Observer<T>): void;
+  abstract sinkInto(this: ObservableLike<T>, sink: Observer<T>): void;
 
   move(): void {
     pipe(this, dispatch(none));

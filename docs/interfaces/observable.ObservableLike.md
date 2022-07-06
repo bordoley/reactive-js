@@ -35,7 +35,7 @@ The source of notifications which notifies a `ObserverLike` instance.
 
 ### Methods
 
-- [sink](observable.ObservableLike.md#sink)
+- [sinkInto](observable.ObservableLike.md#sinkinto)
 
 ## Properties
 
@@ -75,9 +75,9 @@ ___
 
 ## Methods
 
-### sink
+### sinkInto
 
-▸ **sink**(`this`, `sink`): `void`
+▸ **sinkInto**(`this`, `sink`): `void`
 
 #### Parameters
 
@@ -92,4 +92,4 @@ ___
 
 #### Overrides
 
-[ReactiveContainerLike](reactiveContainer.ReactiveContainerLike.md).[sink](reactiveContainer.ReactiveContainerLike.md#sink)
+[ReactiveContainerLike](reactiveContainer.ReactiveContainerLike.md).[sinkInto](reactiveContainer.ReactiveContainerLike.md#sinkinto)

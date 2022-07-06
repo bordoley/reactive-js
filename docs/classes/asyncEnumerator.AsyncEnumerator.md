@@ -48,7 +48,7 @@
 - [dispatch](asyncEnumerator.AsyncEnumerator.md#dispatch)
 - [dispose](asyncEnumerator.AsyncEnumerator.md#dispose)
 - [move](asyncEnumerator.AsyncEnumerator.md#move)
-- [sink](asyncEnumerator.AsyncEnumerator.md#sink)
+- [sinkInto](asyncEnumerator.AsyncEnumerator.md#sinkinto)
 
 ## Constructors
 
@@ -282,9 +282,9 @@ ___
 
 ___
 
-### sink
+### sinkInto
 
-▸ `Abstract` **sink**(`this`, `sink`): `void`
+▸ `Abstract` **sinkInto**(`this`, `sink`): `void`
 
 #### Parameters
 
@@ -299,4 +299,4 @@ ___
 
 #### Implementation of
 
-StreamLike.sink
+StreamLike.sinkInto

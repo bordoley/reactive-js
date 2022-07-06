@@ -10,7 +10,7 @@ import { ReactiveSinkLike } from "./reactiveSink";
 export interface ReactiveContainerLike extends LiftableContainerLike {
   readonly TLiftableContainerState: ReactiveSinkLike<unknown>;
 
-  sink(
+  sinkInto(
     this: this,
     sink: LiftableContainerStateOf<ReactiveContainerLike, this["T"]>,
   ): void;
@@ -32,7 +32,7 @@ export const sinkInto =
     sink: TSink,
   ): Function1<C, C> =>
   source => {
-    source.sink(sink);
+    source.sinkInto(sink);
     return source;
   };
 
@@ -45,6 +45,6 @@ export const sourceFrom =
     source: C,
   ): Function1<TSink, TSink> =>
   sink => {
-    source.sink(sink);
+    source.sinkInto(sink);
     return sink;
   };

@@ -58,7 +58,7 @@ export class Subject<T>
     }
   }
 
-  sink(observer: Observer<T>) {
+  sinkInto(observer: Observer<T>) {
     if (!isDisposed(this)) {
       const { observers } = this;
       observers.add(observer);
