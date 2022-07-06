@@ -1,14 +1,14 @@
-[Reactive-JS](../README.md) / [liftable](../modules/liftable.md) / Defer
+[Reactive-JS](../README.md) / [liftableContainer](../modules/liftableContainer.md) / Defer
 
 # Interface: Defer<C\>
 
-[liftable](../modules/liftable.md).Defer
+[liftableContainer](../modules/liftableContainer.md).Defer
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`LiftableContainerLike`](liftable.LiftableContainerLike.md) |
+| `C` | extends [`LiftableContainerLike`](liftableContainer.LiftableContainerLike.md) |
 
 ## Hierarchy
 
@@ -20,11 +20,11 @@
 
 ### Properties
 
-- [TContainerOf](liftable.Defer.md#tcontainerof)
+- [TContainerOf](liftableContainer.Defer.md#tcontainerof)
 
 ### Methods
 
-- [defer](liftable.Defer.md#defer)
+- [defer](liftableContainer.Defer.md#defer)
 
 ## Properties
 

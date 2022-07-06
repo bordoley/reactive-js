@@ -1,6 +1,6 @@
 import { Container, ContainerOf } from "./container.mjs";
 import { Function1 } from "./functions.mjs";
-import { LiftableContainerLike, LiftableContainerStateOf } from "./liftable.mjs";
+import { LiftableContainerLike, LiftableContainerStateOf } from "./liftableContainer.mjs";
 import { ReactiveSinkLike } from "./reactiveSink.mjs";
 interface ReactiveContainerLike extends LiftableContainerLike {
     readonly TLiftableContainerState: ReactiveSinkLike<unknown>;

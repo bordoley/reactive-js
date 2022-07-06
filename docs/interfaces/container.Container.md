@@ -62,19 +62,19 @@
 
   ↳ [`CreateInteractiveContainer`](interactiveContainer.CreateInteractiveContainer.md)
 
-  ↳ [`CatchError`](liftable.CatchError.md)
+  ↳ [`CatchError`](liftableContainer.CatchError.md)
 
-  ↳ [`DecodeWithCharset`](liftable.DecodeWithCharset.md)
+  ↳ [`DecodeWithCharset`](liftableContainer.DecodeWithCharset.md)
 
-  ↳ [`Defer`](liftable.Defer.md)
+  ↳ [`Defer`](liftableContainer.Defer.md)
 
-  ↳ [`FromIterable`](liftable.FromIterable.md)
+  ↳ [`FromIterable`](liftableContainer.FromIterable.md)
 
-  ↳ [`FromIterator`](liftable.FromIterator.md)
+  ↳ [`FromIterator`](liftableContainer.FromIterator.md)
 
-  ↳ [`ThrowIfEmpty`](liftable.ThrowIfEmpty.md)
+  ↳ [`ThrowIfEmpty`](liftableContainer.ThrowIfEmpty.md)
 
-  ↳ [`Using`](liftable.Using.md)
+  ↳ [`Using`](liftableContainer.Using.md)
 
   ↳ [`FromObservable`](observable.FromObservable.md)
 

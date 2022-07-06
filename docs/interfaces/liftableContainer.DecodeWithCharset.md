@@ -1,14 +1,14 @@
-[Reactive-JS](../README.md) / [liftable](../modules/liftable.md) / DecodeWithCharset
+[Reactive-JS](../README.md) / [liftableContainer](../modules/liftableContainer.md) / DecodeWithCharset
 
 # Interface: DecodeWithCharset<C\>
 
-[liftable](../modules/liftable.md).DecodeWithCharset
+[liftableContainer](../modules/liftableContainer.md).DecodeWithCharset
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`LiftableContainerLike`](liftable.LiftableContainerLike.md) |
+| `C` | extends [`LiftableContainerLike`](liftableContainer.LiftableContainerLike.md) |
 
 ## Hierarchy
 
@@ -20,11 +20,11 @@
 
 ### Properties
 
-- [TContainerOf](liftable.DecodeWithCharset.md#tcontainerof)
+- [TContainerOf](liftableContainer.DecodeWithCharset.md#tcontainerof)
 
 ### Methods
 
-- [decodeWithCharset](liftable.DecodeWithCharset.md#decodewithcharset)
+- [decodeWithCharset](liftableContainer.DecodeWithCharset.md#decodewithcharset)
 
 ## Properties
 

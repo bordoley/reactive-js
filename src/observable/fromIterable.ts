@@ -3,7 +3,7 @@ import {
   fromIterator as enumerableFromIterator,
 } from "../enumerable";
 import { Factory, Function1, compose } from "../functions";
-import { FromIterable, FromIterator } from "../liftable";
+import { FromIterable, FromIterator } from "../liftableContainer";
 import { ObservableLike } from "../observable";
 import { fromEnumerable } from "./fromEnumerable";
 

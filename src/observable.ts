@@ -61,7 +61,11 @@ import {
   newInstance,
   pipe,
 } from "./functions";
-import { CatchError, DecodeWithCharset, ThrowIfEmpty } from "./liftable";
+import {
+  CatchError,
+  DecodeWithCharset,
+  ThrowIfEmpty,
+} from "./liftableContainer";
 import { createObservable, createT } from "./observable/createObservable";
 import { defer } from "./observable/defer";
 import { fromArrayT } from "./observable/fromArray";

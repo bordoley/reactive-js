@@ -1,6 +1,6 @@
 import { Container, ContainerOperator, FromArray, FromArrayOptions } from "./container.mjs";
 import { Function1, Equality, Predicate, SideEffect1, Reducer, Factory } from "./functions.mjs";
-import { LiftableContainerLike, LiftableContainerStateOf } from "./liftable.mjs";
+import { LiftableContainerLike, LiftableContainerStateOf } from "./liftableContainer.mjs";
 import { Option } from "./option.mjs";
 declare type TInteractive = 0;
 declare const interactive: TInteractive;

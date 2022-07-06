@@ -1,6 +1,6 @@
 import { addTo } from "../disposable";
 import { Factory, SideEffect1, pipe } from "../functions";
-import { Defer } from "../liftable";
+import { Defer } from "../liftableContainer";
 import { ObservableLike } from "../observable";
 import { Observer, getScheduler } from "../observer";
 import { sinkInto } from "../reactiveContainer";

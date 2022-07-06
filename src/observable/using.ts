@@ -1,5 +1,5 @@
 import { createUsing } from "../__internal__.reactiveContainer";
-import { Using } from "../liftable";
+import { Using } from "../liftableContainer";
 import { ObservableLike } from "../observable";
 import { createT } from "./createObservable";
 

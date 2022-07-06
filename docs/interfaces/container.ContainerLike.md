@@ -10,7 +10,7 @@
 
   ↳ [`FlowableLike`](flowable.FlowableLike.md)
 
-  ↳ [`LiftableContainerLike`](liftable.LiftableContainerLike.md)
+  ↳ [`LiftableContainerLike`](liftableContainer.LiftableContainerLike.md)
 
   ↳ [`SequenceLike`](sequence.SequenceLike.md)
 

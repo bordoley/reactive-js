@@ -1,6 +1,6 @@
 import { Container, ContainerOf } from "./container.mjs";
 import { InteractiveSourceLike } from "./interactiveSource.mjs";
-import { LiftableContainerLike, LiftableContainerStateOf } from "./liftable.mjs";
+import { LiftableContainerLike, LiftableContainerStateOf } from "./liftableContainer.mjs";
 interface InteractiveContainerLike extends LiftableContainerLike {
     readonly TLiftableContainerState: InteractiveSourceLike;
     readonly TCtx: unknown;

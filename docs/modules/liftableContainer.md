@@ -1,28 +1,28 @@
-[Reactive-JS](../README.md) / liftable
+[Reactive-JS](../README.md) / liftableContainer
 
-# Module: liftable
+# Module: liftableContainer
 
 ## Table of contents
 
 ### Interfaces
 
-- [CatchError](../interfaces/liftable.CatchError.md)
-- [DecodeWithCharset](../interfaces/liftable.DecodeWithCharset.md)
-- [Defer](../interfaces/liftable.Defer.md)
-- [FromIterable](../interfaces/liftable.FromIterable.md)
-- [FromIterator](../interfaces/liftable.FromIterator.md)
-- [LiftableContainerLike](../interfaces/liftable.LiftableContainerLike.md)
-- [ThrowIfEmpty](../interfaces/liftable.ThrowIfEmpty.md)
-- [Using](../interfaces/liftable.Using.md)
+- [CatchError](../interfaces/liftableContainer.CatchError.md)
+- [DecodeWithCharset](../interfaces/liftableContainer.DecodeWithCharset.md)
+- [Defer](../interfaces/liftableContainer.Defer.md)
+- [FromIterable](../interfaces/liftableContainer.FromIterable.md)
+- [FromIterator](../interfaces/liftableContainer.FromIterator.md)
+- [LiftableContainerLike](../interfaces/liftableContainer.LiftableContainerLike.md)
+- [ThrowIfEmpty](../interfaces/liftableContainer.ThrowIfEmpty.md)
+- [Using](../interfaces/liftableContainer.Using.md)
 
 ### Type Aliases
 
-- [LiftableContainerStateOf](liftable.md#liftablecontainerstateof)
+- [LiftableContainerStateOf](liftableContainer.md#liftablecontainerstateof)
 
 ### Functions
 
-- [encodeUtf8](liftable.md#encodeutf8)
-- [genMap](liftable.md#genmap)
+- [encodeUtf8](liftableContainer.md#encodeutf8)
+- [genMap](liftableContainer.md#genmap)
 
 ## Type Aliases
 
@@ -34,7 +34,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`LiftableContainerLike`](../interfaces/liftable.LiftableContainerLike.md) |
+| `C` | extends [`LiftableContainerLike`](../interfaces/liftableContainer.LiftableContainerLike.md) |
 | `T` | `T` |
 
 ## Functions
@@ -47,13 +47,13 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`LiftableContainerLike`](../interfaces/liftable.LiftableContainerLike.md) |
+| `C` | extends [`LiftableContainerLike`](../interfaces/liftableContainer.LiftableContainerLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Defer`](../interfaces/liftable.Defer.md)<`C`\> & [`Map`](../interfaces/container.Map.md)<`C`\> |
+| `m` | [`Defer`](../interfaces/liftableContainer.Defer.md)<`C`\> & [`Map`](../interfaces/container.Map.md)<`C`\> |
 
 #### Returns
 
@@ -69,7 +69,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`LiftableContainerLike`](../interfaces/liftable.LiftableContainerLike.md) |
+| `C` | extends [`LiftableContainerLike`](../interfaces/liftableContainer.LiftableContainerLike.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |
 | `OConcatAll` | extends `Record`<`string`, `never`\> = `Record`<`string`, `never`\> |
@@ -81,7 +81,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `m` | [`Map`](../interfaces/container.Map.md)<`C`\> & [`ConcatAll`](../interfaces/container.ConcatAll.md)<`C`, `OConcatAll`\> & [`FromIterator`](../interfaces/liftable.FromIterator.md)<`C`, `OFromIterator`\> |
+| `m` | [`Map`](../interfaces/container.Map.md)<`C`\> & [`ConcatAll`](../interfaces/container.ConcatAll.md)<`C`, `OConcatAll`\> & [`FromIterator`](../interfaces/liftableContainer.FromIterator.md)<`C`, `OFromIterator`\> |
 | `mapper` | [`Function1`](functions.md#function1)<`TA`, `Generator`<`TB`, `TReturn`, `TNext`\>\> |
 | `options?` | `Partial`<`OConcatAll` & `OFromIterator`\> |
 

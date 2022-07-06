@@ -17,7 +17,7 @@ Reactive-JS
 - [functions](modules/functions.md)
 - [interactiveContainer](modules/interactiveContainer.md)
 - [interactiveSource](modules/interactiveSource.md)
-- [liftable](modules/liftable.md)
+- [liftableContainer](modules/liftableContainer.md)
 - [node](modules/node.md)
 - [observable](modules/observable.md)
 - [observer](modules/observer.md)

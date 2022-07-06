@@ -1,14 +1,14 @@
-[Reactive-JS](../README.md) / [liftable](../modules/liftable.md) / FromIterator
+[Reactive-JS](../README.md) / [liftableContainer](../modules/liftableContainer.md) / FromIterator
 
 # Interface: FromIterator<C, O\>
 
-[liftable](../modules/liftable.md).FromIterator
+[liftableContainer](../modules/liftableContainer.md).FromIterator
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`LiftableContainerLike`](liftable.LiftableContainerLike.md) |
+| `C` | extends [`LiftableContainerLike`](liftableContainer.LiftableContainerLike.md) |
 | `O` | extends `Record`<`string`, `unknown`\> = `Record`<`string`, `never`\> |
 
 ## Hierarchy
@@ -21,11 +21,11 @@
 
 ### Properties
 
-- [TContainerOf](liftable.FromIterator.md#tcontainerof)
+- [TContainerOf](liftableContainer.FromIterator.md#tcontainerof)
 
 ### Methods
 
-- [fromIterator](liftable.FromIterator.md#fromiterator)
+- [fromIterator](liftableContainer.FromIterator.md#fromiterator)
 
 ## Properties
 

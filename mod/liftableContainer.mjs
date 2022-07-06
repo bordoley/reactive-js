@@ -1,4 +1,4 @@
-/// <reference types="./liftable.d.ts" />
+/// <reference types="./liftableContainer.d.ts" />
 import { newInstance, pipe, compose, pipeLazy } from './functions.mjs';
 
 const encodeUtf8 = (m) => obs => m.defer(() => {

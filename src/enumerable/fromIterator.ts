@@ -9,7 +9,7 @@ import {
   pipe,
   pipeLazy,
 } from "../functions";
-import { FromIterable, FromIterator } from "../liftable";
+import { FromIterable, FromIterator } from "../liftableContainer";
 import { none } from "../option";
 import { createEnumerable } from "./enumerable";
 

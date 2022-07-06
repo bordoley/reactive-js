@@ -1,7 +1,10 @@
 import { __DEV__ } from "./__internal__.env";
 import { Container, ContainerOf } from "./container";
 import { Function1 } from "./functions";
-import { LiftableContainerLike, LiftableContainerStateOf } from "./liftable";
+import {
+  LiftableContainerLike,
+  LiftableContainerStateOf,
+} from "./liftableContainer";
 import { ReactiveSinkLike } from "./reactiveSink";
 
 export interface ReactiveContainerLike extends LiftableContainerLike {
