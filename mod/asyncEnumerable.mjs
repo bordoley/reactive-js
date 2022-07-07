@@ -1,7 +1,7 @@
 /// <reference types="./asyncEnumerable.d.ts" />
 import { createFromArray } from './__internal__.container.mjs';
 import { getDelegate } from './__internal__.delegating.mjs';
-import { interactive, createKeepLiftOperator, createMapLiftOperator, createScanLiftOperator, createTakeWhileLiftOperator } from './__internal__.liftable.mjs';
+import { interactive, createKeepOperator, createMapOperator, createScanOperator, createTakeWhileOperator } from './__internal__.liftable.mjs';
 import { getDelay } from './__internal__.optionalArgs.mjs';
 import { raise, pipe, newInstance, getLength, compose, increment, returns, pipeLazy, newInstanceWith } from './functions.mjs';
 import { stream } from './streamable.mjs';
@@ -193,7 +193,7 @@ class AbstractDelegatingAsyncEnumerator extends AsyncEnumerator {
         pipe(this, getDelegate, dispatch(req));
     }
 }
-const keep = /*@__PURE__*/ createKeepLiftOperator(liftT, class KeepAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
+const keep = /*@__PURE__*/ createKeepOperator(liftT, class KeepAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
     constructor(delegate, predicate) {
         super(delegate);
         this.observableType = 0;
@@ -216,7 +216,7 @@ const keep = /*@__PURE__*/ createKeepLiftOperator(liftT, class KeepAsyncEnumerat
 const keepT = {
     keep,
 };
-const map = /*@__PURE__*/ createMapLiftOperator(liftT, class MapAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
+const map = /*@__PURE__*/ createMapOperator(liftT, class MapAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
     constructor(delegate, mapper) {
         super(delegate);
         this.mapper = mapper;
@@ -229,7 +229,7 @@ const map = /*@__PURE__*/ createMapLiftOperator(liftT, class MapAsyncEnumerator 
 const mapT = {
     map,
 };
-const scan = /*@__PURE__*/ createScanLiftOperator(liftT, class ScanAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
+const scan = /*@__PURE__*/ createScanOperator(liftT, class ScanAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
     constructor(delegate, reducer, acc) {
         super(delegate);
         this.op = scan$1(reducer, returns(acc));
@@ -260,7 +260,7 @@ const scanAsync = (reducer, initialValue) => pipe((delegate) => pipe(ScanAsyncAs
 const scanAsyncT = {
     scanAsync,
 };
-const takeWhile = /*@__PURE__*/ createTakeWhileLiftOperator(liftT, class TakeWhileAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
+const takeWhile = /*@__PURE__*/ createTakeWhileOperator(liftT, class TakeWhileAsyncEnumerator extends AbstractDelegatingAsyncEnumerator {
     constructor(delegate, predicate, inclusive) {
         super(delegate);
         this.obs = pipe(delegate, takeWhile$1(predicate, { inclusive }), multicast(delegate.scheduler), add(this));
