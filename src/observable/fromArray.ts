@@ -4,7 +4,7 @@ import { FromArray } from "../container";
 import { dispose } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike } from "../observable";
-import { Observer } from "../observer";
+import { ObserverLike } from "../observer";
 import { none } from "../option";
 import { __yield } from "../scheduler";
 import { createObservable } from "./createObservable";
@@ -12,7 +12,7 @@ import { defer } from "./defer";
 import { tagObservableType } from "./observable";
 
 const empty = /*@__PURE__*/ pipe(
-  createObservable(dispose<Observer<any>>()),
+  createObservable(dispose<ObserverLike<any>>()),
   tagObservableType(2),
 );
 
@@ -51,7 +51,7 @@ export const fromArray = /*@__PURE__*/ createFromArray<
           defer(
             () => {
               let index = startIndex;
-              return (observer: Observer<T>) => {
+              return (observer: ObserverLike<T>) => {
                 while (index < endIndex) {
                   const value = values[index];
                   index++;

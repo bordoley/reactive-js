@@ -7,7 +7,7 @@ import {
   RunnableObservable,
   RunnableObservableLike,
 } from "../observable";
-import { Observer } from "../observer";
+import { ObserverLike } from "../observer";
 
 export abstract class AbstractObservable<T> implements ObservableLike<T> {
   get T() {
@@ -18,7 +18,7 @@ export abstract class AbstractObservable<T> implements ObservableLike<T> {
     return this;
   }
 
-  get TLiftableContainerState(): Observer<this["T"]> {
+  get TLiftableContainerState(): ObserverLike<this["T"]> {
     return raise();
   }
 
@@ -27,7 +27,7 @@ export abstract class AbstractObservable<T> implements ObservableLike<T> {
     | RunnableObservable
     | EnumerableObservable;
 
-  abstract sinkInto(this: ObservableLike<T>, sink: Observer<T>): void;
+  abstract sinkInto(this: ObservableLike<T>, sink: ObserverLike<T>): void;
 }
 
 export const isEnumerable = <T>(

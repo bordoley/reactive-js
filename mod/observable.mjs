@@ -3,22 +3,22 @@ import { hasDelay, getDelay } from './__internal__.optionalArgs.mjs';
 import { createMapOperator, createOnNotifyOperator, createUsing, createNever, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './__internal__.reactiveContainer.mjs';
 import { empty as empty$1, fromValue, throws, concatMap } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
-import { dispose, addTo, Disposable, isDisposed, onDisposed, add, disposed, onComplete, bindTo, toErrorHandler } from './disposable.mjs';
+import { dispose, addTo, onComplete, Disposable, isDisposed, onDisposed, add, disposed, bindTo, toErrorHandler } from './disposable.mjs';
 import { move, getCurrent, hasCurrent, forEach } from './enumerator.mjs';
 import { raise, pipe, newInstance, getLength, newInstanceWith, isEmpty, arrayEquality, ignore, pipeLazy, compose, max, returns, identity, instanceFactory } from './functions.mjs';
-import { getScheduler, Observer, getDispatcher } from './observer.mjs';
+import { getScheduler, getDispatcher } from './observer.mjs';
 import { sinkInto, sourceFrom } from './reactiveContainer.mjs';
 import { schedule, __yield, isInContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { createFromArray } from './__internal__.container.mjs';
 import { none, isNone, isSome } from './option.mjs';
 import { reactive } from './__internal__.liftable.mjs';
 import { getDelegate } from './__internal__.delegating.mjs';
-import { notify, assertState, notifySink } from './reactiveSink.mjs';
+import { __DEV__, MAX_SAFE_INTEGER } from './__internal__.env.mjs';
+import { assertState, notify, notifySink } from './reactiveSink.mjs';
 import { DisposableRef } from './__internal__.disposable.mjs';
 import { createRunnable } from './runnable.mjs';
 import { map as map$1, everySatisfy as everySatisfy$1 } from './__internal__.readonlyArray.mjs';
 import { enumerate, fromIterator as fromIterator$1, fromIterable as fromIterable$1, createEnumerable } from './enumerable.mjs';
-import { MAX_SAFE_INTEGER } from './__internal__.env.mjs';
 import { AbstractEnumerator, reset, zip as zip$1 } from './__internal__.enumerator.mjs';
 import { runContinuation } from './__internal__.schedulerImplementation.mjs';
 
@@ -154,6 +154,77 @@ const liftSynchronousT = {
     variance: reactive,
 };
 
+const scheduleDrainQueue = (dispatcher) => {
+    if (getLength(dispatcher.nextQueue) === 1) {
+        const { observer } = dispatcher;
+        pipe(getScheduler(observer), schedule(dispatcher.continuation), addTo(observer), onComplete(dispatcher.onContinuationDispose));
+    }
+};
+class ObserverDelegatingDispatcher extends Disposable {
+    constructor(observer) {
+        super();
+        this.observer = observer;
+        this.continuation = () => {
+            const { nextQueue } = this;
+            const { observer } = this;
+            while (getLength(nextQueue) > 0) {
+                const next = nextQueue.shift();
+                observer.notify(next);
+                __yield();
+            }
+        };
+        this.onContinuationDispose = () => {
+            if (isDisposed(this)) {
+                pipe(this.observer, dispose(this.error));
+            }
+        };
+        this.nextQueue = [];
+    }
+    get scheduler() {
+        return getScheduler(this.observer);
+    }
+    dispatch(next) {
+        if (!isDisposed(this)) {
+            this.nextQueue.push(next);
+            scheduleDrainQueue(this);
+        }
+    }
+}
+/**
+ * Abstract base class for implementing the `ObserverLike` interface.
+ */
+class Observer extends Disposable {
+    constructor(scheduler) {
+        super();
+        this.scheduler = scheduler;
+        this._dispatcher = none;
+    }
+    get dispatcher() {
+        if (isNone(this._dispatcher)) {
+            const dispatcher = pipe(ObserverDelegatingDispatcher, newInstanceWith(this), addTo(this, true), onDisposed(e => {
+                if (isEmpty(dispatcher.nextQueue)) {
+                    pipe(this, dispose(e));
+                }
+            }));
+            this._dispatcher = dispatcher;
+        }
+        return this._dispatcher;
+    }
+    assertState() { }
+    notify(_) {
+        assertState(this);
+    }
+}
+if (__DEV__) {
+    Observer.prototype.assertState = function assertStateDev() {
+        if (!pipe(this, getScheduler, isInContinuation)) {
+            raise("Observer.notify() may only be invoked within a scheduled SchedulerContinuation");
+        }
+        else if (isDisposed(this)) {
+            raise("Observer is disposed");
+        }
+    };
+}
 class AbstractDelegatingObserver extends Observer {
     constructor(delegate) {
         super(getScheduler(delegate));

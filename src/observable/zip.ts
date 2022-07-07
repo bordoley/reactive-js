@@ -24,7 +24,7 @@ import {
   returns,
 } from "../functions";
 import { ObservableLike } from "../observable";
-import { Observer } from "../observer";
+import { ObserverLike } from "../observer";
 import { sourceFrom } from "../reactiveContainer";
 import { assertState, notify } from "../reactiveSink";
 import { createObservable } from "./createObservable";
@@ -75,7 +75,7 @@ class ZipObserver extends AbstractDelegatingObserver<
   readonly unknown[]
 > {
   constructor(
-    delegate: Observer<readonly unknown[]>,
+    delegate: ObserverLike<readonly unknown[]>,
     private readonly enumerators: readonly EnumeratorLike<any>[],
     readonly enumerator: ZipObserverEnumerator,
   ) {

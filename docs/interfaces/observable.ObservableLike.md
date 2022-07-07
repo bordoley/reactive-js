@@ -61,7 +61,7 @@ ___
 
 ### TLiftableContainerState
 
-• `Readonly` **TLiftableContainerState**: [`Observer`](../classes/observer.Observer.md)<`unknown`\>
+• `Readonly` **TLiftableContainerState**: [`ObserverLike`](observer.ObserverLike.md)<`unknown`\>
 
 #### Overrides
 
@@ -84,7 +84,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `this` | [`ObservableLike`](observable.ObservableLike.md)<[`T`](flowable.FlowableStreamLike.md#t)\> |
-| `sink` | [`Observer`](../classes/observer.Observer.md)<[`T`](flowable.FlowableStreamLike.md#t)\> |
+| `sink` | [`ObserverLike`](observer.ObserverLike.md)<[`T`](flowable.FlowableStreamLike.md#t)\> |
 
 #### Returns
 

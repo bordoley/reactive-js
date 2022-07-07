@@ -82,7 +82,7 @@ import { subscribe } from "./observable/subscribe";
 import { switchAll, switchAllT } from "./observable/switchAll";
 import { using } from "./observable/using";
 import { zipWithLatestFrom } from "./observable/zipWithLatestFrom";
-import { Observer, getScheduler } from "./observer";
+import { ObserverLike, getScheduler } from "./observer";
 import { Option, isNone, isSome, none } from "./option";
 import { ReactiveContainerLike, sourceFrom } from "./reactiveContainer";
 import { notifySink } from "./reactiveSink";
@@ -106,14 +106,14 @@ export type EnumerableObservable = 2;
 export interface ObservableLike<T> extends ReactiveContainerLike {
   readonly T: unknown;
   readonly TContainerOf: ObservableLike<this["T"]>;
-  readonly TLiftableContainerState: Observer<this["T"]>;
+  readonly TLiftableContainerState: ObserverLike<this["T"]>;
 
   readonly observableType:
     | EnumerableObservable
     | RunnableObservable
     | DefaultObservable;
 
-  sinkInto(this: ObservableLike<T>, sink: Observer<T>): void;
+  sinkInto(this: ObservableLike<T>, sink: ObserverLike<T>): void;
 }
 
 export interface EnumerableObservableLike<T> extends ObservableLike<T> {
@@ -246,7 +246,7 @@ export const decodeWithCharset: (
       string
     > {
       constructor(
-        delegate: Observer<string>,
+        delegate: ObserverLike<string>,
         readonly textDecoder: TextDecoder,
       ) {
         super(delegate);
@@ -277,7 +277,7 @@ export const distinctUntilChanged: <T>(options?: {
       prev: Option<T> = none;
       hasValue = false;
 
-      constructor(delegate: Observer<T>, readonly equality: Equality<T>) {
+      constructor(delegate: ObserverLike<T>, readonly equality: Equality<T>) {
         super(delegate);
       }
     },
@@ -294,7 +294,10 @@ export const everySatisfy: <T>(
 ) => ObservableOperator<T, boolean> = /*@__PURE__*/ createEverySatisfyOperator(
   { ...fromArrayT, ...liftSynchronousT },
   class EverySatisfyObserver<T> extends AbstractDelegatingObserver<T, boolean> {
-    constructor(delegate: Observer<boolean>, readonly predicate: Predicate<T>) {
+    constructor(
+      delegate: ObserverLike<boolean>,
+      readonly predicate: Predicate<T>,
+    ) {
       super(delegate);
     }
   },
@@ -342,7 +345,7 @@ export const generate = <T>(
   const factory = () => {
     let acc = initialValue();
 
-    return (observer: Observer<T>) => {
+    return (observer: ObserverLike<T>) => {
       while (true) {
         acc = generator(acc);
         observer.notify(acc);
@@ -365,7 +368,7 @@ export const keep: <T>(predicate: Predicate<T>) => ObservableOperator<T, T> =
   /*@__PURE__*/ createKeepOperator(
     liftSynchronousT,
     class KeepObserver<T> extends AbstractDelegatingObserver<T, T> {
-      constructor(delegate: Observer<T>, readonly predicate: Predicate<T>) {
+      constructor(delegate: ObserverLike<T>, readonly predicate: Predicate<T>) {
         super(delegate);
       }
     },
@@ -433,7 +436,7 @@ export const reduce: <T, TAcc>(
   { ...fromArrayT, ...liftSynchronousT },
   class ReducerObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
     constructor(
-      delegate: Observer<TAcc>,
+      delegate: ObserverLike<TAcc>,
       readonly reducer: Reducer<T, TAcc>,
       public acc: TAcc,
     ) {
@@ -456,7 +459,7 @@ export const scan: <T, TAcc>(
   liftSynchronousT,
   class ScanObserver<T, TAcc> extends AbstractDelegatingObserver<T, TAcc> {
     constructor(
-      delegate: Observer<TAcc>,
+      delegate: ObserverLike<TAcc>,
       readonly reducer: Reducer<T, TAcc>,
       public acc: TAcc,
     ) {
@@ -552,7 +555,7 @@ export const skipFirst: <T>(options?: {
   class SkipFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
     count = 0;
 
-    constructor(delegate: Observer<T>, readonly skipCount: number) {
+    constructor(delegate: ObserverLike<T>, readonly skipCount: number) {
       super(delegate);
     }
   },
@@ -567,7 +570,10 @@ export const someSatisfy: <T>(
 ) => ObservableOperator<T, boolean> = /*@__PURE__*/ createSomeSatisfyOperator(
   { ...fromArrayT, ...liftSynchronousT },
   class SomeSatisfyObserver<T> extends AbstractDelegatingObserver<T, boolean> {
-    constructor(delegate: Observer<boolean>, readonly predicate: Predicate<T>) {
+    constructor(
+      delegate: ObserverLike<boolean>,
+      readonly predicate: Predicate<T>,
+    ) {
       super(delegate);
     }
   },
@@ -596,7 +602,7 @@ export const takeFirst: <T>(options?: {
   class TakeFirstObserver<T> extends AbstractDelegatingObserver<T, T> {
     count = 0;
 
-    constructor(delegate: Observer<T>, readonly maxCount: number) {
+    constructor(delegate: ObserverLike<T>, readonly maxCount: number) {
       super(delegate);
     }
   },
@@ -618,7 +624,7 @@ export const takeLast: <T>(options?: {
   class TakeLastObserver<T> extends AbstractDelegatingObserver<T, T> {
     readonly last: T[] = [];
 
-    constructor(delegate: Observer<T>, readonly maxCount: number) {
+    constructor(delegate: ObserverLike<T>, readonly maxCount: number) {
       super(delegate);
     }
   },
@@ -631,8 +637,8 @@ export const takeLastT: TakeLast<ObservableLike<unknown>> = {
 export const takeUntil = <T>(
   notifier: ObservableLike<unknown>,
 ): ObservableOperator<T, T> => {
-  const operator = (delegate: Observer<T>) => {
-    const takeUntilObserver: Observer<T> = pipe(
+  const operator = (delegate: ObserverLike<T>) => {
+    const takeUntilObserver: ObserverLike<T> = pipe(
       createDelegatingObserver(delegate),
       bindTo(delegate),
       bindTo(pipe(notifier, takeFirst(), subscribe(getScheduler(delegate)))),
@@ -657,7 +663,7 @@ export const takeWhile: <T>(
   liftSynchronousT,
   class TakeWhileObserver<T> extends AbstractDelegatingObserver<T, T> {
     constructor(
-      delegate: Observer<T>,
+      delegate: ObserverLike<T>,
       readonly predicate: Predicate<T>,
       readonly inclusive: boolean,
     ) {

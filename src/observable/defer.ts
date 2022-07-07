@@ -2,20 +2,20 @@ import { addTo } from "../disposable";
 import { Factory, SideEffect1, pipe } from "../functions";
 import { Defer } from "../liftableContainer";
 import { ObservableLike } from "../observable";
-import { Observer, getScheduler } from "../observer";
+import { ObserverLike, getScheduler } from "../observer";
 import { sinkInto } from "../reactiveContainer";
 import { schedule } from "../scheduler";
 import { createObservable } from "./createObservable";
 
 export function defer<T>(
-  factory: Factory<SideEffect1<Observer<T>>>,
+  factory: Factory<SideEffect1<ObserverLike<T>>>,
   options?: { readonly delay?: number },
 ): ObservableLike<T>;
 export function defer<T>(
   factory: Factory<ObservableLike<T>>,
 ): ObservableLike<T>;
 export function defer<T>(
-  factory: Factory<ObservableLike<T> | SideEffect1<Observer<T>>>,
+  factory: Factory<ObservableLike<T> | SideEffect1<ObserverLike<T>>>,
   options?: { readonly delay?: number },
 ): ObservableLike<T> {
   return createObservable(observer => {

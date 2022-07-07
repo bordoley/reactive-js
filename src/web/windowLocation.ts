@@ -25,7 +25,7 @@ import {
   takeWhile,
   throttle,
 } from "../observable";
-import { Observer } from "../observer";
+import { ObserverLike } from "../observer";
 import { Option, isSome, none } from "../option";
 import { sinkInto } from "../reactiveContainer";
 import { SchedulerLike } from "../scheduler";
@@ -133,7 +133,7 @@ class WindowLocationStream implements WindowLocationStreamLike {
     return this;
   }
 
-  get TLiftableContainerState(): Observer<this["T"]> {
+  get TLiftableContainerState(): ObserverLike<this["T"]> {
     return raise();
   }
 
@@ -168,7 +168,7 @@ class WindowLocationStream implements WindowLocationStreamLike {
     return canGoBack;
   }
 
-  sinkInto(observer: Observer<WindowLocationURI>): void {
+  sinkInto(observer: ObserverLike<WindowLocationURI>): void {
     pipe(
       this,
       getDelegate,

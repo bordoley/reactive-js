@@ -121,11 +121,11 @@ ___
 
 ### TLiftableContainerState
 
-• `get` **TLiftableContainerState**(): [`Observer`](observer.Observer.md)<`this`[``"T"``]\>
+• `get` **TLiftableContainerState**(): [`ObserverLike`](../interfaces/observer.ObserverLike.md)<`this`[``"T"``]\>
 
 #### Returns
 
-[`Observer`](observer.Observer.md)<`this`[``"T"``]\>
+[`ObserverLike`](../interfaces/observer.ObserverLike.md)<`this`[``"T"``]\>
 
 #### Implementation of
 
@@ -270,7 +270,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `observer` | [`Observer`](observer.Observer.md)<`T`\> |
+| `observer` | [`ObserverLike`](../interfaces/observer.ObserverLike.md)<`T`\> |
 
 #### Returns
 

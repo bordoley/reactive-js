@@ -11,7 +11,7 @@ import { EnumeratorLike, getCurrent, move } from "../enumerator";
 import { Factory, Function1, compose, pipe, pipeLazy } from "../functions";
 import { FromIterable, FromIterator } from "../liftableContainer";
 import { ObservableLike } from "../observable";
-import { Observer } from "../observer";
+import { ObserverLike } from "../observer";
 import { none } from "../option";
 import { __yield } from "../scheduler";
 import { defer } from "./defer";
@@ -34,7 +34,7 @@ export const fromEnumerator =
     return pipe(
       using(f, enumerator =>
         defer(
-          () => (observer: Observer<T>) => {
+          () => (observer: ObserverLike<T>) => {
             while (move(enumerator)) {
               observer.notify(getCurrent(enumerator));
               __yield(options);
