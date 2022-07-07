@@ -65,7 +65,7 @@ import {
   Using,
 } from "./liftableContainer";
 import { Option, getOrDefault, isNone, none } from "./option";
-import { ReactiveContainerLike, sourceFrom } from "./reactiveContainer";
+import { Never, ReactiveContainerLike, sourceFrom } from "./reactiveContainer";
 import { createRunnable, createT } from "./runnable/createRunnable";
 import { first } from "./runnable/first";
 import { fromArrayT } from "./runnable/fromArray";
@@ -264,6 +264,10 @@ export const mapT: Map<RunnableLike<unknown>> = {
 };
 
 export const never = /*@__PURE__*/ createNever(createT);
+
+export const neverT: Never<RunnableLike<unknown>> = {
+  never,
+};
 
 /**
  * Returns an `RunnableLike` that forwards notifications to the provided `onNotify` function.

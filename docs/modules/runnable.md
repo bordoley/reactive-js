@@ -28,6 +28,7 @@
 - [generateT](runnable.md#generatet)
 - [keepT](runnable.md#keept)
 - [mapT](runnable.md#mapt)
+- [neverT](runnable.md#nevert)
 - [pairwiseT](runnable.md#pairwiset)
 - [reduceT](runnable.md#reducet)
 - [repeatT](runnable.md#repeatt)
@@ -166,6 +167,12 @@ ___
 ### mapT
 
 • `Const` **mapT**: [`Map`](../interfaces/container.Map.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
+
+___
+
+### neverT
+
+• `Const` **neverT**: [`Never`](../interfaces/reactiveContainer.Never.md)<[`RunnableLike`](../interfaces/runnable.RunnableLike.md)<`unknown`\>\>
 
 ___
 

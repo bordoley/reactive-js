@@ -3,7 +3,7 @@ import { DisposableOrTeardown } from "./disposable.mjs";
 import { SideEffect1, Function1, Equality, Predicate, Updater, Factory, Reducer } from "./functions.mjs";
 import { CatchError, DecodeWithCharset, ThrowIfEmpty, Using } from "./liftableContainer.mjs";
 import { Option } from "./option.mjs";
-import { CreateReactiveContainer, ReactiveContainerLike } from "./reactiveContainer.mjs";
+import { CreateReactiveContainer, ReactiveContainerLike, Never } from "./reactiveContainer.mjs";
 import { RunnableSink } from "./runnableSink.mjs";
 declare const concatAll: ConcatAll<RunnableLike<unknown>>["concatAll"];
 declare const concatAllT: ConcatAll<RunnableLike<unknown>>;
@@ -47,6 +47,7 @@ declare const keepT: Keep<RunnableLike<unknown>>;
 declare const map: <TA, TB>(mapper: Function1<TA, TB>) => RunnableOperator<TA, TB>;
 declare const mapT: Map<RunnableLike<unknown>>;
 declare const never: <T>() => RunnableLike<T>;
+declare const neverT: Never<RunnableLike<unknown>>;
 /**
  * Returns an `RunnableLike` that forwards notifications to the provided `onNotify` function.
  *
@@ -95,4 +96,4 @@ declare const toRunnableT: ToRunnable<RunnableLike<unknown>>;
 declare const TContainerOf: RunnableLike<unknown>;
 declare const using: Using<RunnableLike<unknown>>["using"];
 declare const usingT: Using<RunnableLike<unknown>>;
-export { RunnableLike, RunnableOperator, TContainerOf, ToRunnable, buffer, bufferT, catchError, catchErrorT, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toArrayT, toRunnable, toRunnableT, using, usingT };
+export { RunnableLike, RunnableOperator, TContainerOf, ToRunnable, buffer, bufferT, catchError, catchErrorT, concat, concatAll, concatAllT, concatT, createRunnable, createT, decodeWithCharset, decodeWithCharsetT, distinctUntilChanged, distinctUntilChangedT, everySatisfy, everySatisfyT, first, forEach, fromArray, fromArrayT, generate, generateT, keep, keepT, last, map, mapT, never, neverT, onNotify, onSink, pairwise, pairwiseT, reduce, reduceT, repeat, repeatT, scan, scanT, skipFirst, skipFirstT, someSatisfy, someSatisfyT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, throwIfEmpty, throwIfEmptyT, toArray, toArrayT, toRunnable, toRunnableT, using, usingT };

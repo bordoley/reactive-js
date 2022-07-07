@@ -52,6 +52,7 @@
 - [mapT](observable.md#mapt)
 - [mergeAllT](observable.md#mergeallt)
 - [mergeT](observable.md#merget)
+- [neverT](observable.md#nevert)
 - [pairwiseT](observable.md#pairwiset)
 - [reduceT](observable.md#reducet)
 - [repeatT](observable.md#repeatt)
@@ -340,6 +341,12 @@ ___
 ### mergeT
 
 • `Const` **mergeT**: [`Concat`](../interfaces/container.Concat.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
+
+___
+
+### neverT
+
+• `Const` **neverT**: [`Never`](../interfaces/reactiveContainer.Never.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>\>
 
 ___
 

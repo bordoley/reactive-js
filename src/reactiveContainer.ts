@@ -23,6 +23,10 @@ export interface CreateReactiveContainer<C extends ReactiveContainerLike>
   ): ContainerOf<C, T>;
 }
 
+export interface Never<C extends ReactiveContainerLike> extends Container<C> {
+  never<T>(): ContainerOf<C, T>;
+}
+
 export const sinkInto =
   <
     C extends ReactiveContainerLike,

@@ -197,7 +197,7 @@ export {
   fromIteratorT,
 } from "./observable/fromEnumerable";
 export { forkMerge, merge, mergeT } from "./observable/merge";
-export { never } from "./observable/never";
+export { never, neverT } from "./observable/never";
 export { subscribe } from "./observable/subscribe";
 export { using, usingT } from "./observable/using";
 export { defer, deferT } from "./observable/defer";
