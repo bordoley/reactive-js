@@ -66,13 +66,13 @@ const create =
   (onSink: (sink: LiftableContainerStateOf<C, T>) => void): ContainerOf<C, T> =>
     m.create(onSink);
 
+type CatchErrorSink<C extends ReactiveContainerLike> = new <T>(
+  delegate: LiftableContainerStateOf<C, T>,
+) => DelegatingLiftableContainerStateOf<C, T, T>;
+
 export const createCatchErrorOperator =
-  <C extends ReactiveContainerLike>(
-    m: Lift<C>,
-    CatchErrorSink: new <T>(
-      delegate: LiftableContainerStateOf<C, T>,
-    ) => DelegatingLiftableContainerStateOf<C, T, T>,
-  ) =>
+  <C extends ReactiveContainerLike>(m: Lift<C>) =>
+  (CatchErrorSink: CatchErrorSink<C>) =>
   <T>(
     f: Function1<unknown, ContainerOf<C, T> | void>,
   ): ContainerOperator<C, T, T> => {
@@ -105,16 +105,16 @@ export const createCatchErrorOperator =
     );
   };
 
+type DecodeWithCharsetSink<C extends ReactiveContainerLike> = new (
+  delegate: LiftableContainerStateOf<C, string>,
+  textDecoder: TextDecoder,
+) => DelegatingLiftableContainerStateOf<C, ArrayBuffer, string> & {
+  readonly textDecoder: TextDecoder;
+};
+
 export const createDecodeWithCharsetOperator =
-  <C extends ReactiveContainerLike>(
-    m: FromArray<C> & Lift<C>,
-    DecodeWithCharsetSink: new (
-      delegate: LiftableContainerStateOf<C, string>,
-      textDecoder: TextDecoder,
-    ) => DelegatingLiftableContainerStateOf<C, ArrayBuffer, string> & {
-      readonly textDecoder: TextDecoder;
-    },
-  ) =>
+  <C extends ReactiveContainerLike>(m: FromArray<C> & Lift<C>) =>
+  (DecodeWithCharsetSink: DecodeWithCharsetSink<C>) =>
   (charset = "utf-8"): ContainerOperator<C, ArrayBuffer, string> =>
     pipe(
       (
@@ -139,15 +139,17 @@ export const createDecodeWithCharsetOperator =
       lift(m),
     );
 
+type SatisfySink<C extends ReactiveContainerLike> = new <T>(
+  delegate: LiftableContainerStateOf<C, boolean>,
+  predicate: Predicate<T>,
+) => DelegatingLiftableContainerStateOf<C, T, boolean> & {
+  readonly predicate: Predicate<T>;
+};
+
 const createSatisfyOperator =
   <C extends ReactiveContainerLike>(
     m: FromArray<C> & Lift<C>,
-    SatisfySink: new <T>(
-      delegate: LiftableContainerStateOf<C, boolean>,
-      predicate: Predicate<T>,
-    ) => DelegatingLiftableContainerStateOf<C, T, boolean> & {
-      readonly predicate: Predicate<T>;
-    },
+    SatisfySink: SatisfySink<C>,
     defaultResult: boolean,
   ) =>
   <T>(predicate: Predicate<T>): ContainerOperator<C, T, boolean> =>
@@ -174,42 +176,36 @@ const createSatisfyOperator =
       lift(m),
     );
 
-export const createEverySatisfyOperator = <C extends ReactiveContainerLike>(
-  m: FromArray<C> & Lift<C>,
-  EverySatisfySink: new <T>(
-    delegate: LiftableContainerStateOf<C, boolean>,
-    predicate: Predicate<T>,
-  ) => DelegatingLiftableContainerStateOf<C, T, boolean> & {
-    readonly predicate: Predicate<T>;
-  },
-): (<T>(predicate: Predicate<T>) => ContainerOperator<C, T, boolean>) =>
-  compose(
-    predicate => compose(predicate, negate),
-    createSatisfyOperator(m, EverySatisfySink, true),
-  );
+export const createEverySatisfyOperator =
+  <C extends ReactiveContainerLike>(m: FromArray<C> & Lift<C>) =>
+  (
+    EverySatisfySink: SatisfySink<C>,
+  ): (<T>(predicate: Predicate<T>) => ContainerOperator<C, T, boolean>) =>
+    compose(
+      predicate => compose(predicate, negate),
+      createSatisfyOperator(m, EverySatisfySink, true),
+    );
 
-export const createSomeSatisfyOperator = <C extends ReactiveContainerLike>(
-  m: FromArray<C> & Lift<C>,
-  SomeSatisfySink: new <T>(
-    delegate: LiftableContainerStateOf<C, boolean>,
-    predicate: Predicate<T>,
-  ) => DelegatingLiftableContainerStateOf<C, T, boolean> & {
-    readonly predicate: Predicate<T>;
-  },
-): (<T>(predicate: Predicate<T>) => ContainerOperator<C, T, boolean>) =>
-  createSatisfyOperator(m, SomeSatisfySink, false);
+export const createSomeSatisfyOperator =
+  <C extends ReactiveContainerLike>(m: FromArray<C> & Lift<C>) =>
+  (
+    SomeSatisfySink: SatisfySink<C>,
+  ): (<T>(predicate: Predicate<T>) => ContainerOperator<C, T, boolean>) =>
+    createSatisfyOperator(m, SomeSatisfySink, false);
+
+type ReduceSink<C extends ReactiveContainerLike> = new <T, TAcc>(
+  delegate: LiftableContainerStateOf<C, TAcc>,
+  reducer: Reducer<T, TAcc>,
+  acc: TAcc,
+) => LiftableContainerStateOf<C, T> & {
+  readonly reducer: Reducer<T, TAcc>;
+  acc: TAcc;
+};
 
 export const createReduceOperator =
   <C extends ReactiveContainerLike>(
     m: FromArray<C> & Lift<C>,
-    ReduceSink: new <T, TAcc>(
-      delegate: LiftableContainerStateOf<C, TAcc>,
-      reducer: Reducer<T, TAcc>,
-      acc: TAcc,
-    ) => LiftableContainerStateOf<C, T> & {
-      readonly reducer: Reducer<T, TAcc>;
-      acc: TAcc;
-    },
+    ReduceSink: ReduceSink<C>,
   ) =>
   <T, TAcc>(
     reducer: Reducer<T, TAcc>,
@@ -240,16 +236,18 @@ export const createReduceOperator =
       lift(m),
     );
 
+type TakeLastSink<C extends ReactiveContainerLike> = new <T>(
+  delegate: LiftOperatorIn<C, T, T, TReactive>,
+  maxCount: number,
+) => LiftOperatorOut<C, T, T, TReactive> & {
+  readonly last: T[];
+  readonly maxCount: number;
+};
+
 export const createTakeLastOperator =
   <C extends ReactiveContainerLike>(
     m: FromArray<C> & Lift<C>,
-    TakeLastSink: new <T>(
-      delegate: LiftOperatorIn<C, T, T, TReactive>,
-      maxCount: number,
-    ) => LiftOperatorOut<C, T, T, TReactive> & {
-      readonly last: T[];
-      readonly maxCount: number;
-    },
+    TakeLastSink: TakeLastSink<C>,
   ) =>
   <T>(
     options: { readonly count?: number } = {},
@@ -337,40 +335,34 @@ const decorateWithNotify = <TThis, TNext>(
   SinkClass.prototype.notify = notify;
 };
 
-export const decorateWithCatchErrorNotify = <C extends ReactiveContainerLike>(
-  CatchErrorSink: new <T>(
-    delegate: LiftableContainerStateOf<C, T>,
-  ) => DelegatingLiftableContainerStateOf<C, T, T>,
-) =>
-  decorateWithNotify(
-    CatchErrorSink,
-    function notifyCatchError(this: InstanceType<typeof CatchErrorSink>, next) {
-      getDelegate(this).notify(next);
-    },
-  );
+export const decorateWithCatchErrorNotify =
+  <C extends ReactiveContainerLike>() =>
+  (CatchErrorSink: CatchErrorSink<C>) =>
+    decorateWithNotify(
+      CatchErrorSink,
+      function notifyCatchError(
+        this: InstanceType<typeof CatchErrorSink>,
+        next,
+      ) {
+        getDelegate(this).notify(next);
+      },
+    );
 
-export const decorateWithDecodeWithCharsetNotify = <
-  C extends ReactiveContainerLike,
->(
-  DecodeWithCharsetSink: new (
-    delegate: LiftableContainerStateOf<C, string>,
-    textDecoder: TextDecoder,
-  ) => DelegatingLiftableContainerStateOf<C, ArrayBuffer, string> & {
-    readonly textDecoder: TextDecoder;
-  },
-) =>
-  decorateWithNotify(
-    DecodeWithCharsetSink,
-    function notifyDecodeWithCharset(
-      this: InstanceType<typeof DecodeWithCharsetSink>,
-      next: ArrayBuffer,
-    ) {
-      const data = this.textDecoder.decode(next, { stream: true });
-      if (!isEmpty(data)) {
-        getDelegate(this).notify(data);
-      }
-    },
-  );
+export const decorateWithDecodeWithCharsetNotify =
+  <C extends ReactiveContainerLike>() =>
+  (DecodeWithCharsetSink: DecodeWithCharsetSink<C>) =>
+    decorateWithNotify(
+      DecodeWithCharsetSink,
+      function notifyDecodeWithCharset(
+        this: InstanceType<typeof DecodeWithCharsetSink>,
+        next: ArrayBuffer,
+      ) {
+        const data = this.textDecoder.decode(next, { stream: true });
+        if (!isEmpty(data)) {
+          getDelegate(this).notify(data);
+        }
+      },
+    );
 
 export const decorateWithDistinctUntilChangedNotify = <
   C extends ReactiveContainerLike,
@@ -496,14 +488,7 @@ export const decorateWithScanNotify = <C extends ReactiveContainerLike>(
   );
 
 export const decorateWithReduceNotify = <C extends ReactiveContainerLike>(
-  ReduceSink: new <T, TAcc>(
-    delegate: LiftableContainerStateOf<C, TAcc>,
-    reducer: Reducer<T, TAcc>,
-    acc: TAcc,
-  ) => LiftableContainerStateOf<C, T> & {
-    readonly reducer: Reducer<T, TAcc>;
-    acc: TAcc;
-  },
+  ReduceSink: ReduceSink<C>,
 ) =>
   decorateWithNotify(
     ReduceSink,
@@ -513,12 +498,7 @@ export const decorateWithReduceNotify = <C extends ReactiveContainerLike>(
   );
 
 const decorateWithSatisfyNotify = <C extends ReactiveContainerLike>(
-  SatisfySink: new <T>(
-    delegate: LiftableContainerStateOf<C, boolean>,
-    predicate: Predicate<T>,
-  ) => DelegatingLiftableContainerStateOf<C, T, boolean> & {
-    readonly predicate: Predicate<T>;
-  },
+  SatisfySink: SatisfySink<C>,
   defaultResult: boolean,
 ) =>
   decorateWithNotify(
@@ -531,23 +511,15 @@ const decorateWithSatisfyNotify = <C extends ReactiveContainerLike>(
     },
   );
 
-export const decorateWithEverySatisfyNotify = <C extends ReactiveContainerLike>(
-  SatisfySink: new <T>(
-    delegate: LiftableContainerStateOf<C, boolean>,
-    predicate: Predicate<T>,
-  ) => DelegatingLiftableContainerStateOf<C, T, boolean> & {
-    readonly predicate: Predicate<T>;
-  },
-) => decorateWithSatisfyNotify(SatisfySink, true);
+export const decorateWithEverySatisfyNotify =
+  <C extends ReactiveContainerLike>() =>
+  (SatisfySink: SatisfySink<C>) =>
+    decorateWithSatisfyNotify(SatisfySink, true);
 
-export const decorateWithSomeSatisfyNotify = <C extends ReactiveContainerLike>(
-  SatisfySink: new <T>(
-    delegate: LiftableContainerStateOf<C, boolean>,
-    predicate: Predicate<T>,
-  ) => DelegatingLiftableContainerStateOf<C, T, boolean> & {
-    readonly predicate: Predicate<T>;
-  },
-) => decorateWithSatisfyNotify(SatisfySink, false);
+export const decorateWithSomeSatisfyNotify =
+  <C extends ReactiveContainerLike>() =>
+  (SatisfySink: SatisfySink<C>) =>
+    decorateWithSatisfyNotify(SatisfySink, false);
 
 export const decorateWithSkipFirstNotify = <C extends ReactiveContainerLike>(
   SkipFirstSink: new <T>(
@@ -589,13 +561,7 @@ export const decorateWithTakeFirstNotify = <C extends ReactiveContainerLike>(
   );
 
 export const decorateWithTakeLastNotify = <C extends ReactiveContainerLike>(
-  TakeLastSink: new <T>(
-    delegate: LiftOperatorIn<C, T, T, TReactive>,
-    maxCount: number,
-  ) => LiftOperatorOut<C, T, T, TReactive> & {
-    readonly last: T[];
-    readonly maxCount: number;
-  },
+  TakeLastSink: TakeLastSink<C>,
 ) =>
   decorateWithNotify(
     TakeLastSink,

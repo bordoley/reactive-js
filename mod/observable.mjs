@@ -1,4 +1,5 @@
 /// <reference types="./observable.d.ts" />
+import { decorateMap } from './__internal__.functions.mjs';
 import { reactive, createMapOperator, createOnNotifyOperator, createDistinctUntilChangedOperator, createKeepOperator, createPairwiseOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './__internal__.liftable.mjs';
 import { hasDelay, getDelay } from './__internal__.optionalArgs.mjs';
 import { decorateWithMapNotify, decorateWithOnNotifyNotify, createUsing, createNever, decorateWithCatchErrorNotify, createCatchErrorOperator, createFromDisposable, decorateWithDecodeWithCharsetNotify, createDecodeWithCharsetOperator, decorateWithDistinctUntilChangedNotify, decorateWithEverySatisfyNotify, createEverySatisfyOperator, decorateWithKeepNotify, createOnSink, decorateWithPairwiseNotify, decorateWithReduceNotify, createReduceOperator, decorateWithScanNotify, decorateWithSkipFirstNotify, decorateWithSomeSatisfyNotify, createSomeSatisfyOperator, decorateWithTakeFirstNotify, decorateWithTakeLastNotify, createTakeLastOperator, decorateWithTakeWhileNotify, decorateWithThrowIfEmptyNotify } from './__internal__.reactiveContainer.mjs';
@@ -1333,28 +1334,21 @@ const toPromise = (scheduler) => observable => newInstance(Promise, (resolve, re
     }));
 });
 
-const catchError = /*@__PURE__*/ (() => {
-    class CatchErrorObserver extends AbstractDelegatingObserver {
-    }
-    decorateWithCatchErrorNotify(CatchErrorObserver);
-    decorateNotifyWithAssertions(CatchErrorObserver);
-    return createCatchErrorOperator(liftSynchronousT, CatchErrorObserver);
-})();
+const catchError = /*@__PURE__*/ decorateMap(class CatchErrorObserver extends AbstractDelegatingObserver {
+}, decorateWithCatchErrorNotify(), decorateNotifyWithAssertions, createCatchErrorOperator(liftSynchronousT));
 const catchErrorT = {
     catchError,
 };
 const fromDisposable = /*@__PURE__*/ createFromDisposable(createT);
-const decodeWithCharset = /*@__PURE__*/ (() => {
-    class DecodeWithCharsetObserver extends AbstractDelegatingObserver {
-        constructor(delegate, textDecoder) {
-            super(delegate);
-            this.textDecoder = textDecoder;
-        }
+const decodeWithCharset = /*@__PURE__*/ decorateMap(class DecodeWithCharsetObserver extends AbstractDelegatingObserver {
+    constructor(delegate, textDecoder) {
+        super(delegate);
+        this.textDecoder = textDecoder;
     }
-    decorateWithDecodeWithCharsetNotify(DecodeWithCharsetObserver);
-    decorateNotifyWithAssertions(DecodeWithCharsetObserver);
-    return createDecodeWithCharsetOperator({ ...liftSynchronousT, ...fromArrayT }, DecodeWithCharsetObserver);
-})();
+}, decorateWithDecodeWithCharsetNotify(), decorateNotifyWithAssertions, createDecodeWithCharsetOperator({
+    ...liftSynchronousT,
+    ...fromArrayT,
+}));
 const decodeWithCharsetT = {
     decodeWithCharset,
 };
@@ -1381,17 +1375,12 @@ const distinctUntilChanged = /*@__PURE__*/ (() => {
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
-const everySatisfy = /*@__PURE__*/ (() => {
-    class EverySatisfyObserver extends AbstractDelegatingObserver {
-        constructor(delegate, predicate) {
-            super(delegate);
-            this.predicate = predicate;
-        }
+const everySatisfy = /*@__PURE__*/ decorateMap(class EverySatisfyObserver extends AbstractDelegatingObserver {
+    constructor(delegate, predicate) {
+        super(delegate);
+        this.predicate = predicate;
     }
-    decorateWithEverySatisfyNotify(EverySatisfyObserver);
-    decorateNotifyWithAssertions(EverySatisfyObserver);
-    return createEverySatisfyOperator({ ...fromArrayT, ...liftSynchronousT }, EverySatisfyObserver);
-})();
+}, decorateWithEverySatisfyNotify(), decorateNotifyWithAssertions, createEverySatisfyOperator({ ...fromArrayT, ...liftSynchronousT }));
 const everySatisfyT = {
     everySatisfy,
 };
@@ -1564,17 +1553,12 @@ const skipFirst = /*@__PURE__*/ (() => {
 const skipFirstT = {
     skipFirst,
 };
-const someSatisfy = /*@__PURE__*/ (() => {
-    class SomeSatisfyObserver extends AbstractDelegatingObserver {
-        constructor(delegate, predicate) {
-            super(delegate);
-            this.predicate = predicate;
-        }
+const someSatisfy = /*@__PURE__*/ decorateMap(class SomeSatisfyObserver extends AbstractDelegatingObserver {
+    constructor(delegate, predicate) {
+        super(delegate);
+        this.predicate = predicate;
     }
-    decorateWithSomeSatisfyNotify(SomeSatisfyObserver);
-    decorateNotifyWithAssertions(SomeSatisfyObserver);
-    return createSomeSatisfyOperator({ ...fromArrayT, ...liftSynchronousT }, SomeSatisfyObserver);
-})();
+}, decorateWithSomeSatisfyNotify(), decorateNotifyWithAssertions, createSomeSatisfyOperator({ ...fromArrayT, ...liftSynchronousT }));
 const someSatisfyT = {
     someSatisfy,
 };

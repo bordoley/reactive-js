@@ -1,3 +1,4 @@
+import { decorateMap } from "./__internal__.functions";
 import {
   TReactive,
   createDistinctUntilChangedOperator,
@@ -243,12 +244,12 @@ export { isEnumerable, isRunnable } from "./observable/observable";
 
 export const catchError: <T>(
   onError: Function1<unknown, ObservableLike<T> | void>,
-) => ObservableOperator<T, T> = /*@__PURE__*/ (() => {
-  class CatchErrorObserver<T> extends AbstractDelegatingObserver<T, T> {}
-  decorateWithCatchErrorNotify<ObservableLike<unknown>>(CatchErrorObserver);
-  decorateNotifyWithAssertions(CatchErrorObserver);
-  return createCatchErrorOperator(liftSynchronousT, CatchErrorObserver);
-})();
+) => ObservableOperator<T, T> = /*@__PURE__*/ decorateMap(
+  class CatchErrorObserver<T> extends AbstractDelegatingObserver<T, T> {},
+  decorateWithCatchErrorNotify<ObservableLike<unknown>>(),
+  decorateNotifyWithAssertions,
+  createCatchErrorOperator(liftSynchronousT),
+);
 
 export const catchErrorT: CatchError<ObservableLike<unknown>> = {
   catchError,
@@ -258,7 +259,7 @@ export const fromDisposable = /*@__PURE__*/ createFromDisposable(createT);
 
 export const decodeWithCharset: (
   charset?: string,
-) => ObservableOperator<ArrayBuffer, string> = /*@__PURE__*/ (() => {
+) => ObservableOperator<ArrayBuffer, string> = /*@__PURE__*/ decorateMap(
   class DecodeWithCharsetObserver extends AbstractDelegatingObserver<
     ArrayBuffer,
     string
@@ -269,16 +270,14 @@ export const decodeWithCharset: (
     ) {
       super(delegate);
     }
-  }
-  decorateWithDecodeWithCharsetNotify<ObservableLike<unknown>>(
-    DecodeWithCharsetObserver,
-  );
-  decorateNotifyWithAssertions(DecodeWithCharsetObserver);
-  return createDecodeWithCharsetOperator<ObservableLike<unknown>>(
-    { ...liftSynchronousT, ...fromArrayT },
-    DecodeWithCharsetObserver,
-  );
-})();
+  },
+  decorateWithDecodeWithCharsetNotify<ObservableLike<unknown>>(),
+  decorateNotifyWithAssertions,
+  createDecodeWithCharsetOperator({
+    ...liftSynchronousT,
+    ...fromArrayT,
+  }),
+);
 
 export const decodeWithCharsetT: DecodeWithCharset<ObservableLike<unknown>> = {
   decodeWithCharset,
@@ -324,7 +323,7 @@ export const distinctUntilChangedT: DistinctUntilChanged<
 
 export const everySatisfy: <T>(
   predicate: Predicate<T>,
-) => ObservableOperator<T, boolean> = /*@__PURE__*/ (() => {
+) => ObservableOperator<T, boolean> = /*@__PURE__*/ decorateMap(
   class EverySatisfyObserver<T> extends AbstractDelegatingObserver<T, boolean> {
     constructor(
       delegate: ObserverLike<boolean>,
@@ -332,15 +331,11 @@ export const everySatisfy: <T>(
     ) {
       super(delegate);
     }
-  }
-
-  decorateWithEverySatisfyNotify<ObservableLike<unknown>>(EverySatisfyObserver);
-  decorateNotifyWithAssertions(EverySatisfyObserver);
-  return createEverySatisfyOperator(
-    { ...fromArrayT, ...liftSynchronousT },
-    EverySatisfyObserver,
-  );
-})();
+  },
+  decorateWithEverySatisfyNotify<ObservableLike<unknown>>(),
+  decorateNotifyWithAssertions,
+  createEverySatisfyOperator({ ...fromArrayT, ...liftSynchronousT }),
+);
 
 export const everySatisfyT: EverySatisfy<ObservableLike<unknown>> = {
   everySatisfy,
@@ -629,7 +624,7 @@ export const skipFirstT: SkipFirst<ObservableLike<unknown>> = {
 
 export const someSatisfy: <T>(
   predicate: Predicate<T>,
-) => ObservableOperator<T, boolean> = /*@__PURE__*/ (() => {
+) => ObservableOperator<T, boolean> = /*@__PURE__*/ decorateMap(
   class SomeSatisfyObserver<T> extends AbstractDelegatingObserver<T, boolean> {
     constructor(
       delegate: ObserverLike<boolean>,
@@ -637,15 +632,11 @@ export const someSatisfy: <T>(
     ) {
       super(delegate);
     }
-  }
-
-  decorateWithSomeSatisfyNotify<ObservableLike<unknown>>(SomeSatisfyObserver);
-  decorateNotifyWithAssertions(SomeSatisfyObserver);
-  return createSomeSatisfyOperator(
-    { ...fromArrayT, ...liftSynchronousT },
-    SomeSatisfyObserver,
-  );
-})();
+  },
+  decorateWithSomeSatisfyNotify<ObservableLike<unknown>>(),
+  decorateNotifyWithAssertions,
+  createSomeSatisfyOperator({ ...fromArrayT, ...liftSynchronousT }),
+);
 
 export const someSatisfyT: SomeSatisfy<ObservableLike<unknown>> = {
   someSatisfy,

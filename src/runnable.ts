@@ -1,5 +1,6 @@
 import { getDelegate } from "./__internal__.delegating";
 import { MAX_SAFE_INTEGER } from "./__internal__.env";
+import { decorateMap } from "./__internal__.functions";
 import {
   TReactive,
   createDistinctUntilChangedOperator,
@@ -189,12 +190,12 @@ export const bufferT: Buffer<RunnableLike<unknown>> = {
 
 export const catchError: <T>(
   onError: Function1<unknown, RunnableLike<T> | void>,
-) => RunnableOperator<T, T> = /*@__PURE__*/ (() => {
-  class CatchErrorSink<T> extends AbstractDelegatingRunnableSink<T, T> {}
-  decorateWithCatchErrorNotify<RunnableLike<unknown>>(CatchErrorSink);
-  decorateNotifyWithAssertions(CatchErrorSink);
-  return createCatchErrorOperator(liftT, CatchErrorSink);
-})();
+) => RunnableOperator<T, T> = /*@__PURE__*/ decorateMap(
+  class CatchErrorSink<T> extends AbstractDelegatingRunnableSink<T, T> {},
+  decorateWithCatchErrorNotify(),
+  decorateNotifyWithAssertions,
+  createCatchErrorOperator(liftT),
+);
 
 export const catchErrorT: CatchError<RunnableLike<unknown>> = {
   catchError,
@@ -221,7 +222,7 @@ export const concatT: Concat<RunnableLike<unknown>> = {
 
 export const decodeWithCharset: (
   charset?: string,
-) => RunnableOperator<ArrayBuffer, string> = /*@__PURE__*/ (() => {
+) => RunnableOperator<ArrayBuffer, string> = /*@__PURE__*/ decorateMap(
   class DecodeWithCharsetSink extends AbstractDelegatingRunnableSink<
     ArrayBuffer,
     string
@@ -232,16 +233,14 @@ export const decodeWithCharset: (
     ) {
       super(delegate);
     }
-  }
-  decorateWithDecodeWithCharsetNotify<RunnableLike<unknown>>(
-    DecodeWithCharsetSink,
-  );
-  decorateNotifyWithAssertions(DecodeWithCharsetSink);
-  return createDecodeWithCharsetOperator<RunnableLike<unknown>>(
-    { ...liftT, ...fromArrayT },
-    DecodeWithCharsetSink,
-  );
-})();
+  },
+  decorateWithDecodeWithCharsetNotify(),
+  decorateNotifyWithAssertions,
+  createDecodeWithCharsetOperator({
+    ...liftT,
+    ...fromArrayT,
+  }),
+);
 
 export const decodeWithCharsetT: DecodeWithCharset<RunnableLike<unknown>> = {
   decodeWithCharset,
@@ -277,7 +276,7 @@ export const distinctUntilChangedT: DistinctUntilChanged<
 
 export const everySatisfy: <T>(
   predicate: Predicate<T>,
-) => RunnableOperator<T, boolean> = /*@__PURE__*/ (() => {
+) => RunnableOperator<T, boolean> = /*@__PURE__*/ decorateMap(
   class EverySatisfySink<T> extends AbstractDelegatingRunnableSink<T, boolean> {
     constructor(
       delegate: ReactiveSinkLike<boolean>,
@@ -285,15 +284,11 @@ export const everySatisfy: <T>(
     ) {
       super(delegate);
     }
-  }
-
-  decorateWithEverySatisfyNotify<RunnableLike<unknown>>(EverySatisfySink);
-  decorateNotifyWithAssertions(EverySatisfySink);
-  return createEverySatisfyOperator(
-    { ...fromArrayT, ...liftT },
-    EverySatisfySink,
-  );
-})();
+  },
+  decorateWithEverySatisfyNotify<RunnableLike<unknown>>(),
+  decorateNotifyWithAssertions,
+  createEverySatisfyOperator({ ...fromArrayT, ...liftT }),
+);
 
 export const everySatisfyT: EverySatisfy<RunnableLike<unknown>> = {
   everySatisfy,
@@ -502,7 +497,7 @@ export const skipFirstT: SkipFirst<RunnableLike<unknown>> = {
 
 export const someSatisfy: <T>(
   predicate: Predicate<T>,
-) => RunnableOperator<T, boolean> = /*@__PURE__*/ (() => {
+) => RunnableOperator<T, boolean> = /*@__PURE__*/ decorateMap(
   class SomeSatisfySink<T> extends AbstractDelegatingRunnableSink<T, boolean> {
     constructor(
       delegate: ReactiveSinkLike<boolean>,
@@ -510,15 +505,11 @@ export const someSatisfy: <T>(
     ) {
       super(delegate);
     }
-  }
-
-  decorateWithSomeSatisfyNotify<RunnableLike<unknown>>(SomeSatisfySink);
-  decorateNotifyWithAssertions(SomeSatisfySink);
-  return createSomeSatisfyOperator(
-    { ...fromArrayT, ...liftT },
-    SomeSatisfySink,
-  );
-})();
+  },
+  decorateWithSomeSatisfyNotify<RunnableLike<unknown>>(),
+  decorateNotifyWithAssertions,
+  createSomeSatisfyOperator({ ...fromArrayT, ...liftT }),
+);
 
 export const someSatisfyT: SomeSatisfy<RunnableLike<unknown>> = {
   someSatisfy,
