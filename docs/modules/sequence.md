@@ -7,7 +7,7 @@
 ### Interfaces
 
 - [SequenceLike](../interfaces/sequence.SequenceLike.md)
-- [SequenceResultNotify](../interfaces/sequence.SequenceResultNotify.md)
+- [SequenceResultNext](../interfaces/sequence.SequenceResultNext.md)
 
 ### Type Aliases
 
@@ -87,7 +87,7 @@ ___
 
 ### SequenceResult
 
-Ƭ **SequenceResult**<`T`\>: [`SequenceResultNotify`](../interfaces/sequence.SequenceResultNotify.md)<`T`\> \| typeof [`sequenceResultDone`](sequence.md#sequenceresultdone)
+Ƭ **SequenceResult**<`T`\>: [`SequenceResultNext`](../interfaces/sequence.SequenceResultNext.md)<`T`\> \| typeof [`sequenceResultDone`](sequence.md#sequenceresultdone)
 
 #### Type parameters
 
