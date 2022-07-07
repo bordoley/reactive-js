@@ -1,10 +1,10 @@
 import { createFromArray } from "./__internal__.container";
 import { getDelegate } from "./__internal__.delegating";
 import {
-  createKeepLiftOperator,
-  createMapLiftOperator,
-  createScanLiftOperator,
-  createTakeWhileLiftOperator,
+  createKeepOperator,
+  createMapOperator,
+  createScanOperator,
+  createTakeWhileOperator,
 } from "./__internal__.liftable";
 import { getDelay } from "./__internal__.optionalArgs";
 import { AbstractAsyncEnumerable, lift, liftT } from "./asyncEnumerable/lift";
@@ -462,7 +462,7 @@ abstract class AbstractDelegatingAsyncEnumerator<TA, TB>
 
 export const keep: <T>(
   predicate: Predicate<T>,
-) => AsyncEnumerableOperator<T, T> = /*@__PURE__*/ createKeepLiftOperator(
+) => AsyncEnumerableOperator<T, T> = /*@__PURE__*/ createKeepOperator(
   liftT,
   class KeepAsyncEnumerator<T> extends AbstractDelegatingAsyncEnumerator<T, T> {
     readonly obs: MulticastObservableLike<T>;
@@ -504,7 +504,7 @@ export const keepT: Keep<AsyncEnumerableLike<unknown>> = {
 
 export const map: <TA, TB>(
   mapper: Function1<TA, TB>,
-) => AsyncEnumerableOperator<TA, TB> = /*@__PURE__*/ createMapLiftOperator(
+) => AsyncEnumerableOperator<TA, TB> = /*@__PURE__*/ createMapOperator(
   liftT,
   class MapAsyncEnumerator<TA, TB> extends AbstractDelegatingAsyncEnumerator<
     TA,
@@ -533,7 +533,7 @@ export const mapT: Map<AsyncEnumerableLike<unknown>> = {
 export const scan: <T, TAcc>(
   reducer: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-) => AsyncEnumerableOperator<T, TAcc> = /*@__PURE__*/ createScanLiftOperator(
+) => AsyncEnumerableOperator<T, TAcc> = /*@__PURE__*/ createScanOperator(
   liftT,
   class ScanAsyncEnumerator<T, TAcc> extends AbstractDelegatingAsyncEnumerator<
     T,
@@ -619,7 +619,7 @@ export const scanAsyncT: ScanAsync<AsyncEnumerableLike<unknown>> = {
 export const takeWhile: <T>(
   predicate: Predicate<T>,
   options?: { readonly inclusive?: boolean },
-) => AsyncEnumerableOperator<T, T> = /*@__PURE__*/ createTakeWhileLiftOperator(
+) => AsyncEnumerableOperator<T, T> = /*@__PURE__*/ createTakeWhileOperator(
   liftT,
   class TakeWhileAsyncEnumerator<T> extends AbstractDelegatingAsyncEnumerator<
     T,

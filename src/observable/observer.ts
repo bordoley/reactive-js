@@ -17,11 +17,17 @@ import {
   newInstance,
   newInstanceWith,
   pipe,
+  raise,
 } from "../functions";
 import { ObserverLike, getScheduler } from "../observer";
 import { Option, isNone, none } from "../option";
 import { notify } from "../reactiveSink";
-import { SchedulerLike, __yield, schedule } from "../scheduler";
+import {
+  SchedulerLike,
+  __yield,
+  isInContinuation,
+  schedule,
+} from "../scheduler";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (getLength(dispatcher.nextQueue) === 1) {
@@ -190,3 +196,25 @@ export const createDelegatingObserver = <T>(
     DelegatingObserver,
     delegate,
   );
+
+export const decorateNotifyWithAssertions = (
+  ObserverClass: new (...any: readonly any[]) => ObserverLike<unknown>,
+) => {
+  if (__DEV__) {
+    const notify = ObserverClass.prototype.notify;
+
+    ObserverClass.prototype.notify = function notifyWithAssertion<T>(
+      this: ObserverLike<T>,
+      next: T,
+    ) {
+      if (!pipe(this, getScheduler, isInContinuation)) {
+        raise(
+          "Observer.notify() may only be invoked within a scheduled SchedulerContinuation",
+        );
+      } else if (isDisposed(this)) {
+        raise("Observer is disposed");
+      }
+      notify.call(this, next);
+    };
+  }
+};

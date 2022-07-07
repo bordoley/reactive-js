@@ -73,7 +73,7 @@ export type DelegatingLiftableContainerStateOf<
   readonly delegate: TDelegateLiftableState;
 };
 
-export const createDistinctUntilChangedLiftOperator =
+export const createDistinctUntilChangedOperator =
   <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     DistinctUntilChangedLiftableState: new <T>(
@@ -98,7 +98,7 @@ export const createDistinctUntilChangedLiftOperator =
     return pipe(operator, lift(m));
   };
 
-export const createKeepLiftOperator =
+export const createKeepOperator =
   <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     KeepLiftableState: new <T>(
@@ -122,7 +122,7 @@ export const createKeepLiftOperator =
     return pipe(operator, lift(m));
   };
 
-export const createMapLiftOperator =
+export const createMapOperator =
   <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     MapLiftableState: new <TA, TB>(
@@ -145,7 +145,7 @@ export const createMapLiftOperator =
       lift(m),
     );
 
-export const createOnNotifyLiftOperator =
+export const createOnNotifyOperator =
   <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     OnNotifyLiftableState: new <T>(
@@ -168,7 +168,7 @@ export const createOnNotifyLiftOperator =
       lift(m),
     );
 
-export const createPairwiseLiftOperator =
+export const createPairwiseOperator =
   <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     PairwiseLiftableState: new <T>(
@@ -191,7 +191,7 @@ export const createPairwiseLiftOperator =
       lift(m),
     );
 
-export const createScanLiftOperator =
+export const createScanOperator =
   <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     ScanLiftableState: new <T, TAcc>(
@@ -219,7 +219,7 @@ export const createScanLiftOperator =
       lift(m),
     );
 
-export const createSkipFirstLiftOperator =
+export const createSkipFirstOperator =
   <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     SkipLiftableState: new <T>(
@@ -246,7 +246,7 @@ export const createSkipFirstLiftOperator =
     return runnable => (count > 0 ? pipe(runnable, lifted) : runnable);
   };
 
-export const createTakeFirstLiftOperator =
+export const createTakeFirstOperator =
   <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: FromArray<C> & Lift<C, TVar>,
     TakeFirstLiftableState: new <T>(
@@ -272,7 +272,7 @@ export const createTakeFirstLiftOperator =
     return source => (count > 0 ? pipe(source, lifted) : empty(m));
   };
 
-export const createTakeWhileLiftOperator =
+export const createTakeWhileOperator =
   <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     TakeWhileLiftableState: new <T>(
@@ -302,7 +302,7 @@ export const createTakeWhileLiftOperator =
     }, lift(m));
   };
 
-export const createThrowIfEmptyLiftOperator =
+export const createThrowIfEmptyOperator =
   <C extends LiftableContainerLike, TVar extends TInteractive | TReactive>(
     m: Lift<C, TVar>,
     ThrowIfEmptyLiftableState: new <T>(

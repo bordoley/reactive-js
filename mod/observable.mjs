@@ -1,6 +1,7 @@
 /// <reference types="./observable.d.ts" />
+import { reactive, createMapOperator, createOnNotifyOperator, createDistinctUntilChangedOperator, createKeepOperator, createPairwiseOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './__internal__.liftable.mjs';
 import { hasDelay, getDelay } from './__internal__.optionalArgs.mjs';
-import { createMapOperator, createOnNotifyOperator, createUsing, createNever, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './__internal__.reactiveContainer.mjs';
+import { decorateWithMapNotify, decorateWithOnNotifyNotify, createUsing, createNever, decorateWithCatchErrorNotify, createCatchErrorOperator, createFromDisposable, decorateWithDecodeWithCharsetNotify, createDecodeWithCharsetOperator, decorateWithDistinctUntilChangedNotify, decorateWithEverySatisfyNotify, createEverySatisfyOperator, decorateWithKeepNotify, createOnSink, decorateWithPairwiseNotify, decorateWithReduceNotify, createReduceOperator, decorateWithScanNotify, decorateWithSkipFirstNotify, decorateWithSomeSatisfyNotify, createSomeSatisfyOperator, decorateWithTakeFirstNotify, decorateWithTakeLastNotify, createTakeLastOperator, decorateWithTakeWhileNotify, decorateWithThrowIfEmptyNotify } from './__internal__.reactiveContainer.mjs';
 import { empty as empty$1, fromValue, throws, concatMap } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
 import { dispose, addTo, isDisposed, onComplete, Disposable, onDisposed, add, disposed, toErrorHandler, bindTo } from './disposable.mjs';
@@ -11,14 +12,13 @@ import { sinkInto, sourceFrom } from './reactiveContainer.mjs';
 import { schedule, __yield, isInContinuation, createVirtualTimeScheduler } from './scheduler.mjs';
 import { createFromArray } from './__internal__.container.mjs';
 import { none, isNone, isSome } from './option.mjs';
-import { reactive } from './__internal__.liftable.mjs';
 import { getDelegate } from './__internal__.delegating.mjs';
+import { __DEV__, MAX_SAFE_INTEGER } from './__internal__.env.mjs';
 import { notify, notifySink } from './reactiveSink.mjs';
 import { DisposableRef } from './__internal__.disposable.mjs';
 import { createRunnable } from './runnable.mjs';
 import { map as map$1, everySatisfy as everySatisfy$1 } from './__internal__.readonlyArray.mjs';
 import { enumerate, fromIterator as fromIterator$1, fromIterable as fromIterable$1, createEnumerable } from './enumerable.mjs';
-import { MAX_SAFE_INTEGER } from './__internal__.env.mjs';
 import { AbstractEnumerator, reset, zip as zip$1 } from './__internal__.enumerator.mjs';
 import { runContinuation } from './__internal__.schedulerImplementation.mjs';
 
@@ -258,13 +258,32 @@ class DelegatingObserver extends AbstractDelegatingObserver {
     }
 }
 const createDelegatingObserver = (delegate) => newInstance(DelegatingObserver, delegate);
-
-const map = /*@__PURE__*/ createMapOperator(liftSynchronousT, class MapObserver extends AbstractDelegatingObserver {
-    constructor(delegate, mapper) {
-        super(delegate);
-        this.mapper = mapper;
+const decorateNotifyWithAssertions = (ObserverClass) => {
+    if (__DEV__) {
+        const notify = ObserverClass.prototype.notify;
+        ObserverClass.prototype.notify = function notifyWithAssertion(next) {
+            if (!pipe(this, getScheduler, isInContinuation)) {
+                raise("Observer.notify() may only be invoked within a scheduled SchedulerContinuation");
+            }
+            else if (isDisposed(this)) {
+                raise("Observer is disposed");
+            }
+            notify.call(this, next);
+        };
     }
-});
+};
+
+const map = /*@__PURE__*/ (() => {
+    class MapObserver extends AbstractDelegatingObserver {
+        constructor(delegate, mapper) {
+            super(delegate);
+            this.mapper = mapper;
+        }
+    }
+    decorateWithMapNotify(MapObserver);
+    decorateNotifyWithAssertions(MapObserver);
+    return createMapOperator(liftSynchronousT, MapObserver);
+})();
 const mapT = {
     map,
 };
@@ -274,12 +293,17 @@ const mapT = {
  *
  * @param onNotify The function that is invoked when the observable source produces values.
  */
-const onNotify = /*@__PURE__*/ createOnNotifyOperator(liftSynchronousT, class OnNotifyObserver extends AbstractDelegatingObserver {
-    constructor(delegate, onNotify) {
-        super(delegate);
-        this.onNotify = onNotify;
+const onNotify = /*@__PURE__*/ (() => {
+    class OnNotifyObserver extends AbstractDelegatingObserver {
+        constructor(delegate, onNotify) {
+            super(delegate);
+            this.onNotify = onNotify;
+        }
     }
-});
+    decorateWithOnNotifyNotify(OnNotifyObserver);
+    decorateNotifyWithAssertions(OnNotifyObserver);
+    return createOnNotifyOperator(liftSynchronousT, OnNotifyObserver);
+})();
 
 class Subject extends Disposable {
     constructor(replay = 1) {
@@ -1309,19 +1333,28 @@ const toPromise = (scheduler) => observable => newInstance(Promise, (resolve, re
     }));
 });
 
-const catchError = /*@__PURE__*/ createCatchErrorOperator(liftSynchronousT, class CatchErrorObserver extends AbstractDelegatingObserver {
-});
+const catchError = /*@__PURE__*/ (() => {
+    class CatchErrorObserver extends AbstractDelegatingObserver {
+    }
+    decorateWithCatchErrorNotify(CatchErrorObserver);
+    decorateNotifyWithAssertions(CatchErrorObserver);
+    return createCatchErrorOperator(liftSynchronousT, CatchErrorObserver);
+})();
 const catchErrorT = {
     catchError,
 };
 const fromDisposable = /*@__PURE__*/ createFromDisposable(createT);
-const decodeWithCharset = 
-/*@__PURE__*/ createDecodeWithCharsetOperator({ ...liftSynchronousT, ...fromArrayT }, class DecodeWithCharsetObserver extends AbstractDelegatingObserver {
-    constructor(delegate, textDecoder) {
-        super(delegate);
-        this.textDecoder = textDecoder;
+const decodeWithCharset = /*@__PURE__*/ (() => {
+    class DecodeWithCharsetObserver extends AbstractDelegatingObserver {
+        constructor(delegate, textDecoder) {
+            super(delegate);
+            this.textDecoder = textDecoder;
+        }
     }
-});
+    decorateWithDecodeWithCharsetNotify(DecodeWithCharsetObserver);
+    decorateNotifyWithAssertions(DecodeWithCharsetObserver);
+    return createDecodeWithCharsetOperator({ ...liftSynchronousT, ...fromArrayT }, DecodeWithCharsetObserver);
+})();
 const decodeWithCharsetT = {
     decodeWithCharset,
 };
@@ -1332,24 +1365,33 @@ const decodeWithCharsetT = {
  * @param equals Optional equality function that is used to compare
  * if an item is distinct from the previous item.
  */
-const distinctUntilChanged = 
-/*@__PURE__*/ createDistinctUntilChangedOperator(liftSynchronousT, class DistinctUntilChangedObserver extends AbstractDelegatingObserver {
-    constructor(delegate, equality) {
-        super(delegate);
-        this.equality = equality;
-        this.prev = none;
-        this.hasValue = false;
+const distinctUntilChanged = /*@__PURE__*/ (() => {
+    class DistinctUntilChangedObserver extends AbstractDelegatingObserver {
+        constructor(delegate, equality) {
+            super(delegate);
+            this.equality = equality;
+            this.prev = none;
+            this.hasValue = false;
+        }
     }
-});
+    decorateWithDistinctUntilChangedNotify(DistinctUntilChangedObserver);
+    decorateNotifyWithAssertions(DistinctUntilChangedObserver);
+    return createDistinctUntilChangedOperator(liftSynchronousT, DistinctUntilChangedObserver);
+})();
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
-const everySatisfy = /*@__PURE__*/ createEverySatisfyOperator({ ...fromArrayT, ...liftSynchronousT }, class EverySatisfyObserver extends AbstractDelegatingObserver {
-    constructor(delegate, predicate) {
-        super(delegate);
-        this.predicate = predicate;
+const everySatisfy = /*@__PURE__*/ (() => {
+    class EverySatisfyObserver extends AbstractDelegatingObserver {
+        constructor(delegate, predicate) {
+            super(delegate);
+            this.predicate = predicate;
+        }
     }
-});
+    decorateWithEverySatisfyNotify(EverySatisfyObserver);
+    decorateNotifyWithAssertions(EverySatisfyObserver);
+    return createEverySatisfyOperator({ ...fromArrayT, ...liftSynchronousT }, EverySatisfyObserver);
+})();
 const everySatisfyT = {
     everySatisfy,
 };
@@ -1392,12 +1434,17 @@ const generateT = {
     generate,
 };
 const keep = 
-/*@__PURE__*/ createKeepOperator(liftSynchronousT, class KeepObserver extends AbstractDelegatingObserver {
-    constructor(delegate, predicate) {
-        super(delegate);
-        this.predicate = predicate;
+/*@__PURE__*/ (() => {
+    class KeepObserver extends AbstractDelegatingObserver {
+        constructor(delegate, predicate) {
+            super(delegate);
+            this.predicate = predicate;
+        }
     }
-});
+    decorateWithKeepNotify(KeepObserver);
+    decorateNotifyWithAssertions(KeepObserver);
+    return createKeepOperator(liftSynchronousT, KeepObserver);
+})();
 const keepT = {
     keep,
 };
@@ -1405,12 +1452,17 @@ const mapAsync = (f) => concatMap({ ...switchAllT, ...mapT }, (a) => fromPromise
 const onSubscribe = /*@__PURE__*/ createOnSink(createT);
 const getObserverCount = (observable) => observable.observerCount;
 const pairwise = 
-/*@__PURE__*/ createPairwiseOperator(liftSynchronousT, class PairwiseObserver extends AbstractDelegatingObserver {
-    constructor() {
-        super(...arguments);
-        this.hasPrev = false;
+/*@__PURE__*/ (() => {
+    class PairwiseObserver extends AbstractDelegatingObserver {
+        constructor() {
+            super(...arguments);
+            this.hasPrev = false;
+        }
     }
-});
+    decorateWithPairwiseNotify(PairwiseObserver);
+    decorateNotifyWithAssertions(PairwiseObserver);
+    return createPairwiseOperator(liftSynchronousT, PairwiseObserver);
+})();
 const pairwiseT = {
     pairwise,
 };
@@ -1427,24 +1479,34 @@ const multicast = (scheduler, options = {}) => observable => {
     pipe(observable, onNotify(publishTo(subject)), subscribe(scheduler), bindTo(subject));
     return subject;
 };
-const reduce = /*@__PURE__*/ createReduceOperator({ ...fromArrayT, ...liftSynchronousT }, class ReducerObserver extends AbstractDelegatingObserver {
-    constructor(delegate, reducer, acc) {
-        super(delegate);
-        this.reducer = reducer;
-        this.acc = acc;
+const reduce = /*@__PURE__*/ (() => {
+    class ReducerObserver extends AbstractDelegatingObserver {
+        constructor(delegate, reducer, acc) {
+            super(delegate);
+            this.reducer = reducer;
+            this.acc = acc;
+        }
     }
-});
+    decorateWithReduceNotify(ReducerObserver);
+    decorateNotifyWithAssertions(ReducerObserver);
+    return createReduceOperator({ ...fromArrayT, ...liftSynchronousT }, ReducerObserver);
+})();
 const reduceT = {
     reduce,
 };
 const getReplay = (observable) => observable.replay;
-const scan = /*@__PURE__*/ createScanOperator(liftSynchronousT, class ScanObserver extends AbstractDelegatingObserver {
-    constructor(delegate, reducer, acc) {
-        super(delegate);
-        this.reducer = reducer;
-        this.acc = acc;
+const scan = /*@__PURE__*/ (() => {
+    class ScanObserver extends AbstractDelegatingObserver {
+        constructor(delegate, reducer, acc) {
+            super(delegate);
+            this.reducer = reducer;
+            this.acc = acc;
+        }
     }
-});
+    decorateWithScanNotify(ScanObserver);
+    decorateNotifyWithAssertions(ScanObserver);
+    return createScanOperator(liftSynchronousT, ScanObserver);
+})();
 const scanT = {
     scan,
 };
@@ -1487,33 +1549,48 @@ const share = (scheduler, options) => source => {
  *
  * @param count The number of items emitted by source that should be skipped.
  */
-const skipFirst = /*@__PURE__*/ createSkipFirstOperator(liftSynchronousT, class SkipFirstObserver extends AbstractDelegatingObserver {
-    constructor(delegate, skipCount) {
-        super(delegate);
-        this.skipCount = skipCount;
-        this.count = 0;
+const skipFirst = /*@__PURE__*/ (() => {
+    class SkipFirstObserver extends AbstractDelegatingObserver {
+        constructor(delegate, skipCount) {
+            super(delegate);
+            this.skipCount = skipCount;
+            this.count = 0;
+        }
     }
-});
+    decorateWithSkipFirstNotify(SkipFirstObserver);
+    decorateNotifyWithAssertions(SkipFirstObserver);
+    return createSkipFirstOperator(liftSynchronousT, SkipFirstObserver);
+})();
 const skipFirstT = {
     skipFirst,
 };
-const someSatisfy = /*@__PURE__*/ createSomeSatisfyOperator({ ...fromArrayT, ...liftSynchronousT }, class SomeSatisfyObserver extends AbstractDelegatingObserver {
-    constructor(delegate, predicate) {
-        super(delegate);
-        this.predicate = predicate;
+const someSatisfy = /*@__PURE__*/ (() => {
+    class SomeSatisfyObserver extends AbstractDelegatingObserver {
+        constructor(delegate, predicate) {
+            super(delegate);
+            this.predicate = predicate;
+        }
     }
-});
+    decorateWithSomeSatisfyNotify(SomeSatisfyObserver);
+    decorateNotifyWithAssertions(SomeSatisfyObserver);
+    return createSomeSatisfyOperator({ ...fromArrayT, ...liftSynchronousT }, SomeSatisfyObserver);
+})();
 const someSatisfyT = {
     someSatisfy,
 };
 const subscribeOn = (scheduler) => observable => createObservable(({ dispatcher }) => pipe(observable, onNotify(dispatchTo(dispatcher)), subscribe(scheduler), bindTo(dispatcher)));
-const takeFirst = /*@__PURE__*/ createTakeFirstOperator({ ...fromArrayT, ...liftSynchronousT }, class TakeFirstObserver extends AbstractDelegatingObserver {
-    constructor(delegate, maxCount) {
-        super(delegate);
-        this.maxCount = maxCount;
-        this.count = 0;
+const takeFirst = /*@__PURE__*/ (() => {
+    class TakeFirstObserver extends AbstractDelegatingObserver {
+        constructor(delegate, maxCount) {
+            super(delegate);
+            this.maxCount = maxCount;
+            this.count = 0;
+        }
     }
-});
+    decorateWithTakeFirstNotify(TakeFirstObserver);
+    decorateNotifyWithAssertions(TakeFirstObserver);
+    return createTakeFirstOperator({ ...fromArrayT, ...liftSynchronousT }, TakeFirstObserver);
+})();
 const takeFirstT = {
     takeFirst,
 };
@@ -1522,13 +1599,18 @@ const takeFirstT = {
  *
  * @param count The maximum number of values to emit.
  */
-const takeLast = /*@__PURE__*/ createTakeLastOperator({ ...fromArrayT, ...liftSynchronousT }, class TakeLastObserver extends AbstractDelegatingObserver {
-    constructor(delegate, maxCount) {
-        super(delegate);
-        this.maxCount = maxCount;
-        this.last = [];
+const takeLast = /*@__PURE__*/ (() => {
+    class TakeLastObserver extends AbstractDelegatingObserver {
+        constructor(delegate, maxCount) {
+            super(delegate);
+            this.maxCount = maxCount;
+            this.last = [];
+        }
     }
-});
+    decorateWithTakeLastNotify(TakeLastObserver);
+    decorateNotifyWithAssertions(TakeLastObserver);
+    return createTakeLastOperator({ ...fromArrayT, ...liftSynchronousT }, TakeLastObserver);
+})();
 const takeLastT = {
     takeLast,
 };
@@ -1546,22 +1628,32 @@ const takeUntil = (notifier) => {
  *
  * @param predicate The predicate function.
  */
-const takeWhile = /*@__PURE__*/ createTakeWhileOperator(liftSynchronousT, class TakeWhileObserver extends AbstractDelegatingObserver {
-    constructor(delegate, predicate, inclusive) {
-        super(delegate);
-        this.predicate = predicate;
-        this.inclusive = inclusive;
+const takeWhile = /*@__PURE__*/ (() => {
+    class TakeWhileObserver extends AbstractDelegatingObserver {
+        constructor(delegate, predicate, inclusive) {
+            super(delegate);
+            this.predicate = predicate;
+            this.inclusive = inclusive;
+        }
     }
-});
+    decorateWithTakeWhileNotify(TakeWhileObserver);
+    decorateNotifyWithAssertions(TakeWhileObserver);
+    return createTakeWhileOperator(liftSynchronousT, TakeWhileObserver);
+})();
 const takeWhileT = {
     takeWhile,
 };
-const throwIfEmpty = /*@__PURE__*/ createThrowIfEmptyOperator(liftSynchronousT, class ThrowIfEmptyObserver extends AbstractDelegatingObserver {
-    constructor() {
-        super(...arguments);
-        this.isEmpty = true;
+const throwIfEmpty = /*@__PURE__*/ (() => {
+    class ThrowIfEmptyObserver extends AbstractDelegatingObserver {
+        constructor() {
+            super(...arguments);
+            this.isEmpty = true;
+        }
     }
-});
+    decorateWithThrowIfEmptyNotify(ThrowIfEmptyObserver);
+    decorateNotifyWithAssertions(ThrowIfEmptyObserver);
+    return createThrowIfEmptyOperator(liftT, ThrowIfEmptyObserver);
+})();
 const throwIfEmptyT = {
     throwIfEmpty,
 };
