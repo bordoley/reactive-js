@@ -8,7 +8,7 @@ An object that schedules units of work on a runloop.
 
 ## Hierarchy
 
-- [`Disposable`](../classes/disposable.Disposable.md)
+- [`DisposableLike`](disposable.DisposableLike.md)
 
   ↳ **`SchedulerLike`**
 
@@ -20,14 +20,11 @@ An object that schedules units of work on a runloop.
 
 ### Properties
 
+- [error](scheduler.SchedulerLike.md#error)
 - [inContinuation](scheduler.SchedulerLike.md#incontinuation)
+- [isDisposed](scheduler.SchedulerLike.md#isdisposed)
 - [now](scheduler.SchedulerLike.md#now)
 - [shouldYield](scheduler.SchedulerLike.md#shouldyield)
-
-### Accessors
-
-- [error](scheduler.SchedulerLike.md#error)
-- [isDisposed](scheduler.SchedulerLike.md#isdisposed)
 
 ### Methods
 
@@ -38,9 +35,33 @@ An object that schedules units of work on a runloop.
 
 ## Properties
 
+### error
+
+• `Readonly` **error**: [`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Inherited from
+
+[DisposableLike](disposable.DisposableLike.md).[error](disposable.DisposableLike.md#error)
+
+___
+
 ### inContinuation
 
 • `Readonly` **inContinuation**: `boolean`
+
+___
+
+### isDisposed
+
+• `Readonly` **isDisposed**: `boolean`
+
+`true` if this resource has been disposed, otherwise false
+
+#### Inherited from
+
+[DisposableLike](disposable.DisposableLike.md).[isDisposed](disposable.DisposableLike.md#isdisposed)
 
 ___
 
@@ -53,38 +74,6 @@ ___
 ### shouldYield
 
 • `Readonly` **shouldYield**: `boolean`
-
-## Accessors
-
-### error
-
-• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
-
-The error the `Disposable` was disposed with if disposed.
-
-#### Returns
-
-[`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
-
-#### Inherited from
-
-Disposable.error
-
-___
-
-### isDisposed
-
-• `get` **isDisposed**(): `boolean`
-
-`true` if this resource has been disposed, otherwise false
-
-#### Returns
-
-`boolean`
-
-#### Inherited from
-
-Disposable.isDisposed
 
 ## Methods
 
@@ -110,7 +99,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Inherited from
 
-[Disposable](../classes/disposable.Disposable.md).[add](../classes/disposable.Disposable.md#add)
+[DisposableLike](disposable.DisposableLike.md).[add](disposable.DisposableLike.md#add)
 
 ___
 
@@ -133,7 +122,7 @@ Dispose the resource.
 
 #### Inherited from
 
-[Disposable](../classes/disposable.Disposable.md).[dispose](../classes/disposable.Disposable.md#dispose)
+[DisposableLike](disposable.DisposableLike.md).[dispose](disposable.DisposableLike.md#dispose)
 
 ___
 

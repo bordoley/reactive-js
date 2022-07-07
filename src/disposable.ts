@@ -16,12 +16,43 @@ export interface Error {
   readonly cause: unknown;
 }
 
-export type DisposableOrTeardown = Disposable | SideEffect1<Option<Error>>;
+export type DisposableOrTeardown = DisposableLike | SideEffect1<Option<Error>>;
 
 /**
  * Represents an unmanaged resource that can be disposed.
  */
-export class Disposable {
+export interface DisposableLike {
+  /**
+   * The error the `Disposable` was disposed with if disposed.
+   */
+  readonly error: Option<Error>;
+
+  /**
+   * `true` if this resource has been disposed, otherwise false
+   */
+  readonly isDisposed: boolean;
+
+  /**
+   * Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
+   *
+   * @param disposable
+   * @returns `this`
+   */
+  add(
+    this: this,
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void;
+
+  /**
+   * Dispose the resource.
+   *
+   * @param error An optional error that signals the resource is being disposed due to an error.
+   */
+  dispose(this: this, error?: Error): void;
+}
+
+export class Disposable implements DisposableLike {
   /** @ignore */
   private _isDisposed = false;
 
@@ -102,38 +133,40 @@ export class Disposable {
  * Dispose `disposable` with an optional error.
  */
 export const dispose =
-  <T extends Disposable>(e?: Error): Function1<T, T> =>
+  <T extends DisposableLike>(e?: Error): Function1<T, T> =>
   disposable => {
     disposable.dispose(e);
     return disposable;
   };
 
-export const isDisposed = (disposable: Disposable): boolean =>
+export const isDisposed = (disposable: DisposableLike): boolean =>
   disposable.isDisposed;
 
 function addDisposableOrTeardown(
-  parent: Disposable,
-  child: Disposable | SideEffect1<Option<Error>>,
+  parent: DisposableLike,
+  child: DisposableOrTeardown,
   ignoreChildErrors = false,
 ) {
   parent.add(child, ignoreChildErrors);
 }
 
 export const bindTo =
-  <T extends Disposable>(child: Disposable): Function1<T, T> =>
+  <T extends DisposableLike>(child: DisposableLike): Function1<T, T> =>
   (parent: T): T => {
     addDisposableOrTeardown(parent, child);
     addDisposableOrTeardown(child, parent);
     return parent;
   };
 
-export function add<T extends Disposable>(
-  child: Disposable,
+export function add<T extends DisposableLike>(
+  child: DisposableLike,
   ignoreChildErrors: true,
 ): Function1<T, T>;
-export function add<T extends Disposable>(child: Disposable): Function1<T, T>;
-export function add<T extends Disposable>(
-  child: Disposable,
+export function add<T extends DisposableLike>(
+  child: DisposableLike,
+): Function1<T, T>;
+export function add<T extends DisposableLike>(
+  child: DisposableLike,
   ignoreChildErrors = false,
 ): Function1<T, T> {
   return (parent: T): T => {
@@ -142,13 +175,15 @@ export function add<T extends Disposable>(
   };
 }
 
-export function addTo<T extends Disposable>(
-  child: Disposable,
+export function addTo<T extends DisposableLike>(
+  child: DisposableLike,
   ignoreChildErrors: true,
 ): Function1<T, T>;
-export function addTo<T extends Disposable>(child: Disposable): Function1<T, T>;
-export function addTo<T extends Disposable>(
-  parent: Disposable,
+export function addTo<T extends DisposableLike>(
+  child: DisposableLike,
+): Function1<T, T>;
+export function addTo<T extends DisposableLike>(
+  parent: DisposableLike,
   ignoreChildErrors = false,
 ): Function1<T, T> {
   return (child: T): T => {
@@ -158,7 +193,7 @@ export function addTo<T extends Disposable>(
 }
 
 export const onDisposed =
-  <T extends Disposable>(
+  <T extends DisposableLike>(
     teardown: SideEffect1<Option<Error>>,
   ): Function1<T, T> =>
   disposable => {
@@ -167,7 +202,7 @@ export const onDisposed =
   };
 
 export const onError =
-  <T extends Disposable>(teardown: SideEffect1<Error>): Function1<T, T> =>
+  <T extends DisposableLike>(teardown: SideEffect1<Error>): Function1<T, T> =>
   disposable => {
     addDisposableOrTeardown(disposable, e => {
       if (isSome(e)) {
@@ -178,7 +213,7 @@ export const onError =
   };
 
 export const onComplete =
-  <T extends Disposable>(teardown: SideEffect): Function1<T, T> =>
+  <T extends DisposableLike>(teardown: SideEffect): Function1<T, T> =>
   disposable => {
     addDisposableOrTeardown(disposable, e => {
       if (isNone(e)) {
@@ -192,11 +227,11 @@ export const onComplete =
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
  */
 export const toErrorHandler =
-  (disposable: Disposable): SideEffect1<unknown> =>
+  (disposable: DisposableLike): SideEffect1<unknown> =>
   cause =>
     pipe(disposable, dispose({ cause }));
 
-const doDispose = (self: Disposable, disposable: DisposableOrTeardown) => {
+const doDispose = (self: DisposableLike, disposable: DisposableOrTeardown) => {
   const { error } = self;
   if (disposable instanceof Function) {
     try {
@@ -213,7 +248,7 @@ const doDispose = (self: Disposable, disposable: DisposableOrTeardown) => {
 
 export const disposed = /*@__PURE__*/ pipe(newInstance(Disposable), dispose());
 
-export const toAbortSignal = (disposable: Disposable): AbortSignal => {
+export const toAbortSignal = (disposable: DisposableLike): AbortSignal => {
   const abortController = newInstance(AbortController);
   addDisposableOrTeardown(disposable, () => abortController.abort());
   return abortController.signal;

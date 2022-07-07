@@ -1,8 +1,8 @@
-import { Disposable, isDisposed } from "./disposable";
+import { DisposableLike, isDisposed } from "./disposable";
 import { Function1 } from "./functions";
 import { SchedulerContinuationLike } from "./scheduler";
 
-export interface SchedulerImplementationLike extends Disposable {
+export interface SchedulerImplementationLike extends DisposableLike {
   inContinuation: boolean;
 }
 

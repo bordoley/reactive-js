@@ -4,35 +4,23 @@
 
 [disposable](../modules/disposable.md).Disposable
 
-Represents an unmanaged resource that can be disposed.
-
 ## Hierarchy
 
 - **`Disposable`**
 
   ↳ [`AsyncEnumerator`](asyncEnumerator.AsyncEnumerator.md)
 
-  ↳ [`DispatcherLike`](../interfaces/dispatcher.DispatcherLike.md)
-
   ↳ [`Enumerator`](enumerator.Enumerator.md)
-
-  ↳ [`InteractiveSourceLike`](../interfaces/interactiveSource.InteractiveSourceLike.md)
-
-  ↳ [`MulticastObservableLike`](../interfaces/observable.MulticastObservableLike.md)
 
   ↳ [`Subject`](observable.Subject.md)
 
   ↳ [`Observer`](observer.Observer.md)
 
-  ↳ [`ReactiveSinkLike`](../interfaces/reactiveSink.ReactiveSinkLike.md)
-
   ↳ [`RunnableSink`](runnableSink.RunnableSink.md)
 
-  ↳ [`PrioritySchedulerLike`](../interfaces/scheduler.PrioritySchedulerLike.md)
+## Implements
 
-  ↳ [`SchedulerContinuationLike`](../interfaces/scheduler.SchedulerContinuationLike.md)
-
-  ↳ [`SchedulerLike`](../interfaces/scheduler.SchedulerLike.md)
+- [`DisposableLike`](../interfaces/disposable.DisposableLike.md)
 
 ## Table of contents
 
@@ -68,6 +56,10 @@ The error the `Disposable` was disposed with if disposed.
 
 [`Option`](../modules/option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>
 
+#### Implementation of
+
+[DisposableLike](../interfaces/disposable.DisposableLike.md).[error](../interfaces/disposable.DisposableLike.md#error)
+
 ___
 
 ### isDisposed
@@ -79,6 +71,10 @@ ___
 #### Returns
 
 `boolean`
+
+#### Implementation of
+
+[DisposableLike](../interfaces/disposable.DisposableLike.md).[isDisposed](../interfaces/disposable.DisposableLike.md#isdisposed)
 
 ## Methods
 
@@ -102,6 +98,10 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 `this`
 
+#### Implementation of
+
+[DisposableLike](../interfaces/disposable.DisposableLike.md).[add](../interfaces/disposable.DisposableLike.md#add)
+
 ___
 
 ### dispose
@@ -120,3 +120,7 @@ Dispose the resource.
 #### Returns
 
 `void`
+
+#### Implementation of
+
+[DisposableLike](../interfaces/disposable.DisposableLike.md).[dispose](../interfaces/disposable.DisposableLike.md#dispose)

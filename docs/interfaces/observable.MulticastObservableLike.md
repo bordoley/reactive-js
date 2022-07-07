@@ -16,7 +16,7 @@ An `ObservableLike` that shares a common subscription to an underlying observabl
 
 - [`ObservableLike`](observable.ObservableLike.md)<`T`\>
 
-- [`Disposable`](../classes/disposable.Disposable.md)
+- [`DisposableLike`](disposable.DisposableLike.md)
 
   ↳ **`MulticastObservableLike`**
 

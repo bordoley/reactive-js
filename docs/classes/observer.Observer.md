@@ -97,7 +97,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Implementation of
 
-ReactiveSinkLike.error
+[ReactiveSinkLike](../interfaces/reactiveSink.ReactiveSinkLike.md).[error](../interfaces/reactiveSink.ReactiveSinkLike.md#error)
 
 #### Inherited from
 
@@ -117,7 +117,7 @@ ___
 
 #### Implementation of
 
-ReactiveSinkLike.isDisposed
+[ReactiveSinkLike](../interfaces/reactiveSink.ReactiveSinkLike.md).[isDisposed](../interfaces/reactiveSink.ReactiveSinkLike.md#isdisposed)
 
 #### Inherited from
 

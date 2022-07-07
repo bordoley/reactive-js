@@ -8,7 +8,7 @@ A scheduler which schedules work according to it's priority.
 
 ## Hierarchy
 
-- [`Disposable`](../classes/disposable.Disposable.md)
+- [`DisposableLike`](disposable.DisposableLike.md)
 
   ↳ **`PrioritySchedulerLike`**
 

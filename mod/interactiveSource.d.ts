@@ -1,5 +1,5 @@
-import { Disposable } from "./disposable.mjs";
-interface InteractiveSourceLike extends Disposable {
+import { DisposableLike } from "./disposable.mjs";
+interface InteractiveSourceLike extends DisposableLike {
     move(this: this): void;
 }
 declare const move: <TSource extends InteractiveSourceLike = InteractiveSourceLike>(source: TSource) => TSource;

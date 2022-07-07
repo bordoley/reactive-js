@@ -6,7 +6,7 @@ import {
   ContainerOperator,
   Map,
 } from "./container";
-import { Disposable } from "./disposable";
+import { DisposableLike } from "./disposable";
 import {
   Factory,
   Function1,
@@ -21,14 +21,14 @@ import {
 } from "./functions";
 
 export interface LiftableContainerLike extends ContainerLike {
-  readonly TLiftableContainerState: Disposable;
+  readonly TLiftableContainerState: DisposableLike;
 }
 
 export type LiftableContainerStateOf<
   C extends LiftableContainerLike,
   T,
 > = C extends {
-  readonly TLiftableContainerState: Disposable;
+  readonly TLiftableContainerState: DisposableLike;
 }
   ? (C & {
       readonly T: T;
@@ -80,20 +80,24 @@ export interface ThrowIfEmpty<C extends LiftableContainerLike>
 }
 
 export interface Using<C extends LiftableContainerLike> extends Container<C> {
-  using<TResource extends Disposable, T>(
+  using<TResource extends DisposableLike, T>(
     resourceFactory: Factory<TResource>,
     containerFactory: Function1<TResource, ContainerOf<C, T>>,
   ): ContainerOf<C, T>;
 
-  using<TResource1 extends Disposable, TResource2 extends Disposable, T>(
+  using<
+    TResource1 extends DisposableLike,
+    TResource2 extends DisposableLike,
+    T,
+  >(
     resourceFactory: Factory<[TResource1, TResource2]>,
     containerFactory: Function2<TResource1, TResource2, ContainerOf<C, T>>,
   ): ContainerOf<C, T>;
 
   using<
-    TResource1 extends Disposable,
-    TResource2 extends Disposable,
-    TResource3 extends Disposable,
+    TResource1 extends DisposableLike,
+    TResource2 extends DisposableLike,
+    TResource3 extends DisposableLike,
     T,
   >(
     resourceFactory: Factory<[TResource1, TResource2, TResource3]>,
@@ -106,10 +110,10 @@ export interface Using<C extends LiftableContainerLike> extends Container<C> {
   ): ContainerOf<C, T>;
 
   using<
-    TResource1 extends Disposable,
-    TResource2 extends Disposable,
-    TResource3 extends Disposable,
-    TResource4 extends Disposable,
+    TResource1 extends DisposableLike,
+    TResource2 extends DisposableLike,
+    TResource3 extends DisposableLike,
+    TResource4 extends DisposableLike,
     T,
   >(
     resourceFactory: Factory<[TResource1, TResource2, TResource3, TResource4]>,
@@ -123,11 +127,11 @@ export interface Using<C extends LiftableContainerLike> extends Container<C> {
   ): ContainerOf<C, T>;
 
   using<
-    TResource1 extends Disposable,
-    TResource2 extends Disposable,
-    TResource3 extends Disposable,
-    TResource4 extends Disposable,
-    TResource5 extends Disposable,
+    TResource1 extends DisposableLike,
+    TResource2 extends DisposableLike,
+    TResource3 extends DisposableLike,
+    TResource4 extends DisposableLike,
+    TResource5 extends DisposableLike,
     T,
   >(
     resourceFactory: Factory<
@@ -143,7 +147,7 @@ export interface Using<C extends LiftableContainerLike> extends Container<C> {
     >,
   ): ContainerOf<C, T>;
 
-  using<TResource extends Disposable, T>(
+  using<TResource extends DisposableLike, T>(
     resourceFactory: Factory<TResource | readonly TResource[]>,
     runnableFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>,
   ): ContainerOf<C, T>;

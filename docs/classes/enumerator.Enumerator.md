@@ -81,7 +81,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Implementation of
 
-InteractiveSourceLike.error
+[InteractiveSourceLike](../interfaces/interactiveSource.InteractiveSourceLike.md).[error](../interfaces/interactiveSource.InteractiveSourceLike.md#error)
 
 #### Inherited from
 
@@ -111,7 +111,7 @@ ___
 
 #### Implementation of
 
-InteractiveSourceLike.isDisposed
+[InteractiveSourceLike](../interfaces/interactiveSource.InteractiveSourceLike.md).[isDisposed](../interfaces/interactiveSource.InteractiveSourceLike.md#isdisposed)
 
 #### Inherited from
 

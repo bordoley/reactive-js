@@ -46,4 +46,4 @@ ___
 
 ### TLiftableContainerState
 
-• `Readonly` **TLiftableContainerState**: [`Disposable`](../classes/disposable.Disposable.md)
+• `Readonly` **TLiftableContainerState**: [`DisposableLike`](disposable.DisposableLike.md)

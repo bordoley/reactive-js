@@ -1,7 +1,7 @@
 import { getDelegate } from "../__internal__.delegating";
 import { ignoreElements } from "../container";
 import { dispatchTo, getScheduler } from "../dispatcher";
-import { Disposable, addTo, bindTo } from "../disposable";
+import { DisposableOrTeardown, Error, addTo, dispose } from "../disposable";
 import {
   Updater,
   compose,
@@ -100,14 +100,29 @@ const windowHistoryPushState = (
   history.pushState({ counter: self.historyCounter, title }, "", uri);
 };
 
-class WindowLocationStream
-  extends Disposable
-  implements WindowLocationStreamLike
-{
+class WindowLocationStream implements WindowLocationStreamLike {
   historyCounter = -1;
 
-  constructor(readonly delegate: StreamLike<TAction, TState>) {
-    super();
+  constructor(readonly delegate: StreamLike<TAction, TState>) {}
+
+  get error(): Option<Error> {
+    return this.delegate.error;
+  }
+
+  get isDisposed(): boolean {
+    return this.delegate.isDisposed;
+  }
+
+  add(
+    this: this,
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void {
+    pipe(this, getDelegate).add(disposable, ignoreChildErrors);
+  }
+
+  dispose(this: this, error?: Error | undefined): void {
+    pipe(this, getDelegate, dispose(error));
   }
 
   get T(): WindowLocationURI {
@@ -199,7 +214,6 @@ export const windowLocation: WindowLocationStreamableLike =
       const windowLocationStream = pipe(
         WindowLocationStream,
         newInstanceWith(actionReducer),
-        bindTo(actionReducer),
       );
 
       pipe(

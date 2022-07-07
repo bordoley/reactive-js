@@ -1,6 +1,6 @@
 import { Readable, Transform, Writable } from "stream";
 import {
-  Disposable,
+  DisposableLike,
   dispose,
   onDisposed,
   onError,
@@ -23,7 +23,7 @@ const disposeStream = (stream: NodeStream) => () => {
 };
 
 export const addToNodeStream =
-  <TDisposable extends Disposable>(
+  <TDisposable extends DisposableLike>(
     stream: NodeStream,
   ): Function1<TDisposable, TDisposable> =>
   disposable => {
@@ -33,7 +33,7 @@ export const addToNodeStream =
 
 export const addDisposable =
   <TNodeStream extends NodeStream>(
-    disposable: Disposable,
+    disposable: DisposableLike,
   ): Function1<TNodeStream, TNodeStream> =>
   stream => {
     stream.on("error", toErrorHandler(disposable));
@@ -44,7 +44,7 @@ export const addDisposable =
 
 export const addToDisposable =
   <TNodeStream extends NodeStream>(
-    disposable: Disposable,
+    disposable: DisposableLike,
   ): Function1<TNodeStream, TNodeStream> =>
   stream => {
     pipe(disposable, onDisposed(disposeStream(stream)));
