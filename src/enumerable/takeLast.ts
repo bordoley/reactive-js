@@ -1,18 +1,18 @@
 import { TakeLast, empty } from "../container";
-import { add, bindTo, isDisposed } from "../disposable";
+import { Disposable, add, bindTo, isDisposed } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
-import { Enumerator, getCurrent, hasCurrent, move } from "../enumerator";
+import { EnumeratorLike, getCurrent, hasCurrent, move } from "../enumerator";
 import { getLength, newInstanceWith, pipe, raise } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
 import { enumerate } from "./enumerable";
 import { fromArray, fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 
-class TakeLastEnumerator<T> extends Enumerator<T> {
-  private enumerator: Option<Enumerator<T>> = none;
+class TakeLastEnumerator<T> extends Disposable implements EnumeratorLike<T> {
+  private enumerator: Option<EnumeratorLike<T>> = none;
 
   constructor(
-    private readonly delegate: Enumerator<T>,
+    private readonly delegate: EnumeratorLike<T>,
     private readonly maxCount: number,
   ) {
     super();
@@ -59,10 +59,10 @@ export const takeLast = <T>(
   options: { readonly count?: number } = {},
 ): EnumerableOperator<T, T> => {
   const { count = 1 } = options;
-  const operator = (delegate: Enumerator<T>) =>
+  const operator = (delegate: EnumeratorLike<T>) =>
     pipe(
       TakeLastEnumerator,
-      newInstanceWith<TakeLastEnumerator<T>, Enumerator<T>, number>(
+      newInstanceWith<TakeLastEnumerator<T>, EnumeratorLike<T>, number>(
         delegate,
         count,
       ),

@@ -3,7 +3,7 @@ import { MAX_SAFE_INTEGER } from "../__internal__.env";
 import { Buffer } from "../container";
 import { add, dispose } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
-import { Enumerator, getCurrent, hasCurrent } from "../enumerator";
+import { EnumeratorLike, getCurrent, hasCurrent } from "../enumerator";
 import { getLength, max, newInstanceWith, pipe } from "../functions";
 import { AbstractDelegatingEnumerator } from "./enumerator";
 import { lift } from "./lift";
@@ -12,7 +12,10 @@ class BufferEnumerator<T> extends AbstractDelegatingEnumerator<
   T,
   readonly T[]
 > {
-  constructor(delegate: Enumerator<T>, private readonly maxBufferSize: number) {
+  constructor(
+    delegate: EnumeratorLike<T>,
+    private readonly maxBufferSize: number,
+  ) {
     super(delegate);
   }
 
@@ -47,10 +50,10 @@ export const buffer = <T>(
 ): EnumerableOperator<T, readonly T[]> => {
   const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
 
-  const operator = (delegate: Enumerator<T>) =>
+  const operator = (delegate: EnumeratorLike<T>) =>
     pipe(
       BufferEnumerator,
-      newInstanceWith<BufferEnumerator<T>, Enumerator<T>, number>(
+      newInstanceWith<BufferEnumerator<T>, EnumeratorLike<T>, number>(
         delegate,
         maxBufferSize,
       ),

@@ -32,7 +32,7 @@ import {
   enumerate,
   fromIterable as fromIterableEnumerable,
 } from "./enumerable";
-import { Enumerator, getCurrent, move } from "./enumerator";
+import { EnumeratorLike, getCurrent, move } from "./enumerator";
 import {
   Factory,
   Function1,
@@ -348,7 +348,7 @@ const _fromEnumerable = <T>(
   enumerable: EnumerableLike<T>,
 ): AsyncEnumerableLike<T> =>
   createLiftedAsyncEnumerable(
-    withLatestFrom<void, Enumerator<T>, Enumerator<T>>(
+    withLatestFrom<void, EnumeratorLike<T>, EnumeratorLike<T>>(
       using(
         pipeLazy(enumerable, enumerate),
         compose(fromValue(fromArrayTObs), concatWith(concatT, never())),

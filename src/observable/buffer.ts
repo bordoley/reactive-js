@@ -32,7 +32,11 @@ import { subscribe } from "./subscribe";
 
 class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
   buffer: T[] = [];
-  private readonly durationSubscription = newInstance(DisposableRef, this);
+  private readonly durationSubscription = newInstance(
+    DisposableRef,
+    this,
+    disposed,
+  );
 
   constructor(
     delegate: Observer<readonly T[]>,

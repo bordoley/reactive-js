@@ -6,7 +6,7 @@ import {
 } from "../__internal__.schedulerImplementation";
 import { add, addTo, dispose, isDisposed } from "../disposable";
 import { EnumerableLike, ToEnumerable, createEnumerable } from "../enumerable";
-import { Enumerator, hasCurrent } from "../enumerator";
+import { EnumeratorLike, hasCurrent } from "../enumerator";
 import { Function1, newInstance, newInstanceWith, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { Observer } from "../observer";
@@ -85,7 +85,7 @@ class EnumeratorObserver<T> extends Observer<T> {
   }
 }
 
-export const enumerateObs = <T>(obs: ObservableLike<T>): Enumerator<T> => {
+export const enumerateObs = <T>(obs: ObservableLike<T>): EnumeratorLike<T> => {
   const scheduler = newInstance<EnumeratorScheduler<T>>(EnumeratorScheduler);
 
   pipe(

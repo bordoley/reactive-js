@@ -246,7 +246,10 @@ const doDispose = (self: DisposableLike, disposable: DisposableOrTeardown) => {
   }
 };
 
-export const disposed = /*@__PURE__*/ pipe(newInstance(Disposable), dispose());
+export const disposed: DisposableLike = /*@__PURE__*/ pipe(
+  newInstance(Disposable),
+  dispose(),
+);
 
 export const toAbortSignal = (disposable: DisposableLike): AbortSignal => {
   const abortController = newInstance(AbortController);

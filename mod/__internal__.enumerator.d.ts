@@ -1,5 +1,6 @@
-import { Enumerator } from "./enumerator.mjs";
-declare abstract class AbstractEnumerator<T> extends Enumerator<T> {
+import { Disposable } from "./disposable.mjs";
+import { EnumeratorLike } from "./enumerator.mjs";
+declare abstract class AbstractEnumerator<T> extends Disposable implements EnumeratorLike<T> {
     private _current;
     private _hasCurrent;
     constructor();
@@ -10,29 +11,29 @@ declare abstract class AbstractEnumerator<T> extends Enumerator<T> {
     abstract move(): boolean;
 }
 declare const reset: <T>(enumerator: AbstractEnumerator<T>) => void;
-declare function zip<TA, TB>(a: Enumerator<TA>, b: Enumerator<TB>): Enumerator<readonly [
+declare function zip<TA, TB>(a: EnumeratorLike<TA>, b: EnumeratorLike<TB>): EnumeratorLike<readonly [
     TA,
     TB
 ]>;
-declare function zip<TA, TB, TC>(a: Enumerator<TA>, b: Enumerator<TB>, c: Enumerator<TC>): Enumerator<readonly [
+declare function zip<TA, TB, TC>(a: EnumeratorLike<TA>, b: EnumeratorLike<TB>, c: EnumeratorLike<TC>): EnumeratorLike<readonly [
     TA,
     TB,
     TC
 ]>;
-declare function zip<TA, TB, TC, TD>(a: Enumerator<TA>, b: Enumerator<TB>, c: Enumerator<TC>, d: Enumerator<TD>): Enumerator<readonly [
+declare function zip<TA, TB, TC, TD>(a: EnumeratorLike<TA>, b: EnumeratorLike<TB>, c: EnumeratorLike<TC>, d: EnumeratorLike<TD>): EnumeratorLike<readonly [
     TA,
     TB,
     TC,
     TD
 ]>;
-declare function zip<TA, TB, TC, TD, TE>(a: Enumerator<TA>, b: Enumerator<TB>, c: Enumerator<TC>, d: Enumerator<TD>, e: Enumerator<TE>): Enumerator<readonly [
+declare function zip<TA, TB, TC, TD, TE>(a: EnumeratorLike<TA>, b: EnumeratorLike<TB>, c: EnumeratorLike<TC>, d: EnumeratorLike<TD>, e: EnumeratorLike<TE>): EnumeratorLike<readonly [
     TA,
     TB,
     TC,
     TD,
     TE
 ]>;
-declare function zip<TA, TB, TC, TD, TE, TF>(a: Enumerator<TA>, b: Enumerator<TB>, c: Enumerator<TC>, d: Enumerator<TD>, e: Enumerator<TE>, f: Enumerator<TF>): Enumerator<readonly [
+declare function zip<TA, TB, TC, TD, TE, TF>(a: EnumeratorLike<TA>, b: EnumeratorLike<TB>, c: EnumeratorLike<TC>, d: EnumeratorLike<TD>, e: EnumeratorLike<TE>, f: EnumeratorLike<TF>): EnumeratorLike<readonly [
     TA,
     TB,
     TC,
@@ -40,7 +41,7 @@ declare function zip<TA, TB, TC, TD, TE, TF>(a: Enumerator<TA>, b: Enumerator<TB
     TE,
     TF
 ]>;
-declare function zip<TA, TB, TC, TD, TE, TF, TG>(a: Enumerator<TA>, b: Enumerator<TB>, c: Enumerator<TC>, d: Enumerator<TD>, e: Enumerator<TE>, f: Enumerator<TF>, g: Enumerator<TG>): Enumerator<readonly [
+declare function zip<TA, TB, TC, TD, TE, TF, TG>(a: EnumeratorLike<TA>, b: EnumeratorLike<TB>, c: EnumeratorLike<TC>, d: EnumeratorLike<TD>, e: EnumeratorLike<TE>, f: EnumeratorLike<TF>, g: EnumeratorLike<TG>): EnumeratorLike<readonly [
     TA,
     TB,
     TC,
@@ -49,7 +50,7 @@ declare function zip<TA, TB, TC, TD, TE, TF, TG>(a: Enumerator<TA>, b: Enumerato
     TF,
     TG
 ]>;
-declare function zip<TA, TB, TC, TD, TE, TF, TG, TH>(a: Enumerator<TA>, b: Enumerator<TB>, c: Enumerator<TC>, d: Enumerator<TD>, e: Enumerator<TE>, f: Enumerator<TF>, g: Enumerator<TG>, h: Enumerator<TH>): Enumerator<readonly [
+declare function zip<TA, TB, TC, TD, TE, TF, TG, TH>(a: EnumeratorLike<TA>, b: EnumeratorLike<TB>, c: EnumeratorLike<TC>, d: EnumeratorLike<TD>, e: EnumeratorLike<TE>, f: EnumeratorLike<TF>, g: EnumeratorLike<TG>, h: EnumeratorLike<TH>): EnumeratorLike<readonly [
     TA,
     TB,
     TC,
@@ -59,7 +60,7 @@ declare function zip<TA, TB, TC, TD, TE, TF, TG, TH>(a: Enumerator<TA>, b: Enume
     TG,
     TH
 ]>;
-declare function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: Enumerator<TA>, b: Enumerator<TB>, c: Enumerator<TC>, d: Enumerator<TD>, e: Enumerator<TE>, f: Enumerator<TF>, g: Enumerator<TG>, h: Enumerator<TH>, i: Enumerator<TI>): Enumerator<readonly [
+declare function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: EnumeratorLike<TA>, b: EnumeratorLike<TB>, c: EnumeratorLike<TC>, d: EnumeratorLike<TD>, e: EnumeratorLike<TE>, f: EnumeratorLike<TF>, g: EnumeratorLike<TG>, h: EnumeratorLike<TH>, i: EnumeratorLike<TI>): EnumeratorLike<readonly [
     TA,
     TB,
     TC,
@@ -70,5 +71,5 @@ declare function zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: Enumerator<TA>, b: E
     TH,
     TI
 ]>;
-declare function zip<T>(...enumerators: readonly Enumerator<T>[]): Enumerator<readonly T[]>;
+declare function zip<T>(...enumerators: readonly EnumeratorLike<T>[]): EnumeratorLike<readonly T[]>;
 export { AbstractEnumerator, reset, zip };

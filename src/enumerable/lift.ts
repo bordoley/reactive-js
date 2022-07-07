@@ -1,19 +1,22 @@
 import { Lift, TInteractive, interactive } from "../__internal__.liftable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
-import { Enumerator } from "../enumerator";
+import { EnumeratorLike } from "../enumerator";
 import { Function1, newInstance, pipe } from "../functions";
 import { AbstractEnumerable, enumerate } from "./enumerable";
 
 class LiftedEnumerable<T> extends AbstractEnumerable<T> {
   constructor(
     readonly src: EnumerableLike<any>,
-    readonly operators: readonly Function1<Enumerator<any>, Enumerator<any>>[],
+    readonly operators: readonly Function1<
+      EnumeratorLike<any>,
+      EnumeratorLike<any>
+    >[],
   ) {
     super();
   }
 
-  enumerate(): Enumerator<T> {
-    return pipe(this.src, enumerate, ...this.operators) as Enumerator<T>;
+  enumerate(): EnumeratorLike<T> {
+    return pipe(this.src, enumerate, ...this.operators) as EnumeratorLike<T>;
   }
 }
 
@@ -25,7 +28,7 @@ class LiftedEnumerable<T> extends AbstractEnumerable<T> {
  */
 export const lift =
   <TA, TB>(
-    operator: Function1<Enumerator<TA>, Enumerator<TB>>,
+    operator: Function1<EnumeratorLike<TA>, EnumeratorLike<TB>>,
   ): EnumerableOperator<TA, TB> =>
   enumerable => {
     const src =
@@ -39,7 +42,7 @@ export const lift =
     return newInstance<
       LiftedEnumerable<TB>,
       EnumerableLike<any>,
-      readonly Function1<Enumerator<any>, Enumerator<any>>[]
+      readonly Function1<EnumeratorLike<any>, EnumeratorLike<any>>[]
     >(LiftedEnumerable, src, allFunctions);
   };
 

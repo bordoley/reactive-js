@@ -13,7 +13,7 @@ import {
   onComplete,
   onDisposed,
 } from "../disposable";
-import { Enumerator, getCurrent, hasCurrent, move } from "../enumerator";
+import { EnumeratorLike, getCurrent, hasCurrent, move } from "../enumerator";
 
 import {
   getLength,
@@ -34,7 +34,7 @@ import { AbstractDelegatingObserver } from "./observer";
 import { enumerateObs } from "./toEnumerable";
 import { using } from "./using";
 
-const shouldEmit = (enumerators: readonly Enumerator<unknown>[]) => {
+const shouldEmit = (enumerators: readonly EnumeratorLike<unknown>[]) => {
   for (const enumerator of enumerators) {
     if (!hasCurrent(enumerator)) {
       return false;
@@ -43,7 +43,7 @@ const shouldEmit = (enumerators: readonly Enumerator<unknown>[]) => {
   return true;
 };
 
-const shouldComplete = (enumerators: readonly Enumerator<unknown>[]) => {
+const shouldComplete = (enumerators: readonly EnumeratorLike<unknown>[]) => {
   for (const enumerator of enumerators) {
     move(enumerator);
     if (isDisposed(enumerator) && !hasCurrent(enumerator)) {
@@ -76,7 +76,7 @@ class ZipObserver extends AbstractDelegatingObserver<
 > {
   constructor(
     delegate: Observer<readonly unknown[]>,
-    private readonly enumerators: readonly Enumerator<any>[],
+    private readonly enumerators: readonly EnumeratorLike<any>[],
     readonly enumerator: ZipObserverEnumerator,
   ) {
     super(delegate);
@@ -117,14 +117,14 @@ const _zip = (
     ? pipe(
         using(
           pipeLazy(observables, map(enumerateObs)),
-          (...enumerators: readonly Enumerator<any>[]) =>
+          (...enumerators: readonly EnumeratorLike<any>[]) =>
             pipe(zipEnumerators(...enumerators), returns, fromEnumerator()),
         ),
         tagObservableType(2),
       )
     : createObservable(observer => {
         const count = getLength(observables);
-        const enumerators: Enumerator<unknown>[] = [];
+        const enumerators: EnumeratorLike<unknown>[] = [];
         for (let index = 0; index < count; index++) {
           const next = observables[index];
 

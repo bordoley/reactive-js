@@ -1,7 +1,7 @@
 import { getDelegate } from "../__internal__.delegating";
 import { DisposableRef } from "../__internal__.disposable";
 import { fromValue } from "../container";
-import { addTo, isDisposed, onComplete } from "../disposable";
+import { addTo, disposed, isDisposed, onComplete } from "../disposable";
 import { Function1, newInstance, newInstanceWith, pipe } from "../functions";
 import {
   ObservableLike,
@@ -32,10 +32,7 @@ const setupDurationSubscription = <T>(
 class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
   value: Option<T> = none;
   hasValue = false;
-  readonly durationSubscription: DisposableRef = newInstance(
-    DisposableRef,
-    this,
-  );
+  readonly durationSubscription = newInstance(DisposableRef, this, disposed);
 
   readonly onNotify = (_?: unknown) => {
     if (this.hasValue) {

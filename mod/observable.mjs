@@ -3,7 +3,7 @@ import { hasDelay, getDelay } from './__internal__.optionalArgs.mjs';
 import { createMapOperator, createOnNotifyOperator, createUsing, createNever, createCatchErrorOperator, createFromDisposable, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './__internal__.reactiveContainer.mjs';
 import { empty as empty$1, fromValue, throws, concatMap } from './container.mjs';
 import { dispatch, dispatchTo } from './dispatcher.mjs';
-import { dispose, addTo, Disposable, isDisposed, onDisposed, add, onComplete, disposed, bindTo, toErrorHandler } from './disposable.mjs';
+import { dispose, addTo, Disposable, isDisposed, onDisposed, add, disposed, onComplete, bindTo, toErrorHandler } from './disposable.mjs';
 import { move, getCurrent, hasCurrent, forEach } from './enumerator.mjs';
 import { raise, pipe, newInstance, getLength, newInstanceWith, isEmpty, arrayEquality, ignore, pipeLazy, compose, max, returns, identity, instanceFactory } from './functions.mjs';
 import { getScheduler, Observer, getDispatcher } from './observer.mjs';
@@ -268,7 +268,7 @@ function onDispose() {
 class SwitchObserver extends AbstractDelegatingObserver {
     constructor() {
         super(...arguments);
-        this.currentRef = newInstance(DisposableRef, getDelegate(this));
+        this.currentRef = newInstance(DisposableRef, getDelegate(this), disposed);
     }
     notify(next) {
         assertState(this);
@@ -738,7 +738,7 @@ class BufferObserver extends AbstractDelegatingObserver {
         this.durationFunction = durationFunction;
         this.maxBufferSize = maxBufferSize;
         this.buffer = [];
-        this.durationSubscription = newInstance(DisposableRef, this);
+        this.durationSubscription = newInstance(DisposableRef, this, disposed);
     }
     notify(next) {
         assertState(this);
@@ -934,7 +934,7 @@ class ThrottleObserver extends AbstractDelegatingObserver {
         this.mode = mode;
         this.value = none;
         this.hasValue = false;
-        this.durationSubscription = newInstance(DisposableRef, this);
+        this.durationSubscription = newInstance(DisposableRef, this, disposed);
         this.onNotify = (_) => {
             if (this.hasValue) {
                 const value = this.value;
@@ -984,7 +984,7 @@ class TimeoutObserver extends AbstractDelegatingObserver {
     constructor(delegate, duration) {
         super(delegate);
         this.duration = duration;
-        this.durationSubscription = newInstance(DisposableRef, this);
+        this.durationSubscription = newInstance(DisposableRef, this, disposed);
     }
     notify(next) {
         assertState(this);

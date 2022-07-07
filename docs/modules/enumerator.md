@@ -4,9 +4,9 @@
 
 ## Table of contents
 
-### Classes
+### Interfaces
 
-- [Enumerator](../classes/enumerator.Enumerator.md)
+- [EnumeratorLike](../interfaces/enumerator.EnumeratorLike.md)
 
 ### Functions
 
@@ -26,7 +26,7 @@
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TEnumerator` | extends [`Enumerator`](../classes/enumerator.Enumerator.md)<`T`, `TEnumerator`\> = [`Enumerator`](../classes/enumerator.Enumerator.md)<`T`\> |
+| `TEnumerator` | extends [`EnumeratorLike`](../interfaces/enumerator.EnumeratorLike.md)<`T`, `TEnumerator`\> = [`EnumeratorLike`](../interfaces/enumerator.EnumeratorLike.md)<`T`\> |
 
 #### Parameters
 
@@ -54,7 +54,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerator` | [`Enumerator`](../classes/enumerator.Enumerator.md)<`T`\> |
+| `enumerator` | [`EnumeratorLike`](../interfaces/enumerator.EnumeratorLike.md)<`T`\> |
 
 #### Returns
 
@@ -76,7 +76,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerator` | [`Enumerator`](../classes/enumerator.Enumerator.md)<`T`\> |
+| `enumerator` | [`EnumeratorLike`](../interfaces/enumerator.EnumeratorLike.md)<`T`\> |
 
 #### Returns
 
@@ -98,7 +98,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerator` | [`Enumerator`](../classes/enumerator.Enumerator.md)<`T`\> |
+| `enumerator` | [`EnumeratorLike`](../interfaces/enumerator.EnumeratorLike.md)<`T`\> |
 
 #### Returns
 

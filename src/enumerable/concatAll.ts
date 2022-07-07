@@ -3,17 +3,21 @@ import { reset } from "../__internal__.enumerator";
 import { ConcatAll } from "../container";
 import { add, dispose, isDisposed } from "../disposable";
 import { EnumerableLike, EnumerableOperator } from "../enumerable";
-import { Enumerator, getCurrent, hasCurrent, move } from "../enumerator";
+import { EnumeratorLike, getCurrent, hasCurrent, move } from "../enumerator";
 import { newInstance, newInstanceWith, pipe } from "../functions";
 import { enumerate } from "./enumerable";
-import { AbstractDelegatingEnumerator } from "./enumerator";
+import { AbstractDelegatingEnumerator, NeverEnumerator } from "./enumerator";
 import { lift } from "./lift";
 
 class ConcatAllEnumerator<T> extends AbstractDelegatingEnumerator<
   EnumerableLike<T>,
   T
 > {
-  private readonly enumerator = newInstance(DisposableRef, this);
+  private readonly enumerator: DisposableRef<EnumeratorLike<T>> = newInstance(
+    DisposableRef,
+    this,
+    newInstance<NeverEnumerator<T>>(NeverEnumerator),
+  );
 
   move(): boolean {
     reset(this);
@@ -24,10 +28,7 @@ class ConcatAllEnumerator<T> extends AbstractDelegatingEnumerator<
       enumerator.current = pipe(delegate, getCurrent, enumerate);
     }
 
-    while (
-      enumerator.current instanceof Enumerator &&
-      !isDisposed(enumerator.current)
-    ) {
+    while (!isDisposed(enumerator.current)) {
       if (move(enumerator.current)) {
         this.current = getCurrent(enumerator.current);
         break;
@@ -42,10 +43,10 @@ class ConcatAllEnumerator<T> extends AbstractDelegatingEnumerator<
   }
 }
 
-const operator = <T>(delegate: Enumerator<EnumerableLike<T>>) =>
+const operator = <T>(delegate: EnumeratorLike<EnumerableLike<T>>) =>
   pipe(
     ConcatAllEnumerator,
-    newInstanceWith<ConcatAllEnumerator<T>, Enumerator<EnumerableLike<T>>>(
+    newInstanceWith<ConcatAllEnumerator<T>, EnumeratorLike<EnumerableLike<T>>>(
       delegate,
     ),
     add(delegate),
