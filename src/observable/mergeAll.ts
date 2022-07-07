@@ -12,7 +12,7 @@ import { getLength, newInstance, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { ObserverLike, getScheduler } from "../observer";
 import { isSome } from "../option";
-import { assertState, notifySink } from "../reactiveSink";
+import { notifySink } from "../reactiveSink";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver } from "./observer";
 import { onNotify } from "./onNotify";
@@ -60,8 +60,6 @@ class MergeObserver<T> extends AbstractDelegatingObserver<
   }
 
   notify(next: ObservableLike<T>) {
-    assertState(this);
-
     const { queue } = this;
 
     queue.push(next);

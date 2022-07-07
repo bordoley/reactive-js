@@ -28,7 +28,6 @@
 ### Methods
 
 - [add](observer.ObserverLike.md#add)
-- [assertState](observer.ObserverLike.md#assertstate)
 - [dispose](observer.ObserverLike.md#dispose)
 - [notify](observer.ObserverLike.md#notify)
 
@@ -93,26 +92,6 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 #### Inherited from
 
 [ReactiveSinkLike](reactiveSink.ReactiveSinkLike.md).[add](reactiveSink.ReactiveSinkLike.md#add)
-
-___
-
-### assertState
-
-▸ **assertState**(`this`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `this` | [`ObserverLike`](observer.ObserverLike.md)<`T`\> |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[ReactiveSinkLike](reactiveSink.ReactiveSinkLike.md).[assertState](reactiveSink.ReactiveSinkLike.md#assertstate)
 
 ___
 

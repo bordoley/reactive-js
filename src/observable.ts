@@ -346,7 +346,7 @@ export const generate = <T>(
     let acc = initialValue();
 
     return (observer: ObserverLike<T>) => {
-      while (true) {
+      while (!isDisposed(observer)) {
         acc = generator(acc);
         observer.notify(acc);
         __yield(options);

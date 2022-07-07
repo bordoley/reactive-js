@@ -26,7 +26,7 @@ import {
 import { ObservableLike } from "../observable";
 import { ObserverLike } from "../observer";
 import { sourceFrom } from "../reactiveContainer";
-import { assertState, notify } from "../reactiveSink";
+import { notify } from "../reactiveSink";
 import { createObservable } from "./createObservable";
 import { fromEnumerator } from "./fromEnumerable";
 import { isEnumerable, tagObservableType } from "./observable";
@@ -83,8 +83,6 @@ class ZipObserver extends AbstractDelegatingObserver<
   }
 
   notify(next: unknown) {
-    assertState(this);
-
     const { enumerator, enumerators } = this;
 
     if (!isDisposed(this)) {

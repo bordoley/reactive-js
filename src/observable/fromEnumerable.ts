@@ -1,5 +1,5 @@
 import { hasDelay } from "../__internal__.optionalArgs";
-import { dispose } from "../disposable";
+import { dispose, isDisposed } from "../disposable";
 import {
   EnumerableLike,
   FromEnumerable,
@@ -35,7 +35,7 @@ export const fromEnumerator =
       using(f, enumerator =>
         defer(
           () => (observer: ObserverLike<T>) => {
-            while (move(enumerator)) {
+            while (move(enumerator) && !isDisposed(observer)) {
               observer.notify(getCurrent(enumerator));
               __yield(options);
             }

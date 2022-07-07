@@ -11,7 +11,6 @@ import { Function1, newInstance, newInstanceWith, pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { isNone } from "../option";
 import { sourceFrom } from "../reactiveContainer";
-import { assertState } from "../reactiveSink";
 import {
   SchedulerContinuationLike,
   SchedulerLike,
@@ -79,8 +78,6 @@ class EnumeratorObserver<T> extends Observer<T> {
   }
 
   notify(next: T) {
-    assertState(this);
-
     this.enumerator.current = next;
   }
 }

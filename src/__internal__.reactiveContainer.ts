@@ -63,7 +63,7 @@ import {
   ReactiveContainerLike,
   sinkInto,
 } from "./reactiveContainer";
-import { assertState, notify } from "./reactiveSink";
+import { notify } from "./reactiveSink";
 
 export interface Lift<C extends ReactiveContainerLike>
   extends LiftableLift<C, TReactive> {
@@ -107,8 +107,6 @@ export const createBufferOperator = <C extends ReactiveContainerLike>(
       },
       next: T,
     ) {
-      assertState(this);
-
       const { buffer, maxBufferSize } = this;
 
       buffer.push(next);
@@ -287,8 +285,6 @@ export const createDistinctUntilChangedOperator = <
       },
       next: T,
     ) {
-      assertState(this);
-
       const shouldEmit = !this.hasValue || !this.equality(this.prev as T, next);
 
       if (shouldEmit) {
@@ -320,8 +316,6 @@ const createSatisfyOperator = <C extends ReactiveContainerLike>(
       },
       next: T,
     ) {
-      assertState(this);
-
       if (this.predicate(next)) {
         const { delegate } = this;
         pipe(delegate, notify(!defaultResult), dispose());
@@ -385,7 +379,6 @@ export const createKeepOperator = <C extends ReactiveContainerLike>(
       },
       next: T,
     ) {
-      assertState(this);
       if (this.predicate(next)) {
         getDelegate(this).notify(next);
       }
@@ -413,7 +406,6 @@ export const createMapOperator = <C extends ReactiveContainerLike>(
       },
       next: TA,
     ) {
-      assertState(this);
       const mapped = this.mapper(next);
       getDelegate(this).notify(mapped);
     },
@@ -439,8 +431,6 @@ export const createOnNotifyOperator = <C extends ReactiveContainerLike>(
       },
       next: T,
     ) {
-      assertState(this);
-
       this.onNotify(next);
       getDelegate(this).notify(next);
     },
@@ -468,7 +458,6 @@ export const createPairwiseOperator = <C extends ReactiveContainerLike>(
       },
       value: T,
     ): void {
-      assertState(this);
       const prev = this.hasPrev ? this.prev : none;
 
       this.hasPrev = true;
@@ -504,8 +493,6 @@ export const createReduceOperator = <C extends ReactiveContainerLike>(
       },
       next: T,
     ) {
-      assertState(this);
-
       this.acc = this.reducer(this.acc, next);
     },
   );
@@ -564,7 +551,6 @@ export const createScanOperator = <C extends ReactiveContainerLike>(
       },
       next: T,
     ) {
-      assertState(this);
       const nextAcc = this.reducer(this.acc, next);
       this.acc = nextAcc;
 
@@ -638,8 +624,6 @@ export const createTakeFirstOperator = <C extends ReactiveContainerLike>(
       },
       next: T,
     ) {
-      assertState(this);
-
       this.count++;
       getDelegate(this).notify(next);
       if (this.count >= this.maxCount) {
@@ -672,8 +656,6 @@ export const createTakeLastOperator = <C extends ReactiveContainerLike>(
       },
       next: T,
     ) {
-      assertState(this);
-
       const { last } = this;
 
       last.push(next);
@@ -740,8 +722,6 @@ export const createTakeWhileOperator = <C extends ReactiveContainerLike>(
       },
       next: T,
     ) {
-      assertState(this);
-
       const satisfiesPredicate = this.predicate(next);
 
       if (satisfiesPredicate || this.inclusive) {
@@ -773,8 +753,6 @@ export const createThrowIfEmptyOperator = <C extends ReactiveContainerLike>(
       },
       next: T,
     ) {
-      assertState(this);
-
       this.isEmpty = false;
       getDelegate(this).notify(next);
     },

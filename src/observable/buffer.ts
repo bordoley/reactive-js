@@ -22,7 +22,7 @@ import { ObservableLike, ObservableOperator } from "../observable";
 import { ObserverLike, getScheduler } from "../observer";
 import { none } from "../option";
 import { sinkInto } from "../reactiveContainer";
-import { assertState, notify } from "../reactiveSink";
+import { notify } from "../reactiveSink";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { never } from "./never";
@@ -47,8 +47,6 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
   }
 
   notify(next: T) {
-    assertState(this);
-
     const { buffer, maxBufferSize } = this;
 
     buffer.push(next);

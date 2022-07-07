@@ -11,7 +11,7 @@ import {
 import { newInstance, newInstanceWith, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { ObserverLike, getScheduler } from "../observer";
-import { assertState, notifySink } from "../reactiveSink";
+import { notifySink } from "../reactiveSink";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver } from "./observer";
 import { onNotify } from "./onNotify";
@@ -30,8 +30,6 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
   readonly currentRef = newInstance(DisposableRef, getDelegate(this), disposed);
 
   notify(next: ObservableLike<T>) {
-    assertState(this);
-
     this.currentRef.current = pipe(
       next,
       onNotify(pipe(this, getDelegate, notifySink)),
