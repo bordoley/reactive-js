@@ -2,7 +2,7 @@ import { getDelegate } from "../__internal__.delegating";
 import { addTo, bindTo, dispose, isDisposed, onComplete } from "../disposable";
 import { Function2, newInstanceWith, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer, getScheduler } from "../observer";
+import { ObserverLike, getScheduler } from "../observer";
 import { Option } from "../option";
 import { assertState, notify } from "../reactiveSink";
 import { lift } from "./lift";
@@ -18,7 +18,7 @@ class WithLatestFromObserver<TA, TB, T> extends AbstractDelegatingObserver<
   hasLatest = false;
 
   constructor(
-    delegate: Observer<T>,
+    delegate: ObserverLike<T>,
     private readonly selector: Function2<TA, TB, T>,
   ) {
     super(delegate);
@@ -46,12 +46,12 @@ export const withLatestFrom = <TA, TB, T>(
   other: ObservableLike<TB>,
   selector: Function2<TA, TB, T>,
 ): ObservableOperator<TA, T> => {
-  const operator = (delegate: Observer<T>) => {
+  const operator = (delegate: ObserverLike<T>) => {
     const observer = pipe(
       WithLatestFromObserver,
       newInstanceWith<
         WithLatestFromObserver<TA, TB, T>,
-        Observer<T>,
+        ObserverLike<T>,
         Function2<TA, TB, T>
       >(delegate, selector),
       bindTo(delegate),

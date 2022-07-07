@@ -3,13 +3,13 @@ import { Concat } from "../container";
 import { addTo, dispose, onComplete } from "../disposable";
 import { getLength, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer } from "../observer";
+import { ObserverLike } from "../observer";
 import { sourceFrom } from "../reactiveContainer";
 import { createObservable } from "./createObservable";
 import { createDelegatingObserver } from "./observer";
 
 const createMergeObserver = <T>(
-  delegate: Observer<T>,
+  delegate: ObserverLike<T>,
   count: number,
   ctx: {
     completedCount: number;

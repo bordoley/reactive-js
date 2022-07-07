@@ -4,7 +4,7 @@ import { throws } from "../container";
 import { bindTo, dispose, disposed } from "../disposable";
 import { newInstance, newInstanceWith, pipe, returns } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer, getScheduler } from "../observer";
+import { ObserverLike, getScheduler } from "../observer";
 import { assertState, notify } from "../reactiveSink";
 import { concat } from "./concat";
 import { fromArrayT } from "./fromArray";
@@ -31,7 +31,7 @@ class TimeoutObserver<T> extends AbstractDelegatingObserver<T, T> {
   readonly durationSubscription = newInstance(DisposableRef, this, disposed);
 
   constructor(
-    delegate: Observer<T>,
+    delegate: ObserverLike<T>,
     readonly duration: ObservableLike<unknown>,
   ) {
     super(delegate);
@@ -76,7 +76,7 @@ export function timeout<T>(
           duration,
           throws({ ...fromArrayT, ...mapT })(returnTimeoutError),
         );
-  const operator = (delegate: Observer<T>) => {
+  const operator = (delegate: ObserverLike<T>) => {
     const observer = pipe(
       TimeoutObserver,
       newInstanceWith(delegate, durationObs),

@@ -4,9 +4,9 @@
 
 ## Table of contents
 
-### Classes
+### Interfaces
 
-- [Observer](../classes/observer.Observer.md)
+- [ObserverLike](../interfaces/observer.ObserverLike.md)
 
 ### Functions
 
@@ -29,7 +29,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `observer` | [`Observer`](../classes/observer.Observer.md)<`T`\> |
+| `observer` | [`ObserverLike`](../interfaces/observer.ObserverLike.md)<`T`\> |
 
 #### Returns
 
@@ -51,7 +51,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `observer` | [`Observer`](../classes/observer.Observer.md)<`T`\> |
+| `observer` | [`ObserverLike`](../interfaces/observer.ObserverLike.md)<`T`\> |
 
 #### Returns
 

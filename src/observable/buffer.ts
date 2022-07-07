@@ -19,7 +19,7 @@ import {
   pipe,
 } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer, getScheduler } from "../observer";
+import { ObserverLike, getScheduler } from "../observer";
 import { none } from "../option";
 import { sinkInto } from "../reactiveContainer";
 import { assertState, notify } from "../reactiveSink";
@@ -39,7 +39,7 @@ class BufferObserver<T> extends AbstractDelegatingObserver<T, readonly T[]> {
   );
 
   constructor(
-    delegate: Observer<readonly T[]>,
+    delegate: ObserverLike<readonly T[]>,
     private readonly durationFunction: Function1<T, ObservableLike<unknown>>,
     private readonly maxBufferSize: number,
   ) {
@@ -98,12 +98,12 @@ export function buffer<T>(
 
   const maxBufferSize = max(options.maxBufferSize ?? MAX_SAFE_INTEGER, 1);
 
-  const operator = (delegate: Observer<readonly T[]>) => {
+  const operator = (delegate: ObserverLike<readonly T[]>) => {
     return pipe(
       BufferObserver,
       newInstanceWith<
         BufferObserver<T>,
-        Observer<readonly T[]>,
+        ObserverLike<readonly T[]>,
         Function1<T, ObservableLike<unknown>>,
         number
       >(delegate, durationFunction, maxBufferSize),

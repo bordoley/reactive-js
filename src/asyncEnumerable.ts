@@ -81,7 +81,7 @@ import {
   using,
   withLatestFrom,
 } from "./observable";
-import { Observer, getScheduler } from "./observer";
+import { ObserverLike, getScheduler } from "./observer";
 import { none } from "./option";
 import { sinkInto } from "./reactiveContainer";
 import { SchedulerLike } from "./scheduler";
@@ -114,7 +114,7 @@ abstract class AsyncEnumerator<T>
     return this;
   }
 
-  get TLiftableContainerState(): Observer<this["T"]> {
+  get TLiftableContainerState(): ObserverLike<this["T"]> {
     return raise();
   }
 
@@ -125,7 +125,7 @@ abstract class AsyncEnumerator<T>
   abstract replay: number;
 
   abstract dispatch(this: DispatcherLike<void>, req: void): void;
-  abstract sinkInto(this: ObservableLike<T>, sink: Observer<T>): void;
+  abstract sinkInto(this: ObservableLike<T>, sink: ObserverLike<T>): void;
 
   move(): void {
     pipe(this, dispatch(none));
@@ -188,7 +188,7 @@ class LiftedAsyncEnumerator<T> extends AsyncEnumerator<T> {
     pipe(this.subject, publish(req));
   }
 
-  sinkInto(observer: Observer<T>) {
+  sinkInto(observer: ObserverLike<T>) {
     pipe(this.observable, sinkInto(observer));
   }
 }
@@ -457,7 +457,7 @@ abstract class AbstractDelegatingAsyncEnumerator<TA, TB>
     pipe(this, getDelegate, dispatch(req));
   }
 
-  abstract sinkInto(observer: Observer<TB>): void;
+  abstract sinkInto(observer: ObserverLike<TB>): void;
 }
 
 export const keep: <T>(
@@ -492,7 +492,7 @@ export const keep: <T>(
 
     readonly observableType: DefaultObservable = 0;
 
-    sinkInto(observer: Observer<T>): void {
+    sinkInto(observer: ObserverLike<T>): void {
       pipe(this.obs, sinkInto(observer));
     }
   },
@@ -520,7 +520,7 @@ export const map: <TA, TB>(
       this.op = mapObs(this.mapper);
     }
 
-    sinkInto(observer: Observer<TB>): void {
+    sinkInto(observer: ObserverLike<TB>): void {
       pipe(this, getDelegate, this.op, sinkInto(observer));
     }
   },
@@ -550,7 +550,7 @@ export const scan: <T, TAcc>(
       this.op = scanObs(reducer, returns(acc));
     }
 
-    sinkInto(observer: Observer<TAcc>): void {
+    sinkInto(observer: ObserverLike<TAcc>): void {
       pipe(this, getDelegate, this.op, sinkInto(observer));
     }
   },
@@ -588,7 +588,7 @@ class ScanAsyncAsyncEnumerator<
     return getReplay(this.obs);
   }
 
-  sinkInto(observer: Observer<TAcc>): void {
+  sinkInto(observer: ObserverLike<TAcc>): void {
     pipe(this.obs, sinkInto(observer));
   }
 }
@@ -650,7 +650,7 @@ export const takeWhile: <T>(
       return getReplay(this.obs);
     }
 
-    sinkInto(observer: Observer<T>): void {
+    sinkInto(observer: ObserverLike<T>): void {
       pipe(this.obs, sinkInto(observer));
     }
   },

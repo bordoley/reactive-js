@@ -2,7 +2,7 @@ import { Repeat } from "../container";
 import { Error, addTo, dispose, onDisposed } from "../disposable";
 import { Function2, Predicate, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer, getScheduler } from "../observer";
+import { ObserverLike, getScheduler } from "../observer";
 import { isNone, isSome } from "../option";
 import { notifySink } from "../reactiveSink";
 import { lift } from "./lift";
@@ -11,7 +11,7 @@ import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
 const createRepeatObserver = <T>(
-  delegate: Observer<T>,
+  delegate: ObserverLike<T>,
   observable: ObservableLike<T>,
   shouldRepeat: (count: number, error?: Error) => boolean,
 ) => {
@@ -53,7 +53,7 @@ const repeatObs =
     shouldRepeat: (count: number, error?: Error) => boolean,
   ): ObservableOperator<T, T> =>
   observable => {
-    const operator = (observer: Observer<T>) =>
+    const operator = (observer: ObserverLike<T>) =>
       createRepeatObserver(observer, observable, shouldRepeat);
 
     return lift(operator, true)(observable);

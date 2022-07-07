@@ -1,7 +1,7 @@
 import { createOnNotifyOperator } from "../__internal__.reactiveContainer";
 import { SideEffect1 } from "../functions";
 import { ObservableOperator } from "../observable";
-import { Observer } from "../observer";
+import { ObserverLike } from "../observer";
 import { liftSynchronousT } from "./lift";
 import { AbstractDelegatingObserver } from "./observer";
 
@@ -15,7 +15,7 @@ export const onNotify: <T>(
 ) => ObservableOperator<T, T> = /*@__PURE__*/ createOnNotifyOperator(
   liftSynchronousT,
   class OnNotifyObserver<T> extends AbstractDelegatingObserver<T, T> {
-    constructor(delegate: Observer<T>, readonly onNotify: SideEffect1<T>) {
+    constructor(delegate: ObserverLike<T>, readonly onNotify: SideEffect1<T>) {
       super(delegate);
     }
   },

@@ -10,7 +10,7 @@ import {
   multicast,
   publish,
 } from "./observable";
-import { Observer } from "./observer";
+import { ObserverLike } from "./observer";
 import { sinkInto } from "./reactiveContainer";
 import { SchedulerLike } from "./scheduler";
 import { StreamLike } from "./stream";
@@ -43,7 +43,7 @@ class StreamImpl<TReq, T> extends Disposable implements StreamLike<TReq, T> {
     return this;
   }
 
-  get TLiftableContainerState(): Observer<this["T"]> {
+  get TLiftableContainerState(): ObserverLike<this["T"]> {
     return raise();
   }
 
@@ -61,7 +61,7 @@ class StreamImpl<TReq, T> extends Disposable implements StreamLike<TReq, T> {
     pipe(this.subject, publish(req));
   }
 
-  sinkInto(observer: Observer<T>) {
+  sinkInto(observer: ObserverLike<T>) {
     pipe(this.observable, sinkInto(observer));
   }
 }

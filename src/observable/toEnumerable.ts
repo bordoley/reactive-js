@@ -9,7 +9,6 @@ import { EnumerableLike, ToEnumerable, createEnumerable } from "../enumerable";
 import { EnumeratorLike, hasCurrent } from "../enumerator";
 import { Function1, newInstance, newInstanceWith, pipe } from "../functions";
 import { ObservableLike } from "../observable";
-import { Observer } from "../observer";
 import { isNone } from "../option";
 import { sourceFrom } from "../reactiveContainer";
 import { assertState } from "../reactiveSink";
@@ -18,6 +17,7 @@ import {
   SchedulerLike,
   isInContinuation,
 } from "../scheduler";
+import { Observer } from "./observer";
 
 class EnumeratorScheduler<T>
   extends AbstractEnumerator<T>

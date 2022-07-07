@@ -1,18 +1,10 @@
 import { DispatcherLike } from "./dispatcher.mjs";
-import { Disposable } from "./disposable.mjs";
 import { ReactiveSinkLike } from "./reactiveSink.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
-/**
- * Abstract base class for implementing the `ObserverLike` interface.
- */
-declare class Observer<T> extends Disposable implements ReactiveSinkLike<T> {
+interface ObserverLike<T> extends ReactiveSinkLike<T> {
+    readonly dispatcher: DispatcherLike<T>;
     readonly scheduler: SchedulerLike;
-    private _dispatcher;
-    constructor(scheduler: SchedulerLike);
-    get dispatcher(): DispatcherLike<T>;
-    assertState(this: Observer<T>): void;
-    notify(_: T): void;
 }
-declare const getScheduler: <T>(observer: Observer<T>) => SchedulerLike;
-declare const getDispatcher: <T>(observer: Observer<T>) => DispatcherLike<T>;
-export { Observer, getDispatcher, getScheduler };
+declare const getScheduler: <T>(observer: ObserverLike<T>) => SchedulerLike;
+declare const getDispatcher: <T>(observer: ObserverLike<T>) => DispatcherLike<T>;
+export { ObserverLike, getDispatcher, getScheduler };

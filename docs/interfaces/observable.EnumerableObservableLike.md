@@ -53,7 +53,7 @@ ___
 
 ### TLiftableContainerState
 
-• `Readonly` **TLiftableContainerState**: [`Observer`](../classes/observer.Observer.md)<`unknown`\>
+• `Readonly` **TLiftableContainerState**: [`ObserverLike`](observer.ObserverLike.md)<`unknown`\>
 
 #### Inherited from
 
@@ -80,7 +80,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `this` | [`ObservableLike`](observable.ObservableLike.md)<`T`\> |
-| `sink` | [`Observer`](../classes/observer.Observer.md)<`T`\> |
+| `sink` | [`ObserverLike`](observer.ObserverLike.md)<`T`\> |
 
 #### Returns
 

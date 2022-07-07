@@ -9,14 +9,14 @@ import {
   raise,
 } from "../functions";
 import { MulticastObservableLike, ObservableLike } from "../observable";
-import { Observer, getDispatcher } from "../observer";
+import { ObserverLike, getDispatcher } from "../observer";
 
 export class Subject<T>
   extends Disposable
   implements MulticastObservableLike<T>
 {
-  private readonly observers: Set<Observer<T>> =
-    newInstance<Set<Observer<T>>>(Set);
+  private readonly observers: Set<ObserverLike<T>> =
+    newInstance<Set<ObserverLike<T>>>(Set);
   private readonly replayed: T[] = [];
 
   constructor(public readonly replay: number = 1) {
@@ -31,7 +31,7 @@ export class Subject<T>
     return raise();
   }
 
-  get TLiftableContainerState(): Observer<this["T"]> {
+  get TLiftableContainerState(): ObserverLike<this["T"]> {
     return raise();
   }
 
@@ -58,7 +58,7 @@ export class Subject<T>
     }
   }
 
-  sinkInto(observer: Observer<T>) {
+  sinkInto(observer: ObserverLike<T>) {
     if (!isDisposed(this)) {
       const { observers } = this;
       observers.add(observer);

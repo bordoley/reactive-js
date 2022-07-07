@@ -8,7 +8,7 @@ import {
   ObservableOperator,
   ThrottleMode,
 } from "../observable";
-import { Observer, getScheduler } from "../observer";
+import { ObserverLike, getScheduler } from "../observer";
 import { Option, none } from "../option";
 import { sinkInto } from "../reactiveContainer";
 import { assertState } from "../reactiveSink";
@@ -46,7 +46,7 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
   };
 
   constructor(
-    delegate: Observer<T>,
+    delegate: ObserverLike<T>,
     readonly durationFunction: Function1<T, ObservableLike<unknown>>,
     readonly mode: ThrottleMode,
   ) {
@@ -104,12 +104,12 @@ export function throttle<T>(
     typeof duration === "number"
       ? (_: T) => fromValue(fromArrayT, { delay: duration })(none)
       : duration;
-  const operator = (delegate: Observer<T>) => {
+  const operator = (delegate: ObserverLike<T>) => {
     const observer = pipe(
       ThrottleObserver,
       newInstanceWith<
         ThrottleObserver<T>,
-        Observer<T>,
+        ObserverLike<T>,
         Function1<T, ObservableLike<unknown>>,
         ThrottleMode
       >(delegate, durationFunction, mode),

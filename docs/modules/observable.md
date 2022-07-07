@@ -1338,7 +1338,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`Observer`](../classes/observer.Observer.md)<`T`\>\> |
+| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/observer.ObserverLike.md)<`T`\>\> |
 
 #### Returns
 
@@ -1376,7 +1376,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`SideEffect1`](functions.md#sideeffect1)<[`Observer`](../classes/observer.Observer.md)<`T`\>\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/observer.ObserverLike.md)<`T`\>\>\> |
 | `options?` | `Object` |
 | `options.delay?` | `number` |
 

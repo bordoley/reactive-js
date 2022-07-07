@@ -10,7 +10,7 @@ import {
 } from "../disposable";
 import { newInstance, newInstanceWith, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer, getScheduler } from "../observer";
+import { ObserverLike, getScheduler } from "../observer";
 import { assertState, notifySink } from "../reactiveSink";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver } from "./observer";
@@ -45,7 +45,7 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
   }
 }
 
-const operator = <T>(delegate: Observer<T>) =>
+const operator = <T>(delegate: ObserverLike<T>) =>
   pipe(
     SwitchObserver,
     newInstanceWith(delegate),

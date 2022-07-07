@@ -2,14 +2,14 @@ import { Concat } from "../container";
 import { addTo, dispose, onComplete } from "../disposable";
 import { getLength, isEmpty, pipe } from "../functions";
 import { ObservableLike } from "../observable";
-import { Observer } from "../observer";
+import { ObserverLike } from "../observer";
 import { sourceFrom } from "../reactiveContainer";
 import { createObservable } from "./createObservable";
 import { computeMinTag, tagObservableType } from "./observable";
 import { createDelegatingObserver } from "./observer";
 
 const createConcatObserver = <T>(
-  delegate: Observer<T>,
+  delegate: ObserverLike<T>,
   observables: readonly ObservableLike<T>[],
   next: number,
 ) =>
