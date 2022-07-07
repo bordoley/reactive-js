@@ -17,17 +17,11 @@ import {
   newInstance,
   newInstanceWith,
   pipe,
-  raise,
 } from "../functions";
 import { ObserverLike, getScheduler } from "../observer";
 import { Option, isNone, none } from "../option";
-import { assertState, notify } from "../reactiveSink";
-import {
-  SchedulerLike,
-  __yield,
-  isInContinuation,
-  schedule,
-} from "../scheduler";
+import { notify } from "../reactiveSink";
+import { SchedulerLike, __yield, schedule } from "../scheduler";
 
 const scheduleDrainQueue = <T>(dispatcher: ObserverDelegatingDispatcher<T>) => {
   if (getLength(dispatcher.nextQueue) === 1) {
@@ -109,24 +103,7 @@ export class Observer<T> extends Disposable implements ObserverLike<T> {
     return this._dispatcher;
   }
 
-  assertState(this: Observer<T>): void {}
-
-  notify(_: T): void {
-    assertState(this);
-  }
-}
-if (__DEV__) {
-  Observer.prototype.assertState = function assertStateDev<T>(
-    this: Observer<T>,
-  ) {
-    if (!pipe(this, getScheduler, isInContinuation)) {
-      raise(
-        "Observer.notify() may only be invoked within a scheduled SchedulerContinuation",
-      );
-    } else if (isDisposed(this)) {
-      raise("Observer is disposed");
-    }
-  };
+  notify(_: T): void {}
 }
 
 export class AbstractDisposableBindingDelegatingObserver<
@@ -182,25 +159,7 @@ export class AbstractDisposableBindingDelegatingObserver<
     this.delegate.dispose(error);
   }
 
-  assertState(this: this): void {}
-
-  notify(_: TIn): void {
-    assertState(this);
-  }
-}
-if (__DEV__) {
-  AbstractDisposableBindingDelegatingObserver.prototype.assertState =
-    function assertStateDev(
-      this: AbstractDisposableBindingDelegatingObserver<unknown, unknown>,
-    ) {
-      if (!pipe(this, getScheduler, isInContinuation)) {
-        raise(
-          "Observer.notify() may only be invoked within a scheduled SchedulerContinuation",
-        );
-      } else if (isDisposed(this)) {
-        raise("Observer is disposed");
-      }
-    };
+  notify(_: TIn): void {}
 }
 
 export class AbstractDelegatingObserver<

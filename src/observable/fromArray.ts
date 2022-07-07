@@ -1,7 +1,7 @@
 import { createFromArray } from "../__internal__.container";
 import { hasDelay } from "../__internal__.optionalArgs";
 import { FromArray } from "../container";
-import { dispose } from "../disposable";
+import { dispose, isDisposed } from "../disposable";
 import { pipe } from "../functions";
 import { ObservableLike } from "../observable";
 import { ObserverLike } from "../observer";
@@ -52,7 +52,7 @@ export const fromArray = /*@__PURE__*/ createFromArray<
             () => {
               let index = startIndex;
               return (observer: ObserverLike<T>) => {
-                while (index < endIndex) {
+                while (index < endIndex && !isDisposed(observer)) {
                   const value = values[index];
                   index++;
 

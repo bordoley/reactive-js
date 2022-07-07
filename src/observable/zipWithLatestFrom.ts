@@ -10,7 +10,7 @@ import {
 import { ObservableLike, ObservableOperator } from "../observable";
 import { ObserverLike, getScheduler } from "../observer";
 import { Option } from "../option";
-import { assertState, notify } from "../reactiveSink";
+import { notify } from "../reactiveSink";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver } from "./observer";
 import { onNotify } from "./onNotify";
@@ -45,7 +45,6 @@ class ZipWithLatestFromObserver<TA, TB, T> extends AbstractDelegatingObserver<
   }
 
   notify(next: TA) {
-    assertState(this);
     this.queue.push(next);
 
     notifyDelegate(this);

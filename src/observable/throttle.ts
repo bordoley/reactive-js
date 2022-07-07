@@ -11,7 +11,6 @@ import {
 import { ObserverLike, getScheduler } from "../observer";
 import { Option, none } from "../option";
 import { sinkInto } from "../reactiveContainer";
-import { assertState } from "../reactiveSink";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { AbstractDelegatingObserver } from "./observer";
@@ -54,8 +53,6 @@ class ThrottleObserver<T> extends AbstractDelegatingObserver<T, T> {
   }
 
   notify(next: T) {
-    assertState(this);
-
     this.value = next;
     this.hasValue = true;
 

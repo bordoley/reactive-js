@@ -10,27 +10,10 @@
 
 ### Functions
 
-- [assertState](reactiveSink.md#assertstate)
 - [notify](reactiveSink.md#notify)
 - [notifySink](reactiveSink.md#notifysink)
 
 ## Functions
-
-### assertState
-
-▸ **assertState**(`sink`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `sink` | [`ReactiveSinkLike`](../interfaces/reactiveSink.ReactiveSinkLike.md)<`unknown`\> |
-
-#### Returns
-
-`void`
-
-___
 
 ### notify
 

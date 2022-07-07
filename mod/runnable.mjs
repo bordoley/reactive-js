@@ -6,7 +6,6 @@ import { raise, pipe, newInstance, pipeLazy, newInstanceWith, ignore, getLength,
 import { isSome, none, isNone, getOrDefault } from './option.mjs';
 import { sourceFrom } from './reactiveContainer.mjs';
 import { getDelegate } from './__internal__.delegating.mjs';
-import { __DEV__ } from './__internal__.env.mjs';
 import { notify } from './reactiveSink.mjs';
 import { createFromArray } from './__internal__.container.mjs';
 import { reactive } from './__internal__.liftable.mjs';
@@ -46,15 +45,7 @@ const createT = {
 const run = (f) => (runnable) => pipe(f(), sourceFrom(runnable), dispose(), ({ error, result }) => isSome(error) ? raise(error.cause) : result);
 
 class RunnableSink extends Disposable {
-    assertState() { }
     notify(_) { }
-}
-if (__DEV__) {
-    RunnableSink.prototype.assertState = function () {
-        if (isDisposed(this)) {
-            raise("RunnableSink is disposed");
-        }
-    };
 }
 class AbstractDelegatingRunnableSink extends RunnableSink {
     constructor(delegate) {

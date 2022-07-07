@@ -3,8 +3,6 @@ import { DisposableLike } from "./disposable";
 import { Function1, SideEffect1 } from "./functions";
 
 export interface ReactiveSinkLike<T> extends DisposableLike {
-  assertState(this: this): void;
-
   /**
    * Notifies the the sink of the next notification produced by the observable source.
    *
@@ -15,12 +13,6 @@ export interface ReactiveSinkLike<T> extends DisposableLike {
    */
   notify(this: this, next: T): void;
 }
-
-export const assertState = (sink: ReactiveSinkLike<unknown>): void => {
-  if (__DEV__) {
-    sink.assertState();
-  }
-};
 
 export const notify =
   <T, TSink extends ReactiveSinkLike<T> = ReactiveSinkLike<T>>(

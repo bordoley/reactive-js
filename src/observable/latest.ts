@@ -7,7 +7,7 @@ import { ObservableLike, ObservableOperator } from "../observable";
 import { ObserverLike, getScheduler } from "../observer";
 import { none } from "../option";
 import { sourceFrom } from "../reactiveContainer";
-import { assertState, notify } from "../reactiveSink";
+import { notify } from "../reactiveSink";
 import { SchedulerLike } from "../scheduler";
 import { defer } from "./defer";
 import { computeMinTag, tagObservableType } from "./observable";
@@ -70,8 +70,6 @@ class LatestObserver extends Observer<unknown> {
   }
 
   notify(next: unknown) {
-    assertState(this);
-
     const { ctx } = this;
     this.latest = next;
 
