@@ -4,7 +4,7 @@ import { Function2, newInstanceWith, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { ObserverLike, getScheduler } from "../observer";
 import { Option } from "../option";
-import { assertState, notify } from "../reactiveSink";
+import { notify } from "../reactiveSink";
 import { lift } from "./lift";
 import { AbstractDisposableBindingDelegatingObserver } from "./observer";
 import { onNotify } from "./onNotify";
@@ -27,8 +27,6 @@ class WithLatestFromObserver<
   }
 
   notify(next: TA) {
-    assertState(this);
-
     if (!isDisposed(this) && this.hasLatest) {
       const result = this.selector(next, this.otherLatest as TB);
       pipe(this, getDelegate, notify(result));

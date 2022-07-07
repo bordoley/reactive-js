@@ -28,7 +28,6 @@
 ### Methods
 
 - [add](reactiveSink.ReactiveSinkLike.md#add)
-- [assertState](reactiveSink.ReactiveSinkLike.md#assertstate)
 - [dispose](reactiveSink.ReactiveSinkLike.md#dispose)
 - [notify](reactiveSink.ReactiveSinkLike.md#notify)
 
@@ -81,22 +80,6 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 #### Inherited from
 
 [DisposableLike](disposable.DisposableLike.md).[add](disposable.DisposableLike.md#add)
-
-___
-
-### assertState
-
-▸ **assertState**(`this`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `this` | [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)<`T`\> |
-
-#### Returns
-
-`void`
 
 ___
 

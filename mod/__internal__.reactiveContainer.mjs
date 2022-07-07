@@ -8,7 +8,7 @@ import { addTo, onComplete, dispose, onError, isDisposed, onDisposed, add } from
 import { getLength, max, pipe, newInstanceWith, isEmpty, newInstance, compose, negate, ignore, identity } from './functions.mjs';
 import { none, isSome } from './option.mjs';
 import { sinkInto } from './reactiveContainer.mjs';
-import { assertState, notify } from './reactiveSink.mjs';
+import { notify } from './reactiveSink.mjs';
 
 const create = (m) => (onSink) => m.create(onSink);
 const decorateWithNotify = (SinkClass, notify) => {
@@ -16,7 +16,6 @@ const decorateWithNotify = (SinkClass, notify) => {
 };
 const createBufferOperator = (m, BufferSink) => {
     decorateWithNotify(BufferSink, function notifyBuffer(next) {
-        assertState(this);
         const { buffer, maxBufferSize } = this;
         buffer.push(next);
         if (getLength(buffer) === maxBufferSize) {
@@ -81,7 +80,6 @@ const createDecodeWithCharsetOperator = (m, DecodeWithCharsetSink) => {
 };
 const createDistinctUntilChangedOperator = (m, DistinctUntilChangedSink) => {
     decorateWithNotify(DistinctUntilChangedSink, function notifyDistinctUntilChanged(next) {
-        assertState(this);
         const shouldEmit = !this.hasValue || !this.equality(this.prev, next);
         if (shouldEmit) {
             this.prev = next;
@@ -93,7 +91,6 @@ const createDistinctUntilChangedOperator = (m, DistinctUntilChangedSink) => {
 };
 const createSatisfyOperator = (m, SatisfySink, defaultResult) => {
     decorateWithNotify(SatisfySink, function notifyEverySatisfy(next) {
-        assertState(this);
         if (this.predicate(next)) {
             const { delegate } = this;
             pipe(delegate, notify(!defaultResult), dispose());
@@ -108,7 +105,6 @@ const createSatisfyOperator = (m, SatisfySink, defaultResult) => {
 const createEverySatisfyOperator = (m, EverySatisfySink) => compose(predicate => compose(predicate, negate), createSatisfyOperator(m, EverySatisfySink, true));
 const createKeepOperator = (m, KeepSink) => {
     decorateWithNotify(KeepSink, function notifyKeep(next) {
-        assertState(this);
         if (this.predicate(next)) {
             getDelegate(this).notify(next);
         }
@@ -117,7 +113,6 @@ const createKeepOperator = (m, KeepSink) => {
 };
 const createMapOperator = (m, MapSink) => {
     decorateWithNotify(MapSink, function notifyMap(next) {
-        assertState(this);
         const mapped = this.mapper(next);
         getDelegate(this).notify(mapped);
     });
@@ -125,7 +120,6 @@ const createMapOperator = (m, MapSink) => {
 };
 const createOnNotifyOperator = (m, OnNotifySink) => {
     decorateWithNotify(OnNotifySink, function notifyOnNotify(next) {
-        assertState(this);
         this.onNotify(next);
         getDelegate(this).notify(next);
     });
@@ -133,7 +127,6 @@ const createOnNotifyOperator = (m, OnNotifySink) => {
 };
 const createPairwiseOperator = (m, PairwiseSink) => {
     decorateWithNotify(PairwiseSink, function notifyPairwise(value) {
-        assertState(this);
         const prev = this.hasPrev ? this.prev : none;
         this.hasPrev = true;
         this.prev = value;
@@ -143,7 +136,6 @@ const createPairwiseOperator = (m, PairwiseSink) => {
 };
 const createReduceOperator = (m, ReduceSink) => {
     decorateWithNotify(ReduceSink, function notifyReduce(next) {
-        assertState(this);
         this.acc = this.reducer(this.acc, next);
     });
     return (reducer, initialValue) => pipe((delegate) => {
@@ -155,7 +147,6 @@ const createReduceOperator = (m, ReduceSink) => {
 };
 const createScanOperator = (m, ScanSink) => {
     decorateWithNotify(ScanSink, function notifyScan(next) {
-        assertState(this);
         const nextAcc = this.reducer(this.acc, next);
         this.acc = nextAcc;
         getDelegate(this).notify(nextAcc);
@@ -174,7 +165,6 @@ const createSkipFirstOperator = (m, SkipFirstSink) => {
 const createSomeSatisfyOperator = (m, SomeSatisfySink) => createSatisfyOperator(m, SomeSatisfySink, false);
 const createTakeFirstOperator = (m, TakeFirstSink) => {
     decorateWithNotify(TakeFirstSink, function notifyTakeFirst(next) {
-        assertState(this);
         this.count++;
         getDelegate(this).notify(next);
         if (this.count >= this.maxCount) {
@@ -185,7 +175,6 @@ const createTakeFirstOperator = (m, TakeFirstSink) => {
 };
 const createTakeLastOperator = (m, TakeLastSink) => {
     decorateWithNotify(TakeLastSink, function notifyTakeLast(next) {
-        assertState(this);
         const { last } = this;
         last.push(next);
         if (getLength(last) > this.maxCount) {
@@ -207,7 +196,6 @@ const createTakeLastOperator = (m, TakeLastSink) => {
 };
 const createTakeWhileOperator = (m, TakeWhileSink) => {
     decorateWithNotify(TakeWhileSink, function notifyTakeWhile(next) {
-        assertState(this);
         const satisfiesPredicate = this.predicate(next);
         if (satisfiesPredicate || this.inclusive) {
             getDelegate(this).notify(next);
@@ -220,7 +208,6 @@ const createTakeWhileOperator = (m, TakeWhileSink) => {
 };
 const createThrowIfEmptyOperator = (m, ThrowIfEmptySink) => {
     decorateWithNotify(ThrowIfEmptySink, function notify(next) {
-        assertState(this);
         this.isEmpty = false;
         getDelegate(this).notify(next);
     });

@@ -5,7 +5,7 @@ import { dispose, disposed } from "../disposable";
 import { newInstance, newInstanceWith, pipe, returns } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { ObserverLike, getScheduler } from "../observer";
-import { assertState, notify } from "../reactiveSink";
+import { notify } from "../reactiveSink";
 import { concat } from "./concat";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
@@ -27,7 +27,10 @@ const setupDurationSubscription = <T>(observer: TimeoutObserver<T>) => {
   );
 };
 
-class TimeoutObserver<T> extends AbstractDisposableBindingDelegatingObserver<T, T> {
+class TimeoutObserver<T> extends AbstractDisposableBindingDelegatingObserver<
+  T,
+  T
+> {
   readonly durationSubscription = newInstance(DisposableRef, this, disposed);
 
   constructor(
@@ -38,8 +41,6 @@ class TimeoutObserver<T> extends AbstractDisposableBindingDelegatingObserver<T, 
   }
 
   notify(next: T) {
-    assertState(this);
-
     pipe(this.durationSubscription.current, dispose());
     pipe(this, getDelegate, notify(next));
   }
