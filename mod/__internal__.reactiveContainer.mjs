@@ -10,7 +10,7 @@ import { sinkInto } from './reactiveContainer.mjs';
 import { notify } from './reactiveSink.mjs';
 
 const create = (m) => (onSink) => m.create(onSink);
-const createCatchErrorOperator = (m, CatchErrorSink) => (f) => {
+const createCatchErrorOperator = (m) => (CatchErrorSink) => (f) => {
     return pipe((delegate) => pipe(CatchErrorSink, newInstanceWith(delegate), addTo(delegate, true), onComplete(() => pipe(delegate, dispose())), onError(e => {
         try {
             const result = f(e.cause) || none;
@@ -26,7 +26,7 @@ const createCatchErrorOperator = (m, CatchErrorSink) => (f) => {
         }
     })), lift(m));
 };
-const createDecodeWithCharsetOperator = (m, DecodeWithCharsetSink) => (charset = "utf-8") => pipe((delegate) => {
+const createDecodeWithCharsetOperator = (m) => (DecodeWithCharsetSink) => (charset = "utf-8") => pipe((delegate) => {
     const textDecoder = newInstance(TextDecoder, charset, { fatal: true });
     return pipe(DecodeWithCharsetSink, newInstanceWith(delegate, textDecoder), addTo(delegate), onComplete(() => {
         const data = textDecoder.decode();
@@ -43,8 +43,8 @@ const createSatisfyOperator = (m, SatisfySink, defaultResult) => (predicate) => 
         pipe(defaultResult, fromValue(m), sinkInto(delegate));
     }
 })), lift(m));
-const createEverySatisfyOperator = (m, EverySatisfySink) => compose(predicate => compose(predicate, negate), createSatisfyOperator(m, EverySatisfySink, true));
-const createSomeSatisfyOperator = (m, SomeSatisfySink) => createSatisfyOperator(m, SomeSatisfySink, false);
+const createEverySatisfyOperator = (m) => (EverySatisfySink) => compose(predicate => compose(predicate, negate), createSatisfyOperator(m, EverySatisfySink, true));
+const createSomeSatisfyOperator = (m) => (SomeSatisfySink) => createSatisfyOperator(m, SomeSatisfySink, false);
 const createReduceOperator = (m, ReduceSink) => (reducer, initialValue) => pipe((delegate) => {
     const sink = pipe(ReduceSink, newInstanceWith(delegate, reducer, initialValue()), addTo(delegate), onComplete(() => {
         pipe(sink.acc, fromValue(m), sinkInto(delegate));
@@ -81,10 +81,10 @@ const createUsing = (m) => (resourceFactory, sourceFactory) => pipe((sink) => pi
 const decorateWithNotify = (SinkClass, notify) => {
     SinkClass.prototype.notify = notify;
 };
-const decorateWithCatchErrorNotify = (CatchErrorSink) => decorateWithNotify(CatchErrorSink, function notifyCatchError(next) {
+const decorateWithCatchErrorNotify = () => (CatchErrorSink) => decorateWithNotify(CatchErrorSink, function notifyCatchError(next) {
     getDelegate(this).notify(next);
 });
-const decorateWithDecodeWithCharsetNotify = (DecodeWithCharsetSink) => decorateWithNotify(DecodeWithCharsetSink, function notifyDecodeWithCharset(next) {
+const decorateWithDecodeWithCharsetNotify = () => (DecodeWithCharsetSink) => decorateWithNotify(DecodeWithCharsetSink, function notifyDecodeWithCharset(next) {
     const data = this.textDecoder.decode(next, { stream: true });
     if (!isEmpty(data)) {
         getDelegate(this).notify(data);
@@ -131,8 +131,8 @@ const decorateWithSatisfyNotify = (SatisfySink, defaultResult) => decorateWithNo
         pipe(delegate, notify(!defaultResult), dispose());
     }
 });
-const decorateWithEverySatisfyNotify = (SatisfySink) => decorateWithSatisfyNotify(SatisfySink, true);
-const decorateWithSomeSatisfyNotify = (SatisfySink) => decorateWithSatisfyNotify(SatisfySink, false);
+const decorateWithEverySatisfyNotify = () => (SatisfySink) => decorateWithSatisfyNotify(SatisfySink, true);
+const decorateWithSomeSatisfyNotify = () => (SatisfySink) => decorateWithSatisfyNotify(SatisfySink, false);
 const decorateWithSkipFirstNotify = (SkipFirstSink) => decorateWithNotify(SkipFirstSink, function notifySkipFirst(next) {
     this.count++;
     if (this.count > this.skipCount) {
