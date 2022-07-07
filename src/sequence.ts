@@ -43,7 +43,7 @@ import {
 import { Option, isNone, none } from "./option";
 import { RunnableLike, ToRunnable, createRunnable } from "./runnable";
 
-export interface SequenceResultNotify<T> {
+export interface SequenceResultNext<T> {
   readonly data: T;
   readonly next: Sequence<T>;
 }
@@ -51,7 +51,7 @@ export interface SequenceResultNotify<T> {
 export const sequenceResultDone = Symbol("SequenceResultDone");
 
 export type SequenceResult<T> =
-  | SequenceResultNotify<T>
+  | SequenceResultNext<T>
   | typeof sequenceResultDone;
 
 export interface SequenceLike extends ContainerLike {
@@ -64,11 +64,11 @@ export type SequenceOperator<TA, TB> = Function1<Sequence<TA>, Sequence<TB>>;
 
 export const TContainerOf: Sequence<unknown> = undefined as any;
 
-const isNotify = <T>(
+const isNext = <T>(
   result: SequenceResult<T>,
-): result is SequenceResultNotify<T> => result != sequenceResultDone;
+): result is SequenceResultNext<T> => result != sequenceResultDone;
 
-const notify = <T>(
+const createNext = <T>(
   data: T,
   next: Factory<SequenceResult<T>>,
 ): SequenceResult<T> => ({
@@ -88,8 +88,8 @@ export const concatAll =
       result: SequenceResult<T>,
       continuation: Sequence<Sequence<T>>,
     ): SequenceResult<T> => {
-      if (isNotify(result)) {
-        return notify(result.data, () =>
+      if (isNext(result)) {
+        return createNext(result.data, () =>
           continueWith(result.next(), continuation),
         );
       } else {
@@ -100,7 +100,7 @@ export const concatAll =
     const flattenIter = (
       result: SequenceResult<Sequence<T>>,
     ): SequenceResult<T> => {
-      if (isNotify(result)) {
+      if (isNext(result)) {
         return continueWith(result.data(), result.next);
       } else {
         return done();
@@ -120,7 +120,7 @@ const _fromArray = <T>(
   endIndex: number,
 ): SequenceResult<T> =>
   index < endIndex && index >= 0
-    ? notify(arr[index], () => _fromArray(arr, index + 1, endIndex))
+    ? createNext(arr[index], () => _fromArray(arr, index + 1, endIndex))
     : done();
 
 export const fromArray = /*@__PURE__*/ createFromArray<Sequence<unknown>>(
@@ -154,9 +154,9 @@ const _distinctUntilChanged = <T>(
   castToSequence(() => {
     let retval = next();
     while (true) {
-      if (isNotify(retval)) {
+      if (isNext(retval)) {
         if (!equality(prevValue, retval.data)) {
-          return notify(
+          return createNext(
             retval.data,
             _distinctUntilChanged(equality, retval.data, retval.next),
           );
@@ -177,8 +177,8 @@ export const distinctUntilChanged =
     castToSequence(() => {
       const { equality = strictEquality } = options;
       const result = seq();
-      return isNotify(result)
-        ? notify(
+      return isNext(result)
+        ? createNext(
             result.data,
             _distinctUntilChanged(equality, result.data, result.next),
           )
@@ -193,9 +193,9 @@ const _keep = <T>(predicate: Predicate<T>, seq: Sequence<T>): Sequence<T> =>
   castToSequence(() => {
     let result = seq();
     while (true) {
-      if (isNotify(result)) {
+      if (isNext(result)) {
         if (predicate(result.data)) {
-          return notify(result.data, _keep(predicate, result.next));
+          return createNext(result.data, _keep(predicate, result.next));
         } else {
           result = result.next();
         }
@@ -221,8 +221,8 @@ const _map = <TA, TB>(
   castToSequence(() => {
     const result = seq();
 
-    return isNotify(result)
-      ? notify(mapper(result.data), _map(mapper, result.next))
+    return isNext(result)
+      ? createNext(mapper(result.data), _map(mapper, result.next))
       : done();
   });
 export const map =
@@ -235,7 +235,7 @@ export const mapT: Map<Sequence<unknown>> = {
 };
 
 const _generate = <T>(generator: Updater<T>, acc: T): Sequence<T> =>
-  castToSequence(() => notify(acc, _generate(generator, generator(acc))));
+  castToSequence(() => createNext(acc, _generate(generator, generator(acc))));
 
 export const generate = <T>(
   generator: Updater<T>,
@@ -256,10 +256,10 @@ const _pairwise = <T>(
 ): Sequence<readonly [Option<T>, T]> =>
   castToSequence(() => {
     const result = seq();
-    if (isNotify(result)) {
+    if (isNext(result)) {
       const { data, next } = result;
       const v: [Option<T>, T] = [prev, data];
-      return notify(v, _pairwise(data, next));
+      return createNext(v, _pairwise(data, next));
     } else {
       return done();
     }
@@ -285,7 +285,7 @@ export const seek =
       for (let i = 0; i < count; i++) {
         const result = retval();
 
-        if (isNotify(result)) {
+        if (isNext(result)) {
           retval = result.next;
         }
       }
@@ -297,8 +297,8 @@ const _takeFirst = <T>(count: number, seq: Sequence<T>): Sequence<T> =>
   castToSequence(() => {
     if (count > 0) {
       const result = seq();
-      return isNotify(result)
-        ? notify(result.data, _takeFirst(count - 1, result.next))
+      return isNext(result)
+        ? createNext(result.data, _takeFirst(count - 1, result.next))
         : done();
     } else {
       return done();
@@ -324,8 +324,11 @@ const _repeat = <T>(
 ): Sequence<T> =>
   castToSequence(() => {
     const result = seq();
-    if (isNotify(result)) {
-      return notify(result.data, _repeat(predicate, count, src, result.next));
+    if (isNext(result)) {
+      return createNext(
+        result.data,
+        _repeat(predicate, count, src, result.next),
+      );
     } else if (predicate(count)) {
       return _repeat(predicate, count + 1, src, src)();
     } else {
@@ -359,9 +362,9 @@ const _scan = <T, TAcc>(
 ): Sequence<TAcc> =>
   castToSequence(() => {
     const result = seq();
-    if (isNotify(result)) {
+    if (isNext(result)) {
       const nextAcc = reducer(acc, result.data);
-      return notify(nextAcc, _scan(reducer, nextAcc, result.next));
+      return createNext(nextAcc, _scan(reducer, nextAcc, result.next));
     } else {
       return done();
     }
@@ -396,7 +399,7 @@ const _takeLast = <T>(maxCount: number, seq: Sequence<T>): Sequence<T> =>
     const last: T[] = [];
     let result = seq();
     while (true) {
-      if (isNotify(result)) {
+      if (isNext(result)) {
         last.push(result.data);
         if (getLength(last) > maxCount) {
           last.shift();
@@ -427,10 +430,10 @@ const _takeWhile = <T>(
   castToSequence(() => {
     const result = seq();
 
-    return isNotify(result) && predicate(result.data)
-      ? notify(result.data, _takeWhile(predicate, inclusive, result.next))
-      : isNotify(result) && inclusive
-      ? notify<T>(result.data, done)
+    return isNext(result) && predicate(result.data)
+      ? createNext(result.data, _takeWhile(predicate, inclusive, result.next))
+      : isNext(result) && inclusive
+      ? createNext<T>(result.data, done)
       : done();
   });
 
@@ -453,7 +456,7 @@ export const toRunnable =
   seq =>
     createRunnable(sink => {
       let result = seq();
-      while (isNotify(result)) {
+      while (isNext(result)) {
         sink.notify(result.data);
         result = result.next();
       }
@@ -467,21 +470,21 @@ const _zip = <T>(
   ...sequences: readonly Sequence<T>[]
 ): Sequence<readonly any[]> =>
   castToSequence(() => {
-    const notifyResults = pipe(
+    const nextResults = pipe(
       sequences,
       mapArray(callWith()),
-      keepTypeArray(isNotify),
+      keepTypeArray(isNext),
     );
 
-    return getLength(notifyResults) === getLength(sequences)
-      ? notify(
+    return getLength(nextResults) === getLength(sequences)
+      ? createNext(
           pipe(
-            notifyResults,
+            nextResults,
             mapArray(x => x.data),
           ),
           _zip(
             ...pipe(
-              notifyResults,
+              nextResults,
               mapArray(x => x.next),
             ),
           ),
@@ -503,7 +506,7 @@ class SequenceEnumerator<T> extends AbstractEnumerator<T> {
   move(): boolean {
     if (!isDisposed(this)) {
       const next = this.seq();
-      if (isNotify(next)) {
+      if (isNext(next)) {
         this.current = next.data;
         this.seq = next.next;
       } else {

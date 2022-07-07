@@ -3,12 +3,12 @@ import { EnumerableLike, ToEnumerable } from "./enumerable.mjs";
 import { Factory, Function1, Equality, Predicate, Updater, Reducer } from "./functions.mjs";
 import { Option } from "./option.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
-interface SequenceResultNotify<T> {
+interface SequenceResultNext<T> {
     readonly data: T;
     readonly next: Sequence<T>;
 }
 declare const sequenceResultDone: unique symbol;
-declare type SequenceResult<T> = SequenceResultNotify<T> | typeof sequenceResultDone;
+declare type SequenceResult<T> = SequenceResultNext<T> | typeof sequenceResultDone;
 interface SequenceLike extends ContainerLike {
     readonly T: unknown;
     readonly TContainerOf: Sequence<this["T"]>;
@@ -66,4 +66,4 @@ declare const zip: Zip<Sequence<unknown>>["zip"];
 declare const zipT: Zip<Sequence<unknown>>;
 declare const toEnumerable: <T>() => Function1<Sequence<T>, EnumerableLike<T>>;
 declare const toEnumerableT: ToEnumerable<Sequence<unknown>>;
-export { Sequence, SequenceLike, SequenceOperator, SequenceResult, SequenceResultNotify, TContainerOf, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, fromArray, fromArrayT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, sequenceResultDone, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toRunnable, toRunnableT, zip, zipT };
+export { Sequence, SequenceLike, SequenceOperator, SequenceResult, SequenceResultNext, TContainerOf, concat, concatAll, concatAllT, concatT, distinctUntilChanged, distinctUntilChangedT, fromArray, fromArrayT, generate, generateT, keep, keepT, map, mapT, pairwise, pairwiseT, repeat, repeatT, scan, scanT, seek, sequenceResultDone, skipFirst, skipFirstT, takeFirst, takeFirstT, takeLast, takeLastT, takeWhile, takeWhileT, toEnumerable, toEnumerableT, toRunnable, toRunnableT, zip, zipT };
