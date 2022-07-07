@@ -3,7 +3,7 @@ import {
   AsyncEnumerableLike,
   AsyncEnumerableOperator,
 } from "../asyncEnumerable";
-import { AsyncEnumerator } from "../asyncEnumerator";
+import { AsyncEnumeratorLike } from "../asyncEnumerator";
 import { Function1, newInstance, pipe, raise } from "../functions";
 import { DefaultObservable } from "../observable";
 import { SchedulerLike } from "../scheduler";
@@ -20,7 +20,7 @@ export abstract class AbstractAsyncEnumerable<T>
     return this;
   }
 
-  get TLiftableContainerState(): AsyncEnumerator<this["T"]> {
+  get TLiftableContainerState(): AsyncEnumeratorLike<this["T"]> {
     return raise();
   }
 
@@ -30,23 +30,23 @@ export abstract class AbstractAsyncEnumerable<T>
 
   readonly observableType: DefaultObservable = 0;
 
-  interact(scheduler: SchedulerLike): AsyncEnumerator<T> {
+  interact(scheduler: SchedulerLike): AsyncEnumeratorLike<T> {
     return pipe(this, stream(scheduler));
   }
 
   abstract stream(
-    this: StreamableLike<void, T, AsyncEnumerator<T>>,
+    this: StreamableLike<void, T, AsyncEnumeratorLike<T>>,
     scheduler: SchedulerLike,
     options?: { readonly replay?: number | undefined } | undefined,
-  ): AsyncEnumerator<T>;
+  ): AsyncEnumeratorLike<T>;
 }
 
 class LiftedAsyncEnumerable<T> extends AbstractAsyncEnumerable<T> {
   constructor(
     readonly src: AsyncEnumerableLike<any>,
     readonly operators: readonly Function1<
-      AsyncEnumerator<any>,
-      AsyncEnumerator<any>
+      AsyncEnumeratorLike<any>,
+      AsyncEnumeratorLike<any>
     >[],
   ) {
     super();
@@ -55,15 +55,15 @@ class LiftedAsyncEnumerable<T> extends AbstractAsyncEnumerable<T> {
   stream(
     scheduler: SchedulerLike,
     options?: { readonly replay?: number },
-  ): AsyncEnumerator<T> {
+  ): AsyncEnumeratorLike<T> {
     const src = pipe(this.src, stream(scheduler, options));
-    return pipe(src, ...this.operators) as AsyncEnumerator<T>;
+    return pipe(src, ...this.operators) as AsyncEnumeratorLike<T>;
   }
 }
 
 export const lift =
   <TA, TB>(
-    operator: Function1<AsyncEnumerator<TA>, AsyncEnumerator<TB>>,
+    operator: Function1<AsyncEnumeratorLike<TA>, AsyncEnumeratorLike<TB>>,
   ): AsyncEnumerableOperator<TA, TB> =>
   enumerable => {
     const src =
@@ -77,7 +77,7 @@ export const lift =
     return newInstance<
       LiftedAsyncEnumerable<TB>,
       AsyncEnumerableLike<any>,
-      readonly Function1<AsyncEnumerator<any>, AsyncEnumerator<any>>[]
+      readonly Function1<AsyncEnumeratorLike<any>, AsyncEnumeratorLike<any>>[]
     >(LiftedAsyncEnumerable, src, allFunctions);
   };
 

@@ -5,10 +5,9 @@ import { interactive, createKeepLiftOperator, createMapLiftOperator, createScanL
 import { getDelay } from './__internal__.optionalArgs.mjs';
 import { raise, pipe, newInstance, getLength, compose, increment, returns, pipeLazy, newInstanceWith } from './functions.mjs';
 import { stream } from './streamable.mjs';
-import { AsyncEnumerator } from './asyncEnumerator.mjs';
 import { fromValue, concatMap, concatWith } from './container.mjs';
-import { getScheduler, dispatch } from './dispatcher.mjs';
-import { add, addTo, bindTo } from './disposable.mjs';
+import { dispatch, getScheduler } from './dispatcher.mjs';
+import { Disposable, add, addTo, bindTo } from './disposable.mjs';
 import { enumerate, fromIterable as fromIterable$1 } from './enumerable.mjs';
 import { move, getCurrent } from './enumerator.mjs';
 import { Subject, multicast, getObserverCount, getReplay, publish, fromArrayT as fromArrayT$1, scan as scan$1, mapT as mapT$1, concatAllT, takeFirst, withLatestFrom, using, concatT, never, takeWhile as takeWhile$1, map as map$1, scanAsync as scanAsync$1, onNotify, keep as keep$1, createObservable, onSubscribe } from './observable.mjs';
@@ -59,6 +58,24 @@ const liftT = {
     variance: interactive,
 };
 
+class AsyncEnumerator extends Disposable {
+    constructor() {
+        super(...arguments);
+        this.observableType = 0;
+    }
+    get T() {
+        return raise();
+    }
+    get TContainerOf() {
+        return this;
+    }
+    get TLiftableContainerState() {
+        return raise();
+    }
+    move() {
+        pipe(this, dispatch(none));
+    }
+}
 class CreateAsyncEnumerable extends AbstractAsyncEnumerable {
     constructor(stream) {
         super();

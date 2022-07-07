@@ -8,8 +8,6 @@
 
 - **`Disposable`**
 
-  ↳ [`AsyncEnumerator`](asyncEnumerator.AsyncEnumerator.md)
-
   ↳ [`Enumerator`](enumerator.Enumerator.md)
 
   ↳ [`Subject`](observable.Subject.md)
