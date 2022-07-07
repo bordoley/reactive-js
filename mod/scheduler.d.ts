@@ -1,4 +1,4 @@
-import { Disposable } from "./disposable.mjs";
+import { DisposableLike } from "./disposable.mjs";
 import { Enumerator } from "./enumerator.mjs";
 import { SideEffect, Function1 } from "./functions.mjs";
 /**
@@ -15,7 +15,7 @@ declare const __yield: (options?: {
 }) => void;
 declare const schedule: (f: SideEffect, options?: {
     readonly delay?: number;
-}) => Function1<SchedulerLike, Disposable>;
+}) => Function1<SchedulerLike, DisposableLike>;
 /**
  * Converts a PrioritySchedulerLike to a SchedulerLike that schedules work with the given priority.
  *
@@ -44,7 +44,7 @@ declare const shouldYield: (scheduler: SchedulerLike) => boolean;
  *
  * @noInheritDoc
  */
-interface SchedulerContinuationLike extends Disposable {
+interface SchedulerContinuationLike extends DisposableLike {
     /**
      * Work function to be invoked by the scheduler after the specified delay.
      */
@@ -53,7 +53,7 @@ interface SchedulerContinuationLike extends Disposable {
 /**
  * An object that schedules units of work on a runloop.
  */
-interface SchedulerLike extends Disposable {
+interface SchedulerLike extends DisposableLike {
     readonly inContinuation: boolean;
     readonly now: number;
     readonly shouldYield: boolean;
@@ -83,7 +83,7 @@ interface PausableSchedulerLike extends SchedulerLike {
  *
  * @noInheritDoc
  */
-interface PrioritySchedulerLike extends Disposable {
+interface PrioritySchedulerLike extends DisposableLike {
     readonly inContinuation: boolean;
     readonly now: number;
     readonly shouldYield: boolean;

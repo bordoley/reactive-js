@@ -1,8 +1,8 @@
-import { Disposable } from "./disposable.mjs";
+import { DisposableLike } from "./disposable.mjs";
 import { Function1, SideEffect1 } from "./functions.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
 /** @noInheritDoc */
-interface DispatcherLike<T> extends Disposable {
+interface DispatcherLike<T> extends DisposableLike {
     /**
      * Dispatches the next request
      * @param req

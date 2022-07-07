@@ -1,6 +1,6 @@
 /// <reference types="./web.d.ts" />
 import { dispatch, getScheduler, dispatchTo } from './dispatcher.mjs';
-import { onDisposed, Disposable, bindTo, addTo, toAbortSignal, dispose } from './disposable.mjs';
+import { onDisposed, dispose, addTo, toAbortSignal } from './disposable.mjs';
 import { pipe, newInstance, isEmpty, getLength, raise, newInstanceWith, compose, returns } from './functions.mjs';
 import { createObservable, getObserverCount, getReplay, map, forkCombineLatest, takeWhile, onNotify, keepT, keep as keep$1, throttle, subscribe, defer, fromPromise } from './observable.mjs';
 import { getDispatcher } from './observer.mjs';
@@ -79,12 +79,23 @@ const windowHistoryPushState = (self, title, uri) => {
     self.historyCounter++;
     history.pushState({ counter: self.historyCounter, title }, "", uri);
 };
-class WindowLocationStream extends Disposable {
+class WindowLocationStream {
     constructor(delegate) {
-        super();
         this.delegate = delegate;
         this.historyCounter = -1;
         this.observableType = 0;
+    }
+    get error() {
+        return this.delegate.error;
+    }
+    get isDisposed() {
+        return this.delegate.isDisposed;
+    }
+    add(disposable, ignoreChildErrors) {
+        pipe(this, getDelegate).add(disposable, ignoreChildErrors);
+    }
+    dispose(error) {
+        pipe(this, getDelegate, dispose(error));
     }
     get T() {
         return raise();
@@ -133,7 +144,7 @@ const windowLocation =
         replace: true,
         uri: getCurrentWindowLocationURI(),
     }), { equality: areWindowLocationStatesEqual }), stream(scheduler, options));
-    const windowLocationStream = pipe(WindowLocationStream, newInstanceWith(actionReducer), bindTo(actionReducer));
+    const windowLocationStream = pipe(WindowLocationStream, newInstanceWith(actionReducer));
     pipe(actionReducer, map(({ uri, replace }) => ({
         uri: windowLocationURIToString(uri),
         title: uri.title,

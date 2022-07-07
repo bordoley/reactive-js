@@ -2,9 +2,6 @@
 import { newInstance, pipe } from './functions.mjs';
 import { none, isSome, isNone } from './option.mjs';
 
-/**
- * Represents an unmanaged resource that can be disposed.
- */
 class Disposable {
     constructor() {
         /** @ignore */

@@ -1,9 +1,9 @@
-import { Disposable } from "./disposable";
+import { DisposableLike } from "./disposable";
 import { Function1, SideEffect1 } from "./functions";
 import { SchedulerLike } from "./scheduler";
 
 /** @noInheritDoc */
-export interface DispatcherLike<T> extends Disposable {
+export interface DispatcherLike<T> extends DisposableLike {
   /**
    * Dispatches the next request
    * @param req

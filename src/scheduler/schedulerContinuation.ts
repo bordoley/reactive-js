@@ -1,5 +1,11 @@
 import { getDelay } from "../__internal__.optionalArgs";
-import { Disposable, Error, dispose, isDisposed } from "../disposable";
+import {
+  Disposable,
+  DisposableLike,
+  Error,
+  dispose,
+  isDisposed,
+} from "../disposable";
 import {
   Function1,
   SideEffect,
@@ -77,7 +83,7 @@ export const schedule =
   (
     f: SideEffect,
     options?: { readonly delay?: number },
-  ): Function1<SchedulerLike, Disposable> =>
+  ): Function1<SchedulerLike, DisposableLike> =>
   scheduler => {
     const continuation = newInstance(SchedulerContinuationImpl, scheduler, f);
     scheduler.schedule(continuation, options);

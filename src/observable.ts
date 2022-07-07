@@ -38,7 +38,7 @@ import {
 } from "./container";
 import { dispatch, dispatchTo } from "./dispatcher";
 import {
-  Disposable,
+  DisposableLike,
   addTo,
   bindTo,
   dispose,
@@ -149,7 +149,7 @@ export type ObservableOperator<A, B> = Function1<
  */
 export interface MulticastObservableLike<T>
   extends ObservableLike<T>,
-    Disposable {
+    DisposableLike {
   /**
    * The number of observers currently observing.
    */

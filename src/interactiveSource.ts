@@ -1,7 +1,7 @@
 import { __DEV__ } from "./__internal__.env";
-import { Disposable } from "./disposable";
+import { DisposableLike } from "./disposable";
 
-export interface InteractiveSourceLike extends Disposable {
+export interface InteractiveSourceLike extends DisposableLike {
   move(this: this): void;
 }
 

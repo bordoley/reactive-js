@@ -1,8 +1,8 @@
 import { __DEV__ } from "./__internal__.env";
-import { Disposable } from "./disposable";
+import { DisposableLike } from "./disposable";
 import { Function1, SideEffect1 } from "./functions";
 
-export interface ReactiveSinkLike<T> extends Disposable {
+export interface ReactiveSinkLike<T> extends DisposableLike {
   assertState(this: this): void;
 
   /**

@@ -1,4 +1,4 @@
-import { Disposable, DisposableOrTeardown } from "./disposable.mjs";
+import { DisposableLike, Disposable, DisposableOrTeardown } from "./disposable.mjs";
 import { Zip, Concat, FromArray, Buffer, Map, ConcatAll, Repeat, ContainerLike, Container, ContainerOf, DistinctUntilChanged, EverySatisfy, Generate, Keep, ContainerOperator, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile } from "./container.mjs";
 import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Predicate, Equality, Updater, Reducer } from "./functions.mjs";
 import { FromIterator, FromIterable, Using, Defer, CatchError, DecodeWithCharset, ThrowIfEmpty } from "./liftableContainer.mjs";
@@ -26,13 +26,13 @@ declare function __do<TA, TB, TC>(fn: SideEffect3<TA, TB, TC>, a: TA, b: TB, c: 
 declare function __do<TA, TB, TC, TD>(fn: SideEffect4<TA, TB, TC, TD>, a: TA, b: TB, c: TC, d: TD): void;
 declare function __do<TA, TB, TC, TD, TE>(fn: SideEffect5<TA, TB, TC, TD, TE>, a: TA, b: TB, c: TC, d: TD, e: TE): void;
 declare function __do<TA, TB, TC, TD, TE, TF>(fn: SideEffect6<TA, TB, TC, TD, TE, TF>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): void;
-declare function __using<T extends Disposable>(fn: Factory<T>): T;
-declare function __using<TA, T extends Disposable>(fn: Function1<TA, T>, a: TA): T;
-declare function __using<TA, TB, T extends Disposable>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
-declare function __using<TA, TB, TC, T extends Disposable>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
-declare function __using<TA, TB, TC, TD, T extends Disposable>(fn: Function4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
-declare function __using<TA, TB, TC, TD, TE, T extends Disposable>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
-declare function __using<TA, TB, TC, TD, TE, TF, T extends Disposable>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
+declare function __using<T extends DisposableLike>(fn: Factory<T>): T;
+declare function __using<TA, T extends DisposableLike>(fn: Function1<TA, T>, a: TA): T;
+declare function __using<TA, TB, T extends DisposableLike>(fn: Function2<TA, TB, T>, a: TA, b: TB): T;
+declare function __using<TA, TB, TC, T extends DisposableLike>(fn: Function3<TA, TB, TC, T>, a: TA, b: TB, c: TC): T;
+declare function __using<TA, TB, TC, TD, T extends DisposableLike>(fn: Function4<TA, TB, TC, TD, T>, a: TA, b: TB, c: TC, d: TD): T;
+declare function __using<TA, TB, TC, TD, TE, T extends DisposableLike>(fn: Function5<TA, TB, TC, TD, TE, T>, a: TA, b: TB, c: TC, d: TD, e: TE): T;
+declare function __using<TA, TB, TC, TD, TE, TF, T extends DisposableLike>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
 declare function __currentScheduler(): SchedulerLike;
 declare function combineLatest<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): ObservableLike<[
     TA,
@@ -363,12 +363,12 @@ declare const never: <T>() => ObservableLike<T>;
 declare const neverT: Never<ObservableLike<unknown>>;
 /**
  * Safely subscribes to an `ObservableLike` with a `ObserverLike` instance
- * using the provided scheduler. The returned `Disposable`
+ * using the provided scheduler. The returned `DisposableLike`
  * may used to cancel the subscription.
  *
  * @param scheduler The SchedulerLike instance that should be used by the source to notify it's observer.
  */
-declare const subscribe: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, Disposable>;
+declare const subscribe: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, DisposableLike>;
 declare const using: Using<ObservableLike<unknown>>["using"];
 declare const usingT: Using<ObservableLike<unknown>>;
 declare function defer<T>(factory: Factory<SideEffect1<Observer<T>>>, options?: {
@@ -569,7 +569,7 @@ declare type ObservableOperator<A, B> = Function1<ObservableLike<A>, ObservableL
  *
  * @noInheritDoc
  */
-interface MulticastObservableLike<T> extends ObservableLike<T>, Disposable {
+interface MulticastObservableLike<T> extends ObservableLike<T>, DisposableLike {
     /**
      * The number of observers currently observing.
      */
@@ -587,7 +587,7 @@ declare type ObservableEffectMode = "batched" | "combine-latest";
 declare type ThrottleMode = "first" | "last" | "interval";
 declare const catchError: <T>(onError: Function1<unknown, ObservableLike<T> | void>) => ObservableOperator<T, T>;
 declare const catchErrorT: CatchError<ObservableLike<unknown>>;
-declare const fromDisposable: <T>(disposable: Disposable) => ObservableLike<T>;
+declare const fromDisposable: <T>(disposable: DisposableLike) => ObservableLike<T>;
 declare const decodeWithCharset: (charset?: string) => ObservableOperator<ArrayBuffer, string>;
 declare const decodeWithCharsetT: DecodeWithCharset<ObservableLike<unknown>>;
 /**
