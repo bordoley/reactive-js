@@ -1,14 +1,16 @@
 /// <reference types="./runnable.d.ts" />
-import { createBufferOperator, createCatchErrorOperator, createDecodeWithCharsetOperator, createDistinctUntilChangedOperator, createEverySatisfyOperator, createKeepOperator, createMapOperator, createNever, createOnNotifyOperator, createOnSink, createPairwiseOperator, createReduceOperator, createScanOperator, createSkipFirstOperator, createSomeSatisfyOperator, createTakeFirstOperator, createTakeLastOperator, createTakeWhileOperator, createThrowIfEmptyOperator, createUsing } from './__internal__.reactiveContainer.mjs';
-import { empty } from './__internal__.readonlyArray.mjs';
-import { dispose, Disposable, isDisposed, addTo, bindTo } from './disposable.mjs';
-import { raise, pipe, newInstance, pipeLazy, newInstanceWith, ignore, getLength, alwaysTrue, compose, identity } from './functions.mjs';
-import { isSome, none, isNone, getOrDefault } from './option.mjs';
-import { sourceFrom } from './reactiveContainer.mjs';
 import { getDelegate } from './__internal__.delegating.mjs';
+import { __DEV__, MAX_SAFE_INTEGER } from './__internal__.env.mjs';
+import { reactive, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './__internal__.liftable.mjs';
+import { decorateWithCatchErrorNotify, createCatchErrorOperator, decorateWithDecodeWithCharsetNotify, createDecodeWithCharsetOperator, decorateWithDistinctUntilChangedNotify, decorateWithEverySatisfyNotify, createEverySatisfyOperator, decorateWithKeepNotify, decorateWithMapNotify, createNever, decorateWithOnNotifyNotify, createOnSink, decorateWithPairwiseNotify, decorateWithReduceNotify, createReduceOperator, decorateWithScanNotify, decorateWithSkipFirstNotify, decorateWithSomeSatisfyNotify, createSomeSatisfyOperator, decorateWithTakeFirstNotify, decorateWithTakeLastNotify, createTakeLastOperator, decorateWithTakeWhileNotify, decorateWithThrowIfEmptyNotify, createUsing } from './__internal__.reactiveContainer.mjs';
+import { empty } from './__internal__.readonlyArray.mjs';
+import { fromValue } from './container.mjs';
+import { dispose, Disposable, isDisposed, addTo, bindTo, onComplete } from './disposable.mjs';
+import { raise, pipe, newInstance, pipeLazy, newInstanceWith, ignore, getLength, max, isEmpty, alwaysTrue, compose, identity } from './functions.mjs';
+import { isSome, none, isNone, getOrDefault } from './option.mjs';
+import { sourceFrom, sinkInto } from './reactiveContainer.mjs';
 import { notify } from './reactiveSink.mjs';
 import { createFromArray } from './__internal__.container.mjs';
-import { reactive } from './__internal__.liftable.mjs';
 
 class AbstractRunnable {
     get T() {
@@ -60,6 +62,17 @@ class DelegatingRunnableSink extends AbstractDelegatingRunnableSink {
     }
 }
 const createDelegatingRunnableSink = (delegate) => newInstance(DelegatingRunnableSink, delegate);
+const decorateNotifyWithAssertions = (SinkClass) => {
+    if (__DEV__) {
+        const notify = SinkClass.prototype.notify;
+        SinkClass.prototype.notify = function notifyWithAssertion(next) {
+            if (isDisposed(this)) {
+                raise("Sink is disposed");
+            }
+            notify.call(this, next);
+        };
+    }
+};
 
 class FirstSink extends RunnableSink {
     constructor() {
@@ -151,18 +164,48 @@ const last = () => {
     return run(createSink);
 };
 
-const buffer = /*@__PURE__*/ createBufferOperator({ ...liftT, ...fromArrayT }, class BufferSink extends AbstractDelegatingRunnableSink {
-    constructor(delegate, maxBufferSize) {
-        super(delegate);
-        this.maxBufferSize = maxBufferSize;
-        this.buffer = [];
+const buffer = /*@__PURE__*/ (() => {
+    class BufferSink extends AbstractDelegatingRunnableSink {
+        constructor(delegate, maxBufferSize) {
+            super(delegate);
+            this.maxBufferSize = maxBufferSize;
+            this.buffer = [];
+        }
+        notify(next) {
+            const { buffer, maxBufferSize } = this;
+            buffer.push(next);
+            if (getLength(buffer) === maxBufferSize) {
+                const buffer = this.buffer;
+                this.buffer = [];
+                getDelegate(this).notify(buffer);
+            }
+        }
     }
-});
+    return (options = {}) => {
+        var _a;
+        const maxBufferSize = max((_a = options.maxBufferSize) !== null && _a !== void 0 ? _a : MAX_SAFE_INTEGER, 1);
+        return lift((delegate) => pipe(BufferSink, newInstanceWith(delegate, maxBufferSize), addTo(delegate), onComplete(function onDispose() {
+            const { buffer } = this;
+            this.buffer = [];
+            if (isEmpty(buffer)) {
+                pipe(this, getDelegate, dispose());
+            }
+            else {
+                pipe(buffer, fromValue(fromArrayT), sinkInto(getDelegate(this)));
+            }
+        })));
+    };
+})();
 const bufferT = {
     buffer,
 };
-const catchError = /*@__PURE__*/ createCatchErrorOperator(liftT, class CatchErrorSink extends AbstractDelegatingRunnableSink {
-});
+const catchError = /*@__PURE__*/ (() => {
+    class CatchErrorSink extends AbstractDelegatingRunnableSink {
+    }
+    decorateWithCatchErrorNotify(CatchErrorSink);
+    decorateNotifyWithAssertions(CatchErrorSink);
+    return createCatchErrorOperator(liftT, CatchErrorSink);
+})();
 const catchErrorT = {
     catchError,
 };
@@ -175,33 +218,47 @@ const concat = (...runnables) => createRunnable((sink) => {
 const concatT = {
     concat,
 };
-const decodeWithCharset = 
-/*@__PURE__*/ createDecodeWithCharsetOperator({ ...liftT, ...fromArrayT }, class DecodeWithCharsetSink extends AbstractDelegatingRunnableSink {
-    constructor(delegate, textDecoder) {
-        super(delegate);
-        this.textDecoder = textDecoder;
+const decodeWithCharset = /*@__PURE__*/ (() => {
+    class DecodeWithCharsetSink extends AbstractDelegatingRunnableSink {
+        constructor(delegate, textDecoder) {
+            super(delegate);
+            this.textDecoder = textDecoder;
+        }
     }
-});
+    decorateWithDecodeWithCharsetNotify(DecodeWithCharsetSink);
+    decorateNotifyWithAssertions(DecodeWithCharsetSink);
+    return createDecodeWithCharsetOperator({ ...liftT, ...fromArrayT }, DecodeWithCharsetSink);
+})();
 const decodeWithCharsetT = {
     decodeWithCharset,
 };
-const distinctUntilChanged = /*@__PURE__*/ createDistinctUntilChangedOperator(liftT, class DistinctUntilChangedSink extends AbstractDelegatingRunnableSink {
-    constructor(delegate, equality) {
-        super(delegate);
-        this.equality = equality;
-        this.prev = none;
-        this.hasValue = false;
+const distinctUntilChanged = /*@__PURE__*/ (() => {
+    class DistinctUntilChangedSink extends AbstractDelegatingRunnableSink {
+        constructor(delegate, equality) {
+            super(delegate);
+            this.equality = equality;
+            this.prev = none;
+            this.hasValue = false;
+        }
     }
-});
+    decorateWithDistinctUntilChangedNotify(DistinctUntilChangedSink);
+    decorateNotifyWithAssertions(DistinctUntilChangedSink);
+    return createDistinctUntilChangedOperator(liftT, DistinctUntilChangedSink);
+})();
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
-const everySatisfy = /*@__PURE__*/ createEverySatisfyOperator({ ...fromArrayT, ...liftT }, class EverySatisfySink extends AbstractDelegatingRunnableSink {
-    constructor(delegate, predicate) {
-        super(delegate);
-        this.predicate = predicate;
+const everySatisfy = /*@__PURE__*/ (() => {
+    class EverySatisfySink extends AbstractDelegatingRunnableSink {
+        constructor(delegate, predicate) {
+            super(delegate);
+            this.predicate = predicate;
+        }
     }
-});
+    decorateWithEverySatisfyNotify(EverySatisfySink);
+    decorateNotifyWithAssertions(EverySatisfySink);
+    return createEverySatisfyOperator({ ...fromArrayT, ...liftT }, EverySatisfySink);
+})();
 const everySatisfyT = {
     everySatisfy,
 };
@@ -219,21 +276,31 @@ const generateT = {
     generate,
 };
 const keep = 
-/*@__PURE__*/ createKeepOperator(liftT, class KeepSink extends AbstractDelegatingRunnableSink {
-    constructor(delegate, predicate) {
-        super(delegate);
-        this.predicate = predicate;
+/*@__PURE__*/ (() => {
+    class KeepSink extends AbstractDelegatingRunnableSink {
+        constructor(delegate, predicate) {
+            super(delegate);
+            this.predicate = predicate;
+        }
     }
-});
+    decorateWithKeepNotify(KeepSink);
+    decorateNotifyWithAssertions(KeepSink);
+    return createKeepOperator(liftT, KeepSink);
+})();
 const keepT = {
     keep,
 };
-const map = /*@__PURE__*/ createMapOperator(liftT, class MapSink extends AbstractDelegatingRunnableSink {
-    constructor(delegate, mapper) {
-        super(delegate);
-        this.mapper = mapper;
+const map = /*@__PURE__*/ (() => {
+    class MapSink extends AbstractDelegatingRunnableSink {
+        constructor(delegate, mapper) {
+            super(delegate);
+            this.mapper = mapper;
+        }
     }
-});
+    decorateWithMapNotify(MapSink);
+    decorateNotifyWithAssertions(MapSink);
+    return createMapOperator(liftT, MapSink);
+})();
 const mapT = {
     map,
 };
@@ -247,30 +314,45 @@ const neverT = {
  * @param onNotify The function that is invoked when the observable source produces values.
  */
 const onNotify = 
-/*@__PURE__*/ createOnNotifyOperator(liftT, class OnNotifySink extends AbstractDelegatingRunnableSink {
-    constructor(delegate, onNotify) {
-        super(delegate);
-        this.onNotify = onNotify;
+/*@__PURE__*/ (() => {
+    class OnNotifySink extends AbstractDelegatingRunnableSink {
+        constructor(delegate, onNotify) {
+            super(delegate);
+            this.onNotify = onNotify;
+        }
     }
-});
+    decorateWithOnNotifyNotify(OnNotifySink);
+    decorateNotifyWithAssertions(OnNotifySink);
+    return createOnNotifyOperator(liftT, OnNotifySink);
+})();
 const onSink = /*@__PURE__*/ createOnSink(createT);
 const pairwise = 
-/*@__PURE__*/ createPairwiseOperator(liftT, class PairwiseSink extends AbstractDelegatingRunnableSink {
-    constructor() {
-        super(...arguments);
-        this.hasPrev = false;
+/*@__PURE__*/ (() => {
+    class PairwiseSink extends AbstractDelegatingRunnableSink {
+        constructor() {
+            super(...arguments);
+            this.hasPrev = false;
+        }
     }
-});
+    decorateWithPairwiseNotify(PairwiseSink);
+    decorateNotifyWithAssertions(PairwiseSink);
+    return createPairwiseOperator(liftT, PairwiseSink);
+})();
 const pairwiseT = {
     pairwise,
 };
-const reduce = /*@__PURE__*/ createReduceOperator({ ...fromArrayT, ...liftT }, class ReducerSink extends AbstractDelegatingRunnableSink {
-    constructor(delegate, reducer, acc) {
-        super(delegate);
-        this.reducer = reducer;
-        this.acc = acc;
+const reduce = /*@__PURE__*/ (() => {
+    class ReducerSink extends AbstractDelegatingRunnableSink {
+        constructor(delegate, reducer, acc) {
+            super(delegate);
+            this.reducer = reducer;
+            this.acc = acc;
+        }
     }
-});
+    decorateWithReduceNotify(ReducerSink);
+    decorateNotifyWithAssertions(ReducerSink);
+    return createReduceOperator({ ...fromArrayT, ...liftT }, ReducerSink);
+})();
 const reduceT = {
     reduce,
 };
@@ -291,71 +373,106 @@ const repeat = (predicate) => {
 const repeatT = {
     repeat,
 };
-const scan = /*@__PURE__*/ createScanOperator(liftT, class ScanSink extends AbstractDelegatingRunnableSink {
-    constructor(delegate, reducer, acc) {
-        super(delegate);
-        this.reducer = reducer;
-        this.acc = acc;
+const scan = /*@__PURE__*/ (() => {
+    class ScanSink extends AbstractDelegatingRunnableSink {
+        constructor(delegate, reducer, acc) {
+            super(delegate);
+            this.reducer = reducer;
+            this.acc = acc;
+        }
     }
-});
+    decorateWithScanNotify(ScanSink);
+    decorateNotifyWithAssertions(ScanSink);
+    return createScanOperator(liftT, ScanSink);
+})();
 const scanT = {
     scan,
 };
-const skipFirst = /*@__PURE__*/ createSkipFirstOperator(liftT, class SkipFirstSink extends AbstractDelegatingRunnableSink {
-    constructor(delegate, skipCount) {
-        super(delegate);
-        this.skipCount = skipCount;
-        this.count = 0;
+const skipFirst = /*@__PURE__*/ (() => {
+    class SkipFirstSink extends AbstractDelegatingRunnableSink {
+        constructor(delegate, skipCount) {
+            super(delegate);
+            this.skipCount = skipCount;
+            this.count = 0;
+        }
     }
-});
+    decorateWithSkipFirstNotify(SkipFirstSink);
+    decorateNotifyWithAssertions(SkipFirstSink);
+    return createSkipFirstOperator(liftT, SkipFirstSink);
+})();
 const skipFirstT = {
     skipFirst,
 };
-const someSatisfy = /*@__PURE__*/ createSomeSatisfyOperator({ ...fromArrayT, ...liftT }, class SomeSatisfySink extends AbstractDelegatingRunnableSink {
-    constructor(delegate, predicate) {
-        super(delegate);
-        this.predicate = predicate;
+const someSatisfy = /*@__PURE__*/ (() => {
+    class SomeSatisfySink extends AbstractDelegatingRunnableSink {
+        constructor(delegate, predicate) {
+            super(delegate);
+            this.predicate = predicate;
+        }
     }
-});
+    decorateWithSomeSatisfyNotify(SomeSatisfySink);
+    decorateNotifyWithAssertions(SomeSatisfySink);
+    return createSomeSatisfyOperator({ ...fromArrayT, ...liftT }, SomeSatisfySink);
+})();
 const someSatisfyT = {
     someSatisfy,
 };
-const takeFirst = /*@__PURE__*/ createTakeFirstOperator({ ...fromArrayT, ...liftT }, class TakeFirstSink extends AbstractDelegatingRunnableSink {
-    constructor(delegate, maxCount) {
-        super(delegate);
-        this.maxCount = maxCount;
-        this.count = 0;
+const takeFirst = /*@__PURE__*/ (() => {
+    class TakeFirstSink extends AbstractDelegatingRunnableSink {
+        constructor(delegate, maxCount) {
+            super(delegate);
+            this.maxCount = maxCount;
+            this.count = 0;
+        }
     }
-});
+    decorateWithTakeFirstNotify(TakeFirstSink);
+    decorateNotifyWithAssertions(TakeFirstSink);
+    return createTakeFirstOperator({ ...fromArrayT, ...liftT }, TakeFirstSink);
+})();
 const takeFirstT = {
     takeFirst,
 };
-const takeLast = /*@__PURE__*/ createTakeLastOperator({ ...fromArrayT, ...liftT }, class TakeLastSink extends AbstractDelegatingRunnableSink {
-    constructor(delegate, maxCount) {
-        super(delegate);
-        this.maxCount = maxCount;
-        this.last = [];
+const takeLast = /*@__PURE__*/ (() => {
+    class TakeLastSink extends AbstractDelegatingRunnableSink {
+        constructor(delegate, maxCount) {
+            super(delegate);
+            this.maxCount = maxCount;
+            this.last = [];
+        }
     }
-});
+    decorateWithTakeLastNotify(TakeLastSink);
+    decorateNotifyWithAssertions(TakeLastSink);
+    return createTakeLastOperator({ ...fromArrayT, ...liftT }, TakeLastSink);
+})();
 const takeLastT = {
     takeLast,
 };
-const takeWhile = /*@__PURE__*/ createTakeWhileOperator(liftT, class TakeWhileSink extends AbstractDelegatingRunnableSink {
-    constructor(delegate, predicate, inclusive) {
-        super(delegate);
-        this.predicate = predicate;
-        this.inclusive = inclusive;
+const takeWhile = /*@__PURE__*/ (() => {
+    class TakeWhileSink extends AbstractDelegatingRunnableSink {
+        constructor(delegate, predicate, inclusive) {
+            super(delegate);
+            this.predicate = predicate;
+            this.inclusive = inclusive;
+        }
     }
-});
+    decorateWithTakeWhileNotify(TakeWhileSink);
+    decorateNotifyWithAssertions(TakeWhileSink);
+    return createTakeWhileOperator(liftT, TakeWhileSink);
+})();
 const takeWhileT = {
     takeWhile,
 };
-const throwIfEmpty = /*@__PURE__*/ createThrowIfEmptyOperator(liftT, class ThrowIfEmptySink extends AbstractDelegatingRunnableSink {
-    constructor() {
-        super(...arguments);
-        this.isEmpty = true;
+const throwIfEmpty = /*@__PURE__*/ (() => {
+    class ThrowIfEmptySink extends AbstractDelegatingRunnableSink {
+        constructor() {
+            super(...arguments);
+            this.isEmpty = true;
+        }
     }
-});
+    decorateWithThrowIfEmptyNotify(ThrowIfEmptySink);
+    decorateNotifyWithAssertions(ThrowIfEmptySink);
+    return createThrowIfEmptyOperator(liftT, ThrowIfEmptySink);
+})();
 const throwIfEmptyT = {
     throwIfEmpty,
 };
