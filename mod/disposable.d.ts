@@ -79,6 +79,6 @@ declare const onComplete: <T extends DisposableLike>(teardown: SideEffect) => Fu
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
  */
 declare const toErrorHandler: (disposable: DisposableLike) => SideEffect1<unknown>;
-declare const disposed: Disposable;
+declare const disposed: DisposableLike;
 declare const toAbortSignal: (disposable: DisposableLike) => AbortSignal;
 export { Disposable, DisposableLike, DisposableOrTeardown, Error, add, addTo, bindTo, dispose, disposed, isDisposed, onComplete, onDisposed, onError, toAbortSignal, toErrorHandler };

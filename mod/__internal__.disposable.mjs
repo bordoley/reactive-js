@@ -1,12 +1,12 @@
 /// <reference types="./__internal__.disposable.d.ts" />
-import { disposed, add, dispose } from './disposable.mjs';
+import { add, dispose } from './disposable.mjs';
 import { pipe } from './functions.mjs';
 
 // FIXME: Should really be generic
 class DisposableRef {
-    constructor(disposable) {
+    constructor(disposable, defaultValue) {
         this.disposable = disposable;
-        this._current = disposed;
+        this._current = defaultValue;
     }
     get current() {
         return this._current;

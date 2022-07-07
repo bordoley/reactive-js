@@ -1,5 +1,5 @@
 import { DisposableLike } from "./disposable.mjs";
-import { Enumerator } from "./enumerator.mjs";
+import { EnumeratorLike } from "./enumerator.mjs";
 import { SideEffect, Function1 } from "./functions.mjs";
 /**
  * Creates a new priority scheduler which schedules work using the provided
@@ -70,7 +70,7 @@ interface SchedulerLike extends DisposableLike {
         readonly delay?: number;
     }): void;
 }
-interface VirtualTimeSchedulerLike extends Enumerator<void>, SchedulerLike {
+interface VirtualTimeSchedulerLike extends EnumeratorLike<void>, SchedulerLike {
     readonly isDisposed: boolean;
     dispose(this: this): void;
 }

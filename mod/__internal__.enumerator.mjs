@@ -1,11 +1,11 @@
 /// <reference types="./__internal__.enumerator.d.ts" />
 import { everySatisfy, map, forEach } from './__internal__.readonlyArray.mjs';
-import { onDisposed, isDisposed, dispose, addTo } from './disposable.mjs';
-import { Enumerator, hasCurrent, move, getCurrent } from './enumerator.mjs';
+import { Disposable, onDisposed, isDisposed, dispose, addTo } from './disposable.mjs';
+import { hasCurrent, move, getCurrent } from './enumerator.mjs';
 import { pipe, pipeLazy, raise, newInstance } from './functions.mjs';
 import { none } from './option.mjs';
 
-class AbstractEnumerator extends Enumerator {
+class AbstractEnumerator extends Disposable {
     constructor() {
         super();
         this._current = none;

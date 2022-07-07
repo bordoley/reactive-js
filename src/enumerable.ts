@@ -36,7 +36,7 @@ import {
 } from "./enumerable/enumerator";
 import { fromArray, fromArrayT } from "./enumerable/fromArray";
 import { liftT } from "./enumerable/lift";
-import { Enumerator, getCurrent, hasCurrent, move } from "./enumerator";
+import { EnumeratorLike, getCurrent, hasCurrent, move } from "./enumerator";
 import {
   Equality,
   Factory,
@@ -57,14 +57,14 @@ import { Option, isSome, none } from "./option";
 export interface EnumerableLike<T> extends InteractiveContainerLike {
   readonly T: unknown;
   readonly TContainerOf: EnumerableLike<this["T"]>;
-  readonly TLiftableContainerState: Enumerator<this["T"]>;
+  readonly TLiftableContainerState: EnumeratorLike<this["T"]>;
   readonly TCtx: void;
 
   /**
    * Returns an `EnumeratorLike` to iterate through the Container.
    */
-  enumerate(this: EnumerableLike<this["T"]>): Enumerator<T>;
-  interact(this: EnumerableLike<this["T"]>, _: void): Enumerator<T>;
+  enumerate(this: EnumerableLike<this["T"]>): EnumeratorLike<T>;
+  interact(this: EnumerableLike<this["T"]>, _: void): EnumeratorLike<T>;
 }
 
 /** A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB> */
@@ -125,7 +125,7 @@ export const distinctUntilChanged: <T>(options?: {
       T,
     > extends AbstractPassThroughEnumerator<T> {
       constructor(
-        delegate: Enumerator<T>,
+        delegate: EnumeratorLike<T>,
         private readonly equality: Equality<T>,
       ) {
         super(delegate);
@@ -174,7 +174,7 @@ export const keep: <T>(predicate: Predicate<T>) => EnumerableOperator<T, T> =
     liftT,
     class KeepEnumerator<T> extends AbstractPassThroughEnumerator<T> {
       constructor(
-        delegate: Enumerator<T>,
+        delegate: EnumeratorLike<T>,
         private readonly predicate: Predicate<T>,
       ) {
         super(delegate);
@@ -203,7 +203,10 @@ export const map: <TA, TB>(
 ) => EnumerableOperator<TA, TB> = /*@__PURE__*/ createMapLiftOperator(
   liftT,
   class MapEnumerator<TA, TB> extends AbstractDelegatingEnumerator<TA, TB> {
-    constructor(delegate: Enumerator<TA>, readonly mapper: Function1<TA, TB>) {
+    constructor(
+      delegate: EnumeratorLike<TA>,
+      readonly mapper: Function1<TA, TB>,
+    ) {
       super(delegate);
     }
 
@@ -235,7 +238,7 @@ export const onNotify: <T>(
   liftT,
   class OnNotifyEnumerator<T> extends AbstractPassThroughEnumerator<T> {
     constructor(
-      delegate: Enumerator<T>,
+      delegate: EnumeratorLike<T>,
       private readonly onNotify: SideEffect1<T>,
     ) {
       super(delegate);
@@ -291,7 +294,7 @@ export const scan: <T, TAcc>(
   liftT,
   class ScanEnumerator<T, TAcc> extends AbstractDelegatingEnumerator<T, TAcc> {
     constructor(
-      delegate: Enumerator<T>,
+      delegate: EnumeratorLike<T>,
       private readonly reducer: Reducer<T, TAcc>,
       current: TAcc,
     ) {
@@ -329,7 +332,10 @@ export const skipFirst: <T>(options?: {
   class SkipFirstEnumerator<T> extends AbstractPassThroughEnumerator<T> {
     private count = 0;
 
-    constructor(delegate: Enumerator<T>, private readonly skipCount: number) {
+    constructor(
+      delegate: EnumeratorLike<T>,
+      private readonly skipCount: number,
+    ) {
       super(delegate);
     }
 
@@ -359,7 +365,10 @@ export const takeFirst: <T>(options?: {
   class TakeFirstEnumerator<T> extends AbstractPassThroughEnumerator<T> {
     private count = 0;
 
-    constructor(delegate: Enumerator<T>, private readonly maxCount: number) {
+    constructor(
+      delegate: EnumeratorLike<T>,
+      private readonly maxCount: number,
+    ) {
       super(delegate);
     }
 
@@ -393,7 +402,7 @@ export const takeWhile: <T>(
     private done = false;
 
     constructor(
-      delegate: Enumerator<T>,
+      delegate: EnumeratorLike<T>,
       private readonly predicate: Predicate<T>,
       private readonly inclusive: boolean,
     ) {

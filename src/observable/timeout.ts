@@ -1,7 +1,7 @@
 import { getDelegate } from "../__internal__.delegating";
 import { DisposableRef } from "../__internal__.disposable";
 import { throws } from "../container";
-import { bindTo, dispose } from "../disposable";
+import { bindTo, dispose, disposed } from "../disposable";
 import { newInstance, newInstanceWith, pipe, returns } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer, getScheduler } from "../observer";
@@ -28,10 +28,7 @@ const setupDurationSubscription = <T>(observer: TimeoutObserver<T>) => {
 };
 
 class TimeoutObserver<T> extends AbstractDelegatingObserver<T, T> {
-  readonly durationSubscription: DisposableRef = newInstance(
-    DisposableRef,
-    this,
-  );
+  readonly durationSubscription = newInstance(DisposableRef, this, disposed);
 
   constructor(
     delegate: Observer<T>,

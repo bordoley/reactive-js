@@ -66,7 +66,7 @@ ___
 
 ### TLiftableContainerState
 
-• `Readonly` **TLiftableContainerState**: [`Enumerator`](../classes/enumerator.Enumerator.md)<`unknown`\>
+• `Readonly` **TLiftableContainerState**: [`EnumeratorLike`](enumerator.EnumeratorLike.md)<`unknown`\>
 
 #### Overrides
 
@@ -76,7 +76,7 @@ ___
 
 ### enumerate
 
-▸ **enumerate**(`this`): [`Enumerator`](../classes/enumerator.Enumerator.md)<[`T`](enumerable.EnumerableLike.md#t)\>
+▸ **enumerate**(`this`): [`EnumeratorLike`](enumerator.EnumeratorLike.md)<[`T`](enumerable.EnumerableLike.md#t)\>
 
 Returns an `EnumeratorLike` to iterate through the Container.
 
@@ -88,13 +88,13 @@ Returns an `EnumeratorLike` to iterate through the Container.
 
 #### Returns
 
-[`Enumerator`](../classes/enumerator.Enumerator.md)<[`T`](enumerable.EnumerableLike.md#t)\>
+[`EnumeratorLike`](enumerator.EnumeratorLike.md)<[`T`](enumerable.EnumerableLike.md#t)\>
 
 ___
 
 ### interact
 
-▸ **interact**(`this`, `_`): [`Enumerator`](../classes/enumerator.Enumerator.md)<[`T`](enumerable.EnumerableLike.md#t)\>
+▸ **interact**(`this`, `_`): [`EnumeratorLike`](enumerator.EnumeratorLike.md)<[`T`](enumerable.EnumerableLike.md#t)\>
 
 #### Parameters
 
@@ -105,7 +105,7 @@ ___
 
 #### Returns
 
-[`Enumerator`](../classes/enumerator.Enumerator.md)<[`T`](enumerable.EnumerableLike.md#t)\>
+[`EnumeratorLike`](enumerator.EnumeratorLike.md)<[`T`](enumerable.EnumerableLike.md#t)\>
 
 #### Overrides
 

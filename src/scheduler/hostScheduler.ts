@@ -5,6 +5,7 @@ import {
 } from "../__internal__.schedulerImplementation";
 import {
   Disposable,
+  DisposableLike,
   add,
   addTo,
   dispose,
@@ -84,7 +85,7 @@ const scheduleImmediate = (
 const run = (
   scheduler: HostScheduler,
   continuation: SchedulerContinuationLike,
-  immmediateOrTimerDisposable: Disposable,
+  immmediateOrTimerDisposable: DisposableLike,
 ) => {
   // clear the immediateOrTimer disposable
   pipe(immmediateOrTimerDisposable, dispose());

@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`Enumerator`](../classes/enumerator.Enumerator.md)<`void`\>
+- [`EnumeratorLike`](enumerator.EnumeratorLike.md)<`void`\>
 
 - [`SchedulerLike`](scheduler.SchedulerLike.md)
 
@@ -16,16 +16,13 @@
 
 ### Properties
 
+- [current](scheduler.VirtualTimeSchedulerLike.md#current)
+- [error](scheduler.VirtualTimeSchedulerLike.md#error)
+- [hasCurrent](scheduler.VirtualTimeSchedulerLike.md#hascurrent)
 - [inContinuation](scheduler.VirtualTimeSchedulerLike.md#incontinuation)
 - [isDisposed](scheduler.VirtualTimeSchedulerLike.md#isdisposed)
 - [now](scheduler.VirtualTimeSchedulerLike.md#now)
 - [shouldYield](scheduler.VirtualTimeSchedulerLike.md#shouldyield)
-
-### Accessors
-
-- [current](scheduler.VirtualTimeSchedulerLike.md#current)
-- [error](scheduler.VirtualTimeSchedulerLike.md#error)
-- [hasCurrent](scheduler.VirtualTimeSchedulerLike.md#hascurrent)
 
 ### Methods
 
@@ -36,6 +33,38 @@
 - [schedule](scheduler.VirtualTimeSchedulerLike.md#schedule)
 
 ## Properties
+
+### current
+
+• `Readonly` **current**: `void`
+
+#### Inherited from
+
+[EnumeratorLike](enumerator.EnumeratorLike.md).[current](enumerator.EnumeratorLike.md#current)
+
+___
+
+### error
+
+• `Readonly` **error**: [`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
+
+The error the `Disposable` was disposed with if disposed.
+
+#### Inherited from
+
+[SchedulerLike](scheduler.SchedulerLike.md).[error](scheduler.SchedulerLike.md#error)
+
+___
+
+### hasCurrent
+
+• `Readonly` **hasCurrent**: `boolean`
+
+#### Inherited from
+
+[EnumeratorLike](enumerator.EnumeratorLike.md).[hasCurrent](enumerator.EnumeratorLike.md#hascurrent)
+
+___
 
 ### inContinuation
 
@@ -76,50 +105,6 @@ ___
 #### Inherited from
 
 [SchedulerLike](scheduler.SchedulerLike.md).[shouldYield](scheduler.SchedulerLike.md#shouldyield)
-
-## Accessors
-
-### current
-
-• `Abstract` `get` **current**(): `T`
-
-#### Returns
-
-`T`
-
-#### Inherited from
-
-Enumerator.current
-
-___
-
-### error
-
-• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
-
-The error the `Disposable` was disposed with if disposed.
-
-#### Returns
-
-[`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
-
-#### Inherited from
-
-Enumerator.error
-
-___
-
-### hasCurrent
-
-• `Abstract` `get` **hasCurrent**(): `boolean`
-
-#### Returns
-
-`boolean`
-
-#### Inherited from
-
-Enumerator.hasCurrent
 
 ## Methods
 
@@ -173,7 +158,7 @@ ___
 
 ### move
 
-▸ `Abstract` **move**(): `boolean`
+▸ **move**(): `boolean`
 
 #### Returns
 
@@ -181,7 +166,7 @@ ___
 
 #### Inherited from
 
-[Enumerator](../classes/enumerator.Enumerator.md).[move](../classes/enumerator.Enumerator.md#move)
+[EnumeratorLike](enumerator.EnumeratorLike.md).[move](enumerator.EnumeratorLike.md#move)
 
 ___
 

@@ -3,9 +3,9 @@ import { getDelegate } from './__internal__.delegating.mjs';
 import { AbstractEnumerator, reset, zip as zip$1 } from './__internal__.enumerator.mjs';
 import { interactive, createDistinctUntilChangedLiftOperator, createKeepLiftOperator, createMapLiftOperator, createOnNotifyLiftOperator, createPairwiseLiftOperator, createScanLiftOperator, createSkipFirstLiftOperator, createTakeFirstLiftOperator, createTakeWhileLiftOperator, createThrowIfEmptyLiftOperator } from './__internal__.liftable.mjs';
 import { map as map$1, empty as empty$1, forEach as forEach$1 } from './__internal__.readonlyArray.mjs';
-import { isDisposed, dispose, add, addTo, bindTo } from './disposable.mjs';
+import { isDisposed, dispose, Disposable, add, addTo, bindTo } from './disposable.mjs';
 import { DisposableRef } from './__internal__.disposable.mjs';
-import { hasCurrent, Enumerator, getCurrent, move, forEach } from './enumerator.mjs';
+import { hasCurrent, getCurrent, move, forEach } from './enumerator.mjs';
 import { pipe, pipeLazy, instanceFactory, callWith, raise, newInstance, newInstanceWith, getLength, max, alwaysTrue, identity } from './functions.mjs';
 import { empty } from './container.mjs';
 import { none, isNone, isSome } from './option.mjs';
@@ -90,7 +90,7 @@ class AbstractDelegatingEnumerator extends AbstractEnumerator {
         this.delegate = delegate;
     }
 }
-class AbstractPassThroughEnumerator extends Enumerator {
+class AbstractPassThroughEnumerator extends Disposable {
     constructor(delegate) {
         super();
         this.delegate = delegate;
@@ -100,6 +100,17 @@ class AbstractPassThroughEnumerator extends Enumerator {
     }
     get hasCurrent() {
         return pipe(this, getDelegate, hasCurrent);
+    }
+}
+class NeverEnumerator extends Disposable {
+    get current() {
+        return raise();
+    }
+    get hasCurrent() {
+        return false;
+    }
+    move() {
+        return false;
     }
 }
 
@@ -134,7 +145,7 @@ const liftT = {
 class ConcatAllEnumerator extends AbstractDelegatingEnumerator {
     constructor() {
         super(...arguments);
-        this.enumerator = newInstance(DisposableRef, this);
+        this.enumerator = newInstance(DisposableRef, this, newInstance(NeverEnumerator));
     }
     move() {
         reset(this);
@@ -142,8 +153,7 @@ class ConcatAllEnumerator extends AbstractDelegatingEnumerator {
         if (isDisposed(enumerator.current) && move(delegate)) {
             enumerator.current = pipe(delegate, getCurrent, enumerate);
         }
-        while (enumerator.current instanceof Enumerator &&
-            !isDisposed(enumerator.current)) {
+        while (!isDisposed(enumerator.current)) {
             if (move(enumerator.current)) {
                 this.current = getCurrent(enumerator.current);
                 break;
@@ -199,7 +209,7 @@ const bufferT = {
     buffer,
 };
 
-class IteratorEnumerator extends Enumerator {
+class IteratorEnumerator extends Disposable {
     constructor(iterator) {
         super();
         this.iterator = iterator;
@@ -274,7 +284,7 @@ const generateT = {
     generate,
 };
 
-class RepeatEnumerator extends Enumerator {
+class RepeatEnumerator extends Disposable {
     constructor(src, shouldRepeat) {
         super();
         this.src = src;
@@ -325,7 +335,7 @@ const repeatT = {
     repeat,
 };
 
-class TakeLastEnumerator extends Enumerator {
+class TakeLastEnumerator extends Disposable {
     constructor(delegate, maxCount) {
         super();
         this.delegate = delegate;

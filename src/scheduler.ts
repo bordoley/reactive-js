@@ -1,5 +1,5 @@
 import { DisposableLike } from "./disposable";
-import { Enumerator } from "./enumerator";
+import { EnumeratorLike } from "./enumerator";
 
 /**
  * A unit of work to be executed by a scheduler.
@@ -39,7 +39,7 @@ export interface SchedulerLike extends DisposableLike {
 }
 
 export interface VirtualTimeSchedulerLike
-  extends Enumerator<void>,
+  extends EnumeratorLike<void>,
     SchedulerLike {
   readonly isDisposed: boolean;
   dispose(this: this): void;

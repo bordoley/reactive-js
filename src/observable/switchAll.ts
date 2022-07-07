@@ -1,7 +1,13 @@
 import { getDelegate } from "../__internal__.delegating";
 import { DisposableRef } from "../__internal__.disposable";
 import { ConcatAll } from "../container";
-import { addTo, dispose, isDisposed, onComplete } from "../disposable";
+import {
+  addTo,
+  dispose,
+  disposed,
+  isDisposed,
+  onComplete,
+} from "../disposable";
 import { newInstance, newInstanceWith, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { Observer, getScheduler } from "../observer";
@@ -21,7 +27,7 @@ class SwitchObserver<T> extends AbstractDelegatingObserver<
   ObservableLike<T>,
   T
 > {
-  readonly currentRef = newInstance(DisposableRef, getDelegate(this));
+  readonly currentRef = newInstance(DisposableRef, getDelegate(this), disposed);
 
   notify(next: ObservableLike<T>) {
     assertState(this);
