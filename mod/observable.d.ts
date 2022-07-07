@@ -313,6 +313,7 @@ declare const fromArray: <T>(options?: Partial<{
 }>) => Function1<readonly T[], ObservableLike<T>>;
 declare const fromArrayT: FromArray<ObservableLike<unknown>, {
     readonly delay: number;
+    readonly delayStart: boolean;
     readonly startIndex: number;
     readonly endIndex: number;
 }>;

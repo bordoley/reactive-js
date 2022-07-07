@@ -76,6 +76,7 @@ export const fromArrayT: FromArray<
   ObservableLike<unknown>,
   {
     readonly delay: number;
+    readonly delayStart: boolean;
     readonly startIndex: number;
     readonly endIndex: number;
   }
