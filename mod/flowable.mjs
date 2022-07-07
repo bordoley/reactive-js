@@ -14,7 +14,7 @@ function createLiftedFlowable(...ops) {
     return createLiftedStreamable(...ops);
 }
 const fromObservable = () => observable => createLiftedFlowable((modeObs) => createObservable(observer => {
-    const pausableScheduler = createPausableScheduler(getScheduler(observer));
+    const pausableScheduler = pipe(observer, getScheduler, createPausableScheduler);
     pipe(observer, sourceFrom(pipe(observable, subscribeOn(pausableScheduler), pipe(pausableScheduler, fromDisposable, takeUntil))), add(pipe(modeObs, onNotify((mode) => {
         switch (mode) {
             case "pause":

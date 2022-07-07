@@ -3,6 +3,8 @@ import { __DEV__ } from "../__internal__.env";
 import { DispatcherLike } from "../dispatcher";
 import {
   Disposable,
+  DisposableOrTeardown,
+  Error,
   addTo,
   dispose,
   isDisposed,
@@ -62,7 +64,7 @@ class ObserverDelegatingDispatcher<T>
 
   readonly nextQueue: T[] = [];
 
-  constructor(readonly observer: Observer<T>) {
+  constructor(readonly observer: ObserverLike<T>) {
     super();
   }
 
@@ -125,6 +127,80 @@ if (__DEV__) {
       raise("Observer is disposed");
     }
   };
+}
+
+export class AbstractDisposableBindingDelegatingObserver<
+  TIn,
+  TOut,
+  TObserver extends ObserverLike<TOut> = ObserverLike<TOut>,
+> implements ObserverLike<TIn>
+{
+  private _dispatcher: Option<DispatcherLike<TIn>> = none;
+
+  constructor(public readonly delegate: TObserver) {}
+
+  get dispatcher(): DispatcherLike<TIn> {
+    if (isNone(this._dispatcher)) {
+      const dispatcher = pipe(
+        ObserverDelegatingDispatcher,
+        newInstanceWith<ObserverDelegatingDispatcher<TIn>, ObserverLike<TIn>>(
+          this,
+        ),
+        addTo(this, true),
+        onDisposed(e => {
+          if (isEmpty(dispatcher.nextQueue)) {
+            pipe(this, dispose(e));
+          }
+        }),
+      );
+
+      this._dispatcher = dispatcher;
+    }
+
+    return this._dispatcher;
+  }
+
+  get error(): Option<Error> {
+    return this.delegate.error;
+  }
+  get isDisposed(): boolean {
+    return this.delegate.isDisposed;
+  }
+
+  get scheduler(): SchedulerLike {
+    return getScheduler(this.delegate);
+  }
+
+  add(
+    this: this,
+    disposable: DisposableOrTeardown,
+    ignoreChildErrors: boolean,
+  ): void {
+    this.delegate.add(disposable, ignoreChildErrors);
+  }
+  dispose(this: this, error?: Error | undefined): void {
+    this.delegate.dispose(error);
+  }
+
+  assertState(this: this): void {}
+
+  notify(_: TIn): void {
+    assertState(this);
+  }
+}
+if (__DEV__) {
+  AbstractDisposableBindingDelegatingObserver.prototype.assertState =
+    function assertStateDev(
+      this: AbstractDisposableBindingDelegatingObserver<unknown, unknown>,
+    ) {
+      if (!pipe(this, getScheduler, isInContinuation)) {
+        raise(
+          "Observer.notify() may only be invoked within a scheduled SchedulerContinuation",
+        );
+      } else if (isDisposed(this)) {
+        raise("Observer is disposed");
+      }
+    };
 }
 
 export class AbstractDelegatingObserver<
