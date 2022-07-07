@@ -225,6 +225,53 @@ if (__DEV__) {
         }
     };
 }
+class AbstractDisposableBindingDelegatingObserver {
+    constructor(delegate) {
+        this.delegate = delegate;
+        this._dispatcher = none;
+    }
+    get dispatcher() {
+        if (isNone(this._dispatcher)) {
+            const dispatcher = pipe(ObserverDelegatingDispatcher, newInstanceWith(this), addTo(this, true), onDisposed(e => {
+                if (isEmpty(dispatcher.nextQueue)) {
+                    pipe(this, dispose(e));
+                }
+            }));
+            this._dispatcher = dispatcher;
+        }
+        return this._dispatcher;
+    }
+    get error() {
+        return this.delegate.error;
+    }
+    get isDisposed() {
+        return this.delegate.isDisposed;
+    }
+    get scheduler() {
+        return getScheduler(this.delegate);
+    }
+    add(disposable, ignoreChildErrors) {
+        this.delegate.add(disposable, ignoreChildErrors);
+    }
+    dispose(error) {
+        this.delegate.dispose(error);
+    }
+    assertState() { }
+    notify(_) {
+        assertState(this);
+    }
+}
+if (__DEV__) {
+    AbstractDisposableBindingDelegatingObserver.prototype.assertState =
+        function assertStateDev() {
+            if (!pipe(this, getScheduler, isInContinuation)) {
+                raise("Observer.notify() may only be invoked within a scheduled SchedulerContinuation");
+            }
+            else if (isDisposed(this)) {
+                raise("Observer is disposed");
+            }
+        };
+}
 class AbstractDelegatingObserver extends Observer {
     constructor(delegate) {
         super(getScheduler(delegate));
@@ -1076,7 +1123,7 @@ function timeout(duration) {
     return lift(operator);
 }
 
-class WithLatestFromObserver extends AbstractDelegatingObserver {
+class WithLatestFromObserver extends AbstractDisposableBindingDelegatingObserver {
     constructor(delegate, selector) {
         super(delegate);
         this.selector = selector;
@@ -1100,7 +1147,7 @@ class WithLatestFromObserver extends AbstractDelegatingObserver {
  */
 const withLatestFrom = (other, selector) => {
     const operator = (delegate) => {
-        const observer = pipe(WithLatestFromObserver, newInstanceWith(delegate, selector), bindTo(delegate));
+        const observer = pipe(WithLatestFromObserver, newInstanceWith(delegate, selector));
         pipe(other, onNotify(next => {
             observer.hasLatest = true;
             observer.otherLatest = next;

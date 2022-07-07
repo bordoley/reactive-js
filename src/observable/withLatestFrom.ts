@@ -1,19 +1,20 @@
 import { getDelegate } from "../__internal__.delegating";
-import { addTo, bindTo, dispose, isDisposed, onComplete } from "../disposable";
+import { addTo, dispose, isDisposed, onComplete } from "../disposable";
 import { Function2, newInstanceWith, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { ObserverLike, getScheduler } from "../observer";
 import { Option } from "../option";
 import { assertState, notify } from "../reactiveSink";
 import { lift } from "./lift";
-import { AbstractDelegatingObserver } from "./observer";
+import { AbstractDisposableBindingDelegatingObserver } from "./observer";
 import { onNotify } from "./onNotify";
 import { subscribe } from "./subscribe";
 
-class WithLatestFromObserver<TA, TB, T> extends AbstractDelegatingObserver<
+class WithLatestFromObserver<
   TA,
-  T
-> {
+  TB,
+  T,
+> extends AbstractDisposableBindingDelegatingObserver<TA, T> {
   otherLatest: Option<TB>;
   hasLatest = false;
 
@@ -54,7 +55,6 @@ export const withLatestFrom = <TA, TB, T>(
         ObserverLike<T>,
         Function2<TA, TB, T>
       >(delegate, selector),
-      bindTo(delegate),
     );
 
     pipe(
