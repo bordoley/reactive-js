@@ -1,7 +1,7 @@
 import { getDelegate } from "../__internal__.delegating";
 import { DisposableRef } from "../__internal__.disposable";
 import { throws } from "../container";
-import { bindTo, dispose, disposed } from "../disposable";
+import { dispose, disposed } from "../disposable";
 import { newInstance, newInstanceWith, pipe, returns } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
 import { ObserverLike, getScheduler } from "../observer";
@@ -10,7 +10,7 @@ import { concat } from "./concat";
 import { fromArrayT } from "./fromArray";
 import { lift } from "./lift";
 import { mapT } from "./map";
-import { AbstractDelegatingObserver } from "./observer";
+import { AbstractDisposableBindingDelegatingObserver } from "./observer";
 import { subscribe } from "./subscribe";
 
 const _timeoutError = /*@__PURE__*/ Symbol(
@@ -27,7 +27,7 @@ const setupDurationSubscription = <T>(observer: TimeoutObserver<T>) => {
   );
 };
 
-class TimeoutObserver<T> extends AbstractDelegatingObserver<T, T> {
+class TimeoutObserver<T> extends AbstractDisposableBindingDelegatingObserver<T, T> {
   readonly durationSubscription = newInstance(DisposableRef, this, disposed);
 
   constructor(
@@ -80,7 +80,6 @@ export function timeout<T>(
     const observer = pipe(
       TimeoutObserver,
       newInstanceWith(delegate, durationObs),
-      bindTo(delegate),
     );
 
     setupDurationSubscription(observer);

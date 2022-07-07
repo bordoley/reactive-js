@@ -164,8 +164,10 @@ export const fromObservable =
   observable =>
     createLiftedFlowable((modeObs: ObservableLike<FlowMode>) =>
       createObservable(observer => {
-        const pausableScheduler = createPausableScheduler(
-          getScheduler(observer),
+        const pausableScheduler = pipe(
+          observer,
+          getScheduler,
+          createPausableScheduler,
         );
 
         pipe(
