@@ -286,7 +286,7 @@ ___
 
 ### fromArrayT
 
-• `Const` **fromArrayT**: [`FromArray`](../interfaces/container.FromArray.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, { `delay`: `number` ; `endIndex`: `number` ; `startIndex`: `number`  }\>
+• `Const` **fromArrayT**: [`FromArray`](../interfaces/container.FromArray.md)<[`ObservableLike`](../interfaces/observable.ObservableLike.md)<`unknown`\>, { `delay`: `number` ; `delayStart`: `boolean` ; `endIndex`: `number` ; `startIndex`: `number`  }\>
 
 ___
 
