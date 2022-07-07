@@ -4,6 +4,6 @@
 
 ## Table of contents
 
-### Classes
+### Interfaces
 
-- [AsyncEnumerator](../classes/asyncEnumerator.AsyncEnumerator.md)
+- [AsyncEnumeratorLike](../interfaces/asyncEnumerator.AsyncEnumeratorLike.md)

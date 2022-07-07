@@ -1,4 +1,4 @@
-import { AsyncEnumerator } from "./asyncEnumerator.mjs";
+import { AsyncEnumeratorLike } from "./asyncEnumerator.mjs";
 import { FromArray, Generate, Keep, Map, Scan, TakeWhile } from "./container.mjs";
 import { EnumerableLike, FromEnumerable } from "./enumerable.mjs";
 import { Function1, Updater, Factory, Predicate, Reducer } from "./functions.mjs";
@@ -7,10 +7,10 @@ import { FromIterable } from "./liftableContainer.mjs";
 import { AsyncReducer, ScanAsync, ObservableLike, ToObservable } from "./observable.mjs";
 import { SchedulerLike } from "./scheduler.mjs";
 import { StreamableLike } from "./streamable.mjs";
-interface AsyncEnumerableLike<T> extends StreamableLike<void, T, AsyncEnumerator<T>>, InteractiveContainerLike {
+interface AsyncEnumerableLike<T> extends StreamableLike<void, T, AsyncEnumeratorLike<T>>, InteractiveContainerLike {
     readonly T: unknown;
     readonly TContainerOf: AsyncEnumerableLike<this["T"]>;
-    readonly TLiftableContainerState: AsyncEnumerator<this["T"]>;
+    readonly TLiftableContainerState: AsyncEnumeratorLike<this["T"]>;
     readonly TCtx: SchedulerLike;
 }
 declare type AsyncEnumerableOperator<TA, TB> = Function1<AsyncEnumerableLike<TA>, AsyncEnumerableLike<TB>>;
