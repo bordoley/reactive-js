@@ -12,9 +12,7 @@
 
   ↳↳ [`AsyncEnumeratorLike`](asyncEnumerator.AsyncEnumeratorLike.md)
 
-## Implemented by
-
-- [`Enumerator`](../classes/enumerator.Enumerator.md)
+  ↳↳ [`EnumeratorLike`](enumerator.EnumeratorLike.md)
 
 ## Table of contents
 

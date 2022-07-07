@@ -320,7 +320,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerate` | [`Factory`](functions.md#factory)<[`Enumerator`](../classes/enumerator.Enumerator.md)<`T`\>\> |
+| `enumerate` | [`Factory`](functions.md#factory)<[`EnumeratorLike`](../interfaces/enumerator.EnumeratorLike.md)<`T`\>\> |
 
 #### Returns
 
@@ -353,7 +353,7 @@ ___
 
 ### enumerate
 
-▸ **enumerate**<`T`\>(`enumerable`): [`Enumerator`](../classes/enumerator.Enumerator.md)<`T`\>
+▸ **enumerate**<`T`\>(`enumerable`): [`EnumeratorLike`](../interfaces/enumerator.EnumeratorLike.md)<`T`\>
 
 #### Type parameters
 
@@ -369,7 +369,7 @@ ___
 
 #### Returns
 
-[`Enumerator`](../classes/enumerator.Enumerator.md)<`T`\>
+[`EnumeratorLike`](../interfaces/enumerator.EnumeratorLike.md)<`T`\>
 
 ___
 

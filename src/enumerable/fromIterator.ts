@@ -1,6 +1,6 @@
-import { dispose, isDisposed } from "../disposable";
+import { Disposable, dispose, isDisposed } from "../disposable";
 import { EnumerableLike } from "../enumerable";
-import { Enumerator, hasCurrent } from "../enumerator";
+import { EnumeratorLike, hasCurrent } from "../enumerator";
 import {
   Factory,
   Function1,
@@ -13,11 +13,10 @@ import { FromIterable, FromIterator } from "../liftableContainer";
 import { none } from "../option";
 import { createEnumerable } from "./enumerable";
 
-class IteratorEnumerator<
-  T,
-  TReturn = any,
-  TNext = unknown,
-> extends Enumerator<T> {
+class IteratorEnumerator<T, TReturn = any, TNext = unknown>
+  extends Disposable
+  implements EnumeratorLike<T>
+{
   current: any = none;
   hasCurrent = false;
 

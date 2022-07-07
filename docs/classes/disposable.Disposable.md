@@ -8,8 +8,6 @@
 
 - **`Disposable`**
 
-  ↳ [`Enumerator`](enumerator.Enumerator.md)
-
   ↳ [`Subject`](observable.Subject.md)
 
   ↳ [`Observer`](observer.Observer.md)

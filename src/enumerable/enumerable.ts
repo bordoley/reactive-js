@@ -1,14 +1,15 @@
 import { empty } from "../container";
 import { dispose } from "../disposable";
 import { EnumerableLike } from "../enumerable";
-import { Enumerator } from "../enumerator";
+import { EnumeratorLike } from "../enumerator";
 import { Factory, newInstance, pipe, raise } from "../functions";
 import { CreateInteractiveContainer } from "../interactiveContainer";
 import { none } from "../option";
 import { fromArrayT } from "./fromArray";
 
-export const enumerate = <T>(enumerable: EnumerableLike<T>): Enumerator<T> =>
-  enumerable.enumerate();
+export const enumerate = <T>(
+  enumerable: EnumerableLike<T>,
+): EnumeratorLike<T> => enumerable.enumerate();
 
 export abstract class AbstractEnumerable<T> implements EnumerableLike<T> {
   get T(): T {
@@ -19,7 +20,7 @@ export abstract class AbstractEnumerable<T> implements EnumerableLike<T> {
     return this;
   }
 
-  get TLiftableContainerState(): Enumerator<this["T"]> {
+  get TLiftableContainerState(): EnumeratorLike<this["T"]> {
     return raise();
   }
 
@@ -27,19 +28,19 @@ export abstract class AbstractEnumerable<T> implements EnumerableLike<T> {
     return none;
   }
 
-  abstract enumerate(this: EnumerableLike<T>): Enumerator<T>;
+  abstract enumerate(this: EnumerableLike<T>): EnumeratorLike<T>;
 
-  interact(_: void): Enumerator<T> {
+  interact(_: void): EnumeratorLike<T> {
     return pipe(this, enumerate);
   }
 }
 
 class CreateEnumerable<T> extends AbstractEnumerable<T> {
-  constructor(readonly _enumerate: Factory<Enumerator<T>>) {
+  constructor(readonly _enumerate: Factory<EnumeratorLike<T>>) {
     super();
   }
 
-  enumerate(): Enumerator<T> {
+  enumerate(): EnumeratorLike<T> {
     try {
       return this._enumerate();
     } catch (cause) {
@@ -53,10 +54,10 @@ class CreateEnumerable<T> extends AbstractEnumerable<T> {
 }
 
 export const createEnumerable = <T>(
-  enumerate: Factory<Enumerator<T>>,
+  enumerate: Factory<EnumeratorLike<T>>,
 ): EnumerableLike<T> => newInstance(CreateEnumerable, enumerate);
 
 export const createT: CreateInteractiveContainer<EnumerableLike<unknown>> = {
-  create: <T>(source: (_: void) => Enumerator<T>) =>
+  create: <T>(source: (_: void) => EnumeratorLike<T>) =>
     createEnumerable<T>(() => source(none)),
 };

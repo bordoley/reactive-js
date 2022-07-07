@@ -44,7 +44,7 @@
 
 ### disposed
 
-• `Const` **disposed**: [`Disposable`](../classes/disposable.Disposable.md)
+• `Const` **disposed**: [`DisposableLike`](../interfaces/disposable.DisposableLike.md)
 
 ## Functions
 

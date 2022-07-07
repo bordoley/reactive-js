@@ -5,7 +5,7 @@ import {
   SchedulerImplementationLike,
   runContinuation,
 } from "../__internal__.schedulerImplementation";
-import { add, isDisposed } from "../disposable";
+import { add, disposed, isDisposed } from "../disposable";
 import { getCurrent, hasCurrent, move } from "../enumerator";
 import { max, newInstance, pipe } from "../functions";
 import { Option, isNone, isSome, none } from "../option";
@@ -85,7 +85,7 @@ export abstract class AbstractQueueScheduler<
   private dueTime = 0;
   private taskIDCounter = 0;
   private yieldRequested = false;
-  readonly currentRef = newInstance(DisposableRef, this);
+  readonly currentRef = newInstance(DisposableRef, this, disposed);
 
   constructor(readonly host: SchedulerLike) {
     super();

@@ -7,7 +7,7 @@ import {
   fromIterator as enumerableFromIterator,
   enumerate,
 } from "../enumerable";
-import { Enumerator, getCurrent, move } from "../enumerator";
+import { EnumeratorLike, getCurrent, move } from "../enumerator";
 import { Factory, Function1, compose, pipe, pipeLazy } from "../functions";
 import { FromIterable, FromIterator } from "../liftableContainer";
 import { ObservableLike } from "../observable";
@@ -28,7 +28,7 @@ export const fromEnumerator =
   <T>(options?: {
     readonly delay?: number;
     readonly delayStart?: boolean;
-  }): Function1<Factory<Enumerator<T>>, ObservableLike<T>> =>
+  }): Function1<Factory<EnumeratorLike<T>>, ObservableLike<T>> =>
   f => {
     const { delayStart = true } = options ?? {};
     return pipe(

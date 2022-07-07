@@ -1,6 +1,6 @@
 /// <reference types="./scheduler.d.ts" />
 import { MAX_SAFE_INTEGER } from './__internal__.env.mjs';
-import { Disposable, isDisposed, dispose, add, addTo, onDisposed, disposed } from './disposable.mjs';
+import { Disposable, isDisposed, dispose, disposed, add, addTo, onDisposed } from './disposable.mjs';
 import { floor, getLength, newInstance, pipe, raise, instanceFactory, max, newInstanceWith } from './functions.mjs';
 import { isSome, none, isNone } from './option.mjs';
 import { DisposableRef } from './__internal__.disposable.mjs';
@@ -193,7 +193,7 @@ class AbstractQueueScheduler extends AbstractEnumerator {
         this.dueTime = 0;
         this.taskIDCounter = 0;
         this.yieldRequested = false;
-        this.currentRef = newInstance(DisposableRef, this);
+        this.currentRef = newInstance(DisposableRef, this, disposed);
         this.hostContinuation = () => {
             for (let task = peek(this); isSome(task) && !isDisposed(this); task = peek(this)) {
                 const { continuation, dueTime } = task;

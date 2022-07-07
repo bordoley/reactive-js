@@ -1,5 +1,5 @@
 import { Buffer, ConcatAll, FromArrayOptions, FromArray, Generate, Repeat, TakeLast, ToIterable, Zip, ContainerLike, Container, ContainerOf, Concat, DistinctUntilChanged, Keep, Map, Pairwise, Scan, SkipFirst, TakeFirst, TakeWhile } from "./container.mjs";
-import { Enumerator } from "./enumerator.mjs";
+import { EnumeratorLike } from "./enumerator.mjs";
 import { Factory, Function1, Updater, Predicate, Equality, SideEffect1, Reducer } from "./functions.mjs";
 import { InteractiveContainerLike } from "./interactiveContainer.mjs";
 import { FromIterator, FromIterable, ThrowIfEmpty, Using } from "./liftableContainer.mjs";
@@ -9,8 +9,8 @@ declare const buffer: <T>(options?: {
     readonly maxBufferSize?: number;
 }) => EnumerableOperator<T, readonly T[]>;
 declare const bufferT: Buffer<EnumerableLike<unknown>>;
-declare const enumerate: <T>(enumerable: EnumerableLike<T>) => Enumerator<T>;
-declare const createEnumerable: <T>(enumerate: Factory<Enumerator<T>>) => EnumerableLike<T>;
+declare const enumerate: <T>(enumerable: EnumerableLike<T>) => EnumeratorLike<T>;
+declare const createEnumerable: <T>(enumerate: Factory<EnumeratorLike<T>>) => EnumerableLike<T>;
 /**
  * Converts a higher-order EnumerableLike into a first-order EnumerableLike.
  */
@@ -88,13 +88,13 @@ declare const zipT: Zip<EnumerableLike<unknown>>;
 interface EnumerableLike<T> extends InteractiveContainerLike {
     readonly T: unknown;
     readonly TContainerOf: EnumerableLike<this["T"]>;
-    readonly TLiftableContainerState: Enumerator<this["T"]>;
+    readonly TLiftableContainerState: EnumeratorLike<this["T"]>;
     readonly TCtx: void;
     /**
      * Returns an `EnumeratorLike` to iterate through the Container.
      */
-    enumerate(this: EnumerableLike<this["T"]>): Enumerator<T>;
-    interact(this: EnumerableLike<this["T"]>, _: void): Enumerator<T>;
+    enumerate(this: EnumerableLike<this["T"]>): EnumeratorLike<T>;
+    interact(this: EnumerableLike<this["T"]>, _: void): EnumeratorLike<T>;
 }
 /** A unary function that transforms an EnumerableLike<TA> into a EnumerableLike<TB> */
 declare type EnumerableOperator<TA, TB> = Function1<EnumerableLike<TA>, EnumerableLike<TB>>;
