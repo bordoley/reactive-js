@@ -7,6 +7,7 @@
 ### Interfaces
 
 - [CreateReactiveContainer](../interfaces/reactiveContainer.CreateReactiveContainer.md)
+- [Never](../interfaces/reactiveContainer.Never.md)
 - [ReactiveContainerLike](../interfaces/reactiveContainer.ReactiveContainerLike.md)
 
 ### Functions

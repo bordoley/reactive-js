@@ -84,6 +84,8 @@
 
   ↳ [`CreateReactiveContainer`](reactiveContainer.CreateReactiveContainer.md)
 
+  ↳ [`Never`](reactiveContainer.Never.md)
+
   ↳ [`ToRunnable`](runnable.ToRunnable.md)
 
 ## Table of contents
