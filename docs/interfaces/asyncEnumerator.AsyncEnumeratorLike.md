@@ -56,7 +56,7 @@ ___
 
 ### TLiftableContainerState
 
-• `Readonly` **TLiftableContainerState**: [`Observer`](../classes/observer.Observer.md)<`T`\>
+• `Readonly` **TLiftableContainerState**: [`ObserverLike`](observer.ObserverLike.md)<`T`\>
 
 #### Overrides
 

@@ -10,8 +10,6 @@
 
   ↳ [`Subject`](observable.Subject.md)
 
-  ↳ [`Observer`](observer.Observer.md)
-
 ## Implements
 
 - [`DisposableLike`](../interfaces/disposable.DisposableLike.md)

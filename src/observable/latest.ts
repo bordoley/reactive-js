@@ -4,13 +4,14 @@ import { Zip } from "../container";
 import { addTo, dispose, onComplete } from "../disposable";
 import { getLength, newInstanceWith, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer, getScheduler } from "../observer";
+import { ObserverLike, getScheduler } from "../observer";
 import { none } from "../option";
 import { sourceFrom } from "../reactiveContainer";
 import { assertState, notify } from "../reactiveSink";
 import { SchedulerLike } from "../scheduler";
 import { defer } from "./defer";
 import { computeMinTag, tagObservableType } from "./observable";
+import { Observer } from "./observer";
 
 const enum LatestMode {
   Combine = 1,
@@ -23,7 +24,7 @@ class LatestCtx {
   readyCount = 0;
 
   constructor(
-    readonly delegate: Observer<readonly unknown[]>,
+    readonly delegate: ObserverLike<readonly unknown[]>,
     private readonly mode: LatestMode,
   ) {}
 
@@ -87,7 +88,7 @@ export const latest = (
   observables: readonly ObservableLike<any>[],
   mode: LatestMode,
 ): ObservableLike<readonly unknown[]> => {
-  const factory = () => (delegate: Observer<readonly unknown[]>) => {
+  const factory = () => (delegate: ObserverLike<readonly unknown[]>) => {
     const latestCtxDelegate = new LatestCtx(delegate, mode);
     const onCompleteCb = () => {
       latestCtxDelegate.onCompleted();

@@ -1,6 +1,6 @@
 import { DisposableLike } from "./disposable";
 import { InteractiveSourceLike } from "./interactiveSource";
-import { Observer } from "./observer";
+import { ObserverLike } from "./observer";
 import { StreamLike } from "./stream";
 
 export interface AsyncEnumeratorLike<T>
@@ -9,5 +9,5 @@ export interface AsyncEnumeratorLike<T>
     StreamLike<void, T> {
   readonly T: T;
   readonly TContainerOf: AsyncEnumeratorLike<T>;
-  readonly TLiftableContainerState: Observer<T>;
+  readonly TLiftableContainerState: ObserverLike<T>;
 }

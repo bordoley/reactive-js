@@ -10,7 +10,7 @@ import {
 } from "../disposable";
 import { getLength, newInstance, pipe } from "../functions";
 import { ObservableLike, ObservableOperator } from "../observable";
-import { Observer, getScheduler } from "../observer";
+import { ObserverLike, getScheduler } from "../observer";
 import { isSome } from "../option";
 import { assertState, notifySink } from "../reactiveSink";
 import { lift } from "./lift";
@@ -52,7 +52,7 @@ class MergeObserver<T> extends AbstractDelegatingObserver<
   readonly queue: ObservableLike<T>[] = [];
 
   constructor(
-    delegate: Observer<T>,
+    delegate: ObserverLike<T>,
     readonly maxBufferSize: number,
     readonly maxConcurrency: number,
   ) {
@@ -92,7 +92,7 @@ export const mergeAll = <T>(
     maxBufferSize = MAX_SAFE_INTEGER,
     maxConcurrency = MAX_SAFE_INTEGER,
   } = options;
-  const operator = (delegate: Observer<T>) => {
+  const operator = (delegate: ObserverLike<T>) => {
     const observer = pipe(
       delegate,
       onDisposed(_ => {

@@ -32,7 +32,7 @@ import {
   raise,
 } from "../functions";
 import { ObservableEffectMode, ObservableLike } from "../observable";
-import { Observer, getScheduler } from "../observer";
+import { ObserverLike, getScheduler } from "../observer";
 import { Option, isNone, isSome, none } from "../option";
 import { notify } from "../reactiveSink";
 import { SchedulerLike, schedule } from "../scheduler";
@@ -137,7 +137,7 @@ class ObservableContext {
   private scheduledComputationSubscription: DisposableLike = disposed;
 
   constructor(
-    readonly observer: Observer<unknown>,
+    readonly observer: ObserverLike<unknown>,
     private readonly runComputation: () => void,
     private readonly mode: ObservableEffectMode,
   ) {}
@@ -239,7 +239,7 @@ export const observable = <T>(
   computation: Factory<T>,
   { mode = "batched" }: { mode?: ObservableEffectMode } = {},
 ): ObservableLike<T> =>
-  defer(() => (observer: Observer<T>) => {
+  defer(() => (observer: ObserverLike<T>) => {
     const runComputation = () => {
       let result: Option<T> = none;
       let error: Option<Error> = none;

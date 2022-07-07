@@ -2,7 +2,7 @@ import { DisposableLike, Disposable, DisposableOrTeardown } from "./disposable.m
 import { Zip, Concat, FromArray, Buffer, Map, ConcatAll, Repeat, ContainerLike, Container, ContainerOf, DistinctUntilChanged, EverySatisfy, Generate, Keep, ContainerOperator, Pairwise, Reduce, Scan, SkipFirst, SomeSatisfy, TakeFirst, TakeLast, TakeWhile } from "./container.mjs";
 import { Factory, Function1, Function2, Function3, Function4, Function5, Function6, SideEffect, SideEffect1, SideEffect2, SideEffect3, SideEffect4, SideEffect5, SideEffect6, Predicate, Equality, Updater, Reducer } from "./functions.mjs";
 import { FromIterator, FromIterable, Using, Defer, CatchError, DecodeWithCharset, ThrowIfEmpty } from "./liftableContainer.mjs";
-import { Observer } from "./observer.mjs";
+import { ObserverLike } from "./observer.mjs";
 import { Option } from "./option.mjs";
 import { CreateReactiveContainer, Never, ReactiveContainerLike } from "./reactiveContainer.mjs";
 import { RunnableLike, ToRunnable } from "./runnable.mjs";
@@ -281,7 +281,7 @@ declare function forkZipLatest<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: Observa
  */
 declare function concat<T>(fst: ObservableLike<T>, snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): ObservableLike<T>;
 declare const concatT: Concat<ObservableLike<unknown>>;
-declare const createObservable: <T>(f: SideEffect1<Observer<T>>) => ObservableLike<T>;
+declare const createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T>;
 declare const createT: CreateReactiveContainer<ObservableLike<unknown>>;
 declare class Subject<T> extends Disposable implements MulticastObservableLike<T> {
     readonly replay: number;
@@ -290,11 +290,11 @@ declare class Subject<T> extends Disposable implements MulticastObservableLike<T
     constructor(replay?: number);
     get T(): T;
     get TContainerOf(): ObservableLike<this["T"]>;
-    get TLiftableContainerState(): Observer<this["T"]>;
+    get TLiftableContainerState(): ObserverLike<this["T"]>;
     readonly observableType = 0;
     get observerCount(): number;
     publish(next: T): void;
-    sinkInto(observer: Observer<T>): void;
+    sinkInto(observer: ObserverLike<T>): void;
 }
 declare const publish: <T>(v: T) => Function1<Subject<T>, Subject<T>>;
 declare const publishTo: <T>(subject: Subject<T>) => SideEffect1<T>;
@@ -371,7 +371,7 @@ declare const neverT: Never<ObservableLike<unknown>>;
 declare const subscribe: <T>(scheduler: SchedulerLike) => Function1<ObservableLike<T>, DisposableLike>;
 declare const using: Using<ObservableLike<unknown>>["using"];
 declare const usingT: Using<ObservableLike<unknown>>;
-declare function defer<T>(factory: Factory<SideEffect1<Observer<T>>>, options?: {
+declare function defer<T>(factory: Factory<SideEffect1<ObserverLike<T>>>, options?: {
     readonly delay?: number;
 }): ObservableLike<T>;
 declare function defer<T>(factory: Factory<ObservableLike<T>>): ObservableLike<T>;
@@ -544,9 +544,9 @@ declare type EnumerableObservable = 2;
 interface ObservableLike<T> extends ReactiveContainerLike {
     readonly T: unknown;
     readonly TContainerOf: ObservableLike<this["T"]>;
-    readonly TLiftableContainerState: Observer<this["T"]>;
+    readonly TLiftableContainerState: ObserverLike<this["T"]>;
     readonly observableType: EnumerableObservable | RunnableObservable | DefaultObservable;
-    sinkInto(this: ObservableLike<T>, sink: Observer<T>): void;
+    sinkInto(this: ObservableLike<T>, sink: ObserverLike<T>): void;
 }
 interface EnumerableObservableLike<T> extends ObservableLike<T> {
     readonly TContainerOf: EnumerableObservableLike<this["T"]>;

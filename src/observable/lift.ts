@@ -8,14 +8,14 @@ import {
   ObservableOperator,
   RunnableObservable,
 } from "../observable";
-import { Observer } from "../observer";
+import { ObserverLike } from "../observer";
 import { sourceFrom } from "../reactiveContainer";
 import { AbstractObservable, isEnumerable } from "./observable";
 
 /**
  * A function which transforms a `ObserverLike<B>` to a `ObserverLike<A>`.
  */
-type ObserverOperator<A, B> = Function1<Observer<B>, Observer<A>>;
+type ObserverOperator<A, B> = Function1<ObserverLike<B>, ObserverLike<A>>;
 
 class LiftedObservable<TIn, TOut> extends AbstractObservable<TOut> {
   constructor(
@@ -29,8 +29,12 @@ class LiftedObservable<TIn, TOut> extends AbstractObservable<TOut> {
     super();
   }
 
-  sinkInto(observer: Observer<TOut>) {
-    pipe(observer, ...this.operators, sourceFrom(this.source)) as Observer<any>;
+  sinkInto(observer: ObserverLike<TOut>) {
+    pipe(
+      observer,
+      ...this.operators,
+      sourceFrom(this.source),
+    ) as ObserverLike<any>;
   }
 }
 

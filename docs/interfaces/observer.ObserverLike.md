@@ -1,8 +1,8 @@
-[Reactive-JS](../README.md) / [reactiveSink](../modules/reactiveSink.md) / ReactiveSinkLike
+[Reactive-JS](../README.md) / [observer](../modules/observer.md) / ObserverLike
 
-# Interface: ReactiveSinkLike<T\>
+# Interface: ObserverLike<T\>
 
-[reactiveSink](../modules/reactiveSink.md).ReactiveSinkLike
+[observer](../modules/observer.md).ObserverLike
 
 ## Type parameters
 
@@ -12,27 +12,33 @@
 
 ## Hierarchy
 
-- [`DisposableLike`](disposable.DisposableLike.md)
+- [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)<`T`\>
 
-  ↳ **`ReactiveSinkLike`**
-
-  ↳↳ [`ObserverLike`](observer.ObserverLike.md)
+  ↳ **`ObserverLike`**
 
 ## Table of contents
 
 ### Properties
 
-- [error](reactiveSink.ReactiveSinkLike.md#error)
-- [isDisposed](reactiveSink.ReactiveSinkLike.md#isdisposed)
+- [dispatcher](observer.ObserverLike.md#dispatcher)
+- [error](observer.ObserverLike.md#error)
+- [isDisposed](observer.ObserverLike.md#isdisposed)
+- [scheduler](observer.ObserverLike.md#scheduler)
 
 ### Methods
 
-- [add](reactiveSink.ReactiveSinkLike.md#add)
-- [assertState](reactiveSink.ReactiveSinkLike.md#assertstate)
-- [dispose](reactiveSink.ReactiveSinkLike.md#dispose)
-- [notify](reactiveSink.ReactiveSinkLike.md#notify)
+- [add](observer.ObserverLike.md#add)
+- [assertState](observer.ObserverLike.md#assertstate)
+- [dispose](observer.ObserverLike.md#dispose)
+- [notify](observer.ObserverLike.md#notify)
 
 ## Properties
+
+### dispatcher
+
+• `Readonly` **dispatcher**: [`DispatcherLike`](dispatcher.DispatcherLike.md)<`T`\>
+
+___
 
 ### error
 
@@ -42,7 +48,7 @@ The error the `Disposable` was disposed with if disposed.
 
 #### Inherited from
 
-[DisposableLike](disposable.DisposableLike.md).[error](disposable.DisposableLike.md#error)
+[ReactiveSinkLike](reactiveSink.ReactiveSinkLike.md).[error](reactiveSink.ReactiveSinkLike.md#error)
 
 ___
 
@@ -54,7 +60,13 @@ ___
 
 #### Inherited from
 
-[DisposableLike](disposable.DisposableLike.md).[isDisposed](disposable.DisposableLike.md#isdisposed)
+[ReactiveSinkLike](reactiveSink.ReactiveSinkLike.md).[isDisposed](reactiveSink.ReactiveSinkLike.md#isdisposed)
+
+___
+
+### scheduler
+
+• `Readonly` **scheduler**: [`SchedulerLike`](scheduler.SchedulerLike.md)
 
 ## Methods
 
@@ -68,7 +80,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)<`T`\> |
+| `this` | [`ObserverLike`](observer.ObserverLike.md)<`T`\> |
 | `disposable` | [`DisposableOrTeardown`](../modules/disposable.md#disposableorteardown) |
 | `ignoreChildErrors` | `boolean` |
 
@@ -80,7 +92,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Inherited from
 
-[DisposableLike](disposable.DisposableLike.md).[add](disposable.DisposableLike.md#add)
+[ReactiveSinkLike](reactiveSink.ReactiveSinkLike.md).[add](reactiveSink.ReactiveSinkLike.md#add)
 
 ___
 
@@ -92,11 +104,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)<`T`\> |
+| `this` | [`ObserverLike`](observer.ObserverLike.md)<`T`\> |
 
 #### Returns
 
 `void`
+
+#### Inherited from
+
+[ReactiveSinkLike](reactiveSink.ReactiveSinkLike.md).[assertState](reactiveSink.ReactiveSinkLike.md#assertstate)
 
 ___
 
@@ -110,7 +126,7 @@ Dispose the resource.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `this` | [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)<`T`\> | - |
+| `this` | [`ObserverLike`](observer.ObserverLike.md)<`T`\> | - |
 | `error?` | [`Error`](disposable.Error.md) | An optional error that signals the resource is being disposed due to an error. |
 
 #### Returns
@@ -119,7 +135,7 @@ Dispose the resource.
 
 #### Inherited from
 
-[DisposableLike](disposable.DisposableLike.md).[dispose](disposable.DisposableLike.md#dispose)
+[ReactiveSinkLike](reactiveSink.ReactiveSinkLike.md).[dispose](reactiveSink.ReactiveSinkLike.md#dispose)
 
 ___
 
@@ -136,9 +152,13 @@ scheduled using the sink's `schedule` method.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `this` | [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)<`T`\> | - |
+| `this` | [`ObserverLike`](observer.ObserverLike.md)<`T`\> | - |
 | `next` | `T` | The next notification value. |
 
 #### Returns
 
 `void`
+
+#### Inherited from
+
+[ReactiveSinkLike](reactiveSink.ReactiveSinkLike.md).[notify](reactiveSink.ReactiveSinkLike.md#notify)
