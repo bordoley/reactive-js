@@ -52,7 +52,7 @@ ___
 
 ### TLiftableContainerState
 
-• `Readonly` **TLiftableContainerState**: [`RunnableSink`](../classes/runnableSink.RunnableSink.md)<`unknown`\>
+• `Readonly` **TLiftableContainerState**: [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)<`unknown`\>
 
 #### Overrides
 
@@ -69,7 +69,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `this` | [`RunnableLike`](runnable.RunnableLike.md)<[`T`](runnable.RunnableLike.md#t)\> |
-| `sink` | [`RunnableSink`](../classes/runnableSink.RunnableSink.md)<[`T`](runnable.RunnableLike.md#t)\> |
+| `sink` | [`ReactiveSinkLike`](reactiveSink.ReactiveSinkLike.md)<[`T`](runnable.RunnableLike.md#t)\> |
 
 #### Returns
 

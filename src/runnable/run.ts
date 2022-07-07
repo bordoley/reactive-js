@@ -3,7 +3,7 @@ import { pipe, raise } from "../functions";
 import { isSome } from "../option";
 import { sourceFrom } from "../reactiveContainer";
 import { RunnableLike } from "../runnable";
-import { RunnableSink } from "../runnableSink";
+import { RunnableSink } from "./runnableSink";
 
 export const run =
   <T, TResult>(

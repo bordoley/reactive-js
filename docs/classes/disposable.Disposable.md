@@ -12,8 +12,6 @@
 
   ↳ [`Observer`](observer.Observer.md)
 
-  ↳ [`RunnableSink`](runnableSink.RunnableSink.md)
-
 ## Implements
 
 - [`DisposableLike`](../interfaces/disposable.DisposableLike.md)

@@ -5,8 +5,8 @@ import {
   pipeLazy,
 } from "../functions";
 import { RunnableLike } from "../runnable";
-import { RunnableSink } from "../runnableSink";
 import { run } from "./run";
+import { RunnableSink } from "./runnableSink";
 
 class ForEachSink<T> extends RunnableSink<T> {
   result: void = undefined;

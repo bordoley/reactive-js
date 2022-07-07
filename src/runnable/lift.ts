@@ -4,8 +4,8 @@ import { dispose } from "../disposable";
 import { Function1, newInstance, pipe } from "../functions";
 import { sourceFrom } from "../reactiveContainer";
 import { RunnableLike, RunnableOperator } from "../runnable";
-import { RunnableSink } from "../runnableSink";
 import { AbstractRunnable } from "./runnable";
+import { RunnableSink } from "./runnableSink";
 
 class LiftedRunnable<T> extends AbstractRunnable<T> {
   constructor(

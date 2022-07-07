@@ -1,14 +1,27 @@
 import { getDelegate } from "../__internal__.delegating";
 import { __DEV__ } from "../__internal__.env";
-import { newInstance, pipe } from "../functions";
-import { notify } from "../reactiveSink";
-import { RunnableSink } from "../runnableSink";
+import { Disposable, isDisposed } from "../disposable";
+import { newInstance, pipe, raise } from "../functions";
+import { ReactiveSinkLike, notify } from "../reactiveSink";
+
+export class RunnableSink<T> extends Disposable implements ReactiveSinkLike<T> {
+  assertState(this: this): void {}
+
+  notify(_: T): void {}
+}
+if (__DEV__) {
+  RunnableSink.prototype.assertState = function <T>(this: RunnableSink<T>) {
+    if (isDisposed(this)) {
+      raise("RunnableSink is disposed");
+    }
+  };
+}
 
 export class AbstractDelegatingRunnableSink<
   TIn,
   TOut,
 > extends RunnableSink<TIn> {
-  constructor(readonly delegate: RunnableSink<TOut>) {
+  constructor(readonly delegate: ReactiveSinkLike<TOut>) {
     super();
   }
 
@@ -22,5 +35,5 @@ class DelegatingRunnableSink<T> extends AbstractDelegatingRunnableSink<T, T> {
 }
 
 export const createDelegatingRunnableSink = <T>(
-  delegate: RunnableSink<T>,
+  delegate: ReactiveSinkLike<T>,
 ): RunnableSink<T> => newInstance(DelegatingRunnableSink, delegate);

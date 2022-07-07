@@ -66,6 +66,7 @@ import {
 } from "./liftableContainer";
 import { Option, getOrDefault, isNone, none } from "./option";
 import { Never, ReactiveContainerLike, sourceFrom } from "./reactiveContainer";
+import { ReactiveSinkLike } from "./reactiveSink";
 import { createRunnable, createT } from "./runnable/createRunnable";
 import { first } from "./runnable/first";
 import { fromArrayT } from "./runnable/fromArray";
@@ -74,14 +75,13 @@ import {
   AbstractDelegatingRunnableSink,
   createDelegatingRunnableSink,
 } from "./runnable/runnableSink";
-import { RunnableSink } from "./runnableSink";
 
 export interface RunnableLike<T> extends ReactiveContainerLike {
   readonly T: unknown;
   readonly TContainerOf: RunnableLike<this["T"]>;
-  readonly TLiftableContainerState: RunnableSink<this["T"]>;
+  readonly TLiftableContainerState: ReactiveSinkLike<this["T"]>;
 
-  sinkInto(this: RunnableLike<T>, sink: RunnableSink<T>): void;
+  sinkInto(this: RunnableLike<T>, sink: ReactiveSinkLike<T>): void;
 }
 
 export type RunnableOperator<TA, TB> = Function1<
@@ -107,7 +107,7 @@ export const buffer: <T>(options?: {
   class BufferSink<T> extends AbstractDelegatingRunnableSink<T, readonly T[]> {
     buffer: T[] = [];
     constructor(
-      delegate: RunnableSink<readonly T[]>,
+      delegate: ReactiveSinkLike<readonly T[]>,
       readonly maxBufferSize: number,
     ) {
       super(delegate);
@@ -133,7 +133,7 @@ export const catchErrorT: CatchError<RunnableLike<unknown>> = {
 export const concat: Concat<RunnableLike<unknown>>["concat"] = <T>(
   ...runnables: readonly RunnableLike<T>[]
 ) =>
-  createRunnable((sink: RunnableSink<T>) => {
+  createRunnable((sink: ReactiveSinkLike<T>) => {
     const runnablesLength = getLength(runnables);
     for (let i = 0; i < runnablesLength && !isDisposed(sink); i++) {
       pipe(
@@ -160,7 +160,7 @@ export const decodeWithCharset: (
       string
     > {
       constructor(
-        delegate: RunnableSink<string>,
+        delegate: ReactiveSinkLike<string>,
         readonly textDecoder: TextDecoder,
       ) {
         super(delegate);
@@ -183,7 +183,7 @@ export const distinctUntilChanged: <T>(options?: {
     prev: Option<T> = none;
     hasValue = false;
 
-    constructor(delegate: RunnableSink<T>, readonly equality: Equality<T>) {
+    constructor(delegate: ReactiveSinkLike<T>, readonly equality: Equality<T>) {
       super(delegate);
     }
   },
@@ -201,7 +201,7 @@ export const everySatisfy: <T>(
   { ...fromArrayT, ...liftT },
   class EverySatisfySink<T> extends AbstractDelegatingRunnableSink<T, boolean> {
     constructor(
-      delegate: RunnableSink<boolean>,
+      delegate: ReactiveSinkLike<boolean>,
       readonly predicate: Predicate<T>,
     ) {
       super(delegate);
@@ -217,7 +217,7 @@ export const generate = <T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
 ): RunnableLike<T> => {
-  const run = (sink: RunnableSink<T>) => {
+  const run = (sink: ReactiveSinkLike<T>) => {
     let acc = initialValue();
     while (!isDisposed(sink)) {
       acc = generator(acc);
@@ -235,7 +235,10 @@ export const keep: <T>(predicate: Predicate<T>) => RunnableOperator<T, T> =
   /*@__PURE__*/ createKeepOperator(
     liftT,
     class KeepSink<T> extends AbstractDelegatingRunnableSink<T, T> {
-      constructor(delegate: RunnableSink<T>, readonly predicate: Predicate<T>) {
+      constructor(
+        delegate: ReactiveSinkLike<T>,
+        readonly predicate: Predicate<T>,
+      ) {
         super(delegate);
       }
     },
@@ -251,7 +254,7 @@ export const map: <TA, TB>(
   liftT,
   class MapSink<TA, TB> extends AbstractDelegatingRunnableSink<TA, TB> {
     constructor(
-      delegate: RunnableSink<TB>,
+      delegate: ReactiveSinkLike<TB>,
       readonly mapper: Function1<TA, TB>,
     ) {
       super(delegate);
@@ -279,7 +282,7 @@ export const onNotify: <T>(onNotify: SideEffect1<T>) => RunnableOperator<T, T> =
     liftT,
     class OnNotifySink<T> extends AbstractDelegatingRunnableSink<T, T> {
       constructor(
-        delegate: RunnableSink<T>,
+        delegate: ReactiveSinkLike<T>,
         readonly onNotify: SideEffect1<T>,
       ) {
         super(delegate);
@@ -312,7 +315,7 @@ export const reduce: <T, TAcc>(
   { ...fromArrayT, ...liftT },
   class ReducerSink<T, TAcc> extends AbstractDelegatingRunnableSink<T, TAcc> {
     constructor(
-      delegate: RunnableSink<TAcc>,
+      delegate: ReactiveSinkLike<TAcc>,
       readonly reducer: Reducer<T, TAcc>,
       public acc: TAcc,
     ) {
@@ -360,7 +363,7 @@ export const scan: <T, TAcc>(
   liftT,
   class ScanSink<T, TAcc> extends AbstractDelegatingRunnableSink<T, TAcc> {
     constructor(
-      delegate: RunnableSink<TAcc>,
+      delegate: ReactiveSinkLike<TAcc>,
       readonly reducer: Reducer<T, TAcc>,
       public acc: TAcc,
     ) {
@@ -380,7 +383,7 @@ export const skipFirst: <T>(options?: {
   class SkipFirstSink<T> extends AbstractDelegatingRunnableSink<T, T> {
     count = 0;
 
-    constructor(delegate: RunnableSink<T>, readonly skipCount: number) {
+    constructor(delegate: ReactiveSinkLike<T>, readonly skipCount: number) {
       super(delegate);
     }
   },
@@ -396,7 +399,7 @@ export const someSatisfy: <T>(
   { ...fromArrayT, ...liftT },
   class SomeSatisfySink<T> extends AbstractDelegatingRunnableSink<T, boolean> {
     constructor(
-      delegate: RunnableSink<boolean>,
+      delegate: ReactiveSinkLike<boolean>,
       readonly predicate: Predicate<T>,
     ) {
       super(delegate);
@@ -415,7 +418,7 @@ export const takeFirst: <T>(options?: {
   class TakeFirstSink<T> extends AbstractDelegatingRunnableSink<T, T> {
     count = 0;
 
-    constructor(delegate: RunnableSink<T>, readonly maxCount: number) {
+    constructor(delegate: ReactiveSinkLike<T>, readonly maxCount: number) {
       super(delegate);
     }
   },
@@ -432,7 +435,7 @@ export const takeLast: <T>(options?: {
   class TakeLastSink<T> extends AbstractDelegatingRunnableSink<T, T> {
     readonly last: T[] = [];
 
-    constructor(delegate: RunnableSink<T>, readonly maxCount: number) {
+    constructor(delegate: ReactiveSinkLike<T>, readonly maxCount: number) {
       super(delegate);
     }
   },
@@ -449,7 +452,7 @@ export const takeWhile: <T>(
   liftT,
   class TakeWhileSink<T> extends AbstractDelegatingRunnableSink<T, T> {
     constructor(
-      delegate: RunnableSink<T>,
+      delegate: ReactiveSinkLike<T>,
       readonly predicate: Predicate<T>,
       readonly inclusive: boolean,
     ) {

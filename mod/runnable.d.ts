@@ -4,10 +4,10 @@ import { SideEffect1, Function1, Equality, Predicate, Updater, Factory, Reducer 
 import { CatchError, DecodeWithCharset, ThrowIfEmpty, Using } from "./liftableContainer.mjs";
 import { Option } from "./option.mjs";
 import { CreateReactiveContainer, ReactiveContainerLike, Never } from "./reactiveContainer.mjs";
-import { RunnableSink } from "./runnableSink.mjs";
+import { ReactiveSinkLike } from "./reactiveSink.mjs";
 declare const concatAll: ConcatAll<RunnableLike<unknown>>["concatAll"];
 declare const concatAllT: ConcatAll<RunnableLike<unknown>>;
-declare const createRunnable: <T>(run: SideEffect1<RunnableSink<T>>) => RunnableLike<T>;
+declare const createRunnable: <T>(run: SideEffect1<ReactiveSinkLike<T>>) => RunnableLike<T>;
 declare const createT: CreateReactiveContainer<RunnableLike<unknown>>;
 declare const first: <T>() => Function1<RunnableLike<T>, Option<T>>;
 declare const forEach: <T>(f: SideEffect1<T>) => Function1<RunnableLike<T>, void>;
@@ -17,8 +17,8 @@ declare const last: <T>() => Function1<RunnableLike<T>, Option<T>>;
 interface RunnableLike<T> extends ReactiveContainerLike {
     readonly T: unknown;
     readonly TContainerOf: RunnableLike<this["T"]>;
-    readonly TLiftableContainerState: RunnableSink<this["T"]>;
-    sinkInto(this: RunnableLike<T>, sink: RunnableSink<T>): void;
+    readonly TLiftableContainerState: ReactiveSinkLike<this["T"]>;
+    sinkInto(this: RunnableLike<T>, sink: ReactiveSinkLike<T>): void;
 }
 declare type RunnableOperator<TA, TB> = Function1<RunnableLike<TA>, RunnableLike<TB>>;
 interface ToRunnable<C extends ContainerLike> extends Container<C> {
