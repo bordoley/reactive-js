@@ -1,4 +1,4 @@
-import { Disposable } from "./disposable";
+import { DisposableLike } from "./disposable";
 import { Enumerator } from "./enumerator";
 
 /**
@@ -6,7 +6,7 @@ import { Enumerator } from "./enumerator";
  *
  * @noInheritDoc
  */
-export interface SchedulerContinuationLike extends Disposable {
+export interface SchedulerContinuationLike extends DisposableLike {
   /**
    * Work function to be invoked by the scheduler after the specified delay.
    */
@@ -16,7 +16,7 @@ export interface SchedulerContinuationLike extends Disposable {
 /**
  * An object that schedules units of work on a runloop.
  */
-export interface SchedulerLike extends Disposable {
+export interface SchedulerLike extends DisposableLike {
   readonly inContinuation: boolean;
   readonly now: number;
   readonly shouldYield: boolean;
@@ -55,7 +55,7 @@ export interface PausableSchedulerLike extends SchedulerLike {
  *
  * @noInheritDoc
  */
-export interface PrioritySchedulerLike extends Disposable {
+export interface PrioritySchedulerLike extends DisposableLike {
   readonly inContinuation: boolean;
   readonly now: number;
   readonly shouldYield: boolean;

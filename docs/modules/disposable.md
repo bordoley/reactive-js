@@ -10,6 +10,7 @@
 
 ### Interfaces
 
+- [DisposableLike](../interfaces/disposable.DisposableLike.md)
 - [Error](../interfaces/disposable.Error.md)
 
 ### Type Aliases
@@ -37,7 +38,7 @@
 
 ### DisposableOrTeardown
 
-Ƭ **DisposableOrTeardown**: [`Disposable`](../classes/disposable.Disposable.md) \| [`SideEffect1`](functions.md#sideeffect1)<[`Option`](option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>\>
+Ƭ **DisposableOrTeardown**: [`DisposableLike`](../interfaces/disposable.DisposableLike.md) \| [`SideEffect1`](functions.md#sideeffect1)<[`Option`](option.md#option)<[`Error`](../interfaces/disposable.Error.md)\>\>
 
 ## Variables
 
@@ -55,13 +56,13 @@
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`Disposable`](../classes/disposable.Disposable.md)<`T`\> |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `child` | [`Disposable`](../classes/disposable.Disposable.md) |
+| `child` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 | `ignoreChildErrors` | ``true`` |
 
 #### Returns
@@ -74,13 +75,13 @@
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`Disposable`](../classes/disposable.Disposable.md)<`T`\> |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `child` | [`Disposable`](../classes/disposable.Disposable.md) |
+| `child` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 
 #### Returns
 
@@ -96,13 +97,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`Disposable`](../classes/disposable.Disposable.md)<`T`\> |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `child` | [`Disposable`](../classes/disposable.Disposable.md) |
+| `child` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 | `ignoreChildErrors` | ``true`` |
 
 #### Returns
@@ -115,13 +116,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`Disposable`](../classes/disposable.Disposable.md)<`T`\> |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `child` | [`Disposable`](../classes/disposable.Disposable.md) |
+| `child` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 
 #### Returns
 
@@ -137,13 +138,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`Disposable`](../classes/disposable.Disposable.md)<`T`\> |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `child` | [`Disposable`](../classes/disposable.Disposable.md) |
+| `child` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 
 #### Returns
 
@@ -161,7 +162,7 @@ Dispose `disposable` with an optional error.
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`Disposable`](../classes/disposable.Disposable.md)<`T`\> |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 
@@ -183,7 +184,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `disposable` | [`Disposable`](../classes/disposable.Disposable.md) |
+| `disposable` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 
 #### Returns
 
@@ -199,7 +200,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`Disposable`](../classes/disposable.Disposable.md)<`T`\> |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 
@@ -221,7 +222,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`Disposable`](../classes/disposable.Disposable.md)<`T`\> |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 
@@ -243,7 +244,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`Disposable`](../classes/disposable.Disposable.md)<`T`\> |
+| `T` | extends [`DisposableLike`](../interfaces/disposable.DisposableLike.md)<`T`\> |
 
 #### Parameters
 
@@ -265,7 +266,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `disposable` | [`Disposable`](../classes/disposable.Disposable.md) |
+| `disposable` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 
 #### Returns
 
@@ -283,7 +284,7 @@ Returns a function that disposes `disposable` with an error wrapping the provide
 
 | Name | Type |
 | :------ | :------ |
-| `disposable` | [`Disposable`](../classes/disposable.Disposable.md) |
+| `disposable` | [`DisposableLike`](../interfaces/disposable.DisposableLike.md) |
 
 #### Returns
 

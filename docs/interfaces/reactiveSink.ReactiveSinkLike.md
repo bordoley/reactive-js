@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`Disposable`](../classes/disposable.Disposable.md)
+- [`DisposableLike`](disposable.DisposableLike.md)
 
   ↳ **`ReactiveSinkLike`**
 
@@ -23,7 +23,7 @@
 
 ## Table of contents
 
-### Accessors
+### Properties
 
 - [error](reactiveSink.ReactiveSinkLike.md#error)
 - [isDisposed](reactiveSink.ReactiveSinkLike.md#isdisposed)
@@ -35,37 +35,29 @@
 - [dispose](reactiveSink.ReactiveSinkLike.md#dispose)
 - [notify](reactiveSink.ReactiveSinkLike.md#notify)
 
-## Accessors
+## Properties
 
 ### error
 
-• `get` **error**(): [`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
+• `Readonly` **error**: [`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
 
 The error the `Disposable` was disposed with if disposed.
 
-#### Returns
-
-[`Option`](../modules/option.md#option)<[`Error`](disposable.Error.md)\>
-
 #### Inherited from
 
-Disposable.error
+[DisposableLike](disposable.DisposableLike.md).[error](disposable.DisposableLike.md#error)
 
 ___
 
 ### isDisposed
 
-• `get` **isDisposed**(): `boolean`
+• `Readonly` **isDisposed**: `boolean`
 
 `true` if this resource has been disposed, otherwise false
 
-#### Returns
-
-`boolean`
-
 #### Inherited from
 
-Disposable.isDisposed
+[DisposableLike](disposable.DisposableLike.md).[isDisposed](disposable.DisposableLike.md#isdisposed)
 
 ## Methods
 
@@ -91,7 +83,7 @@ Adds the given `DisposableOrTeardown` to this container or disposes it if the co
 
 #### Inherited from
 
-[Disposable](../classes/disposable.Disposable.md).[add](../classes/disposable.Disposable.md#add)
+[DisposableLike](disposable.DisposableLike.md).[add](disposable.DisposableLike.md#add)
 
 ___
 
@@ -130,7 +122,7 @@ Dispose the resource.
 
 #### Inherited from
 
-[Disposable](../classes/disposable.Disposable.md).[dispose](../classes/disposable.Disposable.md#dispose)
+[DisposableLike](disposable.DisposableLike.md).[dispose](disposable.DisposableLike.md#dispose)
 
 ___
 

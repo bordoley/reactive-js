@@ -1,7 +1,7 @@
 import { __DEV__ } from "../__internal__.env";
 import { empty } from "../container";
 import {
-  Disposable,
+  DisposableLike,
   Error,
   addTo,
   dispose,
@@ -59,7 +59,7 @@ type MemoEffect = {
 type ObserveEffect = {
   readonly type: EffecTContainerOf.Observe;
   observable: ObservableLike<unknown>;
-  subscription: Disposable;
+  subscription: DisposableLike;
   value: Option<unknown>;
   hasValue: boolean;
 };
@@ -68,7 +68,7 @@ type UsingEffect = {
   readonly type: EffecTContainerOf.Using;
   f: (...args: any[]) => unknown;
   args: any[];
-  value: Disposable;
+  value: DisposableLike;
 };
 
 let currentCtx: Option<ObservableContext> = none;
@@ -134,7 +134,7 @@ function validateObservableEffect(
 class ObservableContext {
   index = 0;
   readonly effects: ObservableEffect[] = [];
-  private scheduledComputationSubscription = disposed;
+  private scheduledComputationSubscription: DisposableLike = disposed;
 
   constructor(
     readonly observer: Observer<unknown>,
@@ -216,7 +216,7 @@ class ObservableContext {
     }
   }
 
-  using<T extends Disposable>(f: (...args: any[]) => T, ...args: any[]): T {
+  using<T extends DisposableLike>(f: (...args: any[]) => T, ...args: any[]): T {
     const effect = validateObservableEffect(this, EffecTContainerOf.Using);
 
     if (f === effect.f && arrayStrictEquality(args, effect.args)) {
@@ -404,30 +404,30 @@ export function __do(f: (...args: any[]) => void, ...args: any[]): void {
   ctx.using(subscribeOnScheduler, observable);
 }
 
-export function __using<T extends Disposable>(fn: Factory<T>): T;
-export function __using<TA, T extends Disposable>(
+export function __using<T extends DisposableLike>(fn: Factory<T>): T;
+export function __using<TA, T extends DisposableLike>(
   fn: Function1<TA, T>,
   a: TA,
 ): T;
-export function __using<TA, TB, T extends Disposable>(
+export function __using<TA, TB, T extends DisposableLike>(
   fn: Function2<TA, TB, T>,
   a: TA,
   b: TB,
 ): T;
-export function __using<TA, TB, TC, T extends Disposable>(
+export function __using<TA, TB, TC, T extends DisposableLike>(
   fn: Function3<TA, TB, TC, T>,
   a: TA,
   b: TB,
   c: TC,
 ): T;
-export function __using<TA, TB, TC, TD, T extends Disposable>(
+export function __using<TA, TB, TC, TD, T extends DisposableLike>(
   fn: Function4<TA, TB, TC, TD, T>,
   a: TA,
   b: TB,
   c: TC,
   d: TD,
 ): T;
-export function __using<TA, TB, TC, TD, TE, T extends Disposable>(
+export function __using<TA, TB, TC, TD, TE, T extends DisposableLike>(
   fn: Function5<TA, TB, TC, TD, TE, T>,
   a: TA,
   b: TB,
@@ -435,7 +435,7 @@ export function __using<TA, TB, TC, TD, TE, T extends Disposable>(
   d: TD,
   e: TE,
 ): T;
-export function __using<TA, TB, TC, TD, TE, TF, T extends Disposable>(
+export function __using<TA, TB, TC, TD, TE, TF, T extends DisposableLike>(
   fn: Function6<TA, TB, TC, TD, TE, TF, T>,
   a: TA,
   b: TB,
@@ -444,7 +444,7 @@ export function __using<TA, TB, TC, TD, TE, TF, T extends Disposable>(
   e: TE,
   f: TF,
 ): T;
-export function __using<T extends Disposable>(
+export function __using<T extends DisposableLike>(
   f: (...args: any[]) => T,
   ...args: any[]
 ): T {

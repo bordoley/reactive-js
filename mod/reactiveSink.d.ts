@@ -1,6 +1,6 @@
-import { Disposable } from "./disposable.mjs";
+import { DisposableLike } from "./disposable.mjs";
 import { Function1, SideEffect1 } from "./functions.mjs";
-interface ReactiveSinkLike<T> extends Disposable {
+interface ReactiveSinkLike<T> extends DisposableLike {
     assertState(this: this): void;
     /**
      * Notifies the the sink of the next notification produced by the observable source.

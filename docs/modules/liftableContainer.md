@@ -28,7 +28,7 @@
 
 ### LiftableContainerStateOf
 
-Ƭ **LiftableContainerStateOf**<`C`, `T`\>: `C` extends { `TLiftableContainerState`: [`Disposable`](../classes/disposable.Disposable.md)  } ? `C` & { `T`: `T`  }[``"TLiftableContainerState"``] : { `_C`: `C` ; `_T`: () => `T`  }
+Ƭ **LiftableContainerStateOf**<`C`, `T`\>: `C` extends { `TLiftableContainerState`: [`DisposableLike`](../interfaces/disposable.DisposableLike.md)  } ? `C` & { `T`: `T`  }[``"TLiftableContainerState"``] : { `_C`: `C` ; `_T`: () => `T`  }
 
 #### Type parameters
 

@@ -28,7 +28,7 @@ import {
   fromValue,
 } from "./container";
 import {
-  Disposable,
+  DisposableLike,
   DisposableOrTeardown,
   add,
   addTo,
@@ -785,7 +785,7 @@ export const createThrowIfEmptyOperator = <C extends ReactiveContainerLike>(
 
 export const createFromDisposable =
   <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) =>
-  <T>(disposable: Disposable): ContainerOf<C, T> =>
+  <T>(disposable: DisposableLike): ContainerOf<C, T> =>
     pipe(disposable, addTo, create(m));
 
 export const createNever = <C extends ReactiveContainerLike>(
@@ -814,7 +814,7 @@ export const createOnSink =
 
 export const createUsing =
   <C extends ReactiveContainerLike>(m: CreateReactiveContainer<C>) =>
-  <TResource extends Disposable, T>(
+  <TResource extends DisposableLike, T>(
     resourceFactory: Factory<TResource | readonly TResource[]>,
     sourceFactory: (...resources: readonly TResource[]) => ContainerOf<C, T>,
   ): ContainerOf<C, T> =>
