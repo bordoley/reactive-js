@@ -1,6 +1,7 @@
 /// <reference types="./runnable.d.ts" />
 import { getDelegate } from './__internal__.delegating.mjs';
 import { __DEV__, MAX_SAFE_INTEGER } from './__internal__.env.mjs';
+import { decorateMap } from './__internal__.functions.mjs';
 import { reactive, createDistinctUntilChangedOperator, createKeepOperator, createMapOperator, createOnNotifyOperator, createPairwiseOperator, createScanOperator, createSkipFirstOperator, createTakeFirstOperator, createTakeWhileOperator, createThrowIfEmptyOperator } from './__internal__.liftable.mjs';
 import { decorateWithCatchErrorNotify, createCatchErrorOperator, decorateWithDecodeWithCharsetNotify, createDecodeWithCharsetOperator, decorateWithDistinctUntilChangedNotify, decorateWithEverySatisfyNotify, createEverySatisfyOperator, decorateWithKeepNotify, decorateWithMapNotify, createNever, decorateWithOnNotifyNotify, createOnSink, decorateWithPairwiseNotify, decorateWithReduceNotify, createReduceOperator, decorateWithScanNotify, decorateWithSkipFirstNotify, decorateWithSomeSatisfyNotify, createSomeSatisfyOperator, decorateWithTakeFirstNotify, decorateWithTakeLastNotify, createTakeLastOperator, decorateWithTakeWhileNotify, decorateWithThrowIfEmptyNotify, createUsing } from './__internal__.reactiveContainer.mjs';
 import { empty } from './__internal__.readonlyArray.mjs';
@@ -199,13 +200,8 @@ const buffer = /*@__PURE__*/ (() => {
 const bufferT = {
     buffer,
 };
-const catchError = /*@__PURE__*/ (() => {
-    class CatchErrorSink extends AbstractDelegatingRunnableSink {
-    }
-    decorateWithCatchErrorNotify(CatchErrorSink);
-    decorateNotifyWithAssertions(CatchErrorSink);
-    return createCatchErrorOperator(liftT, CatchErrorSink);
-})();
+const catchError = /*@__PURE__*/ decorateMap(class CatchErrorSink extends AbstractDelegatingRunnableSink {
+}, decorateWithCatchErrorNotify(), decorateNotifyWithAssertions, createCatchErrorOperator(liftT));
 const catchErrorT = {
     catchError,
 };
@@ -218,17 +214,15 @@ const concat = (...runnables) => createRunnable((sink) => {
 const concatT = {
     concat,
 };
-const decodeWithCharset = /*@__PURE__*/ (() => {
-    class DecodeWithCharsetSink extends AbstractDelegatingRunnableSink {
-        constructor(delegate, textDecoder) {
-            super(delegate);
-            this.textDecoder = textDecoder;
-        }
+const decodeWithCharset = /*@__PURE__*/ decorateMap(class DecodeWithCharsetSink extends AbstractDelegatingRunnableSink {
+    constructor(delegate, textDecoder) {
+        super(delegate);
+        this.textDecoder = textDecoder;
     }
-    decorateWithDecodeWithCharsetNotify(DecodeWithCharsetSink);
-    decorateNotifyWithAssertions(DecodeWithCharsetSink);
-    return createDecodeWithCharsetOperator({ ...liftT, ...fromArrayT }, DecodeWithCharsetSink);
-})();
+}, decorateWithDecodeWithCharsetNotify(), decorateNotifyWithAssertions, createDecodeWithCharsetOperator({
+    ...liftT,
+    ...fromArrayT,
+}));
 const decodeWithCharsetT = {
     decodeWithCharset,
 };
@@ -248,17 +242,12 @@ const distinctUntilChanged = /*@__PURE__*/ (() => {
 const distinctUntilChangedT = {
     distinctUntilChanged,
 };
-const everySatisfy = /*@__PURE__*/ (() => {
-    class EverySatisfySink extends AbstractDelegatingRunnableSink {
-        constructor(delegate, predicate) {
-            super(delegate);
-            this.predicate = predicate;
-        }
+const everySatisfy = /*@__PURE__*/ decorateMap(class EverySatisfySink extends AbstractDelegatingRunnableSink {
+    constructor(delegate, predicate) {
+        super(delegate);
+        this.predicate = predicate;
     }
-    decorateWithEverySatisfyNotify(EverySatisfySink);
-    decorateNotifyWithAssertions(EverySatisfySink);
-    return createEverySatisfyOperator({ ...fromArrayT, ...liftT }, EverySatisfySink);
-})();
+}, decorateWithEverySatisfyNotify(), decorateNotifyWithAssertions, createEverySatisfyOperator({ ...fromArrayT, ...liftT }));
 const everySatisfyT = {
     everySatisfy,
 };
@@ -403,17 +392,12 @@ const skipFirst = /*@__PURE__*/ (() => {
 const skipFirstT = {
     skipFirst,
 };
-const someSatisfy = /*@__PURE__*/ (() => {
-    class SomeSatisfySink extends AbstractDelegatingRunnableSink {
-        constructor(delegate, predicate) {
-            super(delegate);
-            this.predicate = predicate;
-        }
+const someSatisfy = /*@__PURE__*/ decorateMap(class SomeSatisfySink extends AbstractDelegatingRunnableSink {
+    constructor(delegate, predicate) {
+        super(delegate);
+        this.predicate = predicate;
     }
-    decorateWithSomeSatisfyNotify(SomeSatisfySink);
-    decorateNotifyWithAssertions(SomeSatisfySink);
-    return createSomeSatisfyOperator({ ...fromArrayT, ...liftT }, SomeSatisfySink);
-})();
+}, decorateWithSomeSatisfyNotify(), decorateNotifyWithAssertions, createSomeSatisfyOperator({ ...fromArrayT, ...liftT }));
 const someSatisfyT = {
     someSatisfy,
 };
