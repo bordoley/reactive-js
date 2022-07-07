@@ -2,8 +2,8 @@ import { createFromArray } from "../__internal__.container";
 import { FromArray, FromArrayOptions } from "../container";
 import { isDisposed } from "../disposable";
 import { ignore } from "../functions";
+import { ReactiveSinkLike } from "../reactiveSink";
 import { RunnableLike } from "../runnable";
-import { RunnableSink } from "../runnableSink";
 import { createRunnable } from "./createRunnable";
 
 export const fromArray = /*@__PURE__*/ createFromArray<RunnableLike<unknown>>(
@@ -13,7 +13,7 @@ export const fromArray = /*@__PURE__*/ createFromArray<RunnableLike<unknown>>(
     const run =
       count === 0
         ? ignore
-        : (sink: RunnableSink<T>) => {
+        : (sink: ReactiveSinkLike<T>) => {
             for (
               let index = startIndex;
               index < endIndex && !isDisposed(sink);

@@ -1,8 +1,8 @@
 import { Function1, newInstanceWith, pipeLazy } from "../functions";
 import { Option, none } from "../option";
 import { RunnableLike } from "../runnable";
-import { RunnableSink } from "../runnableSink";
 import { run } from "./run";
+import { RunnableSink } from "./runnableSink";
 
 class LastSink<T> extends RunnableSink<T> {
   result: Option<T> = none;
