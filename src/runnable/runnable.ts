@@ -1,6 +1,6 @@
 import { raise } from "../functions";
 import { RunnableLike } from "../runnable";
-import { RunnableSink } from "../runnableSink";
+import { RunnableSink } from "./runnableSink";
 
 export abstract class AbstractRunnable<T> implements RunnableLike<T> {
   get T(): T {

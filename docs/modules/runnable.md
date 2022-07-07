@@ -359,7 +359,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `run` | [`SideEffect1`](functions.md#sideeffect1)<[`RunnableSink`](../classes/runnableSink.RunnableSink.md)<`T`\>\> |
+| `run` | [`SideEffect1`](functions.md#sideeffect1)<[`ReactiveSinkLike`](../interfaces/reactiveSink.ReactiveSinkLike.md)<`T`\>\> |
 
 #### Returns
 

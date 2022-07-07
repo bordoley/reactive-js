@@ -19,7 +19,6 @@
 ## Implemented by
 
 - [`Observer`](../classes/observer.Observer.md)
-- [`RunnableSink`](../classes/runnableSink.RunnableSink.md)
 
 ## Table of contents
 

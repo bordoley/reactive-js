@@ -26,7 +26,6 @@ Reactive-JS
 - [reactiveContainer](modules/reactiveContainer.md)
 - [reactiveSink](modules/reactiveSink.md)
 - [runnable](modules/runnable.md)
-- [runnableSink](modules/runnableSink.md)
 - [scheduler](modules/scheduler.md)
 - [sequence](modules/sequence.md)
 - [stream](modules/stream.md)
